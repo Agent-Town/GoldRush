@@ -29,6 +29,9 @@ interface ThreeGameDiagnostics {
   heroIframes: boolean;
   enemiesAlive: number;
   enemyPoolSize: number;
+  boltsAlive: number;
+  xp: number;
+  xpMotesAlive: number;
   kills: number;
   goldPanned: number;
   deathLedger: {
@@ -104,5 +107,12 @@ interface Window {
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;
+    spawnPack: (n: number, radius?: number) => void;
+    resetRun: () => void;
+    state: () => {
+      enemiesAlive: number;
+      xp: number;
+      boltsAlive: number;
+    };
   };
 }

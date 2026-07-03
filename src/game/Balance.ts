@@ -23,10 +23,27 @@ export const Balance = {
     spatialHashCellSize: 2,
     spatialHashWorldMin: -40,
     spatialHashWorldMax: 40,
-    xp: 3,
     debugPackSize: 5,
     debugPackRadius: 3.2,
     groundY: 0.05,
+  },
+  sparkRig: {
+    fireRate: 2.0,
+    damage: 12,
+    range: 10,
+    boltSpeed: 18,
+    boltRadius: 0.25,
+    boltLife: 1.2,
+    volley: 1,
+  },
+  xp: {
+    perKill: 3,
+    moteMagnetRadius: 2,
+    motePool: 64,
+    needBase: 12,
+  },
+  projectile: {
+    pool: 128,
   },
   economy: {
     logCapacity: 128,

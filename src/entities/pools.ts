@@ -54,6 +54,10 @@ export class EnemyPool {
     return this.enemies.length;
   }
 
+  get all(): readonly ClaimJumperEnemy[] {
+    return this.enemies;
+  }
+
   spawn(position: THREE.Vector3, speedScale = 1): ClaimJumperEnemy | null {
     for (const enemy of this.enemies) {
       if (enemy.isAlive) continue;
@@ -65,9 +69,9 @@ export class EnemyPool {
     return null;
   }
 
-  spawnPack(center: THREE.Vector3, count: number): number {
+  spawnPack(center: THREE.Vector3, count: number, radius: number = Balance.enemy.debugPackRadius): number {
     let spawned = 0;
-    const ringRadius = Balance.enemy.debugPackRadius;
+    const ringRadius = radius;
     const startAngle = Math.PI * -0.5;
 
     for (let i = 0; i < count; i += 1) {

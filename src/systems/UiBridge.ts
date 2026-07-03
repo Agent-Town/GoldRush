@@ -1,3 +1,4 @@
+import { Balance } from '../game/Balance';
 import type { GameState, RunState } from '../game/GameState';
 
 export type WaveState = 'quiet' | 'warning' | 'active' | 'cleared';
@@ -26,7 +27,7 @@ export class UiBridge {
     maxHp: 100,
     gold: 0,
     xp: 0,
-    xpNeed: 12,
+    xpNeed: Balance.xp.needBase,
     level: 1,
     wave: 0,
     waveState: 'quiet',
@@ -39,8 +40,18 @@ export class UiBridge {
     canAffordBeacon: false,
   };
 
-  build(state: GameState, timeAlive: number, hp: number, maxHp: number, enemiesAlive: number, gold: number): UiSnapshot {
+  build(
+    state: GameState,
+    timeAlive: number,
+    hp: number,
+    maxHp: number,
+    enemiesAlive: number,
+    gold: number,
+    xp: number,
+  ): UiSnapshot {
     this.snapshot.gold = gold;
+    this.snapshot.xp = xp;
+    this.snapshot.xpNeed = Balance.xp.needBase;
     this.snapshot.timeAlive = timeAlive;
     this.snapshot.state = state.current;
     this.snapshot.paused = state.isPaused;

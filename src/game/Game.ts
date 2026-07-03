@@ -5,14 +5,18 @@ import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { Hero } from '../entities/Hero';
+import { ProjectilePool } from '../entities/Projectile';
+import { XpMotePool } from '../entities/XpMote';
 import { EnemyPool } from '../entities/pools';
-import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { Balance } from './Balance';
+import { AudioSystem } from '../systems/AudioSystem';
 import { Economy, initialEconomyState, reduce as reduceEconomy } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
+import { CombatSystem } from '../systems/CombatSystem';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
+import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
@@ -28,10 +32,24 @@ export class Game {
   private readonly input: InputController;
   private readonly hero = new Hero();
   private readonly enemies = new EnemyPool();
+  private readonly projectiles = new ProjectilePool();
+  private readonly xpMotes = new XpMotePool();
+  private readonly combatVfx = new CombatVfx();
+  private readonly audio = new AudioSystem();
   private readonly state = new GameState();
   private readonly economy = new Economy();
   private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors);
   private readonly vfx = new Vfx();
+  private readonly combat = new CombatSystem(
+    this.events,
+    this.hero,
+    this.enemies,
+    this.projectiles,
+    this.xpMotes,
+    this.combatVfx,
+    this.audio,
+    () => this.endRun(),
+  );
   private readonly simTimeScale = getTimescale();
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
@@ -91,6 +109,17 @@ export class Game {
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.resetRun());
     this.damageVignette.className = 'damage-vignette';
     this.getElement('#app').append(this.damageVignette);
+    this.combat.registerShooter({
+      getPos: () => this.hero.group.position,
+      range: Balance.sparkRig.range,
+      cooldown: 1 / Balance.sparkRig.fireRate,
+      damage: Balance.sparkRig.damage,
+      projSpeed: Balance.sparkRig.boltSpeed,
+      volley: Balance.sparkRig.volley,
+    });
+    this.events.on('hero_damaged', () => {
+      this.damageFlashRemaining = Balance.hero.iframes;
+    });
     this.events.on('hero_died', (event) => {
       this.deathLedger = {
         timeAlive: event.timeAlive,
@@ -98,6 +127,9 @@ export class Game {
         goldPanned: event.goldPanned,
       };
       this.deathOverlay.show(this.deathLedger);
+    });
+    this.events.on('enemy_killed', () => {
+      this.kills += 1;
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -114,6 +146,13 @@ export class Game {
           this.hero.group.position.set(x, this.hero.group.position.y, z);
           this.hero.velocity.set(0, 0, 0);
         },
+        spawnPack: (n: number, radius?: number) => this.spawnDebugPack(n, radius),
+        resetRun: () => this.resetRun(),
+        state: () => ({
+          enemiesAlive: this.enemies.activeCount,
+          xp: this.combat.xpCount,
+          boltsAlive: this.combat.boltsAlive,
+        }),
       };
     }
     this.cameraRig.snapTo(this.hero.group.position);
@@ -136,6 +175,8 @@ export class Game {
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.harvestSystem.dispose();
+    this.combat.dispose();
+    this.audio.dispose();
     this.vfx.dispose();
     this.enemies.dispose();
     this.hero.dispose();
@@ -163,7 +204,8 @@ export class Game {
       this.timeAlive += simDelta;
       this.terrainView?.update(simDelta);
       this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
-      this.enemies.update(simDelta, this.hero.group.position, (enemy) => this.handleEnemyContact(enemy));
+      this.combat.setTime(this.timeAlive);
+      this.enemies.update(simDelta, this.hero.group.position, this.combat.handleEnemyContact);
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
         this.timeAlive,
@@ -174,6 +216,8 @@ export class Game {
         this.goldPanned += this.harvestSnapshot.lastGoldGain;
         this.vfx.floatText(this.hero.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
+      this.combat.update(simDelta, this.timeAlive);
+      this.combatVfx.update(simDelta);
     }
     this.vfx.update(delta);
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
@@ -222,6 +266,9 @@ export class Game {
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
     this.scene.add(this.harvestSystem.group);
+    this.scene.add(this.projectiles.group);
+    this.scene.add(this.xpMotes.group);
+    this.scene.add(this.combatVfx.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.hero.group.position.copy(this.heroStart);
@@ -251,6 +298,9 @@ export class Game {
       heroIframes: this.hero.hasIframes,
       enemiesAlive: this.enemies.activeCount,
       enemyPoolSize: this.enemies.capacity,
+      boltsAlive: this.combat.boltsAlive,
+      xp: this.combat.xpCount,
+      xpMotesAlive: this.xpMotes.activeCount,
       kills: this.kills,
       goldPanned: this.goldPanned,
       deathLedger: this.deathLedger,
@@ -334,6 +384,7 @@ export class Game {
       this.hero.maxHp,
       this.enemies.activeCount,
       this.economy.gold,
+      this.combat.xpCount,
     );
     this.hud.update(this.uiSnapshot);
   }
@@ -346,6 +397,7 @@ export class Game {
   resetRun(): void {
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
+    this.combat.reset();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);
     this.timeAlive = 0;
@@ -362,25 +414,6 @@ export class Game {
     this.state.restart();
   }
 
-  private handleEnemyContact(enemy: ClaimJumperEnemy): void {
-    const result = this.hero.takeDamage(Balance.enemy.contactDamage);
-    if (!result.applied) return;
-
-    this.damageFlashRemaining = Balance.hero.iframes;
-    this.events.emit({
-      type: 'hero_damaged',
-      at: this.timeAlive,
-      amount: Balance.enemy.contactDamage,
-      hp: this.hero.hp,
-      maxHp: this.hero.maxHp,
-      sourceId: enemy.id,
-    });
-
-    if (result.died) {
-      this.endRun();
-    }
-  }
-
   private endRun(): void {
     if (this.state.current === 'dead') return;
     this.state.transition('dead');
@@ -393,10 +426,10 @@ export class Game {
     });
   }
 
-  private spawnDebugPack(): void {
+  private spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): void {
     if (isSpawnDisabled() || this.state.current !== 'playing') return;
     this.spawnCenter.copy(this.hero.group.position);
-    this.enemies.spawnPack(this.spawnCenter, Balance.enemy.debugPackSize);
+    this.enemies.spawnPack(this.spawnCenter, count, radius);
   }
 
   private spawnStressEnemies(): void {

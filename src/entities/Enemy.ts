@@ -66,6 +66,14 @@ export class ClaimJumperEnemy {
     return this.alive;
   }
 
+  get position(): THREE.Vector3 {
+    return this.group.position;
+  }
+
+  get currentHp(): number {
+    return this.hp;
+  }
+
   spawn(position: THREE.Vector3, speedScale: number): void {
     this.alive = true;
     this.hp = Balance.enemy.hp;

@@ -10,6 +10,7 @@ export const assetSlots = {
   propRock: 'prop.rock',
   propStump: 'prop.stump',
   propClaimPost: 'prop.claim_post',
+  vfxBolt: 'vfx.bolt',
 } as const;
 
 export type AssetSlotId = (typeof assetSlots)[keyof typeof assetSlots];

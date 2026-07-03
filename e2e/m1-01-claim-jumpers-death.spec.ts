@@ -30,16 +30,17 @@ test('T spawns Claim Jumpers, contact kills hero, R restarts in place', async ({
   const errors = collectPageErrors(page);
   await waitForGame(page);
 
+  // Since m1/02 the Spark Rig fights back: overwhelm immediately so contact
+  // damage outpaces the rig (iframes cap intake at ~16 dmg/s -> death ~6.5s).
   await spawnDebugPack(page);
-  await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBe(5);
+  await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive)).toBeGreaterThan(0);
+  for (let i = 0; i < 5; i += 1) {
+    await spawnDebugPack(page);
+  }
 
   await expect
     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.hp ?? 100), { timeout: 10_000 })
     .toBeLessThan(100);
-
-  for (let i = 0; i < 4; i += 1) {
-    await spawnDebugPack(page);
-  }
 
   await waitForDeath(page);
   await expect(page.getByTestId('death-overlay')).toBeVisible();
@@ -66,15 +67,17 @@ test('nospawn blocks debug packs', async ({ page }) => {
 });
 
 test('double restart recycles enemies without geometry growth', async ({ page }) => {
-  await page.goto('/?timescale=4');
+  await page.goto('/?debug&timescale=4');
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer.geometries ?? 0);
 
   for (let cycle = 0; cycle < 3; cycle += 1) {
-    for (let pack = 0; pack < 5; pack += 1) {
-      await spawnDebugPack(page);
-    }
+    // Keyboard KeyT spam collapses at headless fps (edge-triggered intents) and
+    // since m1/02 the rig can out-kill a thin spawn; use the harness instead.
+    await page.evaluate(() => {
+      for (let pack = 0; pack < 5; pack += 1) window.__GR_TEST__?.spawnPack(5);
+    });
     await waitForDeath(page);
     await page.keyboard.press('KeyR');
     await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('playing');

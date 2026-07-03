@@ -1,4 +1,4 @@
-import { expect, test } from '@playwright/test';
+import { expect, test, type Page } from '@playwright/test';
 import { PNG } from 'pngjs';
 
 type CanvasSample = {
@@ -181,13 +181,19 @@ test('HUD shell is readable and stable as run numbers tick', async ({ page }) =>
   expect(pageErrors).toEqual([]);
 });
 
+async function holdKey(page: Page, key: string): Promise<void> {
+  await page.keyboard.down(key);
+  await page.waitForTimeout(160);
+  await page.keyboard.up(key);
+}
+
 test('P toggles pause diagnostics and freezes sim time', async ({ page }) => {
   await page.goto('/');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('playing');
 
-  await page.keyboard.press('KeyP');
+  await holdKey(page, 'KeyP');
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('paused');
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(true);
   const pausedAt = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0);
@@ -195,7 +201,7 @@ test('P toggles pause diagnostics and freezes sim time', async ({ page }) => {
   const stillPausedAt = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0);
   expect(stillPausedAt).toBe(pausedAt);
 
-  await page.keyboard.press('KeyP');
+  await holdKey(page, 'KeyP');
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('playing');
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(false);
   await expect
