@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: ACTIVE 2026-07-03T11:07:00Z (session 5 — scheduled lane; m1-07 prep + M2 specs)
+Last updated: ACTIVE 2026-07-03T14:08:00Z (session 6 — scheduled lane; m1-07 execution + M2 specs. s5 lock was stale: s5 died after playtest-doc commit, no slice work lost)
 
 ## Where we are
 - **M0: all 5 slices done.** Awaiting Robin playtest + sign-off.
