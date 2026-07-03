@@ -28,6 +28,20 @@ export const Balance = {
     debugPackRadius: 3.2,
     groundY: 0.05,
   },
+  economy: {
+    logCapacity: 128,
+  },
+  goldSeam: {
+    activeMin: 2,
+    activeMax: 3,
+    channelRange: 1.6,
+    slowSpeed: 0.35,
+    tickSeconds: 1.5,
+    tickGold: 5,
+    capacity: 30,
+    decayMultiplier: 2,
+    respawnSeconds: 20,
+  },
   camera: {
     fov: 42,
     offset: new THREE.Vector3(0, 22, 10),

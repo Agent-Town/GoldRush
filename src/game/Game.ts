@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { EventBus } from '../core/EventBus';
-import { getStressCount, isSpawnDisabled } from '../core/DebugParams';
+import { getStressCount, getTimescale, isSpawnDisabled } from '../core/DebugParams';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
@@ -8,8 +8,10 @@ import { Hero } from '../entities/Hero';
 import { EnemyPool } from '../entities/pools';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { Balance } from './Balance';
+import { Economy, initialEconomyState, reduce as reduceEconomy } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
+import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
@@ -26,6 +28,10 @@ export class Game {
   private readonly hero = new Hero();
   private readonly enemies = new EnemyPool();
   private readonly state = new GameState();
+  private readonly economy = new Economy();
+  private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors);
+  private readonly simTimeScale = getTimescale();
+  private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
   private readonly deathOverlay: DeathOverlay;
@@ -88,6 +94,15 @@ export class Game {
     });
 
     this.createScene();
+    if (new URLSearchParams(window.location.search).has('debug')) {
+      // Test/debug harness: parking-free positioning for interaction e2e.
+      window.__GR_TEST__ = {
+        teleport: (x: number, z: number) => {
+          this.hero.group.position.set(x, this.hero.group.position.y, z);
+          this.hero.velocity.set(0, 0, 0);
+        },
+      };
+    }
     this.cameraRig.snapTo(this.hero.group.position);
     this.state.transition('playing');
     this.spawnStressEnemies();
@@ -107,6 +122,7 @@ export class Game {
     this.deathOverlay.dispose();
     this.damageVignette.remove();
     this.debugTools.dispose();
+    this.harvestSystem.dispose();
     this.enemies.dispose();
     this.hero.dispose();
     this.events.clear();
@@ -128,10 +144,17 @@ export class Game {
 
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     if (this.state.simActive) {
-      this.timeAlive += delta;
-      this.terrainView?.update(delta);
-      this.hero.update(delta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
-      this.enemies.update(delta, this.hero.group.position, (enemy) => this.handleEnemyContact(enemy));
+      const simDelta = delta * this.simTimeScale;
+      this.timeAlive += simDelta;
+      this.terrainView?.update(simDelta);
+      this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
+      this.enemies.update(simDelta, this.hero.group.position, (enemy) => this.handleEnemyContact(enemy));
+      this.harvestSnapshot = this.harvestSystem.update(
+        simDelta,
+        this.timeAlive,
+        this.hero.group.position,
+        this.hero.velocity.length(),
+      );
     }
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
@@ -164,6 +187,7 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    this.scene.add(this.harvestSystem.group);
     this.scene.add(this.enemies.group);
     this.hero.group.position.copy(this.heroStart);
     this.scene.add(this.hero.group);
@@ -177,6 +201,8 @@ export class Game {
       z: this.hero.group.position.z,
     };
     const speed = this.hero.velocity.length();
+    const economyLog = this.economy.log;
+    const economyReplay = economyLog.reduce(reduceEconomy, initialEconomyState);
     window.__THREE_GAME_DIAGNOSTICS__ = {
       frame: this.frame,
       elapsed: this.elapsed,
@@ -204,6 +230,13 @@ export class Game {
         position: heroPos,
         speed,
       },
+      economy: {
+        gold: this.economy.gold,
+        logLength: economyLog.length,
+        state: this.economy.state,
+        replay: economyReplay,
+      },
+      harvest: this.harvestSnapshot,
       renderer: {
         calls: info.render.calls,
         triangles: info.render.triangles,
@@ -238,6 +271,7 @@ export class Game {
       this.hero.hp,
       this.hero.maxHp,
       this.enemies.activeCount,
+      this.economy.gold,
     );
     this.hud.update(this.uiSnapshot);
   }
@@ -248,6 +282,7 @@ export class Game {
   }
 
   resetRun(): void {
+    this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);
@@ -292,7 +327,7 @@ export class Game {
       at: this.timeAlive,
       timeAlive: this.timeAlive,
       kills: this.kills,
-      goldPanned: this.goldPanned,
+      goldPanned: this.economy.gold,
     });
   }
 

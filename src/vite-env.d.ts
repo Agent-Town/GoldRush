@@ -45,6 +45,26 @@ interface ThreeGameDiagnostics {
     position: { x: number; y: number; z: number };
     speed: number;
   };
+  economy: {
+    gold: number;
+    logLength: number;
+    state: { gold: number };
+    replay: { gold: number };
+  };
+  harvest: {
+    activeNodes: Array<{
+      id: string;
+      active: boolean;
+      anchorIndex: number;
+      position: { x: number; z: number };
+      remaining: number;
+      respawnIn: number;
+    }>;
+    channeling: boolean;
+    channelNodeId: string | null;
+    progress: number;
+    lastGoldGain: number;
+  };
   renderer: {
     calls: number;
     triangles: number;
@@ -70,4 +90,8 @@ interface ThreeGameDiagnostics {
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
+  /** Present only with ?debug — parking-free positioning for interaction e2e. */
+  __GR_TEST__?: {
+    teleport: (x: number, z: number) => void;
+  };
 }

@@ -56,32 +56,9 @@ export class ClaimJumperEnemy {
   private contactCooldown = 0;
 
   constructor(readonly id: number, assets: ClaimJumperAssets) {
+    void assets;
     this.group.name = `ClaimJumperEnemy-${id}`;
     this.group.visible = false;
-
-    const shadow = new THREE.Mesh(assets.shadowGeometry, assets.shadowMaterial);
-    shadow.rotation.x = -Math.PI / 2;
-    shadow.position.y = 0.012;
-    shadow.renderOrder = -1;
-
-    const poncho = new THREE.Mesh(assets.ponchoGeometry, assets.ponchoMaterial);
-    poncho.position.y = 0.54;
-    poncho.castShadow = true;
-    poncho.receiveShadow = true;
-
-    const face = new THREE.Mesh(assets.faceGeometry, assets.faceMaterial);
-    face.position.set(0, 0.93, -0.34);
-    face.castShadow = true;
-
-    const brim = new THREE.Mesh(assets.brimGeometry, assets.hatMaterial);
-    brim.position.y = 1.15;
-    brim.castShadow = true;
-
-    const crown = new THREE.Mesh(assets.crownGeometry, assets.hatMaterial);
-    crown.position.y = 1.32;
-    crown.castShadow = true;
-
-    this.group.add(shadow, poncho, face, brim, crown);
     tagPlaceholder(this.group, assetSlots.charClaimJumper);
   }
 

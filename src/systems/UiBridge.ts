@@ -35,7 +35,8 @@ export class UiBridge {
     canAffordBeacon: false,
   };
 
-  build(state: GameState, timeAlive: number, hp: number, maxHp: number, enemiesAlive: number): UiSnapshot {
+  build(state: GameState, timeAlive: number, hp: number, maxHp: number, enemiesAlive: number, gold: number): UiSnapshot {
+    this.snapshot.gold = gold;
     this.snapshot.timeAlive = timeAlive;
     this.snapshot.state = state.current;
     this.snapshot.paused = state.isPaused;

@@ -6,6 +6,7 @@ export const assetSlots = {
   terrainBank: 'terrain.bank',
   terrainRiver: 'terrain.river',
   terrainFord: 'terrain.ford',
+  nodeGoldSeam: 'node.gold_seam',
   propRock: 'prop.rock',
   propStump: 'prop.stump',
   propClaimPost: 'prop.claim_post',

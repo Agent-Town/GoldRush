@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import {
   ClaimJumperEnemy,
@@ -12,8 +13,14 @@ export class EnemyPool {
 
   private readonly assets: ClaimJumperAssets = createClaimJumperAssets();
   private readonly enemies: ClaimJumperEnemy[] = [];
+  private readonly renderParts: THREE.InstancedMesh[] = [];
+  private readonly localMatrices: THREE.Matrix4[] = [];
   private readonly cells: ClaimJumperEnemy[][] = [];
   private readonly touchedCells: number[] = [];
+  private readonly baseMatrix = new THREE.Matrix4();
+  private readonly instanceMatrix = new THREE.Matrix4();
+  private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
+  private readonly syncObject = new THREE.Object3D();
   private readonly gridSize: number;
   private readonly gridMin: number;
   private readonly gridMax: number;
@@ -26,6 +33,7 @@ export class EnemyPool {
     this.gridMin = Balance.enemy.spatialHashWorldMin;
     this.gridMax = Balance.enemy.spatialHashWorldMax;
     this.gridSize = Math.ceil((this.gridMax - this.gridMin) / this.cellSize);
+    this.createRenderParts();
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
       this.cells.push([]);
@@ -34,8 +42,8 @@ export class EnemyPool {
     for (let i = 0; i < Balance.enemy.poolSize; i += 1) {
       const enemy = new ClaimJumperEnemy(i, this.assets);
       this.enemies.push(enemy);
-      this.group.add(enemy.group);
     }
+    this.syncInstances();
   }
 
   get activeCount(): number {
@@ -51,6 +59,7 @@ export class EnemyPool {
       if (enemy.isAlive) continue;
       enemy.spawn(position, speedScale);
       this.active += 1;
+      this.syncEnemyInstance(enemy);
       return enemy;
     }
     return null;
@@ -109,12 +118,14 @@ export class EnemyPool {
         onContact(enemy);
       }
     }
+    this.syncInstances();
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
     if (!enemy.isAlive) return;
     enemy.recycle();
     this.active = Math.max(0, this.active - 1);
+    this.syncEnemyInstance(enemy);
   }
 
   recycleAll(): void {
@@ -123,6 +134,7 @@ export class EnemyPool {
     }
     this.active = 0;
     this.clearSpatialHash();
+    this.syncInstances();
   }
 
   dispose(): void {
@@ -130,6 +142,65 @@ export class EnemyPool {
       enemy.dispose();
     }
     disposeClaimJumperAssets(this.assets);
+  }
+
+  private createRenderParts(): void {
+    this.localMatrices.push(
+      this.createLocalMatrix(new THREE.Vector3(0, 0.012, 0), new THREE.Euler(-Math.PI / 2, 0, 0)),
+      this.createLocalMatrix(new THREE.Vector3(0, 0.54, 0)),
+      this.createLocalMatrix(new THREE.Vector3(0, 0.93, -0.34)),
+      this.createLocalMatrix(new THREE.Vector3(0, 1.15, 0)),
+      this.createLocalMatrix(new THREE.Vector3(0, 1.32, 0)),
+    );
+
+    this.renderParts.push(
+      new THREE.InstancedMesh(this.assets.shadowGeometry, this.assets.shadowMaterial, Balance.enemy.poolSize),
+      new THREE.InstancedMesh(this.assets.ponchoGeometry, this.assets.ponchoMaterial, Balance.enemy.poolSize),
+      new THREE.InstancedMesh(this.assets.faceGeometry, this.assets.faceMaterial, Balance.enemy.poolSize),
+      new THREE.InstancedMesh(this.assets.brimGeometry, this.assets.hatMaterial, Balance.enemy.poolSize),
+      new THREE.InstancedMesh(this.assets.crownGeometry, this.assets.hatMaterial, Balance.enemy.poolSize),
+    );
+
+    for (const part of this.renderParts) {
+      part.count = Balance.enemy.poolSize;
+      part.castShadow = false;
+      part.receiveShadow = false;
+      part.frustumCulled = false;
+      tagPlaceholder(part, assetSlots.charClaimJumper);
+      this.group.add(part);
+    }
+    this.renderParts[0].renderOrder = -1;
+  }
+
+  private createLocalMatrix(position: THREE.Vector3, rotation = new THREE.Euler()): THREE.Matrix4 {
+    this.syncObject.position.copy(position);
+    this.syncObject.rotation.copy(rotation);
+    this.syncObject.scale.set(1, 1, 1);
+    this.syncObject.updateMatrix();
+    return this.syncObject.matrix.clone();
+  }
+
+  private syncInstances(): void {
+    for (const enemy of this.enemies) {
+      this.syncEnemyInstance(enemy);
+    }
+  }
+
+  private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
+    this.syncObject.position.copy(enemy.group.position);
+    this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
+    this.syncObject.scale.set(1, 1, 1);
+    this.syncObject.updateMatrix();
+    this.baseMatrix.copy(enemy.isAlive ? this.syncObject.matrix : this.hiddenMatrix);
+
+    for (let i = 0; i < this.renderParts.length; i += 1) {
+      const part = this.renderParts[i];
+      const localMatrix = this.localMatrices[i];
+      if (!part || !localMatrix) continue;
+      this.instanceMatrix.multiplyMatrices(this.baseMatrix, localMatrix);
+      part.setMatrixAt(enemy.id, this.instanceMatrix);
+      part.instanceMatrix.needsUpdate = true;
+    }
   }
 
   private rebuildSpatialHash(): void {
