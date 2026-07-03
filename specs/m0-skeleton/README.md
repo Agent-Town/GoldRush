@@ -8,10 +8,10 @@ Synthesized 2026-07-03 from three independent slice drafts (strong convergence o
 
 _Last updated: 2026-07-03. Update this section before ending your pass._
 
-Status: **all five slices open.** Pickup point: `slices/01-scaffold-boot.md`. Slice 01 must land alone (it is the sandbox spike — npm install in the mounted repo is unproven; fallback documented in STATUS.md). After 01, slices 02/03/04 may run in parallel (03 codes against the `TerrainSample` type from 02's seam using a flat stub until merge; each slice's spec names its exact `Game.ts` registration lines to avoid collisions). 05 joins them. Verify per GATE-STD below; write findings to `reviews/<slice>.md`; keep this prompt current.
+Status: **01 done (reviews/m0-01-scaffold-boot.md, PASS).** Pickup point: slices 02/03/04 (parallelizable; 03 stubs `TerrainSample` until 02 merges; Codex runs them as separate sequential sessions in `~/gr` per STATUS.md environment recipe). 05 joins them. Verify per GATE-STD below; write findings to `reviews/<slice>.md`; keep this prompt current.
 
 TODO:
-- [ ] 01-scaffold-boot (owner: Codex)
+- [x] 01-scaffold-boot (Codex, PASS 2026-07-03)
 - [ ] 02-claim-terrain
 - [ ] 03-hero-camera
 - [ ] 04-hud-shell-state
