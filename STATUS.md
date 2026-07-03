@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-03 ~20:15 +07 (session 4 end — manual lane; ACTIVE lock cleared)
+Last updated: ACTIVE 2026-07-03T11:07:00Z (session 5 — scheduled lane; m1-07 prep + M2 specs)
 
 ## Where we are
 - **M0: all 5 slices done.** Awaiting Robin playtest + sign-off.
