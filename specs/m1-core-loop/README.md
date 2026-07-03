@@ -10,7 +10,7 @@ Synthesized 2026-07-03 from three independent drafts.
 
 _Last updated: 2026-07-03. Update this section before ending your pass._
 
-Status: **01–07 ALL DONE 2026-07-03** (07 in session 5 `c2a46b9`, review `m1-07-feel-and-tune-prep.md`; fun verdict POSITIVE per `docs/playtests/2026-07-03-robin-wave10.md`, directives D1–D5 implemented; regression 45/45). **M1 exit pending only Robin confirming the applied defaults feel right → then `close-spec`.** Test-harness params now: `?nowaves` `?nokill` `?nospawn` `?nolevel` `?nopause` `?stress` `?timescale` `?seed`; `__GR_TEST__.setBalance/clearScores` added. Next work: M2 specs (`feature-slicing`; route backlog: multi-weapon + AOE buildables per playtest doc) — session 6 lane may already own this, check STATUS. WARNING: `pw.reuse.config.ts` is UNSAFE in the sandbox (PID-namespaced zombie vites serve stale code round-robin) — hermetic base-config runs only; see m1-07 review §environment. Read STATUS.md lessons first; single-enemy scenarios for kill-attribution asserts (bolt-diffusion). Keep this prompt current.
+Status: **01–07 ALL DONE 2026-07-03** (07 in session 5 `c2a46b9`, review `m1-07-feel-and-tune-prep.md`; fun verdict POSITIVE per `docs/playtests/2026-07-03-robin-wave10.md`, directives D1–D5 implemented; regression 45/45). **M1 exit now = 08-wave18-corrections (BINDING, landed 22:09 after this line was written) + Robin confirming the applied defaults → then `close-spec`.** Test-harness params now: `?nowaves` `?nokill` `?nospawn` `?nolevel` `?nopause` `?stress` `?timescale` `?seed`; `__GR_TEST__.setBalance/clearScores` added. Next work: M2 specs (`feature-slicing`; route backlog: multi-weapon + AOE buildables per playtest doc) — session 6 lane may already own this, check STATUS. WARNING: `pw.reuse.config.ts` is UNSAFE in the sandbox (PID-namespaced zombie vites serve stale code round-robin) — hermetic base-config runs only; see m1-07 review §environment. Read STATUS.md lessons first; single-enemy scenarios for kill-attribution asserts (bolt-diffusion). Keep this prompt current.
 
 TODO:
 - [x] 01-claim-jumpers-death (Codex A, PASS; enemies instanced in perf round)
@@ -20,6 +20,7 @@ TODO:
 - [x] 05-sentry-beacon-build (Codex E `019f2741-d3eb`, PASS + 4 supervisor fixes; bolt-diffusion finding in `reviews/m1-05-sentry-beacon-build.md`; 2026-07-03 s4)
 - [x] 06-level-up-choices (Codex F `019f277f-e96a`, PASS; `?nolevel` harness param added — new-mechanic slices MUST regression-sweep old suites for semantic breaks; `reviews/m1-06-level-up-choices.md`; 2026-07-03 s4)
 - [x] 07-feel-and-tune-gate (Codex G `019f2845-9049`, PASS `c2a46b9` + 1 correction + supervisor %-fix; fun verdict POSITIVE wave-10 playtest, D1–D5 shipped; `reviews/m1-07-feel-and-tune-prep.md`; 2026-07-03 s5) → **M1 exit awaits Robin confirming defaults; split_spark same-vs-next-nearest still queued**
+- [ ] 08-wave18-corrections (`slices/08-wave18-corrections.md`, BINDING before close-spec — lifetime-panned ledger derive, beacon knob tune, upgrade-pool exhaustion fallback; from Robin's wave-18 correction round, routed by s6)
 
 ## Slice graph
 
