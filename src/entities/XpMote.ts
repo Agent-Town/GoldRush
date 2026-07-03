@@ -58,7 +58,11 @@ export class XpMotePool {
     return false;
   }
 
-  update(delta: number, heroPosition: THREE.Vector3): number {
+  update(
+    delta: number,
+    heroPosition: THREE.Vector3,
+    onCollect?: (position: THREE.Vector3, value: number) => void,
+  ): number {
     let gained = 0;
     const magnetRadiusSq = Balance.xp.moteMagnetRadius * Balance.xp.moteMagnetRadius;
     for (let i = 0; i < this.active.length; i += 1) {
@@ -71,7 +75,9 @@ export class XpMotePool {
       const dz = heroPosition.z - position.z;
       const distanceSq = dx * dx + dz * dz;
       if (distanceSq <= 0.16) {
-        gained += this.values[i] ?? 0;
+        const value = this.values[i] ?? 0;
+        gained += value;
+        if (onCollect && value > 0) onCollect(position, value);
         this.deactivate(i);
         continue;
       }

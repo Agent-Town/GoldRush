@@ -56,6 +56,11 @@ test('stress pack never exceeds the bolt pool and logs no console errors', async
 
 test('run reset recycles combat pools without renderer memory growth', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=3&nowaves');
+  // Warm the float-text pool: the first rendered float lazily uploads the shared
+  // sprite geometry + canvas textures. Steady-state floatText (xp/gold pickups)
+  // is dispose/create net-zero, so the baseline stays an exact leak gate.
+  await page.evaluate(() => window.__GR_TEST__?.warmVfx());
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 20);
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
 
   for (let cycle = 0; cycle < 3; cycle += 1) {

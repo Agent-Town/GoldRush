@@ -68,6 +68,17 @@ export class Vfx {
     return this.pool.reduce((count, item) => count + (item.active ? 1 : 0), 0);
   }
 
+  /**
+   * Cycle every pool slot once so the shared sprite geometry and per-slot canvas
+   * textures upload eagerly. Steady-state floatText is then dispose/create
+   * net-zero for renderer memory counts (used by e2e leak baselines via ?debug).
+   */
+  warm(position: THREE.Vector3): void {
+    for (let index = 0; index < this.pool.length; index += 1) {
+      this.floatText(position, '+0', '#83ded7');
+    }
+  }
+
   update(delta: number): void {
     for (const item of this.pool) {
       if (!item.active) continue;

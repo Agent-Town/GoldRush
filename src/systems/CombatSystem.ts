@@ -41,6 +41,7 @@ export class CombatSystem {
     private readonly vfx: CombatVfx,
     private readonly audio: AudioSystem,
     private readonly onHeroDied: () => void,
+    private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
   ) {}
 
   get xpCount(): number {
@@ -71,7 +72,7 @@ export class CombatSystem {
       remaining -= step;
     }
 
-    const gained = this.motes.update(delta, this.hero.group.position);
+    const gained = this.motes.update(delta, this.hero.group.position, this.onXpCollect);
     if (gained > 0) this.xp += gained;
   }
 

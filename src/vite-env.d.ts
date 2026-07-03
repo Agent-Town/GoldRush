@@ -115,6 +115,7 @@ interface Window {
     teleport: (x: number, z: number) => void;
     spawnPack: (n: number, radius?: number) => void;
     resetRun: () => void;
+    warmVfx: () => void;
     state: () => {
       enemiesAlive: number;
       xp: number;

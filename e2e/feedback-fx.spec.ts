@@ -65,3 +65,18 @@ test('gold panning spawns pooled world-space float text', async ({ page }) => {
   const frameMs = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frameMs);
   console.log(`frameMs avg=${frameMs?.avg.toFixed(2)} p95=${frameMs?.p95.toFixed(2)}`);
 });
+
+test('xp mote pickup spawns teal world-space float text', async ({ page }) => {
+  await page.goto('/?debug&timescale=3&nowaves');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+
+  await page.evaluate(() => window.__GR_TEST__?.spawnPack(5, 3));
+  await expect
+    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.xp ?? 0), { timeout: 15_000 })
+    .toBeGreaterThan(0);
+  await expect
+    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts ?? 0), {
+      timeout: 2_000,
+    })
+    .toBeGreaterThan(0);
+});

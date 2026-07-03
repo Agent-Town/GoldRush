@@ -70,6 +70,10 @@ test('double restart recycles enemies without geometry growth', async ({ page })
   await page.goto('/?debug&timescale=4&nowaves');
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  // Warm the float-text pool first: kills during the swarm drop xp motes whose
+  // pickup floats would otherwise lazily upload sprite geometry mid-test.
+  await page.evaluate(() => window.__GR_TEST__?.warmVfx());
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 20);
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer.geometries ?? 0);
 
   for (let cycle = 0; cycle < 3; cycle += 1) {

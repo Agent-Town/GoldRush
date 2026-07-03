@@ -51,6 +51,7 @@ export class Game {
     this.combatVfx,
     this.audio,
     () => this.endRun(),
+    (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
   );
   private readonly simTimeScale = getTimescale();
   private harvestSnapshot = this.harvestSystem.snapshot;
@@ -158,6 +159,7 @@ export class Game {
         },
         spawnPack: (n: number, radius?: number) => this.spawnDebugPack(n, radius),
         resetRun: () => this.resetRun(),
+        warmVfx: () => this.vfx.warm(this.hero.group.position),
         state: () => ({
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
