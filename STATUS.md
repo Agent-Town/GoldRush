@@ -1,10 +1,12 @@
 # STATUS — Gold Rush
 
-Last updated: ACTIVE 2026-07-03T22:10Z (s8 — took over DEAD s7 lock @5h; finishing m1-08 = wave18 (s7 staged, unverified) + wave23 corrections, then close-spec M1)
+Last updated: 2026-07-03T22:35Z (s8 handoff — **M1 CODE-COMPLETE & SPEC-CLOSED, 51/51**; **PAUSED for Robin's M1 playtest per his request**. NO ACTIVE lock. Next session: await Robin; do NOT start M2 until he resumes.)
 
 ## Where we are
-- **M0: all 5 slices done.** Awaiting Robin playtest + sign-off.
-- **M1: 01–07 ALL done, reviewed, committed (07 = `c2a46b9`, s5). M1 exit = Robin confirms the applied D2 defaults, then `close-spec`.** Fun verdict already POSITIVE (wave-10 doc; wave-18 followup logged).
+- **M1: DONE (code) — 01–08 all shipped & spec-closed (s8, 2026-07-04). Full regression 51/51.** m1-08 = wave18 (`adfb1bc`) + wave23 card corrections (`12af31e` + harness/evidence `bfe9e0d`). Milestone now gates ONLY on **Robin's M1 playtest sign-off**. **Robin asked to PAUSE after M1 (2026-07-04) — M2 NOT started; next session waits for his go.**
+  - **s8 (this, took over dead s7 lock @5h):** verified s7's uncommitted wave18 (tsc+build+committed) → folded Robin's **wave23** round into m1-08 via Codex `019f2a21`: fillers scale (assay +5×wave, dressing 30% maxHp, sharpen unchanged), **procedural glyphs REMOVED** (clean parchment) → batch-002 family icons, **cards slimmed** (key+name+one effect, flavor line cut, `n/max` marker). Added `__GR_TEST__.maxUpgrades` harness (unblocks filler/exhaustion tests vs the 45s wall). Evidence: 51/51 hermetic, desktop+mobile+filler screenshots, **screenshot-critique PASS**. batch-002 prompts written (6 combat-family icons). Robin pinged for M1 playtest.
+  - **⚠ SCHEDULED-TASK NOTE:** if a scheduled build-loop session fires, it must respect Robin's pause — do docs/await only, do NOT start M2. Consider pausing the scheduled task until Robin resumes (flagged to Robin in the M1 ping).
+- **M0: all 5 slices done.** Awaiting Robin playtest + sign-off (rolls into the M1 playtest).
   - Session 4 (this): Robin directive #1 XP float `4849825` → m1-05 Sentry Beacons `60f8552` (`reviews/m1-05-sentry-beacon-build.md`) → m1-06 level-up choices `448407f` (`reviews/m1-06-level-up-choices.md`).
   - The full core loop is now playable end to end: move/pan/kite → auto-fire → waves escalate → gold → build beacons (B, teal/rust ghost, Enter/click) → XP motes float `+3` → level-up freezes sim → 3 parchment Patent-Office cards (1/2/3) → visible run change → death → Stake Again.
 - Full regression at session end: **38/38** across 8 spec files (visual 5, feedback-fx 3, m1-01 4, m1-02 3, m1-03 5, m1-04 4, m1-05 6, m1-06 8), tsc clean, build green, draw calls 35 @ `?stress=120` + 6 beacons (budget ≤200).
@@ -69,6 +71,7 @@ Last updated: ACTIVE 2026-07-03T22:10Z (s8 — took over DEAD s7 lock @5h; finis
 - 07-gate questions queued: camera 57°, split_spark same-target vs next-nearest, beacon cost curve feel (25/35/45/55/75/95).
 
 ## Done log
+- 2026-07-04 (s8, took over DEAD s7 lock @5h): re-provisioned wiped VM (codex/libs/playwright/~gr) → committed s7's orphaned wave18 (`adfb1bc`) → **wave23** card corrections via Codex `019f2a21` (`12af31e`) → `maxUpgrades` harness + **51/51** regression + card screenshots/critique PASS (`bfe9e0d`) → **M1 spec-CLOSED**, STATUS/README updated, batch-002 icon prompts written. Root cause of Robin's "lost work" worry: s7 died mid-slice leaving wave18 staged-but-uncommitted. PAUSED for Robin per his request; lock cleared.
 - 2026-07-03 (s5 scheduled, long-runner): env re-provision from wiped home + chromium-channel fix `(in 851896a)` → **m1-07 `c2a46b9`** (lil-gui seam, hit-pause/impulse, coin-tick, D1–D5 directives, tonal pass; Codex G, 1 correction round + %-suffix supervisor fix) → zombie-vite forensics → review + this handoff. Overlapped s6 from ~14:08Z (art batch `68f1c53`, playtest docs) — disjoint paths, no conflicts.
 - 2026-07-03 (s1): skeleton `e439424` → specs `bc87a96` → m0-01..05 → m1-01 `b4cb01d` → m1-04 `a873bc5` → docs `e1164ec`.
 - 2026-07-03 (s3 feedback lane): `0a4cf2f` F1–F4.
