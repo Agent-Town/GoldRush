@@ -10,13 +10,13 @@ Synthesized 2026-07-03 from three independent drafts.
 
 _Last updated: 2026-07-03. Update this section before ending your pass._
 
-Status: **blocked on M0 completion.** Pickup point after M0: lane A `slices/01-claim-jumpers-death.md` and lane B `slices/04-gold-panning-economy.md` may start **in parallel** (disjoint files; each spec lists its `Game.ts` registration lines). Then A: 02 → 03; B: 05 after 02+04; 06 after 02 (∥ 03/05); 07 last, everything converges there. Verify per M0 README GATE-STD; findings to `reviews/<slice>.md`; keep this prompt current.
+Status: **01 + 04 DONE 2026-07-03** (parallel Codex lanes, merged + reviewed: `reviews/m1-01-*.md`, `reviews/m1-04-*.md`). Pickup point: `slices/02-auto-fire-spark-rig.md` (lane A next), then 03; 05 unblocks after 02; 06 after 02. Read STATUS.md §environment first — chunked Codex protocol, teleport test harness (`?debug` → `window.__GR_TEST__`), unified sim clock (`?timescale` scales hero+enemies+harvest), headless fps-floor rationale. Verify per M0 README GATE-STD; keep this prompt current.
 
 TODO:
-- [ ] 01-claim-jumpers-death (lane A)
-- [ ] 02-auto-fire-spark-rig (lane A)
+- [x] 01-claim-jumpers-death (Codex A, PASS; enemies instanced in perf round)
+- [ ] 02-auto-fire-spark-rig (lane A) ← NEXT
 - [ ] 03-wave-pressure (lane A) — first "is it fun" verdict recorded here
-- [ ] 04-gold-panning-economy (lane B, ∥ with 01–03)
+- [x] 04-gold-panning-economy (Codex B, PASS; seams instanced; teleport harness)
 - [ ] 05-sentry-beacon-build (needs 02+04)
 - [ ] 06-level-up-choices (needs 02; ∥ 03/05)
 - [ ] 07-feel-and-tune-gate → M1 exit: Robin playtest + sign-off
