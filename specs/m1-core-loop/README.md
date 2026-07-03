@@ -10,7 +10,7 @@ Synthesized 2026-07-03 from three independent drafts.
 
 _Last updated: 2026-07-03. Update this section before ending your pass._
 
-Status: **01 + 02 + 03 + 04 DONE 2026-07-03** (03: `reviews/m1-03-wave-pressure.md`, fun verdict recorded in `slices/03-wave-pressure.md` — **NOT FLAT, no reslice**; WaveSystem owns ALL spawning incl. debug/stress; `?nowaves`/`?nokill` test flags; announcement slot now evented via `UiBridge.announce`). Pickup point: `slices/05-sentry-beacon-build.md` and/or `slices/06-level-up-choices.md` — both unblocked, parallelizable (05 touches Economy/build; 06 touches Progression/UI — disjoint except `Game.ts`/`Balance.ts` registration lines). Fold HarvestSystem `reset()` into 05 (carried minor). Read STATUS.md §environment + §lessons first — chunked Codex protocol, `pw.reuse.config.ts` for e2e (port-orphan workaround), harness spawns (`__GR_TEST__.spawnPack`) NOT keyboard in tests, e2e serial never parallel, unified sim clock. Verify per M0 README GATE-STD; keep this prompt current.
+Status: **01–06 ALL DONE 2026-07-03** (05/06 in session 4: reviews `m1-05-sentry-beacon-build.md`, `m1-06-level-up-choices.md`; full regression 38/38). Pickup point: `slices/07-feel-and-tune-gate.md` — orchestrator preps lil-gui Balance bindings (`?debug`) + charm-ledger pass; the GATE itself (fun verdict, tuning, M1 exit) needs Robin playing. Test-harness params now: `?nowaves` `?nokill` `?nospawn` `?nolevel` `?stress` `?timescale` `?seed`. Read STATUS.md §environment + §lessons first — chunked Codex protocol, `pw.reuse.config.ts`, harness spawns not keyboard, e2e serial, unified sim clock; single-enemy scenarios for kill-attribution asserts (bolt-diffusion, see m1-05 review). Verify per M0 README GATE-STD; keep this prompt current.
 
 TODO:
 - [x] 01-claim-jumpers-death (Codex A, PASS; enemies instanced in perf round)
@@ -18,8 +18,8 @@ TODO:
 - [x] 03-wave-pressure (Codex D `019f2701-f227`, PASS after 1 correction — real alive-cap overshoot found by supervisor probe; verdict: NOT FLAT, tuning concerns → 07)
 - [x] 04-gold-panning-economy (Codex B, PASS; seams instanced; teleport harness)
 - [x] 05-sentry-beacon-build (Codex E `019f2741-d3eb`, PASS + 4 supervisor fixes; bolt-diffusion finding in `reviews/m1-05-sentry-beacon-build.md`; 2026-07-03 s4)
-- [ ] 06-level-up-choices (needs 02; ∥ 03/05)
-- [ ] 07-feel-and-tune-gate → M1 exit: Robin playtest + sign-off
+- [x] 06-level-up-choices (Codex F `019f277f-e96a`, PASS; `?nolevel` harness param added — new-mechanic slices MUST regression-sweep old suites for semantic breaks; `reviews/m1-06-level-up-choices.md`; 2026-07-03 s4)
+- [ ] 07-feel-and-tune-gate → M1 exit: Robin playtest + sign-off (orchestrator preps lil-gui Balance bindings under ?debug; gate itself needs Robin — split_spark same-target-vs-next-nearest question queued for him)
 
 ## Slice graph
 

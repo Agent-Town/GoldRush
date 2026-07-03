@@ -1,68 +1,73 @@
 # STATUS — Gold Rush
 
-Last updated: ACTIVE 2026-07-03T15:46+07:00 (session 4 — manual lane; implementing Robin directive #1 XP float + m1-05, then m1-06)
+Last updated: 2026-07-03 ~20:15 +07 (session 4 end — manual lane; ACTIVE lock cleared)
 
 ## Where we are
-- **M0 Skeleton: all 5 slices done + committed.** Awaiting Robin playtest + sign-off (`npm install && npm run dev`; docs/DEPLOY.md).
-- **M1: 01, 02, 03, 04 done, reviewed, committed.**
-  - 02 = Spark Rig auto-fire (`06f4231`, s2 scheduled session; `reviews/m1-02-auto-fire-spark-rig.md`).
-  - 03 = wave pressure (`7b5180f`, session 3; `reviews/m1-03-wave-pressure.md`). **First fun verdict recorded in `specs/m1-core-loop/slices/03-wave-pressure.md`: NOT FLAT, no reslice** — stationary dies wave 1, instrumented kiting reaches wave 3 with gold income frozen by pressure (the intended tension). Tuning concerns parked for 07.
-  - Feedback fixes from Robin's playtest = `0a4cf2f` (banner, gold float text, frame pacing, 57° camera; `reviews/feedback-fixes.md`).
-- Next: **m1/05-sentry-beacon-build and m1/06-level-up-choices — both unblocked, parallelizable** (disjoint except Game.ts/Balance.ts registration). Fold HarvestSystem `reset()` into 05. Then 07 tune gate → Robin playtest = M1 exit.
-- Full regression at session end: **23/23** across 6 spec files, tsc clean, build green.
+- **M0: all 5 slices done.** Awaiting Robin playtest + sign-off.
+- **M1: 01–06 done, reviewed, committed. Only 07 (feel-and-tune gate) remains → Robin playtest = M1 exit.**
+  - Session 4 (this): Robin directive #1 XP float `4849825` → m1-05 Sentry Beacons `60f8552` (`reviews/m1-05-sentry-beacon-build.md`) → m1-06 level-up choices `448407f` (`reviews/m1-06-level-up-choices.md`).
+  - The full core loop is now playable end to end: move/pan/kite → auto-fire → waves escalate → gold → build beacons (B, teal/rust ghost, Enter/click) → XP motes float `+3` → level-up freezes sim → 3 parchment Patent-Office cards (1/2/3) → visible run change → death → Stake Again.
+- Full regression at session end: **38/38** across 8 spec files (visual 5, feedback-fx 3, m1-01 4, m1-02 3, m1-03 5, m1-04 4, m1-05 6, m1-06 8), tsc clean, build green, draw calls 35 @ `?stress=120` + 6 beacons (budget ≤200).
+- Next: **m1/07-feel-and-tune-gate** — orchestrator can prep lil-gui Balance bindings under `?debug` (the only allowed new dep: `lil-gui`) + charm pass; the gate verdict itself needs Robin. After M1 exit: write M2 specs (`feature-slicing`).
 
-## Session collision — resolved today, protocol below is BINDING
-Two orchestrator lanes ran concurrently today (scheduled s2 + manual s3). Both independently built m1-02; s2 committed first (`06f4231`); s3 followed the protocol, discarded its duplicate working tree, validated s2's HEAD (smoke + probes), and harvested its findings into the record. Nothing was lost, ~1 slice of effort was burned. **Rules:**
-1. On start: read STATUS.md `Last updated` line. If it says ACTIVE with a timestamp <3 h old, assume another lane is live: do docs/review/probe work only, or coordinate via a fresh commit message — do NOT start a slice.
-2. Set `ACTIVE <ISO>` in STATUS.md (commit it) on start; clear it in your handoff commit.
-3. Before rsync-back: `git log --oneline -3` on the mount. Newer commits than your ~/gr baseline → STOP, 3-way merge (restore their-only files via `git checkout HEAD --`), re-run the suite, only then commit.
-4. rsync-back excludes `STATUS.md` and `specs/` — edit those ON the mount after code sync (two clobbers happened today; both caught).
+## Session collision protocol (BINDING — unchanged)
+1. On start: read the `Last updated` line. `ACTIVE <ts>` < 3 h old → another lane is live: docs/review/probe only.
+2. Set `ACTIVE <ISO>` + commit on start; clear it in the handoff commit.
+3. Before rsync-back: `git log --oneline -3` on the mount; newer commits than your ~/gr baseline → STOP, 3-way merge, re-run suite.
+4. rsync-back excludes `STATUS.md` and `specs/` (edit those ON the mount); also exclude `test-results/`, `playwright-report/`, `dist/`. Do NOT use `--delete` on rsync-back (review files live mount-side only); rebuild-direction (mount→gr) keeps `--delete`.
 
 ## How to resume (next session — in order)
-1. Enable file deletion (`allow_cowork_file_delete`) BEFORE any rm/git work.
-2. Re-provision sandbox: `npm config set prefix ~/.npm-global && export PATH=~/.npm-global/bin:$PATH && npm i -g @openai/codex`; copy `.codex-auth/auth.json → ~/.codex/auth.json`; `~/.codex/config.toml` trusts mount AND `~/gr`; `apt-get download libxdamage1 && dpkg -x libxdamage1*.deb ~/locallibs`; Playwright runs need `export LD_LIBRARY_PATH=~/locallibs/usr/lib/aarch64-linux-gnu`. NEVER `npx playwright install` if browsers exist (check `~/.cache/ms-playwright`).
-3. Rebuild ~/gr: `rsync -a --delete --exclude node_modules --exclude .git mnt/Gold\ Rush/ ~/gr/ && cd ~/gr && npm i --prefer-offline && git init -qb main && git add -A && git commit -qm baseline`.
-4. Delegate m1/05 (and optionally 06 in a parallel ~/grB lane) per the chunked protocol. Review; rsync back per collision rule 4.
+1. Load `allow_cowork_file_delete` tool BEFORE any rm/git work (call it only when a delete actually fails).
+2. Re-provision sandbox (VM home may be wiped — s4 found codex/auth/libs INTACT but ~/gr stale and git identity missing): `git config --global user.name/email`; `export PATH=~/.npm-global/bin:$PATH; codex login status` (expect "Logged in using ChatGPT"); `ls ~/locallibs/usr/lib/aarch64-linux-gnu` (libXdamage); `ls ~/.cache/ms-playwright` (chromium-1228 — NEVER `npx playwright install`); Playwright runs need `export LD_LIBRARY_PATH=~/locallibs/usr/lib/aarch64-linux-gnu`.
+3. Rebuild ~/gr: `rm -rf ~/gr/.git && rsync -a --delete --exclude node_modules --exclude .git "mnt/Gold Rush/" ~/gr/ && cd ~/gr && npm i --prefer-offline && git init -qb main && git add -A && git commit -qm baseline`.
+4. Verify baseline green (see verification lessons), then 07 prep / M2 spec work.
 
-## Codex chunked-exec protocol (proven; m1-03 took ~15 chunks + 1 correction)
-- Launch in `~/gr`: `timeout -k 1 40 codex exec --dangerously-bypass-approvals-and-sandbox -m gpt-5.5 -c model_reasoning_effort="medium" "$(cat ~/task.md)" < /dev/null >> ~/log 2>&1`; then loop `codex exec resume <id> ... "continue (supervisor checkpoint — check disk, don't redo)"` until exit 0 (124 = keep resuming).
-- Task file must include: interrupted+resumed warning, write-files-early, servers die between chunks, NEVER playwright install, LD_LIBRARY_PATH line, do NOT git commit, and **"reply READY-FOR-GATES instead of running long verifications — the supervisor runs gates"** (worked cleanly for m1-03; prevents verification livelock).
-- If Codex stalls two checkpoints at the same spot, nudge with an explicit "WRITE IT NOW in two patches" instruction — un-stalled m1-03's WaveSystem immediately.
-- When e2e fails repeatedly: run a live probe YOURSELF (vite + playwright-api node script sampling diagnostics every ~500 ms), hand Codex the curve + root cause. Found m1-03's real alive-cap overshoot in one probe; earlier found s2's 0-dmg slot bug and the (discarded lane's) bolt-tunneling issue the same way. Probe before correcting; never let Codex soften a failing assert.
+## Codex chunked-exec protocol (proven; sessions E/F took ~15 chunks each)
+- Launch in `~/gr`: `timeout -k 1 40 codex exec --dangerously-bypass-approvals-and-sandbox -m gpt-5.5 -c model_reasoning_effort="medium" "$(cat ~/task.md)" < /dev/null >> ~/log 2>&1`; loop `codex exec resume <id> ...` until exit 0 (124 = keep resuming).
+- Task file must include: interrupted+resumed warning, write-files-early, servers die, NEVER playwright install, LD_LIBRARY_PATH, no git commit, don't touch STATUS/specs/reviews/existing e2e, and "reply READY-FOR-GATES — supervisor runs gates".
+- **s4 lesson — write-livelock remedy:** if chunks keep dying mid-write ("writing X now" with nothing on disk), switch resumes to `model_reasoning_effort="low"` + explicit "TWO apply_patch calls of ~60 lines each, first tool call immediately, ZERO prose". Un-stuck both E and F instantly. Medium reasoning for planning/integration chunks, low for mechanical writing.
+- Per-file progress probes (`wc -l`, `grep -c`) after each chunk beat reading the log.
 
-## Verification lessons (cumulative)
-- Count playwright summaries: `grep -E "[0-9]+ (passed|failed|skipped)"` — never tail.
-- E2e SERIAL on SwiftShader (`--workers=1`); per spec file, and per-test batches via `-g "name|name"` sized <35 s to fit the 45 s bash wall.
-- `pw.reuse.config.ts` (port 5189, reuseExistingServer) + `(npx vite --port 5189 --strictPort >log &) && sleep 3` in the same call. Orphan servers CAN outlive a bash call (hidden PID namespace): **kill with `fuser -k 5189/tcp`** — `pkill -f vite` self-matches your own bash cmdline and kills your shell (exit 143 trap).
-- Keyboard e2e deprecated for actions → `__GR_TEST__.spawnPack/teleport/resetRun` under `?debug`; `?nowaves` for tests assuming no ambient spawns; `?nokill` for cap/pressure tests; `?nospawn` hard block.
-- Headless SwiftShader: 17–22 fps ceiling, fps gate ≥12 floor; draw calls are the real perf gate — ≤200 budget, currently ~26 @ stress=120. frameMs telemetry (avg/p95) now in diagnostics for Robin-hardware numbers.
-- Death tests must OVERWHELM (rig out-fights thin spawns; iframes cap intake → death ≈6.5 s sim under swarm).
+## Verification lessons (cumulative — additions from s4 at top)
+- **New-mechanic slices change sim semantics under OLD suites — always run the FULL regression, never just the new spec file.** m1-06's level-freeze deadlocked m1-01's death test (caught) and made m1-02's kill counts a mote-collection race (latent). Fix pattern: harness param family — `?nolevel` (XP math intact, no offer/freeze) joins `?nowaves/?nokill/?nospawn`.
+- **Bolt-diffusion:** dumb bolts hit the first pool-ordered enemy on the flight line — in a clump, damage diffuses (probed: 7/7 hits, 56 dmg, zero kills across 6×28 HP). Kill-attribution asserts need SINGLE-enemy scenarios (all bolts concentrate → deterministic kill). Receding/approaching targets always get hit; crossers/clumps diffuse.
+- **Playwright tracing (`retain-on-failure`) records during passing runs and shifts timing** — it re-rolls race coins. Never chase trace-on-vs-off as the bug; find the underlying nondeterminism (probe at volley/hit level with temporary guarded console.warn instrumentation — then REVERT it).
+- **Renderer-memory leak gates need a warm cycle along the measured camera path** — first visibility lazily uploads frustum-culled geometry (+1 on a mere teleport). Pattern: run one full identical cycle before baselining (m1-05 reset test), plus `__GR_TEST__.warmVfx()` for the float-text pool (m1-01/02).
+- **Sub-frame windows (volley-2 double bolt ≈ 1 headless frame) can't be seen by protocol polling** — install an in-page rAF max-tracker via evaluate and read it after.
+- **aria/page snapshots list HIDDEN overlays** (death + upgrade overlays are permanently in DOM) — don't misread them as visible when debugging failures.
+- Freeze/drift asserts: never compare against a pre-keypress sample (sim runs between sample and key landing — 0.45 s at ×3); assert within the frozen window and use the identity `Δ(nextWaveInSim) ≡ Δ(timeAlive)` for un-drift.
+- Count summaries: `grep -E "[0-9]+ (passed|failed|skipped)"` — never tail. E2e SERIAL (`--workers=1`), `--project=desktop-chrome` (23→38 tests), per spec file, `-g` batches sized <35 s; ONE batch per bash call (two in one call breached the 45 s wall).
+- `pw.reuse.config.ts` (port 5189) + guarded start: `(curl -s -o /dev/null http://127.0.0.1:5189/ || ((npx vite --port 5189 --strictPort >log 2>&1 &) && sleep 3))` — orphan vite sometimes survives between calls, sometimes not. Kill only via `fuser -k 5189/tcp`.
+- Death tests must OVERWHELM; spawnPack lands ON the hero — a 4-pack vs an upgraded rig is a death coin flip, use 1-enemy packs for non-death asserts.
+- Headless SwiftShader 17–22 fps; fps floor ≥12; draw calls are the real gate (≤200; now ~35 with 6 beacons @ stress=120). frameMs avg/p95 in diagnostics.
+- `__GR_TEST__` surface: teleport, spawnPack, resetRun, warmVfx, grantGold, grantXp, setBuildMode, placeBeacon, state. Debug keys: T pack, X +50 XP (?debug only).
 
 ## Codex sessions (resumable)
-- A (m1-01): `019f266c-2120-75d0-b86a-2ff59bf12b9a` · B (m1-04): `019f266c-d5e3-73c3-9dfe-e9b002893366` · C (m1-02, s2): `019f26c3-f4c7-7c40-8fff-804894719f3e` · D (m1-03, s3): `019f2701-f227-7710-a6f1-884cb5d10232` · feedback fixes: `019f26bd-3944-76a3-a8a7-b19089b2d4f4`. (`019f26e4-8174…` = s3's discarded duplicate m1-02 — do not resume.)
-- New slices: fresh sessions.
+- A (m1-01) `019f266c-2120-75d0-b86a-2ff59bf12b9a` · B (m1-04) `019f266c-d5e3-73c3-9dfe-e9b002893366` · C (m1-02) `019f26c3-f4c7-7c40-8fff-804894719f3e` · D (m1-03) `019f2701-f227-7710-a6f1-884cb5d10232` · feedback `019f26bd-3944-76a3-a8a7-b19089b2d4f4` · **E (m1-05) `019f2741-d3eb-7962-b9b3-7946d440d98c` · F (m1-06) `019f277f-e96a-7513-8a9a-30b4442485de`**. (`019f26e4-8174…` = discarded dup — do not resume.) New slices: fresh sessions.
 
 ## Open reviews / carried minors
-- Bolt readability (teal washes white under tone-mapping) + dust-puff reads black (want tan/parchment) → m1-07 or batch-001.
-- Seam cluster subtle at gameplay zoom; river hue leans green → batch-001 art.
-- Camera 57° (`0a4cf2f`) — confirm with Robin at 07 gate; all camera knobs in ?debug lil-gui.
-- HarvestSystem has no `reset()` — fold into m1-05 (touches Economy anyway).
-- XP counter shows overflow ("21 / 12 XP") until 06 consumes levels — expected.
-- `?stress` bypasses the wave alive-cap by design (perf harness); respects pool cap 96 — don't "fix".
-- Intermittent dark rectangle in `?debug` screenshots only (canvas-rendered, screen-anchored, extensively probed in `reviews/feedback-fixes.md`; never seen without ?debug) — watch during 05/06; escalate only if it appears in default views or on Robin's hardware.
-- Vfx floatText textures now cached by string (s3 finding folded into s2's review record); frameMs stats computed on publish, not per-frame.
+- **Dark-wood props read black** at gameplay zoom (M0 claim posts + stumps, `palette.wood`) — same tonal family as dust-puff-reads-black and teal-bolt-washout → one lighting/palette item in m1-07 + batch-001.
+- **split_spark implements +1 bolt SAME target** (single combat path); README flavor said "next-nearest" — Robin call at 07 gate whether the feel needs true split (targeting change).
+- Vfx floatText is NOT string-cached (s3 note was wrong — verified): dispose+create canvas per call, bounded by pool 12. Fine at current pickup volume; revisit only if 07 profiling flags it.
+- Upgrade weights all = 1 (uniform); offer UX (hover states, pick flourish) → 07 charm pass.
+- Mobile: build ghost = hero-position fallback (no touch-drag), level cards tight at 390 px but readable; ?debug lil-gui overlaps card 1 (debug-only) → M2 build-UX + 07 notes.
+- Camera 57° (`0a4cf2f`) — confirm with Robin at 07; all camera knobs already in ?debug gui.
+- Intermittent dark rectangle in `?debug` screenshots only — still present in s4 debug shots, never in default views; keep watching, escalate only if it reaches Robin's hardware/default views.
+- `?stress` bypasses the wave alive-cap by design; beacon pool pre-allocated ×6 (InstancedMesh parts) — don't "fix" either.
 
 ## Robin owes (non-blocking)
-- Playtest: M0 + M1 (01–04) are playable — waves, auto-fire, panning, death/restart, run ledger. Fun verdict from headless instrumentation is positive; the real feel check is his.
-- batch-001: budget OK per `assets/LEDGER.md`; paste `assets/requests/batch-001.md` prompts into ChatGPT, downloads → `assets/raw/` exact filenames.
+- **Playtest M1 01–06 — the whole loop is live** (`npm install && npm run dev`): pan, build a beacon (B), level up (or press X under `?debug` to force it), pick cards with 1/2/3. Fun verdicts: waves (03) recorded NOT FLAT; beacons+levels need his hands.
+- batch-001: paste `assets/requests/batch-001.md` prompts into ChatGPT, downloads → `assets/raw/` exact filenames.
+- 07-gate questions queued: camera 57°, split_spark same-target vs next-nearest, beacon cost curve feel (25/35/45/55/75/95).
 
 ## Done log
 - 2026-07-03 (s1): skeleton `e439424` → specs `bc87a96` → m0-01..05 → m1-01 `b4cb01d` → m1-04 `a873bc5` → docs `e1164ec`.
-- 2026-07-03 (s3 manual, feedback lane): `0a4cf2f` F1–F4 fixes (+2 supervisor review-fixes: float-text sizing, shadow frustum ±48).
-- 2026-07-03 (s2 scheduled): m1-02 `06f4231` (+ e2e modernization, pw.reuse), handoff `7942d54`.
-- 2026-07-03 (s3 manual): collision resolved per protocol (own m1-02 duplicate discarded, s2 HEAD validated); ACTIVE lock `64f3400`; m1-03 `7b5180f` (WaveSystem, fun verdict NOT FLAT, 23/23 regression); this handoff.
+- 2026-07-03 (s3 feedback lane): `0a4cf2f` F1–F4.
+- 2026-07-03 (s2 scheduled): m1-02 `06f4231`, handoff `7942d54`.
+- 2026-07-03 (s3 manual): collision resolved; m1-03 `7b5180f` (fun verdict NOT FLAT); handoff `e9158db`/`9860fd4`.
+- 2026-07-03 (s4 manual): lock `152dce4` → **XP-float directive `4849825`** (+ warmVfx leak-gate hardening) → **m1-05 `60f8552`** (beacons; bolt-diffusion probe; 4 supervisor fixes) → **m1-06 `448407f`** (levels; `?nolevel`; full-suite semantic sweep) → this handoff (ACTIVE cleared).
 
-## Robin directives (2026-07-03 evening — binding, next session implements FIRST)
-1. **Standing UX rule: EVERY collectible/pickup shows floating world-space amount feedback** (like gold "+5"): XP motes → teal "+3" via existing `Vfx.floatText` at pickup point, wired to the xp-grant path. Applies to all future items/drops — write it into every relevant slice spec. Implement the XP wire BEFORE starting m1-05.
-2. Robin playtests the live working tree (vite HMR) — keep main always playable; he gets 15-min progress pings (scheduled task `gold-rush-progress-ping`) + 3h build sessions (`gold-rush-build-loop`).
-3. Reminder shown to Robin: level-up on XP threshold arrives with m1-06 (currently XP accrues past need — expected).
+## Robin directives (2026-07-03 — status)
+1. **DONE `4849825`** — XP motes float teal `+N` at pickup. The standing rule (every collectible/pickup floats its amount, e2e-asserted) is codified in `specs/m1-core-loop/README.md` invariants; write it into every future item/drop slice.
+2. Robin playtests the live working tree — main is playable at every commit (verified each slice); 15-min pings + 3 h build sessions continue via scheduled tasks.
+3. Level-ups now consume XP (m1-06) — the "XP accrues past need" reminder is obsolete.
