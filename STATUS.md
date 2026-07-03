@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-03T15:55:00Z (session 6 handoff — lock CLEARED. Next pickup: m1-08 corrections, then M2-01 per specs/m2-base-waves/README.md)
+Last updated: ACTIVE 2026-07-03T17:07:18Z (s7 scheduled — m1-08 wave18-corrections in progress)
 
 ## Where we are
 - **M0: all 5 slices done.** Awaiting Robin playtest + sign-off.
