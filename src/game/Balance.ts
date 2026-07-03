@@ -2,10 +2,31 @@ import * as THREE from 'three';
 
 export const Balance = {
   hero: {
+    maxHp: 100,
     speed: 6.0,
     accel: 20,
     decel: 28,
-    radius: 0.55,
+    iframes: 0.5,
+    radius: 0.5,
+  },
+  enemy: {
+    poolSize: 96,
+    hp: 28,
+    speed: 2.7,
+    speedVariance: 0.1,
+    contactDamage: 8,
+    contactCooldown: 0.8,
+    touchRadius: 0.6,
+    separationRadius: 0.9,
+    separationRadiusSq: 0.9 * 0.9,
+    separationStrength: 0.9,
+    spatialHashCellSize: 2,
+    spatialHashWorldMin: -40,
+    spatialHashWorldMax: 40,
+    xp: 3,
+    debugPackSize: 5,
+    debugPackRadius: 3.2,
+    groundY: 0.05,
   },
   camera: {
     fov: 42,

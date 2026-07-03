@@ -22,6 +22,20 @@ interface ThreeGameDiagnostics {
     paused: boolean;
     canAffordBeacon: boolean;
   };
+  hp: number;
+  maxHp: number;
+  heroIframes: boolean;
+  enemiesAlive: number;
+  enemyPoolSize: number;
+  kills: number;
+  goldPanned: number;
+  deathLedger: {
+    timeAlive: number;
+    kills: number;
+    goldPanned: number;
+  };
+  spawnDisabled: boolean;
+  stressCount: number;
   score: number;
   targetScore: number;
   complete: boolean;

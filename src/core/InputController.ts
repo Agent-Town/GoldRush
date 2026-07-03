@@ -14,6 +14,7 @@ export type Intents = {
   build: boolean;
   restart: boolean;
   pause: boolean;
+  debugSpawn: boolean;
 };
 
 export class InputController {
@@ -26,6 +27,7 @@ export class InputController {
     build: false,
     restart: false,
     pause: false,
+    debugSpawn: false,
   };
   private readonly pointerState: PointerState = {
     active: false,
@@ -107,6 +109,7 @@ export class InputController {
     this.intents.build = this.keys.has('KeyB');
     this.intents.restart = this.keys.has('KeyR');
     this.intents.pause = this.keys.has('KeyP') || this.keys.has('Escape');
+    this.intents.debugSpawn = this.keys.has('KeyT');
     return this.intents;
   }
 

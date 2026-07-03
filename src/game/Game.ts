@@ -1,12 +1,17 @@
 import * as THREE from 'three';
+import { EventBus } from '../core/EventBus';
+import { getStressCount, isSpawnDisabled } from '../core/DebugParams';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { Hero } from '../entities/Hero';
+import { EnemyPool } from '../entities/pools';
+import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { Balance } from './Balance';
 import { CameraRig } from '../systems/CameraRig';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
+import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
@@ -16,11 +21,17 @@ export class Game {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
+  private readonly events = new EventBus();
   private readonly input: InputController;
   private readonly hero = new Hero();
+  private readonly enemies = new EnemyPool();
   private readonly state = new GameState();
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
+  private readonly deathOverlay: DeathOverlay;
+  private readonly damageVignette = document.createElement('div');
+  private readonly heroStart = new THREE.Vector3(0, 0.06, 12);
+  private readonly spawnCenter = new THREE.Vector3();
   private terrainView?: TerrainView;
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly loop = new Loop(
@@ -37,8 +48,18 @@ export class Game {
   private frame = 0;
   private elapsed = 0;
   private timeAlive = 0;
+  private kills = 0;
+  private goldPanned = 0;
+  private damageFlashRemaining = 0;
   private lastPauseIntent = false;
+  private lastRestartIntent = false;
+  private lastDebugSpawnIntent = false;
   private uiSnapshot?: UiSnapshot;
+  private deathLedger: DeathLedger = {
+    timeAlive: 0,
+    kills: 0,
+    goldPanned: 0,
+  };
 
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = createRenderer(canvas);
@@ -49,6 +70,17 @@ export class Game {
     const confirmButton = this.getElement('#confirm-button');
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
+    this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.resetRun());
+    this.damageVignette.className = 'damage-vignette';
+    this.getElement('#app').append(this.damageVignette);
+    this.events.on('hero_died', (event) => {
+      this.deathLedger = {
+        timeAlive: event.timeAlive,
+        kills: event.kills,
+        goldPanned: event.goldPanned,
+      };
+      this.deathOverlay.show(this.deathLedger);
+    });
 
     this.debugTools = new DebugTools(this.tuning, () => {
       this.renderer.toneMappingExposure = this.tuning.exposure;
@@ -58,6 +90,7 @@ export class Game {
     this.createScene();
     this.cameraRig.snapTo(this.hero.group.position);
     this.state.transition('playing');
+    this.spawnStressEnemies();
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     this.syncUi();
     this.publishDiagnostics();
@@ -71,8 +104,12 @@ export class Game {
     this.loop.stop();
     this.input.dispose();
     this.hud.dispose();
+    this.deathOverlay.dispose();
+    this.damageVignette.remove();
     this.debugTools.dispose();
+    this.enemies.dispose();
     this.hero.dispose();
+    this.events.clear();
     this.renderer.dispose();
     window.__THREE_GAME_DIAGNOSTICS__ = undefined;
   }
@@ -82,16 +119,22 @@ export class Game {
     this.elapsed += delta;
     const intents = this.input.readIntents();
     if (intents.pause && !this.lastPauseIntent) this.state.togglePause();
-    if (intents.restart && this.state.current === 'dead') this.state.restart();
+    if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
+    if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
     this.lastPauseIntent = intents.pause;
+    this.lastRestartIntent = intents.restart;
+    this.lastDebugSpawnIntent = intents.debugSpawn;
+    this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
 
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     if (this.state.simActive) {
       this.timeAlive += delta;
       this.terrainView?.update(delta);
       this.hero.update(delta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
+      this.enemies.update(delta, this.hero.group.position, (enemy) => this.handleEnemyContact(enemy));
     }
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
+    this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUi();
     this.publishDiagnostics();
   }
@@ -121,7 +164,8 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
-    this.hero.group.position.set(0, 0.06, 12);
+    this.scene.add(this.enemies.group);
+    this.hero.group.position.copy(this.heroStart);
     this.scene.add(this.hero.group);
   }
 
@@ -141,6 +185,16 @@ export class Game {
       paused: this.state.isPaused,
       state: this.state.isPaused ? 'paused' : this.state.current,
       ui: this.uiSnapshot,
+      hp: this.hero.hp,
+      maxHp: this.hero.maxHp,
+      heroIframes: this.hero.hasIframes,
+      enemiesAlive: this.enemies.activeCount,
+      enemyPoolSize: this.enemies.capacity,
+      kills: this.kills,
+      goldPanned: this.goldPanned,
+      deathLedger: this.deathLedger,
+      spawnDisabled: isSpawnDisabled(),
+      stressCount: getStressCount(),
       score: 0,
       targetScore: 0,
       complete: false,
@@ -178,13 +232,93 @@ export class Game {
   }
 
   private syncUi(): void {
-    this.uiSnapshot = this.uiBridge.build(this.state, this.timeAlive);
+    this.uiSnapshot = this.uiBridge.build(
+      this.state,
+      this.timeAlive,
+      this.hero.hp,
+      this.hero.maxHp,
+      this.enemies.activeCount,
+    );
     this.hud.update(this.uiSnapshot);
   }
 
   private handleUiIntent(intent: UiIntent): void {
     if (intent.type === 'pause') this.state.togglePause();
-    if (intent.type === 'restart' && this.state.current === 'dead') this.state.restart();
+    if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
+  }
+
+  resetRun(): void {
+    this.enemies.recycleAll();
+    this.hero.resetRun(this.heroStart);
+    this.cameraRig.snapTo(this.hero.group.position);
+    this.timeAlive = 0;
+    this.kills = 0;
+    this.goldPanned = 0;
+    this.damageFlashRemaining = 0;
+    this.damageVignette.style.opacity = '0';
+    this.deathOverlay.hide();
+    this.deathLedger = {
+      timeAlive: 0,
+      kills: 0,
+      goldPanned: 0,
+    };
+    this.state.restart();
+  }
+
+  private handleEnemyContact(enemy: ClaimJumperEnemy): void {
+    const result = this.hero.takeDamage(Balance.enemy.contactDamage);
+    if (!result.applied) return;
+
+    this.damageFlashRemaining = Balance.hero.iframes;
+    this.events.emit({
+      type: 'hero_damaged',
+      at: this.timeAlive,
+      amount: Balance.enemy.contactDamage,
+      hp: this.hero.hp,
+      maxHp: this.hero.maxHp,
+      sourceId: enemy.id,
+    });
+
+    if (result.died) {
+      this.endRun();
+    }
+  }
+
+  private endRun(): void {
+    if (this.state.current === 'dead') return;
+    this.state.transition('dead');
+    this.events.emit({
+      type: 'hero_died',
+      at: this.timeAlive,
+      timeAlive: this.timeAlive,
+      kills: this.kills,
+      goldPanned: this.goldPanned,
+    });
+  }
+
+  private spawnDebugPack(): void {
+    if (isSpawnDisabled() || this.state.current !== 'playing') return;
+    this.spawnCenter.copy(this.hero.group.position);
+    this.enemies.spawnPack(this.spawnCenter, Balance.enemy.debugPackSize);
+  }
+
+  private spawnStressEnemies(): void {
+    if (isSpawnDisabled()) return;
+    const stressCount = getStressCount();
+    if (stressCount <= 0) return;
+
+    const center = this.hero.group.position;
+    const radius = 15;
+    for (let i = 0; i < stressCount; i += 1) {
+      const angle = (i / Math.max(1, stressCount)) * Math.PI * 2;
+      const speedScale = 1 + (((i % 7) - 3) / 3) * Balance.enemy.speedVariance;
+      const position = new THREE.Vector3(
+        center.x + Math.cos(angle) * radius,
+        Balance.enemy.groundY,
+        center.z + Math.sin(angle) * radius,
+      );
+      if (!this.enemies.spawn(position, speedScale)) return;
+    }
   }
 
   private getElement(selector: string): HTMLElement {

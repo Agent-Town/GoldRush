@@ -12,9 +12,11 @@ export class Hero {
   readonly group = new THREE.Group();
   readonly velocity = new THREE.Vector3();
   readonly stats: StatSheet = {};
+  hp: number = Balance.hero.maxHp;
 
   private readonly targetVelocity = new THREE.Vector3();
   private readonly nextPosition = new THREE.Vector3();
+  private iframeRemaining = 0;
   private readonly bodyGeometry = new THREE.CapsuleGeometry(0.34, 0.78, 8, 16);
   private readonly coatGeometry = new THREE.BoxGeometry(0.42, 0.34, 0.12);
   private readonly hatGeometry = new THREE.ConeGeometry(0.48, 0.34, 18);
@@ -75,6 +77,8 @@ export class Hero {
   }
 
   update(dt: number, intents: Intents, terrain: { bounds: TerrainBounds; sample: TerrainSampler }): void {
+    this.iframeRemaining = Math.max(0, this.iframeRemaining - dt);
+
     const currentSample = terrain.sample(this.group.position.x, this.group.position.z);
     this.targetVelocity
       .set(intents.move.x, 0, intents.move.y)
@@ -110,6 +114,33 @@ export class Hero {
     if (this.velocity.lengthSq() > 0.0025) {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);
     }
+  }
+
+  get maxHp(): number {
+    return Balance.hero.maxHp;
+  }
+
+  get hasIframes(): boolean {
+    return this.iframeRemaining > 0;
+  }
+
+  takeDamage(amount: number): { applied: boolean; died: boolean } {
+    if (this.iframeRemaining > 0 || this.hp <= 0) {
+      return { applied: false, died: this.hp <= 0 };
+    }
+
+    this.hp = Math.max(0, this.hp - amount);
+    this.iframeRemaining = Balance.hero.iframes;
+    return { applied: true, died: this.hp <= 0 };
+  }
+
+  resetRun(position: THREE.Vector3): void {
+    this.hp = Balance.hero.maxHp;
+    this.iframeRemaining = 0;
+    this.velocity.set(0, 0, 0);
+    this.targetVelocity.set(0, 0, 0);
+    this.group.position.copy(position);
+    this.group.rotation.y = 0;
   }
 
   dispose(): void {
