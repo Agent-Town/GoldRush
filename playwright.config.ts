@@ -22,7 +22,7 @@ export default defineConfig({
       name: 'desktop-chrome',
       use: {
         ...devices['Desktop Chrome'],
-        viewport: { width: 1280, height: 720 },
+        viewport: { width: 1280, height: 800 },
       },
     },
     {
@@ -30,6 +30,7 @@ export default defineConfig({
       use: {
         ...devices['Pixel 5'],
         browserName: 'chromium',
+        viewport: { width: 390, height: 844 },
       },
     },
   ],

@@ -3,6 +3,25 @@
 interface ThreeGameDiagnostics {
   frame: number;
   elapsed: number;
+  timeAlive: number;
+  runState: 'boot' | 'playing' | 'levelup' | 'dead';
+  paused: boolean;
+  state: 'boot' | 'playing' | 'levelup' | 'dead' | 'paused';
+  ui?: {
+    hp: number;
+    maxHp: number;
+    gold: number;
+    xp: number;
+    xpNeed: number;
+    level: number;
+    wave: number;
+    waveState: 'quiet' | 'warning' | 'active' | 'cleared';
+    enemiesAlive: number;
+    timeAlive: number;
+    state: 'boot' | 'playing' | 'levelup' | 'dead';
+    paused: boolean;
+    canAffordBeacon: boolean;
+  };
   score: number;
   targetScore: number;
   complete: boolean;
