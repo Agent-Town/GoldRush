@@ -3,17 +3,14 @@ import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { Pickup } from '../entities/Pickup';
-import { Player, type ArenaBounds } from '../entities/Player';
+import { Player } from '../entities/Player';
 import { AudioSystem } from '../systems/AudioSystem';
 import { CameraRig } from '../systems/CameraRig';
 import { CollisionSystem } from '../systems/CollisionSystem';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
 import { Hud } from '../systems/Hud';
-
-const ARENA: ArenaBounds = {
-  halfWidth: 11,
-  halfDepth: 7,
-};
+import * as Terrain from '../world/Terrain';
+import type { TerrainView } from '../world/Terrain';
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -21,6 +18,7 @@ export class Game {
   private readonly camera = new THREE.PerspectiveCamera(48, 1, 0.1, 80);
   private readonly input: InputController;
   private readonly player = new Player();
+  private terrainView?: TerrainView;
   private readonly pickups: Pickup[] = [];
   private readonly collision = new CollisionSystem();
   private readonly audio = new AudioSystem();
@@ -87,7 +85,8 @@ export class Game {
     if (!this.complete) this.elapsed += delta;
 
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
-    this.player.update(delta, elapsed, this.input, this.tuning, ARENA);
+    this.terrainView?.update(delta);
+    this.player.update(delta, elapsed, this.input, this.tuning, Terrain.bounds, Terrain.sample);
 
     for (const pickup of this.pickups) {
       pickup.update(delta, elapsed);
@@ -114,128 +113,50 @@ export class Game {
   }
 
   private createScene(): void {
-    this.scene.background = new THREE.Color('#151713');
-    this.scene.fog = new THREE.Fog('#151713', 20, 44);
+    this.scene.background = new THREE.Color('#c2e6ff');
+    this.scene.fog = new THREE.Fog('#f5e6c8', 34, 70);
 
-    const hemisphere = new THREE.HemisphereLight('#f6f1df', '#2b322d', 1.7);
+    const hemisphere = new THREE.HemisphereLight('#fff8e8', '#8b7d3c', 1.45);
     this.scene.add(hemisphere);
 
-    const sun = new THREE.DirectionalLight('#fff1bf', 2.6);
-    sun.position.set(-5, 9, 6);
+    const sun = new THREE.DirectionalLight('#ffe4a0', 2.7);
+    sun.position.set(-10, 14, -8);
     sun.castShadow = true;
     sun.shadow.mapSize.set(2048, 2048);
     sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 30;
-    sun.shadow.camera.left = -14;
-    sun.shadow.camera.right = 14;
-    sun.shadow.camera.top = 12;
-    sun.shadow.camera.bottom = -12;
+    sun.shadow.camera.far = 60;
+    sun.shadow.camera.left = -34;
+    sun.shadow.camera.right = 34;
+    sun.shadow.camera.top = 34;
+    sun.shadow.camera.bottom = -34;
     this.scene.add(sun);
 
-    this.scene.add(this.createArena());
+    this.terrainView = Terrain.createTerrainView();
+    this.scene.add(this.terrainView.group);
+    this.player.group.position.set(0, 0.06, 12);
     this.scene.add(this.player.group);
     this.createPickups();
   }
 
-  private createArena(): THREE.Group {
-    const arena = new THREE.Group();
-    const floorTexture = this.createFloorTexture();
-    floorTexture.wrapS = THREE.RepeatWrapping;
-    floorTexture.wrapT = THREE.RepeatWrapping;
-    floorTexture.repeat.set(ARENA.halfWidth / 2, ARENA.halfDepth / 2);
-
-    const floor = new THREE.Mesh(
-      new THREE.PlaneGeometry(ARENA.halfWidth * 2, ARENA.halfDepth * 2, 1, 1),
-      new THREE.MeshStandardMaterial({
-        color: '#2a2c25',
-        map: floorTexture,
-        roughness: 0.72,
-        metalness: 0.02,
-      }),
-    );
-    floor.rotation.x = -Math.PI / 2;
-    floor.receiveShadow = true;
-    arena.add(floor);
-
-    const railMaterial = new THREE.MeshStandardMaterial({
-      color: '#d94f35',
-      roughness: 0.52,
-      metalness: 0.08,
-    });
-    const longRailGeometry = new THREE.BoxGeometry(ARENA.halfWidth * 2 + 1, 0.55, 0.42);
-    const shortRailGeometry = new THREE.BoxGeometry(0.42, 0.55, ARENA.halfDepth * 2 + 1);
-    const rails = [
-      new THREE.Mesh(longRailGeometry, railMaterial),
-      new THREE.Mesh(longRailGeometry, railMaterial),
-      new THREE.Mesh(shortRailGeometry, railMaterial),
-      new THREE.Mesh(shortRailGeometry, railMaterial),
-    ];
-    rails[0].position.set(0, 0.28, -ARENA.halfDepth - 0.24);
-    rails[1].position.set(0, 0.28, ARENA.halfDepth + 0.24);
-    rails[2].position.set(-ARENA.halfWidth - 0.24, 0.28, 0);
-    rails[3].position.set(ARENA.halfWidth + 0.24, 0.28, 0);
-    for (const rail of rails) {
-      rail.castShadow = true;
-      rail.receiveShadow = true;
-      arena.add(rail);
-    }
-
-    const markerMaterial = new THREE.MeshBasicMaterial({ color: '#f5ba49' });
-    const markerGeometry = new THREE.RingGeometry(0.68, 0.72, 48);
-    const centerMarker = new THREE.Mesh(markerGeometry, markerMaterial);
-    centerMarker.rotation.x = -Math.PI / 2;
-    centerMarker.position.y = 0.018;
-    arena.add(centerMarker);
-
-    return arena;
-  }
-
   private createPickups(): void {
     const positions = [
-      [-8, -4],
-      [-3, -5],
-      [3, -4.8],
-      [8, -3],
-      [-7.5, 3.5],
-      [-1.5, 4.7],
-      [4.5, 3.8],
-      [8.2, 1.4],
+      [-18, -8],
+      [-10, -11],
+      [-2, -8.5],
+      [8, -10],
+      [18, -8],
+      [-15, 8],
+      [-5, 10.5],
+      [6, 8.5],
+      [15, 11],
     ];
 
     positions.forEach(([x, z], index) => {
+      if (!Terrain.sample(x, z).walkable) return;
       const pickup = new Pickup(index, new THREE.Vector3(x, 0.8, z));
       this.pickups.push(pickup);
       this.scene.add(pickup.group);
     });
-  }
-
-  private createFloorTexture(): THREE.CanvasTexture {
-    const size = 256;
-    const textureCanvas = document.createElement('canvas');
-    textureCanvas.width = size;
-    textureCanvas.height = size;
-    const context = textureCanvas.getContext('2d');
-    if (!context) throw new Error('Could not create floor texture context.');
-
-    context.fillStyle = '#282a24';
-    context.fillRect(0, 0, size, size);
-    context.strokeStyle = 'rgba(246, 241, 223, 0.08)';
-    context.lineWidth = 1;
-    for (let i = 0; i <= size; i += 32) {
-      context.beginPath();
-      context.moveTo(i, 0);
-      context.lineTo(i, size);
-      context.moveTo(0, i);
-      context.lineTo(size, i);
-      context.stroke();
-    }
-    context.strokeStyle = 'rgba(245, 186, 73, 0.24)';
-    context.lineWidth = 2;
-    context.strokeRect(8, 8, size - 16, size - 16);
-
-    const texture = new THREE.CanvasTexture(textureCanvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    return texture;
   }
 
   private publishDiagnostics(): void {
@@ -259,6 +180,17 @@ export class Game {
         triangles: info.render.triangles,
         geometries: info.memory.geometries,
         textures: info.memory.textures,
+      },
+      terrain: {
+        playerZone: Terrain.sample(this.player.group.position.x, this.player.group.position.z).zone,
+        probes: {
+          bank: Terrain.sample(-12, -12),
+          shallows: Terrain.sample(-12, -5.5),
+          river: Terrain.sample(-12, 0),
+          ford: Terrain.sample(0, 0),
+          northBank: Terrain.sample(12, 12),
+          out: Terrain.sample(40, 0),
+        },
       },
       canvas: {
         clientWidth: this.canvas.clientWidth,

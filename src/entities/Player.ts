@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { InputController } from '../core/InputController';
+import type { TerrainBounds, TerrainSample } from '../world/Terrain';
 
 export type PlayerTuning = {
   speed: number;
@@ -7,10 +8,7 @@ export type PlayerTuning = {
   acceleration: number;
 };
 
-export type ArenaBounds = {
-  halfWidth: number;
-  halfDepth: number;
-};
+export type TerrainSampler = (x: number, z: number) => TerrainSample;
 
 export class Player {
   readonly group = new THREE.Group();
@@ -47,17 +45,34 @@ export class Player {
     this.group.add(nose);
   }
 
-  update(delta: number, elapsed: number, input: InputController, tuning: PlayerTuning, bounds: ArenaBounds): void {
+  update(
+    delta: number,
+    elapsed: number,
+    input: InputController,
+    tuning: PlayerTuning,
+    bounds: TerrainBounds,
+    terrainSample: TerrainSampler,
+  ): void {
     input.readMovement(this.move);
     const dash = input.isDashHeld() ? tuning.dashMultiplier : 1;
-    this.targetVelocity.set(this.move.x, 0, this.move.y).multiplyScalar(tuning.speed * dash);
+    const currentSample = terrainSample(this.group.position.x, this.group.position.z);
+    this.targetVelocity.set(this.move.x, 0, this.move.y).multiplyScalar(tuning.speed * dash * currentSample.speedMul);
 
     const smoothing = 1 - Math.exp(-tuning.acceleration * delta);
     this.velocity.lerp(this.targetVelocity, smoothing);
-    this.group.position.addScaledVector(this.velocity, delta);
+    const previousX = this.group.position.x;
+    const previousZ = this.group.position.z;
+    const nextX = THREE.MathUtils.clamp(this.group.position.x + this.velocity.x * delta, bounds.minX + 0.8, bounds.maxX - 0.8);
+    const nextZ = THREE.MathUtils.clamp(this.group.position.z + this.velocity.z * delta, bounds.minZ + 0.8, bounds.maxZ - 0.8);
 
-    this.group.position.x = THREE.MathUtils.clamp(this.group.position.x, -bounds.halfWidth + 0.8, bounds.halfWidth - 0.8);
-    this.group.position.z = THREE.MathUtils.clamp(this.group.position.z, -bounds.halfDepth + 0.8, bounds.halfDepth - 0.8);
+    if (terrainSample(nextX, nextZ).walkable) {
+      this.group.position.set(nextX, this.group.position.y, nextZ);
+    } else {
+      if (terrainSample(nextX, previousZ).walkable) this.group.position.x = nextX;
+      else this.velocity.x = 0;
+      if (terrainSample(previousX, nextZ).walkable) this.group.position.z = nextZ;
+      else this.velocity.z = 0;
+    }
 
     if (this.velocity.lengthSq() > 0.001) {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);

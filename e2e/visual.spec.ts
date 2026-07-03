@@ -92,3 +92,18 @@ test('renders a nonblank interactive game canvas', async ({ page }, testInfo) =>
   expect(consoleErrors).toEqual([]);
   expect(pageErrors).toEqual([]);
 });
+
+test('terrain diagnostics expose claim zones and speeds', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+
+  const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);
+  expect(probes).toMatchObject({
+    bank: { walkable: true, speedMul: 1, zone: 'bank' },
+    shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },
+    river: { walkable: true, speedMul: 0.55, zone: 'river' },
+    ford: { walkable: true, speedMul: 0.85, zone: 'ford' },
+    northBank: { walkable: true, speedMul: 1, zone: 'bank' },
+    out: { walkable: false, speedMul: 0, zone: 'out' },
+  });
+});

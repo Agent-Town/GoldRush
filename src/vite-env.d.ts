@@ -16,6 +16,14 @@ interface ThreeGameDiagnostics {
     geometries: number;
     textures: number;
   };
+  terrain: {
+    playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+    probes: Record<string, {
+      walkable: boolean;
+      speedMul: number;
+      zone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+    }>;
+  };
   canvas: {
     clientWidth: number;
     clientHeight: number;
