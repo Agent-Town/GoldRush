@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-03 ~16:00 +07 (session 2 end — scheduled build loop)
+Last updated: ACTIVE 2026-07-03T15:05+07:00 (session 3 running — manual continuation lane; picking up m1-03 per s2 handoff)
 
 ## Where we are
 - **M0 Skeleton: all 5 slices done + committed.** Awaiting Robin playtest + sign-off (run `npm install && npm run dev` in the project folder; docs/DEPLOY.md).
