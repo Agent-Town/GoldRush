@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-03 ~15:55 +07 (session 3 end — manual continuation lane; ACTIVE lock cleared)
+Last updated: ACTIVE 2026-07-03T15:46+07:00 (session 4 — manual lane; implementing Robin directive #1 XP float + m1-05, then m1-06)
 
 ## Where we are
 - **M0 Skeleton: all 5 slices done + committed.** Awaiting Robin playtest + sign-off (`npm install && npm run dev`; docs/DEPLOY.md).
