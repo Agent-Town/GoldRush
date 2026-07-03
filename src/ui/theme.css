@@ -105,8 +105,14 @@
   width: min(280px, calc(100vw - 210px));
   min-height: 34px;
   padding: 7px 20px;
+  opacity: 0;
   text-align: center;
   transform: translateX(-50%);
+  transition: opacity 420ms ease;
+}
+
+.hud--announcement-visible .hud__wave {
+  opacity: 1;
 }
 
 .hud-row {

@@ -44,8 +44,8 @@ export const Balance = {
   },
   camera: {
     fov: 42,
-    offset: new THREE.Vector3(0, 22, 10),
-    lag: 0.12,
+    offset: new THREE.Vector3(0, 22, 14.3),
+    lag: 0.08,
     lookAhead: 1.5,
     downScreenLookOffset: 2.2,
   },

@@ -11,6 +11,8 @@ export type UiSnapshot = {
   level: number;
   wave: number;
   waveState: WaveState;
+  announcement: string | null;
+  announcementAt: number;
   enemiesAlive: number;
   timeAlive: number;
   state: RunState;
@@ -28,6 +30,8 @@ export class UiBridge {
     level: 1,
     wave: 0,
     waveState: 'quiet',
+    announcement: 'Stake your claim.',
+    announcementAt: 0,
     enemiesAlive: 0,
     timeAlive: 0,
     state: 'boot',
@@ -43,6 +47,8 @@ export class UiBridge {
     this.snapshot.hp = hp;
     this.snapshot.maxHp = maxHp;
     this.snapshot.enemiesAlive = enemiesAlive;
+    this.snapshot.announcement = state.current === 'playing' && timeAlive < 4 ? 'Stake your claim.' : null;
+    this.snapshot.announcementAt = 0;
     return this.snapshot;
   }
 }

@@ -16,6 +16,8 @@ interface ThreeGameDiagnostics {
     level: number;
     wave: number;
     waveState: 'quiet' | 'warning' | 'active' | 'cleared';
+    announcement: string | null;
+    announcementAt: number;
     enemiesAlive: number;
     timeAlive: number;
     state: 'boot' | 'playing' | 'levelup' | 'dead';
@@ -65,6 +67,9 @@ interface ThreeGameDiagnostics {
     progress: number;
     lastGoldGain: number;
   };
+  vfx: {
+    activeFloatTexts: number;
+  };
   renderer: {
     calls: number;
     triangles: number;
@@ -85,6 +90,12 @@ interface ThreeGameDiagnostics {
     width: number;
     height: number;
     dpr: number;
+  };
+  frameMs: {
+    last: number;
+    avg: number;
+    p95: number;
+    sampleCount: number;
   };
 }
 

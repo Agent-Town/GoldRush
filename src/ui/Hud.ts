@@ -19,6 +19,9 @@ type HudElements = {
 export class Hud {
   private readonly elements: HudElements;
   private lastGold = 0;
+  private lastAnnouncement: string | null = null;
+  private lastAnnouncementAt = -1;
+  private announcementClearTimer = 0;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
@@ -86,7 +89,7 @@ export class Hud {
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;
     this.elements.levelText.textContent = snapshot.level.toString();
     this.elements.timeText.textContent = this.formatTime(snapshot.timeAlive);
-    this.elements.waveText.textContent = snapshot.wave > 0 ? `Wave ${snapshot.wave}` : 'Stake your claim.';
+    this.updateAnnouncement(snapshot);
     this.elements.root.dataset.runState = snapshot.state;
     this.elements.root.dataset.paused = String(snapshot.paused);
     this.elements.pauseHint.textContent = snapshot.paused ? 'P - back to the claim' : 'P - catch your breath';
@@ -101,6 +104,7 @@ export class Hud {
 
   dispose(): void {
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
+    window.clearTimeout(this.announcementClearTimer);
   }
 
   private readonly onPauseClick = () => {
@@ -116,6 +120,29 @@ export class Hud {
     const minutes = Math.floor(secondsAlive / 60).toString().padStart(2, '0');
     const seconds = Math.floor(secondsAlive % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
+  }
+
+  private updateAnnouncement(snapshot: UiSnapshot): void {
+    const changed =
+      snapshot.announcement !== this.lastAnnouncement || snapshot.announcementAt !== this.lastAnnouncementAt;
+    if (!changed) return;
+
+    this.lastAnnouncement = snapshot.announcement;
+    this.lastAnnouncementAt = snapshot.announcementAt;
+    window.clearTimeout(this.announcementClearTimer);
+
+    if (!snapshot.announcement) {
+      this.elements.root.classList.remove('hud--announcement-visible');
+      return;
+    }
+
+    this.elements.waveText.textContent = snapshot.announcement;
+    this.elements.root.classList.add('hud--announcement-visible');
+    this.announcementClearTimer = window.setTimeout(() => {
+      if (this.lastAnnouncement === snapshot.announcement && this.lastAnnouncementAt === snapshot.announcementAt) {
+        this.elements.root.classList.remove('hud--announcement-visible');
+      }
+    }, 4_000);
   }
 
   private get(root: HTMLElement, selector: string): HTMLElement {

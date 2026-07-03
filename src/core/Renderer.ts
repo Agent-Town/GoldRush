@@ -1,5 +1,15 @@
 import * as THREE from 'three';
 
+type ResizeState = {
+  clientWidth: number;
+  clientHeight: number;
+  dpr: number;
+  bufferWidth: number;
+  bufferHeight: number;
+};
+
+const resizeState = new WeakMap<HTMLCanvasElement, ResizeState>();
+
 export function createRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
   const renderer = new THREE.WebGLRenderer({
     canvas,
@@ -26,7 +36,32 @@ export function resizeRenderer(
   const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
   const bufferWidth = Math.floor(width * dpr);
   const bufferHeight = Math.floor(height * dpr);
-  const needsResize = canvas.width !== bufferWidth || canvas.height !== bufferHeight;
+  const previous = resizeState.get(canvas);
+  if (
+    previous &&
+    previous.clientWidth === width &&
+    previous.clientHeight === height &&
+    previous.dpr === dpr &&
+    previous.bufferWidth === bufferWidth &&
+    previous.bufferHeight === bufferHeight
+  ) {
+    return false;
+  }
+
+  const needsResize =
+    canvas.width !== bufferWidth ||
+    canvas.height !== bufferHeight ||
+    !previous ||
+    previous.clientWidth !== width ||
+    previous.clientHeight !== height ||
+    previous.dpr !== dpr;
+  resizeState.set(canvas, {
+    clientWidth: width,
+    clientHeight: height,
+    dpr,
+    bufferWidth,
+    bufferHeight,
+  });
 
   if (needsResize) {
     renderer.setPixelRatio(dpr);

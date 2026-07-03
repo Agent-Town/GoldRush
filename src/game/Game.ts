@@ -13,6 +13,7 @@ import { CameraRig } from '../systems/CameraRig';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
+import { Vfx } from '../systems/Vfx';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import * as Terrain from '../world/Terrain';
@@ -30,6 +31,7 @@ export class Game {
   private readonly state = new GameState();
   private readonly economy = new Economy();
   private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors);
+  private readonly vfx = new Vfx();
   private readonly simTimeScale = getTimescale();
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
@@ -48,6 +50,11 @@ export class Game {
   private readonly tuning: DebugTuning = {
     exposure: Balance.render.exposure,
     maxDpr: Balance.render.maxDpr,
+    cameraLag: Balance.camera.lag,
+    cameraLookAhead: Balance.camera.lookAhead,
+    cameraOffsetY: Balance.camera.offset.y,
+    cameraOffsetZ: Balance.camera.offset.z,
+    cameraDownScreenLookOffset: Balance.camera.downScreenLookOffset,
   };
 
   private readonly debugTools: DebugTools;
@@ -57,6 +64,11 @@ export class Game {
   private kills = 0;
   private goldPanned = 0;
   private damageFlashRemaining = 0;
+  private readonly frameMsSamples: number[] = [];
+  private frameMsCursor = 0;
+  private frameMsLast = 0;
+  private frameMsAvg = 0;
+  private frameMsP95 = 0;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastDebugSpawnIntent = false;
@@ -90,6 +102,7 @@ export class Game {
 
     this.debugTools = new DebugTools(this.tuning, () => {
       this.renderer.toneMappingExposure = this.tuning.exposure;
+      this.applyCameraTuning();
       resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     });
 
@@ -123,6 +136,7 @@ export class Game {
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.harvestSystem.dispose();
+    this.vfx.dispose();
     this.enemies.dispose();
     this.hero.dispose();
     this.events.clear();
@@ -132,6 +146,7 @@ export class Game {
 
   private update(delta: number): void {
     this.frame += 1;
+    this.recordFrameMs(delta * 1000);
     this.elapsed += delta;
     const intents = this.input.readIntents();
     if (intents.pause && !this.lastPauseIntent) this.state.togglePause();
@@ -155,7 +170,12 @@ export class Game {
         this.hero.group.position,
         this.hero.velocity.length(),
       );
+      if (this.harvestSnapshot.lastGoldGain > 0) {
+        this.goldPanned += this.harvestSnapshot.lastGoldGain;
+        this.vfx.floatText(this.hero.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
+      }
     }
+    this.vfx.update(delta);
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUi();
@@ -164,6 +184,20 @@ export class Game {
 
   private render(): void {
     this.renderer.render(this.scene, this.camera);
+  }
+
+  private applyCameraTuning(): void {
+    const cameraBalance = Balance.camera as {
+      offset: THREE.Vector3;
+      lag: number;
+      lookAhead: number;
+      downScreenLookOffset: number;
+    };
+    cameraBalance.lag = this.tuning.cameraLag;
+    cameraBalance.lookAhead = this.tuning.cameraLookAhead;
+    cameraBalance.offset.y = this.tuning.cameraOffsetY;
+    cameraBalance.offset.z = this.tuning.cameraOffsetZ;
+    cameraBalance.downScreenLookOffset = this.tuning.cameraDownScreenLookOffset;
   }
 
   private createScene(): void {
@@ -179,15 +213,16 @@ export class Game {
     sun.shadow.mapSize.set(2048, 2048);
     sun.shadow.camera.near = 0.5;
     sun.shadow.camera.far = 60;
-    sun.shadow.camera.left = -34;
-    sun.shadow.camera.right = 34;
-    sun.shadow.camera.top = 34;
-    sun.shadow.camera.bottom = -34;
+    sun.shadow.camera.left = -48;
+    sun.shadow.camera.right = 48;
+    sun.shadow.camera.top = 48;
+    sun.shadow.camera.bottom = -48;
     this.scene.add(sun);
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
     this.scene.add(this.harvestSystem.group);
+    this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.hero.group.position.copy(this.heroStart);
     this.scene.add(this.hero.group);
@@ -237,6 +272,9 @@ export class Game {
         replay: economyReplay,
       },
       harvest: this.harvestSnapshot,
+      vfx: {
+        activeFloatTexts: this.vfx.activeFloatTexts,
+      },
       renderer: {
         calls: info.render.calls,
         triangles: info.render.triangles,
@@ -261,7 +299,31 @@ export class Game {
         height: this.canvas.height,
         dpr: Math.min(window.devicePixelRatio || 1, this.tuning.maxDpr),
       },
+      frameMs: {
+        last: this.frameMsLast,
+        avg: this.frameMsAvg,
+        p95: this.frameMsP95,
+        sampleCount: this.frameMsSamples.length,
+      },
     };
+  }
+
+  private recordFrameMs(frameMs: number): void {
+    this.frameMsLast = frameMs;
+    if (this.frameMsSamples.length < 180) {
+      this.frameMsSamples.push(frameMs);
+    } else {
+      this.frameMsSamples[this.frameMsCursor] = frameMs;
+      this.frameMsCursor = (this.frameMsCursor + 1) % this.frameMsSamples.length;
+    }
+
+    let total = 0;
+    for (const sample of this.frameMsSamples) total += sample;
+    this.frameMsAvg = total / this.frameMsSamples.length;
+
+    const sorted = [...this.frameMsSamples].sort((a, b) => a - b);
+    const p95Index = Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95));
+    this.frameMsP95 = sorted[p95Index] ?? 0;
   }
 
   private syncUi(): void {
