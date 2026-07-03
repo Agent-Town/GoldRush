@@ -61,3 +61,8 @@ Two orchestrator lanes ran concurrently today (scheduled s2 + manual s3). Both i
 - 2026-07-03 (s3 manual, feedback lane): `0a4cf2f` F1–F4 fixes (+2 supervisor review-fixes: float-text sizing, shadow frustum ±48).
 - 2026-07-03 (s2 scheduled): m1-02 `06f4231` (+ e2e modernization, pw.reuse), handoff `7942d54`.
 - 2026-07-03 (s3 manual): collision resolved per protocol (own m1-02 duplicate discarded, s2 HEAD validated); ACTIVE lock `64f3400`; m1-03 `7b5180f` (WaveSystem, fun verdict NOT FLAT, 23/23 regression); this handoff.
+
+## Robin directives (2026-07-03 evening — binding, next session implements FIRST)
+1. **Standing UX rule: EVERY collectible/pickup shows floating world-space amount feedback** (like gold "+5"): XP motes → teal "+3" via existing `Vfx.floatText` at pickup point, wired to the xp-grant path. Applies to all future items/drops — write it into every relevant slice spec. Implement the XP wire BEFORE starting m1-05.
+2. Robin playtests the live working tree (vite HMR) — keep main always playable; he gets 15-min progress pings (scheduled task `gold-rush-progress-ping`) + 3h build sessions (`gold-rush-build-loop`).
+3. Reminder shown to Robin: level-up on XP threshold arrives with m1-06 (currently XP accrues past need — expected).
