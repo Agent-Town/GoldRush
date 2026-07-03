@@ -1,8 +1,11 @@
+import { Balance } from './Balance';
+
 export const upgradeDefs = [
   {
     id: 'double_tap_coil',
     name: 'Double-Tap Coil',
     description: 'A second spring where one sufficed.',
+    iconFamily: 'firerate',
     maxStacks: 3,
     deltas: { fireRateMult: 0.25 },
   },
@@ -10,6 +13,7 @@ export const upgradeDefs = [
     id: 'heavy_spark',
     name: 'Heavy Spark Charge',
     description: 'A brighter charge, stamped twice by the assay clerk.',
+    iconFamily: 'damage',
     maxStacks: 3,
     deltas: { damageMult: 0.3 },
   },
@@ -17,6 +21,7 @@ export const upgradeDefs = [
     id: 'long_resonator',
     name: 'Long-Barrel Resonator',
     description: 'A brass throat for sparks that dislike short errands.',
+    iconFamily: 'range',
     maxStacks: 2,
     deltas: { rangeMult: 0.2, boltSpeedMult: 0.2 },
   },
@@ -24,6 +29,7 @@ export const upgradeDefs = [
     id: 'split_spark',
     name: 'Split Spark',
     description: 'One patent, two signatures, both arriving hot.',
+    iconFamily: 'volley',
     maxStacks: 2,
     deltas: { volleyBonus: 1 },
   },
@@ -31,6 +37,7 @@ export const upgradeDefs = [
     id: 'tinkers_plating',
     name: "Tinker's Plating",
     description: 'Thin brass mercy, fitted under the coat.',
+    iconFamily: 'plating',
     maxStacks: 3,
     deltas: { maxHpBonus: 25, heal: 25 },
   },
@@ -38,6 +45,7 @@ export const upgradeDefs = [
     id: 'spring_heels',
     name: 'Spring Heels',
     description: 'Boot springs filed for urgent claim work.',
+    iconFamily: 'mobility',
     maxStacks: 3,
     deltas: { moveSpeedMult: 0.12 },
   },
@@ -45,6 +53,7 @@ export const upgradeDefs = [
     id: 'pan_legend',
     name: 'Pan Like a Legend',
     description: 'A patent rhythm for finding color before doubt.',
+    iconFamily: 'panning',
     maxStacks: 2,
     deltas: { panTickMult: -0.3 },
   },
@@ -52,6 +61,7 @@ export const upgradeDefs = [
     id: 'prospectors_luck',
     name: "Prospector's Luck",
     description: 'A ledger margin where richer seams keep appearing.',
+    iconFamily: 'prospecting',
     maxStacks: 2,
     deltas: { seamCapacityBonus: 10, seamRespawnReduction: 5 },
   },
@@ -59,6 +69,7 @@ export const upgradeDefs = [
     id: 'beacon_dynamo',
     name: 'Beacon Dynamo',
     description: 'A humming coil that teaches beacons impatience.',
+    iconFamily: 'beacon',
     maxStacks: 2,
     deltas: { beaconFireRateMult: 0.3 },
   },
@@ -66,6 +77,7 @@ export const upgradeDefs = [
     id: 'assay_bonus',
     name: 'Assay Bonus',
     description: 'A tidy receipt from the Assay Office.',
+    iconFamily: 'gold',
     filler: true,
     weight: 1,
     maxStacks: Number.POSITIVE_INFINITY,
@@ -75,6 +87,7 @@ export const upgradeDefs = [
     id: 'field_dressing',
     name: 'Field Dressing',
     description: 'A practical bandage from the claim kit.',
+    iconFamily: 'mend',
     filler: true,
     weight: 1,
     maxStacks: Number.POSITIVE_INFINITY,
@@ -84,6 +97,7 @@ export const upgradeDefs = [
     id: 'sharpen',
     name: 'Sharpen',
     description: 'A finer point filed onto the spark patent.',
+    iconFamily: 'damage',
     filler: true,
     weight: 1,
     maxStacks: Number.POSITIVE_INFINITY,
@@ -94,6 +108,7 @@ export const upgradeDefs = [
 export type UpgradeDef = (typeof upgradeDefs)[number];
 export type UpgradeId = UpgradeDef['id'];
 type UpgradeDeltas = UpgradeDef['deltas'];
+export type ResolvedFiller = { goldGrant?: number; heal?: number; effectText: string };
 
 export const upgradeDefById: Record<UpgradeId, UpgradeDef> = upgradeDefs.reduce(
   (defs, def) => {
@@ -124,6 +139,18 @@ export function upgradeEffect(def: UpgradeDef): string {
   if ('seamRespawnReduction' in deltas) parts.push(`-${deltas.seamRespawnReduction}s seam respawn`);
   if ('beaconFireRateMult' in deltas) parts.push(`+${percent(deltas.beaconFireRateMult)}% beacon fire rate`);
   return parts.join(', ');
+}
+
+export function resolveFiller(def: UpgradeDef, ctx: { wave: number; maxHp: number }): ResolvedFiller {
+  if (def.id === 'assay_bonus') {
+    const goldGrant = Balance.upgrades.assayGoldPerWave * Math.max(1, ctx.wave);
+    return { goldGrant, effectText: `+${goldGrant} gold now` };
+  }
+  if (def.id === 'field_dressing') {
+    const heal = Math.round(Balance.upgrades.fieldDressingHealFrac * ctx.maxHp);
+    return { heal, effectText: `heals ${heal}` };
+  }
+  return { effectText: upgradeEffect(def) };
 }
 
 function percent(value: number): number {

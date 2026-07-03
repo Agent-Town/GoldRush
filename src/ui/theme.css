@@ -406,10 +406,10 @@
 
 .upgrade-card {
   position: relative;
-  min-height: 210px;
+  min-height: 166px;
   border: 2px solid var(--at-wood-950);
   border-radius: 8px;
-  padding: 18px 16px 16px;
+  padding: 24px 18px 18px;
   color: var(--at-wood-950);
   background:
     linear-gradient(135deg, rgba(255, 248, 232, 0.9), rgba(246, 241, 223, 0.98)),
@@ -421,27 +421,6 @@
   cursor: pointer;
   font: inherit;
   text-align: left;
-}
-
-.upgrade-card__icon {
-  display: grid;
-  place-items: center;
-  width: 48px;
-  height: 48px;
-  margin-bottom: 10px;
-  border: 2px solid rgba(46, 27, 14, 0.7);
-  border-radius: 8px;
-  background: rgba(232, 213, 168, 0.58);
-}
-
-.upgrade-card__icon svg {
-  width: 38px;
-  height: 38px;
-  fill: none;
-  stroke: var(--at-wood-950);
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 .upgrade-card:hover,
@@ -468,52 +447,33 @@
 
 .upgrade-card__name,
 .upgrade-card__effect,
-.upgrade-card__description,
-.upgrade-card__pips {
+.upgrade-card__stacks {
   display: block;
 }
 
 .upgrade-card__name {
   max-width: calc(100% - 36px);
-  margin-bottom: 12px;
-  font-size: 1.35rem;
+  margin-bottom: 18px;
+  font-size: 1.48rem;
   font-weight: 900;
   line-height: 1.08;
 }
 
 .upgrade-card__effect {
-  margin-bottom: 8px;
   color: var(--at-rust-600);
-  font-size: 0.92rem;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.upgrade-card__description {
-  color: rgba(46, 27, 14, 0.78);
   font-size: 1rem;
-  line-height: 1.35;
+  font-weight: 800;
+  line-height: 1.25;
 }
 
-.upgrade-card__pips {
+.upgrade-card__stacks {
   position: absolute;
-  right: 16px;
-  bottom: 14px;
-  left: 16px;
-  display: flex;
-  gap: 7px;
-}
-
-.upgrade-card__pip {
-  width: 13px;
-  height: 13px;
-  border: 1px solid var(--at-wood-950);
-  border-radius: 50%;
-  background: rgba(255, 248, 232, 0.72);
-}
-
-.upgrade-card__pip--filled {
-  background: var(--at-brass-700);
+  right: 14px;
+  bottom: 12px;
+  color: rgba(46, 27, 14, 0.46);
+  font-size: 0.76rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
 @keyframes hud-coin-tick {
@@ -594,26 +554,22 @@
   }
 
   .upgrade-card {
-    min-height: 168px;
-    padding: 14px;
-  }
-
-  .upgrade-card__icon {
-    width: 40px;
-    height: 40px;
-    margin-bottom: 8px;
+    min-height: 128px;
+    padding: 18px 14px 16px;
   }
 
   .upgrade-card__name {
-    font-size: 1.12rem;
-    margin-bottom: 7px;
+    margin-bottom: 12px;
+    font-size: 1.18rem;
   }
 
   .upgrade-card__effect {
-    font-size: 0.84rem;
+    font-size: 0.9rem;
   }
 
-  .upgrade-card__description {
-    font-size: 0.9rem;
+  .upgrade-card__stacks {
+    right: 12px;
+    bottom: 10px;
+    font-size: 0.72rem;
   }
 }

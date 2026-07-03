@@ -1,8 +1,9 @@
-import { upgradeEffect, type UpgradeDef, type UpgradeId } from '../game/Upgrades';
+import { upgradeEffect, type UpgradeDef } from '../game/Upgrades';
 
 export type UpgradeChoice = {
   def: UpgradeDef;
   stacks: number;
+  effect?: string;
 };
 
 export type UpgradeIntent = {
@@ -67,7 +68,7 @@ export class UpgradeOverlay {
       card.hidden = false;
       card.disabled = false;
       card.dataset.upgradeId = choice.def.id;
-      card.dataset.slot = `ui.upgrade.${choice.def.id}`;
+      card.dataset.slot = `ui.upgrade.icon.${choice.def.iconFamily}`;
       card.innerHTML = this.renderCard(choice, i);
     }
     this.root.classList.add('upgrade-overlay--visible');
@@ -103,41 +104,15 @@ export class UpgradeOverlay {
   }
 
   private renderCard(choice: UpgradeChoice, index: number): string {
-    const repeatable = !Number.isFinite(choice.def.maxStacks);
-    const pips = repeatable
-      ? '<span class="upgrade-card__pip upgrade-card__pip--filled"></span>'
-      : Array.from({ length: choice.def.maxStacks }, (_, pip) => {
-          const filled = pip < choice.stacks;
-          return `<span class="upgrade-card__pip${filled ? ' upgrade-card__pip--filled' : ''}"></span>`;
-        }).join('');
+    const stacks = Number.isFinite(choice.def.maxStacks)
+      ? `<span class="upgrade-card__stacks" aria-label="${choice.stacks} of ${choice.def.maxStacks} stacks">${choice.stacks}/${choice.def.maxStacks}</span>`
+      : '';
     return `
       <span class="upgrade-card__key">${index + 1}</span>
-      <span class="upgrade-card__icon" data-slot="ui.upgrade.${this.escape(choice.def.id)}" aria-hidden="true">
-        ${this.renderGlyph(choice.def.id)}
-      </span>
       <span class="upgrade-card__name">${this.escape(choice.def.name)}</span>
-      <span class="upgrade-card__effect">${this.escape(upgradeEffect(choice.def))}</span>
-      <span class="upgrade-card__description">${this.escape(choice.def.description)}</span>
-      <span class="upgrade-card__pips" aria-label="${repeatable ? `repeatable, ${choice.stacks} picked` : `${choice.stacks} of ${choice.def.maxStacks} stacks`}">${pips}</span>
+      <span class="upgrade-card__effect">${this.escape(choice.effect ?? upgradeEffect(choice.def))}</span>
+      ${stacks}
     `;
-  }
-
-  private renderGlyph(id: UpgradeId): string {
-    const glyphs: Record<UpgradeId, string> = {
-      double_tap_coil: '<path d="M16 31c10-16 22 16 32 0"/><path d="M16 21c10-16 22 16 32 0"/>',
-      heavy_spark: '<path d="M34 8 20 34h13l-5 22 17-29H32z"/>',
-      long_resonator: '<path d="M16 36h24l10-8v24l-10-8H16z"/><path d="M18 30v20"/>',
-      split_spark: '<path d="M16 32h20"/><path d="m36 32 12-12"/><path d="m36 32 12 12"/>',
-      tinkers_plating: '<path d="M32 9 50 17v14c0 12-8 20-18 24-10-4-18-12-18-24V17z"/>',
-      spring_heels: '<path d="M19 42h17l9-8"/><path d="M22 25c8-7 15 7 7 14"/><path d="M34 19c9-5 13 8 4 13"/>',
-      pan_legend: '<path d="M15 30c7 17 27 17 34 0z"/><path d="M20 30c8-7 20-7 28 0"/><path d="M47 30l8-5"/>',
-      prospectors_luck: '<path d="M31 10 48 24 42 48H22l-6-24z"/><path d="M26 25h12"/><path d="M24 34h16"/>',
-      beacon_dynamo: '<path d="M32 12v40"/><path d="M22 52h20"/><path d="M24 24c5-6 11-6 16 0"/><path d="M19 17c8-9 18-9 26 0"/>',
-      assay_bonus: '<path d="M18 18h28v31H18z"/><path d="M24 26h16"/><path d="M24 34h16"/><path d="M25 47c6-8 10-8 16 0"/>',
-      field_dressing: '<path d="M32 15v34"/><path d="M15 32h34"/><path d="M20 20h24v24H20z"/>',
-      sharpen: '<path d="M18 48 45 21l5-7-7 5-27 27z"/><path d="M37 22l5 5"/><path d="M15 51h18"/>',
-    };
-    return `<svg viewBox="0 0 64 64" focusable="false">${glyphs[id]}</svg>`;
   }
 
   private get(selector: string): HTMLElement {
@@ -146,7 +121,7 @@ export class UpgradeOverlay {
     return element;
   }
 
-  private escape(value: string | UpgradeId): string {
+  private escape(value: string): string {
     return value.replace(/[&<>"']/g, (char) => {
       if (char === '&') return '&amp;';
       if (char === '<') return '&lt;';

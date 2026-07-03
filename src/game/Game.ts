@@ -37,6 +37,7 @@ import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
+import { resolveFiller } from './Upgrades';
 import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, type UpgradeId } from './Upgrades';
@@ -159,6 +160,8 @@ export class Game {
       state: this.state,
       rng: createRng(`${getDebugSeed() ?? 'gold-rush'}:upgrades`),
       getBeaconCount: () => this.buildSystem.beaconCount,
+      getWave: () => this.waveSystem.diagnostics.wave,
+      getMaxHp: () => this.hero.maxHp,
       onStatsChanged: (stats, pickedId) => this.applyStats(stats, pickedId),
       onGoldGranted: (amount) => {
         this.economy.apply({
@@ -654,7 +657,16 @@ export class Game {
       return;
     }
     const stacks = this.progression.snapshot.stacks;
-    this.upgradeOverlay.show(offer.map((def) => ({ def, stacks: stacks[def.id] ?? 0 })));
+    this.upgradeOverlay.show(
+      offer.map((def) => ({
+        def,
+        stacks: stacks[def.id] ?? 0,
+        effect:
+          'filler' in def && def.filler === true
+            ? resolveFiller(def, { wave: this.waveSystem.diagnostics.wave, maxHp: this.hero.maxHp }).effectText
+            : undefined,
+      })),
+    );
   }
 
   private getElement(selector: string): HTMLElement {

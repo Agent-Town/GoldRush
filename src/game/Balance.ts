@@ -80,6 +80,10 @@ export const Balance = {
   economy: {
     logCapacity: 2048,
   },
+  upgrades: {
+    assayGoldPerWave: 5,
+    fieldDressingHealFrac: 0.3,
+  },
   goldSeam: {
     activeMin: 2,
     activeMax: 3,

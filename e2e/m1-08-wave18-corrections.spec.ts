@@ -209,9 +209,12 @@ test('filler cards grant assay gold and capped field dressing healing', async ({
   await maxCoreUpgrades(page);
 
   await offerFillers(page);
-  const goldBefore = (await diagnostics(page)).economy.gold;
+  const beforeAssay = await diagnostics(page);
+  const w = beforeAssay.wave;
+  const assayGold = 5 * Math.max(1, w);
+  const goldBefore = beforeAssay.economy.gold;
   await pickOfferId(page, 'assay_bonus');
-  await expect.poll(async () => (await diagnostics(page)).economy.gold).toBe(goldBefore + 15);
+  await expect.poll(async () => (await diagnostics(page)).economy.gold).toBe(goldBefore + assayGold);
   const log = await page.evaluate(
     () =>
       (window.__GR_TEST__?.economyLog() ?? []) as Array<{
@@ -220,7 +223,7 @@ test('filler cards grant assay gold and capped field dressing healing', async ({
         amount?: number;
       }>,
   );
-  expect(log.some((event) => event.type === 'gold_granted' && event.source === 'upgrade_assay' && event.amount === 15)).toBe(true);
+  expect(log.some((event) => event.type === 'gold_granted' && event.source === 'upgrade_assay' && event.amount === assayGold)).toBe(true);
   while ((await diagnostics(page)).runState === 'levelup') await pickIndex(page, 0);
 
   await page.evaluate(() => window.__GR_TEST__?.setBalance('enemy.contactDamage', 40));
@@ -230,7 +233,7 @@ test('filler cards grant assay gold and capped field dressing healing', async ({
   await grantOneLevel(page);
   await expect.poll(async () => (await diagnostics(page)).runState).toBe('levelup');
   await pickOfferId(page, 'field_dressing');
-  await expect.poll(async () => (await diagnostics(page)).hp).toBe(Math.min(hurt.maxHp, hurt.hp + 30));
+  await expect.poll(async () => (await diagnostics(page)).hp).toBe(Math.min(hurt.maxHp, hurt.hp + Math.round(0.3 * hurt.maxHp)));
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

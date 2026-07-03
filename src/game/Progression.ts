@@ -2,7 +2,7 @@ import type { Rng } from '../core/Rng';
 import type { GameState } from './GameState';
 import { Balance } from './Balance';
 import { effectiveStats, type EffectiveStats, type UpgradeStacks } from './StatSheet';
-import { isUpgradeId, upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
+import { isUpgradeId, resolveFiller, upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 
 export type ProgressionSnapshot = {
   level: number;
@@ -19,6 +19,8 @@ type ProgressionOptions = {
   state: GameState;
   rng: Rng;
   getBeaconCount: () => number;
+  getWave: () => number;
+  getMaxHp: () => number;
   onStatsChanged: (stats: EffectiveStats, pickedId: UpgradeId | null) => void;
   onGoldGranted?: (amount: number) => void;
   onHeal?: (amount: number) => void;
@@ -94,8 +96,11 @@ export class Progression {
     this.stacksValue[id] = current + 1;
     this.statsValue = effectiveStats(this.stacksValue);
     this.options.onStatsChanged(this.statsValue, id);
-    if ('goldGrant' in def.deltas) this.options.onGoldGranted?.(def.deltas.goldGrant);
-    if (id === 'field_dressing' && 'heal' in def.deltas) this.options.onHeal?.(def.deltas.heal);
+    if (isFiller(def)) {
+      const filler = resolveFiller(def, { wave: this.options.getWave(), maxHp: this.options.getMaxHp() });
+      if (filler.goldGrant) this.options.onGoldGranted?.(filler.goldGrant);
+      if (filler.heal) this.options.onHeal?.(filler.heal);
+    }
     this.pendingLevelsValue = Math.max(0, this.pendingLevelsValue - 1);
     this.currentOffer = null;
 

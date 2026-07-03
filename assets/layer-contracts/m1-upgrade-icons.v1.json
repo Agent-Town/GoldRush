@@ -1,0 +1,18 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "batch-002",
+  "notes": "Upgrade-card icons, ONE per effect FAMILY (not per card), per Robin's wave-23 directive (remove procedural glyphs -> real illustrated icons). Cutouts alpha-extracted from flat #8a8a8a. Wired onto the card ROOT slot `ui.upgrade.icon.<family>` (UpgradeOverlay sets card.dataset.slot). Card ships icon-less (clean parchment) until these are generated+integrated — placeholder-first. iconFamily on each upgrade def maps card -> slot. Order by gameplay impact: combat families first tranche.",
+  "slots": [
+    { "file": "icon-firerate.png", "slot": "ui.upgrade.icon.firerate", "size": [512, 512], "usage": "fire-rate family (Double-Tap Coil): twin-coil spark rig / paired pistons", "fullBleed": false, "tranche": 1 },
+    { "file": "icon-damage.png", "slot": "ui.upgrade.icon.damage", "size": [512, 512], "usage": "spark-damage family (Heavy Spark Charge, Sharpen): a single bright stamped spark bolt", "fullBleed": false, "tranche": 1 },
+    { "file": "icon-range.png", "slot": "ui.upgrade.icon.range", "size": [512, 512], "usage": "range/bolt-speed family (Long-Barrel Resonator): a long brass resonator barrel", "fullBleed": false, "tranche": 1 },
+    { "file": "icon-volley.png", "slot": "ui.upgrade.icon.volley", "size": [512, 512], "usage": "extra-bolt family (Split Spark): a forked twin-spark emitter", "fullBleed": false, "tranche": 1 },
+    { "file": "icon-plating.png", "slot": "ui.upgrade.icon.plating", "size": [512, 512], "usage": "max-HP family (Tinker's Plating): a riveted brass chest plate", "fullBleed": false, "tranche": 1 },
+    { "file": "icon-mobility.png", "slot": "ui.upgrade.icon.mobility", "size": [512, 512], "usage": "move-speed family (Spring Heels): spring-loaded prospector boots", "fullBleed": false, "tranche": 1 },
+    { "file": "icon-panning.png", "slot": "ui.upgrade.icon.panning", "size": [512, 512], "usage": "faster-panning family (Pan Like a Legend): a gold pan with swirling color", "fullBleed": false, "tranche": 2 },
+    { "file": "icon-prospecting.png", "slot": "ui.upgrade.icon.prospecting", "size": [512, 512], "usage": "seam-yield family (Prospector's Luck): a rich assay map with a marked seam", "fullBleed": false, "tranche": 2 },
+    { "file": "icon-beacon.png", "slot": "ui.upgrade.icon.beacon", "size": [512, 512], "usage": "beacon family (Beacon Dynamo): a sentry-beacon coil tower, humming", "fullBleed": false, "tranche": 2 },
+    { "file": "icon-gold.png", "slot": "ui.upgrade.icon.gold", "size": [512, 512], "usage": "gold-grant filler (Assay Bonus): a stamped assay receipt with a small coin stack", "fullBleed": false, "tranche": 2 },
+    { "file": "icon-mend.png", "slot": "ui.upgrade.icon.mend", "size": [512, 512], "usage": "heal filler (Field Dressing): a rolled claim-kit bandage with a brass clasp", "fullBleed": false, "tranche": 2 }
+  ]
+}
