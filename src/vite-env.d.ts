@@ -168,6 +168,7 @@ interface Window {
     setBalance: (path: string, value: number) => boolean;
     grantGold: (n: number) => void;
     grantXp: (n: number) => void;
+    maxUpgrades: () => void;
     setFillersDisabled: (disabled: boolean) => void;
     economyLog: () => readonly unknown[];
     summarizeLog: (log: readonly unknown[]) => {

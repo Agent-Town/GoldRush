@@ -249,6 +249,7 @@ export class Game {
           });
         },
         grantXp: (n: number) => this.progression.debugGrant(n),
+        maxUpgrades: () => this.progression.maxCoreForTest(),
         setFillersDisabled: (disabled: boolean) => this.progression.setFillersDisabled(disabled),
         economyLog: () => this.economy.log,
         summarizeLog: (log) => summarizeLog(log as readonly EconomyEvent[]),

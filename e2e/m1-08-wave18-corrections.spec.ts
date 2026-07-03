@@ -89,25 +89,15 @@ async function forceDeath(page: Page): Promise<void> {
 }
 
 async function maxCoreUpgrades(page: Page): Promise<void> {
-  for (let guard = 0; guard < 90; guard += 1) {
-    const state = await diagnostics(page);
-    const missing = Object.entries(coreMax).filter(([id, max]) => (state.progression.stacks[id] ?? 0) < max);
-    if (missing.length === 0) return;
-    if (state.runState !== 'levelup') {
-      await grantOneLevel(page);
-      await expect.poll(async () => (await diagnostics(page)).runState).toBe('levelup');
-    }
-    const ids = await offerIds(page);
-    const fresh = await diagnostics(page);
-    const pickable = ids.findIndex((id) => (coreMax[id] ?? 0) > (fresh.progression.stacks[id] ?? 0));
-    if (pickable >= 0) {
-      await pickIndex(page, pickable);
-    } else {
-      await pickIndex(page, 0);
-    }
-    await page.waitForTimeout(30);
-  }
-  throw new Error(`Core upgrades did not max: ${JSON.stringify((await diagnostics(page)).progression.stacks)}`);
+  // Fast path: instantly max all non-filler upgrades via the test hook, skipping
+  // the ~22 sequential UI picks that blow the sandbox's 45s per-call wall.
+  await page.evaluate(() => window.__GR_TEST__?.maxUpgrades());
+  await expect
+    .poll(async () => {
+      const stacks = (await diagnostics(page)).progression.stacks;
+      return Object.entries(coreMax).every(([id, max]) => (stacks[id] ?? 0) >= max);
+    })
+    .toBe(true);
 }
 
 async function offerFillers(page: Page): Promise<string[]> {

@@ -82,6 +82,18 @@ export class Progression {
     this.addXp(amount);
   }
 
+  /** Test-only (?debug __GR_TEST__.maxUpgrades): instantly max every non-filler
+   *  upgrade so exhaustion/filler e2e skip the slow ~22-pick UI loop that blows
+   *  the sandbox's 45s wall. Recomputes stats; does not fire per-pick effects. */
+  maxCoreForTest(): void {
+    for (const def of upgradeDefs) {
+      if (isFiller(def)) continue;
+      this.stacksValue[def.id] = def.maxStacks;
+    }
+    this.statsValue = effectiveStats(this.stacksValue);
+    this.options.onStatsChanged(this.statsValue, null);
+  }
+
   setFillersDisabled(disabled: boolean): void {
     this.fillersDisabled = disabled;
   }

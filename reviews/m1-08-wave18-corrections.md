@@ -39,3 +39,35 @@ All three product-owner findings fixed with evidence. **No game-code findings.**
 ## New harness surface
 
 `__GR_TEST__.setFillersDisabled(bool)` · `economyLog()` · `summarizeLog(events)` · `setBeaconWave(n|null)`; diagnostics gains `economy.summary` + `deathLedger.spent/beaconsBuilt`.
+
+---
+
+## Wave-23 corrections — PASS (s8, 2026-07-04)
+
+Robin's wave-23 findings folded into the same slice. Implementer: Codex `019f2a21-ea23-7a82-b7f8-03ffb91878cd` (low-reasoning mechanical remedy after an initial write-livelock). Supervisor closed 2 test-authoring gaps + added one harness hook (permitted classes). Commits: wave18 `adfb1bc`, wave23 `12af31e`, + harness/evidence follow-up.
+
+### Verdict
+All three wave-23 findings fixed with evidence. Surgical diff (UpgradeOverlay −43 lines, theme.css slimmed). No game-code review findings.
+
+### Evidence
+- `tsc --noEmit` clean · `npm run build` (tsc + vite) green on the combined wave18+wave23 tree.
+- **Full regression 51/51** (serial, desktop-chrome, hermetic base config, per spec file): visual 5 · feedback-fx 3 · m1-01 4 · m1-02 3 · m1-03 5 · m1-04 4 · m1-05 6 · m1-06 8 · m1-07 7 · m1-08 6. (m1-02 "renderer memory growth" flaked once — 2 enemies left after 15s under headless load — then passed clean on isolated re-run; known 6fps/bolt-diffusion env variance, not a code defect. Balance delta confirmed additive: only `upgrades.{assayGoldPerWave,fieldDressingHealFrac}`, no combat field touched.)
+- Screenshots `reviews/shots-m1-08/wave23-cards-desktop.png` (1280), `wave23-cards-mobile.png` (390), `wave23-fillers-desktop.png`. **screenshot-critique PASS** both viewports: card = pick-key chip + display-size serif name + one rust effect line, clean parchment, NO glyph, NO flavor line, subtle `n/max` stack marker, gold focus border; readable well under 1s. Filler shot proves live scaling: "Assay Bonus / +5 gold now", "Field Dressing / heals 53" (30% of the 175 maxHp shown in HUD), "Sharpen / +5% spark damage".
+
+### Fix 4 — filler cards scale
+`resolveFiller(def, {wave, maxHp})` pure helper (Upgrades.ts) is the single source of truth for BOTH the card effect line (Game.syncUpgradeOverlay, show-time) and the apply path (Progression.applyUpgrade). assay = 5×max(1,wave); field_dressing = round(0.30×maxHp), maxHp-capped; sharpen unchanged (+5%, permanent). `Balance.upgrades` knobs. `getWave`/`getMaxHp` wired into Progression options. Frozen sim during level-up ⇒ show == apply.
+
+### Fix 5 — glyphs removed
+`renderGlyph()` + the visible `.upgrade-card__icon` SVG deleted (clean parchment). `iconFamily` added to every def; card root carries the future-art slot `ui.upgrade.icon.<family>`. Real icons routed to batch-002 (`assets/requests/batch-002.md`, `layer-contracts/m1-upgrade-icons.v1.json`, 11 family slots; tranche-1 six prompts written).
+
+### Fix 6 — card layout
+Card slimmed to key + name + one effect line; flavor `description` cut; `.upgrade-card__pips` → compact low-contrast `.upgrade-card__stacks` (`n/max`, hidden for infinite fillers). theme.css retuned for hierarchy + whitespace; mobile block updated.
+
+### Supervisor fixes (test-only / harness, permitted)
+1. `m1-07-charm.spec.ts` — deleted the stale `[data-slot="ui.upgrade.<id>"] svg` visible assert (glyph gone) + its now-unused `id` const (Codex missed both; tsc caught the second).
+2. **New harness `__GR_TEST__.maxUpgrades()` → `Progression.maxCoreForTest()`** (instantly maxes all non-filler upgrades). The old `maxCoreUpgrades` e2e helper's 22 sequential UI picks blew the sandbox's 45s per-call wall; the hook drops filler/exhaustion tests to ~15s. Durable speed-up for future sessions.
+
+### Carried minors
+- Mobile cards are a touch airy (effect line high, blank below) — cosmetic, later UI-polish candidate.
+- The `n/max` stack marker is the one deliberate deviation from Robin's literal "nothing else" — kept because it is functional run state, not flavor. Flagged for his re-verdict.
+- Filler "does the scaling feel un-shrug-like?" is Robin's next-playtest call.
