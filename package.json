@@ -9,6 +9,7 @@
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
     "verify:visual": "playwright test e2e/visual.spec.ts",
+    "test:preview": "playwright test --config playwright.preview.config.ts",
     "inspect:canvas": "node scripts/inspect-threejs-canvas.mjs"
   },
   "dependencies": {
