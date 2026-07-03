@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: ACTIVE 2026-07-03T17:07:18Z (s7 scheduled — m1-08 wave18-corrections in progress)
+Last updated: ACTIVE 2026-07-03T22:10Z (s8 — took over DEAD s7 lock @5h; finishing m1-08 = wave18 (s7 staged, unverified) + wave23 corrections, then close-spec M1)
 
 ## Where we are
 - **M0: all 5 slices done.** Awaiting Robin playtest + sign-off.
