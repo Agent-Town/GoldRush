@@ -71,3 +71,6 @@ Last updated: ACTIVE 2026-07-03T11:07:00Z (session 5 — scheduled lane; m1-07 p
 1. **DONE `4849825`** — XP motes float teal `+N` at pickup. The standing rule (every collectible/pickup floats its amount, e2e-asserted) is codified in `specs/m1-core-loop/README.md` invariants; write it into every future item/drop slice.
 2. Robin playtests the live working tree — main is playable at every commit (verified each slice); 15-min pings + 3 h build sessions continue via scheduled tasks.
 3. Level-ups now consume XP (m1-06) — the "XP accrues past need" reminder is obsolete.
+
+## Robin playtest wave-10 (2026-07-03 late) — BINDING for m1-07, read docs/playtests/2026-07-03-robin-wave10.md
+Fun verdict POSITIVE ("I enjoy it", reached wave 10). Directives: (1) upgrade cards get effect text + placeholder icons; (2) adopt his Balance defaults — camera lag .15 / lookAhead 1.35 / offset (0,26.2,18.3) / downLook 3.35, exposure 0.75; (3) XP readability into the tonal pass; (4) rename death CTA "Stake Again"→"Try Again" (+e2e assert update); (5) local top-5 scoreboard on death screen (localStorage). Backlog → M2 specs: multi-weapon + AOE buildables. → M3: skill tree. M1 exit = directives applied + Robin confirms defaults.
