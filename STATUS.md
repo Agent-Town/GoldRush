@@ -4,11 +4,13 @@ Last updated: ACTIVE 2026-07-03T14:08:00Z (session 6 — scheduled lane; m1-07 e
 
 ## Where we are
 - **M0: all 5 slices done.** Awaiting Robin playtest + sign-off.
-- **M1: 01–06 done, reviewed, committed. Only 07 (feel-and-tune gate) remains → Robin playtest = M1 exit.**
+- **M1: 01–07 ALL done, reviewed, committed (07 = `c2a46b9`, s5). M1 exit = Robin confirms the applied D2 defaults, then `close-spec`.** Fun verdict already POSITIVE (wave-10 doc; wave-18 followup logged).
   - Session 4 (this): Robin directive #1 XP float `4849825` → m1-05 Sentry Beacons `60f8552` (`reviews/m1-05-sentry-beacon-build.md`) → m1-06 level-up choices `448407f` (`reviews/m1-06-level-up-choices.md`).
   - The full core loop is now playable end to end: move/pan/kite → auto-fire → waves escalate → gold → build beacons (B, teal/rust ghost, Enter/click) → XP motes float `+3` → level-up freezes sim → 3 parchment Patent-Office cards (1/2/3) → visible run change → death → Stake Again.
 - Full regression at session end: **38/38** across 8 spec files (visual 5, feedback-fx 3, m1-01 4, m1-02 3, m1-03 5, m1-04 4, m1-05 6, m1-06 8), tsc clean, build green, draw calls 35 @ `?stress=120` + 6 beacons (budget ≤200).
-- Next: **m1/07-feel-and-tune-gate** — orchestrator can prep lil-gui Balance bindings under `?debug` (the only allowed new dep: `lil-gui`) + charm pass; the gate verdict itself needs Robin. After M1 exit: write M2 specs (`feature-slicing`).
+- Next: **M2 specs via `feature-slicing`** (s6 lane per its lock; route playtest backlog: multi-weapon + AOE buildables). Then M2 slice 1. Robin owes: confirm D2 defaults (M1 exit), split_spark same-vs-next-nearest, batch-001 visual review in-game (art integrated by s6 `68f1c53`).
+- **s5 handoff (m1-07, `c2a46b9` + review `m1-07-feel-and-tune-prep.md`):** 45/45 regression HERMETIC (see environment rule below), tsc/build clean, evidence shots in `reviews/shots-m1-07/`. Codex G `019f2845-9049-7970-ae36-5dcf45f38611`. New harness: `?nopause`, `__GR_TEST__.setBalance/clearScores`, `test.setTimeout(45s)` on m1-06 maxed (trace cost of richer card DOM).
+- **s5 ENVIRONMENT RULE (supersedes pw.reuse guidance): bash calls live in separate PID namespaces — background vites from earlier calls turn into invisible, unkillable zombies serving STALE module caches, and multiple listeners round-robin one port.** Never trust a reused server: run e2e ONLY via base `playwright.config.ts` (own webServer per run); probes/screenshots = vite + client in the SAME bash call on a virgin port + freshness-check a new-API symbol first. Also: headless_shell-1228 SIGSEGVs on this image → `channel:'chromium'` committed; full chrome needed the `data:,` favicon (committed). Provisioning from wiped home works: npm i (34 pkgs, lockfile), `npx playwright install chromium` OK (shell binary broken anyway — full binary is what we use), libxdamage1 via `apt-get download` + `dpkg -x ~/locallibs`.
 
 ## Session collision protocol (BINDING — unchanged)
 1. On start: read the `Last updated` line. `ACTIVE <ts>` < 3 h old → another lane is live: docs/review/probe only.
@@ -61,6 +63,7 @@ Last updated: ACTIVE 2026-07-03T14:08:00Z (session 6 — scheduled lane; m1-07 e
 - 07-gate questions queued: camera 57°, split_spark same-target vs next-nearest, beacon cost curve feel (25/35/45/55/75/95).
 
 ## Done log
+- 2026-07-03 (s5 scheduled, long-runner): env re-provision from wiped home + chromium-channel fix `(in 851896a)` → **m1-07 `c2a46b9`** (lil-gui seam, hit-pause/impulse, coin-tick, D1–D5 directives, tonal pass; Codex G, 1 correction round + %-suffix supervisor fix) → zombie-vite forensics → review + this handoff. Overlapped s6 from ~14:08Z (art batch `68f1c53`, playtest docs) — disjoint paths, no conflicts.
 - 2026-07-03 (s1): skeleton `e439424` → specs `bc87a96` → m0-01..05 → m1-01 `b4cb01d` → m1-04 `a873bc5` → docs `e1164ec`.
 - 2026-07-03 (s3 feedback lane): `0a4cf2f` F1–F4.
 - 2026-07-03 (s2 scheduled): m1-02 `06f4231`, handoff `7942d54`.
