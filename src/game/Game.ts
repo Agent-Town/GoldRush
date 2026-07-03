@@ -1,6 +1,14 @@
 import * as THREE from 'three';
 import { EventBus } from '../core/EventBus';
-import { areWavesDisabled, getDebugSeed, getStressCount, getTimescale, isLevelUpDisabled, isSpawnDisabled } from '../core/DebugParams';
+import {
+  areWavesDisabled,
+  getDebugSeed,
+  getStressCount,
+  getTimescale,
+  isCharmPauseDisabled,
+  isLevelUpDisabled,
+  isSpawnDisabled,
+} from '../core/DebugParams';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
@@ -16,7 +24,7 @@ import { CameraRig } from '../systems/CameraRig';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
-import { DebugTools, type DebugTuning } from '../systems/DebugTools';
+import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem } from '../systems/WaveSystem';
@@ -29,6 +37,7 @@ import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
+import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, type UpgradeId } from './Upgrades';
 
@@ -46,7 +55,9 @@ export class Game {
   private readonly audio = new AudioSystem();
   private readonly state = new GameState();
   private readonly economy = new Economy();
-  private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors);
+  private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors, undefined, () => {
+    if (Balance.charm.coinTick > 0) this.audio.playCoin();
+  });
   private readonly vfx = new Vfx();
   private readonly combat = new CombatSystem(
     this.events,
@@ -58,6 +69,7 @@ export class Game {
     this.audio,
     () => this.endRun(),
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
+    (position) => this.onEnemyKilled(position),
   );
   private readonly buildSystem: BuildSystem;
   private readonly progression: Progression;
@@ -108,6 +120,9 @@ export class Game {
   private kills = 0;
   private goldPanned = 0;
   private damageFlashRemaining = 0;
+  private charmPauseRemaining = 0;
+  private charmPauseCooldown = 0;
+  private charmPauseActive = false;
   private readonly frameMsSamples: number[] = [];
   private frameMsCursor = 0;
   private frameMsLast = 0;
@@ -153,19 +168,29 @@ export class Game {
       this.damageFlashRemaining = Balance.hero.iframes;
     });
     this.events.on('hero_died', (event) => {
+      const scoreAt = Date.now();
       this.deathLedger = {
         timeAlive: event.timeAlive,
         kills: event.kills,
         goldPanned: event.goldPanned,
         wavesSurvived: event.wavesSurvived,
       };
-      this.deathOverlay.show(this.deathLedger);
+      const scores = recordScore({
+        waves: event.wavesSurvived,
+        kills: event.kills,
+        gold: event.goldPanned,
+        timeAlive: event.timeAlive,
+        at: scoreAt,
+      });
+      this.deathOverlay.show(this.deathLedger, scores, scoreAt);
     });
     this.events.on('enemy_killed', () => {
       this.kills += 1;
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
+      (Balance.render as { exposure: number; maxDpr: number }).exposure = this.tuning.exposure;
+      (Balance.render as { exposure: number; maxDpr: number }).maxDpr = this.tuning.maxDpr;
       this.renderer.toneMappingExposure = this.tuning.exposure;
       this.applyCameraTuning();
       resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
@@ -182,6 +207,8 @@ export class Game {
         spawnPack: (n: number, radius?: number) => this.spawnDebugPack(n, radius),
         resetRun: () => this.resetRun(),
         warmVfx: () => this.vfx.warm(this.hero.group.position),
+        clearScores: () => clearScores(),
+        setBalance: (path: string, value: number) => setBalance(path, value),
         grantGold: (n: number) => {
           this.economy.apply({
             id: crypto.randomUUID(),
@@ -201,6 +228,11 @@ export class Game {
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
           boltsAlive: this.combat.boltsAlive,
+          balance: {
+            rig: {
+              fireRate: Balance.sparkRig.fireRate,
+            },
+          },
         }),
       };
     }
@@ -258,6 +290,7 @@ export class Game {
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
+    this.updateCharmPause(delta);
 
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     if (this.state.simActive) {
@@ -293,6 +326,32 @@ export class Game {
 
   private render(): void {
     this.renderer.render(this.scene, this.camera);
+  }
+
+  private onEnemyKilled(position: THREE.Vector3): void {
+    if (isCharmPauseDisabled() || this.state.current !== 'playing' || this.state.isPaused) return;
+    this.cameraRig.impulse(position, Balance.charm.camImpulse);
+    if (this.charmPauseCooldown > 0 || Balance.charm.hitPauseMs <= 0) return;
+
+    this.charmPauseRemaining = Math.min(60, Balance.charm.hitPauseMs) / 1000;
+    this.charmPauseCooldown = Math.max(0, Balance.charm.hitPauseCooldownMs) / 1000;
+    this.charmPauseActive = this.charmPauseRemaining > 0;
+    if (this.charmPauseActive) this.state.setPaused(true);
+  }
+
+  private updateCharmPause(delta: number): void {
+    this.charmPauseCooldown = Math.max(0, this.charmPauseCooldown - delta);
+    if (!this.charmPauseActive) return;
+    if (this.state.current !== 'playing') {
+      this.charmPauseActive = false;
+      this.charmPauseRemaining = 0;
+      return;
+    }
+    this.charmPauseRemaining = Math.max(0, this.charmPauseRemaining - delta);
+    if (this.charmPauseRemaining <= 0) {
+      this.charmPauseActive = false;
+      this.state.setPaused(false);
+    }
   }
 
   private applyCameraTuning(): void {
@@ -398,6 +457,8 @@ export class Game {
       },
       progression: this.progression.snapshot,
       harvest: this.harvestSnapshot,
+      charmPause: this.charmPauseActive,
+      camImpulseActive: this.cameraRig.impulseActive,
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
       },
@@ -499,6 +560,9 @@ export class Game {
     this.timeAlive = 0;
     this.kills = 0;
     this.goldPanned = 0;
+    this.charmPauseRemaining = 0;
+    this.charmPauseCooldown = 0;
+    this.charmPauseActive = false;
     this.damageFlashRemaining = 0;
     this.damageVignette.style.opacity = '0';
     this.deathOverlay.hide();

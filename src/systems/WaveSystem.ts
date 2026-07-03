@@ -15,10 +15,30 @@ export type WaveDiagnostics = {
 };
 
 const EDGE_COPY: Record<CompassEdge, readonly string[]> = {
-  north: ['Rustlers on the north bank!', 'Trouble follows the river...'],
-  south: ['Claim Jumpers ride the south bank!', 'They want the gold, not the glory.'],
-  east: ['Claim Jumpers massing east!', 'Trouble follows the river...'],
-  west: ['Rustlers on the west ridge!', 'They want the gold, not the glory.'],
+  north: [
+    'Rustlers on the north bank!',
+    'Keep the sluice running!',
+    'The claim holds if you do.',
+    'They want the gold, not the glory.',
+  ],
+  south: [
+    'Claim Jumpers press the south bank!',
+    'Stake lights to the south!',
+    'Hold steady for the assay.',
+    'The river keeps our receipt.',
+  ],
+  east: [
+    'Claim Jumpers massing east!',
+    'Beacon coils hum eastward!',
+    'Prosperity needs a guard.',
+    'The claim office stands ready.',
+  ],
+  west: [
+    'Rustlers on the west ridge!',
+    'Brass warnings from the west!',
+    'Keep the ledgers clean.',
+    'No one takes tomorrow from us.',
+  ],
 };
 
 export class WaveSystem {
@@ -29,6 +49,7 @@ export class WaveSystem {
   private wave = 0;
   private waveSpawnedTotal = 0;
   private copyCursor = 0;
+  private lastCopy = '';
   private currentAtSim = 0;
   private waveState: WaveDiagnostics['waveState'] = 'quiet';
 
@@ -77,6 +98,7 @@ export class WaveSystem {
     this.wave = 0;
     this.waveSpawnedTotal = 0;
     this.copyCursor = 0;
+    this.lastCopy = '';
     this.currentAtSim = 0;
     this.waveState = 'quiet';
   }
@@ -187,8 +209,13 @@ export class WaveSystem {
 
   private waveCopy(edge: CompassEdge): string {
     const pool = EDGE_COPY[edge];
-    const text = pool[this.copyCursor % pool.length] ?? pool[0];
+    let text = pool[this.copyCursor % pool.length] ?? pool[0];
     this.copyCursor += 1;
+    if (text === this.lastCopy) {
+      text = pool[this.copyCursor % pool.length] ?? text;
+      this.copyCursor += 1;
+    }
+    this.lastCopy = text;
     return text;
   }
 

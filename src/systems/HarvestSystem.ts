@@ -34,6 +34,7 @@ export class HarvestSystem {
     private readonly economy: Economy,
     private readonly anchors: readonly Vec2[],
     rng: Rng = createRng(getDebugSeed()),
+    private readonly onGoldTick?: (amount: number) => void,
   ) {
     this.rng = rng;
     this.group.name = 'HarvestSystem';
@@ -164,7 +165,10 @@ export class HarvestSystem {
         nodeId: node.id,
         amount: gained,
       });
-      if (result.ok) this.lastGoldGain += gained;
+      if (result.ok) {
+        this.lastGoldGain += gained;
+        this.onGoldTick?.(gained);
+      }
 
       if (node.remainingGold <= 0) {
         node.deactivateUntil(at);

@@ -4,7 +4,7 @@ export const palette = {
   ochre: '#c4883a',
   rust: '#a0522d',
   teal: '#5b8a8a',
-  wood: '#2e1b0e',
+  wood: '#6b4a2f',
   sun: '#ffe4a0',
   sky: '#c2e6ff',
 } as const;

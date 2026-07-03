@@ -5,6 +5,7 @@ export type DebugParams = {
   readonly nospawn: boolean;
   readonly nowaves: boolean;
   readonly nokill: boolean;
+  readonly nopause: boolean;
   readonly stress: number;
 };
 
@@ -15,6 +16,7 @@ const DEFAULT_PARAMS: DebugParams = {
   nospawn: false,
   nowaves: false,
   nokill: false,
+  nopause: false,
   stress: 0,
 };
 
@@ -28,6 +30,7 @@ export function readDebugParams(search = getSearch()): DebugParams {
     nospawn: readFlag(params, 'nospawn'),
     nowaves: readFlag(params, 'nowaves'),
     nokill: readFlag(params, 'nokill'),
+    nopause: readFlag(params, 'nopause'),
     stress: readNonNegativeInt(params, 'stress', DEFAULT_PARAMS.stress),
   };
 }
@@ -61,6 +64,10 @@ export function isLevelUpDisabled(): boolean {
 
 export function isCombatDamageDisabled(): boolean {
   return DEBUG_PARAMS.nokill;
+}
+
+export function isCharmPauseDisabled(): boolean {
+  return DEBUG_PARAMS.nopause;
 }
 
 export function getStressCount(): number {

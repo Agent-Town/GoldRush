@@ -140,6 +140,9 @@ test('sampled offers never contain duplicate ids', async ({ page }) => {
 });
 
 test('maxed upgrades leave the offer pool', async ({ page }) => {
+  // m1-07 richer card DOM (glyphs + effect lines) makes trace snapshots of this
+  // 30-press loop ~2x slower; 30 s default budget is too tight with tracing on.
+  test.setTimeout(45_000);
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-maxed');
 
   for (let guard = 0; guard < 30; guard += 1) {

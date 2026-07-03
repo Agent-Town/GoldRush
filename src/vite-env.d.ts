@@ -111,6 +111,8 @@ interface ThreeGameDiagnostics {
     progress: number;
     lastGoldGain: number;
   };
+  charmPause: boolean;
+  camImpulseActive: boolean;
   vfx: {
     activeFloatTexts: number;
   };
@@ -143,14 +145,19 @@ interface ThreeGameDiagnostics {
   };
 }
 
+type GoldRushGui = import('lil-gui').default;
+
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
+  __GR_GUI__?: GoldRushGui;
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;
     spawnPack: (n: number, radius?: number) => void;
     resetRun: () => void;
     warmVfx: () => void;
+    clearScores: () => void;
+    setBalance: (path: string, value: number) => boolean;
     grantGold: (n: number) => void;
     grantXp: (n: number) => void;
     setBuildMode: (on: boolean) => void;
@@ -159,6 +166,11 @@ interface Window {
       enemiesAlive: number;
       xp: number;
       boltsAlive: number;
+      balance: {
+        rig: {
+          fireRate: number;
+        };
+      };
     };
   };
 }

@@ -5,12 +5,21 @@ export type DeathLedger = {
   wavesSurvived: number;
 };
 
+export type BestClaimRow = {
+  waves: number;
+  kills: number;
+  gold: number;
+  timeAlive: number;
+  at: number;
+};
+
 export class DeathOverlay {
   private readonly root: HTMLElement;
   private readonly timeValue: HTMLElement;
   private readonly killsValue: HTMLElement;
   private readonly goldValue: HTMLElement;
   private readonly wavesValue: HTMLElement;
+  private readonly bestClaimsList: HTMLElement;
   private readonly button: HTMLButtonElement;
   private visible = false;
 
@@ -24,6 +33,7 @@ export class DeathOverlay {
       <div class="death-overlay__panel">
         <p class="death-overlay__eyebrow">The claim went quiet.</p>
         <h1>Run Ledger</h1>
+        <p class="death-overlay__flavor">The claim was overrun. The gold remembers.</p>
         <dl class="death-overlay__ledger">
           <div>
             <dt>Time Held</dt>
@@ -42,7 +52,11 @@ export class DeathOverlay {
             <dd data-death-gold>0</dd>
           </div>
         </dl>
-        <button class="death-overlay__button" type="button" data-testid="stake-again">Stake Again</button>
+        <section class="death-overlay__scores" aria-label="Best Claims">
+          <h2>Best Claims</h2>
+          <ol data-best-claims></ol>
+        </section>
+        <button class="death-overlay__button" type="button" data-testid="stake-again">Try Again</button>
       </div>
     `;
 
@@ -50,6 +64,7 @@ export class DeathOverlay {
     this.killsValue = this.get('[data-death-kills]');
     this.wavesValue = this.get('[data-death-waves]');
     this.goldValue = this.get('[data-death-gold]');
+    this.bestClaimsList = this.get('[data-best-claims]');
     this.button = this.get<HTMLButtonElement>('[data-testid="stake-again"]');
 
     this.button.addEventListener('click', this.handleStakeAgain);
@@ -57,12 +72,13 @@ export class DeathOverlay {
     parent.append(this.root);
   }
 
-  show(ledger: DeathLedger): void {
+  show(ledger: DeathLedger, scores: readonly BestClaimRow[] = [], currentAt = 0): void {
     this.visible = true;
     this.timeValue.textContent = this.formatTime(ledger.timeAlive);
     this.killsValue.textContent = ledger.kills.toString();
     this.wavesValue.textContent = ledger.wavesSurvived.toString();
     this.goldValue.textContent = ledger.goldPanned.toString();
+    this.renderScores(scores, currentAt);
     this.root.classList.add('death-overlay--visible');
     this.root.setAttribute('aria-hidden', 'false');
     this.button.focus({ preventScroll: true });
@@ -78,6 +94,38 @@ export class DeathOverlay {
     this.button.removeEventListener('click', this.handleStakeAgain);
     window.removeEventListener('keydown', this.handleKeyDown);
     this.root.remove();
+  }
+
+  private renderScores(scores: readonly BestClaimRow[], currentAt: number): void {
+    this.bestClaimsList.innerHTML = '';
+    if (scores.length === 0) {
+      const empty = document.createElement('li');
+      empty.className = 'death-overlay__score death-overlay__score--empty';
+      empty.textContent = 'No claims logged yet.';
+      this.bestClaimsList.append(empty);
+      return;
+    }
+
+    for (const score of scores) {
+      const row = document.createElement('li');
+      row.className = 'death-overlay__score';
+      row.dataset.testid = 'best-claim-row';
+      if (score.at === currentAt) {
+        row.classList.add('death-overlay__score--current');
+        row.dataset.currentRun = 'true';
+      }
+
+      const summary = document.createElement('span');
+      summary.className = 'death-overlay__score-summary';
+      summary.textContent = `${score.waves} waves - ${this.formatTime(score.timeAlive)}`;
+
+      const detail = document.createElement('span');
+      detail.className = 'death-overlay__score-detail';
+      detail.textContent = `${score.kills} turned back - ${score.gold} gold`;
+
+      row.append(summary, detail);
+      this.bestClaimsList.append(row);
+    }
   }
 
   private readonly handleStakeAgain = () => {

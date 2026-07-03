@@ -66,6 +66,7 @@ export const upgradeDefs = [
 
 export type UpgradeDef = (typeof upgradeDefs)[number];
 export type UpgradeId = UpgradeDef['id'];
+type UpgradeDeltas = UpgradeDef['deltas'];
 
 export const upgradeDefById: Record<UpgradeId, UpgradeDef> = upgradeDefs.reduce(
   (defs, def) => {
@@ -77,4 +78,26 @@ export const upgradeDefById: Record<UpgradeId, UpgradeDef> = upgradeDefs.reduce(
 
 export function isUpgradeId(id: string): id is UpgradeId {
   return id in upgradeDefById;
+}
+
+export function upgradeEffect(def: UpgradeDef): string {
+  const deltas: UpgradeDeltas = def.deltas;
+  const parts: string[] = [];
+  if ('fireRateMult' in deltas) parts.push(`+${percent(deltas.fireRateMult)}% fire rate`);
+  if ('damageMult' in deltas) parts.push(`+${percent(deltas.damageMult)}% spark damage`);
+  if ('rangeMult' in deltas) parts.push(`+${percent(deltas.rangeMult)}% range`);
+  if ('boltSpeedMult' in deltas) parts.push(`+${percent(deltas.boltSpeedMult)}% bolt speed`);
+  if ('volleyBonus' in deltas) parts.push(`+${deltas.volleyBonus} spark per volley`);
+  if ('maxHpBonus' in deltas) parts.push(`+${deltas.maxHpBonus} max HP`);
+  if ('heal' in deltas) parts.push(`heals ${deltas.heal}`);
+  if ('moveSpeedMult' in deltas) parts.push(`+${percent(deltas.moveSpeedMult)}% move speed`);
+  if ('panTickMult' in deltas) parts.push(`${percent(Math.abs(deltas.panTickMult))}% faster panning`);
+  if ('seamCapacityBonus' in deltas) parts.push(`+${deltas.seamCapacityBonus} gold per seam`);
+  if ('seamRespawnReduction' in deltas) parts.push(`-${deltas.seamRespawnReduction}s seam respawn`);
+  if ('beaconFireRateMult' in deltas) parts.push(`+${percent(deltas.beaconFireRateMult)}% beacon fire rate`);
+  return parts.join(', ');
+}
+
+function percent(value: number): number {
+  return Math.round(value * 100);
 }

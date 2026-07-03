@@ -90,13 +90,20 @@ export const Balance = {
   },
   camera: {
     fov: 42,
-    offset: new THREE.Vector3(0, 22, 14.3),
-    lag: 0.08,
-    lookAhead: 1.5,
-    downScreenLookOffset: 2.2,
+    offset: new THREE.Vector3(0, 26.2, 18.3),
+    lag: 0.15,
+    lookAhead: 1.35,
+    downScreenLookOffset: 3.35,
   },
   render: {
-    exposure: 1.05,
+    exposure: 0.75,
     maxDpr: 2,
+  },
+  charm: {
+    hitPauseMs: 50,
+    hitPauseCooldownMs: 250,
+    camImpulse: 0.12,
+    coinTick: 1,
+    banterCooldownS: 8,
   },
 } as const;

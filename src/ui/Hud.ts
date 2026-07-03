@@ -114,8 +114,10 @@ export class Hud {
 
     if (snapshot.gold !== this.lastGold) {
       this.elements.goldPanel.classList.remove('hud-panel--tick');
+      this.elements.goldText.classList.remove('hud-value--gold-pop');
       void this.elements.goldPanel.offsetWidth;
       this.elements.goldPanel.classList.add('hud-panel--tick');
+      this.elements.goldText.classList.add('hud-value--gold-pop');
       this.lastGold = snapshot.gold;
     }
   }

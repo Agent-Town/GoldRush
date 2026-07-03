@@ -38,6 +38,12 @@ export class GameState {
     return this.paused;
   }
 
+  setPaused(paused: boolean): boolean {
+    if (this.state !== 'playing') return this.paused;
+    this.paused = paused;
+    return this.paused;
+  }
+
   restart(): void {
     this.state = 'playing';
     this.paused = false;

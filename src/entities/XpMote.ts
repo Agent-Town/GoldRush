@@ -10,9 +10,9 @@ export class XpMotePool {
   private readonly age: number[] = [];
   private readonly geometry = new THREE.TetrahedronGeometry(0.16, 0);
   private readonly material = new THREE.MeshStandardMaterial({
-    color: '#83ded7',
-    emissive: '#5b8a8a',
-    emissiveIntensity: 1.25,
+    color: '#a8fff4',
+    emissive: '#2f8f89',
+    emissiveIntensity: 1.6,
     roughness: 0.42,
     metalness: 0.12,
   });

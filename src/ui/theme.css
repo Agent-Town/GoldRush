@@ -98,6 +98,12 @@
   animation: hud-coin-tick 240ms ease-out;
 }
 
+.hud-value--gold-pop {
+  display: inline-block;
+  transform-origin: center;
+  animation: hud-gold-pop 120ms ease-out;
+}
+
 .hud__wave {
   position: absolute;
   top: max(16px, env(safe-area-inset-top));
@@ -164,7 +170,8 @@
 }
 
 .hud-bar__fill--xp {
-  background: linear-gradient(90deg, var(--at-teal-600), #78a6a6);
+  background: linear-gradient(90deg, #1f7f78, #8ff5e8);
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 232, 0.38);
 }
 
 .hud-coin {
@@ -251,15 +258,22 @@
 }
 
 .death-overlay h1 {
-  margin: 0 0 16px;
+  margin: 0 0 6px;
   font-size: 2rem;
   line-height: 1.05;
+}
+
+.death-overlay__flavor {
+  margin: 0 0 14px;
+  color: rgba(46, 27, 14, 0.78);
+  font-size: 0.95rem;
+  line-height: 1.25;
 }
 
 .death-overlay__ledger {
   display: grid;
   gap: 10px;
-  margin: 0 0 18px;
+  margin: 0 0 14px;
 }
 
 .death-overlay__ledger div {
@@ -283,6 +297,44 @@
   font-size: 1.2rem;
   font-weight: 800;
   font-variant-numeric: tabular-nums;
+}
+
+.death-overlay__scores {
+  margin: 0 0 16px;
+}
+
+.death-overlay__scores h2 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+.death-overlay__scores ol {
+  display: grid;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.death-overlay__score {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border: 1px solid rgba(46, 27, 14, 0.2);
+  border-radius: 6px;
+  padding: 6px 8px;
+  background: rgba(255, 248, 232, 0.48);
+  font-size: 0.82rem;
+}
+
+.death-overlay__score--current {
+  border-color: var(--at-teal-600);
+  box-shadow: inset 0 0 0 1px rgba(91, 138, 138, 0.42);
+}
+
+.death-overlay__score-detail {
+  color: rgba(46, 27, 14, 0.72);
 }
 
 .death-overlay__button {
@@ -371,6 +423,27 @@
   text-align: left;
 }
 
+.upgrade-card__icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: 10px;
+  border: 2px solid rgba(46, 27, 14, 0.7);
+  border-radius: 8px;
+  background: rgba(232, 213, 168, 0.58);
+}
+
+.upgrade-card__icon svg {
+  width: 38px;
+  height: 38px;
+  fill: none;
+  stroke: var(--at-wood-950);
+  stroke-width: 4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
 .upgrade-card:hover,
 .upgrade-card:focus-visible {
   outline: 3px solid var(--at-sun-200);
@@ -394,6 +467,7 @@
 }
 
 .upgrade-card__name,
+.upgrade-card__effect,
 .upgrade-card__description,
 .upgrade-card__pips {
   display: block;
@@ -405,6 +479,14 @@
   font-size: 1.35rem;
   font-weight: 900;
   line-height: 1.08;
+}
+
+.upgrade-card__effect {
+  margin-bottom: 8px;
+  color: var(--at-rust-600);
+  font-size: 0.92rem;
+  font-weight: 800;
+  line-height: 1.2;
 }
 
 .upgrade-card__description {
@@ -443,6 +525,18 @@
   }
   100% {
     transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes hud-gold-pop {
+  0% {
+    transform: scale(1);
+  }
+  55% {
+    transform: scale(1.18);
+  }
+  100% {
+    transform: scale(1);
   }
 }
 
@@ -500,12 +594,23 @@
   }
 
   .upgrade-card {
-    min-height: 138px;
+    min-height: 168px;
     padding: 14px;
+  }
+
+  .upgrade-card__icon {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 8px;
   }
 
   .upgrade-card__name {
     font-size: 1.12rem;
+    margin-bottom: 7px;
+  }
+
+  .upgrade-card__effect {
+    font-size: 0.84rem;
   }
 
   .upgrade-card__description {

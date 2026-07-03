@@ -19,6 +19,10 @@ export class AudioSystem {
     this.blip(260, 520, 0.09, 0.035);
   }
 
+  playCoin(): void {
+    this.blip(880, 1320, 0.04, 0.02);
+  }
+
   dispose(): void {
     window.removeEventListener('pointerdown', this.resume);
     window.removeEventListener('keydown', this.resume);

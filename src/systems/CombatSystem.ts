@@ -44,6 +44,7 @@ export class CombatSystem {
     private readonly audio: AudioSystem,
     private readonly onHeroDied: () => void,
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
+    private readonly onEnemyKilled?: (position: THREE.Vector3) => void,
   ) {}
 
   get xpCount(): number {
@@ -197,6 +198,7 @@ export class CombatSystem {
     this.motes.spawn(enemy.position, Balance.xp.perKill);
     this.vfx.dustPuff(enemy.position);
     this.audio.playKill();
+    this.onEnemyKilled?.(enemy.position);
     this.events.emit({
       type: 'enemy_killed',
       at,
