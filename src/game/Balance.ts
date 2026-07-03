@@ -60,6 +60,19 @@ export const Balance = {
   projectile: {
     pool: 128,
   },
+  beacon: {
+    costBase: 25,
+    costGrowth: 1.3,
+    maxCount: 6,
+    damage: 8,
+    fireRate: 1.2,
+    range: 8,
+    boltSpeed: 14,
+    volley: 1,
+    placeRadius: 6,
+    overlapRadius: 1.2,
+    gridSnap: 1,
+  },
   economy: {
     logCapacity: 128,
   },

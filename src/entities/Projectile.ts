@@ -10,6 +10,7 @@ export class ProjectilePool {
   private readonly velocities: THREE.Vector3[] = [];
   private readonly life: number[] = [];
   private readonly damage: number[] = [];
+  private readonly ownerIds: string[] = [];
   private readonly boltGeometry = new THREE.SphereGeometry(0.12, 10, 6);
   private readonly tracerGeometry = new THREE.BoxGeometry(0.055, 0.055, 0.62);
   private readonly boltMaterial = new THREE.MeshStandardMaterial({
@@ -55,6 +56,7 @@ export class ProjectilePool {
       this.velocities.push(new THREE.Vector3());
       this.life.push(0);
       this.damage.push(0);
+      this.ownerIds.push('hero');
       this.hide(i);
     }
     this.markNeedsUpdate();
@@ -80,7 +82,11 @@ export class ProjectilePool {
     return this.damage[index] ?? 0;
   }
 
-  activate(origin: THREE.Vector3, dirX: number, dirZ: number, speed: number, damage: number): boolean {
+  ownerIdAt(index: number): string | null {
+    return this.ownerIds[index] ?? null;
+  }
+
+  activate(origin: THREE.Vector3, dirX: number, dirZ: number, speed: number, damage: number, ownerId = 'hero'): boolean {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       const position = this.positions[i];
@@ -93,6 +99,7 @@ export class ProjectilePool {
       velocity.set(dirX * speed, 0, dirZ * speed);
       this.life[i] = Balance.sparkRig.boltLife;
       this.damage[i] = damage;
+      this.ownerIds[i] = ownerId;
       this.sync(i);
       return true;
     }
@@ -121,6 +128,7 @@ export class ProjectilePool {
     this.active[index] = false;
     this.life[index] = 0;
     this.damage[index] = 0;
+    this.ownerIds[index] = 'hero';
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
   }
@@ -130,6 +138,7 @@ export class ProjectilePool {
       this.active[i] = false;
       this.life[i] = 0;
       this.damage[i] = 0;
+      this.ownerIds[i] = 'hero';
       this.hide(i);
     }
     this.alive = 0;

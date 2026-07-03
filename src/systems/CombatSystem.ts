@@ -12,6 +12,7 @@ import { TargetingSystem } from './TargetingSystem';
 import type { CombatVfx } from './CombatVfx';
 
 export type ShooterHandle = {
+  id?: string;
   getPos: () => THREE.Vector3;
   range: number;
   cooldown: number;
@@ -29,6 +30,7 @@ type ShooterState = {
 export class CombatSystem {
   private readonly rigs: ShooterState[] = [];
   private readonly scratchOrigin = new THREE.Vector3();
+  private readonly ownerKills: Record<string, number> = {};
   private xp = 0;
   private currentAt = 0;
 
@@ -52,8 +54,17 @@ export class CombatSystem {
     return this.projectiles.activeCount;
   }
 
-  registerShooter(handle: ShooterHandle): void {
-    this.rigs.push({ handle, timer: 0, targeting: new TargetingSystem<ClaimJumperEnemy>() });
+  get killsByOwner(): Readonly<Record<string, number>> {
+    return this.ownerKills;
+  }
+
+  registerShooter(handle: ShooterHandle): () => void {
+    const state = { handle, timer: 0, targeting: new TargetingSystem<ClaimJumperEnemy>() };
+    this.rigs.push(state);
+    return () => {
+      const index = this.rigs.indexOf(state);
+      if (index >= 0) this.rigs.splice(index, 1);
+    };
   }
 
   setTime(at: number): void {
@@ -99,6 +110,7 @@ export class CombatSystem {
     this.projectiles.recycleAll();
     this.motes.recycleAll();
     this.vfx.reset();
+    for (const ownerId of Object.keys(this.ownerKills)) delete this.ownerKills[ownerId];
     for (let i = 0; i < this.rigs.length; i += 1) {
       const state = this.rigs[i];
       if (!state) continue;
@@ -146,7 +158,7 @@ export class CombatSystem {
     const dirZ = dz * invLen;
     const count = Math.max(1, handle.volley);
     for (let i = 0; i < count; i += 1) {
-      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, handle.damage)) {
+      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, handle.damage, handle.id ?? 'hero')) {
         this.audio.playArc();
       }
     }
@@ -169,17 +181,19 @@ export class CombatSystem {
         if (dx * dx + dz * dz > hitRadiusSq) continue;
 
         const damage = this.projectiles.damageAt(boltIndex);
+        const ownerId = this.projectiles.ownerIdAt(boltIndex) ?? 'hero';
         this.projectiles.deactivate(boltIndex);
         const died = enemy.takeDamage(damage);
         this.vfx.hit(enemy.position);
         this.audio.playHit();
-        if (died) this.killEnemy(enemy, at);
+        if (died) this.killEnemy(enemy, at, ownerId);
         break;
       }
     }
   }
 
-  private killEnemy(enemy: ClaimJumperEnemy, at: number): void {
+  private killEnemy(enemy: ClaimJumperEnemy, at: number, ownerId: string): void {
+    this.ownerKills[ownerId] = (this.ownerKills[ownerId] ?? 0) + 1;
     this.motes.spawn(enemy.position, Balance.xp.perKill);
     this.vfx.dustPuff(enemy.position);
     this.audio.playKill();

@@ -18,6 +18,10 @@ export type UiSnapshot = {
   timeAlive: number;
   state: RunState;
   paused: boolean;
+  buildMode: boolean;
+  beaconCount: number;
+  beaconMax: number;
+  nextBeaconCost: number;
   canAffordBeacon: boolean;
 };
 
@@ -37,6 +41,10 @@ export class UiBridge {
     timeAlive: 0,
     state: 'boot',
     paused: false,
+    buildMode: false,
+    beaconCount: 0,
+    beaconMax: Balance.beacon.maxCount,
+    nextBeaconCost: Balance.beacon.costBase,
     canAffordBeacon: false,
   };
 
@@ -55,6 +63,11 @@ export class UiBridge {
     xp: number,
     wave: number,
     waveState: WaveState,
+    buildMode: boolean,
+    beaconCount: number,
+    beaconMax: number,
+    nextBeaconCost: number,
+    canAffordBeacon: boolean,
   ): UiSnapshot {
     this.snapshot.gold = gold;
     this.snapshot.xp = xp;
@@ -67,6 +80,11 @@ export class UiBridge {
     this.snapshot.enemiesAlive = enemiesAlive;
     this.snapshot.wave = wave;
     this.snapshot.waveState = waveState;
+    this.snapshot.buildMode = buildMode;
+    this.snapshot.beaconCount = beaconCount;
+    this.snapshot.beaconMax = beaconMax;
+    this.snapshot.nextBeaconCost = nextBeaconCost;
+    this.snapshot.canAffordBeacon = canAffordBeacon;
     return this.snapshot;
   }
 }

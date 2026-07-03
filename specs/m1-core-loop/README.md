@@ -38,6 +38,7 @@ lane C (progress):       02 ── 06 ─────────┘
 - `game/Balance.ts` owns every number below. lil-gui (`?debug`) binds to it in 07.
 - Only `WaveSystem` spawns enemies (debug keys route through it). Pools: enemies 96, projectiles 128, XP motes 64 — zero per-frame allocation in hot paths.
 - Restart = `Game.resetRun()` in place: pools recycled, timers cleared, economy `run_reset`, no page reload, `renderer.info.memory` stable across 3 restarts.
+- **Standing UX rule (Robin directive 2026-07-03, applies to every current and future collectible/pickup/drop):** world-space floating amount feedback at the pickup point via `Vfx.floatText` — gold `+N` in gold `#c4883a`, XP `+N` in mote teal `#83ded7` (both shipped); every new item/drop slice must wire this and assert it in e2e.
 
 ## Balance starting numbers (all in `game/Balance.ts`)
 

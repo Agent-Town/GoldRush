@@ -22,6 +22,10 @@ interface ThreeGameDiagnostics {
     timeAlive: number;
     state: 'boot' | 'playing' | 'levelup' | 'dead';
     paused: boolean;
+    buildMode: boolean;
+    beaconCount: number;
+    beaconMax: number;
+    nextBeaconCost: number;
     canAffordBeacon: boolean;
   };
   hp: number;
@@ -61,6 +65,15 @@ interface ThreeGameDiagnostics {
     logLength: number;
     state: { gold: number };
     replay: { gold: number };
+  };
+  build: {
+    mode: boolean;
+    ghostValid: boolean;
+    ghostPos: { x: number; z: number };
+    beacons: number;
+    beaconPositions: Array<{ x: number; z: number }>;
+    nextCost: number;
+    killsByOwner: Readonly<Record<string, number>>;
   };
   harvest: {
     activeNodes: Array<{
@@ -116,6 +129,8 @@ interface Window {
     spawnPack: (n: number, radius?: number) => void;
     resetRun: () => void;
     warmVfx: () => void;
+    grantGold: (n: number) => void;
+    setBuildMode: (on: boolean) => void;
     state: () => {
       enemiesAlive: number;
       xp: number;

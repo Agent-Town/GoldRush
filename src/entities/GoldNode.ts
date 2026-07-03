@@ -142,6 +142,16 @@ export class GoldNode {
     this.visuals.hide(this.visualIndex);
   }
 
+  resetInactive(): void {
+    this.remaining = Balance.goldSeam.capacity;
+    this.active = false;
+    this.anchorIndex = -1;
+    this.respawnAt = 0;
+    this.group.visible = false;
+    this.group.position.set(0, 0.05, 0);
+    this.visuals.hide(this.visualIndex);
+  }
+
   isRespawnReady(at: number): boolean {
     return !this.active && this.respawnAt > 0 && at >= this.respawnAt;
   }

@@ -110,6 +110,18 @@ export class HarvestSystem {
     }
   }
 
+  reset(): void {
+    this.channelNode = null;
+    this.progress = 0;
+    this.lastGoldGain = 0;
+    this.progressGroup.visible = false;
+    this.progressFill.geometry.setDrawRange(0, 0);
+    for (const node of this.nodes) {
+      node.resetInactive();
+    }
+    this.activateInitialNodes();
+  }
+
   private activateInitialNodes(): void {
     const activeCount = this.rng.int(Balance.goldSeam.activeMin, Balance.goldSeam.activeMax + 1);
     const anchorIndexes = this.shuffledAnchorIndexes();

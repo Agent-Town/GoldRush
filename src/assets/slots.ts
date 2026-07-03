@@ -11,6 +11,7 @@ export const assetSlots = {
   propStump: 'prop.stump',
   propClaimPost: 'prop.claim_post',
   vfxBolt: 'vfx.bolt',
+  bldSentryBeacon: 'bld.sentry_beacon',
 } as const;
 
 export type AssetSlotId = (typeof assetSlots)[keyof typeof assetSlots];

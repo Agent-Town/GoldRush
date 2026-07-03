@@ -1,4 +1,5 @@
 import type { UiSnapshot } from '../systems/UiBridge';
+import { BuildButton } from './BuildButton';
 
 export type UiIntent = { type: 'restart' | 'toggle_build' | 'pause' };
 
@@ -15,6 +16,7 @@ type HudElements = {
   waveNumber: HTMLElement;
   timeText: HTMLElement;
   pauseHint: HTMLElement;
+  buildMount: HTMLElement;
 };
 
 export class Hud {
@@ -23,6 +25,7 @@ export class Hud {
   private lastAnnouncement: string | null = null;
   private lastAnnouncementAt = -1;
   private announcementClearTimer = 0;
+  private readonly buildButton: BuildButton;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
@@ -64,6 +67,10 @@ export class Hud {
         </div>
       </section>
 
+      <section class="hud-panel hud-panel--build" data-testid="hud-build-panel" aria-label="Build">
+        <div data-hud-build></div>
+      </section>
+
       <button class="hud-pause" type="button" data-testid="hud-pause" data-hud-pause>
         P - catch your breath
       </button>
@@ -82,7 +89,10 @@ export class Hud {
       waveNumber: this.get(root, '[data-hud-wave-number]'),
       timeText: this.get(root, '[data-hud-time]'),
       pauseHint: this.get(root, '[data-hud-pause]'),
+      buildMount: this.get(root, '[data-hud-build]'),
     };
+    this.buildButton = new BuildButton(this.onIntent);
+    this.elements.buildMount.append(this.buildButton.element);
 
     this.elements.pauseHint.addEventListener('click', this.onPauseClick);
   }
@@ -100,6 +110,7 @@ export class Hud {
     this.elements.root.dataset.runState = snapshot.state;
     this.elements.root.dataset.paused = String(snapshot.paused);
     this.elements.pauseHint.textContent = snapshot.paused ? 'P - back to the claim' : 'P - catch your breath';
+    this.buildButton.update(snapshot);
 
     if (snapshot.gold !== this.lastGold) {
       this.elements.goldPanel.classList.remove('hud-panel--tick');
@@ -111,6 +122,7 @@ export class Hud {
 
   dispose(): void {
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
+    this.buildButton.dispose();
     window.clearTimeout(this.announcementClearTimer);
   }
 

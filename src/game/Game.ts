@@ -13,6 +13,7 @@ import { Balance } from './Balance';
 import { AudioSystem } from '../systems/AudioSystem';
 import { Economy, initialEconomyState, reduce as reduceEconomy } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
+import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
@@ -53,6 +54,7 @@ export class Game {
     () => this.endRun(),
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
   );
+  private readonly buildSystem: BuildSystem;
   private readonly simTimeScale = getTimescale();
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
@@ -98,6 +100,8 @@ export class Game {
   private frameMsP95 = 0;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
+  private lastBuildIntent = false;
+  private lastConfirmIntent = false;
   private lastDebugSpawnIntent = false;
   private uiSnapshot?: UiSnapshot;
   private deathLedger: DeathLedger = {
@@ -110,6 +114,7 @@ export class Game {
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
+    this.buildSystem = new BuildSystem(canvas, this.camera, this.economy, this.combat, this.hero.group.position);
 
     const stick = this.getElement('#touch-stick');
     const knob = this.getElement('#touch-knob');
@@ -160,6 +165,16 @@ export class Game {
         spawnPack: (n: number, radius?: number) => this.spawnDebugPack(n, radius),
         resetRun: () => this.resetRun(),
         warmVfx: () => this.vfx.warm(this.hero.group.position),
+        grantGold: (n: number) => {
+          this.economy.apply({
+            id: crypto.randomUUID(),
+            at: this.timeAlive,
+            type: 'gold_panned',
+            nodeId: 'debug-grant',
+            amount: n,
+          });
+        },
+        setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         state: () => ({
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
@@ -187,6 +202,7 @@ export class Game {
     this.deathOverlay.dispose();
     this.damageVignette.remove();
     this.debugTools.dispose();
+    this.buildSystem.dispose();
     this.harvestSystem.dispose();
     this.combat.dispose();
     this.audio.dispose();
@@ -205,9 +221,13 @@ export class Game {
     const intents = this.input.readIntents();
     if (intents.pause && !this.lastPauseIntent) this.state.togglePause();
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
+    if (intents.build && !this.lastBuildIntent) this.buildSystem.toggleBuildMode();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
+    if (intents.confirm && !this.lastConfirmIntent) this.buildSystem.confirm(this.timeAlive);
     this.lastPauseIntent = intents.pause;
     this.lastRestartIntent = intents.restart;
+    this.lastBuildIntent = intents.build;
+    this.lastConfirmIntent = intents.confirm;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
 
@@ -219,6 +239,7 @@ export class Game {
       this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
       this.combat.setTime(this.timeAlive);
       this.waveSystem.update(this.timeAlive);
+      this.buildSystem.update(this.timeAlive);
       this.enemies.update(simDelta, this.hero.group.position, this.combat.handleEnemyContact);
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
@@ -280,6 +301,7 @@ export class Game {
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
     this.scene.add(this.harvestSystem.group);
+    this.scene.add(this.buildSystem.group);
     this.scene.add(this.projectiles.group);
     this.scene.add(this.xpMotes.group);
     this.scene.add(this.combatVfx.group);
@@ -339,6 +361,10 @@ export class Game {
         logLength: economyLog.length,
         state: this.economy.state,
         replay: economyReplay,
+      },
+      build: {
+        ...this.buildSystem.diagnostics,
+        killsByOwner: this.combat.killsByOwner,
       },
       harvest: this.harvestSnapshot,
       vfx: {
@@ -406,6 +432,11 @@ export class Game {
       this.combat.xpCount,
       this.waveSystem.diagnostics.wave,
       this.waveSystem.diagnostics.waveState,
+      this.buildSystem.isBuildMode,
+      this.buildSystem.beaconCount,
+      Balance.beacon.maxCount,
+      this.buildSystem.nextCost,
+      this.buildSystem.canAffordNext,
     );
     this.hud.update(this.uiSnapshot);
   }
@@ -413,12 +444,15 @@ export class Game {
   private handleUiIntent(intent: UiIntent): void {
     if (intent.type === 'pause') this.state.togglePause();
     if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
+    if (intent.type === 'toggle_build') this.buildSystem.toggleBuildMode();
   }
 
   resetRun(): void {
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
     this.waveSystem.reset();
+    this.buildSystem.reset();
+    this.harvestSystem.reset();
     this.combat.reset();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);

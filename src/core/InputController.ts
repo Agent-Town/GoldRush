@@ -21,6 +21,7 @@ export class InputController {
   private readonly keys = new Set<string>();
   private readonly pointer = new THREE.Vector2();
   private readonly keyVector = new THREE.Vector2();
+  private previousBuild = false;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
     confirm: false,
@@ -106,7 +107,9 @@ export class InputController {
   readIntents(): Intents {
     this.readMovement(this.intents.move);
     this.intents.confirm = this.keys.has('Space') || this.keys.has('Enter') || this.keys.has('TouchConfirm');
-    this.intents.build = this.keys.has('KeyB');
+    const buildHeld = this.keys.has('KeyB');
+    this.intents.build = buildHeld && !this.previousBuild;
+    this.previousBuild = buildHeld;
     this.intents.restart = this.keys.has('KeyR');
     this.intents.pause = this.keys.has('KeyP') || this.keys.has('Escape');
     this.intents.debugSpawn = this.keys.has('KeyT');

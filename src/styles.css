@@ -89,8 +89,41 @@ body {
   touch-action: none;
 }
 
+.hud-panel--build {
+  position: absolute;
+  left: max(18px, env(safe-area-inset-left));
+  bottom: max(18px, env(safe-area-inset-bottom));
+}
+
+.hud-build-button {
+  min-width: 132px;
+  border: 1px solid rgba(246, 241, 223, 0.34);
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #fff8e8;
+  background: rgba(47, 143, 133, 0.82);
+  font: inherit;
+  font-weight: 800;
+  box-shadow: 0 0 18px rgba(131, 222, 215, 0.22);
+}
+
+.hud-build-button[data-active="true"] {
+  background: #2f8f85;
+  outline: 2px solid rgba(255, 248, 232, 0.5);
+}
+
+.hud-build-button:disabled {
+  color: rgba(255, 248, 232, 0.5);
+  background: rgba(46, 27, 14, 0.58);
+  box-shadow: none;
+}
+
 @media (pointer: coarse), (max-width: 760px) {
   #touch-controls {
     display: flex;
+  }
+
+  .hud-panel--build {
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 112px);
   }
 }
