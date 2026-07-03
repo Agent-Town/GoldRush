@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 
 export const assetSlots = {
+  charHero: 'char.hero',
   terrainBank: 'terrain.bank',
   terrainRiver: 'terrain.river',
   terrainFord: 'terrain.ford',

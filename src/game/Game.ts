@@ -2,47 +2,35 @@ import * as THREE from 'three';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
-import { Pickup } from '../entities/Pickup';
-import { Player } from '../entities/Player';
-import { AudioSystem } from '../systems/AudioSystem';
+import { Hero } from '../entities/Hero';
+import { Balance } from './Balance';
 import { CameraRig } from '../systems/CameraRig';
-import { CollisionSystem } from '../systems/CollisionSystem';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
-import { Hud } from '../systems/Hud';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly scene = new THREE.Scene();
-  private readonly camera = new THREE.PerspectiveCamera(48, 1, 0.1, 80);
+  private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
   private readonly input: InputController;
-  private readonly player = new Player();
+  private readonly hero = new Hero();
+  private readonly timerValue = this.getElement('#timer-value');
   private terrainView?: TerrainView;
-  private readonly pickups: Pickup[] = [];
-  private readonly collision = new CollisionSystem();
-  private readonly audio = new AudioSystem();
-  private readonly hud = new Hud();
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly loop = new Loop(
-    (delta, elapsed) => this.update(delta, elapsed),
+    (delta) => this.update(delta),
     () => this.render(),
   );
 
   private readonly tuning: DebugTuning = {
-    speed: 5.8,
-    dashMultiplier: 1.75,
-    acceleration: 13,
-    cameraLag: 0.16,
-    exposure: 1.05,
-    maxDpr: 2,
+    exposure: Balance.render.exposure,
+    maxDpr: Balance.render.maxDpr,
   };
 
   private readonly debugTools: DebugTools;
   private frame = 0;
-  private score = 0;
   private elapsed = 0;
-  private complete = false;
 
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = createRenderer(canvas);
@@ -50,8 +38,8 @@ export class Game {
 
     const stick = this.getElement('#touch-stick');
     const knob = this.getElement('#touch-knob');
-    const dashButton = this.getElement('#dash-button');
-    this.input = new InputController(stick, knob, dashButton);
+    const confirmButton = this.getElement('#confirm-button');
+    this.input = new InputController(stick, knob, confirmButton);
 
     this.debugTools = new DebugTools(this.tuning, () => {
       this.renderer.toneMappingExposure = this.tuning.exposure;
@@ -59,8 +47,7 @@ export class Game {
     });
 
     this.createScene();
-    this.hud.setTarget(this.pickups.length);
-    this.cameraRig.snapTo(this.player.group.position);
+    this.cameraRig.snapTo(this.hero.group.position);
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     this.publishDiagnostics();
   }
@@ -72,39 +59,21 @@ export class Game {
   dispose(): void {
     this.loop.stop();
     this.input.dispose();
-    this.audio.dispose();
     this.debugTools.dispose();
-    for (const pickup of this.pickups) pickup.dispose();
-    this.player.dispose();
+    this.hero.dispose();
     this.renderer.dispose();
     window.__THREE_GAME_DIAGNOSTICS__ = undefined;
   }
 
-  private update(delta: number, elapsed: number): void {
+  private update(delta: number): void {
     this.frame += 1;
-    if (!this.complete) this.elapsed += delta;
+    this.elapsed += delta;
 
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     this.terrainView?.update(delta);
-    this.player.update(delta, elapsed, this.input, this.tuning, Terrain.bounds, Terrain.sample);
-
-    for (const pickup of this.pickups) {
-      pickup.update(delta, elapsed);
-    }
-
-    const collected = this.collision.collectPickups(this.player.group.position, this.pickups, 0.55);
-    for (const pickup of collected) {
-      this.score += 1;
-      this.audio.pickup(pickup.index);
-      this.hud.flashPickup();
-    }
-
-    if (this.score >= this.pickups.length) {
-      this.complete = true;
-    }
-
-    this.cameraRig.update(delta, this.player.group.position, this.tuning.cameraLag);
-    this.hud.update(this.score, this.pickups.length, this.elapsed, this.complete);
+    this.hero.update(delta, this.input.readIntents(), { bounds: Terrain.bounds, sample: Terrain.sample });
+    this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
+    this.updateTimeAlive();
     this.publishDiagnostics();
   }
 
@@ -133,47 +102,29 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
-    this.player.group.position.set(0, 0.06, 12);
-    this.scene.add(this.player.group);
-    this.createPickups();
-  }
-
-  private createPickups(): void {
-    const positions = [
-      [-18, -8],
-      [-10, -11],
-      [-2, -8.5],
-      [8, -10],
-      [18, -8],
-      [-15, 8],
-      [-5, 10.5],
-      [6, 8.5],
-      [15, 11],
-    ];
-
-    positions.forEach(([x, z], index) => {
-      if (!Terrain.sample(x, z).walkable) return;
-      const pickup = new Pickup(index, new THREE.Vector3(x, 0.8, z));
-      this.pickups.push(pickup);
-      this.scene.add(pickup.group);
-    });
+    this.hero.group.position.set(0, 0.06, 12);
+    this.scene.add(this.hero.group);
   }
 
   private publishDiagnostics(): void {
     const info = this.renderer.info;
+    const heroPos = {
+      x: this.hero.group.position.x,
+      y: this.hero.group.position.y,
+      z: this.hero.group.position.z,
+    };
+    const speed = this.hero.velocity.length();
     window.__THREE_GAME_DIAGNOSTICS__ = {
       frame: this.frame,
       elapsed: this.elapsed,
-      score: this.score,
-      targetScore: this.pickups.length,
-      complete: this.complete,
+      score: 0,
+      targetScore: 0,
+      complete: false,
+      heroPos,
+      speed,
       player: {
-        position: {
-          x: this.player.group.position.x,
-          y: this.player.group.position.y,
-          z: this.player.group.position.z,
-        },
-        speed: this.player.velocity.length(),
+        position: heroPos,
+        speed,
       },
       renderer: {
         calls: info.render.calls,
@@ -182,7 +133,7 @@ export class Game {
         textures: info.memory.textures,
       },
       terrain: {
-        playerZone: Terrain.sample(this.player.group.position.x, this.player.group.position.z).zone,
+        playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
         probes: {
           bank: Terrain.sample(-12, -12),
           shallows: Terrain.sample(-12, -5.5),
@@ -200,6 +151,12 @@ export class Game {
         dpr: Math.min(window.devicePixelRatio || 1, this.tuning.maxDpr),
       },
     };
+  }
+
+  private updateTimeAlive(): void {
+    const minutes = Math.floor(this.elapsed / 60).toString().padStart(2, '0');
+    const seconds = Math.floor(this.elapsed % 60).toString().padStart(2, '0');
+    this.timerValue.textContent = `${minutes}:${seconds}`;
   }
 
   private getElement(selector: string): HTMLElement {

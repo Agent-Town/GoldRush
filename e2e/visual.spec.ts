@@ -59,7 +59,7 @@ test('renders a nonblank interactive game canvas', async ({ page }, testInfo) =>
   const sample = await sampleCanvas(page);
   expect(sample, JSON.stringify(sample)).toMatchObject({ ok: true });
 
-  const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.player.position.z ?? 0);
+  const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.heroPos.z ?? 0);
 
   if (testInfo.project.name.includes('mobile')) {
     const stick = page.locator('#touch-stick');
@@ -80,7 +80,7 @@ test('renders a nonblank interactive game canvas', async ({ page }, testInfo) =>
   }
 
   await expect
-    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.player.position.z ?? 0))
+    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.heroPos.z ?? 0))
     .toBeLessThan(before - 0.3);
 
   const screenshot = await page.screenshot({ fullPage: true });
@@ -106,4 +106,32 @@ test('terrain diagnostics expose claim zones and speeds', async ({ page }) => {
     northBank: { walkable: true, speedMul: 1, zone: 'bank' },
     out: { walkable: false, speedMul: 0, zone: 'out' },
   });
+});
+
+test('river band slows the hero through diagnostics', async ({ page }) => {
+  await page.goto('/');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+
+  await page.keyboard.down('KeyA');
+  await expect
+    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.heroPos.x ?? 0))
+    .toBeLessThan(-4);
+  await page.keyboard.up('KeyA');
+  await page.waitForTimeout(180);
+
+  await page.keyboard.down('KeyW');
+  await page.waitForTimeout(650);
+  const bankSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);
+  expect(bankSpeed).toBeGreaterThan(5.2);
+
+  await expect
+    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone))
+    .toBe('river');
+  await page.waitForTimeout(400);
+  const riverSpeed = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0);
+  await page.keyboard.up('KeyW');
+
+  const ratio = riverSpeed / bankSpeed;
+  expect(ratio).toBeGreaterThan(0.48);
+  expect(ratio).toBeLessThan(0.62);
 });

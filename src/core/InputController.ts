@@ -8,10 +8,25 @@ type PointerState = {
   radius: number;
 };
 
+export type Intents = {
+  move: THREE.Vector2;
+  confirm: boolean;
+  build: boolean;
+  restart: boolean;
+  pause: boolean;
+};
+
 export class InputController {
   private readonly keys = new Set<string>();
   private readonly pointer = new THREE.Vector2();
   private readonly keyVector = new THREE.Vector2();
+  private readonly intents: Intents = {
+    move: new THREE.Vector2(),
+    confirm: false,
+    build: false,
+    restart: false,
+    pause: false,
+  };
   private readonly pointerState: PointerState = {
     active: false,
     id: null,
@@ -20,20 +35,12 @@ export class InputController {
     radius: 1,
   };
 
-  private dashDown = false;
-
   private readonly onKeyDown = (event: KeyboardEvent) => {
     this.keys.add(event.code);
-    if (event.code === 'Space' || event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-      this.dashDown = true;
-    }
   };
 
   private readonly onKeyUp = (event: KeyboardEvent) => {
     this.keys.delete(event.code);
-    if (event.code === 'Space' || event.code === 'ShiftLeft' || event.code === 'ShiftRight') {
-      this.dashDown = false;
-    }
   };
 
   private readonly onStickDown = (event: PointerEvent) => {
@@ -67,20 +74,20 @@ export class InputController {
     this.updateKnob();
   };
 
-  private readonly onDashDown = (event: PointerEvent) => {
+  private readonly onConfirmDown = (event: PointerEvent) => {
     event.preventDefault();
-    this.dashDown = true;
+    this.keys.add('TouchConfirm');
   };
 
-  private readonly onDashUp = (event: PointerEvent) => {
+  private readonly onConfirmUp = (event: PointerEvent) => {
     event.preventDefault();
-    this.dashDown = false;
+    this.keys.delete('TouchConfirm');
   };
 
   constructor(
     private readonly stick: HTMLElement,
     private readonly knob: HTMLElement,
-    private readonly dashButton: HTMLElement,
+    private readonly confirmButton: HTMLElement,
   ) {
     window.addEventListener('keydown', this.onKeyDown);
     window.addEventListener('keyup', this.onKeyUp);
@@ -88,10 +95,19 @@ export class InputController {
     this.stick.addEventListener('pointermove', this.onStickMove);
     this.stick.addEventListener('pointerup', this.onStickUp);
     this.stick.addEventListener('pointercancel', this.onStickUp);
-    this.dashButton.addEventListener('pointerdown', this.onDashDown);
-    this.dashButton.addEventListener('pointerup', this.onDashUp);
-    this.dashButton.addEventListener('pointercancel', this.onDashUp);
-    this.dashButton.addEventListener('pointerleave', this.onDashUp);
+    this.confirmButton.addEventListener('pointerdown', this.onConfirmDown);
+    this.confirmButton.addEventListener('pointerup', this.onConfirmUp);
+    this.confirmButton.addEventListener('pointercancel', this.onConfirmUp);
+    this.confirmButton.addEventListener('pointerleave', this.onConfirmUp);
+  }
+
+  readIntents(): Intents {
+    this.readMovement(this.intents.move);
+    this.intents.confirm = this.keys.has('Space') || this.keys.has('Enter') || this.keys.has('TouchConfirm');
+    this.intents.build = this.keys.has('KeyB');
+    this.intents.restart = this.keys.has('KeyR');
+    this.intents.pause = this.keys.has('KeyP') || this.keys.has('Escape');
+    return this.intents;
   }
 
   readMovement(target: THREE.Vector2): THREE.Vector2 {
@@ -106,10 +122,6 @@ export class InputController {
     return target;
   }
 
-  isDashHeld(): boolean {
-    return this.dashDown;
-  }
-
   dispose(): void {
     window.removeEventListener('keydown', this.onKeyDown);
     window.removeEventListener('keyup', this.onKeyUp);
@@ -117,10 +129,10 @@ export class InputController {
     this.stick.removeEventListener('pointermove', this.onStickMove);
     this.stick.removeEventListener('pointerup', this.onStickUp);
     this.stick.removeEventListener('pointercancel', this.onStickUp);
-    this.dashButton.removeEventListener('pointerdown', this.onDashDown);
-    this.dashButton.removeEventListener('pointerup', this.onDashUp);
-    this.dashButton.removeEventListener('pointercancel', this.onDashUp);
-    this.dashButton.removeEventListener('pointerleave', this.onDashUp);
+    this.confirmButton.removeEventListener('pointerdown', this.onConfirmDown);
+    this.confirmButton.removeEventListener('pointerup', this.onConfirmUp);
+    this.confirmButton.removeEventListener('pointercancel', this.onConfirmUp);
+    this.confirmButton.removeEventListener('pointerleave', this.onConfirmUp);
   }
 
   private updatePointer(clientX: number, clientY: number): void {

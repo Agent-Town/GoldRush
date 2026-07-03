@@ -6,6 +6,8 @@ interface ThreeGameDiagnostics {
   score: number;
   targetScore: number;
   complete: boolean;
+  heroPos: { x: number; y: number; z: number };
+  speed: number;
   player: {
     position: { x: number; y: number; z: number };
     speed: number;
