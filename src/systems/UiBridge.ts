@@ -40,6 +40,11 @@ export class UiBridge {
     canAffordBeacon: false,
   };
 
+  announce(text: string, atSim: number): void {
+    this.snapshot.announcement = text;
+    this.snapshot.announcementAt = atSim;
+  }
+
   build(
     state: GameState,
     timeAlive: number,
@@ -48,6 +53,8 @@ export class UiBridge {
     enemiesAlive: number,
     gold: number,
     xp: number,
+    wave: number,
+    waveState: WaveState,
   ): UiSnapshot {
     this.snapshot.gold = gold;
     this.snapshot.xp = xp;
@@ -58,8 +65,8 @@ export class UiBridge {
     this.snapshot.hp = hp;
     this.snapshot.maxHp = maxHp;
     this.snapshot.enemiesAlive = enemiesAlive;
-    this.snapshot.announcement = state.current === 'playing' && timeAlive < 4 ? 'Stake your claim.' : null;
-    this.snapshot.announcementAt = 0;
+    this.snapshot.wave = wave;
+    this.snapshot.waveState = waveState;
     return this.snapshot;
   }
 }

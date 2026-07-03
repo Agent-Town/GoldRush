@@ -69,7 +69,7 @@ test('renders a nonblank interactive game canvas', async ({ page }, testInfo) =>
   });
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
-  await page.goto('/');
+  await page.goto('/?nowaves');
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
@@ -111,7 +111,7 @@ test('renders a nonblank interactive game canvas', async ({ page }, testInfo) =>
 });
 
 test('terrain diagnostics expose claim zones and speeds', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?nowaves');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   const probes = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes);
@@ -133,7 +133,7 @@ test('HUD shell is readable and stable as run numbers tick', async ({ page }) =>
   });
   page.on('pageerror', (error) => pageErrors.push(error.message));
 
-  await page.goto('/');
+  await page.goto('/?nowaves');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   const vitals = page.getByTestId('hud-vitals');
@@ -188,7 +188,7 @@ async function holdKey(page: Page, key: string): Promise<void> {
 }
 
 test('P toggles pause diagnostics and freezes sim time', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?nowaves');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('playing');
@@ -210,7 +210,7 @@ test('P toggles pause diagnostics and freezes sim time', async ({ page }) => {
 });
 
 test('river band slows the hero through diagnostics', async ({ page }) => {
-  await page.goto('/');
+  await page.goto('/?nowaves');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   await page.keyboard.down('KeyA');

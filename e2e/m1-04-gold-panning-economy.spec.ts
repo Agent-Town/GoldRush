@@ -26,7 +26,7 @@ function collectErrors(page: Page): ErrorBucket {
 
 // timescale=2: fast enough for respawn waits, slow enough for the keyboard walk
 // to steer precisely under the unified sim clock (hero speed scales with timescale).
-async function openGame(page: Page, query = '?seed=m1-04&timescale=2&debug'): Promise<ErrorBucket> {
+async function openGame(page: Page, query = '?seed=m1-04&timescale=2&debug&nowaves'): Promise<ErrorBucket> {
   const errors = collectErrors(page);
   await page.goto(`/${query}`);
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
@@ -86,7 +86,7 @@ test('scripted walk to a gold seam pans at least one tick', async ({ page }, tes
 });
 
 test('leaving mid-pan decays harvest progress', async ({ page }) => {
-  const errors = await openGame(page, '?seed=m1-04-decay&timescale=2&debug');
+  const errors = await openGame(page, '?seed=m1-04-decay&timescale=2&debug&nowaves');
   const target = await nearestActiveNode(page);
 
   await moveTo(page, target.position);
@@ -107,7 +107,7 @@ test('leaving mid-pan decays harvest progress', async ({ page }) => {
 });
 
 test('depleted gold seam relocates after its respawn timer', async ({ page }) => {
-  const errors = await openGame(page, '?seed=m1-04-relocate&timescale=8&debug');
+  const errors = await openGame(page, '?seed=m1-04-relocate&timescale=8&debug&nowaves');
   const target = await nearestActiveNode(page);
   const oldAnchorIndex = target.anchorIndex;
 

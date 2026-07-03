@@ -3,6 +3,8 @@ export type DebugParams = {
   readonly seed: string | null;
   readonly timescale: number;
   readonly nospawn: boolean;
+  readonly nowaves: boolean;
+  readonly nokill: boolean;
   readonly stress: number;
 };
 
@@ -11,6 +13,8 @@ const DEFAULT_PARAMS: DebugParams = {
   seed: null,
   timescale: 1,
   nospawn: false,
+  nowaves: false,
+  nokill: false,
   stress: 0,
 };
 
@@ -22,6 +26,8 @@ export function readDebugParams(search = getSearch()): DebugParams {
     seed: params.get('seed'),
     timescale: readPositiveNumber(params, 'timescale', DEFAULT_PARAMS.timescale),
     nospawn: readFlag(params, 'nospawn'),
+    nowaves: readFlag(params, 'nowaves'),
+    nokill: readFlag(params, 'nokill'),
     stress: readNonNegativeInt(params, 'stress', DEFAULT_PARAMS.stress),
   };
 }
@@ -42,6 +48,14 @@ export function getTimescale(): number {
 
 export function isSpawnDisabled(): boolean {
   return DEBUG_PARAMS.nospawn;
+}
+
+export function areWavesDisabled(): boolean {
+  return DEBUG_PARAMS.nowaves;
+}
+
+export function isCombatDamageDisabled(): boolean {
+  return DEBUG_PARAMS.nokill;
 }
 
 export function getStressCount(): number {

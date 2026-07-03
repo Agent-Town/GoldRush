@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
 async function waitForGame(page: Page): Promise<void> {
-  await page.goto('/');
+  await page.goto('/?nowaves');
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 }
@@ -56,7 +56,7 @@ test('T spawns Claim Jumpers, contact kills hero, R restarts in place', async ({
 });
 
 test('nospawn blocks debug packs', async ({ page }) => {
-  await page.goto('/?nospawn');
+  await page.goto('/?nospawn&nowaves');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   await spawnDebugPack(page);
@@ -67,7 +67,7 @@ test('nospawn blocks debug packs', async ({ page }) => {
 });
 
 test('double restart recycles enemies without geometry growth', async ({ page }) => {
-  await page.goto('/?debug&timescale=4');
+  await page.goto('/?debug&timescale=4&nowaves');
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer.geometries ?? 0);
@@ -89,7 +89,7 @@ test('double restart recycles enemies without geometry growth', async ({ page })
 });
 
 test('stress=120 stays within pool and draw-call budget', async ({ page }) => {
-  await page.goto('/?stress=120');
+  await page.goto('/?stress=120&nowaves');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 20);
 
   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0);

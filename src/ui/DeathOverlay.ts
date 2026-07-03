@@ -2,6 +2,7 @@ export type DeathLedger = {
   timeAlive: number;
   kills: number;
   goldPanned: number;
+  wavesSurvived: number;
 };
 
 export class DeathOverlay {
@@ -9,6 +10,7 @@ export class DeathOverlay {
   private readonly timeValue: HTMLElement;
   private readonly killsValue: HTMLElement;
   private readonly goldValue: HTMLElement;
+  private readonly wavesValue: HTMLElement;
   private readonly button: HTMLButtonElement;
   private visible = false;
 
@@ -32,6 +34,10 @@ export class DeathOverlay {
             <dd data-death-kills>0</dd>
           </div>
           <div>
+            <dt>Waves Survived</dt>
+            <dd data-death-waves>0</dd>
+          </div>
+          <div>
             <dt>Gold Panned</dt>
             <dd data-death-gold>0</dd>
           </div>
@@ -42,6 +48,7 @@ export class DeathOverlay {
 
     this.timeValue = this.get('[data-death-time]');
     this.killsValue = this.get('[data-death-kills]');
+    this.wavesValue = this.get('[data-death-waves]');
     this.goldValue = this.get('[data-death-gold]');
     this.button = this.get<HTMLButtonElement>('[data-testid="stake-again"]');
 
@@ -54,6 +61,7 @@ export class DeathOverlay {
     this.visible = true;
     this.timeValue.textContent = this.formatTime(ledger.timeAlive);
     this.killsValue.textContent = ledger.kills.toString();
+    this.wavesValue.textContent = ledger.wavesSurvived.toString();
     this.goldValue.textContent = ledger.goldPanned.toString();
     this.root.classList.add('death-overlay--visible');
     this.root.setAttribute('aria-hidden', 'false');

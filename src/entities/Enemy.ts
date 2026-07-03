@@ -14,6 +14,11 @@ export type ClaimJumperAssets = {
   shadowMaterial: THREE.MeshBasicMaterial;
 };
 
+export type EnemySpawnParams = {
+  speedScale?: number;
+  hpScale?: number;
+};
+
 export function createClaimJumperAssets(): ClaimJumperAssets {
   return {
     ponchoGeometry: new THREE.ConeGeometry(0.54, 1.08, 7),
@@ -74,10 +79,10 @@ export class ClaimJumperEnemy {
     return this.hp;
   }
 
-  spawn(position: THREE.Vector3, speedScale: number): void {
+  spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): void {
     this.alive = true;
-    this.hp = Balance.enemy.hp;
-    this.speed = Balance.enemy.speed * speedScale;
+    this.hp = Balance.enemy.hp * (params.hpScale ?? 1);
+    this.speed = Balance.enemy.speed * (params.speedScale ?? 1);
     this.contactCooldown = 0;
     this.velocity.set(0, 0, 0);
     this.heading.set(0, 0, -1);

@@ -10,12 +10,12 @@ Synthesized 2026-07-03 from three independent drafts.
 
 _Last updated: 2026-07-03. Update this section before ending your pass._
 
-Status: **01 + 02 + 04 DONE 2026-07-03** (02: `reviews/m1-02-auto-fire-spark-rig.md`, commit `06f4231` — includes mid-flight merge with feedback commit `0a4cf2f`; UI vfx = `systems/Vfx.ts`, combat vfx = `systems/CombatVfx.ts`, don't re-unify). Pickup point: `slices/03-wave-pressure.md` (lane A) — record the first "is it fun" verdict in this file; 05 and 06 are now unblocked (02+04 done) and may run as a parallel lane. Read STATUS.md §environment + §lessons first — chunked Codex protocol, `pw.reuse.config.ts` for e2e (port-orphan workaround), harness spawns (`__GR_TEST__.spawnPack`) NOT keyboard in tests, e2e serial never parallel, unified sim clock. Verify per M0 README GATE-STD; keep this prompt current.
+Status: **01 + 02 + 03 + 04 DONE 2026-07-03** (03: `reviews/m1-03-wave-pressure.md`, fun verdict recorded in `slices/03-wave-pressure.md` — **NOT FLAT, no reslice**; WaveSystem owns ALL spawning incl. debug/stress; `?nowaves`/`?nokill` test flags; announcement slot now evented via `UiBridge.announce`). Pickup point: `slices/05-sentry-beacon-build.md` and/or `slices/06-level-up-choices.md` — both unblocked, parallelizable (05 touches Economy/build; 06 touches Progression/UI — disjoint except `Game.ts`/`Balance.ts` registration lines). Fold HarvestSystem `reset()` into 05 (carried minor). Read STATUS.md §environment + §lessons first — chunked Codex protocol, `pw.reuse.config.ts` for e2e (port-orphan workaround), harness spawns (`__GR_TEST__.spawnPack`) NOT keyboard in tests, e2e serial never parallel, unified sim clock. Verify per M0 README GATE-STD; keep this prompt current.
 
 TODO:
 - [x] 01-claim-jumpers-death (Codex A, PASS; enemies instanced in perf round)
 - [x] 02-auto-fire-spark-rig (Codex C, PASS after 1 correction round — 0-dmg slot-order blocker caught by live probe)
-- [ ] 03-wave-pressure (lane A) ← NEXT — first "is it fun" verdict recorded here
+- [x] 03-wave-pressure (Codex D `019f2701-f227`, PASS after 1 correction — real alive-cap overshoot found by supervisor probe; verdict: NOT FLAT, tuning concerns → 07)
 - [x] 04-gold-panning-economy (Codex B, PASS; seams instanced; teleport harness)
 - [ ] 05-sentry-beacon-build (needs 02+04)
 - [ ] 06-level-up-choices (needs 02; ∥ 03/05)

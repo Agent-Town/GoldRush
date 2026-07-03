@@ -12,6 +12,7 @@ type HudElements = {
   xpFill: HTMLElement;
   levelText: HTMLElement;
   waveText: HTMLElement;
+  waveNumber: HTMLElement;
   timeText: HTMLElement;
   pauseHint: HTMLElement;
 };
@@ -40,6 +41,10 @@ export class Hud {
         <div class="hud-row hud-row--split">
           <span class="hud-label">Time</span>
           <strong class="hud-value" data-hud-time>00:00</strong>
+        </div>
+        <div class="hud-row hud-row--split">
+          <span class="hud-label">Wave</span>
+          <strong class="hud-value" data-hud-wave-number>0</strong>
         </div>
       </section>
 
@@ -74,6 +79,7 @@ export class Hud {
       xpFill: this.get(root, '[data-hud-xp-fill]'),
       levelText: this.get(root, '[data-hud-level]'),
       waveText: this.get(root, '[data-hud-wave]'),
+      waveNumber: this.get(root, '[data-hud-wave-number]'),
       timeText: this.get(root, '[data-hud-time]'),
       pauseHint: this.get(root, '[data-hud-pause]'),
     };
@@ -88,6 +94,7 @@ export class Hud {
     this.elements.xpText.textContent = `${snapshot.xp} / ${snapshot.xpNeed} XP`;
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;
     this.elements.levelText.textContent = snapshot.level.toString();
+    this.elements.waveNumber.textContent = snapshot.wave.toString();
     this.elements.timeText.textContent = this.formatTime(snapshot.timeAlive);
     this.updateAnnouncement(snapshot);
     this.elements.root.dataset.runState = snapshot.state;

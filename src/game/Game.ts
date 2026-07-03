@@ -1,9 +1,10 @@
 import * as THREE from 'three';
 import { EventBus } from '../core/EventBus';
-import { getStressCount, getTimescale, isSpawnDisabled } from '../core/DebugParams';
+import { areWavesDisabled, getDebugSeed, getStressCount, getTimescale, isSpawnDisabled } from '../core/DebugParams';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
+import { createRng } from '../core/Rng';
 import { Hero } from '../entities/Hero';
 import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
@@ -16,6 +17,7 @@ import { CombatSystem } from '../systems/CombatSystem';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
+import { WaveSystem } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
@@ -57,9 +59,15 @@ export class Game {
   private readonly deathOverlay: DeathOverlay;
   private readonly damageVignette = document.createElement('div');
   private readonly heroStart = new THREE.Vector3(0, 0.06, 12);
-  private readonly spawnCenter = new THREE.Vector3();
   private terrainView?: TerrainView;
   private readonly cameraRig = new CameraRig(this.camera);
+  private readonly waveSystem = new WaveSystem(
+    this.enemies,
+    this.hero.group.position,
+    createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
+    (text, atSim) => this.uiBridge.announce(text, atSim),
+    areWavesDisabled,
+  );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
     () => this.render(),
@@ -95,6 +103,7 @@ export class Game {
     timeAlive: 0,
     kills: 0,
     goldPanned: 0,
+    wavesSurvived: 0,
   };
 
   constructor(private readonly canvas: HTMLCanvasElement) {
@@ -125,6 +134,7 @@ export class Game {
         timeAlive: event.timeAlive,
         kills: event.kills,
         goldPanned: event.goldPanned,
+        wavesSurvived: event.wavesSurvived,
       };
       this.deathOverlay.show(this.deathLedger);
     });
@@ -157,7 +167,8 @@ export class Game {
     }
     this.cameraRig.snapTo(this.hero.group.position);
     this.state.transition('playing');
-    this.spawnStressEnemies();
+    this.uiBridge.announce('Stake your claim.', 0);
+    this.waveSystem.spawnStressEnemies();
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     this.syncUi();
     this.publishDiagnostics();
@@ -205,6 +216,7 @@ export class Game {
       this.terrainView?.update(simDelta);
       this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
       this.combat.setTime(this.timeAlive);
+      this.waveSystem.update(this.timeAlive);
       this.enemies.update(simDelta, this.hero.group.position, this.combat.handleEnemyContact);
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
@@ -304,6 +316,11 @@ export class Game {
       kills: this.kills,
       goldPanned: this.goldPanned,
       deathLedger: this.deathLedger,
+      wave: this.waveSystem.diagnostics.wave,
+      nextWaveInSim: this.waveSystem.diagnostics.nextWaveInSim,
+      trickleInterval: this.waveSystem.diagnostics.trickleInterval,
+      waveSpawnedTotal: this.waveSystem.diagnostics.waveSpawnedTotal,
+      waveState: this.waveSystem.diagnostics.waveState,
       spawnDisabled: isSpawnDisabled(),
       stressCount: getStressCount(),
       score: 0,
@@ -385,6 +402,8 @@ export class Game {
       this.enemies.activeCount,
       this.economy.gold,
       this.combat.xpCount,
+      this.waveSystem.diagnostics.wave,
+      this.waveSystem.diagnostics.waveState,
     );
     this.hud.update(this.uiSnapshot);
   }
@@ -397,6 +416,7 @@ export class Game {
   resetRun(): void {
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
+    this.waveSystem.reset();
     this.combat.reset();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);
@@ -410,8 +430,10 @@ export class Game {
       timeAlive: 0,
       kills: 0,
       goldPanned: 0,
+      wavesSurvived: 0,
     };
     this.state.restart();
+    this.uiBridge.announce('Stake your claim.', 0);
   }
 
   private endRun(): void {
@@ -423,32 +445,13 @@ export class Game {
       timeAlive: this.timeAlive,
       kills: this.kills,
       goldPanned: this.economy.gold,
+      wavesSurvived: this.waveSystem.diagnostics.wave,
     });
   }
 
   private spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): void {
     if (isSpawnDisabled() || this.state.current !== 'playing') return;
-    this.spawnCenter.copy(this.hero.group.position);
-    this.enemies.spawnPack(this.spawnCenter, count, radius);
-  }
-
-  private spawnStressEnemies(): void {
-    if (isSpawnDisabled()) return;
-    const stressCount = getStressCount();
-    if (stressCount <= 0) return;
-
-    const center = this.hero.group.position;
-    const radius = 15;
-    for (let i = 0; i < stressCount; i += 1) {
-      const angle = (i / Math.max(1, stressCount)) * Math.PI * 2;
-      const speedScale = 1 + (((i % 7) - 3) / 3) * Balance.enemy.speedVariance;
-      const position = new THREE.Vector3(
-        center.x + Math.cos(angle) * radius,
-        Balance.enemy.groundY,
-        center.z + Math.sin(angle) * radius,
-      );
-      if (!this.enemies.spawn(position, speedScale)) return;
-    }
+    this.waveSystem.spawnDebugPack(count, radius);
   }
 
   private getElement(selector: string): HTMLElement {

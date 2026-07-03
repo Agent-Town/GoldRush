@@ -5,6 +5,7 @@ import type { Hero } from '../entities/Hero';
 import type { ProjectilePool } from '../entities/Projectile';
 import type { XpMotePool } from '../entities/XpMote';
 import type { EnemyPool } from '../entities/pools';
+import { isCombatDamageDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
 import type { AudioSystem } from './AudioSystem';
 import { TargetingSystem } from './TargetingSystem';
@@ -75,6 +76,8 @@ export class CombatSystem {
   }
 
   readonly handleEnemyContact = (enemy: ClaimJumperEnemy): void => {
+    if (isCombatDamageDisabled()) return;
+
     const result = this.hero.takeDamage(Balance.enemy.contactDamage);
     if (!result.applied) return;
 
@@ -149,6 +152,8 @@ export class CombatSystem {
   }
 
   private resolveBoltHits(at: number): void {
+    if (isCombatDamageDisabled()) return;
+
     const hitRadius = Balance.sparkRig.boltRadius + Balance.enemy.touchRadius;
     const hitRadiusSq = hitRadius * hitRadius;
     for (let boltIndex = 0; boltIndex < this.projectiles.capacity; boltIndex += 1) {

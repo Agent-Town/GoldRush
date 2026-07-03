@@ -43,7 +43,7 @@ test('announcement banner fades after the opening claim notice', async ({ page }
 });
 
 test('gold panning spawns pooled world-space float text', async ({ page }) => {
-  await page.goto('/?debug&timescale=8&seed=feedback-fx');
+  await page.goto('/?debug&timescale=8&seed=feedback-fx&nowaves');
   await waitForGame(page);
 
   const target = await nearestActiveNode(page);

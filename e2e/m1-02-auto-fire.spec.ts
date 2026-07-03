@@ -23,7 +23,7 @@ async function openGame(page: Page, query: string): Promise<ErrorBucket> {
 }
 
 test('Spark Rig clears a debug pack and motes grant XP with zero input', async ({ page }) => {
-  const errors = await openGame(page, '?debug&timescale=3');
+  const errors = await openGame(page, '?debug&timescale=3&nowaves');
 
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(5, 3));
   await expect.poll(async () => page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBeGreaterThan(0);
@@ -39,7 +39,7 @@ test('Spark Rig clears a debug pack and motes grant XP with zero input', async (
 });
 
 test('stress pack never exceeds the bolt pool and logs no console errors', async ({ page }) => {
-  const errors = await openGame(page, '?stress=120&timescale=3');
+  const errors = await openGame(page, '?stress=120&timescale=3&nowaves');
   let maxBolts = 0;
 
   for (let i = 0; i < 20; i += 1) {
@@ -55,7 +55,7 @@ test('stress pack never exceeds the bolt pool and logs no console errors', async
 });
 
 test('run reset recycles combat pools without renderer memory growth', async ({ page }) => {
-  const errors = await openGame(page, '?debug&timescale=3');
+  const errors = await openGame(page, '?debug&timescale=3&nowaves');
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
 
   for (let cycle = 0; cycle < 3; cycle += 1) {

@@ -13,6 +13,7 @@ export type GameEvent =
       timeAlive: number;
       kills: number;
       goldPanned: number;
+      wavesSurvived: number;
     }
   | {
       type: 'enemy_killed';

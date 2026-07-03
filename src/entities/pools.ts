@@ -6,6 +6,7 @@ import {
   createClaimJumperAssets,
   disposeClaimJumperAssets,
   type ClaimJumperAssets,
+  type EnemySpawnParams,
 } from './Enemy';
 
 export class EnemyPool {
@@ -58,33 +59,15 @@ export class EnemyPool {
     return this.enemies;
   }
 
-  spawn(position: THREE.Vector3, speedScale = 1): ClaimJumperEnemy | null {
+  spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): ClaimJumperEnemy | null {
     for (const enemy of this.enemies) {
       if (enemy.isAlive) continue;
-      enemy.spawn(position, speedScale);
+      enemy.spawn(position, params);
       this.active += 1;
       this.syncEnemyInstance(enemy);
       return enemy;
     }
     return null;
-  }
-
-  spawnPack(center: THREE.Vector3, count: number, radius: number = Balance.enemy.debugPackRadius): number {
-    let spawned = 0;
-    const ringRadius = radius;
-    const startAngle = Math.PI * -0.5;
-
-    for (let i = 0; i < count; i += 1) {
-      const angle = startAngle + (i / Math.max(1, count)) * Math.PI * 2;
-      const position = new THREE.Vector3(
-        center.x + Math.cos(angle) * ringRadius,
-        Balance.enemy.groundY,
-        center.z + Math.sin(angle) * ringRadius,
-      );
-      if (this.spawn(position, 1)) spawned += 1;
-    }
-
-    return spawned;
   }
 
   update(delta: number, heroPosition: THREE.Vector3, onContact: (enemy: ClaimJumperEnemy) => void): void {

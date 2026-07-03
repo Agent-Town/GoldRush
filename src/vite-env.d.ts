@@ -38,7 +38,13 @@ interface ThreeGameDiagnostics {
     timeAlive: number;
     kills: number;
     goldPanned: number;
+    wavesSurvived: number;
   };
+  wave: number;
+  nextWaveInSim: number;
+  trickleInterval: number;
+  waveSpawnedTotal: number;
+  waveState: 'quiet' | 'warning' | 'active' | 'cleared';
   spawnDisabled: boolean;
   stressCount: number;
   score: number;
