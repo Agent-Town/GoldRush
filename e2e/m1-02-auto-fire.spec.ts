@@ -40,15 +40,22 @@ test('Spark Rig clears a debug pack and motes grant XP with zero input', async (
 
 test('stress pack never exceeds the bolt pool and logs no console errors', async ({ page }) => {
   const errors = await openGame(page, '?stress=120&timescale=3&nowaves');
-  let maxBolts = 0;
-
-  for (let i = 0; i < 20; i += 1) {
-    await page.waitForTimeout(250);
-    const bolts = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.boltsAlive ?? 0);
-    maxBolts = Math.max(maxBolts, bolts);
-  }
-
-  expect(maxBolts).toBeGreaterThan(0);
+  // In-page rAF max-tracker: protocol polling misses sub-frame flight windows
+  // when headless fps collapses (bolt flight resolves in 1-2 frames at low fps).
+  await page.evaluate(() => {
+    const w = window as unknown as { __maxBolts?: number };
+    w.__maxBolts = 0;
+    const track = () => {
+      const bolts = window.__THREE_GAME_DIAGNOSTICS__?.boltsAlive ?? 0;
+      w.__maxBolts = Math.max(w.__maxBolts ?? 0, bolts);
+      requestAnimationFrame(track);
+    };
+    requestAnimationFrame(track);
+  });
+  await expect
+    .poll(async () => page.evaluate(() => (window as unknown as { __maxBolts?: number }).__maxBolts ?? 0), { timeout: 10_000 })
+    .toBeGreaterThan(0);
+  const maxBolts = await page.evaluate(() => (window as unknown as { __maxBolts?: number }).__maxBolts ?? 0);
   expect(maxBolts).toBeLessThanOrEqual(128);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);

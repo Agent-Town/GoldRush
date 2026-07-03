@@ -20,6 +20,9 @@ export type Intents = {
 
 export class InputController {
   private readonly keys = new Set<string>();
+  // Sub-frame tap buffer: a keydown+keyup pair that lands entirely between two
+  // intent samples (low-fps frames) must still register for one sample.
+  private readonly tapped = new Set<string>();
   private readonly pointer = new THREE.Vector2();
   private readonly keyVector = new THREE.Vector2();
   private previousBuild = false;
@@ -43,6 +46,7 @@ export class InputController {
 
   private readonly onKeyDown = (event: KeyboardEvent) => {
     this.keys.add(event.code);
+    this.tapped.add(event.code);
   };
 
   private readonly onKeyUp = (event: KeyboardEvent) => {
@@ -83,6 +87,7 @@ export class InputController {
   private readonly onConfirmDown = (event: PointerEvent) => {
     event.preventDefault();
     this.keys.add('TouchConfirm');
+    this.tapped.add('TouchConfirm');
   };
 
   private readonly onConfirmUp = (event: PointerEvent) => {
@@ -108,17 +113,19 @@ export class InputController {
   }
 
   readIntents(): Intents {
+    const down = (code: string): boolean => this.keys.has(code) || this.tapped.has(code);
     this.readMovement(this.intents.move);
-    this.intents.confirm = this.keys.has('Space') || this.keys.has('Enter') || this.keys.has('TouchConfirm');
-    const buildHeld = this.keys.has('KeyB');
+    this.intents.confirm = down('Space') || down('Enter') || down('TouchConfirm');
+    const buildHeld = down('KeyB');
     this.intents.build = buildHeld && !this.previousBuild;
-    this.previousBuild = buildHeld;
-    this.intents.restart = this.keys.has('KeyR');
-    this.intents.pause = this.keys.has('KeyP') || this.keys.has('Escape');
-    this.intents.debugSpawn = this.keys.has('KeyT');
-    const debugXpHeld = this.keys.has('KeyX');
+    this.previousBuild = this.keys.has('KeyB');
+    this.intents.restart = down('KeyR');
+    this.intents.pause = down('KeyP') || down('Escape');
+    this.intents.debugSpawn = down('KeyT');
+    const debugXpHeld = down('KeyX');
     this.intents.debugXp = debugXpHeld && !this.previousDebugXp;
-    this.previousDebugXp = debugXpHeld;
+    this.previousDebugXp = this.keys.has('KeyX');
+    this.tapped.clear();
     return this.intents;
   }
 
