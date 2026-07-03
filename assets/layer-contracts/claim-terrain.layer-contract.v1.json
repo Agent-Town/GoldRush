@@ -1,0 +1,11 @@
+{
+  "$schema": "gold-rush layer contract v1",
+  "batch": "batch-002 (queued)",
+  "notes": "Terrain prop slots — placeholders shipped as primitives in m0/02; art queued behind batch-001.",
+  "slots": [
+    { "file": "prop-rock.png", "slot": "prop.rock", "size": [512, 512], "usage": "scatter prop billboard", "fullBleed": false },
+    { "file": "prop-stump.png", "slot": "prop.stump", "size": [512, 512], "usage": "scatter prop billboard", "fullBleed": false },
+    { "file": "prop-claim-post.png", "slot": "prop.claim_post", "size": [512, 512], "usage": "claim marker billboard", "fullBleed": false },
+    { "file": "terrain-ford-tile.png", "slot": "terrain.ford", "size": [1024, 1024], "usage": "shallow crossing texture", "fullBleed": true }
+  ]
+}
