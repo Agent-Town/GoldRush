@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 
 async function waitForGame(page: Page): Promise<void> {
-  await page.goto('/?nowaves');
+  await page.goto('/?nowaves&nolevel');
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 }
@@ -67,7 +67,7 @@ test('nospawn blocks debug packs', async ({ page }) => {
 });
 
 test('double restart recycles enemies without geometry growth', async ({ page }) => {
-  await page.goto('/?debug&timescale=4&nowaves');
+  await page.goto('/?debug&timescale=4&nowaves&nolevel');
   await expect(page.locator('#game-canvas')).toBeVisible();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   // Warm the float-text pool first: kills during the swarm drop xp motes whose

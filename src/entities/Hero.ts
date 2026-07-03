@@ -4,16 +4,15 @@ import { Balance } from '../game/Balance';
 import type { Intents } from '../core/InputController';
 import type { TerrainBounds, TerrainSample } from '../world/Terrain';
 
-export type StatSheet = Record<string, never>;
-
 export type TerrainSampler = (x: number, z: number) => TerrainSample;
 
 export class Hero {
   readonly group = new THREE.Group();
   readonly velocity = new THREE.Vector3();
-  readonly stats: StatSheet = {};
   hp: number = Balance.hero.maxHp;
 
+  private maxHpBonus = 0;
+  private moveSpeedMult = 1;
   private readonly targetVelocity = new THREE.Vector3();
   private readonly nextPosition = new THREE.Vector3();
   private iframeRemaining = 0;
@@ -82,7 +81,7 @@ export class Hero {
     const currentSample = terrain.sample(this.group.position.x, this.group.position.z);
     this.targetVelocity
       .set(intents.move.x, 0, intents.move.y)
-      .multiplyScalar(Balance.hero.speed * currentSample.speedMul);
+      .multiplyScalar(Balance.hero.speed * this.moveSpeedMult * currentSample.speedMul);
 
     const rate = this.targetVelocity.lengthSq() > this.velocity.lengthSq() ? Balance.hero.accel : Balance.hero.decel;
     this.velocity.lerp(this.targetVelocity, 1 - Math.exp(-rate * dt));
@@ -117,7 +116,7 @@ export class Hero {
   }
 
   get maxHp(): number {
-    return Balance.hero.maxHp;
+    return Balance.hero.maxHp + this.maxHpBonus;
   }
 
   get hasIframes(): boolean {
@@ -134,8 +133,21 @@ export class Hero {
     return { applied: true, died: this.hp <= 0 };
   }
 
+  applyStats(maxHpBonus: number, moveSpeedMult: number): void {
+    const previousMax = this.maxHp;
+    this.maxHpBonus = maxHpBonus;
+    this.moveSpeedMult = moveSpeedMult;
+    if (this.maxHp < previousMax) this.hp = Math.min(this.hp, this.maxHp);
+  }
+
+  heal(amount: number): void {
+    this.hp = Math.min(this.maxHp, this.hp + amount);
+  }
+
   resetRun(position: THREE.Vector3): void {
-    this.hp = Balance.hero.maxHp;
+    this.maxHpBonus = 0;
+    this.moveSpeedMult = 1;
+    this.hp = this.maxHp;
     this.iframeRemaining = 0;
     this.velocity.set(0, 0, 0);
     this.targetVelocity.set(0, 0, 0);

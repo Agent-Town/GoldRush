@@ -17,7 +17,7 @@ TODO:
 - [x] 02-auto-fire-spark-rig (Codex C, PASS after 1 correction round — 0-dmg slot-order blocker caught by live probe)
 - [x] 03-wave-pressure (Codex D `019f2701-f227`, PASS after 1 correction — real alive-cap overshoot found by supervisor probe; verdict: NOT FLAT, tuning concerns → 07)
 - [x] 04-gold-panning-economy (Codex B, PASS; seams instanced; teleport harness)
-- [ ] 05-sentry-beacon-build (needs 02+04)
+- [x] 05-sentry-beacon-build (Codex E `019f2741-d3eb`, PASS + 4 supervisor fixes; bolt-diffusion finding in `reviews/m1-05-sentry-beacon-build.md`; 2026-07-03 s4)
 - [ ] 06-level-up-choices (needs 02; ∥ 03/05)
 - [ ] 07-feel-and-tune-gate → M1 exit: Robin playtest + sign-off
 

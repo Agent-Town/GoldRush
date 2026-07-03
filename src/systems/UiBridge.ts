@@ -61,6 +61,8 @@ export class UiBridge {
     enemiesAlive: number,
     gold: number,
     xp: number,
+    xpNeed: number,
+    level: number,
     wave: number,
     waveState: WaveState,
     buildMode: boolean,
@@ -71,7 +73,8 @@ export class UiBridge {
   ): UiSnapshot {
     this.snapshot.gold = gold;
     this.snapshot.xp = xp;
-    this.snapshot.xpNeed = Balance.xp.needBase;
+    this.snapshot.xpNeed = xpNeed;
+    this.snapshot.level = level;
     this.snapshot.timeAlive = timeAlive;
     this.snapshot.state = state.current;
     this.snapshot.paused = state.isPaused;

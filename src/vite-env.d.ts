@@ -36,6 +36,28 @@ interface ThreeGameDiagnostics {
   boltsAlive: number;
   xp: number;
   xpMotesAlive: number;
+  progression: {
+    level: number;
+    xpInto: number;
+    xpNeed: number;
+    pendingLevels: number;
+    offer: string[] | null;
+    stacks: Record<string, number>;
+    stats: {
+      fireRateMult: number;
+      damageMult: number;
+      rangeMult: number;
+      boltSpeedMult: number;
+      volleyBonus: number;
+      maxHpBonus: number;
+      moveSpeedMult: number;
+      panTickMult: number;
+      seamCapacityBonus: number;
+      seamRespawnReduction: number;
+      beaconFireRateMult: number;
+    };
+    eligibility: string[];
+  };
   kills: number;
   goldPanned: number;
   deathLedger: {
@@ -130,7 +152,9 @@ interface Window {
     resetRun: () => void;
     warmVfx: () => void;
     grantGold: (n: number) => void;
+    grantXp: (n: number) => void;
     setBuildMode: (on: boolean) => void;
+    placeBeacon: () => boolean;
     state: () => {
       enemiesAlive: number;
       xp: number;

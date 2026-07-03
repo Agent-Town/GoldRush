@@ -15,6 +15,7 @@ export type Intents = {
   restart: boolean;
   pause: boolean;
   debugSpawn: boolean;
+  debugXp: boolean;
 };
 
 export class InputController {
@@ -22,6 +23,7 @@ export class InputController {
   private readonly pointer = new THREE.Vector2();
   private readonly keyVector = new THREE.Vector2();
   private previousBuild = false;
+  private previousDebugXp = false;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
     confirm: false,
@@ -29,6 +31,7 @@ export class InputController {
     restart: false,
     pause: false,
     debugSpawn: false,
+    debugXp: false,
   };
   private readonly pointerState: PointerState = {
     active: false,
@@ -113,6 +116,9 @@ export class InputController {
     this.intents.restart = this.keys.has('KeyR');
     this.intents.pause = this.keys.has('KeyP') || this.keys.has('Escape');
     this.intents.debugSpawn = this.keys.has('KeyT');
+    const debugXpHeld = this.keys.has('KeyX');
+    this.intents.debugXp = debugXpHeld && !this.previousDebugXp;
+    this.previousDebugXp = debugXpHeld;
     return this.intents;
   }
 

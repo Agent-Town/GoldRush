@@ -54,6 +54,11 @@ export function areWavesDisabled(): boolean {
   return DEBUG_PARAMS.nowaves;
 }
 
+/** ?nolevel — test harness: XP/level math runs, but level-ups never freeze the sim with an offer. */
+export function isLevelUpDisabled(): boolean {
+  return new URLSearchParams(window.location.search).has('nolevel');
+}
+
 export function isCombatDamageDisabled(): boolean {
   return DEBUG_PARAMS.nokill;
 }

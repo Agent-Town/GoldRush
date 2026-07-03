@@ -91,7 +91,9 @@ export class GoldNodeVisualBatch {
 export class GoldNode {
   readonly group = new THREE.Group();
 
-  private remaining = Balance.goldSeam.capacity;
+  private capacity: number = Balance.goldSeam.capacity;
+  private respawnSeconds: number = Balance.goldSeam.respawnSeconds;
+  private remaining: number = Balance.goldSeam.capacity;
   private active = false;
   private anchorIndex = -1;
   private respawnAt = 0;
@@ -120,7 +122,7 @@ export class GoldNode {
   place(anchor: Vec2, anchorIndex: number): void {
     this.anchor = anchor;
     this.anchorIndex = anchorIndex;
-    this.remaining = Balance.goldSeam.capacity;
+    this.remaining = this.capacity;
     this.respawnAt = 0;
     this.active = true;
     this.group.visible = true;
@@ -138,12 +140,14 @@ export class GoldNode {
   deactivateUntil(at: number): void {
     this.active = false;
     this.group.visible = false;
-    this.respawnAt = at + Balance.goldSeam.respawnSeconds;
+    this.respawnAt = at + this.respawnSeconds;
     this.visuals.hide(this.visualIndex);
   }
 
   resetInactive(): void {
-    this.remaining = Balance.goldSeam.capacity;
+    this.capacity = Balance.goldSeam.capacity;
+    this.respawnSeconds = Balance.goldSeam.respawnSeconds;
+    this.remaining = this.capacity;
     this.active = false;
     this.anchorIndex = -1;
     this.respawnAt = 0;
@@ -159,6 +163,17 @@ export class GoldNode {
   update(_delta: number, at: number): void {
     if (!this.active) return;
     this.visuals.updateGlint(this.visualIndex, this.anchor, this.anchorIndex, at);
+  }
+
+  applyStats(capacity: number, respawnSeconds: number): void {
+    const previousCapacity = this.capacity;
+    this.capacity = capacity;
+    this.respawnSeconds = respawnSeconds;
+    if (this.active && capacity > previousCapacity) {
+      this.remaining += capacity - previousCapacity;
+    } else if (this.remaining > capacity) {
+      this.remaining = capacity;
+    }
   }
 
   snapshot(at: number): GoldNodeSnapshot {

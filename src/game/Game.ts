@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { EventBus } from '../core/EventBus';
-import { areWavesDisabled, getDebugSeed, getStressCount, getTimescale, isSpawnDisabled } from '../core/DebugParams';
+import { areWavesDisabled, getDebugSeed, getStressCount, getTimescale, isLevelUpDisabled, isSpawnDisabled } from '../core/DebugParams';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
@@ -15,6 +15,7 @@ import { Economy, initialEconomyState, reduce as reduceEconomy } from './Economy
 import { CameraRig } from '../systems/CameraRig';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
+import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
@@ -23,9 +24,13 @@ import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
+import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { GameState } from './GameState';
+import { Progression } from './Progression';
+import type { EffectiveStats } from './StatSheet';
+import { upgradeDefById, type UpgradeId } from './Upgrades';
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -55,11 +60,21 @@ export class Game {
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
   );
   private readonly buildSystem: BuildSystem;
+  private readonly progression: Progression;
+  private readonly heroShooter: ShooterHandle = {
+    getPos: () => this.hero.group.position,
+    range: Balance.sparkRig.range,
+    cooldown: 1 / Balance.sparkRig.fireRate,
+    damage: Balance.sparkRig.damage,
+    projSpeed: Balance.sparkRig.boltSpeed,
+    volley: Balance.sparkRig.volley,
+  };
   private readonly simTimeScale = getTimescale();
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
   private readonly deathOverlay: DeathOverlay;
+  private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
   private readonly heroStart = new THREE.Vector3(0, 0.06, 12);
   private terrainView?: TerrainView;
@@ -103,6 +118,7 @@ export class Game {
   private lastBuildIntent = false;
   private lastConfirmIntent = false;
   private lastDebugSpawnIntent = false;
+  private lastDebugXpIntent = false;
   private uiSnapshot?: UiSnapshot;
   private deathLedger: DeathLedger = {
     timeAlive: 0,
@@ -115,6 +131,13 @@ export class Game {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
     this.buildSystem = new BuildSystem(canvas, this.camera, this.economy, this.combat, this.hero.group.position);
+    this.progression = new Progression({
+      state: this.state,
+      rng: createRng(`${getDebugSeed() ?? 'gold-rush'}:upgrades`),
+      getBeaconCount: () => this.buildSystem.beaconCount,
+      onStatsChanged: (stats, pickedId) => this.applyStats(stats, pickedId),
+      isChoiceDisabled: isLevelUpDisabled,
+    });
 
     const stick = this.getElement('#touch-stick');
     const knob = this.getElement('#touch-knob');
@@ -122,16 +145,10 @@ export class Game {
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.resetRun());
+    this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
     this.getElement('#app').append(this.damageVignette);
-    this.combat.registerShooter({
-      getPos: () => this.hero.group.position,
-      range: Balance.sparkRig.range,
-      cooldown: 1 / Balance.sparkRig.fireRate,
-      damage: Balance.sparkRig.damage,
-      projSpeed: Balance.sparkRig.boltSpeed,
-      volley: Balance.sparkRig.volley,
-    });
+    this.combat.registerShooter(this.heroShooter);
     this.events.on('hero_damaged', () => {
       this.damageFlashRemaining = Balance.hero.iframes;
     });
@@ -174,7 +191,12 @@ export class Game {
             amount: n,
           });
         },
+        grantXp: (n: number) => this.progression.debugGrant(n),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
+        placeBeacon: () => {
+          this.buildSystem.setBuildMode(true);
+          return this.buildSystem.confirm(this.timeAlive);
+        },
         state: () => ({
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
@@ -200,6 +222,7 @@ export class Game {
     this.input.dispose();
     this.hud.dispose();
     this.deathOverlay.dispose();
+    this.upgradeOverlay.dispose();
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.buildSystem.dispose();
@@ -223,12 +246,17 @@ export class Game {
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
     if (intents.build && !this.lastBuildIntent) this.buildSystem.toggleBuildMode();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
+    if (intents.debugXp && !this.lastDebugXpIntent && new URLSearchParams(window.location.search).has('debug')) {
+      // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
+      this.progression.debugGrant(50);
+    }
     if (intents.confirm && !this.lastConfirmIntent) this.buildSystem.confirm(this.timeAlive);
     this.lastPauseIntent = intents.pause;
     this.lastRestartIntent = intents.restart;
     this.lastBuildIntent = intents.build;
     this.lastConfirmIntent = intents.confirm;
     this.lastDebugSpawnIntent = intents.debugSpawn;
+    this.lastDebugXpIntent = intents.debugXp;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
 
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
@@ -252,11 +280,13 @@ export class Game {
         this.vfx.floatText(this.hero.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.combat.update(simDelta, this.timeAlive);
+      this.progression.consumeXpTotal(this.combat.xpCount);
       this.combatVfx.update(simDelta);
     }
     this.vfx.update(delta);
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
+    this.syncUpgradeOverlay();
     this.syncUi();
     this.publishDiagnostics();
   }
@@ -366,6 +396,7 @@ export class Game {
         ...this.buildSystem.diagnostics,
         killsByOwner: this.combat.killsByOwner,
       },
+      progression: this.progression.snapshot,
       harvest: this.harvestSnapshot,
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
@@ -429,7 +460,9 @@ export class Game {
       this.hero.maxHp,
       this.enemies.activeCount,
       this.economy.gold,
-      this.combat.xpCount,
+      this.progression.xpInto,
+      this.progression.xpNeed,
+      this.progression.level,
       this.waveSystem.diagnostics.wave,
       this.waveSystem.diagnostics.waveState,
       this.buildSystem.isBuildMode,
@@ -447,6 +480,12 @@ export class Game {
     if (intent.type === 'toggle_build') this.buildSystem.toggleBuildMode();
   }
 
+  private handleUpgradeIntent(intent: UpgradeIntent): void {
+    if (intent.type !== 'pick_upgrade' || this.state.current !== 'levelup') return;
+    const picked = this.progression.offer?.[intent.index];
+    if (picked) this.progression.applyUpgrade(picked.id);
+  }
+
   resetRun(): void {
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -454,6 +493,7 @@ export class Game {
     this.buildSystem.reset();
     this.harvestSystem.reset();
     this.combat.reset();
+    this.progression.reset();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);
     this.timeAlive = 0;
@@ -470,6 +510,7 @@ export class Game {
     };
     this.state.restart();
     this.uiBridge.announce('Stake your claim.', 0);
+    this.upgradeOverlay.hide();
   }
 
   private endRun(): void {
@@ -488,6 +529,30 @@ export class Game {
   private spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): void {
     if (isSpawnDisabled() || this.state.current !== 'playing') return;
     this.waveSystem.spawnDebugPack(count, radius);
+  }
+
+  private applyStats(stats: EffectiveStats, pickedId: UpgradeId | null): void {
+    this.heroShooter.cooldown = 1 / (Balance.sparkRig.fireRate * stats.fireRateMult);
+    this.heroShooter.damage = Balance.sparkRig.damage * stats.damageMult;
+    this.heroShooter.range = Balance.sparkRig.range * stats.rangeMult;
+    this.heroShooter.projSpeed = Balance.sparkRig.boltSpeed * stats.boltSpeedMult;
+    this.heroShooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
+    this.hero.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
+    if (pickedId === 'tinkers_plating' && 'heal' in upgradeDefById.tinkers_plating.deltas) {
+      this.hero.heal(upgradeDefById.tinkers_plating.deltas.heal);
+    }
+    this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction);
+    this.buildSystem.applyStats(stats.beaconFireRateMult);
+  }
+
+  private syncUpgradeOverlay(): void {
+    const offer = this.progression.offer;
+    if (this.state.current !== 'levelup' || !offer) {
+      this.upgradeOverlay.hide();
+      return;
+    }
+    const stacks = this.progression.snapshot.stacks;
+    this.upgradeOverlay.show(offer.map((def) => ({ def, stacks: stacks[def.id] ?? 0 })));
   }
 
   private getElement(selector: string): HTMLElement {

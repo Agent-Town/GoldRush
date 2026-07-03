@@ -26,6 +26,9 @@ export class HarvestSystem {
   private channelNode: GoldNode | null = null;
   private progress = 0;
   private lastGoldGain = 0;
+  private panTickMult = 1;
+  private seamCapacityBonus = 0;
+  private seamRespawnReduction = 0;
 
   constructor(
     private readonly economy: Economy,
@@ -83,12 +86,13 @@ export class HarvestSystem {
     const target = this.findChannelTarget(heroPosition, heroSpeed);
     if (target) {
       this.channelNode = target;
-      this.progress = Math.min(1, this.progress + delta / Balance.goldSeam.tickSeconds);
+      this.progress = Math.min(1, this.progress + delta / (Balance.goldSeam.tickSeconds * this.panTickMult));
       this.collectReadyTicks(at, target);
     } else {
       this.progress = Math.max(
         0,
-        this.progress - (delta / Balance.goldSeam.tickSeconds) * Balance.goldSeam.decayMultiplier,
+        this.progress -
+          (delta / (Balance.goldSeam.tickSeconds * this.panTickMult)) * Balance.goldSeam.decayMultiplier,
       );
       if (this.progress === 0) this.channelNode = null;
     }
@@ -111,6 +115,9 @@ export class HarvestSystem {
   }
 
   reset(): void {
+    this.panTickMult = 1;
+    this.seamCapacityBonus = 0;
+    this.seamRespawnReduction = 0;
     this.channelNode = null;
     this.progress = 0;
     this.lastGoldGain = 0;
@@ -120,6 +127,16 @@ export class HarvestSystem {
       node.resetInactive();
     }
     this.activateInitialNodes();
+  }
+
+  applyStats(panTickMult: number, seamCapacityBonus: number, seamRespawnReduction: number): void {
+    this.panTickMult = Math.max(0.1, panTickMult);
+    this.seamCapacityBonus = seamCapacityBonus;
+    this.seamRespawnReduction = seamRespawnReduction;
+    // Existing and future seams share one run stat so panning rules stay consistent after a pick.
+    const capacity = Balance.goldSeam.capacity + this.seamCapacityBonus;
+    const respawnSeconds = Math.max(0, Balance.goldSeam.respawnSeconds - this.seamRespawnReduction);
+    for (const node of this.nodes) node.applyStats(capacity, respawnSeconds);
   }
 
   private activateInitialNodes(): void {

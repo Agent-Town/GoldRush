@@ -23,7 +23,7 @@ async function openGame(page: Page, query: string): Promise<ErrorBucket> {
 }
 
 test('Spark Rig clears a debug pack and motes grant XP with zero input', async ({ page }) => {
-  const errors = await openGame(page, '?debug&timescale=3&nowaves');
+  const errors = await openGame(page, '?debug&timescale=3&nowaves&nolevel');
 
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(5, 3));
   await expect.poll(async () => page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? 0)).toBeGreaterThan(0);
@@ -55,7 +55,7 @@ test('stress pack never exceeds the bolt pool and logs no console errors', async
 });
 
 test('run reset recycles combat pools without renderer memory growth', async ({ page }) => {
-  const errors = await openGame(page, '?debug&timescale=3&nowaves');
+  const errors = await openGame(page, '?debug&timescale=3&nowaves&nolevel');
   // Warm the float-text pool: the first rendered float lazily uploads the shared
   // sprite geometry + canvas textures. Steady-state floatText (xp/gold pickups)
   // is dispose/create net-zero, so the baseline stays an exact leak gate.

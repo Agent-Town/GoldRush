@@ -56,6 +56,7 @@ export const Balance = {
     moteMagnetRadius: 2,
     motePool: 64,
     needBase: 12,
+    needStep: 8,
   },
   projectile: {
     pool: 128,

@@ -40,6 +40,8 @@ export class BuildSystem {
   private readonly ghostPos = new THREE.Vector3();
   private readonly shooterPos = new THREE.Vector3();
   private readonly unregisterShooters: Array<() => void> = [];
+  private readonly shooterHandles: ShooterHandle[] = [];
+  private beaconFireRateMult = 1;
   private pointerReady = false;
   private pointerClientX = 0;
   private pointerClientY = 0;
@@ -136,11 +138,12 @@ export class BuildSystem {
       id: 'beacons',
       getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
       range: Balance.beacon.range,
-      cooldown: 1 / Balance.beacon.fireRate,
+      cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
       damage: Balance.beacon.damage,
       projSpeed: Balance.beacon.boltSpeed,
       volley: Balance.beacon.volley,
     };
+    this.shooterHandles.push(handle);
     this.unregisterShooters.push(this.combat.registerShooter(handle));
     this.valid = this.computeValid();
     return true;
@@ -149,9 +152,18 @@ export class BuildSystem {
   reset(): void {
     for (const unregister of this.unregisterShooters) unregister();
     this.unregisterShooters.length = 0;
+    this.shooterHandles.length = 0;
+    this.beaconFireRateMult = 1;
     this.beacons.reset();
     this.setBuildMode(false);
     this.valid = false;
+  }
+
+  applyStats(beaconFireRateMult: number): void {
+    this.beaconFireRateMult = beaconFireRateMult;
+    for (const handle of this.shooterHandles) {
+      handle.cooldown = 1 / (Balance.beacon.fireRate * this.beaconFireRateMult);
+    }
   }
 
   dispose(): void {
