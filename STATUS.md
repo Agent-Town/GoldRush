@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-03T23:30Z (Codex takeover — **M1 CODE-COMPLETE & SPEC-CLOSED, 51/51**. NO ACTIVE lock. Codex now owns orchestration; Claude scheduled build tasks are legacy/paused.)
+Last updated: ACTIVE 2026-07-03T23:30Z (Codex visual-polish/01 batch-001 asset integration in progress)
 
 ## Where we are
 - **M1: DONE (code) — 01–08 all shipped & spec-closed (s8, 2026-07-04). Full regression 51/51.** m1-08 = wave18 (`adfb1bc`) + wave23 card corrections (`12af31e` + harness/evidence `bfe9e0d`). Robin still needs to playtest/sign off, but Codex orchestration is no longer paused.
