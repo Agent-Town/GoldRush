@@ -8,12 +8,20 @@ export type EconomyEventBase = {
 export type EconomyEvent = EconomyEventBase &
   (
     | { type: 'gold_panned'; nodeId: string; amount: number }
+    | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug'; amount: number }
     | { type: 'gold_spent'; sink: 'build_sentry_beacon'; amount: number }
     | { type: 'run_reset' }
   );
 
 export type EconomyState = {
   gold: number;
+};
+
+export type EconomySummary = {
+  panned: number;
+  granted: number;
+  spent: number;
+  beaconsBuilt: number;
 };
 
 export type EconomyApplyResult = { ok: true; gold: number } | { ok: false; reason: 'OUT_OF_RESOURCES' };
@@ -26,11 +34,33 @@ export function reduce(state: EconomyState, event: EconomyEvent): EconomyState {
   switch (event.type) {
     case 'gold_panned':
       return { gold: state.gold + event.amount };
+    case 'gold_granted':
+      return { gold: state.gold + event.amount };
     case 'gold_spent':
       return { gold: state.gold - event.amount };
     case 'run_reset':
       return { gold: 0 };
   }
+}
+
+export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
+  const summary: EconomySummary = { panned: 0, granted: 0, spent: 0, beaconsBuilt: 0 };
+  for (const event of log) {
+    if (event.type === 'run_reset') {
+      summary.panned = 0;
+      summary.granted = 0;
+      summary.spent = 0;
+      summary.beaconsBuilt = 0;
+      continue;
+    }
+    if (event.type === 'gold_panned') summary.panned += event.amount;
+    if (event.type === 'gold_granted') summary.granted += event.amount;
+    if (event.type === 'gold_spent') {
+      summary.spent += event.amount;
+      if (event.sink === 'build_sentry_beacon') summary.beaconsBuilt += 1;
+    }
+  }
+  return summary;
 }
 
 export class Economy {

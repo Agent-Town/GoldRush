@@ -17,6 +17,7 @@ export type ShooterHandle = {
   range: number;
   cooldown: number;
   damage: number;
+  getDamage?: () => number;
   projSpeed: number;
   volley: number;
 };
@@ -159,7 +160,8 @@ export class CombatSystem {
     const dirZ = dz * invLen;
     const count = Math.max(1, handle.volley);
     for (let i = 0; i < count; i += 1) {
-      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, handle.damage, handle.id ?? 'hero')) {
+      const damage = handle.getDamage?.() ?? handle.damage;
+      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, handle.id ?? 'hero')) {
         this.audio.playArc();
       }
     }

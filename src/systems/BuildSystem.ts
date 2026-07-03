@@ -55,6 +55,7 @@ export class BuildSystem {
     private readonly economy: Economy,
     private readonly combat: CombatSystem,
     private readonly heroPosition: THREE.Vector3,
+    private readonly getWave: () => number = () => 0,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(this.beacons.group, this.ghost);
@@ -140,6 +141,7 @@ export class BuildSystem {
       range: Balance.beacon.range,
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
       damage: Balance.beacon.damage,
+      getDamage: () => Balance.beacon.damage + Balance.beacon.damagePerWave * this.getWave(),
       projSpeed: Balance.beacon.boltSpeed,
       volley: Balance.beacon.volley,
     };

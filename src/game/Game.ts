@@ -19,7 +19,7 @@ import { XpMotePool } from '../entities/XpMote';
 import { EnemyPool } from '../entities/pools';
 import { Balance } from './Balance';
 import { AudioSystem } from '../systems/AudioSystem';
-import { Economy, initialEconomyState, reduce as reduceEconomy } from './Economy';
+import { Economy, initialEconomyState, reduce as reduceEconomy, summarizeLog, type EconomyEvent } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
 import { BuildSystem } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
@@ -118,7 +118,6 @@ export class Game {
   private elapsed = 0;
   private timeAlive = 0;
   private kills = 0;
-  private goldPanned = 0;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
   private charmPauseCooldown = 0;
@@ -128,6 +127,7 @@ export class Game {
   private frameMsLast = 0;
   private frameMsAvg = 0;
   private frameMsP95 = 0;
+  private debugBeaconWaveOverride: number | null = null;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
@@ -139,18 +139,43 @@ export class Game {
     timeAlive: 0,
     kills: 0,
     goldPanned: 0,
+    spent: 0,
+    beaconsBuilt: 0,
     wavesSurvived: 0,
   };
 
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
-    this.buildSystem = new BuildSystem(canvas, this.camera, this.economy, this.combat, this.hero.group.position);
+    this.buildSystem = new BuildSystem(
+      canvas,
+      this.camera,
+      this.economy,
+      this.combat,
+      this.hero.group.position,
+      () => this.debugBeaconWaveOverride ?? this.waveSystem.diagnostics.wave,
+    );
     this.progression = new Progression({
       state: this.state,
       rng: createRng(`${getDebugSeed() ?? 'gold-rush'}:upgrades`),
       getBeaconCount: () => this.buildSystem.beaconCount,
       onStatsChanged: (stats, pickedId) => this.applyStats(stats, pickedId),
+      onGoldGranted: (amount) => {
+        this.economy.apply({
+          id: crypto.randomUUID(),
+          at: this.timeAlive,
+          type: 'gold_granted',
+          source: 'upgrade_assay',
+          amount,
+        });
+        this.vfx.floatText(this.hero.group.position, `+${amount}`, '#c4883a');
+      },
+      onHeal: (amount) => {
+        const before = this.hero.hp;
+        this.hero.heal(amount);
+        const healed = Math.round(this.hero.hp - before);
+        if (healed > 0) this.vfx.floatText(this.hero.group.position, `+${healed}`, '#6bb36b');
+      },
       isChoiceDisabled: isLevelUpDisabled,
     });
 
@@ -173,6 +198,8 @@ export class Game {
         timeAlive: event.timeAlive,
         kills: event.kills,
         goldPanned: event.goldPanned,
+        spent: event.spent,
+        beaconsBuilt: event.beaconsBuilt,
         wavesSurvived: event.wavesSurvived,
       };
       const scores = recordScore({
@@ -213,12 +240,18 @@ export class Game {
           this.economy.apply({
             id: crypto.randomUUID(),
             at: this.timeAlive,
-            type: 'gold_panned',
-            nodeId: 'debug-grant',
+            type: 'gold_granted',
+            source: 'debug',
             amount: n,
           });
         },
         grantXp: (n: number) => this.progression.debugGrant(n),
+        setFillersDisabled: (disabled: boolean) => this.progression.setFillersDisabled(disabled),
+        economyLog: () => this.economy.log,
+        summarizeLog: (log) => summarizeLog(log as readonly EconomyEvent[]),
+        setBeaconWave: (wave: number | null) => {
+          this.debugBeaconWaveOverride = wave;
+        },
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         placeBeacon: () => {
           this.buildSystem.setBuildMode(true);
@@ -309,7 +342,6 @@ export class Game {
         this.hero.velocity.length(),
       );
       if (this.harvestSnapshot.lastGoldGain > 0) {
-        this.goldPanned += this.harvestSnapshot.lastGoldGain;
         this.vfx.floatText(this.hero.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.combat.update(simDelta, this.timeAlive);
@@ -410,6 +442,7 @@ export class Game {
     const speed = this.hero.velocity.length();
     const economyLog = this.economy.log;
     const economyReplay = economyLog.reduce(reduceEconomy, initialEconomyState);
+    const economySummary = summarizeLog(economyLog);
     window.__THREE_GAME_DIAGNOSTICS__ = {
       frame: this.frame,
       elapsed: this.elapsed,
@@ -427,7 +460,7 @@ export class Game {
       xp: this.combat.xpCount,
       xpMotesAlive: this.xpMotes.activeCount,
       kills: this.kills,
-      goldPanned: this.goldPanned,
+      goldPanned: economySummary.panned,
       deathLedger: this.deathLedger,
       wave: this.waveSystem.diagnostics.wave,
       nextWaveInSim: this.waveSystem.diagnostics.nextWaveInSim,
@@ -450,6 +483,7 @@ export class Game {
         logLength: economyLog.length,
         state: this.economy.state,
         replay: economyReplay,
+        summary: economySummary,
       },
       build: {
         ...this.buildSystem.diagnostics,
@@ -559,7 +593,6 @@ export class Game {
     this.cameraRig.snapTo(this.hero.group.position);
     this.timeAlive = 0;
     this.kills = 0;
-    this.goldPanned = 0;
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
     this.charmPauseActive = false;
@@ -570,6 +603,8 @@ export class Game {
       timeAlive: 0,
       kills: 0,
       goldPanned: 0,
+      spent: 0,
+      beaconsBuilt: 0,
       wavesSurvived: 0,
     };
     this.state.restart();
@@ -580,12 +615,15 @@ export class Game {
   private endRun(): void {
     if (this.state.current === 'dead') return;
     this.state.transition('dead');
+    const economySummary = summarizeLog(this.economy.log);
     this.events.emit({
       type: 'hero_died',
       at: this.timeAlive,
       timeAlive: this.timeAlive,
       kills: this.kills,
-      goldPanned: this.economy.gold,
+      goldPanned: economySummary.panned,
+      spent: economySummary.spent,
+      beaconsBuilt: economySummary.beaconsBuilt,
       wavesSurvived: this.waveSystem.diagnostics.wave,
     });
   }

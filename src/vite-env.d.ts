@@ -64,6 +64,8 @@ interface ThreeGameDiagnostics {
     timeAlive: number;
     kills: number;
     goldPanned: number;
+    spent: number;
+    beaconsBuilt: number;
     wavesSurvived: number;
   };
   wave: number;
@@ -87,6 +89,12 @@ interface ThreeGameDiagnostics {
     logLength: number;
     state: { gold: number };
     replay: { gold: number };
+    summary: {
+      panned: number;
+      granted: number;
+      spent: number;
+      beaconsBuilt: number;
+    };
   };
   build: {
     mode: boolean;
@@ -160,6 +168,15 @@ interface Window {
     setBalance: (path: string, value: number) => boolean;
     grantGold: (n: number) => void;
     grantXp: (n: number) => void;
+    setFillersDisabled: (disabled: boolean) => void;
+    economyLog: () => readonly unknown[];
+    summarizeLog: (log: readonly unknown[]) => {
+      panned: number;
+      granted: number;
+      spent: number;
+      beaconsBuilt: number;
+    };
+    setBeaconWave: (wave: number | null) => void;
     setBuildMode: (on: boolean) => void;
     placeBeacon: () => boolean;
     state: () => {

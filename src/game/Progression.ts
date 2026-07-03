@@ -20,6 +20,8 @@ type ProgressionOptions = {
   rng: Rng;
   getBeaconCount: () => number;
   onStatsChanged: (stats: EffectiveStats, pickedId: UpgradeId | null) => void;
+  onGoldGranted?: (amount: number) => void;
+  onHeal?: (amount: number) => void;
   /** Test harness (?nolevel): keep XP math, never open the choice overlay. */
   isChoiceDisabled?: () => boolean;
 };
@@ -32,6 +34,7 @@ export class Progression {
   private readonly stacksValue: UpgradeStacks = {};
   private currentOffer: UpgradeDef[] | null = null;
   private statsValue = effectiveStats(this.stacksValue);
+  private fillersDisabled = false;
 
   constructor(private readonly options: ProgressionOptions) {}
 
@@ -77,6 +80,10 @@ export class Progression {
     this.addXp(amount);
   }
 
+  setFillersDisabled(disabled: boolean): void {
+    this.fillersDisabled = disabled;
+  }
+
   applyUpgrade(id: string): boolean {
     if (!isUpgradeId(id)) return false;
     if (!this.currentOffer?.some((def) => def.id === id)) return false;
@@ -87,6 +94,8 @@ export class Progression {
     this.stacksValue[id] = current + 1;
     this.statsValue = effectiveStats(this.stacksValue);
     this.options.onStatsChanged(this.statsValue, id);
+    if ('goldGrant' in def.deltas) this.options.onGoldGranted?.(def.deltas.goldGrant);
+    if (id === 'field_dressing' && 'heal' in def.deltas) this.options.onHeal?.(def.deltas.heal);
     this.pendingLevelsValue = Math.max(0, this.pendingLevelsValue - 1);
     this.currentOffer = null;
 
@@ -126,17 +135,34 @@ export class Progression {
   }
 
   private beginChoice(): void {
-    this.currentOffer = this.rollOffer();
-    if (this.options.state.current === 'playing') this.options.state.transition('levelup');
+    while (this.pendingLevelsValue > 0) {
+      const offer = this.rollOffer();
+      if (offer.length > 0) {
+        this.currentOffer = offer;
+        if (this.options.state.current === 'playing') this.options.state.transition('levelup');
+        return;
+      }
+      this.pendingLevelsValue -= 1;
+    }
+    this.currentOffer = null;
+    if (this.options.state.current === 'levelup') this.options.state.transition('playing');
   }
 
   private rollOffer(): UpgradeDef[] {
-    const pool = this.eligibleDefs();
+    const pool = this.eligibleDefs().filter((def) => !isFiller(def));
     const offer: UpgradeDef[] = [];
     while (offer.length < 3 && pool.length > 0) {
       const index = this.options.rng.int(0, pool.length);
       const [picked] = pool.splice(index, 1);
       if (picked) offer.push(picked);
+    }
+    if (offer.length < 3) {
+      const fillers = this.eligibleDefs().filter((def) => isFiller(def));
+      while (offer.length < 3 && fillers.length > 0) {
+        const index = this.options.rng.int(0, fillers.length);
+        const [picked] = fillers.splice(index, 1);
+        if (picked) offer.push(picked);
+      }
     }
     return offer;
   }
@@ -144,6 +170,7 @@ export class Progression {
   private eligibleDefs(): UpgradeDef[] {
     const beaconCount = this.options.getBeaconCount();
     return upgradeDefs.filter((def) => {
+      if (isFiller(def) && this.fillersDisabled) return false;
       if (def.id === 'beacon_dynamo' && beaconCount <= 0) return false;
       return (this.stacksValue[def.id] ?? 0) < def.maxStacks;
     });
@@ -152,4 +179,8 @@ export class Progression {
 
 export function need(level: number): number {
   return Balance.xp.needBase + Balance.xp.needStep * (level - 1);
+}
+
+function isFiller(def: UpgradeDef): boolean {
+  return 'filler' in def && def.filler === true;
 }

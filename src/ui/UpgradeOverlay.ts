@@ -55,7 +55,17 @@ export class UpgradeOverlay {
     for (let i = 0; i < this.cards.length; i += 1) {
       const card = this.cards[i];
       const choice = choices[i];
-      if (!card || !choice) continue;
+      if (!card) continue;
+      if (!choice) {
+        card.hidden = true;
+        card.disabled = true;
+        delete card.dataset.upgradeId;
+        delete card.dataset.slot;
+        card.innerHTML = '';
+        continue;
+      }
+      card.hidden = false;
+      card.disabled = false;
       card.dataset.upgradeId = choice.def.id;
       card.dataset.slot = `ui.upgrade.${choice.def.id}`;
       card.innerHTML = this.renderCard(choice, i);
@@ -93,10 +103,13 @@ export class UpgradeOverlay {
   }
 
   private renderCard(choice: UpgradeChoice, index: number): string {
-    const pips = Array.from({ length: choice.def.maxStacks }, (_, pip) => {
-      const filled = pip < choice.stacks;
-      return `<span class="upgrade-card__pip${filled ? ' upgrade-card__pip--filled' : ''}"></span>`;
-    }).join('');
+    const repeatable = !Number.isFinite(choice.def.maxStacks);
+    const pips = repeatable
+      ? '<span class="upgrade-card__pip upgrade-card__pip--filled"></span>'
+      : Array.from({ length: choice.def.maxStacks }, (_, pip) => {
+          const filled = pip < choice.stacks;
+          return `<span class="upgrade-card__pip${filled ? ' upgrade-card__pip--filled' : ''}"></span>`;
+        }).join('');
     return `
       <span class="upgrade-card__key">${index + 1}</span>
       <span class="upgrade-card__icon" data-slot="ui.upgrade.${this.escape(choice.def.id)}" aria-hidden="true">
@@ -105,7 +118,7 @@ export class UpgradeOverlay {
       <span class="upgrade-card__name">${this.escape(choice.def.name)}</span>
       <span class="upgrade-card__effect">${this.escape(upgradeEffect(choice.def))}</span>
       <span class="upgrade-card__description">${this.escape(choice.def.description)}</span>
-      <span class="upgrade-card__pips" aria-label="${choice.stacks} of ${choice.def.maxStacks} stacks">${pips}</span>
+      <span class="upgrade-card__pips" aria-label="${repeatable ? `repeatable, ${choice.stacks} picked` : `${choice.stacks} of ${choice.def.maxStacks} stacks`}">${pips}</span>
     `;
   }
 
@@ -120,6 +133,9 @@ export class UpgradeOverlay {
       pan_legend: '<path d="M15 30c7 17 27 17 34 0z"/><path d="M20 30c8-7 20-7 28 0"/><path d="M47 30l8-5"/>',
       prospectors_luck: '<path d="M31 10 48 24 42 48H22l-6-24z"/><path d="M26 25h12"/><path d="M24 34h16"/>',
       beacon_dynamo: '<path d="M32 12v40"/><path d="M22 52h20"/><path d="M24 24c5-6 11-6 16 0"/><path d="M19 17c8-9 18-9 26 0"/>',
+      assay_bonus: '<path d="M18 18h28v31H18z"/><path d="M24 26h16"/><path d="M24 34h16"/><path d="M25 47c6-8 10-8 16 0"/>',
+      field_dressing: '<path d="M32 15v34"/><path d="M15 32h34"/><path d="M20 20h24v24H20z"/>',
+      sharpen: '<path d="M18 48 45 21l5-7-7 5-27 27z"/><path d="M37 22l5 5"/><path d="M15 51h18"/>',
     };
     return `<svg viewBox="0 0 64 64" focusable="false">${glyphs[id]}</svg>`;
   }

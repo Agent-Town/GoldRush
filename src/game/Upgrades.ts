@@ -62,6 +62,33 @@ export const upgradeDefs = [
     maxStacks: 2,
     deltas: { beaconFireRateMult: 0.3 },
   },
+  {
+    id: 'assay_bonus',
+    name: 'Assay Bonus',
+    description: 'A tidy receipt from the Assay Office.',
+    filler: true,
+    weight: 1,
+    maxStacks: Number.POSITIVE_INFINITY,
+    deltas: { goldGrant: 15 },
+  },
+  {
+    id: 'field_dressing',
+    name: 'Field Dressing',
+    description: 'A practical bandage from the claim kit.',
+    filler: true,
+    weight: 1,
+    maxStacks: Number.POSITIVE_INFINITY,
+    deltas: { heal: 30 },
+  },
+  {
+    id: 'sharpen',
+    name: 'Sharpen',
+    description: 'A finer point filed onto the spark patent.',
+    filler: true,
+    weight: 1,
+    maxStacks: Number.POSITIVE_INFINITY,
+    deltas: { damageMult: 0.05 },
+  },
 ] as const;
 
 export type UpgradeDef = (typeof upgradeDefs)[number];
@@ -90,6 +117,7 @@ export function upgradeEffect(def: UpgradeDef): string {
   if ('volleyBonus' in deltas) parts.push(`+${deltas.volleyBonus} spark per volley`);
   if ('maxHpBonus' in deltas) parts.push(`+${deltas.maxHpBonus} max HP`);
   if ('heal' in deltas) parts.push(`heals ${deltas.heal}`);
+  if ('goldGrant' in deltas) parts.push(`+${deltas.goldGrant} gold now`);
   if ('moveSpeedMult' in deltas) parts.push(`+${percent(deltas.moveSpeedMult)}% move speed`);
   if ('panTickMult' in deltas) parts.push(`${percent(Math.abs(deltas.panTickMult))}% faster panning`);
   if ('seamCapacityBonus' in deltas) parts.push(`+${deltas.seamCapacityBonus} gold per seam`);

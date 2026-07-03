@@ -13,6 +13,8 @@ export type GameEvent =
       timeAlive: number;
       kills: number;
       goldPanned: number;
+      spent: number;
+      beaconsBuilt: number;
       wavesSurvived: number;
     }
   | {

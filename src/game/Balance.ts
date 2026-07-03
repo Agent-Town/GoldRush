@@ -65,7 +65,10 @@ export const Balance = {
     costBase: 25,
     costGrowth: 1.3,
     maxCount: 6,
-    damage: 8,
+    // Wave-18 correction: 10 base + 0.75/wave keeps two beacons relevant at wave 10
+    // without changing targeting or hero Spark Rig damage.
+    damage: 10,
+    damagePerWave: 0.75,
     fireRate: 1.2,
     range: 8,
     boltSpeed: 14,
@@ -75,7 +78,7 @@ export const Balance = {
     gridSnap: 1,
   },
   economy: {
-    logCapacity: 128,
+    logCapacity: 2048,
   },
   goldSeam: {
     activeMin: 2,

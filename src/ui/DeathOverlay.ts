@@ -2,6 +2,8 @@ export type DeathLedger = {
   timeAlive: number;
   kills: number;
   goldPanned: number;
+  spent: number;
+  beaconsBuilt: number;
   wavesSurvived: number;
 };
 
@@ -18,6 +20,8 @@ export class DeathOverlay {
   private readonly timeValue: HTMLElement;
   private readonly killsValue: HTMLElement;
   private readonly goldValue: HTMLElement;
+  private readonly spentValue: HTMLElement;
+  private readonly beaconsBuiltValue: HTMLElement;
   private readonly wavesValue: HTMLElement;
   private readonly bestClaimsList: HTMLElement;
   private readonly button: HTMLButtonElement;
@@ -51,6 +55,14 @@ export class DeathOverlay {
             <dt>Gold Panned</dt>
             <dd data-death-gold>0</dd>
           </div>
+          <div>
+            <dt>Spent</dt>
+            <dd data-death-spent>0</dd>
+          </div>
+          <div>
+            <dt>Beacons Built</dt>
+            <dd data-death-beacons-built>0</dd>
+          </div>
         </dl>
         <section class="death-overlay__scores" aria-label="Best Claims">
           <h2>Best Claims</h2>
@@ -64,6 +76,8 @@ export class DeathOverlay {
     this.killsValue = this.get('[data-death-kills]');
     this.wavesValue = this.get('[data-death-waves]');
     this.goldValue = this.get('[data-death-gold]');
+    this.spentValue = this.get('[data-death-spent]');
+    this.beaconsBuiltValue = this.get('[data-death-beacons-built]');
     this.bestClaimsList = this.get('[data-best-claims]');
     this.button = this.get<HTMLButtonElement>('[data-testid="stake-again"]');
 
@@ -78,6 +92,8 @@ export class DeathOverlay {
     this.killsValue.textContent = ledger.kills.toString();
     this.wavesValue.textContent = ledger.wavesSurvived.toString();
     this.goldValue.textContent = ledger.goldPanned.toString();
+    this.spentValue.textContent = ledger.spent.toString();
+    this.beaconsBuiltValue.textContent = ledger.beaconsBuilt.toString();
     this.renderScores(scores, currentAt);
     this.root.classList.add('death-overlay--visible');
     this.root.setAttribute('aria-hidden', 'false');
