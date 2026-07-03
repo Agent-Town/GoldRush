@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { attachGeneratedSprite, type GeneratedSprite } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import type { Intents } from '../core/InputController';
@@ -11,6 +12,8 @@ export class Hero {
   readonly velocity = new THREE.Vector3();
   hp: number = Balance.hero.maxHp;
 
+  private readonly placeholderGroup = new THREE.Group();
+  private readonly generatedSprite: GeneratedSprite;
   private maxHpBonus = 0;
   private moveSpeedMult = 1;
   private readonly targetVelocity = new THREE.Vector3();
@@ -46,6 +49,7 @@ export class Hero {
 
   constructor() {
     this.group.name = 'HomesteaderHero';
+    this.placeholderGroup.name = 'HomesteaderHeroPlaceholder';
 
     const body = new THREE.Mesh(this.bodyGeometry, this.bodyMaterial);
     body.position.y = 0.7;
@@ -71,7 +75,17 @@ export class Hero {
     const glow = new THREE.PointLight('#5b8a8a', 0.55, 2.2);
     glow.position.copy(lamp.position);
 
-    this.group.add(body, coat, brim, hat, lamp, glow);
+    this.placeholderGroup.add(body, coat, brim, hat, lamp, glow);
+    this.group.add(this.placeholderGroup);
+    this.generatedSprite = attachGeneratedSprite(this.group, assetSlots.charHero, {
+      name: 'GeneratedHeroHomesteader',
+      position: [0, 0.9, 0],
+      scale: [1.85, 1.85],
+      renderOrder: 3,
+      onLoaded: () => {
+        this.placeholderGroup.visible = false;
+      },
+    });
     tagPlaceholder(this.group, assetSlots.charHero);
   }
 
@@ -165,5 +179,6 @@ export class Hero {
     this.sleeveMaterial.dispose();
     this.brassMaterial.dispose();
     this.lampMaterial.dispose();
+    this.generatedSprite.dispose();
   }
 }

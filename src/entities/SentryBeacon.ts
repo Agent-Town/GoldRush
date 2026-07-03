@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 
@@ -46,6 +47,13 @@ export class SentryBeaconPool {
   private readonly capMesh = new THREE.InstancedMesh(this.capGeometry, this.capMaterial, Balance.beacon.maxCount);
   private readonly glassMesh = new THREE.InstancedMesh(this.glassGeometry, this.glassMaterial, Balance.beacon.maxCount);
   private readonly coreMesh = new THREE.InstancedMesh(this.coreGeometry, this.coreMaterial, Balance.beacon.maxCount);
+  private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.bldSentryBeacon, Balance.beacon.maxCount, {
+    name: 'GeneratedSentryBeaconSprites',
+    y: 0.78,
+    scale: [1.8, 1.8],
+    renderOrder: 2,
+    onLoaded: () => this.setProceduralVisible(false),
+  });
   private readonly syncObject = new THREE.Object3D();
   private alive = 0;
 
@@ -64,6 +72,7 @@ export class SentryBeaconPool {
       mesh.castShadow = true;
       this.group.add(mesh);
     }
+    this.group.add(this.generatedSprites.group);
     tagPlaceholder(this.group, assetSlots.bldSentryBeacon);
     for (let i = 0; i < Balance.beacon.maxCount; i += 1) {
       this.active.push(false);
@@ -128,6 +137,7 @@ export class SentryBeaconPool {
     this.capMaterial.dispose();
     this.glassMaterial.dispose();
     this.coreMaterial.dispose();
+    this.generatedSprites.dispose();
   }
 
   private sync(index: number, at: number): void {
@@ -145,6 +155,7 @@ export class SentryBeaconPool {
     this.syncPart(this.capMesh, index, position.x, 1.04, position.z, 1);
     this.syncPart(this.glassMesh, index, position.x, 0.82, position.z, 1);
     this.syncPart(this.coreMesh, index, position.x, 0.82, position.z, 0.92 + Math.sin(at * Math.PI * 2) * 0.08);
+    this.generatedSprites.set(index, position, true);
   }
 
   private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number): void {
@@ -160,6 +171,7 @@ export class SentryBeaconPool {
     this.capMesh.setMatrixAt(index, hiddenMatrix);
     this.glassMesh.setMatrixAt(index, hiddenMatrix);
     this.coreMesh.setMatrixAt(index, hiddenMatrix);
+    this.generatedSprites.hide(index);
   }
 
   private markNeedsUpdate(): void {
@@ -167,5 +179,12 @@ export class SentryBeaconPool {
     this.capMesh.instanceMatrix.needsUpdate = true;
     this.glassMesh.instanceMatrix.needsUpdate = true;
     this.coreMesh.instanceMatrix.needsUpdate = true;
+  }
+
+  private setProceduralVisible(visible: boolean): void {
+    for (const leg of this.legs) leg.visible = visible;
+    this.capMesh.visible = visible;
+    this.glassMesh.visible = visible;
+    this.coreMesh.visible = visible;
   }
 }

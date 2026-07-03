@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import type { Vec2 } from '../world/Terrain';
@@ -33,6 +34,7 @@ export class GoldNodeVisualBatch {
 
   private readonly clusterMesh: THREE.InstancedMesh;
   private readonly glintMesh: THREE.InstancedMesh;
+  private readonly generatedSprites: GeneratedSpriteBatch;
   private readonly matrix = new THREE.Matrix4();
   private readonly position = new THREE.Vector3();
   private readonly rotation = new THREE.Quaternion();
@@ -49,6 +51,16 @@ export class GoldNodeVisualBatch {
     this.glintMesh.name = 'GoldSeamGlintInstances';
     this.glintMesh.castShadow = false;
     this.glintMesh.receiveShadow = false;
+    this.generatedSprites = new GeneratedSpriteBatch(assetSlots.nodeGoldSeam, capacity, {
+      name: 'GeneratedGoldSeamSprites',
+      y: 0.42,
+      scale: [1.65, 1.65],
+      renderOrder: 2,
+      onLoaded: () => {
+        this.clusterMesh.visible = false;
+        this.glintMesh.visible = false;
+      },
+    });
 
     for (let index = 0; index < capacity; index += 1) {
       this.clusterMesh.setMatrixAt(index, hiddenMatrix);
@@ -57,7 +69,7 @@ export class GoldNodeVisualBatch {
     this.clusterMesh.instanceMatrix.needsUpdate = true;
     this.glintMesh.instanceMatrix.needsUpdate = true;
 
-    this.group.add(this.clusterMesh, this.glintMesh);
+    this.group.add(this.clusterMesh, this.glintMesh, this.generatedSprites.group);
     tagPlaceholder(this.group, assetSlots.nodeGoldSeam);
   }
 
@@ -67,6 +79,7 @@ export class GoldNodeVisualBatch {
     this.matrix.compose(this.position, this.rotation, this.scale);
     this.clusterMesh.setMatrixAt(index, this.matrix);
     this.clusterMesh.instanceMatrix.needsUpdate = true;
+    this.generatedSprites.set(index, this.position, true);
     this.updateGlint(index, anchor, 0, 0);
   }
 
@@ -75,6 +88,7 @@ export class GoldNodeVisualBatch {
     this.glintMesh.setMatrixAt(index, hiddenMatrix);
     this.clusterMesh.instanceMatrix.needsUpdate = true;
     this.glintMesh.instanceMatrix.needsUpdate = true;
+    this.generatedSprites.hide(index);
   }
 
   updateGlint(index: number, anchor: Vec2, anchorIndex: number, at: number): void {
@@ -85,6 +99,10 @@ export class GoldNodeVisualBatch {
     this.matrix.compose(this.position, this.rotation, this.scale);
     this.glintMesh.setMatrixAt(index, this.matrix);
     this.glintMesh.instanceMatrix.needsUpdate = true;
+  }
+
+  dispose(): void {
+    this.generatedSprites.dispose();
   }
 }
 

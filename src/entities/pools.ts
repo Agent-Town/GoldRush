@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import {
@@ -15,6 +16,13 @@ export class EnemyPool {
   private readonly assets: ClaimJumperAssets = createClaimJumperAssets();
   private readonly enemies: ClaimJumperEnemy[] = [];
   private readonly renderParts: THREE.InstancedMesh[] = [];
+  private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+    name: 'GeneratedClaimJumperSprites',
+    y: 0.72,
+    scale: [1.55, 1.55],
+    renderOrder: 2,
+    onLoaded: () => this.setProceduralVisible(false),
+  });
   private readonly localMatrices: THREE.Matrix4[] = [];
   private readonly cells: ClaimJumperEnemy[][] = [];
   private readonly touchedCells: number[] = [];
@@ -35,6 +43,7 @@ export class EnemyPool {
     this.gridMax = Balance.enemy.spatialHashWorldMax;
     this.gridSize = Math.ceil((this.gridMax - this.gridMin) / this.cellSize);
     this.createRenderParts();
+    this.group.add(this.generatedSprites.group);
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
       this.cells.push([]);
@@ -128,6 +137,7 @@ export class EnemyPool {
     for (const enemy of this.enemies) {
       enemy.dispose();
     }
+    this.generatedSprites.dispose();
     disposeClaimJumperAssets(this.assets);
   }
 
@@ -188,6 +198,11 @@ export class EnemyPool {
       part.setMatrixAt(enemy.id, this.instanceMatrix);
       part.instanceMatrix.needsUpdate = true;
     }
+    this.generatedSprites.set(enemy.id, enemy.group.position, enemy.isAlive);
+  }
+
+  private setProceduralVisible(visible: boolean): void {
+    for (const part of this.renderParts) part.visible = visible;
   }
 
   private rebuildSpatialHash(): void {

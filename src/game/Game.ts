@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
 import { EventBus } from '../core/EventBus';
 import {
   areWavesDisabled,
@@ -301,6 +302,7 @@ export class Game {
     this.vfx.dispose();
     this.enemies.dispose();
     this.hero.dispose();
+    disposeGeneratedAssets();
     this.events.clear();
     this.renderer.dispose();
     window.__THREE_GAME_DIAGNOSTICS__ = undefined;
@@ -506,6 +508,8 @@ export class Game {
         geometries: info.memory.geometries,
         textures: info.memory.textures,
       },
+      assets: generatedAssetStatuses(),
+      assetSprites: generatedAssetRenderCounts(),
       terrain: {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
         probes: {

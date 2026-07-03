@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { applyGeneratedMap } from '../assets/generated';
 import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
 import { createClaimProps } from './props';
@@ -116,6 +117,11 @@ export const createBankPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
     material.map.wrapS = THREE.RepeatWrapping;
     material.map.wrapT = THREE.RepeatWrapping;
     material.map.repeat.set(4, 4);
+    applyGeneratedMap(material, assetSlots.terrainBank, (texture) => {
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(4, 4);
+    });
     return tagPlaceholder(mesh, assetSlots.terrainBank);
   },
   { slotId: assetSlots.terrainBank },
@@ -132,6 +138,11 @@ export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.ass
     material.map.wrapS = THREE.RepeatWrapping;
     material.map.wrapT = THREE.RepeatWrapping;
     material.map.repeat.set(8, 1);
+    applyGeneratedMap(material, assetSlots.terrainRiver, (texture) => {
+      texture.wrapS = THREE.RepeatWrapping;
+      texture.wrapT = THREE.RepeatWrapping;
+      texture.repeat.set(8, 1);
+    });
     return tagPlaceholder(mesh, assetSlots.terrainRiver);
   },
   { slotId: assetSlots.terrainRiver },

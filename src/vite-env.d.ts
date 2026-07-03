@@ -130,6 +130,8 @@ interface ThreeGameDiagnostics {
     geometries: number;
     textures: number;
   };
+  assets: Partial<Record<string, 'missing' | 'pending' | 'loaded' | 'error'>>;
+  assetSprites: Partial<Record<string, number>>;
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
     probes: Record<string, {

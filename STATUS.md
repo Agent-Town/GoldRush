@@ -1,11 +1,11 @@
 # STATUS — Gold Rush
 
-Last updated: ACTIVE 2026-07-03T23:30Z (Codex visual-polish/01 batch-001 asset integration in progress)
+Last updated: 2026-07-03T23:42Z (Codex visual-polish/01 batch-001 asset integration done; ACTIVE cleared)
 
 ## Where we are
 - **M1: DONE (code) — 01–08 all shipped & spec-closed (s8, 2026-07-04). Full regression 51/51.** m1-08 = wave18 (`adfb1bc`) + wave23 card corrections (`12af31e` + harness/evidence `bfe9e0d`). Robin still needs to playtest/sign off, but Codex orchestration is no longer paused.
-- **Current Codex priority:** `specs/visual-polish/slices/01-batch001-asset-integration.md`. The six PNGs exist in `assets/processed/`, but `assets/LEDGER.md` still marks them unintegrated and the game renders placeholders. Do this small visual-polish slice before M2.
-- **After asset integration / Robin's M1 verdict:** continue with `specs/m2-base-waves/README.md`, starting at M2-01 buildable registry/menu.
+- **visual-polish/01: DONE (2026-07-03T23:42Z).** The six batch-001 processed PNGs are integrated through slot contracts with procedural fallback retained. Evidence: `reviews/visual-polish-01-batch001-asset-integration.md`, screenshots in `reviews/shots-visual-polish-01/`, focused desktop/mobile asset tests.
+- **Next Codex priority after Robin's M1 verdict:** continue with `specs/m2-base-waves/README.md`, starting at M2-01 buildable registry/menu. Batch-002 icon integration waits until Robin generates those files.
 - **M0: all 5 slices done.** M0 sign-off rolls into the M1 playtest.
 - **s8 handoff:** folded Robin's wave23 round into m1-08 via Codex `019f2a21`: fillers scale (assay +5×wave, dressing 30% maxHp, sharpen unchanged), procedural glyphs removed, cards slimmed, `__GR_TEST__.maxUpgrades` added. Evidence: 51/51 hermetic, desktop+mobile+filler screenshots, screenshot-critique PASS. batch-002 icon prompts written.
 - **s6 handoff (2026-07-03 eve): COLLISION ACCOUNT + ports.** s6 started on a 3h-old s5 ACTIVE lock (task-file guard: 150 min) while s5 was still live → both lanes built m1-07 in parallel. s5's landed (`c2a46b9`, richer, reviewed) — s6's duplicate was DISCARDED (implementation `~/gr-mine` in s6's VM only, Codex session `019f285a-f5a9-7b23-bf08-bcc7b217244f`, do not resume). Salvaged from s6's lane with fresh evidence, committed `93ddbae` on top of s5: (1) **InputController sub-frame tap buffer** — real game bug, keydown+keyup inside one frame gap dropped the press; on s6's 6fps VM, Enter-to-build was lost ~50% of presses (probe: confirm() never called, 3/3 fixed after). Benefits all tap keys incl. 1/2/3 picks on slow machines. (2) **m1-02 bolt-pool assert → in-page rAF max-tracker** (protocol polling read 0 bolts across 20 samples at 6fps while kills advanced). s6's hitPause-cooldown patch was dropped — s5's charm impl already has cooldown+clamp (verified). LOCK RULE FIX: overlap guard now honors ANY ACTIVE lock <3h (per §protocol) — the 150-min task-file window caused this; if the scheduled task fires while a lock is <3h old, exit. Robin: consider updating the scheduled-task prompt's 150 to 180+ min.
@@ -53,6 +53,7 @@ Last updated: ACTIVE 2026-07-03T23:30Z (Codex visual-polish/01 batch-001 asset i
 - A (m1-01) `019f266c-2120-75d0-b86a-2ff59bf12b9a` · B (m1-04) `019f266c-d5e3-73c3-9dfe-e9b002893366` · C (m1-02) `019f26c3-f4c7-7c40-8fff-804894719f3e` · D (m1-03) `019f2701-f227-7710-a6f1-884cb5d10232` · feedback `019f26bd-3944-76a3-a8a7-b19089b2d4f4` · **E (m1-05) `019f2741-d3eb-7962-b9b3-7946d440d98c` · F (m1-06) `019f277f-e96a-7513-8a9a-30b4442485de`**. (`019f26e4-8174…` = discarded dup — do not resume.) New slices: fresh sessions.
 
 ## Open reviews / carried minors
+- **visual-polish/01 screenshot critique carry-forward:** generated art is wired and visible, but river/water still reads as rectangular geometry with hard banks, terrain texture repetition is visible, billboard characters need stronger contact shadows, and mobile HUD/touch controls need a dedicated layout/styling pass.
 - **Dark-wood props read black** at gameplay zoom (M0 claim posts + stumps, `palette.wood`) — same tonal family as dust-puff-reads-black and teal-bolt-washout → one lighting/palette item in m1-07 + batch-001.
 - **split_spark implements +1 bolt SAME target** (single combat path); README flavor said "next-nearest" — Robin call at 07 gate whether the feel needs true split (targeting change).
 - Vfx floatText is NOT string-cached (s3 note was wrong — verified): dispose+create canvas per call, bounded by pool 12. Fine at current pickup volume; revisit only if 07 profiling flags it.
@@ -64,7 +65,7 @@ Last updated: ACTIVE 2026-07-03T23:30Z (Codex visual-polish/01 batch-001 asset i
 
 ## Robin owes (non-blocking)
 - **Playtest M1 01–06 — the whole loop is live** (`npm install && npm run dev`): pan, build a beacon (B), level up (or press X under `?debug` to force it), pick cards with 1/2/3. Fun verdicts: waves (03) recorded NOT FLAT; beacons+levels need his hands.
-- batch-001: paste `assets/requests/batch-001.md` prompts into ChatGPT, downloads → `assets/raw/` exact filenames.
+- batch-002: generate the upgrade-card family icons from `assets/requests/batch-002.md`; downloads → `assets/raw/` exact filenames.
 - 07-gate questions queued: camera 57°, split_spark same-target vs next-nearest, beacon cost curve feel (25/35/45/55/75/95).
 
 ## Done log
@@ -84,5 +85,5 @@ Last updated: ACTIVE 2026-07-03T23:30Z (Codex visual-polish/01 batch-001 asset i
 ## Robin playtest wave-10 (2026-07-03 late) — BINDING for m1-07, read docs/playtests/2026-07-03-robin-wave10.md
 Fun verdict POSITIVE ("I enjoy it", reached wave 10). Directives: (1) upgrade cards get effect text + placeholder icons; (2) adopt his Balance defaults — camera lag .15 / lookAhead 1.35 / offset (0,26.2,18.3) / downLook 3.35, exposure 0.75; (3) XP readability into the tonal pass; (4) rename death CTA "Stake Again"→"Try Again" (+e2e assert update); (5) local top-5 scoreboard on death screen (localStorage). Backlog → M2 specs: multi-weapon + AOE buildables. → M3: skill tree. M1 exit = directives applied + Robin confirms defaults.
 
-## Art batch-001 generated 2026-07-03T15:05Z — 6/6 raw+processed in assets/
-All six batch-001 slots (hero-homesteader, enemy-claim-jumper, node-gold-seam, bld-sentry-beacon, terrain-bank-tile, terrain-river-tile) are generated (1254² raw PNGs) and processed (1024² game-ready; cutouts alpha-keyed via new `scripts/extract-alpha.mjs`, terrain full-bleed). Per-slot visual review + pipeline notes (incl. why generation ran through ChatGPT web relay instead of Codex CLI, and the 7-call budget accounting) in `assets/LEDGER.md`. NEXT CODE SESSION: wire processed art to slots per `assets/layer-contracts/m1-core.layer-contract.v1.json` (billboard sprites for char.*/node.*/bld.* slots, textures for terrain.bank/terrain.river), screenshot in-game, visual review vs brief §4.1, then mark LEDGER Integrated. Keep placeholders as fallback for missing/failed slots. Duplicate raws also sit in ~/Downloads (same filenames) — safe to delete.
+## Art batch-001 integrated 2026-07-03T23:42Z — 6/6 raw+processed+in-game
+All six batch-001 slots (hero-homesteader, enemy-claim-jumper, node-gold-seam, bld-sentry-beacon, terrain-bank-tile, terrain-river-tile) are generated (1254² raw PNGs), processed (1024² game-ready; cutouts alpha-keyed via `scripts/extract-alpha.mjs`, terrain full-bleed), and integrated in-game. Evidence: `assets/LEDGER.md`, `reviews/visual-polish-01-batch001-asset-integration.md`, screenshots in `reviews/shots-visual-polish-01/`. Fallback is covered by a forced failed-image Playwright check. Duplicate raws also sit in ~/Downloads (same filenames) — safe to delete.

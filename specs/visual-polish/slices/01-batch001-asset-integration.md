@@ -34,3 +34,11 @@ Assets already exist in `assets/processed/` and are mapped by `assets/layer-cont
 - No batch-002 icon integration unless Robin has generated those files.
 - No art-pack/skin system.
 - No new dependencies.
+
+## Done — 2026-07-03T23:42Z
+
+- Integrated all six batch-001 processed assets with procedural fallback retained.
+- Added diagnostics for generated asset load status and visible generated sprite counts.
+- Added focused Playwright coverage for normal asset rendering and a forced gold-seam image failure fallback.
+- Evidence review: `reviews/visual-polish-01-batch001-asset-integration.md`.
+- Screenshots: `reviews/shots-visual-polish-01/desktop-batch001-assets.png` and `reviews/shots-visual-polish-01/mobile-batch001-assets.png`.

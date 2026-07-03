@@ -103,6 +103,7 @@ export class HarvestSystem {
   }
 
   dispose(): void {
+    this.nodeVisuals.dispose();
     for (const child of this.progressGroup.children) {
       const mesh = child as THREE.Mesh;
       mesh.geometry?.dispose();
