@@ -37,15 +37,15 @@ Design constraints carried in (BINDING): wave-18 pressure ceiling (informed play
 
 ## Next Agent Prompt
 
-_Last updated: 2026-07-04 (s9). Update before ending your pass._
+_Last updated: 2026-07-04 (s14). Update before ending your pass._
 
 Pickup order: **M2-01** (m1-08 done, M1 spec-closed by s8; Robin's playtest verdict still gates the M1 *milestone* and tunes M2-03/04). Slice specs above are compact v1 — when you pick a slice, expand it into `slices/NN-<slug>.md` with acceptance criteria + harness params before delegating (feature-slicing says specs are living docs). Read STATUS.md §environment first: s6 recipe (curl-guarded vite IN the same bash call as each test batch, in-page trackers for throughput asserts, forceDeath pattern — overlay visibility lies under opacity-hide, `heroHp` is NOT a diagnostics key, use `state === 'dead'`). Robin owes (still): D2 defaults confirm = M1 exit; split_spark same-vs-next-nearest; batch-001 in-game visual review.
 
 TODO:
 - [x] m1-08 wave18-corrections (done s8, M1 spec-closed)
-- [ ] m2-01 buildable-registry-and-menu
-- [ ] m2-02 sluice-and-stockpile
-- [ ] m2-03 wave-scheduler-v2
+- [x] m2-01 buildable-registry-and-menu (done s10, `98250eb`; palisade-rotation correction rides M2-02)
+- [ ] m2-02 sluice-and-stockpile ← spec expanded s14 (`slices/02-…`), relayed as tasks/005
+- [x] m2-03 wave-scheduler-v2 (done s11, `57eb019`/`9518eab`)
 - [ ] m2-04 gold-stealing ← M2 fun gate
 - [ ] m2-05 base-damage-and-repair
 - [ ] m2-06 arsenal-blast-charge
