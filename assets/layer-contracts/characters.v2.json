@@ -1,5 +1,6 @@
 {
   "version": 2,
+  "notes": "s15 batch-004: front/back orientations + action clips. Cell semantics are BINDING per assets/requests/batch-004.md. hero.side uses the files form: indexes 0-3 = original side sheet (idle/walk-L/walk-R/hit), 4-9 = side-actions sheet (pan-swirl/pan-tip/build-raised/build-struck/brace-aim/true-idle). DEVIATION (logged reviews/s15-batch-004-processing.md): side idle stays index 0, not true-idle 9 — walk frames are old-sheet, and idle<->walk is the highest-frequency seam; cross-sheet style/scale continuity wins. Unwired clips (pan/build/aim on hero, grab/flee-2f on jumper) are contract-ready for code that requests them; unknown clips fall back to walk->idle in SpriteAnimator.",
   "slots": [
     {
       "slot": "char.hero",
@@ -9,15 +10,41 @@
       "orientations": {
         "side": {
           "frames": {
+            "files": [
+              "char-hero-sheet-side-r0c0.png",
+              "char-hero-sheet-side-r0c1.png",
+              "char-hero-sheet-side-r1c0.png",
+              "char-hero-sheet-side-r1c1.png",
+              "char-hero-sheet-side-actions-r0c0.png",
+              "char-hero-sheet-side-actions-r0c1.png",
+              "char-hero-sheet-side-actions-r0c2.png",
+              "char-hero-sheet-side-actions-r1c0.png",
+              "char-hero-sheet-side-actions-r1c1.png",
+              "char-hero-sheet-side-actions-r1c2.png"
+            ]
+          },
+          "clips": {
+            "idle": { "frames": [0], "fps": 1 },
+            "walk": { "frames": [1, 2], "fps": 4 },
+            "hit": { "frames": [3], "fps": 1 },
+            "pan": { "frames": [4, 5], "fps": 3 },
+            "build": { "frames": [6, 7], "fps": 3 },
+            "aim": { "frames": [8], "fps": 1 }
+          }
+        },
+        "front": {
+          "frames": {
             "grid": {
-              "file": "char-hero-sheet-side.png",
-              "cols": 2,
+              "file": "char-hero-sheet-front.png",
+              "cols": 3,
               "rows": 2,
               "order": [
-                "char-hero-sheet-side-r0c0.png",
-                "char-hero-sheet-side-r0c1.png",
-                "char-hero-sheet-side-r1c0.png",
-                "char-hero-sheet-side-r1c1.png"
+                "char-hero-sheet-front-r0c0.png",
+                "char-hero-sheet-front-r0c1.png",
+                "char-hero-sheet-front-r0c2.png",
+                "char-hero-sheet-front-r1c0.png",
+                "char-hero-sheet-front-r1c1.png",
+                "char-hero-sheet-front-r1c2.png"
               ]
             }
           },
@@ -25,7 +52,31 @@
             "idle": { "frames": [0], "fps": 1 },
             "walk": { "frames": [1, 2], "fps": 4 },
             "hit": { "frames": [3], "fps": 1 },
-            "pan": { "frames": [3], "fps": 1 }
+            "pan": { "frames": [4], "fps": 1 },
+            "aim": { "frames": [5], "fps": 1 }
+          }
+        },
+        "back": {
+          "frames": {
+            "grid": {
+              "file": "char-hero-sheet-back.png",
+              "cols": 3,
+              "rows": 2,
+              "order": [
+                "char-hero-sheet-back-r0c0.png",
+                "char-hero-sheet-back-r0c1.png",
+                "char-hero-sheet-back-r0c2.png",
+                "char-hero-sheet-back-r1c0.png",
+                "char-hero-sheet-back-r1c1.png",
+                "char-hero-sheet-back-r1c2.png"
+              ]
+            }
+          },
+          "clips": {
+            "idle": { "frames": [0], "fps": 1 },
+            "walk": { "frames": [1, 2], "fps": 4 },
+            "build": { "frames": [3, 4], "fps": 3 },
+            "hit": { "frames": [5], "fps": 1 }
           }
         }
       }
@@ -54,6 +105,52 @@
             "idle": { "frames": [0], "fps": 1 },
             "walk": { "frames": [1, 2], "fps": 4 },
             "flee": { "frames": [3], "fps": 1 }
+          }
+        },
+        "front": {
+          "frames": {
+            "grid": {
+              "file": "char-jumper-sheet-front.png",
+              "cols": 3,
+              "rows": 2,
+              "order": [
+                "char-jumper-sheet-front-r0c0.png",
+                "char-jumper-sheet-front-r0c1.png",
+                "char-jumper-sheet-front-r0c2.png",
+                "char-jumper-sheet-front-r1c0.png",
+                "char-jumper-sheet-front-r1c1.png",
+                "char-jumper-sheet-front-r1c2.png"
+              ]
+            }
+          },
+          "clips": {
+            "idle": { "frames": [0], "fps": 1 },
+            "walk": { "frames": [1, 2], "fps": 4 },
+            "hit": { "frames": [3], "fps": 1 },
+            "grab": { "frames": [4, 5], "fps": 3 }
+          }
+        },
+        "back": {
+          "frames": {
+            "grid": {
+              "file": "char-jumper-sheet-back.png",
+              "cols": 3,
+              "rows": 2,
+              "order": [
+                "char-jumper-sheet-back-r0c0.png",
+                "char-jumper-sheet-back-r0c1.png",
+                "char-jumper-sheet-back-r0c2.png",
+                "char-jumper-sheet-back-r1c0.png",
+                "char-jumper-sheet-back-r1c1.png",
+                "char-jumper-sheet-back-r1c2.png"
+              ]
+            }
+          },
+          "clips": {
+            "idle": { "frames": [2], "fps": 1 },
+            "walk": { "frames": [0, 1], "fps": 4 },
+            "flee": { "frames": [3, 4], "fps": 5 },
+            "hit": { "frames": [5], "fps": 1 }
           }
         }
       }

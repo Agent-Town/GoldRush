@@ -257,7 +257,11 @@ async function createRuntimeOrientation(
     const clipFrames = indexes.map((index) => atlasFrames[index]);
     if (clipFrames.every((frame): frame is RuntimeFrame => !!frame)) clips.set(name, { frames: clipFrames, fps: source.fps ?? 1 });
   }
-  if (clips.size === 0 && fallbackClip) clips.set('idle', fallbackClip);
+  // s15 gate fix: an orientation must always resolve idle-or-walk. With mixed-source
+  // frame lists (side + side-actions cells) a partial load can drop idle/walk while
+  // action clips survive — without this, pickClip() returns null and the sprite
+  // freezes on whatever map it had instead of the one-frame billboard fallback.
+  if (fallbackClip && !clips.has('idle') && !clips.has('walk')) clips.set('idle', fallbackClip);
   if (clips.size === 0 && atlasFrames[0]) clips.set('idle', { frames: [atlasFrames[0]], fps: 1 });
   return clips.size > 0 ? { clips } : null;
 }

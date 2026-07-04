@@ -39,7 +39,7 @@ import { PNG } from 'pngjs';
 let KEY = [0x8a, 0x8a, 0x8a];
 
 function parseArgs(argv) {
-  const opts = { tol: 26, feather: 14, size: 1024, cell: 512, key: '8a8a8a', grid: null, pocketMean: 12, fullBleed: false, out: 'assets/processed', inputs: [] };
+  const opts = { tol: 26, feather: 14, size: 1024, cell: 512, key: '8a8a8a', grid: null, pocketMean: 12, interiorKey: 90, fullBleed: false, out: 'assets/processed', inputs: [] };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--tol') opts.tol = Number(argv[++i]);
@@ -47,6 +47,7 @@ function parseArgs(argv) {
     else if (a === '--size') opts.size = Number(argv[++i]);
     else if (a === '--cell') opts.cell = Number(argv[++i]);
     else if (a === '--pocket-mean') opts.pocketMean = Number(argv[++i]);
+    else if (a === '--interior-key') opts.interiorKey = Number(argv[++i]);
     else if (a === '--key') opts.key = argv[++i];
     else if (a === '--grid') opts.grid = argv[++i];
     else if (a === '--full-bleed') opts.fullBleed = true;
@@ -201,29 +202,36 @@ function parseKeyHex(hex) {
 const keySaturation = () => Math.max(...KEY) - Math.min(...KEY);
 
 /**
- * Hue-targeted despill for saturated keys (e.g. #ff00ff): on pixels in the edge
- * band (alpha < 255, dilated 2px into opaque content), the excess of every
+ * Hue-targeted despill for saturated keys (e.g. #ff00ff): the excess of every
  * key-dominant channel (key channel >= 128) over the strongest key-recessive
- * channel — beyond a 24-step margin — is subtracted. Magenta fringe on dark ink
+ * channel — beyond a 16-step margin — is subtracted. Magenta fringe on dark ink
  * outlines collapses to neutral dark; rust (b << g+24) and teal (r << g) survive.
+ * s15: runs on ALL opaque pixels by default (all=true) — batch-004 sheets carried
+ * painted magenta SPILL on interior cloth/limb pixels that the old 3px edge band
+ * never reached; the margin rule already protects every legit palette color, so
+ * band-limiting was caution, not necessity. Pass all=false for the legacy band.
  */
-function despillSaturatedKey(png) {
+function despillSaturatedKey(png, all = true) {
   const { width: w, height: h, data } = png;
   const hi = [], lo = [];
   for (let c = 0; c < 3; c++) (KEY[c] >= 128 ? hi : lo).push(c);
   if (!hi.length || !lo.length) return 0;
   let band = new Uint8Array(w * h);
-  for (let i = 0; i < w * h; i++) if (data[(i << 2) + 3] < 255) band[i] = 1;
-  for (let it = 0; it < 3; it++) {
-    const next = band.slice();
-    for (let y = 0; y < h; y++) {
-      for (let x = 0; x < w; x++) {
-        const i = w * y + x;
-        if (band[i]) continue;
-        if ((x > 0 && band[i - 1]) || (x < w - 1 && band[i + 1]) || (y > 0 && band[i - w]) || (y < h - 1 && band[i + w])) next[i] = 1;
+  if (all) {
+    band.fill(1);
+  } else {
+    for (let i = 0; i < w * h; i++) if (data[(i << 2) + 3] < 255) band[i] = 1;
+    for (let it = 0; it < 3; it++) {
+      const next = band.slice();
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const i = w * y + x;
+          if (band[i]) continue;
+          if ((x > 0 && band[i - 1]) || (x < w - 1 && band[i + 1]) || (y > 0 && band[i - w]) || (y < h - 1 && band[i + w])) next[i] = 1;
+        }
       }
+      band = next;
     }
-    band = next;
   }
   let fixed = 0;
   for (let i = 0; i < w * h; i++) {
@@ -240,6 +248,33 @@ function despillSaturatedKey(png) {
     fixed++;
   }
   return fixed;
+}
+
+/**
+ * Interior near-key alpha clear (s15, saturated keys only): opaque pixels whose
+ * max-channel distance to the key is < thr go transparent (ramped to thr+feather).
+ * Catches magenta spill BLOBS painted over gaps (between legs, under poncho
+ * fringe) that are neither border-connected nor clean enclosed pockets. thr 90 is
+ * unreachable by legit art: any sepia/rust/teal/parchment pixel differs from
+ * #ff00ff by >100 on at least one channel (G is never near 0 where R/B are high).
+ * NOT safe for gray keys (would eat real grays) — call sites gate on saturation.
+ */
+function interiorKeyClear(png, thr, feather) {
+  const { data } = png;
+  const n = png.width * png.height;
+  let cleared = 0;
+  for (let i = 0; i < n; i++) {
+    const idx = i << 2;
+    if (!data[idx + 3]) continue;
+    const d = keyDist(data, idx);
+    if (d >= thr + feather) continue;
+    const a = d <= thr ? 0 : Math.round(((d - thr) / feather) * 255);
+    if (a < data[idx + 3]) {
+      data[idx + 3] = a;
+      if (a === 0) cleared++;
+    }
+  }
+  return cleared;
 }
 
 /**
@@ -318,10 +353,12 @@ for (const input of opts.inputs) {
     if (!gm) { console.error(`bad --grid ${opts.grid} (want CxR, e.g. 2x2)`); process.exit(1); }
     const cols = Number(gm[1]), rows = Number(gm[2]);
     const { keyed, total } = extractAlpha(png, opts.tol, opts.feather, opts.deshadow, opts.pocketMean);
-    const despilled = keySaturation() > 60 ? despillSaturatedKey(png) : 0;
+    const saturated = keySaturation() > 60;
+    const cleared = saturated ? interiorKeyClear(png, opts.interiorKey, opts.feather) : 0;
+    const despilled = saturated ? despillSaturatedKey(png) : 0;
     const emitted = sliceGrid(png, cols, rows, opts.cell, base, opts.out);
     console.log(
-      `${path.basename(input)}: ${native}, keyed ${((keyed / total) * 100).toFixed(1)}%, despilled ${despilled} px -> ` +
+      `${path.basename(input)}: ${native}, keyed ${((keyed / total) * 100).toFixed(1)}%, spill-cleared ${cleared} px, despilled ${despilled} px -> ` +
       `${emitted.filter((e) => !e.empty).length}/${emitted.length} cells @${opts.cell}px + ${base}.frames.json`,
     );
   } else {
@@ -329,8 +366,10 @@ for (const input of opts.inputs) {
     let stat = 'full-bleed (no keying)';
     if (!opts.fullBleed) {
       const { keyed, total } = extractAlpha(png, opts.tol, opts.feather, opts.deshadow, opts.pocketMean);
-      const despilled = keySaturation() > 60 ? despillSaturatedKey(png) : 0;
-      stat = `keyed ${keyed}/${total} px (${((keyed / total) * 100).toFixed(1)}%)${despilled ? `, despilled ${despilled} px` : ''}`;
+      const saturated = keySaturation() > 60;
+      const cleared = saturated ? interiorKeyClear(png, opts.interiorKey, opts.feather) : 0;
+      const despilled = saturated ? despillSaturatedKey(png) : 0;
+      stat = `keyed ${keyed}/${total} px (${((keyed / total) * 100).toFixed(1)}%)${cleared ? `, spill-cleared ${cleared} px` : ''}${despilled ? `, despilled ${despilled} px` : ''}`;
     }
     const outFile = path.join(opts.out, path.basename(input));
     fs.writeFileSync(outFile, PNG.sync.write(png));
