@@ -20,8 +20,11 @@ Pipeline: slot defined → prompt written (batch) → generated (Robin/ChatGPT) 
 | ui.upgrade.icon.volley | (none — clean parchment card) | batch-002 | — | — | — |
 | ui.upgrade.icon.plating | (none — clean parchment card) | batch-002 | — | — | — |
 | ui.upgrade.icon.mobility | (none — clean parchment card) | batch-002 | — | — | — |
-| ui.upgrade.icon.{panning,prospecting,beacon,gold,mend} | (none — clean parchment card) | batch-003 (queued) | — | — | — |
-| prop.rock / prop.stump / prop.claim_post | primitives | batch-003 (queued) | — | — | — |
+| terrain.bank.b / terrain.bank.c (quiet variants) | rotation/mirror of tile A (VP-03 code) | batch-003 | — | — | — |
+| char.hero walk-a/walk-b (flipbook pair) | 1-frame clip = current art (VP-02 code) | batch-003 | — | — | — |
+| char.claim_jumper walk-a/walk-b (flipbook pair) | 1-frame clip = current art (VP-02 code) | batch-003 | — | — | — |
+| ui.upgrade.icon.{panning,prospecting,beacon,gold,mend} | (none — clean parchment card) | batch-004 (queued) | — | — | — |
+| prop.rock / prop.stump / prop.claim_post | primitives | batch-004 (queued) | — | — | — |
 | vfx.bolt | emissive sphere + tracer | stays procedural | n/a | n/a | n/a |
 | ui.font.display / ui.font.body | system serif | n/a — font files (Rye/Wellfleet), not GPT Image | n/a | n/a | n/a |
 
@@ -29,7 +32,8 @@ Pipeline: slot defined → prompt written (batch) → generated (Robin/ChatGPT) 
 
 1. **batch-001** (`requests/batch-001.md`) — M1 core six. Status: **generated + processed + integrated 2026-07-03.** Evidence: `reviews/visual-polish-01-batch001-asset-integration.md`, screenshots in `reviews/shots-visual-polish-01/`, and focused desktop/mobile Playwright asset checks. 1 candidate per prompt (Robin-approved budget: 6 + 1 retry). 7 backend image calls total: 6 prompts + 1 model-initiated "consistency edit" on bld-sentry-beacon (counted against the retry slot). No rate-limit or quota errors observed. Generated via ChatGPT web (Robin's Pro account, Claude-in-Chrome relay per CLAUDE.md §7 step 4) — **not** Codex CLI: the sandbox kills every process at the 45s bash cap, and one GPT-Image generation needs 45-110s, so `codex exec` can never hold the connection long enough (one interrupted codex attempt on the *codex* account, session 019f2857-52af, may have burned one hidden generation there). Raw 1254×1254 PNGs land in `~/Downloads` (duplicates of `assets/raw/`); processed = 1024×1024 (contract size), cutouts alpha-keyed.
 2. **batch-002** (`requests/batch-002.md`) — upgrade-card family icons, tranche 1 (6 combat families: firerate, damage, range, volley, plating, mobility). Status: **prompts WRITTEN 2026-07-04 (s8); awaiting Robin generation.** Routed here by Robin's wave-23 directive (procedural glyphs removed as "sucking"; cards ship clean/parchment meanwhile — placeholder-first). Slots in `layer-contracts/m1-upgrade-icons.v1.json`. 512² cutouts, one icon per effect FAMILY not per card.
-3. batch-003 (queued) — upgrade icons tranche 2 (panning, prospecting, beacon, gold, mend) + props/decoration (rock/stump/claim_post) + death/level-up flourishes. Not written yet.
+3. **batch-003** (`requests/batch-003.md`) — terrain bank variants b/c (quiet filler tiles) + hero/claim-jumper walk flipbook PAIRS (2 frames each). Status: **prompts WRITTEN 2026-07-04 (s9b); generate after (or with) batch-002.** Routed from Robin's 2026-07-04 playtest (tile repetition, sprite animation). Code lands first: VP-03 variant sampler, VP-02 SpriteAnimator — both placeholder-first, art drops in by filename.
+4. batch-004 (queued) — upgrade icons tranche 2 (panning, prospecting, beacon, gold, mend) + props/decoration (rock/stump/claim_post) + death/level-up flourishes. Not written yet — do not write until 002+003 land.
 
 ## Process notes
 
