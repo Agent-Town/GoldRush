@@ -1,4 +1,4 @@
-# Task 011: build-menu blurbs + controls legend (RUN ONLY AFTER tasks/009 M2-05 IS INTEGRATED — shared files)
+# Task 011: build-menu blurbs + controls legend (WORKTREE LANE-C VERSION — run in worktrees/lane-c on branch lane/polish, commit prefix "polish:"; the merge session reconciles with 009's landed buildables shape — ADAPT, never revert)
 
 You are Codex, implementer for Gold Rush, on Robin's Mac. Claude orchestrates and gates. READ FIRST: `AGENTS.md`; brief §5 (voice: warm frontier-ledger copy, places/rituals naming).
 
