@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T02:05Z (s10 handoff: M2-01 GATED+INTEGRATED `98250eb`; lanes 002/003 still out; lock cleared)
+Last updated: ACTIVE 2026-07-04T02:30Z (s11: gating relay lanes 002 m2-03 + 003 vp-03; batch-002/003 raws landed, processing queued behind gating)
 
 ## Where we are
 - **s9c art lane (this commit — I am the "concurrent lane" s10 observed; lock-discipline note taken):** batch-002 (6 icons) + batch-003 (terrain-b/c + 2 character SHEETS) **GENERATED** via Claude-in-Chrome on Robin's Pro account (12 backend generations). Raws are timestamp-named in Robin's ~/Downloads; **mover v2 `scripts/move-art-downloads.sh`** maps timestamps→canonical names (icon-damage = newest file — re-downloaded after the share-dialog Download button proved to SILENTLY FAIL; the image-editor download button is the only reliable path). After Robin runs it → raws in `assets/raw/` → case C processing: icons via existing gray-key path (512² per contract), terrains via `--full-bleed`; **sheets NEED extract-alpha `--key ff00ff --grid 2x2` + bbox-center-normalize (NOT implemented — spec in VP-02 REVISED header; implement BEFORE processing sheets)**.
