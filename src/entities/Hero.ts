@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrientationResolver } from '../assets/OrientationResolver';
 import { attachGeneratedSprite, type GeneratedSprite } from '../assets/generated';
 import { SpriteAnimator } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
@@ -16,6 +17,7 @@ export class Hero {
   private readonly placeholderGroup = new THREE.Group();
   private readonly generatedSprite: GeneratedSprite;
   private readonly spriteAnimator: SpriteAnimator;
+  private readonly orientationResolver = new OrientationResolver();
   private maxHpBonus = 0;
   private moveSpeedMult = 1;
   private readonly targetVelocity = new THREE.Vector3();
@@ -135,13 +137,9 @@ export class Hero {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);
     }
     const speedSq = this.velocity.lengthSq();
-    const orientation =
-      speedSq > 0.0025 && Math.abs(this.velocity.z) > Math.abs(this.velocity.x)
-        ? this.velocity.z > 0
-          ? 'front'
-          : 'back'
-        : 'side';
-    this.spriteAnimator.update(dt, speedSq > 0.0025 ? 'walk' : 'idle', orientation, orientation === 'side' && this.velocity.x < 0);
+    const moving = speedSq > 0.0025;
+    const direction = moving ? this.orientationResolver.resolve(this.velocity.x, this.velocity.z) : this.orientationResolver.idleDirection();
+    this.spriteAnimator.update(dt, moving ? 'walk' : 'idle', direction);
   }
 
   get maxHp(): number {
@@ -180,6 +178,7 @@ export class Hero {
     this.iframeRemaining = 0;
     this.velocity.set(0, 0, 0);
     this.targetVelocity.set(0, 0, 0);
+    this.orientationResolver.reset();
     this.group.position.copy(position);
     this.group.rotation.y = 0;
     this.spriteAnimator.reset('idle');

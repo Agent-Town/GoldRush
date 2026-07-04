@@ -1,6 +1,13 @@
 import * as THREE from 'three';
 import characterContractText from '../../assets/layer-contracts/characters.v2.json?raw';
 import { loadGeneratedTexture } from './generated';
+import {
+  coarseOrientationForDirection,
+  idleDirectionFor,
+  isMirroredRotationDirection,
+  isRotationDirection,
+  type RotationDirection,
+} from './OrientationResolver';
 import { type AssetSlotId } from './slots';
 
 export type CharacterSpriteClip = 'idle' | 'walk' | 'hit' | 'pan' | 'flee' | string;
@@ -14,10 +21,16 @@ type ContractSlot = {
   fallback?: { file?: string };
   frames?: FrameSource;
   clips?: Record<string, ClipSource>;
-  orientations?: Record<string, {
-    frames?: FrameSource;
-    clips?: Record<string, ClipSource>;
-  }>;
+  orientations?: Record<string, OrientationSource>;
+  rotations?: {
+    directions?: Record<string, OrientationSource>;
+    mirrors?: Record<string, string>;
+  };
+};
+
+type OrientationSource = {
+  frames?: FrameSource;
+  clips?: Record<string, ClipSource>;
 };
 
 type FrameSource = {
@@ -55,6 +68,14 @@ type RuntimeOrientation = {
 
 type RuntimeSlot = {
   orientations: Map<string, RuntimeOrientation>;
+  rotationDirections: Set<string>;
+  rotationMirrors: Map<string, string>;
+};
+
+type PickedClip = {
+  clip: RuntimeClip;
+  direction?: RotationDirection;
+  mirrored: boolean;
 };
 
 export type SpriteAnimationSnapshot = {
@@ -64,6 +85,8 @@ export type SpriteAnimationSnapshot = {
   frameCount: number;
   fps: number;
   loaded: boolean;
+  direction?: string;
+  mirrored?: boolean;
 };
 
 const contract = JSON.parse(characterContractText) as Contract;
@@ -101,6 +124,8 @@ export class SpriteAnimator {
   private currentClip: RuntimeClip | null = null;
   private seenTestClipVersion = -1;
   private overrideClip: RuntimeClip | null = null;
+  private diagnosticDirection: RotationDirection | undefined;
+  private diagnosticMirrored: boolean | undefined;
 
   constructor(
     private readonly slotId: AssetSlotId,
@@ -124,8 +149,14 @@ export class SpriteAnimator {
   update(delta: number, requestedClip: CharacterSpriteClip, orientation = 'side', mirrored = false): void {
     this.syncTestClip();
     if (this.sprite) this.sprite.scale.x = Math.abs(this.sprite.scale.x) * (mirrored ? -1 : 1);
-    const nextClip = this.pickClip(requestedClip, orientation);
-    if (!nextClip) return;
+    const next = this.pickClip(requestedClip, orientation);
+    if (!next) return;
+
+    const nextClip = next.clip;
+    const nextMirrored = mirrored || next.mirrored;
+    this.diagnosticDirection = next.direction;
+    this.diagnosticMirrored = next.direction ? nextMirrored : undefined;
+    if (this.sprite) this.sprite.scale.x = Math.abs(this.sprite.scale.x) * (nextMirrored ? -1 : 1);
 
     if (nextClip !== this.currentClip || requestedClip !== this.clipName) {
       this.currentClip = nextClip;
@@ -173,14 +204,39 @@ export class SpriteAnimator {
     });
   }
 
-  private pickClip(requestedClip: CharacterSpriteClip, orientation: string): RuntimeClip | null {
-    if (this.overrideClip) return this.overrideClip;
+  private pickClip(requestedClip: CharacterSpriteClip, orientation: string): PickedClip | null {
+    if (this.overrideClip) return { clip: this.overrideClip, mirrored: false };
     if (!this.runtimeReady) return null;
+    const runtime = this.runtime;
+    if (!runtime) return null;
+
+    const direction = rotationDirectionFor(runtime, orientation);
+    if (direction && isLocomotionClip(requestedClip)) {
+      const clipDirection = requestedClip === 'idle' ? idleDirectionFor(direction) : direction;
+      const sourceDirection = runtime.rotationMirrors.get(clipDirection) ?? clipDirection;
+      const clips = runtime.orientations.get(sourceDirection)?.clips;
+      const clip = clips?.get(requestedClip) ?? clips?.get('walk') ?? clips?.get('idle') ?? null;
+      if (clip) {
+        return {
+          clip,
+          direction: clipDirection,
+          mirrored: runtime.rotationMirrors.has(clipDirection),
+        };
+      }
+    }
+
+    const coarseOrientation = direction ? coarseOrientationForDirection(direction) : orientation;
     const clips =
-      this.runtime?.orientations.get(orientation)?.clips ??
-      this.runtime?.orientations.get('side')?.clips ??
-      this.runtime?.orientations.values().next().value?.clips;
-    return clips?.get(requestedClip) ?? clips?.get('walk') ?? clips?.get('idle') ?? null;
+      runtime.orientations.get(coarseOrientation)?.clips ??
+      runtime.orientations.get('side')?.clips ??
+      runtime.orientations.values().next().value?.clips;
+    const clip = clips?.get(requestedClip) ?? clips?.get('walk') ?? clips?.get('idle') ?? null;
+    if (!clip) return null;
+    return {
+      clip,
+      direction: direction ?? undefined,
+      mirrored: direction ? isMirroredRotationDirection(direction) : false,
+    };
   }
 
   private applyFrame(): void {
@@ -194,7 +250,7 @@ export class SpriteAnimator {
       this.material.map = frame.texture;
       this.material.needsUpdate = true;
     }
-    animationDiagnostics[this.slotId] = {
+    const snapshot: SpriteAnimationSnapshot = {
       clip: this.overrideClip ? 'test' : this.clipName,
       frame: this.frameIndex,
       frameKey: frame.key,
@@ -202,6 +258,11 @@ export class SpriteAnimator {
       fps: clip.fps,
       loaded: true,
     };
+    if (this.diagnosticDirection) {
+      snapshot.direction = this.diagnosticDirection;
+      snapshot.mirrored = this.diagnosticMirrored ?? false;
+    }
+    animationDiagnostics[this.slotId] = snapshot;
   }
 }
 
@@ -226,16 +287,44 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
     ? Object.entries(slot.orientations)
     : [['side', { frames: slot?.frames, clips: slot?.clips }] as const];
   const orientations = new Map<string, RuntimeOrientation>();
+  const rotationDirections = new Set<string>();
+  const rotationMirrors = new Map<string, string>();
 
   for (const [name, source] of orientationSources) {
     const orientation = await createRuntimeOrientation(source.frames, source.clips ?? {}, fallbackClip);
     if (orientation) orientations.set(name, orientation);
   }
 
+  for (const [name, source] of Object.entries(slot?.rotations?.directions ?? {})) {
+    const direction = name.toLowerCase();
+    const orientation = await createRuntimeOrientation(source.frames, source.clips ?? {}, fallbackClip);
+    if (orientation) {
+      orientations.set(direction, orientation);
+      rotationDirections.add(direction);
+    }
+  }
+
+  for (const [target, source] of Object.entries(slot?.rotations?.mirrors ?? {})) {
+    const targetDirection = target.toLowerCase();
+    const sourceDirection = source.toLowerCase();
+    if (!isRotationDirection(targetDirection) || !isRotationDirection(sourceDirection)) continue;
+    rotationDirections.add(targetDirection);
+    rotationDirections.add(sourceDirection);
+    rotationMirrors.set(targetDirection, sourceDirection);
+  }
+
   if (orientations.size === 0 && fallbackClip) {
     orientations.set('side', { clips: new Map([['idle', fallbackClip], ['walk', fallbackClip]]) });
   }
-  return orientations.size > 0 ? { orientations } : null;
+  return orientations.size > 0 ? { orientations, rotationDirections, rotationMirrors } : null;
+}
+
+function rotationDirectionFor(runtime: RuntimeSlot, orientation: string): RotationDirection | null {
+  return runtime.rotationDirections.has(orientation) && isRotationDirection(orientation) ? orientation : null;
+}
+
+function isLocomotionClip(clip: CharacterSpriteClip): boolean {
+  return clip === 'walk' || clip === 'idle';
 }
 
 async function createRuntimeOrientation(
