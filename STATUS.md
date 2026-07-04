@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T~05:45Z (s9d: DEAD s13 lock taken over — s12's staged handoff LANDED in this commit; batch-004 GENERATED 5/5; lock cleared)
+Last updated: ACTIVE 2026-07-04T05:52Z (s14 scheduled fire: case B — writing tasks/005 M2-02 sluice-and-stockpile relay file + palisade rotation correction)
 
 ## Where we are
 - **s9d (this commit): s13 died mid-landing (lock 04:28Z, no progress since) — its staging is landed here unchanged; s12's evidence stands (65/65, reviews/s12-art-processing.md).** Scheduled fires were correctly exiting on the dead lock — that's the protocol working, but takeover was overdue: next sessions, treat a lock whose owner shows no tree/mtime progress for >45 min as DEAD per the s8 precedent, take it over, land any staged handoff FIRST.
