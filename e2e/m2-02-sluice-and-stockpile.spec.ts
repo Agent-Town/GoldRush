@@ -115,15 +115,21 @@ test('sluice income follows Balance cadence and replays to the HUD balance', asy
   await waitForSim(page, Balance.sluice.cycleSeconds * 2 + 0.3);
   await shot(page, 'working-sluice');
 
-  const log = await economyLog(page);
-  const sluiced = log.filter((event) => event.type === 'gold_sluiced');
+  // Log + gold + HUD sampled in ONE evaluate: separate round-trips straddle an income
+  // cycle on slow VMs (s25 gate; same atomic-sample family as the s23 fix below).
+  // Intent unchanged: replay(log) must equal live gold AND HUD gold at one instant.
+  const snap = (await page.evaluate(() => ({
+    log: [...(window.__GR_TEST__?.economyLog() ?? [])],
+    gold: window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? -1,
+    hud: window.__THREE_GAME_DIAGNOSTICS__?.ui?.gold ?? -2,
+  }))) as { log: EconomyEvent[]; gold: number; hud: number };
+  const sluiced = snap.log.filter((event) => event.type === 'gold_sluiced');
   expect(sluiced.length).toBeGreaterThanOrEqual(2);
   expect(sluiced.every((event) => event.amount === Balance.sluice.goldPerCycle)).toBe(true);
 
-  const replay = log.reduce(reduce, initialEconomyState);
-  const diagnostics = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__);
-  expect(diagnostics?.economy.gold).toBe(replay.gold);
-  expect(diagnostics?.ui?.gold).toBe(replay.gold);
+  const replay = snap.log.reduce(reduce, initialEconomyState);
+  expect(snap.gold).toBe(replay.gold);
+  expect(snap.hud).toBe(replay.gold);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

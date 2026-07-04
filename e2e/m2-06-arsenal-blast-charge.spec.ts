@@ -217,6 +217,14 @@ test('stress blast pool never exceeds cap', async ({ page }) => {
   });
 
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.detonations ?? 0), { timeout: 15_000 }).toBeGreaterThan(0);
+  // Give the rAF tracker time to actually sample: at ~6fps one poll round-trip spans ~2 frames,
+  // so asserting samples>2 immediately after the detonation poll is a coin flip (s25 gate, env A/B-proven).
+  await expect
+    .poll(
+      () => page.evaluate(() => (window as unknown as { __m206BlastTrack: { samples: number } }).__m206BlastTrack.samples),
+      { timeout: 10_000 },
+    )
+    .toBeGreaterThan(2);
   const track = await page.evaluate(() => (window as unknown as { __m206BlastTrack: { samples: number; maxAlive: number } }).__m206BlastTrack);
   expect(track.samples).toBeGreaterThan(2);
   expect(track.maxAlive).toBeGreaterThan(0);
