@@ -1,10 +1,13 @@
 import * as THREE from 'three';
 import { getStressCount, isSpawnDisabled } from '../core/DebugParams';
+import type { CompassEdge } from '../entities/Enemy';
 import type { Rng } from '../core/Rng';
 import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
 
-type CompassEdge = 'north' | 'south' | 'east' | 'west';
+export type SpawnPackOptions = {
+  speedScale?: number;
+};
 
 type PlannedPulse = {
   wave: number;
@@ -84,6 +87,7 @@ export class WaveSystem {
     private readonly rng: Rng,
     private readonly announce: (text: string, atSim: number) => void,
     private readonly scheduledDisabled: () => boolean,
+    private readonly canSpawnThieves: () => boolean = () => false,
   ) {}
 
   get diagnostics(): WaveDiagnostics {
@@ -152,7 +156,11 @@ export class WaveSystem {
     this.lastPulseAt = Number.NEGATIVE_INFINITY;
   }
 
-  spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): number {
+  spawnDebugPack(
+    count: number = Balance.enemy.debugPackSize,
+    radius: number = Balance.enemy.debugPackRadius,
+    opts: SpawnPackOptions = {},
+  ): number {
     if (isSpawnDisabled()) return 0;
 
     let spawned = 0;
@@ -165,7 +173,7 @@ export class WaveSystem {
         Balance.enemy.groundY,
         this.debugCenter.z + Math.sin(angle) * radius,
       );
-      if (this.spawnAtPosition(this.wave)) spawned += 1;
+      if (this.spawnAtPosition(this.wave, true, opts)) spawned += 1;
     }
     return spawned;
   }
@@ -258,13 +266,19 @@ export class WaveSystem {
         if (!edge) continue;
         this.edge = edge;
         for (let i = 0; i < count; i += 1) {
-          this.spawnAt(edge, i, pulse.wave, count);
+          this.spawnAt(edge, i, pulse.wave, count, i < this.thiefCount(count, pulse.wave));
         }
       }
     }
   }
 
-  private spawnAt(edge: CompassEdge, index: number, wave: number, groupCount = this.waveBudget(wave)): boolean {
+  private spawnAt(
+    edge: CompassEdge,
+    index: number,
+    wave: number,
+    groupCount = this.waveBudget(wave),
+    thief = false,
+  ): boolean {
     if (Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
 
     const radius = Balance.waves.spawnRingRadius;
@@ -284,10 +298,14 @@ export class WaveSystem {
 
     this.spawnPosition.x = this.clampSpawn(this.spawnPosition.x);
     this.spawnPosition.z = this.clampSpawn(this.spawnPosition.z);
-    return this.spawnAtPosition(wave);
+    return this.spawnAtPosition(wave, true, { edge, thief });
   }
 
-  private spawnAtPosition(wave: number, respectAliveCap = true): boolean {
+  private spawnAtPosition(
+    wave: number,
+    respectAliveCap = true,
+    params: SpawnPackOptions & { edge?: CompassEdge; thief?: boolean } = {},
+  ): boolean {
     if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
 
     const speedScale = Math.min(
@@ -296,7 +314,9 @@ export class WaveSystem {
     );
     const enemy = this.enemies.spawn(this.spawnPosition, {
       hpScale: Math.pow(Balance.waves.hpScalePerWave, wave),
-      speedScale,
+      speedScale: params.speedScale ?? speedScale,
+      edge: params.edge,
+      thief: params.thief === true,
     });
     if (!enemy) return false;
     this.waveSpawnedTotal += 1;
@@ -316,6 +336,12 @@ export class WaveSystem {
       if (edge) edges.push(edge);
     }
     return edges;
+  }
+
+  private thiefCount(groupCount: number, wave: number): number {
+    if (!this.canSpawnThieves() || wave < Balance.steal.minWave) return 0;
+    const count = Math.floor(groupCount * Balance.steal.share);
+    return Math.min(groupCount, Math.max(1, count));
   }
 
   private currentTrickleInterval(atSim: number): number {

@@ -24,9 +24,9 @@ interface ThreeGameDiagnostics {
     paused: boolean;
     buildMode: boolean;
     buildMenuOpen: boolean;
-    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
+    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
     buildables: Array<{
-      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
+      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
       displayName: string;
       cost: number;
       count: number;
@@ -40,6 +40,7 @@ interface ThreeGameDiagnostics {
     beaconMax: number;
     nextBeaconCost: number;
     canAffordBeacon: boolean;
+    weapon: 'rig' | 'blast';
   };
   hp: number;
   maxHp: number;
@@ -47,6 +48,13 @@ interface ThreeGameDiagnostics {
   enemiesAlive: number;
   enemyPoolSize: number;
   boltsAlive: number;
+  arsenal: {
+    active: 'rig' | 'blast';
+    blastsAlive: number;
+    detonations: number;
+    blastKills: number;
+    turretKills: number;
+  };
   xp: number;
   xpMotesAlive: number;
   progression: {
@@ -120,16 +128,18 @@ interface ThreeGameDiagnostics {
     ghostPos: { x: number; z: number };
     ghostRotationSteps: number;
     ghostFootprint: { w: number; d: number };
-    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
+    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
     beacons: number;
     palisades: number;
     sluices: number;
     stockpiles: number;
+    turrets: number;
     beaconPositions: Array<{ x: number; z: number }>;
     palisadePositions: Array<{ x: number; z: number }>;
     sluicePositions: Array<{ x: number; z: number }>;
     stockpilePositions: Array<{ x: number; z: number }>;
-    buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile'; count: number }>;
+    turretPositions: Array<{ x: number; z: number }>;
+    buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret'; count: number }>;
     sluicesState: Array<{
       id: string;
       active: boolean;
@@ -160,6 +170,15 @@ interface ThreeGameDiagnostics {
     channelNodeId: string | null;
     progress: number;
     lastGoldGain: number;
+  };
+  steal: {
+    thieves: number;
+    fleeing: number;
+    carriedTotal: number;
+    stolenTotal: number;
+    reclaimedTotal: number;
+    pickups: number;
+    pickupTotal: number;
   };
   charmPause: boolean;
   camImpulseActive: boolean;
@@ -213,8 +232,10 @@ interface Window {
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;
-    spawnPack: (n: number, radius?: number) => void;
+    spawnPack: (n: number, radius?: number, opts?: { speedScale?: number }) => void;
+    spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     resetRun: () => void;
+    toggleWeapon: () => 'rig' | 'blast';
     warmVfx: () => Promise<void>;
     clearScores: () => void;
     setBalance: (path: string, value: number) => boolean;
@@ -235,18 +256,43 @@ interface Window {
     selectBuildable: (id: string) => boolean;
     rotateBuildGhost: () => boolean;
     confirmBuild: () => boolean;
-    enemyPositions: () => Array<{ x: number; z: number; hp: number }>;
+    enemyPositions: () => Array<{
+      x: number;
+      z: number;
+      hp: number;
+      thief?: boolean;
+      state?: 'none' | 'seekHolding' | 'grabbing' | 'fleeing';
+      carried?: number;
+      edge?: 'north' | 'south' | 'east' | 'west' | null;
+    }>;
     spawnEnemyAt: (x: number, z: number) => boolean;
     clearEnemies: () => void;
+    goldPickups: () => Array<{ active: boolean; amount: number; position: { x: number; z: number } }>;
     placeBeacon: () => boolean;
     state: () => {
       enemiesAlive: number;
       xp: number;
       boltsAlive: number;
-      buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile'; count: number }>;
+      arsenal: {
+        active: 'rig' | 'blast';
+        blastsAlive: number;
+        detonations: number;
+        blastKills: number;
+        turretKills: number;
+      };
+      buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret'; count: number }>;
       economy: {
         banked: number;
         bankCap: number;
+      };
+      steal: {
+        thieves: number;
+        fleeing: number;
+        carriedTotal: number;
+        stolenTotal: number;
+        reclaimedTotal: number;
+        pickups: number;
+        pickupTotal: number;
       };
       balance: {
         rig: {

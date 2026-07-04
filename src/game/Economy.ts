@@ -13,6 +13,8 @@ export type EconomyEvent = EconomyEventBase &
     | { type: 'gold_sluiced'; sluiceId: string; amount: number }
     | { type: 'gold_capped'; amount: 0 }
     | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug'; amount: number }
+    | { type: 'gold_stolen'; amount: number }
+    | { type: 'gold_reclaimed'; amount: number }
     | { type: 'gold_spent'; sink: BuildSink; amount: number }
     | { type: 'run_reset' }
   );
@@ -47,6 +49,10 @@ export function reduce(state: EconomyState, event: EconomyEvent): EconomyState {
     case 'gold_capped':
       return state;
     case 'gold_granted':
+      return { ...state, gold: state.gold + event.amount };
+    case 'gold_stolen':
+      return { ...state, gold: state.gold - event.amount };
+    case 'gold_reclaimed':
       return { ...state, gold: state.gold + event.amount };
     case 'gold_spent':
       return { ...state, gold: state.gold - event.amount };
@@ -104,6 +110,9 @@ export class Economy {
     if (event.type === 'gold_spent' && event.amount > this.current.gold) {
       return { ok: false, reason: 'OUT_OF_RESOURCES' };
     }
+    if (event.type === 'gold_stolen' && event.amount > this.current.gold) {
+      return { ok: false, reason: 'OUT_OF_RESOURCES' };
+    }
     if (isBankedIncome(event) && !this.canReceiveIncome(event.amount)) {
       return { ok: false, reason: 'BANK_CAP' };
     }
@@ -132,6 +141,8 @@ export class Economy {
   }
 }
 
-function isBankedIncome(event: EconomyEvent): event is Extract<EconomyEvent, { type: 'gold_panned' | 'gold_sluiced' }> {
-  return event.type === 'gold_panned' || event.type === 'gold_sluiced';
+function isBankedIncome(
+  event: EconomyEvent,
+): event is Extract<EconomyEvent, { type: 'gold_panned' | 'gold_sluiced' | 'gold_reclaimed' }> {
+  return event.type === 'gold_panned' || event.type === 'gold_sluiced' || event.type === 'gold_reclaimed';
 }

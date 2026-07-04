@@ -11,15 +11,19 @@ import {
   isCharmPauseDisabled,
   isLevelUpDisabled,
   isSpawnDisabled,
+  isStealDisabled,
 } from '../core/DebugParams';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { createRng } from '../core/Rng';
 import { Hero } from '../entities/Hero';
+import { BlastChargePool } from '../entities/BlastCharge';
+import { GoldPickupPool } from '../entities/GoldPickup';
 import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
 import { EnemyPool } from '../entities/pools';
+import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
 import { Balance } from './Balance';
 import { AudioSystem } from '../systems/AudioSystem';
 import { Economy, initialEconomyState, reduce as reduceEconomy, summarizeLog, type EconomyEvent } from './Economy';
@@ -30,9 +34,10 @@ import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
-import { WaveSystem } from '../systems/WaveSystem';
+import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
+import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
@@ -55,11 +60,25 @@ export class Game {
   private readonly hero = new Hero();
   private readonly enemies = new EnemyPool();
   private readonly projectiles = new ProjectilePool();
+  private readonly blastCharges = new BlastChargePool();
   private readonly xpMotes = new XpMotePool();
+  private readonly goldPickups = new GoldPickupPool();
   private readonly combatVfx = new CombatVfx();
   private readonly audio = new AudioSystem();
   private readonly state = new GameState();
   private readonly economy = new Economy();
+  private readonly goldTargeting = new TargetingSystem();
+  private readonly stockpileHoldingPositions = Array.from(
+    { length: Balance.stockpile.maxCount },
+    () => new THREE.Vector3(),
+  );
+  private readonly stockpileHoldings: GoldHolding[] = this.stockpileHoldingPositions.map((position, index) => ({
+    id: `stockpile:${index}`,
+    kind: 'stockpile',
+    position,
+    active: false,
+    amount: 0,
+  }));
   private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors, undefined, () => {
     if (Balance.charm.coinTick > 0) this.audio.playCoin();
   }, (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'));
@@ -69,6 +88,7 @@ export class Game {
     this.hero,
     this.enemies,
     this.projectiles,
+    this.blastCharges,
     this.xpMotes,
     this.combatVfx,
     this.audio,
@@ -78,13 +98,28 @@ export class Game {
   );
   private readonly buildSystem: BuildSystem;
   private readonly progression: Progression;
+  private activeWeapon: 'rig' | 'blast' = 'rig';
   private readonly heroShooter: ShooterHandle = {
+    id: 'hero',
+    enabled: () => this.activeWeapon === 'rig',
     getPos: () => this.hero.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
     damage: Balance.sparkRig.damage,
     projSpeed: Balance.sparkRig.boltSpeed,
     volley: Balance.sparkRig.volley,
+  };
+  private readonly blastShooter: ShooterHandle = {
+    id: 'hero_blast',
+    kind: 'lob',
+    enabled: () => this.activeWeapon === 'blast',
+    getPos: () => this.hero.group.position,
+    range: Balance.blast.range,
+    cooldown: Balance.blast.cooldown,
+    damage: Balance.blast.damage,
+    projSpeed: 0,
+    volley: Balance.blast.volley,
+    aoe: { radius: Balance.blast.radius, airTime: Balance.blast.airTime },
   };
   private readonly simTimeScale = getTimescale();
   private harvestSnapshot = this.harvestSystem.snapshot;
@@ -103,6 +138,7 @@ export class Game {
     createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
     (text, atSim) => this.uiBridge.announce(text, atSim),
     areWavesDisabled,
+    () => !isStealDisabled() && this.hasBuiltStockpile(),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -134,6 +170,13 @@ export class Game {
   private frameMsAvg = 0;
   private frameMsP95 = 0;
   private debugBeaconWaveOverride: number | null = null;
+  private stolenTotal = 0;
+  private reclaimedTotal = 0;
+  private readonly thiefContext = {
+    nearestGoldHolding: (from: THREE.Vector3) => this.goldTargeting.nearestGoldHolding(from),
+    claimGold: (enemy: ClaimJumperEnemy, holding: GoldHolding) => this.claimGoldForThief(enemy, holding),
+    onThiefFled: (enemy: ClaimJumperEnemy) => this.onThiefFled(enemy),
+  };
   private buildMenuOpen = false;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
@@ -141,6 +184,7 @@ export class Game {
   private lastCancelIntent = false;
   private lastConfirmIntent = false;
   private lastRotateIntent = false;
+  private lastWeaponToggleIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
   private uiSnapshot?: UiSnapshot;
@@ -200,6 +244,7 @@ export class Game {
     this.damageVignette.className = 'damage-vignette';
     this.getElement('#app').append(this.damageVignette);
     this.combat.registerShooter(this.heroShooter);
+    this.combat.registerShooter(this.blastShooter);
     this.events.on('hero_damaged', () => {
       this.damageFlashRemaining = Balance.hero.iframes;
     });
@@ -235,6 +280,7 @@ export class Game {
     });
 
     this.createScene();
+    this.registerGoldHoldings();
     if (new URLSearchParams(window.location.search).has('debug')) {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
@@ -242,8 +288,11 @@ export class Game {
           this.hero.group.position.set(x, this.hero.group.position.y, z);
           this.hero.velocity.set(0, 0, 0);
         },
-        spawnPack: (n: number, radius?: number) => this.spawnHarnessPack(n, radius),
+        spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
+          this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
+        spawnThief: (edge?: CompassEdge) => this.spawnHarnessThief(edge),
         resetRun: () => this.resetRun(),
+        toggleWeapon: () => this.toggleWeapon(),
         warmVfx: () => this.vfx.warm(this.hero.group.position),
         clearScores: () => clearScores(),
         setBalance: (path: string, value: number) => setBalance(path, value),
@@ -272,9 +321,18 @@ export class Game {
         enemyPositions: () =>
           this.enemies.all
             .filter((enemy) => enemy.isAlive)
-            .map((enemy) => ({ x: enemy.position.x, z: enemy.position.z, hp: enemy.currentHp })),
+            .map((enemy) => ({
+              x: enemy.position.x,
+              z: enemy.position.z,
+              hp: enemy.currentHp,
+              thief: enemy.isThief,
+              state: enemy.stealState,
+              carried: enemy.carriedAmount,
+              edge: enemy.ownEdge,
+            })),
         spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z)) !== null,
         clearEnemies: () => this.enemies.recycleAll(),
+        goldPickups: () => this.goldPickups.snapshot(),
         placeBeacon: () => {
           this.buildSystem.selectBuildable('sentry_beacon', true);
           return this.buildSystem.confirm(this.timeAlive);
@@ -283,11 +341,13 @@ export class Game {
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
           boltsAlive: this.combat.boltsAlive,
+          arsenal: this.arsenalDiagnostics(),
           buildables: this.buildSystem.buildableCounts,
           economy: {
             banked: this.economy.gold,
             bankCap: this.economy.bankCap,
           },
+          steal: this.stealDiagnostics(),
           balance: {
             rig: {
               fireRate: Balance.sparkRig.fireRate,
@@ -322,6 +382,7 @@ export class Game {
     this.combat.dispose();
     this.audio.dispose();
     this.vfx.dispose();
+    this.goldPickups.dispose();
     this.enemies.dispose();
     this.hero.dispose();
     disposeGeneratedAssets();
@@ -344,6 +405,7 @@ export class Game {
     }
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
     if (intents.rotateBuild && !this.lastRotateIntent && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
+    if (intents.weaponToggle && !this.lastWeaponToggleIntent) this.toggleWeapon();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
     if (intents.debugXp && !this.lastDebugXpIntent && new URLSearchParams(window.location.search).has('debug')) {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
@@ -356,6 +418,7 @@ export class Game {
     this.lastCancelIntent = intents.cancel;
     this.lastConfirmIntent = intents.confirm;
     this.lastRotateIntent = intents.rotateBuild;
+    this.lastWeaponToggleIntent = intents.weaponToggle;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
@@ -379,11 +442,13 @@ export class Game {
         },
         (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
       );
+      this.syncStockpileHoldings();
       this.enemies.update(
         simDelta,
         this.hero.group.position,
         this.combat.handleEnemyContact,
         this.buildSystem.palisadeBlockers,
+        isStealDisabled() ? undefined : this.thiefContext,
       );
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
@@ -395,6 +460,13 @@ export class Game {
         this.vfx.floatText(this.hero.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.combat.update(simDelta, this.timeAlive);
+      this.goldPickups.update(
+        simDelta,
+        this.hero.group.position,
+        (amount) => this.economy.canReceiveIncome(amount),
+        (position, amount) => this.reclaimGold(position, amount),
+        (position) => this.blockedGoldPickup(position),
+      );
       this.progression.consumeXpTotal(this.combat.xpCount);
       this.combatVfx.update(simDelta);
     }
@@ -411,6 +483,7 @@ export class Game {
   }
 
   private onEnemyKilled(position: THREE.Vector3): void {
+    this.dropCarrierGold(position);
     if (isCharmPauseDisabled() || this.state.current !== 'playing' || this.state.isPaused) return;
     this.cameraRig.impulse(position, Balance.charm.camImpulse);
     if (this.charmPauseCooldown > 0 || Balance.charm.hitPauseMs <= 0) return;
@@ -474,7 +547,9 @@ export class Game {
     this.scene.add(this.harvestSystem.group);
     this.scene.add(this.buildSystem.group);
     this.scene.add(this.projectiles.group);
+    this.scene.add(this.blastCharges.group);
     this.scene.add(this.xpMotes.group);
+    this.scene.add(this.goldPickups.group);
     this.scene.add(this.combatVfx.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
@@ -507,6 +582,7 @@ export class Game {
       enemiesAlive: this.enemies.activeCount,
       enemyPoolSize: this.enemies.capacity,
       boltsAlive: this.combat.boltsAlive,
+      arsenal: this.arsenalDiagnostics(),
       xp: this.combat.xpCount,
       xpMotesAlive: this.xpMotes.activeCount,
       kills: this.kills,
@@ -546,6 +622,7 @@ export class Game {
       },
       progression: this.progression.snapshot,
       harvest: this.harvestSnapshot,
+      steal: this.stealDiagnostics(),
       charmPause: this.charmPauseActive,
       camImpulseActive: this.cameraRig.impulseActive,
       vfx: {
@@ -628,6 +705,7 @@ export class Game {
       Balance.beacon.maxCount,
       this.buildSystem.nextCost,
       this.buildSystem.canAffordNext,
+      this.activeWeapon,
     );
     this.hud.update(this.uiSnapshot);
   }
@@ -649,16 +727,21 @@ export class Game {
   resetRun(): void {
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
+    this.goldPickups.recycleAll();
     this.waveSystem.reset();
     this.buildMenuOpen = false;
     this.buildSystem.reset();
     this.harvestSystem.reset();
     this.combat.reset();
+    this.activeWeapon = 'rig';
     this.progression.reset();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);
     this.timeAlive = 0;
     this.kills = 0;
+    this.stolenTotal = 0;
+    this.reclaimedTotal = 0;
+    this.syncStockpileHoldings();
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
     this.charmPauseActive = false;
@@ -694,29 +777,168 @@ export class Game {
     });
   }
 
-  private spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): void {
-    if (isSpawnDisabled() || this.state.current !== 'playing') return;
-    this.waveSystem.spawnDebugPack(count, radius);
+  private registerGoldHoldings(): void {
+    this.goldTargeting.clearGoldHoldings();
+    for (const holding of this.stockpileHoldings) this.goldTargeting.registerGoldHolding(holding);
+    for (const holding of this.goldPickups.goldHoldings) this.goldTargeting.registerGoldHolding(holding);
+    this.syncStockpileHoldings();
   }
 
-  private spawnHarnessPack(count: number = Balance.enemy.debugPackSize, radius?: number): void {
-    if (count !== 5 || radius !== 3) {
-      this.spawnDebugPack(count, radius);
-      return;
+  private syncStockpileHoldings(): void {
+    const snapshots = this.buildSystem.diagnostics.stockpilesState;
+    for (let i = 0; i < this.stockpileHoldings.length; i += 1) {
+      const holding = this.stockpileHoldings[i];
+      if (!holding) continue;
+      const snapshot = snapshots[i];
+      holding.active = snapshot?.active === true;
+      holding.amount = holding.active ? this.economy.gold : 0;
+      if (snapshot) holding.position.set(snapshot.position.x, Balance.enemy.groundY, snapshot.position.z);
     }
-    if (isSpawnDisabled() || this.state.current !== 'playing') return;
+  }
 
-    const startAngle = Math.PI * -0.5;
-    const zeroInputRadius = Math.min(radius, Balance.xp.moteMagnetRadius * 0.9);
-    for (let i = 0; i < count; i += 1) {
-      const angle = startAngle + (i / Math.max(1, count)) * Math.PI * 2;
-      this.debugSpawnPosition.set(
-        this.hero.group.position.x + Math.cos(angle) * zeroInputRadius,
-        Balance.enemy.groundY,
-        this.hero.group.position.z + Math.sin(angle) * zeroInputRadius,
-      );
-      this.enemies.spawn(this.debugSpawnPosition, { speedScale: 0 });
+  private hasBuiltStockpile(): boolean {
+    return (this.buildSystem.buildableCounts.find((entry) => entry.id === 'stockpile')?.count ?? 0) > 0;
+  }
+
+  private claimGoldForThief(_enemy: ClaimJumperEnemy, holding: GoldHolding): number {
+    if (holding.kind === 'pickup') return this.goldPickups.take(holding.pickupIndex ?? -1);
+
+    const amount = Math.min(Balance.steal.grabAmount, this.economy.gold);
+    if (amount <= 0) return 0;
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at: this.timeAlive,
+      type: 'gold_stolen',
+      amount,
+    });
+    if (!result.ok) return 0;
+    this.stolenTotal += amount;
+    this.syncStockpileHoldings();
+    this.vfx.floatText(holding.position, `-${amount}`, '#a0522d');
+    return amount;
+  }
+
+  private onThiefFled(enemy: ClaimJumperEnemy): void {
+    enemy.releaseCarriedGold();
+    this.enemies.recycle(enemy);
+  }
+
+  private toggleWeapon(): 'rig' | 'blast' {
+    this.activeWeapon = this.activeWeapon === 'rig' ? 'blast' : 'rig';
+    return this.activeWeapon;
+  }
+
+  private arsenalDiagnostics(): {
+    active: 'rig' | 'blast';
+    blastsAlive: number;
+    detonations: number;
+    blastKills: number;
+    turretKills: number;
+  } {
+    return {
+      active: this.activeWeapon,
+      blastsAlive: this.combat.blastsAlive,
+      detonations: this.combat.detonations,
+      blastKills: this.combat.killsByOwner.hero_blast ?? 0,
+      turretKills: this.combat.killsByOwner.turrets ?? 0,
+    };
+  }
+
+  private dropCarrierGold(position: THREE.Vector3): void {
+    const carrier = this.carrierAt(position);
+    const amount = carrier?.releaseCarriedGold() ?? 0;
+    if (amount > 0) this.goldPickups.spawn(position, amount);
+  }
+
+  private carrierAt(position: THREE.Vector3): ClaimJumperEnemy | null {
+    for (const enemy of this.enemies.all) {
+      if (!enemy.isAlive || enemy.carriedAmount <= 0) continue;
+      const dx = enemy.position.x - position.x;
+      const dz = enemy.position.z - position.z;
+      if (dx * dx + dz * dz <= 0.01) return enemy;
     }
+    return null;
+  }
+
+  private reclaimGold(position: THREE.Vector3, amount: number): void {
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at: this.timeAlive,
+      type: 'gold_reclaimed',
+      amount,
+    });
+    if (!result.ok) return;
+    this.reclaimedTotal += amount;
+    if (Balance.charm.coinTick > 0) this.audio.playCoin();
+    this.vfx.floatText(position, `+${amount}`, '#c4883a');
+  }
+
+  private blockedGoldPickup(position: THREE.Vector3): void {
+    this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'gold_capped', amount: 0 });
+    this.vfx.floatText(position, 'Vault full!', '#a0522d');
+  }
+
+  private stealDiagnostics(): {
+    thieves: number;
+    fleeing: number;
+    carriedTotal: number;
+    stolenTotal: number;
+    reclaimedTotal: number;
+    pickups: number;
+    pickupTotal: number;
+  } {
+    let thieves = 0;
+    let fleeing = 0;
+    let carriedTotal = 0;
+    for (const enemy of this.enemies.all) {
+      if (!enemy.isAlive || !enemy.isThief) continue;
+      thieves += 1;
+      if (enemy.isFleeingWithGold) fleeing += 1;
+      carriedTotal += enemy.carriedAmount;
+    }
+    return {
+      thieves,
+      fleeing,
+      carriedTotal,
+      stolenTotal: this.stolenTotal,
+      reclaimedTotal: this.reclaimedTotal,
+      pickups: this.goldPickups.activeCount,
+      pickupTotal: this.goldPickups.totalAmount,
+    };
+  }
+
+  private spawnDebugPack(
+    count: number = Balance.enemy.debugPackSize,
+    radius: number = Balance.enemy.debugPackRadius,
+    opts: SpawnPackOptions = {},
+  ): void {
+    if (isSpawnDisabled() || this.state.current !== 'playing') return;
+    this.waveSystem.spawnDebugPack(count, radius, opts);
+  }
+
+  private spawnHarnessPack(
+    count: number = Balance.enemy.debugPackSize,
+    radius: number = Balance.enemy.debugPackRadius,
+    opts: SpawnPackOptions = {},
+  ): void {
+    if (isSpawnDisabled() || this.state.current !== 'playing') return;
+    const effectiveRadius =
+      opts.speedScale === 0 ? Math.min(radius, Balance.xp.moteMagnetRadius * 0.9) : radius;
+    this.spawnDebugPack(count, effectiveRadius, opts);
+  }
+
+  private spawnHarnessThief(edge?: CompassEdge): boolean {
+    if (isSpawnDisabled() || this.state.current !== 'playing' || isStealDisabled()) return false;
+    const radius = Math.min(14, Balance.waves.spawnRingRadius);
+    const x = this.hero.group.position.x;
+    const z = this.hero.group.position.z;
+    if (edge === 'south') this.debugSpawnPosition.set(x, Balance.enemy.groundY, z - radius);
+    else if (edge === 'east') this.debugSpawnPosition.set(x + radius, Balance.enemy.groundY, z);
+    else if (edge === 'west') this.debugSpawnPosition.set(x - radius, Balance.enemy.groundY, z);
+    else this.debugSpawnPosition.set(x, Balance.enemy.groundY, z + radius);
+    this.debugSpawnPosition.x = Math.max(-38, Math.min(38, this.debugSpawnPosition.x));
+    this.debugSpawnPosition.z = Math.max(-38, Math.min(38, this.debugSpawnPosition.z));
+    return this.enemies.spawn(this.debugSpawnPosition, { edge, thief: true }) !== null;
   }
 
   private toggleBuildMenu(): void {
@@ -782,4 +1004,8 @@ export class Game {
     if (!element) throw new Error(`Missing element: ${selector}`);
     return element;
   }
+}
+
+function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOptions | undefined {
+  return count === 5 && radius === 3 ? { speedScale: 0 } : undefined;
 }

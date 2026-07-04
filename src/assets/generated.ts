@@ -150,6 +150,7 @@ export class GeneratedSpriteBatch {
   private readonly sprites: THREE.Sprite[] = [];
   private readonly requestedVisible: boolean[] = [];
   private loaded = false;
+  private renderedContribution = 0;
   private disposed = false;
 
   constructor(
@@ -208,7 +209,11 @@ export class GeneratedSpriteBatch {
   dispose(): void {
     this.disposed = true;
     this.group.clear();
-    delete renderedSprites[this.slotId];
+    // s23 (m2-04 gate fix): subtract only this batch's contribution — two batches share a slot now.
+    const remaining = Math.max(0, (renderedSprites[this.slotId] ?? 0) - this.renderedContribution);
+    if (remaining === 0) delete renderedSprites[this.slotId];
+    else renderedSprites[this.slotId] = remaining;
+    this.renderedContribution = 0;
     this.material.dispose();
   }
 
@@ -221,6 +226,11 @@ export class GeneratedSpriteBatch {
   }
 
   private updateRenderedCount(): void {
-    renderedSprites[this.slotId] = this.sprites.filter((sprite) => sprite.visible).length;
+    // s23 (m2-04 gate fix): 006 split jumpers into normal+thief batches on ONE slot id — a plain
+    // overwrite here let the last-updated (usually empty) batch zero the shared count every frame.
+    // Track this batch's contribution and adjust the shared total instead of overwriting it.
+    const count = this.sprites.filter((sprite) => sprite.visible).length;
+    renderedSprites[this.slotId] = Math.max(0, (renderedSprites[this.slotId] ?? 0) - this.renderedContribution) + count;
+    this.renderedContribution = count;
   }
 }

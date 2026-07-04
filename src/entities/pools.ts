@@ -10,6 +10,7 @@ import {
   disposeClaimJumperAssets,
   type ClaimJumperAssets,
   type EnemySpawnParams,
+  type ThiefUpdateContext,
 } from './Enemy';
 
 export class EnemyPool {
@@ -18,6 +19,11 @@ export class EnemyPool {
   private readonly assets: ClaimJumperAssets = createClaimJumperAssets();
   private readonly enemies: ClaimJumperEnemy[] = [];
   private readonly renderParts: THREE.InstancedMesh[] = [];
+  private readonly sackMesh = new THREE.InstancedMesh(
+    this.assets.sackGeometry,
+    this.assets.sackMaterial,
+    Balance.enemy.poolSize,
+  );
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
     y: 0.72,
@@ -26,6 +32,13 @@ export class EnemyPool {
     onLoaded: () => this.setProceduralVisible(false),
   });
   private readonly spriteAnimator = new SpriteAnimator(assetSlots.charClaimJumper, this.generatedSprites.material);
+  private readonly thiefSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+    name: 'GeneratedClaimJumperThiefSprites',
+    y: 0.72,
+    scale: [1.55, 1.55],
+    renderOrder: 2,
+  });
+  private readonly thiefSpriteAnimator = new SpriteAnimator(assetSlots.charClaimJumper, this.thiefSprites.material);
   private readonly localMatrices: THREE.Matrix4[] = [];
   private readonly cells: ClaimJumperEnemy[][] = [];
   private readonly touchedCells: number[] = [];
@@ -33,6 +46,9 @@ export class EnemyPool {
   private readonly instanceMatrix = new THREE.Matrix4();
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private readonly syncObject = new THREE.Object3D();
+  private readonly sackLocalMatrix = new THREE.Matrix4();
+  private readonly normalPonchoColor = new THREE.Color('#a0522d');
+  private readonly carryingPonchoColor = new THREE.Color('#5b8a8a');
   private readonly gridSize: number;
   private readonly gridMin: number;
   private readonly gridMax: number;
@@ -46,7 +62,8 @@ export class EnemyPool {
     this.gridMax = Balance.enemy.spatialHashWorldMax;
     this.gridSize = Math.ceil((this.gridMax - this.gridMin) / this.cellSize);
     this.createRenderParts();
-    this.group.add(this.generatedSprites.group);
+    this.createSackMesh();
+    this.group.add(this.generatedSprites.group, this.thiefSprites.group);
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
       this.cells.push([]);
@@ -87,6 +104,7 @@ export class EnemyPool {
     heroPosition: THREE.Vector3,
     onContact: (enemy: ClaimJumperEnemy) => void,
     blockers: readonly PalisadeBlocker[] = [],
+    thiefContext?: ThiefUpdateContext,
   ): void {
     this.rebuildSpatialHash();
 
@@ -104,7 +122,7 @@ export class EnemyPool {
           if (!cell) continue;
 
           for (const other of cell) {
-            if (other === enemy) continue;
+            if (other === enemy || !other.isAlive) continue;
             const awayX = enemy.group.position.x - other.group.position.x;
             const awayZ = enemy.group.position.z - other.group.position.z;
             const distSq = awayX * awayX + awayZ * awayZ;
@@ -118,12 +136,13 @@ export class EnemyPool {
         }
       }
 
-      if (enemy.update(delta, heroPosition, separationX, separationZ, blockers)) {
+      if (enemy.update(delta, heroPosition, separationX, separationZ, blockers, thiefContext)) {
         onContact(enemy);
       }
     }
     this.syncInstances();
-    this.spriteAnimator.update(delta, this.activeClip());
+    this.spriteAnimator.update(delta, this.activeClip(false));
+    this.thiefSpriteAnimator.update(delta, this.activeClip(true));
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
@@ -148,12 +167,22 @@ export class EnemyPool {
     }
     this.generatedSprites.dispose();
     this.spriteAnimator.dispose();
+    this.thiefSprites.dispose();
+    this.thiefSpriteAnimator.dispose();
     disposeClaimJumperAssets(this.assets);
   }
 
-  private activeClip(): CharacterSpriteClip {
+  private activeClip(thieves: boolean): CharacterSpriteClip {
+    if (thieves) {
+      for (const enemy of this.enemies) {
+        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'grab') return 'grab';
+      }
+      for (const enemy of this.enemies) {
+        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'flee') return 'flee';
+      }
+    }
     for (const enemy of this.enemies) {
-      if (enemy.isAlive) return enemy.animationClip;
+      if (enemy.isAlive && enemy.isThief === thieves) return enemy.animationClip;
     }
     return 'idle';
   }
@@ -186,6 +215,19 @@ export class EnemyPool {
     this.renderParts[0].renderOrder = -1;
   }
 
+  private createSackMesh(): void {
+    this.sackLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(-0.38, 0.66, 0.12), new THREE.Euler(0.2, 0.1, -0.38)));
+    this.sackMesh.count = Balance.enemy.poolSize;
+    this.sackMesh.frustumCulled = false;
+    this.sackMesh.renderOrder = 3;
+    tagPlaceholder(this.sackMesh, assetSlots.charClaimJumper);
+    this.group.add(this.sackMesh);
+    for (let i = 0; i < Balance.enemy.poolSize; i += 1) {
+      this.sackMesh.setMatrixAt(i, this.hiddenMatrix);
+    }
+    this.sackMesh.instanceMatrix.needsUpdate = true;
+  }
+
   private createLocalMatrix(position: THREE.Vector3, rotation = new THREE.Euler()): THREE.Matrix4 {
     this.syncObject.position.copy(position);
     this.syncObject.rotation.copy(rotation);
@@ -213,9 +255,17 @@ export class EnemyPool {
       if (!part || !localMatrix) continue;
       this.instanceMatrix.multiplyMatrices(this.baseMatrix, localMatrix);
       part.setMatrixAt(enemy.id, this.instanceMatrix);
+      if (i === 1) {
+        part.setColorAt(enemy.id, enemy.carriedAmount > 0 ? this.carryingPonchoColor : this.normalPonchoColor);
+        if (part.instanceColor) part.instanceColor.needsUpdate = true;
+      }
       part.instanceMatrix.needsUpdate = true;
     }
-    this.generatedSprites.set(enemy.id, enemy.group.position, enemy.isAlive);
+    this.instanceMatrix.multiplyMatrices(enemy.isAlive && enemy.carriedAmount > 0 ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
+    this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
+    this.sackMesh.instanceMatrix.needsUpdate = true;
+    this.generatedSprites.set(enemy.id, enemy.group.position, enemy.isAlive && !enemy.isThief);
+    this.thiefSprites.set(enemy.id, enemy.group.position, enemy.isAlive && enemy.isThief);
   }
 
   private setProceduralVisible(visible: boolean): void {
