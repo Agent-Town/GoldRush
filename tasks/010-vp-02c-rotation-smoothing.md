@@ -4,6 +4,12 @@ You are Codex, implementer for Gold Rush, on Robin's Mac in the project folder. 
 
 Robin's verdict on the live 8-way resolver: "not really smooth — many directions missing." Treat as two hypotheses, in order:
 
+## 0. ROBIN'S OBSERVED SYMPTOMS (2026-07-04 live playtest — your probe must reproduce, then fix, all three)
+- N and S: correct 2-frame walk cycles ("great").
+- W: ONE static posture (its stride PAIR exists in the sheet — r1c0/r1c1 — so the frames wiring dropped a frame); E: identical to W (mirror produces same single posture).
+- SE and NE: ONE posture each, and the SAME diagonal cell is reused for BOTH the up- and down- variants of that side (SW shows SE art, NW shows NE art, likely unmirrored and/or frame pairs unwired).
+Hypothesis priority: rotations-block frames wiring (pairs → single frames) + mirror-flag application for diagonal mirrors. The ART is complete — fix wiring before any smoothing work, then smoothing on top.
+
 ## 1. PROBE FIRST (do not skip): are all 8 orientations actually firing?
 Drive the hero through a full 360° sweep (`__GR_TEST__` teleport/heading or key simulation) and record `spriteAnimations['char.hero'].frameKey` per 45° heading. If any of the 8 headings never selects its expected rotation cell (mapping, mirror-table, or hysteresis bug), FIX THAT FIRST and report which were dead — this alone may explain "directions missing."
 
