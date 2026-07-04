@@ -1,8 +1,12 @@
-# VP-02 — sprite-animation (pose-swap billboards) (s9b, 2026-07-04)
+# VP-02 — sprite-animation (sheet-based billboards) (s9b, REVISED s9c 2026-07-04)
 
-**Robin directive (2026-07-04):** "we need sprite sheets to make the animations better."
+**Robin directives (2026-07-04, BINDING):** (1) "we need sprite sheets" — full animation sets per character as SHEETS, all frames in ONE image (in-image consistency; proven s9c: singles drifted, 2x2 sheets held), on flat **magenta #ff00ff** key. (2) Characters must cover ALL directions (left/right/up/down, turning) and actions (shoot, hit, pan, build — extensible).
 
-**Goal:** characters animate via frame cycling on their billboards. Pose-swap flipbook (2–4 frames), NOT dense sheet grids — GPT Image consistency limit; storybook look is the style anchor anyway.
+**REVISION over the s9b pose-swap plan below:** the contract's primary form is now the sheet grid; per-file frames remain a legacy fallback. Orientation model (BINDING): per character 3 generated orientations — `side` (mirrored at runtime for the 4th direction), `front`, `back` — one sheet per orientation, `clips` defined per orientation with fallback chain (missing orientation → side+mirror; missing clip → walk; missing everything → 1-frame batch-001 billboard). Assets that exist TODAY: `char-hero-sheet-side.png`, `char-jumper-sheet-side.png` (2x2 magenta: idle-ish/walk-L/walk-R/hit|flee) — integrate these first; front/back + action cells arrive as batch-004 ONLY after these two survive extraction→contract→in-game (placeholder-first).
+
+**Extract script extension (part of this slice):** `scripts/extract-alpha.mjs` gains `--key <hex>` (default 8a8a8a; ff00ff for sheets; hue-aware despill for saturated keys — kill magenta fringe on anti-aliased edges) and `--grid CxR` (slice cells, bbox-center each cell's content, normalize to contract cell size, emit `<name>-r<row>c<col>.png` + a frames JSON stub for the contract).
+
+**Original s9b plan (still valid where not superseded):**
 
 ## Contract
 
