@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T11:55Z (s24: M2-05 base-damage-and-repair DELEGATED — slice spec expanded + tasks/009 written; chatgpt.com 403 → relay, one-liner in Robin-owes; lock cleared)
+Last updated: ACTIVE 2026-07-04T14:00Z (s25: gating tasks/009 M2-05 output — lane settled per mtime rule; per-scope review done, running gates)
 
 ## Where we are
 - **s9h — Robin live-playtest refinements:** (1) 8-way SYMPTOMS RECORDED into tasks/010 §0 (N/S perfect; W/E one static posture though the sheet pair exists; SE/NE single-posture reused for SW/NW) — wiring/mirror bugs, art is complete; 010 fixes wiring FIRST then smoothing. (2) **tasks/011 WRITTEN (build-menu blurbs + controls legend)** — RUN ONLY AFTER 009 integrates (shared buildables/UI files); blurb copy in ledger voice, pause-overlay controls block (R-rotate discoverability — the binding exists: KeyR/TouchRotate). (3) Robin on the M4 agent partner: "perfect — looking forward to that moment" → **flag for M2-07 sign-off: offer M3↔M4 order swap** (agent co-op before roguelite meta; product-owner call, zero cost now). Chain when free: 009 → 010 → 011.
