@@ -18,6 +18,6 @@ Robin (2026-07-04): "I don't quite understand what each of the buildings does, w
 6. First-build nudge: the first time a menu opens each run, the blurb strip pulses once (CSS, no timer system).
 
 ## Firewall
-Touch ONLY `src/game/buildables.ts` (blurb/role fields), `src/ui/BuildButton.ts` (menu strip), the pause-overlay UI file, `src/styles.css`/theme, NEW e2e `e2e/vp-04-build-blurbs.spec.ts` (menu blurb renders per def at desktop+390, legend appears on pause). No Balance/economy/combat/system changes; no STATUS/specs/reviews; no commits. If tasks/009 changed `buildables.ts` shape, ADAPT to its landed form — do not revert anything.
+Touch ONLY `src/game/buildables.ts` (blurb/role fields), `src/ui/BuildButton.ts` (menu strip), `src/core/InputController.ts` + `src/systems/BuildSystem.ts` (ONLY the quick-build/repeat-last intents in §5 — additive, no changes to existing bindings), the pause-overlay UI file, `src/styles.css`/theme, NEW e2e `e2e/vp-04-build-blurbs.spec.ts` (menu blurb renders per def at desktop+390, legend appears on pause). No Balance/economy/combat/system changes; no STATUS/specs/reviews; no commits. If tasks/009 changed `buildables.ts` shape, ADAPT to its landed form — do not revert anything.
 
 Self-check: tsc/build clean, new spec green, m2-01 menu suite green unmodified. End with `READY-FOR-GATES` + files + results.
