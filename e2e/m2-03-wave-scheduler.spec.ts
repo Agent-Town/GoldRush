@@ -236,7 +236,13 @@ test('next-wave timer stays locked to sim time across three waves', async ({ pag
   });
   await installTimerTracker(page);
 
-  await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0)).toBeGreaterThanOrEqual(3);
+  // s27 fix of the s17 rationale: expect.poll defaults to ITS OWN 5s cap -- it does
+  // NOT inherit test.setTimeout. The 45s bump never reached this poll, which is why
+  // "wave reached 2 in-window" kept recurring on slow VMs (s25 exception retired
+  // this fire). Bind the poll to the three-wave window explicitly.
+  await expect
+    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0), { timeout: 35_000 })
+    .toBeGreaterThanOrEqual(3);
   const track = await page.evaluate(() => (window as unknown as { __m203TimerTrack: TimerTrack }).__m203TimerTrack);
   expect(track.samples).toBeGreaterThan(10);
   expect(track.maxError).toBeLessThan(0.08);

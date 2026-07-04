@@ -201,7 +201,12 @@ export class SpriteAnimator {
       this.diagnosticDirection = next.direction;
       this.diagnosticMirrored = next.direction ? nextMirrored : undefined;
       this.setSpriteMirrored(nextMirrored);
-      this.startFade(previousFrame, nextFrame, previousScaleX);
+      // s27 (healthy-VM sweep): fade ONLY on orientation swaps -- the tasks/010
+      // mandate is "crossfade between outgoing/incoming orientation cells". Pure
+      // clip changes (incl. test clips) keep the pre-vp-02c hard cut; fading them
+      // pinned freshly-retired clip textures in the overlay material and re-uploaded
+      // disposed textures on fps-luck (memory canary +1, reviews/s27-healthy-vm-sweep.md).
+      if (orientationChanged) this.startFade(previousFrame, nextFrame, previousScaleX);
       this.applyFrame();
       return;
     }
@@ -347,6 +352,10 @@ export class SpriteAnimator {
     if (t >= 1) {
       this.fadeSprite.visible = false;
       this.fadeMaterial.opacity = 0;
+      // s27: release the outgoing frame's texture at fade end -- a pinned map keeps
+      // retired textures re-uploadable (renderer.memory churn) and blocks GC.
+      this.fadeMaterial.map = null;
+      this.fadeMaterial.needsUpdate = true;
       return;
     }
     this.fadeMaterial.opacity = 1 - t;
