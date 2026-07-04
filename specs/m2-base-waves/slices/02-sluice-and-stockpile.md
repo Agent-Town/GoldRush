@@ -1,5 +1,7 @@
 # M2-02 — sluice-and-stockpile (expanded s14, 2026-07-04)
 
+**Status: DONE (s19, 2026-07-04) — gated + integrated; evidence `reviews/m2-02-sluice-and-stockpile.md`, shots `reviews/shots-m2-02/`. Full sweep 75/75. Rider (palisade rotation) shipped in the same slice.**
+
 **Goal:** the base earns and holds gold. Sluice = passive river income (slower than active panning); stockpile = banked-gold cap raiser with a visible pile. This creates the thing worth robbing (M2-04) and the triage target (M2-05). Rider: palisade-rotation correction (BINDING Robin directive, s9c).
 
 ## Contract

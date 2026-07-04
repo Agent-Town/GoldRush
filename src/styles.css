@@ -77,7 +77,8 @@ body {
   transform: translate(-50%, -50%);
 }
 
-#confirm-button {
+#confirm-button,
+#rotate-button {
   width: clamp(74px, 18vw, 96px);
   aspect-ratio: 1;
   border: 1px solid rgba(246, 241, 223, 0.3);
@@ -87,6 +88,11 @@ body {
   font-weight: 800;
   pointer-events: auto;
   touch-action: none;
+}
+
+#rotate-button {
+  width: clamp(52px, 13vw, 68px);
+  background: #c4883a;
 }
 
 .hud-panel--build {

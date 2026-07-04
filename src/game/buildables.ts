@@ -1,6 +1,6 @@
 import { Balance } from './Balance';
 
-export type BuildableId = 'sentry_beacon' | 'palisade';
+export type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
 export type BuildPlacement = 'bank' | 'river-adjacent' | 'any';
 
 export type BuildableDef = {
@@ -13,6 +13,7 @@ export type BuildableDef = {
   slotFamily: `building.${BuildableId}`;
   maxCount: number;
   iconSlot: `ui.build.icon.${BuildableId}`;
+  rotatable?: boolean;
 };
 
 export const buildableDefs: readonly BuildableDef[] = [
@@ -37,6 +38,29 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.palisade',
     maxCount: Balance.palisade.maxCount,
     iconSlot: 'ui.build.icon.palisade',
+    rotatable: true,
+  },
+  {
+    id: 'sluice',
+    displayName: 'Sluice Works',
+    costCurve: () => Balance.sluice.cost,
+    footprint: { w: 2, d: 1 },
+    hpMax: null,
+    placement: 'river-adjacent',
+    slotFamily: 'building.sluice',
+    maxCount: Balance.sluice.maxCount,
+    iconSlot: 'ui.build.icon.sluice',
+  },
+  {
+    id: 'stockpile',
+    displayName: 'Stockpile Yard',
+    costCurve: () => Balance.stockpile.cost,
+    footprint: { w: 1.5, d: 1.5 },
+    hpMax: null,
+    placement: 'bank',
+    slotFamily: 'building.stockpile',
+    maxCount: Balance.stockpile.maxCount,
+    iconSlot: 'ui.build.icon.stockpile',
   },
 ];
 

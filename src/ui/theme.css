@@ -79,7 +79,7 @@
   top: max(16px, env(safe-area-inset-top));
   right: max(16px, env(safe-area-inset-right));
   display: grid;
-  grid-template-columns: 18px max-content minmax(4ch, 5ch);
+  grid-template-columns: 18px max-content minmax(4ch, 7ch);
   align-items: center;
   column-gap: 8px;
   min-width: 132px;
@@ -534,7 +534,7 @@
     right: max(12px, env(safe-area-inset-right));
     min-width: 108px;
     max-width: calc(100vw - 24px);
-    grid-template-columns: 16px max-content minmax(3ch, 4ch);
+    grid-template-columns: 16px max-content minmax(3ch, 7ch);
     column-gap: 6px;
   }
 

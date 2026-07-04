@@ -8,6 +8,7 @@ export type UiSnapshot = {
   hp: number;
   maxHp: number;
   gold: number;
+  bankCap: number;
   xp: number;
   xpNeed: number;
   level: number;
@@ -30,7 +31,9 @@ export type UiSnapshot = {
     maxCount: number;
     canAfford: boolean;
     selected: boolean;
+    iconSlot: `ui.build.icon.${BuildableId}`;
   }>;
+  stockpileCount: number;
   beaconCount: number;
   beaconMax: number;
   nextBeaconCost: number;
@@ -42,6 +45,7 @@ export class UiBridge {
     hp: 100,
     maxHp: 100,
     gold: 0,
+    bankCap: Balance.economy.bankCap,
     xp: 0,
     xpNeed: Balance.xp.needBase,
     level: 1,
@@ -57,6 +61,7 @@ export class UiBridge {
     buildMenuOpen: false,
     selectedBuildable: 'sentry_beacon',
     buildables: [],
+    stockpileCount: 0,
     beaconCount: 0,
     beaconMax: Balance.beacon.maxCount,
     nextBeaconCost: Balance.beacon.costBase,
@@ -75,6 +80,7 @@ export class UiBridge {
     maxHp: number,
     enemiesAlive: number,
     gold: number,
+    bankCap: number,
     xp: number,
     xpNeed: number,
     level: number,
@@ -84,12 +90,14 @@ export class UiBridge {
     buildMenuOpen: boolean,
     selectedBuildable: BuildableId,
     buildables: UiSnapshot['buildables'],
+    stockpileCount: number,
     beaconCount: number,
     beaconMax: number,
     nextBeaconCost: number,
     canAffordBeacon: boolean,
   ): UiSnapshot {
     this.snapshot.gold = gold;
+    this.snapshot.bankCap = bankCap;
     this.snapshot.xp = xp;
     this.snapshot.xpNeed = xpNeed;
     this.snapshot.level = level;
@@ -105,6 +113,7 @@ export class UiBridge {
     this.snapshot.buildMenuOpen = buildMenuOpen;
     this.snapshot.selectedBuildable = selectedBuildable;
     this.snapshot.buildables = buildables;
+    this.snapshot.stockpileCount = stockpileCount;
     this.snapshot.beaconCount = beaconCount;
     this.snapshot.beaconMax = beaconMax;
     this.snapshot.nextBeaconCost = nextBeaconCost;

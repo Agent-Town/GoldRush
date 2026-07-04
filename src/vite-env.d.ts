@@ -24,16 +24,18 @@ interface ThreeGameDiagnostics {
     paused: boolean;
     buildMode: boolean;
     buildMenuOpen: boolean;
-    selectedBuildable: 'sentry_beacon' | 'palisade';
+    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
     buildables: Array<{
-      id: 'sentry_beacon' | 'palisade';
+      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
       displayName: string;
       cost: number;
       count: number;
       maxCount: number;
       canAfford: boolean;
       selected: boolean;
+      iconSlot: string;
     }>;
+    stockpileCount: number;
     beaconCount: number;
     beaconMax: number;
     nextBeaconCost: number;
@@ -100,9 +102,11 @@ interface ThreeGameDiagnostics {
   };
   economy: {
     gold: number;
+    banked: number;
+    bankCap: number;
     logLength: number;
-    state: { gold: number };
-    replay: { gold: number };
+    state: { gold: number; bankCap: number };
+    replay: { gold: number; bankCap: number };
     summary: {
       panned: number;
       granted: number;
@@ -114,12 +118,32 @@ interface ThreeGameDiagnostics {
     mode: boolean;
     ghostValid: boolean;
     ghostPos: { x: number; z: number };
-    selectedBuildable: 'sentry_beacon' | 'palisade';
+    ghostRotationSteps: number;
+    ghostFootprint: { w: number; d: number };
+    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
     beacons: number;
     palisades: number;
+    sluices: number;
+    stockpiles: number;
     beaconPositions: Array<{ x: number; z: number }>;
     palisadePositions: Array<{ x: number; z: number }>;
-    buildables: Array<{ id: 'sentry_beacon' | 'palisade'; count: number }>;
+    sluicePositions: Array<{ x: number; z: number }>;
+    stockpilePositions: Array<{ x: number; z: number }>;
+    buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile'; count: number }>;
+    sluicesState: Array<{
+      id: string;
+      active: boolean;
+      position: { x: number; z: number };
+      progress: number;
+      contested: boolean;
+      capped: boolean;
+    }>;
+    stockpilesState: Array<{
+      active: boolean;
+      position: { x: number; z: number };
+      pileStep: number;
+    }>;
+    pileStep: number;
     nextCost: number;
     killsByOwner: Readonly<Record<string, number>>;
   };
@@ -191,7 +215,7 @@ interface Window {
     teleport: (x: number, z: number) => void;
     spawnPack: (n: number, radius?: number) => void;
     resetRun: () => void;
-    warmVfx: () => void;
+    warmVfx: () => Promise<void>;
     clearScores: () => void;
     setBalance: (path: string, value: number) => boolean;
     grantGold: (n: number) => void;
@@ -209,13 +233,21 @@ interface Window {
     setTestClip: (slot: string, frames: string[], fps: number) => void;
     setBuildMode: (on: boolean) => void;
     selectBuildable: (id: string) => boolean;
+    rotateBuildGhost: () => boolean;
+    confirmBuild: () => boolean;
     enemyPositions: () => Array<{ x: number; z: number; hp: number }>;
+    spawnEnemyAt: (x: number, z: number) => boolean;
+    clearEnemies: () => void;
     placeBeacon: () => boolean;
     state: () => {
       enemiesAlive: number;
       xp: number;
       boltsAlive: number;
-      buildables: Array<{ id: 'sentry_beacon' | 'palisade'; count: number }>;
+      buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile'; count: number }>;
+      economy: {
+        banked: number;
+        bankCap: number;
+      };
       balance: {
         rig: {
           fireRate: number;

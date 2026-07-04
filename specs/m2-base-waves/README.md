@@ -44,7 +44,7 @@ Pickup order: **M2-01** (m1-08 done, M1 spec-closed by s8; Robin's playtest verd
 TODO:
 - [x] m1-08 wave18-corrections (done s8, M1 spec-closed)
 - [x] m2-01 buildable-registry-and-menu (done s10, `98250eb`; palisade-rotation correction rides M2-02)
-- [ ] m2-02 sluice-and-stockpile ← spec expanded s14 (`slices/02-…`), relayed as tasks/005
+- [x] m2-02 sluice-and-stockpile (done s19, incl. palisade-rotation rider; review `reviews/m2-02-sluice-and-stockpile.md`)
 - [x] m2-03 wave-scheduler-v2 (done s11, `57eb019`/`9518eab`)
 - [ ] m2-04 gold-stealing ← M2 fun gate
 - [ ] m2-05 base-damage-and-repair

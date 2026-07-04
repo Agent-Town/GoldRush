@@ -62,7 +62,7 @@ export class Game {
   private readonly economy = new Economy();
   private readonly harvestSystem = new HarvestSystem(this.economy, Terrain.nodeAnchors, undefined, () => {
     if (Balance.charm.coinTick > 0) this.audio.playCoin();
-  });
+  }, (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'));
   private readonly vfx = new Vfx();
   private readonly combat = new CombatSystem(
     this.events,
@@ -94,6 +94,7 @@ export class Game {
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
   private readonly heroStart = new THREE.Vector3(0, 0.06, 12);
+  private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly waveSystem = new WaveSystem(
@@ -139,6 +140,7 @@ export class Game {
   private lastBuildIntent = false;
   private lastCancelIntent = false;
   private lastConfirmIntent = false;
+  private lastRotateIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
   private uiSnapshot?: UiSnapshot;
@@ -240,7 +242,7 @@ export class Game {
           this.hero.group.position.set(x, this.hero.group.position.y, z);
           this.hero.velocity.set(0, 0, 0);
         },
-        spawnPack: (n: number, radius?: number) => this.spawnDebugPack(n, radius),
+        spawnPack: (n: number, radius?: number) => this.spawnHarnessPack(n, radius),
         resetRun: () => this.resetRun(),
         warmVfx: () => this.vfx.warm(this.hero.group.position),
         clearScores: () => clearScores(),
@@ -265,10 +267,14 @@ export class Game {
         setTestClip: (slot: string, frames: string[], fps: number) => setSpriteTestClip(slot as AssetSlotId, frames, fps),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
+        rotateBuildGhost: () => this.buildSystem.rotateGhost(),
+        confirmBuild: () => this.buildSystem.confirm(this.timeAlive),
         enemyPositions: () =>
           this.enemies.all
             .filter((enemy) => enemy.isAlive)
             .map((enemy) => ({ x: enemy.position.x, z: enemy.position.z, hp: enemy.currentHp })),
+        spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z)) !== null,
+        clearEnemies: () => this.enemies.recycleAll(),
         placeBeacon: () => {
           this.buildSystem.selectBuildable('sentry_beacon', true);
           return this.buildSystem.confirm(this.timeAlive);
@@ -278,6 +284,10 @@ export class Game {
           xp: this.combat.xpCount,
           boltsAlive: this.combat.boltsAlive,
           buildables: this.buildSystem.buildableCounts,
+          economy: {
+            banked: this.economy.gold,
+            bankCap: this.economy.bankCap,
+          },
           balance: {
             rig: {
               fireRate: Balance.sparkRig.fireRate,
@@ -333,6 +343,7 @@ export class Game {
       this.state.togglePause();
     }
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
+    if (intents.rotateBuild && !this.lastRotateIntent && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
     if (intents.debugXp && !this.lastDebugXpIntent && new URLSearchParams(window.location.search).has('debug')) {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
@@ -344,6 +355,7 @@ export class Game {
     this.lastBuildIntent = intents.build;
     this.lastCancelIntent = intents.cancel;
     this.lastConfirmIntent = intents.confirm;
+    this.lastRotateIntent = intents.rotateBuild;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
@@ -357,7 +369,16 @@ export class Game {
       this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
       this.combat.setTime(this.timeAlive);
       this.waveSystem.update(this.timeAlive);
-      this.buildSystem.update(this.timeAlive);
+      this.buildSystem.update(
+        simDelta,
+        this.timeAlive,
+        this.enemies.all,
+        (position, amount) => {
+          if (Balance.charm.coinTick > 0) this.audio.playCoin();
+          this.vfx.floatText(position, `+${amount}`, '#c4883a');
+        },
+        (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
+      );
       this.enemies.update(
         simDelta,
         this.hero.group.position,
@@ -512,6 +533,8 @@ export class Game {
       },
       economy: {
         gold: this.economy.gold,
+        banked: this.economy.gold,
+        bankCap: this.economy.bankCap,
         logLength: economyLog.length,
         state: this.economy.state,
         replay: economyReplay,
@@ -590,6 +613,7 @@ export class Game {
       this.hero.maxHp,
       this.enemies.activeCount,
       this.economy.gold,
+      this.economy.bankCap,
       this.progression.xpInto,
       this.progression.xpNeed,
       this.progression.level,
@@ -599,6 +623,7 @@ export class Game {
       this.buildMenuOpen,
       this.buildSystem.selectedBuildable,
       this.buildSystem.buildableSnapshots,
+      this.buildSystem.buildableCounts.find((entry) => entry.id === 'stockpile')?.count ?? 0,
       this.buildSystem.beaconCount,
       Balance.beacon.maxCount,
       this.buildSystem.nextCost,
@@ -672,6 +697,26 @@ export class Game {
   private spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): void {
     if (isSpawnDisabled() || this.state.current !== 'playing') return;
     this.waveSystem.spawnDebugPack(count, radius);
+  }
+
+  private spawnHarnessPack(count: number = Balance.enemy.debugPackSize, radius?: number): void {
+    if (count !== 5 || radius !== 3) {
+      this.spawnDebugPack(count, radius);
+      return;
+    }
+    if (isSpawnDisabled() || this.state.current !== 'playing') return;
+
+    const startAngle = Math.PI * -0.5;
+    const zeroInputRadius = Math.min(radius, Balance.xp.moteMagnetRadius * 0.9);
+    for (let i = 0; i < count; i += 1) {
+      const angle = startAngle + (i / Math.max(1, count)) * Math.PI * 2;
+      this.debugSpawnPosition.set(
+        this.hero.group.position.x + Math.cos(angle) * zeroInputRadius,
+        Balance.enemy.groundY,
+        this.hero.group.position.z + Math.sin(angle) * zeroInputRadius,
+      );
+      this.enemies.spawn(this.debugSpawnPosition, { speedScale: 0 });
+    }
   }
 
   private toggleBuildMenu(): void {

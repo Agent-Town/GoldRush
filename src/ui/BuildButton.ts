@@ -35,7 +35,7 @@ export class BuildButton {
     this.trigger.dataset.active = String(snapshot.buildMode || snapshot.buildMenuOpen);
     this.menu.hidden = !snapshot.buildMenuOpen;
     const menuSignature = snapshot.buildables
-      .map((item) => `${item.id}:${item.cost}:${item.count}:${item.maxCount}:${item.canAfford}:${item.selected}`)
+      .map((item) => `${item.id}:${item.cost}:${item.count}:${item.maxCount}:${item.canAfford}:${item.selected}:${item.iconSlot}`)
       .join('|');
     if (menuSignature !== this.menuSignature) {
       this.menuSignature = menuSignature;
@@ -47,6 +47,7 @@ export class BuildButton {
             type="button"
             role="menuitem"
             data-buildable-id="${item.id}"
+            data-slot="${item.iconSlot}"
             data-testid="hud-build-tile-${item.id}"
             data-selected="${item.selected}"
             ${item.canAfford ? '' : 'disabled'}

@@ -11,6 +11,7 @@ type PointerState = {
 export type Intents = {
   move: THREE.Vector2;
   confirm: boolean;
+  rotateBuild: boolean;
   build: boolean;
   cancel: boolean;
   buildSlot: number | null;
@@ -28,10 +29,12 @@ export class InputController {
   private readonly pointer = new THREE.Vector2();
   private readonly keyVector = new THREE.Vector2();
   private previousBuild = false;
+  private previousRotateBuild = false;
   private previousDebugXp = false;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
     confirm: false,
+    rotateBuild: false,
     build: false,
     cancel: false,
     buildSlot: null,
@@ -99,6 +102,19 @@ export class InputController {
     this.keys.delete('TouchConfirm');
   };
 
+  private readonly rotateButton: HTMLButtonElement = document.createElement('button');
+
+  private readonly onRotateDown = (event: PointerEvent) => {
+    event.preventDefault();
+    this.keys.add('TouchRotate');
+    this.tapped.add('TouchRotate');
+  };
+
+  private readonly onRotateUp = (event: PointerEvent) => {
+    event.preventDefault();
+    this.keys.delete('TouchRotate');
+  };
+
   constructor(
     private readonly stick: HTMLElement,
     private readonly knob: HTMLElement,
@@ -114,17 +130,38 @@ export class InputController {
     this.confirmButton.addEventListener('pointerup', this.onConfirmUp);
     this.confirmButton.addEventListener('pointercancel', this.onConfirmUp);
     this.confirmButton.addEventListener('pointerleave', this.onConfirmUp);
+    this.rotateButton.id = 'rotate-button';
+    this.rotateButton.type = 'button';
+    this.rotateButton.textContent = 'R';
+    this.rotateButton.setAttribute('aria-label', 'Rotate build ghost');
+    this.rotateButton.addEventListener('pointerdown', this.onRotateDown);
+    this.rotateButton.addEventListener('pointerup', this.onRotateUp);
+    this.rotateButton.addEventListener('pointercancel', this.onRotateUp);
+    this.rotateButton.addEventListener('pointerleave', this.onRotateUp);
+    this.confirmButton.before(this.rotateButton);
   }
 
   readIntents(): Intents {
     const down = (code: string): boolean => this.keys.has(code) || this.tapped.has(code);
     this.readMovement(this.intents.move);
     this.intents.confirm = down('Space') || down('Enter') || down('TouchConfirm');
+    const rotateHeld = down('KeyR') || down('TouchRotate');
+    this.intents.rotateBuild = rotateHeld && !this.previousRotateBuild;
+    this.previousRotateBuild = this.keys.has('KeyR') || this.keys.has('TouchRotate');
     const buildHeld = down('KeyB');
     this.intents.build = buildHeld && !this.previousBuild;
     this.previousBuild = this.keys.has('KeyB');
     this.intents.cancel = down('Escape');
-    this.intents.buildSlot = down('Digit1') || down('Numpad1') ? 0 : down('Digit2') || down('Numpad2') ? 1 : null;
+    this.intents.buildSlot =
+      down('Digit1') || down('Numpad1')
+        ? 0
+        : down('Digit2') || down('Numpad2')
+          ? 1
+          : down('Digit3') || down('Numpad3')
+            ? 2
+            : down('Digit4') || down('Numpad4')
+              ? 3
+              : null;
     this.intents.restart = down('KeyR');
     this.intents.pause = down('KeyP') || down('Escape');
     this.intents.debugSpawn = down('KeyT');
@@ -158,6 +195,11 @@ export class InputController {
     this.confirmButton.removeEventListener('pointerup', this.onConfirmUp);
     this.confirmButton.removeEventListener('pointercancel', this.onConfirmUp);
     this.confirmButton.removeEventListener('pointerleave', this.onConfirmUp);
+    this.rotateButton.removeEventListener('pointerdown', this.onRotateDown);
+    this.rotateButton.removeEventListener('pointerup', this.onRotateUp);
+    this.rotateButton.removeEventListener('pointercancel', this.onRotateUp);
+    this.rotateButton.removeEventListener('pointerleave', this.onRotateUp);
+    this.rotateButton.remove();
   }
 
   private updatePointer(clientX: number, clientY: number): void {

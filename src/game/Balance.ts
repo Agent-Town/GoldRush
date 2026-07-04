@@ -92,8 +92,22 @@ export const Balance = {
     avoidancePad: 0.68,
     slideBias: 0.82,
   },
+  sluice: {
+    cost: 40,
+    maxCount: 3,
+    riverPad: 2,
+    cycleSeconds: 5,
+    goldPerCycle: 2,
+    contestedRadius: 6,
+  },
+  stockpile: {
+    cost: 60,
+    maxCount: 2,
+    capBonus: 150,
+  },
   economy: {
     logCapacity: 2048,
+    bankCap: 200,
   },
   upgrades: {
     assayGoldPerWave: 5,

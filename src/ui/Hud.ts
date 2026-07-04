@@ -103,7 +103,7 @@ export class Hud {
   update(snapshot: UiSnapshot): void {
     this.elements.hpText.textContent = `${snapshot.hp} / ${snapshot.maxHp}`;
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
-    this.elements.goldText.textContent = snapshot.gold.toString();
+    this.elements.goldText.textContent = this.goldText(snapshot);
     this.elements.xpText.textContent = `${snapshot.xp} / ${snapshot.xpNeed} XP`;
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;
     this.elements.levelText.textContent = snapshot.level.toString();
@@ -144,6 +144,12 @@ export class Hud {
     const minutes = Math.floor(secondsAlive / 60).toString().padStart(2, '0');
     const seconds = Math.floor(secondsAlive % 60).toString().padStart(2, '0');
     return `${minutes}:${seconds}`;
+  }
+
+  private goldText(snapshot: UiSnapshot): string {
+    return snapshot.gold >= snapshot.bankCap * 0.8 || snapshot.stockpileCount > 0
+      ? `${snapshot.gold}/${snapshot.bankCap}`
+      : snapshot.gold.toString();
   }
 
   private updateAnnouncement(snapshot: UiSnapshot): void {

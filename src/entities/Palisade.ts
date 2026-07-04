@@ -18,6 +18,7 @@ export class PalisadePool {
 
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
+  private readonly rotationSteps: number[] = [];
   private readonly blockers: PalisadeBlocker[] = [];
   private readonly postGeometry = new THREE.BoxGeometry(0.16, 0.92, 0.16);
   private readonly railGeometry = new THREE.BoxGeometry(0.18, 0.16, Balance.palisade.depth);
@@ -41,6 +42,7 @@ export class PalisadePool {
     for (let i = 0; i < Balance.palisade.maxCount; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
+      this.rotationSteps.push(0);
       this.hide(i);
     }
     this.markNeedsUpdate();
@@ -66,16 +68,22 @@ export class PalisadePool {
     return this.active[index] === true;
   }
 
-  place(position: THREE.Vector3): number {
+  rotationStepsAt(index: number): number {
+    return this.rotationSteps[index] ?? 0;
+  }
+
+  place(position: THREE.Vector3, rotationSteps = 0): number {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       this.active[i] = true;
       this.positions[i]?.copy(position);
+      this.rotationSteps[i] = rotationSteps % 4;
+      const rotated = this.rotationSteps[i] % 2 === 1;
       this.blockers.push({
         x: position.x,
         z: position.z,
-        halfX: Balance.palisade.width / 2,
-        halfZ: Balance.palisade.depth / 2,
+        halfX: (rotated ? Balance.palisade.depth : Balance.palisade.width) / 2,
+        halfZ: (rotated ? Balance.palisade.width : Balance.palisade.depth) / 2,
       });
       this.alive += 1;
       this.sync(i);
@@ -88,6 +96,7 @@ export class PalisadePool {
   reset(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
+      this.rotationSteps[i] = 0;
       this.hide(i);
     }
     this.blockers.length = 0;
@@ -107,20 +116,25 @@ export class PalisadePool {
   private sync(index: number): void {
     const position = this.positions[index];
     if (!position) return;
-    this.syncPart(this.posts, index * 2, position.x, 0.46, position.z - Balance.palisade.depth / 2 + 0.1, 1);
-    this.syncPart(this.posts, index * 2 + 1, position.x, 0.46, position.z + Balance.palisade.depth / 2 - 0.1, 1);
-    this.syncPart(this.rails, index * 2, position.x, 0.35, position.z, 1);
-    this.syncPart(this.rails, index * 2 + 1, position.x, 0.68, position.z, 0.92);
-    this.syncObject.rotation.set(0, 0, 0.12);
+    const angle = this.rotationStepsAt(index) * (Math.PI / 2);
+    const sin = Math.sin(angle);
+    const cos = Math.cos(angle);
+    const postA = -Balance.palisade.depth / 2 + 0.1;
+    const postB = Balance.palisade.depth / 2 - 0.1;
+    this.syncPart(this.posts, index * 2, position.x + postA * sin, 0.46, position.z + postA * cos, 1, angle);
+    this.syncPart(this.posts, index * 2 + 1, position.x + postB * sin, 0.46, position.z + postB * cos, 1, angle);
+    this.syncPart(this.rails, index * 2, position.x, 0.35, position.z, 1, angle);
+    this.syncPart(this.rails, index * 2 + 1, position.x, 0.68, position.z, 0.92, angle);
+    this.syncObject.rotation.set(0, angle, 0.12);
     this.syncObject.position.set(position.x, 0.53, position.z);
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
     this.braces.setMatrixAt(index, this.syncObject.matrix);
   }
 
-  private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number): void {
+  private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number, angle = 0): void {
     this.syncObject.position.set(x, y, z);
-    this.syncObject.rotation.set(0, 0, 0);
+    this.syncObject.rotation.set(0, angle, 0);
     this.syncObject.scale.setScalar(scale);
     this.syncObject.updateMatrix();
     mesh.setMatrixAt(index, this.syncObject.matrix);

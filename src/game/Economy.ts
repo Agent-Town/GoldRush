@@ -10,6 +10,8 @@ export type EconomyEventBase = {
 export type EconomyEvent = EconomyEventBase &
   (
     | { type: 'gold_panned'; nodeId: string; amount: number }
+    | { type: 'gold_sluiced'; sluiceId: string; amount: number }
+    | { type: 'gold_capped'; amount: 0 }
     | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug'; amount: number }
     | { type: 'gold_spent'; sink: BuildSink; amount: number }
     | { type: 'run_reset' }
@@ -17,6 +19,7 @@ export type EconomyEvent = EconomyEventBase &
 
 export type EconomyState = {
   gold: number;
+  bankCap: number;
 };
 
 export type EconomySummary = {
@@ -26,22 +29,29 @@ export type EconomySummary = {
   beaconsBuilt: number;
 };
 
-export type EconomyApplyResult = { ok: true; gold: number } | { ok: false; reason: 'OUT_OF_RESOURCES' };
+export type EconomyApplyResult =
+  | { ok: true; gold: number }
+  | { ok: false; reason: 'OUT_OF_RESOURCES' | 'BANK_CAP' };
 
 export const initialEconomyState: EconomyState = {
   gold: 0,
+  bankCap: Balance.economy.bankCap,
 };
 
 export function reduce(state: EconomyState, event: EconomyEvent): EconomyState {
   switch (event.type) {
     case 'gold_panned':
-      return { gold: state.gold + event.amount };
+      return { ...state, gold: state.gold + event.amount };
+    case 'gold_sluiced':
+      return { ...state, gold: state.gold + event.amount };
+    case 'gold_capped':
+      return state;
     case 'gold_granted':
-      return { gold: state.gold + event.amount };
+      return { ...state, gold: state.gold + event.amount };
     case 'gold_spent':
-      return { gold: state.gold - event.amount };
+      return { ...state, gold: state.gold - event.amount };
     case 'run_reset':
-      return { gold: 0 };
+      return { ...state, gold: 0 };
   }
 }
 
@@ -68,6 +78,7 @@ export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
 export class Economy {
   private current: EconomyState = { ...initialEconomyState };
   private readonly events: EconomyEvent[] = [];
+  private readonly capSources = new Map<string, number>();
 
   constructor(private readonly logCapacity: number = Balance.economy.logCapacity) {}
 
@@ -76,7 +87,13 @@ export class Economy {
   }
 
   get state(): EconomyState {
-    return { ...this.current };
+    return { gold: this.current.gold, bankCap: this.bankCap };
+  }
+
+  get bankCap(): number {
+    let bonus = 0;
+    for (const amount of this.capSources.values()) bonus += amount;
+    return Balance.economy.bankCap + bonus;
   }
 
   get log(): readonly EconomyEvent[] {
@@ -87,12 +104,34 @@ export class Economy {
     if (event.type === 'gold_spent' && event.amount > this.current.gold) {
       return { ok: false, reason: 'OUT_OF_RESOURCES' };
     }
+    if (isBankedIncome(event) && !this.canReceiveIncome(event.amount)) {
+      return { ok: false, reason: 'BANK_CAP' };
+    }
 
     this.current = reduce(this.current, event);
+    this.current.bankCap = this.bankCap;
     this.events.push(event);
     if (this.events.length > this.logCapacity) {
       this.events.splice(0, this.events.length - this.logCapacity);
     }
     return { ok: true, gold: this.current.gold };
   }
+
+  canReceiveIncome(amount: number): boolean {
+    return amount <= 0 || this.current.gold + amount <= this.bankCap;
+  }
+
+  addCapSource(id: string, amount: number): void {
+    this.capSources.set(id, amount);
+    this.current.bankCap = this.bankCap;
+  }
+
+  removeCapSource(id: string): void {
+    this.capSources.delete(id);
+    this.current.bankCap = this.bankCap;
+  }
+}
+
+function isBankedIncome(event: EconomyEvent): event is Extract<EconomyEvent, { type: 'gold_panned' | 'gold_sluiced' }> {
+  return event.type === 'gold_panned' || event.type === 'gold_sluiced';
 }

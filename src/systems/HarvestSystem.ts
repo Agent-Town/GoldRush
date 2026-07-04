@@ -29,12 +29,14 @@ export class HarvestSystem {
   private panTickMult = 1;
   private seamCapacityBonus = 0;
   private seamRespawnReduction = 0;
+  private panCapBlocked = false;
 
   constructor(
     private readonly economy: Economy,
     private readonly anchors: readonly Vec2[],
     rng: Rng = createRng(getDebugSeed()),
     private readonly onGoldTick?: (amount: number) => void,
+    private readonly onGoldBlocked?: (position: THREE.Vector3) => void,
   ) {
     this.rng = rng;
     this.group.name = 'HarvestSystem';
@@ -86,6 +88,7 @@ export class HarvestSystem {
 
     const target = this.findChannelTarget(heroPosition, heroSpeed);
     if (target) {
+      if (target !== this.channelNode) this.panCapBlocked = false;
       this.channelNode = target;
       this.progress = Math.min(1, this.progress + delta / (Balance.goldSeam.tickSeconds * this.panTickMult));
       this.collectReadyTicks(at, target);
@@ -96,6 +99,7 @@ export class HarvestSystem {
           (delta / (Balance.goldSeam.tickSeconds * this.panTickMult)) * Balance.goldSeam.decayMultiplier,
       );
       if (this.progress === 0) this.channelNode = null;
+      if (this.progress < 1) this.panCapBlocked = false;
     }
 
     this.updateProgressRing(at);
@@ -123,6 +127,7 @@ export class HarvestSystem {
     this.channelNode = null;
     this.progress = 0;
     this.lastGoldGain = 0;
+    this.panCapBlocked = false;
     this.progressGroup.visible = false;
     this.progressFill.geometry.setDrawRange(0, 0);
     for (const node of this.nodes) {
@@ -155,9 +160,16 @@ export class HarvestSystem {
 
   private collectReadyTicks(at: number, node: GoldNode): void {
     while (this.progress >= 1 && node.isActive) {
-      this.progress -= 1;
-      const gained = node.takeGold(Balance.goldSeam.tickGold);
+      const gained = Math.min(Balance.goldSeam.tickGold, node.remainingGold);
       if (gained <= 0) break;
+      if (!this.economy.canReceiveIncome(gained)) {
+        if (!this.panCapBlocked) {
+          this.economy.apply({ id: createEconomyEventId(), at, type: 'gold_capped', amount: 0 });
+          this.onGoldBlocked?.(node.group.position);
+        }
+        this.panCapBlocked = true;
+        break;
+      }
 
       const result = this.economy.apply({
         id: createEconomyEventId(),
@@ -167,8 +179,13 @@ export class HarvestSystem {
         amount: gained,
       });
       if (result.ok) {
+        this.progress -= 1;
+        node.takeGold(gained);
+        this.panCapBlocked = false;
         this.lastGoldGain += gained;
         this.onGoldTick?.(gained);
+      } else {
+        break;
       }
 
       if (node.remainingGold <= 0) {

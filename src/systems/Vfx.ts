@@ -70,13 +70,24 @@ export class Vfx {
 
   /**
    * Cycle every pool slot once so the shared sprite geometry and per-slot canvas
-   * textures upload eagerly. Steady-state floatText is then dispose/create
-   * net-zero for renderer memory counts (used by e2e leak baselines via ?debug).
+   * textures upload eagerly for one frame. Steady-state floatText is then
+   * dispose/create net-zero for renderer memory counts (used by e2e leak
+   * baselines via ?debug) without leaving warmup sprites in the combat window.
    */
-  warm(position: THREE.Vector3): void {
+  warm(position: THREE.Vector3): Promise<void> {
     for (let index = 0; index < this.pool.length; index += 1) {
       this.floatText(position, '+0', '#83ded7');
     }
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        for (const item of this.pool) {
+          item.active = false;
+          item.sprite.visible = false;
+          item.material.opacity = 0;
+        }
+        resolve();
+      });
+    });
   }
 
   update(delta: number): void {

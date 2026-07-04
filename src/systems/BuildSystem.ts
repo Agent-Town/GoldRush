@@ -1,6 +1,9 @@
 import * as THREE from 'three';
+import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { PalisadePool, type PalisadeBlocker } from '../entities/Palisade';
 import { SentryBeaconPool } from '../entities/SentryBeacon';
+import { SluicePool, type SluiceSnapshot } from '../entities/Sluice';
+import { StockpilePool, type StockpileSnapshot } from '../entities/Stockpile';
 import { Balance } from '../game/Balance';
 import {
   beaconCost as registryBeaconCost,
@@ -22,6 +25,7 @@ export type BuildableSnapshot = {
   maxCount: number;
   canAfford: boolean;
   selected: boolean;
+  iconSlot: `ui.build.icon.${BuildableId}`;
 };
 
 export type BuildDiagnostics = {
@@ -29,25 +33,41 @@ export type BuildDiagnostics = {
   selectedBuildable: BuildableId;
   ghostValid: boolean;
   ghostPos: { x: number; z: number };
+  ghostRotationSteps: number;
+  ghostFootprint: { w: number; d: number };
   beacons: number;
   palisades: number;
+  sluices: number;
+  stockpiles: number;
   beaconPositions: Array<{ x: number; z: number }>;
   palisadePositions: Array<{ x: number; z: number }>;
+  sluicePositions: Array<{ x: number; z: number }>;
+  stockpilePositions: Array<{ x: number; z: number }>;
   buildables: Array<{ id: BuildableId; count: number }>;
+  sluicesState: SluiceSnapshot[];
+  stockpilesState: StockpileSnapshot[];
+  pileStep: number;
   nextCost: number;
 };
 
 const validColor = new THREE.Color('#2f8f85');
 const invalidColor = new THREE.Color('#8a4a2a');
+const emptyPositions: Array<{ x: number; z: number }> = [];
+const emptySluiceSnapshots: SluiceSnapshot[] = [];
+const emptyStockpileSnapshots: StockpileSnapshot[] = [];
 
 export class BuildSystem {
   readonly group = new THREE.Group();
 
   private readonly beacons = new SentryBeaconPool();
   private readonly palisades = new PalisadePool();
+  private readonly sluices = new SluicePool();
+  private readonly stockpiles = new StockpilePool();
   private readonly ghost = new THREE.Group();
   private readonly beaconGhost = new THREE.Group();
   private readonly palisadeGhost = new THREE.Group();
+  private readonly sluiceGhost = new THREE.Group();
+  private readonly stockpileGhost = new THREE.Group();
   private readonly ghostMaterial = new THREE.MeshStandardMaterial({
     color: validColor,
     emissive: validColor,
@@ -67,6 +87,7 @@ export class BuildSystem {
   private readonly unregisterShooters: Array<() => void> = [];
   private readonly shooterHandles: ShooterHandle[] = [];
   private selectedId: BuildableId = 'sentry_beacon';
+  private ghostRotationSteps = 0;
   private beaconFireRateMult = 1;
   private pointerReady = false;
   private pointerClientX = 0;
@@ -84,7 +105,7 @@ export class BuildSystem {
     private readonly getWave: () => number = () => 0,
   ) {
     this.group.name = 'BuildSystem';
-    this.group.add(this.beacons.group, this.palisades.group, this.ghost);
+    this.group.add(this.beacons.group, this.palisades.group, this.sluices.group, this.stockpiles.group, this.ghost);
     this.createGhost();
     this.syncGhostShape();
     this.ghost.visible = false;
@@ -120,6 +141,7 @@ export class BuildSystem {
         maxCount: def.maxCount,
         canAfford: this.economy.gold >= cost && count < def.maxCount,
         selected: def.id === this.selectedId,
+        iconSlot: def.iconSlot,
       };
     });
   }
@@ -143,16 +165,28 @@ export class BuildSystem {
   }
 
   get diagnostics(): BuildDiagnostics {
+    const footprint = this.footprint(this.selectedDef(), this.ghostRotationSteps);
+    const sluicesActive = this.sluices.activeCount > 0;
+    const stockpilesActive = this.stockpiles.activeCount > 0;
     return {
       mode: this.mode,
       selectedBuildable: this.selectedId,
       ghostValid: this.valid,
       ghostPos: { x: this.ghostPos.x, z: this.ghostPos.z },
+      ghostRotationSteps: this.ghostRotationSteps,
+      ghostFootprint: footprint,
       beacons: this.beaconCount,
       palisades: this.palisades.activeCount,
+      sluices: this.sluices.activeCount,
+      stockpiles: this.stockpiles.activeCount,
       beaconPositions: this.activePositions(this.beacons),
       palisadePositions: this.activePositions(this.palisades),
+      sluicePositions: sluicesActive ? this.activePositions(this.sluices) : emptyPositions,
+      stockpilePositions: stockpilesActive ? this.activePositions(this.stockpiles) : emptyPositions,
       buildables: this.buildableCounts,
+      sluicesState: sluicesActive ? this.sluices.snapshot() : emptySluiceSnapshots,
+      stockpilesState: stockpilesActive ? this.stockpiles.snapshot() : emptyStockpileSnapshots,
+      pileStep: this.stockpiles.maxPileStep,
       nextCost: this.nextCost,
     };
   }
@@ -171,18 +205,35 @@ export class BuildSystem {
     const def = getBuildableDef(id);
     if (!def) return false;
     this.selectedId = def.id;
+    if (!def.rotatable) this.ghostRotationSteps = 0;
     this.syncGhostShape();
     if (arm) this.setBuildMode(true);
     return true;
   }
 
-  update(at: number): void {
+  rotateGhost(): boolean {
+    if (!this.selectedDef().rotatable) return false;
+    this.ghostRotationSteps = (this.ghostRotationSteps + 1) % 4;
+    this.syncGhostShape();
+    return true;
+  }
+
+  update(
+    delta: number,
+    at: number,
+    enemies: readonly ClaimJumperEnemy[],
+    onSluiceGold: (position: THREE.Vector3, amount: number) => void,
+    onBankFull: (position: THREE.Vector3) => void,
+  ): void {
     this.currentAt = at;
     this.beacons.update(at);
+    this.sluices.update(delta, at, enemies, this.economy, onSluiceGold, onBankFull);
+    this.stockpiles.update(this.economy.gold, this.economy.bankCap);
     if (!this.mode) return;
     this.updateGhostPosition();
     this.valid = this.computeValid();
     this.ghost.position.copy(this.ghostPos);
+    this.ghost.rotation.y = this.ghostRotationSteps * (Math.PI / 2);
     this.ghostMaterial.color.copy(this.valid ? validColor : invalidColor);
     this.ghostMaterial.emissive.copy(this.valid ? validColor : invalidColor);
     const pulse = 1 + Math.sin(at * Math.PI * 2) * 0.03;
@@ -209,6 +260,7 @@ export class BuildSystem {
     const placed = this.place(def.id, this.ghostPos);
     if (placed < 0) return false;
     if (def.id === 'sentry_beacon') this.registerBeaconShooter(placed);
+    if (def.id === 'stockpile') this.economy.addCapSource(stockpileCapSource(placed), Balance.stockpile.capBonus);
     this.valid = this.computeValid();
     return true;
   }
@@ -220,7 +272,11 @@ export class BuildSystem {
     this.beaconFireRateMult = 1;
     this.beacons.reset();
     this.palisades.reset();
+    this.sluices.reset();
+    for (let i = 0; i < this.stockpiles.capacity; i += 1) this.economy.removeCapSource(stockpileCapSource(i));
+    this.stockpiles.reset();
     this.selectedId = 'sentry_beacon';
+    this.ghostRotationSteps = 0;
     this.syncGhostShape();
     this.setBuildMode(false);
   }
@@ -238,6 +294,8 @@ export class BuildSystem {
     this.reset();
     this.beacons.dispose();
     this.palisades.dispose();
+    this.sluices.dispose();
+    this.stockpiles.dispose();
     this.ghost.traverse((child) => {
       const mesh = child as THREE.Mesh;
       mesh.geometry?.dispose();
@@ -289,30 +347,58 @@ export class BuildSystem {
   private matchesPlacement(def: BuildableDef, position: THREE.Vector3): boolean {
     if (def.placement === 'any') return Terrain.sample(position.x, position.z).walkable;
     if (def.placement === 'bank') return Terrain.isBuildable(position.x, position.z);
+    return this.isRiverAdjacent(position);
+  }
+
+  private isRiverAdjacent(position: THREE.Vector3): boolean {
     const sample = Terrain.sample(position.x, position.z);
-    return sample.zone === 'bank' || sample.zone === 'shallows';
+    if (sample.zone !== 'bank' && sample.zone !== 'shallows') return false;
+    const river = Terrain.riverGeometry();
+    if (position.x < river.minX || position.x > river.maxX) return false;
+    const distance =
+      position.z < river.minZ ? river.minZ - position.z : position.z > river.maxZ ? position.z - river.maxZ : 0;
+    return distance <= Balance.sluice.riverPad;
   }
 
   private overlapsExisting(id: BuildableId, position: THREE.Vector3): boolean {
     for (let i = 0; i < this.beacons.capacity; i += 1) {
       if (!this.beacons.isActive(i)) continue;
       const pos = this.beacons.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, 'sentry_beacon', pos)) return true;
+      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'sentry_beacon', pos, 0)) return true;
     }
     for (let i = 0; i < this.palisades.capacity; i += 1) {
       if (!this.palisades.isActive(i)) continue;
       const pos = this.palisades.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, 'palisade', pos)) return true;
+      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'palisade', pos, this.palisades.rotationStepsAt(i))) {
+        return true;
+      }
+    }
+    for (let i = 0; i < this.sluices.capacity; i += 1) {
+      if (!this.sluices.isActive(i)) continue;
+      const pos = this.sluices.allPositions[i];
+      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'sluice', pos, 0)) return true;
+    }
+    for (let i = 0; i < this.stockpiles.capacity; i += 1) {
+      if (!this.stockpiles.isActive(i)) continue;
+      const pos = this.stockpiles.allPositions[i];
+      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'stockpile', pos, 0)) return true;
     }
     return false;
   }
 
-  private overlapsBuildable(aId: BuildableId, a: THREE.Vector3, bId: BuildableId, b: THREE.Vector3): boolean {
+  private overlapsBuildable(
+    aId: BuildableId,
+    a: THREE.Vector3,
+    aRotationSteps: number,
+    bId: BuildableId,
+    b: THREE.Vector3,
+    bRotationSteps: number,
+  ): boolean {
     if (aId === 'sentry_beacon' && bId === 'sentry_beacon') {
       return this.overlaps(a, b, this.overlapRadius('sentry_beacon'));
     }
-    const aHalf = this.footprintHalfExtents(aId);
-    const bHalf = this.footprintHalfExtents(bId);
+    const aHalf = this.footprintHalfExtents(aId, aRotationSteps);
+    const bHalf = this.footprintHalfExtents(bId, bRotationSteps);
     return Math.abs(a.x - b.x) < aHalf.x + bHalf.x && Math.abs(a.z - b.z) < aHalf.z + bHalf.z;
   }
 
@@ -326,9 +412,14 @@ export class BuildSystem {
     return id === 'palisade' ? Balance.palisade.overlapRadius : Balance.beacon.overlapRadius;
   }
 
-  private footprintHalfExtents(id: BuildableId): { x: number; z: number } {
-    const footprint = getBuildableDef(id)?.footprint ?? { w: 1, d: 1 };
+  private footprintHalfExtents(id: BuildableId, rotationSteps = 0): { x: number; z: number } {
+    const footprint = this.footprint(getBuildableDef(id), rotationSteps);
     return { x: footprint.w / 2, z: footprint.d / 2 };
+  }
+
+  private footprint(def: BuildableDef | undefined, rotationSteps = 0): { w: number; d: number } {
+    const footprint = def?.footprint ?? { w: 1, d: 1 };
+    return rotationSteps % 2 === 1 ? { w: footprint.d, d: footprint.w } : footprint;
   }
 
   private snap(position: THREE.Vector3): void {
@@ -339,18 +430,26 @@ export class BuildSystem {
   }
 
   private countFor(id: BuildableId): number {
-    return id === 'palisade' ? this.palisades.activeCount : this.beacons.activeCount;
+    if (id === 'palisade') return this.palisades.activeCount;
+    if (id === 'sluice') return this.sluices.activeCount;
+    if (id === 'stockpile') return this.stockpiles.activeCount;
+    return this.beacons.activeCount;
   }
 
   private place(id: BuildableId, position: THREE.Vector3): number {
-    return id === 'palisade' ? this.palisades.place(position) : this.beacons.place(position);
+    if (id === 'palisade') return this.palisades.place(position, this.ghostRotationSteps);
+    if (id === 'sluice') return this.sluices.place(position);
+    if (id === 'stockpile') return this.stockpiles.place(position);
+    return this.beacons.place(position);
   }
 
   private selectedDef(): BuildableDef {
     return getBuildableDef(this.selectedId) ?? buildableDefs[0];
   }
 
-  private activePositions(pool: SentryBeaconPool | PalisadePool): Array<{ x: number; z: number }> {
+  private activePositions(
+    pool: SentryBeaconPool | PalisadePool | SluicePool | StockpilePool,
+  ): Array<{ x: number; z: number }> {
     return pool.allPositions
       .map((pos, i) => ({ x: pos.x, z: pos.z, active: pool.isActive(i) }))
       .filter((entry) => entry.active)
@@ -375,12 +474,16 @@ export class BuildSystem {
   private syncGhostShape(): void {
     this.beaconGhost.visible = this.selectedId === 'sentry_beacon';
     this.palisadeGhost.visible = this.selectedId === 'palisade';
+    this.sluiceGhost.visible = this.selectedId === 'sluice';
+    this.stockpileGhost.visible = this.selectedId === 'stockpile';
   }
 
   private createGhost(): void {
     this.createBeaconGhost();
     this.createPalisadeGhost();
-    this.ghost.add(this.beaconGhost, this.palisadeGhost);
+    this.createSluiceGhost();
+    this.createStockpileGhost();
+    this.ghost.add(this.beaconGhost, this.palisadeGhost, this.sluiceGhost, this.stockpileGhost);
   }
 
   private createBeaconGhost(): void {
@@ -414,10 +517,41 @@ export class BuildSystem {
       this.palisadeGhost.add(rail);
     }
   }
+
+  private createSluiceGhost(): void {
+    const trough = new THREE.Mesh(new THREE.BoxGeometry(1.7, 0.32, 0.62), this.ghostMaterial);
+    trough.position.set(0, 0.2, 0);
+    trough.rotation.y = 0.08;
+    this.sluiceGhost.add(trough);
+    const water = new THREE.Mesh(new THREE.BoxGeometry(1.34, 0.035, 0.34), this.ghostMaterial);
+    water.position.set(0, 0.39, 0);
+    water.rotation.y = 0.08;
+    this.sluiceGhost.add(water);
+  }
+
+  private createStockpileGhost(): void {
+    const base = new THREE.Mesh(new THREE.DodecahedronGeometry(0.42, 0), this.ghostMaterial);
+    base.position.set(0, 0.28, 0);
+    this.stockpileGhost.add(base);
+    for (const [x, z, scale] of [
+      [-0.34, -0.1, 0.54],
+      [0.28, -0.16, 0.48],
+      [0.05, 0.3, 0.44],
+    ] as const) {
+      const nugget = new THREE.Mesh(new THREE.DodecahedronGeometry(0.38, 0), this.ghostMaterial);
+      nugget.position.set(x, 0.18, z);
+      nugget.scale.setScalar(scale);
+      this.stockpileGhost.add(nugget);
+    }
+  }
 }
 
 function buildSink(id: BuildableId): BuildSink {
   return `build_${id}`;
+}
+
+function stockpileCapSource(index: number): string {
+  return `stockpile:${index}`;
 }
 
 export function beaconCost(index: number): number {

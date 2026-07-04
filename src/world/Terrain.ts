@@ -83,6 +83,15 @@ export function isBuildable(x: number, z: number): boolean {
   return sample(x, z).zone === 'bank';
 }
 
+export function riverGeometry(): { minX: number; maxX: number; minZ: number; maxZ: number } {
+  return {
+    minX: bounds.minX,
+    maxX: bounds.maxX,
+    minZ: RIVER_MIN_Z,
+    maxZ: RIVER_MAX_Z,
+  };
+}
+
 export type TerrainView = {
   group: THREE.Group;
   update: (delta: number) => void;
