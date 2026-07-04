@@ -23,6 +23,17 @@ interface ThreeGameDiagnostics {
     state: 'boot' | 'playing' | 'levelup' | 'dead';
     paused: boolean;
     buildMode: boolean;
+    buildMenuOpen: boolean;
+    selectedBuildable: 'sentry_beacon' | 'palisade';
+    buildables: Array<{
+      id: 'sentry_beacon' | 'palisade';
+      displayName: string;
+      cost: number;
+      count: number;
+      maxCount: number;
+      canAfford: boolean;
+      selected: boolean;
+    }>;
     beaconCount: number;
     beaconMax: number;
     nextBeaconCost: number;
@@ -100,8 +111,12 @@ interface ThreeGameDiagnostics {
     mode: boolean;
     ghostValid: boolean;
     ghostPos: { x: number; z: number };
+    selectedBuildable: 'sentry_beacon' | 'palisade';
     beacons: number;
+    palisades: number;
     beaconPositions: Array<{ x: number; z: number }>;
+    palisadePositions: Array<{ x: number; z: number }>;
+    buildables: Array<{ id: 'sentry_beacon' | 'palisade'; count: number }>;
     nextCost: number;
     killsByOwner: Readonly<Record<string, number>>;
   };
@@ -181,11 +196,14 @@ interface Window {
     };
     setBeaconWave: (wave: number | null) => void;
     setBuildMode: (on: boolean) => void;
+    selectBuildable: (id: string) => boolean;
+    enemyPositions: () => Array<{ x: number; z: number; hp: number }>;
     placeBeacon: () => boolean;
     state: () => {
       enemiesAlive: number;
       xp: number;
       boltsAlive: number;
+      buildables: Array<{ id: 'sentry_beacon' | 'palisade'; count: number }>;
       balance: {
         rig: {
           fireRate: number;

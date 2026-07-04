@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
+import type { PalisadeBlocker } from './Palisade';
 import {
   ClaimJumperEnemy,
   createClaimJumperAssets,
@@ -79,7 +80,12 @@ export class EnemyPool {
     return null;
   }
 
-  update(delta: number, heroPosition: THREE.Vector3, onContact: (enemy: ClaimJumperEnemy) => void): void {
+  update(
+    delta: number,
+    heroPosition: THREE.Vector3,
+    onContact: (enemy: ClaimJumperEnemy) => void,
+    blockers: readonly PalisadeBlocker[] = [],
+  ): void {
     this.rebuildSpatialHash();
 
     for (const enemy of this.enemies) {
@@ -110,7 +116,7 @@ export class EnemyPool {
         }
       }
 
-      if (enemy.update(delta, heroPosition, separationX, separationZ)) {
+      if (enemy.update(delta, heroPosition, separationX, separationZ, blockers)) {
         onContact(enemy);
       }
     }

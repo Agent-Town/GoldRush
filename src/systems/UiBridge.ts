@@ -1,4 +1,5 @@
 import { Balance } from '../game/Balance';
+import type { BuildableId } from '../game/buildables';
 import type { GameState, RunState } from '../game/GameState';
 
 export type WaveState = 'quiet' | 'warning' | 'active' | 'cleared';
@@ -19,6 +20,17 @@ export type UiSnapshot = {
   state: RunState;
   paused: boolean;
   buildMode: boolean;
+  buildMenuOpen: boolean;
+  selectedBuildable: BuildableId;
+  buildables: Array<{
+    id: BuildableId;
+    displayName: string;
+    cost: number;
+    count: number;
+    maxCount: number;
+    canAfford: boolean;
+    selected: boolean;
+  }>;
   beaconCount: number;
   beaconMax: number;
   nextBeaconCost: number;
@@ -42,6 +54,9 @@ export class UiBridge {
     state: 'boot',
     paused: false,
     buildMode: false,
+    buildMenuOpen: false,
+    selectedBuildable: 'sentry_beacon',
+    buildables: [],
     beaconCount: 0,
     beaconMax: Balance.beacon.maxCount,
     nextBeaconCost: Balance.beacon.costBase,
@@ -66,6 +81,9 @@ export class UiBridge {
     wave: number,
     waveState: WaveState,
     buildMode: boolean,
+    buildMenuOpen: boolean,
+    selectedBuildable: BuildableId,
+    buildables: UiSnapshot['buildables'],
     beaconCount: number,
     beaconMax: number,
     nextBeaconCost: number,
@@ -84,6 +102,9 @@ export class UiBridge {
     this.snapshot.wave = wave;
     this.snapshot.waveState = waveState;
     this.snapshot.buildMode = buildMode;
+    this.snapshot.buildMenuOpen = buildMenuOpen;
+    this.snapshot.selectedBuildable = selectedBuildable;
+    this.snapshot.buildables = buildables;
     this.snapshot.beaconCount = beaconCount;
     this.snapshot.beaconMax = beaconMax;
     this.snapshot.nextBeaconCost = nextBeaconCost;

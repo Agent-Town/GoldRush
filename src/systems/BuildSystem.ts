@@ -1,17 +1,39 @@
 import * as THREE from 'three';
+import { PalisadePool, type PalisadeBlocker } from '../entities/Palisade';
 import { SentryBeaconPool } from '../entities/SentryBeacon';
 import { Balance } from '../game/Balance';
-import type { Economy } from '../game/Economy';
+import {
+  beaconCost as registryBeaconCost,
+  buildableDefs,
+  getBuildableDef,
+  type BuildableDef,
+  type BuildableId,
+} from '../game/buildables';
+import type { BuildSink, Economy } from '../game/Economy';
 import type { ShooterHandle } from './CombatSystem';
 import type { CombatSystem } from './CombatSystem';
 import * as Terrain from '../world/Terrain';
 
+export type BuildableSnapshot = {
+  id: BuildableId;
+  displayName: string;
+  cost: number;
+  count: number;
+  maxCount: number;
+  canAfford: boolean;
+  selected: boolean;
+};
+
 export type BuildDiagnostics = {
   mode: boolean;
+  selectedBuildable: BuildableId;
   ghostValid: boolean;
   ghostPos: { x: number; z: number };
   beacons: number;
+  palisades: number;
   beaconPositions: Array<{ x: number; z: number }>;
+  palisadePositions: Array<{ x: number; z: number }>;
+  buildables: Array<{ id: BuildableId; count: number }>;
   nextCost: number;
 };
 
@@ -22,7 +44,10 @@ export class BuildSystem {
   readonly group = new THREE.Group();
 
   private readonly beacons = new SentryBeaconPool();
+  private readonly palisades = new PalisadePool();
   private readonly ghost = new THREE.Group();
+  private readonly beaconGhost = new THREE.Group();
+  private readonly palisadeGhost = new THREE.Group();
   private readonly ghostMaterial = new THREE.MeshStandardMaterial({
     color: validColor,
     emissive: validColor,
@@ -41,6 +66,7 @@ export class BuildSystem {
   private readonly shooterPos = new THREE.Vector3();
   private readonly unregisterShooters: Array<() => void> = [];
   private readonly shooterHandles: ShooterHandle[] = [];
+  private selectedId: BuildableId = 'sentry_beacon';
   private beaconFireRateMult = 1;
   private pointerReady = false;
   private pointerClientX = 0;
@@ -58,8 +84,9 @@ export class BuildSystem {
     private readonly getWave: () => number = () => 0,
   ) {
     this.group.name = 'BuildSystem';
-    this.group.add(this.beacons.group, this.ghost);
+    this.group.add(this.beacons.group, this.palisades.group, this.ghost);
     this.createGhost();
+    this.syncGhostShape();
     this.ghost.visible = false;
     this.canvas.addEventListener('pointermove', this.onPointerMove);
     this.canvas.addEventListener('click', this.onCanvasClick);
@@ -67,6 +94,10 @@ export class BuildSystem {
 
   get isBuildMode(): boolean {
     return this.mode;
+  }
+
+  get selectedBuildable(): BuildableId {
+    return this.selectedId;
   }
 
   get ghostValid(): boolean {
@@ -77,24 +108,51 @@ export class BuildSystem {
     return this.beacons.activeCount;
   }
 
+  get buildableSnapshots(): BuildableSnapshot[] {
+    return buildableDefs.map((def) => {
+      const count = this.countFor(def.id);
+      const cost = def.costCurve(count);
+      return {
+        id: def.id,
+        displayName: def.displayName,
+        cost,
+        count,
+        maxCount: def.maxCount,
+        canAfford: this.economy.gold >= cost && count < def.maxCount,
+        selected: def.id === this.selectedId,
+      };
+    });
+  }
+
+  get buildableCounts(): Array<{ id: BuildableId; count: number }> {
+    return buildableDefs.map((def) => ({ id: def.id, count: this.countFor(def.id) }));
+  }
+
+  get palisadeBlockers(): readonly PalisadeBlocker[] {
+    return this.palisades.activeBlockers;
+  }
+
   get nextCost(): number {
-    return beaconCost(this.beaconCount);
+    const def = this.selectedDef();
+    return def.costCurve(this.countFor(def.id));
   }
 
   get canAffordNext(): boolean {
-    return this.economy.gold >= this.nextCost && this.beaconCount < Balance.beacon.maxCount;
+    const def = this.selectedDef();
+    return this.economy.gold >= this.nextCost && this.countFor(def.id) < def.maxCount;
   }
 
   get diagnostics(): BuildDiagnostics {
     return {
       mode: this.mode,
+      selectedBuildable: this.selectedId,
       ghostValid: this.valid,
       ghostPos: { x: this.ghostPos.x, z: this.ghostPos.z },
       beacons: this.beaconCount,
-      beaconPositions: this.beacons.allPositions
-        .map((pos, i) => ({ x: pos.x, z: pos.z, active: this.beacons.isActive(i) }))
-        .filter((entry) => entry.active)
-        .map(({ x, z }) => ({ x, z })),
+      palisades: this.palisades.activeCount,
+      beaconPositions: this.activePositions(this.beacons),
+      palisadePositions: this.activePositions(this.palisades),
+      buildables: this.buildableCounts,
       nextCost: this.nextCost,
     };
   }
@@ -102,10 +160,20 @@ export class BuildSystem {
   setBuildMode(on: boolean): void {
     this.mode = on;
     this.ghost.visible = on;
+    if (!on) this.valid = false;
   }
 
   toggleBuildMode(): void {
     this.setBuildMode(!this.mode);
+  }
+
+  selectBuildable(id: string, arm = true): boolean {
+    const def = getBuildableDef(id);
+    if (!def) return false;
+    this.selectedId = def.id;
+    this.syncGhostShape();
+    if (arm) this.setBuildMode(true);
+    return true;
   }
 
   update(at: number): void {
@@ -122,31 +190,25 @@ export class BuildSystem {
   }
 
   confirm(at: number): boolean {
-    if (!this.mode || !this.valid || this.beaconCount >= Balance.beacon.maxCount) return false;
-    const cost = this.nextCost;
+    if (!this.mode) return false;
+    this.updateGhostPosition();
+    this.valid = this.computeValid();
+    if (!this.valid) return false;
+
+    const def = this.selectedDef();
+    const cost = def.costCurve(this.countFor(def.id));
     const result = this.economy.apply({
       id: crypto.randomUUID(),
       at,
       type: 'gold_spent',
-      sink: 'build_sentry_beacon',
+      sink: buildSink(def.id),
       amount: cost,
     });
     if (!result.ok) return false;
 
-    const placed = this.beacons.place(this.ghostPos);
+    const placed = this.place(def.id, this.ghostPos);
     if (placed < 0) return false;
-    const handle: ShooterHandle = {
-      id: 'beacons',
-      getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
-      range: Balance.beacon.range,
-      cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
-      damage: Balance.beacon.damage,
-      getDamage: () => Balance.beacon.damage + Balance.beacon.damagePerWave * this.getWave(),
-      projSpeed: Balance.beacon.boltSpeed,
-      volley: Balance.beacon.volley,
-    };
-    this.shooterHandles.push(handle);
-    this.unregisterShooters.push(this.combat.registerShooter(handle));
+    if (def.id === 'sentry_beacon') this.registerBeaconShooter(placed);
     this.valid = this.computeValid();
     return true;
   }
@@ -157,8 +219,10 @@ export class BuildSystem {
     this.shooterHandles.length = 0;
     this.beaconFireRateMult = 1;
     this.beacons.reset();
+    this.palisades.reset();
+    this.selectedId = 'sentry_beacon';
+    this.syncGhostShape();
     this.setBuildMode(false);
-    this.valid = false;
   }
 
   applyStats(beaconFireRateMult: number): void {
@@ -173,6 +237,7 @@ export class BuildSystem {
     this.canvas.removeEventListener('click', this.onCanvasClick);
     this.reset();
     this.beacons.dispose();
+    this.palisades.dispose();
     this.ghost.traverse((child) => {
       const mesh = child as THREE.Mesh;
       mesh.geometry?.dispose();
@@ -211,22 +276,59 @@ export class BuildSystem {
   }
 
   private computeValid(): boolean {
-    if (this.beaconCount >= Balance.beacon.maxCount) return false;
-    if (this.economy.gold < this.nextCost) return false;
-    if (!Terrain.isBuildable(this.ghostPos.x, this.ghostPos.z)) return false;
+    const def = this.selectedDef();
+    if (this.countFor(def.id) >= def.maxCount) return false;
+    if (this.economy.gold < def.costCurve(this.countFor(def.id))) return false;
+    if (!this.matchesPlacement(def, this.ghostPos)) return false;
     const dx = this.ghostPos.x - this.heroPosition.x;
     const dz = this.ghostPos.z - this.heroPosition.z;
     if (dx * dx + dz * dz > Balance.beacon.placeRadius * Balance.beacon.placeRadius) return false;
-    const overlapSq = Balance.beacon.overlapRadius * Balance.beacon.overlapRadius;
+    return !this.overlapsExisting(def.id, this.ghostPos);
+  }
+
+  private matchesPlacement(def: BuildableDef, position: THREE.Vector3): boolean {
+    if (def.placement === 'any') return Terrain.sample(position.x, position.z).walkable;
+    if (def.placement === 'bank') return Terrain.isBuildable(position.x, position.z);
+    const sample = Terrain.sample(position.x, position.z);
+    return sample.zone === 'bank' || sample.zone === 'shallows';
+  }
+
+  private overlapsExisting(id: BuildableId, position: THREE.Vector3): boolean {
     for (let i = 0; i < this.beacons.capacity; i += 1) {
       if (!this.beacons.isActive(i)) continue;
       const pos = this.beacons.allPositions[i];
-      if (!pos) continue;
-      const ox = this.ghostPos.x - pos.x;
-      const oz = this.ghostPos.z - pos.z;
-      if (ox * ox + oz * oz < overlapSq) return false;
+      if (pos && this.overlapsBuildable(id, position, 'sentry_beacon', pos)) return true;
     }
-    return true;
+    for (let i = 0; i < this.palisades.capacity; i += 1) {
+      if (!this.palisades.isActive(i)) continue;
+      const pos = this.palisades.allPositions[i];
+      if (pos && this.overlapsBuildable(id, position, 'palisade', pos)) return true;
+    }
+    return false;
+  }
+
+  private overlapsBuildable(aId: BuildableId, a: THREE.Vector3, bId: BuildableId, b: THREE.Vector3): boolean {
+    if (aId === 'sentry_beacon' && bId === 'sentry_beacon') {
+      return this.overlaps(a, b, this.overlapRadius('sentry_beacon'));
+    }
+    const aHalf = this.footprintHalfExtents(aId);
+    const bHalf = this.footprintHalfExtents(bId);
+    return Math.abs(a.x - b.x) < aHalf.x + bHalf.x && Math.abs(a.z - b.z) < aHalf.z + bHalf.z;
+  }
+
+  private overlaps(a: THREE.Vector3, b: THREE.Vector3, radius: number): boolean {
+    const dx = a.x - b.x;
+    const dz = a.z - b.z;
+    return dx * dx + dz * dz < radius * radius;
+  }
+
+  private overlapRadius(id: BuildableId): number {
+    return id === 'palisade' ? Balance.palisade.overlapRadius : Balance.beacon.overlapRadius;
+  }
+
+  private footprintHalfExtents(id: BuildableId): { x: number; z: number } {
+    const footprint = getBuildableDef(id)?.footprint ?? { w: 1, d: 1 };
+    return { x: footprint.w / 2, z: footprint.d / 2 };
   }
 
   private snap(position: THREE.Vector3): void {
@@ -236,24 +338,88 @@ export class BuildSystem {
     position.z = Math.round(position.z / snap) * snap;
   }
 
+  private countFor(id: BuildableId): number {
+    return id === 'palisade' ? this.palisades.activeCount : this.beacons.activeCount;
+  }
+
+  private place(id: BuildableId, position: THREE.Vector3): number {
+    return id === 'palisade' ? this.palisades.place(position) : this.beacons.place(position);
+  }
+
+  private selectedDef(): BuildableDef {
+    return getBuildableDef(this.selectedId) ?? buildableDefs[0];
+  }
+
+  private activePositions(pool: SentryBeaconPool | PalisadePool): Array<{ x: number; z: number }> {
+    return pool.allPositions
+      .map((pos, i) => ({ x: pos.x, z: pos.z, active: pool.isActive(i) }))
+      .filter((entry) => entry.active)
+      .map(({ x, z }) => ({ x, z }));
+  }
+
+  private registerBeaconShooter(placed: number): void {
+    const handle: ShooterHandle = {
+      id: 'beacons',
+      getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
+      range: Balance.beacon.range,
+      cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
+      damage: Balance.beacon.damage,
+      getDamage: () => Balance.beacon.damage + Balance.beacon.damagePerWave * this.getWave(),
+      projSpeed: Balance.beacon.boltSpeed,
+      volley: Balance.beacon.volley,
+    };
+    this.shooterHandles.push(handle);
+    this.unregisterShooters.push(this.combat.registerShooter(handle));
+  }
+
+  private syncGhostShape(): void {
+    this.beaconGhost.visible = this.selectedId === 'sentry_beacon';
+    this.palisadeGhost.visible = this.selectedId === 'palisade';
+  }
+
   private createGhost(): void {
+    this.createBeaconGhost();
+    this.createPalisadeGhost();
+    this.ghost.add(this.beaconGhost, this.palisadeGhost);
+  }
+
+  private createBeaconGhost(): void {
     const legGeometry = new THREE.CylinderGeometry(0.035, 0.045, 1.05, 6);
     for (let i = 0; i < 3; i += 1) {
       const angle = i * ((Math.PI * 2) / 3) + 0.2;
       const leg = new THREE.Mesh(legGeometry, this.ghostMaterial);
       leg.position.set(Math.cos(angle) * 0.27, 0.47, Math.sin(angle) * 0.27);
       leg.rotation.set(0.42 * Math.sin(angle), angle, 0.42 * Math.cos(angle));
-      this.ghost.add(leg);
+      this.beaconGhost.add(leg);
     }
-    this.ghost.add(new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.24, 0.12, 12), this.ghostMaterial));
-    this.ghost.children[3]?.position.set(0, 1.04, 0);
-    this.ghost.add(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.16, 0.34, 12), this.ghostMaterial));
-    this.ghost.children[4]?.position.set(0, 0.82, 0);
-    this.ghost.add(new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 8), this.ghostMaterial));
-    this.ghost.children[5]?.position.set(0, 0.82, 0);
+    this.beaconGhost.add(new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.24, 0.12, 12), this.ghostMaterial));
+    this.beaconGhost.children[3]?.position.set(0, 1.04, 0);
+    this.beaconGhost.add(new THREE.Mesh(new THREE.CylinderGeometry(0.18, 0.16, 0.34, 12), this.ghostMaterial));
+    this.beaconGhost.children[4]?.position.set(0, 0.82, 0);
+    this.beaconGhost.add(new THREE.Mesh(new THREE.SphereGeometry(0.11, 12, 8), this.ghostMaterial));
+    this.beaconGhost.children[5]?.position.set(0, 0.82, 0);
+  }
+
+  private createPalisadeGhost(): void {
+    const postGeometry = new THREE.BoxGeometry(0.16, 0.92, 0.16);
+    const railGeometry = new THREE.BoxGeometry(0.18, 0.16, Balance.palisade.depth);
+    for (const z of [-Balance.palisade.depth / 2 + 0.1, Balance.palisade.depth / 2 - 0.1]) {
+      const post = new THREE.Mesh(postGeometry, this.ghostMaterial);
+      post.position.set(0, 0.46, z);
+      this.palisadeGhost.add(post);
+    }
+    for (const y of [0.35, 0.68]) {
+      const rail = new THREE.Mesh(railGeometry, this.ghostMaterial);
+      rail.position.set(0, y, 0);
+      this.palisadeGhost.add(rail);
+    }
   }
 }
 
+function buildSink(id: BuildableId): BuildSink {
+  return `build_${id}`;
+}
+
 export function beaconCost(index: number): number {
-  return Math.ceil((Balance.beacon.costBase * Balance.beacon.costGrowth ** index) / 5) * 5;
+  return registryBeaconCost(index);
 }

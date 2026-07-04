@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
+import type { PalisadeBlocker } from './Palisade';
 
 export type ClaimJumperAssets = {
   ponchoGeometry: THREE.ConeGeometry;
@@ -55,6 +56,7 @@ export class ClaimJumperEnemy {
 
   private readonly velocity = new THREE.Vector3();
   private readonly heading = new THREE.Vector3(0, 0, -1);
+  private readonly nextPosition = new THREE.Vector3();
   private alive = false;
   private hp = 0;
   private speed: number = Balance.enemy.speed;
@@ -92,7 +94,13 @@ export class ClaimJumperEnemy {
     this.group.visible = true;
   }
 
-  update(delta: number, heroPosition: THREE.Vector3, separationX: number, separationZ: number): boolean {
+  update(
+    delta: number,
+    heroPosition: THREE.Vector3,
+    separationX: number,
+    separationZ: number,
+    blockers: readonly PalisadeBlocker[] = [],
+  ): boolean {
     if (!this.alive) return false;
 
     this.contactCooldown = Math.max(0, this.contactCooldown - delta);
@@ -112,7 +120,11 @@ export class ClaimJumperEnemy {
     );
     if (this.velocity.lengthSq() > 1) this.velocity.normalize();
 
-    this.group.position.addScaledVector(this.velocity, this.speed * delta);
+    if (blockers.length === 0) {
+      this.group.position.addScaledVector(this.velocity, this.speed * delta);
+    } else {
+      this.move(delta, blockers);
+    }
     this.group.position.y = Balance.enemy.groundY;
 
     if (this.velocity.lengthSq() > 0.0025) {
@@ -147,6 +159,62 @@ export class ClaimJumperEnemy {
 
   dispose(): void {
     this.group.clear();
+  }
+
+  private move(delta: number, blockers: readonly PalisadeBlocker[]): void {
+    const distance = this.speed * delta;
+    const steps = blockers.length > 0 ? Math.max(1, Math.min(8, Math.ceil(distance / 0.25))) : 1;
+    const stepDistance = distance / steps;
+    for (let step = 0; step < steps; step += 1) {
+      this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
+      for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
+      this.group.position.copy(this.nextPosition);
+    }
+  }
+
+  private resolveBlocker(blocker: PalisadeBlocker, stepDistance: number): void {
+    const pad = Balance.palisade.avoidancePad;
+    const minX = blocker.x - blocker.halfX - pad;
+    const maxX = blocker.x + blocker.halfX + pad;
+    const minZ = blocker.z - blocker.halfZ - pad;
+    const maxZ = blocker.z + blocker.halfZ + pad;
+    const outsideNudge = 0.05;
+    if (this.nextPosition.x < minX || this.nextPosition.x > maxX) return;
+    if (this.nextPosition.z < minZ || this.nextPosition.z > maxZ) return;
+
+    const previous = this.group.position;
+    const fromWest = previous.x <= minX;
+    const fromEast = previous.x >= maxX;
+    const fromSouth = previous.z <= minZ;
+    const fromNorth = previous.z >= maxZ;
+
+    if (fromWest) {
+      this.nextPosition.x = minX - outsideNudge;
+      this.nextPosition.z += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+    } else if (fromEast) {
+      this.nextPosition.x = maxX + outsideNudge;
+      this.nextPosition.z += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+    } else if (fromSouth) {
+      this.nextPosition.z = minZ - outsideNudge;
+      this.nextPosition.x += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+    } else if (fromNorth) {
+      this.nextPosition.z = maxZ + outsideNudge;
+      this.nextPosition.x += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+    } else {
+      const pushWest = Math.abs(this.nextPosition.x - minX);
+      const pushEast = Math.abs(maxX - this.nextPosition.x);
+      const pushSouth = Math.abs(this.nextPosition.z - minZ);
+      const pushNorth = Math.abs(maxZ - this.nextPosition.z);
+      const push = Math.min(pushWest, pushEast, pushSouth, pushNorth);
+      if (push === pushWest) this.nextPosition.x = minX;
+      else if (push === pushEast) this.nextPosition.x = maxX;
+      else if (push === pushSouth) this.nextPosition.z = minZ;
+      else this.nextPosition.z = maxZ;
+    }
+  }
+
+  private avoidanceSide(): number {
+    return this.id % 2 === 0 ? 1 : -1;
   }
 }
 

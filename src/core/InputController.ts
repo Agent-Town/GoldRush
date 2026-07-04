@@ -12,6 +12,8 @@ export type Intents = {
   move: THREE.Vector2;
   confirm: boolean;
   build: boolean;
+  cancel: boolean;
+  buildSlot: number | null;
   restart: boolean;
   pause: boolean;
   debugSpawn: boolean;
@@ -31,6 +33,8 @@ export class InputController {
     move: new THREE.Vector2(),
     confirm: false,
     build: false,
+    cancel: false,
+    buildSlot: null,
     restart: false,
     pause: false,
     debugSpawn: false,
@@ -119,6 +123,8 @@ export class InputController {
     const buildHeld = down('KeyB');
     this.intents.build = buildHeld && !this.previousBuild;
     this.previousBuild = this.keys.has('KeyB');
+    this.intents.cancel = down('Escape');
+    this.intents.buildSlot = down('Digit1') || down('Numpad1') ? 0 : down('Digit2') || down('Numpad2') ? 1 : null;
     this.intents.restart = down('KeyR');
     this.intents.pause = down('KeyP') || down('Escape');
     this.intents.debugSpawn = down('KeyT');

@@ -1,5 +1,7 @@
 import { Balance } from './Balance';
 
+export type BuildSink = 'build_sentry_beacon' | `build_${string}`;
+
 export type EconomyEventBase = {
   id: string;
   at: number;
@@ -9,7 +11,7 @@ export type EconomyEvent = EconomyEventBase &
   (
     | { type: 'gold_panned'; nodeId: string; amount: number }
     | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug'; amount: number }
-    | { type: 'gold_spent'; sink: 'build_sentry_beacon'; amount: number }
+    | { type: 'gold_spent'; sink: BuildSink; amount: number }
     | { type: 'run_reset' }
   );
 

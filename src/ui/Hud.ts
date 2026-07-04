@@ -1,7 +1,10 @@
 import type { UiSnapshot } from '../systems/UiBridge';
+import type { BuildableId } from '../game/buildables';
 import { BuildButton } from './BuildButton';
 
-export type UiIntent = { type: 'restart' | 'toggle_build' | 'pause' };
+export type UiIntent =
+  | { type: 'restart' | 'toggle_build_menu' | 'close_build_menu' | 'pause' }
+  | { type: 'select_buildable'; id: BuildableId | string };
 
 type HudElements = {
   root: HTMLElement;

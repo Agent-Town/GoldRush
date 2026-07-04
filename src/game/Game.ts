@@ -42,6 +42,7 @@ import { resolveFiller } from './Upgrades';
 import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, type UpgradeId } from './Upgrades';
+import { buildableDefs } from './buildables';
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -130,9 +131,11 @@ export class Game {
   private frameMsAvg = 0;
   private frameMsP95 = 0;
   private debugBeaconWaveOverride: number | null = null;
+  private buildMenuOpen = false;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
+  private lastCancelIntent = false;
   private lastConfirmIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
@@ -258,14 +261,20 @@ export class Game {
           this.debugBeaconWaveOverride = wave;
         },
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
+        selectBuildable: (id: string) => this.selectBuildable(id),
+        enemyPositions: () =>
+          this.enemies.all
+            .filter((enemy) => enemy.isAlive)
+            .map((enemy) => ({ x: enemy.position.x, z: enemy.position.z, hp: enemy.currentHp })),
         placeBeacon: () => {
-          this.buildSystem.setBuildMode(true);
+          this.buildSystem.selectBuildable('sentry_beacon', true);
           return this.buildSystem.confirm(this.timeAlive);
         },
         state: () => ({
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
           boltsAlive: this.combat.boltsAlive,
+          buildables: this.buildSystem.buildableCounts,
           balance: {
             rig: {
               fireRate: Balance.sparkRig.fireRate,
@@ -313,9 +322,14 @@ export class Game {
     this.recordFrameMs(delta * 1000);
     this.elapsed += delta;
     const intents = this.input.readIntents();
-    if (intents.pause && !this.lastPauseIntent) this.state.togglePause();
+    if (intents.build && !this.lastBuildIntent) this.toggleBuildMenu();
+    if (intents.buildSlot !== null && this.buildMenuOpen) this.selectBuildableByIndex(intents.buildSlot);
+    if (intents.cancel && !this.lastCancelIntent && (this.buildMenuOpen || this.buildSystem.isBuildMode)) {
+      this.closeBuildMenu();
+    } else if (intents.pause && !this.lastPauseIntent) {
+      this.state.togglePause();
+    }
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
-    if (intents.build && !this.lastBuildIntent) this.buildSystem.toggleBuildMode();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
     if (intents.debugXp && !this.lastDebugXpIntent && new URLSearchParams(window.location.search).has('debug')) {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
@@ -325,6 +339,7 @@ export class Game {
     this.lastPauseIntent = intents.pause;
     this.lastRestartIntent = intents.restart;
     this.lastBuildIntent = intents.build;
+    this.lastCancelIntent = intents.cancel;
     this.lastConfirmIntent = intents.confirm;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
@@ -340,7 +355,12 @@ export class Game {
       this.combat.setTime(this.timeAlive);
       this.waveSystem.update(this.timeAlive);
       this.buildSystem.update(this.timeAlive);
-      this.enemies.update(simDelta, this.hero.group.position, this.combat.handleEnemyContact);
+      this.enemies.update(
+        simDelta,
+        this.hero.group.position,
+        this.combat.handleEnemyContact,
+        this.buildSystem.palisadeBlockers,
+      );
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
         this.timeAlive,
@@ -569,6 +589,9 @@ export class Game {
       this.waveSystem.diagnostics.wave,
       this.waveSystem.diagnostics.waveState,
       this.buildSystem.isBuildMode,
+      this.buildMenuOpen,
+      this.buildSystem.selectedBuildable,
+      this.buildSystem.buildableSnapshots,
       this.buildSystem.beaconCount,
       Balance.beacon.maxCount,
       this.buildSystem.nextCost,
@@ -580,7 +603,9 @@ export class Game {
   private handleUiIntent(intent: UiIntent): void {
     if (intent.type === 'pause') this.state.togglePause();
     if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
-    if (intent.type === 'toggle_build') this.buildSystem.toggleBuildMode();
+    if (intent.type === 'toggle_build_menu') this.toggleBuildMenu();
+    if (intent.type === 'close_build_menu') this.closeBuildMenu();
+    if (intent.type === 'select_buildable') this.selectBuildable(intent.id);
   }
 
   private handleUpgradeIntent(intent: UpgradeIntent): void {
@@ -593,6 +618,7 @@ export class Game {
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
     this.waveSystem.reset();
+    this.buildMenuOpen = false;
     this.buildSystem.reset();
     this.harvestSystem.reset();
     this.combat.reset();
@@ -639,6 +665,31 @@ export class Game {
   private spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): void {
     if (isSpawnDisabled() || this.state.current !== 'playing') return;
     this.waveSystem.spawnDebugPack(count, radius);
+  }
+
+  private toggleBuildMenu(): void {
+    if (this.buildMenuOpen || this.buildSystem.isBuildMode) {
+      this.closeBuildMenu();
+      return;
+    }
+    this.buildMenuOpen = true;
+    this.buildSystem.setBuildMode(true);
+  }
+
+  private closeBuildMenu(): void {
+    this.buildMenuOpen = false;
+    this.buildSystem.setBuildMode(false);
+  }
+
+  private selectBuildable(id: string): boolean {
+    const selected = this.buildSystem.selectBuildable(id, true);
+    if (selected) this.buildMenuOpen = false;
+    return selected;
+  }
+
+  private selectBuildableByIndex(index: number): void {
+    const def = buildableDefs[index];
+    if (def) this.selectBuildable(def.id);
   }
 
   private applyStats(stats: EffectiveStats, pickedId: UpgradeId | null): void {
