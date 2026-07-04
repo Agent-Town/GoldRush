@@ -9,3 +9,9 @@
 
 ## True-3D question (world, not characters — characters stay ADR-001 sprites)
 The game IS 3D (scene/camera/lighting); flat READ comes from tile ground + billboard buildings. If depth is wanted: **2.5D relief pilot** — ONE building (Sluice Works) as procedural mesh (BufferGeometry in-repo, no Blender/gen-3D dependency) + NPR engraved-ledger shader (sepia ramp + hatching), judged in-game against its billboard. Art direction law: the Frontier Ledger look survives or the pilot dies. Parked behind M2-07 + M3/M4 scaffolds; pull card = "vp-3d-pilot".
+
+## North star (Robin, 2026-07-04): family co-op + family-authored adventures
+Robin wants to play this with his children, and wants the family to modify the game together — "make our own adventures." Design implications, effective now:
+1. The canon guardrails (illustrated never gory, warm even when tense, comic thieves) are not just brand — the audience includes kids. Hold that line extra firmly in every art/copy review.
+2. M4 agent UX: approvals, receipts and agent copy must be readable/directable by a child — simple verbs, clear pictures, no jargon walls. Add to the M4 spec's acceptance criteria when build slices are written.
+3. "Our own adventures" end-state: adventure authoring THROUGH the agent — describe the adventure in words, the agent composes a mode manifest + map layout within validation contracts (M5 law at adventure scale). The mode-manifest substrate (rung 4) is what family adventures compile to; keep it human-readable.
