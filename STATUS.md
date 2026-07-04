@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: ACTIVE 2026-07-04T17:04:30Z (s28: gating lane/m3 run-scaffold merge — s9i serial lane merges begin; lane/m4 + lane/perf queued for later fires)
+Last updated: ACTIVE 2026-07-04T23:39:30Z (s28: gating tasks/012 m2-05b overwhelm-valves output — landed 23:12Z, settled; lane merges queued after)
 
 ## Where we are
 - **s9k — M2-07 VERDICT: PROVISIONAL PASS (Robin, morning 2026-07-05: "keep rolling with M2-07 and the M3/M4 build slices").** Conditions: tasks/012 wave-12 valves land + Robin confirms the tuned siege at next playtest; if that fails, M2 re-opens (re-slice law). **M3/M4 BUILD SLICES UNLOCKED — next 1-2 fires, in priority order:** (1) feature-slice M3 build wave → write `tasks/lane-a-m3-02-suspend-resume.md` (per VISION-HOOKS save directive: single slot, wave-boundary+quit autosave, DELETE on death, snapshot+log-tail architecture) and M3-03 (meta dimensions earn/spend + between-run screen); (2) feature-slice M4 build wave → write `tasks/lane-b-m4-02-agent-behavior-v1.md` (agent acts at permission L1 via ToolSurface ONLY: pan_at, repair, chase_mark; receipts visible in a feed; teen-grade UX bar per north star — clarity is craft); (3) lane-d perf-02 from perf-01 findings if gated. ADR-002 install()/merge law holds for all. Robin pastes lane commands as task files appear (watch tasks/). batch-005B portraits = next art-capable session (Chrome).
