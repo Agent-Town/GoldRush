@@ -38,6 +38,7 @@ export type UiSnapshot = {
   beaconMax: number;
   nextBeaconCost: number;
   canAffordBeacon: boolean;
+  weapon: 'rig' | 'blast';
 };
 
 export class UiBridge {
@@ -66,6 +67,7 @@ export class UiBridge {
     beaconMax: Balance.beacon.maxCount,
     nextBeaconCost: Balance.beacon.costBase,
     canAffordBeacon: false,
+    weapon: 'rig',
   };
 
   announce(text: string, atSim: number): void {
@@ -95,6 +97,7 @@ export class UiBridge {
     beaconMax: number,
     nextBeaconCost: number,
     canAffordBeacon: boolean,
+    weapon: 'rig' | 'blast',
   ): UiSnapshot {
     this.snapshot.gold = gold;
     this.snapshot.bankCap = bankCap;
@@ -118,6 +121,7 @@ export class UiBridge {
     this.snapshot.beaconMax = beaconMax;
     this.snapshot.nextBeaconCost = nextBeaconCost;
     this.snapshot.canAffordBeacon = canAffordBeacon;
+    this.snapshot.weapon = weapon;
     return this.snapshot;
   }
 }

@@ -12,6 +12,7 @@ type HudElements = {
   hpFill: HTMLElement;
   goldText: HTMLElement;
   goldPanel: HTMLElement;
+  weaponChip: HTMLElement;
   xpText: HTMLElement;
   xpFill: HTMLElement;
   levelText: HTMLElement;
@@ -60,6 +61,11 @@ export class Hud {
         <strong class="hud-value" data-hud-gold>0</strong>
       </section>
 
+      <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
+        <span class="hud-label">Weapon</span>
+        <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
+      </section>
+
       <section class="hud-panel hud-panel--xp" data-testid="hud-xp" aria-label="Experience">
         <div class="hud-row">
           <span class="hud-label">Level <strong data-hud-level>1</strong></span>
@@ -85,6 +91,7 @@ export class Hud {
       hpFill: this.get(root, '[data-hud-hp-fill]'),
       goldText: this.get(root, '[data-hud-gold]'),
       goldPanel: this.get(root, '[data-testid="hud-gold"]'),
+      weaponChip: this.get(root, '[data-hud-weapon]'),
       xpText: this.get(root, '[data-hud-xp]'),
       xpFill: this.get(root, '[data-hud-xp-fill]'),
       levelText: this.get(root, '[data-hud-level]'),
@@ -104,6 +111,8 @@ export class Hud {
     this.elements.hpText.textContent = `${snapshot.hp} / ${snapshot.maxHp}`;
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
     this.elements.goldText.textContent = this.goldText(snapshot);
+    this.elements.weaponChip.textContent = snapshot.weapon === 'blast' ? 'Blast Charge' : 'Spark Rig';
+    this.elements.weaponChip.dataset.weapon = snapshot.weapon;
     this.elements.xpText.textContent = `${snapshot.xp} / ${snapshot.xpNeed} XP`;
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;
     this.elements.levelText.textContent = snapshot.level.toString();

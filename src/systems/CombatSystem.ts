@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import type { EventBus } from '../core/EventBus';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import type { Hero } from '../entities/Hero';
+import type { BlastChargePool } from '../entities/BlastCharge';
 import type { ProjectilePool } from '../entities/Projectile';
 import type { XpMotePool } from '../entities/XpMote';
 import type { EnemyPool } from '../entities/pools';
@@ -13,6 +14,10 @@ import type { CombatVfx } from './CombatVfx';
 
 export type ShooterHandle = {
   id?: string;
+  kind?: 'bolt' | 'lob';
+  enabled?: () => boolean;
+  canTarget?: (target: ClaimJumperEnemy) => boolean;
+  aoe?: { radius: number; airTime: number };
   getPos: () => THREE.Vector3;
   range: number;
   cooldown: number;
@@ -34,12 +39,14 @@ export class CombatSystem {
   private readonly ownerKills: Record<string, number> = {};
   private xp = 0;
   private currentAt = 0;
+  private blastDetonationCount = 0;
 
   constructor(
     private readonly events: EventBus,
     private readonly hero: Hero,
     private readonly enemies: EnemyPool,
     private readonly projectiles: ProjectilePool,
+    private readonly blastCharges: BlastChargePool,
     private readonly motes: XpMotePool,
     private readonly vfx: CombatVfx,
     private readonly audio: AudioSystem,
@@ -54,6 +61,14 @@ export class CombatSystem {
 
   get boltsAlive(): number {
     return this.projectiles.activeCount;
+  }
+
+  get blastsAlive(): number {
+    return this.blastCharges.activeCount;
+  }
+
+  get detonations(): number {
+    return this.blastDetonationCount;
   }
 
   get killsByOwner(): Readonly<Record<string, number>> {
@@ -81,6 +96,7 @@ export class CombatSystem {
     while (remaining > 0) {
       const step = Math.min(remaining, 1 / 30);
       this.projectiles.update(step);
+      this.blastCharges.update(step, this.onBlastDetonated);
       this.resolveBoltHits(at);
       remaining -= step;
     }
@@ -110,8 +126,10 @@ export class CombatSystem {
   reset(): void {
     this.xp = 0;
     this.projectiles.recycleAll();
+    this.blastCharges.recycleAll();
     this.motes.recycleAll();
     this.vfx.reset();
+    this.blastDetonationCount = 0;
     for (const ownerId of Object.keys(this.ownerKills)) delete this.ownerKills[ownerId];
     for (let i = 0; i < this.rigs.length; i += 1) {
       const state = this.rigs[i];
@@ -123,6 +141,7 @@ export class CombatSystem {
 
   dispose(): void {
     this.projectiles.dispose();
+    this.blastCharges.dispose();
     this.motes.dispose();
     this.vfx.dispose();
   }
@@ -135,8 +154,12 @@ export class CombatSystem {
       if (state.timer > 0) continue;
 
       const handle = state.handle;
+      if (handle.enabled && !handle.enabled()) {
+        state.timer = Math.max(0, state.timer);
+        continue;
+      }
       const origin = handle.getPos();
-      const target = state.targeting.findNearest(origin, handle.range, this.enemies.all);
+      const target = state.targeting.findNearest(origin, handle.range, this.enemies.all, handle.canTarget);
       if (!target) {
         state.timer = Math.max(0, state.timer);
         continue;
@@ -150,6 +173,18 @@ export class CombatSystem {
 
   private emitVolley(handle: ShooterHandle, origin: THREE.Vector3, target: ClaimJumperEnemy): void {
     this.scratchOrigin.copy(origin);
+    if (handle.kind === 'lob') {
+      const aoe = handle.aoe ?? Balance.blast;
+      const count = Math.max(1, handle.volley);
+      for (let i = 0; i < count; i += 1) {
+        const damage = handle.getDamage?.() ?? handle.damage;
+        if (this.blastCharges.activate(this.scratchOrigin, target.position, aoe.airTime, damage, aoe.radius, handle.id ?? 'hero_blast')) {
+          this.audio.playArc();
+        }
+      }
+      return;
+    }
+
     const dx = target.position.x - this.scratchOrigin.x;
     const dz = target.position.z - this.scratchOrigin.z;
     const lenSq = dx * dx + dz * dz;
@@ -166,6 +201,27 @@ export class CombatSystem {
       }
     }
   }
+
+  private readonly onBlastDetonated = (position: THREE.Vector3, damage: number, radius: number, ownerId: string): void => {
+    this.blastDetonationCount += 1;
+    this.vfx.detonationRing(position, radius);
+    if (isCombatDamageDisabled()) return;
+
+    const radiusSq = radius * radius;
+    let hit = false;
+    for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
+      const enemy = this.enemies.all[enemyIndex];
+      if (!enemy?.isAlive) continue;
+      const dx = enemy.position.x - position.x;
+      const dz = enemy.position.z - position.z;
+      if (dx * dx + dz * dz > radiusSq) continue;
+      hit = true;
+      const died = enemy.takeDamage(damage);
+      this.vfx.hit(enemy.position);
+      if (died) this.killEnemy(enemy, this.currentAt, ownerId);
+    }
+    if (hit) this.audio.playHit();
+  };
 
   private resolveBoltHits(at: number): void {
     if (isCombatDamageDisabled()) return;

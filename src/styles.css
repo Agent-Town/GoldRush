@@ -78,7 +78,8 @@ body {
 }
 
 #confirm-button,
-#rotate-button {
+#rotate-button,
+#weapon-toggle-button {
   width: clamp(74px, 18vw, 96px);
   aspect-ratio: 1;
   border: 1px solid rgba(246, 241, 223, 0.3);
@@ -93,6 +94,25 @@ body {
 #rotate-button {
   width: clamp(52px, 13vw, 68px);
   background: #c4883a;
+}
+
+#weapon-toggle-button {
+  width: clamp(52px, 13vw, 68px);
+  background: #83ded7;
+}
+
+.hud-panel--weapon {
+  top: calc(max(16px, env(safe-area-inset-top)) + 58px);
+  right: max(16px, env(safe-area-inset-right));
+  display: grid;
+  grid-template-columns: max-content minmax(10ch, max-content);
+  align-items: baseline;
+  column-gap: 8px;
+  min-width: 168px;
+}
+
+.hud-panel--weapon .hud-value {
+  min-width: 10ch;
 }
 
 .hud-panel--build {
@@ -244,6 +264,14 @@ body {
 
   .hud-build-tile {
     min-height: 54px;
+  }
+
+  .hud-panel--weapon {
+    top: calc(max(12px, env(safe-area-inset-top)) + 52px);
+    right: max(12px, env(safe-area-inset-right));
+    min-width: 146px;
+    grid-template-columns: 1fr;
+    gap: 2px;
   }
 
   .upgrade-overlay__cards {

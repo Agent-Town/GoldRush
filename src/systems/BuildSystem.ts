@@ -4,6 +4,7 @@ import { PalisadePool, type PalisadeBlocker } from '../entities/Palisade';
 import { SentryBeaconPool } from '../entities/SentryBeacon';
 import { SluicePool, type SluiceSnapshot } from '../entities/Sluice';
 import { StockpilePool, type StockpileSnapshot } from '../entities/Stockpile';
+import { TurretPool } from '../entities/Turret';
 import { Balance } from '../game/Balance';
 import {
   beaconCost as registryBeaconCost,
@@ -39,10 +40,12 @@ export type BuildDiagnostics = {
   palisades: number;
   sluices: number;
   stockpiles: number;
+  turrets: number;
   beaconPositions: Array<{ x: number; z: number }>;
   palisadePositions: Array<{ x: number; z: number }>;
   sluicePositions: Array<{ x: number; z: number }>;
   stockpilePositions: Array<{ x: number; z: number }>;
+  turretPositions: Array<{ x: number; z: number }>;
   buildables: Array<{ id: BuildableId; count: number }>;
   sluicesState: SluiceSnapshot[];
   stockpilesState: StockpileSnapshot[];
@@ -63,11 +66,13 @@ export class BuildSystem {
   private readonly palisades = new PalisadePool();
   private readonly sluices = new SluicePool();
   private readonly stockpiles = new StockpilePool();
+  private readonly turrets = new TurretPool();
   private readonly ghost = new THREE.Group();
   private readonly beaconGhost = new THREE.Group();
   private readonly palisadeGhost = new THREE.Group();
   private readonly sluiceGhost = new THREE.Group();
   private readonly stockpileGhost = new THREE.Group();
+  private readonly turretGhost = new THREE.Group();
   private readonly ghostMaterial = new THREE.MeshStandardMaterial({
     color: validColor,
     emissive: validColor,
@@ -105,7 +110,14 @@ export class BuildSystem {
     private readonly getWave: () => number = () => 0,
   ) {
     this.group.name = 'BuildSystem';
-    this.group.add(this.beacons.group, this.palisades.group, this.sluices.group, this.stockpiles.group, this.ghost);
+    this.group.add(
+      this.beacons.group,
+      this.palisades.group,
+      this.sluices.group,
+      this.stockpiles.group,
+      this.turrets.group,
+      this.ghost,
+    );
     this.createGhost();
     this.syncGhostShape();
     this.ghost.visible = false;
@@ -179,10 +191,12 @@ export class BuildSystem {
       palisades: this.palisades.activeCount,
       sluices: this.sluices.activeCount,
       stockpiles: this.stockpiles.activeCount,
+      turrets: this.turrets.activeCount,
       beaconPositions: this.activePositions(this.beacons),
       palisadePositions: this.activePositions(this.palisades),
       sluicePositions: sluicesActive ? this.activePositions(this.sluices) : emptyPositions,
       stockpilePositions: stockpilesActive ? this.activePositions(this.stockpiles) : emptyPositions,
+      turretPositions: this.activePositions(this.turrets),
       buildables: this.buildableCounts,
       sluicesState: sluicesActive ? this.sluices.snapshot() : emptySluiceSnapshots,
       stockpilesState: stockpilesActive ? this.stockpiles.snapshot() : emptyStockpileSnapshots,
@@ -227,6 +241,7 @@ export class BuildSystem {
   ): void {
     this.currentAt = at;
     this.beacons.update(at);
+    this.turrets.update(at);
     this.sluices.update(delta, at, enemies, this.economy, onSluiceGold, onBankFull);
     this.stockpiles.update(this.economy.gold, this.economy.bankCap);
     if (!this.mode) return;
@@ -260,6 +275,7 @@ export class BuildSystem {
     const placed = this.place(def.id, this.ghostPos);
     if (placed < 0) return false;
     if (def.id === 'sentry_beacon') this.registerBeaconShooter(placed);
+    if (def.id === 'turret') this.registerTurretShooter(placed);
     if (def.id === 'stockpile') this.economy.addCapSource(stockpileCapSource(placed), Balance.stockpile.capBonus);
     this.valid = this.computeValid();
     return true;
@@ -273,6 +289,7 @@ export class BuildSystem {
     this.beacons.reset();
     this.palisades.reset();
     this.sluices.reset();
+    this.turrets.reset();
     for (let i = 0; i < this.stockpiles.capacity; i += 1) this.economy.removeCapSource(stockpileCapSource(i));
     this.stockpiles.reset();
     this.selectedId = 'sentry_beacon';
@@ -296,6 +313,7 @@ export class BuildSystem {
     this.palisades.dispose();
     this.sluices.dispose();
     this.stockpiles.dispose();
+    this.turrets.dispose();
     this.ghost.traverse((child) => {
       const mesh = child as THREE.Mesh;
       mesh.geometry?.dispose();
@@ -340,7 +358,8 @@ export class BuildSystem {
     if (!this.matchesPlacement(def, this.ghostPos)) return false;
     const dx = this.ghostPos.x - this.heroPosition.x;
     const dz = this.ghostPos.z - this.heroPosition.z;
-    if (dx * dx + dz * dz > Balance.beacon.placeRadius * Balance.beacon.placeRadius) return false;
+    const placeRadius = this.placeRadius(def.id);
+    if (dx * dx + dz * dz > placeRadius * placeRadius) return false;
     return !this.overlapsExisting(def.id, this.ghostPos);
   }
 
@@ -383,6 +402,11 @@ export class BuildSystem {
       const pos = this.stockpiles.allPositions[i];
       if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'stockpile', pos, 0)) return true;
     }
+    for (let i = 0; i < this.turrets.capacity; i += 1) {
+      if (!this.turrets.isActive(i)) continue;
+      const pos = this.turrets.allPositions[i];
+      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'turret', pos, 0)) return true;
+    }
     return false;
   }
 
@@ -409,7 +433,13 @@ export class BuildSystem {
   }
 
   private overlapRadius(id: BuildableId): number {
-    return id === 'palisade' ? Balance.palisade.overlapRadius : Balance.beacon.overlapRadius;
+    if (id === 'palisade') return Balance.palisade.overlapRadius;
+    if (id === 'turret') return Balance.turret.overlapRadius;
+    return Balance.beacon.overlapRadius;
+  }
+
+  private placeRadius(id: BuildableId): number {
+    return id === 'turret' ? Balance.turret.placeRadius : Balance.beacon.placeRadius;
   }
 
   private footprintHalfExtents(id: BuildableId, rotationSteps = 0): { x: number; z: number } {
@@ -433,6 +463,7 @@ export class BuildSystem {
     if (id === 'palisade') return this.palisades.activeCount;
     if (id === 'sluice') return this.sluices.activeCount;
     if (id === 'stockpile') return this.stockpiles.activeCount;
+    if (id === 'turret') return this.turrets.activeCount;
     return this.beacons.activeCount;
   }
 
@@ -440,6 +471,7 @@ export class BuildSystem {
     if (id === 'palisade') return this.palisades.place(position, this.ghostRotationSteps);
     if (id === 'sluice') return this.sluices.place(position);
     if (id === 'stockpile') return this.stockpiles.place(position);
+    if (id === 'turret') return this.turrets.place(position);
     return this.beacons.place(position);
   }
 
@@ -448,7 +480,7 @@ export class BuildSystem {
   }
 
   private activePositions(
-    pool: SentryBeaconPool | PalisadePool | SluicePool | StockpilePool,
+    pool: SentryBeaconPool | PalisadePool | SluicePool | StockpilePool | TurretPool,
   ): Array<{ x: number; z: number }> {
     return pool.allPositions
       .map((pos, i) => ({ x: pos.x, z: pos.z, active: pool.isActive(i) }))
@@ -471,11 +503,26 @@ export class BuildSystem {
     this.unregisterShooters.push(this.combat.registerShooter(handle));
   }
 
+  private registerTurretShooter(placed: number): void {
+    const handle: ShooterHandle = {
+      id: 'turrets',
+      getPos: () => this.shooterPos.copy(this.turrets.allPositions[placed] ?? this.ghostPos),
+      range: Balance.turret.range,
+      cooldown: 1 / Balance.turret.fireRate,
+      damage: Balance.turret.damage,
+      projSpeed: Balance.turret.boltSpeed,
+      volley: Balance.turret.volley,
+      canTarget: (target) => this.hasLineOfSight(this.turrets.allPositions[placed] ?? this.ghostPos, target.position),
+    };
+    this.unregisterShooters.push(this.combat.registerShooter(handle));
+  }
+
   private syncGhostShape(): void {
     this.beaconGhost.visible = this.selectedId === 'sentry_beacon';
     this.palisadeGhost.visible = this.selectedId === 'palisade';
     this.sluiceGhost.visible = this.selectedId === 'sluice';
     this.stockpileGhost.visible = this.selectedId === 'stockpile';
+    this.turretGhost.visible = this.selectedId === 'turret';
   }
 
   private createGhost(): void {
@@ -483,7 +530,8 @@ export class BuildSystem {
     this.createPalisadeGhost();
     this.createSluiceGhost();
     this.createStockpileGhost();
-    this.ghost.add(this.beaconGhost, this.palisadeGhost, this.sluiceGhost, this.stockpileGhost);
+    this.createTurretGhost();
+    this.ghost.add(this.beaconGhost, this.palisadeGhost, this.sluiceGhost, this.stockpileGhost, this.turretGhost);
   }
 
   private createBeaconGhost(): void {
@@ -543,6 +591,64 @@ export class BuildSystem {
       nugget.scale.setScalar(scale);
       this.stockpileGhost.add(nugget);
     }
+  }
+
+  private createTurretGhost(): void {
+    const body = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.22, 0.74, 10), this.ghostMaterial);
+    body.position.set(0, 0.42, 0);
+    this.turretGhost.add(body);
+    const head = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.18, 0.36, 10), this.ghostMaterial);
+    head.position.set(0, 0.92, 0);
+    this.turretGhost.add(head);
+  }
+
+  private hasLineOfSight(from: THREE.Vector3, to: THREE.Vector3): boolean {
+    for (const blocker of this.palisades.activeBlockers) {
+      if (this.segmentIntersectsBlocker(from.x, from.z, to.x, to.z, blocker)) return false;
+    }
+    return true;
+  }
+
+  private segmentIntersectsBlocker(ax: number, az: number, bx: number, bz: number, blocker: PalisadeBlocker): boolean {
+    const minX = blocker.x - blocker.halfX;
+    const maxX = blocker.x + blocker.halfX;
+    const minZ = blocker.z - blocker.halfZ;
+    const maxZ = blocker.z + blocker.halfZ;
+    let tMin = 0;
+    let tMax = 1;
+    const dx = bx - ax;
+    const dz = bz - az;
+
+    if (Math.abs(dx) < 0.0001) {
+      if (ax < minX || ax > maxX) return false;
+    } else {
+      const inv = 1 / dx;
+      let t1 = (minX - ax) * inv;
+      let t2 = (maxX - ax) * inv;
+      if (t1 > t2) {
+        const tmp = t1;
+        t1 = t2;
+        t2 = tmp;
+      }
+      tMin = Math.max(tMin, t1);
+      tMax = Math.min(tMax, t2);
+      if (tMin > tMax) return false;
+    }
+
+    if (Math.abs(dz) < 0.0001) {
+      return az >= minZ && az <= maxZ;
+    }
+    const inv = 1 / dz;
+    let t1 = (minZ - az) * inv;
+    let t2 = (maxZ - az) * inv;
+    if (t1 > t2) {
+      const tmp = t1;
+      t1 = t2;
+      t2 = tmp;
+    }
+    tMin = Math.max(tMin, t1);
+    tMax = Math.min(tMax, t2);
+    return tMin <= tMax;
   }
 }
 

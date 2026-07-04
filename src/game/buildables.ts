@@ -1,6 +1,6 @@
 import { Balance } from './Balance';
 
-export type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile';
+export type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
 export type BuildPlacement = 'bank' | 'river-adjacent' | 'any';
 
 export type BuildableDef = {
@@ -62,6 +62,17 @@ export const buildableDefs: readonly BuildableDef[] = [
     maxCount: Balance.stockpile.maxCount,
     iconSlot: 'ui.build.icon.stockpile',
   },
+  {
+    id: 'turret',
+    displayName: 'Signal Turret',
+    costCurve: turretCost,
+    footprint: { w: 1, d: 1 },
+    hpMax: null,
+    placement: 'bank',
+    slotFamily: 'building.turret',
+    maxCount: Balance.turret.maxCount,
+    iconSlot: 'ui.build.icon.turret',
+  },
 ];
 
 export function getBuildableDef(id: string): BuildableDef | undefined {
@@ -70,4 +81,8 @@ export function getBuildableDef(id: string): BuildableDef | undefined {
 
 export function beaconCost(index: number): number {
   return Math.ceil((Balance.beacon.costBase * Balance.beacon.costGrowth ** index) / 5) * 5;
+}
+
+export function turretCost(index: number): number {
+  return Math.ceil((Balance.turret.costBase * Balance.turret.costGrowth ** index) / 5) * 5;
 }

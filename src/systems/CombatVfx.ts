@@ -2,6 +2,7 @@ import * as THREE from 'three';
 
 const PUFFS = 32;
 const TICKS = 48;
+const RINGS = 8;
 
 export class CombatVfx {
   readonly group = new THREE.Group();
@@ -12,8 +13,13 @@ export class CombatVfx {
   private readonly tickActive: boolean[] = [];
   private readonly tickAge: number[] = [];
   private readonly tickPos: THREE.Vector3[] = [];
+  private readonly ringActive: boolean[] = [];
+  private readonly ringAge: number[] = [];
+  private readonly ringPos: THREE.Vector3[] = [];
+  private readonly ringRadius: number[] = [];
   private readonly puffGeometry = new THREE.CircleGeometry(0.42, 18);
   private readonly tickGeometry = new THREE.BoxGeometry(0.08, 0.34, 0.035);
+  private readonly ringGeometry = new THREE.RingGeometry(0.82, 1, 28);
   private readonly puffMaterial = new THREE.MeshBasicMaterial({
     color: '#c4883a',
     transparent: true,
@@ -26,16 +32,26 @@ export class CombatVfx {
     opacity: 0.9,
     depthWrite: false,
   });
+  private readonly ringMaterial = new THREE.MeshBasicMaterial({
+    color: '#83ded7',
+    transparent: true,
+    opacity: 0.46,
+    depthWrite: false,
+  });
   private readonly puffs = new THREE.InstancedMesh(this.puffGeometry, this.puffMaterial, PUFFS);
   private readonly ticks = new THREE.InstancedMesh(this.tickGeometry, this.tickMaterial, TICKS);
+  private readonly rings = new THREE.InstancedMesh(this.ringGeometry, this.ringMaterial, RINGS);
   private readonly syncObject = new THREE.Object3D();
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
+  private ringAlive = 0;
 
   constructor() {
     this.group.name = 'CombatVfx';
     this.puffs.frustumCulled = false;
     this.ticks.frustumCulled = false;
-    this.group.add(this.puffs, this.ticks);
+    this.rings.frustumCulled = false;
+    this.rings.visible = false;
+    this.group.add(this.puffs, this.ticks, this.rings);
     for (let i = 0; i < PUFFS; i += 1) {
       this.puffActive.push(false);
       this.puffAge.push(0);
@@ -47,6 +63,13 @@ export class CombatVfx {
       this.tickAge.push(0);
       this.tickPos.push(new THREE.Vector3());
       this.ticks.setMatrixAt(i, this.hiddenMatrix);
+    }
+    for (let i = 0; i < RINGS; i += 1) {
+      this.ringActive.push(false);
+      this.ringAge.push(0);
+      this.ringPos.push(new THREE.Vector3());
+      this.ringRadius.push(1);
+      this.rings.setMatrixAt(i, this.hiddenMatrix);
     }
     this.markNeedsUpdate();
   }
@@ -63,6 +86,21 @@ export class CombatVfx {
       this.puffPos[i]?.set(position.x, 0.08, position.z);
       this.syncPuff(i);
       this.puffs.instanceMatrix.needsUpdate = true;
+      return;
+    }
+  }
+
+  detonationRing(position: THREE.Vector3, radius: number): void {
+    for (let i = 0; i < RINGS; i += 1) {
+      if (this.ringActive[i]) continue;
+      this.ringActive[i] = true;
+      this.ringAge[i] = 0;
+      this.ringRadius[i] = radius;
+      this.ringPos[i]?.set(position.x, 0.1, position.z);
+      this.ringAlive += 1;
+      this.rings.visible = true;
+      this.syncRing(i);
+      this.rings.instanceMatrix.needsUpdate = true;
       return;
     }
   }
@@ -88,6 +126,19 @@ export class CombatVfx {
         this.syncTick(i);
       }
     }
+    for (let i = 0; i < RINGS; i += 1) {
+      if (!this.ringActive[i]) continue;
+      this.ringAge[i] = (this.ringAge[i] ?? 0) + delta;
+      if ((this.ringAge[i] ?? 0) >= 0.48) {
+        this.ringActive[i] = false;
+        this.ringAge[i] = 0;
+        this.ringAlive = Math.max(0, this.ringAlive - 1);
+        this.rings.setMatrixAt(i, this.hiddenMatrix);
+      } else {
+        this.syncRing(i);
+      }
+    }
+    this.rings.visible = this.ringAlive > 0;
     this.markNeedsUpdate();
   }
 
@@ -102,14 +153,24 @@ export class CombatVfx {
       this.tickAge[i] = 0;
       this.ticks.setMatrixAt(i, this.hiddenMatrix);
     }
+    for (let i = 0; i < RINGS; i += 1) {
+      this.ringActive[i] = false;
+      this.ringAge[i] = 0;
+      this.ringRadius[i] = 1;
+      this.rings.setMatrixAt(i, this.hiddenMatrix);
+    }
+    this.ringAlive = 0;
+    this.rings.visible = false;
     this.markNeedsUpdate();
   }
 
   dispose(): void {
     this.puffGeometry.dispose();
     this.tickGeometry.dispose();
+    this.ringGeometry.dispose();
     this.puffMaterial.dispose();
     this.tickMaterial.dispose();
+    this.ringMaterial.dispose();
   }
 
   private spawnTick(position: THREE.Vector3): void {
@@ -147,8 +208,20 @@ export class CombatVfx {
     this.ticks.setMatrixAt(index, this.syncObject.matrix);
   }
 
+  private syncRing(index: number): void {
+    const age = this.ringAge[index] ?? 0;
+    const pos = this.ringPos[index];
+    if (!pos) return;
+    this.syncObject.position.copy(pos);
+    this.syncObject.rotation.set(-Math.PI / 2, 0, age * 2.5);
+    this.syncObject.scale.setScalar((this.ringRadius[index] ?? 1) * (0.35 + age * 2.4));
+    this.syncObject.updateMatrix();
+    this.rings.setMatrixAt(index, this.syncObject.matrix);
+  }
+
   private markNeedsUpdate(): void {
     this.puffs.instanceMatrix.needsUpdate = true;
     this.ticks.instanceMatrix.needsUpdate = true;
+    this.rings.instanceMatrix.needsUpdate = true;
   }
 }

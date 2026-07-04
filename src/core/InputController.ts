@@ -12,6 +12,7 @@ export type Intents = {
   move: THREE.Vector2;
   confirm: boolean;
   rotateBuild: boolean;
+  weaponToggle: boolean;
   build: boolean;
   cancel: boolean;
   buildSlot: number | null;
@@ -30,11 +31,13 @@ export class InputController {
   private readonly keyVector = new THREE.Vector2();
   private previousBuild = false;
   private previousRotateBuild = false;
+  private previousWeaponToggle = false;
   private previousDebugXp = false;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
     confirm: false,
     rotateBuild: false,
+    weaponToggle: false,
     build: false,
     cancel: false,
     buildSlot: null,
@@ -103,6 +106,7 @@ export class InputController {
   };
 
   private readonly rotateButton: HTMLButtonElement = document.createElement('button');
+  private readonly weaponButton: HTMLButtonElement = document.createElement('button');
 
   private readonly onRotateDown = (event: PointerEvent) => {
     event.preventDefault();
@@ -113,6 +117,17 @@ export class InputController {
   private readonly onRotateUp = (event: PointerEvent) => {
     event.preventDefault();
     this.keys.delete('TouchRotate');
+  };
+
+  private readonly onWeaponDown = (event: PointerEvent) => {
+    event.preventDefault();
+    this.keys.add('TouchWeaponToggle');
+    this.tapped.add('TouchWeaponToggle');
+  };
+
+  private readonly onWeaponUp = (event: PointerEvent) => {
+    event.preventDefault();
+    this.keys.delete('TouchWeaponToggle');
   };
 
   constructor(
@@ -138,7 +153,15 @@ export class InputController {
     this.rotateButton.addEventListener('pointerup', this.onRotateUp);
     this.rotateButton.addEventListener('pointercancel', this.onRotateUp);
     this.rotateButton.addEventListener('pointerleave', this.onRotateUp);
-    this.confirmButton.before(this.rotateButton);
+    this.weaponButton.id = 'weapon-toggle-button';
+    this.weaponButton.type = 'button';
+    this.weaponButton.textContent = 'Q';
+    this.weaponButton.setAttribute('aria-label', 'Toggle weapon');
+    this.weaponButton.addEventListener('pointerdown', this.onWeaponDown);
+    this.weaponButton.addEventListener('pointerup', this.onWeaponUp);
+    this.weaponButton.addEventListener('pointercancel', this.onWeaponUp);
+    this.weaponButton.addEventListener('pointerleave', this.onWeaponUp);
+    this.confirmButton.before(this.rotateButton, this.weaponButton);
   }
 
   readIntents(): Intents {
@@ -148,6 +171,9 @@ export class InputController {
     const rotateHeld = down('KeyR') || down('TouchRotate');
     this.intents.rotateBuild = rotateHeld && !this.previousRotateBuild;
     this.previousRotateBuild = this.keys.has('KeyR') || this.keys.has('TouchRotate');
+    const weaponHeld = down('KeyQ') || down('TouchWeaponToggle');
+    this.intents.weaponToggle = weaponHeld && !this.previousWeaponToggle;
+    this.previousWeaponToggle = this.keys.has('KeyQ') || this.keys.has('TouchWeaponToggle');
     const buildHeld = down('KeyB');
     this.intents.build = buildHeld && !this.previousBuild;
     this.previousBuild = this.keys.has('KeyB');
@@ -161,7 +187,9 @@ export class InputController {
             ? 2
             : down('Digit4') || down('Numpad4')
               ? 3
-              : null;
+              : down('Digit5') || down('Numpad5')
+                ? 4
+                : null;
     this.intents.restart = down('KeyR');
     this.intents.pause = down('KeyP') || down('Escape');
     this.intents.debugSpawn = down('KeyT');
@@ -199,7 +227,12 @@ export class InputController {
     this.rotateButton.removeEventListener('pointerup', this.onRotateUp);
     this.rotateButton.removeEventListener('pointercancel', this.onRotateUp);
     this.rotateButton.removeEventListener('pointerleave', this.onRotateUp);
+    this.weaponButton.removeEventListener('pointerdown', this.onWeaponDown);
+    this.weaponButton.removeEventListener('pointerup', this.onWeaponUp);
+    this.weaponButton.removeEventListener('pointercancel', this.onWeaponUp);
+    this.weaponButton.removeEventListener('pointerleave', this.onWeaponUp);
     this.rotateButton.remove();
+    this.weaponButton.remove();
   }
 
   private updatePointer(clientX: number, clientY: number): void {
