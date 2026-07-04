@@ -200,7 +200,14 @@ interface ThreeGameDiagnostics {
     frameCount: number;
     fps: number;
     loaded: boolean;
+    direction?: string;
+    mirrored?: boolean;
   }>>;
+  spriteStats: {
+    activeAnimators: number;
+    textureSwapsPerFrame: number;
+    fadeOverlaysActive: number;
+  };
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
     probes: Record<string, {

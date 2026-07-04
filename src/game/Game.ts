@@ -1,6 +1,11 @@
 import * as THREE from 'three';
 import { disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
-import { setSpriteTestClip, spriteAnimationDiagnostics } from '../assets/SpriteAnimator';
+import {
+  beginSpriteStatsFrame,
+  setSpriteTestClip,
+  spriteAnimationDiagnostics,
+  spriteStatsDiagnostics,
+} from '../assets/SpriteAnimator';
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
 import {
@@ -10,6 +15,7 @@ import {
   getTimescale,
   isCharmPauseDisabled,
   isLevelUpDisabled,
+  isProfileEnabled,
   isSpawnDisabled,
   isStealDisabled,
 } from '../core/DebugParams';
@@ -165,10 +171,13 @@ export class Game {
   private charmPauseCooldown = 0;
   private charmPauseActive = false;
   private readonly frameMsSamples: number[] = [];
+  private readonly profileFrameMs: number[] = [];
+  private readonly profileDrawCalls: number[] = [];
   private frameMsCursor = 0;
   private frameMsLast = 0;
   private frameMsAvg = 0;
   private frameMsP95 = 0;
+  private profileElapsed = 0;
   private debugBeaconWaveOverride: number | null = null;
   private stolenTotal = 0;
   private reclaimedTotal = 0;
@@ -393,6 +402,7 @@ export class Game {
 
   private update(delta: number): void {
     this.frame += 1;
+    beginSpriteStatsFrame(this.frame);
     this.recordFrameMs(delta * 1000);
     this.elapsed += delta;
     const intents = this.input.readIntents();
@@ -480,6 +490,7 @@ export class Game {
 
   private render(): void {
     this.renderer.render(this.scene, this.camera);
+    this.recordProfileSample();
   }
 
   private onEnemyKilled(position: THREE.Vector3): void {
@@ -637,6 +648,7 @@ export class Game {
       assets: generatedAssetStatuses(),
       assetSprites: generatedAssetRenderCounts(),
       spriteAnimations: spriteAnimationDiagnostics(),
+      spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
         probes: {
@@ -680,6 +692,33 @@ export class Game {
     const sorted = [...this.frameMsSamples].sort((a, b) => a - b);
     const p95Index = Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95));
     this.frameMsP95 = sorted[p95Index] ?? 0;
+  }
+
+  private recordProfileSample(): void {
+    if (!isProfileEnabled()) return;
+
+    this.profileElapsed += this.frameMsLast / 1000;
+    this.profileFrameMs.push(this.frameMsLast);
+    this.profileDrawCalls.push(this.renderer.info.render.calls);
+    if (this.profileElapsed < 5) return;
+
+    const sortedFrameMs = [...this.profileFrameMs].sort((a, b) => a - b);
+    console.table([
+      {
+        windowSec: Number(this.profileElapsed.toFixed(2)),
+        frames: this.profileFrameMs.length,
+        frameMsP50: round1(percentile(sortedFrameMs, 0.5)),
+        frameMsP95: round1(percentile(sortedFrameMs, 0.95)),
+        drawCalls: Math.max(...this.profileDrawCalls),
+      },
+    ]);
+    this.profileElapsed = 0;
+    this.profileFrameMs.length = 0;
+    this.profileDrawCalls.length = 0;
+  }
+
+  private fadeOverlaysActive(): number {
+    return Number(this.damageFlashRemaining > 0) + Number(this.state.current === 'dead') + Number(this.state.current === 'levelup');
   }
 
   private syncUi(): void {
@@ -1008,4 +1047,13 @@ export class Game {
 
 function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOptions | undefined {
   return count === 5 && radius === 3 ? { speedScale: 0 } : undefined;
+}
+
+function percentile(sorted: readonly number[], ratio: number): number {
+  if (sorted.length === 0) return 0;
+  return sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * ratio))] ?? 0;
+}
+
+function round1(value: number): number {
+  return Math.round(value * 10) / 10;
 }

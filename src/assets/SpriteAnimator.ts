@@ -89,6 +89,12 @@ export type SpriteAnimationSnapshot = {
   mirrored?: boolean;
 };
 
+export type SpriteStatsSnapshot = {
+  activeAnimators: number;
+  textureSwapsPerFrame: number;
+  fadeOverlaysActive: number;
+};
+
 const contract = JSON.parse(characterContractText) as Contract;
 const slotContracts = new Map((contract.slots ?? []).map((slot) => [slot.slot, slot]));
 const processedTextureUrls = import.meta.glob<string>('../../assets/processed/*.png', {
@@ -105,9 +111,27 @@ const testClipAtlasCache = new Map<string, Promise<RuntimeClip>>();
 const animationDiagnostics: Partial<Record<AssetSlotId, SpriteAnimationSnapshot>> = {};
 const testClips = new Map<AssetSlotId, { frames: string[]; fps: number }>();
 let testClipVersion = 0;
+let spriteStatsFrame = -1;
+let activeAnimators = 0;
+let textureSwapsPerFrame = 0;
+
+export function beginSpriteStatsFrame(frame: number): void {
+  if (spriteStatsFrame === frame) return;
+  spriteStatsFrame = frame;
+  activeAnimators = 0;
+  textureSwapsPerFrame = 0;
+}
 
 export function spriteAnimationDiagnostics(): Partial<Record<AssetSlotId, SpriteAnimationSnapshot>> {
   return { ...animationDiagnostics };
+}
+
+export function spriteStatsDiagnostics(fadeOverlaysActive: number): SpriteStatsSnapshot {
+  return {
+    activeAnimators,
+    textureSwapsPerFrame,
+    fadeOverlaysActive,
+  };
 }
 
 export function setSpriteTestClip(slotId: AssetSlotId, frames: readonly string[], fps: number): void {
@@ -126,6 +150,7 @@ export class SpriteAnimator {
   private overrideClip: RuntimeClip | null = null;
   private diagnosticDirection: RotationDirection | undefined;
   private diagnosticMirrored: boolean | undefined;
+  private lastFrameKey = '';
 
   constructor(
     private readonly slotId: AssetSlotId,
@@ -244,11 +269,16 @@ export class SpriteAnimator {
     const frame = clip?.frames[this.frameIndex];
     if (!clip || !frame) return;
 
-    frame.texture.repeat.set(frame.repeatX, frame.repeatY);
-    frame.texture.offset.set(frame.offsetX, frame.offsetY);
-    if (this.material.map !== frame.texture) {
+    activeAnimators += 1;
+    const textureUserData = frame.texture.userData as { spriteFrameKey?: string };
+    if (this.lastFrameKey !== frame.key || this.material.map !== frame.texture || textureUserData.spriteFrameKey !== frame.key) {
+      frame.texture.repeat.set(frame.repeatX, frame.repeatY);
+      frame.texture.offset.set(frame.offsetX, frame.offsetY);
       this.material.map = frame.texture;
       this.material.needsUpdate = true;
+      textureUserData.spriteFrameKey = frame.key;
+      this.lastFrameKey = frame.key;
+      textureSwapsPerFrame += 1;
     }
     const snapshot: SpriteAnimationSnapshot = {
       clip: this.overrideClip ? 'test' : this.clipName,
