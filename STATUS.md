@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T07:55Z (s15: batch-004 processed + integrated — hero front/back LIVE; extractor spill fix + SpriteAnimator fallback fix; vp-02 evidence debt closed; lock cleared)
+Last updated: ACTIVE 2026-07-04T07:20Z (s17: closing s16 harness debt — test.setTimeout(45s) on m2-01-stress + m2-03-timer)
 
 ## Where we are
 - **s16 (this commit): RETRO-GATE of a674606 swept-in VP-02 — PASS.** 14 files, 65 asserts green; 2 env-timing exceptions WITH proof-of-innocence (m2-01 stress passes at 38s + budget holds; m2-03 timer only reaches wave 2 in-window — drift assert never evaluated); 1 REAL perf watch-item for the m2-07 gate: sprite frame cost under ?stress in headless. Full tally + ownership of the process slip: reviews/vp-02-retro-gate.md. **NEW BINDING RULE: never git add -A — path-scoped adds per the active task file scope only.** Harness debt next fire: test.setTimeout(45s) on m2-01-stress + m2-03-timer.
