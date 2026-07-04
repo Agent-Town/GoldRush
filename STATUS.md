@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T07:25Z (s17: s16 harness debt closed — 45s timeouts on m2-01-stress + m2-03-timer; lock cleared)
+Last updated: ACTIVE 2026-07-04T07:37Z (s18: gating 005 M2-02 relay output; prev s17 07:25Z) (s17: s16 harness debt closed — 45s timeouts on m2-01-stress + m2-03-timer; lock cleared)
 
 ## Where we are
 - **s17 (this commit): s16 harness debt CLOSED.** `test.setTimeout(45_000)` + retro-gate rationale comments added to m2-01 "stress draw calls" and m2-03 "next-wave timer" (m1-06 precedent pattern). m2-03 note: s16's failure mode (wave reached 2 across the full window) proves the wave≥3 `expect.poll` binds on the TEST timeout, not the 5s expect cap — the bump alone is sufficient; the drift assert now gets room to evaluate on slow VMs. **Gates (proportionate to a timeout-widening-only diff): tsc clean; `playwright test --list` parses both files, all 10×2 tests listed.** Suites NOT executed this fire (mount node_modules is darwin; no env rebuild for a 10-line harness diff) — **both ride the next FULL sweep at the 005 integration gate, which was already mandatory.** Queue unchanged: (A) 005 output → gate per scope; (B) nothing delegatable until 005 integrates; (C) exit fast. Robin-owes list unchanged (005 relay command, hero-idle overrule optional, M1 verdict).
