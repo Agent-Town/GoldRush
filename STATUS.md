@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T06:06Z (s14: M2-02 slice spec expanded + tasks/005 relay written — queue is 004→005 on Robin's Mac; git unlink-EPERM workaround recorded; lock cleared)
+Last updated: ACTIVE 2026-07-04T06:52Z (s15: batch-004 sheet raws landed — processing ff00ff 3x2, contracts+LEDGER; NO in-game integration, VP-02 not landed)
 
 ## Where we are
 - **s14 (this commit): tasks/005 M2-02 sluice-and-stockpile WRITTEN + slice spec expanded** (`specs/m2-base-waves/slices/02-sluice-and-stockpile.md` was missing — README compact contract expanded per feature-slicing). **Palisade-rotation rider is IN it** (Robin directive honored — did not slip past M2-02). Scopes hard-disjoint from the 004 lane (005: BuildSystem/HarvestSystem/DebugTools/Economy/Balance/buildables/entities-new/UI vs 004: Hero/Enemy/src-assets); Game.ts sibling-changes rule stated in BOTH task files; Terrain.ts limited to an additive read-only river accessor. chatgpt.com 403 again → relay mode. **Design calls taken without Robin (flag at m2-07 if wrong, all Balance knobs):** bankCap 200 with BLOCK-never-destroy semantics (no forfeiture — conservation exact; M2-04 thieves will make cap room), sluice rate ≤1/3 active panning, costs 40/60, `gold_sluiced`/`gold_capped` event literals.
