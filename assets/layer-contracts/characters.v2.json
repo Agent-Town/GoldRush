@@ -7,6 +7,33 @@
       "fallback": {
         "file": "hero-homesteader.png"
       },
+      "rotations": {
+        "version": 1,
+        "notes": "s21 batch-005R pilot (assets/requests/batch-005-rotation.md). DORMANT: SpriteAnimator reads only 'orientations' today; the 8-way resolver rider (velocity angle -> direction, ~10deg hysteresis) consumes this block when it lands. Mirror table is BINDING and encodes the s9e deviation: the sheet's pure-side pair faces LEFT -> stored as 'w', 'e' mirrors from it (flipX); 'se'/'ne' face as specced, 'sw'/'nw' mirror from them. Idle cells exist for s/n only; other directions use the SpriteAnimator runtime-orientation idle fallback. s21 scale finding: bbox-height spread 14.6% (>8% target) attributed to stride-pose variance, one shared extractor scale held (scale=1); resolver-lane gameplay-zoom gate MUST watch the W (378->340) and NE (354->398) walk pairs for scale pulsing -> regenerate sheet if it breathes.",
+        "mirrors": { "e": "w", "sw": "se", "nw": "ne" },
+        "directions": {
+          "s": {
+            "frames": { "files": ["char-hero-sheet-rotation-r0c0.png", "char-hero-sheet-rotation-r0c1.png", "char-hero-sheet-rotation-r2c2.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 }, "idle": { "frames": [2], "fps": 1 } }
+          },
+          "se": {
+            "frames": { "files": ["char-hero-sheet-rotation-r0c2.png", "char-hero-sheet-rotation-r0c3.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "w": {
+            "frames": { "files": ["char-hero-sheet-rotation-r1c0.png", "char-hero-sheet-rotation-r1c1.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "ne": {
+            "frames": { "files": ["char-hero-sheet-rotation-r1c2.png", "char-hero-sheet-rotation-r1c3.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "n": {
+            "frames": { "files": ["char-hero-sheet-rotation-r2c0.png", "char-hero-sheet-rotation-r2c1.png", "char-hero-sheet-rotation-r2c3.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 }, "idle": { "frames": [2], "fps": 1 } }
+          }
+        }
+      },
       "orientations": {
         "side": {
           "frames": {
