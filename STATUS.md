@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T00:27Z (s9: orchestration handed back to Claude Cowork; no ACTIVE lock)
+Last updated: ACTIVE 2026-07-04T00:35Z (s9: Claude orchestration restored; provisioning + M2-01 buildable-registry-and-menu)
 
 ## Where we are
 - **Orchestration is Claude Cowork again (s9, Robin's call, 2026-07-04).** `AGENTS.md` rewritten: Codex = implementer only, per CLAUDE.md. The Codex-orchestrator era (`ee11bde`…`78336ce`) produced visual-polish/01 — kept, evidence intact. **No scheduled tasks exist** (all were deleted in that era) — collision risk is now only manual parallel sessions; lock protocol stays BINDING.
