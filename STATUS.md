@@ -1,8 +1,10 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-03T23:42Z (Codex visual-polish/01 batch-001 asset integration done; ACTIVE cleared)
+Last updated: 2026-07-04T00:27Z (s9: orchestration handed back to Claude Cowork; no ACTIVE lock)
 
 ## Where we are
+- **Orchestration is Claude Cowork again (s9, Robin's call, 2026-07-04).** `AGENTS.md` rewritten: Codex = implementer only, per CLAUDE.md. The Codex-orchestrator era (`ee11bde`…`78336ce`) produced visual-polish/01 — kept, evidence intact. **No scheduled tasks exist** (all were deleted in that era) — collision risk is now only manual parallel sessions; lock protocol stays BINDING.
+- **s9 env probe:** VM home wiped again (no codex CLI, no ~/.npm-global, no ~/.cache/ms-playwright, no ~/locallibs, no ~/gr). Mount `node_modules` is darwin-arm64 (Robin's Mac) → `vite build` fails on linux (`@rolldown/binding-linux-arm64-gnu` missing) — mount is for editing only; builds/e2e go through the ~/gr recipe (§resume). `npx tsc` on the mount: clean. `.codex-auth/auth.json` present (auth seed).
 - **M1: DONE (code) — 01–08 all shipped & spec-closed (s8, 2026-07-04). Full regression 51/51.** m1-08 = wave18 (`adfb1bc`) + wave23 card corrections (`12af31e` + harness/evidence `bfe9e0d`). Robin still needs to playtest/sign off, but Codex orchestration is no longer paused.
 - **visual-polish/01: DONE (2026-07-03T23:42Z).** The six batch-001 processed PNGs are integrated through slot contracts with procedural fallback retained. Evidence: `reviews/visual-polish-01-batch001-asset-integration.md`, screenshots in `reviews/shots-visual-polish-01/`, focused desktop/mobile asset tests.
 - **Next Codex priority after Robin's M1 verdict:** continue with `specs/m2-base-waves/README.md`, starting at M2-01 buildable registry/menu. Batch-002 icon integration waits until Robin generates those files.

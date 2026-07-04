@@ -1,52 +1,27 @@
-# AGENTS.md - Codex Orchestrator
+# AGENTS.md — Codex Implementer
 
-You are Codex, the orchestrator and implementer for Gold Rush, a three.js browser game.
+You are Codex, the **implementer** for Gold Rush, a three.js browser game. Claude (the Cowork session) is the orchestrator per `CLAUDE.md`: it slices specs, delegates one slice per task, reviews, integrates, commits, and owns `STATUS.md`. You implement exactly the task you are given — nothing more.
 
-Primary checkout:
-`/Users/robin/Claude/Projects/Gold Rush`
+(Orchestration was briefly Codex-owned 2026-07-03/04; Robin moved it back to Claude on 2026-07-04. Historical AGENTS.md guidance from that era is void.)
 
-Do not work from stale detached worktrees unless you first verify they are based on current `main`.
+## Read order
 
-## Read Order
+1. The task you were given: goal, spec path, acceptance criteria, constraints, do-not-touch list.
+2. The active spec under `specs/`.
+3. `docs/GOLD_RUSH_BRIEF.md` §4 (art direction) and §9 (canon guardrails) when visuals, naming, or content are involved.
+4. `STATUS.md` §verification-lessons before writing or running tests.
+5. `assets/LEDGER.md` when generated art, slots, or prompts are involved.
 
-1. `STATUS.md` - current truth, active lock, next slice, verification lessons.
-2. `docs/GOLD_RUSH_BRIEF.md` - canon; especially art direction and guardrails in sections 4 and 9.
-3. The active spec under `specs/`.
-4. `assets/LEDGER.md` when visuals, generated art, slots, or prompts are involved.
-5. `CLAUDE.md` only as historical process background; this file supersedes it for Codex orchestration.
+## Operating rules
 
-## Operating Rules
+- One spec slice per task. If you find adjacent problems, report them; do not fix out of scope.
+- Do NOT touch `STATUS.md`, `specs/`, `reviews/`, existing e2e specs, or git history (no commits) unless the task explicitly says otherwise. The orchestrator integrates and records evidence.
+- Sandbox facts (binding when you run there): every bash call is interrupted/resumed; write files early; servers die between calls; NEVER `npx playwright install`; Playwright needs `LD_LIBRARY_PATH=~/locallibs/usr/lib/aarch64-linux-gnu`; reply `READY-FOR-GATES` when done — the supervisor runs the gates.
 
-- One spec slice per implementation task.
-- Use subagents heavily for independent read-only audits, reviews, visual checks, and disjoint implementation slices.
-- The main Codex thread owns coordination, final integration, review, and `STATUS.md`.
-- Before implementation, check `STATUS.md` for an `ACTIVE` lock. If a lock is under 3 hours old, do review/probe work only.
-- When starting a slice, set `STATUS.md` to `ACTIVE <ISO timestamp>` and commit or clearly stage that lock before handing work to workers.
-- When ending a slice, clear the lock, update `STATUS.md`, write/update `reviews/<slice>.md`, and record verification evidence.
-- Claude scheduled tasks are legacy. Do not rely on them to mutate this repo unless Robin explicitly re-enables them.
+## Quality bar (the orchestrator gates on these)
 
-## Quality Gates
-
-Every playable slice ends with:
-
-- `npm run build`
-- relevant Playwright specs, and full regression when semantics changed
-- local browser run with zero console/page errors
-- desktop and mobile screenshots for visual/UI changes
-- nonblank canvas evidence for renderer changes
-- main control path still works
-
-Use base `playwright.config.ts` for e2e. Do not trust `pw.reuse.config.ts`; stale Vite servers have caused false results.
-
-## Scope Guardrails
-
-- TypeScript + Vite + three.js. No heavy frameworks.
-- No secrets in client code.
-- Placeholder-first art is allowed, but generated assets must be wired through `assets/layer-contracts/` and `assets/LEDGER.md`.
-- Frontier-tech weapons only; illustrated, not gory.
-- No Native American enemies.
-- Public names should feel like places or rituals, not backend tools.
-
-## Current Direction
-
-M1 is code-complete and spec-closed. The next safe Codex-owned work is visual asset integration for batch-001, because those files exist but are not rendered yet. After Robin resumes build work beyond M1, continue with `specs/m2-base-waves/README.md`.
+- `npm run build` green; zero console/page errors; relevant Playwright specs pass; full regression whenever sim semantics change.
+- TypeScript + Vite + three.js only. No heavy frameworks. No secrets in client code.
+- Canon: frontier-tech weapons (rigs, beacons, brass/teal agent-tech — no realistic firearms); illustrated, never gory; no Native American enemies; public names are places/rituals, not backend tools.
+- Placeholder-first art; generated assets wire through `assets/layer-contracts/` + `assets/LEDGER.md`.
+- Ownership invariants: Economy is the only gold writer; CombatSystem the only damage resolver; one TargetingSystem; pools per family; every pickup floats its amount (e2e-asserted).
