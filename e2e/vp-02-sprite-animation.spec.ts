@@ -103,6 +103,9 @@ test('hero test clip advances on sim time and holds during hit-pause', async ({ 
 test('missing sheet cells fall back to the existing one-frame billboard without drift', async ({ page }) => {
   await page.route('**/char-hero-sheet-side-r*.png', (route) => route.abort());
   await page.route('**/char-jumper-sheet-side-r*.png', (route) => route.abort());
+  // s23 (vp-02b gate): the hero slot now also carries rotation-sheet cells (008) — block them
+  // too so this test keeps exercising the LAST fallback layer (one-frame billboard), per its intent.
+  await page.route('**/char-hero-sheet-rotation-r*.png', (route) => route.abort());
   const errors = await openGame(page, 'vp-02-fallback');
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameKey === 'hero-homesteader.png');
   await page.keyboard.press('KeyP');

@@ -67,10 +67,18 @@ test('enemy kill triggers hit-pause and then sim time resumes', async ({ page })
   const errors = await openGame(page, '?debug&nowaves&seed=m1-07-pause');
   await installCharmTracker(page);
 
+  // s23 retro-gate (s9f directive): feel defaults are now camImpulse=0 / hitPauseMs=30 —
+  // assert the FEATURE via knobs (m1-06 knob-driven pattern), not the shipped defaults.
+  await page.evaluate(() => window.__GR_TEST__?.setBalance('charm.hitPauseMs', 120));
+  await page.evaluate(() => window.__GR_TEST__?.setBalance('charm.camImpulse', 0.12));
+
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(1, 8));
   await expect.poll(async () => (await diagnostics(page)).kills, { timeout: 10_000 }).toBeGreaterThan(0);
   await expect
     .poll(async () => page.evaluate(() => (window as unknown as { __charmTrack: { sawPause: boolean } }).__charmTrack.sawPause))
+    .toBe(true);
+  await expect
+    .poll(async () => page.evaluate(() => (window as unknown as { __charmTrack: { sawImpulse: boolean } }).__charmTrack.sawImpulse))
     .toBe(true);
   await expect
     .poll(async () => page.evaluate(() => (window as unknown as { __charmTrack: { runningAfter: boolean } }).__charmTrack.runningAfter), {

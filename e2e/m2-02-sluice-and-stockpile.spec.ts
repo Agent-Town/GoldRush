@@ -183,7 +183,17 @@ test('bank cap blocks panning and sluicing until a stockpile raises capacity', a
   await shot(page, 'stockpile-step2');
   await expect.poll(() => economyLog(page).then((log) => log.filter((event) => event.type === 'gold_sluiced').length)).toBeGreaterThan(0);
   expect(await gold(page)).toBeLessThanOrEqual(Balance.economy.bankCap + Balance.stockpile.capBonus);
-  await expect(page.getByTestId('hud-gold')).toContainText(`${await gold(page)}/${Balance.economy.bankCap + Balance.stockpile.capBonus}`);
+  // s23 gate fix: sample-then-assert raced live sluice income at timescale=8 — read HUD and
+  // diagnostics in ONE in-page evaluate so the consistency check is atomic per frame.
+  await expect
+    .poll(async () =>
+      page.evaluate((cap) => {
+        const hud = document.querySelector('[data-testid="hud-gold"]')?.textContent ?? '';
+        const banked = window.__THREE_GAME_DIAGNOSTICS__?.economy.banked;
+        return hud.includes(`${banked}/${cap}`);
+      }, Balance.economy.bankCap + Balance.stockpile.capBonus),
+    )
+    .toBe(true);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
