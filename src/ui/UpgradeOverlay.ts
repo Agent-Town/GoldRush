@@ -1,5 +1,19 @@
 import { upgradeEffect, type UpgradeDef } from '../game/Upgrades';
 
+// Lazy glob (NOT eager) — same rule as Terrain.ts: eager would make every icon
+// png a boot-time module dep; lazy keeps missing/blocked icons a silent
+// fallback to the clean parchment card (placeholder-first).
+const upgradeIconUrls = import.meta.glob<string>('../../assets/processed/icon-*.png', {
+  query: '?url',
+  import: 'default',
+});
+const upgradeIconUrlByFamily = new Map(
+  Object.entries(upgradeIconUrls).map(([path, urlLoader]) => [
+    (path.split('/').pop() ?? '').replace(/^icon-/, '').replace(/\.png$/, ''),
+    urlLoader,
+  ]),
+);
+
 export type UpgradeChoice = {
   def: UpgradeDef;
   stacks: number;
@@ -70,6 +84,8 @@ export class UpgradeOverlay {
       card.dataset.upgradeId = choice.def.id;
       card.dataset.slot = `ui.upgrade.icon.${choice.def.iconFamily}`;
       card.innerHTML = this.renderCard(choice, i);
+      card.classList.remove('upgrade-card--icon');
+      this.applyIcon(card, choice.def.iconFamily);
     }
     this.root.classList.add('upgrade-overlay--visible');
     this.root.setAttribute('aria-hidden', 'false');
@@ -101,6 +117,24 @@ export class UpgradeOverlay {
   private pick(index: number): void {
     if (!this.visible || !this.choices[index]) return;
     this.onIntent({ type: 'pick_upgrade', index });
+  }
+
+  /** Resolve ui.upgrade.icon.<family> to a processed png; no file -> clean card. */
+  private applyIcon(card: HTMLButtonElement, family: string): void {
+    const urlLoader = upgradeIconUrlByFamily.get(family);
+    if (!urlLoader) return;
+    void urlLoader().then(
+      (url) => {
+        if (card.dataset.slot !== `ui.upgrade.icon.${family}`) return; // re-rendered meanwhile
+        const icon = document.createElement('span');
+        icon.className = 'upgrade-card__icon';
+        icon.setAttribute('aria-hidden', 'true');
+        icon.style.backgroundImage = `url("${url}")`;
+        card.append(icon);
+        card.classList.add('upgrade-card--icon');
+      },
+      () => undefined,
+    );
   }
 
   private renderCard(choice: UpgradeChoice, index: number): string {

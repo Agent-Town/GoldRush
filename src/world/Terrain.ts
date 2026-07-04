@@ -274,7 +274,11 @@ vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
   vec2 tileUv = terrainOrientUv(fract(repeatedUv), terrainCell);
   float variantCount = max(1.0, terrainVariantCount);
   float variant = min(floor(terrainHash(terrainCell + vec2(23.0, 29.0)) * variantCount), variantCount - 1.0);
-  vec2 atlasUv = vec2(tileUv.x, (clamp(tileUv.y, 0.001, 0.999) + variant) / max(1.0, terrainAtlasRows));
+  // Atlas canvas draws variant 0 in the TOP row; three.js uploads canvases with
+  // flipY=true, so texture-space row bands run bottom-up. Invert the row index so
+  // variant i selects canvas row i (vp-03 review finding 2). rows=1 -> unchanged.
+  float atlasRow = max(1.0, terrainAtlasRows) - 1.0 - variant;
+  vec2 atlasUv = vec2(tileUv.x, (clamp(tileUv.y, 0.001, 0.999) + atlasRow) / max(1.0, terrainAtlasRows));
   vec4 sampledDiffuseColor = texture2D(map, atlasUv);
   sampledDiffuseColor.rgb = mix(vec3(1.0), sampledDiffuseColor.rgb, clamp(terrainFeatureMix, 0.0, 1.0));
   float macro = terrainValueNoise(vTerrainUv * 2.15 + terrainSeed * 11.0) * 2.0 - 1.0;
@@ -289,14 +293,16 @@ vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
   };
   void loadBankVariantAtlas().then((atlas) => {
     if (!atlas) return;
-    const map = material.map;
-    if (map && map.image instanceof HTMLCanvasElement) {
-      map.image.width = atlas.canvas.width;
-      map.image.height = atlas.canvas.height;
-      const context = map.image.getContext('2d');
-      if (context) context.drawImage(atlas.canvas, 0, 0);
-      map.needsUpdate = true;
-    }
+    // Do NOT resize the live map's backing canvas: three.js allocates immutable
+    // texture storage at first upload, so a grown canvas dies in texSubImage2D
+    // (GL_INVALID_VALUE, s12 probe) and the GPU silently keeps the old content.
+    // Swap in a fresh CanvasTexture sized to the atlas instead.
+    const atlasTexture = new THREE.CanvasTexture(atlas.canvas);
+    configureBankAtlas(atlasTexture);
+    const previous = material.map;
+    material.map = atlasTexture;
+    material.needsUpdate = true;
+    if (previous && previous !== atlasTexture) previous.dispose();
     uniforms.variantCount.value = atlas.variantCount;
     uniforms.atlasRows.value = atlas.rows;
   });

@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import type { PalisadeBlocker } from './Palisade';
@@ -61,6 +62,7 @@ export class ClaimJumperEnemy {
   private hp = 0;
   private speed: number = Balance.enemy.speed;
   private contactCooldown = 0;
+  private spriteClip: CharacterSpriteClip = 'idle';
 
   constructor(readonly id: number, assets: ClaimJumperAssets) {
     void assets;
@@ -81,6 +83,14 @@ export class ClaimJumperEnemy {
     return this.hp;
   }
 
+  get animationClip(): CharacterSpriteClip {
+    return this.spriteClip;
+  }
+
+  setAnimationClip(clip: CharacterSpriteClip): void {
+    this.spriteClip = clip;
+  }
+
   spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): void {
     this.alive = true;
     this.hp = Balance.enemy.hp * (params.hpScale ?? 1);
@@ -88,6 +98,7 @@ export class ClaimJumperEnemy {
     this.contactCooldown = 0;
     this.velocity.set(0, 0, 0);
     this.heading.set(0, 0, -1);
+    this.spriteClip = 'walk';
     this.group.position.copy(position);
     this.group.position.y = Balance.enemy.groundY;
     this.group.rotation.y = 0;
@@ -153,6 +164,7 @@ export class ClaimJumperEnemy {
     this.hp = 0;
     this.contactCooldown = 0;
     this.velocity.set(0, 0, 0);
+    this.spriteClip = 'idle';
     this.group.visible = false;
     this.group.position.set(0, Balance.enemy.groundY, 0);
   }

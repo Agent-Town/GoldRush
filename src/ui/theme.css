@@ -476,6 +476,24 @@
   line-height: 1;
 }
 
+.upgrade-card__icon {
+  position: absolute;
+  top: 46px;
+  right: 12px;
+  width: 56px;
+  height: 56px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: drop-shadow(0 2px 2px rgba(46, 27, 14, 0.32));
+  pointer-events: none;
+}
+
+.upgrade-card--icon .upgrade-card__name,
+.upgrade-card--icon .upgrade-card__effect {
+  max-width: calc(100% - 66px);
+}
+
 @keyframes hud-coin-tick {
   0% {
     transform: translateY(0) scale(1);

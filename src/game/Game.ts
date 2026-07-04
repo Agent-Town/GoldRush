@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
+import { setSpriteTestClip, spriteAnimationDiagnostics } from '../assets/SpriteAnimator';
+import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
 import {
   areWavesDisabled,
@@ -260,6 +262,7 @@ export class Game {
         setBeaconWave: (wave: number | null) => {
           this.debugBeaconWaveOverride = wave;
         },
+        setTestClip: (slot: string, frames: string[], fps: number) => setSpriteTestClip(slot as AssetSlotId, frames, fps),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
         enemyPositions: () =>
@@ -533,6 +536,7 @@ export class Game {
       },
       assets: generatedAssetStatuses(),
       assetSprites: generatedAssetRenderCounts(),
+      spriteAnimations: spriteAnimationDiagnostics(),
       terrain: {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
         probes: {

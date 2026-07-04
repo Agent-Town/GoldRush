@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { attachGeneratedSprite, type GeneratedSprite } from '../assets/generated';
+import { SpriteAnimator } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import type { Intents } from '../core/InputController';
@@ -14,6 +15,7 @@ export class Hero {
 
   private readonly placeholderGroup = new THREE.Group();
   private readonly generatedSprite: GeneratedSprite;
+  private readonly spriteAnimator: SpriteAnimator;
   private maxHpBonus = 0;
   private moveSpeedMult = 1;
   private readonly targetVelocity = new THREE.Vector3();
@@ -86,6 +88,11 @@ export class Hero {
         this.placeholderGroup.visible = false;
       },
     });
+    this.spriteAnimator = new SpriteAnimator(
+      assetSlots.charHero,
+      this.generatedSprite.sprite.material as THREE.SpriteMaterial,
+      this.generatedSprite.sprite,
+    );
     tagPlaceholder(this.group, assetSlots.charHero);
   }
 
@@ -127,6 +134,14 @@ export class Hero {
     if (this.velocity.lengthSq() > 0.0025) {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);
     }
+    const speedSq = this.velocity.lengthSq();
+    const orientation =
+      speedSq > 0.0025 && Math.abs(this.velocity.z) > Math.abs(this.velocity.x)
+        ? this.velocity.z > 0
+          ? 'front'
+          : 'back'
+        : 'side';
+    this.spriteAnimator.update(dt, speedSq > 0.0025 ? 'walk' : 'idle', orientation, orientation === 'side' && this.velocity.x < 0);
   }
 
   get maxHp(): number {
@@ -167,6 +182,7 @@ export class Hero {
     this.targetVelocity.set(0, 0, 0);
     this.group.position.copy(position);
     this.group.rotation.y = 0;
+    this.spriteAnimator.reset('idle');
   }
 
   dispose(): void {
@@ -179,6 +195,7 @@ export class Hero {
     this.sleeveMaterial.dispose();
     this.brassMaterial.dispose();
     this.lampMaterial.dispose();
+    this.spriteAnimator.dispose();
     this.generatedSprite.dispose();
   }
 }

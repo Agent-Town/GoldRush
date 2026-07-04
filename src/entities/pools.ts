@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
+import { SpriteAnimator, type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import type { PalisadeBlocker } from './Palisade';
@@ -24,6 +25,7 @@ export class EnemyPool {
     renderOrder: 2,
     onLoaded: () => this.setProceduralVisible(false),
   });
+  private readonly spriteAnimator = new SpriteAnimator(assetSlots.charClaimJumper, this.generatedSprites.material);
   private readonly localMatrices: THREE.Matrix4[] = [];
   private readonly cells: ClaimJumperEnemy[][] = [];
   private readonly touchedCells: number[] = [];
@@ -121,6 +123,7 @@ export class EnemyPool {
       }
     }
     this.syncInstances();
+    this.spriteAnimator.update(delta, this.activeClip());
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
@@ -144,7 +147,15 @@ export class EnemyPool {
       enemy.dispose();
     }
     this.generatedSprites.dispose();
+    this.spriteAnimator.dispose();
     disposeClaimJumperAssets(this.assets);
+  }
+
+  private activeClip(): CharacterSpriteClip {
+    for (const enemy of this.enemies) {
+      if (enemy.isAlive) return enemy.animationClip;
+    }
+    return 'idle';
   }
 
   private createRenderParts(): void {

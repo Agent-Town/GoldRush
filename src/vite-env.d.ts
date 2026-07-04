@@ -150,6 +150,14 @@ interface ThreeGameDiagnostics {
   };
   assets: Partial<Record<string, 'missing' | 'pending' | 'loaded' | 'error'>>;
   assetSprites: Partial<Record<string, number>>;
+  spriteAnimations: Partial<Record<string, {
+    clip: string;
+    frame: number;
+    frameKey: string;
+    frameCount: number;
+    fps: number;
+    loaded: boolean;
+  }>>;
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
     probes: Record<string, {
@@ -198,6 +206,7 @@ interface Window {
       beaconsBuilt: number;
     };
     setBeaconWave: (wave: number | null) => void;
+    setTestClip: (slot: string, frames: string[], fps: number) => void;
     setBuildMode: (on: boolean) => void;
     selectBuildable: (id: string) => boolean;
     enemyPositions: () => Array<{ x: number; z: number; hp: number }>;

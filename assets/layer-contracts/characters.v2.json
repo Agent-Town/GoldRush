@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "slots": [
+    {
+      "slot": "char.hero",
+      "fallback": {
+        "file": "hero-homesteader.png"
+      },
+      "orientations": {
+        "side": {
+          "frames": {
+            "grid": {
+              "file": "char-hero-sheet-side.png",
+              "cols": 2,
+              "rows": 2,
+              "order": [
+                "char-hero-sheet-side-r0c0.png",
+                "char-hero-sheet-side-r0c1.png",
+                "char-hero-sheet-side-r1c0.png",
+                "char-hero-sheet-side-r1c1.png"
+              ]
+            }
+          },
+          "clips": {
+            "idle": { "frames": [0], "fps": 1 },
+            "walk": { "frames": [1, 2], "fps": 4 },
+            "hit": { "frames": [3], "fps": 1 },
+            "pan": { "frames": [3], "fps": 1 }
+          }
+        }
+      }
+    },
+    {
+      "slot": "char.claim_jumper",
+      "fallback": {
+        "file": "enemy-claim-jumper.png"
+      },
+      "orientations": {
+        "side": {
+          "frames": {
+            "grid": {
+              "file": "char-jumper-sheet-side.png",
+              "cols": 2,
+              "rows": 2,
+              "order": [
+                "char-jumper-sheet-side-r0c0.png",
+                "char-jumper-sheet-side-r0c1.png",
+                "char-jumper-sheet-side-r1c0.png",
+                "char-jumper-sheet-side-r1c1.png"
+              ]
+            }
+          },
+          "clips": {
+            "idle": { "frames": [0], "fps": 1 },
+            "walk": { "frames": [1, 2], "fps": 4 },
+            "flee": { "frames": [3], "fps": 1 }
+          }
+        }
+      }
+    }
+  ]
+}

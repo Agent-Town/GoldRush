@@ -141,14 +141,14 @@ export function attachGeneratedSprite(
 
 export class GeneratedSpriteBatch {
   readonly group = new THREE.Group();
-
-  private readonly sprites: THREE.Sprite[] = [];
-  private readonly requestedVisible: boolean[] = [];
-  private readonly material = new THREE.SpriteMaterial({
+  readonly material = new THREE.SpriteMaterial({
     transparent: true,
     alphaTest: 0.04,
     depthWrite: false,
   });
+
+  private readonly sprites: THREE.Sprite[] = [];
+  private readonly requestedVisible: boolean[] = [];
   private loaded = false;
   private disposed = false;
 
