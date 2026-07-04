@@ -1,6 +1,7 @@
 import { Balance } from './Balance';
+import type { BuildableId } from './buildables';
 
-export type BuildSink = 'build_sentry_beacon' | `build_${string}`;
+export type BuildSink = 'build_sentry_beacon' | `build_${string}` | `repair_${BuildableId}`;
 
 export type EconomyEventBase = {
   id: string;
@@ -29,6 +30,8 @@ export type EconomySummary = {
   granted: number;
   spent: number;
   beaconsBuilt: number;
+  repairSpent: number;
+  repairs: number;
 };
 
 export type EconomyApplyResult =
@@ -62,13 +65,15 @@ export function reduce(state: EconomyState, event: EconomyEvent): EconomyState {
 }
 
 export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
-  const summary: EconomySummary = { panned: 0, granted: 0, spent: 0, beaconsBuilt: 0 };
+  const summary: EconomySummary = { panned: 0, granted: 0, spent: 0, beaconsBuilt: 0, repairSpent: 0, repairs: 0 };
   for (const event of log) {
     if (event.type === 'run_reset') {
       summary.panned = 0;
       summary.granted = 0;
       summary.spent = 0;
       summary.beaconsBuilt = 0;
+      summary.repairSpent = 0;
+      summary.repairs = 0;
       continue;
     }
     if (event.type === 'gold_panned') summary.panned += event.amount;
@@ -76,6 +81,10 @@ export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
     if (event.type === 'gold_spent') {
       summary.spent += event.amount;
       if (event.sink === 'build_sentry_beacon') summary.beaconsBuilt += 1;
+      if (event.sink.startsWith('repair_')) {
+        summary.repairSpent += event.amount;
+        summary.repairs += 1;
+      }
     }
   }
   return summary;

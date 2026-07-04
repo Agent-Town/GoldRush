@@ -22,6 +22,22 @@ export type GameEvent =
       at: number;
       enemyId: number;
       xp: number;
+    }
+  | {
+      type: 'building_damaged';
+      at: number;
+      family: string;
+      index: number;
+      hp: number;
+      maxHp: number;
+      sourceId: number;
+    }
+  | {
+      type: 'building_wrecked';
+      at: number;
+      family: string;
+      index: number;
+      sourceId: number;
     };
 
 type Handler<T extends GameEvent['type']> = (event: Extract<GameEvent, { type: T }>) => void;

@@ -120,6 +120,8 @@ interface ThreeGameDiagnostics {
       granted: number;
       spent: number;
       beaconsBuilt: number;
+      repairSpent: number;
+      repairs: number;
     };
   };
   build: {
@@ -156,6 +158,27 @@ interface ThreeGameDiagnostics {
     pileStep: number;
     nextCost: number;
     killsByOwner: Readonly<Record<string, number>>;
+    hp: Array<{
+      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
+      index: number;
+      hp: number;
+      maxHp: number;
+      wrecked: boolean;
+      repairProgress: number;
+      position: { x: number; z: number };
+    }>;
+    ruins: number;
+    hpBars: number;
+    repair: {
+      active: boolean;
+      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | null;
+      index: number;
+      progress: number;
+      blocked: boolean;
+    };
+    shooterRegistrations: number;
+    repairs: number;
+    repairGold: number;
   };
   harvest: {
     activeNodes: Array<{
@@ -179,6 +202,15 @@ interface ThreeGameDiagnostics {
     reclaimedTotal: number;
     pickups: number;
     pickupTotal: number;
+  };
+  wreck: {
+    wreckers: number;
+    swinging: number;
+    ruins: number;
+    hitsResolved: number;
+    wrecked: number;
+    repairs: number;
+    repairGold: number;
   };
   charmPause: boolean;
   camImpulseActive: boolean;
@@ -232,8 +264,10 @@ interface Window {
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;
-    spawnPack: (n: number, radius?: number, opts?: { speedScale?: number }) => void;
+    spawnPack: (n: number, radius?: number, opts?: { speedScale?: number; wrecker?: boolean }) => void;
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
+    spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
+    wreck: (family: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret', index: number) => boolean;
     resetRun: () => void;
     toggleWeapon: () => 'rig' | 'blast';
     warmVfx: () => Promise<void>;
@@ -249,6 +283,8 @@ interface Window {
       granted: number;
       spent: number;
       beaconsBuilt: number;
+      repairSpent: number;
+      repairs: number;
     };
     setBeaconWave: (wave: number | null) => void;
     setTestClip: (slot: string, frames: string[], fps: number) => void;
@@ -261,7 +297,9 @@ interface Window {
       z: number;
       hp: number;
       thief?: boolean;
+      wrecker?: boolean;
       state?: 'none' | 'seekHolding' | 'grabbing' | 'fleeing';
+      wreckState?: 'none' | 'seekBuilding' | 'swinging';
       carried?: number;
       edge?: 'north' | 'south' | 'east' | 'west' | null;
     }>;
@@ -293,6 +331,15 @@ interface Window {
         reclaimedTotal: number;
         pickups: number;
         pickupTotal: number;
+      };
+      wreck: {
+        wreckers: number;
+        swinging: number;
+        ruins: number;
+        hitsResolved: number;
+        wrecked: number;
+        repairs: number;
+        repairGold: number;
       };
       balance: {
         rig: {

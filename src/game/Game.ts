@@ -12,6 +12,7 @@ import {
   isLevelUpDisabled,
   isSpawnDisabled,
   isStealDisabled,
+  isWreckDisabled,
 } from '../core/DebugParams';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
@@ -37,7 +38,7 @@ import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
-import { TargetingSystem, type GoldHolding } from '../systems/TargetingSystem';
+import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
@@ -49,7 +50,7 @@ import { resolveFiller } from './Upgrades';
 import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, type UpgradeId } from './Upgrades';
-import { buildableDefs } from './buildables';
+import { buildableDefs, type BuildableId } from './buildables';
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -139,6 +140,7 @@ export class Game {
     (text, atSim) => this.uiBridge.announce(text, atSim),
     areWavesDisabled,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
+    () => !isWreckDisabled() && this.buildSystem.hasAnyBuildable,
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -172,10 +174,16 @@ export class Game {
   private debugBeaconWaveOverride: number | null = null;
   private stolenTotal = 0;
   private reclaimedTotal = 0;
+  private buildingHitsResolved = 0;
+  private buildingsWrecked = 0;
   private readonly thiefContext = {
     nearestGoldHolding: (from: THREE.Vector3) => this.goldTargeting.nearestGoldHolding(from),
     claimGold: (enemy: ClaimJumperEnemy, holding: GoldHolding) => this.claimGoldForThief(enemy, holding),
     onThiefFled: (enemy: ClaimJumperEnemy) => this.onThiefFled(enemy),
+  };
+  private readonly wreckerContext = {
+    nearestBuilding: (from: THREE.Vector3) => this.goldTargeting.nearestBuilding(from),
+    hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget) => this.combat.handleBuildingHit(enemy, target),
   };
   private buildMenuOpen = false;
   private lastPauseIntent = false;
@@ -205,8 +213,10 @@ export class Game {
       this.camera,
       this.economy,
       this.combat,
+      this.goldTargeting,
       this.hero.group.position,
       () => this.debugBeaconWaveOverride ?? this.waveSystem.diagnostics.wave,
+      (position, text, color) => this.vfx.floatText(position, text, color),
     );
     this.progression = new Progression({
       state: this.state,
@@ -270,6 +280,12 @@ export class Game {
     this.events.on('enemy_killed', () => {
       this.kills += 1;
     });
+    this.events.on('building_damaged', () => {
+      this.buildingHitsResolved += 1;
+    });
+    this.events.on('building_wrecked', () => {
+      this.buildingsWrecked += 1;
+    });
 
     this.debugTools = new DebugTools(this.tuning, () => {
       (Balance.render as { exposure: number; maxDpr: number }).exposure = this.tuning.exposure;
@@ -291,6 +307,8 @@ export class Game {
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
           this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
         spawnThief: (edge?: CompassEdge) => this.spawnHarnessThief(edge),
+        spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
+        wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         resetRun: () => this.resetRun(),
         toggleWeapon: () => this.toggleWeapon(),
         warmVfx: () => this.vfx.warm(this.hero.group.position),
@@ -326,7 +344,9 @@ export class Game {
               z: enemy.position.z,
               hp: enemy.currentHp,
               thief: enemy.isThief,
+              wrecker: enemy.isWrecker,
               state: enemy.stealState,
+              wreckState: enemy.wreckState,
               carried: enemy.carriedAmount,
               edge: enemy.ownEdge,
             })),
@@ -348,6 +368,7 @@ export class Game {
             bankCap: this.economy.bankCap,
           },
           steal: this.stealDiagnostics(),
+          wreck: this.wreckDiagnostics(),
           balance: {
             rig: {
               fireRate: Balance.sparkRig.fireRate,
@@ -449,6 +470,7 @@ export class Game {
         this.combat.handleEnemyContact,
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
+        isWreckDisabled() ? undefined : this.wreckerContext,
       );
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
@@ -623,6 +645,7 @@ export class Game {
       progression: this.progression.snapshot,
       harvest: this.harvestSnapshot,
       steal: this.stealDiagnostics(),
+      wreck: this.wreckDiagnostics(),
       charmPause: this.charmPauseActive,
       camImpulseActive: this.cameraRig.impulseActive,
       vfx: {
@@ -741,6 +764,8 @@ export class Game {
     this.kills = 0;
     this.stolenTotal = 0;
     this.reclaimedTotal = 0;
+    this.buildingHitsResolved = 0;
+    this.buildingsWrecked = 0;
     this.syncStockpileHoldings();
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
@@ -797,7 +822,7 @@ export class Game {
   }
 
   private hasBuiltStockpile(): boolean {
-    return (this.buildSystem.buildableCounts.find((entry) => entry.id === 'stockpile')?.count ?? 0) > 0;
+    return this.buildSystem.diagnostics.stockpilesState.some((entry) => entry.active);
   }
 
   private claimGoldForThief(_enemy: ClaimJumperEnemy, holding: GoldHolding): number {
@@ -907,6 +932,33 @@ export class Game {
     };
   }
 
+  private wreckDiagnostics(): {
+    wreckers: number;
+    swinging: number;
+    ruins: number;
+    hitsResolved: number;
+    wrecked: number;
+    repairs: number;
+    repairGold: number;
+  } {
+    let wreckers = 0;
+    let swinging = 0;
+    for (const enemy of this.enemies.all) {
+      if (!enemy.isAlive || !enemy.isWrecker) continue;
+      wreckers += 1;
+      if (enemy.wreckState === 'swinging') swinging += 1;
+    }
+    return {
+      wreckers,
+      swinging,
+      ruins: this.buildSystem.ruinCount,
+      hitsResolved: this.buildingHitsResolved,
+      wrecked: this.buildingsWrecked,
+      repairs: this.buildSystem.diagnostics.repairs,
+      repairGold: this.buildSystem.diagnostics.repairGold,
+    };
+  }
+
   private spawnDebugPack(
     count: number = Balance.enemy.debugPackSize,
     radius: number = Balance.enemy.debugPackRadius,
@@ -939,6 +991,28 @@ export class Game {
     this.debugSpawnPosition.x = Math.max(-38, Math.min(38, this.debugSpawnPosition.x));
     this.debugSpawnPosition.z = Math.max(-38, Math.min(38, this.debugSpawnPosition.z));
     return this.enemies.spawn(this.debugSpawnPosition, { edge, thief: true }) !== null;
+  }
+
+  private spawnHarnessWrecker(edge?: CompassEdge): boolean {
+    if (isSpawnDisabled() || this.state.current !== 'playing' || isWreckDisabled()) return false;
+    const radius = Math.min(14, Balance.waves.spawnRingRadius);
+    const x = this.hero.group.position.x;
+    const z = this.hero.group.position.z;
+    if (edge === 'south') this.debugSpawnPosition.set(x, Balance.enemy.groundY, z - radius);
+    else if (edge === 'east') this.debugSpawnPosition.set(x + radius, Balance.enemy.groundY, z);
+    else if (edge === 'west') this.debugSpawnPosition.set(x - radius, Balance.enemy.groundY, z);
+    else this.debugSpawnPosition.set(x, Balance.enemy.groundY, z + radius);
+    this.debugSpawnPosition.x = Math.max(-38, Math.min(38, this.debugSpawnPosition.x));
+    this.debugSpawnPosition.z = Math.max(-38, Math.min(38, this.debugSpawnPosition.z));
+    return this.enemies.spawn(this.debugSpawnPosition, { edge, wrecker: true }) !== null;
+  }
+
+  private wreckHarnessBuilding(family: BuildableId, index: number): boolean {
+    const target = this.buildSystem.buildingTarget(family, index);
+    if (!target || target.hp <= 0) return false;
+    this.combat.setTime(this.timeAlive);
+    this.combat.damageBuilding(target, this.buildSystem.remainingHp(family, index), -1);
+    return true;
   }
 
   private toggleBuildMenu(): void {

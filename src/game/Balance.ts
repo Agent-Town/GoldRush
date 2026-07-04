@@ -136,6 +136,24 @@ export const Balance = {
     grabRadius: 0.9,
     pickupCap: 24,
   },
+  wreck: {
+    hp: {
+      sentry_beacon: 40,
+      palisade: 60,
+      sluice: 40,
+      stockpile: 80,
+      turret: 50,
+    },
+    damage: 8,
+    hitCooldown: 0.9,
+    reach: 1.1,
+    share: 0.34,
+    pulseEvery: 2,
+    minWave: 4,
+    repairSeconds: 1.2,
+    repairCostFrac: 0.5,
+    repairRadius: 1.4,
+  },
   economy: {
     logCapacity: 2048,
     bankCap: 200,
@@ -168,6 +186,10 @@ export const Balance = {
   },
   terrain: {
     featureMix: 0.86,
+  },
+  sprite: {
+    turnRateDegPerS: 540,
+    orientationFadeMs: 100,
   },
   charm: {
     hitPauseMs: 30,

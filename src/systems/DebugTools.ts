@@ -80,9 +80,11 @@ export class DebugTools {
       ['Sluice', 'sluice'],
       ['Stockpile', 'stockpile'],
       ['Steal', 'steal'],
+      ['Wreck', 'wreck'],
       ['Economy', 'economy'],
       ['XP', 'xp'],
       ['Terrain', 'terrain'],
+      ['Sprite', 'sprite'],
       ['Charm', 'charm'],
     ];
     for (const [label, key] of groups) this.bindObject(this.gui.addFolder(label), key, Balance[key as keyof typeof Balance], onChange);

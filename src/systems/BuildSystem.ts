@@ -16,6 +16,7 @@ import {
 import type { BuildSink, Economy } from '../game/Economy';
 import type { ShooterHandle } from './CombatSystem';
 import type { CombatSystem } from './CombatSystem';
+import type { BuildingTarget, TargetingSystem } from './TargetingSystem';
 import * as Terrain from '../world/Terrain';
 
 export type BuildableSnapshot = {
@@ -51,6 +52,21 @@ export type BuildDiagnostics = {
   stockpilesState: StockpileSnapshot[];
   pileStep: number;
   nextCost: number;
+  hp: Array<{
+    id: BuildableId;
+    index: number;
+    hp: number;
+    maxHp: number;
+    wrecked: boolean;
+    repairProgress: number;
+    position: { x: number; z: number };
+  }>;
+  ruins: number;
+  hpBars: number;
+  repair: { active: boolean; id: BuildableId | null; index: number; progress: number; blocked: boolean };
+  shooterRegistrations: number;
+  repairs: number;
+  repairGold: number;
 };
 
 const validColor = new THREE.Color('#2f8f85');
@@ -58,6 +74,22 @@ const invalidColor = new THREE.Color('#8a4a2a');
 const emptyPositions: Array<{ x: number; z: number }> = [];
 const emptySluiceSnapshots: SluiceSnapshot[] = [];
 const emptyStockpileSnapshots: StockpileSnapshot[] = [];
+const buildableIds: readonly BuildableId[] = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret'];
+const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
+const hpColor = new THREE.Color('#a0522d');
+const rubbleColor = new THREE.Color('#8b7d3c');
+const repairColor = new THREE.Color('#ffe4a0');
+const blockedRepairColor = new THREE.Color('#a0522d');
+
+type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
+type BuildingDamageResult = {
+  applied: boolean;
+  family: string;
+  index: number;
+  hp: number;
+  maxHp: number;
+  wrecked: boolean;
+};
 
 export class BuildSystem {
   readonly group = new THREE.Group();
@@ -89,8 +121,33 @@ export class BuildSystem {
   private readonly rayHit = new THREE.Vector3();
   private readonly ghostPos = new THREE.Vector3();
   private readonly shooterPos = new THREE.Vector3();
-  private readonly unregisterShooters: Array<() => void> = [];
+  private readonly visualObject = new THREE.Object3D();
+  private readonly hp = createNumberStore();
+  private readonly wrecked = createBooleanStore();
+  private readonly repairProgress = createNumberStore();
+  private readonly repairNeedGoldShown = createBooleanStore();
+  private readonly targets = createTargetStore();
+  private readonly unregisterShooters = createFunctionStore();
+  private readonly shooterByInstance = createShooterStore();
   private readonly shooterHandles: ShooterHandle[] = [];
+  private readonly filteredBlockers: PalisadeBlocker[] = [];
+  private readonly buildingVisualGeometry = new THREE.BoxGeometry(1, 1, 1);
+  private readonly buildingVisualMaterial = new THREE.MeshStandardMaterial({
+    color: '#fff8e8',
+    roughness: 0.86,
+    metalness: 0.02,
+    vertexColors: true,
+  });
+  private readonly buildingVisuals = new THREE.InstancedMesh(
+    this.buildingVisualGeometry,
+    this.buildingVisualMaterial,
+    totalBuildableCapacity() * 2,
+  );
+  private readonly repairRing = new THREE.Mesh(
+    new THREE.RingGeometry(0.78, 0.92, 48),
+    new THREE.MeshBasicMaterial({ color: repairColor, transparent: true, opacity: 0.86, side: THREE.DoubleSide }),
+  );
+  private readonly repairRingIndexCount: number;
   private selectedId: BuildableId = 'sentry_beacon';
   private ghostRotationSteps = 0;
   private beaconFireRateMult = 1;
@@ -100,14 +157,24 @@ export class BuildSystem {
   private mode = false;
   private valid = false;
   private currentAt = 0;
+  private visualDirty = true;
+  private activeHpBars = 0;
+  private activeRuins = 0;
+  private activeRepairId: BuildableId | null = null;
+  private activeRepairIndex = -1;
+  private activeRepairBlocked = false;
+  private repairs = 0;
+  private repairGold = 0;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly camera: THREE.Camera,
     private readonly economy: Economy,
     private readonly combat: CombatSystem,
+    private readonly targeting: TargetingSystem,
     private readonly heroPosition: THREE.Vector3,
     private readonly getWave: () => number = () => 0,
+    private readonly onFloatText?: (position: THREE.Vector3, text: string, color: string) => void,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(
@@ -116,9 +183,25 @@ export class BuildSystem {
       this.sluices.group,
       this.stockpiles.group,
       this.turrets.group,
+      this.buildingVisuals,
+      this.repairRing,
       this.ghost,
     );
     this.createGhost();
+    this.createBuildingTargets();
+    this.combat.registerBuildingDamageResolver((target, amount) => this.resolveBuildingDamage(target, amount));
+    this.repairRing.rotation.x = -Math.PI / 2;
+    this.repairRing.visible = false;
+    this.repairRingIndexCount = this.repairRing.geometry.index?.count ?? this.repairRing.geometry.attributes.position.count;
+    this.repairRing.geometry.setDrawRange(0, 0);
+    this.buildingVisuals.frustumCulled = false;
+    this.buildingVisuals.visible = false;
+    for (let i = 0; i < totalBuildableCapacity() * 2; i += 1) {
+      this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
+      this.buildingVisuals.setColorAt(i, rubbleColor);
+    }
+    this.buildingVisuals.instanceMatrix.needsUpdate = true;
+    if (this.buildingVisuals.instanceColor) this.buildingVisuals.instanceColor.needsUpdate = true;
     this.syncGhostShape();
     this.ghost.visible = false;
     this.canvas.addEventListener('pointermove', this.onPointerMove);
@@ -163,7 +246,24 @@ export class BuildSystem {
   }
 
   get palisadeBlockers(): readonly PalisadeBlocker[] {
-    return this.palisades.activeBlockers;
+    this.filteredBlockers.length = 0;
+    for (let i = 0; i < this.palisades.activeBlockers.length; i += 1) {
+      if (this.wrecked.palisade[i]) continue;
+      const blocker = this.palisades.activeBlockers[i];
+      if (blocker) this.filteredBlockers.push(blocker);
+    }
+    return this.filteredBlockers;
+  }
+
+  get hasAnyBuildable(): boolean {
+    for (const id of buildableIds) {
+      if (this.countFor(id) > 0) return true;
+    }
+    return false;
+  }
+
+  get ruinCount(): number {
+    return this.activeRuins;
   }
 
   get nextCost(): number {
@@ -198,10 +298,23 @@ export class BuildSystem {
       stockpilePositions: stockpilesActive ? this.activePositions(this.stockpiles) : emptyPositions,
       turretPositions: this.activePositions(this.turrets),
       buildables: this.buildableCounts,
-      sluicesState: sluicesActive ? this.sluices.snapshot() : emptySluiceSnapshots,
-      stockpilesState: stockpilesActive ? this.stockpiles.snapshot() : emptyStockpileSnapshots,
+      sluicesState: sluicesActive ? this.sluiceSnapshots() : emptySluiceSnapshots,
+      stockpilesState: stockpilesActive ? this.stockpileSnapshots() : emptyStockpileSnapshots,
       pileStep: this.stockpiles.maxPileStep,
       nextCost: this.nextCost,
+      hp: this.hpDiagnostics(),
+      ruins: this.activeRuins,
+      hpBars: this.activeHpBars,
+      repair: {
+        active: this.activeRepairId !== null,
+        id: this.activeRepairId,
+        index: this.activeRepairIndex,
+        progress: this.activeRepairId ? this.repairProgress[this.activeRepairId][this.activeRepairIndex] ?? 0 : 0,
+        blocked: this.activeRepairBlocked,
+      },
+      shooterRegistrations: this.shooterHandles.length,
+      repairs: this.repairs,
+      repairGold: this.repairGold,
     };
   }
 
@@ -242,8 +355,10 @@ export class BuildSystem {
     this.currentAt = at;
     this.beacons.update(at);
     this.turrets.update(at);
-    this.sluices.update(delta, at, enemies, this.economy, onSluiceGold, onBankFull);
+    this.sluices.update(delta, at, enemies, this.economy, onSluiceGold, onBankFull, (index) => !this.wrecked.sluice[index]);
     this.stockpiles.update(this.economy.gold, this.economy.bankCap);
+    this.updateRepairs(delta, at);
+    this.updateBuildingVisuals(at);
     if (!this.mode) return;
     this.updateGhostPosition();
     this.valid = this.computeValid();
@@ -274,18 +389,29 @@ export class BuildSystem {
 
     const placed = this.place(def.id, this.ghostPos);
     if (placed < 0) return false;
-    if (def.id === 'sentry_beacon') this.registerBeaconShooter(placed);
-    if (def.id === 'turret') this.registerTurretShooter(placed);
-    if (def.id === 'stockpile') this.economy.addCapSource(stockpileCapSource(placed), Balance.stockpile.capBonus);
+    this.finishPlacement(def.id, placed);
     this.valid = this.computeValid();
     return true;
   }
 
   reset(): void {
-    for (const unregister of this.unregisterShooters) unregister();
-    this.unregisterShooters.length = 0;
+    for (const id of buildableIds) {
+      for (let i = 0; i < this.unregisterShooters[id].length; i += 1) this.unregisterShooter(id, i);
+      for (let i = 0; i < this.hp[id].length; i += 1) {
+        this.hp[id][i] = 0;
+        this.wrecked[id][i] = false;
+        this.repairProgress[id][i] = 0;
+        this.repairNeedGoldShown[id][i] = false;
+        const target = this.targets[id][i];
+        if (target) {
+          target.active = false;
+          target.hp = 0;
+        }
+      }
+    }
     this.shooterHandles.length = 0;
     this.beaconFireRateMult = 1;
+    this.targeting.clearBuildings();
     this.beacons.reset();
     this.palisades.reset();
     this.sluices.reset();
@@ -296,6 +422,16 @@ export class BuildSystem {
     this.ghostRotationSteps = 0;
     this.syncGhostShape();
     this.setBuildMode(false);
+    this.activeRepairId = null;
+    this.activeRepairIndex = -1;
+    this.activeRepairBlocked = false;
+    this.activeHpBars = 0;
+    this.activeRuins = 0;
+    this.repairs = 0;
+    this.repairGold = 0;
+    this.repairRing.visible = false;
+    this.repairRing.geometry.setDrawRange(0, 0);
+    this.hideAllBuildingVisuals();
   }
 
   applyStats(beaconFireRateMult: number): void {
@@ -319,6 +455,35 @@ export class BuildSystem {
       mesh.geometry?.dispose();
     });
     this.ghostMaterial.dispose();
+    this.buildingVisualGeometry.dispose();
+    this.buildingVisualMaterial.dispose();
+    this.repairRing.geometry.dispose();
+    this.repairRing.material.dispose();
+  }
+
+  buildingTarget(id: BuildableId, index: number): BuildingTarget | null {
+    return this.targets[id][index] ?? null;
+  }
+
+  remainingHp(id: BuildableId, index: number): number {
+    return this.hp[id][index] ?? 0;
+  }
+
+  resolveBuildingDamage(target: BuildingTarget, amount: number): BuildingDamageResult {
+    const id = target.family as BuildableId;
+    const index = target.index;
+    const maxHp = this.maxHpFor(id);
+    if (!target.active || this.wrecked[id][index] || maxHp <= 0) {
+      return { applied: false, family: id, index, hp: this.hp[id][index] ?? 0, maxHp, wrecked: false };
+    }
+
+    const nextHp = Math.max(0, (this.hp[id][index] ?? maxHp) - Math.max(0, amount));
+    this.hp[id][index] = nextHp;
+    target.hp = nextHp;
+    const wrecked = nextHp <= 0;
+    if (wrecked) this.wreck(id, index);
+    this.visualDirty = true;
+    return { applied: true, family: id, index, hp: nextHp, maxHp, wrecked };
   }
 
   private readonly onPointerMove = (event: PointerEvent): void => {
@@ -475,6 +640,43 @@ export class BuildSystem {
     return this.beacons.place(position);
   }
 
+  private finishPlacement(id: BuildableId, index: number): void {
+    const maxHp = this.maxHpFor(id);
+    this.hp[id][index] = maxHp;
+    this.wrecked[id][index] = false;
+    this.repairProgress[id][index] = 0;
+    this.repairNeedGoldShown[id][index] = false;
+    this.syncBuildingTarget(id, index, true);
+    if (id === 'sentry_beacon') this.registerBeaconShooter(index);
+    if (id === 'turret') this.registerTurretShooter(index);
+    if (id === 'stockpile') this.economy.addCapSource(stockpileCapSource(index), Balance.stockpile.capBonus);
+    this.visualDirty = true;
+  }
+
+  private wreck(id: BuildableId, index: number): void {
+    if (this.wrecked[id][index]) return;
+    this.wrecked[id][index] = true;
+    this.repairProgress[id][index] = 0;
+    this.repairNeedGoldShown[id][index] = false;
+    this.syncBuildingTarget(id, index, false);
+    this.unregisterShooter(id, index);
+    if (id === 'stockpile') this.economy.removeCapSource(stockpileCapSource(index));
+    this.visualDirty = true;
+  }
+
+  private repair(id: BuildableId, index: number): void {
+    const maxHp = this.maxHpFor(id);
+    this.hp[id][index] = maxHp;
+    this.wrecked[id][index] = false;
+    this.repairProgress[id][index] = 0;
+    this.repairNeedGoldShown[id][index] = false;
+    this.syncBuildingTarget(id, index, true);
+    if (id === 'sentry_beacon') this.registerBeaconShooter(index);
+    if (id === 'turret') this.registerTurretShooter(index);
+    if (id === 'stockpile') this.economy.addCapSource(stockpileCapSource(index), Balance.stockpile.capBonus);
+    this.visualDirty = true;
+  }
+
   private selectedDef(): BuildableDef {
     return getBuildableDef(this.selectedId) ?? buildableDefs[0];
   }
@@ -488,6 +690,84 @@ export class BuildSystem {
       .map(({ x, z }) => ({ x, z }));
   }
 
+  private createBuildingTargets(): void {
+    for (const id of buildableIds) {
+      for (let i = 0; i < this.targets[id].length; i += 1) {
+        const target = this.targets[id][i];
+        if (target) this.targeting.registerBuilding(target);
+      }
+    }
+  }
+
+  private syncBuildingTarget(id: BuildableId, index: number, active: boolean): void {
+    const target = this.targets[id][index];
+    const position = this.positionFor(id, index);
+    if (!target || !position) return;
+    target.position.copy(position);
+    target.active = active;
+    target.hp = this.hp[id][index] ?? 0;
+    target.maxHp = this.maxHpFor(id);
+    target.reachRadius = this.reachRadiusFor(id, index);
+    this.targeting.registerBuilding(target);
+  }
+
+  private positionFor(id: BuildableId, index: number): THREE.Vector3 | undefined {
+    if (id === 'palisade') return this.palisades.allPositions[index];
+    if (id === 'sluice') return this.sluices.allPositions[index];
+    if (id === 'stockpile') return this.stockpiles.allPositions[index];
+    if (id === 'turret') return this.turrets.allPositions[index];
+    return this.beacons.allPositions[index];
+  }
+
+  private maxHpFor(id: BuildableId): number {
+    return getBuildableDef(id)?.hpMax ?? 0;
+  }
+
+  private reachRadiusFor(id: BuildableId, index: number): number {
+    const half = this.footprintHalfExtents(id, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0);
+    return Math.max(half.x, half.z);
+  }
+
+  private hpDiagnostics(): BuildDiagnostics['hp'] {
+    const entries: BuildDiagnostics['hp'] = [];
+    for (const id of buildableIds) {
+      for (let index = 0; index < this.hp[id].length; index += 1) {
+        const hp = this.hp[id][index] ?? 0;
+        const wrecked = this.wrecked[id][index] === true;
+        if (hp <= 0 && !wrecked) continue;
+        const position = this.positionFor(id, index);
+        entries.push({
+          id,
+          index,
+          hp,
+          maxHp: this.maxHpFor(id),
+          wrecked,
+          repairProgress: this.repairProgress[id][index] ?? 0,
+          position: { x: position?.x ?? 0, z: position?.z ?? 0 },
+        });
+      }
+    }
+    return entries;
+  }
+
+  private sluiceSnapshots(): SluiceSnapshot[] {
+    const snapshots = this.sluices.snapshot();
+    for (let i = 0; i < snapshots.length; i += 1) {
+      const snapshot = snapshots[i];
+      if (snapshot && this.wrecked.sluice[i]) snapshot.active = false;
+    }
+    return snapshots;
+  }
+
+  private stockpileSnapshots(): StockpileSnapshot[] {
+    const snapshots = this.stockpiles.snapshot();
+    for (let i = 0; i < snapshots.length; i += 1) {
+      const snapshot = snapshots[i];
+      if (snapshot && this.wrecked.stockpile[i]) snapshot.active = false;
+    }
+    return snapshots;
+  }
+
   private registerBeaconShooter(placed: number): void {
     const handle: ShooterHandle = {
       id: 'beacons',
@@ -499,8 +779,7 @@ export class BuildSystem {
       projSpeed: Balance.beacon.boltSpeed,
       volley: Balance.beacon.volley,
     };
-    this.shooterHandles.push(handle);
-    this.unregisterShooters.push(this.combat.registerShooter(handle));
+    this.registerShooter('sentry_beacon', placed, handle);
   }
 
   private registerTurretShooter(placed: number): void {
@@ -514,7 +793,191 @@ export class BuildSystem {
       volley: Balance.turret.volley,
       canTarget: (target) => this.hasLineOfSight(this.turrets.allPositions[placed] ?? this.ghostPos, target.position),
     };
-    this.unregisterShooters.push(this.combat.registerShooter(handle));
+    this.registerShooter('turret', placed, handle);
+  }
+
+  private registerShooter(id: BuildableId, index: number, handle: ShooterHandle): void {
+    this.unregisterShooter(id, index);
+    this.shooterByInstance[id][index] = handle;
+    this.shooterHandles.push(handle);
+    this.unregisterShooters[id][index] = this.combat.registerShooter(handle);
+  }
+
+  private unregisterShooter(id: BuildableId, index: number): void {
+    const unregister = this.unregisterShooters[id][index];
+    if (unregister) unregister();
+    this.unregisterShooters[id][index] = undefined;
+    const handle = this.shooterByInstance[id][index];
+    this.shooterByInstance[id][index] = undefined;
+    if (!handle) return;
+    const handleIndex = this.shooterHandles.indexOf(handle);
+    if (handleIndex >= 0) this.shooterHandles.splice(handleIndex, 1);
+  }
+
+  private updateRepairs(delta: number, at: number): void {
+    let bestId: BuildableId | null = null;
+    let bestIndex = -1;
+    let bestDistanceSq = Balance.wreck.repairRadius * Balance.wreck.repairRadius;
+
+    for (const id of buildableIds) {
+      for (let i = 0; i < this.wrecked[id].length; i += 1) {
+        if (!this.wrecked[id][i]) {
+          this.repairProgress[id][i] = 0;
+          continue;
+        }
+        const position = this.positionFor(id, i);
+        if (!position) continue;
+        const dx = position.x - this.heroPosition.x;
+        const dz = position.z - this.heroPosition.z;
+        const distanceSq = dx * dx + dz * dz;
+        if (distanceSq <= bestDistanceSq) {
+          bestId = id;
+          bestIndex = i;
+          bestDistanceSq = distanceSq;
+        } else {
+          this.repairProgress[id][i] = 0;
+        }
+      }
+    }
+
+    this.activeRepairId = bestId;
+    this.activeRepairIndex = bestIndex;
+    this.activeRepairBlocked = false;
+
+    if (!bestId || bestIndex < 0) {
+      this.repairRing.visible = false;
+      this.repairRing.geometry.setDrawRange(0, 0);
+      return;
+    }
+
+    const cost = this.repairCost(bestId);
+    const position = this.positionFor(bestId, bestIndex);
+    if (!position) return;
+
+    this.repairRing.visible = true;
+    this.repairRing.position.set(position.x, 0.1, position.z);
+    this.repairRing.rotation.y = at * 0.8;
+    this.repairRing.scale.setScalar(1 + Math.sin(at * 8.5 + bestIndex) * 0.04);
+
+    if (this.economy.gold < cost) {
+      this.repairProgress[bestId][bestIndex] = 0;
+      this.activeRepairBlocked = true;
+      (this.repairRing.material as THREE.MeshBasicMaterial).color.copy(blockedRepairColor);
+      this.repairRing.geometry.setDrawRange(0, this.repairRingIndexCount);
+      if (!this.repairNeedGoldShown[bestId][bestIndex]) {
+        this.onFloatText?.(position, 'Need gold!', '#a0522d');
+        this.repairNeedGoldShown[bestId][bestIndex] = true;
+      }
+      return;
+    }
+
+    this.repairNeedGoldShown[bestId][bestIndex] = false;
+    (this.repairRing.material as THREE.MeshBasicMaterial).color.copy(repairColor);
+    const progress = Math.min(1, (this.repairProgress[bestId][bestIndex] ?? 0) + delta / Balance.wreck.repairSeconds);
+    this.repairProgress[bestId][bestIndex] = progress;
+    this.repairRing.geometry.setDrawRange(0, Math.floor(this.repairRingIndexCount * progress));
+    if (progress < 1) return;
+
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at,
+      type: 'gold_spent',
+      sink: repairSink(bestId),
+      amount: cost,
+    });
+    if (!result.ok) return;
+    this.onFloatText?.(position, `-${cost}`, '#a0522d');
+    this.repairs += 1;
+    this.repairGold += cost;
+    this.repair(bestId, bestIndex);
+    this.activeRepairId = null;
+    this.activeRepairIndex = -1;
+    this.repairRing.visible = false;
+    this.repairRing.geometry.setDrawRange(0, 0);
+  }
+
+  private updateBuildingVisuals(_at: number): void {
+    if (!this.visualDirty) return;
+    this.activeHpBars = 0;
+    this.activeRuins = 0;
+    let any = false;
+
+    for (const id of buildableIds) {
+      for (let i = 0; i < this.hp[id].length; i += 1) {
+        const baseSlot = this.visualSlot(id, i);
+        const hpSlot = baseSlot * 2;
+        const rubbleSlot = hpSlot + 1;
+        this.buildingVisuals.setMatrixAt(hpSlot, hiddenMatrix);
+        this.buildingVisuals.setMatrixAt(rubbleSlot, hiddenMatrix);
+
+        const position = this.positionFor(id, i);
+        const maxHp = this.maxHpFor(id);
+        const hp = this.hp[id][i] ?? 0;
+        if (!position || hp <= 0 || maxHp <= 0) {
+          if (this.wrecked[id][i] && position) {
+            this.syncRubble(rubbleSlot, id, i, position);
+            this.activeRuins += 1;
+            any = true;
+          }
+          continue;
+        }
+
+        if (this.wrecked[id][i]) {
+          this.syncRubble(rubbleSlot, id, i, position);
+          this.activeRuins += 1;
+          any = true;
+        } else if (hp < maxHp) {
+          this.syncHpBar(hpSlot, position, hp / maxHp);
+          this.activeHpBars += 1;
+          any = true;
+        }
+      }
+    }
+
+    this.buildingVisuals.visible = any;
+    this.buildingVisuals.instanceMatrix.needsUpdate = true;
+    if (this.buildingVisuals.instanceColor) this.buildingVisuals.instanceColor.needsUpdate = true;
+    this.visualDirty = false;
+  }
+
+  private syncHpBar(slot: number, position: THREE.Vector3, ratio: number): void {
+    this.visualObject.position.set(position.x, 1.46, position.z);
+    this.visualObject.rotation.set(0, 0, 0);
+    this.visualObject.scale.set(Math.max(0.04, 0.92 * ratio), 0.08, 0.08);
+    this.visualObject.updateMatrix();
+    this.buildingVisuals.setMatrixAt(slot, this.visualObject.matrix);
+    this.buildingVisuals.setColorAt(slot, hpColor);
+  }
+
+  private syncRubble(slot: number, id: BuildableId, index: number, position: THREE.Vector3): void {
+    const footprint = this.footprint(getBuildableDef(id), id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0);
+    this.visualObject.position.set(position.x, 0.08, position.z);
+    this.visualObject.rotation.set(0, id === 'palisade' ? this.palisades.rotationStepsAt(index) * (Math.PI / 2) : 0, 0);
+    this.visualObject.scale.set(Math.max(0.5, footprint.w * 0.72), 0.14, Math.max(0.5, footprint.d * 0.72));
+    this.visualObject.updateMatrix();
+    this.buildingVisuals.setMatrixAt(slot, this.visualObject.matrix);
+    this.buildingVisuals.setColorAt(slot, rubbleColor);
+  }
+
+  private hideAllBuildingVisuals(): void {
+    for (let i = 0; i < totalBuildableCapacity() * 2; i += 1) this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
+    this.buildingVisuals.visible = false;
+    this.buildingVisuals.instanceMatrix.needsUpdate = true;
+    this.visualDirty = false;
+  }
+
+  private visualSlot(id: BuildableId, index: number): number {
+    let offset = 0;
+    for (const candidate of buildableIds) {
+      if (candidate === id) return offset + index;
+      offset += this.hp[candidate].length;
+    }
+    return index;
+  }
+
+  private repairCost(id: BuildableId): number {
+    const def = getBuildableDef(id);
+    return Math.ceil(((def?.costCurve(0) ?? 0) * Balance.wreck.repairCostFrac));
   }
 
   private syncGhostShape(): void {
@@ -603,7 +1066,7 @@ export class BuildSystem {
   }
 
   private hasLineOfSight(from: THREE.Vector3, to: THREE.Vector3): boolean {
-    for (const blocker of this.palisades.activeBlockers) {
+    for (const blocker of this.palisadeBlockers) {
       if (this.segmentIntersectsBlocker(from.x, from.z, to.x, to.z, blocker)) return false;
     }
     return true;
@@ -656,10 +1119,64 @@ function buildSink(id: BuildableId): BuildSink {
   return `build_${id}`;
 }
 
+function repairSink(id: BuildableId): BuildSink {
+  return `repair_${id}`;
+}
+
 function stockpileCapSource(index: number): string {
   return `stockpile:${index}`;
 }
 
 export function beaconCost(index: number): number {
   return registryBeaconCost(index);
+}
+
+function totalBuildableCapacity(): number {
+  let total = 0;
+  for (const def of buildableDefs) total += def.maxCount;
+  return total;
+}
+
+function createNumberStore(): BuildingFamilyStore<number> {
+  return createStore(() => 0);
+}
+
+function createBooleanStore(): BuildingFamilyStore<boolean> {
+  return createStore(() => false);
+}
+
+function createFunctionStore(): BuildingFamilyStore<(() => void) | undefined> {
+  return createStore(() => undefined);
+}
+
+function createShooterStore(): BuildingFamilyStore<ShooterHandle | undefined> {
+  return createStore(() => undefined);
+}
+
+function createTargetStore(): BuildingFamilyStore<BuildingTarget> {
+  return createStore((id, index) => ({
+    id: `${id}:${index}`,
+    family: id,
+    index,
+    position: new THREE.Vector3(),
+    active: false,
+    hp: 0,
+    maxHp: getBuildableDef(id)?.hpMax ?? 0,
+    reachRadius: 0,
+  }));
+}
+
+function createStore<T>(make: (id: BuildableId, index: number) => T): BuildingFamilyStore<T> {
+  return {
+    sentry_beacon: createFamily('sentry_beacon', make),
+    palisade: createFamily('palisade', make),
+    sluice: createFamily('sluice', make),
+    stockpile: createFamily('stockpile', make),
+    turret: createFamily('turret', make),
+  };
+}
+
+function createFamily<T>(id: BuildableId, make: (id: BuildableId, index: number) => T): T[] {
+  const def = getBuildableDef(id);
+  return Array.from({ length: def?.maxCount ?? 0 }, (_, index) => make(id, index));
 }

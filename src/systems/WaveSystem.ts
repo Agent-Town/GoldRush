@@ -7,6 +7,7 @@ import { Balance } from '../game/Balance';
 
 export type SpawnPackOptions = {
   speedScale?: number;
+  wrecker?: boolean;
 };
 
 type PlannedPulse = {
@@ -88,6 +89,7 @@ export class WaveSystem {
     private readonly announce: (text: string, atSim: number) => void,
     private readonly scheduledDisabled: () => boolean,
     private readonly canSpawnThieves: () => boolean = () => false,
+    private readonly canSpawnWreckers: () => boolean = () => false,
   ) {}
 
   get diagnostics(): WaveDiagnostics {
@@ -265,8 +267,10 @@ export class WaveSystem {
         const count = pulse.counts[edgeIndex] ?? 0;
         if (!edge) continue;
         this.edge = edge;
+        const thieves = this.thiefCount(count, pulse.wave);
+        const wreckers = this.wreckerCount(count - thieves, pulse.wave, pulse.pulse);
         for (let i = 0; i < count; i += 1) {
-          this.spawnAt(edge, i, pulse.wave, count, i < this.thiefCount(count, pulse.wave));
+          this.spawnAt(edge, i, pulse.wave, count, i < thieves, i >= thieves && i < thieves + wreckers);
         }
       }
     }
@@ -278,6 +282,7 @@ export class WaveSystem {
     wave: number,
     groupCount = this.waveBudget(wave),
     thief = false,
+    wrecker = false,
   ): boolean {
     if (Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
 
@@ -298,13 +303,13 @@ export class WaveSystem {
 
     this.spawnPosition.x = this.clampSpawn(this.spawnPosition.x);
     this.spawnPosition.z = this.clampSpawn(this.spawnPosition.z);
-    return this.spawnAtPosition(wave, true, { edge, thief });
+    return this.spawnAtPosition(wave, true, { edge, thief, wrecker });
   }
 
   private spawnAtPosition(
     wave: number,
     respectAliveCap = true,
-    params: SpawnPackOptions & { edge?: CompassEdge; thief?: boolean } = {},
+    params: SpawnPackOptions & { edge?: CompassEdge; thief?: boolean; wrecker?: boolean } = {},
   ): boolean {
     if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
 
@@ -317,6 +322,7 @@ export class WaveSystem {
       speedScale: params.speedScale ?? speedScale,
       edge: params.edge,
       thief: params.thief === true,
+      wrecker: params.wrecker === true,
     });
     if (!enemy) return false;
     this.waveSpawnedTotal += 1;
@@ -342,6 +348,14 @@ export class WaveSystem {
     if (!this.canSpawnThieves() || wave < Balance.steal.minWave) return 0;
     const count = Math.floor(groupCount * Balance.steal.share);
     return Math.min(groupCount, Math.max(1, count));
+  }
+
+  private wreckerCount(remainder: number, wave: number, pulse: number): number {
+    if (remainder <= 0 || !this.canSpawnWreckers()) return 0;
+    if (wave < Balance.wreck.minWave) return 0;
+    if (pulse % Math.max(1, Math.floor(Balance.wreck.pulseEvery)) !== 0) return 0;
+    const count = Math.floor(remainder * Balance.wreck.share);
+    return Math.min(remainder, Math.max(1, count));
   }
 
   private currentTrickleInterval(atSim: number): number {

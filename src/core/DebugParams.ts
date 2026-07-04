@@ -7,6 +7,7 @@ export type DebugParams = {
   readonly nokill: boolean;
   readonly nopause: boolean;
   readonly nosteal: boolean;
+  readonly nowreck: boolean;
   readonly stress: number;
 };
 
@@ -19,6 +20,7 @@ const DEFAULT_PARAMS: DebugParams = {
   nokill: false,
   nopause: false,
   nosteal: false,
+  nowreck: false,
   stress: 0,
 };
 
@@ -34,6 +36,7 @@ export function readDebugParams(search = getSearch()): DebugParams {
     nokill: readFlag(params, 'nokill'),
     nopause: readFlag(params, 'nopause'),
     nosteal: readFlag(params, 'nosteal'),
+    nowreck: readFlag(params, 'nowreck'),
     stress: readNonNegativeInt(params, 'stress', DEFAULT_PARAMS.stress),
   };
 }
@@ -75,6 +78,10 @@ export function isCharmPauseDisabled(): boolean {
 
 export function isStealDisabled(): boolean {
   return DEBUG_PARAMS.nosteal;
+}
+
+export function isWreckDisabled(): boolean {
+  return DEBUG_PARAMS.nowreck;
 }
 
 export function getStressCount(): number {

@@ -9,7 +9,7 @@ import type { EnemyPool } from '../entities/pools';
 import { isCombatDamageDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
 import type { AudioSystem } from './AudioSystem';
-import { TargetingSystem } from './TargetingSystem';
+import { TargetingSystem, type BuildingTarget } from './TargetingSystem';
 import type { CombatVfx } from './CombatVfx';
 
 export type ShooterHandle = {
@@ -33,6 +33,15 @@ type ShooterState = {
   targeting: TargetingSystem<ClaimJumperEnemy>;
 };
 
+type BuildingDamageResult = {
+  applied: boolean;
+  family: string;
+  index: number;
+  hp: number;
+  maxHp: number;
+  wrecked: boolean;
+};
+
 export class CombatSystem {
   private readonly rigs: ShooterState[] = [];
   private readonly scratchOrigin = new THREE.Vector3();
@@ -40,6 +49,7 @@ export class CombatSystem {
   private xp = 0;
   private currentAt = 0;
   private blastDetonationCount = 0;
+  private buildingDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
 
   constructor(
     private readonly events: EventBus,
@@ -84,6 +94,10 @@ export class CombatSystem {
     };
   }
 
+  registerBuildingDamageResolver(resolve: (target: BuildingTarget, amount: number) => BuildingDamageResult): void {
+    this.buildingDamageResolver = resolve;
+  }
+
   setTime(at: number): void {
     this.currentAt = at;
   }
@@ -122,6 +136,39 @@ export class CombatSystem {
 
     if (result.died) this.onHeroDied();
   };
+
+  readonly handleBuildingHit = (enemy: ClaimJumperEnemy, target: BuildingTarget, amount: number = Balance.wreck.damage): void => {
+    this.damageBuilding(target, amount, enemy.id);
+  };
+
+  damageBuilding(target: BuildingTarget, amount: number = Balance.wreck.damage, sourceId = -1): void {
+    if (!this.buildingDamageResolver) return;
+
+    const result = this.buildingDamageResolver(target, amount);
+    if (!result.applied) return;
+
+    this.vfx.hit(target.position);
+    this.vfx.dustPuff(target.position);
+    this.audio.playHit();
+    this.events.emit({
+      type: 'building_damaged',
+      at: this.currentAt,
+      family: result.family,
+      index: result.index,
+      hp: result.hp,
+      maxHp: result.maxHp,
+      sourceId,
+    });
+    if (result.wrecked) {
+      this.events.emit({
+        type: 'building_wrecked',
+        at: this.currentAt,
+        family: result.family,
+        index: result.index,
+        sourceId,
+      });
+    }
+  }
 
   reset(): void {
     this.xp = 0;

@@ -11,6 +11,7 @@ import {
   type ClaimJumperAssets,
   type EnemySpawnParams,
   type ThiefUpdateContext,
+  type WreckerUpdateContext,
 } from './Enemy';
 
 export class EnemyPool {
@@ -49,6 +50,7 @@ export class EnemyPool {
   private readonly sackLocalMatrix = new THREE.Matrix4();
   private readonly normalPonchoColor = new THREE.Color('#a0522d');
   private readonly carryingPonchoColor = new THREE.Color('#5b8a8a');
+  private readonly wreckerPonchoColor = new THREE.Color('#8b7d3c');
   private readonly gridSize: number;
   private readonly gridMin: number;
   private readonly gridMax: number;
@@ -105,6 +107,7 @@ export class EnemyPool {
     onContact: (enemy: ClaimJumperEnemy) => void,
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
+    wreckerContext?: WreckerUpdateContext,
   ): void {
     this.rebuildSpatialHash();
 
@@ -136,7 +139,7 @@ export class EnemyPool {
         }
       }
 
-      if (enemy.update(delta, heroPosition, separationX, separationZ, blockers, thiefContext)) {
+      if (enemy.update(delta, heroPosition, separationX, separationZ, blockers, thiefContext, wreckerContext)) {
         onContact(enemy);
       }
     }
@@ -256,7 +259,10 @@ export class EnemyPool {
       this.instanceMatrix.multiplyMatrices(this.baseMatrix, localMatrix);
       part.setMatrixAt(enemy.id, this.instanceMatrix);
       if (i === 1) {
-        part.setColorAt(enemy.id, enemy.carriedAmount > 0 ? this.carryingPonchoColor : this.normalPonchoColor);
+        part.setColorAt(
+          enemy.id,
+          enemy.carriedAmount > 0 ? this.carryingPonchoColor : enemy.isWrecker ? this.wreckerPonchoColor : this.normalPonchoColor,
+        );
         if (part.instanceColor) part.instanceColor.needsUpdate = true;
       }
       part.instanceMatrix.needsUpdate = true;

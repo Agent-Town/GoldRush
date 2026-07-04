@@ -101,11 +101,16 @@ export class SluicePool {
     economy: Economy,
     onGold: (position: THREE.Vector3, amount: number) => void,
     onBlocked: (position: THREE.Vector3) => void,
+    enabled: (index: number) => boolean = () => true,
   ): void {
     if (this.alive === 0) return;
     const amount = Balance.sluice.goldPerCycle;
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
+      if (!enabled(i)) {
+        this.syncWater(i, at, false);
+        continue;
+      }
       const position = this.positions[i];
       if (!position) continue;
 

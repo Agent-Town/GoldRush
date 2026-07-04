@@ -2,11 +2,12 @@ import * as THREE from 'three';
 import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
-import type { GoldHolding } from '../systems/TargetingSystem';
+import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
 import type { PalisadeBlocker } from './Palisade';
 
 export type CompassEdge = 'north' | 'south' | 'east' | 'west';
 export type ThiefState = 'none' | 'seekHolding' | 'grabbing' | 'fleeing';
+export type WreckerState = 'none' | 'seekBuilding' | 'swinging';
 
 export type ClaimJumperAssets = {
   ponchoGeometry: THREE.ConeGeometry;
@@ -27,6 +28,7 @@ export type EnemySpawnParams = {
   hpScale?: number;
   edge?: CompassEdge;
   thief?: boolean;
+  wrecker?: boolean;
 };
 
 export type ThiefUpdateContext = {
@@ -35,7 +37,13 @@ export type ThiefUpdateContext = {
   onThiefFled: (enemy: ClaimJumperEnemy) => void;
 };
 
+export type WreckerUpdateContext = {
+  nearestBuilding: (from: THREE.Vector3) => BuildingTarget | null;
+  hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget) => void;
+};
+
 const THIEF_RETARGET_SECONDS = 0.35;
+const WRECKER_RETARGET_SECONDS = 0.35;
 const FLEE_EDGE = 37.5;
 
 export function createClaimJumperAssets(): ClaimJumperAssets {
@@ -88,11 +96,16 @@ export class ClaimJumperEnemy {
   private contactCooldown = 0;
   private spriteClip: CharacterSpriteClip = 'idle';
   private thief = false;
+  private wrecker = false;
   private thiefState: ThiefState = 'none';
+  private wreckerState: WreckerState = 'none';
   private carriedGold = 0;
   private grabTimer = 0;
+  private swingTimer = 0;
   private retargetTimer = 0;
+  private wreckerRetargetTimer = 0;
   private currentHolding: GoldHolding | null = null;
+  private currentBuilding: BuildingTarget | null = null;
   private spawnEdge: CompassEdge | null = null;
 
   constructor(readonly id: number, assets: ClaimJumperAssets) {
@@ -122,8 +135,16 @@ export class ClaimJumperEnemy {
     return this.thief;
   }
 
+  get isWrecker(): boolean {
+    return this.wrecker;
+  }
+
   get stealState(): ThiefState {
     return this.thiefState;
+  }
+
+  get wreckState(): WreckerState {
+    return this.wreckerState;
   }
 
   get carriedAmount(): number {
@@ -148,11 +169,16 @@ export class ClaimJumperEnemy {
     this.speed = Balance.enemy.speed * (params.speedScale ?? 1);
     this.contactCooldown = 0;
     this.thief = params.thief === true;
+    this.wrecker = !this.thief && params.wrecker === true;
     this.thiefState = this.thief ? 'seekHolding' : 'none';
+    this.wreckerState = this.wrecker ? 'seekBuilding' : 'none';
     this.carriedGold = 0;
     this.grabTimer = 0;
+    this.swingTimer = 0;
     this.retargetTimer = 0;
+    this.wreckerRetargetTimer = 0;
     this.currentHolding = null;
+    this.currentBuilding = null;
     this.spawnEdge = params.edge ?? null;
     this.velocity.set(0, 0, 0);
     this.heading.set(0, 0, -1);
@@ -170,12 +196,13 @@ export class ClaimJumperEnemy {
     separationZ: number,
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
+    wreckerContext?: WreckerUpdateContext,
   ): boolean {
     if (!this.alive) return false;
 
     this.contactCooldown = Math.max(0, this.contactCooldown - delta);
 
-    const targetPosition = this.updateThief(delta, thiefContext) ?? heroPosition;
+    const targetPosition = this.updateThief(delta, thiefContext) ?? this.updateWrecker(delta, wreckerContext) ?? heroPosition;
     const speed = this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
     this.heading.set(targetPosition.x - this.group.position.x, 0, targetPosition.z - this.group.position.z);
@@ -193,7 +220,7 @@ export class ClaimJumperEnemy {
     );
     if (this.velocity.lengthSq() > 1) this.velocity.normalize();
 
-    if (this.thiefState === 'grabbing') {
+    if (this.thiefState === 'grabbing' || this.wreckerState === 'swinging') {
       this.velocity.set(0, 0, 0);
     } else if (blockers.length === 0) {
       this.group.position.addScaledVector(this.velocity, speed * delta);
@@ -232,11 +259,16 @@ export class ClaimJumperEnemy {
     this.hp = 0;
     this.contactCooldown = 0;
     this.thief = false;
+    this.wrecker = false;
     this.thiefState = 'none';
+    this.wreckerState = 'none';
     this.carriedGold = 0;
     this.grabTimer = 0;
+    this.swingTimer = 0;
     this.retargetTimer = 0;
+    this.wreckerRetargetTimer = 0;
     this.currentHolding = null;
+    this.currentBuilding = null;
     this.spawnEdge = null;
     this.velocity.set(0, 0, 0);
     this.spriteClip = 'idle';
@@ -313,6 +345,49 @@ export class ClaimJumperEnemy {
 
   private isHoldingValid(holding: GoldHolding | null): holding is GoldHolding {
     return holding?.active === true && holding.amount > 0;
+  }
+
+  private updateWrecker(delta: number, context?: WreckerUpdateContext): THREE.Vector3 | null {
+    if (!this.wrecker || !context) return null;
+
+    this.wreckerRetargetTimer = Math.max(0, this.wreckerRetargetTimer - delta);
+    if (!this.isBuildingValid(this.currentBuilding) || this.wreckerRetargetTimer <= 0) {
+      this.currentBuilding = context.nearestBuilding(this.group.position);
+      this.wreckerRetargetTimer = WRECKER_RETARGET_SECONDS;
+    }
+
+    if (!this.isBuildingValid(this.currentBuilding)) {
+      this.currentBuilding = null;
+      this.wreckerState = 'seekBuilding';
+      this.spriteClip = 'walk';
+      return null;
+    }
+
+    const dx = this.currentBuilding.position.x - this.group.position.x;
+    const dz = this.currentBuilding.position.z - this.group.position.z;
+    const reach = Balance.wreck.reach + this.currentBuilding.reachRadius;
+    if (dx * dx + dz * dz <= reach * reach) {
+      this.wreckerState = 'swinging';
+      this.spriteClip = 'grab';
+      this.swingTimer -= delta;
+      if (this.swingTimer <= 0) {
+        context.hitBuilding(this, this.currentBuilding);
+        this.swingTimer += Balance.wreck.hitCooldown;
+        if (!this.isBuildingValid(this.currentBuilding)) {
+          this.currentBuilding = null;
+          this.wreckerState = 'seekBuilding';
+          this.wreckerRetargetTimer = 0;
+        }
+      }
+    } else {
+      this.wreckerState = 'seekBuilding';
+      this.spriteClip = 'walk';
+    }
+    return this.currentBuilding?.position ?? null;
+  }
+
+  private isBuildingValid(building: BuildingTarget | null): building is BuildingTarget {
+    return building?.active === true && building.hp > 0;
   }
 
   private updateFleeTarget(): void {

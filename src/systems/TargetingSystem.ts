@@ -14,9 +14,21 @@ export type GoldHolding = {
   pickupIndex?: number;
 };
 
+export type BuildingTarget = {
+  id: string;
+  family: string;
+  index: number;
+  position: THREE.Vector3;
+  active: boolean;
+  hp: number;
+  maxHp: number;
+  reachRadius: number;
+};
+
 export class TargetingSystem<T extends Damageable = Damageable> {
   private current: T | null = null;
   private readonly goldHoldings: GoldHolding[] = [];
+  private readonly buildings: BuildingTarget[] = [];
 
   findNearest(from: THREE.Vector3, range: number, targets: readonly T[], eligible?: (target: T) => boolean): T | null {
     const stickyRange = range + 1;
@@ -79,6 +91,29 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     }
 
     return bestStockpile ?? bestPickup;
+  }
+
+  registerBuilding(building: BuildingTarget): void {
+    if (!this.buildings.includes(building)) this.buildings.push(building);
+  }
+
+  clearBuildings(): void {
+    this.buildings.length = 0;
+  }
+
+  nearestBuilding(from: THREE.Vector3): BuildingTarget | null {
+    let best: BuildingTarget | null = null;
+    let bestDistanceSq = Number.POSITIVE_INFINITY;
+    for (let i = 0; i < this.buildings.length; i += 1) {
+      const building = this.buildings[i];
+      if (!building?.active || building.hp <= 0) continue;
+      const distanceSq = this.distanceSqXZ(from, building.position);
+      if (distanceSq < bestDistanceSq) {
+        best = building;
+        bestDistanceSq = distanceSq;
+      }
+    }
+    return best;
   }
 
   private distanceSqXZ(a: THREE.Vector3, b: THREE.Vector3): number {
