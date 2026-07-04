@@ -121,6 +121,9 @@ export const Balance = {
     exposure: 0.75,
     maxDpr: 2,
   },
+  terrain: {
+    featureMix: 0.86,
+  },
   charm: {
     hitPauseMs: 50,
     hitPauseCooldownMs: 250,

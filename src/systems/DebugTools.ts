@@ -76,6 +76,7 @@ export class DebugTools {
       ['Gold Seams', 'goldSeam'],
       ['Beacons', 'beacon'],
       ['XP', 'xp'],
+      ['Terrain', 'terrain'],
       ['Charm', 'charm'],
     ];
     for (const [label, key] of groups) this.bindObject(this.gui.addFolder(label), key, Balance[key as keyof typeof Balance], onChange);

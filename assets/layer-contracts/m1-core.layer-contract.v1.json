@@ -7,7 +7,7 @@
     { "file": "enemy-claim-jumper.png", "slot": "char.claim_jumper", "size": [1024, 1024], "usage": "enemy billboard sprite; replaces poncho-cone placeholder", "fullBleed": false },
     { "file": "node-gold-seam.png", "slot": "node.gold_seam", "size": [1024, 1024], "usage": "gold seam billboard/decal; replaces nugget-cluster placeholder", "fullBleed": false },
     { "file": "bld-sentry-beacon.png", "slot": "bld.sentry_beacon", "size": [1024, 1024], "usage": "sentry beacon billboard sprite; replaces tripod placeholder", "fullBleed": false },
-    { "file": "terrain-bank-tile.png", "slot": "terrain.bank", "size": [1024, 1024], "usage": "ground texture, repeats; replaces procedural parchment-sand", "fullBleed": true },
+    { "file": "terrain-bank-tile.png", "slot": "terrain.bank", "variants": ["terrain-bank-tile.png", "terrain-bank-tile-b.png", "terrain-bank-tile-c.png"], "size": [1024, 1024], "usage": "ground texture variants, per-cell sampled; replaces procedural parchment-sand", "fullBleed": true },
     { "file": "terrain-river-tile.png", "slot": "terrain.river", "size": [1024, 1024], "usage": "river texture, UV-scrolled; replaces teal plane", "fullBleed": true }
   ]
 }
