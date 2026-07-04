@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T09:20Z (s22: M2-06 spec expanded + tasks/007+008 written — chain 006→007→008 is ONE relay round-trip for Robin; lock cleared)
+Last updated: ACTIVE 2026-07-04T10:55Z (s23: gating chain 006→007→008 — combined tree settled, per-slice gates running)
 
 ## Where we are
 - **s9f ESCALATION — DROPPED DIRECTIVE CAUGHT: the camera-shake/recoil fix (Robin, playtest addendum 2) did NOT ride tasks/005** — HEAD Balance still ships `camImpulse: 0.12`, `hitPauseMs: 50`. BINDING for the session that gates tasks/006: apply as supervisor fix WITH the gate — `camImpulse` default → 0, `hitPauseMs` → ~30, both stay ?debug knobs; adjust any m1-07-charm asserts that assume nonzero defaults (knob-driven asserts per retro-gate pattern). Do NOT let it slip a second time; Robin re-verdicts feel on the next playtest.
