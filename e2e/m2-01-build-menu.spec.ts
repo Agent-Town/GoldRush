@@ -262,6 +262,10 @@ test('390px build menu is visible, tappable, and clear of HUD controls', async (
 });
 
 test('stress draw calls stay under 200 with palisades and beacons', async ({ page }) => {
+  // s16 retro-gate: 120-enemy stress spawn + 8-buildable loop legitimately runs
+  // ~38s wall on slow VMs (proof-of-innocence in reviews/vp-02-retro-gate.md);
+  // the 30s default flakes under load while the draw-call budget itself holds.
+  test.setTimeout(45_000);
   const errors = await openGame(page, '?debug&timescale=3&nowaves&nokill&stress=120&seed=m2-01-draws');
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(0);
   await grantGold(page, 600);

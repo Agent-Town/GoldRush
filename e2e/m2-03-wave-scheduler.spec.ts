@@ -217,6 +217,10 @@ test('edge telegraphs precede the pulse spawn', async ({ page }) => {
 });
 
 test('next-wave timer stays locked to sim time across three waves', async ({ page }) => {
+  // s16 retro-gate: on slow VMs the 30s default only reaches wave 2 in-window,
+  // so the cross-wave drift assert below never evaluated (proof-of-innocence in
+  // reviews/vp-02-retro-gate.md). Give the three-wave window room to complete.
+  test.setTimeout(45_000);
   const errors = await openGame(page, '?debug&timescale=6&nokill&nolevel&seed=m2-03-timer');
   await setWaveBalance(page, {
     waveInterval: 8,
