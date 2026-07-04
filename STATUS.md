@@ -1,6 +1,6 @@
 # STATUS — Gold Rush
 
-Last updated: 2026-07-04T01:35Z (s9b handoff: 3 relay lanes out — tasks/001+002+003 chained; lock cleared)
+Last updated: ACTIVE 2026-07-04T01:22Z (s10 scheduled: gating relay lane 001 M2-01)
 
 ## Where we are
 - **THREE relay lanes out (s9b), chained sequential on Robin's Mac:** tasks/001 M2-01 buildable-registry (spec `specs/m2-base-waves/slices/01-…`), tasks/002 M2-03 wave-scheduler-v2 (spec `…slices/03-…`, expanded s9b), tasks/003 VP-03 terrain-variety (spec `specs/visual-polish/slices/03-…`). Lanes have HARD disjoint file scopes + sibling-changes rule (tree is shared — that's why chained, not parallel). Robin's one-paste command is in his chat. **Integration rule for the gating session: the working tree may hold a COMBINED multi-lane diff — review/commit PER SLICE by file scope** (001: buildables/BuildSystem/BuildButton/Enemy-movement/e2e-m2-01; 002: WaveSystem/Balance.waves/Hud-banner/DebugTools/e2e-m2-03; 003: Terrain/contract/Balance.terrain/e2e-vp-03; Balance.ts sections split by lane). Full regression before ANY commit; if one lane is broken, commit the green lanes' paths only, write findings to reviews/, respec the broken lane into the next tasks/NNN.
