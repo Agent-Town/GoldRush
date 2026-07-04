@@ -18,6 +18,8 @@ export class Hero {
   private readonly generatedSprite: GeneratedSprite;
   private readonly spriteAnimator: SpriteAnimator;
   private readonly orientationResolver = new OrientationResolver();
+  private facingAngleDeg = 0;
+  private hasFacingAngle = false;
   private maxHpBonus = 0;
   private moveSpeedMult = 1;
   private readonly targetVelocity = new THREE.Vector3();
@@ -137,8 +139,10 @@ export class Hero {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);
     }
     const speedSq = this.velocity.lengthSq();
-    const moving = speedSq > 0.0025;
-    const direction = moving ? this.orientationResolver.resolve(this.velocity.x, this.velocity.z) : this.orientationResolver.idleDirection();
+    const intentSpeedSq = this.targetVelocity.lengthSq();
+    const moving = speedSq > 0.0025 || intentSpeedSq > 0.0025;
+    const heading = intentSpeedSq > 0.0025 ? this.targetVelocity : this.velocity;
+    const direction = moving ? this.orientationResolver.resolve(...this.smoothedHeadingVector(dt, heading)) : this.orientationResolver.idleDirection();
     this.spriteAnimator.update(dt, moving ? 'walk' : 'idle', direction);
   }
 
@@ -178,6 +182,8 @@ export class Hero {
     this.iframeRemaining = 0;
     this.velocity.set(0, 0, 0);
     this.targetVelocity.set(0, 0, 0);
+    this.facingAngleDeg = 0;
+    this.hasFacingAngle = false;
     this.orientationResolver.reset();
     this.group.position.copy(position);
     this.group.rotation.y = 0;
@@ -197,4 +203,26 @@ export class Hero {
     this.spriteAnimator.dispose();
     this.generatedSprite.dispose();
   }
+
+  private smoothedHeadingVector(dt: number, heading: THREE.Vector3): [number, number] {
+    const target = normalizeDegrees((Math.atan2(heading.x, heading.z) * 180) / Math.PI);
+    if (!this.hasFacingAngle) {
+      this.facingAngleDeg = target;
+      this.hasFacingAngle = true;
+    } else {
+      const maxStep = Math.min(Balance.sprite.turnRateDegPerS * dt, 30);
+      this.facingAngleDeg = normalizeDegrees(this.facingAngleDeg + THREE.MathUtils.clamp(signedAngleDelta(this.facingAngleDeg, target), -maxStep, maxStep));
+    }
+    const radians = THREE.MathUtils.degToRad(this.facingAngleDeg);
+    return [Math.sin(radians), Math.cos(radians)];
+  }
+}
+
+function normalizeDegrees(degrees: number): number {
+  return ((degrees % 360) + 360) % 360;
+}
+
+function signedAngleDelta(from: number, to: number): number {
+  const delta = ((to - from + 540) % 360) - 180;
+  return delta === -180 ? 180 : delta;
 }
