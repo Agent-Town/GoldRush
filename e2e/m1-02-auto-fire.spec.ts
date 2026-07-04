@@ -68,6 +68,16 @@ test('run reset recycles combat pools without renderer memory growth', async ({ 
   // is dispose/create net-zero, so the baseline stays an exact leak gate.
   await page.evaluate(() => window.__GR_TEST__?.warmVfx());
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 20);
+  // Warm cycle (m1-05 pattern): one full identical spawn->kill->reset cycle before
+  // baselining, so first-time lazy uploads (float-text pool depth on slow VMs)
+  // don't read as leaks. See STATUS verification lessons.
+  await page.evaluate(() => window.__GR_TEST__?.spawnPack(5, 3));
+  await expect
+    .poll(async () => page.evaluate(() => window.__GR_TEST__?.state().enemiesAlive ?? -1), { timeout: 15_000 })
+    .toBe(0);
+  await expect.poll(async () => page.evaluate(() => window.__GR_TEST__?.state().xp ?? 0), { timeout: 5_000 }).toBeGreaterThan(0);
+  await page.evaluate(() => window.__GR_TEST__?.resetRun());
+  await expect.poll(async () => page.evaluate(() => window.__GR_TEST__?.state().xp ?? -1)).toBe(0);
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
 
   for (let cycle = 0; cycle < 3; cycle += 1) {
