@@ -1,0 +1,6 @@
+# Lane A / M3-02: suspend-resume + run victory structure (worktree lane-a, branch lane/m3, prefix "m3:")
+READ: AGENTS.md, ADR-002, docs/VISION-HOOKS.md §Save (BINDING), your landed m3-01 scaffold.
+1. SUSPEND/RESUME: single slot gr.run.v1; autosave at wave boundaries + on quit/hide; snapshot = sim state (entities/pools/wave/progression/build state) + Economy log tail; resume restores byte-consistent Economy replay; slot DELETED on death (no save-scum). Title screen gains "Continue claim (wave N)" when a slot exists.
+2. RUN VICTORY (Robin design Q resolved, all knobs): at `Balance.run.secureWave` (default 20) the run is WON — "Claim Secured" ceremony (banner + ledger summary + meta payout via m3-01 RunManager), then player CHOOSES: end run (bank meta) OR "Stay for the Rush" endless continuation (records/leaderboard; death then banks meta normally — staying is never punished into loss of payout). Both paths emit run_ended with reason.
+3. e2e: suspend at wave boundary → reload → resume state equality (economy replay + entity counts); death deletes slot; secureWave triggers ceremony + choice; endless continue keeps scoreboard writing.
+install() pattern, no Game.ts edits, no STATUS/specs. READY-FOR-GATES + files + results.
