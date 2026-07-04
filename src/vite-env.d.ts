@@ -84,6 +84,9 @@ interface ThreeGameDiagnostics {
   trickleInterval: number;
   waveSpawnedTotal: number;
   waveState: 'quiet' | 'warning' | 'active' | 'cleared';
+  pulse: number;
+  edge: 'north' | 'south' | 'east' | 'west' | null;
+  budget: number;
   spawnDisabled: boolean;
   stressCount: number;
   score: number;

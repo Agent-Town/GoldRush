@@ -6,38 +6,56 @@ import { Balance } from '../game/Balance';
 
 type CompassEdge = 'north' | 'south' | 'east' | 'west';
 
+type PlannedPulse = {
+  wave: number;
+  pulse: number;
+  spawnAt: number;
+  edges: CompassEdge[];
+  counts: number[];
+  budget: number;
+  telegraphed: boolean[];
+  spawned: boolean;
+};
+
 export type WaveDiagnostics = {
   wave: number;
   nextWaveInSim: number;
   trickleInterval: number;
   waveSpawnedTotal: number;
   waveState: 'quiet' | 'warning' | 'active' | 'cleared';
+  pulse: number;
+  edge: CompassEdge | null;
+  budget: number;
 };
+
+const TELEGRAPH_SECONDS = 2;
+const TELEGRAPH_STAGGER_SECONDS = 0.5;
+const EDGES: readonly CompassEdge[] = ['north', 'south', 'east', 'west'];
 
 const EDGE_COPY: Record<CompassEdge, readonly string[]> = {
   north: [
-    'Rustlers on the north bank!',
-    'Keep the sluice running!',
-    'The claim holds if you do.',
-    'They want the gold, not the glory.',
+    'Claim Jumpers from the north bank!',
+    'Brass warning on the north bank!',
+    'Hold the north bank for the assay!',
+    'North bank shadows want the gold!',
   ],
   south: [
-    'Claim Jumpers press the south bank!',
-    'Stake lights to the south!',
-    'Hold steady for the assay.',
-    'The river keeps our receipt.',
+    'Claim Jumpers from the south bank!',
+    'Stake lights on the south bank!',
+    'Hold the south bank for the assay!',
+    'South bank dust is moving!',
   ],
   east: [
-    'Claim Jumpers massing east!',
+    'Claim Jumpers from the east ridge!',
     'Beacon coils hum eastward!',
-    'Prosperity needs a guard.',
-    'The claim office stands ready.',
+    'Hold the east ridge for the assay!',
+    'East ridge dust is moving!',
   ],
   west: [
-    'Rustlers on the west ridge!',
-    'Brass warnings from the west!',
-    'Keep the ledgers clean.',
-    'No one takes tomorrow from us.',
+    'Claim Jumpers from the west ridge!',
+    'Brass warning on the west ridge!',
+    'Hold the west ridge for the assay!',
+    'West ridge shadows want the gold!',
   ],
 };
 
@@ -46,12 +64,19 @@ export class WaveSystem {
   private readonly debugCenter = new THREE.Vector3();
   private nextTrickleAt = Balance.waves.graceSeconds + Balance.waves.trickleInterval;
   private nextWaveAt = Balance.waves.waveInterval;
+  private nextPlanWaveAt = Balance.waves.waveInterval;
+  private nextPlanWave = 1;
+  private readonly plannedPulses: PlannedPulse[] = [];
   private wave = 0;
+  private pulse = 0;
+  private edge: CompassEdge | null = null;
+  private budget = 0;
   private waveSpawnedTotal = 0;
   private copyCursor = 0;
   private lastCopy = '';
   private currentAtSim = 0;
   private waveState: WaveDiagnostics['waveState'] = 'quiet';
+  private lastPulseAt = Number.NEGATIVE_INFINITY;
 
   constructor(
     private readonly enemies: EnemyPool,
@@ -68,6 +93,9 @@ export class WaveSystem {
       trickleInterval: this.currentTrickleInterval(this.currentAtSim),
       waveSpawnedTotal: this.waveSpawnedTotal,
       waveState: this.waveState,
+      pulse: this.pulse,
+      edge: this.edge,
+      budget: this.budget,
     };
   }
 
@@ -78,29 +106,50 @@ export class WaveSystem {
       return;
     }
 
-    this.waveState = atSim < Balance.waves.graceSeconds ? 'quiet' : 'active';
-
-    while (atSim >= this.nextWaveAt) {
-      this.wave += 1;
-      this.spawnWavePulse(atSim);
-      this.nextWaveAt += Balance.waves.waveInterval;
-    }
+    this.planDueWaves(atSim);
+    this.telegraphDuePulses(atSim);
+    this.spawnDuePulses(atSim);
 
     while (atSim >= this.nextTrickleAt) {
+      const lullUntil = this.trickleLullUntil();
+      if (this.nextTrickleAt < lullUntil) {
+        this.nextTrickleAt = lullUntil;
+        continue;
+      }
+      if (this.lastPulseAt > 0 && this.nextTrickleAt <= this.lastPulseAt) {
+        this.nextTrickleAt = this.lastPulseAt + this.currentTrickleInterval(this.lastPulseAt);
+        continue;
+      }
+      this.pulse = 0;
       this.spawnAt(this.pickEdge(), 0, this.wave);
       this.nextTrickleAt += this.currentTrickleInterval(this.waveElapsedAt(this.nextTrickleAt));
     }
+
+    const firstPending = this.plannedPulses.findIndex((pulse) => !pulse.spawned);
+    if (firstPending < 0) {
+      this.plannedPulses.length = 0;
+    } else if (firstPending > 0) {
+      this.plannedPulses.splice(0, firstPending);
+    }
+    this.waveState = this.resolveWaveState(atSim);
   }
 
   reset(): void {
     this.nextTrickleAt = Balance.waves.graceSeconds + Balance.waves.trickleInterval;
     this.nextWaveAt = Balance.waves.waveInterval;
+    this.nextPlanWaveAt = Balance.waves.waveInterval;
+    this.nextPlanWave = 1;
+    this.plannedPulses.length = 0;
     this.wave = 0;
+    this.pulse = 0;
+    this.edge = null;
+    this.budget = 0;
     this.waveSpawnedTotal = 0;
     this.copyCursor = 0;
     this.lastCopy = '';
     this.currentAtSim = 0;
     this.waveState = 'quiet';
+    this.lastPulseAt = Number.NEGATIVE_INFINITY;
   }
 
   spawnDebugPack(count: number = Balance.enemy.debugPackSize, radius: number = Balance.enemy.debugPackRadius): number {
@@ -139,20 +188,87 @@ export class WaveSystem {
     return spawned;
   }
 
-  private spawnWavePulse(atSim: number): void {
-    const edge = this.pickEdge();
-    const count = Balance.waves.pulseBase + Balance.waves.pulsePerWave * this.wave;
-    this.announce(this.waveCopy(edge), atSim);
-    for (let i = 0; i < count; i += 1) {
-      this.spawnAt(edge, i, this.wave);
+  private planDueWaves(atSim: number): void {
+    while (atSim >= this.nextPlanWaveAt - this.maxTelegraphLead()) {
+      this.planWave(this.nextPlanWave, this.nextPlanWaveAt);
+      this.nextPlanWave += 1;
+      this.nextPlanWaveAt += this.waveInterval();
     }
   }
 
-  private spawnAt(edge: CompassEdge, index: number, wave: number): boolean {
+  private planWave(wave: number, startAt: number): void {
+    const pulseCount = this.effectivePulsesPerWave();
+    const edgeCount = this.effectiveEdgesPerPulse();
+    const budget = Math.max(pulseCount * edgeCount, this.waveBudget(wave));
+    const slots = pulseCount * edgeCount;
+    const baseCount = Math.floor(budget / slots);
+    let extra = budget % slots;
+
+    for (let pulse = 1; pulse <= pulseCount; pulse += 1) {
+      const edges = this.pickEdges(edgeCount);
+      const counts = edges.map(() => {
+        const count = baseCount + (extra > 0 ? 1 : 0);
+        extra = Math.max(0, extra - 1);
+        return count;
+      });
+      this.plannedPulses.push({
+        wave,
+        pulse,
+        spawnAt: startAt + (pulse - 1) * Math.max(0, Balance.waves.lullSeconds),
+        edges,
+        counts,
+        budget,
+        telegraphed: edges.map(() => false),
+        spawned: false,
+      });
+    }
+  }
+
+  private telegraphDuePulses(atSim: number): void {
+    for (const pulse of this.plannedPulses) {
+      if (pulse.spawned) continue;
+      for (let i = 0; i < pulse.edges.length; i += 1) {
+        if (pulse.telegraphed[i]) continue;
+        const edge = pulse.edges[i];
+        if (!edge) continue;
+        const telegraphAt = pulse.spawnAt - this.telegraphLead(i, pulse.edges.length);
+        if (atSim < telegraphAt) continue;
+        pulse.telegraphed[i] = true;
+        this.pulse = pulse.pulse;
+        this.edge = edge;
+        this.budget = pulse.budget;
+        this.announce(this.waveCopy(edge), telegraphAt);
+      }
+    }
+  }
+
+  private spawnDuePulses(atSim: number): void {
+    for (const pulse of this.plannedPulses) {
+      if (pulse.spawned || atSim < pulse.spawnAt) continue;
+      pulse.spawned = true;
+      this.wave = Math.max(this.wave, pulse.wave);
+      this.pulse = pulse.pulse;
+      this.budget = pulse.budget;
+      this.lastPulseAt = pulse.spawnAt;
+      this.advanceNextWaveAt(pulse.spawnAt);
+
+      for (let edgeIndex = 0; edgeIndex < pulse.edges.length; edgeIndex += 1) {
+        const edge = pulse.edges[edgeIndex];
+        const count = pulse.counts[edgeIndex] ?? 0;
+        if (!edge) continue;
+        this.edge = edge;
+        for (let i = 0; i < count; i += 1) {
+          this.spawnAt(edge, i, pulse.wave, count);
+        }
+      }
+    }
+  }
+
+  private spawnAt(edge: CompassEdge, index: number, wave: number, groupCount = this.waveBudget(wave)): boolean {
     if (Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
 
     const radius = Balance.waves.spawnRingRadius;
-    const spread = (index - 0.5 * Math.max(0, Balance.waves.pulseBase + Balance.waves.pulsePerWave * wave - 1)) * 1.35;
+    const spread = (index - 0.5 * Math.max(0, groupCount - 1)) * 1.35;
     const jitter = this.rng.range(-1.2, 1.2);
     const lateral = spread + jitter;
 
@@ -188,11 +304,18 @@ export class WaveSystem {
   }
 
   private pickEdge(): CompassEdge {
-    const value = this.rng.int(0, 4);
-    if (value === 0) return 'north';
-    if (value === 1) return 'south';
-    if (value === 2) return 'east';
-    return 'west';
+    return EDGES[this.rng.int(0, EDGES.length)] ?? 'west';
+  }
+
+  private pickEdges(count: number): CompassEdge[] {
+    const available = [...EDGES];
+    const edges: CompassEdge[] = [];
+    for (let i = 0; i < count && available.length > 0; i += 1) {
+      const index = this.rng.int(0, available.length);
+      const edge = available.splice(index, 1)[0];
+      if (edge) edges.push(edge);
+    }
+    return edges;
   }
 
   private currentTrickleInterval(atSim: number): number {
@@ -205,6 +328,63 @@ export class WaveSystem {
 
   private waveElapsedAt(atSim: number): number {
     return Math.max(Balance.waves.graceSeconds, atSim);
+  }
+
+  private waveBudget(wave: number): number {
+    const linear = Balance.waves.pulseBase + Balance.waves.pulsePerWave * wave;
+    const kneeWave = Math.max(0, Balance.waves.kneeWave);
+    if (wave <= kneeWave) return Math.max(1, Math.round(linear));
+
+    const kneeBudget = Balance.waves.pulseBase + Balance.waves.pulsePerWave * kneeWave;
+    const ceiling = Math.max(kneeBudget, Balance.waves.budgetCeiling);
+    const excess = Math.max(0, linear - kneeBudget);
+    const sharpness = Math.max(0.01, Balance.waves.kneeSharpness);
+    const eased = ceiling - (ceiling - kneeBudget) * Math.exp(-excess / sharpness);
+    return Math.max(1, Math.round(Math.min(ceiling, eased)));
+  }
+
+  private effectivePulsesPerWave(): number {
+    const requested = Math.max(1, Math.floor(Balance.waves.pulsesPerWave));
+    const lull = Math.max(0.1, Balance.waves.lullSeconds);
+    const maxByInterval = Math.max(1, Math.floor((this.waveInterval() - TELEGRAPH_SECONDS) / lull) + 1);
+    return Math.min(requested, maxByInterval);
+  }
+
+  private effectiveEdgesPerPulse(): number {
+    return Math.max(1, Math.min(EDGES.length, Math.floor(Balance.waves.edgesPerPulse)));
+  }
+
+  private waveInterval(): number {
+    return Math.max(0.1, Balance.waves.waveInterval);
+  }
+
+  private maxTelegraphLead(): number {
+    return this.telegraphLead(0, this.effectiveEdgesPerPulse());
+  }
+
+  private telegraphLead(index: number, count: number): number {
+    return TELEGRAPH_SECONDS + Math.max(0, count - index - 1) * TELEGRAPH_STAGGER_SECONDS;
+  }
+
+  private advanceNextWaveAt(atSim: number): void {
+    while (this.nextWaveAt <= atSim) this.nextWaveAt += this.waveInterval();
+  }
+
+  private trickleLullUntil(): number {
+    if (this.lastPulseAt <= 0) return Number.NEGATIVE_INFINITY;
+    const nextPulse = this.plannedPulses.find(
+      (pulse) => !pulse.spawned && pulse.wave === this.wave && pulse.spawnAt > this.lastPulseAt,
+    );
+    if (!nextPulse) return this.lastPulseAt;
+    return Math.min(nextPulse.spawnAt, this.lastPulseAt + Math.max(0, Balance.waves.lullSeconds));
+  }
+
+  private resolveWaveState(atSim: number): WaveDiagnostics['waveState'] {
+    if (atSim < Balance.waves.graceSeconds) return 'quiet';
+    const warning = this.plannedPulses.some(
+      (pulse) => !pulse.spawned && atSim < pulse.spawnAt && pulse.telegraphed.some(Boolean),
+    );
+    return warning ? 'warning' : 'active';
   }
 
   private waveCopy(edge: CompassEdge): string {
