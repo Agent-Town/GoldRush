@@ -6,7 +6,7 @@ export const upgradeDefs = [
     name: 'Double-Tap Coil',
     description: 'A second spring where one sufficed.',
     iconFamily: 'firerate',
-    maxStacks: 3,
+    maxStacks: 6,
     deltas: { fireRateMult: 0.25 },
   },
   {

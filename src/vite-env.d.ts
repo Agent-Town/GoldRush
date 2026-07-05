@@ -287,6 +287,8 @@ interface Window {
     grantGold: (n: number) => void;
     grantXp: (n: number) => void;
     maxUpgrades: () => void;
+    setUpgradeStacks: (stacks: Partial<Record<string, number>>) => void;
+    rollUpgradeOffer: () => string[];
     setFillersDisabled: (disabled: boolean) => void;
     economyLog: () => readonly unknown[];
     summarizeLog: (log: readonly unknown[]) => {

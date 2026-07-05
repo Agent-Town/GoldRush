@@ -181,6 +181,9 @@ export const Balance = {
     assayGoldPerWave: 5,
     fieldDressingHealFrac: 0.3,
   },
+  offers: {
+    investBonus: 0.35,
+  },
   goldSeam: {
     activeMin: 2,
     activeMax: 3,

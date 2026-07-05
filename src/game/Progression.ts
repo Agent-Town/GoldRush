@@ -98,6 +98,21 @@ export class Progression {
     this.fillersDisabled = disabled;
   }
 
+  setStacksForTest(stacks: Partial<Record<UpgradeId, number>>): void {
+    for (const id of Object.keys(this.stacksValue) as UpgradeId[]) delete this.stacksValue[id];
+    for (const [id, count] of Object.entries(stacks)) {
+      if (!isUpgradeId(id) || !Number.isFinite(count) || count <= 0) continue;
+      const def = upgradeDefById[id];
+      this.stacksValue[id] = Math.min(Math.floor(count), def.maxStacks);
+    }
+    this.statsValue = effectiveStats(this.stacksValue);
+    this.options.onStatsChanged(this.statsValue, null);
+  }
+
+  rollOfferForTest(): UpgradeId[] {
+    return this.rollOffer().map((def) => def.id);
+  }
+
   applyUpgrade(id: string): boolean {
     if (!isUpgradeId(id)) return false;
     if (!this.currentOffer?.some((def) => def.id === id)) return false;
@@ -169,19 +184,38 @@ export class Progression {
     const pool = this.eligibleDefs().filter((def) => !isFiller(def));
     const offer: UpgradeDef[] = [];
     while (offer.length < 3 && pool.length > 0) {
-      const index = this.options.rng.int(0, pool.length);
+      const index = this.pickWeightedIndex(pool);
       const [picked] = pool.splice(index, 1);
       if (picked) offer.push(picked);
     }
     if (offer.length < 3) {
       const fillers = this.eligibleDefs().filter((def) => isFiller(def));
       while (offer.length < 3 && fillers.length > 0) {
-        const index = this.options.rng.int(0, fillers.length);
+        const index = this.pickWeightedIndex(fillers);
         const [picked] = fillers.splice(index, 1);
         if (picked) offer.push(picked);
       }
     }
     return offer;
+  }
+
+  private pickWeightedIndex(pool: UpgradeDef[]): number {
+    const total = pool.reduce((sum, def) => sum + this.offerWeight(def, pool), 0);
+    let needle = this.options.rng.range(0, total);
+    for (let index = 0; index < pool.length; index += 1) {
+      needle -= this.offerWeight(pool[index], pool);
+      if (needle <= 0) return index;
+    }
+    return pool.length - 1;
+  }
+
+  private offerWeight(def: UpgradeDef, pool: readonly UpgradeDef[]): number {
+    const familyCards = pool.filter((candidate) => candidate.iconFamily === def.iconFamily).length;
+    return (1 + Balance.offers.investBonus * this.familyStacks(def.iconFamily)) / familyCards;
+  }
+
+  private familyStacks(family: string): number {
+    return upgradeDefs.reduce((total, def) => total + (def.iconFamily === family ? (this.stacksValue[def.id] ?? 0) : 0), 0);
   }
 
   private eligibleDefs(): UpgradeDef[] {

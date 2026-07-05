@@ -85,6 +85,7 @@ export class DebugTools {
       ['Wreck', 'wreck'],
       ['Economy', 'economy'],
       ['XP', 'xp'],
+      ['Offers', 'offers'],
       ['Terrain', 'terrain'],
       ['Sprite', 'sprite'],
       ['Charm', 'charm'],
