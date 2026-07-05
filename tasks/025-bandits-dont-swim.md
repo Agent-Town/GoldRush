@@ -1,5 +1,5 @@
 # Task 025: bandits don't swim — river blocks enemies, fords are the gates (MAIN slot, after 024)
-ROBIN DESIGN FINDING (BINDING): sluices must touch water, walls cannot, so the economy has a permanently open river flank — geography contradiction, not a tuning issue.
+ROBIN DESIGN FINDING (BINDING): sluices must touch water, walls cannot, so the economy has a permanently open river flank. CURRENT BEHAVIOR (Robin-confirmed): bandits path STRAIGHT THROUGH deep water anywhere — the river is no obstacle at all today. That is the repro: spawn across the river, watch them wade through mid-channel.
 1. Enemy pathing: DEEP river = impassable to all enemies (bandits/thieves/wreckers); crossings only at fords/shallows (existing terrain zones — playerZone already distinguishes river/shallows/ford). Knob Balance.pathing.riverBlocksEnemies=true. HERO unchanged (wades, slowed — his escape valve stays; asymmetry intentional).
 2. Wave/spawn integration: cross-river spawn edges route to nearest ford (m2-03 edge threading); telegraph copy may name the ford side. No spawn-count changes.
 3. Fleeing thieves: also ford-bound (no swimming home with gold) — chases gain a predictable interception line (design win, verify feel in probe shots).
