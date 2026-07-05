@@ -58,6 +58,14 @@ async function offerIds(page: Page): Promise<string[]> {
   );
 }
 
+async function rolledOffers(page: Page, samples: number): Promise<string[][]> {
+  return page.evaluate((count) => Array.from({ length: count }, () => window.__GR_TEST__?.rollUpgradeOffer() ?? []), samples);
+}
+
+function offersWith(offers: string[][], ids: readonly string[]): number {
+  return offers.filter((offer) => offer.some((id) => ids.includes(id))).length;
+}
+
 async function pickOfferId(page: Page, id: string): Promise<boolean> {
   const ids = await offerIds(page);
   const index = ids.indexOf(id);
@@ -126,6 +134,50 @@ test('first offer is deterministic for a fixed seed and has no duplicates', asyn
   await pageB.close();
 });
 
+test('investment weighting prefers owned families without losing discovery', async ({ browser }) => {
+  const seed = 'm1-06-weighting-1';
+  const firerateIds = ['double_tap_coil'];
+  const blastIds = ['powder_charge', 'wide_ring', 'quick_fuse'];
+  const pages = await Promise.all([browser.newPage(), browser.newPage(), browser.newPage(), browser.newPage()]);
+  const [basePage, investedPage, repeatedPage, maxedPage] = pages;
+  const errors = await Promise.all(
+    pages.map((page) => openGame(page, `?debug&timescale=3&nowaves&seed=${seed}`)),
+  );
+
+  await investedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 5 }));
+  await repeatedPage.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 5 }));
+  await maxedPage.evaluate(() =>
+    window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 6, powder_charge: 2, wide_ring: 2, quick_fuse: 2 }),
+  );
+
+  const baseOffers = await rolledOffers(basePage, 40);
+  const investedOffers = await rolledOffers(investedPage, 40);
+  const repeatedOffers = await rolledOffers(repeatedPage, 40);
+  const maxedOffers = await rolledOffers(maxedPage, 20);
+  const baseHits = offersWith(baseOffers, firerateIds);
+  const investedHits = offersWith(investedOffers, firerateIds);
+
+  expect(investedHits).toBeGreaterThanOrEqual(baseHits * 2);
+  expect(investedOffers.slice(0, 12).some((offer) => offer.some((id) => blastIds.includes(id)))).toBe(true);
+  expect(repeatedOffers).toEqual(investedOffers);
+  expect(maxedOffers.flat()).not.toContain('double_tap_coil');
+  for (const id of blastIds) expect(maxedOffers.flat()).not.toContain(id);
+  for (const bucket of errors) await assertNoErrors(bucket);
+  await Promise.all(pages.map((page) => page.close()));
+});
+
+test('owned-family cards show a compact stack pip', async ({ page }) => {
+  const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-pip-1');
+  await page.evaluate(() => window.__GR_TEST__?.setUpgradeStacks({ double_tap_coil: 5 }));
+  await debugLevel(page);
+
+  const card = page.locator('[data-upgrade-id="double_tap_coil"]');
+  await expect(card.locator('.upgrade-card__stacks')).toHaveText('V');
+  const box = await card.boundingBox();
+  expect(box?.width ?? 0).toBeLessThanOrEqual((page.viewportSize()?.width ?? 390) - 28);
+  await assertNoErrors(errors);
+});
+
 test('sampled offers never contain duplicate ids', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m1-06-duplicates');
 
@@ -147,13 +199,13 @@ test('maxed upgrades leave the offer pool', async ({ page }) => {
 
   for (let guard = 0; guard < 30; guard += 1) {
     const stacks = (await diagnostics(page)).progression.stacks.double_tap_coil ?? 0;
-    if (stacks >= 3) break;
+    if (stacks >= 6) break;
     await debugLevel(page);
     if (!(await pickOfferId(page, 'double_tap_coil'))) await pressChoice(page, 0);
     await drainChoices(page);
   }
 
-  expect((await diagnostics(page)).progression.stacks.double_tap_coil).toBe(3);
+  expect((await diagnostics(page)).progression.stacks.double_tap_coil).toBe(6);
   for (let sample = 0; sample < 3; sample += 1) {
     await debugLevel(page);
     expect(await offerIds(page)).not.toContain('double_tap_coil');

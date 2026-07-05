@@ -42,11 +42,32 @@ type BuildingDamageResult = {
   wrecked: boolean;
 };
 
+export type XpAuditDiagnostics = {
+  deaths: number;
+  motesSpawned: number;
+  motesCollected: number;
+  motesCollectedXp: number;
+  overflowBanked: number;
+  expiredBanked: number;
+  autoBanked: number;
+  dropped: number;
+  xpAwarded: number;
+  xpPerKill: number;
+  motePool: number;
+  expiryBanks: boolean;
+};
+
 export class CombatSystem {
   private readonly rigs: ShooterState[] = [];
   private readonly scratchOrigin = new THREE.Vector3();
   private readonly ownerKills: Record<string, number> = {};
   private xp = 0;
+  private xpDeaths = 0;
+  private xpMotesSpawned = 0;
+  private xpMotesCollected = 0;
+  private xpMotesCollectedValue = 0;
+  private xpOverflowBanked = 0;
+  private xpExpiredBanked = 0;
   private currentAt = 0;
   private blastDetonationCount = 0;
   private buildingDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
@@ -85,6 +106,23 @@ export class CombatSystem {
     return this.ownerKills;
   }
 
+  get xpAudit(): XpAuditDiagnostics {
+    return {
+      deaths: this.xpDeaths,
+      motesSpawned: this.xpMotesSpawned,
+      motesCollected: this.xpMotesCollected,
+      motesCollectedXp: this.xpMotesCollectedValue,
+      overflowBanked: this.xpOverflowBanked,
+      expiredBanked: this.xpExpiredBanked,
+      autoBanked: this.xpOverflowBanked + this.xpExpiredBanked,
+      dropped: 0,
+      xpAwarded: this.xp,
+      xpPerKill: Balance.xp.perKill,
+      motePool: Balance.xp.motePool,
+      expiryBanks: Balance.xp.expiryBanks,
+    };
+  }
+
   registerShooter(handle: ShooterHandle): () => void {
     const state = { handle, timer: 0, targeting: new TargetingSystem<ClaimJumperEnemy>() };
     this.rigs.push(state);
@@ -115,7 +153,7 @@ export class CombatSystem {
       remaining -= step;
     }
 
-    const gained = this.motes.update(delta, this.hero.group.position, this.onXpCollect);
+    const gained = this.motes.update(delta, this.hero.group.position, this.handleXpCollect);
     if (gained > 0) this.xp += gained;
   }
 
@@ -172,6 +210,12 @@ export class CombatSystem {
 
   reset(): void {
     this.xp = 0;
+    this.xpDeaths = 0;
+    this.xpMotesSpawned = 0;
+    this.xpMotesCollected = 0;
+    this.xpMotesCollectedValue = 0;
+    this.xpOverflowBanked = 0;
+    this.xpExpiredBanked = 0;
     this.projectiles.recycleAll();
     this.blastCharges.recycleAll();
     this.motes.recycleAll();
@@ -299,8 +343,14 @@ export class CombatSystem {
   }
 
   private killEnemy(enemy: ClaimJumperEnemy, at: number, ownerId: string): void {
+    const xp = Balance.xp.perKill;
     this.ownerKills[ownerId] = (this.ownerKills[ownerId] ?? 0) + 1;
-    this.motes.spawn(enemy.position, Balance.xp.perKill);
+    this.xpDeaths += 1;
+    if (this.motes.spawn(enemy.position, xp)) {
+      this.xpMotesSpawned += 1;
+    } else {
+      this.bankXp(enemy.position, xp, 'overflow');
+    }
     this.vfx.dustPuff(enemy.position);
     this.audio.playKill();
     this.onEnemyKilled?.(enemy.position);
@@ -308,9 +358,23 @@ export class CombatSystem {
       type: 'enemy_killed',
       at,
       enemyId: enemy.id,
-      xp: Balance.xp.perKill,
+      xp,
     });
     this.enemies.recycle(enemy);
   }
 
+  private readonly handleXpCollect = (position: THREE.Vector3, value: number): void => {
+    if (value <= 0) return;
+    this.xpMotesCollected += 1;
+    this.xpMotesCollectedValue += value;
+    this.onXpCollect?.(position, value);
+  };
+
+  private bankXp(position: THREE.Vector3, value: number, reason: 'overflow' | 'expiry'): void {
+    if (value <= 0) return;
+    this.xp += value;
+    if (reason === 'overflow') this.xpOverflowBanked += 1;
+    else this.xpExpiredBanked += 1;
+    this.onXpCollect?.(position, value);
+  }
 }

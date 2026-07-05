@@ -62,6 +62,20 @@ interface ThreeGameDiagnostics {
   };
   xp: number;
   xpMotesAlive: number;
+  xpAudit: {
+    deaths: number;
+    motesSpawned: number;
+    motesCollected: number;
+    motesCollectedXp: number;
+    overflowBanked: number;
+    expiredBanked: number;
+    autoBanked: number;
+    dropped: number;
+    xpAwarded: number;
+    xpPerKill: number;
+    motePool: number;
+    expiryBanks: boolean;
+  };
   progression: {
     level: number;
     xpInto: number;
@@ -294,6 +308,8 @@ interface Window {
     grantGold: (n: number) => void;
     grantXp: (n: number) => void;
     maxUpgrades: () => void;
+    setUpgradeStacks: (stacks: Partial<Record<string, number>>) => void;
+    rollUpgradeOffer: () => string[];
     setFillersDisabled: (disabled: boolean) => void;
     economyLog: () => readonly unknown[];
     summarizeLog: (log: readonly unknown[]) => {

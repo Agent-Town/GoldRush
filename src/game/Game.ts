@@ -58,7 +58,7 @@ import { Progression } from './Progression';
 import { resolveFiller } from './Upgrades';
 import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
-import { upgradeDefById, type UpgradeId } from './Upgrades';
+import { upgradeDefById, upgradeDefs, type UpgradeId } from './Upgrades';
 import { buildableDefs, type BuildableId } from './buildables';
 
 export class Game {
@@ -351,6 +351,8 @@ export class Game {
         },
         grantXp: (n: number) => this.progression.debugGrant(n),
         maxUpgrades: () => this.progression.maxCoreForTest(),
+        setUpgradeStacks: (stacks) => this.progression.setStacksForTest(stacks as Partial<Record<UpgradeId, number>>),
+        rollUpgradeOffer: () => this.progression.rollOfferForTest(),
         setFillersDisabled: (disabled: boolean) => this.progression.setFillersDisabled(disabled),
         economyLog: () => this.economy.log,
         summarizeLog: (log) => summarizeLog(log as readonly EconomyEvent[]),
@@ -643,6 +645,7 @@ export class Game {
       arsenal: this.arsenalDiagnostics(),
       xp: this.combat.xpCount,
       xpMotesAlive: this.xpMotes.activeCount,
+      xpAudit: this.combat.xpAudit,
       kills: this.kills,
       goldPanned: economySummary.panned,
       deathLedger: this.deathLedger,
@@ -1178,7 +1181,10 @@ export class Game {
     this.upgradeOverlay.show(
       offer.map((def) => ({
         def,
-        stacks: stacks[def.id] ?? 0,
+        familyStacks: upgradeDefs.reduce(
+          (total, upgrade) => total + (upgrade.iconFamily === def.iconFamily ? (stacks[upgrade.id] ?? 0) : 0),
+          0,
+        ),
         effect:
           'filler' in def && def.filler === true
             ? resolveFiller(def, { wave: this.waveSystem.diagnostics.wave, maxHp: this.hero.maxHp }).effectText

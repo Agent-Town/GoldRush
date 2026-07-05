@@ -16,7 +16,7 @@ const upgradeIconUrlByFamily = new Map(
 
 export type UpgradeChoice = {
   def: UpgradeDef;
-  stacks: number;
+  familyStacks: number;
   effect?: string;
 };
 
@@ -62,7 +62,7 @@ export class UpgradeOverlay {
   }
 
   show(choices: UpgradeChoice[]): void {
-    const nextKey = choices.map((choice) => `${choice.def.id}:${choice.stacks}`).join('|');
+    const nextKey = choices.map((choice) => `${choice.def.id}:${choice.familyStacks}`).join('|');
     if (this.visible && nextKey === this.offerKey) return;
     this.visible = true;
     this.choices = choices;
@@ -138,8 +138,8 @@ export class UpgradeOverlay {
   }
 
   private renderCard(choice: UpgradeChoice, index: number): string {
-    const stacks = Number.isFinite(choice.def.maxStacks)
-      ? `<span class="upgrade-card__stacks" aria-label="${choice.stacks} of ${choice.def.maxStacks} stacks">${choice.stacks}/${choice.def.maxStacks}</span>`
+    const stacks = choice.familyStacks > 0
+      ? `<span class="upgrade-card__stacks" aria-label="${choice.familyStacks} ${choice.def.iconFamily} family stacks">${roman(choice.familyStacks)}</span>`
       : '';
     return `
       <span class="upgrade-card__key">${index + 1}</span>
@@ -164,4 +164,9 @@ export class UpgradeOverlay {
       return '&#39;';
     });
   }
+}
+
+function roman(value: number): string {
+  const numerals = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+  return numerals[value] ?? String(value);
 }
