@@ -12,6 +12,8 @@
     { "file": "bld-stockpile-yard.png", "slot": "bld.portrait.stockpile", "size": [1024, 1024], "usage": "build-menu portrait (run-001 batch-005B); DORMANT - see bld.portrait.palisade", "fullBleed": false },
     { "file": "bld-signal-turret.png", "slot": "bld.portrait.turret", "size": [1024, 1024], "usage": "build-menu portrait (run-001 batch-005B, 1 canon retry: no-barrel resonator mast per brief 9.2); DORMANT - see bld.portrait.palisade", "fullBleed": false },
     { "file": "terrain-bank-tile.png", "slot": "terrain.bank", "variants": ["terrain-bank-tile.png", "terrain-bank-tile-b.png", "terrain-bank-tile-c.png"], "size": [1024, 1024], "usage": "ground texture variants, per-cell sampled; replaces procedural parchment-sand", "fullBleed": true },
-    { "file": "terrain-river-tile.png", "slot": "terrain.river", "size": [1024, 1024], "usage": "river texture, UV-scrolled; replaces teal plane", "fullBleed": true }
+    { "file": "terrain-river-tile.png", "slot": "terrain.river", "size": [1024, 1024], "usage": "river texture, UV-scrolled; replaces teal plane", "fullBleed": true },
+    { "file": "vfx-death-poof-sheet.png", "slot": "vfx.death_poof", "grid": "3x2", "size": [512, 512], "usage": "one-shot enemy-death dust-poof clip, 6 frames (batch-005 Part B, key ff00ff); DORMANT - CombatVfx procedural puff stays until a wiring slice; slots.ts mirror deferred until consumption (bld.portrait precedent); canon 9.2 bloodless", "fullBleed": false },
+    { "file": "vfx-levelup-flourish-sheet.png", "slot": "vfx.levelup_flourish", "grid": "3x2", "size": [512, 512], "usage": "one-shot level-up prosperity flourish clip, 6 frames (batch-005 Part B, key ff00ff); DORMANT - see vfx.death_poof", "fullBleed": false }
   ]
 }
