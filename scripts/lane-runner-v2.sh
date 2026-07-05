@@ -16,7 +16,9 @@ if ! mkdir "$LOCKDIR" 2>/dev/null; then
   echo "[lane-runner-v2] another instance appears to be running ($LOCKDIR exists). Remove it if stale."
   exit 1
 fi
-trap 'rmdir "$LOCKDIR" 2>/dev/null' EXIT INT TERM
+cleanup() { rmdir "$LOCKDIR" 2>/dev/null; }
+trap 'cleanup; echo "[lane-runner-v2] stopped"; exit 130' INT TERM
+trap cleanup EXIT
 mkdir -p "$ROOT/tasks/runs" "$ROOT/tasks/done" "$ROOT/tasks/failed" "$ROOT/tasks/running"
 
 dir_for_slot() {
