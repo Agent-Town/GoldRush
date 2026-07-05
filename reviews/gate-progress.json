@@ -1,50 +1,51 @@
 {
-  "gate": "s32-lane-m4-drain",
-  "opened": "2026-07-05T05:24Z",
-  "closed": "2026-07-05T05:52Z",
-  "protocol": "v2 evidence-first lane drain (second; m3-01/s31 precedent)",
-  "result": "MERGED: lane/m4 (a79c87c, single slice m4-01) -> main (two-parent, plumbing path). Review: reviews/m4-01-tool-surface.md",
+  "gate": "s33-lane-perf-drain",
+  "opened": "2026-07-05T05:45Z",
+  "closed": "2026-07-05T06:05Z ABORTED-ENV (VM disk exhaustion; shell infra bricked; handoff done host-side, UNCOMMITTED)",
+  "protocol": "v2 evidence-first lane drain (third; m3-01/s31 + m4-01/s32 precedent)",
+  "result": "NOT MERGED. Scope review DONE = CLEAN. Gates NOT RUN. lane/perf (6c4d0f3) stays unmerged; rerun gates from step 3 on a healthy VM.",
   "steps": [
     {
       "id": 1,
       "name": "lock",
       "status": "done",
-      "result": "0f6293e"
+      "result": "5a355d7 (after clearing stale s32 lock debris: HEAD.lock/index.lock/objects/maintenance.lock from e87a30e's successful commit, mount unlink quirk; Cowork delete permission had to be RE-GRANTED this session via allow_cowork_file_delete — it does not persist across sessions)"
     },
     {
       "id": 2,
-      "name": "review: lane diff vs tasks/lane-b-m4-01 scope + ADR-002",
+      "name": "review: lane diff vs tasks/lane-d-perf-01.md scope",
       "status": "done",
-      "result": "scope EXACT (4 new files, zero existing-file edits); no MetaProgress writes; et.goldrush.* naming; Economy read-only; 4 non-blocking findings for M4-02 (private-field fallback, meta unbound level-0 pin, capped-log costFromDelta, dev-only e2e coverage)"
+      "result": "CLEAN. 5 files +218/-4, single commit 6c4d0f3. Deliverables: (1) spriteStats {activeAnimators, textureSwapsPerFrame, fadeOverlaysActive} module counters + Game.getDiagnostics wiring + vite-env.d.ts type; (2) ?profile flag in DebugParams + recordProfileSample() 5s console.table (frameMs p50/p95, max drawCalls); (3) new e2e/perf-01-stress-budget.spec.ts (stress=120, 12 palisades via __GR_TEST__, in-page rAF max-tracker per house style, drawCalls<=200, swaps<=animators, zero console/page errors); (4) sanctioned cheap fix: SpriteAnimator.setFrame lastFrameKey cache, triple guard (lastFrameKey, material.map, texture.userData.spriteFrameKey) — userData clause is cross-animator shared-texture invalidation insurance. No gameplay changes. Nits (non-blocking): spriteStats counters reset in update() so getDiagnostics mid-frame reads are partial (fine for max-tracking spec); fadeOverlaysActive is a coarse 3-source sum (damageFlash/dead/levelup); vite-env.d.ts also adds direction?/mirrored? to spriteAnimations entries — check 016 didn't already add these (dedupe on merge)."
     },
     {
       "id": 3,
-      "name": "provision /tmp/gr-s32 merged preview + ADR-002 Game.ts wiring",
-      "status": "done",
-      "result": "/tmp survived s31 (chromium-1228, npm-cache, locallibs); wiring = installAgentStub({economyLog}) + boot heartbeat + dispose hook; tsc 0, build 451ms"
+      "name": "provision /tmp/gr-s33 merged preview (REAL 3-way: main x lane/perf)",
+      "status": "FAILED-ENV, redo",
+      "result": "All 4 src files overlap main-side changes since merge-base 0f875e0 (016->SpriteAnimator.ts; m4-01->Game.ts+vite-env.d.ts; DebugParams.ts) — conflicts LIKELY in Game.ts (imports + getDiagnostics block + update() insertions vs m4-01 wiring) and vite-env.d.ts (both extend ThreeGameDiagnostics). VM arrived with home wiped AND / at 96% (418M free); concurrent chromium unzip (188M zip -> ~450M) + full-history clone (199M .git) filled / to 0; shell infra ENOSPC-bricked (RPC settings writes failed) and never recovered this fire. DISK LAW: df first; lean tree first; chromium unzip LAST and alone; rm failed partials immediately. Leftovers to clean next fire if present: ~/.cache/chromium-1228 partial, /tmp/gr-s33 partial clone."
     },
     {
       "id": 4,
-      "name": "gates",
-      "status": "done",
-      "result": "m4-01 8/8 both projects (no skips); m3-01 8/8; m1-05 6/6; vp-02 11/11 (5 groups + rotation trio via --list tiling check); boot probe desktop+390 zero console errors, marker+heartbeat debug-gated both ways"
+      "name": "gates: tsc/build; perf-01 both projects; vp-02 11/11 (--list tiling check, rotation trio hides outside historic groups); m4-01 8/8; m3-01 8/8; boot probe desktop+390 zero console errors; shots -> reviews/shots-perf-01/",
+      "status": "pending",
+      "result": null
     },
     {
       "id": 5,
-      "name": "merge on mount",
-      "status": "done",
-      "result": "plumbing path (write-tree + commit-tree -p HEAD -p lane/m4 + update-ref); all 5 gated files md5-verified pre-commit; art strays (6 raws + codex-art-run-001.md) untouched"
+      "name": "merge on mount (plumbing path, BINDING: write-tree + commit-tree -p HEAD -p lane/perf + update-ref; md5-verify gated files; art strays untouched)",
+      "status": "pending",
+      "result": null
     }
   ],
   "queue_remaining": [
-    "lane/perf (6c4d0f3 tip)",
+    "lane/perf gates + merge (REDO from step 3)",
     "017 art LEDGER pass + raws processing (case C)",
     "tasks/019 when a tree is free"
   ],
   "env_notes": [
-    "VM healthy; /tmp/gr-s32 provisioned ~1min from survivals; git identity was missing (wiped home) \u2014 set before any commit in /tmp clones",
-    "vp-02 splits used: 'hit-pause|one-frame' / 'memory|screenshots' / 'sweep|reversal' / 'wiggle' / 'crossfades once' / 'stride cells|mirrored pixels' / 'frameKey alternates' \u2014 ALWAYS re-verify tiling with --list (three rotation tests hide outside the historic groups)",
-    "m1-05 file is e2e/m1-05-sentry-beacon-build.spec.ts (not m1-05-building) \u2014 wrong filename wastes a call",
-    "MOUNT GIT MERGE RECIPE (BINDING): plumbing path only; plain add/commit fine"
+    "FIRST ACT next fire: commit the s33 handoff (STATUS.md + this file + reviews/perf-01-stress-budget.md are UNCOMMITTED host-side writes) before anything else",
+    "Cowork delete permission does NOT persist across sessions: on first EPERM unlink, call allow_cowork_file_delete, then clear any stale .git/*.lock + .git/objects/maintenance.lock (check mtimes vs last commit before removing)",
+    "s32's HEAD.lock was left behind by its SUCCESSFUL handoff commit — a stale lock at the exact mtime of the last commit is debris, not a live process",
+    "VM / is ~9.6G total; budget before provisioning: clone 199M + node_modules ~300M + chromium ~450M + build/test artifacts — if <1.2G free, provision lean (rsync tree without .git per recipe + per-file 3-way via git merge-file for the 5 lane files) instead of full clone",
+    "sandbox clock vs STATUS timestamps skew ~15min (s32 wrote 05:55Z, commit landed 05:39:39Z real) — use commit times, not line-1 timestamps, for lock-age math"
   ]
 }
