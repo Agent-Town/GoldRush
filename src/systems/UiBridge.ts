@@ -1,5 +1,6 @@
 import { Balance } from '../game/Balance';
 import type { BuildableId } from '../game/buildables';
+import type { CompassEdge } from '../entities/Enemy';
 import type { GameState, RunState } from '../game/GameState';
 
 export type WaveState = 'quiet' | 'warning' | 'active' | 'cleared';
@@ -16,6 +17,8 @@ export type UiSnapshot = {
   waveState: WaveState;
   announcement: string | null;
   announcementAt: number;
+  announcementDurationSeconds: number;
+  announcementEdge: CompassEdge | null;
   enemiesAlive: number;
   timeAlive: number;
   state: RunState;
@@ -54,6 +57,8 @@ export class UiBridge {
     waveState: 'quiet',
     announcement: 'Stake your claim.',
     announcementAt: 0,
+    announcementDurationSeconds: 4,
+    announcementEdge: null,
     enemiesAlive: 0,
     timeAlive: 0,
     state: 'boot',
@@ -70,9 +75,11 @@ export class UiBridge {
     weapon: 'rig',
   };
 
-  announce(text: string, atSim: number): void {
+  announce(text: string, atSim: number, edge: CompassEdge | null = null, durationSeconds = 4): void {
     this.snapshot.announcement = text;
     this.snapshot.announcementAt = atSim;
+    this.snapshot.announcementDurationSeconds = durationSeconds;
+    this.snapshot.announcementEdge = edge;
   }
 
   build(

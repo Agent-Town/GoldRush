@@ -10,6 +10,7 @@ import {
   getTimescale,
   isCharmPauseDisabled,
   isLevelUpDisabled,
+  isPingDisabled,
   isSpawnDisabled,
   isStealDisabled,
   isWreckDisabled,
@@ -141,6 +142,7 @@ export class Game {
     areWavesDisabled,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
     () => !isWreckDisabled() && this.buildSystem.hasAnyBuildable,
+    () => this.liveThiefCount(),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -618,6 +620,7 @@ export class Game {
       pulse: this.waveSystem.diagnostics.pulse,
       edge: this.waveSystem.diagnostics.edge,
       budget: this.waveSystem.diagnostics.budget,
+      lastPulseAt: this.waveSystem.diagnostics.lastPulseAt,
       spawnDisabled: isSpawnDisabled(),
       stressCount: getStressCount(),
       score: 0,
@@ -825,8 +828,12 @@ export class Game {
     return this.buildSystem.diagnostics.stockpilesState.some((entry) => entry.active);
   }
 
-  private claimGoldForThief(_enemy: ClaimJumperEnemy, holding: GoldHolding): number {
-    if (holding.kind === 'pickup') return this.goldPickups.take(holding.pickupIndex ?? -1);
+  private claimGoldForThief(enemy: ClaimJumperEnemy, holding: GoldHolding): number {
+    if (holding.kind === 'pickup') {
+      const amount = this.goldPickups.take(holding.pickupIndex ?? -1);
+      this.onThiefGrabbed(enemy, amount);
+      return amount;
+    }
 
     const amount = Math.min(Balance.steal.grabAmount, this.economy.gold);
     if (amount <= 0) return 0;
@@ -840,7 +847,15 @@ export class Game {
     this.stolenTotal += amount;
     this.syncStockpileHoldings();
     this.vfx.floatText(holding.position, `-${amount}`, '#a0522d');
+    this.onThiefGrabbed(enemy, amount);
     return amount;
+  }
+
+  private onThiefGrabbed(enemy: ClaimJumperEnemy, amount: number): void {
+    if (amount <= 0 || isPingDisabled()) return;
+    const edge = enemy.ownEdge ?? edgeFromPosition(enemy.position);
+    this.uiBridge.announce(`Gold snatched - ${edgePlace(edge)}!`, this.timeAlive, edge, Balance.steal.pingSeconds);
+    this.audio.playPing();
   }
 
   private onThiefFled(enemy: ClaimJumperEnemy): void {
@@ -930,6 +945,14 @@ export class Game {
       pickups: this.goldPickups.activeCount,
       pickupTotal: this.goldPickups.totalAmount,
     };
+  }
+
+  private liveThiefCount(): number {
+    let thieves = 0;
+    for (const enemy of this.enemies.all) {
+      if (enemy.isAlive && enemy.isThief) thieves += 1;
+    }
+    return thieves;
   }
 
   private wreckDiagnostics(): {
@@ -1082,4 +1105,15 @@ export class Game {
 
 function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOptions | undefined {
   return count === 5 && radius === 3 ? { speedScale: 0 } : undefined;
+}
+
+function edgeFromPosition(position: THREE.Vector3): CompassEdge {
+  return Math.abs(position.x) > Math.abs(position.z) ? (position.x >= 0 ? 'east' : 'west') : position.z >= 0 ? 'north' : 'south';
+}
+
+function edgePlace(edge: CompassEdge): string {
+  if (edge === 'north') return 'north bank';
+  if (edge === 'south') return 'south bank';
+  if (edge === 'east') return 'east ridge';
+  return 'west ridge';
 }

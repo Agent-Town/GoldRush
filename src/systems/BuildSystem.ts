@@ -123,6 +123,7 @@ export class BuildSystem {
   private readonly shooterPos = new THREE.Vector3();
   private readonly visualObject = new THREE.Object3D();
   private readonly hp = createNumberStore();
+  private readonly hpMax = createNumberStore();
   private readonly wrecked = createBooleanStore();
   private readonly repairProgress = createNumberStore();
   private readonly repairNeedGoldShown = createBooleanStore();
@@ -399,6 +400,7 @@ export class BuildSystem {
       for (let i = 0; i < this.unregisterShooters[id].length; i += 1) this.unregisterShooter(id, i);
       for (let i = 0; i < this.hp[id].length; i += 1) {
         this.hp[id][i] = 0;
+        this.hpMax[id][i] = 0;
         this.wrecked[id][i] = false;
         this.repairProgress[id][i] = 0;
         this.repairNeedGoldShown[id][i] = false;
@@ -472,7 +474,7 @@ export class BuildSystem {
   resolveBuildingDamage(target: BuildingTarget, amount: number): BuildingDamageResult {
     const id = target.family as BuildableId;
     const index = target.index;
-    const maxHp = this.maxHpFor(id);
+    const maxHp = this.maxHpForInstance(id, index);
     if (!target.active || this.wrecked[id][index] || maxHp <= 0) {
       return { applied: false, family: id, index, hp: this.hp[id][index] ?? 0, maxHp, wrecked: false };
     }
@@ -641,7 +643,8 @@ export class BuildSystem {
   }
 
   private finishPlacement(id: BuildableId, index: number): void {
-    const maxHp = this.maxHpFor(id);
+    const maxHp = this.maxHpForPlacement(id);
+    this.hpMax[id][index] = maxHp;
     this.hp[id][index] = maxHp;
     this.wrecked[id][index] = false;
     this.repairProgress[id][index] = 0;
@@ -665,7 +668,7 @@ export class BuildSystem {
   }
 
   private repair(id: BuildableId, index: number): void {
-    const maxHp = this.maxHpFor(id);
+    const maxHp = this.maxHpForInstance(id, index);
     this.hp[id][index] = maxHp;
     this.wrecked[id][index] = false;
     this.repairProgress[id][index] = 0;
@@ -706,7 +709,7 @@ export class BuildSystem {
     target.position.copy(position);
     target.active = active;
     target.hp = this.hp[id][index] ?? 0;
-    target.maxHp = this.maxHpFor(id);
+    target.maxHp = this.maxHpForInstance(id, index);
     target.reachRadius = this.reachRadiusFor(id, index);
     this.targeting.registerBuilding(target);
   }
@@ -719,8 +722,19 @@ export class BuildSystem {
     return this.beacons.allPositions[index];
   }
 
-  private maxHpFor(id: BuildableId): number {
-    return getBuildableDef(id)?.hpMax ?? 0;
+  private maxHpForInstance(id: BuildableId, index: number): number {
+    return this.hpMax[id][index] || this.maxHpForPlacement(id);
+  }
+
+  private maxHpForPlacement(id: BuildableId): number {
+    const base = Balance.wreck.hp[id];
+    if (id !== 'palisade') return base;
+
+    const scale = Balance.wreck.hpWaveScale.palisade;
+    const wave = Math.max(0, Math.floor(this.getWave()));
+    const steps = Math.max(0, wave - Math.max(0, Math.floor(scale.startWave)) + 1);
+    const scaled = base + steps * Math.max(0, scale.perWave);
+    return Math.round(Math.min(base * Math.max(1, scale.capMult), scaled));
   }
 
   private reachRadiusFor(id: BuildableId, index: number): number {
@@ -740,7 +754,7 @@ export class BuildSystem {
           id,
           index,
           hp,
-          maxHp: this.maxHpFor(id),
+          maxHp: this.maxHpForInstance(id, index),
           wrecked,
           repairProgress: this.repairProgress[id][index] ?? 0,
           position: { x: position?.x ?? 0, z: position?.z ?? 0 },
@@ -911,7 +925,7 @@ export class BuildSystem {
         this.buildingVisuals.setMatrixAt(rubbleSlot, hiddenMatrix);
 
         const position = this.positionFor(id, i);
-        const maxHp = this.maxHpFor(id);
+        const maxHp = this.maxHpForInstance(id, i);
         const hp = this.hp[id][i] ?? 0;
         if (!position || hp <= 0 || maxHp <= 0) {
           if (this.wrecked[id][i] && position) {
@@ -1158,12 +1172,12 @@ function createTargetStore(): BuildingFamilyStore<BuildingTarget> {
     id: `${id}:${index}`,
     family: id,
     index,
-    position: new THREE.Vector3(),
-    active: false,
-    hp: 0,
-    maxHp: getBuildableDef(id)?.hpMax ?? 0,
-    reachRadius: 0,
-  }));
+	    position: new THREE.Vector3(),
+	    active: false,
+	    hp: 0,
+	    maxHp: 0,
+	    reachRadius: 0,
+	  }));
 }
 
 function createStore<T>(make: (id: BuildableId, index: number) => T): BuildingFamilyStore<T> {

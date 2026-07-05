@@ -8,6 +8,7 @@ export type DebugParams = {
   readonly nopause: boolean;
   readonly nosteal: boolean;
   readonly nowreck: boolean;
+  readonly noping: boolean;
   readonly stress: number;
 };
 
@@ -21,6 +22,7 @@ const DEFAULT_PARAMS: DebugParams = {
   nopause: false,
   nosteal: false,
   nowreck: false,
+  noping: false,
   stress: 0,
 };
 
@@ -37,6 +39,7 @@ export function readDebugParams(search = getSearch()): DebugParams {
     nopause: readFlag(params, 'nopause'),
     nosteal: readFlag(params, 'nosteal'),
     nowreck: readFlag(params, 'nowreck'),
+    noping: readFlag(params, 'noping'),
     stress: readNonNegativeInt(params, 'stress', DEFAULT_PARAMS.stress),
   };
 }
@@ -82,6 +85,10 @@ export function isStealDisabled(): boolean {
 
 export function isWreckDisabled(): boolean {
   return DEBUG_PARAMS.nowreck;
+}
+
+export function isPingDisabled(): boolean {
+  return DEBUG_PARAMS.noping;
 }
 
 export function getStressCount(): number {

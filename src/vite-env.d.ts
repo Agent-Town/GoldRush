@@ -18,6 +18,8 @@ interface ThreeGameDiagnostics {
     waveState: 'quiet' | 'warning' | 'active' | 'cleared';
     announcement: string | null;
     announcementAt: number;
+    announcementDurationSeconds: number;
+    announcementEdge: 'north' | 'south' | 'east' | 'west' | null;
     enemiesAlive: number;
     timeAlive: number;
     state: 'boot' | 'playing' | 'levelup' | 'dead';
@@ -97,6 +99,7 @@ interface ThreeGameDiagnostics {
   pulse: number;
   edge: 'north' | 'south' | 'east' | 'west' | null;
   budget: number;
+  lastPulseAt: number;
   spawnDisabled: boolean;
   stressCount: number;
   score: number;

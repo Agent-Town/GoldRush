@@ -40,6 +40,7 @@ export const Balance = {
     kneeSharpness: 8,
     budgetCeiling: 42,
     lullSeconds: 8,
+    lullFloor12: 8,
     pulsesPerWave: 2,
     edgesPerPulse: 2,
     hpScalePerWave: 1.12,
@@ -135,6 +136,10 @@ export const Balance = {
     fleeSpeedMult: 1.35,
     grabRadius: 0.9,
     pickupCap: 24,
+    maxConcurrent: 2,
+    maxConcurrentPerWaves: 6,
+    maxConcurrentCap: 4,
+    pingSeconds: 3,
   },
   wreck: {
     hp: {
@@ -144,14 +149,21 @@ export const Balance = {
       stockpile: 80,
       turret: 50,
     },
+    hpWaveScale: {
+      palisade: {
+        perWave: 4,
+        startWave: 6,
+        capMult: 2,
+      },
+    },
     damage: 8,
     hitCooldown: 0.9,
     reach: 1.1,
-    share: 0.34,
+    share: 0.25,
     pulseEvery: 2,
     minWave: 4,
     repairSeconds: 1.2,
-    repairCostFrac: 0.5,
+    repairCostFrac: 0.3,
     repairRadius: 1.4,
   },
   economy: {

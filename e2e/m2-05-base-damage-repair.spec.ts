@@ -69,6 +69,18 @@ async function placeBuildableAt(page: Page, id: BuildableId, x: number, z: numbe
   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
 }
 
+function repairCost(id: BuildableId): number {
+  return Math.ceil(buildBaseCost(id) * Balance.wreck.repairCostFrac);
+}
+
+function buildBaseCost(id: BuildableId): number {
+  if (id === 'palisade') return Balance.palisade.cost;
+  if (id === 'sluice') return Balance.sluice.cost;
+  if (id === 'stockpile') return Balance.stockpile.cost;
+  if (id === 'turret') return Math.ceil(Balance.turret.costBase / 5) * 5;
+  return Math.ceil(Balance.beacon.costBase / 5) * 5;
+}
+
 async function waitForSim(page: Page, seconds: number): Promise<void> {
   const start = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0);
   await page.waitForFunction(
@@ -190,7 +202,8 @@ test('repair dwell spends exact sink, restores function, and keeps replay equal 
   await placeBuildableAt(page, 'palisade', 0, 9);
   await wreck(page, 'palisade');
   const before = await gold(page);
-  await grantGold(page, 5);
+  const cost = repairCost('palisade');
+  await grantGold(page, cost);
   await teleport(page, 0, 9);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.repair.progress ?? 0)).toBeGreaterThan(0);
   await shot(page, 'repair-ring-mid-dwell');
@@ -199,7 +212,7 @@ test('repair dwell spends exact sink, restores function, and keeps replay equal 
   const after = await gold(page);
   expect(after).toBe(before);
   const log = await economyLog(page);
-  expect(log.some((event) => event.type === 'gold_spent' && event.sink === 'repair_palisade' && event.amount === 5)).toBe(true);
+  expect(log.some((event) => event.type === 'gold_spent' && event.sink === 'repair_palisade' && event.amount === cost)).toBe(true);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wreck.repairs ?? 0)).toBe(1);
   expect(await hpEntry(page, 'palisade').then((entry) => entry?.hp)).toBe(Balance.wreck.hp.palisade);
   const diagnostics = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__);
@@ -217,7 +230,7 @@ test('repair interrupt does not debit and no-funds repair shows one blocked floa
   await placeBuildableAt(page, 'palisade', 0, 9);
   await wreck(page, 'palisade');
   await teleport(page, 8, 16);
-  await grantGold(page, 5);
+  await grantGold(page, repairCost('palisade'));
   await teleport(page, 0, 9);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.repair.progress ?? 0)).toBeGreaterThan(0);
   await teleport(page, 8, 16);
@@ -310,7 +323,7 @@ test('wreck and repair cycles leave shooter and renderer counts at baseline', as
   await placeBuildableAt(page, 'sentry_beacon', 0, 12);
   await wreck(page, 'sentry_beacon');
   await teleport(page, 8, 16);
-  await grantGold(page, 13);
+  await grantGold(page, repairCost('sentry_beacon'));
   await teleport(page, 0, 12);
   await expect.poll(() => hpEntry(page, 'sentry_beacon').then((entry) => entry?.wrecked ?? true), { timeout: 10_000 }).toBe(false);
   await waitForSim(page, 0.5);
@@ -322,7 +335,7 @@ test('wreck and repair cycles leave shooter and renderer counts at baseline', as
   for (let i = 0; i < 3; i += 1) {
     await wreck(page, 'sentry_beacon');
     await teleport(page, 8, 16);
-    await grantGold(page, 13);
+    await grantGold(page, repairCost('sentry_beacon'));
     await teleport(page, 0, 12);
     await expect.poll(() => hpEntry(page, 'sentry_beacon').then((entry) => entry?.wrecked ?? true), { timeout: 10_000 }).toBe(false);
   }

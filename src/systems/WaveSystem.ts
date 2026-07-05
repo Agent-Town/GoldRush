@@ -30,6 +30,7 @@ export type WaveDiagnostics = {
   pulse: number;
   edge: CompassEdge | null;
   budget: number;
+  lastPulseAt: number;
 };
 
 const TELEGRAPH_SECONDS = 2;
@@ -63,6 +64,13 @@ const EDGE_COPY: Record<CompassEdge, readonly string[]> = {
   ],
 };
 
+const EDGE_PLACES: Record<CompassEdge, string> = {
+  north: 'north bank',
+  south: 'south bank',
+  east: 'east ridge',
+  west: 'west ridge',
+};
+
 export class WaveSystem {
   private readonly spawnPosition = new THREE.Vector3();
   private readonly debugCenter = new THREE.Vector3();
@@ -90,6 +98,7 @@ export class WaveSystem {
     private readonly scheduledDisabled: () => boolean,
     private readonly canSpawnThieves: () => boolean = () => false,
     private readonly canSpawnWreckers: () => boolean = () => false,
+    private readonly liveThiefCount: () => number = () => 0,
   ) {}
 
   get diagnostics(): WaveDiagnostics {
@@ -102,6 +111,7 @@ export class WaveSystem {
       pulse: this.pulse,
       edge: this.edge,
       budget: this.budget,
+      lastPulseAt: this.lastPulseAt,
     };
   }
 
@@ -207,12 +217,13 @@ export class WaveSystem {
   }
 
   private planWave(wave: number, startAt: number): void {
-    const pulseCount = this.effectivePulsesPerWave();
+    const pulseCount = this.effectivePulsesPerWave(wave);
     const edgeCount = this.effectiveEdgesPerPulse();
     const budget = Math.max(pulseCount * edgeCount, this.waveBudget(wave));
     const slots = pulseCount * edgeCount;
     const baseCount = Math.floor(budget / slots);
     let extra = budget % slots;
+    const lull = this.lullSecondsFor(wave);
 
     for (let pulse = 1; pulse <= pulseCount; pulse += 1) {
       const edges = this.pickEdges(edgeCount);
@@ -224,7 +235,7 @@ export class WaveSystem {
       this.plannedPulses.push({
         wave,
         pulse,
-        spawnAt: startAt + (pulse - 1) * Math.max(0, Balance.waves.lullSeconds),
+        spawnAt: startAt + (pulse - 1) * lull,
         edges,
         counts,
         budget,
@@ -248,6 +259,9 @@ export class WaveSystem {
         this.edge = edge;
         this.budget = pulse.budget;
         this.announce(this.waveCopy(edge), telegraphAt);
+        if (this.isWreckerPulse(pulse.counts[i] ?? 0, pulse.wave, pulse.pulse)) {
+          this.announce(this.wreckerCopy(edge), telegraphAt);
+        }
       }
     }
   }
@@ -347,7 +361,16 @@ export class WaveSystem {
   private thiefCount(groupCount: number, wave: number): number {
     if (!this.canSpawnThieves() || wave < Balance.steal.minWave) return 0;
     const count = Math.floor(groupCount * Balance.steal.share);
-    return Math.min(groupCount, Math.max(1, count));
+    const slots = this.thiefCap(wave) - this.liveThiefCount();
+    if (slots <= 0) return 0;
+    return Math.min(groupCount, slots, Math.max(1, count));
+  }
+
+  private thiefCap(wave: number): number {
+    const base = Math.max(0, Math.floor(Balance.steal.maxConcurrent));
+    const every = Math.max(1, Math.floor(Balance.steal.maxConcurrentPerWaves));
+    const hardCap = Math.max(0, Math.floor(Balance.steal.maxConcurrentCap));
+    return Math.min(hardCap, base + Math.floor(Math.max(0, wave) / every));
   }
 
   private wreckerCount(remainder: number, wave: number, pulse: number): number {
@@ -356,6 +379,11 @@ export class WaveSystem {
     if (pulse % Math.max(1, Math.floor(Balance.wreck.pulseEvery)) !== 0) return 0;
     const count = Math.floor(remainder * Balance.wreck.share);
     return Math.min(remainder, Math.max(1, count));
+  }
+
+  private isWreckerPulse(groupCount: number, wave: number, pulse: number): boolean {
+    const thieves = this.thiefCount(groupCount, wave);
+    return this.wreckerCount(groupCount - thieves, wave, pulse) > 0;
   }
 
   private currentTrickleInterval(atSim: number): number {
@@ -383,11 +411,16 @@ export class WaveSystem {
     return Math.max(1, Math.round(Math.min(ceiling, eased)));
   }
 
-  private effectivePulsesPerWave(): number {
+  private effectivePulsesPerWave(wave = this.nextPlanWave): number {
     const requested = Math.max(1, Math.floor(Balance.waves.pulsesPerWave));
-    const lull = Math.max(0.1, Balance.waves.lullSeconds);
+    const lull = Math.max(0.1, this.lullSecondsFor(wave));
     const maxByInterval = Math.max(1, Math.floor((this.waveInterval() - TELEGRAPH_SECONDS) / lull) + 1);
     return Math.min(requested, maxByInterval);
+  }
+
+  private lullSecondsFor(wave: number): number {
+    const base = Math.max(0, Balance.waves.lullSeconds);
+    return wave >= 12 ? Math.max(base, Balance.waves.lullFloor12) : base;
   }
 
   private effectiveEdgesPerPulse(): number {
@@ -416,7 +449,7 @@ export class WaveSystem {
       (pulse) => !pulse.spawned && pulse.wave === this.wave && pulse.spawnAt > this.lastPulseAt,
     );
     if (!nextPulse) return this.lastPulseAt;
-    return Math.min(nextPulse.spawnAt, this.lastPulseAt + Math.max(0, Balance.waves.lullSeconds));
+    return Math.min(nextPulse.spawnAt, this.lastPulseAt + this.lullSecondsFor(this.wave));
   }
 
   private resolveWaveState(atSim: number): WaveDiagnostics['waveState'] {
@@ -437,6 +470,10 @@ export class WaveSystem {
     }
     this.lastCopy = text;
     return text;
+  }
+
+  private wreckerCopy(edge: CompassEdge): string {
+    return `Wrecking crew sighted - ${EDGE_PLACES[edge]}.`;
   }
 
   private speedVariance(): number {

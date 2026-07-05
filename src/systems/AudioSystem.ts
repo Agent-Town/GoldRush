@@ -23,6 +23,10 @@ export class AudioSystem {
     this.blip(880, 1320, 0.04, 0.02);
   }
 
+  playPing(): void {
+    this.blip(660, 1480, 0.055, 0.03);
+  }
+
   dispose(): void {
     window.removeEventListener('pointerdown', this.resume);
     window.removeEventListener('keydown', this.resume);

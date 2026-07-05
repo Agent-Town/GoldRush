@@ -112,6 +112,10 @@
   min-height: 34px;
   padding: 7px 20px;
   opacity: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
   text-align: center;
   transform: translateX(-50%);
   transition: opacity 420ms ease;
@@ -119,6 +123,24 @@
 
 .hud--announcement-visible .hud__wave {
   opacity: 1;
+}
+
+.hud__wave-edge:empty {
+  display: none;
+}
+
+.hud__wave-edge {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border: 1px solid rgba(46, 27, 14, 0.62);
+  border-radius: 50%;
+  color: #fff8e8;
+  background: var(--at-rust-600);
+  font-size: 0.72rem;
+  font-weight: 900;
+  line-height: 1;
 }
 
 .hud-row {

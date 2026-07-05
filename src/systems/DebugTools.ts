@@ -105,6 +105,8 @@ export class DebugTools {
           recomputeDerived(path);
           onChange();
         });
+      } else if (child && typeof child === 'object') {
+        this.bindObject(folder.addFolder(key), path, child, onChange);
       }
     }
   }

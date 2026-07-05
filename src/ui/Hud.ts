@@ -17,6 +17,7 @@ type HudElements = {
   xpFill: HTMLElement;
   levelText: HTMLElement;
   waveText: HTMLElement;
+  waveEdge: HTMLElement;
   waveNumber: HTMLElement;
   timeText: HTMLElement;
   pauseHint: HTMLElement;
@@ -34,6 +35,7 @@ export class Hud {
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
       <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">
+        <span class="hud__wave-edge" data-testid="hud-edge" data-hud-edge aria-hidden="true"></span>
         <span data-hud-wave>Stake your claim.</span>
       </div>
 
@@ -96,6 +98,7 @@ export class Hud {
       xpFill: this.get(root, '[data-hud-xp-fill]'),
       levelText: this.get(root, '[data-hud-level]'),
       waveText: this.get(root, '[data-hud-wave]'),
+      waveEdge: this.get(root, '[data-hud-edge]'),
       waveNumber: this.get(root, '[data-hud-wave-number]'),
       timeText: this.get(root, '[data-hud-time]'),
       pauseHint: this.get(root, '[data-hud-pause]'),
@@ -176,12 +179,14 @@ export class Hud {
     }
 
     this.elements.waveText.textContent = snapshot.announcement;
+    this.elements.waveEdge.textContent = snapshot.announcementEdge ? edgeGlyph(snapshot.announcementEdge) : '';
+    this.elements.waveEdge.dataset.edge = snapshot.announcementEdge ?? '';
     this.elements.root.classList.add('hud--announcement-visible');
     this.announcementClearTimer = window.setTimeout(() => {
       if (this.lastAnnouncement === snapshot.announcement && this.lastAnnouncementAt === snapshot.announcementAt) {
         this.elements.root.classList.remove('hud--announcement-visible');
       }
-    }, 4_000);
+    }, Math.max(0.1, snapshot.announcementDurationSeconds) * 1000);
   }
 
   private get(root: HTMLElement, selector: string): HTMLElement {
@@ -189,4 +194,12 @@ export class Hud {
     if (!element) throw new Error(`Missing HUD element: ${selector}`);
     return element;
   }
+}
+
+function edgeGlyph(edge: UiSnapshot['announcementEdge']): string {
+  if (edge === 'north') return 'N';
+  if (edge === 'south') return 'S';
+  if (edge === 'east') return 'E';
+  if (edge === 'west') return 'W';
+  return '';
 }
