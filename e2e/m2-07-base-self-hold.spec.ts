@@ -201,7 +201,12 @@ async function spawnClusterAtHero(page: Page, wave: number): Promise<void> {
 }
 
 async function measureBlastTtk(page: Page, targetWave: number): Promise<TtkSample> {
-  await waitForStableWave(page, targetWave);
+  // F-022-1: pin a wide wave gap (40 sim-s) two waves early — before the target
+  // wave is planned — so the >=30 sim-s measurement window cannot be raced by the
+  // next wave on slow envs (5 protocol round-trips overran the old 10 sim-s window).
+  await waitForWave(page, Math.max(1, targetWave - 2));
+  await setBalance(page, 'waves.waveInterval', 40);
+  await waitForStableWave(page, targetWave, 30, 60_000);
   const wave = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? targetWave);
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
   await expect(page.evaluate(() => window.__GR_TEST__?.toggleWeapon())).resolves.toBe('blast');
@@ -228,6 +233,7 @@ async function measureBlastTtk(page: Page, targetWave: number): Promise<TtkSampl
   expect(done.wave).toBe(wave);
   await expect(page.evaluate(() => window.__GR_TEST__?.toggleWeapon())).resolves.toBe('rig');
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+  await setBalance(page, 'waves.waveInterval', 12); // restore the test's fast advancement interval
   return {
     wave,
     ttk: Number((done.time - start.time).toFixed(2)),
@@ -304,7 +310,7 @@ test('SELF-HOLD reference base survives two wave-15 pulse cycles without hero in
 });
 
 test('blast clump TTK at wave 20+ stays within 2x wave-10', async ({ page }, testInfo) => {
-  test.setTimeout(60_000);
+  test.setTimeout(90_000); // F-022-1: absorbs the two pinned 40 sim-s measurement gaps
   const errors = await openGame(page, '?debug&timescale=12&nolevel&nopause&nosteal&nowreck&seed=m2-07-blast-ttk');
   await setBalance(page, 'enemy.speed', 0);
   await setBalance(page, 'enemy.contactDamage', 0);

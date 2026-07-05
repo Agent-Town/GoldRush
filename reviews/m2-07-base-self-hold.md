@@ -32,3 +32,11 @@
 1. Mac: `npx playwright test` (full, both projects) — commit evidence file incl. `test-results/m2-07-base-self-hold/blast-ttk.json` numbers.
 2. Start `scripts/lane-runner-v2.sh` (v1 is retired; it produced this very on-main drop).
 3. Playtest turret feel (2.75x DPS is a big swing — your ruling, but feel it).
+
+## F-022-1 corrective (s36, 2026-07-05)
+
+Test-side de-race landed directly (review-fix authority, ~9 lines, e2e-only): `measureBlastTtk` now arrives two waves early (`waitForWave(target-2)`), pins `waves.waveInterval` 12→40 **before the target wave is planned** (WaveSystem plans just-in-time, telegraph-lead ahead; `waveInterval()` reads Balance live — so pinning at N−2 guarantees the ≥40 sim-s gap around wave N in both planning-race orderings), waits `waitForStableWave(target, 30, 60s)`, and restores 12 after each measurement. `test.setTimeout` 60s→90s absorbs the two pinned gaps.
+
+Gates (in-VM, /tmp/gr-s36): tsc --noEmit clean; spec collects both projects; mechanism probe PASS (`shots-m2-07/f-022-1-mechanism-probe.json`) — detection at wave 5 with 39.99 sim-s window, still on-wave with 36.6 sim-s after 6 protocol RTs at ts12. Full TTK run remains **Mac-owed** (by design it now spans ~50s wall, over the VM's 43s call wall): Robin's regression run supplies blast-ttk.json numbers; ratio≤2 gate unchanged (F-022-2).
+
+Env notes for next fire: `~/.cache/ms-playwright` symlink vanished again (s25 pattern) — set `PLAYWRIGHT_BROWSERS_PATH=/tmp/pw-browsers` per call; `~/locallibs` wiped — xdamage stub rebuilt from `scripts/xdamage-stub.c` into `/tmp/gr-s36/locallibs`.
