@@ -22,12 +22,14 @@ import * as Terrain from '../world/Terrain';
 export type BuildableSnapshot = {
   id: BuildableId;
   displayName: string;
+  blurb?: string;
   cost: number;
   count: number;
   maxCount: number;
   canAfford: boolean;
   selected: boolean;
   iconSlot: `ui.build.icon.${BuildableId}`;
+  portraitSlug?: string;
 };
 
 export type BuildDiagnostics = {
@@ -42,11 +44,13 @@ export type BuildDiagnostics = {
   sluices: number;
   stockpiles: number;
   turrets: number;
+  assayOffices: number;
   beaconPositions: Array<{ x: number; z: number }>;
   palisadePositions: Array<{ x: number; z: number }>;
   sluicePositions: Array<{ x: number; z: number }>;
   stockpilePositions: Array<{ x: number; z: number }>;
   turretPositions: Array<{ x: number; z: number }>;
+  assayOfficePositions: Array<{ x: number; z: number }>;
   buildables: Array<{ id: BuildableId; count: number }>;
   sluicesState: SluiceSnapshot[];
   stockpilesState: StockpileSnapshot[];
@@ -74,7 +78,7 @@ const invalidColor = new THREE.Color('#8a4a2a');
 const emptyPositions: Array<{ x: number; z: number }> = [];
 const emptySluiceSnapshots: SluiceSnapshot[] = [];
 const emptyStockpileSnapshots: StockpileSnapshot[] = [];
-const buildableIds: readonly BuildableId[] = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret'];
+const buildableIds: readonly BuildableId[] = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office'];
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const hpColor = new THREE.Color('#a0522d');
 const rubbleColor = new THREE.Color('#8b7d3c');
@@ -99,12 +103,16 @@ export class BuildSystem {
   private readonly sluices = new SluicePool();
   private readonly stockpiles = new StockpilePool();
   private readonly turrets = new TurretPool();
+  private readonly assayOffice = new THREE.Group();
   private readonly ghost = new THREE.Group();
   private readonly beaconGhost = new THREE.Group();
   private readonly palisadeGhost = new THREE.Group();
   private readonly sluiceGhost = new THREE.Group();
   private readonly stockpileGhost = new THREE.Group();
   private readonly turretGhost = new THREE.Group();
+  private readonly assayOfficeGhost = new THREE.Group();
+  private readonly assayOfficePosition = new THREE.Vector3();
+  private assayOfficeActive = false;
   private readonly ghostMaterial = new THREE.MeshStandardMaterial({
     color: validColor,
     emissive: validColor,
@@ -150,6 +158,16 @@ export class BuildSystem {
     new THREE.MeshBasicMaterial({ color: repairColor, transparent: true, opacity: 0.86, side: THREE.DoubleSide }),
   );
   private readonly repairRingIndexCount: number;
+  private readonly assayOfficeMaterial = new THREE.MeshStandardMaterial({
+    color: '#f5e6c8',
+    roughness: 0.82,
+    metalness: 0.03,
+  });
+  private readonly assayRoofMaterial = new THREE.MeshStandardMaterial({
+    color: '#8b7d3c',
+    roughness: 0.72,
+    metalness: 0.12,
+  });
   private selectedId: BuildableId = 'sentry_beacon';
   private ghostRotationSteps = 0;
   private beaconFireRateMult = 1;
@@ -185,10 +203,12 @@ export class BuildSystem {
       this.sluices.group,
       this.stockpiles.group,
       this.turrets.group,
+      this.assayOffice,
       this.buildingVisuals,
       this.repairRing,
       this.ghost,
     );
+    this.createAssayOffice();
     this.createGhost();
     this.createBuildingTargets();
     this.combat.registerBuildingDamageResolver((target, amount) => this.resolveBuildingDamage(target, amount));
@@ -233,12 +253,14 @@ export class BuildSystem {
       return {
         id: def.id,
         displayName: def.displayName,
+        blurb: def.blurb,
         cost,
         count,
         maxCount: def.maxCount,
         canAfford: this.economy.gold >= cost && count < def.maxCount,
         selected: def.id === this.selectedId,
         iconSlot: def.iconSlot,
+        portraitSlug: def.portraitSlug,
       };
     });
   }
@@ -294,11 +316,13 @@ export class BuildSystem {
       sluices: this.sluices.activeCount,
       stockpiles: this.stockpiles.activeCount,
       turrets: this.turrets.activeCount,
+      assayOffices: this.assayOfficeActive ? 1 : 0,
       beaconPositions: this.activePositions(this.beacons),
       palisadePositions: this.activePositions(this.palisades),
       sluicePositions: sluicesActive ? this.activePositions(this.sluices) : emptyPositions,
       stockpilePositions: stockpilesActive ? this.activePositions(this.stockpiles) : emptyPositions,
       turretPositions: this.activePositions(this.turrets),
+      assayOfficePositions: this.assayOfficeActive ? [{ x: this.assayOfficePosition.x, z: this.assayOfficePosition.z }] : emptyPositions,
       buildables: this.buildableCounts,
       sluicesState: sluicesActive ? this.sluiceSnapshots() : emptySluiceSnapshots,
       stockpilesState: stockpilesActive ? this.stockpileSnapshots() : emptyStockpileSnapshots,
@@ -422,6 +446,9 @@ export class BuildSystem {
     this.turrets.reset();
     for (let i = 0; i < this.stockpiles.capacity; i += 1) this.economy.removeCapSource(stockpileCapSource(i));
     this.stockpiles.reset();
+    this.assayOfficeActive = false;
+    this.assayOffice.visible = false;
+    this.assayOfficePosition.set(0, 0, 0);
     this.selectedId = 'sentry_beacon';
     this.ghostRotationSteps = 0;
     this.syncGhostShape();
@@ -463,10 +490,23 @@ export class BuildSystem {
     this.buildingVisualMaterial.dispose();
     this.repairRing.geometry.dispose();
     this.repairRing.material.dispose();
+    this.assayOffice.traverse((child) => {
+      const mesh = child as THREE.Mesh;
+      mesh.geometry?.dispose();
+    });
+    this.assayOfficeMaterial.dispose();
+    this.assayRoofMaterial.dispose();
   }
 
   buildingTarget(id: BuildableId, index: number): BuildingTarget | null {
     return this.targets[id][index] ?? null;
+  }
+
+  assayOfficeInRange(position: THREE.Vector3, radius = Balance.assayOffice.interactRadius): boolean {
+    if (!this.assayOfficeActive || this.wrecked.assay_office[0]) return false;
+    const dx = this.assayOfficePosition.x - position.x;
+    const dz = this.assayOfficePosition.z - position.z;
+    return dx * dx + dz * dz <= radius * radius;
   }
 
   remainingHp(id: BuildableId, index: number): number {
@@ -576,6 +616,9 @@ export class BuildSystem {
       const pos = this.turrets.allPositions[i];
       if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'turret', pos, 0)) return true;
     }
+    if (this.assayOfficeActive && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'assay_office', this.assayOfficePosition, 0)) {
+      return true;
+    }
     return false;
   }
 
@@ -633,6 +676,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.activeCount;
     if (id === 'stockpile') return this.stockpiles.activeCount;
     if (id === 'turret') return this.turrets.activeCount;
+    if (id === 'assay_office') return this.assayOfficeActive ? 1 : 0;
     return this.beacons.activeCount;
   }
 
@@ -641,6 +685,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.place(position);
     if (id === 'stockpile') return this.stockpiles.place(position);
     if (id === 'turret') return this.turrets.place(position);
+    if (id === 'assay_office') return this.placeAssayOffice(position);
     return this.beacons.place(position);
   }
 
@@ -721,6 +766,7 @@ export class BuildSystem {
   }
 
   private positionFor(id: BuildableId, index: number): THREE.Vector3 | undefined {
+    if (id === 'assay_office') return index === 0 && this.assayOfficeActive ? this.assayOfficePosition : undefined;
     if (id === 'palisade') return this.palisades.allPositions[index];
     if (id === 'sluice') return this.sluices.allPositions[index];
     if (id === 'stockpile') return this.stockpiles.allPositions[index];
@@ -1009,6 +1055,7 @@ export class BuildSystem {
     this.sluiceGhost.visible = this.selectedId === 'sluice';
     this.stockpileGhost.visible = this.selectedId === 'stockpile';
     this.turretGhost.visible = this.selectedId === 'turret';
+    this.assayOfficeGhost.visible = this.selectedId === 'assay_office';
   }
 
   private createGhost(): void {
@@ -1017,7 +1064,29 @@ export class BuildSystem {
     this.createSluiceGhost();
     this.createStockpileGhost();
     this.createTurretGhost();
-    this.ghost.add(this.beaconGhost, this.palisadeGhost, this.sluiceGhost, this.stockpileGhost, this.turretGhost);
+    this.createAssayOfficeGhost();
+    this.ghost.add(this.beaconGhost, this.palisadeGhost, this.sluiceGhost, this.stockpileGhost, this.turretGhost, this.assayOfficeGhost);
+  }
+
+  private placeAssayOffice(position: THREE.Vector3): number {
+    if (this.assayOfficeActive) return -1;
+    this.assayOfficeActive = true;
+    this.assayOfficePosition.copy(position);
+    this.assayOffice.position.copy(position);
+    this.assayOffice.visible = true;
+    return 0;
+  }
+
+  private createAssayOffice(): void {
+    const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.9, 1.1), this.assayOfficeMaterial);
+    base.position.y = 0.45;
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.18, 1.28), this.assayRoofMaterial);
+    roof.position.y = 0.98;
+    roof.rotation.z = 0.04;
+    const plaque = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.24, 0.04), this.assayRoofMaterial);
+    plaque.position.set(0, 0.62, -0.57);
+    this.assayOffice.add(base, roof, plaque);
+    this.assayOffice.visible = false;
   }
 
   private createBeaconGhost(): void {
@@ -1086,6 +1155,16 @@ export class BuildSystem {
     const head = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.18, 0.36, 10), this.ghostMaterial);
     head.position.set(0, 0.92, 0);
     this.turretGhost.add(head);
+  }
+
+  private createAssayOfficeGhost(): void {
+    const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.9, 1.1), this.ghostMaterial);
+    base.position.y = 0.45;
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.18, 1.28), this.ghostMaterial);
+    roof.position.y = 0.98;
+    const plaque = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.24, 0.04), this.ghostMaterial);
+    plaque.position.set(0, 0.62, -0.57);
+    this.assayOfficeGhost.add(base, roof, plaque);
   }
 
   private hasLineOfSight(from: THREE.Vector3, to: THREE.Vector3): boolean {
@@ -1198,6 +1277,7 @@ function createStore<T>(make: (id: BuildableId, index: number) => T): BuildingFa
     sluice: createFamily('sluice', make),
     stockpile: createFamily('stockpile', make),
     turret: createFamily('turret', make),
+    assay_office: createFamily('assay_office', make),
   };
 }
 

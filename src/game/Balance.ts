@@ -139,6 +139,11 @@ export const Balance = {
     maxCount: 2,
     capBonus: 150,
   },
+  assayOffice: {
+    cost: 80,
+    maxCount: 1,
+    interactRadius: 1.8,
+  },
   steal: {
     share: 0.25,
     minWave: 3,
@@ -164,6 +169,7 @@ export const Balance = {
       sluice: 40,
       stockpile: 80,
       turret: 50,
+      assay_office: 60,
     },
     hpWaveScale: {
       sentry_beacon: {

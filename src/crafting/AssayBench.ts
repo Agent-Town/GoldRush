@@ -86,6 +86,10 @@ export class AssayBenchPanel {
     parent.append(this.root);
   }
 
+  focus(): void {
+    this.text.focus();
+  }
+
   dispose(): void {
     this.root.querySelector('[data-testid="assay-post"]')?.removeEventListener('click', this.postOrder);
     this.root.removeEventListener('keydown', this.stopGameHotkeys);

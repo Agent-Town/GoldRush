@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
 import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
@@ -90,6 +91,7 @@ export class ClaimJumperEnemy {
   private readonly velocity = new THREE.Vector3();
   private readonly leadVelocity = new THREE.Vector3();
   private readonly heading = new THREE.Vector3(0, 0, -1);
+  private readonly orientationResolver = new OrientationResolver();
   private readonly nextPosition = new THREE.Vector3();
   private readonly fleeTarget = new THREE.Vector3();
   private readonly routeTarget = new THREE.Vector3();
@@ -101,6 +103,7 @@ export class ClaimJumperEnemy {
   private scripted = false;
   private contactCooldown = 0;
   private spriteClip: CharacterSpriteClip = 'idle';
+  private spriteOrientation: RotationDirection = 's';
   private thief = false;
   private wrecker = false;
   private thiefState: ThiefState = 'none';
@@ -135,6 +138,10 @@ export class ClaimJumperEnemy {
 
   get animationClip(): CharacterSpriteClip {
     return this.spriteClip;
+  }
+
+  get animationOrientation(): RotationDirection {
+    return this.spriteOrientation;
   }
 
   get isThief(): boolean {
@@ -199,6 +206,8 @@ export class ClaimJumperEnemy {
     this.velocity.set(0, 0, 0);
     this.leadVelocity.set(0, 0, 0);
     this.heading.set(0, 0, -1);
+    this.orientationResolver.reset();
+    this.spriteOrientation = 's';
     this.spriteClip = 'walk';
     this.group.position.copy(position);
     this.group.position.y = Balance.enemy.groundY;
@@ -256,6 +265,9 @@ export class ClaimJumperEnemy {
 
     if (this.velocity.lengthSq() > 0.0025) {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);
+      this.spriteOrientation = this.orientationResolver.resolve(this.velocity.x, this.velocity.z);
+    } else {
+      this.spriteOrientation = this.orientationResolver.idleDirection();
     }
 
     const touchRadius = Balance.hero.radius + Balance.enemy.touchRadius;
@@ -299,6 +311,8 @@ export class ClaimJumperEnemy {
     this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);
     this.leadVelocity.set(0, 0, 0);
+    this.orientationResolver.reset();
+    this.spriteOrientation = 's';
     this.spriteClip = 'idle';
     this.group.visible = false;
     this.group.position.set(0, Balance.enemy.groundY, 0);

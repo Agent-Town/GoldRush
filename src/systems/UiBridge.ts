@@ -29,12 +29,14 @@ export type UiSnapshot = {
   buildables: Array<{
     id: BuildableId;
     displayName: string;
+    blurb?: string;
     cost: number;
     count: number;
     maxCount: number;
     canAfford: boolean;
     selected: boolean;
     iconSlot: `ui.build.icon.${BuildableId}`;
+    portraitSlug?: string;
   }>;
   stockpileCount: number;
   beaconCount: number;

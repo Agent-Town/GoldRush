@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+type GrBuildableId = GrBuildableId | 'assay_office';
+
 interface ThreeGameDiagnostics {
   frame: number;
   elapsed: number;
@@ -27,16 +29,18 @@ interface ThreeGameDiagnostics {
     paused: boolean;
     buildMode: boolean;
     buildMenuOpen: boolean;
-    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
+    selectedBuildable: GrBuildableId;
     buildables: Array<{
-      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
+      id: GrBuildableId;
       displayName: string;
+      blurb?: string;
       cost: number;
       count: number;
       maxCount: number;
       canAfford: boolean;
       selected: boolean;
       iconSlot: string;
+      portraitSlug?: string;
     }>;
     stockpileCount: number;
     beaconCount: number;
@@ -167,7 +171,7 @@ interface ThreeGameDiagnostics {
     ghostPos: { x: number; z: number };
     ghostRotationSteps: number;
     ghostFootprint: { w: number; d: number };
-    selectedBuildable: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
+    selectedBuildable: GrBuildableId;
     beacons: number;
     palisades: number;
     sluices: number;
@@ -178,7 +182,9 @@ interface ThreeGameDiagnostics {
     sluicePositions: Array<{ x: number; z: number }>;
     stockpilePositions: Array<{ x: number; z: number }>;
     turretPositions: Array<{ x: number; z: number }>;
-    buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret'; count: number }>;
+    assayOffices: number;
+    assayOfficePositions: Array<{ x: number; z: number }>;
+    buildables: Array<{ id: GrBuildableId; count: number }>;
     sluicesState: Array<{
       id: string;
       active: boolean;
@@ -196,7 +202,7 @@ interface ThreeGameDiagnostics {
     nextCost: number;
     killsByOwner: Readonly<Record<string, number>>;
     hp: Array<{
-      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
+      id: GrBuildableId;
       index: number;
       hp: number;
       maxHp: number;
@@ -208,7 +214,7 @@ interface ThreeGameDiagnostics {
     hpBars: number;
     repair: {
       active: boolean;
-      id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | null;
+      id: GrBuildableId | null;
       index: number;
       progress: number;
       blocked: boolean;
@@ -311,7 +317,7 @@ interface Window {
     spawnPack: (n: number, radius?: number, opts?: { speedScale?: number; wrecker?: boolean }) => void;
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
-    wreck: (family: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret', index: number) => boolean;
+    wreck: (family: GrBuildableId, index: number) => boolean;
     resetRun: () => void;
     toggleWeapon: () => 'rig' | 'blast';
     setBlastAim: (x: number, z: number) => { x: number; z: number };
@@ -386,7 +392,7 @@ interface Window {
         aimTarget: { x: number; z: number };
         lastDetonation: { x: number; z: number } | null;
       };
-      buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret'; count: number }>;
+      buildables: Array<{ id: GrBuildableId; count: number }>;
       economy: {
         banked: number;
         bankCap: number;

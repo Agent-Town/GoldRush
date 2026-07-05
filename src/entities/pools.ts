@@ -13,6 +13,7 @@ import {
   type ThiefUpdateContext,
   type WreckerUpdateContext,
 } from './Enemy';
+import type { RotationDirection } from '../assets/OrientationResolver';
 
 export class EnemyPool {
   readonly group = new THREE.Group();
@@ -144,8 +145,10 @@ export class EnemyPool {
       }
     }
     this.syncInstances();
-    this.spriteAnimator.update(delta, this.activeClip(false));
-    this.thiefSpriteAnimator.update(delta, this.activeClip(true));
+    const normalAnimation = this.activeAnimation(false);
+    const thiefAnimation = this.activeAnimation(true);
+    if (thiefAnimation.active) this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.orientation);
+    if (normalAnimation.active || !thiefAnimation.active) this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.orientation);
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
@@ -175,19 +178,25 @@ export class EnemyPool {
     disposeClaimJumperAssets(this.assets);
   }
 
-  private activeClip(thieves: boolean): CharacterSpriteClip {
+  private activeAnimation(thieves: boolean): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean } {
     if (thieves) {
       for (const enemy of this.enemies) {
-        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'grab') return 'grab';
+        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'grab') {
+          return { clip: 'grab', orientation: enemy.animationOrientation, active: true };
+        }
       }
       for (const enemy of this.enemies) {
-        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'flee') return 'flee';
+        if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'flee') {
+          return { clip: 'flee', orientation: enemy.animationOrientation, active: true };
+        }
       }
     }
     for (const enemy of this.enemies) {
-      if (enemy.isAlive && enemy.isThief === thieves) return enemy.animationClip;
+      if (enemy.isAlive && enemy.isThief === thieves) {
+        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true };
+      }
     }
-    return 'idle';
+    return { clip: 'idle', orientation: 's', active: false };
   }
 
   private createRenderParts(): void {

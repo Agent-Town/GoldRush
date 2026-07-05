@@ -1,11 +1,12 @@
 import { Balance } from './Balance';
 
-export type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
+export type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office';
 export type BuildPlacement = 'bank' | 'river-adjacent' | 'any';
 
 export type BuildableDef = {
   id: BuildableId;
   displayName: string;
+  blurb?: string;
   costCurve: (built: number) => number;
   footprint: { w: number; d: number };
   hpMax: number | null;
@@ -13,6 +14,7 @@ export type BuildableDef = {
   slotFamily: `building.${BuildableId}`;
   maxCount: number;
   iconSlot: `ui.build.icon.${BuildableId}`;
+  portraitSlug?: string;
   rotatable?: boolean;
 };
 
@@ -27,6 +29,7 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.sentry_beacon',
     maxCount: Balance.beacon.maxCount,
     iconSlot: 'ui.build.icon.sentry_beacon',
+    portraitSlug: 'sentry-beacon',
   },
   {
     id: 'palisade',
@@ -38,6 +41,7 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.palisade',
     maxCount: Balance.palisade.maxCount,
     iconSlot: 'ui.build.icon.palisade',
+    portraitSlug: 'palisade',
     rotatable: true,
   },
   {
@@ -50,6 +54,7 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.sluice',
     maxCount: Balance.sluice.maxCount,
     iconSlot: 'ui.build.icon.sluice',
+    portraitSlug: 'sluice-works',
   },
   {
     id: 'stockpile',
@@ -61,6 +66,7 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.stockpile',
     maxCount: Balance.stockpile.maxCount,
     iconSlot: 'ui.build.icon.stockpile',
+    portraitSlug: 'stockpile-yard',
   },
   {
     id: 'turret',
@@ -72,6 +78,19 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.turret',
     maxCount: Balance.turret.maxCount,
     iconSlot: 'ui.build.icon.turret',
+    portraitSlug: 'signal-turret',
+  },
+  {
+    id: 'assay_office',
+    displayName: 'Assay Office',
+    blurb: 'River-side ledger house where claim notes become bench receipts.',
+    costCurve: () => Balance.assayOffice.cost,
+    footprint: { w: 2, d: 1.5 },
+    hpMax: Balance.wreck.hp.assay_office,
+    placement: 'river-adjacent',
+    slotFamily: 'building.assay_office',
+    maxCount: Balance.assayOffice.maxCount,
+    iconSlot: 'ui.build.icon.assay_office',
   },
 ];
 
