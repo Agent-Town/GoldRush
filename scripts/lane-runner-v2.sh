@@ -69,5 +69,9 @@ while true; do
     fi
     echo "[lane-runner-v2] $(date +%H:%M:%S) DONE rc=$rc $slot :: $name"
   done
+  # JANITOR (s9af): fires may not delete on the mount (session-scoped permission prompts);
+  # they RENAME git debris instead. This Mac-side sweep is the only deleter.
+  find "$ROOT/.git" -maxdepth 2 \( -name '*.stale*' -o -name 'tmp_obj_*' \) -type f -delete 2>/dev/null
+  find "$ROOT/tasks/runs" -name '*.log' -mtime +3 -delete 2>/dev/null
   sleep 20
 done
