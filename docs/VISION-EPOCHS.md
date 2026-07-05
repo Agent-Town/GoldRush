@@ -22,3 +22,19 @@ S1 (now): 027 victory-matters + M5 finish + Demo Day. S2: M6 Town v1 — static 
 - Victory compounds the world, visibly, every time (027 principle, now constitutional).
 - Characters persist and age; the story is the reward. Generated content (faces, houses, tales) flows through pipeline v2 + contracts — generator proposes, canon/validation disposes.
 - Epochs are satire-friendly but stay warm, illustrated, never gory; naming stays places/rituals.
+
+## Asset strategy at epoch scale (s9ao)
+APPETITE (honest): per epoch ~10-15 buildings + transformed variants, 10-20 townsfolk (portraits + sheets + AGING variants), a terrain/biome set per new tile, weapons/icons/contract art -> 60-150 generations per epoch incl. retries; thousands over the project's life.
+RATE LIMITS (honest): subscription pools (Codex image_gen, ChatGPT web) have window caps — fine for a DRIP, walls for BURSTS (already observed: one credit exhaustion).
+STRATEGY — volume becomes a schedule, not an event:
+1. assets/BACKLOG.md = the standing manifest (per-stage, priority-ordered). Fires maintain it from specs.
+2. NIGHTLY ART SHIFT: a recurring art task the fires enqueue — process the top N backlog items per night (N tuned to observed limits, start 15-20), reference-conditioned, self-QA'd, logged with burn rate. Epochs are months away in play-time; their assets accrue silently in the background.
+3. TRANSFORMS OVER REGENERATION: era-variants of houses/characters via image-EDIT on the existing asset (consistency + often cheaper); in-engine tint/palette variants for townsfolk diversity; procedural layer keeps carrying terrain/vfx.
+4. BURST VALVE (Robin decision when needed): a usage-based API key with a hard monthly cost guard — the offline-queue JSONs make the backend swappable without touching the pipeline.
+
+## The no-code adventure platform (Robin's end-state; the family IS the prototype)
+The loop Robin runs with Claude (describe -> agent implements -> gates verify -> play) IS the product, re-surfaced for kids:
+- LAYER 1 (ships within current roadmap, M5/S2-S3): tavern tale-telling / Assay authoring — describe an adventure in words -> agent composes mode-manifest + map layout -> validation gates -> playable, shareable as a file. CONTENT ONLY, no code, fully safe. This is the kids' first authorship.
+- LAYER 2: the Adventure Workshop — conversational TUNING with their agent ("faster bandits, bigger reward") = manifest diffs with preview/approve (permission-ladder pattern reused verbatim). Still content-only.
+- LAYER 3 (the platform): the engine's VERBS (move/shoot/build/collect/defend/chase/escort...) recombined by manifests give a Bomberman-sized possibility space WITHOUT arbitrary code. NEW verbs remain the adults' factory (specs->lanes->gates) — kids request a verb, the family factory ships it gated. Sharing = manifest+asset bundles as files first; any hosted/public gallery is a FUTURE decision with real moderation questions — flagged, not designed.
+LAW: authored content passes the same two gates as crafted items (contract + sim/abuse). Canon tone holds in shared content surfaces.
