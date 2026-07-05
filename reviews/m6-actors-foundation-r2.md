@@ -26,3 +26,11 @@
 Split the monolith — it died twice as one scary task:
 1. **3a audit+report only** — read-only, cheap, un-killable: every hero-singleton touchpoint with risk notes + the 2nd-actor needs report.
 2. **3b mechanical refactor** behind the knob, with the perf-04 determinism harness (seeded-hash equivalence) run FIRST, before the full suite.
+
+---
+
+## ADDENDUM (s49, 2026-07-05) — RED-GATE EVIDENCE RETRACTED, PARTIAL EXONERATION
+
+The decisive finding above — m1-01 stress `expected-96-got-95` ON MAC = "knob-off equivalence broken, no env excuse" — is **retracted**. s49's 028 gate hit the same red on root, A/B'd it on pure HEAD (fails identically, no lane-d diff present), and probed the cause: main's own 024-era damage tuning lets the rig kill one-shot-spawned stress enemies inside the settle window (alive decays 96→95→94; probe logged in reviews/task-028-spark-target-leading.md). The tripwire was broken on main; it convicts nobody. Fixed as F-028-1 (`&nokill` on the stress URL).
+
+What still stands against lane-d attempt 2: died mid-task (real partial: Game.ts mid-refactor), produced NO audit report, and its done-move was premature (done file byte-identical to task). The RETRY-LAW STOP remains, but the "broke knob-off equivalence" conviction is withdrawn. **Robin: your attempt-3 verdict (owes #6) should weigh the split recommendation (3a audit-only, 3b knob refactor behind perf-04 determinism harness) WITHOUT the equivalence-broken premise — the partial may be closer to sound than r2 concluded.**

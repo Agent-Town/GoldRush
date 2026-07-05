@@ -93,7 +93,14 @@ test('double restart recycles enemies without geometry growth', async ({ page })
 });
 
 test('stress=120 stays within pool and draw-call budget', async ({ page }) => {
-  await page.goto('/?stress=120&nowaves');
+  // F-028-1 (s49): &nokill added — 024-era damage tuning made the rig kill stress
+  // enemies inside the settle window (96 -> 95 -> 94 decay, probed on pure HEAD),
+  // so the exact pool-cap identity below was racing live combat. This test's intent
+  // is pool cap + spawn integrity + draw calls + fps, NOT kill rate; nokill freezes
+  // combat damage (proven harness flag, task-025/m2-05b precedent) and restores the
+  // deterministic ===96. This red also fired lane-d's r2 "equivalence broken" verdict
+  // on Mac — that evidence is retracted (see reviews/m6-actors-foundation-r2.md addendum).
+  await page.goto('/?stress=120&nowaves&nokill');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 20);
 
   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0);
