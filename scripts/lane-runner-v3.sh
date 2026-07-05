@@ -1,0 +1,63 @@
+#!/bin/bash
+# Gold Rush lane runner v3 — TRUE PARALLEL slots (v2 was serial: codex exec blocked the loop).
+# One concurrent task PER SLOT (up to 5 at once), each in its own worktree, background jobs.
+# Keeps v2's fixes: single-instance mkdir lock, failed/ dir, working Ctrl+C, janitor.
+# Swap protocol: wait for current v2 task DONE -> Ctrl+C v2 -> start v3.
+set -u
+ROOT="$(cd "$(dirname "$0")/.." && pwd)"
+LOCKDIR="$ROOT/tasks/.runner.lock"
+if ! mkdir "$LOCKDIR" 2>/dev/null; then
+  echo "[lane-runner-v3] another instance running ($LOCKDIR). Remove if stale."; exit 1
+fi
+cleanup() { rmdir "$LOCKDIR" 2>/dev/null; }
+trap 'cleanup; echo "[lane-runner-v3] stopped (background tasks finish on their own)"; exit 130' INT TERM
+trap cleanup EXIT
+mkdir -p "$ROOT/tasks/runs" "$ROOT/tasks/done" "$ROOT/tasks/failed" "$ROOT/tasks/running"
+dir_for_slot() {
+  case "$1" in
+    main)   echo "$ROOT" ;;
+    lane-a) echo "$ROOT/worktrees/lane-a" ;;
+    lane-b) echo "$ROOT/worktrees/lane-b" ;;
+    lane-c) echo "$ROOT/worktrees/lane-c" ;;
+    lane-d) echo "$ROOT/worktrees/lane-d" ;;
+    *)      echo "" ;;
+  esac
+}
+echo "[lane-runner-v3] watching $ROOT/tasks/queue — parallel slots — Ctrl+C to stop"
+while true; do
+  for slot in main lane-a lane-b lane-c lane-d; do
+    pidfile="$ROOT/tasks/running/$slot.pid"
+    if [ -f "$pidfile" ]; then
+      pid=$(cat "$pidfile" 2>/dev/null)
+      if [ -n "${pid:-}" ] && kill -0 "$pid" 2>/dev/null; then continue; fi
+      # stale pid: crashed mid-task -> salvage to failed/
+      for r in "$ROOT/tasks/running/$slot--"*.md; do
+        [ -e "$r" ] && mv "$r" "$ROOT/tasks/failed/CRASHED-$(basename "$r")"
+      done
+      rm -f "$pidfile"
+      echo "[lane-runner-v3] $slot: stale run cleaned (crash salvaged to failed/)"
+    fi
+    q="$ROOT/tasks/queue/$slot"
+    f=$(ls "$q"/*.md 2>/dev/null | head -1)
+    [ -z "${f:-}" ] && continue
+    name=$(basename "$f")
+    wd="$(dir_for_slot "$slot")"
+    if [ -z "$wd" ] || [ ! -d "$wd" ]; then echo "[lane-runner-v3] $slot dir missing, skip $name"; continue; fi
+    stamp=$(date +%Y%m%d-%H%M%S)
+    run="$ROOT/tasks/running/$slot--$stamp-$name"
+    mv "$f" "$run"
+    log="$ROOT/tasks/runs/$stamp-$slot-$name.log"
+    echo "[lane-runner-v3] $stamp START $slot :: $name (log: $log)"
+    (
+      cd "$wd" && codex exec "Do the task in the file at: $run" >"$log" 2>&1
+      rc=$?
+      if [ $rc -eq 0 ]; then mv "$run" "$ROOT/tasks/done/$stamp-$name"; else mv "$run" "$ROOT/tasks/failed/rc$rc-$stamp-$name"; fi
+      rm -f "$ROOT/tasks/running/$slot.pid"
+      echo "[lane-runner-v3] $(date +%H:%M:%S) DONE rc=$rc $slot :: $name"
+    ) &
+    echo $! > "$pidfile"
+  done
+  find "$ROOT/.git" -maxdepth 2 \( -name '*.stale*' -o -name 'tmp_obj_*' \) -type f -delete 2>/dev/null
+  find "$ROOT/tasks/runs" -name '*.log' -mtime +3 -delete 2>/dev/null
+  sleep 15
+done
