@@ -363,7 +363,11 @@ export class Game {
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
         rotateBuildGhost: () => this.buildSystem.rotateGhost(),
-        confirmBuild: () => this.buildSystem.confirm(this.timeAlive),
+        confirmBuild: () => {
+          const placed = this.buildSystem.confirm(this.timeAlive);
+          this.publishDiagnostics();
+          return placed;
+        },
         enemyPositions: () =>
           this.enemies.all
             .filter((enemy) => enemy.isAlive)

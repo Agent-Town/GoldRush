@@ -61,7 +61,7 @@ export const Balance = {
   },
   blast: {
     damage: 20,
-    dmgPerWave: 0.02,
+    dmgPerWave: 0.28,
     radius: 2.2,
     cooldown: 2.5,
     airTime: 0.7,
@@ -100,9 +100,9 @@ export const Balance = {
     costBase: 50,
     costGrowth: 1.35,
     maxCount: 4,
-    damage: 26,
-    fireRate: 0.8,
-    range: 12,
+    damage: 52,
+    fireRate: 1.1,
+    range: 16,
     boltSpeed: 16,
     volley: 1,
     placeRadius: 6,
@@ -158,10 +158,20 @@ export const Balance = {
       turret: 50,
     },
     hpWaveScale: {
-      palisade: {
-        perWave: 4,
+      sentry_beacon: {
+        perWave: 6,
         startWave: 6,
-        capMult: 2,
+        capMult: 3,
+      },
+      palisade: {
+        perWave: 8,
+        startWave: 6,
+        capMult: 3,
+      },
+      turret: {
+        perWave: 8,
+        startWave: 6,
+        capMult: 3,
       },
     },
     damage: 8,

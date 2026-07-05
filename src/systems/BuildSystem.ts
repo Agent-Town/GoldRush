@@ -731,9 +731,9 @@ export class BuildSystem {
 
   private maxHpForPlacement(id: BuildableId): number {
     const base = Balance.wreck.hp[id];
-    if (id !== 'palisade') return base;
+    const scale = Balance.wreck.hpWaveScale[id as keyof typeof Balance.wreck.hpWaveScale];
+    if (!scale) return base;
 
-    const scale = Balance.wreck.hpWaveScale.palisade;
     const wave = Math.max(0, Math.floor(this.getWave()));
     const steps = Math.max(0, wave - Math.max(0, Math.floor(scale.startWave)) + 1);
     const scaled = base + steps * Math.max(0, scale.perWave);
