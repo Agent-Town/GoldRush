@@ -6,6 +6,8 @@ export type RunSummary = {
   buildingsBuilt: number;
 };
 
+export type RunEndReason = 'death' | 'secured' | 'rush';
+
 export type GameEvent =
   | {
       type: 'hero_damaged';
@@ -50,6 +52,11 @@ export type GameEvent =
       sourceId: number;
     }
   | {
+      type: 'wave_started';
+      at: number;
+      wave: number;
+    }
+  | {
       type: 'run_started';
       at: number;
       runId: number;
@@ -58,6 +65,7 @@ export type GameEvent =
       type: 'run_ended';
       at: number;
       runId: number;
+      reason: RunEndReason;
       summary: RunSummary;
     };
 

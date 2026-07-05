@@ -95,6 +95,7 @@ export class WaveSystem {
     private readonly heroPosition: THREE.Vector3,
     private readonly rng: Rng,
     private readonly announce: (text: string, atSim: number) => void,
+    private readonly onWaveStarted: (wave: number, atSim: number) => boolean | void,
     private readonly scheduledDisabled: () => boolean,
     private readonly canSpawnThieves: () => boolean = () => false,
     private readonly canSpawnWreckers: () => boolean = () => false,
@@ -124,7 +125,7 @@ export class WaveSystem {
 
     this.planDueWaves(atSim);
     this.telegraphDuePulses(atSim);
-    this.spawnDuePulses(atSim);
+    if (!this.spawnDuePulses(atSim)) return;
 
     while (atSim >= this.nextTrickleAt) {
       const lullUntil = this.trickleLullUntil();
@@ -266,10 +267,11 @@ export class WaveSystem {
     }
   }
 
-  private spawnDuePulses(atSim: number): void {
+  private spawnDuePulses(atSim: number): boolean {
     for (const pulse of this.plannedPulses) {
       if (pulse.spawned || atSim < pulse.spawnAt) continue;
       pulse.spawned = true;
+      const startedNewWave = pulse.wave > this.wave;
       this.wave = Math.max(this.wave, pulse.wave);
       this.pulse = pulse.pulse;
       this.budget = pulse.budget;
@@ -289,7 +291,13 @@ export class WaveSystem {
           this.spawnAt(edge, i, pulse.wave, total, i < thieves, i >= thieves && i < thieves + wreckers);
         }
       }
+
+      if (startedNewWave) {
+        this.onWaveStarted(pulse.wave, pulse.spawnAt);
+        return false;
+      }
     }
+    return true;
   }
 
   private spawnAt(

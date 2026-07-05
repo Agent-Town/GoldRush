@@ -188,6 +188,9 @@ export const Balance = {
     logCapacity: 2048,
     bankCap: 200,
   },
+  run: {
+    secureWave: 20,
+  },
   upgrades: {
     assayGoldPerWave: 5,
     fieldDressingHealFrac: 0.3,

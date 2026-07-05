@@ -23,7 +23,7 @@ import {
   isStealDisabled,
   isWreckDisabled,
 } from '../core/DebugParams';
-import { InputController } from '../core/InputController';
+import { InputController, type Intents } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { createRng } from '../core/Rng';
@@ -153,6 +153,10 @@ export class Game {
     this.hero.group.position,
     createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
     (text, atSim) => this.uiBridge.announce(text, atSim),
+    (wave, atSim) => {
+      this.events.emit({ type: 'wave_started', at: atSim, wave });
+      return !this.secureClaimChoicePending();
+    },
     areWavesDisabled,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
     () => !isWreckDisabled() && this.buildSystem.hasAnyBuildable,
@@ -349,7 +353,9 @@ export class Game {
             amount: n,
           });
         },
-        grantXp: (n: number) => this.progression.debugGrant(n),
+        grantXp: (n: number) => {
+          if (!this.secureClaimChoicePending()) this.progression.debugGrant(n);
+        },
         maxUpgrades: () => this.progression.maxCoreForTest(),
         setUpgradeStacks: (stacks) => this.progression.setStacksForTest(stacks as Partial<Record<UpgradeId, number>>),
         rollUpgradeOffer: () => this.progression.rollOfferForTest(),
@@ -457,18 +463,31 @@ export class Game {
     this.recordFrameMs(delta * 1000);
     this.elapsed += delta;
     const intents = this.input.readIntents();
+    if (this.secureClaimChoicePending()) {
+      this.rememberIntents(intents);
+      this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
+      this.updateCharmPause(delta);
+      resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+      this.updatePresentation(delta);
+      return;
+    }
     if (intents.build && !this.lastBuildIntent) this.toggleBuildMenu();
     if (intents.buildSlot !== null && this.buildMenuOpen) this.selectBuildableByIndex(intents.buildSlot);
     if (intents.cancel && !this.lastCancelIntent && (this.buildMenuOpen || this.buildSystem.isBuildMode)) {
       this.closeBuildMenu();
-    } else if (intents.pause && !this.lastPauseIntent) {
+    } else if (intents.pause && !this.lastPauseIntent && !this.secureClaimChoicePending()) {
       this.state.togglePause();
     }
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
     if (intents.rotateBuild && !this.lastRotateIntent && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
     if (intents.weaponToggle && !this.lastWeaponToggleIntent) this.toggleWeapon();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
-    if (intents.debugXp && !this.lastDebugXpIntent && new URLSearchParams(window.location.search).has('debug')) {
+    if (
+      intents.debugXp &&
+      !this.lastDebugXpIntent &&
+      new URLSearchParams(window.location.search).has('debug') &&
+      !this.secureClaimChoicePending()
+    ) {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
       this.progression.debugGrant(50);
     }
@@ -494,6 +513,10 @@ export class Game {
       this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
       this.combat.setTime(this.timeAlive);
       this.waveSystem.update(this.timeAlive);
+      if (this.secureClaimChoicePending()) {
+        this.updatePresentation(delta);
+        return;
+      }
       this.buildSystem.update(
         simDelta,
         this.timeAlive,
@@ -533,12 +556,28 @@ export class Game {
       this.progression.consumeXpTotal(this.combat.xpCount);
       this.combatVfx.update(simDelta);
     }
+    this.updatePresentation(delta);
+  }
+
+  private updatePresentation(delta: number): void {
     this.vfx.update(delta);
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
     this.publishDiagnostics();
+  }
+
+  private rememberIntents(intents: Intents): void {
+    this.lastPauseIntent = intents.pause;
+    this.lastRestartIntent = intents.restart;
+    this.lastBuildIntent = intents.build;
+    this.lastCancelIntent = intents.cancel;
+    this.lastConfirmIntent = intents.confirm;
+    this.lastRotateIntent = intents.rotateBuild;
+    this.lastWeaponToggleIntent = intents.weaponToggle;
+    this.lastDebugSpawnIntent = intents.debugSpawn;
+    this.lastDebugXpIntent = intents.debugXp;
   }
 
   private render(): void {
@@ -560,6 +599,11 @@ export class Game {
 
   private updateCharmPause(delta: number): void {
     this.charmPauseCooldown = Math.max(0, this.charmPauseCooldown - delta);
+    if (this.secureClaimChoicePending()) {
+      this.charmPauseActive = false;
+      this.charmPauseRemaining = 0;
+      return;
+    }
     if (!this.charmPauseActive) return;
     if (this.state.current !== 'playing') {
       this.charmPauseActive = false;
@@ -682,6 +726,7 @@ export class Game {
         replay: economyReplay,
         summary: economySummary,
       },
+      run: this.runManager?.diagnostics ?? { secured: false, rush: false, lastRunEndedReason: null },
       build: {
         ...this.buildSystem.diagnostics,
         killsByOwner: this.combat.killsByOwner,
@@ -806,11 +851,17 @@ export class Game {
   }
 
   private handleUiIntent(intent: UiIntent): void {
+    if (this.secureClaimChoicePending()) return;
     if (intent.type === 'pause') this.state.togglePause();
     if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
     if (intent.type === 'toggle_build_menu') this.toggleBuildMenu();
     if (intent.type === 'close_build_menu') this.closeBuildMenu();
     if (intent.type === 'select_buildable') this.selectBuildable(intent.id);
+  }
+
+  private secureClaimChoicePending(): boolean {
+    const run = this.runManager?.diagnostics;
+    return run?.secured === true && run.rush !== true;
   }
 
   private handleUpgradeIntent(intent: UpgradeIntent): void {

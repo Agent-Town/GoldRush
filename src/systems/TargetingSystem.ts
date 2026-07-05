@@ -19,6 +19,8 @@ export type BuildingTarget = {
   family: string;
   index: number;
   position: THREE.Vector3;
+  halfX: number;
+  halfZ: number;
   active: boolean;
   hp: number;
   maxHp: number;
@@ -107,7 +109,7 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     for (let i = 0; i < this.buildings.length; i += 1) {
       const building = this.buildings[i];
       if (!building?.active || building.hp <= 0) continue;
-      const distanceSq = this.distanceSqXZ(from, building.position);
+      const distanceSq = this.distanceSqToBuilding(from, building);
       if (distanceSq < bestDistanceSq) {
         best = building;
         bestDistanceSq = distanceSq;
@@ -119,6 +121,12 @@ export class TargetingSystem<T extends Damageable = Damageable> {
   private distanceSqXZ(a: THREE.Vector3, b: THREE.Vector3): number {
     const dx = a.x - b.x;
     const dz = a.z - b.z;
+    return dx * dx + dz * dz;
+  }
+
+  private distanceSqToBuilding(from: THREE.Vector3, building: BuildingTarget): number {
+    const dx = Math.max(Math.abs(from.x - building.position.x) - building.halfX, 0);
+    const dz = Math.max(Math.abs(from.z - building.position.z) - building.halfZ, 0);
     return dx * dx + dz * dz;
   }
 }

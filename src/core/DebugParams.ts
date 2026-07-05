@@ -78,8 +78,12 @@ export function isCombatDamageDisabled(): boolean {
   return DEBUG_PARAMS.nokill;
 }
 
-export function isCharmPauseDisabled(): boolean {
+export function isPauseDisabled(): boolean {
   return DEBUG_PARAMS.nopause;
+}
+
+export function isCharmPauseDisabled(): boolean {
+  return isPauseDisabled();
 }
 
 export function isStealDisabled(): boolean {

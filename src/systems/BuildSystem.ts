@@ -710,10 +710,13 @@ export class BuildSystem {
     const position = this.positionFor(id, index);
     if (!target || !position) return;
     target.position.copy(position);
+    const half = this.footprintHalfExtents(id, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0);
+    target.halfX = half.x;
+    target.halfZ = half.z;
     target.active = active;
     target.hp = this.hp[id][index] ?? 0;
     target.maxHp = this.maxHpForInstance(id, index);
-    target.reachRadius = this.reachRadiusFor(id, index);
+    target.reachRadius = Math.max(half.x, half.z);
     this.targeting.registerBuilding(target);
   }
 
@@ -738,11 +741,6 @@ export class BuildSystem {
     const steps = Math.max(0, wave - Math.max(0, Math.floor(scale.startWave)) + 1);
     const scaled = base + steps * Math.max(0, scale.perWave);
     return Math.round(Math.min(base * Math.max(1, scale.capMult), scaled));
-  }
-
-  private reachRadiusFor(id: BuildableId, index: number): number {
-    const half = this.footprintHalfExtents(id, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0);
-    return Math.max(half.x, half.z);
   }
 
   private hpDiagnostics(): BuildDiagnostics['hp'] {
@@ -1184,6 +1182,8 @@ function createTargetStore(): BuildingFamilyStore<BuildingTarget> {
     family: id,
     index,
     position: new THREE.Vector3(),
+    halfX: 0.5,
+    halfZ: 0.5,
     active: false,
     hp: 0,
     maxHp: 0,

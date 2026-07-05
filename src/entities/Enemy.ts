@@ -363,10 +363,7 @@ export class ClaimJumperEnemy {
       return null;
     }
 
-    const dx = this.currentBuilding.position.x - this.group.position.x;
-    const dz = this.currentBuilding.position.z - this.group.position.z;
-    const reach = Balance.wreck.reach + this.currentBuilding.reachRadius;
-    if (dx * dx + dz * dz <= reach * reach) {
+    if (this.distanceSqToBuilding(this.currentBuilding) <= Balance.wreck.reach * Balance.wreck.reach) {
       this.wreckerState = 'swinging';
       this.spriteClip = 'grab';
       this.swingTimer -= delta;
@@ -388,6 +385,12 @@ export class ClaimJumperEnemy {
 
   private isBuildingValid(building: BuildingTarget | null): building is BuildingTarget {
     return building?.active === true && building.hp > 0;
+  }
+
+  private distanceSqToBuilding(building: BuildingTarget): number {
+    const dx = Math.max(Math.abs(this.group.position.x - building.position.x) - building.halfX, 0);
+    const dz = Math.max(Math.abs(this.group.position.z - building.position.z) - building.halfZ, 0);
+    return dx * dx + dz * dz;
   }
 
   private updateFleeTarget(): void {

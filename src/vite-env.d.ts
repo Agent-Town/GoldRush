@@ -149,6 +149,11 @@ interface ThreeGameDiagnostics {
       repairs: number;
     };
   };
+  run: {
+    secured: boolean;
+    rush: boolean;
+    lastRunEndedReason: 'death' | 'secured' | 'rush' | null;
+  };
   build: {
     mode: boolean;
     ghostValid: boolean;
