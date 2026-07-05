@@ -40,3 +40,22 @@ Test-side de-race landed directly (review-fix authority, ~9 lines, e2e-only): `m
 Gates (in-VM, /tmp/gr-s36): tsc --noEmit clean; spec collects both projects; mechanism probe PASS (`shots-m2-07/f-022-1-mechanism-probe.json`) — detection at wave 5 with 39.99 sim-s window, still on-wave with 36.6 sim-s after 6 protocol RTs at ts12. Full TTK run remains **Mac-owed** (by design it now spans ~50s wall, over the VM's 43s call wall): Robin's regression run supplies blast-ttk.json numbers; ratio≤2 gate unchanged (F-022-2).
 
 Env notes for next fire: `~/.cache/ms-playwright` symlink vanished again (s25 pattern) — set `PLAYWRIGHT_BROWSERS_PATH=/tmp/pw-browsers` per call; `~/locallibs` wiped — xdamage stub rebuilt from `scripts/xdamage-stub.c` into `/tmp/gr-s36/locallibs`.
+
+## Mac evidence landed — F-022-2 ADJUDICATED CLOSED (s43, 2026-07-05)
+
+**Provenance:** `test-results/m2-07-base-self-hold/blast-ttk.json` appeared on the mount, mtime 15:08+0700 (08:08Z). It is a COMPLETE report (wave10 + wave21 + ratio + error capture) — impossible in-VM since F-022-1 made the run span ~50s wall vs the 43s call ceiling ⇒ Mac origin. `.last-run.json` = `{"status":"passed","failedTests":[]}`. s37–s42 fires missed it because test-results/ is gitignored — triage only watched `git status`. Copied out of the wipe-prone dir per env law 3: `shots-m2-07/blast-ttk-mac-2026-07-05.json` + `blast-ttk-mac-last-run.json`.
+
+**Numbers and verdict:**
+
+| Metric | Wave 10 | Wave 21 | Gate | Verdict |
+|---|---|---|---|---|
+| TTK | 4.48s | 4.39s | w21 ≤ 2× w10 | **ratio 0.98 — PASS, 2x headroom** |
+| blastDamage | 76 | 137.6 | scales with dmgPerWave 0.28 | 1.81x, tracking |
+| enemyHp | 78.27 | 272.26 | — | 3.48x (curve context) |
+| console/page errors | 0 | 0 | zero | PASS |
+
+TTK is essentially FLAT across the measured span while enemy HP grows 3.48x — the combined arsenal (blast @0.28/wave + turret curve) keeps pace by design, not by accident of one overtuned knob. **F-022-2 closes:** the instrument gated the data-less knob and the data arrived green. No re-tune owed. The self-hold "generous curve" Watch stays OPEN — it keys to Robin's turret-feel playtest (subjective), not to this ratio.
+
+**What this does NOT prove:** a full regression. test-results/ holds only the two m2-07 spec dirs (playwright wipes per run ⇒ last Mac run was `--grep`-filtered to this spec). Both m2-07 tests passed on darwin — SELF-hold now has a Mac pass too — but "full both projects" evidence remains owed unless Robin says it ran.
+
+**Caught process gap:** evidence landed at 08:08Z; five fires (s37–s42) triaged past it while listing it as owed. Fix folded into STATUS triage: fires now probe `test-results/` mtime alongside git status (one stat, no cost).
