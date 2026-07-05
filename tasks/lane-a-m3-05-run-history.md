@@ -1,0 +1,2 @@
+# Lane A / M3-05: run history + M3 close-out (lane-a, AFTER m3-04 READY; prefix "m3:")
+Claim Office gains a Run Ledger page: past runs list (gr.history.v1, cap 50) — wave, victory/death, base value, meta earned, weapon split (reuse polish-02 summary shape; if unmerged, define the shape per its task and note for merge session). Close-out: assemble M3 evidence summary in your final message (all m3 e2e green, persistence matrix: fresh/migrate/suspend/resume/death). READY-FOR-GATES.

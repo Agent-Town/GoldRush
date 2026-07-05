@@ -1,0 +1,2 @@
+# Lane C / POLISH-05: portrait slots + screen polish (lane-c, AFTER polish-04 READY; prefix "polish:")
+(1) Build-menu portrait slots consume assets/processed/bld-*.png via the 011 lazy glob — add the four missing filenames to the glob list NOW so art drops in with zero code when batch-005B generates (text fallback stays). (2) Victory "Claim Secured" + death screens: parchment layout pass, run-ledger table styling (polish-02 data), Stay-for-the-Rush button prominence, 390px. NO new mechanics. e2e: screens render both paths, fallbacks clean. READY-FOR-GATES.

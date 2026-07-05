@@ -1,0 +1,2 @@
+# Lane D / PERF-05: startup/load pass (lane-d, AFTER perf-04 READY; prefix "perf:")
+Measure then improve: TTI + time-to-first-frame + asset bytes on boot (report before/after). Preload only critical textures (hero/terrain/enemy), lazy-load the rest behind first frame (menu icons, victory art, action cells); verify no pop-in on first enemy/build (prefetch on wave-1 telegraph). Budget asserts in e2e: boot-to-playable < 3s on throttled profile, zero asset 404s, lazy set actually deferred (network log assert). READY-FOR-GATES + report.
