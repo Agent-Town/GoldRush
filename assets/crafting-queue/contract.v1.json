@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "paths": {
+    "pending": "assets/crafting-queue/pending/<id>.json",
+    "approved": "assets/crafting-queue/approved/<id>.json",
+    "rejected": "assets/crafting-queue/rejected/<id>.json"
+  },
+  "pending": {
+    "required": ["version", "id", "text", "profile", "timestamp"],
+    "fields": {
+      "version": "literal 1",
+      "id": "deterministic order_<profile>_<timestamp>_<text_slug>",
+      "text": "raw player request text for the pipeline generator",
+      "profile": "normalized crafted-items profile",
+      "timestamp": "ISO-8601 UTC creation time"
+    }
+  },
+  "approved": {
+    "required": ["version", "id", "request", "item", "contractVerdict", "simVerdict", "approvedAt"],
+    "rule": "only items with contractVerdict.ok and simVerdict.ok enter the crafted-items pool"
+  },
+  "rejected": {
+    "required": ["version", "id", "request", "contractVerdict", "reasons", "rejectedAt"],
+    "rule": "reasons are shown in the Assay Bench and never enter the crafted-items pool"
+  }
+}

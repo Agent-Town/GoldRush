@@ -1,5 +1,6 @@
 import './styles.css';
 import './ui/theme.css';
+import { install as installAssayBench } from './crafting/AssayBench';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
@@ -15,9 +16,11 @@ applyUpgradeBudgetsFromBalance();
 
 const game = new Game(canvas);
 game.start();
+const assayBench = installAssayBench(document.querySelector<HTMLElement>('#app') ?? document.body);
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
+    assayBench?.dispose();
     game.dispose();
   });
 }

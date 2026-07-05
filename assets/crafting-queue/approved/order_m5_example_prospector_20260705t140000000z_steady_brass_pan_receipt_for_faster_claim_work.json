@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "order_m5_example_prospector_20260705t140000000z_steady_brass_pan_receipt_for_faster_claim_work",
+  "request": {
+    "version": 1,
+    "id": "order_m5_example_prospector_20260705t140000000z_steady_brass_pan_receipt_for_faster_claim_work",
+    "text": "steady brass pan receipt for faster claim work",
+    "profile": "m5_example_prospector",
+    "timestamp": "2026-07-05T14:00:00.000Z"
+  },
+  "item": {
+    "id": "craft_brass_pan_receipt_m5_example",
+    "kind": "tool",
+    "rarity": "common",
+    "name": "Brass Pan Receipt",
+    "blurb": "A stamped Assay Office tool note for better claim work.",
+    "cost": 21,
+    "stats": {
+      "panTickMult": 1.12
+    }
+  },
+  "contractVerdict": {
+    "ok": true,
+    "reasons": []
+  },
+  "simVerdict": {
+    "ok": true,
+    "reasons": [],
+    "summary": "M5-03 dry sim stayed inside common tool bounds."
+  },
+  "approvedAt": "2026-07-05T14:05:00.000Z"
+}

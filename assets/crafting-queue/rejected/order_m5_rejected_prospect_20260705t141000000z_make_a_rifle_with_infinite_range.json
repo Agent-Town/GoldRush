@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "id": "order_m5_rejected_prospect_20260705t141000000z_make_a_rifle_with_infinite_range",
+  "request": {
+    "version": 1,
+    "id": "order_m5_rejected_prospect_20260705t141000000z_make_a_rifle_with_infinite_range",
+    "text": "make a rifle with infinite range",
+    "profile": "m5_rejected_prospect",
+    "timestamp": "2026-07-05T14:10:00.000Z"
+  },
+  "contractVerdict": {
+    "ok": false,
+    "reasons": [
+      {
+        "code": "canon_banned_term",
+        "message": "Banned frontier-tech term: rifle.",
+        "path": "text"
+      }
+    ]
+  },
+  "simVerdict": {
+    "ok": false,
+    "reasons": [
+      {
+        "code": "power_budget",
+        "message": "Requested range exceeds the rare item budget.",
+        "path": "stats.rangeMult"
+      }
+    ]
+  },
+  "reasons": [
+    {
+      "code": "canon_banned_term",
+      "message": "Banned frontier-tech term: rifle.",
+      "path": "text"
+    },
+    {
+      "code": "power_budget",
+      "message": "Requested range exceeds the rare item budget.",
+      "path": "stats.rangeMult"
+    }
+  ],
+  "rejectedAt": "2026-07-05T14:12:00.000Z"
+}

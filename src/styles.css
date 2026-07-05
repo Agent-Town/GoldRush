@@ -282,3 +282,90 @@ body {
     min-height: 128px;
   }
 }
+
+.assay-bench {
+  position: fixed;
+  top: max(12px, env(safe-area-inset-top));
+  left: max(12px, env(safe-area-inset-left));
+  z-index: 30;
+  display: grid;
+  width: min(430px, calc(100vw - 24px));
+  max-height: calc(100vh - 24px);
+  gap: 8px;
+  overflow: auto;
+  padding: 10px;
+  border: 2px solid #2e1b0e;
+  border-radius: 8px;
+  color: #2e1b0e;
+  background: rgba(245, 230, 200, 0.96);
+  box-shadow: 0 14px 32px rgba(46, 27, 14, 0.34);
+  font: 13px/1.35 Wellfleet, Georgia, serif;
+}
+
+.assay-bench__form,
+.assay-bench__card {
+  display: grid;
+  gap: 8px;
+}
+
+.assay-bench__card {
+  padding: 8px;
+  border: 1px solid rgba(46, 27, 14, 0.35);
+  border-radius: 6px;
+  background: rgba(255, 248, 232, 0.78);
+}
+
+.assay-bench label {
+  display: grid;
+  gap: 4px;
+}
+
+.assay-bench textarea,
+.assay-bench input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(46, 27, 14, 0.45);
+  border-radius: 5px;
+  padding: 7px 8px;
+  color: inherit;
+  background: #fff8e8;
+  font: inherit;
+}
+
+.assay-bench button {
+  justify-self: start;
+  border: 0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: #fff8e8;
+  background: #5b8a8a;
+  font: inherit;
+  cursor: pointer;
+}
+
+.assay-bench button:focus-visible {
+  outline: 3px solid #ffe4a0;
+  outline-offset: 2px;
+}
+
+.assay-bench pre,
+.assay-bench code {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+  font-size: 11px;
+}
+
+.assay-bench ol,
+.assay-bench ul {
+  display: grid;
+  gap: 5px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.assay-bench ol:empty::after,
+.assay-bench ul:empty::after {
+  content: "None";
+  opacity: 0.7;
+}
