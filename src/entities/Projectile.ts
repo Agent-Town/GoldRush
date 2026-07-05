@@ -11,6 +11,8 @@ export class ProjectilePool {
   private readonly life: number[] = [];
   private readonly damage: number[] = [];
   private readonly ownerIds: string[] = [];
+  private readonly shooterIds: number[] = [];
+  private readonly targetIds: number[] = [];
   private readonly boltGeometry = new THREE.SphereGeometry(0.12, 10, 6);
   private readonly tracerGeometry = new THREE.BoxGeometry(0.055, 0.055, 0.62);
   private readonly boltMaterial = new THREE.MeshStandardMaterial({
@@ -57,6 +59,8 @@ export class ProjectilePool {
       this.life.push(0);
       this.damage.push(0);
       this.ownerIds.push('hero');
+      this.shooterIds.push(-1);
+      this.targetIds.push(-1);
       this.hide(i);
     }
     this.markNeedsUpdate();
@@ -86,7 +90,24 @@ export class ProjectilePool {
     return this.ownerIds[index] ?? null;
   }
 
-  activate(origin: THREE.Vector3, dirX: number, dirZ: number, speed: number, damage: number, ownerId = 'hero'): boolean {
+  shooterIdAt(index: number): number {
+    return this.shooterIds[index] ?? -1;
+  }
+
+  targetIdAt(index: number): number {
+    return this.targetIds[index] ?? -1;
+  }
+
+  activate(
+    origin: THREE.Vector3,
+    dirX: number,
+    dirZ: number,
+    speed: number,
+    damage: number,
+    ownerId = 'hero',
+    shooterId = -1,
+    targetId = -1,
+  ): boolean {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       const position = this.positions[i];
@@ -100,13 +121,15 @@ export class ProjectilePool {
       this.life[i] = Balance.sparkRig.boltLife;
       this.damage[i] = damage;
       this.ownerIds[i] = ownerId;
+      this.shooterIds[i] = shooterId;
+      this.targetIds[i] = targetId;
       this.sync(i);
       return true;
     }
     return false;
   }
 
-  update(delta: number): void {
+  update(delta: number, onExpired?: (shooterId: number, targetId: number) => void): void {
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
       const position = this.positions[i];
@@ -115,6 +138,7 @@ export class ProjectilePool {
       position.addScaledVector(velocity, delta);
       this.life[i] = (this.life[i] ?? 0) - delta;
       if ((this.life[i] ?? 0) <= 0) {
+        onExpired?.(this.shooterIdAt(i), this.targetIdAt(i));
         this.deactivate(i);
       } else {
         this.sync(i);
@@ -129,6 +153,8 @@ export class ProjectilePool {
     this.life[index] = 0;
     this.damage[index] = 0;
     this.ownerIds[index] = 'hero';
+    this.shooterIds[index] = -1;
+    this.targetIds[index] = -1;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
   }
@@ -139,6 +165,8 @@ export class ProjectilePool {
       this.life[i] = 0;
       this.damage[i] = 0;
       this.ownerIds[i] = 'hero';
+      this.shooterIds[i] = -1;
+      this.targetIds[i] = -1;
       this.hide(i);
     }
     this.alive = 0;

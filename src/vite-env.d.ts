@@ -342,9 +342,12 @@ interface Window {
     rotateBuildGhost: () => boolean;
     confirmBuild: () => boolean;
     enemyPositions: () => Array<{
+      id: number;
       x: number;
       z: number;
       hp: number;
+      vx: number;
+      vz: number;
       thief?: boolean;
       wrecker?: boolean;
       state?: 'none' | 'seekHolding' | 'grabbing' | 'fleeing';
@@ -354,6 +357,7 @@ interface Window {
       zone?: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
     }>;
     spawnEnemyAt: (x: number, z: number) => boolean;
+    scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => boolean;
     clearEnemies: () => void;
     goldPickups: () => Array<{ active: boolean; amount: number; position: { x: number; z: number } }>;
     placeBeacon: () => boolean;
@@ -361,6 +365,11 @@ interface Window {
       enemiesAlive: number;
       xp: number;
       boltsAlive: number;
+      combat: {
+        hits: number;
+        misses: number;
+        staleSwitches: number;
+      };
       arsenal: {
         active: 'rig' | 'blast';
         blastsAlive: number;

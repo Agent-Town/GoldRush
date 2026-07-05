@@ -88,13 +88,17 @@ export class ClaimJumperEnemy {
   readonly group = new THREE.Group();
 
   private readonly velocity = new THREE.Vector3();
+  private readonly leadVelocity = new THREE.Vector3();
   private readonly heading = new THREE.Vector3(0, 0, -1);
   private readonly nextPosition = new THREE.Vector3();
   private readonly fleeTarget = new THREE.Vector3();
   private readonly routeTarget = new THREE.Vector3();
+  private readonly scriptedTarget = new THREE.Vector3();
   private alive = false;
   private hp = 0;
   private speed: number = Balance.enemy.speed;
+  private scriptedSpeed = 0;
+  private scripted = false;
   private contactCooldown = 0;
   private spriteClip: CharacterSpriteClip = 'idle';
   private thief = false;
@@ -161,6 +165,14 @@ export class ClaimJumperEnemy {
     return this.spawnEdge;
   }
 
+  get velocityX(): number {
+    return this.leadVelocity.x;
+  }
+
+  get velocityZ(): number {
+    return this.leadVelocity.z;
+  }
+
   setAnimationClip(clip: CharacterSpriteClip): void {
     this.spriteClip = clip;
   }
@@ -182,7 +194,10 @@ export class ClaimJumperEnemy {
     this.currentHolding = null;
     this.currentBuilding = null;
     this.spawnEdge = params.edge ?? null;
+    this.scripted = false;
+    this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);
+    this.leadVelocity.set(0, 0, 0);
     this.heading.set(0, 0, -1);
     this.spriteClip = 'walk';
     this.group.position.copy(position);
@@ -202,11 +217,15 @@ export class ClaimJumperEnemy {
   ): boolean {
     if (!this.alive) return false;
 
+    const previousX = this.group.position.x;
+    const previousZ = this.group.position.z;
     this.contactCooldown = Math.max(0, this.contactCooldown - delta);
 
-    const targetPosition = this.updateThief(delta, thiefContext) ?? this.updateWrecker(delta, wreckerContext) ?? heroPosition;
+    const targetPosition = this.scripted
+      ? this.scriptedTarget
+      : this.updateThief(delta, thiefContext) ?? this.updateWrecker(delta, wreckerContext) ?? heroPosition;
     const moveTarget = this.routedTarget(targetPosition);
-    const speed = this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
+    const speed = this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
     this.heading.set(moveTarget.x - this.group.position.x, 0, moveTarget.z - this.group.position.z);
     const distanceSq = this.heading.lengthSq();
@@ -229,6 +248,11 @@ export class ClaimJumperEnemy {
       this.move(delta, blockers, speed);
     }
     this.group.position.y = Balance.enemy.groundY;
+    if (delta > 0) {
+      this.leadVelocity.set((this.group.position.x - previousX) / delta, 0, (this.group.position.z - previousZ) / delta);
+    } else {
+      this.leadVelocity.set(0, 0, 0);
+    }
 
     if (this.velocity.lengthSq() > 0.0025) {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);
@@ -271,7 +295,10 @@ export class ClaimJumperEnemy {
     this.currentHolding = null;
     this.currentBuilding = null;
     this.spawnEdge = null;
+    this.scripted = false;
+    this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);
+    this.leadVelocity.set(0, 0, 0);
     this.spriteClip = 'idle';
     this.group.visible = false;
     this.group.position.set(0, Balance.enemy.groundY, 0);
@@ -286,6 +313,12 @@ export class ClaimJumperEnemy {
     this.carriedGold = 0;
     if (this.thief) this.thiefState = 'seekHolding';
     return amount;
+  }
+
+  scriptMoveTo(x: number, z: number, speed: number): void {
+    this.scriptedTarget.set(x, Balance.enemy.groundY, z);
+    this.scriptedSpeed = Math.max(0, speed);
+    this.scripted = true;
   }
 
   private updateThief(delta: number, context?: ThiefUpdateContext): THREE.Vector3 | null {

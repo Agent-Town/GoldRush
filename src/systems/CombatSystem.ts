@@ -31,8 +31,11 @@ export type ShooterHandle = {
 
 type ShooterState = {
   handle: ShooterHandle;
+  id: number;
   timer: number;
   targeting: TargetingSystem<ClaimJumperEnemy>;
+  missTargetId: number;
+  misses: number;
 };
 
 type BuildingDamageResult = {
@@ -59,10 +62,21 @@ export type XpAuditDiagnostics = {
   expiryBanks: boolean;
 };
 
+export type BoltDiagnostics = {
+  hits: number;
+  misses: number;
+  staleSwitches: number;
+};
+
 export class CombatSystem {
   private readonly rigs: ShooterState[] = [];
   private readonly scratchOrigin = new THREE.Vector3();
+  private readonly scratchAimPoint = new THREE.Vector3();
   private readonly ownerKills: Record<string, number> = {};
+  private nextShooterId = 1;
+  private boltHits = 0;
+  private boltMisses = 0;
+  private staleTargetSwitches = 0;
   private xp = 0;
   private xpDeaths = 0;
   private xpMotesSpawned = 0;
@@ -131,8 +145,24 @@ export class CombatSystem {
     };
   }
 
+  get boltDiagnostics(): BoltDiagnostics {
+    return {
+      hits: this.boltHits,
+      misses: this.boltMisses,
+      staleSwitches: this.staleTargetSwitches,
+    };
+  }
+
   registerShooter(handle: ShooterHandle): () => void {
-    const state = { handle, timer: 0, targeting: new TargetingSystem<ClaimJumperEnemy>() };
+    const state = {
+      handle,
+      id: this.nextShooterId,
+      timer: 0,
+      targeting: new TargetingSystem<ClaimJumperEnemy>(),
+      missTargetId: -1,
+      misses: 0,
+    };
+    this.nextShooterId += 1;
     this.rigs.push(state);
     return () => {
       const index = this.rigs.indexOf(state);
@@ -155,7 +185,7 @@ export class CombatSystem {
     let remaining = delta;
     while (remaining > 0) {
       const step = Math.min(remaining, 1 / 30);
-      this.projectiles.update(step);
+      this.projectiles.update(step, this.handleBoltExpired);
       this.blastCharges.update(step, this.onBlastDetonated);
       this.resolveBoltHits(at);
       remaining -= step;
@@ -230,12 +260,17 @@ export class CombatSystem {
     this.vfx.reset();
     this.blastDetonationCount = 0;
     this.hasLastBlastDetonation = false;
+    this.boltHits = 0;
+    this.boltMisses = 0;
+    this.staleTargetSwitches = 0;
     for (const ownerId of Object.keys(this.ownerKills)) delete this.ownerKills[ownerId];
     for (let i = 0; i < this.rigs.length; i += 1) {
       const state = this.rigs[i];
       if (!state) continue;
       state.timer = 0;
       state.targeting.reset();
+      state.missTargetId = -1;
+      state.misses = 0;
     }
   }
 
@@ -265,13 +300,14 @@ export class CombatSystem {
         continue;
       }
 
-      this.emitVolley(handle, origin, target);
+      this.emitVolley(state, origin, target);
       state.timer += handle.cooldown;
       if (state.timer < 0) state.timer = handle.cooldown;
     }
   }
 
-  private emitVolley(handle: ShooterHandle, origin: THREE.Vector3, target: ClaimJumperEnemy): void {
+  private emitVolley(state: ShooterState, origin: THREE.Vector3, target: ClaimJumperEnemy): void {
+    const handle = state.handle;
     this.scratchOrigin.copy(origin);
     if (handle.kind === 'lob') {
       const aoe = handle.aoe ?? Balance.blast;
@@ -286,8 +322,9 @@ export class CombatSystem {
       return;
     }
 
-    const dx = target.position.x - this.scratchOrigin.x;
-    const dz = target.position.z - this.scratchOrigin.z;
+    const aimPoint = this.boltAimPoint(handle, target);
+    const dx = aimPoint.x - this.scratchOrigin.x;
+    const dz = aimPoint.z - this.scratchOrigin.z;
     const lenSq = dx * dx + dz * dz;
     if (lenSq <= 0.0001) return;
 
@@ -297,10 +334,31 @@ export class CombatSystem {
     const count = Math.max(1, handle.volley);
     for (let i = 0; i < count; i += 1) {
       const damage = handle.getDamage?.() ?? handle.damage;
-      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, handle.id ?? 'hero')) {
+      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, handle.id ?? 'hero', state.id, target.id)) {
         this.audio.playArc();
       }
     }
+  }
+
+  private boltAimPoint(handle: ShooterHandle, target: ClaimJumperEnemy): THREE.Vector3 {
+    this.scratchAimPoint.copy(target.position);
+    if (!Balance.sparkRig.leading || handle.projSpeed <= 0) return this.scratchAimPoint;
+
+    const distance = Math.hypot(target.position.x - this.scratchOrigin.x, target.position.z - this.scratchOrigin.z);
+    const flightTime = distance / handle.projSpeed;
+    let leadX = target.velocityX * flightTime;
+    let leadZ = target.velocityZ * flightTime;
+    const maxLead = Math.max(0, Balance.sparkRig.maxLeadRad);
+    if (maxLead <= 0) return this.scratchAimPoint;
+    const leadLenSq = leadX * leadX + leadZ * leadZ;
+    if (leadLenSq > maxLead * maxLead) {
+      const scale = maxLead / Math.sqrt(leadLenSq);
+      leadX *= scale;
+      leadZ *= scale;
+    }
+    this.scratchAimPoint.x += leadX;
+    this.scratchAimPoint.z += leadZ;
+    return this.scratchAimPoint;
   }
 
   private readonly onBlastDetonated = (position: THREE.Vector3, damage: number, radius: number, ownerId: string): void => {
@@ -344,7 +402,10 @@ export class CombatSystem {
 
         const damage = this.projectiles.damageAt(boltIndex);
         const ownerId = this.projectiles.ownerIdAt(boltIndex) ?? 'hero';
+        const shooterId = this.projectiles.shooterIdAt(boltIndex);
+        const targetId = this.projectiles.targetIdAt(boltIndex);
         this.projectiles.deactivate(boltIndex);
+        this.recordBoltHit(shooterId, targetId, enemy.id);
         const died = enemy.takeDamage(damage);
         this.vfx.hit(enemy.position);
         this.audio.playHit();
@@ -352,6 +413,52 @@ export class CombatSystem {
         break;
       }
     }
+  }
+
+  private readonly handleBoltExpired = (shooterId: number, targetId: number): void => {
+    this.recordBoltMiss(shooterId, targetId);
+  };
+
+  private recordBoltHit(shooterId: number, targetId: number, hitId: number): void {
+    this.boltHits += 1;
+    if (targetId === hitId) {
+      const state = this.shooterById(shooterId);
+      if (state && state.missTargetId === targetId) {
+        state.missTargetId = -1;
+        state.misses = 0;
+      }
+      return;
+    }
+    this.recordBoltMiss(shooterId, targetId);
+  }
+
+  private recordBoltMiss(shooterId: number, targetId: number): void {
+    if (targetId < 0) return;
+    this.boltMisses += 1;
+    const switchCount = Math.floor(Balance.sparkRig.missSwitchCount);
+    if (switchCount <= 0) return;
+
+    const state = this.shooterById(shooterId);
+    if (!state) return;
+    if (state.missTargetId === targetId) state.misses += 1;
+    else {
+      state.missTargetId = targetId;
+      state.misses = 1;
+    }
+
+    if (state.misses < switchCount || state.targeting.currentTarget?.id !== targetId) return;
+    state.targeting.reset();
+    state.missTargetId = -1;
+    state.misses = 0;
+    this.staleTargetSwitches += 1;
+  }
+
+  private shooterById(id: number): ShooterState | null {
+    for (let i = 0; i < this.rigs.length; i += 1) {
+      const state = this.rigs[i];
+      if (state?.id === id) return state;
+    }
+    return null;
   }
 
   private killEnemy(enemy: ClaimJumperEnemy, at: number, ownerId: string): void {

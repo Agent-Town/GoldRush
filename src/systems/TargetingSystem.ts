@@ -32,6 +32,10 @@ export class TargetingSystem<T extends Damageable = Damageable> {
   private readonly goldHoldings: GoldHolding[] = [];
   private readonly buildings: BuildingTarget[] = [];
 
+  get currentTarget(): T | null {
+    return this.current;
+  }
+
   findNearest(from: THREE.Vector3, range: number, targets: readonly T[], eligible?: (target: T) => boolean): T | null {
     const stickyRange = range + 1;
     if (

@@ -416,7 +416,10 @@ export class Game {
             .map((enemy) => ({
               x: enemy.position.x,
               z: enemy.position.z,
+              id: enemy.id,
               hp: enemy.currentHp,
+              vx: enemy.velocityX,
+              vz: enemy.velocityZ,
               thief: enemy.isThief,
               wrecker: enemy.isWrecker,
               state: enemy.stealState,
@@ -426,6 +429,12 @@ export class Game {
               zone: Terrain.sample(enemy.position.x, enemy.position.z).zone,
             })),
         spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z)) !== null,
+        scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => {
+          const enemy = this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z));
+          if (!enemy) return false;
+          enemy.scriptMoveTo(targetX, targetZ, speed);
+          return true;
+        },
         clearEnemies: () => this.enemies.recycleAll(),
         goldPickups: () => this.goldPickups.snapshot(),
         placeBeacon: () => {
@@ -436,6 +445,7 @@ export class Game {
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
           boltsAlive: this.combat.boltsAlive,
+          combat: this.combat.boltDiagnostics,
           arsenal: this.arsenalDiagnostics(),
           buildables: this.buildSystem.buildableCounts,
           economy: {

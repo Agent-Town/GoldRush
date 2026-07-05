@@ -62,6 +62,9 @@ export const Balance = {
     boltRadius: 0.25,
     boltLife: 1.2,
     volley: 1,
+    leading: true,
+    maxLeadRad: 3,
+    missSwitchCount: 4,
   },
   blast: {
     aimMode: 'cursor',
