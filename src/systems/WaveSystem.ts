@@ -282,9 +282,11 @@ export class WaveSystem {
         if (!edge) continue;
         this.edge = edge;
         const thieves = this.thiefCount(count, pulse.wave);
-        const wreckers = this.wreckerCount(count - thieves, pulse.wave, pulse.pulse);
-        for (let i = 0; i < count; i += 1) {
-          this.spawnAt(edge, i, pulse.wave, count, i < thieves, i >= thieves && i < thieves + wreckers);
+        const shared = Balance.waves.pressureBudgetShared;
+        const wreckers = this.wreckerCount(shared ? count - thieves : count, pulse.wave, pulse.pulse);
+        const total = shared ? count : count + thieves + wreckers;
+        for (let i = 0; i < total; i += 1) {
+          this.spawnAt(edge, i, pulse.wave, total, i < thieves, i >= thieves && i < thieves + wreckers);
         }
       }
     }

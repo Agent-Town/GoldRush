@@ -24,7 +24,7 @@ const SKIP_KEYS = new Set([
 ]);
 
 // Init-captured pool/debug constants and derived values are intentionally not live-bound.
-export function setBalance(path: string, value: number): boolean {
+export function setBalance(path: string, value: number | boolean): boolean {
   const normalizedPath = path.startsWith('rig.') ? `sparkRig.${path.slice(4)}` : path;
   const keys = normalizedPath.split('.');
   let target: unknown = Balance;
@@ -32,7 +32,9 @@ export function setBalance(path: string, value: number): boolean {
     target = (target as MutableRecord | undefined)?.[keys[i]];
   }
   const key = keys[keys.length - 1];
-  if (!key || !target || typeof (target as MutableRecord)[key] !== 'number') return false;
+  if (!key || !target) return false;
+  const current = (target as MutableRecord)[key];
+  if (typeof current !== typeof value || (typeof current !== 'number' && typeof current !== 'boolean')) return false;
   (target as MutableRecord)[key] = value;
   recomputeDerived(normalizedPath);
   return true;
@@ -105,6 +107,8 @@ export class DebugTools {
           recomputeDerived(path);
           onChange();
         });
+      } else if (typeof child === 'boolean') {
+        folder.add(object, key).onChange(onChange);
       } else if (child && typeof child === 'object') {
         this.bindObject(folder.addFolder(key), path, child, onChange);
       }

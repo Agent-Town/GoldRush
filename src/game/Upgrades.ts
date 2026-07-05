@@ -74,6 +74,30 @@ export const upgradeDefs = [
     deltas: { beaconFireRateMult: 0.3 },
   },
   {
+    id: 'powder_charge',
+    name: 'Powder Charge',
+    description: 'A tighter powder cup for the charge rig.',
+    iconFamily: 'blast',
+    maxStacks: 2,
+    deltas: { blastDamageMult: 0.25 },
+  },
+  {
+    id: 'wide_ring',
+    name: 'Wide Ring',
+    description: 'A broader brass collar for the blast pattern.',
+    iconFamily: 'blast',
+    maxStacks: 2,
+    deltas: { blastRadiusMult: 0.15 },
+  },
+  {
+    id: 'quick_fuse',
+    name: 'Quick Fuse',
+    description: 'Shorter fuse cord, same steady hand.',
+    iconFamily: 'blast',
+    maxStacks: 2,
+    deltas: { blastCooldownMult: -0.15 },
+  },
+  {
     id: 'assay_bonus',
     name: 'Assay Bonus',
     description: 'A tidy receipt from the Assay Office.',
@@ -138,6 +162,9 @@ export function upgradeEffect(def: UpgradeDef): string {
   if ('seamCapacityBonus' in deltas) parts.push(`+${deltas.seamCapacityBonus} gold per seam`);
   if ('seamRespawnReduction' in deltas) parts.push(`-${deltas.seamRespawnReduction}s seam respawn`);
   if ('beaconFireRateMult' in deltas) parts.push(`+${percent(deltas.beaconFireRateMult)}% beacon fire rate`);
+  if ('blastDamageMult' in deltas) parts.push(`+${percent(deltas.blastDamageMult)}% blast damage`);
+  if ('blastRadiusMult' in deltas) parts.push(`+${percent(deltas.blastRadiusMult)}% blast radius`);
+  if ('blastCooldownMult' in deltas) parts.push(`${percent(Math.abs(deltas.blastCooldownMult))}% faster blast fuse`);
   return parts.join(', ');
 }
 

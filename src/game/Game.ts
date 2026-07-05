@@ -101,6 +101,11 @@ export class Game {
   private readonly buildSystem: BuildSystem;
   private readonly progression: Progression;
   private activeWeapon: 'rig' | 'blast' = 'rig';
+  private blastDamageMult = 1;
+  private blastRadiusMult = 1;
+  private blastCooldownMult = 1;
+  private weaponToggleCount = 0;
+  private blastTime = 0;
   private readonly heroShooter: ShooterHandle = {
     id: 'hero',
     enabled: () => this.activeWeapon === 'rig',
@@ -119,6 +124,7 @@ export class Game {
     range: Balance.blast.range,
     cooldown: Balance.blast.cooldown,
     damage: Balance.blast.damage,
+    getDamage: () => this.currentBlastDamage(),
     projSpeed: 0,
     volley: Balance.blast.volley,
     aoe: { radius: Balance.blast.radius, airTime: Balance.blast.airTime },
@@ -205,6 +211,8 @@ export class Game {
     spent: 0,
     beaconsBuilt: 0,
     wavesSurvived: 0,
+    weaponToggles: 0,
+    blastTime: 0,
   };
 
   constructor(private readonly canvas: HTMLCanvasElement) {
@@ -269,6 +277,8 @@ export class Game {
         spent: event.spent,
         beaconsBuilt: event.beaconsBuilt,
         wavesSurvived: event.wavesSurvived,
+        weaponToggles: event.weaponToggles,
+        blastTime: event.blastTime,
       };
       const scores = recordScore({
         waves: event.wavesSurvived,
@@ -315,7 +325,7 @@ export class Game {
         toggleWeapon: () => this.toggleWeapon(),
         warmVfx: () => this.vfx.warm(this.hero.group.position),
         clearScores: () => clearScores(),
-        setBalance: (path: string, value: number) => setBalance(path, value),
+        setBalance: (path: string, value: number | boolean) => setBalance(path, value),
         grantGold: (n: number) => {
           this.economy.apply({
             id: crypto.randomUUID(),
@@ -451,6 +461,7 @@ export class Game {
     if (this.state.simActive) {
       const simDelta = delta * this.simTimeScale;
       this.timeAlive += simDelta;
+      if (this.activeWeapon === 'blast') this.blastTime += simDelta;
       this.terrainView?.update(simDelta);
       this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
       this.combat.setTime(this.timeAlive);
@@ -487,7 +498,7 @@ export class Game {
       this.goldPickups.update(
         simDelta,
         this.hero.group.position,
-        (amount) => this.economy.canReceiveIncome(amount),
+        (amount) => this.economy.canReceiveIncome(this.reclaimAmount(amount)),
         (position, amount) => this.reclaimGold(position, amount),
         (position) => this.blockedGoldPickup(position),
       );
@@ -760,6 +771,8 @@ export class Game {
     this.harvestSystem.reset();
     this.combat.reset();
     this.activeWeapon = 'rig';
+    this.weaponToggleCount = 0;
+    this.blastTime = 0;
     this.progression.reset();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);
@@ -783,6 +796,8 @@ export class Game {
       spent: 0,
       beaconsBuilt: 0,
       wavesSurvived: 0,
+      weaponToggles: 0,
+      blastTime: 0,
     };
     this.state.restart();
     this.uiBridge.announce('Stake your claim.', 0);
@@ -802,6 +817,8 @@ export class Game {
       spent: economySummary.spent,
       beaconsBuilt: economySummary.beaconsBuilt,
       wavesSurvived: this.waveSystem.diagnostics.wave,
+      weaponToggles: this.weaponToggleCount,
+      blastTime: this.blastTime,
     });
   }
 
@@ -865,6 +882,7 @@ export class Game {
 
   private toggleWeapon(): 'rig' | 'blast' {
     this.activeWeapon = this.activeWeapon === 'rig' ? 'blast' : 'rig';
+    this.weaponToggleCount += 1;
     return this.activeWeapon;
   }
 
@@ -874,6 +892,9 @@ export class Game {
     detonations: number;
     blastKills: number;
     turretKills: number;
+    weaponToggles: number;
+    blastTime: number;
+    blastDamage: number;
   } {
     return {
       active: this.activeWeapon,
@@ -881,7 +902,15 @@ export class Game {
       detonations: this.combat.detonations,
       blastKills: this.combat.killsByOwner.hero_blast ?? 0,
       turretKills: this.combat.killsByOwner.turrets ?? 0,
+      weaponToggles: this.weaponToggleCount,
+      blastTime: this.blastTime,
+      blastDamage: this.currentBlastDamage(),
     };
+  }
+
+  private currentBlastDamage(): number {
+    const waveMult = 1 + Math.max(0, this.waveSystem.diagnostics.wave) * Balance.blast.dmgPerWave;
+    return Balance.blast.damage * this.blastDamageMult * waveMult;
   }
 
   private dropCarrierGold(position: THREE.Vector3): void {
@@ -901,16 +930,22 @@ export class Game {
   }
 
   private reclaimGold(position: THREE.Vector3, amount: number): void {
+    const reclaimed = this.reclaimAmount(amount);
     const result = this.economy.apply({
       id: crypto.randomUUID(),
       at: this.timeAlive,
       type: 'gold_reclaimed',
-      amount,
+      amount: reclaimed,
     });
     if (!result.ok) return;
-    this.reclaimedTotal += amount;
+    this.reclaimedTotal += reclaimed;
     if (Balance.charm.coinTick > 0) this.audio.playCoin();
-    this.vfx.floatText(position, `+${amount}`, '#c4883a');
+    this.vfx.floatText(position, `+${reclaimed}`, '#c4883a');
+  }
+
+  private reclaimAmount(amount: number): number {
+    const bonus = this.hasBuiltStockpile() ? Balance.steal.reclaimStockpileBonus : 0;
+    return Math.ceil(amount * (1 + Math.max(0, bonus)));
   }
 
   private blockedGoldPickup(position: THREE.Vector3): void {
@@ -1069,6 +1104,11 @@ export class Game {
     this.heroShooter.range = Balance.sparkRig.range * stats.rangeMult;
     this.heroShooter.projSpeed = Balance.sparkRig.boltSpeed * stats.boltSpeedMult;
     this.heroShooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
+    this.blastDamageMult = stats.blastDamageMult;
+    this.blastRadiusMult = stats.blastRadiusMult;
+    this.blastCooldownMult = stats.blastCooldownMult;
+    this.blastShooter.cooldown = Math.max(0.35, Balance.blast.cooldown * this.blastCooldownMult);
+    if (this.blastShooter.aoe) this.blastShooter.aoe.radius = Balance.blast.radius * this.blastRadiusMult;
     this.hero.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
     if (pickedId === 'tinkers_plating' && 'heal' in upgradeDefById.tinkers_plating.deltas) {
       this.hero.heal(upgradeDefById.tinkers_plating.deltas.heal);

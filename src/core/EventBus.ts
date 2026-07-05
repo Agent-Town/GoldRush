@@ -16,6 +16,8 @@ export type GameEvent =
       spent: number;
       beaconsBuilt: number;
       wavesSurvived: number;
+      weaponToggles: number;
+      blastTime: number;
     }
   | {
       type: 'enemy_killed';

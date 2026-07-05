@@ -14,6 +14,9 @@ export type EffectiveStats = {
   seamCapacityBonus: number;
   seamRespawnReduction: number;
   beaconFireRateMult: number;
+  blastDamageMult: number;
+  blastRadiusMult: number;
+  blastCooldownMult: number;
 };
 
 export const baseStats: EffectiveStats = {
@@ -28,6 +31,9 @@ export const baseStats: EffectiveStats = {
   seamCapacityBonus: 0,
   seamRespawnReduction: 0,
   beaconFireRateMult: 1,
+  blastDamageMult: 1,
+  blastRadiusMult: 1,
+  blastCooldownMult: 1,
 };
 
 export function effectiveStats(stacks: UpgradeStacks): EffectiveStats {
@@ -48,6 +54,9 @@ export function effectiveStats(stacks: UpgradeStacks): EffectiveStats {
     if ('seamCapacityBonus' in deltas) stats.seamCapacityBonus += deltas.seamCapacityBonus * count;
     if ('seamRespawnReduction' in deltas) stats.seamRespawnReduction += deltas.seamRespawnReduction * count;
     if ('beaconFireRateMult' in deltas) stats.beaconFireRateMult += deltas.beaconFireRateMult * count;
+    if ('blastDamageMult' in deltas) stats.blastDamageMult += deltas.blastDamageMult * count;
+    if ('blastRadiusMult' in deltas) stats.blastRadiusMult += deltas.blastRadiusMult * count;
+    if ('blastCooldownMult' in deltas) stats.blastCooldownMult += deltas.blastCooldownMult * count;
   }
 
   return stats;

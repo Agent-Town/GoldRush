@@ -56,6 +56,9 @@ interface ThreeGameDiagnostics {
     detonations: number;
     blastKills: number;
     turretKills: number;
+    weaponToggles: number;
+    blastTime: number;
+    blastDamage: number;
   };
   xp: number;
   xpMotesAlive: number;
@@ -78,6 +81,9 @@ interface ThreeGameDiagnostics {
       seamCapacityBonus: number;
       seamRespawnReduction: number;
       beaconFireRateMult: number;
+      blastDamageMult: number;
+      blastRadiusMult: number;
+      blastCooldownMult: number;
     };
     eligibility: string[];
   };
@@ -90,6 +96,8 @@ interface ThreeGameDiagnostics {
     spent: number;
     beaconsBuilt: number;
     wavesSurvived: number;
+    weaponToggles: number;
+    blastTime: number;
   };
   wave: number;
   nextWaveInSim: number;
@@ -275,7 +283,7 @@ interface Window {
     toggleWeapon: () => 'rig' | 'blast';
     warmVfx: () => Promise<void>;
     clearScores: () => void;
-    setBalance: (path: string, value: number) => boolean;
+    setBalance: (path: string, value: number | boolean) => boolean;
     grantGold: (n: number) => void;
     grantXp: (n: number) => void;
     maxUpgrades: () => void;
@@ -320,6 +328,9 @@ interface Window {
         detonations: number;
         blastKills: number;
         turretKills: number;
+        weaponToggles: number;
+        blastTime: number;
+        blastDamage: number;
       };
       buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret'; count: number }>;
       economy: {

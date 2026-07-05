@@ -105,6 +105,10 @@ async function createDroppedPickup(page: Page, banked = 120): Promise<PickupSnap
   return activePickup(page);
 }
 
+function reclaimAmount(amount: number): number {
+  return Math.ceil(amount * (1 + Balance.steal.reclaimStockpileBonus));
+}
+
 test('steal debits bank through gold_stolen and shows a float', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nokill&nolevel&seed=m2-04-steal');
   await placeStockpile(page);
@@ -174,7 +178,7 @@ test('killed carrier drops reclaimable gold pickup', async ({ page }) => {
       timeout: 10_000,
     })
     .toBe(1);
-  expect(await gold(page)).toBe(before + pickup.amount);
+  expect(await gold(page)).toBe(before + reclaimAmount(pickup.amount));
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().steal.pickups ?? -1)).toBe(0);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts ?? 0)).toBeGreaterThan(0);
   expect(errors.consoleErrors).toEqual([]);
@@ -194,11 +198,12 @@ test('bank cap blocks pickup reclaim until room exists', async ({ page }) => {
   expect(await gold(page)).toBe(cap);
   expect((await activePickup(page)).amount).toBe(pickup.amount);
 
-  await setBalance(page, 'palisade.cost', 10);
+  const reclaimed = reclaimAmount(pickup.amount);
+  await setBalance(page, 'palisade.cost', reclaimed);
   await placeBuildableAt(page, 'palisade', 7, 12);
   await page.evaluate((pos) => window.__GR_TEST__?.teleport(pos.x, pos.z), pickup.position);
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().steal.pickups ?? -1), { timeout: 10_000 }).toBe(0);
-  expect(await gold(page)).toBe(cap - 10 + pickup.amount);
+  expect(await gold(page)).toBe(cap);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

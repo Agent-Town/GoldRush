@@ -48,6 +48,7 @@ export const Balance = {
     speedScaleCap: 1.3,
     aliveCap: 60,
     spawnRingRadius: 26,
+    pressureBudgetShared: true,
   },
   sparkRig: {
     fireRate: 2.0,
@@ -60,6 +61,7 @@ export const Balance = {
   },
   blast: {
     damage: 20,
+    dmgPerWave: 0.02,
     radius: 2.2,
     cooldown: 2.5,
     airTime: 0.7,
@@ -120,7 +122,7 @@ export const Balance = {
     maxCount: 3,
     riverPad: 2,
     cycleSeconds: 5,
-    goldPerCycle: 2,
+    goldPerCycle: 3,
     contestedRadius: 6,
   },
   stockpile: {
@@ -139,7 +141,12 @@ export const Balance = {
     maxConcurrent: 2,
     maxConcurrentPerWaves: 6,
     maxConcurrentCap: 4,
+    reclaimStockpileBonus: 0.25,
     pingSeconds: 3,
+  },
+  repair: {
+    pctOfCost: 0.25,
+    capPctOfCost: 0.4,
   },
   wreck: {
     hp: {

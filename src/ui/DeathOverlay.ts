@@ -5,6 +5,8 @@ export type DeathLedger = {
   spent: number;
   beaconsBuilt: number;
   wavesSurvived: number;
+  weaponToggles: number;
+  blastTime: number;
 };
 
 export type BestClaimRow = {
@@ -22,6 +24,8 @@ export class DeathOverlay {
   private readonly goldValue: HTMLElement;
   private readonly spentValue: HTMLElement;
   private readonly beaconsBuiltValue: HTMLElement;
+  private readonly weaponTogglesValue: HTMLElement;
+  private readonly blastTimeValue: HTMLElement;
   private readonly wavesValue: HTMLElement;
   private readonly bestClaimsList: HTMLElement;
   private readonly button: HTMLButtonElement;
@@ -63,6 +67,14 @@ export class DeathOverlay {
             <dt>Beacons Built</dt>
             <dd data-death-beacons-built>0</dd>
           </div>
+          <div>
+            <dt>Blast Toggles</dt>
+            <dd data-death-weapon-toggles>0</dd>
+          </div>
+          <div>
+            <dt>Blast Charge Time</dt>
+            <dd data-death-blast-time>00:00</dd>
+          </div>
         </dl>
         <section class="death-overlay__scores" aria-label="Best Claims">
           <h2>Best Claims</h2>
@@ -78,6 +90,8 @@ export class DeathOverlay {
     this.goldValue = this.get('[data-death-gold]');
     this.spentValue = this.get('[data-death-spent]');
     this.beaconsBuiltValue = this.get('[data-death-beacons-built]');
+    this.weaponTogglesValue = this.get('[data-death-weapon-toggles]');
+    this.blastTimeValue = this.get('[data-death-blast-time]');
     this.bestClaimsList = this.get('[data-best-claims]');
     this.button = this.get<HTMLButtonElement>('[data-testid="stake-again"]');
 
@@ -94,6 +108,8 @@ export class DeathOverlay {
     this.goldValue.textContent = ledger.goldPanned.toString();
     this.spentValue.textContent = ledger.spent.toString();
     this.beaconsBuiltValue.textContent = ledger.beaconsBuilt.toString();
+    this.weaponTogglesValue.textContent = ledger.weaponToggles.toString();
+    this.blastTimeValue.textContent = this.formatTime(ledger.blastTime);
     this.renderScores(scores, currentAt);
     this.root.classList.add('death-overlay--visible');
     this.root.setAttribute('aria-hidden', 'false');

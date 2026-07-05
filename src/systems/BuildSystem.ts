@@ -124,6 +124,7 @@ export class BuildSystem {
   private readonly visualObject = new THREE.Object3D();
   private readonly hp = createNumberStore();
   private readonly hpMax = createNumberStore();
+  private readonly buildCosts = createNumberStore();
   private readonly wrecked = createBooleanStore();
   private readonly repairProgress = createNumberStore();
   private readonly repairNeedGoldShown = createBooleanStore();
@@ -390,7 +391,7 @@ export class BuildSystem {
 
     const placed = this.place(def.id, this.ghostPos);
     if (placed < 0) return false;
-    this.finishPlacement(def.id, placed);
+    this.finishPlacement(def.id, placed, cost);
     this.valid = this.computeValid();
     return true;
   }
@@ -401,6 +402,7 @@ export class BuildSystem {
       for (let i = 0; i < this.hp[id].length; i += 1) {
         this.hp[id][i] = 0;
         this.hpMax[id][i] = 0;
+        this.buildCosts[id][i] = 0;
         this.wrecked[id][i] = false;
         this.repairProgress[id][i] = 0;
         this.repairNeedGoldShown[id][i] = false;
@@ -642,9 +644,10 @@ export class BuildSystem {
     return this.beacons.place(position);
   }
 
-  private finishPlacement(id: BuildableId, index: number): void {
+  private finishPlacement(id: BuildableId, index: number, cost: number): void {
     const maxHp = this.maxHpForPlacement(id);
     this.hpMax[id][index] = maxHp;
+    this.buildCosts[id][index] = cost;
     this.hp[id][index] = maxHp;
     this.wrecked[id][index] = false;
     this.repairProgress[id][index] = 0;
@@ -835,7 +838,9 @@ export class BuildSystem {
 
     for (const id of buildableIds) {
       for (let i = 0; i < this.wrecked[id].length; i += 1) {
-        if (!this.wrecked[id][i]) {
+        const maxHp = this.maxHpForInstance(id, i);
+        const hp = this.hp[id][i] ?? 0;
+        if (maxHp <= 0 || (!this.wrecked[id][i] && (hp <= 0 || hp >= maxHp))) {
           this.repairProgress[id][i] = 0;
           continue;
         }
@@ -864,7 +869,7 @@ export class BuildSystem {
       return;
     }
 
-    const cost = this.repairCost(bestId);
+    const cost = this.repairCost(bestId, bestIndex);
     const position = this.positionFor(bestId, bestIndex);
     if (!position) return;
 
@@ -989,9 +994,15 @@ export class BuildSystem {
     return index;
   }
 
-  private repairCost(id: BuildableId): number {
+  private repairCost(id: BuildableId, index: number): number {
     const def = getBuildableDef(id);
-    return Math.ceil(((def?.costCurve(0) ?? 0) * Balance.wreck.repairCostFrac));
+    const maxHp = this.maxHpForInstance(id, index);
+    const hp = this.wrecked[id][index] ? 0 : (this.hp[id][index] ?? maxHp);
+    const missingFraction = maxHp > 0 ? Math.max(0, maxHp - hp) / maxHp : 0;
+    if (missingFraction <= 0) return 0;
+    const cost = this.buildCosts[id][index] || def?.costCurve(0) || 0;
+    const pct = Math.min(Balance.repair.capPctOfCost, Balance.repair.pctOfCost * missingFraction);
+    return Math.ceil(cost * Math.max(0, pct));
   }
 
   private syncGhostShape(): void {
@@ -1172,12 +1183,12 @@ function createTargetStore(): BuildingFamilyStore<BuildingTarget> {
     id: `${id}:${index}`,
     family: id,
     index,
-	    position: new THREE.Vector3(),
-	    active: false,
-	    hp: 0,
-	    maxHp: 0,
-	    reachRadius: 0,
-	  }));
+    position: new THREE.Vector3(),
+    active: false,
+    hp: 0,
+    maxHp: 0,
+    reachRadius: 0,
+  }));
 }
 
 function createStore<T>(make: (id: BuildableId, index: number) => T): BuildingFamilyStore<T> {
