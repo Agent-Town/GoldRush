@@ -43,6 +43,13 @@ async function toggleBlast(page: Page): Promise<void> {
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.active)).toBe('blast');
 }
 
+async function aimBlastAtHero(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos ?? { x: 0, z: 0 };
+    window.__GR_TEST__?.setBlastAim(hero.x, hero.z);
+  });
+}
+
 async function spawnFrozenPack(page: Page, count: number, radius: number): Promise<void> {
   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.waveSpawnedTotal ?? 0);
   await page.evaluate(([n, r]) => window.__GR_TEST__?.spawnPack(n, r, { speedScale: 0 }), [count, radius] as const);
@@ -73,6 +80,7 @@ test('toggle defaults to rig, then blast kills while rig owner stops', async ({ 
   const rigKills = (await ownerKills(page)).hero ?? 0;
   await easyEnemies(page, 10);
   await toggleBlast(page);
+  await aimBlastAtHero(page);
   await spawnFrozenPack(page, 1, 2);
 
   await expect.poll(() => ownerKills(page).then((kills) => kills.hero_blast ?? 0), { timeout: 12_000 }).toBeGreaterThan(0);
@@ -85,6 +93,7 @@ test('one blast detonation kills a frozen cluster once through hero_blast', asyn
   const errors = await openGame(page);
   await easyEnemies(page, 10);
   await toggleBlast(page);
+  await aimBlastAtHero(page);
   await spawnFrozenPack(page, 4, 0.35);
 
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.detonations ?? 0), { timeout: 12_000 }).toBe(1);

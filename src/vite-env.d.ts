@@ -7,6 +7,7 @@ interface ThreeGameDiagnostics {
   runState: 'boot' | 'playing' | 'levelup' | 'dead';
   paused: boolean;
   state: 'boot' | 'playing' | 'levelup' | 'dead' | 'paused';
+  difficultyPreset: 'greenhorn' | 'trail' | 'vein-hunter';
   ui?: {
     hp: number;
     maxHp: number;
@@ -59,6 +60,12 @@ interface ThreeGameDiagnostics {
     weaponToggles: number;
     blastTime: number;
     blastDamage: number;
+    blastRadius: number;
+    disarmed: boolean;
+    aimReticleRadius: number;
+    aimMode: 'cursor' | 'auto';
+    aimTarget: { x: number; z: number };
+    lastDetonation: { x: number; z: number } | null;
   };
   xp: number;
   xpMotesAlive: number;
@@ -307,9 +314,11 @@ interface Window {
     wreck: (family: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret', index: number) => boolean;
     resetRun: () => void;
     toggleWeapon: () => 'rig' | 'blast';
+    setBlastAim: (x: number, z: number) => { x: number; z: number };
+    setDifficultyPreset: (preset: string) => 'greenhorn' | 'trail' | 'vein-hunter';
     warmVfx: () => Promise<void>;
     clearScores: () => void;
-    setBalance: (path: string, value: number | boolean) => boolean;
+    setBalance: (path: string, value: number | boolean | string) => boolean;
     grantGold: (n: number) => void;
     grantXp: (n: number) => void;
     maxUpgrades: () => void;
@@ -326,6 +335,7 @@ interface Window {
       repairs: number;
     };
     setBeaconWave: (wave: number | null) => void;
+    setWave: (wave: number) => void;
     setTestClip: (slot: string, frames: string[], fps: number) => void;
     setBuildMode: (on: boolean) => void;
     selectBuildable: (id: string) => boolean;
@@ -341,6 +351,7 @@ interface Window {
       wreckState?: 'none' | 'seekBuilding' | 'swinging';
       carried?: number;
       edge?: 'north' | 'south' | 'east' | 'west' | null;
+      zone?: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
     }>;
     spawnEnemyAt: (x: number, z: number) => boolean;
     clearEnemies: () => void;
@@ -359,6 +370,12 @@ interface Window {
         weaponToggles: number;
         blastTime: number;
         blastDamage: number;
+        blastRadius: number;
+        disarmed: boolean;
+        aimReticleRadius: number;
+        aimMode: 'cursor' | 'auto';
+        aimTarget: { x: number; z: number };
+        lastDetonation: { x: number; z: number } | null;
       };
       buildables: Array<{ id: 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret'; count: number }>;
       economy: {
@@ -384,6 +401,11 @@ interface Window {
         repairGold: number;
       };
       balance: {
+        difficultyPreset: 'greenhorn' | 'trail' | 'vein-hunter';
+        enemyHp: number;
+        xpPerKill: number;
+        offerInvestBonus: number;
+        doubleTapCoilMaxStacks: number;
         rig: {
           fireRate: number;
         };

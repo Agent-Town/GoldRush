@@ -50,6 +50,10 @@ export const Balance = {
     spawnRingRadius: 26,
     pressureBudgetShared: true,
   },
+  pathing: {
+    riverBlocksEnemies: true,
+    deepWaterDisarmsHero: true,
+  },
   sparkRig: {
     fireRate: 2.0,
     damage: 12,
@@ -60,6 +64,7 @@ export const Balance = {
     volley: 1,
   },
   blast: {
+    aimMode: 'cursor',
     damage: 20,
     dmgPerWave: 0.28,
     radius: 2.2,
@@ -161,12 +166,22 @@ export const Balance = {
       sentry_beacon: {
         perWave: 6,
         startWave: 6,
-        capMult: 3,
+        capMult: 4,
       },
       palisade: {
         perWave: 8,
         startWave: 6,
-        capMult: 3,
+        capMult: 5,
+      },
+      sluice: {
+        perWave: 6,
+        startWave: 6,
+        capMult: 4,
+      },
+      stockpile: {
+        perWave: 8,
+        startWave: 6,
+        capMult: 4,
       },
       turret: {
         perWave: 8,
@@ -180,6 +195,7 @@ export const Balance = {
     share: 0.25,
     pulseEvery: 2,
     minWave: 4,
+    maxPerEdgeWave20: 2,
     repairSeconds: 1.2,
     repairCostFrac: 0.3,
     repairRadius: 1.4,
@@ -194,6 +210,7 @@ export const Balance = {
   upgrades: {
     assayGoldPerWave: 5,
     fieldDressingHealFrac: 0.3,
+    doubleTapCoilMaxStacks: 6,
   },
   offers: {
     investBonus: 0.35,
@@ -235,3 +252,101 @@ export const Balance = {
     banterCooldownS: 8,
   },
 } as const;
+
+export type BlastAimMode = 'cursor' | 'auto';
+export type DifficultyPresetId = 'greenhorn' | 'trail' | 'vein-hunter';
+
+export const DIFFICULTY_PRESET_STORAGE_KEY = 'gr.difficultyPreset.v1';
+
+const TRAIL = {
+  enemyHp: 25.2,
+  xpPerKill: 4,
+  offerInvestBonus: 0.35,
+  thiefMaxConcurrent: 2,
+  thiefMaxConcurrentCap: 4,
+  palisadeHp: 60,
+  doubleTapCoilMaxStacks: 6,
+} as const;
+
+type MutableBalance = {
+  enemy: { hp: number };
+  xp: { perKill: number };
+  offers: { investBonus: number };
+  steal: { maxConcurrent: number; maxConcurrentCap: number };
+  wreck: { hp: { palisade: number } };
+  upgrades: { doubleTapCoilMaxStacks: number };
+};
+
+export function normalizeDifficultyPreset(value: unknown): DifficultyPresetId {
+  if (value === 'greenhorn') return 'greenhorn';
+  if (value === 'vein-hunter' || value === 'vein_hunter' || value === 'hard') return 'vein-hunter';
+  return 'trail';
+}
+
+export function readDifficultyPreset(search = getSearch(), storage = getStorage()): DifficultyPresetId {
+  const params = new URLSearchParams(search);
+  const raw = params.get('preset') ?? params.get('difficulty');
+  const preset = normalizeDifficultyPreset(raw ?? readStoredDifficultyPreset(storage));
+  if (raw) saveDifficultyPreset(preset, storage);
+  return preset;
+}
+
+export function saveDifficultyPreset(preset: DifficultyPresetId, storage = getStorage()): void {
+  try {
+    storage?.setItem(DIFFICULTY_PRESET_STORAGE_KEY, preset);
+  } catch {
+    // localStorage is optional in private/headless contexts.
+  }
+}
+
+export function applyDifficultyPreset(preset: DifficultyPresetId): DifficultyPresetId {
+  const balance = Balance as unknown as MutableBalance;
+  balance.enemy.hp = TRAIL.enemyHp;
+  balance.xp.perKill = TRAIL.xpPerKill;
+  balance.offers.investBonus = TRAIL.offerInvestBonus;
+  balance.steal.maxConcurrent = TRAIL.thiefMaxConcurrent;
+  balance.steal.maxConcurrentCap = TRAIL.thiefMaxConcurrentCap;
+  balance.wreck.hp.palisade = TRAIL.palisadeHp;
+  balance.upgrades.doubleTapCoilMaxStacks = TRAIL.doubleTapCoilMaxStacks;
+
+  if (preset === 'greenhorn') {
+    balance.steal.maxConcurrent = 1;
+    balance.steal.maxConcurrentCap = 3;
+    balance.wreck.hp.palisade = Math.round(TRAIL.palisadeHp * 1.2);
+  } else if (preset === 'vein-hunter') {
+    balance.enemy.hp = 28;
+    balance.xp.perKill = 3;
+    balance.offers.investBonus = 0;
+    balance.upgrades.doubleTapCoilMaxStacks = 3;
+  }
+
+  return preset;
+}
+
+export function applyStoredDifficultyPreset(): DifficultyPresetId {
+  return applyDifficultyPreset(readDifficultyPreset());
+}
+
+function getSearch(): string {
+  try {
+    return globalThis.location?.search ?? '';
+  } catch {
+    return '';
+  }
+}
+
+function getStorage(): Storage | null {
+  try {
+    return globalThis.localStorage ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function readStoredDifficultyPreset(storage: Storage | null): string | null {
+  try {
+    return storage?.getItem(DIFFICULTY_PRESET_STORAGE_KEY) ?? null;
+  } catch {
+    return null;
+  }
+}

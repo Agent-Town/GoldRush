@@ -34,7 +34,15 @@ import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
 import { EnemyPool } from '../entities/pools';
 import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
-import { Balance } from './Balance';
+import {
+  applyDifficultyPreset,
+  Balance,
+  normalizeDifficultyPreset,
+  readDifficultyPreset,
+  saveDifficultyPreset,
+  type BlastAimMode,
+  type DifficultyPresetId,
+} from './Balance';
 import { AudioSystem } from '../systems/AudioSystem';
 import { Economy, initialEconomyState, reduce as reduceEconomy, summarizeLog, type EconomyEvent } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
@@ -55,7 +63,7 @@ import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
-import { resolveFiller } from './Upgrades';
+import { applyUpgradeBudgetsFromBalance, resolveFiller } from './Upgrades';
 import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeId } from './Upgrades';
@@ -108,15 +116,34 @@ export class Game {
   );
   private readonly buildSystem: BuildSystem;
   private readonly progression: Progression;
+  private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
   private activeWeapon: 'rig' | 'blast' = 'rig';
   private blastDamageMult = 1;
   private blastRadiusMult = 1;
   private blastCooldownMult = 1;
   private weaponToggleCount = 0;
   private blastTime = 0;
+  private pointerAimReady = false;
+  private readonly aimRaycaster = new THREE.Raycaster();
+  private readonly aimPointerNdc = new THREE.Vector2();
+  private readonly aimGroundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
+  private readonly pointerAimPoint = new THREE.Vector3();
+  private readonly blastAimPoint = new THREE.Vector3(0, 0.08, 2);
+  private readonly blastAimRaw = new THREE.Vector3();
+  private blastAimReticleRadius: number = Balance.blast.radius;
+  private readonly blastAimReticle = new THREE.Mesh(
+    new THREE.RingGeometry(Balance.blast.radius * 0.88, Balance.blast.radius, 40),
+    new THREE.MeshBasicMaterial({
+      color: '#83ded7',
+      transparent: true,
+      opacity: 0.46,
+      depthWrite: false,
+      side: THREE.DoubleSide,
+    }),
+  );
   private readonly heroShooter: ShooterHandle = {
     id: 'hero',
-    enabled: () => this.activeWeapon === 'rig',
+    enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabled(),
     getPos: () => this.hero.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
@@ -127,12 +154,13 @@ export class Game {
   private readonly blastShooter: ShooterHandle = {
     id: 'hero_blast',
     kind: 'lob',
-    enabled: () => this.activeWeapon === 'blast',
+    enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabled(),
     getPos: () => this.hero.group.position,
     range: Balance.blast.range,
     cooldown: Balance.blast.cooldown,
     damage: Balance.blast.damage,
     getDamage: () => this.currentBlastDamage(),
+    targetPoint: (_origin, target) => this.currentBlastTarget(target.position),
     projSpeed: 0,
     volley: Balance.blast.volley,
     aoe: { radius: Balance.blast.radius, airTime: Balance.blast.airTime },
@@ -219,6 +247,7 @@ export class Game {
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
   private uiSnapshot?: UiSnapshot;
+  private wetPowderHintCooldown = 0;
   private deathLedger: DeathLedger = {
     timeAlive: 0,
     kills: 0,
@@ -236,6 +265,10 @@ export class Game {
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
+    this.blastAimReticle.name = 'BlastAimReticle';
+    this.blastAimReticle.rotation.x = -Math.PI / 2;
+    this.blastAimReticle.visible = false;
+    this.canvas.addEventListener('pointermove', this.onBlastAimPointerMove);
     this.buildSystem = new BuildSystem(
       canvas,
       this.camera,
@@ -341,9 +374,11 @@ export class Game {
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         resetRun: () => this.resetRun(),
         toggleWeapon: () => this.toggleWeapon(),
+        setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
+        setDifficultyPreset: (preset: string) => this.setDifficultyPreset(preset),
         warmVfx: () => this.vfx.warm(this.hero.group.position),
         clearScores: () => clearScores(),
-        setBalance: (path: string, value: number | boolean) => setBalance(path, value),
+        setBalance: (path: string, value: number | boolean | string) => setBalance(path, value),
         grantGold: (n: number) => {
           this.economy.apply({
             id: crypto.randomUUID(),
@@ -365,6 +400,7 @@ export class Game {
         setBeaconWave: (wave: number | null) => {
           this.debugBeaconWaveOverride = wave;
         },
+        setWave: (wave: number) => this.waveSystem.setWaveForTest(wave),
         setTestClip: (slot: string, frames: string[], fps: number) => setSpriteTestClip(slot as AssetSlotId, frames, fps),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
@@ -387,6 +423,7 @@ export class Game {
               wreckState: enemy.wreckState,
               carried: enemy.carriedAmount,
               edge: enemy.ownEdge,
+              zone: Terrain.sample(enemy.position.x, enemy.position.z).zone,
             })),
         spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z)) !== null,
         clearEnemies: () => this.enemies.recycleAll(),
@@ -408,6 +445,11 @@ export class Game {
           steal: this.stealDiagnostics(),
           wreck: this.wreckDiagnostics(),
           balance: {
+            difficultyPreset: this.difficultyPreset,
+            enemyHp: Balance.enemy.hp,
+            xpPerKill: Balance.xp.perKill,
+            offerInvestBonus: Balance.offers.investBonus,
+            doubleTapCoilMaxStacks: Balance.upgrades.doubleTapCoilMaxStacks,
             rig: {
               fireRate: Balance.sparkRig.fireRate,
             },
@@ -437,6 +479,7 @@ export class Game {
     this.runManager?.dispose();
     this.agentStub?.dispose();
     this.loop.stop();
+    this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     this.input.dispose();
     this.hud.dispose();
     this.deathOverlay.dispose();
@@ -448,6 +491,8 @@ export class Game {
     this.combat.dispose();
     this.audio.dispose();
     this.vfx.dispose();
+    this.blastAimReticle.geometry.dispose();
+    (this.blastAimReticle.material as THREE.Material).dispose();
     this.goldPickups.dispose();
     this.enemies.dispose();
     this.hero.dispose();
@@ -511,6 +556,8 @@ export class Game {
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
       this.terrainView?.update(simDelta);
       this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
+      this.updateBlastAim(intents);
+      this.updateWetPowderHint(simDelta);
       this.combat.setTime(this.timeAlive);
       this.waveSystem.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
@@ -656,6 +703,7 @@ export class Game {
     this.scene.add(this.buildSystem.group);
     this.scene.add(this.projectiles.group);
     this.scene.add(this.blastCharges.group);
+    this.scene.add(this.blastAimReticle);
     this.scene.add(this.xpMotes.group);
     this.scene.add(this.goldPickups.group);
     this.scene.add(this.combatVfx.group);
@@ -683,6 +731,7 @@ export class Game {
       runState: this.state.current,
       paused: this.state.isPaused,
       state: this.state.isPaused ? 'paused' : this.state.current,
+      difficultyPreset: this.difficultyPreset,
       ui: this.uiSnapshot,
       hp: this.hero.hp,
       maxHp: this.hero.maxHp,
@@ -871,6 +920,7 @@ export class Game {
   }
 
   resetRun(): void {
+    this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
     this.goldPickups.recycleAll();
@@ -880,8 +930,10 @@ export class Game {
     this.harvestSystem.reset();
     this.combat.reset();
     this.activeWeapon = 'rig';
+    this.blastAimReticle.visible = false;
     this.weaponToggleCount = 0;
     this.blastTime = 0;
+    this.wetPowderHintCooldown = 0;
     this.progression.reset();
     this.hero.resetRun(this.heroStart);
     this.cameraRig.snapTo(this.hero.group.position);
@@ -991,8 +1043,104 @@ export class Game {
 
   private toggleWeapon(): 'rig' | 'blast' {
     this.activeWeapon = this.activeWeapon === 'rig' ? 'blast' : 'rig';
+    if (this.activeWeapon !== 'blast') this.blastAimReticle.visible = false;
     this.weaponToggleCount += 1;
     return this.activeWeapon;
+  }
+
+  private readonly onBlastAimPointerMove = (event: PointerEvent): void => {
+    const rect = this.canvas.getBoundingClientRect();
+    this.aimPointerNdc.set(
+      ((event.clientX - rect.left) / Math.max(1, rect.width)) * 2 - 1,
+      -(((event.clientY - rect.top) / Math.max(1, rect.height)) * 2 - 1),
+    );
+    this.aimRaycaster.setFromCamera(this.aimPointerNdc, this.camera);
+    if (!this.aimRaycaster.ray.intersectPlane(this.aimGroundPlane, this.pointerAimPoint)) return;
+    this.pointerAimReady = true;
+  };
+
+  private setBlastAimForTest(x: number, z: number): { x: number; z: number } {
+    this.pointerAimPoint.set(x, 0.08, z);
+    this.pointerAimReady = true;
+    this.clampBlastAim(this.hero.group.position, this.pointerAimPoint, this.blastAimPoint);
+    return { x: this.blastAimPoint.x, z: this.blastAimPoint.z };
+  }
+
+  private setDifficultyPreset(value: string): DifficultyPresetId {
+    const preset = normalizeDifficultyPreset(value);
+    saveDifficultyPreset(preset);
+    return this.applyRunPreset(preset, false);
+  }
+
+  private applyRunPreset(preset: DifficultyPresetId, persist: boolean): DifficultyPresetId {
+    if (persist) saveDifficultyPreset(preset);
+    this.difficultyPreset = applyDifficultyPreset(preset);
+    applyUpgradeBudgetsFromBalance();
+    return this.difficultyPreset;
+  }
+
+  private updateBlastAim(intents: Intents): void {
+    const aimMode = Balance.blast.aimMode as BlastAimMode;
+    if (this.activeWeapon !== 'blast' || aimMode === 'auto') {
+      this.blastAimReticle.visible = false;
+      return;
+    }
+
+    if (this.pointerAimReady) {
+      this.clampBlastAim(this.hero.group.position, this.pointerAimPoint, this.blastAimPoint);
+    } else {
+      this.leadBlastAim(intents);
+    }
+
+    this.blastAimReticle.position.set(this.blastAimPoint.x, 0.09, this.blastAimPoint.z);
+    this.blastAimReticle.visible = true;
+  }
+
+  private updateWetPowderHint(delta: number): void {
+    this.wetPowderHintCooldown = Math.max(0, this.wetPowderHintCooldown - delta);
+    if (!this.heroWeaponsDisarmed() || this.enemies.activeCount <= 0 || this.wetPowderHintCooldown > 0) return;
+    this.uiBridge.announce('Wet powder.', this.timeAlive, null, 1.4);
+    this.wetPowderHintCooldown = 1.4;
+  }
+
+  private heroWeaponsEnabled(): boolean {
+    return !this.heroWeaponsDisarmed();
+  }
+
+  private heroWeaponsDisarmed(): boolean {
+    return Balance.pathing.deepWaterDisarmsHero && Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone === 'river';
+  }
+
+  private currentBlastTarget(autoTarget: THREE.Vector3): THREE.Vector3 {
+    if ((Balance.blast.aimMode as BlastAimMode) === 'auto') return autoTarget;
+    return this.blastAimPoint;
+  }
+
+  private leadBlastAim(intents: Intents): void {
+    const origin = this.hero.group.position;
+    const dx = Math.abs(intents.move.x) > 0.01 ? intents.move.x : this.hero.velocity.x;
+    const dz = Math.abs(intents.move.y) > 0.01 ? intents.move.y : this.hero.velocity.z;
+    const len = Math.hypot(dx, dz);
+    const range = Balance.blast.range * 0.72;
+    if (len > 0.01) {
+      this.blastAimRaw.set(origin.x + (dx / len) * range, 0.08, origin.z + (dz / len) * range);
+    } else {
+      this.blastAimRaw.set(origin.x, 0.08, origin.z - range);
+    }
+    this.clampBlastAim(origin, this.blastAimRaw, this.blastAimPoint);
+  }
+
+  private clampBlastAim(origin: THREE.Vector3, raw: THREE.Vector3, out: THREE.Vector3): THREE.Vector3 {
+    const dx = raw.x - origin.x;
+    const dz = raw.z - origin.z;
+    const len = Math.hypot(dx, dz);
+    if (len <= 0.001) {
+      out.set(origin.x, 0.08, origin.z);
+      return out;
+    }
+    const distance = Math.min(len, Balance.blast.range);
+    out.set(origin.x + (dx / len) * distance, 0.08, origin.z + (dz / len) * distance);
+    return out;
   }
 
   private arsenalDiagnostics(): {
@@ -1004,7 +1152,14 @@ export class Game {
     weaponToggles: number;
     blastTime: number;
     blastDamage: number;
+    blastRadius: number;
+    disarmed: boolean;
+    aimReticleRadius: number;
+    aimMode: BlastAimMode;
+    aimTarget: { x: number; z: number };
+    lastDetonation: { x: number; z: number } | null;
   } {
+    const detonation = this.combat.lastBlastDetonation;
     return {
       active: this.activeWeapon,
       blastsAlive: this.combat.blastsAlive,
@@ -1014,6 +1169,12 @@ export class Game {
       weaponToggles: this.weaponToggleCount,
       blastTime: this.blastTime,
       blastDamage: this.currentBlastDamage(),
+      blastRadius: this.blastShooter.aoe?.radius ?? Balance.blast.radius,
+      disarmed: this.heroWeaponsDisarmed(),
+      aimReticleRadius: this.blastAimReticleRadius,
+      aimMode: Balance.blast.aimMode as BlastAimMode,
+      aimTarget: { x: Number(this.blastAimPoint.x.toFixed(3)), z: Number(this.blastAimPoint.z.toFixed(3)) },
+      lastDetonation: detonation ? { x: Number(detonation.x.toFixed(3)), z: Number(detonation.z.toFixed(3)) } : null,
     };
   }
 
@@ -1217,13 +1378,24 @@ export class Game {
     this.blastRadiusMult = stats.blastRadiusMult;
     this.blastCooldownMult = stats.blastCooldownMult;
     this.blastShooter.cooldown = Math.max(0.35, Balance.blast.cooldown * this.blastCooldownMult);
-    if (this.blastShooter.aoe) this.blastShooter.aoe.radius = Balance.blast.radius * this.blastRadiusMult;
+    const blastRadius = Balance.blast.radius * this.blastRadiusMult;
+    if (this.blastShooter.aoe) this.blastShooter.aoe.radius = blastRadius;
+    this.syncBlastReticleRadius(blastRadius);
     this.hero.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
     if (pickedId === 'tinkers_plating' && 'heal' in upgradeDefById.tinkers_plating.deltas) {
       this.hero.heal(upgradeDefById.tinkers_plating.deltas.heal);
     }
     this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction);
     this.buildSystem.applyStats(stats.beaconFireRateMult);
+  }
+
+  private syncBlastReticleRadius(radius: number): void {
+    const nextRadius = Math.max(0.1, radius);
+    if (Math.abs(this.blastAimReticleRadius - nextRadius) < 0.001) return;
+    const previousGeometry = this.blastAimReticle.geometry;
+    this.blastAimReticle.geometry = new THREE.RingGeometry(nextRadius * 0.88, nextRadius, 40);
+    previousGeometry.dispose();
+    this.blastAimReticleRadius = nextRadius;
   }
 
   private syncUpgradeOverlay(): void {

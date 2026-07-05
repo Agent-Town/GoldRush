@@ -105,21 +105,6 @@ async function placeBuildableAt(page: Page, id: BuildableId, x: number, z: numbe
     .toBe(before + 1);
 }
 
-async function waitForWave(page: Page, wave: number, timeout = 30_000): Promise<void> {
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0), { timeout }).toBeGreaterThanOrEqual(wave);
-}
-
-async function waitForStableWave(page: Page, wave: number, minWindow = 10, timeout = 30_000): Promise<void> {
-  await page.waitForFunction(
-    ({ targetWave, windowSeconds }) => {
-      const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
-      return diagnostics?.wave === targetWave && diagnostics.nextWaveInSim >= windowSeconds;
-    },
-    { targetWave: wave, windowSeconds: minWindow },
-    { timeout },
-  );
-}
-
 async function writeReport(testInfo: TestInfo, name: string, output: unknown): Promise<void> {
   const body = `${JSON.stringify(output, null, 2)}\n`;
   fs.mkdirSync(reportDir, { recursive: true });
@@ -127,8 +112,8 @@ async function writeReport(testInfo: TestInfo, name: string, output: unknown): P
   await testInfo.attach(name, { body, contentType: 'application/json' });
 }
 
-async function installSelfHoldTracker(page: Page): Promise<void> {
-  await page.evaluate(() => {
+async function installSelfHoldTracker(page: Page, targetWave: number): Promise<void> {
+  await page.evaluate((wave) => {
     const standing = () => {
       const entries = window.__THREE_GAME_DIAGNOSTICS__?.build.hp ?? [];
       return entries.filter((entry) => entry.hp > 0 && !entry.wrecked).length;
@@ -166,7 +151,7 @@ async function installSelfHoldTracker(page: Page): Promise<void> {
       if (!diagnostics || state.done) return;
       if (diagnostics.lastPulseAt !== lastPulseAt) {
         lastPulseAt = diagnostics.lastPulseAt;
-        if (Number.isFinite(lastPulseAt) && diagnostics.wave === 15) {
+        if (Number.isFinite(lastPulseAt) && diagnostics.wave === wave) {
           const pulse = sample();
           if (pulse) state.pulses.push(pulse);
         }
@@ -180,7 +165,7 @@ async function installSelfHoldTracker(page: Page): Promise<void> {
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
-  });
+  }, targetWave);
 }
 
 async function hpEntries(page: Page): Promise<HpEntry[]> {
@@ -201,16 +186,17 @@ async function spawnClusterAtHero(page: Page, wave: number): Promise<void> {
 }
 
 async function measureBlastTtk(page: Page, targetWave: number): Promise<TtkSample> {
-  // F-022-1: pin a wide wave gap (40 sim-s) two waves early — before the target
-  // wave is planned — so the >=30 sim-s measurement window cannot be raced by the
-  // next wave on slow envs (5 protocol round-trips overran the old 10 sim-s window).
-  await waitForWave(page, Math.max(1, targetWave - 2));
-  await setBalance(page, 'waves.waveInterval', 40);
-  await waitForStableWave(page, targetWave, 30, 60_000);
-  const wave = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? targetWave);
+  await page.evaluate((wave) => window.__GR_TEST__?.setWave(wave), targetWave);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? -1)).toBe(targetWave);
+  const wave = targetWave;
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
-  await expect(page.evaluate(() => window.__GR_TEST__?.toggleWeapon())).resolves.toBe('blast');
+  const active = await page.evaluate(() => window.__GR_TEST__?.state().arsenal.active);
+  if (active !== 'blast') await expect(page.evaluate(() => window.__GR_TEST__?.toggleWeapon())).resolves.toBe('blast');
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.state().arsenal.active)).toBe('blast');
+  await page.evaluate(() => {
+    const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos ?? { x: 0, z: 0 };
+    window.__GR_TEST__?.setBlastAim(hero.x, hero.z);
+  });
   await spawnClusterAtHero(page, wave);
   const start = await page.evaluate(() => ({
     time: window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0,
@@ -289,10 +275,10 @@ test('SELF-HOLD reference base survives two wave-15 pulse cycles without hero in
     true,
   );
 
-  await waitForWave(page, 14);
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+  await page.evaluate(() => window.__GR_TEST__?.setWave(14));
   await teleport(page, 22, -22);
-  await installSelfHoldTracker(page);
+  await installSelfHoldTracker(page, 15);
 
   await expect.poll(() => page.evaluate(() => window.__M2_07_SELF_HOLD__?.done ?? false), { timeout: 35_000 }).toBe(true);
   const report = await page.evaluate(() => window.__M2_07_SELF_HOLD__);
@@ -309,9 +295,60 @@ test('SELF-HOLD reference base survives two wave-15 pulse cycles without hero in
   expect(errors.pageErrors).toEqual([]);
 });
 
+test('SELF-HOLD reference base keeps half standing through wave-25 pulse cycles', async ({ page }, testInfo) => {
+  test.setTimeout(80_000);
+  const errors = await openGame(page, '?debug&timescale=36&nolevel&nopause&nosteal&seed=m2-07-self-hold-wave25');
+  await setBalance(page, 'enemy.contactDamage', 0);
+  await setBalance(page, 'sparkRig.range', 0);
+  await setBalance(page, 'waves.trickleInterval', 9999);
+  await setBalance(page, 'wreck.minWave', 25);
+  await page.evaluate(() => window.__GR_TEST__?.setBeaconWave(24));
+  await grantGold(page, 2_000);
+
+  for (const placement of [
+    ['stockpile', -8, 12],
+    ['sentry_beacon', -4, 12],
+    ['sentry_beacon', 4, 12],
+    ['turret', -3, 15],
+    ['turret', 3, 15],
+    ['palisade', -3, 9],
+    ['palisade', -2, 9],
+    ['palisade', -1, 9],
+    ['palisade', 0, 9],
+    ['palisade', 1, 9],
+    ['palisade', 2, 9],
+  ] as const) {
+    await placeBuildableAt(page, placement[0], placement[1], placement[2]);
+  }
+
+  const built = await hpEntries(page);
+  expect(built).toHaveLength(11);
+  expect(built.filter((entry) => entry.id === 'stockpile').every((entry) => entry.maxHp > Balance.wreck.hp.stockpile)).toBe(true);
+  expect(built.filter((entry) => entry.id === 'palisade').every((entry) => entry.maxHp > Balance.wreck.hp.palisade * 2)).toBe(true);
+
+  await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+  await page.evaluate(() => window.__GR_TEST__?.setWave(24));
+  await teleport(page, 22, -22);
+  await installSelfHoldTracker(page, 25);
+
+  await expect.poll(() => page.evaluate(() => window.__M2_07_SELF_HOLD__?.done ?? false), { timeout: 35_000 }).toBe(true);
+  const report = await page.evaluate(() => window.__M2_07_SELF_HOLD__);
+  await writeReport(testInfo, 'self-hold-wave25', { report, errors });
+  expect(report).toBeTruthy();
+  if (!report?.final) throw new Error('wave-25 self-hold probe produced no final sample');
+  expect(report.failure).toBeNull();
+  expect(report.initialStanding).toBe(11);
+  expect(report.pulses).toHaveLength(2);
+  expect(report.pulses.some((pulse) => pulse.wreckers > 0)).toBe(true);
+  expect(report.final.stockpileAlive).toBe(true);
+  expect(report.final.standing).toBeGreaterThanOrEqual(Math.ceil(report.initialStanding * 0.5));
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('blast clump TTK at wave 20+ stays within 2x wave-10', async ({ page }, testInfo) => {
-  test.setTimeout(90_000); // F-022-1: absorbs the two pinned 40 sim-s measurement gaps
-  const errors = await openGame(page, '?debug&timescale=12&nolevel&nopause&nosteal&nowreck&seed=m2-07-blast-ttk');
+  test.setTimeout(45_000);
+  const errors = await openGame(page, '?debug&timescale=12&nowaves&nolevel&nopause&nosteal&nowreck&seed=m2-07-blast-ttk');
   await setBalance(page, 'enemy.speed', 0);
   await setBalance(page, 'enemy.contactDamage', 0);
   await setBalance(page, 'sparkRig.range', 0);

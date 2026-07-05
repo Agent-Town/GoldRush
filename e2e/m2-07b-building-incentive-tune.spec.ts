@@ -217,6 +217,10 @@ test('six blast stacks kill a wave-15 clump and log blast usage', async ({ page 
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
   await setBalance(page, 'enemy.hp', 35);
   await expect(page.evaluate(() => window.__GR_TEST__?.toggleWeapon())).resolves.toBe('blast');
+  await page.evaluate(() => {
+    const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos ?? { x: 0, z: 0 };
+    window.__GR_TEST__?.setBlastAim(hero.x, hero.z);
+  });
   await waitForSim(page, 0.4);
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(6, 0.35, { speedScale: 0 }));
 

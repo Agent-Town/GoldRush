@@ -6,7 +6,7 @@ export const upgradeDefs = [
     name: 'Double-Tap Coil',
     description: 'A second spring where one sufficed.',
     iconFamily: 'firerate',
-    maxStacks: 6,
+    maxStacks: Balance.upgrades.doubleTapCoilMaxStacks,
     deltas: { fireRateMult: 0.25 },
   },
   {
@@ -144,6 +144,10 @@ export const upgradeDefById: Record<UpgradeId, UpgradeDef> = upgradeDefs.reduce(
 
 export function isUpgradeId(id: string): id is UpgradeId {
   return id in upgradeDefById;
+}
+
+export function applyUpgradeBudgetsFromBalance(): void {
+  (upgradeDefById.double_tap_coil as { maxStacks: number }).maxStacks = Balance.upgrades.doubleTapCoilMaxStacks;
 }
 
 export function upgradeEffect(def: UpgradeDef): string {

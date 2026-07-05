@@ -4,6 +4,7 @@ import type { CompassEdge } from '../entities/Enemy';
 import type { Rng } from '../core/Rng';
 import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 
 export type SpawnPackOptions = {
   speedScale?: number;
@@ -74,9 +75,9 @@ const EDGE_PLACES: Record<CompassEdge, string> = {
 export class WaveSystem {
   private readonly spawnPosition = new THREE.Vector3();
   private readonly debugCenter = new THREE.Vector3();
-  private nextTrickleAt = Balance.waves.graceSeconds + Balance.waves.trickleInterval;
-  private nextWaveAt = Balance.waves.waveInterval;
-  private nextPlanWaveAt = Balance.waves.waveInterval;
+  private nextTrickleAt: number = Balance.waves.graceSeconds + Balance.waves.trickleInterval;
+  private nextWaveAt: number = Balance.waves.waveInterval;
+  private nextPlanWaveAt: number = Balance.waves.waveInterval;
   private nextPlanWave = 1;
   private readonly plannedPulses: PlannedPulse[] = [];
   private wave = 0;
@@ -167,6 +168,19 @@ export class WaveSystem {
     this.currentAtSim = 0;
     this.waveState = 'quiet';
     this.lastPulseAt = Number.NEGATIVE_INFINITY;
+  }
+
+  setWaveForTest(wave: number): void {
+    this.wave = Math.max(0, Math.floor(wave));
+    this.pulse = 0;
+    this.edge = null;
+    this.budget = 0;
+    this.waveSpawnedTotal = 0;
+    this.plannedPulses.length = 0;
+    this.nextWaveAt = this.currentAtSim + this.waveInterval();
+    this.nextPlanWaveAt = this.nextWaveAt;
+    this.nextPlanWave = this.wave + 1;
+    this.lastPulseAt = this.currentAtSim;
   }
 
   spawnDebugPack(
@@ -327,6 +341,7 @@ export class WaveSystem {
 
     this.spawnPosition.x = this.clampSpawn(this.spawnPosition.x);
     this.spawnPosition.z = this.clampSpawn(this.spawnPosition.z);
+    this.keepSpawnOutOfDeepWater(edge);
     return this.spawnAtPosition(wave, true, { edge, thief, wrecker });
   }
 
@@ -336,6 +351,7 @@ export class WaveSystem {
     params: SpawnPackOptions & { edge?: CompassEdge; thief?: boolean; wrecker?: boolean } = {},
   ): boolean {
     if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
+    this.keepSpawnOutOfDeepWater(params.edge);
 
     const speedScale = Math.min(
       Balance.waves.speedScaleCap,
@@ -351,6 +367,14 @@ export class WaveSystem {
     if (!enemy) return false;
     this.waveSpawnedTotal += 1;
     return true;
+  }
+
+  private keepSpawnOutOfDeepWater(edge?: CompassEdge): void {
+    if (!Balance.pathing.riverBlocksEnemies || Terrain.sample(this.spawnPosition.x, this.spawnPosition.z).zone !== 'river') return;
+
+    if (edge === 'north') this.spawnPosition.z = Terrain.RIVER_MAX_Z + Terrain.SHALLOWS_WIDTH;
+    else if (edge === 'south') this.spawnPosition.z = Terrain.RIVER_MIN_Z - Terrain.SHALLOWS_WIDTH;
+    else this.spawnPosition.z = this.heroPosition.z >= 0 ? Terrain.RIVER_MAX_Z + Terrain.SHALLOWS_WIDTH : Terrain.RIVER_MIN_Z - Terrain.SHALLOWS_WIDTH;
   }
 
   private pickEdge(): CompassEdge {
@@ -388,7 +412,8 @@ export class WaveSystem {
     if (wave < Balance.wreck.minWave) return 0;
     if (pulse % Math.max(1, Math.floor(Balance.wreck.pulseEvery)) !== 0) return 0;
     const count = Math.floor(remainder * Balance.wreck.share);
-    return Math.min(remainder, Math.max(1, count));
+    const cap = wave >= 20 ? Math.max(1, Math.floor(Balance.wreck.maxPerEdgeWave20)) : remainder;
+    return Math.min(remainder, cap, Math.max(1, count));
   }
 
   private isWreckerPulse(groupCount: number, wave: number, pulse: number): boolean {

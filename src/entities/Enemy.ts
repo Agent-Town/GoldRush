@@ -3,6 +3,7 @@ import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
+import * as Terrain from '../world/Terrain';
 import type { PalisadeBlocker } from './Palisade';
 
 export type CompassEdge = 'north' | 'south' | 'east' | 'west';
@@ -90,6 +91,7 @@ export class ClaimJumperEnemy {
   private readonly heading = new THREE.Vector3(0, 0, -1);
   private readonly nextPosition = new THREE.Vector3();
   private readonly fleeTarget = new THREE.Vector3();
+  private readonly routeTarget = new THREE.Vector3();
   private alive = false;
   private hp = 0;
   private speed: number = Balance.enemy.speed;
@@ -203,9 +205,10 @@ export class ClaimJumperEnemy {
     this.contactCooldown = Math.max(0, this.contactCooldown - delta);
 
     const targetPosition = this.updateThief(delta, thiefContext) ?? this.updateWrecker(delta, wreckerContext) ?? heroPosition;
+    const moveTarget = this.routedTarget(targetPosition);
     const speed = this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
-    this.heading.set(targetPosition.x - this.group.position.x, 0, targetPosition.z - this.group.position.z);
+    this.heading.set(moveTarget.x - this.group.position.x, 0, moveTarget.z - this.group.position.z);
     const distanceSq = this.heading.lengthSq();
     if (distanceSq > 0.0001) {
       this.heading.normalize();
@@ -222,8 +225,6 @@ export class ClaimJumperEnemy {
 
     if (this.thiefState === 'grabbing' || this.wreckerState === 'swinging') {
       this.velocity.set(0, 0, 0);
-    } else if (blockers.length === 0) {
-      this.group.position.addScaledVector(this.velocity, speed * delta);
     } else {
       this.move(delta, blockers, speed);
     }
@@ -423,14 +424,63 @@ export class ClaimJumperEnemy {
     return 'west';
   }
 
+  private routedTarget(target: THREE.Vector3): THREE.Vector3 {
+    if (!Balance.pathing.riverBlocksEnemies) return target;
+
+    const current = this.group.position;
+    const currentZone = Terrain.sample(current.x, current.z).zone;
+    const targetSide = riverSide(target.z);
+    if (currentZone === 'ford') {
+      if (targetSide === 'north' && current.z < Terrain.RIVER_MAX_Z - 0.1) {
+        return this.routeTarget.set(0, Balance.enemy.groundY, Terrain.RIVER_MAX_Z);
+      }
+      if (targetSide === 'south' && current.z > Terrain.RIVER_MIN_Z + 0.1) {
+        return this.routeTarget.set(0, Balance.enemy.groundY, Terrain.RIVER_MIN_Z);
+      }
+      return target;
+    }
+
+    const currentSide = riverSide(current.z);
+    if (currentSide && targetSide && currentSide !== targetSide) {
+      return this.routeTarget.set(0, Balance.enemy.groundY, currentSide === 'north' ? Terrain.RIVER_MAX_Z : Terrain.RIVER_MIN_Z);
+    }
+
+    if (currentZone === 'river') {
+      return this.routeTarget.set(THREE.MathUtils.clamp(current.x, Terrain.FORD_MIN_X, Terrain.FORD_MAX_X), Balance.enemy.groundY, current.z);
+    }
+
+    return target;
+  }
+
   private move(delta: number, blockers: readonly PalisadeBlocker[], speed: number): void {
     const distance = speed * delta;
-    const steps = blockers.length > 0 ? Math.max(1, Math.min(8, Math.ceil(distance / 0.25))) : 1;
+    const steps = blockers.length > 0 || Balance.pathing.riverBlocksEnemies ? Math.max(1, Math.min(8, Math.ceil(distance / 0.25))) : 1;
     const stepDistance = distance / steps;
     for (let step = 0; step < steps; step += 1) {
       this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
       for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
+      this.resolveRiver(stepDistance);
       this.group.position.copy(this.nextPosition);
+    }
+  }
+
+  private resolveRiver(stepDistance: number): void {
+    if (!Balance.pathing.riverBlocksEnemies || Terrain.sample(this.nextPosition.x, this.nextPosition.z).zone !== 'river') return;
+
+    const outsideNudge = 0.05;
+    const previous = this.group.position;
+    if (previous.z <= Terrain.RIVER_MIN_Z) {
+      this.nextPosition.z = Terrain.RIVER_MIN_Z - outsideNudge;
+      this.nextPosition.x += Math.sign(-this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
+    } else if (previous.z >= Terrain.RIVER_MAX_Z) {
+      this.nextPosition.z = Terrain.RIVER_MAX_Z + outsideNudge;
+      this.nextPosition.x += Math.sign(-this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
+    } else if (previous.x < Terrain.FORD_MIN_X) {
+      this.nextPosition.x = Terrain.FORD_MIN_X + outsideNudge;
+    } else if (previous.x > Terrain.FORD_MAX_X) {
+      this.nextPosition.x = Terrain.FORD_MAX_X - outsideNudge;
+    } else {
+      this.nextPosition.x = THREE.MathUtils.clamp(this.nextPosition.x, Terrain.FORD_MIN_X, Terrain.FORD_MAX_X);
     }
   }
 
@@ -478,6 +528,12 @@ export class ClaimJumperEnemy {
   private avoidanceSide(): number {
     return this.id % 2 === 0 ? 1 : -1;
   }
+}
+
+function riverSide(z: number): 'north' | 'south' | null {
+  if (z > Terrain.RIVER_MAX_Z) return 'north';
+  if (z < Terrain.RIVER_MIN_Z) return 'south';
+  return null;
 }
 
 export function disposeClaimJumperAssets(assets: ClaimJumperAssets): void {

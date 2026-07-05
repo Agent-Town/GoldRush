@@ -210,6 +210,7 @@ export class Progression {
   }
 
   private offerWeight(def: UpgradeDef, pool: readonly UpgradeDef[]): number {
+    if (Balance.offers.investBonus <= 0) return 1;
     const familyCards = pool.filter((candidate) => candidate.iconFamily === def.iconFamily).length;
     return (1 + Balance.offers.investBonus * this.familyStacks(def.iconFamily)) / familyCards;
   }

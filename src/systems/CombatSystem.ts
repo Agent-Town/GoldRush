@@ -8,6 +8,7 @@ import type { XpMotePool } from '../entities/XpMote';
 import type { EnemyPool } from '../entities/pools';
 import { isCombatDamageDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 import type { AudioSystem } from './AudioSystem';
 import { TargetingSystem, type BuildingTarget } from './TargetingSystem';
 import type { CombatVfx } from './CombatVfx';
@@ -17,6 +18,7 @@ export type ShooterHandle = {
   kind?: 'bolt' | 'lob';
   enabled?: () => boolean;
   canTarget?: (target: ClaimJumperEnemy) => boolean;
+  targetPoint?: (origin: THREE.Vector3, target: ClaimJumperEnemy) => THREE.Vector3 | null;
   aoe?: { radius: number; airTime: number };
   getPos: () => THREE.Vector3;
   range: number;
@@ -70,6 +72,8 @@ export class CombatSystem {
   private xpExpiredBanked = 0;
   private currentAt = 0;
   private blastDetonationCount = 0;
+  private readonly lastBlastDetonationPosition = new THREE.Vector3();
+  private hasLastBlastDetonation = false;
   private buildingDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
 
   constructor(
@@ -100,6 +104,10 @@ export class CombatSystem {
 
   get detonations(): number {
     return this.blastDetonationCount;
+  }
+
+  get lastBlastDetonation(): THREE.Vector3 | null {
+    return this.hasLastBlastDetonation ? this.lastBlastDetonationPosition : null;
   }
 
   get killsByOwner(): Readonly<Record<string, number>> {
@@ -221,6 +229,7 @@ export class CombatSystem {
     this.motes.recycleAll();
     this.vfx.reset();
     this.blastDetonationCount = 0;
+    this.hasLastBlastDetonation = false;
     for (const ownerId of Object.keys(this.ownerKills)) delete this.ownerKills[ownerId];
     for (let i = 0; i < this.rigs.length; i += 1) {
       const state = this.rigs[i];
@@ -266,10 +275,11 @@ export class CombatSystem {
     this.scratchOrigin.copy(origin);
     if (handle.kind === 'lob') {
       const aoe = handle.aoe ?? Balance.blast;
+      const targetPoint = handle.targetPoint?.(this.scratchOrigin, target) ?? target.position;
       const count = Math.max(1, handle.volley);
       for (let i = 0; i < count; i += 1) {
         const damage = handle.getDamage?.() ?? handle.damage;
-        if (this.blastCharges.activate(this.scratchOrigin, target.position, aoe.airTime, damage, aoe.radius, handle.id ?? 'hero_blast')) {
+        if (this.blastCharges.activate(this.scratchOrigin, targetPoint, aoe.airTime, damage, aoe.radius, handle.id ?? 'hero_blast')) {
           this.audio.playArc();
         }
       }
@@ -295,6 +305,8 @@ export class CombatSystem {
 
   private readonly onBlastDetonated = (position: THREE.Vector3, damage: number, radius: number, ownerId: string): void => {
     this.blastDetonationCount += 1;
+    this.lastBlastDetonationPosition.copy(position);
+    this.hasLastBlastDetonation = true;
     this.vfx.detonationRing(position, radius);
     if (isCombatDamageDisabled()) return;
 
@@ -346,7 +358,7 @@ export class CombatSystem {
     const xp = Balance.xp.perKill;
     this.ownerKills[ownerId] = (this.ownerKills[ownerId] ?? 0) + 1;
     this.xpDeaths += 1;
-    if (this.motes.spawn(enemy.position, xp)) {
+    if (Terrain.sample(enemy.position.x, enemy.position.z).zone !== 'river' && this.motes.spawn(enemy.position, xp)) {
       this.xpMotesSpawned += 1;
     } else {
       this.bankXp(enemy.position, xp, 'overflow');
