@@ -4,6 +4,7 @@ import { setSpriteTestClip, spriteAnimationDiagnostics } from '../assets/SpriteA
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
 import { install as installRunManager, type RunManager } from './RunManager';
+import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import {
   areWavesDisabled,
   getDebugSeed,
@@ -217,6 +218,7 @@ export class Game {
   };
 
   private runManager?: RunManager;
+  private agentStub?: AgentStub;
 
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = createRenderer(canvas);
@@ -401,6 +403,9 @@ export class Game {
     this.publishDiagnostics();
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
     this.runManager = installRunManager(this);
+    // ADR-002 section 4: M4 exposes install(game); wiring happens at merge (m4-01 gate, s32).
+    this.agentStub = installAgentStub({ economyLog: () => this.economy.log });
+    this.agentStub.heartbeat();
   }
 
   start(): void {
@@ -409,6 +414,7 @@ export class Game {
 
   dispose(): void {
     this.runManager?.dispose();
+    this.agentStub?.dispose();
     this.loop.stop();
     this.input.dispose();
     this.hud.dispose();

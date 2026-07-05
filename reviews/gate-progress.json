@@ -1,27 +1,50 @@
 {
-  "gate": "s31-lane-m3-drain",
-  "opened": "2026-07-05T04:48Z",
-  "closed": "2026-07-05T05:15Z",
-  "protocol": "v2 evidence-first (first lane-branch drain under s9v)",
-  "result": "MERGED: lane/m3 (a6886f3, single slice m3-01) -> main 055ea68 (two-parent, plumbing path). RIDER: 015 soak-30 landed 0f77122 (gate condition '015 rides 018' met by 1147 evidence).",
-  "evidence": [
-    "reviews/evidence/mac-fullsuite-20260705-1059.md (116/119; found this fire — landed mid-s30 unseen)",
-    "reviews/evidence/mac-fullsuite-20260705-1147.md (118/119 on 013+016 main; landed MID-FIRE 11:58 local; sole fail m1-02 known warm-depth harness debt -> tasks/019)"
-  ],
+  "gate": "s32-lane-m4-drain",
+  "opened": "2026-07-05T05:24Z",
+  "closed": "2026-07-05T05:52Z",
+  "protocol": "v2 evidence-first lane drain (second; m3-01/s31 precedent)",
+  "result": "MERGED: lane/m4 (a79c87c, single slice m4-01) -> main (two-parent, plumbing path). Review: reviews/m4-01-tool-surface.md",
   "steps": [
-    {"id": 1, "name": "lock", "status": "done", "result": "e72fb6b"},
-    {"id": 2, "name": "review: evidence plausibility + lane diff vs tasks/lane-a-m3-01 scope + ADR-002", "status": "done", "result": "scope exact (3 new files + EventBus append-only); two merge-time necessities identified: EventBus same-anchor union conflict (013 building_* vs m3 run_*), e2e hero_died missing 013's weaponToggles/blastTime"},
-    {"id": 3, "name": "strays: 19 Mac-sweep-regenerated PNGs content-overwritten from HEAD", "status": "done", "result": "clean; 1147 sweep re-clobbered a few mid-fire and its own cleanup restored them — final status 0 modified"},
-    {"id": 4, "name": "provision /tmp/gr-s31 merged preview + ADR-002 Game.ts wiring", "status": "done", "result": "/tmp survived s30 (chromium-1228, npm-cache, locallibs); tsc 0, build 0"},
-    {"id": 5, "name": "gates", "status": "done", "result": "m3-01 8/8 both projects; visual 5/5; m1-05 6/6; vp-02 11/11 (extra split: sweep|reversal / wiggle / crossfades-once — 45s wall); m2-07b 4/4; boot probe desktop+390 zero console errors, readout live"},
-    {"id": 6, "name": "merge on mount", "status": "done", "result": "git merge self-wedges on delete-guard (locks index twice per op; EPERM'd unlink poisons phase 2 — NEW RECIPE: write-tree + commit-tree -p HEAD -p lane + update-ref, single lock cycles). Content md5-verified vs gated tree pre-commit. Mid-fire live-lane event: Mac evidence commit 5d98caa landed on top of the lock (docs-only, permitted) — merge rebased onto it."},
-    {"id": 7, "name": "015 rider + review + corrective", "status": "done", "result": "0f77122 soak-30; reviews/m3-01-run-scaffold.md; tasks/019 written (freeze lifted: pending gates now 2 <3)"}
+    {
+      "id": 1,
+      "name": "lock",
+      "status": "done",
+      "result": "0f6293e"
+    },
+    {
+      "id": 2,
+      "name": "review: lane diff vs tasks/lane-b-m4-01 scope + ADR-002",
+      "status": "done",
+      "result": "scope EXACT (4 new files, zero existing-file edits); no MetaProgress writes; et.goldrush.* naming; Economy read-only; 4 non-blocking findings for M4-02 (private-field fallback, meta unbound level-0 pin, capped-log costFromDelta, dev-only e2e coverage)"
+    },
+    {
+      "id": 3,
+      "name": "provision /tmp/gr-s32 merged preview + ADR-002 Game.ts wiring",
+      "status": "done",
+      "result": "/tmp survived s31 (chromium-1228, npm-cache, locallibs); wiring = installAgentStub({economyLog}) + boot heartbeat + dispose hook; tsc 0, build 451ms"
+    },
+    {
+      "id": 4,
+      "name": "gates",
+      "status": "done",
+      "result": "m4-01 8/8 both projects (no skips); m3-01 8/8; m1-05 6/6; vp-02 11/11 (5 groups + rotation trio via --list tiling check); boot probe desktop+390 zero console errors, marker+heartbeat debug-gated both ways"
+    },
+    {
+      "id": 5,
+      "name": "merge on mount",
+      "status": "done",
+      "result": "plumbing path (write-tree + commit-tree -p HEAD -p lane/m4 + update-ref); all 5 gated files md5-verified pre-commit; art strays (6 raws + codex-art-run-001.md) untouched"
+    }
   ],
-  "queue_remaining": ["lane/m4 (a79c87c tip)", "lane/perf (6c4d0f3 tip)"],
+  "queue_remaining": [
+    "lane/perf (6c4d0f3 tip)",
+    "017 art LEDGER pass + raws processing (case C)",
+    "tasks/019 when a tree is free"
+  ],
   "env_notes": [
-    "VM healthy (~0.2); /tmp/gr-s31 built ~1min from survivals",
-    "vp-02 'sweep|reversal|wiggle' group now exceeds one 45s call on this VM — split wiggle out; 'crossfades once' title is NOT covered by the four historic groups, run it explicitly (11th test)",
-    "bare chromium.launch() wants headless_shell (absent) — screenshot probes need executablePath=/tmp/pw-browsers/chromium-1228/chrome-linux/chrome",
-    "MOUNT GIT MERGE RECIPE (BINDING): never 'git merge' on the mount — plumbing path above; plain add/commit still fine"
+    "VM healthy; /tmp/gr-s32 provisioned ~1min from survivals; git identity was missing (wiped home) \u2014 set before any commit in /tmp clones",
+    "vp-02 splits used: 'hit-pause|one-frame' / 'memory|screenshots' / 'sweep|reversal' / 'wiggle' / 'crossfades once' / 'stride cells|mirrored pixels' / 'frameKey alternates' \u2014 ALWAYS re-verify tiling with --list (three rotation tests hide outside the historic groups)",
+    "m1-05 file is e2e/m1-05-sentry-beacon-build.spec.ts (not m1-05-building) \u2014 wrong filename wastes a call",
+    "MOUNT GIT MERGE RECIPE (BINDING): plumbing path only; plain add/commit fine"
   ]
 }
