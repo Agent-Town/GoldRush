@@ -38,6 +38,7 @@ lane C (progress):       02 ── 06 ─────────┘
 - `game/Progression.ts` is the sole writer of `StatSheet` run-modifiers; upgrades stack additively on `Balance` base values — one stacking rule.
 - `game/Balance.ts` owns every number below. lil-gui (`?debug`) binds to it in 07.
 - Only `WaveSystem` spawns enemies (debug keys route through it). Pools: enemies 96, projectiles 128, XP motes 64 — zero per-frame allocation in hot paths.
+- Every enemy death yields its XP exactly once: pickup mote, overflow auto-bank, or expiry auto-bank when expiry exists and `Balance.xp.expiryBanks` is true. Flee-despawn is the only justified zero-XP enemy exit.
 - Restart = `Game.resetRun()` in place: pools recycled, timers cleared, economy `run_reset`, no page reload, `renderer.info.memory` stable across 3 restarts.
 - **Standing UX rule (Robin directive 2026-07-03, applies to every current and future collectible/pickup/drop):** world-space floating amount feedback at the pickup point via `Vfx.floatText` — gold `+N` in gold `#c4883a`, XP `+N` in mote teal `#83ded7` (both shipped); every new item/drop slice must wire this and assert it in e2e.
 
@@ -47,11 +48,11 @@ lane C (progress):       02 ── 06 ─────────┘
 |---|---|
 | Hero | HP 100 · 6.0 m/s (river ×0.55, ford ×0.85) · accel 20 · iframes 0.5 s · collider r 0.5 |
 | Spark Rig | 2.0 shots/s · dmg 12 · range 10 m · bolt speed 18, r 0.25, life 1.2 s · nearest-enemy, sticky target |
-| Claim Jumper | HP 28 · speed 2.7 ±10% · contact 8 dmg / 0.8 s per-enemy cd · touch r 0.6 · separation r 0.9 · XP 3 |
+| Claim Jumper | HP 25.2 · speed 2.7 ±10% · contact 8 dmg / 0.8 s per-enemy cd · touch r 0.6 · separation r 0.9 · XP 4 |
 | Waves | grace 5 s · trickle 1 per 2.4 s, ×0.97 per 10 s, floor 0.8 s · wave every 30 s: pulse of 3+3·wave from random edge · HP ×1.12, speed ×1.02 (cap +30%) per wave · alive cap 60 |
 | Gold Seam | 6 anchors, 2–3 active · stand ≤1.6 m & slow → channel: 5 gold per 1.5 s tick, 30 gold capacity · progress decays ×2 outside · relocates after depletion, 20 s |
 | Sentry Beacon | cost 25 gold ×1.3 per built (25/35/45/60) · dmg 8 · 1.2 shots/s · range 8 · max 6 · indestructible (M2 adds HP) |
-| XP | `need(L) = 12 + 8(L−1)` → 12/20/28/36… ≈ one choice per wave · mote magnet 2 m |
+| XP | `need(L) = 12 + 8(L−1)` → 12/20/28/36… ≈ one choice per wave · mote magnet 2 m · pool overflow banks directly |
 | Perf | 60 fps @ 60 enemies + 128 bolts + 6 beacons · draw calls ≤ 150 steady, ≤ 200 at wave-10 stress · fallback ladder: shared material → merged geo → InstancedMesh |
 
 Sanity: base DPS 24 clears wave 1 easily; by wave 6–7 cadence eHP outruns un-upgraded DPS → upgrades + beacons or death. Target: first-timer dies wave 5–8 (≈4–7 min), informed play 8–10 min.

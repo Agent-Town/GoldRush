@@ -11,7 +11,7 @@ export const Balance = {
   },
   enemy: {
     poolSize: 96,
-    hp: 28,
+    hp: 25.2,
     speed: 2.7,
     speedVariance: 0.1,
     contactDamage: 8,
@@ -70,9 +70,10 @@ export const Balance = {
     volley: 1,
   },
   xp: {
-    perKill: 3,
+    perKill: 4,
     moteMagnetRadius: 2,
     motePool: 64,
+    expiryBanks: true,
     needBase: 12,
     needStep: 8,
   },

@@ -634,6 +634,7 @@ export class Game {
       arsenal: this.arsenalDiagnostics(),
       xp: this.combat.xpCount,
       xpMotesAlive: this.xpMotes.activeCount,
+      xpAudit: this.combat.xpAudit,
       kills: this.kills,
       goldPanned: economySummary.panned,
       deathLedger: this.deathLedger,
