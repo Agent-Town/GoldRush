@@ -10,6 +10,7 @@ export type DebugParams = {
   readonly nowreck: boolean;
   readonly noping: boolean;
   readonly stress: number;
+  readonly profile: boolean;
 };
 
 const DEFAULT_PARAMS: DebugParams = {
@@ -24,6 +25,7 @@ const DEFAULT_PARAMS: DebugParams = {
   nowreck: false,
   noping: false,
   stress: 0,
+  profile: false,
 };
 
 export function readDebugParams(search = getSearch()): DebugParams {
@@ -41,6 +43,7 @@ export function readDebugParams(search = getSearch()): DebugParams {
     nowreck: readFlag(params, 'nowreck'),
     noping: readFlag(params, 'noping'),
     stress: readNonNegativeInt(params, 'stress', DEFAULT_PARAMS.stress),
+    profile: readFlag(params, 'profile'),
   };
 }
 
@@ -93,6 +96,10 @@ export function isPingDisabled(): boolean {
 
 export function getStressCount(): number {
   return DEBUG_PARAMS.stress;
+}
+
+export function isProfileEnabled(): boolean {
+  return DEBUG_PARAMS.profile;
 }
 
 function getSearch(): string {

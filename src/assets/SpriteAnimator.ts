@@ -94,6 +94,12 @@ export type SpriteAnimationSnapshot = {
   fadeWindow?: number;
 };
 
+export type SpriteStatsSnapshot = {
+  activeAnimators: number;
+  textureSwapsPerFrame: number;
+  fadeOverlaysActive: number;
+};
+
 const contract = JSON.parse(characterContractText) as Contract;
 const slotContracts = new Map((contract.slots ?? []).map((slot) => [slot.slot, slot]));
 const processedTextureUrls = import.meta.glob<string>('../../assets/processed/*.png', {
@@ -110,9 +116,27 @@ const testClipAtlasCache = new Map<string, Promise<RuntimeClip>>();
 const animationDiagnostics: Partial<Record<AssetSlotId, SpriteAnimationSnapshot>> = {};
 const testClips = new Map<AssetSlotId, { frames: string[]; fps: number }>();
 let testClipVersion = 0;
+let spriteStatsFrame = -1;
+let activeAnimators = 0;
+let textureSwapsPerFrame = 0;
+
+export function beginSpriteStatsFrame(frame: number): void {
+  if (spriteStatsFrame === frame) return;
+  spriteStatsFrame = frame;
+  activeAnimators = 0;
+  textureSwapsPerFrame = 0;
+}
 
 export function spriteAnimationDiagnostics(): Partial<Record<AssetSlotId, SpriteAnimationSnapshot>> {
   return { ...animationDiagnostics };
+}
+
+export function spriteStatsDiagnostics(fadeOverlaysActive: number): SpriteStatsSnapshot {
+  return {
+    activeAnimators,
+    textureSwapsPerFrame,
+    fadeOverlaysActive,
+  };
 }
 
 export function setSpriteTestClip(slotId: AssetSlotId, frames: readonly string[], fps: number): void {
@@ -139,6 +163,7 @@ export class SpriteAnimator {
   private fadeElapsed = 0;
   private fadeDuration = 0;
   private fadeWindow = 0;
+  private lastFrameKey = '';
 
   constructor(
     private readonly slotId: AssetSlotId,
@@ -305,7 +330,16 @@ export class SpriteAnimator {
     const frame = clip?.frames[this.frameIndex];
     if (!clip || !frame) return;
 
-    applyRuntimeFrame(this.material, frame, this.currentMirrored);
+    activeAnimators += 1;
+    const resolved = this.currentMirrored ? mirroredRuntimeFrame(frame) : frame;
+    const resolvedKey = this.currentMirrored ? `${frame.key}#m` : frame.key;
+    const textureUserData = resolved.texture.userData as { spriteFrameKey?: string };
+    if (this.lastFrameKey !== resolvedKey || this.material.map !== resolved.texture || textureUserData.spriteFrameKey !== resolvedKey) {
+      applyRuntimeFrame(this.material, frame, this.currentMirrored);
+      textureUserData.spriteFrameKey = resolvedKey;
+      this.lastFrameKey = resolvedKey;
+      textureSwapsPerFrame += 1;
+    }
     this.currentFrame = frame;
     const snapshot: SpriteAnimationSnapshot = {
       clip: this.overrideClip ? 'test' : this.clipName,
