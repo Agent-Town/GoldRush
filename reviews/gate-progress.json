@@ -11,16 +11,16 @@
   },
   "steps": [
     {"id": 1, "name": "lock+progress-file", "status": "done", "at": "2026-07-05T04:10Z"},
-    {"id": 2, "name": "diff-attribution 013/015/016", "status": "next"},
-    {"id": 3, "name": "provision /tmp/gr-s30 (rsync excl worktrees; npm i /tmp/npm-cache; chromium /tmp/pw-browsers; xdamage stub; LD_LIBRARY_PATH)", "status": "pending"},
-    {"id": 4, "name": "tsc + vite build", "status": "pending"},
-    {"id": 5, "name": "e2e m2-07b (013 new spec)", "status": "pending"},
-    {"id": 6, "name": "e2e vp-02 splits incl. per-direction cycling (016)", "status": "pending"},
-    {"id": 7, "name": "canary m1-05 splits", "status": "pending"},
-    {"id": 8, "name": "scope review per task files; findings", "status": "pending"},
-    {"id": 9, "name": "commit per slice 013→016→015, reviews written", "status": "pending"},
-    {"id": 10, "name": "soak-30: attempt once; likely exceeds sandbox walls → defer to 018 Mac evidence run", "status": "pending"},
-    {"id": 11, "name": "STATUS handoff + clear lock + tree clean (raws stay untracked)", "status": "pending"}
+    {"id": 2, "name": "diff-attribution 013/015/016", "status": "done", "result": "NO contention: 015=e2e/soak-30 only (zero src soak refs); 016=SpriteAnimator+contract+vp02 exactly; 013=rest. 3 stray PNGs (2x shots-m2-05b + mobile-batch001-assets) to content-overwrite."},
+    {"id": 3, "name": "provision /tmp/gr-s30 (rsync excl worktrees; npm i /tmp/npm-cache; chromium /tmp/pw-browsers; xdamage stub; LD_LIBRARY_PATH)", "status": "done", "result": "HEALTHY VM load 0.00; /tmp survived from s28: chromium-1228 OK, npm-cache OK, xdamage at /tmp/locallibs OK. gr-s30 built, raws excluded from rsync."},
+    {"id": 4, "name": "tsc + vite build", "status": "done", "result": "TSC-EXIT:0, BUILD-EXIT:0 (456ms)"},
+    {"id": 5, "name": "e2e m2-07b (013 new spec)", "status": "done", "result": "8/8 green (4 desktop + 4 mobile). ONE sanctioned harness fix at gate (s23 law): income-during-dwell race — atomic mark+sample, conservation exact, debit pinned via gold_spent event."},
+    {"id": 6, "name": "e2e vp-02 + vp-02b (016)", "status": "done", "result": "vp-02 11/11 (incl. 2 new 016 tests); vp-02b 4/4 functional (60s shots test = evidence generator, skipped in-sandbox)."},
+    {"id": 7, "name": "canary m1-05 + affected old suites m2-05/m2-05b", "status": "done", "result": "m1-05 6/6 after A/B (pure HEAD passes, 016-only fails +2 textures = lazy mirror-bake depth, NOT leak; vp-02 memory gate green) → s27-law harness modernization, reset test 3x stable. m2-05 7/7, m2-05b 5/5. m2-04 7/7 (modified canary)."},
+    {"id": 8, "name": "scope review per task files; findings", "status": "done", "result": "013 clean (default byte-identity verified on WaveSystem; Economy sole-writer intact; canon ok). 016 firewall exact. FINDING non-blocking: orphaned Balance.wreck.repairCostFrac + stale derivations in m2-05/m2-05b specs (green via grant-slack + palisade ceil-coincidence) — corrective queued."},
+    {"id": 9, "name": "commit per slice 013→016, reviews written", "status": "done", "result": "013 = ea570a8, 016 = 51b75ba. 3 strays content-overwritten pre-commit; 16 gated files md5-verified vs test tree before committing (live Mac lane detected mid-gate)."},
+    {"id": 10, "name": "soak-30 (015)", "status": "deferred", "result": "REVIEWED clean (test-side only, zero src), UNRUNNABLE in sandbox (single 180s test vs 45s wall). Uncommitted by design; rides tasks/018 Mac run. See reviews/015-soak-harness.md."},
+    {"id": 11, "name": "STATUS handoff + clear lock", "status": "done", "result": "Intentionally dirty after s30: e2e/soak-30.spec.ts (untracked, 018), assets/raw/* (017 art lane LIVE), reviews/shots-008-rotation/* strays (Mac-side regenerations mid-gate; restore once lane settles). NEXT fires: lane/m3 → lane/m4 → lane/perf serial drains."}
   ],
-  "env_notes": []
+  "env_notes": ["VM healthy load 0.0; /tmp survived from s28: chromium-1228, npm-cache, xdamage stub all reusable; gr-s30 built in ~40s total", "45s-wall splits used: m2-07b ['half-damaged|blast cards','pressure budget|six blast']; vp-02 ['alternates|mirrored pixels','hit-pause|one-frame|rotation contract','sweep|reversal|wiggle','renderer memory|screenshots']"]
 }
