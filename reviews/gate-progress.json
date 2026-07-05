@@ -1,51 +1,25 @@
 {
-  "gate": "s33-lane-perf-drain",
-  "opened": "2026-07-05T05:45Z",
-  "closed": "2026-07-05T06:05Z ABORTED-ENV (VM disk exhaustion; shell infra bricked; handoff done host-side, UNCOMMITTED)",
-  "protocol": "v2 evidence-first lane drain (third; m3-01/s31 + m4-01/s32 precedent)",
-  "result": "NOT MERGED. Scope review DONE = CLEAN. Gates NOT RUN. lane/perf (6c4d0f3) stays unmerged; rerun gates from step 3 on a healthy VM.",
+  "gate": "s34-lane-perf-drain",
+  "opened": "2026-07-05T06:15Z",
+  "closed": "2026-07-05T07:0xZ GATES PASSED; land deferred behind runner-era integration debt",
+  "protocol": "v2 evidence-first lane drain (fourth; m3-01/s31 + m4-01/s32 + s33-aborted precedent) + s34 TOCTOU/CAS amendments",
+  "result": "MERGE CANDIDATE a0d2458 (detached, in-object-db, worktrees/gate-perf-s34) GATED GREEN. NOT yet on main: CAS-before-merge caught runner-era commits + live codex (tasks/020, 021) editing the main tree; landing inverted to per-slice review of 020/021 first, then re-land a0d2458. See reviews/perf-01-stress-budget.md (final), reviews/vp02-mobile-env-baseline.md, reviews/lane-runner.md.",
   "steps": [
-    {
-      "id": 1,
-      "name": "lock",
-      "status": "done",
-      "result": "5a355d7 (after clearing stale s32 lock debris: HEAD.lock/index.lock/objects/maintenance.lock from e87a30e's successful commit, mount unlink quirk; Cowork delete permission had to be RE-GRANTED this session via allow_cowork_file_delete — it does not persist across sessions)"
-    },
-    {
-      "id": 2,
-      "name": "review: lane diff vs tasks/lane-d-perf-01.md scope",
-      "status": "done",
-      "result": "CLEAN. 5 files +218/-4, single commit 6c4d0f3. Deliverables: (1) spriteStats {activeAnimators, textureSwapsPerFrame, fadeOverlaysActive} module counters + Game.getDiagnostics wiring + vite-env.d.ts type; (2) ?profile flag in DebugParams + recordProfileSample() 5s console.table (frameMs p50/p95, max drawCalls); (3) new e2e/perf-01-stress-budget.spec.ts (stress=120, 12 palisades via __GR_TEST__, in-page rAF max-tracker per house style, drawCalls<=200, swaps<=animators, zero console/page errors); (4) sanctioned cheap fix: SpriteAnimator.setFrame lastFrameKey cache, triple guard (lastFrameKey, material.map, texture.userData.spriteFrameKey) — userData clause is cross-animator shared-texture invalidation insurance. No gameplay changes. Nits (non-blocking): spriteStats counters reset in update() so getDiagnostics mid-frame reads are partial (fine for max-tracking spec); fadeOverlaysActive is a coarse 3-source sum (damageFlash/dead/levelup); vite-env.d.ts also adds direction?/mirrored? to spriteAnimations entries — check 016 didn't already add these (dedupe on merge)."
-    },
-    {
-      "id": 3,
-      "name": "provision /tmp/gr-s33 merged preview (REAL 3-way: main x lane/perf)",
-      "status": "FAILED-ENV, redo",
-      "result": "All 4 src files overlap main-side changes since merge-base 0f875e0 (016->SpriteAnimator.ts; m4-01->Game.ts+vite-env.d.ts; DebugParams.ts) — conflicts LIKELY in Game.ts (imports + getDiagnostics block + update() insertions vs m4-01 wiring) and vite-env.d.ts (both extend ThreeGameDiagnostics). VM arrived with home wiped AND / at 96% (418M free); concurrent chromium unzip (188M zip -> ~450M) + full-history clone (199M .git) filled / to 0; shell infra ENOSPC-bricked (RPC settings writes failed) and never recovered this fire. DISK LAW: df first; lean tree first; chromium unzip LAST and alone; rm failed partials immediately. Leftovers to clean next fire if present: ~/.cache/chromium-1228 partial, /tmp/gr-s33 partial clone."
-    },
-    {
-      "id": 4,
-      "name": "gates: tsc/build; perf-01 both projects; vp-02 11/11 (--list tiling check, rotation trio hides outside historic groups); m4-01 8/8; m3-01 8/8; boot probe desktop+390 zero console errors; shots -> reviews/shots-perf-01/",
-      "status": "pending",
-      "result": null
-    },
-    {
-      "id": 5,
-      "name": "merge on mount (plumbing path, BINDING: write-tree + commit-tree -p HEAD -p lane/perf + update-ref; md5-verify gated files; art strays untouched)",
-      "status": "pending",
-      "result": null
-    }
+    { "id": 1, "name": "recover s33 + lock", "status": "done",
+      "result": "s33 handoff committed 0ee7d34 (delete permission re-granted via allow_cowork_file_delete — again, it does NOT persist). LOCK RACE: s35 fire locked 769572e 17s before s34's 0dc275f (both read the same CLEARED line — TOCTOU); s35 conceded via 0af936a/63cb881 keeping s34's line; s34 mis-yielded 119761b then reclaimed d801243 with protocol amendment: post-lock-commit foreign-lock check + CAS-before-merge. Both now in STATUS.md protocol." },
+    { "id": 2, "name": "scope review", "status": "done (s33, unchanged)", "result": "CLEAN — see s33 record in git history of this file." },
+    { "id": 3, "name": "true merge candidate", "status": "done",
+      "result": "mount worktree worktrees/gate-perf-s34 (detached d801243) + git merge --no-commit lane/perf. Conflicts as predicted (F1): Game.ts trivial (imports/helpers/shared-closing-brace — tsc caught the brace), SpriteAnimator NON-trivial: lane dedup guard predates vp-02 mirroring refactor; resolved with mirror-aware triple guard (resolvedKey=key+'#m', map vs resolved texture, userData=resolvedKey). Candidate committed a0d2458. Build env: ~/gr on VM (rsync excl. worktrees/node_modules; npm i twice — first install's kill left corrupt rolldown bindings, bus error; clean reinstall fixed)." },
+    { "id": 4, "name": "gates", "status": "done",
+      "result": "tsc+vite build clean. perf-01 2/2 both projects (desktop 27.7s, mobile 31.9s). vp-02 desktop 11/11 (source-tiled greps, 11 titles verified). vp-02 mobile 9/11: east-mirroring FAIL (asymmetry -0.003, snapshot mid-crossfade suspected) + damped-sweep FAIL (30s timeout) — BOTH repro on STOCK MAIN d801243 same env (2x/1x) = pre-existing env baseline, filed reviews/vp02-mobile-env-baseline.md, NOT lane debt. vp-02b desktop 5/5. m4-01 4/4+4/4. m3-01 4/4+4/4. m1-05 6/6 desktop. Stress boot probe (?stress=120&profile) zero console/page errors desktop+390; shots reviews/shots-perf-01/{desktop-1280x800,mobile-390x844}.png reviewed: 120-ring renders, HUD intact, mirroring visible, FL style holds." },
+    { "id": 5, "name": "land on main", "status": "BLOCKED->deferred",
+      "result": "CAS caught 4 foreign commits (04257fa runner portability, 52c5e57 s9ab lifecycle, 9e2257c s9ac->tasks/020, c0e1903 s9ad->tasks/021) — disjoint from runtime scope, acceptable. But merge ABORTED on dirty tree: lane-runner main slot executing 020 then 021 live against repo root (no lock awareness — v1 defect). Queue PAUSED (tasks/queue-paused/), runner v2 written (lock-aware, scripts/lane-runner-v2.sh). Landing order now: per-slice review+commit 020, then 021, then re-merge a0d2458 (expect Game.ts/vite-env.d.ts re-resolution vs their committed state) + perf-01/vp-02 smoke re-gate." }
   ],
-  "queue_remaining": [
-    "lane/perf gates + merge (REDO from step 3)",
-    "017 art LEDGER pass + raws processing (case C)",
-    "tasks/019 when a tree is free"
-  ],
-  "env_notes": [
-    "FIRST ACT next fire: commit the s33 handoff (STATUS.md + this file + reviews/perf-01-stress-budget.md are UNCOMMITTED host-side writes) before anything else",
-    "Cowork delete permission does NOT persist across sessions: on first EPERM unlink, call allow_cowork_file_delete, then clear any stale .git/*.lock + .git/objects/maintenance.lock (check mtimes vs last commit before removing)",
-    "s32's HEAD.lock was left behind by its SUCCESSFUL handoff commit — a stale lock at the exact mtime of the last commit is debris, not a live process",
-    "VM / is ~9.6G total; budget before provisioning: clone 199M + node_modules ~300M + chromium ~450M + build/test artifacts — if <1.2G free, provision lean (rsync tree without .git per recipe + per-file 3-way via git merge-file for the 5 lane files) instead of full clone",
-    "sandbox clock vs STATUS timestamps skew ~15min (s32 wrote 05:55Z, commit landed 05:39:39Z real) — use commit times, not line-1 timestamps, for lock-age math"
+  "env_lessons_s34": [
+    "DISK LAW v2: /sessions is a SEPARATE 9.8G volume (home lives there) with ~8.5G PHANTOM usage held by the harness (deleted-but-open, du -x shows ~650M real). df /sessions is the metric for home; keep npm cache + pw-browsers on /tmp (rootfs). Budget ~500M-1G usable in home.",
+    "Background procs do NOT survive bash-call teardown; setsid nohup + disown DOES. Poll across calls.",
+    "NEVER pkill -f with a pattern contained in your own command line (self-SIGTERM, happened twice).",
+    "playwright install: chromium-1228 completes first; the headless_shell item can stall forever — kill after INSTALLATION_COMPLETE, channel:'chromium' needs only the full binary. Script-launched chromium needs explicit channel:'chromium'.",
+    "This VM ~30-40% slower than s32's: mobile-project suites hit 30s test timeouts; split greps to singles/pairs; expect 41s for screenshot tests."
   ]
 }

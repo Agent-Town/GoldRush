@@ -1,7 +1,23 @@
 # Review: lane/perf — PERF-01 sprite stress budget diagnostics
 
-> **STATUS: PENDING-GATES — DO NOT MERGE ON THIS REVIEW ALONE.**
-> s33 (2026-07-05) completed the scope review below, then the sandbox VM died (disk exhaustion) before any gate ran. Gates and merge are owed by the next fire; see `reviews/gate-progress.json` (s33 record) for the exact resume steps and disk law.
+> **STATUS: MERGED (s34, 2026-07-05) — on main as `a0d2458`, cross-merged with 020/021 at `2254ff8` (post-merge smoke: tsc/build, perf-01, vp-02 mirroring+hit-pause, pip, xp-audit — all green).**
+> All gates below ran green on the true merge candidate (main d801243 x lane 6c4d0f3, conflicts
+> resolved semantically). First land attempt aborted: the lane-runner was live-editing the main
+> tree (tasks/020/021) — integration order inverted, candidate re-lands after their per-slice
+> review. Gate record: `reviews/gate-progress.json` s34.
+>
+> Gate results: tsc + vite build clean · perf-01 2/2 both projects · vp-02 desktop 11/11 (tiling
+> verified against source: 11 titles) · vp-02 mobile 9/11 — 2 failures are PRE-EXISTING env
+> baseline, stock-main repro'd (`reviews/vp02-mobile-env-baseline.md`) · vp-02b desktop 5/5 ·
+> m4-01 8/8 both · m3-01 8/8 both · m1-05 6/6 · stress boot probe (stress=120&profile) zero
+> console/page errors desktop+390 · shots: `reviews/shots-perf-01/`.
+>
+> Merge notes: Game.ts conflicts trivial (imports + helpers + shared-closing-brace). SpriteAnimator
+> conflict NON-trivial — lane's triple dedup guard predates main's vp-02 mirroring refactor; resolved
+> by keying the guard on the RESOLVED (mirror-aware) frame (`resolvedKey = key + '#m'` when mirrored,
+> map compared against the resolved texture, userData tagged with resolvedKey). Escalation per s23:
+> compensated with FULL vp-02 both projects + vp-02b instead of smoke. F2 dedupe: vite-env.d.ts
+> auto-merged clean, tsc confirms no duplicate identifiers.
 
 Lane: `lane/perf`, single commit `6c4d0f3` "perf: add sprite stress budget diagnostics" (2026-07-04 14:34Z), 5 files, +218/−4.
 Task: `tasks/lane-d-perf-01.md` — diagnostics + measurement ONLY; the one sanctioned fix is the frameKey cache.
