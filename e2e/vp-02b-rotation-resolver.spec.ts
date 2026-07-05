@@ -23,12 +23,12 @@ const shotDir = path.resolve('reviews/shots-008-rotation');
 const directions = [
   ['s', { x: 0, y: 1 }, ['char-hero-sheet-rotation-r0c0.png', 'char-hero-sheet-rotation-r0c1.png'], false],
   ['se', { x: 1, y: 1 }, ['char-hero-sheet-rotation-r0c2.png', 'char-hero-sheet-rotation-r0c3.png'], false],
-  ['e', { x: 1, y: 0 }, ['char-hero-sheet-rotation-r1c0.png', 'char-hero-sheet-rotation-r1c1.png'], true],
+  ['e', { x: 1, y: 0 }, ['char-hero-sheet-rotation2-r0c2.png', 'char-hero-sheet-rotation2-r0c3.png'], false],
   ['ne', { x: 1, y: -1 }, ['char-hero-sheet-rotation-r1c2.png', 'char-hero-sheet-rotation-r1c3.png'], false],
   ['n', { x: 0, y: -1 }, ['char-hero-sheet-rotation-r2c0.png', 'char-hero-sheet-rotation-r2c1.png'], false],
-  ['nw', { x: -1, y: -1 }, ['char-hero-sheet-rotation-r1c2.png', 'char-hero-sheet-rotation-r1c3.png'], true],
+  ['nw', { x: -1, y: -1 }, ['char-hero-sheet-rotation2-r1c0.png', 'char-hero-sheet-rotation2-r1c1.png'], false],
   ['w', { x: -1, y: 0 }, ['char-hero-sheet-rotation-r1c0.png', 'char-hero-sheet-rotation-r1c1.png'], false],
-  ['sw', { x: -1, y: 1 }, ['char-hero-sheet-rotation-r0c2.png', 'char-hero-sheet-rotation-r0c3.png'], true],
+  ['sw', { x: -1, y: 1 }, ['char-hero-sheet-rotation2-r0c0.png', 'char-hero-sheet-rotation2-r0c1.png'], false],
 ] as const;
 
 function collectErrors(page: Page): ErrorBucket {

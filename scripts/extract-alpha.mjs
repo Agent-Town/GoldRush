@@ -31,6 +31,10 @@
  *                   "breathe", emit <base>-r<row>c<col>.png + <base>.frames.json.
  *                   Ignores --size (cell output size comes from --cell).
  *   --cell N        grid-mode output cell size (default 512)
+ *   --scale F       grid-mode: absolute scale override (skips the auto 86%-fit; still
+ *                   capped at 1 = never upscale). Use to match figure heights across
+ *                   sheets whose grids have different native cell sizes (s37 law:
+ *                   cross-sheet direction neighbors must not size-pop).
  */
 import fs from 'node:fs';
 import path from 'node:path';
@@ -39,7 +43,7 @@ import { PNG } from 'pngjs';
 let KEY = [0x8a, 0x8a, 0x8a];
 
 function parseArgs(argv) {
-  const opts = { tol: 26, feather: 14, size: 1024, cell: 512, key: '8a8a8a', grid: null, pocketMean: 12, interiorKey: 90, fullBleed: false, out: 'assets/processed', inputs: [] };
+  const opts = { tol: 26, feather: 14, size: 1024, cell: 512, key: '8a8a8a', grid: null, scaleOverride: null, pocketMean: 12, interiorKey: 90, fullBleed: false, out: 'assets/processed', inputs: [] };
   for (let i = 2; i < argv.length; i++) {
     const a = argv[i];
     if (a === '--tol') opts.tol = Number(argv[++i]);
@@ -50,6 +54,7 @@ function parseArgs(argv) {
     else if (a === '--interior-key') opts.interiorKey = Number(argv[++i]);
     else if (a === '--key') opts.key = argv[++i];
     else if (a === '--grid') opts.grid = argv[++i];
+    else if (a === '--scale') opts.scaleOverride = Number(argv[++i]);
     else if (a === '--full-bleed') opts.fullBleed = true;
     else if (a === '--deshadow') opts.deshadow = true;
     else if (a === '--out') opts.out = argv[++i];
@@ -283,7 +288,7 @@ function interiorKeyClear(png, thr, feather) {
  * bbox dimension -> 86% of cellSize, capped at 1 = never upscale) so animation
  * frames keep relative proportions instead of pulsing per-frame.
  */
-function sliceGrid(png, cols, rows, cellSize, base, outDir) {
+function sliceGrid(png, cols, rows, cellSize, base, outDir, scaleOverride = null) {
   const cw = Math.floor(png.width / cols), ch = Math.floor(png.height / rows);
   const cells = [];
   for (let r = 0; r < rows; r++) {
@@ -303,7 +308,11 @@ function sliceGrid(png, cols, rows, cellSize, base, outDir) {
   }
   const occupied = cells.filter((k) => !k.empty);
   const maxDim = Math.max(1, ...occupied.map((k) => Math.max(k.x1 - k.x0 + 1, k.y1 - k.y0 + 1)));
-  const scale = Math.min(1, (cellSize * 0.86) / maxDim);
+  const scale = Math.min(1, scaleOverride ?? (cellSize * 0.86) / maxDim);
+  if (maxDim * scale > cellSize) {
+    console.error(`--scale ${scaleOverride}: largest content ${maxDim}px would exceed the ${cellSize}px cell`);
+    process.exit(1);
+  }
   const emitted = [];
   for (const cell of cells) {
     const out = new PNG({ width: cellSize, height: cellSize });
@@ -356,7 +365,7 @@ for (const input of opts.inputs) {
     const saturated = keySaturation() > 60;
     const cleared = saturated ? interiorKeyClear(png, opts.interiorKey, opts.feather) : 0;
     const despilled = saturated ? despillSaturatedKey(png) : 0;
-    const emitted = sliceGrid(png, cols, rows, opts.cell, base, opts.out);
+    const emitted = sliceGrid(png, cols, rows, opts.cell, base, opts.out, opts.scaleOverride);
     console.log(
       `${path.basename(input)}: ${native}, keyed ${((keyed / total) * 100).toFixed(1)}%, spill-cleared ${cleared} px, despilled ${despilled} px -> ` +
       `${emitted.filter((e) => !e.empty).length}/${emitted.length} cells @${opts.cell}px + ${base}.frames.json`,

@@ -27,12 +27,12 @@ const rotationDirections = ['s', 'se', 'e', 'ne', 'n', 'nw', 'w', 'sw'] as const
 const rotationCases = [
   ['s', 0, 1, ['char-hero-sheet-rotation-r0c0.png', 'char-hero-sheet-rotation-r0c1.png'], false],
   ['se', 1, 1, ['char-hero-sheet-rotation-r0c2.png', 'char-hero-sheet-rotation-r0c3.png'], false],
-  ['e', 1, 0, ['char-hero-sheet-rotation-r1c0.png', 'char-hero-sheet-rotation-r1c1.png'], true],
+  ['e', 1, 0, ['char-hero-sheet-rotation2-r0c2.png', 'char-hero-sheet-rotation2-r0c3.png'], false],
   ['ne', 1, -1, ['char-hero-sheet-rotation-r1c2.png', 'char-hero-sheet-rotation-r1c3.png'], false],
   ['n', 0, -1, ['char-hero-sheet-rotation-r2c0.png', 'char-hero-sheet-rotation-r2c1.png'], false],
-  ['nw', -1, -1, ['char-hero-sheet-rotation-r1c2.png', 'char-hero-sheet-rotation-r1c3.png'], true],
+  ['nw', -1, -1, ['char-hero-sheet-rotation2-r1c0.png', 'char-hero-sheet-rotation2-r1c1.png'], false],
   ['w', -1, 0, ['char-hero-sheet-rotation-r1c0.png', 'char-hero-sheet-rotation-r1c1.png'], false],
-  ['sw', -1, 1, ['char-hero-sheet-rotation-r0c2.png', 'char-hero-sheet-rotation-r0c3.png'], true],
+  ['sw', -1, 1, ['char-hero-sheet-rotation2-r0c0.png', 'char-hero-sheet-rotation2-r0c1.png'], false],
 ] as const;
 
 function collectErrors(page: Page): ErrorBucket {
@@ -174,31 +174,35 @@ async function canvasCaptureAtHeroFrame(page: Page, direction: string, frameKey:
   };
 }
 
-function heroHorizontalAsymmetry(png: PNG): number {
+/**
+ * s37: mean abs RGB difference inside the hero crop window (window constants
+ * inherited from the retired heroHorizontalAsymmetry), optionally flipping b
+ * horizontally. Art-agnostic
+ * replacement for the flip-specific signed-asymmetry delta, which drowned in
+ * noise at the 390px viewport once east stopped being literal flipped-west
+ * pixels (explicit rotation2 art). Same-size captures only.
+ */
+function heroCropDifference(a: PNG, b: PNG, flipB = false): number {
   const crop = {
-    x: Math.round(png.width * 0.38),
-    y: Math.round(png.height * 0.52),
-    w: Math.round(png.width * 0.24),
-    h: Math.round(png.height * 0.2),
+    x: Math.round(a.width * 0.38),
+    y: Math.round(a.height * 0.52),
+    w: Math.round(a.width * 0.24),
+    h: Math.round(a.height * 0.2),
   };
-  let left = 0;
-  let right = 0;
-  const midX = crop.x + crop.w / 2;
+  let sum = 0;
+  let count = 0;
   for (let y = crop.y; y < crop.y + crop.h; y += 1) {
     for (let x = crop.x; x < crop.x + crop.w; x += 1) {
-      const index = (y * png.width + x) * 4;
-      const r = png.data[index] ?? 0;
-      const g = png.data[index + 1] ?? 0;
-      const b = png.data[index + 2] ?? 0;
-      const luma = 0.299 * r + 0.587 * g + 0.114 * b;
-      const saturation = Math.max(r, g, b) - Math.min(r, g, b);
-      const weight = Math.max(0, 150 - luma) + Math.max(0, saturation - 25) * 0.5;
-      if (weight <= 20) continue;
-      if (x < midX) left += weight;
-      else right += weight;
+      const ia = (y * a.width + x) * 4;
+      const bx = flipB ? crop.x + (crop.w - 1 - (x - crop.x)) : x;
+      const ib = (y * b.width + bx) * 4;
+      for (let c = 0; c < 3; c += 1) {
+        sum += Math.abs((a.data[ia + c] ?? 0) - (b.data[ib + c] ?? 0));
+        count += 1;
+      }
     }
   }
-  return (right - left) / Math.max(1, right + left);
+  return sum / Math.max(1, count) / 255;
 }
 
 async function trackHeroDirections(page: Page): Promise<void> {
@@ -509,7 +513,13 @@ test('hero walk frameKey alternates while each 8-way heading is held', async ({ 
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('east heading uses west files with mirrored pixels', async ({ page }) => {
+// s37 run-001 rewiring: e/sw/nw are EXPLICIT rotation2 cells now (no hero mirrors).
+// This test used to prove the flipX pipeline by comparing mirrored-east against west
+// pixels. It now guards the inverse regression: east must render its OWN right-facing
+// art, unmirrored, and remain pixel-distinguishable from west. COVERAGE GAP (logged
+// reviews/run-001-contract-wiring.md): mirroredRuntimeFrame/flipX has no live consumer
+// until M2-04 activates jumper sw/nw mirrors — mirrored-pixel coverage returns there.
+test('east heading uses explicit rotation2 files with unmirrored pixels', async ({ page }) => {
   const errors = await openGame(page, 'vp-02-mirror-pixels');
   for (let attempt = 0; attempt < 2; attempt += 1) {
     await page.evaluate(() => {
@@ -527,7 +537,7 @@ test('east heading uses west files with mirrored pixels', async ({ page }) => {
     await page.evaluate(() => window.__GR_TEST__?.teleport(0, 0));
     await moveStick(page, 1, 0);
     await waitForHeroDirection(page, 'e', 2_000);
-    const east = await canvasCaptureAtHeroFrame(page, 'e', 'char-hero-sheet-rotation-r1c0.png').catch(() => null);
+    const east = await canvasCaptureAtHeroFrame(page, 'e', 'char-hero-sheet-rotation2-r0c2.png').catch(() => null);
     await releaseStick(page);
 
     if (attempt === 0 && (!west || !east)) {
@@ -538,9 +548,16 @@ test('east heading uses west files with mirrored pixels', async ({ page }) => {
     expect(east).not.toBeNull();
     expect(west!.snapshot.frameKey).toBe('char-hero-sheet-rotation-r1c0.png');
     expect(west!.snapshot.mirrored).toBe(false);
-    expect(east!.snapshot.frameKey).toBe('char-hero-sheet-rotation-r1c0.png');
-    expect(east!.snapshot.mirrored).toBe(true);
-    expect(heroHorizontalAsymmetry(east!.png) - heroHorizontalAsymmetry(west!.png)).toBeGreaterThan(0.004);
+    expect(east!.snapshot.frameKey).toBe('char-hero-sheet-rotation2-r0c2.png');
+    expect(east!.snapshot.mirrored).toBe(false);
+    // East is its own drawing now: it must differ from west directly AND from
+    // flipped-west (stale-mirror regression guard). frameKey/mirrored above are the
+    // contract truth; this is the renderer-level backstop.
+    const directDiff = heroCropDifference(east!.png, west!.png);
+    const flippedDiff = heroCropDifference(east!.png, west!.png, true);
+    console.log(`[mirror-pixels] heroCropDifference direct=${directDiff.toFixed(4)} flipped=${flippedDiff.toFixed(4)}`);
+    expect(directDiff).toBeGreaterThan(0.01);
+    expect(flippedDiff).toBeGreaterThan(0.01);
     break;
   }
   expect(errors.consoleErrors).toEqual([]);

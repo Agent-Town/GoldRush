@@ -9,8 +9,8 @@
       },
       "rotations": {
         "version": 1,
-        "notes": "s21 batch-005R pilot (assets/requests/batch-005-rotation.md). SpriteAnimator reads this block for 8-way hero locomotion. Mirror table is BINDING and encodes the s9e deviation: the sheet's pure-side pair faces LEFT -> stored as 'w', 'e' mirrors from it (flipX); 'se'/'ne' face as specced, 'sw'/'nw' mirror from them. Future explicit direction blocks override this mirror table. Idle cells exist for s/n only; other directions use the SpriteAnimator runtime-orientation idle fallback. s21 scale finding: bbox-height spread 14.6% (>8% target) attributed to stride-pose variance, one shared extractor scale held (scale=1); resolver-lane gameplay-zoom gate MUST watch the W (378->340) and NE (354->398) walk pairs for scale pulsing -> regenerate sheet if it breathes.",
-        "mirrors": { "e": "w", "sw": "se", "nw": "ne" },
+        "notes": "s21 batch-005R pilot (assets/requests/batch-005-rotation.md). SpriteAnimator reads this block for 8-way hero locomotion. Mirror table is BINDING and encodes the s9e deviation: the sheet's pure-side pair faces LEFT -> stored as 'w', 'e' mirrors from it (flipX); 'se'/'ne' face as specced, 'sw'/'nw' mirror from them. Future explicit direction blocks override this mirror table. Idle cells exist for s/n only; other directions use the SpriteAnimator runtime-orientation idle fallback. s21 scale finding: bbox-height spread 14.6% (>8% target) attributed to stride-pose variance, one shared extractor scale held (scale=1); resolver-lane gameplay-zoom gate MUST watch the W (378->340) and NE (354->398) walk pairs for scale pulsing -> regenerate sheet if it breathes. s37 run-001 (batch-005R2): sw/e/nw now EXPLICIT from char-hero-sheet-rotation2 (Robin call: no mirrors for the asymmetric hero) -> mirror table retired to {} (SpriteAnimator prefers explicit blocks; behavior-identical, honesty win). rotation2 reprocessed with extractor --scale 0.66 so cross-sheet figure heights match the s21 sheet: SW 379 vs S 380, E 377 vs W 377; NW ~331 sits inside the NE-pair gait regime (352-397) - watch at gameplay zoom. e idle (r1c2) and w idle (r1c3) cells are wired but RUNTIME-DORMANT: idleDirectionFor + the SpriteAnimator idle remap hard-snap idle to s/n, so the W-idle-fallback retirement promised in batch-005R2 needs a resolver rider (src change, separate task) before it is real.",
+        "mirrors": {},
         "directions": {
           "s": {
             "frames": { "files": ["char-hero-sheet-rotation-r0c0.png", "char-hero-sheet-rotation-r0c1.png", "char-hero-sheet-rotation-r2c2.png"] },
@@ -21,8 +21,8 @@
             "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
           },
           "w": {
-            "frames": { "files": ["char-hero-sheet-rotation-r1c0.png", "char-hero-sheet-rotation-r1c1.png"] },
-            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+            "frames": { "files": ["char-hero-sheet-rotation-r1c0.png", "char-hero-sheet-rotation-r1c1.png", "char-hero-sheet-rotation2-r1c3.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 }, "idle": { "frames": [2], "fps": 1 } }
           },
           "ne": {
             "frames": { "files": ["char-hero-sheet-rotation-r1c2.png", "char-hero-sheet-rotation-r1c3.png"] },
@@ -31,6 +31,18 @@
           "n": {
             "frames": { "files": ["char-hero-sheet-rotation-r2c0.png", "char-hero-sheet-rotation-r2c1.png", "char-hero-sheet-rotation-r2c3.png"] },
             "clips": { "walk": { "frames": [0, 1], "fps": 4 }, "idle": { "frames": [2], "fps": 1 } }
+          },
+          "sw": {
+            "frames": { "files": ["char-hero-sheet-rotation2-r0c0.png", "char-hero-sheet-rotation2-r0c1.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "e": {
+            "frames": { "files": ["char-hero-sheet-rotation2-r0c2.png", "char-hero-sheet-rotation2-r0c3.png", "char-hero-sheet-rotation2-r1c2.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 }, "idle": { "frames": [2], "fps": 1 } }
+          },
+          "nw": {
+            "frames": { "files": ["char-hero-sheet-rotation2-r1c0.png", "char-hero-sheet-rotation2-r1c1.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
           }
         }
       },
@@ -112,6 +124,37 @@
       "slot": "char.claim_jumper",
       "fallback": {
         "file": "enemy-claim-jumper.png"
+      },
+      "rotations": {
+        "version": 1,
+        "notes": "s37 run-001 (batch-005R3): full 4x3 walk rotation, cells wired in SPEC ORDER. The LEDGER note 'cells 5-8 reversed, swap in contract map' was STALE - it described the REJECTED first pass; the accepted retry sheet is in spec order (run-001 retry QA + s37 pixel inspection: r1c0/r1c1 face RIGHT = e, r1c2/r1c3 face LEFT = w). RUNTIME-DORMANT until enemy code sends 8-way directions (M2-04); Enemy currently passes coarse side/front/back, which never resolves a rotation direction, and cell textures load lazily so dormancy costs nothing. Both pure side profiles explicit (Robin no-mirror call); the sheet has no sw/nw cells so those mirror from se/ne. n walk is a single cell (r2c2; 1-frame clip per VP-02 precedent); s idle is the crouch cell r2c3. run-001 QA note: ne pair angle slightly shallow, usable. SCALE DEBT (blocks ACTIVATION, not wiring): figures 296-331px vs side-sheet walk 409-439px; source cells are 313x418 so native size caps there and upscaling is refused (linework quality). Before M2-04 activation either regenerate the sheet at 2-row cell height (rotation2 pattern) or add runtime scale compensation.",
+        "mirrors": { "sw": "se", "nw": "ne" },
+        "directions": {
+          "s": {
+            "frames": { "files": ["char-jumper-sheet-rotation-r0c0.png", "char-jumper-sheet-rotation-r0c1.png", "char-jumper-sheet-rotation-r2c3.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 }, "idle": { "frames": [2], "fps": 1 } }
+          },
+          "se": {
+            "frames": { "files": ["char-jumper-sheet-rotation-r0c2.png", "char-jumper-sheet-rotation-r0c3.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "e": {
+            "frames": { "files": ["char-jumper-sheet-rotation-r1c0.png", "char-jumper-sheet-rotation-r1c1.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "w": {
+            "frames": { "files": ["char-jumper-sheet-rotation-r1c2.png", "char-jumper-sheet-rotation-r1c3.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "ne": {
+            "frames": { "files": ["char-jumper-sheet-rotation-r2c0.png", "char-jumper-sheet-rotation-r2c1.png"] },
+            "clips": { "walk": { "frames": [0, 1], "fps": 4 } }
+          },
+          "n": {
+            "frames": { "files": ["char-jumper-sheet-rotation-r2c2.png"] },
+            "clips": { "walk": { "frames": [0], "fps": 4 } }
+          }
+        }
       },
       "orientations": {
         "side": {
