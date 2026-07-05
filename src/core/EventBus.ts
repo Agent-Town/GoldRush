@@ -1,3 +1,11 @@
+export type RunSummary = {
+  wavesSurvived: number;
+  goldPanned: number;
+  goldStolen: number;
+  goldReclaimed: number;
+  buildingsBuilt: number;
+};
+
 export type GameEvent =
   | {
       type: 'hero_damaged';
@@ -40,6 +48,17 @@ export type GameEvent =
       family: string;
       index: number;
       sourceId: number;
+    }
+  | {
+      type: 'run_started';
+      at: number;
+      runId: number;
+    }
+  | {
+      type: 'run_ended';
+      at: number;
+      runId: number;
+      summary: RunSummary;
     };
 
 type Handler<T extends GameEvent['type']> = (event: Extract<GameEvent, { type: T }>) => void;

@@ -3,6 +3,7 @@ import { disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatu
 import { setSpriteTestClip, spriteAnimationDiagnostics } from '../assets/SpriteAnimator';
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
+import { install as installRunManager, type RunManager } from './RunManager';
 import {
   areWavesDisabled,
   getDebugSeed,
@@ -215,6 +216,8 @@ export class Game {
     blastTime: 0,
   };
 
+  private runManager?: RunManager;
+
   constructor(private readonly canvas: HTMLCanvasElement) {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
@@ -396,6 +399,8 @@ export class Game {
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     this.syncUi();
     this.publishDiagnostics();
+    // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
+    this.runManager = installRunManager(this);
   }
 
   start(): void {
@@ -403,6 +408,7 @@ export class Game {
   }
 
   dispose(): void {
+    this.runManager?.dispose();
     this.loop.stop();
     this.input.dispose();
     this.hud.dispose();
