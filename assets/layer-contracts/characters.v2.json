@@ -9,7 +9,7 @@
       },
       "rotations": {
         "version": 1,
-        "notes": "s21 batch-005R pilot (assets/requests/batch-005-rotation.md). DORMANT: SpriteAnimator reads only 'orientations' today; the 8-way resolver rider (velocity angle -> direction, ~10deg hysteresis) consumes this block when it lands. Mirror table is BINDING and encodes the s9e deviation: the sheet's pure-side pair faces LEFT -> stored as 'w', 'e' mirrors from it (flipX); 'se'/'ne' face as specced, 'sw'/'nw' mirror from them. Idle cells exist for s/n only; other directions use the SpriteAnimator runtime-orientation idle fallback. s21 scale finding: bbox-height spread 14.6% (>8% target) attributed to stride-pose variance, one shared extractor scale held (scale=1); resolver-lane gameplay-zoom gate MUST watch the W (378->340) and NE (354->398) walk pairs for scale pulsing -> regenerate sheet if it breathes.",
+        "notes": "s21 batch-005R pilot (assets/requests/batch-005-rotation.md). SpriteAnimator reads this block for 8-way hero locomotion. Mirror table is BINDING and encodes the s9e deviation: the sheet's pure-side pair faces LEFT -> stored as 'w', 'e' mirrors from it (flipX); 'se'/'ne' face as specced, 'sw'/'nw' mirror from them. Future explicit direction blocks override this mirror table. Idle cells exist for s/n only; other directions use the SpriteAnimator runtime-orientation idle fallback. s21 scale finding: bbox-height spread 14.6% (>8% target) attributed to stride-pose variance, one shared extractor scale held (scale=1); resolver-lane gameplay-zoom gate MUST watch the W (378->340) and NE (354->398) walk pairs for scale pulsing -> regenerate sheet if it breathes.",
         "mirrors": { "e": "w", "sw": "se", "nw": "ne" },
         "directions": {
           "s": {

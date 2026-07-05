@@ -134,11 +134,40 @@ test('resetRun clears Sentry Beacons, owner kills, and keeps renderer memory sta
   await cycle();
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
 
-  await cycle();
+  // s30 gate harness fix (s27 law: global renderer counters are not pure functions
+  // of the system under test). 016 made walk pairs cycle on ALL directions (hero and
+  // jumpers) instead of freezing on idle-less ones, which doubled the lazy sprite-cell
+  // matrix: which stride cell is on screen when a heading is crossed is phase-dependent,
+  // so ONE warm cycle no longer deterministically saturates texture uploads (A/B s30:
+  // HEAD passes, 016-only fails +2, vp-02's own warmed memory gate green). Geometries
+  // stay EXACT from the first baseline — beacon meshes are the reset surface under
+  // test. Textures follow the s27 warm -> grace -> zero-growth pattern: a grace cycle
+  // absorbs remaining lazy depth, then the measured cycle must add ZERO textures. A
+  // real leak (s27 pinned-overlay class, grows per cycle) still fails.
+  const stableTextures = async (): Promise<number> => {
+    let last = -1;
+    await expect
+      .poll(
+        async () => {
+          const current = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer?.textures ?? -1);
+          const settled = current === last;
+          last = current;
+          return settled;
+        },
+        { intervals: [1000], timeout: 15_000 },
+      )
+      .toBe(true);
+    return last;
+  };
+
+  await cycle(); // grace cycle — absorbs lazy sprite-cell depth
+  const graceTextures = await stableTextures();
+
+  await cycle(); // measured cycle
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.killsByOwner.beacons ?? 0)).toBe(0);
   const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
   expect(after?.geometries).toBe(baseline?.geometries);
-  expect(after?.textures).toBe(baseline?.textures);
+  expect(await stableTextures()).toBe(graceTextures);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

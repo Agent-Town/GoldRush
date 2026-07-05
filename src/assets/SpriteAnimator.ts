@@ -51,6 +51,7 @@ type ClipSource = {
 
 type RuntimeFrame = {
   texture: THREE.Texture;
+  mirroredFrame?: RuntimeFrame;
   key: string;
   offsetX: number;
   offsetY: number;
@@ -181,11 +182,11 @@ export class SpriteAnimator {
 
     const nextClip = next.clip;
     const nextMirrored = mirrored || next.mirrored;
+    const previousMirrored = this.currentMirrored;
     const clipChanged = nextClip !== this.currentClip || requestedClip !== this.clipName;
     const orientationChanged = next.direction !== this.currentDirection || nextMirrored !== this.currentMirrored;
     if (clipChanged || orientationChanged) {
       const previousFrame = this.currentFrame;
-      const previousScaleX = this.sprite?.scale.x ?? 1;
       const nextFrameIndex = clipChanged ? 0 : this.frameIndex % nextClip.frames.length;
       const nextFrame = nextClip.frames[nextFrameIndex] ?? null;
       if (clipChanged) {
@@ -200,13 +201,13 @@ export class SpriteAnimator {
       this.currentMirrored = nextMirrored;
       this.diagnosticDirection = next.direction;
       this.diagnosticMirrored = next.direction ? nextMirrored : undefined;
-      this.setSpriteMirrored(nextMirrored);
+      this.setSpriteScalePositive();
       // s27 (healthy-VM sweep): fade ONLY on orientation swaps -- the tasks/010
       // mandate is "crossfade between outgoing/incoming orientation cells". Pure
       // clip changes (incl. test clips) keep the pre-vp-02c hard cut; fading them
       // pinned freshly-retired clip textures in the overlay material and re-uploaded
       // disposed textures on fps-luck (memory canary +1, reviews/s27-healthy-vm-sweep.md).
-      if (orientationChanged) this.startFade(previousFrame, nextFrame, previousScaleX);
+      if (orientationChanged) this.startFade(previousFrame, nextFrame, previousMirrored, nextMirrored);
       this.applyFrame();
       return;
     }
@@ -215,7 +216,7 @@ export class SpriteAnimator {
     this.diagnosticMirrored = next.direction ? nextMirrored : undefined;
     this.currentDirection = next.direction;
     this.currentMirrored = nextMirrored;
-    this.setSpriteMirrored(nextMirrored);
+    this.setSpriteScalePositive();
 
     const frameDuration = nextClip.frames.length > 1 && nextClip.fps > 0 ? 1 / nextClip.fps : 0;
     if (frameDuration > 0) {
@@ -272,14 +273,15 @@ export class SpriteAnimator {
     const direction = rotationDirectionFor(runtime, orientation);
     if (direction && isLocomotionClip(requestedClip)) {
       const clipDirection = requestedClip === 'idle' ? idleDirectionFor(direction) : direction;
-      const sourceDirection = runtime.rotationMirrors.get(clipDirection) ?? clipDirection;
+      const hasExplicitDirection = runtime.orientations.has(clipDirection);
+      const sourceDirection = hasExplicitDirection ? clipDirection : runtime.rotationMirrors.get(clipDirection) ?? clipDirection;
       const clips = runtime.orientations.get(sourceDirection)?.clips;
       const clip = clips?.get(requestedClip) ?? clips?.get('walk') ?? clips?.get('idle') ?? null;
       if (clip) {
         return {
           clip,
           direction: clipDirection,
-          mirrored: runtime.rotationMirrors.has(clipDirection),
+          mirrored: !hasExplicitDirection && runtime.rotationMirrors.has(clipDirection),
         };
       }
     }
@@ -303,7 +305,7 @@ export class SpriteAnimator {
     const frame = clip?.frames[this.frameIndex];
     if (!clip || !frame) return;
 
-    applyRuntimeFrame(this.material, frame);
+    applyRuntimeFrame(this.material, frame, this.currentMirrored);
     this.currentFrame = frame;
     const snapshot: SpriteAnimationSnapshot = {
       clip: this.overrideClip ? 'test' : this.clipName,
@@ -325,19 +327,25 @@ export class SpriteAnimator {
     animationDiagnostics[this.slotId] = snapshot;
   }
 
-  private setSpriteMirrored(mirrored: boolean): void {
+  private setSpriteScalePositive(): void {
     if (!this.sprite) return;
-    this.sprite.scale.x = Math.abs(this.sprite.scale.x) * (mirrored ? -1 : 1);
+    // THREE.Sprite billboarding derives scale from vector length, so scale.x's sign
+    // is not a reliable mirror. Keep transform scale positive; UV flip below owns it.
+    this.sprite.scale.x = Math.abs(this.sprite.scale.x);
   }
 
-  private startFade(previousFrame: RuntimeFrame | null, nextFrame: RuntimeFrame | null, previousScaleX: number): void {
+  private startFade(
+    previousFrame: RuntimeFrame | null,
+    nextFrame: RuntimeFrame | null,
+    previousMirrored: boolean,
+    nextMirrored: boolean,
+  ): void {
     if (!previousFrame || !nextFrame || !this.fadeSprite || !this.fadeMaterial || Balance.sprite.orientationFadeMs <= 0) return;
-    const mirrorChanged = Math.sign(previousScaleX) !== Math.sign(this.sprite?.scale.x ?? previousScaleX);
+    const mirrorChanged = previousMirrored !== nextMirrored;
     if (previousFrame.texture === nextFrame.texture && previousFrame.key !== nextFrame.key && !mirrorChanged) return;
-    applyRuntimeFrame(this.fadeMaterial, previousFrame);
+    applyRuntimeFrame(this.fadeMaterial, previousFrame, previousMirrored);
     this.fadeSprite.position.copy(this.sprite?.position ?? this.fadeSprite.position);
     this.fadeSprite.scale.copy(this.sprite?.scale ?? this.fadeSprite.scale);
-    this.fadeSprite.scale.x = previousScaleX;
     this.fadeSprite.visible = true;
     this.fadeElapsed = 0;
     this.fadeDuration = Balance.sprite.orientationFadeMs / 1000;
@@ -362,13 +370,45 @@ export class SpriteAnimator {
   }
 }
 
-function applyRuntimeFrame(material: THREE.SpriteMaterial, frame: RuntimeFrame): void {
-  frame.texture.repeat.set(frame.repeatX, frame.repeatY);
-  frame.texture.offset.set(frame.offsetX, frame.offsetY);
-  if (material.map !== frame.texture) {
-    material.map = frame.texture;
+function applyRuntimeFrame(material: THREE.SpriteMaterial, frame: RuntimeFrame, mirrored = false): void {
+  const nextFrame = mirrored ? mirroredRuntimeFrame(frame) : frame;
+  const texture = nextFrame.texture;
+  texture.repeat.set(nextFrame.repeatX, nextFrame.repeatY);
+  texture.offset.set(nextFrame.offsetX, nextFrame.offsetY);
+  if (material.map !== texture) {
+    material.map = texture;
     material.needsUpdate = true;
   }
+}
+
+function mirroredRuntimeFrame(frame: RuntimeFrame): RuntimeFrame {
+  if (frame.mirroredFrame) return frame.mirroredFrame;
+  const image = frame.texture.image as CanvasImageSource | undefined;
+  const sourceWidth = imageWidth(image);
+  const sourceHeight = imageHeight(image);
+  const sx = Math.max(0, Math.round(frame.offsetX * sourceWidth));
+  const sy = Math.max(0, Math.round(sourceHeight - (frame.offsetY + frame.repeatY) * sourceHeight));
+  const sw = Math.max(1, Math.round(frame.repeatX * sourceWidth));
+  const sh = Math.max(1, Math.round(frame.repeatY * sourceHeight));
+  const canvas = document.createElement('canvas');
+  canvas.width = sw;
+  canvas.height = sh;
+  const context = canvas.getContext('2d');
+  if (!context || !image) throw new Error('Could not create mirrored sprite frame.');
+  context.translate(sw, 0);
+  context.scale(-1, 1);
+  context.drawImage(image, sx, sy, sw, sh, 0, 0, sw, sh);
+  const texture = new THREE.CanvasTexture(canvas);
+  configureTexture(texture);
+  frame.mirroredFrame = {
+    texture,
+    key: frame.key,
+    offsetX: 0,
+    offsetY: 0,
+    repeatX: 1,
+    repeatY: 1,
+  };
+  return frame.mirroredFrame;
 }
 
 function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
@@ -451,11 +491,9 @@ async function createRuntimeOrientation(
     const clipFrames = indexes.map((index) => atlasFrames[index]);
     if (clipFrames.every((frame): frame is RuntimeFrame => !!frame)) clips.set(name, { frames: clipFrames, fps: source.fps ?? 1 });
   }
-  // s15 gate fix: an orientation must always resolve idle-or-walk. With mixed-source
-  // frame lists (side + side-actions cells) a partial load can drop idle/walk while
-  // action clips survive — without this, pickClip() returns null and the sprite
-  // freezes on whatever map it had instead of the one-frame billboard fallback.
-  if (fallbackClip && !clips.has('idle') && !clips.has('walk')) clips.set('idle', fallbackClip);
+  // s15 + task 016: an orientation must always resolve idle without replacing a real walk
+  // pair. Walk-only direction blocks keep cycling; idle falls back to the billboard.
+  if (fallbackClip && !clips.has('idle')) clips.set('idle', fallbackClip);
   if (clips.size === 0 && atlasFrames[0]) clips.set('idle', { frames: [atlasFrames[0]], fps: 1 });
   return clips.size > 0 ? { clips } : null;
 }
