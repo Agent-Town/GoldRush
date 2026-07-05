@@ -1,0 +1,2 @@
+# Task 015: 30-wave soak harness (MAIN folder, AFTER 014 READY)
+Scripted auto-play soak: ?soak=30 — bot policy (kite ring + build script + pick first card) runs to wave 30 at timescale; assert every 5 waves: pool caps honored, renderer memory within envelope (warm-cycle rule), zero GL/console errors, draw calls <=200, fps floor >=12; dump per-wave JSON. e2e wraps it (extended timeout, own spec file, serial). Catches late-wave decay before Robin's kids do. Harness/e2e only, no gameplay changes. READY-FOR-GATES + soak report.
