@@ -1,6 +1,8 @@
 # Asset Ledger — Gold Rush
 
-Pipeline: slot defined → prompt written (batch) → generated (Robin/ChatGPT) → processed (alpha-extract `#8a8a8a`) → integrated (wired + screenshotted in-game) → done.
+Pipeline v2 (2026-07-05, Robin-approved): PRIMARY generation = Codex image_gen (gpt-image-2, new account) with on-disk reference sheets for character consistency + generator self-QA vs cell maps, output direct to assets/raw/ (tasks/017 pilot). FALLBACK = ChatGPT web via Chrome relay (the original conversation). Extraction/contract/gate discipline UNCHANGED — generator proposes, contract disposes.
+
+Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGPT) → processed (alpha-extract `#8a8a8a`) → integrated (wired + screenshotted in-game) → done.
 
 **Budget:** proposed 20 generations/week (≈1 batch of 6–8 prompts × 2–3 candidates) — **pending Robin's OK**. One batch in flight at a time, ordered by gameplay impact (hero/enemies/terrain before decoration). Placeholder-first is the law: no slot ever blocks gameplay.
 
