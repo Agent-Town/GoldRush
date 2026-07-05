@@ -14,18 +14,15 @@ trap 'cleanup; echo "[lane-runner-v3] stopped (background tasks finish on their 
 trap cleanup EXIT
 mkdir -p "$ROOT/tasks/runs" "$ROOT/tasks/done" "$ROOT/tasks/failed" "$ROOT/tasks/running"
 dir_for_slot() {
-  case "$1" in
-    main)   echo "$ROOT" ;;
-    lane-a) echo "$ROOT/worktrees/lane-a" ;;
-    lane-b) echo "$ROOT/worktrees/lane-b" ;;
-    lane-c) echo "$ROOT/worktrees/lane-c" ;;
-    lane-d) echo "$ROOT/worktrees/lane-d" ;;
-    *)      echo "" ;;
-  esac
+  # CONVENTION: slot "main" -> repo root; any other slot -> worktrees/<slot> (create with:
+  #   git worktree add worktrees/<slot> -b lane/<slot> && (cd worktrees/<slot> && npm install)
+  # then mkdir tasks/queue/<slot> — the runner picks it up next cycle. Lanes are UNCAPPED.)
+  if [ "$1" = "main" ]; then echo "$ROOT"; else echo "$ROOT/worktrees/$1"; fi
 }
 echo "[lane-runner-v3] watching $ROOT/tasks/queue — parallel slots — Ctrl+C to stop"
 while true; do
-  for slot in main lane-a lane-b lane-c lane-d; do
+  for qdir in "$ROOT/tasks/queue"/*/; do
+    slot=$(basename "$qdir")
     pidfile="$ROOT/tasks/running/$slot.pid"
     if [ -f "$pidfile" ]; then
       pid=$(cat "$pidfile" 2>/dev/null)
@@ -36,6 +33,9 @@ while true; do
       done
       rm -f "$pidfile"
       echo "[lane-runner-v3] $slot: stale run cleaned (crash salvaged to failed/)"
+    fi
+    if [ "$slot" = "main" ] && head -2 "$ROOT/STATUS.md" 2>/dev/null | grep -q "ACTIVE 2"; then
+      continue  # a gate fire holds main (v2 rule restored) — lanes keep running, main waits
     fi
     q="$ROOT/tasks/queue/$slot"
     f=$(ls "$q"/*.md 2>/dev/null | head -1)
