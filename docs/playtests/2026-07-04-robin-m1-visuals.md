@@ -42,3 +42,6 @@ Robin cannot pass wave 12 (record 25 pre-blast-family); cannot yet assemble a wo
 
 ## Addendum 7 (2026-07-05, s9ad): XP tempo + the drop question
 Robin: more upgrades is fine; proposes bandit HP down / xpPerKill 3->4; reports SOME KILLS DROP NO XP. Routed tasks/021 (queued behind 020): audit-first (mote pool exhaustion = prime suspect for silent XP loss — if confirmed, overflow auto-banks, XP never lost, new conservation invariant e2e'd), then his knobs as defaults. Product direction noted: generosity up (shower-of-power genre instinct) — dilution fix (020) + tempo raise (021) TOGETHER re-frame the m2-07 thesis re-run.
+
+## Addendum 8 (2026-07-05, s9ae): RECORD TIED AT 25 — thesis reframed by owner ruling
+Post-020/021 run: 25 waves, hybrid blast-kite + spark-weave (emergent two-weapon play — design win, keep). Buildings still melt at late pulses (durability, not economy — repairs now cheap). ROBIN RULING: m2-07 acceptance becomes BASE SELF-SUFFICIENCY (holds itself through wave-15 pulses, hero-free), agent = multiplier beyond; routed tasks/022 (durability curve + scripted self-hold probe as the standing gate + blast late-TTK data check). M4 bet re-affirmed by owner ("lets see how it goes then").
