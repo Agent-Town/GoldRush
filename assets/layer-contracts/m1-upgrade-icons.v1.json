@@ -1,7 +1,7 @@
 {
   "$schema": "gold-rush layer contract v1",
   "batch": "batch-002",
-  "notes": "Upgrade-card icons, ONE per effect FAMILY (not per card), per Robin's wave-23 directive (remove procedural glyphs -> real illustrated icons). Cutouts alpha-extracted from flat #8a8a8a. Wired onto the card ROOT slot `ui.upgrade.icon.<family>` (UpgradeOverlay sets card.dataset.slot). Card ships icon-less (clean parchment) until these are generated+integrated — placeholder-first. iconFamily on each upgrade def maps card -> slot. Order by gameplay impact: combat families first tranche.",
+  "notes": "Upgrade-card icons, ONE per effect FAMILY (not per card), per Robin's wave-23 directive (remove procedural glyphs -> real illustrated icons). Cutouts alpha-extracted from flat #8a8a8a. Wired onto the card ROOT slot `ui.upgrade.icon.<family>` (UpgradeOverlay sets card.dataset.slot). Card ships icon-less (clean parchment) until these are generated+integrated — placeholder-first. iconFamily on each upgrade def maps card -> slot. Order by gameplay impact: combat families first tranche. batch-006 (codex image_gen run-002, s38): tranche 2 generated+processed + NEW blast slot; favicon-source.png is a NON-SLOT extra -> public/favicon-{48,32,16}.png + index.html links. Prospecting note: the gray inside the loupe is intentional glass (lens + nugget), NOT key residue - do not pocket-key it away on reprocess.",
   "slots": [
     { "file": "icon-firerate.png", "slot": "ui.upgrade.icon.firerate", "size": [512, 512], "usage": "fire-rate family (Double-Tap Coil): twin-coil spark rig / paired pistons", "fullBleed": false, "tranche": 1 },
     { "file": "icon-damage.png", "slot": "ui.upgrade.icon.damage", "size": [512, 512], "usage": "spark-damage family (Heavy Spark Charge, Sharpen): a single bright stamped spark bolt", "fullBleed": false, "tranche": 1 },
@@ -13,6 +13,7 @@
     { "file": "icon-prospecting.png", "slot": "ui.upgrade.icon.prospecting", "size": [512, 512], "usage": "seam-yield family (Prospector's Luck): a rich assay map with a marked seam", "fullBleed": false, "tranche": 2 },
     { "file": "icon-beacon.png", "slot": "ui.upgrade.icon.beacon", "size": [512, 512], "usage": "beacon family (Beacon Dynamo): a sentry-beacon coil tower, humming", "fullBleed": false, "tranche": 2 },
     { "file": "icon-gold.png", "slot": "ui.upgrade.icon.gold", "size": [512, 512], "usage": "gold-grant filler (Assay Bonus): a stamped assay receipt with a small coin stack", "fullBleed": false, "tranche": 2 },
-    { "file": "icon-mend.png", "slot": "ui.upgrade.icon.mend", "size": [512, 512], "usage": "heal filler (Field Dressing): a rolled claim-kit bandage with a brass clasp", "fullBleed": false, "tranche": 2 }
+    { "file": "icon-mend.png", "slot": "ui.upgrade.icon.mend", "size": [512, 512], "usage": "heal filler (Field Dressing): a rolled claim-kit bandage with a brass clasp", "fullBleed": false, "tranche": 2 },
+    { "file": "icon-blast.png", "slot": "ui.upgrade.icon.blast", "size": [512, 512], "usage": "blast family (M2-06 Blast Charge cards): round powder keg with a short sparking teal fuse, comic not menacing", "fullBleed": false, "tranche": 2 }
   ]
 }
