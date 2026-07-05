@@ -57,6 +57,26 @@ while true; do
     ) &
     echo $! > "$pidfile"
   done
+  # JANITOR REQUESTS (s9an): sandbox fires cannot delete on the mount. They drop
+  # WHITELISTED request files in tasks/janitor/ (line1=op, line2=arg); only these
+  # two ops exist — nothing from the file is ever executed as code.
+  for req in "$ROOT/tasks/janitor"/*.req; do
+    [ -e "$req" ] || continue
+    op=$(head -1 "$req"); arg=$(sed -n 2p "$req")
+    case "$op" in
+      refresh-lane)
+        wt="$ROOT/worktrees/$arg"
+        if [ -d "$wt" ] && [ ! -f "$ROOT/tasks/running/$arg.pid" ]; then
+          ( cd "$wt" && git reset --hard main >/dev/null 2>&1 && git clean -fd >/dev/null 2>&1 ) \
+            && echo "[janitor] refreshed lane $arg" || echo "[janitor] refresh FAILED for $arg"
+        else echo "[janitor] skip refresh $arg (busy or missing)"; fi ;;
+      clean-tests)
+        rm -rf "$ROOT/test-results" "$ROOT/playwright-report" 2>/dev/null
+        echo "[janitor] cleaned test artifacts" ;;
+      *) echo "[janitor] unknown op in $(basename "$req") — ignored" ;;
+    esac
+    mv "$req" "$ROOT/tasks/done/janitor-$(date +%s)-$(basename "$req")" 2>/dev/null
+  done
   find "$ROOT/.git" -maxdepth 2 \( -name '*.stale*' -o -name 'tmp_obj_*' \) -type f -delete 2>/dev/null
   find "$ROOT/tasks/runs" -name '*.log' -mtime +3 -delete 2>/dev/null
   sleep 15
