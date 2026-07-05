@@ -1,0 +1,26 @@
+{
+  "gate": "s30-drain",
+  "opened": "2026-07-05T04:10Z",
+  "protocol": "v2-no-evidence (resumable drain; tasks/018 evidence file absent)",
+  "queue": ["013-m2-07b-tune", "016-sprite-direction-fixes", "015-soak-harness"],
+  "tree_attribution": {
+    "013": ["src/core/EventBus.ts", "src/game/StatSheet.ts", "src/game/Upgrades.ts", "src/ui/DeathOverlay.ts", "src/game/Balance.ts", "src/systems/WaveSystem.ts", "src/game/Game.ts", "src/systems/BuildSystem.ts", "src/systems/DebugTools.ts", "src/vite-env.d.ts", "e2e/m2-04-gold-stealing.spec.ts", "e2e/m2-07b-building-incentive-tune.spec.ts"],
+    "016": ["src/assets/SpriteAnimator.ts", "assets/layer-contracts/characters.v2.json", "e2e/vp-02-sprite-animation.spec.ts"],
+    "015": ["e2e/soak-30.spec.ts", "UNRESOLVED: possible Game/DebugTools soak half — attribute in step 2"],
+    "not_ours": ["assets/raw/* (017 art lane LIVE 11:04+07)", ".probe-mount (junk, delete at close)", "reviews/shots-m2-05b/*.png modified (strays — restore via content-overwrite)"]
+  },
+  "steps": [
+    {"id": 1, "name": "lock+progress-file", "status": "done", "at": "2026-07-05T04:10Z"},
+    {"id": 2, "name": "diff-attribution 013/015/016", "status": "next"},
+    {"id": 3, "name": "provision /tmp/gr-s30 (rsync excl worktrees; npm i /tmp/npm-cache; chromium /tmp/pw-browsers; xdamage stub; LD_LIBRARY_PATH)", "status": "pending"},
+    {"id": 4, "name": "tsc + vite build", "status": "pending"},
+    {"id": 5, "name": "e2e m2-07b (013 new spec)", "status": "pending"},
+    {"id": 6, "name": "e2e vp-02 splits incl. per-direction cycling (016)", "status": "pending"},
+    {"id": 7, "name": "canary m1-05 splits", "status": "pending"},
+    {"id": 8, "name": "scope review per task files; findings", "status": "pending"},
+    {"id": 9, "name": "commit per slice 013→016→015, reviews written", "status": "pending"},
+    {"id": 10, "name": "soak-30: attempt once; likely exceeds sandbox walls → defer to 018 Mac evidence run", "status": "pending"},
+    {"id": 11, "name": "STATUS handoff + clear lock + tree clean (raws stay untracked)", "status": "pending"}
+  ],
+  "env_notes": []
+}
