@@ -1,26 +1,27 @@
 {
-  "gate": "s30-drain",
-  "opened": "2026-07-05T04:10Z",
-  "protocol": "v2-no-evidence (resumable drain; tasks/018 evidence file absent)",
-  "queue": ["013-m2-07b-tune", "016-sprite-direction-fixes", "015-soak-harness"],
-  "tree_attribution": {
-    "013": ["src/core/EventBus.ts", "src/game/StatSheet.ts", "src/game/Upgrades.ts", "src/ui/DeathOverlay.ts", "src/game/Balance.ts", "src/systems/WaveSystem.ts", "src/game/Game.ts", "src/systems/BuildSystem.ts", "src/systems/DebugTools.ts", "src/vite-env.d.ts", "e2e/m2-04-gold-stealing.spec.ts", "e2e/m2-07b-building-incentive-tune.spec.ts"],
-    "016": ["src/assets/SpriteAnimator.ts", "assets/layer-contracts/characters.v2.json", "e2e/vp-02-sprite-animation.spec.ts"],
-    "015": ["e2e/soak-30.spec.ts", "UNRESOLVED: possible Game/DebugTools soak half — attribute in step 2"],
-    "not_ours": ["assets/raw/* (017 art lane LIVE 11:04+07)", ".probe-mount (junk, delete at close)", "reviews/shots-m2-05b/*.png modified (strays — restore via content-overwrite)"]
-  },
-  "steps": [
-    {"id": 1, "name": "lock+progress-file", "status": "done", "at": "2026-07-05T04:10Z"},
-    {"id": 2, "name": "diff-attribution 013/015/016", "status": "done", "result": "NO contention: 015=e2e/soak-30 only (zero src soak refs); 016=SpriteAnimator+contract+vp02 exactly; 013=rest. 3 stray PNGs (2x shots-m2-05b + mobile-batch001-assets) to content-overwrite."},
-    {"id": 3, "name": "provision /tmp/gr-s30 (rsync excl worktrees; npm i /tmp/npm-cache; chromium /tmp/pw-browsers; xdamage stub; LD_LIBRARY_PATH)", "status": "done", "result": "HEALTHY VM load 0.00; /tmp survived from s28: chromium-1228 OK, npm-cache OK, xdamage at /tmp/locallibs OK. gr-s30 built, raws excluded from rsync."},
-    {"id": 4, "name": "tsc + vite build", "status": "done", "result": "TSC-EXIT:0, BUILD-EXIT:0 (456ms)"},
-    {"id": 5, "name": "e2e m2-07b (013 new spec)", "status": "done", "result": "8/8 green (4 desktop + 4 mobile). ONE sanctioned harness fix at gate (s23 law): income-during-dwell race — atomic mark+sample, conservation exact, debit pinned via gold_spent event."},
-    {"id": 6, "name": "e2e vp-02 + vp-02b (016)", "status": "done", "result": "vp-02 11/11 (incl. 2 new 016 tests); vp-02b 4/4 functional (60s shots test = evidence generator, skipped in-sandbox)."},
-    {"id": 7, "name": "canary m1-05 + affected old suites m2-05/m2-05b", "status": "done", "result": "m1-05 6/6 after A/B (pure HEAD passes, 016-only fails +2 textures = lazy mirror-bake depth, NOT leak; vp-02 memory gate green) → s27-law harness modernization, reset test 3x stable. m2-05 7/7, m2-05b 5/5. m2-04 7/7 (modified canary)."},
-    {"id": 8, "name": "scope review per task files; findings", "status": "done", "result": "013 clean (default byte-identity verified on WaveSystem; Economy sole-writer intact; canon ok). 016 firewall exact. FINDING non-blocking: orphaned Balance.wreck.repairCostFrac + stale derivations in m2-05/m2-05b specs (green via grant-slack + palisade ceil-coincidence) — corrective queued."},
-    {"id": 9, "name": "commit per slice 013→016, reviews written", "status": "done", "result": "013 = ea570a8, 016 = 51b75ba. 3 strays content-overwritten pre-commit; 16 gated files md5-verified vs test tree before committing (live Mac lane detected mid-gate)."},
-    {"id": 10, "name": "soak-30 (015)", "status": "deferred", "result": "REVIEWED clean (test-side only, zero src), UNRUNNABLE in sandbox (single 180s test vs 45s wall). Uncommitted by design; rides tasks/018 Mac run. See reviews/015-soak-harness.md."},
-    {"id": 11, "name": "STATUS handoff + clear lock", "status": "done", "result": "Intentionally dirty after s30: e2e/soak-30.spec.ts (untracked, 018), assets/raw/* (017 art lane LIVE), reviews/shots-008-rotation/* strays (Mac-side regenerations mid-gate; restore once lane settles). NEXT fires: lane/m3 → lane/m4 → lane/perf serial drains."}
+  "gate": "s31-lane-m3-drain",
+  "opened": "2026-07-05T04:48Z",
+  "closed": "2026-07-05T05:15Z",
+  "protocol": "v2 evidence-first (first lane-branch drain under s9v)",
+  "result": "MERGED: lane/m3 (a6886f3, single slice m3-01) -> main 055ea68 (two-parent, plumbing path). RIDER: 015 soak-30 landed 0f77122 (gate condition '015 rides 018' met by 1147 evidence).",
+  "evidence": [
+    "reviews/evidence/mac-fullsuite-20260705-1059.md (116/119; found this fire — landed mid-s30 unseen)",
+    "reviews/evidence/mac-fullsuite-20260705-1147.md (118/119 on 013+016 main; landed MID-FIRE 11:58 local; sole fail m1-02 known warm-depth harness debt -> tasks/019)"
   ],
-  "env_notes": ["VM healthy load 0.0; /tmp survived from s28: chromium-1228, npm-cache, xdamage stub all reusable; gr-s30 built in ~40s total", "45s-wall splits used: m2-07b ['half-damaged|blast cards','pressure budget|six blast']; vp-02 ['alternates|mirrored pixels','hit-pause|one-frame|rotation contract','sweep|reversal|wiggle','renderer memory|screenshots']"]
+  "steps": [
+    {"id": 1, "name": "lock", "status": "done", "result": "e72fb6b"},
+    {"id": 2, "name": "review: evidence plausibility + lane diff vs tasks/lane-a-m3-01 scope + ADR-002", "status": "done", "result": "scope exact (3 new files + EventBus append-only); two merge-time necessities identified: EventBus same-anchor union conflict (013 building_* vs m3 run_*), e2e hero_died missing 013's weaponToggles/blastTime"},
+    {"id": 3, "name": "strays: 19 Mac-sweep-regenerated PNGs content-overwritten from HEAD", "status": "done", "result": "clean; 1147 sweep re-clobbered a few mid-fire and its own cleanup restored them — final status 0 modified"},
+    {"id": 4, "name": "provision /tmp/gr-s31 merged preview + ADR-002 Game.ts wiring", "status": "done", "result": "/tmp survived s30 (chromium-1228, npm-cache, locallibs); tsc 0, build 0"},
+    {"id": 5, "name": "gates", "status": "done", "result": "m3-01 8/8 both projects; visual 5/5; m1-05 6/6; vp-02 11/11 (extra split: sweep|reversal / wiggle / crossfades-once — 45s wall); m2-07b 4/4; boot probe desktop+390 zero console errors, readout live"},
+    {"id": 6, "name": "merge on mount", "status": "done", "result": "git merge self-wedges on delete-guard (locks index twice per op; EPERM'd unlink poisons phase 2 — NEW RECIPE: write-tree + commit-tree -p HEAD -p lane + update-ref, single lock cycles). Content md5-verified vs gated tree pre-commit. Mid-fire live-lane event: Mac evidence commit 5d98caa landed on top of the lock (docs-only, permitted) — merge rebased onto it."},
+    {"id": 7, "name": "015 rider + review + corrective", "status": "done", "result": "0f77122 soak-30; reviews/m3-01-run-scaffold.md; tasks/019 written (freeze lifted: pending gates now 2 <3)"}
+  ],
+  "queue_remaining": ["lane/m4 (a79c87c tip)", "lane/perf (6c4d0f3 tip)"],
+  "env_notes": [
+    "VM healthy (~0.2); /tmp/gr-s31 built ~1min from survivals",
+    "vp-02 'sweep|reversal|wiggle' group now exceeds one 45s call on this VM — split wiggle out; 'crossfades once' title is NOT covered by the four historic groups, run it explicitly (11th test)",
+    "bare chromium.launch() wants headless_shell (absent) — screenshot probes need executablePath=/tmp/pw-browsers/chromium-1228/chrome-linux/chrome",
+    "MOUNT GIT MERGE RECIPE (BINDING): never 'git merge' on the mount — plumbing path above; plain add/commit still fine"
+  ]
 }
