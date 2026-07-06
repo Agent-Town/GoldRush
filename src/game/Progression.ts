@@ -2,7 +2,16 @@ import type { Rng } from '../core/Rng';
 import type { GameState } from './GameState';
 import { Balance } from './Balance';
 import { effectiveStats, type EffectiveStats, type UpgradeStacks } from './StatSheet';
-import { isUpgradeId, isUpgradeUnlocked, resolveFiller, upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
+import {
+  isMasteryConversionUnlocked,
+  isUpgradeId,
+  isUpgradeUnlocked,
+  resolveFiller,
+  upgradeDefById,
+  upgradeDefs,
+  type UpgradeDef,
+  type UpgradeId,
+} from './Upgrades';
 
 export type ProgressionSnapshot = {
   level: number;
@@ -68,7 +77,7 @@ export class Progression {
       xpNeed: this.xpNeed,
       pendingLevels: this.pendingLevelsValue,
       offer: this.currentOffer?.map((def) => def.id) ?? null,
-      stacks: { ...this.stacksValue },
+      stacks: stackSnapshot(this.stacksValue),
       stats: this.statsValue,
       eligibility: this.eligibleDefs().map((def) => def.id),
     };
@@ -87,9 +96,15 @@ export class Progression {
    *  upgrade so exhaustion/filler e2e skip the slow ~22-pick UI loop that blows
    *  the sandbox's 45s wall. Recomputes stats; does not fire per-pick effects. */
   maxCoreForTest(): void {
-    for (const def of this.eligibleDefs()) {
-      if (isFiller(def)) continue;
-      this.stacksValue[def.id] = def.maxStacks;
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const def of this.eligibleDefs()) {
+        if (isFiller(def)) continue;
+        if ((this.stacksValue[def.id] ?? 0) >= def.maxStacks) continue;
+        this.stacksValue[def.id] = def.maxStacks;
+        changed = true;
+      }
     }
     this.statsValue = effectiveStats(this.stacksValue);
     this.options.onStatsChanged(this.statsValue, null);
@@ -102,7 +117,7 @@ export class Progression {
   setStacksForTest(stacks: Partial<Record<UpgradeId, number>>): void {
     for (const id of Object.keys(this.stacksValue) as UpgradeId[]) delete this.stacksValue[id];
     for (const [id, count] of Object.entries(stacks)) {
-      if (!isUpgradeId(id) || !Number.isFinite(count) || count <= 0) continue;
+      if (!isUpgradeId(id) || typeof count !== 'number' || !Number.isFinite(count) || count <= 0) continue;
       const def = upgradeDefById[id];
       this.stacksValue[id] = Math.min(Math.floor(count), def.maxStacks);
     }
@@ -227,8 +242,10 @@ export class Progression {
 
   private eligibleDefs(): UpgradeDef[] {
     const beaconCount = this.options.getBeaconCount();
+    const hasNode = (id: string) => this.options.hasResearchNode?.(id) === true;
     return upgradeDefs.filter((def) => {
-      if (!isUpgradeUnlocked(def, (id) => this.options.hasResearchNode?.(id) === true)) return false;
+      if (!isUpgradeUnlocked(def, hasNode)) return false;
+      if (!isMasteryConversionUnlocked(def, this.stacksValue, this.options.hasResearchNode ? hasNode : undefined)) return false;
       if (isFiller(def) && this.fillersDisabled) return false;
       if (def.id === 'beacon_dynamo' && beaconCount <= 0) return false;
       return (this.stacksValue[def.id] ?? 0) < def.maxStacks;
@@ -242,4 +259,12 @@ export function need(level: number): number {
 
 function isFiller(def: UpgradeDef): boolean {
   return 'filler' in def && def.filler === true;
+}
+
+function stackSnapshot(stacks: UpgradeStacks): Record<string, number> {
+  const snapshot: Record<string, number> = {};
+  for (const [id, count] of Object.entries(stacks)) {
+    if (typeof count === 'number') snapshot[id] = count;
+  }
+  return snapshot;
 }

@@ -1,3 +1,4 @@
+import { Balance } from './Balance';
 import { upgradeDefs, type UpgradeId } from './Upgrades';
 
 export type UpgradeStacks = Partial<Record<UpgradeId, number>>;
@@ -13,6 +14,7 @@ export type EffectiveStats = {
   panTickMult: number;
   seamCapacityBonus: number;
   seamRespawnReduction: number;
+  stockpileCapBonus: number;
   beaconFireRateMult: number;
   blastDamageMult: number;
   blastRadiusMult: number;
@@ -30,6 +32,7 @@ export const baseStats: EffectiveStats = {
   panTickMult: 1,
   seamCapacityBonus: 0,
   seamRespawnReduction: 0,
+  stockpileCapBonus: 0,
   beaconFireRateMult: 1,
   blastDamageMult: 1,
   blastRadiusMult: 1,
@@ -43,21 +46,25 @@ export function effectiveStats(stacks: UpgradeStacks): EffectiveStats {
     const count = stacks[def.id] ?? 0;
     if (count <= 0) continue;
     const deltas = def.deltas;
-    if ('fireRateMult' in deltas) stats.fireRateMult += deltas.fireRateMult * count;
-    if ('damageMult' in deltas) stats.damageMult += deltas.damageMult * count;
-    if ('rangeMult' in deltas) stats.rangeMult += deltas.rangeMult * count;
-    if ('boltSpeedMult' in deltas) stats.boltSpeedMult += deltas.boltSpeedMult * count;
-    if ('volleyBonus' in deltas) stats.volleyBonus += deltas.volleyBonus * count;
-    if ('maxHpBonus' in deltas) stats.maxHpBonus += deltas.maxHpBonus * count;
-    if ('moveSpeedMult' in deltas) stats.moveSpeedMult += deltas.moveSpeedMult * count;
-    if ('panTickMult' in deltas) stats.panTickMult += deltas.panTickMult * count;
-    if ('seamCapacityBonus' in deltas) stats.seamCapacityBonus += deltas.seamCapacityBonus * count;
-    if ('seamRespawnReduction' in deltas) stats.seamRespawnReduction += deltas.seamRespawnReduction * count;
-    if ('beaconFireRateMult' in deltas) stats.beaconFireRateMult += deltas.beaconFireRateMult * count;
-    if ('blastDamageMult' in deltas) stats.blastDamageMult += deltas.blastDamageMult * count;
-    if ('blastRadiusMult' in deltas) stats.blastRadiusMult += deltas.blastRadiusMult * count;
-    if ('blastCooldownMult' in deltas) stats.blastCooldownMult += deltas.blastCooldownMult * count;
+    if (deltas.fireRateMult !== undefined) stats.fireRateMult += deltas.fireRateMult * count;
+    if (deltas.damageMult !== undefined) stats.damageMult += deltas.damageMult * count;
+    if (deltas.rangeMult !== undefined) stats.rangeMult += deltas.rangeMult * count;
+    if (deltas.boltSpeedMult !== undefined) stats.boltSpeedMult += deltas.boltSpeedMult * count;
+    if (deltas.volleyBonus !== undefined) stats.volleyBonus += deltas.volleyBonus * count;
+    if (deltas.maxHpBonus !== undefined) stats.maxHpBonus += deltas.maxHpBonus * count;
+    if (deltas.moveSpeedMult !== undefined) stats.moveSpeedMult += deltas.moveSpeedMult * count;
+    if (deltas.panTickMult !== undefined) stats.panTickMult += deltas.panTickMult * count;
+    if (deltas.seamCapacityBonus !== undefined) stats.seamCapacityBonus += deltas.seamCapacityBonus * count;
+    if (deltas.seamRespawnReduction !== undefined) stats.seamRespawnReduction += deltas.seamRespawnReduction * count;
+    if (deltas.stockpileCapBonus !== undefined) stats.stockpileCapBonus += deltas.stockpileCapBonus * count;
+    if (deltas.beaconFireRateMult !== undefined) stats.beaconFireRateMult += deltas.beaconFireRateMult * count;
+    if (deltas.blastDamageMult !== undefined) stats.blastDamageMult += deltas.blastDamageMult * count;
+    if (deltas.blastRadiusMult !== undefined) stats.blastRadiusMult += deltas.blastRadiusMult * count;
+    if (deltas.blastCooldownMult !== undefined) stats.blastCooldownMult += deltas.blastCooldownMult * count;
   }
 
+  stats.blastRadiusMult = Math.min(stats.blastRadiusMult, Balance.eraCaps.blastRadiusMult);
+  stats.seamCapacityBonus = Math.min(stats.seamCapacityBonus, Balance.eraCaps.seamCapacityBonus);
+  stats.stockpileCapBonus = Math.min(stats.stockpileCapBonus, Balance.eraCaps.stockpileCapBonus);
   return stats;
 }

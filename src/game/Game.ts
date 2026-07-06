@@ -1582,16 +1582,30 @@ export class Game {
     if (this.blastShooter.aoe) this.blastShooter.aoe.radius = blastRadius;
     this.syncBlastReticleRadius(blastRadius);
     this.hero.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
-    if (pickedId === 'tinkers_plating' && 'heal' in upgradeDefById.tinkers_plating.deltas) {
-      this.hero.heal(upgradeDefById.tinkers_plating.deltas.heal);
+    const platingHeal = upgradeDefById.tinkers_plating.deltas.heal;
+    if (pickedId === 'tinkers_plating' && platingHeal !== undefined) {
+      this.hero.heal(platingHeal);
     }
     this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction);
     this.buildSystem.applyStats(stats.beaconFireRateMult);
+    this.applyUpgradeCapEffects(stats);
     this.applyResearchEffects();
   }
 
+  private applyUpgradeCapEffects(stats: EffectiveStats): void {
+    if (stats.stockpileCapBonus > 0) {
+      this.economy.addCapSource('upgrade:stockpile_cap', stats.stockpileCapBonus);
+    } else {
+      this.economy.removeCapSource('upgrade:stockpile_cap');
+    }
+  }
+
   private applyResearchEffects(): void {
-    const prospectingStacks = this.progression.snapshot.stacks.prospectors_luck ?? 0;
+    const stacks = this.progression.snapshot.stacks;
+    const prospectingStacks = upgradeDefs.reduce((total, def) => {
+      if (def.iconFamily !== 'prospecting' || def.deltas.seamCapacityBonus === undefined) return total;
+      return total + (stacks[def.id] ?? 0);
+    }, 0);
     const capBonus = hasResearchNode(this.researchState, 'assay_grading')
       ? prospectingStacks * Balance.research.assayGradingStockpileCapBonus
       : 0;

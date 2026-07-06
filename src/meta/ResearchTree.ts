@@ -72,8 +72,9 @@ export const RESEARCH_NODES = [
     branch: 'Prospecting Works',
     name: 'Pact Ledger',
     description: 'The town learns riskier gold bargains for hard nights.',
-    effect: 'Pact cards prepare to enter late offers.',
+    effect: 'Unlocks pact cards: richer seams for slower pan work.',
     requires: ['claim_map_table'],
+    live: true,
   },
   {
     id: 'chain_spark_primer',
@@ -88,8 +89,9 @@ export const RESEARCH_NODES = [
     branch: 'Arsenal Works',
     name: 'Beacon Cadence',
     description: 'Beacon keepers learn a steadier handoff from rig to tower.',
-    effect: 'Beacon mastery prepares to link with rig cards.',
+    effect: 'Unlocks Beacon Handoff cards in the run pool.',
     requires: ['chain_spark_primer'],
+    live: true,
   },
   {
     id: 'brass_coil_standards',

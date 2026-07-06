@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "epochId": "epoch-1-frontier",
+  "families": [
+    {
+      "id": "chain_spark_arc",
+      "branch": "Arsenal Works",
+      "unlockNodeId": "chain_spark_primer",
+      "cards": [
+        {
+          "id": "chain_spark_arc",
+          "name": "Chain Spark Arc",
+          "description": "A spark pattern that borrows a beacon keeper's cadence.",
+          "iconFamily": "volley",
+          "maxStacks": 2,
+          "deltas": { "fireRateMult": 0.12, "beaconFireRateMult": 0.12 }
+        }
+      ]
+    },
+    {
+      "id": "beacon_cadence",
+      "branch": "Arsenal Works",
+      "unlockNodeId": "beacon_cadence",
+      "cards": [
+        {
+          "id": "beacon_handoff",
+          "name": "Beacon Handoff",
+          "description": "The rig and beacon keep the same brass count.",
+          "iconFamily": "beacon",
+          "maxStacks": 2,
+          "deltas": { "beaconFireRateMult": 0.18, "fireRateMult": 0.06 }
+        }
+      ]
+    },
+    {
+      "id": "pact_ledger",
+      "branch": "Prospecting Works",
+      "unlockNodeId": "pact_ledger",
+      "cards": [
+        {
+          "id": "rich_seam_pact",
+          "name": "Rich Seam Pact",
+          "description": "Fatter seams for pan work that takes a little longer.",
+          "iconFamily": "prospecting",
+          "maxStacks": 2,
+          "deltas": { "seamCapacityBonus": 18, "panTickMult": 0.1 }
+        }
+      ]
+    }
+  ],
+  "masteryConversions": [
+    {
+      "whenFamilyMaxed": "firerate",
+      "offers": ["spark_pressure_ring"]
+    },
+    {
+      "whenFamilyMaxed": "prospecting",
+      "offers": ["stockpile_seam_survey"]
+    }
+  ],
+  "synergyCards": [
+    {
+      "id": "spark_pressure_ring",
+      "name": "Spark Pressure Ring",
+      "description": "Mastered coils widen the blast circle without hotter powder.",
+      "iconFamily": "blast",
+      "familyId": "mastery_blast_radius",
+      "maxStacks": 1,
+      "deltas": { "blastRadiusMult": 0.08 }
+    },
+    {
+      "id": "stockpile_seam_survey",
+      "name": "Stockpile Seam Survey",
+      "description": "Mastered prospecting marks deeper seams and roomier ledgers.",
+      "iconFamily": "prospecting",
+      "familyId": "mastery_seam_stockpile",
+      "maxStacks": 1,
+      "deltas": { "seamCapacityBonus": 10, "stockpileCapBonus": 60 }
+    }
+  ]
+}

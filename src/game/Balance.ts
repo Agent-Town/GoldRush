@@ -262,6 +262,11 @@ export const Balance = {
     assayGradingProspectingOfferWeightBonus: 1.25,
     secondOrderSlots: 2,
   },
+  eraCaps: {
+    blastRadiusMult: 1.4,
+    seamCapacityBonus: 40,
+    stockpileCapBonus: 80,
+  },
   offers: {
     investBonus: 0.35,
   },

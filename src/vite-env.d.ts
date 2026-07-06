@@ -111,6 +111,7 @@ interface ThreeGameDiagnostics {
       panTickMult: number;
       seamCapacityBonus: number;
       seamRespawnReduction: number;
+      stockpileCapBonus: number;
       beaconFireRateMult: number;
       blastDamageMult: number;
       blastRadiusMult: number;

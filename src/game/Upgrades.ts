@@ -1,6 +1,40 @@
 import { Balance } from './Balance';
+import { epochFamilyUpgradeDefs, masteryConversionRules, masterySynergyDefs } from '../meta/ContractFamilies';
 
-export const upgradeDefs = [
+export type UpgradeDeltas = {
+  fireRateMult?: number;
+  damageMult?: number;
+  rangeMult?: number;
+  boltSpeedMult?: number;
+  volleyBonus?: number;
+  maxHpBonus?: number;
+  heal?: number;
+  goldGrant?: number;
+  moveSpeedMult?: number;
+  panTickMult?: number;
+  seamCapacityBonus?: number;
+  seamRespawnReduction?: number;
+  stockpileCapBonus?: number;
+  beaconFireRateMult?: number;
+  blastDamageMult?: number;
+  blastRadiusMult?: number;
+  blastCooldownMult?: number;
+};
+
+export type UpgradeDef = {
+  id: string;
+  name: string;
+  description: string;
+  iconFamily: string;
+  familyId?: string;
+  familyGate?: string;
+  maxStacks: number;
+  weight?: number;
+  filler?: boolean;
+  deltas: UpgradeDeltas;
+};
+
+const baselineUpgradeDefs = [
   {
     id: 'double_tap_coil',
     name: 'Double-Tap Coil',
@@ -98,15 +132,6 @@ export const upgradeDefs = [
     deltas: { blastCooldownMult: -0.15 },
   },
   {
-    id: 'chain_spark_arc',
-    name: 'Chain Spark Arc',
-    description: 'A spark pattern that borrows a beacon keeper\'s cadence.',
-    iconFamily: 'volley',
-    familyGate: 'chain_spark_primer',
-    maxStacks: 2,
-    deltas: { fireRateMult: 0.12, beaconFireRateMult: 0.12 },
-  },
-  {
     id: 'assay_bonus',
     name: 'Assay Bonus',
     description: 'A tidy receipt from the Assay Office.',
@@ -136,20 +161,21 @@ export const upgradeDefs = [
     maxStacks: Number.POSITIVE_INFINITY,
     deltas: { damageMult: 0.05 },
   },
-] as const;
+] as const satisfies readonly UpgradeDef[];
 
-export type UpgradeDef = (typeof upgradeDefs)[number];
-export type UpgradeId = UpgradeDef['id'];
-type UpgradeDeltas = UpgradeDef['deltas'];
+export const upgradeDefs: readonly UpgradeDef[] = [...baselineUpgradeDefs, ...epochFamilyUpgradeDefs, ...masterySynergyDefs];
+export type UpgradeId = string;
 export type ResolvedFiller = { goldGrant?: number; heal?: number; effectText: string };
 
-export const upgradeDefById: Record<UpgradeId, UpgradeDef> = upgradeDefs.reduce(
+export const upgradeDefById: Record<string, UpgradeDef> = upgradeDefs.reduce(
   (defs, def) => {
     defs[def.id] = def;
     return defs;
   },
-  {} as Record<UpgradeId, UpgradeDef>,
+  {} as Record<string, UpgradeDef>,
 );
+
+const masteryOfferIds = new Set(masteryConversionRules.flatMap((rule) => rule.offers));
 
 export function isUpgradeId(id: string): id is UpgradeId {
   return id in upgradeDefById;
@@ -162,27 +188,65 @@ export function applyUpgradeBudgetsFromBalance(): void {
 export function upgradeEffect(def: UpgradeDef): string {
   const deltas: UpgradeDeltas = def.deltas;
   const parts: string[] = [];
-  if ('fireRateMult' in deltas) parts.push(`+${percent(deltas.fireRateMult)}% fire rate`);
-  if ('damageMult' in deltas) parts.push(`+${percent(deltas.damageMult)}% spark damage`);
-  if ('rangeMult' in deltas) parts.push(`+${percent(deltas.rangeMult)}% range`);
-  if ('boltSpeedMult' in deltas) parts.push(`+${percent(deltas.boltSpeedMult)}% bolt speed`);
-  if ('volleyBonus' in deltas) parts.push(`+${deltas.volleyBonus} spark per volley`);
-  if ('maxHpBonus' in deltas) parts.push(`+${deltas.maxHpBonus} max HP`);
-  if ('heal' in deltas) parts.push(`heals ${deltas.heal}`);
-  if ('goldGrant' in deltas) parts.push(`+${deltas.goldGrant} gold now`);
-  if ('moveSpeedMult' in deltas) parts.push(`+${percent(deltas.moveSpeedMult)}% move speed`);
-  if ('panTickMult' in deltas) parts.push(`${percent(Math.abs(deltas.panTickMult))}% faster panning`);
-  if ('seamCapacityBonus' in deltas) parts.push(`+${deltas.seamCapacityBonus} gold per seam`);
-  if ('seamRespawnReduction' in deltas) parts.push(`-${deltas.seamRespawnReduction}s seam respawn`);
-  if ('beaconFireRateMult' in deltas) parts.push(`+${percent(deltas.beaconFireRateMult)}% beacon fire rate`);
-  if ('blastDamageMult' in deltas) parts.push(`+${percent(deltas.blastDamageMult)}% blast damage`);
-  if ('blastRadiusMult' in deltas) parts.push(`+${percent(deltas.blastRadiusMult)}% blast radius`);
-  if ('blastCooldownMult' in deltas) parts.push(`${percent(Math.abs(deltas.blastCooldownMult))}% faster blast fuse`);
+  if (deltas.fireRateMult !== undefined) parts.push(`+${percent(deltas.fireRateMult)}% fire rate`);
+  if (deltas.damageMult !== undefined) parts.push(`+${percent(deltas.damageMult)}% spark damage`);
+  if (deltas.rangeMult !== undefined) parts.push(`+${percent(deltas.rangeMult)}% range`);
+  if (deltas.boltSpeedMult !== undefined) parts.push(`+${percent(deltas.boltSpeedMult)}% bolt speed`);
+  if (deltas.volleyBonus !== undefined) parts.push(`+${deltas.volleyBonus} spark per volley`);
+  if (deltas.maxHpBonus !== undefined) parts.push(`+${deltas.maxHpBonus} max HP`);
+  if (deltas.heal !== undefined) parts.push(`heals ${deltas.heal}`);
+  if (deltas.goldGrant !== undefined) parts.push(`+${deltas.goldGrant} gold now`);
+  if (deltas.moveSpeedMult !== undefined) parts.push(`+${percent(deltas.moveSpeedMult)}% move speed`);
+  if (deltas.panTickMult !== undefined) {
+    parts.push(
+      deltas.panTickMult < 0
+        ? `${percent(Math.abs(deltas.panTickMult))}% faster panning`
+        : `${percent(deltas.panTickMult)}% slower panning`,
+    );
+  }
+  if (deltas.seamCapacityBonus !== undefined) parts.push(`+${deltas.seamCapacityBonus} gold per seam`);
+  if (deltas.seamRespawnReduction !== undefined) parts.push(`-${deltas.seamRespawnReduction}s seam respawn`);
+  if (deltas.stockpileCapBonus !== undefined) parts.push(`+${deltas.stockpileCapBonus} stockpile room`);
+  if (deltas.beaconFireRateMult !== undefined) parts.push(`+${percent(deltas.beaconFireRateMult)}% beacon fire rate`);
+  if (deltas.blastDamageMult !== undefined) parts.push(`+${percent(deltas.blastDamageMult)}% blast damage`);
+  if (deltas.blastRadiusMult !== undefined) parts.push(`+${percent(deltas.blastRadiusMult)}% blast radius`);
+  if (deltas.blastCooldownMult !== undefined) parts.push(`${percent(Math.abs(deltas.blastCooldownMult))}% faster blast fuse`);
   return parts.join(', ');
 }
 
 export function isUpgradeUnlocked(def: UpgradeDef, hasResearchNode: (id: string) => boolean): boolean {
   return !('familyGate' in def) || !def.familyGate || hasResearchNode(def.familyGate);
+}
+
+export function isMasteryConversionUnlocked(
+  def: UpgradeDef,
+  stacks: Partial<Record<string, number>>,
+  hasResearchNode?: (id: string) => boolean,
+): boolean {
+  if (!masteryOfferIds.has(def.id)) return true;
+  if (!hasResearchNode) return false;
+  return masteryConversionRules.some(
+    (rule) => rule.offers.includes(def.id) && isUpgradeFamilyMaxed(rule.whenFamilyMaxed, stacks, hasResearchNode),
+  );
+}
+
+export function upgradeFamilyId(def: UpgradeDef): string {
+  return def.familyId ?? def.iconFamily;
+}
+
+export function isUpgradeFamilyMaxed(
+  familyId: string,
+  stacks: Partial<Record<string, number>>,
+  hasResearchNode: (id: string) => boolean,
+): boolean {
+  const family = upgradeDefs.filter(
+    (def) =>
+      upgradeFamilyId(def) === familyId &&
+      !isFiller(def) &&
+      !masteryOfferIds.has(def.id) &&
+      isUpgradeUnlocked(def, hasResearchNode),
+  );
+  return family.length > 0 && family.every((def) => (stacks[def.id] ?? 0) >= def.maxStacks);
 }
 
 export function resolveFiller(def: UpgradeDef, ctx: { wave: number; maxHp: number }): ResolvedFiller {
@@ -199,4 +263,8 @@ export function resolveFiller(def: UpgradeDef, ctx: { wave: number; maxHp: numbe
 
 function percent(value: number): number {
   return Math.round(value * 100);
+}
+
+function isFiller(def: UpgradeDef): boolean {
+  return def.filler === true;
 }
