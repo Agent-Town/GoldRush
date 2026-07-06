@@ -14,9 +14,8 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 5. 014 charm-pass · then 015 soak-harness (verify runtime budget fits runner first)
 
 ## lane-a (meta/progression)
-1. ✅ demo-profiles-v2 SHIPPED (s82 `0834a44`); ✅ SCI-01 research loop SHIPPED (s84 `6b6624c`)
-2. **IN QUEUE: SCI-02 epoch-gated families + mastery** — FIRE-AUTHORED s84 (`tasks/lane-a-sci-02-families-mastery.md`); full epoch-1 families.json + mastery conversions; wave-30 wall is the owner playtest gate
-3. SCI-03 assay & agent research branch — GATE: after SCI-02 AND the live assayer has produced real approvals (contract tier must gate something real)
+1. ✅ demo-profiles-v2 SHIPPED (s82 `0834a44`); ✅ SCI-01 research loop SHIPPED (s84 `6b6624c`); ✅ **SCI-02 families+mastery SHIPPED (s87 `4e65ae8`)** — owner wave-30 playtest pending
+3. SCI-03 assay & agent research branch — GATE: after SCI-02 (✅) AND the live assayer has produced real approvals (contract tier must gate something real) — assayer queue still EMPTY, so still gated
 5. SCI-04 contract-family registry — authorable anytime (socket only)
 
 ## lane-b (agent)
@@ -47,7 +46,8 @@ Drain: `lane/m6-r3a-apply` +2 (perf-02 bench + reviews/m6-r3a-audit.md, the M6 v
 4. Nightly art-shift resumes per VISION-EPOCHS asset strategy once BACKLOG-manifest rows exist
 
 ## OWNER'S DESK — blocking on Robin (the human is a lane too; dashboard renders these)
-OWNER: turret-feel RE-TEST after 041 turret-overwatch merges — the LOS finding WAS the substantive verdict (owner experiment 2026-07-06); M2 sign-off = re-feel the fixed turret + the remaining gate answers
+OWNER: turret-feel RE-TEST — **041 turret-overwatch MERGED s87 `305d405`** (turrets now shoot over own palisades; wall-crossing shots arc, single-target damage preserved); the LOS finding WAS the substantive verdict (owner experiment 2026-07-06); M2 sign-off = re-feel the fixed turret + the remaining gate answers
+OWNER: SCI-02 wave-30 wall playtest — **MERGED s87 `4e65ae8`** (epoch-gated families + mastery synergy cards); does combinatorial pool depth move the wall without stat inflation?
 OWNER: water-feel fallback preference — air-bar vs chill-drain (rules the 025 fallback; both recorded)
 OWNER: Mac full-regression evidence run, both projects (standing)
 OWNER: science spec pacing re-check after epoch-1 first fill (threshold 6 was the 2026-07-06 stake)
