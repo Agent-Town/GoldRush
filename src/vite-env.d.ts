@@ -294,6 +294,16 @@ interface ThreeGameDiagnostics {
   };
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+    water?: {
+      material: 'LivingWaterShader';
+      riverTime: number;
+      fordTime: number;
+      quality: number;
+      mobile: boolean;
+      foam: boolean;
+      glints: number;
+      fordStones: number;
+    };
     height: {
       min: number;
       max: number;

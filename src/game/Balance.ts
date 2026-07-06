@@ -250,6 +250,9 @@ export const Balance = {
     terrainSegments: 64,
     terrainMobileSegments: 40,
     terrainRelief: 1,
+    waterQuality: 1,
+    waterMobileQuality: 0.55,
+    waterFlowSpeed: 0.075,
   },
   terrain: {
     featureMix: 0.86,

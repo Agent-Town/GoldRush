@@ -818,6 +818,7 @@ export class Game {
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
+        water: this.terrainView?.diagnostics(),
         height: {
           ...Terrain.heightDiagnostics(),
           heroGround: Terrain.sampleHeight(this.hero.group.position.x, this.hero.group.position.z),

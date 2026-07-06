@@ -1,11 +1,18 @@
 import * as THREE from 'three';
 import terrainContractText from '../../assets/layer-contracts/m1-core.layer-contract.v1.json?raw';
-import { applyGeneratedMap, loadGeneratedTexture } from '../assets/generated';
+import { loadGeneratedTexture } from '../assets/generated';
 import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import { normalizeSeed } from '../core/Rng';
 import { createClaimProps } from './props';
+import {
+  createFordStones,
+  createLivingWaterMaterial,
+  updateWaterMaterial,
+  waterDiagnostics,
+  type WaterDiagnostics,
+} from './Water';
 
 export type TerrainZone = 'bank' | 'shallows' | 'river' | 'ford' | 'out';
 
@@ -163,6 +170,7 @@ export function heightDiagnostics(): {
 export type TerrainView = {
   group: THREE.Group;
   update: (delta: number) => void;
+  diagnostics: () => WaterDiagnostics;
 };
 
 type LayerContract = {
@@ -203,22 +211,6 @@ const bankMaterial = new THREE.MeshStandardMaterial({
   metalness: 0.01,
 });
 
-const riverMaterial = new THREE.MeshStandardMaterial({
-  color: '#4f7f86',
-  transparent: true,
-  opacity: 0.88,
-  roughness: 0.42,
-  metalness: 0.02,
-});
-
-const fordMaterial = new THREE.MeshStandardMaterial({
-  color: '#7fa3a4',
-  transparent: true,
-  opacity: 0.72,
-  roughness: 0.5,
-  metalness: 0.01,
-});
-
 export const createBankPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
   () => {
     const mesh = new THREE.Mesh(createBankGeometry(), createBankMaterial());
@@ -233,20 +225,14 @@ export const createBankPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
 
 export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
   () => {
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(CLAIM_SIZE, RIVER_MAX_Z - RIVER_MIN_Z, 1, 1), riverMaterial.clone());
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(CLAIM_SIZE, visualWaterWidth(), 1, 1),
+      createLivingWaterMaterial(waterMaterialConfig(false)),
+    );
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = WATER_Y;
+    mesh.renderOrder = 0;
     mesh.receiveShadow = true;
-    const material = mesh.material as THREE.MeshStandardMaterial;
-    material.map = createRiverTexture(false);
-    material.map.wrapS = THREE.RepeatWrapping;
-    material.map.wrapT = THREE.RepeatWrapping;
-    material.map.repeat.set(8, 1);
-    applyGeneratedMap(material, assetSlots.terrainRiver, (texture) => {
-      texture.wrapS = THREE.RepeatWrapping;
-      texture.wrapT = THREE.RepeatWrapping;
-      texture.repeat.set(8, 1);
-    });
     return tagPlaceholder(mesh, assetSlots.terrainRiver);
   },
   { slotId: assetSlots.terrainRiver },
@@ -254,15 +240,14 @@ export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.ass
 
 export const createFordPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
   () => {
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(FORD_MAX_X - FORD_MIN_X, RIVER_MAX_Z - RIVER_MIN_Z, 1, 1), fordMaterial.clone());
+    const mesh = new THREE.Mesh(
+      new THREE.PlaneGeometry(FORD_MAX_X - FORD_MIN_X, visualWaterWidth(), 1, 1),
+      createLivingWaterMaterial(waterMaterialConfig(true)),
+    );
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = WATER_Y + 0.015;
+    mesh.renderOrder = 1;
     mesh.receiveShadow = true;
-    const material = mesh.material as THREE.MeshStandardMaterial;
-    material.map = createRiverTexture(true);
-    material.map.wrapS = THREE.RepeatWrapping;
-    material.map.wrapT = THREE.RepeatWrapping;
-    material.map.repeat.set(1, 1);
     return tagPlaceholder(mesh, assetSlots.terrainFord);
   },
   { slotId: assetSlots.terrainFord },
@@ -273,23 +258,20 @@ export function createTerrainView(): TerrainView {
   const bank = createBankPlaceholder();
   const river = createRiverPlaceholder();
   const ford = createFordPlaceholder();
+  const fordStones = createFordStones(WATER_Y);
   const props = createClaimProps();
   for (const prop of props.children) prop.position.y = visualY(prop.position.x, prop.position.z, 0, 0.7);
-  group.add(bank, river, ford, props);
+  group.add(bank, river, ford, fordStones, props);
 
   return {
     group,
     update: (delta: number) => {
       syncBankMaterial(bank);
-      scrollMap(river, delta * 0.025);
-      scrollMap(ford, delta * 0.012);
+      updateWaterMaterial(river, delta);
+      updateWaterMaterial(ford, delta);
     },
+    diagnostics: () => waterDiagnostics(river, ford, fordStones),
   };
-}
-
-function scrollMap(mesh: THREE.Mesh, amount: number): void {
-  const map = (mesh.material as THREE.MeshStandardMaterial).map;
-  if (map) map.offset.x = (map.offset.x + amount) % 1;
 }
 
 function createBankMaterial(): THREE.MeshStandardMaterial {
@@ -424,6 +406,24 @@ function terrainSegments(): number {
   const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
   const value = mobile ? Balance.world.terrainMobileSegments : Balance.world.terrainSegments;
   return Math.max(24, Math.min(96, Math.floor(value)));
+}
+
+function waterMaterialConfig(ford: boolean): Parameters<typeof createLivingWaterMaterial>[0] {
+  const riverHalfWidth = (RIVER_MAX_Z - RIVER_MIN_Z) / 2;
+  return {
+    ford,
+    riverHalfWidth,
+    visualHalfWidth: visualWaterWidth() / 2,
+    fordHalfWidth: (FORD_MAX_X - FORD_MIN_X) / 2,
+    anchors: nodeAnchors.map((anchor) => ({
+      x: anchor.x,
+      z: anchor.z < 0 ? RIVER_MIN_Z + 0.55 : RIVER_MAX_Z - 0.55,
+    })),
+  };
+}
+
+function visualWaterWidth(): number {
+  return RIVER_MAX_Z - RIVER_MIN_Z + SHALLOWS_WIDTH * 2;
 }
 
 function syncBankMaterial(mesh: THREE.Mesh): void {
@@ -587,32 +587,6 @@ function createBankTexture(): THREE.CanvasTexture {
     context.beginPath();
     context.ellipse(x, y, 5, 1.6, (i % 6) * 0.45, 0, Math.PI * 2);
     context.fill();
-  }
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  return texture;
-}
-
-function createRiverTexture(shallow: boolean): THREE.CanvasTexture {
-  const size = 256;
-  const canvas = document.createElement('canvas');
-  canvas.width = size;
-  canvas.height = size;
-  const context = canvas.getContext('2d');
-  if (!context) throw new Error('Could not create river texture context.');
-
-  context.fillStyle = shallow ? '#7fa3a4' : '#4f7f86';
-  context.fillRect(0, 0, size, size);
-  context.strokeStyle = shallow ? 'rgba(245, 230, 200, 0.18)' : 'rgba(245, 230, 200, 0.13)';
-  context.lineWidth = 1;
-  for (let y = 12; y < size; y += 24) {
-    context.beginPath();
-    context.moveTo(0, y);
-    for (let x = 0; x <= size; x += 24) {
-      context.lineTo(x, y + Math.sin(x * 0.06 + y) * 5);
-    }
-    context.stroke();
   }
 
   const texture = new THREE.CanvasTexture(canvas);
