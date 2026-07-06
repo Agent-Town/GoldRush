@@ -368,6 +368,33 @@ type GoldRushGui = import('lil-gui').default;
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
   __GR_GUI__?: GoldRushGui;
+  __GR_PROFILE__?: {
+    state: () => {
+      version: 2;
+      activeId: string;
+      profiles: Array<{
+        id: string;
+        name: string;
+        createdAt: number;
+        updatedAt: number;
+        difficultyPreset: 'greenhorn' | 'trail' | 'vein-hunter';
+        hintsSeen: string[];
+      }>;
+    };
+    active: () => {
+      id: string;
+      name: string;
+      createdAt: number;
+      updatedAt: number;
+      difficultyPreset: 'greenhorn' | 'trail' | 'vein-hunter';
+      hintsSeen: string[];
+    };
+    createProfile: (name: string) => string | null;
+    switchProfile: (id: string) => boolean;
+    start: () => boolean;
+    storageKey: (logicalKey: string, profileId?: string) => string;
+    markHintSeen: (hintId: string) => boolean;
+  };
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;

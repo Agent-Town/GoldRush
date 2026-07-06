@@ -16,6 +16,7 @@ export type BestClaimRow = {
   timeAlive: number;
   at: number;
   secured?: boolean;
+  profileName?: string;
 };
 
 export class DeathOverlay {
@@ -154,7 +155,7 @@ export class DeathOverlay {
 
       const detail = document.createElement('span');
       detail.className = 'death-overlay__score-detail';
-      detail.textContent = `${score.kills} turned back - ${score.gold} gold`;
+      detail.textContent = `${score.profileName ?? 'Robin'} - ${score.kills} turned back - ${score.gold} gold`;
 
       const stamp = document.createElement('strong');
       stamp.className = 'death-overlay__score-stamp';

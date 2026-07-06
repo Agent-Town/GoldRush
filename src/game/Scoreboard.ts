@@ -1,3 +1,5 @@
+import { SCOREBOARD_KEY, activeProfileName } from './ProfileStorage';
+
 export type ScoreRecord = {
   waves: number;
   kills: number;
@@ -5,9 +7,10 @@ export type ScoreRecord = {
   timeAlive: number;
   at: number;
   secured?: boolean;
+  profileName?: string;
 };
 
-const STORAGE_KEY = 'gr.scores.v1';
+const STORAGE_KEY = SCOREBOARD_KEY;
 const MAX_SCORES = 5;
 
 export function loadScores(): ScoreRecord[] {
@@ -16,7 +19,7 @@ export function loadScores(): ScoreRecord[] {
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter(isScoreRecord).sort(compareScores).slice(0, MAX_SCORES);
+    return parsed.filter(isScoreRecord).map(withProfileName).sort(compareScores).slice(0, MAX_SCORES);
   } catch {
     return [];
   }
@@ -24,7 +27,7 @@ export function loadScores(): ScoreRecord[] {
 
 export function recordScore(record: ScoreRecord): ScoreRecord[] {
   try {
-    const scores = [...loadScores(), record].sort(compareScores).slice(0, MAX_SCORES);
+    const scores = [...loadScores(), withProfileName(record)].sort(compareScores).slice(0, MAX_SCORES);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
     return scores;
   } catch {
@@ -38,6 +41,11 @@ export function clearScores(): void {
   } catch {
     // Storage can be unavailable in private/headless contexts; scoreboard is optional.
   }
+}
+
+function withProfileName(record: ScoreRecord): ScoreRecord {
+  const profileName = typeof record.profileName === 'string' && record.profileName.trim() ? record.profileName.trim() : activeProfileName();
+  return { ...record, profileName };
 }
 
 function compareScores(a: ScoreRecord, b: ScoreRecord): number {
@@ -54,7 +62,9 @@ function isScoreRecord(value: unknown): value is ScoreRecord {
     isFiniteNumber(candidate.kills) &&
     isFiniteNumber(candidate.gold) &&
     isFiniteNumber(candidate.timeAlive) &&
-    isFiniteNumber(candidate.at)
+    isFiniteNumber(candidate.at) &&
+    (candidate.secured === undefined || typeof candidate.secured === 'boolean') &&
+    (candidate.profileName === undefined || typeof candidate.profileName === 'string')
   );
 }
 
