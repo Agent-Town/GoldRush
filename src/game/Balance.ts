@@ -27,6 +27,12 @@ export const Balance = {
     debugPackRadius: 3.2,
     groundY: 0.05,
   },
+  combatReadability: {
+    enemyFlashSeconds: 0.18,
+    enemyFlashIntensity: 0.9,
+    turretPulseSeconds: 0.18,
+    turretPulseIntensity: 0.14,
+  },
   waves: {
     graceSeconds: 5,
     trickleInterval: 2.4,

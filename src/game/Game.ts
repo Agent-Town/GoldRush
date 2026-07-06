@@ -469,7 +469,10 @@ export class Game {
         toggleWeapon: () => this.toggleWeapon(),
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
         setDifficultyPreset: (preset: string) => this.setDifficultyPreset(preset),
-        warmVfx: () => this.vfx.warm(this.hero.group.position),
+        warmVfx: () =>
+          Promise.all([this.vfx.warm(this.hero.group.position), this.enemies.warmHitFlashes(this.hero.group.position)]).then(
+            () => undefined,
+          ),
         clearScores: () => clearScores(),
         setBalance: (path: string, value: number | boolean | string) => setBalance(path, value),
         grantGold: (n: number) => {
@@ -875,6 +878,7 @@ export class Game {
     const economyLog = this.economy.log;
     const economyReplay = economyLog.reduce(reduceEconomy, initialEconomyState);
     const economySummary = summarizeLog(economyLog);
+    const buildDiagnostics = this.buildSystem.diagnostics;
     window.__THREE_GAME_DIAGNOSTICS__ = {
       frame: this.frame,
       elapsed: this.elapsed,
@@ -939,7 +943,7 @@ export class Game {
         embodiment: this.prospector.snapshot,
       },
       build: {
-        ...this.buildSystem.diagnostics,
+        ...buildDiagnostics,
         killsByOwner: this.combat.killsByOwner,
         damageByOwner: this.combat.damageByOwner,
       },
@@ -952,6 +956,13 @@ export class Game {
       lighting: this.lightRig?.diagnostics(),
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
+      },
+      readability: {
+        enemyHitFlashes: this.enemies.hitFlashCount,
+        activeEnemyFlashes: this.enemies.activeFlashCount,
+        buildingHpBars: buildDiagnostics.hpBars,
+        turretPulses: buildDiagnostics.turretPulses,
+        activeTurretPulses: buildDiagnostics.activeTurretPulses,
       },
       renderer: {
         calls: info.render.calls,

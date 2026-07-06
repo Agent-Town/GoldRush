@@ -29,6 +29,7 @@ export type ShooterHandle = {
   cooldown: number;
   damage: number;
   getDamage?: () => number;
+  onFire?: (at: number) => void;
   projSpeed: number;
   volley: number;
 };
@@ -343,6 +344,7 @@ export class CombatSystem {
         const ownerId = handle.id ?? 'hero_blast';
         if (this.blastCharges.activate(this.scratchOrigin, targetPoint, airTime, damage, aoe.radius, ownerId)) {
           this.recordShot('lob', ownerId);
+          handle.onFire?.(this.currentAt);
           this.audio.playArc();
         }
       }
@@ -363,6 +365,7 @@ export class CombatSystem {
       const ownerId = handle.id ?? 'hero';
       if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, ownerId, state.id, target.id)) {
         this.recordShot('bolt', ownerId);
+        handle.onFire?.(this.currentAt);
         this.audio.playArc();
       }
     }

@@ -28,6 +28,15 @@ export class EnemyPool {
     this.assets.sackMaterial,
     Balance.enemy.poolSize,
   );
+  private readonly hitFlashGeometry = new THREE.BoxGeometry(1, 1, 1);
+  private readonly hitFlashMaterial = new THREE.MeshBasicMaterial({
+    color: '#fff8e8',
+    transparent: true,
+    opacity: 0.5,
+    depthWrite: false,
+    blending: THREE.AdditiveBlending,
+  });
+  private readonly hitFlashes = new THREE.InstancedMesh(this.hitFlashGeometry, this.hitFlashMaterial, Balance.enemy.poolSize);
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
     y: ENEMY_SPRITE_Y,
@@ -72,6 +81,7 @@ export class EnemyPool {
   private readonly instanceMatrix = new THREE.Matrix4();
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private readonly syncObject = new THREE.Object3D();
+  private readonly warmHitFlashPosition = new THREE.Vector3();
   private readonly sackLocalMatrix = new THREE.Matrix4();
   private readonly normalPonchoColor = new THREE.Color('#a0522d');
   private readonly carryingPonchoColor = new THREE.Color('#5b8a8a');
@@ -81,6 +91,8 @@ export class EnemyPool {
   private readonly gridMax: number;
   private readonly cellSize: number;
   private active = 0;
+  private activeHitFlashes = 0;
+  private warmHitFlashFrames = 0;
 
   constructor() {
     this.group.name = 'EnemyPool';
@@ -90,6 +102,7 @@ export class EnemyPool {
     this.gridSize = Math.ceil((this.gridMax - this.gridMin) / this.cellSize);
     this.createRenderParts();
     this.createSackMesh();
+    this.createHitFlashMesh();
     this.group.add(this.generatedSprites.group, this.generatedSpriteFades.group, this.thiefSprites.group, this.thiefSpriteFades.group);
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
@@ -113,6 +126,24 @@ export class EnemyPool {
 
   get all(): readonly ClaimJumperEnemy[] {
     return this.enemies;
+  }
+
+  get activeFlashCount(): number {
+    return this.activeHitFlashes;
+  }
+
+  get hitFlashCount(): number {
+    let total = 0;
+    for (const enemy of this.enemies) total += enemy.hitFlashCount;
+    return total;
+  }
+
+  warmHitFlashes(position: THREE.Vector3): Promise<void> {
+    this.warmHitFlashPosition.copy(position);
+    this.warmHitFlashFrames = 2;
+    return new Promise((resolve) => {
+      requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    });
   }
 
   spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): ClaimJumperEnemy | null {
@@ -169,6 +200,7 @@ export class EnemyPool {
       }
     }
     this.syncInstances();
+    this.syncHitFlashes();
     const normalAnimation = this.activeAnimation(false);
     const thiefAnimation = this.activeAnimation(true);
     const updateNormalSprites = () =>
@@ -190,6 +222,7 @@ export class EnemyPool {
     enemy.recycle();
     this.active = Math.max(0, this.active - 1);
     this.syncEnemyInstance(enemy);
+    this.syncHitFlashes();
   }
 
   recycleAll(): void {
@@ -199,6 +232,7 @@ export class EnemyPool {
     this.active = 0;
     this.clearSpatialHash();
     this.syncInstances();
+    this.syncHitFlashes();
   }
 
   dispose(): void {
@@ -211,6 +245,8 @@ export class EnemyPool {
     this.thiefSprites.dispose();
     this.thiefSpriteFades.dispose();
     this.thiefSpriteAnimator.dispose();
+    this.hitFlashGeometry.dispose();
+    this.hitFlashMaterial.dispose();
     disposeClaimJumperAssets(this.assets);
   }
 
@@ -274,6 +310,19 @@ export class EnemyPool {
       this.sackMesh.setMatrixAt(i, this.hiddenMatrix);
     }
     this.sackMesh.instanceMatrix.needsUpdate = true;
+  }
+
+  private createHitFlashMesh(): void {
+    this.hitFlashes.count = Balance.enemy.poolSize;
+    this.hitFlashes.frustumCulled = false;
+    this.hitFlashes.renderOrder = 4;
+    this.hitFlashes.visible = false;
+    tagPlaceholder(this.hitFlashes, assetSlots.charClaimJumper);
+    this.group.add(this.hitFlashes);
+    for (let i = 0; i < Balance.enemy.poolSize; i += 1) {
+      this.hitFlashes.setMatrixAt(i, this.hiddenMatrix);
+    }
+    this.hitFlashes.instanceMatrix.needsUpdate = true;
   }
 
   private createLocalMatrix(position: THREE.Vector3, rotation = new THREE.Euler()): THREE.Matrix4 {
@@ -346,6 +395,37 @@ export class EnemyPool {
     this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], normalMotion.bobOffset);
     this.applySpriteBob(this.thiefSprites.group.children[enemy.id], thiefMotion.bobOffset);
     this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], thiefMotion.bobOffset);
+  }
+
+  private syncHitFlashes(): void {
+    this.activeHitFlashes = 0;
+    for (const enemy of this.enemies) {
+      const flash = enemy.hitFlashRemaining;
+      if (!enemy.isAlive || flash <= 0) {
+        this.hitFlashes.setMatrixAt(enemy.id, this.hiddenMatrix);
+        continue;
+      }
+
+      const t = Math.min(1, flash / Math.max(0.001, Balance.combatReadability.enemyFlashSeconds));
+      const scale = 1 + t * Balance.combatReadability.enemyFlashIntensity * 0.18;
+      this.syncObject.position.set(enemy.group.position.x, enemy.group.position.y + ENEMY_SPRITE_Y, enemy.group.position.z);
+      this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
+      this.syncObject.scale.set(1.55 * scale, 1.42 * scale, 0.08);
+      this.syncObject.updateMatrix();
+      this.hitFlashes.setMatrixAt(enemy.id, this.syncObject.matrix);
+      this.activeHitFlashes += 1;
+    }
+    if (this.activeHitFlashes === 0 && this.warmHitFlashFrames > 0) {
+      this.syncObject.position.set(this.warmHitFlashPosition.x, this.warmHitFlashPosition.y + ENEMY_SPRITE_Y, this.warmHitFlashPosition.z);
+      this.syncObject.rotation.set(0, 0, 0);
+      this.syncObject.scale.set(0.001, 0.001, 0.001);
+      this.syncObject.updateMatrix();
+      this.hitFlashes.setMatrixAt(0, this.syncObject.matrix);
+      this.activeHitFlashes = 1;
+    }
+    this.warmHitFlashFrames = Math.max(0, this.warmHitFlashFrames - 1);
+    this.hitFlashes.visible = this.activeHitFlashes > 0;
+    this.hitFlashes.instanceMatrix.needsUpdate = true;
   }
 
   private applySpriteBob(sprite: THREE.Object3D | undefined, bobOffset: number): void {

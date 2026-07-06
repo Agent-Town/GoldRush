@@ -269,6 +269,14 @@ interface ThreeGameDiagnostics {
     }>;
     ruins: number;
     hpBars: number;
+    hpBarsVisible: boolean;
+    hpBarDetails: Array<{
+      id: GrBuildableId;
+      index: number;
+      visible: boolean;
+      ratio: number;
+      color: 'ink' | 'amber' | 'red';
+    }>;
     repair: {
       active: boolean;
       id: GrBuildableId | null;
@@ -277,6 +285,8 @@ interface ThreeGameDiagnostics {
       blocked: boolean;
     };
     shooterRegistrations: number;
+    turretPulses: number;
+    activeTurretPulses: number;
     repairs: number;
     repairGold: number;
   };
@@ -316,6 +326,13 @@ interface ThreeGameDiagnostics {
   camImpulseActive: boolean;
   vfx: {
     activeFloatTexts: number;
+  };
+  readability: {
+    enemyHitFlashes: number;
+    activeEnemyFlashes: number;
+    buildingHpBars: number;
+    turretPulses: number;
+    activeTurretPulses: number;
   };
   renderer: {
     calls: number;

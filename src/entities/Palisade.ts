@@ -15,6 +15,12 @@ const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const timber = '#c99a61';
 const timberLight = '#d9b77d';
 const brass = '#8b7d3c';
+const postNormalColor = new THREE.Color(timberLight);
+const railNormalColor = new THREE.Color(timber);
+const braceNormalColor = new THREE.Color(brass);
+const postWornColor = new THREE.Color('#92704a');
+const railWornColor = new THREE.Color('#7a5132');
+const braceWornColor = new THREE.Color('#5d5630');
 
 export class PalisadePool {
   readonly group = new THREE.Group();
@@ -22,13 +28,14 @@ export class PalisadePool {
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
   private readonly rotationSteps: number[] = [];
+  private readonly worn: boolean[] = [];
   private readonly blockers: PalisadeBlockerSlot[] = [];
   private readonly postGeometry = new THREE.BoxGeometry(0.16, 0.92, 0.16);
   private readonly railGeometry = new THREE.BoxGeometry(0.18, 0.16, Balance.palisade.depth);
   private readonly braceGeometry = new THREE.BoxGeometry(0.08, 0.22, Balance.palisade.depth * 0.86);
-  private readonly postMaterial = new THREE.MeshStandardMaterial({ color: timberLight, roughness: 0.82, metalness: 0.02 });
-  private readonly railMaterial = new THREE.MeshStandardMaterial({ color: timber, roughness: 0.86, metalness: 0.02 });
-  private readonly braceMaterial = new THREE.MeshStandardMaterial({ color: brass, roughness: 0.74, metalness: 0.18 });
+  private readonly postMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.82, metalness: 0.02, vertexColors: true });
+  private readonly railMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.86, metalness: 0.02, vertexColors: true });
+  private readonly braceMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.74, metalness: 0.18, vertexColors: true });
   private readonly posts = new THREE.InstancedMesh(this.postGeometry, this.postMaterial, Balance.palisade.maxCount * 2);
   private readonly rails = new THREE.InstancedMesh(this.railGeometry, this.railMaterial, Balance.palisade.maxCount * 2);
   private readonly braces = new THREE.InstancedMesh(this.braceGeometry, this.braceMaterial, Balance.palisade.maxCount);
@@ -46,7 +53,9 @@ export class PalisadePool {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
       this.rotationSteps.push(0);
+      this.worn.push(false);
       this.hide(i);
+      this.syncColors(i);
     }
     this.markNeedsUpdate();
   }
@@ -75,12 +84,19 @@ export class PalisadePool {
     return this.rotationSteps[index] ?? 0;
   }
 
+  setWear(index: number, worn: boolean): void {
+    if (!this.active[index] || this.worn[index] === worn) return;
+    this.worn[index] = worn;
+    this.syncColors(index);
+  }
+
   place(position: THREE.Vector3, rotationSteps = 0): number {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       this.active[i] = true;
       this.positions[i]?.copy(position);
       this.rotationSteps[i] = rotationSteps % 4;
+      this.worn[i] = false;
       const rotated = this.rotationSteps[i] % 2 === 1;
       this.blockers[i] = {
         x: position.x,
@@ -100,6 +116,7 @@ export class PalisadePool {
     if (!this.active[index]) return false;
     this.active[index] = false;
     this.rotationSteps[index] = 0;
+    this.worn[index] = false;
     this.blockers[index] = undefined;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
@@ -111,7 +128,9 @@ export class PalisadePool {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
       this.rotationSteps[i] = 0;
+      this.worn[i] = false;
       this.hide(i);
+      this.syncColors(i);
     }
     this.blockers.length = 0;
     this.alive = 0;
@@ -146,6 +165,7 @@ export class PalisadePool {
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
     this.braces.setMatrixAt(index, this.syncObject.matrix);
+    this.syncColors(index);
   }
 
   private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number, angle = 0): void {
@@ -162,6 +182,21 @@ export class PalisadePool {
     this.rails.setMatrixAt(index * 2, hiddenMatrix);
     this.rails.setMatrixAt(index * 2 + 1, hiddenMatrix);
     this.braces.setMatrixAt(index, hiddenMatrix);
+  }
+
+  private syncColors(index: number): void {
+    const worn = this.worn[index] === true;
+    const postColor = worn ? postWornColor : postNormalColor;
+    const railColor = worn ? railWornColor : railNormalColor;
+    const braceColor = worn ? braceWornColor : braceNormalColor;
+    this.posts.setColorAt(index * 2, postColor);
+    this.posts.setColorAt(index * 2 + 1, postColor);
+    this.rails.setColorAt(index * 2, railColor);
+    this.rails.setColorAt(index * 2 + 1, railColor);
+    this.braces.setColorAt(index, braceColor);
+    if (this.posts.instanceColor) this.posts.instanceColor.needsUpdate = true;
+    if (this.rails.instanceColor) this.rails.instanceColor.needsUpdate = true;
+    if (this.braces.instanceColor) this.braces.instanceColor.needsUpdate = true;
   }
 
   private markNeedsUpdate(): void {

@@ -9,6 +9,7 @@ export class TurretPool {
 
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
+  private readonly pulseUntil: number[] = [];
   private readonly geometry = new THREE.LatheGeometry(
     [
       new THREE.Vector2(0.16, 0),
@@ -30,6 +31,8 @@ export class TurretPool {
   private readonly mesh = new THREE.InstancedMesh(this.geometry, this.material, Balance.turret.maxCount);
   private readonly syncObject = new THREE.Object3D();
   private alive = 0;
+  private pulses = 0;
+  private activePulses = 0;
 
   constructor() {
     this.group.name = 'TurretPool';
@@ -40,6 +43,7 @@ export class TurretPool {
     for (let i = 0; i < Balance.turret.maxCount; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
+      this.pulseUntil.push(0);
       this.hide(i);
     }
     this.mesh.instanceMatrix.needsUpdate = true;
@@ -57,8 +61,22 @@ export class TurretPool {
     return this.positions;
   }
 
+  get pulseCount(): number {
+    return this.pulses;
+  }
+
+  get activePulseCount(): number {
+    return this.activePulses;
+  }
+
   isActive(index: number): boolean {
     return this.active[index] === true;
+  }
+
+  pulse(index: number, at: number): void {
+    if (!this.active[index]) return;
+    this.pulseUntil[index] = at + Balance.combatReadability.turretPulseSeconds;
+    this.pulses += 1;
   }
 
   place(position: THREE.Vector3): number {
@@ -78,6 +96,7 @@ export class TurretPool {
   deactivate(index: number): boolean {
     if (!this.active[index]) return false;
     this.active[index] = false;
+    this.pulseUntil[index] = 0;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
     this.mesh.visible = this.alive > 0;
@@ -86,19 +105,29 @@ export class TurretPool {
   }
 
   update(at: number): void {
-    this.material.emissiveIntensity = 0.34 + Math.sin(at * Math.PI * 2) * 0.08;
+    let maxPulse = 0;
+    this.activePulses = 0;
     for (let i = 0; i < this.active.length; i += 1) {
-      if (this.active[i]) this.sync(i, at);
+      if (!this.active[i]) continue;
+      const pulse = this.pulseAmount(i, at);
+      maxPulse = Math.max(maxPulse, pulse);
+      if (pulse > 0) this.activePulses += 1;
+      this.sync(i, at, pulse);
     }
+    this.material.emissiveIntensity =
+      0.34 + Math.sin(at * Math.PI * 2) * 0.08 + maxPulse * Balance.combatReadability.turretPulseIntensity * 3.2;
     this.mesh.instanceMatrix.needsUpdate = true;
   }
 
   reset(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
+      this.pulseUntil[i] = 0;
       this.hide(i);
     }
     this.alive = 0;
+    this.pulses = 0;
+    this.activePulses = 0;
     this.mesh.visible = false;
     this.mesh.instanceMatrix.needsUpdate = true;
   }
@@ -108,14 +137,20 @@ export class TurretPool {
     this.material.dispose();
   }
 
-  private sync(index: number, at: number): void {
+  private sync(index: number, at: number, pulse = 0): void {
     const position = this.positions[index];
     if (!position) return;
     this.syncObject.position.set(position.x, Terrain.visualY(position.x, position.z, 0, Balance.turret.overlapRadius), position.z);
     this.syncObject.rotation.set(0, Math.sin(at * 0.9 + index) * 0.12, 0);
-    this.syncObject.scale.setScalar(1);
+    this.syncObject.scale.setScalar(1 + pulse * Balance.combatReadability.turretPulseIntensity);
     this.syncObject.updateMatrix();
     this.mesh.setMatrixAt(index, this.syncObject.matrix);
+  }
+
+  private pulseAmount(index: number, at: number): number {
+    const remaining = Math.max(0, (this.pulseUntil[index] ?? 0) - at);
+    if (remaining <= 0) return 0;
+    return remaining / Math.max(0.001, Balance.combatReadability.turretPulseSeconds);
   }
 
   private hide(index: number): void {

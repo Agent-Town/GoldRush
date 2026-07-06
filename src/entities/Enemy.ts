@@ -116,6 +116,8 @@ export class ClaimJumperEnemy {
   private currentHolding: GoldHolding | null = null;
   private currentBuilding: BuildingTarget | null = null;
   private spawnEdge: CompassEdge | null = null;
+  private flashRemaining = 0;
+  private flashCount = 0;
 
   constructor(readonly id: number, assets: ClaimJumperAssets) {
     void assets;
@@ -180,6 +182,14 @@ export class ClaimJumperEnemy {
     return this.leadVelocity.z;
   }
 
+  get hitFlashRemaining(): number {
+    return this.flashRemaining;
+  }
+
+  get hitFlashCount(): number {
+    return this.flashCount;
+  }
+
   setAnimationClip(clip: CharacterSpriteClip): void {
     this.spriteClip = clip;
   }
@@ -201,6 +211,7 @@ export class ClaimJumperEnemy {
     this.currentHolding = null;
     this.currentBuilding = null;
     this.spawnEdge = params.edge ?? null;
+    this.flashRemaining = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);
@@ -229,6 +240,7 @@ export class ClaimJumperEnemy {
     const previousX = this.group.position.x;
     const previousZ = this.group.position.z;
     this.contactCooldown = Math.max(0, this.contactCooldown - delta);
+    this.flashRemaining = Math.max(0, this.flashRemaining - delta);
 
     const targetPosition = this.scripted
       ? this.scriptedTarget
@@ -287,6 +299,10 @@ export class ClaimJumperEnemy {
 
   takeDamage(amount: number): boolean {
     if (!this.alive) return false;
+    if (amount > 0) {
+      this.flashRemaining = Balance.combatReadability.enemyFlashSeconds;
+      this.flashCount += 1;
+    }
     this.hp = Math.max(0, this.hp - amount);
     return this.hp <= 0;
   }
@@ -307,6 +323,7 @@ export class ClaimJumperEnemy {
     this.currentHolding = null;
     this.currentBuilding = null;
     this.spawnEdge = null;
+    this.flashRemaining = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);

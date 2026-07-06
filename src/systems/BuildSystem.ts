@@ -67,8 +67,18 @@ export type BuildDiagnostics = {
   }>;
   ruins: number;
   hpBars: number;
+  hpBarsVisible: boolean;
+  hpBarDetails: Array<{
+    id: BuildableId;
+    index: number;
+    visible: boolean;
+    ratio: number;
+    color: 'ink' | 'amber' | 'red';
+  }>;
   repair: { active: boolean; id: BuildableId | null; index: number; progress: number; blocked: boolean };
   shooterRegistrations: number;
+  turretPulses: number;
+  activeTurretPulses: number;
   repairs: number;
   repairGold: number;
 };
@@ -88,10 +98,16 @@ const emptySluiceSnapshots: SluiceSnapshot[] = [];
 const emptyStockpileSnapshots: StockpileSnapshot[] = [];
 const buildableIds: readonly BuildableId[] = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office'];
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
-const hpColor = new THREE.Color('#a0522d');
+const hpBackingColor = new THREE.Color('#f5e6c8');
+const hpInkColor = new THREE.Color('#3b2a1a');
+const hpAmberColor = new THREE.Color('#c4883a');
+const hpDangerColor = new THREE.Color('#a0522d');
 const rubbleColor = new THREE.Color('#8b7d3c');
 const repairColor = new THREE.Color('#ffe4a0');
 const blockedRepairColor = new THREE.Color('#a0522d');
+const hpBarWidth = 1.46;
+const hpBarHeight = 0.18;
+const hpBarDepth = 0.075;
 
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
 type BuildingDamageResult = {
@@ -159,7 +175,7 @@ export class BuildSystem {
   private readonly buildingVisuals = new THREE.InstancedMesh(
     this.buildingVisualGeometry,
     this.buildingVisualMaterial,
-    totalBuildableCapacity() * 2,
+    totalBuildableCapacity() * 3,
   );
   private readonly repairRing = new THREE.Mesh(
     new THREE.RingGeometry(0.78, 0.92, 48),
@@ -226,7 +242,7 @@ export class BuildSystem {
     this.repairRing.geometry.setDrawRange(0, 0);
     this.buildingVisuals.frustumCulled = false;
     this.buildingVisuals.visible = false;
-    for (let i = 0; i < totalBuildableCapacity() * 2; i += 1) {
+    for (let i = 0; i < totalBuildableCapacity() * 3; i += 1) {
       this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
       this.buildingVisuals.setColorAt(i, rubbleColor);
     }
@@ -339,6 +355,8 @@ export class BuildSystem {
       hp: this.hpDiagnostics(),
       ruins: this.activeRuins,
       hpBars: this.activeHpBars,
+      hpBarsVisible: this.activeHpBars > 0,
+      hpBarDetails: this.hpBarDiagnostics(),
       repair: {
         active: this.activeRepairId !== null,
         id: this.activeRepairId,
@@ -347,6 +365,8 @@ export class BuildSystem {
         blocked: this.activeRepairBlocked,
       },
       shooterRegistrations: this.shooterHandles.length,
+      turretPulses: this.turrets.pulseCount,
+      activeTurretPulses: this.turrets.activePulseCount,
       repairs: this.repairs,
       repairGold: this.repairGold,
     };
@@ -948,6 +968,26 @@ export class BuildSystem {
     return entries;
   }
 
+  private hpBarDiagnostics(): BuildDiagnostics['hpBarDetails'] {
+    const entries: BuildDiagnostics['hpBarDetails'] = [];
+    for (const id of buildableIds) {
+      for (let index = 0; index < this.hp[id].length; index += 1) {
+        const hp = this.hp[id][index] ?? 0;
+        const maxHp = this.maxHpForInstance(id, index);
+        if (hp <= 0 || maxHp <= 0 || hp >= maxHp || this.wrecked[id][index]) continue;
+        const ratio = THREE.MathUtils.clamp(hp / maxHp, 0, 1);
+        entries.push({
+          id,
+          index,
+          visible: true,
+          ratio: Number(ratio.toFixed(3)),
+          color: this.hpBarColorName(ratio),
+        });
+      }
+    }
+    return entries;
+  }
+
   private sluiceSnapshots(): SluiceSnapshot[] {
     const snapshots = this.sluices.snapshot();
     for (let i = 0; i < snapshots.length; i += 1) {
@@ -987,6 +1027,7 @@ export class BuildSystem {
       range: Balance.turret.range,
       cooldown: 1 / Balance.turret.fireRate,
       damage: Balance.turret.damage,
+      onFire: (at) => this.turrets.pulse(placed, at),
       projSpeed: Balance.turret.boltSpeed,
       volley: Balance.turret.volley,
       projectileKind: (origin, _target, targetPoint) => (this.firingLineCrossesPalisade(origin, targetPoint) ? 'lob' : 'bolt'),
@@ -1106,22 +1147,25 @@ export class BuildSystem {
   }
 
   private updateBuildingVisuals(_at: number): void {
-    if (!this.visualDirty) return;
+    if (!this.visualDirty && this.activeHpBars <= 0) return;
     this.activeHpBars = 0;
     this.activeRuins = 0;
     let any = false;
 
     for (const id of buildableIds) {
       for (let i = 0; i < this.hp[id].length; i += 1) {
-        const baseSlot = this.visualSlot(id, i);
-        const hpSlot = baseSlot * 2;
-        const rubbleSlot = hpSlot + 1;
-        this.buildingVisuals.setMatrixAt(hpSlot, hiddenMatrix);
+        const baseSlot = this.visualSlot(id, i) * 3;
+        const hpBackSlot = baseSlot;
+        const hpFillSlot = baseSlot + 1;
+        const rubbleSlot = baseSlot + 2;
+        this.buildingVisuals.setMatrixAt(hpBackSlot, hiddenMatrix);
+        this.buildingVisuals.setMatrixAt(hpFillSlot, hiddenMatrix);
         this.buildingVisuals.setMatrixAt(rubbleSlot, hiddenMatrix);
 
         const position = this.positionFor(id, i);
         const maxHp = this.maxHpForInstance(id, i);
         const hp = this.hp[id][i] ?? 0;
+        if (id === 'palisade') this.palisades.setWear(i, position !== undefined && !this.wrecked[id][i] && maxHp > 0 && hp / maxHp < 0.5);
         if (!position || hp <= 0 || maxHp <= 0) {
           if (this.wrecked[id][i] && position) {
             this.syncRubble(rubbleSlot, id, i, position);
@@ -1136,7 +1180,7 @@ export class BuildSystem {
           this.activeRuins += 1;
           any = true;
         } else if (hp < maxHp) {
-          this.syncHpBar(hpSlot, position, hp / maxHp);
+          this.syncHpBar(hpBackSlot, hpFillSlot, id, i, position, hp / maxHp);
           this.activeHpBars += 1;
           any = true;
         }
@@ -1149,13 +1193,32 @@ export class BuildSystem {
     this.visualDirty = false;
   }
 
-  private syncHpBar(slot: number, position: THREE.Vector3, ratio: number): void {
-    this.visualObject.position.set(position.x, Terrain.visualY(position.x, position.z, 1.46, 0.7), position.z);
-    this.visualObject.rotation.set(0, 0, 0);
-    this.visualObject.scale.set(Math.max(0.04, 0.92 * ratio), 0.08, 0.08);
+  private syncHpBar(backSlot: number, fillSlot: number, id: BuildableId, index: number, position: THREE.Vector3, ratio: number): void {
+    const safeRatio = THREE.MathUtils.clamp(ratio, 0, 1);
+    const rotationSteps = id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0;
+    const yaw = this.hpBarYaw(position);
+    const y = this.visualYFor(id, position, rotationSteps, 1.72);
+
+    this.visualObject.position.set(position.x, y, position.z);
+    this.visualObject.rotation.set(0, yaw, 0);
+    this.visualObject.scale.set(hpBarWidth, hpBarHeight, hpBarDepth);
     this.visualObject.updateMatrix();
-    this.buildingVisuals.setMatrixAt(slot, this.visualObject.matrix);
-    this.buildingVisuals.setColorAt(slot, hpColor);
+    this.buildingVisuals.setMatrixAt(backSlot, this.visualObject.matrix);
+    this.buildingVisuals.setColorAt(backSlot, hpBackingColor);
+
+    const fillWidth = Math.max(0.08, hpBarWidth * safeRatio);
+    const leftOffset = -hpBarWidth * (1 - safeRatio) * 0.5;
+    const towardCameraX = Math.sin(yaw);
+    const towardCameraZ = Math.cos(yaw);
+    this.visualObject.position.set(
+      position.x + Math.cos(yaw) * leftOffset + towardCameraX * 0.035,
+      y + 0.012,
+      position.z - Math.sin(yaw) * leftOffset + towardCameraZ * 0.035,
+    );
+    this.visualObject.scale.set(fillWidth, hpBarHeight * 0.54, hpBarDepth * 0.58);
+    this.visualObject.updateMatrix();
+    this.buildingVisuals.setMatrixAt(fillSlot, this.visualObject.matrix);
+    this.buildingVisuals.setColorAt(fillSlot, this.hpBarFillColor(safeRatio));
   }
 
   private syncRubble(slot: number, id: BuildableId, index: number, position: THREE.Vector3): void {
@@ -1169,10 +1232,26 @@ export class BuildSystem {
   }
 
   private hideAllBuildingVisuals(): void {
-    for (let i = 0; i < totalBuildableCapacity() * 2; i += 1) this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
+    for (let i = 0; i < totalBuildableCapacity() * 3; i += 1) this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
     this.buildingVisuals.visible = false;
     this.buildingVisuals.instanceMatrix.needsUpdate = true;
     this.visualDirty = false;
+  }
+
+  private hpBarYaw(position: THREE.Vector3): number {
+    return Math.atan2(this.camera.position.x - position.x, this.camera.position.z - position.z);
+  }
+
+  private hpBarFillColor(ratio: number): THREE.Color {
+    if (ratio < 0.33) return hpDangerColor;
+    if (ratio < 0.66) return hpAmberColor;
+    return hpInkColor;
+  }
+
+  private hpBarColorName(ratio: number): 'ink' | 'amber' | 'red' {
+    if (ratio < 0.33) return 'red';
+    if (ratio < 0.66) return 'amber';
+    return 'ink';
   }
 
   private visualSlot(id: BuildableId, index: number): number {
