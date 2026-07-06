@@ -404,6 +404,7 @@ type GrAgentStub = import('./agent/AgentStub').AgentStub;
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
+  __BENCH_REPORT__?: unknown;
   __GR_GUI__?: GoldRushGui;
   __GR_PROFILE__?: {
     state: () => {

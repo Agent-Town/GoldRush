@@ -30,11 +30,12 @@ const DEFAULT_PARAMS: DebugParams = {
 
 export function readDebugParams(search = getSearch()): DebugParams {
   const params = new URLSearchParams(search);
+  const fullbaseBench = params.get('bench') === 'fullbase';
 
   return {
-    debug: readFlag(params, 'debug'),
-    seed: params.get('seed'),
-    timescale: readPositiveNumber(params, 'timescale', DEFAULT_PARAMS.timescale),
+    debug: readFlag(params, 'debug') || fullbaseBench,
+    seed: params.get('seed') ?? (fullbaseBench ? 'perf-02-fullbase' : DEFAULT_PARAMS.seed),
+    timescale: readPositiveNumber(params, 'timescale', fullbaseBench ? 24 : DEFAULT_PARAMS.timescale),
     nospawn: readFlag(params, 'nospawn'),
     nowaves: readFlag(params, 'nowaves'),
     nokill: readFlag(params, 'nokill'),
