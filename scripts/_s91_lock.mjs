@@ -1,0 +1,10 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+const p = 'STATUS.md';
+const lines = readFileSync(p, 'utf8').split('\n');
+const prev = lines[0];
+const active = 'ACTIVE 2026-07-06T17:11:40Z (s91 fire) — DRAIN lane-a SCI-04 contract-registry (done-moved), then triage lane-b m4-07 CRASH; lane-c w1-04 RUNNING (do not disturb).';
+const archiveBullet = '- **s90 handoff (line-1 archive):** ' + prev.replace(/^Last updated: /, '');
+const rest = lines.slice(1);
+const out = [active, '', archiveBullet, ...rest].join('\n');
+writeFileSync(p, out);
+console.log('lock written; s90 archived; line1 len', active.length);

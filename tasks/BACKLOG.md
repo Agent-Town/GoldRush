@@ -6,22 +6,23 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 **Stale-check law**: a master written >2 days ago gets a 60-second reality check against current main before queueing (the m4-02 "6→40 refresh" lesson) — refresh it or flag it, never blind-queue.
 
 ## main (serial slot; balance/fix/feature tune — THROTTLE: ≤1 queued while drain pile ≥3)
-0. **IN QUEUE: 041 turret-overwatch** — owner-confirmed by experiment 2026-07-06: turret `canTarget: hasLineOfSight` refuses targets behind friendly palisades → turrets shoot over walls + lob-arc visual. THE core-loop feel fix; M2 turret-feel sign-off re-tests after this merges
-1. **RE-RUN 034 vp02 mobile-stick** — GATE: main slot free — its first run's output was gate-blocked (038 contamination) and LOST in the compound-pile cleanup (never merged, verified 2026-07-06 19:4x: no vp02 code on main); master intact, contamination cause gone
+0. ✅ 041 turret-overwatch MERGED s87 `305d405` (see OWNER'S DESK) — line retired
+1. **QUEUED main s91: 034 vp02 mobile-stick** — test-only (touches ONLY `e2e/vp-02*.spec.ts`, NO product code), disjoint from SCI-04/w1-03 merges; ref pattern `e2e/task-031-anim-roundness.spec.ts` verified present. GATE "main slot free" now true (lane-a drained s91)
 2. fix-037-panGold-flake — GATE: authorable now — F-1 from 037's gate (task-037:115 harness flake, non-blocking but owed; fire-authorable, small)
 3. 012 overwhelm-valves (wave-32 wall, tower-defense side)
 4. 011 build-menu-blurbs refresh (stale-check first — build menu changed since)
 5. 014 charm-pass · then 015 soak-harness (verify runtime budget fits runner first)
 
-## lane-a (meta/progression)
+## lane-a (meta/progression) — ⚠ PIPELINE-DRY (queue empty; SCI-03 needs authoring)
 1. ✅ demo-profiles-v2 SHIPPED (s82 `0834a44`); ✅ SCI-01 research loop SHIPPED (s84 `6b6624c`); ✅ **SCI-02 families+mastery SHIPPED (s87 `4e65ae8`)** — owner wave-30 playtest pending
-3. SCI-03 assay & agent research branch — GATE: after SCI-02 (✅) AND the live assayer has produced real approvals (contract tier must gate something real) — assayer queue still EMPTY, so still gated
-5. SCI-04 contract-family registry — **QUEUED lane-a s89 (FIRE-AUTHORED, `tasks/lane-a-sci-04-contract-registry.md`)**: bundle manifest structure + registry `loadEpoch()` socket + `epoch-2-steamworks/` STUB (no content, honors M7+ hooks-only). Behavior-preserving for epoch-1 (routes SCI-02 direct load through the registry). Checkpoint: registry lists+loads a content-less epoch-2 with ZERO engine change.
+2. ✅ **SCI-04 contract-family registry (epoch socket) SHIPPED s91 `50c2974`** — manifest bundle shape + `listEpochs()`/`loadEpoch()`, SCI-02 routed byte-identical through `loadEpoch('epoch-1-frontier')`, locked content-less `epoch-2-steamworks` stub proves zero-engine-rewrite socket. Gate: tsc+build+38 e2e desktop+mobile. Review `reviews/sci-04.md`. lane/m3 merged (ancestor of main) → next refill's self-reset is loss-free.
+3. **NEXT: SCI-03 assay & agent research branch** — GATE re-examined s91: the "assayer produced real approvals" precondition is NOW MET (`assets/crafting-queue/approved/` holds 15 brass-pan approvals). Remaining blockers to authoring: needs the SCI-03 spec slice + a decision on what the contract tier gates (design-adjacent) → **PIPELINE-DRY flag: author-from-spec next fire OR attended.** Do NOT blind-author (canon/design surface).
 
-## lane-b (agent)
-1. ✅ m4-re-land SHIPPED (embodiment + voice; salvage archived `archive/m4-embodiment-voice-v1`); ✅ m4-07 prospector art SHIPPED (s85 `fe1a1b0`)
-2. m4-05 agent-closeout — GATE SATISFIED (m4-re-land merged; `src/agent/Voice.ts` on main) BUT **master STALE (Jul 5, pre-re-land) — do NOT blind-queue** (s89: lane-b worktree refreshed to main & refill-ready, but m4-05 needs a stale-refresh vs current agent `install()`/`snapshot`/run-summary shape, OR author M4-07 receipts-UX instead — next-fire/attended authoring)
-3. M4-07 receipts-UX clarity — AUTHOR from VISION-HOOKS "clarity is craft" note + m4-re-land review findings
+## lane-b (agent) — ⚠ PIPELINE-DRY (queue empty; both next items need authoring/refresh)
+1. ✅ m4-re-land SHIPPED (embodiment + voice; salvage archived `archive/m4-embodiment-voice-v1`); ✅ m4-07 prospector art SHIPPED **s85 `fe1a1b0`** (main Balance.ts already carries `spriteScale:2.24, hoverFps:4`)
+   ⚠ **s91 NOTE — REDUNDANT RE-RUN DISCARDED:** `tasks/failed/CRASHED-lane-b--…m4-07-prospector-art-activation.md` (run 20:51 Jul-6) was m4-07 re-queued AFTER it already shipped at s85. Codex re-derived the identical diff (already on main) and flailed to a pathological **824k tokens** before the runner marked it CRASHED post-completion. **NO salvage, NO re-queue, NO owner action** — work is already on main; the uncommitted worktree dupes are loss-free to reset on next refill. Lesson: don't re-queue a master already marked SHIPPED here.
+2. m4-05 agent-closeout — GATE SATISFIED (m4-re-land merged; `src/agent/Voice.ts` on main) BUT **master STALE (Jul 5, pre-re-land) — do NOT blind-queue**: needs stale-refresh vs current agent `install()`/`snapshot`/run-summary shape. lane/m4 (tip `702e623`, ancestor of main) is refill-safe once refreshed.
+3. M4-07 receipts-UX clarity — AUTHOR from VISION-HOOKS "clarity is craft" note + m4-re-land review findings. **PIPELINE-DRY: next fire refresh m4-05 OR author receipts-UX.**
 
 ## lane-c (world/polish) — DRAINED ✓ (vista merged s80; scatter RULED RE-LAND)
 Scatter ruling (s61 attended, 2026-07-06 late): s80 found `save/w1-04-scatter` 3-way-conflicts post-vista → per the salvage lifecycle, it RE-LANDS instead of hand-merging. Sequence:
