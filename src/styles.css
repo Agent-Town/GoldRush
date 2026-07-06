@@ -115,6 +115,42 @@ body {
   min-width: 10ch;
 }
 
+.hud-agent-chip {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: max-content max-content minmax(0, 1fr);
+  align-items: center;
+  gap: 3px 6px;
+  max-width: 28ch;
+  padding-top: 4px;
+  border-top: 1px solid rgba(255, 248, 232, 0.18);
+  font-size: 0.72rem;
+  font-weight: 800;
+}
+
+.hud-agent-chip strong {
+  color: #f5ba49;
+}
+
+.hud-agent-chip [data-hud-agent-label] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud-agent-feed {
+  grid-column: 1 / -1;
+  max-width: 24ch;
+  overflow: hidden;
+  color: #83ded7;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.hud-agent-feed:empty {
+  display: none;
+}
+
 .hud-panel--build {
   position: absolute;
   left: max(18px, env(safe-area-inset-left));
@@ -313,6 +349,16 @@ body {
     min-width: 146px;
     grid-template-columns: 1fr;
     gap: 2px;
+  }
+
+  .hud-agent-chip {
+    grid-template-columns: max-content max-content;
+    max-width: 18ch;
+  }
+
+  .hud-agent-chip [data-hud-agent-label],
+  .hud-agent-feed {
+    grid-column: 1 / -1;
   }
 
   .upgrade-overlay__cards {

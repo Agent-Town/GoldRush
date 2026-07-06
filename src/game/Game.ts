@@ -9,8 +9,10 @@ import {
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
 import { install as installRunManager, type RunManager } from './RunManager';
-import type { MetaProgress } from './MetaProgress';
+import { agentAutonomyLevel, type MetaProgress } from './MetaProgress';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
+import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
+import type { ToolReceipt } from '../agent/ToolSurface';
 import {
   areWavesDisabled,
   getDebugSeed,
@@ -116,6 +118,7 @@ export class Game {
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
     (position) => this.onEnemyKilled(position),
   );
+  private readonly prospector = new ProspectorEmbodiment((position, text, color) => this.vfx.floatText(position, text, color));
   private readonly buildSystem: BuildSystem;
   private readonly progression: Progression;
   private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
@@ -264,6 +267,7 @@ export class Game {
 
   private runManager?: RunManager;
   private agentStub?: AgentStub;
+  private unsubscribeAgentReceipts?: () => void;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -498,7 +502,23 @@ export class Game {
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
     this.runManager = installRunManager(this);
     // ADR-002 section 4: M4 exposes install(game); wiring happens at merge (m4-01 gate, s32).
-    this.agentStub = installAgentStub({ economyLog: () => this.economy.log });
+    const game = this;
+    this.agentStub = installAgentStub(
+      {
+        diagnostics: () => window.__THREE_GAME_DIAGNOSTICS__,
+        economyLog: () => this.economy.log,
+      },
+      {
+        metaProgress: {
+          get agentAutonomyLevel() {
+            return game.runManager ? agentAutonomyLevel(game.runManager.metaProgress) : 0;
+          },
+        },
+      },
+    );
+    this.unsubscribeAgentReceipts = this.agentStub.subscribe((receipt) =>
+      this.prospector.handleReceipt(receipt, this.resolveProspectorReceiptPoint(receipt)),
+    );
     this.agentStub.heartbeat();
   }
 
@@ -508,6 +528,7 @@ export class Game {
 
   dispose(): void {
     this.runManager?.dispose();
+    this.unsubscribeAgentReceipts?.();
     this.agentStub?.dispose();
     this.loop.stop();
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
@@ -522,6 +543,7 @@ export class Game {
     this.harvestSystem.dispose();
     this.combat.dispose();
     this.audio.dispose();
+    this.prospector.dispose();
     this.vfx.dispose();
     this.blastAimReticle.geometry.dispose();
     (this.blastAimReticle.material as THREE.Material).dispose();
@@ -639,6 +661,7 @@ export class Game {
   }
 
   private updatePresentation(delta: number): void {
+    this.prospector.update(delta, this.timeAlive);
     this.vfx.update(delta);
     this.syncHeroVisualHeight();
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
@@ -741,6 +764,7 @@ export class Game {
     this.scene.add(this.xpMotes.group);
     this.scene.add(this.goldPickups.group);
     this.scene.add(this.combatVfx.group);
+    this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.hero.group.position.copy(this.heroStart);
@@ -816,6 +840,10 @@ export class Game {
         lastRunEndedReason: null,
         meta: null,
         victoryPayout: null,
+      },
+      agent: {
+        stub: this.agentStub?.state ?? null,
+        embodiment: this.prospector.snapshot,
       },
       build: {
         ...this.buildSystem.diagnostics,
@@ -943,8 +971,13 @@ export class Game {
       this.buildSystem.nextCost,
       this.buildSystem.canAffordNext,
       this.activeWeapon,
+      this.agentUiState(),
     );
     this.hud.update(this.uiSnapshot);
+  }
+
+  private agentUiState(): UiSnapshot['agent'] {
+    return this.agentStub?.state ?? null;
   }
 
   private syncAssayOfficePrompt(): void {
@@ -1020,6 +1053,7 @@ export class Game {
       blastTime: 0,
     };
     this.state.restart();
+    this.prospector.reset();
     this.uiBridge.announce('Stake your claim.', 0);
     this.upgradeOverlay.hide();
   }
@@ -1295,6 +1329,51 @@ export class Game {
     this.hero.group.position.y = Terrain.visualY(this.hero.group.position.x, this.hero.group.position.z, this.heroStart.y);
   }
 
+  private resolveProspectorReceiptPoint(receipt: ToolReceipt): ProspectorPoint | null {
+    const args = receipt.args as {
+      node?: unknown;
+      building?: { id?: unknown; index?: unknown };
+      thief?: { id?: unknown; index?: unknown };
+      pos?: unknown;
+    };
+
+    if (receipt.tool === 'et.goldrush.pan_at') {
+      const node = typeof args.node === 'string' ? args.node : '';
+      const exact = this.harvestSnapshot.activeNodes.find((entry) => entry.id === node);
+      if (exact) return exact.position;
+      const oneBased = Number(node.match(/\d+/)?.[0] ?? 0) - 1;
+      return this.harvestSnapshot.activeNodes[oneBased]?.position ?? null;
+    }
+
+    if (receipt.tool === 'et.goldrush.place_building') return pointFromUnknown(args.pos);
+
+    if (receipt.tool === 'et.goldrush.repair') {
+      const id = typeof args.building?.id === 'string' ? args.building.id : '';
+      const index = typeof args.building?.index === 'number' ? args.building.index : undefined;
+      const target = this.buildSystem.diagnostics.hp.find(
+        (entry) => entry.id === id && (index === undefined || entry.index === index),
+      );
+      return target?.position ?? null;
+    }
+
+    if (receipt.tool === 'et.goldrush.chase_mark') {
+      const ref = args.thief;
+      const id = typeof ref?.id === 'number' ? ref.id : undefined;
+      const index = typeof ref?.index === 'number' ? ref.index : undefined;
+      const target = this.enemies.all.find(
+        (enemy, enemyIndex) => enemy.isAlive && (enemy.id === id || enemyIndex === index),
+      );
+      return target ? { x: target.position.x, z: target.position.z } : null;
+    }
+
+    if (receipt.tool === 'et.goldrush.collect_xp' && receipt.outcome.ok) {
+      const result = receipt.outcome.result as { agentPath?: unknown[] } | undefined;
+      return pointFromUnknown(result?.agentPath?.at(-1));
+    }
+
+    return null;
+  }
+
   private stealDiagnostics(): {
     thieves: number;
     fleeing: number;
@@ -1520,6 +1599,14 @@ function edgePlace(edge: CompassEdge): string {
   if (edge === 'south') return 'south bank';
   if (edge === 'east') return 'east ridge';
   return 'west ridge';
+}
+
+function pointFromUnknown(value: unknown): ProspectorPoint | null {
+  if (typeof value !== 'object' || value === null) return null;
+  const point = value as { x?: unknown; z?: unknown };
+  return typeof point.x === 'number' && Number.isFinite(point.x) && typeof point.z === 'number' && Number.isFinite(point.z)
+    ? { x: point.x, z: point.z }
+    : null;
 }
 
 function percentile(sorted: readonly number[], ratio: number): number {
