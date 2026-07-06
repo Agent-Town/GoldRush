@@ -1,0 +1,4 @@
+# Lane A / DEMO-1: per-player profiles (worktree lane-a, prefix "m3:")
+Demo-Day front. gr.profile.v2: named profiles (create/pick on title screen, parchment list), each with OWN suspend-slot, meta (gr.meta), scoreboard identity (Best Claims entries carry profile name), hints-seen state, and a difficultyPreset field (string; values plug in when 024's presets merge — store/plumb only, default 'trail'). Migration: existing single-profile data becomes profile "Robin". e2e: two profiles fully isolated (meta/saves/scores), migration keeps his 36-wave board, profile switch mid-session blocked during a run. install()/no Game.ts. READY-FOR-GATES.
+
+## SALVAGE NOTE (s9aq): a previous run of this task completed on BROKEN git; its output survives at worktrees/<your-slot>-salvage/ (stale main base). You MAY read it as reference to move faster — NEVER blind-copy files from it (stale base contamination). Implement fresh against current main.

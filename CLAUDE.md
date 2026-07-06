@@ -132,6 +132,16 @@ Be stern and honest, have an opinion.
 
 ---
 
+## 12. MIGRATION NOTE (2026-07-06) — Claude Code era
+
+The orchestration layer moved from Cowork to **Claude Code, natively on Robin's Mac**. What changed and what didn't:
+
+- **Fires**: now a launchd job (`scripts/com.goldrush.fire.plist` → `scripts/fire-runner.sh`), running `claude -p` headless with `scripts/fire.md` as the protocol, **model claude-opus-4-8**, every 15 min. The Cowork scheduled task is DISABLED — never run both.
+- **Attended orchestration**: interactive `claude` sessions in this repo (this file auto-loads). Start by reading `STATUS.md` line-1 + `docs/HANDOVER-2026-07-06.md`.
+- **Unchanged**: the whole factory — lane runner (`scripts/lane-runner-v3.sh`, Robin's Terminal) executing Codex tasks from `tasks/queue/<slot>/`; STATUS.md as ledger + lock semaphore ("ACTIVE" in head-2 holds the main slot); evidence gates; art pipeline (§7); milestones (§10); Robin's role (§11).
+- **Obsolete**: every sandbox-VM workaround (rename-not-delete, HEAD.lock recipes, janitor .req files, 45s test splits, chromium stubs). Native git/disk/playwright now. Surviving process laws are indexed in `docs/HANDOVER-2026-07-06.md` §6.
+- Sections above that say "sandbox" or "relay" describe the Cowork era; where they conflict with native execution, native wins. Conflict rule stays: brief > these instructions > skills.
+
 ## Appendix A — One-time setup (Robin, on your Mac)
 
 1. Create the project folder (e.g. `~/Projects/GoldRush`), select it in a new Cowork project, and put this file at its root (as `CLAUDE.md` or in project instructions).
