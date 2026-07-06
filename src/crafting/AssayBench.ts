@@ -57,7 +57,7 @@ export class AssayBenchPanel {
       <form class="assay-bench__form" data-testid="assay-form">
         <label>
           <span>Order</span>
-          <textarea data-testid="assay-text" rows="3">steady brass pan receipt for faster claim work</textarea>
+          <textarea data-testid="assay-text" rows="3"></textarea>
         </label>
         <label>
           <span>Profile</span>
@@ -139,13 +139,26 @@ export class AssayBenchPanel {
   };
 
   private readonly postOrder = async () => {
+    const text = this.text.value.trim();
+    if (!text) {
+      this.root.dataset.pendingSaved = 'false';
+      this.pendingStatus.textContent = 'Write an order first';
+      this.pendingPath.textContent = '';
+      this.pendingJson.textContent = '';
+      return;
+    }
+
     this.pendingStatus.textContent = 'Posting';
-    this.renderPending(await postPendingOrder(this.text.value, this.profile.value, queueTimestamp()));
+    this.renderPending(await postPendingOrder(text, this.profile.value, queueTimestamp()));
   };
 
   private renderPending(result: PendingPostResult): void {
     this.root.dataset.pendingSaved = String(result.saved);
-    this.pendingStatus.textContent = result.saved ? 'Posted' : `JSON ready${result.error ? ` (${result.error})` : ''}`;
+    this.pendingStatus.textContent = result.alreadyExists
+      ? 'Already at the works'
+      : result.saved
+        ? 'Posted'
+        : `JSON ready${result.error ? ` (${result.error})` : ''}`;
     this.pendingPath.textContent = result.path;
     this.pendingJson.textContent = JSON.stringify(result.request, null, 2);
   }
@@ -186,7 +199,6 @@ export function install(
   parent: HTMLElement,
   options: { profile?: string; initiallyOpen?: boolean } = {},
 ): AssayBenchPanel | undefined {
-  if (!new URLSearchParams(window.location.search).has('debug')) return undefined;
   return new AssayBenchPanel(parent, options);
 }
 

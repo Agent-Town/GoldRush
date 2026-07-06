@@ -59,6 +59,7 @@ import { Vfx } from '../systems/Vfx';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
 import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
+import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
@@ -170,6 +171,7 @@ export class Game {
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
+  private readonly assayOfficePrompt: AssayOfficePrompt;
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
@@ -314,6 +316,7 @@ export class Game {
     const confirmButton = this.getElement('#confirm-button');
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
+    this.assayOfficePrompt = new AssayOfficePrompt(this.getElement('#hud'));
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.resetRun());
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
@@ -510,6 +513,7 @@ export class Game {
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     this.input.dispose();
     this.hud.dispose();
+    this.assayOfficePrompt.dispose();
     this.deathOverlay.dispose();
     this.upgradeOverlay.dispose();
     this.damageVignette.remove();
@@ -641,6 +645,7 @@ export class Game {
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
+    this.syncAssayOfficePrompt();
     this.publishDiagnostics();
   }
 
@@ -939,6 +944,14 @@ export class Game {
       this.activeWeapon,
     );
     this.hud.update(this.uiSnapshot);
+  }
+
+  private syncAssayOfficePrompt(): void {
+    this.assayOfficePrompt.update(
+      this.state.current === 'playing' &&
+        !this.buildSystem.isBuildMode &&
+        this.buildSystem.assayOfficeInRange(this.hero.group.position),
+    );
   }
 
   private handleUiIntent(intent: UiIntent): void {
