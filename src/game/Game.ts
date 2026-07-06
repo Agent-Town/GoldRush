@@ -8,6 +8,17 @@ import {
 } from '../assets/SpriteAnimator';
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
+import {
+  availablePicks,
+  browserResearchStorage,
+  hasResearchNode,
+  loadResearchState,
+  saveResearchState,
+  scienceMeter,
+  skipResearchPick,
+  takeNode,
+  type ResearchState,
+} from '../meta/ResearchTree';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, type MetaProgress } from './MetaProgress';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
@@ -59,7 +70,7 @@ import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
-import { DeathOverlay, type DeathLedger } from '../ui/DeathOverlay';
+import { DeathOverlay, type DeathLedger, type DeathOverlayOptions, type DeathResearchState } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
@@ -268,6 +279,8 @@ export class Game {
   private runManager?: RunManager;
   private agentStub?: AgentStub;
   private unsubscribeAgentReceipts?: () => void;
+  private readonly researchStorage = browserResearchStorage();
+  private researchState: ResearchState = loadResearchState(this.researchStorage);
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -312,6 +325,7 @@ export class Game {
         const healed = Math.round(this.hero.hp - before);
         if (healed > 0) this.vfx.floatText(this.hero.group.position, `+${healed}`, '#6bb36b');
       },
+      hasResearchNode: (id) => hasResearchNode(this.researchState, id),
       isChoiceDisabled: isLevelUpDisabled,
     });
 
@@ -350,18 +364,41 @@ export class Game {
         at: scoreAt,
         secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= Balance.run.secureWave,
       });
-      this.deathOverlay.show(this.deathLedger, scores, scoreAt);
+      this.deathOverlay.show(this.deathLedger, scores, scoreAt, this.researchOverlayOptions(1));
     });
     this.events.on('run_ended', (event) => {
       if (event.reason !== 'secured') return;
-      recordScore({
+      const scoreAt = Date.now();
+      const scores = recordScore({
         waves: event.summary.wavesSurvived,
         kills: this.kills,
         gold: event.summary.goldPanned,
         timeAlive: event.at,
-        at: Date.now(),
+        at: scoreAt,
         secured: true,
       });
+      const ledger: DeathLedger = {
+        timeAlive: event.at,
+        kills: this.kills,
+        goldPanned: event.summary.goldPanned,
+        spent: summarizeLog(this.economy.log).spent,
+        beaconsBuilt: event.summary.buildingsBuilt,
+        wavesSurvived: event.summary.wavesSurvived,
+        weaponToggles: this.weaponToggleCount,
+        blastTime: this.blastTime,
+      };
+      window.setTimeout(() => {
+        this.state.setPaused(true);
+        this.deathOverlay.show(ledger, scores, scoreAt, {
+          ...this.researchOverlayOptions(2),
+          outcome: 'secured',
+          actionLabel: 'Enter New Claim',
+          onDone: () => {
+            this.deathOverlay.hide();
+            this.state.setPaused(false);
+          },
+        });
+      }, 0);
     });
     this.events.on('enemy_killed', () => {
       this.kills += 1;
@@ -419,6 +456,9 @@ export class Game {
         setUpgradeStacks: (stacks) => this.progression.setStacksForTest(stacks as Partial<Record<UpgradeId, number>>),
         rollUpgradeOffer: () => this.progression.rollOfferForTest(),
         setFillersDisabled: (disabled: boolean) => this.progression.setFillersDisabled(disabled),
+        researchState: () => this.researchDiagnostics(),
+        takeResearchNode: (id: string) => this.takeResearchNodeForTest(id),
+        availableResearchPicks: () => availablePicks(this.researchState).map((node) => node.id),
         economyLog: () => this.economy.log,
         summarizeLog: (log) => summarizeLog(log as readonly EconomyEvent[]),
         setBeaconWave: (wave: number | null) => {
@@ -841,6 +881,7 @@ export class Game {
         meta: null,
         victoryPayout: null,
       },
+      research: this.researchDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -1546,6 +1587,84 @@ export class Game {
     }
     this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction);
     this.buildSystem.applyStats(stats.beaconFireRateMult);
+    this.applyResearchEffects();
+  }
+
+  private applyResearchEffects(): void {
+    const prospectingStacks = this.progression.snapshot.stacks.prospectors_luck ?? 0;
+    const capBonus = hasResearchNode(this.researchState, 'assay_grading')
+      ? prospectingStacks * Balance.research.assayGradingStockpileCapBonus
+      : 0;
+    if (capBonus > 0) {
+      this.economy.addCapSource('research:assay_grading', capBonus);
+    } else {
+      this.economy.removeCapSource('research:assay_grading');
+    }
+  }
+
+  private researchOverlayOptions(totalRounds: number): DeathOverlayOptions {
+    this.researchState = loadResearchState(this.researchStorage);
+    let roundsRemaining = Math.max(0, totalRounds);
+    const state = (): DeathResearchState => ({
+      totalRounds,
+      roundsRemaining,
+      science: scienceMeter(this.researchState),
+      proposals: roundsRemaining > 0 ? availablePicks(this.researchState) : [],
+    });
+
+    return {
+      research: state(),
+      onResearchPick: (id) => {
+        const next = takeNode(this.researchState, id);
+        if (next !== this.researchState) {
+          this.researchState = saveResearchState(this.researchStorage, next);
+          roundsRemaining = Math.max(0, roundsRemaining - 1);
+          this.applyResearchEffects();
+          this.publishDiagnostics();
+        }
+        return state();
+      },
+      onResearchSkip: () => {
+        this.researchState = saveResearchState(this.researchStorage, skipResearchPick(this.researchState));
+        roundsRemaining = 0;
+        this.publishDiagnostics();
+        return state();
+      },
+    };
+  }
+
+  private takeResearchNodeForTest(id: string): boolean {
+    this.researchState = loadResearchState(this.researchStorage);
+    for (let guard = 0; guard < 8 && !availablePicks(this.researchState).some((node) => node.id === id); guard += 1) {
+      this.researchState = skipResearchPick(this.researchState);
+    }
+    const next = takeNode(this.researchState, id);
+    if (next === this.researchState) return false;
+    this.researchState = saveResearchState(this.researchStorage, next);
+    this.applyResearchEffects();
+    this.publishDiagnostics();
+    return true;
+  }
+
+  private researchDiagnostics(): {
+    taken: string[];
+    available: string[];
+    steps: number;
+    remaining: number;
+    threshold: number;
+    meter: string;
+    assayOrderSlots: number;
+  } {
+    const meter = scienceMeter(this.researchState);
+    return {
+      taken: [...this.researchState.taken],
+      available: availablePicks(this.researchState).map((node) => node.id),
+      steps: meter.steps,
+      remaining: meter.remaining,
+      threshold: meter.threshold,
+      meter: meter.text,
+      assayOrderSlots: hasResearchNode(this.researchState, 'second_order_slot') ? Balance.research.secondOrderSlots : 1,
+    };
   }
 
   private syncBlastReticleRadius(radius: number): void {

@@ -98,6 +98,15 @@ export const upgradeDefs = [
     deltas: { blastCooldownMult: -0.15 },
   },
   {
+    id: 'chain_spark_arc',
+    name: 'Chain Spark Arc',
+    description: 'A spark pattern that borrows a beacon keeper\'s cadence.',
+    iconFamily: 'volley',
+    familyGate: 'chain_spark_primer',
+    maxStacks: 2,
+    deltas: { fireRateMult: 0.12, beaconFireRateMult: 0.12 },
+  },
+  {
     id: 'assay_bonus',
     name: 'Assay Bonus',
     description: 'A tidy receipt from the Assay Office.',
@@ -170,6 +179,10 @@ export function upgradeEffect(def: UpgradeDef): string {
   if ('blastRadiusMult' in deltas) parts.push(`+${percent(deltas.blastRadiusMult)}% blast radius`);
   if ('blastCooldownMult' in deltas) parts.push(`${percent(Math.abs(deltas.blastCooldownMult))}% faster blast fuse`);
   return parts.join(', ');
+}
+
+export function isUpgradeUnlocked(def: UpgradeDef, hasResearchNode: (id: string) => boolean): boolean {
+  return !('familyGate' in def) || !def.familyGate || hasResearchNode(def.familyGate);
 }
 
 export function resolveFiller(def: UpgradeDef, ctx: { wave: number; maxHp: number }): ResolvedFiller {

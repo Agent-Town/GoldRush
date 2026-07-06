@@ -1,5 +1,6 @@
 import { DIFFICULTY_PRESET_STORAGE_KEY, normalizeDifficultyPreset, type DifficultyPresetId } from './Balance';
 import { META_PROGRESS_KEY } from './MetaProgress';
+import { RESEARCH_STATE_KEY } from '../meta/ResearchTree';
 
 export const PROFILE_KEY = 'gr.profile.v2';
 export const SCOREBOARD_KEY = 'gr.scores.v1';
@@ -13,6 +14,7 @@ const PROFILE_DATA_KEYS = new Set([
   RUN_SUSPEND_KEY,
   RUN_HISTORY_KEY,
   SCOREBOARD_KEY,
+  RESEARCH_STATE_KEY,
   DIFFICULTY_PRESET_STORAGE_KEY,
 ]);
 

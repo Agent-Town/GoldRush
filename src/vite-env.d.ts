@@ -186,6 +186,15 @@ interface ThreeGameDiagnostics {
       agent: number;
     } | null;
   };
+  research: {
+    taken: string[];
+    available: string[];
+    steps: number;
+    remaining: number;
+    threshold: number;
+    meter: string;
+    assayOrderSlots: number;
+  };
   agent: {
     stub: {
       name: string;
@@ -444,6 +453,17 @@ interface Window {
     setUpgradeStacks: (stacks: Partial<Record<string, number>>) => void;
     rollUpgradeOffer: () => string[];
     setFillersDisabled: (disabled: boolean) => void;
+    researchState: () => {
+      taken: string[];
+      available: string[];
+      steps: number;
+      remaining: number;
+      threshold: number;
+      meter: string;
+      assayOrderSlots: number;
+    };
+    takeResearchNode: (id: string) => boolean;
+    availableResearchPicks: () => string[];
     economyLog: () => readonly unknown[];
     summarizeLog: (log: readonly unknown[]) => {
       panned: number;

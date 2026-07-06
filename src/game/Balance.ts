@@ -255,6 +255,11 @@ export const Balance = {
     fieldDressingHealFrac: 0.3,
     doubleTapCoilMaxStacks: 6,
   },
+  research: {
+    assayGradingStockpileCapBonus: 35,
+    assayGradingProspectingOfferWeightBonus: 1.25,
+    secondOrderSlots: 2,
+  },
   offers: {
     investBonus: 0.35,
   },

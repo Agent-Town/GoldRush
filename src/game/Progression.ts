@@ -2,7 +2,7 @@ import type { Rng } from '../core/Rng';
 import type { GameState } from './GameState';
 import { Balance } from './Balance';
 import { effectiveStats, type EffectiveStats, type UpgradeStacks } from './StatSheet';
-import { isUpgradeId, resolveFiller, upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
+import { isUpgradeId, isUpgradeUnlocked, resolveFiller, upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 
 export type ProgressionSnapshot = {
   level: number;
@@ -24,6 +24,7 @@ type ProgressionOptions = {
   onStatsChanged: (stats: EffectiveStats, pickedId: UpgradeId | null) => void;
   onGoldGranted?: (amount: number) => void;
   onHeal?: (amount: number) => void;
+  hasResearchNode?: (id: string) => boolean;
   /** Test harness (?nolevel): keep XP math, never open the choice overlay. */
   isChoiceDisabled?: () => boolean;
 };
@@ -86,7 +87,7 @@ export class Progression {
    *  upgrade so exhaustion/filler e2e skip the slow ~22-pick UI loop that blows
    *  the sandbox's 45s wall. Recomputes stats; does not fire per-pick effects. */
   maxCoreForTest(): void {
-    for (const def of upgradeDefs) {
+    for (const def of this.eligibleDefs()) {
       if (isFiller(def)) continue;
       this.stacksValue[def.id] = def.maxStacks;
     }
@@ -212,7 +213,12 @@ export class Progression {
   private offerWeight(def: UpgradeDef, pool: readonly UpgradeDef[]): number {
     if (Balance.offers.investBonus <= 0) return 1;
     const familyCards = pool.filter((candidate) => candidate.iconFamily === def.iconFamily).length;
-    return (1 + Balance.offers.investBonus * this.familyStacks(def.iconFamily)) / familyCards;
+    const investWeight = Balance.offers.investBonus * this.familyStacks(def.iconFamily);
+    const researchWeight =
+      def.iconFamily === 'prospecting' && this.options.hasResearchNode?.('assay_grading')
+        ? Balance.research.assayGradingProspectingOfferWeightBonus
+        : 0;
+    return (1 + investWeight + researchWeight) / familyCards;
   }
 
   private familyStacks(family: string): number {
@@ -222,6 +228,7 @@ export class Progression {
   private eligibleDefs(): UpgradeDef[] {
     const beaconCount = this.options.getBeaconCount();
     return upgradeDefs.filter((def) => {
+      if (!isUpgradeUnlocked(def, (id) => this.options.hasResearchNode?.(id) === true)) return false;
       if (isFiller(def) && this.fillersDisabled) return false;
       if (def.id === 'beacon_dynamo' && beaconCount <= 0) return false;
       return (this.stacksValue[def.id] ?? 0) < def.maxStacks;
