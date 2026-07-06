@@ -54,8 +54,8 @@ The **town transforms forward** (pillar 4: one evolving home, houses become thei
 - UNTOUCHED: Economy (sole gold writer — research is meta, spends nothing in-run), CombatSystem, wave scheduler, determinism/event-log invariants (multiplayer hooks), sim timestep.
 
 ## Slices (lane-ready; each ends playable)
-- **SCI-01 Research loop v1**: overlay + pick-1-of-2 + persistence + science meter with epoch threshold + THREE real nodes wired (one per branch, incl. the first seam buff so F5 improves on day one). Checkpoint: die, pick, next run's offers visibly differ.
-- **SCI-02 Epoch-gated families + mastery**: full epoch-1 families.json, pool gating, mastery conversions. Checkpoint: the wave-30 wall moves (owner playtest gate).
+- **SCI-01 Research loop v1** ✅ **SHIPPED s84** (`6b6624c`, review `reviews/sci-01-research-loop.md`): overlay + pick-1-of-2 + persistence + science meter with epoch threshold + THREE real nodes wired (one per branch, incl. the first seam buff so F5 improves on day one). Checkpoint met: die, pick, next run's offers visibly differ. 40/40 e2e both projects.
+- **SCI-02 Epoch-gated families + mastery** — QUEUED lane-a s84 (`tasks/lane-a-sci-02-families-mastery.md`, FIRE-AUTHORED): full epoch-1 families.json, pool gating, mastery conversions. Checkpoint: the wave-30 wall moves (owner playtest gate).
 - **SCI-03 Assay & agent branch**: contract tier, crafted-cards-into-pools, schooling offers. (Sequenced after the live assayer exists so tiers gate something real.)
 - **SCI-04 Contract-family registry**: bundle folder structure, epoch-1 extraction, registry module, `epoch-2-steamworks/` STUB manifest proving the socket loads (no content). 
 Every slice: tsc/build; own e2e both projects; sim-drift suites unmodified-green; canon-voice copy review; STATUS/spec updated.

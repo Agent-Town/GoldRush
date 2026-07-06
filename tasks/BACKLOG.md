@@ -13,10 +13,9 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 5. 014 charm-pass · then 015 soak-harness (verify runtime budget fits runner first)
 
 ## lane-a (meta/progression)
-1. IN QUEUE/RUNNING: demo-profiles-v2 (re-land on fresh main, salvage-ref save/demo-profiles-v1)
-2. SCI-01 research loop — GATE: after demo-profiles-v2 MERGES (master ready)
-3. SCI-02 epoch-gated families + mastery — AUTHOR after SCI-01 evidence
-4. SCI-03 assay & agent research branch — GATE: after SCI-02 AND the live assayer has produced real approvals (contract tier must gate something real)
+1. ✅ demo-profiles-v2 SHIPPED (s82 `0834a44`); ✅ SCI-01 research loop SHIPPED (s84 `6b6624c`)
+2. **IN QUEUE: SCI-02 epoch-gated families + mastery** — FIRE-AUTHORED s84 (`tasks/lane-a-sci-02-families-mastery.md`); full epoch-1 families.json + mastery conversions; wave-30 wall is the owner playtest gate
+3. SCI-03 assay & agent research branch — GATE: after SCI-02 AND the live assayer has produced real approvals (contract tier must gate something real)
 5. SCI-04 contract-family registry — authorable anytime (socket only)
 
 ## lane-b (agent)
@@ -28,13 +27,14 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 Drain order before ANY refill: (1) w1-06 vista = tip commit on lane/polish (secure-committed s61); (2) w1-04 scatter = branch `save/w1-04-scatter` (3-way vs base 789c978). Both bases are from TODAY — headless-mergeable, dry-merge first, DISJOINT-PAIR batch allowed. THEN:
 1. **RERUN w1-03 light+atmosphere** — output DESTROYED by w1-04's reset pre-flight (master intact, includes owner's water fix) — GATE: lane-c fully drained
 2. **RERUN polish-02 rivalry-stats** — output DESTROYED by w1-06's reset — GATE: after the w1-03 rerun
+2b. **combat-readability** (owner playtest finding 2026-07-06: "no lifebars… should be visualized"; master ready — enemy hit-flash, building bars made visible, palisade wear, turret muzzle pulse) — GATE: after polish-02 rerun; may float to main if lane-c stays congested
 3. W1-05 building shells — AUTHOR after 029 town art reviewed in-world (spec slice exists; art processed s64, LEDGER rows deferred)
 4. **W1-07 the natural claim** — AUTHOR after the W1-03/04/06 combined in-world review (owner directive: "whole map natural… more feel/style/natural look")
 5. polish-03 mobile-pass → polish-04 first-run-hints (owner: "can come later with a menu") → polish-05 portraits+screens
 6. lane-c-docs-animation-pipeline (docs task, master exists — lowest priority, any idle window)
 
 ## lane-d (perf/foundation) — ⚠ DRAIN FIRST
-Drain: `lane/m6-r3a-apply` +2 (perf-02 bench + reviews/m6-r3a-audit.md, the M6 verdict doc — mostly NEW files, near-zero conflict risk). THEN:
+Drain: `lane/m6-r3a-apply` +2 (perf-02 bench + reviews/m6-r3a-audit.md, the M6 verdict doc). **⚠ CONFLICT NOTE (s84 recon): NOT near-zero — base `e738424` is stale; branch touches Game.ts + main.ts + Balance.ts which main has ALSO moved → genuine 3-way graft on hot core files. Also a stray `src/game/Balance.ts.orig` conflict artifact sits on main (sweep it during this drain). NEW/safe: `e2e/perf-02-fullbase-bench.spec.ts`, `src/diagnostics/fullBaseBenchmark.ts`, `reviews/m6-r3a-audit.md`, CombatSystem.ts + DebugParams.ts (main didn't move these). Needs a focused fire, not a rushed second drain.** THEN:
 1. M6 attempt-4 — AUTHOR from the audit verdict once drained (integrate-as-is / rework scope / abandon)
 2. perf-03 instancing-ladder (pairs with w1-04 scatter) → m5-03 stat-sim-harness → perf-04 determinism-harness → perf-05 startup
 
