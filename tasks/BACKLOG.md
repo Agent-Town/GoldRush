@@ -52,6 +52,7 @@ OWNER: Mac full-regression evidence run, both projects (standing)
 OWNER: science spec pacing re-check after epoch-1 first fill (threshold 6 was the 2026-07-06 stake)
 
 ## LATER — attended-authored specs (not fire-authorable; owner-adjacent design)
+- **Building-tiers spec RATIFIED 2026-07-06** (`specs/building-tiers/README.md`: endless-as-homestead ✓, science-gated tiers ✓, baseline trio palisade+sluice+turret ✓). **BT-00 demolish = fire-authorable NOW** (small, independent, main-slot candidate — owner-hit gap: built things can't be removed; HP-scaled refund per spec). BT-01 (tier core, the trio) fire-authorable AFTER combat-readability lands (both touch BuildSystem visuals — sequence them). BT-02..04 follow the spec order.
 - **Town v1 spec** (staged path S2: tavern CONTRACT BOARD = the ratified between-runs door, town square grown from victories, townsfolk names/barks) — attended authors AFTER M6 attempt-4 resolves
 - **Item-application slice** (approved crafted items apply in-run — Robin's multi-target Spark Rig becomes real here) — spec after the assayer produces real approvals + SCI-02's contract-tier groundwork
 - **Live assayer = STANDING FIRE DUTY** (fire.md §2D), not a queue item — listed here so the ledger is complete
