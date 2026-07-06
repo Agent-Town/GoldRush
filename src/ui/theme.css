@@ -463,6 +463,80 @@
   text-transform: uppercase;
 }
 
+.gr-profile-title {
+  z-index: 12;
+}
+
+.gr-profile-title__panel {
+  width: min(520px, 100%);
+}
+
+.gr-profile-list {
+  display: grid;
+  gap: 8px;
+  max-height: min(42vh, 320px);
+  margin: 0 0 14px;
+  padding: 0;
+  overflow: auto;
+  list-style: none;
+}
+
+.gr-profile-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 46px;
+  border: 1px solid rgba(46, 27, 14, 0.28);
+  border-radius: 6px;
+  padding: 8px 10px;
+  color: var(--at-wood-950);
+  background: rgba(255, 248, 232, 0.56);
+  font: inherit;
+  font-weight: 800;
+  text-align: left;
+}
+
+.gr-profile-row small {
+  color: rgba(46, 27, 14, 0.62);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+}
+
+.gr-profile-row[aria-pressed="true"] {
+  border-color: var(--at-teal-600);
+  box-shadow: inset 0 0 0 2px rgba(91, 138, 138, 0.34);
+}
+
+.gr-profile-row:hover,
+.gr-profile-row:focus-visible,
+.gr-profile-create input:focus-visible {
+  outline: 2px solid var(--at-sun-200);
+  outline-offset: 2px;
+}
+
+.gr-profile-create {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(96px, 128px);
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.gr-profile-create input {
+  min-width: 0;
+  min-height: 44px;
+  border: 1px solid rgba(46, 27, 14, 0.4);
+  border-radius: 6px;
+  padding: 0 10px;
+  color: var(--at-wood-950);
+  background: var(--at-cream-50);
+  font: inherit;
+}
+
+.gr-profile-create__button {
+  min-width: 0;
+}
+
 @keyframes claimOfficePayout {
   from {
     opacity: 0;
