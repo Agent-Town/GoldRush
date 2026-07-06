@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "id": "order_local_prospector_20260706t071621941z_i_want_an_upgrade_enhancement_invention_that_all",
+  "request": {
+    "version": 1,
+    "id": "order_local_prospector_20260706t071621941z_i_want_an_upgrade_enhancement_invention_that_all",
+    "text": "I want an upgrade/enhancement/invention that allows my spark rig to shoot at more than one enemy at once",
+    "profile": "local_prospector",
+    "timestamp": "2026-07-06T07:16:21.941Z"
+  },
+  "contractVerdict": {
+    "ok": false,
+    "reasons": [
+      {
+        "code": "out_of_contract_vocabulary",
+        "message": "Multi-target firing has no representation in contract.v1 stats (damageMult, fireRateMult, rangeMult, moveSpeedMult, panTickMult, maxHpBonus). A chain/fork/pierce or target-count delta is required and does not exist in this epoch contract; the Assayer must not stretch vocabulary to fake it.",
+        "path": "text"
+      }
+    ],
+    "summary": "M5-01 contract gate: requested capability (hit more than one enemy at once) cannot be expressed by any contract.v1 stat delta. Reject rather than stretch vocabulary."
+  },
+  "reasons": [
+    {
+      "code": "out_of_contract_vocabulary",
+      "message": "Multi-target firing has no representation in contract.v1 stats (damageMult, fireRateMult, rangeMult, moveSpeedMult, panTickMult, maxHpBonus). A chain/fork/pierce or target-count delta is required and does not exist in this epoch contract; the Assayer must not stretch vocabulary to fake it.",
+      "path": "text"
+    }
+  ],
+  "rejectedAt": "2026-07-06T09:02:30.000Z"
+}
