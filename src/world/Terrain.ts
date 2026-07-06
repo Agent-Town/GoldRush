@@ -42,6 +42,7 @@ export const FORD_MIN_X = -3;
 export const FORD_MAX_X = 3;
 export const SHALLOWS_WIDTH = 1.25;
 export const WATER_Y = 0.025;
+export const VISTA_RADIUS = 90;
 
 export const bounds: TerrainBounds = {
   minX: -CLAIM_HALF,
@@ -101,23 +102,31 @@ export function riverGeometry(): { minX: number; maxX: number; minZ: number; max
 }
 
 export function sampleHeight(x: number, z: number): number {
-  const clampedX = THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX);
-  const clampedZ = THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ);
-  const absZ = Math.abs(clampedZ);
+  return sampleHeightFamily(THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX), THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ), false);
+}
+
+export function sampleUnclampedHeight(x: number, z: number): number {
+  return sampleHeightFamily(x, z, true);
+}
+
+function sampleHeightFamily(x: number, z: number, vistaRise: boolean): number {
+  const absZ = Math.abs(z);
   const bankDistance = Math.max(0, absZ - RIVER_MAX_Z);
   const bankT = smoothstep(0, 15, bankDistance);
   const valley = THREE.MathUtils.lerp(-0.16, 0.36, bankT);
-  const southRise = clampedZ < RIVER_MIN_Z ? smoothstep(0, CLAIM_HALF - Math.abs(RIVER_MIN_Z), Math.abs(clampedZ) - Math.abs(RIVER_MIN_Z)) * 0.14 : 0;
+  const southRise = z < RIVER_MIN_Z ? smoothstep(0, CLAIM_HALF - Math.abs(RIVER_MIN_Z), Math.abs(z) - Math.abs(RIVER_MIN_Z)) * 0.14 : 0;
+  const vistaBankRise = vistaRise ? smoothstep(CLAIM_HALF, VISTA_RADIUS, absZ) * 0.42 : 0;
   const claimCalm =
-    clampedZ > RIVER_MAX_Z + SHALLOWS_WIDTH && clampedZ < 23 && Math.abs(clampedX) < 24
-      ? THREE.MathUtils.lerp(0.42, 1, smoothstep(0, 24, Math.abs(clampedX)))
+    z > RIVER_MAX_Z + SHALLOWS_WIDTH && z < 23 && Math.abs(x) < 24
+      ? THREE.MathUtils.lerp(0.42, 1, smoothstep(0, 24, Math.abs(x)))
       : 1;
   const riverNoiseMask = THREE.MathUtils.lerp(0.28, 1, smoothstep(RIVER_MAX_Z - 0.5, RIVER_MAX_Z + 4, absZ));
   const noise =
-    (valueNoise(clampedX * 0.065, clampedZ * 0.065) - 0.5) * 0.32 +
-    (valueNoise(clampedX * 0.17 + 41.7, clampedZ * 0.17 - 13.2) - 0.5) * 0.16 +
-    (valueNoise(clampedX * 0.34 - 9.1, clampedZ * 0.34 + 27.4) - 0.5) * 0.06;
-  return THREE.MathUtils.clamp((valley + southRise + noise * claimCalm * riverNoiseMask) * Balance.world.terrainRelief, -0.18, 0.62);
+    (valueNoise(x * 0.065, z * 0.065) - 0.5) * 0.32 +
+    (valueNoise(x * 0.17 + 41.7, z * 0.17 - 13.2) - 0.5) * 0.16 +
+    (valueNoise(x * 0.34 - 9.1, z * 0.34 + 27.4) - 0.5) * 0.06;
+  const maxHeight = vistaRise && absZ > CLAIM_HALF ? 1.05 : 0.62;
+  return THREE.MathUtils.clamp((valley + southRise + vistaBankRise + noise * claimCalm * riverNoiseMask) * Balance.world.terrainRelief, -0.18, maxHeight);
 }
 
 export function samplePaddedHeight(x: number, z: number, radius = 0): number {
@@ -164,6 +173,32 @@ export function heightDiagnostics(): {
       nearBank: sampleHeight(12, RIVER_MAX_Z + SHALLOWS_WIDTH),
       farBank: sampleHeight(12, -18),
     },
+  };
+}
+
+export type VistaDiagnostics = {
+  present: boolean;
+  segments: number;
+  radius: number;
+  vertices: number;
+  seamMaxDelta: number;
+  seam: Array<{ x: number; z: number; clamped: number; unclamped: number; delta: number }>;
+};
+
+export function vistaDiagnostics(): VistaDiagnostics {
+  const seam = vistaSeamProbePoints().map((point) => {
+    const clamped = sampleHeight(point.x, point.z);
+    const unclamped = sampleUnclampedHeight(point.x, point.z);
+    const delta = Math.abs(clamped - unclamped);
+    return { ...point, clamped, unclamped, delta };
+  });
+  return {
+    present: true,
+    segments: vistaSegments(),
+    radius: VISTA_RADIUS,
+    vertices: vistaVertexCount(),
+    seamMaxDelta: Math.max(...seam.map((entry) => entry.delta)),
+    seam,
   };
 }
 
@@ -225,10 +260,7 @@ export const createBankPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
 
 export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
   () => {
-    const mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(CLAIM_SIZE, visualWaterWidth(), 1, 1),
-      createLivingWaterMaterial(waterMaterialConfig(false)),
-    );
+    const mesh = new THREE.Mesh(createExtendedRiverGeometry(), createLivingWaterMaterial(waterMaterialConfig(false)));
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = WATER_Y;
     mesh.renderOrder = 0;
@@ -257,11 +289,12 @@ export function createTerrainView(): TerrainView {
   const group = new THREE.Group();
   const bank = createBankPlaceholder();
   const river = createRiverPlaceholder();
+  const vistaBank = createVistaBankMesh(bank.material as THREE.MeshStandardMaterial);
   const ford = createFordPlaceholder();
   const fordStones = createFordStones(WATER_Y);
   const props = createClaimProps();
   for (const prop of props.children) prop.position.y = visualY(prop.position.x, prop.position.z, 0, 0.7);
-  group.add(bank, river, ford, fordStones, props);
+  group.add(vistaBank, bank, river, ford, fordStones, props);
 
   return {
     group,
@@ -398,14 +431,153 @@ function createBankGeometry(): THREE.PlaneGeometry {
     positions.setZ(index, sampleHeight(x, z));
   }
   positions.needsUpdate = true;
+  applyTerrainNormals(geometry, sampleUnclampedHeight);
+  return geometry;
+}
+
+function createVistaBankMesh(material: THREE.MeshStandardMaterial): THREE.Mesh {
+  const mesh = new THREE.Mesh(createVistaRingGeometry(), material);
+  mesh.name = 'TerrainVistaRing';
+  mesh.userData.terrainVista = true;
+  mesh.rotation.x = -Math.PI / 2;
+  mesh.receiveShadow = true;
+  mesh.renderOrder = -1;
+  return mesh;
+}
+
+function createVistaRingGeometry(): THREE.BufferGeometry {
+  const { fullAxis, innerAxis, leftAxis, rightAxis } = vistaAxes();
+  const geometry = new THREE.BufferGeometry();
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+  addVistaGrid(positions, uvs, indices, fullAxis, rightAxis, sampleUnclampedHeight);
+  addVistaGrid(positions, uvs, indices, fullAxis, leftAxis, sampleUnclampedHeight);
+  addVistaGrid(positions, uvs, indices, rightAxis, innerAxis, sampleUnclampedHeight);
+  addVistaGrid(positions, uvs, indices, leftAxis, innerAxis, sampleUnclampedHeight);
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setIndex(indices);
+  applyTerrainNormals(geometry, sampleUnclampedHeight);
+  return geometry;
+}
+
+function createExtendedRiverGeometry(): THREE.BufferGeometry {
+  const halfWidth = visualWaterWidth() / 2;
+  const geometry = new THREE.BufferGeometry();
+  const positions: number[] = [];
+  const uvs: number[] = [];
+  const indices: number[] = [];
+  addVistaGrid(positions, uvs, indices, [-VISTA_RADIUS, VISTA_RADIUS], [-halfWidth, halfWidth], () => 0);
+  geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+  geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+  geometry.setIndex(indices);
   geometry.computeVertexNormals();
   return geometry;
+}
+
+function addVistaGrid(
+  positions: number[],
+  uvs: number[],
+  indices: number[],
+  xAxis: number[],
+  zAxis: number[],
+  heightAt: (x: number, z: number) => number,
+): void {
+  const base = positions.length / 3;
+  for (const z of zAxis) {
+    for (const x of xAxis) {
+      positions.push(x, -z, heightAt(x, z));
+      uvs.push((x + CLAIM_HALF) / CLAIM_SIZE, (-z + CLAIM_HALF) / CLAIM_SIZE);
+    }
+  }
+  const width = xAxis.length;
+  for (let zi = 0; zi < zAxis.length - 1; zi += 1) {
+    for (let xi = 0; xi < xAxis.length - 1; xi += 1) {
+      const a = base + zi * width + xi;
+      const b = a + 1;
+      const c = a + width;
+      const d = c + 1;
+      indices.push(a, c, b, b, c, d);
+    }
+  }
 }
 
 function terrainSegments(): number {
   const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
   const value = mobile ? Balance.world.terrainMobileSegments : Balance.world.terrainSegments;
   return Math.max(24, Math.min(96, Math.floor(value)));
+}
+
+function vistaSegments(): number {
+  const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
+  const value = mobile ? Balance.world.vistaMobileSegments : Balance.world.vistaSegments;
+  return Math.max(4, Math.min(24, Math.floor(value)));
+}
+
+function vistaAxes(): { fullAxis: number[]; innerAxis: number[]; leftAxis: number[]; rightAxis: number[] } {
+  const edgeSegments = terrainSegments();
+  const outerSegments = vistaSegments();
+  const innerAxis = makeAxis(-CLAIM_HALF, CLAIM_HALF, edgeSegments);
+  const leftAxis = makeVistaOuterAxis(-CLAIM_HALF, -VISTA_RADIUS, outerSegments).reverse();
+  const rightAxis = makeVistaOuterAxis(CLAIM_HALF, VISTA_RADIUS, outerSegments);
+  return {
+    fullAxis: [...leftAxis.slice(0, -1), ...innerAxis, ...rightAxis.slice(1)],
+    innerAxis,
+    leftAxis,
+    rightAxis,
+  };
+}
+
+function makeAxis(start: number, end: number, segments: number): number[] {
+  const count = Math.max(1, Math.floor(segments));
+  const values: number[] = [];
+  for (let index = 0; index <= count; index += 1) values.push(THREE.MathUtils.lerp(start, end, index / count));
+  return values;
+}
+
+function makeVistaOuterAxis(edge: number, outer: number, segments: number): number[] {
+  const nearSegments = Math.max(2, Math.min(8, Math.floor(segments * 0.75)));
+  const farSegments = Math.max(1, Math.floor(segments) - nearSegments);
+  const direction = Math.sign(outer - edge) || 1;
+  const transitionEnd = edge + direction * Math.min(8, Math.abs(outer - edge));
+  return [...makeAxis(edge, transitionEnd, nearSegments), ...makeAxis(transitionEnd, outer, farSegments).slice(1)];
+}
+
+function applyTerrainNormals(geometry: THREE.BufferGeometry, heightAt: (x: number, z: number) => number): void {
+  const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
+  const normals: number[] = [];
+  for (let index = 0; index < positions.count; index += 1) {
+    const x = positions.getX(index);
+    const z = -positions.getY(index);
+    const normal = terrainNormal(x, z, heightAt);
+    normals.push(normal.x, normal.y, normal.z);
+  }
+  geometry.setAttribute('normal', new THREE.Float32BufferAttribute(normals, 3));
+}
+
+function terrainNormal(x: number, z: number, heightAt: (x: number, z: number) => number): THREE.Vector3 {
+  const step = 0.5;
+  const dx = (heightAt(x + step, z) - heightAt(x - step, z)) / (step * 2);
+  const dz = (heightAt(x, z + step) - heightAt(x, z - step)) / (step * 2);
+  return new THREE.Vector3(-dx, dz, 1).normalize();
+}
+
+function vistaVertexCount(): number {
+  const { fullAxis, innerAxis, leftAxis, rightAxis } = vistaAxes();
+  const outer = vistaSegments() + 1;
+  return fullAxis.length * outer * 2 + rightAxis.length * innerAxis.length + leftAxis.length * innerAxis.length;
+}
+
+function vistaSeamProbePoints(): Array<{ x: number; z: number }> {
+  return [
+    { x: -CLAIM_HALF, z: -24 },
+    { x: CLAIM_HALF, z: -12 },
+    { x: -18, z: -CLAIM_HALF },
+    { x: 0, z: CLAIM_HALF },
+    { x: 18, z: CLAIM_HALF },
+    { x: CLAIM_HALF, z: 4 },
+  ];
 }
 
 function waterMaterialConfig(ford: boolean): Parameters<typeof createLivingWaterMaterial>[0] {
