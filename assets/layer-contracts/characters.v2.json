@@ -256,6 +256,14 @@
           }
         }
       }
+    },
+    {
+      "slot": "char.prospector_agent",
+      "status": "DORMANT",
+      "fallback": {
+        "procedural": "src/agent/Embodiment.ts:createProspectorTexture"
+      },
+      "notes": "M4-06 placeholder-first Prospector companion: runtime uses one procedural canvas billboard in Frontier Ledger tones. Future art batch may replace this with an illustrated automaton sprite sheet; no generated art exists for this slot yet. Canon guardrails: the agent is the Prospector, machinefolk/frontier-tech, no realistic firearms, no gore, no text."
     }
   ]
 }

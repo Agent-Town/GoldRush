@@ -13,6 +13,11 @@ type HudElements = {
   goldText: HTMLElement;
   goldPanel: HTMLElement;
   weaponChip: HTMLElement;
+  agentChip: HTMLElement;
+  agentName: HTMLElement;
+  agentLevel: HTMLElement;
+  agentLabel: HTMLElement;
+  agentFeed: HTMLElement;
   xpText: HTMLElement;
   xpFill: HTMLElement;
   levelText: HTMLElement;
@@ -66,6 +71,12 @@ export class Hud {
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
+        <span class="hud-agent-chip" data-testid="hud-agent" aria-label="Prospector permission ladder">
+          <span data-hud-agent-name>the Prospector</span>
+          <strong data-hud-agent-level>L0</strong>
+          <span data-hud-agent-label>suggest-only</span>
+          <span class="hud-agent-feed" data-testid="hud-agent-feed" data-hud-agent-feed aria-live="polite"></span>
+        </span>
       </section>
 
       <section class="hud-panel hud-panel--xp" data-testid="hud-xp" aria-label="Experience">
@@ -94,6 +105,11 @@ export class Hud {
       goldText: this.get(root, '[data-hud-gold]'),
       goldPanel: this.get(root, '[data-testid="hud-gold"]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
+      agentChip: this.get(root, '[data-testid="hud-agent"]'),
+      agentName: this.get(root, '[data-hud-agent-name]'),
+      agentLevel: this.get(root, '[data-hud-agent-level]'),
+      agentLabel: this.get(root, '[data-hud-agent-label]'),
+      agentFeed: this.get(root, '[data-hud-agent-feed]'),
       xpText: this.get(root, '[data-hud-xp]'),
       xpFill: this.get(root, '[data-hud-xp-fill]'),
       levelText: this.get(root, '[data-hud-level]'),
@@ -116,6 +132,11 @@ export class Hud {
     this.elements.goldText.textContent = this.goldText(snapshot);
     this.elements.weaponChip.textContent = snapshot.weapon === 'blast' ? 'Blast Charge' : 'Spark Rig';
     this.elements.weaponChip.dataset.weapon = snapshot.weapon;
+    this.elements.agentName.textContent = snapshot.agent?.name ?? 'the Prospector';
+    this.elements.agentLevel.textContent = `L${snapshot.agent?.permissionLevel ?? 0}`;
+    this.elements.agentLabel.textContent = snapshot.agent?.permissionLabel ?? 'suggest-only';
+    this.elements.agentChip.dataset.level = String(snapshot.agent?.permissionLevel ?? 0);
+    this.elements.agentFeed.textContent = snapshot.agent?.receiptFeed.join(' · ') ?? '';
     this.elements.xpText.textContent = `${snapshot.xp} / ${snapshot.xpNeed} XP`;
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;
     this.elements.levelText.textContent = snapshot.level.toString();

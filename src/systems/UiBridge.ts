@@ -44,6 +44,12 @@ export type UiSnapshot = {
   nextBeaconCost: number;
   canAffordBeacon: boolean;
   weapon: 'rig' | 'blast';
+  agent: {
+    name: string;
+    permissionLevel: number;
+    permissionLabel: string;
+    receiptFeed: readonly string[];
+  } | null;
 };
 
 export class UiBridge {
@@ -75,6 +81,7 @@ export class UiBridge {
     nextBeaconCost: Balance.beacon.costBase,
     canAffordBeacon: false,
     weapon: 'rig',
+    agent: null,
   };
 
   announce(text: string, atSim: number, edge: CompassEdge | null = null, durationSeconds = 4): void {
@@ -107,6 +114,7 @@ export class UiBridge {
     nextBeaconCost: number,
     canAffordBeacon: boolean,
     weapon: 'rig' | 'blast',
+    agent: UiSnapshot['agent'],
   ): UiSnapshot {
     this.snapshot.gold = gold;
     this.snapshot.bankCap = bankCap;
@@ -131,6 +139,7 @@ export class UiBridge {
     this.snapshot.nextBeaconCost = nextBeaconCost;
     this.snapshot.canAffordBeacon = canAffordBeacon;
     this.snapshot.weapon = weapon;
+    this.snapshot.agent = agent;
     return this.snapshot;
   }
 }

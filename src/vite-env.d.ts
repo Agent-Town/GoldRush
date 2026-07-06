@@ -48,6 +48,12 @@ interface ThreeGameDiagnostics {
     nextBeaconCost: number;
     canAffordBeacon: boolean;
     weapon: 'rig' | 'blast';
+    agent: {
+      name: string;
+      permissionLevel: number;
+      permissionLabel: string;
+      receiptFeed: readonly string[];
+    } | null;
   };
   hp: number;
   maxHp: number;
@@ -179,6 +185,26 @@ interface ThreeGameDiagnostics {
       hero: number;
       agent: number;
     } | null;
+  };
+  agent: {
+    stub: {
+      name: string;
+      permissionLevel: number;
+      permissionLabel: string;
+      receiptCount: number;
+      lastReceiptTool: string | null;
+      receiptFeed: readonly string[];
+    } | null;
+    embodiment: {
+      visible: boolean;
+      moving: boolean;
+      working: boolean;
+      receiptCount: number;
+      lastReceiptTool: string | null;
+      lastLine: string | null;
+      position: { x: number; y: number; z: number };
+      target: { x: number; z: number };
+    };
   };
   build: {
     mode: boolean;
@@ -350,10 +376,13 @@ interface ThreeGameDiagnostics {
 }
 
 type GoldRushGui = import('lil-gui').default;
+type GrAgentStub = import('./agent/AgentStub').AgentStub;
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
   __GR_GUI__?: GoldRushGui;
+  /** Present only with ?debug — direct agent receipt hooks for e2e. */
+  __GR_AGENT__?: GrAgentStub;
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;
