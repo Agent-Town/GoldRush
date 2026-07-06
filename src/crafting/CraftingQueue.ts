@@ -26,6 +26,7 @@ export type PendingPostResult = {
   path: string;
   saved: boolean;
   error?: string;
+  alreadyExists?: boolean;
 };
 
 const approvedFiles = import.meta.glob('../../assets/crafting-queue/approved/*.json', {
@@ -69,9 +70,26 @@ export async function postPendingOrder(
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(request),
     });
-    return { request, path, saved: response.ok, ...(response.ok ? {} : { error: `HTTP ${response.status}` }) };
+    const body = await readJson(response);
+    if (response.ok && body?.ok !== false) return { request, path, saved: true };
+    return {
+      request,
+      path: typeof body?.path === 'string' ? body.path : path,
+      saved: false,
+      ...(body?.reason === 'duplicate' || response.status === 409 ? { alreadyExists: true } : {}),
+      error: typeof body?.message === 'string' ? body.message : `HTTP ${response.status}`,
+    };
   } catch (error) {
     return { request, path, saved: false, error: error instanceof Error ? error.message : String(error) };
+  }
+}
+
+async function readJson(response: Response): Promise<Record<string, unknown> | null> {
+  try {
+    const value: unknown = await response.json();
+    return isRecord(value) ? value : null;
+  } catch {
+    return null;
   }
 }
 

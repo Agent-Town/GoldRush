@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import type { Plugin } from 'vite';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { access, mkdir, writeFile } from 'node:fs/promises';
 import type { IncomingMessage } from 'node:http';
 import { resolve, sep } from 'node:path';
 import {
@@ -64,6 +64,13 @@ function craftingQueuePlugin(): Plugin {
           return;
         }
 
+        const existingPath = await existingQueuePath(request.id);
+        if (existingPath) {
+          res.setHeader('content-type', 'application/json');
+          res.end(JSON.stringify({ ok: false, reason: 'duplicate', message: 'already at the works', path: existingPath }));
+          return;
+        }
+
         try {
           await mkdir(root, { recursive: true });
           await writeFile(filePath, `${JSON.stringify(request, null, 2)}\n`, 'utf8');
@@ -78,6 +85,23 @@ function craftingQueuePlugin(): Plugin {
       });
     },
   };
+}
+
+async function existingQueuePath(id: string): Promise<string | undefined> {
+  for (const state of ['pending', 'approved', 'rejected'] as const) {
+    const relativePath =
+      state === 'pending' ? pendingQueuePath(id) : `assets/crafting-queue/${state}/${id}.json`;
+    if (await fileExists(relativePath)) return relativePath;
+  }
+}
+
+async function fileExists(relativePath: string): Promise<boolean> {
+  try {
+    await access(resolve(process.cwd(), relativePath));
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 function readBody(req: IncomingMessage): Promise<string> {

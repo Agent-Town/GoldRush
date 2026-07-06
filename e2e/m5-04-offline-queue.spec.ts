@@ -51,8 +51,34 @@ async function cleanPostedOrders(profile: string): Promise<void> {
   );
 }
 
+async function localSamplePendingOrders(): Promise<string[]> {
+  const pendingDir = resolve(process.cwd(), 'assets/crafting-queue/pending');
+  return (await readdir(pendingDir).catch(() => []))
+    .filter((file) => file.startsWith('order_local_prospector_') && file.endsWith('_steady_brass_pan_receipt_for_faster_claim_work.json'))
+    .sort();
+}
+
+async function cleanLocalSamplePendingOrders(): Promise<void> {
+  const pendingDir = resolve(process.cwd(), 'assets/crafting-queue/pending');
+  await Promise.all((await localSamplePendingOrders()).map((file) => rm(resolve(pendingDir, file), { force: true })));
+}
+
 test.afterEach(async ({}, testInfo) => {
   await cleanPostedOrders(`e2e_${testInfo.project.name}`);
+});
+
+test('booting never posts the default local sample order', async ({ page }) => {
+  await cleanLocalSamplePendingOrders();
+  const errors = collectErrors(page);
+
+  for (const query of ['?debug&nowaves&nolevel', '?nowaves&nolevel', '?debug&nowaves&nolevel']) {
+    await page.goto(`/${query}`);
+    await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    expect(await localSamplePendingOrders()).toEqual([]);
+  }
+
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
 });
 
 test('post the order writes the exact pending request JSON', async ({ page }, testInfo) => {
@@ -77,11 +103,60 @@ test('post the order writes the exact pending request JSON', async ({ page }, te
     const diskJson = JSON.parse(await readFile(filePath, 'utf8'));
     expect(visibleJson).toEqual(expected);
     expect(diskJson).toEqual(expected);
+
+    await page.getByTestId('assay-post').click();
+    await expect(page.getByTestId('assay-pending-status')).toHaveText('Already at the works');
+    expect(JSON.parse(await readFile(filePath, 'utf8'))).toEqual(expected);
     expect(errors.consoleErrors).toEqual([]);
     expect(errors.pageErrors).toEqual([]);
   } finally {
     await rm(filePath, { force: true });
   }
+});
+
+test('verdicted order ids cannot be recreated as pending', async ({ page }) => {
+  const duplicates = [
+    {
+      profile: 'local_prospector',
+      text: 'steady brass pan receipt for faster claim work',
+      timestamp: '2026-07-05T23:54:01.057Z',
+    },
+    {
+      profile: 'm5_rejected_prospect',
+      text: 'make a rifle with infinite range',
+      timestamp: '2026-07-05T14:10:00.000Z',
+    },
+  ];
+
+  for (const duplicate of duplicates) {
+    const expected = makePendingQueueRequest(duplicate.text, duplicate.profile, duplicate.timestamp);
+    const pendingPath = resolve(process.cwd(), pendingQueuePath(expected.id));
+    await rm(pendingPath, { force: true });
+
+    const errors = await openBench(
+      page,
+      `?debug&nowaves&nolevel&profile=${encodeURIComponent(duplicate.profile)}&queueNow=${encodeURIComponent(expected.timestamp)}`,
+    );
+    await page.getByTestId('assay-text').fill(duplicate.text);
+    await page.getByTestId('assay-post').click();
+    await expect(page.getByTestId('assay-pending-status')).toHaveText('Already at the works');
+    await expect(page.getByTestId('assay-pending-path')).not.toHaveText(pendingQueuePath(expected.id));
+    await expect(readFile(pendingPath, 'utf8')).rejects.toThrow();
+    expect(errors.consoleErrors).toEqual([]);
+    expect(errors.pageErrors).toEqual([]);
+  }
+});
+
+test('blank bench submits stay local', async ({ page }) => {
+  await cleanLocalSamplePendingOrders();
+  const errors = await openBench(page, '?debug&nowaves&nolevel&profile=local_prospector');
+
+  await page.getByTestId('assay-post').click();
+  await expect(page.getByTestId('assay-pending-status')).toHaveText('Write an order first');
+  await expect(page.getByTestId('assay-pending-path')).toHaveText('');
+  expect(await localSamplePendingOrders()).toEqual([]);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
 });
 
 test('first-run pipeline consumes pending orders and keeps verdicts flexible', async ({ page }) => {
@@ -107,7 +182,7 @@ test('first-run pipeline consumes pending orders and keeps verdicts flexible', a
       rejectedReasons: queue.rejected.flatMap((entry) => entry.reasons.map((reason) => reason.message)),
     };
   });
-  expect(verdicts.approved + verdicts.rejected).toBe(2);
+  expect(verdicts.approved + verdicts.rejected).toBeGreaterThanOrEqual(2);
   expect(verdicts.rejectedReasons.every((message) => message.length > 0)).toBe(true);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);

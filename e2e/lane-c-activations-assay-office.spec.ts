@@ -137,10 +137,9 @@ test('Assay Office is river-adjacent only and opens the bench on confirm', async
   await teleport(page, 0, 7);
   await page.keyboard.press('Enter');
   await expect(page.getByTestId('assay-bench')).toBeVisible();
-  // Incumbent bench (m5-04 offline queue, owner decision): posting an order is the action;
-  // acceptance happens offline between sessions — assert the post round-trip, not an instant verdict.
+  // Incumbent bench (m5-04 offline queue, owner decision): no seeded sample order should leak.
   await page.getByTestId('assay-post').click();
-  await expect(page.getByTestId('assay-pending-status')).toHaveText(/Posted|JSON ready/);
+  await expect(page.getByTestId('assay-pending-status')).toHaveText('Write an order first');
 
   fs.mkdirSync(shotDir, { recursive: true });
   await page.screenshot({ path: path.join(shotDir, 'assay-office-bench.png'), fullPage: false });
