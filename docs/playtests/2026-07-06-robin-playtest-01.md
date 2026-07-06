@@ -35,9 +35,10 @@ Signals: blast charge is a heavily engaged mechanic (322 toggles). Spent (1199) 
 **F5 — "I never select the upgrades for the seams. Seems to be a waste of talents for me."**
 - Seam upgrade family = dead picks in the offer pool. Feeds **021** + revisit of 020 (offer weighting): buff seam value, make its payoff legible, or cut the family.
 
-## Open with owner (asked 2026-07-06)
-1. W1-01+02 direction verdict (3D world + illustrated characters) — gates W1-03..06.
-2. Did the wave-20 "Claim Secured" victory ceremony appear during the 35-wave run? (Calibrates 027 victory-must-matter: broken vs weightless.)
+## Owner answers (same day, 2026-07-06)
+1. **W1 direction verdict: PASS with finding.** "It is ok, but not a WOW moment — the waves of the water are too regular to be real. But ok." → Ladder UNLOCKED (w1-03/04/06 queued to lane-c). New finding **F-w1-02-1** (water periodicity) folded as the mandatory first item of the w1-03 task; W1-03 light/shadows is the designated wow-maker and the integration test for the illustrated-characters hybrid.
+2. **Ceremony appeared: "it is ok — it should explain a bit more."** Plus: "for new players there is no help either… can come later with a menu." → 027 victory-must-matter UNPAUSED to queue/main with this note; first-run onboarding already exists in backlog as lane-c-polish-04-first-run-hints (later polish wave, per owner's "can come later").
+3. **Owner throughput directive:** "Can we pack the pipeline? I have 4 Resets and 75% of a full Codex subscription to burn… tons of agents in parallel." → All lanes loaded (see handover §4); 021 also unpaused on the strength of findings F2/F5; M6 attempt-3a queued to lane-d under the standing 3a recommendation.
 
 ## Not covered by this playtest (still owed)
 Turret-feel (M2 gate), water-feel fallback preference (air-bar vs chill-drain), favicon eyeball, Mac full-regression evidence.
