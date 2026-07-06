@@ -51,7 +51,20 @@ while true; do
     (
       cd "$wd" && codex exec "Do the task in the file at: $run" >"$log" 2>&1
       rc=$?
-      if [ $rc -eq 0 ]; then mv "$run" "$ROOT/tasks/done/$stamp-$name"; else mv "$run" "$ROOT/tasks/failed/rc$rc-$stamp-$name"; fi
+      if [ $rc -eq 0 ]; then
+        # s76 ROOT-CAUSE FIX: persist LANE output to its branch so gate-fires can merge a
+        # committed branch (before this, lane work sat uncommitted in the worktree and no
+        # headless fire could reach it — the multi-fire lane-drain deadlock). Lanes only:
+        # the MAIN slot stays fire-path-scoped (NEVER -A) per the gate protocol, so it is
+        # deliberately excluded. Commit-to-branch also makes janitor reset --hard survivable
+        # (work becomes reflog-recoverable instead of lost) — LANE-SAFETY improvement.
+        if [ "$slot" != "main" ]; then
+          ( cd "$wd" && git add -A && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
+        fi
+        mv "$run" "$ROOT/tasks/done/$stamp-$name"
+      else
+        mv "$run" "$ROOT/tasks/failed/rc$rc-$stamp-$name"
+      fi
       rm -f "$ROOT/tasks/running/$slot.pid"
       echo "[lane-runner-v3] $(date +%H:%M:%S) DONE rc=$rc $slot :: $name"
     ) &
