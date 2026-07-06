@@ -105,6 +105,68 @@ export function sanitizePendingQueueRequest(value: unknown): CraftingQueueReques
   return value.id === canonical.id ? canonical : null;
 }
 
+export function parseApprovedQueueEntry(value: unknown): CraftingQueueApproved | null {
+  if (!isRecord(value)) return null;
+  if (value.version !== CRAFTING_QUEUE_VERSION || typeof value.id !== 'string' || typeof value.approvedAt !== 'string') {
+    return null;
+  }
+  if (!isRequest(value.request) || !isItem(value.item)) return null;
+  if (!isVerdict(value.contractVerdict) || !isVerdict(value.simVerdict)) return null;
+  return value.contractVerdict.ok && value.simVerdict.ok ? (value as CraftingQueueApproved) : null;
+}
+
+export function parseRejectedQueueEntry(value: unknown): CraftingQueueRejected | null {
+  if (!isRecord(value)) return null;
+  if (value.version !== CRAFTING_QUEUE_VERSION || typeof value.id !== 'string' || typeof value.rejectedAt !== 'string') {
+    return null;
+  }
+  if (!isRequest(value.request) || !isVerdict(value.contractVerdict)) return null;
+  if (value.simVerdict !== undefined && !isVerdict(value.simVerdict)) return null;
+  if (!Array.isArray(value.reasons) || !value.reasons.every(isReason)) return null;
+  return value as CraftingQueueRejected;
+}
+
+function isRequest(value: unknown): value is CraftingQueueRequest {
+  return (
+    isRecord(value) &&
+    value.version === CRAFTING_QUEUE_VERSION &&
+    typeof value.id === 'string' &&
+    typeof value.text === 'string' &&
+    typeof value.profile === 'string' &&
+    typeof value.timestamp === 'string'
+  );
+}
+
+function isVerdict(value: unknown): value is CraftingQueueVerdict {
+  return isRecord(value) && typeof value.ok === 'boolean' && Array.isArray(value.reasons) && value.reasons.every(isReason);
+}
+
+function isReason(value: unknown): value is CraftingQueueReason {
+  return (
+    isRecord(value) &&
+    typeof value.code === 'string' &&
+    typeof value.message === 'string' &&
+    (value.path === undefined || typeof value.path === 'string')
+  );
+}
+
+function isItem(value: unknown): value is CraftedItemDef {
+  return (
+    isRecord(value) &&
+    typeof value.id === 'string' &&
+    isOneOf(value.kind, ['weapon_mod', 'tool', 'trinket']) &&
+    isOneOf(value.rarity, ['common', 'uncommon', 'rare']) &&
+    typeof value.name === 'string' &&
+    typeof value.blurb === 'string' &&
+    typeof value.cost === 'number' &&
+    isRecord(value.stats)
+  );
+}
+
+function isOneOf<T extends string>(value: unknown, allowed: readonly T[]): value is T {
+  return typeof value === 'string' && allowed.includes(value as T);
+}
+
 function queueStamp(iso: string): string {
   return iso.replace(/[-:.]/g, '').replace('T', 't').replace('Z', 'z');
 }

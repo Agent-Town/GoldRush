@@ -1,14 +1,22 @@
 import {
   makePendingQueueRequest,
   normalizeQueueProfile,
+  parseApprovedQueueEntry,
+  parseRejectedQueueEntry,
   pendingQueuePath,
+  sanitizePendingQueueRequest,
   type CraftedItemDef,
   type CraftingQueueApproved,
   type CraftingQueueReason,
   type CraftingQueueRejected,
   type CraftingQueueRequest,
-  type CraftingQueueVerdict,
 } from './CraftingQueueContract';
+
+export type CraftingPendingNotice = {
+  id: string;
+  text: string;
+  timestamp: string;
+};
 
 export type CraftingRejectedNotice = {
   id: string;
@@ -17,6 +25,7 @@ export type CraftingRejectedNotice = {
 };
 
 export type CraftingQueueSnapshot = {
+  pending: CraftingPendingNotice[];
   approved: CraftedItemDef[];
   rejected: CraftingRejectedNotice[];
 };
@@ -29,32 +38,20 @@ export type PendingPostResult = {
   alreadyExists?: boolean;
 };
 
-const approvedFiles = import.meta.glob('../../assets/crafting-queue/approved/*.json', {
-  eager: true,
-  import: 'default',
-});
-const rejectedFiles = import.meta.glob('../../assets/crafting-queue/rejected/*.json', {
-  eager: true,
-  import: 'default',
-});
-
 export function loadCraftingQueue(profile: string): CraftingQueueSnapshot {
+  return snapshotFromQueueEntries([], [], [], normalizeQueueProfile(profile));
+}
+
+export async function loadCraftingQueueState(profile: string): Promise<CraftingQueueSnapshot> {
   const normalizedProfile = normalizeQueueProfile(profile);
-  const approved = Object.values(approvedFiles)
-    .map(parseApproved)
-    .filter((entry): entry is CraftingQueueApproved => Boolean(entry))
-    .filter((entry) => entry.request.profile === normalizedProfile)
-    .map((entry) => entry.item);
-  const rejected = Object.values(rejectedFiles)
-    .map(parseRejected)
-    .filter((entry): entry is CraftingQueueRejected => Boolean(entry))
-    .filter((entry) => entry.request.profile === normalizedProfile)
-    .map((entry) => ({
-      id: entry.id,
-      text: entry.request.text,
-      reasons: entry.reasons.length ? entry.reasons : [...entry.contractVerdict.reasons, ...(entry.simVerdict?.reasons ?? [])],
-    }));
-  return { approved, rejected };
+  try {
+    const response = await fetch(`/__goldrush/crafting-queue/state?profile=${encodeURIComponent(normalizedProfile)}`);
+    if (!response.ok) return loadStaticCraftingQueue(normalizedProfile);
+    const body: unknown = await response.json();
+    return parseQueueState(body, normalizedProfile) ?? loadStaticCraftingQueue(normalizedProfile);
+  } catch {
+    return loadStaticCraftingQueue(normalizedProfile);
+  }
 }
 
 export async function postPendingOrder(
@@ -93,62 +90,50 @@ async function readJson(response: Response): Promise<Record<string, unknown> | n
   }
 }
 
-function parseApproved(value: unknown): CraftingQueueApproved | null {
-  if (!isRecord(value)) return null;
-  if (value.version !== 1 || typeof value.id !== 'string' || typeof value.approvedAt !== 'string') return null;
-  if (!isRequest(value.request) || !isItem(value.item)) return null;
-  if (!isVerdict(value.contractVerdict) || !isVerdict(value.simVerdict)) return null;
-  return value.contractVerdict.ok && value.simVerdict.ok ? (value as CraftingQueueApproved) : null;
-}
-
-function parseRejected(value: unknown): CraftingQueueRejected | null {
-  if (!isRecord(value)) return null;
-  if (value.version !== 1 || typeof value.id !== 'string' || typeof value.rejectedAt !== 'string') return null;
-  if (!isRequest(value.request) || !isVerdict(value.contractVerdict)) return null;
-  if (value.simVerdict !== undefined && !isVerdict(value.simVerdict)) return null;
-  if (!Array.isArray(value.reasons) || !value.reasons.every(isReason)) return null;
-  return value as CraftingQueueRejected;
-}
-
-function isRequest(value: unknown): value is CraftingQueueRequest {
-  return (
-    isRecord(value) &&
-    value.version === 1 &&
-    typeof value.id === 'string' &&
-    typeof value.text === 'string' &&
-    typeof value.profile === 'string' &&
-    typeof value.timestamp === 'string'
+function parseQueueState(value: unknown, normalizedProfile: string): CraftingQueueSnapshot | null {
+  if (!isRecord(value) || !Array.isArray(value.pending) || !Array.isArray(value.approved) || !Array.isArray(value.rejected)) {
+    return null;
+  }
+  return snapshotFromQueueEntries(
+    parseMany(value.pending, sanitizePendingQueueRequest),
+    parseMany(value.approved, parseApprovedQueueEntry),
+    parseMany(value.rejected, parseRejectedQueueEntry),
+    normalizedProfile,
   );
 }
 
-function isVerdict(value: unknown): value is CraftingQueueVerdict {
-  return isRecord(value) && typeof value.ok === 'boolean' && Array.isArray(value.reasons) && value.reasons.every(isReason);
+export function snapshotFromQueueEntries(
+  pendingEntries: CraftingQueueRequest[],
+  approvedEntries: CraftingQueueApproved[],
+  rejectedEntries: CraftingQueueRejected[],
+  normalizedProfile: string,
+): CraftingQueueSnapshot {
+  const approvedForProfile = approvedEntries.filter((entry) => entry.request.profile === normalizedProfile);
+  const rejectedForProfile = rejectedEntries.filter((entry) => entry.request.profile === normalizedProfile);
+  const verdictIds = new Set([...approvedForProfile, ...rejectedForProfile].map((entry) => entry.request.id));
+  const pending = pendingEntries
+    .filter((entry) => entry.profile === normalizedProfile && !verdictIds.has(entry.id))
+    .map((entry) => ({ id: entry.id, text: entry.text, timestamp: entry.timestamp }));
+  const approved = approvedForProfile.map((entry) => entry.item);
+  const rejected = rejectedForProfile.map((entry) => ({
+    id: entry.request.id,
+    text: entry.request.text,
+    reasons: entry.reasons.length ? entry.reasons : [...entry.contractVerdict.reasons, ...(entry.simVerdict?.reasons ?? [])],
+  }));
+  return { pending, approved, rejected };
 }
 
-function isReason(value: unknown): value is CraftingQueueReason {
-  return (
-    isRecord(value) &&
-    typeof value.code === 'string' &&
-    typeof value.message === 'string' &&
-    (value.path === undefined || typeof value.path === 'string')
-  );
+function parseMany<T>(values: unknown[], parse: (value: unknown) => T | null): T[] {
+  return values.map(parse).filter((entry): entry is T => Boolean(entry));
 }
 
-function isItem(value: unknown): value is CraftedItemDef {
-  return (
-    isRecord(value) &&
-    typeof value.id === 'string' &&
-    isOneOf(value.kind, ['weapon_mod', 'tool', 'trinket']) &&
-    isOneOf(value.rarity, ['common', 'uncommon', 'rare']) &&
-    typeof value.name === 'string' &&
-    typeof value.blurb === 'string' &&
-    typeof value.cost === 'number' &&
-    isRecord(value.stats)
-  );
-}
-
-function isOneOf<T extends string>(value: unknown, allowed: readonly T[]): value is T {
-  return typeof value === 'string' && allowed.includes(value as T);
+async function loadStaticCraftingQueue(profile: string): Promise<CraftingQueueSnapshot> {
+  try {
+    const staticQueue = await import('./CraftingQueueStatic');
+    return staticQueue.loadStaticCraftingQueue(profile);
+  } catch {
+    return loadCraftingQueue(profile);
+  }
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

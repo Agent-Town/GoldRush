@@ -431,6 +431,12 @@ body {
   padding-left: 18px;
 }
 
+.assay-bench__pending-order {
+  padding-left: 6px;
+  border-left: 3px solid #5b8a8a;
+  color: #4b3828;
+}
+
 .assay-bench ol:empty::after,
 .assay-bench ul:empty::after {
   content: "None";

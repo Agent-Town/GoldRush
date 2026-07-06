@@ -1,6 +1,9 @@
 import {
   loadCraftingQueue,
+  loadCraftingQueueState,
   postPendingOrder,
+  type CraftingPendingNotice,
+  type CraftingQueueSnapshot,
   type CraftingRejectedNotice,
   type PendingPostResult,
 } from './CraftingQueue';
@@ -20,25 +23,34 @@ export class AssayBench {
   ingestApproved(items: readonly CraftedItemDef[]): void {
     for (const item of items) this.accepted.set(item.id, item);
   }
+
+  replaceApproved(items: readonly CraftedItemDef[]): void {
+    this.accepted.clear();
+    this.ingestApproved(items);
+  }
 }
 
 export class AssayBenchPanel {
   private readonly bench: AssayBench;
-  private readonly rejected: CraftingRejectedNotice[];
+  private pending: CraftingPendingNotice[];
+  private rejected: CraftingRejectedNotice[];
   private readonly root = document.createElement('section');
   private readonly text: HTMLTextAreaElement;
   private readonly profile: HTMLInputElement;
   private readonly pendingStatus: HTMLElement;
   private readonly pendingPath: HTMLElement;
   private readonly pendingJson: HTMLElement;
+  private readonly pendingOrders: HTMLElement;
   private readonly history: HTMLElement;
   private readonly rejections: HTMLElement;
   private readonly closeButton: HTMLButtonElement;
+  private refreshSeq = 0;
 
   constructor(parent: HTMLElement, options: { profile?: string; initiallyOpen?: boolean } = {}) {
     const profile = normalizeQueueProfile(options.profile ?? new URLSearchParams(window.location.search).get('profile'));
     const queue = loadCraftingQueue(profile);
     this.bench = new AssayBench(queue.approved);
+    this.pending = queue.pending;
     this.rejected = queue.rejected;
 
     this.root.className = 'assay-bench';
@@ -70,6 +82,10 @@ export class AssayBenchPanel {
         <code data-testid="assay-pending-path"></code>
         <pre data-testid="assay-pending-json"></pre>
       </article>
+      <section class="assay-bench__card assay-bench__pending-orders" aria-label="Pending orders">
+        <strong>At the works</strong>
+        <ul data-testid="assay-queue-pending"></ul>
+      </section>
       <section class="assay-bench__card" aria-label="Crafted item history">
         <strong>History</strong>
         <ol data-testid="assay-log"></ol>
@@ -85,6 +101,7 @@ export class AssayBenchPanel {
     this.pendingStatus = this.get('[data-testid="assay-pending-status"]');
     this.pendingPath = this.get('[data-testid="assay-pending-path"]');
     this.pendingJson = this.get('[data-testid="assay-pending-json"]');
+    this.pendingOrders = this.get('[data-testid="assay-queue-pending"]');
     this.history = this.get('[data-testid="assay-log"]');
     this.rejections = this.get('[data-testid="assay-queue-rejections"]');
     this.closeButton = this.get('[data-testid="assay-close"]');
@@ -94,14 +111,15 @@ export class AssayBenchPanel {
     this.root.addEventListener('keydown', this.onRootKeyDown);
     this.root.addEventListener('keyup', this.stopGameHotkeys);
     document.addEventListener('keydown', this.onDocumentKeyDown);
-    this.renderHistory();
-    this.renderRejections();
+    this.renderQueue(queue);
     parent.append(this.root);
+    if (!this.root.hidden) void this.refreshQueue();
   }
 
   focus(): void {
     this.root.hidden = false;
     this.root.setAttribute('aria-hidden', 'false');
+    void this.refreshQueue();
     this.text.focus();
   }
 
@@ -150,6 +168,7 @@ export class AssayBenchPanel {
 
     this.pendingStatus.textContent = 'Posting';
     this.renderPending(await postPendingOrder(text, this.profile.value, queueTimestamp()));
+    await this.refreshQueue();
   };
 
   private renderPending(result: PendingPostResult): void {
@@ -161,6 +180,34 @@ export class AssayBenchPanel {
         : `JSON ready${result.error ? ` (${result.error})` : ''}`;
     this.pendingPath.textContent = result.path;
     this.pendingJson.textContent = JSON.stringify(result.request, null, 2);
+  }
+
+  private async refreshQueue(): Promise<void> {
+    const seq = ++this.refreshSeq;
+    const queue = await loadCraftingQueueState(this.profile.value);
+    if (seq === this.refreshSeq) this.renderQueue(queue);
+  }
+
+  private renderQueue(queue: CraftingQueueSnapshot): void {
+    this.bench.replaceApproved(queue.approved);
+    this.pending = queue.pending;
+    this.rejected = queue.rejected;
+    this.renderPendingOrders();
+    this.renderHistory();
+    this.renderRejections();
+  }
+
+  private renderPendingOrders(): void {
+    this.pendingOrders.replaceChildren(
+      ...this.pending.map((entry) => {
+        const row = document.createElement('li');
+        row.className = 'assay-bench__pending-order';
+        row.textContent = `${entry.text} (${formatQueueTimestamp(entry.timestamp)}) — at the assay works, check back next run`;
+        row.dataset.orderId = entry.id;
+        row.dataset.status = 'pending';
+        return row;
+      }),
+    );
   }
 
   private renderHistory(): void {
@@ -207,6 +254,11 @@ function queueTimestamp(): Date {
   if (!override) return new Date();
   const parsed = new Date(override);
   return Number.isNaN(parsed.valueOf()) ? new Date() : parsed;
+}
+
+function formatQueueTimestamp(value: string): string {
+  const parsed = new Date(value);
+  return Number.isNaN(parsed.valueOf()) ? value : parsed.toISOString();
 }
 
 function escapeAttr(value: string): string {

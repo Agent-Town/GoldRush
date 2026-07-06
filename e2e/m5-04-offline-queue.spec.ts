@@ -1,10 +1,11 @@
 import { expect, test, type Page } from '@playwright/test';
-import { readFile, readdir, rm } from 'node:fs/promises';
+import { mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { makePendingQueueRequest, normalizeQueueProfile, pendingQueuePath } from '../src/crafting/CraftingQueueContract';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type Box = { x: number; y: number; width: number; height: number };
+const localSampleSuffix = '_steady_brass_pan_receipt_for_faster_claim_work.json';
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -45,7 +46,7 @@ async function cleanPostedOrders(profile: string): Promise<void> {
       .filter(
         (file) =>
           file.endsWith('.json') &&
-          (file.startsWith('order_local_prospector_') || file.startsWith(ownPrefix)),
+          ((file.startsWith('order_local_prospector_') && file.endsWith(localSampleSuffix)) || file.startsWith(ownPrefix)),
       )
       .map((file) => rm(resolve(pendingDir, file), { force: true })),
   );
@@ -54,7 +55,7 @@ async function cleanPostedOrders(profile: string): Promise<void> {
 async function localSamplePendingOrders(): Promise<string[]> {
   const pendingDir = resolve(process.cwd(), 'assets/crafting-queue/pending');
   return (await readdir(pendingDir).catch(() => []))
-    .filter((file) => file.startsWith('order_local_prospector_') && file.endsWith('_steady_brass_pan_receipt_for_faster_claim_work.json'))
+    .filter((file) => file.startsWith('order_local_prospector_') && file.endsWith(localSampleSuffix))
     .sort();
 }
 
@@ -64,7 +65,11 @@ async function cleanLocalSamplePendingOrders(): Promise<void> {
 }
 
 test.afterEach(async ({}, testInfo) => {
-  await cleanPostedOrders(`e2e_${testInfo.project.name}`);
+  await Promise.all([
+    cleanPostedOrders(`e2e_${testInfo.project.name}`),
+    cleanPostedOrders(`e2e_status_${testInfo.project.name}`),
+    cleanPostedOrders(`e2e_race_${testInfo.project.name}`),
+  ]);
 });
 
 test('booting never posts the default local sample order', async ({ page }) => {
@@ -111,6 +116,127 @@ test('post the order writes the exact pending request JSON', async ({ page }, te
     expect(errors.pageErrors).toEqual([]);
   } finally {
     await rm(filePath, { force: true });
+  }
+});
+
+test('posted orders stay visible across reloads and refresh to verdicts on reopen', async ({ page }, testInfo) => {
+  const text = 'brass teal spark rig coupler for steady target splits';
+  const profile = `e2e_status_${testInfo.project.name}`;
+  const expected = makePendingQueueRequest(text, profile, '2026-07-06T10:39:00.000Z');
+  const pendingPath = resolve(process.cwd(), pendingQueuePath(expected.id));
+  const approvedPath = resolve(process.cwd(), `assets/crafting-queue/approved/${expected.id}.json`);
+  await rm(pendingPath, { force: true });
+  await rm(approvedPath, { force: true });
+
+  const errors = await openBench(
+    page,
+    `?debug&nowaves&nolevel&nokill&profile=${encodeURIComponent(profile)}&queueNow=${encodeURIComponent(expected.timestamp)}`,
+  );
+
+  try {
+    await page.getByTestId('assay-text').fill(text);
+    await page.getByTestId('assay-post').click();
+    await expect(page.getByTestId('assay-pending-status')).toHaveText('Posted');
+
+    await page.reload();
+    await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    const pendingRows = page.getByTestId('assay-queue-pending').locator('li');
+    await expect(pendingRows).toHaveCount(1);
+    await expect(pendingRows.first()).toContainText(text);
+    await expect(pendingRows.first()).toContainText('at the assay works, check back next run');
+
+    await page.evaluate(() => {
+      window.__GR_TEST__?.grantGold(120);
+      window.__GR_TEST__?.teleport(0, 9);
+      window.__GR_TEST__?.selectBuildable('assay_office');
+      window.__GR_TEST__?.confirmBuild();
+      window.__GR_TEST__?.setBuildMode(false);
+      window.__GR_TEST__?.teleport(0, 7);
+    });
+    await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.assayOffices ?? 0)).toBe(1);
+    await page.getByTestId('assay-close').click();
+    await expect(page.getByTestId('assay-bench')).toBeHidden();
+
+    await mkdir(resolve(process.cwd(), 'assets/crafting-queue/approved'), { recursive: true });
+    await writeFile(
+      approvedPath,
+      `${JSON.stringify(
+        {
+          version: 1,
+          id: `${expected.id}_verdict`,
+          request: expected,
+          item: {
+            id: `${expected.id}_item`,
+            kind: 'weapon_mod',
+            rarity: 'common',
+            name: 'Teal Splitter Coupler',
+            blurb: 'A brass-and-teal ledger coupler for steadier Spark Rig arcs.',
+            cost: 1,
+            stats: { fireRateMult: 1.05 },
+          },
+          contractVerdict: { ok: true, reasons: [] },
+          simVerdict: { ok: true, reasons: [] },
+          approvedAt: '2026-07-06T10:40:00.000Z',
+        },
+        null,
+        2,
+      )}\n`,
+      'utf8',
+    );
+
+    await page.keyboard.press('Enter');
+    await expect(page.getByTestId('assay-bench')).toBeVisible();
+    await expect(page.getByTestId('assay-log').locator('li')).toContainText([
+      'Teal Splitter Coupler (common) arrived — collection opens soon',
+    ]);
+    await expect(page.getByTestId('assay-queue-pending').locator('li')).toHaveCount(0);
+    expect(errors.consoleErrors).toEqual([]);
+    expect(errors.pageErrors).toEqual([]);
+  } finally {
+    await rm(pendingPath, { force: true });
+    await rm(approvedPath, { force: true });
+  }
+});
+
+test('stale open refresh cannot hide a newly posted pending order', async ({ page }, testInfo) => {
+  const text = 'brass teal queue race check';
+  const profile = `e2e_race_${testInfo.project.name}`;
+  const expected = makePendingQueueRequest(text, profile, '2026-07-06T10:41:00.000Z');
+  const pendingPath = resolve(process.cwd(), pendingQueuePath(expected.id));
+  await rm(pendingPath, { force: true });
+
+  let stateRequests = 0;
+  await page.route('**/__goldrush/crafting-queue/state?**', async (route) => {
+    stateRequests += 1;
+    if (stateRequests === 1) {
+      await new Promise((resolveDelay) => setTimeout(resolveDelay, 1000));
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({ pending: [], approved: [], rejected: [] }),
+      });
+      return;
+    }
+    await route.continue();
+  });
+
+  const errors = await openBench(
+    page,
+    `?debug&nowaves&nolevel&nokill&profile=${encodeURIComponent(profile)}&queueNow=${encodeURIComponent(expected.timestamp)}`,
+  );
+
+  try {
+    await page.getByTestId('assay-text').fill(text);
+    await page.getByTestId('assay-post').click();
+    await expect(page.getByTestId('assay-pending-status')).toHaveText('Posted');
+    const pendingRows = page.getByTestId('assay-queue-pending').locator('li');
+    await expect(pendingRows).toHaveCount(1);
+    await page.waitForTimeout(1200);
+    await expect(pendingRows).toHaveCount(1);
+    expect(errors.consoleErrors).toEqual([]);
+    expect(errors.pageErrors).toEqual([]);
+  } finally {
+    await rm(pendingPath, { force: true });
   }
 });
 
@@ -171,8 +297,8 @@ test('first-run pipeline consumes pending orders and keeps verdicts flexible', a
   const errors = await openBench(page, '?debug&nowaves&nolevel&profile=local_prospector');
   const verdicts = await page.evaluate(async () => {
     const queuePath = '/src/crafting/CraftingQueue.ts';
-    const { loadCraftingQueue } = await import(queuePath);
-    const queue = loadCraftingQueue('local_prospector') as {
+    const { loadCraftingQueueState } = await import(queuePath);
+    const queue = (await loadCraftingQueueState('local_prospector')) as {
       approved: unknown[];
       rejected: Array<{ reasons: Array<{ message: string }> }>;
     };
@@ -198,12 +324,12 @@ test('approved fixtures enter a profile history once', async ({ page }) => {
   const idempotentCount = await page.evaluate(async () => {
     const benchPath = '/src/crafting/AssayBench.ts';
     const queuePath = '/src/crafting/CraftingQueue.ts';
-    const [{ AssayBench }, { loadCraftingQueue }] = await Promise.all([
+    const [{ AssayBench }, { loadCraftingQueueState }] = await Promise.all([
       import(benchPath),
       import(queuePath),
     ]);
     const bench = new AssayBench();
-    const queue = loadCraftingQueue('m5_example_prospector');
+    const queue = await loadCraftingQueueState('m5_example_prospector');
     bench.ingestApproved(queue.approved);
     bench.ingestApproved(queue.approved);
     return bench.acceptedLog.length;
