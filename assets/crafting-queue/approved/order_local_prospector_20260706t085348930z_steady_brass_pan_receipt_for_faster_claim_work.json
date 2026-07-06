@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "id": "order_local_prospector_20260706t085348930z_steady_brass_pan_receipt_for_faster_claim_work",
+  "request": {
+    "version": 1,
+    "id": "order_local_prospector_20260706t085348930z_steady_brass_pan_receipt_for_faster_claim_work",
+    "text": "steady brass pan receipt for faster claim work",
+    "profile": "local_prospector",
+    "timestamp": "2026-07-06T08:53:48.930Z"
+  },
+  "item": {
+    "id": "craft_assay_office_pan_ledger_local_085348",
+    "kind": "tool",
+    "rarity": "uncommon",
+    "name": "Assay Office Pan Ledger",
+    "blurb": "A brass-stamped receipt the Assayer files beside the pan for steady claim work.",
+    "cost": 55,
+    "stats": {
+      "panTickMult": -0.18,
+      "moveSpeedMult": 0.04
+    }
+  },
+  "contractVerdict": {
+    "ok": true,
+    "reasons": [],
+    "summary": "M5-01 paper budget 1.84 <= uncommon budget 5; panTickMult -0.18 within -0.35 cap, moveSpeedMult 0.04 within 0.18 cap; no banned frontier-tech terms; name is a ledger/receipt per brief 9.4. Identical dupe of approved 085304856 (runaway local_prospector loop) — batch-verdicted per s71 sanction."
+  },
+  "simVerdict": {
+    "ok": true,
+    "reasons": [],
+    "summary": "M5-03 dry sim stayed within tolerance for faster panning plus a small movement delta."
+  },
+  "approvedAt": "2026-07-06T09:20:00.000Z"
+}
