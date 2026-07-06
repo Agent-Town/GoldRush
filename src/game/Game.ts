@@ -76,6 +76,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
+import { LightRig } from '../world/LightRig';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
 import { applyUpgradeBudgetsFromBalance, resolveFiller } from './Upgrades';
@@ -192,6 +193,7 @@ export class Game {
   private readonly heroStart = new THREE.Vector3(0, 0.06, 12);
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
+  private lightRig?: LightRig;
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly waveSystem = new WaveSystem(
     this.enemies,
@@ -580,6 +582,7 @@ export class Game {
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.buildSystem.dispose();
+    this.lightRig?.dispose();
     this.harvestSystem.dispose();
     this.combat.dispose();
     this.audio.dispose();
@@ -705,6 +708,7 @@ export class Game {
     this.vfx.update(delta);
     this.syncHeroVisualHeight();
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
+    this.lightRig?.update();
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
@@ -725,7 +729,9 @@ export class Game {
   }
 
   private render(): void {
+    this.renderer.info.reset();
     this.renderer.render(this.scene, this.camera);
+    this.lightRig?.renderPost(this.renderer);
     this.recordProfileSample();
   }
 
@@ -776,23 +782,7 @@ export class Game {
   }
 
   private createScene(): void {
-    this.scene.background = new THREE.Color('#c2e6ff');
-    this.scene.fog = new THREE.Fog('#f5e6c8', 34, 70);
-
-    const hemisphere = new THREE.HemisphereLight('#fff8e8', '#8b7d3c', 1.45);
-    this.scene.add(hemisphere);
-
-    const sun = new THREE.DirectionalLight('#ffe4a0', 2.7);
-    sun.position.set(-10, 14, -8);
-    sun.castShadow = true;
-    sun.shadow.mapSize.set(2048, 2048);
-    sun.shadow.camera.near = 0.5;
-    sun.shadow.camera.far = 60;
-    sun.shadow.camera.left = -48;
-    sun.shadow.camera.right = 48;
-    sun.shadow.camera.top = 48;
-    sun.shadow.camera.bottom = -48;
-    this.scene.add(sun);
+    this.lightRig = new LightRig(this.scene, this.renderer);
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
@@ -896,6 +886,7 @@ export class Game {
       wreck: this.wreckDiagnostics(),
       charmPause: this.charmPauseActive,
       camImpulseActive: this.cameraRig.impulseActive,
+      lighting: this.lightRig?.diagnostics(),
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
       },

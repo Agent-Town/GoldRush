@@ -317,6 +317,17 @@ interface ThreeGameDiagnostics {
     geometries: number;
     textures: number;
   };
+  lighting?: {
+    sunPresent: boolean;
+    shadowsQuality: 'soft' | 'blob';
+    fogNear: number;
+    fogFar: number;
+    postEnabled: boolean;
+    paperGrainOpacity: number;
+    shadowMapSize: number;
+    shadowMapTargetSize: number;
+    blobShadows: number;
+  };
   assets: Partial<Record<string, 'missing' | 'pending' | 'loaded' | 'error'>>;
   assetSprites: Partial<Record<string, number>>;
   spriteAnimations: Partial<Record<string, {
@@ -354,6 +365,7 @@ interface ThreeGameDiagnostics {
       foam: boolean;
       glints: number;
       fordStones: number;
+      waterPhaseVariance: number;
     };
     vista: {
       present: boolean;

@@ -13,6 +13,7 @@ export type WaterDiagnostics = {
   foam: boolean;
   glints: number;
   fordStones: number;
+  waterPhaseVariance: number;
 };
 
 type WaterUniforms = {
@@ -84,23 +85,49 @@ float waterGoldGlints(vec2 world) {
   float glint = 0.0;
 ${glintShaderLines(config.anchors)}
   return glint;
+}
+
+float waterHash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+float waterNoise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  f = f * f * (3.0 - 2.0 * f);
+  float a = waterHash(i);
+  float b = waterHash(i + vec2(1.0, 0.0));
+  float c = waterHash(i + vec2(0.0, 1.0));
+  float d = waterHash(i + vec2(1.0, 1.0));
+  return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
 }`)
       .replace('#include <map_fragment>', `
 #ifdef USE_MAP
-  vec2 flowUv = vec2(vWaterUv.x * waterRepeat + waterTime * waterFlowSpeed, vWaterUv.y);
-  float slowWarp = sin(vWaterWorld.x * 0.38 - waterTime * 1.45) * 0.018 * waterQuality;
-  flowUv.y += slowWarp;
+  float lengthNoise = waterNoise(vec2(vWaterWorld.x * 0.055, vWaterWorld.y * 0.16));
+  float crossNoise = waterNoise(vec2(vWaterWorld.x * 0.18 + 13.0, vWaterWorld.y * 0.11 - 7.0));
+  float phaseWarp = (waterNoise(vec2(vWaterWorld.x * 0.12 - waterTime * 0.18, vWaterWorld.y * 0.27)) - 0.5) * 0.58 * waterQuality;
+  float localSpeed = waterFlowSpeed * mix(0.58, 1.44, lengthNoise);
+  vec2 flowUv = vec2(vWaterUv.x * waterRepeat + waterTime * localSpeed + phaseWarp, vWaterUv.y);
+  float slowWarp =
+    sin(vWaterWorld.x * mix(0.23, 0.52, crossNoise) + vWaterWorld.y * 0.37 - waterTime * mix(0.9, 1.9, lengthNoise)) *
+    mix(0.012, 0.038, crossNoise) *
+    waterQuality;
+  flowUv.y += slowWarp + (crossNoise - 0.5) * 0.045 * waterQuality;
   vec4 baseTexel = texture2D(map, flowUv);
   float visualEdgeDist = max(0.0, ${config.visualHalfWidth.toFixed(3)} - abs(vWaterWorld.y));
   float riverDist = max(0.0, ${config.riverHalfWidth.toFixed(3)} - abs(vWaterWorld.y));
   float depth = smoothstep(0.05, ${config.riverHalfWidth.toFixed(3)}, riverDist);
   float fordBand = max(waterFord, 1.0 - smoothstep(${config.fordHalfWidth.toFixed(3)}, ${(config.fordHalfWidth + 0.9).toFixed(3)}, abs(vWaterWorld.x)));
-  float ripple = sin(vWaterWorld.x * 1.7 + sin(vWaterWorld.y * 1.15) * 0.9 - waterTime * 3.1) * 0.5 + 0.5;
+  float rippleFreq = mix(1.05, 2.45, lengthNoise);
+  float rippleAmp = mix(0.06, 0.17, crossNoise);
+  float ripple = sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise)) * 0.5 + 0.5;
   float fineRipple = 0.0;
   if (waterQuality > 0.7) {
-    fineRipple = sin(vWaterWorld.x * 4.8 + vWaterWorld.y * 1.6 - waterTime * 5.2) * 0.5 + 0.5;
+    fineRipple = sin(vWaterWorld.x * mix(3.7, 6.2, crossNoise) + vWaterWorld.y * mix(0.8, 2.4, lengthNoise) - waterTime * mix(3.8, 6.7, crossNoise) + phaseWarp * 2.0) * 0.5 + 0.5;
   }
-  float foamNoise = smoothstep(0.32, 0.94, sin(vWaterWorld.x * 1.05 - waterTime * 2.2 + sin(vWaterWorld.y * 2.1)) * 0.5 + 0.5);
+  float foamNoise = smoothstep(0.26, 0.92, waterNoise(vec2(vWaterWorld.x * 0.42 - waterTime * 0.7, vWaterWorld.y * 1.25 + lengthNoise * 3.0)));
   float bankLine = abs(abs(vWaterWorld.y) - ${config.riverHalfWidth.toFixed(3)});
   float bankFoam = (1.0 - smoothstep(0.04, 0.72, bankLine)) * foamNoise * (0.35 + waterQuality * 0.65);
   vec3 shallow = vec3(0.35, 0.51, 0.45);
@@ -108,7 +135,7 @@ ${glintShaderLines(config.anchors)}
   vec3 deep = vec3(0.06, 0.18, 0.17);
   vec3 ford = vec3(0.70, 0.69, 0.50);
   vec3 waterColor = mix(shallow, deep, depth);
-  waterColor = mix(waterColor, mid, ripple * 0.11 * waterQuality);
+  waterColor = mix(waterColor, mid, ripple * rippleAmp * waterQuality);
   waterColor = mix(waterColor, ford, fordBand * 0.72);
   waterColor += vec3(0.08, 0.10, 0.08) * fineRipple * waterQuality * (1.0 - fordBand) * 0.22;
   waterColor = mix(waterColor, vec3(0.92, 0.84, 0.62), bankFoam * 0.58);
@@ -184,6 +211,7 @@ export function waterDiagnostics(river: THREE.Mesh, ford: THREE.Mesh, fordStones
     foam: true,
     glints: (river.material as THREE.Material).userData.waterGlints ?? 0,
     fordStones: fordStones.count,
+    waterPhaseVariance: round3(waterPhaseVariance()),
   };
 }
 
@@ -198,6 +226,10 @@ function waterQuality(): number {
 
 function isMobileWater(): boolean {
   return typeof window !== 'undefined' && window.innerWidth <= 430;
+}
+
+function waterPhaseVariance(): number {
+  return waterQuality() * 0.43;
 }
 
 function glintShaderLines(anchors: Array<{ x: number; z: number }>): string {
