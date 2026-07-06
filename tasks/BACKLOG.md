@@ -41,7 +41,7 @@ Drain: `lane/m6-r3a-apply` +2 (perf-02 bench + reviews/m6-r3a-audit.md, the M6 v
 2. perf-03 instancing-ladder (pairs with w1-04 scatter) → m5-03 stat-sim-harness → perf-04 determinism-harness → perf-05 startup
 
 ## art (fifth lane — batch-driven, one batch in flight; **Codex generates directly via image_gen/GPT-Image-2 — NEVER an owner chore** [owner reminder 2026-07-06])
-1. IN QUEUE: art-batch-008 Prospector companion (2 hover sheets + portrait; pairs with lane-b m4-re-land)
+1. ✅ **art-batch-008 Prospector companion SHIPPED** (2 hover sheets + portrait, 1254² each) — raws + `assets/requests/codex-art-run-005.md` + LEDGER all present & integrated. s91 re-queued it by mistake (stale "IN QUEUE" marker); Codex correctly NO-OP'd (already processed+integrated) — done-moved `tasks/done/20260707-002213-art-batch-008…`, nothing to gate. Line corrected.
 2. art-029 LEDGER rows — deferred-to-M6 by s64; wire when W1-05/town work consumes the assets
 3. batch-009 candidates (author after W1 combined review): water-foam/detail sprites if the review wants them, walk4 gap cells
 4. Nightly art-shift resumes per VISION-EPOCHS asset strategy once BACKLOG-manifest rows exist
