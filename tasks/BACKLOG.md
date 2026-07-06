@@ -16,11 +16,11 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 ## lane-a (meta/progression)
 1. ✅ demo-profiles-v2 SHIPPED (s82 `0834a44`); ✅ SCI-01 research loop SHIPPED (s84 `6b6624c`); ✅ **SCI-02 families+mastery SHIPPED (s87 `4e65ae8`)** — owner wave-30 playtest pending
 3. SCI-03 assay & agent research branch — GATE: after SCI-02 (✅) AND the live assayer has produced real approvals (contract tier must gate something real) — assayer queue still EMPTY, so still gated
-5. SCI-04 contract-family registry — authorable anytime (socket only)
+5. SCI-04 contract-family registry — **QUEUED lane-a s89 (FIRE-AUTHORED, `tasks/lane-a-sci-04-contract-registry.md`)**: bundle manifest structure + registry `loadEpoch()` socket + `epoch-2-steamworks/` STUB (no content, honors M7+ hooks-only). Behavior-preserving for epoch-1 (routes SCI-02 direct load through the registry). Checkpoint: registry lists+loads a content-less epoch-2 with ZERO engine change.
 
 ## lane-b (agent)
-1. IN QUEUE/RUNNING: m4-re-land (embodiment + voice on fresh main, salvage-ref save/m4-embodiment-voice-v1)
-2. m4-05 agent-closeout — GATE: after m4-re-land merges (stale-check the master)
+1. ✅ m4-re-land SHIPPED (embodiment + voice; salvage archived `archive/m4-embodiment-voice-v1`); ✅ m4-07 prospector art SHIPPED (s85 `fe1a1b0`)
+2. m4-05 agent-closeout — GATE SATISFIED (m4-re-land merged; `src/agent/Voice.ts` on main) BUT **master STALE (Jul 5, pre-re-land) — do NOT blind-queue** (s89: lane-b worktree refreshed to main & refill-ready, but m4-05 needs a stale-refresh vs current agent `install()`/`snapshot`/run-summary shape, OR author M4-07 receipts-UX instead — next-fire/attended authoring)
 3. M4-07 receipts-UX clarity — AUTHOR from VISION-HOOKS "clarity is craft" note + m4-re-land review findings
 
 ## lane-c (world/polish) — DRAINED ✓ (vista merged s80; scatter RULED RE-LAND)
