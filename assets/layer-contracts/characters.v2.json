@@ -46,6 +46,22 @@
           }
         }
       },
+      "walk4": {
+        "version": 1,
+        "status": "RUNTIME-DORMANT",
+        "notes": "s64 art-run-004 (assets/requests/codex-art-run-004.md): 4-phase gait walk cycles for 8-way locomotion — the roundness fix for the active 2-frame @4fps rotation walk (owner note s9at 'walks not round'). Columns = gait phases contact/down/passing/up (frame order 0..3); rows = directions. Sheet-a rows s/se/e/ne, sheet-b rows n/nw/w/sw; all 8 directions EXPLICIT (no mirrors, 32 cells). Extracted @scale=1 (auto-fit capped), output heights 336-372px land in the rotation2 output band (316-379, avg 349.6) so no cross-sheet size-pop vs the active rotation. DORMANT: SpriteAnimator does NOT read this block — gait WIRING (4-frame clip reader + fps tune + optional crossfade) is a separate Codex task (031 follow-up). fps 8 is a placeholder for the wiring task to tune.",
+        "mirrors": {},
+        "directions": {
+          "s":  { "frames": { "files": ["char-hero-sheet-walk4-a-r0c0.png", "char-hero-sheet-walk4-a-r0c1.png", "char-hero-sheet-walk4-a-r0c2.png", "char-hero-sheet-walk4-a-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "se": { "frames": { "files": ["char-hero-sheet-walk4-a-r1c0.png", "char-hero-sheet-walk4-a-r1c1.png", "char-hero-sheet-walk4-a-r1c2.png", "char-hero-sheet-walk4-a-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "e":  { "frames": { "files": ["char-hero-sheet-walk4-a-r2c0.png", "char-hero-sheet-walk4-a-r2c1.png", "char-hero-sheet-walk4-a-r2c2.png", "char-hero-sheet-walk4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "ne": { "frames": { "files": ["char-hero-sheet-walk4-a-r3c0.png", "char-hero-sheet-walk4-a-r3c1.png", "char-hero-sheet-walk4-a-r3c2.png", "char-hero-sheet-walk4-a-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "n":  { "frames": { "files": ["char-hero-sheet-walk4-b-r0c0.png", "char-hero-sheet-walk4-b-r0c1.png", "char-hero-sheet-walk4-b-r0c2.png", "char-hero-sheet-walk4-b-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "nw": { "frames": { "files": ["char-hero-sheet-walk4-b-r1c0.png", "char-hero-sheet-walk4-b-r1c1.png", "char-hero-sheet-walk4-b-r1c2.png", "char-hero-sheet-walk4-b-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "w":  { "frames": { "files": ["char-hero-sheet-walk4-b-r2c0.png", "char-hero-sheet-walk4-b-r2c1.png", "char-hero-sheet-walk4-b-r2c2.png", "char-hero-sheet-walk4-b-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "sw": { "frames": { "files": ["char-hero-sheet-walk4-b-r3c0.png", "char-hero-sheet-walk4-b-r3c1.png", "char-hero-sheet-walk4-b-r3c2.png", "char-hero-sheet-walk4-b-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
+        }
+      },
       "orientations": {
         "side": {
           "frames": {
@@ -154,6 +170,22 @@
             "frames": { "files": ["char-jumper-sheet-rotation-r2c2.png"] },
             "clips": { "walk": { "frames": [0], "fps": 4 } }
           }
+        }
+      },
+      "walk4": {
+        "version": 1,
+        "status": "RUNTIME-DORMANT",
+        "notes": "s64 art-run-004: 4-phase gait walk cycles for the claim jumper, 8-way, all directions EXPLICIT (no mirrors, 32 cells). Columns = contact/down/passing/up; sheet-a rows s/se/e/ne, sheet-b rows n/nw/w/sw. Extracted @scale=1; output heights 277-349px (a avg 329, b avg 293) sit in the jumper-rotation walking band (298-332, back rows shorter) so no size-pop vs the active rotation. This block ALSO resolves the jumper SCALE DEBT flagged in the rotations note (rotation figures 296-331 vs side-sheet 409-439): walk4 heights match the rotation band, and activation stays gated on the enemy sending 8-way directions (M2-04). DORMANT: SpriteAnimator does NOT read this block; gait WIRING is the separate 031 follow-up Codex task. No weapons in any cell (canon brief §9). fps 8 placeholder.",
+        "mirrors": {},
+        "directions": {
+          "s":  { "frames": { "files": ["char-jumper-sheet-walk4-a-r0c0.png", "char-jumper-sheet-walk4-a-r0c1.png", "char-jumper-sheet-walk4-a-r0c2.png", "char-jumper-sheet-walk4-a-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "se": { "frames": { "files": ["char-jumper-sheet-walk4-a-r1c0.png", "char-jumper-sheet-walk4-a-r1c1.png", "char-jumper-sheet-walk4-a-r1c2.png", "char-jumper-sheet-walk4-a-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "e":  { "frames": { "files": ["char-jumper-sheet-walk4-a-r2c0.png", "char-jumper-sheet-walk4-a-r2c1.png", "char-jumper-sheet-walk4-a-r2c2.png", "char-jumper-sheet-walk4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "ne": { "frames": { "files": ["char-jumper-sheet-walk4-a-r3c0.png", "char-jumper-sheet-walk4-a-r3c1.png", "char-jumper-sheet-walk4-a-r3c2.png", "char-jumper-sheet-walk4-a-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "n":  { "frames": { "files": ["char-jumper-sheet-walk4-b-r0c0.png", "char-jumper-sheet-walk4-b-r0c1.png", "char-jumper-sheet-walk4-b-r0c2.png", "char-jumper-sheet-walk4-b-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "nw": { "frames": { "files": ["char-jumper-sheet-walk4-b-r1c0.png", "char-jumper-sheet-walk4-b-r1c1.png", "char-jumper-sheet-walk4-b-r1c2.png", "char-jumper-sheet-walk4-b-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "w":  { "frames": { "files": ["char-jumper-sheet-walk4-b-r2c0.png", "char-jumper-sheet-walk4-b-r2c1.png", "char-jumper-sheet-walk4-b-r2c2.png", "char-jumper-sheet-walk4-b-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "sw": { "frames": { "files": ["char-jumper-sheet-walk4-b-r3c0.png", "char-jumper-sheet-walk4-b-r3c1.png", "char-jumper-sheet-walk4-b-r3c2.png", "char-jumper-sheet-walk4-b-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
         }
       },
       "orientations": {
