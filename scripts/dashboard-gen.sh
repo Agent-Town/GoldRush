@@ -111,6 +111,9 @@ for b in lane/m3 lane/m4 lane/polish lane/perf lane/m6-r3a-apply save/w1-04-scat
   fi
 done
 [ -z "$LANES" ] && LANES="(nothing waiting — all lane work merged)"
+ARCH=$(git branch --list 'archive/*' 2>/dev/null | wc -l | tr -d ' ')
+[ "${ARCH:-0}" != "0" ] && LANES="$LANES
+(+ $ARCH archived salvage branch(es) — superseded by shipped re-lands; reference only, NOT waiting)"
 LANES=$(printf '%s' "$LANES" | esc)
 
 MERGES=$(git log --oneline -14 --format='%h  %cr — %s' | grep -viE 'lock ACTIVE|handoff|bookkeeping|lock CLEARED' | head -8 | cut -c1-120 | esc)

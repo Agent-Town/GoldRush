@@ -6,6 +6,7 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 **Stale-check law**: a master written >2 days ago gets a 60-second reality check against current main before queueing (the m4-02 "6→40 refresh" lesson) — refresh it or flag it, never blind-queue.
 
 ## main (serial slot; balance/fix/feature tune — THROTTLE: ≤1 queued while drain pile ≥3)
+0. **IN QUEUE: 041 turret-overwatch** — owner-confirmed by experiment 2026-07-06: turret `canTarget: hasLineOfSight` refuses targets behind friendly palisades → turrets shoot over walls + lob-arc visual. THE core-loop feel fix; M2 turret-feel sign-off re-tests after this merges
 1. **RE-RUN 034 vp02 mobile-stick** — GATE: main slot free — its first run's output was gate-blocked (038 contamination) and LOST in the compound-pile cleanup (never merged, verified 2026-07-06 19:4x: no vp02 code on main); master intact, contamination cause gone
 2. fix-037-panGold-flake — GATE: authorable now — F-1 from 037's gate (task-037:115 harness flake, non-blocking but owed; fire-authorable, small)
 3. 012 overwhelm-valves (wave-32 wall, tower-defense side)
@@ -23,10 +24,11 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 2. m4-05 agent-closeout — GATE: after m4-re-land merges (stale-check the master)
 3. M4-07 receipts-UX clarity — AUTHOR from VISION-HOOKS "clarity is craft" note + m4-re-land review findings
 
-## lane-c (world/polish) — ⚠ DRAIN FIRST
-Drain order before ANY refill: (1) w1-06 vista = tip commit on lane/polish (secure-committed s61); (2) w1-04 scatter = branch `save/w1-04-scatter` (3-way vs base 789c978). Both bases are from TODAY — headless-mergeable, dry-merge first, DISJOINT-PAIR batch allowed. THEN:
-1. **RERUN w1-03 light+atmosphere** — output DESTROYED by w1-04's reset pre-flight (master intact, includes owner's water fix) — GATE: lane-c fully drained
-2. **RERUN polish-02 rivalry-stats** — output DESTROYED by w1-06's reset — GATE: after the w1-03 rerun
+## lane-c (world/polish) — DRAINED ✓ (vista merged s80; scatter RULED RE-LAND)
+Scatter ruling (s61 attended, 2026-07-06 late): s80 found `save/w1-04-scatter` 3-way-conflicts post-vista → per the salvage lifecycle, it RE-LANDS instead of hand-merging. Sequence:
+1. **RERUN w1-03 light+atmosphere** — GATE: none, lane-c is clear — master intact, includes owner's water fix
+2. **RE-LAND w1-04 scatter** — AUTHOR (fire): fresh task, salvage-ref `save/w1-04-scatter`, adapt to merged vista/light; rename salvage → archive/ when it ships — GATE: after w1-03 rerun
+3. **RERUN polish-02 rivalry-stats** — GATE: after w1-04 re-land
 2b. **combat-readability** (owner playtest finding 2026-07-06: "no lifebars… should be visualized"; master ready — enemy hit-flash, building bars made visible, palisade wear, turret muzzle pulse) — GATE: after polish-02 rerun; may float to main if lane-c stays congested
 3. W1-05 building shells — AUTHOR after 029 town art reviewed in-world (spec slice exists; art processed s64, LEDGER rows deferred)
 4. **W1-07 the natural claim** — AUTHOR after the W1-03/04/06 combined in-world review (owner directive: "whole map natural… more feel/style/natural look")
@@ -45,9 +47,8 @@ Drain: `lane/m6-r3a-apply` +2 (perf-02 bench + reviews/m6-r3a-audit.md, the M6 v
 4. Nightly art-shift resumes per VISION-EPOCHS asset strategy once BACKLOG-manifest rows exist
 
 ## OWNER'S DESK — blocking on Robin (the human is a lane too; dashboard renders these)
-OWNER: turret-feel playtest — the LAST M2 sign-off gate (milestone-blocking since s4x)
+OWNER: turret-feel RE-TEST after 041 turret-overwatch merges — the LOS finding WAS the substantive verdict (owner experiment 2026-07-06); M2 sign-off = re-feel the fixed turret + the remaining gate answers
 OWNER: water-feel fallback preference — air-bar vs chill-drain (rules the 025 fallback; both recorded)
-OWNER: favicon 16px eyeball (10 seconds)
 OWNER: Mac full-regression evidence run, both projects (standing)
 OWNER: science spec pacing re-check after epoch-1 first fill (threshold 6 was the 2026-07-06 stake)
 
