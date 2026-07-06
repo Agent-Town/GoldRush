@@ -264,6 +264,8 @@ export const Balance = {
   world: {
     terrainSegments: 64,
     terrainMobileSegments: 40,
+    vistaSegments: 12,
+    vistaMobileSegments: 7,
     terrainRelief: 1,
     waterQuality: 1,
     waterMobileQuality: 0.55,

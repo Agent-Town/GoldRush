@@ -838,6 +838,7 @@ export class Game {
       terrain: {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
         water: this.terrainView?.diagnostics(),
+        vista: Terrain.vistaDiagnostics(),
         height: {
           ...Terrain.heightDiagnostics(),
           heroGround: Terrain.sampleHeight(this.hero.group.position.x, this.hero.group.position.z),

@@ -319,6 +319,20 @@ interface ThreeGameDiagnostics {
       glints: number;
       fordStones: number;
     };
+    vista: {
+      present: boolean;
+      segments: number;
+      radius: number;
+      vertices: number;
+      seamMaxDelta: number;
+      seam: Array<{
+        x: number;
+        z: number;
+        clamped: number;
+        unclamped: number;
+        delta: number;
+      }>;
+    };
     height: {
       min: number;
       max: number;
