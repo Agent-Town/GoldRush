@@ -1,5 +1,9 @@
 # Vision hooks (Robin, 2026-07-04) — design-now, build-later (§10 M7+ pattern)
 
+## Build-in-public: the factory as a live show (Robin, 2026-07-06)
+"The agents that build it could have a QA pipeline and that is streamed live on Twitch or somewhere. Then people can see the features that later end up in the game before they are released." — the agent factory itself becomes marketing/content: a live stream of Codex implementing, gates running (headed browser e2e is inherently watchable), fires merging, the dashboard as overlay. Pre-release features become episodes; viewers watch the game grow.
+Design-now implications (cheap, already true): the factory ledger dashboard (scripts/dashboard-gen.sh → logs/dashboard.html) is the seed of the stream overlay; gates already produce screenshots/videos per run. Build-later pieces: OBS scene = dashboard + a headed gate browser + fire log tail; a public-safe view (STRIP secrets/keys/paths — hygiene pass REQUIRED before anything streams; .env/credentials never on screen); moderation/canon review for chat-facing surfaces; possibly re-run nightly gates headed on a schedule as "the show." Decision points for Robin later: platform, cadence, what stays private (balance numbers? unreleased canon?). Parked until the factory itself is boringly stable — the show is only good if the machine is.
+
 ## Multiplayer ladder (each rung stands alone)
 1. **Human + agent co-op** — IS M4 (lane B running). The two-actor model everything else grows from.
 2. **Many actors, one machine** — M6 recruited agents already gives "multiplayer with agents" locally (playbook-driven actors through the SAME typed tool surface).
