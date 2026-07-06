@@ -39,6 +39,9 @@ Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGP
 | vfx.death_poof / vfx.levelup_flourish (one-shot 3x2 FX sheets, NEW s40) | procedural (CombatVfx puffs/ticks/rings) | batch-005 (prompts ✓ s40) | — | — | — |
 | vfx.bolt | emissive sphere + tracer | stays procedural | n/a | n/a | n/a |
 | ui.font.display / ui.font.body | system serif | n/a — font files (Rye/Wellfleet), not GPT Image | n/a | n/a | n/a |
+| town.bld.{tavern,general_store,claim_office,schoolhouse,chapel} (S2 Town v1) | (none — M6 town unbuilt) | run-003 (task 029) | ✓ 2026-07-06 (1024², gray-bg cutouts, QA `codex-art-run-003.md`) | ✓ 2026-07-06 s64 (5 cutouts @1024, key 8a8a8a, keyed 49–55%, corners transparent, warm windows preserved) | **DEFERRED to M6** — no consumer/slot yet; contract wiring waits for the town-render slice so the schema matches the actual consumer (§7 slots-before-wiring). Visual PASS `reviews/shots-art-run-004/town-buildings-montage.png` |
+| town.folk.{tavernkeeper,storekeeper,assay_clerk,schoolteacher,preacher,elder,youngster_a,youngster_b} (S2 Town v1) | (none — M6 town unbuilt) | run-003 (task 029) | ✓ 2026-07-06 (768², gray-bg portrait cutouts, QA `codex-art-run-003.md`) | ✓ 2026-07-06 s64 (8 cutouts @768, key 8a8a8a, keyed 42–60%, portraits intact) | **DEFERRED to M6** — no consumer yet. Warm ledger-engraving faces, diverse ages, no caricature/text/weapons (canon §9). Visual PASS `town-folk-montage.png` |
+| town.tavern.interior_backdrop (S2 Town v1) | (none — M6 town unbuilt) | run-003 (task 029) | ✓ 2026-07-06 (1536×1024, QA `codex-art-run-003.md`) | ✓ 2026-07-06 s64 (full-bleed, no keying, 1536×1024 preserved) | **DEFERRED to M6** — no consumer yet. Warm interior, hearth, bar, notice board empty of text. Visual PASS (viewed in-drain) |
 
 ## Batch queue
 
