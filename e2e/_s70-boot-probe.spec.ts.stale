@@ -1,0 +1,14 @@
+import { test, expect } from '@playwright/test';
+
+// s70 temp boot probe for the 027 drain — zero console/page errors at boot,
+// desktop + 390px. Deleted after the gate.
+test('boot: zero console/page errors and canvas renders', async ({ page }, testInfo) => {
+  const errors: string[] = [];
+  page.on('console', (m) => { if (m.type() === 'error') errors.push(m.text()); });
+  page.on('pageerror', (e) => errors.push(String(e)));
+  await page.goto('/');
+  await page.waitForSelector('canvas', { timeout: 15_000 });
+  await page.waitForTimeout(2500);
+  await page.screenshot({ path: `reviews/shots-027/boot-${testInfo.project.name}.png` });
+  expect(errors, `console/page errors:\n${errors.join('\n')}`).toEqual([]);
+});

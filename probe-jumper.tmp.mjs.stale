@@ -1,0 +1,14 @@
+import { chromium } from '@playwright/test';
+const b = await chromium.launch({ executablePath: '/tmp/pw-browsers/chromium-1228/chrome-linux/chrome' });
+const page = await (await b.newContext({ viewport:{width:1280,height:800} })).newPage();
+const errs=[]; page.on('pageerror',e=>errs.push(String(e))); page.on('console',m=>{if(m.type()==='error')errs.push(m.text())});
+await page.goto('http://localhost:5199/?debug&timescale=6&nowaves&nolevel&nokill&seed=probe');
+await page.waitForFunction(()=>window.__THREE_GAME_DIAGNOSTICS__ && window.__GR_TEST__, null, {timeout:15000});
+await page.evaluate(()=>{ window.__GR_TEST__?.setBalance('enemy.speed',0.25); window.__GR_TEST__?.setBalance('enemy.hp',999); window.__GR_TEST__?.teleport?.(0,0); });
+await page.evaluate(()=>window.__GR_TEST__?.clearEnemies());
+await page.evaluate(()=>window.__GR_TEST__?.spawnEnemyAt(-10,0)); // approaching from west -> walks east
+await page.waitForTimeout(2500);
+const snap = await page.evaluate(()=>window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations?.['char.claim_jumper']);
+console.log('SNAPSHOT:', JSON.stringify(snap,null,1));
+console.log('ERRORS:', errs.slice(0,3));
+await b.close();

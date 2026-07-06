@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.goldrush.dashboard</string>
+  <key>ProgramArguments</key>
+  <array>
+    <string>/bin/bash</string>
+    <string>/Users/robin/Claude/Projects/Gold Rush/scripts/dashboard-gen.sh</string>
+  </array>
+  <key>StartInterval</key>
+  <integer>60</integer>
+  <key>RunAtLoad</key>
+  <true/>
+  <key>WorkingDirectory</key>
+  <string>/Users/robin/Claude/Projects/Gold Rush</string>
+  <key>StandardOutPath</key>
+  <string>/Users/robin/Claude/Projects/Gold Rush/logs/dashboard-launchd.log</string>
+  <key>StandardErrorPath</key>
+  <string>/Users/robin/Claude/Projects/Gold Rush/logs/dashboard-launchd.log</string>
+</dict>
+</plist>
