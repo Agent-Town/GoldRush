@@ -13,6 +13,7 @@ type HpEntry = {
   effectiveDamage?: number;
   effectiveFireRate?: number;
   panRateMult?: number;
+  yieldPerCycle?: number;
   position: { x: number; z: number };
 };
 
@@ -88,6 +89,21 @@ async function setBalance(page: Page, path: string, value: number): Promise<void
   await expect(page.evaluate(([key, next]) => window.__GR_TEST__?.setBalance(key, next), [path, value] as const)).resolves.toBe(true);
 }
 
+function sluiceRate(entry: HpEntry): number {
+  return (entry.yieldPerCycle ?? 0) * (entry.panRateMult ?? 1);
+}
+
+async function firstSluiceAmounts(page: Page, ids: string[]): Promise<Record<string, number | null>> {
+  return page.evaluate((sluiceIds) => {
+    const amounts = Object.fromEntries(sluiceIds.map((id) => [id, null])) as Record<string, number | null>;
+    for (const event of (window.__GR_TEST__?.economyLog() ?? []) as Array<{ type?: string; sluiceId?: string; amount?: number }>) {
+      if (event.type !== 'gold_sluiced' || !event.sluiceId || !sluiceIds.includes(event.sluiceId)) continue;
+      amounts[event.sluiceId] ??= event.amount ?? 0;
+    }
+    return amounts;
+  }, ids);
+}
+
 async function ghostValidAt(page: Page, id: BuildableId, x: number, z: number): Promise<boolean> {
   await teleport(page, x, z + 2);
   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
@@ -105,6 +121,23 @@ async function ghostValidAt(page: Page, id: BuildableId, x: number, z: number): 
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false);
 }
 
+test('every buyable tier rung changes a live stat', () => {
+  const stats = {
+    palisade: ['maxHpMult'],
+    sluice: ['panRateMult', 'yieldMult'],
+    turret: ['damageMult', 'fireRateMult'],
+  } as const;
+
+  for (const id of Object.keys(stats) as Array<keyof typeof stats>) {
+    const rows = Balance.tiers[id] as readonly Record<string, number>[];
+    for (let tier = 1; tier < rows.length; tier += 1) {
+      if ((rows[tier]?.cost ?? 0) <= 0) continue;
+      const changed = stats[id].some((stat) => rows[tier]?.[stat] !== rows[tier - 1]?.[stat]);
+      expect(changed, `${id} tier ${tier + 1} changes a stat`).toBe(true);
+    }
+  }
+});
+
 test('turret tier raises live damage and spends the exact tier-2 cost', async ({ page }) => {
   const errors = await openGame(page, 'bt-01-turret');
   await grantGold(page, 300);
@@ -112,6 +145,7 @@ test('turret tier raises live damage and spends the exact tier-2 cost', async ({
   const before = (await hpEntry(page, 'turret', turret.index))!;
   expect(before.tier).toBe(1);
   expect(before.effectiveDamage).toBe(Balance.turret.damage);
+  expect(before.effectiveFireRate).toBe(Balance.turret.fireRate);
 
   await teleport(page, turret.position.x, turret.position.z);
   await expect(page.getByTestId('upgrade-prompt')).toBeVisible();
@@ -126,6 +160,10 @@ test('turret tier raises live damage and spends the exact tier-2 cost', async ({
   expect(await baseValue(page)).toBe(Balance.turret.costBase + Balance.tiers.turret[1].cost);
   expect(after.effectiveDamage).toBeGreaterThan(before.effectiveDamage ?? 0);
   expect(after.effectiveDamage).toBeCloseTo(Balance.turret.damage * Balance.tiers.turret[1].damageMult, 5);
+  expect(after.effectiveFireRate).toBeCloseTo(Balance.turret.fireRate * Balance.tiers.turret[1].fireRateMult, 5);
+  expect((after.effectiveDamage ?? 0) * (after.effectiveFireRate ?? 0)).toBeGreaterThanOrEqual(
+    (before.effectiveDamage ?? 0) * (before.effectiveFireRate ?? 0) * 1.5,
+  );
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
@@ -139,40 +177,55 @@ test('palisade tier raises max HP, heals, and wears only below half the new max'
   await expect(upgrade(page, palisade)).resolves.toBe(true);
   const upgraded = (await hpEntry(page, 'palisade', palisade.index))!;
   expect(upgraded.tier).toBe(2);
-  expect(upgraded.maxHp).toBe(96);
+  expect(upgraded.maxHp).toBe(Math.round(Balance.wreck.hp.palisade * Balance.tiers.palisade[1].maxHpMult));
+  expect(upgraded.maxHp / palisade.maxHp).toBeGreaterThanOrEqual(1.75);
   expect(upgraded.hp).toBe(upgraded.maxHp);
   expect(upgraded.worn).toBe(false);
 
   await setBalance(page, 'enemy.contactDamage', 0);
-  await setBalance(page, 'wreck.damage', 46);
+  const firstDamage = Math.floor(upgraded.maxHp / 2) - 1;
+  await setBalance(page, 'wreck.damage', firstDamage);
   await setBalance(page, 'wreck.hitCooldown', 999);
   await teleport(page, 0, -5);
   await expect(page.evaluate(() => window.__GR_TEST__?.spawnWrecker('south'))).resolves.toBe(true);
-  await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(50);
+  const aboveHalfHp = upgraded.maxHp - firstDamage;
+  await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(aboveHalfHp);
   expect((await hpEntry(page, 'palisade', palisade.index))?.worn).toBe(false);
 
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
-  await setBalance(page, 'wreck.damage', 5);
+  await setBalance(page, 'wreck.damage', 2);
   await expect(page.evaluate(() => window.__GR_TEST__?.spawnWrecker('south'))).resolves.toBe(true);
-  await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(45);
+  await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(aboveHalfHp - 2);
   expect((await hpEntry(page, 'palisade', palisade.index))?.worn).toBe(true);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('sluice tier raises the pan-rate multiplier the sluice reads', async ({ page }) => {
+test('sluice tier raises pan-out yield and out-earns two tier-1 rates', async ({ page }) => {
   const errors = await openGame(page, 'bt-01-sluice');
-  await grantGold(page, 300);
-  const sluice = await placeBuildableAt(page, 'sluice', 0, 7);
-  const before = (await hpEntry(page, 'sluice', sluice.index))!;
+  await grantGold(page, 200);
+  const tier1 = await placeBuildableAt(page, 'sluice', -2, 7);
+  const tier2 = await placeBuildableAt(page, 'sluice', 2, 7);
+  const before = (await hpEntry(page, 'sluice', tier1.index))!;
   expect(before.panRateMult).toBe(1);
+  expect(before.yieldPerCycle).toBe(Balance.sluice.goldPerCycle);
 
-  await expect(upgrade(page, sluice)).resolves.toBe(true);
-  const after = (await hpEntry(page, 'sluice', sluice.index))!;
+  await expect(upgrade(page, tier2)).resolves.toBe(true);
+  const after = (await hpEntry(page, 'sluice', tier2.index))!;
   expect(after.tier).toBe(2);
   expect(after.panRateMult).toBe(Balance.tiers.sluice[1].panRateMult);
-  const sluiceState = await page.evaluate((index) => window.__THREE_GAME_DIAGNOSTICS__?.build.sluicesState[index]?.panRateMult ?? 0, sluice.index);
-  expect(sluiceState).toBe(Balance.tiers.sluice[1].panRateMult);
+  expect(after.yieldPerCycle).toBe(Math.round(Balance.sluice.goldPerCycle * Balance.tiers.sluice[1].yieldMult));
+  expect(sluiceRate(after)).toBeGreaterThan(sluiceRate(before) * 2);
+
+  const sluiceState = await page.evaluate((index) => window.__THREE_GAME_DIAGNOSTICS__?.build.sluicesState[index], tier2.index);
+  expect(sluiceState?.panRateMult).toBe(Balance.tiers.sluice[1].panRateMult);
+  expect(sluiceState?.yieldPerCycle).toBe(after.yieldPerCycle);
+
+  const tier1Id = `sluice-${tier1.index + 1}`;
+  const tier2Id = `sluice-${tier2.index + 1}`;
+  await expect
+    .poll(() => firstSluiceAmounts(page, [tier1Id, tier2Id]), { timeout: 8_000 })
+    .toEqual({ [tier1Id]: before.yieldPerCycle, [tier2Id]: after.yieldPerCycle });
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
@@ -211,6 +264,22 @@ test('tier cap stops at tier 3 without extra spend', async ({ page }) => {
   await expect(upgrade(page, turret)).resolves.toBe(false);
   expect(await gold(page)).toBe(beforeGold);
   expect((await hpEntry(page, 'turret', turret.index))?.tier).toBe(3);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('demolish refund includes tier investment', async ({ page }) => {
+  const errors = await openGame(page, 'bt-01-refund');
+  await grantGold(page, Balance.turret.costBase + Balance.tiers.turret[1].cost);
+  const turret = await placeBuildableAt(page, 'turret', 0, 12);
+  await expect(upgrade(page, turret)).resolves.toBe(true);
+
+  await teleport(page, turret.position.x, turret.position.z);
+  await expect(page.evaluate(([id, index]) => window.__GR_TEST__?.demolish(id, index) ?? false, [turret.id, turret.index] as const)).resolves.toBe(true);
+
+  const invested = Balance.turret.costBase + Balance.tiers.turret[1].cost;
+  expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * invested));
+  await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

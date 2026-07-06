@@ -247,6 +247,7 @@ interface ThreeGameDiagnostics {
       position: { x: number; z: number };
       progress: number;
       panRateMult: number;
+      yieldPerCycle: number;
       contested: boolean;
       capped: boolean;
     }>;
@@ -270,6 +271,7 @@ interface ThreeGameDiagnostics {
       effectiveDamage?: number;
       effectiveFireRate?: number;
       panRateMult?: number;
+      yieldPerCycle?: number;
       repairProgress: number;
       position: { x: number; z: number };
     }>;

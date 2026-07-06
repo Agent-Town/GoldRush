@@ -196,13 +196,13 @@ export const Balance = {
   tiers: {
     palisade: [
       { cost: 0, maxHpMult: 1 },
-      { cost: 90, maxHpMult: 1.6 },
-      { cost: 250, maxHpMult: 2.4 },
+      { cost: 90, maxHpMult: 1.75 },
+      { cost: 250, maxHpMult: 3.1 },
     ],
     sluice: [
-      { cost: 0, panRateMult: 1 },
-      { cost: 120, panRateMult: 1.35 },
-      { cost: 320, panRateMult: 1.9 },
+      { cost: 0, panRateMult: 1, yieldMult: 1 },
+      { cost: 120, panRateMult: 1.35, yieldMult: 1.7 },
+      { cost: 320, panRateMult: 1.9, yieldMult: 2.7 },
     ],
     turret: [
       { cost: 0, damageMult: 1, fireRateMult: 1 },
