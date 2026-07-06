@@ -192,7 +192,7 @@ export class GeneratedSpriteBatch {
   set(index: number, position: THREE.Vector3, visible: boolean): void {
     const sprite = this.sprites[index];
     if (!sprite) return;
-    sprite.position.set(position.x, this.options.y, position.z);
+    sprite.position.set(position.x, position.y + this.options.y, position.z);
     this.requestedVisible[index] = visible;
     sprite.visible = visible && this.loaded;
     this.updateRenderedCount();

@@ -365,6 +365,7 @@ export class Game {
       window.__GR_TEST__ = {
         teleport: (x: number, z: number) => {
           this.hero.group.position.set(x, this.hero.group.position.y, z);
+          this.syncHeroVisualHeight();
           this.hero.velocity.set(0, 0, 0);
         },
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
@@ -415,6 +416,7 @@ export class Game {
             .filter((enemy) => enemy.isAlive)
             .map((enemy) => ({
               x: enemy.position.x,
+              y: enemy.position.y,
               z: enemy.position.z,
               id: enemy.id,
               hp: enemy.currentHp,
@@ -618,6 +620,7 @@ export class Game {
 
   private updatePresentation(delta: number): void {
     this.vfx.update(delta);
+    this.syncHeroVisualHeight();
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
@@ -720,6 +723,7 @@ export class Game {
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.hero.group.position.copy(this.heroStart);
+    this.syncHeroVisualHeight();
     this.scene.add(this.hero.group);
   }
 
@@ -811,6 +815,11 @@ export class Game {
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
+        height: {
+          ...Terrain.heightDiagnostics(),
+          heroGround: Terrain.sampleHeight(this.hero.group.position.x, this.hero.group.position.z),
+          heroVisualY: this.hero.group.position.y,
+        },
         probes: {
           bank: Terrain.sample(-12, -12),
           shallows: Terrain.sample(-12, -5.5),
@@ -946,6 +955,7 @@ export class Game {
     this.wetPowderHintCooldown = 0;
     this.progression.reset();
     this.hero.resetRun(this.heroStart);
+    this.syncHeroVisualHeight();
     this.cameraRig.snapTo(this.hero.group.position);
     this.timeAlive = 0;
     this.kills = 0;
@@ -1008,7 +1018,7 @@ export class Game {
       const snapshot = snapshots[i];
       holding.active = snapshot?.active === true;
       holding.amount = holding.active ? this.economy.gold : 0;
-      if (snapshot) holding.position.set(snapshot.position.x, Balance.enemy.groundY, snapshot.position.z);
+      if (snapshot) holding.position.set(snapshot.position.x, Terrain.visualY(snapshot.position.x, snapshot.position.z, Balance.enemy.groundY), snapshot.position.z);
     }
   }
 
@@ -1231,6 +1241,10 @@ export class Game {
   private blockedGoldPickup(position: THREE.Vector3): void {
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'gold_capped', amount: 0 });
     this.vfx.floatText(position, 'Vault full!', '#a0522d');
+  }
+
+  private syncHeroVisualHeight(): void {
+    this.hero.group.position.y = Terrain.visualY(this.hero.group.position.x, this.hero.group.position.z, this.heroStart.y);
   }
 
   private stealDiagnostics(): {

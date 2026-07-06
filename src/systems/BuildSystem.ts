@@ -388,7 +388,11 @@ export class BuildSystem {
     if (!this.mode) return;
     this.updateGhostPosition();
     this.valid = this.computeValid();
-    this.ghost.position.copy(this.ghostPos);
+    this.ghost.position.set(
+      this.ghostPos.x,
+      this.visualYFor(this.selectedId, this.ghostPos, this.ghostRotationSteps),
+      this.ghostPos.z,
+    );
     this.ghost.rotation.y = this.ghostRotationSteps * (Math.PI / 2);
     this.ghostMaterial.color.copy(this.valid ? validColor : invalidColor);
     this.ghostMaterial.emissive.copy(this.valid ? validColor : invalidColor);
@@ -664,6 +668,11 @@ export class BuildSystem {
     return rotationSteps % 2 === 1 ? { w: footprint.d, d: footprint.w } : footprint;
   }
 
+  private visualYFor(id: BuildableId, position: THREE.Vector3, rotationSteps = 0, base = 0): number {
+    const half = this.footprintHalfExtents(id, rotationSteps);
+    return Terrain.visualY(position.x, position.z, base, Math.max(half.x, half.z));
+  }
+
   private snap(position: THREE.Vector3): void {
     const snap = Balance.beacon.gridSnap;
     position.x = Math.round(position.x / snap) * snap;
@@ -754,7 +763,7 @@ export class BuildSystem {
     const target = this.targets[id][index];
     const position = this.positionFor(id, index);
     if (!target || !position) return;
-    target.position.copy(position);
+    target.position.set(position.x, this.visualYFor(id, position, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0), position.z);
     const half = this.footprintHalfExtents(id, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0);
     target.halfX = half.x;
     target.halfZ = half.z;
@@ -918,7 +927,7 @@ export class BuildSystem {
     if (!position) return;
 
     this.repairRing.visible = true;
-    this.repairRing.position.set(position.x, 0.1, position.z);
+    this.repairRing.position.set(position.x, this.visualYFor(bestId, position, bestId === 'palisade' ? this.palisades.rotationStepsAt(bestIndex) : 0, 0.1), position.z);
     this.repairRing.rotation.y = at * 0.8;
     this.repairRing.scale.setScalar(1 + Math.sin(at * 8.5 + bestIndex) * 0.04);
 
@@ -1004,7 +1013,7 @@ export class BuildSystem {
   }
 
   private syncHpBar(slot: number, position: THREE.Vector3, ratio: number): void {
-    this.visualObject.position.set(position.x, 1.46, position.z);
+    this.visualObject.position.set(position.x, Terrain.visualY(position.x, position.z, 1.46, 0.7), position.z);
     this.visualObject.rotation.set(0, 0, 0);
     this.visualObject.scale.set(Math.max(0.04, 0.92 * ratio), 0.08, 0.08);
     this.visualObject.updateMatrix();
@@ -1014,7 +1023,7 @@ export class BuildSystem {
 
   private syncRubble(slot: number, id: BuildableId, index: number, position: THREE.Vector3): void {
     const footprint = this.footprint(getBuildableDef(id), id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0);
-    this.visualObject.position.set(position.x, 0.08, position.z);
+    this.visualObject.position.set(position.x, this.visualYFor(id, position, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0, 0.08), position.z);
     this.visualObject.rotation.set(0, id === 'palisade' ? this.palisades.rotationStepsAt(index) * (Math.PI / 2) : 0, 0);
     this.visualObject.scale.set(Math.max(0.5, footprint.w * 0.72), 0.14, Math.max(0.5, footprint.d * 0.72));
     this.visualObject.updateMatrix();
@@ -1072,7 +1081,7 @@ export class BuildSystem {
     if (this.assayOfficeActive) return -1;
     this.assayOfficeActive = true;
     this.assayOfficePosition.copy(position);
-    this.assayOffice.position.copy(position);
+    this.assayOffice.position.set(position.x, this.visualYFor('assay_office', position), position.z);
     this.assayOffice.visible = true;
     return 0;
   }

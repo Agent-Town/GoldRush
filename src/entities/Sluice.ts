@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import type { ClaimJumperEnemy } from './Enemy';
 import { Balance } from '../game/Balance';
 import type { Economy } from '../game/Economy';
+import * as Terrain from '../world/Terrain';
 
 export type SluiceSnapshot = {
   id: string;
@@ -192,7 +193,8 @@ export class SluicePool {
   private syncTrough(index: number): void {
     const position = this.positions[index];
     if (!position) return;
-    this.syncObject.position.set(position.x, 0.2, position.z);
+    const groundY = Terrain.visualY(position.x, position.z, 0, 0.9);
+    this.syncObject.position.set(position.x, groundY + 0.2, position.z);
     this.syncObject.rotation.set(0, 0.08, 0);
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
@@ -206,7 +208,8 @@ export class SluicePool {
     }
     const position = this.positions[index];
     if (!position) return;
-    this.syncObject.position.set(position.x, 0.39 + Math.sin(at * 3.2 + index) * 0.018, position.z);
+    const groundY = Terrain.visualY(position.x, position.z, 0, 0.9);
+    this.syncObject.position.set(position.x, groundY + 0.39 + Math.sin(at * 3.2 + index) * 0.018, position.z);
     this.syncObject.rotation.set(0, 0.08, 0);
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();

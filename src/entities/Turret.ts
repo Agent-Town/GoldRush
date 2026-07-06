@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 
@@ -100,7 +101,7 @@ export class TurretPool {
   private sync(index: number, at: number): void {
     const position = this.positions[index];
     if (!position) return;
-    this.syncObject.position.set(position.x, 0, position.z);
+    this.syncObject.position.set(position.x, Terrain.visualY(position.x, position.z, 0, Balance.turret.overlapRadius), position.z);
     this.syncObject.rotation.set(0, Math.sin(at * 0.9 + index) * 0.12, 0);
     this.syncObject.scale.setScalar(1);
     this.syncObject.updateMatrix();

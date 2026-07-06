@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 
 export class XpMotePool {
   readonly group = new THREE.Group();
@@ -50,7 +51,7 @@ export class XpMotePool {
       this.values[i] = value;
       this.age[i] = 0;
       this.alive += 1;
-      motePosition.set(position.x, 0.52, position.z);
+      motePosition.set(position.x, Terrain.visualY(position.x, position.z, 0.52), position.z);
       this.sync(i);
       this.mesh.instanceMatrix.needsUpdate = true;
       return true;
@@ -88,7 +89,7 @@ export class XpMotePool {
         position.x += (dx / distance) * speed * delta;
         position.z += (dz / distance) * speed * delta;
       }
-      position.y = 0.52 + Math.sin((this.age[i] ?? 0) * 8) * 0.07;
+      position.y = Terrain.visualY(position.x, position.z, 0.52 + Math.sin((this.age[i] ?? 0) * 8) * 0.07);
       this.sync(i);
     }
     this.mesh.instanceMatrix.needsUpdate = true;

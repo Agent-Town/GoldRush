@@ -285,6 +285,15 @@ interface ThreeGameDiagnostics {
   };
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+    height: {
+      min: number;
+      max: number;
+      segments: number;
+      waterY: number;
+      heroGround: number;
+      heroVisualY: number;
+      probes: Record<string, number>;
+    };
     probes: Record<string, {
       walkable: boolean;
       speedMul: number;
@@ -350,6 +359,7 @@ interface Window {
     enemyPositions: () => Array<{
       id: number;
       x: number;
+      y: number;
       z: number;
       hp: number;
       vx: number;
