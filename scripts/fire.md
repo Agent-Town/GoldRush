@@ -11,7 +11,8 @@ You are a scheduled FIRE: one autonomous build-loop increment for the Gold Rush 
 1. If STATUS.md line-1 starts with "ACTIVE" and the stamp is <45 min old: another fire is live — EXIT silently.
 2. Otherwise: rewrite line-1 to `ACTIVE <ISO-stamp> (s<N> fire) — <one-line intent>`, commit it (`s<N>: lock ACTIVE — <intent>`), and proceed. A >45-min-stale ACTIVE lock is dead: archive it honestly in your handoff and take over.
 
-## 2. Triage (strict order — first match wins, ONE major action per fire)
+## 2. Triage (strict order — first match wins; DRAIN BUDGET: up to 3 drains per fire or ~35 minutes, whichever first — owner throughput ruling 2026-07-06)
+Drains within one fire remain STRICTLY SERIAL: each one fully gated + committed before the next begins (never batch-gate). After each completed drain, refresh your line-1 ACTIVE stamp (keeps the 45-min staleness check honest) and re-triage from the top — a new failed run or fresher priority may outrank the queue you planned. Non-drain actions (bookkeeping, correctives, re-queues) don't count against the budget.
 A. **Uncommitted bookkeeping** (host-side STATUS/task edits from attended sessions): commit them first — this may be your whole first act some fires.
 B. **Runner output to drain**: done-moves in tasks/done/ newer than the last handoff, or dirty main from a finished main-slot task → GATE IT (see §3). One drain per fire. Priority: main-slot output > lane done-moves (serial, oldest first) > art raws processing.
 C. **Failed runs**: tasks/failed/ entries whose run log tail shows "turn interrupted" + large token count = Codex credit wall → re-queue from tasks/<name>.md master, at most once per fire; two consecutive interrupts on the same task = STOP and flag Robin in the handoff. Any other rc≠0: READ the log before deciding (real failures get findings written, not blind retries).
