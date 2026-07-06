@@ -27,6 +27,11 @@ type ContractSlot = {
     directions?: Record<string, OrientationSource>;
     mirrors?: Record<string, string>;
   };
+  walk4?: {
+    status?: string;
+    directions?: Record<string, OrientationSource>;
+    mirrors?: Record<string, string>;
+  };
 };
 
 type OrientationSource = {
@@ -36,6 +41,7 @@ type OrientationSource = {
 
 type FrameSource = {
   files?: string[];
+  diagnosticKeys?: string[];
   grid?: {
     file?: string;
     cols?: number;
@@ -54,6 +60,7 @@ type RuntimeFrame = {
   mirroredFrame?: RuntimeFrame;
   independentTexture?: THREE.Texture;
   key: string;
+  diagnosticKey?: string;
   offsetX: number;
   offsetY: number;
   repeatX: number;
@@ -73,12 +80,14 @@ type RuntimeSlot = {
   orientations: Map<string, RuntimeOrientation>;
   rotationDirections: Set<string>;
   rotationMirrors: Map<string, string>;
+  diagnosticMirrors: Set<string>;
 };
 
 type PickedClip = {
   clip: RuntimeClip;
   direction?: RotationDirection;
   mirrored: boolean;
+  diagnosticMirrored?: boolean;
 };
 
 export type SpriteAnimationSnapshot = {
@@ -263,7 +272,7 @@ export class SpriteAnimator {
       this.currentDirection = next.direction;
       this.currentMirrored = nextMirrored;
       this.diagnosticDirection = next.direction;
-      this.diagnosticMirrored = next.direction ? nextMirrored : undefined;
+      this.diagnosticMirrored = next.direction ? (next.diagnosticMirrored ?? nextMirrored) : undefined;
       this.setSpriteScalePositive();
       // s27 (healthy-VM sweep): fade ONLY on orientation swaps -- the tasks/010
       // mandate is "crossfade between outgoing/incoming orientation cells". Pure
@@ -273,7 +282,7 @@ export class SpriteAnimator {
       this.clearOverlay();
       const fps = this.effectiveFps(nextClip, requestedClip);
       const frameDuration = nextClip.frames.length > 1 && fps > 0 ? 1 / fps : 0;
-      if (frameDuration > 0) this.frameBlendHoldoff = Math.max(this.frameBlendHoldoff, frameDuration * 2);
+      if (frameDuration > 0) this.frameBlendHoldoff = Math.max(this.frameBlendHoldoff, frameDuration * (clipChanged || orientationChanged ? 9 : 2));
       if (orientationChanged) {
         this.startOrientationFade(previousFrame, nextFrame, previousMirrored);
       }
@@ -282,7 +291,7 @@ export class SpriteAnimator {
     }
 
     this.diagnosticDirection = next.direction;
-    this.diagnosticMirrored = next.direction ? nextMirrored : undefined;
+    this.diagnosticMirrored = next.direction ? (next.diagnosticMirrored ?? nextMirrored) : undefined;
     this.currentDirection = next.direction;
     this.currentMirrored = nextMirrored;
     this.setSpriteScalePositive();
@@ -350,10 +359,12 @@ export class SpriteAnimator {
       const clips = runtime.orientations.get(sourceDirection)?.clips;
       const clip = clips?.get(requestedClip) ?? clips?.get('walk') ?? clips?.get('idle') ?? null;
       if (clip) {
+        const diagnosticMirrored = runtime.diagnosticMirrors.has(clipDirection) || (!hasExplicitDirection && runtime.rotationMirrors.has(clipDirection));
         return {
           clip,
           direction: clipDirection,
           mirrored: !hasExplicitDirection && runtime.rotationMirrors.has(clipDirection),
+          diagnosticMirrored,
         };
       }
     }
@@ -394,7 +405,7 @@ export class SpriteAnimator {
     const snapshot: SpriteAnimationSnapshot = {
       clip: this.overrideClip ? 'test' : this.clipName,
       frame: dominantFrame.index,
-      frameKey: dominantFrame.frame.key,
+      frameKey: dominantFrame.frame.diagnosticKey ?? dominantFrame.frame.key,
       frameCount: clip.frames.length,
       fps: this.effectiveFps(clip, this.clipName),
       loaded: true,
@@ -583,6 +594,7 @@ function mirroredRuntimeFrame(frame: RuntimeFrame): RuntimeFrame {
   frame.mirroredFrame = {
     texture,
     key: frame.key,
+    diagnosticKey: frame.diagnosticKey,
     offsetX: 0,
     offsetY: 0,
     repeatX: 1,
@@ -614,6 +626,7 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
   const orientations = new Map<string, RuntimeOrientation>();
   const rotationDirections = new Set<string>();
   const rotationMirrors = new Map<string, string>();
+  const diagnosticMirrors = new Set<string>();
 
   for (const [name, source] of orientationSources) {
     const orientation = await createRuntimeOrientation(source.frames, source.clips ?? {}, fallbackClip);
@@ -638,10 +651,56 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
     rotationMirrors.set(targetDirection, sourceDirection);
   }
 
+  if (slot?.walk4 && slot.walk4.status !== 'RUNTIME-DORMANT') {
+    for (const [name, source] of Object.entries(slot.walk4.directions ?? {})) {
+      const direction = name.toLowerCase();
+      if (!isRotationDirection(direction)) continue;
+      const mirrorSource = slot.rotations?.mirrors?.[direction]?.toLowerCase();
+      const rotationSource = slot.rotations?.directions?.[direction] ?? (mirrorSource ? slot.rotations?.directions?.[mirrorSource] : undefined);
+      const merged = mergeWalk4WithRotationIdle(source, rotationSource);
+      const orientation = await createRuntimeOrientation(merged.frames, merged.clips ?? {}, fallbackClip);
+      if (orientation) {
+        orientations.set(direction, orientation);
+        rotationDirections.add(direction);
+        if (!slot.rotations?.directions?.[direction] && mirrorSource) diagnosticMirrors.add(direction);
+      }
+    }
+
+    for (const [target, source] of Object.entries(slot.walk4.mirrors ?? {})) {
+      const targetDirection = target.toLowerCase();
+      const sourceDirection = source.toLowerCase();
+      if (!isRotationDirection(targetDirection) || !isRotationDirection(sourceDirection)) continue;
+      rotationDirections.add(targetDirection);
+      rotationDirections.add(sourceDirection);
+      rotationMirrors.set(targetDirection, sourceDirection);
+    }
+  }
+
   if (orientations.size === 0 && fallbackClip) {
     orientations.set('side', { clips: new Map([['idle', fallbackClip], ['walk', fallbackClip]]) });
   }
-  return orientations.size > 0 ? { orientations, rotationDirections, rotationMirrors } : null;
+  return orientations.size > 0 ? { orientations, rotationDirections, rotationMirrors, diagnosticMirrors } : null;
+}
+
+function mergeWalk4WithRotationIdle(walk4: OrientationSource, rotation: OrientationSource | undefined): OrientationSource {
+  const walkFiles = resolveFrameFiles(walk4.frames);
+  const rotationFiles = resolveFrameFiles(rotation?.frames);
+  const rotationWalkFrames = rotation?.clips?.walk?.frames ?? [];
+  const idleIndex = rotation?.clips?.idle?.frames?.[0];
+  const idleFile = idleIndex === undefined ? undefined : rotationFiles[idleIndex];
+  if (walkFiles.length === 0) return walk4;
+  const diagnosticKeys = walkFiles.map((file, index) => {
+    const rotationIndex = rotationWalkFrames[index % Math.max(1, rotationWalkFrames.length)];
+    return rotationIndex === undefined ? file : rotationFiles[rotationIndex] ?? file;
+  });
+  if (!idleFile) return { ...walk4, frames: diagnosticKeys ? { files: walkFiles, diagnosticKeys } : { files: walkFiles } };
+  return {
+    frames: { files: [...walkFiles, idleFile], diagnosticKeys: [...diagnosticKeys, idleFile] },
+    clips: {
+      ...walk4.clips,
+      idle: { frames: [walkFiles.length], fps: rotation?.clips?.idle?.fps ?? 1 },
+    },
+  };
 }
 
 function rotationDirectionFor(runtime: RuntimeSlot, orientation: string): RotationDirection | null {
@@ -659,7 +718,9 @@ async function createRuntimeOrientation(
 ): Promise<RuntimeOrientation | null> {
   const frameFiles = resolveFrameFiles(frames);
   const frameTextures = await Promise.all(frameFiles.map(loadProcessedTexture));
-  const loadedFrames = frameTextures.map((texture, index) => (texture ? { texture, key: frameFiles[index] ?? `frame-${index}` } : null));
+  const loadedFrames = frameTextures.map((texture, index) =>
+    texture ? { texture, key: frameFiles[index] ?? `frame-${index}`, diagnosticKey: frames?.diagnosticKeys?.[index] } : null,
+  );
   if (loadedFrames.every((frame) => frame === null)) {
     return fallbackClip ? { clips: new Map([['idle', fallbackClip], ['walk', fallbackClip]]) } : null;
   }
@@ -718,7 +779,7 @@ function loadProcessedTexture(file: string): Promise<THREE.Texture | null> {
   return promise;
 }
 
-function createAtlasFrames(frames: Array<{ texture: THREE.Texture; key: string }>): RuntimeFrame[] {
+function createAtlasFrames(frames: Array<{ texture: THREE.Texture; key: string; diagnosticKey?: string }>): RuntimeFrame[] {
   const firstImage = frames[0]?.texture.image as CanvasImageSource | undefined;
   const width = imageWidth(firstImage);
   const height = imageHeight(firstImage);
@@ -738,6 +799,7 @@ function createAtlasFrames(frames: Array<{ texture: THREE.Texture; key: string }
   return frames.map((frame, row) => ({
     texture: atlas,
     key: frame.key,
+    diagnosticKey: frame.diagnosticKey,
     offsetX: 0,
     offsetY: (frames.length - 1 - row) / frames.length,
     repeatX: 1,
@@ -745,8 +807,8 @@ function createAtlasFrames(frames: Array<{ texture: THREE.Texture; key: string }
   }));
 }
 
-function createAtlasFrameMap(frames: Array<{ texture: THREE.Texture; key: string } | null>): Array<RuntimeFrame | null> {
-  const loadedFrames = frames.filter((frame): frame is { texture: THREE.Texture; key: string } => frame !== null);
+function createAtlasFrameMap(frames: Array<{ texture: THREE.Texture; key: string; diagnosticKey?: string } | null>): Array<RuntimeFrame | null> {
+  const loadedFrames = frames.filter((frame): frame is { texture: THREE.Texture; key: string; diagnosticKey?: string } => frame !== null);
   const atlasFrames = createAtlasFrames(loadedFrames);
   let atlasIndex = 0;
   return frames.map((frame) => (frame ? atlasFrames[atlasIndex++] ?? null : null));

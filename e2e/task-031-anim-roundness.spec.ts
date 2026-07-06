@@ -93,7 +93,7 @@ async function releaseStick(page: Page): Promise<void> {
   await releaseMoveKeys(page);
 }
 
-async function waitForSprite(page: Page, slot: string, frameCount = 2): Promise<void> {
+async function waitForSprite(page: Page, slot: string, frameCount = 4): Promise<void> {
   await page.waitForFunction(
     ({ wantedSlot, wantedFrames }) => {
       const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations[wantedSlot] as
@@ -199,8 +199,8 @@ test('default frame blending and gait motion are active for hero and bandits', a
   expect(idleHero.frameBlendActive).toBe(false);
   expect(idleHero.fadeActive).toBe(false);
 
-  expect(hero.frameCount).toBeGreaterThanOrEqual(2);
-  expect(hero.fps).toBeCloseTo(5.5, 1);
+  expect(hero.frameCount).toBe(4);
+  expect(hero.fps).toBeCloseTo(9.5, 1);
   expect(hero.sawFrameBlend).toBe(true);
   expect(hero.maxBob).toBeGreaterThan(0.015);
   expect(hero.maxLean).toBeGreaterThan(1);
@@ -208,8 +208,8 @@ test('default frame blending and gait motion are active for hero and bandits', a
   await expect(page.evaluate(() => window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 4))).resolves.toBe(true);
   await waitForSprite(page, 'char.claim_jumper');
   const enemy = await collectSpriteSamples(page, 'char.claim_jumper', 1_100);
-  expect(enemy.frameCount).toBeGreaterThanOrEqual(2);
-  expect(enemy.fps).toBeCloseTo(5.5, 1);
+  expect(enemy.frameCount).toBe(4);
+  expect(enemy.fps).toBeCloseTo(9.5, 1);
   expect(enemy.sawFrameBlend).toBe(true);
   expect(enemy.maxBob).toBeGreaterThan(0.015);
   expect(enemy.maxLean).toBeGreaterThan(1);
@@ -232,16 +232,28 @@ test('zeroed animation knobs preserve hard frameKey cycling', async ({ page }) =
   await setBalance(page, 'anim.walkFps', 0);
   await setBalance(page, 'anim.bobAmp', 0);
   await setBalance(page, 'anim.leanDeg', 0);
+  await showTouchStick(page);
+  await startStick(page, 0, 1);
+  await waitForSprite(page, 'char.hero', 4);
+  const realHero = await collectSpriteSamples(page, 'char.hero', 1_250);
+  await releaseStick(page);
+
+  expect(realHero.frameCount).toBe(4);
+  expect(realHero.fps).toBe(8);
+  expect(realHero.sawFrameBlend).toBe(false);
+  expect(realHero.maxFrameBlendWindow).toBe(0);
+  expect(realHero.maxBob).toBe(0);
+  expect(realHero.maxLean).toBe(0);
+
   const testFrames = ['#111111', '#333333', '#777777', '#bbbbbb'];
-  await page.evaluate((frames) => window.__GR_TEST__?.setTestClip('char.hero', frames, 4), testFrames);
+  await page.evaluate((frames) => window.__GR_TEST__?.setTestClip('char.hero', frames, 8), testFrames);
   await waitForSprite(page, 'char.hero', 4);
 
-  await showTouchStick(page);
   await startStick(page, 0, 1);
   const hero = await collectSpriteSamples(page, 'char.hero', 1_250);
   await releaseStick(page);
 
-  expect(hero.fps).toBe(4);
+  expect(hero.fps).toBe(8);
   expect(hero.sawFrameBlend).toBe(false);
   expect(hero.maxFrameBlendWindow).toBe(0);
   expect(hero.maxBob).toBe(0);

@@ -50,6 +50,20 @@ async function openGame(page: Page, seed: string): Promise<ErrorBucket> {
   return errors;
 }
 
+const MOVE_KEYS = ['KeyW', 'KeyA', 'KeyS', 'KeyD'] as const;
+
+async function pressMoveKeys(page: Page, x: number, y: number): Promise<void> {
+  const absX = Math.abs(x);
+  const absY = Math.abs(y);
+  const diagonal = absX > 0.3 && absY > 0.3 && Math.min(absX, absY) / Math.max(absX, absY) >= 0.55;
+  if (absY > 0.3 && (diagonal || absY >= absX)) await page.keyboard.down(y > 0 ? 'KeyS' : 'KeyW');
+  if (absX > 0.3 && (diagonal || absX >= absY)) await page.keyboard.down(x > 0 ? 'KeyD' : 'KeyA');
+}
+
+async function releaseMoveKeys(page: Page): Promise<void> {
+  for (const key of MOVE_KEYS) await page.keyboard.up(key);
+}
+
 async function moveStick(page: Page, x: number, y: number, steps = 4): Promise<void> {
   const box = await page.locator('#touch-stick').boundingBox();
   expect(box).not.toBeNull();
@@ -57,6 +71,8 @@ async function moveStick(page: Page, x: number, y: number, steps = 4): Promise<v
   const length = Math.hypot(x, y) || 1;
   const radius = box.width * 0.36;
   await page.mouse.move(box.x + box.width / 2 + (x / length) * radius, box.y + box.height / 2 + (y / length) * radius, { steps });
+  await releaseMoveKeys(page);
+  await pressMoveKeys(page, x, y);
 }
 
 async function startStick(page: Page, x: number, y: number): Promise<void> {
@@ -70,6 +86,7 @@ async function startStick(page: Page, x: number, y: number): Promise<void> {
 
 async function releaseStick(page: Page): Promise<void> {
   await page.mouse.up();
+  await releaseMoveKeys(page);
 }
 
 async function waitForHero(page: Page, direction: string, clip = 'walk'): Promise<SpriteSnapshot> {
