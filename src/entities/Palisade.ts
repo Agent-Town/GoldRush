@@ -21,6 +21,9 @@ const braceNormalColor = new THREE.Color(brass);
 const postWornColor = new THREE.Color('#92704a');
 const railWornColor = new THREE.Color('#7a5132');
 const braceWornColor = new THREE.Color('#5d5630');
+const postTierColors = [postNormalColor, new THREE.Color('#d9b77d'), new THREE.Color('#ffe4a0')];
+const railTierColors = [railNormalColor, new THREE.Color('#b9824c'), new THREE.Color('#c4883a')];
+const braceTierColors = [braceNormalColor, new THREE.Color('#9f8f4a'), new THREE.Color('#5b8a8a')];
 
 export class PalisadePool {
   readonly group = new THREE.Group();
@@ -29,6 +32,7 @@ export class PalisadePool {
   private readonly positions: THREE.Vector3[] = [];
   private readonly rotationSteps: number[] = [];
   private readonly worn: boolean[] = [];
+  private readonly tiers: number[] = [];
   private readonly blockers: PalisadeBlockerSlot[] = [];
   private readonly postGeometry = new THREE.BoxGeometry(0.16, 0.92, 0.16);
   private readonly railGeometry = new THREE.BoxGeometry(0.18, 0.16, Balance.palisade.depth);
@@ -54,6 +58,7 @@ export class PalisadePool {
       this.positions.push(new THREE.Vector3());
       this.rotationSteps.push(0);
       this.worn.push(false);
+      this.tiers.push(1);
       this.hide(i);
       this.syncColors(i);
     }
@@ -90,6 +95,16 @@ export class PalisadePool {
     this.syncColors(index);
   }
 
+  isWorn(index: number): boolean {
+    return this.worn[index] === true;
+  }
+
+  setTier(index: number, tier: number): void {
+    if (index < 0 || index >= this.tiers.length) return;
+    this.tiers[index] = Math.max(1, Math.min(3, Math.floor(tier)));
+    this.syncColors(index);
+  }
+
   place(position: THREE.Vector3, rotationSteps = 0): number {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
@@ -97,6 +112,7 @@ export class PalisadePool {
       this.positions[i]?.copy(position);
       this.rotationSteps[i] = rotationSteps % 4;
       this.worn[i] = false;
+      this.tiers[i] = 1;
       const rotated = this.rotationSteps[i] % 2 === 1;
       this.blockers[i] = {
         x: position.x,
@@ -117,6 +133,7 @@ export class PalisadePool {
     this.active[index] = false;
     this.rotationSteps[index] = 0;
     this.worn[index] = false;
+    this.tiers[index] = 1;
     this.blockers[index] = undefined;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
@@ -129,6 +146,7 @@ export class PalisadePool {
       this.active[i] = false;
       this.rotationSteps[i] = 0;
       this.worn[i] = false;
+      this.tiers[i] = 1;
       this.hide(i);
       this.syncColors(i);
     }
@@ -186,9 +204,10 @@ export class PalisadePool {
 
   private syncColors(index: number): void {
     const worn = this.worn[index] === true;
-    const postColor = worn ? postWornColor : postNormalColor;
-    const railColor = worn ? railWornColor : railNormalColor;
-    const braceColor = worn ? braceWornColor : braceNormalColor;
+    const tierIndex = Math.max(0, Math.min(2, (this.tiers[index] ?? 1) - 1));
+    const postColor = worn ? postWornColor : (postTierColors[tierIndex] ?? postTierColors[0]);
+    const railColor = worn ? railWornColor : (railTierColors[tierIndex] ?? railTierColors[0]);
+    const braceColor = worn ? braceWornColor : (braceTierColors[tierIndex] ?? braceTierColors[0]);
     this.posts.setColorAt(index * 2, postColor);
     this.posts.setColorAt(index * 2 + 1, postColor);
     this.rails.setColorAt(index * 2, railColor);

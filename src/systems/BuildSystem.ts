@@ -59,9 +59,14 @@ export type BuildDiagnostics = {
   hp: Array<{
     id: BuildableId;
     index: number;
+    tier: number;
     hp: number;
     maxHp: number;
     wrecked: boolean;
+    worn: boolean;
+    effectiveDamage?: number;
+    effectiveFireRate?: number;
+    panRateMult?: number;
     repairProgress: number;
     position: { x: number; z: number };
   }>;
@@ -79,6 +84,7 @@ export type BuildDiagnostics = {
   shooterRegistrations: number;
   turretPulses: number;
   activeTurretPulses: number;
+  tierUpgrades: number;
   repairs: number;
   repairGold: number;
 };
@@ -91,12 +97,27 @@ export type DemolishCandidate = {
   position: { x: number; z: number };
 };
 
+export type UpgradeCandidate = {
+  id: BuildableId;
+  index: number;
+  displayName: string;
+  tier: number;
+  maxTier: number;
+  nextTier: number | null;
+  cost: number;
+  canUpgrade: boolean;
+  reason: 'ready' | 'max' | 'insufficient_gold' | 'gated';
+  gain: string;
+  position: { x: number; z: number };
+};
+
 const validColor = new THREE.Color('#2f8f85');
 const invalidColor = new THREE.Color('#8a4a2a');
 const emptyPositions: Array<{ x: number; z: number }> = [];
 const emptySluiceSnapshots: SluiceSnapshot[] = [];
 const emptyStockpileSnapshots: StockpileSnapshot[] = [];
 const buildableIds: readonly BuildableId[] = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office'];
+const upgradeableBuildableIds = ['palisade', 'sluice', 'turret'] as const;
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const hpBackingColor = new THREE.Color('#f5e6c8');
 const hpInkColor = new THREE.Color('#3b2a1a');
@@ -110,6 +131,9 @@ const hpBarHeight = 0.18;
 const hpBarDepth = 0.075;
 
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
+type UpgradeableBuildableId = (typeof upgradeableBuildableIds)[number];
+type TierRung = (typeof Balance.tiers)[UpgradeableBuildableId][number];
+type TierStat = 'maxHpMult' | 'panRateMult' | 'damageMult' | 'fireRateMult';
 type BuildingDamageResult = {
   applied: boolean;
   family: string;
@@ -156,6 +180,7 @@ export class BuildSystem {
   private readonly visualObject = new THREE.Object3D();
   private readonly hp = createNumberStore();
   private readonly hpMax = createNumberStore();
+  private readonly tier = createNumberStore();
   private readonly buildCosts = createNumberStore();
   private readonly wrecked = createBooleanStore();
   private readonly repairProgress = createNumberStore();
@@ -207,6 +232,7 @@ export class BuildSystem {
   private activeRepairId: BuildableId | null = null;
   private activeRepairIndex = -1;
   private activeRepairBlocked = false;
+  private tierUpgrades = 0;
   private repairs = 0;
   private repairGold = 0;
 
@@ -367,6 +393,7 @@ export class BuildSystem {
       shooterRegistrations: this.shooterHandles.length,
       turretPulses: this.turrets.pulseCount,
       activeTurretPulses: this.turrets.activePulseCount,
+      tierUpgrades: this.tierUpgrades,
       repairs: this.repairs,
       repairGold: this.repairGold,
     };
@@ -409,7 +436,16 @@ export class BuildSystem {
     this.currentAt = at;
     this.beacons.update(at);
     this.turrets.update(at);
-    this.sluices.update(delta, at, enemies, this.economy, onSluiceGold, onBankFull, (index) => !this.wrecked.sluice[index]);
+    this.sluices.update(
+      delta,
+      at,
+      enemies,
+      this.economy,
+      onSluiceGold,
+      onBankFull,
+      (index) => !this.wrecked.sluice[index],
+      (index) => this.effectiveSluicePanRateMult(index),
+    );
     this.stockpiles.update(this.economy.gold, this.economy.bankCap);
     this.updateRepairs(delta, at);
     this.updateBuildingVisuals(at);
@@ -474,6 +510,7 @@ export class BuildSystem {
       for (let i = 0; i < this.hp[id].length; i += 1) {
         this.hp[id][i] = 0;
         this.hpMax[id][i] = 0;
+        this.tier[id][i] = 0;
         this.buildCosts[id][i] = 0;
         this.wrecked[id][i] = false;
         this.repairProgress[id][i] = 0;
@@ -506,6 +543,7 @@ export class BuildSystem {
     this.activeRepairBlocked = false;
     this.activeHpBars = 0;
     this.activeRuins = 0;
+    this.tierUpgrades = 0;
     this.repairs = 0;
     this.repairGold = 0;
     this.repairRing.visible = false;
@@ -515,8 +553,10 @@ export class BuildSystem {
 
   applyStats(beaconFireRateMult: number): void {
     this.beaconFireRateMult = beaconFireRateMult;
-    for (const handle of this.shooterHandles) {
-      handle.cooldown = 1 / (Balance.beacon.fireRate * this.beaconFireRateMult);
+    for (const id of buildableIds) {
+      for (let index = 0; index < this.shooterByInstance[id].length; index += 1) {
+        this.refreshShooterStats(id, index);
+      }
     }
   }
 
@@ -582,6 +622,66 @@ export class BuildSystem {
       }
     }
     return best;
+  }
+
+  nearestUpgradeableTo(position: THREE.Vector3, radius = Balance.demolish.interactRadius): UpgradeCandidate | null {
+    let best: UpgradeCandidate | null = null;
+    let bestDistanceSq = radius * radius;
+    for (const id of upgradeableBuildableIds) {
+      for (let index = 0; index < this.hp[id].length; index += 1) {
+        if (!this.isSlotActive(id, index)) continue;
+        const buildingPosition = this.positionFor(id, index);
+        if (!buildingPosition) continue;
+        const dx = buildingPosition.x - position.x;
+        const dz = buildingPosition.z - position.z;
+        const distanceSq = dx * dx + dz * dz;
+        if (distanceSq <= bestDistanceSq) {
+          const candidate = this.upgradeCandidate(id, index, buildingPosition);
+          if (!candidate) continue;
+          bestDistanceSq = distanceSq;
+          best = candidate;
+        }
+      }
+    }
+    return best;
+  }
+
+  upgradeBuilding(
+    id: BuildableId,
+    index: number,
+    at: number,
+    position: THREE.Vector3 = this.heroPosition,
+    radius = Balance.demolish.interactRadius,
+  ): boolean {
+    if (!isUpgradeableBuildable(id) || !this.isSlotActive(id, index) || this.wrecked[id][index]) return false;
+    const buildingPosition = this.positionFor(id, index);
+    if (!buildingPosition) return false;
+    const dx = buildingPosition.x - position.x;
+    const dz = buildingPosition.z - position.z;
+    if (dx * dx + dz * dz > radius * radius) return false;
+
+    const candidate = this.upgradeCandidate(id, index, buildingPosition);
+    if (!candidate?.canUpgrade || candidate.nextTier === null) return false;
+
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at,
+      type: 'gold_spent',
+      sink: upgradeSink(id),
+      amount: candidate.cost,
+    });
+    if (!result.ok) return false;
+
+    this.tier[id][index] = candidate.nextTier;
+    this.buildCosts[id][index] = (this.buildCosts[id][index] ?? 0) + candidate.cost;
+    if (id === 'palisade') this.hp[id][index] = this.maxHpForInstance(id, index);
+    this.syncBuildingTarget(id, index, true);
+    this.syncTierVisual(id, index);
+    this.refreshShooterStats(id, index);
+    this.tierUpgrades += 1;
+    this.visualDirty = true;
+    this.onFloatText?.(buildingPosition, `Tier ${candidate.nextTier}`, '#5b8a8a');
+    return true;
   }
 
   demolish(
@@ -835,6 +935,7 @@ export class BuildSystem {
 
   private finishPlacement(id: BuildableId, index: number, cost: number): void {
     const maxHp = this.maxHpForPlacement(id);
+    this.tier[id][index] = 1;
     this.hpMax[id][index] = maxHp;
     this.buildCosts[id][index] = cost;
     this.hp[id][index] = maxHp;
@@ -845,6 +946,7 @@ export class BuildSystem {
     if (id === 'sentry_beacon') this.registerBeaconShooter(index);
     if (id === 'turret') this.registerTurretShooter(index);
     if (id === 'stockpile') this.economy.addCapSource(stockpileCapSource(index), Balance.stockpile.capBonus);
+    this.syncTierVisual(id, index);
     this.visualDirty = true;
   }
 
@@ -866,6 +968,7 @@ export class BuildSystem {
   private clearBuildingState(id: BuildableId, index: number): void {
     this.hp[id][index] = 0;
     this.hpMax[id][index] = 0;
+    this.tier[id][index] = 0;
     this.buildCosts[id][index] = 0;
     this.wrecked[id][index] = false;
     this.repairProgress[id][index] = 0;
@@ -882,6 +985,7 @@ export class BuildSystem {
     if (id === 'sentry_beacon') this.registerBeaconShooter(index);
     if (id === 'turret') this.registerTurretShooter(index);
     if (id === 'stockpile') this.economy.addCapSource(stockpileCapSource(index), Balance.stockpile.capBonus);
+    this.syncTierVisual(id, index);
     this.visualDirty = true;
   }
 
@@ -932,7 +1036,7 @@ export class BuildSystem {
   }
 
   private maxHpForInstance(id: BuildableId, index: number): number {
-    return this.hpMax[id][index] || this.maxHpForPlacement(id);
+    return this.effectiveMaxHp(id, index, this.hpMax[id][index] || this.maxHpForPlacement(id));
   }
 
   private maxHpForPlacement(id: BuildableId): number {
@@ -954,12 +1058,18 @@ export class BuildSystem {
         const wrecked = this.wrecked[id][index] === true;
         if (hp <= 0 && !wrecked) continue;
         const position = this.positionFor(id, index);
+        const maxHp = this.maxHpForInstance(id, index);
         entries.push({
           id,
           index,
+          tier: this.tierFor(id, index),
           hp,
-          maxHp: this.maxHpForInstance(id, index),
+          maxHp,
           wrecked,
+          worn: id === 'palisade' && this.palisades.isWorn(index),
+          effectiveDamage: id === 'turret' ? this.effectiveTurretDamage(index) : undefined,
+          effectiveFireRate: id === 'turret' ? this.effectiveTurretFireRate(index) : undefined,
+          panRateMult: id === 'sluice' ? this.effectiveSluicePanRateMult(index) : undefined,
           repairProgress: this.repairProgress[id][index] ?? 0,
           position: { x: position?.x ?? 0, z: position?.z ?? 0 },
         });
@@ -1006,6 +1116,78 @@ export class BuildSystem {
     return snapshots;
   }
 
+  private upgradeCandidate(id: UpgradeableBuildableId, index: number, position: THREE.Vector3): UpgradeCandidate | null {
+    if (this.wrecked[id][index]) return null;
+    const def = getBuildableDef(id);
+    const tier = this.tierFor(id, index);
+    const maxTier = Balance.tiers[id].length;
+    const nextTier = tier < maxTier ? tier + 1 : null;
+    const cost = nextTier === null ? 0 : (Balance.tiers[id][nextTier - 1]?.cost ?? 0);
+    let reason: UpgradeCandidate['reason'] = 'ready';
+    if (nextTier === null) reason = 'max';
+    else if (!tierUnlockAllowed(id, nextTier)) reason = 'gated';
+    else if (this.economy.gold < cost) reason = 'insufficient_gold';
+    return {
+      id,
+      index,
+      displayName: def?.displayName ?? id,
+      tier,
+      maxTier,
+      nextTier,
+      cost,
+      canUpgrade: reason === 'ready',
+      reason,
+      gain: nextTier === null ? 'the frontier crew has no higher pattern yet' : this.tierGain(id, nextTier),
+      position: { x: position.x, z: position.z },
+    };
+  }
+
+  private tierFor(id: BuildableId, index: number): number {
+    return Math.max(1, Math.floor(this.tier[id][index] || 1));
+  }
+
+  private tierRung(id: BuildableId, index: number): TierRung | null {
+    if (!isUpgradeableBuildable(id)) return null;
+    return Balance.tiers[id][this.tierFor(id, index) - 1] ?? Balance.tiers[id][0] ?? null;
+  }
+
+  private effectiveStat(id: BuildableId, index: number, base: number, stat: TierStat): number {
+    const value = (this.tierRung(id, index) as Partial<Record<TierStat, number>> | null)?.[stat];
+    return base * (typeof value === 'number' ? value : 1);
+  }
+
+  private effectiveMaxHp(id: BuildableId, index: number, base: number): number {
+    return Math.round(this.effectiveStat(id, index, base, 'maxHpMult'));
+  }
+
+  private effectiveSluicePanRateMult(index: number): number {
+    return this.effectiveStat('sluice', index, 1, 'panRateMult');
+  }
+
+  private effectiveTurretDamage(index: number): number {
+    return this.effectiveStat('turret', index, Balance.turret.damage, 'damageMult');
+  }
+
+  private effectiveTurretFireRate(index: number): number {
+    return this.effectiveStat('turret', index, Balance.turret.fireRate, 'fireRateMult');
+  }
+
+  private syncTierVisual(id: BuildableId, index: number): void {
+    const tier = this.tierFor(id, index);
+    if (id === 'palisade') this.palisades.setTier(index, tier);
+    if (id === 'sluice') {
+      this.sluices.setTier(index, tier);
+      this.sluices.setPanRateMult(index, this.effectiveSluicePanRateMult(index));
+    }
+    if (id === 'turret') this.turrets.setTier(index, tier);
+  }
+
+  private tierGain(id: UpgradeableBuildableId, tier: number): string {
+    if (id === 'palisade') return tier === 2 ? 'thicker timber' : 'brass bands and teal braces';
+    if (id === 'sluice') return tier === 2 ? 'quicker pan water' : 'a brighter agent-flow channel';
+    return tier === 2 ? 'a sharper brass cadence' : 'a steadier teal signal';
+  }
+
   private registerBeaconShooter(placed: number): void {
     const handle: ShooterHandle = {
       id: 'beacons',
@@ -1025,8 +1207,9 @@ export class BuildSystem {
       id: 'turrets',
       getPos: () => this.shooterPos.copy(this.turrets.allPositions[placed] ?? this.ghostPos),
       range: Balance.turret.range,
-      cooldown: 1 / Balance.turret.fireRate,
-      damage: Balance.turret.damage,
+      cooldown: 1 / this.effectiveTurretFireRate(placed),
+      damage: this.effectiveTurretDamage(placed),
+      getDamage: () => this.effectiveTurretDamage(placed),
       onFire: (at) => this.turrets.pulse(placed, at),
       projSpeed: Balance.turret.boltSpeed,
       volley: Balance.turret.volley,
@@ -1042,6 +1225,20 @@ export class BuildSystem {
       },
     };
     this.registerShooter('turret', placed, handle);
+  }
+
+  private refreshShooterStats(id: BuildableId, index: number): void {
+    const handle = this.shooterByInstance[id][index];
+    if (!handle) return;
+    if (id === 'sentry_beacon') {
+      handle.cooldown = 1 / (Balance.beacon.fireRate * this.beaconFireRateMult);
+      handle.damage = Balance.beacon.damage;
+      return;
+    }
+    if (id === 'turret') {
+      handle.cooldown = 1 / this.effectiveTurretFireRate(index);
+      handle.damage = this.effectiveTurretDamage(index);
+    }
   }
 
   private registerShooter(id: BuildableId, index: number, handle: ShooterHandle): void {
@@ -1457,8 +1654,21 @@ function repairSink(id: BuildableId): BuildSink {
   return `repair_${id}`;
 }
 
+function upgradeSink(id: BuildableId): BuildSink {
+  return `upgrade_${id}`;
+}
+
 function stockpileCapSource(index: number): string {
   return `stockpile:${index}`;
+}
+
+function isUpgradeableBuildable(id: BuildableId): id is UpgradeableBuildableId {
+  return id === 'palisade' || id === 'sluice' || id === 'turret';
+}
+
+export function tierUnlockAllowed(_id: BuildableId, _tier: number): boolean {
+  // TODO(SCI-03): read tier gates from families.json
+  return true;
 }
 
 export function beaconCost(index: number): number {

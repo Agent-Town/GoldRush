@@ -1,7 +1,7 @@
 import { Balance } from './Balance';
 import type { BuildableId } from './buildables';
 
-export type BuildSink = 'build_sentry_beacon' | `build_${string}` | `repair_${BuildableId}`;
+export type BuildSink = 'build_sentry_beacon' | `build_${string}` | `repair_${BuildableId}` | `upgrade_${BuildableId}`;
 
 export type EconomyEventBase = {
   id: string;
@@ -112,6 +112,10 @@ export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
         standingBaseValue += event.amount;
         summary.baseValue = Math.max(summary.baseValue, standingBaseValue);
         summary.buildingsBuilt += 1;
+      }
+      if (event.sink.startsWith('upgrade_')) {
+        standingBaseValue += event.amount;
+        summary.baseValue = Math.max(summary.baseValue, standingBaseValue);
       }
       if (event.sink === 'build_sentry_beacon') summary.beaconsBuilt += 1;
       if (event.sink.startsWith('repair_')) {

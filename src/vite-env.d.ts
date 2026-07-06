@@ -1,6 +1,6 @@
 /// <reference types="vite/client" />
 
-type GrBuildableId = GrBuildableId | 'assay_office';
+type GrBuildableId = any;
 
 interface ThreeGameDiagnostics {
   frame: number;
@@ -246,6 +246,7 @@ interface ThreeGameDiagnostics {
       active: boolean;
       position: { x: number; z: number };
       progress: number;
+      panRateMult: number;
       contested: boolean;
       capped: boolean;
     }>;
@@ -261,9 +262,14 @@ interface ThreeGameDiagnostics {
     hp: Array<{
       id: GrBuildableId;
       index: number;
+      tier: number;
       hp: number;
       maxHp: number;
       wrecked: boolean;
+      worn: boolean;
+      effectiveDamage?: number;
+      effectiveFireRate?: number;
+      panRateMult?: number;
       repairProgress: number;
       position: { x: number; z: number };
     }>;
@@ -287,6 +293,7 @@ interface ThreeGameDiagnostics {
     shooterRegistrations: number;
     turretPulses: number;
     activeTurretPulses: number;
+    tierUpgrades: number;
     repairs: number;
     repairGold: number;
   };
@@ -507,6 +514,7 @@ interface Window {
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     wreck: (family: GrBuildableId, index: number) => boolean;
     demolish: (family: GrBuildableId, index: number) => boolean;
+    upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     resetRun: () => void;
     toggleWeapon: () => 'rig' | 'blast';
     setBlastAim: (x: number, z: number) => { x: number; z: number };

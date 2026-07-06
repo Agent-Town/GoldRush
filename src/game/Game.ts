@@ -67,7 +67,7 @@ import {
   type EconomySummary,
 } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
-import { BuildSystem, type DemolishCandidate } from '../systems/BuildSystem';
+import { BuildSystem, type DemolishCandidate, type UpgradeCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
@@ -87,6 +87,7 @@ import {
 import { Hud, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { DemolishPrompt } from '../ui/DemolishPrompt';
+import { UpgradePrompt } from '../ui/UpgradePrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
@@ -203,6 +204,7 @@ export class Game {
   private readonly hud: Hud;
   private readonly assayOfficePrompt: AssayOfficePrompt;
   private readonly demolishPrompt: DemolishPrompt;
+  private readonly upgradePrompt: UpgradePrompt;
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
@@ -275,6 +277,8 @@ export class Game {
   private buildMenuOpen = false;
   private demolishCandidate: DemolishCandidate | null = null;
   private demolishSuppressedKey: string | null = null;
+  private upgradeCandidate: UpgradeCandidate | null = null;
+  private upgradeSuppressedKey: string | null = null;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
@@ -357,6 +361,7 @@ export class Game {
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
     this.assayOfficePrompt = new AssayOfficePrompt(this.getElement('#hud'));
     this.demolishPrompt = new DemolishPrompt(this.getElement('#hud'), () => this.confirmDemolish());
+    this.upgradePrompt = new UpgradePrompt(this.getElement('#hud'), () => this.confirmUpgrade());
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.resetRun());
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
@@ -465,6 +470,7 @@ export class Game {
         spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         demolish: (family: BuildableId, index: number) => this.demolishBuilding(family, index),
+        upgradeBuilding: (family: BuildableId, index: number) => this.upgradeBuilding(family, index),
         resetRun: () => this.resetRun(),
         toggleWeapon: () => this.toggleWeapon(),
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
@@ -611,6 +617,7 @@ export class Game {
     this.hud.dispose();
     this.assayOfficePrompt.dispose();
     this.demolishPrompt.dispose();
+    this.upgradePrompt.dispose();
     this.deathOverlay.dispose();
     this.upgradeOverlay.dispose();
     this.damageVignette.remove();
@@ -650,8 +657,8 @@ export class Game {
     }
     if (intents.build && !this.lastBuildIntent) this.toggleBuildMenu();
     if (intents.buildSlot !== null && this.buildMenuOpen) this.selectBuildableByIndex(intents.buildSlot);
-    if (intents.cancel && !this.lastCancelIntent && this.demolishCandidate) {
-      this.cancelDemolishPrompt();
+    if (intents.cancel && !this.lastCancelIntent && (this.upgradeCandidate || this.demolishCandidate)) {
+      this.cancelInteractionPrompts();
     } else if (intents.cancel && !this.lastCancelIntent && (this.buildMenuOpen || this.buildSystem.isBuildMode)) {
       this.closeBuildMenu();
     } else if (intents.pause && !this.lastPauseIntent && !this.secureClaimChoicePending()) {
@@ -755,6 +762,7 @@ export class Game {
     this.syncUpgradeOverlay();
     this.syncUi();
     this.syncAssayOfficePrompt();
+    this.syncUpgradePrompt();
     this.syncDemolishPrompt();
     this.publishDiagnostics();
   }
@@ -1119,7 +1127,22 @@ export class Game {
     if (key && this.demolishSuppressedKey && key !== this.demolishSuppressedKey) this.demolishSuppressedKey = null;
     if (key && key === this.demolishSuppressedKey) candidate = null;
     this.demolishCandidate = candidate;
-    this.demolishPrompt.update(candidate, !assayInRange);
+    this.demolishPrompt.update(candidate, !assayInRange && this.upgradeCandidate?.canUpgrade !== true);
+  }
+
+  private syncUpgradePrompt(): void {
+    const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
+    const assayInRange = this.buildSystem.assayOfficeInRange(this.hero.group.position);
+    let candidate =
+      this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode
+        ? this.buildSystem.nearestUpgradeableTo(this.hero.group.position)
+        : null;
+    const key = candidate ? upgradeKey(candidate) : null;
+    if (!key) this.upgradeSuppressedKey = null;
+    if (key && this.upgradeSuppressedKey && key !== this.upgradeSuppressedKey) this.upgradeSuppressedKey = null;
+    if (key && key === this.upgradeSuppressedKey) candidate = null;
+    this.upgradeCandidate = candidate;
+    this.upgradePrompt.update(candidate, !assayInRange);
   }
 
   private handleUiIntent(intent: UiIntent): void {
@@ -1149,6 +1172,10 @@ export class Game {
     this.goldPickups.recycleAll();
     this.waveSystem.reset();
     this.buildMenuOpen = false;
+    this.upgradeCandidate = null;
+    this.upgradeSuppressedKey = null;
+    this.demolishCandidate = null;
+    this.demolishSuppressedKey = null;
     this.buildSystem.reset();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
@@ -1190,6 +1217,8 @@ export class Game {
     this.prospector.reset();
     this.uiBridge.announce('Stake your claim.', 0);
     this.upgradeOverlay.hide();
+    this.upgradePrompt.update(null, true);
+    this.demolishPrompt.update(null, true);
   }
 
   applyMetaProgress(meta: MetaProgress): void {
@@ -1651,7 +1680,22 @@ export class Game {
       this.openAssayBench?.();
       return;
     }
+    if (this.upgradeCandidate) {
+      if (this.confirmUpgrade()) return;
+    }
     this.confirmDemolish();
+  }
+
+  private confirmUpgrade(): boolean {
+    const candidate = this.upgradeCandidate;
+    if (!candidate) return false;
+    const upgraded = this.upgradeBuilding(candidate.id, candidate.index);
+    if (upgraded) {
+      this.upgradeCandidate = null;
+      this.upgradeSuppressedKey = null;
+      this.upgradePrompt.update(null, true);
+    }
+    return upgraded;
   }
 
   private confirmDemolish(): boolean {
@@ -1666,10 +1710,21 @@ export class Game {
     return removed;
   }
 
-  private cancelDemolishPrompt(): void {
+  private cancelInteractionPrompts(): void {
+    if (this.upgradeCandidate) this.upgradeSuppressedKey = upgradeKey(this.upgradeCandidate);
     if (this.demolishCandidate) this.demolishSuppressedKey = demolishKey(this.demolishCandidate);
+    this.upgradeCandidate = null;
     this.demolishCandidate = null;
+    this.upgradePrompt.update(null, true);
     this.demolishPrompt.update(null, true);
+  }
+
+  private upgradeBuilding(id: BuildableId, index: number): boolean {
+    const upgraded = this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.hero.group.position);
+    if (!upgraded) return false;
+    this.syncStockpileHoldings();
+    this.publishDiagnostics();
+    return true;
   }
 
   private demolishBuilding(id: BuildableId, index: number): boolean {
@@ -1848,6 +1903,10 @@ function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOption
 
 function demolishKey(candidate: DemolishCandidate): string {
   return `${candidate.id}:${candidate.index}`;
+}
+
+function upgradeKey(candidate: UpgradeCandidate): string {
+  return `${candidate.id}:${candidate.index}:${candidate.tier}`;
 }
 
 function edgeFromPosition(position: THREE.Vector3): CompassEdge {

@@ -193,6 +193,23 @@ export const Balance = {
     refundPctOfCost: 0.5,
     interactRadius: 1.6,
   },
+  tiers: {
+    palisade: [
+      { cost: 0, maxHpMult: 1 },
+      { cost: 90, maxHpMult: 1.6 },
+      { cost: 250, maxHpMult: 2.4 },
+    ],
+    sluice: [
+      { cost: 0, panRateMult: 1 },
+      { cost: 120, panRateMult: 1.35 },
+      { cost: 320, panRateMult: 1.9 },
+    ],
+    turret: [
+      { cost: 0, damageMult: 1, fireRateMult: 1 },
+      { cost: 150, damageMult: 1.4, fireRateMult: 1.18 },
+      { cost: 400, damageMult: 1.9, fireRateMult: 1.35 },
+    ],
+  },
   wreck: {
     hp: {
       sentry_beacon: 40,

@@ -3,6 +3,7 @@ import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
+const tierColors = [new THREE.Color('#8b7d3c'), new THREE.Color('#c4883a'), new THREE.Color('#5b8a8a')];
 
 export class TurretPool {
   readonly group = new THREE.Group();
@@ -10,6 +11,7 @@ export class TurretPool {
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
   private readonly pulseUntil: number[] = [];
+  private readonly tiers: number[] = [];
   private readonly geometry = new THREE.LatheGeometry(
     [
       new THREE.Vector2(0.16, 0),
@@ -22,11 +24,12 @@ export class TurretPool {
     10,
   );
   private readonly material = new THREE.MeshStandardMaterial({
-    color: '#8b7d3c',
+    color: '#ffffff',
     emissive: '#5b8a8a',
     emissiveIntensity: 0.38,
     roughness: 0.48,
     metalness: 0.32,
+    vertexColors: true,
   });
   private readonly mesh = new THREE.InstancedMesh(this.geometry, this.material, Balance.turret.maxCount);
   private readonly syncObject = new THREE.Object3D();
@@ -44,7 +47,9 @@ export class TurretPool {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
       this.pulseUntil.push(0);
+      this.tiers.push(1);
       this.hide(i);
+      this.syncColor(i);
     }
     this.mesh.instanceMatrix.needsUpdate = true;
   }
@@ -73,6 +78,12 @@ export class TurretPool {
     return this.active[index] === true;
   }
 
+  setTier(index: number, tier: number): void {
+    if (index < 0 || index >= this.tiers.length) return;
+    this.tiers[index] = Math.max(1, Math.min(3, Math.floor(tier)));
+    this.syncColor(index);
+  }
+
   pulse(index: number, at: number): void {
     if (!this.active[index]) return;
     this.pulseUntil[index] = at + Balance.combatReadability.turretPulseSeconds;
@@ -84,6 +95,7 @@ export class TurretPool {
       if (this.active[i]) continue;
       this.active[i] = true;
       this.positions[i]?.copy(position);
+      this.tiers[i] = 1;
       this.alive += 1;
       this.sync(i, 0);
       this.mesh.visible = true;
@@ -97,6 +109,7 @@ export class TurretPool {
     if (!this.active[index]) return false;
     this.active[index] = false;
     this.pulseUntil[index] = 0;
+    this.tiers[index] = 1;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
     this.mesh.visible = this.alive > 0;
@@ -123,6 +136,7 @@ export class TurretPool {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
       this.pulseUntil[i] = 0;
+      this.tiers[i] = 1;
       this.hide(i);
     }
     this.alive = 0;
@@ -142,7 +156,9 @@ export class TurretPool {
     if (!position) return;
     this.syncObject.position.set(position.x, Terrain.visualY(position.x, position.z, 0, Balance.turret.overlapRadius), position.z);
     this.syncObject.rotation.set(0, Math.sin(at * 0.9 + index) * 0.12, 0);
-    this.syncObject.scale.setScalar(1 + pulse * Balance.combatReadability.turretPulseIntensity);
+    const pulseScale = 1 + pulse * Balance.combatReadability.turretPulseIntensity;
+    const tierLift = 1 + Math.max(0, (this.tiers[index] ?? 1) - 1) * 0.08;
+    this.syncObject.scale.set(pulseScale, pulseScale * tierLift, pulseScale);
     this.syncObject.updateMatrix();
     this.mesh.setMatrixAt(index, this.syncObject.matrix);
   }
@@ -155,5 +171,11 @@ export class TurretPool {
 
   private hide(index: number): void {
     this.mesh.setMatrixAt(index, hiddenMatrix);
+  }
+
+  private syncColor(index: number): void {
+    const tierIndex = Math.max(0, Math.min(2, (this.tiers[index] ?? 1) - 1));
+    this.mesh.setColorAt(index, tierColors[tierIndex] ?? tierColors[0]);
+    if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
   }
 }

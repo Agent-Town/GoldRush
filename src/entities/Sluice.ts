@@ -9,12 +9,14 @@ export type SluiceSnapshot = {
   active: boolean;
   position: { x: number; z: number };
   progress: number;
+  panRateMult: number;
   contested: boolean;
   capped: boolean;
 };
 
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
-const timber = '#b9824c';
+const troughTierColors = [new THREE.Color('#b9824c'), new THREE.Color('#8b7d3c'), new THREE.Color('#5b8a8a')];
+const waterTierColors = [new THREE.Color('#5b8a8a'), new THREE.Color('#6fa0a0'), new THREE.Color('#83ded7')];
 const water = '#5b8a8a';
 
 export class SluicePool {
@@ -23,19 +25,22 @@ export class SluicePool {
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
   private readonly timers: number[] = [];
+  private readonly tiers: number[] = [];
+  private readonly panRateMults: number[] = [];
   private readonly contested: boolean[] = [];
   private readonly capped: boolean[] = [];
   private readonly troughGeometry = new THREE.BoxGeometry(1.7, 0.32, 0.62);
   private readonly waterGeometry = new THREE.BoxGeometry(1.34, 0.035, 0.34);
-  private readonly troughMaterial = new THREE.MeshStandardMaterial({ color: timber, roughness: 0.86, metalness: 0.02 });
+  private readonly troughMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.86, metalness: 0.02, vertexColors: true });
   private readonly waterMaterial = new THREE.MeshStandardMaterial({
-    color: water,
+    color: '#ffffff',
     emissive: water,
     emissiveIntensity: 0.18,
     transparent: true,
     opacity: 0.72,
     roughness: 0.26,
     metalness: 0.04,
+    vertexColors: true,
   });
   private readonly troughs = new THREE.InstancedMesh(this.troughGeometry, this.troughMaterial, Balance.sluice.maxCount);
   private readonly waters = new THREE.InstancedMesh(this.waterGeometry, this.waterMaterial, Balance.sluice.maxCount);
@@ -54,9 +59,12 @@ export class SluicePool {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
       this.timers.push(0);
+      this.tiers.push(1);
+      this.panRateMults.push(1);
       this.contested.push(false);
       this.capped.push(false);
       this.hide(i);
+      this.syncColors(i);
     }
     this.markNeedsUpdate();
   }
@@ -77,6 +85,17 @@ export class SluicePool {
     return this.active[index] === true;
   }
 
+  setTier(index: number, tier: number): void {
+    if (index < 0 || index >= this.tiers.length) return;
+    this.tiers[index] = Math.max(1, Math.min(3, Math.floor(tier)));
+    this.syncColors(index);
+  }
+
+  setPanRateMult(index: number, panRateMult: number): void {
+    if (index < 0 || index >= this.panRateMults.length) return;
+    this.panRateMults[index] = Math.max(0.001, panRateMult);
+  }
+
   place(position: THREE.Vector3): number {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
@@ -84,6 +103,8 @@ export class SluicePool {
       this.group.visible = true;
       this.positions[i]?.copy(position);
       this.timers[i] = 0;
+      this.tiers[i] = 1;
+      this.panRateMults[i] = 1;
       this.contested[i] = false;
       this.capped[i] = false;
       this.alive += 1;
@@ -99,6 +120,8 @@ export class SluicePool {
     if (!this.active[index]) return false;
     this.active[index] = false;
     this.timers[index] = 0;
+    this.tiers[index] = 1;
+    this.panRateMults[index] = 1;
     this.contested[index] = false;
     this.capped[index] = false;
     this.alive = Math.max(0, this.alive - 1);
@@ -116,11 +139,14 @@ export class SluicePool {
     onGold: (position: THREE.Vector3, amount: number) => void,
     onBlocked: (position: THREE.Vector3) => void,
     enabled: (index: number) => boolean = () => true,
+    panRateMult: (index: number) => number = () => 1,
   ): void {
     if (this.alive === 0) return;
     const amount = Balance.sluice.goldPerCycle;
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
+      this.panRateMults[i] = Math.max(0.001, panRateMult(i));
+      const cycleSeconds = Balance.sluice.cycleSeconds / this.panRateMults[i];
       if (!enabled(i)) {
         this.syncWater(i, at, false);
         continue;
@@ -132,7 +158,7 @@ export class SluicePool {
       this.contested[i] = contested;
       if (!contested) this.timers[i] = (this.timers[i] ?? 0) + delta;
 
-      if (!contested && (this.timers[i] ?? 0) >= Balance.sluice.cycleSeconds) {
+      if (!contested && (this.timers[i] ?? 0) >= cycleSeconds) {
         if (!economy.canReceiveIncome(amount)) {
           if (!this.capped[i]) {
             economy.apply({ id: eventId(), at, type: 'gold_capped', amount: 0 });
@@ -149,7 +175,7 @@ export class SluicePool {
             amount,
           });
           if (result.ok) {
-            this.timers[i] = (this.timers[i] ?? 0) - Balance.sluice.cycleSeconds;
+            this.timers[i] = (this.timers[i] ?? 0) - cycleSeconds;
             onGold(position, amount);
           }
         }
@@ -164,6 +190,8 @@ export class SluicePool {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
       this.timers[i] = 0;
+      this.tiers[i] = 1;
+      this.panRateMults[i] = 1;
       this.contested[i] = false;
       this.capped[i] = false;
       this.hide(i);
@@ -181,14 +209,19 @@ export class SluicePool {
   }
 
   snapshot(): SluiceSnapshot[] {
-    return this.positions.map((position, index) => ({
-      id: `sluice-${index + 1}`,
-      active: this.active[index] === true,
-      position: { x: position.x, z: position.z },
-      progress: Math.min(1, (this.timers[index] ?? 0) / Balance.sluice.cycleSeconds),
-      contested: this.contested[index] === true,
-      capped: this.capped[index] === true,
-    }));
+    return this.positions.map((position, index) => {
+      const panRateMult = this.panRateMults[index] ?? 1;
+      const cycleSeconds = Balance.sluice.cycleSeconds / Math.max(0.001, panRateMult);
+      return {
+        id: `sluice-${index + 1}`,
+        active: this.active[index] === true,
+        position: { x: position.x, z: position.z },
+        progress: Math.min(1, (this.timers[index] ?? 0) / cycleSeconds),
+        panRateMult,
+        contested: this.contested[index] === true,
+        capped: this.capped[index] === true,
+      };
+    });
   }
 
   private isContested(position: THREE.Vector3, enemies: readonly ClaimJumperEnemy[]): boolean {
@@ -232,6 +265,14 @@ export class SluicePool {
   private hide(index: number): void {
     this.troughs.setMatrixAt(index, hiddenMatrix);
     this.waters.setMatrixAt(index, hiddenMatrix);
+  }
+
+  private syncColors(index: number): void {
+    const tierIndex = Math.max(0, Math.min(2, (this.tiers[index] ?? 1) - 1));
+    this.troughs.setColorAt(index, troughTierColors[tierIndex] ?? troughTierColors[0]);
+    this.waters.setColorAt(index, waterTierColors[tierIndex] ?? waterTierColors[0]);
+    if (this.troughs.instanceColor) this.troughs.instanceColor.needsUpdate = true;
+    if (this.waters.instanceColor) this.waters.instanceColor.needsUpdate = true;
   }
 
   private markNeedsUpdate(): void {
