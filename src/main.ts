@@ -14,9 +14,13 @@ if (!canvas) {
 applyStoredDifficultyPreset();
 applyUpgradeBudgetsFromBalance();
 
-const game = new Game(canvas);
+const app = document.querySelector<HTMLElement>('#app') ?? document.body;
+const search = new URLSearchParams(window.location.search);
+const assayBench = installAssayBench(app, {
+  initiallyOpen: search.has('profile') || search.has('queueNow'),
+});
+const game = new Game(canvas, () => assayBench?.focus());
 game.start();
-const assayBench = installAssayBench(document.querySelector<HTMLElement>('#app') ?? document.body);
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {

@@ -1,0 +1,19 @@
+# Task 036: F-033-2 — m2-01 build-menu suite regressions + m5-04 pending leak (MAIN slot, commit prefix "fix:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in the repo root (main slot). READ FIRST: AGENTS.md; reviews/w1-01-terrain-relief.md §Findings (attribution evidence for everything below); e2e/m2-01-build-menu.spec.ts. Pre-flight: `git status --short` must show ZERO staged/modified TRACKED files (lines not starting `??`) — if any exist, STOP and report. Untracked `??` entries (unprocessed art raws in assets/raw/, rm-blocked host debris, .claude/) are EXPECTED on this host: list them briefly and proceed. (Attempt 20260706-1223 correctly self-stopped on a then-dirty tree mid-w1-01-merge; that state is resolved.)
+
+## Goal
+`e2e/m2-01-build-menu.spec.ts` is red on main (5 failures, both projects) and the m5-04 harness leaks fixtures. Restore the suite to 12/12 GREEN both projects WITHOUT weakening any assertion, and stop the leak. w1-01 terrain relief (just merged) is verified NOT the cause — do not touch terrain.
+
+## Findings to fix (attribution already done — trust it, verify locally)
+
+1. **F-033-2a — beacon cost curve (desktop+mobile).** After menu-select via Digit1, the poll `window.__THREE_GAME_DIAGNOSTICS__?.ui.buildMenuOpen → false` times out (menu state never closes). GREEN at bc8c220, RED since the 033+035 merge (bf8c4f7). Suspects: 033/035 AssayBench key handling swallowing digits, or buildMenuOpen state/diagnostics coupling broken by the bench UI rework.
+2. **F-033-2b — stress draw calls (desktop).** `renderer.calls` = 229 vs budget ≤200 at 120-enemy stress + 6 beacons + 12 palisades. GREEN at bc8c220, RED since bf8c4f7 → ~+30 calls came in with 033+035 (in-world bench/office meshes? material/program split? per-fixture props?). Diagnose by diffing `renderer.info` composition at the stress scene, main vs a detached worktree at bc8c220 (`git worktree add <tmp> bc8c220 --detach`, symlink node_modules, own vite port — pattern used in the attribution runs). Budget 200 is LAW: if you believe it genuinely cannot hold with merged 033 content, STOP and flag Robin — do not raise the number.
+3. **F-033-2c — 390px build menu clear of HUD (both projects).** `intersects(menuBox, hudElementBox)` is true. RED already at bc8c220 → OLDER than 033 (origin unknown; likely earlier lane-c activations/HUD-era layout). Read the failing test's error-context page snapshot to see which element overlaps, fix the layout. Keep ≥44px tap targets and every other m2-01 assertion green.
+4. **F-033-3 — m5-04 pending leak.** Every `e2e/m5-04-offline-queue.spec.ts` run posts 2 `order_local_prospector_*_brass_pan_*.json` into `assets/crafting-queue/pending/` and leaves them (6 had accumulated; swept 2026-07-06 s61). Make the harness self-cleaning (teardown that removes what the run posted, or point the middleware at an ephemeral dir for tests). Acceptance: two consecutive full m5-04 runs each end with pending/ free of local_prospector residue.
+
+## Firewall
+Touch ONLY: bench/build-menu UI + key-handling code, HUD layout (styles), the draw-call source you identify, m5-04 harness/middleware test plumbing. ADDITIVE m5-04 assertion for pending-clean is welcome. NO changes to: sim logic (movement/combat/economy/waves), src/world/Terrain.ts or any w1-01 terrain code, m2-01 spec assertions (layout/DOM fixes only — the tests are the contract), Balance values other than additive knobs.
+
+## Self-check (evidence, not vibes)
+tsc + `npm run build` green; `e2e/m2-01-build-menu.spec.ts` 12/12 GREEN desktop+mobile; `e2e/m5-04-offline-queue.spec.ts` 10/10 GREEN both + pending/ clean after ×2 runs; `e2e/lane-c-activations-assay-office.spec.ts` 6/6 GREEN both (mobile portraits was F-033-1 — don't reintroduce); task-025 + m1-01 unmodified green; zero console/page errors. Record final stress draw-call number in your report. End: READY-FOR-GATES + files touched + per-finding root cause + results.

@@ -35,7 +35,7 @@ export class AssayBenchPanel {
   private readonly rejections: HTMLElement;
   private readonly closeButton: HTMLButtonElement;
 
-  constructor(parent: HTMLElement, options: { profile?: string } = {}) {
+  constructor(parent: HTMLElement, options: { profile?: string; initiallyOpen?: boolean } = {}) {
     const profile = normalizeQueueProfile(options.profile ?? new URLSearchParams(window.location.search).get('profile'));
     const queue = loadCraftingQueue(profile);
     this.bench = new AssayBench(queue.approved);
@@ -44,7 +44,8 @@ export class AssayBenchPanel {
     this.root.className = 'assay-bench';
     this.root.dataset.testid = 'assay-bench';
     this.root.setAttribute('aria-label', 'Assay Bench');
-    this.root.setAttribute('aria-hidden', 'false');
+    this.root.hidden = options.initiallyOpen === false;
+    this.root.setAttribute('aria-hidden', String(this.root.hidden));
     this.root.innerHTML = `
       <header class="assay-bench__header">
         <div>
@@ -181,7 +182,10 @@ export class AssayBenchPanel {
   }
 }
 
-export function install(parent: HTMLElement, options: { profile?: string } = {}): AssayBenchPanel | undefined {
+export function install(
+  parent: HTMLElement,
+  options: { profile?: string; initiallyOpen?: boolean } = {},
+): AssayBenchPanel | undefined {
   if (!new URLSearchParams(window.location.search).has('debug')) return undefined;
   return new AssayBenchPanel(parent, options);
 }

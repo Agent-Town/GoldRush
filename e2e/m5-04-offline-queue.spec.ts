@@ -1,7 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { readFile, readdir, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { makePendingQueueRequest, pendingQueuePath } from '../src/crafting/CraftingQueueContract';
+import { makePendingQueueRequest, normalizeQueueProfile, pendingQueuePath } from '../src/crafting/CraftingQueueContract';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type Box = { x: number; y: number; width: number; height: number };
@@ -27,6 +27,33 @@ function overlaps(a: Box | null, b: Box | null): boolean {
   if (!a || !b) return false;
   return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
 }
+
+// Sweep the two kinds of pending orders that tests leak, without racing sibling
+// workers. The w1 gate config runs desktop + mobile projects in parallel against a
+// shared pending dir. The only order file a test READS back is its own
+// `order_e2e_<project>_*` (the "post the order" test), so that sweep must be scoped
+// to the current project — a broad `order_e2e_*` delete let one worker wipe a
+// sibling's in-flight file mid-test (ENOENT race, F-033-2 regression). The default
+// `local_prospector` orders (F-033-3 leak) are never read back by any test, so
+// deleting them broadly is race-free.
+async function cleanPostedOrders(profile: string): Promise<void> {
+  const pendingDir = resolve(process.cwd(), 'assets/crafting-queue/pending');
+  const files = await readdir(pendingDir).catch(() => []);
+  const ownPrefix = `order_${normalizeQueueProfile(profile)}_`;
+  await Promise.all(
+    files
+      .filter(
+        (file) =>
+          file.endsWith('.json') &&
+          (file.startsWith('order_local_prospector_') || file.startsWith(ownPrefix)),
+      )
+      .map((file) => rm(resolve(pendingDir, file), { force: true })),
+  );
+}
+
+test.afterEach(async ({}, testInfo) => {
+  await cleanPostedOrders(`e2e_${testInfo.project.name}`);
+});
 
 test('post the order writes the exact pending request JSON', async ({ page }, testInfo) => {
   const text = 'steady teal coil for careful claim work';

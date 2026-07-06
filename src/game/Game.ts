@@ -262,7 +262,10 @@ export class Game {
   private runManager?: RunManager;
   private agentStub?: AgentStub;
 
-  constructor(private readonly canvas: HTMLCanvasElement) {
+  constructor(
+    private readonly canvas: HTMLCanvasElement,
+    private readonly openAssayBench?: () => void,
+  ) {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
     this.blastAimReticle.name = 'BlastAimReticle';
@@ -548,7 +551,7 @@ export class Game {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
       this.progression.debugGrant(50);
     }
-    if (intents.confirm && !this.lastConfirmIntent) this.buildSystem.confirm(this.timeAlive);
+    if (intents.confirm && !this.lastConfirmIntent) this.confirmAction();
     this.lastPauseIntent = intents.pause;
     this.lastRestartIntent = intents.restart;
     this.lastBuildIntent = intents.build;
@@ -1379,6 +1382,14 @@ export class Game {
   private closeBuildMenu(): void {
     this.buildMenuOpen = false;
     this.buildSystem.setBuildMode(false);
+  }
+
+  private confirmAction(): void {
+    if (this.buildSystem.isBuildMode) {
+      this.buildSystem.confirm(this.timeAlive);
+      return;
+    }
+    if (this.buildSystem.assayOfficeInRange(this.hero.group.position)) this.openAssayBench?.();
   }
 
   private selectBuildable(id: string): boolean {

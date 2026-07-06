@@ -334,12 +334,14 @@ export class EnemyPool {
   private syncEnemySprite(enemy: ClaimJumperEnemy): void {
     const normalVisible = enemy.isAlive && !enemy.isThief;
     const thiefVisible = enemy.isAlive && enemy.isThief;
+    // ponytail: batch fades draw every live enemy twice; skip them for stress-sized packs unless sprites get instanced.
+    const showFade = this.active <= 64;
     const normalMotion = this.spriteAnimator.motion;
     const thiefMotion = this.thiefSpriteAnimator.motion;
     this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
-    this.generatedSpriteFades.set(enemy.id, enemy.group.position, normalVisible && this.spriteAnimator.overlayActive);
+    this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
     this.thiefSprites.set(enemy.id, enemy.group.position, thiefVisible);
-    this.thiefSpriteFades.set(enemy.id, enemy.group.position, thiefVisible && this.thiefSpriteAnimator.overlayActive);
+    this.thiefSpriteFades.set(enemy.id, enemy.group.position, showFade && thiefVisible && this.thiefSpriteAnimator.overlayActive);
     this.applySpriteBob(this.generatedSprites.group.children[enemy.id], normalMotion.bobOffset);
     this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], normalMotion.bobOffset);
     this.applySpriteBob(this.thiefSprites.group.children[enemy.id], thiefMotion.bobOffset);

@@ -1,4 +1,6 @@
-ACTIVE 2026-07-06T05:48Z (s62 fire) — draining 036 corrective (F-033-2 m2-01 regressions) main-slot output; archiving prev line-1 to bullet
+ACTIVE 2026-07-06T06:34Z (s63 fire) — taking over DEAD s62 lock (46min stale); s62 fully gated+staged the 036 corrective (F-033-2/3) but died before committing. Re-verifying the staged tree (tsc+build+m2-01+m5-04) then committing it.
+
+- **s62 (line-1 archive, DEAD lock reclaimed by s63):** ACTIVE 2026-07-06T05:48Z (s62 fire) — draining 036 corrective (F-033-2 m2-01 regressions) main-slot output. s62 wrote reviews/036-f033-2-m2-01-regressions.md (PASS verdict, F-033-2-race orchestrator corrective applied), staged all 5 src/e2e files + shots + 2 done-moves, but the lock went 46min stale with nothing committed → s63 took over, re-gated, and committed the drain.
 
 - **s60 (line-1 archive):** Last updated: 2026-07-06T04:45Z ACTIVE (s60 ATTENDED, Fable 5, Robin present) — taking over DEAD s59's w1-01 terrain drain (s59 died ~04:12Z mid-e2e, gate orphaned, nothing committed; its firewall/tsc/build/perf/visual legs all PASSED per fire log). Doing: e2e gate re-run (w1-01 + task-025 sim-drift + m2-01 + m1-01, both projects) → review → path-scoped merge → queue 034 + W1-02 → handoff. Fires: bounce until this clears.
 
