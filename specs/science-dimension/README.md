@@ -43,7 +43,7 @@ The **town transforms forward** (pillar 4: one evolving home, houses become thei
 
 **SPEND SURFACE.** v1 is the post-run **Research overlay** in canon voice (§5: plain frontier language, warm, specific — "The Elder proposes…"). No new in-run building yet: the Schoolhouse (art already generated in batch-029) becomes science's physical home in Town v1 (staged path S2), not before.
 
-**NUMBERS SKETCH** (tuning stake, not law): epoch-1 tree = 15 nodes (5 per branch); "Steamworks (locked)" visible at threshold 10 steps; 1 pick per run + 1 victory bonus → epoch-1 fills in roughly 8–12 sessions of mixed outcomes (ratification item 3). Interface with task 021 (economy audit, queued): 021 owns in-run XP/gold pacing; science owns run-to-run structure; they meet at the SAME family definitions — 021 must not retune what a science node gates without updating the node text.
+**NUMBERS SKETCH** (owner-tuned 2026-07-06: "8–12 experiences for one epoch are a lot… depends on their length and difficulty"): epoch-1 tree = 15 nodes (5 per branch); **"Steamworks (locked)" threshold at 6 steps** → with 1 pick per run + victory bonus, epoch-1 turns over in **~4–6 runs**. Epoch LENGTH RAMPS with the saga: later epochs have longer arcs (more steps, longer/harder contracts), first epochs turn over fast so the transformation magic shows early. Threshold per epoch lives in the epoch bundle — tuning stays data. Interface with task 021 (economy audit, queued): 021 owns in-run XP/gold pacing; science owns run-to-run structure; they meet at the SAME family definitions — 021 must not retune what a science node gates without updating the node text.
 
 ## Integration map (what each slice touches)
 - `MetaProgress.tracks.science` — already persists; steps write here.
@@ -63,7 +63,13 @@ Every slice: tsc/build; own e2e both projects; sim-drift suites unmodified-green
 ## Laws (inherited + new, binding on all SCI lanes)
 Pool depth is combinatorial, never inflationary. Victory compounds the world visibly, every time. Failure advances time. Generator proposes, contract + validation disposes — at every scale (items → cards → modes → maps). Canon: illustrated never gory; frontier-tech per ADR-001; naming per §9.4; satire playful, never textbook. Placeholder-first art; epoch assets accrue via the nightly drip, never block gameplay.
 
-## Ratification (Robin — answer whenever, non-blocking for SCI-01)
-1. **Replay Law**: era-stamped replayable tiles + forward-transforming town — confirmed?
-2. **Branches**: Prospecting / Arsenal / Assay Works — right three? (Alternative: a fourth "Town" branch reserved for S2.)
-3. **Pacing stake**: ~8–12 sessions to fill epoch-1 / threshold at 10 steps — feel right as a starting stake?
+## Ratification — ANSWERED (Robin, 2026-07-06 evening)
+1. **Replay Law: CONFIRMED.** Era-stamped replayable tiles + forward-transforming town is LAW.
+2. **Branches**: question didn't land ("I can't follow you here") → orchestrator's call, made: three branches, presented in-game in plain terms — **one improves the mining economy, one improves your arsenal, one improves the AI crafting & your agent** (canon names Prospecting/Arsenal/Assay Works remain the flavor labels on top). Revisit only if playtests show confusion.
+3. **Pacing: RULED — 8–12 is too many.** Threshold set to 6 steps (~4–6 runs for epoch-1), epoch length ramps in later eras, per-epoch threshold lives in the bundle (see Numbers Sketch).
+
+## Owner UX ruling — RATIFIED (Robin, 2026-07-06 evening: "I like the idea of the town in between")
+The between-runs town model below is LAW for S2+ slicing: contracts are chosen at the tavern board between runs; in-run buildings stay defense/economy machines.
+
+(Original question, for the record: "Will I build a contract house in my game and jump into the next game from there?")
+Design answer in this spec's model (see docs/VISION-EPOCHS.md S2/S3): contracts are chosen BETWEEN runs, in the TOWN — the tavern's contract board is where the next adventure (era-stamped tile + modifiers + posted family-authored tales) is picked; the Claim Office anchors territory; the Schoolhouse is science's home. In-run buildings stay defense/economy machines; runs stay tight roguelite runs. Bridge until Town v1 (S2): Run Ledger → research pick → Try Again, with the contract board arriving as the town's first interactive surface. If Robin wants an IN-RUN contract building instead, that's a design fork to argue before S2 — the between-runs model is this spec's recommendation.

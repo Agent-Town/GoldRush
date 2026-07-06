@@ -11,7 +11,7 @@ The science meta-track exists as a zeroed skeleton. Build the v1 loop: after eve
 ## Scope
 1. **NEW `src/meta/ResearchTree.ts`**: data-driven node definitions (epoch-1, three branches per spec: Prospecting Works / Arsenal Works / Assay Works — ship the tree STRUCTURE with 15 node slots but only the 3 launch nodes below need live effects); pure functions: `availablePicks(meta)`, `takeNode(meta, id)` (writes `tracks.science += 1` + node registry into the existing meta storage, versioned/migratable like MetaProgress); proposal roll = seeded 1-of-2 from unlocked-frontier nodes.
 2. **Research overlay** (`src/ui/`): flows AFTER the Run Ledger (death AND victory paths); canon voice ("The Elder proposes…"); shows both proposals with one-sentence "what changes" text; keyboard + touch selectable; skippable (skip banks nothing — no pick hoarding v1). Victory grants +1 bonus pick (a second proposal round) per the spec's 027 principle.
-3. **Science meter**: in the overlay + Run Ledger footer — "Science: N steps — M to the Steamworks (locked)"; threshold constant from the tree data (10).
+3. **Science meter**: in the overlay + Run Ledger footer — "Science: N steps — M to the Steamworks (locked)"; threshold constant from the tree data (6 — owner pacing ruling 2026-07-06: epoch-1 turns over in ~4–6 runs).
 4. **Three LIVE launch nodes** (one per branch, real effects, legible):
    - Prospecting: *Assay Grading* — seam/prospecting family cards additionally +stockpile cap (exact delta additive via Balance knob) AND the family's offer weight raised while ungated → the F5 dead-pick fix begins here.
    - Arsenal: *Chain Spark Primer* — unlocks ONE new epoch-gated card family (a single cross-family synergy card is enough for v1; mastery SYSTEM is SCI-02).
