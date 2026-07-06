@@ -13,13 +13,17 @@ import type { AudioSystem } from './AudioSystem';
 import { TargetingSystem, type BuildingTarget } from './TargetingSystem';
 import type { CombatVfx } from './CombatVfx';
 
+export type ProjectileKind = 'bolt' | 'lob';
+
 export type ShooterHandle = {
   id?: string;
-  kind?: 'bolt' | 'lob';
+  kind?: ProjectileKind;
+  projectileKind?: (origin: THREE.Vector3, target: ClaimJumperEnemy, targetPoint: THREE.Vector3) => ProjectileKind;
   enabled?: () => boolean;
   canTarget?: (target: ClaimJumperEnemy) => boolean;
   targetPoint?: (origin: THREE.Vector3, target: ClaimJumperEnemy) => THREE.Vector3 | null;
   aoe?: { radius: number; airTime: number };
+  airTime?: (origin: THREE.Vector3, targetPoint: THREE.Vector3) => number;
   getPos: () => THREE.Vector3;
   range: number;
   cooldown: number;
@@ -66,6 +70,9 @@ export type BoltDiagnostics = {
   hits: number;
   misses: number;
   staleSwitches: number;
+  shots: Record<ProjectileKind, number>;
+  lastShotKind: ProjectileKind | null;
+  lastShotOwnerId: string | null;
 };
 
 export class CombatSystem {
@@ -77,6 +84,9 @@ export class CombatSystem {
   private boltHits = 0;
   private boltMisses = 0;
   private staleTargetSwitches = 0;
+  private readonly shotsByKind: Record<ProjectileKind, number> = { bolt: 0, lob: 0 };
+  private lastShotKind: ProjectileKind | null = null;
+  private lastShotOwnerId: string | null = null;
   private xp = 0;
   private xpDeaths = 0;
   private xpMotesSpawned = 0;
@@ -150,6 +160,9 @@ export class CombatSystem {
       hits: this.boltHits,
       misses: this.boltMisses,
       staleSwitches: this.staleTargetSwitches,
+      shots: { ...this.shotsByKind },
+      lastShotKind: this.lastShotKind,
+      lastShotOwnerId: this.lastShotOwnerId,
     };
   }
 
@@ -263,6 +276,10 @@ export class CombatSystem {
     this.boltHits = 0;
     this.boltMisses = 0;
     this.staleTargetSwitches = 0;
+    this.shotsByKind.bolt = 0;
+    this.shotsByKind.lob = 0;
+    this.lastShotKind = null;
+    this.lastShotOwnerId = null;
     for (const ownerId of Object.keys(this.ownerKills)) delete this.ownerKills[ownerId];
     for (let i = 0; i < this.rigs.length; i += 1) {
       const state = this.rigs[i];
@@ -309,22 +326,25 @@ export class CombatSystem {
   private emitVolley(state: ShooterState, origin: THREE.Vector3, target: ClaimJumperEnemy): void {
     const handle = state.handle;
     this.scratchOrigin.copy(origin);
-    if (handle.kind === 'lob') {
+    const targetPoint = handle.targetPoint?.(this.scratchOrigin, target) ?? this.boltAimPoint(handle, target);
+    const kind = handle.projectileKind?.(this.scratchOrigin, target, targetPoint) ?? handle.kind ?? 'bolt';
+    if (kind === 'lob') {
       const aoe = handle.aoe ?? Balance.blast;
-      const targetPoint = handle.targetPoint?.(this.scratchOrigin, target) ?? target.position;
+      const airTime = handle.airTime?.(this.scratchOrigin, targetPoint) ?? aoe.airTime;
       const count = Math.max(1, handle.volley);
       for (let i = 0; i < count; i += 1) {
         const damage = handle.getDamage?.() ?? handle.damage;
-        if (this.blastCharges.activate(this.scratchOrigin, targetPoint, aoe.airTime, damage, aoe.radius, handle.id ?? 'hero_blast')) {
+        const ownerId = handle.id ?? 'hero_blast';
+        if (this.blastCharges.activate(this.scratchOrigin, targetPoint, airTime, damage, aoe.radius, ownerId)) {
+          this.recordShot('lob', ownerId);
           this.audio.playArc();
         }
       }
       return;
     }
 
-    const aimPoint = this.boltAimPoint(handle, target);
-    const dx = aimPoint.x - this.scratchOrigin.x;
-    const dz = aimPoint.z - this.scratchOrigin.z;
+    const dx = targetPoint.x - this.scratchOrigin.x;
+    const dz = targetPoint.z - this.scratchOrigin.z;
     const lenSq = dx * dx + dz * dz;
     if (lenSq <= 0.0001) return;
 
@@ -334,10 +354,18 @@ export class CombatSystem {
     const count = Math.max(1, handle.volley);
     for (let i = 0; i < count; i += 1) {
       const damage = handle.getDamage?.() ?? handle.damage;
-      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, handle.id ?? 'hero', state.id, target.id)) {
+      const ownerId = handle.id ?? 'hero';
+      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, ownerId, state.id, target.id)) {
+        this.recordShot('bolt', ownerId);
         this.audio.playArc();
       }
     }
+  }
+
+  private recordShot(kind: ProjectileKind, ownerId: string): void {
+    this.shotsByKind[kind] += 1;
+    this.lastShotKind = kind;
+    this.lastShotOwnerId = ownerId;
   }
 
   private boltAimPoint(handle: ShooterHandle, target: ClaimJumperEnemy): THREE.Vector3 {
@@ -370,6 +398,29 @@ export class CombatSystem {
 
     const radiusSq = radius * radius;
     let hit = false;
+    if (ownerId === 'turrets') {
+      let closest: ClaimJumperEnemy | null = null;
+      let closestSq = radiusSq;
+      for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
+        const enemy = this.enemies.all[enemyIndex];
+        if (!enemy?.isAlive) continue;
+        const dx = enemy.position.x - position.x;
+        const dz = enemy.position.z - position.z;
+        const distanceSq = dx * dx + dz * dz;
+        if (distanceSq > closestSq) continue;
+        closest = enemy;
+        closestSq = distanceSq;
+      }
+      if (closest) {
+        hit = true;
+        const died = closest.takeDamage(damage);
+        this.vfx.hit(closest.position);
+        if (died) this.killEnemy(closest, this.currentAt, ownerId);
+      }
+      if (hit) this.audio.playHit();
+      return;
+    }
+
     for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
       const enemy = this.enemies.all[enemyIndex];
       if (!enemy?.isAlive) continue;

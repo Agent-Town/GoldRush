@@ -107,6 +107,7 @@ export const Balance = {
   },
   projectile: {
     pool: 128,
+    turretLobMinAirTime: 0.1,
   },
   beacon: {
     costBase: 25,

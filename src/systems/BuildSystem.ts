@@ -877,7 +877,16 @@ export class BuildSystem {
       damage: Balance.turret.damage,
       projSpeed: Balance.turret.boltSpeed,
       volley: Balance.turret.volley,
-      canTarget: (target) => this.hasLineOfSight(this.turrets.allPositions[placed] ?? this.ghostPos, target.position),
+      projectileKind: (origin, _target, targetPoint) => (this.firingLineCrossesPalisade(origin, targetPoint) ? 'lob' : 'bolt'),
+      airTime: (origin, targetPoint) =>
+        Math.max(
+          Balance.projectile.turretLobMinAirTime,
+          Math.hypot(targetPoint.x - origin.x, targetPoint.z - origin.z) / Math.max(0.001, Balance.turret.boltSpeed),
+        ),
+      aoe: {
+        radius: Balance.sparkRig.boltRadius + Balance.enemy.touchRadius,
+        airTime: Balance.projectile.turretLobMinAirTime,
+      },
     };
     this.registerShooter('turret', placed, handle);
   }
@@ -1192,11 +1201,11 @@ export class BuildSystem {
     this.assayOfficeGhost.add(base, roof, plaque);
   }
 
-  private hasLineOfSight(from: THREE.Vector3, to: THREE.Vector3): boolean {
+  private firingLineCrossesPalisade(from: THREE.Vector3, to: THREE.Vector3): boolean {
     for (const blocker of this.palisadeBlockers) {
-      if (this.segmentIntersectsBlocker(from.x, from.z, to.x, to.z, blocker)) return false;
+      if (this.segmentIntersectsBlocker(from.x, from.z, to.x, to.z, blocker)) return true;
     }
-    return true;
+    return false;
   }
 
   private segmentIntersectsBlocker(ax: number, az: number, bx: number, bz: number, blocker: PalisadeBlocker): boolean {
