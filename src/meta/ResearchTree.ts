@@ -5,9 +5,10 @@ import {
   type MetaProgress,
   type MetaProgressStorage,
 } from '../game/MetaProgress';
+import { loadEpoch } from './ContractFamilies';
 
 export const RESEARCH_STATE_KEY = 'gr.research.v1';
-export const STEAMWORKS_THRESHOLD = 6;
+export const STEAMWORKS_THRESHOLD = loadEpoch('epoch-1-frontier').threshold ?? 6;
 
 export type ResearchBranch = 'Prospecting Works' | 'Arsenal Works' | 'Assay Works';
 
