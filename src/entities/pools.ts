@@ -15,6 +15,8 @@ import {
 } from './Enemy';
 import type { RotationDirection } from '../assets/OrientationResolver';
 
+const ENEMY_SPRITE_Y = 0.72;
+
 export class EnemyPool {
   readonly group = new THREE.Group();
 
@@ -28,19 +30,41 @@ export class EnemyPool {
   );
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
-    y: 0.72,
+    y: ENEMY_SPRITE_Y,
     scale: [1.55, 1.55],
     renderOrder: 2,
     onLoaded: () => this.setProceduralVisible(false),
   });
-  private readonly spriteAnimator = new SpriteAnimator(assetSlots.charClaimJumper, this.generatedSprites.material);
+  private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+    name: 'GeneratedClaimJumperSpriteFades',
+    y: ENEMY_SPRITE_Y,
+    scale: [1.55, 1.55],
+    renderOrder: 2.01,
+  });
+  private readonly spriteAnimator = new SpriteAnimator(
+    assetSlots.charClaimJumper,
+    this.generatedSprites.material,
+    undefined,
+    this.generatedSpriteFades.material,
+  );
   private readonly thiefSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSprites',
-    y: 0.72,
+    y: ENEMY_SPRITE_Y,
     scale: [1.55, 1.55],
     renderOrder: 2,
   });
-  private readonly thiefSpriteAnimator = new SpriteAnimator(assetSlots.charClaimJumper, this.thiefSprites.material);
+  private readonly thiefSpriteFades = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+    name: 'GeneratedClaimJumperThiefSpriteFades',
+    y: ENEMY_SPRITE_Y,
+    scale: [1.55, 1.55],
+    renderOrder: 2.01,
+  });
+  private readonly thiefSpriteAnimator = new SpriteAnimator(
+    assetSlots.charClaimJumper,
+    this.thiefSprites.material,
+    undefined,
+    this.thiefSpriteFades.material,
+  );
   private readonly localMatrices: THREE.Matrix4[] = [];
   private readonly cells: ClaimJumperEnemy[][] = [];
   private readonly touchedCells: number[] = [];
@@ -66,7 +90,7 @@ export class EnemyPool {
     this.gridSize = Math.ceil((this.gridMax - this.gridMin) / this.cellSize);
     this.createRenderParts();
     this.createSackMesh();
-    this.group.add(this.generatedSprites.group, this.thiefSprites.group);
+    this.group.add(this.generatedSprites.group, this.generatedSpriteFades.group, this.thiefSprites.group, this.thiefSpriteFades.group);
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
       this.cells.push([]);
@@ -147,8 +171,18 @@ export class EnemyPool {
     this.syncInstances();
     const normalAnimation = this.activeAnimation(false);
     const thiefAnimation = this.activeAnimation(true);
-    if (thiefAnimation.active) this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.orientation);
-    if (normalAnimation.active || !thiefAnimation.active) this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.orientation);
+    const updateNormalSprites = () =>
+      this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.active ? normalAnimation.orientation : 'side');
+    const updateThiefSprites = () =>
+      this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.active ? thiefAnimation.orientation : 'side');
+    if (normalAnimation.active || !thiefAnimation.active) {
+      updateThiefSprites();
+      updateNormalSprites();
+    } else {
+      updateNormalSprites();
+      updateThiefSprites();
+    }
+    this.syncSpriteVisuals();
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
@@ -172,8 +206,10 @@ export class EnemyPool {
       enemy.dispose();
     }
     this.generatedSprites.dispose();
+    this.generatedSpriteFades.dispose();
     this.spriteAnimator.dispose();
     this.thiefSprites.dispose();
+    this.thiefSpriteFades.dispose();
     this.thiefSpriteAnimator.dispose();
     disposeClaimJumperAssets(this.assets);
   }
@@ -255,8 +291,11 @@ export class EnemyPool {
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
+    const motion = enemy.isThief ? this.thiefSpriteAnimator.motion : this.spriteAnimator.motion;
     this.syncObject.position.copy(enemy.group.position);
+    this.syncObject.position.y += motion.bobOffset;
     this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
+    this.syncObject.rotation.z = motion.leanRad;
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
     this.baseMatrix.copy(enemy.isAlive ? this.syncObject.matrix : this.hiddenMatrix);
@@ -279,8 +318,36 @@ export class EnemyPool {
     this.instanceMatrix.multiplyMatrices(enemy.isAlive && enemy.carriedAmount > 0 ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.sackMesh.instanceMatrix.needsUpdate = true;
-    this.generatedSprites.set(enemy.id, enemy.group.position, enemy.isAlive && !enemy.isThief);
-    this.thiefSprites.set(enemy.id, enemy.group.position, enemy.isAlive && enemy.isThief);
+    this.syncEnemySprite(enemy);
+  }
+
+  private syncSpriteVisuals(): void {
+    const normalMotion = this.spriteAnimator.motion;
+    const thiefMotion = this.thiefSpriteAnimator.motion;
+    this.generatedSprites.material.rotation = normalMotion.leanRad;
+    this.generatedSpriteFades.material.rotation = normalMotion.leanRad;
+    this.thiefSprites.material.rotation = thiefMotion.leanRad;
+    this.thiefSpriteFades.material.rotation = thiefMotion.leanRad;
+    for (const enemy of this.enemies) this.syncEnemySprite(enemy);
+  }
+
+  private syncEnemySprite(enemy: ClaimJumperEnemy): void {
+    const normalVisible = enemy.isAlive && !enemy.isThief;
+    const thiefVisible = enemy.isAlive && enemy.isThief;
+    const normalMotion = this.spriteAnimator.motion;
+    const thiefMotion = this.thiefSpriteAnimator.motion;
+    this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
+    this.generatedSpriteFades.set(enemy.id, enemy.group.position, normalVisible && this.spriteAnimator.overlayActive);
+    this.thiefSprites.set(enemy.id, enemy.group.position, thiefVisible);
+    this.thiefSpriteFades.set(enemy.id, enemy.group.position, thiefVisible && this.thiefSpriteAnimator.overlayActive);
+    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], normalMotion.bobOffset);
+    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], normalMotion.bobOffset);
+    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], thiefMotion.bobOffset);
+    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], thiefMotion.bobOffset);
+  }
+
+  private applySpriteBob(sprite: THREE.Object3D | undefined, bobOffset: number): void {
+    if (sprite) sprite.position.y = ENEMY_SPRITE_Y + bobOffset;
   }
 
   private setProceduralVisible(visible: boolean): void {

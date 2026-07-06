@@ -253,6 +253,12 @@ export const Balance = {
     turnRateDegPerS: 540,
     orientationFadeMs: 100,
   },
+  anim: {
+    frameBlendMs: 80,
+    walkFps: 5.5,
+    bobAmp: 0.035,
+    leanDeg: 2.4,
+  },
   charm: {
     hitPauseMs: 30,
     hitPauseCooldownMs: 250,

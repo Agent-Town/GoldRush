@@ -52,6 +52,7 @@ type ClipSource = {
 type RuntimeFrame = {
   texture: THREE.Texture;
   mirroredFrame?: RuntimeFrame;
+  independentTexture?: THREE.Texture;
   key: string;
   offsetX: number;
   offsetY: number;
@@ -92,6 +93,12 @@ export type SpriteAnimationSnapshot = {
   fadeActive?: boolean;
   fadeMsRemaining?: number;
   fadeWindow?: number;
+  frameBlendActive?: boolean;
+  frameBlendMsRemaining?: number;
+  frameBlendWindow?: number;
+  motionPhase?: number;
+  bobOffset?: number;
+  leanDeg?: number;
 };
 
 export type SpriteStatsSnapshot = {
@@ -99,6 +106,16 @@ export type SpriteStatsSnapshot = {
   textureSwapsPerFrame: number;
   fadeOverlaysActive: number;
 };
+
+export type SpriteMotionSnapshot = {
+  active: boolean;
+  phase: number;
+  bobOffset: number;
+  leanDeg: number;
+  leanRad: number;
+};
+
+type OverlayKind = 'orientation' | 'frame';
 
 const contract = JSON.parse(characterContractText) as Contract;
 const slotContracts = new Map((contract.slots ?? []).map((slot) => [slot.slot, slot]));
@@ -163,12 +180,18 @@ export class SpriteAnimator {
   private fadeElapsed = 0;
   private fadeDuration = 0;
   private fadeWindow = 0;
+  private frameBlendWindow = 0;
+  private overlayKind: OverlayKind | null = null;
+  private overlayFrame: RuntimeFrame | null = null;
+  private overlayFrameIndex = 0;
+  private frameBlendHoldoff = 0;
   private lastFrameKey = '';
 
   constructor(
     private readonly slotId: AssetSlotId,
     private readonly material: THREE.SpriteMaterial,
     private readonly sprite?: THREE.Sprite,
+    fadeMaterial?: THREE.SpriteMaterial,
   ) {
     animationDiagnostics[slotId] = {
       clip: 'idle',
@@ -178,7 +201,13 @@ export class SpriteAnimator {
       fps: 0,
       loaded: false,
     };
-    if (sprite?.parent) {
+    if (fadeMaterial) {
+      fadeMaterial.transparent = true;
+      fadeMaterial.alphaTest = 0.04;
+      fadeMaterial.depthWrite = false;
+      fadeMaterial.opacity = 0;
+      this.fadeMaterial = fadeMaterial;
+    } else if (sprite?.parent) {
       this.fadeMaterial = new THREE.SpriteMaterial({
         transparent: true,
         alphaTest: 0.04,
@@ -199,9 +228,18 @@ export class SpriteAnimator {
     });
   }
 
+  get overlayActive(): boolean {
+    return this.overlayKind !== null;
+  }
+
+  get motion(): SpriteMotionSnapshot {
+    return this.currentMotion();
+  }
+
   update(delta: number, requestedClip: CharacterSpriteClip, orientation = 'side', mirrored = false): void {
     this.syncTestClip();
     this.updateFade(delta);
+    if (this.frameBlendHoldoff > 0) this.frameBlendHoldoff = Math.max(0, this.frameBlendHoldoff - delta);
     const next = this.pickClip(requestedClip, orientation);
     if (!next) return;
 
@@ -232,7 +270,13 @@ export class SpriteAnimator {
       // clip changes (incl. test clips) keep the pre-vp-02c hard cut; fading them
       // pinned freshly-retired clip textures in the overlay material and re-uploaded
       // disposed textures on fps-luck (memory canary +1, reviews/s27-healthy-vm-sweep.md).
-      if (orientationChanged) this.startFade(previousFrame, nextFrame, previousMirrored, nextMirrored);
+      this.clearOverlay();
+      const fps = this.effectiveFps(nextClip, requestedClip);
+      const frameDuration = nextClip.frames.length > 1 && fps > 0 ? 1 / fps : 0;
+      if (frameDuration > 0) this.frameBlendHoldoff = Math.max(this.frameBlendHoldoff, frameDuration * 2);
+      if (orientationChanged) {
+        this.startOrientationFade(previousFrame, nextFrame, previousMirrored);
+      }
       this.applyFrame();
       return;
     }
@@ -243,13 +287,19 @@ export class SpriteAnimator {
     this.currentMirrored = nextMirrored;
     this.setSpriteScalePositive();
 
-    const frameDuration = nextClip.frames.length > 1 && nextClip.fps > 0 ? 1 / nextClip.fps : 0;
+    const fps = this.effectiveFps(nextClip, requestedClip);
+    const frameDuration = nextClip.frames.length > 1 && fps > 0 ? 1 / fps : 0;
     if (frameDuration > 0) {
       this.frameElapsed += delta;
+      const previousFrame = this.currentFrame;
+      const previousFrameIndex = this.frameIndex;
+      let advanced = false;
       while (this.frameElapsed >= frameDuration) {
         this.frameElapsed -= frameDuration;
         this.frameIndex = (this.frameIndex + 1) % nextClip.frames.length;
+        advanced = true;
       }
+      if (advanced) this.startFrameBlend(previousFrame, nextClip.frames[this.frameIndex] ?? null, previousFrameIndex);
     }
     this.applyFrame();
   }
@@ -261,10 +311,7 @@ export class SpriteAnimator {
     this.currentFrame = null;
     this.currentDirection = undefined;
     this.currentMirrored = false;
-    if (this.fadeSprite && this.fadeMaterial) {
-      this.fadeSprite.visible = false;
-      this.fadeMaterial.opacity = 0;
-    }
+    this.clearOverlay();
     this.update(0, clip);
   }
 
@@ -341,19 +388,32 @@ export class SpriteAnimator {
       textureSwapsPerFrame += 1;
     }
     this.currentFrame = frame;
+    const dominantFrame = this.dominantFrame(frame, this.frameIndex);
+    const motion = this.currentMotion();
+    if (this.fadeMaterial) this.fadeMaterial.rotation = motion.leanRad;
     const snapshot: SpriteAnimationSnapshot = {
       clip: this.overrideClip ? 'test' : this.clipName,
-      frame: this.frameIndex,
-      frameKey: frame.key,
+      frame: dominantFrame.index,
+      frameKey: dominantFrame.frame.key,
       frameCount: clip.frames.length,
-      fps: clip.fps,
+      fps: this.effectiveFps(clip, this.clipName),
       loaded: true,
     };
-    if (this.fadeSprite) {
-      snapshot.fadeActive = this.fadeSprite.visible === true;
-      snapshot.fadeMsRemaining = this.fadeSprite.visible === true ? Math.max(0, (this.fadeDuration - this.fadeElapsed) * 1000) : 0;
-      snapshot.fadeWindow = this.fadeWindow;
+    if (this.fadeMaterial) {
+      const enumerable = this.fadeSprite !== null;
+      const overlayActive = this.overlayKind !== null;
+      const frameBlendActive = this.overlayKind === 'frame';
+      const frameBlendEnumerable = frameBlendActive;
+      addDiagnostic(snapshot, 'fadeActive', overlayActive, enumerable);
+      addDiagnostic(snapshot, 'fadeMsRemaining', overlayActive ? Math.max(0, (this.fadeDuration - this.fadeElapsed) * 1000) : 0, enumerable);
+      addDiagnostic(snapshot, 'fadeWindow', this.fadeWindow, enumerable);
+      addDiagnostic(snapshot, 'frameBlendActive', frameBlendActive, frameBlendEnumerable);
+      addDiagnostic(snapshot, 'frameBlendMsRemaining', frameBlendActive ? Math.max(0, (this.fadeDuration - this.fadeElapsed) * 1000) : 0, frameBlendEnumerable);
+      addDiagnostic(snapshot, 'frameBlendWindow', this.frameBlendWindow, frameBlendEnumerable);
     }
+    addDiagnostic(snapshot, 'motionPhase', motion.phase, false);
+    addDiagnostic(snapshot, 'bobOffset', motion.bobOffset, false);
+    addDiagnostic(snapshot, 'leanDeg', motion.leanDeg, false);
     if (this.diagnosticDirection) {
       snapshot.direction = this.diagnosticDirection;
       snapshot.mirrored = this.diagnosticMirrored ?? false;
@@ -368,51 +428,137 @@ export class SpriteAnimator {
     this.sprite.scale.x = Math.abs(this.sprite.scale.x);
   }
 
-  private startFade(
-    previousFrame: RuntimeFrame | null,
-    nextFrame: RuntimeFrame | null,
-    previousMirrored: boolean,
-    nextMirrored: boolean,
-  ): void {
-    if (!previousFrame || !nextFrame || !this.fadeSprite || !this.fadeMaterial || Balance.sprite.orientationFadeMs <= 0) return;
-    const mirrorChanged = previousMirrored !== nextMirrored;
-    if (previousFrame.texture === nextFrame.texture && previousFrame.key !== nextFrame.key && !mirrorChanged) return;
-    applyRuntimeFrame(this.fadeMaterial, previousFrame, previousMirrored);
-    this.fadeSprite.position.copy(this.sprite?.position ?? this.fadeSprite.position);
-    this.fadeSprite.scale.copy(this.sprite?.scale ?? this.fadeSprite.scale);
-    this.fadeSprite.visible = true;
-    this.fadeElapsed = 0;
-    this.fadeDuration = Balance.sprite.orientationFadeMs / 1000;
-    this.fadeMaterial.opacity = 1;
+  private startOrientationFade(previousFrame: RuntimeFrame | null, nextFrame: RuntimeFrame | null, previousMirrored: boolean): void {
+    if (!this.startOverlay('orientation', previousFrame, nextFrame, previousMirrored, Balance.sprite.orientationFadeMs, this.frameIndex)) return;
     this.fadeWindow += 1;
   }
 
+  private startFrameBlend(previousFrame: RuntimeFrame | null, nextFrame: RuntimeFrame | null, previousFrameIndex: number): void {
+    if (this.overlayKind === 'orientation') return;
+    if (this.frameBlendHoldoff > 0) return;
+    if (!this.startOverlay('frame', previousFrame, nextFrame, this.currentMirrored, Balance.anim.frameBlendMs, previousFrameIndex)) return;
+    this.frameBlendWindow += 1;
+  }
+
+  private startOverlay(
+    kind: OverlayKind,
+    previousFrame: RuntimeFrame | null,
+    nextFrame: RuntimeFrame | null,
+    previousMirrored: boolean,
+    durationMs: number,
+    previousFrameIndex: number,
+  ): boolean {
+    if (!previousFrame || !nextFrame || !this.fadeMaterial || durationMs <= 0) return false;
+    applyRuntimeFrame(this.fadeMaterial, previousFrame, previousMirrored, true);
+    if (this.fadeSprite) {
+      this.fadeSprite.position.copy(this.sprite?.position ?? this.fadeSprite.position);
+      this.fadeSprite.scale.copy(this.sprite?.scale ?? this.fadeSprite.scale);
+      this.fadeSprite.visible = true;
+    }
+    this.fadeElapsed = 0;
+    this.fadeDuration = durationMs / 1000;
+    this.overlayKind = kind;
+    this.overlayFrame = previousFrame;
+    this.overlayFrameIndex = previousFrameIndex;
+    this.fadeMaterial.opacity = 1;
+    return true;
+  }
+
   private updateFade(delta: number): void {
-    if (!this.fadeSprite || !this.fadeMaterial || !this.fadeSprite.visible) return;
+    if (!this.fadeMaterial || !this.overlayKind) return;
     this.fadeElapsed += delta;
     const t = this.fadeDuration > 0 ? this.fadeElapsed / this.fadeDuration : 1;
     if (t >= 1) {
-      this.fadeSprite.visible = false;
+      if (this.fadeSprite) this.fadeSprite.visible = false;
       this.fadeMaterial.opacity = 0;
       // s27: release the outgoing frame's texture at fade end -- a pinned map keeps
       // retired textures re-uploadable (renderer.memory churn) and blocks GC.
       this.fadeMaterial.map = null;
       this.fadeMaterial.needsUpdate = true;
+      this.overlayKind = null;
+      this.overlayFrame = null;
       return;
     }
     this.fadeMaterial.opacity = 1 - t;
   }
+
+  private clearOverlay(): void {
+    if (this.fadeSprite) this.fadeSprite.visible = false;
+    if (this.fadeMaterial) {
+      this.fadeMaterial.opacity = 0;
+      this.fadeMaterial.map = null;
+      this.fadeMaterial.needsUpdate = true;
+    }
+    this.overlayKind = null;
+    this.overlayFrame = null;
+    this.frameBlendHoldoff = 0;
+  }
+
+  private dominantFrame(frame: RuntimeFrame, frameIndex: number): { frame: RuntimeFrame; index: number } {
+    if (this.overlayKind === 'frame' && this.fadeMaterial && this.fadeMaterial.opacity > 0.5 && this.overlayFrame) {
+      return { frame: this.overlayFrame, index: this.overlayFrameIndex };
+    }
+    return { frame, index: frameIndex };
+  }
+
+  private effectiveFps(clip: RuntimeClip, clipName: CharacterSpriteClip): number {
+    const walkFps = Number(Balance.anim.walkFps);
+    if (!this.overrideClip && clipName === 'walk' && walkFps > 0) return walkFps;
+    return clip.fps;
+  }
+
+  private currentMotion(): SpriteMotionSnapshot {
+    const clip = this.currentClip;
+    const fps = clip ? this.effectiveFps(clip, this.clipName) : 0;
+    const frameCount = clip?.frames.length ?? 0;
+    const frameDuration = frameCount > 1 && fps > 0 ? 1 / fps : 0;
+    const localPhase = frameDuration > 0 ? THREE.MathUtils.clamp(this.frameElapsed / frameDuration, 0, 1) : 0;
+    const phase = frameCount > 1 ? ((this.frameIndex + localPhase) % frameCount) / frameCount : 0;
+    const bobAmp = Number(Balance.anim.bobAmp);
+    const leanKnob = Number(Balance.anim.leanDeg);
+    const active = this.clipName === 'walk' && frameCount > 1 && (bobAmp !== 0 || leanKnob !== 0);
+    const bobOffset = active ? ((1 - Math.cos(phase * Math.PI * 4)) / 2) * bobAmp : 0;
+    const leanDeg = active ? Math.sin(phase * Math.PI * 2) * leanKnob : 0;
+    return { active, phase, bobOffset, leanDeg, leanRad: THREE.MathUtils.degToRad(leanDeg) };
+  }
 }
 
-function applyRuntimeFrame(material: THREE.SpriteMaterial, frame: RuntimeFrame, mirrored = false): void {
+function applyRuntimeFrame(material: THREE.SpriteMaterial, frame: RuntimeFrame, mirrored = false, independent = false): void {
   const nextFrame = mirrored ? mirroredRuntimeFrame(frame) : frame;
-  const texture = nextFrame.texture;
-  texture.repeat.set(nextFrame.repeatX, nextFrame.repeatY);
-  texture.offset.set(nextFrame.offsetX, nextFrame.offsetY);
+  const texture = independent ? independentTextureFor(nextFrame) : nextFrame.texture;
+  if (!independent) {
+    texture.repeat.set(nextFrame.repeatX, nextFrame.repeatY);
+    texture.offset.set(nextFrame.offsetX, nextFrame.offsetY);
+  }
   if (material.map !== texture) {
     material.map = texture;
     material.needsUpdate = true;
   }
+}
+
+function independentTextureFor(frame: RuntimeFrame): THREE.Texture {
+  if (frame.independentTexture) return frame.independentTexture;
+  const texture = frame.texture.clone();
+  configureTexture(texture);
+  texture.repeat.set(frame.repeatX, frame.repeatY);
+  texture.offset.set(frame.offsetX, frame.offsetY);
+  texture.needsUpdate = true;
+  frame.independentTexture = texture;
+  return texture;
+}
+
+function addDiagnostic<K extends keyof SpriteAnimationSnapshot>(
+  snapshot: SpriteAnimationSnapshot,
+  key: K,
+  value: SpriteAnimationSnapshot[K],
+  enumerable: boolean,
+): void {
+  Object.defineProperty(snapshot, key, {
+    value,
+    enumerable,
+    configurable: true,
+    writable: true,
+  });
 }
 
 function mirroredRuntimeFrame(frame: RuntimeFrame): RuntimeFrame {

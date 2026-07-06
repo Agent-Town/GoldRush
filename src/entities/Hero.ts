@@ -14,6 +14,7 @@ export class Hero {
   readonly velocity = new THREE.Vector3();
   hp: number = Balance.hero.maxHp;
 
+  private readonly visualGroup = new THREE.Group();
   private readonly placeholderGroup = new THREE.Group();
   private readonly generatedSprite: GeneratedSprite;
   private readonly spriteAnimator: SpriteAnimator;
@@ -55,6 +56,7 @@ export class Hero {
 
   constructor() {
     this.group.name = 'HomesteaderHero';
+    this.visualGroup.name = 'HomesteaderHeroVisuals';
     this.placeholderGroup.name = 'HomesteaderHeroPlaceholder';
 
     const body = new THREE.Mesh(this.bodyGeometry, this.bodyMaterial);
@@ -82,8 +84,9 @@ export class Hero {
     glow.position.copy(lamp.position);
 
     this.placeholderGroup.add(body, coat, brim, hat, lamp, glow);
-    this.group.add(this.placeholderGroup);
-    this.generatedSprite = attachGeneratedSprite(this.group, assetSlots.charHero, {
+    this.visualGroup.add(this.placeholderGroup);
+    this.group.add(this.visualGroup);
+    this.generatedSprite = attachGeneratedSprite(this.visualGroup, assetSlots.charHero, {
       name: 'GeneratedHeroHomesteader',
       position: [0, 0.9, 0],
       scale: [1.85, 1.85],
@@ -144,6 +147,7 @@ export class Hero {
     const heading = intentSpeedSq > 0.0025 ? this.targetVelocity : this.velocity;
     const direction = moving ? this.orientationResolver.resolve(...this.smoothedHeadingVector(dt, heading)) : this.orientationResolver.idleDirection();
     this.spriteAnimator.update(dt, moving ? 'walk' : 'idle', direction);
+    this.applyProceduralMotion();
   }
 
   get maxHp(): number {
@@ -188,6 +192,7 @@ export class Hero {
     this.group.position.copy(position);
     this.group.rotation.y = 0;
     this.spriteAnimator.reset('idle');
+    this.applyProceduralMotion();
   }
 
   dispose(): void {
@@ -215,6 +220,13 @@ export class Hero {
     }
     const radians = THREE.MathUtils.degToRad(this.facingAngleDeg);
     return [Math.sin(radians), Math.cos(radians)];
+  }
+
+  private applyProceduralMotion(): void {
+    const motion = this.spriteAnimator.motion;
+    this.visualGroup.position.y = motion.bobOffset;
+    this.placeholderGroup.rotation.z = motion.leanRad;
+    (this.generatedSprite.sprite.material as THREE.SpriteMaterial).rotation = motion.leanRad;
   }
 }
 

@@ -277,6 +277,15 @@ interface ThreeGameDiagnostics {
     loaded: boolean;
     direction?: string;
     mirrored?: boolean;
+    fadeActive?: boolean;
+    fadeMsRemaining?: number;
+    fadeWindow?: number;
+    frameBlendActive?: boolean;
+    frameBlendMsRemaining?: number;
+    frameBlendWindow?: number;
+    motionPhase?: number;
+    bobOffset?: number;
+    leanDeg?: number;
   }>>;
   spriteStats: {
     activeAnimators: number;
