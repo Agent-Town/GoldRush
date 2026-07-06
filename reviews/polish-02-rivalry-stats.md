@@ -1,29 +1,31 @@
-# Review — lane-c polish-02 rivalry-stats (s96 drain attempt)
+# Review — polish-02 rivalry-stats (CORRECTIVE drain)
 
-**Verdict: BLOCKED — NOT merged. Corrective re-run queued to lane-c.**
-Source: `lane/polish 00dfa90` (runner done-move `tasks/done/20260707-020405-lane-c-polish-02-rivalry-stats.md`), rerun of the polish-02 lost to a lane reset (s61).
+**Slice:** lane-c polish-02 rivalry-stats (run-ledger totals, v1→v2 scoreboard migration, rivalry/base-value stats, weapon split, Best Claims sort)
+**Verdict:** ✅ **PASS — merged to main (s98 drain).**
+**Source:** `lane/polish` commit `ed564f1` (corrective run 023942), grafted onto clean main.
+**Base:** `9805e10` (main-side; only STATUS.md + a stray landmine spec moved on main since).
 
-## What it did (feature is sound)
-Expanded death/victory run ledger (waves, gold panned/sluiced/stolen/reclaimed, buildings built/lost/repaired, spark-vs-blast damage, upgrades by family) + Best Claims scoreboard **v2** with base-value + weapon-split + v1→v2 migration. Files: `src/game/Economy.ts` (+31 summary fields), `src/game/ProfileStorage.ts`, `src/game/Scoreboard.ts` (+93 migration), `src/systems/CombatSystem.ts` (+14 damageByOwner), `src/ui/DeathOverlay.ts` (+81), `src/ui/theme.css`, `src/vite-env.d.ts`, new `e2e/polish-02-rivalry-stats.spec.ts`, `e2e/m1-08-wave18-corrections.spec.ts` (+14).
+## What landed
+Single clean commit `ed564f1` (+648/−34 over `9805e10`), 15 files:
+- `src/game/Economy.ts`, `src/game/Game.ts` (additive — 031 GATE RIDER CLEAR, office/SpriteAnimator branches untouched), `src/game/ProfileStorage.ts`, `src/game/Scoreboard.ts`, `src/systems/BuildSystem.ts`, `src/systems/CombatSystem.ts`, `src/ui/DeathOverlay.ts`, `src/ui/theme.css`, `src/vite-env.d.ts`
+- specs: `polish-02-rivalry-stats` (327 lines, definitive), `m1-08`, `m3-06`, `sci-01`, `sci-02`, `sci-04` (test-only edits)
 
-## Merge mechanics (were clean)
-3-way squash-merge onto clean main `9e8f534` (BT-00) went cleanly — the 3 files BT-00 also touched (Economy.ts, BuildSystem.ts, vite-env.d.ts) auto-merged with no conflict (disjoint regions; both BT-00 `demolish` source and polish-02 rivalry summary fields coexist). tsc clean, build green on the merged tree.
+## F-POLISH02-1 (s96 BLOCKER) — RESOLVED
+s96 blocked this slice: one real victory applied the claim payout to `meta.tracks` **twice** (+2/track, expected +1), causation proven. The corrective run `ed564f1` fixes it. Verified DEAD:
+- `task-027-victory-must-matter` **2/2 both projects** (desktop 3.3s + mobile 3.1s) — the mandatory regression gate.
+- `polish-02-rivalry-stats.spec.ts:264` "a single secured victory increments every meta track exactly once" **2/2**.
 
-## BLOCKING FINDING — F-POLISH02-1: victory-meta double-count
-`e2e/task-027-victory-must-matter.spec.ts` goes **RED** on the merged tree: a single real victory applies the claim payout to `meta.tracks` **twice** — expected `{territory:1,science:1,hero:1,agent:1}`, received `{2,2,2,2}`. Both projects, deterministic (30s run, exact doubling — not a flake). The UI claim-payout still shows `+1` per track (those assertions pass); only the persisted/applied meta doubles.
+## s97 landmine — RESOLVED
+The s97 lock commit `59de42c` accidentally committed a stray 179-line `e2e/polish-02-rivalry-stats.spec.ts` to main (path-scoped-add slip; that spec's product code was NOT on main, so it was an ungated test on main). This graft overwrites it with ed564f1's definitive 327-line version + the product code it exercises → landmine resolved, spec now green.
 
-### Causation proven (not assumed)
-- pure BT-00 main `9e8f534`: task-027 **2/2 PASS** (verified in isolation).
-- BT-00 + polish-02 merged: task-027 **2/2 FAIL** (tracks doubled).
-→ polish-02-introduced. (An intermediate file-by-file checkout gave a false `nearestBuildingTo is not a function` — that was an inconsistent-tree artifact of the causation probe, not the real merged tree; discounted.)
+## Gate (native, scratch port 5238)
+- `npx tsc --noEmit`: clean
+- `npm run build`: green (479ms)
+- **task-027 2/2** both projects (double-count dead)
+- **polish-02 + m1-08 + m3-06 = 30/30** both projects — incl. `polish-02:144` v1→v2 migration **under a SELECTED profile** (profile-scope guard held, no fix-027 regression), `polish-02:204` base-value replay subtracts demolished cost, `polish-02:237` Best Claims sorts wave-then-base-value, `polish-02:264` victory-once
+- **sci-01 + sci-02 + sci-04 = 26/26** both projects (graft-touched specs)
+- **boot probe 2/2** both projects — zero console/page errors, desktop 1280 + mobile 390
+- **Total: 60 e2e green.**
 
-### Mechanism (lead for the corrective)
-`addMetaPayout` (`src/game/MetaProgress.ts:69`) has ONE guarded call site: `RunManager.awardSecuredClaim()` (guard `securedRunId===runId || endedRunId===runId`). RunManager/MetaProgress are OUTSIDE polish-02's scope, so the second application is a side effect of polish-02's ledger/scoreboard code — likely the expanded DeathOverlay/claim-office render re-invoking the secure/award path, or `recordScore`/`migrateLegacyScores` writing localStorage during the victory frame and triggering a meta re-load+re-apply. Corrective instructs Codex to log `addMetaPayout` calls in the failing run and remove the accidental second trigger.
-
-## Disposition
-- Main stays at BT-00 `9e8f534` (clean).
-- `00dfa90` is buggy + unmerged → its lane-reset destroys nothing merge-worthy.
-- Corrective master updated (`tasks/lane-c-polish-02-rivalry-stats.md`, CORRECTIVE header + task-027 added as a MANDATORY regression gate) and re-queued (`tasks/queue/lane-c/`). Runner resets lane/polish→main, re-runs fresh.
-
-## Gates that DID pass (evidence, merged tree, scratch 5236)
-tsc clean; build green; `polish-02-rivalry-stats` + `bt-00-demolish` + `m1-08` = 24 passed in the same batch — only task-027 failed. So the feature and its own spec are healthy; the defect is the meta double-count alone.
+## Post-merge note
+`lane/polish` still points at `ed564f1` (content now merged into main as a graft, not a cherry-pick). It is a content-dupe ahead of main — LANE-SAFETY: the next lane-c refill (combat-readability) must carry a drain-gated self-resetting pre-flight (`checkout lane/polish && reset --hard main`, runner-executed) before use. No undrained content is at risk (ed564f1 is fully merged).

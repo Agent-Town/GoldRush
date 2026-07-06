@@ -80,6 +80,7 @@ export class CombatSystem {
   private readonly scratchOrigin = new THREE.Vector3();
   private readonly scratchAimPoint = new THREE.Vector3();
   private readonly ownerKills: Record<string, number> = {};
+  private readonly ownerDamage: Record<string, number> = {};
   private nextShooterId = 1;
   private boltHits = 0;
   private boltMisses = 0;
@@ -136,6 +137,10 @@ export class CombatSystem {
 
   get killsByOwner(): Readonly<Record<string, number>> {
     return this.ownerKills;
+  }
+
+  get damageByOwner(): Readonly<Record<string, number>> {
+    return this.ownerDamage;
   }
 
   get xpAudit(): XpAuditDiagnostics {
@@ -281,6 +286,7 @@ export class CombatSystem {
     this.lastShotKind = null;
     this.lastShotOwnerId = null;
     for (const ownerId of Object.keys(this.ownerKills)) delete this.ownerKills[ownerId];
+    for (const ownerId of Object.keys(this.ownerDamage)) delete this.ownerDamage[ownerId];
     for (let i = 0; i < this.rigs.length; i += 1) {
       const state = this.rigs[i];
       if (!state) continue;
@@ -413,6 +419,7 @@ export class CombatSystem {
       }
       if (closest) {
         hit = true;
+        this.recordDamage(ownerId, Math.min(closest.currentHp, damage));
         const died = closest.takeDamage(damage);
         this.vfx.hit(closest.position);
         if (died) this.killEnemy(closest, this.currentAt, ownerId);
@@ -428,6 +435,7 @@ export class CombatSystem {
       const dz = enemy.position.z - position.z;
       if (dx * dx + dz * dz > radiusSq) continue;
       hit = true;
+      this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
       const died = enemy.takeDamage(damage);
       this.vfx.hit(enemy.position);
       if (died) this.killEnemy(enemy, this.currentAt, ownerId);
@@ -457,6 +465,7 @@ export class CombatSystem {
         const targetId = this.projectiles.targetIdAt(boltIndex);
         this.projectiles.deactivate(boltIndex);
         this.recordBoltHit(shooterId, targetId, enemy.id);
+        this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
         const died = enemy.takeDamage(damage);
         this.vfx.hit(enemy.position);
         this.audio.playHit();
@@ -531,6 +540,11 @@ export class CombatSystem {
       xp,
     });
     this.enemies.recycle(enemy);
+  }
+
+  private recordDamage(ownerId: string, amount: number): void {
+    if (amount <= 0) return;
+    this.ownerDamage[ownerId] = (this.ownerDamage[ownerId] ?? 0) + amount;
   }
 
   private readonly handleXpCollect = (position: THREE.Vector3, value: number): void => {

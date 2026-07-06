@@ -1,4 +1,5 @@
 import type { ResearchNode } from '../meta/ResearchTree';
+import { upgradeDefById } from '../game/Upgrades';
 
 export type DeathLedger = {
   timeAlive: number;
@@ -17,8 +18,22 @@ export type BestClaimRow = {
   gold: number;
   timeAlive: number;
   at: number;
+  baseValue?: number;
+  weaponSplit?: { spark: number; blast: number };
   secured?: boolean;
   profileName?: string;
+  legacy?: boolean;
+};
+
+export type DeathRunStatsSnapshot = {
+  sluiced: number;
+  stolen: number;
+  reclaimed: number;
+  buildingsBuilt: number;
+  buildingsLost: number;
+  buildingsRepaired: number;
+  damageByOwner: Readonly<Record<string, number>>;
+  upgradeStacks: Record<string, number>;
 };
 
 export type ScienceMeterView = {
@@ -38,6 +53,7 @@ export type DeathResearchState = {
 export type DeathOverlayOptions = {
   outcome?: 'death' | 'secured';
   actionLabel?: string;
+  runStats?: DeathRunStatsSnapshot;
   research?: DeathResearchState;
   onResearchPick?: (id: string) => DeathResearchState;
   onResearchSkip?: () => DeathResearchState;
@@ -84,6 +100,7 @@ export class DeathOverlay {
 
   private render(ledger: DeathLedger, scores: readonly BestClaimRow[], currentAt: number): string {
     const secured = this.options.outcome === 'secured';
+    const runStats = this.runStats();
     const flavor = secured
       ? 'The assay is sealed. The town kept thinking.'
       : 'The claim was overrun. The gold remembers.';
@@ -110,6 +127,14 @@ export class DeathOverlay {
             <dd data-death-gold>${ledger.goldPanned}</dd>
           </div>
           <div>
+            <dt>Gold Sluiced</dt>
+            <dd data-death-sluiced>${runStats.sluiced}</dd>
+          </div>
+          <div>
+            <dt>Stolen / Reclaimed</dt>
+            <dd data-death-stolen>${runStats.stolen} / ${runStats.reclaimed}</dd>
+          </div>
+          <div>
             <dt>Spent</dt>
             <dd data-death-spent>${ledger.spent}</dd>
           </div>
@@ -118,12 +143,24 @@ export class DeathOverlay {
             <dd data-death-beacons-built>${ledger.beaconsBuilt}</dd>
           </div>
           <div>
+            <dt>Buildings Built / Lost / Repaired</dt>
+            <dd data-death-buildings>${runStats.buildingsBuilt} / ${runStats.buildingsLost} / ${runStats.buildingsRepaired}</dd>
+          </div>
+          <div>
+            <dt>Spark / Blast Damage</dt>
+            <dd data-death-damage>${runStats.sparkDamage} / ${runStats.blastDamage}</dd>
+          </div>
+          <div>
             <dt>Blast Toggles</dt>
             <dd data-death-weapon-toggles>${ledger.weaponToggles}</dd>
           </div>
           <div>
             <dt>Blast Charge Time</dt>
             <dd data-death-blast-time>${this.formatTime(ledger.blastTime)}</dd>
+          </div>
+          <div>
+            <dt>Upgrades Taken</dt>
+            <dd data-death-upgrades>${this.escape(runStats.upgradeFamilies)}</dd>
           </div>
         </dl>
         ${this.renderScienceFooter()}
@@ -196,15 +233,64 @@ export class DeathOverlay {
           <li class="death-overlay__score ${current ? 'death-overlay__score--current' : ''}" data-testid="best-claim-row"${
             current ? ' data-current-run="true"' : ''
           }>
-            <span class="death-overlay__score-summary">${score.waves} waves - ${this.formatTime(score.timeAlive)}</span>
+            <span class="death-overlay__score-summary">wave ${score.waves} · ${this.formatBase(score.baseValue)}</span>
             <strong class="death-overlay__score-stamp">${score.secured ? 'SECURED' : 'OVERRUN'}</strong>
-            <span class="death-overlay__score-detail">${this.escape(score.profileName ?? 'Robin')} - ${score.kills} turned back - ${
-              score.gold
-            } gold</span>
+            <span class="death-overlay__score-detail">${this.escape(score.profileName ?? 'Robin')} · ${
+              score.waves
+            } waves · ${this.formatTime(score.timeAlive)} · ${score.kills} turned back · ${score.gold} gold · spark ${
+              Math.round(score.weaponSplit?.spark ?? 0)
+            } / blast ${Math.round(score.weaponSplit?.blast ?? 0)}${score.legacy ? ' · legacy' : ''}</span>
           </li>
         `;
       })
       .join('');
+  }
+
+  private runStats(): {
+    sluiced: number;
+    stolen: number;
+    reclaimed: number;
+    buildingsBuilt: number;
+    buildingsLost: number;
+    buildingsRepaired: number;
+    sparkDamage: number;
+    blastDamage: number;
+    upgradeFamilies: string;
+  } {
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+    const summary = diagnostics?.economy.summary;
+    const snapshot = this.options.runStats;
+    const damage = snapshot?.damageByOwner ?? diagnostics?.build.damageByOwner ?? {};
+    return {
+      sluiced: Math.round(snapshot?.sluiced ?? summary?.sluiced ?? 0),
+      stolen: Math.round(snapshot?.stolen ?? summary?.stolen ?? diagnostics?.steal.stolenTotal ?? 0),
+      reclaimed: Math.round(snapshot?.reclaimed ?? summary?.reclaimed ?? diagnostics?.steal.reclaimedTotal ?? 0),
+      buildingsBuilt: Math.round(snapshot?.buildingsBuilt ?? summary?.buildingsBuilt ?? 0),
+      buildingsLost: Math.round(snapshot?.buildingsLost ?? diagnostics?.wreck.wrecked ?? 0),
+      buildingsRepaired: Math.round(snapshot?.buildingsRepaired ?? summary?.repairs ?? diagnostics?.wreck.repairs ?? 0),
+      sparkDamage: Math.round(damage.hero ?? 0),
+      blastDamage: Math.round(damage.hero_blast ?? 0),
+      upgradeFamilies: this.upgradeFamilies(snapshot?.upgradeStacks ?? diagnostics?.progression.stacks ?? {}),
+    };
+  }
+
+  private upgradeFamilies(stacks: Record<string, number>): string {
+    const families = new Map<string, number>();
+    for (const [id, count] of Object.entries(stacks)) {
+      if (count <= 0) continue;
+      const family = upgradeDefById[id]?.iconFamily ?? 'other';
+      families.set(family, (families.get(family) ?? 0) + count);
+    }
+    if (families.size === 0) return 'none';
+    return [...families.entries()]
+      .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+      .map(([family, count]) => `${family} ${count}`)
+      .join(' · ');
+  }
+
+  private formatBase(value: number | undefined): string {
+    const baseValue = Math.round(value ?? 0);
+    return baseValue > 0 ? `${baseValue}g base` : 'baseless';
   }
 
   private readonly handleClick = (event: MouseEvent) => {

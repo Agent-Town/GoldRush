@@ -160,8 +160,13 @@ interface ThreeGameDiagnostics {
     replay: { gold: number; bankCap: number };
     summary: {
       panned: number;
+      sluiced: number;
       granted: number;
+      stolen: number;
+      reclaimed: number;
       spent: number;
+      baseValue: number;
+      buildingsBuilt: number;
       beaconsBuilt: number;
       repairSpent: number;
       repairs: number;
@@ -252,6 +257,7 @@ interface ThreeGameDiagnostics {
     pileStep: number;
     nextCost: number;
     killsByOwner: Readonly<Record<string, number>>;
+    damageByOwner: Readonly<Record<string, number>>;
     hp: Array<{
       id: GrBuildableId;
       index: number;
@@ -511,8 +517,13 @@ interface Window {
     economyLog: () => readonly unknown[];
     summarizeLog: (log: readonly unknown[]) => {
       panned: number;
+      sluiced: number;
       granted: number;
+      stolen: number;
+      reclaimed: number;
       spent: number;
+      baseValue: number;
+      buildingsBuilt: number;
       beaconsBuilt: number;
       repairSpent: number;
       repairs: number;

@@ -2,9 +2,9 @@ import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { SCOREBOARD_KEY } from '../src/game/ProfileStorage';
 import { RESEARCH_STATE_KEY } from '../src/meta/ResearchTree';
 
-const SCORE_KEY = 'gr.scores.v1';
 const SHOT_DIR = 'artifacts/sci-02';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
@@ -47,7 +47,7 @@ async function openGame(page: Page, taken: string[] = [], query = '?debug&timesc
       );
       localStorage.setItem(researchKey, JSON.stringify({ version: 1, taken: takenNodes, proposalSalt: 0 }));
     },
-    { metaKey: META_PROGRESS_KEY, researchKey: RESEARCH_STATE_KEY, scoreKey: SCORE_KEY, takenNodes: taken },
+    { metaKey: META_PROGRESS_KEY, researchKey: RESEARCH_STATE_KEY, scoreKey: SCOREBOARD_KEY, takenNodes: taken },
   );
   await page.goto(`/${query}`);
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);

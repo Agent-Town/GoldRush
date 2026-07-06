@@ -165,21 +165,21 @@ async function seedProfileData(page: Page): Promise<void> {
   const aliceMeta: MetaProgress = { version: 1, tracks: { territory: 2, science: 0, hero: 0, agent: 0 } };
   const bobMeta: MetaProgress = { version: 1, tracks: { territory: 0, science: 0, hero: 1, agent: 0 } };
   await page.evaluate(
-    ({ aliceMeta, bobMeta, aliceSlot, bobSlot }) => {
+    ({ aliceMeta, bobMeta, aliceSlot, bobSlot, scoreKey }) => {
       localStorage.setItem(window.__GR_PROFILE__!.storageKey('gr.meta.v1', 'alice'), JSON.stringify(aliceMeta));
       localStorage.setItem(window.__GR_PROFILE__!.storageKey('gr.meta.v1', 'bob'), JSON.stringify(bobMeta));
       localStorage.setItem(window.__GR_PROFILE__!.storageKey('gr.run.v1', 'alice'), JSON.stringify(aliceSlot));
       localStorage.setItem(window.__GR_PROFILE__!.storageKey('gr.run.v1', 'bob'), JSON.stringify(bobSlot));
       localStorage.setItem(
-        window.__GR_PROFILE__!.storageKey('gr.scores.v1', 'alice'),
+        window.__GR_PROFILE__!.storageKey(scoreKey, 'alice'),
         JSON.stringify([{ waves: 30, kills: 50, gold: 200, timeAlive: 500, at: 1, profileName: 'Alice' }]),
       );
       localStorage.setItem(
-        window.__GR_PROFILE__!.storageKey('gr.scores.v1', 'bob'),
+        window.__GR_PROFILE__!.storageKey(scoreKey, 'bob'),
         JSON.stringify([{ waves: 6, kills: 10, gold: 40, timeAlive: 90, at: 2, profileName: 'Bob' }]),
       );
     },
-    { aliceMeta, bobMeta, aliceSlot: { wave: 4 }, bobSlot: { wave: 8 } },
+    { aliceMeta, bobMeta, aliceSlot: { wave: 4 }, bobSlot: { wave: 8 }, scoreKey: SCOREBOARD_KEY },
   );
 }
 

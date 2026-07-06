@@ -13,7 +13,8 @@ export type EconomyEvent = EconomyEventBase &
     | { type: 'gold_panned'; nodeId: string; amount: number }
     | { type: 'gold_sluiced'; sluiceId: string; amount: number }
     | { type: 'gold_capped'; amount: 0 }
-    | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug' | 'demolish'; amount: number }
+    | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug'; amount: number }
+    | { type: 'gold_granted'; source: 'demolish'; amount: number; buildCost?: number }
     | { type: 'gold_stolen'; amount: number }
     | { type: 'gold_reclaimed'; amount: number }
     | { type: 'gold_spent'; sink: BuildSink; amount: number }
@@ -27,8 +28,13 @@ export type EconomyState = {
 
 export type EconomySummary = {
   panned: number;
+  sluiced: number;
   granted: number;
+  stolen: number;
+  reclaimed: number;
   spent: number;
+  baseValue: number;
+  buildingsBuilt: number;
   beaconsBuilt: number;
   repairSpent: number;
   repairs: number;
@@ -65,29 +71,63 @@ export function reduce(state: EconomyState, event: EconomyEvent): EconomyState {
 }
 
 export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
-  const summary: EconomySummary = { panned: 0, granted: 0, spent: 0, beaconsBuilt: 0, repairSpent: 0, repairs: 0 };
+  const summary: EconomySummary = {
+    panned: 0,
+    sluiced: 0,
+    granted: 0,
+    stolen: 0,
+    reclaimed: 0,
+    spent: 0,
+    baseValue: 0,
+    buildingsBuilt: 0,
+    beaconsBuilt: 0,
+    repairSpent: 0,
+    repairs: 0,
+  };
+  let standingBaseValue = 0;
   for (const event of log) {
     if (event.type === 'run_reset') {
       summary.panned = 0;
+      summary.sluiced = 0;
       summary.granted = 0;
+      summary.stolen = 0;
+      summary.reclaimed = 0;
       summary.spent = 0;
+      summary.baseValue = 0;
+      summary.buildingsBuilt = 0;
       summary.beaconsBuilt = 0;
       summary.repairSpent = 0;
       summary.repairs = 0;
+      standingBaseValue = 0;
       continue;
     }
     if (event.type === 'gold_panned') summary.panned += event.amount;
+    if (event.type === 'gold_sluiced') summary.sluiced += event.amount;
     if (event.type === 'gold_granted') summary.granted += event.amount;
+    if (event.type === 'gold_stolen') summary.stolen += event.amount;
+    if (event.type === 'gold_reclaimed') summary.reclaimed += event.amount;
     if (event.type === 'gold_spent') {
       summary.spent += event.amount;
+      if (event.sink.startsWith('build_')) {
+        standingBaseValue += event.amount;
+        summary.baseValue = Math.max(summary.baseValue, standingBaseValue);
+        summary.buildingsBuilt += 1;
+      }
       if (event.sink === 'build_sentry_beacon') summary.beaconsBuilt += 1;
       if (event.sink.startsWith('repair_')) {
         summary.repairSpent += event.amount;
         summary.repairs += 1;
       }
     }
+    if (event.type === 'gold_granted' && event.source === 'demolish') {
+      standingBaseValue = Math.max(0, standingBaseValue - (cleanPositiveNumber(event.buildCost) ?? event.amount));
+    }
   }
   return summary;
+}
+
+function cleanPositiveNumber(value: unknown): number | undefined {
+  return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : undefined;
 }
 
 export class Economy {

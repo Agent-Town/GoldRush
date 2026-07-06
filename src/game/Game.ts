@@ -58,7 +58,14 @@ import {
   type DifficultyPresetId,
 } from './Balance';
 import { AudioSystem } from '../systems/AudioSystem';
-import { Economy, initialEconomyState, reduce as reduceEconomy, summarizeLog, type EconomyEvent } from './Economy';
+import {
+  Economy,
+  initialEconomyState,
+  reduce as reduceEconomy,
+  summarizeLog,
+  type EconomyEvent,
+  type EconomySummary,
+} from './Economy';
 import { CameraRig } from '../systems/CameraRig';
 import { BuildSystem, type DemolishCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
@@ -70,7 +77,13 @@ import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
-import { DeathOverlay, type DeathLedger, type DeathOverlayOptions, type DeathResearchState } from '../ui/DeathOverlay';
+import {
+  DeathOverlay,
+  type DeathLedger,
+  type DeathOverlayOptions,
+  type DeathResearchState,
+  type DeathRunStatsSnapshot,
+} from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { DemolishPrompt } from '../ui/DemolishPrompt';
@@ -355,6 +368,8 @@ export class Game {
     });
     this.events.on('hero_died', (event) => {
       const scoreAt = Date.now();
+      const economySummary = summarizeLog(this.economy.log);
+      const runStats = this.deathRunStats(economySummary);
       this.deathLedger = {
         timeAlive: event.timeAlive,
         kills: event.kills,
@@ -372,12 +387,16 @@ export class Game {
         timeAlive: event.timeAlive,
         at: scoreAt,
         secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= Balance.run.secureWave,
+        baseValue: Math.round(economySummary.baseValue),
+        weaponSplit: this.weaponSplit(runStats),
       });
-      this.deathOverlay.show(this.deathLedger, scores, scoreAt, this.researchOverlayOptions(1));
+      this.deathOverlay.show(this.deathLedger, scores, scoreAt, { ...this.researchOverlayOptions(1), runStats });
     });
     this.events.on('run_ended', (event) => {
       if (event.reason !== 'secured') return;
       const scoreAt = Date.now();
+      const economySummary = summarizeLog(this.economy.log);
+      const runStats = this.deathRunStats(economySummary);
       const scores = recordScore({
         waves: event.summary.wavesSurvived,
         kills: this.kills,
@@ -385,12 +404,14 @@ export class Game {
         timeAlive: event.at,
         at: scoreAt,
         secured: true,
+        baseValue: Math.round(economySummary.baseValue),
+        weaponSplit: this.weaponSplit(runStats),
       });
       const ledger: DeathLedger = {
         timeAlive: event.at,
         kills: this.kills,
         goldPanned: event.summary.goldPanned,
-        spent: summarizeLog(this.economy.log).spent,
+        spent: economySummary.spent,
         beaconsBuilt: event.summary.buildingsBuilt,
         wavesSurvived: event.summary.wavesSurvived,
         weaponToggles: this.weaponToggleCount,
@@ -402,6 +423,7 @@ export class Game {
           ...this.researchOverlayOptions(2),
           outcome: 'secured',
           actionLabel: 'Enter New Claim',
+          runStats,
           onDone: () => {
             this.deathOverlay.hide();
             this.state.setPaused(false);
@@ -746,6 +768,26 @@ export class Game {
     this.lastDebugXpIntent = intents.debugXp;
   }
 
+  private deathRunStats(summary: EconomySummary): DeathRunStatsSnapshot {
+    return {
+      sluiced: summary.sluiced,
+      stolen: summary.stolen,
+      reclaimed: summary.reclaimed,
+      buildingsBuilt: summary.buildingsBuilt,
+      buildingsLost: this.buildingsWrecked,
+      buildingsRepaired: summary.repairs,
+      damageByOwner: { ...this.combat.damageByOwner },
+      upgradeStacks: { ...this.progression.snapshot.stacks },
+    };
+  }
+
+  private weaponSplit(stats: DeathRunStatsSnapshot): { spark: number; blast: number } {
+    return {
+      spark: Math.round(stats.damageByOwner.hero ?? 0),
+      blast: Math.round(stats.damageByOwner.hero_blast ?? 0),
+    };
+  }
+
   private render(): void {
     this.renderer.info.reset();
     this.renderer.render(this.scene, this.camera);
@@ -899,6 +941,7 @@ export class Game {
       build: {
         ...this.buildSystem.diagnostics,
         killsByOwner: this.combat.killsByOwner,
+        damageByOwner: this.combat.damageByOwner,
       },
       progression: this.progression.snapshot,
       harvest: this.harvestSnapshot,

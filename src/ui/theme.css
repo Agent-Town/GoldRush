@@ -438,8 +438,8 @@
 }
 
 .death-overlay__score {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr auto;
   gap: 10px;
   border: 1px solid rgba(46, 27, 14, 0.2);
   border-radius: 6px;
@@ -449,7 +449,6 @@
 }
 
 .death-overlay__score-stamp {
-  margin-left: auto;
   color: var(--at-teal-600);
   font-size: 0.72rem;
   letter-spacing: 0;
@@ -461,7 +460,9 @@
 }
 
 .death-overlay__score-detail {
+  grid-column: 1 / -1;
   color: rgba(46, 27, 14, 0.72);
+  line-height: 1.25;
 }
 
 .death-overlay__button {

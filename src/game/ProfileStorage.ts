@@ -3,7 +3,8 @@ import { META_PROGRESS_KEY } from './MetaProgress';
 import { RESEARCH_STATE_KEY } from '../meta/ResearchTree';
 
 export const PROFILE_KEY = 'gr.profile.v2';
-export const SCOREBOARD_KEY = 'gr.scores.v1';
+export const LEGACY_SCOREBOARD_KEY = 'gr.scores.v1';
+export const SCOREBOARD_KEY = 'gr.scores.v2';
 export const RUN_SUSPEND_KEY = 'gr.run.v1';
 export const RUN_HISTORY_KEY = 'gr.history.v1';
 export const DEFAULT_PROFILE_NAME = 'Robin';
@@ -13,6 +14,7 @@ const PROFILE_DATA_KEYS = new Set([
   META_PROGRESS_KEY,
   RUN_SUSPEND_KEY,
   RUN_HISTORY_KEY,
+  LEGACY_SCOREBOARD_KEY,
   SCOREBOARD_KEY,
   RESEARCH_STATE_KEY,
   DIFFICULTY_PRESET_STORAGE_KEY,

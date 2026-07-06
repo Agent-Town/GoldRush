@@ -578,6 +578,7 @@ export class BuildSystem {
     const dz = buildingPosition.z - position.z;
     if (dx * dx + dz * dz > radius * radius) return false;
 
+    const buildCost = this.buildCosts[id][index] ?? 0;
     const refund = this.demolishRefund(id, index);
     const result = this.economy.apply({
       id: crypto.randomUUID(),
@@ -585,6 +586,7 @@ export class BuildSystem {
       type: 'gold_granted',
       source: 'demolish',
       amount: refund,
+      buildCost,
     });
     if (!result.ok) return false;
 

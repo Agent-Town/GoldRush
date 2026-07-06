@@ -158,7 +158,19 @@ test('summarizeLog reports exact panned granted spent and beacon counts', async 
   );
   // M2-05 widened EconomySummary additively (repairSpent/repairs — sanctioned by the 009 firewall).
   // Strict deep-equality kept: new fields asserted at their no-repair values (s25 gate, s23 amend-don't-weaken law).
-  expect(summary).toEqual({ panned: 10, granted: 20, spent: 25, beaconsBuilt: 1, repairSpent: 0, repairs: 0 });
+  expect(summary).toEqual({
+    panned: 10,
+    sluiced: 0,
+    granted: 20,
+    stolen: 0,
+    reclaimed: 0,
+    spent: 25,
+    baseValue: 25,
+    buildingsBuilt: 1,
+    beaconsBuilt: 1,
+    repairSpent: 0,
+    repairs: 0,
+  });
 });
 
 test('exhausted core pool offers three distinct pickable filler cards', async ({ page }) => {
