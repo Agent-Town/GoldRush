@@ -1,8 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { SCOREBOARD_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
-const SCORE_KEY = 'gr.scores.v1';
+const META_STORAGE_KEY = profileDataKey('robin', META_PROGRESS_KEY);
+const SCORE_STORAGE_KEY = profileDataKey('robin', SCOREBOARD_KEY);
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -18,15 +20,44 @@ function collectErrors(page: Page): ErrorBucket {
 async function openGame(page: Page, query: string): Promise<ErrorBucket> {
   const errors = collectErrors(page);
   await page.addInitScript(
-    ({ metaKey, scoreKey }) => {
-      localStorage.removeItem(metaKey);
-      localStorage.removeItem(scoreKey);
+    ({ keys }) => {
+      for (const key of keys) {
+        localStorage.removeItem(key);
+      }
     },
-    { metaKey: META_PROGRESS_KEY, scoreKey: SCORE_KEY },
+    {
+      keys: [
+        META_PROGRESS_KEY,
+        SCOREBOARD_KEY,
+        META_STORAGE_KEY,
+        SCORE_STORAGE_KEY,
+      ],
+    },
   );
   await page.goto(`/${query}`);
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 2);
   return errors;
+}
+
+async function killHero(page: Page): Promise<void> {
+  await setBalance(page, 'enemy.contactDamage', 999);
+  await page.evaluate((radius) => {
+    window.__GR_TEST__?.spawnPack(1, radius, { speedScale: 0 });
+    window.__GR_TEST__?.teleport(0, 12 - radius);
+  }, 0.1);
+}
+
+async function readJson<T>(page: Page, key: string, fallback: string): Promise<T> {
+  return page.evaluate(
+    ([storageKey, missing]) => JSON.parse(localStorage.getItem(storageKey) ?? missing),
+    [key, fallback] as const,
+  ) as Promise<T>;
+}
+
+async function finishSecuredLedger(page: Page): Promise<void> {
+  await expect(page.getByTestId('stake-again')).toBeVisible();
+  await page.getByTestId('stake-again').click();
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? true)).toBe(false);
 }
 
 async function setBalance(page: Page, path: string, value: number): Promise<void> {
@@ -59,7 +90,7 @@ test('real victory pays meta, opens Claim Office, and tier one changes the next 
   await page.waitForTimeout(800);
   await page.screenshot({ path: 'artifacts/task-027-payout.png', fullPage: true });
 
-  const meta = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), META_PROGRESS_KEY);
+  const meta = await readJson<{ tracks: Record<string, number> }>(page, META_STORAGE_KEY, 'null');
   expect(meta.tracks).toMatchObject({ territory: 1, science: 1, hero: 1, agent: 1 });
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.meta?.tracks.territory ?? 0)).toBeGreaterThan(0);
 
@@ -67,6 +98,7 @@ test('real victory pays meta, opens Claim Office, and tier one changes the next 
   await page.getByTestId('bank-secured-claim').click();
   await expect(page.getByTestId('claim-secured')).toBeHidden();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? -1)).toBe(0);
+  await finishSecuredLedger(page);
 
   await expect
     .poll(() =>
@@ -79,16 +111,12 @@ test('real victory pays meta, opens Claim Office, and tier one changes the next 
     expect(palisade.wrecked).toBe(false);
   }
 
-  const scores = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '[]'), SCORE_KEY);
+  const scores = await readJson<Array<{ secured?: boolean; waves?: number }>>(page, SCORE_STORAGE_KEY, '[]');
   expect(scores.some((row: { secured?: boolean; waves?: number }) => row.secured === true && row.waves === Balance.run.secureWave)).toBe(
     true,
   );
 
-  await setBalance(page, 'enemy.contactDamage', 999);
-  await page.evaluate(() => {
-    window.__GR_TEST__?.teleport(0, 12);
-    window.__GR_TEST__?.spawnPack(1, 0.1, { speedScale: 0 });
-  });
+  await killHero(page);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.runState), { timeout: 8_000 }).toBe('dead');
   await expect(page.getByTestId('best-claim-row').first()).toContainText('SECURED');
 
