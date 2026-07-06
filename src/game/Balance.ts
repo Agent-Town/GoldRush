@@ -54,6 +54,13 @@ export const Balance = {
     riverBlocksEnemies: true,
     deepWaterDisarmsHero: true,
   },
+  agent: {
+    xpMoteAgeS: 4,
+    priorityChaseMark: 40,
+    priorityRepair: 30,
+    priorityCollectXp: 20,
+    priorityPanAtCombat: 10,
+  },
   sparkRig: {
     fireRate: 2.0,
     damage: 12,

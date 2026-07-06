@@ -36,6 +36,12 @@ export class AgentStub {
     return receipt;
   }
 
+  collectXp(): ToolReceipt<'et.goldrush.collect_xp', { minAgeS: number }> {
+    const receipt = this.surface.tools.collect_xp();
+    this.record(receipt);
+    return receipt;
+  }
+
   dispose(): void {
     this.marker?.remove();
     this.receipts.length = 0;

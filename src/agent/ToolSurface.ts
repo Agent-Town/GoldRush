@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { Balance } from '../game/Balance';
 import type { BuildableId } from '../game/buildables';
 import {
   decideToolPermission,
@@ -10,12 +11,22 @@ import {
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };
 export type AgentThiefRef = { id?: number; index?: number };
+export type AgentCollectXpOptions = { minAgeS: number };
+export type AgentCollectXpResult = {
+  xp: number;
+  motes: number;
+  message: string;
+  collector?: 'prospector';
+  agentPath?: AgentVec2[];
+  sweptIds?: string[];
+};
 
 export type GoldRushToolName =
   | 'et.goldrush.get_state'
   | 'et.goldrush.pan_at'
   | 'et.goldrush.repair'
   | 'et.goldrush.chase_mark'
+  | 'et.goldrush.collect_xp'
   | 'et.goldrush.place_building';
 
 export type ToolOutcome =
@@ -51,6 +62,7 @@ export type AgentGameAdapter = {
   readonly panAt?: (node: string) => unknown;
   readonly repair?: (building: AgentBuildingRef) => unknown;
   readonly chaseMark?: (thief: AgentThiefRef) => unknown;
+  readonly collectXp?: (options: AgentCollectXpOptions) => unknown;
 };
 
 export type ToolSurfaceOptions = {
@@ -66,6 +78,7 @@ export type GoldRushToolSurface = {
     pan_at: (node: string) => ToolReceipt<'et.goldrush.pan_at', { node: string }>;
     repair: (building: AgentBuildingRef) => ToolReceipt<'et.goldrush.repair', { building: AgentBuildingRef }>;
     chase_mark: (thief: AgentThiefRef) => ToolReceipt<'et.goldrush.chase_mark', { thief: AgentThiefRef }>;
+    collect_xp: () => ToolReceipt<'et.goldrush.collect_xp', AgentCollectXpOptions>;
     place_building: (
       def: BuildableId,
       pos: AgentVec2,
@@ -115,6 +128,14 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
         runSideEffect(game, permissionLevel(), 'et.goldrush.repair', { building }, () => game.repair?.(building)),
       chase_mark: (thief) =>
         runSideEffect(game, permissionLevel(), 'et.goldrush.chase_mark', { thief }, () => game.chaseMark?.(thief)),
+      collect_xp: () => {
+        const args = { minAgeS: Balance.agent.xpMoteAgeS };
+        return runSideEffect(game, permissionLevel(), 'et.goldrush.collect_xp', args, () => {
+          const result = game.collectXp?.(args);
+          if (result === undefined || result === false || isInvalid(result)) return result;
+          return normalizeCollectXpResult(result);
+        });
+      },
       place_building: (def, pos, rot = 0) =>
         runSideEffect(game, permissionLevel(), 'et.goldrush.place_building', { def, pos, rot }, () => {
           if (!validPos(pos)) return invalid('place_building requires finite x/z.');
@@ -228,6 +249,22 @@ function validPos(pos: unknown): pos is AgentVec2 {
     Number.isFinite((pos as { x?: unknown }).x) &&
     Number.isFinite((pos as { z?: unknown }).z)
   );
+}
+
+function normalizeCollectXpResult(value: unknown): AgentCollectXpResult | { invalid: true; message: string } {
+  if (typeof value !== 'object' || value === null) return invalid('collect_xp requires a result object.');
+  const raw = value as Partial<AgentCollectXpResult>;
+  if (!Number.isFinite(raw.xp) || !Number.isInteger(raw.motes) || (raw.xp ?? 0) < 0 || (raw.motes ?? 0) < 0) {
+    return invalid('collect_xp result requires non-negative xp and mote counts.');
+  }
+  const xp = raw.xp as number;
+  const motes = raw.motes as number;
+  return {
+    ...raw,
+    xp,
+    motes,
+    message: typeof raw.message === 'string' && raw.message.length > 0 ? raw.message : `Gathered ${xp} XP`,
+  };
 }
 
 function readMeta(game: AgentGameAdapter): MetaProgressAgentGate | undefined {
