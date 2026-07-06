@@ -413,6 +413,8 @@ interface ThreeGameDiagnostics {
 
 type GoldRushGui = import('lil-gui').default;
 type GrAgentStub = import('./agent/AgentStub').AgentStub;
+type GrContractEpochMeta = import('./meta/ContractFamilies').EpochMeta;
+type GrContractEpochBundle = import('./meta/ContractFamilies').EpochBundle;
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
@@ -447,6 +449,11 @@ interface Window {
   };
   /** Present only with ?debug — direct agent receipt hooks for e2e. */
   __GR_AGENT__?: GrAgentStub;
+  /** Present only with ?debug — contract-family registry hooks for e2e. */
+  __GR_CONTRACT_REGISTRY__?: {
+    listEpochs: () => GrContractEpochMeta[];
+    loadEpoch: (id: string) => GrContractEpochBundle;
+  };
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;

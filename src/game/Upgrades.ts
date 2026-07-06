@@ -1,5 +1,5 @@
 import { Balance } from './Balance';
-import { epochFamilyUpgradeDefs, masteryConversionRules, masterySynergyDefs } from '../meta/ContractFamilies';
+import { loadEpoch } from '../meta/ContractFamilies';
 
 export type UpgradeDeltas = {
   fireRateMult?: number;
@@ -162,6 +162,17 @@ const baselineUpgradeDefs = [
     deltas: { damageMult: 0.05 },
   },
 ] as const satisfies readonly UpgradeDef[];
+
+const frontierEpoch = loadEpoch('epoch-1-frontier');
+const epochFamilyUpgradeDefs = frontierEpoch.families.flatMap((family) =>
+  family.cards.map((card) => ({
+    ...card,
+    familyId: card.familyId ?? family.id,
+    familyGate: family.unlockNodeId,
+  })),
+);
+const masterySynergyDefs = frontierEpoch.synergyCards;
+const masteryConversionRules = frontierEpoch.masteryConversions;
 
 export const upgradeDefs: readonly UpgradeDef[] = [...baselineUpgradeDefs, ...epochFamilyUpgradeDefs, ...masterySynergyDefs];
 export type UpgradeId = string;
