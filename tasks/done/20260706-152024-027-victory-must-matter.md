@@ -1,0 +1,8 @@
+# Task 027: victory must MATTER — post-win flow + felt progression (MAIN slot)
+ROBIN, after his first real Claim Secured (023 fix confirmed working): "Did not feel too euphoric... it just started a new game after that. Nothing changed." BINDING: winning changes the world, visibly, every time.
+1. AUDIT FIRST: did his victory PAY meta? Trace run_ended(victory) -> MetaProgress delta on a real (non-harness) win. If zero or unwired: that is the P1 bug, fix before polish.
+2. POST-VICTORY FLOW (replaces straight-to-new-run): Claim Secured ceremony -> the CLAIM OFFICE OPENS AUTOMATICALLY with the payout ARRIVING animated (+N territory/science/hero/agent, ledger-stamp per dimension, coin-tick crescendo) -> spend-or-bank -> then Continue (Stay for the Rush) or New Claim. The player must SEE what winning bought, every single win.
+3. EUPHORIA PASS on the ceremony (charm, canon voice, no gore obviously): screen-edge gold-glint burst, banner "CLAIM SECURED" with wave count, the Prospector tips his hat bark ("Struck it proper, partner."), scoreboard entry stamped SECURED (vs "overrun") — Best Claims list shows victories distinctly.
+4. FIRST-WIN GUARANTEE: tune territory tier-1 threshold (knob) so the FIRST victory reaches it — the very next run STARTS visibly different (m3-04 palisade ring / widened bank). "Nothing changed" must be impossible after any win.
+5. e2e: real-sim victory -> meta delta >0 asserted -> Claim Office auto-opens with payout shown -> tier-1 applied next run; scoreboard SECURED flag persists.
+Firewall: RunManager/ClaimOffice/MetaProgress wiring + ceremony UI/vfx + Balance thresholds. Canaries: m3 suites, victory e2e from 023. READY-FOR-GATES + a screenshot of the payout moment.

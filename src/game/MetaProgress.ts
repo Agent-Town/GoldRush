@@ -2,6 +2,7 @@ export const META_PROGRESS_KEY = 'gr.meta.v1';
 export const META_TRACKS = ['territory', 'science', 'hero', 'agent'] as const;
 
 export type MetaTrack = (typeof META_TRACKS)[number];
+export type MetaPayout = Record<MetaTrack, number>;
 
 export type MetaProgress = {
   version: 1;
@@ -51,6 +52,12 @@ export function loadMetaProgress(storage: MetaProgressStorage): MetaProgress {
 export function saveMetaProgress(storage: MetaProgressStorage, meta: MetaProgress): MetaProgress {
   const next = migrateMetaProgress(meta);
   storage.setItem(META_PROGRESS_KEY, JSON.stringify(next));
+  return next;
+}
+
+export function addMetaPayout(meta: MetaProgress, payout: Partial<Record<MetaTrack, number>>): MetaProgress {
+  const next = migrateMetaProgress(meta);
+  for (const track of META_TRACKS) next.tracks[track] += cleanTrack(payout[track]);
   return next;
 }
 

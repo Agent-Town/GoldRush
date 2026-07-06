@@ -4,6 +4,7 @@ export type ScoreRecord = {
   gold: number;
   timeAlive: number;
   at: number;
+  secured?: boolean;
 };
 
 const STORAGE_KEY = 'gr.scores.v1';

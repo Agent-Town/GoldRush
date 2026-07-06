@@ -216,6 +216,21 @@ export const Balance = {
   run: {
     secureWave: 20,
   },
+  meta: {
+    victoryPayout: {
+      territory: 1,
+      science: 1,
+      hero: 1,
+      agent: 1,
+    },
+    territoryTier1: 1,
+    territoryRing: [
+      { x: 0, z: 15, rotationSteps: 1 },
+      { x: 0, z: 9, rotationSteps: 1 },
+      { x: -3, z: 12, rotationSteps: 0 },
+      { x: 3, z: 12, rotationSteps: 0 },
+    ],
+  },
   upgrades: {
     assayGoldPerWave: 5,
     fieldDressingHealFrac: 0.3,
@@ -263,7 +278,7 @@ export const Balance = {
   },
   anim: {
     frameBlendMs: 80,
-    walkFps: 5.5,
+    walkFps: 9.5,
     bobAmp: 0.035,
     leanDeg: 2.4,
   },

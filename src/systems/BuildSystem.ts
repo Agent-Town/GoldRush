@@ -424,6 +424,22 @@ export class BuildSystem {
     return true;
   }
 
+  placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0): boolean {
+    const def = getBuildableDef(id);
+    if (!def || this.countFor(def.id) >= def.maxCount) return false;
+
+    const previousRotation = this.ghostRotationSteps;
+    this.ghostRotationSteps = ((Math.round(rotationSteps) % 4) + 4) % 4;
+    const target = new THREE.Vector3(position.x, 0, position.z);
+    this.snap(target);
+    const ok = this.matchesPlacement(def, target) && !this.overlapsExisting(def.id, target);
+    const placed = ok ? this.place(def.id, target) : -1;
+    if (placed >= 0) this.finishPlacement(def.id, placed, 0);
+    this.ghostRotationSteps = previousRotation;
+    this.syncGhostShape();
+    return placed >= 0;
+  }
+
   reset(): void {
     for (const id of buildableIds) {
       for (let i = 0; i < this.unregisterShooters[id].length; i += 1) this.unregisterShooter(id, i);

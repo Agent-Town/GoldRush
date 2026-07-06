@@ -9,6 +9,7 @@ import {
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
 import { install as installRunManager, type RunManager } from './RunManager';
+import type { MetaProgress } from './MetaProgress';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import {
   areWavesDisabled,
@@ -340,8 +341,20 @@ export class Game {
         gold: event.goldPanned,
         timeAlive: event.timeAlive,
         at: scoreAt,
+        secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= Balance.run.secureWave,
       });
       this.deathOverlay.show(this.deathLedger, scores, scoreAt);
+    });
+    this.events.on('run_ended', (event) => {
+      if (event.reason !== 'secured') return;
+      recordScore({
+        waves: event.summary.wavesSurvived,
+        kills: this.kills,
+        gold: event.summary.goldPanned,
+        timeAlive: event.at,
+        at: Date.now(),
+        secured: true,
+      });
     });
     this.events.on('enemy_killed', () => {
       this.kills += 1;
@@ -792,7 +805,13 @@ export class Game {
         replay: economyReplay,
         summary: economySummary,
       },
-      run: this.runManager?.diagnostics ?? { secured: false, rush: false, lastRunEndedReason: null },
+      run: this.runManager?.diagnostics ?? {
+        secured: false,
+        rush: false,
+        lastRunEndedReason: null,
+        meta: null,
+        victoryPayout: null,
+      },
       build: {
         ...this.buildSystem.diagnostics,
         killsByOwner: this.combat.killsByOwner,
@@ -950,6 +969,7 @@ export class Game {
     this.waveSystem.reset();
     this.buildMenuOpen = false;
     this.buildSystem.reset();
+    if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
     this.activeWeapon = 'rig';
@@ -987,6 +1007,13 @@ export class Game {
     this.state.restart();
     this.uiBridge.announce('Stake your claim.', 0);
     this.upgradeOverlay.hide();
+  }
+
+  applyMetaProgress(meta: MetaProgress): void {
+    if (meta.tracks.territory < Balance.meta.territoryTier1) return;
+    for (const segment of Balance.meta.territoryRing) {
+      this.buildSystem.placeFree('palisade', segment, segment.rotationSteps);
+    }
   }
 
   private endRun(): void {

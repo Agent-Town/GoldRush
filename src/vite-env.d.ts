@@ -164,6 +164,21 @@ interface ThreeGameDiagnostics {
     secured: boolean;
     rush: boolean;
     lastRunEndedReason: 'death' | 'secured' | 'rush' | null;
+    meta: {
+      version: 1;
+      tracks: {
+        territory: number;
+        science: number;
+        hero: number;
+        agent: number;
+      };
+    } | null;
+    victoryPayout: {
+      territory: number;
+      science: number;
+      hero: number;
+      agent: number;
+    } | null;
   };
   build: {
     mode: boolean;

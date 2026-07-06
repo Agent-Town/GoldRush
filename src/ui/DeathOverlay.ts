@@ -15,6 +15,7 @@ export type BestClaimRow = {
   gold: number;
   timeAlive: number;
   at: number;
+  secured?: boolean;
 };
 
 export class DeathOverlay {
@@ -155,7 +156,11 @@ export class DeathOverlay {
       detail.className = 'death-overlay__score-detail';
       detail.textContent = `${score.kills} turned back - ${score.gold} gold`;
 
-      row.append(summary, detail);
+      const stamp = document.createElement('strong');
+      stamp.className = 'death-overlay__score-stamp';
+      stamp.textContent = score.secured ? 'SECURED' : 'OVERRUN';
+
+      row.append(summary, stamp, detail);
       this.bestClaimsList.append(row);
     }
   }
