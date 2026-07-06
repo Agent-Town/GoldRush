@@ -259,11 +259,24 @@
     },
     {
       "slot": "char.prospector_agent",
-      "status": "DORMANT",
-      "fallback": {
-        "procedural": "src/agent/Embodiment.ts:createProspectorTexture"
+      "status": "ACTIVE",
+      "walk4": {
+        "version": 1,
+        "status": "ACTIVE",
+        "notes": "batch-008 / codex-art-run-005 Prospector hover body. SpriteAnimator requires this block to be named walk4 and the locomotion clip to be named walk; the frames themselves are a 4-phase hover-bob cycle with no legs. Columns = low/rise/high/fall hover phases, fps 4 for a gentle float; sheet-a rows s/se/e/ne, sheet-b rows n/nw/w/sw. Extracted @scale=1; measured heights a-avg 215 / b-avg 203 (~6% A>B seam watch), with world sprite scale tuned in Balance.agent.spriteScale to the ~70%-hero buddy band.",
+        "mirrors": {},
+        "directions": {
+          "s":  { "frames": { "files": ["char-prospector-sheet-hover4-a-r0c0.png", "char-prospector-sheet-hover4-a-r0c1.png", "char-prospector-sheet-hover4-a-r0c2.png", "char-prospector-sheet-hover4-a-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
+          "se": { "frames": { "files": ["char-prospector-sheet-hover4-a-r1c0.png", "char-prospector-sheet-hover4-a-r1c1.png", "char-prospector-sheet-hover4-a-r1c2.png", "char-prospector-sheet-hover4-a-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
+          "e":  { "frames": { "files": ["char-prospector-sheet-hover4-a-r2c0.png", "char-prospector-sheet-hover4-a-r2c1.png", "char-prospector-sheet-hover4-a-r2c2.png", "char-prospector-sheet-hover4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
+          "ne": { "frames": { "files": ["char-prospector-sheet-hover4-a-r3c0.png", "char-prospector-sheet-hover4-a-r3c1.png", "char-prospector-sheet-hover4-a-r3c2.png", "char-prospector-sheet-hover4-a-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
+          "n":  { "frames": { "files": ["char-prospector-sheet-hover4-b-r0c0.png", "char-prospector-sheet-hover4-b-r0c1.png", "char-prospector-sheet-hover4-b-r0c2.png", "char-prospector-sheet-hover4-b-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
+          "nw": { "frames": { "files": ["char-prospector-sheet-hover4-b-r1c0.png", "char-prospector-sheet-hover4-b-r1c1.png", "char-prospector-sheet-hover4-b-r1c2.png", "char-prospector-sheet-hover4-b-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
+          "w":  { "frames": { "files": ["char-prospector-sheet-hover4-b-r2c0.png", "char-prospector-sheet-hover4-b-r2c1.png", "char-prospector-sheet-hover4-b-r2c2.png", "char-prospector-sheet-hover4-b-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
+          "sw": { "frames": { "files": ["char-prospector-sheet-hover4-b-r3c0.png", "char-prospector-sheet-hover4-b-r3c1.png", "char-prospector-sheet-hover4-b-r3c2.png", "char-prospector-sheet-hover4-b-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } }
+        }
       },
-      "notes": "M4-06 placeholder-first Prospector companion: runtime uses one procedural canvas billboard in Frontier Ledger tones. Future art batch may replace this with an illustrated automaton sprite sheet; no generated art exists for this slot yet. Canon guardrails: the agent is the Prospector, machinefolk/frontier-tech, no realistic firearms, no gore, no text."
+      "notes": "M4-07 activates the real illustrated Prospector companion body, replacing the M4-06 procedural canvas billboard. Canon guardrails: the agent is the Prospector, warm brass/copper machinefolk frontier-tech with teal agent glow, no realistic firearms, no gore, no text."
     }
   ]
 }
