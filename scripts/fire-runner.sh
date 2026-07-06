@@ -27,6 +27,24 @@ CLAUDE_BIN="$(command -v claude || true)"
 done
 if [ -z "$CLAUDE_BIN" ]; then echo "[fire-runner] $(date +%H:%M:%S) FATAL: claude binary not found" >> "$LOG"; exit 1; fi
 
+# resolve node onto PATH — launchd's thin PATH lacks the nvm/user node, so tsc/build/e2e
+# and scripts/extract-alpha.mjs (all gates) silently fail with "command not found". (s55)
+if ! command -v node >/dev/null 2>&1; then
+  export NVM_DIR="${NVM_DIR:-$HOME/.nvm}"
+  # shellcheck disable=SC1091
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" >/dev/null 2>&1
+fi
+if ! command -v node >/dev/null 2>&1; then
+  for d in "$NVM_DIR"/versions/node/*/bin /opt/homebrew/bin /usr/local/bin "$HOME/.volta/bin" "$HOME/.asdf/shims"; do
+    if [ -x "$d/node" ]; then PATH="$d:$PATH"; export PATH; break; fi
+  done
+fi
+if command -v node >/dev/null 2>&1; then
+  echo "[fire-runner] $(date +%H:%M:%S) node $(node -v) at $(command -v node)" >> "$LOG"
+else
+  echo "[fire-runner] $(date +%H:%M:%S) WARN: node not on PATH — build/e2e/art gates will fail" >> "$LOG"
+fi
+
 echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model claude-opus-4-8)" >> "$LOG"
 "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" \
   --model claude-opus-4-8 \
