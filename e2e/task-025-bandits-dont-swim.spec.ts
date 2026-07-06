@@ -85,6 +85,29 @@ async function armRiverWatch(page: Page): Promise<void> {
   });
 }
 
+async function armWadeSampler(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    const w = window as unknown as {
+      __task025Wade?: { riverSamples: number; speedMul: number; minSpeed: number; maxSpeed: number };
+    };
+    w.__task025Wade = { riverSamples: 0, speedMul: 0, minSpeed: Number.POSITIVE_INFINITY, maxSpeed: 0 };
+    const tick = () => {
+      const sampler = w.__task025Wade;
+      const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+      if (!sampler || !diagnostics) return;
+      if (diagnostics.terrain.playerZone === 'river') {
+        const speed = diagnostics.speed ?? 0;
+        sampler.riverSamples += 1;
+        sampler.speedMul = diagnostics.terrain.probes.river.speedMul;
+        sampler.minSpeed = Math.min(sampler.minSpeed, speed);
+        sampler.maxSpeed = Math.max(sampler.maxSpeed, speed);
+      }
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  });
+}
+
 test('enemy crossing the river reaches the hero through the ford only', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=12&nowaves&nokill&nolevel&nopause&seed=task-025-ford');
   await teleport(page, -12, 12);
@@ -124,29 +147,44 @@ test('hero still wades but wet powder disables and then restores weapons', async
   await setBalance(page, 'enemy.speed', 0);
 
   await teleport(page, -12, -7);
+  await armWadeSampler(page);
   await page.keyboard.down('ArrowDown');
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone), { timeout: 8_000 }).toBe('river');
-  await waitForSim(page, 0.5);
-  const wade = await page.evaluate(() => ({
-    speed: window.__THREE_GAME_DIAGNOSTICS__?.speed ?? 0,
-    speedMul: window.__THREE_GAME_DIAGNOSTICS__?.terrain.probes.river.speedMul ?? 0,
-  }));
+  await expect
+    .poll(() => page.evaluate(() => (window as unknown as { __task025Wade?: { minSpeed: number } }).__task025Wade?.minSpeed ?? 999), {
+      timeout: 8_000,
+    })
+    .toBeLessThan(Balance.hero.speed * 0.55 + 0.25);
+  const wade = await page.evaluate(() => (window as unknown as {
+    __task025Wade?: { riverSamples: number; speedMul: number; minSpeed: number; maxSpeed: number };
+  }).__task025Wade);
   await page.keyboard.up('ArrowDown');
-  expect(wade.speedMul).toBe(0.55);
-  expect(wade.speed).toBeGreaterThan(Balance.hero.speed * 0.42);
-  expect(wade.speed).toBeLessThan(Balance.hero.speed * 0.7);
+  expect(wade?.riverSamples ?? 0).toBeGreaterThan(0);
+  expect(wade?.speedMul).toBe(0.55);
+  expect(wade?.maxSpeed ?? 0).toBeGreaterThan(Balance.hero.speed * 0.42);
+  expect(wade?.minSpeed ?? 999).toBeLessThan(Balance.hero.speed * (wade?.speedMul ?? 0) + 0.25);
 
+  await page.evaluate(() => window.__GR_TEST__?.toggleWeapon());
+  await page.evaluate(() => window.__GR_TEST__?.setBlastAim(-12, 4));
   await teleport(page, -12, 0);
+  await expect
+    .poll(() => page.evaluate(() => document.querySelector('#game-canvas')?.classList.contains('aim-reticle--disarmed') ?? false), {
+      timeout: 8_000,
+    })
+    .toBe(true);
+  await page.evaluate(() => window.__GR_TEST__?.toggleWeapon());
   await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(-12, 8))).resolves.toBe(true);
   await waitForSim(page, 1);
   const deep = await page.evaluate(() => ({
     bolts: window.__THREE_GAME_DIAGNOSTICS__?.boltsAlive ?? -1,
     disarmed: window.__GR_TEST__?.state().arsenal.disarmed,
     announcement: window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcement,
+    reticleDisarmed: document.querySelector('#game-canvas')?.classList.contains('aim-reticle--disarmed') ?? false,
   }));
   expect(deep.bolts).toBe(0);
   expect(deep.disarmed).toBe(true);
   expect(deep.announcement).toContain('Wet powder');
+  expect(deep.reticleDisarmed).toBe(true);
 
   await teleport(page, -12, 7);
   await page.evaluate(() => {
@@ -162,6 +200,7 @@ test('hero still wades but wet powder disables and then restores weapons', async
     .poll(() => page.evaluate(() => (window as unknown as { __task025MaxBolts?: number }).__task025MaxBolts ?? 0), { timeout: 8_000 })
     .toBeGreaterThan(0);
   await expect(page.evaluate(() => window.__GR_TEST__?.state().arsenal.disarmed)).resolves.toBe(false);
+  await expect(page.locator('#game-canvas')).not.toHaveClass(/aim-reticle--disarmed/);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

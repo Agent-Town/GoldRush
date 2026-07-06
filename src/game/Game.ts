@@ -987,6 +987,7 @@ export class Game {
     this.combat.reset();
     this.activeWeapon = 'rig';
     this.blastAimReticle.visible = false;
+    this.canvas.classList.remove('aim-reticle--disarmed');
     this.weaponToggleCount = 0;
     this.blastTime = 0;
     this.wetPowderHintCooldown = 0;
@@ -1145,7 +1146,9 @@ export class Game {
 
   private updateBlastAim(intents: Intents): void {
     const aimMode = Balance.blast.aimMode as BlastAimMode;
-    if (this.activeWeapon !== 'blast' || aimMode === 'auto') {
+    const disarmed = this.heroWeaponsDisarmed();
+    this.canvas.classList.toggle('aim-reticle--disarmed', disarmed);
+    if (this.activeWeapon !== 'blast' || aimMode === 'auto' || disarmed) {
       this.blastAimReticle.visible = false;
       return;
     }
