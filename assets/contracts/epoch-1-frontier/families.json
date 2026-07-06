@@ -46,6 +46,23 @@
           "deltas": { "seamCapacityBonus": 18, "panTickMult": 0.1 }
         }
       ]
+    },
+    {
+      "id": "agent_schooling",
+      "branch": "Assay Works",
+      "unlockNodeId": "agent_schooling",
+      "cards": [
+        {
+          "id": "prospector_policy_slot",
+          "name": "Agent Schooling",
+          "description": "Past wave 15, the Prospector carries 1 extra policy slot for this run.",
+          "iconFamily": "beacon",
+          "familyId": "agent_schooling",
+          "maxStacks": 1,
+          "minWave": 16,
+          "deltas": { "agentPolicySlots": 1 }
+        }
+      ]
     }
   ],
   "masteryConversions": [

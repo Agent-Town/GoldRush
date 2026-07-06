@@ -116,6 +116,7 @@ interface ThreeGameDiagnostics {
       blastDamageMult: number;
       blastRadiusMult: number;
       blastCooldownMult: number;
+      agentPolicySlots: number;
     };
     eligibility: string[];
   };
@@ -200,6 +201,7 @@ interface ThreeGameDiagnostics {
     threshold: number;
     meter: string;
     assayOrderSlots: number;
+    contractTier: number;
   };
   agent: {
     stub: {
@@ -467,6 +469,7 @@ type GoldRushGui = import('lil-gui').default;
 type GrAgentStub = import('./agent/AgentStub').AgentStub;
 type GrContractEpochMeta = import('./meta/ContractFamilies').EpochMeta;
 type GrContractEpochBundle = import('./meta/ContractFamilies').EpochBundle;
+type GrContractTierBudget = import('./meta/ContractFamilies').ContractTierBudget;
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
@@ -505,6 +508,8 @@ interface Window {
   __GR_CONTRACT_REGISTRY__?: {
     listEpochs: () => GrContractEpochMeta[];
     loadEpoch: (id: string) => GrContractEpochBundle;
+    contractTierBudget: (epochId: string, tier: number) => GrContractTierBudget;
+    contractBudgetOk: (epochId: string, tier: number, rarity: 'common' | 'uncommon' | 'rare', budget: number) => boolean;
   };
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
@@ -536,6 +541,7 @@ interface Window {
       threshold: number;
       meter: string;
       assayOrderSlots: number;
+      contractTier: number;
     };
     takeResearchNode: (id: string) => boolean;
     availableResearchPicks: () => string[];

@@ -6,18 +6,19 @@
     "rejected": "assets/crafting-queue/rejected/<id>.json"
   },
   "pending": {
-    "required": ["version", "id", "text", "profile", "timestamp"],
+    "required": ["version", "id", "text", "profile", "timestamp", "tier"],
     "fields": {
       "version": "literal 1",
       "id": "deterministic order_<profile>_<timestamp>_<text_slug>",
       "text": "raw player request text for the pipeline generator",
       "profile": "normalized crafted-items profile",
-      "timestamp": "ISO-8601 UTC creation time"
+      "timestamp": "ISO-8601 UTC creation time",
+      "tier": "contract tier stamped from the profile's research state at post time"
     }
   },
   "approved": {
     "required": ["version", "id", "request", "item", "contractVerdict", "simVerdict", "approvedAt"],
-    "rule": "only items with contractVerdict.ok and simVerdict.ok enter the crafted-items pool"
+    "rule": "only family-tagged items with contractVerdict.ok and simVerdict.ok enter the crafted-items pool after Pattern Library"
   },
   "rejected": {
     "required": ["version", "id", "request", "contractVerdict", "reasons", "rejectedAt"],

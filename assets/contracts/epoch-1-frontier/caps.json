@@ -1,0 +1,51 @@
+{
+  "version": 1,
+  "epochId": "epoch-1-frontier",
+  "contractTiers": [
+    {
+      "tier": 1,
+      "name": "Frontier Assay",
+      "rarityBudgets": { "common": 3, "uncommon": 5, "rare": 8 },
+      "statCaps": {
+        "fireRateMult": 0.3,
+        "damageMult": 0.35,
+        "rangeMult": 0.3,
+        "moveSpeedMult": 0.18,
+        "panTickMult": -0.35,
+        "maxHpBonus": 35
+      },
+      "craftedOfferCap": 0,
+      "agentPolicySlots": 0
+    },
+    {
+      "tier": 2,
+      "name": "Refined Assay",
+      "rarityBudgets": { "common": 3.6, "uncommon": 6, "rare": 9.6 },
+      "statCaps": {
+        "fireRateMult": 0.3,
+        "damageMult": 0.35,
+        "rangeMult": 0.3,
+        "moveSpeedMult": 0.18,
+        "panTickMult": -0.35,
+        "maxHpBonus": 35
+      },
+      "craftedOfferCap": 0,
+      "agentPolicySlots": 0
+    },
+    {
+      "tier": 3,
+      "name": "Pattern Library",
+      "rarityBudgets": { "common": 3.6, "uncommon": 6, "rare": 9.6 },
+      "statCaps": {
+        "fireRateMult": 0.3,
+        "damageMult": 0.35,
+        "rangeMult": 0.3,
+        "moveSpeedMult": 0.18,
+        "panTickMult": -0.35,
+        "maxHpBonus": 35
+      },
+      "craftedOfferCap": 2,
+      "agentPolicySlots": 1
+    }
+  ]
+}

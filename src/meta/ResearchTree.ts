@@ -5,7 +5,7 @@ import {
   type MetaProgress,
   type MetaProgressStorage,
 } from '../game/MetaProgress';
-import { loadEpoch } from './ContractFamilies';
+import { loadEpoch, type ContractTier } from './ContractFamilies';
 
 export const RESEARCH_STATE_KEY = 'gr.research.v1';
 export const STEAMWORKS_THRESHOLD = loadEpoch('epoch-1-frontier').threshold ?? 6;
@@ -33,6 +33,12 @@ type ResearchRegistry = {
   version: 1;
   taken: string[];
   proposalSalt: number;
+};
+
+const RESEARCH_ID_MIGRATIONS: Record<string, string> = {
+  receipt_shelves: 'refined_assay',
+  contract_tier_one: 'pattern_library',
+  schoolhouse_notes: 'agent_schooling',
 };
 
 export const RESEARCH_NODES = [
@@ -127,28 +133,31 @@ export const RESEARCH_NODES = [
     live: true,
   },
   {
-    id: 'receipt_shelves',
+    id: 'refined_assay',
     branch: 'Assay Works',
-    name: 'Receipt Shelves',
-    description: 'The Assayer keeps cleaner notes for items that come back approved.',
-    effect: 'Crafted-card history prepares to improve.',
+    name: 'Refined Assay',
+    description: 'Tier 2 orders raise common/uncommon/rare stat budgets by 20%: 3.6 / 6 / 9.6.',
+    effect: 'Contract tier becomes 2; new orders carry the 20% higher assay ceiling.',
     requires: ['second_order_slot'],
+    live: true,
   },
   {
-    id: 'contract_tier_one',
+    id: 'pattern_library',
     branch: 'Assay Works',
-    name: 'Contract Tier One',
-    description: 'The bench learns a wider but still safe invention vocabulary.',
-    effect: 'Contract caps prepare to rise inside the era.',
-    requires: ['receipt_shelves'],
+    name: 'Pattern Library',
+    description: 'Tier 3 lets up to 2 approved crafted cards enter each run offer pool.',
+    effect: 'Approved family-tagged inventions can appear as run cards, capped at 2 per offer.',
+    requires: ['refined_assay'],
+    live: true,
   },
   {
-    id: 'schoolhouse_notes',
+    id: 'agent_schooling',
     branch: 'Assay Works',
-    name: 'Schoolhouse Notes',
-    description: 'The Schoolhouse turns bench receipts into town lessons.',
-    effect: 'Schooling offers prepare to begin.',
-    requires: ['contract_tier_one'],
+    name: 'Agent Schooling',
+    description: 'After wave 15, schooling offers can grant the Prospector +1 policy slot for that run.',
+    effect: 'Unlocks late-run Agent Schooling offers with +1 run-only policy slot.',
+    requires: ['pattern_library'],
+    live: true,
   },
   {
     id: 'prospector_lessons',
@@ -156,7 +165,7 @@ export const RESEARCH_NODES = [
     name: 'Prospector Lessons',
     description: 'The Prospector carries approved lessons into the claim.',
     effect: 'Agent schooling prepares to enter late offers.',
-    requires: ['schoolhouse_notes'],
+    requires: ['agent_schooling'],
   },
 ] as const satisfies readonly ResearchNode[];
 
@@ -235,6 +244,12 @@ export function hasResearchNode(state: ResearchState, id: string): boolean {
   return state.taken.includes(id);
 }
 
+export function contractTierForResearch(state: ResearchState): ContractTier {
+  if (hasResearchNode(state, 'pattern_library')) return 3;
+  if (hasResearchNode(state, 'refined_assay')) return 2;
+  return 1;
+}
+
 export function scienceMeter(state: ResearchState): { steps: number; remaining: number; threshold: number; text: string } {
   const steps = Math.max(0, Math.floor(state.progress.tracks.science));
   const remaining = Math.max(0, STEAMWORKS_THRESHOLD - steps);
@@ -257,7 +272,9 @@ export function browserResearchStorage(): MetaProgressStorage | undefined {
 function migrateResearchState(raw: unknown, progress: MetaProgress): ResearchState {
   if (!isRecord(raw)) return freshResearchState(progress);
   const rawTaken = Array.isArray(raw.taken) ? raw.taken : [];
-  const taken = rawTaken.filter((id): id is string => typeof id === 'string' && id in researchNodeById);
+  const taken = rawTaken
+    .map((id) => (typeof id === 'string' ? (RESEARCH_ID_MIGRATIONS[id] ?? id) : id))
+    .filter((id): id is string => typeof id === 'string' && id in researchNodeById);
   const proposalSalt =
     typeof raw.proposalSalt === 'number' && Number.isFinite(raw.proposalSalt) ? Math.max(0, Math.floor(raw.proposalSalt)) : 0;
   return { version: 1, progress, taken: [...new Set(taken)], proposalSalt };

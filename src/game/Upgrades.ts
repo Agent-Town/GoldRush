@@ -1,5 +1,6 @@
 import { Balance } from './Balance';
 import { loadEpoch } from '../meta/ContractFamilies';
+import { parseApprovedQueueEntry, type CraftedItemDef, type CraftingQueueApproved } from '../crafting/CraftingQueueContract';
 
 export type UpgradeDeltas = {
   fireRateMult?: number;
@@ -19,6 +20,7 @@ export type UpgradeDeltas = {
   blastDamageMult?: number;
   blastRadiusMult?: number;
   blastCooldownMult?: number;
+  agentPolicySlots?: number;
 };
 
 export type UpgradeDef = {
@@ -28,6 +30,9 @@ export type UpgradeDef = {
   iconFamily: string;
   familyId?: string;
   familyGate?: string;
+  minWave?: number;
+  crafted?: boolean;
+  craftedProfile?: string;
   maxStacks: number;
   weight?: number;
   filler?: boolean;
@@ -171,10 +176,17 @@ const epochFamilyUpgradeDefs = frontierEpoch.families.flatMap((family) =>
     familyGate: family.unlockNodeId,
   })),
 );
+const craftedUpgradeDefs = loadCraftedUpgradeDefs();
 const masterySynergyDefs = frontierEpoch.synergyCards;
 const masteryConversionRules = frontierEpoch.masteryConversions;
+const craftedOfferCap = frontierEpoch.contractTiers.find((tier) => tier.tier === 3)?.craftedOfferCap ?? 2;
 
-export const upgradeDefs: readonly UpgradeDef[] = [...baselineUpgradeDefs, ...epochFamilyUpgradeDefs, ...masterySynergyDefs];
+export const upgradeDefs: readonly UpgradeDef[] = [
+  ...baselineUpgradeDefs,
+  ...epochFamilyUpgradeDefs,
+  ...craftedUpgradeDefs,
+  ...masterySynergyDefs,
+];
 export type UpgradeId = string;
 export type ResolvedFiller = { goldGrant?: number; heal?: number; effectText: string };
 
@@ -222,6 +234,7 @@ export function upgradeEffect(def: UpgradeDef): string {
   if (deltas.blastDamageMult !== undefined) parts.push(`+${percent(deltas.blastDamageMult)}% blast damage`);
   if (deltas.blastRadiusMult !== undefined) parts.push(`+${percent(deltas.blastRadiusMult)}% blast radius`);
   if (deltas.blastCooldownMult !== undefined) parts.push(`${percent(Math.abs(deltas.blastCooldownMult))}% faster blast fuse`);
+  if (deltas.agentPolicySlots !== undefined) parts.push(`+${deltas.agentPolicySlots} Prospector policy slot this run`);
   return parts.join(', ');
 }
 
@@ -278,4 +291,43 @@ function percent(value: number): number {
 
 function isFiller(def: UpgradeDef): boolean {
   return def.filler === true;
+}
+
+function loadCraftedUpgradeDefs(): UpgradeDef[] {
+  const files =
+    typeof import.meta.env === 'object'
+      ? import.meta.glob<CraftingQueueApproved>('../../assets/crafting-queue/approved/*.json', {
+          eager: true,
+          import: 'default',
+        })
+      : {};
+  const byId = new Map<string, UpgradeDef>();
+  for (const value of Object.values(files)) {
+    const entry = parseApprovedQueueEntry(value);
+    const card = entry?.item.family ? craftedItemCard(entry) : null;
+    if (card) byId.set(card.id, card);
+  }
+  return [...byId.values()];
+}
+
+function craftedItemCard(entry: CraftingQueueApproved): UpgradeDef {
+  const item: CraftedItemDef = entry.item;
+  const family = item.family!;
+  return {
+    id: `crafted_${item.id}`,
+    name: item.name,
+    description: item.blurb,
+    iconFamily: family,
+    familyId: `crafted_${family}`,
+    familyGate: 'pattern_library',
+    crafted: true,
+    craftedProfile: entry.request.profile,
+    maxStacks: 1,
+    weight: 0.85,
+    deltas: { ...item.stats },
+  };
+}
+
+export function craftedOfferLimit(): number {
+  return craftedOfferCap;
 }

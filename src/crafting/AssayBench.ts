@@ -8,6 +8,7 @@ import {
   type PendingPostResult,
 } from './CraftingQueue';
 import { normalizeQueueProfile, type CraftedItemDef } from './CraftingQueueContract';
+import { browserResearchStorage, contractTierForResearch, loadResearchState } from '../meta/ResearchTree';
 
 export class AssayBench {
   private readonly accepted = new Map<string, CraftedItemDef>();
@@ -167,7 +168,7 @@ export class AssayBenchPanel {
     }
 
     this.pendingStatus.textContent = 'Posting';
-    this.renderPending(await postPendingOrder(text, this.profile.value, queueTimestamp()));
+    this.renderPending(await postPendingOrder(text, this.profile.value, queueTimestamp(), currentContractTier()));
     await this.refreshQueue();
   };
 
@@ -254,6 +255,10 @@ function queueTimestamp(): Date {
   if (!override) return new Date();
   const parsed = new Date(override);
   return Number.isNaN(parsed.valueOf()) ? new Date() : parsed;
+}
+
+function currentContractTier(): number {
+  return contractTierForResearch(loadResearchState(browserResearchStorage()));
 }
 
 function formatQueueTimestamp(value: string): string {

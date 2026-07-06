@@ -19,6 +19,7 @@ export type EffectiveStats = {
   blastDamageMult: number;
   blastRadiusMult: number;
   blastCooldownMult: number;
+  agentPolicySlots: number;
 };
 
 export const baseStats: EffectiveStats = {
@@ -37,6 +38,7 @@ export const baseStats: EffectiveStats = {
   blastDamageMult: 1,
   blastRadiusMult: 1,
   blastCooldownMult: 1,
+  agentPolicySlots: 0,
 };
 
 export function effectiveStats(stacks: UpgradeStacks): EffectiveStats {
@@ -61,6 +63,7 @@ export function effectiveStats(stacks: UpgradeStacks): EffectiveStats {
     if (deltas.blastDamageMult !== undefined) stats.blastDamageMult += deltas.blastDamageMult * count;
     if (deltas.blastRadiusMult !== undefined) stats.blastRadiusMult += deltas.blastRadiusMult * count;
     if (deltas.blastCooldownMult !== undefined) stats.blastCooldownMult += deltas.blastCooldownMult * count;
+    if (deltas.agentPolicySlots !== undefined) stats.agentPolicySlots += deltas.agentPolicySlots * count;
   }
 
   stats.blastRadiusMult = Math.min(stats.blastRadiusMult, Balance.eraCaps.blastRadiusMult);

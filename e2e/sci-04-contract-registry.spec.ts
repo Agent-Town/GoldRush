@@ -71,12 +71,14 @@ test('contract registry lists Frontier and locked Steamworks in order', async ({
   expect(registry.epochs.map((epoch) => epoch.id)).toEqual(['epoch-1-frontier', 'epoch-2-steamworks']);
   expect(registry.epochs.map((epoch) => epoch.displayName)).toEqual(['Frontier', 'Steamworks']);
   expect(registry.frontier).toMatchObject({ locked: false, threshold: 6 });
-  expect(registry.frontier.gates).toEqual(['chain_spark_primer', 'beacon_cadence', 'pact_ledger']);
+  expect(registry.frontier.gates).toEqual(['chain_spark_primer', 'beacon_cadence', 'pact_ledger', 'agent_schooling']);
   expect(registry.frontier.families.flatMap((family) => family.cards.map((card) => card.id))).toEqual([
     'chain_spark_arc',
     'beacon_handoff',
     'rich_seam_pact',
+    'prospector_policy_slot',
   ]);
+  expect(registry.frontier.contractTiers.map((tier) => tier.rarityBudgets.common)).toEqual([3, 3.6, 3.6]);
   expect(registry.steamworks).toMatchObject({
     id: 'epoch-2-steamworks',
     displayName: 'Steamworks',
@@ -86,6 +88,7 @@ test('contract registry lists Frontier and locked Steamworks in order', async ({
     gates: [],
     masteryConversions: [],
     synergyCards: [],
+    contractTiers: [],
   });
   assertNoErrors(errors);
 });
