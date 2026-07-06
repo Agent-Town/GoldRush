@@ -286,18 +286,6 @@ function containsOrdered(sequence: readonly string[], expected: readonly string[
   return false;
 }
 
-function meanPixelDelta(a: PNG, b: PNG): number {
-  expect(a.width).toBe(b.width);
-  expect(a.height).toBe(b.height);
-  let total = 0;
-  let count = 0;
-  for (let i = 0; i < a.data.length; i += 4) {
-    total += Math.abs(a.data[i] - b.data[i]) + Math.abs(a.data[i + 1] - b.data[i + 1]) + Math.abs(a.data[i + 2] - b.data[i + 2]);
-    count += 3;
-  }
-  return total / count;
-}
-
 test('hero test clip advances on sim time and holds during hit-pause', async ({ page }) => {
   const errors = await openGame(page, 'vp-02-frames');
   await setHeroTestClip(page, ['#ff0000', '#00ff00'], 8);
@@ -360,7 +348,7 @@ test('missing sheet cells fall back to the existing one-frame billboard without 
   const before = PNG.sync.read(await page.locator('#game-canvas').screenshot());
   await page.waitForTimeout(300);
   const after = PNG.sync.read(await page.locator('#game-canvas').screenshot());
-  expect(meanPixelDelta(before, after)).toBeLessThan(0.01);
+  expect(heroCropDifference(before, after)).toBeLessThan(0.01);
   expect(errors.consoleErrors.filter((message) => !message.includes('Failed to load resource: net::ERR_FAILED'))).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
