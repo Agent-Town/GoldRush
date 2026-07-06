@@ -483,6 +483,7 @@ interface Window {
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     wreck: (family: GrBuildableId, index: number) => boolean;
+    demolish: (family: GrBuildableId, index: number) => boolean;
     resetRun: () => void;
     toggleWeapon: () => 'rig' | 'blast';
     setBlastAim: (x: number, z: number) => { x: number; z: number };

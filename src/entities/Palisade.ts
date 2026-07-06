@@ -9,6 +9,8 @@ export type PalisadeBlocker = {
   halfZ: number;
 };
 
+type PalisadeBlockerSlot = PalisadeBlocker | undefined;
+
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const timber = '#c99a61';
 const timberLight = '#d9b77d';
@@ -20,7 +22,7 @@ export class PalisadePool {
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
   private readonly rotationSteps: number[] = [];
-  private readonly blockers: PalisadeBlocker[] = [];
+  private readonly blockers: PalisadeBlockerSlot[] = [];
   private readonly postGeometry = new THREE.BoxGeometry(0.16, 0.92, 0.16);
   private readonly railGeometry = new THREE.BoxGeometry(0.18, 0.16, Balance.palisade.depth);
   private readonly braceGeometry = new THREE.BoxGeometry(0.08, 0.22, Balance.palisade.depth * 0.86);
@@ -61,7 +63,7 @@ export class PalisadePool {
     return this.positions;
   }
 
-  get activeBlockers(): readonly PalisadeBlocker[] {
+  get activeBlockers(): readonly PalisadeBlockerSlot[] {
     return this.blockers;
   }
 
@@ -80,18 +82,29 @@ export class PalisadePool {
       this.positions[i]?.copy(position);
       this.rotationSteps[i] = rotationSteps % 4;
       const rotated = this.rotationSteps[i] % 2 === 1;
-      this.blockers.push({
+      this.blockers[i] = {
         x: position.x,
         z: position.z,
         halfX: (rotated ? Balance.palisade.depth : Balance.palisade.width) / 2,
         halfZ: (rotated ? Balance.palisade.width : Balance.palisade.depth) / 2,
-      });
+      };
       this.alive += 1;
       this.sync(i);
       this.markNeedsUpdate();
       return i;
     }
     return -1;
+  }
+
+  deactivate(index: number): boolean {
+    if (!this.active[index]) return false;
+    this.active[index] = false;
+    this.rotationSteps[index] = 0;
+    this.blockers[index] = undefined;
+    this.alive = Math.max(0, this.alive - 1);
+    this.hide(index);
+    this.markNeedsUpdate();
+    return true;
   }
 
   reset(): void {

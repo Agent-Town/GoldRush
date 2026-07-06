@@ -183,6 +183,10 @@ export const Balance = {
     pctOfCost: 0.25,
     capPctOfCost: 0.4,
   },
+  demolish: {
+    refundPctOfCost: 0.5,
+    interactRadius: 1.6,
+  },
   wreck: {
     hp: {
       sentry_beacon: 40,

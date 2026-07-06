@@ -75,6 +75,16 @@ export class TurretPool {
     return -1;
   }
 
+  deactivate(index: number): boolean {
+    if (!this.active[index]) return false;
+    this.active[index] = false;
+    this.alive = Math.max(0, this.alive - 1);
+    this.hide(index);
+    this.mesh.visible = this.alive > 0;
+    this.mesh.instanceMatrix.needsUpdate = true;
+    return true;
+  }
+
   update(at: number): void {
     this.material.emissiveIntensity = 0.34 + Math.sin(at * Math.PI * 2) * 0.08;
     for (let i = 0; i < this.active.length; i += 1) {

@@ -80,6 +80,17 @@ export class StockpilePool {
     return -1;
   }
 
+  deactivate(index: number): boolean {
+    if (!this.active[index]) return false;
+    this.active[index] = false;
+    this.pileSteps[index] = 0;
+    this.alive = Math.max(0, this.alive - 1);
+    this.mesh.setMatrixAt(index, hiddenMatrix);
+    this.group.visible = this.alive > 0;
+    this.mesh.instanceMatrix.needsUpdate = true;
+    return true;
+  }
+
   update(banked: number, cap: number): void {
     if (this.alive === 0) return;
     const step = Math.max(0, Math.min(4, Math.floor((banked / Math.max(1, cap)) * 5)));

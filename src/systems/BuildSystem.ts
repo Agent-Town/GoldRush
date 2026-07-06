@@ -73,6 +73,14 @@ export type BuildDiagnostics = {
   repairGold: number;
 };
 
+export type DemolishCandidate = {
+  id: BuildableId;
+  index: number;
+  displayName: string;
+  refund: number;
+  position: { x: number; z: number };
+};
+
 const validColor = new THREE.Color('#2f8f85');
 const invalidColor = new THREE.Color('#8a4a2a');
 const emptyPositions: Array<{ x: number; z: number }> = [];
@@ -529,6 +537,72 @@ export class BuildSystem {
     return dx * dx + dz * dz <= radius * radius;
   }
 
+  nearestBuildingTo(position: THREE.Vector3, radius = Balance.demolish.interactRadius): DemolishCandidate | null {
+    let best: DemolishCandidate | null = null;
+    let bestDistanceSq = radius * radius;
+    for (const id of buildableIds) {
+      const def = getBuildableDef(id);
+      for (let index = 0; index < this.hp[id].length; index += 1) {
+        if (!this.isSlotActive(id, index)) continue;
+        const buildingPosition = this.positionFor(id, index);
+        if (!buildingPosition) continue;
+        const dx = buildingPosition.x - position.x;
+        const dz = buildingPosition.z - position.z;
+        const distanceSq = dx * dx + dz * dz;
+        if (distanceSq <= bestDistanceSq) {
+          bestDistanceSq = distanceSq;
+          best = {
+            id,
+            index,
+            displayName: def?.displayName ?? id,
+            refund: this.demolishRefund(id, index),
+            position: { x: buildingPosition.x, z: buildingPosition.z },
+          };
+        }
+      }
+    }
+    return best;
+  }
+
+  demolish(
+    id: BuildableId,
+    index: number,
+    at: number,
+    position: THREE.Vector3 = this.heroPosition,
+    radius = Balance.demolish.interactRadius,
+  ): boolean {
+    if (!this.isSlotActive(id, index)) return false;
+    const buildingPosition = this.positionFor(id, index);
+    if (!buildingPosition) return false;
+    const dx = buildingPosition.x - position.x;
+    const dz = buildingPosition.z - position.z;
+    if (dx * dx + dz * dz > radius * radius) return false;
+
+    const refund = this.demolishRefund(id, index);
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at,
+      type: 'gold_granted',
+      source: 'demolish',
+      amount: refund,
+    });
+    if (!result.ok) return false;
+
+    this.teardownBuilding(id, index);
+    this.clearBuildingState(id, index);
+    if (!this.deactivateSlot(id, index)) return false;
+    if (this.activeRepairId === id && this.activeRepairIndex === index) {
+      this.activeRepairId = null;
+      this.activeRepairIndex = -1;
+      this.activeRepairBlocked = false;
+      this.repairRing.visible = false;
+      this.repairRing.geometry.setDrawRange(0, 0);
+    }
+    if (refund > 0) this.onFloatText?.(buildingPosition, `+${refund}`, '#c4883a');
+    this.visualDirty = true;
+    return true;
+  }
+
   remainingHp(id: BuildableId, index: number): number {
     return this.hp[id][index] ?? 0;
   }
@@ -714,6 +788,29 @@ export class BuildSystem {
     return this.beacons.place(position);
   }
 
+  private isSlotActive(id: BuildableId, index: number): boolean {
+    if (id === 'assay_office') return index === 0 && this.assayOfficeActive;
+    if (id === 'palisade') return this.palisades.isActive(index);
+    if (id === 'sluice') return this.sluices.isActive(index);
+    if (id === 'stockpile') return this.stockpiles.isActive(index);
+    if (id === 'turret') return this.turrets.isActive(index);
+    return this.beacons.isActive(index);
+  }
+
+  private deactivateSlot(id: BuildableId, index: number): boolean {
+    if (id === 'assay_office') {
+      if (index !== 0 || !this.assayOfficeActive) return false;
+      this.assayOfficeActive = false;
+      this.assayOffice.visible = false;
+      return true;
+    }
+    if (id === 'palisade') return this.palisades.deactivate(index);
+    if (id === 'sluice') return this.sluices.deactivate(index);
+    if (id === 'stockpile') return this.stockpiles.deactivate(index);
+    if (id === 'turret') return this.turrets.deactivate(index);
+    return this.beacons.deactivate(index);
+  }
+
   private finishPlacement(id: BuildableId, index: number, cost: number): void {
     const maxHp = this.maxHpForPlacement(id);
     this.hpMax[id][index] = maxHp;
@@ -732,12 +829,25 @@ export class BuildSystem {
   private wreck(id: BuildableId, index: number): void {
     if (this.wrecked[id][index]) return;
     this.wrecked[id][index] = true;
+    this.teardownBuilding(id, index);
+  }
+
+  private teardownBuilding(id: BuildableId, index: number): void {
     this.repairProgress[id][index] = 0;
     this.repairNeedGoldShown[id][index] = false;
     this.syncBuildingTarget(id, index, false);
     this.unregisterShooter(id, index);
     if (id === 'stockpile') this.economy.removeCapSource(stockpileCapSource(index));
     this.visualDirty = true;
+  }
+
+  private clearBuildingState(id: BuildableId, index: number): void {
+    this.hp[id][index] = 0;
+    this.hpMax[id][index] = 0;
+    this.buildCosts[id][index] = 0;
+    this.wrecked[id][index] = false;
+    this.repairProgress[id][index] = 0;
+    this.repairNeedGoldShown[id][index] = false;
   }
 
   private repair(id: BuildableId, index: number): void {
@@ -1081,6 +1191,13 @@ export class BuildSystem {
     const cost = this.buildCosts[id][index] || def?.costCurve(0) || 0;
     const pct = Math.min(Balance.repair.capPctOfCost, Balance.repair.pctOfCost * missingFraction);
     return Math.ceil(cost * Math.max(0, pct));
+  }
+
+  private demolishRefund(id: BuildableId, index: number): number {
+    const maxHp = this.maxHpForInstance(id, index);
+    const hp = this.wrecked[id][index] ? 0 : Math.max(0, Math.min(maxHp, this.hp[id][index] ?? maxHp));
+    const cost = this.buildCosts[id][index] ?? 0;
+    return Math.floor(Math.max(0, Balance.demolish.refundPctOfCost * cost * (maxHp > 0 ? hp / maxHp : 0)));
   }
 
   private syncGhostShape(): void {

@@ -95,6 +95,19 @@ export class SluicePool {
     return -1;
   }
 
+  deactivate(index: number): boolean {
+    if (!this.active[index]) return false;
+    this.active[index] = false;
+    this.timers[index] = 0;
+    this.contested[index] = false;
+    this.capped[index] = false;
+    this.alive = Math.max(0, this.alive - 1);
+    this.hide(index);
+    this.group.visible = this.alive > 0;
+    this.markNeedsUpdate();
+    return true;
+  }
+
   update(
     delta: number,
     at: number,

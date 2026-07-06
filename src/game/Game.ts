@@ -60,7 +60,7 @@ import {
 import { AudioSystem } from '../systems/AudioSystem';
 import { Economy, initialEconomyState, reduce as reduceEconomy, summarizeLog, type EconomyEvent } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
-import { BuildSystem } from '../systems/BuildSystem';
+import { BuildSystem, type DemolishCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
@@ -73,6 +73,7 @@ import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../syste
 import { DeathOverlay, type DeathLedger, type DeathOverlayOptions, type DeathResearchState } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
+import { DemolishPrompt } from '../ui/DemolishPrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
@@ -188,6 +189,7 @@ export class Game {
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
   private readonly assayOfficePrompt: AssayOfficePrompt;
+  private readonly demolishPrompt: DemolishPrompt;
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
@@ -258,6 +260,8 @@ export class Game {
     hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget) => this.combat.handleBuildingHit(enemy, target),
   };
   private buildMenuOpen = false;
+  private demolishCandidate: DemolishCandidate | null = null;
+  private demolishSuppressedKey: string | null = null;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
@@ -339,6 +343,7 @@ export class Game {
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
     this.assayOfficePrompt = new AssayOfficePrompt(this.getElement('#hud'));
+    this.demolishPrompt = new DemolishPrompt(this.getElement('#hud'), () => this.confirmDemolish());
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.resetRun());
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
@@ -437,6 +442,7 @@ export class Game {
         spawnThief: (edge?: CompassEdge) => this.spawnHarnessThief(edge),
         spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
+        demolish: (family: BuildableId, index: number) => this.demolishBuilding(family, index),
         resetRun: () => this.resetRun(),
         toggleWeapon: () => this.toggleWeapon(),
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
@@ -579,6 +585,7 @@ export class Game {
     this.input.dispose();
     this.hud.dispose();
     this.assayOfficePrompt.dispose();
+    this.demolishPrompt.dispose();
     this.deathOverlay.dispose();
     this.upgradeOverlay.dispose();
     this.damageVignette.remove();
@@ -618,7 +625,9 @@ export class Game {
     }
     if (intents.build && !this.lastBuildIntent) this.toggleBuildMenu();
     if (intents.buildSlot !== null && this.buildMenuOpen) this.selectBuildableByIndex(intents.buildSlot);
-    if (intents.cancel && !this.lastCancelIntent && (this.buildMenuOpen || this.buildSystem.isBuildMode)) {
+    if (intents.cancel && !this.lastCancelIntent && this.demolishCandidate) {
+      this.cancelDemolishPrompt();
+    } else if (intents.cancel && !this.lastCancelIntent && (this.buildMenuOpen || this.buildSystem.isBuildMode)) {
       this.closeBuildMenu();
     } else if (intents.pause && !this.lastPauseIntent && !this.secureClaimChoicePending()) {
       this.state.togglePause();
@@ -721,6 +730,7 @@ export class Game {
     this.syncUpgradeOverlay();
     this.syncUi();
     this.syncAssayOfficePrompt();
+    this.syncDemolishPrompt();
     this.publishDiagnostics();
   }
 
@@ -1041,6 +1051,21 @@ export class Game {
         !this.buildSystem.isBuildMode &&
         this.buildSystem.assayOfficeInRange(this.hero.group.position),
     );
+  }
+
+  private syncDemolishPrompt(): void {
+    const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
+    const assayInRange = this.buildSystem.assayOfficeInRange(this.hero.group.position);
+    let candidate =
+      this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode
+        ? this.buildSystem.nearestBuildingTo(this.hero.group.position)
+        : null;
+    const key = candidate ? demolishKey(candidate) : null;
+    if (!key) this.demolishSuppressedKey = null;
+    if (key && this.demolishSuppressedKey && key !== this.demolishSuppressedKey) this.demolishSuppressedKey = null;
+    if (key && key === this.demolishSuppressedKey) candidate = null;
+    this.demolishCandidate = candidate;
+    this.demolishPrompt.update(candidate, !assayInRange);
   }
 
   private handleUiIntent(intent: UiIntent): void {
@@ -1568,7 +1593,37 @@ export class Game {
       this.buildSystem.confirm(this.timeAlive);
       return;
     }
-    if (this.buildSystem.assayOfficeInRange(this.hero.group.position)) this.openAssayBench?.();
+    if (this.buildSystem.assayOfficeInRange(this.hero.group.position)) {
+      this.openAssayBench?.();
+      return;
+    }
+    this.confirmDemolish();
+  }
+
+  private confirmDemolish(): boolean {
+    const candidate = this.demolishCandidate;
+    if (!candidate) return false;
+    const removed = this.demolishBuilding(candidate.id, candidate.index);
+    if (removed) {
+      this.demolishCandidate = null;
+      this.demolishSuppressedKey = null;
+      this.demolishPrompt.update(null, true);
+    }
+    return removed;
+  }
+
+  private cancelDemolishPrompt(): void {
+    if (this.demolishCandidate) this.demolishSuppressedKey = demolishKey(this.demolishCandidate);
+    this.demolishCandidate = null;
+    this.demolishPrompt.update(null, true);
+  }
+
+  private demolishBuilding(id: BuildableId, index: number): boolean {
+    const removed = this.buildSystem.demolish(id, index, this.timeAlive, this.hero.group.position);
+    if (!removed) return false;
+    this.syncStockpileHoldings();
+    this.publishDiagnostics();
+    return true;
   }
 
   private selectBuildable(id: string): boolean {
@@ -1735,6 +1790,10 @@ export class Game {
 
 function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOptions | undefined {
   return count === 5 && radius === 3 ? { speedScale: 0 } : undefined;
+}
+
+function demolishKey(candidate: DemolishCandidate): string {
+  return `${candidate.id}:${candidate.index}`;
 }
 
 function edgeFromPosition(position: THREE.Vector3): CompassEdge {

@@ -113,6 +113,15 @@ export class SentryBeaconPool {
     return -1;
   }
 
+  deactivate(index: number): boolean {
+    if (!this.active[index]) return false;
+    this.active[index] = false;
+    this.alive = Math.max(0, this.alive - 1);
+    this.hide(index);
+    this.markNeedsUpdate();
+    return true;
+  }
+
   update(at: number): void {
     (this.coreMaterial as THREE.MeshStandardMaterial).emissiveIntensity = 1.55 + Math.sin(at * Math.PI * 2) * 0.35;
     for (let i = 0; i < this.active.length; i += 1) {
