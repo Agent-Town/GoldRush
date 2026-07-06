@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
-import type { Vec2 } from '../world/Terrain';
+import { visualY, type Vec2 } from '../world/Terrain';
 
 export type GoldNodeSnapshot = {
   id: string;
@@ -74,7 +74,7 @@ export class GoldNodeVisualBatch {
   }
 
   show(index: number, anchor: Vec2): void {
-    this.position.set(anchor.x, 0.05, anchor.z);
+    this.position.set(anchor.x, visualY(anchor.x, anchor.z, 0.05), anchor.z);
     this.scale.setScalar(1);
     this.matrix.compose(this.position, this.rotation, this.scale);
     this.clusterMesh.setMatrixAt(index, this.matrix);
@@ -93,7 +93,7 @@ export class GoldNodeVisualBatch {
 
   updateGlint(index: number, anchor: Vec2, anchorIndex: number, at: number): void {
     const pulse = 0.82 + Math.sin(at * 5.4 + anchorIndex) * 0.18;
-    this.position.set(anchor.x + 0.08, 0.47, anchor.z - 0.04);
+    this.position.set(anchor.x + 0.08, visualY(anchor.x, anchor.z, 0.47), anchor.z - 0.04);
     this.rotation.setFromAxisAngle(new THREE.Vector3(0, 1, 0), at * 5.2);
     this.scale.setScalar(pulse);
     this.matrix.compose(this.position, this.rotation, this.scale);
@@ -144,7 +144,7 @@ export class GoldNode {
     this.respawnAt = 0;
     this.active = true;
     this.group.visible = true;
-    this.group.position.set(anchor.x, 0.05, anchor.z);
+    this.group.position.set(anchor.x, visualY(anchor.x, anchor.z, 0.05), anchor.z);
     this.visuals.show(this.visualIndex, anchor);
   }
 

@@ -210,7 +210,7 @@ export class ClaimJumperEnemy {
     this.spriteOrientation = 's';
     this.spriteClip = 'walk';
     this.group.position.copy(position);
-    this.group.position.y = Balance.enemy.groundY;
+    this.syncVisualY();
     this.group.rotation.y = 0;
     this.group.visible = true;
   }
@@ -256,7 +256,7 @@ export class ClaimJumperEnemy {
     } else {
       this.move(delta, blockers, speed);
     }
-    this.group.position.y = Balance.enemy.groundY;
+    this.syncVisualY();
     if (delta > 0) {
       this.leadVelocity.set((this.group.position.x - previousX) / delta, 0, (this.group.position.z - previousZ) / delta);
     } else {
@@ -574,6 +574,10 @@ export class ClaimJumperEnemy {
 
   private avoidanceSide(): number {
     return this.id % 2 === 0 ? 1 : -1;
+  }
+
+  private syncVisualY(): void {
+    this.group.position.y = Terrain.visualY(this.group.position.x, this.group.position.z, Balance.enemy.groundY);
   }
 }
 

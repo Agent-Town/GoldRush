@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 
 const brass = '#8a6b3a';
 const bronze = '#6f5732';
@@ -55,6 +56,7 @@ export class SentryBeaconPool {
     onLoaded: () => this.setProceduralVisible(false),
   });
   private readonly syncObject = new THREE.Object3D();
+  private readonly spritePosition = new THREE.Vector3();
   private alive = 0;
 
   constructor() {
@@ -143,19 +145,20 @@ export class SentryBeaconPool {
   private sync(index: number, at: number): void {
     const position = this.positions[index];
     if (!position) return;
+    const groundY = Terrain.visualY(position.x, position.z, 0, Balance.beacon.overlapRadius);
     for (let leg = 0; leg < this.legs.length; leg += 1) {
       const angle = leg * ((Math.PI * 2) / 3) + 0.2;
-      this.syncObject.position.set(position.x + Math.cos(angle) * 0.27, 0.47, position.z + Math.sin(angle) * 0.27);
+      this.syncObject.position.set(position.x + Math.cos(angle) * 0.27, groundY + 0.47, position.z + Math.sin(angle) * 0.27);
       this.syncObject.rotation.set(0.42 * Math.sin(angle), angle, 0.42 * Math.cos(angle));
       this.syncObject.scale.set(1, 1, 1);
       this.syncObject.updateMatrix();
       this.legs[leg]?.setMatrixAt(index, this.syncObject.matrix);
     }
 
-    this.syncPart(this.capMesh, index, position.x, 1.04, position.z, 1);
-    this.syncPart(this.glassMesh, index, position.x, 0.82, position.z, 1);
-    this.syncPart(this.coreMesh, index, position.x, 0.82, position.z, 0.92 + Math.sin(at * Math.PI * 2) * 0.08);
-    this.generatedSprites.set(index, position, true);
+    this.syncPart(this.capMesh, index, position.x, groundY + 1.04, position.z, 1);
+    this.syncPart(this.glassMesh, index, position.x, groundY + 0.82, position.z, 1);
+    this.syncPart(this.coreMesh, index, position.x, groundY + 0.82, position.z, 0.92 + Math.sin(at * Math.PI * 2) * 0.08);
+    this.generatedSprites.set(index, this.spritePosition.set(position.x, groundY, position.z), true);
   }
 
   private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number): void {

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 
 export type StockpileSnapshot = {
   active: boolean;
@@ -121,7 +122,7 @@ export class StockpilePool {
     if (!position) return;
     const step = this.pileSteps[index] ?? 0;
     const scale = 0.64 + step * 0.16;
-    this.syncObject.position.set(position.x, 0.1 + step * 0.025, position.z);
+    this.syncObject.position.set(position.x, Terrain.visualY(position.x, position.z, 0.1 + step * 0.025, 0.7), position.z);
     this.syncObject.rotation.set(0, index * 0.7, 0);
     this.syncObject.scale.set(scale, scale, scale);
     this.syncObject.updateMatrix();

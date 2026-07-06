@@ -246,6 +246,11 @@ export const Balance = {
     exposure: 0.75,
     maxDpr: 2,
   },
+  world: {
+    terrainSegments: 64,
+    terrainMobileSegments: 40,
+    terrainRelief: 1,
+  },
   terrain: {
     featureMix: 0.86,
   },

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 
 export type PalisadeBlocker = {
   x: number;
@@ -117,16 +118,18 @@ export class PalisadePool {
     const position = this.positions[index];
     if (!position) return;
     const angle = this.rotationStepsAt(index) * (Math.PI / 2);
+    const padRadius = Math.max(Balance.palisade.width, Balance.palisade.depth) / 2;
+    const groundY = Terrain.visualY(position.x, position.z, 0, padRadius);
     const sin = Math.sin(angle);
     const cos = Math.cos(angle);
     const postA = -Balance.palisade.depth / 2 + 0.1;
     const postB = Balance.palisade.depth / 2 - 0.1;
-    this.syncPart(this.posts, index * 2, position.x + postA * sin, 0.46, position.z + postA * cos, 1, angle);
-    this.syncPart(this.posts, index * 2 + 1, position.x + postB * sin, 0.46, position.z + postB * cos, 1, angle);
-    this.syncPart(this.rails, index * 2, position.x, 0.35, position.z, 1, angle);
-    this.syncPart(this.rails, index * 2 + 1, position.x, 0.68, position.z, 0.92, angle);
+    this.syncPart(this.posts, index * 2, position.x + postA * sin, groundY + 0.46, position.z + postA * cos, 1, angle);
+    this.syncPart(this.posts, index * 2 + 1, position.x + postB * sin, groundY + 0.46, position.z + postB * cos, 1, angle);
+    this.syncPart(this.rails, index * 2, position.x, groundY + 0.35, position.z, 1, angle);
+    this.syncPart(this.rails, index * 2 + 1, position.x, groundY + 0.68, position.z, 0.92, angle);
     this.syncObject.rotation.set(0, angle, 0.12);
-    this.syncObject.position.set(position.x, 0.53, position.z);
+    this.syncObject.position.set(position.x, groundY + 0.53, position.z);
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
     this.braces.setMatrixAt(index, this.syncObject.matrix);

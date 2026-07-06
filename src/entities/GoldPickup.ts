@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
 import type { GoldHolding } from '../systems/TargetingSystem';
+import * as Terrain from '../world/Terrain';
 
 export type GoldPickupSnapshot = {
   active: boolean;
@@ -77,7 +78,7 @@ export class GoldPickupPool {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       this.active[i] = true;
-      this.positions[i]?.set(position.x, pickupY, position.z);
+      this.positions[i]?.set(position.x, Terrain.visualY(position.x, position.z, pickupY), position.z);
       this.amounts[i] = amount;
       this.age[i] = 0;
       this.blockedCooldown[i] = 0;
@@ -129,7 +130,7 @@ export class GoldPickupPool {
         }
       }
 
-      position.y = pickupY + Math.sin((this.age[i] ?? 0) * 4.5) * 0.06;
+      position.y = Terrain.visualY(position.x, position.z, pickupY + Math.sin((this.age[i] ?? 0) * 4.5) * 0.06);
       this.sync(i);
       dirty = true;
     }

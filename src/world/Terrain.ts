@@ -34,6 +34,7 @@ export const RIVER_MAX_Z = 5;
 export const FORD_MIN_X = -3;
 export const FORD_MAX_X = 3;
 export const SHALLOWS_WIDTH = 1.25;
+export const WATER_Y = 0.025;
 
 export const bounds: TerrainBounds = {
   minX: -CLAIM_HALF,
@@ -89,6 +90,73 @@ export function riverGeometry(): { minX: number; maxX: number; minZ: number; max
     maxX: bounds.maxX,
     minZ: RIVER_MIN_Z,
     maxZ: RIVER_MAX_Z,
+  };
+}
+
+export function sampleHeight(x: number, z: number): number {
+  const clampedX = THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX);
+  const clampedZ = THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ);
+  const absZ = Math.abs(clampedZ);
+  const bankDistance = Math.max(0, absZ - RIVER_MAX_Z);
+  const bankT = smoothstep(0, 15, bankDistance);
+  const valley = THREE.MathUtils.lerp(-0.16, 0.36, bankT);
+  const southRise = clampedZ < RIVER_MIN_Z ? smoothstep(0, CLAIM_HALF - Math.abs(RIVER_MIN_Z), Math.abs(clampedZ) - Math.abs(RIVER_MIN_Z)) * 0.14 : 0;
+  const claimCalm =
+    clampedZ > RIVER_MAX_Z + SHALLOWS_WIDTH && clampedZ < 23 && Math.abs(clampedX) < 24
+      ? THREE.MathUtils.lerp(0.42, 1, smoothstep(0, 24, Math.abs(clampedX)))
+      : 1;
+  const riverNoiseMask = THREE.MathUtils.lerp(0.28, 1, smoothstep(RIVER_MAX_Z - 0.5, RIVER_MAX_Z + 4, absZ));
+  const noise =
+    (valueNoise(clampedX * 0.065, clampedZ * 0.065) - 0.5) * 0.32 +
+    (valueNoise(clampedX * 0.17 + 41.7, clampedZ * 0.17 - 13.2) - 0.5) * 0.16 +
+    (valueNoise(clampedX * 0.34 - 9.1, clampedZ * 0.34 + 27.4) - 0.5) * 0.06;
+  return THREE.MathUtils.clamp((valley + southRise + noise * claimCalm * riverNoiseMask) * Balance.world.terrainRelief, -0.18, 0.62);
+}
+
+export function samplePaddedHeight(x: number, z: number, radius = 0): number {
+  if (radius <= 0.01) return sampleHeight(x, z);
+  const r = Math.max(0.25, radius * 0.65);
+  return (
+    sampleHeight(x, z) * 2 +
+    sampleHeight(x - r, z) +
+    sampleHeight(x + r, z) +
+    sampleHeight(x, z - r) +
+    sampleHeight(x, z + r)
+  ) / 6;
+}
+
+export function visualY(x: number, z: number, base = 0, padRadius = 0): number {
+  return samplePaddedHeight(x, z, padRadius) + base;
+}
+
+export function heightDiagnostics(): {
+  min: number;
+  max: number;
+  segments: number;
+  waterY: number;
+  probes: Record<string, number>;
+} {
+  let min = Number.POSITIVE_INFINITY;
+  let max = Number.NEGATIVE_INFINITY;
+  for (let z = bounds.minZ; z <= bounds.maxZ; z += 8) {
+    for (let x = bounds.minX; x <= bounds.maxX; x += 8) {
+      const height = sampleHeight(x, z);
+      min = Math.min(min, height);
+      max = Math.max(max, height);
+    }
+  }
+  return {
+    min,
+    max,
+    segments: terrainSegments(),
+    waterY: WATER_Y,
+    probes: {
+      heroStart: sampleHeight(0, 12),
+      river: sampleHeight(-12, 0),
+      ford: sampleHeight(0, 0),
+      nearBank: sampleHeight(12, RIVER_MAX_Z + SHALLOWS_WIDTH),
+      farBank: sampleHeight(12, -18),
+    },
   };
 }
 
@@ -153,7 +221,9 @@ const fordMaterial = new THREE.MeshStandardMaterial({
 
 export const createBankPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
   () => {
-    const mesh = new THREE.Mesh(new THREE.PlaneGeometry(CLAIM_SIZE, CLAIM_SIZE, 1, 1), createBankMaterial());
+    const mesh = new THREE.Mesh(createBankGeometry(), createBankMaterial());
+    mesh.name = 'TerrainReliefMesh';
+    mesh.userData.terrainRelief = true;
     mesh.rotation.x = -Math.PI / 2;
     mesh.receiveShadow = true;
     return tagPlaceholder(mesh, assetSlots.terrainBank);
@@ -165,7 +235,7 @@ export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.ass
   () => {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(CLAIM_SIZE, RIVER_MAX_Z - RIVER_MIN_Z, 1, 1), riverMaterial.clone());
     mesh.rotation.x = -Math.PI / 2;
-    mesh.position.y = 0.025;
+    mesh.position.y = WATER_Y;
     mesh.receiveShadow = true;
     const material = mesh.material as THREE.MeshStandardMaterial;
     material.map = createRiverTexture(false);
@@ -186,7 +256,7 @@ export const createFordPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
   () => {
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(FORD_MAX_X - FORD_MIN_X, RIVER_MAX_Z - RIVER_MIN_Z, 1, 1), fordMaterial.clone());
     mesh.rotation.x = -Math.PI / 2;
-    mesh.position.y = 0.04;
+    mesh.position.y = WATER_Y + 0.015;
     mesh.receiveShadow = true;
     const material = mesh.material as THREE.MeshStandardMaterial;
     material.map = createRiverTexture(true);
@@ -203,7 +273,9 @@ export function createTerrainView(): TerrainView {
   const bank = createBankPlaceholder();
   const river = createRiverPlaceholder();
   const ford = createFordPlaceholder();
-  group.add(bank, river, ford, createClaimProps());
+  const props = createClaimProps();
+  for (const prop of props.children) prop.position.y = visualY(prop.position.x, prop.position.z, 0, 0.7);
+  group.add(bank, river, ford, props);
 
   return {
     group,
@@ -239,8 +311,8 @@ function createBankMaterial(): THREE.MeshStandardMaterial {
     shader.uniforms.terrainFeatureMix = uniforms.featureMix;
     shader.uniforms.terrainSeed = uniforms.seed;
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec2 vTerrainUv;')
-      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvTerrainUv = uv;');
+      .replace('#include <common>', '#include <common>\nvarying vec2 vTerrainUv;\nvarying vec2 vTerrainWorld;')
+      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvTerrainUv = uv;\nvTerrainWorld = (modelMatrix * vec4(position, 1.0)).xz;');
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
 uniform float terrainRepeat;
@@ -249,6 +321,7 @@ uniform float terrainAtlasRows;
 uniform float terrainFeatureMix;
 uniform float terrainSeed;
 varying vec2 vTerrainUv;
+varying vec2 vTerrainWorld;
 
 float terrainHash(vec2 p) {
   p += terrainSeed * vec2(37.2, 19.7);
@@ -275,20 +348,36 @@ vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
   if (rotation < 1.5) return vec2(tileUv.y, 1.0 - tileUv.x);
   if (rotation < 2.5) return vec2(1.0 - tileUv.x, 1.0 - tileUv.y);
   return vec2(1.0 - tileUv.y, tileUv.x);
+}
+
+float terrainVariant(vec2 cell, vec2 salt) {
+  float variantCount = max(1.0, terrainVariantCount);
+  return min(floor(terrainHash(cell + salt) * variantCount), variantCount - 1.0);
+}`)
+      .replace('#include <map_pars_fragment>', `#include <map_pars_fragment>
+vec4 terrainAtlasSample(vec2 tileUv, float variant) {
+  float atlasRow = max(1.0, terrainAtlasRows) - 1.0 - variant;
+  vec2 atlasUv = vec2(tileUv.x, (clamp(tileUv.y, 0.001, 0.999) + atlasRow) / max(1.0, terrainAtlasRows));
+  return texture2D(map, atlasUv);
 }`)
       .replace('#include <map_fragment>', `
 #ifdef USE_MAP
   vec2 repeatedUv = vTerrainUv * terrainRepeat;
   vec2 terrainCell = floor(repeatedUv);
-  vec2 tileUv = terrainOrientUv(fract(repeatedUv), terrainCell);
-  float variantCount = max(1.0, terrainVariantCount);
-  float variant = min(floor(terrainHash(terrainCell + vec2(23.0, 29.0)) * variantCount), variantCount - 1.0);
-  // Atlas canvas draws variant 0 in the TOP row; three.js uploads canvases with
-  // flipY=true, so texture-space row bands run bottom-up. Invert the row index so
-  // variant i selects canvas row i (vp-03 review finding 2). rows=1 -> unchanged.
-  float atlasRow = max(1.0, terrainAtlasRows) - 1.0 - variant;
-  vec2 atlasUv = vec2(tileUv.x, (clamp(tileUv.y, 0.001, 0.999) + atlasRow) / max(1.0, terrainAtlasRows));
-  vec4 sampledDiffuseColor = texture2D(map, atlasUv);
+  vec2 jitter = vec2(
+    terrainHash(terrainCell + vec2(71.0, 19.0)),
+    terrainHash(terrainCell + vec2(13.0, 83.0))
+  ) - 0.5;
+  vec2 tileUv = terrainOrientUv(fract(repeatedUv + jitter * 0.18), terrainCell);
+  vec4 packedSand = terrainAtlasSample(tileUv, terrainVariant(terrainCell, vec2(23.0, 29.0)));
+  vec4 dryDirt = terrainAtlasSample(terrainOrientUv(fract(repeatedUv * 0.73 + jitter * 0.11), terrainCell + vec2(3.0, 7.0)), terrainVariant(terrainCell, vec2(43.0, 61.0)));
+  vec4 scrub = terrainAtlasSample(terrainOrientUv(fract(repeatedUv * 1.21 - jitter * 0.13), terrainCell + vec2(11.0, 5.0)), terrainVariant(terrainCell, vec2(89.0, 31.0)));
+  float dirtBlend = smoothstep(0.22, 0.78, terrainValueNoise(vTerrainWorld * 0.075 + terrainSeed * 17.0));
+  float shoreDistance = max(0.0, abs(vTerrainWorld.y) - 5.0);
+  float shoreBand = 1.0 - smoothstep(1.1, 8.0, shoreDistance);
+  float scrubBlend = shoreBand * smoothstep(0.42, 0.88, terrainValueNoise(vTerrainWorld * 0.22 + terrainSeed * 31.0));
+  vec4 sampledDiffuseColor = mix(packedSand, dryDirt, dirtBlend * 0.48);
+  sampledDiffuseColor = mix(sampledDiffuseColor, scrub, scrubBlend * 0.24);
   sampledDiffuseColor.rgb = mix(vec3(1.0), sampledDiffuseColor.rgb, clamp(terrainFeatureMix, 0.0, 1.0));
   float macro = terrainValueNoise(vTerrainUv * 2.15 + terrainSeed * 11.0) * 2.0 - 1.0;
   vec3 macroTint = vec3(
@@ -296,7 +385,7 @@ vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
     1.0 + macro * 0.038,
     1.0 + macro * 0.026 - max(macro, 0.0) * 0.010
   );
-  sampledDiffuseColor.rgb *= macroTint;
+  sampledDiffuseColor.rgb *= macroTint * mix(vec3(1.0), vec3(0.92, 1.0, 0.86), scrubBlend * 0.18);
   diffuseColor *= sampledDiffuseColor;
 #endif`);
   };
@@ -316,6 +405,25 @@ vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
     uniforms.atlasRows.value = atlas.rows;
   });
   return material;
+}
+
+function createBankGeometry(): THREE.PlaneGeometry {
+  const geometry = new THREE.PlaneGeometry(CLAIM_SIZE, CLAIM_SIZE, terrainSegments(), terrainSegments());
+  const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
+  for (let index = 0; index < positions.count; index += 1) {
+    const x = positions.getX(index);
+    const z = -positions.getY(index);
+    positions.setZ(index, sampleHeight(x, z));
+  }
+  positions.needsUpdate = true;
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+function terrainSegments(): number {
+  const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
+  const value = mobile ? Balance.world.terrainMobileSegments : Balance.world.terrainSegments;
+  return Math.max(24, Math.min(96, Math.floor(value)));
 }
 
 function syncBankMaterial(mesh: THREE.Mesh): void {
@@ -394,6 +502,36 @@ function terrainBankVariantFiles(): string[] {
 function terrainSeed(): number {
   if (typeof window === 'undefined') return 0;
   return normalizeSeed(new URLSearchParams(window.location.search).get('seed')) / 4294967296;
+}
+
+function valueNoise(x: number, z: number): number {
+  const ix = Math.floor(x);
+  const iz = Math.floor(z);
+  const fx = smooth01(x - ix);
+  const fz = smooth01(z - iz);
+  const a = terrainHash(ix, iz);
+  const b = terrainHash(ix + 1, iz);
+  const c = terrainHash(ix, iz + 1);
+  const d = terrainHash(ix + 1, iz + 1);
+  return THREE.MathUtils.lerp(THREE.MathUtils.lerp(a, b, fx), THREE.MathUtils.lerp(c, d, fx), fz);
+}
+
+function terrainHash(x: number, z: number): number {
+  const seed = terrainSeed() * 997.31;
+  return fract(Math.sin(x * 127.1 + z * 311.7 + seed) * 43758.5453123);
+}
+
+function smoothstep(edge0: number, edge1: number, value: number): number {
+  if (edge0 === edge1) return value < edge0 ? 0 : 1;
+  return smooth01(THREE.MathUtils.clamp((value - edge0) / (edge1 - edge0), 0, 1));
+}
+
+function smooth01(value: number): number {
+  return value * value * (3 - 2 * value);
+}
+
+function fract(value: number): number {
+  return value - Math.floor(value);
 }
 
 function imageWidth(image: CanvasImageSource | undefined): number {
