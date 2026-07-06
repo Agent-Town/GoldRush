@@ -7,7 +7,7 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 
 ## main (serial slot; balance/fix/feature tune — THROTTLE: ≤1 queued while drain pile ≥3)
 0. ✅ 041 turret-overwatch MERGED s87 `305d405` (see OWNER'S DESK) — line retired
-1. **QUEUED main s91: 034 vp02 mobile-stick** — test-only (touches ONLY `e2e/vp-02*.spec.ts`, NO product code), disjoint from SCI-04/w1-03 merges; ref pattern `e2e/task-031-anim-roundness.spec.ts` verified present. GATE "main slot free" now true (lane-a drained s91)
+0b. ✅ **034 vp-02 mobile-input fix SHIPPED s92 `a6fe49d`** (test-only) — the re-run produced a REAL small delta (not redundant): swapped vp-02's whole-frame `meanPixelDelta` → viewport-robust `heroCropDifference` (the residual mobile fragility; WASD-key half was already on main = the s83 no-op). vp-02+vp-02b **16/16 desktop + 16/16 mobile-isolated**, tsc+build clean. Review `reviews/034-vp02-mobile-stick.md`. Line retired.
 2. fix-037-panGold-flake — GATE: authorable now — F-1 from 037's gate (task-037:115 harness flake, non-blocking but owed; fire-authorable, small)
 3. 012 overwhelm-valves (wave-32 wall, tower-defense side)
 4. 011 build-menu-blurbs refresh (stale-check first — build menu changed since)
@@ -25,7 +25,7 @@ Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires r
 3. M4-07 receipts-UX clarity — AUTHOR from VISION-HOOKS "clarity is craft" note + m4-re-land review findings. GATE: authorable next idle-lane-b window.
 4. **M4-08 agent-vs-player run-summary stats — DESIGN FORK (owner-gated, NOT fire-authorable).** s92 scout VERIFIED: `gold_panned` events carry no `actor` tag; `DeathLedger`/`EconomySummary`/`RunManager.summarizeRun` have no agent fields. Attributing panned/repaired/reclaimed by agent-vs-player needs net-new plumbing (optional `actor` on the economy event type → `summarizeLog` → ledger + wire `AgentCollectXpResult.collector`). Deliberately carved OUT of the m4-05 close-out. Needs an owner call on whether M4 close-out wants agent attribution, then a spec-lite.
 
-## lane-c (world/polish) — DRAINED ✓ (vista merged s80; scatter RULED RE-LAND)
+## lane-c (world/polish) — ⚠ DRAIN PENDING: **w1-04 instanced-detail DONE-MOVED s92** (`tasks/done/20260707-000139-lane-c-w1-04-instanced-detail.md`; worktrees/lane-c holds uncommitted additive scatter on top of main, runner made no commit). **TOP fresh drain for next fire** — mostly ADDITIVE (src/world/ new Scatter module + Balance/diagnostics additive + new `e2e/w1-04-detail.spec.ts`), so a cleaner merge than lane-d. Gate: tsc+build, w1-04-detail spec both projects, task-025+m1-01+m2-01 unmodified green, boot probe, perf snapshot + before/after screenshots (runner left artifacts/w1-04/), in-game visual review vs Frontier Ledger. Do NOT refill lane-c until drained (LANE-SAFETY). Prior state below:
 Scatter ruling (s61 attended, 2026-07-06 late): s80 found `save/w1-04-scatter` 3-way-conflicts post-vista → per the salvage lifecycle, it RE-LANDS instead of hand-merging. Sequence:
 1. **RERUN w1-03 light+atmosphere** — GATE: none, lane-c is clear — master intact, includes owner's water fix
 2. **RE-LAND w1-04 scatter** — AUTHOR (fire): fresh task, salvage-ref `save/w1-04-scatter`, adapt to merged vista/light; rename salvage → archive/ when it ships — GATE: after w1-03 rerun
