@@ -34,7 +34,13 @@ export function migrateMetaProgress(raw: unknown): MetaProgress {
 }
 
 export function loadMetaProgress(storage: MetaProgressStorage): MetaProgress {
-  const saved = storage.getItem(META_PROGRESS_KEY);
+  let saved: string | null = null;
+  try {
+    saved = storage.getItem(META_PROGRESS_KEY);
+  } catch {
+    return migrateMetaProgress(null);
+  }
+
   let raw: unknown = null;
   if (saved !== null) {
     try {
@@ -45,13 +51,17 @@ export function loadMetaProgress(storage: MetaProgressStorage): MetaProgress {
   }
 
   const meta = migrateMetaProgress(raw);
-  storage.setItem(META_PROGRESS_KEY, JSON.stringify(meta));
+  try {
+    storage.setItem(META_PROGRESS_KEY, JSON.stringify(meta));
+  } catch {}
   return meta;
 }
 
 export function saveMetaProgress(storage: MetaProgressStorage, meta: MetaProgress): MetaProgress {
   const next = migrateMetaProgress(meta);
-  storage.setItem(META_PROGRESS_KEY, JSON.stringify(next));
+  try {
+    storage.setItem(META_PROGRESS_KEY, JSON.stringify(next));
+  } catch {}
   return next;
 }
 
