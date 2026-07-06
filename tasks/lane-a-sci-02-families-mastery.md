@@ -2,11 +2,11 @@
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-a. READ FIRST: AGENTS.md; `specs/science-dimension/README.md` (LAWS + Vocabulary + "THE EPOCH-CONTRACT LAW" + Mechanics v1 are binding — this is slice **SCI-02**); `reviews/sci-01-research-loop.md` (what SCI-01 shipped and its F-SCI-01-1 note); `docs/GOLD_RUSH_BRIEF.md` §9.2 (frontier-tech, no firearms) + §9.4 (naming).
 
-## ⚠️ Pre-flight — drain-gated (LANE-SAFETY LAW) — **CONTENT check, not commit-ancestry**
-SCI-01 was drained to main by a **graft-merge** (files copied onto main, `6b6624c`), so `lane/m3`'s tip commit `18e8021` is NOT an ancestor of main by identity even though its **content** is fully in main. Do NOT use `git log main..lane/m3` — it false-positives on the grafted commit. Instead:
-1. Run `git diff --stat main lane/m3 -- src e2e specs assets/contracts`. If it shows **any changes** (real source/spec content on lane/m3 not yet in main), OR `git status --short` shows an uncommitted implementation in this worktree — **STOP immediately and report "lane/m3 has undrained content; do NOT reset"**. (An EMPTY diff means the graft left nothing behind → reset is safe.)
-2. If the diff is empty: `git checkout lane/m3 && git reset --hard main && git clean -fd && npm install --no-audit --no-fund`; `npm run build` green before touching anything.
-3. Confirm SCI-01 is present on the base: `src/meta/ResearchTree.ts` exists, `e2e/sci-01-research-loop.spec.ts` passes. If absent — STOP and report.
+## ⚠️ Pre-flight — worktree-dirty guard (proven pattern; do NOT diff main↔lane)
+The FIRE that queued this task already drained SCI-01 to main (graft-merge `6b6624c`) and verified lane-a carries no undrained work before refilling (§2E LANE-SAFETY is the fire's duty). Your only pre-flight job is to not clobber an in-progress run. **Do NOT use `git log main..lane/m3` or `git diff main lane/m3`** — graft-merge makes the lane tip a non-ancestor, and main moves ahead constantly (other lanes, attended edits), so BOTH false-positive and would make you wrongly STOP.
+1. If `git status --short` in this worktree shows an **uncommitted implementation** (dirty tree from a live run) — STOP and report "worktree dirty; do not reset". Otherwise:
+2. `git checkout lane/m3 && git reset --hard main && git clean -fd && npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+3. Confirm SCI-01 is present on the reset base: `src/meta/ResearchTree.ts` exists and `e2e/sci-01-research-loop.spec.ts` passes. If absent — STOP and report (means you're not on current main).
 
 ## Goal
 SCI-01 shipped the research loop with THREE live launch nodes; the other 12 nodes read "prepare to…" placeholders. SCI-02 makes the **Arsenal Works** branch fully live and adds the **mastery-conversion** system: pool depth becomes combinatorial (empty-pool a + b from the spec) so the wave-30 wall can move **without stat inflation**. Playable checkpoint: take Arsenal nodes across runs → new epoch-gated card families enter the level-up offer pool; **max out a card family in a run → it converts to offering rare cross-family synergy cards** (e.g. firerate mastery feeds blast radius). Owner playtest gate afterward: does the wave-30 wall move? (that sign-off is Robin's, not this task's.)
