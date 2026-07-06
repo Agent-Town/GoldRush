@@ -1,9 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
-import { readFile, rm } from 'node:fs/promises';
+import { readFile, readdir, rm } from 'node:fs/promises';
 import { resolve } from 'node:path';
 import { makePendingQueueRequest, pendingQueuePath } from '../src/crafting/CraftingQueueContract';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+type Box = { x: number; y: number; width: number; height: number };
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -20,6 +21,11 @@ async function openBench(page: Page, query: string): Promise<ErrorBucket> {
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await expect(page.getByTestId('assay-bench')).toBeVisible();
   return errors;
+}
+
+function overlaps(a: Box | null, b: Box | null): boolean {
+  if (!a || !b) return false;
+  return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
 }
 
 test('post the order writes the exact pending request JSON', async ({ page }, testInfo) => {
@@ -51,12 +57,41 @@ test('post the order writes the exact pending request JSON', async ({ page }, te
   }
 });
 
+test('first-run pipeline consumes pending orders and keeps verdicts flexible', async ({ page }) => {
+  const consumed = [
+    'order_m5_example_prospector_20260705t140000000z_steady_brass_pan_receipt_for_faster_claim_work.json',
+    'order_local_prospector_20260705t235401057z_steady_brass_pan_receipt_for_faster_claim_work.json',
+    'order_local_prospector_20260705t235419215z_steady_brass_pan_receipt_for_faster_claim_work.json',
+  ];
+  const pendingFiles = new Set(await readdir(resolve(process.cwd(), 'assets/crafting-queue/pending')).catch(() => []));
+  expect(consumed.filter((file) => pendingFiles.has(file))).toEqual([]);
+
+  const errors = await openBench(page, '?debug&nowaves&nolevel&profile=local_prospector');
+  const verdicts = await page.evaluate(async () => {
+    const queuePath = '/src/crafting/CraftingQueue.ts';
+    const { loadCraftingQueue } = await import(queuePath);
+    const queue = loadCraftingQueue('local_prospector') as {
+      approved: unknown[];
+      rejected: Array<{ reasons: Array<{ message: string }> }>;
+    };
+    return {
+      approved: queue.approved.length,
+      rejected: queue.rejected.length,
+      rejectedReasons: queue.rejected.flatMap((entry) => entry.reasons.map((reason) => reason.message)),
+    };
+  });
+  expect(verdicts.approved + verdicts.rejected).toBe(2);
+  expect(verdicts.rejectedReasons.every((message) => message.length > 0)).toBe(true);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('approved fixtures enter a profile history once', async ({ page }) => {
   const errors = await openBench(page, '?debug&nowaves&nolevel&profile=m5_example_prospector');
 
   const rows = page.getByTestId('assay-log').locator('li');
   await expect(rows).toHaveCount(1);
-  await expect(rows.first()).toContainText('Brass Pan Receipt (common)');
+  await expect(rows.first()).toContainText('Brass Pan Receipt (common) arrived — collection opens soon');
 
   const idempotentCount = await page.evaluate(async () => {
     const benchPath = '/src/crafting/AssayBench.ts';
@@ -72,6 +107,30 @@ test('approved fixtures enter a profile history once', async ({ page }) => {
     return bench.acceptedLog.length;
   });
   expect(idempotentCount).toBe(1);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('bench hint is visible, avoids HUD chips, and closes both ways', async ({ page }) => {
+  const errors = await openBench(page, '?debug&nowaves&nolevel&profile=m5_example_prospector');
+  await expect(page.getByTestId('assay-hint')).toHaveText(
+    'Write what you need — the Assayer takes orders now, fills them between sessions.',
+  );
+  await expect(page.getByTestId('assay-close')).toBeVisible();
+
+  const benchBox = await page.getByTestId('assay-bench').boundingBox();
+  expect(overlaps(benchBox, await page.getByTestId('hud-vitals').boundingBox())).toBe(false);
+  expect(overlaps(benchBox, await page.getByTestId('hud-gold').boundingBox())).toBe(false);
+  expect(overlaps(benchBox, await page.getByTestId('hud-build').boundingBox())).toBe(false);
+
+  await page.keyboard.press('Escape');
+  await expect(page.getByTestId('assay-bench')).toBeHidden();
+  await page.getByTestId('assay-bench').evaluate((el) => {
+    (el as HTMLElement).hidden = false;
+    el.setAttribute('aria-hidden', 'false');
+  });
+  await page.getByTestId('assay-close').click();
+  await expect(page.getByTestId('assay-bench')).toBeHidden();
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

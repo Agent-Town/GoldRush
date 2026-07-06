@@ -13,10 +13,10 @@
     "kind": "tool",
     "rarity": "common",
     "name": "Brass Pan Receipt",
-    "blurb": "A stamped Assay Office tool note for better claim work.",
-    "cost": 21,
+    "blurb": "A stamped Assay Office receipt that steadies faster pan work.",
+    "cost": 30,
     "stats": {
-      "panTickMult": 1.12
+      "panTickMult": -0.12
     }
   },
   "contractVerdict": {
@@ -26,7 +26,7 @@
   "simVerdict": {
     "ok": true,
     "reasons": [],
-    "summary": "M5-03 dry sim stayed inside common tool bounds."
+    "summary": "M5-01 paper budget 0.96 <= common budget 3; M5-03 dry sim stayed inside common tool bounds."
   },
   "approvedAt": "2026-07-05T14:05:00.000Z"
 }

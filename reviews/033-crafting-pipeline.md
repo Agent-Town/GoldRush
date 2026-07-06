@@ -16,3 +16,23 @@ Working-tree 033 output: `src/crafting/AssayBench.ts` (close ✕ + Esc + hint st
 
 ## Disposition
 Do not commit 033 code. Leave 033 in the working tree; Codex fixes 035 (F-033-1) in place, then next fire re-gates the whole 033+035 set (tsc+build + m5-04 + lane-c office spec, both projects) and merges if green.
+
+---
+
+## Re-gate s58 (2026-07-06T03:2xZ) — 033+035 combined → VERDICT: PASS, MERGED
+
+035 (F-033-1 corrective) was done-moved by the runner (`tasks/done/20260706-100721-035-…`). Its fix sits on top of the still-uncommitted 033 tree — gated the combined set on a fresh vite (5219, own strictPort server; 5188 held by a stale vite, `playwright.s58.config.ts` scratch, delete after).
+
+**035 fix (bench-UX firewall — styles.css + AssayBench.ts + m5-04 spec only):** mobile media query (`max-width:760px`) now caps `.assay-bench` with `bottom: calc(max(18px,safe-area)+354px)` so the panel can't grow over the bottom-left Build panel; added `[hidden]` state + close button; m5-04 "avoids HUD chips" test extended with a `hud-build` non-overlap assertion (line 124).
+
+**Evidence (all on 5219, current 033+035 working tree):**
+- `npx tsc --noEmit` — clean. `npm run build` — green (384ms).
+- `e2e/m5-04-offline-queue.spec.ts` — **10/10 PASS** desktop+mobile (incl. new hud-build overlap assert). Boot-probe folded in (every test asserts consoleErrors/pageErrors == []).
+- `e2e/lane-c-activations-assay-office.spec.ts` — **6/6 PASS** desktop+mobile — **F-033-1 test "build menu shows the five processed building portraits" now GREEN on mobile-chrome** (was 5/6).
+- Gate-rider: `git diff --stat src/game/Game.ts` EMPTY — office branch intact, no committed code reverted outside firewall.
+- Stat-convention check: example fixture `panTickMult` 1.12→-0.12 is a genuine FIX, not corruption — game treats panTickMult as a delta (Upgrades.ts `-0.3`; StatSheet `+= delta`; HarvestSystem smaller=faster), so negative=faster matches the "steadies faster pan work" blurb. Item-application still not wired (inert data), so no gameplay effect either way.
+
+**F-033-1: RESOLVED.**
+
+## Merge disposition (s58)
+Path-scoped commit (NO `-A`): `src/crafting/AssayBench.ts`, `src/game/buildables.ts`, `src/styles.css`, `e2e/m5-04-offline-queue.spec.ts`, and the intended crafting fixtures only — `approved/order_m5_example_prospector_…` (M), `pending/order_m5_example_prospector_…` (D, consumed), `approved/order_local_prospector_20260705t235401057z_…`, `rejected/order_local_prospector_20260705t235419215z_…`. EXCLUDED: all `pending/order_local_prospector_*` (test pollution posted by gate runs — pending should be empty; Robin sweeps with debris), `playwright.s58.config.ts` (scratch), art raws / specs/w1 / artifacts / .claude / debris.

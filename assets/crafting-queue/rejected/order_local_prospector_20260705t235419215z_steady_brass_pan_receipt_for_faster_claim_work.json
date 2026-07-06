@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "id": "order_local_prospector_20260705t235419215z_steady_brass_pan_receipt_for_faster_claim_work",
+  "request": {
+    "version": 1,
+    "id": "order_local_prospector_20260705t235419215z_steady_brass_pan_receipt_for_faster_claim_work",
+    "text": "steady brass pan receipt for faster claim work",
+    "profile": "local_prospector",
+    "timestamp": "2026-07-05T23:54:19.215Z"
+  },
+  "contractVerdict": {
+    "ok": false,
+    "reasons": [
+      {
+        "code": "stat_cap",
+        "message": "Proposed pan speed delta -0.38 exceeds the -0.35 faster-panning cap.",
+        "path": "stats.panTickMult"
+      },
+      {
+        "code": "power_budget",
+        "message": "Proposed Claim Rush Assay paper budget 3.34 exceeds the common budget 3.",
+        "path": "stats"
+      }
+    ],
+    "summary": "Near-limit proposal was intentionally rejected instead of rounded down."
+  },
+  "simVerdict": {
+    "ok": false,
+    "reasons": [
+      {
+        "code": "overperforming",
+        "message": "M5-03 dry sim exceeded the declared common budget for pan throughput.",
+        "path": "stats.panTickMult"
+      }
+    ]
+  },
+  "reasons": [
+    {
+      "code": "stat_cap",
+      "message": "Proposed pan speed delta -0.38 exceeds the -0.35 faster-panning cap.",
+      "path": "stats.panTickMult"
+    },
+    {
+      "code": "power_budget",
+      "message": "Proposed Claim Rush Assay paper budget 3.34 exceeds the common budget 3.",
+      "path": "stats"
+    },
+    {
+      "code": "overperforming",
+      "message": "M5-03 dry sim exceeded the declared common budget for pan throughput.",
+      "path": "stats.panTickMult"
+    }
+  ],
+  "rejectedAt": "2026-07-06T01:14:00.000Z"
+}

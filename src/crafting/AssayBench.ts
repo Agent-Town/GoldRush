@@ -33,6 +33,7 @@ export class AssayBenchPanel {
   private readonly pendingJson: HTMLElement;
   private readonly history: HTMLElement;
   private readonly rejections: HTMLElement;
+  private readonly closeButton: HTMLButtonElement;
 
   constructor(parent: HTMLElement, options: { profile?: string } = {}) {
     const profile = normalizeQueueProfile(options.profile ?? new URLSearchParams(window.location.search).get('profile'));
@@ -43,10 +44,18 @@ export class AssayBenchPanel {
     this.root.className = 'assay-bench';
     this.root.dataset.testid = 'assay-bench';
     this.root.setAttribute('aria-label', 'Assay Bench');
+    this.root.setAttribute('aria-hidden', 'false');
     this.root.innerHTML = `
+      <header class="assay-bench__header">
+        <div>
+          <strong>Assay Bench</strong>
+          <p class="assay-bench__hint" data-testid="assay-hint">Write what you need — the Assayer takes orders now, fills them between sessions.</p>
+        </div>
+        <button class="assay-bench__close" type="button" aria-label="Close Assay Bench" data-testid="assay-close">✕</button>
+      </header>
       <form class="assay-bench__form" data-testid="assay-form">
         <label>
-          <span>Assay Bench</span>
+          <span>Order</span>
           <textarea data-testid="assay-text" rows="3">steady brass pan receipt for faster claim work</textarea>
         </label>
         <label>
@@ -77,25 +86,52 @@ export class AssayBenchPanel {
     this.pendingJson = this.get('[data-testid="assay-pending-json"]');
     this.history = this.get('[data-testid="assay-log"]');
     this.rejections = this.get('[data-testid="assay-queue-rejections"]');
+    this.closeButton = this.get('[data-testid="assay-close"]');
 
     this.root.querySelector('[data-testid="assay-post"]')?.addEventListener('click', this.postOrder);
-    this.root.addEventListener('keydown', this.stopGameHotkeys);
+    this.closeButton.addEventListener('click', this.close);
+    this.root.addEventListener('keydown', this.onRootKeyDown);
     this.root.addEventListener('keyup', this.stopGameHotkeys);
+    document.addEventListener('keydown', this.onDocumentKeyDown);
     this.renderHistory();
     this.renderRejections();
     parent.append(this.root);
   }
 
   focus(): void {
+    this.root.hidden = false;
+    this.root.setAttribute('aria-hidden', 'false');
     this.text.focus();
   }
 
   dispose(): void {
     this.root.querySelector('[data-testid="assay-post"]')?.removeEventListener('click', this.postOrder);
-    this.root.removeEventListener('keydown', this.stopGameHotkeys);
+    this.closeButton.removeEventListener('click', this.close);
+    this.root.removeEventListener('keydown', this.onRootKeyDown);
     this.root.removeEventListener('keyup', this.stopGameHotkeys);
+    document.removeEventListener('keydown', this.onDocumentKeyDown);
     this.root.remove();
   }
+
+  private readonly close = () => {
+    this.root.hidden = true;
+    this.root.setAttribute('aria-hidden', 'true');
+  };
+
+  private readonly onRootKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.close();
+    }
+    event.stopPropagation();
+  };
+
+  private readonly onDocumentKeyDown = (event: KeyboardEvent) => {
+    if (event.key !== 'Escape' || this.root.hidden) return;
+    event.preventDefault();
+    this.close();
+    event.stopPropagation();
+  };
 
   private readonly stopGameHotkeys = (event: KeyboardEvent) => {
     event.stopPropagation();
@@ -117,7 +153,7 @@ export class AssayBenchPanel {
     this.history.replaceChildren(
       ...this.bench.acceptedLog.map((item) => {
         const row = document.createElement('li');
-        row.textContent = `${item.name} (${item.rarity})`;
+        row.textContent = `${item.name} (${item.rarity}) arrived — collection opens soon`;
         row.dataset.itemId = item.id;
         return row;
       }),

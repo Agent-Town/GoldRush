@@ -83,7 +83,7 @@ export const buildableDefs: readonly BuildableDef[] = [
   {
     id: 'assay_office',
     displayName: 'Assay Office',
-    blurb: 'River-side ledger house where claim notes become bench receipts.',
+    blurb: 'Write what you need; the Assayer fills orders between sessions.',
     costCurve: () => Balance.assayOffice.cost,
     footprint: { w: 2, d: 1.5 },
     hpMax: Balance.wreck.hp.assay_office,
