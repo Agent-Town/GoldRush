@@ -25,6 +25,7 @@ export class LightRig {
   private readonly blobShadows = new SpriteBlobShadows();
   private readonly post = new LedgerPostPass();
   private currentShadowMapSize = -1;
+  private stressFallback = false;
 
   constructor(private readonly scene: THREE.Scene, private readonly renderer: THREE.WebGLRenderer) {
     this.group.name = 'GoldenHourLightRig';
@@ -47,7 +48,7 @@ export class LightRig {
   }
 
   update(): void {
-    const quality = effectiveShadowQuality();
+    const quality = effectiveShadowQuality(this.stressFallback);
     const fogNear = Balance.world.fogNear;
     const fogFar = Math.max(fogNear + 8, Balance.world.fogFar);
     this.scene.background = this.background;
@@ -68,8 +69,12 @@ export class LightRig {
     this.post.render(renderer);
   }
 
+  setStressFallback(active: boolean): void {
+    this.stressFallback = active;
+  }
+
   diagnostics(): LightRigDiagnostics {
-    const quality = effectiveShadowQuality();
+    const quality = effectiveShadowQuality(this.stressFallback);
     const shadowTargetSize = this.sun.shadow.map?.width ?? 0;
     return {
       sunPresent: this.sun.visible && this.sun.intensity > 0,
@@ -285,8 +290,8 @@ void main() {
   }
 }
 
-function effectiveShadowQuality(): ShadowsQuality {
-  return isMobileTier() || String(Balance.world.shadowsQuality) === 'blob' ? 'blob' : 'soft';
+function effectiveShadowQuality(forceBlob = false): ShadowsQuality {
+  return forceBlob || isMobileTier() || String(Balance.world.shadowsQuality) === 'blob' ? 'blob' : 'soft';
 }
 
 function isMobileTier(): boolean {

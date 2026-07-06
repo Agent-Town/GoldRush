@@ -77,6 +77,7 @@ import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { LightRig } from '../world/LightRig';
+import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
 import { applyUpgradeBudgetsFromBalance, resolveFiller } from './Upgrades';
@@ -194,6 +195,7 @@ export class Game {
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
   private lightRig?: LightRig;
+  private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly waveSystem = new WaveSystem(
     this.enemies,
@@ -582,6 +584,7 @@ export class Game {
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.buildSystem.dispose();
+    this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
     this.combat.dispose();
@@ -707,7 +710,12 @@ export class Game {
     this.prospector.update(delta, this.timeAlive);
     this.vfx.update(delta);
     this.syncHeroVisualHeight();
+    const visualStress =
+      this.enemies.activeCount >= Balance.world.detailStressEnemyThreshold ||
+      this.waveSystem.diagnostics.wave >= Balance.world.detailStressWaveThreshold;
+    this.detailScatter?.syncBuildingClearings(this.detailClearings());
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
+    this.lightRig?.setStressFallback(visualStress);
     this.lightRig?.update();
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
@@ -786,6 +794,8 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    this.detailScatter = new DetailScatter();
+    this.scene.add(this.detailScatter.group);
     this.scene.add(this.harvestSystem.group);
     this.scene.add(this.buildSystem.group);
     this.scene.add(this.projectiles.group);
@@ -904,6 +914,7 @@ export class Game {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
         water: this.terrainView?.diagnostics(),
         vista: Terrain.vistaDiagnostics(),
+        detailScatter: this.detailScatter?.diagnostics(),
         height: {
           ...Terrain.heightDiagnostics(),
           heroGround: Terrain.sampleHeight(this.hero.group.position.x, this.hero.group.position.z),
@@ -950,6 +961,18 @@ export class Game {
     const sorted = [...this.frameMsSamples].sort((a, b) => a - b);
     const p95Index = Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95));
     this.frameMsP95 = sorted[p95Index] ?? 0;
+  }
+
+  private detailClearings(): DetailScatterClearPoint[] {
+    const diagnostics = this.buildSystem.diagnostics;
+    return [
+      ...diagnostics.beaconPositions,
+      ...diagnostics.palisadePositions,
+      ...diagnostics.sluicePositions,
+      ...diagnostics.stockpilePositions,
+      ...diagnostics.turretPositions,
+      ...diagnostics.assayOfficePositions,
+    ].map((position) => ({ x: position.x, z: position.z, radius: Balance.world.detailBuildingClearRadius }));
   }
 
   private recordProfileSample(): void {
