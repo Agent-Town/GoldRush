@@ -25,6 +25,7 @@ const AUDIO_SETTINGS_IDS = {
 type StartMenuOptions = {
   onNewClaim: () => void;
   onContinue: () => void;
+  onEnterTown: () => void;
   onProfile: () => void;
 };
 
@@ -74,6 +75,7 @@ export class StartMenu {
               : ''
           }
           <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="new" data-testid="start-menu-new-claim">New Claim</button>
+          <button class="gr-start-menu__button" type="button" data-menu-action="town" data-testid="start-menu-enter-town">Enter Town</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="profile" data-testid="start-menu-profile">Profile</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="research" data-testid="start-menu-research">Research</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
@@ -115,6 +117,7 @@ export class StartMenu {
     this.audio.play(action === 'research' ? 'ledger-open' : 'menu-tap');
     if (action === 'new') this.options.onNewClaim();
     if (action === 'continue') this.options.onContinue();
+    if (action === 'town') this.options.onEnterTown();
     if (action === 'profile') this.options.onProfile();
     if (action === 'settings') this.toggleSettings();
     if (action === 'research') this.toggleResearch(true);

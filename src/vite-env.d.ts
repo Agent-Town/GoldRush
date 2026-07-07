@@ -550,6 +550,7 @@ type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnost
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
+  __GR_TOWN_DIAGNOSTICS__?: import('./town/TownScene').TownDiagnostics;
   __BENCH_REPORT__?: unknown;
   __GR_GUI__?: GoldRushGui;
   __GR_PROFILE__?: {

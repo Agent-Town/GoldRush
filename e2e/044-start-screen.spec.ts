@@ -45,6 +45,7 @@ test('plain boot shows the Storybook start menu without Continue', async ({ page
   await expect(page.getByText('an Agent Town tale')).toBeVisible();
   await expect(page.getByTestId('start-menu-continue')).toHaveCount(0);
   await expect(page.getByTestId('start-menu-new-claim')).toBeFocused();
+  await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
 
   await shot(page, testInfo, 'menu');
   await page.getByTestId('start-menu-emblem').screenshot({
@@ -79,6 +80,8 @@ test('Profile opens the existing selector with arrow and Enter', async ({ page }
   const errors = collectErrors(page);
   await page.goto('/');
 
+  await page.keyboard.press('ArrowDown');
+  await expect(page.getByTestId('start-menu-enter-town')).toBeFocused();
   await page.keyboard.press('ArrowDown');
   await expect(page.getByTestId('start-menu-profile')).toBeFocused();
   await page.keyboard.press('Enter');

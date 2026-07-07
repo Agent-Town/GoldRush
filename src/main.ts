@@ -6,6 +6,7 @@ import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import { install as installProfiles } from './game/ProfileManager';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
+import { TownScene } from './town/TownScene';
 import { install as installStartMenu, type StartMenu } from './ui/menu/StartMenu';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
@@ -35,6 +36,7 @@ let game: Game | undefined;
 let assayBench: ReturnType<typeof installAssayBench> | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
+let town: TownScene | undefined;
 
 function startGame(returnToMenu: boolean): void {
   applyStoredDifficultyPreset();
@@ -67,6 +69,12 @@ function showStartMenu(): void {
       startMenu = undefined;
       startWithProfiles({ skipTitle: true, returnToMenu: true });
     },
+    onEnterTown: () => {
+      startMenu?.dispose();
+      startMenu = undefined;
+      town = new TownScene(gameCanvas, returnToStartMenu);
+      town.start();
+    },
     onProfile: () => {
       startMenu?.dispose();
       startMenu = undefined;
@@ -76,6 +84,8 @@ function showStartMenu(): void {
 }
 
 function returnToStartMenu(): void {
+  town?.dispose();
+  town = undefined;
   game?.dispose();
   game = undefined;
   assayBench?.dispose();
@@ -98,6 +108,7 @@ if (import.meta.hot) {
     startMenu?.dispose();
     profiles?.dispose();
     assayBench?.dispose();
+    town?.dispose();
     game?.dispose();
   });
 }
