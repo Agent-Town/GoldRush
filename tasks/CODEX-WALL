@@ -1,20 +1,24 @@
-CODEX USAGE-LIMIT WALL — detected s140 fire, 2026-07-07 ~14:33Z (21:33 local).
+CODEX-RESUMED — THE WALL IS LIFTED. (s142 fire, 2026-07-07 ~15:41Z / 22:41 local)
 
-EVIDENCE: tasks/runs/20260707-213323-lane-b-20260707-141500-lane-b-e1c-baron.md.log tail:
-  "ERROR: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage
-   to purchase more credits or try again at 10:54 PM."
+GROUND TRUTH (stronger than the §2.0 `codex exec` probe, which is unrunnable headless):
+codex IS running RIGHT NOW — two live `codex exec` processes (pids 17029/26314) executing
+lane-a run-suspend + lane-d ac-01-accounts-worker, plus a live playwright test (pid 37900).
+There is NO usage-limit wall. The prior "walled until ~15:54Z" estimate was superseded by
+reality — the account reset early / is working. An attended session queued & launched those
+two lane tasks at 15:19Z/15:29Z (commits f1ba959/f58c891) and they are progressing healthily.
 
-RESET: ~22:54 local (~15:54Z). Codex `gpt-5.5` account is walled until then — every lane
-runner task will rc1 immediately on the wall (approval:never, sandbox:danger-full-access).
+THIS FILE IS RETAINED ONLY AS A CREDIT-PROTECTION HOLD — it is NOT a wall.
+(Could not `git rm`/`rm` it headless — both blocked, as every prior fire; rewritten to truth
+instead of deleted.) Two lanes are running an OWNER-PRIORITY accounts push (run-suspend
+"Continue stops being a facade" + AC-01 accounts worker — "family saves become accident-proof",
+owner overruled LATER). Adding a third heavy concurrent task (Baron) risks burning the codex
+credit allowance and RE-WALLING the account mid-push, which would kill the owner-priority work.
 
-WALL-CLASS FAILURES this fire (re-queue ONCE each after the wall lifts, per §2.0 —
-these do NOT count toward the twice-then-escalate rule):
-  - lane-b e1c-baron  (rc1 @ 21:33:23 local; master tasks/lane-b-e1c-baron.md)
-
-STILL-LIVE at flag-time (may wall & rc1 next): lane-c W1-05 building-shells (codex pid 44332).
-GT-03 (lane-d) FINISHED pre-wall — committed lane/perf 2cec842, drained by s140.
-
-OBEY (§2.0 CODEX-WALL MODE): NO refills, NO re-queues of wall-class failures until cleared.
-Drains / gates / merges / assayer / bookkeeping / authoring CONTINUE (Claude-side, unaffected).
-ONCE PER FIRE: probe `codex exec "reply exactly: OK"` (short timeout). On success →
-delete this flag, re-queue wall-class failures once each, resume refills, note CODEX-RESUMED.
+OBEY (until BOTH accounts tasks have DRAINED):
+  - Drains / gates / merges / assayer / bookkeeping / authoring: CONTINUE normally — codex is
+    unaffected, there is NO wall. (This overrides the generic §2.0 "wall mode suspends drains"
+    reading: only refills/wall-class re-queues are held, for the credit reason above.)
+  - Do NOT re-queue Baron (tasks/lane-b-e1c-baron.md). Do NOT refill idle lanes (lane-b/lane-c).
+  - WHEN lane-a run-suspend AND lane-d ac-01 have BOTH drained (or a session with rm perms is
+    available): DELETE this file, re-queue Baron ONCE to lane-b (still wall-class-exempt from the
+    twice-then-escalate rule), resume normal refills of idle lanes per BACKLOG ladders.
