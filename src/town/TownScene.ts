@@ -10,6 +10,7 @@ import { palette } from '../assets/palette';
 import { Balance } from '../game/Balance';
 import { disposeObject3D } from '../utils/dispose';
 import { townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
+import { readTownName, saveTownName, validateTownName } from './TownNaming';
 
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
@@ -21,6 +22,8 @@ export type TownDiagnostics = {
   elapsed: number;
   player: { x: number; z: number };
   activePrompt: TownBuildingId | null;
+  townName: string | null;
+  namingPrompt: boolean;
   renderer: { calls: number; geometries: number; textures: number };
   canvas: { width: number; height: number; dpr: number };
 };
@@ -29,6 +32,8 @@ type HiddenButtonState = {
   element: HTMLElement;
   hidden: HTMLElement['hidden'];
 };
+
+type TownNameMode = 'founding' | 'rename';
 
 export class TownScene {
   private readonly renderer: THREE.WebGLRenderer;
@@ -40,10 +45,21 @@ export class TownScene {
   private readonly loop = new Loop((delta) => this.update(delta), () => this.render());
   private readonly ui = document.createElement('section');
   private readonly prompt = document.createElement('div');
+  private readonly nameCard = document.createElement('form');
   private readonly hiddenButtons: HiddenButtonState[];
+  private townTitle?: HTMLElement;
+  private townSubtitle?: HTMLElement;
+  private nameInput?: HTMLInputElement;
+  private nameMessage?: HTMLElement;
+  private nameBeat?: HTMLElement;
   private frame = 0;
   private elapsed = 0;
   private activePrompt: TownBuilding | null = null;
+  private promptKey = '';
+  private townName = readTownName();
+  private nameMode: TownNameMode = 'founding';
+  private nameCardOpen = false;
+  private nameBeatTimer = 0;
   private lastExitIntent = false;
 
   constructor(
@@ -69,6 +85,10 @@ export class TownScene {
     this.loop.stop();
     this.input.dispose();
     for (const state of this.hiddenButtons) state.element.hidden = state.hidden;
+    window.clearTimeout(this.nameBeatTimer);
+    this.prompt.removeEventListener('click', this.onPromptClick);
+    this.nameCard.removeEventListener('submit', this.onNameSubmit);
+    this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.ui.remove();
     this.hero.dispose();
     disposeObject3D(this.scene);
@@ -82,12 +102,13 @@ export class TownScene {
     this.elapsed += delta;
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     const intents = this.input.readIntents();
-    const exitIntent = intents.cancel || intents.pause;
+    const rawExitIntent = intents.cancel || intents.pause;
+    const exitIntent = !this.nameCardOpen && rawExitIntent;
     if (exitIntent && !this.lastExitIntent) {
       this.onExit();
       return;
     }
-    this.lastExitIntent = exitIntent;
+    this.lastExitIntent = rawExitIntent;
 
     this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: townSample });
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
@@ -141,26 +162,100 @@ export class TownScene {
     this.ui.innerHTML = `
       <div class="town-ui__bar">
         <div class="town-ui__title">
-          <strong>Town Square</strong>
-          <span>Four doors stand ready.</span>
+          <strong data-testid="town-name">Town Square</strong>
+          <span data-testid="town-subtitle">Four doors stand ready.</span>
         </div>
         <button class="town-ui__exit" type="button" data-testid="town-exit">Exit</button>
       </div>
       <div class="town-ui__prompt-stack" data-testid="town-prompt-stack"></div>
     `;
+    this.townTitle = this.ui.querySelector<HTMLElement>('[data-testid="town-name"]') ?? undefined;
+    this.townSubtitle = this.ui.querySelector<HTMLElement>('[data-testid="town-subtitle"]') ?? undefined;
     this.prompt.className = 'town-ui__prompt';
     this.prompt.dataset.testid = 'town-approach-prompt';
     this.prompt.setAttribute('role', 'status');
     this.prompt.setAttribute('aria-live', 'polite');
     this.prompt.hidden = true;
+    this.nameCard.className = 'town-ui__name-card';
+    this.nameCard.dataset.testid = 'town-name-card';
+    this.nameCard.hidden = true;
+    this.nameCard.innerHTML = `
+      <div class="town-ui__name-panel">
+        <p class="town-ui__name-eyebrow">Founding Ledger</p>
+        <h2>What will you call this place?</h2>
+        <input class="town-ui__name-input" data-testid="town-name-input" name="townName" maxlength="18" autocomplete="off" inputmode="text" />
+        <p class="town-ui__name-rule">2-18 letters, numbers, spaces, apostrophes, or hyphens.</p>
+        <p class="town-ui__name-error" data-testid="town-name-error" aria-live="polite"></p>
+        <p class="town-ui__name-beat" data-testid="town-name-beat" hidden></p>
+        <button class="town-ui__name-submit" type="submit" data-testid="town-name-submit">Confirm</button>
+      </div>
+    `;
+    this.nameInput = this.nameCard.querySelector<HTMLInputElement>('[data-testid="town-name-input"]') ?? undefined;
+    this.nameMessage = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-error"]') ?? undefined;
+    this.nameBeat = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-beat"]') ?? undefined;
+    this.nameInput?.addEventListener('keydown', stopKeyPropagation);
     this.ui.querySelector('[data-testid="town-prompt-stack"]')?.append(this.prompt);
+    this.ui.append(this.nameCard);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
+    this.prompt.addEventListener('click', this.onPromptClick);
+    this.nameCard.addEventListener('submit', this.onNameSubmit);
     this.getElement('#app').append(this.ui);
+    this.syncTownTitle();
+    if (!this.townName) this.openNameCard('founding');
   }
 
   private readonly onExitClick = () => {
     this.onExit();
   };
+
+  private readonly onPromptClick = (event: Event) => {
+    if ((event.target as HTMLElement | null)?.closest('[data-town-rename]')) this.openNameCard('rename');
+  };
+
+  private readonly onNameSubmit = (event: Event) => {
+    event.preventDefault();
+    if (!this.nameInput || !this.nameMessage || !this.nameBeat) return;
+
+    const result = validateTownName(this.nameInput.value);
+    if (!result.ok) {
+      this.nameMessage.textContent = result.message;
+      this.nameBeat.hidden = true;
+      return;
+    }
+
+    this.townName = saveTownName(result.value) ?? result.value;
+    this.syncTownTitle();
+    this.nameMessage.textContent = '';
+    this.nameInput.disabled = true;
+    this.nameBeat.textContent = `${this.nameMode === 'founding' ? 'Founded' : 'Renamed'}: ${this.townName}, 2026`;
+    this.nameBeat.hidden = false;
+    window.clearTimeout(this.nameBeatTimer);
+    this.nameBeatTimer = window.setTimeout(() => this.closeNameCard(), 900);
+  };
+
+  private openNameCard(mode: TownNameMode): void {
+    if (!this.nameInput || !this.nameMessage || !this.nameBeat) return;
+    this.nameMode = mode;
+    this.nameCardOpen = true;
+    this.nameCard.hidden = false;
+    this.nameInput.disabled = false;
+    this.nameInput.value = mode === 'rename' ? (this.townName ?? '') : '';
+    this.nameMessage.textContent = '';
+    this.nameBeat.hidden = true;
+  }
+
+  private closeNameCard(): void {
+    if (!this.nameInput) return;
+    this.nameInput.disabled = false;
+    this.nameCard.hidden = true;
+    this.nameCardOpen = false;
+    this.syncPrompt();
+  }
+
+  private syncTownTitle(): void {
+    if (this.townTitle) this.townTitle.textContent = this.townName ?? 'Town Square';
+    if (this.townSubtitle) this.townSubtitle.textContent = this.townName ? 'Town Square' : 'Four doors stand ready.';
+  }
 
   private syncPrompt(): void {
     const position = this.hero.group.position;
@@ -177,7 +272,22 @@ export class TownScene {
     }
     this.activePrompt = nearest;
     this.prompt.hidden = nearest === null;
-    if (nearest) this.prompt.textContent = `${nearest.name} ... opens soon`;
+    if (!nearest) {
+      this.promptKey = '';
+      this.prompt.textContent = '';
+      return;
+    }
+    const promptKey = `${nearest.id}:${this.townName ?? ''}`;
+    if (promptKey === this.promptKey) return;
+    this.promptKey = promptKey;
+    if (nearest.id === 'claim_office' && this.townName) {
+      this.prompt.innerHTML = `
+        <span>${nearest.name} ... opens soon</span>
+        <button class="town-ui__prompt-button" type="button" data-town-rename data-testid="town-rename">Rename</button>
+      `;
+    } else {
+      this.prompt.textContent = `${nearest.name} ... opens soon`;
+    }
   }
 
   private publishDiagnostics(): void {
@@ -190,6 +300,8 @@ export class TownScene {
         z: round2(this.hero.group.position.z),
       },
       activePrompt: this.activePrompt?.id ?? null,
+      townName: this.townName,
+      namingPrompt: this.nameCardOpen,
       renderer: {
         calls: this.renderer.info.render.calls,
         geometries: this.renderer.info.memory.geometries,
@@ -219,6 +331,10 @@ export class TownScene {
     if (!element) throw new Error(`Missing ${selector}`);
     return element;
   }
+}
+
+function stopKeyPropagation(event: KeyboardEvent): void {
+  event.stopPropagation();
 }
 
 function townSample(x: number, z: number) {
