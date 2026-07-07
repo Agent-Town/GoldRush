@@ -29,6 +29,9 @@ Build: main @ post-s101 era (041 overwatch, SCI-01/02/04, w1-03 light rerun, w1-
 - **F-0707-10 Prompt overlap**: tier prompt + demolish prompt stack/collide → ONE building context bar (both actions, fixed slots) + a global prompt-stack layout law. Same task 043.
 - BT-00 demolish + BT-02 tiers confirmed LIVE in owner's build (he tiered a sluice to 2, saw T3 pricing at 320g, used tear-down) — the homestead loop is being played hours after ratification.
 
+## Thirteenth wave (~23:02, screenshot) — WAVE 46, NEW BEST + THE PROSPECTOR'S FIRST CREDITED WORK
+"My best run ever — lots and lots of repairing and Q + Q + Q + Q spam." 23:26 held, 2,453 turned back, 46 waves (41→46). THE LEDGER'S NEW LINE DEBUTS IN PLAY: "Stolen 50 / you 0 / **the Prospector 26**" — M4-08 attribution + the integrity wiring live: the agent RECLAIMED 26 GOLD, its first credited contribution in the game's history. 254 repairs (79→254; mend 3), blast 1.13M vs spark 291k (blast = 80% of damage), toggles 1,991 (616→1,375→1,991 across three runs — the Q-spam pattern is now a trend the owner names EVERY run despite self-parking it). OPEN ONE-WORDERS RE-SURFACED: (1) autonomy trickle (254 manual repairs beside a working deputy = the evidence); (2) Q-ergonomics: parked-but-recurring — promote on owner word only.
+
 ## Twelfth wave (~17:55, screenshot) — WAVE 41: 047 CONFIRMED IN PLAY + the ceiling reached honestly
 Owner's longest honest run: **wave 41, 20:40, 2,277 turned back.** His words: "I repaired the level 3 walls to keep the bandits out while Q + Q spamming grenades… all upgradeable buildings upgraded… with the new upgradeable towers, I stayed with the base this time."
 - **047 valves CONFIRMED by play** (probe said fundable; owner proved it): sluiced 8,604 (3.6× the wave-35 run), T3 walls/towers/sluices all reached and USED, damage rung 15 taken, spent 8,652/earned ~8,994. Wall progression across ONE DAY: 32 → 35 → 41, each wall felled by a system shipped the same day.
