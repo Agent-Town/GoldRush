@@ -8,10 +8,15 @@ import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
 import { Balance } from '../game/Balance';
+import { loadMetaProgress } from '../game/MetaProgress';
+import { loadScores, type ScoreRecord } from '../game/Scoreboard';
+import { DEFAULT_CONTRACT_ID, listContracts, type ContractManifest } from '../meta/ContractFamilies';
+import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
 import { disposeObject3D } from '../utils/dispose';
 import { townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 
+const tavernBackdropUrl = new URL('../../assets/processed/tavern-interior-backdrop.png', import.meta.url).href;
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 0);
@@ -24,8 +29,14 @@ export type TownDiagnostics = {
   activePrompt: TownBuildingId | null;
   townName: string | null;
   namingPrompt: boolean;
+  boardOpen: boolean;
   renderer: { calls: number; geometries: number; textures: number };
   canvas: { width: number; height: number; dpr: number };
+};
+
+type TownSceneOptions = {
+  openBoard?: boolean;
+  onLaunchContract?: (id: string) => void;
 };
 
 type HiddenButtonState = {
@@ -46,6 +57,7 @@ export class TownScene {
   private readonly ui = document.createElement('section');
   private readonly prompt = document.createElement('div');
   private readonly nameCard = document.createElement('form');
+  private readonly board = document.createElement('section');
   private readonly hiddenButtons: HiddenButtonState[];
   private townTitle?: HTMLElement;
   private townSubtitle?: HTMLElement;
@@ -59,12 +71,14 @@ export class TownScene {
   private townName = readTownName();
   private nameMode: TownNameMode = 'founding';
   private nameCardOpen = false;
+  private boardOpen = false;
   private nameBeatTimer = 0;
   private lastExitIntent = false;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly onExit: () => void,
+    private readonly options: TownSceneOptions = {},
   ) {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = 1.02;
@@ -87,6 +101,7 @@ export class TownScene {
     for (const state of this.hiddenButtons) state.element.hidden = state.hidden;
     window.clearTimeout(this.nameBeatTimer);
     this.prompt.removeEventListener('click', this.onPromptClick);
+    this.board.removeEventListener('click', this.onBoardClick);
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.ui.remove();
@@ -103,6 +118,13 @@ export class TownScene {
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
+    if (this.boardOpen) {
+      if (rawExitIntent && !this.lastExitIntent) this.closeBoard();
+      this.lastExitIntent = rawExitIntent;
+      this.syncPrompt();
+      this.publishDiagnostics();
+      return;
+    }
     const exitIntent = !this.nameCardOpen && rawExitIntent;
     if (exitIntent && !this.lastExitIntent) {
       this.onExit();
@@ -176,6 +198,10 @@ export class TownScene {
     this.prompt.setAttribute('role', 'status');
     this.prompt.setAttribute('aria-live', 'polite');
     this.prompt.hidden = true;
+    this.board.className = 'town-ui__board';
+    this.board.dataset.testid = 'contract-board';
+    this.board.setAttribute('aria-label', 'Tavern contract board');
+    this.board.hidden = true;
     this.nameCard.className = 'town-ui__name-card';
     this.nameCard.dataset.testid = 'town-name-card';
     this.nameCard.hidden = true;
@@ -198,10 +224,13 @@ export class TownScene {
     this.ui.append(this.nameCard);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
+    this.board.addEventListener('click', this.onBoardClick);
     this.nameCard.addEventListener('submit', this.onNameSubmit);
+    this.ui.append(this.board);
     this.getElement('#app').append(this.ui);
     this.syncTownTitle();
     if (!this.townName) this.openNameCard('founding');
+    if (this.options.openBoard) this.openBoard();
   }
 
   private readonly onExitClick = () => {
@@ -209,7 +238,20 @@ export class TownScene {
   };
 
   private readonly onPromptClick = (event: Event) => {
-    if ((event.target as HTMLElement | null)?.closest('[data-town-rename]')) this.openNameCard('rename');
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('[data-town-board]')) this.openBoard();
+    if (target?.closest('[data-town-rename]')) this.openNameCard('rename');
+  };
+
+  private readonly onBoardClick = (event: Event) => {
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('[data-contract-close]')) {
+      this.closeBoard();
+      return;
+    }
+    const launch = target?.closest<HTMLButtonElement>('[data-contract-launch]');
+    const id = launch?.dataset.contractLaunch;
+    if (id && !launch.disabled) this.options.onLaunchContract?.(id);
   };
 
   private readonly onNameSubmit = (event: Event) => {
@@ -285,9 +327,72 @@ export class TownScene {
         <span>${nearest.name} ... opens soon</span>
         <button class="town-ui__prompt-button" type="button" data-town-rename data-testid="town-rename">Rename</button>
       `;
+    } else if (nearest.id === 'tavern') {
+      this.prompt.innerHTML = `
+        <span>${nearest.name} ... opens soon</span>
+        <button class="town-ui__prompt-button" type="button" data-town-board data-testid="town-open-board">Board</button>
+      `;
     } else {
       this.prompt.textContent = `${nearest.name} ... opens soon`;
     }
+  }
+
+  private openBoard(): void {
+    this.renderBoard();
+    this.boardOpen = true;
+    this.board.hidden = false;
+    this.board.querySelector<HTMLButtonElement>('[data-contract-launch]:not(:disabled), [data-contract-close]')?.focus({ preventScroll: true });
+    this.publishDiagnostics();
+  }
+
+  private closeBoard(): void {
+    this.board.hidden = true;
+    this.boardOpen = false;
+    this.publishDiagnostics();
+  }
+
+  private renderBoard(): void {
+    const rows = listContracts();
+    const scores = loadScores();
+    this.board.innerHTML = `
+      <div class="town-ui__board-backdrop" style="background-image:url('${tavernBackdropUrl}')" aria-hidden="true"></div>
+      <div class="town-ui__board-shell">
+        <header class="town-ui__board-header">
+          <div>
+            <p class="town-ui__board-eyebrow">Tavern Ledger</p>
+            <h2>Contract Board</h2>
+          </div>
+          <button class="town-ui__board-close" type="button" data-contract-close data-testid="contract-board-close">Back</button>
+        </header>
+        <div class="town-ui__contracts" data-testid="contract-card-list">
+          ${rows.map((contract) => this.renderContractCard(contract, scores)).join('')}
+        </div>
+      </div>
+    `;
+  }
+
+  private renderContractCard(contract: ContractManifest, scores: readonly ScoreRecord[]): string {
+    const unlock = contractUnlock(contract);
+    const best = bestContractScore(contract.id, scores);
+    const tags = contract.boardRow.tags.length > 0 ? contract.boardRow.tags : ['trail'];
+    return `
+      <article class="town-ui__contract ${unlock.unlocked ? '' : 'town-ui__contract--locked'}" data-testid="contract-card-${escapeHtml(
+        contract.id,
+      )}" data-contract-id="${escapeHtml(contract.id)}" data-contract-locked="${unlock.unlocked ? 'false' : 'true'}">
+        <div class="town-ui__contract-topline">
+          <span class="town-ui__contract-tag">${escapeHtml(formatTag(tags[0] ?? 'trail'))}</span>
+          <span class="town-ui__contract-state">${unlock.unlocked ? 'Open' : 'Locked'}</span>
+        </div>
+        <h3>${escapeHtml(contract.boardRow.name)}</h3>
+        <p>${escapeHtml(contract.boardRow.ledgerBlurb)}</p>
+        <p class="town-ui__contract-best" data-testid="contract-best-${escapeHtml(contract.id)}">${escapeHtml(formatBest(best))}</p>
+        <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
+          contract.id,
+        )}" ${unlock.unlocked ? '' : 'disabled'}>
+          ${escapeHtml(unlock.unlocked ? 'Launch' : unlock.condition)}
+        </button>
+      </article>
+    `;
   }
 
   private publishDiagnostics(): void {
@@ -302,6 +407,7 @@ export class TownScene {
       activePrompt: this.activePrompt?.id ?? null,
       townName: this.townName,
       namingPrompt: this.nameCardOpen,
+      boardOpen: this.boardOpen,
       renderer: {
         calls: this.renderer.info.render.calls,
         geometries: this.renderer.info.memory.geometries,
@@ -335,6 +441,71 @@ export class TownScene {
 
 function stopKeyPropagation(event: KeyboardEvent): void {
   event.stopPropagation();
+}
+
+function contractUnlock(contract: ContractManifest): { unlocked: boolean; condition: string } {
+  const unlock = contract.boardRow.unlock;
+  if (unlock === 'default') return { unlocked: true, condition: '' };
+
+  const scores = loadScores();
+  if (unlock === 'wave10OnClaim') {
+    return {
+      unlocked: scores.some((score) => contractIdOf(score) === DEFAULT_CONTRACT_ID && score.waves >= 10),
+      condition: 'Reach wave 10 on The Claim',
+    };
+  }
+  if (unlock === 'firstSecuredClaim') {
+    return { unlocked: scores.some((score) => score.secured === true), condition: 'Secure a claim first' };
+  }
+  if (unlock === 'science-complete') {
+    return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
+  }
+  if (unlock.startsWith('science')) {
+    const required = Number.parseInt(unlock.match(/\d+/)?.[0] ?? '0', 10);
+    const storage = browserStorage();
+    const science = storage ? loadMetaProgress(storage).tracks.science : 0;
+    return { unlocked: science >= required, condition: `Bank ${required} science first` };
+  }
+  return { unlocked: false, condition: 'Progress farther first' };
+}
+
+function bestContractScore(id: string, scores: readonly ScoreRecord[]): ScoreRecord | null {
+  return scores.find((score) => contractIdOf(score) === id) ?? null;
+}
+
+function contractIdOf(score: ScoreRecord): string {
+  return score.contractId?.trim() || DEFAULT_CONTRACT_ID;
+}
+
+function formatBest(score: ScoreRecord | null): string {
+  if (!score) return 'No result yet';
+  return `${score.secured ? 'Secured' : 'Overrun'} - wave ${score.waves} - ${score.gold} gold`;
+}
+
+function formatTag(tag: string): string {
+  return tag
+    .split('-')
+    .filter(Boolean)
+    .map((part) => part[0]?.toUpperCase() + part.slice(1))
+    .join('-');
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (char) => {
+    if (char === '&') return '&amp;';
+    if (char === '<') return '&lt;';
+    if (char === '>') return '&gt;';
+    if (char === '"') return '&quot;';
+    return '&#39;';
+  });
+}
+
+function browserStorage(): Storage | undefined {
+  try {
+    return globalThis.localStorage ?? undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 function townSample(x: number, z: number) {

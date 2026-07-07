@@ -515,9 +515,11 @@ export class Game {
         secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= this.secureWaveForRun(),
         baseValue: Math.round(economySummary.baseValue),
         weaponSplit: this.weaponSplit(runStats),
+        contractId: this.activeContract.id,
       });
       this.deathOverlay.show(this.deathLedger, scores, scoreAt, {
         ...this.researchOverlayOptions(1),
+        actionLabel: this.onReturnToMenu ? 'Contract Board' : undefined,
         runStats,
         agentAutonomyDelta: this.agentAutonomyDelta(this.runManager?.diagnostics.secured === true),
         townName: readTownName(),
@@ -539,6 +541,7 @@ export class Game {
         secured: true,
         baseValue: Math.round(economySummary.baseValue),
         weaponSplit: this.weaponSplit(runStats),
+        contractId: this.activeContract.id,
       });
       const ledger: DeathLedger = {
         timeAlive: event.at,
@@ -556,7 +559,7 @@ export class Game {
         this.deathOverlay.show(ledger, scores, scoreAt, {
           ...this.researchOverlayOptions(2),
           outcome: 'secured',
-          actionLabel: 'Enter New Claim',
+          actionLabel: this.onReturnToMenu ? 'Contract Board' : 'Enter New Claim',
           runStats,
           agentAutonomyDelta,
           townName: readTownName(),
