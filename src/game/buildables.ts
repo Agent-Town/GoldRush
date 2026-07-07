@@ -1,6 +1,13 @@
 import { Balance } from './Balance';
 
-export type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office';
+export type BuildableId =
+  | 'sentry_beacon'
+  | 'palisade'
+  | 'sluice'
+  | 'stockpile'
+  | 'turret'
+  | 'assay_office'
+  | 'lantern_post';
 export type BuildPlacement = 'bank' | 'river-adjacent' | 'any';
 
 export type BuildableDef = {
@@ -79,6 +86,18 @@ export const buildableDefs: readonly BuildableDef[] = [
     maxCount: Balance.turret.maxCount,
     iconSlot: 'ui.build.icon.turret',
     portraitSlug: 'signal-turret',
+  },
+  {
+    id: 'lantern_post',
+    displayName: 'Lantern Post',
+    blurb: 'A cheap light-only post for holding the Night Shift.',
+    costCurve: () => Balance.lanternPost.cost,
+    footprint: { w: 0.8, d: 0.8 },
+    hpMax: Balance.wreck.hp.lantern_post,
+    placement: 'bank',
+    slotFamily: 'building.lantern_post',
+    maxCount: Balance.lanternPost.maxCount,
+    iconSlot: 'ui.build.icon.lantern_post',
   },
   {
     id: 'assay_office',

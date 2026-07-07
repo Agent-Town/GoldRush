@@ -50,6 +50,36 @@
         "tags": ["trail"],
         "unlock": "wave10OnClaim"
       }
+    },
+    {
+      "id": "e1-night-shift",
+      "name": "Night Shift",
+      "tileParams": {
+        "tileId": "frontier-river-claim",
+        "biome": "river-claim",
+        "river": true,
+        "ford": true,
+        "waterSources": [],
+        "lanes": {
+          "spawnEdges": ["north", "south", "east", "west"],
+          "territoryRingBiasWaves": 3,
+          "territoryRingLaneBias": 0.75
+        }
+      },
+      "twist": {
+        "secureWave": 25,
+        "lightRamp": {
+          "duskWave": 5,
+          "darkWave": 10,
+          "dawnWave": 25
+        }
+      },
+      "boardRow": {
+        "name": "Night Shift",
+        "ledgerBlurb": "Hold the claim through lantern-dark waves until the dawn assay is sealed.",
+        "tags": ["vein-hunter"],
+        "unlock": "science≥3"
+      }
     }
   ]
 }

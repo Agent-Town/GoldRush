@@ -79,7 +79,7 @@ import { BlastChargePool } from '../entities/BlastCharge';
 import { GoldPickupPool } from '../entities/GoldPickup';
 import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
-import { EnemyPool } from '../entities/pools';
+import { EnemyPool, type EnemyLightSource } from '../entities/pools';
 import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
 import { normalizeQueueProfile } from '../crafting/CraftingQueueContract';
 import {
@@ -126,7 +126,7 @@ import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { simHeightDiagnostics, terrainSimSample } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
-import { LightRig } from '../world/LightRig';
+import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
@@ -434,6 +434,7 @@ export class Game {
       () => this.debugBeaconWaveOverride ?? this.waveSystem.diagnostics.wave,
       (position, text, color) => this.vfx.floatText(position, text, color),
       (sound) => this.audio.play(sound),
+      (id) => this.isBuildableEnabled(id),
     );
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
@@ -510,7 +511,7 @@ export class Game {
         gold: event.goldPanned,
         timeAlive: event.timeAlive,
         at: scoreAt,
-        secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= Balance.run.secureWave,
+        secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= this.secureWaveForRun(),
         baseValue: Math.round(economySummary.baseValue),
         weaponSplit: this.weaponSplit(runStats),
       });
@@ -678,6 +679,7 @@ export class Game {
               carried: enemy.carriedAmount,
               edge: enemy.ownEdge,
               zone: Terrain.sample(enemy.position.x, enemy.position.z).zone,
+              light: Number(this.enemies.lightFactorFor(enemy).toFixed(3)),
             })),
         spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z), { activationDelay: 0.05 }) !== null,
         scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => {
@@ -936,6 +938,7 @@ export class Game {
     this.detailScatter?.syncBuildingClearings(this.detailClearings());
     this.cameraRig.update(delta, this.primaryActor.group.position, this.primaryActor.velocity);
     this.lightRig?.setStressFallback(visualStress);
+    this.syncNightShiftLighting();
     this.lightRig?.update();
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
@@ -1355,6 +1358,8 @@ export class Game {
         tileParams: this.activeContract.tileParams,
         boardRow: this.activeContract.boardRow,
         seamYieldMult: this.contractSeamYieldMult(),
+        secureWave: this.secureWaveForRun(),
+        lightRamp: this.activeContract.twist.lightRamp ?? null,
       },
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
@@ -1375,6 +1380,7 @@ export class Game {
       charmPause: this.charmPauseActive,
       camImpulseActive: this.cameraRig.impulseActive,
       lighting: this.lightRig?.diagnostics(),
+      enemyDimming: this.enemies.dimmingDiagnostics,
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
       },
@@ -1449,6 +1455,84 @@ export class Game {
     this.frameMsP95 = sorted[p95Index] ?? 0;
   }
 
+  secureWaveForRun(): number {
+    return Math.max(0, Math.floor(this.activeContract.twist.secureWave ?? Balance.run.secureWave));
+  }
+
+  private syncNightShiftLighting(): void {
+    const state = this.nightShiftLightingState();
+    this.lightRig?.setNightShift(state);
+    if (!state.enabled || state.darkness <= 0) {
+      this.enemies.setLightDimming({
+        enabled: false,
+        darkness: 0,
+        minLight: 1,
+        falloff: Balance.contracts.nightShift.lightFalloff,
+        sources: [],
+      });
+      return;
+    }
+
+    const diagnostics = this.buildSystem.diagnostics;
+    const sources: EnemyLightSource[] = [
+      {
+        x: this.primaryActor.group.position.x,
+        z: this.primaryActor.group.position.z,
+        radius: Balance.contracts.nightShift.heroLightRadius,
+      },
+    ];
+    const liveLightPositions = (id: BuildableId): Array<{ x: number; z: number }> =>
+      diagnostics.hp
+        .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
+        .map((entry) => entry.position);
+
+    for (const position of liveLightPositions('sentry_beacon')) {
+      sources.push({ x: position.x, z: position.z, radius: Balance.beacon.range * Balance.contracts.nightShift.beaconLightMult });
+    }
+    for (const position of liveLightPositions('turret')) {
+      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.turretLightRadius });
+    }
+    for (const position of liveLightPositions('lantern_post')) {
+      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.lanternPostLightRadius });
+    }
+
+    this.enemies.setLightDimming({
+      enabled: true,
+      darkness: state.darkness,
+      minLight: Balance.contracts.nightShift.minLight,
+      falloff: Balance.contracts.nightShift.lightFalloff,
+      sources,
+    });
+  }
+
+  private nightShiftLightingState(): LightRigNightShiftState {
+    if (!this.isNightShiftContract()) return { enabled: false, phase: 'full', darkness: 0 };
+    const ramp = this.activeContract.twist.lightRamp ?? Balance.contracts.nightShift;
+    const wave = Math.max(0, Math.floor(this.waveSystem.diagnostics.wave));
+    let phase: NightShiftPhase = 'full';
+    let darkness = 0;
+    if (wave >= ramp.dawnWave) {
+      phase = 'dawn';
+    } else if (wave >= ramp.darkWave) {
+      phase = 'dark';
+      darkness = Balance.contracts.nightShift.darkDarkness;
+    } else if (wave >= ramp.duskWave) {
+      phase = 'dusk';
+      const span = Math.max(1, ramp.darkWave - ramp.duskWave);
+      const t = THREE.MathUtils.clamp((wave - ramp.duskWave) / span, 0, 1);
+      darkness = THREE.MathUtils.lerp(Balance.contracts.nightShift.duskDarkness, Balance.contracts.nightShift.darkDarkness, t);
+    }
+    return { enabled: true, phase, darkness };
+  }
+
+  private isNightShiftContract(): boolean {
+    return this.activeContract.id === 'e1-night-shift';
+  }
+
+  private isBuildableEnabled(id: BuildableId): boolean {
+    return id !== 'lantern_post' || this.isNightShiftContract();
+  }
+
   private detailClearings(): DetailScatterClearPoint[] {
     const diagnostics = this.buildSystem.diagnostics;
     return [
@@ -1457,6 +1541,7 @@ export class Game {
       ...diagnostics.sluicePositions,
       ...diagnostics.stockpilePositions,
       ...diagnostics.turretPositions,
+      ...diagnostics.lanternPostPositions,
       ...diagnostics.assayOfficePositions,
       ...diagnostics.reservedFootprints,
     ].map((position) => ({ x: position.x, z: position.z, radius: Balance.world.detailBuildingClearRadius }));
@@ -2415,8 +2500,8 @@ export class Game {
   }
 
   private selectBuildableByIndex(index: number): void {
-    const def = buildableDefs[index];
-    if (def) this.selectBuildable(def.id);
+    const snapshot = this.buildSystem.buildableSnapshots[index];
+    if (snapshot) this.selectBuildable(snapshot.id);
   }
 
   private applyStats(stats: EffectiveStats, pickedId: UpgradeId | null): void {

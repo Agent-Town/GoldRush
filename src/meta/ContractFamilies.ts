@@ -98,6 +98,11 @@ export type ContractWaterSource = {
   z: number;
   radius: number;
 };
+export type ContractLightRamp = {
+  duskWave: number;
+  darkWave: number;
+  dawnWave: number;
+};
 export type ContractManifest = {
   id: string;
   name: string;
@@ -116,6 +121,8 @@ export type ContractManifest = {
   twist: {
     sluicesNeedWaterSource?: boolean;
     seamYieldMult?: number;
+    secureWave?: number;
+    lightRamp?: ContractLightRamp;
   };
   boardRow: {
     name: string;

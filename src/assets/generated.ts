@@ -150,6 +150,7 @@ export class GeneratedSpriteBatch {
 
   private readonly sprites: THREE.Sprite[] = [];
   private readonly requestedVisible: boolean[] = [];
+  private readonly tintScalars: number[] = [];
   private loaded = false;
   private renderedContribution = 0;
   private disposed = false;
@@ -168,11 +169,15 @@ export class GeneratedSpriteBatch {
     this.group.name = options.name;
     for (let i = 0; i < capacity; i += 1) {
       const sprite = new THREE.Sprite(this.material);
+      sprite.onBeforeRender = () => {
+        this.material.color.setScalar(this.tintScalars[i] ?? 1);
+      };
       sprite.visible = false;
       sprite.scale.set(options.scale[0], options.scale[1], 1);
       sprite.renderOrder = options.renderOrder ?? RenderLayers.gameplay;
       this.sprites.push(sprite);
       this.requestedVisible.push(false);
+      this.tintScalars.push(1);
       this.group.add(sprite);
     }
 
@@ -205,6 +210,11 @@ export class GeneratedSpriteBatch {
     this.requestedVisible[index] = false;
     sprite.visible = false;
     this.updateRenderedCount();
+  }
+
+  setTintScalar(index: number, scalar: number): void {
+    if (index < 0 || index >= this.tintScalars.length) return;
+    this.tintScalars[index] = THREE.MathUtils.clamp(scalar, 0, 1);
   }
 
   dispose(): void {

@@ -46,12 +46,14 @@ export type BuildDiagnostics = {
   stockpiles: number;
   turrets: number;
   assayOffices: number;
+  lanternPosts: number;
   beaconPositions: Array<{ x: number; z: number }>;
   palisadePositions: Array<{ x: number; z: number }>;
   sluicePositions: Array<{ x: number; z: number }>;
   stockpilePositions: Array<{ x: number; z: number }>;
   turretPositions: Array<{ x: number; z: number }>;
   assayOfficePositions: Array<{ x: number; z: number }>;
+  lanternPostPositions: Array<{ x: number; z: number }>;
   reservedFootprints: Array<{ id: string; x: number; z: number; halfX: number; halfZ: number }>;
   buildables: Array<{ id: BuildableId; count: number }>;
   sluicesState: SluiceSnapshot[];
@@ -143,7 +145,15 @@ const invalidColor = new THREE.Color('#8a4a2a');
 const emptyPositions: Array<{ x: number; z: number }> = [];
 const emptySluiceSnapshots: SluiceSnapshot[] = [];
 const emptyStockpileSnapshots: StockpileSnapshot[] = [];
-const buildableIds: readonly BuildableId[] = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office'];
+const buildableIds: readonly BuildableId[] = [
+  'sentry_beacon',
+  'palisade',
+  'sluice',
+  'stockpile',
+  'turret',
+  'lantern_post',
+  'assay_office',
+];
 const upgradeableBuildableIds = ['palisade', 'sluice', 'turret'] as const;
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const hpBackingColor = new THREE.Color('#f5e6c8');
@@ -179,6 +189,7 @@ export class BuildSystem {
   private readonly sluices = new SluicePool();
   private readonly stockpiles = new StockpilePool();
   private readonly turrets = new TurretPool();
+  private readonly lanternPosts = new LanternPostPool();
   private readonly assayOffice = new THREE.Group();
   private readonly ghost = new THREE.Group();
   private readonly beaconGhost = new THREE.Group();
@@ -186,6 +197,7 @@ export class BuildSystem {
   private readonly sluiceGhost = new THREE.Group();
   private readonly stockpileGhost = new THREE.Group();
   private readonly turretGhost = new THREE.Group();
+  private readonly lanternPostGhost = new THREE.Group();
   private readonly assayOfficeGhost = new THREE.Group();
   private readonly assayOfficePosition = new THREE.Vector3();
   private assayOfficeActive = false;
@@ -305,6 +317,7 @@ export class BuildSystem {
     private readonly getWave: () => number = () => 0,
     private readonly onFloatText?: (position: THREE.Vector3, text: string, color: string) => void,
     private readonly onSound?: (name: BuildSystemSound, position?: THREE.Vector3) => void,
+    private readonly isBuildableEnabled: (id: BuildableId) => boolean = () => true,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(
@@ -313,6 +326,7 @@ export class BuildSystem {
       this.sluices.group,
       this.stockpiles.group,
       this.turrets.group,
+      this.lanternPosts.group,
       this.assayOffice,
       this.buildingVisuals,
       this.hpVisuals,
@@ -369,7 +383,7 @@ export class BuildSystem {
   }
 
   get buildableSnapshots(): BuildableSnapshot[] {
-    return buildableDefs.map((def) => {
+    return buildableDefs.filter((def) => this.isBuildableEnabled(def.id)).map((def) => {
       const count = this.countFor(def.id);
       const cost = def.costCurve(count);
       return {
@@ -442,12 +456,14 @@ export class BuildSystem {
       stockpiles: this.stockpiles.activeCount,
       turrets: this.turrets.activeCount,
       assayOffices: this.assayOfficeActive ? 1 : 0,
+      lanternPosts: this.lanternPosts.activeCount,
       beaconPositions: this.activePositions(this.beacons),
       palisadePositions: this.activePositions(this.palisades),
       sluicePositions: sluicesActive ? this.activePositions(this.sluices) : emptyPositions,
       stockpilePositions: stockpilesActive ? this.activePositions(this.stockpiles) : emptyPositions,
       turretPositions: this.activePositions(this.turrets),
       assayOfficePositions: this.assayOfficeActive ? [{ x: this.assayOfficePosition.x, z: this.assayOfficePosition.z }] : emptyPositions,
+      lanternPostPositions: this.activePositions(this.lanternPosts),
       reservedFootprints: this.reservedFootprints
         .filter((entry) => entry.active)
         .map(({ id, x, z, halfX, halfZ }) => ({ id, x, z, halfX, halfZ })),
@@ -489,7 +505,7 @@ export class BuildSystem {
 
   selectBuildable(id: string, arm = true): boolean {
     const def = getBuildableDef(id);
-    if (!def) return false;
+    if (!def || !this.isBuildableEnabled(def.id)) return false;
     this.selectedId = def.id;
     if (!def.rotatable) this.ghostRotationSteps = 0;
     this.syncGhostShape();
@@ -523,6 +539,7 @@ export class BuildSystem {
     this.currentAt = at;
     this.beacons.update(at);
     this.turrets.update(at);
+    this.lanternPosts.update(at, (index) => !this.wrecked.lantern_post[index]);
     this.sluices.update(
       delta,
       at,
@@ -579,7 +596,7 @@ export class BuildSystem {
 
   placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0): boolean {
     const def = getBuildableDef(id);
-    if (!def || this.countFor(def.id) >= def.maxCount) return false;
+    if (!def || !this.isBuildableEnabled(def.id) || this.countFor(def.id) >= def.maxCount) return false;
 
     const previousRotation = this.ghostRotationSteps;
     this.ghostRotationSteps = ((Math.round(rotationSteps) % 4) + 4) % 4;
@@ -619,6 +636,7 @@ export class BuildSystem {
     this.palisades.reset();
     this.sluices.reset();
     this.turrets.reset();
+    this.lanternPosts.reset();
     for (let i = 0; i < this.stockpiles.capacity; i += 1) this.economy.removeCapSource(stockpileCapSource(i));
     this.stockpiles.reset();
     this.assayOfficeActive = false;
@@ -660,6 +678,7 @@ export class BuildSystem {
     this.sluices.dispose();
     this.stockpiles.dispose();
     this.turrets.dispose();
+    this.lanternPosts.dispose();
     this.ghost.traverse((child) => {
       const mesh = child as THREE.Mesh;
       mesh.geometry?.dispose();
@@ -1017,6 +1036,11 @@ export class BuildSystem {
       const pos = this.turrets.allPositions[i];
       if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'turret', pos, 0)) return true;
     }
+    for (let i = 0; i < this.lanternPosts.capacity; i += 1) {
+      if (!this.lanternPosts.isActive(i)) continue;
+      const pos = this.lanternPosts.allPositions[i];
+      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'lantern_post', pos, 0)) return true;
+    }
     if (this.assayOfficeActive && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'assay_office', this.assayOfficePosition, 0)) {
       return true;
     }
@@ -1055,10 +1079,12 @@ export class BuildSystem {
   private overlapRadius(id: BuildableId): number {
     if (id === 'palisade') return Balance.palisade.overlapRadius;
     if (id === 'turret') return Balance.turret.overlapRadius;
+    if (id === 'lantern_post') return Balance.lanternPost.overlapRadius;
     return Balance.beacon.overlapRadius;
   }
 
   private placeRadius(id: BuildableId): number {
+    if (id === 'lantern_post') return Balance.lanternPost.placeRadius;
     return id === 'turret' ? Balance.turret.placeRadius : Balance.beacon.placeRadius;
   }
 
@@ -1089,6 +1115,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.activeCount;
     if (id === 'stockpile') return this.stockpiles.activeCount;
     if (id === 'turret') return this.turrets.activeCount;
+    if (id === 'lantern_post') return this.lanternPosts.activeCount;
     if (id === 'assay_office') return this.assayOfficeActive ? 1 : 0;
     return this.beacons.activeCount;
   }
@@ -1098,6 +1125,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.place(position);
     if (id === 'stockpile') return this.stockpiles.place(position);
     if (id === 'turret') return this.turrets.place(position);
+    if (id === 'lantern_post') return this.lanternPosts.place(position);
     if (id === 'assay_office') return this.placeAssayOffice(position);
     return this.beacons.place(position);
   }
@@ -1108,6 +1136,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.isActive(index);
     if (id === 'stockpile') return this.stockpiles.isActive(index);
     if (id === 'turret') return this.turrets.isActive(index);
+    if (id === 'lantern_post') return this.lanternPosts.isActive(index);
     return this.beacons.isActive(index);
   }
 
@@ -1122,6 +1151,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.deactivate(index);
     if (id === 'stockpile') return this.stockpiles.deactivate(index);
     if (id === 'turret') return this.turrets.deactivate(index);
+    if (id === 'lantern_post') return this.lanternPosts.deactivate(index);
     return this.beacons.deactivate(index);
   }
 
@@ -1186,7 +1216,7 @@ export class BuildSystem {
   }
 
   private activePositions(
-    pool: SentryBeaconPool | PalisadePool | SluicePool | StockpilePool | TurretPool,
+    pool: SentryBeaconPool | PalisadePool | SluicePool | StockpilePool | TurretPool | LanternPostPool,
   ): Array<{ x: number; z: number }> {
     return pool.allPositions
       .map((pos, i) => ({ x: pos.x, z: pos.z, active: pool.isActive(i) }))
@@ -1224,6 +1254,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.allPositions[index];
     if (id === 'stockpile') return this.stockpiles.allPositions[index];
     if (id === 'turret') return this.turrets.allPositions[index];
+    if (id === 'lantern_post') return this.lanternPosts.allPositions[index];
     return this.beacons.allPositions[index];
   }
 
@@ -1710,6 +1741,7 @@ export class BuildSystem {
     this.sluiceGhost.visible = this.selectedId === 'sluice';
     this.stockpileGhost.visible = this.selectedId === 'stockpile';
     this.turretGhost.visible = this.selectedId === 'turret';
+    this.lanternPostGhost.visible = this.selectedId === 'lantern_post';
     this.assayOfficeGhost.visible = this.selectedId === 'assay_office';
   }
 
@@ -1719,8 +1751,17 @@ export class BuildSystem {
     this.createSluiceGhost();
     this.createStockpileGhost();
     this.createTurretGhost();
+    this.createLanternPostGhost();
     this.createAssayOfficeGhost();
-    this.ghost.add(this.beaconGhost, this.palisadeGhost, this.sluiceGhost, this.stockpileGhost, this.turretGhost, this.assayOfficeGhost);
+    this.ghost.add(
+      this.beaconGhost,
+      this.palisadeGhost,
+      this.sluiceGhost,
+      this.stockpileGhost,
+      this.turretGhost,
+      this.lanternPostGhost,
+      this.assayOfficeGhost,
+    );
   }
 
   private placeAssayOffice(position: THREE.Vector3): number {
@@ -1812,6 +1853,18 @@ export class BuildSystem {
     this.turretGhost.add(head);
   }
 
+  private createLanternPostGhost(): void {
+    const post = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.06, 1.35, 6), this.ghostMaterial);
+    post.position.set(0, 0.66, 0);
+    this.lanternPostGhost.add(post);
+    const arm = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.07, 0.07), this.ghostMaterial);
+    arm.position.set(0.22, 1.22, 0);
+    this.lanternPostGhost.add(arm);
+    const lantern = new THREE.Mesh(new THREE.BoxGeometry(0.22, 0.28, 0.18), this.ghostMaterial);
+    lantern.position.set(0.52, 1.03, 0);
+    this.lanternPostGhost.add(lantern);
+  }
+
   private createAssayOfficeGhost(): void {
     const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.9, 1.1), this.ghostMaterial);
     base.position.y = 0.45;
@@ -1869,6 +1922,174 @@ export class BuildSystem {
     tMin = Math.max(tMin, t1);
     tMax = Math.min(tMax, t2);
     return tMin <= tMax;
+  }
+}
+
+class LanternPostPool {
+  readonly group = new THREE.Group();
+
+  private readonly active: boolean[] = [];
+  private readonly positions: THREE.Vector3[] = [];
+  private readonly postGeometry = new THREE.CylinderGeometry(0.045, 0.06, 1.35, 6);
+  private readonly armGeometry = new THREE.BoxGeometry(0.62, 0.07, 0.07);
+  private readonly lanternGeometry = new THREE.BoxGeometry(0.22, 0.28, 0.18);
+  private readonly haloGeometry = new THREE.SphereGeometry(0.42, 12, 8);
+  private readonly postMaterial = new THREE.MeshStandardMaterial({
+    color: '#6f5732',
+    emissive: '#3b2a1a',
+    emissiveIntensity: 0.12,
+    roughness: 0.72,
+    metalness: 0.08,
+  });
+  private readonly lanternMaterial = new THREE.MeshStandardMaterial({
+    color: '#f5e6c8',
+    emissive: '#ffd28a',
+    emissiveIntensity: 1.45,
+    roughness: 0.28,
+    metalness: 0.12,
+  });
+  private readonly haloMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffd28a',
+    transparent: true,
+    opacity: 0.22,
+    depthWrite: false,
+  });
+  private readonly postMesh = new THREE.InstancedMesh(this.postGeometry, this.postMaterial, Balance.lanternPost.maxCount);
+  private readonly armMesh = new THREE.InstancedMesh(this.armGeometry, this.postMaterial, Balance.lanternPost.maxCount);
+  private readonly lanternMesh = new THREE.InstancedMesh(this.lanternGeometry, this.lanternMaterial, Balance.lanternPost.maxCount);
+  private readonly haloMesh = new THREE.InstancedMesh(this.haloGeometry, this.haloMaterial, Balance.lanternPost.maxCount);
+  private readonly syncObject = new THREE.Object3D();
+  private alive = 0;
+
+  constructor() {
+    this.group.name = 'LanternPostPool';
+    for (const mesh of [this.postMesh, this.armMesh, this.lanternMesh, this.haloMesh]) {
+      mesh.frustumCulled = false;
+      mesh.castShadow = false;
+      this.group.add(mesh);
+    }
+    this.haloMesh.renderOrder = RenderLayers.groundDecals + 1;
+    this.haloMesh.visible = false;
+    for (let i = 0; i < Balance.lanternPost.maxCount; i += 1) {
+      this.active.push(false);
+      this.positions.push(new THREE.Vector3());
+      this.hide(i);
+    }
+    this.markNeedsUpdate();
+  }
+
+  get activeCount(): number {
+    return this.alive;
+  }
+
+  get capacity(): number {
+    return Balance.lanternPost.maxCount;
+  }
+
+  get allPositions(): readonly THREE.Vector3[] {
+    return this.positions;
+  }
+
+  isActive(index: number): boolean {
+    return this.active[index] === true;
+  }
+
+  place(position: THREE.Vector3): number {
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (this.active[i]) continue;
+      this.active[i] = true;
+      this.positions[i]?.copy(position);
+      this.alive += 1;
+      this.sync(i, 0);
+      this.markNeedsUpdate();
+      return i;
+    }
+    return -1;
+  }
+
+  deactivate(index: number): boolean {
+    if (!this.active[index]) return false;
+    this.active[index] = false;
+    this.alive = Math.max(0, this.alive - 1);
+    this.hide(index);
+    this.markNeedsUpdate();
+    return true;
+  }
+
+  update(at: number, isLit: (index: number) => boolean = () => true): void {
+    const pulse = 0.82 + Math.sin(at * Math.PI * 1.7) * 0.18;
+    this.lanternMaterial.emissiveIntensity = 1.25 + pulse * 0.55;
+    this.haloMaterial.opacity = 0.16 + pulse * 0.08;
+    let litCount = 0;
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i]) continue;
+      const lit = isLit(i);
+      if (lit) litCount += 1;
+      this.sync(i, at, lit);
+    }
+    this.haloMesh.visible = litCount > 0;
+    this.markNeedsUpdate();
+  }
+
+  reset(): void {
+    for (let i = 0; i < this.active.length; i += 1) {
+      this.active[i] = false;
+      this.hide(i);
+    }
+    this.alive = 0;
+    this.haloMesh.visible = false;
+    this.markNeedsUpdate();
+  }
+
+  dispose(): void {
+    this.postGeometry.dispose();
+    this.armGeometry.dispose();
+    this.lanternGeometry.dispose();
+    this.haloGeometry.dispose();
+    this.postMaterial.dispose();
+    this.lanternMaterial.dispose();
+    this.haloMaterial.dispose();
+  }
+
+  private sync(index: number, at: number, lit = true): void {
+    const position = this.positions[index];
+    if (!position) return;
+    const groundY = Terrain.visualY(position.x, position.z, 0, Balance.lanternPost.overlapRadius);
+    const sway = Math.sin(at * 0.85 + index) * 0.035;
+    this.syncPart(this.postMesh, index, position.x, groundY + 0.66, position.z, 1, 0);
+    this.syncPart(this.armMesh, index, position.x + 0.22, groundY + 1.22, position.z, 1, sway);
+    if (!lit) {
+      this.hideLight(index);
+      return;
+    }
+    this.syncPart(this.lanternMesh, index, position.x + 0.52, groundY + 1.03, position.z, 1, sway * 1.4);
+    this.syncPart(this.haloMesh, index, position.x + 0.52, groundY + 1.03, position.z, 1 + Math.sin(at * 1.6 + index) * 0.06, 0);
+  }
+
+  private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number, yaw: number): void {
+    this.syncObject.position.set(x, y, z);
+    this.syncObject.rotation.set(0, yaw, 0);
+    this.syncObject.scale.setScalar(scale);
+    this.syncObject.updateMatrix();
+    mesh.setMatrixAt(index, this.syncObject.matrix);
+  }
+
+  private hide(index: number): void {
+    this.postMesh.setMatrixAt(index, hiddenMatrix);
+    this.armMesh.setMatrixAt(index, hiddenMatrix);
+    this.hideLight(index);
+  }
+
+  private hideLight(index: number): void {
+    this.lanternMesh.setMatrixAt(index, hiddenMatrix);
+    this.haloMesh.setMatrixAt(index, hiddenMatrix);
+  }
+
+  private markNeedsUpdate(): void {
+    this.postMesh.instanceMatrix.needsUpdate = true;
+    this.armMesh.instanceMatrix.needsUpdate = true;
+    this.lanternMesh.instanceMatrix.needsUpdate = true;
+    this.haloMesh.instanceMatrix.needsUpdate = true;
   }
 }
 
@@ -1949,6 +2170,7 @@ function createStore<T>(make: (id: BuildableId, index: number) => T): BuildingFa
     sluice: createFamily('sluice', make),
     stockpile: createFamily('stockpile', make),
     turret: createFamily('turret', make),
+    lantern_post: createFamily('lantern_post', make),
     assay_office: createFamily('assay_office', make),
   };
 }

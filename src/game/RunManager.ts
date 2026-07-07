@@ -22,6 +22,7 @@ type RunManagerHost = {
   events: EventBus;
   economy: EconomyLog;
   wave: () => number | undefined;
+  secureWave?: () => number | undefined;
   at: () => number | undefined;
   setPaused?: (paused: boolean) => void;
   resetRun?: () => void;
@@ -143,7 +144,8 @@ export class RunManager {
   }
 
   private maybeSecureRun(wave: number): void {
-    if (!this.host || Balance.run.secureWave <= 0 || wave < Balance.run.secureWave) return;
+    const secureWave = this.host?.secureWave?.() ?? Balance.run.secureWave;
+    if (!this.host || secureWave <= 0 || wave < secureWave) return;
     if (this.securedRunId === this.runId || this.endedRunId === this.runId) return;
     this.securedRunId = this.runId;
     this.awardSecuredClaim();
@@ -309,6 +311,7 @@ function resolveHost(game: unknown): RunManagerHost {
     events?: EventBus;
     economy?: EconomyLog;
     waveSystem?: { diagnostics?: { wave?: number } };
+    secureWaveForRun?: () => number;
     timeAlive?: number;
     state?: { setPaused?: (paused: boolean) => void };
     resetRun?: () => void;
@@ -323,6 +326,7 @@ function resolveHost(game: unknown): RunManagerHost {
     events: host.events,
     economy: host.economy,
     wave: () => host.waveSystem?.diagnostics?.wave,
+    secureWave: () => host.secureWaveForRun?.(),
     at: () => host.timeAlive,
     setPaused: (paused) => host.state?.setPaused?.(paused),
     resetRun: () => host.resetRun?.(),
