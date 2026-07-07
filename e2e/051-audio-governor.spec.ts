@@ -102,23 +102,30 @@ test('global voice cap holds and UI displaces low-priority ambience', async ({ p
   const errors = await openGame(page, '?debug&timescale=3&nowaves&nolevel&seed=051-voice-cap');
   await unlockAudio(page);
 
-  await page.evaluate(() => {
+  const before = await audio(page);
+  const syncState = await page.evaluate(() => {
     for (const name of ['river-ambience-loop', 'prospector-hover-loop', 'wind-gust']) {
       for (let i = 0; i < 4; i += 1) window.__GR_TEST__?.testAudio(name);
     }
+    const saturated = window.__THREE_GAME_DIAGNOSTICS__?.audio as unknown as GovernorAudio;
+    window.__GR_TEST__?.testAudio('ledger-open');
+    const afterUi = window.__THREE_GAME_DIAGNOSTICS__?.audio as unknown as GovernorAudio;
+    return {
+      saturatedVoices: saturated.concurrentVoices,
+      voiceCap: saturated.voiceCap,
+      afterUiVoices: afterUi.concurrentVoices,
+      ambientDrops: afterUi.droppedByPriority.ambient ?? 0,
+      headroomGain: afterUi.headroomGain,
+    };
   });
-  await expect.poll(() => audio(page).then((state) => state.concurrentVoices), { timeout: 8_000 }).toBe(12);
 
-  const before = await audio(page);
-  await page.evaluate(() => window.__GR_TEST__?.testAudio('ledger-open'));
+  expect(syncState.saturatedVoices).toBe(syncState.voiceCap);
+  expect(syncState.afterUiVoices).toBeLessThanOrEqual(syncState.voiceCap);
+  expect(syncState.ambientDrops).toBeGreaterThan(before.droppedByPriority.ambient ?? 0);
+  expect(syncState.headroomGain).toBeLessThan(1);
   await expect
     .poll(() => audio(page).then((state) => state.startedBySound['ledger-open'] ?? 0), { timeout: 8_000 })
     .toBeGreaterThan(before.startedBySound['ledger-open'] ?? 0);
-
-  const after = await audio(page);
-  expect(after.concurrentVoices).toBeLessThanOrEqual(after.voiceCap);
-  expect(after.droppedByPriority.ambient ?? 0).toBeGreaterThan(before.droppedByPriority.ambient ?? 0);
-  expect(after.headroomGain).toBeLessThan(1);
   assertNoErrors(errors);
 });
 

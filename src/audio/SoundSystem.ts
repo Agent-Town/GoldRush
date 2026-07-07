@@ -352,6 +352,7 @@ export class SoundSystem {
     const id = this.nextVoiceId++;
     this.voices.set(id, { id, name, priority, loop, countsPerSound, source: null });
     this.updateMasterGain();
+    this.publishAudioDiagnostics();
     return id;
   }
 
@@ -375,6 +376,7 @@ export class SoundSystem {
       } catch {}
     }
     this.updateMasterGain();
+    this.publishAudioDiagnostics();
   }
 
   private recordDrop(name: SoundName, family = soundFamily(name)): void {
@@ -385,6 +387,7 @@ export class SoundSystem {
     if (family) this.droppedByFamily.set(family, (this.droppedByFamily.get(family) ?? 0) + 1);
     this.droppedAt.push(now);
     this.trimStarts(this.droppedAt, now);
+    this.publishAudioDiagnostics();
   }
 
   private playbackRate(pitchVariance = 0): number {
@@ -398,6 +401,7 @@ export class SoundSystem {
     starts.push(now);
     this.startedAtBySound.set(name, starts);
     this.trimStarts(starts, now);
+    this.publishAudioDiagnostics();
   }
 
   private playsPerSecondSnapshot(): Record<string, number> {
@@ -462,6 +466,12 @@ export class SoundSystem {
   private updateMasterGain(): void {
     if (!this.masterGain) return;
     this.masterGain.gain.value = readAudioMuted() ? 0 : readAudioVolume() * this.headroomGain();
+  }
+
+  private publishAudioDiagnostics(): void {
+    if (typeof window !== 'undefined' && window.__THREE_GAME_DIAGNOSTICS__) {
+      window.__THREE_GAME_DIAGNOSTICS__.audio = this.diagnostics();
+    }
   }
 
   private loopSourceCount(name: SoundName, fallback: number): number {
