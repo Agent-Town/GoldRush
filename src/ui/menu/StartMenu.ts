@@ -84,7 +84,9 @@ export class StartMenu {
     return `
       <p class="research-ledger__eyebrow">Schoolhouse Notes</p>
       <h2>Research Ledger</h2>
-      <p data-testid="science-meter">${escapeHtml(meter.text)}</p>
+      <p data-testid="science-meter">${escapeHtml(meter.text)}${
+        meter.bankedText ? ` <span data-testid="science-banked">${escapeHtml(meter.bankedText)}</span>` : ''
+      }</p>
       <div class="gr-start-menu__research-grid">
         ${
           picks.length > 0
@@ -99,7 +101,7 @@ export class StartMenu {
                   `,
                 )
                 .join('')
-            : '<p>The Elder has no fresh proposal in the ledger.</p>'
+            : '<p>Continued Study remains open.</p>'
         }
       </div>
       <button class="gr-start-menu__small-button" type="button" data-menu-action="research-close">Close</button>

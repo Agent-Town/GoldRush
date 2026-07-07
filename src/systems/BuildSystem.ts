@@ -222,6 +222,7 @@ export class BuildSystem {
   private selectedId: BuildableId = 'sentry_beacon';
   private ghostRotationSteps = 0;
   private beaconFireRateMult = 1;
+  private turretDamageMult = 1;
   private pointerReady = false;
   private pointerClientX = 0;
   private pointerClientY = 0;
@@ -526,6 +527,7 @@ export class BuildSystem {
     }
     this.shooterHandles.length = 0;
     this.beaconFireRateMult = 1;
+    this.turretDamageMult = 1;
     this.targeting.clearBuildings();
     this.beacons.reset();
     this.palisades.reset();
@@ -553,8 +555,9 @@ export class BuildSystem {
     this.hideAllBuildingVisuals();
   }
 
-  applyStats(beaconFireRateMult: number): void {
+  applyStats(beaconFireRateMult: number, turretDamageMult = 1): void {
     this.beaconFireRateMult = beaconFireRateMult;
+    this.turretDamageMult = Math.max(0.1, turretDamageMult);
     for (const id of buildableIds) {
       for (let index = 0; index < this.shooterByInstance[id].length; index += 1) {
         this.refreshShooterStats(id, index);
@@ -1169,7 +1172,7 @@ export class BuildSystem {
   }
 
   private effectiveTurretDamage(index: number): number {
-    return this.effectiveStat('turret', index, Balance.turret.damage, 'damageMult');
+    return this.effectiveStat('turret', index, Balance.turret.damage, 'damageMult') * this.turretDamageMult;
   }
 
   private effectiveTurretFireRate(index: number): number {

@@ -199,7 +199,13 @@ interface ThreeGameDiagnostics {
     steps: number;
     remaining: number;
     threshold: number;
+    overflow: number;
     meter: string;
+    continued: {
+      seamYieldMult: number;
+      turretDamageMult: number;
+      stockpileCapBonus: number;
+    };
     assayOrderSlots: number;
     contractTier: number;
   };
@@ -547,7 +553,13 @@ interface Window {
       steps: number;
       remaining: number;
       threshold: number;
+      overflow: number;
       meter: string;
+      continued: {
+        seamYieldMult: number;
+        turretDamageMult: number;
+        stockpileCapBonus: number;
+      };
       assayOrderSlots: number;
       contractTier: number;
     };

@@ -40,7 +40,10 @@ export type ScienceMeterView = {
   steps: number;
   remaining: number;
   threshold: number;
+  overflow: number;
+  complete: boolean;
   text: string;
+  bankedText?: string;
 };
 
 export type DeathResearchState = {
@@ -181,7 +184,9 @@ export class DeathOverlay {
   private renderScienceFooter(): string {
     const meter = this.options.research?.science;
     if (!meter) return '';
-    return `<p class="death-overlay__science" data-testid="science-meter">${this.escape(meter.text)}</p>`;
+    return `<p class="death-overlay__science" data-testid="science-meter">${this.escape(meter.text)}${
+      meter.bankedText ? ` <span data-testid="science-banked">${this.escape(meter.bankedText)}</span>` : ''
+    }</p>`;
   }
 
   private renderResearch(): string {

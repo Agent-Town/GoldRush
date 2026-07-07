@@ -9,6 +9,8 @@ import { loadEpoch, type ContractTier } from './ContractFamilies';
 
 export const RESEARCH_STATE_KEY = 'gr.research.v1';
 export const STEAMWORKS_THRESHOLD = loadEpoch('epoch-1-frontier').threshold ?? 6;
+export const SCIENCE_CEILING_TEXT =
+  'Epoch science complete — the Steamworks awaits a town to build it. (Steps beyond the threshold are banked for the new era.)';
 
 export type ResearchBranch = 'Prospecting Works' | 'Arsenal Works' | 'Assay Works';
 
@@ -20,6 +22,23 @@ export type ResearchNode = {
   effect: string;
   requires?: readonly string[];
   live?: boolean;
+  repeatable?: boolean;
+};
+
+export type ScienceMeter = {
+  steps: number;
+  remaining: number;
+  threshold: number;
+  overflow: number;
+  complete: boolean;
+  text: string;
+  bankedText?: string;
+};
+
+export type ContinuedStudyBonuses = {
+  seamYieldMult: number;
+  turretDamageMult: number;
+  stockpileCapBonus: number;
 };
 
 export type ResearchState = {
@@ -169,6 +188,33 @@ export const RESEARCH_NODES = [
   },
 ] as const satisfies readonly ResearchNode[];
 
+const CONTINUED_STUDY_PREFIX = 'continued_study:';
+type ContinuedStudyTemplate = Omit<ResearchNode, 'id' | 'repeatable'> & { slug: string };
+
+const CONTINUED_STUDIES = [
+  {
+    slug: 'seam_yield',
+    branch: 'Prospecting Works',
+    name: 'Continued Study: Seam Yield',
+    description: 'Repeatable: seam pans yield +1% gold for each take.',
+    effect: '+1% seam panning yield.',
+  },
+  {
+    slug: 'turret_damage',
+    branch: 'Arsenal Works',
+    name: 'Continued Study: Turret Damage',
+    description: 'Repeatable: turret sparks hit +1% harder for each take.',
+    effect: '+1% turret damage.',
+  },
+  {
+    slug: 'stockpile_cap',
+    branch: 'Assay Works',
+    name: 'Continued Study: Stockpile Ledger',
+    description: 'Repeatable: stockpile ledgers hold +5 more gold for each take.',
+    effect: '+5 stockpile cap.',
+  },
+] as const satisfies readonly ContinuedStudyTemplate[];
+
 export const researchNodeById = RESEARCH_NODES.reduce(
   (nodes, node) => {
     nodes[node.id] = node;
@@ -216,12 +262,13 @@ export function availablePicks(state: ResearchState): ResearchNode[] {
     const requires = 'requires' in node ? node.requires : [];
     return requires.every((id) => taken.has(id));
   });
-  return seededShuffle(frontier, proposalSeed(state)).slice(0, 2);
+  if (frontier.length > 0) return seededShuffle(frontier, proposalSeed(state)).slice(0, 2);
+  return continuedStudyPicks(state);
 }
 
 export function takeNode(state: ResearchState, id: string): ResearchState {
-  if (!researchNodeById[id] || state.taken.includes(id)) return state;
-  if (!availablePicks(state).some((node) => node.id === id)) return state;
+  const pick = availablePicks(state).find((node) => node.id === id);
+  if (!pick || (!pick.repeatable && state.taken.includes(id))) return state;
   return {
     version: 1,
     progress: {
@@ -250,14 +297,33 @@ export function contractTierForResearch(state: ResearchState): ContractTier {
   return 1;
 }
 
-export function scienceMeter(state: ResearchState): { steps: number; remaining: number; threshold: number; text: string } {
+export function continuedStudyBonuses(state: ResearchState): ContinuedStudyBonuses {
+  const counts = new Map<string, number>();
+  for (const id of state.taken) {
+    const slug = continuedStudySlug(id);
+    if (slug) counts.set(slug, (counts.get(slug) ?? 0) + 1);
+  }
+  return {
+    seamYieldMult: (counts.get('seam_yield') ?? 0) * 0.01,
+    turretDamageMult: (counts.get('turret_damage') ?? 0) * 0.01,
+    stockpileCapBonus: (counts.get('stockpile_cap') ?? 0) * 5,
+  };
+}
+
+export function scienceMeter(state: ResearchState): ScienceMeter {
   const steps = Math.max(0, Math.floor(state.progress.tracks.science));
   const remaining = Math.max(0, STEAMWORKS_THRESHOLD - steps);
+  const overflow = Math.max(0, steps - STEAMWORKS_THRESHOLD);
+  const complete = steps >= STEAMWORKS_THRESHOLD;
+  const bankedText = complete ? `banked: +${overflow} toward the Steamworks` : undefined;
   return {
     steps,
     remaining,
     threshold: STEAMWORKS_THRESHOLD,
-    text: `Science: ${steps} steps - ${remaining} to the Steamworks (locked)`,
+    overflow,
+    complete,
+    bankedText,
+    text: complete ? SCIENCE_CEILING_TEXT : `Science: ${steps} steps - ${remaining} to the Steamworks`,
   };
 }
 
@@ -274,7 +340,7 @@ function migrateResearchState(raw: unknown, progress: MetaProgress): ResearchSta
   const rawTaken = Array.isArray(raw.taken) ? raw.taken : [];
   const taken = rawTaken
     .map((id) => (typeof id === 'string' ? (RESEARCH_ID_MIGRATIONS[id] ?? id) : id))
-    .filter((id): id is string => typeof id === 'string' && id in researchNodeById);
+    .filter((id): id is string => typeof id === 'string' && (id in researchNodeById || isContinuedStudyId(id)));
   const proposalSalt =
     typeof raw.proposalSalt === 'number' && Number.isFinite(raw.proposalSalt) ? Math.max(0, Math.floor(raw.proposalSalt)) : 0;
   return { version: 1, progress, taken: [...new Set(taken)], proposalSalt };
@@ -286,6 +352,29 @@ function toRegistry(state: ResearchState): ResearchRegistry {
 
 function proposalSeed(state: ResearchState): string {
   return `${state.proposalSalt}:${state.progress.tracks.science}:${state.taken.join(',')}`;
+}
+
+function continuedStudyPicks(state: ResearchState): ResearchNode[] {
+  const start = state.taken.filter(isContinuedStudyId).length + state.proposalSalt;
+  return [0, 1].map((offset) => {
+    const template = CONTINUED_STUDIES[(start + offset) % CONTINUED_STUDIES.length]!;
+    return {
+      ...template,
+      id: `${CONTINUED_STUDY_PREFIX}${template.slug}:${state.progress.tracks.science}:${state.proposalSalt}:${offset}`,
+      repeatable: true,
+      live: true,
+    };
+  });
+}
+
+function isContinuedStudyId(id: string): boolean {
+  return id.startsWith(CONTINUED_STUDY_PREFIX);
+}
+
+function continuedStudySlug(id: string): string | undefined {
+  if (!isContinuedStudyId(id)) return undefined;
+  const slug = id.slice(CONTINUED_STUDY_PREFIX.length).split(':')[0];
+  return CONTINUED_STUDIES.some((study) => study.slug === slug) ? slug : undefined;
 }
 
 function seededShuffle<T>(items: readonly T[], seed: string): T[] {
