@@ -163,8 +163,8 @@ export const RESEARCH_NODES = [
     id: 'prospector_lessons',
     branch: 'Assay Works',
     name: 'Prospector Lessons',
-    description: 'The Prospector carries approved lessons into the claim.',
-    effect: 'Agent schooling prepares to enter late offers.',
+    description: 'Not yet live: banks the Agent Schooling +1 policy slot toward a permanent run-start head start.',
+    effect: 'Design hook for a permanent +1 Prospector policy slot; not yet applied in a run.',
     requires: ['agent_schooling'],
   },
 ] as const satisfies readonly ResearchNode[];
