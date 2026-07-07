@@ -213,12 +213,15 @@ interface ThreeGameDiagnostics {
     embodiment: {
       visible: boolean;
       moving: boolean;
+      drifting: boolean;
       working: boolean;
       receiptCount: number;
       lastReceiptTool: string | null;
       lastLine: string | null;
       position: { x: number; y: number; z: number };
       target: { x: number; z: number };
+      terrainY: number;
+      clearance: number;
     };
   };
   build: {

@@ -2,6 +2,13 @@ import * as THREE from 'three';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
+export type XpMoteSweepResult = {
+  xp: number;
+  motes: number;
+  agentPath: Array<{ x: number; z: number }>;
+  sweptIds: string[];
+};
+
 export class XpMotePool {
   readonly group = new THREE.Group();
 
@@ -96,6 +103,52 @@ export class XpMotePool {
     return gained;
   }
 
+  hasCollectible(minAgeS: number, from: THREE.Vector3, maxDistance: number): boolean {
+    const maxDistanceSq = maxDistance * maxDistance;
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i] || (this.age[i] ?? 0) <= minAgeS) continue;
+      const position = this.positions[i];
+      if (!position || Terrain.sample(position.x, position.z).zone === 'river') continue;
+      const dx = position.x - from.x;
+      const dz = position.z - from.z;
+      if (dx * dx + dz * dz <= maxDistanceSq) return true;
+    }
+    return false;
+  }
+
+  collectAged(
+    minAgeS: number,
+    from: THREE.Vector3,
+    maxDistance: number,
+    onCollect?: (position: THREE.Vector3, value: number) => void,
+  ): XpMoteSweepResult {
+    const maxDistanceSq = maxDistance * maxDistance;
+    const path: Array<{ x: number; z: number }> = [];
+    const sweptIds: string[] = [];
+    let xp = 0;
+    let cursor = { x: from.x, z: from.z };
+
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i] || (this.age[i] ?? 0) <= minAgeS) continue;
+      const position = this.positions[i];
+      if (!position || Terrain.sample(position.x, position.z).zone === 'river') continue;
+      const dx = position.x - from.x;
+      const dz = position.z - from.z;
+      if (dx * dx + dz * dz > maxDistanceSq) continue;
+
+      const value = this.values[i] ?? 0;
+      path.push(...sampleRoute(routeThroughFord(cursor, position)));
+      cursor = { x: position.x, z: position.z };
+      sweptIds.push(`mote-${i}`);
+      xp += value;
+      if (onCollect && value > 0) onCollect(position, value);
+      this.deactivate(i);
+    }
+
+    this.mesh.instanceMatrix.needsUpdate = true;
+    return { xp, motes: sweptIds.length, agentPath: path, sweptIds };
+  }
+
   recycleAll(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
@@ -134,4 +187,25 @@ export class XpMotePool {
   private hide(index: number): void {
     this.mesh.setMatrixAt(index, this.hiddenMatrix);
   }
+}
+
+function routeThroughFord(from: { x: number; z: number }, to: { x: number; z: number }): Array<{ x: number; z: number }> {
+  if (from.z > Terrain.RIVER_MAX_Z && to.z < Terrain.RIVER_MIN_Z) return [from, { x: 0, z: from.z }, { x: 0, z: to.z }, to];
+  if (from.z < Terrain.RIVER_MIN_Z && to.z > Terrain.RIVER_MAX_Z) return [from, { x: 0, z: from.z }, { x: 0, z: to.z }, to];
+  return [from, to];
+}
+
+function sampleRoute(route: Array<{ x: number; z: number }>): Array<{ x: number; z: number }> {
+  const samples: Array<{ x: number; z: number }> = [];
+  for (let i = 1; i < route.length; i += 1) {
+    const a = route[i - 1]!;
+    const b = route[i]!;
+    const distance = Math.hypot(b.x - a.x, b.z - a.z);
+    const steps = Math.max(1, Math.ceil(distance / 0.5));
+    for (let step = 0; step <= steps; step += 1) {
+      const t = step / steps;
+      samples.push({ x: a.x + (b.x - a.x) * t, z: a.z + (b.z - a.z) * t });
+    }
+  }
+  return samples;
 }

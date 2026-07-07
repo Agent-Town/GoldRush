@@ -2,6 +2,8 @@ import type { UiSnapshot } from '../systems/UiBridge';
 import type { BuildableId } from '../game/buildables';
 import { BuildButton } from './BuildButton';
 
+const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
+
 export type UiIntent =
   | { type: 'restart' | 'toggle_build_menu' | 'close_build_menu' | 'pause' }
   | { type: 'select_buildable'; id: BuildableId | string };
@@ -14,6 +16,7 @@ type HudElements = {
   goldPanel: HTMLElement;
   weaponChip: HTMLElement;
   agentChip: HTMLElement;
+  agentDetail: HTMLElement;
   agentName: HTMLElement;
   agentLevel: HTMLElement;
   agentLabel: HTMLElement;
@@ -71,12 +74,16 @@ export class Hud {
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
-        <span class="hud-agent-chip" data-testid="hud-agent" aria-label="Prospector permission ladder">
-          <span data-hud-agent-name>the Prospector</span>
-          <strong data-hud-agent-level>L0</strong>
-          <span data-hud-agent-label>suggest-only</span>
+        <button class="hud-agent-chip" type="button" data-testid="hud-agent" aria-label="Prospector permission chip" aria-expanded="false">
+          <img class="hud-agent-chip__portrait" src="${prospectorPortraitUrl}" alt="" data-hud-agent-portrait />
+          <span class="hud-agent-chip__main">
+            <span data-hud-agent-name>the Prospector</span>
+            <strong data-hud-agent-level>L0</strong>
+            <span data-hud-agent-label>suggest-only</span>
+          </span>
           <span class="hud-agent-feed" data-testid="hud-agent-feed" data-hud-agent-feed aria-live="polite"></span>
-        </span>
+          <span class="hud-agent-detail" data-hud-agent-detail aria-hidden="true"></span>
+        </button>
       </section>
 
       <section class="hud-panel hud-panel--xp" data-testid="hud-xp" aria-label="Experience">
@@ -106,6 +113,7 @@ export class Hud {
       goldPanel: this.get(root, '[data-testid="hud-gold"]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
       agentChip: this.get(root, '[data-testid="hud-agent"]'),
+      agentDetail: this.get(root, '[data-hud-agent-detail]'),
       agentName: this.get(root, '[data-hud-agent-name]'),
       agentLevel: this.get(root, '[data-hud-agent-level]'),
       agentLabel: this.get(root, '[data-hud-agent-label]'),
@@ -124,6 +132,7 @@ export class Hud {
     this.elements.buildMount.append(this.buildButton.element);
 
     this.elements.pauseHint.addEventListener('click', this.onPauseClick);
+    this.elements.agentChip.addEventListener('click', this.onAgentChipClick);
   }
 
   update(snapshot: UiSnapshot): void {
@@ -136,6 +145,7 @@ export class Hud {
     this.elements.agentLevel.textContent = `L${snapshot.agent?.permissionLevel ?? 0}`;
     this.elements.agentLabel.textContent = snapshot.agent?.permissionLabel ?? 'suggest-only';
     this.elements.agentChip.dataset.level = String(snapshot.agent?.permissionLevel ?? 0);
+    this.elements.agentDetail.textContent = agentAbilityDetail(snapshot.agent?.permissionLevel ?? 0);
     this.elements.agentFeed.textContent = snapshot.agent?.receiptFeed.join(' · ') ?? '';
     this.elements.xpText.textContent = `${snapshot.xp} / ${snapshot.xpNeed} XP`;
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;
@@ -160,12 +170,20 @@ export class Hud {
 
   dispose(): void {
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
+    this.elements.agentChip.removeEventListener('click', this.onAgentChipClick);
     this.buildButton.dispose();
     window.clearTimeout(this.announcementClearTimer);
   }
 
   private readonly onPauseClick = () => {
     this.onIntent({ type: 'pause' });
+  };
+
+  private readonly onAgentChipClick = () => {
+    const open = this.elements.agentChip.dataset.open === 'true';
+    this.elements.agentChip.dataset.open = String(!open);
+    this.elements.agentChip.setAttribute('aria-expanded', String(!open));
+    this.elements.agentDetail.setAttribute('aria-hidden', String(open));
   };
 
   private percent(value: number, max: number): number {
@@ -223,4 +241,11 @@ function edgeGlyph(edge: UiSnapshot['announcementEdge']): string {
   if (edge === 'east') return 'E';
   if (edge === 'west') return 'W';
   return '';
+}
+
+function agentAbilityDetail(level: number): string {
+  if (level >= 3) return 'Acts within budget, gathers XP, pans, repairs, chases thieves, and places approved builds. Grows when secured claims add agent progress.';
+  if (level >= 2) return 'Runs trusted chores: gather XP, pan, repair, chase thieves, and place routine builds. Grows when secured claims add agent progress.';
+  if (level >= 1) return 'Can gather XP motes and handle chores when approved. Grows when secured claims add agent progress.';
+  return 'Follows you, observes the claim, and suggests work. Grows when secured claims add agent progress.';
 }

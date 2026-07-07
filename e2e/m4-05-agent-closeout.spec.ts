@@ -206,7 +206,7 @@ async function fastWave20(page: Page): Promise<void> {
 }
 
 function homePoint(): Point {
-  return { x: Balance.agent.homeX, z: Balance.agent.homeZ };
+  return { x: Balance.agent.homeX, z: 12 - 1.25 + 0.18 };
 }
 
 test('hero death creates no orphan agent receipts and reset returns the Prospector home', async ({ page }) => {

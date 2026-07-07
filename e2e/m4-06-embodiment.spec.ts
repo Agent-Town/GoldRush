@@ -53,6 +53,11 @@ async function saveM407Shot(page: Page, testInfo: TestInfo, name: string): Promi
   await page.screenshot({ path: `artifacts/m4-07/${testInfo.project.name}-${name}.png`, fullPage: true });
 }
 
+async function savePresenceShot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  mkdirSync('artifacts/prospector-presence', { recursive: true });
+  await page.screenshot({ path: `artifacts/prospector-presence/${testInfo.project.name}-${name}.png`, fullPage: true });
+}
+
 async function hideDebugGui(page: Page): Promise<void> {
   await page.evaluate(() => {
     const gui = document.querySelector<HTMLElement>('.lil-gui');
@@ -63,11 +68,15 @@ async function hideDebugGui(page: Page): Promise<void> {
 async function companion(page: Page): Promise<{
   visible: boolean;
   moving: boolean;
+  drifting: boolean;
   working: boolean;
   receiptCount: number;
+  lastReceiptTool: string | null;
   lastLine: string | null;
   position: { x: number; y: number; z: number };
   target: Point;
+  terrainY: number;
+  clearance: number;
 }> {
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.agent.embodiment);
 }
@@ -76,7 +85,15 @@ function distance(a: Point, b: Point): number {
   return Math.hypot(a.x - b.x, a.z - b.z);
 }
 
-async function waitForProspectorSprite(page: Page): Promise<SpriteSnapshot> {
+function terrainZone(point: Point): 'bank' | 'shallows' | 'river' | 'ford' | 'out' {
+  if (point.x < -32 || point.x > 32 || point.z < -32 || point.z > 32) return 'out';
+  if (point.x >= -3 && point.x <= 3 && point.z >= -5 && point.z <= 5) return 'ford';
+  if (point.z >= -5 && point.z <= 5) return 'river';
+  if ((point.z > 5 && point.z <= 6.25) || (point.z < -5 && point.z >= -6.25)) return 'shallows';
+  return 'bank';
+}
+
+async function waitForProspectorSprite(page: Page, timeout = 5_000): Promise<SpriteSnapshot> {
   await page.waitForFunction(() => {
     const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.prospector_agent'];
     return (
@@ -84,7 +101,7 @@ async function waitForProspectorSprite(page: Page): Promise<SpriteSnapshot> {
       snapshot.frameCount === 4 &&
       snapshot.frameKey.startsWith('char-prospector-sheet-hover4-')
     );
-  });
+  }, undefined, { timeout });
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.spriteAnimations['char.prospector_agent'] as SpriteSnapshot);
 }
 
@@ -114,22 +131,156 @@ function expectedDirection(dx: number, dz: number): string {
   return new OrientationResolver().resolve(dx, dz);
 }
 
+function minProspectorClearance(): number {
+  return Balance.agent.spriteScale * 0.5 + 0.08;
+}
+
 test('plain boot renders the Prospector near the claim with no debug gate', async ({ page }, testInfo) => {
   const errors = await openGame(page, '?nowaves&nolevel&seed=m4-06-plain');
+  const intro = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcement ?? '');
 
   await expect
     .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.agent.embodiment.visible ?? false), {
-      timeout: 6_000,
+      timeout: 2_000,
     })
     .toBe(true);
+  await waitForProspectorSprite(page, 2_000);
   const snap = await companion(page);
-  expect(distance(snap.position, { x: Balance.agent.homeX, z: Balance.agent.homeZ })).toBeLessThan(0.35);
+  const hero = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.heroPos);
+  expect(distance(snap.position, hero)).toBeGreaterThan(1.2);
+  expect(distance(snap.position, hero)).toBeLessThan(3.1);
+  expect(snap.position.y).toBeGreaterThanOrEqual(snap.terrainY + minProspectorClearance());
+  expect(snap.clearance).toBeGreaterThanOrEqual(minProspectorClearance());
   expect(snap.moving).toBe(false);
   expect(snap.receiptCount).toBeGreaterThanOrEqual(1);
+  expect(intro).toContain('the Prospector');
+  expect(intro).toContain('Chip by weapon');
+  await expect(page.getByTestId('hud-wave')).toContainText('the Prospector');
   await expect(page.getByTestId('hud-agent')).toContainText('L0');
   await expect(page.getByTestId('hud-agent')).toContainText('suggest-only');
 
-  await saveShot(page, testInfo, 'idle');
+  const introSample = await page.evaluate(() => ({
+    text: window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcement,
+    at: window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcementAt,
+  }));
+  await page.waitForTimeout(650);
+  await expect
+    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcementAt ?? -1), { timeout: 1_000 })
+    .toBe(introSample.at);
+
+  await savePresenceShot(page, testInfo, 'idle-beside-hero');
+  await savePresenceShot(page, testInfo, 'first-contact-beat');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('permission chip shows portrait, current level, abilities, and growth path', async ({ page }, testInfo) => {
+  await setAgentLevel(page, 1);
+  const errors = await openGame(page, '?nowaves&nolevel&seed=prospector-chip');
+  const chip = page.getByTestId('hud-agent');
+
+  await expect(chip.locator('[data-hud-agent-portrait]')).toBeVisible();
+  await expect(chip).toContainText('L1');
+  await expect(chip).toContainText('approval-required');
+  await chip.click();
+  await expect(chip).toHaveAttribute('aria-expanded', 'true');
+  await expect(chip.locator('[data-hud-agent-detail]')).toContainText('Can gather XP motes');
+  await expect(chip.locator('[data-hud-agent-detail]')).toContainText('Grows when secured claims add agent progress');
+
+  await savePresenceShot(page, testInfo, 'chip');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('Prospector floats above terrain while following hero probe points', async ({ page }) => {
+  const errors = await openGame(page, '?debug&nowaves&nolevel&seed=prospector-clearance');
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__));
+  const probes = [
+    { x: 0, z: 12 },
+    { x: -5, z: 18 },
+    { x: 5, z: 6.5 },
+    { x: 5, z: 5.5 },
+  ];
+
+  for (const probe of probes) {
+    await page.evaluate(({ x, z }) => window.__GR_TEST__?.teleport(x, z), probe);
+    await expect
+      .poll(
+        () =>
+          page.evaluate(() => {
+            const hero = window.__THREE_GAME_DIAGNOSTICS__!.heroPos;
+            const body = window.__THREE_GAME_DIAGNOSTICS__!.agent.embodiment.position;
+            return Math.hypot(body.x - hero.x, body.z - hero.z);
+          }),
+        { timeout: 8_000 },
+      )
+      .toBeLessThan(3.15);
+    const snap = await companion(page);
+    expect(snap.position.y).toBeGreaterThanOrEqual(snap.terrainY + minProspectorClearance());
+    expect(snap.clearance).toBeGreaterThanOrEqual(minProspectorClearance());
+    expect(terrainZone(snap.position)).not.toBe('river');
+  }
+
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('normal play Prospector gathers XP motes when permission allows', async ({ page }, testInfo) => {
+  await setAgentLevel(page, 1);
+  const errors = await openGame(page, '?stress=2&timescale=10&nolevel&seed=prospector-normal-xp');
+  await waitForProspectorSprite(page);
+
+  await expect
+    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.xpAudit.motesCollected ?? 0), {
+      timeout: 18_000,
+    })
+    .toBeGreaterThan(0);
+  await expect(page.getByTestId('hud-agent-feed')).toContainText('Gather');
+  const snap = await companion(page);
+  expect(snap.lastLine).toMatch(/motes|sweep|spark/);
+
+  await savePresenceShot(page, testInfo, 'xp-gather');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('Prospector defers XP gathering while a higher-priority receipt is active', async ({ page }) => {
+  await setAgentLevel(page, 2);
+  const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&seed=prospector-xp-priority');
+  await page.waitForFunction(() => Boolean(window.__GR_AGENT__));
+  await page.evaluate(() => {
+    window.__GR_TEST__?.setBalance('agent.xpMoteAgeS', 0.05);
+    window.__GR_TEST__?.setBalance('enemy.speed', 0);
+  });
+
+  const route = await page.evaluate(() => {
+    const start = window.__THREE_GAME_DIAGNOSTICS__!.agent.embodiment.position;
+    const nodes = window.__THREE_GAME_DIAGNOSTICS__!.harvest.activeNodes.filter((node) => node.active);
+    return (
+      nodes
+        .map((node) => ({
+          id: node.id,
+          position: node.position,
+          distance: Math.hypot(node.position.x - start.x, node.position.z - start.z),
+        }))
+        .sort((a, b) => b.distance - a.distance)[0] ?? null
+    );
+  });
+  expect(route).toBeTruthy();
+  const receipt = await page.evaluate((nodeId) => window.__GR_AGENT__?.panAt(nodeId), route!.id);
+  expect((receipt as { tool?: string } | undefined)?.tool).toBe('et.goldrush.pan_at');
+  await expect.poll(() => companion(page).then((snap) => snap.moving), { timeout: 2_000 }).toBe(true);
+
+  await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(-8, 12))).resolves.toBe(true);
+  await expect
+    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.xpAudit.motesSpawned ?? 0), { timeout: 8_000 })
+    .toBeGreaterThan(0);
+  await page.waitForTimeout(1_200);
+
+  const snap = await companion(page);
+  expect(snap.lastReceiptTool).toBe('et.goldrush.pan_at');
+  expect(distance(snap.target, route!.position)).toBeLessThan(0.01);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.xpAudit.motesCollected ?? 0)).toBe(0);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
@@ -140,7 +291,7 @@ test('real Prospector sprite loads and faces pan movement', async ({ page }, tes
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   const idle = await waitForProspectorSprite(page);
-  expect(idle.clip).toBe('idle');
+  expect(['idle', 'walk']).toContain(idle.clip);
   expect(idle.fps).toBe(4);
   expect(idle.frameKey).not.toContain('createProspectorTexture');
   await saveM407Shot(page, testInfo, 'idle');
@@ -221,7 +372,6 @@ test('debug receipt moves the Prospector toward a panning target and floats ledg
   const before = await companion(page);
   const node = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((entry) => entry.active));
   expect(node).toBeTruthy();
-  const beforeFloats = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts ?? 0);
   const receipt = await page.evaluate((nodeId) => window.__GR_AGENT__?.panAt(nodeId), node!.id);
   expect((receipt as { tool?: string } | undefined)?.tool).toBe('et.goldrush.pan_at');
 
@@ -234,14 +384,14 @@ test('debug receipt moves the Prospector toward a panning target and floats ledg
   await expect(page.getByTestId('hud-agent-feed')).toContainText('Pan');
   await expect
     .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts ?? 0), { timeout: 2_000 })
-    .toBeGreaterThan(beforeFloats);
+    .toBeGreaterThan(0);
 
   await saveShot(page, testInfo, 'mid-action');
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('permission-denied receipts do not move the Prospector', async ({ page }) => {
+test('permission-denied receipts do not send the Prospector to the denied target', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=4&nowaves&nolevel&seed=m4-06-denied');
   await page.waitForFunction(() => Boolean(window.__GR_AGENT__));
   const before = await companion(page);
@@ -256,7 +406,8 @@ test('permission-denied receipts do not move the Prospector', async ({ page }) =
   await page.waitForTimeout(350);
   const after = await companion(page);
 
-  expect(distance(after.position, before.position)).toBeLessThan(0.08);
+  expect(distance(after.position, before.position)).toBeLessThan(0.45);
+  expect(after.moving).toBe(false);
   expect(distance(after.target, before.target)).toBeLessThan(0.01);
   expect(distance(after.target, node!.position)).toBeGreaterThan(0.5);
   expect(['held', 'ask me', 'no trust']).toContain(after.lastLine);

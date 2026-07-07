@@ -118,14 +118,55 @@ body {
 .hud-agent-chip {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: max-content max-content minmax(0, 1fr);
+  grid-template-columns: 34px minmax(0, 1fr);
   align-items: center;
-  gap: 3px 6px;
-  max-width: 28ch;
-  padding-top: 4px;
+  gap: 4px 8px;
+  width: 100%;
+  max-width: 30ch;
+  margin: 4px 0 0;
+  padding: 5px 0 0;
   border-top: 1px solid rgba(255, 248, 232, 0.18);
+  border-right: 0;
+  border-bottom: 0;
+  border-left: 0;
+  color: inherit;
+  background: transparent;
   font-size: 0.72rem;
+  font-family: inherit;
   font-weight: 800;
+  text-align: left;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.hud-agent-chip:hover,
+.hud-agent-chip:focus-visible {
+  outline: 2px solid rgba(91, 138, 138, 0.72);
+  outline-offset: 3px;
+}
+
+.hud-agent-chip__portrait {
+  grid-row: span 2;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(46, 27, 14, 0.52);
+  border-radius: 6px;
+  object-fit: cover;
+  background: #f5e6c8;
+}
+
+.hud-agent-chip__main {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) max-content;
+  gap: 2px 6px;
+  width: 100%;
+  min-width: 0;
+}
+
+.hud-agent-chip__main [data-hud-agent-name] {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .hud-agent-chip strong {
@@ -133,13 +174,14 @@ body {
 }
 
 .hud-agent-chip [data-hud-agent-label] {
+  grid-column: 1 / -1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
 .hud-agent-feed {
-  grid-column: 1 / -1;
+  grid-column: 2;
   max-width: 24ch;
   overflow: hidden;
   color: #83ded7;
@@ -149,6 +191,26 @@ body {
 
 .hud-agent-feed:empty {
   display: none;
+}
+
+.hud-agent-detail {
+  display: none;
+  grid-column: 1 / -1;
+  max-width: 30ch;
+  padding: 6px 8px;
+  border: 1px solid rgba(46, 27, 14, 0.28);
+  border-radius: 6px;
+  color: #2e1b0e;
+  background: rgba(255, 248, 232, 0.88);
+  font-size: 0.7rem;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.hud-agent-chip:hover .hud-agent-detail,
+.hud-agent-chip:focus-visible .hud-agent-detail,
+.hud-agent-chip[data-open="true"] .hud-agent-detail {
+  display: block;
 }
 
 .hud-panel--build {
@@ -455,13 +517,21 @@ body {
   }
 
   .hud-agent-chip {
-    grid-template-columns: max-content max-content;
-    max-width: 18ch;
+    grid-template-columns: 30px minmax(0, 1fr);
+    max-width: 20ch;
   }
 
-  .hud-agent-chip [data-hud-agent-label],
+  .hud-agent-chip__portrait {
+    width: 30px;
+    height: 30px;
+  }
+
   .hud-agent-feed {
-    grid-column: 1 / -1;
+    grid-column: 2;
+  }
+
+  .hud-agent-detail {
+    max-width: 20ch;
   }
 
   .upgrade-overlay__cards {

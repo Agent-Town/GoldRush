@@ -8,6 +8,7 @@ import type { XpMotePool } from '../entities/XpMote';
 import type { EnemyPool } from '../entities/pools';
 import { isCombatDamageDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
+import type { AgentCollectXpOptions, AgentCollectXpResult } from '../agent/ToolSurface';
 import * as Terrain from '../world/Terrain';
 import type { AudioSystem } from './AudioSystem';
 import { TargetingSystem, type BuildingTarget } from './TargetingSystem';
@@ -212,6 +213,20 @@ export class CombatSystem {
 
     const gained = this.motes.update(delta, this.hero.group.position, this.handleXpCollect);
     if (gained > 0) this.xp += gained;
+  }
+
+  hasProspectorXp(options: AgentCollectXpOptions, agentPosition: THREE.Vector3): boolean {
+    return this.motes.hasCollectible(options.minAgeS, agentPosition, Balance.sparkRig.range);
+  }
+
+  collectXpForProspector(options: AgentCollectXpOptions, agentPosition: THREE.Vector3): AgentCollectXpResult {
+    const sweep = this.motes.collectAged(options.minAgeS, agentPosition, Balance.sparkRig.range, this.handleXpCollect);
+    if (sweep.xp > 0) this.xp += sweep.xp;
+    return {
+      ...sweep,
+      collector: 'prospector',
+      message: `Gathered ${sweep.xp} XP`,
+    };
   }
 
   readonly handleEnemyContact = (enemy: ClaimJumperEnemy): void => {

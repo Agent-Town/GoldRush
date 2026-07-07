@@ -23,7 +23,7 @@ import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, type MetaProgress } from './MetaProgress';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
-import type { ToolReceipt } from '../agent/ToolSurface';
+import type { AgentCollectXpOptions, AgentCollectXpResult, ToolReceipt } from '../agent/ToolSurface';
 import {
   areWavesDisabled,
   getDebugSeed,
@@ -304,6 +304,8 @@ export class Game {
   private runManager?: RunManager;
   private agentStub?: AgentStub;
   private unsubscribeAgentReceipts?: () => void;
+  private nextProspectorXpSweepAt = 0;
+  private prospectorIntroShown = false;
   private readonly researchStorage = browserResearchStorage();
   private researchState: ResearchState = loadResearchState(this.researchStorage);
 
@@ -588,6 +590,7 @@ export class Game {
       {
         diagnostics: () => window.__THREE_GAME_DIAGNOSTICS__,
         economyLog: () => this.economy.log,
+        collectXp: (options) => this.collectProspectorXp(options),
       },
       {
         metaProgress: {
@@ -601,6 +604,7 @@ export class Game {
       this.prospector.handleReceipt(receipt, this.resolveProspectorReceiptPoint(receipt)),
     );
     this.agentStub.heartbeat();
+    this.showProspectorIntro();
   }
 
   start(): void {
@@ -734,6 +738,7 @@ export class Game {
         this.vfx.floatText(this.hero.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.combat.update(simDelta, this.timeAlive);
+      this.maybeProspectorCollectXp();
       this.goldPickups.update(
         simDelta,
         this.hero.group.position,
@@ -748,7 +753,7 @@ export class Game {
   }
 
   private updatePresentation(delta: number): void {
-    this.prospector.update(delta, this.timeAlive);
+    this.prospector.update(delta, this.timeAlive, this.hero.group.position);
     this.vfx.update(delta);
     this.syncHeroVisualHeight();
     const visualStress =
@@ -867,11 +872,12 @@ export class Game {
     this.scene.add(this.xpMotes.group);
     this.scene.add(this.goldPickups.group);
     this.scene.add(this.combatVfx.group);
+    this.hero.group.position.copy(this.heroStart);
+    this.syncHeroVisualHeight();
+    this.prospector.reset(this.hero.group.position);
     this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
-    this.hero.group.position.copy(this.heroStart);
-    this.syncHeroVisualHeight();
     this.scene.add(this.hero.group);
   }
 
@@ -1107,6 +1113,41 @@ export class Game {
     return this.agentStub?.state ?? null;
   }
 
+  private showProspectorIntro(): void {
+    if (this.prospectorIntroShown || !this.agentStub) return;
+    const { permissionLevel } = this.agentStub.state;
+    this.prospectorIntroShown = true;
+    this.uiBridge.announce(
+      `the Prospector: ${prospectorIntroAbility(permissionLevel)} Chip by weapon; claim wins grow it.`,
+      this.timeAlive,
+      null,
+      5.6,
+    );
+    this.prospector.speak('Prospector ready');
+  }
+
+  private maybeProspectorCollectXp(): void {
+    if (
+      !this.agentStub ||
+      this.agentStub.state.permissionLevel <= 0 ||
+      this.prospector.hasActiveTask ||
+      this.timeAlive < this.nextProspectorXpSweepAt
+    ) {
+      return;
+    }
+    const options = { minAgeS: Balance.agent.xpMoteAgeS };
+    if (!this.combat.hasProspectorXp(options, this.prospector.position)) {
+      this.nextProspectorXpSweepAt = this.timeAlive + 0.8;
+      return;
+    }
+    this.agentStub.collectXp();
+    this.nextProspectorXpSweepAt = this.timeAlive + 2.4;
+  }
+
+  private collectProspectorXp(options: AgentCollectXpOptions): AgentCollectXpResult {
+    return this.combat.collectXpForProspector(options, this.prospector.position);
+  }
+
   private syncAssayOfficePrompt(): void {
     this.assayOfficePrompt.update(
       this.state.current === 'playing' &&
@@ -1191,6 +1232,8 @@ export class Game {
     this.syncHeroVisualHeight();
     this.cameraRig.snapTo(this.hero.group.position);
     this.timeAlive = 0;
+    this.nextProspectorXpSweepAt = 0;
+    this.prospectorIntroShown = false;
     this.kills = 0;
     this.stolenTotal = 0;
     this.reclaimedTotal = 0;
@@ -1214,8 +1257,9 @@ export class Game {
       blastTime: 0,
     };
     this.state.restart();
-    this.prospector.reset();
+    this.prospector.reset(this.hero.group.position);
     this.uiBridge.announce('Stake your claim.', 0);
+    this.showProspectorIntro();
     this.upgradeOverlay.hide();
     this.upgradePrompt.update(null, true);
     this.demolishPrompt.update(null, true);
@@ -1918,6 +1962,12 @@ function edgePlace(edge: CompassEdge): string {
   if (edge === 'south') return 'south bank';
   if (edge === 'east') return 'east ridge';
   return 'west ridge';
+}
+
+function prospectorIntroAbility(level: number): string {
+  if (level >= 2) return 'does trusted chores.';
+  if (level >= 1) return 'can gather XP with approval.';
+  return 'follows and observes.';
 }
 
 function pointFromUnknown(value: unknown): ProspectorPoint | null {
