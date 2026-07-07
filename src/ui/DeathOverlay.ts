@@ -54,6 +54,7 @@ export type DeathResearchState = {
   roundsRemaining: number;
   science: ScienceMeterView;
   proposals: readonly ResearchNode[];
+  pinnedPath?: readonly string[];
 };
 
 export type DeathOverlayOptions = {
@@ -234,6 +235,11 @@ export class DeathOverlay {
                   <strong>${this.escape(node.name)}</strong>
                   <span>${this.escape(node.description)}</span>
                   <span data-testid="research-effect-${index}">Effect: ${this.escape(node.effect)}</span>
+                  ${
+                    research.pinnedPath?.includes(node.id)
+                      ? `<span class="research-card__pin-hint" data-testid="research-pin-hint-${index}">on your surveyed route</span>`
+                      : ''
+                  }
                 </button>
               `,
             )

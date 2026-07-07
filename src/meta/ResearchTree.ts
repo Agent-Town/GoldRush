@@ -46,12 +46,14 @@ export type ResearchState = {
   progress: MetaProgress;
   taken: string[];
   proposalSalt: number;
+  pinnedTarget: string | null;
 };
 
 type ResearchRegistry = {
   version: 1;
   taken: string[];
   proposalSalt: number;
+  pinnedTarget?: string | null;
 };
 
 const RESEARCH_ID_MIGRATIONS: Record<string, string> = {
@@ -224,7 +226,7 @@ export const researchNodeById = RESEARCH_NODES.reduce(
 );
 
 export function freshResearchState(progress: MetaProgress = freshMetaProgress()): ResearchState {
-  return { version: 1, progress, taken: [], proposalSalt: 0 };
+  return { version: 1, progress, taken: [], proposalSalt: 0, pinnedTarget: null };
 }
 
 export function loadResearchState(
@@ -256,14 +258,18 @@ export function saveResearchState(
 }
 
 export function availablePicks(state: ResearchState): ResearchNode[] {
-  const taken = new Set(state.taken);
-  const frontier = RESEARCH_NODES.filter((node) => {
-    if (taken.has(node.id)) return false;
-    const requires = 'requires' in node ? node.requires : [];
-    return requires.every((id) => taken.has(id));
-  });
+  const frontier = frontierNodes(state);
   if (frontier.length > 0) return seededShuffle(frontier, proposalSeed(state)).slice(0, 2);
   return continuedStudyPicks(state);
+}
+
+export function frontierNodes(state: ResearchState): ResearchNode[] {
+  const taken = new Set(state.taken);
+  return RESEARCH_NODES.filter((node) => {
+    if (taken.has(node.id)) return false;
+    const requires = (node as ResearchNode).requires ?? [];
+    return requires.every((id) => taken.has(id));
+  });
 }
 
 export function takeNode(state: ResearchState, id: string): ResearchState {
@@ -280,6 +286,7 @@ export function takeNode(state: ResearchState, id: string): ResearchState {
     },
     taken: [...state.taken, id],
     proposalSalt: state.proposalSalt + 1,
+    pinnedTarget: state.pinnedTarget,
   };
 }
 
@@ -289,6 +296,34 @@ export function skipResearchPick(state: ResearchState): ResearchState {
 
 export function hasResearchNode(state: ResearchState, id: string): boolean {
   return state.taken.includes(id);
+}
+
+export function setPinnedResearchTarget(state: ResearchState, id: string | null): ResearchState {
+  return { ...state, pinnedTarget: id && id in researchNodeById ? id : null };
+}
+
+export function pinnedResearchPath(state: ResearchState): string[] {
+  return state.pinnedTarget ? researchPathIds(state.pinnedTarget) : [];
+}
+
+export function researchPathIds(id: string): string[] {
+  const path: string[] = [];
+  const seen = new Set<string>();
+  const visit = (nodeId: string) => {
+    if (seen.has(nodeId)) return;
+    seen.add(nodeId);
+    const node = researchNodeById[nodeId];
+    if (!node) return;
+    for (const required of node.requires ?? []) visit(required);
+    path.push(nodeId);
+  };
+  visit(id);
+  return path;
+}
+
+export function researchDistance(state: ResearchState, id: string): number {
+  const taken = new Set(state.taken);
+  return researchPathIds(id).filter((nodeId) => !taken.has(nodeId)).length;
 }
 
 export function contractTierForResearch(state: ResearchState): ContractTier {
@@ -343,11 +378,13 @@ function migrateResearchState(raw: unknown, progress: MetaProgress): ResearchSta
     .filter((id): id is string => typeof id === 'string' && (id in researchNodeById || isContinuedStudyId(id)));
   const proposalSalt =
     typeof raw.proposalSalt === 'number' && Number.isFinite(raw.proposalSalt) ? Math.max(0, Math.floor(raw.proposalSalt)) : 0;
-  return { version: 1, progress, taken: [...new Set(taken)], proposalSalt };
+  const rawPinnedTarget = typeof raw.pinnedTarget === 'string' ? (RESEARCH_ID_MIGRATIONS[raw.pinnedTarget] ?? raw.pinnedTarget) : null;
+  const pinnedTarget = rawPinnedTarget && rawPinnedTarget in researchNodeById ? rawPinnedTarget : null;
+  return { version: 1, progress, taken: [...new Set(taken)], proposalSalt, pinnedTarget };
 }
 
 function toRegistry(state: ResearchState): ResearchRegistry {
-  return { version: 1, taken: state.taken, proposalSalt: state.proposalSalt };
+  return { version: 1, taken: state.taken, proposalSalt: state.proposalSalt, pinnedTarget: state.pinnedTarget };
 }
 
 function proposalSeed(state: ResearchState): string {

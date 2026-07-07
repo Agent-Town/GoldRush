@@ -15,6 +15,7 @@ import {
   continuedStudyBonuses,
   hasResearchNode,
   loadResearchState,
+  pinnedResearchPath,
   researchNodeById,
   saveResearchState,
   scienceMeter,
@@ -1954,6 +1955,7 @@ export class Game {
       roundsRemaining,
       science: scienceMeter(this.researchState),
       proposals: roundsRemaining > 0 ? availablePicks(this.researchState) : [],
+      pinnedPath: pinnedResearchPath(this.researchState),
     });
 
     return {
@@ -2001,6 +2003,7 @@ export class Game {
     continued: ReturnType<typeof continuedStudyBonuses>;
     assayOrderSlots: number;
     contractTier: number;
+    pinnedTarget: string | null;
   } {
     const meter = scienceMeter(this.researchState);
     return {
@@ -2014,6 +2017,7 @@ export class Game {
       continued: continuedStudyBonuses(this.researchState),
       assayOrderSlots: hasResearchNode(this.researchState, 'second_order_slot') ? Balance.research.secondOrderSlots : 1,
       contractTier: contractTierForResearch(this.researchState),
+      pinnedTarget: this.researchState.pinnedTarget,
     };
   }
 

@@ -580,6 +580,7 @@ interface Window {
       };
       assayOrderSlots: number;
       contractTier: number;
+      pinnedTarget: string | null;
     };
     takeResearchNode: (id: string) => boolean;
     availableResearchPicks: () => string[];
