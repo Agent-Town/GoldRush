@@ -1,5 +1,5 @@
 # Epoch 6 "The Atomic Homestead" — art & level bundle · banked 2026-07-07 (template-law shape)
-**TONE GATE: this whole bundle executes only per the owner's saga §6 Q1 answer (warm 50s-futurism check). Everything below is written to the warm reading: the peaceful atom, chrome optimism, zero sickness imagery — hazards glow and tick, they never wound.**
+**TONE GATE: SATISFIED — owner ratified the warm reading 2026-07-07 ("Warm atomic satire works"). The lore keystone is likewise ratified at full strength: ADR-003 (agents originate here). Build with that weight.**
 
 **Era thesis.** The Deep Reactor comes ashore and nobody quite knows what it is — but the Combine does, and floods the frontier with "helpful" atomic appliances that promptly go feral. Everything in this era TICKS: buffs decay, hazards decay, enemies decay. Time itself becomes a resource you read on teal dials.
 

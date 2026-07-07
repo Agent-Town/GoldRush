@@ -51,10 +51,15 @@ Current lane-c order: (1) **w1-07 re-queue** (burst re-queue orders; earlier run
 3. batch-009 candidates (author after W1 combined review): water-foam/detail sprites if the review wants them, walk4 gap cells
 4. Nightly art-shift resumes per VISION-EPOCHS asset strategy once BACKLOG-manifest rows exist
 
+## ⭐ TWELVE OWNER RULINGS — interactive session 2026-07-07 ~10:45 (all recorded in specs; fires obey)
+E6 warm-atomic RATIFIED · **agent-origin FULL canon → ADR-003** · **audio = GENERATED-FIRST NOW** (spec owed, attended; owner key owed, see desk) · Charter Press → LATER (E4+, supersedes beta-early) · **economy: META-CURRENCY layer above era resources** (slot reserved; monetization spec = owner-gated LATER) · co-op = own milestone AFTER E2 · **M4-08 = YES full attribution → FIRE-AUTHORABLE NOW** (plumbing per lane-b ladder item 4's scout notes) · **GT-07 = "The Claim, Re-surveyed"** (spec updated — A/B vs the frozen flat original) · **BACKUP = private GitHub + fire auto-push** (fire.md BACKUP LAW live; push scoped-allowed, force denied; ACTIVATES when owner creates the remote) · **HOSTING = Cloudflare Pages auto-deploy** (task authorable after owner's wrangler login) · audience = family/friends first, public planned if hit (public-readiness pack = LATER: title review, moderation, privacy, monetization) · fire cadence stays 5-min.
+
 ## OWNER'S DESK — blocking on Robin (the human is a lane too; dashboard renders these)
-OWNER: SCI-02 deep-run check — plain words: sometime, play PAST WAVE 30 and answer in one sentence: "did the level-up choices keep mattering deep, or did the wall come back?" (Original complaint: upgrades stop holding ~w32; SCI-02's families+mastery is the fix under test. Happens naturally while playing — owner 2026-07-07: "I can keep playing.")
-OWNER: science pacing re-check after epoch-1 first fill (threshold 6; owner signal 2026-07-07: "moving towards steampower quickly")
-OWNER: M4-08 one-liner — should run summaries attribute stats agent-vs-player ("panned: you 140 / Prospector 95")? Recommendation: yes.
+OWNER: ONE-TIME (2 min): create the backup remote — `gh repo create gold-rush --private --source . --push` (or any private repo + `git remote add origin <url>`); the fires auto-push from then on. THE PROJECT HAS NO OFF-SITE COPY UNTIL THIS RUNS.
+OWNER: ONE-TIME (5 min, when convenient): `wrangler login` + create a Cloudflare Pages project — unlocks auto-deploy of gated builds (kids play at a private URL).
+OWNER: WHEN READY: an audio-generation key (ElevenLabs or preferred) — unlocks the generated-first audio pipeline you ratified.
+OWNER: SCI-02 deep-run check — sometime, play PAST WAVE 30, one sentence: "did the picks keep mattering, or did the wall come back?"
+OWNER: science pacing re-check after epoch-1 first fill (signal noted: "moving towards steampower quickly")
 
 ### Retired 2026-07-07 morning (owner desk sweep)
 - ✅ **turret-feel: "tested, better now" → M2 SIGNED OFF** — that was the last M2 gate (provisional since s4x). Recorded in HANDOVER §2.

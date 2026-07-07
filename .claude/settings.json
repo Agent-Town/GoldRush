@@ -68,10 +68,17 @@
       "Bash(npm -v)",
       "Bash(codex --version)",
       "Bash(claude mcp list)",
-      "Bash(claude mcp list *)"
+      "Bash(claude mcp list *)",
+      "Bash(git push origin *)",
+      "Bash(git push -u origin *)",
+      "Bash(git push origin)",
+      "Bash(git remote add origin *)"
     ],
     "deny": [
-      "Bash(git push:*)",
+      "Bash(git push --force:*)",
+      "Bash(git push -f:*)",
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
       "Bash(git reset --hard:*)",
       "Bash(rm -rf /Users:*)",
       "Bash(rm -rf .git:*)",
