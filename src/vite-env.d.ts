@@ -445,6 +445,11 @@ interface ThreeGameDiagnostics {
     sim: {
       flat: boolean;
       tile: string;
+      balance: {
+        uphillMin: number;
+        downhillMax: number;
+        slopeMax: number;
+      };
       probes: Record<string, {
         height: number;
         slope: { dx: number; dz: number };
@@ -653,6 +658,13 @@ interface Window {
     fundMegaproject: () => boolean;
     damageMegaproject: (amount: number) => boolean;
     terrainSample: (x: number, z: number) => GrTerrainSample;
+    terrainSim: (x: number, z: number) => {
+      height: number;
+      slope: { dx: number; dz: number };
+      traversable: boolean;
+      speedEast: number;
+      speedWest: number;
+    };
     setTestClip: (slot: string, frames: string[], fps: number) => void;
     setBuildMode: (on: boolean) => void;
     selectBuildable: (id: string) => boolean;

@@ -87,6 +87,7 @@ export class DebugTools {
       ['XP', 'xp'],
       ['Offers', 'offers'],
       ['Terrain', 'terrain'],
+      ['Terrain Sim', 'terrainSim'],
       ['Sprite', 'sprite'],
       ['Charm', 'charm'],
     ];

@@ -6,6 +6,7 @@ import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/s
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import { activeContract, type ContractWaterSource } from '../meta/ContractFamilies';
+import { hasElevationTile, isTraversable as isSimTraversable, simHeight } from '../sim/TileHeight';
 import { normalizeSeed } from '../core/Rng';
 import { createClaimProps } from './props';
 import {
@@ -59,6 +60,7 @@ export const WATER_Y = 0.025;
 export const VISTA_RADIUS = 90;
 
 const ACTIVE_CONTRACT = activeContract();
+const ELEVATION_TILE = hasElevationTile();
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
 
 export const bounds: TerrainBounds = {
@@ -81,6 +83,7 @@ export function sample(x: number, z: number): TerrainSample {
   if (x < bounds.minX || x > bounds.maxX || z < bounds.minZ || z > bounds.maxZ) {
     return { walkable: false, speedMul: 0, zone: 'out' };
   }
+  if (ELEVATION_TILE && !isSimTraversable(x, z)) return { walkable: false, speedMul: 0, zone: 'out' };
 
   const spring = springPondAt(x, z);
   if (spring) return { walkable: true, speedMul: 0.8, zone: 'shallows', waterSource: 'spring_pond' };
@@ -145,10 +148,12 @@ export function isWaterSourceAdjacent(x: number, z: number, pad: number): boolea
 }
 
 export function sampleHeight(x: number, z: number): number {
+  if (ELEVATION_TILE) return simHeight(x, z);
   return sampleHeightFamily(THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX), THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ), false);
 }
 
 export function sampleUnclampedHeight(x: number, z: number): number {
+  if (ELEVATION_TILE) return simHeight(x, z);
   return sampleHeightFamily(x, z, true);
 }
 

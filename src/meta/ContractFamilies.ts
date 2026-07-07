@@ -157,6 +157,7 @@ export type EpochTileDescriptor = {
 
 export type EpochBundle = EpochMeta & {
   tile?: EpochTileDescriptor;
+  devTiles: EpochTileDescriptor[];
   megaprojects: MegaprojectManifest[];
   contracts: ContractManifest[];
   families: EpochUpgradeFamily[];
@@ -168,6 +169,7 @@ export type EpochBundle = EpochMeta & {
 
 type EpochManifest = EpochMeta & {
   tile?: EpochTileDescriptor;
+  devTiles?: EpochTileDescriptor[];
   megaprojects?: MegaprojectManifest[];
   parts: {
     families?: string;
@@ -241,6 +243,7 @@ export function loadEpoch(id: string): EpochBundle {
   return {
     ...toMeta(manifest),
     tile: manifest.tile,
+    devTiles: manifest.devTiles ?? [],
     megaprojects: manifest.megaprojects ?? [],
     contracts: contracts.contracts,
     families: families.families,
@@ -252,6 +255,8 @@ export function loadEpoch(id: string): EpochBundle {
 }
 
 export function activeTileDescriptor(): EpochTileDescriptor {
+  const tileOverride = activeDevTileOverride();
+  if (tileOverride) return tileOverride;
   const contract = activeContract();
   const tile = {
     id: contract.tileParams.tileId,
@@ -357,6 +362,13 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
     },
   };
   return activeSelection;
+}
+
+function activeDevTileOverride(): EpochTileDescriptor | null {
+  const params = readSearchParams();
+  const requestedId = params.get('tile');
+  if (!requestedId || !params.has('debug')) return null;
+  return manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((tile) => tile.id === requestedId) ?? null;
 }
 
 function defaultContractFor(manifest: EpochManifest): ContractManifest {

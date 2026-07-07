@@ -7,6 +7,7 @@ import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import type { Intents } from '../core/InputController';
 import type { TerrainBounds, TerrainSample } from '../world/Terrain';
+import { terrainSpeedMultiplier } from '../sim/TileHeight';
 
 export type TerrainSampler = (x: number, z: number) => TerrainSample;
 
@@ -108,9 +109,10 @@ export class Hero {
     this.iframeRemaining = Math.max(0, this.iframeRemaining - dt);
 
     const currentSample = terrain.sample(this.group.position.x, this.group.position.z);
+    const slopeSpeed = terrainSpeedMultiplier(this.group.position.x, this.group.position.z, intents.move.x, intents.move.y);
     this.targetVelocity
       .set(intents.move.x, 0, intents.move.y)
-      .multiplyScalar(Balance.hero.speed * this.moveSpeedMult * currentSample.speedMul);
+      .multiplyScalar(Balance.hero.speed * this.moveSpeedMult * currentSample.speedMul * slopeSpeed);
 
     const rate = this.targetVelocity.lengthSq() > this.velocity.lengthSq() ? Balance.hero.accel : Balance.hero.decel;
     this.velocity.lerp(this.targetVelocity, 1 - Math.exp(-rate * dt));

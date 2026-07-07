@@ -3,6 +3,7 @@ import { OrientationResolver, type RotationDirection } from '../assets/Orientati
 import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
+import { hasElevationTile, isTraversable as isSimTraversable, terrainSpeedMultiplier } from '../sim/TileHeight';
 import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
 import * as Terrain from '../world/Terrain';
 import type { PalisadeBlocker } from './Palisade';
@@ -28,6 +29,7 @@ export type ClaimJumperAssets = {
 export type EnemySpawnParams = {
   speedScale?: number;
   hpScale?: number;
+  activationDelay?: number;
   edge?: CompassEdge;
   thief?: boolean;
   wrecker?: boolean;
@@ -109,6 +111,7 @@ export class ClaimJumperEnemy {
   private speed: number = Balance.enemy.speed;
   private scriptedSpeed = 0;
   private scripted = false;
+  private activationDelay = 0;
   private contactCooldown = 0;
   private spriteClip: CharacterSpriteClip = 'idle';
   private spriteOrientation: RotationDirection = 's';
@@ -211,6 +214,7 @@ export class ClaimJumperEnemy {
     this.alive = true;
     this.hp = Balance.enemy.hp * (params.hpScale ?? 1);
     this.speed = Balance.enemy.speed * (params.speedScale ?? 1);
+    this.activationDelay = Math.max(0, params.activationDelay ?? 0);
     this.contactCooldown = 0;
     this.thief = params.thief === true;
     this.wrecker = !this.thief && params.wrecker === true;
@@ -257,6 +261,14 @@ export class ClaimJumperEnemy {
     const previousZ = this.group.position.z;
     this.contactCooldown = Math.max(0, this.contactCooldown - delta);
     this.flashRemaining = Math.max(0, this.flashRemaining - delta);
+    if (this.activationDelay > 0) {
+      this.activationDelay = Math.max(0, this.activationDelay - delta);
+      this.velocity.set(0, 0, 0);
+      this.leadVelocity.set(0, 0, 0);
+      this.spriteOrientation = this.orientationResolver.idleDirection();
+      this.syncVisualY();
+      return false;
+    }
 
     const targetPosition = this.scripted
       ? this.scriptedTarget
@@ -350,6 +362,7 @@ export class ClaimJumperEnemy {
   recycle(): void {
     this.alive = false;
     this.hp = 0;
+    this.activationDelay = 0;
     this.contactCooldown = 0;
     this.thief = false;
     this.wrecker = false;
@@ -558,15 +571,43 @@ export class ClaimJumperEnemy {
   }
 
   private move(delta: number, blockers: readonly PalisadeBlocker[], speed: number): void {
-    const distance = speed * delta;
-    const steps = blockers.length > 0 || Balance.pathing.riverBlocksEnemies ? Math.max(1, Math.min(8, Math.ceil(distance / 0.25))) : 1;
-    const stepDistance = distance / steps;
+    const elevation = hasElevationTile();
+    if (!elevation) {
+      const distance = speed * delta;
+      const steps = blockers.length > 0 || Balance.pathing.riverBlocksEnemies ? Math.max(1, Math.min(8, Math.ceil(distance / 0.25))) : 1;
+      const stepDistance = distance / steps;
+      for (let step = 0; step < steps; step += 1) {
+        this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
+        for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
+        this.resolveRiver(stepDistance);
+        this.group.position.copy(this.nextPosition);
+      }
+      return;
+    }
+
+    const maxDistance = speed * Balance.terrainSim.downhillMax * delta;
+    const steps = Math.max(1, Math.min(8, Math.ceil(maxDistance / 0.25)));
+    const stepDelta = delta / steps;
     for (let step = 0; step < steps; step += 1) {
+      const stepDistance =
+        speed * terrainSpeedMultiplier(this.group.position.x, this.group.position.z, this.velocity.x, this.velocity.z) * stepDelta;
       this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
       for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
       this.resolveRiver(stepDistance);
+      this.resolveTerrain();
       this.group.position.copy(this.nextPosition);
     }
+  }
+
+  private resolveTerrain(): void {
+    if (isSimTraversable(this.nextPosition.x, this.nextPosition.z)) return;
+
+    const previous = this.group.position;
+    const nextX = this.nextPosition.x;
+    const nextZ = this.nextPosition.z;
+    this.nextPosition.copy(previous);
+    if (isSimTraversable(nextX, previous.z)) this.nextPosition.x = nextX;
+    if (isSimTraversable(this.nextPosition.x, nextZ)) this.nextPosition.z = nextZ;
   }
 
   private resolveRiver(stepDistance: number): void {
