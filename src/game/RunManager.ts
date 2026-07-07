@@ -204,8 +204,8 @@ export class RunManager {
         <p class="death-overlay__flavor">The assay is sealed. The Claim Office has your payout ready.</p>
         <dl class="death-overlay__ledger">
           <div><dt>Waves Held</dt><dd>${summary.wavesSurvived}</dd></div>
-          <div><dt>Gold Panned</dt><dd>${summary.goldPanned}</dd></div>
-          <div><dt>Gold Reclaimed</dt><dd>${summary.goldReclaimed}</dd></div>
+          <div><dt>Gold Panned</dt><dd>${renderActorSplit(summary.goldPanned, summary.goldPannedByProspector, 'summary-gold-panned-split')}</dd></div>
+          <div><dt>Gold Reclaimed</dt><dd>${renderActorSplit(summary.goldReclaimed, summary.goldReclaimedByProspector, 'summary-gold-reclaimed-split')}</dd></div>
           <div><dt>Buildings Raised</dt><dd>${summary.buildingsBuilt}</dd></div>
         </dl>
         <section class="claim-office" data-testid="claim-office" aria-label="Claim Office">
@@ -267,26 +267,41 @@ export function summarizeRun(log: readonly EconomyEvent[], wavesSurvived: number
   const summary: RunSummary = {
     wavesSurvived,
     goldPanned: 0,
+    goldPannedByProspector: 0,
     goldStolen: 0,
     goldReclaimed: 0,
+    goldReclaimedByProspector: 0,
     buildingsBuilt: 0,
   };
 
   for (const event of log) {
     if (event.type === 'run_reset') {
       summary.goldPanned = 0;
+      summary.goldPannedByProspector = 0;
       summary.goldStolen = 0;
       summary.goldReclaimed = 0;
+      summary.goldReclaimedByProspector = 0;
       summary.buildingsBuilt = 0;
       continue;
     }
-    if (event.type === 'gold_panned') summary.goldPanned += event.amount;
+    if (event.type === 'gold_panned') {
+      summary.goldPanned += event.amount;
+      if (event.actor === 'prospector') summary.goldPannedByProspector += event.amount;
+    }
     if (event.type === 'gold_stolen') summary.goldStolen += event.amount;
-    if (event.type === 'gold_reclaimed') summary.goldReclaimed += event.amount;
+    if (event.type === 'gold_reclaimed') {
+      summary.goldReclaimed += event.amount;
+      if (event.actor === 'prospector') summary.goldReclaimedByProspector += event.amount;
+    }
     if (event.type === 'gold_spent' && event.sink.startsWith('build_')) summary.buildingsBuilt += 1;
   }
 
   return summary;
+}
+
+function renderActorSplit(total: number, prospector: number, testId: string): string {
+  if (prospector <= 0) return `${total}`;
+  return `<span data-testid="${testId}">you ${total - prospector} / the Prospector ${prospector}</span>`;
 }
 
 function resolveHost(game: unknown): RunManagerHost {

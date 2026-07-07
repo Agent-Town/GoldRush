@@ -29,6 +29,9 @@ export type DeathRunStatsSnapshot = {
   sluiced: number;
   stolen: number;
   reclaimed: number;
+  pannedByProspector: number;
+  sluicedByProspector: number;
+  reclaimedByProspector: number;
   buildingsBuilt: number;
   buildingsLost: number;
   buildingsRepaired: number;
@@ -129,15 +132,19 @@ export class DeathOverlay {
           </div>
           <div>
             <dt>Gold Panned</dt>
-            <dd data-death-gold>${ledger.goldPanned}</dd>
+            <dd data-death-gold>${this.formatActorSplit(ledger.goldPanned, runStats.pannedByProspector, 'summary-gold-panned-split')}</dd>
           </div>
           <div>
             <dt>Gold Sluiced</dt>
-            <dd data-death-sluiced>${runStats.sluiced}</dd>
+            <dd data-death-sluiced>${this.formatActorSplit(runStats.sluiced, runStats.sluicedByProspector, 'summary-gold-sluiced-split')}</dd>
           </div>
           <div>
             <dt>Stolen / Reclaimed</dt>
-            <dd data-death-stolen>${runStats.stolen} / ${runStats.reclaimed}</dd>
+            <dd data-death-stolen>${runStats.stolen} / ${this.formatActorSplit(
+              runStats.reclaimed,
+              runStats.reclaimedByProspector,
+              'summary-gold-reclaimed-split',
+            )}</dd>
           </div>
           <div>
             <dt>Spent</dt>
@@ -264,6 +271,9 @@ export class DeathOverlay {
     sluiced: number;
     stolen: number;
     reclaimed: number;
+    pannedByProspector: number;
+    sluicedByProspector: number;
+    reclaimedByProspector: number;
     buildingsBuilt: number;
     buildingsLost: number;
     buildingsRepaired: number;
@@ -279,6 +289,9 @@ export class DeathOverlay {
       sluiced: Math.round(snapshot?.sluiced ?? summary?.sluiced ?? 0),
       stolen: Math.round(snapshot?.stolen ?? summary?.stolen ?? diagnostics?.steal.stolenTotal ?? 0),
       reclaimed: Math.round(snapshot?.reclaimed ?? summary?.reclaimed ?? diagnostics?.steal.reclaimedTotal ?? 0),
+      pannedByProspector: Math.round(snapshot?.pannedByProspector ?? summary?.pannedByProspector ?? 0),
+      sluicedByProspector: Math.round(snapshot?.sluicedByProspector ?? summary?.sluicedByProspector ?? 0),
+      reclaimedByProspector: Math.round(snapshot?.reclaimedByProspector ?? summary?.reclaimedByProspector ?? 0),
       buildingsBuilt: Math.round(snapshot?.buildingsBuilt ?? summary?.buildingsBuilt ?? 0),
       buildingsLost: Math.round(snapshot?.buildingsLost ?? diagnostics?.wreck.wrecked ?? 0),
       buildingsRepaired: Math.round(snapshot?.buildingsRepaired ?? summary?.repairs ?? diagnostics?.wreck.repairs ?? 0),
@@ -305,6 +318,11 @@ export class DeathOverlay {
   private formatBase(value: number | undefined): string {
     const baseValue = Math.round(value ?? 0);
     return baseValue > 0 ? `${baseValue}g base` : 'baseless';
+  }
+
+  private formatActorSplit(total: number, prospector: number, testId: string): string {
+    if (prospector <= 0) return `${total}`;
+    return `<span data-testid="${testId}">you ${total - prospector} / the Prospector ${prospector}</span>`;
   }
 
   private readonly handleClick = (event: MouseEvent) => {

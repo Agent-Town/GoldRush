@@ -1,8 +1,10 @@
 export type RunSummary = {
   wavesSurvived: number;
   goldPanned: number;
+  goldPannedByProspector: number;
   goldStolen: number;
   goldReclaimed: number;
+  goldReclaimedByProspector: number;
   buildingsBuilt: number;
 };
 

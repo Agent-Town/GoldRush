@@ -167,6 +167,9 @@ interface ThreeGameDiagnostics {
       granted: number;
       stolen: number;
       reclaimed: number;
+      pannedByProspector: number;
+      sluicedByProspector: number;
+      reclaimedByProspector: number;
       spent: number;
       baseValue: number;
       buildingsBuilt: number;
@@ -576,6 +579,9 @@ interface Window {
       granted: number;
       stolen: number;
       reclaimed: number;
+      pannedByProspector: number;
+      sluicedByProspector: number;
+      reclaimedByProspector: number;
       spent: number;
       baseValue: number;
       buildingsBuilt: number;

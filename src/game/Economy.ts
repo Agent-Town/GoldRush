@@ -8,15 +8,17 @@ export type EconomyEventBase = {
   at: number;
 };
 
+export type EconomyActor = 'player' | 'prospector';
+
 export type EconomyEvent = EconomyEventBase &
   (
-    | { type: 'gold_panned'; nodeId: string; amount: number }
-    | { type: 'gold_sluiced'; sluiceId: string; amount: number }
+    | { type: 'gold_panned'; nodeId: string; amount: number; actor?: EconomyActor }
+    | { type: 'gold_sluiced'; sluiceId: string; amount: number; actor?: EconomyActor }
     | { type: 'gold_capped'; amount: 0 }
     | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug'; amount: number }
     | { type: 'gold_granted'; source: 'demolish'; amount: number; buildCost?: number }
     | { type: 'gold_stolen'; amount: number }
-    | { type: 'gold_reclaimed'; amount: number }
+    | { type: 'gold_reclaimed'; amount: number; actor?: EconomyActor }
     | { type: 'gold_spent'; sink: BuildSink; amount: number }
     | { type: 'run_reset' }
   );
@@ -32,6 +34,9 @@ export type EconomySummary = {
   granted: number;
   stolen: number;
   reclaimed: number;
+  pannedByProspector: number;
+  sluicedByProspector: number;
+  reclaimedByProspector: number;
   spent: number;
   baseValue: number;
   buildingsBuilt: number;
@@ -77,6 +82,9 @@ export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
     granted: 0,
     stolen: 0,
     reclaimed: 0,
+    pannedByProspector: 0,
+    sluicedByProspector: 0,
+    reclaimedByProspector: 0,
     spent: 0,
     baseValue: 0,
     buildingsBuilt: 0,
@@ -92,6 +100,9 @@ export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
       summary.granted = 0;
       summary.stolen = 0;
       summary.reclaimed = 0;
+      summary.pannedByProspector = 0;
+      summary.sluicedByProspector = 0;
+      summary.reclaimedByProspector = 0;
       summary.spent = 0;
       summary.baseValue = 0;
       summary.buildingsBuilt = 0;
@@ -101,11 +112,20 @@ export function summarizeLog(log: readonly EconomyEvent[]): EconomySummary {
       standingBaseValue = 0;
       continue;
     }
-    if (event.type === 'gold_panned') summary.panned += event.amount;
-    if (event.type === 'gold_sluiced') summary.sluiced += event.amount;
+    if (event.type === 'gold_panned') {
+      summary.panned += event.amount;
+      if (event.actor === 'prospector') summary.pannedByProspector += event.amount;
+    }
+    if (event.type === 'gold_sluiced') {
+      summary.sluiced += event.amount;
+      if (event.actor === 'prospector') summary.sluicedByProspector += event.amount;
+    }
     if (event.type === 'gold_granted') summary.granted += event.amount;
     if (event.type === 'gold_stolen') summary.stolen += event.amount;
-    if (event.type === 'gold_reclaimed') summary.reclaimed += event.amount;
+    if (event.type === 'gold_reclaimed') {
+      summary.reclaimed += event.amount;
+      if (event.actor === 'prospector') summary.reclaimedByProspector += event.amount;
+    }
     if (event.type === 'gold_spent') {
       summary.spent += event.amount;
       if (event.sink.startsWith('build_')) {

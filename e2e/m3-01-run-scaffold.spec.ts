@@ -65,8 +65,10 @@ test('run end summary matches Economy log replay', () => {
   expect(ended[0].summary).toEqual({
     wavesSurvived: 3,
     goldPanned: 120,
+    goldPannedByProspector: 0,
     goldStolen: 20,
     goldReclaimed: 5,
+    goldReclaimedByProspector: 0,
     buildingsBuilt: 2,
   });
   expect(ended[0].summary).toEqual(summarizeRun(economy.log, game.waveSystem.diagnostics.wave));
