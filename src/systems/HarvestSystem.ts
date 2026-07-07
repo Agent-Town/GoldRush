@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { createRng, type Rng } from '../core/Rng';
 import { getDebugSeed } from '../core/DebugParams';
+import { RenderLayers } from '../core/RenderLayers';
 import { GoldNode, GoldNodeVisualBatch, type GoldNodeSnapshot } from '../entities/GoldNode';
 import { Balance } from '../game/Balance';
 import type { Economy } from '../game/Economy';
@@ -51,15 +52,35 @@ export class HarvestSystem {
 
     const progressBack = new THREE.Mesh(
       new THREE.RingGeometry(0.78, 0.92, 48),
-      new THREE.MeshBasicMaterial({ color: '#2e1b0e', transparent: true, opacity: 0.2, side: THREE.DoubleSide }),
+      new THREE.MeshBasicMaterial({
+        color: '#2e1b0e',
+        transparent: true,
+        opacity: 0.2,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        polygonOffset: true,
+        polygonOffsetFactor: -1,
+        polygonOffsetUnits: -1,
+      }),
     );
     progressBack.rotation.x = -Math.PI / 2;
+    progressBack.renderOrder = RenderLayers.groundDecals;
 
     this.progressFill = new THREE.Mesh(
       new THREE.RingGeometry(0.78, 0.92, 48),
-      new THREE.MeshBasicMaterial({ color: '#ffe4a0', transparent: true, opacity: 0.86, side: THREE.DoubleSide }),
+      new THREE.MeshBasicMaterial({
+        color: '#ffe4a0',
+        transparent: true,
+        opacity: 0.86,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+        polygonOffset: true,
+        polygonOffsetFactor: -1,
+        polygonOffsetUnits: -1,
+      }),
     );
     this.progressFill.rotation.x = -Math.PI / 2;
+    this.progressFill.renderOrder = RenderLayers.groundDecals;
     this.progressFillIndexCount =
       this.progressFill.geometry.index?.count ?? this.progressFill.geometry.attributes.position.count;
     this.progressFill.geometry.setDrawRange(0, 0);

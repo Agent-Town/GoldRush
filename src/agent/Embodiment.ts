@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
 import { SpriteAnimator } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 import type { GoldRushToolName, ToolReceipt } from './ToolSurface';
@@ -52,7 +53,7 @@ export class ProspectorEmbodiment {
     this.group.name = 'ProspectorEmbodiment';
     this.sprite.name = 'ProspectorSprite';
     this.sprite.scale.setScalar(Balance.agent.spriteScale);
-    this.sprite.renderOrder = 2.5;
+    this.sprite.renderOrder = RenderLayers.companion;
     this.group.add(this.sprite);
     this.animator = new SpriteAnimator(assetSlots.charProspectorAgent, this.material, this.sprite);
     tagPlaceholder(this.group, assetSlots.charProspectorAgent);

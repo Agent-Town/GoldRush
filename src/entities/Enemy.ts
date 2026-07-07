@@ -81,6 +81,9 @@ export function createClaimJumperAssets(): ClaimJumperAssets {
       transparent: true,
       opacity: 0.2,
       depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
     }),
   };
 }

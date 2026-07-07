@@ -10,6 +10,8 @@ interface ThreeGameDiagnostics {
   paused: boolean;
   state: 'boot' | 'playing' | 'levelup' | 'dead' | 'paused';
   difficultyPreset: 'greenhorn' | 'trail' | 'vein-hunter';
+  renderLayers: Record<string, number>;
+  renderLayerOf: (name: string) => number | null;
   ui?: {
     hp: number;
     maxHp: number;

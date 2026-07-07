@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RenderLayers } from '../core/RenderLayers';
 import { assetSlots, type AssetSlotId } from './slots';
 
 const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
@@ -116,7 +117,7 @@ export function attachGeneratedSprite(
   sprite.visible = false;
   sprite.position.set(...options.position);
   sprite.scale.set(options.scale[0], options.scale[1], 1);
-  sprite.renderOrder = options.renderOrder ?? 1;
+  sprite.renderOrder = options.renderOrder ?? RenderLayers.gameplay;
   parent.add(sprite);
 
   loadGeneratedTexture(slotId).then((texture) => {
@@ -169,7 +170,7 @@ export class GeneratedSpriteBatch {
       const sprite = new THREE.Sprite(this.material);
       sprite.visible = false;
       sprite.scale.set(options.scale[0], options.scale[1], 1);
-      sprite.renderOrder = options.renderOrder ?? 1;
+      sprite.renderOrder = options.renderOrder ?? RenderLayers.gameplay;
       this.sprites.push(sprite);
       this.requestedVisible.push(false);
       this.group.add(sprite);

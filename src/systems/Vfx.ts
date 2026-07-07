@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RenderLayers } from '../core/RenderLayers';
 
 type FloatingText = {
   sprite: THREE.Sprite;
@@ -32,6 +33,7 @@ export class Vfx {
       });
       const sprite = new THREE.Sprite(material);
       sprite.visible = false;
+      sprite.renderOrder = RenderLayers.impactVfx;
       sprite.scale.set(1.6, 0.8, 1);
       this.group.add(sprite);
       this.pool.push({

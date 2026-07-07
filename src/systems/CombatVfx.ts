@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RenderLayers } from '../core/RenderLayers';
 
 const PUFFS = 32;
 const TICKS = 48;
@@ -25,6 +26,9 @@ export class CombatVfx {
     transparent: true,
     opacity: 0.42,
     depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -2,
+    polygonOffsetUnits: -2,
   });
   private readonly tickMaterial = new THREE.MeshBasicMaterial({
     color: '#fff8e8',
@@ -37,6 +41,9 @@ export class CombatVfx {
     transparent: true,
     opacity: 0.46,
     depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -2,
+    polygonOffsetUnits: -2,
   });
   private readonly puffs = new THREE.InstancedMesh(this.puffGeometry, this.puffMaterial, PUFFS);
   private readonly ticks = new THREE.InstancedMesh(this.tickGeometry, this.tickMaterial, TICKS);
@@ -50,6 +57,9 @@ export class CombatVfx {
     this.puffs.frustumCulled = false;
     this.ticks.frustumCulled = false;
     this.rings.frustumCulled = false;
+    this.puffs.renderOrder = RenderLayers.impactVfx;
+    this.ticks.renderOrder = RenderLayers.impactVfx;
+    this.rings.renderOrder = RenderLayers.impactVfx;
     this.rings.visible = false;
     this.group.add(this.puffs, this.ticks, this.rings);
     for (let i = 0; i < PUFFS; i += 1) {

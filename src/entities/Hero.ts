@@ -3,6 +3,7 @@ import { OrientationResolver } from '../assets/OrientationResolver';
 import { attachGeneratedSprite, type GeneratedSprite } from '../assets/generated';
 import { SpriteAnimator } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import type { Intents } from '../core/InputController';
 import type { TerrainBounds, TerrainSample } from '../world/Terrain';
@@ -90,7 +91,7 @@ export class Hero {
       name: 'GeneratedHeroHomesteader',
       position: [0, 0.9, 0],
       scale: [1.85, 1.85],
-      renderOrder: 3,
+      renderOrder: RenderLayers.gameplay,
       onLoaded: () => {
         this.placeholderGroup.visible = false;
       },

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { createRng, normalizeSeed, type Rng } from '../core/Rng';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from './Terrain';
@@ -161,6 +162,7 @@ export class DetailScatter {
     mesh.frustumCulled = false;
     mesh.castShadow = false;
     mesh.receiveShadow = true;
+    if (profile.groundRotationX !== undefined) mesh.renderOrder = RenderLayers.groundDecals;
     if (count === 0) mesh.visible = false;
     this.group.add(mesh);
 
@@ -439,6 +441,9 @@ function rutMaterial(): THREE.MeshBasicMaterial {
     transparent: true,
     opacity: 0.68,
     depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
     side: THREE.DoubleSide,
   });
 }

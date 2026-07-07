@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
@@ -52,7 +53,7 @@ export class SentryBeaconPool {
     name: 'GeneratedSentryBeaconSprites',
     y: 0.78,
     scale: [1.8, 1.8],
-    renderOrder: 2,
+    renderOrder: RenderLayers.gameplay,
     onLoaded: () => this.setProceduralVisible(false),
   });
   private readonly syncObject = new THREE.Object3D();
