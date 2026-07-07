@@ -89,7 +89,7 @@ test('loads Dry Gulch via debug param and suppresses bad contract fallback to di
   expect(contract.active?.id).toBe('e1-dry-gulch');
   expect(contract.registry?.boardRow).toMatchObject({
     name: 'The Dry Gulch',
-    ledgerBlurb: expect.stringContaining('Water is scarce'),
+    ledgerBlurb: expect.stringContaining('Mesa country'),
     tags: ['trail'],
     unlock: 'wave10OnClaim',
   });

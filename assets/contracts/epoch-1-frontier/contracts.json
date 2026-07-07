@@ -34,6 +34,33 @@
         "river": false,
         "ford": false,
         "waterSources": [{ "kind": "spring_pond", "x": -18, "z": -18, "radius": 1.4 }],
+        "heightfield": {
+          "id": "dry-gulch-mesa-washes",
+          "mode": "visual",
+          "springBasin": { "x": -18, "z": -18, "radius": 7.5, "depth": 0.68 },
+          "washChannels": [
+            { "id": "southwest-arroyo", "x": -12, "z": -14, "length": 38, "width": 4.2, "depth": 0.2, "angle": -0.55 },
+            { "id": "east-mesa-wash", "x": 14, "z": 10, "length": 42, "width": 3.6, "depth": 0.16, "angle": 0.34 }
+          ]
+        },
+        "palette": {
+          "id": "dry-gulch-ochre-red",
+          "tint": [1.1, 0.9, 0.72],
+          "dampTint": [0.78, 0.58, 0.42],
+          "dampAmount": 0.2
+        },
+        "scatter": {
+          "id": "dry-gulch-cactus-sparse",
+          "density": 0.62,
+          "classCounts": {
+            "rocks": 56,
+            "stumps": 4,
+            "dry_grass": 38,
+            "wagon_ruts": 14,
+            "claim_posts": 8,
+            "cactus": 24
+          }
+        },
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],
           "territoryRingBiasWaves": 0,
@@ -46,7 +73,7 @@
       },
       "boardRow": {
         "name": "The Dry Gulch",
-        "ledgerBlurb": "Water is scarce; one spring pond makes every sluice placement count.",
+        "ledgerBlurb": "Mesa country; dry washes fall toward one sunken spring.",
         "tags": ["trail"],
         "unlock": "wave10OnClaim"
       }
@@ -60,6 +87,13 @@
         "river": true,
         "ford": true,
         "waterSources": [],
+        "palette": {
+          "id": "night-shift-dusk",
+          "tint": [0.74, 0.78, 0.86],
+          "dampTint": [0.34, 0.4, 0.44],
+          "dampAmount": 0.12
+        },
+        "prePlacedBuildables": [{ "id": "lantern_post", "x": 0, "z": 12, "rotationSteps": 0 }],
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],
           "territoryRingBiasWaves": 3,
@@ -76,7 +110,7 @@
       },
       "boardRow": {
         "name": "Night Shift",
-        "ledgerBlurb": "Hold the claim through lantern-dark waves until the dawn assay is sealed.",
+        "ledgerBlurb": "Same claim bones, duskier banks, and a lantern on the stake.",
         "tags": ["vein-hunter"],
         "unlock": "science≥3"
       }
@@ -102,6 +136,34 @@
           { "id": "north-expansion-marker", "x": 0, "z": 12, "lossCondition": false }
         ],
         "waterSources": [],
+        "heightfield": {
+          "id": "twin-banks-subtle-relief",
+          "mode": "visual",
+          "bankRelief": { "amount": 0.13, "width": 9 }
+        },
+        "palette": {
+          "id": "twin-banks-damp",
+          "tint": [0.92, 0.96, 0.88],
+          "dampTint": [0.45, 0.53, 0.4],
+          "dampAmount": 0.28
+        },
+        "scatter": {
+          "id": "twin-banks-reeds",
+          "density": 1,
+          "nearWaterBias": 1,
+          "classCounts": {
+            "reeds": 44,
+            "dry_grass": 106
+          }
+        },
+        "water": {
+          "id": "twin-banks-braided-river",
+          "visualHalfWidth": 7.8,
+          "gravelBars": [
+            { "id": "west-mid-channel-bar", "x": -7.5, "z": 0.2, "length": 5.4, "width": 1.35, "rotation": -0.12 },
+            { "id": "east-mid-channel-bar", "x": 7.4, "z": -0.25, "length": 4.8, "width": 1.2, "rotation": 0.16 }
+          ]
+        },
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],
           "territoryRingBiasWaves": 0,
@@ -111,7 +173,7 @@
       "twist": {},
       "boardRow": {
         "name": "Twin Banks",
-        "ledgerBlurb": "A split homestead; two fords decide which bank holds.",
+        "ledgerBlurb": "A braided river claim with twin fords, gravel bars, and damp reeds.",
         "tags": ["vein-hunter"],
         "unlock": "firstSecuredClaim"
       }

@@ -2,10 +2,11 @@ import * as THREE from 'three';
 import { createRng, normalizeSeed, type Rng } from '../core/Rng';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import { activeContract, type ContractDetailClass } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from './Terrain';
 
-export type DetailClassId = 'rocks' | 'stumps' | 'dry_grass' | 'wagon_ruts' | 'claim_posts';
+export type DetailClassId = ContractDetailClass;
 export type DetailDensityTier = 'desktop' | 'mobile-reduced' | 'off';
 
 export type DetailScatterClearPoint = {
@@ -72,6 +73,7 @@ const scratchObject = new THREE.Object3D();
 const BUILD_PAD_PROBE = { x: 0, z: 9 };
 const FORD_PROBE = { x: 0, z: 0 };
 const ROUTING_PROBE = { x: 0, z: -14 };
+const SCATTER_DESCRIPTOR = activeContract().tileParams.scatter;
 
 export class DetailScatter {
   readonly group = new THREE.Group();
@@ -193,7 +195,7 @@ function createProfiles(): DetailProfile[] {
   return [
     {
       id: 'rocks',
-      baseCount: 44,
+      baseCount: profileCount('rocks', 44),
       geometry: rockGeometry(),
       material: standardMaterial('#8c7f6d', 0.9),
       minScale: 0.55,
@@ -202,7 +204,7 @@ function createProfiles(): DetailProfile[] {
     },
     {
       id: 'stumps',
-      baseCount: 18,
+      baseCount: profileCount('stumps', 18),
       geometry: stumpGeometry(),
       material: standardMaterial('#4f331f', 0.86),
       minScale: 0.72,
@@ -211,7 +213,7 @@ function createProfiles(): DetailProfile[] {
     },
     {
       id: 'dry_grass',
-      baseCount: 92,
+      baseCount: profileCount('dry_grass', 92),
       geometry: grassGeometry(),
       material: new THREE.MeshStandardMaterial({
         color: '#7b8050',
@@ -225,7 +227,7 @@ function createProfiles(): DetailProfile[] {
     },
     {
       id: 'wagon_ruts',
-      baseCount: 24,
+      baseCount: profileCount('wagon_ruts', 24),
       geometry: new THREE.PlaneGeometry(1.9, 0.46),
       material: rutMaterial(),
       minScale: 0.72,
@@ -235,14 +237,41 @@ function createProfiles(): DetailProfile[] {
     },
     {
       id: 'claim_posts',
-      baseCount: 12,
+      baseCount: profileCount('claim_posts', 12),
       geometry: claimPostGeometry(),
       material: standardMaterial('#6f5732', 0.78),
       minScale: 0.82,
       maxScale: 1.1,
       baseY: 0,
     },
+    {
+      id: 'cactus',
+      baseCount: profileCount('cactus', 0),
+      geometry: cactusGeometry(),
+      material: standardMaterial('#4f6f4a', 0.92),
+      minScale: 0.74,
+      maxScale: 1.25,
+      baseY: 0,
+    },
+    {
+      id: 'reeds',
+      baseCount: profileCount('reeds', 0),
+      geometry: reedGeometry(),
+      material: new THREE.MeshStandardMaterial({
+        color: '#566c42',
+        roughness: 1,
+        metalness: 0,
+        side: THREE.DoubleSide,
+      }),
+      minScale: 0.72,
+      maxScale: 1.42,
+      baseY: 0.01,
+    },
   ];
+}
+
+function profileCount(id: DetailClassId, fallback: number): number {
+  return Math.max(0, Math.floor(SCATTER_DESCRIPTOR?.classCounts?.[id] ?? fallback));
 }
 
 function placeDetail(
@@ -289,6 +318,15 @@ function detailAcceptance(profile: DetailProfile, x: number, z: number): number 
   const edge = Math.max(Math.abs(x) / Terrain.CLAIM_HALF, Math.abs(z) / Terrain.CLAIM_HALF);
   const lane = Math.min(1, routingLaneDistance(x, z) / 10);
   const base = 0.16 + edge * 0.74 + lane * 0.12;
+  if (profile.id === 'cactus') {
+    const dryEdge = smoothstep(7, 20, Math.abs(z)) * (1 - nearWaterMask(x, z));
+    return THREE.MathUtils.clamp(base * dryEdge * (0.7 + feature.shelf * 1.2 + feature.bluff * 0.4), 0.04, 0.88);
+  }
+  if (profile.id === 'reeds') {
+    const water = nearWaterMask(x, z);
+    const bias = SCATTER_DESCRIPTOR?.nearWaterBias ?? 1;
+    return THREE.MathUtils.clamp((0.14 + water * 1.6 * bias) * (0.7 + lane * 0.35), 0.02, 0.96);
+  }
   const bias =
     profile.id === 'rocks'
       ? 0.42 + feature.shelf * 1.45 + feature.bluff * 0.55
@@ -296,6 +334,14 @@ function detailAcceptance(profile: DetailProfile, x: number, z: number): number 
         ? 0.58 + feature.pocket * 1.15 - feature.gully * 0.18
         : 0.76 + feature.pocket * 0.18;
   return THREE.MathUtils.clamp(base * bias, 0.08, 0.98);
+}
+
+function nearWaterMask(x: number, z: number): number {
+  let mask = Terrain.hasRiverWater() ? 1 - smoothstep(0.8, 6.5, Math.max(0, Math.abs(z) - Terrain.RIVER_MAX_Z)) : 0;
+  for (const source of Terrain.waterSources()) {
+    mask = Math.max(mask, 1 - smoothstep(source.radius + 0.35, source.radius + 5.5, Math.hypot(x - source.x, z - source.z)));
+  }
+  return THREE.MathUtils.clamp(mask, 0, 1);
 }
 
 function tooCloseToClass(x: number, z: number, placed: readonly DetailInstance[]): boolean {
@@ -357,7 +403,7 @@ function probeClear(
 function detailDensity(tier: DetailDensityTier): number {
   if (tier === 'off') return 0;
   const raw = tier === 'mobile-reduced' ? Balance.world.detailMobileDensity : Balance.world.detailDensity;
-  return THREE.MathUtils.clamp(raw, 0, 1.5);
+  return THREE.MathUtils.clamp(raw * (SCATTER_DESCRIPTOR?.density ?? 1), 0, 1.5);
 }
 
 function densityTier(): DetailDensityTier {
@@ -402,6 +448,18 @@ function stumpGeometry(): THREE.BufferGeometry {
 function claimPostGeometry(): THREE.BufferGeometry {
   const geometry = new THREE.BoxGeometry(0.16, 1.08, 0.16);
   geometry.translate(0, 0.54, 0);
+  return geometry;
+}
+
+function cactusGeometry(): THREE.BufferGeometry {
+  const geometry = new THREE.CylinderGeometry(0.13, 0.18, 0.88, 7);
+  geometry.translate(0, 0.44, 0);
+  return geometry;
+}
+
+function reedGeometry(): THREE.BufferGeometry {
+  const geometry = grassGeometry();
+  geometry.scale(0.58, 1.24, 0.58);
   return geometry;
 }
 
@@ -452,4 +510,10 @@ function rutMaterial(): THREE.MeshBasicMaterial {
     polygonOffsetUnits: -1,
     side: THREE.DoubleSide,
   });
+}
+
+function smoothstep(edge0: number, edge1: number, value: number): number {
+  if (edge0 === edge1) return value < edge0 ? 0 : 1;
+  const t = Math.max(0, Math.min(1, (value - edge0) / (edge1 - edge0)));
+  return t * t * (3 - 2 * t);
 }

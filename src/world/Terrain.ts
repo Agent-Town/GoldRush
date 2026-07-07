@@ -5,7 +5,12 @@ import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
-import { activeContract, type ContractStakeMarker, type ContractWaterSource } from '../meta/ContractFamilies';
+import {
+  activeContract,
+  type ContractGravelBar,
+  type ContractStakeMarker,
+  type ContractWaterSource,
+} from '../meta/ContractFamilies';
 import { hasElevationTile, isTraversable as isSimTraversable, simHeight } from '../sim/TileHeight';
 import { normalizeSeed } from '../core/Rng';
 import { createClaimProps } from './props';
@@ -69,6 +74,9 @@ export const VISTA_RADIUS = 90;
 
 const ACTIVE_CONTRACT = activeContract();
 const ELEVATION_TILE = hasElevationTile();
+const TILE_HEIGHTFIELD = ACTIVE_CONTRACT.tileParams.heightfield;
+const TILE_PALETTE = ACTIVE_CONTRACT.tileParams.palette;
+const TILE_WATER = ACTIVE_CONTRACT.tileParams.water;
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
 const FORD_RANGES = resolveFordRanges();
 
@@ -255,7 +263,8 @@ function sampleHeightFamily(x: number, z: number, vistaRise: boolean): number {
     legacyMaxHeight,
   );
   const maxHeight = vistaRise && absZ > CLAIM_HALF ? 1.46 : 1.18;
-  return THREE.MathUtils.clamp(baseHeight + features.heightOffset, -0.38, maxHeight);
+  const minHeight = TILE_HEIGHTFIELD ? -0.52 : -0.38;
+  return THREE.MathUtils.clamp(baseHeight + features.heightOffset + contractHeightfieldOffset(x, z), minHeight, maxHeight);
 }
 
 export function samplePaddedHeight(x: number, z: number, radius = 0): number {
@@ -383,6 +392,9 @@ type TerrainShaderUniforms = {
   atlasRows: THREE.IUniform<number>;
   featureMix: THREE.IUniform<number>;
   seed: THREE.IUniform<number>;
+  paletteTint: THREE.IUniform<THREE.Vector3>;
+  dampTint: THREE.IUniform<THREE.Vector3>;
+  dampAmount: THREE.IUniform<number>;
 };
 
 const BANK_TILE_REPEATS = 4;
@@ -422,6 +434,7 @@ export const createBankPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
 export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
   () => {
     const mesh = new THREE.Mesh(createExtendedRiverGeometry(), createLivingWaterMaterial(waterMaterialConfig(false)));
+    mesh.userData.visualHalfWidth = visualWaterWidth() / 2;
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = WATER_Y;
     mesh.renderOrder = RenderLayers.terrain;
@@ -455,6 +468,7 @@ export function createTerrainView(): TerrainView {
   let river: THREE.Mesh | null = null;
   const fords: THREE.Mesh[] = [];
   const fordStones: THREE.InstancedMesh[] = [];
+  const gravelBars: THREE.Mesh[] = [];
   if (ACTIVE_CONTRACT.tileParams.river) {
     river = createRiverPlaceholder();
     for (const range of FORD_RANGES) {
@@ -463,7 +477,8 @@ export function createTerrainView(): TerrainView {
       fords.push(ford);
       fordStones.push(stones);
     }
-    group.add(river, ...fords, ...fordStones);
+    gravelBars.push(...createGravelBars());
+    group.add(river, ...fords, ...fordStones, ...gravelBars);
   }
 
   group.add(springPonds, props);
@@ -475,8 +490,30 @@ export function createTerrainView(): TerrainView {
       if (river) updateWaterMaterial(river, delta);
       for (const ford of fords) updateWaterMaterial(ford, delta);
     },
-    diagnostics: () => (river ? waterDiagnostics(river, fords, fordStones) : dryWaterDiagnostics(SPRING_PONDS.length)),
+    diagnostics: () => (river ? waterDiagnostics(river, fords, fordStones, gravelBars) : dryWaterDiagnostics(SPRING_PONDS.length)),
   };
+}
+
+function createGravelBars(): THREE.Mesh[] {
+  return (TILE_WATER?.gravelBars ?? []).map(createGravelBar);
+}
+
+function createGravelBar(bar: ContractGravelBar): THREE.Mesh {
+  const mesh = new THREE.Mesh(
+    new THREE.CircleGeometry(0.5, 36),
+    new THREE.MeshStandardMaterial({
+      color: '#a99573',
+      roughness: 0.94,
+      metalness: 0.01,
+    }),
+  );
+  mesh.name = `RiverGravelBar.${bar.id}`;
+  mesh.rotation.set(-Math.PI / 2, 0, bar.rotation);
+  mesh.position.set(bar.x, WATER_Y + 0.03, bar.z);
+  mesh.scale.set(bar.length, bar.width, 1);
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.receiveShadow = true;
+  return mesh;
 }
 
 function createSpringPonds(): THREE.Group {
@@ -579,6 +616,9 @@ function createBankMaterial(): THREE.MeshStandardMaterial {
     atlasRows: { value: 1 },
     featureMix: { value: Balance.terrain.featureMix },
     seed: { value: terrainSeed() },
+    paletteTint: { value: paletteVector(TILE_PALETTE?.tint, [1, 1, 1]) },
+    dampTint: { value: paletteVector(TILE_PALETTE?.dampTint, [0.4, 0.37, 0.29]) },
+    dampAmount: { value: TILE_PALETTE?.dampAmount ?? 0.28 },
   };
   material.map = createBankTexture();
   configureBankAtlas(material.map);
@@ -589,6 +629,9 @@ function createBankMaterial(): THREE.MeshStandardMaterial {
     shader.uniforms.terrainAtlasRows = uniforms.atlasRows;
     shader.uniforms.terrainFeatureMix = uniforms.featureMix;
     shader.uniforms.terrainSeed = uniforms.seed;
+    shader.uniforms.terrainPaletteTint = uniforms.paletteTint;
+    shader.uniforms.terrainDampTint = uniforms.dampTint;
+    shader.uniforms.terrainDampAmount = uniforms.dampAmount;
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying vec2 vTerrainUv;\nvarying vec2 vTerrainWorld;\nvarying float vTerrainSlope;')
       .replace(
@@ -602,6 +645,9 @@ uniform float terrainVariantCount;
 uniform float terrainAtlasRows;
 uniform float terrainFeatureMix;
 uniform float terrainSeed;
+uniform vec3 terrainPaletteTint;
+uniform vec3 terrainDampTint;
+uniform float terrainDampAmount;
 varying vec2 vTerrainUv;
 varying vec2 vTerrainWorld;
 varying float vTerrainSlope;
@@ -677,7 +723,7 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
   float rockBlend = smoothstep(0.10, 0.72, vTerrainSlope) * (0.55 + terrainValueNoise(vTerrainWorld * 0.18 + terrainSeed * 47.0) * 0.45);
   sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, mix(dryDirt.rgb, vec3(0.47, 0.44, 0.37), 0.46), rockBlend * 0.42);
   float dampGully = terrainGullyMask(vTerrainWorld) * (1.0 - smoothstep(4.0, 22.0, shoreDistance));
-  sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, vec3(0.40, 0.37, 0.29), dampGully * 0.28);
+  sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, terrainDampTint, dampGully * terrainDampAmount);
   sampledDiffuseColor.rgb = mix(vec3(1.0), sampledDiffuseColor.rgb, clamp(terrainFeatureMix, 0.0, 1.0));
   float macro = terrainValueNoise(vTerrainUv * 2.15 + terrainSeed * 11.0) * 2.0 - 1.0;
   vec3 macroTint = vec3(
@@ -685,7 +731,7 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
     1.0 + macro * 0.038,
     1.0 + macro * 0.026 - max(macro, 0.0) * 0.010
   );
-  sampledDiffuseColor.rgb *= macroTint * mix(vec3(1.0), vec3(0.92, 1.0, 0.86), scrubBlend * 0.18);
+  sampledDiffuseColor.rgb *= terrainPaletteTint * macroTint * mix(vec3(1.0), vec3(0.92, 1.0, 0.86), scrubBlend * 0.18);
   diffuseColor *= sampledDiffuseColor;
 #endif`);
   };
@@ -880,6 +926,41 @@ function terrainFeatures(x: number, z: number): TerrainFeatureSample {
   return { gully, shelf, bluff, pocket, routeMask, calmMask, heightOffset };
 }
 
+function contractHeightfieldOffset(x: number, z: number): number {
+  if (!TILE_HEIGHTFIELD || TILE_HEIGHTFIELD.mode !== 'visual') return 0;
+
+  let offset = 0;
+  const basin = TILE_HEIGHTFIELD.springBasin;
+  if (basin) offset -= ovalMask(x, z, basin.x, basin.z, basin.radius, basin.radius * 0.78) * basin.depth;
+
+  for (const wash of TILE_HEIGHTFIELD.washChannels ?? []) {
+    offset -= washChannelMask(x, z, wash.x, wash.z, wash.length, wash.width, wash.angle) * wash.depth;
+  }
+
+  const bankRelief = TILE_HEIGHTFIELD.bankRelief;
+  if (bankRelief) {
+    const bankDistance = Math.max(0, Math.abs(z) - RIVER_MAX_Z);
+    const nearBank = smoothstep(0.25, 2.4, bankDistance) * (1 - smoothstep(3.2, bankRelief.width, bankDistance));
+    const ripple = 0.74 + valueNoise(x * 0.13 + 2.6, z * 0.13 - 11.4) * 0.36;
+    offset += nearBank * bankRelief.amount * ripple;
+  }
+
+  return offset;
+}
+
+function washChannelMask(x: number, z: number, cx: number, cz: number, length: number, width: number, angle: number): number {
+  const dx = x - cx;
+  const dz = z - cz;
+  const cos = Math.cos(angle);
+  const sin = Math.sin(angle);
+  const along = dx * cos + dz * sin;
+  const across = -dx * sin + dz * cos;
+  const lengthMask = 1 - smoothstep(length * 0.42, length * 0.5, Math.abs(along));
+  const widthMask = 1 - smoothstep(width * 0.32, width * 0.5, Math.abs(across + Math.sin(along * 0.18) * width * 0.18));
+  const grain = 0.84 + valueNoise(x * 0.16 + 31.2, z * 0.16 - 8.1) * 0.24;
+  return THREE.MathUtils.clamp(lengthMask * widthMask * grain, 0, 1);
+}
+
 function channelMask(x: number, z: number): number {
   const bankDistance = Math.max(0, Math.abs(z) - RIVER_MAX_Z);
   const warpedX = x + Math.sin(z * 0.19) * 3 + Math.sin(z * 0.061) * 6;
@@ -952,12 +1033,17 @@ function waterMaterialConfig(ford: boolean, range: FordRange = defaultFordRange(
 }
 
 function visualWaterWidth(): number {
-  return RIVER_MAX_Z - RIVER_MIN_Z + SHALLOWS_WIDTH * 2;
+  return (TILE_WATER?.visualHalfWidth ?? (RIVER_MAX_Z - RIVER_MIN_Z) / 2 + SHALLOWS_WIDTH) * 2;
 }
 
 function syncBankMaterial(mesh: THREE.Mesh): void {
   const uniforms = (mesh.material as THREE.MeshStandardMaterial).userData.terrainUniforms as TerrainShaderUniforms | undefined;
   if (uniforms) uniforms.featureMix.value = Balance.terrain.featureMix;
+}
+
+function paletteVector(value: [number, number, number] | undefined, fallback: [number, number, number]): THREE.Vector3 {
+  const [r, g, b] = value ?? fallback;
+  return new THREE.Vector3(r, g, b);
 }
 
 async function loadBankVariantAtlas(): Promise<{ canvas: HTMLCanvasElement; variantCount: number; rows: number } | null> {

@@ -608,6 +608,7 @@ export class Game {
     this.createScene();
     this.registerGoldHoldings();
     this.syncMegaprojectSite();
+    this.placeContractFixtures();
     if (new URLSearchParams(window.location.search).has('debug')) {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
@@ -1151,6 +1152,14 @@ export class Game {
       this.megaprojectVisuals.push(beam);
     }
     this.megaprojectGroup.visible = false;
+  }
+
+  private placeContractFixtures(): void {
+    for (const fixture of this.activeContract.tileParams.prePlacedBuildables ?? []) {
+      if (fixture.id === 'lantern_post') {
+        this.buildSystem.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0);
+      }
+    }
   }
 
   private syncMegaprojectSite(): void {
@@ -1965,6 +1974,7 @@ export class Game {
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
     this.syncMegaprojectSite();
+    this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();

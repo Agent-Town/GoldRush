@@ -134,6 +134,61 @@ export type ContractStakeMarker = {
   z: number;
   lossCondition: boolean;
 };
+export type ContractHeightfieldDescriptor = {
+  id: string;
+  mode: 'visual';
+  springBasin?: {
+    x: number;
+    z: number;
+    radius: number;
+    depth: number;
+  };
+  washChannels?: Array<{
+    id: string;
+    x: number;
+    z: number;
+    length: number;
+    width: number;
+    depth: number;
+    angle: number;
+  }>;
+  bankRelief?: {
+    amount: number;
+    width: number;
+  };
+};
+export type ContractPaletteDescriptor = {
+  id: string;
+  tint: [number, number, number];
+  dampTint?: [number, number, number];
+  dampAmount?: number;
+};
+export type ContractDetailClass = 'rocks' | 'stumps' | 'dry_grass' | 'wagon_ruts' | 'claim_posts' | 'cactus' | 'reeds';
+export type ContractScatterDescriptor = {
+  id: string;
+  density?: number;
+  classCounts?: Partial<Record<ContractDetailClass, number>>;
+  nearWaterBias?: number;
+};
+export type ContractGravelBar = {
+  id: string;
+  x: number;
+  z: number;
+  length: number;
+  width: number;
+  rotation: number;
+};
+export type ContractWaterDescriptor = {
+  id: string;
+  visualHalfWidth?: number;
+  gravelBars?: ContractGravelBar[];
+};
+export type ContractBuildableFixture = {
+  id: 'lantern_post';
+  x: number;
+  z: number;
+  rotationSteps?: number;
+};
 export type ContractManifest = {
   id: string;
   name: string;
@@ -146,6 +201,11 @@ export type ContractManifest = {
     buildZones?: ContractBuildZone[];
     stakeMarkers?: ContractStakeMarker[];
     waterSources: ContractWaterSource[];
+    heightfield?: ContractHeightfieldDescriptor;
+    palette?: ContractPaletteDescriptor;
+    scatter?: ContractScatterDescriptor;
+    water?: ContractWaterDescriptor;
+    prePlacedBuildables?: ContractBuildableFixture[];
     lanes: {
       spawnEdges: ContractEdge[];
       territoryRingBiasWaves: number;
