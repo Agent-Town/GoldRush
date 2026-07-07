@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
 
 export type BlastDetonation = (position: THREE.Vector3, damage: number, radius: number, ownerId: string) => void;
 
@@ -8,6 +9,9 @@ const ARC_SEGMENTS = 10;
 const MARKER_SEGMENTS = 24;
 const LINES_PER_SLOT = ARC_SEGMENTS + MARKER_SEGMENTS;
 const FLOATS_PER_SEGMENT = 6;
+const LAUNCH_Y = 0.78;
+const IMPACT_Y = 0.08;
+const MARKER_Y = 0.07;
 
 export class BlastChargePool {
   readonly group = new THREE.Group();
@@ -16,6 +20,7 @@ export class BlastChargePool {
   private readonly origins: THREE.Vector3[] = [];
   private readonly targets: THREE.Vector3[] = [];
   private readonly positions: THREE.Vector3[] = [];
+  private readonly apexY: number[] = [];
   private readonly age: number[] = [];
   private readonly duration: number[] = [];
   private readonly damage: number[] = [];
@@ -57,6 +62,7 @@ export class BlastChargePool {
       this.origins.push(new THREE.Vector3());
       this.targets.push(new THREE.Vector3());
       this.positions.push(new THREE.Vector3());
+      this.apexY.push(0);
       this.age.push(0);
       this.duration.push(0);
       this.damage.push(0);
@@ -81,8 +87,9 @@ export class BlastChargePool {
       if (this.active[i]) continue;
       this.active[i] = true;
       this.alive += 1;
-      this.origins[i]?.set(origin.x, 0.78, origin.z);
-      this.targets[i]?.set(target.x, 0.08, target.z);
+      this.origins[i]?.set(origin.x, Terrain.visualY(origin.x, origin.z, LAUNCH_Y), origin.z);
+      this.targets[i]?.set(target.x, Terrain.visualY(target.x, target.z, IMPACT_Y), target.z);
+      this.apexY[i] = Terrain.visualY((origin.x + target.x) * 0.5, (origin.z + target.z) * 0.5, (LAUNCH_Y + IMPACT_Y) * 0.5);
       this.positions[i]?.copy(this.origins[i] ?? origin);
       this.age[i] = 0;
       this.duration[i] = Math.max(0.1, airTime);
@@ -119,6 +126,7 @@ export class BlastChargePool {
       this.duration[i] = 0;
       this.damage[i] = 0;
       this.radius[i] = 0;
+      this.apexY[i] = 0;
       this.ownerIds[i] = 'hero_blast';
       this.hide(i);
     }
@@ -141,6 +149,7 @@ export class BlastChargePool {
     this.duration[index] = 0;
     this.damage[index] = 0;
     this.radius[index] = 0;
+    this.apexY[index] = 0;
     this.ownerIds[index] = 'hero_blast';
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
@@ -155,7 +164,7 @@ export class BlastChargePool {
 
     const t = Math.min(1, (this.age[index] ?? 0) / Math.max(0.1, this.duration[index] ?? 0.1));
     const radius = this.radius[index] ?? Balance.blast.radius;
-    this.pointOnArc(origin, target, t, radius, position);
+    this.pointOnArc(origin, target, t, radius, this.apexY[index] ?? 0, position);
     this.syncObject.position.copy(position);
     this.syncObject.rotation.set(t * Math.PI * 2, t * Math.PI * 4, 0.25);
     this.syncObject.scale.setScalar(1);
@@ -169,41 +178,51 @@ export class BlastChargePool {
     for (let i = 0; i < ARC_SEGMENTS; i += 1) {
       const a = i / ARC_SEGMENTS;
       const b = (i + 1) / ARC_SEGMENTS;
-      offset = this.writeArcSegment(offset, origin, target, a, b, radius);
+      offset = this.writeArcSegment(offset, origin, target, a, b, radius, this.apexY[index] ?? 0);
     }
 
     for (let i = 0; i < MARKER_SEGMENTS; i += 1) {
       const a = i * ((Math.PI * 2) / MARKER_SEGMENTS);
       const b = (i + 1) * ((Math.PI * 2) / MARKER_SEGMENTS);
-      this.linePositions[offset++] = target.x + Math.cos(a) * radius;
-      this.linePositions[offset++] = 0.07;
-      this.linePositions[offset++] = target.z + Math.sin(a) * radius;
-      this.linePositions[offset++] = target.x + Math.cos(b) * radius;
-      this.linePositions[offset++] = 0.07;
-      this.linePositions[offset++] = target.z + Math.sin(b) * radius;
+      const ax = target.x + Math.cos(a) * radius;
+      const az = target.z + Math.sin(a) * radius;
+      const bx = target.x + Math.cos(b) * radius;
+      const bz = target.z + Math.sin(b) * radius;
+      this.linePositions[offset++] = ax;
+      this.linePositions[offset++] = Terrain.visualY(ax, az, MARKER_Y);
+      this.linePositions[offset++] = az;
+      this.linePositions[offset++] = bx;
+      this.linePositions[offset++] = Terrain.visualY(bx, bz, MARKER_Y);
+      this.linePositions[offset++] = bz;
     }
   }
 
-  private writeArcSegment(offset: number, origin: THREE.Vector3, target: THREE.Vector3, a: number, b: number, radius: number): number {
+  private writeArcSegment(offset: number, origin: THREE.Vector3, target: THREE.Vector3, a: number, b: number, radius: number, apexY: number): number {
     const height = Math.max(1.2, radius * 0.75);
-    this.writeArcPoint(offset, origin, target, a, height);
-    this.writeArcPoint(offset + 3, origin, target, b, height);
+    this.writeArcPoint(offset, origin, target, a, height, apexY);
+    this.writeArcPoint(offset + 3, origin, target, b, height, apexY);
     return offset + FLOATS_PER_SEGMENT;
   }
 
-  private writeArcPoint(offset: number, origin: THREE.Vector3, target: THREE.Vector3, t: number, height: number): void {
+  private writeArcPoint(offset: number, origin: THREE.Vector3, target: THREE.Vector3, t: number, height: number, apexY: number): void {
     this.linePositions[offset] = origin.x + (target.x - origin.x) * t;
-    this.linePositions[offset + 1] = origin.y + (target.y - origin.y) * t + Math.sin(t * Math.PI) * height;
+    this.linePositions[offset + 1] = this.arcBaseY(origin.y, target.y, apexY, t) + Math.sin(t * Math.PI) * height;
     this.linePositions[offset + 2] = origin.z + (target.z - origin.z) * t;
   }
 
-  private pointOnArc(origin: THREE.Vector3, target: THREE.Vector3, t: number, radius: number, out: THREE.Vector3): void {
+  private pointOnArc(origin: THREE.Vector3, target: THREE.Vector3, t: number, radius: number, apexY: number, out: THREE.Vector3): void {
     const height = Math.max(1.2, radius * 0.75);
     out.set(
       origin.x + (target.x - origin.x) * t,
-      origin.y + (target.y - origin.y) * t + Math.sin(t * Math.PI) * height,
+      this.arcBaseY(origin.y, target.y, apexY, t) + Math.sin(t * Math.PI) * height,
       origin.z + (target.z - origin.z) * t,
     );
+  }
+
+  private arcBaseY(originY: number, targetY: number, apexY: number, t: number): number {
+    return t < 0.5
+      ? THREE.MathUtils.lerp(originY, apexY, t * 2)
+      : THREE.MathUtils.lerp(apexY, targetY, (t - 0.5) * 2);
   }
 
   private hide(index: number): void {

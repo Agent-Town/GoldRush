@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
+import * as Terrain from '../world/Terrain';
 
 const PUFFS = 32;
 const TICKS = 48;
@@ -93,7 +94,7 @@ export class CombatVfx {
       if (this.puffActive[i]) continue;
       this.puffActive[i] = true;
       this.puffAge[i] = 0;
-      this.puffPos[i]?.set(position.x, 0.08, position.z);
+      this.puffPos[i]?.set(position.x, Terrain.visualY(position.x, position.z, 0.08), position.z);
       this.syncPuff(i);
       this.puffs.instanceMatrix.needsUpdate = true;
       return;
@@ -106,7 +107,7 @@ export class CombatVfx {
       this.ringActive[i] = true;
       this.ringAge[i] = 0;
       this.ringRadius[i] = radius;
-      this.ringPos[i]?.set(position.x, 0.1, position.z);
+      this.ringPos[i]?.set(position.x, Terrain.visualY(position.x, position.z, 0.1), position.z);
       this.ringAlive += 1;
       this.rings.visible = true;
       this.syncRing(i);

@@ -81,7 +81,7 @@ interface ThreeGameDiagnostics {
     aimReticleRadius: number;
     aimMode: 'cursor' | 'auto';
     aimTarget: { x: number; z: number };
-    lastDetonation: { x: number; z: number } | null;
+    lastDetonation: { x: number; y: number; z: number } | null;
   };
   xp: number;
   xpMotesAlive: number;
@@ -701,6 +701,7 @@ interface Window {
     fundMegaproject: () => boolean;
     damageMegaproject: (amount: number) => boolean;
     terrainSample: (x: number, z: number) => GrTerrainSample;
+    terrainVisualY: (x: number, z: number, base?: number, padRadius?: number) => number;
     terrainSim: (x: number, z: number) => {
       height: number;
       slope: { dx: number; dz: number };
@@ -773,7 +774,7 @@ interface Window {
         aimReticleRadius: number;
         aimMode: 'cursor' | 'auto';
         aimTarget: { x: number; z: number };
-        lastDetonation: { x: number; z: number } | null;
+        lastDetonation: { x: number; y: number; z: number } | null;
       };
       buildables: Array<{ id: GrBuildableId; count: number }>;
       economy: {

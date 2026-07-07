@@ -662,6 +662,7 @@ export class Game {
         fundMegaproject: () => this.fundMegaprojectStage(),
         damageMegaproject: (amount: number) => this.damageMegaprojectForTest(amount),
         terrainSample: (x: number, z: number) => Terrain.sample(x, z),
+        terrainVisualY: (x: number, z: number, base = 0, padRadius = 0) => Terrain.visualY(x, z, base, padRadius),
         terrainSim: (x: number, z: number) => terrainSimSample(x, z),
         setTestClip: (slot: string, frames: string[], fps: number) => setSpriteTestClip(slot as AssetSlotId, frames, fps),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
@@ -2264,7 +2265,7 @@ export class Game {
     aimReticleRadius: number;
     aimMode: BlastAimMode;
     aimTarget: { x: number; z: number };
-    lastDetonation: { x: number; z: number } | null;
+    lastDetonation: { x: number; y: number; z: number } | null;
   } {
     const detonation = this.combat.lastBlastDetonation;
     return {
@@ -2281,7 +2282,9 @@ export class Game {
       aimReticleRadius: this.blastAimReticleRadius,
       aimMode: Balance.blast.aimMode as BlastAimMode,
       aimTarget: { x: Number(this.blastAimPoint.x.toFixed(3)), z: Number(this.blastAimPoint.z.toFixed(3)) },
-      lastDetonation: detonation ? { x: Number(detonation.x.toFixed(3)), z: Number(detonation.z.toFixed(3)) } : null,
+      lastDetonation: detonation
+        ? { x: Number(detonation.x.toFixed(3)), y: Number(detonation.y.toFixed(3)), z: Number(detonation.z.toFixed(3)) }
+        : null,
     };
   }
 
