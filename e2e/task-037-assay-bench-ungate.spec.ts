@@ -4,6 +4,7 @@ import { resolve } from 'node:path';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type Point = { x: number; z: number };
+type HeroSnapshot = Point & { speed: number };
 type Rect = { x: number; y: number; width: number; height: number };
 
 function collectErrors(page: Page): ErrorBucket {
@@ -26,21 +27,39 @@ async function releaseMoveKeys(page: Page): Promise<void> {
   for (const key of ['KeyW', 'KeyA', 'KeyS', 'KeyD']) await page.keyboard.up(key);
 }
 
+async function heroSnapshot(page: Page): Promise<HeroSnapshot> {
+  return page.evaluate(() => {
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+    const hero = diagnostics?.heroPos ?? { x: 0, z: 0 };
+    return { x: hero.x, z: hero.z, speed: diagnostics?.speed ?? 0 };
+  });
+}
+
 async function walkTo(page: Page, target: Point, tolerance = 0.75): Promise<void> {
   const deadline = Date.now() + 10_000;
   while (Date.now() < deadline) {
-    const hero = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.heroPos ?? { x: 0, z: 0 });
+    const hero = await heroSnapshot(page);
     const dx = target.x - hero.x;
     const dz = target.z - hero.z;
-    if (dx * dx + dz * dz <= tolerance * tolerance) break;
     await releaseMoveKeys(page);
-    if (dx > tolerance * 0.4) await page.keyboard.down('KeyD');
-    if (dx < -tolerance * 0.4) await page.keyboard.down('KeyA');
-    if (dz > tolerance * 0.4) await page.keyboard.down('KeyS');
-    if (dz < -tolerance * 0.4) await page.keyboard.down('KeyW');
-    await page.waitForTimeout(80);
+    if (dx * dx + dz * dz <= tolerance * tolerance && hero.speed < 0.12) return;
+    if (dx * dx + dz * dz > tolerance * tolerance) {
+      if (dx > tolerance * 0.4) await page.keyboard.down('KeyD');
+      if (dx < -tolerance * 0.4) await page.keyboard.down('KeyA');
+      if (dz > tolerance * 0.4) await page.keyboard.down('KeyS');
+      if (dz < -tolerance * 0.4) await page.keyboard.down('KeyW');
+    }
+    await page.waitForTimeout(60);
   }
   await releaseMoveKeys(page);
+  await expect
+    .poll(async () => {
+      const hero = await heroSnapshot(page);
+      const dx = target.x - hero.x;
+      const dz = target.z - hero.z;
+      return dx * dx + dz * dz <= tolerance * tolerance && hero.speed < 0.12;
+    }, { timeout: 1_000 })
+    .toBe(true);
 }
 
 async function panGold(page: Page, goal: number): Promise<void> {
@@ -78,12 +97,20 @@ async function gold(page: Page): Promise<number> {
 }
 
 async function buildAssayOfficeWithUi(page: Page): Promise<void> {
-  await walkTo(page, { x: 0, z: 9 }, 0.65);
+  await walkTo(page, { x: 0, z: 9 }, 0.35);
   await page.getByTestId('hud-build').click();
   await expect(page.getByTestId('hud-build-menu')).toBeVisible();
   await page.getByTestId('hud-build-tile-assay_office').click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.selectedBuildable)).toBe('assay_office');
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+  await releaseMoveKeys(page);
+  await expect
+    .poll(() =>
+      page.evaluate(() => {
+        const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+        return Boolean(diagnostics && diagnostics.speed < 0.12 && diagnostics.build.ghostValid);
+      }),
+    )
+    .toBe(true);
   await page.keyboard.press('Enter');
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.assayOffices ?? 0)).toBe(1);
   await page.keyboard.press('Escape');
@@ -114,25 +141,27 @@ async function cleanupPostedPath(page: Page): Promise<void> {
 
 test('normal play shows the Assay Office prompt and opens the bench without debug', async ({ page }, testInfo: TestInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'normal play keyboard path is covered on desktop; mobile touch has its own test');
-  const errors = await openGame(page, '?timescale=8&nowaves&nolevel&nokill&seed=task037-normal');
+  const errors = await openGame(page, '?timescale=4&nowaves&nolevel&nokill&seed=task037-normal');
   await expect(page.getByTestId('assay-bench')).toBeHidden();
   await expect(page.getByTestId('assay-office-prompt')).toBeHidden();
 
-  await panGold(page, 80);
+  await panGold(page, 85);
   await buildAssayOfficeWithUi(page);
   await walkTo(page, { x: 0, z: 12 }, 0.75);
   await expect(page.getByTestId('assay-office-prompt')).toBeHidden();
-  await walkTo(page, { x: 0, z: 7 }, 0.65);
+  await walkTo(page, { x: 0, z: 7 }, 0.35);
   await expect(page.getByTestId('assay-office-prompt')).toBeVisible();
   await expect(page.getByTestId('assay-office-prompt')).toContainText('Enter - Assay Office');
 
   await page.keyboard.press('Enter');
   await expect(page.getByTestId('assay-bench')).toBeVisible();
   await expect(page.getByTestId('assay-office-prompt')).toBeHidden();
+  const orderText = 'Need a field-ready assay sample';
+  await page.getByTestId('assay-text').fill(orderText);
   await page.getByTestId('assay-profile').fill(`task037_${testInfo.project.name}`);
   await page.getByTestId('assay-post').click();
   await expect(page.getByTestId('assay-pending-status')).toHaveText(/Posted|JSON ready/);
-  await expect(page.getByTestId('assay-log').locator('li').first()).toContainText(/arrived/);
+  await expect(page.getByTestId('assay-queue-pending').locator('li').first()).toContainText(orderText);
   await cleanupPostedPath(page);
 
   expect(errors.consoleErrors).toEqual([]);
