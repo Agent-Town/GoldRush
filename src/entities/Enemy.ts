@@ -3,7 +3,7 @@ import { OrientationResolver, type RotationDirection } from '../assets/Orientati
 import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
-import { hasElevationTile, isTraversable as isSimTraversable, terrainSpeedMultiplier } from '../sim/TileHeight';
+import { hasElevationTile, resolveTerrainMove, terrainDetourWaypoint, terrainSpeedMultiplier } from '../sim/TileHeight';
 import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
 import * as Terrain from '../world/Terrain';
 import type { PalisadeBlocker } from './Palisade';
@@ -105,6 +105,7 @@ export class ClaimJumperEnemy {
   private readonly nextPosition = new THREE.Vector3();
   private readonly fleeTarget = new THREE.Vector3();
   private readonly routeTarget = new THREE.Vector3();
+  private readonly terrainRouteTarget = new THREE.Vector3();
   private readonly scriptedTarget = new THREE.Vector3();
   private alive = false;
   private hp = 0;
@@ -130,6 +131,7 @@ export class ClaimJumperEnemy {
   private formationOffset = 0;
   private flashRemaining = 0;
   private flashCount = 0;
+  private terrainSlideSide = 0;
 
   constructor(readonly id: number, assets: ClaimJumperAssets) {
     void assets;
@@ -230,6 +232,7 @@ export class ClaimJumperEnemy {
     this.spawnEdge = params.edge ?? null;
     this.formationOffset = seededOffset(params.formationSeed ?? this.id);
     this.flashRemaining = 0;
+    this.terrainSlideSide = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);
@@ -273,7 +276,7 @@ export class ClaimJumperEnemy {
     const targetPosition = this.scripted
       ? this.scriptedTarget
       : this.updateThief(delta, thiefContext) ?? this.updateWrecker(delta, wreckerContext) ?? heroPosition;
-    const moveTarget = this.routedTarget(targetPosition);
+    const moveTarget = this.terrainAwareTarget(this.routedTarget(targetPosition));
     const speed = this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
     this.heading.set(moveTarget.x - this.group.position.x, 0, moveTarget.z - this.group.position.z);
@@ -318,7 +321,7 @@ export class ClaimJumperEnemy {
     if (this.thiefState === 'grabbing' || this.wreckerState === 'swinging') {
       this.velocity.set(0, 0, 0);
     } else {
-      this.move(delta, blockers, speed);
+      this.move(delta, blockers, speed, moveTarget);
     }
     this.syncVisualY();
     if (delta > 0) {
@@ -378,6 +381,7 @@ export class ClaimJumperEnemy {
     this.spawnEdge = null;
     this.formationOffset = 0;
     this.flashRemaining = 0;
+    this.terrainSlideSide = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);
@@ -571,7 +575,14 @@ export class ClaimJumperEnemy {
     return target;
   }
 
-  private move(delta: number, blockers: readonly PalisadeBlocker[], speed: number): void {
+  private terrainAwareTarget(target: THREE.Vector3): THREE.Vector3 {
+    if (!hasElevationTile()) return target;
+    const detour = terrainDetourWaypoint(this.group.position.x, this.group.position.z, target.x, target.z);
+    if (!detour) return target;
+    return this.terrainRouteTarget.set(detour.x, Balance.enemy.groundY, detour.z);
+  }
+
+  private move(delta: number, blockers: readonly PalisadeBlocker[], speed: number, moveTarget: THREE.Vector3): void {
     const elevation = hasElevationTile();
     if (!elevation) {
       const distance = speed * delta;
@@ -595,20 +606,79 @@ export class ClaimJumperEnemy {
       this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
       for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
       this.resolveRiver(stepDistance);
-      this.resolveTerrain();
+      this.resolveTerrain(moveTarget);
       this.group.position.copy(this.nextPosition);
     }
   }
 
-  private resolveTerrain(): void {
-    if (isSimTraversable(this.nextPosition.x, this.nextPosition.z)) return;
-
+  private resolveTerrain(moveTarget: THREE.Vector3): void {
     const previous = this.group.position;
-    const nextX = this.nextPosition.x;
-    const nextZ = this.nextPosition.z;
-    this.nextPosition.copy(previous);
-    if (isSimTraversable(nextX, previous.z)) this.nextPosition.x = nextX;
-    if (isSimTraversable(this.nextPosition.x, nextZ)) this.nextPosition.z = nextZ;
+    const stepX = this.nextPosition.x - previous.x;
+    const stepZ = this.nextPosition.z - previous.z;
+    const stepDistance = Math.hypot(stepX, stepZ);
+    const goalX = moveTarget.x - previous.x;
+    const goalZ = moveTarget.z - previous.z;
+    const northSouth = Math.abs(goalZ) >= Math.abs(goalX);
+    const tangentX = northSouth ? 1 : 0;
+    const tangentZ = northSouth ? 0 : 1;
+    const goalDistance = Math.hypot(goalX, goalZ);
+    let obstacleAhead = false;
+
+    if (Terrain.sample(this.nextPosition.x, this.nextPosition.z).walkable) {
+      if (stepDistance <= 0.000001 || goalDistance <= 0.000001) return;
+      const lookahead = Math.max(0.6, stepDistance * 2);
+      const aheadX = previous.x + (goalX / goalDistance) * lookahead;
+      const aheadZ = previous.z + (goalZ / goalDistance) * lookahead;
+      if (Terrain.sample(aheadX, aheadZ).walkable) {
+        this.terrainSlideSide = 0;
+        return;
+      }
+      if (this.terrainSlideSide === 0) {
+        this.terrainSlideSide = (northSouth ? Math.sign(previous.x) : Math.sign(previous.z)) || this.avoidanceSide();
+      }
+      obstacleAhead = true;
+      this.nextPosition.set(
+        previous.x + tangentX * this.terrainSlideSide * stepDistance,
+        this.nextPosition.y,
+        previous.z + tangentZ * this.terrainSlideSide * stepDistance,
+      );
+    }
+
+    if (this.terrainSlideSide === 0) {
+      this.terrainSlideSide = (northSouth ? Math.sign(previous.x) : Math.sign(previous.z)) || this.avoidanceSide();
+    }
+    if (stepDistance > 0.000001 && goalDistance > 0.000001) {
+      const lookahead = Math.max(0.6, stepDistance * 2);
+      const aheadX = previous.x + (goalX / goalDistance) * lookahead;
+      const aheadZ = previous.z + (goalZ / goalDistance) * lookahead;
+      obstacleAhead ||= !Terrain.sample(aheadX, aheadZ).walkable;
+    }
+    const probe = 0.4;
+    const sideWalkable = Terrain.sample(
+      previous.x + tangentX * this.terrainSlideSide * probe,
+      previous.z + tangentZ * this.terrainSlideSide * probe,
+    ).walkable;
+    let fallbackX = tangentX * this.terrainSlideSide;
+    let fallbackZ = tangentZ * this.terrainSlideSide;
+    if (!sideWalkable) {
+      fallbackX += northSouth ? 0 : -Math.sign(goalX || 1) * 0.75;
+      fallbackZ += northSouth ? -Math.sign(goalZ || 1) * 0.75 : 0;
+      const fallbackLength = Math.hypot(fallbackX, fallbackZ);
+      if (fallbackLength > 0.000001) {
+        fallbackX /= fallbackLength;
+        fallbackZ /= fallbackLength;
+      }
+    }
+    if (obstacleAhead && stepDistance > 0.000001) {
+      this.nextPosition.set(previous.x + fallbackX * stepDistance, this.nextPosition.y, previous.z + fallbackZ * stepDistance);
+    }
+    const resolved = resolveTerrainMove(previous.x, previous.z, this.nextPosition.x, this.nextPosition.z, (x, z) => Terrain.sample(x, z).walkable, {
+      x: moveTarget.x,
+      z: moveTarget.z,
+      fallbackX,
+      fallbackZ,
+    });
+    this.nextPosition.set(resolved.x, this.nextPosition.y, resolved.z);
   }
 
   private resolveRiver(stepDistance: number): void {
