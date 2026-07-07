@@ -353,6 +353,13 @@ interface ThreeGameDiagnostics {
     tierUpgrades: number;
     repairs: number;
     repairGold: number;
+    shells: Record<string, {
+      active: number;
+      signs: number;
+      meshes: string[];
+      lit: boolean;
+      wheelPhase?: number;
+    }>;
   };
   harvest: {
     activeNodes: Array<{

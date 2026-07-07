@@ -1,6 +1,8 @@
 import * as THREE from 'three';
+import { assetSlots } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
+import { createBuildingSign, disposeBuildingSign } from './BuildingSign';
 
 export type PalisadeBlocker = {
   x: number;
@@ -37,26 +39,46 @@ export class PalisadePool {
   private readonly postGeometry = new THREE.BoxGeometry(0.16, 0.92, 0.16);
   private readonly railGeometry = new THREE.BoxGeometry(0.18, 0.16, Balance.palisade.depth);
   private readonly braceGeometry = new THREE.BoxGeometry(0.08, 0.22, Balance.palisade.depth * 0.86);
-  private readonly postMaterial = new THREE.MeshBasicMaterial({
+  private readonly postMaterial = new THREE.MeshStandardMaterial({
     color: '#ffffff',
+    emissive: '#6b4a2f',
+    emissiveIntensity: 0.12,
+    roughness: 0.82,
+    metalness: 0.02,
+    flatShading: true,
   });
-  private readonly railMaterial = new THREE.MeshBasicMaterial({
+  private readonly railMaterial = new THREE.MeshStandardMaterial({
     color: '#ffffff',
+    emissive: '#6b4a2f',
+    emissiveIntensity: 0.1,
+    roughness: 0.84,
+    metalness: 0.02,
+    flatShading: true,
   });
-  private readonly braceMaterial = new THREE.MeshBasicMaterial({
+  private readonly braceMaterial = new THREE.MeshStandardMaterial({
     color: '#ffffff',
+    emissive: '#7a5132',
+    emissiveIntensity: 0.16,
+    roughness: 0.7,
+    metalness: 0.08,
+    flatShading: true,
   });
   private readonly posts = new THREE.InstancedMesh(this.postGeometry, this.postMaterial, Balance.palisade.maxCount * 2);
   private readonly rails = new THREE.InstancedMesh(this.railGeometry, this.railMaterial, Balance.palisade.maxCount * 2);
   private readonly braces = new THREE.InstancedMesh(this.braceGeometry, this.braceMaterial, Balance.palisade.maxCount);
+  private readonly signs = createBuildingSign(assetSlots.bldPortraitPalisade, Balance.palisade.maxCount, 'PalisadePortraitSigns');
   private readonly syncObject = new THREE.Object3D();
   private alive = 0;
 
   constructor() {
     this.group.name = 'PalisadePool';
-    for (const mesh of [this.posts, this.rails, this.braces]) {
+    this.posts.name = 'PalisadePosts';
+    this.rails.name = 'PalisadeRails';
+    this.braces.name = 'PalisadeBraces';
+    for (const mesh of [this.posts, this.rails, this.braces, this.signs]) {
       mesh.frustumCulled = false;
       mesh.castShadow = false;
+      mesh.receiveShadow = true;
       this.group.add(mesh);
     }
     for (let i = 0; i < Balance.palisade.maxCount; i += 1) {
@@ -168,6 +190,16 @@ export class PalisadePool {
     this.postMaterial.dispose();
     this.railMaterial.dispose();
     this.braceMaterial.dispose();
+    disposeBuildingSign(this.signs);
+  }
+
+  diagnostics(): { active: number; signs: number; meshes: string[]; lit: boolean } {
+    return {
+      active: this.alive,
+      signs: this.alive,
+      meshes: [this.posts.name, this.rails.name, this.braces.name, this.signs.name],
+      lit: true,
+    };
   }
 
   private sync(index: number): void {
@@ -189,6 +221,12 @@ export class PalisadePool {
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
     this.braces.setMatrixAt(index, this.syncObject.matrix);
+    const signSide = -0.12;
+    this.syncObject.position.set(position.x + signSide * cos, groundY + 0.78, position.z - signSide * sin);
+    this.syncObject.rotation.set(-1.05, angle, 0);
+    this.syncObject.scale.set(1.05, 0.54, 1);
+    this.syncObject.updateMatrix();
+    this.signs.setMatrixAt(index, this.syncObject.matrix);
     this.syncColors(index);
   }
 
@@ -206,6 +244,7 @@ export class PalisadePool {
     this.rails.setMatrixAt(index * 2, hiddenMatrix);
     this.rails.setMatrixAt(index * 2 + 1, hiddenMatrix);
     this.braces.setMatrixAt(index, hiddenMatrix);
+    this.signs.setMatrixAt(index, hiddenMatrix);
   }
 
   private syncColors(index: number): void {
@@ -228,5 +267,6 @@ export class PalisadePool {
     this.posts.instanceMatrix.needsUpdate = true;
     this.rails.instanceMatrix.needsUpdate = true;
     this.braces.instanceMatrix.needsUpdate = true;
+    this.signs.instanceMatrix.needsUpdate = true;
   }
 }

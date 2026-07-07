@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
+import { createBuildingSignFromUrl, disposeBuildingSign } from '../entities/BuildingSign';
 import { PalisadePool, type PalisadeBlocker } from '../entities/Palisade';
 import { SentryBeaconPool } from '../entities/SentryBeacon';
 import { SluicePool, type SluiceSnapshot } from '../entities/Sluice';
@@ -94,6 +95,15 @@ export type BuildDiagnostics = {
   tierUpgrades: number;
   repairs: number;
   repairGold: number;
+  shells: Record<'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office', BuildingShellDiagnostics>;
+};
+
+export type BuildingShellDiagnostics = {
+  active: number;
+  signs: number;
+  meshes: string[];
+  lit: boolean;
+  wheelPhase?: number;
 };
 
 export type DemolishCandidate = {
@@ -166,6 +176,7 @@ const blockedRepairColor = new THREE.Color('#a0522d');
 const hpBarWidth = 1.46;
 const hpBarHeight = 0.12;
 const hpBarDepth = 0.28;
+const assayOfficeSignUrl = new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href;
 
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
 type UpgradeableBuildableId = (typeof upgradeableBuildableIds)[number];
@@ -279,6 +290,7 @@ export class BuildSystem {
     emissiveIntensity: 0.18,
     roughness: 0.82,
     metalness: 0.03,
+    flatShading: true,
   });
   private readonly assayRoofMaterial = new THREE.MeshStandardMaterial({
     color: '#8b7d3c',
@@ -286,7 +298,9 @@ export class BuildSystem {
     emissiveIntensity: 0.24,
     roughness: 0.72,
     metalness: 0.12,
+    flatShading: true,
   });
+  private readonly assayOfficeSign = createBuildingSignFromUrl(assayOfficeSignUrl, 1, 'AssayOfficePortraitSign');
   private selectedId: BuildableId = 'sentry_beacon';
   private ghostRotationSteps = 0;
   private beaconFireRateMult = 1;
@@ -490,6 +504,7 @@ export class BuildSystem {
       tierUpgrades: this.tierUpgrades,
       repairs: this.repairs,
       repairGold: this.repairGold,
+      shells: this.shellDiagnostics(),
     };
   }
 
@@ -690,11 +705,13 @@ export class BuildSystem {
     this.repairRing.geometry.dispose();
     this.repairRing.material.dispose();
     this.assayOffice.traverse((child) => {
+      if (child === this.assayOfficeSign) return;
       const mesh = child as THREE.Mesh;
       mesh.geometry?.dispose();
     });
     this.assayOfficeMaterial.dispose();
     this.assayRoofMaterial.dispose();
+    disposeBuildingSign(this.assayOfficeSign);
   }
 
   buildingTarget(id: BuildableId, index: number): BuildingTarget | null {
@@ -1745,6 +1762,21 @@ export class BuildSystem {
     this.assayOfficeGhost.visible = this.selectedId === 'assay_office';
   }
 
+  private shellDiagnostics(): BuildDiagnostics['shells'] {
+    return {
+      palisade: this.palisades.diagnostics(),
+      sluice: this.sluices.diagnostics(),
+      stockpile: this.stockpiles.diagnostics(),
+      turret: this.turrets.diagnostics(),
+      assay_office: {
+        active: this.assayOfficeActive ? 1 : 0,
+        signs: this.assayOfficeActive ? 1 : 0,
+        meshes: ['AssayOfficeTimberShell', 'AssayOfficeBrassRoof', 'AssayOfficePlaqueFrame', 'AssayOfficeTimberLintel', this.assayOfficeSign.name],
+        lit: true,
+      },
+    };
+  }
+
   private createGhost(): void {
     this.createBeaconGhost();
     this.createPalisadeGhost();
@@ -1775,13 +1807,25 @@ export class BuildSystem {
 
   private createAssayOffice(): void {
     const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.9, 1.1), this.assayOfficeMaterial);
+    base.name = 'AssayOfficeTimberShell';
     base.position.y = 0.45;
     const roof = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.18, 1.28), this.assayRoofMaterial);
+    roof.name = 'AssayOfficeBrassRoof';
     roof.position.y = 0.98;
     roof.rotation.z = 0.04;
     const plaque = new THREE.Mesh(new THREE.BoxGeometry(0.54, 0.24, 0.04), this.assayRoofMaterial);
+    plaque.name = 'AssayOfficePlaqueFrame';
     plaque.position.set(0, 0.62, -0.57);
-    this.assayOffice.add(base, roof, plaque);
+    const lintel = new THREE.Mesh(new THREE.BoxGeometry(1.58, 0.08, 0.08), this.assayRoofMaterial);
+    lintel.name = 'AssayOfficeTimberLintel';
+    lintel.position.set(0, 0.84, -0.6);
+    this.visualObject.position.set(0, 1.12, -0.46);
+    this.visualObject.rotation.set(-1.05, 0, 0);
+    this.visualObject.scale.set(1.08, 0.66, 1);
+    this.visualObject.updateMatrix();
+    this.assayOfficeSign.setMatrixAt(0, this.visualObject.matrix);
+    this.assayOfficeSign.instanceMatrix.needsUpdate = true;
+    this.assayOffice.add(base, roof, plaque, lintel, this.assayOfficeSign);
     this.assayOffice.visible = false;
   }
 

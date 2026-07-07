@@ -13,6 +13,10 @@ export const assetSlots = {
   propClaimPost: 'prop.claim_post',
   vfxBolt: 'vfx.bolt',
   bldSentryBeacon: 'bld.sentry_beacon',
+  bldPortraitPalisade: 'bld.portrait.palisade',
+  bldPortraitSluice: 'bld.portrait.sluice',
+  bldPortraitStockpile: 'bld.portrait.stockpile',
+  bldPortraitTurret: 'bld.portrait.turret',
 } as const;
 
 export type AssetSlotId = (typeof assetSlots)[keyof typeof assetSlots];
