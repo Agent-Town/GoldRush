@@ -846,17 +846,11 @@ export class BuildSystem {
   private matchesPlacement(def: BuildableDef, position: THREE.Vector3): boolean {
     if (def.placement === 'any') return Terrain.sample(position.x, position.z).walkable;
     if (def.placement === 'bank') return Terrain.isBuildable(position.x, position.z);
-    return this.isRiverAdjacent(position);
+    return this.isWaterSourceAdjacent(position);
   }
 
-  private isRiverAdjacent(position: THREE.Vector3): boolean {
-    const sample = Terrain.sample(position.x, position.z);
-    if (sample.zone !== 'bank' && sample.zone !== 'shallows') return false;
-    const river = Terrain.riverGeometry();
-    if (position.x < river.minX || position.x > river.maxX) return false;
-    const distance =
-      position.z < river.minZ ? river.minZ - position.z : position.z > river.maxZ ? position.z - river.maxZ : 0;
-    return distance <= Balance.sluice.riverPad;
+  private isWaterSourceAdjacent(position: THREE.Vector3): boolean {
+    return Terrain.isWaterSourceAdjacent(position.x, position.z, Balance.sluice.riverPad);
   }
 
   private overlapsExisting(id: BuildableId, position: THREE.Vector3): boolean {

@@ -8,6 +8,7 @@ import {
 } from '../assets/SpriteAnimator';
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
+import { activeContract as selectActiveContract, activeContractDiagnostics } from '../meta/ContractFamilies';
 import {
   availablePicks,
   browserResearchStorage,
@@ -222,6 +223,7 @@ export class Game {
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
+  private readonly activeContract = selectActiveContract();
   private readonly waveSystem = new WaveSystem(
     this.enemies,
     this.primaryActor.group.position,
@@ -377,6 +379,7 @@ export class Game {
       getCraftingProfile: () => this.craftingProfile,
       isChoiceDisabled: isLevelUpDisabled,
     });
+    this.applyStats(this.progression.snapshot.stats, null);
 
     const stick = this.getElement('#touch-stick');
     const knob = this.getElement('#touch-knob');
@@ -540,6 +543,8 @@ export class Game {
           this.debugBeaconWaveOverride = wave;
         },
         setWave: (wave: number) => this.waveSystem.setWaveForTest(wave),
+        activeContract: () => this.activeContract,
+        terrainSample: (x: number, z: number) => Terrain.sample(x, z),
         setTestClip: (slot: string, frames: string[], fps: number) => setSpriteTestClip(slot as AssetSlotId, frames, fps),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
@@ -991,6 +996,13 @@ export class Game {
         lastRunEndedReason: null,
         meta: null,
         victoryPayout: null,
+      },
+      contract: {
+        ...activeContractDiagnostics(),
+        name: this.activeContract.name,
+        tileParams: this.activeContract.tileParams,
+        boardRow: this.activeContract.boardRow,
+        seamYieldMult: this.contractSeamYieldMult(),
       },
       research: this.researchDiagnostics(),
       agent: {
@@ -1887,11 +1899,21 @@ export class Game {
       this.primaryActor.heal(platingHeal);
     }
     const continued = continuedStudyBonuses(this.researchState);
-    this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction, 1 + continued.seamYieldMult);
+    this.harvestSystem.applyStats(
+      stats.panTickMult,
+      stats.seamCapacityBonus,
+      stats.seamRespawnReduction,
+      (1 + continued.seamYieldMult) * this.contractSeamYieldMult(),
+    );
     this.buildSystem.applyStats(stats.beaconFireRateMult, 1 + continued.turretDamageMult);
     this.agentPolicySlotBonus = Math.max(0, Math.floor(stats.agentPolicySlots));
     this.applyUpgradeCapEffects(stats);
     this.applyResearchEffects();
+  }
+
+  private contractSeamYieldMult(): number {
+    if (this.activeContract.id === 'e1-dry-gulch') return Balance.contracts.dryGulch.seamYieldMult;
+    return Math.max(0.1, this.activeContract.twist.seamYieldMult ?? 1);
   }
 
   private applyUpgradeCapEffects(stats: EffectiveStats): void {

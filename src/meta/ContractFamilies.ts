@@ -1,4 +1,5 @@
 import frontierCaps from '../../assets/contracts/epoch-1-frontier/caps.json' with { type: 'json' };
+import frontierContracts from '../../assets/contracts/epoch-1-frontier/contracts.json' with { type: 'json' };
 import frontierFamilies from '../../assets/contracts/epoch-1-frontier/families.json' with { type: 'json' };
 import frontierManifest from '../../assets/contracts/epoch-1-frontier/manifest.json' with { type: 'json' };
 import steamworksManifest from '../../assets/contracts/epoch-2-steamworks/manifest.json' with { type: 'json' };
@@ -89,6 +90,52 @@ export type EpochCapsBundle = {
   contractTiers: ContractTierBudget[];
 };
 
+export type ContractEdge = 'north' | 'south' | 'east' | 'west';
+export type ContractWaterSource = {
+  kind: 'spring_pond';
+  x: number;
+  z: number;
+  radius: number;
+};
+export type ContractManifest = {
+  id: string;
+  name: string;
+  tileParams: {
+    tileId: string;
+    biome: string;
+    river: boolean;
+    ford: boolean;
+    waterSources: ContractWaterSource[];
+    lanes: {
+      spawnEdges: ContractEdge[];
+      territoryRingBiasWaves: number;
+      territoryRingLaneBias: number;
+    };
+  };
+  twist: {
+    sluicesNeedWaterSource?: boolean;
+    seamYieldMult?: number;
+  };
+  boardRow: {
+    name: string;
+    ledgerBlurb: string;
+    tags: string[];
+    unlock: string;
+  };
+};
+export type ContractsBundle = {
+  version: 1;
+  epochId: string;
+  contracts: ContractManifest[];
+};
+
+export type ActiveContractDiagnostics = {
+  activeId: string;
+  requestedId: string | null;
+  fallbackReason: 'debug-disabled' | 'unknown-contract' | null;
+  warningSuppressed: boolean;
+};
+
 export type TileElevationDescriptor = {
   grid?: {
     columns: number;
@@ -109,6 +156,7 @@ export type EpochTileDescriptor = {
 
 export type EpochBundle = EpochMeta & {
   tile?: EpochTileDescriptor;
+  contracts: ContractManifest[];
   families: EpochUpgradeFamily[];
   gates: string[];
   masteryConversions: MasteryConversionRule[];
@@ -121,9 +169,13 @@ type EpochManifest = EpochMeta & {
   parts: {
     families?: string;
     caps?: string;
+    contracts?: string;
     [part: string]: string | undefined;
   };
 };
+
+const DEFAULT_EPOCH_ID = 'epoch-1-frontier';
+export const DEFAULT_CONTRACT_ID = 'the-claim';
 
 // Future locked-stub example:
 // tile: { id: 'steamworks-forge-yard', biome: 'steamworks', elevation: { grid: { columns: 33, rows: 33 }, cellSize: 2, heightsRef: 'tiles/forge-yard.hf32', slopeMax: 0.7, waterline: -0.1 } }
@@ -136,6 +188,9 @@ const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
 };
 const fallbackCapsBundles: Record<string, EpochCapsBundle> = {
   '../../assets/contracts/epoch-1-frontier/caps.json': frontierCaps as EpochCapsBundle,
+};
+const fallbackContractBundles: Record<string, ContractsBundle> = {
+  '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
 };
 
 const manifests =
@@ -159,6 +214,13 @@ const capsBundles =
         import: 'default',
       })
     : fallbackCapsBundles;
+const contractBundles =
+  typeof import.meta.env === 'object'
+    ? import.meta.glob<ContractsBundle>('../../assets/contracts/*/contracts.json', {
+        eager: true,
+        import: 'default',
+      })
+    : fallbackContractBundles;
 
 const orderedManifests = Object.values(manifests).sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 const manifestsById = new Map(orderedManifests.map((manifest) => [manifest.id, manifest]));
@@ -172,9 +234,11 @@ export function loadEpoch(id: string): EpochBundle {
   if (!manifest) throw new Error(`Unknown contract epoch: ${id}`);
   const families = loadFamilies(manifest);
   const caps = loadCaps(manifest);
+  const contracts = loadContracts(manifest);
   return {
     ...toMeta(manifest),
     tile: manifest.tile,
+    contracts: contracts.contracts,
     families: families.families,
     gates: [...new Set(families.families.map((family) => family.unlockNodeId))],
     masteryConversions: families.masteryConversions,
@@ -184,9 +248,31 @@ export function loadEpoch(id: string): EpochBundle {
 }
 
 export function activeTileDescriptor(): EpochTileDescriptor {
-  const tile = loadEpoch('epoch-1-frontier').tile;
+  const contract = activeContract();
+  const tile = {
+    id: contract.tileParams.tileId,
+    biome: contract.tileParams.biome,
+  };
   if (!tile) throw new Error('Missing active tile descriptor: epoch-1-frontier');
   return tile;
+}
+
+export function listContracts(epochId = DEFAULT_EPOCH_ID): ContractManifest[] {
+  return loadEpoch(epochId).contracts;
+}
+
+export function loadContract(id: string, epochId = DEFAULT_EPOCH_ID): ContractManifest {
+  const contract = listContracts(epochId).find((entry) => entry.id === id);
+  if (!contract) throw new Error(`Unknown contract: ${id}`);
+  return contract;
+}
+
+export function activeContract(): ContractManifest {
+  return activeContractSelection().contract;
+}
+
+export function activeContractDiagnostics(): ActiveContractDiagnostics {
+  return activeContractSelection().diagnostics;
 }
 
 export function contractTierBudget(epochId: string, tier: number): ContractTierBudget {
@@ -217,6 +303,16 @@ function loadCaps(manifest: EpochManifest): EpochCapsBundle {
   return bundle;
 }
 
+function loadContracts(manifest: EpochManifest): ContractsBundle {
+  const contractsPath = manifest.parts.contracts;
+  if (!contractsPath) {
+    return { version: 1, epochId: manifest.id, contracts: [defaultContractFor(manifest)] };
+  }
+  const bundle = contractBundles[`../../assets/contracts/${manifest.id}/${contractsPath}`];
+  if (!bundle) throw new Error(`Missing contracts bundle for contract epoch: ${manifest.id}`);
+  return bundle;
+}
+
 function toMeta(manifest: EpochManifest): EpochMeta {
   return {
     id: manifest.id,
@@ -227,8 +323,84 @@ function toMeta(manifest: EpochManifest): EpochMeta {
   };
 }
 
+let activeSelection: { contract: ContractManifest; diagnostics: ActiveContractDiagnostics } | null = null;
+
+function activeContractSelection(): { contract: ContractManifest; diagnostics: ActiveContractDiagnostics } {
+  if (activeSelection) return activeSelection;
+
+  const contracts = listContracts(DEFAULT_EPOCH_ID);
+  const fallback = contracts.find((contract) => contract.id === DEFAULT_CONTRACT_ID) ?? defaultContractFor(manifestsById.get(DEFAULT_EPOCH_ID)!);
+  const params = readSearchParams();
+  const requestedId = params.get('contract');
+  const debug = params.has('debug') || params.get('bench') === 'fullbase';
+  let contract = fallback;
+  let fallbackReason: ActiveContractDiagnostics['fallbackReason'] = null;
+
+  if (requestedId && !debug) {
+    fallbackReason = 'debug-disabled';
+  } else if (requestedId) {
+    contract = contracts.find((entry) => entry.id === requestedId) ?? fallback;
+    if (contract.id !== requestedId) fallbackReason = 'unknown-contract';
+  }
+
+  activeSelection = {
+    contract,
+    diagnostics: {
+      activeId: contract.id,
+      requestedId,
+      fallbackReason,
+      warningSuppressed: fallbackReason === 'unknown-contract',
+    },
+  };
+  return activeSelection;
+}
+
+function defaultContractFor(manifest: EpochManifest): ContractManifest {
+  return {
+    id: DEFAULT_CONTRACT_ID,
+    name: 'The Claim',
+    tileParams: {
+      tileId: manifest.tile?.id ?? 'frontier-river-claim',
+      biome: manifest.tile?.biome ?? 'river-claim',
+      river: true,
+      ford: true,
+      waterSources: [],
+      lanes: {
+        spawnEdges: ['north', 'south', 'east', 'west'],
+        territoryRingBiasWaves: 3,
+        territoryRingLaneBias: 0.75,
+      },
+    },
+    twist: {},
+    boardRow: {
+      name: 'The Claim',
+      ledgerBlurb: 'The classic river claim.',
+      tags: ['trail'],
+      unlock: 'default',
+    },
+  };
+}
+
+function readSearchParams(): URLSearchParams {
+  try {
+    return new URLSearchParams(globalThis.location?.search ?? '');
+  } catch {
+    return new URLSearchParams('');
+  }
+}
+
 try {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')) {
-    window.__GR_CONTRACT_REGISTRY__ = { listEpochs, loadEpoch, activeTileDescriptor, contractTierBudget, contractBudgetOk };
+    window.__GR_CONTRACT_REGISTRY__ = {
+      listEpochs,
+      loadEpoch,
+      listContracts,
+      loadContract,
+      activeContract,
+      activeContractDiagnostics,
+      activeTileDescriptor,
+      contractTierBudget,
+      contractBudgetOk,
+    };
   }
 } catch {}

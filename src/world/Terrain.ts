@@ -5,11 +5,13 @@ import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import { activeContract, type ContractWaterSource } from '../meta/ContractFamilies';
 import { normalizeSeed } from '../core/Rng';
 import { createClaimProps } from './props';
 import {
   createFordStones,
   createLivingWaterMaterial,
+  dryWaterDiagnostics,
   updateWaterMaterial,
   waterDiagnostics,
   type WaterDiagnostics,
@@ -26,6 +28,7 @@ export type TerrainSample = {
   walkable: boolean;
   speedMul: number;
   zone: TerrainZone;
+  waterSource?: 'river' | 'spring_pond';
 };
 
 export type TerrainFeatureSample = {
@@ -55,6 +58,9 @@ export const SHALLOWS_WIDTH = 1.25;
 export const WATER_Y = 0.025;
 export const VISTA_RADIUS = 90;
 
+const ACTIVE_CONTRACT = activeContract();
+const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
+
 export const bounds: TerrainBounds = {
   minX: -CLAIM_HALF,
   maxX: CLAIM_HALF,
@@ -76,16 +82,21 @@ export function sample(x: number, z: number): TerrainSample {
     return { walkable: false, speedMul: 0, zone: 'out' };
   }
 
+  const spring = springPondAt(x, z);
+  if (spring) return { walkable: true, speedMul: 0.8, zone: 'shallows', waterSource: 'spring_pond' };
+
+  if (!ACTIVE_CONTRACT.tileParams.river) return { walkable: true, speedMul: 1, zone: 'bank' };
+
   const inFord = x >= FORD_MIN_X && x <= FORD_MAX_X && z >= RIVER_MIN_Z && z <= RIVER_MAX_Z;
-  if (inFord) return { walkable: true, speedMul: 0.85, zone: 'ford' };
+  if (ACTIVE_CONTRACT.tileParams.ford && inFord) return { walkable: true, speedMul: 0.85, zone: 'ford', waterSource: 'river' };
 
   const inRiver = z >= RIVER_MIN_Z && z <= RIVER_MAX_Z;
-  if (inRiver) return { walkable: true, speedMul: 0.55, zone: 'river' };
+  if (inRiver) return { walkable: true, speedMul: 0.55, zone: 'river', waterSource: 'river' };
 
   const inShallows =
     (z > RIVER_MAX_Z && z <= RIVER_MAX_Z + SHALLOWS_WIDTH) ||
     (z < RIVER_MIN_Z && z >= RIVER_MIN_Z - SHALLOWS_WIDTH);
-  if (inShallows) return { walkable: true, speedMul: 0.8, zone: 'shallows' };
+  if (inShallows) return { walkable: true, speedMul: 0.8, zone: 'shallows', waterSource: 'river' };
 
   return { walkable: true, speedMul: 1, zone: 'bank' };
 }
@@ -110,6 +121,27 @@ export function riverGeometry(): { minX: number; maxX: number; minZ: number; max
     minZ: RIVER_MIN_Z,
     maxZ: RIVER_MAX_Z,
   };
+}
+
+export function waterSources(): readonly ContractWaterSource[] {
+  return SPRING_PONDS;
+}
+
+export function hasRiverWater(): boolean {
+  return ACTIVE_CONTRACT.tileParams.river;
+}
+
+export function isWaterSourceAdjacent(x: number, z: number, pad: number): boolean {
+  const terrain = sample(x, z);
+  if (terrain.zone !== 'bank' && terrain.zone !== 'shallows') return false;
+  if (ACTIVE_CONTRACT.tileParams.river) {
+    const river = riverGeometry();
+    if (x >= river.minX && x <= river.maxX) {
+      const distance = z < river.minZ ? river.minZ - z : z > river.maxZ ? z - river.maxZ : 0;
+      if (distance <= pad) return true;
+    }
+  }
+  return SPRING_PONDS.some((source) => distanceToSpringEdge(x, z, source) <= pad);
 }
 
 export function sampleHeight(x: number, z: number): number {
@@ -348,23 +380,125 @@ export const createFordPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
 export function createTerrainView(): TerrainView {
   const group = new THREE.Group();
   const bank = createBankPlaceholder();
-  const river = createRiverPlaceholder();
   const vistaBank = createVistaBankMesh(bank.material as THREE.MeshStandardMaterial);
-  const ford = createFordPlaceholder();
-  const fordStones = createFordStones(WATER_Y);
   const props = createClaimProps();
+  const springPonds = createSpringPonds();
   for (const prop of props.children) prop.position.y = visualY(prop.position.x, prop.position.z, 0, 0.7);
-  group.add(vistaBank, bank, river, ford, fordStones, props);
+  group.add(vistaBank, bank);
+
+  let river: THREE.Mesh | null = null;
+  let ford: THREE.Mesh | null = null;
+  let fordStones: THREE.InstancedMesh | null = null;
+  if (ACTIVE_CONTRACT.tileParams.river) {
+    river = createRiverPlaceholder();
+    ford = createFordPlaceholder();
+    fordStones = createFordStones(WATER_Y);
+    group.add(river, ford, fordStones);
+  }
+
+  group.add(springPonds, props);
 
   return {
     group,
     update: (delta: number) => {
       syncBankMaterial(bank);
-      updateWaterMaterial(river, delta);
-      updateWaterMaterial(ford, delta);
+      if (river) updateWaterMaterial(river, delta);
+      if (ford) updateWaterMaterial(ford, delta);
     },
-    diagnostics: () => waterDiagnostics(river, ford, fordStones),
+    diagnostics: () => river && ford && fordStones ? waterDiagnostics(river, ford, fordStones) : dryWaterDiagnostics(SPRING_PONDS.length),
   };
+}
+
+function createSpringPonds(): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'SpringPonds';
+  for (const source of SPRING_PONDS) group.add(createSpringPond(source));
+  return group;
+}
+
+function createSpringPond(source: ContractWaterSource): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'SpringPond';
+  const waterMaterial = new THREE.MeshStandardMaterial({
+    color: '#416f6e',
+    transparent: true,
+    opacity: 0.86,
+    roughness: 0.42,
+    metalness: 0.01,
+  });
+  const water = new THREE.Mesh(new THREE.CircleGeometry(source.radius, 48), waterMaterial);
+  water.name = 'SpringPondPlaceholder';
+  water.rotation.x = -Math.PI / 2;
+  water.position.set(source.x, visualY(source.x, source.z, WATER_Y + 0.02, source.radius), source.z);
+  water.renderOrder = RenderLayers.groundDecals;
+  group.add(water);
+
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(source.radius * 0.96, source.radius * 1.35, 48),
+    new THREE.MeshBasicMaterial({ color: '#3f4a36', transparent: true, opacity: 0.24, side: THREE.DoubleSide }),
+  );
+  ring.name = 'SpringPondDampRing';
+  ring.rotation.x = -Math.PI / 2;
+  ring.position.copy(water.position);
+  ring.position.y -= 0.004;
+  ring.renderOrder = RenderLayers.groundDecals;
+  group.add(ring);
+
+  const reeds = createPondReeds(source);
+  group.add(reeds);
+
+  const urlLoader = processedTextureUrlsByFile.get('prop-spring-pond.png');
+  if (urlLoader) {
+    void urlLoader().then((url) => {
+      textureLoader.load(url, (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = 4;
+        waterMaterial.map = texture;
+        waterMaterial.needsUpdate = true;
+      });
+    });
+  }
+  return group;
+}
+
+function createPondReeds(source: ContractWaterSource): THREE.InstancedMesh {
+  const count = 14;
+  const mesh = new THREE.InstancedMesh(
+    new THREE.CylinderGeometry(0.025, 0.035, 0.42, 5),
+    new THREE.MeshStandardMaterial({ color: '#5c6742', roughness: 0.9 }),
+    count,
+  );
+  mesh.name = 'SpringPondReeds';
+  mesh.renderOrder = RenderLayers.gameplay;
+  const matrix = new THREE.Matrix4();
+  const rotation = new THREE.Quaternion();
+  const position = new THREE.Vector3();
+  const scale = new THREE.Vector3();
+  for (let index = 0; index < count; index += 1) {
+    const angle = index * 2.399963 + 0.3;
+    const radius = source.radius * (1.05 + ((index * 37) % 5) * 0.035);
+    const x = source.x + Math.cos(angle) * radius;
+    const z = source.z + Math.sin(angle) * radius;
+    position.set(x, visualY(x, z, 0.24), z);
+    rotation.setFromEuler(new THREE.Euler(0.12 * Math.sin(angle), angle, 0.18 * Math.cos(angle)));
+    scale.setScalar(0.78 + ((index * 19) % 7) * 0.05);
+    matrix.compose(position, rotation, scale);
+    mesh.setMatrixAt(index, matrix);
+  }
+  mesh.instanceMatrix.needsUpdate = true;
+  return mesh;
+}
+
+function springPondAt(x: number, z: number): ContractWaterSource | null {
+  return SPRING_PONDS.find((source) => distanceToSpringCenter(x, z, source) <= source.radius) ?? null;
+}
+
+function distanceToSpringEdge(x: number, z: number, source: ContractWaterSource): number {
+  return Math.max(0, distanceToSpringCenter(x, z, source) - source.radius);
+}
+
+function distanceToSpringCenter(x: number, z: number, source: ContractWaterSource): number {
+  return Math.hypot(x - source.x, z - source.z);
 }
 
 function createBankMaterial(): THREE.MeshStandardMaterial {
