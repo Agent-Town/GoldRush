@@ -8,7 +8,7 @@ import {
 } from '../assets/SpriteAnimator';
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
-import { activeContract as selectActiveContract, activeContractDiagnostics } from '../meta/ContractFamilies';
+import { activeContract as selectActiveContract, activeContractDiagnostics, type ContractManifest } from '../meta/ContractFamilies';
 import {
   availablePicks,
   browserResearchStorage,
@@ -241,7 +241,8 @@ export class Game {
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
-  private readonly heroStart = new THREE.Vector3(0, 0.06, 12);
+  private readonly activeContract = selectActiveContract();
+  private readonly heroStart = contractHeroStart(this.activeContract);
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
   private lightRig?: LightRig;
@@ -287,7 +288,6 @@ export class Game {
     maxHp: 0,
     reachRadius: 0,
   };
-  private readonly activeContract = selectActiveContract();
   private readonly waveSystem = new WaveSystem(
     this.enemies,
     this.primaryActor.group.position,
@@ -2597,6 +2597,11 @@ function demolishKey(candidate: DemolishCandidate): string {
 
 function edgeFromPosition(position: THREE.Vector3): CompassEdge {
   return Math.abs(position.x) > Math.abs(position.z) ? (position.x >= 0 ? 'east' : 'west') : position.z >= 0 ? 'north' : 'south';
+}
+
+function contractHeroStart(contract: ContractManifest): THREE.Vector3 {
+  const lossStake = contract.tileParams.stakeMarkers?.find((marker) => marker.lossCondition);
+  return new THREE.Vector3(lossStake?.x ?? 0, 0.06, lossStake?.z ?? 12);
 }
 
 function edgePlace(edge: CompassEdge): string {

@@ -906,7 +906,7 @@ export class BuildSystem {
   }
 
   private isWaterSourceAdjacent(position: THREE.Vector3): boolean {
-    return Terrain.isWaterSourceAdjacent(position.x, position.z, Balance.sluice.riverPad);
+    return Terrain.isBuildable(position.x, position.z) && Terrain.isWaterSourceAdjacent(position.x, position.z, Balance.sluice.riverPad);
   }
 
   private overlapsExisting(id: BuildableId, position: THREE.Vector3): boolean {

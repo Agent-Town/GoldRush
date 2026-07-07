@@ -1,6 +1,9 @@
 import * as THREE from 'three';
 import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
+import { activeContract } from '../meta/ContractFamilies';
+
+const ACTIVE_CONTRACT = activeContract();
 
 const rockMaterial = new THREE.MeshStandardMaterial({
   color: '#8c7f6d',
@@ -91,8 +94,15 @@ export function createClaimProps(): THREE.Group {
     [createStumpPlaceholder, 8.5, 11, 0.8, -0.8],
     [createStumpPlaceholder, 22, -12, 0.65, 0.6],
     [createRockPlaceholder, 3.5, -15, 0.55, 2.7],
-    [createClaimPostPlaceholder, -4.5, -7.2, 1, -0.25],
   ];
+  const stakes = ACTIVE_CONTRACT.tileParams.stakeMarkers ?? [];
+  if (stakes.length > 0) {
+    for (const stake of stakes) {
+      placements.push([createClaimPostPlaceholder, stake.x, stake.z, stake.lossCondition ? 1 : 0.82, stake.lossCondition ? -0.25 : 0.25]);
+    }
+  } else {
+    placements.push([createClaimPostPlaceholder, -4.5, -7.2, 1, -0.25]);
+  }
 
   for (const [factory, x, z, scale, rotation] of placements) {
     const prop = factory();

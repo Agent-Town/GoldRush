@@ -50,6 +50,41 @@
         "tags": ["trail"],
         "unlock": "wave10OnClaim"
       }
+    },
+    {
+      "id": "e1-twin-banks",
+      "name": "Twin Banks",
+      "tileParams": {
+        "tileId": "e1-twin-banks",
+        "biome": "river-claim",
+        "river": true,
+        "ford": true,
+        "fords": [
+          { "id": "west-ford", "x": -16, "halfWidth": 3 },
+          { "id": "east-ford", "x": 16, "halfWidth": 3 }
+        ],
+        "buildZones": [
+          { "id": "south-bank", "bank": "south", "minX": -28, "maxX": 28, "minZ": -30, "maxZ": -7 },
+          { "id": "north-bank", "bank": "north", "minX": -28, "maxX": 28, "minZ": 7, "maxZ": 30 }
+        ],
+        "stakeMarkers": [
+          { "id": "south-claim-stake", "x": 0, "z": -12, "lossCondition": true },
+          { "id": "north-expansion-marker", "x": 0, "z": 12, "lossCondition": false }
+        ],
+        "waterSources": [],
+        "lanes": {
+          "spawnEdges": ["north", "south", "east", "west"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {},
+      "boardRow": {
+        "name": "Twin Banks",
+        "ledgerBlurb": "A split homestead; two fords decide which bank holds.",
+        "tags": ["vein-hunter"],
+        "unlock": "firstSecuredClaim"
+      }
     }
   ]
 }
