@@ -15,14 +15,16 @@ import {
   continuedStudyBonuses,
   hasResearchNode,
   loadResearchState,
+  researchNodeById,
   saveResearchState,
   scienceMeter,
   skipResearchPick,
   takeNode,
   type ResearchState,
 } from '../meta/ResearchTree';
+import { loadEpoch } from '../meta/ContractFamilies';
 import { install as installRunManager, type RunManager } from './RunManager';
-import { agentAutonomyLevel, type MetaProgress } from './MetaProgress';
+import { agentAutonomyLevel, freshMetaProgress, type MetaProgress } from './MetaProgress';
 import { AgentConsentStore } from '../agent/AgentConsent';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
@@ -89,7 +91,7 @@ import {
   type DeathResearchState,
   type DeathRunStatsSnapshot,
 } from '../ui/DeathOverlay';
-import { Hud, type UiIntent } from '../ui/Hud';
+import { Hud, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt } from '../ui/BuildingContextPrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
@@ -100,11 +102,13 @@ import { LightRig } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
-import { applyUpgradeBudgetsFromBalance, resolveFiller } from './Upgrades';
+import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgradeEffect, upgradeFamilyId } from './Upgrades';
 import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
-import { upgradeDefById, upgradeDefs, type UpgradeId } from './Upgrades';
+import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 import { buildableDefs, type BuildableId } from './buildables';
+
+const frontierEpoch = loadEpoch('epoch-1-frontier');
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -303,6 +307,7 @@ export class Game {
   private lastWeaponToggleIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
+  private playerPauseActive = false;
   private uiSnapshot?: UiSnapshot;
   private wetPowderHintCooldown = 0;
   private deathLedger: DeathLedger = {
@@ -325,6 +330,8 @@ export class Game {
   private agentPolicySlotBonus = 0;
   private readonly researchStorage = browserResearchStorage();
   private researchState: ResearchState = loadResearchState(this.researchStorage);
+  private appliedMetaProgress: MetaProgress = freshMetaProgress();
+  private runStartMetaRecapPending = false;
   private readonly craftingProfile = normalizeQueueProfile(new URLSearchParams(window.location.search).get('profile'));
 
   constructor(
@@ -461,11 +468,13 @@ export class Game {
           runStats,
           onDone: () => {
             if (this.onReturnToMenu) {
+              this.runStartMetaRecapPending = false;
               this.onReturnToMenu();
               return;
             }
             this.deathOverlay.hide();
             this.state.setPaused(false);
+            this.flushRunStartMetaRecap();
           },
         });
       }, 0);
@@ -615,8 +624,10 @@ export class Game {
     this.runManager = installRunManager(this);
     this.waveSystem.spawnStressEnemies();
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+    this.applyStats(this.progression.stats, null);
     this.syncUi();
     this.publishDiagnostics();
+    this.showRunStartMetaRecap();
     // ADR-002 section 4: M4 exposes install(game); wiring happens at merge (m4-01 gate, s32).
     const game = this;
     this.agentStub = installAgentStub(
@@ -700,7 +711,7 @@ export class Game {
     } else if (intents.cancel && !this.lastCancelIntent && (this.buildMenuOpen || this.buildSystem.isBuildMode)) {
       this.closeBuildMenu();
     } else if (intents.pause && !this.lastPauseIntent && !this.secureClaimChoicePending()) {
-      this.state.togglePause();
+      this.togglePlayerPause();
     }
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
     const upgradedThisFrame = intents.upgrade && !this.lastUpgradeIntent ? this.confirmUpgrade() : false;
@@ -1148,7 +1159,7 @@ export class Game {
       this.activeWeapon,
       this.agentUiState(),
     );
-    this.hud.update(this.uiSnapshot);
+    this.hud.update(this.uiSnapshot, this.pauseMetaSnapshot(), this.playerPauseActive && this.state.isPaused);
   }
 
   private agentUiState(): UiSnapshot['agent'] {
@@ -1231,7 +1242,7 @@ export class Game {
     if (intent.type === 'set_agent_ability') this.agentConsent.setAbility(intent.ability, intent.granted);
     if (intent.type === 'set_agent_rung' || intent.type === 'set_agent_ability') return;
     if (this.secureClaimChoicePending()) return;
-    if (intent.type === 'pause') this.state.togglePause();
+    if (intent.type === 'pause') this.togglePlayerPause();
     if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
     if (intent.type === 'toggle_build_menu') this.toggleBuildMenu();
     if (intent.type === 'close_build_menu') this.closeBuildMenu();
@@ -1250,6 +1261,8 @@ export class Game {
   }
 
   resetRun(): void {
+    const deferMetaRecap =
+      this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -1300,9 +1313,15 @@ export class Game {
       blastTime: 0,
     };
     this.state.restart();
+    this.playerPauseActive = false;
     this.prospector.reset(this.primaryActor.group.position);
     this.uiBridge.announce('Stake your claim.', 0);
     this.showProspectorIntro();
+    if (deferMetaRecap) {
+      this.runStartMetaRecapPending = true;
+    } else {
+      this.showRunStartMetaRecap();
+    }
     this.upgradeOverlay.hide();
     this.buildingContextPrompt.update(null, null, false);
   }
@@ -1315,7 +1334,13 @@ export class Game {
     this.resetRun();
   }
 
+  private togglePlayerPause(): void {
+    const paused = this.state.togglePause();
+    this.playerPauseActive = this.state.current === 'playing' && paused;
+  }
+
   applyMetaProgress(meta: MetaProgress): void {
+    this.appliedMetaProgress = cloneMetaProgress(meta);
     this.territoryRingPresent = false;
     if (meta.tracks.territory < Balance.meta.territoryTier1) return;
     let placed = 0;
@@ -1356,6 +1381,7 @@ export class Game {
 
   private endRun(): void {
     if (this.state.current === 'dead') return;
+    this.playerPauseActive = false;
     this.state.transition('dead');
     const economySummary = summarizeLog(this.economy.log);
     this.events.emit({
@@ -1991,6 +2017,72 @@ export class Game {
     };
   }
 
+  private showRunStartMetaRecap(): void {
+    this.hud.showMetaRecap(runStartMetaRecap(this.metaProgressForPresence(), this.researchState), 4);
+  }
+
+  private flushRunStartMetaRecap(): void {
+    if (!this.runStartMetaRecapPending) return;
+    this.runStartMetaRecapPending = false;
+    this.showRunStartMetaRecap();
+  }
+
+  private pauseMetaSnapshot(): PauseMetaSnapshot {
+    const meter = scienceMeter(this.researchState);
+    return {
+      science: `Science: ${meter.steps}/${meter.threshold} steps; banked +${meter.overflow}`,
+      territory: territoryPauseLine(this.metaProgressForPresence()),
+      boons: activeResearchBoons(this.researchState).map(({ name, effect }) => ({ name, effect })),
+      mastery: this.masteryProgressLines(),
+    };
+  }
+
+  private metaProgressForPresence(): MetaProgress {
+    return this.appliedMetaProgress;
+  }
+
+  private masteryProgressLines(): PauseMetaSnapshot['mastery'] {
+    const stacks = this.progression.snapshot.stacks;
+    const hasNode = (id: string) => hasResearchNode(this.researchState, id);
+    return frontierEpoch.masteryConversions
+      .map((rule) => {
+        const family = upgradeDefs.filter(
+          (def) =>
+            upgradeFamilyId(def) === rule.whenFamilyMaxed &&
+            isUpgradeUnlocked(def, hasNode) &&
+            Number.isFinite(def.maxStacks),
+        );
+        const total = family.reduce((sum, def) => sum + def.maxStacks, 0);
+        if (total <= 0) return null;
+        const current = family.reduce((sum, def) => sum + Math.min(stacks[def.id] ?? 0, def.maxStacks), 0);
+        const offers = rule.offers.map((id) => upgradeDefById[id]?.name ?? id).join(', ');
+        return {
+          name: `${familyName(rule.whenFamilyMaxed)} mastery`,
+          effect: `${current}/${total} stacks toward ${offers}`,
+        };
+      })
+      .filter((line): line is { name: string; effect: string } => line !== null);
+  }
+
+  private upgradeProvenance(def: UpgradeDef, effect: string): { label: string; line: string } | undefined {
+    const lines: string[] = [];
+    let label: string | undefined;
+    if (def.familyGate && hasResearchNode(this.researchState, def.familyGate)) {
+      const node = researchNodeById[def.familyGate];
+      if (node) {
+        label = `${node.name} earned`;
+        lines.push(`${node.name} opened ${def.name}${effect ? ` - ${effect}.` : '.'}`);
+      }
+    }
+    if (def.iconFamily === 'prospecting' && hasResearchNode(this.researchState, 'assay_grading')) {
+      label ??= 'Assay Grading earned';
+      lines.push(
+        `Assay Grading raised Prospecting - +${Balance.research.assayGradingStockpileCapBonus} stockpile cap rides seam cards.`,
+      );
+    }
+    return lines.length > 0 ? { label: label ?? 'Research earned', line: lines.join(' ') } : undefined;
+  }
+
   private syncBlastReticleRadius(radius: number): void {
     const nextRadius = Math.max(0.1, radius);
     if (Math.abs(this.blastAimReticleRadius - nextRadius) < 0.001) return;
@@ -2008,17 +2100,21 @@ export class Game {
     }
     const stacks = this.progression.snapshot.stacks;
     this.upgradeOverlay.show(
-      offer.map((def) => ({
-        def,
-        familyStacks: upgradeDefs.reduce(
-          (total, upgrade) => total + (upgrade.iconFamily === def.iconFamily ? (stacks[upgrade.id] ?? 0) : 0),
-          0,
-        ),
-        effect:
+      offer.map((def) => {
+        const effect =
           'filler' in def && def.filler === true
             ? resolveFiller(def, { wave: this.waveSystem.diagnostics.wave, maxHp: this.primaryActor.maxHp }).effectText
-            : undefined,
-      })),
+            : upgradeEffect(def);
+        return {
+          def,
+          familyStacks: upgradeDefs.reduce(
+            (total, upgrade) => total + (upgrade.iconFamily === def.iconFamily ? (stacks[upgrade.id] ?? 0) : 0),
+            0,
+          ),
+          effect,
+          provenance: this.upgradeProvenance(def, effect),
+        };
+      }),
     );
   }
 
@@ -2031,6 +2127,92 @@ export class Game {
     if (!element) throw new Error(`Missing element: ${selector}`);
     return element;
   }
+}
+
+type MetaPresenceLine = { name: string; effect: string; recap: string };
+
+function runStartMetaRecap(meta: MetaProgress, research: ResearchState): string | null {
+  const items: string[] = [];
+  if (meta.tracks.territory >= Balance.meta.territoryTier1) {
+    items.push(`palisade ring (Territory ${romanNumeral(meta.tracks.territory)})`);
+  }
+  for (const boon of activeResearchBoons(research)) items.push(boon.recap);
+  return items.length > 0 ? `Your claim remembers: ${items.slice(0, 3).join(' | ')}` : null;
+}
+
+function territoryPauseLine(meta: MetaProgress): string {
+  if (meta.tracks.territory >= Balance.meta.territoryTier1) {
+    return `Territory ${romanNumeral(meta.tracks.territory)}: palisade ring active (${Balance.meta.territoryRing.length} segments)`;
+  }
+  return `Territory 0/${Balance.meta.territoryTier1}: palisade ring not earned`;
+}
+
+function activeResearchBoons(state: ResearchState): MetaPresenceLine[] {
+  const lines: MetaPresenceLine[] = [];
+  for (const id of state.taken) {
+    const node = researchNodeById[id];
+    if (!node?.live) continue;
+    lines.push({ name: node.name, effect: node.effect, recap: researchRecap(id) });
+  }
+  const continued = continuedStudyBonuses(state);
+  if (continued.seamYieldMult > 0) {
+    const percent = percentBonus(continued.seamYieldMult);
+    lines.push({
+      name: 'Continued Study: Seam Yield',
+      effect: `+${percent}% seam panning yield.`,
+      recap: `+${percent}% seam yield (Continued Study)`,
+    });
+  }
+  if (continued.turretDamageMult > 0) {
+    const percent = percentBonus(continued.turretDamageMult);
+    lines.push({
+      name: 'Continued Study: Turret Damage',
+      effect: `+${percent}% turret spark damage.`,
+      recap: `+${percent}% turret damage (Continued Study)`,
+    });
+  }
+  if (continued.stockpileCapBonus > 0) {
+    lines.push({
+      name: 'Continued Study: Stockpile Ledger',
+      effect: `+${continued.stockpileCapBonus} stockpile cap.`,
+      recap: `+${continued.stockpileCapBonus} stockpile cap (Continued Study)`,
+    });
+  }
+  return lines;
+}
+
+function researchRecap(id: string): string {
+  if (id === 'assay_grading') {
+    return `Prospecting cards +${Balance.research.assayGradingStockpileCapBonus} cap/stack (Assay Grading)`;
+  }
+  if (id === 'chain_spark_primer') return 'Chain Spark Arc (Chain Spark Primer +12%)';
+  if (id === 'beacon_cadence') return 'Beacon Handoff (Beacon Cadence +18%)';
+  if (id === 'pact_ledger') return 'Rich Seam Pact (Pact Ledger +18 seam gold)';
+  if (id === 'second_order_slot') return `+${Balance.research.secondOrderSlots - 1} order slot (Second Order Slot)`;
+  if (id === 'refined_assay') return 'tier 2 orders (Refined Assay +20%)';
+  if (id === 'pattern_library') return '2 crafted offers (Pattern Library)';
+  if (id === 'agent_schooling') return 'Agent Schooling card after wave 15 (+1 policy slot)';
+  return researchNodeById[id]?.name ?? id;
+}
+
+function familyName(id: string): string {
+  if (id === 'firerate') return 'Firerate';
+  if (id === 'prospecting') return 'Prospecting';
+  return id.replace(/_/g, ' ');
+}
+
+function romanNumeral(value: number): string {
+  const numerals = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+  const whole = Math.max(0, Math.floor(value));
+  return numerals[whole] ?? String(whole);
+}
+
+function percentBonus(value: number): number {
+  return Math.round(value * 100);
+}
+
+function cloneMetaProgress(meta: MetaProgress): MetaProgress {
+  return { version: 1, tracks: { ...meta.tracks } };
 }
 
 function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOptions | undefined {
