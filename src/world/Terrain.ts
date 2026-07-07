@@ -28,6 +28,16 @@ export type TerrainSample = {
   zone: TerrainZone;
 };
 
+export type TerrainFeatureSample = {
+  gully: number;
+  shelf: number;
+  bluff: number;
+  pocket: number;
+  routeMask: number;
+  calmMask: number;
+  heightOffset: number;
+};
+
 export type TerrainBounds = {
   minX: number;
   maxX: number;
@@ -110,6 +120,16 @@ export function sampleUnclampedHeight(x: number, z: number): number {
   return sampleHeightFamily(x, z, true);
 }
 
+export function routingLaneDistance(x: number, z: number): number {
+  const fordApproach = Math.abs(x);
+  const claimLane = Math.abs(x) < 18 ? Math.abs(z - 12) : Number.POSITIVE_INFINITY;
+  return Math.min(fordApproach, claimLane);
+}
+
+export function terrainFeatureSample(x: number, z: number): TerrainFeatureSample {
+  return terrainFeatures(x, z);
+}
+
 function sampleHeightFamily(x: number, z: number, vistaRise: boolean): number {
   const absZ = Math.abs(z);
   const bankDistance = Math.max(0, absZ - RIVER_MAX_Z);
@@ -126,8 +146,15 @@ function sampleHeightFamily(x: number, z: number, vistaRise: boolean): number {
     (valueNoise(x * 0.065, z * 0.065) - 0.5) * 0.32 +
     (valueNoise(x * 0.17 + 41.7, z * 0.17 - 13.2) - 0.5) * 0.16 +
     (valueNoise(x * 0.34 - 9.1, z * 0.34 + 27.4) - 0.5) * 0.06;
-  const maxHeight = vistaRise && absZ > CLAIM_HALF ? 1.05 : 0.62;
-  return THREE.MathUtils.clamp((valley + southRise + vistaBankRise + noise * claimCalm * riverNoiseMask) * Balance.world.terrainRelief, -0.18, maxHeight);
+  const features = terrainFeatures(x, z);
+  const legacyMaxHeight = vistaRise && absZ > CLAIM_HALF ? 1.05 : 0.62;
+  const baseHeight = THREE.MathUtils.clamp(
+    (valley + southRise + vistaBankRise + noise * claimCalm * riverNoiseMask) * Balance.world.terrainRelief,
+    -0.18,
+    legacyMaxHeight,
+  );
+  const maxHeight = vistaRise && absZ > CLAIM_HALF ? 1.46 : 1.18;
+  return THREE.MathUtils.clamp(baseHeight + features.heightOffset, -0.38, maxHeight);
 }
 
 export function samplePaddedHeight(x: number, z: number, radius = 0): number {
@@ -152,16 +179,35 @@ export function heightDiagnostics(): {
   segments: number;
   waterY: number;
   probes: Record<string, number>;
+  natural: {
+    range: number;
+    fordApproachDelta: number;
+    routingLaneDelta: number;
+    routingFeatureMax: number;
+    probes: Record<'gully' | 'shelf' | 'bluff' | 'pocket', number>;
+    features: Record<'gully' | 'shelf' | 'bluff' | 'pocket', TerrainFeatureSample>;
+  };
 } {
   let min = Number.POSITIVE_INFINITY;
   let max = Number.NEGATIVE_INFINITY;
-  for (let z = bounds.minZ; z <= bounds.maxZ; z += 8) {
-    for (let x = bounds.minX; x <= bounds.maxX; x += 8) {
+  for (let z = bounds.minZ; z <= bounds.maxZ; z += 4) {
+    for (let x = bounds.minX; x <= bounds.maxX; x += 4) {
       const height = sampleHeight(x, z);
       min = Math.min(min, height);
       max = Math.max(max, height);
     }
   }
+  const naturalProbes = {
+    gully: sampleHeight(14, -14),
+    shelf: sampleHeight(23, -20),
+    bluff: sampleHeight(29, 29),
+    pocket: sampleHeight(-22, 20),
+  };
+  const fordBand = [-2, 0, 2].flatMap((x) => [sampleHeight(x, RIVER_MAX_Z + SHALLOWS_WIDTH), sampleHeight(x, RIVER_MIN_Z - SHALLOWS_WIDTH)]);
+  const fordApproachDelta = Math.max(...fordBand) - Math.min(...fordBand);
+  const laneSamples = [-28, -18, -8, 8, 18, 28].map((z) => sampleHeight(0, z));
+  const routingLaneDelta = Math.max(...laneSamples) - Math.min(...laneSamples);
+  const routingFeatureMax = Math.max(...[-28, -18, -8, 8, 18, 28].map((z) => Math.abs(terrainFeatureSample(0, z).heightOffset)));
   return {
     min,
     max,
@@ -173,6 +219,19 @@ export function heightDiagnostics(): {
       ford: sampleHeight(0, 0),
       nearBank: sampleHeight(12, RIVER_MAX_Z + SHALLOWS_WIDTH),
       farBank: sampleHeight(12, -18),
+    },
+    natural: {
+      range: max - min,
+      fordApproachDelta,
+      routingLaneDelta,
+      routingFeatureMax,
+      probes: naturalProbes,
+      features: {
+        gully: terrainFeatureSample(14, -14),
+        shelf: terrainFeatureSample(23, -20),
+        bluff: terrainFeatureSample(29, 29),
+        pocket: terrainFeatureSample(-22, 20),
+      },
     },
   };
 }
@@ -327,8 +386,11 @@ function createBankMaterial(): THREE.MeshStandardMaterial {
     shader.uniforms.terrainFeatureMix = uniforms.featureMix;
     shader.uniforms.terrainSeed = uniforms.seed;
     shader.vertexShader = shader.vertexShader
-      .replace('#include <common>', '#include <common>\nvarying vec2 vTerrainUv;\nvarying vec2 vTerrainWorld;')
-      .replace('#include <uv_vertex>', '#include <uv_vertex>\nvTerrainUv = uv;\nvTerrainWorld = (modelMatrix * vec4(position, 1.0)).xz;');
+      .replace('#include <common>', '#include <common>\nvarying vec2 vTerrainUv;\nvarying vec2 vTerrainWorld;\nvarying float vTerrainSlope;')
+      .replace(
+        '#include <uv_vertex>',
+        '#include <uv_vertex>\nvTerrainUv = uv;\nvTerrainWorld = (modelMatrix * vec4(position, 1.0)).xz;\nvTerrainSlope = clamp((1.0 - abs(normal.z)) * 8.0, 0.0, 1.0);',
+      );
     shader.fragmentShader = shader.fragmentShader
       .replace('#include <common>', `#include <common>
 uniform float terrainRepeat;
@@ -338,6 +400,7 @@ uniform float terrainFeatureMix;
 uniform float terrainSeed;
 varying vec2 vTerrainUv;
 varying vec2 vTerrainWorld;
+varying float vTerrainSlope;
 
 float terrainHash(vec2 p) {
   p += terrainSeed * vec2(37.2, 19.7);
@@ -369,6 +432,19 @@ vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
 float terrainVariant(vec2 cell, vec2 salt) {
   float variantCount = max(1.0, terrainVariantCount);
   return min(floor(terrainHash(cell + salt) * variantCount), variantCount - 1.0);
+}
+
+float terrainGullyMask(vec2 worldPos) {
+  float absZ = abs(worldPos.y);
+  float bankDistance = max(0.0, absZ - 5.0);
+  float bankMask = smoothstep(2.0, 8.0, bankDistance) * (1.0 - smoothstep(18.0, 30.0, bankDistance));
+  float warpedX = worldPos.x + sin(worldPos.y * 0.19) * 3.0 + sin(worldPos.y * 0.061) * 6.0;
+  float cell = floor((warpedX + 6.5) / 13.0);
+  float center = cell * 13.0 - 6.5 + sin(bankDistance * 0.8 + cell) * 2.0;
+  float channel = 1.0 - smoothstep(0.6, 2.3, abs(warpedX - center));
+  float lane = smoothstep(4.6, 9.6, min(abs(worldPos.x), abs(worldPos.y - 12.0)));
+  float ford = smoothstep(4.0, 9.0, length(worldPos));
+  return channel * bankMask * lane * ford;
 }`)
       .replace('#include <map_pars_fragment>', `#include <map_pars_fragment>
 vec4 terrainAtlasSample(vec2 tileUv, float variant) {
@@ -394,6 +470,10 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
   float scrubBlend = shoreBand * smoothstep(0.42, 0.88, terrainValueNoise(vTerrainWorld * 0.22 + terrainSeed * 31.0));
   vec4 sampledDiffuseColor = mix(packedSand, dryDirt, dirtBlend * 0.48);
   sampledDiffuseColor = mix(sampledDiffuseColor, scrub, scrubBlend * 0.24);
+  float rockBlend = smoothstep(0.10, 0.72, vTerrainSlope) * (0.55 + terrainValueNoise(vTerrainWorld * 0.18 + terrainSeed * 47.0) * 0.45);
+  sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, mix(dryDirt.rgb, vec3(0.47, 0.44, 0.37), 0.46), rockBlend * 0.42);
+  float dampGully = terrainGullyMask(vTerrainWorld) * (1.0 - smoothstep(4.0, 22.0, shoreDistance));
+  sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, vec3(0.40, 0.37, 0.29), dampGully * 0.28);
   sampledDiffuseColor.rgb = mix(vec3(1.0), sampledDiffuseColor.rgb, clamp(terrainFeatureMix, 0.0, 1.0));
   float macro = terrainValueNoise(vTerrainUv * 2.15 + terrainSeed * 11.0) * 2.0 - 1.0;
   vec3 macroTint = vec3(
@@ -562,6 +642,78 @@ function terrainNormal(x: number, z: number, heightAt: (x: number, z: number) =>
   const dx = (heightAt(x + step, z) - heightAt(x - step, z)) / (step * 2);
   const dz = (heightAt(x, z + step) - heightAt(x, z - step)) / (step * 2);
   return new THREE.Vector3(-dx, dz, 1).normalize();
+}
+
+function terrainFeatures(x: number, z: number): TerrainFeatureSample {
+  const absZ = Math.abs(z);
+  const bankDistance = Math.max(0, absZ - RIVER_MAX_Z);
+  const routeMask = smoothstep(
+    Balance.world.terrainRoutingLaneCalmRadius,
+    Balance.world.terrainRoutingLaneCalmRadius + 5,
+    routingLaneDistance(x, z),
+  );
+  const fordMask = smoothstep(4, 9, Math.hypot(x, z));
+  const calmMask = claimFeatureCalmMask(x, z) * stableProbeMask(x, z) * routeMask * fordMask;
+  const bankMask = smoothstep(2, 8, bankDistance) * (1 - smoothstep(18, 30, bankDistance)) * calmMask;
+  const gully = channelMask(x, z) * bankMask * (0.72 + valueNoise(x * 0.09 + 18.5, z * 0.09 - 4.5) * 0.42);
+  const shelf =
+    Math.max(ovalMask(x, z, 23, -20, 8, 6), ovalMask(x, z, -23, -19, 9, 6), ovalMask(x, z, -8, -28, 12, 4) * 0.72) *
+    calmMask *
+    (0.82 + valueNoise(x * 0.12 - 8.4, z * 0.12 + 19.1) * 0.34);
+  const edge = Math.max(Math.abs(x), Math.abs(z));
+  const bluff = smoothstep(CLAIM_HALF - 8, CLAIM_HALF, edge) * calmMask * (0.76 + valueNoise(x * 0.05 + 2.2, z * 0.05 - 9.7) * 0.38);
+  const pocket =
+    Math.max(
+      ovalMask(x, z, -22, 20, 7, 5),
+      ovalMask(x, z, 24, 21, 5, 6),
+      ovalMask(x, z, -26, -23, 6, 5),
+      ovalMask(x, z, 26, -27, 5, 4),
+    ) *
+    calmMask *
+    (0.82 + valueNoise(x * 0.16 + 7.1, z * 0.16 + 2.4) * 0.28);
+  const scale = Balance.world.terrainFeatureRelief * mobileTerrainFeatureScale();
+  const heightOffset = (shelf * 0.42 + bluff * 0.48 - gully * 0.30 - pocket * 0.22) * scale;
+  return { gully, shelf, bluff, pocket, routeMask, calmMask, heightOffset };
+}
+
+function channelMask(x: number, z: number): number {
+  const bankDistance = Math.max(0, Math.abs(z) - RIVER_MAX_Z);
+  const warpedX = x + Math.sin(z * 0.19) * 3 + Math.sin(z * 0.061) * 6;
+  const cell = Math.floor((warpedX + 6.5) / 13);
+  const center = cell * 13 - 6.5 + Math.sin(bankDistance * 0.8 + cell) * 2;
+  const main = 1 - smoothstep(0.6, 2.3, Math.abs(warpedX - center));
+  const branchCenter = center + Math.sign(z || 1) * (3.2 + Math.sin(bankDistance * 0.6 + cell * 1.9) * 2.2);
+  const branch = (1 - smoothstep(0.45, 1.7, Math.abs(warpedX - branchCenter))) * smoothstep(7, 14, bankDistance);
+  return Math.max(main, branch * 0.7);
+}
+
+function ovalMask(x: number, z: number, cx: number, cz: number, rx: number, rz: number): number {
+  const nx = (x - cx) / rx;
+  const nz = (z - cz) / rz;
+  return 1 - smoothstep(0.54, 1, nx * nx + nz * nz);
+}
+
+function claimFeatureCalmMask(x: number, z: number): number {
+  if (z <= RIVER_MAX_Z + SHALLOWS_WIDTH || z >= 23 || Math.abs(x) >= 24) return 1;
+  return smoothstep(7, 22, Math.abs(x));
+}
+
+function stableProbeMask(x: number, z: number): number {
+  const probes = [
+    [0, 12],
+    [-12, 0],
+    [0, 0],
+    [12, RIVER_MAX_Z + SHALLOWS_WIDTH],
+    [12, -18],
+  ] as const;
+  let mask = 1;
+  for (const [px, pz] of probes) mask *= smoothstep(1.8, 4.2, Math.hypot(x - px, z - pz));
+  return mask;
+}
+
+function mobileTerrainFeatureScale(): number {
+  if (typeof window === 'undefined') return 1;
+  return window.innerWidth <= 430 ? Balance.world.terrainFeatureMobileScale : 1;
 }
 
 function vistaVertexCount(): number {
