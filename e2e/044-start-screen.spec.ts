@@ -2,6 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { RUN_SUSPEND_KEY } from '../src/game/ProfileStorage';
 import { AUDIO_VOLUME_STORAGE_KEY } from '../src/systems/AudioSystem';
+import { Balance } from '../src/game/Balance';
 
 const SHOT_DIR = 'artifacts/044';
 
@@ -111,17 +112,100 @@ test('Research is readable between runs and Settings volume writes through', asy
 });
 
 test('Continue appears only for an existing suspend slot and enters the run path', async ({ page }) => {
-  await page.addInitScript((key) => {
+  await page.addInitScript(({ key, value }) => {
     localStorage.clear();
     sessionStorage.clear();
-    localStorage.setItem(key, JSON.stringify({ wave: 4 }));
-  }, RUN_SUSPEND_KEY);
+    localStorage.setItem(key, JSON.stringify(value));
+  }, { key: RUN_SUSPEND_KEY, value: suspendFixture(4) });
   const errors = collectErrors(page);
   await page.goto('/');
 
   await expect(page.getByTestId('start-menu-continue')).toBeVisible();
+  await expect(page.getByTestId('start-menu-saved-claim')).toContainText('wave 4');
   await page.getByTestId('start-menu-continue').click();
   await expect(page.getByTestId('start-menu')).toHaveCount(0);
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   assertNoErrors(errors);
 });
+
+function suspendFixture(wave: number): unknown {
+  const meta = { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } };
+  return {
+    v: 1,
+    wave,
+    timeAlive: wave * Balance.waves.waveInterval,
+    writtenAt: Date.now(),
+    lastWriteMs: 0,
+    sizeBytes: 1,
+    trigger: 'wave-boundary',
+    copy: `The claim resumes at wave ${wave}. The ledger kept your place; trail work after that boundary is replayed.`,
+    contractId: 'the-claim',
+    seed: '044',
+    rng: { waves: null, upgrades: null },
+    waveSystem: {
+      wave,
+      pulse: 0,
+      edge: null,
+      budget: 0,
+      waveSpawnedTotal: 0,
+      nextTrickleAt: Balance.waves.graceSeconds + Balance.waves.trickleInterval,
+      nextWaveAt: (wave + 1) * Balance.waves.waveInterval,
+      nextPlanWaveAt: (wave + 1) * Balance.waves.waveInterval,
+      nextPlanWave: wave + 1,
+      plannedPulses: [],
+      copyCursor: 0,
+      lastCopy: '',
+      currentAtSim: wave * Balance.waves.waveInterval,
+      waveState: 'quiet',
+      lastPulseAt: Number.NEGATIVE_INFINITY,
+    },
+    enemies: { spawnSerial: 0, active: [] },
+    economy: {
+      gold: 0,
+      bankCap: Balance.economy.bankCap,
+      log: [],
+      summary: {
+        panned: 0,
+        sluiced: 0,
+        granted: 0,
+        stolen: 0,
+        reclaimed: 0,
+        pannedByProspector: 0,
+        sluicedByProspector: 0,
+        reclaimedByProspector: 0,
+        spent: 0,
+        baseValue: 0,
+        buildingsBuilt: 0,
+        beaconsBuilt: 0,
+        repairSpent: 0,
+        repairs: 0,
+      },
+    },
+    hero: {
+      level: 1,
+      xpTotal: 0,
+      spentXp: 0,
+      xpInto: 0,
+      pendingLevels: 0,
+      offer: null,
+      stacks: {},
+      hp: Balance.hero.maxHp,
+      maxHp: Balance.hero.maxHp,
+      position: { x: 0, y: 0.06, z: 12 },
+      velocity: { x: 0, y: 0, z: 0 },
+    },
+    buildings: [],
+    counters: {
+      kills: 0,
+      stolenTotal: 0,
+      reclaimedTotal: 0,
+      buildingHitsResolved: 0,
+      buildingsWrecked: 0,
+      weapon: 'rig',
+      weaponToggleCount: 0,
+      blastTime: 0,
+    },
+    meta,
+    research: { version: 1, progress: meta, taken: [], proposalSalt: 0, pinnedTarget: null },
+  };
+}

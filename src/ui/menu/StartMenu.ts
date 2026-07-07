@@ -1,5 +1,4 @@
 import {
-  RUN_SUSPEND_KEY,
   ensureProfileState,
   installProfileStorageScope,
 } from '../../game/ProfileStorage';
@@ -12,6 +11,7 @@ import {
 import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { renderResearchChart } from '../ResearchChart';
+import { clearRunSuspend, readRunSuspend, runSuspendLabel } from '../../game/RunSuspend';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const backdropUrl = new URL('../../../assets/processed/ui-menu-backdrop.png', import.meta.url).href;
@@ -60,7 +60,7 @@ export class StartMenu {
 
   private render(): void {
     this.disposeAudioSettings();
-    const hasContinue = hasSuspendedRun();
+    const suspend = readRunSuspend();
     this.root.className = `gr-start-menu${this.researchOpen ? ' gr-start-menu--research-open' : ''}`;
     this.root.innerHTML = `
       <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="ready" style="background-image:url('${backdropUrl}')"></div>
@@ -68,10 +68,11 @@ export class StartMenu {
         <div class="gr-start-menu__emblem" data-testid="start-menu-emblem" data-asset-slot="ui-title-emblem" data-asset-state="ready" style="background-image:url('${emblemUrl}')" aria-hidden="true"></div>
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
         <p class="gr-start-menu__subtitle">an Agent Town tale</p>
+        ${suspend ? `<p class="gr-start-menu__saved-claim" data-testid="start-menu-saved-claim">${runSuspendLabel(suspend)}</p>` : ''}
         <nav class="gr-start-menu__nav" aria-label="Claim actions">
           ${
-            hasContinue
-              ? '<button class="gr-start-menu__button" type="button" data-menu-action="continue" data-testid="start-menu-continue">Continue</button>'
+            suspend
+              ? `<button class="gr-start-menu__button" type="button" data-menu-action="continue" data-testid="start-menu-continue">Continue Wave ${suspend.wave}</button>`
               : ''
           }
           <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="new" data-testid="start-menu-new-claim">New Claim</button>
@@ -115,7 +116,7 @@ export class StartMenu {
     const action = button?.dataset.menuAction;
     if (!action) return;
     this.audio.play(action === 'research' ? 'ledger-open' : 'menu-tap');
-    if (action === 'new') this.options.onNewClaim();
+    if (action === 'new' && this.confirmNewClaim()) this.options.onNewClaim();
     if (action === 'continue') this.options.onContinue();
     if (action === 'town') this.options.onEnterTown();
     if (action === 'profile') this.options.onProfile();
@@ -192,6 +193,14 @@ export class StartMenu {
   private actionButtons(): HTMLButtonElement[] {
     return [...this.root.querySelectorAll<HTMLButtonElement>('.gr-start-menu__nav [data-menu-action]')];
   }
+
+  private confirmNewClaim(): boolean {
+    const suspend = readRunSuspend();
+    if (!suspend) return true;
+    if (!window.confirm(`Abandon the saved claim at wave ${suspend.wave}?`)) return false;
+    clearRunSuspend();
+    return true;
+  }
 }
 
 export function install(parent: HTMLElement, options: StartMenuOptions): StartMenu {
@@ -207,16 +216,5 @@ function setupProfileStorage(): Storage | undefined {
     return storage;
   } catch {
     return undefined;
-  }
-}
-
-function hasSuspendedRun(): boolean {
-  try {
-    const raw = setupProfileStorage()?.getItem(RUN_SUSPEND_KEY);
-    if (!raw) return false;
-    const parsed = JSON.parse(raw);
-    return Boolean(parsed && typeof parsed === 'object');
-  } catch {
-    return false;
   }
 }

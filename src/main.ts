@@ -5,6 +5,7 @@ import { installFullBaseBenchmark } from './diagnostics/fullBaseBenchmark';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import { install as installProfiles } from './game/ProfileManager';
+import { readRunSuspend } from './game/RunSuspend';
 import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { TownScene } from './town/TownScene';
@@ -65,9 +66,7 @@ function showStartMenu(): void {
       launchContract(DEFAULT_CONTRACT_ID);
     },
     onContinue: () => {
-      startMenu?.dispose();
-      startMenu = undefined;
-      startWithProfiles({ skipTitle: true, returnToMenu: true });
+      continueSavedRun();
     },
     onEnterTown: () => {
       startMenu?.dispose();
@@ -81,6 +80,19 @@ function showStartMenu(): void {
       startWithProfiles({ showTitle: true, returnToMenu: true });
     },
   });
+}
+
+function continueSavedRun(): void {
+  const suspend = readRunSuspend();
+  if (suspend?.contractId) {
+    stagePlayerContractLaunch(suspend.contractId);
+    const nextSearch = new URLSearchParams(window.location.search);
+    nextSearch.set('contract', suspend.contractId);
+    history.pushState(null, '', `${window.location.pathname}?${nextSearch.toString()}${window.location.hash}`);
+  }
+  startMenu?.dispose();
+  startMenu = undefined;
+  startWithProfiles({ skipTitle: true, returnToMenu: true });
 }
 
 function launchContract(contractId: string): void {

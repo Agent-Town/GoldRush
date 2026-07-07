@@ -1366,6 +1366,14 @@ export class Game {
         lastRunEndedReason: null,
         meta: null,
         victoryPayout: null,
+        suspend: {
+          hasSuspend: false,
+          restored: false,
+          restoredWave: null,
+          lastWriteAt: null,
+          lastWriteMs: null,
+          sizeBytes: 0,
+        },
       },
       contract: {
         ...activeContractDiagnostics(),

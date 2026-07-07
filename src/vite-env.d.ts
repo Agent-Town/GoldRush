@@ -201,6 +201,14 @@ interface ThreeGameDiagnostics {
       hero: number;
       agent: number;
     } | null;
+    suspend: {
+      hasSuspend: boolean;
+      restored: boolean;
+      restoredWave: number | null;
+      lastWriteAt: number | null;
+      lastWriteMs: number | null;
+      sizeBytes: number;
+    };
   };
   contract: {
     activeId: string;
