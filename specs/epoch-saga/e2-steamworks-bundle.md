@@ -87,5 +87,8 @@ batch-010 = A1 buildings + A5 terrain (needed by Hill Mine + Town v1 first) → 
 
 ---
 
+## §B2 — Arsenal addition: THE SKY-ROCKET BATTERY (owner memory → banked properly, 2026-07-07 ~18:30)
+Owner: "I remember there was a rocket launcher weapon in the works?" — it existed in NO ledger until now (chat is not a ledger; now it is). Canon-corrected for the era: a **black-powder festival-rocket volley weapon** — Congreve-age skyrockets, period-perfect for the Steamworks. Arcing multi-rocket salvo (CombatSystem 'lob' kind — no new damage paths), AoE sparkle-bursts in gold-and-teal, trailing ember arcs — reads as FIREWORKS, never ordnance (ADR-001: warm, zero firearm energy). Acquired via E2's science tree arsenal branch; upgrade family: salvo count / burst radius / lingering embers. Art rides an E2 batch (rocket-cart sprite + burst sheet). Story hook: the Baron's E2 revenge contract fields sky-rockets against you FIRST — you capture the science by beating him.
+
 ## §C — THE TEMPLATE LAW
 Every epoch bundle ships THIS file's shape: §A art manifest with prompt-ready entries in the five categories (new builds / era transforms / enemy sheets + boss / townsfolk + aging / terrain-props-icons) + batching plan · §B one signature tile spec with ASCII layout, elevation table, gates, objectives, economy, hazards, camera, validation probes, perf budget · authored ONE epoch ahead of build, from the saga master plan, folding in every art-QA lesson banked since the previous bundle. E3 "Voltage Age" bundle gets drafted while E2 is in players' hands — never earlier, never later.
