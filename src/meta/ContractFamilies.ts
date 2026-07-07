@@ -103,6 +103,25 @@ export type ContractLightRamp = {
   darkWave: number;
   dawnWave: number;
 };
+export type ContractFord = {
+  id: string;
+  x: number;
+  halfWidth: number;
+};
+export type ContractBuildZone = {
+  id: string;
+  bank: 'north' | 'south';
+  minX: number;
+  maxX: number;
+  minZ: number;
+  maxZ: number;
+};
+export type ContractStakeMarker = {
+  id: string;
+  x: number;
+  z: number;
+  lossCondition: boolean;
+};
 export type ContractManifest = {
   id: string;
   name: string;
@@ -111,6 +130,9 @@ export type ContractManifest = {
     biome: string;
     river: boolean;
     ford: boolean;
+    fords?: ContractFord[];
+    buildZones?: ContractBuildZone[];
+    stakeMarkers?: ContractStakeMarker[];
     waterSources: ContractWaterSource[];
     lanes: {
       spawnEdges: ContractEdge[];

@@ -5,7 +5,7 @@ import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
-import { activeContract, type ContractWaterSource } from '../meta/ContractFamilies';
+import { activeContract, type ContractStakeMarker, type ContractWaterSource } from '../meta/ContractFamilies';
 import { hasElevationTile, isTraversable as isSimTraversable, simHeight } from '../sim/TileHeight';
 import { normalizeSeed } from '../core/Rng';
 import { createClaimProps } from './props';
@@ -49,6 +49,14 @@ export type TerrainBounds = {
   maxZ: number;
 };
 
+export type FordRange = {
+  id: string;
+  minX: number;
+  maxX: number;
+  centerX: number;
+  halfWidth: number;
+};
+
 export const CLAIM_SIZE = 64;
 export const CLAIM_HALF = CLAIM_SIZE / 2;
 export const RIVER_MIN_Z = -5;
@@ -62,6 +70,7 @@ export const VISTA_RADIUS = 90;
 const ACTIVE_CONTRACT = activeContract();
 const ELEVATION_TILE = hasElevationTile();
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
+const FORD_RANGES = resolveFordRanges();
 
 export const bounds: TerrainBounds = {
   minX: -CLAIM_HALF,
@@ -69,6 +78,34 @@ export const bounds: TerrainBounds = {
   minZ: -CLAIM_HALF,
   maxZ: CLAIM_HALF,
 };
+
+function defaultFordRange(): FordRange {
+  return {
+    id: 'center-ford',
+    minX: FORD_MIN_X,
+    maxX: FORD_MAX_X,
+    centerX: (FORD_MIN_X + FORD_MAX_X) / 2,
+    halfWidth: (FORD_MAX_X - FORD_MIN_X) / 2,
+  };
+}
+
+function resolveFordRanges(): FordRange[] {
+  if (!ACTIVE_CONTRACT.tileParams.ford) return [];
+  const ranges = ACTIVE_CONTRACT.tileParams.fords ?? [];
+  if (ranges.length === 0) return [defaultFordRange()];
+  return ranges.map((range) => ({
+    id: range.id,
+    minX: range.x - range.halfWidth,
+    maxX: range.x + range.halfWidth,
+    centerX: range.x,
+    halfWidth: range.halfWidth,
+  }));
+}
+
+function fordAt(x: number, z: number): FordRange | null {
+  if (z < RIVER_MIN_Z || z > RIVER_MAX_Z) return null;
+  return FORD_RANGES.find((range) => x >= range.minX && x <= range.maxX) ?? null;
+}
 
 export const nodeAnchors: Vec2[] = [
   { x: -22, z: -6.8 },
@@ -90,7 +127,7 @@ export function sample(x: number, z: number): TerrainSample {
 
   if (!ACTIVE_CONTRACT.tileParams.river) return { walkable: true, speedMul: 1, zone: 'bank' };
 
-  const inFord = x >= FORD_MIN_X && x <= FORD_MAX_X && z >= RIVER_MIN_Z && z <= RIVER_MAX_Z;
+  const inFord = fordAt(x, z) !== null;
   if (ACTIVE_CONTRACT.tileParams.ford && inFord) return { walkable: true, speedMul: 0.85, zone: 'ford', waterSource: 'river' };
 
   const inRiver = z >= RIVER_MIN_Z && z <= RIVER_MAX_Z;
@@ -114,7 +151,9 @@ export function spawnEdges(): Vec2[] {
 }
 
 export function isBuildable(x: number, z: number): boolean {
-  return sample(x, z).zone === 'bank';
+  if (sample(x, z).zone !== 'bank') return false;
+  const zones = ACTIVE_CONTRACT.tileParams.buildZones ?? [];
+  return zones.length === 0 || zones.some((zone) => x >= zone.minX && x <= zone.maxX && z >= zone.minZ && z <= zone.maxZ);
 }
 
 export function riverGeometry(): { minX: number; maxX: number; minZ: number; maxZ: number } {
@@ -128,6 +167,31 @@ export function riverGeometry(): { minX: number; maxX: number; minZ: number; max
 
 export function waterSources(): readonly ContractWaterSource[] {
   return SPRING_PONDS;
+}
+
+export function fordRanges(): readonly FordRange[] {
+  return FORD_RANGES;
+}
+
+export function nearestFordRange(x: number): FordRange {
+  let best = FORD_RANGES[0] ?? defaultFordRange();
+  let bestDistance = Math.abs(x - best.centerX);
+  for (const range of FORD_RANGES.slice(1)) {
+    const distance = Math.abs(x - range.centerX);
+    if (distance < bestDistance) {
+      best = range;
+      bestDistance = distance;
+    }
+  }
+  return best;
+}
+
+export function stakeMarkers(): readonly ContractStakeMarker[] {
+  return ACTIVE_CONTRACT.tileParams.stakeMarkers ?? [];
+}
+
+export function lossStakeMarker(): ContractStakeMarker | null {
+  return stakeMarkers().find((marker) => marker.lossCondition) ?? null;
 }
 
 export function hasRiverWater(): boolean {
@@ -158,7 +222,7 @@ export function sampleUnclampedHeight(x: number, z: number): number {
 }
 
 export function routingLaneDistance(x: number, z: number): number {
-  const fordApproach = Math.abs(x);
+  const fordApproach = Math.abs(x - nearestFordRange(x).centerX);
   const claimLane = Math.abs(x) < 18 ? Math.abs(z - 12) : Number.POSITIVE_INFINITY;
   return Math.min(fordApproach, claimLane);
 }
@@ -367,20 +431,17 @@ export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.ass
   { slotId: assetSlots.terrainRiver },
 );
 
-export const createFordPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assign(
-  () => {
-    const mesh = new THREE.Mesh(
-      new THREE.PlaneGeometry(FORD_MAX_X - FORD_MIN_X, visualWaterWidth(), 1, 1),
-      createLivingWaterMaterial(waterMaterialConfig(true)),
-    );
-    mesh.rotation.x = -Math.PI / 2;
-    mesh.position.y = WATER_Y + 0.015;
-    mesh.renderOrder = RenderLayers.groundDecals;
-    mesh.receiveShadow = true;
-    return tagPlaceholder(mesh, assetSlots.terrainFord);
-  },
-  { slotId: assetSlots.terrainFord },
-);
+export function createFordPlaceholder(range: FordRange = defaultFordRange()): THREE.Mesh {
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(range.maxX - range.minX, visualWaterWidth(), 1, 1),
+    createLivingWaterMaterial(waterMaterialConfig(true, range)),
+  );
+  mesh.rotation.x = -Math.PI / 2;
+  mesh.position.set(range.centerX, WATER_Y + 0.015, 0);
+  mesh.renderOrder = RenderLayers.groundDecals;
+  mesh.receiveShadow = true;
+  return tagPlaceholder(mesh, assetSlots.terrainFord);
+}
 
 export function createTerrainView(): TerrainView {
   const group = new THREE.Group();
@@ -392,13 +453,17 @@ export function createTerrainView(): TerrainView {
   group.add(vistaBank, bank);
 
   let river: THREE.Mesh | null = null;
-  let ford: THREE.Mesh | null = null;
-  let fordStones: THREE.InstancedMesh | null = null;
+  const fords: THREE.Mesh[] = [];
+  const fordStones: THREE.InstancedMesh[] = [];
   if (ACTIVE_CONTRACT.tileParams.river) {
     river = createRiverPlaceholder();
-    ford = createFordPlaceholder();
-    fordStones = createFordStones(WATER_Y);
-    group.add(river, ford, fordStones);
+    for (const range of FORD_RANGES) {
+      const ford = createFordPlaceholder(range);
+      const stones = createFordStones(WATER_Y, range.centerX);
+      fords.push(ford);
+      fordStones.push(stones);
+    }
+    group.add(river, ...fords, ...fordStones);
   }
 
   group.add(springPonds, props);
@@ -408,9 +473,9 @@ export function createTerrainView(): TerrainView {
     update: (delta: number) => {
       syncBankMaterial(bank);
       if (river) updateWaterMaterial(river, delta);
-      if (ford) updateWaterMaterial(ford, delta);
+      for (const ford of fords) updateWaterMaterial(ford, delta);
     },
-    diagnostics: () => river && ford && fordStones ? waterDiagnostics(river, ford, fordStones) : dryWaterDiagnostics(SPRING_PONDS.length),
+    diagnostics: () => (river ? waterDiagnostics(river, fords, fordStones) : dryWaterDiagnostics(SPRING_PONDS.length)),
   };
 }
 
@@ -872,13 +937,13 @@ function vistaSeamProbePoints(): Array<{ x: number; z: number }> {
   ];
 }
 
-function waterMaterialConfig(ford: boolean): Parameters<typeof createLivingWaterMaterial>[0] {
+function waterMaterialConfig(ford: boolean, range: FordRange = defaultFordRange()): Parameters<typeof createLivingWaterMaterial>[0] {
   const riverHalfWidth = (RIVER_MAX_Z - RIVER_MIN_Z) / 2;
   return {
     ford,
     riverHalfWidth,
     visualHalfWidth: visualWaterWidth() / 2,
-    fordHalfWidth: (FORD_MAX_X - FORD_MIN_X) / 2,
+    fordHalfWidth: range.halfWidth,
     anchors: nodeAnchors.map((anchor) => ({
       x: anchor.x,
       z: anchor.z < 0 ? RIVER_MIN_Z + 0.55 : RIVER_MAX_Z - 0.55,

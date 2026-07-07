@@ -548,23 +548,24 @@ export class ClaimJumperEnemy {
     const current = this.group.position;
     const currentZone = Terrain.sample(current.x, current.z).zone;
     const targetSide = riverSide(target.z);
+    const ford = Terrain.nearestFordRange(current.x);
     if (currentZone === 'ford') {
       if (targetSide === 'north' && current.z < Terrain.RIVER_MAX_Z - 0.1) {
-        return this.routeTarget.set(0, Balance.enemy.groundY, Terrain.RIVER_MAX_Z);
+        return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, Terrain.RIVER_MAX_Z);
       }
       if (targetSide === 'south' && current.z > Terrain.RIVER_MIN_Z + 0.1) {
-        return this.routeTarget.set(0, Balance.enemy.groundY, Terrain.RIVER_MIN_Z);
+        return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, Terrain.RIVER_MIN_Z);
       }
       return target;
     }
 
     const currentSide = riverSide(current.z);
     if (currentSide && targetSide && currentSide !== targetSide) {
-      return this.routeTarget.set(0, Balance.enemy.groundY, currentSide === 'north' ? Terrain.RIVER_MAX_Z : Terrain.RIVER_MIN_Z);
+      return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, currentSide === 'north' ? Terrain.RIVER_MAX_Z : Terrain.RIVER_MIN_Z);
     }
 
     if (currentZone === 'river') {
-      return this.routeTarget.set(THREE.MathUtils.clamp(current.x, Terrain.FORD_MIN_X, Terrain.FORD_MAX_X), Balance.enemy.groundY, current.z);
+      return this.routeTarget.set(THREE.MathUtils.clamp(current.x, ford.minX, ford.maxX), Balance.enemy.groundY, current.z);
     }
 
     return target;
@@ -617,16 +618,21 @@ export class ClaimJumperEnemy {
     const previous = this.group.position;
     if (previous.z <= Terrain.RIVER_MIN_Z) {
       this.nextPosition.z = Terrain.RIVER_MIN_Z - outsideNudge;
-      this.nextPosition.x += Math.sign(-this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
+      const ford = Terrain.nearestFordRange(previous.x);
+      this.nextPosition.x += Math.sign(ford.centerX - this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
     } else if (previous.z >= Terrain.RIVER_MAX_Z) {
       this.nextPosition.z = Terrain.RIVER_MAX_Z + outsideNudge;
-      this.nextPosition.x += Math.sign(-this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
-    } else if (previous.x < Terrain.FORD_MIN_X) {
-      this.nextPosition.x = Terrain.FORD_MIN_X + outsideNudge;
-    } else if (previous.x > Terrain.FORD_MAX_X) {
-      this.nextPosition.x = Terrain.FORD_MAX_X - outsideNudge;
+      const ford = Terrain.nearestFordRange(previous.x);
+      this.nextPosition.x += Math.sign(ford.centerX - this.nextPosition.x || this.avoidanceSide()) * stepDistance * Balance.palisade.slideBias;
     } else {
-      this.nextPosition.x = THREE.MathUtils.clamp(this.nextPosition.x, Terrain.FORD_MIN_X, Terrain.FORD_MAX_X);
+      const ford = Terrain.nearestFordRange(previous.x);
+      if (previous.x < ford.minX) {
+        this.nextPosition.x = ford.minX + outsideNudge;
+      } else if (previous.x > ford.maxX) {
+        this.nextPosition.x = ford.maxX - outsideNudge;
+      } else {
+        this.nextPosition.x = THREE.MathUtils.clamp(this.nextPosition.x, ford.minX, ford.maxX);
+      }
     }
   }
 
@@ -702,7 +708,11 @@ function hashUnit(seed: number): number {
 
 function safeFormationSpread(): number {
   const ringGap = Math.max(0, Balance.meta.territoryRingGapHalfWidth - FORMATION_GAP_CLEARANCE);
-  const fordGap = Math.max(0, (Terrain.FORD_MAX_X - Terrain.FORD_MIN_X) * 0.5 - FORMATION_GAP_CLEARANCE);
+  const fordGap = Math.max(
+    0,
+    Math.min(...Terrain.fordRanges().map((range) => range.halfWidth), (Terrain.FORD_MAX_X - Terrain.FORD_MIN_X) * 0.5) -
+      FORMATION_GAP_CLEARANCE,
+  );
   return Math.min(Balance.enemy.formationSpreadWidth, ringGap, fordGap);
 }
 

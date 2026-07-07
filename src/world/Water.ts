@@ -159,7 +159,7 @@ float waterNoise(vec2 p) {
   return material;
 }
 
-export function createFordStones(waterY: number): THREE.InstancedMesh {
+export function createFordStones(waterY: number, offsetX = 0): THREE.InstancedMesh {
   const stoneGeometry = new THREE.CylinderGeometry(0.55, 0.68, 0.08, 9);
   const stoneMaterial = new THREE.MeshStandardMaterial({
     color: palette.sandDeep,
@@ -185,7 +185,7 @@ export function createFordStones(waterY: number): THREE.InstancedMesh {
   const scale = new THREE.Vector3();
   for (let index = 0; index < stones.length; index += 1) {
     const [x, z, sx, sz, yaw] = stones[index];
-    position.set(x, waterY + 0.045, z);
+    position.set(x + offsetX, waterY + 0.045, z);
     rotation.setFromEuler(new THREE.Euler(0, yaw, 0));
     scale.set(sx, 1, sz);
     matrix.compose(position, rotation, scale);
@@ -203,20 +203,21 @@ export function updateWaterMaterial(mesh: THREE.Mesh, delta: number): void {
   uniforms.flowSpeed.value = Balance.world.waterFlowSpeed;
 }
 
-export function waterDiagnostics(river: THREE.Mesh, ford: THREE.Mesh, fordStones: THREE.InstancedMesh): WaterDiagnostics {
+export function waterDiagnostics(river: THREE.Mesh, fords: readonly THREE.Mesh[], fordStones: readonly THREE.InstancedMesh[]): WaterDiagnostics {
   const riverUniforms = waterUniforms(river);
-  const fordUniforms = waterUniforms(ford);
+  const ford = fords[0];
+  const fordUniforms = ford ? waterUniforms(ford) : undefined;
   return {
     material: 'LivingWaterShader',
     riverPresent: true,
-    fordPresent: true,
+    fordPresent: fords.length > 0,
     riverTime: round3(riverUniforms?.time.value ?? 0),
     fordTime: round3(fordUniforms?.time.value ?? 0),
     quality: round3(riverUniforms?.quality.value ?? waterQuality()),
     mobile: isMobileWater(),
     foam: true,
     glints: (river.material as THREE.Material).userData.waterGlints ?? 0,
-    fordStones: fordStones.count,
+    fordStones: fordStones.reduce((sum, mesh) => sum + mesh.count, 0),
     springPonds: 0,
     waterPhaseVariance: round3(waterPhaseVariance()),
   };
