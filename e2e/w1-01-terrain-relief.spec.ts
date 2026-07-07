@@ -60,6 +60,7 @@ test('hero and enemy visual Y track terrain while XZ stays planar', async ({ pag
   expect(hero.pos?.z).toBeCloseTo(-18, 2);
   expect(hero.pos?.y ?? 0).toBeCloseTo((hero.terrain?.heroGround ?? 0) + 0.06, 2);
 
+  await page.evaluate(() => window.__GR_TEST__?.setBalance('enemy.speed', 0));
   await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(12, -18))).resolves.toBe(true);
   await expect
     .poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions()[0]?.x ?? 0), { timeout: 8_000 })
