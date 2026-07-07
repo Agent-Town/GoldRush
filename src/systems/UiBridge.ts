@@ -3,6 +3,7 @@ import type { BuildableId } from '../game/buildables';
 import type { CompassEdge } from '../entities/Enemy';
 import type { GameState, RunState } from '../game/GameState';
 import type { AgentConsentSnapshot } from '../agent/AgentConsent';
+import type { AgentCapability, GoldRushToolName } from '../agent/ToolSurface';
 
 export type WaveState = 'quiet' | 'warning' | 'active' | 'cleared';
 
@@ -49,6 +50,8 @@ export type UiSnapshot = {
     name: string;
     permissionLevel: number;
     permissionLabel: string;
+    capabilities: readonly AgentCapability[];
+    lastActionAt: Partial<Record<GoldRushToolName, number>>;
     autonomyTrack: number;
     policySlotBonus: number;
     receiptFeed: readonly string[];

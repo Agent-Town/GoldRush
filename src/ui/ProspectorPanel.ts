@@ -1,8 +1,8 @@
 import type { AgentAbility } from '../agent/AgentConsent';
-import { AGENT_ABILITIES } from '../agent/AgentConsent';
 import { AGENT_PERMISSION_LABELS, type AgentPermissionLevel } from '../agent/PermissionLadder';
 import type { UiIntent } from './Hud';
 import type { UiSnapshot } from '../systems/UiBridge';
+import type { AgentCapability } from '../agent/ToolSurface';
 
 const RUNGS: readonly {
   level: AgentPermissionLevel;
@@ -55,6 +55,7 @@ export class ProspectorPanel {
       policySlotBonus: agent?.policySlotBonus ?? 0,
       receipts: agent?.receiptFeed ?? [],
       consent: agent?.consent ?? null,
+      capabilities: agent?.capabilities ?? [],
     });
     if (!force && key === this.renderKey) return;
     this.renderKey = key;
@@ -119,10 +120,12 @@ export class ProspectorPanel {
 
   private abilities(): string {
     const consent = this.snapshot?.agent?.consent;
+    const capabilities = this.snapshot?.agent?.capabilities ?? [];
+    if (capabilities.length === 0) return '<p class="prospector-panel__hint">No chores are wired yet.</p>';
     if ((this.snapshot?.agent?.permissionLevel ?? 0) === 0) {
-      return AGENT_ABILITIES.map((ability) => this.lockedAbility(ability)).join('');
+      return capabilities.map((ability) => this.lockedAbility(ability)).join('');
     }
-    const earned = AGENT_ABILITIES.filter((ability) => consent?.abilities[ability.id].earned);
+    const earned = capabilities.filter((ability) => consent?.abilities[ability.id].earned);
     if (earned.length === 0) return '<p class="prospector-panel__hint">Claim victories open the first chore trust.</p>';
     return earned
       .map((ability) => {
@@ -139,8 +142,8 @@ export class ProspectorPanel {
       .join('');
   }
 
-  private lockedAbility(ability: (typeof AGENT_ABILITIES)[number]): string {
-    const level = visibleRequirement(ability);
+  private lockedAbility(ability: AgentCapability): string {
+    const level = ability.level;
     const label = AGENT_PERMISSION_LABELS[level];
     return `
       <div class="prospector-check prospector-check--locked" data-testid="prospector-ability-${ability.id}" data-allowed="false">
@@ -197,8 +200,4 @@ function cleanTrack(value: number): number {
 function formatTrack(value: number): string {
   const rounded = Math.round(value * 100) / 100;
   return Number.isInteger(rounded) ? `${rounded}.0` : String(rounded);
-}
-
-function visibleRequirement(ability: (typeof AGENT_ABILITIES)[number]): AgentPermissionLevel {
-  return ability.id === 'auto_repair' ? 1 : ability.level;
 }

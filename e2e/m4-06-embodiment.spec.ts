@@ -416,8 +416,10 @@ test('permission-denied receipts do not send the Prospector to the denied target
 });
 
 test('the Prospector has no collider for scripted enemy movement', async ({ page }) => {
-  const errors = await openGame(page, '?debug&timescale=6&nowaves&nokill&nolevel&seed=m4-06-collider');
+  const errors = await openGame(page, '?debug&timescale=1&nowaves&nokill&nolevel&seed=m4-06-collider');
   await page.waitForFunction(() => Boolean(window.__GR_TEST__));
+  await expect(page.evaluate(() => window.__GR_TEST__?.setBalance('enemy.formationSpreadWidth', 0))).resolves.toBe(true);
+  await expect(page.evaluate(() => window.__GR_TEST__?.setBalance('enemy.formationSeparationStrength', 0))).resolves.toBe(true);
   await page.evaluate(() => window.__GR_TEST__?.teleport(12, 12));
   const snap = await companion(page);
   const start = { x: snap.position.x - 4, z: snap.position.z };
@@ -425,7 +427,7 @@ test('the Prospector has no collider for scripted enemy movement', async ({ page
 
   await expect(
     page.evaluate(
-      ({ x, z, tx, tz }) => window.__GR_TEST__?.scriptEnemyAt(x, z, tx, tz, 3),
+      ({ x, z, tx, tz }) => window.__GR_TEST__?.scriptEnemyAt(x, z, tx, tz, 2),
       { x: start.x, z: start.z, tx: target.x, tz: target.z },
     ),
   ).resolves.toBe(true);

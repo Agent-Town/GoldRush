@@ -100,10 +100,11 @@ test('ladder renders earned toggles, unearned hints, and current abilities', asy
   await expect(page.getByTestId('prospector-rung-2')).toContainText('Earned at agent level 2');
   await expect(page.getByTestId('prospector-rung-3')).toContainText('Claim victories grow the trust track');
   await expect(page.getByTestId('prospector-ability-auto_collect')).toBeVisible();
-  await expect(page.getByTestId('prospector-ability-auto_repair')).toHaveCount(0);
+  await expect(page.getByTestId('prospector-ability-auto_repair')).toBeVisible();
 
   await page.getByTestId('prospector-rung-toggle-1').uncheck();
   await expect(page.getByTestId('prospector-ability-auto_collect').locator('xpath=..')).toHaveAttribute('data-allowed', 'false');
+  await expect(page.getByTestId('prospector-ability-auto_repair').locator('xpath=..')).toHaveAttribute('data-allowed', 'false');
   await expect(page.locator('[data-testid="prospector-rung-toggle-2"]')).toHaveCount(0);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
