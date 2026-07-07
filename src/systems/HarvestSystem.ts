@@ -27,6 +27,7 @@ export class HarvestSystem {
   private progress = 0;
   private lastGoldGain = 0;
   private panTickMult = 1;
+  private panYieldMult = 1;
   private seamCapacityBonus = 0;
   private seamRespawnReduction = 0;
   private panCapBlocked = false;
@@ -122,6 +123,7 @@ export class HarvestSystem {
 
   reset(): void {
     this.panTickMult = 1;
+    this.panYieldMult = 1;
     this.seamCapacityBonus = 0;
     this.seamRespawnReduction = 0;
     this.channelNode = null;
@@ -136,8 +138,9 @@ export class HarvestSystem {
     this.activateInitialNodes();
   }
 
-  applyStats(panTickMult: number, seamCapacityBonus: number, seamRespawnReduction: number): void {
+  applyStats(panTickMult: number, seamCapacityBonus: number, seamRespawnReduction: number, panYieldMult = 1): void {
     this.panTickMult = Math.max(0.1, panTickMult);
+    this.panYieldMult = Math.max(0.1, panYieldMult);
     this.seamCapacityBonus = seamCapacityBonus;
     this.seamRespawnReduction = seamRespawnReduction;
     // Existing and future seams share one run stat so panning rules stay consistent after a pick.
@@ -160,7 +163,7 @@ export class HarvestSystem {
 
   private collectReadyTicks(at: number, node: GoldNode): void {
     while (this.progress >= 1 && node.isActive) {
-      const gained = Math.min(Balance.goldSeam.tickGold, node.remainingGold);
+      const gained = Math.min(Balance.goldSeam.tickGold * this.panYieldMult, node.remainingGold);
       if (gained <= 0) break;
       if (!this.economy.canReceiveIncome(gained)) {
         if (!this.panCapBlocked) {

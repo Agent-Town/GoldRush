@@ -12,6 +12,7 @@ import {
   availablePicks,
   browserResearchStorage,
   contractTierForResearch,
+  continuedStudyBonuses,
   hasResearchNode,
   loadResearchState,
   saveResearchState,
@@ -1831,8 +1832,9 @@ export class Game {
     if (pickedId === 'tinkers_plating' && platingHeal !== undefined) {
       this.hero.heal(platingHeal);
     }
-    this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction);
-    this.buildSystem.applyStats(stats.beaconFireRateMult);
+    const continued = continuedStudyBonuses(this.researchState);
+    this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction, 1 + continued.seamYieldMult);
+    this.buildSystem.applyStats(stats.beaconFireRateMult, 1 + continued.turretDamageMult);
     this.agentPolicySlotBonus = Math.max(0, Math.floor(stats.agentPolicySlots));
     this.applyUpgradeCapEffects(stats);
     this.applyResearchEffects();
@@ -1855,8 +1857,10 @@ export class Game {
     const capBonus = hasResearchNode(this.researchState, 'assay_grading')
       ? prospectingStacks * Balance.research.assayGradingStockpileCapBonus
       : 0;
-    if (capBonus > 0) {
-      this.economy.addCapSource('research:assay_grading', capBonus);
+    const continuedCapBonus = continuedStudyBonuses(this.researchState).stockpileCapBonus;
+    const totalCapBonus = capBonus + continuedCapBonus;
+    if (totalCapBonus > 0) {
+      this.economy.addCapSource('research:assay_grading', totalCapBonus);
     } else {
       this.economy.removeCapSource('research:assay_grading');
     }
@@ -1912,7 +1916,9 @@ export class Game {
     steps: number;
     remaining: number;
     threshold: number;
+    overflow: number;
     meter: string;
+    continued: ReturnType<typeof continuedStudyBonuses>;
     assayOrderSlots: number;
     contractTier: number;
   } {
@@ -1923,7 +1929,9 @@ export class Game {
       steps: meter.steps,
       remaining: meter.remaining,
       threshold: meter.threshold,
+      overflow: meter.overflow,
       meter: meter.text,
+      continued: continuedStudyBonuses(this.researchState),
       assayOrderSlots: hasResearchNode(this.researchState, 'second_order_slot') ? Balance.research.secondOrderSlots : 1,
       contractTier: contractTierForResearch(this.researchState),
     };

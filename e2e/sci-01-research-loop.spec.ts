@@ -5,7 +5,8 @@ import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { SCOREBOARD_KEY } from '../src/game/ProfileStorage';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
 
-const SHOT_DIR = 'artifacts/sci-copy';
+const SCI_COPY_SHOT_DIR = 'artifacts/sci-copy';
+const SCI_CEILING_SHOT_DIR = 'artifacts/sci-ceiling';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -49,10 +50,10 @@ async function openGame(page: Page, query: string): Promise<ErrorBucket> {
   return errors;
 }
 
-async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
-  await mkdir(SHOT_DIR, { recursive: true });
+async function shot(page: Page, testInfo: TestInfo, name: string, dir = SCI_COPY_SHOT_DIR): Promise<void> {
+  await mkdir(dir, { recursive: true });
   await page.addStyleTag({ content: '.lil-gui { display: none !important; }' });
-  await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-${name}.png`, fullPage: true });
+  await page.screenshot({ path: `${dir}/${testInfo.project.name}-${name}.png`, fullPage: true });
 }
 
 async function killFast(page: Page): Promise<void> {
@@ -87,6 +88,27 @@ async function createProfile(page: Page, name: string): Promise<void> {
   await expect(page.getByTestId('profile-row').filter({ hasText: name })).toBeVisible();
 }
 
+async function openSeededResearchGame(page: Page, taken: string[], science: number, query: string): Promise<ErrorBucket> {
+  const errors = collectErrors(page);
+  await page.addInitScript(
+    ({ metaKey, researchKey, scoreKey, takenNodes, scienceSteps }) => {
+      localStorage.removeItem(scoreKey);
+      localStorage.setItem(
+        metaKey,
+        JSON.stringify({
+          version: 1,
+          tracks: { territory: 0, science: scienceSteps, hero: 0, agent: 0 },
+        }),
+      );
+      localStorage.setItem(researchKey, JSON.stringify({ version: 1, taken: takenNodes, proposalSalt: 0 }));
+    },
+    { metaKey: META_PROGRESS_KEY, researchKey: RESEARCH_STATE_KEY, scoreKey: SCOREBOARD_KEY, takenNodes: taken, scienceSteps: science },
+  );
+  await page.goto(`/${query}`);
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  return errors;
+}
+
 function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
@@ -98,6 +120,56 @@ test('research node descriptions stay concrete', () => {
     (node) => !/\d/.test(node.description) && !namedCardFamilies.some((family) => node.description.includes(family)),
   );
   expect(vague.map((node) => `${node.id}: ${node.description}`)).toEqual([]);
+});
+
+test('science ceiling promises the Steamworks and surfaces banked overflow', async ({ page }, testInfo) => {
+  const errors = await openSeededResearchGame(
+    page,
+    [],
+    STEAMWORKS_THRESHOLD + 2,
+    '?debug&timescale=8&nowaves&nolevel&seed=sci-ceiling-copy',
+  );
+  await killFast(page);
+
+  await expect(page.getByTestId('science-meter')).toContainText('Epoch science complete');
+  await expect(page.getByTestId('science-meter')).toContainText('the Steamworks awaits a town to build it');
+  await expect(page.getByTestId('science-meter')).not.toContainText('(locked)');
+  await expect(page.getByTestId('science-banked')).toHaveText('banked: +2 toward the Steamworks');
+  const state = await page.evaluate(() => window.__GR_TEST__?.researchState());
+  expect(state?.remaining).toBe(0);
+  expect(state?.overflow).toBe(2);
+  await shot(page, testInfo, 'ceiling-meter', SCI_CEILING_SHOT_DIR);
+  assertNoErrors(errors);
+});
+
+test('exhausted Frontier tree offers Continued Study proposals with numeric copy', async ({ page }, testInfo) => {
+  const taken = RESEARCH_NODES.map((node) => node.id);
+  const errors = await openSeededResearchGame(
+    page,
+    taken,
+    taken.length,
+    '?debug&timescale=8&nowaves&nolevel&seed=sci-continued-study',
+  );
+  await killFast(page);
+
+  const proposalIds = await researchCardIds(page);
+  expect(proposalIds).toHaveLength(2);
+  expect(proposalIds.every((id) => id.startsWith('continued_study:'))).toBe(true);
+  for (const index of [0, 1]) {
+    await expect(page.getByTestId(`research-card-${index}`)).toContainText('Continued Study');
+    await expect(page.getByTestId(`research-effect-${index}`)).toContainText(/Effect: \+\d+(%| stockpile cap)/);
+  }
+  await expect(page.getByTestId('science-banked')).toHaveText(`banked: +${taken.length - STEAMWORKS_THRESHOLD} toward the Steamworks`);
+  await page.getByTestId('research-card-0').scrollIntoViewIfNeeded();
+  await shot(page, testInfo, 'continued-study-proposal', SCI_CEILING_SHOT_DIR);
+
+  await page.getByTestId('research-card-0').click();
+  const state = await page.evaluate(() => window.__GR_TEST__?.researchState());
+  expect(state?.steps).toBe(taken.length + 1);
+  expect(state?.available).toHaveLength(2);
+  expect(state?.available.every((id) => id.startsWith('continued_study:'))).toBe(true);
+  expect(Object.values(state?.continued ?? {}).some((value) => value > 0)).toBe(true);
+  assertNoErrors(errors);
 });
 
 test('death ledger offers research, persists the pick, and changes the next proposal pool', async ({ page }, testInfo) => {
