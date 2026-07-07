@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 type GrBuildableId = any;
+type GrStorySignal = import('./story').StorySignal;
 
 interface ThreeGameDiagnostics {
   frame: number;
@@ -585,6 +586,13 @@ type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 
 interface Window {
+  __GR_STORY__?: {
+    emit: (signal: GrStorySignal) => void;
+    registry: string[];
+    active: () => string | null;
+    pending: () => string[];
+    talesEnabled: () => boolean;
+  };
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
   __GR_TOWN_DIAGNOSTICS__?: import('./town/TownScene').TownDiagnostics;
   __BENCH_REPORT__?: unknown;

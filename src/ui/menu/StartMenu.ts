@@ -13,6 +13,7 @@ import {
 } from '../../meta/ResearchTree';
 import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
+import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
 import { renderResearchChart } from '../ResearchChart';
 import { clearRunSuspend, readRunSuspend, runSuspendLabel } from '../../game/RunSuspend';
 
@@ -23,6 +24,9 @@ const AUDIO_SETTINGS_IDS = {
   volume: 'start-menu-volume',
   volumeValue: 'start-menu-volume-value',
   mute: 'start-menu-mute',
+};
+const STORY_SETTINGS_IDS = {
+  tales: 'start-menu-tales',
 };
 
 type StartMenuOptions = {
@@ -36,6 +40,7 @@ export class StartMenu {
   private readonly root = document.createElement('section');
   private readonly audio = new SoundSystem();
   private disposeAudioSettings: () => void = () => undefined;
+  private disposeStorySettings: () => void = () => undefined;
   private storage?: Storage;
   private firstBoot = false;
   private profileMessage = '';
@@ -62,6 +67,7 @@ export class StartMenu {
 
   dispose(): void {
     this.disposeAudioSettings();
+    this.disposeStorySettings();
     this.root.removeEventListener('click', this.onClick);
     this.root.removeEventListener('keydown', this.onKeyDown);
     this.audio.dispose();
@@ -70,6 +76,7 @@ export class StartMenu {
 
   private render(): void {
     this.disposeAudioSettings();
+    this.disposeStorySettings();
     const suspend = readRunSuspend();
     const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
     this.root.className = `gr-start-menu${this.researchOpen ? ' gr-start-menu--research-open' : ''}`;
@@ -98,6 +105,7 @@ export class StartMenu {
         }
         <section class="gr-start-menu__settings" data-testid="start-menu-settings-panel" ${this.settingsOpen ? '' : 'hidden'}>
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
+          ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
         </section>
         <section class="gr-start-menu__research" data-testid="research-overlay" aria-label="Research ledger" ${
           this.researchOpen ? '' : 'hidden'
@@ -105,6 +113,7 @@ export class StartMenu {
       </div>
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
+    this.disposeStorySettings = bindStorySettingsControl(this.root, STORY_SETTINGS_IDS);
     this.root.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
       event.preventDefault();
       this.createFirstProfile();

@@ -8,6 +8,7 @@ import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
 import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
+import { installStoryRuntime } from './story';
 import { TownScene } from './town/TownScene';
 import { install as installStartMenu, type StartMenu } from './ui/menu/StartMenu';
 
@@ -33,6 +34,7 @@ if (initialSearch.get('bench') === 'fullbase') {
 }
 
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
+installStoryRuntime(app);
 let game: Game | undefined;
 let assayBench: ReturnType<typeof installAssayBench> | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
