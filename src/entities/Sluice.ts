@@ -1,8 +1,10 @@
 import * as THREE from 'three';
+import { assetSlots } from '../assets/slots';
 import type { ClaimJumperEnemy } from './Enemy';
 import { Balance } from '../game/Balance';
 import type { Economy } from '../game/Economy';
 import * as Terrain from '../world/Terrain';
+import { createBuildingSign, disposeBuildingSign } from './BuildingSign';
 
 export type SluiceSnapshot = {
   id: string;
@@ -18,7 +20,9 @@ export type SluiceSnapshot = {
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const troughTierColors = [new THREE.Color('#b9824c'), new THREE.Color('#8b7d3c'), new THREE.Color('#5b8a8a')];
 const waterTierColors = [new THREE.Color('#5b8a8a'), new THREE.Color('#6fa0a0'), new THREE.Color('#83ded7')];
+const frameTierColors = [new THREE.Color('#6b4a2f'), new THREE.Color('#8b7d3c'), new THREE.Color('#c4883a')];
 const water = '#5b8a8a';
+const sluiceYaw = 0.08;
 
 export class SluicePool {
   readonly group = new THREE.Group();
@@ -33,12 +37,17 @@ export class SluicePool {
   private readonly capped: boolean[] = [];
   private readonly troughGeometry = new THREE.BoxGeometry(1.7, 0.32, 0.62);
   private readonly waterGeometry = new THREE.BoxGeometry(1.34, 0.035, 0.34);
+  private readonly frameGeometry = new THREE.BoxGeometry(1.88, 0.1, 0.1);
+  private readonly legGeometry = new THREE.BoxGeometry(0.1, 0.42, 0.1);
+  private readonly wheelGeometry = new THREE.TorusGeometry(0.23, 0.03, 6, 16);
+  private readonly spokeGeometry = new THREE.BoxGeometry(0.055, 0.42, 0.035);
   private readonly troughMaterial = new THREE.MeshStandardMaterial({
     color: '#ffffff',
     emissive: '#7a5132',
     emissiveIntensity: 0.32,
     roughness: 0.86,
     metalness: 0.02,
+    flatShading: true,
   });
   private readonly waterMaterial = new THREE.MeshStandardMaterial({
     color: '#ffffff',
@@ -49,17 +58,48 @@ export class SluicePool {
     roughness: 0.26,
     metalness: 0.04,
   });
+  private readonly frameMaterial = new THREE.MeshStandardMaterial({
+    color: '#ffffff',
+    emissive: '#3b2a1a',
+    emissiveIntensity: 0.12,
+    roughness: 0.82,
+    metalness: 0.02,
+    flatShading: true,
+  });
+  private readonly wheelMaterial = new THREE.MeshStandardMaterial({
+    color: '#8b7d3c',
+    emissive: '#7a5132',
+    emissiveIntensity: 0.22,
+    roughness: 0.58,
+    metalness: 0.28,
+    flatShading: true,
+  });
   private readonly troughs = new THREE.InstancedMesh(this.troughGeometry, this.troughMaterial, Balance.sluice.maxCount);
   private readonly waters = new THREE.InstancedMesh(this.waterGeometry, this.waterMaterial, Balance.sluice.maxCount);
+  private readonly frames = new THREE.InstancedMesh(this.frameGeometry, this.frameMaterial, Balance.sluice.maxCount * 2);
+  private readonly legs = new THREE.InstancedMesh(this.legGeometry, this.frameMaterial, Balance.sluice.maxCount * 4);
+  private readonly wheelRims = new THREE.InstancedMesh(this.wheelGeometry, this.wheelMaterial, Balance.sluice.maxCount);
+  private readonly wheelSpokesA = new THREE.InstancedMesh(this.spokeGeometry, this.wheelMaterial, Balance.sluice.maxCount);
+  private readonly wheelSpokesB = new THREE.InstancedMesh(this.spokeGeometry, this.wheelMaterial, Balance.sluice.maxCount);
+  private readonly signs = createBuildingSign(assetSlots.bldPortraitSluice, Balance.sluice.maxCount, 'SluicePortraitSigns');
   private readonly syncObject = new THREE.Object3D();
   private alive = 0;
+  private wheelPhase = 0;
 
   constructor() {
     this.group.name = 'SluicePool';
     this.group.visible = false;
-    for (const mesh of [this.troughs, this.waters]) {
+    this.troughs.name = 'SluiceTroughs';
+    this.waters.name = 'SluiceWaterChannels';
+    this.frames.name = 'SluiceTimberRails';
+    this.legs.name = 'SluiceTimberLegs';
+    this.wheelRims.name = 'SluiceWheelRims';
+    this.wheelSpokesA.name = 'SluiceWheelSpokesA';
+    this.wheelSpokesB.name = 'SluiceWheelSpokesB';
+    for (const mesh of [this.troughs, this.waters, this.frames, this.legs, this.wheelRims, this.wheelSpokesA, this.wheelSpokesB, this.signs]) {
       mesh.frustumCulled = false;
       mesh.castShadow = false;
+      mesh.receiveShadow = true;
       this.group.add(mesh);
     }
     for (let i = 0; i < Balance.sluice.maxCount; i += 1) {
@@ -165,6 +205,7 @@ export class SluicePool {
       const cycleSeconds = Balance.sluice.cycleSeconds / this.panRateMults[i];
       if (!enabled(i)) {
         this.syncWater(i, at, false);
+        this.syncWheel(i, at);
         continue;
       }
       const position = this.positions[i];
@@ -199,8 +240,12 @@ export class SluicePool {
       }
 
       this.syncWater(i, at, !this.contested[i] && !this.capped[i]);
+      this.syncWheel(i, at);
     }
     this.waters.instanceMatrix.needsUpdate = true;
+    this.wheelRims.instanceMatrix.needsUpdate = true;
+    this.wheelSpokesA.instanceMatrix.needsUpdate = true;
+    this.wheelSpokesB.instanceMatrix.needsUpdate = true;
   }
 
   reset(): void {
@@ -222,8 +267,34 @@ export class SluicePool {
   dispose(): void {
     this.troughGeometry.dispose();
     this.waterGeometry.dispose();
+    this.frameGeometry.dispose();
+    this.legGeometry.dispose();
+    this.wheelGeometry.dispose();
+    this.spokeGeometry.dispose();
     this.troughMaterial.dispose();
     this.waterMaterial.dispose();
+    this.frameMaterial.dispose();
+    this.wheelMaterial.dispose();
+    disposeBuildingSign(this.signs);
+  }
+
+  diagnostics(): { active: number; signs: number; meshes: string[]; lit: boolean; wheelPhase: number } {
+    return {
+      active: this.alive,
+      signs: this.alive,
+      meshes: [
+        this.troughs.name,
+        this.waters.name,
+        this.frames.name,
+        this.legs.name,
+        this.wheelRims.name,
+        this.wheelSpokesA.name,
+        this.wheelSpokesB.name,
+        this.signs.name,
+      ],
+      lit: true,
+      wheelPhase: Number((this.wheelPhase % (Math.PI * 2)).toFixed(3)),
+    };
   }
 
   snapshot(): SluiceSnapshot[] {
@@ -260,10 +331,21 @@ export class SluicePool {
     if (!position) return;
     const groundY = Terrain.visualY(position.x, position.z, 0, 0.9);
     this.syncObject.position.set(position.x, groundY + 0.2, position.z);
-    this.syncObject.rotation.set(0, 0.08, 0);
+    this.syncObject.rotation.set(0, sluiceYaw, 0);
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
     this.troughs.setMatrixAt(index, this.syncObject.matrix);
+    this.syncLocal(this.frames, index * 2, position, groundY, 0, 0.47, -0.38, 1, 1, 1);
+    this.syncLocal(this.frames, index * 2 + 1, position, groundY, 0, 0.47, 0.38, 1, 1, 1);
+    let leg = index * 4;
+    for (const x of [-0.8, 0.8]) {
+      for (const z of [-0.32, 0.32]) {
+        this.syncLocal(this.legs, leg, position, groundY, x, 0.22, z, 1, 1, 1);
+        leg += 1;
+      }
+    }
+    this.syncLocal(this.signs, index, position, groundY, 0.46, 0.86, -0.48, 0.94, 0.6, 1, 0, -1.05);
+    this.syncWheel(index, 0);
   }
 
   private syncWater(index: number, at: number, visible: boolean): void {
@@ -275,7 +357,7 @@ export class SluicePool {
     if (!position) return;
     const groundY = Terrain.visualY(position.x, position.z, 0, 0.9);
     this.syncObject.position.set(position.x, groundY + 0.39 + Math.sin(at * 3.2 + index) * 0.018, position.z);
-    this.syncObject.rotation.set(0, 0.08, 0);
+    this.syncObject.rotation.set(0, sluiceYaw, 0);
     this.syncObject.scale.set(1, 1, 1);
     this.syncObject.updateMatrix();
     this.waters.setMatrixAt(index, this.syncObject.matrix);
@@ -284,19 +366,69 @@ export class SluicePool {
   private hide(index: number): void {
     this.troughs.setMatrixAt(index, hiddenMatrix);
     this.waters.setMatrixAt(index, hiddenMatrix);
+    this.frames.setMatrixAt(index * 2, hiddenMatrix);
+    this.frames.setMatrixAt(index * 2 + 1, hiddenMatrix);
+    for (let leg = 0; leg < 4; leg += 1) this.legs.setMatrixAt(index * 4 + leg, hiddenMatrix);
+    this.wheelRims.setMatrixAt(index, hiddenMatrix);
+    this.wheelSpokesA.setMatrixAt(index, hiddenMatrix);
+    this.wheelSpokesB.setMatrixAt(index, hiddenMatrix);
+    this.signs.setMatrixAt(index, hiddenMatrix);
   }
 
   private syncColors(index: number): void {
     const tierIndex = Math.max(0, Math.min(2, (this.tiers[index] ?? 1) - 1));
     this.troughs.setColorAt(index, troughTierColors[tierIndex] ?? troughTierColors[0]);
     this.waters.setColorAt(index, waterTierColors[tierIndex] ?? waterTierColors[0]);
+    this.frames.setColorAt(index * 2, frameTierColors[tierIndex] ?? frameTierColors[0]);
+    this.frames.setColorAt(index * 2 + 1, frameTierColors[tierIndex] ?? frameTierColors[0]);
     if (this.troughs.instanceColor) this.troughs.instanceColor.needsUpdate = true;
     if (this.waters.instanceColor) this.waters.instanceColor.needsUpdate = true;
+    if (this.frames.instanceColor) this.frames.instanceColor.needsUpdate = true;
   }
 
   private markNeedsUpdate(): void {
     this.troughs.instanceMatrix.needsUpdate = true;
     this.waters.instanceMatrix.needsUpdate = true;
+    this.frames.instanceMatrix.needsUpdate = true;
+    this.legs.instanceMatrix.needsUpdate = true;
+    this.wheelRims.instanceMatrix.needsUpdate = true;
+    this.wheelSpokesA.instanceMatrix.needsUpdate = true;
+    this.wheelSpokesB.instanceMatrix.needsUpdate = true;
+    this.signs.instanceMatrix.needsUpdate = true;
+  }
+
+  private syncWheel(index: number, at: number): void {
+    const position = this.positions[index];
+    if (!position) return;
+    const groundY = Terrain.visualY(position.x, position.z, 0, 0.9);
+    this.wheelPhase = at * 2.4;
+    const spin = this.wheelPhase + index * 0.45;
+    this.syncLocal(this.wheelRims, index, position, groundY, -0.72, 0.48, -0.48, 1, 1, 1, spin);
+    this.syncLocal(this.wheelSpokesA, index, position, groundY, -0.72, 0.48, -0.48, 1, 1, 1, spin);
+    this.syncLocal(this.wheelSpokesB, index, position, groundY, -0.72, 0.48, -0.48, 1, 1, 1, spin + Math.PI / 2);
+  }
+
+  private syncLocal(
+    mesh: THREE.InstancedMesh,
+    instance: number,
+    position: THREE.Vector3,
+    groundY: number,
+    localX: number,
+    localY: number,
+    localZ: number,
+    scaleX: number,
+    scaleY: number,
+    scaleZ: number,
+    roll = 0,
+    pitch = 0,
+  ): void {
+    const cos = Math.cos(sluiceYaw);
+    const sin = Math.sin(sluiceYaw);
+    this.syncObject.position.set(position.x + localX * cos + localZ * sin, groundY + localY, position.z - localX * sin + localZ * cos);
+    this.syncObject.rotation.set(pitch, sluiceYaw, roll);
+    this.syncObject.scale.set(scaleX, scaleY, scaleZ);
+    this.syncObject.updateMatrix();
+    mesh.setMatrixAt(instance, this.syncObject.matrix);
   }
 }
 

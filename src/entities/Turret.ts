@@ -1,6 +1,8 @@
 import * as THREE from 'three';
+import { assetSlots } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
+import { createBuildingSign, disposeBuildingSign } from './BuildingSign';
 
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const tierColors = [new THREE.Color('#8b7d3c'), new THREE.Color('#c4883a'), new THREE.Color('#5b8a8a')];
@@ -12,6 +14,8 @@ export class TurretPool {
   private readonly positions: THREE.Vector3[] = [];
   private readonly pulseUntil: number[] = [];
   private readonly tiers: number[] = [];
+  private readonly baseGeometry = new THREE.BoxGeometry(0.78, 0.18, 0.78);
+  private readonly legGeometry = new THREE.CylinderGeometry(0.035, 0.05, 0.72, 6);
   private readonly geometry = new THREE.LatheGeometry(
     [
       new THREE.Vector2(0.16, 0),
@@ -29,8 +33,20 @@ export class TurretPool {
     emissiveIntensity: 0.58,
     roughness: 0.48,
     metalness: 0.32,
+    flatShading: true,
   });
+  private readonly baseMaterial = new THREE.MeshStandardMaterial({
+    color: '#6b4a2f',
+    emissive: '#3b2a1a',
+    emissiveIntensity: 0.14,
+    roughness: 0.82,
+    metalness: 0.02,
+    flatShading: true,
+  });
+  private readonly baseMesh = new THREE.InstancedMesh(this.baseGeometry, this.baseMaterial, Balance.turret.maxCount);
+  private readonly legMesh = new THREE.InstancedMesh(this.legGeometry, this.baseMaterial, Balance.turret.maxCount * 3);
   private readonly mesh = new THREE.InstancedMesh(this.geometry, this.material, Balance.turret.maxCount);
+  private readonly signs = createBuildingSign(assetSlots.bldPortraitTurret, Balance.turret.maxCount, 'TurretPortraitSigns');
   private readonly syncObject = new THREE.Object3D();
   private alive = 0;
   private pulses = 0;
@@ -38,10 +54,19 @@ export class TurretPool {
 
   constructor() {
     this.group.name = 'TurretPool';
-    this.mesh.frustumCulled = false;
-    this.mesh.castShadow = false;
+    this.baseMesh.name = 'TurretTimberBases';
+    this.legMesh.name = 'TurretTripodLegs';
+    this.mesh.name = 'TurretSignalMasts';
+    for (const mesh of [this.baseMesh, this.legMesh, this.mesh, this.signs]) {
+      mesh.frustumCulled = false;
+      mesh.castShadow = false;
+      mesh.receiveShadow = true;
+      this.group.add(mesh);
+    }
     this.mesh.visible = false;
-    this.group.add(this.mesh);
+    this.baseMesh.visible = false;
+    this.legMesh.visible = false;
+    this.signs.visible = false;
     for (let i = 0; i < Balance.turret.maxCount; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
@@ -50,7 +75,7 @@ export class TurretPool {
       this.hide(i);
       this.syncColor(i);
     }
-    this.mesh.instanceMatrix.needsUpdate = true;
+    this.markNeedsUpdate();
   }
 
   get activeCount(): number {
@@ -97,8 +122,8 @@ export class TurretPool {
       this.tiers[i] = 1;
       this.alive += 1;
       this.sync(i, 0);
-      this.mesh.visible = true;
-      this.mesh.instanceMatrix.needsUpdate = true;
+      this.setVisible(true);
+      this.markNeedsUpdate();
       return i;
     }
     return -1;
@@ -111,8 +136,8 @@ export class TurretPool {
     this.tiers[index] = 1;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
-    this.mesh.visible = this.alive > 0;
-    this.mesh.instanceMatrix.needsUpdate = true;
+    this.setVisible(this.alive > 0);
+    this.markNeedsUpdate();
     return true;
   }
 
@@ -128,7 +153,7 @@ export class TurretPool {
     }
     this.material.emissiveIntensity =
       0.34 + Math.sin(at * Math.PI * 2) * 0.08 + maxPulse * Balance.combatReadability.turretPulseIntensity * 3.2;
-    this.mesh.instanceMatrix.needsUpdate = true;
+    this.markNeedsUpdate();
   }
 
   reset(): void {
@@ -141,20 +166,49 @@ export class TurretPool {
     this.alive = 0;
     this.pulses = 0;
     this.activePulses = 0;
-    this.mesh.visible = false;
-    this.mesh.instanceMatrix.needsUpdate = true;
+    this.setVisible(false);
+    this.markNeedsUpdate();
   }
 
   dispose(): void {
+    this.baseGeometry.dispose();
+    this.legGeometry.dispose();
     this.geometry.dispose();
+    this.baseMaterial.dispose();
     this.material.dispose();
+    disposeBuildingSign(this.signs);
+  }
+
+  diagnostics(): { active: number; signs: number; meshes: string[]; lit: boolean } {
+    return {
+      active: this.alive,
+      signs: this.alive,
+      meshes: [this.baseMesh.name, this.legMesh.name, this.mesh.name, this.signs.name],
+      lit: true,
+    };
   }
 
   private sync(index: number, at: number, pulse = 0): void {
     const position = this.positions[index];
     if (!position) return;
-    this.syncObject.position.set(position.x, Terrain.visualY(position.x, position.z, 0, Balance.turret.overlapRadius), position.z);
-    this.syncObject.rotation.set(0, Math.sin(at * 0.9 + index) * 0.12, 0);
+    const groundY = Terrain.visualY(position.x, position.z, 0, Balance.turret.overlapRadius);
+    const yaw = Math.sin(at * 0.9 + index) * 0.12;
+    this.syncObject.position.set(position.x, groundY + 0.09, position.z);
+    this.syncObject.rotation.set(0, yaw, 0);
+    this.syncObject.scale.set(1, 1, 1);
+    this.syncObject.updateMatrix();
+    this.baseMesh.setMatrixAt(index, this.syncObject.matrix);
+    for (let leg = 0; leg < 3; leg += 1) {
+      const angle = leg * ((Math.PI * 2) / 3) + 0.25 + yaw;
+      this.syncObject.position.set(position.x + Math.cos(angle) * 0.3, groundY + 0.38, position.z + Math.sin(angle) * 0.3);
+      this.syncObject.rotation.set(0.42 * Math.sin(angle), angle, 0.42 * Math.cos(angle));
+      this.syncObject.scale.set(1, 1, 1);
+      this.syncObject.updateMatrix();
+      this.legMesh.setMatrixAt(index * 3 + leg, this.syncObject.matrix);
+    }
+    this.syncLocal(this.signs, index, position, groundY, 0, 0.47, -0.5, yaw, 0.78, 0.52, 1, -1.05);
+    this.syncObject.position.set(position.x, groundY, position.z);
+    this.syncObject.rotation.set(0, yaw, 0);
     const pulseScale = 1 + pulse * Balance.combatReadability.turretPulseIntensity;
     const tierLift = 1 + Math.max(0, (this.tiers[index] ?? 1) - 1) * 0.08;
     this.syncObject.scale.set(pulseScale, pulseScale * tierLift, pulseScale);
@@ -169,12 +223,52 @@ export class TurretPool {
   }
 
   private hide(index: number): void {
+    this.baseMesh.setMatrixAt(index, hiddenMatrix);
+    for (let leg = 0; leg < 3; leg += 1) this.legMesh.setMatrixAt(index * 3 + leg, hiddenMatrix);
     this.mesh.setMatrixAt(index, hiddenMatrix);
+    this.signs.setMatrixAt(index, hiddenMatrix);
   }
 
   private syncColor(index: number): void {
     const tierIndex = Math.max(0, Math.min(2, (this.tiers[index] ?? 1) - 1));
     this.mesh.setColorAt(index, tierColors[tierIndex] ?? tierColors[0]);
     if (this.mesh.instanceColor) this.mesh.instanceColor.needsUpdate = true;
+  }
+
+  private setVisible(visible: boolean): void {
+    this.baseMesh.visible = visible;
+    this.legMesh.visible = visible;
+    this.mesh.visible = visible;
+    this.signs.visible = visible;
+  }
+
+  private markNeedsUpdate(): void {
+    this.baseMesh.instanceMatrix.needsUpdate = true;
+    this.legMesh.instanceMatrix.needsUpdate = true;
+    this.mesh.instanceMatrix.needsUpdate = true;
+    this.signs.instanceMatrix.needsUpdate = true;
+  }
+
+  private syncLocal(
+    mesh: THREE.InstancedMesh,
+    index: number,
+    position: THREE.Vector3,
+    groundY: number,
+    localX: number,
+    localY: number,
+    localZ: number,
+    yaw: number,
+    scaleX: number,
+    scaleY: number,
+    scaleZ: number,
+    pitch = 0,
+  ): void {
+    const cos = Math.cos(yaw);
+    const sin = Math.sin(yaw);
+    this.syncObject.position.set(position.x + localX * cos + localZ * sin, groundY + localY, position.z - localX * sin + localZ * cos);
+    this.syncObject.rotation.set(pitch, yaw, 0);
+    this.syncObject.scale.set(scaleX, scaleY, scaleZ);
+    this.syncObject.updateMatrix();
+    mesh.setMatrixAt(index, this.syncObject.matrix);
   }
 }

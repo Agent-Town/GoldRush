@@ -7,6 +7,10 @@ const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
   [assetSlots.charClaimJumper]: new URL('../../assets/processed/enemy-claim-jumper.png', import.meta.url).href,
   [assetSlots.nodeGoldSeam]: new URL('../../assets/processed/node-gold-seam.png', import.meta.url).href,
   [assetSlots.bldSentryBeacon]: new URL('../../assets/processed/bld-sentry-beacon.png', import.meta.url).href,
+  [assetSlots.bldPortraitPalisade]: new URL('../../assets/processed/bld-palisade.png', import.meta.url).href,
+  [assetSlots.bldPortraitSluice]: new URL('../../assets/processed/bld-sluice-works.png', import.meta.url).href,
+  [assetSlots.bldPortraitStockpile]: new URL('../../assets/processed/bld-stockpile-yard.png', import.meta.url).href,
+  [assetSlots.bldPortraitTurret]: new URL('../../assets/processed/bld-signal-turret.png', import.meta.url).href,
   [assetSlots.terrainBank]: new URL('../../assets/processed/terrain-bank-tile.png', import.meta.url).href,
   [assetSlots.terrainRiver]: new URL('../../assets/processed/terrain-river-tile.png', import.meta.url).href,
 };
