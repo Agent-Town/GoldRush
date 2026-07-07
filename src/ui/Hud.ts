@@ -1,12 +1,17 @@
 import type { UiSnapshot } from '../systems/UiBridge';
 import type { BuildableId } from '../game/buildables';
+import type { AgentAbility } from '../agent/AgentConsent';
+import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { BuildButton } from './BuildButton';
+import { ProspectorPanel } from './ProspectorPanel';
 
 const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
 
 export type UiIntent =
   | { type: 'restart' | 'toggle_build_menu' | 'close_build_menu' | 'pause' }
-  | { type: 'select_buildable'; id: BuildableId | string };
+  | { type: 'select_buildable'; id: BuildableId | string }
+  | { type: 'set_agent_rung'; level: AgentPermissionLevel; granted: boolean }
+  | { type: 'set_agent_ability'; ability: AgentAbility; granted: boolean };
 
 type HudElements = {
   root: HTMLElement;
@@ -39,6 +44,8 @@ export class Hud {
   private lastAnnouncementAt = -1;
   private announcementClearTimer = 0;
   private readonly buildButton: BuildButton;
+  private readonly prospectorPanel: ProspectorPanel;
+  private prospectorPanelOpen = false;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
@@ -130,9 +137,12 @@ export class Hud {
     };
     this.buildButton = new BuildButton(this.onIntent);
     this.elements.buildMount.append(this.buildButton.element);
+    this.prospectorPanel = new ProspectorPanel(prospectorPortraitUrl, this.onIntent, () => this.setProspectorPanelOpen(false));
+    root.append(this.prospectorPanel.element);
 
     this.elements.pauseHint.addEventListener('click', this.onPauseClick);
     this.elements.agentChip.addEventListener('click', this.onAgentChipClick);
+    window.addEventListener('keydown', this.onKeyDown, { capture: true });
   }
 
   update(snapshot: UiSnapshot): void {
@@ -146,7 +156,8 @@ export class Hud {
     this.elements.agentLabel.textContent = snapshot.agent?.permissionLabel ?? 'suggest-only';
     this.elements.agentChip.dataset.level = String(snapshot.agent?.permissionLevel ?? 0);
     this.elements.agentDetail.textContent = agentAbilityDetail(snapshot.agent?.permissionLevel ?? 0);
-    this.elements.agentFeed.textContent = snapshot.agent?.receiptFeed.join(' · ') ?? '';
+    this.elements.agentFeed.textContent = snapshot.agent?.receiptFeed[0] ?? '';
+    this.prospectorPanel.update(snapshot);
     this.elements.xpText.textContent = `${snapshot.xp} / ${snapshot.xpNeed} XP`;
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;
     this.elements.levelText.textContent = snapshot.level.toString();
@@ -171,6 +182,8 @@ export class Hud {
   dispose(): void {
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
     this.elements.agentChip.removeEventListener('click', this.onAgentChipClick);
+    window.removeEventListener('keydown', this.onKeyDown, { capture: true });
+    this.prospectorPanel.dispose();
     this.buildButton.dispose();
     window.clearTimeout(this.announcementClearTimer);
   }
@@ -180,11 +193,29 @@ export class Hud {
   };
 
   private readonly onAgentChipClick = () => {
-    const open = this.elements.agentChip.dataset.open === 'true';
-    this.elements.agentChip.dataset.open = String(!open);
-    this.elements.agentChip.setAttribute('aria-expanded', String(!open));
-    this.elements.agentDetail.setAttribute('aria-hidden', String(open));
+    this.setProspectorPanelOpen(!this.prospectorPanelOpen);
   };
+
+  private readonly onKeyDown = (event: KeyboardEvent) => {
+    if (event.repeat) return;
+    if (event.code === 'KeyG') {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      this.setProspectorPanelOpen(!this.prospectorPanelOpen);
+    } else if (event.code === 'Escape' && this.prospectorPanelOpen) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      this.setProspectorPanelOpen(false);
+    }
+  };
+
+  private setProspectorPanelOpen(open: boolean): void {
+    this.prospectorPanelOpen = open;
+    this.elements.agentChip.dataset.open = String(open);
+    this.elements.agentChip.setAttribute('aria-expanded', String(open));
+    this.elements.agentDetail.setAttribute('aria-hidden', String(!open));
+    this.prospectorPanel.setOpen(open);
+  }
 
   private percent(value: number, max: number): number {
     if (max <= 0) return 0;
@@ -244,8 +275,8 @@ function edgeGlyph(edge: UiSnapshot['announcementEdge']): string {
 }
 
 function agentAbilityDetail(level: number): string {
-  if (level >= 3) return 'Acts within budget, gathers XP, pans, repairs, chases thieves, and places approved builds. Grows when secured claims add agent progress.';
-  if (level >= 2) return 'Runs trusted chores: gather XP, pan, repair, chase thieves, and place routine builds. Grows when secured claims add agent progress.';
+  if (level >= 3) return 'Can gather XP motes, tend walls, and work claim pans. Grows when secured claims add agent progress.';
+  if (level >= 2) return 'Can gather XP motes and tend walls when trusted. Grows when secured claims add agent progress.';
   if (level >= 1) return 'Can gather XP motes and handle chores when approved. Grows when secured claims add agent progress.';
   return 'Follows you, observes the claim, and suggests work. Grows when secured claims add agent progress.';
 }

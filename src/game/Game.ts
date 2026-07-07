@@ -22,6 +22,7 @@ import {
 } from '../meta/ResearchTree';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, type MetaProgress } from './MetaProgress';
+import { AgentConsentStore } from '../agent/AgentConsent';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import type { AgentCollectXpOptions, AgentCollectXpResult, ToolReceipt } from '../agent/ToolSurface';
@@ -305,6 +306,7 @@ export class Game {
 
   private runManager?: RunManager;
   private agentStub?: AgentStub;
+  private readonly agentConsent = new AgentConsentStore();
   private unsubscribeAgentReceipts?: () => void;
   private nextProspectorXpSweepAt = 0;
   private prospectorIntroShown = false;
@@ -603,6 +605,7 @@ export class Game {
         collectXp: (options) => this.collectProspectorXp(options),
       },
       {
+        clock: () => this.timeAlive,
         metaProgress: {
           get agentAutonomyLevel() {
             return (game.runManager ? agentAutonomyLevel(game.runManager.metaProgress) : 0) + game.agentPolicySlotBonus;
@@ -1121,10 +1124,15 @@ export class Game {
 
   private agentUiState(): UiSnapshot['agent'] {
     const state = this.agentStub?.state ?? null;
-    if (!state || this.agentPolicySlotBonus <= 0) return state;
+    if (!state) return null;
+    const receiptFeed =
+      this.agentPolicySlotBonus > 0
+        ? [`Schooling: +${this.agentPolicySlotBonus} policy slot`, ...state.receiptFeed].slice(0, 8)
+        : state.receiptFeed;
     return {
       ...state,
-      receiptFeed: [`Schooling: +${this.agentPolicySlotBonus} policy slot`, ...state.receiptFeed].slice(0, 3),
+      receiptFeed,
+      consent: this.agentConsent.snapshot(state.permissionLevel),
     };
   }
 
@@ -1145,6 +1153,7 @@ export class Game {
     if (
       !this.agentStub ||
       this.agentStub.state.permissionLevel <= 0 ||
+      !this.agentConsent.allows('auto_collect', this.agentStub.state.permissionLevel) ||
       this.prospector.hasActiveTask ||
       this.timeAlive < this.nextProspectorXpSweepAt
     ) {
@@ -1202,6 +1211,9 @@ export class Game {
   }
 
   private handleUiIntent(intent: UiIntent): void {
+    if (intent.type === 'set_agent_rung') this.agentConsent.setRung(intent.level, intent.granted);
+    if (intent.type === 'set_agent_ability') this.agentConsent.setAbility(intent.ability, intent.granted);
+    if (intent.type === 'set_agent_rung' || intent.type === 'set_agent_ability') return;
     if (this.secureClaimChoicePending()) return;
     if (intent.type === 'pause') this.state.togglePause();
     if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
@@ -1243,6 +1255,7 @@ export class Game {
     this.blastTime = 0;
     this.wetPowderHintCooldown = 0;
     this.progression.reset();
+    this.agentConsent.reset();
     this.hero.resetRun(this.heroStart);
     this.syncHeroVisualHeight();
     this.cameraRig.snapTo(this.hero.group.position);

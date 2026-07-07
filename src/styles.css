@@ -451,6 +451,186 @@ body {
   display: block;
 }
 
+.prospector-panel-shell {
+  position: fixed;
+  inset: 0;
+  z-index: 36;
+  display: grid;
+  align-items: start;
+  justify-items: end;
+  padding: calc(max(16px, env(safe-area-inset-top)) + 82px) max(16px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+  background: rgba(17, 19, 18, 0.36);
+  backdrop-filter: blur(1px);
+  pointer-events: auto;
+}
+
+.prospector-panel-shell[hidden] {
+  display: none;
+}
+
+.prospector-panel {
+  display: grid;
+  gap: 12px;
+  width: min(456px, calc(100vw - 32px));
+  max-height: calc(100vh - 116px);
+  overflow: auto;
+  padding: 14px;
+  border: 2px solid #8b7d3c;
+  border-radius: 8px;
+  color: #2e1b0e;
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, 0.95), rgba(245, 230, 200, 0.97)),
+    #f5e6c8;
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 248, 232, 0.5),
+    0 5px 0 rgba(46, 27, 14, 0.78),
+    0 18px 34px rgba(17, 19, 18, 0.32);
+  font-family: Wellfleet, Georgia, "Iowan Old Style", serif;
+}
+
+.prospector-panel__header {
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr) 44px;
+  gap: 12px;
+  align-items: center;
+}
+
+.prospector-panel__portrait {
+  width: 64px;
+  height: 64px;
+  border: 2px solid rgba(46, 27, 14, 0.6);
+  border-radius: 8px;
+  object-fit: cover;
+  background: #fff8e8;
+}
+
+.prospector-panel__eyebrow,
+.prospector-panel p,
+.prospector-panel h2,
+.prospector-panel h3 {
+  margin: 0;
+}
+
+.prospector-panel__eyebrow {
+  color: #5b8a8a;
+  font-size: 0.74rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.prospector-panel h2 {
+  color: #2e1b0e;
+  font-size: 1.18rem;
+  line-height: 1.1;
+}
+
+.prospector-panel h3 {
+  color: #5b3a1f;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+}
+
+.prospector-panel__close,
+.prospector-switch,
+.prospector-check {
+  min-height: 44px;
+  pointer-events: auto;
+}
+
+.prospector-panel__close {
+  width: 44px;
+  border: 2px solid #8b7d3c;
+  border-radius: 7px;
+  color: #2e1b0e;
+  background: #ffe4a0;
+  font: inherit;
+  font-weight: 900;
+  cursor: pointer;
+}
+
+.prospector-panel__close:hover,
+.prospector-panel__close:focus-visible,
+.prospector-switch:focus-within,
+.prospector-check:focus-within {
+  outline: 3px solid rgba(91, 138, 138, 0.6);
+  outline-offset: 2px;
+}
+
+.prospector-panel__section {
+  display: grid;
+  gap: 8px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(139, 125, 60, 0.34);
+}
+
+.prospector-ladder,
+.prospector-abilities,
+.prospector-receipts {
+  display: grid;
+  gap: 8px;
+}
+
+.prospector-rung {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(112px, max-content);
+  gap: 10px;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(46, 27, 14, 0.12);
+}
+
+.prospector-rung[data-earned="false"] {
+  grid-template-columns: 1fr;
+}
+
+.prospector-rung strong,
+.prospector-rung span {
+  display: block;
+}
+
+.prospector-rung span,
+.prospector-panel__hint,
+.prospector-receipts {
+  color: rgba(46, 27, 14, 0.78);
+  font-size: 0.78rem;
+  line-height: 1.35;
+}
+
+.prospector-switch,
+.prospector-check {
+  display: grid;
+  grid-template-columns: 20px minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.prospector-switch input,
+.prospector-check input {
+  width: 20px;
+  height: 20px;
+  accent-color: #5b8a8a;
+}
+
+.prospector-check {
+  padding: 8px 0;
+}
+
+.prospector-check[data-allowed="false"] span {
+  color: #a0522d;
+}
+
+.prospector-receipts {
+  max-height: 184px;
+  margin: 0;
+  padding: 0 0 0 20px;
+}
+
+.prospector-receipts li {
+  padding: 2px 0;
+}
+
 .hud-panel--build {
   position: absolute;
   left: max(18px, env(safe-area-inset-left));
@@ -770,6 +950,28 @@ body {
 
   .hud-agent-detail {
     max-width: 20ch;
+  }
+
+  .prospector-panel-shell {
+    align-items: end;
+    justify-items: stretch;
+    padding: 0;
+    background: rgba(17, 19, 18, 0.58);
+    backdrop-filter: blur(1.5px);
+  }
+
+  .prospector-panel {
+    width: 100%;
+    max-height: min(84vh, 720px);
+    border-right: 0;
+    border-bottom: 0;
+    border-left: 0;
+    border-radius: 8px 8px 0 0;
+    padding: 14px max(14px, env(safe-area-inset-right)) max(16px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  }
+
+  .prospector-rung {
+    grid-template-columns: 1fr;
   }
 
   .upgrade-overlay__cards {
