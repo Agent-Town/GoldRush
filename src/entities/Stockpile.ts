@@ -18,10 +18,8 @@ export class StockpilePool {
   private readonly positions: THREE.Vector3[] = [];
   private readonly pileSteps: number[] = [];
   private readonly geometry = createPileGeometry();
-  private readonly material = new THREE.MeshStandardMaterial({
+  private readonly material = new THREE.MeshBasicMaterial({
     color: nugget,
-    roughness: 0.45,
-    metalness: 0.2,
   });
   private readonly mesh = new THREE.InstancedMesh(this.geometry, this.material, Balance.stockpile.maxCount);
   private readonly syncObject = new THREE.Object3D();
@@ -31,7 +29,7 @@ export class StockpilePool {
     this.group.name = 'StockpilePool';
     this.group.visible = false;
     this.mesh.frustumCulled = false;
-    this.mesh.castShadow = true;
+    this.mesh.castShadow = false;
     this.group.add(this.mesh);
     for (let i = 0; i < Balance.stockpile.maxCount; i += 1) {
       this.active.push(false);

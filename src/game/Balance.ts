@@ -34,8 +34,8 @@ export const Balance = {
     groundY: 0.05,
   },
   combatReadability: {
-    enemyFlashSeconds: 0.18,
-    enemyFlashIntensity: 0.9,
+    enemyFlashSeconds: 0,
+    enemyFlashIntensity: 0,
     turretPulseSeconds: 0.18,
     turretPulseIntensity: 0.14,
   },

@@ -200,7 +200,6 @@ export class BuildSystem {
     color: '#fff8e8',
     roughness: 0.86,
     metalness: 0.02,
-    vertexColors: true,
     depthWrite: false,
     polygonOffset: true,
     polygonOffsetFactor: -1,
@@ -210,7 +209,6 @@ export class BuildSystem {
     color: '#fff8e8',
     roughness: 0.86,
     metalness: 0.02,
-    vertexColors: true,
     transparent: true,
     depthWrite: false,
   });
@@ -240,11 +238,15 @@ export class BuildSystem {
   private readonly repairRingIndexCount: number;
   private readonly assayOfficeMaterial = new THREE.MeshStandardMaterial({
     color: '#f5e6c8',
+    emissive: '#7a5132',
+    emissiveIntensity: 0.18,
     roughness: 0.82,
     metalness: 0.03,
   });
   private readonly assayRoofMaterial = new THREE.MeshStandardMaterial({
     color: '#8b7d3c',
+    emissive: '#7a5132',
+    emissiveIntensity: 0.24,
     roughness: 0.72,
     metalness: 0.12,
   });

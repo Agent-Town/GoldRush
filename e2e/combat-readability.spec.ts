@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
-type BuildableId = 'palisade' | 'stockpile' | 'turret';
+type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret';
 type HpBarDetail = {
   id: BuildableId;
   index: number;
@@ -20,7 +20,7 @@ type PerfTracker = {
   maxDrawCalls: number;
 };
 
-const artifactDir = path.resolve('artifacts/damage-orientation');
+const artifactDir = path.resolve('artifacts/correctives-0707');
 
 declare global {
   interface Window {
@@ -161,6 +161,33 @@ async function samplePerf(page: Page, durationMs: number): Promise<PerfTracker> 
   return page.evaluate(() => window.__CR_PERF__!);
 }
 
+test('lit buildings keep procedural beacon silhouette out of the base', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&timescale=5&nowaves&nolevel&nopause&nokill&nosteal&seed=correctives-lit-buildings');
+  await grantGold(page, 1000);
+
+  await placeBuildableAt(page, 'sentry_beacon', -6, 11);
+  await placeBuildableAt(page, 'sluice', -2, 7);
+  await placeBuildableAt(page, 'palisade', -3, 11);
+  await placeBuildableAt(page, 'palisade', 0, 11, true);
+  await placeBuildableAt(page, 'stockpile', 4, 11);
+  await placeBuildableAt(page, 'turret', 7, 11);
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await teleport(page, 0, 6);
+  await waitForFrames(page, 16);
+
+  const build = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build);
+  expect(build).toMatchObject({ beacons: 1, palisades: 2, sluices: 1, stockpiles: 1, turrets: 1 });
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.assets['bld.sentry_beacon'] ?? 'missing')).toBe('loaded');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['bld.sentry_beacon'] ?? 0)).toBe(0);
+
+  await shot(page, testInfo, 'lit-buildings-desktop');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await waitForFrames(page);
+  await shot(page, testInfo, 'lit-buildings-390px');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('damaged building bars are visible at desktop and 390px', async ({ page }, testInfo) => {
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&nokill&seed=combat-bars');
   await setBalance(page, 'enemy.contactDamage', 0);
@@ -271,21 +298,18 @@ test('building bar keeps world footprint orientation instead of billboarding', a
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('enemy hit flash and turret pulse diagnostics advance', async ({ page }, testInfo) => {
-  const errors = await openGame(page, '?debug&timescale=4&nowaves&nolevel&nopause&seed=combat-flash');
-  await setBalance(page, 'combatReadability.enemyFlashSeconds', 0.8);
+test('enemy hits do not flash while turret pulse diagnostics advance', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&timescale=4&nowaves&nolevel&nopause&seed=combat-no-flash');
   await setBalance(page, 'enemy.hp', 100);
   await setBalance(page, 'enemy.speed', 0);
   await setBalance(page, 'enemy.contactDamage', 0);
   await teleport(page, 0, 12);
-  const flashesBefore = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.enemyHitFlashes ?? 0);
   await page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 7));
   await expect
-    .poll(() => page.evaluate((before) => (window.__THREE_GAME_DIAGNOSTICS__?.readability.enemyHitFlashes ?? 0) - before, flashesBefore), {
-      timeout: 8_000,
-    })
+    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.damageByOwner.hero ?? 0), { timeout: 8_000 })
     .toBeGreaterThan(0);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.activeEnemyFlashes ?? 0)).toBeGreaterThan(0);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.enemyHitFlashes ?? 0)).toBe(0);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.activeEnemyFlashes ?? 0)).toBe(0);
 
   await grantGold(page, 50);
   await placeBuildableAt(page, 'turret', 0, 13);
@@ -302,22 +326,19 @@ test('enemy hit flash and turret pulse diagnostics advance', async ({ page }, te
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('120-enemy flash stress stays inside draw-call and frame budget', async ({ page }, testInfo) => {
+test('120-enemy no-flash stress stays inside draw-call and frame budget', async ({ page }, testInfo) => {
   test.setTimeout(45_000);
-  const errors = await openGame(page, '?debug&stress=120&timescale=3&nowaves&nolevel&nopause&profile&seed=combat-stress');
-  await setBalance(page, 'combatReadability.enemyFlashSeconds', 1);
+  const errors = await openGame(page, '?debug&stress=120&timescale=3&nowaves&nolevel&nopause&profile&seed=combat-no-flash-stress');
   await setBalance(page, 'enemy.contactDamage', 0);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBeGreaterThan(30);
 
   const baseline = await samplePerf(page, 1_250);
-  const flashesBefore = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.enemyHitFlashes ?? 0);
   await expect
-    .poll(() => page.evaluate((before) => (window.__THREE_GAME_DIAGNOSTICS__?.readability.enemyHitFlashes ?? 0) - before, flashesBefore), {
-      timeout: 8_000,
-    })
+    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.damageByOwner.hero ?? 0), { timeout: 8_000 })
     .toBeGreaterThan(0);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.activeEnemyFlashes ?? 0)).toBeGreaterThan(0);
-  await shot(page, testInfo, 'enemy-flash-mid-swarm');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.enemyHitFlashes ?? 0)).toBe(0);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.activeEnemyFlashes ?? 0)).toBe(0);
+  await shot(page, testInfo, 'enemy-swarm-no-flash');
 
   const flashing = await samplePerf(page, 1_250);
   expect(flashing.samples).toBeGreaterThan(10);

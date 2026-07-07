@@ -26,10 +26,9 @@ export class TurretPool {
   private readonly material = new THREE.MeshStandardMaterial({
     color: '#ffffff',
     emissive: '#5b8a8a',
-    emissiveIntensity: 0.38,
+    emissiveIntensity: 0.58,
     roughness: 0.48,
     metalness: 0.32,
-    vertexColors: true,
   });
   private readonly mesh = new THREE.InstancedMesh(this.geometry, this.material, Balance.turret.maxCount);
   private readonly syncObject = new THREE.Object3D();
@@ -40,7 +39,7 @@ export class TurretPool {
   constructor() {
     this.group.name = 'TurretPool';
     this.mesh.frustumCulled = false;
-    this.mesh.castShadow = true;
+    this.mesh.castShadow = false;
     this.mesh.visible = false;
     this.group.add(this.mesh);
     for (let i = 0; i < Balance.turret.maxCount; i += 1) {

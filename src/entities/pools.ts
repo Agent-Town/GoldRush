@@ -144,6 +144,7 @@ export class EnemyPool {
   }
 
   warmHitFlashes(position: THREE.Vector3): Promise<void> {
+    if (Balance.combatReadability.enemyFlashSeconds <= 0 || Balance.combatReadability.enemyFlashIntensity <= 0) return Promise.resolve();
     this.warmHitFlashPosition.copy(position);
     this.warmHitFlashFrames = 2;
     return new Promise((resolve) => {
@@ -404,6 +405,13 @@ export class EnemyPool {
 
   private syncHitFlashes(): void {
     this.activeHitFlashes = 0;
+    if (Balance.combatReadability.enemyFlashSeconds <= 0 || Balance.combatReadability.enemyFlashIntensity <= 0) {
+      for (const enemy of this.enemies) this.hitFlashes.setMatrixAt(enemy.id, this.hiddenMatrix);
+      this.warmHitFlashFrames = 0;
+      this.hitFlashes.visible = false;
+      this.hitFlashes.instanceMatrix.needsUpdate = true;
+      return;
+    }
     for (const enemy of this.enemies) {
       const flash = enemy.hitFlashRemaining;
       if (!enemy.isAlive || flash <= 0) {
