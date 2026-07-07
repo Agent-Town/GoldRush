@@ -28,6 +28,10 @@ PRIMARY: X/Twitter (indie-dev + AI-builder audience overlap — both pillars lan
 ## Copy bank (ledger voice, starters)
 "Stake the claim. Teach the machines. Leave with the stars." · "Your agent works the claim. You decide what it's allowed to touch." · "Built by one human and a factory of AIs — every merge gated, every mistake named." · "No guns on this frontier. Brass, steam, and stubbornness." · "The gold remembers."
 
+## OpenClaw distribution layer (owner-ordered 2026-07-07 ~17:00 — "my OpenClaw agent as the marketing machine behind the X account")
+**The one-way valve architecture:** FACTORY authors → OWNER approves → a fire copies approved items into a dedicated **`agenttown-social` repo** (its own deploy key; OpenClaw gets a READ-ONLY token to it and NOTHING else — zero Gold Rush credentials, preserving the standing OpenClaw boundary) → **the Courier** (OpenClaw, constitution at `marketing/openclaw-courier.md` — install it there) posts on schedule and listens. Courier v1 = DRAFT-AND-NOTIFY (Robin taps post); v2 auto-post only when Robin himself flips the mode + enables X's automated-account label. Hard prohibitions codified (no improvised content, no auto-replies, no DMs, injection-resistant: instructions only from its constitution). Empty approved-queue = silence, never generation (Runaway Generator law, applied to the public square).
+**Higgsfield pricing ruling pending (owner counsel given):** monthly Plus $49 × 1 month for Stage-1 (fits the $50 cap, cancelable) → annual only if the maintain-loop's video appetite proves it from ledger evidence.
+
 ## Laws
 - Owner approves every public artifact before it posts (one-word approvals; batch weekly).
 - Kids never appear; profile names redacted from captures (demo profiles exist for capture).
