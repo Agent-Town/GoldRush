@@ -3,6 +3,7 @@ import type { GameState } from './GameState';
 import { Balance } from './Balance';
 import { effectiveStats, type EffectiveStats, type UpgradeStacks } from './StatSheet';
 import {
+  craftedOfferLimit,
   isMasteryConversionUnlocked,
   isUpgradeId,
   isUpgradeUnlocked,
@@ -34,6 +35,7 @@ type ProgressionOptions = {
   onGoldGranted?: (amount: number) => void;
   onHeal?: (amount: number) => void;
   hasResearchNode?: (id: string) => boolean;
+  getCraftingProfile?: () => string;
   /** Test harness (?nolevel): keep XP math, never open the choice overlay. */
   isChoiceDisabled?: () => boolean;
 };
@@ -115,10 +117,12 @@ export class Progression {
   }
 
   setStacksForTest(stacks: Partial<Record<UpgradeId, number>>): void {
+    const craftingProfile = this.craftingProfile();
     for (const id of Object.keys(this.stacksValue) as UpgradeId[]) delete this.stacksValue[id];
     for (const [id, count] of Object.entries(stacks)) {
       if (!isUpgradeId(id) || typeof count !== 'number' || !Number.isFinite(count) || count <= 0) continue;
       const def = upgradeDefById[id];
+      if (!isCraftedProfileVisible(def, craftingProfile)) continue;
       this.stacksValue[id] = Math.min(Math.floor(count), def.maxStacks);
     }
     this.statsValue = effectiveStats(this.stacksValue);
@@ -202,7 +206,14 @@ export class Progression {
     while (offer.length < 3 && pool.length > 0) {
       const index = this.pickWeightedIndex(pool);
       const [picked] = pool.splice(index, 1);
-      if (picked) offer.push(picked);
+      if (picked) {
+        offer.push(picked);
+        if (craftedCount(offer) >= craftedOfferLimit()) {
+          for (let i = pool.length - 1; i >= 0; i -= 1) {
+            if (pool[i].crafted) pool.splice(i, 1);
+          }
+        }
+      }
     }
     if (offer.length < 3) {
       const fillers = this.eligibleDefs().filter((def) => isFiller(def));
@@ -237,19 +248,32 @@ export class Progression {
   }
 
   private familyStacks(family: string): number {
-    return upgradeDefs.reduce((total, def) => total + (def.iconFamily === family ? (this.stacksValue[def.id] ?? 0) : 0), 0);
+    return this.visibleUpgradeDefs().reduce(
+      (total, def) => total + (def.iconFamily === family ? (this.stacksValue[def.id] ?? 0) : 0),
+      0,
+    );
   }
 
   private eligibleDefs(): UpgradeDef[] {
     const beaconCount = this.options.getBeaconCount();
     const hasNode = (id: string) => this.options.hasResearchNode?.(id) === true;
-    return upgradeDefs.filter((def) => {
+    return this.visibleUpgradeDefs().filter((def) => {
       if (!isUpgradeUnlocked(def, hasNode)) return false;
       if (!isMasteryConversionUnlocked(def, this.stacksValue, this.options.hasResearchNode ? hasNode : undefined)) return false;
       if (isFiller(def) && this.fillersDisabled) return false;
+      if (def.minWave !== undefined && this.options.getWave() < def.minWave) return false;
       if (def.id === 'beacon_dynamo' && beaconCount <= 0) return false;
       return (this.stacksValue[def.id] ?? 0) < def.maxStacks;
     });
+  }
+
+  private visibleUpgradeDefs(): readonly UpgradeDef[] {
+    const craftingProfile = this.craftingProfile();
+    return upgradeDefs.filter((def) => isCraftedProfileVisible(def, craftingProfile));
+  }
+
+  private craftingProfile(): string {
+    return this.options.getCraftingProfile?.() ?? 'local_prospector';
   }
 }
 
@@ -259,6 +283,14 @@ export function need(level: number): number {
 
 function isFiller(def: UpgradeDef): boolean {
   return 'filler' in def && def.filler === true;
+}
+
+function craftedCount(defs: readonly UpgradeDef[]): number {
+  return defs.filter((def) => def.crafted === true).length;
+}
+
+function isCraftedProfileVisible(def: UpgradeDef, craftingProfile: string): boolean {
+  return def.crafted !== true || def.craftedProfile === craftingProfile;
 }
 
 function stackSnapshot(stacks: UpgradeStacks): Record<string, number> {

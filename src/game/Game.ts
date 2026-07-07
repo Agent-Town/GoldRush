@@ -11,6 +11,7 @@ import { EventBus } from '../core/EventBus';
 import {
   availablePicks,
   browserResearchStorage,
+  contractTierForResearch,
   hasResearchNode,
   loadResearchState,
   saveResearchState,
@@ -48,6 +49,7 @@ import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
 import { EnemyPool } from '../entities/pools';
 import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
+import { normalizeQueueProfile } from '../crafting/CraftingQueueContract';
 import {
   applyDifficultyPreset,
   Balance,
@@ -306,8 +308,10 @@ export class Game {
   private unsubscribeAgentReceipts?: () => void;
   private nextProspectorXpSweepAt = 0;
   private prospectorIntroShown = false;
+  private agentPolicySlotBonus = 0;
   private readonly researchStorage = browserResearchStorage();
   private researchState: ResearchState = loadResearchState(this.researchStorage);
+  private readonly craftingProfile = normalizeQueueProfile(new URLSearchParams(window.location.search).get('profile'));
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -353,6 +357,7 @@ export class Game {
         if (healed > 0) this.vfx.floatText(this.hero.group.position, `+${healed}`, '#6bb36b');
       },
       hasResearchNode: (id) => hasResearchNode(this.researchState, id),
+      getCraftingProfile: () => this.craftingProfile,
       isChoiceDisabled: isLevelUpDisabled,
     });
 
@@ -595,7 +600,7 @@ export class Game {
       {
         metaProgress: {
           get agentAutonomyLevel() {
-            return game.runManager ? agentAutonomyLevel(game.runManager.metaProgress) : 0;
+            return (game.runManager ? agentAutonomyLevel(game.runManager.metaProgress) : 0) + game.agentPolicySlotBonus;
           },
         },
       },
@@ -1110,7 +1115,12 @@ export class Game {
   }
 
   private agentUiState(): UiSnapshot['agent'] {
-    return this.agentStub?.state ?? null;
+    const state = this.agentStub?.state ?? null;
+    if (!state || this.agentPolicySlotBonus <= 0) return state;
+    return {
+      ...state,
+      receiptFeed: [`Schooling: +${this.agentPolicySlotBonus} policy slot`, ...state.receiptFeed].slice(0, 3),
+    };
   }
 
   private showProspectorIntro(): void {
@@ -1810,6 +1820,7 @@ export class Game {
     }
     this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction);
     this.buildSystem.applyStats(stats.beaconFireRateMult);
+    this.agentPolicySlotBonus = Math.max(0, Math.floor(stats.agentPolicySlots));
     this.applyUpgradeCapEffects(stats);
     this.applyResearchEffects();
   }
@@ -1890,6 +1901,7 @@ export class Game {
     threshold: number;
     meter: string;
     assayOrderSlots: number;
+    contractTier: number;
   } {
     const meter = scienceMeter(this.researchState);
     return {
@@ -1900,6 +1912,7 @@ export class Game {
       threshold: meter.threshold,
       meter: meter.text,
       assayOrderSlots: hasResearchNode(this.researchState, 'second_order_slot') ? Balance.research.secondOrderSlots : 1,
+      contractTier: contractTierForResearch(this.researchState),
     };
   }
 

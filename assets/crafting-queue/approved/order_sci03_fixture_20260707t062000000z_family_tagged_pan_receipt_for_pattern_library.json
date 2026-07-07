@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "id": "order_sci03_fixture_20260707t062000000z_family_tagged_pan_receipt_for_pattern_library",
+  "request": {
+    "version": 1,
+    "id": "order_sci03_fixture_20260707t062000000z_family_tagged_pan_receipt_for_pattern_library",
+    "text": "family tagged pan receipt for pattern library",
+    "profile": "sci03_fixture",
+    "timestamp": "2026-07-07T06:20:00.000Z",
+    "tier": 3
+  },
+  "item": {
+    "id": "craft_sci03_pan_receipt",
+    "kind": "tool",
+    "rarity": "common",
+    "family": "panning",
+    "name": "Pattern Pan Receipt",
+    "blurb": "A filed Assay Office receipt for steadier pan work.",
+    "cost": 25,
+    "stats": { "panTickMult": -0.08 }
+  },
+  "contractVerdict": {
+    "ok": true,
+    "reasons": [],
+    "summary": "SCI-03 fixture: family-tagged panning card within tier 3 common budget."
+  },
+  "simVerdict": {
+    "ok": true,
+    "reasons": []
+  },
+  "approvedAt": "2026-07-07T06:22:00.000Z"
+}

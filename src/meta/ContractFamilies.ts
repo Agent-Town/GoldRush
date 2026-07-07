@@ -1,3 +1,4 @@
+import frontierCaps from '../../assets/contracts/epoch-1-frontier/caps.json' with { type: 'json' };
 import frontierFamilies from '../../assets/contracts/epoch-1-frontier/families.json' with { type: 'json' };
 import frontierManifest from '../../assets/contracts/epoch-1-frontier/manifest.json' with { type: 'json' };
 import steamworksManifest from '../../assets/contracts/epoch-2-steamworks/manifest.json' with { type: 'json' };
@@ -20,6 +21,7 @@ export type EpochUpgradeDeltas = {
   blastDamageMult?: number;
   blastRadiusMult?: number;
   blastCooldownMult?: number;
+  agentPolicySlots?: number;
 };
 
 export type EpochUpgradeCard = {
@@ -29,6 +31,7 @@ export type EpochUpgradeCard = {
   iconFamily: string;
   familyId?: string;
   maxStacks: number;
+  minWave?: number;
   weight?: number;
   filler?: boolean;
   deltas: EpochUpgradeDeltas;
@@ -62,11 +65,36 @@ export type EpochMeta = {
   threshold: number | null;
 };
 
+export type ContractRarity = 'common' | 'uncommon' | 'rare';
+export type ContractTier = 1 | 2 | 3;
+export type ContractTierBudget = {
+  tier: ContractTier;
+  name: string;
+  rarityBudgets: Record<ContractRarity, number>;
+  statCaps: {
+    fireRateMult: number;
+    damageMult: number;
+    rangeMult: number;
+    moveSpeedMult: number;
+    panTickMult: number;
+    maxHpBonus: number;
+  };
+  craftedOfferCap: number;
+  agentPolicySlots: number;
+};
+
+export type EpochCapsBundle = {
+  version: 1;
+  epochId: string;
+  contractTiers: ContractTierBudget[];
+};
+
 export type EpochBundle = EpochMeta & {
   families: EpochUpgradeFamily[];
   gates: string[];
   masteryConversions: MasteryConversionRule[];
   synergyCards: EpochUpgradeCard[];
+  contractTiers: ContractTierBudget[];
 };
 
 type EpochManifest = EpochMeta & {
@@ -84,6 +112,9 @@ const fallbackManifests: Record<string, EpochManifest> = {
 const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
   '../../assets/contracts/epoch-1-frontier/families.json': frontierFamilies as EpochFamiliesBundle,
 };
+const fallbackCapsBundles: Record<string, EpochCapsBundle> = {
+  '../../assets/contracts/epoch-1-frontier/caps.json': frontierCaps as EpochCapsBundle,
+};
 
 const manifests =
   typeof import.meta.env === 'object'
@@ -99,6 +130,13 @@ const familyBundles =
         import: 'default',
       })
     : fallbackFamilyBundles;
+const capsBundles =
+  typeof import.meta.env === 'object'
+    ? import.meta.glob<EpochCapsBundle>('../../assets/contracts/*/caps.json', {
+        eager: true,
+        import: 'default',
+      })
+    : fallbackCapsBundles;
 
 const orderedManifests = Object.values(manifests).sort((a, b) => a.order - b.order || a.id.localeCompare(b.id));
 const manifestsById = new Map(orderedManifests.map((manifest) => [manifest.id, manifest]));
@@ -111,13 +149,25 @@ export function loadEpoch(id: string): EpochBundle {
   const manifest = manifestsById.get(id);
   if (!manifest) throw new Error(`Unknown contract epoch: ${id}`);
   const families = loadFamilies(manifest);
+  const caps = loadCaps(manifest);
   return {
     ...toMeta(manifest),
     families: families.families,
     gates: [...new Set(families.families.map((family) => family.unlockNodeId))],
     masteryConversions: families.masteryConversions,
     synergyCards: families.synergyCards,
+    contractTiers: caps.contractTiers,
   };
+}
+
+export function contractTierBudget(epochId: string, tier: number): ContractTierBudget {
+  const epoch = loadEpoch(epochId);
+  const cleaned = Math.max(1, Math.min(3, Math.floor(tier))) as ContractTier;
+  return epoch.contractTiers.find((entry) => entry.tier === cleaned) ?? epoch.contractTiers[0]!;
+}
+
+export function contractBudgetOk(epochId: string, tier: number, rarity: ContractRarity, budget: number): boolean {
+  return budget <= contractTierBudget(epochId, tier).rarityBudgets[rarity];
 }
 
 function loadFamilies(manifest: EpochManifest): EpochFamiliesBundle {
@@ -127,6 +177,14 @@ function loadFamilies(manifest: EpochManifest): EpochFamiliesBundle {
   }
   const bundle = familyBundles[`../../assets/contracts/${manifest.id}/${familiesPath}`];
   if (!bundle) throw new Error(`Missing families bundle for contract epoch: ${manifest.id}`);
+  return bundle;
+}
+
+function loadCaps(manifest: EpochManifest): EpochCapsBundle {
+  const capsPath = manifest.parts.caps;
+  if (!capsPath) return { version: 1, epochId: manifest.id, contractTiers: [] };
+  const bundle = capsBundles[`../../assets/contracts/${manifest.id}/${capsPath}`];
+  if (!bundle) throw new Error(`Missing caps bundle for contract epoch: ${manifest.id}`);
   return bundle;
 }
 
@@ -142,6 +200,6 @@ function toMeta(manifest: EpochManifest): EpochMeta {
 
 try {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')) {
-    window.__GR_CONTRACT_REGISTRY__ = { listEpochs, loadEpoch };
+    window.__GR_CONTRACT_REGISTRY__ = { listEpochs, loadEpoch, contractTierBudget, contractBudgetOk };
   }
 } catch {}

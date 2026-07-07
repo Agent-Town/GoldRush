@@ -3,6 +3,7 @@ export const CRAFTING_QUEUE_PENDING_DIR = 'assets/crafting-queue/pending';
 
 export type CraftedItemKind = 'weapon_mod' | 'tool' | 'trinket';
 export type CraftedItemRarity = 'common' | 'uncommon' | 'rare';
+export type CraftingContractTier = 1 | 2 | 3;
 
 export type CraftedStatDeltas = {
   damageMult?: number;
@@ -17,6 +18,7 @@ export type CraftedItemDef = {
   id: string;
   kind: CraftedItemKind;
   rarity: CraftedItemRarity;
+  family?: string;
   name: string;
   blurb: string;
   cost: number;
@@ -35,6 +37,7 @@ export type CraftingQueueRequest = {
   text: string;
   profile: string;
   timestamp: string;
+  tier: CraftingContractTier;
 };
 
 export type CraftingQueueVerdict = {
@@ -71,6 +74,7 @@ export function makePendingQueueRequest(
   text: string,
   profile: string,
   timestamp: Date | string = new Date(),
+  tier: number = 1,
 ): CraftingQueueRequest {
   const iso = (timestamp instanceof Date ? timestamp : new Date(timestamp)).toISOString();
   const normalizedProfile = normalizeQueueProfile(profile);
@@ -81,6 +85,7 @@ export function makePendingQueueRequest(
     text,
     profile: normalizedProfile,
     timestamp: iso,
+    tier: cleanContractTier(tier),
   };
 }
 
@@ -97,7 +102,7 @@ export function sanitizePendingQueueRequest(value: unknown): CraftingQueueReques
 
   let canonical: CraftingQueueRequest;
   try {
-    canonical = makePendingQueueRequest(value.text, value.profile, value.timestamp);
+    canonical = makePendingQueueRequest(value.text, value.profile, value.timestamp, cleanContractTier(value.tier));
   } catch {
     return null;
   }
@@ -110,9 +115,10 @@ export function parseApprovedQueueEntry(value: unknown): CraftingQueueApproved |
   if (value.version !== CRAFTING_QUEUE_VERSION || typeof value.id !== 'string' || typeof value.approvedAt !== 'string') {
     return null;
   }
-  if (!isRequest(value.request) || !isItem(value.item)) return null;
+  const request = parseRequest(value.request);
+  if (!request || !isItem(value.item)) return null;
   if (!isVerdict(value.contractVerdict) || !isVerdict(value.simVerdict)) return null;
-  return value.contractVerdict.ok && value.simVerdict.ok ? (value as CraftingQueueApproved) : null;
+  return value.contractVerdict.ok && value.simVerdict.ok ? ({ ...value, request } as CraftingQueueApproved) : null;
 }
 
 export function parseRejectedQueueEntry(value: unknown): CraftingQueueRejected | null {
@@ -120,21 +126,30 @@ export function parseRejectedQueueEntry(value: unknown): CraftingQueueRejected |
   if (value.version !== CRAFTING_QUEUE_VERSION || typeof value.id !== 'string' || typeof value.rejectedAt !== 'string') {
     return null;
   }
-  if (!isRequest(value.request) || !isVerdict(value.contractVerdict)) return null;
+  const request = parseRequest(value.request);
+  if (!request || !isVerdict(value.contractVerdict)) return null;
   if (value.simVerdict !== undefined && !isVerdict(value.simVerdict)) return null;
   if (!Array.isArray(value.reasons) || !value.reasons.every(isReason)) return null;
-  return value as CraftingQueueRejected;
+  return { ...value, request } as CraftingQueueRejected;
 }
 
-function isRequest(value: unknown): value is CraftingQueueRequest {
-  return (
-    isRecord(value) &&
-    value.version === CRAFTING_QUEUE_VERSION &&
-    typeof value.id === 'string' &&
-    typeof value.text === 'string' &&
-    typeof value.profile === 'string' &&
-    typeof value.timestamp === 'string'
-  );
+function parseRequest(value: unknown): CraftingQueueRequest | null {
+  if (!isRecord(value)) return null;
+  if (
+    value.version !== CRAFTING_QUEUE_VERSION ||
+    typeof value.id !== 'string' ||
+    typeof value.text !== 'string' ||
+    typeof value.profile !== 'string' ||
+    typeof value.timestamp !== 'string'
+  ) {
+    return null;
+  }
+  try {
+    const canonical = makePendingQueueRequest(value.text, value.profile, value.timestamp, cleanContractTier(value.tier));
+    return canonical.id === value.id ? canonical : null;
+  } catch {
+    return null;
+  }
 }
 
 function isVerdict(value: unknown): value is CraftingQueueVerdict {
@@ -156,6 +171,7 @@ function isItem(value: unknown): value is CraftedItemDef {
     typeof value.id === 'string' &&
     isOneOf(value.kind, ['weapon_mod', 'tool', 'trinket']) &&
     isOneOf(value.rarity, ['common', 'uncommon', 'rare']) &&
+    (value.family === undefined || typeof value.family === 'string') &&
     typeof value.name === 'string' &&
     typeof value.blurb === 'string' &&
     typeof value.cost === 'number' &&
@@ -169,6 +185,10 @@ function isOneOf<T extends string>(value: unknown, allowed: readonly T[]): value
 
 function queueStamp(iso: string): string {
   return iso.replace(/[-:.]/g, '').replace('T', 't').replace('Z', 'z');
+}
+
+function cleanContractTier(value: unknown): CraftingContractTier {
+  return Math.max(1, Math.min(3, Math.floor(typeof value === 'number' && Number.isFinite(value) ? value : 1))) as CraftingContractTier;
 }
 
 function slug(value: string): string {

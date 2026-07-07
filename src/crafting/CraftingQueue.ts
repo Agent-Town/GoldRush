@@ -58,8 +58,9 @@ export async function postPendingOrder(
   text: string,
   profile: string,
   timestamp: Date | string = new Date(),
+  tier = 1,
 ): Promise<PendingPostResult> {
-  const request = makePendingQueueRequest(text, profile, timestamp);
+  const request = makePendingQueueRequest(text, profile, timestamp, tier);
   const path = pendingQueuePath(request.id);
   try {
     const response = await fetch('/__goldrush/crafting-queue/pending', {
