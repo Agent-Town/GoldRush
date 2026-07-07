@@ -49,6 +49,8 @@ export type UiSnapshot = {
     name: string;
     permissionLevel: number;
     permissionLabel: string;
+    autonomyTrack: number;
+    policySlotBonus: number;
     receiptFeed: readonly string[];
     consent: AgentConsentSnapshot;
   } | null;

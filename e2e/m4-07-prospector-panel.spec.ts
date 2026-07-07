@@ -111,7 +111,7 @@ test('ladder renders earned toggles, unearned hints, and current abilities', asy
 
 test('auto-collect consent halts and resumes behavior, with stacked newest-first receipts', async ({ page }, testInfo) => {
   await setAgentLevel(page, 1);
-  const errors = await openGame(page, '?stress=3&timescale=12&nolevel&seed=m4-07-consent');
+  const errors = await openGame(page, '?stress=4&timescale=16&nolevel&seed=m4-07-consent');
 
   await openPanelWithG(page);
   await page.getByTestId('prospector-ability-auto_collect').uncheck();

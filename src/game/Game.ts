@@ -433,7 +433,11 @@ export class Game {
         baseValue: Math.round(economySummary.baseValue),
         weaponSplit: this.weaponSplit(runStats),
       });
-      this.deathOverlay.show(this.deathLedger, scores, scoreAt, { ...this.researchOverlayOptions(1), runStats });
+      this.deathOverlay.show(this.deathLedger, scores, scoreAt, {
+        ...this.researchOverlayOptions(1),
+        runStats,
+        agentAutonomyDelta: this.agentAutonomyDelta(this.runManager?.diagnostics.secured === true),
+      });
     });
     this.events.on('run_ended', (event) => {
       if (event.reason !== 'secured') return;
@@ -460,6 +464,7 @@ export class Game {
         weaponToggles: this.weaponToggleCount,
         blastTime: this.blastTime,
       };
+      const agentAutonomyDelta = this.agentAutonomyDelta(true);
       window.setTimeout(() => {
         this.state.setPaused(true);
         this.deathOverlay.show(ledger, scores, scoreAt, {
@@ -467,6 +472,7 @@ export class Game {
           outcome: 'secured',
           actionLabel: 'Enter New Claim',
           runStats,
+          agentAutonomyDelta,
           onDone: () => {
             if (this.onReturnToMenu) {
               this.runStartMetaRecapPending = false;
@@ -1173,9 +1179,21 @@ export class Game {
         : state.receiptFeed;
     return {
       ...state,
+      autonomyTrack: this.runManager?.metaProgress.tracks.agent ?? 0,
+      policySlotBonus: this.agentPolicySlotBonus,
       receiptFeed,
       consent: this.agentConsent.snapshot(state.permissionLevel),
     };
+  }
+
+  private agentAutonomyDelta(securedThisRun: boolean): { before: number; after: number } | undefined {
+    const run = this.runManager?.diagnostics;
+    const moved = run?.victoryPayout?.agent ?? 0;
+    const rawAfter = Math.max(0, run?.meta.tracks.agent ?? 0);
+    const before = Math.min(3, Math.max(0, rawAfter - moved));
+    const after = Math.min(3, rawAfter);
+    if (!securedThisRun || moved <= 0 || after <= before) return undefined;
+    return { before, after };
   }
 
   private showProspectorIntro(): void {
