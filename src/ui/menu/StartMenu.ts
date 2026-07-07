@@ -6,6 +6,10 @@ import {
 import { availablePicks, browserResearchStorage, loadResearchState, scienceMeter } from '../../meta/ResearchTree';
 import { readAudioVolume, setAudioVolume } from '../../systems/AudioSystem';
 
+const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
+const backdropUrl = new URL('../../../assets/processed/ui-menu-backdrop.png', import.meta.url).href;
+const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
+
 type StartMenuOptions = {
   onNewClaim: () => void;
   onContinue: () => void;
@@ -22,6 +26,7 @@ export class StartMenu {
     this.root.className = 'gr-start-menu';
     this.root.dataset.testid = 'start-menu';
     this.root.setAttribute('aria-label', 'Gold Rush start menu');
+    this.root.style.setProperty('--gr-menu-panel', `url("${panelUrl}")`);
     this.root.addEventListener('click', this.onClick);
     this.root.addEventListener('keydown', this.onKeyDown);
     this.render();
@@ -39,9 +44,9 @@ export class StartMenu {
     const hasContinue = hasSuspendedRun();
     const volume = Math.round(readAudioVolume() * 100);
     this.root.innerHTML = `
-      <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="placeholder"></div>
+      <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="ready" style="background-image:url('${backdropUrl}')"></div>
       <div class="gr-start-menu__column">
-        <div class="gr-start-menu__emblem" data-testid="start-menu-emblem" data-asset-slot="ui-title-emblem" data-asset-state="placeholder" aria-hidden="true"></div>
+        <div class="gr-start-menu__emblem" data-testid="start-menu-emblem" data-asset-slot="ui-title-emblem" data-asset-state="ready" style="background-image:url('${emblemUrl}')" aria-hidden="true"></div>
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
         <p class="gr-start-menu__subtitle">an Agent Town tale</p>
         <nav class="gr-start-menu__nav" aria-label="Claim actions">

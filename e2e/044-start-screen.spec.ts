@@ -40,7 +40,7 @@ test('plain boot shows the Storybook start menu without Continue', async ({ page
 
   await expect(page.getByTestId('start-menu')).toBeVisible();
   await expect(page.getByTestId('start-menu-emblem')).toHaveAttribute('data-asset-slot', 'ui-title-emblem');
-  await expect(page.getByTestId('start-menu-emblem')).toHaveAttribute('data-asset-state', 'placeholder');
+  await expect(page.getByTestId('start-menu-emblem')).toHaveAttribute('data-asset-state', 'ready');
   await expect(page.getByTestId('start-menu-wordmark')).toHaveText('GOLD RUSH');
   await expect(page.getByText('an Agent Town tale')).toBeVisible();
   await expect(page.getByTestId('start-menu-continue')).toHaveCount(0);
@@ -48,7 +48,7 @@ test('plain boot shows the Storybook start menu without Continue', async ({ page
 
   await shot(page, testInfo, 'menu');
   await page.getByTestId('start-menu-emblem').screenshot({
-    path: `${SHOT_DIR}/${testInfo.project.name}-placeholder-emblem.png`,
+    path: `${SHOT_DIR}/${testInfo.project.name}-emblem.png`,
   });
   assertNoErrors(errors);
 });
