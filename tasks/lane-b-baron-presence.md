@@ -1,0 +1,20 @@
+# Task baron-presence: the Baron becomes a MOMENT, not a stat block (LANE-B, branch lane/m4, commit prefix "feat:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b. READ FIRST: AGENTS.md; **specs/story-spine/README.md (SS-04 pulled forward — the Baron thread; beat-card laws apply)**; the Baron implementation (Game.ts:1522 taunt announce, Medals.ts, the contract manifest); assets/LEDGER.md rows 34–35 (Baron sheets A/B + banner: PENDING-PROCESSING); scripts/extract-alpha.mjs; the m1-03 banner machinery + F-S110-1 (the wave-banner race — do not repeat it). Pre-flight: safe-dupe rule (ahead-merged lane commits → `git checkout -B lane/m4 main && git clean -fd`, proceed; STOP only on unmerged content or foreign edits); npm install; build green.
+
+## Owner playtest (2026-07-08 ~04:00, the first Baron fight — wave 47 run, secured 21)
+"It was 1:1 the same level except at some point there was the Baron, no announcement of it, but it was a bit bigger. I killed it, no mention of killing the Baron or any consequences." VERIFIED: taunts fired via the GENERIC announce banner (invisible-by-sameness); the art is an unprocessed placeholder; the defeat beat is one quiet line. The fight works; the tale is silent.
+
+## Scope
+1. **PROCESS + WIRE THE REAL BARON** (explicit processing authorization for this task): run `node scripts/extract-alpha.mjs --key ff00ff --grid 4x4` on char-baron-sheet-walk4-a/b + `--key ff00ff` on prop-baron-banner; wire sheets into the elite's sprite (walk4 pattern, scale per manifest) + the banner attachment (object-frame law). Update LEDGER rows to INTEGRATED. If extraction output fails QA (seams/magenta), fall back to placeholder and report — never wire broken art.
+2. **Taunts become BARON banners**: dedicated presentation — oxblood/dark ledger-card style, Baron portrait crop (from sheet A), distinct from ALL other banners; queued to never collide with the wave banner (sequence after it, ≥2s separation). Same trigger waves, same copy.
+3. **THE ARRIVAL (wave 20)**: name card beat — "THE CLAIM-JUMPER BARON" + one taunt line + the wave-horn sting (audio exists) + his spawn visibly flagged (banner over his head from spawn). ≤4s, non-blocking, skippable per story-spine laws.
+4. **THE DEFEAT MOMENT**: center beat card on kill — "The Baron is DEFEATED. Dragged off by his own men, swearing revenge." + "+double science" callout · run-ledger gains a line ("THE BARON — DEFEATED, wave 20") · the board card shows the medal prominently + the E2 hook line ("He'll be back — with machines."). Death read: sprite tips + banner falls + dust puff (reuse existing vfx; warm, never gory).
+5. **Contract identity**: the board card + run-start recap name the stakes ("The Baron's outfit rides at 20 — cadence runs hot"); the +15% cadence gets one visible line so the contract stops feeling 1:1.
+6. **Balance: NO stat changes** (attended rec pending owner: the Baron stays fresh-profile-calibrated — E1's graduation is for new players; veterans steamroll him and the E2 revenge contract is their rematch. Owner may veto with one word → then a tune task follows).
+
+## Firewall
+Touch ONLY: baron presentation (banners/beats/ledger line/board card), asset processing + wiring for the 3 baron assets + LEDGER rows, e2e. NO stat/Balance changes, NO wave scheduler changes, NO story-spine engine (SS-01 owns the general system — this task hand-places the Baron's beats in the existing UI patterns, to be migrated onto SS-01 later).
+
+## Self-check
+tsc/build; extended `e2e/e1-baron.spec.ts`: taunt banner uses the baron style + never overlaps the wave banner (both asserted at wave 12) · arrival card at 20 · defeat card + ledger line + medal on board · real sprite wired (asset-slot state asserted) · placeholder fallback path still green if processing fails; m1-01 + m2-01 + town-t3 unmodified green both projects; zero console errors; screenshots (taunt banner, the arrival, the defeat card, the board medal) into artifacts/baron-presence/. Commit on lane/m4. End: READY-FOR-GATES + processing QA results + results.
