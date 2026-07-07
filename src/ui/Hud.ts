@@ -34,6 +34,9 @@ type HudElements = {
   hpFill: HTMLElement;
   goldText: HTMLElement;
   goldPanel: HTMLElement;
+  pressurePanel: HTMLElement;
+  pressureLabel: HTMLElement;
+  pressureText: HTMLElement;
   weaponChip: HTMLElement;
   agentChip: HTMLElement;
   agentDetail: HTMLElement;
@@ -98,6 +101,12 @@ export class Hud {
         <strong class="hud-value" data-hud-gold>0</strong>
       </section>
 
+      <section class="hud-panel hud-panel--resource hud-panel--pressure" data-testid="hud-pressure" aria-label="Pressure gauge" hidden>
+        <span class="hud-gauge" aria-hidden="true"></span>
+        <span class="hud-label" data-hud-pressure-label>Pressure</span>
+        <strong class="hud-value" data-hud-pressure>0</strong>
+      </section>
+
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
@@ -142,6 +151,9 @@ export class Hud {
       hpFill: this.get(root, '[data-hud-hp-fill]'),
       goldText: this.get(root, '[data-hud-gold]'),
       goldPanel: this.get(root, '[data-testid="hud-gold"]'),
+      pressurePanel: this.get(root, '[data-testid="hud-pressure"]'),
+      pressureLabel: this.get(root, '[data-hud-pressure-label]'),
+      pressureText: this.get(root, '[data-hud-pressure]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
       agentChip: this.get(root, '[data-testid="hud-agent"]'),
       agentDetail: this.get(root, '[data-hud-agent-detail]'),
@@ -173,6 +185,7 @@ export class Hud {
     this.elements.hpText.textContent = `${snapshot.hp} / ${snapshot.maxHp}`;
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
     this.elements.goldText.textContent = this.goldText(snapshot);
+    this.updatePressure(snapshot);
     this.elements.weaponChip.textContent = snapshot.weapon === 'blast' ? 'Blast Charge' : 'Spark Rig';
     this.elements.weaponChip.dataset.weapon = snapshot.weapon;
     this.elements.agentName.textContent = snapshot.agent?.name ?? 'the Prospector';
@@ -275,6 +288,15 @@ export class Hud {
     return snapshot.gold >= snapshot.bankCap * 0.8 || snapshot.stockpileCount > 0
       ? `${snapshot.gold}/${snapshot.bankCap}`
       : snapshot.gold.toString();
+  }
+
+  private updatePressure(snapshot: UiSnapshot): void {
+    const pressure = snapshot.resources.find((resource) => resource.id === 'pressure');
+    this.elements.root.classList.toggle('hud--pressure-visible', Boolean(pressure));
+    this.elements.pressurePanel.hidden = !pressure;
+    if (!pressure) return;
+    this.elements.pressureLabel.textContent = pressure.name;
+    this.elements.pressureText.textContent = `${pressure.amount}/${pressure.cap}`;
   }
 
   private updateAnnouncement(snapshot: UiSnapshot): void {

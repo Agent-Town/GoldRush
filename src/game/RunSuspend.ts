@@ -7,6 +7,7 @@ import { Balance } from './Balance';
 import { buildableDefs, type BuildableId } from './buildables';
 import {
   initialEconomyState,
+  createEconomyState,
   reduce as reduceEconomy,
   summarizeLog,
   type EconomyEvent,
@@ -35,6 +36,7 @@ export type RunSuspendEnvelope = {
   economy: {
     gold: number;
     bankCap: number;
+    resources?: Record<string, { amount: number; cap: number }>;
     log: EconomyEvent[];
     summary: EconomySummary;
   };
@@ -346,6 +348,7 @@ function captureSnapshot(
     economy: {
       gold: cleanNumber(game.economy?.gold),
       bankCap: cleanNumber(game.economy?.bankCap),
+      resources: deepClone(game.economy?.resources ?? {}),
       log: economyLog,
       summary: summarizeLog(economyLog),
     },
@@ -600,9 +603,12 @@ function restoreEconomy(game: AnyGame, snapshot: RunSuspendEnvelope): void {
   const economy = game.economy as AnyGame | undefined;
   if (!economy) return;
   const replay = snapshot.economy.log.reduce(reduceEconomy, { ...initialEconomyState });
+  const bankCap = snapshot.economy.bankCap || replay.bankCap;
   economy.current = {
-    gold: snapshot.economy.gold,
-    bankCap: snapshot.economy.bankCap || replay.bankCap,
+    ...createEconomyState(snapshot.economy.gold, bankCap, {
+      ...resourceSnapshot(replay.resources),
+      ...resourceSnapshot(snapshot.economy.resources),
+    }),
   };
   if (Array.isArray(economy.events)) {
     economy.events.splice(0, economy.events.length, ...cloneEvents(snapshot.economy.log));
@@ -749,6 +755,19 @@ function deepClone<T>(value: T): T {
 
 function cloneEvents(events: readonly EconomyEvent[]): EconomyEvent[] {
   return deepClone([...events]);
+}
+
+function resourceSnapshot(value: unknown): Record<string, { amount: number; cap: number }> {
+  if (!isRecord(value)) return {};
+  const output: Record<string, { amount: number; cap: number }> = {};
+  for (const [key, entry] of Object.entries(value)) {
+    if (!isRecord(entry)) continue;
+    output[key] = {
+      amount: cleanNumber(entry.amount),
+      cap: cleanNumber(entry.cap),
+    };
+  }
+  return output;
 }
 
 function browserStorage(): Storage | undefined {

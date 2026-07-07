@@ -8,7 +8,12 @@ import {
 } from '../assets/SpriteAnimator';
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
-import { activeContract as selectActiveContract, activeContractDiagnostics, type ContractManifest } from '../meta/ContractFamilies';
+import {
+  activeContract as selectActiveContract,
+  activeContractDiagnostics,
+  activeEpoch as selectActiveEpoch,
+  type ContractManifest,
+} from '../meta/ContractFamilies';
 import {
   availablePicks,
   browserResearchStorage,
@@ -250,6 +255,7 @@ export class Game {
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
+  private readonly activeEpoch = selectActiveEpoch();
   private readonly activeContract = selectActiveContract();
   private readonly heroStart = contractHeroStart(this.activeContract);
   private readonly debugSpawnPosition = new THREE.Vector3();
@@ -638,6 +644,17 @@ export class Game {
             type: 'gold_granted',
             source: 'debug',
             amount: n,
+          });
+        },
+        grantPressure: (n: number, actor = 'player') => {
+          this.economy.apply({
+            id: crypto.randomUUID(),
+            at: this.timeAlive,
+            type: 'resource_granted',
+            resource: 'pressure',
+            source: 'debug',
+            amount: n,
+            actor: actor === 'prospector' ? 'prospector' : 'player',
           });
         },
         grantXp: (n: number) => {
@@ -1368,6 +1385,8 @@ export class Game {
         gold: this.economy.gold,
         banked: this.economy.gold,
         bankCap: this.economy.bankCap,
+        resources: this.economy.resources,
+        activeResources: this.activeResourceSnapshots(),
         logLength: economyLog.length,
         state: this.economy.state,
         replay: economyReplay,
@@ -1390,6 +1409,9 @@ export class Game {
       },
       contract: {
         ...activeContractDiagnostics(),
+        epochId: this.activeEpoch.id,
+        epochResources: this.activeEpoch.resources,
+        claimOffice: this.activeEpoch.claimOffice,
         name: this.activeContract.name,
         tileParams: this.activeContract.tileParams,
         boardRow: this.activeContract.boardRow,
@@ -1668,6 +1690,7 @@ export class Game {
       this.enemies.activeCount,
       this.economy.gold,
       this.economy.bankCap,
+      this.activeResourceSnapshots(),
       this.progression.xpInto,
       this.progression.xpNeed,
       this.progression.level,
@@ -1686,6 +1709,17 @@ export class Game {
       this.agentUiState(),
     );
     this.hud.update(this.uiSnapshot, this.pauseMetaSnapshot(), this.playerPauseActive && this.state.isPaused);
+  }
+
+  private activeResourceSnapshots(): UiSnapshot['resources'] {
+    return this.activeEpoch.resources.map((resource) => {
+      const balance = this.economy.resourceBalance(resource.id);
+      return {
+        ...resource,
+        amount: Math.floor(balance.amount),
+        cap: Math.floor(balance.cap || resource.capDefault),
+      };
+    });
   }
 
   private agentUiState(): UiSnapshot['agent'] {

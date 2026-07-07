@@ -4,5 +4,38 @@
   "order": 2,
   "locked": true,
   "threshold": null,
+  "resources": [
+    {
+      "id": "pressure",
+      "name": "Pressure",
+      "iconSlot": "ui.resource.pressure",
+      "capDefault": 100,
+      "ledgerBlurb": "the boilers breathe it"
+    }
+  ],
+  "claimOffice": {
+    "exchange": [
+      {
+        "id": "gold-to-pressure",
+        "from": "gold",
+        "to": "pressure",
+        "fromAmount": 20,
+        "toAmount": 1,
+        "ledgerBlurb": "Feed the boiler bond."
+      },
+      {
+        "id": "pressure-to-gold",
+        "from": "pressure",
+        "to": "gold",
+        "fromAmount": 1,
+        "toAmount": 12,
+        "ledgerBlurb": "Vent surplus into the assay market."
+      }
+    ],
+    "metaCurrencySlot": {
+      "reserved": true,
+      "note": "Future overall-currency exchange rows fit this table; not implemented in E2."
+    }
+  },
   "parts": {}
 }
