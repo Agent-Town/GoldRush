@@ -11,6 +11,7 @@ import type { PalisadeBlocker } from './Palisade';
 export type CompassEdge = 'north' | 'south' | 'east' | 'west';
 export type ThiefState = 'none' | 'seekHolding' | 'grabbing' | 'fleeing';
 export type WreckerState = 'none' | 'seekBuilding' | 'swinging';
+export type EnemyEliteKind = 'baron';
 
 export type ClaimJumperAssets = {
   ponchoGeometry: THREE.ConeGeometry;
@@ -34,6 +35,9 @@ export type EnemySpawnParams = {
   thief?: boolean;
   wrecker?: boolean;
   formationSeed?: number;
+  eliteKind?: EnemyEliteKind;
+  visualScale?: number;
+  banner?: boolean;
 };
 
 export type ThiefUpdateContext = {
@@ -109,7 +113,11 @@ export class ClaimJumperEnemy {
   private readonly scriptedTarget = new THREE.Vector3();
   private alive = false;
   private hp = 0;
+  private maxHpValue = 0;
   private speed: number = Balance.enemy.speed;
+  private elite: EnemyEliteKind | null = null;
+  private visualScaleValue = 1;
+  private banner = false;
   private scriptedSpeed = 0;
   private scripted = false;
   private activationDelay = 0;
@@ -150,6 +158,26 @@ export class ClaimJumperEnemy {
 
   get currentHp(): number {
     return this.hp;
+  }
+
+  get maxHp(): number {
+    return this.maxHpValue;
+  }
+
+  get moveSpeed(): number {
+    return this.speed;
+  }
+
+  get eliteKind(): EnemyEliteKind | null {
+    return this.elite;
+  }
+
+  get visualScale(): number {
+    return this.visualScaleValue;
+  }
+
+  get hasBanner(): boolean {
+    return this.banner;
   }
 
   get animationClip(): CharacterSpriteClip {
@@ -214,8 +242,12 @@ export class ClaimJumperEnemy {
 
   spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): void {
     this.alive = true;
-    this.hp = Balance.enemy.hp * (params.hpScale ?? 1);
+    this.maxHpValue = Balance.enemy.hp * (params.hpScale ?? 1);
+    this.hp = this.maxHpValue;
     this.speed = Balance.enemy.speed * (params.speedScale ?? 1);
+    this.elite = params.eliteKind ?? null;
+    this.visualScaleValue = Math.max(0.1, params.visualScale ?? 1);
+    this.banner = params.banner === true;
     this.activationDelay = Math.max(0, params.activationDelay ?? 0);
     this.contactCooldown = 0;
     this.thief = params.thief === true;
@@ -365,6 +397,10 @@ export class ClaimJumperEnemy {
   recycle(): void {
     this.alive = false;
     this.hp = 0;
+    this.maxHpValue = 0;
+    this.elite = null;
+    this.visualScaleValue = 1;
+    this.banner = false;
     this.activationDelay = 0;
     this.contactCooldown = 0;
     this.thief = false;

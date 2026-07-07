@@ -11,6 +11,7 @@ export const assetSlots = {
   propRock: 'prop.rock',
   propStump: 'prop.stump',
   propClaimPost: 'prop.claim_post',
+  propBaronBanner: 'prop.baron_banner',
   vfxBolt: 'vfx.bolt',
   bldSentryBeacon: 'bld.sentry_beacon',
   bldPortraitPalisade: 'bld.portrait.palisade',

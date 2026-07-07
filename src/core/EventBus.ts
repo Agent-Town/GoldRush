@@ -36,6 +36,7 @@ export type GameEvent =
       at: number;
       enemyId: number;
       xp: number;
+      eliteKind?: string;
     }
   | {
       type: 'building_damaged';

@@ -556,6 +556,7 @@ export class CombatSystem {
       at,
       enemyId: enemy.id,
       xp,
+      eliteKind: enemy.eliteKind ?? undefined,
     });
     this.enemies.recycle(enemy);
   }

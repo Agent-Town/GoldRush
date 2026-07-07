@@ -1,14 +1,19 @@
 import * as THREE from 'three';
 import { getStressCount, isSpawnDisabled } from '../core/DebugParams';
-import type { CompassEdge } from '../entities/Enemy';
+import type { CompassEdge, EnemyEliteKind } from '../entities/Enemy';
 import type { Rng } from '../core/Rng';
 import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
-import { activeContract } from '../meta/ContractFamilies';
+import { activeContract, type ContractManifest } from '../meta/ContractFamilies';
 import * as Terrain from '../world/Terrain';
 
 export type SpawnPackOptions = {
   speedScale?: number;
+  speedMult?: number;
+  hpScale?: number;
+  eliteKind?: EnemyEliteKind;
+  visualScale?: number;
+  banner?: boolean;
   wrecker?: boolean;
 };
 
@@ -37,8 +42,8 @@ export type WaveDiagnostics = {
 
 const TELEGRAPH_SECONDS = 2;
 const TELEGRAPH_STAGGER_SECONDS = 0.5;
-const ACTIVE_CONTRACT = activeContract();
-export const WAVE_SPAWN_EDGES: readonly CompassEdge[] = ACTIVE_CONTRACT.tileParams.lanes.spawnEdges;
+const DEFAULT_CONTRACT = activeContract();
+export const WAVE_SPAWN_EDGES: readonly CompassEdge[] = DEFAULT_CONTRACT.tileParams.lanes.spawnEdges;
 
 const EDGE_COPY: Record<CompassEdge, readonly string[]> = {
   north: [
@@ -92,6 +97,7 @@ export class WaveSystem {
   private currentAtSim = 0;
   private waveState: WaveDiagnostics['waveState'] = 'quiet';
   private lastPulseAt = Number.NEGATIVE_INFINITY;
+  private baronSpawned = false;
 
   constructor(
     private readonly enemies: EnemyPool,
@@ -100,12 +106,24 @@ export class WaveSystem {
     private readonly announce: (text: string, atSim: number) => void,
     private readonly onWaveStarted: (wave: number, atSim: number) => boolean | void,
     private readonly scheduledDisabled: () => boolean,
+    private readonly liveContract: () => ContractManifest = activeContract,
     private readonly canSpawnThieves: () => boolean = () => false,
     private readonly canSpawnWreckers: () => boolean = () => false,
     private readonly liveThiefCount: () => number = () => 0,
     private readonly hasTerritoryRing: () => boolean = () => false,
     private readonly territoryRingCenter: THREE.Vector3 = heroPosition,
-  ) {}
+  ) {
+    this.nextWaveAt = this.waveInterval();
+    this.nextPlanWaveAt = this.nextWaveAt;
+  }
+
+  private get contract(): ContractManifest {
+    return this.liveContract();
+  }
+
+  private get spawnEdges(): readonly CompassEdge[] {
+    return this.contract.tileParams.lanes.spawnEdges;
+  }
 
   get diagnostics(): WaveDiagnostics {
     return {
@@ -158,8 +176,8 @@ export class WaveSystem {
 
   reset(): void {
     this.nextTrickleAt = Balance.waves.graceSeconds + Balance.waves.trickleInterval;
-    this.nextWaveAt = Balance.waves.waveInterval;
-    this.nextPlanWaveAt = Balance.waves.waveInterval;
+    this.nextWaveAt = this.waveInterval();
+    this.nextPlanWaveAt = this.nextWaveAt;
     this.nextPlanWave = 1;
     this.plannedPulses.length = 0;
     this.wave = 0;
@@ -172,6 +190,7 @@ export class WaveSystem {
     this.currentAtSim = 0;
     this.waveState = 'quiet';
     this.lastPulseAt = Number.NEGATIVE_INFINITY;
+    this.baronSpawned = false;
   }
 
   setWaveForTest(wave: number): void {
@@ -185,6 +204,7 @@ export class WaveSystem {
     this.nextPlanWaveAt = this.nextWaveAt;
     this.nextPlanWave = this.wave + 1;
     this.lastPulseAt = this.currentAtSim;
+    this.baronSpawned = this.wave >= (this.contract.twist.baron?.wave ?? Number.POSITIVE_INFINITY);
   }
 
   spawnDebugPack(
@@ -311,6 +331,7 @@ export class WaveSystem {
       }
 
       if (startedNewWave) {
+        this.spawnBaronWave(pulse.wave, pulse.edges[0] ?? this.pickEdge());
         this.onWaveStarted(pulse.wave, pulse.spawnAt);
         return false;
       }
@@ -325,8 +346,10 @@ export class WaveSystem {
     groupCount = this.waveBudget(wave),
     thief = false,
     wrecker = false,
+    options: SpawnPackOptions = {},
+    respectAliveCap = true,
   ): boolean {
-    if (Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
+    if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
 
     const radius = Balance.waves.spawnRingRadius;
     const spread = (index - 0.5 * Math.max(0, groupCount - 1)) * 1.35;
@@ -347,7 +370,7 @@ export class WaveSystem {
     this.spawnPosition.x = this.clampSpawn(this.spawnPosition.x);
     this.spawnPosition.z = this.clampSpawn(this.spawnPosition.z);
     this.keepSpawnOutOfDeepWater(edge);
-    return this.spawnAtPosition(wave, true, { edge, thief, wrecker });
+    return this.spawnAtPosition(wave, respectAliveCap, { edge, thief, wrecker, ...options });
   }
 
   private spawnAtPosition(
@@ -363,11 +386,14 @@ export class WaveSystem {
       Math.pow(Balance.waves.speedScalePerWave, wave) * this.speedVariance(),
     );
     const enemy = this.enemies.spawn(this.spawnPosition, {
-      hpScale: Math.pow(Balance.waves.hpScalePerWave, wave),
-      speedScale: params.speedScale ?? speedScale,
+      hpScale: Math.pow(Balance.waves.hpScalePerWave, wave) * (params.hpScale ?? 1),
+      speedScale: params.speedScale ?? speedScale * (params.speedMult ?? 1),
       edge: params.edge,
       thief: params.thief === true,
       wrecker: params.wrecker === true,
+      eliteKind: params.eliteKind,
+      visualScale: params.visualScale,
+      banner: params.banner,
     });
     if (!enemy) return false;
     this.waveSpawnedTotal += 1;
@@ -383,11 +409,12 @@ export class WaveSystem {
   }
 
   private pickEdge(): CompassEdge {
-    return WAVE_SPAWN_EDGES[this.rng.int(0, WAVE_SPAWN_EDGES.length)] ?? 'west';
+    const edges = this.spawnEdges;
+    return edges[this.rng.int(0, edges.length)] ?? 'west';
   }
 
   private pickEdges(count: number): CompassEdge[] {
-    const available = [...WAVE_SPAWN_EDGES];
+    const available = [...this.spawnEdges];
     const edges: CompassEdge[] = [];
     for (let i = 0; i < count && available.length > 0; i += 1) {
       const index = this.rng.int(0, available.length);
@@ -464,11 +491,39 @@ export class WaveSystem {
   }
 
   private effectiveEdgesPerPulse(): number {
-    return Math.max(1, Math.min(WAVE_SPAWN_EDGES.length, Math.floor(Balance.waves.edgesPerPulse)));
+    return Math.max(1, Math.min(this.spawnEdges.length, Math.floor(Balance.waves.edgesPerPulse)));
   }
 
   private waveInterval(): number {
-    return Math.max(0.1, Balance.waves.waveInterval);
+    const cadence = Math.max(0.1, this.contract.twist.waveCadenceMult ?? 1);
+    return Math.max(0.1, Balance.waves.waveInterval / cadence);
+  }
+
+  private spawnBaronWave(wave: number, edge: CompassEdge): void {
+    const baron = this.contract.twist.baron;
+    if (!baron || this.baronSpawned || wave !== baron.wave) return;
+    this.baronSpawned = true;
+    const escorts = Math.max(0, Math.floor(baron.escortCount));
+    const groupCount = escorts + 1;
+    for (let index = 0; index < escorts; index += 1) {
+      this.spawnAt(edge, index, wave, groupCount);
+    }
+    this.spawnAt(
+      edge,
+      escorts,
+      wave,
+      groupCount,
+      false,
+      false,
+      {
+        eliteKind: 'baron',
+        hpScale: baron.hpScale,
+        speedMult: baron.speedScale,
+        visualScale: baron.scale,
+        banner: true,
+      },
+      false,
+    );
   }
 
   private maxTelegraphLead(): number {
@@ -522,7 +577,7 @@ export class WaveSystem {
 
   private territoryRingLateral(lateral: number, wave: number): number {
     if (!this.usesTerritoryRingLane(wave)) return lateral;
-    const bias = THREE.MathUtils.clamp(ACTIVE_CONTRACT.tileParams.lanes.territoryRingLaneBias, 0, 1);
+    const bias = THREE.MathUtils.clamp(this.contract.tileParams.lanes.territoryRingLaneBias, 0, 1);
     return lateral * (1 - bias);
   }
 
@@ -531,7 +586,7 @@ export class WaveSystem {
   }
 
   private usesTerritoryRingLane(wave: number): boolean {
-    return this.hasTerritoryRing() && wave <= ACTIVE_CONTRACT.tileParams.lanes.territoryRingBiasWaves;
+    return this.hasTerritoryRing() && wave <= this.contract.tileParams.lanes.territoryRingBiasWaves;
   }
 
   private clampSpawn(value: number): number {

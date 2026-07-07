@@ -12,6 +12,7 @@ import {
   type MetaPayout,
   type MetaProgress,
   type MetaProgressStorage,
+  type MetaTrack,
 } from './MetaProgress';
 
 type EconomyLog = {
@@ -27,6 +28,8 @@ type RunManagerHost = {
   setPaused?: (paused: boolean) => void;
   resetRun?: () => void;
   applyMetaProgress?: (meta: MetaProgress) => void;
+  securePayoutMult?: () => Partial<Record<MetaTrack, number>> | undefined;
+  secureBark?: () => string | undefined;
 };
 
 type InstallOptions = {
@@ -112,6 +115,12 @@ export class RunManager {
     return true;
   }
 
+  secureCurrentRun(wave: number = this.host?.wave() ?? 0): boolean {
+    if (!this.host || this.securedRunId === this.runId || this.endedRunId === this.runId) return false;
+    this.secureRun(wave);
+    return true;
+  }
+
   stayForRush(): boolean {
     if (!this.host || this.securedRunId !== this.runId) return false;
     this.stayedForRushRunId = this.runId;
@@ -147,6 +156,11 @@ export class RunManager {
     const secureWave = this.host?.secureWave?.() ?? Balance.run.secureWave;
     if (!this.host || secureWave <= 0 || wave < secureWave) return;
     if (this.securedRunId === this.runId || this.endedRunId === this.runId) return;
+    this.secureRun(wave);
+  }
+
+  private secureRun(wave: number): void {
+    if (!this.host) return;
     this.securedRunId = this.runId;
     this.awardSecuredClaim();
     if (isPauseDisabled()) {
@@ -194,6 +208,7 @@ export class RunManager {
     const summary = summarizeRun(this.host.economy.log, wave);
     const payout = this.lastPayout ?? zeroPayout();
     const territoryReady = this.meta.tracks.territory >= Balance.meta.territoryTier1;
+    const customBark = this.host.secureBark?.();
     this.hideSecureOverlay();
     const root = document.createElement('section');
     root.className = 'death-overlay death-overlay--visible gr-run-overlay';
@@ -212,7 +227,7 @@ export class RunManager {
         </dl>
         <section class="claim-office" data-testid="claim-office" aria-label="Claim Office">
           <h2>Claim Office</h2>
-          <p class="claim-office__bark">The Prospector tips his hat: &ldquo;Struck it proper, partner.&rdquo;</p>
+          <p class="claim-office__bark">${customBark ? escapeHtml(customBark) : 'The Prospector tips his hat: &ldquo;Struck it proper, partner.&rdquo;'}</p>
           <ul class="claim-office__payout" data-testid="claim-payout">
             ${META_TRACKS.map(
               (track) => `
@@ -246,7 +261,8 @@ export class RunManager {
     if (this.paidRunId === this.runId && this.lastPayout) return this.lastPayout;
 
     const payout = zeroPayout();
-    for (const track of META_TRACKS) payout[track] = Balance.meta.victoryPayout[track];
+    const multipliers = this.host?.securePayoutMult?.() ?? {};
+    for (const track of META_TRACKS) payout[track] = Balance.meta.victoryPayout[track] * (multipliers[track] ?? 1);
     this.meta = addMetaPayout(this.meta, payout);
     if (this.storage) this.meta = saveMetaProgress(this.storage, this.meta);
     this.lastPayout = payout;
@@ -316,6 +332,9 @@ function resolveHost(game: unknown): RunManagerHost {
     state?: { setPaused?: (paused: boolean) => void };
     resetRun?: () => void;
     applyMetaProgress?: (meta: MetaProgress) => void;
+    autoSecureWaveForRun?: () => number;
+    securePayoutMultForRun?: () => Partial<Record<MetaTrack, number>> | undefined;
+    secureBarkForRun?: () => string | undefined;
   };
 
   if (!host.events || !host.economy) {
@@ -326,11 +345,13 @@ function resolveHost(game: unknown): RunManagerHost {
     events: host.events,
     economy: host.economy,
     wave: () => host.waveSystem?.diagnostics?.wave,
-    secureWave: () => host.secureWaveForRun?.(),
+    secureWave: () => host.autoSecureWaveForRun?.() ?? host.secureWaveForRun?.(),
     at: () => host.timeAlive,
     setPaused: (paused) => host.state?.setPaused?.(paused),
     resetRun: () => host.resetRun?.(),
     applyMetaProgress: (meta) => host.applyMetaProgress?.(meta),
+    securePayoutMult: () => host.securePayoutMultForRun?.(),
+    secureBark: () => host.secureBarkForRun?.(),
   };
 }
 
@@ -358,6 +379,15 @@ function formatMetaProgress(meta: MetaProgress): string {
 
 function zeroPayout(): MetaPayout {
   return { territory: 0, science: 0, hero: 0, agent: 0 };
+}
+
+function escapeHtml(value: string): string {
+  return value
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
 }
 
 function trackLabel(track: (typeof META_TRACKS)[number]): string {
