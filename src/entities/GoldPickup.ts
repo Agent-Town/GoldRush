@@ -8,6 +8,11 @@ export type GoldPickupSnapshot = {
   amount: number;
   position: { x: number; z: number };
 };
+export type GoldPickupCollectResult = {
+  index: number;
+  amount: number;
+  position: { x: number; z: number };
+};
 
 const pickupY = 0.42;
 const collectRadiusSq = (Balance.hero.radius + 0.35) * (Balance.hero.radius + 0.35);
@@ -99,6 +104,32 @@ export class GoldPickupPool {
     return amount;
   }
 
+  hasCollectibleNear(position: THREE.Vector3, radius: number): boolean {
+    return this.nearestActiveIndex(position, radius) >= 0;
+  }
+
+  collectNear(
+    collectorPosition: THREE.Vector3,
+    radius: number,
+    canCollect: (amount: number) => boolean,
+    onCollect: (position: THREE.Vector3, amount: number) => void,
+    onBlocked: (position: THREE.Vector3) => void,
+  ): GoldPickupCollectResult | false {
+    const index = this.nearestActiveIndex(collectorPosition, radius);
+    if (index < 0) return false;
+    const position = this.positions[index];
+    const amount = this.amounts[index] ?? 0;
+    if (!position || amount <= 0) return false;
+    if (!canCollect(amount)) {
+      onBlocked(position);
+      return false;
+    }
+    const collectedAt = { x: position.x, z: position.z };
+    onCollect(position, amount);
+    this.deactivate(index);
+    return { index, amount, position: collectedAt };
+  }
+
   update(
     delta: number,
     heroPosition: THREE.Vector3,
@@ -183,6 +214,24 @@ export class GoldPickupPool {
     this.amounts[best] = (this.amounts[best] ?? 0) + amount;
     this.total += amount;
     this.syncHolding(best);
+    return best;
+  }
+
+  private nearestActiveIndex(position: THREE.Vector3, radius: number): number {
+    let best = -1;
+    let bestDistanceSq = Math.max(0, radius) * Math.max(0, radius);
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i]) continue;
+      const pickupPosition = this.positions[i];
+      if (!pickupPosition) continue;
+      const dx = pickupPosition.x - position.x;
+      const dz = pickupPosition.z - position.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq <= bestDistanceSq) {
+        best = i;
+        bestDistanceSq = distanceSq;
+      }
+    }
     return best;
   }
 

@@ -49,7 +49,13 @@ import { agentAutonomyLevel, freshMetaProgress, type MetaProgress } from './Meta
 import { AgentConsentStore } from '../agent/AgentConsent';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
-import type { AgentCollectXpOptions, AgentCollectXpResult, ToolReceipt } from '../agent/ToolSurface';
+import type {
+  AgentBuildingRef,
+  AgentCollectGoldResult,
+  AgentCollectXpOptions,
+  AgentCollectXpResult,
+  ToolReceipt,
+} from '../agent/ToolSurface';
 import {
   areWavesDisabled,
   getDebugSeed,
@@ -391,6 +397,10 @@ export class Game {
   private readonly agentConsent = new AgentConsentStore();
   private unsubscribeAgentReceipts?: () => void;
   private nextProspectorXpSweepAt = 0;
+  private nextProspectorGoldSweepAt = 0;
+  private nextProspectorRepairSweepAt = 0;
+  private prospectorRepairTarget: AgentBuildingRef | null = null;
+  private prospectorRepairDwellStartedAt: number | null = null;
   private prospectorIntroShown = false;
   private agentPolicySlotBonus = 0;
   private readonly researchStorage = browserResearchStorage();
@@ -676,6 +686,10 @@ export class Game {
           return true;
         },
         clearEnemies: () => this.enemies.recycleAll(),
+        spawnGoldPickup: (x: number, z: number, amount: number) =>
+          this.goldPickups.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z), amount) >= 0,
+        spawnXpMote: (x: number, z: number, value: number) =>
+          this.xpMotes.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z), value),
         goldPickups: () => this.goldPickups.snapshot(),
         placeBeacon: () => {
           this.buildSystem.selectBuildable('sentry_beacon', true);
@@ -725,7 +739,9 @@ export class Game {
       {
         diagnostics: () => window.__THREE_GAME_DIAGNOSTICS__,
         economyLog: () => this.economy.log,
+        repair: (building) => this.repairProspectorBuilding(building),
         collectXp: (options) => this.collectProspectorXp(options),
+        collectGold: () => this.collectProspectorGold(),
       },
       {
         clock: () => this.timeAlive,
@@ -891,6 +907,8 @@ export class Game {
         this.vfx.floatText(this.primaryActor.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.combat.update(simDelta, this.timeAlive);
+      this.maybeProspectorRepair();
+      this.maybeProspectorCollectGold();
       this.maybeProspectorCollectXp();
       this.goldPickups.update(
         simDelta,
@@ -906,7 +924,8 @@ export class Game {
   }
 
   private updatePresentation(delta: number): void {
-    this.prospector.update(delta, this.timeAlive, this.primaryActor.group.position);
+    const prospectorDelta = this.state.isPaused ? 0 : delta;
+    this.prospector.update(prospectorDelta, this.timeAlive, this.state.isPaused ? undefined : this.primaryActor.group.position);
     this.syncAudioLoops();
     this.vfx.update(delta);
     this.syncHeroVisualHeight();
@@ -1539,9 +1558,7 @@ export class Game {
 
   private maybeProspectorCollectXp(): void {
     if (
-      !this.agentStub ||
-      this.agentStub.state.permissionLevel <= 0 ||
-      !this.agentConsent.allows('auto_collect', this.agentStub.state.permissionLevel) ||
+      !this.prospectorCan('auto_collect') ||
       this.prospector.hasActiveTask ||
       this.timeAlive < this.nextProspectorXpSweepAt
     ) {
@@ -1552,12 +1569,149 @@ export class Game {
       this.nextProspectorXpSweepAt = this.timeAlive + 0.8;
       return;
     }
-    this.agentStub.collectXp();
+    this.agentStub?.collectXp();
     this.nextProspectorXpSweepAt = this.timeAlive + 2.4;
   }
 
   private collectProspectorXp(options: AgentCollectXpOptions): AgentCollectXpResult {
     return this.combat.collectXpForProspector(options, this.prospector.position);
+  }
+
+  private maybeProspectorCollectGold(): void {
+    if (
+      !this.prospectorCan('auto_collect') ||
+      this.prospector.hasActiveTask ||
+      this.timeAlive < this.nextProspectorGoldSweepAt
+    ) {
+      return;
+    }
+    if (!this.goldPickups.hasCollectibleNear(this.prospector.position, Balance.sparkRig.range)) {
+      this.nextProspectorGoldSweepAt = this.timeAlive + 0.8;
+      return;
+    }
+    this.agentStub?.collectGold();
+    this.nextProspectorGoldSweepAt = this.timeAlive + 2.4;
+  }
+
+  private collectProspectorGold(): AgentCollectGoldResult | false {
+    const start = pointFromVector(this.prospector.position);
+    const collected = this.goldPickups.collectNear(
+      this.prospector.position,
+      Balance.sparkRig.range,
+      (amount) => this.economy.canReceiveIncome(this.reclaimAmount(amount)),
+      (position, amount) => this.reclaimGold(position, amount, 'prospector'),
+      (position) => this.blockedGoldPickup(position),
+    );
+    if (!collected) return false;
+    const gold = this.reclaimAmount(collected.amount);
+    return {
+      gold,
+      pickups: 1,
+      message: `Gathered ${gold} gold`,
+      collector: 'prospector',
+      agentPath: [start, collected.position],
+      sweptIds: [`pickup:${collected.index}`],
+    };
+  }
+
+  private maybeProspectorRepair(): void {
+    if (
+      !this.prospectorCan('auto_repair') ||
+      this.timeAlive < this.nextProspectorRepairSweepAt
+    ) {
+      return;
+    }
+    if (this.prospector.hasActiveTask) {
+      this.previewProspectorRepair();
+      return;
+    }
+    this.prospectorRepairDwellStartedAt = null;
+
+    const hadTarget = this.prospectorRepairTarget !== null;
+    const target =
+      this.prospectorRepairTargetFor(this.prospectorRepairTarget) ?? this.nearestProspectorRepairTarget();
+    if (!target) {
+      this.prospectorRepairTarget = null;
+      this.nextProspectorRepairSweepAt = this.timeAlive + 0.8;
+      return;
+    }
+
+    this.prospectorRepairTarget = { id: target.id, index: target.index };
+    const distanceSq = distanceSq2(this.prospector.position.x, this.prospector.position.z, target.position.x, target.position.z);
+    if (!hadTarget || distanceSq > Balance.wreck.repairRadius * Balance.wreck.repairRadius) {
+      this.prospector.assignWork(target.position, Balance.wreck.repairSeconds);
+      this.prospectorRepairDwellStartedAt = null;
+      this.nextProspectorRepairSweepAt = this.timeAlive + 0.2;
+      return;
+    }
+
+    const receipt = this.agentStub?.repair({ id: target.id, index: target.index });
+    if (receipt?.outcome.ok) this.prospectorRepairTarget = null;
+    this.nextProspectorRepairSweepAt = this.timeAlive + 1.2;
+  }
+
+  private previewProspectorRepair(): void {
+    const target = this.prospectorRepairTargetFor(this.prospectorRepairTarget);
+    if (!target || !this.prospector.snapshot.working) {
+      this.prospectorRepairDwellStartedAt = null;
+      return;
+    }
+    this.prospectorRepairDwellStartedAt ??= this.elapsed;
+    const progress = (this.elapsed - this.prospectorRepairDwellStartedAt) / Balance.wreck.repairSeconds;
+    this.buildSystem.previewRepairProgress(target.id, target.index, progress, this.timeAlive);
+  }
+
+  private repairProspectorBuilding(building: AgentBuildingRef): unknown {
+    const id = buildableIdFromString(building.id);
+    const index = Number.isInteger(building.index) ? building.index! : 0;
+    if (!id || index < 0) return false;
+    const start = pointFromVector(this.prospector.position);
+    const result = this.buildSystem.repairBuilding(id, index, this.timeAlive, this.prospector.position);
+    if (!result) return false;
+    this.syncStockpileHoldings();
+    this.publishDiagnostics();
+    return {
+      ...result,
+      collector: 'prospector',
+      agentPath: [start, result.position],
+    };
+  }
+
+  private prospectorCan(ability: 'auto_collect' | 'auto_repair'): boolean {
+    if (!this.agentStub) return false;
+    const level = this.agentStub.state.permissionLevel;
+    return level > 0 && this.agentConsent.allows(ability, level);
+  }
+
+  private prospectorRepairTargetFor(ref: AgentBuildingRef | null): {
+    id: BuildableId;
+    index: number;
+    position: ProspectorPoint;
+  } | null {
+    if (!ref) return null;
+    const id = buildableIdFromString(ref.id);
+    const index = Number.isInteger(ref.index) ? ref.index! : 0;
+    if (!id || index < 0) return null;
+    const entry = this.buildSystem.diagnostics.hp.find((candidate) => candidate.id === id && candidate.index === index);
+    if (!entry || !buildingNeedsRepair(entry)) return null;
+    const rangeSq = Balance.sparkRig.range * Balance.sparkRig.range;
+    const distanceSq = distanceSq2(this.prospector.position.x, this.prospector.position.z, entry.position.x, entry.position.z);
+    if (distanceSq > rangeSq) return null;
+    return { id, index, position: entry.position };
+  }
+
+  private nearestProspectorRepairTarget(): { id: BuildableId; index: number; position: ProspectorPoint } | null {
+    let best: { id: BuildableId; index: number; position: ProspectorPoint } | null = null;
+    let bestDistanceSq = Balance.sparkRig.range * Balance.sparkRig.range;
+    for (const entry of this.buildSystem.diagnostics.hp) {
+      if (!buildingNeedsRepair(entry)) continue;
+      const distanceSq = distanceSq2(this.prospector.position.x, this.prospector.position.z, entry.position.x, entry.position.z);
+      if (distanceSq <= bestDistanceSq) {
+        best = { id: entry.id, index: entry.index, position: entry.position };
+        bestDistanceSq = distanceSq;
+      }
+    }
+    return best;
   }
 
   private syncAssayOfficePrompt(): void {
@@ -1639,6 +1793,10 @@ export class Game {
     this.cameraRig.snapTo(this.primaryActor.group.position);
     this.timeAlive = 0;
     this.nextProspectorXpSweepAt = 0;
+    this.nextProspectorGoldSweepAt = 0;
+    this.nextProspectorRepairSweepAt = 0;
+    this.prospectorRepairTarget = null;
+    this.prospectorRepairDwellStartedAt = null;
     this.prospectorIntroShown = false;
     this.lastHarvestChanneling = false;
     this.lastUpgradeOfferAudioKey = '';
@@ -1973,13 +2131,14 @@ export class Game {
     return null;
   }
 
-  private reclaimGold(position: THREE.Vector3, amount: number): void {
+  private reclaimGold(position: THREE.Vector3, amount: number, actor: 'player' | 'prospector' = 'player'): void {
     const reclaimed = this.reclaimAmount(amount);
     const result = this.economy.apply({
       id: crypto.randomUUID(),
       at: this.timeAlive,
       type: 'gold_reclaimed',
       amount: reclaimed,
+      ...(actor === 'prospector' ? { actor } : {}),
     });
     if (!result.ok) return;
     this.reclaimedTotal += reclaimed;
@@ -2040,6 +2199,11 @@ export class Game {
     }
 
     if (receipt.tool === 'et.goldrush.collect_xp' && receipt.outcome.ok) {
+      const result = receipt.outcome.result as { agentPath?: unknown[] } | undefined;
+      return pointFromUnknown(result?.agentPath?.at(-1));
+    }
+
+    if (receipt.tool === 'et.goldrush.collect_gold' && receipt.outcome.ok) {
       const result = receipt.outcome.result as { agentPath?: unknown[] } | undefined;
       return pointFromUnknown(result?.agentPath?.at(-1));
     }
@@ -2618,7 +2782,7 @@ function edgePlace(edge: CompassEdge): string {
 
 function prospectorIntroAbility(level: number): string {
   if (level >= 2) return 'does trusted chores.';
-  if (level >= 1) return 'can gather XP with approval.';
+  if (level >= 1) return 'can gather and mend with approval.';
   return 'follows and observes.';
 }
 
@@ -2628,6 +2792,24 @@ function pointFromUnknown(value: unknown): ProspectorPoint | null {
   return typeof point.x === 'number' && Number.isFinite(point.x) && typeof point.z === 'number' && Number.isFinite(point.z)
     ? { x: point.x, z: point.z }
     : null;
+}
+
+function pointFromVector(value: THREE.Vector3): ProspectorPoint {
+  return { x: value.x, z: value.z };
+}
+
+function distanceSq2(ax: number, az: number, bx: number, bz: number): number {
+  const dx = ax - bx;
+  const dz = az - bz;
+  return dx * dx + dz * dz;
+}
+
+function buildableIdFromString(value: string): BuildableId | null {
+  return buildableDefs.some((def) => def.id === value) ? (value as BuildableId) : null;
+}
+
+function buildingNeedsRepair(entry: { hp: number; maxHp: number; wrecked: boolean }): boolean {
+  return entry.maxHp > 0 && (entry.wrecked || (entry.hp > 0 && entry.hp < entry.maxHp));
 }
 
 function browserMegaprojectStorage(): MegaprojectStorage | undefined {

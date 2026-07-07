@@ -117,6 +117,17 @@ export type UpgradeCandidate = {
   position: { x: number; z: number };
 };
 
+export type BuildingRepairResult = {
+  id: BuildableId;
+  index: number;
+  displayName: string;
+  cost: number;
+  hp: number;
+  maxHp: number;
+  position: { x: number; z: number };
+  message: string;
+};
+
 export type ReservedFootprint = {
   id: string;
   x: number;
@@ -812,6 +823,75 @@ export class BuildSystem {
     if (refund > 0) this.onFloatText?.(buildingPosition, `+${refund}`, '#c4883a');
     this.onSound?.('demolish', buildingPosition);
     this.visualDirty = true;
+    return true;
+  }
+
+  repairBuilding(
+    id: BuildableId,
+    index: number,
+    at: number,
+    position: THREE.Vector3 = this.heroPosition,
+    radius = Balance.wreck.repairRadius,
+  ): BuildingRepairResult | false {
+    if (!this.isSlotActive(id, index)) return false;
+    const buildingPosition = this.positionFor(id, index);
+    if (!buildingPosition) return false;
+    const dx = buildingPosition.x - position.x;
+    const dz = buildingPosition.z - position.z;
+    if (dx * dx + dz * dz > radius * radius) return false;
+    const maxHp = this.maxHpForInstance(id, index);
+    const hp = this.wrecked[id][index] ? 0 : (this.hp[id][index] ?? maxHp);
+    if (maxHp <= 0 || hp >= maxHp) return false;
+    const cost = this.repairCost(id, index);
+    if (cost <= 0) return false;
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at,
+      type: 'gold_spent',
+      sink: repairSink(id),
+      amount: cost,
+    });
+    if (!result.ok) return false;
+
+    this.onFloatText?.(buildingPosition, `-${cost}`, '#a0522d');
+    this.repairs += 1;
+    this.repairGold += cost;
+    this.repair(id, index);
+    if (this.activeRepairId === id && this.activeRepairIndex === index) {
+      this.activeRepairId = null;
+      this.activeRepairIndex = -1;
+      this.activeRepairBlocked = false;
+      this.repairRing.visible = false;
+      this.repairRing.geometry.setDrawRange(0, 0);
+    }
+    const displayName = getBuildableDef(id)?.displayName ?? id;
+    return {
+      id,
+      index,
+      displayName,
+      cost,
+      hp: this.hp[id][index] ?? maxHp,
+      maxHp,
+      position: { x: buildingPosition.x, z: buildingPosition.z },
+      message: `Mended ${displayName}`,
+    };
+  }
+
+  previewRepairProgress(id: BuildableId, index: number, progress: number, at: number): boolean {
+    if (!this.isSlotActive(id, index)) return false;
+    const position = this.positionFor(id, index);
+    if (!position) return false;
+    const safeProgress = Math.max(0, Math.min(1, progress));
+    this.activeRepairId = id;
+    this.activeRepairIndex = index;
+    this.activeRepairBlocked = false;
+    this.repairProgress[id][index] = safeProgress;
+    this.repairRing.visible = safeProgress > 0;
+    this.repairRing.position.set(position.x, this.visualYFor(id, position, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0, 0.1), position.z);
+    this.repairRing.rotation.y = at * 0.8;
+    this.repairRing.scale.setScalar(1 + Math.sin(at * 8.5 + index) * 0.04);
+    (this.repairRing.material as THREE.MeshBasicMaterial).color.copy(repairColor);
+    this.repairRing.geometry.setDrawRange(0, Math.floor(this.repairRingIndexCount * safeProgress));
     return true;
   }
 

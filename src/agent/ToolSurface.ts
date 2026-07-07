@@ -7,6 +7,7 @@ import {
   type AgentPermissionLevel,
   type MetaProgressAgentGate,
 } from './PermissionLadder';
+import type { AgentAbility } from './AgentConsent';
 
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };
@@ -20,6 +21,14 @@ export type AgentCollectXpResult = {
   agentPath?: AgentVec2[];
   sweptIds?: string[];
 };
+export type AgentCollectGoldResult = {
+  gold: number;
+  pickups: number;
+  message: string;
+  collector?: 'prospector';
+  agentPath?: AgentVec2[];
+  sweptIds?: string[];
+};
 
 export type GoldRushToolName =
   | 'et.goldrush.get_state'
@@ -27,7 +36,15 @@ export type GoldRushToolName =
   | 'et.goldrush.repair'
   | 'et.goldrush.chase_mark'
   | 'et.goldrush.collect_xp'
+  | 'et.goldrush.collect_gold'
   | 'et.goldrush.place_building';
+
+export type AgentCapability = {
+  id: AgentAbility;
+  level: AgentPermissionLevel;
+  label: string;
+  tools: readonly GoldRushToolName[];
+};
 
 export type ToolOutcome =
   | {
@@ -63,6 +80,7 @@ export type AgentGameAdapter = {
   readonly repair?: (building: AgentBuildingRef) => unknown;
   readonly chaseMark?: (thief: AgentThiefRef) => unknown;
   readonly collectXp?: (options: AgentCollectXpOptions) => unknown;
+  readonly collectGold?: () => unknown;
 };
 
 export type ToolSurfaceOptions = {
@@ -73,12 +91,14 @@ export type ToolSurfaceOptions = {
 export type GoldRushToolSurface = {
   readonly namespace: 'et.goldrush';
   readonly permissionLevel: () => AgentPermissionLevel;
+  readonly capabilities: readonly AgentCapability[];
   readonly tools: {
     get_state: () => ToolReceipt<'et.goldrush.get_state', Record<string, never>>;
     pan_at: (node: string) => ToolReceipt<'et.goldrush.pan_at', { node: string }>;
     repair: (building: AgentBuildingRef) => ToolReceipt<'et.goldrush.repair', { building: AgentBuildingRef }>;
     chase_mark: (thief: AgentThiefRef) => ToolReceipt<'et.goldrush.chase_mark', { thief: AgentThiefRef }>;
     collect_xp: () => ToolReceipt<'et.goldrush.collect_xp', AgentCollectXpOptions>;
+    collect_gold: () => ToolReceipt<'et.goldrush.collect_gold', Record<string, never>>;
     place_building: (
       def: BuildableId,
       pos: AgentVec2,
@@ -109,6 +129,7 @@ const EMPTY_ARGS: Record<string, never> = {};
 
 export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOptions = {}): GoldRushToolSurface {
   const permissionLevel = () => options.permissionLevel ?? readAgentPermissionLevel(options.metaProgress ?? readMeta(game));
+  const capabilities = implementedCapabilities(game);
 
   const stateReceipt = (): ToolReceipt<'et.goldrush.get_state', Record<string, never>> =>
     makeReceipt('et.goldrush.get_state', EMPTY_ARGS, {
@@ -120,6 +141,7 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
   return {
     namespace: 'et.goldrush',
     permissionLevel,
+    capabilities,
     tools: {
       get_state: stateReceipt,
       pan_at: (node) =>
@@ -136,6 +158,12 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
           return normalizeCollectXpResult(result);
         });
       },
+      collect_gold: () =>
+        runSideEffect(game, permissionLevel(), 'et.goldrush.collect_gold', EMPTY_ARGS, () => {
+          const result = game.collectGold?.();
+          if (result === undefined || result === false || isInvalid(result)) return result;
+          return normalizeCollectGoldResult(result);
+        }),
       place_building: (def, pos, rot = 0) =>
         runSideEffect(game, permissionLevel(), 'et.goldrush.place_building', { def, pos, rot }, () => {
           if (!validPos(pos)) return invalid('place_building requires finite x/z.');
@@ -265,6 +293,57 @@ function normalizeCollectXpResult(value: unknown): AgentCollectXpResult | { inva
     motes,
     message: typeof raw.message === 'string' && raw.message.length > 0 ? raw.message : `Gathered ${xp} XP`,
   };
+}
+
+function normalizeCollectGoldResult(value: unknown): AgentCollectGoldResult | { invalid: true; message: string } {
+  if (typeof value !== 'object' || value === null) return invalid('collect_gold requires a result object.');
+  const raw = value as Partial<AgentCollectGoldResult>;
+  if (!Number.isFinite(raw.gold) || !Number.isInteger(raw.pickups) || (raw.gold ?? 0) < 0 || (raw.pickups ?? 0) < 0) {
+    return invalid('collect_gold result requires non-negative gold and pickup counts.');
+  }
+  const gold = raw.gold as number;
+  const pickups = raw.pickups as number;
+  return {
+    ...raw,
+    gold,
+    pickups,
+    message: typeof raw.message === 'string' && raw.message.length > 0 ? raw.message : `Gathered ${gold} gold`,
+  };
+}
+
+function implementedCapabilities(game: AgentGameAdapter): readonly AgentCapability[] {
+  const capabilities: AgentCapability[] = [];
+  const collectTools: GoldRushToolName[] = [];
+  if (typeof game.collectXp === 'function') collectTools.push('et.goldrush.collect_xp');
+  if (typeof game.collectGold === 'function') collectTools.push('et.goldrush.collect_gold');
+  if (collectTools.length > 0) {
+    capabilities.push({
+      id: 'auto_collect',
+      level: 1,
+      label:
+        collectTools.length > 1
+          ? 'Let the Prospector gather loose XP and dropped gold'
+          : 'Let the Prospector gather loose XP',
+      tools: collectTools,
+    });
+  }
+  if (typeof game.repair === 'function') {
+    capabilities.push({
+      id: 'auto_repair',
+      level: 1,
+      label: 'Let the Prospector tend walls',
+      tools: ['et.goldrush.repair'],
+    });
+  }
+  if (typeof game.panAt === 'function') {
+    capabilities.push({
+      id: 'auto_pan',
+      level: 3,
+      label: 'Let the Prospector work claim pans',
+      tools: ['et.goldrush.pan_at'],
+    });
+  }
+  return capabilities;
 }
 
 function readMeta(game: AgentGameAdapter): MetaProgressAgentGate | undefined {

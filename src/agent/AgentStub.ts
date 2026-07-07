@@ -1,6 +1,7 @@
 import {
   install as installToolSurface,
   type AgentBuildingRef,
+  type AgentCapability,
   type AgentGameAdapter,
   type AgentThiefRef,
   type AgentVec2,
@@ -22,6 +23,8 @@ export type AgentStubState = {
   name: string;
   permissionLevel: AgentPermissionLevel;
   permissionLabel: string;
+  capabilities: readonly AgentCapability[];
+  lastActionAt: Partial<Record<ToolReceipt['tool'], number>>;
   receiptCount: number;
   lastReceiptTool: ToolReceipt['tool'] | null;
   receiptFeed: readonly string[];
@@ -35,6 +38,7 @@ export class AgentStub {
   private readonly debug: boolean;
   private readonly marker?: HTMLElement;
   private readonly receiptFeed: string[] = [];
+  private readonly lastActionAt: Partial<Record<ToolReceipt['tool'], number>> = {};
   private receiptCount = 0;
   private lastReceiptTool: ToolReceipt['tool'] | null = null;
 
@@ -60,6 +64,8 @@ export class AgentStub {
       name: AGENT_DISPLAY_NAME,
       permissionLevel: level,
       permissionLabel: AGENT_PERMISSION_LABELS[level],
+      capabilities: this.surface.capabilities,
+      lastActionAt: { ...this.lastActionAt },
       receiptCount: this.receiptCount,
       lastReceiptTool: this.lastReceiptTool,
       receiptFeed: this.receiptFeed.slice(),
@@ -101,6 +107,12 @@ export class AgentStub {
     return receipt;
   }
 
+  collectGold(): ToolReceipt<'et.goldrush.collect_gold', Record<string, never>> {
+    const receipt = this.surface.tools.collect_gold();
+    this.record(receipt);
+    return receipt;
+  }
+
   placeBuilding(
     def: BuildableId,
     pos: AgentVec2,
@@ -122,6 +134,7 @@ export class AgentStub {
   private record(receipt: ToolReceipt): void {
     this.receiptCount += 1;
     this.lastReceiptTool = receipt.tool;
+    if (receipt.tool !== 'et.goldrush.get_state') this.lastActionAt[receipt.tool] = this.clock?.() ?? 0;
     const line = feedLineForReceipt(receipt, this.receiptCount);
     if (line) this.receiptFeed.unshift(`${formatRunTime(this.clock?.() ?? 0)} - ${line}`);
     if (this.receiptFeed.length > 8) this.receiptFeed.length = 8;

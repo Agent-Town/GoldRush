@@ -54,6 +54,8 @@ interface ThreeGameDiagnostics {
       name: string;
       permissionLevel: number;
       permissionLabel: string;
+      capabilities: readonly { id: string; level: number; label: string; tools: readonly string[] }[];
+      lastActionAt: Partial<Record<string, number>>;
       autonomyTrack: number;
       policySlotBonus: number;
       receiptFeed: readonly string[];
@@ -232,6 +234,8 @@ interface ThreeGameDiagnostics {
       name: string;
       permissionLevel: number;
       permissionLabel: string;
+      capabilities: readonly { id: string; level: number; label: string; tools: readonly string[] }[];
+      lastActionAt: Partial<Record<string, number>>;
       receiptCount: number;
       lastReceiptTool: string | null;
       receiptFeed: readonly string[];
@@ -675,6 +679,8 @@ interface Window {
     spawnEnemyAt: (x: number, z: number) => boolean;
     scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => boolean;
     clearEnemies: () => void;
+    spawnGoldPickup: (x: number, z: number, amount: number) => boolean;
+    spawnXpMote: (x: number, z: number, value: number) => boolean;
     goldPickups: () => Array<{ active: boolean; amount: number; position: { x: number; z: number } }>;
     placeBeacon: () => boolean;
     state: () => {

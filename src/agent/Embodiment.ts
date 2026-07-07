@@ -44,6 +44,7 @@ export class ProspectorEmbodiment {
   private moving = false;
   private drifting = false;
   private workRemaining = 0;
+  private nextWorkSeconds: number = Balance.agent.workSeconds;
   private nextSurveyAt: number = Balance.agent.surveyFirstSeconds;
   private receiptCount = 0;
   private lastReceiptTool: GoldRushToolName | null = null;
@@ -71,7 +72,16 @@ export class ProspectorEmbodiment {
     this.moving = false;
     this.drifting = false;
     this.workRemaining = 0;
+    this.nextWorkSeconds = Balance.agent.workSeconds;
     this.nextSurveyAt = Balance.agent.surveyFirstSeconds;
+  }
+
+  assignWork(point: ProspectorPoint, workSeconds: number = Balance.agent.workSeconds): void {
+    this.target.set(point.x, 0, point.z);
+    this.moving = true;
+    this.drifting = false;
+    this.workRemaining = 0;
+    this.nextWorkSeconds = Math.max(0, workSeconds);
   }
 
   handleReceipt(receipt: ToolReceipt, point?: ProspectorPoint | null): void {
@@ -91,13 +101,15 @@ export class ProspectorEmbodiment {
   }
 
   update(delta: number, at: number, hero?: ProspectorPoint): void {
-    if (this.moving) this.stepTowardTarget(delta);
-    else if (this.workRemaining > 0) this.workRemaining = Math.max(0, this.workRemaining - delta);
-    else {
-      if (hero) this.driftNearHero(delta, at, hero);
-      if (at >= this.nextSurveyAt) {
-        this.say(agentBark('survey', Math.floor(at)));
-        this.nextSurveyAt = at + Balance.agent.surveyCooldownSeconds;
+    if (delta > 0) {
+      if (this.moving) this.stepTowardTarget(delta);
+      else if (this.workRemaining > 0) this.workRemaining = Math.max(0, this.workRemaining - delta);
+      else {
+        if (hero) this.driftNearHero(delta, at, hero);
+        if (at >= this.nextSurveyAt) {
+          this.say(agentBark('survey', Math.floor(at)));
+          this.nextSurveyAt = at + Balance.agent.surveyCooldownSeconds;
+        }
       }
     }
 
@@ -163,7 +175,8 @@ export class ProspectorEmbodiment {
       this.group.position.z = this.target.z;
       this.moving = false;
       this.drifting = false;
-      this.workRemaining = Balance.agent.workSeconds;
+      this.workRemaining = this.nextWorkSeconds;
+      this.nextWorkSeconds = Balance.agent.workSeconds;
       return;
     }
 

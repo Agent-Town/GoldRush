@@ -19,6 +19,7 @@ const TOOL_KIND: Partial<Record<GoldRushToolName, AgentVoiceKind>> = {
   'et.goldrush.repair': 'repair',
   'et.goldrush.chase_mark': 'chase',
   'et.goldrush.collect_xp': 'gather',
+  'et.goldrush.collect_gold': 'gather',
   'et.goldrush.place_building': 'place',
 };
 
@@ -51,10 +52,18 @@ export function feedLineForReceipt(receipt: ToolReceipt, index: number): string 
   const kind = voiceKindForReceipt(receipt);
   if (!kind) return null;
   const cost = receipt.cost ? ` -${receipt.cost}g` : '';
+  const message = receipt.outcome.ok ? resultMessage(receipt.outcome.result) : null;
+  if (message) return `${message}${cost}`;
   return `${FEED_LABEL[kind]}: ${barkForReceipt(receipt, index)}${cost}`;
 }
 
 export function agentBark(kind: AgentVoiceKind, index: number): string {
   const lines = AGENT_BARKS[kind];
   return lines[Math.abs(index) % lines.length] ?? AGENT_BARKS.survey[0];
+}
+
+function resultMessage(result: unknown): string | null {
+  if (typeof result !== 'object' || result === null) return null;
+  const message = (result as { message?: unknown }).message;
+  return typeof message === 'string' && message.length > 0 ? message : null;
 }
