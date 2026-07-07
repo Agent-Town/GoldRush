@@ -1,0 +1,20 @@
+CODEX USAGE-LIMIT WALL — detected s140 fire, 2026-07-07 ~14:33Z (21:33 local).
+
+EVIDENCE: tasks/runs/20260707-213323-lane-b-20260707-141500-lane-b-e1c-baron.md.log tail:
+  "ERROR: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage
+   to purchase more credits or try again at 10:54 PM."
+
+RESET: ~22:54 local (~15:54Z). Codex `gpt-5.5` account is walled until then — every lane
+runner task will rc1 immediately on the wall (approval:never, sandbox:danger-full-access).
+
+WALL-CLASS FAILURES this fire (re-queue ONCE each after the wall lifts, per §2.0 —
+these do NOT count toward the twice-then-escalate rule):
+  - lane-b e1c-baron  (rc1 @ 21:33:23 local; master tasks/lane-b-e1c-baron.md)
+
+STILL-LIVE at flag-time (may wall & rc1 next): lane-c W1-05 building-shells (codex pid 44332).
+GT-03 (lane-d) FINISHED pre-wall — committed lane/perf 2cec842, drained by s140.
+
+OBEY (§2.0 CODEX-WALL MODE): NO refills, NO re-queues of wall-class failures until cleared.
+Drains / gates / merges / assayer / bookkeeping / authoring CONTINUE (Claude-side, unaffected).
+ONCE PER FIRE: probe `codex exec "reply exactly: OK"` (short timeout). On success →
+delete this flag, re-queue wall-class failures once each, resume refills, note CODEX-RESUMED.
