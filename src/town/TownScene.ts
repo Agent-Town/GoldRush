@@ -16,7 +16,8 @@ import { disposeObject3D } from '../utils/dispose';
 import { townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 
-const tavernBackdropUrl = new URL('../../assets/processed/tavern-interior-backdrop.png', import.meta.url).href;
+const loadTavernBackdropUrl = () =>
+  import('../../assets/processed/tavern-interior-backdrop.png?url').then((module) => module.default);
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 0);
@@ -74,6 +75,8 @@ export class TownScene {
   private boardOpen = false;
   private nameBeatTimer = 0;
   private lastExitIntent = false;
+  private tavernBackdropUrl: string | undefined;
+  private tavernBackdropRequest: Promise<string> | undefined;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -341,6 +344,7 @@ export class TownScene {
     this.renderBoard();
     this.boardOpen = true;
     this.board.hidden = false;
+    this.loadTavernBackdrop();
     this.board.querySelector<HTMLButtonElement>('[data-contract-launch]:not(:disabled), [data-contract-close]')?.focus({ preventScroll: true });
     this.publishDiagnostics();
   }
@@ -354,8 +358,9 @@ export class TownScene {
   private renderBoard(): void {
     const rows = listContracts();
     const scores = loadScores();
+    const backdropStyle = this.tavernBackdropUrl ? ` style="background-image:url('${this.tavernBackdropUrl}')"` : '';
     this.board.innerHTML = `
-      <div class="town-ui__board-backdrop" style="background-image:url('${tavernBackdropUrl}')" aria-hidden="true"></div>
+      <div class="town-ui__board-backdrop"${backdropStyle} aria-hidden="true"></div>
       <div class="town-ui__board-shell">
         <header class="town-ui__board-header">
           <div>
@@ -369,6 +374,15 @@ export class TownScene {
         </div>
       </div>
     `;
+  }
+
+  private loadTavernBackdrop(): void {
+    this.tavernBackdropRequest ??= loadTavernBackdropUrl();
+    void this.tavernBackdropRequest.then((url) => {
+      this.tavernBackdropUrl = url;
+      const backdrop = this.board.querySelector<HTMLElement>('.town-ui__board-backdrop');
+      if (backdrop) backdrop.style.backgroundImage = `url("${url}")`;
+    });
   }
 
   private renderContractCard(contract: ContractManifest, scores: readonly ScoreRecord[]): string {

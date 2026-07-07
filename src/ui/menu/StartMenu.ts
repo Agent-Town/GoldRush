@@ -14,8 +14,8 @@ import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../au
 import { renderResearchChart } from '../ResearchChart';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
-const backdropUrl = new URL('../../../assets/processed/ui-menu-backdrop.png', import.meta.url).href;
 const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
+const loadBackdropUrl = () => import('../../../assets/processed/ui-menu-backdrop.png?url').then((module) => module.default);
 const AUDIO_SETTINGS_IDS = {
   volume: 'start-menu-volume',
   volumeValue: 'start-menu-volume-value',
@@ -36,6 +36,8 @@ export class StartMenu {
   private settingsOpen = false;
   private researchOpen = false;
   private selectedResearchNodeId: string | undefined;
+  private backdropUrl: string | undefined;
+  private backdropRequest: Promise<string> | undefined;
 
   constructor(parent: HTMLElement, private readonly options: StartMenuOptions) {
     setupProfileStorage();
@@ -47,6 +49,7 @@ export class StartMenu {
     this.root.addEventListener('keydown', this.onKeyDown);
     this.render();
     parent.append(this.root);
+    this.loadBackdrop();
     this.firstAction()?.focus({ preventScroll: true });
   }
 
@@ -61,9 +64,10 @@ export class StartMenu {
   private render(): void {
     this.disposeAudioSettings();
     const hasContinue = hasSuspendedRun();
+    const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
     this.root.className = `gr-start-menu${this.researchOpen ? ' gr-start-menu--research-open' : ''}`;
     this.root.innerHTML = `
-      <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="ready" style="background-image:url('${backdropUrl}')"></div>
+      <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="${this.backdropUrl ? 'ready' : 'placeholder'}"${backdropStyle}></div>
       <div class="gr-start-menu__column">
         <div class="gr-start-menu__emblem" data-testid="start-menu-emblem" data-asset-slot="ui-title-emblem" data-asset-state="ready" style="background-image:url('${emblemUrl}')" aria-hidden="true"></div>
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
@@ -89,6 +93,17 @@ export class StartMenu {
       </div>
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
+  }
+
+  private loadBackdrop(): void {
+    this.backdropRequest ??= loadBackdropUrl();
+    void this.backdropRequest.then((url) => {
+      this.backdropUrl = url;
+      const backdrop = this.root.querySelector<HTMLElement>('.gr-start-menu__backdrop');
+      if (!backdrop) return;
+      backdrop.dataset.assetState = 'ready';
+      backdrop.style.backgroundImage = `url("${url}")`;
+    });
   }
 
   private renderResearch(): string {

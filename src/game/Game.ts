@@ -615,6 +615,7 @@ export class Game {
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         demolish: (family: BuildableId, index: number) => this.demolishBuilding(family, index),
         upgradeBuilding: (family: BuildableId, index: number) => this.upgradeBuilding(family, index),
+        advanceSim: (seconds: number, stepSeconds?: number) => this.advanceSimForTest(seconds, stepSeconds),
         resetRun: () => this.resetRun(),
         toggleWeapon: () => this.toggleWeapon(),
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
@@ -1862,6 +1863,18 @@ export class Game {
     if (intent.type !== 'pick_upgrade' || this.state.current !== 'levelup') return;
     const picked = this.progression.offer?.[intent.index];
     if (picked) this.progression.applyUpgrade(picked.id);
+  }
+
+  private advanceSimForTest(seconds: number, stepSeconds = 1 / 5): void {
+    const total = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
+    const step = Number.isFinite(stepSeconds) ? Math.max(0.001, stepSeconds) : 1 / 5;
+    const scale = Math.max(0.001, this.simTimeScale);
+    let remaining = total;
+    while (remaining > 0) {
+      const simStep = Math.min(step, remaining);
+      this.update(simStep / scale);
+      remaining -= simStep;
+    }
   }
 
   resetRun(): void {

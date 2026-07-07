@@ -29,7 +29,7 @@ export default defineConfig({
     strictPort: true,
   },
   build: {
-    sourcemap: true,
+    sourcemap: false,
     chunkSizeWarningLimit: 900,
   },
 });

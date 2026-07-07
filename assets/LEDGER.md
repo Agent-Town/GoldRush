@@ -1,6 +1,6 @@
 # Asset Ledger — Gold Rush
 
-Pipeline v2 (2026-07-05, Robin-approved): PRIMARY generation = Codex image_gen (gpt-image-2, new account) with on-disk reference sheets for character consistency + generator self-QA vs cell maps, output direct to assets/raw/ (tasks/017 pilot). FALLBACK = ChatGPT web via Chrome relay (the original conversation). Extraction/contract/gate discipline UNCHANGED — generator proposes, contract disposes.
+Pipeline v2 (2026-07-05, Robin-approved): PRIMARY generation = Codex image_gen (gpt-image-2, new account) with on-disk reference sheets for character consistency + generator self-QA vs cell maps, output direct to assets/raw/ (tasks/017 pilot). FALLBACK = ChatGPT web via Chrome relay (the original conversation). Extraction/contract/gate discipline UNCHANGED — generator proposes, contract disposes. After extraction, run `node scripts/optimize-assets.mjs`: full processed originals are preserved in `assets/processed-full/`, while `assets/processed/` is the display-sized, shipped copy and no shipped image may exceed 600KB.
 
 Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGPT) → processed (alpha-extract `#8a8a8a`) → integrated (wired + screenshotted in-game) → done.
 

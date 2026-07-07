@@ -628,6 +628,7 @@ interface Window {
     wreck: (family: GrBuildableId, index: number) => boolean;
     demolish: (family: GrBuildableId, index: number) => boolean;
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
+    advanceSim: (seconds: number, stepSeconds?: number) => void;
     resetRun: () => void;
     toggleWeapon: () => 'rig' | 'blast';
     setBlastAim: (x: number, z: number) => { x: number; z: number };
