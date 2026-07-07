@@ -31,6 +31,8 @@ type RunManagerHost = {
   applyMetaProgress?: (meta: MetaProgress) => void;
   securePayoutMult?: () => Partial<Record<MetaTrack, number>> | undefined;
   secureBark?: () => string | undefined;
+  secureLedgerLine?: () => string | undefined;
+  secureCallout?: () => string | undefined;
 };
 
 type InstallOptions = {
@@ -226,6 +228,8 @@ export class RunManager {
     const payout = this.lastPayout ?? zeroPayout();
     const territoryReady = this.meta.tracks.territory >= Balance.meta.territoryTier1;
     const customBark = this.host.secureBark?.();
+    const customLedgerLine = this.host.secureLedgerLine?.();
+    const customCallout = this.host.secureCallout?.();
     this.hideSecureOverlay();
     const root = document.createElement('section');
     root.className = 'death-overlay death-overlay--visible gr-run-overlay';
@@ -241,10 +245,12 @@ export class RunManager {
           <div><dt>Gold Panned</dt><dd>${renderActorSplit(summary.goldPanned, summary.goldPannedByProspector, 'summary-gold-panned-split')}</dd></div>
           <div><dt>Gold Reclaimed</dt><dd>${renderActorSplit(summary.goldReclaimed, summary.goldReclaimedByProspector, 'summary-gold-reclaimed-split')}</dd></div>
           <div><dt>Buildings Raised</dt><dd>${summary.buildingsBuilt}</dd></div>
+          ${customLedgerLine ? `<div data-testid="run-ledger-baron"><dt>Contract Moment</dt><dd>${escapeHtml(customLedgerLine)}</dd></div>` : ''}
         </dl>
         <section class="claim-office" data-testid="claim-office" aria-label="Claim Office">
           <h2>Claim Office</h2>
           <p class="claim-office__bark">${customBark ? escapeHtml(customBark) : 'The Prospector tips his hat: &ldquo;Struck it proper, partner.&rdquo;'}</p>
+          ${customCallout ? `<p class="claim-office__baron-callout" data-testid="baron-defeat-callout">${escapeHtml(customCallout)}</p>` : ''}
           <ul class="claim-office__payout" data-testid="claim-payout">
             ${META_TRACKS.map(
               (track) => `
@@ -352,6 +358,8 @@ function resolveHost(game: unknown): RunManagerHost {
     autoSecureWaveForRun?: () => number;
     securePayoutMultForRun?: () => Partial<Record<MetaTrack, number>> | undefined;
     secureBarkForRun?: () => string | undefined;
+    secureLedgerLineForRun?: () => string | undefined;
+    secureCalloutForRun?: () => string | undefined;
   };
 
   if (!host.events || !host.economy) {
@@ -369,6 +377,8 @@ function resolveHost(game: unknown): RunManagerHost {
     applyMetaProgress: (meta) => host.applyMetaProgress?.(meta),
     securePayoutMult: () => host.securePayoutMultForRun?.(),
     secureBark: () => host.secureBarkForRun?.(),
+    secureLedgerLine: () => host.secureLedgerLineForRun?.(),
+    secureCallout: () => host.secureCalloutForRun?.(),
   };
 }
 

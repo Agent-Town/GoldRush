@@ -258,6 +258,28 @@
       }
     },
     {
+      "slot": "char.baron",
+      "fallback": {
+        "file": "char-baron-sheet-walk4-a-r0c0.png"
+      },
+      "walk4": {
+        "version": 1,
+        "status": "ACTIVE",
+        "notes": "baron-presence 2026-07-08: Claim-Jumper Baron walk4. Source rows are down/left/right/up; A supplies cardinal directions, B supplies banner-pose diagonals. Runtime scale stays on the e1-baron manifest.",
+        "mirrors": {},
+        "directions": {
+          "s":  { "frames": { "files": ["char-baron-sheet-walk4-a-r0c0.png", "char-baron-sheet-walk4-a-r0c1.png", "char-baron-sheet-walk4-a-r0c2.png", "char-baron-sheet-walk4-a-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "sw": { "frames": { "files": ["char-baron-sheet-walk4-b-r1c0.png", "char-baron-sheet-walk4-b-r1c1.png", "char-baron-sheet-walk4-b-r1c2.png", "char-baron-sheet-walk4-b-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "w":  { "frames": { "files": ["char-baron-sheet-walk4-a-r1c0.png", "char-baron-sheet-walk4-a-r1c1.png", "char-baron-sheet-walk4-a-r1c2.png", "char-baron-sheet-walk4-a-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "nw": { "frames": { "files": ["char-baron-sheet-walk4-b-r1c0.png", "char-baron-sheet-walk4-b-r1c1.png", "char-baron-sheet-walk4-b-r1c2.png", "char-baron-sheet-walk4-b-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "n":  { "frames": { "files": ["char-baron-sheet-walk4-a-r3c0.png", "char-baron-sheet-walk4-a-r3c1.png", "char-baron-sheet-walk4-a-r3c2.png", "char-baron-sheet-walk4-a-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "ne": { "frames": { "files": ["char-baron-sheet-walk4-b-r2c0.png", "char-baron-sheet-walk4-b-r2c1.png", "char-baron-sheet-walk4-b-r2c2.png", "char-baron-sheet-walk4-b-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "e":  { "frames": { "files": ["char-baron-sheet-walk4-a-r2c0.png", "char-baron-sheet-walk4-a-r2c1.png", "char-baron-sheet-walk4-a-r2c2.png", "char-baron-sheet-walk4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "se": { "frames": { "files": ["char-baron-sheet-walk4-b-r2c0.png", "char-baron-sheet-walk4-b-r2c1.png", "char-baron-sheet-walk4-b-r2c2.png", "char-baron-sheet-walk4-b-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
+        }
+      }
+    },
+    {
       "slot": "char.prospector_agent",
       "status": "ACTIVE",
       "walk4": {

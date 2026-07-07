@@ -128,7 +128,7 @@
   position: absolute;
   top: max(16px, env(safe-area-inset-top));
   left: 50%;
-  width: min(280px, calc(100vw - 210px));
+  width: min(320px, calc(100vw - 210px));
   min-height: 34px;
   padding: 7px 20px;
   opacity: 0;
@@ -141,8 +141,51 @@
   transition: opacity 420ms ease;
 }
 
+.hud__wave-copy {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
+.hud__wave-copy strong {
+  font-size: 0.74rem;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.hud__wave-portrait {
+  display: block;
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  flex: 0 0 auto;
+  margin: -10px 0 -8px -10px;
+}
+
+.hud__wave-portrait[hidden] {
+  display: none;
+}
+
 .hud--announcement-visible .hud__wave {
   opacity: 1;
+}
+
+.hud--announcement-visible[data-announcement-kind="baron"] .hud__wave {
+  width: min(460px, calc(100vw - 32px));
+  min-height: 52px;
+  color: var(--at-cream-50);
+  background:
+    linear-gradient(135deg, rgba(64, 17, 22, 0.94), rgba(127, 38, 51, 0.96)),
+    #401116;
+  box-shadow:
+    inset 0 0 0 2px rgba(196, 136, 58, 0.48),
+    0 4px 0 rgba(46, 27, 14, 0.86),
+    0 16px 30px rgba(46, 27, 14, 0.26);
+}
+
+.hud--announcement-visible[data-announcement-kind="baron"] .hud__wave::before,
+.hud--announcement-visible[data-announcement-kind="baron"] .hud__wave::after {
+  background: var(--at-ochre-500);
 }
 
 .hud__wave-edge:empty {
@@ -678,6 +721,19 @@
   line-height: 1.25;
 }
 
+.claim-office__baron-callout {
+  width: fit-content;
+  margin: 0;
+  padding: 5px 8px;
+  border: 1px solid rgba(127, 38, 51, 0.42);
+  border-radius: 6px;
+  color: #fff8e8;
+  background: #7f2633;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
 .claim-office__payout {
   display: grid;
   gap: 6px;
@@ -1105,6 +1161,15 @@
     left: max(12px, env(safe-area-inset-left));
     width: 162px;
     transform: none;
+  }
+
+  .hud--announcement-visible[data-announcement-kind="baron"] .hud__wave {
+    top: calc(max(12px, env(safe-area-inset-top)) + 304px);
+    right: max(12px, env(safe-area-inset-right));
+    left: max(12px, env(safe-area-inset-left));
+    width: auto;
+    padding: 8px 16px;
+    text-align: left;
   }
 
   .hud-panel--xp {

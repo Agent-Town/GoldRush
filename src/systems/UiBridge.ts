@@ -6,6 +6,7 @@ import type { AgentConsentSnapshot } from '../agent/AgentConsent';
 import type { AgentCapability, GoldRushToolName } from '../agent/ToolSurface';
 
 export type WaveState = 'quiet' | 'warning' | 'active' | 'cleared';
+export type AnnouncementKind = 'wave' | 'baron';
 
 export type UiSnapshot = {
   hp: number;
@@ -29,6 +30,8 @@ export type UiSnapshot = {
   announcementAt: number;
   announcementDurationSeconds: number;
   announcementEdge: CompassEdge | null;
+  announcementKind: AnnouncementKind;
+  announcementTitle: string | null;
   enemiesAlive: number;
   timeAlive: number;
   state: RunState;
@@ -83,6 +86,8 @@ export class UiBridge {
     announcementAt: 0,
     announcementDurationSeconds: 4,
     announcementEdge: null,
+    announcementKind: 'wave',
+    announcementTitle: null,
     enemiesAlive: 0,
     timeAlive: 0,
     state: 'boot',
@@ -100,11 +105,20 @@ export class UiBridge {
     agent: null,
   };
 
-  announce(text: string, atSim: number, edge: CompassEdge | null = null, durationSeconds = 4): void {
+  announce(
+    text: string,
+    atSim: number,
+    edge: CompassEdge | null = null,
+    durationSeconds = 4,
+    kind: AnnouncementKind = 'wave',
+    title: string | null = null,
+  ): void {
     this.snapshot.announcement = text;
     this.snapshot.announcementAt = atSim;
     this.snapshot.announcementDurationSeconds = durationSeconds;
     this.snapshot.announcementEdge = edge;
+    this.snapshot.announcementKind = kind;
+    this.snapshot.announcementTitle = title;
   }
 
   build(

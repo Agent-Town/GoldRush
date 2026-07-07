@@ -26,6 +26,8 @@ interface ThreeGameDiagnostics {
     announcementAt: number;
     announcementDurationSeconds: number;
     announcementEdge: 'north' | 'south' | 'east' | 'west' | null;
+    announcementKind: 'wave' | 'baron';
+    announcementTitle: string | null;
     enemiesAlive: number;
     timeAlive: number;
     state: 'boot' | 'playing' | 'levelup' | 'dead';
@@ -745,6 +747,7 @@ interface Window {
       repairs: number;
     };
     setBeaconWave: (wave: number | null) => void;
+    announceForTest: (text: string, kind?: 'wave' | 'baron') => void;
     setWave: (wave: number) => void;
     startWaveForTest: (wave: number) => void;
     activeContract: () => GrContractManifest;

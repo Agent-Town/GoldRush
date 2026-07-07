@@ -8,6 +8,7 @@ import { BuildButton } from './BuildButton';
 import { ProspectorPanel } from './ProspectorPanel';
 
 const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
+const baronPortraitUrl = new URL('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png', import.meta.url).href;
 const PAUSE_AUDIO_SETTINGS_IDS = {
   volume: 'pause-volume',
   volumeValue: 'pause-volume-value',
@@ -52,7 +53,9 @@ type HudElements = {
   xpFill: HTMLElement;
   levelText: HTMLElement;
   waveText: HTMLElement;
+  waveTitle: HTMLElement;
   waveEdge: HTMLElement;
+  wavePortrait: HTMLImageElement;
   waveNumber: HTMLElement;
   timeText: HTMLElement;
   pauseHint: HTMLElement;
@@ -78,8 +81,12 @@ export class Hud {
       <div class="hud-meta-recap" data-testid="run-meta-recap" aria-live="polite" hidden></div>
 
       <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">
+        <img class="hud__wave-portrait" alt="" data-hud-wave-portrait hidden />
         <span class="hud__wave-edge" data-testid="hud-edge" data-hud-edge aria-hidden="true"></span>
-        <span data-hud-wave>Stake your claim.</span>
+        <span class="hud__wave-copy">
+          <strong data-hud-wave-title></strong>
+          <span data-hud-wave>Stake your claim.</span>
+        </span>
       </div>
 
       <section class="hud-panel hud-panel--vitals" data-testid="hud-vitals" aria-label="Run vitals">
@@ -170,7 +177,9 @@ export class Hud {
       xpFill: this.get(root, '[data-hud-xp-fill]'),
       levelText: this.get(root, '[data-hud-level]'),
       waveText: this.get(root, '[data-hud-wave]'),
+      waveTitle: this.get(root, '[data-hud-wave-title]'),
       waveEdge: this.get(root, '[data-hud-edge]'),
+      wavePortrait: this.get(root, '[data-hud-wave-portrait]') as HTMLImageElement,
       waveNumber: this.get(root, '[data-hud-wave-number]'),
       timeText: this.get(root, '[data-hud-time]'),
       pauseHint: this.get(root, '[data-hud-pause]'),
@@ -316,12 +325,21 @@ export class Hud {
 
     if (!snapshot.announcement) {
       this.elements.root.classList.remove('hud--announcement-visible');
+      this.elements.wavePortrait.hidden = true;
+      delete this.elements.root.dataset.announcementKind;
       return;
     }
 
     this.elements.waveText.textContent = snapshot.announcement;
+    this.elements.waveTitle.textContent = snapshot.announcementTitle ?? '';
+    this.elements.waveTitle.hidden = !snapshot.announcementTitle;
+    if (snapshot.announcementKind === 'baron' && this.elements.wavePortrait.src !== baronPortraitUrl) {
+      this.elements.wavePortrait.src = baronPortraitUrl;
+    }
+    this.elements.wavePortrait.hidden = snapshot.announcementKind !== 'baron';
     this.elements.waveEdge.textContent = snapshot.announcementEdge ? edgeGlyph(snapshot.announcementEdge) : '';
     this.elements.waveEdge.dataset.edge = snapshot.announcementEdge ?? '';
+    this.elements.root.dataset.announcementKind = snapshot.announcementKind;
     this.elements.root.classList.add('hud--announcement-visible');
     this.announcementClearTimer = window.setTimeout(() => {
       if (this.lastAnnouncement === snapshot.announcement && this.lastAnnouncementAt === snapshot.announcementAt) {

@@ -194,6 +194,7 @@
 .town-ui__contracts {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  align-items: start;
   gap: 12px;
   min-height: 0;
   padding: 14px;
@@ -203,8 +204,8 @@
 }
 
 .town-ui__contract {
-  display: grid;
-  grid-template-rows: auto auto minmax(4.6em, auto) auto auto;
+  display: flex;
+  flex-direction: column;
   gap: 9px;
   min-height: 260px;
   border: 2px solid rgba(46, 27, 14, 0.82);
@@ -270,6 +271,24 @@
   align-self: end;
   min-height: 1.4em;
   font-weight: 900;
+}
+
+.town-ui__contract-best:not(.town-ui__contract-medal) {
+  margin-top: auto;
+}
+
+.town-ui__contract-stakes,
+.town-ui__contract-medal {
+  align-self: stretch;
+  padding: 6px 8px;
+  border: 1px solid rgba(127, 38, 51, 0.42);
+  border-radius: 6px;
+  background: rgba(127, 38, 51, 0.1);
+}
+
+.town-ui__contract-medal {
+  min-height: auto;
+  color: #7f2633;
 }
 
 .town-ui__contract-action {

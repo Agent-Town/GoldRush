@@ -166,6 +166,7 @@ const STAMP_MILL_RAIL_SPUR: RailPathDescriptor[] = [
     ],
   },
 ];
+const BARON_ARRIVAL_TITLE = 'THE CLAIM-JUMPER BARON';
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -331,7 +332,7 @@ export class Game {
     this.enemies,
     this.primaryActor.group.position,
     createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
-    (text, atSim) => this.uiBridge.announce(text, atSim),
+    (text, atSim) => this.announceWaveBanner(text, atSim),
     (wave, atSim) => {
       this.events.emit({ type: 'wave_started', at: atSim, wave });
       this.advanceMegaprojectOnWave(atSim);
@@ -370,6 +371,9 @@ export class Game {
   private timeAlive = 0;
   private kills = 0;
   private baronBeatenThisRun = false;
+  private baronAnnouncementTimer = 0;
+  private baronDefeatTimer = 0;
+  private pendingBaronBanner: { text: string; atSim: number; title: string } | null = null;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
   private charmPauseCooldown = 0;
@@ -623,7 +627,7 @@ export class Game {
     });
     this.events.on('wave_started', (event) => {
       this.audio.play('wave-start-horn');
-      this.announceBaronTaunt(event.wave, event.at);
+      this.announceBaronBeat(event.wave, event.at);
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -698,6 +702,11 @@ export class Game {
         summarizeLog: (log) => summarizeLog(log as readonly EconomyEvent[]),
         setBeaconWave: (wave: number | null) => {
           this.debugBeaconWaveOverride = wave;
+        },
+        announceForTest: (text: string, kind: 'wave' | 'baron' = 'wave') => {
+          this.uiBridge.announce(text, this.timeAlive, null, 4, kind);
+          this.syncUi();
+          this.publishDiagnostics();
         },
         setWave: (wave: number) => this.waveSystem.setWaveForTest(wave),
         startWaveForTest: (wave: number) => this.startWaveForTest(wave),
@@ -799,6 +808,7 @@ export class Game {
     this.cameraRig.snapTo(this.primaryActor.group.position);
     this.state.transition('playing');
     this.uiBridge.announce('Stake your claim.', 0);
+    this.prefetchContractPresentation();
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
     // Meta defenses need to exist before the opening stress spawns pick lanes.
     this.runManager = installRunManager(this);
@@ -846,6 +856,8 @@ export class Game {
     this.unsubscribeAgentReceipts?.();
     this.agentStub?.dispose();
     this.loop.stop();
+    window.clearTimeout(this.baronAnnouncementTimer);
+    window.clearTimeout(this.baronDefeatTimer);
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     this.input.dispose();
     this.hud.dispose();
@@ -1632,17 +1644,82 @@ export class Game {
 
   secureBarkForRun(): string | undefined {
     const baron = this.activeContract.twist.baron;
-    return baron && this.baronBeatenThisRun ? baron.defeatBeat : undefined;
+    return baron && this.baronBeatenThisRun ? `The Baron is DEFEATED. ${baron.defeatBeat}` : undefined;
+  }
+
+  secureLedgerLineForRun(): string | undefined {
+    const baron = this.activeContract.twist.baron;
+    return baron && this.baronBeatenThisRun ? `THE BARON — DEFEATED, wave ${baron.wave}` : undefined;
+  }
+
+  secureCalloutForRun(): string | undefined {
+    return this.activeContract.twist.baron && this.baronBeatenThisRun ? '+double science' : undefined;
   }
 
   private waitsForBaronDefeat(): boolean {
     return Boolean(this.activeContract.twist.baron && !this.baronBeatenThisRun);
   }
 
-  private announceBaronTaunt(wave: number, atSim: number): void {
+  private announceBaronBeat(wave: number, atSim: number): void {
     const baron = this.activeContract.twist.baron;
-    if (!baron || !baron.tauntWaves.includes(wave)) return;
-    this.uiBridge.announce(baron.taunt, atSim, null, 5);
+    if (!baron) return;
+    if (wave === baron.wave) {
+      this.queueBaronBanner(baron.taunt, atSim, BARON_ARRIVAL_TITLE);
+      return;
+    }
+    if (!baron.tauntWaves.includes(wave)) return;
+    this.queueBaronBanner(baron.taunt, atSim, 'The Claim-Jumper Baron');
+  }
+
+  private announceWaveBanner(text: string, atSim: number): void {
+    if (this.pendingBaronBanner?.title === BARON_ARRIVAL_TITLE || this.baronArrivalBannerVisible()) return;
+    this.uiBridge.announce(text, atSim);
+  }
+
+  private queueBaronBanner(text: string, atSim: number, title: string): void {
+    window.clearTimeout(this.baronAnnouncementTimer);
+    const banner = { text, atSim, title };
+    const show = () => {
+      this.showBaronBanner(banner);
+    };
+    if (this.waveAnnouncementVisible()) {
+      this.pendingBaronBanner = banner;
+      this.baronAnnouncementTimer = window.setTimeout(show, this.waveAnnouncementDelayMs());
+      return;
+    }
+    show();
+  }
+
+  private showBaronBanner(banner: { text: string; atSim: number; title: string }): void {
+    this.baronAnnouncementTimer = 0;
+    if (this.pendingBaronBanner === banner) this.pendingBaronBanner = null;
+    this.uiBridge.announce(banner.text, banner.atSim, null, 3.8, 'baron', banner.title);
+    this.syncUi();
+    this.publishDiagnostics();
+  }
+
+  private waveAnnouncementVisible(): boolean {
+    const root = globalThis.document?.querySelector<HTMLElement>('#hud');
+    return root?.classList.contains('hud--announcement-visible') === true && root.dataset.announcementKind === 'wave';
+  }
+
+  private baronArrivalBannerVisible(): boolean {
+    const root = globalThis.document?.querySelector<HTMLElement>('#hud');
+    return (
+      root?.classList.contains('hud--announcement-visible') === true &&
+      root.dataset.announcementKind === 'baron' &&
+      this.uiSnapshot?.announcementTitle === BARON_ARRIVAL_TITLE
+    );
+  }
+
+  private waveAnnouncementDelayMs(): number {
+    const snapshot = this.uiSnapshot;
+    const remainingSim =
+      snapshot?.announcementKind === 'wave'
+        ? Math.max(0, snapshot.announcementAt + snapshot.announcementDurationSeconds - this.timeAlive)
+        : 0;
+    const timeScale = Math.max(0.001, this.simTimeScale);
+    return Math.round((remainingSim / timeScale + 2) * 1000);
   }
 
   private startWaveForTest(wave: number): void {
@@ -1656,14 +1733,37 @@ export class Game {
     if (this.baronBeatenThisRun) return;
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
+    if (this.pendingBaronBanner?.title === BARON_ARRIVAL_TITLE) {
+      const pending = this.pendingBaronBanner;
+      window.clearTimeout(this.baronAnnouncementTimer);
+      this.showBaronBanner(pending);
+      this.state.setPaused(true);
+      window.clearTimeout(this.baronDefeatTimer);
+      this.baronDefeatTimer = window.setTimeout(() => {
+        this.baronDefeatTimer = 0;
+        this.state.setPaused(false);
+        this.completeBaronDefeat(atSim);
+      }, 2000);
+      return;
+    }
+    this.completeBaronDefeat(atSim);
+  }
+
+  private completeBaronDefeat(atSim: number): void {
+    if (this.baronBeatenThisRun) return;
+    const baron = this.activeContract.twist.baron;
+    if (!baron) return;
     this.baronBeatenThisRun = true;
     const secured = this.runManager?.secureCurrentRun(this.waveSystem.diagnostics.wave) === true;
     if (!secured) {
       this.baronBeatenThisRun = false;
       return;
     }
+    window.clearTimeout(this.baronAnnouncementTimer);
+    this.pendingBaronBanner = null;
+    this.baronAnnouncementTimer = 0;
     awardBaronMedal();
-    this.uiBridge.announce(baron.defeatBeat, atSim, null, 5);
+    this.uiBridge.announce(`The Baron is DEFEATED. ${baron.defeatBeat}`, atSim, null, 3.8, 'baron', BARON_ARRIVAL_TITLE);
   }
 
   private syncNightShiftLighting(): void {
@@ -2122,6 +2222,9 @@ export class Game {
     this.lastUpgradeOfferAudioKey = '';
     this.kills = 0;
     this.baronBeatenThisRun = false;
+    window.clearTimeout(this.baronAnnouncementTimer);
+    window.clearTimeout(this.baronDefeatTimer);
+    this.pendingBaronBanner = null;
     this.stolenTotal = 0;
     this.reclaimedTotal = 0;
     this.buildingHitsResolved = 0;
@@ -2147,6 +2250,7 @@ export class Game {
     this.playerPauseActive = false;
     this.prospector.reset(this.primaryActor.group.position);
     this.uiBridge.announce('Stake your claim.', 0);
+    this.prefetchContractPresentation();
     this.showProspectorIntro();
     if (deferMetaRecap) {
       this.runStartMetaRecapPending = true;
@@ -2163,6 +2267,10 @@ export class Game {
       return;
     }
     this.resetRun();
+  }
+
+  private prefetchContractPresentation(): void {
+    if (this.activeContract.twist.baron) this.enemies.prefetchBaronPresentation();
   }
 
   private togglePlayerPause(): void {
@@ -2887,7 +2995,7 @@ export class Game {
   }
 
   private showRunStartMetaRecap(): void {
-    this.hud.showMetaRecap(runStartMetaRecap(this.metaProgressForPresence(), this.researchState, readTownName()), 4);
+    this.hud.showMetaRecap(runStartMetaRecap(this.metaProgressForPresence(), this.researchState, readTownName(), this.activeContract), 4);
   }
 
   private flushRunStartMetaRecap(): void {
@@ -3006,8 +3114,9 @@ export class Game {
 
 type MetaPresenceLine = { name: string; effect: string; recap: string };
 
-function runStartMetaRecap(meta: MetaProgress, research: ResearchState, townName: string | null): string | null {
+function runStartMetaRecap(meta: MetaProgress, research: ResearchState, townName: string | null, contract: ContractManifest): string | null {
   const items: string[] = [];
+  if (contract.id === 'e1-baron') items.push("The Baron's outfit rides at 20 — cadence runs hot (+15%).");
   if (meta.tracks.territory >= Balance.meta.territoryTier1) {
     items.push(`palisade ring (Territory ${romanNumeral(meta.tracks.territory)})`);
   }
