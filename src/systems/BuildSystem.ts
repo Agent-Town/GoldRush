@@ -147,6 +147,7 @@ type BuildingDamageResult = {
   maxHp: number;
   wrecked: boolean;
 };
+type BuildSystemSound = 'build-place' | 'demolish' | 'invalid' | 'tier-up';
 
 export class BuildSystem {
   readonly group = new THREE.Group();
@@ -279,6 +280,7 @@ export class BuildSystem {
     private readonly heroPosition: THREE.Vector3,
     private readonly getWave: () => number = () => 0,
     private readonly onFloatText?: (position: THREE.Vector3, text: string, color: string) => void,
+    private readonly onSound?: (name: BuildSystemSound, position?: THREE.Vector3) => void,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(
@@ -515,7 +517,7 @@ export class BuildSystem {
     if (!this.mode) return false;
     this.updateGhostPosition();
     this.valid = this.computeValid();
-    if (!this.valid) return false;
+    if (!this.valid) return this.invalidBuild();
 
     const def = this.selectedDef();
     const cost = def.costCurve(this.countFor(def.id));
@@ -526,11 +528,12 @@ export class BuildSystem {
       sink: buildSink(def.id),
       amount: cost,
     });
-    if (!result.ok) return false;
+    if (!result.ok) return this.invalidBuild();
 
     const placed = this.place(def.id, this.ghostPos);
-    if (placed < 0) return false;
+    if (placed < 0) return this.invalidBuild();
     this.finishPlacement(def.id, placed, cost);
+    this.onSound?.('build-place', this.ghostPos);
     this.valid = this.computeValid();
     return true;
   }
@@ -738,6 +741,7 @@ export class BuildSystem {
     this.tierUpgrades += 1;
     this.visualDirty = true;
     this.onFloatText?.(buildingPosition, this.upgradeFloatText(id, candidate.nextTier), '#5b8a8a');
+    this.onSound?.('tier-up', buildingPosition);
     return true;
   }
 
@@ -778,8 +782,14 @@ export class BuildSystem {
       this.repairRing.geometry.setDrawRange(0, 0);
     }
     if (refund > 0) this.onFloatText?.(buildingPosition, `+${refund}`, '#c4883a');
+    this.onSound?.('demolish', buildingPosition);
     this.visualDirty = true;
     return true;
+  }
+
+  private invalidBuild(): false {
+    this.onSound?.('invalid', this.ghostPos);
+    return false;
   }
 
   remainingHp(id: BuildableId, index: number): number {

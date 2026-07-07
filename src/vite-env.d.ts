@@ -249,6 +249,18 @@ interface ThreeGameDiagnostics {
       clearance: number;
     };
   };
+  audio: {
+    unlocked: boolean;
+    muted: boolean;
+    volume: number;
+    requests: number;
+    started: number;
+    missing: number;
+    active: number;
+    loops: string[];
+    lastRequested: string | null;
+    lastStarted: string | null;
+  };
   build: {
     mode: boolean;
     ghostValid: boolean;
@@ -633,6 +645,7 @@ interface Window {
     selectBuildable: (id: string) => boolean;
     rotateBuildGhost: () => boolean;
     confirmBuild: () => boolean;
+    testAudio: (name: string) => void;
     enemyPositions: () => Array<{
       id: number;
       x: number;

@@ -1,6 +1,7 @@
 import { DIFFICULTY_PRESET_STORAGE_KEY, normalizeDifficultyPreset, type DifficultyPresetId } from './Balance';
 import { META_PROGRESS_KEY } from './MetaProgress';
 import { RESEARCH_STATE_KEY } from '../meta/ResearchTree';
+import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY } from '../audio/settings';
 
 export const PROFILE_KEY = 'gr.profile.v2';
 export const LEGACY_SCOREBOARD_KEY = 'gr.scores.v1';
@@ -18,7 +19,10 @@ const PROFILE_DATA_KEYS = new Set([
   SCOREBOARD_KEY,
   RESEARCH_STATE_KEY,
   DIFFICULTY_PRESET_STORAGE_KEY,
+  AUDIO_VOLUME_STORAGE_KEY,
+  AUDIO_MUTED_STORAGE_KEY,
 ]);
+const LATE_PROFILE_DATA_KEYS = [AUDIO_VOLUME_STORAGE_KEY, AUDIO_MUTED_STORAGE_KEY] as const;
 
 export type ProfileRecord = {
   id: string;
@@ -49,7 +53,10 @@ let storageScopeInstalled = false;
 
 export function ensureProfileState(storage: ProfileStorage): ProfileState {
   const saved = loadProfileState(storage);
-  if (saved) return saved;
+  if (saved) {
+    migrateProfileDataKeys(storage, saved.profiles.map((profile) => profile.id), LATE_PROFILE_DATA_KEYS);
+    return saved;
+  }
 
   const now = Date.now();
   const robin = freshProfile(DEFAULT_PROFILE_NAME, now, 'robin', readLegacyDifficulty(storage));
@@ -185,10 +192,15 @@ function scopedDataKey(storage: Storage, key: string): string {
 }
 
 function migrateLegacyData(storage: ProfileStorage, profileId: string): void {
-  for (const key of PROFILE_DATA_KEYS) {
+  migrateProfileDataKeys(storage, [profileId], PROFILE_DATA_KEYS);
+}
+
+function migrateProfileDataKeys(storage: ProfileStorage, profileIds: readonly string[], keys: Iterable<string>): void {
+  for (const key of keys) {
     const legacy = rawGet(storage, key);
-    if (legacy !== null && rawGet(storage, profileDataKey(profileId, key)) === null) {
-      saveProfileDatum(storage, profileId, key, legacy);
+    if (legacy === null) continue;
+    for (const profileId of profileIds) {
+      if (rawGet(storage, profileDataKey(profileId, key)) === null) saveProfileDatum(storage, profileId, key, legacy);
     }
   }
 }
