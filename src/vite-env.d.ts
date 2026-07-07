@@ -404,6 +404,15 @@ interface ThreeGameDiagnostics {
   };
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+    sim: {
+      flat: boolean;
+      tile: string;
+      probes: Record<string, {
+        height: number;
+        slope: { dx: number; dz: number };
+        traversable: boolean;
+      }>;
+    };
     water?: {
       material: 'LivingWaterShader';
       riverTime: number;
@@ -486,6 +495,7 @@ type GrAgentStub = import('./agent/AgentStub').AgentStub;
 type GrContractEpochMeta = import('./meta/ContractFamilies').EpochMeta;
 type GrContractEpochBundle = import('./meta/ContractFamilies').EpochBundle;
 type GrContractTierBudget = import('./meta/ContractFamilies').ContractTierBudget;
+type GrEpochTileDescriptor = import('./meta/ContractFamilies').EpochTileDescriptor;
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
@@ -524,6 +534,7 @@ interface Window {
   __GR_CONTRACT_REGISTRY__?: {
     listEpochs: () => GrContractEpochMeta[];
     loadEpoch: (id: string) => GrContractEpochBundle;
+    activeTileDescriptor: () => GrEpochTileDescriptor;
     contractTierBudget: (epochId: string, tier: number) => GrContractTierBudget;
     contractBudgetOk: (epochId: string, tier: number, rarity: 'common' | 'uncommon' | 'rare', budget: number) => boolean;
   };

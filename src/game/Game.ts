@@ -93,6 +93,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { DemolishPrompt } from '../ui/DemolishPrompt';
 import { UpgradePrompt } from '../ui/UpgradePrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
+import { simHeightDiagnostics } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { LightRig } from '../world/LightRig';
@@ -1004,6 +1005,7 @@ export class Game {
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
         playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
+        sim: simHeightDiagnostics(),
         water: this.terrainView?.diagnostics(),
         vista: Terrain.vistaDiagnostics(),
         detailScatter: this.detailScatter?.diagnostics(),
