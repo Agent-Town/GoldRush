@@ -256,7 +256,7 @@ function placeDetail(
     const z = rng.range(Terrain.bounds.minZ + 1, Terrain.bounds.maxZ - 1);
     if (Terrain.sample(x, z).zone !== 'bank') continue;
     if (staticExcluded(x, z)) continue;
-    if (rng.next() > edgeAcceptance(x, z)) continue;
+    if (rng.next() > detailAcceptance(profile, x, z)) continue;
     if (tooCloseToClass(x, z, placedInClass)) continue;
 
     const scale = rng.range(profile.minScale, profile.maxScale);
@@ -272,7 +272,7 @@ function placeDetail(
 }
 
 function staticExcluded(x: number, z: number): boolean {
-  if (routingLaneDistance(x, z) < Balance.world.detailRoutingLaneClearRadius) return true;
+  if (Terrain.routingLaneDistance(x, z) < Balance.world.detailRoutingLaneClearRadius) return true;
   if (distanceSq(x, z, BUILD_PAD_PROBE.x, BUILD_PAD_PROBE.z) < Balance.world.detailBuildPadClearRadius ** 2) return true;
   for (const anchor of Terrain.nodeAnchors) {
     if (distanceSq(x, z, anchor.x, anchor.z) < Balance.world.detailHarvestAnchorClearRadius ** 2) return true;
@@ -281,15 +281,21 @@ function staticExcluded(x: number, z: number): boolean {
 }
 
 function routingLaneDistance(x: number, z: number): number {
-  const fordApproach = z > Terrain.RIVER_MIN_Z - 20 && z < Terrain.RIVER_MAX_Z + 20 ? Math.abs(x) : Number.POSITIVE_INFINITY;
-  const claimLane = Math.abs(x) < 18 ? Math.abs(z - 12) : Number.POSITIVE_INFINITY;
-  return Math.min(fordApproach, claimLane);
+  return Terrain.routingLaneDistance(x, z);
 }
 
-function edgeAcceptance(x: number, z: number): number {
+function detailAcceptance(profile: DetailProfile, x: number, z: number): number {
+  const feature = Terrain.terrainFeatureSample(x, z);
   const edge = Math.max(Math.abs(x) / Terrain.CLAIM_HALF, Math.abs(z) / Terrain.CLAIM_HALF);
   const lane = Math.min(1, routingLaneDistance(x, z) / 10);
-  return THREE.MathUtils.clamp(0.16 + edge * 0.74 + lane * 0.12, 0.12, 0.96);
+  const base = 0.16 + edge * 0.74 + lane * 0.12;
+  const bias =
+    profile.id === 'rocks'
+      ? 0.42 + feature.shelf * 1.45 + feature.bluff * 0.55
+      : profile.id === 'dry_grass'
+        ? 0.58 + feature.pocket * 1.15 - feature.gully * 0.18
+        : 0.76 + feature.pocket * 0.18;
+  return THREE.MathUtils.clamp(base * bias, 0.08, 0.98);
 }
 
 function tooCloseToClass(x: number, z: number, placed: readonly DetailInstance[]): boolean {
