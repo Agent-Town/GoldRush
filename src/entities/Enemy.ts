@@ -31,6 +31,7 @@ export type EnemySpawnParams = {
   edge?: CompassEdge;
   thief?: boolean;
   wrecker?: boolean;
+  formationSeed?: number;
 };
 
 export type ThiefUpdateContext = {
@@ -47,6 +48,10 @@ export type WreckerUpdateContext = {
 const THIEF_RETARGET_SECONDS = 0.35;
 const WRECKER_RETARGET_SECONDS = 0.35;
 const FLEE_EDGE = 37.5;
+const FORMATION_STEER = 0.38;
+const FORMATION_GAP_CLEARANCE = 0.25;
+const FORMATION_LANES = 7;
+const FORMATION_JITTER = 0.16;
 
 export function createClaimJumperAssets(): ClaimJumperAssets {
   return {
@@ -119,6 +124,7 @@ export class ClaimJumperEnemy {
   private currentHolding: GoldHolding | null = null;
   private currentBuilding: BuildingTarget | null = null;
   private spawnEdge: CompassEdge | null = null;
+  private formationOffset = 0;
   private flashRemaining = 0;
   private flashCount = 0;
 
@@ -185,6 +191,10 @@ export class ClaimJumperEnemy {
     return this.leadVelocity.z;
   }
 
+  get spreadOffset(): number {
+    return this.formationOffset;
+  }
+
   get hitFlashRemaining(): number {
     return this.flashRemaining;
   }
@@ -214,6 +224,7 @@ export class ClaimJumperEnemy {
     this.currentHolding = null;
     this.currentBuilding = null;
     this.spawnEdge = params.edge ?? null;
+    this.formationOffset = seededOffset(params.formationSeed ?? this.id);
     this.flashRemaining = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
@@ -234,6 +245,8 @@ export class ClaimJumperEnemy {
     heroPosition: THREE.Vector3,
     separationX: number,
     separationZ: number,
+    formationSeparationX: number,
+    formationSeparationZ: number,
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
@@ -259,10 +272,34 @@ export class ClaimJumperEnemy {
       this.heading.set(0, 0, 0);
     }
 
+    const spread = safeFormationSpread();
+    const lateralOffset = THREE.MathUtils.clamp(this.formationOffset, -spread, spread);
+    let spreadBiasX = 0;
+    let spreadBiasZ = 0;
+    if (spread > 0) {
+      if (Math.abs(this.heading.z) >= Math.abs(this.heading.x)) {
+        spreadBiasX = THREE.MathUtils.clamp((moveTarget.x + lateralOffset - this.group.position.x) / spread, -1, 1) * FORMATION_STEER;
+      } else {
+        let laneZ = moveTarget.z + lateralOffset;
+        const currentSide = riverSide(this.group.position.z);
+        if (Balance.pathing.riverBlocksEnemies && currentSide === 'north') {
+          laneZ = Math.max(laneZ, Terrain.RIVER_MAX_Z + FORMATION_GAP_CLEARANCE);
+        } else if (Balance.pathing.riverBlocksEnemies && currentSide === 'south') {
+          laneZ = Math.min(laneZ, Terrain.RIVER_MIN_Z - FORMATION_GAP_CLEARANCE);
+        }
+        spreadBiasZ = THREE.MathUtils.clamp((laneZ - this.group.position.z) / spread, -1, 1) * FORMATION_STEER;
+      }
+    }
     this.velocity.set(
-      this.heading.x + separationX * Balance.enemy.separationStrength,
+      this.heading.x +
+        spreadBiasX +
+        separationX * Balance.enemy.separationStrength +
+        formationSeparationX * Balance.enemy.formationSeparationStrength,
       0,
-      this.heading.z + separationZ * Balance.enemy.separationStrength,
+      this.heading.z +
+        spreadBiasZ +
+        separationZ * Balance.enemy.separationStrength +
+        formationSeparationZ * Balance.enemy.formationSeparationStrength,
     );
     if (this.velocity.lengthSq() > 1) this.velocity.normalize();
 
@@ -326,6 +363,7 @@ export class ClaimJumperEnemy {
     this.currentHolding = null;
     this.currentBuilding = null;
     this.spawnEdge = null;
+    this.formationOffset = 0;
     this.flashRemaining = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
@@ -605,6 +643,26 @@ function riverSide(z: number): 'north' | 'south' | null {
   if (z > Terrain.RIVER_MAX_Z) return 'north';
   if (z < Terrain.RIVER_MIN_Z) return 'south';
   return null;
+}
+
+function seededOffset(seed: number): number {
+  const lane = (seed >>> 0) % FORMATION_LANES;
+  const laneUnit = FORMATION_LANES <= 1 ? 0 : (lane / (FORMATION_LANES - 1)) * 2 - 1;
+  return (laneUnit + hashUnit(seed) * FORMATION_JITTER) * Balance.enemy.formationSpreadWidth;
+}
+
+function hashUnit(seed: number): number {
+  let value = Math.imul((seed >>> 0) ^ 0x9e3779b9, 0x85ebca6b);
+  value ^= value >>> 13;
+  value = Math.imul(value, 0xc2b2ae35);
+  value ^= value >>> 16;
+  return ((value >>> 0) / 0xffffffff) * 2 - 1;
+}
+
+function safeFormationSpread(): number {
+  const ringGap = Math.max(0, Balance.meta.territoryRingGapHalfWidth - FORMATION_GAP_CLEARANCE);
+  const fordGap = Math.max(0, (Terrain.FORD_MAX_X - Terrain.FORD_MIN_X) * 0.5 - FORMATION_GAP_CLEARANCE);
+  return Math.min(Balance.enemy.formationSpreadWidth, ringGap, fordGap);
 }
 
 export function disposeClaimJumperAssets(assets: ClaimJumperAssets): void {

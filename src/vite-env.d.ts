@@ -613,6 +613,7 @@ interface Window {
       y: number;
       z: number;
       hp: number;
+      spreadOffset: number;
       vx: number;
       vz: number;
       thief?: boolean;

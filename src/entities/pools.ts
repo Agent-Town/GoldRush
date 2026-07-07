@@ -98,6 +98,7 @@ export class EnemyPool {
   private active = 0;
   private activeHitFlashes = 0;
   private warmHitFlashFrames = 0;
+  private spawnSerial = 0;
 
   constructor() {
     this.group.name = 'EnemyPool';
@@ -154,7 +155,8 @@ export class EnemyPool {
   spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): ClaimJumperEnemy | null {
     for (const enemy of this.enemies) {
       if (enemy.isAlive) continue;
-      enemy.spawn(position, params);
+      enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
+      this.spawnSerial += 1;
       this.active += 1;
       this.syncEnemyInstance(enemy);
       return enemy;
@@ -177,6 +179,8 @@ export class EnemyPool {
 
       let separationX = 0;
       let separationZ = 0;
+      let formationSeparationX = 0;
+      let formationSeparationZ = 0;
       const cellX = this.toGridCoord(enemy.group.position.x);
       const cellZ = this.toGridCoord(enemy.group.position.z);
 
@@ -196,11 +200,44 @@ export class EnemyPool {
             const strength = 1 - distance / Balance.enemy.separationRadius;
             separationX += (awayX / distance) * strength;
             separationZ += (awayZ / distance) * strength;
+            const speed = Math.hypot(enemy.velocityX, enemy.velocityZ);
+            const otherSpeed = Math.hypot(other.velocityX, other.velocityZ);
+            const sameDirection =
+              speed > 0.05 &&
+              otherSpeed > 0.05 &&
+              (enemy.velocityX * other.velocityX + enemy.velocityZ * other.velocityZ) / (speed * otherSpeed) > 0.65;
+            if (sameDirection) {
+              const offsetDelta = enemy.spreadOffset - other.spreadOffset;
+              const side = Math.abs(offsetDelta) > 0.05 ? Math.sign(offsetDelta) : enemy.id < other.id ? -1 : 1;
+              if (Math.abs(enemy.velocityZ) >= Math.abs(enemy.velocityX)) {
+                formationSeparationX += side * strength;
+              } else {
+                formationSeparationZ += side * strength;
+              }
+            }
           }
         }
       }
+      const formationSeparationSq = formationSeparationX * formationSeparationX + formationSeparationZ * formationSeparationZ;
+      if (formationSeparationSq > 1) {
+        const scale = 1 / Math.sqrt(formationSeparationSq);
+        formationSeparationX *= scale;
+        formationSeparationZ *= scale;
+      }
 
-      if (enemy.update(delta, heroPosition, separationX, separationZ, blockers, thiefContext, wreckerContext)) {
+      if (
+        enemy.update(
+          delta,
+          heroPosition,
+          separationX,
+          separationZ,
+          formationSeparationX,
+          formationSeparationZ,
+          blockers,
+          thiefContext,
+          wreckerContext,
+        )
+      ) {
         onContact(enemy);
       }
     }
@@ -235,6 +272,7 @@ export class EnemyPool {
       enemy.recycle();
     }
     this.active = 0;
+    this.spawnSerial = 0;
     this.clearSpatialHash();
     this.syncInstances();
     this.syncHitFlashes();

@@ -557,6 +557,7 @@ export class Game {
               y: enemy.position.y,
               z: enemy.position.z,
               id: enemy.id,
+              spreadOffset: enemy.spreadOffset,
               hp: enemy.currentHp,
               vx: enemy.velocityX,
               vz: enemy.velocityZ,
