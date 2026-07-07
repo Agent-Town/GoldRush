@@ -73,6 +73,7 @@ export function resolveTerrainMove(
   targetX: number,
   targetZ: number,
   isWalkable: (x: number, z: number) => boolean,
+  goal?: { x: number; z: number; fallbackX?: number; fallbackZ?: number },
 ): { x: number; z: number; moved: boolean } {
   if (isWalkable(targetX, targetZ)) return { x: targetX, z: targetZ, moved: true };
 
@@ -80,6 +81,10 @@ export function resolveTerrainMove(
   const dz = targetZ - previousZ;
   const distance = Math.hypot(dx, dz);
   if (distance <= 0.000001) return { x: previousX, z: previousZ, moved: false };
+  const goalDistance = goal ? Math.hypot(goal.x - previousX, goal.z - previousZ) : 0;
+  const fallbackLength = Math.hypot(goal?.fallbackX ?? 0, goal?.fallbackZ ?? 0);
+  const fallbackX = fallbackLength > 0 ? (goal?.fallbackX ?? 0) / fallbackLength : 0;
+  const fallbackZ = fallbackLength > 0 ? (goal?.fallbackZ ?? 0) / fallbackLength : 0;
 
   let bestX = previousX;
   let bestZ = previousZ;
@@ -88,16 +93,21 @@ export function resolveTerrainMove(
   const consider = (moveX: number, moveZ: number) => {
     if (Math.hypot(moveX, moveZ) <= 0.000001) return;
     const alignment = moveX * dx + moveZ * dz;
-    if (alignment <= bestScore + 0.000001) return;
+    const canUseBias = goal !== undefined || fallbackLength > 0;
+    if (!canUseBias && alignment <= bestScore + 0.000001) return;
     for (const scale of SLIDE_STEP_SCALES) {
       const score = alignment * scale;
-      if (score <= bestScore + 0.000001) continue;
+      if (!canUseBias && score <= bestScore + 0.000001) continue;
       const x = previousX + moveX * scale;
       const z = previousZ + moveZ * scale;
       if (!isWalkable(x, z)) continue;
+      const goalBias = goal ? Math.max(0, goalDistance - Math.hypot(goal.x - x, goal.z - z)) * distance : 0;
+      const fallbackBias = fallbackLength > 0 ? Math.max(0, moveX * fallbackX + moveZ * fallbackZ) * distance * 0.5 : 0;
+      const biasedScore = score + goalBias + fallbackBias;
+      if (biasedScore <= bestScore + 0.000001) continue;
       bestX = x;
       bestZ = z;
-      bestScore = score;
+      bestScore = biasedScore;
       break;
     }
   };
@@ -111,6 +121,17 @@ export function resolveTerrainMove(
     consider(dx - nx * into, dz - nz * into);
   };
 
+  const previousSlope = simSlope(previousX, previousZ);
+  if (fallbackLength > 0) {
+    const normalLength = Math.hypot(previousSlope.dx, previousSlope.dz);
+    if (normalLength > 0.000001) {
+      const nx = previousSlope.dx / normalLength;
+      const nz = previousSlope.dz / normalLength;
+      const into = fallbackX * nx + fallbackZ * nz;
+      consider((fallbackX - nx * into) * distance, (fallbackZ - nz * into) * distance);
+    }
+    consider(fallbackX * distance, fallbackZ * distance);
+  }
   consider(dx, 0);
   consider(0, dz);
   const moveAngle = Math.atan2(dz, dx);
@@ -134,7 +155,6 @@ export function resolveTerrainMove(
   considerSlide(0, normalZ);
   considerSlide(normalX, normalZ);
 
-  const previousSlope = simSlope(previousX, previousZ);
   considerSlide(previousSlope.dx, previousSlope.dz);
   const targetSlope = simSlope(targetX, targetZ);
   considerSlide(targetSlope.dx, targetSlope.dz);
@@ -167,6 +187,35 @@ export function terrainSimSample(x: number, z: number): {
     speedEast: terrainSpeedMultiplier(x, z, 1, 0),
     speedWest: terrainSpeedMultiplier(x, z, -1, 0),
   };
+}
+
+export function terrainDetourWaypoint(
+  x: number,
+  z: number,
+  goalX: number,
+  goalZ: number,
+): { x: number; z: number } | null {
+  const analytic = ACTIVE_TILE.elevation?.analytic;
+  if (!analytic) return null;
+  const minX = analytic.cliffMinX;
+  const maxX = analytic.cliffMaxX;
+  const minZ = analytic.cliffMinZ;
+  const maxZ = analytic.cliffMaxZ;
+  if (minX === undefined || maxX === undefined || minZ === undefined || maxZ === undefined) return null;
+
+  const pad = Math.max(1.25, (analytic.cliffFeather ?? 0) + 0.5);
+  const crossesFromSouth = z < minZ - pad && goalZ > minZ;
+  const crossesFromNorth = z > maxZ + pad && goalZ < maxZ;
+  const inApproachBand = z >= minZ - pad && z <= maxZ + pad && goalZ !== z;
+  if (!crossesFromSouth && !crossesFromNorth && !inApproachBand) return null;
+
+  const spanMinX = minX - pad;
+  const spanMaxX = maxX + pad;
+  if (x <= spanMinX || x >= spanMaxX) return null;
+  let detourX = x <= (minX + maxX) * 0.5 ? spanMinX : spanMaxX;
+  if (goalX <= spanMinX) detourX = spanMinX;
+  else if (goalX >= spanMaxX) detourX = spanMaxX;
+  return { x: detourX, z };
 }
 
 export function simHeightDiagnostics(): {

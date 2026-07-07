@@ -707,6 +707,12 @@ interface Window {
       edge?: 'north' | 'south' | 'east' | 'west' | null;
       zone?: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
       light?: number;
+      terrain?: {
+        grounded: boolean;
+        slope: { dx: number; dz: number };
+        traversable: boolean;
+        speedMul: number;
+      };
     }>;
     spawnEnemyAt: (x: number, z: number) => boolean;
     scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => boolean;

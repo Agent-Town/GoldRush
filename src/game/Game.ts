@@ -123,7 +123,7 @@ import { Hud, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt } from '../ui/BuildingContextPrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
-import { simHeightDiagnostics, terrainSimSample } from '../sim/TileHeight';
+import { simHeightDiagnostics, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '../world/LightRig';
@@ -669,24 +669,33 @@ export class Game {
         enemyPositions: () =>
           this.enemies.all
             .filter((enemy) => enemy.isAlive)
-            .map((enemy) => ({
-              x: enemy.position.x,
-              y: enemy.position.y,
-              z: enemy.position.z,
-              id: enemy.id,
-              spreadOffset: enemy.spreadOffset,
-              hp: enemy.currentHp,
-              vx: enemy.velocityX,
-              vz: enemy.velocityZ,
-              thief: enemy.isThief,
-              wrecker: enemy.isWrecker,
-              state: enemy.stealState,
-              wreckState: enemy.wreckState,
-              carried: enemy.carriedAmount,
-              edge: enemy.ownEdge,
-              zone: Terrain.sample(enemy.position.x, enemy.position.z).zone,
-              light: Number(this.enemies.lightFactorFor(enemy).toFixed(3)),
-            })),
+            .map((enemy) => {
+              const sim = terrainSimSample(enemy.position.x, enemy.position.z);
+              return {
+                x: enemy.position.x,
+                y: enemy.position.y,
+                z: enemy.position.z,
+                id: enemy.id,
+                spreadOffset: enemy.spreadOffset,
+                hp: enemy.currentHp,
+                vx: enemy.velocityX,
+                vz: enemy.velocityZ,
+                thief: enemy.isThief,
+                wrecker: enemy.isWrecker,
+                state: enemy.stealState,
+                wreckState: enemy.wreckState,
+                carried: enemy.carriedAmount,
+                edge: enemy.ownEdge,
+                zone: Terrain.sample(enemy.position.x, enemy.position.z).zone,
+                light: Number(this.enemies.lightFactorFor(enemy).toFixed(3)),
+                terrain: {
+                  grounded: Math.abs(enemy.position.y - Terrain.visualY(enemy.position.x, enemy.position.z, Balance.enemy.groundY)) < 0.01,
+                  slope: sim.slope,
+                  traversable: sim.traversable,
+                  speedMul: terrainSpeedMultiplier(enemy.position.x, enemy.position.z, enemy.velocityX, enemy.velocityZ),
+                },
+              };
+            }),
         spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z), { activationDelay: 0.05 }) !== null,
         scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => {
           const enemy = this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z));
