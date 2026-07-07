@@ -1,13 +1,19 @@
 import { defineConfig, devices } from '@playwright/test';
 
+const captureBaseURL = process.env.GR_CAPTURE_BASE_URL;
+const baseURL = captureBaseURL ?? 'http://127.0.0.1:5188';
+const captureRun = process.env.GR_CAPTURE_RUN === '1';
+
 export default defineConfig({
   testDir: './e2e',
+  testIgnore: captureRun ? [] : ['**/*.rig.ts'],
+  testMatch: captureRun ? ['**/*.rig.ts'] : undefined,
   timeout: 30_000,
   expect: {
     timeout: 5_000,
   },
   use: {
-    baseURL: 'http://127.0.0.1:5188',
+    baseURL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     // channel 'chromium' = full-binary new headless. The default
@@ -16,9 +22,9 @@ export default defineConfig({
     // + libXdamage from ~/locallibs works. See STATUS.md environment notes.
     channel: 'chromium',
   },
-  webServer: {
+  webServer: process.env.GR_CAPTURE_EXTERNAL_SERVER === '1' ? undefined : {
     command: 'npm run dev',
-    url: 'http://127.0.0.1:5188',
+    url: baseURL,
     reuseExistingServer: false,
     timeout: 20_000,
   },
