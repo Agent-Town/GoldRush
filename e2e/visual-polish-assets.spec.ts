@@ -79,7 +79,7 @@ test('batch-001 generated asset slots load and stay playable', async ({ page }, 
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.beacons ?? 0)).toBe(1);
   await expect
     .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['bld.sentry_beacon'] ?? 0))
-    .toBe(1);
+    .toBe(0);
 
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(1, 5));
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBe(1);

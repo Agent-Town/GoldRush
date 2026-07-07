@@ -339,7 +339,7 @@ export class ClaimJumperEnemy {
 
   takeDamage(amount: number): boolean {
     if (!this.alive) return false;
-    if (amount > 0) {
+    if (amount > 0 && Balance.combatReadability.enemyFlashSeconds > 0 && Balance.combatReadability.enemyFlashIntensity > 0) {
       this.flashRemaining = Balance.combatReadability.enemyFlashSeconds;
       this.flashCount += 1;
     }

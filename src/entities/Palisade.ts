@@ -12,18 +12,18 @@ export type PalisadeBlocker = {
 type PalisadeBlockerSlot = PalisadeBlocker | undefined;
 
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
-const timber = '#c99a61';
-const timberLight = '#d9b77d';
+const timber = '#f5c77d';
+const timberLight = '#ffe4a0';
 const brass = '#8b7d3c';
 const postNormalColor = new THREE.Color(timberLight);
 const railNormalColor = new THREE.Color(timber);
 const braceNormalColor = new THREE.Color(brass);
-const postWornColor = new THREE.Color('#92704a');
-const railWornColor = new THREE.Color('#7a5132');
-const braceWornColor = new THREE.Color('#5d5630');
-const postTierColors = [postNormalColor, new THREE.Color('#d9b77d'), new THREE.Color('#ffe4a0')];
-const railTierColors = [railNormalColor, new THREE.Color('#b9824c'), new THREE.Color('#c4883a')];
-const braceTierColors = [braceNormalColor, new THREE.Color('#9f8f4a'), new THREE.Color('#5b8a8a')];
+const postWornColor = new THREE.Color('#c99a61');
+const railWornColor = new THREE.Color('#b9824c');
+const braceWornColor = new THREE.Color('#8b7d3c');
+const postTierColors = [postNormalColor, new THREE.Color('#f5e6c8'), new THREE.Color('#fff8e8')];
+const railTierColors = [railNormalColor, new THREE.Color('#ffe4a0'), new THREE.Color('#c4883a')];
+const braceTierColors = [braceNormalColor, new THREE.Color('#c4883a'), new THREE.Color('#5b8a8a')];
 
 export class PalisadePool {
   readonly group = new THREE.Group();
@@ -37,9 +37,15 @@ export class PalisadePool {
   private readonly postGeometry = new THREE.BoxGeometry(0.16, 0.92, 0.16);
   private readonly railGeometry = new THREE.BoxGeometry(0.18, 0.16, Balance.palisade.depth);
   private readonly braceGeometry = new THREE.BoxGeometry(0.08, 0.22, Balance.palisade.depth * 0.86);
-  private readonly postMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.82, metalness: 0.02, vertexColors: true });
-  private readonly railMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.86, metalness: 0.02, vertexColors: true });
-  private readonly braceMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.74, metalness: 0.18, vertexColors: true });
+  private readonly postMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffffff',
+  });
+  private readonly railMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffffff',
+  });
+  private readonly braceMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffffff',
+  });
   private readonly posts = new THREE.InstancedMesh(this.postGeometry, this.postMaterial, Balance.palisade.maxCount * 2);
   private readonly rails = new THREE.InstancedMesh(this.railGeometry, this.railMaterial, Balance.palisade.maxCount * 2);
   private readonly braces = new THREE.InstancedMesh(this.braceGeometry, this.braceMaterial, Balance.palisade.maxCount);
@@ -50,7 +56,7 @@ export class PalisadePool {
     this.group.name = 'PalisadePool';
     for (const mesh of [this.posts, this.rails, this.braces]) {
       mesh.frustumCulled = false;
-      mesh.castShadow = true;
+      mesh.castShadow = false;
       this.group.add(mesh);
     }
     for (let i = 0; i < Balance.palisade.maxCount; i += 1) {

@@ -33,7 +33,13 @@ export class SluicePool {
   private readonly capped: boolean[] = [];
   private readonly troughGeometry = new THREE.BoxGeometry(1.7, 0.32, 0.62);
   private readonly waterGeometry = new THREE.BoxGeometry(1.34, 0.035, 0.34);
-  private readonly troughMaterial = new THREE.MeshStandardMaterial({ color: '#ffffff', roughness: 0.86, metalness: 0.02, vertexColors: true });
+  private readonly troughMaterial = new THREE.MeshStandardMaterial({
+    color: '#ffffff',
+    emissive: '#7a5132',
+    emissiveIntensity: 0.32,
+    roughness: 0.86,
+    metalness: 0.02,
+  });
   private readonly waterMaterial = new THREE.MeshStandardMaterial({
     color: '#ffffff',
     emissive: water,
@@ -42,7 +48,6 @@ export class SluicePool {
     opacity: 0.72,
     roughness: 0.26,
     metalness: 0.04,
-    vertexColors: true,
   });
   private readonly troughs = new THREE.InstancedMesh(this.troughGeometry, this.troughMaterial, Balance.sluice.maxCount);
   private readonly waters = new THREE.InstancedMesh(this.waterGeometry, this.waterMaterial, Balance.sluice.maxCount);
@@ -54,7 +59,7 @@ export class SluicePool {
     this.group.visible = false;
     for (const mesh of [this.troughs, this.waters]) {
       mesh.frustumCulled = false;
-      mesh.castShadow = true;
+      mesh.castShadow = false;
       this.group.add(mesh);
     }
     for (let i = 0; i < Balance.sluice.maxCount; i += 1) {

@@ -1,7 +1,6 @@
 import * as THREE from 'three';
-import { GeneratedSpriteBatch } from '../assets/generated';
+import { loadGeneratedTexture } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
-import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
@@ -21,11 +20,15 @@ export class SentryBeaconPool {
   private readonly coreGeometry = new THREE.SphereGeometry(0.11, 12, 8);
   private readonly legMaterial = new THREE.MeshStandardMaterial({
     color: brass,
+    emissive: '#7a5132',
+    emissiveIntensity: 0.24,
     roughness: 0.5,
     metalness: 0.38,
   });
   private readonly capMaterial = new THREE.MeshStandardMaterial({
     color: bronze,
+    emissive: '#7a5132',
+    emissiveIntensity: 0.24,
     roughness: 0.48,
     metalness: 0.42,
   });
@@ -49,15 +52,7 @@ export class SentryBeaconPool {
   private readonly capMesh = new THREE.InstancedMesh(this.capGeometry, this.capMaterial, Balance.beacon.maxCount);
   private readonly glassMesh = new THREE.InstancedMesh(this.glassGeometry, this.glassMaterial, Balance.beacon.maxCount);
   private readonly coreMesh = new THREE.InstancedMesh(this.coreGeometry, this.coreMaterial, Balance.beacon.maxCount);
-  private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.bldSentryBeacon, Balance.beacon.maxCount, {
-    name: 'GeneratedSentryBeaconSprites',
-    y: 0.78,
-    scale: [1.8, 1.8],
-    renderOrder: RenderLayers.gameplay,
-    onLoaded: () => this.setProceduralVisible(false),
-  });
   private readonly syncObject = new THREE.Object3D();
-  private readonly spritePosition = new THREE.Vector3();
   private alive = 0;
 
   constructor() {
@@ -66,17 +61,17 @@ export class SentryBeaconPool {
     for (let i = 0; i < 3; i += 1) {
       const mesh = new THREE.InstancedMesh(this.legGeometry, this.legMaterial, Balance.beacon.maxCount);
       mesh.frustumCulled = false;
-      mesh.castShadow = true;
+      mesh.castShadow = false;
       this.legs.push(mesh);
       this.group.add(mesh);
     }
     for (const mesh of [this.capMesh, this.glassMesh, this.coreMesh]) {
       mesh.frustumCulled = false;
-      mesh.castShadow = true;
+      mesh.castShadow = false;
       this.group.add(mesh);
     }
-    this.group.add(this.generatedSprites.group);
     tagPlaceholder(this.group, assetSlots.bldSentryBeacon);
+    void loadGeneratedTexture(assetSlots.bldSentryBeacon);
     for (let i = 0; i < Balance.beacon.maxCount; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
@@ -149,7 +144,6 @@ export class SentryBeaconPool {
     this.capMaterial.dispose();
     this.glassMaterial.dispose();
     this.coreMaterial.dispose();
-    this.generatedSprites.dispose();
   }
 
   private sync(index: number, at: number): void {
@@ -168,7 +162,6 @@ export class SentryBeaconPool {
     this.syncPart(this.capMesh, index, position.x, groundY + 1.04, position.z, 1);
     this.syncPart(this.glassMesh, index, position.x, groundY + 0.82, position.z, 1);
     this.syncPart(this.coreMesh, index, position.x, groundY + 0.82, position.z, 0.92 + Math.sin(at * Math.PI * 2) * 0.08);
-    this.generatedSprites.set(index, this.spritePosition.set(position.x, groundY, position.z), true);
   }
 
   private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number): void {
@@ -184,7 +177,6 @@ export class SentryBeaconPool {
     this.capMesh.setMatrixAt(index, hiddenMatrix);
     this.glassMesh.setMatrixAt(index, hiddenMatrix);
     this.coreMesh.setMatrixAt(index, hiddenMatrix);
-    this.generatedSprites.hide(index);
   }
 
   private markNeedsUpdate(): void {
@@ -192,12 +184,5 @@ export class SentryBeaconPool {
     this.capMesh.instanceMatrix.needsUpdate = true;
     this.glassMesh.instanceMatrix.needsUpdate = true;
     this.coreMesh.instanceMatrix.needsUpdate = true;
-  }
-
-  private setProceduralVisible(visible: boolean): void {
-    for (const leg of this.legs) leg.visible = visible;
-    this.capMesh.visible = visible;
-    this.glassMesh.visible = visible;
-    this.coreMesh.visible = visible;
   }
 }
