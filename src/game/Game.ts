@@ -116,7 +116,7 @@ import { Hud, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt } from '../ui/BuildingContextPrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
-import { simHeightDiagnostics } from '../sim/TileHeight';
+import { simHeightDiagnostics, terrainSimSample } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { LightRig } from '../world/LightRig';
@@ -636,6 +636,7 @@ export class Game {
         fundMegaproject: () => this.fundMegaprojectStage(),
         damageMegaproject: (amount: number) => this.damageMegaprojectForTest(amount),
         terrainSample: (x: number, z: number) => Terrain.sample(x, z),
+        terrainSim: (x: number, z: number) => terrainSimSample(x, z),
         setTestClip: (slot: string, frames: string[], fps: number) => setSpriteTestClip(slot as AssetSlotId, frames, fps),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
@@ -666,7 +667,7 @@ export class Game {
               edge: enemy.ownEdge,
               zone: Terrain.sample(enemy.position.x, enemy.position.z).zone,
             })),
-        spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z)) !== null,
+        spawnEnemyAt: (x: number, z: number) => this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z), { activationDelay: 0.05 }) !== null,
         scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => {
           const enemy = this.enemies.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z));
           if (!enemy) return false;

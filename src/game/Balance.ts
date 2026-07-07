@@ -363,6 +363,11 @@ export const Balance = {
   terrain: {
     featureMix: 0.86,
   },
+  terrainSim: {
+    uphillMin: 0.6,
+    downhillMax: 1.1,
+    slopeMax: 0.35,
+  },
   sprite: {
     turnRateDegPerS: 540,
     orientationFadeMs: 100,

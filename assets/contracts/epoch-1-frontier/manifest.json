@@ -8,6 +8,33 @@
     "id": "frontier-river-claim",
     "biome": "river-claim"
   },
+  "devTiles": [
+    {
+      "id": "gt-test-basin",
+      "biome": "dev-basin",
+      "elevation": {
+        "cellSize": 2,
+        "slopeMax": 0.35,
+        "analytic": {
+          "bowlCenterX": -4,
+          "bowlCenterZ": 10,
+          "bowlDepth": 0.85,
+          "bowlRadius": 24,
+          "ridgeX": 2,
+          "ridgeZ": 18,
+          "ridgeAmp": 2.7,
+          "ridgeWidth": 7,
+          "ridgeLength": 36,
+          "cliffMinX": -18,
+          "cliffMaxX": 22,
+          "cliffMinZ": -16,
+          "cliffMaxZ": -13,
+          "cliffAmp": 1.4,
+          "cliffFeather": 1
+        }
+      }
+    }
+  ],
   "megaprojects": [
     {
       "id": "dev-stamp-mill-site",
