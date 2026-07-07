@@ -9,12 +9,18 @@ import {
   saveResearchState,
   setPinnedResearchTarget,
 } from '../../meta/ResearchTree';
-import { readAudioMuted, readAudioVolume, setAudioMuted, setAudioVolume, SoundSystem } from '../../audio/SoundSystem';
+import { SoundSystem } from '../../audio/SoundSystem';
+import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { renderResearchChart } from '../ResearchChart';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const backdropUrl = new URL('../../../assets/processed/ui-menu-backdrop.png', import.meta.url).href;
 const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
+const AUDIO_SETTINGS_IDS = {
+  volume: 'start-menu-volume',
+  volumeValue: 'start-menu-volume-value',
+  mute: 'start-menu-mute',
+};
 
 type StartMenuOptions = {
   onNewClaim: () => void;
@@ -25,6 +31,7 @@ type StartMenuOptions = {
 export class StartMenu {
   private readonly root = document.createElement('section');
   private readonly audio = new SoundSystem();
+  private disposeAudioSettings: () => void = () => undefined;
   private settingsOpen = false;
   private researchOpen = false;
   private selectedResearchNodeId: string | undefined;
@@ -43,6 +50,7 @@ export class StartMenu {
   }
 
   dispose(): void {
+    this.disposeAudioSettings();
     this.root.removeEventListener('click', this.onClick);
     this.root.removeEventListener('keydown', this.onKeyDown);
     this.audio.dispose();
@@ -50,9 +58,8 @@ export class StartMenu {
   }
 
   private render(): void {
+    this.disposeAudioSettings();
     const hasContinue = hasSuspendedRun();
-    const volume = Math.round(readAudioVolume() * 100);
-    const muted = readAudioMuted();
     this.root.className = `gr-start-menu${this.researchOpen ? ' gr-start-menu--research-open' : ''}`;
     this.root.innerHTML = `
       <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="ready" style="background-image:url('${backdropUrl}')"></div>
@@ -72,23 +79,14 @@ export class StartMenu {
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
         </nav>
         <section class="gr-start-menu__settings" data-testid="start-menu-settings-panel" ${this.settingsOpen ? '' : 'hidden'}>
-          <label>
-            <span>Volume</span>
-            <input data-testid="start-menu-volume" type="range" min="0" max="100" step="5" value="${volume}" />
-            <output data-testid="start-menu-volume-value">${volume}%</output>
-          </label>
-          <label>
-            <span>Mute</span>
-            <input data-testid="start-menu-mute" type="checkbox" ${muted ? 'checked' : ''} />
-          </label>
+          ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
         </section>
         <section class="gr-start-menu__research" data-testid="research-overlay" aria-label="Research ledger" ${
           this.researchOpen ? '' : 'hidden'
         }>${this.renderResearch()}</section>
       </div>
     `;
-    this.root.querySelector<HTMLInputElement>('[data-testid="start-menu-volume"]')?.addEventListener('input', this.onVolumeInput);
-    this.root.querySelector<HTMLInputElement>('[data-testid="start-menu-mute"]')?.addEventListener('change', this.onMuteInput);
+    this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
   }
 
   private renderResearch(): string {
@@ -144,18 +142,6 @@ export class StartMenu {
       event.preventDefault();
       this.focusAction(-1);
     }
-  };
-
-  private readonly onVolumeInput = (event: Event) => {
-    const input = event.currentTarget as HTMLInputElement;
-    const volume = Math.max(0, Math.min(100, Number(input.value)));
-    setAudioVolume(volume / 100);
-    const output = this.root.querySelector<HTMLOutputElement>('[data-testid="start-menu-volume-value"]');
-    if (output) output.textContent = `${volume}%`;
-  };
-
-  private readonly onMuteInput = (event: Event) => {
-    setAudioMuted((event.currentTarget as HTMLInputElement).checked);
   };
 
   private toggleSettings(): void {

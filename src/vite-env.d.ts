@@ -261,6 +261,9 @@ interface ThreeGameDiagnostics {
     loops: string[];
     lastRequested: string | null;
     lastStarted: string | null;
+    playsPerSecond: Record<string, number>;
+    startedBySound: Record<string, number>;
+    droppedBySound: Record<string, number>;
   };
   build: {
     mode: boolean;

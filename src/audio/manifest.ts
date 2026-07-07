@@ -35,6 +35,8 @@ export type SoundManifestEntry = {
   volume: number;
   group: SoundGroup;
   loop?: boolean;
+  minIntervalMs?: number;
+  pitchVariance?: number;
 };
 
 // Manifest choice: keep the tuneable sound list explicit, but resolve URLs with
@@ -65,11 +67,11 @@ export const soundManifest = {
   'research-pick': { file: 'research-pick.mp3', volume: 0.34, group: 'ui' },
   'river-ambience-loop': { file: 'river-ambience-loop.mp3', volume: 0.18, group: 'ambience', loop: true },
   'sluice-water-loop': { file: 'sluice-water-loop.mp3', volume: 0.24, group: 'ambience', loop: true },
-  'spark-bolt-fire': { file: 'spark-bolt-fire.mp3', volume: 0.34, group: 'sfx' },
-  'spark-bolt-hit': { file: 'spark-bolt-hit.mp3', volume: 0.32, group: 'sfx' },
+  'spark-bolt-fire': { file: 'spark-bolt-fire.mp3', volume: 0.13, group: 'sfx', minIntervalMs: 80, pitchVariance: 0.05 },
+  'spark-bolt-hit': { file: 'spark-bolt-hit.mp3', volume: 0.24, group: 'sfx', minIntervalMs: 50, pitchVariance: 0.04 },
   'stockpile-deposit': { file: 'stockpile-deposit.mp3', volume: 0.34, group: 'sfx' },
   'tier-up': { file: 'tier-up.mp3', volume: 0.38, group: 'ui' },
-  'turret-fire': { file: 'turret-fire.mp3', volume: 0.32, group: 'sfx' },
+  'turret-fire': { file: 'turret-fire.mp3', volume: 0.24, group: 'sfx', minIntervalMs: 70, pitchVariance: 0.04 },
   'victory-sting': { file: 'victory-sting.mp3', volume: 0.42, group: 'ui' },
   'wave-start-horn': { file: 'wave-start-horn.mp3', volume: 0.4, group: 'sfx' },
   'wind-gust': { file: 'wind-gust.mp3', volume: 0.22, group: 'ambience' },

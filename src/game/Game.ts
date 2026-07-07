@@ -86,6 +86,7 @@ import {
   type DifficultyPresetId,
 } from './Balance';
 import { SoundSystem } from '../audio/SoundSystem';
+import { readAudioMuted, setAudioMuted } from '../audio/settings';
 import {
   Economy,
   initialEconomyState,
@@ -368,6 +369,7 @@ export class Game {
   private lastUpgradeIntent = false;
   private lastRotateIntent = false;
   private lastWeaponToggleIntent = false;
+  private lastMuteIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
   private playerPauseActive = false;
@@ -793,6 +795,8 @@ export class Game {
     this.recordFrameMs(delta * 1000);
     this.elapsed += delta;
     const intents = this.input.readIntents();
+    if (intents.mute && !this.lastMuteIntent) this.toggleAudioMute();
+    this.lastMuteIntent = intents.mute;
     if (this.secureClaimChoicePending()) {
       this.rememberIntents(intents);
       this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
@@ -833,6 +837,7 @@ export class Game {
     this.lastUpgradeIntent = intents.upgrade;
     this.lastRotateIntent = intents.rotateBuild;
     this.lastWeaponToggleIntent = intents.weaponToggle;
+    this.lastMuteIntent = intents.mute;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
@@ -956,6 +961,7 @@ export class Game {
     this.lastUpgradeIntent = intents.upgrade;
     this.lastRotateIntent = intents.rotateBuild;
     this.lastWeaponToggleIntent = intents.weaponToggle;
+    this.lastMuteIntent = intents.mute;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
   }
@@ -1683,6 +1689,11 @@ export class Game {
   private togglePlayerPause(): void {
     const paused = this.state.togglePause();
     this.playerPauseActive = this.state.current === 'playing' && paused;
+  }
+
+  private toggleAudioMute(): void {
+    const muted = setAudioMuted(!readAudioMuted());
+    this.hud.showMetaRecap(muted ? 'The claim goes quiet.' : 'Sound returns.', 1.8);
   }
 
   applyMetaProgress(meta: MetaProgress): void {

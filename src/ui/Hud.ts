@@ -2,10 +2,16 @@ import type { UiSnapshot } from '../systems/UiBridge';
 import type { BuildableId } from '../game/buildables';
 import type { AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
+import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
 import { BuildButton } from './BuildButton';
 import { ProspectorPanel } from './ProspectorPanel';
 
 const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
+const PAUSE_AUDIO_SETTINGS_IDS = {
+  volume: 'pause-volume',
+  volumeValue: 'pause-volume-value',
+  mute: 'pause-mute',
+};
 
 export type UiIntent =
   | { type: 'restart' | 'toggle_build_menu' | 'close_build_menu' | 'pause' }
@@ -54,6 +60,7 @@ export class Hud {
   private announcementClearTimer = 0;
   private metaRecapClearTimer = 0;
   private pauseMetaKey = '';
+  private disposeAudioSettings: () => void = () => undefined;
   private readonly buildButton: BuildButton;
   private readonly prospectorPanel: ProspectorPanel;
   private prospectorPanelOpen = false;
@@ -198,6 +205,7 @@ export class Hud {
   }
 
   dispose(): void {
+    this.disposeAudioSettings();
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
     this.elements.agentChip.removeEventListener('click', this.onAgentChipClick);
     window.removeEventListener('keydown', this.onKeyDown, { capture: true });
@@ -304,6 +312,7 @@ export class Hud {
     const key = paused ? JSON.stringify(meta) : '';
     if (key === this.pauseMetaKey) return;
     this.pauseMetaKey = key;
+    this.disposeAudioSettings();
     if (paused) {
       this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
       this.elements.metaRecap.hidden = true;
@@ -315,6 +324,10 @@ export class Hud {
       <p class="hud-meta__eyebrow">Claim Memory</p>
       <p class="hud-meta__line" data-testid="pause-meta-science">${this.escape(meta.science)}</p>
       <p class="hud-meta__line" data-testid="pause-meta-territory">${this.escape(meta.territory)}</p>
+      <div class="hud-meta__audio" data-testid="pause-audio-settings">
+        <p class="hud-meta__label">Sound</p>
+        ${renderAudioSettingsControls(PAUSE_AUDIO_SETTINGS_IDS)}
+      </div>
       <p class="hud-meta__label">Active Research</p>
       <ul class="hud-meta__list" data-testid="pause-meta-boons">
         ${this.renderMetaLines(meta.boons, '0 active research boons', '0 named family effects earned.')}
@@ -324,6 +337,7 @@ export class Hud {
         ${this.renderMetaLines(meta.mastery, '0 mastery tracks exposed', '0 mastery conversions active.')}
       </ul>
     `;
+    this.disposeAudioSettings = bindAudioSettingsControls(this.elements.pauseMeta, PAUSE_AUDIO_SETTINGS_IDS);
   }
 
   private renderMetaLines(lines: PauseMetaSnapshot['boons'], emptyName: string, emptyEffect: string): string {

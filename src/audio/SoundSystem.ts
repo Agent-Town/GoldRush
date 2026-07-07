@@ -1,5 +1,5 @@
 import type { ProjectileKind } from '../systems/CombatSystem';
-import { soundManifest, soundUrlLoader, type SoundName } from './manifest';
+import { soundManifest, soundUrlLoader, type SoundManifestEntry, type SoundName } from './manifest';
 import { readAudioMuted, readAudioVolume, subscribeAudioPreferences } from './settings';
 
 export { soundManifest, type SoundName } from './manifest';
@@ -27,6 +27,9 @@ type SoundDiagnostics = {
   loops: string[];
   lastRequested: string | null;
   lastStarted: string | null;
+  playsPerSecond: Record<string, number>;
+  startedBySound: Record<string, number>;
+  droppedBySound: Record<string, number>;
 };
 
 type LoopState = {
@@ -46,6 +49,10 @@ export class SoundSystem {
   private lastStarted: string | null = null;
   private readonly buffers = new Map<SoundName, Promise<AudioBuffer | null>>();
   private readonly activeBySound = new Map<SoundName, number>();
+  private readonly startedBySound = new Map<SoundName, number>();
+  private readonly droppedBySound = new Map<SoundName, number>();
+  private readonly startedAtBySound = new Map<SoundName, number[]>();
+  private readonly lastAcceptedAtBySound = new Map<SoundName, number>();
   private readonly loops = new Map<SoundName, LoopState>();
   private readonly unsubscribePreferences = subscribeAudioPreferences(() => this.applyMasterVolume());
 
@@ -63,6 +70,7 @@ export class SoundSystem {
       return;
     }
     if (!this.unlocked || readAudioMuted() || readAudioVolume() <= 0) return;
+    if (!this.acceptSoundRequest(name)) return;
     const count = this.activeBySound.get(name) ?? 0;
     if (count >= MAX_PER_SOUND) return;
     this.activeBySound.set(name, count + 1);
@@ -83,7 +91,7 @@ export class SoundSystem {
 
   setLoopVolume(name: SoundName, volume: number): void {
     const loop = this.loops.get(name);
-    const entry = soundManifest[name];
+    const entry: SoundManifestEntry = soundManifest[name];
     if (!loop || !entry) return;
     loop.gain.gain.value = this.effectiveVolume(entry.volume * volume);
   }
@@ -163,14 +171,24 @@ export class SoundSystem {
       loops: [...this.loops.keys()],
       lastRequested: this.lastRequested,
       lastStarted: this.lastStarted,
+      playsPerSecond: this.playsPerSecondSnapshot(),
+      startedBySound: Object.fromEntries(this.startedBySound),
+      droppedBySound: Object.fromEntries(this.droppedBySound),
     };
   }
 
   private readonly unlock = (): void => {
     if (this.disposed) return;
     const context = this.ensureContext();
-    this.unlocked = true;
-    if (context.state !== 'running') void context.resume().catch(() => undefined);
+    if (context.state === 'running') {
+      this.unlocked = true;
+      return;
+    }
+    void context.resume()
+      .then(() => {
+        if (!this.disposed && context.state === 'running') this.unlocked = true;
+      })
+      .catch(() => undefined);
   };
 
   private ensureContext(): AudioContext {
@@ -189,16 +207,18 @@ export class SoundSystem {
       this.releaseSoundSlot(name);
       return;
     }
-    const entry = soundManifest[name];
+    const entry: SoundManifestEntry = soundManifest[name];
     const source = context.createBufferSource();
     const gain = context.createGain();
     source.buffer = buffer;
+    source.playbackRate.value = this.playbackRate(entry.pitchVariance);
     gain.gain.value = this.effectiveVolume(entry.volume * volume);
     source.connect(gain).connect(context.destination);
     this.active += 1;
     source.onended = () => this.markEnded(name);
     source.start();
     this.started += 1;
+    this.recordStarted(name);
     this.lastStarted = name;
   }
 
@@ -220,7 +240,46 @@ export class SoundSystem {
     };
     source.start();
     this.started += 1;
+    this.recordStarted(name);
     this.lastStarted = name;
+  }
+
+  private acceptSoundRequest(name: SoundName): boolean {
+    const entry: SoundManifestEntry = soundManifest[name];
+    const minIntervalMs = entry.minIntervalMs ?? 0;
+    if (minIntervalMs <= 0) return true;
+    const now = performance.now();
+    const last = this.lastAcceptedAtBySound.get(name) ?? -Infinity;
+    if (now - last < minIntervalMs) {
+      this.droppedBySound.set(name, (this.droppedBySound.get(name) ?? 0) + 1);
+      return false;
+    }
+    this.lastAcceptedAtBySound.set(name, now);
+    return true;
+  }
+
+  private playbackRate(pitchVariance = 0): number {
+    return Math.max(0.01, 1 + (Math.random() * 2 - 1) * pitchVariance);
+  }
+
+  private recordStarted(name: SoundName): void {
+    const now = performance.now();
+    this.startedBySound.set(name, (this.startedBySound.get(name) ?? 0) + 1);
+    const starts = this.startedAtBySound.get(name) ?? [];
+    starts.push(now);
+    this.startedAtBySound.set(name, starts);
+    this.trimStarts(starts, now);
+  }
+
+  private playsPerSecondSnapshot(): Record<string, number> {
+    const now = performance.now();
+    const entries = [...this.startedAtBySound.entries()].map(([name, starts]) => [name, this.trimStarts(starts, now).length]);
+    return Object.fromEntries(entries);
+  }
+
+  private trimStarts(starts: number[], now: number): number[] {
+    while (starts[0] !== undefined && now - starts[0] > 1000) starts.shift();
+    return starts;
   }
 
   private loadBuffer(name: SoundName): Promise<AudioBuffer | null> {

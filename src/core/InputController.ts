@@ -19,6 +19,7 @@ export type Intents = {
   buildSlot: number | null;
   restart: boolean;
   pause: boolean;
+  mute: boolean;
   debugSpawn: boolean;
   debugXp: boolean;
 };
@@ -34,6 +35,7 @@ export class InputController {
   private previousUpgrade = false;
   private previousRotateBuild = false;
   private previousWeaponToggle = false;
+  private previousMute = false;
   private previousDebugXp = false;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
@@ -46,6 +48,7 @@ export class InputController {
     buildSlot: null,
     restart: false,
     pause: false,
+    mute: false,
     debugSpawn: false,
     debugXp: false,
   };
@@ -198,6 +201,9 @@ export class InputController {
                 : null;
     this.intents.restart = down('KeyR');
     this.intents.pause = down('KeyP') || down('Escape');
+    const muteHeld = down('KeyM');
+    this.intents.mute = muteHeld && !this.previousMute;
+    this.previousMute = this.keys.has('KeyM');
     this.intents.debugSpawn = down('KeyT');
     const debugXpHeld = down('KeyX');
     this.intents.debugXp = debugXpHeld && !this.previousDebugXp;
