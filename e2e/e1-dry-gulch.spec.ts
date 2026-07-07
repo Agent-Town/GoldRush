@@ -144,9 +144,15 @@ test('Dry Gulch seam panning uses the +40% contract yield multiplier', async ({ 
     .poll(
       () =>
         page.evaluate(() => {
-          const event = (window.__GR_TEST__?.economyLog() ?? []).findLast((entry) => {
-            return typeof entry === 'object' && entry !== null && (entry as { type?: string }).type === 'gold_panned';
-          }) as { amount?: number } | undefined;
+          const log = (window.__GR_TEST__?.economyLog() ?? []) as ReadonlyArray<{ type?: string; amount?: number }>;
+          let event: { type?: string; amount?: number } | undefined;
+          for (let i = log.length - 1; i >= 0; i--) {
+            const entry = log[i];
+            if (typeof entry === 'object' && entry !== null && entry.type === 'gold_panned') {
+              event = entry;
+              break;
+            }
+          }
           return event?.amount ?? 0;
         }),
       { timeout: 10_000 },
@@ -172,7 +178,9 @@ test('contract lane constants allow all four spawn edges', async ({ page }) => {
     ['waves.edgesPerPulse', 4],
     ['waves.aliveCap', 8],
   ] as const) {
-    await expect(page.evaluate(([path, next]) => window.__GR_TEST__?.setBalance(path, next), [key, value])).resolves.toBe(true);
+    await expect(
+      page.evaluate((args: readonly [string, number]) => window.__GR_TEST__?.setBalance(args[0], args[1]), [key, value] as const),
+    ).resolves.toBe(true);
   }
   await page.evaluate(() => window.__GR_TEST__?.resetRun());
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().length ?? 0), { timeout: 10_000 }).toBeGreaterThanOrEqual(4);
