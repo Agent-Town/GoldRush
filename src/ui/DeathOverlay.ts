@@ -62,6 +62,7 @@ export type DeathOverlayOptions = {
   actionLabel?: string;
   runStats?: DeathRunStatsSnapshot;
   agentAutonomyDelta?: { before: number; after: number };
+  townName?: string | null;
   research?: DeathResearchState;
   onResearchPick?: (id: string) => DeathResearchState;
   onResearchSkip?: () => DeathResearchState;
@@ -179,6 +180,7 @@ export class DeathOverlay {
         </dl>
         ${this.renderAgentAutonomy()}
         ${this.renderScienceFooter()}
+        ${this.renderTownFooter()}
         ${this.renderResearch()}
         <section class="death-overlay__scores" aria-label="Best Claims">
           <h2>Best Claims</h2>
@@ -197,6 +199,12 @@ export class DeathOverlay {
     return `<p class="death-overlay__science" data-testid="science-meter">${this.escape(meter.text)}${
       meter.bankedText ? ` <span data-testid="science-banked">${this.escape(meter.bankedText)}</span>` : ''
     }</p>`;
+  }
+
+  private renderTownFooter(): string {
+    const townName = this.options.townName?.trim();
+    if (!townName) return '';
+    return `<p class="death-overlay__town" data-testid="run-ledger-town">Recorded for the claim of ${this.escape(townName)}.</p>`;
   }
 
   private renderAgentAutonomy(): string {

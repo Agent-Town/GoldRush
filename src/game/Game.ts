@@ -128,6 +128,7 @@ import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { LightRig } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
+import { readTownName } from '../town/TownNaming';
 import { GameState } from './GameState';
 import { Progression } from './Progression';
 import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgradeEffect, upgradeFamilyId } from './Upgrades';
@@ -518,6 +519,7 @@ export class Game {
         ...this.researchOverlayOptions(1),
         runStats,
         agentAutonomyDelta: this.agentAutonomyDelta(this.runManager?.diagnostics.secured === true),
+        townName: readTownName(),
       });
     });
     this.events.on('run_ended', (event) => {
@@ -556,6 +558,7 @@ export class Game {
           actionLabel: 'Enter New Claim',
           runStats,
           agentAutonomyDelta,
+          townName: readTownName(),
           onDone: () => {
             if (this.onReturnToMenu) {
               this.runStartMetaRecapPending = false;
@@ -2559,7 +2562,7 @@ export class Game {
   }
 
   private showRunStartMetaRecap(): void {
-    this.hud.showMetaRecap(runStartMetaRecap(this.metaProgressForPresence(), this.researchState), 4);
+    this.hud.showMetaRecap(runStartMetaRecap(this.metaProgressForPresence(), this.researchState, readTownName()), 4);
   }
 
   private flushRunStartMetaRecap(): void {
@@ -2678,13 +2681,14 @@ export class Game {
 
 type MetaPresenceLine = { name: string; effect: string; recap: string };
 
-function runStartMetaRecap(meta: MetaProgress, research: ResearchState): string | null {
+function runStartMetaRecap(meta: MetaProgress, research: ResearchState, townName: string | null): string | null {
   const items: string[] = [];
   if (meta.tracks.territory >= Balance.meta.territoryTier1) {
     items.push(`palisade ring (Territory ${romanNumeral(meta.tracks.territory)})`);
   }
   for (const boon of activeResearchBoons(research)) items.push(boon.recap);
-  return items.length > 0 ? `Your claim remembers: ${items.slice(0, 3).join(' | ')}` : null;
+  const prefix = townName ? `${townName} remembers` : 'Your claim remembers';
+  return items.length > 0 ? `${prefix}: ${items.slice(0, 3).join(' | ')}` : null;
 }
 
 function territoryPauseLine(meta: MetaProgress): string {
