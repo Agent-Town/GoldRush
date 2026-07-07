@@ -10,7 +10,7 @@ import { isCombatDamageDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
 import type { AgentCollectXpOptions, AgentCollectXpResult } from '../agent/ToolSurface';
 import * as Terrain from '../world/Terrain';
-import type { AudioSystem } from './AudioSystem';
+import type { SoundSystem } from '../audio/SoundSystem';
 import { TargetingSystem, type BuildingTarget } from './TargetingSystem';
 import type { CombatVfx } from './CombatVfx';
 
@@ -111,7 +111,7 @@ export class CombatSystem {
     private readonly blastCharges: BlastChargePool,
     private readonly motes: XpMotePool,
     private readonly vfx: CombatVfx,
-    private readonly audio: AudioSystem,
+    private readonly audio: SoundSystem,
     private readonly onHeroDied: () => void,
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
     private readonly onEnemyKilled?: (position: THREE.Vector3) => void,
@@ -263,7 +263,7 @@ export class CombatSystem {
 
     this.vfx.hit(target.position);
     this.vfx.dustPuff(target.position);
-    this.audio.playHit();
+    this.audio.playBuildingDamage(result.family, result.hp, result.maxHp, result.wrecked);
     this.events.emit({
       type: 'building_damaged',
       at: this.currentAt,
@@ -364,7 +364,7 @@ export class CombatSystem {
         if (this.blastCharges.activate(this.scratchOrigin, targetPoint, airTime, damage, aoe.radius, ownerId)) {
           this.recordShot('lob', ownerId);
           handle.onFire?.(this.currentAt);
-          this.audio.playArc();
+          this.audio.playShot('lob', ownerId);
         }
       }
       return;
@@ -385,7 +385,7 @@ export class CombatSystem {
       if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, ownerId, state.id, target.id)) {
         this.recordShot('bolt', ownerId);
         handle.onFire?.(this.currentAt);
-        this.audio.playArc();
+        this.audio.playShot('bolt', ownerId);
       }
     }
   }
@@ -422,10 +422,10 @@ export class CombatSystem {
     this.lastBlastDetonationPosition.copy(position);
     this.hasLastBlastDetonation = true;
     this.vfx.detonationRing(position, radius);
+    this.audio.playDetonation(ownerId);
     if (isCombatDamageDisabled()) return;
 
     const radiusSq = radius * radius;
-    let hit = false;
     if (ownerId === 'turrets') {
       let closest: ClaimJumperEnemy | null = null;
       let closestSq = radiusSq;
@@ -440,13 +440,11 @@ export class CombatSystem {
         closestSq = distanceSq;
       }
       if (closest) {
-        hit = true;
         this.recordDamage(ownerId, Math.min(closest.currentHp, damage));
         const died = closest.takeDamage(damage);
         this.vfx.hit(closest.position);
         if (died) this.killEnemy(closest, this.currentAt, ownerId);
       }
-      if (hit) this.audio.playHit();
       return;
     }
 
@@ -456,13 +454,11 @@ export class CombatSystem {
       const dx = enemy.position.x - position.x;
       const dz = enemy.position.z - position.z;
       if (dx * dx + dz * dz > radiusSq) continue;
-      hit = true;
       this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
       const died = enemy.takeDamage(damage);
       this.vfx.hit(enemy.position);
       if (died) this.killEnemy(enemy, this.currentAt, ownerId);
     }
-    if (hit) this.audio.playHit();
   };
 
   private resolveBoltHits(at: number): void {

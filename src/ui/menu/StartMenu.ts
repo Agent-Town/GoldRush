@@ -9,7 +9,7 @@ import {
   saveResearchState,
   setPinnedResearchTarget,
 } from '../../meta/ResearchTree';
-import { readAudioVolume, setAudioVolume } from '../../systems/AudioSystem';
+import { readAudioMuted, readAudioVolume, setAudioMuted, setAudioVolume, SoundSystem } from '../../audio/SoundSystem';
 import { renderResearchChart } from '../ResearchChart';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
@@ -24,6 +24,7 @@ type StartMenuOptions = {
 
 export class StartMenu {
   private readonly root = document.createElement('section');
+  private readonly audio = new SoundSystem();
   private settingsOpen = false;
   private researchOpen = false;
   private selectedResearchNodeId: string | undefined;
@@ -44,12 +45,14 @@ export class StartMenu {
   dispose(): void {
     this.root.removeEventListener('click', this.onClick);
     this.root.removeEventListener('keydown', this.onKeyDown);
+    this.audio.dispose();
     this.root.remove();
   }
 
   private render(): void {
     const hasContinue = hasSuspendedRun();
     const volume = Math.round(readAudioVolume() * 100);
+    const muted = readAudioMuted();
     this.root.className = `gr-start-menu${this.researchOpen ? ' gr-start-menu--research-open' : ''}`;
     this.root.innerHTML = `
       <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="ready" style="background-image:url('${backdropUrl}')"></div>
@@ -74,6 +77,10 @@ export class StartMenu {
             <input data-testid="start-menu-volume" type="range" min="0" max="100" step="5" value="${volume}" />
             <output data-testid="start-menu-volume-value">${volume}%</output>
           </label>
+          <label>
+            <span>Mute</span>
+            <input data-testid="start-menu-mute" type="checkbox" ${muted ? 'checked' : ''} />
+          </label>
         </section>
         <section class="gr-start-menu__research" data-testid="research-overlay" aria-label="Research ledger" ${
           this.researchOpen ? '' : 'hidden'
@@ -81,6 +88,7 @@ export class StartMenu {
       </div>
     `;
     this.root.querySelector<HTMLInputElement>('[data-testid="start-menu-volume"]')?.addEventListener('input', this.onVolumeInput);
+    this.root.querySelector<HTMLInputElement>('[data-testid="start-menu-mute"]')?.addEventListener('change', this.onMuteInput);
   }
 
   private renderResearch(): string {
@@ -106,6 +114,7 @@ export class StartMenu {
     const button = target.closest<HTMLButtonElement>('[data-menu-action]');
     const action = button?.dataset.menuAction;
     if (!action) return;
+    this.audio.play(action === 'research' ? 'ledger-open' : 'menu-tap');
     if (action === 'new') this.options.onNewClaim();
     if (action === 'continue') this.options.onContinue();
     if (action === 'profile') this.options.onProfile();
@@ -143,6 +152,10 @@ export class StartMenu {
     setAudioVolume(volume / 100);
     const output = this.root.querySelector<HTMLOutputElement>('[data-testid="start-menu-volume-value"]');
     if (output) output.textContent = `${volume}%`;
+  };
+
+  private readonly onMuteInput = (event: Event) => {
+    setAudioMuted((event.currentTarget as HTMLInputElement).checked);
   };
 
   private toggleSettings(): void {

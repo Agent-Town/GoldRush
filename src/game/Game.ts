@@ -85,7 +85,7 @@ import {
   type BlastAimMode,
   type DifficultyPresetId,
 } from './Balance';
-import { AudioSystem } from '../systems/AudioSystem';
+import { SoundSystem } from '../audio/SoundSystem';
 import {
   Economy,
   initialEconomyState,
@@ -144,7 +144,7 @@ export class Game {
   private readonly xpMotes = new XpMotePool();
   private readonly goldPickups = new GoldPickupPool();
   private readonly combatVfx = new CombatVfx();
-  private readonly audio = new AudioSystem();
+  private readonly audio = new SoundSystem();
   private readonly state = new GameState();
   private readonly economy = new Economy();
   private readonly goldTargeting = new TargetingSystem();
@@ -396,6 +396,8 @@ export class Game {
   private appliedMetaProgress: MetaProgress = freshMetaProgress();
   private runStartMetaRecapPending = false;
   private readonly craftingProfile = normalizeQueueProfile(new URLSearchParams(window.location.search).get('profile'));
+  private lastHarvestChanneling = false;
+  private lastUpgradeOfferAudioKey = '';
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -419,6 +421,7 @@ export class Game {
       this.primaryActor.group.position,
       () => this.debugBeaconWaveOverride ?? this.waveSystem.diagnostics.wave,
       (position, text, color) => this.vfx.floatText(position, text, color),
+      (sound) => this.audio.play(sound),
     );
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
@@ -474,6 +477,8 @@ export class Game {
       this.damageFlashRemaining = Balance.hero.iframes;
     });
     this.events.on('hero_died', (event) => {
+      this.audio.play('defeat-sting');
+      this.audio.play('ledger-open', 0.75);
       const scoreAt = Date.now();
       const economySummary = summarizeLog(this.economy.log);
       const runStats = this.deathRunStats(economySummary);
@@ -505,6 +510,8 @@ export class Game {
     });
     this.events.on('run_ended', (event) => {
       if (event.reason !== 'secured') return;
+      this.audio.play('victory-sting');
+      this.audio.play('ledger-open', 0.75);
       const scoreAt = Date.now();
       const economySummary = summarizeLog(this.economy.log);
       const runStats = this.deathRunStats(economySummary);
@@ -558,6 +565,9 @@ export class Game {
     });
     this.events.on('building_wrecked', () => {
       this.buildingsWrecked += 1;
+    });
+    this.events.on('wave_started', () => {
+      this.audio.play('wave-start-horn');
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -635,6 +645,7 @@ export class Game {
           this.publishDiagnostics();
           return placed;
         },
+        testAudio: (name: string) => this.audio.play(name),
         enemyPositions: () =>
           this.enemies.all
             .filter((enemy) => enemy.isAlive)
@@ -723,9 +734,12 @@ export class Game {
         },
       },
     );
-    this.unsubscribeAgentReceipts = this.agentStub.subscribe((receipt) =>
-      this.prospector.handleReceipt(receipt, this.resolveProspectorReceiptPoint(receipt)),
-    );
+    this.unsubscribeAgentReceipts = this.agentStub.subscribe((receipt) => {
+      this.prospector.handleReceipt(receipt, this.resolveProspectorReceiptPoint(receipt));
+      if (receipt.tool === 'et.goldrush.get_state') return;
+      if (receipt.outcome.ok) this.audio.play('chirp-acknowledge');
+      else if (receipt.outcome.reason !== 'NO_SYSTEM_API') this.audio.play('chirp-refuse');
+    });
     this.agentStub.heartbeat();
     this.showProspectorIntro();
   }
@@ -845,6 +859,7 @@ export class Game {
         this.enemies.all,
         (position, amount) => {
           if (Balance.charm.coinTick > 0) this.audio.playCoin();
+          if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
           this.vfx.floatText(position, `+${amount}`, '#c4883a');
         },
         (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
@@ -864,7 +879,10 @@ export class Game {
         this.primaryActor.group.position,
         this.primaryActor.velocity.length(),
       );
+      if (this.harvestSnapshot.channeling && !this.lastHarvestChanneling) this.audio.play('pan-swish');
+      this.lastHarvestChanneling = this.harvestSnapshot.channeling;
       if (this.harvestSnapshot.lastGoldGain > 0) {
+        if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
         this.vfx.floatText(this.primaryActor.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.combat.update(simDelta, this.timeAlive);
@@ -884,6 +902,7 @@ export class Game {
 
   private updatePresentation(delta: number): void {
     this.prospector.update(delta, this.timeAlive, this.primaryActor.group.position);
+    this.syncAudioLoops();
     this.vfx.update(delta);
     this.syncHeroVisualHeight();
     const visualStress =
@@ -899,6 +918,33 @@ export class Game {
     this.syncAssayOfficePrompt();
     this.syncBuildingContextPrompt();
     this.publishDiagnostics();
+  }
+
+  private syncAudioLoops(): void {
+    const active = this.state.current === 'playing' && !this.state.isPaused;
+    if (!active) {
+      this.audio.setLoop('river-ambience-loop', false);
+      this.audio.setLoop('sluice-water-loop', false);
+      this.audio.setLoop('prospector-hover-loop', false);
+      return;
+    }
+
+    this.audio.setLoop('river-ambience-loop', true, 0.35 + this.spatialAudioVolume({ x: this.camera.position.x, z: 0 }, 34) * 0.65);
+
+    const sluices = this.buildSystem.diagnostics.sluicePositions;
+    let sluiceVolume = 0;
+    for (const position of sluices) sluiceVolume = Math.max(sluiceVolume, this.spatialAudioVolume(position, 26));
+    this.audio.setLoop('sluice-water-loop', sluices.length > 0 && sluiceVolume > 0.04, sluiceVolume);
+
+    const prospector = this.prospector.snapshot;
+    const moving = prospector.moving || prospector.drifting;
+    this.audio.setLoop('prospector-hover-loop', moving, this.spatialAudioVolume(prospector.position, 20));
+  }
+
+  private spatialAudioVolume(point: { x: number; z: number }, radius: number): number {
+    const dx = this.camera.position.x - point.x;
+    const dz = this.camera.position.z - point.z;
+    return Math.max(0, Math.min(1, 1 - Math.hypot(dx, dz) / Math.max(1, radius)));
   }
 
   private rememberIntents(intents: Intents): void {
@@ -1290,6 +1336,7 @@ export class Game {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
       },
+      audio: this.audio.diagnostics(),
       build: {
         ...buildDiagnostics,
         killsByOwner: this.combat.killsByOwner,
@@ -1537,6 +1584,7 @@ export class Game {
     if (intent.type === 'set_agent_ability') this.agentConsent.setAbility(intent.ability, intent.granted);
     if (intent.type === 'set_agent_rung' || intent.type === 'set_agent_ability') return;
     if (this.secureClaimChoicePending()) return;
+    this.audio.play('menu-tap');
     if (intent.type === 'pause') this.togglePlayerPause();
     if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
     if (intent.type === 'toggle_build_menu') this.toggleBuildMenu();
@@ -1586,6 +1634,8 @@ export class Game {
     this.timeAlive = 0;
     this.nextProspectorXpSweepAt = 0;
     this.prospectorIntroShown = false;
+    this.lastHarvestChanneling = false;
+    this.lastUpgradeOfferAudioKey = '';
     this.kills = 0;
     this.stolenTotal = 0;
     this.reclaimedTotal = 0;
@@ -1923,6 +1973,7 @@ export class Game {
     if (!result.ok) return;
     this.reclaimedTotal += reclaimed;
     if (Balance.charm.coinTick > 0) this.audio.playCoin();
+    if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
     this.vfx.floatText(position, `+${reclaimed}`, '#c4883a');
   }
 
@@ -2125,6 +2176,7 @@ export class Game {
       return;
     }
     if (this.buildSystem.assayOfficeInRange(this.primaryActor.group.position)) {
+      this.audio.play('ledger-open');
       this.openAssayBench?.();
       return;
     }
@@ -2270,6 +2322,7 @@ export class Game {
         const next = takeNode(this.researchState, id);
         if (next !== this.researchState) {
           this.researchState = saveResearchState(this.researchStorage, next);
+          this.audio.play('research-pick');
           roundsRemaining = Math.max(0, roundsRemaining - 1);
           this.applyResearchEffects();
           this.syncMegaprojectSite();
@@ -2408,7 +2461,13 @@ export class Game {
     const offer = this.progression.offer;
     if (this.state.current !== 'levelup' || !offer) {
       this.upgradeOverlay.hide();
+      this.lastUpgradeOfferAudioKey = '';
       return;
+    }
+    const offerKey = offer.map((def) => def.id).join('|');
+    if (offerKey !== this.lastUpgradeOfferAudioKey) {
+      this.audio.play('tier-up');
+      this.lastUpgradeOfferAudioKey = offerKey;
     }
     const stacks = this.progression.snapshot.stacks;
     this.upgradeOverlay.show(
