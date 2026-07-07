@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { loadGeneratedTexture } from '../assets/generated';
 import { palette } from '../assets/palette';
 import { assetSlots } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 
 export type WaterDiagnostics = {
@@ -173,7 +174,7 @@ export function createFordStones(waterY: number): THREE.InstancedMesh {
   ] as const;
   const mesh = new THREE.InstancedMesh(stoneGeometry, stoneMaterial, stones.length);
   mesh.name = 'FordSteppingStones';
-  mesh.renderOrder = 2;
+  mesh.renderOrder = RenderLayers.gameplay;
   mesh.receiveShadow = true;
   const matrix = new THREE.Matrix4();
   const rotation = new THREE.Quaternion();

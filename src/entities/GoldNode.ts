@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import { visualY, type Vec2 } from '../world/Terrain';
 
@@ -55,7 +56,7 @@ export class GoldNodeVisualBatch {
       name: 'GeneratedGoldSeamSprites',
       y: 0.42,
       scale: [1.65, 1.65],
-      renderOrder: 2,
+      renderOrder: RenderLayers.gameplay,
       onLoaded: () => {
         this.clusterMesh.visible = false;
         this.glintMesh.visible = false;

@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
 import { SpriteAnimator, type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import type { PalisadeBlocker } from './Palisade';
 import {
@@ -45,14 +46,14 @@ export class EnemyPool {
     name: 'GeneratedClaimJumperSprites',
     y: ENEMY_SPRITE_Y,
     scale: [1.55, 1.55],
-    renderOrder: 2,
+    renderOrder: RenderLayers.gameplay,
     onLoaded: () => this.setProceduralVisible(false),
   });
   private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSpriteFades',
     y: ENEMY_SPRITE_Y,
     scale: [1.55, 1.55],
-    renderOrder: 2.01,
+    renderOrder: RenderLayers.gameplayFade,
   });
   private readonly spriteAnimator = new SpriteAnimator(
     assetSlots.charClaimJumper,
@@ -64,13 +65,13 @@ export class EnemyPool {
     name: 'GeneratedClaimJumperThiefSprites',
     y: ENEMY_SPRITE_Y,
     scale: [1.55, 1.55],
-    renderOrder: 2,
+    renderOrder: RenderLayers.gameplay,
   });
   private readonly thiefSpriteFades = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSpriteFades',
     y: ENEMY_SPRITE_Y,
     scale: [1.55, 1.55],
-    renderOrder: 2.01,
+    renderOrder: RenderLayers.gameplayFade,
   });
   private readonly thiefSpriteAnimator = new SpriteAnimator(
     assetSlots.charClaimJumper,
@@ -300,14 +301,14 @@ export class EnemyPool {
       tagPlaceholder(part, assetSlots.charClaimJumper);
       this.group.add(part);
     }
-    this.renderParts[0].renderOrder = -1;
+    this.renderParts[0].renderOrder = RenderLayers.groundShadows;
   }
 
   private createSackMesh(): void {
     this.sackLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(-0.38, 0.66, 0.12), new THREE.Euler(0.2, 0.1, -0.38)));
     this.sackMesh.count = Balance.enemy.poolSize;
     this.sackMesh.frustumCulled = false;
-    this.sackMesh.renderOrder = 3;
+    this.sackMesh.renderOrder = RenderLayers.gameplay;
     tagPlaceholder(this.sackMesh, assetSlots.charClaimJumper);
     this.group.add(this.sackMesh);
     for (let i = 0; i < Balance.enemy.poolSize; i += 1) {
@@ -319,7 +320,7 @@ export class EnemyPool {
   private createHitFlashMesh(): void {
     this.hitFlashes.count = Balance.enemy.poolSize;
     this.hitFlashes.frustumCulled = false;
-    this.hitFlashes.renderOrder = 4;
+    this.hitFlashes.renderOrder = RenderLayers.impactVfx;
     this.hitFlashes.visible = false;
     tagPlaceholder(this.hitFlashes, assetSlots.charClaimJumper);
     this.group.add(this.hitFlashes);

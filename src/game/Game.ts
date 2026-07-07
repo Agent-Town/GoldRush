@@ -43,6 +43,7 @@ import {
 import { InputController, type Intents } from '../core/InputController';
 import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
+import { RenderLayers, renderLayerOf } from '../core/RenderLayers';
 import { createRng } from '../core/Rng';
 import { Hero } from '../entities/Hero';
 import { BlastChargePool } from '../entities/BlastCharge';
@@ -174,6 +175,9 @@ export class Game {
       transparent: true,
       opacity: 0.46,
       depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
       side: THREE.DoubleSide,
     }),
   );
@@ -332,6 +336,7 @@ export class Game {
     this.renderer.toneMappingExposure = this.tuning.exposure;
     this.blastAimReticle.name = 'BlastAimReticle';
     this.blastAimReticle.rotation.x = -Math.PI / 2;
+    this.blastAimReticle.renderOrder = RenderLayers.groundDecals;
     this.blastAimReticle.visible = false;
     this.canvas.addEventListener('pointermove', this.onBlastAimPointerMove);
     this.buildSystem = new BuildSystem(
@@ -931,6 +936,8 @@ export class Game {
       paused: this.state.isPaused,
       state: this.state.isPaused ? 'paused' : this.state.current,
       difficultyPreset: this.difficultyPreset,
+      renderLayers: RenderLayers,
+      renderLayerOf,
       ui: this.uiSnapshot,
       hp: this.primaryActor.hp,
       maxHp: this.primaryActor.maxHp,

@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 
 export class ProjectilePool {
@@ -48,6 +49,8 @@ export class ProjectilePool {
     this.tracerMesh.count = Balance.projectile.pool;
     this.boltMesh.frustumCulled = false;
     this.tracerMesh.frustumCulled = false;
+    this.boltMesh.renderOrder = RenderLayers.impactVfx;
+    this.tracerMesh.renderOrder = RenderLayers.impactVfx;
     tagPlaceholder(this.boltMesh, assetSlots.vfxBolt);
     tagPlaceholder(this.tracerMesh, assetSlots.vfxBolt);
     this.group.add(this.tracerMesh, this.boltMesh);

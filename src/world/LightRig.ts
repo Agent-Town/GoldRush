@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import * as Terrain from './Terrain';
 
@@ -154,7 +155,7 @@ class SpriteBlobShadows {
     for (const mesh of Object.values(this.meshes)) {
       mesh.name = `${this.group.name}.${mesh.uuid}`;
       mesh.frustumCulled = false;
-      mesh.renderOrder = -2;
+      mesh.renderOrder = RenderLayers.groundShadows;
       mesh.count = 0;
       this.group.add(mesh);
     }
@@ -217,6 +218,9 @@ class SpriteBlobShadows {
       transparent: true,
       opacity,
       depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
     });
   }
 }

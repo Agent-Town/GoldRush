@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 
 export type BlastDetonation = (position: THREE.Vector3, damage: number, radius: number, ownerId: string) => void;
@@ -36,6 +37,7 @@ export class BlastChargePool {
     transparent: true,
     opacity: 0.72,
     depthWrite: false,
+    depthTest: false,
   });
   private readonly lines = new THREE.LineSegments(this.lineGeometry, this.lineMaterial);
   private readonly syncObject = new THREE.Object3D();
@@ -46,6 +48,8 @@ export class BlastChargePool {
     this.group.name = 'BlastChargePool';
     this.chargeMesh.frustumCulled = false;
     this.lines.frustumCulled = false;
+    this.chargeMesh.renderOrder = RenderLayers.impactVfx;
+    this.lines.renderOrder = RenderLayers.impactVfx;
     this.lineGeometry.setAttribute('position', new THREE.BufferAttribute(this.linePositions, 3));
     this.group.add(this.lines, this.chargeMesh);
     for (let i = 0; i < Balance.blast.pool; i += 1) {

@@ -17,6 +17,7 @@ import type { BuildSink, Economy } from '../game/Economy';
 import type { ShooterHandle } from './CombatSystem';
 import type { CombatSystem } from './CombatSystem';
 import type { BuildingTarget, TargetingSystem } from './TargetingSystem';
+import { RenderLayers } from '../core/RenderLayers';
 import * as Terrain from '../world/Terrain';
 
 export type BuildableSnapshot = {
@@ -200,15 +201,41 @@ export class BuildSystem {
     roughness: 0.86,
     metalness: 0.02,
     vertexColors: true,
+    depthWrite: false,
+    polygonOffset: true,
+    polygonOffsetFactor: -1,
+    polygonOffsetUnits: -1,
+  });
+  private readonly hpVisualMaterial = new THREE.MeshStandardMaterial({
+    color: '#fff8e8',
+    roughness: 0.86,
+    metalness: 0.02,
+    vertexColors: true,
+    transparent: true,
+    depthWrite: false,
   });
   private readonly buildingVisuals = new THREE.InstancedMesh(
     this.buildingVisualGeometry,
     this.buildingVisualMaterial,
-    totalBuildableCapacity() * 3,
+    totalBuildableCapacity(),
+  );
+  private readonly hpVisuals = new THREE.InstancedMesh(
+    this.buildingVisualGeometry,
+    this.hpVisualMaterial,
+    totalBuildableCapacity() * 2,
   );
   private readonly repairRing = new THREE.Mesh(
     new THREE.RingGeometry(0.78, 0.92, 48),
-    new THREE.MeshBasicMaterial({ color: repairColor, transparent: true, opacity: 0.86, side: THREE.DoubleSide }),
+    new THREE.MeshBasicMaterial({
+      color: repairColor,
+      transparent: true,
+      opacity: 0.86,
+      side: THREE.DoubleSide,
+      depthWrite: false,
+      polygonOffset: true,
+      polygonOffsetFactor: -1,
+      polygonOffsetUnits: -1,
+    }),
   );
   private readonly repairRingIndexCount: number;
   private readonly assayOfficeMaterial = new THREE.MeshStandardMaterial({
@@ -260,6 +287,7 @@ export class BuildSystem {
       this.turrets.group,
       this.assayOffice,
       this.buildingVisuals,
+      this.hpVisuals,
       this.repairRing,
       this.ghost,
     );
@@ -268,17 +296,28 @@ export class BuildSystem {
     this.createBuildingTargets();
     this.combat.registerBuildingDamageResolver((target, amount) => this.resolveBuildingDamage(target, amount));
     this.repairRing.rotation.x = -Math.PI / 2;
+    this.repairRing.renderOrder = RenderLayers.groundDecals;
     this.repairRing.visible = false;
     this.repairRingIndexCount = this.repairRing.geometry.index?.count ?? this.repairRing.geometry.attributes.position.count;
     this.repairRing.geometry.setDrawRange(0, 0);
     this.buildingVisuals.frustumCulled = false;
+    this.buildingVisuals.renderOrder = RenderLayers.groundDecals;
     this.buildingVisuals.visible = false;
-    for (let i = 0; i < totalBuildableCapacity() * 3; i += 1) {
+    this.hpVisuals.frustumCulled = false;
+    this.hpVisuals.renderOrder = RenderLayers.worldUi;
+    this.hpVisuals.visible = false;
+    for (let i = 0; i < totalBuildableCapacity(); i += 1) {
       this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
       this.buildingVisuals.setColorAt(i, rubbleColor);
     }
+    for (let i = 0; i < totalBuildableCapacity() * 2; i += 1) {
+      this.hpVisuals.setMatrixAt(i, hiddenMatrix);
+      this.hpVisuals.setColorAt(i, hpBackingColor);
+    }
     this.buildingVisuals.instanceMatrix.needsUpdate = true;
     if (this.buildingVisuals.instanceColor) this.buildingVisuals.instanceColor.needsUpdate = true;
+    this.hpVisuals.instanceMatrix.needsUpdate = true;
+    if (this.hpVisuals.instanceColor) this.hpVisuals.instanceColor.needsUpdate = true;
     this.syncGhostShape();
     this.ghost.visible = false;
     this.canvas.addEventListener('pointermove', this.onPointerMove);
@@ -584,6 +623,7 @@ export class BuildSystem {
     this.ghostMaterial.dispose();
     this.buildingVisualGeometry.dispose();
     this.buildingVisualMaterial.dispose();
+    this.hpVisualMaterial.dispose();
     this.repairRing.geometry.dispose();
     this.repairRing.material.dispose();
     this.assayOffice.traverse((child) => {
@@ -1377,16 +1417,15 @@ export class BuildSystem {
     if (!this.visualDirty && this.activeHpBars <= 0) return;
     this.activeHpBars = 0;
     this.activeRuins = 0;
-    let any = false;
 
     for (const id of buildableIds) {
       for (let i = 0; i < this.hp[id].length; i += 1) {
-        const baseSlot = this.visualSlot(id, i) * 3;
-        const hpBackSlot = baseSlot;
-        const hpFillSlot = baseSlot + 1;
-        const rubbleSlot = baseSlot + 2;
-        this.buildingVisuals.setMatrixAt(hpBackSlot, hiddenMatrix);
-        this.buildingVisuals.setMatrixAt(hpFillSlot, hiddenMatrix);
+        const baseSlot = this.visualSlot(id, i);
+        const hpBackSlot = baseSlot * 2;
+        const hpFillSlot = hpBackSlot + 1;
+        const rubbleSlot = baseSlot;
+        this.hpVisuals.setMatrixAt(hpBackSlot, hiddenMatrix);
+        this.hpVisuals.setMatrixAt(hpFillSlot, hiddenMatrix);
         this.buildingVisuals.setMatrixAt(rubbleSlot, hiddenMatrix);
 
         const position = this.positionFor(id, i);
@@ -1397,7 +1436,6 @@ export class BuildSystem {
           if (this.wrecked[id][i] && position) {
             this.syncRubble(rubbleSlot, id, i, position);
             this.activeRuins += 1;
-            any = true;
           }
           continue;
         }
@@ -1405,18 +1443,19 @@ export class BuildSystem {
         if (this.wrecked[id][i]) {
           this.syncRubble(rubbleSlot, id, i, position);
           this.activeRuins += 1;
-          any = true;
         } else if (hp < maxHp) {
           this.syncHpBar(hpBackSlot, hpFillSlot, id, i, position, hp / maxHp);
           this.activeHpBars += 1;
-          any = true;
         }
       }
     }
 
-    this.buildingVisuals.visible = any;
+    this.buildingVisuals.visible = this.activeRuins > 0;
+    this.hpVisuals.visible = this.activeHpBars > 0;
     this.buildingVisuals.instanceMatrix.needsUpdate = true;
     if (this.buildingVisuals.instanceColor) this.buildingVisuals.instanceColor.needsUpdate = true;
+    this.hpVisuals.instanceMatrix.needsUpdate = true;
+    if (this.hpVisuals.instanceColor) this.hpVisuals.instanceColor.needsUpdate = true;
     this.visualDirty = false;
   }
 
@@ -1430,8 +1469,8 @@ export class BuildSystem {
     this.visualObject.rotation.set(0, yaw, 0);
     this.visualObject.scale.set(hpBarWidth, hpBarHeight, hpBarDepth);
     this.visualObject.updateMatrix();
-    this.buildingVisuals.setMatrixAt(backSlot, this.visualObject.matrix);
-    this.buildingVisuals.setColorAt(backSlot, hpBackingColor);
+    this.hpVisuals.setMatrixAt(backSlot, this.visualObject.matrix);
+    this.hpVisuals.setColorAt(backSlot, hpBackingColor);
 
     const fillWidth = Math.max(0.08, hpBarWidth * safeRatio);
     const leftOffset = -hpBarWidth * (1 - safeRatio) * 0.5;
@@ -1446,8 +1485,8 @@ export class BuildSystem {
     );
     this.visualObject.scale.set(fillWidth, fillHeight, fillDepth);
     this.visualObject.updateMatrix();
-    this.buildingVisuals.setMatrixAt(fillSlot, this.visualObject.matrix);
-    this.buildingVisuals.setColorAt(fillSlot, this.hpBarFillColor(safeRatio));
+    this.hpVisuals.setMatrixAt(fillSlot, this.visualObject.matrix);
+    this.hpVisuals.setColorAt(fillSlot, this.hpBarFillColor(safeRatio));
   }
 
   private syncRubble(slot: number, id: BuildableId, index: number, position: THREE.Vector3): void {
@@ -1461,9 +1500,12 @@ export class BuildSystem {
   }
 
   private hideAllBuildingVisuals(): void {
-    for (let i = 0; i < totalBuildableCapacity() * 3; i += 1) this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
+    for (let i = 0; i < totalBuildableCapacity(); i += 1) this.buildingVisuals.setMatrixAt(i, hiddenMatrix);
+    for (let i = 0; i < totalBuildableCapacity() * 2; i += 1) this.hpVisuals.setMatrixAt(i, hiddenMatrix);
     this.buildingVisuals.visible = false;
+    this.hpVisuals.visible = false;
     this.buildingVisuals.instanceMatrix.needsUpdate = true;
+    this.hpVisuals.instanceMatrix.needsUpdate = true;
     this.visualDirty = false;
   }
 

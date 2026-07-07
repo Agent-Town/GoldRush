@@ -3,6 +3,7 @@ import terrainContractText from '../../assets/layer-contracts/m1-core.layer-cont
 import { loadGeneratedTexture } from '../assets/generated';
 import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
+import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import { normalizeSeed } from '../core/Rng';
 import { createClaimProps } from './props';
@@ -263,7 +264,7 @@ export const createRiverPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.ass
     const mesh = new THREE.Mesh(createExtendedRiverGeometry(), createLivingWaterMaterial(waterMaterialConfig(false)));
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = WATER_Y;
-    mesh.renderOrder = 0;
+    mesh.renderOrder = RenderLayers.terrain;
     mesh.receiveShadow = true;
     return tagPlaceholder(mesh, assetSlots.terrainRiver);
   },
@@ -278,7 +279,7 @@ export const createFordPlaceholder: PlaceholderFactory<THREE.Mesh> = Object.assi
     );
     mesh.rotation.x = -Math.PI / 2;
     mesh.position.y = WATER_Y + 0.015;
-    mesh.renderOrder = 1;
+    mesh.renderOrder = RenderLayers.groundDecals;
     mesh.receiveShadow = true;
     return tagPlaceholder(mesh, assetSlots.terrainFord);
   },
@@ -441,7 +442,7 @@ function createVistaBankMesh(material: THREE.MeshStandardMaterial): THREE.Mesh {
   mesh.userData.terrainVista = true;
   mesh.rotation.x = -Math.PI / 2;
   mesh.receiveShadow = true;
-  mesh.renderOrder = -1;
+  mesh.renderOrder = RenderLayers.terrainBackdrop;
   return mesh;
 }
 
