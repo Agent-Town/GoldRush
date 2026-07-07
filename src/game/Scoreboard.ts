@@ -15,6 +15,7 @@ export type ScoreRecord = {
   weaponSplit?: WeaponSplit;
   secured?: boolean;
   profileName?: string;
+  contractId?: string;
   legacy?: boolean;
 };
 
@@ -126,6 +127,7 @@ function isScoreRecord(value: unknown): value is ScoreRecord {
     (candidate.weaponSplit === undefined || isWeaponSplit(candidate.weaponSplit)) &&
     (candidate.secured === undefined || typeof candidate.secured === 'boolean') &&
     (candidate.profileName === undefined || typeof candidate.profileName === 'string') &&
+    (candidate.contractId === undefined || typeof candidate.contractId === 'string') &&
     (candidate.legacy === undefined || typeof candidate.legacy === 'boolean')
   );
 }

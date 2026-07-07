@@ -210,6 +210,7 @@ type EpochManifest = EpochMeta & {
 
 const DEFAULT_EPOCH_ID = 'epoch-1-frontier';
 export const DEFAULT_CONTRACT_ID = 'the-claim';
+const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
 
 // Future locked-stub example:
 // tile: { id: 'steamworks-forge-yard', biome: 'steamworks', elevation: { grid: { columns: 33, rows: 33 }, cellSize: 2, heightsRef: 'tiles/forge-yard.hf32', slopeMax: 0.7, waterline: -0.1 } }
@@ -362,19 +363,29 @@ function toMeta(manifest: EpochManifest): EpochMeta {
 }
 
 let activeSelection: { contract: ContractManifest; diagnostics: ActiveContractDiagnostics } | null = null;
+let activeSelectionSearch = '';
+
+export function stagePlayerContractLaunch(id: string): void {
+  activeSelection = null;
+  activeSelectionSearch = '';
+  try {
+    globalThis.sessionStorage?.setItem(PLAYER_CONTRACT_LAUNCH_KEY, id);
+  } catch {}
+}
 
 function activeContractSelection(): { contract: ContractManifest; diagnostics: ActiveContractDiagnostics } {
-  if (activeSelection) return activeSelection;
+  const search = currentSearch();
+  if (activeSelection && activeSelectionSearch === search) return activeSelection;
 
   const contracts = listContracts(DEFAULT_EPOCH_ID);
   const fallback = contracts.find((contract) => contract.id === DEFAULT_CONTRACT_ID) ?? defaultContractFor(manifestsById.get(DEFAULT_EPOCH_ID)!);
-  const params = readSearchParams();
+  const params = new URLSearchParams(search);
   const requestedId = params.get('contract');
   const debug = params.has('debug') || params.get('bench') === 'fullbase';
   let contract = fallback;
   let fallbackReason: ActiveContractDiagnostics['fallbackReason'] = null;
 
-  if (requestedId && !debug) {
+  if (requestedId && !debug && !isPlayerContractLaunch(requestedId)) {
     fallbackReason = 'debug-disabled';
   } else if (requestedId) {
     contract = contracts.find((entry) => entry.id === requestedId) ?? fallback;
@@ -390,7 +401,16 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
       warningSuppressed: fallbackReason === 'unknown-contract',
     },
   };
+  activeSelectionSearch = search;
   return activeSelection;
+}
+
+function isPlayerContractLaunch(id: string): boolean {
+  try {
+    return globalThis.sessionStorage?.getItem(PLAYER_CONTRACT_LAUNCH_KEY) === id;
+  } catch {
+    return false;
+  }
 }
 
 function activeDevTileOverride(): EpochTileDescriptor | null {
@@ -427,10 +447,14 @@ function defaultContractFor(manifest: EpochManifest): ContractManifest {
 }
 
 function readSearchParams(): URLSearchParams {
+  return new URLSearchParams(currentSearch());
+}
+
+function currentSearch(): string {
   try {
-    return new URLSearchParams(globalThis.location?.search ?? '');
+    return globalThis.location?.search ?? '';
   } catch {
-    return new URLSearchParams('');
+    return '';
   }
 }
 

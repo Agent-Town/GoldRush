@@ -22,6 +22,7 @@ export type BestClaimRow = {
   weaponSplit?: { spark: number; blast: number };
   secured?: boolean;
   profileName?: string;
+  contractId?: string;
   legacy?: boolean;
 };
 

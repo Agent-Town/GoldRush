@@ -105,6 +105,196 @@
   cursor: pointer;
 }
 
+.town-ui__board {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: grid;
+  place-items: center;
+  padding: max(18px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
+  pointer-events: auto;
+}
+
+.town-ui__board[hidden] {
+  display: none;
+}
+
+.town-ui__board-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #2e1b0e center / cover no-repeat;
+}
+
+.town-ui__board-backdrop::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background:
+    linear-gradient(90deg, rgba(46, 27, 14, 0.42), rgba(46, 27, 14, 0.12) 44%, rgba(46, 27, 14, 0.48)),
+    linear-gradient(0deg, rgba(46, 27, 14, 0.62), rgba(46, 27, 14, 0.12) 42%, rgba(46, 27, 14, 0.36));
+}
+
+.town-ui__board-shell {
+  position: relative;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  width: min(980px, calc(100vw - 28px));
+  max-height: min(720px, calc(100vh - 28px));
+  border: 2px solid #2e1b0e;
+  border-radius: 8px;
+  color: #2e1b0e;
+  background: rgba(245, 230, 200, 0.94);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 248, 232, 0.68),
+    0 7px 0 rgba(46, 27, 14, 0.68),
+    0 22px 48px rgba(46, 27, 14, 0.42);
+  overflow: hidden;
+}
+
+.town-ui__board-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 14px 16px 12px;
+  border-bottom: 2px solid rgba(46, 27, 14, 0.58);
+  background: rgba(255, 248, 232, 0.64);
+}
+
+.town-ui__board-eyebrow {
+  margin: 0 0 4px;
+  color: #5b8a8a;
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.town-ui__board-header h2 {
+  margin: 0;
+  font-size: 1.55rem;
+  line-height: 1.05;
+}
+
+.town-ui__board-close,
+.town-ui__contract-action {
+  min-height: 44px;
+  border: 2px solid #2e1b0e;
+  border-radius: 8px;
+  font: 900 0.9rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+}
+
+.town-ui__board-close {
+  padding: 9px 13px;
+  color: #2e1b0e;
+  background: #ffe4a0;
+  box-shadow: 0 4px 0 rgba(46, 27, 14, 0.5);
+}
+
+.town-ui__contracts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 12px;
+  min-height: 0;
+  padding: 14px;
+  overflow: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.town-ui__contract {
+  display: grid;
+  grid-template-rows: auto auto minmax(4.6em, auto) auto auto;
+  gap: 9px;
+  min-height: 260px;
+  border: 2px solid rgba(46, 27, 14, 0.82);
+  border-radius: 8px;
+  padding: 12px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(232, 213, 168, 0.98)),
+    #f5e6c8;
+  box-shadow: inset 0 0 0 1px rgba(139, 125, 60, 0.3);
+}
+
+.town-ui__contract--locked {
+  background:
+    linear-gradient(135deg, rgba(232, 213, 168, 0.9), rgba(174, 144, 93, 0.72)),
+    #e8d5a8;
+}
+
+.town-ui__contract-topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-height: 26px;
+}
+
+.town-ui__contract-tag,
+.town-ui__contract-state {
+  border: 1px solid rgba(46, 27, 14, 0.52);
+  border-radius: 6px;
+  padding: 4px 7px;
+  font-size: 0.7rem;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.town-ui__contract-tag {
+  color: #fff8e8;
+  background: #5b8a8a;
+}
+
+.town-ui__contract-state {
+  color: #2e1b0e;
+  background: #ffe4a0;
+}
+
+.town-ui__contract h3,
+.town-ui__contract p {
+  margin: 0;
+}
+
+.town-ui__contract h3 {
+  font-size: 1.18rem;
+  line-height: 1.1;
+}
+
+.town-ui__contract p {
+  color: rgba(46, 27, 14, 0.78);
+  font-size: 0.84rem;
+  line-height: 1.26;
+}
+
+.town-ui__contract-best {
+  align-self: end;
+  min-height: 1.4em;
+  font-weight: 900;
+}
+
+.town-ui__contract-action {
+  width: 100%;
+  padding: 9px 10px;
+  color: #fff8e8;
+  background: #5b8a8a;
+  box-shadow: 0 4px 0 rgba(46, 27, 14, 0.55);
+}
+
+.town-ui__contract-action:disabled {
+  color: rgba(46, 27, 14, 0.76);
+  background: #d6b478;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+.town-ui__board-close:hover,
+.town-ui__board-close:focus-visible,
+.town-ui__contract-action:hover,
+.town-ui__contract-action:focus-visible {
+  outline: 3px solid rgba(91, 138, 138, 0.72);
+  outline-offset: 3px;
+}
+
 .town-ui__name-card {
   position: absolute;
   inset: 0;
@@ -217,6 +407,29 @@
 }
 
 @media (max-width: 430px) {
+  .town-ui__board {
+    align-items: stretch;
+  }
+
+  .town-ui__board-shell {
+    width: calc(100vw - 20px);
+    max-height: calc(100vh - 20px);
+  }
+
+  .town-ui__board-header {
+    padding: 12px;
+  }
+
+  .town-ui__contracts {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 10px;
+  }
+
+  .town-ui__contract {
+    min-height: 236px;
+  }
+
   .town-ui__title span {
     display: none;
   }

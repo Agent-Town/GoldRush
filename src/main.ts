@@ -5,6 +5,7 @@ import { installFullBaseBenchmark } from './diagnostics/fullBaseBenchmark';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import { install as installProfiles } from './game/ProfileManager';
+import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { TownScene } from './town/TownScene';
 import { install as installStartMenu, type StartMenu } from './ui/menu/StartMenu';
@@ -31,20 +32,21 @@ if (initialSearch.get('bench') === 'fullbase') {
 }
 
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
-const search = new URLSearchParams(window.location.search);
 let game: Game | undefined;
 let assayBench: ReturnType<typeof installAssayBench> | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
 let town: TownScene | undefined;
+let runReturnTarget: 'menu' | 'board' = 'menu';
 
 function startGame(returnToMenu: boolean): void {
+  const currentSearch = new URLSearchParams(window.location.search);
   applyStoredDifficultyPreset();
   applyUpgradeBudgetsFromBalance();
   assayBench = installAssayBench(app, {
-    initiallyOpen: search.has('profile') || search.has('queueNow'),
+    initiallyOpen: currentSearch.has('profile') || currentSearch.has('queueNow'),
   });
-  game = new Game(gameCanvas, () => assayBench?.focus(), returnToMenu ? returnToStartMenu : undefined);
+  game = new Game(gameCanvas, () => assayBench?.focus(), returnToMenu ? runReturnCallback : undefined);
   game.start();
 }
 
@@ -60,9 +62,7 @@ function showStartMenu(): void {
   startMenu?.dispose();
   startMenu = installStartMenu(app, {
     onNewClaim: () => {
-      startMenu?.dispose();
-      startMenu = undefined;
-      startWithProfiles({ skipTitle: true, returnToMenu: true });
+      launchContract(DEFAULT_CONTRACT_ID);
     },
     onContinue: () => {
       startMenu?.dispose();
@@ -72,7 +72,7 @@ function showStartMenu(): void {
     onEnterTown: () => {
       startMenu?.dispose();
       startMenu = undefined;
-      town = new TownScene(gameCanvas, returnToStartMenu);
+      town = new TownScene(gameCanvas, returnToStartMenu, { onLaunchContract: launchContract });
       town.start();
     },
     onProfile: () => {
@@ -83,7 +83,41 @@ function showStartMenu(): void {
   });
 }
 
+function launchContract(contractId: string): void {
+  runReturnTarget = 'board';
+  stagePlayerContractLaunch(contractId);
+  const nextSearch = new URLSearchParams(window.location.search);
+  nextSearch.set('contract', contractId);
+  history.pushState(null, '', `${window.location.pathname}?${nextSearch.toString()}${window.location.hash}`);
+  startMenu?.dispose();
+  startMenu = undefined;
+  town?.dispose();
+  town = undefined;
+  startWithProfiles({ skipTitle: true, returnToMenu: true });
+}
+
+function runReturnCallback(): void {
+  if (runReturnTarget === 'board') returnToTownBoard();
+  else returnToStartMenu();
+}
+
+function returnToTownBoard(): void {
+  town?.dispose();
+  town = undefined;
+  game?.dispose();
+  game = undefined;
+  assayBench?.dispose();
+  assayBench = undefined;
+  profiles?.dispose();
+  profiles = undefined;
+  startMenu?.dispose();
+  startMenu = undefined;
+  town = new TownScene(gameCanvas, returnToStartMenu, { openBoard: true, onLaunchContract: launchContract });
+  town.start();
+}
+
 function returnToStartMenu(): void {
+  runReturnTarget = 'menu';
   town?.dispose();
   town = undefined;
   game?.dispose();
