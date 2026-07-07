@@ -518,6 +518,19 @@ interface ThreeGameDiagnostics {
       springPonds: number;
       waterPhaseVariance: number;
     };
+    rails: {
+      active: boolean;
+      paths: number;
+      points: number;
+      style: string | null;
+      renderLayer: number;
+      renderSlot: 'groundDecals';
+      railInstances: number;
+      tieInstances: number;
+      drawCalls: number;
+      asset: 'procedural-placeholder';
+      samples: Array<{ x: number; y: number; z: number; kind: 'point' | 'midpoint' }>;
+    };
     vista: {
       present: boolean;
       segments: number;

@@ -160,6 +160,14 @@ export type ContractStakeMarker = {
   z: number;
   lossCondition: boolean;
 };
+export type RailPathPoint = {
+  x: number;
+  z: number;
+};
+export type RailPathDescriptor = {
+  points: RailPathPoint[];
+  style?: 'placeholder' | 'steamworks' | 'mine-spur';
+};
 export type ContractManifest = {
   id: string;
   name: string;
@@ -171,6 +179,7 @@ export type ContractManifest = {
     fords?: ContractFord[];
     buildZones?: ContractBuildZone[];
     stakeMarkers?: ContractStakeMarker[];
+    rails?: RailPathDescriptor[];
     waterSources: ContractWaterSource[];
     lanes: {
       spawnEdges: ContractEdge[];
@@ -222,6 +231,7 @@ export type EpochTileDescriptor = {
   id: string;
   biome: string;
   elevation?: TileElevationDescriptor;
+  rails?: RailPathDescriptor[];
 };
 
 export type EpochBundle = EpochMeta & {
@@ -334,10 +344,11 @@ export function activeTileDescriptor(): EpochTileDescriptor {
   const tileOverride = activeDevTileOverride();
   if (tileOverride) return tileOverride;
   const contract = activeContract();
-  const tile = {
+  const tile: EpochTileDescriptor = {
     id: contract.tileParams.tileId,
     biome: contract.tileParams.biome,
   };
+  if (contract.tileParams.rails) tile.rails = contract.tileParams.rails;
   if (!tile) throw new Error('Missing active tile descriptor: epoch-1-frontier');
   return tile;
 }
@@ -474,7 +485,12 @@ function activeDevTileOverride(): EpochTileDescriptor | null {
   const params = readSearchParams();
   const requestedId = params.get('tile');
   if (!requestedId || !params.has('debug')) return null;
-  return manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((tile) => tile.id === requestedId) ?? null;
+  const tile = manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((entry) => entry.id === requestedId);
+  if (!tile) return null;
+  const active: EpochTileDescriptor = { id: tile.id, biome: tile.biome };
+  if (tile.elevation) active.elevation = tile.elevation;
+  if (tile.rails && params.get('rails') === 'dev') active.rails = tile.rails;
+  return active;
 }
 
 function defaultContractFor(manifest: EpochManifest): ContractManifest {

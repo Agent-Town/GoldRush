@@ -12,7 +12,9 @@ import {
   activeContract as selectActiveContract,
   activeContractDiagnostics,
   activeEpoch as selectActiveEpoch,
+  activeTileDescriptor,
   type ContractManifest,
+  type RailPathDescriptor,
 } from '../meta/ContractFamilies';
 import {
   availablePicks,
@@ -132,6 +134,7 @@ import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { simHeightDiagnostics, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
+import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { readTownName } from '../town/TownNaming';
@@ -144,6 +147,24 @@ import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './
 import { buildableDefs, type BuildableId } from './buildables';
 
 const frontierEpoch = loadEpoch('epoch-1-frontier');
+const STAMP_MILL_ID = 'stamp-mill';
+const STAMP_MILL_COMPLETE_LINE = 'The Stamp Mill stands ready. The era waits on its whistle.';
+const STAMP_MILL_PROGRESS_LINES = [
+  'The Stamp Mill rises: the rail spur is staked.',
+  'The Stamp Mill rises: the boilers are seated.',
+  'The Stamp Mill rises: the stamps are set.',
+];
+const STAMP_MILL_RAIL_SPUR: RailPathDescriptor[] = [
+  {
+    style: 'mine-spur',
+    points: [
+      { x: -29, z: 18 },
+      { x: -20, z: 17.4 },
+      { x: -13, z: 16.6 },
+      { x: -8, z: 16 },
+    ],
+  },
+];
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -260,6 +281,8 @@ export class Game {
   private readonly heroStart = contractHeroStart(this.activeContract);
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
+  private railPath?: RailPathView;
+  private megaprojectRailPath?: RailPathView;
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -835,6 +858,8 @@ export class Game {
     this.megaprojectBaseMaterial.dispose();
     this.megaprojectStageMaterial.dispose();
     this.megaprojectGhostMaterial.dispose();
+    this.railPath?.dispose();
+    this.megaprojectRailPath?.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -1115,6 +1140,16 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    const rails = activeTileDescriptor().rails ?? [];
+    if (rails.length > 0) {
+      this.railPath = new RailPathView(rails);
+      this.scene.add(this.railPath.group);
+    }
+    if (this.megaprojectManifest?.id === STAMP_MILL_ID) {
+      this.megaprojectRailPath = new RailPathView(STAMP_MILL_RAIL_SPUR);
+      this.megaprojectRailPath.group.visible = false;
+      this.scene.add(this.megaprojectRailPath.group);
+    }
     this.detailScatter = new DetailScatter();
     this.scene.add(this.detailScatter.group);
     this.scene.add(this.harvestSystem.group);
@@ -1151,16 +1186,49 @@ export class Game {
     this.megaprojectVisuals.push(base);
 
     const total = Math.max(1, manifest.stages.length);
+    const stampMillStages =
+      manifest.id === STAMP_MILL_ID
+        ? [
+            {
+              name: 'MegaprojectStage-1-RailScaffold',
+              x: -manifest.siteFootprint.w * 0.28,
+              y: 0.5,
+              z: 0,
+              sx: 0.34,
+              sy: 0.78,
+              sz: manifest.siteFootprint.d * 0.78,
+            },
+            {
+              name: 'MegaprojectStage-2-BoilerHouse',
+              x: 0,
+              y: 0.42,
+              z: -manifest.siteFootprint.d * 0.12,
+              sx: manifest.siteFootprint.w * 0.42,
+              sy: 0.66,
+              sz: manifest.siteFootprint.d * 0.62,
+            },
+            {
+              name: 'MegaprojectStage-3-StampMill',
+              x: manifest.siteFootprint.w * 0.25,
+              y: 0.76,
+              z: manifest.siteFootprint.d * 0.1,
+              sx: manifest.siteFootprint.w * 0.34,
+              sy: 1.28,
+              sz: manifest.siteFootprint.d * 0.56,
+            },
+          ]
+        : null;
     for (let i = 0; i < total; i += 1) {
       const beam = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectGhostMaterial);
-      beam.name = `MegaprojectStage-${i + 1}`;
+      const stampMillStage = stampMillStages?.[i];
+      beam.name = stampMillStage?.name ?? `MegaprojectStage-${i + 1}`;
       const height = 0.55 + i * 0.22;
       beam.position.set(
-        -manifest.siteFootprint.w * 0.5 + ((i + 1) / (total + 1)) * manifest.siteFootprint.w,
-        0.12 + height * 0.5,
-        0,
+        stampMillStage?.x ?? -manifest.siteFootprint.w * 0.5 + ((i + 1) / (total + 1)) * manifest.siteFootprint.w,
+        stampMillStage?.y ?? 0.12 + height * 0.5,
+        stampMillStage?.z ?? 0,
       );
-      beam.scale.set(0.32, height, manifest.siteFootprint.d * 0.72);
+      beam.scale.set(stampMillStage?.sx ?? 0.32, stampMillStage?.sy ?? height, stampMillStage?.sz ?? manifest.siteFootprint.d * 0.72);
       this.megaprojectGroup.add(beam);
       this.megaprojectVisuals.push(beam);
     }
@@ -1179,6 +1247,7 @@ export class Game {
     if (!manifest || !project || !footprint || !visible) {
       this.megaprojectTarget.active = false;
       this.megaprojectTarget.hp = 0;
+      if (this.megaprojectRailPath) this.megaprojectRailPath.group.visible = false;
       this.buildSystem.setReservedFootprints([]);
       return;
     }
@@ -1199,6 +1268,7 @@ export class Game {
     this.megaprojectTarget.reachRadius = Math.max(halfX, halfZ);
     this.buildSystem.setReservedFootprints([this.megaprojectReservedFootprint(manifest)]);
     if (targetActive) this.goldTargeting.registerBuilding(this.megaprojectTarget);
+    if (this.megaprojectRailPath) this.megaprojectRailPath.group.visible = project.stage > 0 || project.funded;
     this.syncMegaprojectVisuals(project);
   }
 
@@ -1219,6 +1289,11 @@ export class Game {
 
   private megaprojectUnlocked(): boolean {
     return isMegaprojectUnlocked(this.megaprojectManifest, scienceMeter(this.researchState).steps);
+  }
+
+  private stampMillBuildStarted(): boolean {
+    if (this.megaprojectManifest?.id !== STAMP_MILL_ID || !this.megaprojectProject) return false;
+    return this.megaprojectProject.funded || this.megaprojectProject.stage > 0;
   }
 
   private fundMegaprojectStage(position?: THREE.Vector3): boolean {
@@ -1263,7 +1338,7 @@ export class Game {
     } else if (result.type === 'waiting') {
       this.uiBridge.announce(`${manifest.name} crews hold the site.`, atSim, null, 3.8);
     } else if (result.type === 'stage_complete' && result.complete) {
-      this.uiBridge.announce(`${manifest.name} stands complete.`, atSim, null, 5.2);
+      this.uiBridge.announce(this.megaprojectCompletionLine(), atSim, null, 5.2);
     } else {
       this.uiBridge.announce(this.megaprojectProgressLine(), atSim, null, 4.8);
     }
@@ -1317,12 +1392,24 @@ export class Game {
     const manifest = this.megaprojectManifest;
     const project = this.megaprojectProject;
     if (!manifest || !project) return '';
-    if (megaprojectComplete(manifest, project)) return `${manifest.name} stands complete.`;
+    if (megaprojectComplete(manifest, project)) return this.megaprojectCompletionLine();
+    if (manifest.id === STAMP_MILL_ID) return STAMP_MILL_PROGRESS_LINES[project.stage] ?? STAMP_MILL_PROGRESS_LINES[0]!;
     return `${manifest.name} rises: stage ${project.stage + 1} of ${manifest.stages.length}`;
+  }
+
+  private megaprojectCompletionLine(): string {
+    return this.megaprojectManifest?.id === STAMP_MILL_ID
+      ? STAMP_MILL_COMPLETE_LINE
+      : `${this.megaprojectManifest?.name ?? 'Megaproject'} stands complete.`;
   }
 
   private megaprojectDiagnostics(): MegaprojectDiagnostics {
     return megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked());
+  }
+
+  private railDiagnostics() {
+    if (this.megaprojectRailPath?.group.visible) return this.megaprojectRailPath.diagnostics();
+    return this.railPath?.diagnostics() ?? emptyRailPathDiagnostics();
   }
 
   private publishDiagnostics(): void {
@@ -1466,6 +1553,7 @@ export class Game {
         playerZone: Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone,
         sim: simHeightDiagnostics(),
         water: this.terrainView?.diagnostics(),
+        rails: this.railDiagnostics(),
         vista: Terrain.vistaDiagnostics(),
         detailScatter: this.detailScatter?.diagnostics(),
         height: {
@@ -2706,7 +2794,7 @@ export class Game {
     const state = (): DeathResearchState => ({
       totalRounds,
       roundsRemaining,
-      science: scienceMeter(this.researchState),
+      science: scienceMeter(this.researchState, this.stampMillBuildStarted() ? 'building' : 'awaiting-town'),
       proposals: roundsRemaining > 0 ? availablePicks(this.researchState) : [],
       pinnedPath: pinnedResearchPath(this.researchState),
     });
@@ -2761,7 +2849,7 @@ export class Game {
     contractTier: number;
     pinnedTarget: string | null;
   } {
-    const meter = scienceMeter(this.researchState);
+    const meter = scienceMeter(this.researchState, this.stampMillBuildStarted() ? 'building' : 'awaiting-town');
     return {
       taken: [...this.researchState.taken],
       available: availablePicks(this.researchState).map((node) => node.id),
