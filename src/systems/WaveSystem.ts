@@ -308,8 +308,14 @@ export class WaveSystem {
   private spawnDuePulses(atSim: number): boolean {
     for (const pulse of this.plannedPulses) {
       if (pulse.spawned || atSim < pulse.spawnAt) continue;
-      pulse.spawned = true;
       const startedNewWave = pulse.wave > this.wave;
+      if (startedNewWave && this.onWaveStarted(pulse.wave, pulse.spawnAt) === false) {
+        this.wave = Math.max(this.wave, pulse.wave);
+        this.pulse = pulse.pulse;
+        this.budget = pulse.budget;
+        return false;
+      }
+      pulse.spawned = true;
       this.wave = Math.max(this.wave, pulse.wave);
       this.pulse = pulse.pulse;
       this.budget = pulse.budget;

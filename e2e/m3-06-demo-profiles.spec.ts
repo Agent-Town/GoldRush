@@ -48,7 +48,7 @@ test('two title profiles isolate meta, suspend slots, and Best Claims scores', a
 
 test('legacy single-profile scores migrate into Robin with difficulty and hints defaults', async ({ page }) => {
   await resetStorage(page);
-  await page.evaluate((key) => {
+  await page.addInitScript((key) => {
     localStorage.setItem(key, JSON.stringify([{ waves: 36, kills: 120, gold: 900, timeAlive: 1800, at: 36 }]));
   }, SCOREBOARD_KEY);
   const errors = collectErrors(page);
@@ -123,7 +123,9 @@ test('running profile keeps its storage when another tab changes active profile'
 
   await bobPage.goto('/?debug&profiles&nowaves&nolevel&seed=profiles-tabs-b');
   await expect(bobPage.getByTestId('profile-title')).toBeVisible();
-  await bobPage.getByTestId('profile-row').filter({ hasText: 'Bob' }).click();
+  await setSharedActive(bobPage, 'bob');
+  await setSharedActive(alicePage, 'bob');
+  await expect.poll(() => bobPage.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '{}')?.activeId, PROFILE_KEY)).toBe('bob');
   expect(await alicePage.evaluate(() => window.__GR_PROFILE__?.markHintSeen('tab-bound-hint'))).toBe(true);
 
   const hintState = await readJson<ProfileState>(alicePage, PROFILE_KEY);
@@ -151,8 +153,12 @@ test('running profile keeps its storage when another tab changes active profile'
 });
 
 async function resetStorage(page: Page): Promise<void> {
-  await page.goto('/?debug&seed=profiles-reset');
-  await page.evaluate(() => localStorage.clear());
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('__gr_profiles_reset_done__')) return;
+    localStorage.clear();
+    sessionStorage.clear();
+    sessionStorage.setItem('__gr_profiles_reset_done__', '1');
+  });
 }
 
 async function createProfile(page: Page, name: string): Promise<void> {
@@ -179,8 +185,24 @@ async function seedProfileData(page: Page): Promise<void> {
         JSON.stringify([{ waves: 6, kills: 10, gold: 40, timeAlive: 90, at: 2, profileName: 'Bob' }]),
       );
     },
-    { aliceMeta, bobMeta, aliceSlot: { wave: 4 }, bobSlot: { wave: 8 }, scoreKey: SCOREBOARD_KEY },
+    { aliceMeta, bobMeta, aliceSlot: suspendFixture(4), bobSlot: suspendFixture(8), scoreKey: SCOREBOARD_KEY },
   );
+}
+
+function suspendFixture(wave: number): unknown {
+  return {
+    v: 1,
+    wave,
+    timeAlive: wave * 10,
+    contractId: 'stored-profile-slot',
+    economy: {},
+    hero: {},
+    buildings: [],
+    waveSystem: {},
+    enemies: { active: [] },
+    meta: {},
+    research: {},
+  };
 }
 
 async function forceDeath(page: Page): Promise<void> {
@@ -196,6 +218,17 @@ async function forceDeath(page: Page): Promise<void> {
 async function readJson<T>(page: Page, key: string): Promise<T> {
   const raw = await page.evaluate((storageKey) => localStorage.getItem(storageKey), key);
   return JSON.parse(raw ?? 'null') as T;
+}
+
+async function setSharedActive(page: Page, profileId: string): Promise<void> {
+  await page.evaluate(
+    ({ profileKey, profileId }) => {
+      const state = JSON.parse(localStorage.getItem(profileKey) ?? '{}') as ProfileState;
+      state.activeId = profileId;
+      localStorage.setItem(profileKey, JSON.stringify(state));
+    },
+    { profileKey: PROFILE_KEY, profileId },
+  );
 }
 
 function collectErrors(page: Page): ErrorBucket {

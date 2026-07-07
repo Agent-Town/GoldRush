@@ -14,6 +14,7 @@ import {
   type MetaProgressStorage,
   type MetaTrack,
 } from './MetaProgress';
+import { RunSuspendController, type RunSuspendDiagnostics } from './RunSuspend';
 
 type EconomyLog = {
   log: readonly EconomyEvent[];
@@ -52,6 +53,7 @@ export class RunManager {
   private lastPayout: MetaPayout | null = null;
   private debugReadout?: HTMLElement;
   private secureOverlay?: HTMLElement;
+  private runSuspend?: RunSuspendController;
 
   constructor(
     private readonly game: unknown,
@@ -66,10 +68,14 @@ export class RunManager {
     this.storage = this.options.storage ?? browserStorage();
     this.meta = this.storage ? loadMetaProgress(this.storage) : freshMetaProgress();
     host.applyMetaProgress?.(this.meta);
+    this.runSuspend = new RunSuspendController(this.game, () => this.meta).install();
     this.offHeroDied = host.events.on('hero_died', (event) =>
       this.endRun(this.stayedForRushRunId === this.runId ? 'rush' : 'death', event.at, event.wavesSurvived),
     );
-    this.offWaveStarted = host.events.on('wave_started', (event) => this.maybeSecureRun(event.wave));
+    this.offWaveStarted = host.events.on('wave_started', (event) => {
+      this.runSuspend?.captureBoundary(event.wave, event.at);
+      this.maybeSecureRun(event.wave);
+    });
     this.patchResetRun();
     this.renderDebugReadout();
     this.startRun(0);
@@ -80,6 +86,7 @@ export class RunManager {
     this.offHeroDied?.();
     this.offWaveStarted?.();
     this.restoreResetRun?.();
+    this.runSuspend?.dispose();
     this.hideSecureOverlay();
     this.debugReadout?.remove();
     this.host = undefined;
@@ -95,6 +102,7 @@ export class RunManager {
     lastRunEndedReason: RunEndReason | null;
     meta: MetaProgress;
     victoryPayout: MetaPayout | null;
+    suspend: RunSuspendDiagnostics;
   } {
     return {
       secured: this.securedRunId === this.runId,
@@ -102,6 +110,14 @@ export class RunManager {
       lastRunEndedReason: this.lastRunEndedReason,
       meta: this.meta,
       victoryPayout: this.lastPayout,
+      suspend: this.runSuspend?.diagnostics() ?? {
+        hasSuspend: false,
+        restored: false,
+        restoredWave: null,
+        lastWriteAt: null,
+        lastWriteMs: null,
+        sizeBytes: 0,
+      },
     };
   }
 
@@ -110,7 +126,7 @@ export class RunManager {
     this.awardSecuredClaim();
     this.hideSecureOverlay();
     this.host.setPaused?.(false);
-    this.endRun('secured', this.host.at() ?? 0, this.host.wave() ?? 0);
+    this.endRun('secured', this.host.at() ?? 0, this.host.secureWave?.() ?? Balance.run.secureWave);
     this.host.resetRun?.();
     return true;
   }
@@ -141,7 +157,8 @@ export class RunManager {
     this.endedRunId = this.runId;
     this.lastRunEndedReason = reason;
     this.hideSecureOverlay();
-    const summary = summarizeRun(this.host.economy.log, this.host.wave() ?? fallbackWave);
+    this.runSuspend?.clear();
+    const summary = summarizeRun(this.host.economy.log, Math.max(this.host.wave() ?? fallbackWave, fallbackWave));
     if (reason === 'secured') this.awardSecuredClaim();
     this.host.events.emit({
       type: 'run_ended',

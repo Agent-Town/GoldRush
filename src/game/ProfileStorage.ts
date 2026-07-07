@@ -14,7 +14,7 @@ export const MEDALS_KEY = 'gr.medals.v1';
 export const DEFAULT_PROFILE_NAME = 'Robin';
 export const DEFAULT_DIFFICULTY_PRESET: DifficultyPresetId = 'trail';
 
-const PROFILE_DATA_KEYS = new Set([
+export const PROFILE_DATA_KEYS = new Set([
   META_PROGRESS_KEY,
   RUN_SUSPEND_KEY,
   RUN_HISTORY_KEY,
@@ -78,7 +78,10 @@ export function loadProfileState(storage: Pick<Storage, 'getItem' | 'setItem'>):
     const raw = rawGet(storage, PROFILE_KEY);
     if (!raw) return null;
     const state = migrateProfileState(JSON.parse(raw));
-    if (state) rawSet(storage, PROFILE_KEY, JSON.stringify(state));
+    if (state) {
+      const normalized = JSON.stringify(state);
+      if (normalized !== raw) rawSet(storage, PROFILE_KEY, normalized);
+    }
     return state;
   } catch {
     return null;
@@ -111,9 +114,19 @@ export function activeProfileName(storage?: ProfileStorage): string {
 }
 
 export function createProfile(storage: ProfileStorage, name: string): ProfileRecord | null {
-  const state = ensureProfileState(storage);
   const cleanName = cleanProfileName(name);
   if (!cleanName) return null;
+  const state = loadProfileState(storage);
+
+  if (!state) {
+    const now = Date.now();
+    const profile = freshProfile(cleanName, now, uniqueProfileId(cleanName, []), readLegacyDifficulty(storage));
+    const next: ProfileState = { version: 2, activeId: profile.id, profiles: [profile] };
+    saveProfileState(storage, next);
+    migrateLegacyData(storage, profile.id);
+    saveProfileDatum(storage, profile.id, DIFFICULTY_PRESET_STORAGE_KEY, profile.difficultyPreset);
+    return profile;
+  }
 
   const existing = state.profiles.find((profile) => profile.name.toLowerCase() === cleanName.toLowerCase());
   if (existing) {
@@ -125,6 +138,27 @@ export function createProfile(storage: ProfileStorage, name: string): ProfileRec
 
   const now = Date.now();
   const profile = freshProfile(cleanName, now, uniqueProfileId(cleanName, state.profiles));
+  state.profiles.push(profile);
+  state.activeId = profile.id;
+  saveProfileState(storage, state);
+  saveProfileDatum(storage, profile.id, DIFFICULTY_PRESET_STORAGE_KEY, profile.difficultyPreset);
+  return profile;
+}
+
+export function importProfileRecord(storage: ProfileStorage, source: ProfileRecord): ProfileRecord | null {
+  const cleanName = cleanProfileName(source.name);
+  if (!cleanName) return null;
+  const state = ensureProfileState(storage);
+  const now = Date.now();
+  const name = uniqueProfileName(cleanName, state.profiles);
+  const profile = freshProfile(
+    name,
+    cleanTime(source.createdAt) || now,
+    uniqueProfileId(name, state.profiles),
+    normalizeDifficultyPreset(source.difficultyPreset),
+  );
+  profile.updatedAt = now;
+  profile.hintsSeen = cleanHintsSeen(source.hintsSeen);
   state.profiles.push(profile);
   state.activeId = profile.id;
   saveProfileState(storage, state);
@@ -257,24 +291,15 @@ function migrateProfile(raw: unknown, seen: Set<string>): ProfileRecord | null {
   seen.add(id);
   const createdAt = cleanTime(raw.createdAt);
   const updatedAt = cleanTime(raw.updatedAt) || createdAt;
-  const hintsSeen = Array.isArray(raw.hintsSeen)
-    ? [
-        ...new Set(
-          raw.hintsSeen
-            .filter((hint): hint is string => typeof hint === 'string' && hint.trim().length > 0)
-            .map((hint) => hint.trim()),
-        ),
-      ]
-    : [];
   return {
     id,
     name,
     createdAt,
     updatedAt,
     difficultyPreset: normalizeDifficultyPreset(
-      typeof raw.difficultyPreset === 'string' ? raw.difficultyPreset : DEFAULT_DIFFICULTY_PRESET,
+        typeof raw.difficultyPreset === 'string' ? raw.difficultyPreset : DEFAULT_DIFFICULTY_PRESET,
     ),
-    hintsSeen,
+    hintsSeen: cleanHintsSeen(raw.hintsSeen),
   };
 }
 
@@ -299,6 +324,14 @@ function uniqueProfileId(name: string, existing: readonly { id: string }[]): str
   return id;
 }
 
+function uniqueProfileName(name: string, existing: readonly { name: string }[]): string {
+  const taken = new Set(existing.map((profile) => profile.name.toLowerCase()));
+  if (!taken.has(name.toLowerCase())) return name;
+  let suffix = 2;
+  while (taken.has(`${name} (${suffix})`.toLowerCase())) suffix += 1;
+  return `${name} (${suffix})`;
+}
+
 function slugProfileName(name: string): string {
   return name
     .toLowerCase()
@@ -309,6 +342,18 @@ function slugProfileName(name: string): string {
 
 function cleanProfileName(name: string): string {
   return name.replace(/\s+/g, ' ').trim().slice(0, 24);
+}
+
+function cleanHintsSeen(value: unknown): string[] {
+  return Array.isArray(value)
+    ? [
+        ...new Set(
+          value
+            .filter((hint): hint is string => typeof hint === 'string' && hint.trim().length > 0)
+            .map((hint) => hint.trim()),
+        ),
+      ]
+    : [];
 }
 
 function cleanTime(value: unknown): number {

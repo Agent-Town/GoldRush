@@ -108,16 +108,23 @@ export class Hero {
   update(dt: number, intents: Intents, terrain: { bounds: TerrainBounds; sample: TerrainSampler }): void {
     this.iframeRemaining = Math.max(0, this.iframeRemaining - dt);
 
+    const moveX = finiteOrZero(intents.move.x);
+    const moveY = finiteOrZero(intents.move.y);
     const currentSample = terrain.sample(this.group.position.x, this.group.position.z);
-    const slopeSpeed = terrainSpeedMultiplier(this.group.position.x, this.group.position.z, intents.move.x, intents.move.y);
+    const slopeSpeed = terrainSpeedMultiplier(this.group.position.x, this.group.position.z, moveX, moveY);
     this.targetVelocity
-      .set(intents.move.x, 0, intents.move.y)
+      .set(moveX, 0, moveY)
       .multiplyScalar(Balance.hero.speed * this.moveSpeedMult * currentSample.speedMul * slopeSpeed);
 
     const rate = this.targetVelocity.lengthSq() > this.velocity.lengthSq() ? Balance.hero.accel : Balance.hero.decel;
     this.velocity.lerp(this.targetVelocity, 1 - Math.exp(-rate * dt));
+    if (!Number.isFinite(this.velocity.x) || !Number.isFinite(this.velocity.z)) this.velocity.set(0, 0, 0);
 
     this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, dt);
+    if (!Number.isFinite(this.nextPosition.x) || !Number.isFinite(this.nextPosition.z)) {
+      this.nextPosition.copy(this.group.position);
+      this.velocity.set(0, 0, 0);
+    }
     this.nextPosition.x = THREE.MathUtils.clamp(
       this.nextPosition.x,
       terrain.bounds.minX + Balance.hero.radius,
@@ -249,4 +256,8 @@ function normalizeDegrees(degrees: number): number {
 function signedAngleDelta(from: number, to: number): number {
   const delta = ((to - from + 540) % 360) - 180;
   return delta === -180 ? 180 : delta;
+}
+
+function finiteOrZero(value: number): number {
+  return Number.isFinite(value) ? value : 0;
 }
