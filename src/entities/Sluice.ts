@@ -10,6 +10,7 @@ export type SluiceSnapshot = {
   position: { x: number; z: number };
   progress: number;
   panRateMult: number;
+  yieldPerCycle: number;
   contested: boolean;
   capped: boolean;
 };
@@ -27,6 +28,7 @@ export class SluicePool {
   private readonly timers: number[] = [];
   private readonly tiers: number[] = [];
   private readonly panRateMults: number[] = [];
+  private readonly yieldPerCycles: number[] = [];
   private readonly contested: boolean[] = [];
   private readonly capped: boolean[] = [];
   private readonly troughGeometry = new THREE.BoxGeometry(1.7, 0.32, 0.62);
@@ -61,6 +63,7 @@ export class SluicePool {
       this.timers.push(0);
       this.tiers.push(1);
       this.panRateMults.push(1);
+      this.yieldPerCycles.push(Balance.sluice.goldPerCycle);
       this.contested.push(false);
       this.capped.push(false);
       this.hide(i);
@@ -96,6 +99,11 @@ export class SluicePool {
     this.panRateMults[index] = Math.max(0.001, panRateMult);
   }
 
+  setYieldPerCycle(index: number, amount: number): void {
+    if (index < 0 || index >= this.yieldPerCycles.length) return;
+    this.yieldPerCycles[index] = cleanYield(amount);
+  }
+
   place(position: THREE.Vector3): number {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
@@ -105,6 +113,7 @@ export class SluicePool {
       this.timers[i] = 0;
       this.tiers[i] = 1;
       this.panRateMults[i] = 1;
+      this.yieldPerCycles[i] = Balance.sluice.goldPerCycle;
       this.contested[i] = false;
       this.capped[i] = false;
       this.alive += 1;
@@ -122,6 +131,7 @@ export class SluicePool {
     this.timers[index] = 0;
     this.tiers[index] = 1;
     this.panRateMults[index] = 1;
+    this.yieldPerCycles[index] = Balance.sluice.goldPerCycle;
     this.contested[index] = false;
     this.capped[index] = false;
     this.alive = Math.max(0, this.alive - 1);
@@ -140,12 +150,13 @@ export class SluicePool {
     onBlocked: (position: THREE.Vector3) => void,
     enabled: (index: number) => boolean = () => true,
     panRateMult: (index: number) => number = () => 1,
+    yieldPerCycle: (index: number) => number = () => Balance.sluice.goldPerCycle,
   ): void {
     if (this.alive === 0) return;
-    const amount = Balance.sluice.goldPerCycle;
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
       this.panRateMults[i] = Math.max(0.001, panRateMult(i));
+      this.yieldPerCycles[i] = cleanYield(yieldPerCycle(i));
       const cycleSeconds = Balance.sluice.cycleSeconds / this.panRateMults[i];
       if (!enabled(i)) {
         this.syncWater(i, at, false);
@@ -159,6 +170,7 @@ export class SluicePool {
       if (!contested) this.timers[i] = (this.timers[i] ?? 0) + delta;
 
       if (!contested && (this.timers[i] ?? 0) >= cycleSeconds) {
+        const amount = this.yieldPerCycles[i] ?? Balance.sluice.goldPerCycle;
         if (!economy.canReceiveIncome(amount)) {
           if (!this.capped[i]) {
             economy.apply({ id: eventId(), at, type: 'gold_capped', amount: 0 });
@@ -192,6 +204,7 @@ export class SluicePool {
       this.timers[i] = 0;
       this.tiers[i] = 1;
       this.panRateMults[i] = 1;
+      this.yieldPerCycles[i] = Balance.sluice.goldPerCycle;
       this.contested[i] = false;
       this.capped[i] = false;
       this.hide(i);
@@ -218,6 +231,7 @@ export class SluicePool {
         position: { x: position.x, z: position.z },
         progress: Math.min(1, (this.timers[index] ?? 0) / cycleSeconds),
         panRateMult,
+        yieldPerCycle: this.yieldPerCycles[index] ?? Balance.sluice.goldPerCycle,
         contested: this.contested[index] === true,
         capped: this.capped[index] === true,
       };
@@ -284,4 +298,8 @@ export class SluicePool {
 function eventId(): string {
   if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID();
   return `sluice-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function cleanYield(amount: number): number {
+  return Math.max(1, Math.round(Number.isFinite(amount) ? amount : Balance.sluice.goldPerCycle));
 }

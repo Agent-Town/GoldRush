@@ -67,6 +67,7 @@ export type BuildDiagnostics = {
     effectiveDamage?: number;
     effectiveFireRate?: number;
     panRateMult?: number;
+    yieldPerCycle?: number;
     repairProgress: number;
     position: { x: number; z: number };
   }>;
@@ -135,7 +136,7 @@ const hpBarDepth = 0.28;
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
 type UpgradeableBuildableId = (typeof upgradeableBuildableIds)[number];
 type TierRung = (typeof Balance.tiers)[UpgradeableBuildableId][number];
-type TierStat = 'maxHpMult' | 'panRateMult' | 'damageMult' | 'fireRateMult';
+type TierStat = 'maxHpMult' | 'panRateMult' | 'yieldMult' | 'damageMult' | 'fireRateMult';
 type BuildingDamageResult = {
   applied: boolean;
   family: string;
@@ -448,6 +449,7 @@ export class BuildSystem {
       onBankFull,
       (index) => !this.wrecked.sluice[index],
       (index) => this.effectiveSluicePanRateMult(index),
+      (index) => this.effectiveSluiceYieldPerCycle(index),
     );
     this.stockpiles.update(this.economy.gold, this.economy.bankCap);
     this.updateRepairs(delta, at);
@@ -685,7 +687,7 @@ export class BuildSystem {
     this.refreshShooterStats(id, index);
     this.tierUpgrades += 1;
     this.visualDirty = true;
-    this.onFloatText?.(buildingPosition, `Tier ${candidate.nextTier}`, '#5b8a8a');
+    this.onFloatText?.(buildingPosition, this.upgradeFloatText(id, candidate.nextTier), '#5b8a8a');
     return true;
   }
 
@@ -1075,6 +1077,7 @@ export class BuildSystem {
           effectiveDamage: id === 'turret' ? this.effectiveTurretDamage(index) : undefined,
           effectiveFireRate: id === 'turret' ? this.effectiveTurretFireRate(index) : undefined,
           panRateMult: id === 'sluice' ? this.effectiveSluicePanRateMult(index) : undefined,
+          yieldPerCycle: id === 'sluice' ? this.effectiveSluiceYieldPerCycle(index) : undefined,
           repairProgress: this.repairProgress[id][index] ?? 0,
           position: { x: position?.x ?? 0, z: position?.z ?? 0 },
         });
@@ -1171,6 +1174,10 @@ export class BuildSystem {
     return this.effectiveStat('sluice', index, 1, 'panRateMult');
   }
 
+  private effectiveSluiceYieldPerCycle(index: number): number {
+    return Math.max(1, Math.round(this.effectiveStat('sluice', index, Balance.sluice.goldPerCycle, 'yieldMult')));
+  }
+
   private effectiveTurretDamage(index: number): number {
     return this.effectiveStat('turret', index, Balance.turret.damage, 'damageMult') * this.turretDamageMult;
   }
@@ -1185,14 +1192,22 @@ export class BuildSystem {
     if (id === 'sluice') {
       this.sluices.setTier(index, tier);
       this.sluices.setPanRateMult(index, this.effectiveSluicePanRateMult(index));
+      this.sluices.setYieldPerCycle(index, this.effectiveSluiceYieldPerCycle(index));
     }
     if (id === 'turret') this.turrets.setTier(index, tier);
   }
 
   private tierGain(id: UpgradeableBuildableId, tier: number): string {
-    if (id === 'palisade') return tier === 2 ? 'thicker timber' : 'brass bands and teal braces';
-    if (id === 'sluice') return tier === 2 ? 'quicker pan water' : 'a brighter agent-flow channel';
-    return tier === 2 ? 'a sharper brass cadence' : 'a steadier teal signal';
+    if (id === 'palisade') return tier === 2 ? 'timber that holds longer' : 'brass bands and teal braces';
+    if (id === 'sluice') return tier === 2 ? 'richer pan-outs and quicker water' : 'a brighter agent-flow channel';
+    return tier === 2 ? 'a stronger brass cadence' : 'a steadier teal signal';
+  }
+
+  private upgradeFloatText(id: UpgradeableBuildableId, tier: number): string {
+    const suffix = ['', 'I', 'II', 'III'][tier] ?? String(tier);
+    if (id === 'sluice') return `Sluice ${suffix} - the works run richer`;
+    if (id === 'palisade') return `Palisade ${suffix} - timber holds longer`;
+    return `Turret ${suffix} - brass cadence quickens`;
   }
 
   private registerBeaconShooter(placed: number): void {
