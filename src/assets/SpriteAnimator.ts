@@ -9,7 +9,7 @@ import {
   isRotationDirection,
   type RotationDirection,
 } from './OrientationResolver';
-import { type AssetSlotId } from './slots';
+import { assetSlots, type AssetSlotId } from './slots';
 
 export type CharacterSpriteClip = 'idle' | 'walk' | 'hit' | 'pan' | 'flee' | string;
 
@@ -108,6 +108,9 @@ export type SpriteAnimationSnapshot = {
   motionPhase?: number;
   bobOffset?: number;
   leanDeg?: number;
+  sourceFrameKey?: string;
+  walkFpsPerSpeed?: number;
+  strideUnitsPerCycle?: number;
 };
 
 export type SpriteStatsSnapshot = {
@@ -195,6 +198,9 @@ export class SpriteAnimator {
   private overlayFrameIndex = 0;
   private frameBlendHoldoff = 0;
   private lastFrameKey = '';
+  private walkFrameIndex = 0;
+  private walkFrameElapsed = 0;
+  private walkCadenceSpeed: number | undefined;
 
   constructor(
     private readonly slotId: AssetSlotId,
@@ -245,8 +251,9 @@ export class SpriteAnimator {
     return this.currentMotion();
   }
 
-  update(delta: number, requestedClip: CharacterSpriteClip, orientation = 'side', mirrored = false): void {
+  update(delta: number, requestedClip: CharacterSpriteClip, orientation = 'side', mirrored = false, walkCadenceSpeed?: number): void {
     this.syncTestClip();
+    this.walkCadenceSpeed = Number.isFinite(walkCadenceSpeed) ? Math.max(0, Number(walkCadenceSpeed)) : undefined;
     this.updateFade(delta);
     if (this.frameBlendHoldoff > 0) this.frameBlendHoldoff = Math.max(0, this.frameBlendHoldoff - delta);
     const next = this.pickClip(requestedClip, orientation);
@@ -255,18 +262,14 @@ export class SpriteAnimator {
     const nextClip = next.clip;
     const nextMirrored = mirrored || next.mirrored;
     const previousMirrored = this.currentMirrored;
-    const clipChanged = nextClip !== this.currentClip || requestedClip !== this.clipName;
+    const clipChanged = nextClip !== this.currentClip;
+    const semanticClipChanged = requestedClip !== this.clipName;
     const orientationChanged = next.direction !== this.currentDirection || nextMirrored !== this.currentMirrored;
-    if (clipChanged || orientationChanged) {
+    if (clipChanged || semanticClipChanged || orientationChanged) {
       const previousFrame = this.currentFrame;
-      const nextFrameIndex = clipChanged ? 0 : this.frameIndex % nextClip.frames.length;
+      this.restoreFrameCursor(nextClip, requestedClip, semanticClipChanged);
+      const nextFrameIndex = this.frameIndex;
       const nextFrame = nextClip.frames[nextFrameIndex] ?? null;
-      if (clipChanged) {
-        this.frameIndex = 0;
-        this.frameElapsed = 0;
-      } else {
-        this.frameIndex = nextFrameIndex;
-      }
       this.currentClip = nextClip;
       this.clipName = requestedClip;
       this.currentDirection = next.direction;
@@ -280,9 +283,12 @@ export class SpriteAnimator {
       // pinned freshly-retired clip textures in the overlay material and re-uploaded
       // disposed textures on fps-luck (memory canary +1, reviews/s27-healthy-vm-sweep.md).
       this.clearOverlay();
-      const fps = this.effectiveFps(nextClip, requestedClip);
+      const fps = this.frameBlendHoldoffFps(nextClip, requestedClip);
       const frameDuration = nextClip.frames.length > 1 && fps > 0 ? 1 / fps : 0;
-      if (frameDuration > 0) this.frameBlendHoldoff = Math.max(this.frameBlendHoldoff, frameDuration * (clipChanged || orientationChanged ? 9 : 2));
+      if (frameDuration > 0) {
+        const holdoffFrames = semanticClipChanged ? 4 : orientationChanged ? 9 : 1;
+        this.frameBlendHoldoff = Math.max(this.frameBlendHoldoff, frameDuration * holdoffFrames);
+      }
       if (orientationChanged) {
         this.startOrientationFade(previousFrame, nextFrame, previousMirrored);
       }
@@ -317,6 +323,9 @@ export class SpriteAnimator {
     this.clipName = '';
     this.frameIndex = 0;
     this.frameElapsed = 0;
+    this.walkFrameIndex = 0;
+    this.walkFrameElapsed = 0;
+    this.walkCadenceSpeed = undefined;
     this.currentFrame = null;
     this.currentDirection = undefined;
     this.currentMirrored = false;
@@ -425,11 +434,15 @@ export class SpriteAnimator {
     addDiagnostic(snapshot, 'motionPhase', motion.phase, false);
     addDiagnostic(snapshot, 'bobOffset', motion.bobOffset, false);
     addDiagnostic(snapshot, 'leanDeg', motion.leanDeg, false);
+    addDiagnostic(snapshot, 'sourceFrameKey', frame.key, false);
+    addDiagnostic(snapshot, 'walkFpsPerSpeed', this.walkFpsPerSpeed(), false);
+    addDiagnostic(snapshot, 'strideUnitsPerCycle', this.strideUnitsPerCycle(clip), false);
     if (this.diagnosticDirection) {
       snapshot.direction = this.diagnosticDirection;
       snapshot.mirrored = this.diagnosticMirrored ?? false;
     }
     animationDiagnostics[this.slotId] = snapshot;
+    this.rememberWalkCursor();
   }
 
   private setSpriteScalePositive(): void {
@@ -514,8 +527,71 @@ export class SpriteAnimator {
 
   private effectiveFps(clip: RuntimeClip, clipName: CharacterSpriteClip): number {
     const walkFps = Number(Balance.anim.walkFps);
-    if (!this.overrideClip && clipName === 'walk' && walkFps > 0) return walkFps;
+    if (!this.overrideClip && clipName === 'walk' && walkFps > 0) return this.walkFpsForSlot(walkFps);
     return clip.fps;
+  }
+
+  private walkFpsForSlot(fallback: number): number {
+    const speed = this.walkSpeedForSlot();
+    const fpsPerSpeed = this.walkFpsPerSpeed();
+    if (speed <= 0 || fpsPerSpeed <= 0) return this.walkCadenceSpeed === undefined ? fallback : 0;
+    return Math.max(Number(Balance.anim.walkMinFps) || 0, speed * fpsPerSpeed);
+  }
+
+  private frameBlendHoldoffFps(clip: RuntimeClip, clipName: CharacterSpriteClip): number {
+    const fps = this.effectiveFps(clip, clipName);
+    const baseWalkFps = !this.overrideClip && clipName === 'walk' ? Number(Balance.anim.walkFps) || 0 : 0;
+    return Math.max(fps, baseWalkFps);
+  }
+
+  private walkFpsPerSpeed(): number {
+    return Number(Balance.anim.walkFpsPerSpeed) || 0;
+  }
+
+  private walkSpeedForSlot(): number {
+    if (this.walkCadenceSpeed !== undefined) return this.walkCadenceSpeed;
+    if (this.slotId === assetSlots.charHero) return Balance.hero.speed;
+    if (this.slotId === assetSlots.charClaimJumper) return Balance.enemy.speed;
+    return 0;
+  }
+
+  private strideUnitsPerCycle(clip: RuntimeClip): number {
+    const speed = this.walkSpeedForSlot();
+    const fps = this.effectiveFps(clip, this.clipName);
+    return speed > 0 && fps > 0 && clip.frames.length > 0 ? speed / (fps / clip.frames.length) : 0;
+  }
+
+  private restoreFrameCursor(nextClip: RuntimeClip, requestedClip: CharacterSpriteClip, semanticClipChanged: boolean): void {
+    const frameCount = nextClip.frames.length;
+    if (frameCount <= 0) {
+      this.frameIndex = 0;
+      this.frameElapsed = 0;
+      return;
+    }
+    if (!semanticClipChanged) {
+      this.frameIndex = this.frameIndex % frameCount;
+      this.frameElapsed = this.clampedFrameElapsed(nextClip, requestedClip, this.frameElapsed);
+      return;
+    }
+    if (requestedClip === 'walk') {
+      this.frameIndex = this.walkFrameIndex % frameCount;
+      this.frameElapsed = this.clampedFrameElapsed(nextClip, requestedClip, this.walkFrameElapsed);
+      return;
+    }
+    this.frameIndex = 0;
+    this.frameElapsed = 0;
+  }
+
+  private clampedFrameElapsed(clip: RuntimeClip, clipName: CharacterSpriteClip, elapsed: number): number {
+    const fps = this.effectiveFps(clip, clipName);
+    const frameDuration = clip.frames.length > 1 && fps > 0 ? 1 / fps : 0;
+    return frameDuration > 0 ? Math.min(Math.max(0, elapsed), frameDuration * 0.999) : 0;
+  }
+
+  private rememberWalkCursor(): void {
+    if (this.clipName !== 'walk') return;
+    this.walkFrameIndex = this.frameIndex;
+    this.walkFrameElapsed = this.frameElapsed;
   }
 
   private currentMotion(): SpriteMotionSnapshot {

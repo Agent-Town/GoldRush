@@ -355,6 +355,8 @@ export const Balance = {
   anim: {
     frameBlendMs: 80,
     walkFps: 9.5,
+    walkFpsPerSpeed: 9.5 / 6,
+    walkMinFps: 3.5,
     bobAmp: 0.035,
     leanDeg: 2.4,
   },

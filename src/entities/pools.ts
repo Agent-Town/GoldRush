@@ -17,6 +17,10 @@ import type { RotationDirection } from '../assets/OrientationResolver';
 
 const ENEMY_SPRITE_Y = 0.72;
 
+function animationSpeed(enemy: ClaimJumperEnemy): number {
+  return Math.hypot(enemy.velocityX, enemy.velocityZ);
+}
+
 export class EnemyPool {
   readonly group = new THREE.Group();
 
@@ -204,9 +208,9 @@ export class EnemyPool {
     const normalAnimation = this.activeAnimation(false);
     const thiefAnimation = this.activeAnimation(true);
     const updateNormalSprites = () =>
-      this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.active ? normalAnimation.orientation : 'side');
+      this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.active ? normalAnimation.orientation : 'side', false, normalAnimation.speed);
     const updateThiefSprites = () =>
-      this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.active ? thiefAnimation.orientation : 'side');
+      this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.active ? thiefAnimation.orientation : 'side', false, thiefAnimation.speed);
     if (normalAnimation.active || !thiefAnimation.active) {
       updateThiefSprites();
       updateNormalSprites();
@@ -250,25 +254,25 @@ export class EnemyPool {
     disposeClaimJumperAssets(this.assets);
   }
 
-  private activeAnimation(thieves: boolean): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean } {
+  private activeAnimation(thieves: boolean): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean; speed: number } {
     if (thieves) {
       for (const enemy of this.enemies) {
         if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'grab') {
-          return { clip: 'grab', orientation: enemy.animationOrientation, active: true };
+          return { clip: 'grab', orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
         }
       }
       for (const enemy of this.enemies) {
         if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'flee') {
-          return { clip: 'flee', orientation: enemy.animationOrientation, active: true };
+          return { clip: 'flee', orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
         }
       }
     }
     for (const enemy of this.enemies) {
       if (enemy.isAlive && enemy.isThief === thieves) {
-        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true };
+        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
       }
     }
-    return { clip: 'idle', orientation: 's', active: false };
+    return { clip: 'idle', orientation: 's', active: false, speed: 0 };
   }
 
   private createRenderParts(): void {

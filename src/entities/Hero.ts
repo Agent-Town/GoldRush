@@ -137,6 +137,7 @@ export class Hero {
       if (terrain.sample(previousX, this.nextPosition.z).walkable) this.group.position.z = this.nextPosition.z;
       else this.velocity.z = 0;
     }
+    const actualSpeed = dt > 0 ? Math.hypot(this.group.position.x - previousX, this.group.position.z - previousZ) / dt : 0;
 
     if (this.velocity.lengthSq() > 0.0025) {
       this.group.rotation.y = Math.atan2(this.velocity.x, -this.velocity.z);
@@ -146,7 +147,7 @@ export class Hero {
     const moving = speedSq > 0.0025 || intentSpeedSq > 0.0025;
     const heading = intentSpeedSq > 0.0025 ? this.targetVelocity : this.velocity;
     const direction = moving ? this.orientationResolver.resolve(...this.smoothedHeadingVector(dt, heading)) : this.orientationResolver.idleDirection();
-    this.spriteAnimator.update(dt, moving ? 'walk' : 'idle', direction);
+    this.spriteAnimator.update(dt, moving ? 'walk' : 'idle', direction, false, actualSpeed);
     this.applyProceduralMotion();
   }
 

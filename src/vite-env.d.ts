@@ -378,6 +378,9 @@ interface ThreeGameDiagnostics {
     motionPhase?: number;
     bobOffset?: number;
     leanDeg?: number;
+    sourceFrameKey?: string;
+    walkFpsPerSpeed?: number;
+    strideUnitsPerCycle?: number;
   }>>;
   spriteStats: {
     activeAnimators: number;
