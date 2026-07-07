@@ -64,6 +64,7 @@ export class DeathOverlay {
   private readonly root: HTMLElement;
   private visible = false;
   private options: DeathOverlayOptions = {};
+  private lastPicked?: ResearchNode;
 
   constructor(parent: HTMLElement, private readonly onStakeAgain: () => void) {
     this.root = document.createElement('section');
@@ -79,6 +80,7 @@ export class DeathOverlay {
   show(ledger: DeathLedger, scores: readonly BestClaimRow[] = [], currentAt = 0, options: DeathOverlayOptions = {}): void {
     this.visible = true;
     this.options = options;
+    this.lastPicked = undefined;
     this.root.innerHTML = this.render(ledger, scores, currentAt);
     this.root.classList.add('death-overlay--visible');
     this.root.setAttribute('aria-hidden', 'false');
@@ -188,12 +190,15 @@ export class DeathOverlay {
     const round = Math.max(1, research.totalRounds - research.roundsRemaining + 1);
     const proposals = research.proposals.slice(0, 2);
     const done = research.roundsRemaining <= 0 || proposals.length === 0;
+    const receipt = this.lastPicked
+      ? `<p data-testid="research-receipt">The Elder logs it: ${this.escape(this.lastPicked.effect)}</p>`
+      : '';
     if (done) {
       return `
         <section class="research-ledger" data-testid="research-overlay" aria-label="Research proposal">
           <p class="research-ledger__eyebrow">Schoolhouse Notes</p>
           <h2>Science Banked</h2>
-          <p>The Elder folds the note into the town ledger.</p>
+          ${receipt || '<p>The Elder folds the note into the town ledger.</p>'}
         </section>
       `;
     }
@@ -202,6 +207,7 @@ export class DeathOverlay {
       <section class="research-ledger" data-testid="research-overlay" aria-label="Research proposal">
         <p class="research-ledger__eyebrow">Research pick ${round} of ${research.totalRounds}</p>
         <h2>The Elder proposes...</h2>
+        ${receipt}
         <div class="research-ledger__cards">
           ${proposals
             .map(
@@ -210,9 +216,12 @@ export class DeathOverlay {
                   node.id,
                 )}">
                   <span class="research-card__key">${index + 1}</span>
-                  <span class="research-card__branch">${this.escape(node.branch)}</span>
+                  <span class="research-card__branch" data-testid="research-branch-${index}">Advances ${this.escape(
+                    this.researchBranchLabel(node.branch),
+                  )}</span>
                   <strong>${this.escape(node.name)}</strong>
                   <span>${this.escape(node.description)}</span>
+                  <span data-testid="research-effect-${index}">Effect: ${this.escape(node.effect)}</span>
                 </button>
               `,
             )
@@ -298,8 +307,8 @@ export class DeathOverlay {
     const target = event.target as HTMLElement;
     const researchButton = target.closest<HTMLElement>('[data-research-id]');
     if (researchButton?.dataset.researchId && this.options.onResearchPick) {
-      this.options.research = this.options.onResearchPick(researchButton.dataset.researchId);
-      this.rerenderResearch();
+      const picked = this.options.research?.proposals.find((node) => node.id === researchButton.dataset.researchId);
+      this.pickResearch(researchButton.dataset.researchId, picked);
       return;
     }
 
@@ -312,8 +321,7 @@ export class DeathOverlay {
     const proposal = index >= 0 ? this.options.research?.proposals[index] : undefined;
     if (proposal && this.options.onResearchPick) {
       event.preventDefault();
-      this.options.research = this.options.onResearchPick(proposal.id);
-      this.rerenderResearch();
+      this.pickResearch(proposal.id, proposal);
       return;
     }
     if (event.code !== 'KeyR') return;
@@ -327,6 +335,18 @@ export class DeathOverlay {
     const meter = this.root.querySelector<HTMLElement>('[data-testid="science-meter"]');
     if (meter && this.options.research) meter.textContent = this.options.research.science.text;
     this.root.querySelector<HTMLButtonElement>('[data-research-id], [data-testid="stake-again"]')?.focus({ preventScroll: true });
+  }
+
+  private pickResearch(id: string, picked?: ResearchNode): void {
+    if (picked) this.lastPicked = picked;
+    this.options.research = this.options.onResearchPick?.(id) ?? this.options.research;
+    this.rerenderResearch();
+  }
+
+  private researchBranchLabel(branch: ResearchNode['branch']): string {
+    if (branch === 'Prospecting Works') return 'economy';
+    if (branch === 'Arsenal Works') return 'arsenal';
+    return 'crafting-agent';
   }
 
   private finish(): void {

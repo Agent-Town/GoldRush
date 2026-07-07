@@ -3,9 +3,9 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { SCOREBOARD_KEY } from '../src/game/ProfileStorage';
-import { RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
+import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
 
-const SHOT_DIR = 'artifacts/sci-01';
+const SHOT_DIR = 'artifacts/sci-copy';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -92,6 +92,14 @@ function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.pageErrors).toEqual([]);
 }
 
+test('research node descriptions stay concrete', () => {
+  const namedCardFamilies = ['Seam cards', 'Chain Spark Arc', 'Beacon Handoff', 'Rich Seam Pact', 'Spark Pressure Ring'];
+  const vague = RESEARCH_NODES.filter(
+    (node) => !/\d/.test(node.description) && !namedCardFamilies.some((family) => node.description.includes(family)),
+  );
+  expect(vague.map((node) => `${node.id}: ${node.description}`)).toEqual([]);
+});
+
 test('death ledger offers research, persists the pick, and changes the next proposal pool', async ({ page }, testInfo) => {
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&seed=sci-01-death');
   await killFast(page);
@@ -100,12 +108,19 @@ test('death ledger offers research, persists the pick, and changes the next prop
   await expect(page.getByTestId('science-meter')).toContainText(`Science: 0 steps - ${STEAMWORKS_THRESHOLD} to the Steamworks`);
   const before = await researchCardIds(page);
   expect(before).toHaveLength(2);
+  for (const index of [0, 1]) {
+    await expect(page.getByTestId(`research-branch-${index}`)).toContainText(/Advances (economy|arsenal|crafting-agent)/);
+    await expect(page.getByTestId(`research-effect-${index}`)).toContainText('Effect: ');
+  }
+  await page.getByTestId('research-card-0').scrollIntoViewIfNeeded();
   await shot(page, testInfo, 'research-overlay');
 
+  const pickedEffect = (await page.getByTestId('research-effect-0').textContent())?.replace('Effect: ', '') ?? '';
   await page.getByTestId('research-card-0').click();
   const picked = before[0];
+  await expect(page.getByTestId('research-receipt')).toHaveText(`The Elder logs it: ${pickedEffect}`);
   await expect(page.getByTestId('science-meter')).toContainText(`Science: 1 steps - ${STEAMWORKS_THRESHOLD - 1}`);
-  await shot(page, testInfo, 'research-meter-after-pick');
+  await shot(page, testInfo, 'post-pick-toast');
 
   const saved = await page.evaluate(
     ({ metaKey, researchKey }) => ({
