@@ -4,9 +4,11 @@ import { Balance } from '../src/game/Balance';
 type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office';
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type EconomyEvent = { type: string; sink?: string; source?: string; amount?: number };
+type Rect = { x: number; y: number; width: number; height: number };
 type HpEntry = {
   id: BuildableId;
   index: number;
+  tier: number;
   hp: number;
   maxHp: number;
   wrecked: boolean;
@@ -84,6 +86,24 @@ function demolishRefund(cost: number, hp: number, maxHp: number): number {
   return Math.floor(Balance.demolish.refundPctOfCost * cost * (hp / maxHp));
 }
 
+function intersects(a: Rect | null, b: Rect | null): boolean {
+  if (!a || !b) return false;
+  return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
+}
+
+async function upgradeBuildable(page: Page, entry: HpEntry): Promise<void> {
+  await teleport(page, entry.position.x, entry.position.z);
+  await expect(page.evaluate(([id, index]) => window.__GR_TEST__?.upgradeBuilding(id, index) ?? false, [entry.id, entry.index] as const)).resolves.toBe(
+    true,
+  );
+  await expect.poll(() => hpEntry(page, entry.id, entry.index).then((next) => next?.tier ?? 0)).toBe(entry.tier + 1);
+}
+
+async function spawnStationaryWreckerAt(page: Page, entry: HpEntry): Promise<void> {
+  await teleport(page, entry.position.x, entry.position.z);
+  await page.evaluate(() => window.__GR_TEST__?.spawnPack(1, 0.1, { speedScale: 0, wrecker: true }));
+}
+
 test('demolish refunds full-HP palisade and frees its footprint for replacement', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=6&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-00-full');
   await grantGold(page, 100);
@@ -103,8 +123,10 @@ test('demolish refunds full-HP palisade and frees its footprint for replacement'
   const expectedRefund = demolishRefund(built.cost, built.hp, built.maxHp);
   expect(expectedRefund).toBe(5);
   await teleport(page, built.position.x, built.position.z);
-  await expect(page.getByTestId('demolish-prompt')).toBeVisible();
-  await expect(page.getByTestId('demolish-prompt')).toContainText('Tear down the palisade');
+  await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+  await expect(page.getByTestId('building-context-prompt')).toContainText('Palisade');
+  await expect(page.getByTestId('building-context-prompt')).toContainText('invested 10g');
+  await expect(page.getByTestId('building-context-prompt')).toContainText('returns 5g');
   await page.getByTestId('demolish-confirm').click();
   await expect.poll(() => gold(page)).toBe(beforeDemolish + expectedRefund);
   await expect.poll(() => hpEntry(page, built.id, built.index)).toBeNull();
@@ -131,8 +153,9 @@ test('demolish button removes an assay office without stealing the bench Enter p
   const beforeEnter = await gold(page);
   await teleport(page, 1.2, 7);
   await expect(page.getByTestId('assay-office-prompt')).toBeVisible();
-  await expect(page.getByTestId('demolish-prompt')).toBeVisible();
-  await expect(page.getByTestId('demolish-prompt')).toContainText('Tear down the palisade');
+  await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+  await expect(page.getByTestId('building-context-prompt')).toContainText('Palisade');
+  expect(intersects(await page.getByTestId('assay-office-prompt').boundingBox(), await page.getByTestId('building-context-prompt').boundingBox())).toBe(false);
   await page.keyboard.press('Enter');
   await expect(page.getByTestId('assay-bench')).toBeVisible();
   await expect.poll(() => hpEntry(page, neighbor.id, neighbor.index)).not.toBeNull();
@@ -145,12 +168,99 @@ test('demolish button removes an assay office without stealing the bench Enter p
   expect(expectedRefund).toBe(40);
   await teleport(page, built.position.x, built.position.z);
   await expect(page.getByTestId('assay-office-prompt')).toBeVisible();
-  await expect(page.getByTestId('demolish-prompt')).toBeVisible();
-  await expect(page.getByTestId('demolish-prompt')).toContainText('Tear down the assay office');
+  await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+  await expect(page.getByTestId('building-context-prompt')).toContainText('Assay Office');
   await page.getByTestId('demolish-confirm').click();
   await expect.poll(() => gold(page)).toBe(beforeDemolish + expectedRefund);
   await expect.poll(() => hpEntry(page, built.id, built.index)).toBeNull();
   await expect.poll(() => buildableCount(page, 'assay_office')).toBe(0);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('building context bar keeps both actions inside a mid-size phone viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 480, height: 844 });
+  const errors = await openGame(page, '?debug&timescale=6&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-00-mid-phone');
+  await grantGold(page, 100);
+  const built = await placeBuildableAt(page, 'palisade', 0, 9);
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await teleport(page, built.position.x, built.position.z);
+  const prompt = page.getByTestId('building-context-prompt');
+  await expect(prompt).toBeVisible();
+
+  const promptBox = await prompt.boundingBox();
+  expect(promptBox).not.toBeNull();
+  const buttonBoxes = await prompt.locator('button').evaluateAll((buttons) =>
+    buttons.map((button) => {
+      const rect = button.getBoundingClientRect();
+      return { x: rect.x, right: rect.right };
+    }),
+  );
+  for (const box of buttonBoxes) {
+    expect(box.x).toBeGreaterThanOrEqual(promptBox!.x);
+    expect(box.right).toBeLessThanOrEqual(promptBox!.x + promptBox!.width);
+    expect(box.right).toBeLessThanOrEqual(480);
+  }
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('tiered full-HP sluice refunds base cost only and shows the loss', async ({ page }) => {
+  const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-00-tiered-full');
+  const baseCost = Balance.sluice.cost;
+  const tierCost = Balance.tiers.sluice[1].cost;
+  await grantGold(page, baseCost + tierCost);
+  const built = await placeBuildableAt(page, 'sluice', 0, 7);
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await upgradeBuildable(page, built);
+
+  const upgraded = (await hpEntry(page, built.id, built.index))!;
+  expect(upgraded.tier).toBe(2);
+  const expectedRefund = demolishRefund(baseCost, upgraded.hp, upgraded.maxHp);
+  expect(expectedRefund).toBe(20);
+  await teleport(page, upgraded.position.x, upgraded.position.z);
+  const prompt = page.getByTestId('building-context-prompt');
+  await expect(prompt).toBeVisible();
+  await expect(prompt).toContainText('Sluice Works · Tier 2');
+  await expect(prompt).toContainText('need 320g');
+  await expect(prompt).toContainText('invested 160g');
+  await expect(prompt).toContainText('returns 20g');
+  await page.getByTestId('demolish-confirm').click();
+  await expect.poll(() => hpEntry(page, built.id, built.index)).toBeNull();
+  const granted = (await economyLog(page)).filter((event) => event.type === 'gold_granted').at(-1);
+  expect(granted).toMatchObject({ type: 'gold_granted', source: 'demolish', amount: expectedRefund });
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('tiered half-HP sluice refund scales from base cost only', async ({ page }) => {
+  const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-00-tiered-half');
+  await page.evaluate(() => {
+    window.__GR_TEST__?.setBalance('enemy.contactDamage', 0);
+    window.__GR_TEST__?.setBalance('wreck.damage', 20);
+    window.__GR_TEST__?.setBalance('wreck.hitCooldown', 999);
+  });
+  await grantGold(page, Balance.sluice.cost + Balance.tiers.sluice[1].cost);
+  const built = await placeBuildableAt(page, 'sluice', 0, 7);
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await upgradeBuildable(page, built);
+
+  await spawnStationaryWreckerAt(page, built);
+  await expect.poll(() => hpEntry(page, built.id, built.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(20);
+  await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+
+  const damaged = (await hpEntry(page, built.id, built.index))!;
+  const expectedRefund = demolishRefund(Balance.sluice.cost, damaged.hp, damaged.maxHp);
+  expect(expectedRefund).toBe(10);
+  await teleport(page, damaged.position.x, damaged.position.z);
+  const prompt = page.getByTestId('building-context-prompt');
+  await expect(prompt).toBeVisible();
+  await expect(prompt).toContainText('invested 160g');
+  await expect(prompt).toContainText('returns 10g');
+  await page.getByTestId('demolish-confirm').click();
+  await expect.poll(() => hpEntry(page, built.id, built.index)).toBeNull();
+  const granted = (await economyLog(page)).filter((event) => event.type === 'gold_granted').at(-1);
+  expect(granted).toMatchObject({ type: 'gold_granted', source: 'demolish', amount: expectedRefund });
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
@@ -165,8 +275,7 @@ test('demolish scales refund by remaining HP after building damage', async ({ pa
   await grantGold(page, 50);
   const built = await placeBuildableAt(page, 'palisade', 0, 9);
 
-  await teleport(page, 0, -5);
-  await expect(page.evaluate(() => window.__GR_TEST__?.spawnWrecker('south'))).resolves.toBe(true);
+  await spawnStationaryWreckerAt(page, built);
   await expect.poll(() => hpEntry(page, built.id, built.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(45);
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
 

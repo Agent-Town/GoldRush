@@ -720,11 +720,21 @@ body {
   box-shadow: none;
 }
 
-.assay-office-prompt {
+.prompt-stack {
   position: absolute;
   left: 50%;
   bottom: calc(max(18px, env(safe-area-inset-bottom)) + 88px);
   z-index: 6;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  width: min(760px, calc(100vw - 32px));
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.assay-office-prompt {
   padding: 8px 12px;
   border: 2px solid #2e1b0e;
   border-radius: 8px;
@@ -738,18 +748,14 @@ body {
     0 12px 20px rgba(46, 27, 14, 0.22);
   font: 800 0.86rem/1.1 Wellfleet, Georgia, serif;
   pointer-events: none;
-  transform: translateX(-50%);
 }
 
-.demolish-prompt {
-  position: absolute;
-  left: 50%;
-  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 132px);
-  z-index: 6;
-  display: flex;
+.building-context-prompt {
+  display: grid;
+  grid-template-columns: 28px minmax(150px, 1fr) minmax(132px, auto) minmax(132px, auto);
   align-items: center;
-  gap: 10px;
-  max-width: min(720px, calc(100vw - 32px));
+  gap: 8px;
+  width: 100%;
   padding: 8px 10px 8px 12px;
   border: 2px solid #2e1b0e;
   border-radius: 8px;
@@ -763,45 +769,37 @@ body {
     0 12px 20px rgba(46, 27, 14, 0.22);
   font: 800 0.86rem/1.15 Wellfleet, Georgia, serif;
   pointer-events: auto;
-  transform: translateX(-50%);
 }
 
-.upgrade-prompt {
-  position: absolute;
-  left: 50%;
-  bottom: calc(max(18px, env(safe-area-inset-bottom)) + 176px);
-  z-index: 6;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  max-width: min(720px, calc(100vw - 32px));
-  padding: 8px 10px 8px 12px;
+.building-context-prompt__icon {
+  display: inline-grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
   border: 2px solid #2e1b0e;
-  border-radius: 8px;
+  border-radius: 50%;
+  color: #fff8e8;
+  background: #8b7d3c;
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 232, 0.28);
+  font-size: 0.78rem;
+}
+
+.building-context-prompt__title {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.building-context-prompt__loss {
+  grid-column: 2 / -1;
+  min-width: 0;
   color: #2e1b0e;
-  background:
-    linear-gradient(135deg, rgba(255, 248, 232, 0.9), rgba(245, 230, 200, 0.97)),
-    #f5e6c8;
-  box-shadow:
-    inset 0 0 0 1px rgba(139, 125, 60, 0.36),
-    0 4px 0 rgba(46, 27, 14, 0.62),
-    0 12px 20px rgba(46, 27, 14, 0.22);
-  font: 800 0.86rem/1.15 Wellfleet, Georgia, serif;
-  pointer-events: auto;
-  transform: translateX(-50%);
+  font-size: 0.72rem;
+  line-height: 1.1;
+  opacity: 0.76;
 }
 
-.demolish-prompt__message {
+.building-context-prompt__button {
   min-width: 0;
-}
-
-.upgrade-prompt__message {
-  min-width: 0;
-}
-
-.demolish-prompt__button,
-.upgrade-prompt__button {
-  flex: 0 0 auto;
   padding: 6px 9px;
   border: 2px solid #2e1b0e;
   border-radius: 6px;
@@ -811,52 +809,49 @@ body {
   font: inherit;
 }
 
-.upgrade-prompt__button {
+.building-context-prompt__button--upgrade {
   background: #5b8a8a;
 }
 
-.upgrade-prompt__button:disabled {
-  opacity: 0.62;
+.building-context-prompt__button:disabled {
+  color: rgba(46, 27, 14, 0.7);
+  background: rgba(139, 125, 60, 0.22);
+  box-shadow: none;
 }
 
 .assay-office-prompt[hidden] {
   display: none;
 }
 
-.demolish-prompt[hidden] {
-  display: none;
-}
-
-.upgrade-prompt[hidden] {
+.building-context-prompt[hidden] {
   display: none;
 }
 
 @media (pointer: coarse), (max-width: 760px) {
-  .assay-office-prompt {
+  .prompt-stack {
     bottom: calc(max(18px, env(safe-area-inset-bottom)) + 190px);
   }
+}
 
-  .demolish-prompt {
-    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 236px);
+@media (max-width: 560px) {
+  .prompt-stack {
+    width: calc(100vw - 28px);
   }
 
-  .upgrade-prompt {
-    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 282px);
+  .building-context-prompt {
+    grid-template-columns: 24px minmax(0, 1fr);
+    align-items: stretch;
+  }
+
+  .building-context-prompt__button,
+  .building-context-prompt__loss {
+    grid-column: 1 / -1;
   }
 }
 
 @media (max-width: 430px) {
-  .assay-office-prompt__key,
-  .demolish-prompt__key,
-  .upgrade-prompt__key {
+  .assay-office-prompt__key {
     display: none;
-  }
-
-  .demolish-prompt,
-  .upgrade-prompt {
-    align-items: stretch;
-    flex-direction: column;
-    width: calc(100vw - 28px);
   }
 }
 

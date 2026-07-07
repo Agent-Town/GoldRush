@@ -96,6 +96,7 @@ export type DemolishCandidate = {
   id: BuildableId;
   index: number;
   displayName: string;
+  invested: number;
   refund: number;
   position: { x: number; z: number };
 };
@@ -622,6 +623,7 @@ export class BuildSystem {
             id,
             index,
             displayName: def?.displayName ?? id,
+            invested: this.buildCosts[id][index] ?? 0,
             refund: this.demolishRefund(id, index),
             position: { x: buildingPosition.x, z: buildingPosition.z },
           };
@@ -651,6 +653,12 @@ export class BuildSystem {
       }
     }
     return best;
+  }
+
+  upgradeCandidateFor(id: BuildableId, index: number): UpgradeCandidate | null {
+    if (!isUpgradeableBuildable(id) || !this.isSlotActive(id, index)) return null;
+    const buildingPosition = this.positionFor(id, index);
+    return buildingPosition ? this.upgradeCandidate(id, index, buildingPosition) : null;
   }
 
   upgradeBuilding(
@@ -1503,8 +1511,18 @@ export class BuildSystem {
   private demolishRefund(id: BuildableId, index: number): number {
     const maxHp = this.maxHpForInstance(id, index);
     const hp = this.wrecked[id][index] ? 0 : Math.max(0, Math.min(maxHp, this.hp[id][index] ?? maxHp));
-    const cost = this.buildCosts[id][index] ?? 0;
+    const cost = this.baseBuildCost(id, index);
     return Math.floor(Math.max(0, Balance.demolish.refundPctOfCost * cost * (maxHp > 0 ? hp / maxHp : 0)));
+  }
+
+  private baseBuildCost(id: BuildableId, index: number): number {
+    const invested = this.buildCosts[id][index] ?? 0;
+    if (!isUpgradeableBuildable(id)) return invested;
+    let tierSpend = 0;
+    for (let tier = 2; tier <= this.tierFor(id, index); tier += 1) {
+      tierSpend += Balance.tiers[id][tier - 1]?.cost ?? 0;
+    }
+    return Math.max(0, invested - tierSpend);
   }
 
   private syncGhostShape(): void {

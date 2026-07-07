@@ -90,8 +90,7 @@ import {
 } from '../ui/DeathOverlay';
 import { Hud, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
-import { DemolishPrompt } from '../ui/DemolishPrompt';
-import { UpgradePrompt } from '../ui/UpgradePrompt';
+import { BuildingContextPrompt } from '../ui/BuildingContextPrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
@@ -206,9 +205,9 @@ export class Game {
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
+  private readonly promptStack = document.createElement('div');
   private readonly assayOfficePrompt: AssayOfficePrompt;
-  private readonly demolishPrompt: DemolishPrompt;
-  private readonly upgradePrompt: UpgradePrompt;
+  private readonly buildingContextPrompt: BuildingContextPrompt;
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
@@ -282,12 +281,12 @@ export class Game {
   private demolishCandidate: DemolishCandidate | null = null;
   private demolishSuppressedKey: string | null = null;
   private upgradeCandidate: UpgradeCandidate | null = null;
-  private upgradeSuppressedKey: string | null = null;
   private lastPauseIntent = false;
   private lastRestartIntent = false;
   private lastBuildIntent = false;
   private lastCancelIntent = false;
   private lastConfirmIntent = false;
+  private lastUpgradeIntent = false;
   private lastRotateIntent = false;
   private lastWeaponToggleIntent = false;
   private lastDebugSpawnIntent = false;
@@ -370,9 +369,15 @@ export class Game {
     const confirmButton = this.getElement('#confirm-button');
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
-    this.assayOfficePrompt = new AssayOfficePrompt(this.getElement('#hud'));
-    this.demolishPrompt = new DemolishPrompt(this.getElement('#hud'), () => this.confirmDemolish());
-    this.upgradePrompt = new UpgradePrompt(this.getElement('#hud'), () => this.confirmUpgrade());
+    this.promptStack.className = 'prompt-stack';
+    this.promptStack.dataset.testid = 'prompt-stack';
+    this.getElement('#hud').append(this.promptStack);
+    this.buildingContextPrompt = new BuildingContextPrompt(
+      this.promptStack,
+      () => this.confirmUpgrade(),
+      () => this.confirmDemolish(),
+    );
+    this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.finishRunLedger());
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
@@ -634,8 +639,8 @@ export class Game {
     this.input.dispose();
     this.hud.dispose();
     this.assayOfficePrompt.dispose();
-    this.demolishPrompt.dispose();
-    this.upgradePrompt.dispose();
+    this.buildingContextPrompt.dispose();
+    this.promptStack.remove();
     this.deathOverlay.dispose();
     this.upgradeOverlay.dispose();
     this.damageVignette.remove();
@@ -683,6 +688,7 @@ export class Game {
       this.state.togglePause();
     }
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
+    const upgradedThisFrame = intents.upgrade && !this.lastUpgradeIntent ? this.confirmUpgrade() : false;
     if (intents.rotateBuild && !this.lastRotateIntent && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
     if (intents.weaponToggle && !this.lastWeaponToggleIntent) this.toggleWeapon();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
@@ -695,12 +701,13 @@ export class Game {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
       this.progression.debugGrant(50);
     }
-    if (intents.confirm && !this.lastConfirmIntent) this.confirmAction();
+    if (intents.confirm && !this.lastConfirmIntent && !upgradedThisFrame) this.confirmAction();
     this.lastPauseIntent = intents.pause;
     this.lastRestartIntent = intents.restart;
     this.lastBuildIntent = intents.build;
     this.lastCancelIntent = intents.cancel;
     this.lastConfirmIntent = intents.confirm;
+    this.lastUpgradeIntent = intents.upgrade;
     this.lastRotateIntent = intents.rotateBuild;
     this.lastWeaponToggleIntent = intents.weaponToggle;
     this.lastDebugSpawnIntent = intents.debugSpawn;
@@ -781,8 +788,7 @@ export class Game {
     this.syncUpgradeOverlay();
     this.syncUi();
     this.syncAssayOfficePrompt();
-    this.syncUpgradePrompt();
-    this.syncDemolishPrompt();
+    this.syncBuildingContextPrompt();
     this.publishDiagnostics();
   }
 
@@ -792,6 +798,7 @@ export class Game {
     this.lastBuildIntent = intents.build;
     this.lastCancelIntent = intents.cancel;
     this.lastConfirmIntent = intents.confirm;
+    this.lastUpgradeIntent = intents.upgrade;
     this.lastRotateIntent = intents.rotateBuild;
     this.lastWeaponToggleIntent = intents.weaponToggle;
     this.lastDebugSpawnIntent = intents.debugSpawn;
@@ -1181,34 +1188,21 @@ export class Game {
     );
   }
 
-  private syncDemolishPrompt(): void {
+  private syncBuildingContextPrompt(): void {
     const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
     const assayInRange = this.buildSystem.assayOfficeInRange(this.hero.group.position);
-    let candidate =
+    let demolish =
       this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode
         ? this.buildSystem.nearestBuildingTo(this.hero.group.position)
         : null;
-    const key = candidate ? demolishKey(candidate) : null;
+    const key = demolish ? demolishKey(demolish) : null;
     if (!key) this.demolishSuppressedKey = null;
     if (key && this.demolishSuppressedKey && key !== this.demolishSuppressedKey) this.demolishSuppressedKey = null;
-    if (key && key === this.demolishSuppressedKey) candidate = null;
-    this.demolishCandidate = candidate;
-    this.demolishPrompt.update(candidate, !assayInRange && this.upgradeCandidate?.canUpgrade !== true);
-  }
-
-  private syncUpgradePrompt(): void {
-    const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
-    const assayInRange = this.buildSystem.assayOfficeInRange(this.hero.group.position);
-    let candidate =
-      this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode
-        ? this.buildSystem.nearestUpgradeableTo(this.hero.group.position)
-        : null;
-    const key = candidate ? upgradeKey(candidate) : null;
-    if (!key) this.upgradeSuppressedKey = null;
-    if (key && this.upgradeSuppressedKey && key !== this.upgradeSuppressedKey) this.upgradeSuppressedKey = null;
-    if (key && key === this.upgradeSuppressedKey) candidate = null;
-    this.upgradeCandidate = candidate;
-    this.upgradePrompt.update(candidate, !assayInRange);
+    if (key && key === this.demolishSuppressedKey) demolish = null;
+    const upgrade = demolish ? this.buildSystem.upgradeCandidateFor(demolish.id, demolish.index) : null;
+    this.demolishCandidate = demolish;
+    this.upgradeCandidate = upgrade;
+    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange);
   }
 
   private handleUiIntent(intent: UiIntent): void {
@@ -1242,7 +1236,6 @@ export class Game {
     this.waveSystem.reset();
     this.buildMenuOpen = false;
     this.upgradeCandidate = null;
-    this.upgradeSuppressedKey = null;
     this.demolishCandidate = null;
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
@@ -1290,8 +1283,7 @@ export class Game {
     this.uiBridge.announce('Stake your claim.', 0);
     this.showProspectorIntro();
     this.upgradeOverlay.hide();
-    this.upgradePrompt.update(null, true);
-    this.demolishPrompt.update(null, true);
+    this.buildingContextPrompt.update(null, null, false);
   }
 
   private finishRunLedger(): void {
@@ -1761,9 +1753,6 @@ export class Game {
       this.openAssayBench?.();
       return;
     }
-    if (this.upgradeCandidate) {
-      if (this.confirmUpgrade()) return;
-    }
     this.confirmDemolish();
   }
 
@@ -1773,8 +1762,8 @@ export class Game {
     const upgraded = this.upgradeBuilding(candidate.id, candidate.index);
     if (upgraded) {
       this.upgradeCandidate = null;
-      this.upgradeSuppressedKey = null;
-      this.upgradePrompt.update(null, true);
+      this.demolishCandidate = null;
+      this.buildingContextPrompt.update(null, null, false);
     }
     return upgraded;
   }
@@ -1786,18 +1775,17 @@ export class Game {
     if (removed) {
       this.demolishCandidate = null;
       this.demolishSuppressedKey = null;
-      this.demolishPrompt.update(null, true);
+      this.upgradeCandidate = null;
+      this.buildingContextPrompt.update(null, null, false);
     }
     return removed;
   }
 
   private cancelInteractionPrompts(): void {
-    if (this.upgradeCandidate) this.upgradeSuppressedKey = upgradeKey(this.upgradeCandidate);
     if (this.demolishCandidate) this.demolishSuppressedKey = demolishKey(this.demolishCandidate);
     this.upgradeCandidate = null;
     this.demolishCandidate = null;
-    this.upgradePrompt.update(null, true);
-    this.demolishPrompt.update(null, true);
+    this.buildingContextPrompt.update(null, null, false);
   }
 
   private upgradeBuilding(id: BuildableId, index: number): boolean {
@@ -1994,10 +1982,6 @@ function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOption
 
 function demolishKey(candidate: DemolishCandidate): string {
   return `${candidate.id}:${candidate.index}`;
-}
-
-function upgradeKey(candidate: UpgradeCandidate): string {
-  return `${candidate.id}:${candidate.index}:${candidate.tier}`;
 }
 
 function edgeFromPosition(position: THREE.Vector3): CompassEdge {

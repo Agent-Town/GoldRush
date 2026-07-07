@@ -11,6 +11,7 @@ type PointerState = {
 export type Intents = {
   move: THREE.Vector2;
   confirm: boolean;
+  upgrade: boolean;
   rotateBuild: boolean;
   weaponToggle: boolean;
   build: boolean;
@@ -30,12 +31,14 @@ export class InputController {
   private readonly pointer = new THREE.Vector2();
   private readonly keyVector = new THREE.Vector2();
   private previousBuild = false;
+  private previousUpgrade = false;
   private previousRotateBuild = false;
   private previousWeaponToggle = false;
   private previousDebugXp = false;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
     confirm: false,
+    upgrade: false,
     rotateBuild: false,
     weaponToggle: false,
     build: false,
@@ -168,6 +171,9 @@ export class InputController {
     const down = (code: string): boolean => this.keys.has(code) || this.tapped.has(code);
     this.readMovement(this.intents.move);
     this.intents.confirm = down('Space') || down('Enter') || down('TouchConfirm');
+    const upgradeHeld = down('KeyU');
+    this.intents.upgrade = upgradeHeld && !this.previousUpgrade;
+    this.previousUpgrade = this.keys.has('KeyU');
     const rotateHeld = down('KeyR') || down('TouchRotate');
     this.intents.rotateBuild = rotateHeld && !this.previousRotateBuild;
     this.previousRotateBuild = this.keys.has('KeyR') || this.keys.has('TouchRotate');

@@ -85,6 +85,11 @@ async function upgrade(page: Page, entry: HpEntry): Promise<boolean> {
   return page.evaluate(([id, index]) => window.__GR_TEST__?.upgradeBuilding(id, index) ?? false, [entry.id, entry.index] as const);
 }
 
+async function spawnStationaryWreckerAt(page: Page, entry: HpEntry): Promise<void> {
+  await teleport(page, entry.position.x, entry.position.z);
+  await page.evaluate(() => window.__GR_TEST__?.spawnPack(1, 0.1, { speedScale: 0, wrecker: true }));
+}
+
 async function setBalance(page: Page, path: string, value: number): Promise<void> {
   await expect(page.evaluate(([key, next]) => window.__GR_TEST__?.setBalance(key, next), [path, value] as const)).resolves.toBe(true);
 }
@@ -148,11 +153,10 @@ test('turret tier raises live damage and spends the exact tier-2 cost', async ({
   expect(before.effectiveFireRate).toBe(Balance.turret.fireRate);
 
   await teleport(page, turret.position.x, turret.position.z);
-  await expect(page.getByTestId('upgrade-prompt')).toBeVisible();
-  await expect(page.getByTestId('upgrade-prompt')).toContainText(`Tier 2`);
-  await expect(page.getByTestId('upgrade-prompt')).toContainText(`${Balance.tiers.turret[1].cost} gold`);
+  await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+  await expect(page.getByTestId('building-context-prompt')).toContainText(`Upgrade to T2 (${Balance.tiers.turret[1].cost}g)`);
   const beforeGold = await gold(page);
-  await page.keyboard.press('Enter');
+  await page.keyboard.press('KeyU');
 
   await expect.poll(() => hpEntry(page, 'turret', turret.index).then((entry) => entry?.tier ?? 0)).toBe(2);
   const after = (await hpEntry(page, 'turret', turret.index))!;
@@ -164,6 +168,47 @@ test('turret tier raises live damage and spends the exact tier-2 cost', async ({
   expect((after.effectiveDamage ?? 0) * (after.effectiveFireRate ?? 0)).toBeGreaterThanOrEqual(
     (before.effectiveDamage ?? 0) * (before.effectiveFireRate ?? 0) * 1.5,
   );
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('same-frame upgrade and confirm does not demolish the upgraded building', async ({ page }) => {
+  const errors = await openGame(page, 'bt-01-upgrade-confirm-chord');
+  await grantGold(page, 300);
+  const turret = await placeBuildableAt(page, 'turret', 0, 12);
+  await teleport(page, turret.position.x, turret.position.z);
+  await expect(page.getByTestId('building-context-prompt')).toContainText(`Upgrade to T2 (${Balance.tiers.turret[1].cost}g)`);
+  const beforeGold = await gold(page);
+
+  await page.evaluate(() => {
+    window.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, code: 'KeyU', key: 'u' }));
+    window.dispatchEvent(new KeyboardEvent('keydown', { bubbles: true, code: 'Enter', key: 'Enter' }));
+  });
+
+  await expect.poll(() => hpEntry(page, 'turret', turret.index).then((entry) => entry?.tier ?? 0)).toBe(2);
+  await expect.poll(() => buildableCount(page, 'turret')).toBe(1);
+  expect(await gold(page)).toBe(beforeGold - Balance.tiers.turret[1].cost);
+  await page.evaluate(() => {
+    window.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, code: 'KeyU', key: 'u' }));
+    window.dispatchEvent(new KeyboardEvent('keyup', { bubbles: true, code: 'Enter', key: 'Enter' }));
+  });
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('Enter tears down after clicking upgrade instead of re-clicking the focused upgrade button', async ({ page }) => {
+  const errors = await openGame(page, 'bt-01-click-upgrade-enter-demolish');
+  await grantGold(page, 1_000);
+  const turret = await placeBuildableAt(page, 'turret', 0, 12);
+  await teleport(page, turret.position.x, turret.position.z);
+  await page.getByTestId('upgrade-confirm').click();
+  await expect.poll(() => hpEntry(page, 'turret', turret.index).then((entry) => entry?.tier ?? 0)).toBe(2);
+  await expect(page.getByTestId('building-context-prompt')).toContainText('Signal Turret · Tier 2');
+
+  await page.keyboard.press('Enter');
+
+  await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();
+  await expect.poll(() => buildableCount(page, 'turret')).toBe(0);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
@@ -186,15 +231,14 @@ test('palisade tier raises max HP, heals, and wears only below half the new max'
   const firstDamage = Math.floor(upgraded.maxHp / 2) - 1;
   await setBalance(page, 'wreck.damage', firstDamage);
   await setBalance(page, 'wreck.hitCooldown', 999);
-  await teleport(page, 0, -5);
-  await expect(page.evaluate(() => window.__GR_TEST__?.spawnWrecker('south'))).resolves.toBe(true);
+  await spawnStationaryWreckerAt(page, upgraded);
   const aboveHalfHp = upgraded.maxHp - firstDamage;
   await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(aboveHalfHp);
   expect((await hpEntry(page, 'palisade', palisade.index))?.worn).toBe(false);
 
   await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
   await setBalance(page, 'wreck.damage', 2);
-  await expect(page.evaluate(() => window.__GR_TEST__?.spawnWrecker('south'))).resolves.toBe(true);
+  await spawnStationaryWreckerAt(page, upgraded);
   await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(aboveHalfHp - 2);
   expect((await hpEntry(page, 'palisade', palisade.index))?.worn).toBe(true);
   expect(errors.consoleErrors).toEqual([]);
@@ -268,7 +312,7 @@ test('tier cap stops at tier 3 without extra spend', async ({ page }) => {
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('demolish refund includes tier investment', async ({ page }) => {
+test('demolish refund ignores tier investment', async ({ page }) => {
   const errors = await openGame(page, 'bt-01-refund');
   await grantGold(page, Balance.turret.costBase + Balance.tiers.turret[1].cost);
   const turret = await placeBuildableAt(page, 'turret', 0, 12);
@@ -277,8 +321,7 @@ test('demolish refund includes tier investment', async ({ page }) => {
   await teleport(page, turret.position.x, turret.position.z);
   await expect(page.evaluate(([id, index]) => window.__GR_TEST__?.demolish(id, index) ?? false, [turret.id, turret.index] as const)).resolves.toBe(true);
 
-  const invested = Balance.turret.costBase + Balance.tiers.turret[1].cost;
-  expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * invested));
+  expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.turret.costBase));
   await expect.poll(() => hpEntry(page, 'turret', turret.index)).toBeNull();
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
@@ -290,12 +333,12 @@ test('insufficient gold leaves tier and gold unchanged', async ({ page }) => {
   const palisade = await placeBuildableAt(page, 'palisade', 0, 9);
   expect(await gold(page)).toBe(0);
   await teleport(page, palisade.position.x, palisade.position.z);
-  await expect(page.getByTestId('upgrade-prompt')).toBeVisible();
-  await expect(page.getByTestId('upgrade-prompt')).toContainText(`Need ${Balance.tiers.palisade[1].cost} gold`);
+  await expect(page.getByTestId('building-context-prompt')).toBeVisible();
+  await expect(page.getByTestId('building-context-prompt')).toContainText(`need ${Balance.tiers.palisade[1].cost}g`);
   await expect(upgrade(page, palisade)).resolves.toBe(false);
   expect(await gold(page)).toBe(0);
   expect((await hpEntry(page, 'palisade', palisade.index))?.tier).toBe(1);
-  await expect(page.getByTestId('demolish-prompt')).toBeVisible();
+  await expect(page.getByTestId('building-context-prompt')).toBeVisible();
   await page.keyboard.press('Enter');
   await expect.poll(() => hpEntry(page, 'palisade', palisade.index)).toBeNull();
   expect(await gold(page)).toBe(Math.floor(Balance.demolish.refundPctOfCost * Balance.palisade.cost));
