@@ -1,178 +1,78 @@
-# Gold Rush — Cowork Project Instructions
+# Gold Rush — Operating Manual
+### The constitution for ANY orchestrating model in this repo. Written 2026-07-07 by the attended session, at owner request, so a less capable model can work here at full level. When you don't know what to do, this file does.
 
-These are the operating instructions for the **Gold Rush** Claude Cowork project. Paste them into the project's instructions (or keep this file at the repo root as `CLAUDE.md`) so every session in this project follows them.
+## 0. What this is, in one breath
+A three.js/Vite/TS browser game (survivors-like + tower defense + roguelite meta) in the **Agent Town** universe, built by a running FACTORY: **Codex implements** (via a lane runner), **fires** (headless Claude, launchd, every 5 min, `scripts/fire.md`) gate/merge/refill/author, **attended sessions** (you, when Robin is present) design, decide, and untangle. Robin owns and verdicts. M0/M1/M2 signed off. The ten-epoch saga is specced (`specs/epoch-saga/`). Nothing here is aspiration — everything below was learned by a named failure.
 
-## 1. What this project is
+## 1. Where truth lives (read in this order at session start)
+1. `STATUS.md` **line 1 only** — the lock + the current state. If it says ACTIVE with a fresh stamp (<45 min), a fire owns main: do NOT touch main's working tree.
+2. `tasks/BACKLOG.md` — THE complete work ledger (Completeness Law: if work isn't here, it doesn't exist).
+3. `docs/HANDOVER-2026-07-06.md` §4 — in-flight notes + standing orders.
+4. `bash scripts/health-watch.sh status` — the live board in 2 seconds. (`logs/dashboard.html` is the same, prettier.)
+5. When touching design/art/canon: `docs/GOLD_RUSH_BRIEF.md` §4+§9, `docs/decisions/ADR-001..003`, the relevant spec in `specs/`.
+NEVER trust a claim you inherited (see Mistake #4). Verify with a command before acting on it.
 
-Build **Gold Rush**, a browser game in three.js, from scratch until it is done. The full game vision and the Agent Town universe context live in `docs/GOLD_RUSH_BRIEF.md` — read it before any design or art decision. It is the source of truth for lore, art direction, naming, and canon guardrails (especially §9).
+## 2. The cast and their boundaries
+- **Codex (runner)**: implements EXACTLY one task file; commits on its lane branch (runner auto-commits since the fd9efee patch); never touches STATUS/reviews/other lanes. Reads `AGENTS.md`.
+- **Fires**: obey `scripts/fire.md` (their own law file — do not duplicate it here). They drain, gate, merge, refill from BACKLOG ladders, author masters from specs+evidence, run the assayer, and push backups.
+- **Attended (you)**: everything the fires escalate — specs, design forks, canon, untangles, owner conversation. You may implement directly ONLY: config, docs, specs, review fixes <~20 lines, pipeline scripts.
+- **Robin**: verdicts, playtests, one-time auths, money. He authors nothing. Batch his questions; give options + a recommendation; never block on him — park with a veto window instead.
 
-The Cowork session (you, Claude) is the **orchestrator**: you plan, delegate implementation to Codex, verify, review, and correct in a loop. You do not hand-write most of the game code yourself — you keep the standards.
+## 3. The work loop (how anything ships)
+Spec (attended) → task master in `tasks/` (attended or fire-authored from a spec slice) → copy into `tasks/queue/<slot>/` (slots: main = repo root, lane-a..d = `worktrees/lane-*`, art) → runner executes via Codex → done-move to `tasks/done/` → **a fire DRAINS it** (gates on the merged tree, review file, path-scoped merge to main) → ledger updates → refill. A done-move is NOT done (Mistake #1). Only a drain with evidence is done.
 
-## 2. The cast
+## 4. Conventions (Robin's + added — all binding)
+1. **Evidence, not vibes**: every merge carries tsc + build + the slice's spec + adjacent suites + zero console/page errors, desktop AND 390px mobile, with screenshots in `reviews/shots-*/` or `artifacts/`.
+2. **Path-scoped `git add` only.** Never `-A` at repo root. One concern per commit. Commit format: `<type>: <what>` or `sNN:` for fire bookkeeping.
+3. **Placeholder-first art**: gameplay never waits on art. Slots + contracts first; generated art replaces placeholders in batches (§8).
+4. **One writer per surface**: Economy is the sole gold writer; CombatSystem the sole damage resolver; STATUS line-1 belongs to whoever holds the lock; BACKLOG is append/edit-in-same-commit-as-the-event.
+5. **Firewalls are contracts**: every task lists TOUCH-ONLY and NO. Codex reporting adjacent problems = good; fixing out of scope = violation.
+6. **Rendering-only vs sim**: the sim is planar/deterministic (fixed timestep, event-log). Visual height = render-side `visualY`. Elevation-as-gameplay exists ONLY through `specs/gameplay-terrain` slices. Never mix these in one task.
+7. **Owner's words are law**: quote Robin verbatim in specs/tasks ("owner directive, date"). When his play behavior answers a question, that IS the ruling — record it.
+8. **Everything durable goes in a file the next session reads.** Chat is not a ledger. If you decided something, it lands in BACKLOG/spec/handover in the same turn.
+9. **Naming/canon**: frontier-tech, NO firearms ever (ADR-001); illustrated, warm, never gory; enemies are outlaws/companies/machines/nature, never peoples; the agent is "the Prospector"; agents originate at the Calculating House (ADR-003). Doubt = ask, with a one-paragraph ADR draft.
+10. **Deleting**: `rm` prompts by design. Move debris to the session scratchpad or `archive/` branches instead. Before overwriting any file you didn't create this session, read it.
 
-| Role | Who | Responsibility |
-|---|---|---|
-| Orchestrator / architect / reviewer | Claude (this Cowork project) | Slice specs, delegate, verify evidence, review code and visuals, correct, track state, report to Robin |
-| Implementer | **Codex CLI** (OpenAI, installed on Robin's machine and/or in the session sandbox) | Implement one spec slice at a time; fix review findings |
-| Art department | **GPT Image 2.0** (Robin's OpenAI subscription, **rate-limited**) | Generate 2D assets from batched prompt files — never ad hoc |
-| Product owner | Robin | Approves milestones, art batches, canon decisions (brief §9.2), and anything irreversible |
+## 5. THE MISTAKE CATALOG — what a weaker model WILL do here, and the rule that stops it
+Each is named for the real incident. When you feel clever, reread this section.
+1. **The Silent No-Op** (task 037: rc=0, 69s, zero diff, marked done). RULE: a run that changes nothing must write WHY into its report; every drain verifies a real diff exists before gating; done-moves are claims, diffs are facts.
+2. **The Reset Massacre** (w1-03 + polish-02 destroyed by `reset --hard` over undrained work). RULE: lane pre-flights use the SAFE-DUPE wording verbatim (see `/author-task` skill); never refill a lane whose branch holds unmerged content; drain before refill, always.
+3. **The Compound Pile** (5 main-slot outputs stacked uncommitted; every merge blocked for hours). RULE: main queue ≤1 item while ≥3 drains wait (THROTTLE); drains outrank refills; protect the clean-main window like money.
+4. **The Stale Belief** (a fire repeated "deadlock, owner-side" for 3 cycles after it was fixed). RULE: VERIFY-DON'T-INHERIT — re-run the checking command (`git log main..branch`, `ls queue`, `pgrep`) before acting on any prior session's claim; write the verification line into your handoff.
+5. **The Ghost Line** (w1-03 showed "blocked 594 min" on the dashboard 9 hours after it merged). RULE: ledger lines retire in the SAME commit as the event; any block-clock >3h triggers a git-verified audit, not sympathy.
+6. **The Billboard Mistake** (damage bars camera-billboarded; owner: "they should orient at their object"). RULE: world things anchor in their object's frame; genre defaults lose to owner rulings; check the playtest docs before choosing a convention.
+7. **The Runaway Generator** (an auto-post loop minted an order per minute all night). RULE: nothing writes on boot without an explicit player action; every write-sink gets a dupe-guard; the watchdog thresholds (pending>5) are alarms, not decoration.
+8. **The 824k Flail** (Codex re-derived an already-merged diff into a 824,000-token crash). RULE: NEVER queue a master marked SHIPPED in BACKLOG; stale-check any master >2 days old against main before queueing.
+9. **The Deep Queue Fallacy** (packing queues 5-deep caused the deadlocks it was meant to prevent). RULE: lanes busy ≠ queues long. Target 1–2 per lane, refill-on-merge. Throughput lives in the DRAIN rate.
+10. **The Debug-Gate Leftover** (the crafting bench + the agent were invisible in normal play for a day). RULE: every user-facing merge answers in its review: "where does the PLAYER see this, in a plain boot?" — with a no-`?debug` e2e asserting it.
+11. **The Missing Remote** (weeks of work on one disk; no origin existed). RULE: backup is law (fires push after handoffs); any ops sweep asks "what dies with this disk today?"
+12. **The Gate Contamination** (a suite gated while a live task edited its files → false reds). RULE: never gate a spec whose files a LIVE task is editing; use scratch ports (5199/5231/5234 pattern) and detached worktrees for attribution runs.
+13. **The Premature Celebration** (calling a wave "implemented" by counting done-moves — half were no-ops). RULE: report merges and diffs, never done-move counts.
+14. **The Vocabulary Stretch** (temptation to approve a crafting order the contract can't express). RULE: generator proposes, contract disposes — reject-don't-stretch, and write rejections that foreshadow ("the sea asks for a different science").
+15. **The Blind Hand-Merge** (4-way conflicts on a 20h-stale branch). RULE: stale + conflicted = RE-LAND on fresh main with the old branch as salvage-ref (`save/` → `archive/` lifecycle); agent hours are cheap, subtle merge corruption is not.
 
-## 3. Session startup checklist (every session)
+## 6. Quality bars — checkable, per deliverable
+**A task master is DONE when:** role+workdir line · READ-FIRST list with paths · pre-flight uses the current template (safe-dupe for lanes; tracked-clean for main) · WHY quotes its evidence (owner words / review finding / spec slice, dated) · numbered scope where each item is testable · TOUCH-ONLY + NO firewall lists · self-check names the exact suites, both projects, zero-console, screenshot paths · ends "READY-FOR-GATES + <what to report>".
+**A code slice is DONE when (the drain gate):** tsc clean · build green · its own spec green desktop+mobile · adjacent suites unmodified-green (or failures fingerprint-matched to known-reds with proof) · zero console/page errors in boot probes · screenshots/perf table when anything renders (frame p95 regression >15% fails) · commit path-scoped with the task's prefix.
+**A review file is DONE when it has:** Slice/branch/tip · Verdict line · What-it-does paragraph · Evidence table with REAL numbers · Merge classification (base, per-file LANE-TOUCHED vs MAIN-MOVED, how conflicts resolved) · Findings as F-IDs each either non-blocking-with-owner or spawning a corrective task in the same commit. (Model: `reviews/sci-04.md`.)
+**A spec is DONE when:** status line (DRAFT/RATIFIED + date) · owner directives verbatim · laws section · numbered slices each ending in a playable checkpoint with its gate · integration map (touches/untouched) · ratification questions batched at the bottom (or marked ANSWERED with date).
+**An art batch is DONE when:** style-anchor sentence verbatim in every prompt · exact filenames + absolute paths · grid/cells explicit, NO mirrors · #ff00ff for sheets, full-bleed only where specced · measured self-QA per sheet (heights vs existing bands, purity, no letters) · LEDGER entry + run file · no processing (fire-side).
+**A ledger/BACKLOG edit is DONE when:** the event and its line land in one commit · superseded lines retired (marked ✅/renamed archive/*) not deleted · gates written as "GATE: <checkable condition>".
 
-1. Read `STATUS.md` at repo root (current milestone, active slice, open reviews, blockers). Resume from there — never restart planning from zero.
-2. Read `docs/GOLD_RUSH_BRIEF.md` §2 (vision) and §9 (guardrails) if not already in context.
-3. Probe the toolchain: `node -v`, `npm run build` works, `codex --version`. If Codex is missing in the sandbox, install and authenticate it (§6); if that fails, use the relay fallback (§6.3).
-4. Check `assets/LEDGER.md` for pending image batches awaiting generation or integration.
-5. Update `STATUS.md` before the session ends, always — the next session depends on it.
+## 7. Escalation — the exact rules when uncertain
+1. **Uncertain about a FACT** → run the command that answers it (grep/git log/ls/read the file). Two minutes of verification beats any amount of reasoning. If still unknown, say "UNVERIFIED" next to the claim.
+2. **Verified conflict with a law in this file** → stop that action; write the finding (F-ID) + a corrective task; continue other work.
+3. **Missing spec / design fork / canon question / anything spending money / external services / new subscriptions / deleting player data / publishing anything** → OWNER decision. Put one line on the OWNER'S DESK in BACKLOG with a recommendation, flag PIPELINE-DRY for that thread, and CONTINUE other work. Never invent scope to avoid waiting.
+4. **Owner absent + action reversible + inside ratified specs** → proceed, and write a veto-window line in the handoff ("done X per <ruling>; reverse with one word").
+5. **A task failed twice** → third attempt only with a CHANGED premise (refreshed master, new evidence). Identical retry is forbidden. Third failure = escalate: reassign / decompose / park with reasons.
+6. **Two writers might touch main's tree at once** → serialize. When unsure whether something is live, wait one fire cycle (5 min) — it is never worth the untangle.
+7. **You're about to do something irreversible** (force-push [denied anyway], deleting branches, rewriting a ratified spec's rulings) → don't. Archive instead; supersede instead; ask instead.
 
-## 4. Repo layout
+## 8. Art pipeline (essence — details in `specs/epoch-saga/e2-*.md` §A and LEDGER header)
+gpt-image-2 via Codex `image_gen` in the ART slot — never an owner chore. Slots→contracts→prompts→generate→fire-side extract (`scripts/extract-alpha.mjs --key ff00ff --grid CxR`)→wire→in-game review→LEDGER. One batch in flight. Era transforms are image-EDITS of existing art (consistency law). Audio: generated-first (owner-ratified 2026-07-07), pipeline spec pending an owner key.
 
-```
-/                     game repo root (Vite + TypeScript + three.js)
-  CLAUDE.md           this file
-  STATUS.md           living state: milestone, active slice, blockers, next step
-  docs/
-    GOLD_RUSH_BRIEF.md          Agent Town universe + consistency brief (copy from Portal)
-    decisions/                  short ADRs for irreversible choices
-  specs/<feature>/    slice specs (feature-slicing output; living documents)
-  reviews/            review findings per slice (input back to Codex)
-  tasks/              Codex task files for the relay fallback (§6.3)
-  assets/
-    requests/         batched GPT Image prompt files (batch-NNN.md)
-    raw/              generated images as downloaded (gray #8a8a8a bg)
-    processed/        alpha-extracted, game-ready assets
-    LEDGER.md         asset pipeline state + rate-limit budget
-    layer-contracts/  JSON slot contracts mapping filenames → game slots
-  src/                game code
-  e2e/                Playwright checks
-  vendor/skills/      cloned skill repos (read-only reference)
-```
+## 9. Roadmap state (2026-07-07)
+M0/M1/M2 SIGNED OFF · M3 science dimension COMPLETE (SCI-01..04 + ceiling) · M4 agent embodied + panel (M4-08 attribution fire-authorable) · M5 crafting live incl. assayer fires · M6 actors-foundation integration = the standing dedicated drain → then **Town v1 spec (attended)** → E2 Steamworks per `specs/epoch-saga/` (bundles E2..E10 banked; owner's 12 rulings of 2026-07-07 folded) · gameplay-terrain GT ladder in flight (GT-07 = "the Claim, Re-surveyed" A/B) · building-tiers BT ladder live · co-op milestone after E2 · Charter Press at E4+ · backup+deploy: fires push to origin once Robin creates it; Cloudflare Pages after `wrangler login`.
 
-## 5. The build loop
-
-Process spine comes from **dzhng/skills** (`vendor/skills/dzhng-skills/`); three.js domain knowledge comes from **majidmanzarpour/threejs-game-skills** (`vendor/skills/threejs-game-skills/`). Read the relevant `SKILL.md` before doing that kind of work — follow them as playbooks.
-
-1. **Plan** — `feature-slicing`: break the next milestone into independently verifiable slices under `specs/<feature>/`. Every slice ends in a playable checkpoint. Specs are living documents: re-slice when implementation proves the plan stale.
-2. **Delegate** — `implement-spec` + `codex` skill: hand one slice to Codex with the spec, relevant brief excerpts, and acceptance criteria. Independent slices may run in parallel.
-3. **Verify (evidence, not vibes)** — per `threejs-qa-release` / `threejs-debug-profiler`: `npm run build`, run the dev server, check browser console for errors, take Playwright screenshots, canvas non-blank pixel check, desktop + mobile viewport, interaction check of the main control path, performance snapshot when rendering changed.
-4. **Review** — code review (architecture, brief-consistency, no secrets in client code) + visual review with `screenshot-critique` / `compare-screenshots` against the Frontier Ledger art direction (brief §4). Write findings to `reviews/<slice>.md`.
-5. **Correct** — send findings back to Codex. Loop 2–5 until the slice passes. Then `refactor-clean` if sediment accumulated, mark the slice done in the spec and `STATUS.md`.
-6. **Close** — at milestone end: `close-spec`, demo note for Robin, get sign-off before the next milestone.
-
-Claude may implement directly only for: config, docs, specs, review fixes under ~20 lines, and asset pipeline scripts. Everything else goes through Codex — but never merge Codex output unreviewed.
-
-## 6. Codex protocol
-
-### 6.1 Setup (primary: CLI in the session sandbox)
-
-- Install per session if missing: `npm install -g @openai/codex`.
-- Auth: prefer `codex login` with Robin's OpenAI account (device/headless flow if available) or an API key provided by Robin via a gitignored `.env.local`. Never commit credentials; never put keys in game code.
-- Give Codex the repo as its working directory. Codex reads `AGENTS.md` — maintain a short `AGENTS.md` at repo root that points to this file, the brief, and the active spec.
-- Install the three.js skills for Codex once on Robin's machine: `npx skills add majidmanzarpour/threejs-game-skills --skill '*' -a codex -g -y` (and in the sandbox if Codex runs there).
-
-### 6.2 Delegation format
-
-Run non-interactively (`codex exec "<task>"` or the pattern in the `codex` SKILL.md). Each task contains: goal, spec path, files in scope, acceptance criteria, constraints (brief §9 items that apply), and "do not touch" list. One slice per task. Ask Codex to use `threejs-gameplay-systems` / `threejs-aaa-graphics-builder` etc. as relevant.
-
-### 6.3 Fallback: file relay via Robin's machine
-
-If sandbox Codex auth is not possible: write the same task content to `tasks/NNN-<slug>.md`, tell Robin, and he runs on his Mac: `codex exec "Do the task in tasks/NNN-<slug>.md" `. The project folder is shared, so results appear for review. Keep tasks small enough that one relay round-trip is meaningful.
-
-### 6.4 Rate-limit awareness (code)
-
-Codex usage on a subscription is also rate-limited. Batch review findings into one correction task instead of many micro-tasks; keep prompts tight; prefer one slice = one Codex run.
-
-## 7. Image asset pipeline (GPT Image 2.0, rate-limited — plan ahead)
-
-**Placeholder-first is the law.** Gameplay is never blocked on art: every visual ships first as procedural/primitive placeholder (colored meshes, generated textures) with a named slot in a layer contract. Real art replaces placeholders in planned batches.
-
-1. **Slots before prompts** — when a feature needs art, add slots to `assets/layer-contracts/*.json` (filename → slot, size, usage), mirroring the Agent Town pattern (brief §10).
-2. **Batch prompts** — write `assets/requests/batch-NNN.md` in the exact style of Portal's `docs/design/frontier-ledger-gpt-image-prompts-2026-06-10.md`: one copy-paste prompt per asset, target filename above each, the Frontier Ledger style-anchor sentence in every prompt, flat `#8a8a8a` background for cutouts, no text/letters/watermarks, 2–3 candidates per prompt.
-3. **Budget** — `assets/LEDGER.md` tracks: slots pending → prompts written → generated → processed → integrated, plus a per-week generation budget agreed with Robin. Order batches by gameplay impact (hero/enemies/terrain before decoration). Never send Robin more than one batch at a time.
-4. **Generate** — Robin pastes prompts into ChatGPT (GPT Image 2.0) and saves downloads into `assets/raw/` with the exact filenames. (Optional: a Claude-in-Chrome session can drive chatgpt.com for him; or switch to the OpenAI Images API later if he provides an API key.)
-5. **Integrate** — alpha-extract `#8a8a8a` backgrounds via repo script into `assets/processed/`, wire by filename → slot, screenshot, and visually review in-game before marking the slot done.
-
-The same discipline applies to the in-game **AI crafting** feature itself: generator proposes, typed contract + physics validation disposes (brief §10).
-
-## 8. Skills
-
-Robin vendors both repos (done once): `git clone` into `vendor/skills/dzhng-skills` and `vendor/skills/threejs-game-skills`. Claude uses them by reading the `SKILL.md` files as playbooks; Codex gets them via the `npx skills add` installs (`-a codex`).
-
-From **dzhng/skills** (process): `feature-slicing`, `implement-spec`, `close-spec`, `refactor-clean`, `codex`, `compare-screenshots`, `screenshot-critique`, `write-docs`. (`renderer` if we go WebGPU/TSL; `preview-shots` is macOS-only — skip in sandbox.)
-
-From **threejs-game-skills** (domain): `threejs-game-director` (consult for orchestration checklists, but the §5 loop above wins on process), `threejs-gameplay-systems` (includes a Vite+TS scaffold — use it at M0), `threejs-aaa-graphics-builder`, `threejs-game-ui-designer`, `threejs-debug-profiler`, `threejs-qa-release`. The generator skills are optional: `threejs-image-generator` uses **Gemini** — our image pipeline is GPT Image 2.0 (§7), so skip unless Robin adds a Gemini key; `threejs-3d-generator` (Tripo) and `threejs-audio-generator` (ElevenLabs) only if Robin provides keys and wants generated 3D/audio.
-
-Conflict rule: brief > these instructions > skills. Skills are advisors, not authorities, on anything canon- or process-specific.
-
-## 9. Quality gates
-
-A slice is **done** only with evidence: build passes; zero console errors; Playwright screenshot(s) attached to the review; playable checkpoint demonstrated (the main loop can be played through the change); 60 fps target on a mid-range machine (note regressions); art matches brief §4 (or is an explicit placeholder); naming matches brief §9.4; no secrets client-side; `STATUS.md` and the spec updated.
-
-A milestone is **done** only when Robin has played it and signed off.
-
-## 10. Milestones and scope guardrails
-
-Vertical slice first — resist building breadth before M1 is fun.
-
-- **M0 Skeleton**: Vite+TS+three.js scaffold, river-claim terrain (placeholder), hero movement, camera, HUD shell, deploy preview.
-- **M1 Core loop (the game is fun here or nowhere)**: auto-shooting hero, one enemy wave type, gold panning/mining node, one buildable defense, death/restart, level-up with 3 upgrade choices.
-- **M2 Base + waves**: building system (sluice, stockpile, walls, turret), wave scheduler/escalation, gold stealing, base damage/repair.
-- **M3 Roguelite meta**: run structure, meta-progression across the dimensions (territory, science, hero, agent), persistence.
-- **M4 The agent**: the player's AI agent as co-op partner — typed tool surface, permission ladder, approvals/receipts (port the Founders Plot Foreman pattern, brief §6–7).
-- **M5 AI crafting**: generative crafting with physics/stat validation gates.
-- **M6 Town + recruited agents**: recruit agents, tasks learned from player demonstrations (recorded playbooks executed through typed tools).
-- **M7+ Epochs**: ocean, then space. **Design hooks only until M6 ships.** Do not build boats or starships early; keep the world model epoch-extensible instead.
-
-Canon guardrails (always): brief §9.2 genre-signal rules (frontier-tech weapons, illustrated not gory, prosperity framing), §9.3 enemy factions (no Native American enemies), §9.4 naming. When a design decision bends canon, write a one-paragraph ADR in `docs/decisions/` and get Robin's call.
-
-## 11. Working with Robin
-
-Robin is rate-limited too. Batch questions; present decisions as options with a recommendation; only block on true product-owner calls (canon bends, art batches, milestone sign-off, spending limits). Offer a scheduled task (e.g. daily build-loop session) once the loop runs smoothly — the loop continues across sessions via `STATUS.md`.
-Be stern and honest, have an opinion.
-
----
-
-## 12. MIGRATION NOTE (2026-07-06) — Claude Code era
-
-The orchestration layer moved from Cowork to **Claude Code, natively on Robin's Mac**. What changed and what didn't:
-
-- **Fires**: now a launchd job (`scripts/com.goldrush.fire.plist` → `scripts/fire-runner.sh`), running `claude -p` headless with `scripts/fire.md` as the protocol, **model claude-opus-4-8**, every 15 min. The Cowork scheduled task is DISABLED — never run both.
-- **Attended orchestration**: interactive `claude` sessions in this repo (this file auto-loads). Start by reading `STATUS.md` line-1 + `docs/HANDOVER-2026-07-06.md`.
-- **Unchanged**: the whole factory — lane runner (`scripts/lane-runner-v3.sh`, Robin's Terminal) executing Codex tasks from `tasks/queue/<slot>/`; STATUS.md as ledger + lock semaphore ("ACTIVE" in head-2 holds the main slot); evidence gates; art pipeline (§7); milestones (§10); Robin's role (§11).
-- **Obsolete**: every sandbox-VM workaround (rename-not-delete, HEAD.lock recipes, janitor .req files, 45s test splits, chromium stubs). Native git/disk/playwright now. Surviving process laws are indexed in `docs/HANDOVER-2026-07-06.md` §6.
-- Sections above that say "sandbox" or "relay" describe the Cowork era; where they conflict with native execution, native wins. Conflict rule stays: brief > these instructions > skills.
-
-## Appendix A — One-time setup (Robin, on your Mac)
-
-1. Create the project folder (e.g. `~/Projects/GoldRush`), select it in a new Cowork project, and put this file at its root (as `CLAUDE.md` or in project instructions).
-2. Copy `GOLD_RUSH_BRIEF.md` from the Portal repo into `docs/`.
-3. Clone the skill repos: `git clone https://github.com/dzhng/skills vendor/skills/dzhng-skills` and `git clone https://github.com/majidmanzarpour/threejs-game-skills vendor/skills/threejs-game-skills`.
-4. Install skills for Codex: `npx skills add majidmanzarpour/threejs-game-skills --skill '*' -a codex -g -y` and `npx skills add dzhng/skills -a codex -g -y`.
-5. Ensure `codex` runs and is logged in (`codex --version`); optionally place an API key in `.env.local` (gitignored) so the sandbox can run Codex too.
-6. `git init` the repo if not already.
-
-## Appendix B — Kickoff prompt (first message in the new project)
-
-```
-Read CLAUDE.md and docs/GOLD_RUSH_BRIEF.md fully. You are the orchestrator for
-building Gold Rush end to end, per those instructions.
-
-Session goal: get the factory running and reach Milestone M0.
-
-1. Run the session startup checklist. Create STATUS.md, AGENTS.md, and the
-   folder skeleton from CLAUDE.md §4. Verify the toolchain and Codex (§6);
-   tell me which Codex mode works (sandbox CLI or file relay).
-2. Read the SKILL.md files for feature-slicing, implement-spec, codex, and
-   threejs-gameplay-systems from vendor/skills/.
-3. Use feature-slicing to write specs for M0 and M1 (specs/m0-skeleton/,
-   specs/m1-core-loop/) — interview me on open design questions first,
-   in one batched round.
-4. Draft assets/LEDGER.md and the first GPT Image batch
-   (assets/requests/batch-001.md) for M1's placeholder-replacement slots,
-   following CLAUDE.md §7 — but placeholders first; don't wait on art.
-5. Start the implement-spec loop on M0 with Codex as implementer and you as
-   reviewer. Show me the first playable checkpoint when it exists.
-
-Constraints: follow the brief's canon guardrails (§9); evidence-based
-verification per CLAUDE.md §9; update STATUS.md before you finish.
-```
+## 10. Skills (executable playbooks in `.claude/skills/`)
+`/drain` — gate+merge a finished task correctly · `/author-task` — write a master that can't fail the known ways · `/playtest-intake` — owner feedback → verified finding → task + ledger in one pass. USE THEM; they encode this file's laws as steps.
