@@ -8,7 +8,12 @@ import {
 } from '../assets/SpriteAnimator';
 import { type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
-import { activeContract as selectActiveContract, activeContractDiagnostics, type ContractManifest } from '../meta/ContractFamilies';
+import {
+  activeContract as selectActiveContract,
+  activeContractDiagnostics,
+  activeTileDescriptor,
+  type ContractManifest,
+} from '../meta/ContractFamilies';
 import {
   availablePicks,
   browserResearchStorage,
@@ -127,6 +132,7 @@ import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { simHeightDiagnostics, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
+import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { readTownName } from '../town/TownNaming';
@@ -254,6 +260,7 @@ export class Game {
   private readonly heroStart = contractHeroStart(this.activeContract);
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
+  private railPath?: RailPathView;
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -818,6 +825,7 @@ export class Game {
     this.megaprojectBaseMaterial.dispose();
     this.megaprojectStageMaterial.dispose();
     this.megaprojectGhostMaterial.dispose();
+    this.railPath?.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -1098,6 +1106,11 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    const rails = activeTileDescriptor().rails ?? [];
+    if (rails.length > 0) {
+      this.railPath = new RailPathView(rails);
+      this.scene.add(this.railPath.group);
+    }
     this.detailScatter = new DetailScatter();
     this.scene.add(this.detailScatter.group);
     this.scene.add(this.harvestSystem.group);
@@ -1444,6 +1457,7 @@ export class Game {
         playerZone: Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone,
         sim: simHeightDiagnostics(),
         water: this.terrainView?.diagnostics(),
+        rails: this.railPath?.diagnostics() ?? emptyRailPathDiagnostics(),
         vista: Terrain.vistaDiagnostics(),
         detailScatter: this.detailScatter?.diagnostics(),
         height: {
