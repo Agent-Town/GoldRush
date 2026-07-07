@@ -3,6 +3,7 @@ import { AGENT_PERMISSION_LABELS, type AgentPermissionLevel } from '../agent/Per
 import type { UiIntent } from './Hud';
 import type { UiSnapshot } from '../systems/UiBridge';
 import type { AgentCapability } from '../agent/ToolSurface';
+import { emitStorySignal } from '../story';
 
 const RUNGS: readonly {
   level: AgentPermissionLevel;
@@ -165,6 +166,10 @@ export class ProspectorPanel {
 
   private readonly onClick = (event: MouseEvent) => {
     const target = event.target;
+    if (target instanceof Element && target.closest('.prospector-check--locked')) {
+      emitStorySignal({ type: 'rung-denied-toggle' });
+      return;
+    }
     if (target === this.element || (target instanceof Element && target.matches('[data-prospector-close]'))) this.onClose();
   };
 

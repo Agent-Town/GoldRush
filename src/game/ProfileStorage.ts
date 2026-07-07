@@ -3,6 +3,7 @@ import { META_PROGRESS_KEY } from './MetaProgress';
 import { RESEARCH_STATE_KEY } from '../meta/ResearchTree';
 import { MEGAPROJECT_STATE_KEY } from '../meta/Megaproject';
 import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY } from '../audio/settings';
+import { STORY_TALES_STORAGE_KEY } from '../story/settings';
 
 export const PROFILE_KEY = 'gr.profile.v2';
 export const LEGACY_SCOREBOARD_KEY = 'gr.scores.v1';
@@ -27,8 +28,9 @@ export const PROFILE_DATA_KEYS = new Set([
   DIFFICULTY_PRESET_STORAGE_KEY,
   AUDIO_VOLUME_STORAGE_KEY,
   AUDIO_MUTED_STORAGE_KEY,
+  STORY_TALES_STORAGE_KEY,
 ]);
-const LATE_PROFILE_DATA_KEYS = [AUDIO_VOLUME_STORAGE_KEY, AUDIO_MUTED_STORAGE_KEY] as const;
+const LATE_PROFILE_DATA_KEYS = [AUDIO_VOLUME_STORAGE_KEY, AUDIO_MUTED_STORAGE_KEY, STORY_TALES_STORAGE_KEY] as const;
 
 export type ProfileRecord = {
   id: string;

@@ -16,6 +16,8 @@ export type WaterDiagnostics = {
   foam: boolean;
   glints: number;
   fordStones: number;
+  gravelBars: number;
+  visualHalfWidth: number;
   springPonds: number;
   waterPhaseVariance: number;
 };
@@ -203,10 +205,16 @@ export function updateWaterMaterial(mesh: THREE.Mesh, delta: number): void {
   uniforms.flowSpeed.value = Balance.world.waterFlowSpeed;
 }
 
-export function waterDiagnostics(river: THREE.Mesh, fords: readonly THREE.Mesh[], fordStones: readonly THREE.InstancedMesh[]): WaterDiagnostics {
+export function waterDiagnostics(
+  river: THREE.Mesh,
+  fords: readonly THREE.Mesh[],
+  fordStones: readonly THREE.InstancedMesh[],
+  gravelBars: readonly THREE.Mesh[] = [],
+): WaterDiagnostics {
   const riverUniforms = waterUniforms(river);
   const ford = fords[0];
   const fordUniforms = ford ? waterUniforms(ford) : undefined;
+  const visualHalfWidth = typeof river.userData.visualHalfWidth === 'number' ? river.userData.visualHalfWidth : 0;
   return {
     material: 'LivingWaterShader',
     riverPresent: true,
@@ -218,6 +226,8 @@ export function waterDiagnostics(river: THREE.Mesh, fords: readonly THREE.Mesh[]
     foam: true,
     glints: (river.material as THREE.Material).userData.waterGlints ?? 0,
     fordStones: fordStones.reduce((sum, mesh) => sum + mesh.count, 0),
+    gravelBars: gravelBars.length,
+    visualHalfWidth: round3(visualHalfWidth),
     springPonds: 0,
     waterPhaseVariance: round3(waterPhaseVariance()),
   };
@@ -235,6 +245,8 @@ export function dryWaterDiagnostics(springPonds: number): WaterDiagnostics {
     foam: false,
     glints: 0,
     fordStones: 0,
+    gravelBars: 0,
+    visualHalfWidth: 0,
     springPonds,
     waterPhaseVariance: 0,
   };

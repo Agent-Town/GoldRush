@@ -79,12 +79,15 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
   expect(snapshot.active?.id).toBe('e1-night-shift');
   expect(snapshot.simTile).toBe('frontier-river-claim');
   expect(snapshot.menuIds).toContain('lantern_post');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts)).toBe(1);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPostPositions)).toEqual([{ x: 0, z: 12 }]);
   expect(snapshot.registry).toMatchObject({
     name: 'Night Shift',
     tileParams: {
       tileId: 'frontier-river-claim',
       river: true,
       ford: true,
+      prePlacedBuildables: [{ id: 'lantern_post', x: 0, z: 12, rotationSteps: 0 }],
     },
     twist: {
       secureWave: 25,
@@ -128,11 +131,11 @@ test('lantern post is Night Shift gated and creates a true-dark light ring', asy
   await setBalance(page, 'enemy.speed', 0);
   await setWave(page, 10);
   await grantGold(page, 80);
-  await teleport(page, 0, 12);
+  await teleport(page, 4, 12);
   await expect(selectBuildable(page, 'lantern_post')).resolves.toBe(true);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts ?? 0)).toBe(1);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts ?? 0)).toBe(2);
 
   await teleport(page, 12, 10);
   await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 10))).resolves.toBe(true);
@@ -146,9 +149,14 @@ test('lantern post is Night Shift gated and creates a true-dark light ring', asy
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
   await shot(page, testInfo, 'true-dark-lantern-ring');
 
-  await expect(page.evaluate(() => window.__GR_TEST__?.wreck('lantern_post', 0))).resolves.toBe(true);
+  const lanternCount = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts ?? 0);
+  for (let index = 0; index < lanternCount; index += 1) {
+    await expect(page.evaluate((target) => window.__GR_TEST__?.wreck('lantern_post', target), index)).resolves.toBe(true);
+  }
   await expect
-    .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.find((entry) => entry.id === 'lantern_post')?.wrecked))
+    .poll(() =>
+      page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.filter((entry) => entry.id === 'lantern_post').every((entry) => entry.wrecked)),
+    )
     .toBe(true);
   await expect
     .poll(() =>
@@ -167,7 +175,7 @@ test('render dimming does not stop turret acquisition or damage', async ({ page 
   await setBalance(page, 'enemy.speed', 0);
   await setWave(page, 10);
   await grantGold(page, 120);
-  await teleport(page, 0, 12);
+  await teleport(page, 4, 12);
   await expect(selectBuildable(page, 'turret')).resolves.toBe(true);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);

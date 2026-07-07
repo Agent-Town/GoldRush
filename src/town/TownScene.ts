@@ -13,6 +13,7 @@ import { loadMetaProgress } from '../game/MetaProgress';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { DEFAULT_CONTRACT_ID, listContracts, type ContractManifest } from '../meta/ContractFamilies';
 import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
+import { emitStorySignal } from '../story';
 import { disposeObject3D } from '../utils/dispose';
 import { townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
@@ -270,6 +271,7 @@ export class TownScene {
     }
 
     this.townName = saveTownName(result.value) ?? result.value;
+    emitStorySignal({ type: 'town-named', townName: this.townName });
     this.syncTownTitle();
     this.nameMessage.textContent = '';
     this.nameInput.disabled = true;
@@ -343,6 +345,7 @@ export class TownScene {
 
   private openBoard(): void {
     this.renderBoard();
+    this.emitBoardStorySignals();
     this.boardOpen = true;
     this.board.hidden = false;
     this.loadTavernBackdrop();
@@ -375,6 +378,19 @@ export class TownScene {
         </div>
       </div>
     `;
+  }
+
+  private emitBoardStorySignals(): void {
+    emitStorySignal({ type: 'board-first-open' });
+    for (const contract of listContracts()) {
+      if (contract.id === DEFAULT_CONTRACT_ID || !contractUnlock(contract).unlocked) continue;
+      emitStorySignal({
+        type: 'contract-unlocked',
+        contractId: contract.id,
+        contractName: contract.boardRow.name,
+        ledgerBlurb: contract.boardRow.ledgerBlurb,
+      });
+    }
   }
 
   private loadTavernBackdrop(): void {

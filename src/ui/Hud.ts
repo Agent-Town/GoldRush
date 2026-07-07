@@ -3,6 +3,7 @@ import type { BuildableId } from '../game/buildables';
 import type { AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
+import { bindStorySettingsControl, renderStorySettingsControl } from '../story/settings';
 import { BuildButton } from './BuildButton';
 import { ProspectorPanel } from './ProspectorPanel';
 
@@ -11,6 +12,9 @@ const PAUSE_AUDIO_SETTINGS_IDS = {
   volume: 'pause-volume',
   volumeValue: 'pause-volume-value',
   mute: 'pause-mute',
+};
+const PAUSE_STORY_SETTINGS_IDS = {
+  tales: 'pause-tales',
 };
 
 export type UiIntent =
@@ -64,6 +68,7 @@ export class Hud {
   private metaRecapClearTimer = 0;
   private pauseMetaKey = '';
   private disposeAudioSettings: () => void = () => undefined;
+  private disposeStorySettings: () => void = () => undefined;
   private readonly buildButton: BuildButton;
   private readonly prospectorPanel: ProspectorPanel;
   private prospectorPanelOpen = false;
@@ -219,6 +224,7 @@ export class Hud {
 
   dispose(): void {
     this.disposeAudioSettings();
+    this.disposeStorySettings();
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
     this.elements.agentChip.removeEventListener('click', this.onAgentChipClick);
     window.removeEventListener('keydown', this.onKeyDown, { capture: true });
@@ -335,6 +341,7 @@ export class Hud {
     if (key === this.pauseMetaKey) return;
     this.pauseMetaKey = key;
     this.disposeAudioSettings();
+    this.disposeStorySettings();
     if (paused) {
       this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
       this.elements.metaRecap.hidden = true;
@@ -349,6 +356,7 @@ export class Hud {
       <div class="hud-meta__audio" data-testid="pause-audio-settings">
         <p class="hud-meta__label">Sound</p>
         ${renderAudioSettingsControls(PAUSE_AUDIO_SETTINGS_IDS)}
+        ${renderStorySettingsControl(PAUSE_STORY_SETTINGS_IDS)}
       </div>
       <p class="hud-meta__label">Active Research</p>
       <ul class="hud-meta__list" data-testid="pause-meta-boons">
@@ -360,6 +368,7 @@ export class Hud {
       </ul>
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.elements.pauseMeta, PAUSE_AUDIO_SETTINGS_IDS);
+    this.disposeStorySettings = bindStorySettingsControl(this.elements.pauseMeta, PAUSE_STORY_SETTINGS_IDS);
   }
 
   private renderMetaLines(lines: PauseMetaSnapshot['boons'], emptyName: string, emptyEffect: string): string {

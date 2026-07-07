@@ -1,6 +1,7 @@
 /// <reference types="vite/client" />
 
 type GrBuildableId = any;
+type GrStorySignal = import('./story').StorySignal;
 
 interface ThreeGameDiagnostics {
   frame: number;
@@ -515,6 +516,8 @@ interface ThreeGameDiagnostics {
       foam: boolean;
       glints: number;
       fordStones: number;
+      gravelBars: number;
+      visualHalfWidth: number;
       springPonds: number;
       waterPhaseVariance: number;
     };
@@ -551,7 +554,12 @@ interface ThreeGameDiagnostics {
       seededInstances: number;
       densityTier: 'desktop' | 'mobile-reduced' | 'off';
       seed: number;
-      classes: Array<{ id: 'rocks' | 'stumps' | 'dry_grass' | 'wagon_ruts' | 'claim_posts'; instances: number; visibleInstances: number; drawCalls: 1 }>;
+      classes: Array<{
+        id: 'rocks' | 'stumps' | 'dry_grass' | 'wagon_ruts' | 'claim_posts' | 'cactus' | 'reeds';
+        instances: number;
+        visibleInstances: number;
+        drawCalls: 1;
+      }>;
       exclusions: {
         buildPadRadius: number;
         routingLaneRadius: number;
@@ -610,6 +618,13 @@ type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 
 interface Window {
+  __GR_STORY__?: {
+    emit: (signal: GrStorySignal) => void;
+    registry: string[];
+    active: () => string | null;
+    pending: () => string[];
+    talesEnabled: () => boolean;
+  };
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
   __GR_TOWN_DIAGNOSTICS__?: import('./town/TownScene').TownDiagnostics;
   __BENCH_REPORT__?: unknown;

@@ -51,6 +51,7 @@ import {
   type MegaprojectState,
   type MegaprojectStorage,
 } from '../meta/Megaproject';
+import { emitStorySignal } from '../story';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, loadMedals } from './Medals';
@@ -559,6 +560,7 @@ export class Game {
     });
     this.events.on('run_ended', (event) => {
       if (event.reason !== 'secured') return;
+      emitStorySignal({ type: 'first-victory' });
       this.audio.play('victory-sting');
       this.audio.play('ledger-open', 0.75);
       const scoreAt = Date.now();
@@ -617,6 +619,7 @@ export class Game {
     });
     this.events.on('building_wrecked', () => {
       this.buildingsWrecked += 1;
+      emitStorySignal({ type: 'building-lost' });
     });
     this.events.on('wave_started', (event) => {
       this.audio.play('wave-start-horn');
@@ -634,6 +637,7 @@ export class Game {
     this.createScene();
     this.registerGoldHoldings();
     this.syncMegaprojectSite();
+    this.placeContractFixtures();
     if (new URLSearchParams(window.location.search).has('debug')) {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
@@ -1233,6 +1237,14 @@ export class Game {
       this.megaprojectVisuals.push(beam);
     }
     this.megaprojectGroup.visible = false;
+  }
+
+  private placeContractFixtures(): void {
+    for (const fixture of this.activeContract.tileParams.prePlacedBuildables ?? []) {
+      if (fixture.id === 'lantern_post') {
+        this.buildSystem.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0);
+      }
+    }
   }
 
   private syncMegaprojectSite(): void {
@@ -1867,7 +1879,9 @@ export class Game {
   }
 
   private collectProspectorXp(options: AgentCollectXpOptions): AgentCollectXpResult {
-    return this.combat.collectXpForProspector(options, this.prospector.position);
+    const result = this.combat.collectXpForProspector(options, this.prospector.position);
+    if (result.xp > 0) emitStorySignal({ type: 'xp-collected' });
+    return result;
   }
 
   private maybeProspectorCollectGold(): void {
@@ -2082,6 +2096,7 @@ export class Game {
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
     this.syncMegaprojectSite();
+    this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
@@ -2809,6 +2824,7 @@ export class Game {
           roundsRemaining = Math.max(0, roundsRemaining - 1);
           this.applyResearchEffects();
           this.syncMegaprojectSite();
+          this.emitScienceCompleteIfReady();
           this.publishDiagnostics();
         }
         return state();
@@ -2832,8 +2848,13 @@ export class Game {
     this.researchState = saveResearchState(this.researchStorage, next);
     this.applyResearchEffects();
     this.syncMegaprojectSite();
+    this.emitScienceCompleteIfReady();
     this.publishDiagnostics();
     return true;
+  }
+
+  private emitScienceCompleteIfReady(): void {
+    if (scienceMeter(this.researchState).complete) emitStorySignal({ type: 'science-complete' });
   }
 
   private researchDiagnostics(): {
