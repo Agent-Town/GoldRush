@@ -23,3 +23,11 @@ Build: main @ post-s101 era (041 overwatch, SCI-01/02/04, w1-03 light rerun, w1-
 - **F-0707-7 Walk animations "still not 100% smooth"** (hero + bandits, post-walk4). → `042-anim-smoothness` (queued, main): measure foot-slide/direction-snap/phase-reset before fixing.
 - **GAMEPLAY-TERRAIN SPEC: owner GO** ("lets write that spec and think it through… many more options for future contracts/scenarios") → `specs/gameplay-terrain/README.md` DRAFTED same hour: First-Claim Law, heightfield-as-data in epoch bundles, GT-01..07 ladder, 3 ratification items open.
 - **Process note**: the 05:44 triple no-op was s61's own too-strict pre-flight ("0-ahead or STOP") colliding with the runner's by-design auto-commits — all three masters re-worded (safe-dupe rule) and re-queued 05:5x.
+
+## Fourth wave (~06:48, screenshot)
+- **F-0707-9 Demolish refund exceeds base cost**: sluice 40g build, +80g tear-down (half of base+tier invested = spec-correct but anchor-wrong). OWNER RULING: "There has to be a loss of gold" → refund law TIGHTENED (spec §BT-00): 50% × BASE cost only × hp/maxHp, tier spends never refund, invested→returned shown in the confirm. → `043-demolish-refund-and-building-bar` (queued, main).
+- **F-0707-10 Prompt overlap**: tier prompt + demolish prompt stack/collide → ONE building context bar (both actions, fixed slots) + a global prompt-stack layout law. Same task 043.
+- BT-00 demolish + BT-02 tiers confirmed LIVE in owner's build (he tiered a sluice to 2, saw T3 pricing at 320g, used tear-down) — the homestead loop is being played hours after ratification.
+
+## Third wave (~06:20, screenshots ×2)
+- **F-0707-8 Damage indicators camera-billboarded**: "the damages are relative to the player camera — they should orient themselves at their object they belong to." Floating angled bars read as detached debris. OWNER RULING supersedes the correctives task's "camera-facing" spec line → `lane-c-damage-orientation` (queued): palisade wear strips render in the wall's local frame (rotate with rotationSteps), building indicators anchor world-aligned above the roofline; no billboarding anywhere in damage UI.
