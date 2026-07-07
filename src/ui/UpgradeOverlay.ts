@@ -18,6 +18,10 @@ export type UpgradeChoice = {
   def: UpgradeDef;
   familyStacks: number;
   effect?: string;
+  provenance?: {
+    label: string;
+    line: string;
+  };
 };
 
 export type UpgradeIntent = {
@@ -62,7 +66,9 @@ export class UpgradeOverlay {
   }
 
   show(choices: UpgradeChoice[]): void {
-    const nextKey = choices.map((choice) => `${choice.def.id}:${choice.familyStacks}`).join('|');
+    const nextKey = choices
+      .map((choice) => `${choice.def.id}:${choice.familyStacks}:${choice.provenance?.line ?? ''}`)
+      .join('|');
     if (this.visible && nextKey === this.offerKey) return;
     this.visible = true;
     this.choices = choices;
@@ -85,6 +91,7 @@ export class UpgradeOverlay {
       card.dataset.slot = `ui.upgrade.icon.${choice.def.iconFamily}`;
       card.innerHTML = this.renderCard(choice, i);
       card.classList.remove('upgrade-card--icon');
+      card.classList.toggle('upgrade-card--provenance', choice.provenance !== undefined);
       this.applyIcon(card, choice.def.iconFamily);
     }
     this.root.classList.add('upgrade-overlay--visible');
@@ -141,11 +148,22 @@ export class UpgradeOverlay {
     const stacks = choice.familyStacks > 0
       ? `<span class="upgrade-card__stacks" aria-label="${choice.familyStacks} ${choice.def.iconFamily} family stacks">${roman(choice.familyStacks)}</span>`
       : '';
+    const provenance = choice.provenance
+      ? `
+      <span class="upgrade-card__elder-mark" data-testid="upgrade-provenance-badge" aria-label="${this.escape(
+        choice.provenance.label,
+      )}">E</span>
+      <span class="upgrade-card__provenance" data-testid="upgrade-provenance-${index}">${this.escape(
+        choice.provenance.line,
+      )}</span>
+    `
+      : '';
     return `
       <span class="upgrade-card__key">${index + 1}</span>
       <span class="upgrade-card__name">${this.escape(choice.def.name)}</span>
       <span class="upgrade-card__effect">${this.escape(choice.effect ?? upgradeEffect(choice.def))}</span>
       ${stacks}
+      ${provenance}
     `;
   }
 

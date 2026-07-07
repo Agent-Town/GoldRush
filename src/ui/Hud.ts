@@ -13,8 +13,17 @@ export type UiIntent =
   | { type: 'set_agent_rung'; level: AgentPermissionLevel; granted: boolean }
   | { type: 'set_agent_ability'; ability: AgentAbility; granted: boolean };
 
+export type PauseMetaSnapshot = {
+  science: string;
+  territory: string;
+  boons: Array<{ name: string; effect: string }>;
+  mastery: Array<{ name: string; effect: string }>;
+};
+
 type HudElements = {
   root: HTMLElement;
+  metaRecap: HTMLElement;
+  pauseMeta: HTMLElement;
   hpText: HTMLElement;
   hpFill: HTMLElement;
   goldText: HTMLElement;
@@ -43,12 +52,16 @@ export class Hud {
   private lastAnnouncement: string | null = null;
   private lastAnnouncementAt = -1;
   private announcementClearTimer = 0;
+  private metaRecapClearTimer = 0;
+  private pauseMetaKey = '';
   private readonly buildButton: BuildButton;
   private readonly prospectorPanel: ProspectorPanel;
   private prospectorPanelOpen = false;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
+      <div class="hud-meta-recap" data-testid="run-meta-recap" aria-live="polite" hidden></div>
+
       <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">
         <span class="hud__wave-edge" data-testid="hud-edge" data-hud-edge aria-hidden="true"></span>
         <span data-hud-wave>Stake your claim.</span>
@@ -107,6 +120,8 @@ export class Hud {
         <div data-hud-build></div>
       </section>
 
+      <section class="hud-panel hud-panel--meta" data-testid="pause-meta-panel" aria-label="Claim memory" hidden></section>
+
       <button class="hud-pause" type="button" data-testid="hud-pause" data-hud-pause>
         P - catch your breath
       </button>
@@ -114,6 +129,8 @@ export class Hud {
 
     this.elements = {
       root,
+      metaRecap: this.get(root, '[data-testid="run-meta-recap"]'),
+      pauseMeta: this.get(root, '[data-testid="pause-meta-panel"]'),
       hpText: this.get(root, '[data-hud-hp]'),
       hpFill: this.get(root, '[data-hud-hp-fill]'),
       goldText: this.get(root, '[data-hud-gold]'),
@@ -145,7 +162,7 @@ export class Hud {
     window.addEventListener('keydown', this.onKeyDown, { capture: true });
   }
 
-  update(snapshot: UiSnapshot): void {
+  update(snapshot: UiSnapshot, meta: PauseMetaSnapshot, showPauseMeta = snapshot.paused): void {
     this.elements.hpText.textContent = `${snapshot.hp} / ${snapshot.maxHp}`;
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
     this.elements.goldText.textContent = this.goldText(snapshot);
@@ -167,6 +184,7 @@ export class Hud {
     this.elements.root.dataset.runState = snapshot.state;
     this.elements.root.dataset.paused = String(snapshot.paused);
     this.elements.pauseHint.textContent = snapshot.paused ? 'P - back to the claim' : 'P - catch your breath';
+    this.updatePauseMeta(showPauseMeta, meta);
     this.buildButton.update(snapshot);
 
     if (snapshot.gold !== this.lastGold) {
@@ -186,6 +204,23 @@ export class Hud {
     this.prospectorPanel.dispose();
     this.buildButton.dispose();
     window.clearTimeout(this.announcementClearTimer);
+    window.clearTimeout(this.metaRecapClearTimer);
+  }
+
+  showMetaRecap(text: string | null, durationSeconds = 4): void {
+    window.clearTimeout(this.metaRecapClearTimer);
+    if (!text) {
+      this.elements.metaRecap.hidden = true;
+      this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
+      return;
+    }
+    this.elements.metaRecap.textContent = text;
+    this.elements.metaRecap.hidden = false;
+    this.elements.metaRecap.classList.add('hud-meta-recap--visible');
+    this.metaRecapClearTimer = window.setTimeout(() => {
+      this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
+      this.elements.metaRecap.hidden = true;
+    }, Math.min(4, Math.max(0.1, durationSeconds)) * 1000);
   }
 
   private readonly onPauseClick = () => {
@@ -263,6 +298,56 @@ export class Hud {
     const element = root.querySelector<HTMLElement>(selector);
     if (!element) throw new Error(`Missing HUD element: ${selector}`);
     return element;
+  }
+
+  private updatePauseMeta(paused: boolean, meta: PauseMetaSnapshot): void {
+    const key = paused ? JSON.stringify(meta) : '';
+    if (key === this.pauseMetaKey) return;
+    this.pauseMetaKey = key;
+    if (paused) {
+      this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
+      this.elements.metaRecap.hidden = true;
+    }
+    this.elements.pauseMeta.hidden = !paused;
+    if (!paused) return;
+
+    this.elements.pauseMeta.innerHTML = `
+      <p class="hud-meta__eyebrow">Claim Memory</p>
+      <p class="hud-meta__line" data-testid="pause-meta-science">${this.escape(meta.science)}</p>
+      <p class="hud-meta__line" data-testid="pause-meta-territory">${this.escape(meta.territory)}</p>
+      <p class="hud-meta__label">Active Research</p>
+      <ul class="hud-meta__list" data-testid="pause-meta-boons">
+        ${this.renderMetaLines(meta.boons, '0 active research boons', '0 named family effects earned.')}
+      </ul>
+      <p class="hud-meta__label">Mastery</p>
+      <ul class="hud-meta__list" data-testid="pause-meta-mastery">
+        ${this.renderMetaLines(meta.mastery, '0 mastery tracks exposed', '0 mastery conversions active.')}
+      </ul>
+    `;
+  }
+
+  private renderMetaLines(lines: PauseMetaSnapshot['boons'], emptyName: string, emptyEffect: string): string {
+    const source = lines.length > 0 ? lines : [{ name: emptyName, effect: emptyEffect }];
+    return source
+      .map(
+        (line) => `
+          <li>
+            <strong>${this.escape(line.name)}</strong>
+            <span>${this.escape(line.effect)}</span>
+          </li>
+        `,
+      )
+      .join('');
+  }
+
+  private escape(value: string): string {
+    return value.replace(/[&<>"']/g, (char) => {
+      if (char === '&') return '&amp;';
+      if (char === '<') return '&lt;';
+      if (char === '>') return '&gt;';
+      if (char === '"') return '&quot;';
+      return '&#39;';
+    });
   }
 }
 
