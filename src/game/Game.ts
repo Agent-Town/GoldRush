@@ -77,7 +77,7 @@ import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
-import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
+import { WAVE_SPAWN_EDGES, WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
@@ -230,6 +230,8 @@ export class Game {
     () => !isStealDisabled() && this.hasBuiltStockpile(),
     () => !isWreckDisabled() && this.buildSystem.hasAnyBuildable,
     () => this.liveThiefCount(),
+    () => this.territoryRingPresent,
+    this.heroStart,
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -268,6 +270,7 @@ export class Game {
   private reclaimedTotal = 0;
   private buildingHitsResolved = 0;
   private buildingsWrecked = 0;
+  private territoryRingPresent = false;
   private readonly thiefContext = {
     nearestGoldHolding: (from: THREE.Vector3) => this.goldTargeting.nearestGoldHolding(from),
     claimGold: (enemy: ClaimJumperEnemy, holding: GoldHolding) => this.claimGoldForThief(enemy, holding),
@@ -596,12 +599,13 @@ export class Game {
     this.cameraRig.snapTo(this.hero.group.position);
     this.state.transition('playing');
     this.uiBridge.announce('Stake your claim.', 0);
+    // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
+    // Meta defenses need to exist before the opening stress spawns pick lanes.
+    this.runManager = installRunManager(this);
     this.waveSystem.spawnStressEnemies();
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     this.syncUi();
     this.publishDiagnostics();
-    // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
-    this.runManager = installRunManager(this);
     // ADR-002 section 4: M4 exposes install(game); wiring happens at merge (m4-01 gate, s32).
     const game = this;
     this.agentStub = installAgentStub(
@@ -1295,10 +1299,42 @@ export class Game {
   }
 
   applyMetaProgress(meta: MetaProgress): void {
+    this.territoryRingPresent = false;
     if (meta.tracks.territory < Balance.meta.territoryTier1) return;
-    for (const segment of Balance.meta.territoryRing) {
-      this.buildSystem.placeFree('palisade', segment, segment.rotationSteps);
+    let placed = 0;
+    for (const segment of this.territoryRingSegments()) {
+      if (this.buildSystem.placeFree('palisade', segment, segment.rotationSteps)) placed += 1;
     }
+    this.territoryRingPresent = placed > 0;
+  }
+
+  private territoryRingSegments(): Array<{ x: number; z: number; rotationSteps: number }> {
+    const center = this.heroStart;
+    const gapHalf = Balance.meta.territoryRingGapHalfWidth;
+    const segmentHalf = Balance.palisade.depth / 2;
+    const wallHalf = Balance.palisade.width / 2;
+    const segmentOffset = gapHalf + segmentHalf;
+    const capOffset = gapHalf + Balance.palisade.depth - wallHalf;
+    const sideOffset = gapHalf + Balance.palisade.depth + wallHalf;
+    const segments: Array<{ x: number; z: number; rotationSteps: number }> = [];
+    for (const edge of WAVE_SPAWN_EDGES) {
+      for (const side of [-1, 1] as const) {
+        if (edge === 'north' || edge === 'south') {
+          segments.push({
+            x: center.x + side * segmentOffset,
+            z: center.z + (edge === 'north' ? capOffset : -capOffset),
+            rotationSteps: 1,
+          });
+        } else {
+          segments.push({
+            x: center.x + (edge === 'east' ? sideOffset : -sideOffset),
+            z: center.z + side * segmentOffset,
+            rotationSteps: 0,
+          });
+        }
+      }
+    }
+    return segments;
   }
 
   private endRun(): void {

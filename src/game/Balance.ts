@@ -1,5 +1,8 @@
 import * as THREE from 'three';
 
+const WAVE_SPAWN_EDGES = ['north', 'south', 'east', 'west'] as const;
+const TERRITORY_RING_SIDES = [-1, 1] as const;
+
 export const Balance = {
   hero: {
     maxHp: 100,
@@ -49,6 +52,9 @@ export const Balance = {
     lullFloor12: 8,
     pulsesPerWave: 2,
     edgesPerPulse: 2,
+    spawnEdges: WAVE_SPAWN_EDGES,
+    territoryRingBiasWaves: 3,
+    territoryRingLaneBias: 0.75,
     hpScalePerWave: 1.12,
     speedScalePerWave: 1.02,
     speedScaleCap: 1.3,
@@ -272,12 +278,8 @@ export const Balance = {
       agent: 1,
     },
     territoryTier1: 1,
-    territoryRing: [
-      { x: 0, z: 15, rotationSteps: 1 },
-      { x: 0, z: 9, rotationSteps: 1 },
-      { x: -3, z: 12, rotationSteps: 0 },
-      { x: 3, z: 12, rotationSteps: 0 },
-    ],
+    territoryRingGapHalfWidth: 1.5,
+    territoryRing: WAVE_SPAWN_EDGES.flatMap((edge) => TERRITORY_RING_SIDES.map((side) => ({ edge, side }))),
   },
   upgrades: {
     assayGoldPerWave: 5,

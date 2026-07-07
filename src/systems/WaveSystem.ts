@@ -36,7 +36,7 @@ export type WaveDiagnostics = {
 
 const TELEGRAPH_SECONDS = 2;
 const TELEGRAPH_STAGGER_SECONDS = 0.5;
-const EDGES: readonly CompassEdge[] = ['north', 'south', 'east', 'west'];
+export const WAVE_SPAWN_EDGES: readonly CompassEdge[] = Balance.waves.spawnEdges;
 
 const EDGE_COPY: Record<CompassEdge, readonly string[]> = {
   north: [
@@ -101,6 +101,8 @@ export class WaveSystem {
     private readonly canSpawnThieves: () => boolean = () => false,
     private readonly canSpawnWreckers: () => boolean = () => false,
     private readonly liveThiefCount: () => number = () => 0,
+    private readonly hasTerritoryRing: () => boolean = () => false,
+    private readonly territoryRingCenter: THREE.Vector3 = heroPosition,
   ) {}
 
   get diagnostics(): WaveDiagnostics {
@@ -327,16 +329,17 @@ export class WaveSystem {
     const radius = Balance.waves.spawnRingRadius;
     const spread = (index - 0.5 * Math.max(0, groupCount - 1)) * 1.35;
     const jitter = this.rng.range(-1.2, 1.2);
-    const lateral = spread + jitter;
+    const lateral = this.territoryRingLateral(spread + jitter, wave);
+    const center = this.territoryRingSpawnCenter(wave);
 
     if (edge === 'north') {
-      this.spawnPosition.set(this.heroPosition.x + lateral, Balance.enemy.groundY, this.heroPosition.z + radius);
+      this.spawnPosition.set(center.x + lateral, Balance.enemy.groundY, center.z + radius);
     } else if (edge === 'south') {
-      this.spawnPosition.set(this.heroPosition.x + lateral, Balance.enemy.groundY, this.heroPosition.z - radius);
+      this.spawnPosition.set(center.x + lateral, Balance.enemy.groundY, center.z - radius);
     } else if (edge === 'east') {
-      this.spawnPosition.set(this.heroPosition.x + radius, Balance.enemy.groundY, this.heroPosition.z + lateral);
+      this.spawnPosition.set(center.x + radius, Balance.enemy.groundY, center.z + lateral);
     } else {
-      this.spawnPosition.set(this.heroPosition.x - radius, Balance.enemy.groundY, this.heroPosition.z + lateral);
+      this.spawnPosition.set(center.x - radius, Balance.enemy.groundY, center.z + lateral);
     }
 
     this.spawnPosition.x = this.clampSpawn(this.spawnPosition.x);
@@ -378,11 +381,11 @@ export class WaveSystem {
   }
 
   private pickEdge(): CompassEdge {
-    return EDGES[this.rng.int(0, EDGES.length)] ?? 'west';
+    return WAVE_SPAWN_EDGES[this.rng.int(0, WAVE_SPAWN_EDGES.length)] ?? 'west';
   }
 
   private pickEdges(count: number): CompassEdge[] {
-    const available = [...EDGES];
+    const available = [...WAVE_SPAWN_EDGES];
     const edges: CompassEdge[] = [];
     for (let i = 0; i < count && available.length > 0; i += 1) {
       const index = this.rng.int(0, available.length);
@@ -459,7 +462,7 @@ export class WaveSystem {
   }
 
   private effectiveEdgesPerPulse(): number {
-    return Math.max(1, Math.min(EDGES.length, Math.floor(Balance.waves.edgesPerPulse)));
+    return Math.max(1, Math.min(WAVE_SPAWN_EDGES.length, Math.floor(Balance.waves.edgesPerPulse)));
   }
 
   private waveInterval(): number {
@@ -513,6 +516,20 @@ export class WaveSystem {
 
   private speedVariance(): number {
     return 1 + this.rng.range(-Balance.enemy.speedVariance, Balance.enemy.speedVariance);
+  }
+
+  private territoryRingLateral(lateral: number, wave: number): number {
+    if (!this.usesTerritoryRingLane(wave)) return lateral;
+    const bias = THREE.MathUtils.clamp(Balance.waves.territoryRingLaneBias, 0, 1);
+    return lateral * (1 - bias);
+  }
+
+  private territoryRingSpawnCenter(wave: number): THREE.Vector3 {
+    return this.usesTerritoryRingLane(wave) ? this.territoryRingCenter : this.heroPosition;
+  }
+
+  private usesTerritoryRingLane(wave: number): boolean {
+    return this.hasTerritoryRing() && wave <= Balance.waves.territoryRingBiasWaves;
   }
 
   private clampSpawn(value: number): number {

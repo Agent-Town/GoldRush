@@ -223,7 +223,7 @@ export class RunManager {
             ).join('')}
           </ul>
           <p class="claim-office__tier" data-testid="territory-tier-one">${
-            territoryReady ? 'Next claim: palisade ring ready.' : 'Next claim: territory ledger banked.'
+            territoryReady ? 'Next claim: palisade ring ready; the gaps are your kill-lanes.' : 'Next claim: territory ledger banked.'
           }</p>
         </section>
         <div class="gr-run-overlay__actions">
