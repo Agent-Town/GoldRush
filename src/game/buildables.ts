@@ -9,6 +9,11 @@ export type BuildableId =
   | 'assay_office'
   | 'lantern_post';
 export type BuildPlacement = 'bank' | 'river-adjacent' | 'any';
+export type BuildablePowerDef = {
+  produces?: number;
+  consumes?: number;
+  relay?: boolean;
+};
 
 export type BuildableDef = {
   id: BuildableId;
@@ -23,6 +28,7 @@ export type BuildableDef = {
   iconSlot: `ui.build.icon.${BuildableId}`;
   portraitSlug?: string;
   rotatable?: boolean;
+  power?: BuildablePowerDef;
 };
 
 export const buildableDefs: readonly BuildableDef[] = [
