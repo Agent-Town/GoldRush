@@ -12,6 +12,10 @@ import {
 } from './ProfileStorage';
 
 type StartGame = () => void;
+type InstallOptions = {
+  showTitle?: boolean;
+  skipTitle?: boolean;
+};
 
 export class ProfileManager {
   private storage?: Storage;
@@ -20,7 +24,10 @@ export class ProfileManager {
   private selectedId = '';
   private started = false;
 
-  constructor(private readonly startGame: StartGame) {}
+  constructor(
+    private readonly startGame: StartGame,
+    private readonly options: InstallOptions = {},
+  ) {}
 
   install(): this {
     this.storage = browserStorage();
@@ -42,7 +49,7 @@ export class ProfileManager {
     this.selectedId = this.state.activeId;
     this.exposeDebug();
 
-    if (!shouldShowProfileTitle()) {
+    if (!shouldShowProfileTitle(this.options)) {
       bindProfileSession(this.selectedId);
       this.started = true;
       this.startGame();
@@ -144,8 +151,8 @@ export class ProfileManager {
   }
 }
 
-export function install(startGame: StartGame): ProfileManager {
-  return new ProfileManager(startGame).install();
+export function install(startGame: StartGame, options: InstallOptions = {}): ProfileManager {
+  return new ProfileManager(startGame, options).install();
 }
 
 function renderProfileRow(profile: ProfileRecord, selected: boolean): string {
@@ -159,7 +166,9 @@ function renderProfileRow(profile: ProfileRecord, selected: boolean): string {
   `;
 }
 
-function shouldShowProfileTitle(): boolean {
+function shouldShowProfileTitle(options: InstallOptions): boolean {
+  if (options.showTitle) return true;
+  if (options.skipTitle) return false;
   const search = globalThis.location?.search ?? '';
   const params = new URLSearchParams(search);
   return params.has('profiles') || search === '';

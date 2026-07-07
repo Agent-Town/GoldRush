@@ -316,6 +316,7 @@ export class Game {
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly openAssayBench?: () => void,
+    private readonly onReturnToMenu?: () => void,
   ) {
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
@@ -369,7 +370,7 @@ export class Game {
     this.assayOfficePrompt = new AssayOfficePrompt(this.getElement('#hud'));
     this.demolishPrompt = new DemolishPrompt(this.getElement('#hud'), () => this.confirmDemolish());
     this.upgradePrompt = new UpgradePrompt(this.getElement('#hud'), () => this.confirmUpgrade());
-    this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.resetRun());
+    this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.finishRunLedger());
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
     this.getElement('#app').append(this.damageVignette);
@@ -437,6 +438,10 @@ export class Game {
           actionLabel: 'Enter New Claim',
           runStats,
           onDone: () => {
+            if (this.onReturnToMenu) {
+              this.onReturnToMenu();
+              return;
+            }
             this.deathOverlay.hide();
             this.state.setPaused(false);
           },
@@ -1273,6 +1278,14 @@ export class Game {
     this.upgradeOverlay.hide();
     this.upgradePrompt.update(null, true);
     this.demolishPrompt.update(null, true);
+  }
+
+  private finishRunLedger(): void {
+    if (this.onReturnToMenu) {
+      this.onReturnToMenu();
+      return;
+    }
+    this.resetRun();
   }
 
   applyMetaProgress(meta: MetaProgress): void {

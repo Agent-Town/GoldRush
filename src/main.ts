@@ -6,12 +6,14 @@ import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import { install as installProfiles } from './game/ProfileManager';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
+import { install as installStartMenu, type StartMenu } from './ui/menu/StartMenu';
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
 
 if (!canvas) {
   throw new Error('Missing #game-canvas element.');
 }
+const gameCanvas = canvas;
 
 const initialSearch = new URLSearchParams(window.location.search);
 if (initialSearch.get('bench') === 'fullbase') {
@@ -30,23 +32,71 @@ if (initialSearch.get('bench') === 'fullbase') {
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
 const search = new URLSearchParams(window.location.search);
 let game: Game | undefined;
-let assayBench: ReturnType<typeof installAssayBench>;
+let assayBench: ReturnType<typeof installAssayBench> | undefined;
+let profiles: ReturnType<typeof installProfiles> | undefined;
+let startMenu: StartMenu | undefined;
 
-const profiles = installProfiles(() => {
+function startGame(returnToMenu: boolean): void {
   applyStoredDifficultyPreset();
   applyUpgradeBudgetsFromBalance();
   assayBench = installAssayBench(app, {
     initiallyOpen: search.has('profile') || search.has('queueNow'),
   });
-  game = new Game(canvas, () => assayBench?.focus());
+  game = new Game(gameCanvas, () => assayBench?.focus(), returnToMenu ? returnToStartMenu : undefined);
   game.start();
-});
+}
+
+function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; returnToMenu?: boolean } = {}): void {
+  profiles?.dispose();
+  profiles = installProfiles(() => startGame(options.returnToMenu === true), {
+    showTitle: options.showTitle,
+    skipTitle: options.skipTitle,
+  });
+}
+
+function showStartMenu(): void {
+  startMenu?.dispose();
+  startMenu = installStartMenu(app, {
+    onNewClaim: () => {
+      startMenu?.dispose();
+      startMenu = undefined;
+      startWithProfiles({ skipTitle: true, returnToMenu: true });
+    },
+    onContinue: () => {
+      startMenu?.dispose();
+      startMenu = undefined;
+      startWithProfiles({ skipTitle: true, returnToMenu: true });
+    },
+    onProfile: () => {
+      startMenu?.dispose();
+      startMenu = undefined;
+      startWithProfiles({ showTitle: true, returnToMenu: true });
+    },
+  });
+}
+
+function returnToStartMenu(): void {
+  game?.dispose();
+  game = undefined;
+  assayBench?.dispose();
+  assayBench = undefined;
+  profiles?.dispose();
+  profiles = undefined;
+  showStartMenu();
+}
+
+if (window.location.search === '') {
+  showStartMenu();
+} else {
+  startWithProfiles();
+}
 
 installFullBaseBenchmark();
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
-    profiles.dispose();
+    startMenu?.dispose();
+    profiles?.dispose();
     assayBench?.dispose();
     game?.dispose();
   });

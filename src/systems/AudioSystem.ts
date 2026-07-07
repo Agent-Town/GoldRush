@@ -1,3 +1,19 @@
+export const AUDIO_VOLUME_STORAGE_KEY = 'gr.audio.volume.v1';
+
+let audioVolume = readStoredAudioVolume();
+
+export function readAudioVolume(): number {
+  return audioVolume;
+}
+
+export function setAudioVolume(value: number): number {
+  audioVolume = clampVolume(value);
+  try {
+    globalThis.localStorage?.setItem(AUDIO_VOLUME_STORAGE_KEY, String(audioVolume));
+  } catch {}
+  return audioVolume;
+}
+
 export class AudioSystem {
   private context: AudioContext | null = null;
   private unlocked = false;
@@ -49,21 +65,36 @@ export class AudioSystem {
 
   private blip(startHz: number, endHz: number, duration: number, gainValue: number): void {
     if (!this.unlocked) return;
+    const volume = readAudioVolume();
+    if (volume <= 0) return;
     const context = this.ensureContext();
     if (context.state !== 'running') return;
 
     const now = context.currentTime;
     const osc = context.createOscillator();
     const gain = context.createGain();
+    const peak = Math.max(0.0001, gainValue * volume);
     osc.type = 'triangle';
     osc.frequency.setValueAtTime(startHz, now);
     osc.frequency.exponentialRampToValueAtTime(endHz, now + duration);
     gain.gain.setValueAtTime(0.0001, now);
-    gain.gain.exponentialRampToValueAtTime(gainValue, now + 0.006);
+    gain.gain.exponentialRampToValueAtTime(peak, now + 0.006);
     gain.gain.exponentialRampToValueAtTime(0.0001, now + duration);
     osc.connect(gain);
     gain.connect(context.destination);
     osc.start(now);
     osc.stop(now + duration + 0.01);
   }
+}
+
+function readStoredAudioVolume(): number {
+  try {
+    return clampVolume(Number(globalThis.localStorage?.getItem(AUDIO_VOLUME_STORAGE_KEY) ?? 0.8));
+  } catch {
+    return 0.8;
+  }
+}
+
+function clampVolume(value: number): number {
+  return Number.isFinite(value) ? Math.max(0, Math.min(1, value)) : 0.8;
 }
