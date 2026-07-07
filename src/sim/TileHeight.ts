@@ -3,6 +3,8 @@ import { Balance } from '../game/Balance';
 
 const ACTIVE_TILE = activeTileDescriptor();
 const FLAT_SLOPE = Object.freeze({ dx: 0, dz: 0 });
+const SLIDE_STEP_SCALES = [1, 0.75, 0.5, 0.25, 0.125] as const;
+const SLIDE_ROTATION_DEGREES = [15, 30, 45, 60, 75] as const;
 const PROBES = [
   ['heroStart', 0, 12],
   ['ford', 0, 0],
@@ -63,6 +65,81 @@ export function terrainSpeedMultiplier(x: number, z: number, dirX: number, dirZ:
     return 1 + (Balance.terrainSim.downhillMax - 1) * Math.min(1, -grade / slopeMax);
   }
   return 1;
+}
+
+export function resolveTerrainMove(
+  previousX: number,
+  previousZ: number,
+  targetX: number,
+  targetZ: number,
+  isWalkable: (x: number, z: number) => boolean,
+): { x: number; z: number; moved: boolean } {
+  if (isWalkable(targetX, targetZ)) return { x: targetX, z: targetZ, moved: true };
+
+  const dx = targetX - previousX;
+  const dz = targetZ - previousZ;
+  const distance = Math.hypot(dx, dz);
+  if (distance <= 0.000001) return { x: previousX, z: previousZ, moved: false };
+
+  let bestX = previousX;
+  let bestZ = previousZ;
+  let bestScore = 0;
+
+  const consider = (moveX: number, moveZ: number) => {
+    if (Math.hypot(moveX, moveZ) <= 0.000001) return;
+    const alignment = moveX * dx + moveZ * dz;
+    if (alignment <= bestScore + 0.000001) return;
+    for (const scale of SLIDE_STEP_SCALES) {
+      const score = alignment * scale;
+      if (score <= bestScore + 0.000001) continue;
+      const x = previousX + moveX * scale;
+      const z = previousZ + moveZ * scale;
+      if (!isWalkable(x, z)) continue;
+      bestX = x;
+      bestZ = z;
+      bestScore = score;
+      break;
+    }
+  };
+
+  const considerSlide = (normalX: number, normalZ: number) => {
+    const normalLength = Math.hypot(normalX, normalZ);
+    if (normalLength <= 0.000001) return;
+    const nx = normalX / normalLength;
+    const nz = normalZ / normalLength;
+    const into = dx * nx + dz * nz;
+    consider(dx - nx * into, dz - nz * into);
+  };
+
+  consider(dx, 0);
+  consider(0, dz);
+  const moveAngle = Math.atan2(dz, dx);
+  for (const degrees of SLIDE_ROTATION_DEGREES) {
+    const turn = (degrees * Math.PI) / 180;
+    const projectedDistance = distance * Math.cos(turn);
+    for (const sign of [-1, 1] as const) {
+      const angle = moveAngle + sign * turn;
+      consider(Math.cos(angle) * projectedDistance, Math.sin(angle) * projectedDistance);
+    }
+  }
+
+  const probe = Math.max(0.25, Math.min(0.5, distance * 2));
+  const blockedEast = isWalkable(previousX + probe, previousZ) ? 0 : 1;
+  const blockedWest = isWalkable(previousX - probe, previousZ) ? 0 : 1;
+  const blockedSouth = isWalkable(previousX, previousZ + probe) ? 0 : 1;
+  const blockedNorth = isWalkable(previousX, previousZ - probe) ? 0 : 1;
+  const normalX = blockedEast - blockedWest;
+  const normalZ = blockedSouth - blockedNorth;
+  considerSlide(normalX, 0);
+  considerSlide(0, normalZ);
+  considerSlide(normalX, normalZ);
+
+  const previousSlope = simSlope(previousX, previousZ);
+  considerSlide(previousSlope.dx, previousSlope.dz);
+  const targetSlope = simSlope(targetX, targetZ);
+  considerSlide(targetSlope.dx, targetSlope.dz);
+
+  return { x: bestX, z: bestZ, moved: bestScore > 0 };
 }
 
 export function hasElevationTile(): boolean {

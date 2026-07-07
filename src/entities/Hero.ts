@@ -7,7 +7,7 @@ import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import type { Intents } from '../core/InputController';
 import type { TerrainBounds, TerrainSample } from '../world/Terrain';
-import { terrainSpeedMultiplier } from '../sim/TileHeight';
+import { hasElevationTile, resolveTerrainMove, terrainSpeedMultiplier } from '../sim/TileHeight';
 
 export type TerrainSampler = (x: number, z: number) => TerrainSample;
 
@@ -134,6 +134,14 @@ export class Hero {
     if (terrain.sample(this.nextPosition.x, this.nextPosition.z).walkable) {
       this.group.position.x = this.nextPosition.x;
       this.group.position.z = this.nextPosition.z;
+    } else if (hasElevationTile()) {
+      const resolved = resolveTerrainMove(previousX, previousZ, this.nextPosition.x, this.nextPosition.z, (x, z) => terrain.sample(x, z).walkable);
+      this.group.position.x = resolved.x;
+      this.group.position.z = resolved.z;
+      if (dt > 0) {
+        this.velocity.x = (resolved.x - previousX) / dt;
+        this.velocity.z = (resolved.z - previousZ) / dt;
+      }
     } else {
       if (terrain.sample(this.nextPosition.x, previousZ).walkable) this.group.position.x = this.nextPosition.x;
       else this.velocity.x = 0;
