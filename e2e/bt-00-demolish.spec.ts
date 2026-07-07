@@ -209,6 +209,7 @@ test('tiered full-HP sluice refunds base cost only and shows the loss', async ({
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-00-tiered-full');
   const baseCost = Balance.sluice.cost;
   const tierCost = Balance.tiers.sluice[1].cost;
+  const nextTierCost = Balance.tiers.sluice[2].cost;
   await grantGold(page, baseCost + tierCost);
   const built = await placeBuildableAt(page, 'sluice', 0, 7);
   await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
@@ -222,8 +223,8 @@ test('tiered full-HP sluice refunds base cost only and shows the loss', async ({
   const prompt = page.getByTestId('building-context-prompt');
   await expect(prompt).toBeVisible();
   await expect(prompt).toContainText('Sluice Works · Tier 2');
-  await expect(prompt).toContainText('need 320g');
-  await expect(prompt).toContainText('invested 160g');
+  await expect(prompt).toContainText(`need ${nextTierCost}g`);
+  await expect(prompt).toContainText(`invested ${baseCost + tierCost}g`);
   await expect(prompt).toContainText('returns 20g');
   await page.getByTestId('demolish-confirm').click();
   await expect.poll(() => hpEntry(page, built.id, built.index)).toBeNull();
@@ -235,12 +236,14 @@ test('tiered full-HP sluice refunds base cost only and shows the loss', async ({
 
 test('tiered half-HP sluice refund scales from base cost only', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-00-tiered-half');
+  const baseCost = Balance.sluice.cost;
+  const tierCost = Balance.tiers.sluice[1].cost;
   await page.evaluate(() => {
     window.__GR_TEST__?.setBalance('enemy.contactDamage', 0);
     window.__GR_TEST__?.setBalance('wreck.damage', 20);
     window.__GR_TEST__?.setBalance('wreck.hitCooldown', 999);
   });
-  await grantGold(page, Balance.sluice.cost + Balance.tiers.sluice[1].cost);
+  await grantGold(page, baseCost + tierCost);
   const built = await placeBuildableAt(page, 'sluice', 0, 7);
   await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
   await upgradeBuildable(page, built);
@@ -255,7 +258,7 @@ test('tiered half-HP sluice refund scales from base cost only', async ({ page })
   await teleport(page, damaged.position.x, damaged.position.z);
   const prompt = page.getByTestId('building-context-prompt');
   await expect(prompt).toBeVisible();
-  await expect(prompt).toContainText('invested 160g');
+  await expect(prompt).toContainText(`invested ${baseCost + tierCost}g`);
   await expect(prompt).toContainText('returns 10g');
   await page.getByTestId('demolish-confirm').click();
   await expect.poll(() => hpEntry(page, built.id, built.index)).toBeNull();

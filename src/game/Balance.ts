@@ -50,7 +50,7 @@ export const Balance = {
     pulsePerWave: 3,
     kneeWave: 10,
     kneeSharpness: 8,
-    budgetCeiling: 42,
+    budgetCeiling: 38, // task-047 late valve; old 42.
     lullSeconds: 8,
     lullFloor12: 8,
     pulsesPerWave: 2,
@@ -58,7 +58,7 @@ export const Balance = {
     spawnEdges: WAVE_SPAWN_EDGES,
     territoryRingBiasWaves: 3,
     territoryRingLaneBias: 0.75,
-    hpScalePerWave: 1.12,
+    hpScalePerWave: 1.115, // task-047 late valve; old 1.12.
     speedScalePerWave: 1.02,
     speedScaleCap: 1.3,
     aliveCap: 60,
@@ -211,12 +211,12 @@ export const Balance = {
     sluice: [
       { cost: 0, panRateMult: 1, yieldMult: 1 },
       { cost: 120, panRateMult: 1.35, yieldMult: 1.7 },
-      { cost: 320, panRateMult: 1.9, yieldMult: 2.7 },
+      { cost: 240, panRateMult: 2.15, yieldMult: 3.1 }, // task-047; old 320 / 1.9 / 2.7.
     ],
     turret: [
       { cost: 0, damageMult: 1, fireRateMult: 1 },
       { cost: 150, damageMult: 1.4, fireRateMult: 1.18 },
-      { cost: 400, damageMult: 1.9, fireRateMult: 1.35 },
+      { cost: 300, damageMult: 1.9, fireRateMult: 1.35 }, // task-047; old 400.
     ],
   },
   wreck: {

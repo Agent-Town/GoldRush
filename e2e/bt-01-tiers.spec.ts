@@ -231,6 +231,7 @@ test('palisade tier raises max HP, heals, and wears only below half the new max'
   const firstDamage = Math.floor(upgraded.maxHp / 2) - 1;
   await setBalance(page, 'wreck.damage', firstDamage);
   await setBalance(page, 'wreck.hitCooldown', 999);
+  await setBalance(page, 'wreck.repairSeconds', 999);
   await spawnStationaryWreckerAt(page, upgraded);
   const aboveHalfHp = upgraded.maxHp - firstDamage;
   await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(aboveHalfHp);
@@ -240,7 +241,7 @@ test('palisade tier raises max HP, heals, and wears only below half the new max'
   await setBalance(page, 'wreck.damage', 2);
   await spawnStationaryWreckerAt(page, upgraded);
   await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.hp ?? -1), { timeout: 12_000 }).toBe(aboveHalfHp - 2);
-  expect((await hpEntry(page, 'palisade', palisade.index))?.worn).toBe(true);
+  await expect.poll(() => hpEntry(page, 'palisade', palisade.index).then((entry) => entry?.worn ?? false), { timeout: 12_000 }).toBe(true);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
