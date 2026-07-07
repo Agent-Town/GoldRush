@@ -60,6 +60,7 @@ export type DeathOverlayOptions = {
   outcome?: 'death' | 'secured';
   actionLabel?: string;
   runStats?: DeathRunStatsSnapshot;
+  agentAutonomyDelta?: { before: number; after: number };
   research?: DeathResearchState;
   onResearchPick?: (id: string) => DeathResearchState;
   onResearchSkip?: () => DeathResearchState;
@@ -175,6 +176,7 @@ export class DeathOverlay {
             <dd data-death-upgrades>${this.escape(runStats.upgradeFamilies)}</dd>
           </div>
         </dl>
+        ${this.renderAgentAutonomy()}
         ${this.renderScienceFooter()}
         ${this.renderResearch()}
         <section class="death-overlay__scores" aria-label="Best Claims">
@@ -194,6 +196,14 @@ export class DeathOverlay {
     return `<p class="death-overlay__science" data-testid="science-meter">${this.escape(meter.text)}${
       meter.bankedText ? ` <span data-testid="science-banked">${this.escape(meter.bankedText)}</span>` : ''
     }</p>`;
+  }
+
+  private renderAgentAutonomy(): string {
+    const delta = this.options.agentAutonomyDelta;
+    if (!delta || delta.after <= delta.before) return '';
+    return `<p class="death-overlay__agent" data-testid="agent-autonomy-ledger">The Prospector grew: autonomy ${formatAutonomy(
+      delta.before,
+    )} &rarr; ${formatAutonomy(delta.after)}</p>`;
   }
 
   private renderResearch(): string {
@@ -398,4 +408,9 @@ export class DeathOverlay {
       return '&#39;';
     });
   }
+}
+
+function formatAutonomy(value: number): string {
+  const rounded = Math.round(Math.max(0, value) * 100) / 100;
+  return Number.isInteger(rounded) ? `${rounded}.0` : String(rounded);
 }

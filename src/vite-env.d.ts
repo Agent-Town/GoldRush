@@ -54,6 +54,8 @@ interface ThreeGameDiagnostics {
       name: string;
       permissionLevel: number;
       permissionLabel: string;
+      autonomyTrack: number;
+      policySlotBonus: number;
       receiptFeed: readonly string[];
     } | null;
   };
