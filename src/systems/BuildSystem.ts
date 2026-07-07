@@ -52,6 +52,7 @@ export type BuildDiagnostics = {
   stockpilePositions: Array<{ x: number; z: number }>;
   turretPositions: Array<{ x: number; z: number }>;
   assayOfficePositions: Array<{ x: number; z: number }>;
+  reservedFootprints: Array<{ id: string; x: number; z: number; halfX: number; halfZ: number }>;
   buildables: Array<{ id: BuildableId; count: number }>;
   sluicesState: SluiceSnapshot[];
   stockpilesState: StockpileSnapshot[];
@@ -114,6 +115,16 @@ export type UpgradeCandidate = {
   reason: 'ready' | 'max' | 'insufficient_gold' | 'gated';
   gain: string;
   position: { x: number; z: number };
+};
+
+export type ReservedFootprint = {
+  id: string;
+  x: number;
+  z: number;
+  halfX: number;
+  halfZ: number;
+  active: boolean;
+  blocksRouting?: boolean;
 };
 
 const validColor = new THREE.Color('#2f8f85');
@@ -195,6 +206,8 @@ export class BuildSystem {
   private readonly shooterByInstance = createShooterStore();
   private readonly shooterHandles: ShooterHandle[] = [];
   private readonly filteredBlockers: PalisadeBlocker[] = [];
+  private readonly reservedFootprints: ReservedFootprint[] = [];
+  private megaprojectDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
   private readonly buildingVisualGeometry = new THREE.BoxGeometry(1, 1, 1);
   private readonly buildingVisualMaterial = new THREE.MeshStandardMaterial({
     color: '#fff8e8',
@@ -372,6 +385,9 @@ export class BuildSystem {
       const blocker = this.palisades.activeBlockers[i];
       if (blocker) this.filteredBlockers.push(blocker);
     }
+    for (const footprint of this.reservedFootprints) {
+      if (footprint.active && footprint.blocksRouting !== false) this.filteredBlockers.push(footprint);
+    }
     return this.filteredBlockers;
   }
 
@@ -419,6 +435,9 @@ export class BuildSystem {
       stockpilePositions: stockpilesActive ? this.activePositions(this.stockpiles) : emptyPositions,
       turretPositions: this.activePositions(this.turrets),
       assayOfficePositions: this.assayOfficeActive ? [{ x: this.assayOfficePosition.x, z: this.assayOfficePosition.z }] : emptyPositions,
+      reservedFootprints: this.reservedFootprints
+        .filter((entry) => entry.active)
+        .map(({ id, x, z, halfX, halfZ }) => ({ id, x, z, halfX, halfZ })),
       buildables: this.buildableCounts,
       sluicesState: sluicesActive ? this.sluiceSnapshots() : emptySluiceSnapshots,
       stockpilesState: stockpilesActive ? this.stockpileSnapshots() : emptyStockpileSnapshots,
@@ -470,6 +489,15 @@ export class BuildSystem {
     this.ghostRotationSteps = (this.ghostRotationSteps + 1) % 4;
     this.syncGhostShape();
     return true;
+  }
+
+  setReservedFootprints(footprints: readonly ReservedFootprint[]): void {
+    this.reservedFootprints.length = 0;
+    this.reservedFootprints.push(...footprints);
+  }
+
+  setMegaprojectDamageResolver(resolve: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null): void {
+    this.megaprojectDamageResolver = resolve;
   }
 
   update(
@@ -787,8 +815,24 @@ export class BuildSystem {
   }
 
   resolveBuildingDamage(target: BuildingTarget, amount: number): BuildingDamageResult {
+    if (target.family === 'megaproject') {
+      return (
+        this.megaprojectDamageResolver?.(target, amount) ?? {
+          applied: false,
+          family: target.family,
+          index: target.index,
+          hp: target.hp,
+          maxHp: target.maxHp,
+          wrecked: false,
+        }
+      );
+    }
+
     const id = target.family as BuildableId;
     const index = target.index;
+    if (!isBuildableId(id)) {
+      return { applied: false, family: target.family, index, hp: target.hp, maxHp: target.maxHp, wrecked: false };
+    }
     const maxHp = this.maxHpForInstance(id, index);
     if (!target.active || this.wrecked[id][index] || maxHp <= 0) {
       return { applied: false, family: id, index, hp: this.hp[id][index] ?? 0, maxHp, wrecked: false };
@@ -885,6 +929,13 @@ export class BuildSystem {
     }
     if (this.assayOfficeActive && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'assay_office', this.assayOfficePosition, 0)) {
       return true;
+    }
+    for (const footprint of this.reservedFootprints) {
+      if (!footprint.active) continue;
+      const half = this.footprintHalfExtents(id, this.ghostRotationSteps);
+      if (Math.abs(position.x - footprint.x) < half.x + footprint.halfX && Math.abs(position.z - footprint.z) < half.z + footprint.halfZ) {
+        return true;
+      }
     }
     return false;
   }
@@ -1749,6 +1800,10 @@ function stockpileCapSource(index: number): string {
 
 function isUpgradeableBuildable(id: BuildableId): id is UpgradeableBuildableId {
   return id === 'palisade' || id === 'sluice' || id === 'turret';
+}
+
+function isBuildableId(id: string): id is BuildableId {
+  return buildableIds.includes(id as BuildableId);
 }
 
 export function tierUnlockAllowed(_id: BuildableId, _tier: number): boolean {

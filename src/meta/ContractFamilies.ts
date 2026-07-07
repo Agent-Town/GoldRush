@@ -3,6 +3,7 @@ import frontierContracts from '../../assets/contracts/epoch-1-frontier/contracts
 import frontierFamilies from '../../assets/contracts/epoch-1-frontier/families.json' with { type: 'json' };
 import frontierManifest from '../../assets/contracts/epoch-1-frontier/manifest.json' with { type: 'json' };
 import steamworksManifest from '../../assets/contracts/epoch-2-steamworks/manifest.json' with { type: 'json' };
+import type { MegaprojectManifest } from './Megaproject';
 
 export type EpochUpgradeDeltas = {
   fireRateMult?: number;
@@ -156,6 +157,7 @@ export type EpochTileDescriptor = {
 
 export type EpochBundle = EpochMeta & {
   tile?: EpochTileDescriptor;
+  megaprojects: MegaprojectManifest[];
   contracts: ContractManifest[];
   families: EpochUpgradeFamily[];
   gates: string[];
@@ -166,6 +168,7 @@ export type EpochBundle = EpochMeta & {
 
 type EpochManifest = EpochMeta & {
   tile?: EpochTileDescriptor;
+  megaprojects?: MegaprojectManifest[];
   parts: {
     families?: string;
     caps?: string;
@@ -238,6 +241,7 @@ export function loadEpoch(id: string): EpochBundle {
   return {
     ...toMeta(manifest),
     tile: manifest.tile,
+    megaprojects: manifest.megaprojects ?? [],
     contracts: contracts.contracts,
     families: families.families,
     gates: [...new Set(families.families.map((family) => family.unlockNodeId))],

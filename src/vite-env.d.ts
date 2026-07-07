@@ -226,6 +226,7 @@ interface ThreeGameDiagnostics {
     assayOrderSlots: number;
     contractTier: number;
   };
+  megaproject: GrMegaprojectDiagnostics;
   agent: {
     stub: {
       name: string;
@@ -268,6 +269,7 @@ interface ThreeGameDiagnostics {
     turretPositions: Array<{ x: number; z: number }>;
     assayOffices: number;
     assayOfficePositions: Array<{ x: number; z: number }>;
+    reservedFootprints: Array<{ id: string; x: number; z: number; halfX: number; halfZ: number }>;
     buildables: Array<{ id: GrBuildableId; count: number }>;
     sluicesState: Array<{
       id: string;
@@ -520,6 +522,7 @@ type GrEpochTileDescriptor = import('./meta/ContractFamilies').EpochTileDescript
 type GrContractManifest = import('./meta/ContractFamilies').ContractManifest;
 type GrActiveContractDiagnostics = import('./meta/ContractFamilies').ActiveContractDiagnostics;
 type GrTerrainSample = import('./world/Terrain').TerrainSample;
+type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
@@ -627,6 +630,9 @@ interface Window {
     setBeaconWave: (wave: number | null) => void;
     setWave: (wave: number) => void;
     activeContract: () => GrContractManifest;
+    megaproject: () => GrMegaprojectDiagnostics;
+    fundMegaproject: () => boolean;
+    damageMegaproject: (amount: number) => boolean;
     terrainSample: (x: number, z: number) => GrTerrainSample;
     setTestClip: (slot: string, frames: string[], fps: number) => void;
     setBuildMode: (on: boolean) => void;

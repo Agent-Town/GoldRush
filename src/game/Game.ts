@@ -25,6 +25,25 @@ import {
   type ResearchState,
 } from '../meta/ResearchTree';
 import { loadEpoch } from '../meta/ContractFamilies';
+import {
+  activeMegaprojectManifest,
+  advanceMegaprojectBuild as advanceMegaprojectStateBuild,
+  damageMegaprojectStage,
+  ensureMegaprojectProject,
+  fundMegaprojectStage as fundMegaprojectStateStage,
+  isMegaprojectUnlocked,
+  loadMegaprojectState,
+  megaprojectComplete,
+  megaprojectDiagnostics,
+  megaprojectStageCost,
+  saveMegaprojectState,
+  stageMaxHp,
+  type MegaprojectDiagnostics,
+  type MegaprojectManifest,
+  type MegaprojectProjectState,
+  type MegaprojectState,
+  type MegaprojectStorage,
+} from '../meta/Megaproject';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress } from './MetaProgress';
 import { AgentConsentStore } from '../agent/AgentConsent';
@@ -76,7 +95,7 @@ import {
   type EconomySummary,
 } from './Economy';
 import { CameraRig } from '../systems/CameraRig';
-import { BuildSystem, type DemolishCandidate, type UpgradeCandidate } from '../systems/BuildSystem';
+import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type UpgradeCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
@@ -228,6 +247,46 @@ export class Game {
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
+  private readonly megaprojectManifest: MegaprojectManifest | null = activeMegaprojectManifest(frontierEpoch);
+  private readonly megaprojectStorage: MegaprojectStorage | undefined = browserMegaprojectStorage();
+  private megaprojectState: MegaprojectState = loadMegaprojectState(this.megaprojectStorage);
+  private megaprojectProject: MegaprojectProjectState | null = this.megaprojectManifest
+    ? ensureMegaprojectProject(this.megaprojectState, this.megaprojectManifest)
+    : null;
+  private readonly megaprojectGroup = new THREE.Group();
+  private readonly megaprojectGeometry = new THREE.BoxGeometry(1, 1, 1);
+  private readonly megaprojectBaseMaterial = new THREE.MeshStandardMaterial({
+    color: '#8b7d3c',
+    roughness: 0.82,
+    metalness: 0.08,
+  });
+  private readonly megaprojectStageMaterial = new THREE.MeshStandardMaterial({
+    color: '#5b8a8a',
+    emissive: '#123838',
+    emissiveIntensity: 0.14,
+    roughness: 0.7,
+    metalness: 0.12,
+  });
+  private readonly megaprojectGhostMaterial = new THREE.MeshStandardMaterial({
+    color: '#f5e6c8',
+    transparent: true,
+    opacity: 0.66,
+    roughness: 0.9,
+    metalness: 0.02,
+  });
+  private readonly megaprojectVisuals: THREE.Mesh[] = [];
+  private readonly megaprojectTarget: BuildingTarget = {
+    id: 'megaproject:none',
+    family: 'megaproject',
+    index: 0,
+    position: new THREE.Vector3(),
+    halfX: 0,
+    halfZ: 0,
+    active: false,
+    hp: 0,
+    maxHp: 0,
+    reachRadius: 0,
+  };
   private readonly activeContract = selectActiveContract();
   private readonly waveSystem = new WaveSystem(
     this.enemies,
@@ -236,11 +295,12 @@ export class Game {
     (text, atSim) => this.uiBridge.announce(text, atSim),
     (wave, atSim) => {
       this.events.emit({ type: 'wave_started', at: atSim, wave });
+      this.advanceMegaprojectOnWave(atSim);
       return !this.secureClaimChoicePending();
     },
     areWavesDisabled,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
-    () => !isWreckDisabled() && this.buildSystem.hasAnyBuildable,
+    () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active),
     () => this.liveThiefCount(),
     () => this.territoryRingPresent,
     this.heroStart,
@@ -360,6 +420,7 @@ export class Game {
       () => this.debugBeaconWaveOverride ?? this.waveSystem.diagnostics.wave,
       (position, text, color) => this.vfx.floatText(position, text, color),
     );
+    this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
       state: this.state,
       rng: createRng(`${getDebugSeed() ?? 'gold-rush'}:upgrades`),
@@ -509,6 +570,7 @@ export class Game {
 
     this.createScene();
     this.registerGoldHoldings();
+    this.syncMegaprojectSite();
     if (new URLSearchParams(window.location.search).has('debug')) {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
@@ -560,6 +622,9 @@ export class Game {
         },
         setWave: (wave: number) => this.waveSystem.setWaveForTest(wave),
         activeContract: () => this.activeContract,
+        megaproject: () => this.megaprojectDiagnostics(),
+        fundMegaproject: () => this.fundMegaprojectStage(),
+        damageMegaproject: (amount: number) => this.damageMegaprojectForTest(amount),
         terrainSample: (x: number, z: number) => Terrain.sample(x, z),
         setTestClip: (slot: string, frames: string[], fps: number) => setSpriteTestClip(slot as AssetSlotId, frames, fps),
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
@@ -685,6 +750,11 @@ export class Game {
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.buildSystem.dispose();
+    this.megaprojectGroup.clear();
+    this.megaprojectGeometry.dispose();
+    this.megaprojectBaseMaterial.dispose();
+    this.megaprojectStageMaterial.dispose();
+    this.megaprojectGhostMaterial.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -929,6 +999,8 @@ export class Game {
     this.scene.add(this.detailScatter.group);
     this.scene.add(this.harvestSystem.group);
     this.scene.add(this.buildSystem.group);
+    this.createMegaprojectVisuals();
+    this.scene.add(this.megaprojectGroup);
     this.scene.add(this.projectiles.group);
     this.scene.add(this.blastCharges.group);
     this.scene.add(this.blastAimReticle);
@@ -942,6 +1014,195 @@ export class Game {
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.scene.add(this.primaryActor.group);
+  }
+
+  private createMegaprojectVisuals(): void {
+    this.megaprojectGroup.name = 'MegaprojectSite';
+    this.megaprojectGroup.clear();
+    this.megaprojectVisuals.length = 0;
+    const manifest = this.megaprojectManifest;
+    if (!manifest) return;
+
+    const base = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectBaseMaterial);
+    base.name = 'MegaprojectSiteBase';
+    base.position.y = 0.06;
+    base.scale.set(manifest.siteFootprint.w, 0.12, manifest.siteFootprint.d);
+    this.megaprojectGroup.add(base);
+    this.megaprojectVisuals.push(base);
+
+    const total = Math.max(1, manifest.stages.length);
+    for (let i = 0; i < total; i += 1) {
+      const beam = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectGhostMaterial);
+      beam.name = `MegaprojectStage-${i + 1}`;
+      const height = 0.55 + i * 0.22;
+      beam.position.set(
+        -manifest.siteFootprint.w * 0.5 + ((i + 1) / (total + 1)) * manifest.siteFootprint.w,
+        0.12 + height * 0.5,
+        0,
+      );
+      beam.scale.set(0.32, height, manifest.siteFootprint.d * 0.72);
+      this.megaprojectGroup.add(beam);
+      this.megaprojectVisuals.push(beam);
+    }
+    this.megaprojectGroup.visible = false;
+  }
+
+  private syncMegaprojectSite(): void {
+    const manifest = this.megaprojectManifest;
+    const project = this.megaprojectProject;
+    const unlocked = this.megaprojectUnlocked();
+    const visible = !!manifest && !!project && unlocked;
+    const complete = !!manifest && !!project && megaprojectComplete(manifest, project);
+    const footprint = manifest?.siteFootprint;
+
+    this.megaprojectGroup.visible = visible;
+    if (!manifest || !project || !footprint || !visible) {
+      this.megaprojectTarget.active = false;
+      this.megaprojectTarget.hp = 0;
+      this.buildSystem.setReservedFootprints([]);
+      return;
+    }
+
+    const halfX = footprint.w * 0.5;
+    const halfZ = footprint.d * 0.5;
+    const y = Terrain.visualY(footprint.x, footprint.z, 0.08, Math.max(halfX, halfZ));
+    const maxHp = stageMaxHp(manifest, project);
+    const targetActive = project.funded && !complete;
+    this.megaprojectGroup.position.set(footprint.x, y, footprint.z);
+    this.megaprojectTarget.id = `megaproject:${manifest.id}`;
+    this.megaprojectTarget.position.set(footprint.x, y, footprint.z);
+    this.megaprojectTarget.halfX = halfX;
+    this.megaprojectTarget.halfZ = halfZ;
+    this.megaprojectTarget.active = targetActive;
+    this.megaprojectTarget.hp = targetActive ? project.hp : 0;
+    this.megaprojectTarget.maxHp = maxHp;
+    this.megaprojectTarget.reachRadius = Math.max(halfX, halfZ);
+    this.buildSystem.setReservedFootprints([this.megaprojectReservedFootprint(manifest)]);
+    if (targetActive) this.goldTargeting.registerBuilding(this.megaprojectTarget);
+    this.syncMegaprojectVisuals(project);
+  }
+
+  private syncMegaprojectVisuals(project: MegaprojectProjectState): void {
+    const visibleStages = Math.max(1, Math.min(this.megaprojectVisuals.length - 1, project.stage + (project.funded ? 1 : 0)));
+    for (let i = 1; i < this.megaprojectVisuals.length; i += 1) {
+      const mesh = this.megaprojectVisuals[i];
+      if (!mesh) continue;
+      mesh.visible = i <= visibleStages;
+      mesh.material = i <= project.stage ? this.megaprojectStageMaterial : this.megaprojectGhostMaterial;
+    }
+  }
+
+  private megaprojectReservedFootprint(manifest: MegaprojectManifest): ReservedFootprint {
+    const { x, z, w, d } = manifest.siteFootprint;
+    return { id: manifest.id, x, z, halfX: w * 0.5, halfZ: d * 0.5, active: true };
+  }
+
+  private megaprojectUnlocked(): boolean {
+    return isMegaprojectUnlocked(this.megaprojectManifest, scienceMeter(this.researchState).steps);
+  }
+
+  private fundMegaprojectStage(position?: THREE.Vector3): boolean {
+    const manifest = this.megaprojectManifest;
+    const project = this.megaprojectProject;
+    if (!manifest || !project || !this.megaprojectUnlocked() || megaprojectComplete(manifest, project) || project.funded) return false;
+    if (position && !this.megaprojectInRange(position)) return false;
+
+    const cost = megaprojectStageCost(manifest, project);
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at: this.timeAlive,
+      type: 'gold_spent',
+      sink: `megaproject_${manifest.id}`,
+      amount: cost,
+    });
+    if (!result.ok) {
+      this.vfx.floatText(this.megaprojectTarget.position, 'Need gold!', '#a0522d');
+      return false;
+    }
+    if (!fundMegaprojectStateStage(manifest, project)) return false;
+
+    this.persistMegaprojectState();
+    this.syncMegaprojectSite();
+    this.uiBridge.announce(this.megaprojectProgressLine(), this.timeAlive, null, 4.8);
+    if (cost > 0) this.vfx.floatText(this.megaprojectTarget.position, `-${cost}`, '#a0522d');
+    this.publishDiagnostics();
+    return true;
+  }
+
+  private advanceMegaprojectOnWave(atSim: number): void {
+    const manifest = this.megaprojectManifest;
+    const project = this.megaprojectProject;
+    if (!manifest || !project || !this.megaprojectUnlocked()) return;
+    const result = advanceMegaprojectStateBuild(manifest, project);
+    if (result.type === 'idle') return;
+
+    this.persistMegaprojectState();
+    this.syncMegaprojectSite();
+    if (result.type === 'delayed') {
+      this.uiBridge.announce(`${manifest.name} crews patch the works.`, atSim, null, 3.8);
+    } else if (result.type === 'waiting') {
+      this.uiBridge.announce(`${manifest.name} crews hold the site.`, atSim, null, 3.8);
+    } else if (result.type === 'stage_complete' && result.complete) {
+      this.uiBridge.announce(`${manifest.name} stands complete.`, atSim, null, 5.2);
+    } else {
+      this.uiBridge.announce(this.megaprojectProgressLine(), atSim, null, 4.8);
+    }
+  }
+
+  private resolveMegaprojectDamage(target: BuildingTarget, amount: number): {
+    applied: boolean;
+    family: string;
+    index: number;
+    hp: number;
+    maxHp: number;
+    wrecked: boolean;
+  } {
+    const manifest = this.megaprojectManifest;
+    const project = this.megaprojectProject;
+    if (target !== this.megaprojectTarget || !manifest || !project || !this.megaprojectUnlocked()) {
+      return { applied: false, family: target.family, index: target.index, hp: target.hp, maxHp: target.maxHp, wrecked: false };
+    }
+
+    const result = damageMegaprojectStage(manifest, project, amount);
+    if (!result.applied) return { applied: false, family: target.family, index: target.index, hp: result.hp, maxHp: result.maxHp, wrecked: false };
+    this.persistMegaprojectState();
+    this.syncMegaprojectSite();
+    if (result.delayed) this.uiBridge.announce(`${manifest.name} loses a build wave.`, this.timeAlive, null, 3.8);
+    return { applied: true, family: target.family, index: target.index, hp: project.hp, maxHp: result.maxHp, wrecked: false };
+  }
+
+  private damageMegaprojectForTest(amount: number): boolean {
+    if (!this.megaprojectTarget.active) return false;
+    this.combat.setTime(this.timeAlive);
+    this.combat.damageBuilding(this.megaprojectTarget, amount, -1);
+    this.publishDiagnostics();
+    return true;
+  }
+
+  private persistMegaprojectState(): void {
+    this.megaprojectState = saveMegaprojectState(this.megaprojectStorage, this.megaprojectState);
+    this.megaprojectProject = this.megaprojectManifest
+      ? ensureMegaprojectProject(this.megaprojectState, this.megaprojectManifest)
+      : null;
+  }
+
+  private megaprojectInRange(position: THREE.Vector3, radius = 2.2): boolean {
+    const target = this.megaprojectTarget;
+    const dx = Math.max(Math.abs(position.x - target.position.x) - target.halfX, 0);
+    const dz = Math.max(Math.abs(position.z - target.position.z) - target.halfZ, 0);
+    return dx * dx + dz * dz <= radius * radius;
+  }
+
+  private megaprojectProgressLine(): string {
+    const manifest = this.megaprojectManifest;
+    const project = this.megaprojectProject;
+    if (!manifest || !project) return '';
+    if (megaprojectComplete(manifest, project)) return `${manifest.name} stands complete.`;
+    return `${manifest.name} rises: stage ${project.stage + 1} of ${manifest.stages.length}`;
+  }
+
+  private megaprojectDiagnostics(): MegaprojectDiagnostics {
+    return megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked());
   }
 
   private publishDiagnostics(): void {
@@ -1024,6 +1285,7 @@ export class Game {
         seamYieldMult: this.contractSeamYieldMult(),
       },
       research: this.researchDiagnostics(),
+      megaproject: this.megaprojectDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -1123,6 +1385,7 @@ export class Game {
       ...diagnostics.stockpilePositions,
       ...diagnostics.turretPositions,
       ...diagnostics.assayOfficePositions,
+      ...diagnostics.reservedFootprints,
     ].map((position) => ({ x: position.x, z: position.z, radius: Balance.world.detailBuildingClearRadius }));
   }
 
@@ -1305,6 +1568,7 @@ export class Game {
     this.demolishCandidate = null;
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
+    this.syncMegaprojectSite();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
@@ -1864,6 +2128,7 @@ export class Game {
       this.openAssayBench?.();
       return;
     }
+    if (this.fundMegaprojectStage(this.primaryActor.group.position)) return;
     this.confirmDemolish();
   }
 
@@ -2007,6 +2272,7 @@ export class Game {
           this.researchState = saveResearchState(this.researchStorage, next);
           roundsRemaining = Math.max(0, roundsRemaining - 1);
           this.applyResearchEffects();
+          this.syncMegaprojectSite();
           this.publishDiagnostics();
         }
         return state();
@@ -2029,6 +2295,7 @@ export class Game {
     if (next === this.researchState) return false;
     this.researchState = saveResearchState(this.researchStorage, next);
     this.applyResearchEffects();
+    this.syncMegaprojectSite();
     this.publishDiagnostics();
     return true;
   }
@@ -2291,6 +2558,14 @@ function pointFromUnknown(value: unknown): ProspectorPoint | null {
   return typeof point.x === 'number' && Number.isFinite(point.x) && typeof point.z === 'number' && Number.isFinite(point.z)
     ? { x: point.x, z: point.z }
     : null;
+}
+
+function browserMegaprojectStorage(): MegaprojectStorage | undefined {
+  try {
+    return globalThis.localStorage ?? undefined;
+  } catch {
+    return undefined;
+  }
 }
 
 function percentile(sorted: readonly number[], ratio: number): number {

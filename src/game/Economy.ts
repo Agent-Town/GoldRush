@@ -1,7 +1,12 @@
 import { Balance } from './Balance';
 import type { BuildableId } from './buildables';
 
-export type BuildSink = 'build_sentry_beacon' | `build_${string}` | `repair_${BuildableId}` | `upgrade_${BuildableId}`;
+export type BuildSink =
+  | 'build_sentry_beacon'
+  | `build_${string}`
+  | `repair_${BuildableId}`
+  | `upgrade_${BuildableId}`
+  | `megaproject_${string}`;
 
 export type EconomyEventBase = {
   id: string;
