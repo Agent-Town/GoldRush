@@ -103,6 +103,18 @@ export type ContractLightRamp = {
   darkWave: number;
   dawnWave: number;
 };
+export type ContractBaronTwist = {
+  wave: number;
+  hpScale: number;
+  speedScale: number;
+  scale: number;
+  escortCount: number;
+  tauntWaves: readonly number[];
+  taunt: string;
+  defeatBeat: string;
+  medalBlurb: string;
+  sciencePayoutMult: number;
+};
 export type ContractFord = {
   id: string;
   x: number;
@@ -144,7 +156,9 @@ export type ContractManifest = {
     sluicesNeedWaterSource?: boolean;
     seamYieldMult?: number;
     secureWave?: number;
+    waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
+    baron?: ContractBaronTwist;
   };
   boardRow: {
     name: string;

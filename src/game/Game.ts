@@ -45,7 +45,8 @@ import {
   type MegaprojectStorage,
 } from '../meta/Megaproject';
 import { install as installRunManager, type RunManager } from './RunManager';
-import { agentAutonomyLevel, freshMetaProgress, type MetaProgress } from './MetaProgress';
+import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
+import { awardBaronMedal, loadMedals } from './Medals';
 import { AgentConsentStore } from '../agent/AgentConsent';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
@@ -108,7 +109,7 @@ import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
-import { WAVE_SPAWN_EDGES, WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
+import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
@@ -307,6 +308,7 @@ export class Game {
       return !this.secureClaimChoicePending();
     },
     areWavesDisabled,
+    () => this.activeContract,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
     () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active),
     () => this.liveThiefCount(),
@@ -337,6 +339,7 @@ export class Game {
   private elapsed = 0;
   private timeAlive = 0;
   private kills = 0;
+  private baronBeatenThisRun = false;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
   private charmPauseCooldown = 0;
@@ -512,7 +515,7 @@ export class Game {
         gold: event.goldPanned,
         timeAlive: event.timeAlive,
         at: scoreAt,
-        secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= this.secureWaveForRun(),
+        secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= this.autoSecureWaveForRun(),
         baseValue: Math.round(economySummary.baseValue),
         weaponSplit: this.weaponSplit(runStats),
         contractId: this.activeContract.id,
@@ -576,8 +579,9 @@ export class Game {
         });
       }, 0);
     });
-    this.events.on('enemy_killed', () => {
+    this.events.on('enemy_killed', (event) => {
       this.kills += 1;
+      if (event.eliteKind === 'baron') this.onBaronDefeated(event.at);
     });
     this.events.on('building_damaged', () => {
       this.buildingHitsResolved += 1;
@@ -585,8 +589,9 @@ export class Game {
     this.events.on('building_wrecked', () => {
       this.buildingsWrecked += 1;
     });
-    this.events.on('wave_started', () => {
+    this.events.on('wave_started', (event) => {
       this.audio.play('wave-start-horn');
+      this.announceBaronTaunt(event.wave, event.at);
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -651,6 +656,7 @@ export class Game {
           this.debugBeaconWaveOverride = wave;
         },
         setWave: (wave: number) => this.waveSystem.setWaveForTest(wave),
+        startWaveForTest: (wave: number) => this.startWaveForTest(wave),
         activeContract: () => this.activeContract,
         megaproject: () => this.megaprojectDiagnostics(),
         fundMegaproject: () => this.fundMegaprojectStage(),
@@ -679,6 +685,11 @@ export class Game {
                 id: enemy.id,
                 spreadOffset: enemy.spreadOffset,
                 hp: enemy.currentHp,
+                maxHp: enemy.maxHp,
+                speed: enemy.moveSpeed,
+                eliteKind: enemy.eliteKind ?? undefined,
+                scale: enemy.visualScale,
+                hasBanner: enemy.hasBanner,
                 vx: enemy.velocityX,
                 vz: enemy.velocityZ,
                 thief: enemy.isThief,
@@ -1375,7 +1386,10 @@ export class Game {
         boardRow: this.activeContract.boardRow,
         seamYieldMult: this.contractSeamYieldMult(),
         secureWave: this.secureWaveForRun(),
+        waveCadenceMult: this.activeContract.twist.waveCadenceMult ?? 1,
         lightRamp: this.activeContract.twist.lightRamp ?? null,
+        baron: this.activeContract.twist.baron ?? null,
+        medals: loadMedals(),
       },
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
@@ -1473,6 +1487,52 @@ export class Game {
 
   secureWaveForRun(): number {
     return Math.max(0, Math.floor(this.activeContract.twist.secureWave ?? Balance.run.secureWave));
+  }
+
+  autoSecureWaveForRun(): number {
+    return this.waitsForBaronDefeat() ? Number.MAX_SAFE_INTEGER : this.secureWaveForRun();
+  }
+
+  securePayoutMultForRun(): Partial<Record<MetaTrack, number>> | undefined {
+    const baron = this.activeContract.twist.baron;
+    if (!baron || !this.baronBeatenThisRun) return undefined;
+    return { science: Math.max(1, baron.sciencePayoutMult) };
+  }
+
+  secureBarkForRun(): string | undefined {
+    const baron = this.activeContract.twist.baron;
+    return baron && this.baronBeatenThisRun ? baron.defeatBeat : undefined;
+  }
+
+  private waitsForBaronDefeat(): boolean {
+    return Boolean(this.activeContract.twist.baron && !this.baronBeatenThisRun);
+  }
+
+  private announceBaronTaunt(wave: number, atSim: number): void {
+    const baron = this.activeContract.twist.baron;
+    if (!baron || !baron.tauntWaves.includes(wave)) return;
+    this.uiBridge.announce(baron.taunt, atSim, null, 5);
+  }
+
+  private startWaveForTest(wave: number): void {
+    const safeWave = Math.max(0, Math.floor(wave));
+    this.waveSystem.setWaveForTest(safeWave);
+    this.events.emit({ type: 'wave_started', at: this.timeAlive, wave: safeWave });
+    this.publishDiagnostics();
+  }
+
+  private onBaronDefeated(atSim: number): void {
+    if (this.baronBeatenThisRun) return;
+    const baron = this.activeContract.twist.baron;
+    if (!baron) return;
+    this.baronBeatenThisRun = true;
+    const secured = this.runManager?.secureCurrentRun(this.waveSystem.diagnostics.wave) === true;
+    if (!secured) {
+      this.baronBeatenThisRun = false;
+      return;
+    }
+    awardBaronMedal();
+    this.uiBridge.announce(baron.defeatBeat, atSim, null, 5);
   }
 
   private syncNightShiftLighting(): void {
@@ -1915,6 +1975,7 @@ export class Game {
     this.lastHarvestChanneling = false;
     this.lastUpgradeOfferAudioKey = '';
     this.kills = 0;
+    this.baronBeatenThisRun = false;
     this.stolenTotal = 0;
     this.reclaimedTotal = 0;
     this.buildingHitsResolved = 0;
@@ -1988,7 +2049,7 @@ export class Game {
     const capOffset = gapHalf + Balance.palisade.depth - wallHalf;
     const sideOffset = gapHalf + Balance.palisade.depth + wallHalf;
     const segments: Array<{ x: number; z: number; rotationSteps: number }> = [];
-    for (const edge of WAVE_SPAWN_EDGES) {
+    for (const edge of this.activeContract.tileParams.lanes.spawnEdges) {
       for (const side of [-1, 1] as const) {
         if (edge === 'north' || edge === 'south') {
           segments.push({

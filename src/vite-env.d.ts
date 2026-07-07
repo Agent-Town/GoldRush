@@ -212,7 +212,10 @@ interface ThreeGameDiagnostics {
     boardRow: GrContractManifest['boardRow'];
     seamYieldMult: number;
     secureWave: number;
+    waveCadenceMult: number;
     lightRamp: GrContractManifest['twist']['lightRamp'] | null;
+    baron: GrContractManifest['twist']['baron'] | null;
+    medals: import('./game/Medals').MedalState;
   };
   research: {
     taken: string[];
@@ -622,7 +625,19 @@ interface Window {
   /** Present only with ?debug — parking-free positioning for interaction e2e. */
   __GR_TEST__?: {
     teleport: (x: number, z: number) => void;
-    spawnPack: (n: number, radius?: number, opts?: { speedScale?: number; wrecker?: boolean }) => void;
+    spawnPack: (
+      n: number,
+      radius?: number,
+      opts?: {
+        speedScale?: number;
+        speedMult?: number;
+        hpScale?: number;
+        eliteKind?: 'baron';
+        visualScale?: number;
+        banner?: boolean;
+        wrecker?: boolean;
+      },
+    ) => void;
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     wreck: (family: GrBuildableId, index: number) => boolean;
@@ -680,6 +695,7 @@ interface Window {
     };
     setBeaconWave: (wave: number | null) => void;
     setWave: (wave: number) => void;
+    startWaveForTest: (wave: number) => void;
     activeContract: () => GrContractManifest;
     megaproject: () => GrMegaprojectDiagnostics;
     fundMegaproject: () => boolean;
@@ -704,6 +720,11 @@ interface Window {
       y: number;
       z: number;
       hp: number;
+      maxHp: number;
+      speed: number;
+      eliteKind?: 'baron';
+      scale: number;
+      hasBanner: boolean;
       spreadOffset: number;
       vx: number;
       vz: number;

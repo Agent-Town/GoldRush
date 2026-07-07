@@ -115,6 +115,44 @@
         "tags": ["vein-hunter"],
         "unlock": "firstSecuredClaim"
       }
+    },
+    {
+      "id": "e1-baron",
+      "name": "The Claim-Jumper Baron",
+      "tileParams": {
+        "tileId": "frontier-river-claim",
+        "biome": "river-claim",
+        "river": true,
+        "ford": true,
+        "waterSources": [],
+        "lanes": {
+          "spawnEdges": ["north", "south", "east", "west"],
+          "territoryRingBiasWaves": 3,
+          "territoryRingLaneBias": 0.75
+        }
+      },
+      "twist": {
+        "secureWave": 20,
+        "waveCadenceMult": 1.15,
+        "baron": {
+          "wave": 20,
+          "hpScale": 40,
+          "speedScale": 0.8,
+          "scale": 1.4,
+          "escortCount": 8,
+          "tauntWaves": [5, 12, 18],
+          "taunt": "The Baron sends his regards. The claim won't hold.",
+          "defeatBeat": "Dragged off by his own men, swearing revenge.",
+          "medalBlurb": "He'll be back — with machines.",
+          "sciencePayoutMult": 2
+        }
+      },
+      "boardRow": {
+        "name": "The Claim-Jumper Baron",
+        "ledgerBlurb": "A brass-bannered bully compresses the waves and waits at the twentieth horn.",
+        "tags": ["vein-hunter"],
+        "unlock": "science-complete"
+      }
     }
   ]
 }

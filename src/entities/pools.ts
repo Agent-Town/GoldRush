@@ -60,6 +60,20 @@ export class EnemyPool {
     blending: THREE.AdditiveBlending,
   });
   private readonly hitFlashes = new THREE.InstancedMesh(this.hitFlashGeometry, this.hitFlashMaterial, Balance.enemy.poolSize);
+  private readonly bannerPoleGeometry = new THREE.CylinderGeometry(0.025, 0.025, 1.36, 8);
+  private readonly bannerClothGeometry = new THREE.BoxGeometry(0.52, 0.34, 0.035);
+  private readonly bannerPoleMaterial = new THREE.MeshStandardMaterial({
+    color: '#4b2a17',
+    roughness: 0.72,
+    metalness: 0.08,
+  });
+  private readonly bannerClothMaterial = new THREE.MeshStandardMaterial({
+    color: '#7f2633',
+    roughness: 0.82,
+    metalness: 0.03,
+  });
+  private readonly bannerPoleMesh = new THREE.InstancedMesh(this.bannerPoleGeometry, this.bannerPoleMaterial, Balance.enemy.poolSize);
+  private readonly bannerClothMesh = new THREE.InstancedMesh(this.bannerClothGeometry, this.bannerClothMaterial, Balance.enemy.poolSize);
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
     y: ENEMY_SPRITE_Y,
@@ -106,13 +120,18 @@ export class EnemyPool {
   private readonly syncObject = new THREE.Object3D();
   private readonly warmHitFlashPosition = new THREE.Vector3();
   private readonly sackLocalMatrix = new THREE.Matrix4();
+  private readonly bannerPoleLocalMatrix = new THREE.Matrix4();
+  private readonly bannerClothLocalMatrix = new THREE.Matrix4();
   private readonly normalPonchoColor = new THREE.Color('#a0522d');
   private readonly carryingPonchoColor = new THREE.Color('#5b8a8a');
   private readonly wreckerPonchoColor = new THREE.Color('#8b7d3c');
+  private readonly baronPonchoColor = new THREE.Color('#7f2633');
   private readonly shadowColor = new THREE.Color('#2e1b0e');
   private readonly faceColor = new THREE.Color('#d9a268');
   private readonly hatColor = new THREE.Color('#4b2a17');
   private readonly sackColor = new THREE.Color('#8b7d3c');
+  private readonly bannerPoleColor = new THREE.Color('#4b2a17');
+  private readonly bannerClothColor = new THREE.Color('#7f2633');
   private readonly dimmedColor = new THREE.Color();
   private lightDimming: EnemyLightDimmingConfig = {
     enabled: false,
@@ -139,6 +158,7 @@ export class EnemyPool {
     this.createRenderParts();
     this.createSackMesh();
     this.createHitFlashMesh();
+    this.createBannerMeshes();
     this.group.add(this.generatedSprites.group, this.generatedSpriteFades.group, this.thiefSprites.group, this.thiefSpriteFades.group);
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
@@ -374,6 +394,10 @@ export class EnemyPool {
     this.thiefSpriteAnimator.dispose();
     this.hitFlashGeometry.dispose();
     this.hitFlashMaterial.dispose();
+    this.bannerPoleGeometry.dispose();
+    this.bannerClothGeometry.dispose();
+    this.bannerPoleMaterial.dispose();
+    this.bannerClothMaterial.dispose();
     disposeClaimJumperAssets(this.assets);
   }
 
@@ -452,6 +476,20 @@ export class EnemyPool {
     this.hitFlashes.instanceMatrix.needsUpdate = true;
   }
 
+  private createBannerMeshes(): void {
+    this.bannerPoleLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(0.45, 1.08, 0.05), new THREE.Euler(0.08, 0, -0.12)));
+    this.bannerClothLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(0.69, 1.48, 0.05), new THREE.Euler(0, 0.04, -0.12)));
+    for (const mesh of [this.bannerPoleMesh, this.bannerClothMesh]) {
+      mesh.count = Balance.enemy.poolSize;
+      mesh.frustumCulled = false;
+      mesh.renderOrder = RenderLayers.gameplay;
+      tagPlaceholder(mesh, assetSlots.propBaronBanner);
+      this.group.add(mesh);
+      for (let i = 0; i < Balance.enemy.poolSize; i += 1) mesh.setMatrixAt(i, this.hiddenMatrix);
+      mesh.instanceMatrix.needsUpdate = true;
+    }
+  }
+
   private createLocalMatrix(position: THREE.Vector3, rotation = new THREE.Euler()): THREE.Matrix4 {
     this.syncObject.position.copy(position);
     this.syncObject.rotation.copy(rotation);
@@ -473,7 +511,7 @@ export class EnemyPool {
     this.syncObject.position.y += motion.bobOffset;
     this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
     this.syncObject.rotation.z = motion.leanRad;
-    this.syncObject.scale.set(1, 1, 1);
+    this.syncObject.scale.setScalar(enemy.visualScale);
     this.syncObject.updateMatrix();
     this.baseMatrix.copy(enemy.isAlive ? this.syncObject.matrix : this.hiddenMatrix);
 
@@ -487,7 +525,13 @@ export class EnemyPool {
         this.setInstanceColor(
           part,
           enemy.id,
-          enemy.carriedAmount > 0 ? this.carryingPonchoColor : enemy.isWrecker ? this.wreckerPonchoColor : this.normalPonchoColor,
+          enemy.eliteKind === 'baron'
+            ? this.baronPonchoColor
+            : enemy.carriedAmount > 0
+              ? this.carryingPonchoColor
+              : enemy.isWrecker
+                ? this.wreckerPonchoColor
+                : this.normalPonchoColor,
           lightFactor,
         );
       } else if (i === 0) {
@@ -503,7 +547,20 @@ export class EnemyPool {
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.setInstanceColor(this.sackMesh, enemy.id, this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
+    this.syncBanner(enemy, lightFactor);
     this.syncEnemySprite(enemy);
+  }
+
+  private syncBanner(enemy: ClaimJumperEnemy, lightFactor: number): void {
+    const visible = enemy.isAlive && enemy.hasBanner;
+    this.instanceMatrix.multiplyMatrices(visible ? this.baseMatrix : this.hiddenMatrix, this.bannerPoleLocalMatrix);
+    this.bannerPoleMesh.setMatrixAt(enemy.id, this.instanceMatrix);
+    this.setInstanceColor(this.bannerPoleMesh, enemy.id, this.bannerPoleColor, lightFactor);
+    this.instanceMatrix.multiplyMatrices(visible ? this.baseMatrix : this.hiddenMatrix, this.bannerClothLocalMatrix);
+    this.bannerClothMesh.setMatrixAt(enemy.id, this.instanceMatrix);
+    this.setInstanceColor(this.bannerClothMesh, enemy.id, this.bannerClothColor, lightFactor);
+    this.bannerPoleMesh.instanceMatrix.needsUpdate = true;
+    this.bannerClothMesh.instanceMatrix.needsUpdate = true;
   }
 
   private syncSpriteVisuals(): void {
@@ -532,10 +589,10 @@ export class EnemyPool {
     this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
     this.thiefSprites.set(enemy.id, enemy.group.position, thiefVisible);
     this.thiefSpriteFades.set(enemy.id, enemy.group.position, showFade && thiefVisible && this.thiefSpriteAnimator.overlayActive);
-    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], normalMotion.bobOffset);
-    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], normalMotion.bobOffset);
-    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], thiefMotion.bobOffset);
-    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], thiefMotion.bobOffset);
+    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], normalMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], normalMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], thiefMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], thiefMotion.bobOffset, enemy.visualScale);
   }
 
   private syncHitFlashes(): void {
@@ -555,8 +612,8 @@ export class EnemyPool {
       }
 
       const t = Math.min(1, flash / Math.max(0.001, Balance.combatReadability.enemyFlashSeconds));
-      const scale = 1 + t * Balance.combatReadability.enemyFlashIntensity * 0.18;
-      this.syncObject.position.set(enemy.group.position.x, enemy.group.position.y + ENEMY_SPRITE_Y, enemy.group.position.z);
+      const scale = (1 + t * Balance.combatReadability.enemyFlashIntensity * 0.18) * enemy.visualScale;
+      this.syncObject.position.set(enemy.group.position.x, enemy.group.position.y + ENEMY_SPRITE_Y * enemy.visualScale, enemy.group.position.z);
       this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
       this.syncObject.scale.set(1.55 * scale, 1.42 * scale, 0.08);
       this.syncObject.updateMatrix();
@@ -576,8 +633,10 @@ export class EnemyPool {
     this.hitFlashes.instanceMatrix.needsUpdate = true;
   }
 
-  private applySpriteBob(sprite: THREE.Object3D | undefined, bobOffset: number): void {
-    if (sprite) sprite.position.y = ENEMY_SPRITE_Y + bobOffset;
+  private applySpriteBob(sprite: THREE.Object3D | undefined, bobOffset: number, visualScale: number): void {
+    if (!sprite) return;
+    sprite.position.y = ENEMY_SPRITE_Y * visualScale + bobOffset;
+    sprite.scale.set(1.55 * visualScale, 1.55 * visualScale, 1);
   }
 
   private setProceduralVisible(visible: boolean): void {
