@@ -23,10 +23,14 @@ type BaronSnapshot = {
   edge: string | null | undefined;
 };
 
-const ARTIFACT_DIR = path.resolve('artifacts/e1-baron');
+const ARTIFACT_DIR = path.resolve('artifacts/baron-presence');
 const BARON_QUERY = '?debug&contract=e1-baron&timescale=6&nolevel&nosteal&nowreck&seed=e1-baron';
 const BARON_TAUNT = "The Baron sends his regards. The claim won't hold.";
+const BARON_ARRIVAL_TITLE = 'THE CLAIM-JUMPER BARON';
+const BARON_TAUNT_TITLE = 'The Claim-Jumper Baron';
 const BARON_DEFEAT = 'Dragged off by his own men, swearing revenge.';
+const BARON_DEFEAT_CARD = `The Baron is DEFEATED. ${BARON_DEFEAT}`;
+const BARON_STAKES = "The Baron's outfit rides at 20 — cadence runs hot (+15%).";
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -137,6 +141,11 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: false });
 }
 
+async function frameForShot(page: Page, testId: string): Promise<void> {
+  await page.getByTestId(testId).evaluate((node) => node.scrollIntoView({ block: 'start', inline: 'nearest' }));
+  await page.waitForTimeout(100);
+}
+
 async function setBalance(page: Page, key: string, value: number | boolean | string): Promise<void> {
   await expect(page.evaluate(([pathKey, next]) => window.__GR_TEST__?.setBalance(pathKey, next), [key, value] as const)).resolves.toBe(true);
 }
@@ -184,10 +193,126 @@ async function waitForBaron(page: Page): Promise<BaronSnapshot> {
   });
 }
 
+async function baronBannerState(page: Page): Promise<{
+  wave: number | undefined;
+  announcement: string | null | undefined;
+  kind: string | null | undefined;
+  title: string | null | undefined;
+  edge: string | null | undefined;
+  hudKind: string | null;
+  hudVisible: boolean;
+  portraitHidden: boolean;
+}> {
+  return page.evaluate(() => {
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__?.ui;
+    const root = document.querySelector<HTMLElement>('#hud');
+    const portrait = document.querySelector<HTMLImageElement>('[data-hud-wave-portrait]');
+    return {
+      wave: diagnostics?.wave,
+      announcement: diagnostics?.announcement,
+      kind: diagnostics?.announcementKind,
+      title: diagnostics?.announcementTitle,
+      edge: diagnostics?.announcementEdge,
+      hudKind: root?.dataset.announcementKind ?? null,
+      hudVisible: root?.classList.contains('hud--announcement-visible') === true,
+      portraitHidden: portrait ? portrait.hidden === true : true,
+    };
+  });
+}
+
+async function expectBaronBanner(page: Page, title: string, wave?: number): Promise<void> {
+  await expect
+    .poll(() => baronBannerState(page), { timeout: 7_000 })
+    .toMatchObject({
+      ...(wave === undefined ? {} : { wave }),
+      announcement: BARON_TAUNT,
+      kind: 'baron',
+      title,
+      edge: null,
+      hudKind: 'baron',
+      hudVisible: true,
+      portraitHidden: false,
+    });
+}
+
+async function expectBaronArtLoaded(page: Page): Promise<void> {
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() => ({
+          baronAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['char.baron'],
+          bannerAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['prop.baron_banner'],
+          baronSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.baron'] ?? 0,
+          bannerSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['prop.baron_banner'] ?? 0,
+          baronAnimationLoaded: window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron']?.loaded ?? false,
+          baronSpritesReady: (window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.baron'] ?? 0) >= 1,
+          bannerSpritesReady: (window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['prop.baron_banner'] ?? 0) >= 1,
+        })),
+      { timeout: 10_000 },
+    )
+    .toMatchObject({
+      baronAsset: 'loaded',
+      bannerAsset: 'loaded',
+      baronAnimationLoaded: true,
+      baronSpritesReady: true,
+      bannerSpritesReady: true,
+    });
+}
+
+async function expectBaronPresentationPrefetched(page: Page): Promise<void> {
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() => ({
+          baronAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['char.baron'],
+          bannerAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['prop.baron_banner'],
+          baronAnimationLoaded: window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.baron']?.loaded ?? false,
+          baronSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.baron'] ?? 0,
+          bannerSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['prop.baron_banner'] ?? 0,
+          portraitSrc: document.querySelector<HTMLImageElement>('[data-hud-wave-portrait]')?.getAttribute('src') ?? null,
+        })),
+      { timeout: 10_000 },
+    )
+    .toEqual({
+      baronAsset: 'loaded',
+      bannerAsset: 'loaded',
+      baronAnimationLoaded: true,
+      baronSprites: 0,
+      bannerSprites: 0,
+      portraitSrc: null,
+    });
+}
+
 function expectClean(errors: ErrorBucket): void {
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 }
+
+test('default contract does not preload Baron art', async ({ page }) => {
+  const errors = await openGame(page, '?debug&timescale=1&nolevel&nowaves&nokill&nosteal&nowreck&seed=e1-baron-no-preload');
+  await page.waitForTimeout(500);
+  await expect(
+    page.evaluate(() => {
+      const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+      return {
+        baronAsset: diagnostics?.assets['char.baron'] ?? null,
+        bannerAsset: diagnostics?.assets['prop.baron_banner'] ?? null,
+        baronSprites: diagnostics?.assetSprites['char.baron'] ?? 0,
+        bannerSprites: diagnostics?.assetSprites['prop.baron_banner'] ?? 0,
+        baronAnimation: diagnostics?.spriteAnimations['char.baron']?.loaded ?? false,
+        portraitSrc: document.querySelector<HTMLImageElement>('[data-hud-wave-portrait]')?.getAttribute('src') ?? null,
+      };
+    }),
+  ).resolves.toEqual({
+    baronAsset: null,
+    bannerAsset: null,
+    baronSprites: 0,
+    bannerSprites: 0,
+    baronAnimation: false,
+    portraitSrc: null,
+  });
+  expectClean(errors);
+});
 
 test('contract board locks Baron until science-complete and shows the profile medal', async ({ page }, testInfo) => {
   test.setTimeout(60_000);
@@ -197,16 +322,19 @@ test('contract board locks Baron until science-complete and shows the profile me
   await openBoard(page);
   await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
+  await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
   await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText('Complete Frontier science first');
 
   await seedStorage(page, { science: 6 });
   await openBoard(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'false');
+  await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
   await expect(page.getByTestId('contract-medal-e1-baron')).toHaveCount(0);
 
   await seedStorage(page, { science: 6, medal: true });
   await openBoard(page);
   await expect(page.getByTestId('contract-medal-e1-baron')).toHaveText(`Baron beaten. ${BARON_MEDAL_BLURB}`);
+  await frameForShot(page, 'contract-card-e1-baron');
   await shot(page, testInfo, 'medal-card');
 
   await seedStorage(page, { science: 6, medal: true, activeId: 'casey', medalProfileId: 'robin' });
@@ -237,8 +365,10 @@ test('board launch uses the live Baron contract for cadence and wave 20 spawn', 
   expectClean(errors);
 });
 
-test('Baron manifest loads and taunts fire at waves 5, 12, and 18', async ({ page }) => {
+test('Baron manifest loads and taunts fire at waves 5, 12, and 18', async ({ page }, testInfo) => {
   const errors = await openGame(page, '?debug&contract=e1-baron&timescale=1&nolevel&nowaves&nokill&nosteal&nowreck&seed=e1-baron-taunts');
+  await expect(page.getByTestId('run-meta-recap')).toContainText(BARON_STAKES);
+  await expectBaronPresentationPrefetched(page);
   const contract = await page.evaluate(() => ({
     diagnostics: window.__THREE_GAME_DIAGNOSTICS__?.contract,
     registry: window.__GR_CONTRACT_REGISTRY__?.listContracts().find((entry) => entry.id === 'e1-baron'),
@@ -264,20 +394,57 @@ test('Baron manifest loads and taunts fire at waves 5, 12, and 18', async ({ pag
   });
   expect(contract.active?.id).toBe('e1-baron');
 
-  for (const wave of [5, 12, 18]) {
+  await page.evaluate(() => window.__GR_TEST__?.announceForTest('Expired wave banner for stale guard.', 'wave'));
+  await expect.poll(() => baronBannerState(page)).toMatchObject({
+    announcement: 'Expired wave banner for stale guard.',
+    kind: 'wave',
+    hudKind: 'wave',
+    hudVisible: true,
+  });
+  await expect.poll(() => baronBannerState(page), { timeout: 5_000 }).toMatchObject({
+    announcement: 'Expired wave banner for stale guard.',
+    kind: 'wave',
+    hudKind: 'wave',
+    hudVisible: false,
+  });
+  await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(5));
+  await expect.poll(() => baronBannerState(page), { timeout: 1_500 }).toMatchObject({
+    wave: 5,
+    announcement: BARON_TAUNT,
+    kind: 'baron',
+    title: BARON_TAUNT_TITLE,
+    hudKind: 'baron',
+    hudVisible: true,
+  });
+
+  await page.evaluate(() => window.__GR_TEST__?.announceForTest('Wave banner for overlap guard.', 'wave'));
+  await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(12));
+  await expect.poll(() => baronBannerState(page)).toMatchObject({
+    wave: 12,
+    announcement: 'Wave banner for overlap guard.',
+    kind: 'wave',
+    title: null,
+    portraitHidden: true,
+  });
+  await page.waitForTimeout(1_100);
+  expect((await baronBannerState(page)).announcement).not.toBe(BARON_TAUNT);
+  await expectBaronBanner(page, BARON_TAUNT_TITLE, 12);
+  await shot(page, testInfo, 'baron-taunt-banner');
+
+  for (const wave of [5, 18]) {
     await page.evaluate((nextWave) => window.__GR_TEST__?.startWaveForTest(nextWave), wave);
-    await expect
-      .poll(() => page.evaluate(() => ({ wave: window.__THREE_GAME_DIAGNOSTICS__?.wave, announcement: window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcement })))
-      .toEqual({ wave, announcement: BARON_TAUNT });
+    await expectBaronBanner(page, BARON_TAUNT_TITLE, wave);
   }
   expectClean(errors);
 });
 
 test('wave 20 spawns the Baron with elite stats, banner, escorts, and stable seed data', async ({ page }, testInfo) => {
-  const errors = await openGame(page, '?debug&contract=e1-baron&timescale=6&nolevel&nokill&nosteal&nowreck&seed=e1-baron-spawn');
-  await tuneFastBaronWave(page);
+  const errors = await openGame(page, '?debug&contract=e1-baron&timescale=1&nolevel&nokill&nosteal&nowreck&seed=e1-baron-spawn');
+  await tuneFastBaronWave(page, { 'waves.waveInterval': 3.6 });
   await setWave(page, 19);
   const baron = await waitForBaron(page);
+  await expectBaronBanner(page, BARON_ARRIVAL_TITLE);
+  await expectBaronArtLoaded(page);
   const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 40;
   const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.8;
   expect(baron.maxHp).toBeCloseTo(expectedHp, 4);
@@ -289,7 +456,7 @@ test('wave 20 spawns the Baron with elite stats, banner, escorts, and stable see
     .poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().filter((enemy) => enemy.eliteKind !== 'baron').length ?? 0))
     .toBeGreaterThanOrEqual(8);
   await expect(page.getByTestId('claim-secured')).toHaveCount(0);
-  await shot(page, testInfo, 'baron-mid-march');
+  await shot(page, testInfo, 'baron-arrival');
 
   const first = await baronDeterminismSnapshot(page);
   await openGame(page, '?debug&contract=e1-baron&timescale=6&nolevel&nokill&nosteal&nowreck&seed=e1-baron-spawn');
@@ -329,8 +496,11 @@ test('standard rig damage defeats the Baron, doubles science, and persists the m
     .toBe(true);
 
   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
-  await expect(page.getByTestId('claim-office')).toContainText(BARON_DEFEAT);
+  await expect(page.getByTestId('claim-office')).toContainText(BARON_DEFEAT_CARD);
+  await expect(page.getByTestId('baron-defeat-callout')).toHaveText('+double science');
+  await expect(page.getByTestId('run-ledger-baron')).toContainText('THE BARON — DEFEATED, wave 20');
   await expect(page.getByTestId('claim-payout-science')).toContainText('+2');
+  await shot(page, testInfo, 'baron-defeat-card');
   await expect
     .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.medals.baronBeaten ?? false), { timeout: 5_000 })
     .toBe(true);
@@ -340,8 +510,81 @@ test('standard rig damage defeats the Baron, doubles science, and persists the m
 
   await page.goto('/');
   await openBoard(page);
+  await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
   await expect(page.getByTestId('contract-medal-e1-baron')).toContainText(BARON_MEDAL_BLURB);
-  await shot(page, testInfo, 'medal-card-after-victory');
+  await frameForShot(page, 'contract-card-e1-baron');
+  await shot(page, testInfo, 'baron-board-medal');
+  expectClean(errors);
+});
+
+test('fast Baron kill preserves the queued arrival card before secure', async ({ page }) => {
+  await seedStorage(page, { science: 6 });
+  const errors = await openGame(page, '?debug&contract=e1-baron&timescale=1&nolevel&nowaves&nosteal&nowreck&seed=e1-baron-fast-arrival');
+  await setBalances(page, {
+    'enemy.contactDamage': 0,
+    'enemy.hp': 1,
+    'sparkRig.damage': 9999,
+    'sparkRig.fireRate': 60,
+    'sparkRig.range': 300,
+    'sparkRig.boltRadius': 5,
+    'sparkRig.boltSpeed': 12,
+    'sparkRig.boltLife': 3,
+  });
+  await setWave(page, 20);
+  await page.evaluate(() => window.__GR_TEST__?.announceForTest('Wave banner for pending arrival.', 'wave'));
+  await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(20));
+  await page.evaluate(() =>
+    window.__GR_TEST__?.spawnPack(1, 4, {
+      eliteKind: 'baron',
+      hpScale: 1,
+      speedScale: 0,
+      visualScale: 1.4,
+      banner: true,
+    }),
+  );
+
+  await expect.poll(() => baronBannerState(page), { timeout: 5_000 }).toMatchObject({
+    announcement: BARON_TAUNT,
+    kind: 'baron',
+    title: BARON_ARRIVAL_TITLE,
+    hudVisible: true,
+  });
+  await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 6_000 });
+  await expect(page.getByTestId('claim-office')).toContainText(BARON_DEFEAT_CARD);
+  expectClean(errors);
+});
+
+test('Baron art fallback keeps the placeholder path green when generated art fails', async ({ page }) => {
+  const errors = await openGame(
+    page,
+    '?debug&contract=e1-baron&timescale=6&nolevel&nokill&nosteal&nowreck&nobaronart&seed=e1-baron-fallback',
+  );
+  await tuneFastBaronWave(page);
+  await setWave(page, 19);
+  const baron = await waitForBaron(page);
+  expect(baron.hasBanner).toBe(true);
+
+  await expect
+    .poll(
+      () =>
+        page.evaluate(() => ({
+          baronAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['char.baron'],
+          bannerAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['prop.baron_banner'],
+          claimSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.claim_jumper'] ?? 0,
+          baronSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.baron'] ?? 0,
+          bannerSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['prop.baron_banner'] ?? 0,
+          claimSpritesReady: (window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.claim_jumper'] ?? 0) >= 1,
+        })),
+      { timeout: 10_000 },
+    )
+    .toMatchObject({
+      baronAsset: 'error',
+      bannerAsset: 'error',
+      baronSprites: 0,
+      bannerSprites: 0,
+      claimSpritesReady: true,
+    });
+  await expect(page.getByTestId('claim-secured')).toHaveCount(0);
   expectClean(errors);
 });
 
@@ -381,7 +624,7 @@ test('loss to the Baron contract remains the normal overrun ledger with no medal
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(4, 0.1, { speedScale: 0 }));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.runState), { timeout: 10_000 }).toBe('dead');
   await expect(page.getByTestId('death-overlay')).toContainText('The claim was overrun. The gold remembers.');
-  await expect(page.getByTestId('death-overlay')).not.toContainText(BARON_DEFEAT);
+  await expect(page.getByTestId('death-overlay')).not.toContainText(BARON_DEFEAT_CARD);
   await expect(page.evaluate((key) => localStorage.getItem(key), profileDataKey('robin', MEDALS_KEY))).resolves.toBeNull();
   expectClean(errors);
 });
@@ -401,7 +644,6 @@ async function baronDeterminismSnapshot(page: Page): Promise<unknown> {
             speed: Math.round(baron.speed * 1000) / 1000,
             scale: baron.scale,
             hasBanner: baron.hasBanner,
-            edge: baron.edge,
           }
         : null,
     };

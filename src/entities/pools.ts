@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
-import { SpriteAnimator, type CharacterSpriteClip } from '../assets/SpriteAnimator';
+import { SpriteAnimator, type CharacterSpriteClip, type SpriteMotionSnapshot } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
@@ -17,6 +17,13 @@ import {
 import type { RotationDirection } from '../assets/OrientationResolver';
 
 const ENEMY_SPRITE_Y = 0.72;
+const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
+  active: false,
+  phase: 0,
+  bobOffset: 0,
+  leanDeg: 0,
+  leanRad: 0,
+};
 
 export type EnemyLightSource = { x: number; z: number; radius: number };
 export type EnemyLightDimmingConfig = {
@@ -111,6 +118,27 @@ export class EnemyPool {
     undefined,
     this.thiefSpriteFades.material,
   );
+  private readonly baronSprites = new GeneratedSpriteBatch(assetSlots.charBaron, Balance.enemy.poolSize, {
+    name: 'GeneratedBaronSprites',
+    y: ENEMY_SPRITE_Y,
+    scale: [1.55, 1.55],
+    renderOrder: RenderLayers.gameplay,
+    lazy: true,
+  });
+  private readonly baronSpriteFades = new GeneratedSpriteBatch(assetSlots.charBaron, Balance.enemy.poolSize, {
+    name: 'GeneratedBaronSpriteFades',
+    y: ENEMY_SPRITE_Y,
+    scale: [1.55, 1.55],
+    renderOrder: RenderLayers.gameplayFade,
+    lazy: true,
+  });
+  private readonly baronBannerSprites = new GeneratedSpriteBatch(assetSlots.propBaronBanner, Balance.enemy.poolSize, {
+    name: 'GeneratedBaronBannerSprites',
+    y: 1.7,
+    scale: [0.9, 0.9],
+    renderOrder: RenderLayers.gameplay + 0.01,
+    lazy: true,
+  });
   private readonly localMatrices: THREE.Matrix4[] = [];
   private readonly cells: ClaimJumperEnemy[][] = [];
   private readonly touchedCells: number[] = [];
@@ -148,6 +176,7 @@ export class EnemyPool {
   private activeHitFlashes = 0;
   private warmHitFlashFrames = 0;
   private spawnSerial = 0;
+  private baronSpriteAnimator: SpriteAnimator | null = null;
 
   constructor() {
     this.group.name = 'EnemyPool';
@@ -159,7 +188,15 @@ export class EnemyPool {
     this.createSackMesh();
     this.createHitFlashMesh();
     this.createBannerMeshes();
-    this.group.add(this.generatedSprites.group, this.generatedSpriteFades.group, this.thiefSprites.group, this.thiefSpriteFades.group);
+    this.group.add(
+      this.generatedSprites.group,
+      this.generatedSpriteFades.group,
+      this.thiefSprites.group,
+      this.thiefSpriteFades.group,
+      this.baronSprites.group,
+      this.baronSpriteFades.group,
+      this.baronBannerSprites.group,
+    );
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
       this.cells.push([]);
@@ -212,6 +249,10 @@ export class EnemyPool {
       dimmed,
       minFactor: round3(this.active > 0 ? minFactor : 1),
     };
+  }
+
+  prefetchBaronPresentation(): void {
+    this.ensureBaronPresentation();
   }
 
   setLightDimming(config: EnemyLightDimmingConfig): void {
@@ -349,10 +390,13 @@ export class EnemyPool {
     this.syncHitFlashes();
     const normalAnimation = this.activeAnimation(false);
     const thiefAnimation = this.activeAnimation(true);
+    const baronAnimation = this.activeBaronAnimation();
     const updateNormalSprites = () =>
       this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.active ? normalAnimation.orientation : 'side', false, normalAnimation.speed);
     const updateThiefSprites = () =>
       this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.active ? thiefAnimation.orientation : 'side', false, thiefAnimation.speed);
+    const updateBaronSprites = () =>
+      this.baronSpriteAnimator?.update(delta, baronAnimation.clip, baronAnimation.active ? baronAnimation.orientation : 'side', false, baronAnimation.speed);
     if (normalAnimation.active || !thiefAnimation.active) {
       updateThiefSprites();
       updateNormalSprites();
@@ -360,6 +404,7 @@ export class EnemyPool {
       updateNormalSprites();
       updateThiefSprites();
     }
+    if (baronAnimation.active || this.baronSpriteAnimator) updateBaronSprites();
     this.syncSpriteVisuals();
   }
 
@@ -392,6 +437,10 @@ export class EnemyPool {
     this.thiefSprites.dispose();
     this.thiefSpriteFades.dispose();
     this.thiefSpriteAnimator.dispose();
+    this.baronSprites.dispose();
+    this.baronSpriteFades.dispose();
+    this.baronSpriteAnimator?.dispose();
+    this.baronBannerSprites.dispose();
     this.hitFlashGeometry.dispose();
     this.hitFlashMaterial.dispose();
     this.bannerPoleGeometry.dispose();
@@ -415,11 +464,34 @@ export class EnemyPool {
       }
     }
     for (const enemy of this.enemies) {
-      if (enemy.isAlive && enemy.isThief === thieves) {
+      if (enemy.isAlive && enemy.isThief === thieves && (!this.baronSprites.isLoaded || enemy.eliteKind !== 'baron')) {
         return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
       }
     }
     return { clip: 'idle', orientation: 's', active: false, speed: 0 };
+  }
+
+  private activeBaronAnimation(): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean; speed: number } {
+    for (const enemy of this.enemies) {
+      if (enemy.isAlive && enemy.eliteKind === 'baron') {
+        this.ensureBaronPresentation();
+        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
+      }
+    }
+    return { clip: 'idle', orientation: 's', active: false, speed: 0 };
+  }
+
+  private ensureBaronPresentation(): SpriteAnimator {
+    this.baronSprites.ensureLoaded();
+    this.baronSpriteFades.ensureLoaded();
+    this.baronBannerSprites.ensureLoaded();
+    this.baronSpriteAnimator ??= new SpriteAnimator(
+      assetSlots.charBaron,
+      this.baronSprites.material,
+      undefined,
+      this.baronSpriteFades.material,
+    );
+    return this.baronSpriteAnimator;
   }
 
   private createRenderParts(): void {
@@ -506,7 +578,13 @@ export class EnemyPool {
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
     const lightFactor = this.lightFactorFor(enemy);
-    const motion = enemy.isThief ? this.thiefSpriteAnimator.motion : this.spriteAnimator.motion;
+    const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
+    const motion =
+      enemy.eliteKind === 'baron' && this.baronSprites.isLoaded
+        ? baronMotion
+        : enemy.isThief
+          ? this.thiefSpriteAnimator.motion
+          : this.spriteAnimator.motion;
     this.syncObject.position.copy(enemy.group.position);
     this.syncObject.position.y += motion.bobOffset;
     this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
@@ -552,7 +630,7 @@ export class EnemyPool {
   }
 
   private syncBanner(enemy: ClaimJumperEnemy, lightFactor: number): void {
-    const visible = enemy.isAlive && enemy.hasBanner;
+    const visible = enemy.isAlive && enemy.hasBanner && !this.baronBannerSprites.isLoaded;
     this.instanceMatrix.multiplyMatrices(visible ? this.baseMatrix : this.hiddenMatrix, this.bannerPoleLocalMatrix);
     this.bannerPoleMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.setInstanceColor(this.bannerPoleMesh, enemy.id, this.bannerPoleColor, lightFactor);
@@ -566,33 +644,48 @@ export class EnemyPool {
   private syncSpriteVisuals(): void {
     const normalMotion = this.spriteAnimator.motion;
     const thiefMotion = this.thiefSpriteAnimator.motion;
+    const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
     this.generatedSprites.material.rotation = normalMotion.leanRad;
     this.generatedSpriteFades.material.rotation = normalMotion.leanRad;
     this.thiefSprites.material.rotation = thiefMotion.leanRad;
     this.thiefSpriteFades.material.rotation = thiefMotion.leanRad;
+    this.baronSprites.material.rotation = baronMotion.leanRad;
+    this.baronSpriteFades.material.rotation = baronMotion.leanRad;
     for (const enemy of this.enemies) this.syncEnemySprite(enemy);
   }
 
   private syncEnemySprite(enemy: ClaimJumperEnemy): void {
-    const normalVisible = enemy.isAlive && !enemy.isThief;
+    const baronVisible = enemy.isAlive && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
+    const normalVisible = enemy.isAlive && !enemy.isThief && !baronVisible;
     const thiefVisible = enemy.isAlive && enemy.isThief;
     // ponytail: batch fades draw every live enemy twice; skip them for stress-sized packs unless sprites get instanced.
     const showFade = this.active <= 64;
     const normalMotion = this.spriteAnimator.motion;
     const thiefMotion = this.thiefSpriteAnimator.motion;
+    const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
+    const baronOverlayActive = this.baronSpriteAnimator?.overlayActive === true;
     const lightFactor = this.lightFactorFor(enemy);
     this.generatedSprites.setTintScalar(enemy.id, lightFactor);
     this.generatedSpriteFades.setTintScalar(enemy.id, lightFactor);
     this.thiefSprites.setTintScalar(enemy.id, lightFactor);
     this.thiefSpriteFades.setTintScalar(enemy.id, lightFactor);
+    this.baronSprites.setTintScalar(enemy.id, lightFactor);
+    this.baronSpriteFades.setTintScalar(enemy.id, lightFactor);
+    this.baronBannerSprites.setTintScalar(enemy.id, lightFactor);
     this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
     this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
     this.thiefSprites.set(enemy.id, enemy.group.position, thiefVisible);
     this.thiefSpriteFades.set(enemy.id, enemy.group.position, showFade && thiefVisible && this.thiefSpriteAnimator.overlayActive);
-    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], normalMotion.bobOffset, enemy.visualScale);
-    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], normalMotion.bobOffset, enemy.visualScale);
-    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], thiefMotion.bobOffset, enemy.visualScale);
-    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], thiefMotion.bobOffset, enemy.visualScale);
+    this.baronSprites.set(enemy.id, enemy.group.position, baronVisible);
+    this.baronSpriteFades.set(enemy.id, enemy.group.position, showFade && baronVisible && baronOverlayActive);
+    this.baronBannerSprites.set(enemy.id, enemy.group.position, enemy.isAlive && enemy.hasBanner && this.baronBannerSprites.isLoaded);
+    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.baronSprites.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.baronSpriteFades.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale);
+    this.applyBannerSprite(enemy, this.baronBannerSprites.group.children[enemy.id], baronMotion.bobOffset);
   }
 
   private syncHitFlashes(): void {
@@ -633,10 +726,17 @@ export class EnemyPool {
     this.hitFlashes.instanceMatrix.needsUpdate = true;
   }
 
-  private applySpriteBob(sprite: THREE.Object3D | undefined, bobOffset: number, visualScale: number): void {
+  private applySpriteBob(sprite: THREE.Object3D | undefined, baseY: number, bobOffset: number, visualScale: number): void {
     if (!sprite) return;
-    sprite.position.y = ENEMY_SPRITE_Y * visualScale + bobOffset;
+    sprite.position.y = baseY + ENEMY_SPRITE_Y * visualScale + bobOffset;
     sprite.scale.set(1.55 * visualScale, 1.55 * visualScale, 1);
+  }
+
+  private applyBannerSprite(enemy: ClaimJumperEnemy, sprite: THREE.Object3D | undefined, bobOffset: number): void {
+    if (!sprite) return;
+    const scale = enemy.visualScale;
+    sprite.position.y = enemy.position.y + 1.85 * scale + bobOffset;
+    sprite.scale.set(0.86 * scale, 0.86 * scale, 1);
   }
 
   private setProceduralVisible(visible: boolean): void {

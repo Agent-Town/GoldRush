@@ -551,7 +551,7 @@ export class SpriteAnimator {
   private walkSpeedForSlot(): number {
     if (this.walkCadenceSpeed !== undefined) return this.walkCadenceSpeed;
     if (this.slotId === assetSlots.charHero) return Balance.hero.speed;
-    if (this.slotId === assetSlots.charClaimJumper) return Balance.enemy.speed;
+    if (this.slotId === assetSlots.charClaimJumper || this.slotId === assetSlots.charBaron) return Balance.enemy.speed;
     return 0;
   }
 

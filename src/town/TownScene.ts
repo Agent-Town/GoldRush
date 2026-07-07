@@ -391,6 +391,10 @@ export class TownScene {
     const best = bestContractScore(contract.id, scores);
     const tags = contract.boardRow.tags.length > 0 ? contract.boardRow.tags : ['trail'];
     const medal = contract.id === 'e1-baron' && hasBaronMedal();
+    const baronStakes =
+      contract.id === 'e1-baron'
+        ? `<p class="town-ui__contract-stakes" data-testid="contract-stakes-e1-baron">The Baron's outfit rides at 20 — cadence runs hot (+15%).</p>`
+        : '';
     return `
       <article class="town-ui__contract ${unlock.unlocked ? '' : 'town-ui__contract--locked'}" data-testid="contract-card-${escapeHtml(
         contract.id,
@@ -401,10 +405,11 @@ export class TownScene {
         </div>
         <h3>${escapeHtml(contract.boardRow.name)}</h3>
         <p>${escapeHtml(contract.boardRow.ledgerBlurb)}</p>
-        <p class="town-ui__contract-best" data-testid="contract-best-${escapeHtml(contract.id)}">${escapeHtml(formatBest(best))}</p>
+        ${baronStakes}
+        ${medal ? '' : `<p class="town-ui__contract-best" data-testid="contract-best-${escapeHtml(contract.id)}">${escapeHtml(formatBest(best))}</p>`}
         ${
           medal
-            ? `<p class="town-ui__contract-best" data-testid="contract-medal-e1-baron">Baron beaten. ${escapeHtml(BARON_MEDAL_BLURB)}</p>`
+            ? `<p class="town-ui__contract-best town-ui__contract-medal" data-testid="contract-medal-e1-baron">Baron beaten. ${escapeHtml(BARON_MEDAL_BLURB)}</p>`
             : ''
         }
         <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
