@@ -79,6 +79,8 @@ export type BuildDiagnostics = {
     visible: boolean;
     ratio: number;
     color: 'ink' | 'amber' | 'red';
+    rotationSteps: number;
+    yaw: number;
   }>;
   repair: { active: boolean; id: BuildableId | null; index: number; progress: number; blocked: boolean };
   shooterRegistrations: number;
@@ -127,8 +129,8 @@ const rubbleColor = new THREE.Color('#8b7d3c');
 const repairColor = new THREE.Color('#ffe4a0');
 const blockedRepairColor = new THREE.Color('#a0522d');
 const hpBarWidth = 1.46;
-const hpBarHeight = 0.18;
-const hpBarDepth = 0.075;
+const hpBarHeight = 0.12;
+const hpBarDepth = 0.28;
 
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
 type UpgradeableBuildableId = (typeof upgradeableBuildableIds)[number];
@@ -1092,6 +1094,8 @@ export class BuildSystem {
           visible: true,
           ratio: Number(ratio.toFixed(3)),
           color: this.hpBarColorName(ratio),
+          rotationSteps: this.hpBarRotationSteps(id, index),
+          yaw: Number(this.hpBarYaw(id, index).toFixed(3)),
         });
       }
     }
@@ -1392,8 +1396,8 @@ export class BuildSystem {
 
   private syncHpBar(backSlot: number, fillSlot: number, id: BuildableId, index: number, position: THREE.Vector3, ratio: number): void {
     const safeRatio = THREE.MathUtils.clamp(ratio, 0, 1);
-    const rotationSteps = id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0;
-    const yaw = this.hpBarYaw(position);
+    const rotationSteps = this.hpBarRotationSteps(id, index);
+    const yaw = this.hpBarYaw(id, index);
     const y = this.visualYFor(id, position, rotationSteps, 1.72);
 
     this.visualObject.position.set(position.x, y, position.z);
@@ -1405,14 +1409,16 @@ export class BuildSystem {
 
     const fillWidth = Math.max(0.08, hpBarWidth * safeRatio);
     const leftOffset = -hpBarWidth * (1 - safeRatio) * 0.5;
-    const towardCameraX = Math.sin(yaw);
-    const towardCameraZ = Math.cos(yaw);
+    const fillHeight = hpBarHeight * 0.34;
+    const fillDepth = hpBarDepth * 0.72;
+    const fillLift = hpBarHeight * 0.5 + fillHeight * 0.5 + 0.004;
+    // Top-mounted fill keeps fixed-orientation bars readable from either side.
     this.visualObject.position.set(
-      position.x + Math.cos(yaw) * leftOffset + towardCameraX * 0.035,
-      y + 0.012,
-      position.z - Math.sin(yaw) * leftOffset + towardCameraZ * 0.035,
+      position.x + Math.cos(yaw) * leftOffset,
+      y + fillLift,
+      position.z - Math.sin(yaw) * leftOffset,
     );
-    this.visualObject.scale.set(fillWidth, hpBarHeight * 0.54, hpBarDepth * 0.58);
+    this.visualObject.scale.set(fillWidth, fillHeight, fillDepth);
     this.visualObject.updateMatrix();
     this.buildingVisuals.setMatrixAt(fillSlot, this.visualObject.matrix);
     this.buildingVisuals.setColorAt(fillSlot, this.hpBarFillColor(safeRatio));
@@ -1435,8 +1441,13 @@ export class BuildSystem {
     this.visualDirty = false;
   }
 
-  private hpBarYaw(position: THREE.Vector3): number {
-    return Math.atan2(this.camera.position.x - position.x, this.camera.position.z - position.z);
+  private hpBarRotationSteps(id: BuildableId, index: number): number {
+    return id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0;
+  }
+
+  private hpBarYaw(id: BuildableId, index: number): number {
+    if (id !== 'palisade') return 0;
+    return this.palisades.rotationStepsAt(index) * (Math.PI / 2) - Math.PI / 2;
   }
 
   private hpBarFillColor(ratio: number): THREE.Color {

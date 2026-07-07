@@ -3,7 +3,16 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
-type BuildableId = 'palisade' | 'turret';
+type BuildableId = 'palisade' | 'stockpile' | 'turret';
+type HpBarDetail = {
+  id: BuildableId;
+  index: number;
+  visible: boolean;
+  ratio: number;
+  color: 'ink' | 'amber' | 'red';
+  rotationSteps: number;
+  yaw: number;
+};
 type PerfTracker = {
   done: boolean;
   samples: number;
@@ -11,7 +20,7 @@ type PerfTracker = {
   maxDrawCalls: number;
 };
 
-const artifactDir = path.resolve('artifacts/combat-readability');
+const artifactDir = path.resolve('artifacts/damage-orientation');
 
 declare global {
   interface Window {
@@ -50,9 +59,10 @@ async function teleport(page: Page, x: number, z: number): Promise<void> {
   await page.evaluate((pos) => window.__GR_TEST__?.teleport(pos.x, pos.z), { x, z });
 }
 
-async function placeBuildableAt(page: Page, id: BuildableId, x: number, z: number): Promise<void> {
+async function placeBuildableAt(page: Page, id: BuildableId, x: number, z: number, rotated = false): Promise<number> {
   await teleport(page, x, z + 2);
   await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
+  if (rotated) await page.evaluate(() => window.__GR_TEST__?.rotateBuildGhost());
   await expect
     .poll(() =>
       page.evaluate(
@@ -65,6 +75,18 @@ async function placeBuildableAt(page: Page, id: BuildableId, x: number, z: numbe
     )
     .toBe(true);
   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+  const index = await page.evaluate(
+    (target) =>
+      window.__THREE_GAME_DIAGNOSTICS__?.build.hp.find(
+        (entry) =>
+          entry.id === target.id &&
+          Math.abs(entry.position.x - target.x) < 0.05 &&
+          Math.abs(entry.position.z - target.z) < 0.05,
+      )?.index ?? -1,
+    { id, x, z },
+  );
+  expect(index).toBeGreaterThanOrEqual(0);
+  return index;
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
@@ -76,6 +98,37 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
 async function waitForFrames(page: Page, frames = 8): Promise<void> {
   const start = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0);
   await page.waitForFunction((target) => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) >= target, start + frames);
+}
+
+async function damageOnce(page: Page, x: number, z: number): Promise<void> {
+  const hitsBefore = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wreck.hitsResolved ?? 0);
+  await teleport(page, x, z - 14);
+  await expect(page.evaluate(() => window.__GR_TEST__?.spawnWrecker('south'))).resolves.toBe(true);
+  await expect
+    .poll(() => page.evaluate((before) => (window.__THREE_GAME_DIAGNOSTICS__?.wreck.hitsResolved ?? 0) - before, hitsBefore), {
+      timeout: 12_000,
+    })
+    .toBe(1);
+  await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+}
+
+async function hpBarDetail(page: Page, id: BuildableId, index: number): Promise<HpBarDetail | undefined> {
+  return page.evaluate(
+    ([buildableId, buildableIndex]) =>
+      window.__THREE_GAME_DIAGNOSTICS__?.build.hpBarDetails.find((entry) => entry.id === buildableId && entry.index === buildableIndex) as
+        | HpBarDetail
+        | undefined,
+    [id, index] as const,
+  );
+}
+
+function expectYawClose(actual: number, expected: number): void {
+  const diff = Math.atan2(Math.sin(actual - expected), Math.cos(actual - expected));
+  expect(Math.abs(diff)).toBeLessThan(0.01);
+}
+
+function expectedHpBarYaw(id: BuildableId, rotationSteps: number): number {
+  return id === 'palisade' ? rotationSteps * (Math.PI / 2) - Math.PI / 2 : 0;
 }
 
 async function samplePerf(page: Page, durationMs: number): Promise<PerfTracker> {
@@ -132,6 +185,88 @@ test('damaged building bars are visible at desktop and 390px', async ({ page }, 
   await page.setViewportSize({ width: 390, height: 844 });
   await waitForFrames(page);
   await shot(page, testInfo, 'building-bar-390px');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('palisade bars stay in the wall frame for rotationSteps 0 and 1', async ({ page }, testInfo) => {
+  const errorBuckets: ErrorBucket[] = [];
+
+  for (const rotationSteps of [
+    0,
+    1,
+  ] as const) {
+    const x = 0;
+    const errors = await openGame(
+      page,
+      `?debug&timescale=8&nowaves&nolevel&nopause&nokill&seed=damage-orient-palisade-${rotationSteps}`,
+    );
+    errorBuckets.push(errors);
+    await setBalance(page, 'enemy.contactDamage', 0);
+    await setBalance(page, 'wreck.damage', 35);
+    await setBalance(page, 'wreck.hitCooldown', 999);
+    await grantGold(page, 20);
+
+    const index = await placeBuildableAt(page, 'palisade', x, 9, rotationSteps === 1);
+    await damageOnce(page, x, 9);
+    await teleport(page, x, 6);
+    await expect
+      .poll(() => hpBarDetail(page, 'palisade', index))
+      .toMatchObject({ visible: true, rotationSteps });
+
+    const initial = await hpBarDetail(page, 'palisade', index);
+    expect(initial).toBeDefined();
+    expectYawClose(initial!.yaw, expectedHpBarYaw('palisade', rotationSteps));
+
+    await teleport(page, x + 8, -2);
+    await waitForFrames(page, 20);
+    const afterCameraMove = await hpBarDetail(page, 'palisade', index);
+    expect(afterCameraMove).toBeDefined();
+    expectYawClose(afterCameraMove!.yaw, initial!.yaw);
+
+    await teleport(page, x, 6);
+    await waitForFrames(page);
+    await shot(page, testInfo, `palisade-rot-${rotationSteps}-desktop`);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await waitForFrames(page);
+    await shot(page, testInfo, `palisade-rot-${rotationSteps}-390px`);
+    await page.setViewportSize({ width: 1280, height: 800 });
+  }
+
+  for (const errors of errorBuckets) {
+    expect(errors.consoleErrors).toEqual([]);
+    expect(errors.pageErrors).toEqual([]);
+  }
+});
+
+test('building bar keeps world footprint orientation instead of billboarding', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&nokill&seed=damage-orient-building');
+  await setBalance(page, 'enemy.contactDamage', 0);
+  await setBalance(page, 'wreck.damage', 35);
+  await setBalance(page, 'wreck.hitCooldown', 999);
+  await grantGold(page, 80);
+
+  const index = await placeBuildableAt(page, 'stockpile', 0, 9);
+  await damageOnce(page, 0, 9);
+  await teleport(page, 0, 6);
+  await expect.poll(() => hpBarDetail(page, 'stockpile', index)).toMatchObject({ visible: true, rotationSteps: 0 });
+
+  const initial = await hpBarDetail(page, 'stockpile', index);
+  expect(initial).toBeDefined();
+  expectYawClose(initial!.yaw, expectedHpBarYaw('stockpile', 0));
+
+  await teleport(page, 8, -2);
+  await waitForFrames(page, 20);
+  const afterCameraMove = await hpBarDetail(page, 'stockpile', index);
+  expect(afterCameraMove).toBeDefined();
+  expectYawClose(afterCameraMove!.yaw, initial!.yaw);
+
+  await teleport(page, 0, 6);
+  await waitForFrames(page);
+  await shot(page, testInfo, 'building-stockpile-desktop');
+  await page.setViewportSize({ width: 390, height: 844 });
+  await waitForFrames(page);
+  await shot(page, testInfo, 'building-stockpile-390px');
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

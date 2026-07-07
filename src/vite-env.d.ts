@@ -287,6 +287,8 @@ interface ThreeGameDiagnostics {
       visible: boolean;
       ratio: number;
       color: 'ink' | 'amber' | 'red';
+      rotationSteps: number;
+      yaw: number;
     }>;
     repair: {
       active: boolean;
