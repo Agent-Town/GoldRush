@@ -29,6 +29,16 @@ Build: main @ post-s101 era (041 overwatch, SCI-01/02/04, w1-03 light rerun, w1-
 - **F-0707-10 Prompt overlap**: tier prompt + demolish prompt stack/collide → ONE building context bar (both actions, fixed slots) + a global prompt-stack layout law. Same task 043.
 - BT-00 demolish + BT-02 tiers confirmed LIVE in owner's build (he tiered a sluice to 2, saw T3 pricing at 320g, used tear-down) — the homestead loop is being played hours after ratification.
 
+## Eighth wave (~12:12, screenshot) — F-0707-14 invisible meta (the theme behind two findings)
+Owner on economy offer cards: "I never ever select these, I think they are nonsense… AHH I just was not aware of this — maybe the meta achievements/science should be more present somewhere?" TRIAGE: the cards are NOT nonsense anymore (his research boosted that family; BT-02 sluice tiers make panning compound) — but NOTHING in-run shows provenance. Same root as the ring surprise (F-0707-13): **earned meta is invisible in-run**. NEW LAW → `lane-a-meta-presence` QUEUED (fills PIPELINE-DRY lane-a): Elder's-mark provenance badges on research-boosted cards, a run-start "the claim remembers" recap of active earned perks, pause-overlay meta panel. Presentation only; balance untouched.
+
+## Seventh wave (~12:11, screenshot) — F-0707-13 territory ring pacing
+Owner: "now this initial barrier is in place. That results in the robbers taking ages to get to you." VERIFIED source: the M3 TERRITORY meta-reward (`RunManager:226` "palisade ring ready", fed by 027 victory payouts) — an EARNED feature, not a bug, with a pacing side-effect: enemies path around the free ring, waves 1–3 crawl. RULING: earned head-starts make the player stronger, never the game slower. → `046-territory-ring-pacing` QUEUED (main): lane-aligned gaps (ring becomes kill-zones), early-spawn gap-bias, acceptance = time-to-first-contact within ±25% of baseline, reward economy untouched.
+
+## Sixth wave (~12:07, screenshot from the LIVE pages.dev deploy — first playtest on the hosted build!)
+- Owner: "now this is very weird. I think you misunderstood 3D — I meant the terrain 3D, not the cam. The page works." VERIFIED: camera untouched (0 camera changes in 15 commits; w1-07 NOT YET MERGED — his build is vista+scatter era). The weirdness = two render bugs at the southern claim edge from the unchanged camera: **F-0707-11** vista river-continuation reads as a WALL edge-on; **F-0707-12** scatter renders as dark unlit silhouettes (black-buildings class, scatter edition). → `lane-c-edge-read-correctives` QUEUED; owner's screenshot pose = the acceptance artifact. Ruling reaffirmed as standing law: terrain gets the 3D, the camera keeps its feel.
+- ✅ Hosted deploy CONFIRMED by owner: "The page works" — first external-URL playtest in project history.
+
 ## Fifth wave (~11:45) — THE AGENT CONFIRMED ❤
 Owner: "I played with the agent/bot now, it works well! it collects the XP, the menu works to toggle the functions. it is great. **I love it.**" → CONFIRMS in play: prospector-presence (visible, alive), M4-07 Prospector Panel (G-menu function toggles), 026 collect-XP behavior, the consent grammar. The M4 arc — brain, body, voice, face, controls — is owner-validated end to end. (M4-08 attribution merged same morning; verdict rides the next run ledger he reads.)
 
