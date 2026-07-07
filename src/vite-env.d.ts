@@ -209,6 +209,8 @@ interface ThreeGameDiagnostics {
     tileParams: GrContractManifest['tileParams'];
     boardRow: GrContractManifest['boardRow'];
     seamYieldMult: number;
+    secureWave: number;
+    lightRamp: GrContractManifest['twist']['lightRamp'] | null;
   };
   research: {
     taken: string[];
@@ -274,6 +276,7 @@ interface ThreeGameDiagnostics {
     sluices: number;
     stockpiles: number;
     turrets: number;
+    lanternPosts: number;
     beaconPositions: Array<{ x: number; z: number }>;
     palisadePositions: Array<{ x: number; z: number }>;
     sluicePositions: Array<{ x: number; z: number }>;
@@ -281,6 +284,7 @@ interface ThreeGameDiagnostics {
     turretPositions: Array<{ x: number; z: number }>;
     assayOffices: number;
     assayOfficePositions: Array<{ x: number; z: number }>;
+    lanternPostPositions: Array<{ x: number; z: number }>;
     reservedFootprints: Array<{ id: string; x: number; z: number; halfX: number; halfZ: number }>;
     buildables: Array<{ id: GrBuildableId; count: number }>;
     sluicesState: Array<{
@@ -403,6 +407,20 @@ interface ThreeGameDiagnostics {
     shadowMapSize: number;
     shadowMapTargetSize: number;
     blobShadows: number;
+    nightShift: {
+      enabled: boolean;
+      phase: 'full' | 'dusk' | 'dark' | 'dawn';
+      darkness: number;
+    };
+  };
+  enemyDimming: {
+    enabled: boolean;
+    darkness: number;
+    minLight: number;
+    falloff: number;
+    sources: number;
+    dimmed: number;
+    minFactor: number;
   };
   assets: Partial<Record<string, 'missing' | 'pending' | 'loaded' | 'error'>>;
   assetSprites: Partial<Record<string, number>>;
@@ -668,6 +686,7 @@ interface Window {
       carried?: number;
       edge?: 'north' | 'south' | 'east' | 'west' | null;
       zone?: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+      light?: number;
     }>;
     spawnEnemyAt: (x: number, z: number) => boolean;
     scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => boolean;

@@ -155,6 +155,13 @@ export const Balance = {
     overlapRadius: 1.2,
     gridSnap: 1,
   },
+  lanternPost: {
+    cost: 15,
+    maxCount: 8,
+    lightRadius: 7,
+    placeRadius: 6,
+    overlapRadius: 0.9,
+  },
   palisade: {
     cost: 10,
     maxCount: 48,
@@ -229,6 +236,7 @@ export const Balance = {
       stockpile: 80,
       turret: 50,
       assay_office: 60,
+      lantern_post: 35,
     },
     hpWaveScale: {
       sentry_beacon: {
@@ -299,6 +307,19 @@ export const Balance = {
   contracts: {
     dryGulch: {
       seamYieldMult: 1.4,
+    },
+    nightShift: {
+      duskWave: 5,
+      darkWave: 10,
+      dawnWave: 25,
+      duskDarkness: 0.55,
+      darkDarkness: 1,
+      minLight: 0.16,
+      lightFalloff: 5,
+      heroLightRadius: 4.8,
+      beaconLightMult: 1.5,
+      turretLightRadius: 4.2,
+      lanternPostLightRadius: 7,
     },
   },
   eraCaps: {

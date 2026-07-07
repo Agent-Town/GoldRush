@@ -18,6 +18,24 @@ import type { RotationDirection } from '../assets/OrientationResolver';
 
 const ENEMY_SPRITE_Y = 0.72;
 
+export type EnemyLightSource = { x: number; z: number; radius: number };
+export type EnemyLightDimmingConfig = {
+  enabled: boolean;
+  darkness: number;
+  minLight: number;
+  falloff: number;
+  sources: readonly EnemyLightSource[];
+};
+export type EnemyDimmingDiagnostics = {
+  enabled: boolean;
+  darkness: number;
+  minLight: number;
+  falloff: number;
+  sources: number;
+  dimmed: number;
+  minFactor: number;
+};
+
 function animationSpeed(enemy: ClaimJumperEnemy): number {
   return Math.hypot(enemy.velocityX, enemy.velocityZ);
 }
@@ -91,6 +109,18 @@ export class EnemyPool {
   private readonly normalPonchoColor = new THREE.Color('#a0522d');
   private readonly carryingPonchoColor = new THREE.Color('#5b8a8a');
   private readonly wreckerPonchoColor = new THREE.Color('#8b7d3c');
+  private readonly shadowColor = new THREE.Color('#2e1b0e');
+  private readonly faceColor = new THREE.Color('#d9a268');
+  private readonly hatColor = new THREE.Color('#4b2a17');
+  private readonly sackColor = new THREE.Color('#8b7d3c');
+  private readonly dimmedColor = new THREE.Color();
+  private lightDimming: EnemyLightDimmingConfig = {
+    enabled: false,
+    darkness: 0,
+    minLight: 1,
+    falloff: 1,
+    sources: [],
+  };
   private readonly gridSize: number;
   private readonly gridMin: number;
   private readonly gridMax: number;
@@ -142,6 +172,59 @@ export class EnemyPool {
     let total = 0;
     for (const enemy of this.enemies) total += enemy.hitFlashCount;
     return total;
+  }
+
+  get dimmingDiagnostics(): EnemyDimmingDiagnostics {
+    let dimmed = 0;
+    let minFactor = 1;
+    for (const enemy of this.enemies) {
+      if (!enemy.isAlive) continue;
+      const factor = this.lightFactorFor(enemy);
+      if (factor < 0.98) dimmed += 1;
+      minFactor = Math.min(minFactor, factor);
+    }
+    return {
+      enabled: this.lightDimming.enabled,
+      darkness: round3(this.lightDimming.darkness),
+      minLight: round3(this.lightDimming.minLight),
+      falloff: round2(this.lightDimming.falloff),
+      sources: this.lightDimming.sources.length,
+      dimmed,
+      minFactor: round3(this.active > 0 ? minFactor : 1),
+    };
+  }
+
+  setLightDimming(config: EnemyLightDimmingConfig): void {
+    this.lightDimming = {
+      enabled: config.enabled,
+      darkness: THREE.MathUtils.clamp(config.darkness, 0, 1),
+      minLight: THREE.MathUtils.clamp(config.minLight, 0, 1),
+      falloff: Math.max(0.1, config.falloff),
+      sources: config.sources.map((source) => ({
+        x: source.x,
+        z: source.z,
+        radius: Math.max(0.1, source.radius),
+      })),
+    };
+  }
+
+  lightFactorFor(enemy: ClaimJumperEnemy): number {
+    const dimming = this.lightDimming;
+    if (!dimming.enabled || dimming.darkness <= 0 || !enemy.isAlive) return 1;
+    let sourceLight = dimming.sources.length > 0 ? dimming.minLight : 1;
+    for (const source of dimming.sources) {
+      const dx = enemy.group.position.x - source.x;
+      const dz = enemy.group.position.z - source.z;
+      const distance = Math.hypot(dx, dz);
+      if (distance <= source.radius) {
+        sourceLight = 1;
+        break;
+      }
+      const falloffT = THREE.MathUtils.clamp((distance - source.radius) / dimming.falloff, 0, 1);
+      const light = dimming.minLight + (1 - dimming.minLight) * (1 - falloffT);
+      sourceLight = Math.max(sourceLight, light);
+    }
+    return THREE.MathUtils.clamp(1 - dimming.darkness * (1 - sourceLight), 0, 1);
   }
 
   warmHitFlashes(position: THREE.Vector3): Promise<void> {
@@ -384,6 +467,7 @@ export class EnemyPool {
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
+    const lightFactor = this.lightFactorFor(enemy);
     const motion = enemy.isThief ? this.thiefSpriteAnimator.motion : this.spriteAnimator.motion;
     this.syncObject.position.copy(enemy.group.position);
     this.syncObject.position.y += motion.bobOffset;
@@ -400,16 +484,24 @@ export class EnemyPool {
       this.instanceMatrix.multiplyMatrices(this.baseMatrix, localMatrix);
       part.setMatrixAt(enemy.id, this.instanceMatrix);
       if (i === 1) {
-        part.setColorAt(
+        this.setInstanceColor(
+          part,
           enemy.id,
           enemy.carriedAmount > 0 ? this.carryingPonchoColor : enemy.isWrecker ? this.wreckerPonchoColor : this.normalPonchoColor,
+          lightFactor,
         );
-        if (part.instanceColor) part.instanceColor.needsUpdate = true;
+      } else if (i === 0) {
+        this.setInstanceColor(part, enemy.id, this.shadowColor, lightFactor);
+      } else if (i === 2) {
+        this.setInstanceColor(part, enemy.id, this.faceColor, lightFactor);
+      } else {
+        this.setInstanceColor(part, enemy.id, this.hatColor, lightFactor);
       }
       part.instanceMatrix.needsUpdate = true;
     }
     this.instanceMatrix.multiplyMatrices(enemy.isAlive && enemy.carriedAmount > 0 ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
+    this.setInstanceColor(this.sackMesh, enemy.id, this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
     this.syncEnemySprite(enemy);
   }
@@ -431,6 +523,11 @@ export class EnemyPool {
     const showFade = this.active <= 64;
     const normalMotion = this.spriteAnimator.motion;
     const thiefMotion = this.thiefSpriteAnimator.motion;
+    const lightFactor = this.lightFactorFor(enemy);
+    this.generatedSprites.setTintScalar(enemy.id, lightFactor);
+    this.generatedSpriteFades.setTintScalar(enemy.id, lightFactor);
+    this.thiefSprites.setTintScalar(enemy.id, lightFactor);
+    this.thiefSpriteFades.setTintScalar(enemy.id, lightFactor);
     this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
     this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
     this.thiefSprites.set(enemy.id, enemy.group.position, thiefVisible);
@@ -487,6 +584,12 @@ export class EnemyPool {
     for (const part of this.renderParts) part.visible = visible;
   }
 
+  private setInstanceColor(mesh: THREE.InstancedMesh, index: number, base: THREE.Color, lightFactor: number): void {
+    this.dimmedColor.copy(base).multiplyScalar(lightFactor);
+    mesh.setColorAt(index, this.dimmedColor);
+    if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }
+
   private rebuildSpatialHash(): void {
     this.clearSpatialHash();
 
@@ -526,4 +629,12 @@ export class EnemyPool {
     const clamped = THREE.MathUtils.clamp(value, this.gridMin, this.gridMax - 0.001);
     return Math.floor((clamped - this.gridMin) / this.cellSize);
   }
+}
+
+function round2(value: number): number {
+  return Math.round(value * 100) / 100;
+}
+
+function round3(value: number): number {
+  return Math.round(value * 1000) / 1000;
 }

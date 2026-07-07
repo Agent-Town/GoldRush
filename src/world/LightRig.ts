@@ -4,6 +4,12 @@ import { Balance } from '../game/Balance';
 import * as Terrain from './Terrain';
 
 export type ShadowsQuality = 'soft' | 'blob';
+export type NightShiftPhase = 'full' | 'dusk' | 'dark' | 'dawn';
+export type LightRigNightShiftState = {
+  enabled: boolean;
+  phase: NightShiftPhase;
+  darkness: number;
+};
 
 export type LightRigDiagnostics = {
   sunPresent: boolean;
@@ -15,6 +21,7 @@ export type LightRigDiagnostics = {
   shadowMapSize: number;
   shadowMapTargetSize: number;
   blobShadows: number;
+  nightShift: LightRigNightShiftState;
 };
 
 export class LightRig {
@@ -23,10 +30,19 @@ export class LightRig {
   private readonly fill = new THREE.HemisphereLight('#fff2cc', '#8b6c3f', 1.12);
   private readonly background = new THREE.Color('#f1c887');
   private readonly fog = new THREE.Fog('#ead2a3', Balance.world.fogNear, Balance.world.fogFar);
+  private readonly dayBackground = new THREE.Color('#f1c887');
+  private readonly duskBackground = new THREE.Color('#8a6b6c');
+  private readonly darkBackground = new THREE.Color('#101824');
+  private readonly dawnBackground = new THREE.Color('#f5cfa0');
+  private readonly dayFog = new THREE.Color('#ead2a3');
+  private readonly duskFog = new THREE.Color('#8b6c6c');
+  private readonly darkFog = new THREE.Color('#17202a');
+  private readonly dawnFog = new THREE.Color('#f5d7b2');
   private readonly blobShadows = new SpriteBlobShadows();
   private readonly post = new LedgerPostPass();
   private currentShadowMapSize = -1;
   private stressFallback = false;
+  private nightShift: LightRigNightShiftState = { enabled: false, phase: 'full', darkness: 0 };
 
   constructor(private readonly scene: THREE.Scene, private readonly renderer: THREE.WebGLRenderer) {
     this.group.name = 'GoldenHourLightRig';
@@ -50,8 +66,10 @@ export class LightRig {
 
   update(): void {
     const quality = effectiveShadowQuality(this.stressFallback);
-    const fogNear = Balance.world.fogNear;
-    const fogFar = Math.max(fogNear + 8, Balance.world.fogFar);
+    const darkness = this.nightShift.enabled ? THREE.MathUtils.clamp(this.nightShift.darkness, 0, 1) : 0;
+    const fogNear = THREE.MathUtils.lerp(Balance.world.fogNear, 28, darkness);
+    const fogFar = Math.max(fogNear + 8, THREE.MathUtils.lerp(Balance.world.fogFar, 58, darkness));
+    this.applyNightShiftPalette(darkness);
     this.scene.background = this.background;
     this.scene.fog = this.fog;
     this.fog.near = fogNear;
@@ -74,19 +92,28 @@ export class LightRig {
     this.stressFallback = active;
   }
 
+  setNightShift(state: LightRigNightShiftState): void {
+    this.nightShift = {
+      enabled: state.enabled,
+      phase: state.phase,
+      darkness: THREE.MathUtils.clamp(state.darkness, 0, 1),
+    };
+  }
+
   diagnostics(): LightRigDiagnostics {
     const quality = effectiveShadowQuality(this.stressFallback);
     const shadowTargetSize = this.sun.shadow.map?.width ?? 0;
     return {
       sunPresent: this.sun.visible && this.sun.intensity > 0,
       shadowsQuality: quality,
-      fogNear: round2(Balance.world.fogNear),
-      fogFar: round2(Math.max(Balance.world.fogNear + 8, Balance.world.fogFar)),
+      fogNear: round2(this.fog.near),
+      fogFar: round2(this.fog.far),
       postEnabled: this.post.enabled,
       paperGrainOpacity: round3(Balance.world.postPaperGrainOpacity),
       shadowMapSize: shadowMapSize(quality),
       shadowMapTargetSize: quality === 'soft' ? shadowTargetSize : 0,
       blobShadows: this.blobShadows.count,
+      nightShift: { ...this.nightShift },
     };
   }
 
@@ -106,6 +133,40 @@ export class LightRig {
     this.sun.shadow.mapPass = null;
     this.currentShadowMapSize = mapSize;
     if (mapSize > 0) this.sun.shadow.needsUpdate = true;
+  }
+
+  private applyNightShiftPalette(darkness: number): void {
+    if (!this.nightShift.enabled) {
+      this.background.copy(this.dayBackground);
+      this.fog.color.copy(this.dayFog);
+      this.sun.color.set('#ffd28a');
+      this.sun.intensity = 2.35;
+      this.fill.color.set('#fff2cc');
+      this.fill.groundColor.set('#8b6c3f');
+      this.fill.intensity = 1.12;
+      return;
+    }
+
+    if (this.nightShift.phase === 'dawn') {
+      this.background.copy(this.dawnBackground);
+      this.fog.color.copy(this.dawnFog);
+      this.sun.color.set('#ffd6a2');
+      this.sun.intensity = 2.05;
+      this.fill.color.set('#fff2cc');
+      this.fill.groundColor.set('#a6815c');
+      this.fill.intensity = 1.2;
+      return;
+    }
+
+    const targetBackground = this.nightShift.phase === 'dusk' ? this.duskBackground : this.darkBackground;
+    const targetFog = this.nightShift.phase === 'dusk' ? this.duskFog : this.darkFog;
+    this.background.copy(this.dayBackground).lerp(targetBackground, darkness);
+    this.fog.color.copy(this.dayFog).lerp(targetFog, darkness);
+    this.sun.color.set('#ffd28a').lerp(new THREE.Color('#7894b8'), darkness);
+    this.sun.intensity = THREE.MathUtils.lerp(2.35, 0.38, darkness);
+    this.fill.color.set('#fff2cc').lerp(new THREE.Color('#6c83a6'), darkness);
+    this.fill.groundColor.set('#8b6c3f').lerp(new THREE.Color('#0b1018'), darkness);
+    this.fill.intensity = THREE.MathUtils.lerp(1.12, 0.36, darkness);
   }
 }
 
