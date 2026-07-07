@@ -29,5 +29,8 @@ Build: main @ post-s101 era (041 overwatch, SCI-01/02/04, w1-03 light rerun, w1-
 - **F-0707-10 Prompt overlap**: tier prompt + demolish prompt stack/collide → ONE building context bar (both actions, fixed slots) + a global prompt-stack layout law. Same task 043.
 - BT-00 demolish + BT-02 tiers confirmed LIVE in owner's build (he tiered a sluice to 2, saw T3 pricing at 320g, used tear-down) — the homestead loop is being played hours after ratification.
 
+## Fifth wave (~11:45) — THE AGENT CONFIRMED ❤
+Owner: "I played with the agent/bot now, it works well! it collects the XP, the menu works to toggle the functions. it is great. **I love it.**" → CONFIRMS in play: prospector-presence (visible, alive), M4-07 Prospector Panel (G-menu function toggles), 026 collect-XP behavior, the consent grammar. The M4 arc — brain, body, voice, face, controls — is owner-validated end to end. (M4-08 attribution merged same morning; verdict rides the next run ledger he reads.)
+
 ## Third wave (~06:20, screenshots ×2)
 - **F-0707-8 Damage indicators camera-billboarded**: "the damages are relative to the player camera — they should orient themselves at their object they belong to." Floating angled bars read as detached debris. OWNER RULING supersedes the correctives task's "camera-facing" spec line → `lane-c-damage-orientation` (queued): palisade wear strips render in the wall's local frame (rotate with rotationSteps), building indicators anchor world-aligned above the roofline; no billboarding anywhere in damage UI.
