@@ -110,7 +110,7 @@ export class Game {
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
   private readonly events = new EventBus();
   private readonly input: InputController;
-  private readonly hero = new Hero();
+  private readonly actors = [new Hero()];
   private readonly enemies = new EnemyPool();
   private readonly projectiles = new ProjectilePool();
   private readonly blastCharges = new BlastChargePool();
@@ -138,7 +138,7 @@ export class Game {
   private readonly vfx = new Vfx();
   private readonly combat = new CombatSystem(
     this.events,
-    this.hero,
+    this.actors,
     this.enemies,
     this.projectiles,
     this.blastCharges,
@@ -180,7 +180,7 @@ export class Game {
   private readonly heroShooter: ShooterHandle = {
     id: 'hero',
     enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabled(),
-    getPos: () => this.hero.group.position,
+    getPos: () => this.primaryActor.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
     damage: Balance.sparkRig.damage,
@@ -191,7 +191,7 @@ export class Game {
     id: 'hero_blast',
     kind: 'lob',
     enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabled(),
-    getPos: () => this.hero.group.position,
+    getPos: () => this.primaryActor.group.position,
     range: Balance.blast.range,
     cooldown: Balance.blast.cooldown,
     damage: Balance.blast.damage,
@@ -219,7 +219,7 @@ export class Game {
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly waveSystem = new WaveSystem(
     this.enemies,
-    this.hero.group.position,
+    this.primaryActor.group.position,
     createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
     (text, atSim) => this.uiBridge.announce(text, atSim),
     (wave, atSim) => {
@@ -237,6 +237,10 @@ export class Game {
     (delta) => this.update(delta),
     () => this.render(),
   );
+
+  private get primaryActor(): Hero {
+    return this.actors[0];
+  }
 
   private readonly tuning: DebugTuning = {
     exposure: Balance.render.exposure,
@@ -323,6 +327,7 @@ export class Game {
     private readonly openAssayBench?: () => void,
     private readonly onReturnToMenu?: () => void,
   ) {
+    this.assertActorMode();
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = this.tuning.exposure;
     this.blastAimReticle.name = 'BlastAimReticle';
@@ -335,7 +340,7 @@ export class Game {
       this.economy,
       this.combat,
       this.goldTargeting,
-      this.hero.group.position,
+      this.primaryActor.group.position,
       () => this.debugBeaconWaveOverride ?? this.waveSystem.diagnostics.wave,
       (position, text, color) => this.vfx.floatText(position, text, color),
     );
@@ -344,7 +349,7 @@ export class Game {
       rng: createRng(`${getDebugSeed() ?? 'gold-rush'}:upgrades`),
       getBeaconCount: () => this.buildSystem.beaconCount,
       getWave: () => this.waveSystem.diagnostics.wave,
-      getMaxHp: () => this.hero.maxHp,
+      getMaxHp: () => this.primaryActor.maxHp,
       onStatsChanged: (stats, pickedId) => this.applyStats(stats, pickedId),
       onGoldGranted: (amount) => {
         this.economy.apply({
@@ -354,13 +359,13 @@ export class Game {
           source: 'upgrade_assay',
           amount,
         });
-        this.vfx.floatText(this.hero.group.position, `+${amount}`, '#c4883a');
+        this.vfx.floatText(this.primaryActor.group.position, `+${amount}`, '#c4883a');
       },
       onHeal: (amount) => {
-        const before = this.hero.hp;
-        this.hero.heal(amount);
-        const healed = Math.round(this.hero.hp - before);
-        if (healed > 0) this.vfx.floatText(this.hero.group.position, `+${healed}`, '#6bb36b');
+        const before = this.primaryActor.hp;
+        this.primaryActor.heal(amount);
+        const healed = Math.round(this.primaryActor.hp - before);
+        if (healed > 0) this.vfx.floatText(this.primaryActor.group.position, `+${healed}`, '#6bb36b');
       },
       hasResearchNode: (id) => hasResearchNode(this.researchState, id),
       getCraftingProfile: () => this.craftingProfile,
@@ -483,9 +488,9 @@ export class Game {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
         teleport: (x: number, z: number) => {
-          this.hero.group.position.set(x, this.hero.group.position.y, z);
+          this.primaryActor.group.position.set(x, this.primaryActor.group.position.y, z);
           this.syncHeroVisualHeight();
-          this.hero.velocity.set(0, 0, 0);
+          this.primaryActor.velocity.set(0, 0, 0);
         },
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
           this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
@@ -499,7 +504,7 @@ export class Game {
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
         setDifficultyPreset: (preset: string) => this.setDifficultyPreset(preset),
         warmVfx: () =>
-          Promise.all([this.vfx.warm(this.hero.group.position), this.enemies.warmHitFlashes(this.hero.group.position)]).then(
+          Promise.all([this.vfx.warm(this.primaryActor.group.position), this.enemies.warmHitFlashes(this.primaryActor.group.position)]).then(
             () => undefined,
           ),
         clearScores: () => clearScores(),
@@ -596,7 +601,7 @@ export class Game {
         }),
       };
     }
-    this.cameraRig.snapTo(this.hero.group.position);
+    this.cameraRig.snapTo(this.primaryActor.group.position);
     this.state.transition('playing');
     this.uiBridge.announce('Stake your claim.', 0);
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
@@ -661,7 +666,7 @@ export class Game {
     (this.blastAimReticle.material as THREE.Material).dispose();
     this.goldPickups.dispose();
     this.enemies.dispose();
-    this.hero.dispose();
+    this.primaryActor.dispose();
     disposeGeneratedAssets();
     this.events.clear();
     this.renderer.dispose();
@@ -725,7 +730,7 @@ export class Game {
       this.timeAlive += simDelta;
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
       this.terrainView?.update(simDelta);
-      this.hero.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
+      this.primaryActor.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
       this.updateBlastAim(intents);
       this.updateWetPowderHint(simDelta);
       this.combat.setTime(this.timeAlive);
@@ -747,7 +752,7 @@ export class Game {
       this.syncStockpileHoldings();
       this.enemies.update(
         simDelta,
-        this.hero.group.position,
+        this.primaryActor.group.position,
         this.combat.handleEnemyContact,
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
@@ -756,17 +761,17 @@ export class Game {
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
         this.timeAlive,
-        this.hero.group.position,
-        this.hero.velocity.length(),
+        this.primaryActor.group.position,
+        this.primaryActor.velocity.length(),
       );
       if (this.harvestSnapshot.lastGoldGain > 0) {
-        this.vfx.floatText(this.hero.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
+        this.vfx.floatText(this.primaryActor.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.combat.update(simDelta, this.timeAlive);
       this.maybeProspectorCollectXp();
       this.goldPickups.update(
         simDelta,
-        this.hero.group.position,
+        this.primaryActor.group.position,
         (amount) => this.economy.canReceiveIncome(this.reclaimAmount(amount)),
         (position, amount) => this.reclaimGold(position, amount),
         (position) => this.blockedGoldPickup(position),
@@ -778,14 +783,14 @@ export class Game {
   }
 
   private updatePresentation(delta: number): void {
-    this.prospector.update(delta, this.timeAlive, this.hero.group.position);
+    this.prospector.update(delta, this.timeAlive, this.primaryActor.group.position);
     this.vfx.update(delta);
     this.syncHeroVisualHeight();
     const visualStress =
       this.enemies.activeCount >= Balance.world.detailStressEnemyThreshold ||
       this.waveSystem.diagnostics.wave >= Balance.world.detailStressWaveThreshold;
     this.detailScatter?.syncBuildingClearings(this.detailClearings());
-    this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
+    this.cameraRig.update(delta, this.primaryActor.group.position, this.primaryActor.velocity);
     this.lightRig?.setStressFallback(visualStress);
     this.lightRig?.update();
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
@@ -897,23 +902,23 @@ export class Game {
     this.scene.add(this.xpMotes.group);
     this.scene.add(this.goldPickups.group);
     this.scene.add(this.combatVfx.group);
-    this.hero.group.position.copy(this.heroStart);
+    this.primaryActor.group.position.copy(this.heroStart);
     this.syncHeroVisualHeight();
-    this.prospector.reset(this.hero.group.position);
+    this.prospector.reset(this.primaryActor.group.position);
     this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
-    this.scene.add(this.hero.group);
+    this.scene.add(this.primaryActor.group);
   }
 
   private publishDiagnostics(): void {
     const info = this.renderer.info;
     const heroPos = {
-      x: this.hero.group.position.x,
-      y: this.hero.group.position.y,
-      z: this.hero.group.position.z,
+      x: this.primaryActor.group.position.x,
+      y: this.primaryActor.group.position.y,
+      z: this.primaryActor.group.position.z,
     };
-    const speed = this.hero.velocity.length();
+    const speed = this.primaryActor.velocity.length();
     const economyLog = this.economy.log;
     const economyReplay = economyLog.reduce(reduceEconomy, initialEconomyState);
     const economySummary = summarizeLog(economyLog);
@@ -927,9 +932,9 @@ export class Game {
       state: this.state.isPaused ? 'paused' : this.state.current,
       difficultyPreset: this.difficultyPreset,
       ui: this.uiSnapshot,
-      hp: this.hero.hp,
-      maxHp: this.hero.maxHp,
-      heroIframes: this.hero.hasIframes,
+      hp: this.primaryActor.hp,
+      maxHp: this.primaryActor.maxHp,
+      heroIframes: this.primaryActor.hasIframes,
       enemiesAlive: this.enemies.activeCount,
       enemyPoolSize: this.enemies.capacity,
       boltsAlive: this.combat.boltsAlive,
@@ -1014,14 +1019,14 @@ export class Game {
       spriteAnimations: spriteAnimationDiagnostics(),
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
-        playerZone: Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone,
+        playerZone: Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone,
         water: this.terrainView?.diagnostics(),
         vista: Terrain.vistaDiagnostics(),
         detailScatter: this.detailScatter?.diagnostics(),
         height: {
           ...Terrain.heightDiagnostics(),
-          heroGround: Terrain.sampleHeight(this.hero.group.position.x, this.hero.group.position.z),
-          heroVisualY: this.hero.group.position.y,
+          heroGround: Terrain.sampleHeight(this.primaryActor.group.position.x, this.primaryActor.group.position.z),
+          heroVisualY: this.primaryActor.group.position.y,
         },
         probes: {
           bank: Terrain.sample(-12, -12),
@@ -1109,8 +1114,8 @@ export class Game {
     this.uiSnapshot = this.uiBridge.build(
       this.state,
       this.timeAlive,
-      this.hero.hp,
-      this.hero.maxHp,
+      this.primaryActor.hp,
+      this.primaryActor.maxHp,
       this.enemies.activeCount,
       this.economy.gold,
       this.economy.bankCap,
@@ -1188,16 +1193,16 @@ export class Game {
     this.assayOfficePrompt.update(
       this.state.current === 'playing' &&
         !this.buildSystem.isBuildMode &&
-        this.buildSystem.assayOfficeInRange(this.hero.group.position),
+        this.buildSystem.assayOfficeInRange(this.primaryActor.group.position),
     );
   }
 
   private syncBuildingContextPrompt(): void {
     const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
-    const assayInRange = this.buildSystem.assayOfficeInRange(this.hero.group.position);
+    const assayInRange = this.buildSystem.assayOfficeInRange(this.primaryActor.group.position);
     let demolish =
       this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode
-        ? this.buildSystem.nearestBuildingTo(this.hero.group.position)
+        ? this.buildSystem.nearestBuildingTo(this.primaryActor.group.position)
         : null;
     const key = demolish ? demolishKey(demolish) : null;
     if (!key) this.demolishSuppressedKey = null;
@@ -1254,9 +1259,9 @@ export class Game {
     this.wetPowderHintCooldown = 0;
     this.progression.reset();
     this.agentConsent.reset();
-    this.hero.resetRun(this.heroStart);
+    this.primaryActor.resetRun(this.heroStart);
     this.syncHeroVisualHeight();
-    this.cameraRig.snapTo(this.hero.group.position);
+    this.cameraRig.snapTo(this.primaryActor.group.position);
     this.timeAlive = 0;
     this.nextProspectorXpSweepAt = 0;
     this.prospectorIntroShown = false;
@@ -1283,7 +1288,7 @@ export class Game {
       blastTime: 0,
     };
     this.state.restart();
-    this.prospector.reset(this.hero.group.position);
+    this.prospector.reset(this.primaryActor.group.position);
     this.uiBridge.announce('Stake your claim.', 0);
     this.showProspectorIntro();
     this.upgradeOverlay.hide();
@@ -1434,7 +1439,7 @@ export class Game {
   private setBlastAimForTest(x: number, z: number): { x: number; z: number } {
     this.pointerAimPoint.set(x, 0.08, z);
     this.pointerAimReady = true;
-    this.clampBlastAim(this.hero.group.position, this.pointerAimPoint, this.blastAimPoint);
+    this.clampBlastAim(this.primaryActor.group.position, this.pointerAimPoint, this.blastAimPoint);
     return { x: this.blastAimPoint.x, z: this.blastAimPoint.z };
   }
 
@@ -1461,7 +1466,7 @@ export class Game {
     }
 
     if (this.pointerAimReady) {
-      this.clampBlastAim(this.hero.group.position, this.pointerAimPoint, this.blastAimPoint);
+      this.clampBlastAim(this.primaryActor.group.position, this.pointerAimPoint, this.blastAimPoint);
     } else {
       this.leadBlastAim(intents);
     }
@@ -1482,7 +1487,7 @@ export class Game {
   }
 
   private heroWeaponsDisarmed(): boolean {
-    return Balance.pathing.deepWaterDisarmsHero && Terrain.sample(this.hero.group.position.x, this.hero.group.position.z).zone === 'river';
+    return Balance.pathing.deepWaterDisarmsHero && Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone === 'river';
   }
 
   private currentBlastTarget(autoTarget: THREE.Vector3): THREE.Vector3 {
@@ -1491,9 +1496,9 @@ export class Game {
   }
 
   private leadBlastAim(intents: Intents): void {
-    const origin = this.hero.group.position;
-    const dx = Math.abs(intents.move.x) > 0.01 ? intents.move.x : this.hero.velocity.x;
-    const dz = Math.abs(intents.move.y) > 0.01 ? intents.move.y : this.hero.velocity.z;
+    const origin = this.primaryActor.group.position;
+    const dx = Math.abs(intents.move.x) > 0.01 ? intents.move.x : this.primaryActor.velocity.x;
+    const dz = Math.abs(intents.move.y) > 0.01 ? intents.move.y : this.primaryActor.velocity.z;
     const len = Math.hypot(dx, dz);
     const range = Balance.blast.range * 0.72;
     if (len > 0.01) {
@@ -1598,7 +1603,7 @@ export class Game {
   }
 
   private syncHeroVisualHeight(): void {
-    this.hero.group.position.y = Terrain.visualY(this.hero.group.position.x, this.hero.group.position.z, this.heroStart.y);
+    this.primaryActor.group.position.y = Terrain.visualY(this.primaryActor.group.position.x, this.primaryActor.group.position.z, this.heroStart.y);
   }
 
   private resolveProspectorReceiptPoint(receipt: ToolReceipt): ProspectorPoint | null {
@@ -1733,8 +1738,8 @@ export class Game {
   private spawnHarnessThief(edge?: CompassEdge): boolean {
     if (isSpawnDisabled() || this.state.current !== 'playing' || isStealDisabled()) return false;
     const radius = Math.min(14, Balance.waves.spawnRingRadius);
-    const x = this.hero.group.position.x;
-    const z = this.hero.group.position.z;
+    const x = this.primaryActor.group.position.x;
+    const z = this.primaryActor.group.position.z;
     if (edge === 'south') this.debugSpawnPosition.set(x, Balance.enemy.groundY, z - radius);
     else if (edge === 'east') this.debugSpawnPosition.set(x + radius, Balance.enemy.groundY, z);
     else if (edge === 'west') this.debugSpawnPosition.set(x - radius, Balance.enemy.groundY, z);
@@ -1747,8 +1752,8 @@ export class Game {
   private spawnHarnessWrecker(edge?: CompassEdge): boolean {
     if (isSpawnDisabled() || this.state.current !== 'playing' || isWreckDisabled()) return false;
     const radius = Math.min(14, Balance.waves.spawnRingRadius);
-    const x = this.hero.group.position.x;
-    const z = this.hero.group.position.z;
+    const x = this.primaryActor.group.position.x;
+    const z = this.primaryActor.group.position.z;
     if (edge === 'south') this.debugSpawnPosition.set(x, Balance.enemy.groundY, z - radius);
     else if (edge === 'east') this.debugSpawnPosition.set(x + radius, Balance.enemy.groundY, z);
     else if (edge === 'west') this.debugSpawnPosition.set(x - radius, Balance.enemy.groundY, z);
@@ -1785,7 +1790,7 @@ export class Game {
       this.buildSystem.confirm(this.timeAlive);
       return;
     }
-    if (this.buildSystem.assayOfficeInRange(this.hero.group.position)) {
+    if (this.buildSystem.assayOfficeInRange(this.primaryActor.group.position)) {
       this.openAssayBench?.();
       return;
     }
@@ -1825,7 +1830,7 @@ export class Game {
   }
 
   private upgradeBuilding(id: BuildableId, index: number): boolean {
-    const upgraded = this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.hero.group.position);
+    const upgraded = this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.primaryActor.group.position);
     if (!upgraded) return false;
     this.syncStockpileHoldings();
     this.publishDiagnostics();
@@ -1833,7 +1838,7 @@ export class Game {
   }
 
   private demolishBuilding(id: BuildableId, index: number): boolean {
-    const removed = this.buildSystem.demolish(id, index, this.timeAlive, this.hero.group.position);
+    const removed = this.buildSystem.demolish(id, index, this.timeAlive, this.primaryActor.group.position);
     if (!removed) return false;
     this.syncStockpileHoldings();
     this.publishDiagnostics();
@@ -1864,10 +1869,10 @@ export class Game {
     const blastRadius = Balance.blast.radius * this.blastRadiusMult;
     if (this.blastShooter.aoe) this.blastShooter.aoe.radius = blastRadius;
     this.syncBlastReticleRadius(blastRadius);
-    this.hero.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
+    this.primaryActor.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
     const platingHeal = upgradeDefById.tinkers_plating.deltas.heal;
     if (pickedId === 'tinkers_plating' && platingHeal !== undefined) {
-      this.hero.heal(platingHeal);
+      this.primaryActor.heal(platingHeal);
     }
     const continued = continuedStudyBonuses(this.researchState);
     this.harvestSystem.applyStats(stats.panTickMult, stats.seamCapacityBonus, stats.seamRespawnReduction, 1 + continued.seamYieldMult);
@@ -1999,10 +2004,14 @@ export class Game {
         ),
         effect:
           'filler' in def && def.filler === true
-            ? resolveFiller(def, { wave: this.waveSystem.diagnostics.wave, maxHp: this.hero.maxHp }).effectText
+            ? resolveFiller(def, { wave: this.waveSystem.diagnostics.wave, maxHp: this.primaryActor.maxHp }).effectText
             : undefined,
       })),
     );
+  }
+
+  private assertActorMode(): void {
+    if (Balance.actors.enabled) throw new Error('Balance.actors.enabled is reserved for the M6 multi-actor follow-up.');
   }
 
   private getElement(selector: string): HTMLElement {

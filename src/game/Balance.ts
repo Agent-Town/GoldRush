@@ -12,6 +12,9 @@ export const Balance = {
     iframes: 0.5,
     radius: 0.5,
   },
+  actors: {
+    enabled: false,
+  },
   enemy: {
     poolSize: 96,
     hp: 25.2,

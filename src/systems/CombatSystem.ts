@@ -105,7 +105,7 @@ export class CombatSystem {
 
   constructor(
     private readonly events: EventBus,
-    private readonly hero: Hero,
+    private readonly actors: readonly Hero[],
     private readonly enemies: EnemyPool,
     private readonly projectiles: ProjectilePool,
     private readonly blastCharges: BlastChargePool,
@@ -116,6 +116,10 @@ export class CombatSystem {
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
     private readonly onEnemyKilled?: (position: THREE.Vector3) => void,
   ) {}
+
+  private get primaryActor(): Hero {
+    return this.actors[0];
+  }
 
   get xpCount(): number {
     return this.xp;
@@ -211,7 +215,7 @@ export class CombatSystem {
       remaining -= step;
     }
 
-    const gained = this.motes.update(delta, this.hero.group.position, this.handleXpCollect);
+    const gained = this.motes.update(delta, this.primaryActor.group.position, this.handleXpCollect);
     if (gained > 0) this.xp += gained;
   }
 
@@ -232,15 +236,15 @@ export class CombatSystem {
   readonly handleEnemyContact = (enemy: ClaimJumperEnemy): void => {
     if (isCombatDamageDisabled()) return;
 
-    const result = this.hero.takeDamage(Balance.enemy.contactDamage);
+    const result = this.primaryActor.takeDamage(Balance.enemy.contactDamage);
     if (!result.applied) return;
 
     this.events.emit({
       type: 'hero_damaged',
       at: this.currentAt,
       amount: Balance.enemy.contactDamage,
-      hp: this.hero.hp,
-      maxHp: this.hero.maxHp,
+      hp: this.primaryActor.hp,
+      maxHp: this.primaryActor.maxHp,
       sourceId: enemy.id,
     });
 
