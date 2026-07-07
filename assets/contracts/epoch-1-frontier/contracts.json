@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "epochId": "epoch-1-frontier",
+  "contracts": [
+    {
+      "id": "the-claim",
+      "name": "The Claim",
+      "tileParams": {
+        "tileId": "frontier-river-claim",
+        "biome": "river-claim",
+        "river": true,
+        "ford": true,
+        "waterSources": [],
+        "lanes": {
+          "spawnEdges": ["north", "south", "east", "west"],
+          "territoryRingBiasWaves": 3,
+          "territoryRingLaneBias": 0.75
+        }
+      },
+      "twist": {},
+      "boardRow": {
+        "name": "The Claim",
+        "ledgerBlurb": "The classic river claim.",
+        "tags": ["trail"],
+        "unlock": "default"
+      }
+    },
+    {
+      "id": "e1-dry-gulch",
+      "name": "The Dry Gulch",
+      "tileParams": {
+        "tileId": "e1-dry-gulch",
+        "biome": "dry-gulch",
+        "river": false,
+        "ford": false,
+        "waterSources": [{ "kind": "spring_pond", "x": -18, "z": -18, "radius": 1.4 }],
+        "lanes": {
+          "spawnEdges": ["north", "south", "east", "west"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "sluicesNeedWaterSource": true,
+        "seamYieldMult": 1.4
+      },
+      "boardRow": {
+        "name": "The Dry Gulch",
+        "ledgerBlurb": "Water is scarce; one spring pond makes every sluice placement count.",
+        "tags": ["trail"],
+        "unlock": "wave10OnClaim"
+      }
+    }
+  ]
+}

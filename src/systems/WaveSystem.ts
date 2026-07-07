@@ -4,6 +4,7 @@ import type { CompassEdge } from '../entities/Enemy';
 import type { Rng } from '../core/Rng';
 import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
+import { activeContract } from '../meta/ContractFamilies';
 import * as Terrain from '../world/Terrain';
 
 export type SpawnPackOptions = {
@@ -36,7 +37,8 @@ export type WaveDiagnostics = {
 
 const TELEGRAPH_SECONDS = 2;
 const TELEGRAPH_STAGGER_SECONDS = 0.5;
-export const WAVE_SPAWN_EDGES: readonly CompassEdge[] = Balance.waves.spawnEdges;
+const ACTIVE_CONTRACT = activeContract();
+export const WAVE_SPAWN_EDGES: readonly CompassEdge[] = ACTIVE_CONTRACT.tileParams.lanes.spawnEdges;
 
 const EDGE_COPY: Record<CompassEdge, readonly string[]> = {
   north: [
@@ -520,7 +522,7 @@ export class WaveSystem {
 
   private territoryRingLateral(lateral: number, wave: number): number {
     if (!this.usesTerritoryRingLane(wave)) return lateral;
-    const bias = THREE.MathUtils.clamp(Balance.waves.territoryRingLaneBias, 0, 1);
+    const bias = THREE.MathUtils.clamp(ACTIVE_CONTRACT.tileParams.lanes.territoryRingLaneBias, 0, 1);
     return lateral * (1 - bias);
   }
 
@@ -529,7 +531,7 @@ export class WaveSystem {
   }
 
   private usesTerritoryRingLane(wave: number): boolean {
-    return this.hasTerritoryRing() && wave <= Balance.waves.territoryRingBiasWaves;
+    return this.hasTerritoryRing() && wave <= ACTIVE_CONTRACT.tileParams.lanes.territoryRingBiasWaves;
   }
 
   private clampSpawn(value: number): number {

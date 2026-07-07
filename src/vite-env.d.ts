@@ -200,6 +200,16 @@ interface ThreeGameDiagnostics {
       agent: number;
     } | null;
   };
+  contract: {
+    activeId: string;
+    requestedId: string | null;
+    fallbackReason: 'debug-disabled' | 'unknown-contract' | null;
+    warningSuppressed: boolean;
+    name: string;
+    tileParams: GrContractManifest['tileParams'];
+    boardRow: GrContractManifest['boardRow'];
+    seamYieldMult: number;
+  };
   research: {
     taken: string[];
     available: string[];
@@ -422,6 +432,8 @@ interface ThreeGameDiagnostics {
     };
     water?: {
       material: 'LivingWaterShader';
+      riverPresent: boolean;
+      fordPresent: boolean;
       riverTime: number;
       fordTime: number;
       quality: number;
@@ -429,6 +441,7 @@ interface ThreeGameDiagnostics {
       foam: boolean;
       glints: number;
       fordStones: number;
+      springPonds: number;
       waterPhaseVariance: number;
     };
     vista: {
@@ -480,6 +493,7 @@ interface ThreeGameDiagnostics {
       walkable: boolean;
       speedMul: number;
       zone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+      waterSource?: 'river' | 'spring_pond';
     }>;
   };
   canvas: {
@@ -503,6 +517,9 @@ type GrContractEpochMeta = import('./meta/ContractFamilies').EpochMeta;
 type GrContractEpochBundle = import('./meta/ContractFamilies').EpochBundle;
 type GrContractTierBudget = import('./meta/ContractFamilies').ContractTierBudget;
 type GrEpochTileDescriptor = import('./meta/ContractFamilies').EpochTileDescriptor;
+type GrContractManifest = import('./meta/ContractFamilies').ContractManifest;
+type GrActiveContractDiagnostics = import('./meta/ContractFamilies').ActiveContractDiagnostics;
+type GrTerrainSample = import('./world/Terrain').TerrainSample;
 
 interface Window {
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
@@ -541,6 +558,10 @@ interface Window {
   __GR_CONTRACT_REGISTRY__?: {
     listEpochs: () => GrContractEpochMeta[];
     loadEpoch: (id: string) => GrContractEpochBundle;
+    listContracts: (epochId?: string) => GrContractManifest[];
+    loadContract: (id: string, epochId?: string) => GrContractManifest;
+    activeContract: () => GrContractManifest;
+    activeContractDiagnostics: () => GrActiveContractDiagnostics;
     activeTileDescriptor: () => GrEpochTileDescriptor;
     contractTierBudget: (epochId: string, tier: number) => GrContractTierBudget;
     contractBudgetOk: (epochId: string, tier: number, rarity: 'common' | 'uncommon' | 'rare', budget: number) => boolean;
@@ -605,6 +626,8 @@ interface Window {
     };
     setBeaconWave: (wave: number | null) => void;
     setWave: (wave: number) => void;
+    activeContract: () => GrContractManifest;
+    terrainSample: (x: number, z: number) => GrTerrainSample;
     setTestClip: (slot: string, frames: string[], fps: number) => void;
     setBuildMode: (on: boolean) => void;
     selectBuildable: (id: string) => boolean;

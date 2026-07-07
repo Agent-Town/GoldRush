@@ -296,6 +296,11 @@ export const Balance = {
     assayGradingProspectingOfferWeightBonus: 1.25,
     secondOrderSlots: 2,
   },
+  contracts: {
+    dryGulch: {
+      seamYieldMult: 1.4,
+    },
+  },
   eraCaps: {
     blastRadiusMult: 1.4,
     seamCapacityBonus: 40,

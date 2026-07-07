@@ -7,6 +7,8 @@ import { Balance } from '../game/Balance';
 
 export type WaterDiagnostics = {
   material: 'LivingWaterShader';
+  riverPresent: boolean;
+  fordPresent: boolean;
   riverTime: number;
   fordTime: number;
   quality: number;
@@ -14,6 +16,7 @@ export type WaterDiagnostics = {
   foam: boolean;
   glints: number;
   fordStones: number;
+  springPonds: number;
   waterPhaseVariance: number;
 };
 
@@ -205,6 +208,8 @@ export function waterDiagnostics(river: THREE.Mesh, ford: THREE.Mesh, fordStones
   const fordUniforms = waterUniforms(ford);
   return {
     material: 'LivingWaterShader',
+    riverPresent: true,
+    fordPresent: true,
     riverTime: round3(riverUniforms?.time.value ?? 0),
     fordTime: round3(fordUniforms?.time.value ?? 0),
     quality: round3(riverUniforms?.quality.value ?? waterQuality()),
@@ -212,7 +217,25 @@ export function waterDiagnostics(river: THREE.Mesh, ford: THREE.Mesh, fordStones
     foam: true,
     glints: (river.material as THREE.Material).userData.waterGlints ?? 0,
     fordStones: fordStones.count,
+    springPonds: 0,
     waterPhaseVariance: round3(waterPhaseVariance()),
+  };
+}
+
+export function dryWaterDiagnostics(springPonds: number): WaterDiagnostics {
+  return {
+    material: 'LivingWaterShader',
+    riverPresent: false,
+    fordPresent: false,
+    riverTime: 0,
+    fordTime: 0,
+    quality: round3(waterQuality()),
+    mobile: isMobileWater(),
+    foam: false,
+    glints: 0,
+    fordStones: 0,
+    springPonds,
+    waterPhaseVariance: 0,
   };
 }
 
