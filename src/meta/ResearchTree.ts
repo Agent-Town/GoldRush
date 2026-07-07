@@ -6,11 +6,14 @@ import {
   type MetaProgressStorage,
 } from '../game/MetaProgress';
 import { loadEpoch, type ContractTier } from './ContractFamilies';
+import { MEGAPROJECT_STATE_KEY } from './Megaproject';
 
 export const RESEARCH_STATE_KEY = 'gr.research.v1';
 export const STEAMWORKS_THRESHOLD = loadEpoch('epoch-1-frontier').threshold ?? 6;
 export const SCIENCE_CEILING_TEXT =
   'Epoch science complete — the Steamworks awaits a town to build it. (Steps beyond the threshold are banked for the new era.)';
+export const SCIENCE_BUILDING_TEXT =
+  'Epoch science complete — the town is building the Steamworks. (Steps beyond the threshold are already in the ledger.)';
 
 export type ResearchBranch = 'Prospecting Works' | 'Arsenal Works' | 'Assay Works';
 
@@ -34,6 +37,8 @@ export type ScienceMeter = {
   text: string;
   bankedText?: string;
 };
+
+export type SteamworksBuildStatus = 'awaiting-town' | 'building';
 
 export type ContinuedStudyBonuses = {
   seamYieldMult: number;
@@ -345,7 +350,7 @@ export function continuedStudyBonuses(state: ResearchState): ContinuedStudyBonus
   };
 }
 
-export function scienceMeter(state: ResearchState): ScienceMeter {
+export function scienceMeter(state: ResearchState, steamworksBuildStatus: SteamworksBuildStatus = 'awaiting-town'): ScienceMeter {
   const steps = Math.max(0, Math.floor(state.progress.tracks.science));
   const remaining = Math.max(0, STEAMWORKS_THRESHOLD - steps);
   const overflow = Math.max(0, steps - STEAMWORKS_THRESHOLD);
@@ -358,8 +363,25 @@ export function scienceMeter(state: ResearchState): ScienceMeter {
     overflow,
     complete,
     bankedText,
-    text: complete ? SCIENCE_CEILING_TEXT : `Science: ${steps} steps - ${remaining} to the Steamworks`,
+    text: complete
+      ? steamworksBuildStatus === 'building'
+        ? SCIENCE_BUILDING_TEXT
+        : SCIENCE_CEILING_TEXT
+      : `Science: ${steps} steps - ${remaining} to the Steamworks`,
   };
+}
+
+export function savedStampMillBuildStarted(): boolean {
+  try {
+    const saved = globalThis.localStorage?.getItem(MEGAPROJECT_STATE_KEY);
+    if (!saved) return false;
+    const project = (JSON.parse(saved) as { projects?: { 'stamp-mill'?: { funded?: boolean; stage?: number } } }).projects?.[
+      'stamp-mill'
+    ];
+    return project?.funded === true || (project?.stage ?? 0) > 0;
+  } catch {
+    return false;
+  }
 }
 
 export function browserResearchStorage(): MetaProgressStorage | undefined {

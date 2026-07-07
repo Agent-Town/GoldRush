@@ -61,6 +61,17 @@
         { "materials": { "gold": 10 }, "buildTicks": 2, "defenseWaves": [1, 3], "hp": 24 },
         { "materials": { "gold": 10 }, "buildTicks": 2, "defenseWaves": [1, 2], "hp": 30 }
       ]
+    },
+    {
+      "id": "stamp-mill",
+      "name": "The Stamp Mill",
+      "siteFootprint": { "x": -8, "z": 16, "w": 5, "d": 3 },
+      "unlockCondition": { "science": 6 },
+      "stages": [
+        { "materials": { "gold": 90 }, "buildTicks": 3, "defenseWaves": [1, 3, 5], "hp": 80 },
+        { "materials": { "gold": 140 }, "buildTicks": 4, "defenseWaves": [1, 3, 5, 7], "hp": 110 },
+        { "materials": { "gold": 190 }, "buildTicks": 5, "defenseWaves": [1, 2, 4, 6, 8], "hp": 150 }
+      ]
     }
   ],
   "parts": {

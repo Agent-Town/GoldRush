@@ -6,6 +6,7 @@ import {
   researchDistance,
   researchNodeById,
   researchPathIds,
+  savedStampMillBuildStarted,
   scienceMeter,
   type ResearchBranch,
   type ResearchNode,
@@ -22,7 +23,7 @@ export function renderResearchChart(state: ResearchState, selectedId?: string): 
   const selected = selectedId ? researchNodeById[selectedId] : undefined;
   const selectedPath = new Set(selected ? researchPathIds(selected.id) : []);
   const pinnedPath = new Set(pinnedResearchPath(state));
-  const meter = scienceMeter(state);
+  const meter = scienceMeter(state, savedStampMillBuildStarted() ? 'building' : 'awaiting-town');
   const frontier = new Set(frontierNodes(state).map((node) => node.id));
   return `
     <div class="research-chart" data-testid="research-chart">
