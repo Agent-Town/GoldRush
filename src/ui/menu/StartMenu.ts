@@ -1,6 +1,9 @@
 import {
+  PROFILE_DATA_KEYS,
+  createProfile,
   ensureProfileState,
   installProfileStorageScope,
+  loadProfileState,
 } from '../../game/ProfileStorage';
 import {
   browserResearchStorage,
@@ -33,12 +36,16 @@ export class StartMenu {
   private readonly root = document.createElement('section');
   private readonly audio = new SoundSystem();
   private disposeAudioSettings: () => void = () => undefined;
+  private storage?: Storage;
+  private firstBoot = false;
+  private profileMessage = '';
   private settingsOpen = false;
   private researchOpen = false;
   private selectedResearchNodeId: string | undefined;
 
   constructor(parent: HTMLElement, private readonly options: StartMenuOptions) {
-    setupProfileStorage();
+    this.storage = setupProfileStorage();
+    this.firstBoot = !!this.storage && !loadProfileState(this.storage);
     this.root.className = 'gr-start-menu';
     this.root.dataset.testid = 'start-menu';
     this.root.setAttribute('aria-label', 'Gold Rush start menu');
@@ -69,7 +76,10 @@ export class StartMenu {
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
         <p class="gr-start-menu__subtitle">an Agent Town tale</p>
         ${suspend ? `<p class="gr-start-menu__saved-claim" data-testid="start-menu-saved-claim">${runSuspendLabel(suspend)}</p>` : ''}
-        <nav class="gr-start-menu__nav" aria-label="Claim actions">
+        ${
+          this.firstBoot
+            ? this.renderFirstBoot()
+            : `<nav class="gr-start-menu__nav" aria-label="Claim actions">
           ${
             suspend
               ? `<button class="gr-start-menu__button" type="button" data-menu-action="continue" data-testid="start-menu-continue">Continue Wave ${suspend.wave}</button>`
@@ -80,7 +90,8 @@ export class StartMenu {
           <button class="gr-start-menu__button" type="button" data-menu-action="profile" data-testid="start-menu-profile">Profile</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="research" data-testid="start-menu-research">Research</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
-        </nav>
+        </nav>`
+        }
         <section class="gr-start-menu__settings" data-testid="start-menu-settings-panel" ${this.settingsOpen ? '' : 'hidden'}>
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
         </section>
@@ -90,6 +101,25 @@ export class StartMenu {
       </div>
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
+    this.root.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      this.createFirstProfile();
+    });
+  }
+
+  private renderFirstBoot(): string {
+    return `
+      <section class="gr-start-menu__first-profile" data-testid="profile-title" aria-label="Create profile">
+        <p class="death-overlay__eyebrow">Claim Ledger</p>
+        <h2>Who's prospecting?</h2>
+        <p>Name the ledger before the first claim.</p>
+        ${this.profileMessage ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.profileMessage)}</p>` : ''}
+        <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
+          <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Prospector name" />
+          <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
+        </form>
+      </section>
+    `;
   }
 
   private renderResearch(): string {
@@ -124,6 +154,22 @@ export class StartMenu {
     if (action === 'research') this.toggleResearch(true);
     if (action === 'research-close') this.toggleResearch(false);
   };
+
+  private createFirstProfile(): void {
+    if (!this.storage) return;
+    const input = this.root.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]');
+    const profile = createProfile(this.storage, input?.value ?? '');
+    if (!profile) {
+      this.profileMessage = 'Use a ledger name the family can read.';
+      this.render();
+      return;
+    }
+    installProfileStorageScope(this.storage);
+    this.firstBoot = false;
+    this.profileMessage = '';
+    this.render();
+    this.firstAction()?.focus({ preventScroll: true });
+  }
 
   private readonly onKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {
@@ -211,10 +257,27 @@ function setupProfileStorage(): Storage | undefined {
   try {
     const storage = globalThis.localStorage;
     if (!storage) return undefined;
-    ensureProfileState(storage);
-    installProfileStorageScope(storage);
+    if (!loadProfileState(storage) && hasLegacyProfileData(storage)) ensureProfileState(storage);
+    if (loadProfileState(storage)) installProfileStorageScope(storage);
     return storage;
   } catch {
     return undefined;
   }
+}
+
+function hasLegacyProfileData(storage: Storage): boolean {
+  for (const key of PROFILE_DATA_KEYS) {
+    if (storage.getItem(key) !== null) return true;
+  }
+  return false;
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (char) => {
+    if (char === '&') return '&amp;';
+    if (char === '<') return '&lt;';
+    if (char === '>') return '&gt;';
+    if (char === '"') return '&quot;';
+    return '&#39;';
+  });
 }

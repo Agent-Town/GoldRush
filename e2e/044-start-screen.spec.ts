@@ -1,6 +1,6 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { RUN_SUSPEND_KEY } from '../src/game/ProfileStorage';
+import { PROFILE_KEY, RUN_SUSPEND_KEY } from '../src/game/ProfileStorage';
 import { AUDIO_VOLUME_STORAGE_KEY } from '../src/systems/AudioSystem';
 import { Balance } from '../src/game/Balance';
 
@@ -18,10 +18,18 @@ function collectErrors(page: Page): ErrorBucket {
 }
 
 async function clearStorage(page: Page): Promise<void> {
-  await page.addInitScript(() => {
+  await page.addInitScript((profileKey) => {
     localStorage.clear();
     sessionStorage.clear();
-  });
+    localStorage.setItem(
+      profileKey,
+      JSON.stringify({
+        version: 2,
+        activeId: 'robin',
+        profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+      }),
+    );
+  }, PROFILE_KEY);
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {

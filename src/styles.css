@@ -141,6 +141,32 @@ body {
   gap: 10px;
 }
 
+.gr-start-menu__first-profile {
+  display: grid;
+  gap: 10px;
+  border: 2px solid #2e1b0e;
+  border-radius: 8px;
+  padding: 14px;
+  color: #2e1b0e;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.92), rgba(245, 230, 200, 0.98)),
+    var(--gr-menu-panel, none) center/cover,
+    #f5e6c8;
+  box-shadow:
+    inset 0 0 0 2px rgba(139, 125, 60, 0.28),
+    0 4px 0 rgba(46, 27, 14, 0.7);
+}
+
+.gr-start-menu__first-profile h2,
+.gr-start-menu__first-profile p {
+  margin: 0;
+}
+
+.gr-start-menu__first-profile h2 {
+  font-size: 1.45rem;
+  line-height: 1.05;
+}
+
 .gr-start-menu__button,
 .gr-start-menu__small-button {
   min-height: 48px;
