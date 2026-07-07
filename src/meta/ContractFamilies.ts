@@ -89,7 +89,26 @@ export type EpochCapsBundle = {
   contractTiers: ContractTierBudget[];
 };
 
+export type TileElevationDescriptor = {
+  grid?: {
+    columns: number;
+    rows: number;
+  };
+  cellSize: number;
+  heightsRef?: string;
+  analytic?: Record<string, number>;
+  slopeMax: number;
+  waterline?: number;
+};
+
+export type EpochTileDescriptor = {
+  id: string;
+  biome: string;
+  elevation?: TileElevationDescriptor;
+};
+
 export type EpochBundle = EpochMeta & {
+  tile?: EpochTileDescriptor;
   families: EpochUpgradeFamily[];
   gates: string[];
   masteryConversions: MasteryConversionRule[];
@@ -98,6 +117,7 @@ export type EpochBundle = EpochMeta & {
 };
 
 type EpochManifest = EpochMeta & {
+  tile?: EpochTileDescriptor;
   parts: {
     families?: string;
     caps?: string;
@@ -105,6 +125,8 @@ type EpochManifest = EpochMeta & {
   };
 };
 
+// Future locked-stub example:
+// tile: { id: 'steamworks-forge-yard', biome: 'steamworks', elevation: { grid: { columns: 33, rows: 33 }, cellSize: 2, heightsRef: 'tiles/forge-yard.hf32', slopeMax: 0.7, waterline: -0.1 } }
 const fallbackManifests: Record<string, EpochManifest> = {
   '../../assets/contracts/epoch-1-frontier/manifest.json': frontierManifest as EpochManifest,
   '../../assets/contracts/epoch-2-steamworks/manifest.json': steamworksManifest as EpochManifest,
@@ -152,12 +174,19 @@ export function loadEpoch(id: string): EpochBundle {
   const caps = loadCaps(manifest);
   return {
     ...toMeta(manifest),
+    tile: manifest.tile,
     families: families.families,
     gates: [...new Set(families.families.map((family) => family.unlockNodeId))],
     masteryConversions: families.masteryConversions,
     synergyCards: families.synergyCards,
     contractTiers: caps.contractTiers,
   };
+}
+
+export function activeTileDescriptor(): EpochTileDescriptor {
+  const tile = loadEpoch('epoch-1-frontier').tile;
+  if (!tile) throw new Error('Missing active tile descriptor: epoch-1-frontier');
+  return tile;
 }
 
 export function contractTierBudget(epochId: string, tier: number): ContractTierBudget {
@@ -200,6 +229,6 @@ function toMeta(manifest: EpochManifest): EpochMeta {
 
 try {
   if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')) {
-    window.__GR_CONTRACT_REGISTRY__ = { listEpochs, loadEpoch, contractTierBudget, contractBudgetOk };
+    window.__GR_CONTRACT_REGISTRY__ = { listEpochs, loadEpoch, activeTileDescriptor, contractTierBudget, contractBudgetOk };
   }
 } catch {}
