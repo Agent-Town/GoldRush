@@ -15,6 +15,7 @@ import { AGENT_DISPLAY_NAME, feedLineForReceipt } from './Voice';
 export type AgentStubOptions = ToolSurfaceOptions & {
   readonly tools?: GoldRushToolSurface;
   readonly debug?: boolean;
+  readonly clock?: () => number;
 };
 
 export type AgentStubState = {
@@ -39,6 +40,7 @@ export class AgentStub {
 
   constructor(private readonly surface: GoldRushToolSurface, options: AgentStubOptions = {}) {
     this.debug = options.debug ?? isDebugSearch();
+    this.clock = options.clock;
     if (this.debug && typeof document !== 'undefined') {
       this.marker = document.createElement('div');
       this.marker.dataset.testid = 'agent-stub-marker';
@@ -121,8 +123,8 @@ export class AgentStub {
     this.receiptCount += 1;
     this.lastReceiptTool = receipt.tool;
     const line = feedLineForReceipt(receipt, this.receiptCount);
-    if (line) this.receiptFeed.unshift(line);
-    if (this.receiptFeed.length > 3) this.receiptFeed.length = 3;
+    if (line) this.receiptFeed.unshift(`${formatRunTime(this.clock?.() ?? 0)} - ${line}`);
+    if (this.receiptFeed.length > 8) this.receiptFeed.length = 8;
     if (this.debug) {
       this.receipts.push(receipt);
       console.debug('[goldrush-agent]', receipt);
@@ -130,6 +132,8 @@ export class AgentStub {
     const state = this.state;
     for (const listener of this.listeners) listener(receipt, state);
   }
+
+  private readonly clock?: () => number;
 }
 
 export function install(game: AgentGameAdapter, options: AgentStubOptions = {}): AgentStub {
@@ -141,4 +145,10 @@ export function install(game: AgentGameAdapter, options: AgentStubOptions = {}):
 
 function isDebugSearch(): boolean {
   return typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug');
+}
+
+function formatRunTime(secondsAlive: number): string {
+  const minutes = Math.floor(secondsAlive / 60).toString().padStart(2, '0');
+  const seconds = Math.floor(secondsAlive % 60).toString().padStart(2, '0');
+  return `${minutes}:${seconds}`;
 }

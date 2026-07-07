@@ -2,6 +2,7 @@ import { Balance } from '../game/Balance';
 import type { BuildableId } from '../game/buildables';
 import type { CompassEdge } from '../entities/Enemy';
 import type { GameState, RunState } from '../game/GameState';
+import type { AgentConsentSnapshot } from '../agent/AgentConsent';
 
 export type WaveState = 'quiet' | 'warning' | 'active' | 'cleared';
 
@@ -49,6 +50,7 @@ export type UiSnapshot = {
     permissionLevel: number;
     permissionLabel: string;
     receiptFeed: readonly string[];
+    consent: AgentConsentSnapshot;
   } | null;
 };
 
