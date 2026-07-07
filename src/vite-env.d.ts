@@ -162,9 +162,18 @@ interface ThreeGameDiagnostics {
     gold: number;
     banked: number;
     bankCap: number;
+    resources: Record<string, { amount: number; cap: number }>;
+    activeResources: Array<{
+      id: string;
+      name: string;
+      amount: number;
+      cap: number;
+      iconSlot: string;
+      ledgerBlurb: string;
+    }>;
     logLength: number;
-    state: { gold: number; bankCap: number };
-    replay: { gold: number; bankCap: number };
+    state: { gold: number; bankCap: number; resources: Record<string, { amount: number; cap: number }> };
+    replay: { gold: number; bankCap: number; resources: Record<string, { amount: number; cap: number }> };
     summary: {
       panned: number;
       sluiced: number;
@@ -215,6 +224,9 @@ interface ThreeGameDiagnostics {
     requestedId: string | null;
     fallbackReason: 'debug-disabled' | 'unknown-contract' | null;
     warningSuppressed: boolean;
+    epochId: string;
+    epochResources: GrContractEpochBundle['resources'];
+    claimOffice: GrContractEpochBundle['claimOffice'];
     name: string;
     tileParams: GrContractManifest['tileParams'];
     boardRow: GrContractManifest['boardRow'];
@@ -622,6 +634,8 @@ interface Window {
   __GR_CONTRACT_REGISTRY__?: {
     listEpochs: () => GrContractEpochMeta[];
     loadEpoch: (id: string) => GrContractEpochBundle;
+    activeEpoch: () => GrContractEpochBundle;
+    activeEpochId: () => string;
     listContracts: (epochId?: string) => GrContractManifest[];
     loadContract: (id: string, epochId?: string) => GrContractManifest;
     activeContract: () => GrContractManifest;
@@ -660,6 +674,7 @@ interface Window {
     clearScores: () => void;
     setBalance: (path: string, value: number | boolean | string) => boolean;
     grantGold: (n: number) => void;
+    grantPressure: (n: number, actor?: 'player' | 'prospector') => void;
     grantXp: (n: number) => void;
     maxUpgrades: () => void;
     setUpgradeStacks: (stacks: Partial<Record<string, number>>) => void;

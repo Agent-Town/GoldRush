@@ -95,6 +95,17 @@
   max-width: calc(100vw - 32px);
 }
 
+.hud-panel--resource {
+  top: max(16px, env(safe-area-inset-top));
+  right: calc(max(16px, env(safe-area-inset-right)) + 148px);
+  display: grid;
+  grid-template-columns: 18px max-content minmax(5ch, 8ch);
+  align-items: center;
+  column-gap: 8px;
+  min-width: 152px;
+  max-width: calc(100vw - 180px);
+}
+
 .hud-panel--xp {
   right: max(16px, env(safe-area-inset-right));
   bottom: max(18px, env(safe-area-inset-bottom));
@@ -239,6 +250,18 @@
     radial-gradient(circle at 35% 30%, var(--at-sun-200) 0 22%, transparent 23%),
     var(--at-ochre-500);
   box-shadow: inset -2px -2px 0 rgba(46, 27, 14, 0.22);
+}
+
+.hud-gauge {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #5b8a8a;
+  border-radius: 50%;
+  background:
+    conic-gradient(from -40deg, #8ff5e8 0 28%, transparent 29% 100%),
+    radial-gradient(circle at 50% 58%, #f5e6c8 0 34%, #5b8a8a 35% 42%, transparent 43%),
+    #2e1b0e;
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 232, 0.42);
 }
 
 .hud-pause {
@@ -1062,6 +1085,19 @@
     max-width: calc(100vw - 24px);
     grid-template-columns: 16px max-content minmax(3ch, 7ch);
     column-gap: 6px;
+  }
+
+  .hud-panel--resource {
+    top: calc(max(12px, env(safe-area-inset-top)) + 48px);
+    right: max(12px, env(safe-area-inset-right));
+    min-width: 126px;
+    max-width: calc(100vw - 24px);
+    grid-template-columns: 16px max-content minmax(4ch, 7ch);
+    column-gap: 6px;
+  }
+
+  .hud--pressure-visible .hud-panel--weapon {
+    top: calc(max(12px, env(safe-area-inset-top)) + 106px);
   }
 
   .hud__wave {

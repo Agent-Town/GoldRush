@@ -12,6 +12,14 @@ export type UiSnapshot = {
   maxHp: number;
   gold: number;
   bankCap: number;
+  resources: Array<{
+    id: string;
+    name: string;
+    amount: number;
+    cap: number;
+    iconSlot: string;
+    ledgerBlurb: string;
+  }>;
   xp: number;
   xpNeed: number;
   level: number;
@@ -65,6 +73,7 @@ export class UiBridge {
     maxHp: 100,
     gold: 0,
     bankCap: Balance.economy.bankCap,
+    resources: [],
     xp: 0,
     xpNeed: Balance.xp.needBase,
     level: 1,
@@ -106,6 +115,7 @@ export class UiBridge {
     enemiesAlive: number,
     gold: number,
     bankCap: number,
+    resources: UiSnapshot['resources'],
     xp: number,
     xpNeed: number,
     level: number,
@@ -125,6 +135,7 @@ export class UiBridge {
   ): UiSnapshot {
     this.snapshot.gold = gold;
     this.snapshot.bankCap = bankCap;
+    this.snapshot.resources = resources;
     this.snapshot.xp = xp;
     this.snapshot.xpNeed = xpNeed;
     this.snapshot.level = level;

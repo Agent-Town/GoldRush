@@ -67,6 +67,32 @@ export type EpochMeta = {
   threshold: number | null;
 };
 
+export type EpochResourceDeclaration = {
+  id: string;
+  name: string;
+  iconSlot: string;
+  capDefault: number;
+  ledgerBlurb: string;
+};
+
+export type ClaimOfficeExchangeRow = {
+  id: string;
+  from: string;
+  to: string;
+  fromAmount: number;
+  toAmount: number;
+  ledgerBlurb: string;
+};
+
+export type ClaimOfficeManifest = {
+  exchange: ClaimOfficeExchangeRow[];
+  // META-CURRENCY SLOT: future overall-currency rows fit this exchange shape; no meta currency ships in E2.
+  metaCurrencySlot?: {
+    reserved: boolean;
+    note: string;
+  };
+};
+
 export type ContractRarity = 'common' | 'uncommon' | 'rare';
 export type ContractTier = 1 | 2 | 3;
 export type ContractTierBudget = {
@@ -202,6 +228,8 @@ export type EpochBundle = EpochMeta & {
   tile?: EpochTileDescriptor;
   devTiles: EpochTileDescriptor[];
   megaprojects: MegaprojectManifest[];
+  resources: EpochResourceDeclaration[];
+  claimOffice: ClaimOfficeManifest | null;
   contracts: ContractManifest[];
   families: EpochUpgradeFamily[];
   gates: string[];
@@ -214,6 +242,8 @@ type EpochManifest = EpochMeta & {
   tile?: EpochTileDescriptor;
   devTiles?: EpochTileDescriptor[];
   megaprojects?: MegaprojectManifest[];
+  resources?: EpochResourceDeclaration[];
+  claimOffice?: ClaimOfficeManifest;
   parts: {
     families?: string;
     caps?: string;
@@ -289,6 +319,8 @@ export function loadEpoch(id: string): EpochBundle {
     tile: manifest.tile,
     devTiles: manifest.devTiles ?? [],
     megaprojects: manifest.megaprojects ?? [],
+    resources: manifest.resources ?? [],
+    claimOffice: manifest.claimOffice ?? null,
     contracts: contracts.contracts,
     families: families.families,
     gates: [...new Set(families.families.map((family) => family.unlockNodeId))],
@@ -318,6 +350,17 @@ export function loadContract(id: string, epochId = DEFAULT_EPOCH_ID): ContractMa
   const contract = listContracts(epochId).find((entry) => entry.id === id);
   if (!contract) throw new Error(`Unknown contract: ${id}`);
   return contract;
+}
+
+export function activeEpoch(): EpochBundle {
+  return loadEpoch(activeEpochId());
+}
+
+export function activeEpochId(): string {
+  const params = readSearchParams();
+  const requestedId = params.get('epoch');
+  const debug = params.has('debug') || params.get('bench') === 'fullbase';
+  return requestedId && debug && manifestsById.has(requestedId) ? requestedId : DEFAULT_EPOCH_ID;
 }
 
 export function activeContract(): ContractManifest {
@@ -477,6 +520,8 @@ try {
     window.__GR_CONTRACT_REGISTRY__ = {
       listEpochs,
       loadEpoch,
+      activeEpoch,
+      activeEpochId,
       listContracts,
       loadContract,
       activeContract,
