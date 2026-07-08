@@ -24,6 +24,10 @@ if (initialSearch.has('debug') && initialSearch.has('simitem')) {
   void import('./crafting/StatSimHarness').then(({ installStatSimHarnessFromSearch }) => installStatSimHarnessFromSearch());
 }
 
+if (initialSearch.has('debug') && initialSearch.has('determinism')) {
+  void import('./diagnostics/DeterminismHarness').then(({ installDeterminismHarnessFromSearch }) => installDeterminismHarnessFromSearch());
+}
+
 if (initialSearch.get('bench') === 'fullbase') {
   const defaults = { debug: '', nolevel: '', nopause: '', seed: 'perf-02-fullbase', timescale: '24' };
   let changed = false;
