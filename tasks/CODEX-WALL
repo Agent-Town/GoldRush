@@ -1,27 +1,20 @@
-CODEX WALLED — real usage-limit hit (s186 fire, 2026-07-08 ~02:20Z / 09:20 local +0700).
+CODEX WALL LIFTED — codex resumed EARLY (before the 04:15Z reset). s188 fire, 2026-07-08 ~02:55Z / 09:55 local +0700.
 
-GROUND TRUTH (rc1 run-log tails — tiny ~900-byte logs = wall, not crash):
-  tasks/runs/20260708-090556-lane-b-...055-baron-kill-stop.md.log
-  tasks/runs/20260708-090811-lane-b-...057-baron-rocket-cart.md.log
-  tasks/runs/20260708-090942-lane-b-...town-t4-growth.md.log
-  tasks/runs/20260708-085339-lane-d-...gt-04-sightlines.md.log
-All end with:
-  "ERROR: You've hit your usage limit. Visit https://chatgpt.com/codex/settings/usage
-   to purchase more credits or try again at 11:15 AM."
+GROUND TRUTH (VERIFY-DON'T-INHERIT — live process + growing logs, not a probe):
+  `pgrep -fl "codex exec"` shows TWO live runs spawned 02:53:36Z:
+    - lane-b 055-baron-kill-stop  (tasks/runs/20260708-095336-lane-b-...055-baron-kill-stop.md.log = 387KB+ and GROWING)
+    - lane-d gt-04-sightlines     (tasks/runs/20260708-095336-lane-d-...gt-04-sightlines.md.log = 768KB+ and GROWING)
+  Large, growing run logs = real execution, NOT the ~900-byte "usage limit" fast-fails that defined the wall. Codex is BACK.
 
-RESET: 11:15 AM local (+0700) = 2026-07-08T04:15Z. Until then EVERY `codex exec` fast-fails.
-(This SUPERSEDES the s142 "WALL LIFTED" content that sat here stale — this is a fresh, real wall.)
+WHO RESUMED IT: the LIVE attended session (Cowork/Fable 5) — commit 267a4ca @02:52:45Z authored 4 masters
+  (lane-b AC-02 sign-in/sync, lane-c TR-01 continuous-ground, lane-d town-T5 townsfolk, audio-batch-002) and
+  re-queued the wall-class work; the runner picked 055 + gt-04 and is executing them. Attended is driving the resume.
 
-FIRE BEHAVIOR (§2.0 CODEX-WALL MODE):
-- NO refills, NO re-queues of wall-class failures until a probe succeeds (or the clock passes 04:15Z).
-- DRAINS / gates / merges / assayer / bookkeeping / authoring CONTINUE — Claude-side, unaffected
-  (s186 DRAINED 054-baron-epic while walled — proof the wall never blocks a drain).
-- Probe once per fire: `codex exec "reply exactly: OK"` (short timeout). On success → DELETE this flag,
-  re-queue wall-class failures ONCE each, note CODEX-RESUMED.
+CAVEAT — one SEPARATE transient auth blip (NOT a wall, NOT credit):
+  lane-c TR-01 (02:52:51Z, tasks/runs/...tr-01-continuous-ground.md.log) hit `401 Unauthorized: Missing bearer`
+  → 5x "Reconnecting" → died. This is the OAuth token-refresh race (see the s184 auth-fail lesson), not a usage wall
+  — 055/gt-04 started 45s later on the same account and authenticate fine. Runner/attended will re-pick or leave TR-01.
 
-UNBLOCKED-WHEN-CODEX-RETURNS (queue after the wall lifts — changed-premise safe):
-- lane-b 055-baron-kill-stop + 057-baron-rocket-cart: baron follow-ups, NOW that 054 epic-Baron is
-  MERGED (0bb7c07) their premise exists on main — re-queue from tasks/lane-b-055/057-*.md (attended-authored).
-- lane-b town-t4-growth: master at tasks/lane-b-town-t4-growth.md — re-queue.
-- lane-d gt-04-sightlines: re-queue per §2C (verify base fresh vs current main first).
-- lane-a stays PIPELINE-DRY (e2-science-socket owner-blocked, s178 — NOT a wall issue).
+STATUS: WALL IS OVER. This flag is retained-as-LIFTED only because a fire cannot `rm` it headless (rm is prompted).
+Next fire: §2.0 CODEX-WALL MODE does NOT apply — codex is live. Confirm with `pgrep -fl "codex exec"` (verify-don't-inherit)
+and proceed normally (drains/refills/re-queues all permitted once codex is confirmed live). Attended/next-attended may delete this file.
