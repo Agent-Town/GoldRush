@@ -723,6 +723,7 @@ export class Game {
             .filter((enemy) => enemy.isAlive)
             .map((enemy) => {
               const sim = terrainSimSample(enemy.position.x, enemy.position.z);
+              const terrainSample = Terrain.sample(enemy.position.x, enemy.position.z);
               return {
                 x: enemy.position.x,
                 y: enemy.position.y,
@@ -743,13 +744,13 @@ export class Game {
                 wreckState: enemy.wreckState,
                 carried: enemy.carriedAmount,
                 edge: enemy.ownEdge,
-                zone: Terrain.sample(enemy.position.x, enemy.position.z).zone,
+                zone: terrainSample.zone,
                 light: Number(this.enemies.lightFactorFor(enemy).toFixed(3)),
                 terrain: {
                   grounded: Math.abs(enemy.position.y - Terrain.visualY(enemy.position.x, enemy.position.z, Balance.enemy.groundY)) < 0.01,
                   slope: sim.slope,
                   traversable: sim.traversable,
-                  speedMul: terrainSpeedMultiplier(enemy.position.x, enemy.position.z, enemy.velocityX, enemy.velocityZ),
+                  speedMul: terrainSample.speedMul * terrainSpeedMultiplier(enemy.position.x, enemy.position.z, enemy.velocityX, enemy.velocityZ),
                 },
               };
             }),
@@ -2361,7 +2362,7 @@ export class Game {
   }
 
   private heroWeaponsDisarmed(): boolean {
-    return Balance.pathing.deepWaterDisarmsHero && Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone === 'river';
+    return Balance.pathing.deepWaterDisarmsHero && Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).waterClass === 'deep';
   }
 
   private currentBlastTarget(autoTarget: THREE.Vector3): THREE.Vector3 {

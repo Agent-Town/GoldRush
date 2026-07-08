@@ -498,6 +498,8 @@ interface ThreeGameDiagnostics {
         uphillMin: number;
         downhillMax: number;
         slopeMax: number;
+        wadeDepth: number;
+        deepDepth: number;
       };
       probes: Record<string, {
         height: number;
@@ -520,6 +522,12 @@ interface ThreeGameDiagnostics {
       visualHalfWidth: number;
       springPonds: number;
       waterPhaseVariance: number;
+      depth: {
+        river: number;
+        ford: number;
+        wade: number;
+        deep: number;
+      };
     };
     rails: {
       active: boolean;
@@ -589,6 +597,8 @@ interface ThreeGameDiagnostics {
       speedMul: number;
       zone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
       waterSource?: 'river' | 'spring_pond';
+      waterDepth?: number;
+      waterClass?: 'wade' | 'deep';
     }>;
   };
   canvas: {
@@ -612,6 +622,7 @@ type GrContractEpochMeta = import('./meta/ContractFamilies').EpochMeta;
 type GrContractEpochBundle = import('./meta/ContractFamilies').EpochBundle;
 type GrContractTierBudget = import('./meta/ContractFamilies').ContractTierBudget;
 type GrEpochTileDescriptor = import('./meta/ContractFamilies').EpochTileDescriptor;
+type GrContractWaterDescriptor = import('./meta/ContractFamilies').ContractWaterDescriptor;
 type GrContractManifest = import('./meta/ContractFamilies').ContractManifest;
 type GrActiveContractDiagnostics = import('./meta/ContractFamilies').ActiveContractDiagnostics;
 type GrTerrainSample = import('./world/Terrain').TerrainSample;
@@ -669,6 +680,7 @@ interface Window {
     activeContract: () => GrContractManifest;
     activeContractDiagnostics: () => GrActiveContractDiagnostics;
     activeTileDescriptor: () => GrEpochTileDescriptor;
+    activeWaterDescriptor: () => GrContractWaterDescriptor | undefined;
     contractTierBudget: (epochId: string, tier: number) => GrContractTierBudget;
     contractBudgetOk: (epochId: string, tier: number, rarity: 'common' | 'uncommon' | 'rare', budget: number) => boolean;
   };

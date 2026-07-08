@@ -388,6 +388,8 @@ export const Balance = {
     uphillMin: 0.6,
     downhillMax: 1.1,
     slopeMax: 0.35,
+    wadeDepth: 0.35,
+    deepDepth: 1,
   },
   sprite: {
     turnRateDegPerS: 540,
