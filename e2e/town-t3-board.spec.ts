@@ -207,7 +207,8 @@ test('post-run overrun returns straight to the town board and records a contract
     for (let pack = 0; pack < 6; pack += 1) window.__GR_TEST__?.spawnPack(5, 0.4);
   });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.runState), { timeout: 15_000 }).toBe('dead');
-  await expect(page.getByTestId('stake-again')).toHaveText('Contract Board');
+  await expect(page.getByTestId('stake-again')).toHaveText('Return to Town');
+  await expect(page.getByTestId('run-secondary-action')).toHaveText('Try Again');
   await page.getByTestId('stake-again').click();
   await expect(page.getByTestId('contract-board')).toBeVisible({ timeout: 8_000 });
   await expect(page.getByTestId('contract-best-the-claim')).not.toHaveText('No result yet');

@@ -131,7 +131,7 @@ test('earned meta is visible in run recap, pause ledger, and boosted cards', asy
   await expect(page.getByTestId('pause-meta-panel')).toHaveCSS('pointer-events', 'auto');
   await expect(page.getByTestId('pause-meta-panel')).toHaveCSS('overflow-y', 'auto');
   await expect(page.getByTestId('pause-meta-science')).toHaveText('Science: 2/6 steps; banked +0');
-  await expect(page.getByTestId('pause-meta-territory')).toHaveText('Territory III: palisade ring active (4 segments)');
+  await expect(page.getByTestId('pause-meta-territory')).toHaveText('Territory III: palisade ring active (8 segments)');
   await expect(page.getByTestId('pause-meta-boons')).toContainText('Assay Grading');
   await expect(page.getByTestId('pause-meta-boons')).toContainText('+35 stockpile cap');
   await expect(page.getByTestId('pause-meta-boons')).toContainText('Second Order Slot');

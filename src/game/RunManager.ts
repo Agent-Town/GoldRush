@@ -269,8 +269,8 @@ export class RunManager {
           }</p>
         </section>
         <div class="gr-run-overlay__actions">
-          <button class="death-overlay__button" type="button" data-testid="bank-secured-claim">New Claim</button>
-          <button class="death-overlay__button" type="button" data-testid="stay-for-rush">Stay for the Rush</button>
+          <button class="death-overlay__button" type="button" data-testid="bank-secured-claim">Return to Town</button>
+          <button class="death-overlay__button death-overlay__button--secondary" type="button" data-testid="stay-for-rush">Stay for the Rush</button>
         </div>
       </div>
     `;

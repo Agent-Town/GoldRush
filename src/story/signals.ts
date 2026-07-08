@@ -8,6 +8,7 @@ export type StorySignal =
   | { type: 'science-threshold'; threshold: number }
   | { type: 'science-complete' }
   | { type: 'stamp-site-found' }
+  | { type: 'run-return-town'; result: 'secured' | 'overrun' }
   | { type: 'contract-unlocked'; contractId: string; contractName: string; ledgerBlurb: string }
   | { type: 'rung-promotion'; level: number }
   | { type: 'rung-denied-toggle' }
@@ -30,6 +31,7 @@ export const STORY_SIGNAL_REGISTRY = [
   'science-threshold',
   'science-complete',
   'stamp-site-found',
+  'run-return-town',
   'contract-unlocked',
   'rung-promotion',
   'rung-denied-toggle',

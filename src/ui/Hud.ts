@@ -264,6 +264,12 @@ export class Hud {
     window.clearTimeout(this.announcementClearTimer);
     window.clearTimeout(this.metaRecapClearTimer);
     window.clearTimeout(this.contractBriefingTimer);
+    this.elements.root.classList.remove('hud--announcement-visible');
+    delete this.elements.root.dataset.announcementKind;
+    this.elements.contractBriefing.classList.remove('contract-briefing--visible');
+    this.elements.contractBriefing.hidden = true;
+    this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
+    this.elements.metaRecap.hidden = true;
   }
 
   showContractBriefing(briefing: ContractBriefingSnapshot): void {

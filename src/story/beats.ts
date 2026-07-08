@@ -162,6 +162,22 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     lines: ['Fund the first stage here.', "The Steamworks wants a founder's gold."],
   },
   {
+    id: 'return-secured',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: false,
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'secured',
+    lines: ['The town heard. Drinks tonight.'],
+  },
+  {
+    id: 'return-overrun',
+    trigger: 'run-return-town',
+    speaker: 'tavernkeeper',
+    oncePerProfile: false,
+    when: (signal) => signal.type === 'run-return-town' && signal.result === 'overrun',
+    lines: ["You're breathing. The claim can be re-staked."],
+  },
+  {
     id: 'board-unlock-dry-gulch',
     trigger: 'contract-unlocked',
     speaker: 'tavernkeeper',

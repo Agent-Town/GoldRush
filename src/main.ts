@@ -6,6 +6,7 @@ import { installFullBaseBenchmark } from './diagnostics/fullBaseBenchmark';
 import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
+import type { RunReturnResult } from './game/Game';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
 import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
@@ -135,12 +136,12 @@ function launchContract(contractId: string): void {
   startWithProfiles({ skipTitle: true, returnToMenu: true });
 }
 
-function runReturnCallback(): void {
-  if (runReturnTarget === 'board') returnToTownBoard();
+function runReturnCallback(result: RunReturnResult): void {
+  if (runReturnTarget === 'board') returnToTownBoard(result);
   else returnToStartMenu();
 }
 
-function returnToTownBoard(): void {
+function returnToTownBoard(result: RunReturnResult): void {
   town?.dispose();
   town = undefined;
   game?.dispose();
@@ -151,7 +152,7 @@ function returnToTownBoard(): void {
   profiles = undefined;
   startMenu?.dispose();
   startMenu = undefined;
-  openTown({ openBoard: true });
+  openTown({ openBoard: true, returnResult: result });
 }
 
 function returnToStartMenu(): void {
@@ -175,7 +176,7 @@ if (window.location.search === '') {
 
 installFullBaseBenchmark();
 
-function openTown(options: { openBoard?: boolean } = {}): void {
+function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult } = {}): void {
   markStartupFrameReady();
   void import('./town/TownScene').then(({ TownScene }) => {
     if (game || profiles) return;
