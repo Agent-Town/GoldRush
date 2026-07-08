@@ -43,6 +43,20 @@ const sounds = [
   ['wave-start-horn', 1.8, false, 'short wave-start horn, distant warm brass call over wood valley, alert not martial, no drums/voice, -14 LUFS', 'distant warm brass horn'],
   ['victory-sting', 3.0, false, 'three-second victory sting, rising warm brass and small bell, frontier celebration, no full music loop/voice, -14 LUFS', 'rising brass and bell'],
   ['defeat-sting', 3.0, false, 'three-second defeat sting, low wood tone and one bell, melancholy never doom, no dark drone/voice, -14 LUFS', 'low wood with single bell'],
+  ['desert-day-loop', 4.0, true, 'seamless quiet desert day ambience loop, dry warm wind over brush, distant sparse insects, frontier ledger claim bed, no melody/voice/words, -18 LUFS', 'dry wind and distant insects'],
+  ['desert-dusk-loop', 4.0, true, 'seamless quiet desert dusk ambience loop, sparse crickets, soft cooling breeze, wide handmade frontier bed, no melody/voice/words, -18 LUFS', 'sparse dusk crickets'],
+  ['river-bed-v2-loop', 4.0, true, 'seamless richer river bed loop, shallow current over gravel with bank breeze and tiny reeds, calm economy bed, no melody/voice/words, -18 LUFS', 'richer shallow river bed'],
+  ['town-square-loop', 4.0, true, 'seamless quiet town square ambience loop, light foot shuffle, wood porch creaks, distant cloth awnings, wordless murmur texture only, no distinct voices/words, -18 LUFS', 'light wordless town bustle'],
+  ['tavern-interior-loop', 4.0, true, 'seamless quiet tavern interior loop, warm wood creaks, soft room tone, low indistinct wordless murmur, no spoken words/singing/music, -18 LUFS', 'wood creak and wordless room tone'],
+  ['research-pick-sting', 1.5, false, 'short research pick sting, pencil scratch on ledger paper plus small warm bell, clever agent-town cue, no voice/full music, -14 LUFS', 'pencil and small bell'],
+  ['epoch-door-sting', 3.0, false, 'three-second epoch door sting, low warm brass swell with steam breath, Stamp Mill completion beat, frontier-tech not martial, no voice/drums, -14 LUFS', 'low brass and steam breath'],
+  ['baron-arrival-sting', 2.5, false, 'short baron arrival sting, dark warm brass cousin of the wave horn, low wood shadow, villain cue not horror, no voice/drums, -14 LUFS', 'dark brass arrival cue'],
+  ['baron-defeat-fanfare', 4.0, false, 'four-second baron defeat fanfare, triumphant warm brass with small bells, handmade frontier celebration, no voice/full music loop, -14 LUFS', 'triumphant brass and bells'],
+  ['town-enter-chime', 2.0, false, 'short town enter chime, two warm bells with soft porch-wood tail, arrival cue, no voice/music bed, -14 LUFS', 'warm arrival bells'],
+  ['founding-stamp-thunk', 0.8, false, 'short founding stamp thunk, rubber stamp on parchment with solid ledger desk thump, naming confirm, no voice/music, -14 LUFS', 'stamp on parchment and desk thump'],
+  ['save-tick', 0.5, false, 'tiny save tick, very short pencil scratch on paper, light UI confirmation, no beep/voice/music, -14 LUFS', 'tiny pencil scratch'],
+  ['slot-save-confirm', 1.0, false, 'short slot save confirm, ledger book closing with soft leather and paper puff, warm UI confirm, no voice/music, -14 LUFS', 'ledger book close'],
+  ['sign-in-chime', 1.2, false, 'short sign-in chime, two gentle post-code teal notes with paper-soft tail, no voice/music bed, -14 LUFS', 'two-note post-code chime'],
 ].map(([name, seconds, loop, prompt, readsAs]) => ({ name, seconds, loop, prompt, readsAs }));
 
 function cleanCell(value) {
@@ -165,8 +179,9 @@ function measuredDuration(file) {
 
 function qaStatus(sound, file) {
   const actual = measuredDuration(file);
-  const max = sound.loop ? 4 : sound.seconds === 3 ? 3.1 : 2.5;
-  const duration = actual == null ? `duration unknown, requested ${sound.seconds}s` : `duration ${actual.toFixed(2)}s ${actual >= 0.5 && actual <= max ? 'OK' : 'RETAKE-CANDIDATE batch-002'}`;
+  const min = sound.seconds < 0.5 ? 0.25 : 0.5;
+  const max = sound.loop ? 8 : Math.max(2.5, sound.seconds + 0.15);
+  const duration = actual == null ? `duration unknown, requested ${sound.seconds}s` : `duration ${actual.toFixed(2)}s ${actual >= min && actual <= max ? 'OK' : 'RETAKE-CANDIDATE batch-002'}`;
   const seam = sound.loop ? '; loop seam: generated with loop=true, audition seam before integration' : '';
   return `generated; ${duration}; reads as ${sound.readsAs}${seam}`;
 }
@@ -183,7 +198,7 @@ async function main() {
   }
   let current = start;
   const done = await generatedNames();
-  await ledger({ name: 'batch-start', prompt: 'remaining credits before audio-batch-001', seconds: 0, cost: 0, takes: 0, status: 'queried before batch', remaining: current.remaining });
+  await ledger({ name: 'batch-start', prompt: 'remaining credits before audio-batch-002', seconds: 0, cost: 0, takes: 0, status: 'queried before batch', remaining: current.remaining });
 
   for (const sound of sounds) {
     if (done.has(sound.name) && await exists(path.join(RAW_DIR, `${sound.name}.mp3`))) {
