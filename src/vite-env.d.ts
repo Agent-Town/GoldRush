@@ -538,6 +538,18 @@ interface ThreeGameDiagnostics {
   };
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
+    ground?: {
+      enabled: boolean;
+      mode: 'fallback' | 'continuous-mesh';
+      drawCalls: 1;
+      segments: number;
+      vertexStep: number;
+      vertices: number;
+      triangles: number;
+      heightSource: 'visual';
+      textureSource: 'bank-atlas';
+      textureSeams: 'texture seams remain until TR-02';
+    };
     sim: {
       flat: boolean;
       tile: string;

@@ -2008,6 +2008,7 @@ export class Game {
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
         playerZone: Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone,
+        ground: this.terrainView?.groundDiagnostics(),
         sim: simHeightDiagnostics(),
         water: this.terrainView?.diagnostics(),
         rails: this.railDiagnostics(),
