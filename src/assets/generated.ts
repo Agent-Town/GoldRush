@@ -227,16 +227,14 @@ export class GeneratedSpriteBatch {
     if (!sprite) return;
     sprite.position.set(position.x, position.y + this.options.y, position.z);
     this.requestedVisible[index] = visible;
-    sprite.visible = visible && this.loaded;
-    this.updateRenderedCount();
+    this.setSpriteVisible(sprite, visible && this.loaded);
   }
 
   hide(index: number): void {
     const sprite = this.sprites[index];
     if (!sprite) return;
     this.requestedVisible[index] = false;
-    sprite.visible = false;
-    this.updateRenderedCount();
+    this.setSpriteVisible(sprite, false);
   }
 
   setTintScalar(index: number, scalar: number): void {
@@ -258,18 +256,18 @@ export class GeneratedSpriteBatch {
   private syncVisibleSprites(): void {
     for (let i = 0; i < this.sprites.length; i += 1) {
       const sprite = this.sprites[i];
-      if (sprite) sprite.visible = this.requestedVisible[i] === true;
+      if (sprite) this.setSpriteVisible(sprite, this.requestedVisible[i] === true);
     }
-    this.updateRenderedCount();
   }
 
-  private updateRenderedCount(): void {
-    // s23 (m2-04 gate fix): 006 split jumpers into normal+thief batches on ONE slot id — a plain
-    // overwrite here let the last-updated (usually empty) batch zero the shared count every frame.
-    // Track this batch's contribution and adjust the shared total instead of overwriting it.
-    const count = this.sprites.filter((sprite) => sprite.visible).length;
-    renderedSprites[this.slotId] = Math.max(0, (renderedSprites[this.slotId] ?? 0) - this.renderedContribution) + count;
-    this.renderedContribution = count;
+  private setSpriteVisible(sprite: THREE.Sprite, visible: boolean): void {
+    if (sprite.visible === visible) return;
+    sprite.visible = visible;
+    const delta = visible ? 1 : -1;
+    this.renderedContribution = Math.max(0, this.renderedContribution + delta);
+    const count = Math.max(0, (renderedSprites[this.slotId] ?? 0) + delta);
+    if (count === 0) delete renderedSprites[this.slotId];
+    else renderedSprites[this.slotId] = count;
   }
 }
 

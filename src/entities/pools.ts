@@ -334,6 +334,7 @@ export class EnemyPool {
       this.spawnSerial += 1;
       this.active += 1;
       this.syncEnemyInstance(enemy);
+      this.syncEnemySprite(enemy);
       this.syncBossHpBar();
       return enemy;
     }
@@ -417,7 +418,7 @@ export class EnemyPool {
         onContact(enemy);
       }
     }
-    this.syncInstances();
+    this.syncRenderInstances();
     this.syncHitFlashes();
     const normalAnimation = this.activeAnimation(false);
     const thiefAnimation = this.activeAnimation(true);
@@ -445,6 +446,7 @@ export class EnemyPool {
     enemy.recycle();
     this.active = Math.max(0, this.active - 1);
     this.syncEnemyInstance(enemy);
+    this.syncEnemySprite(enemy);
     this.syncHitFlashes();
     this.syncBossHpBar();
   }
@@ -637,6 +639,11 @@ export class EnemyPool {
   }
 
   private syncInstances(): void {
+    this.syncRenderInstances();
+    this.syncSpriteVisuals();
+  }
+
+  private syncRenderInstances(): void {
     for (const enemy of this.enemies) {
       this.syncEnemyInstance(enemy);
     }
@@ -709,7 +716,6 @@ export class EnemyPool {
     this.setInstanceColor(this.sackMesh, enemy.id, this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
     this.syncBanner(enemy, lightFactor);
-    this.syncEnemySprite(enemy);
   }
 
   private syncBanner(enemy: ClaimJumperEnemy, lightFactor: number): void {
@@ -741,8 +747,8 @@ export class EnemyPool {
     const baronVisible = enemy.isAlive && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
     const normalVisible = enemy.isAlive && !enemy.isThief && !baronVisible;
     const thiefVisible = enemy.isAlive && enemy.isThief;
-    // ponytail: batch fades draw every live enemy twice; skip them for stress-sized packs unless sprites get instanced.
-    const showFade = this.active <= 64;
+    // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
+    const showFade = this.active <= 32;
     const normalMotion = this.spriteAnimator.motion;
     const thiefMotion = this.thiefSpriteAnimator.motion;
     const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;

@@ -48,7 +48,7 @@ export class SentryBeaconPool {
     roughness: 0.2,
     metalness: 0.06,
   });
-  private readonly legs: THREE.InstancedMesh[] = [];
+  private readonly legMesh = new THREE.InstancedMesh(this.legGeometry, this.legMaterial, Balance.beacon.maxCount * 3);
   private readonly capMesh = new THREE.InstancedMesh(this.capGeometry, this.capMaterial, Balance.beacon.maxCount);
   private readonly glassMesh = new THREE.InstancedMesh(this.glassGeometry, this.glassMaterial, Balance.beacon.maxCount);
   private readonly coreMesh = new THREE.InstancedMesh(this.coreGeometry, this.coreMaterial, Balance.beacon.maxCount);
@@ -58,13 +58,10 @@ export class SentryBeaconPool {
   constructor() {
     this.group.name = 'SentryBeaconPool';
     // Art slot: bld.sentry_beacon
-    for (let i = 0; i < 3; i += 1) {
-      const mesh = new THREE.InstancedMesh(this.legGeometry, this.legMaterial, Balance.beacon.maxCount);
-      mesh.frustumCulled = false;
-      mesh.castShadow = false;
-      this.legs.push(mesh);
-      this.group.add(mesh);
-    }
+    this.legMesh.name = 'SentryBeaconLegs';
+    this.legMesh.frustumCulled = false;
+    this.legMesh.castShadow = false;
+    this.group.add(this.legMesh);
     for (const mesh of [this.capMesh, this.glassMesh, this.coreMesh]) {
       mesh.frustumCulled = false;
       mesh.castShadow = false;
@@ -150,13 +147,13 @@ export class SentryBeaconPool {
     const position = this.positions[index];
     if (!position) return;
     const groundY = Terrain.visualY(position.x, position.z, 0, Balance.beacon.overlapRadius);
-    for (let leg = 0; leg < this.legs.length; leg += 1) {
+    for (let leg = 0; leg < 3; leg += 1) {
       const angle = leg * ((Math.PI * 2) / 3) + 0.2;
       this.syncObject.position.set(position.x + Math.cos(angle) * 0.27, groundY + 0.47, position.z + Math.sin(angle) * 0.27);
       this.syncObject.rotation.set(0.42 * Math.sin(angle), angle, 0.42 * Math.cos(angle));
       this.syncObject.scale.set(1, 1, 1);
       this.syncObject.updateMatrix();
-      this.legs[leg]?.setMatrixAt(index, this.syncObject.matrix);
+      this.legMesh.setMatrixAt(index * 3 + leg, this.syncObject.matrix);
     }
 
     this.syncPart(this.capMesh, index, position.x, groundY + 1.04, position.z, 1);
@@ -173,14 +170,14 @@ export class SentryBeaconPool {
   }
 
   private hide(index: number): void {
-    for (const leg of this.legs) leg.setMatrixAt(index, hiddenMatrix);
+    for (let leg = 0; leg < 3; leg += 1) this.legMesh.setMatrixAt(index * 3 + leg, hiddenMatrix);
     this.capMesh.setMatrixAt(index, hiddenMatrix);
     this.glassMesh.setMatrixAt(index, hiddenMatrix);
     this.coreMesh.setMatrixAt(index, hiddenMatrix);
   }
 
   private markNeedsUpdate(): void {
-    for (const leg of this.legs) leg.instanceMatrix.needsUpdate = true;
+    this.legMesh.instanceMatrix.needsUpdate = true;
     this.capMesh.instanceMatrix.needsUpdate = true;
     this.glassMesh.instanceMatrix.needsUpdate = true;
     this.coreMesh.instanceMatrix.needsUpdate = true;

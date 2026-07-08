@@ -5,6 +5,8 @@ type FloatingText = {
   sprite: THREE.Sprite;
   material: THREE.SpriteMaterial;
   texture: THREE.CanvasTexture;
+  canvas: HTMLCanvasElement;
+  context: CanvasRenderingContext2D;
   elapsed: number;
   duration: number;
   active: boolean;
@@ -24,9 +26,9 @@ export class Vfx {
   constructor() {
     this.group.name = 'Vfx';
     for (let index = 0; index < POOL_SIZE; index += 1) {
-      const texture = createTextTexture('', '#c4883a');
+      const textTexture = createTextTexture('', '#c4883a');
       const material = new THREE.SpriteMaterial({
-        map: texture,
+        map: textTexture.texture,
         transparent: true,
         opacity: 0,
         depthWrite: false,
@@ -39,7 +41,9 @@ export class Vfx {
       this.pool.push({
         sprite,
         material,
-        texture,
+        texture: textTexture.texture,
+        canvas: textTexture.canvas,
+        context: textTexture.context,
         elapsed: 0,
         duration: FLOAT_DURATION,
         active: false,
@@ -52,11 +56,9 @@ export class Vfx {
     const item = this.pool[this.cursor];
     this.cursor = (this.cursor + 1) % this.pool.length;
 
-    item.texture.dispose();
-    item.texture = createTextTexture(text, toCssColor(colorHex));
-    item.material.map = item.texture;
+    drawTextTexture(item.canvas, item.context, text, toCssColor(colorHex));
+    item.texture.needsUpdate = true;
     item.material.opacity = 1;
-    item.material.needsUpdate = true;
     item.elapsed = 0;
     item.duration = FLOAT_DURATION;
     item.active = true;
@@ -118,13 +120,26 @@ export class Vfx {
   }
 }
 
-function createTextTexture(text: string, color: string): THREE.CanvasTexture {
+function createTextTexture(
+  text: string,
+  color: string,
+): { texture: THREE.CanvasTexture; canvas: HTMLCanvasElement; context: CanvasRenderingContext2D } {
   const canvas = document.createElement('canvas');
   canvas.width = 192;
   canvas.height = 96;
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Unable to create floating text canvas');
+  drawTextTexture(canvas, context, text, color);
 
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.minFilter = THREE.LinearFilter;
+  texture.magFilter = THREE.LinearFilter;
+  texture.needsUpdate = true;
+  return { texture, canvas, context };
+}
+
+function drawTextTexture(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, text: string, color: string): void {
   context.clearRect(0, 0, canvas.width, canvas.height);
   context.font = '700 64px Georgia, serif';
   context.textAlign = 'center';
@@ -135,13 +150,6 @@ function createTextTexture(text: string, color: string): THREE.CanvasTexture {
   context.strokeText(text, canvas.width / 2, canvas.height / 2);
   context.fillStyle = color;
   context.fillText(text, canvas.width / 2, canvas.height / 2);
-
-  const texture = new THREE.CanvasTexture(canvas);
-  texture.colorSpace = THREE.SRGBColorSpace;
-  texture.minFilter = THREE.LinearFilter;
-  texture.magFilter = THREE.LinearFilter;
-  texture.needsUpdate = true;
-  return texture;
 }
 
 function toCssColor(colorHex: string | number): string {

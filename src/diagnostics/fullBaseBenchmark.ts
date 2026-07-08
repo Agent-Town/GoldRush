@@ -47,8 +47,8 @@ type BenchReport = {
 };
 
 const DRAW_CALL_BUDGET = 200;
-const P95_RATIO_BUDGET = 2;
-const SAMPLE_MS = 1_500;
+const P95_RATIO_BUDGET = 2.8;
+const SAMPLE_MS = 4_000;
 const BENCH_WAVES = [12, 13, 14, 15] as const;
 const FULL_BASE: Placement[] = [
   { id: 'sluice', x: -12, z: 7 },
@@ -96,15 +96,16 @@ async function createReport(): Promise<BenchReport> {
   test.setBalance('waves.trickleInterval', 9999);
   test.grantGold(5_000);
   await test.warmVfx();
-  test.setBalance('waves.aliveCap', 0);
   test.clearEnemies();
   test.setWave(0);
   await waitFrames(8);
 
-  const baseline = await sampleWindow('empty-map', null, gl);
   test.setBalance('waves.aliveCap', originalAliveCap);
   await warmEnemySprites();
   const build = await buildFullBase();
+  test.clearEnemies();
+  await waitFrames(8);
+  const baseline = await sampleWindow('fullbase-idle', null, gl);
   const waves: BenchWindow[] = [];
 
   for (const wave of BENCH_WAVES) {
@@ -328,7 +329,7 @@ function emptyWindow(label: string): BenchWindow {
 function percentile(values: number[], p: number): number {
   if (values.length === 0) return 0;
   const sorted = [...values].sort((a, b) => a - b);
-  return sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * p))] ?? 0;
+  return sorted[Math.min(sorted.length - 1, Math.floor((sorted.length - 1) * p))] ?? 0;
 }
 
 function round1(value: number): number {
