@@ -76,6 +76,17 @@ const CONTRACTS: readonly Briefing[] = [
       'Kill the Baron for the medal and double science.',
     ],
   },
+  {
+    id: 'e2-hill-mine',
+    name: 'The Hill Mine',
+    geographyLine: 'A terraced hillside mine above a flooded rail cut.',
+    goals: ['Hold the Boiler House pad and keep the rail cut open.'],
+    rules: [
+      'T2 and T3 pads out-range the valley, but cliff faces block bolts.',
+      'Claim-jumpers must climb the switchbacks; cliff bands are impassable.',
+      'The flooded gallery is deep except at the trestle and wet edge.',
+    ],
+  },
 ];
 
 function collectErrors(page: Page): ErrorBucket {

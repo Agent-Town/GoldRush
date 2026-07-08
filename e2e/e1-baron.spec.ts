@@ -329,7 +329,7 @@ test('contract board locks Baron until science-complete and shows the profile me
 
   await seedStorage(page);
   await openBoard(page);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
   await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText('Complete Frontier science first');

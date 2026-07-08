@@ -68,7 +68,10 @@ export type FordRange = {
   halfWidth: number;
 };
 
-export const CLAIM_SIZE = 64;
+const ACTIVE_CONTRACT = activeContract();
+const ACTIVE_TILE = activeTileDescriptor();
+export const DEFAULT_CLAIM_SIZE = 64;
+export const CLAIM_SIZE = ACTIVE_CONTRACT.tileParams.size ?? DEFAULT_CLAIM_SIZE;
 export const CLAIM_HALF = CLAIM_SIZE / 2;
 export const RIVER_MIN_Z = -5;
 export const RIVER_MAX_Z = 5;
@@ -78,8 +81,6 @@ export const SHALLOWS_WIDTH = 1.25;
 export const WATER_Y = 0.025;
 export const VISTA_RADIUS = 90;
 
-const ACTIVE_CONTRACT = activeContract();
-const ACTIVE_TILE = activeTileDescriptor();
 const ELEVATION_TILE = hasElevationTile();
 const TILE_HEIGHTFIELD = ACTIVE_CONTRACT.tileParams.heightfield;
 const TILE_PALETTE = ACTIVE_CONTRACT.tileParams.palette;
@@ -134,7 +135,7 @@ function fordAt(x: number, z: number): FordRange | null {
   return FORD_RANGES.find((range) => x >= range.minX && x <= range.maxX) ?? null;
 }
 
-export const nodeAnchors: Vec2[] = [
+const DEFAULT_NODE_ANCHORS: Vec2[] = [
   { x: -22, z: -6.8 },
   { x: -9, z: 6.7 },
   { x: -1.5, z: -6.4 },
@@ -142,6 +143,7 @@ export const nodeAnchors: Vec2[] = [
   { x: 18, z: -7 },
   { x: 25, z: 6.9 },
 ];
+export const nodeAnchors: Vec2[] = ACTIVE_CONTRACT.tileParams.harvestAnchors ?? DEFAULT_NODE_ANCHORS;
 
 export function sample(x: number, z: number): TerrainSample {
   if (x < bounds.minX || x > bounds.maxX || z < bounds.minZ || z > bounds.maxZ) {

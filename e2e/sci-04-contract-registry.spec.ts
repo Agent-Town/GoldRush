@@ -89,6 +89,7 @@ test('contract registry lists Frontier and locked Steamworks in order', async ({
     masteryConversions: [],
     synergyCards: [],
     contractTiers: [],
+    contracts: [{ id: 'e2-hill-mine' }],
   });
   assertNoErrors(errors);
 });
@@ -122,7 +123,7 @@ test('locked Steamworks stub loads without changing fresh offers', async ({ page
   const steamworks = await page.evaluate(() => window.__GR_CONTRACT_REGISTRY__?.loadEpoch('epoch-2-steamworks'));
   const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.progression.eligibility ?? []);
 
-  expect(steamworks).toMatchObject({ locked: true, families: [], gates: [] });
+  expect(steamworks).toMatchObject({ locked: true, families: [], gates: [], contracts: [{ id: 'e2-hill-mine' }] });
   expect(after).toEqual(before);
   expect(after).not.toContain('beacon_handoff');
   expect(after).not.toContain('spark_pressure_ring');

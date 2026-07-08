@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "epochId": "epoch-2-steamworks",
+  "contracts": [
+    {
+      "id": "e2-hill-mine",
+      "name": "The Hill Mine",
+      "tileParams": {
+        "tileId": "e2-hill-mine",
+        "biome": "steamworks-hill-mine",
+        "size": 96,
+        "river": true,
+        "ford": true,
+        "fords": [{ "id": "trestle", "x": 0, "halfWidth": 4 }],
+        "buildZones": [
+          { "id": "base-t1", "bank": "north", "minX": -30, "maxX": 30, "minZ": 8, "maxZ": 16 },
+          { "id": "t2-west", "bank": "north", "minX": -38, "maxX": -20, "minZ": 21, "maxZ": 29 },
+          { "id": "t2-east", "bank": "north", "minX": 20, "maxX": 38, "minZ": 21, "maxZ": 29 },
+          { "id": "t3-west", "bank": "north", "minX": -36, "maxX": -22, "minZ": 37, "maxZ": 44 },
+          { "id": "t3-east", "bank": "north", "minX": 22, "maxX": 36, "minZ": 37, "maxZ": 44 }
+        ],
+        "stakeMarkers": [{ "id": "boiler-house-site", "x": 0, "z": 12, "lossCondition": true }],
+        "rails": [
+          {
+            "style": "steamworks",
+            "points": [
+              { "x": -46, "z": -2 },
+              { "x": -24, "z": -1 },
+              { "x": 0, "z": 0 },
+              { "x": 24, "z": -1 },
+              { "x": 46, "z": -2 }
+            ]
+          },
+          {
+            "style": "mine-spur",
+            "points": [
+              { "x": -34, "z": 12 },
+              { "x": -22, "z": 16 },
+              { "x": -10, "z": 24 },
+              { "x": 10, "z": 24 },
+              { "x": 24, "z": 34 }
+            ]
+          },
+          {
+            "style": "mine-spur",
+            "points": [
+              { "x": 30, "z": 38 },
+              { "x": 12, "z": 42 },
+              { "x": -6, "z": 41 }
+            ]
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -30, "z": 25 },
+          { "x": -10, "z": 29 },
+          { "x": 18, "z": 25 },
+          { "x": -25, "z": 39 },
+          { "x": 26, "z": 39 }
+        ],
+        "elevation": {
+          "cellSize": 2,
+          "slopeMax": 0.35,
+          "waterline": -0.1,
+          "analytic": {
+            "hillMine": 1,
+            "creekHeight": -0.5,
+            "railHeight": 0,
+            "t1Height": 1.5,
+            "t2Height": 3,
+            "t3Height": 4.5,
+            "creekBlendStart": -12,
+            "creekBlendEnd": -5,
+            "t1RampStart": 5,
+            "t1RampEnd": 14,
+            "t2RampStart": 18,
+            "t2RampEnd": 26,
+            "t3RampStart": 32,
+            "t3RampEnd": 40,
+            "cliffMinX": -16,
+            "cliffMaxX": 16,
+            "cliffMinZ": 18,
+            "cliffMaxZ": 23,
+            "cliffAmp": 2.2,
+            "cliffFeather": 1,
+            "mineMouthX": -6,
+            "mineMouthZ": 41,
+            "mineMouthRadius": 5,
+            "mineMouthCrown": 0.22
+          }
+        },
+        "heightfield": {
+          "id": "hill-mine-terraces",
+          "mode": "visual"
+        },
+        "palette": {
+          "id": "hill-mine-scree-road",
+          "tint": [0.86, 0.82, 0.74],
+          "dampTint": [0.35, 0.43, 0.42],
+          "dampAmount": 0.36
+        },
+        "scatter": {
+          "id": "hill-mine-scree-ruts",
+          "density": 0.82,
+          "classCounts": {
+            "rocks": 94,
+            "dry_grass": 38,
+            "wagon_ruts": 28,
+            "claim_posts": 10
+          }
+        },
+        "water": {
+          "id": "hill-mine-flooded-gallery",
+          "visualHalfWidth": 10,
+          "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.25, "springPond": 0.2 },
+          "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72, "springPond": 0.8 }
+        },
+        "lanes": {
+          "spawnEdges": ["west", "east", "north"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "secureWave": 25
+      },
+      "boardRow": {
+        "name": "The Hill Mine",
+        "ledgerBlurb": "Terraced steamworks ground: hold the mine mouth, the rail cut, and the flooded gallery.",
+        "tags": ["steamworks"],
+        "unlock": "epoch-2-steamworks"
+      },
+      "briefing": {
+        "goals": ["Hold the Boiler House pad and keep the rail cut open."],
+        "rules": [
+          "T2 and T3 pads out-range the valley, but cliff faces block bolts.",
+          "Claim-jumpers must climb the switchbacks; cliff bands are impassable.",
+          "The flooded gallery is deep except at the trestle and wet edge."
+        ],
+        "geographyLine": "A terraced hillside mine above a flooded rail cut."
+      }
+    }
+  ]
+}

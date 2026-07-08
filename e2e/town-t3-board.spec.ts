@@ -127,7 +127,7 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
     {
       name: 'fresh',
       seed: {},
-      locked: { 'e1-dry-gulch': true, 'e1-twin-banks': true, 'e1-night-shift': true },
+      locked: { 'e1-dry-gulch': true, 'e1-twin-banks': true, 'e1-night-shift': true, 'e2-hill-mine': true },
     },
     {
       name: 'wave-10',
@@ -137,30 +137,31 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
           { waves: 12, gold: 88, contractId: 'e1-dry-gulch' },
         ],
       },
-      locked: { 'e1-dry-gulch': false, 'e1-twin-banks': true, 'e1-night-shift': true },
+      locked: { 'e1-dry-gulch': false, 'e1-twin-banks': true, 'e1-night-shift': true, 'e2-hill-mine': true },
     },
     {
       name: 'secured',
       seed: { scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] },
-      locked: { 'e1-dry-gulch': false, 'e1-twin-banks': false, 'e1-night-shift': true },
+      locked: { 'e1-dry-gulch': false, 'e1-twin-banks': false, 'e1-night-shift': true, 'e2-hill-mine': true },
     },
     {
       name: 'science-complete',
       seed: { science: 6, scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] },
-      locked: { 'e1-dry-gulch': false, 'e1-twin-banks': false, 'e1-night-shift': false },
+      locked: { 'e1-dry-gulch': false, 'e1-twin-banks': false, 'e1-night-shift': false, 'e2-hill-mine': true },
     },
   ] as const;
 
   for (const entry of cases) {
     await seedStorage(page, entry.seed);
     await openBoard(page);
-    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
     await expect(page.getByTestId('contract-card-the-claim')).toHaveAttribute('data-contract-locked', 'false');
     for (const [id, locked] of Object.entries(entry.locked)) {
       await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', locked ? 'true' : 'false');
     }
     if (entry.name === 'fresh') {
       await expect(page.getByTestId('contract-launch-e1-twin-banks')).toHaveText('Secure a claim first');
+      await expect(page.getByTestId('contract-launch-e2-hill-mine')).toHaveText('Awaits the Steamworks era');
       await expect(page.getByTestId('contract-best-the-claim')).toHaveText('No result yet');
     }
     if (entry.name === 'wave-10') {
@@ -216,7 +217,7 @@ test('contract board scrolls and keeps tap targets usable at 390px', async ({ pa
   await page.setViewportSize({ width: 390, height: 844 });
   await seedStorage(page, { science: 6, scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] });
   await openBoard(page);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
   const buttonBox = await page.getByTestId('contract-launch-e1-night-shift').boundingBox();
   expect(buttonBox?.height ?? 0).toBeGreaterThanOrEqual(44);
   await shot(page, testInfo, 'mobile-390-board');

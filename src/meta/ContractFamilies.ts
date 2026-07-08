@@ -2,6 +2,7 @@ import frontierCaps from '../../assets/contracts/epoch-1-frontier/caps.json' wit
 import frontierContracts from '../../assets/contracts/epoch-1-frontier/contracts.json' with { type: 'json' };
 import frontierFamilies from '../../assets/contracts/epoch-1-frontier/families.json' with { type: 'json' };
 import frontierManifest from '../../assets/contracts/epoch-1-frontier/manifest.json' with { type: 'json' };
+import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import steamworksManifest from '../../assets/contracts/epoch-2-steamworks/manifest.json' with { type: 'json' };
 import type { MegaprojectManifest } from './Megaproject';
 
@@ -181,6 +182,10 @@ export type RailPathDescriptor = {
   points: RailPathPoint[];
   style?: 'placeholder' | 'steamworks' | 'mine-spur';
 };
+export type ContractHarvestAnchor = {
+  x: number;
+  z: number;
+};
 export type ContractHeightfieldDescriptor = {
   id: string;
   mode: 'visual';
@@ -251,6 +256,7 @@ export type ContractManifest = {
   tileParams: {
     tileId: string;
     biome: string;
+    size?: number;
     river: boolean;
     ford: boolean;
     fords?: ContractFord[];
@@ -258,6 +264,8 @@ export type ContractManifest = {
     stakeMarkers?: ContractStakeMarker[];
     rails?: RailPathDescriptor[];
     waterSources: ContractWaterSource[];
+    harvestAnchors?: ContractHarvestAnchor[];
+    elevation?: TileElevationDescriptor;
     heightfield?: ContractHeightfieldDescriptor;
     palette?: ContractPaletteDescriptor;
     scatter?: ContractScatterDescriptor;
@@ -364,6 +372,7 @@ const fallbackCapsBundles: Record<string, EpochCapsBundle> = {
 };
 const fallbackContractBundles: Record<string, ContractsBundle> = {
   '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
+  '../../assets/contracts/epoch-2-steamworks/contracts.json': steamworksContracts as unknown as ContractsBundle,
 };
 
 const manifests =
@@ -432,6 +441,7 @@ export function activeTileDescriptor(): EpochTileDescriptor {
     id: contract.tileParams.tileId,
     biome: contract.tileParams.biome,
   };
+  if (contract.tileParams.elevation) tile.elevation = contract.tileParams.elevation;
   if (contract.tileParams.rails) tile.rails = contract.tileParams.rails;
   if (!tile) throw new Error('Missing active tile descriptor: epoch-1-frontier');
   return tile;
@@ -448,6 +458,10 @@ export function activeWaterDescriptor(): ContractWaterDescriptor | undefined {
 
 export function listContracts(epochId = DEFAULT_EPOCH_ID): ContractManifest[] {
   return loadEpoch(epochId).contracts;
+}
+
+export function listBoardContracts(): ContractManifest[] {
+  return orderedManifests.flatMap((manifest) => loadContracts(manifest).contracts);
 }
 
 export function loadContract(id: string, epochId = DEFAULT_EPOCH_ID): ContractManifest {
@@ -543,13 +557,15 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
   const params = new URLSearchParams(search);
   const requestedId = params.get('contract');
   const debug = params.has('debug') || params.get('bench') === 'fullbase';
+  const launched = requestedId ? isPlayerContractLaunch(requestedId) : false;
   let contract = fallback;
   let fallbackReason: ActiveContractDiagnostics['fallbackReason'] = null;
 
-  if (requestedId && !debug && !isPlayerContractLaunch(requestedId)) {
+  if (requestedId && !debug && !launched) {
     fallbackReason = 'debug-disabled';
   } else if (requestedId) {
-    contract = contracts.find((entry) => entry.id === requestedId) ?? fallback;
+    const candidates = debug || launched ? listBoardContracts() : contracts;
+    contract = candidates.find((entry) => entry.id === requestedId) ?? fallback;
     if (contract.id !== requestedId) fallbackReason = 'unknown-contract';
   }
 
@@ -659,6 +675,7 @@ try {
       activeEpoch,
       activeEpochId,
       listContracts,
+      listBoardContracts,
       loadContract,
       activeContract,
       activeContractDiagnostics,

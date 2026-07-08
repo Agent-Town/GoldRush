@@ -11,7 +11,7 @@ import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal } from '../game/Medals';
 import { loadMetaProgress } from '../game/MetaProgress';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
-import { DEFAULT_CONTRACT_ID, listContracts, type ContractManifest } from '../meta/ContractFamilies';
+import { DEFAULT_CONTRACT_ID, listBoardContracts, type ContractManifest } from '../meta/ContractFamilies';
 import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
@@ -373,7 +373,7 @@ export class TownScene {
   }
 
   private renderBoard(): void {
-    const rows = listContracts();
+    const rows = listBoardContracts();
     const scores = loadScores();
     const backdropStyle = this.tavernBackdropUrl ? ` style="background-image:url('${this.tavernBackdropUrl}')"` : '';
     this.board.innerHTML = `
@@ -395,7 +395,7 @@ export class TownScene {
 
   private emitBoardStorySignals(): void {
     emitStorySignal({ type: 'board-first-open' });
-    for (const contract of listContracts()) {
+    for (const contract of listBoardContracts()) {
       if (contract.id === DEFAULT_CONTRACT_ID || !contractUnlock(contract).unlocked) continue;
       emitStorySignal({
         type: 'contract-unlocked',
@@ -519,6 +519,7 @@ function contractUnlock(contract: ContractManifest): { unlocked: boolean; condit
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
   }
+  if (unlock === 'epoch-2-steamworks') return { unlocked: false, condition: 'Awaits the Steamworks era' };
   if (unlock.startsWith('science')) {
     const required = Number.parseInt(unlock.match(/\d+/)?.[0] ?? '0', 10);
     const storage = browserStorage();

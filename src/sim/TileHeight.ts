@@ -31,6 +31,7 @@ let lastLosCheck: TerrainLosCheck = initialLosCheck();
 export function simHeight(x: number, z: number): number {
   if (!ACTIVE_TILE.elevation) return 0;
   const analytic = ACTIVE_TILE.elevation.analytic ?? {};
+  if (analytic.hillMine === 1) return hillMineHeight(x, z, analytic);
   const bowlDepth = analytic.bowlDepth ?? 0;
   const bowlRadius = Math.max(0.001, analytic.bowlRadius ?? 1);
   const bowlX = x - (analytic.bowlCenterX ?? 0);
@@ -355,6 +356,33 @@ function insideCliffBand(x: number, z: number): boolean {
     z >= (analytic.cliffMinZ ?? Number.POSITIVE_INFINITY) &&
     z <= (analytic.cliffMaxZ ?? Number.NEGATIVE_INFINITY)
   );
+}
+
+function hillMineHeight(x: number, z: number, analytic: Record<string, number>): number {
+  const creek = analytic.creekHeight ?? -0.5;
+  const rail = analytic.railHeight ?? 0;
+  const t1 = analytic.t1Height ?? 1.5;
+  const t2 = analytic.t2Height ?? 3;
+  const t3 = analytic.t3Height ?? 4.5;
+  let height = rail;
+  height += (creek - rail) * (1 - smoothstep(analytic.creekBlendStart ?? -12, analytic.creekBlendEnd ?? -5, z));
+  height += (t1 - rail) * smoothstep(analytic.t1RampStart ?? 5, analytic.t1RampEnd ?? 14, z);
+  height += (t2 - t1) * smoothstep(analytic.t2RampStart ?? 18, analytic.t2RampEnd ?? 26, z);
+  height += (t3 - t2) * smoothstep(analytic.t3RampStart ?? 32, analytic.t3RampEnd ?? 40, z);
+
+  const cliffFeather = Math.max(0.001, analytic.cliffFeather ?? 1);
+  const cliffMask =
+    smoothstep((analytic.cliffMinX ?? -16) - cliffFeather, analytic.cliffMinX ?? -16, x) *
+    (1 - smoothstep(analytic.cliffMaxX ?? 16, (analytic.cliffMaxX ?? 16) + cliffFeather, x)) *
+    smoothstep((analytic.cliffMinZ ?? 18) - cliffFeather, analytic.cliffMinZ ?? 18, z) *
+    (1 - smoothstep(analytic.cliffMaxZ ?? 23, (analytic.cliffMaxZ ?? 23) + cliffFeather, z));
+  height += (analytic.cliffAmp ?? 0) * cliffMask;
+
+  const mouthRadius = Math.max(0.001, analytic.mineMouthRadius ?? 1);
+  const mouthX = x - (analytic.mineMouthX ?? 0);
+  const mouthZ = z - (analytic.mineMouthZ ?? 40);
+  const mouth = Math.exp(-(mouthX * mouthX + mouthZ * mouthZ) / (2 * mouthRadius * mouthRadius));
+  return height + (analytic.mineMouthCrown ?? 0) * mouth;
 }
 
 function smoothstep(edge0: number, edge1: number, value: number): number {

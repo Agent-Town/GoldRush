@@ -747,6 +747,7 @@ interface Window {
     activeEpoch: () => GrContractEpochBundle;
     activeEpochId: () => string;
     listContracts: (epochId?: string) => GrContractManifest[];
+    listBoardContracts: () => GrContractManifest[];
     loadContract: (id: string, epochId?: string) => GrContractManifest;
     activeContract: () => GrContractManifest;
     activeContractDiagnostics: () => GrActiveContractDiagnostics;

@@ -211,7 +211,6 @@
   display: flex;
   flex-direction: column;
   gap: 9px;
-  min-height: 348px;
   border: 2px solid rgba(46, 27, 14, 0.82);
   border-radius: 8px;
   padding: 12px;
@@ -307,7 +306,7 @@
 }
 
 .town-ui__contract-best:not(.town-ui__contract-medal) {
-  margin-top: auto;
+  margin-top: 4px;
 }
 
 .town-ui__contract-stakes,
@@ -476,10 +475,6 @@
     grid-template-columns: 1fr;
     gap: 10px;
     padding: 10px;
-  }
-
-  .town-ui__contract {
-    min-height: 330px;
   }
 
   .town-ui__title span {
