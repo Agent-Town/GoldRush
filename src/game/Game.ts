@@ -116,6 +116,7 @@ import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
+import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics } from '../systems/PowerGraph';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
@@ -285,6 +286,7 @@ export class Game {
   private terrainView?: TerrainView;
   private railPath?: RailPathView;
   private megaprojectRailPath?: RailPathView;
+  private powerGraph?: PowerGraphSystem;
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -876,6 +878,7 @@ export class Game {
     this.megaprojectGhostMaterial.dispose();
     this.railPath?.dispose();
     this.megaprojectRailPath?.dispose();
+    this.powerGraph?.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -974,6 +977,7 @@ export class Game {
         },
         (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
       );
+      this.powerGraph?.update(this.timeAlive);
       this.syncStockpileHoldings();
       this.enemies.update(
         simDelta,
@@ -1165,6 +1169,10 @@ export class Game {
       this.megaprojectRailPath = new RailPathView(STAMP_MILL_RAIL_SPUR);
       this.megaprojectRailPath.group.visible = false;
       this.scene.add(this.megaprojectRailPath.group);
+    }
+    if (isDevPowerGraphEnabled()) {
+      this.powerGraph = new PowerGraphSystem(devPowerGraphDefinition());
+      this.scene.add(this.powerGraph.group);
     }
     this.detailScatter = new DetailScatter();
     this.scene.add(this.detailScatter.group);
@@ -1535,6 +1543,7 @@ export class Game {
       },
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
+      power: this.powerGraph?.diagnostics() ?? emptyPowerGraphDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -3262,6 +3271,11 @@ function browserMegaprojectStorage(): MegaprojectStorage | undefined {
   } catch {
     return undefined;
   }
+}
+
+function isDevPowerGraphEnabled(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('debug') && params.get('power') === 'dev';
 }
 
 function percentile(sorted: readonly number[], ratio: number): number {

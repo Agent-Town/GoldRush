@@ -543,7 +543,7 @@ function isPlayerContractLaunch(id: string): boolean {
 
 function activeDevTileOverride(): EpochTileDescriptor | null {
   const params = readSearchParams();
-  const requestedId = params.get('tile');
+  const requestedId = params.get('power') === 'dev' ? 'gt-test-basin' : params.get('tile');
   if (!requestedId || !params.has('debug')) return null;
   const tile = manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((entry) => entry.id === requestedId);
   if (!tile) return null;

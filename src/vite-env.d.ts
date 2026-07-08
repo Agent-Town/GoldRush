@@ -257,6 +257,7 @@ interface ThreeGameDiagnostics {
     contractTier: number;
   };
   megaproject: GrMegaprojectDiagnostics;
+  power: GrPowerGraphDiagnostics;
   agent: {
     stub: {
       name: string;
@@ -618,6 +619,7 @@ type GrContractManifest = import('./meta/ContractFamilies').ContractManifest;
 type GrActiveContractDiagnostics = import('./meta/ContractFamilies').ActiveContractDiagnostics;
 type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
+type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 
 interface Window {
   __GR_STORY__?: {
