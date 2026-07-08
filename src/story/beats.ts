@@ -13,6 +13,9 @@ export type StoryBeat = {
   seenKey?: (signal: StorySignal) => string;
 };
 
+const contractLine = (signal: StorySignal, fallback: string): string =>
+  signal.type === 'contract-unlocked' ? signal.ledgerBlurb : fallback;
+
 export const STORY_BEATS: readonly StoryBeat[] = [
   {
     id: 'founding-welcome',
@@ -30,7 +33,7 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'tavernkeeper',
     pointer: '[data-testid="contract-launch-the-claim"]',
     oncePerProfile: true,
-    lines: ['First contract is on the board.', 'The Claim is where every ledger starts.'],
+    lines: ['Claim this card first.', 'The river stake is where every ledger starts.'],
   },
   {
     id: 'town-growth-general-store',
@@ -49,18 +52,27 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     lines: ['Chapel bell went up at sundown.', 'Folks are putting roots under their boots.'],
   },
   {
+    id: 'first-wave-five',
+    trigger: 'wave-complete',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'wave-complete' && signal.wave >= 5,
+    lines: ['Fifth horn recorded.', 'After this, repairs beat replacements on the books.'],
+  },
+  {
     id: 'first-loss',
     trigger: 'building-lost',
     speaker: 'clerk',
     oncePerProfile: true,
-    lines: ['Timber breaks; ledgers do not.', 'Stand near a ruin with gold to mend it.'],
+    lines: ['Broken timber is a debit, not a funeral.', 'Stand near a ruin with gold to mend it.'],
   },
   {
     id: 'first-victory',
     trigger: 'first-victory',
     speaker: 'elder',
+    pointer: '[data-testid="research-overlay"]',
     oncePerProfile: true,
-    lines: ['A secured claim buys more than gold.', 'Take a science step before the next trail.'],
+    lines: ['A secured claim buys more than gold.', 'Take one science step before the next trail.'],
   },
   {
     id: 'deputy-hello',
@@ -79,9 +91,54 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     lines: ['That chore needs trust first.', 'Secured claims raise my rung.'],
   },
   {
+    id: 'deputy-first-promotion',
+    trigger: 'rung-promotion',
+    speaker: 'prospector',
+    pointer: '[data-testid="hud-agent"]',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'rung-promotion' && signal.level >= 1,
+    lines: ['First rung logged.', 'I can ask before I spend a chore.'],
+  },
+  {
+    id: 'deputy-trusted-routine',
+    trigger: 'rung-promotion',
+    speaker: 'prospector',
+    pointer: '[data-testid="hud-agent"]',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'rung-promotion' && signal.level >= 2,
+    lines: ['Trusted routine unlocked.', 'Small chores can leave your hands now.'],
+  },
+  {
+    id: 'science-first-pick',
+    trigger: 'science-threshold',
+    speaker: 'elder',
+    pointer: '[data-testid="research-chart"]',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'science-threshold' && signal.threshold >= 1,
+    lines: ['The first mark matters.', 'One chosen branch makes the next choice clearer.'],
+  },
+  {
+    id: 'science-mastery',
+    trigger: 'science-threshold',
+    speaker: 'elder',
+    pointer: '[data-testid="research-chart"]',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'science-threshold' && signal.threshold >= 3,
+    lines: ['The chart has a spine now.', 'Follow it, and the town will outgrow the claim.'],
+  },
+  {
+    id: 'baron-shadow',
+    trigger: 'science-threshold',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'science-threshold' && signal.threshold >= 4,
+    lines: ['An oxblood coat asked after your claim.', 'Folks stopped laughing when he paid cash.'],
+  },
+  {
     id: 'ceiling-reached',
     trigger: 'science-complete',
     speaker: 'elder',
+    pointer: '[data-testid="science-banked"]',
     oncePerProfile: true,
     lines: ['Frontier science is complete.', 'The Steamworks waits for a town to build it.'],
   },
@@ -99,17 +156,38 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'elder',
     pointer: '[data-testid="stamp-site-fund"]',
     oncePerProfile: true,
-    lines: ["The survey's done.", "The Steamworks wants a founder's gold."],
+    lines: ['Fund the first stage here.', "The Steamworks wants a founder's gold."],
   },
   {
-    id: 'board-unlock-generic',
+    id: 'board-unlock-dry-gulch',
     trigger: 'contract-unlocked',
     speaker: 'tavernkeeper',
     oncePerProfile: true,
-    seenKey: (signal) => (signal.type === 'contract-unlocked' ? `board-unlock-generic:${signal.contractId}` : 'board-unlock-generic'),
-    lines: (signal) => {
-      if (signal.type !== 'contract-unlocked') return ['A new contract opened.', 'Check the board when you are ready.'];
-      return [`${signal.contractName} is open.`, signal.ledgerBlurb];
-    },
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-dry-gulch',
+    lines: (signal) => ['The Dry Gulch is open.', contractLine(signal, 'Mesa country; dry washes fall toward one sunken spring.')],
+  },
+  {
+    id: 'board-unlock-twin-banks',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-twin-banks',
+    lines: (signal) => ['Twin Banks is open.', contractLine(signal, 'A braided river claim with twin fords, gravel bars, and damp reeds.')],
+  },
+  {
+    id: 'board-unlock-night-shift',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-night-shift',
+    lines: (signal) => ['Night Shift is open.', contractLine(signal, 'Same claim bones, duskier banks, and a lantern on the stake.')],
+  },
+  {
+    id: 'board-unlock-baron',
+    trigger: 'contract-unlocked',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-baron',
+    lines: (signal) => ['The Baron card is open.', contractLine(signal, 'An oxblood banner marks the outfit that keeps buying trouble.')],
   },
 ];
