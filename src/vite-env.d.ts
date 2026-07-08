@@ -547,8 +547,8 @@ interface ThreeGameDiagnostics {
       vertices: number;
       triangles: number;
       heightSource: 'visual';
-      textureSource: 'bank-atlas';
-      textureSeams: 'texture seams remain until TR-02';
+      textureSource: 'bank-atlas' | 'bank-atlas-splat';
+      textureSeams: 'texture seams remain until TR-02' | 'per-pixel splat gradients';
     };
     sim: {
       flat: boolean;
@@ -559,6 +559,17 @@ interface ThreeGameDiagnostics {
         slopeMax: number;
         wadeDepth: number;
         deepDepth: number;
+      };
+      gt: {
+        highGroundRangeBonus: number;
+      };
+      lastLos: {
+        flat: boolean;
+        clear: boolean;
+        samples: number;
+        from: { x: number; z: number; h: number };
+        to: { x: number; z: number; h: number };
+        blockedAt: { x: number; z: number; h: number; lineH: number; step: number } | null;
       };
       probes: Record<string, {
         height: number;
@@ -894,6 +905,9 @@ interface Window {
         hits: number;
         misses: number;
         staleSwitches: number;
+        shots: Record<'bolt' | 'lob', number>;
+        lastShotKind: 'bolt' | 'lob' | null;
+        lastShotOwnerId: string | null;
       };
       arsenal: {
         active: 'rig' | 'blast';

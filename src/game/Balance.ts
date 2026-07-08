@@ -385,6 +385,7 @@ export const Balance = {
     detailStressEnemyThreshold: 50,
     detailStressWaveThreshold: 12,
     terrainMesh: false,
+    terrainSplat: false,
     terrainMeshVertexStep: 1,
   },
   terrain: {
@@ -396,6 +397,9 @@ export const Balance = {
     slopeMax: 0.35,
     wadeDepth: 0.35,
     deepDepth: 1,
+  },
+  gt: {
+    highGroundRangeBonus: 1.5,
   },
   sprite: {
     turnRateDegPerS: 540,
