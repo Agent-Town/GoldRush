@@ -384,6 +384,8 @@ export const Balance = {
     detailBuildingClearRadius: 2.4,
     detailStressEnemyThreshold: 50,
     detailStressWaveThreshold: 12,
+    terrainMesh: false,
+    terrainMeshVertexStep: 1,
   },
   terrain: {
     featureMix: 0.86,

@@ -16,6 +16,7 @@ import {
 } from '../meta/ContractFamilies';
 import { hasElevationTile, isTraversable as isSimTraversable, simHeight } from '../sim/TileHeight';
 import { normalizeSeed } from '../core/Rng';
+import { createContinuousGroundMesh, type ContinuousGroundMeshStats } from './ContinuousGroundMesh';
 import { createClaimProps } from './props';
 import {
   createFordStones,
@@ -416,7 +417,23 @@ export type TerrainView = {
   group: THREE.Group;
   update: (delta: number) => void;
   diagnostics: () => WaterDiagnostics;
+  groundDiagnostics: () => TerrainGroundDiagnostics;
 };
+
+export type TerrainGroundDiagnostics =
+  | ContinuousGroundMeshStats
+  | {
+      enabled: false;
+      mode: 'fallback';
+      drawCalls: 1;
+      segments: number;
+      vertexStep: number;
+      vertices: number;
+      triangles: number;
+      heightSource: 'visual';
+      textureSource: 'bank-atlas';
+      textureSeams: 'texture seams remain until TR-02';
+    };
 
 type LayerContract = {
   slots?: Array<{
@@ -498,7 +515,7 @@ export function createFordPlaceholder(range: FordRange = defaultFordRange()): TH
 
 export function createTerrainView(): TerrainView {
   const group = new THREE.Group();
-  const bank = createBankPlaceholder();
+  const bank = createGroundMesh();
   const vistaBank = createVistaBankMesh(bank.material as THREE.MeshStandardMaterial);
   const props = createClaimProps();
   const springPonds = createSpringPonds();
@@ -531,7 +548,20 @@ export function createTerrainView(): TerrainView {
       for (const ford of fords) updateWaterMaterial(ford, delta);
     },
     diagnostics: () => (river ? waterDiagnostics(river, fords, fordStones, gravelBars) : dryWaterDiagnostics(SPRING_PONDS.length)),
+    groundDiagnostics: () => groundDiagnostics(bank),
   };
+}
+
+function createGroundMesh(): THREE.Mesh {
+  if (!terrainMeshEnabled()) return createBankPlaceholder();
+  const mesh = createContinuousGroundMesh({
+    size: CLAIM_SIZE,
+    segments: terrainMeshSegments(),
+    material: createBankMaterial(),
+    heightAt: sampleHeight,
+    normalHeightAt: sampleUnclampedHeight,
+  });
+  return tagPlaceholder(mesh, assetSlots.terrainBank);
 }
 
 function createGravelBars(): THREE.Mesh[] {
@@ -878,6 +908,40 @@ function terrainSegments(): number {
   const mobile = typeof window !== 'undefined' && window.innerWidth <= 430;
   const value = mobile ? Balance.world.terrainMobileSegments : Balance.world.terrainSegments;
   return Math.max(24, Math.min(96, Math.floor(value)));
+}
+
+function terrainMeshEnabled(): boolean {
+  if (typeof window !== 'undefined') {
+    const value = new URLSearchParams(window.location.search).get('terrainMesh');
+    if (value !== null) return value !== '0' && value !== 'false';
+  }
+  if (import.meta.env.VITE_GR_TERRAIN_MESH === '1' || import.meta.env.VITE_GR_TERRAIN_MESH === 'true') return true;
+  return Balance.world.terrainMesh;
+}
+
+function terrainMeshSegments(): number {
+  const step = Math.max(0.5, Math.min(4, Balance.world.terrainMeshVertexStep));
+  return Math.max(8, Math.min(128, Math.round(CLAIM_SIZE / step)));
+}
+
+function groundDiagnostics(mesh: THREE.Mesh): TerrainGroundDiagnostics {
+  const stats = mesh.userData.groundStats as ContinuousGroundMeshStats | undefined;
+  if (stats) return stats;
+  const vertices = (mesh.geometry.getAttribute('position') as THREE.BufferAttribute | undefined)?.count ?? 0;
+  const segments = Math.max(1, Math.round(Math.sqrt(vertices)) - 1);
+  const triangles = mesh.geometry.index ? mesh.geometry.index.count / 3 : Math.floor(vertices / 3);
+  return {
+    enabled: false,
+    mode: 'fallback',
+    drawCalls: 1,
+    segments,
+    vertexStep: CLAIM_SIZE / segments,
+    vertices,
+    triangles,
+    heightSource: 'visual',
+    textureSource: 'bank-atlas',
+    textureSeams: 'texture seams remain until TR-02',
+  };
 }
 
 function vistaSegments(): number {
