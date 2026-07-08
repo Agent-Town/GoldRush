@@ -1035,6 +1035,10 @@ body {
   transform: translateX(-50%);
 }
 
+#hud[data-paused="true"] .prompt-stack {
+  display: none;
+}
+
 .assay-office-prompt {
   padding: 8px 12px;
   border: 2px solid #2e1b0e;

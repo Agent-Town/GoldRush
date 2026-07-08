@@ -23,6 +23,11 @@
         "ledgerBlurb": "The classic river claim.",
         "tags": ["trail"],
         "unlock": "default"
+      },
+      "briefing": {
+        "goals": ["Pan. Build. Hold the claim."],
+        "rules": ["Secure the claim at wave 20, then stay for the rush.", "Protect the stake; overrun ends the run."],
+        "geographyLine": "The classic river claim."
       }
     },
     {
@@ -76,6 +81,15 @@
         "ledgerBlurb": "Mesa country; dry washes fall toward one sunken spring.",
         "tags": ["trail"],
         "unlock": "wave10OnClaim"
+      },
+      "briefing": {
+        "goals": ["Secure the claim at wave 20, then stay for the rush."],
+        "rules": [
+          "Sluices work only beside the spring.",
+          "The river is gone; enemies can press from every edge.",
+          "Seams pay 40% more gold."
+        ],
+        "geographyLine": "Mesa country; dry washes fall toward one sunken spring."
       }
     },
     {
@@ -113,6 +127,15 @@
         "ledgerBlurb": "Same claim bones, duskier banks, and a lantern on the stake.",
         "tags": ["vein-hunter"],
         "unlock": "science≥3"
+      },
+      "briefing": {
+        "goals": ["Survive to DAWN at wave 25."],
+        "rules": [
+          "Dark from wave 10; light is your sight.",
+          "Lantern posts and beacons keep enemies readable.",
+          "Turrets still target in the dark."
+        ],
+        "geographyLine": "Same claim bones, duskier banks, and a lantern on the stake."
       }
     },
     {
@@ -176,6 +199,15 @@
         "ledgerBlurb": "A braided river claim with twin fords, gravel bars, and damp reeds.",
         "tags": ["vein-hunter"],
         "unlock": "firstSecuredClaim"
+      },
+      "briefing": {
+        "goals": ["Secure the south claim, then decide how far north to build."],
+        "rules": [
+          "Both banks can hold buildings.",
+          "Two fords carry pressure across the river.",
+          "The north marker is expansion; the south stake is the loss point."
+        ],
+        "geographyLine": "A braided river claim with twin fords, gravel bars, and damp reeds."
       }
     },
     {
@@ -214,6 +246,15 @@
         "ledgerBlurb": "A brass-bannered bully compresses the waves and waits at the twentieth horn.",
         "tags": ["vein-hunter"],
         "unlock": "science-complete"
+      },
+      "briefing": {
+        "goals": ["The Baron rides at wave 20. End him."],
+        "rules": [
+          "His outfit rides hot: waves come 15% faster.",
+          "Taunts warn you before his banner appears.",
+          "Kill the Baron for the medal and double science."
+        ],
+        "geographyLine": "A brass-bannered bully compresses the waves and waits at the twentieth horn."
       }
     }
   ]

@@ -401,7 +401,6 @@ async function baronDeterminismSnapshot(page: Page): Promise<unknown> {
             speed: Math.round(baron.speed * 1000) / 1000,
             scale: baron.scale,
             hasBanner: baron.hasBanner,
-            edge: baron.edge,
           }
         : null,
     };

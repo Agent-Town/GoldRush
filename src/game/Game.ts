@@ -128,7 +128,7 @@ import {
   type DeathResearchState,
   type DeathRunStatsSnapshot,
 } from '../ui/DeathOverlay';
-import { Hud, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
+import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt } from '../ui/BuildingContextPrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
@@ -808,6 +808,7 @@ export class Game {
     this.syncUi();
     this.publishDiagnostics();
     this.showRunStartMetaRecap();
+    this.showContractBriefing();
     // ADR-002 section 4: M4 exposes install(game); wiring happens at merge (m4-01 gate, s32).
     const game = this;
     this.agentStub = installAgentStub(
@@ -1514,6 +1515,7 @@ export class Game {
         name: this.activeContract.name,
         tileParams: this.activeContract.tileParams,
         boardRow: this.activeContract.boardRow,
+        briefing: this.activeContract.briefing,
         seamYieldMult: this.contractSeamYieldMult(),
         secureWave: this.secureWaveForRun(),
         waveCadenceMult: this.activeContract.twist.waveCadenceMult ?? 1,
@@ -2153,6 +2155,7 @@ export class Game {
     } else {
       this.showRunStartMetaRecap();
     }
+    this.showContractBriefing();
     this.upgradeOverlay.hide();
     this.buildingContextPrompt.update(null, null, false);
   }
@@ -2890,6 +2893,10 @@ export class Game {
     this.hud.showMetaRecap(runStartMetaRecap(this.metaProgressForPresence(), this.researchState, readTownName()), 4);
   }
 
+  private showContractBriefing(): void {
+    this.hud.showContractBriefing(this.contractBriefingSnapshot());
+  }
+
   private flushRunStartMetaRecap(): void {
     if (!this.runStartMetaRecapPending) return;
     this.runStartMetaRecapPending = false;
@@ -2899,10 +2906,20 @@ export class Game {
   private pauseMetaSnapshot(): PauseMetaSnapshot {
     const meter = scienceMeter(this.researchState);
     return {
+      contract: this.contractBriefingSnapshot(),
       science: `Science: ${meter.steps}/${meter.threshold} steps; banked +${meter.overflow}`,
       territory: territoryPauseLine(this.metaProgressForPresence()),
       boons: activeResearchBoons(this.researchState).map(({ name, effect }) => ({ name, effect })),
       mastery: this.masteryProgressLines(),
+    };
+  }
+
+  private contractBriefingSnapshot(): ContractBriefingSnapshot {
+    return {
+      name: this.activeContract.name,
+      goals: this.activeContract.briefing.goals,
+      rules: this.activeContract.briefing.rules,
+      geographyLine: this.activeContract.briefing.geographyLine,
     };
   }
 

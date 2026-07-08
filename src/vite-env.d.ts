@@ -231,6 +231,7 @@ interface ThreeGameDiagnostics {
     name: string;
     tileParams: GrContractManifest['tileParams'];
     boardRow: GrContractManifest['boardRow'];
+    briefing: GrContractManifest['briefing'];
     seamYieldMult: number;
     secureWave: number;
     waveCadenceMult: number;

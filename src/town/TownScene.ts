@@ -306,6 +306,10 @@ export class TownScene {
   }
 
   private syncPrompt(): void {
+    if (this.boardOpen) {
+      this.prompt.hidden = true;
+      return;
+    }
     const position = this.hero.group.position;
     let nearest: TownBuilding | null = null;
     let nearestDistanceSq = APPROACH_RADIUS * APPROACH_RADIUS;
@@ -356,6 +360,7 @@ export class TownScene {
   private closeBoard(): void {
     this.board.hidden = true;
     this.boardOpen = false;
+    this.syncPrompt();
     this.publishDiagnostics();
   }
 
@@ -416,7 +421,10 @@ export class TownScene {
           <span class="town-ui__contract-state">${unlock.unlocked ? 'Open' : 'Locked'}</span>
         </div>
         <h3>${escapeHtml(contract.boardRow.name)}</h3>
-        <p>${escapeHtml(contract.boardRow.ledgerBlurb)}</p>
+        <p class="town-ui__contract-geography" data-testid="contract-board-geography-${escapeHtml(contract.id)}">${escapeHtml(
+          contract.briefing.geographyLine,
+        )}</p>
+        ${renderContractBriefing(contract)}
         <p class="town-ui__contract-best" data-testid="contract-best-${escapeHtml(contract.id)}">${escapeHtml(formatBest(best))}</p>
         ${
           medal
@@ -517,6 +525,17 @@ function contractIdOf(score: ScoreRecord): string {
 function formatBest(score: ScoreRecord | null): string {
   if (!score) return 'No result yet';
   return `${score.secured ? 'Secured' : 'Overrun'} - wave ${score.waves} - ${score.gold} gold`;
+}
+
+function renderContractBriefing(contract: ContractManifest): string {
+  return `
+    <div class="town-ui__contract-briefing" data-testid="contract-board-briefing-${escapeHtml(contract.id)}">
+      <p class="town-ui__contract-briefing-label">Goals</p>
+      <ul>${contract.briefing.goals.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>
+      <p class="town-ui__contract-briefing-label">Rules</p>
+      <ul>${contract.briefing.rules.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>
+    </div>
+  `;
 }
 
 function formatTag(tag: string): string {

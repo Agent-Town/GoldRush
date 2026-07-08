@@ -223,6 +223,11 @@ export type ContractBuildableFixture = {
   z: number;
   rotationSteps?: number;
 };
+export type ContractBriefing = {
+  goals: string[];
+  rules: string[];
+  geographyLine: string;
+};
 export type ContractManifest = {
   id: string;
   name: string;
@@ -261,6 +266,7 @@ export type ContractManifest = {
     tags: string[];
     unlock: string;
   };
+  briefing: ContractBriefing;
 };
 export type ContractsBundle = {
   version: 1;
@@ -575,6 +581,11 @@ function defaultContractFor(manifest: EpochManifest): ContractManifest {
       ledgerBlurb: 'The classic river claim.',
       tags: ['trail'],
       unlock: 'default',
+    },
+    briefing: {
+      goals: ['Pan. Build. Hold the claim.'],
+      rules: ['Secure the claim at wave 20, then stay for the rush.', 'Protect the stake; overrun ends the run.'],
+      geographyLine: 'The classic river claim.',
     },
   };
 }
