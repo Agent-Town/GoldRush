@@ -48,6 +48,7 @@ import {
   type MegaprojectDiagnostics,
   type MegaprojectManifest,
   type MegaprojectProjectState,
+  type MegaprojectSiteReadDiagnostics,
   type MegaprojectState,
   type MegaprojectStorage,
 } from '../meta/Megaproject';
@@ -130,7 +131,7 @@ import {
 } from '../ui/DeathOverlay';
 import { Hud, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
-import { BuildingContextPrompt } from '../ui/BuildingContextPrompt';
+import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { simHeightDiagnostics, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
@@ -295,17 +296,21 @@ export class Game {
     : null;
   private readonly megaprojectGroup = new THREE.Group();
   private readonly megaprojectGeometry = new THREE.BoxGeometry(1, 1, 1);
+  private readonly megaprojectBarrelGeometry = new THREE.CylinderGeometry(0.16, 0.16, 0.38, 12);
+  private readonly megaprojectPlaqueGeometry = new THREE.PlaneGeometry(1.18, 0.46);
   private readonly megaprojectBaseMaterial = new THREE.MeshStandardMaterial({
-    color: '#8b7d3c',
+    color: '#d8b778',
+    transparent: true,
+    opacity: 0.56,
     roughness: 0.82,
-    metalness: 0.08,
+    metalness: 0.04,
   });
   private readonly megaprojectStageMaterial = new THREE.MeshStandardMaterial({
-    color: '#5b8a8a',
-    emissive: '#123838',
-    emissiveIntensity: 0.14,
-    roughness: 0.7,
-    metalness: 0.12,
+    color: '#c4883a',
+    emissive: '#4b2b12',
+    emissiveIntensity: 0.12,
+    roughness: 0.76,
+    metalness: 0.08,
   });
   private readonly megaprojectGhostMaterial = new THREE.MeshStandardMaterial({
     color: '#f5e6c8',
@@ -314,7 +319,55 @@ export class Game {
     roughness: 0.9,
     metalness: 0.02,
   });
+  private readonly megaprojectStakeMaterial = new THREE.MeshStandardMaterial({
+    color: '#6f5732',
+    roughness: 0.86,
+    metalness: 0.02,
+  });
+  private readonly megaprojectStringMaterial = new THREE.MeshStandardMaterial({
+    color: '#d8a45a',
+    emissive: '#5b3a16',
+    emissiveIntensity: 0.08,
+    roughness: 0.72,
+    metalness: 0.02,
+  });
+  private readonly megaprojectWalkwayMaterial = new THREE.MeshStandardMaterial({
+    color: '#7a5132',
+    roughness: 0.82,
+    metalness: 0.03,
+  });
+  private readonly megaprojectSignMaterial = new THREE.MeshStandardMaterial({
+    color: '#6a4728',
+    roughness: 0.84,
+    metalness: 0.03,
+  });
+  private readonly megaprojectCrateMaterial = new THREE.MeshStandardMaterial({
+    color: '#8a5a30',
+    roughness: 0.82,
+    metalness: 0.03,
+  });
+  private readonly megaprojectBarrelMaterial = new THREE.MeshStandardMaterial({
+    color: '#805034',
+    roughness: 0.76,
+    metalness: 0.05,
+  });
+  private readonly megaprojectPlaqueTexture = createMegaprojectPlaqueTexture([
+    'STAMP MILL & RAIL SPUR',
+    'surveyed for the town',
+    'Claim Office takes pledges',
+  ]);
+  private readonly megaprojectPlaqueMaterial = new THREE.MeshBasicMaterial({
+    map: this.megaprojectPlaqueTexture,
+    transparent: true,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+  });
   private readonly megaprojectVisuals: THREE.Mesh[] = [];
+  private readonly megaprojectSurveyVisuals: THREE.Object3D[] = [];
+  private readonly megaprojectSignVisuals: THREE.Object3D[] = [];
+  private readonly megaprojectConstructionDressing: THREE.Object3D[] = [];
+  private megaprojectPlaqueText = 'STAMP MILL & RAIL SPUR / surveyed for the town / Claim Office takes pledges';
+  private stampSiteBeatEmitted = false;
   private readonly megaprojectTarget: BuildingTarget = {
     id: 'megaproject:none',
     family: 'megaproject',
@@ -512,6 +565,7 @@ export class Game {
       this.promptStack,
       () => this.confirmUpgrade(),
       () => this.confirmDemolish(),
+      () => this.fundMegaprojectStage(this.primaryActor.group.position),
     );
     this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.finishRunLedger());
@@ -860,9 +914,19 @@ export class Game {
     this.buildSystem.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
+    this.megaprojectBarrelGeometry.dispose();
+    this.megaprojectPlaqueGeometry.dispose();
     this.megaprojectBaseMaterial.dispose();
     this.megaprojectStageMaterial.dispose();
     this.megaprojectGhostMaterial.dispose();
+    this.megaprojectStakeMaterial.dispose();
+    this.megaprojectStringMaterial.dispose();
+    this.megaprojectWalkwayMaterial.dispose();
+    this.megaprojectSignMaterial.dispose();
+    this.megaprojectCrateMaterial.dispose();
+    this.megaprojectBarrelMaterial.dispose();
+    this.megaprojectPlaqueTexture.dispose();
+    this.megaprojectPlaqueMaterial.dispose();
     this.railPath?.dispose();
     this.megaprojectRailPath?.dispose();
     this.detailScatter?.dispose();
@@ -1180,15 +1244,19 @@ export class Game {
     this.megaprojectGroup.name = 'MegaprojectSite';
     this.megaprojectGroup.clear();
     this.megaprojectVisuals.length = 0;
+    this.megaprojectSurveyVisuals.length = 0;
+    this.megaprojectSignVisuals.length = 0;
+    this.megaprojectConstructionDressing.length = 0;
     const manifest = this.megaprojectManifest;
     if (!manifest) return;
 
     const base = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectBaseMaterial);
     base.name = 'MegaprojectSiteBase';
-    base.position.y = 0.06;
-    base.scale.set(manifest.siteFootprint.w, 0.12, manifest.siteFootprint.d);
+    base.position.y = 0.025;
+    base.scale.set(manifest.siteFootprint.w, 0.05, manifest.siteFootprint.d);
     this.megaprojectGroup.add(base);
     this.megaprojectVisuals.push(base);
+    this.createStampMillSiteDressing(manifest);
 
     const total = Math.max(1, manifest.stages.length);
     const stampMillStages =
@@ -1240,6 +1308,111 @@ export class Game {
     this.megaprojectGroup.visible = false;
   }
 
+  private createStampMillSiteDressing(manifest: MegaprojectManifest): void {
+    if (manifest.id !== STAMP_MILL_ID) return;
+    const { w, d } = manifest.siteFootprint;
+    const halfX = w * 0.5;
+    const halfZ = d * 0.5;
+
+    for (const [x, z] of [
+      [-halfX, -halfZ],
+      [halfX, -halfZ],
+      [halfX, halfZ],
+      [-halfX, halfZ],
+    ] as const) {
+      const stake = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectStakeMaterial);
+      stake.name = 'MegaprojectSurveyStake';
+      stake.position.set(x, 0.42, z);
+      stake.scale.set(0.1, 0.72, 0.1);
+      this.megaprojectGroup.add(stake);
+      this.megaprojectSurveyVisuals.push(stake);
+    }
+
+    for (const line of [
+      { x: 0, z: -halfZ, sx: w, sz: 0.035 },
+      { x: 0, z: halfZ, sx: w, sz: 0.035 },
+      { x: -halfX, z: 0, sx: 0.035, sz: d },
+      { x: halfX, z: 0, sx: 0.035, sz: d },
+    ]) {
+      const stringLine = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectStringMaterial);
+      stringLine.name = 'MegaprojectSurveyStringLine';
+      stringLine.position.set(line.x, 0.32, line.z);
+      stringLine.scale.set(line.sx, 0.035, line.sz);
+      this.megaprojectGroup.add(stringLine);
+      this.megaprojectSurveyVisuals.push(stringLine);
+    }
+
+    for (let i = 0; i < 5; i += 1) {
+      const plank = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectWalkwayMaterial);
+      plank.name = 'MegaprojectWalkwayPlank';
+      plank.position.set(-halfX + 0.55 + i * 0.92, 0.15, -halfZ - 0.44);
+      plank.rotation.y = i % 2 === 0 ? 0.06 : -0.04;
+      plank.scale.set(0.74, 0.08, 0.2);
+      this.megaprojectGroup.add(plank);
+      this.megaprojectSurveyVisuals.push(plank);
+    }
+
+    const signX = halfX - 0.8;
+    const signZ = -halfZ - 0.66;
+    for (const xOffset of [-0.48, 0.48]) {
+      const post = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectStakeMaterial);
+      post.name = 'MegaprojectSurveySignPost';
+      post.position.set(signX + xOffset, 0.58, signZ);
+      post.scale.set(0.08, 1.02, 0.08);
+      this.megaprojectGroup.add(post);
+      this.megaprojectSignVisuals.push(post);
+    }
+
+    const board = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectSignMaterial);
+    board.name = 'MegaprojectSurveySignboard';
+    board.position.set(signX, 0.9, signZ - 0.04);
+    board.scale.set(1.36, 0.62, 0.08);
+    board.renderOrder = 1;
+    this.megaprojectGroup.add(board);
+    this.megaprojectSignVisuals.push(board);
+
+    const plaque = new THREE.Mesh(this.megaprojectPlaqueGeometry, this.megaprojectPlaqueMaterial);
+    plaque.name = 'MegaprojectLedgerPlaque';
+    plaque.position.set(signX, 0.9, signZ - 0.13);
+    plaque.rotation.y = Math.PI;
+    plaque.renderOrder = 2;
+    this.megaprojectGroup.add(plaque);
+    this.megaprojectSignVisuals.push(plaque);
+
+    const reversePlaque = new THREE.Mesh(this.megaprojectPlaqueGeometry, this.megaprojectPlaqueMaterial);
+    reversePlaque.name = 'MegaprojectLedgerPlaque';
+    reversePlaque.position.set(signX, 0.9, signZ + 0.03);
+    reversePlaque.renderOrder = 2;
+    this.megaprojectGroup.add(reversePlaque);
+    this.megaprojectSignVisuals.push(reversePlaque);
+
+    for (const [x, z] of [
+      [-halfX + 0.55, halfZ - 0.42],
+      [halfX - 0.55, halfZ - 0.34],
+      [0.15, -halfZ + 0.52],
+    ] as const) {
+      const crate = new THREE.Mesh(this.megaprojectGeometry, this.megaprojectCrateMaterial);
+      crate.name = 'MegaprojectConstructionCrate';
+      crate.position.set(x, 0.25, z);
+      crate.scale.set(0.42, 0.42, 0.42);
+      crate.visible = false;
+      this.megaprojectGroup.add(crate);
+      this.megaprojectConstructionDressing.push(crate);
+    }
+
+    for (const [x, z] of [
+      [-halfX + 1.1, -halfZ + 0.42],
+      [halfX - 0.42, 0.16],
+    ] as const) {
+      const barrel = new THREE.Mesh(this.megaprojectBarrelGeometry, this.megaprojectBarrelMaterial);
+      barrel.name = 'MegaprojectConstructionBarrel';
+      barrel.position.set(x, 0.25, z);
+      barrel.visible = false;
+      this.megaprojectGroup.add(barrel);
+      this.megaprojectConstructionDressing.push(barrel);
+    }
+  }
+
   private placeContractFixtures(): void {
     for (const fixture of this.activeContract.tileParams.prePlacedBuildables ?? []) {
       if (fixture.id === 'lantern_post') {
@@ -1286,13 +1459,30 @@ export class Game {
   }
 
   private syncMegaprojectVisuals(project: MegaprojectProjectState): void {
+    const preFundingSurvey = project.stage === 0 && !project.funded;
+    const complete = this.megaprojectManifest ? megaprojectComplete(this.megaprojectManifest, project) : false;
     const visibleStages = Math.max(1, Math.min(this.megaprojectVisuals.length - 1, project.stage + (project.funded ? 1 : 0)));
+    for (const visual of this.megaprojectSurveyVisuals) visual.visible = preFundingSurvey;
+    for (const visual of this.megaprojectSignVisuals) visual.visible = true;
+    for (const visual of this.megaprojectConstructionDressing) visual.visible = !preFundingSurvey && !complete;
+    this.updateMegaprojectPlaque(project);
     for (let i = 1; i < this.megaprojectVisuals.length; i += 1) {
       const mesh = this.megaprojectVisuals[i];
       if (!mesh) continue;
       mesh.visible = i <= visibleStages;
       mesh.material = i <= project.stage ? this.megaprojectStageMaterial : this.megaprojectGhostMaterial;
     }
+  }
+
+  private updateMegaprojectPlaque(project: MegaprojectProjectState): void {
+    const manifest = this.megaprojectManifest;
+    if (!manifest || manifest.id !== STAMP_MILL_ID) return;
+    const lines =
+      project.stage === 0 && !project.funded
+        ? ['STAMP MILL & RAIL SPUR', 'surveyed for the town', 'Claim Office takes pledges']
+        : ['STAMP MILL & RAIL SPUR', `stage ${Math.min(project.stage + 1, manifest.stages.length)} of ${manifest.stages.length}`, this.megaprojectProgressLine()];
+    this.megaprojectPlaqueText = lines.join(' / ');
+    drawMegaprojectPlaque(this.megaprojectPlaqueTexture, lines);
   }
 
   private megaprojectReservedFootprint(manifest: MegaprojectManifest): ReservedFootprint {
@@ -1331,6 +1521,7 @@ export class Game {
 
     this.persistMegaprojectState();
     this.syncMegaprojectSite();
+    this.audio.play('ledger-open', 0.75);
     this.uiBridge.announce(this.megaprojectProgressLine(), this.timeAlive, null, 4.8);
     if (cost > 0) this.vfx.floatText(this.megaprojectTarget.position, `-${cost}`, '#a0522d');
     this.publishDiagnostics();
@@ -1401,6 +1592,28 @@ export class Game {
     return dx * dx + dz * dz <= radius * radius;
   }
 
+  private megaprojectFundCandidate(position: THREE.Vector3): MegaprojectFundCandidate | null {
+    const manifest = this.megaprojectManifest;
+    const project = this.megaprojectProject;
+    if (!manifest || !project || !this.megaprojectUnlocked() || megaprojectComplete(manifest, project) || project.funded) return null;
+    if (!this.megaprojectInRange(position, 2.8)) return null;
+    return {
+      title: manifest.id === STAMP_MILL_ID ? 'STAMP MILL & RAIL SPUR' : manifest.name,
+      stage: project.stage + 1,
+      cost: megaprojectStageCost(manifest, project),
+      line:
+        manifest.id === STAMP_MILL_ID && project.stage === 0
+          ? 'Surveyed for the town. The Claim Office takes pledges.'
+          : this.megaprojectProgressLine(),
+    };
+  }
+
+  private maybeEmitStampSiteBeat(fund: MegaprojectFundCandidate | null): void {
+    if (!fund || this.stampSiteBeatEmitted || this.megaprojectManifest?.id !== STAMP_MILL_ID) return;
+    this.stampSiteBeatEmitted = true;
+    emitStorySignal({ type: 'stamp-site-found' });
+  }
+
   private megaprojectProgressLine(): string {
     const manifest = this.megaprojectManifest;
     const project = this.megaprojectProject;
@@ -1417,7 +1630,28 @@ export class Game {
   }
 
   private megaprojectDiagnostics(): MegaprojectDiagnostics {
-    return megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked());
+    const diagnostics = megaprojectDiagnostics(this.megaprojectManifest, this.megaprojectProject, this.megaprojectUnlocked());
+    return { ...diagnostics, siteRead: this.megaprojectSiteReadDiagnostics(diagnostics.active) };
+  }
+
+  private megaprojectSiteReadDiagnostics(active: boolean): MegaprojectSiteReadDiagnostics | null {
+    if (this.megaprojectManifest?.id !== STAMP_MILL_ID) return null;
+    return {
+      packedEarth: active && this.megaprojectGroup.visible,
+      stakes: this.visibleMegaprojectObjects('MegaprojectSurveyStake'),
+      stringLines: this.visibleMegaprojectObjects('MegaprojectSurveyStringLine'),
+      walkwayPlanks: this.visibleMegaprojectObjects('MegaprojectWalkwayPlank'),
+      signboard: active && this.megaprojectSignVisuals.some((visual) => visual.visible && visual.name === 'MegaprojectSurveySignboard'),
+      plaque: this.megaprojectPlaqueText,
+      constructionProps: this.megaprojectConstructionDressing.filter((visual) => visual.visible).length,
+      promptReady: this.megaprojectFundCandidate(this.primaryActor.group.position) !== null,
+      surveyVisible: active && this.megaprojectGroup.visible && this.megaprojectSurveyVisuals.some((visual) => visual.visible),
+    };
+  }
+
+  private visibleMegaprojectObjects(name: string): number {
+    if (!this.megaprojectGroup.visible) return 0;
+    return this.megaprojectGroup.children.filter((child) => child.visible && child.name === name).length;
   }
 
   private railDiagnostics() {
@@ -2033,8 +2267,10 @@ export class Game {
   private syncBuildingContextPrompt(): void {
     const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
     const assayInRange = this.buildSystem.assayOfficeInRange(this.primaryActor.group.position);
+    const canShowPrompt = this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
+    const fund = canShowPrompt ? this.megaprojectFundCandidate(this.primaryActor.group.position) : null;
     let demolish =
-      this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode
+      canShowPrompt && !fund
         ? this.buildSystem.nearestBuildingTo(this.primaryActor.group.position)
         : null;
     const key = demolish ? demolishKey(demolish) : null;
@@ -2044,7 +2280,8 @@ export class Game {
     const upgrade = demolish ? this.buildSystem.upgradeCandidateFor(demolish.id, demolish.index) : null;
     this.demolishCandidate = demolish;
     this.upgradeCandidate = upgrade;
-    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange);
+    this.maybeEmitStampSiteBeat(fund);
+    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
   }
 
   private handleUiIntent(intent: UiIntent): void {
@@ -3154,6 +3391,47 @@ function browserMegaprojectStorage(): MegaprojectStorage | undefined {
   } catch {
     return undefined;
   }
+}
+
+function createMegaprojectPlaqueTexture(lines: readonly string[]): THREE.CanvasTexture {
+  const canvas = document.createElement('canvas');
+  canvas.width = 512;
+  canvas.height = 200;
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  drawMegaprojectPlaque(texture, lines);
+  return texture;
+}
+
+function drawMegaprojectPlaque(texture: THREE.CanvasTexture, lines: readonly string[]): void {
+  const canvas = texture.image as HTMLCanvasElement;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) return;
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = '#f5e6c8';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.strokeStyle = '#2e1b0e';
+  ctx.lineWidth = 12;
+  ctx.strokeRect(6, 6, canvas.width - 12, canvas.height - 12);
+  ctx.fillStyle = '#2e1b0e';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  const displayLines = lines.slice(0, 3);
+  for (const [index, line] of displayLines.entries()) {
+    const baseSize = index === 0 ? 42 : 30;
+    ctx.font = fitPlaqueFont(ctx, line, index === 0 ? 442 : 468, baseSize);
+    ctx.fillText(line, canvas.width * 0.5, 52 + index * 55);
+  }
+  texture.needsUpdate = true;
+}
+
+function fitPlaqueFont(ctx: CanvasRenderingContext2D, line: string, maxWidth: number, baseSize: number): string {
+  for (let size = baseSize; size >= 18; size -= 2) {
+    const font = `700 ${size}px Georgia`;
+    ctx.font = font;
+    if (ctx.measureText(line).width <= maxWidth) return font;
+  }
+  return '700 18px Georgia';
 }
 
 function percentile(sorted: readonly number[], ratio: number): number {
