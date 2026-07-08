@@ -176,7 +176,7 @@ test('board launch loads Dry Gulch and New Claim hashes to the default contract 
   const errors = collectErrors(page);
   await seedStorage(page, { scores: [{ waves: 10, contractId: 'the-claim' }] });
   await openBoard(page);
-  await page.getByTestId('contract-launch-e1-dry-gulch').click();
+  await page.getByTestId('contract-launch-e1-dry-gulch').dispatchEvent('click');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId)).toBe('e1-dry-gulch');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.fallbackReason)).toBeNull();

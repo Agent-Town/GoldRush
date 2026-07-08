@@ -1,6 +1,7 @@
 export type StorySignal =
   | { type: 'first-boot' }
   | { type: 'town-named'; townName: string }
+  | { type: 'town-growth-seen'; buildingId: 'general_store' | 'chapel'; buildingName: string }
   | { type: 'board-first-open' }
   | { type: 'wave-complete'; wave: number }
   | { type: 'first-victory' }
@@ -16,6 +17,7 @@ export type StorySignal =
 export const STORY_SIGNAL_REGISTRY = [
   'first-boot',
   'town-named',
+  'town-growth-seen',
   'board-first-open',
   'wave-complete',
   'first-victory',
