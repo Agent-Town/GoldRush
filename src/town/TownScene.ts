@@ -14,6 +14,7 @@ import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { DEFAULT_CONTRACT_ID, listContracts, type ContractManifest } from '../meta/ContractFamilies';
 import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
+import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
 import { townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
@@ -59,6 +60,7 @@ export class TownScene {
   private readonly loop = new Loop((delta) => this.update(delta), () => this.render());
   private readonly ui = document.createElement('section');
   private readonly prompt = document.createElement('div');
+  private infoNote?: WorldInfoNotePrompt;
   private readonly nameCard = document.createElement('form');
   private readonly board = document.createElement('section');
   private readonly hiddenButtons: HiddenButtonState[];
@@ -109,6 +111,7 @@ export class TownScene {
     this.board.removeEventListener('click', this.onBoardClick);
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
+    this.infoNote?.dispose();
     this.ui.remove();
     this.hero.dispose();
     disposeObject3D(this.scene);
@@ -225,7 +228,9 @@ export class TownScene {
     this.nameMessage = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-error"]') ?? undefined;
     this.nameBeat = this.nameCard.querySelector<HTMLElement>('[data-testid="town-name-beat"]') ?? undefined;
     this.nameInput?.addEventListener('keydown', stopKeyPropagation);
-    this.ui.querySelector('[data-testid="town-prompt-stack"]')?.append(this.prompt);
+    const promptStack = this.ui.querySelector<HTMLElement>('[data-testid="town-prompt-stack"]');
+    promptStack?.append(this.prompt);
+    if (promptStack) this.infoNote = new WorldInfoNotePrompt(promptStack);
     this.ui.append(this.nameCard);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
@@ -308,6 +313,7 @@ export class TownScene {
   private syncPrompt(): void {
     if (this.boardOpen) {
       this.prompt.hidden = true;
+      this.infoNote?.update(null);
       return;
     }
     const position = this.hero.group.position;
@@ -327,8 +333,10 @@ export class TownScene {
     if (!nearest) {
       this.promptKey = '';
       this.prompt.textContent = '';
+      this.infoNote?.update(null);
       return;
     }
+    this.infoNote?.update({ objectClass: townInfoClass(nearest.id) });
     const promptKey = `${nearest.id}:${this.townName ?? ''}`;
     if (promptKey === this.promptKey) return;
     this.promptKey = promptKey;
@@ -714,6 +722,13 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, width: n
   ctx.arcTo(x, y + height, x, y, radius);
   ctx.arcTo(x, y, x + width, y, radius);
   ctx.closePath();
+}
+
+function townInfoClass(id: TownBuildingId): WorldInfoObjectClass {
+  if (id === 'claim_office') return 'town_claim_office';
+  if (id === 'schoolhouse') return 'town_schoolhouse';
+  if (id === 'assay_office') return 'town_assay_office';
+  return 'town_tavern';
 }
 
 function round2(value: number): number {

@@ -65,6 +65,10 @@
   position: absolute;
   left: 50%;
   bottom: calc(max(18px, env(safe-area-inset-bottom)) + 88px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
   width: min(520px, calc(100vw - 32px));
   transform: translateX(-50%);
   pointer-events: none;

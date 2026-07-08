@@ -131,6 +131,7 @@ import {
 import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt } from '../ui/BuildingContextPrompt';
+import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { simHeightDiagnostics, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
@@ -274,6 +275,7 @@ export class Game {
   private readonly promptStack = document.createElement('div');
   private readonly assayOfficePrompt: AssayOfficePrompt;
   private readonly buildingContextPrompt: BuildingContextPrompt;
+  private readonly worldInfoNotePrompt: WorldInfoNotePrompt;
   private readonly deathOverlay: DeathOverlay;
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
@@ -514,6 +516,7 @@ export class Game {
       () => this.confirmDemolish(),
     );
     this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
+    this.worldInfoNotePrompt = new WorldInfoNotePrompt(this.promptStack);
     this.deathOverlay = new DeathOverlay(this.getElement('#app'), () => this.finishRunLedger());
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
@@ -852,6 +855,7 @@ export class Game {
     this.hud.dispose();
     this.assayOfficePrompt.dispose();
     this.buildingContextPrompt.dispose();
+    this.worldInfoNotePrompt.dispose();
     this.promptStack.remove();
     this.deathOverlay.dispose();
     this.upgradeOverlay.dispose();
@@ -1020,6 +1024,7 @@ export class Game {
     this.syncUi();
     this.syncAssayOfficePrompt();
     this.syncBuildingContextPrompt();
+    this.syncWorldInfoNotePrompt();
     this.publishDiagnostics();
   }
 
@@ -2046,6 +2051,70 @@ export class Game {
     this.demolishCandidate = demolish;
     this.upgradeCandidate = upgrade;
     this.buildingContextPrompt.update(demolish, upgrade, !assayInRange);
+  }
+
+  private syncWorldInfoNotePrompt(): void {
+    const blocked =
+      this.state.current !== 'playing' ||
+      this.state.isPaused ||
+      this.buildMenuOpen ||
+      this.buildSystem.isBuildMode ||
+      document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null ||
+      document.querySelector('[data-testid="contract-briefing"]:not([hidden])') !== null;
+    this.worldInfoNotePrompt.update(blocked ? null : this.nearestWorldInfoTarget(this.primaryActor.group.position));
+  }
+
+  private nearestWorldInfoTarget(position: THREE.Vector3): WorldInfoNoteTarget | null {
+    const candidates: Array<{ objectClass: WorldInfoObjectClass; distanceSq: number; priority: number }> = [];
+    const add = (objectClass: WorldInfoObjectClass, x: number, z: number, radius: number, priority = 0) => {
+      const distanceSq = distanceSq2(position.x, position.z, x, z);
+      if (distanceSq <= radius * radius) candidates.push({ objectClass, distanceSq, priority });
+    };
+
+    for (const node of this.harvestSnapshot.activeNodes) {
+      if (node.active) add('gold_seam', node.position.x, node.position.z, 2.25, 3);
+    }
+    for (const entry of this.buildSystem.diagnostics.hp) {
+      if (entry.wrecked || entry.hp <= 0) continue;
+      add(buildingInfoClass(entry.id), entry.position.x, entry.position.z, 2.35, 2);
+    }
+    const stake = Terrain.lossStakeMarker() ?? this.heroStart;
+    add('claim_stake', stake.x, stake.z, 2.4, 1);
+    for (const source of Terrain.waterSources()) {
+      add('spring_pond', source.x, source.z, source.radius + 1.4);
+    }
+    for (const ford of Terrain.fordRanges()) {
+      add('ford', ford.centerX, 0, ford.halfWidth + 1.35);
+    }
+    if (this.territoryRingPresent) {
+      for (const gap of this.territoryRingGapCenters()) add('territory_ring_gap', gap.x, gap.z, 2.4, 2);
+    }
+    const megaproject = this.megaprojectDiagnostics();
+    if (megaproject.unlocked && !megaproject.complete && megaproject.siteFootprint) {
+      const footprint = megaproject.siteFootprint;
+      add('megaproject_site', footprint.x, footprint.z, Math.max(footprint.w, footprint.d) * 0.5 + 2.2, 2);
+    }
+    add('prospector', this.prospector.snapshot.position.x, this.prospector.snapshot.position.z, 1.8);
+
+    candidates.sort((a, b) => a.distanceSq - b.distanceSq || b.priority - a.priority);
+    return candidates[0] ? { objectClass: candidates[0].objectClass } : null;
+  }
+
+  private territoryRingGapCenters(): Array<{ x: number; z: number }> {
+    const center = this.heroStart;
+    const gapHalf = Balance.meta.territoryRingGapHalfWidth;
+    const wallHalf = Balance.palisade.width / 2;
+    const capOffset = gapHalf + Balance.palisade.depth - wallHalf;
+    const sideOffset = gapHalf + Balance.palisade.depth + wallHalf;
+    const gaps: Array<{ x: number; z: number }> = [];
+    for (const edge of this.activeContract.tileParams.lanes.spawnEdges) {
+      if (edge === 'north' || edge === 'south') {
+        gaps.push({ x: center.x, z: center.z + (edge === 'north' ? capOffset : -capOffset) });
+      } else {
+        gaps.push({ x: center.x + (edge === 'east' ? sideOffset : -sideOffset), z: center.z });
+      }
+    }
+    return gaps;
   }
 
   private handleUiIntent(intent: UiIntent): void {
@@ -3114,6 +3183,10 @@ function legacySpawnPackOptions(count: number, radius?: number): SpawnPackOption
 
 function demolishKey(candidate: DemolishCandidate): string {
   return `${candidate.id}:${candidate.index}`;
+}
+
+function buildingInfoClass(id: BuildableId): WorldInfoObjectClass {
+  return id;
 }
 
 function edgeFromPosition(position: THREE.Vector3): CompassEdge {
