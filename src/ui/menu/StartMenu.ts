@@ -20,6 +20,7 @@ import { renderResearchChart } from '../ResearchChart';
 import { clearRunSuspend, readRunSuspend } from '../../game/RunSuspend';
 import { loadContract } from '../../meta/ContractFamilies';
 import { readTownName } from '../../town/TownNaming';
+import { accountSync } from '../../game/AccountSync';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
@@ -53,6 +54,7 @@ export class StartMenu {
   private selectedResearchNodeId: string | undefined;
   private backdropUrl: string | undefined;
   private backdropRequest: Promise<string> | undefined;
+  private disposeAccountSync: () => void = () => undefined;
 
   constructor(parent: HTMLElement, private readonly options: StartMenuOptions) {
     this.storage = setupProfileStorage();
@@ -63,7 +65,8 @@ export class StartMenu {
     this.root.style.setProperty('--gr-menu-panel', `url("${panelUrl}")`);
     this.root.addEventListener('click', this.onClick);
     this.root.addEventListener('keydown', this.onKeyDown);
-    this.render();
+    this.disposeAccountSync = accountSync.subscribe(this.onAccountSync);
+    this.onAccountSync();
     parent.append(this.root);
     this.loadBackdrop();
     this.firstAction()?.focus({ preventScroll: true });
@@ -72,6 +75,7 @@ export class StartMenu {
   dispose(): void {
     this.disposeAudioSettings();
     this.disposeStorySettings();
+    this.disposeAccountSync();
     this.root.removeEventListener('click', this.onClick);
     this.root.removeEventListener('keydown', this.onKeyDown);
     this.audio.dispose();
@@ -82,6 +86,7 @@ export class StartMenu {
     this.disposeAudioSettings();
     this.disposeStorySettings();
     const suspend = readRunSuspend();
+    const account = accountSync.snapshot();
     const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
     this.root.className = `gr-start-menu${this.researchOpen ? ' gr-start-menu--research-open' : ''}`;
     this.root.innerHTML = `
@@ -91,6 +96,7 @@ export class StartMenu {
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
         <p class="gr-start-menu__subtitle">an Agent Town tale</p>
         ${suspend ? `<p class="gr-start-menu__saved-claim" data-testid="start-menu-saved-claim">${escapeHtml(savedClaimLabel(suspend))}</p>` : ''}
+        <p class="gr-account-chip gr-account-chip--menu" data-testid="account-status-chip">${escapeHtml(account.label)}</p>
         ${
           this.firstBoot
             ? this.renderFirstBoot()
@@ -196,9 +202,19 @@ export class StartMenu {
     installProfileStorageScope(this.storage);
     this.firstBoot = false;
     this.profileMessage = '';
+    accountSync.queuePush();
     this.render();
     this.firstAction()?.focus({ preventScroll: true });
   }
+
+  private readonly onAccountSync = () => {
+    if (this.storage && loadProfileState(this.storage)) {
+      installProfileStorageScope(this.storage);
+      this.firstBoot = false;
+      this.profileMessage = '';
+    }
+    this.render();
+  };
 
   private readonly onKeyDown = (event: KeyboardEvent) => {
     if (event.key === 'Escape') {

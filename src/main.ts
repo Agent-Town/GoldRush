@@ -2,6 +2,7 @@ import './styles.css';
 import './ui/theme.css';
 import { install as installAssayBench } from './crafting/AssayBench';
 import { installFullBaseBenchmark } from './diagnostics/fullBaseBenchmark';
+import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import { install as installProfiles } from './game/ProfileManager';
@@ -35,6 +36,7 @@ if (initialSearch.get('bench') === 'fullbase') {
 
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
 installStoryRuntime(app);
+accountSync.install();
 let game: Game | undefined;
 let assayBench: ReturnType<typeof installAssayBench> | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
