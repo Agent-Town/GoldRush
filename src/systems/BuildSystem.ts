@@ -21,6 +21,7 @@ import type { ShooterHandle } from './CombatSystem';
 import type { CombatSystem } from './CombatSystem';
 import type { BuildingTarget, TargetingSystem } from './TargetingSystem';
 import { RenderLayers } from '../core/RenderLayers';
+import { hasElevationTile, highGroundRange, terrainLineOfSight } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 
 export type BuildableSnapshot = {
@@ -1463,6 +1464,12 @@ export class BuildSystem {
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
       damage: Balance.beacon.damage,
       getDamage: () => Balance.beacon.damage + Balance.beacon.damagePerWave * this.getWave(),
+      canTarget: hasElevationTile()
+        ? (target) => {
+            const origin = this.beacons.allPositions[placed] ?? this.ghostPos;
+            return terrainLineOfSight(origin, target.position);
+          }
+        : undefined,
       projSpeed: Balance.beacon.boltSpeed,
       volley: Balance.beacon.volley,
     };
@@ -1477,6 +1484,18 @@ export class BuildSystem {
       cooldown: 1 / this.effectiveTurretFireRate(placed),
       damage: this.effectiveTurretDamage(placed),
       getDamage: () => this.effectiveTurretDamage(placed),
+      canTarget: hasElevationTile()
+        ? (target) => {
+            const origin = this.turrets.allPositions[placed] ?? this.ghostPos;
+            return this.firingLineCrossesPalisade(origin, target.position) || terrainLineOfSight(origin, target.position);
+          }
+        : undefined,
+      effectiveRange: hasElevationTile()
+        ? () => {
+            const origin = this.turrets.allPositions[placed] ?? this.ghostPos;
+            return highGroundRange(handle.range, origin.x, origin.z);
+          }
+        : undefined,
       onFire: (at) => this.turrets.pulse(placed, at),
       projSpeed: Balance.turret.boltSpeed,
       volley: Balance.turret.volley,

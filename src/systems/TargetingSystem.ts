@@ -36,8 +36,15 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     return this.current;
   }
 
-  findNearest(from: THREE.Vector3, range: number, targets: readonly T[], eligible?: (target: T) => boolean): T | null {
-    const stickyRange = range + 1;
+  findNearest(
+    from: THREE.Vector3,
+    range: number,
+    targets: readonly T[],
+    eligible?: (target: T) => boolean,
+    effectiveRange?: (target: T) => number,
+  ): T | null {
+    const currentRange = this.current && effectiveRange ? effectiveRange(this.current) : range;
+    const stickyRange = currentRange + 1;
     if (
       this.current?.isAlive &&
       (!eligible || eligible(this.current)) &&
@@ -47,12 +54,14 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     }
 
     let best: T | null = null;
-    let bestDistanceSq = range * range;
+    let bestDistanceSq = Number.POSITIVE_INFINITY;
     for (let i = 0; i < targets.length; i += 1) {
       const target = targets[i];
       if (!target?.isAlive) continue;
       if (eligible && !eligible(target)) continue;
       const distanceSq = this.distanceSqXZ(from, target.position);
+      const targetRange = effectiveRange ? effectiveRange(target) : range;
+      if (distanceSq > targetRange * targetRange) continue;
       if (distanceSq < bestDistanceSq) {
         best = target;
         bestDistanceSq = distanceSq;

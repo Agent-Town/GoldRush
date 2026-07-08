@@ -397,6 +397,9 @@ export const Balance = {
     wadeDepth: 0.35,
     deepDepth: 1,
   },
+  gt: {
+    highGroundRangeBonus: 1.5,
+  },
   sprite: {
     turnRateDegPerS: 540,
     orientationFadeMs: 100,

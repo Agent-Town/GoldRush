@@ -22,6 +22,7 @@ export type ShooterHandle = {
   projectileKind?: (origin: THREE.Vector3, target: ClaimJumperEnemy, targetPoint: THREE.Vector3) => ProjectileKind;
   enabled?: () => boolean;
   canTarget?: (target: ClaimJumperEnemy) => boolean;
+  effectiveRange?: (target: ClaimJumperEnemy) => number;
   targetPoint?: (origin: THREE.Vector3, target: ClaimJumperEnemy) => THREE.Vector3 | null;
   aoe?: { radius: number; airTime: number };
   airTime?: (origin: THREE.Vector3, targetPoint: THREE.Vector3) => number;
@@ -355,7 +356,7 @@ export class CombatSystem {
         continue;
       }
       const origin = handle.getPos();
-      const target = state.targeting.findNearest(origin, handle.range, this.enemies.all, handle.canTarget);
+      const target = state.targeting.findNearest(origin, handle.range, this.enemies.all, handle.canTarget, handle.effectiveRange);
       if (!target) {
         state.timer = Math.max(0, state.timer);
         continue;

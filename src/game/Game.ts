@@ -138,7 +138,7 @@ import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
-import { simHeightDiagnostics, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
+import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
@@ -292,6 +292,10 @@ export class Game {
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
     damage: Balance.sparkRig.damage,
+    canTarget: hasElevationTile() ? (target) => terrainLineOfSight(this.primaryActor.group.position, target.position) : undefined,
+    effectiveRange: hasElevationTile()
+      ? () => highGroundRange(this.heroShooter.range, this.primaryActor.group.position.x, this.primaryActor.group.position.z)
+      : undefined,
     projSpeed: Balance.sparkRig.boltSpeed,
     volley: Balance.sparkRig.volley,
   };

@@ -560,6 +560,17 @@ interface ThreeGameDiagnostics {
         wadeDepth: number;
         deepDepth: number;
       };
+      gt: {
+        highGroundRangeBonus: number;
+      };
+      lastLos: {
+        flat: boolean;
+        clear: boolean;
+        samples: number;
+        from: { x: number; z: number; h: number };
+        to: { x: number; z: number; h: number };
+        blockedAt: { x: number; z: number; h: number; lineH: number; step: number } | null;
+      };
       probes: Record<string, {
         height: number;
         slope: { dx: number; dz: number };
@@ -894,6 +905,9 @@ interface Window {
         hits: number;
         misses: number;
         staleSwitches: number;
+        shots: Record<'bolt' | 'lob', number>;
+        lastShotKind: 'bolt' | 'lob' | null;
+        lastShotOwnerId: string | null;
       };
       arsenal: {
         active: 'rig' | 'blast';
