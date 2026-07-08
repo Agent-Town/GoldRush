@@ -9,6 +9,14 @@ import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
 import { readRunSuspend } from '../../game/RunSuspend';
+import {
+  AUTO_SAVE_SLOT_NAME,
+  deleteSaveSlot,
+  readSaveSlots,
+  renameSaveSlot,
+  restoreSaveSlotToAuto,
+  type SaveSlot,
+} from '../../game/SaveSlots';
 import { loadContract } from '../../meta/ContractFamilies';
 import { readTownName } from '../../town/TownNaming';
 import { accountSync } from '../../game/AccountSync';
@@ -28,6 +36,7 @@ const STORY_SETTINGS_IDS = {
 type StartMenuOptions = {
   onNewClaim: () => void;
   onContinue: () => void;
+  onLoadSlot: () => void;
   onEnterTown: () => void;
   onProfile: () => void;
 };
@@ -41,6 +50,8 @@ export class StartMenu {
   private firstBoot = false;
   private profileMessage = '';
   private settingsOpen = false;
+  private loadOpen = false;
+  private loadMessage = '';
   private backdropUrl: string | undefined;
   private backdropRequest: Promise<string> | undefined;
   private disposeAccountSync: () => void = () => undefined;
@@ -75,9 +86,10 @@ export class StartMenu {
     this.disposeAudioSettings();
     this.disposeStorySettings();
     const suspend = readRunSuspend();
+    const slots = readSaveSlots(this.storage);
     const account = accountSync.snapshot();
     const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
-    this.root.className = 'gr-start-menu';
+    this.root.className = `gr-start-menu${this.loadOpen ? ' gr-start-menu--load-open' : ''}`;
     this.root.innerHTML = `
       <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="${this.backdropUrl ? 'ready' : 'placeholder'}"${backdropStyle}></div>
       <div class="gr-start-menu__column">
@@ -97,11 +109,19 @@ export class StartMenu {
                 )}</button>`
               : ''
           }
+          ${
+            slots.manual.length > 0
+              ? '<button class="gr-start-menu__button" type="button" data-menu-action="load" data-testid="start-menu-load-claim">Load a claim</button>'
+              : ''
+          }
           <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="town" data-testid="start-menu-enter-town">Enter Town</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="profile" data-testid="start-menu-profile">Profile</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
         </nav>`
         }
+        <section class="gr-start-menu__load" data-testid="load-claim-screen" aria-label="Load a claim" ${this.loadOpen ? '' : 'hidden'}>
+          ${this.renderLoadClaims(slots.manual)}
+        </section>
         <section class="gr-start-menu__settings" data-testid="start-menu-settings-panel" ${this.settingsOpen ? '' : 'hidden'}>
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
           ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
@@ -114,6 +134,7 @@ export class StartMenu {
       event.preventDefault();
       this.createFirstProfile();
     });
+    this.bindLoadRenameForms();
   }
 
   private renderFirstBoot(): string {
@@ -144,6 +165,11 @@ export class StartMenu {
 
   private readonly onClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
+    const slotButton = target.closest<HTMLButtonElement>('[data-slot-action]');
+    if (slotButton?.dataset.slotAction && slotButton.dataset.slotId) {
+      this.handleSlotAction(slotButton.dataset.slotAction, slotButton.dataset.slotId);
+      return;
+    }
     const button = target.closest<HTMLButtonElement>('[data-menu-action]');
     const action = button?.dataset.menuAction;
     if (!action) return;
@@ -151,6 +177,7 @@ export class StartMenu {
     if (action === 'continue') this.options.onContinue();
     if (action === 'town') this.options.onEnterTown();
     if (action === 'profile') this.options.onProfile();
+    if (action === 'load') this.toggleLoad();
     if (action === 'settings') this.toggleSettings();
   };
 
@@ -184,7 +211,11 @@ export class StartMenu {
     if (event.key === 'Escape') {
       event.preventDefault();
       event.stopPropagation();
-      if (this.settingsOpen) {
+      if (this.loadOpen) {
+        this.loadOpen = false;
+        this.render();
+        this.root.querySelector<HTMLElement>('[data-testid="start-menu-load-claim"]')?.focus({ preventScroll: true });
+      } else if (this.settingsOpen) {
         this.settingsOpen = false;
         this.render();
         this.root.querySelector<HTMLElement>('[data-testid="start-menu-settings"]')?.focus({ preventScroll: true });
@@ -204,6 +235,7 @@ export class StartMenu {
 
   private toggleSettings(): void {
     this.settingsOpen = !this.settingsOpen;
+    if (this.settingsOpen) this.loadOpen = false;
     this.render();
     this.root.querySelector<HTMLElement>('[data-testid="start-menu-settings"]')?.focus({ preventScroll: true });
   }
@@ -222,6 +254,104 @@ export class StartMenu {
 
   private actionButtons(): HTMLButtonElement[] {
     return [...this.root.querySelectorAll<HTMLButtonElement>('.gr-start-menu__nav [data-menu-action]')];
+  }
+
+  private toggleLoad(): void {
+    this.loadOpen = !this.loadOpen;
+    if (this.loadOpen) this.settingsOpen = false;
+    this.render();
+    this.root.querySelector<HTMLElement>('[data-testid="load-claim-screen"]')?.focus({ preventScroll: true });
+  }
+
+  private renderLoadClaims(slots: SaveSlot[]): string {
+    const note = this.loadMessage ? `<p class="gr-load-claims__message" data-testid="load-claim-message">${escapeHtml(this.loadMessage)}</p>` : '';
+    if (slots.length === 0) {
+      return `
+        <div class="gr-load-claims__header">
+          <h2>Load a claim</h2>
+          <button class="gr-start-menu__small-button" type="button" data-menu-action="load">Close</button>
+        </div>
+        ${note}
+        <p class="gr-load-claims__empty">No manual claims pinned yet.</p>
+      `;
+    }
+    return `
+      <div class="gr-load-claims__header">
+        <h2>Load a claim</h2>
+        <button class="gr-start-menu__small-button" type="button" data-menu-action="load">Close</button>
+      </div>
+      ${note}
+      <ol class="gr-load-claims__list">
+        ${slots.map((slot) => this.renderSaveSlotCard(slot)).join('')}
+      </ol>
+    `;
+  }
+
+  private renderSaveSlotCard(slot: SaveSlot): string {
+    return `
+      <li class="gr-load-card" data-testid="save-slot-card">
+        <div>
+          <h3 data-testid="save-slot-name">${escapeHtml(slot.name)}</h3>
+          <p data-testid="save-slot-meta">Wave ${slot.wave} · ${escapeHtml(slot.contractName)} · ${escapeHtml(
+            slot.townName ?? 'unnamed town',
+          )} · ${escapeHtml(ageLabel(slot.timestamp))}</p>
+        </div>
+        <div class="gr-load-card__actions">
+          <button class="gr-start-menu__small-button" type="button" data-slot-action="load" data-slot-id="${escapeHtml(
+            slot.id,
+          )}" data-testid="save-slot-load">Load</button>
+          <form class="gr-load-card__rename" data-slot-id="${escapeHtml(slot.id)}" data-testid="save-slot-rename-form">
+            <input data-testid="save-slot-rename-input" name="slotName" maxlength="24" value="${escapeHtml(slot.name)}" />
+            <button class="gr-start-menu__small-button" type="submit" data-testid="save-slot-rename">Rename</button>
+          </form>
+          <button class="gr-start-menu__small-button gr-start-menu__small-button--danger" type="button" data-slot-action="delete" data-slot-id="${escapeHtml(
+            slot.id,
+          )}" data-testid="save-slot-delete">Delete</button>
+        </div>
+      </li>
+    `;
+  }
+
+  private bindLoadRenameForms(): void {
+    this.root.querySelectorAll<HTMLFormElement>('[data-testid="save-slot-rename-form"]').forEach((form) => {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const input = form.querySelector<HTMLInputElement>('[data-testid="save-slot-rename-input"]');
+        const result = renameSaveSlot(form.dataset.slotId ?? '', input?.value ?? '', this.storage);
+        this.loadMessage = result.message;
+        this.render();
+      });
+    });
+  }
+
+  private handleSlotAction(action: string, slotId: string): void {
+    if (action === 'delete') {
+      const slot = readSaveSlots(this.storage).manual.find((entry) => entry.id === slotId);
+      if (slot && !window.confirm(`Delete ${slot.name}?`)) return;
+      const result = deleteSaveSlot(slotId, this.storage);
+      this.loadMessage = result.message;
+      this.render();
+      return;
+    }
+    if (action !== 'load') return;
+    const slot = readSaveSlots(this.storage).manual.find((entry) => entry.id === slotId);
+    if (!slot) {
+      this.loadMessage = 'That claim is no longer on the shelf.';
+      this.render();
+      return;
+    }
+    const suspend = readRunSuspend();
+    if (suspend && JSON.stringify(suspend) !== JSON.stringify(slot.snapshot)) {
+      const auto = `${AUTO_SAVE_SLOT_NAME} (${suspendContext(suspend)})`;
+      if (!window.confirm(`Load ${slot.name} and abandon ${auto}?`)) return;
+    }
+    const result = restoreSaveSlotToAuto(slotId, this.storage);
+    if (!result.ok) {
+      this.loadMessage = result.message;
+      this.render();
+      return;
+    }
+    this.options.onLoadSlot();
   }
 }
 
@@ -279,4 +409,15 @@ function contractName(contractId: string): string {
   } catch {
     return contractId;
   }
+}
+
+function ageLabel(timestamp: number): string {
+  const seconds = Math.max(0, Math.floor((Date.now() - timestamp) / 1000));
+  if (seconds < 60) return 'just now';
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes} min ago`;
+  const hours = Math.floor(minutes / 60);
+  if (hours < 24) return `${hours} hr ago`;
+  const days = Math.floor(hours / 24);
+  return `${days} day${days === 1 ? '' : 's'} ago`;
 }

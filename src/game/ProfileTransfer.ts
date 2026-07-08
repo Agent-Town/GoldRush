@@ -10,9 +10,11 @@ import {
   type ProfileStorage,
   type ProfileState,
 } from './ProfileStorage';
+import { SAVE_SLOTS_KEY, compactSaveSlotsForTransfer } from './SaveSlots';
 
 const TRANSFER_KIND = 'goldrush.profile.ledger';
 const TRANSFER_VERSION = 1;
+const TRANSFER_SOFT_LIMIT_BYTES = 190 * 1024;
 
 export type ProfileTransferEnvelope = {
   kind: typeof TRANSFER_KIND;
@@ -40,13 +42,17 @@ export function packActiveProfile(storage: ProfileStorage): { envelope: ProfileT
     const raw = storage.getItem(profileDataKey(profile.id, key));
     if (raw !== null) data[key] = decodeDatum(raw);
   }
-  const envelope: ProfileTransferEnvelope = {
+  let envelope: ProfileTransferEnvelope = {
     kind: TRANSFER_KIND,
     version: TRANSFER_VERSION,
     exportedAt: new Date().toISOString(),
     profile,
     data,
   };
+  if (byteSize(JSON.stringify(envelope)) > TRANSFER_SOFT_LIMIT_BYTES && SAVE_SLOTS_KEY in data) {
+    data[SAVE_SLOTS_KEY] = compactSaveSlotsForTransfer(data[SAVE_SLOTS_KEY]);
+    envelope = { ...envelope, data };
+  }
   return { envelope, filename: `goldrush-${slug(profile.name)}-${dateStamp()}.json` };
 }
 
@@ -167,6 +173,10 @@ function slug(value: string): string {
 
 function dateStamp(): string {
   return new Date().toISOString().slice(0, 10);
+}
+
+function byteSize(value: string): number {
+  return new TextEncoder().encode(value).length;
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

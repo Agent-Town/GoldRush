@@ -153,6 +153,7 @@ import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 import { buildableDefs, type BuildableId } from './buildables';
 import { readRunSuspend, type RunSuspendWrite } from './RunSuspend';
+import { defaultSaveSlotName, formatBudgetWarning, saveManualSlot, saveSlotsBudget } from './SaveSlots';
 
 const frontierEpoch = loadEpoch('epoch-1-frontier');
 const STAMP_MILL_ID = 'stamp-mill';
@@ -329,6 +330,7 @@ export class Game {
   private readonly activeEpoch = selectActiveEpoch();
   private readonly activeContract = selectActiveContract();
   private runSuspendSaveLine = runSuspendPauseLine(this.activeContract.id);
+  private manualSaveMessage = '';
   private readonly heroStart = contractHeroStart(this.activeContract);
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
@@ -2873,6 +2875,11 @@ export class Game {
     if (intent.type === 'set_agent_rung') this.agentConsent.setRung(intent.level, intent.granted);
     if (intent.type === 'set_agent_ability') this.agentConsent.setAbility(intent.ability, intent.granted);
     if (intent.type === 'set_agent_rung' || intent.type === 'set_agent_ability') return;
+    if (intent.type === 'save_claim') {
+      this.audio.play('ledger-open');
+      this.saveManualClaim(intent.name);
+      return;
+    }
     if (this.secureClaimChoicePending()) return;
     this.audio.play('menu-tap');
     if (intent.type === 'pause') this.togglePlayerPause();
@@ -3754,6 +3761,7 @@ export class Game {
     const meter = scienceMeter(this.researchState);
     return {
       save: this.runSuspendSaveLine,
+      manualSave: this.manualSaveSnapshot(),
       contract: this.contractBriefingSnapshot(),
       science: `Science: ${meter.steps}/${meter.threshold} steps; banked +${meter.overflow}`,
       territory: territoryPauseLine(this.metaProgressForPresence()),
@@ -3765,6 +3773,49 @@ export class Game {
   onRunSuspendWrite(write: RunSuspendWrite): void {
     this.runSuspendSaveLine = runSuspendSavedLine(write.wave);
     this.hud.showMetaRecap(`Wave ${write.wave} ledgered ✓`, 2);
+  }
+
+  private manualSaveSnapshot(): PauseMetaSnapshot['manualSave'] {
+    const snapshot = readRunSuspend();
+    if (!snapshot || snapshot.contractId !== this.activeContract.id) {
+      return {
+        canSave: false,
+        defaultName: '',
+        message: this.manualSaveMessage || "Manual saves unlock after a wave's end.",
+        open: this.manualSaveMessage !== '',
+      };
+    }
+    const warning = formatBudgetWarning(saveSlotsBudget());
+    return {
+      canSave: true,
+      defaultName: defaultSaveSlotName(snapshot, readTownName()),
+      message: this.manualSaveMessage || warning || `Last completed wave ready: ${snapshot.wave}.`,
+      open: this.manualSaveMessage !== '',
+    };
+  }
+
+  private saveManualClaim(name: string): void {
+    const snapshot = readRunSuspend();
+    if (!snapshot || snapshot.contractId !== this.activeContract.id) {
+      this.manualSaveMessage = "Finish a wave first; the ledger only pins completed-wave states.";
+      this.syncUi();
+      return;
+    }
+    const result = saveManualSlot({
+      name,
+      snapshot,
+      contractName: this.activeContract.name,
+      townName: readTownName(),
+    });
+    if (result.ok) {
+      const warning = formatBudgetWarning(result.budget);
+      this.manualSaveMessage = warning ? `${result.message} ${warning}` : result.message;
+      this.hud.showMetaRecap(result.message, 2.4);
+    } else {
+      this.manualSaveMessage = result.message;
+    }
+    this.syncUi();
+    this.publishDiagnostics();
   }
 
   private contractBriefingSnapshot(): ContractBriefingSnapshot {

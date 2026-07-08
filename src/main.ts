@@ -95,6 +95,9 @@ function showStartMenu(): void {
       onContinue: () => {
         continueSavedRun();
       },
+      onLoadSlot: () => {
+        continueSavedRun();
+      },
       onEnterTown: () => {
         startMenu?.dispose();
         startMenu = undefined;
