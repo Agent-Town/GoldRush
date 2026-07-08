@@ -36,17 +36,15 @@ async function runDeterminism(page: Page): Promise<{ report: DeterminismReport; 
   const errors = collectErrors(page);
   await page.goto(`/?debug&determinism&nolevel&nopause&seed=${seed}&timescale=24`);
   await expect(page.locator('#game-canvas')).toBeVisible();
-  await expect
-    .poll(
-      () =>
-        page.evaluate(() => {
-          const report = (window as DeterminismWindow).__GR_DETERMINISM__;
-          return report?.status !== undefined && report.status !== 'running';
-        }),
-      { timeout: 900_000 },
-    )
-    .toBe(true);
-  const report = (await page.evaluate(() => (window as DeterminismWindow).__GR_DETERMINISM__)) as DeterminismReport;
+  const handle = await page.waitForFunction(
+    () => {
+      const report = (window as DeterminismWindow).__GR_DETERMINISM__;
+      return report && report.status !== 'running' ? report : null;
+    },
+    undefined,
+    { timeout: 900_000 },
+  );
+  const report = (await handle.jsonValue()) as DeterminismReport;
   return { report, errors };
 }
 
