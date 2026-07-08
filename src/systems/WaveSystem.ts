@@ -4,13 +4,20 @@ import type { CompassEdge, EnemyEliteKind } from '../entities/Enemy';
 import type { Rng } from '../core/Rng';
 import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
-import { activeContract, type ContractManifest } from '../meta/ContractFamilies';
+import {
+  activeContract,
+  type ContractEnemySpawnGate,
+  type ContractEnemyVariant,
+  type ContractManifest,
+  type RailPathPoint,
+} from '../meta/ContractFamilies';
 import * as Terrain from '../world/Terrain';
 
 export type SpawnPackOptions = {
   speedScale?: number;
   speedMult?: number;
   hpScale?: number;
+  thief?: boolean;
   eliteKind?: EnemyEliteKind;
   visualScale?: number;
   banner?: boolean;
@@ -19,6 +26,17 @@ export type SpawnPackOptions = {
   buildingDamageScale?: number;
   supportBuildingDamageScale?: number;
   heroPursuitRange?: number;
+  variantId?: string;
+  variantLabel?: string;
+  tint?: string;
+  boltDamageMult?: number;
+  bossGroupId?: string;
+  bossGroupSize?: number;
+  bossGroupTotalHp?: number;
+  bossComponentId?: string;
+  bossComponentLabel?: string;
+  bossDegradeSpeedMult?: number;
+  spawnGates?: readonly ContractEnemySpawnGate[];
 };
 
 type PlannedPulse = {
@@ -165,8 +183,9 @@ export class WaveSystem {
         this.nextTrickleAt = this.lastPulseAt + this.currentTrickleInterval(this.lastPulseAt);
         continue;
       }
+      const edge = this.pickEdge();
       this.pulse = 0;
-      this.spawnAt(this.pickEdge(), 0, this.wave);
+      this.spawnAt(edge, 0, this.wave, this.waveBudget(this.wave), false, false, this.variantOptionsFor(Math.max(1, this.wave), edge, 0));
       this.nextTrickleAt += this.currentTrickleInterval(this.waveElapsedAt(this.nextTrickleAt));
     }
 
@@ -241,13 +260,9 @@ export class WaveSystem {
     let spawned = 0;
     for (let i = 0; i < count; i += 1) {
       if (this.enemies.activeCount >= this.enemies.capacity) break;
-      const angle = (i / Math.max(1, count)) * Math.PI * 2;
-      this.spawnPosition.set(
-        this.heroPosition.x + Math.cos(angle) * 15,
-        Balance.enemy.groundY,
-        this.heroPosition.z + Math.sin(angle) * 15,
-      );
-      if (this.spawnAtPosition(this.wave, false)) spawned += 1;
+      const edge = this.spawnEdges[i % Math.max(1, this.spawnEdges.length)] ?? 'west';
+      const wave = Math.max(1, this.wave);
+      if (this.spawnAt(edge, i, wave, count, false, false, this.variantOptionsFor(wave, edge, i), false)) spawned += 1;
     }
     return spawned;
   }
@@ -333,13 +348,22 @@ export class WaveSystem {
         const edge = pulse.edges[edgeIndex];
         const count = pulse.counts[edgeIndex] ?? 0;
         if (!edge) continue;
-        this.edge = edge;
-        const thieves = this.thiefCount(count, pulse.wave);
-        const shared = Balance.waves.pressureBudgetShared;
-        const wreckers = this.wreckerCount(shared ? count - thieves : count, pulse.wave, pulse.pulse);
-        const total = shared ? count : count + thieves + wreckers;
-        for (let i = 0; i < total; i += 1) {
-          this.spawnAt(edge, i, pulse.wave, total, i < thieves, i >= thieves && i < thieves + wreckers);
+        const roster = this.enemyRosterFor(pulse.wave, edge);
+        if (roster.length > 0) {
+          this.edge = edge;
+          for (let i = 0; i < count; i += 1) {
+            const variant = this.variantFor(roster, pulse.wave, edge, i);
+            this.spawnAt(edge, i, pulse.wave, count, false, false, this.optionsForVariant(variant));
+          }
+        } else {
+          this.edge = edge;
+          const thieves = this.thiefCount(count, pulse.wave);
+          const shared = Balance.waves.pressureBudgetShared;
+          const wreckers = this.wreckerCount(shared ? count - thieves : count, pulse.wave, pulse.pulse);
+          const total = shared ? count : count + thieves + wreckers;
+          for (let i = 0; i < total; i += 1) {
+            this.spawnAt(edge, i, pulse.wave, total, i < thieves, i >= thieves && i < thieves + wreckers);
+          }
         }
       }
 
@@ -379,8 +403,11 @@ export class WaveSystem {
       this.spawnPosition.set(center.x - radius, Balance.enemy.groundY, center.z + lateral);
     }
 
-    this.spawnPosition.x = this.clampSpawn(this.spawnPosition.x);
-    this.spawnPosition.z = this.clampSpawn(this.spawnPosition.z);
+    const gated = this.applyVariantSpawnGate(edge, spread + jitter, options.spawnGates);
+    if (!gated) {
+      this.spawnPosition.x = this.clampSpawn(this.spawnPosition.x);
+      this.spawnPosition.z = this.clampSpawn(this.spawnPosition.z);
+    }
     this.keepSpawnOutOfDeepWater(edge);
     return this.spawnAtPosition(wave, respectAliveCap, { edge, thief, wrecker, ...options });
   }
@@ -410,6 +437,16 @@ export class WaveSystem {
       buildingDamageScale: params.buildingDamageScale,
       supportBuildingDamageScale: params.supportBuildingDamageScale,
       heroPursuitRange: params.heroPursuitRange,
+      variantId: params.variantId,
+      variantLabel: params.variantLabel,
+      tint: params.tint,
+      boltDamageMult: params.boltDamageMult,
+      bossGroupId: params.bossGroupId,
+      bossGroupSize: params.bossGroupSize,
+      bossGroupTotalHp: params.bossGroupTotalHp,
+      bossComponentId: params.bossComponentId,
+      bossComponentLabel: params.bossComponentLabel,
+      bossDegradeSpeedMult: params.bossDegradeSpeedMult,
     });
     if (!enemy) return false;
     this.waveSpawnedTotal += 1;
@@ -469,6 +506,43 @@ export class WaveSystem {
     return this.wreckerCount(groupCount - thieves, wave, pulse) > 0;
   }
 
+  private enemyRosterFor(wave: number, edge: CompassEdge): readonly ContractEnemyVariant[] {
+    const roster = this.contract.twist.enemyRoster ?? [];
+    if (roster.length === 0) return [];
+    const edgeRoster = roster.filter((entry) => wave >= (entry.waveMin ?? 1) && (!entry.spawnEdges || entry.spawnEdges.includes(edge)));
+    return edgeRoster.length > 0 ? edgeRoster : roster.filter((entry) => wave >= (entry.waveMin ?? 1));
+  }
+
+  private variantFor(roster: readonly ContractEnemyVariant[], wave: number, edge: CompassEdge, index: number): ContractEnemyVariant {
+    const edgeOffset = edge === 'north' ? 0 : edge === 'east' ? 1 : edge === 'south' ? 2 : 3;
+    return roster[(wave + edgeOffset + index) % roster.length] ?? roster[0]!;
+  }
+
+  private variantOptionsFor(wave: number, edge: CompassEdge, index: number): SpawnPackOptions {
+    const roster = this.enemyRosterFor(wave, edge);
+    if (roster.length === 0) return {};
+    return this.optionsForVariant(this.variantFor(roster, wave, edge, index));
+  }
+
+  private optionsForVariant(variant: ContractEnemyVariant): SpawnPackOptions {
+    return {
+      thief: variant.thief,
+      wrecker: variant.wrecker,
+      variantId: variant.id,
+      variantLabel: variant.label,
+      hpScale: variant.hpScale,
+      speedMult: variant.speedMult,
+      visualScale: variant.visualScale,
+      tint: variant.tint,
+      boltDamageMult: variant.boltDamageMult,
+      contactDamageScale: variant.contactDamageScale,
+      buildingDamageScale: variant.buildingDamageScale,
+      supportBuildingDamageScale: variant.supportBuildingDamageScale,
+      heroPursuitRange: variant.heroPursuitRange,
+      spawnGates: variant.spawnGates,
+    };
+  }
+
   private currentTrickleInterval(atSim: number): number {
     const decaySteps = Math.floor(Math.max(0, atSim - Balance.waves.graceSeconds) / Balance.waves.trickleDecayEvery);
     return Math.max(
@@ -522,7 +596,11 @@ export class WaveSystem {
     const escorts = Math.max(0, Math.floor(baron.escortCount));
     const groupCount = escorts + 1;
     for (let index = 0; index < escorts; index += 1) {
-      this.spawnAt(edge, index, wave, groupCount);
+      this.spawnAt(edge, index, wave, groupCount, false, false, this.variantOptionsFor(wave, edge, index));
+    }
+    if ((baron.components?.length ?? 0) > 0) {
+      this.spawnComponentBossWave(wave);
+      return;
     }
     const spawned = this.spawnAt(
       edge,
@@ -532,7 +610,7 @@ export class WaveSystem {
       false,
       true,
       {
-        eliteKind: 'baron',
+        eliteKind: baron.bossKind ?? 'baron',
         hpScale: baron.hpScale,
         speedMult: baron.speedScale,
         visualScale: baron.scale,
@@ -546,6 +624,67 @@ export class WaveSystem {
       false,
     );
     if (spawned) this.onBaronSpawned(this.spawnPosition, this.currentAtSim);
+  }
+
+  private spawnComponentBossWave(wave: number): void {
+    const baron = this.contract.twist.baron;
+    const components = baron?.components ?? [];
+    if (!baron || components.length === 0) return;
+    const route = this.contract.tileParams.rails?.[baron.railRouteIndex ?? 0];
+    const start = route?.points[0] ?? ({ x: -Balance.waves.spawnRingRadius, z: 0 } satisfies RailPathPoint);
+    const end = route?.points[(route?.points.length ?? 1) - 1] ?? ({ x: Balance.waves.spawnRingRadius, z: 0 } satisfies RailPathPoint);
+    const dx = end.x - start.x;
+    const dz = end.z - start.z;
+    const length = Math.max(0.001, Math.hypot(dx, dz));
+    const alongX = dx / length;
+    const alongZ = dz / length;
+    const sideX = -alongZ;
+    const sideZ = alongX;
+    const waveHpScale = Math.pow(Balance.waves.hpScalePerWave, wave);
+    const waveSpeedScale = Math.min(Balance.waves.speedScaleCap, Math.pow(Balance.waves.speedScalePerWave, wave));
+    const totalHp = Balance.enemy.hp * waveHpScale * baron.hpScale * components.reduce((sum, component) => sum + component.hpScale, 0);
+    const groupId = `${this.contract.id}:wave-${wave}:railcar`;
+    let spawned = 0;
+    for (const component of components) {
+      const along = component.xOffset ?? spawned * 1.1;
+      const side = component.zOffset ?? 0;
+      this.spawnPosition.set(
+        start.x + alongX * along + sideX * side,
+        Balance.enemy.groundY,
+        start.z + alongZ * along + sideZ * side,
+      );
+      const enemy = this.enemies.spawn(this.spawnPosition, {
+        eliteKind: baron.bossKind ?? 'railcar',
+        hpScale: waveHpScale * baron.hpScale * component.hpScale,
+        speedScale: waveSpeedScale * (baron.railSpeed ?? baron.speedScale),
+        visualScale: (component.visualScale ?? 1) * baron.scale,
+        wrecker: true,
+        edge: edgeFromPoint(start),
+        contactDamageScale: component.contactDamageScale ?? baron.contactDamageScale,
+        buildingDamageScale: (baron.buildingDamageScale ?? 1) * (component.buildingDamageScale ?? 1),
+        supportBuildingDamageScale: (baron.supportBuildingDamageScale ?? baron.buildingDamageScale ?? 1) * (component.supportBuildingDamageScale ?? 1),
+        heroPursuitRange: baron.pursuitRange,
+        variantId: 'baron_railcar',
+        variantLabel: 'Armored Railcar',
+        tint: component.tint,
+        boltDamageMult: component.boltDamageMult,
+        bossGroupId: groupId,
+        bossGroupSize: components.length,
+        bossGroupTotalHp: totalHp,
+        bossComponentId: component.id,
+        bossComponentLabel: component.label,
+        bossDegradeSpeedMult: baron.componentDegradeSpeedMult,
+      });
+      if (!enemy) continue;
+      enemy.scriptMoveRoute(route?.points ?? [start, end], Math.max(0, baron.railSpeed ?? baron.speedScale), {
+        ignoreTerrain: true,
+        offsetX: alongX * along + sideX * side,
+        offsetZ: alongZ * along + sideZ * side,
+      });
+      this.waveSpawnedTotal += 1;
+      spawned += 1;
+    }
+    if (spawned > 0) this.onBaronSpawned(this.spawnPosition, this.currentAtSim);
   }
 
   private maxTelegraphLead(): number {
@@ -611,7 +750,21 @@ export class WaveSystem {
     return this.hasTerritoryRing() && wave <= this.contract.tileParams.lanes.territoryRingBiasWaves;
   }
 
+  private applyVariantSpawnGate(edge: CompassEdge, lateral: number, gates?: readonly ContractEnemySpawnGate[]): boolean {
+    const gate = gates?.find((entry) => entry.edge === edge);
+    if (!gate) return false;
+    const offset = THREE.MathUtils.clamp(lateral, -6, 6) * 0.35;
+    const tangentX = edge === 'north' || edge === 'south' ? 1 : 0;
+    const tangentZ = edge === 'east' || edge === 'west' ? 1 : 0;
+    this.spawnPosition.set(gate.x + tangentX * offset, Balance.enemy.groundY, gate.z + tangentZ * offset);
+    return true;
+  }
+
   private clampSpawn(value: number): number {
     return Math.max(-38, Math.min(38, value));
   }
+}
+
+function edgeFromPoint(point: RailPathPoint): CompassEdge {
+  return Math.abs(point.x) > Math.abs(point.z) ? (point.x >= 0 ? 'east' : 'west') : point.z >= 0 ? 'north' : 'south';
 }

@@ -738,7 +738,9 @@ export class Game {
     });
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
-      if (event.eliteKind === 'baron') this.onBaronDefeated(event.at, event.enemyId);
+      if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
+        this.onBaronDefeated(event.at, event.enemyId);
+      }
     });
     this.events.on('building_damaged', () => {
       this.buildingHitsResolved += 1;
@@ -895,6 +897,15 @@ export class Game {
                 heroPursuitRange: enemy.heroPursuitRange,
                 hitRadius: enemy.hitRadius,
                 eliteKind: enemy.eliteKind ?? undefined,
+                variantId: enemy.variantId ?? undefined,
+                variantLabel: enemy.variantLabel ?? undefined,
+                boltDamageMult: enemy.boltDamageMult,
+                bossGroupId: enemy.bossGroupId ?? undefined,
+                bossGroupSize: enemy.bossGroupSize,
+                bossGroupTotalHp: enemy.bossGroupTotalHp,
+                bossComponentId: enemy.bossComponentId ?? undefined,
+                bossComponentLabel: enemy.bossComponentLabel ?? undefined,
+                bossDegradeSpeedMult: enemy.bossDegradeSpeedMult,
                 scale: enemy.visualScale,
                 hasBanner: enemy.hasBanner,
                 vx: enemy.velocityX,
@@ -1465,7 +1476,7 @@ export class Game {
     if (this.baronStandardGroup.children.length > 0) return;
     this.baronStandardGroup.name = 'BaronStandard';
     this.baronStandardGroup.visible = false;
-    if (this.activeContract.twist.baron) applyGeneratedMap(this.baronStandardClothMaterial, assetSlots.propBaronBanner);
+    if (this.activeContractUsesBaronPresentation()) applyGeneratedMap(this.baronStandardClothMaterial, assetSlots.propBaronBanner);
 
     const pole = new THREE.Mesh(this.baronStandardPoleGeometry, this.baronStandardPoleMaterial);
     pole.name = 'BaronStandardPole';
@@ -1876,6 +1887,11 @@ export class Game {
 
   private publishDiagnostics(): void {
     const info = this.renderer.info;
+    const assets = generatedAssetStatuses();
+    if (!this.activeContractUsesBaronPresentation()) {
+      delete assets[assetSlots.charBaron];
+      delete assets[assetSlots.propBaronBanner];
+    }
     const heroPos = {
       x: this.primaryActor.group.position.x,
       y: this.primaryActor.group.position.y,
@@ -2025,7 +2041,7 @@ export class Game {
         geometries: info.memory.geometries,
         textures: info.memory.textures,
       },
-      assets: generatedAssetStatuses(),
+      assets,
       assetSprites: generatedAssetRenderCounts(),
       spriteAnimations: spriteAnimationDiagnostics(),
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
@@ -2101,16 +2117,17 @@ export class Game {
 
   secureBarkForRun(): string | undefined {
     const baron = this.activeContract.twist.baron;
-    return baron && this.baronBeatenThisRun ? `The Baron is DEFEATED. ${baron.defeatBeat}` : undefined;
+    return baron && this.baronBeatenThisRun ? `${bossDefeatLine(baron)} ${baron.defeatBeat}` : undefined;
   }
 
   secureLedgerLineForRun(): string | undefined {
     const baron = this.activeContract.twist.baron;
-    return baron && this.baronBeatenThisRun ? `THE BARON — DEFEATED, wave ${baron.wave}` : undefined;
+    return baron && this.baronBeatenThisRun ? `${bossLedgerLabel(baron)} — DEFEATED, wave ${baron.wave}` : undefined;
   }
 
   secureCalloutForRun(): string | undefined {
-    return this.activeContract.twist.baron && this.baronBeatenThisRun ? '+double science' : undefined;
+    const baron = this.activeContract.twist.baron;
+    return baron && this.baronBeatenThisRun ? bossSecureCallout(baron) : undefined;
   }
 
   private waitsForBaronDefeat(): boolean {
@@ -2121,15 +2138,16 @@ export class Game {
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     if (wave === baron.wave) {
-      this.queueBaronBanner(baron.taunt, atSim, BARON_ARRIVAL_TITLE);
+      emitStorySignal({ type: 'boss-arrival', contractId: this.activeContract.id, contractName: this.activeContract.name });
+      this.queueBaronBanner(baron.taunt, atSim, bossArrivalTitle(baron));
       return;
     }
     if (!baron.tauntWaves.includes(wave)) return;
-    this.queueBaronBanner(baron.taunt, atSim, 'The Claim-Jumper Baron');
+    this.queueBaronBanner(baron.taunt, atSim, bossTauntTitle(baron));
   }
 
   private announceWaveBanner(text: string, atSim: number): void {
-    if (this.pendingBaronBanner?.title === BARON_ARRIVAL_TITLE || this.baronArrivalBannerVisible()) return;
+    if (this.pendingBaronBanner?.title === bossArrivalTitle(this.activeContract.twist.baron) || this.baronArrivalBannerVisible()) return;
     this.uiBridge.announce(text, atSim);
   }
 
@@ -2165,7 +2183,7 @@ export class Game {
     return (
       root?.classList.contains('hud--announcement-visible') === true &&
       root.dataset.announcementKind === 'baron' &&
-      this.uiSnapshot?.announcementTitle === BARON_ARRIVAL_TITLE
+      this.uiSnapshot?.announcementTitle === bossArrivalTitle(this.activeContract.twist.baron)
     );
   }
 
@@ -2192,7 +2210,7 @@ export class Game {
     if (!baron) return;
     const enemy = this.enemies.all.find((entry) => entry.id === enemyId);
     const position = enemy?.position.clone() ?? this.primaryActor.group.position.clone();
-    const pendingArrivalBanner = this.pendingBaronBanner?.title === BARON_ARRIVAL_TITLE ? this.pendingBaronBanner : null;
+    const pendingArrivalBanner = this.pendingBaronBanner?.title === bossArrivalTitle(baron) ? this.pendingBaronBanner : null;
     window.clearTimeout(this.baronAnnouncementTimer);
     this.baronAnnouncementTimer = 0;
     this.charmPauseActive = false;
@@ -2207,7 +2225,7 @@ export class Game {
       this.showBaronBanner(pendingArrivalBanner);
     } else {
       this.pendingBaronBanner = null;
-      this.uiBridge.announce(baron.defeatBeat, atSim, null, BARON_DEFEAT_CARD_SECONDS, 'baron-defeat', BARON_DEFEAT_TITLE);
+      this.uiBridge.announce(baron.defeatBeat, atSim, null, BARON_DEFEAT_CARD_SECONDS, 'baron-defeat', bossDefeatTitle(baron));
     }
     if (isPauseDisabled()) {
       this.completeBaronDefeat(atSim);
@@ -2242,12 +2260,13 @@ export class Game {
     window.clearTimeout(this.baronAnnouncementTimer);
     this.pendingBaronBanner = null;
     this.baronAnnouncementTimer = 0;
-    awardBaronMedal();
+    if (baron.awardMedal !== false) awardBaronMedal();
+    emitStorySignal({ type: 'boss-defeat', contractId: this.activeContract.id, contractName: this.activeContract.name });
     this.researchState = saveResearchState(
       this.researchStorage,
       loadResearchState(this.researchStorage, this.researchStorage, this.researchUnlockFlags()),
     );
-    this.uiBridge.announce(baron.defeatBeat, atSim, null, BARON_DEFEAT_CARD_SECONDS, 'baron-defeat', BARON_DEFEAT_TITLE);
+    this.uiBridge.announce(baron.defeatBeat, atSim, null, BARON_DEFEAT_CARD_SECONDS, 'baron-defeat', bossDefeatTitle(baron));
   }
 
   private readonly skipBaronCeremony = (event: Event): void => {
@@ -3010,7 +3029,12 @@ export class Game {
   }
 
   private prefetchContractPresentation(): void {
-    if (this.activeContract.twist.baron) this.enemies.prefetchBaronPresentation();
+    if (this.activeContractUsesBaronPresentation()) this.enemies.prefetchBaronPresentation();
+  }
+
+  private activeContractUsesBaronPresentation(): boolean {
+    const baron = this.activeContract.twist.baron;
+    return !!baron && (baron.bossKind ?? 'baron') === 'baron';
   }
 
   private togglePlayerPause(): void {
@@ -4001,6 +4025,30 @@ function edgePlace(edge: CompassEdge): string {
   if (edge === 'south') return 'south bank';
   if (edge === 'east') return 'east ridge';
   return 'west ridge';
+}
+
+function bossArrivalTitle(baron?: ContractBaronTwist | null): string {
+  return baron?.arrivalTitle ?? BARON_ARRIVAL_TITLE;
+}
+
+function bossTauntTitle(baron: ContractBaronTwist): string {
+  return baron.tauntTitle ?? 'The Claim-Jumper Baron';
+}
+
+function bossDefeatTitle(baron: ContractBaronTwist): string {
+  return baron.defeatTitle ?? BARON_DEFEAT_TITLE;
+}
+
+function bossDefeatLine(baron: ContractBaronTwist): string {
+  return baron.defeatLine ?? 'The Baron is DEFEATED.';
+}
+
+function bossLedgerLabel(baron: ContractBaronTwist): string {
+  return baron.ledgerLabel ?? 'THE BARON';
+}
+
+function bossSecureCallout(baron: ContractBaronTwist): string {
+  return baron.secureCallout ?? '+double science';
 }
 
 function prospectorIntroAbility(level: number): string {

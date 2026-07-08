@@ -1,7 +1,7 @@
 import './story.css';
-import { STORY_BEATS, type StoryBeat } from './beats';
+import { STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats';
 import { hasStoryBeatSeen, markStoryBeatSeen } from './seenState';
-import { emitStorySignal, onStorySignal, STORY_SIGNAL_REGISTRY, type StorySignal } from './signals';
+import { emitStorySignal, onStorySignal, STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal, type StorySignal } from './signals';
 import { STORY_SPEAKERS } from './speakers';
 import { readStoryTalesEnabled, subscribeStorySettings } from './settings';
 
@@ -9,10 +9,10 @@ const CARD_MS = 6000;
 const GAP_MS = 3000;
 
 type QueueItem = {
-  beat: StoryBeat;
+  beat: RuntimeStoryBeat;
   key: string;
   lines: readonly string[];
-  signal: StorySignal;
+  signal: RuntimeStorySignal;
 };
 
 let installed: StoryRuntime | null = null;
@@ -55,9 +55,9 @@ export class StoryRuntime {
     if (installed === this) installed = null;
   }
 
-  private receive(signal: StorySignal): void {
+  private receive(signal: RuntimeStorySignal): void {
     if (!readStoryTalesEnabled()) return;
-    for (const beat of STORY_BEATS) {
+    for (const beat of STORY_RUNTIME_BEATS) {
       if (beat.trigger !== signal.type || (beat.when && !beat.when(signal))) continue;
       const key = beat.seenKey?.(signal) ?? beat.id;
       if (beat.oncePerProfile && hasStoryBeatSeen(key)) continue;
@@ -69,7 +69,7 @@ export class StoryRuntime {
     this.schedule();
   }
 
-  private linesFor(beat: StoryBeat, signal: StorySignal): readonly string[] {
+  private linesFor(beat: RuntimeStoryBeat, signal: RuntimeStorySignal): readonly string[] {
     const lines = typeof beat.lines === 'function' ? beat.lines(signal) : beat.lines;
     return lines.map((line) => line.trim()).filter(Boolean).slice(0, 2);
   }
@@ -160,8 +160,8 @@ export class StoryRuntime {
   private installDebugHandle(): void {
     try {
       window.__GR_STORY__ = {
-        emit: emitStorySignal,
-        registry: [...STORY_SIGNAL_REGISTRY],
+        emit: (signal: StorySignal) => emitStorySignal(signal),
+        registry: [...STORY_RUNTIME_SIGNAL_REGISTRY],
         active: () => this.active?.key ?? null,
         pending: () => this.queue.map((item) => item.key),
         talesEnabled: () => readStoryTalesEnabled(),

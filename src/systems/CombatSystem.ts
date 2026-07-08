@@ -509,7 +509,7 @@ export class CombatSystem {
         const hitRadiusSq = hitRadius * hitRadius;
         if (dx * dx + dz * dz > hitRadiusSq) continue;
 
-        const damage = this.projectiles.damageAt(boltIndex);
+        const damage = this.projectiles.damageAt(boltIndex) * enemy.boltDamageMult;
         const ownerId = this.projectiles.ownerIdAt(boltIndex) ?? 'hero';
         const shooterId = this.projectiles.shooterIdAt(boltIndex);
         const targetId = this.projectiles.targetIdAt(boltIndex);
@@ -573,6 +573,7 @@ export class CombatSystem {
 
   private killEnemy(enemy: ClaimJumperEnemy, at: number, ownerId: string): void {
     const xp = Balance.xp.perKill;
+    const bossState = this.enemies.degradeBossGroup(enemy);
     this.ownerKills[ownerId] = (this.ownerKills[ownerId] ?? 0) + 1;
     this.xpDeaths += 1;
     if (Terrain.sample(enemy.position.x, enemy.position.z).zone !== 'river' && this.motes.spawn(enemy.position, xp)) {
@@ -589,6 +590,11 @@ export class CombatSystem {
       enemyId: enemy.id,
       xp,
       eliteKind: enemy.eliteKind ?? undefined,
+      variantId: enemy.variantId ?? undefined,
+      bossGroupId: enemy.bossGroupId ?? undefined,
+      bossComponentId: enemy.bossComponentId ?? undefined,
+      bossRemaining: bossState?.remaining,
+      bossComponents: bossState?.total,
     });
     this.enemies.recycle(enemy);
   }
