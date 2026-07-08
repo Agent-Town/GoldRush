@@ -13,3 +13,16 @@ worktrees/
 
 # Claude Code machine-local settings (allowlist shared in settings.json)
 .claude/settings.local.json
+
+# session scratch + probe backups — NEVER track (s198 broad-add guard: the art
+# runner's `git add -A` in the repo root swept these into bfadfc2, 4th instance).
+# Ignoring them makes a repo-root -A safe-by-construction for future runs.
+.s195-probe-bak/
+scripts/_s*
+playwright.s*.config.ts
+
+# transient runner state — masters (tasks/*.md, tasks/BACKLOG.md) stay tracked,
+# but queue/running/done/failed are ephemeral filesystem state the runner manages.
+tasks/running/
+tasks/done/
+tasks/failed/
