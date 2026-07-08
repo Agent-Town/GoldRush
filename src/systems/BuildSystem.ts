@@ -9,7 +9,9 @@ import { TurretPool } from '../entities/Turret';
 import { Balance } from '../game/Balance';
 import {
   beaconCost as registryBeaconCost,
+  buildableBlurb,
   buildableDefs,
+  buildableTierEffectLine,
   getBuildableDef,
   type BuildableDef,
   type BuildableId,
@@ -32,6 +34,7 @@ export type BuildableSnapshot = {
   selected: boolean;
   iconSlot: `ui.build.icon.${BuildableId}`;
   portraitSlug?: string;
+  tierLine?: string;
 };
 
 export type BuildDiagnostics = {
@@ -403,7 +406,7 @@ export class BuildSystem {
       return {
         id: def.id,
         displayName: def.displayName,
-        blurb: def.blurb,
+        blurb: buildableBlurb(def),
         cost,
         count,
         maxCount: def.maxCount,
@@ -411,6 +414,7 @@ export class BuildSystem {
         selected: def.id === this.selectedId,
         iconSlot: def.iconSlot,
         portraitSlug: def.portraitSlug,
+        tierLine: buildableTierEffectLine(def.id, this.menuTierFor(def.id)),
       };
     });
   }
@@ -1387,6 +1391,13 @@ export class BuildSystem {
 
   private tierFor(id: BuildableId, index: number): number {
     return Math.max(1, Math.floor(this.tier[id][index] || 1));
+  }
+
+  private menuTierFor(id: BuildableId): number {
+    if (!isUpgradeableBuildable(id)) return 1;
+    let tier = 1;
+    for (const value of this.tier[id]) tier = Math.max(tier, Math.floor(value || 1));
+    return tier;
   }
 
   private tierRung(id: BuildableId, index: number): TierRung | null {

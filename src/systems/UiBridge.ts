@@ -50,6 +50,7 @@ export type UiSnapshot = {
     selected: boolean;
     iconSlot: `ui.build.icon.${BuildableId}`;
     portraitSlug?: string;
+    tierLine?: string;
   }>;
   stockpileCount: number;
   beaconCount: number;

@@ -198,7 +198,9 @@ export class InputController {
               ? 3
               : down('Digit5') || down('Numpad5')
                 ? 4
-                : null;
+                : down('Digit6') || down('Numpad6')
+                  ? 5
+                  : null;
     this.intents.restart = down('KeyR');
     this.intents.pause = down('KeyP') || down('Escape');
     const muteHeld = down('KeyM');

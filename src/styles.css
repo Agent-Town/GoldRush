@@ -934,6 +934,7 @@ body {
 
 .hud-panel--build {
   position: absolute;
+  z-index: 7;
   left: max(18px, env(safe-area-inset-left));
   bottom: max(18px, env(safe-area-inset-bottom));
   width: min(340px, calc(100vw - 36px));
@@ -953,6 +954,37 @@ body {
 
 .hud-build-menu[hidden] {
   display: none;
+}
+
+.hud-build-blurb {
+  grid-column: 1 / -1;
+  min-height: 58px;
+  border: 1px solid rgba(46, 27, 14, 0.58);
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #2e1b0e;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(232, 213, 168, 0.98)),
+    #f5e6c8;
+  box-shadow: inset 0 0 0 1px rgba(91, 138, 138, 0.24);
+}
+
+.hud-build-blurb strong,
+.hud-build-blurb span {
+  display: block;
+}
+
+.hud-build-blurb strong {
+  font-size: 0.78rem;
+  font-weight: 900;
+}
+
+.hud-build-blurb span {
+  margin-top: 2px;
+  font-size: 0.74rem;
+  font-weight: 800;
+  line-height: 1.22;
+  overflow-wrap: anywhere;
 }
 
 .hud-build-button {
@@ -1214,12 +1246,16 @@ body {
   }
 
   .hud-panel--build {
-    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 112px);
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 154px);
     width: min(354px, calc(100vw - 36px));
   }
 
   .hud-build-tile {
     min-height: 54px;
+  }
+
+  .hud-build-blurb {
+    min-height: 64px;
   }
 
   .hud-panel--weapon {

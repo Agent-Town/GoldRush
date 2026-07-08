@@ -2848,9 +2848,7 @@ export class Game {
   }
 
   private selectBuildable(id: string): boolean {
-    const selected = this.buildSystem.selectBuildable(id, true);
-    if (selected) this.buildMenuOpen = false;
-    return selected;
+    return this.buildSystem.selectBuildable(id, true);
   }
 
   private selectBuildableByIndex(index: number): void {

@@ -1,6 +1,9 @@
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import fs from 'node:fs';
+import path from 'node:path';
+import { Balance } from '../src/game/Balance';
 
-type BuildableId = 'sentry_beacon' | 'palisade';
+type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office';
 type ErrorBucket = {
   consoleErrors: string[];
   pageErrors: string[];
@@ -20,6 +23,9 @@ declare global {
     __M2_01_TRACKER__?: WallTracker;
   }
 }
+
+const shotDir = path.resolve('artifacts/056');
+const menuBuildables = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office'] as const;
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -58,9 +64,9 @@ async function openBuildMenu(page: Page): Promise<void> {
 }
 
 async function selectFromMenu(page: Page, id: BuildableId): Promise<void> {
-  await page.keyboard.press(id === 'palisade' ? 'Digit2' : 'Digit1');
+  await page.keyboard.press(`Digit${menuBuildables.indexOf(id) + 1}`);
   await expect.poll(() => selectedBuildable(page)).toBe(id);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildMenuOpen ?? true)).toBe(false);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildMenuOpen ?? false)).toBe(true);
 }
 
 async function selectedBuildable(page: Page): Promise<string | undefined> {
@@ -97,11 +103,17 @@ function intersects(a: Rect, b: Rect): boolean {
   return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
 }
 
+async function saveShot(page: Page, name: string): Promise<void> {
+  fs.mkdirSync(shotDir, { recursive: true });
+  await page.screenshot({ path: path.join(shotDir, `${name}.png`), fullPage: false });
+}
+
 test('menu places a palisade and logs build_palisade spend', async ({ page }, testInfo: TestInfo) => {
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m2-01-palisade');
   await grantGold(page, 20);
 
   await openBuildMenu(page);
+  if (testInfo.project.name === 'desktop-chrome') await saveShot(page, 'desktop-build-menu-palisade');
   await testInfo.attach('m2-01-desktop-menu-open', {
     body: await page.screenshot({ fullPage: true }),
     contentType: 'image/png',
@@ -117,6 +129,48 @@ test('menu places a palisade and logs build_palisade spend', async ({ page }, te
     }),
   );
   expect(spent.at(-1)).toMatchObject({ type: 'gold_spent', sink: 'build_palisade', amount: 10 });
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('build menu shows six ready icons and Balance-backed blurbs', async ({ page }, testInfo: TestInfo) => {
+  const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m2-01-icons-blurbs');
+  await grantGold(page, 1000);
+
+  await openBuildMenu(page);
+  const blurb = page.getByTestId('hud-build-blurb');
+  await expect(blurb).toContainText(`radius ${Balance.beacon.range}wu`);
+
+  const expectedSlugs: Record<(typeof menuBuildables)[number], string> = {
+    sentry_beacon: 'sentry-beacon',
+    palisade: 'palisade',
+    sluice: 'sluice-works',
+    stockpile: 'stockpile-yard',
+    turret: 'signal-turret',
+    assay_office: 'claim-office',
+  };
+  for (const id of menuBuildables) {
+    const tile = page.getByTestId(`hud-build-tile-${id}`);
+    await expect(tile).toHaveAttribute('data-icon-slug', expectedSlugs[id]);
+    await expect(tile).toHaveAttribute('data-asset-state', 'ready');
+    await expect(tile.locator('.hud-build-tile__icon')).toHaveCSS('display', 'block');
+  }
+
+  await page.getByTestId('hud-build-tile-sluice').hover();
+  await expect(blurb).toContainText(`${Balance.sluice.goldPerCycle}g per cycle`);
+  await expect(blurb).toContainText(`T1: ${Balance.sluice.goldPerCycle}g every ${Balance.sluice.cycleSeconds}s`);
+
+  await page.mouse.move(4, 4);
+  await page.keyboard.press('Digit5');
+  await expect.poll(() => selectedBuildable(page)).toBe('turret');
+  await expect(blurb).toContainText(`${Balance.turret.range}wu range`);
+  await expect(blurb).toContainText(`T1: ${Math.round(Balance.turret.damage)} damage`);
+
+  await page.keyboard.press('Digit6');
+  await expect.poll(() => selectedBuildable(page)).toBe('assay_office');
+  await expect(blurb).toContainText('One per claim');
+  if (testInfo.project.name === 'desktop-chrome') await saveShot(page, 'desktop-build-menu-icons-blurb');
+
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
@@ -223,20 +277,22 @@ test('single enemy slides around a finite palisade line without passing through'
 test('390px build menu is visible, tappable, and clear of HUD controls', async ({ page }, testInfo: TestInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
   const errors = await openGame(page, '?debug&timescale=3&nowaves&seed=m2-01-mobile');
-  await grantGold(page, 20);
+  await grantGold(page, 1000);
 
   await page.getByTestId('hud-build').click();
   const menu = page.getByTestId('hud-build-menu');
   await expect(menu).toBeVisible();
+  await expect(page.getByTestId('hud-build-blurb')).toContainText(`radius ${Balance.beacon.range}wu`);
   const menuBox = await menu.boundingBox();
   expect(menuBox).not.toBeNull();
   if (!menuBox) return;
 
-  for (const id of ['sentry_beacon', 'palisade'] as const) {
+  for (const id of menuBuildables) {
     const box = await page.getByTestId(`hud-build-tile-${id}`).boundingBox();
     expect(box).not.toBeNull();
     expect(box?.width).toBeGreaterThanOrEqual(44);
     expect(box?.height).toBeGreaterThanOrEqual(44);
+    await expect(page.getByTestId(`hud-build-tile-${id}`)).toHaveAttribute('data-asset-state', 'ready');
   }
 
   for (const locator of [
@@ -254,9 +310,11 @@ test('390px build menu is visible, tappable, and clear of HUD controls', async (
     body: await page.screenshot({ fullPage: true }),
     contentType: 'image/png',
   });
+  await saveShot(page, 'mobile-390-build-menu-icons-blurb');
   await page.getByTestId('hud-build-tile-palisade').click();
   await expect.poll(() => selectedBuildable(page)).toBe('palisade');
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.mode ?? false)).toBe(true);
+  await expect(page.getByTestId('hud-build-blurb')).toContainText('Timber that holds');
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

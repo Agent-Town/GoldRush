@@ -19,6 +19,7 @@ const portraitTiles = [
   ['sluice', 'sluice-works'],
   ['stockpile', 'stockpile-yard'],
   ['turret', 'signal-turret'],
+  ['assay_office', 'claim-office'],
 ] as const;
 const jumperDirections = [
   ['s', { x: 0, z: -10 }, ['char-jumper-sheet-rotation-r0c0.png', 'char-jumper-sheet-rotation-r0c1.png'], false],
@@ -103,7 +104,7 @@ test('claim jumpers walk through the 8-way rotation matrix', async ({ page }) =>
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('build menu shows the five processed building portraits', async ({ page }) => {
+test('build menu shows the six processed building portraits', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=6&nowaves&nolevel&seed=lane-c-portraits');
   await grantGold(page, 1000);
   await page.getByTestId('hud-build').click();
@@ -112,9 +113,9 @@ test('build menu shows the five processed building portraits', async ({ page }) 
   for (const [id, slug] of portraitTiles) {
     const tile = page.getByTestId(`hud-build-tile-${id}`);
     await expect(tile).toHaveAttribute('data-icon-slug', slug);
+    await expect(tile).toHaveAttribute('data-asset-state', 'ready');
     await expect(tile.locator('.hud-build-tile__icon')).toHaveCSS('display', 'block');
   }
-  await expect(page.getByTestId('hud-build-tile-assay_office').locator('.hud-build-tile__icon')).toHaveCSS('display', 'none');
 
   fs.mkdirSync(shotDir, { recursive: true });
   await page.screenshot({ path: path.join(shotDir, 'build-menu-portraits.png'), fullPage: false });
