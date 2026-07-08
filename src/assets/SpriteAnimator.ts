@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import characterContractText from '../../assets/layer-contracts/characters.v2.json?raw';
 import { Balance } from '../game/Balance';
-import { loadGeneratedTexture } from './generated';
+import { afterStartupFrame, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
 import {
   coarseOrientationForDirection,
   idleDirectionFor,
@@ -131,7 +131,7 @@ type OverlayKind = 'orientation' | 'frame';
 
 const contract = JSON.parse(characterContractText) as Contract;
 const slotContracts = new Map((contract.slots ?? []).map((slot) => [slot.slot, slot]));
-const processedTextureUrls = import.meta.glob<string>('../../assets/processed/*.png', {
+const processedTextureUrls = import.meta.glob<string>('../../assets/processed/char-*.png', {
   query: '?url',
   import: 'default',
 });
@@ -148,6 +148,7 @@ let testClipVersion = 0;
 let spriteStatsFrame = -1;
 let activeAnimators = 0;
 let textureSwapsPerFrame = 0;
+const nonCriticalSpriteRuntimeSlots: readonly AssetSlotId[] = [assetSlots.charProspectorAgent, assetSlots.charBaron];
 
 export function beginSpriteStatsFrame(frame: number): void {
   if (spriteStatsFrame === frame) return;
@@ -237,7 +238,8 @@ export class SpriteAnimator {
       this.fadeSprite.renderOrder = sprite.renderOrder + 0.01;
       sprite.parent.add(this.fadeSprite);
     }
-    void loadRuntimeSlot(slotId).then((runtime) => {
+    const wait = isCriticalStartupAssetSlot(slotId) ? Promise.resolve() : afterStartupFrame();
+    void wait.then(() => loadRuntimeSlot(slotId)).then((runtime) => {
       this.runtime = runtime;
       this.runtimeReady = true;
     });
@@ -685,6 +687,12 @@ function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
   const promise = createRuntimeSlot(slotId);
   runtimeCache.set(slotId, promise);
   return promise;
+}
+
+export function prefetchNonCriticalSpriteRuntimes(): Promise<void> {
+  return afterStartupFrame()
+    .then(() => Promise.all(nonCriticalSpriteRuntimeSlots.map((slotId) => loadRuntimeSlot(slotId))))
+    .then(() => undefined);
 }
 
 async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {

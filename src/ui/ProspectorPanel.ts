@@ -3,7 +3,6 @@ import { AGENT_PERMISSION_LABELS, type AgentPermissionLevel } from '../agent/Per
 import type { UiIntent } from './Hud';
 import type { UiSnapshot } from '../systems/UiBridge';
 import type { AgentCapability } from '../agent/ToolSurface';
-import { emitStorySignal } from '../story';
 
 const RUNGS: readonly {
   level: AgentPermissionLevel;
@@ -21,7 +20,7 @@ export class ProspectorPanel {
   private renderKey = '';
 
   constructor(
-    private readonly portraitUrl: string,
+    private readonly portraitUrl: () => string,
     private readonly onIntent: (intent: UiIntent) => void,
     private readonly onClose: () => void,
   ) {
@@ -60,6 +59,7 @@ export class ProspectorPanel {
     });
     if (!force && key === this.renderKey) return;
     this.renderKey = key;
+    const portraitUrl = this.portraitUrl();
 
     const level = agent?.permissionLevel ?? 0;
     const receipts = agent?.receiptFeed ?? [];
@@ -71,7 +71,7 @@ export class ProspectorPanel {
     this.element.innerHTML = `
       <section class="prospector-panel" data-testid="prospector-panel" aria-label="Prospector ledger">
         <header class="prospector-panel__header">
-          <img class="prospector-panel__portrait" src="${this.portraitUrl}" alt="" />
+          <img class="prospector-panel__portrait" ${portraitUrl ? `src="${portraitUrl}"` : ''} alt="" />
           <div>
             <p class="prospector-panel__eyebrow">Claim partner</p>
             <h2>${agent?.name ?? 'the Prospector'}</h2>
@@ -177,7 +177,7 @@ export class ProspectorPanel {
   private readonly onClick = (event: MouseEvent) => {
     const target = event.target;
     if (target instanceof Element && target.closest('.prospector-check--locked')) {
-      emitStorySignal({ type: 'rung-denied-toggle' });
+      void import('../story').then(({ emitStorySignal }) => emitStorySignal({ type: 'rung-denied-toggle' }));
       return;
     }
     if (target === this.element || (target instanceof Element && target.matches('[data-prospector-close]'))) this.onClose();

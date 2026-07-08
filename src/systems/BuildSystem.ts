@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
-import { createBuildingSignFromUrl, disposeBuildingSign } from '../entities/BuildingSign';
+import { createBuildingSignFromUrlLoader, disposeBuildingSign } from '../entities/BuildingSign';
 import { PalisadePool, type PalisadeBlocker } from '../entities/Palisade';
 import { SentryBeaconPool } from '../entities/SentryBeacon';
 import { SluicePool, type SluiceSnapshot } from '../entities/Sluice';
@@ -186,7 +186,7 @@ const blockedRepairColor = new THREE.Color('#a0522d');
 const hpBarWidth = 1.46;
 const hpBarHeight = 0.12;
 const hpBarDepth = 0.28;
-const assayOfficeSignUrl = new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href;
+const assayOfficeSignUrlLoader = () => import('../../assets/processed/bld-claim-office.png?url').then((module) => module.default);
 
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
 type UpgradeableBuildableId = (typeof upgradeableBuildableIds)[number];
@@ -311,7 +311,7 @@ export class BuildSystem {
     metalness: 0.12,
     flatShading: true,
   });
-  private readonly assayOfficeSign = createBuildingSignFromUrl(assayOfficeSignUrl, 1, 'AssayOfficePortraitSign');
+  private readonly assayOfficeSign = createBuildingSignFromUrlLoader(assayOfficeSignUrlLoader, 1, 'AssayOfficePortraitSign');
   private selectedId: BuildableId = 'sentry_beacon';
   private ghostRotationSteps = 0;
   private beaconFireRateMult = 1;

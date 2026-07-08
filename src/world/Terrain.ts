@@ -478,10 +478,13 @@ const BANK_VARIANT_FILES = terrainBankVariantFiles();
 // single failed/blocked asset request would then kill the whole app instead
 // of falling back to placeholders (gate finding, s11: visual-polish-assets
 // fallback test). Lazy keeps asset fetches out of the module graph.
-const processedTextureUrls = import.meta.glob<string>('../../assets/processed/*.png', {
-  query: '?url',
-  import: 'default',
-});
+const processedTextureUrls = import.meta.glob<string>(
+  ['../../assets/processed/terrain-*.png', '../../assets/processed/ter-*.png', '../../assets/processed/prop-spring-pond.png'],
+  {
+    query: '?url',
+    import: 'default',
+  },
+);
 const processedTextureUrlsByFile = new Map(
   Object.entries(processedTextureUrls).map(([path, urlLoader]) => [path.split('/').pop() ?? path, urlLoader]),
 );

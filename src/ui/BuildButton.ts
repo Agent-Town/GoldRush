@@ -53,6 +53,7 @@ export class BuildButton {
   }
 
   update(snapshot: UiSnapshot): void {
+    const wasMenuOpen = this.menuOpen;
     this.menuOpen = snapshot.buildMenuOpen;
     this.buildables = snapshot.buildables;
     if (!snapshot.buildMenuOpen || this.selectedBuildableId !== snapshot.selectedBuildable) this.activeBuildableId = null;
@@ -100,6 +101,8 @@ export class BuildButton {
         `,
         )
         .join('')}`;
+      if (this.menuOpen) this.applyPortraits();
+    } else if (this.menuOpen && !wasMenuOpen) {
       this.applyPortraits();
     }
     this.updateBlurbStrip();

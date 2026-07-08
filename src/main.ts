@@ -1,6 +1,7 @@
 import './styles.css';
 import './ui/theme.css';
-import { install as installAssayBench } from './crafting/AssayBench';
+import { markStartupFrameReady, prefetchNonCriticalGeneratedTextures } from './assets/generated';
+import { prefetchNonCriticalSpriteRuntimes } from './assets/SpriteAnimator';
 import { installFullBaseBenchmark } from './diagnostics/fullBaseBenchmark';
 import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
@@ -9,9 +10,10 @@ import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
 import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
-import { installStoryRuntime } from './story';
-import { TownScene } from './town/TownScene';
-import { install as installStartMenu, type StartMenu } from './ui/menu/StartMenu';
+
+type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
+type StartMenu = import('./ui/menu/StartMenu').StartMenu;
+type TownScene = import('./town/TownScene').TownScene;
 
 const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
 
@@ -43,24 +45,34 @@ if (initialSearch.get('bench') === 'fullbase') {
 }
 
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
-installStoryRuntime(app);
 accountSync.install();
 let game: Game | undefined;
-let assayBench: ReturnType<typeof installAssayBench> | undefined;
+let assayBench: AssayBench | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
 let town: TownScene | undefined;
 let runReturnTarget: 'menu' | 'board' = 'menu';
 
+afterFirstFrame(() => {
+  void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
+});
+
 function startGame(returnToMenu: boolean): void {
   const currentSearch = new URLSearchParams(window.location.search);
   applyStoredDifficultyPreset();
   applyUpgradeBudgetsFromBalance();
-  assayBench = installAssayBench(app, {
-    initiallyOpen: currentSearch.has('profile') || currentSearch.has('queueNow'),
-  });
   game = new Game(gameCanvas, () => assayBench?.focus(), returnToMenu ? runReturnCallback : undefined);
   game.start();
+  releaseStartupAssetGateOnFirstGameFrame();
+  installWaveTelegraphPrefetch();
+  afterFirstFrame(() => {
+    void import('./crafting/AssayBench').then(({ install }) => {
+      if (!game) return;
+      assayBench = install(app, {
+        initiallyOpen: currentSearch.has('profile') || currentSearch.has('queueNow'),
+      });
+    });
+  });
 }
 
 function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; returnToMenu?: boolean } = {}): void {
@@ -73,24 +85,27 @@ function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; 
 
 function showStartMenu(): void {
   startMenu?.dispose();
-  startMenu = installStartMenu(app, {
-    onNewClaim: () => {
-      launchContract(DEFAULT_CONTRACT_ID);
-    },
-    onContinue: () => {
-      continueSavedRun();
-    },
-    onEnterTown: () => {
-      startMenu?.dispose();
-      startMenu = undefined;
-      town = new TownScene(gameCanvas, returnToStartMenu, { onLaunchContract: launchContract });
-      town.start();
-    },
-    onProfile: () => {
-      startMenu?.dispose();
-      startMenu = undefined;
-      startWithProfiles({ showTitle: true, returnToMenu: true });
-    },
+  void import('./ui/menu/StartMenu').then(({ install }) => {
+    if (game || town || profiles) return;
+    startMenu?.dispose();
+    startMenu = install(app, {
+      onNewClaim: () => {
+        launchContract(DEFAULT_CONTRACT_ID);
+      },
+      onContinue: () => {
+        continueSavedRun();
+      },
+      onEnterTown: () => {
+        startMenu?.dispose();
+        startMenu = undefined;
+        openTown();
+      },
+      onProfile: () => {
+        startMenu?.dispose();
+        startMenu = undefined;
+        startWithProfiles({ showTitle: true, returnToMenu: true });
+      },
+    });
   });
 }
 
@@ -136,8 +151,7 @@ function returnToTownBoard(): void {
   profiles = undefined;
   startMenu?.dispose();
   startMenu = undefined;
-  town = new TownScene(gameCanvas, returnToStartMenu, { openBoard: true, onLaunchContract: launchContract });
-  town.start();
+  openTown({ openBoard: true });
 }
 
 function returnToStartMenu(): void {
@@ -160,6 +174,57 @@ if (window.location.search === '') {
 }
 
 installFullBaseBenchmark();
+
+function openTown(options: { openBoard?: boolean } = {}): void {
+  markStartupFrameReady();
+  void import('./town/TownScene').then(({ TownScene }) => {
+    if (game || profiles) return;
+    town?.dispose();
+    town = new TownScene(gameCanvas, returnToStartMenu, { ...options, onLaunchContract: launchContract });
+    town.start();
+  });
+}
+
+function afterFirstFrame(task: () => void): void {
+  requestAnimationFrame(() => requestAnimationFrame(task));
+}
+
+function installWaveTelegraphPrefetch(): void {
+  let prefetched = false;
+  const tick = () => {
+    if (prefetched || !game) return;
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+    if (diagnostics?.waveState === 'warning' && diagnostics.wave <= 1) {
+      prefetched = true;
+      prefetchNonCriticalStartupAssets();
+      return;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function releaseStartupAssetGateOnFirstGameFrame(): void {
+  const tick = () => {
+    if (!game) return;
+    if ((window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 0) {
+      requestAnimationFrame(() =>
+        requestAnimationFrame(() => {
+          markStartupFrameReady();
+          prefetchNonCriticalStartupAssets();
+        }),
+      );
+      return;
+    }
+    requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+function prefetchNonCriticalStartupAssets(): void {
+  void prefetchNonCriticalGeneratedTextures();
+  void prefetchNonCriticalSpriteRuntimes();
+}
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {

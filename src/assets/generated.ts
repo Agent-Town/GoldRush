@@ -5,25 +5,44 @@ import { assetSlots, type AssetSlotId } from './slots';
 const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
   [assetSlots.charHero]: new URL('../../assets/processed/hero-homesteader.png', import.meta.url).href,
   [assetSlots.charClaimJumper]: new URL('../../assets/processed/enemy-claim-jumper.png', import.meta.url).href,
-  [assetSlots.charBaron]: new URL('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png', import.meta.url).href,
-  [assetSlots.charTownTavernkeeper]: new URL('../../assets/processed/townsfolk-tavernkeeper.png', import.meta.url).href,
-  [assetSlots.charTownStorekeeper]: new URL('../../assets/processed/townsfolk-storekeeper.png', import.meta.url).href,
-  [assetSlots.charTownElder]: new URL('../../assets/processed/townsfolk-elder.png', import.meta.url).href,
-  [assetSlots.charTownPreacher]: new URL('../../assets/processed/townsfolk-preacher.png', import.meta.url).href,
-  [assetSlots.charTownSchoolteacher]: new URL('../../assets/processed/townsfolk-schoolteacher.png', import.meta.url).href,
-  [assetSlots.charTownAssayClerk]: new URL('../../assets/processed/townsfolk-assay-clerk.png', import.meta.url).href,
-  [assetSlots.charTownYoungsterA]: new URL('../../assets/processed/townsfolk-youngster-a.png', import.meta.url).href,
-  [assetSlots.charTownYoungsterB]: new URL('../../assets/processed/townsfolk-youngster-b.png', import.meta.url).href,
   [assetSlots.nodeGoldSeam]: new URL('../../assets/processed/node-gold-seam.png', import.meta.url).href,
-  [assetSlots.propBaronBanner]: new URL('../../assets/processed/prop-baron-banner.png', import.meta.url).href,
-  [assetSlots.bldSentryBeacon]: new URL('../../assets/processed/bld-sentry-beacon.png', import.meta.url).href,
-  [assetSlots.bldPortraitPalisade]: new URL('../../assets/processed/bld-palisade.png', import.meta.url).href,
-  [assetSlots.bldPortraitSluice]: new URL('../../assets/processed/bld-sluice-works.png', import.meta.url).href,
-  [assetSlots.bldPortraitStockpile]: new URL('../../assets/processed/bld-stockpile-yard.png', import.meta.url).href,
-  [assetSlots.bldPortraitTurret]: new URL('../../assets/processed/bld-signal-turret.png', import.meta.url).href,
   [assetSlots.terrainBank]: new URL('../../assets/processed/terrain-bank-tile.png', import.meta.url).href,
   [assetSlots.terrainRiver]: new URL('../../assets/processed/terrain-river-tile.png', import.meta.url).href,
 };
+const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string>>> = {
+  [assetSlots.charBaron]: () => import('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png?url').then((module) => module.default),
+  [assetSlots.charTownTavernkeeper]: () => import('../../assets/processed/townsfolk-tavernkeeper.png?url').then((module) => module.default),
+  [assetSlots.charTownStorekeeper]: () => import('../../assets/processed/townsfolk-storekeeper.png?url').then((module) => module.default),
+  [assetSlots.charTownElder]: () => import('../../assets/processed/townsfolk-elder.png?url').then((module) => module.default),
+  [assetSlots.charTownPreacher]: () => import('../../assets/processed/townsfolk-preacher.png?url').then((module) => module.default),
+  [assetSlots.charTownSchoolteacher]: () => import('../../assets/processed/townsfolk-schoolteacher.png?url').then((module) => module.default),
+  [assetSlots.charTownAssayClerk]: () => import('../../assets/processed/townsfolk-assay-clerk.png?url').then((module) => module.default),
+  [assetSlots.charTownYoungsterA]: () => import('../../assets/processed/townsfolk-youngster-a.png?url').then((module) => module.default),
+  [assetSlots.charTownYoungsterB]: () => import('../../assets/processed/townsfolk-youngster-b.png?url').then((module) => module.default),
+  [assetSlots.propBaronBanner]: () => import('../../assets/processed/prop-baron-banner.png?url').then((module) => module.default),
+  [assetSlots.bldSentryBeacon]: () => import('../../assets/processed/bld-sentry-beacon.png?url').then((module) => module.default),
+  [assetSlots.bldPortraitPalisade]: () => import('../../assets/processed/bld-palisade.png?url').then((module) => module.default),
+  [assetSlots.bldPortraitSluice]: () => import('../../assets/processed/bld-sluice-works.png?url').then((module) => module.default),
+  [assetSlots.bldPortraitStockpile]: () => import('../../assets/processed/bld-stockpile-yard.png?url').then((module) => module.default),
+  [assetSlots.bldPortraitTurret]: () => import('../../assets/processed/bld-signal-turret.png?url').then((module) => module.default),
+};
+const nonCriticalGeneratedAssetSlots: readonly AssetSlotId[] = [
+  assetSlots.bldSentryBeacon,
+  assetSlots.bldPortraitPalisade,
+  assetSlots.bldPortraitSluice,
+  assetSlots.bldPortraitStockpile,
+  assetSlots.bldPortraitTurret,
+  assetSlots.charBaron,
+  assetSlots.propBaronBanner,
+  assetSlots.charTownTavernkeeper,
+  assetSlots.charTownStorekeeper,
+  assetSlots.charTownElder,
+  assetSlots.charTownPreacher,
+  assetSlots.charTownSchoolteacher,
+  assetSlots.charTownAssayClerk,
+  assetSlots.charTownYoungsterA,
+  assetSlots.charTownYoungsterB,
+];
 
 export type GeneratedAssetStatus = 'missing' | 'pending' | 'loaded' | 'error';
 export type GeneratedAssetStatusMap = Partial<Record<AssetSlotId, GeneratedAssetStatus>>;
@@ -33,6 +52,13 @@ const textureCache = new Map<AssetSlotId, Promise<THREE.Texture | null>>();
 const status: GeneratedAssetStatusMap = {};
 const renderedSprites: Partial<Record<AssetSlotId, number>> = {};
 let assetGeneration = 0;
+let startupFramePassed = typeof requestAnimationFrame !== 'function';
+let resolveStartupFrame: () => void = () => undefined;
+const startupFramePromise = startupFramePassed
+  ? Promise.resolve()
+  : new Promise<void>((resolve) => {
+      resolveStartupFrame = resolve;
+    });
 
 export function generatedAssetStatuses(): GeneratedAssetStatusMap {
   return { ...status };
@@ -48,40 +74,66 @@ export function loadGeneratedTexture(slotId: AssetSlotId): Promise<THREE.Texture
     return Promise.resolve(null);
   }
 
-  const url = generatedAssetUrls[slotId];
-  if (!url) {
-    status[slotId] = 'missing';
-    return Promise.resolve(null);
-  }
-
   const cached = textureCache.get(slotId);
   if (cached) return cached;
 
   status[slotId] = 'pending';
   const generation = assetGeneration;
-  const promise = new Promise<THREE.Texture | null>((resolve) => {
-    loader.load(
-      url,
-      (texture) => {
-        if (generation !== assetGeneration) {
-          texture.dispose();
-          resolve(null);
-          return;
-        }
-        texture.colorSpace = THREE.SRGBColorSpace;
-        texture.anisotropy = 4;
-        status[slotId] = 'loaded';
-        resolve(texture);
-      },
-      undefined,
-      () => {
-        if (generation === assetGeneration) status[slotId] = 'error';
-        resolve(null);
-      },
-    );
-  });
+  const promise = waitForStartupSlot(slotId)
+    .then(() => resolveGeneratedAssetUrl(slotId))
+    .then((url) => {
+      if (!url) {
+        status[slotId] = 'missing';
+        return null;
+      }
+      return new Promise<THREE.Texture | null>((resolve) => {
+        loader.load(
+          url,
+          (texture) => {
+            if (generation !== assetGeneration) {
+              texture.dispose();
+              resolve(null);
+              return;
+            }
+            texture.colorSpace = THREE.SRGBColorSpace;
+            texture.anisotropy = 4;
+            status[slotId] = 'loaded';
+            resolve(texture);
+          },
+          undefined,
+          () => {
+            if (generation === assetGeneration) status[slotId] = 'error';
+            resolve(null);
+          },
+        );
+      });
+    });
   textureCache.set(slotId, promise);
   return promise;
+}
+
+export function prefetchNonCriticalGeneratedTextures(): Promise<void> {
+  return Promise.all(nonCriticalGeneratedAssetSlots.map((slotId) => loadGeneratedTexture(slotId))).then(() => undefined);
+}
+
+export function afterStartupFrame(): Promise<void> {
+  return startupFramePassed ? Promise.resolve() : startupFramePromise;
+}
+
+export function markStartupFrameReady(): void {
+  if (startupFramePassed) return;
+  startupFramePassed = true;
+  resolveStartupFrame();
+}
+
+export function isCriticalStartupAssetSlot(slotId: AssetSlotId): boolean {
+  return (
+    slotId === assetSlots.charHero ||
+    slotId === assetSlots.charClaimJumper ||
+    slotId === assetSlots.nodeGoldSeam ||
+    slotId === assetSlots.terrainBank ||
+    slotId === assetSlots.terrainRiver
+  );
 }
 
 export function disposeGeneratedAssets(): void {
@@ -274,4 +326,15 @@ export class GeneratedSpriteBatch {
 function baronArtDisabledForDebug(slotId: AssetSlotId): boolean {
   if (slotId !== assetSlots.charBaron && slotId !== assetSlots.propBaronBanner) return false;
   return new URLSearchParams(globalThis.location?.search ?? '').has('nobaronart');
+}
+
+function waitForStartupSlot(slotId: AssetSlotId): Promise<void> {
+  return isCriticalStartupAssetSlot(slotId) ? Promise.resolve() : afterStartupFrame();
+}
+
+function resolveGeneratedAssetUrl(slotId: AssetSlotId): Promise<string | null> {
+  const url = generatedAssetUrls[slotId];
+  if (url) return Promise.resolve(url);
+  const loader = generatedAssetUrlLoaders[slotId];
+  return loader ? loader().catch(() => null) : Promise.resolve(null);
 }

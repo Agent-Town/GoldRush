@@ -54,7 +54,7 @@ import {
   type MegaprojectState,
   type MegaprojectStorage,
 } from '../meta/Megaproject';
-import { emitStorySignal } from '../story';
+import { emitStorySignal } from '../story/signals';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';

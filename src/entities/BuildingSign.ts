@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { loadGeneratedTexture } from '../assets/generated';
+import { afterStartupFrame, loadGeneratedTexture } from '../assets/generated';
 import { tagPlaceholder, type AssetSlotId } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 
@@ -18,6 +18,25 @@ export function createBuildingSignFromUrl(url: string, capacity: number, name: s
     texture.anisotropy = 4;
     applyTexture(material, texture);
   });
+  return mesh;
+}
+
+export function createBuildingSignFromUrlLoader(
+  urlLoader: () => Promise<string>,
+  capacity: number,
+  name: string,
+): THREE.InstancedMesh {
+  const mesh = createSignMesh(capacity, name);
+  const material = mesh.material as THREE.MeshStandardMaterial;
+  void afterStartupFrame()
+    .then(urlLoader)
+    .then((url) => {
+      new THREE.TextureLoader().load(url, (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = 4;
+        applyTexture(material, texture);
+      });
+    });
   return mesh;
 }
 

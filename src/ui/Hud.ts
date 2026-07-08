@@ -8,9 +8,10 @@ import { bindStorySettingsControl, renderStorySettingsControl } from '../story/s
 import { BuildButton } from './BuildButton';
 import { ProspectorPanel } from './ProspectorPanel';
 import { accountSync } from '../game/AccountSync';
+import { afterStartupFrame } from '../assets/generated';
 
-const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
-const baronPortraitUrl = new URL('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png', import.meta.url).href;
+const prospectorPortraitUrlLoader = () => import('../../assets/processed/char-prospector-portrait.png?url').then((module) => module.default);
+const baronPortraitUrlLoader = () => import('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png?url').then((module) => module.default);
 const PAUSE_AUDIO_SETTINGS_IDS = {
   volume: 'pause-volume',
   volumeValue: 'pause-volume-value',
@@ -57,6 +58,7 @@ type HudElements = {
   agentName: HTMLElement;
   agentLevel: HTMLElement;
   agentLabel: HTMLElement;
+  agentPortrait: HTMLImageElement;
   agentFeed: HTMLElement;
   xpText: HTMLElement;
   xpFill: HTMLElement;
@@ -84,6 +86,9 @@ export class Hud {
   private disposeStorySettings: () => void = () => undefined;
   private readonly buildButton: BuildButton;
   private readonly prospectorPanel: ProspectorPanel;
+  private prospectorPortraitUrl = '';
+  private baronPortraitUrl = '';
+  private baronPortraitLoading = false;
   private prospectorPanelOpen = false;
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
@@ -135,7 +140,7 @@ export class Hud {
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
         <button class="hud-agent-chip" type="button" data-testid="hud-agent" aria-label="Prospector permission chip" aria-expanded="false">
-          <img class="hud-agent-chip__portrait" src="${prospectorPortraitUrl}" alt="" data-hud-agent-portrait />
+          <img class="hud-agent-chip__portrait" alt="" data-hud-agent-portrait />
           <span class="hud-agent-chip__main">
             <span data-hud-agent-name>the Prospector</span>
             <strong data-hud-agent-level>L0</strong>
@@ -185,6 +190,7 @@ export class Hud {
       agentName: this.get(root, '[data-hud-agent-name]'),
       agentLevel: this.get(root, '[data-hud-agent-level]'),
       agentLabel: this.get(root, '[data-hud-agent-label]'),
+      agentPortrait: this.get(root, '[data-hud-agent-portrait]') as HTMLImageElement,
       agentFeed: this.get(root, '[data-hud-agent-feed]'),
       xpText: this.get(root, '[data-hud-xp]'),
       xpFill: this.get(root, '[data-hud-xp-fill]'),
@@ -200,8 +206,9 @@ export class Hud {
     };
     this.buildButton = new BuildButton(this.onIntent);
     this.elements.buildMount.append(this.buildButton.element);
-    this.prospectorPanel = new ProspectorPanel(prospectorPortraitUrl, this.onIntent, () => this.setProspectorPanelOpen(false));
+    this.prospectorPanel = new ProspectorPanel(() => this.prospectorPortraitUrl, this.onIntent, () => this.setProspectorPanelOpen(false));
     root.append(this.prospectorPanel.element);
+    this.loadProspectorPortrait();
 
     this.elements.pauseHint.addEventListener('click', this.onPauseClick);
     this.elements.contractBriefing.addEventListener('click', this.onBriefingClick);
@@ -388,8 +395,11 @@ export class Hud {
     this.elements.waveTitle.textContent = snapshot.announcementTitle ?? '';
     this.elements.waveTitle.hidden = !snapshot.announcementTitle;
     const baronAnnouncement = snapshot.announcementKind === 'baron' || snapshot.announcementKind === 'baron-defeat';
-    if (baronAnnouncement && this.elements.wavePortrait.src !== baronPortraitUrl) {
-      this.elements.wavePortrait.src = baronPortraitUrl;
+    if (baronAnnouncement) {
+      this.loadBaronPortrait();
+      if (this.baronPortraitUrl && this.elements.wavePortrait.src !== this.baronPortraitUrl) {
+        this.elements.wavePortrait.src = this.baronPortraitUrl;
+      }
     }
     this.elements.wavePortrait.hidden = !baronAnnouncement;
     this.elements.waveEdge.textContent = snapshot.announcementEdge ? edgeGlyph(snapshot.announcementEdge) : '';
@@ -407,6 +417,24 @@ export class Hud {
     const element = root.querySelector<HTMLElement>(selector);
     if (!element) throw new Error(`Missing HUD element: ${selector}`);
     return element;
+  }
+
+  private loadProspectorPortrait(): void {
+    void afterStartupFrame()
+      .then(prospectorPortraitUrlLoader)
+      .then((url) => {
+        this.prospectorPortraitUrl = url;
+        this.elements.agentPortrait.src = url;
+      });
+  }
+
+  private loadBaronPortrait(): void {
+    if (this.baronPortraitUrl || this.baronPortraitLoading) return;
+    this.baronPortraitLoading = true;
+    void baronPortraitUrlLoader().then((url) => {
+      this.baronPortraitUrl = url;
+      this.elements.wavePortrait.src = url;
+    });
   }
 
   private updatePauseMeta(paused: boolean, meta: PauseMetaSnapshot): void {
