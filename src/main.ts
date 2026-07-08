@@ -20,6 +20,10 @@ if (!canvas) {
 const gameCanvas = canvas;
 
 const initialSearch = new URLSearchParams(window.location.search);
+if (initialSearch.has('debug') && initialSearch.has('simitem')) {
+  void import('./crafting/StatSimHarness').then(({ installStatSimHarnessFromSearch }) => installStatSimHarnessFromSearch());
+}
+
 if (initialSearch.get('bench') === 'fullbase') {
   const defaults = { debug: '', nolevel: '', nopause: '', seed: 'perf-02-fullbase', timescale: '24' };
   let changed = false;

@@ -698,6 +698,7 @@ type GrActiveContractDiagnostics = import('./meta/ContractFamilies').ActiveContr
 type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
+type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
 
 interface Window {
   __GR_STORY__?: {
@@ -708,6 +709,7 @@ interface Window {
     talesEnabled: () => boolean;
   };
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
+  __GR_STAT_SIM__?: GrStatSimWindow;
   __GR_TOWN_DIAGNOSTICS__?: import('./town/TownScene').TownDiagnostics;
   __BENCH_REPORT__?: unknown;
   __GR_GUI__?: GoldRushGui;
