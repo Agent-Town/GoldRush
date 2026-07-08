@@ -63,6 +63,11 @@ export class ProspectorPanel {
 
     const level = agent?.permissionLevel ?? 0;
     const receipts = agent?.receiptFeed ?? [];
+    const latestReceipt = receipts[0] ?? 'No chores logged yet.';
+    const previousReceipts = this.element.querySelector<HTMLDetailsElement>('[data-testid="prospector-receipts-wrap"]');
+    const defaultReceiptsOpen =
+      typeof window === 'undefined' || !window.matchMedia('(pointer: coarse), (max-width: 760px)').matches;
+    const receiptsOpen = previousReceipts?.open ?? defaultReceiptsOpen;
     this.element.innerHTML = `
       <section class="prospector-panel" data-testid="prospector-panel" aria-label="Prospector ledger">
         <header class="prospector-panel__header">
@@ -87,10 +92,15 @@ export class ProspectorPanel {
           <div class="prospector-abilities">${this.abilities()}</div>
         </div>
         <div class="prospector-panel__section">
-          <h3>Receipts</h3>
-          <ol class="prospector-receipts" data-testid="prospector-receipts">
-            ${receipts.length ? receipts.map((line) => `<li>${escapeHtml(line)}</li>`).join('') : '<li>No chores logged yet.</li>'}
-          </ol>
+          <details class="prospector-receipts-wrap" data-testid="prospector-receipts-wrap" ${receiptsOpen ? 'open' : ''}>
+            <summary>
+              <span>Receipts</span>
+              <strong>${escapeHtml(latestReceipt)}</strong>
+            </summary>
+            <ol class="prospector-receipts" data-testid="prospector-receipts">
+              ${receipts.length ? receipts.map((line) => `<li>${escapeHtml(line)}</li>`).join('') : '<li>No chores logged yet.</li>'}
+            </ol>
+          </details>
         </div>
       </section>
     `;

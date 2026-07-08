@@ -626,6 +626,7 @@ body {
   gap: 4px 8px;
   width: 100%;
   max-width: 30ch;
+  min-height: 44px;
   margin: 4px 0 0;
   padding: 5px 0 0;
   border-top: 1px solid rgba(255, 248, 232, 0.18);
@@ -836,8 +837,7 @@ body {
 }
 
 .prospector-ladder,
-.prospector-abilities,
-.prospector-receipts {
+.prospector-abilities {
   display: grid;
   gap: 8px;
 }
@@ -922,10 +922,44 @@ body {
   font-weight: 800;
 }
 
+.prospector-receipts-wrap {
+  min-width: 0;
+}
+
+.prospector-receipts-wrap summary {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 8px;
+  align-items: center;
+  min-height: 44px;
+  color: #5b3a1f;
+  cursor: pointer;
+}
+
+.prospector-receipts-wrap summary span {
+  color: #5b3a1f;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.prospector-receipts-wrap summary strong {
+  min-width: 0;
+  overflow: hidden;
+  color: rgba(46, 27, 14, 0.78);
+  font-size: 0.78rem;
+  line-height: 1.25;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .prospector-receipts {
+  display: grid;
+  gap: 8px;
   max-height: 184px;
   margin: 0;
   padding: 0 0 0 20px;
+  overflow: auto;
 }
 
 .prospector-receipts li {
@@ -1310,12 +1344,67 @@ body {
 
 @media (pointer: coarse), (max-width: 760px) {
   #touch-controls {
-    display: flex;
+    display: block;
+    height: 232px;
   }
 
-  .hud-panel--build {
-    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 154px);
-    width: min(354px, calc(100vw - 36px));
+  .prompt-stack {
+    left: max(14px, env(safe-area-inset-left));
+    right: calc(max(14px, env(safe-area-inset-right)) + 88px);
+    width: auto;
+    align-items: stretch;
+    transform: none;
+  }
+
+  .hud-panel.hud-panel--build {
+    right: max(18px, env(safe-area-inset-right));
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 232px);
+    left: auto;
+    width: 76px;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .hud-panel.hud-panel--build::before,
+  .hud-panel.hud-panel--build::after {
+    display: none;
+  }
+
+  .hud-panel.hud-panel--build:has(.hud-build-menu:not([hidden])) {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: calc(max(18px, env(safe-area-inset-bottom)) + 170px);
+    left: max(12px, env(safe-area-inset-left));
+    width: auto;
+    max-height: calc(100vh - max(12px, env(safe-area-inset-top)) - max(18px, env(safe-area-inset-bottom)) - 190px);
+    overflow: hidden;
+    padding: 8px;
+    border: 2px solid #2e1b0e;
+    background:
+      linear-gradient(135deg, rgba(255, 248, 232, 0.78), rgba(245, 230, 200, 0.94)),
+      #f5e6c8;
+    box-shadow:
+      inset 0 0 0 2px rgba(139, 125, 60, 0.38),
+      0 4px 0 rgba(46, 27, 14, 0.7),
+      0 12px 24px rgba(46, 27, 14, 0.18);
+  }
+
+  #hud:has(.hud-panel--build .hud-build-menu:not([hidden])) .hud-panel--xp,
+  #hud:has(.hud-panel--build .hud-build-menu:not([hidden])) .hud-panel--weapon,
+  #hud:has(.hud-panel--build .hud-build-menu:not([hidden])) .hud-pause,
+  #hud:has(.hud-panel--build .hud-build-menu:not([hidden])) .prompt-stack {
+    display: none;
+  }
+
+  .hud-panel.hud-panel--build:has(.hud-build-menu:not([hidden])) .hud-build-control {
+    grid-template-rows: minmax(0, 1fr) auto;
+    max-height: inherit;
+  }
+
+  .hud-panel.hud-panel--build:has(.hud-build-menu:not([hidden])) .hud-build-menu {
+    overflow: auto;
+    overscroll-behavior: contain;
   }
 
   .hud-build-tile {
@@ -1324,6 +1413,50 @@ body {
 
   .hud-build-blurb {
     min-height: 64px;
+  }
+
+  .hud-build-button {
+    display: grid;
+    place-items: center;
+    width: 76px;
+    min-height: 76px;
+    border-radius: 50%;
+    padding: 0 8px;
+    text-align: center;
+  }
+
+  .hud-panel.hud-panel--build:has(.hud-build-menu:not([hidden])) .hud-build-button {
+    width: 100%;
+    min-height: 44px;
+    border-radius: 8px;
+  }
+
+  #touch-stick {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: clamp(104px, 28vw, 126px);
+  }
+
+  #confirm-button {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 76px;
+  }
+
+  #rotate-button {
+    position: absolute;
+    right: 98px;
+    bottom: 10px;
+    width: 58px;
+  }
+
+  #weapon-toggle-button {
+    position: absolute;
+    right: 50px;
+    bottom: 78px;
+    width: 58px;
   }
 
   .hud-panel--weapon {
@@ -1372,6 +1505,15 @@ body {
 
   .prospector-rung {
     grid-template-columns: 1fr;
+  }
+
+  .prospector-receipts-wrap:not([open]) .prospector-receipts {
+    display: none;
+  }
+
+  .prospector-receipts-wrap[open] summary {
+    border-bottom: 1px solid rgba(139, 125, 60, 0.34);
+    margin-bottom: 6px;
   }
 
   .upgrade-overlay__cards {

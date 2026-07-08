@@ -46,7 +46,7 @@ export class BuildButton {
     this.trigger = this.get<HTMLButtonElement>('[data-testid="hud-build"]');
     this.trigger.addEventListener('click', this.onClick);
     this.menu.addEventListener('click', this.onMenuClick);
-    this.menu.addEventListener('pointerover', this.onMenuPoint);
+    this.menu.addEventListener('pointermove', this.onMenuPoint);
     this.menu.addEventListener('focusin', this.onMenuFocus);
     this.menu.addEventListener('pointerleave', this.onMenuLeave);
     document.addEventListener('pointerdown', this.onDocumentPointerDown);
@@ -108,7 +108,7 @@ export class BuildButton {
   dispose(): void {
     this.trigger.removeEventListener('click', this.onClick);
     this.menu.removeEventListener('click', this.onMenuClick);
-    this.menu.removeEventListener('pointerover', this.onMenuPoint);
+    this.menu.removeEventListener('pointermove', this.onMenuPoint);
     this.menu.removeEventListener('focusin', this.onMenuFocus);
     this.menu.removeEventListener('pointerleave', this.onMenuLeave);
     document.removeEventListener('pointerdown', this.onDocumentPointerDown);
@@ -149,6 +149,7 @@ export class BuildButton {
   private readonly onDocumentPointerDown = (event: PointerEvent): void => {
     if (!this.menuOpen) return;
     if (event.target instanceof Node && this.element.contains(event.target)) return;
+    if (event.target instanceof Element && event.target.closest('#touch-controls')) return;
     this.onIntent({ type: 'close_build_menu' });
   };
 
