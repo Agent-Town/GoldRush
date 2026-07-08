@@ -1,10 +1,11 @@
 import { mkdirSync } from 'node:fs';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
-import { RUN_SUSPEND_KEY } from '../src/game/ProfileStorage';
+import { RUN_SUSPEND_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 const QUERY = '?debug&timescale=40&nokill&nolevel&nosteal&nowreck&seed=run-suspend';
 const SHOT_DIR = 'artifacts/run-suspend';
+const SAVE_VISIBILITY_SHOT_DIR = 'artifacts/save-visibility';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type BuildableId = 'palisade' | 'sentry_beacon' | 'stockpile';
@@ -139,7 +140,24 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-${name}.png`, fullPage: true });
 }
 
+async function saveVisibilityShot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  mkdirSync(SAVE_VISIBILITY_SHOT_DIR, { recursive: true });
+  await page.screenshot({ path: `${SAVE_VISIBILITY_SHOT_DIR}/${testInfo.project.name}-${name}.png`, fullPage: true });
+}
+
+test('pause overlay explains the ledger before the first boundary save', async ({ page }, testInfo) => {
+  await clearStorage(page);
+  const errors = await openGame(page, '?debug&nowaves&nolevel&seed=run-suspend-fresh');
+
+  await page.keyboard.press('KeyP');
+  await expect(page.getByTestId('pause-meta-save')).toHaveText("The ledger saves at each wave's end.");
+  await saveVisibilityShot(page, testInfo, 'pause-line-empty');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('wave-boundary suspend restores state and matches the uninterrupted seeded run', async ({ page }, testInfo) => {
+  test.setTimeout(45_000);
   await clearStorage(page);
   const errors = await openGame(page);
   await grantGold(page, 600);
@@ -151,6 +169,14 @@ test('wave-boundary suspend restores state and matches the uninterrupted seeded 
 
   const saved = await waitForSavedWave(page, 3);
   const savedRaw = await savedSuspendRaw(page);
+  await expect(page.getByTestId('run-meta-recap')).toBeVisible();
+  await expect(page.getByTestId('run-meta-recap')).toHaveText(`Wave ${saved.wave} ledgered ✓`);
+  await saveVisibilityShot(page, testInfo, 'boundary-tick');
+  await page.keyboard.press('KeyP');
+  const pauseSaved = await savedSuspend(page);
+  await expect(page.getByTestId('pause-meta-save')).toHaveText(`📒 Ledger saved at wave ${pauseSaved.wave} — closing the tab keeps your place.`);
+  await saveVisibilityShot(page, testInfo, 'pause-line-saved');
+  await page.keyboard.press('KeyP');
   const savedPalisade = saved.buildings.find((entry) => entry.id === 'palisade');
   expect(saved.economy.gold).toBeGreaterThan(0);
   expect(saved.buildings).toHaveLength(3);
@@ -162,6 +188,15 @@ test('wave-boundary suspend restores state and matches the uninterrupted seeded 
   const resavedTargetWave = targetWave + 1;
   const uninterrupted = comparableSuspend(await waitForSavedWave(page, targetWave));
   const uninterruptedAfterResave = comparableSuspend(await waitForSavedWave(page, resavedTargetWave));
+
+  await page.goto('/');
+  await writeSuspend(page, savedRaw);
+  await page.goto(`/${QUERY}&contract=e1-dry-gulch&nowaves`);
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId)).resolves.toBe('e1-dry-gulch');
+  await page.keyboard.press('KeyP');
+  await expect(page.getByTestId('pause-meta-save')).toHaveText("The ledger saves at each wave's end.");
+  await page.keyboard.press('KeyP');
 
   await page.goto('/');
   await writeSuspend(page, savedRaw);
@@ -193,10 +228,12 @@ test('wave-boundary suspend restores state and matches the uninterrupted seeded 
 
   await page.goto('/');
   await writeSuspend(page, savedRaw);
+  await page.evaluate(([key, value]) => localStorage.setItem(key, value), [profileDataKey('robin', TOWN_NAME_KEY), 'Copper Hill'] as const);
   await page.reload();
-  await expect(page.getByTestId('start-menu-continue')).toHaveText(`Continue Wave ${saved.wave}`);
+  await expect(page.getByTestId('start-menu-continue')).toHaveText(`Continue — wave ${saved.wave} · The Claim · Copper Hill`);
   await expect(page.getByTestId('start-menu-saved-claim')).toContainText(`wave ${saved.wave}`);
-  await shot(page, testInfo, 'menu-continue');
+  await expect(page.getByTestId('start-menu-saved-claim')).toContainText('The Claim');
+  await saveVisibilityShot(page, testInfo, 'menu-continue');
   await page.getByTestId('start-menu-continue').click();
   await page.waitForFunction((wave) => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave === wave, saved.wave);
   await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold)).resolves.toBe(saved.economy.gold);
@@ -232,7 +269,7 @@ test('ended runs clear suspend and New Claim confirms abandoning a saved claim',
   await page.goto('/');
   await expect(page.getByTestId('start-menu-continue')).toBeVisible();
   page.once('dialog', async (dialog) => {
-    expect(dialog.message()).toContain('Abandon the saved claim at wave');
+    expect(dialog.message()).toContain('Abandon wave 1 · The Claim');
     await dialog.accept();
   });
   await page.getByTestId('start-menu-new-claim').click();

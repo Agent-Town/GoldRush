@@ -25,6 +25,7 @@ export type UiIntent =
   | { type: 'set_agent_ability'; ability: AgentAbility; granted: boolean };
 
 export type PauseMetaSnapshot = {
+  save: string;
   science: string;
   territory: string;
   boons: Array<{ name: string; effect: string }>;
@@ -369,6 +370,7 @@ export class Hud {
 
     this.elements.pauseMeta.innerHTML = `
       <p class="hud-meta__eyebrow">Claim Memory</p>
+      <p class="hud-meta__line" data-testid="pause-meta-save">${this.escape(meta.save)}</p>
       <p class="hud-meta__line" data-testid="pause-meta-science">${this.escape(meta.science)}</p>
       <p class="hud-meta__line" data-testid="pause-meta-territory">${this.escape(meta.territory)}</p>
       <div class="hud-meta__audio" data-testid="pause-audio-settings">
