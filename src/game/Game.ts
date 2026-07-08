@@ -181,6 +181,8 @@ const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
 type BaronRocketTargetKind = 'hero' | 'building';
 type BaronRocketVolleyConfig = NonNullable<ContractBaronTwist['rocketVolley']>;
 
+export type RunReturnResult = 'secured' | 'overrun';
+
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly scene = new THREE.Scene();
@@ -570,7 +572,7 @@ export class Game {
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly openAssayBench?: () => void,
-    private readonly onReturnToMenu?: () => void,
+    private readonly onReturnToMenu?: (result: RunReturnResult) => void,
   ) {
     this.assertActorMode();
     this.renderer = createRenderer(canvas);
@@ -671,17 +673,21 @@ export class Game {
         gold: event.goldPanned,
         timeAlive: event.timeAlive,
         at: scoreAt,
-        secured: this.runManager?.diagnostics.secured === true || event.wavesSurvived >= this.autoSecureWaveForRun(),
+        secured: this.runWasSecured(event.wavesSurvived),
         baseValue: Math.round(economySummary.baseValue),
         weaponSplit: this.weaponSplit(runStats),
         contractId: this.activeContract.id,
       });
+      const returnResult: RunReturnResult = this.runWasSecured(event.wavesSurvived) ? 'secured' : 'overrun';
       this.deathOverlay.show(this.deathLedger, scores, scoreAt, {
         ...this.researchOverlayOptions(1),
-        actionLabel: this.onReturnToMenu ? 'Contract Board' : undefined,
+        actionLabel: this.onReturnToMenu ? 'Return to Town' : undefined,
+        secondaryActionLabel: this.onReturnToMenu ? 'Try Again' : undefined,
         runStats,
-        agentAutonomyDelta: this.agentAutonomyDelta(this.runManager?.diagnostics.secured === true),
+        agentAutonomyDelta: this.agentAutonomyDelta(returnResult === 'secured'),
         townName: readTownName(),
+        onDone: this.onReturnToMenu ? () => this.onReturnToMenu?.(returnResult) : undefined,
+        onSecondaryAction: this.onReturnToMenu ? () => this.resetRun() : undefined,
       });
     });
     this.events.on('run_ended', (event) => {
@@ -719,20 +725,20 @@ export class Game {
         this.deathOverlay.show(ledger, scores, scoreAt, {
           ...this.researchOverlayOptions(2),
           outcome: 'secured',
-          actionLabel: this.onReturnToMenu ? 'Contract Board' : 'Enter New Claim',
+          actionLabel: this.onReturnToMenu ? 'Return to Town' : 'Enter New Claim',
+          secondaryActionLabel: this.onReturnToMenu ? 'New Claim' : undefined,
           runStats,
           agentAutonomyDelta,
           townName: readTownName(),
           onDone: () => {
             if (this.onReturnToMenu) {
               this.runStartMetaRecapPending = false;
-              this.onReturnToMenu();
+              this.onReturnToMenu('secured');
               return;
             }
-            this.deathOverlay.hide();
-            this.state.setPaused(false);
-            this.flushRunStartMetaRecap();
+            this.finishSecuredLedgerQuickLoop();
           },
+          onSecondaryAction: this.onReturnToMenu ? () => this.finishSecuredLedgerQuickLoop() : undefined,
         });
       }, 0);
     });
@@ -981,8 +987,8 @@ export class Game {
     this.applyStats(this.progression.stats, null);
     this.syncUi();
     this.publishDiagnostics();
-    this.showRunStartMetaRecap();
     this.showContractBriefing();
+    this.showRunStartMetaRecap();
     // ADR-002 section 4: M4 exposes install(game); wiring happens at merge (m4-01 gate, s32).
     const game = this;
     this.agentStub = installAgentStub(
@@ -2109,6 +2115,10 @@ export class Game {
     return this.waitsForBaronDefeat() ? Number.MAX_SAFE_INTEGER : this.secureWaveForRun();
   }
 
+  private runWasSecured(wavesSurvived: number): boolean {
+    return this.runManager?.diagnostics.secured === true || wavesSurvived >= this.autoSecureWaveForRun();
+  }
+
   securePayoutMultForRun(): Partial<Record<MetaTrack, number>> | undefined {
     const baron = this.activeContract.twist.baron;
     if (!baron || !this.baronBeatenThisRun) return undefined;
@@ -3010,22 +3020,28 @@ export class Game {
     this.showProspectorIntro();
     this.uiBridge.announce('Stake your claim.', 0);
     this.syncUi();
+    this.showContractBriefing();
     if (deferMetaRecap) {
       this.runStartMetaRecapPending = true;
     } else {
       this.showRunStartMetaRecap();
     }
-    this.showContractBriefing();
     this.upgradeOverlay.hide();
     this.buildingContextPrompt.update(null, null, false);
   }
 
   private finishRunLedger(): void {
     if (this.onReturnToMenu) {
-      this.onReturnToMenu();
+      this.onReturnToMenu('overrun');
       return;
     }
     this.resetRun();
+  }
+
+  private finishSecuredLedgerQuickLoop(): void {
+    this.deathOverlay.hide();
+    this.state.setPaused(false);
+    this.flushRunStartMetaRecap();
   }
 
   private prefetchContractPresentation(): void {

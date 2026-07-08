@@ -96,6 +96,7 @@ export type TownDiagnostics = {
 
 type TownSceneOptions = {
   openBoard?: boolean;
+  returnResult?: 'secured' | 'overrun';
   onLaunchContract?: (id: string) => void;
 };
 
@@ -161,6 +162,7 @@ export class TownScene {
   private tavernBackdropUrl: string | undefined;
   private tavernBackdropRequest: Promise<string> | undefined;
   private stampMillPlaqueText = '';
+  private returnBeatEmitted = false;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -678,6 +680,7 @@ export class TownScene {
 
   private openBoard(): void {
     this.renderBoard();
+    this.emitReturnStorySignal();
     this.emitBoardStorySignals();
     this.boardOpen = true;
     this.board.hidden = false;
@@ -796,6 +799,12 @@ export class TownScene {
         ledgerBlurb: contract.boardRow.ledgerBlurb,
       });
     }
+  }
+
+  private emitReturnStorySignal(): void {
+    if (!this.options.returnResult || this.returnBeatEmitted) return;
+    this.returnBeatEmitted = true;
+    emitStorySignal({ type: 'run-return-town', result: this.options.returnResult });
   }
 
   private loadTavernBackdrop(): void {

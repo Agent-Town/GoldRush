@@ -283,12 +283,11 @@ test('pause panel repeats the active contract briefing', async ({ page }, testIn
   assertNoErrors(errors);
 });
 
-test('plain no-debug New Claim still briefs The Claim', async ({ page }) => {
+test('plain no-debug board launch still briefs The Claim', async ({ page }) => {
   const claim = CONTRACTS[0]!;
   const errors = collectErrors(page);
-  await seedProfile(page);
-  await page.goto('/');
-  await page.getByTestId('start-menu-new-claim').click();
+  await openBoard(page);
+  await page.getByTestId('contract-launch-the-claim').click();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 12);
   await assertRunCard(page, claim);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.fallbackReason)).toBeNull();

@@ -167,8 +167,7 @@ export class StartMenu {
     this.firstBoot = false;
     this.profileMessage = '';
     accountSync.queuePush();
-    this.render();
-    this.firstAction()?.focus({ preventScroll: true });
+    this.options.onEnterTown();
   }
 
   private readonly onAccountSync = () => {

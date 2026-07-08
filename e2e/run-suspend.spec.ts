@@ -103,6 +103,29 @@ async function waitForSavedWave(page: Page, wave: number): Promise<SavedSuspend>
   return saved;
 }
 
+async function hold(page: Page, key: string, ms: number): Promise<void> {
+  await page.keyboard.down(key);
+  await page.waitForTimeout(ms);
+  await page.keyboard.up(key);
+}
+
+async function launchClaimFromTownBoard(page: Page): Promise<void> {
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  const nameCard = page.getByTestId('town-name-card');
+  if (await nameCard.isVisible()) {
+    await page.getByTestId('town-name-input').fill('Quartz Hill');
+    await page.getByTestId('town-name-submit').click();
+    await expect(nameCard).toBeHidden();
+  }
+  await hold(page, 'KeyA', 850);
+  await hold(page, 'KeyW', 850);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
+  await page.getByTestId('town-open-board').click();
+  await expect(page.getByTestId('contract-board')).toBeVisible();
+  await page.getByTestId('contract-launch-the-claim').click();
+}
+
 function comparableSuspend(snapshot: SavedSuspend): unknown {
   const round = (value: number) => Math.round(value * 1000) / 1000;
   return {
@@ -242,7 +265,7 @@ test('wave-boundary suspend restores state and matches the uninterrupted seeded 
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('ended runs clear suspend and New Claim confirms abandoning a saved claim', async ({ page }) => {
+test('ended runs clear suspend and town board launch confirms abandoning a saved claim', async ({ page }) => {
   await clearStorage(page);
   const errors = await openGame(page);
   await grantGold(page, 80);
@@ -272,7 +295,7 @@ test('ended runs clear suspend and New Claim confirms abandoning a saved claim',
     expect(dialog.message()).toContain('Abandon wave 1 · The Claim');
     await dialog.accept();
   });
-  await page.getByTestId('start-menu-new-claim').click();
+  await launchClaimFromTownBoard(page);
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   expect(await page.evaluate((key) => localStorage.getItem(key), RUN_SUSPEND_KEY)).toBe(null);
   expect(savedRaw.length).toBeGreaterThan(200);

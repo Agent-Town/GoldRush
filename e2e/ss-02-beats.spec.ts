@@ -28,6 +28,8 @@ const EXPECTED_BEATS = [
   'ceiling-reached',
   'sky-rocket-captured',
   'stamp-site-found',
+  'return-secured',
+  'return-overrun',
   'board-unlock-dry-gulch',
   'board-unlock-twin-banks',
   'board-unlock-night-shift',
@@ -143,6 +145,8 @@ function sampleSignal(trigger: StorySignal['type']): StorySignal {
       return { type: 'science-complete' };
     case 'stamp-site-found':
       return { type: 'stamp-site-found' };
+    case 'run-return-town':
+      return { type: 'run-return-town', result: 'secured' };
     case 'contract-unlocked':
       return { type: 'contract-unlocked', contractId: 'e1-dry-gulch', contractName: 'The Dry Gulch', ledgerBlurb: 'Mesa country.' };
     case 'rung-promotion':
@@ -163,7 +167,7 @@ function linesFor(beat: (typeof STORY_BEATS)[number]): readonly string[] {
   return typeof beat.lines === 'function' ? beat.lines(signal) : beat.lines;
 }
 
-test('SS-02 table is 21 registered, attributed, two-line E1 beats', () => {
+test('SS-02 table is 23 registered, attributed, two-line E1 beats', () => {
   const ids = STORY_BEATS.map((beat) => beat.id);
   expect(ids).toEqual([...EXPECTED_BEATS]);
   expect(new Set(ids).size).toBe(STORY_BEATS.length);
@@ -310,6 +314,18 @@ test('full E1 thread fires each authored arc once with portraits', async ({ page
     portrait: 'townsfolk-elder',
     text: 'Fund the first stage here.',
     shot: 'steamworks-door',
+  }, testInfo);
+  await emitAndExpect(page, { type: 'run-return-town', result: 'secured' }, {
+    id: 'return-secured',
+    speaker: 'tavernkeeper',
+    portrait: 'townsfolk-tavernkeeper',
+    text: 'The town heard. Drinks tonight.',
+  }, testInfo);
+  await emitAndExpect(page, { type: 'run-return-town', result: 'overrun' }, {
+    id: 'return-overrun',
+    speaker: 'tavernkeeper',
+    portrait: 'townsfolk-tavernkeeper',
+    text: "You're breathing. The claim can be re-staked.",
   }, testInfo);
 
   await emit(page, { type: 'town-named', townName: 'Aurora Bend' });

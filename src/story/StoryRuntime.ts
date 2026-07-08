@@ -57,6 +57,7 @@ export class StoryRuntime {
 
   private receive(signal: RuntimeStorySignal): void {
     if (!readStoryTalesEnabled()) return;
+    const items: QueueItem[] = [];
     for (const beat of STORY_RUNTIME_BEATS) {
       if (beat.trigger !== signal.type || (beat.when && !beat.when(signal))) continue;
       const key = beat.seenKey?.(signal) ?? beat.id;
@@ -64,7 +65,14 @@ export class StoryRuntime {
       const lines = this.linesFor(beat, signal);
       if (lines.length === 0) continue;
       if (beat.oncePerProfile) markStoryBeatSeen(key);
-      this.queue.push({ beat, key, lines, signal });
+      items.push({ beat, key, lines, signal });
+    }
+    if (items.length === 0) return;
+    if (signal.type === 'run-return-town') {
+      const interrupted = this.interruptActiveBeat();
+      this.queue.unshift(...items, ...(interrupted ? [interrupted] : []));
+    } else {
+      this.queue.push(...items);
     }
     this.schedule();
   }
@@ -127,6 +135,17 @@ export class StoryRuntime {
     this.active = null;
     this.lastDismissedAt = Date.now();
     this.schedule();
+  }
+
+  private interruptActiveBeat(): QueueItem | null {
+    if (!this.active) return null;
+    const active = this.active;
+    this.pointerCleanup();
+    window.clearTimeout(this.dismissTimer);
+    document.removeEventListener('pointerdown', this.onDocumentPointerDown, { capture: true });
+    this.root.innerHTML = '';
+    this.active = null;
+    return active;
   }
 
   private setupPointer(selector: string | undefined): void {

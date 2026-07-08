@@ -47,7 +47,13 @@ test('cleared-storage boot asks who is prospecting and creates no Robin ghost', 
   await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
   await page.getByTestId('profile-name-input').fill('Mina');
   await page.getByTestId('profile-create').click();
-  await expect(page.getByTestId('start-menu-new-claim')).toBeVisible();
+  await expect(page.getByTestId('start-menu')).toHaveCount(0);
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await expect(page.getByTestId('town-name-card')).toBeVisible();
+  await page.getByTestId('town-name-input').fill('Aurora Bend');
+  await page.getByTestId('town-name-submit').click();
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
+  await page.mouse.click(6, 6);
 
   const state = await readProfileState(page);
   expect(state.activeId).toBe('mina');

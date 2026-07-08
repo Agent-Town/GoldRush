@@ -61,6 +61,7 @@ export type DeathResearchState = {
 export type DeathOverlayOptions = {
   outcome?: 'death' | 'secured';
   actionLabel?: string;
+  secondaryActionLabel?: string;
   runStats?: DeathRunStatsSnapshot;
   agentAutonomyDelta?: { before: number; after: number };
   townName?: string | null;
@@ -68,6 +69,7 @@ export type DeathOverlayOptions = {
   onResearchPick?: (id: string) => DeathResearchState;
   onResearchSkip?: () => DeathResearchState;
   onDone?: () => void;
+  onSecondaryAction?: () => void;
 };
 
 export class DeathOverlay {
@@ -187,9 +189,18 @@ export class DeathOverlay {
           <h2>Best Claims</h2>
           <ol data-best-claims>${this.renderScores(scores, currentAt)}</ol>
         </section>
-        <button class="death-overlay__button" type="button" data-testid="stake-again" data-action="finish">${
-          this.options.actionLabel ?? 'Try Again'
-        }</button>
+        <div class="death-overlay__actions">
+          <button class="death-overlay__button" type="button" data-testid="stake-again" data-action="finish">${
+            this.options.actionLabel ?? 'Try Again'
+          }</button>
+          ${
+            this.options.secondaryActionLabel
+              ? `<button class="death-overlay__button death-overlay__button--secondary" type="button" data-testid="run-secondary-action" data-action="secondary">${this.escape(
+                  this.options.secondaryActionLabel,
+                )}</button>`
+              : ''
+          }
+        </div>
       </div>
     `;
   }
@@ -360,6 +371,7 @@ export class DeathOverlay {
       return;
     }
 
+    if (target.closest('[data-action="secondary"]')) this.secondaryAction();
     if (target.closest('[data-action="finish"]')) this.finish();
   };
 
@@ -398,14 +410,27 @@ export class DeathOverlay {
   }
 
   private finish(): void {
-    if ((this.options.research?.roundsRemaining ?? 0) > 0) {
-      this.options.research = this.options.onResearchSkip?.() ?? this.options.research;
-    }
+    this.skipPendingResearch();
     if (this.options.onDone) {
       this.options.onDone();
       return;
     }
     this.onStakeAgain();
+  }
+
+  private secondaryAction(): void {
+    this.skipPendingResearch();
+    if (this.options.onSecondaryAction) {
+      this.options.onSecondaryAction();
+      return;
+    }
+    this.onStakeAgain();
+  }
+
+  private skipPendingResearch(): void {
+    if ((this.options.research?.roundsRemaining ?? 0) > 0) {
+      this.options.research = this.options.onResearchSkip?.() ?? this.options.research;
+    }
   }
 
   private formatTime(secondsAlive: number): string {

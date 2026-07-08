@@ -821,6 +821,17 @@
   font-weight: 800;
 }
 
+.death-overlay__actions {
+  display: grid;
+  gap: 10px;
+}
+
+.death-overlay__button--secondary {
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.92), rgba(245, 230, 200, 0.96)),
+    var(--at-sand-100);
+}
+
 .death-overlay__button:hover,
 .death-overlay__button:focus-visible {
   outline: 2px solid var(--at-sun-200);
