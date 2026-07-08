@@ -29,6 +29,9 @@ Build: main @ post-s101 era (041 overwatch, SCI-01/02/04, w1-03 light rerun, w1-
 - **F-0707-10 Prompt overlap**: tier prompt + demolish prompt stack/collide → ONE building context bar (both actions, fixed slots) + a global prompt-stack layout law. Same task 043.
 - BT-00 demolish + BT-02 tiers confirmed LIVE in owner's build (he tiered a sluice to 2, saw T3 pricing at 320g, used tear-down) — the homestead loop is being played hours after ratification.
 
+## Sixteenth wave (2026-07-08 ~10:10) — the Baron contract BITES before the boss even spawns
+Owner, mid-attempts: "getting harder with the 15% wave buff, my usual timing does not work - I will keep trying." The +15% cadence is disrupting a 47-wave veteran's optimized build order = the contract has an identity beyond its boss, and the first "I will keep trying" of the project = the epic-and-difficult ruling landing as intended. No task; this is the design working.
+
 ## Fifteenth wave (2026-07-08 ~06:45) — THE BOSS RULING (supersedes the fresh-profile-calibrated rec)
 Owner, verbatim: "the Baron is too unspectacular for the first boss — could it become much bigger? Like 4x as big? A real chunk of a unit? And then give it much more health and power — maybe 4 times as much? If it rampages the structures and the player has to run and kite it, that is ok… It should feel really epic and difficult to do." → **054 BARON EPIC queued (lane-b)**: ×4 visual, HP ×160, damage ×4 (3 contacts kill), speed 0.75× (kite-viable), STRUCTURE RAMPAGE via the wrecker path (palisade in 2 swings; kite him or lose the homestead), boss HP bar (object-frame), escorts as his outfit, ONE flagged camera-impulse on spawn (owner verdicts it). Difficulty acceptance as numbers: survives ≥60s focused fire · ≥3 structures if unkited 30s · winnable by kite+chip ≤180s (scripted proof).
 
