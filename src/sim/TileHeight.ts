@@ -5,11 +5,28 @@ const ACTIVE_TILE = activeTileDescriptor();
 const FLAT_SLOPE = Object.freeze({ dx: 0, dz: 0 });
 const SLIDE_STEP_SCALES = [1, 0.75, 0.5, 0.25, 0.125] as const;
 const SLIDE_ROTATION_DEGREES = [15, 30, 45, 60, 75] as const;
+const LOS_STEPS = 12;
+const LOS_EYE_HEIGHT = 0.72;
+const LOS_TARGET_HEIGHT = 0.5;
+const LOS_CLEARANCE = 0.1;
+const LOS_CACHE_LIMIT = 512;
 const PROBES = [
   ['heroStart', 0, 12],
   ['ford', 0, 0],
   ['farBank', 12, -18],
 ] as const;
+
+export type TerrainLosCheck = {
+  flat: boolean;
+  clear: boolean;
+  samples: number;
+  from: { x: number; z: number; h: number };
+  to: { x: number; z: number; h: number };
+  blockedAt: { x: number; z: number; h: number; lineH: number; step: number } | null;
+};
+
+const losCache = new Map<string, TerrainLosCheck>();
+let lastLosCheck: TerrainLosCheck = initialLosCheck();
 
 export function simHeight(x: number, z: number): number {
   if (!ACTIVE_TILE.elevation) return 0;
@@ -65,6 +82,54 @@ export function terrainSpeedMultiplier(x: number, z: number, dirX: number, dirZ:
     return 1 + (Balance.terrainSim.downhillMax - 1) * Math.min(1, -grade / slopeMax);
   }
   return 1;
+}
+
+export function highGroundRange(baseRange: number, x: number, z: number): number {
+  if (!ACTIVE_TILE.elevation) return baseRange;
+  return baseRange + Math.max(0, simHeight(x, z)) * Balance.gt.highGroundRangeBonus;
+}
+
+export function terrainLineOfSight(from: { x: number; z: number }, to: { x: number; z: number }): boolean {
+  if (!ACTIVE_TILE.elevation) {
+    lastLosCheck = flatLosCheck(from, to);
+    return true;
+  }
+
+  const key = losKey(from.x, from.z, to.x, to.z);
+  const cached = losCache.get(key);
+  if (cached) {
+    lastLosCheck = cached;
+    return cached.clear;
+  }
+
+  const fromTerrain = simHeight(from.x, from.z);
+  const toTerrain = simHeight(to.x, to.z);
+  const fromH = fromTerrain + LOS_EYE_HEIGHT;
+  const toH = toTerrain + LOS_TARGET_HEIGHT;
+  const check: TerrainLosCheck = {
+    flat: false,
+    clear: true,
+    samples: LOS_STEPS - 1,
+    from: { x: round3(from.x), z: round3(from.z), h: round3(fromTerrain) },
+    to: { x: round3(to.x), z: round3(to.z), h: round3(toTerrain) },
+    blockedAt: null,
+  };
+
+  for (let step = 1; step < LOS_STEPS; step += 1) {
+    const t = step / LOS_STEPS;
+    const x = from.x + (to.x - from.x) * t;
+    const z = from.z + (to.z - from.z) * t;
+    const terrainH = simHeight(x, z);
+    const lineH = fromH + (toH - fromH) * t;
+    if (terrainH <= lineH - LOS_CLEARANCE) continue;
+    check.clear = false;
+    check.blockedAt = { x: round3(x), z: round3(z), h: round3(terrainH), lineH: round3(lineH), step };
+    break;
+  }
+
+  cacheLos(key, check);
+  lastLosCheck = check;
+  return check.clear;
 }
 
 export function resolveTerrainMove(
@@ -222,6 +287,8 @@ export function simHeightDiagnostics(): {
   flat: boolean;
   tile: string;
   balance: typeof Balance.terrainSim;
+  gt: typeof Balance.gt;
+  lastLos: TerrainLosCheck;
   probes: Record<string, { height: number; slope: { dx: number; dz: number }; traversable: boolean }>;
 } {
   const probes: Record<string, { height: number; slope: { dx: number; dz: number }; traversable: boolean }> = {};
@@ -232,7 +299,51 @@ export function simHeightDiagnostics(): {
       traversable: isTraversable(x, z),
     };
   }
-  return { flat: !ACTIVE_TILE.elevation, tile: ACTIVE_TILE.id, balance: Balance.terrainSim, probes };
+  return { flat: !ACTIVE_TILE.elevation, tile: ACTIVE_TILE.id, balance: Balance.terrainSim, gt: Balance.gt, lastLos: lastLosCheck, probes };
+}
+
+function flatLosCheck(from: { x: number; z: number }, to: { x: number; z: number }): TerrainLosCheck {
+  return {
+    flat: true,
+    clear: true,
+    samples: 0,
+    from: { x: round3(from.x), z: round3(from.z), h: 0 },
+    to: { x: round3(to.x), z: round3(to.z), h: 0 },
+    blockedAt: null,
+  };
+}
+
+function initialLosCheck(): TerrainLosCheck {
+  const origin = { x: 0, z: 0 };
+  if (!ACTIVE_TILE.elevation) return flatLosCheck(origin, origin);
+  return {
+    flat: false,
+    clear: true,
+    samples: 0,
+    from: { x: 0, z: 0, h: round3(simHeight(0, 0)) },
+    to: { x: 0, z: 0, h: round3(simHeight(0, 0)) },
+    blockedAt: null,
+  };
+}
+
+function losKey(ax: number, az: number, bx: number, bz: number): string {
+  return `${keyCoord(ax)},${keyCoord(az)},${keyCoord(bx)},${keyCoord(bz)}`;
+}
+
+function keyCoord(value: number): string {
+  return Object.is(value, -0) ? '0' : String(value);
+}
+
+function round3(value: number): number {
+  return Math.round(value * 1000) / 1000;
+}
+
+function cacheLos(key: string, check: TerrainLosCheck): void {
+  if (losCache.size >= LOS_CACHE_LIMIT) {
+    const first = losCache.keys().next().value;
+    if (first !== undefined) losCache.delete(first);
+  }
+  losCache.set(key, check);
 }
 
 function insideCliffBand(x: number, z: number): boolean {
