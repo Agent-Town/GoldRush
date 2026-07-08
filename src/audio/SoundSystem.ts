@@ -176,7 +176,7 @@ export class SoundSystem {
   }
 
   playDetonation(ownerId: string): void {
-    this.play(ownerId === 'hero_blast' ? 'blast-charge-boom' : 'spark-bolt-hit');
+    this.play(ownerId === 'hero_blast' || ownerId.startsWith('baron_rocket') ? 'blast-charge-boom' : 'spark-bolt-hit');
   }
 
   playBuildingDamage(family: string, hp: number, maxHp: number, wrecked: boolean, forceCrack = false): void {

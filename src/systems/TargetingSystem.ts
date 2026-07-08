@@ -122,6 +122,11 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     return best;
   }
 
+  buildingsInRadius(from: THREE.Vector3, radius: number): BuildingTarget[] {
+    const radiusSq = radius * radius;
+    return this.buildings.filter((building) => building.active && building.hp > 0 && this.distanceSqToBuilding(from, building) <= radiusSq);
+  }
+
   private distanceSqXZ(a: THREE.Vector3, b: THREE.Vector3): number {
     const dx = a.x - b.x;
     const dz = a.z - b.z;

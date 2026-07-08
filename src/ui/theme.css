@@ -170,7 +170,8 @@
   opacity: 1;
 }
 
-.hud--announcement-visible[data-announcement-kind="baron"] .hud__wave {
+.hud--announcement-visible[data-announcement-kind="baron"] .hud__wave,
+.hud--announcement-visible[data-announcement-kind="baron-defeat"] .hud__wave {
   width: min(460px, calc(100vw - 32px));
   min-height: 52px;
   color: var(--at-cream-50);
@@ -183,9 +184,31 @@
     0 16px 30px rgba(46, 27, 14, 0.26);
 }
 
+.hud--announcement-visible[data-announcement-kind="baron-defeat"] .hud__wave {
+  top: 50%;
+  width: min(560px, calc(100vw - 32px));
+  min-height: 74px;
+  padding: 12px 24px;
+  transform: translate(-50%, -50%);
+  animation: baron-defeat-bloom 360ms ease-out both;
+}
+
 .hud--announcement-visible[data-announcement-kind="baron"] .hud__wave::before,
-.hud--announcement-visible[data-announcement-kind="baron"] .hud__wave::after {
+.hud--announcement-visible[data-announcement-kind="baron"] .hud__wave::after,
+.hud--announcement-visible[data-announcement-kind="baron-defeat"] .hud__wave::before,
+.hud--announcement-visible[data-announcement-kind="baron-defeat"] .hud__wave::after {
   background: var(--at-ochre-500);
+}
+
+@keyframes baron-defeat-bloom {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -48%) scale(0.94);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
 }
 
 .hud__wave-edge:empty {
@@ -1289,6 +1312,29 @@
     width: auto;
     padding: 8px 16px;
     text-align: left;
+  }
+
+  .hud--announcement-visible[data-announcement-kind="baron-defeat"] .hud__wave {
+    top: 50%;
+    right: max(12px, env(safe-area-inset-right));
+    left: max(12px, env(safe-area-inset-left));
+    width: auto;
+    min-height: 68px;
+    padding: 10px 14px;
+    text-align: left;
+    transform: translateY(-50%);
+    animation: baron-defeat-bloom-mobile 360ms ease-out both;
+  }
+
+  @keyframes baron-defeat-bloom-mobile {
+    from {
+      opacity: 0;
+      transform: translateY(-46%) scale(0.94);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(-50%) scale(1);
+    }
   }
 
   .hud-panel--xp {

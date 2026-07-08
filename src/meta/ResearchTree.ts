@@ -10,6 +10,7 @@ import { MEGAPROJECT_STATE_KEY } from './Megaproject';
 
 export const RESEARCH_STATE_KEY = 'gr.research.v1';
 export const STEAMWORKS_THRESHOLD = loadEpoch('epoch-1-frontier').threshold ?? 6;
+export const SKY_ROCKET_BATTERY_NODE_ID = 'sky_rocket_battery';
 export const SCIENCE_CEILING_TEXT =
   'Epoch science complete — the Steamworks awaits a town to build it. (Steps beyond the threshold are banked for the new era.)';
 export const SCIENCE_BUILDING_TEXT =
@@ -52,6 +53,10 @@ export type ResearchState = {
   taken: string[];
   proposalSalt: number;
   pinnedTarget: string | null;
+};
+
+export type ResearchUnlockFlags = {
+  rocketCartCaptured?: boolean;
 };
 
 type ResearchRegistry = {
@@ -141,6 +146,15 @@ export const RESEARCH_NODES = [
     description: 'Banks +1 arsenal step toward blast mastery while Frontier blast radius stays capped at 1.4x.',
     effect: 'Powder Math banks +1 arsenal step toward the 1.4x Frontier blast-radius cap.',
     requires: ['brass_coil_standards'],
+  },
+  {
+    id: SKY_ROCKET_BATTERY_NODE_ID,
+    branch: 'Arsenal Works',
+    name: 'Sky-Rocket Battery',
+    description: 'Captured Baron science unlocks a 3-rocket festival-burst battery for the Steamworks arsenal.',
+    effect: 'Unlocks the Sky-Rocket Battery branch: 3 arcing festival rockets, burst radius, and ember upgrades.',
+    requires: ['powder_math'],
+    live: true,
   },
   {
     id: 'rush_pattern',
@@ -237,6 +251,7 @@ export function freshResearchState(progress: MetaProgress = freshMetaProgress())
 export function loadResearchState(
   registryStorage?: MetaProgressStorage,
   progressStorage: MetaProgressStorage | undefined = registryStorage,
+  unlocks: ResearchUnlockFlags = {},
 ): ResearchState {
   const progress = progressStorage ? loadMetaProgress(progressStorage) : freshMetaProgress();
   let raw: unknown = null;
@@ -246,7 +261,7 @@ export function loadResearchState(
   } catch {
     raw = null;
   }
-  return migrateResearchState(raw, progress);
+  return applyResearchUnlockFlags(migrateResearchState(raw, progress), unlocks);
 }
 
 export function saveResearchState(
@@ -403,6 +418,11 @@ function migrateResearchState(raw: unknown, progress: MetaProgress): ResearchSta
   const rawPinnedTarget = typeof raw.pinnedTarget === 'string' ? (RESEARCH_ID_MIGRATIONS[raw.pinnedTarget] ?? raw.pinnedTarget) : null;
   const pinnedTarget = rawPinnedTarget && rawPinnedTarget in researchNodeById ? rawPinnedTarget : null;
   return { version: 1, progress, taken: [...new Set(taken)], proposalSalt, pinnedTarget };
+}
+
+function applyResearchUnlockFlags(state: ResearchState, unlocks: ResearchUnlockFlags): ResearchState {
+  if (!unlocks.rocketCartCaptured || state.taken.includes(SKY_ROCKET_BATTERY_NODE_ID)) return state;
+  return { ...state, taken: [...state.taken, SKY_ROCKET_BATTERY_NODE_ID] };
 }
 
 function toRegistry(state: ResearchState): ResearchRegistry {

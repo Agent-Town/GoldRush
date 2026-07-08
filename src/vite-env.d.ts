@@ -26,7 +26,7 @@ interface ThreeGameDiagnostics {
     announcementAt: number;
     announcementDurationSeconds: number;
     announcementEdge: 'north' | 'south' | 'east' | 'west' | null;
-    announcementKind: 'wave' | 'baron';
+    announcementKind: 'wave' | 'baron' | 'baron-defeat';
     announcementTitle: string | null;
     enemiesAlive: number;
     timeAlive: number;
@@ -433,6 +433,34 @@ interface ThreeGameDiagnostics {
   charmPause: boolean;
   camImpulseActive: boolean;
   baronSpawnImpulses: number;
+  baronCeremony: {
+    active: boolean;
+    elapsed: number;
+    holdSeconds: number;
+  };
+  baronStandard: {
+    visible: boolean;
+    x: number;
+    z: number;
+    dropElapsed: number;
+  };
+  baronRocket: {
+    cartVisible: boolean;
+    telegraphActive: boolean;
+    telegraphElapsed: number;
+    nextVolleyIn: number;
+    volleys: number;
+    suppressed: boolean;
+    targetKind: 'hero' | 'building' | null;
+    lastOwnerId: string;
+    lastTarget: { x: number; z: number };
+    target: { x: number; z: number };
+    manifest: GrContractManifest['twist']['baron'] extends infer Baron
+      ? Baron extends { rocketVolley?: infer Volley }
+        ? Volley | null
+        : null
+      : null;
+  };
   vfx: {
     activeFloatTexts: number;
   };
@@ -510,18 +538,6 @@ interface ThreeGameDiagnostics {
   };
   terrain: {
     playerZone: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
-    ground?: {
-      enabled: boolean;
-      mode: 'fallback' | 'continuous-mesh';
-      drawCalls: 1;
-      segments: number;
-      vertexStep: number;
-      vertices: number;
-      triangles: number;
-      heightSource: 'visual';
-      textureSource: 'bank-atlas';
-      textureSeams: 'texture seams remain until TR-02';
-    };
     sim: {
       flat: boolean;
       tile: string;
@@ -794,7 +810,7 @@ interface Window {
       repairs: number;
     };
     setBeaconWave: (wave: number | null) => void;
-    announceForTest: (text: string, kind?: 'wave' | 'baron') => void;
+    announceForTest: (text: string, kind?: 'wave' | 'baron' | 'baron-defeat') => void;
     setWave: (wave: number) => void;
     startWaveForTest: (wave: number) => void;
     activeContract: () => GrContractManifest;

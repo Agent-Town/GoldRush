@@ -6,7 +6,7 @@ import type { AgentConsentSnapshot } from '../agent/AgentConsent';
 import type { AgentCapability, GoldRushToolName } from '../agent/ToolSurface';
 
 export type WaveState = 'quiet' | 'warning' | 'active' | 'cleared';
-export type AnnouncementKind = 'wave' | 'baron';
+export type AnnouncementKind = 'wave' | 'baron' | 'baron-defeat';
 
 export type UiSnapshot = {
   hp: number;

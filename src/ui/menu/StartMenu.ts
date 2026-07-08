@@ -5,11 +5,13 @@ import {
   installProfileStorageScope,
   loadProfileState,
 } from '../../game/ProfileStorage';
+import { hasRocketCartCaptured } from '../../game/Medals';
 import {
   browserResearchStorage,
   loadResearchState,
   saveResearchState,
   setPinnedResearchTarget,
+  type ResearchState,
 } from '../../meta/ResearchTree';
 import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
@@ -152,8 +154,7 @@ export class StartMenu {
 
   private renderResearch(): string {
     if (!this.researchOpen) return '';
-    const storage = browserResearchStorage();
-    const state = loadResearchState(storage);
+    const state = activeProfileResearchState();
     return `${renderResearchChart(state, this.selectedResearchNodeId)}
       <button class="gr-start-menu__small-button" type="button" data-menu-action="research-close">Close</button>`;
   }
@@ -230,7 +231,7 @@ export class StartMenu {
 
   private toggleResearch(open: boolean): void {
     this.researchOpen = open;
-    if (open) this.selectedResearchNodeId = loadResearchState(browserResearchStorage()).pinnedTarget ?? this.selectedResearchNodeId;
+    if (open) this.selectedResearchNodeId = activeProfileResearchState().pinnedTarget ?? this.selectedResearchNodeId;
     this.render();
     this.root.querySelector<HTMLElement>(open ? '[data-testid="research-overlay"]' : '[data-testid="start-menu-research"]')?.focus({
       preventScroll: true,
@@ -245,7 +246,7 @@ export class StartMenu {
 
   private pinResearchTarget(id: string | null): void {
     const storage = browserResearchStorage();
-    const state = loadResearchState(storage);
+    const state = activeProfileResearchState();
     const next = saveResearchState(storage, setPinnedResearchTarget(state, id));
     this.selectedResearchNodeId = next.pinnedTarget ?? this.selectedResearchNodeId;
     this.render();
@@ -291,6 +292,11 @@ function setupProfileStorage(): Storage | undefined {
   } catch {
     return undefined;
   }
+}
+
+function activeProfileResearchState(): ResearchState {
+  const storage = browserResearchStorage();
+  return loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
 }
 
 function hasLegacyProfileData(storage: Storage): boolean {

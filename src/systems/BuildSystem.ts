@@ -354,6 +354,7 @@ export class BuildSystem {
     this.createGhost();
     this.createBuildingTargets();
     this.combat.registerBuildingDamageResolver((target, amount) => this.resolveBuildingDamage(target, amount));
+    this.combat.registerBuildingTargetsResolver((position, radius) => this.targeting.buildingsInRadius(position, radius));
     this.repairRing.rotation.x = -Math.PI / 2;
     this.repairRing.renderOrder = RenderLayers.groundDecals;
     this.repairRing.visible = false;

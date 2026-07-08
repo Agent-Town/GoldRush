@@ -144,6 +144,15 @@ export type ContractBaronTwist = {
   defeatBeat: string;
   medalBlurb: string;
   sciencePayoutMult: number;
+  rocketVolley?: {
+    count: number;
+    damage: number;
+    radius: number;
+    cadenceSeconds: number;
+    telegraphSeconds: number;
+    airTime: number;
+    spreadRadius: number;
+  };
 };
 export type ContractFord = {
   id: string;

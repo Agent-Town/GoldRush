@@ -386,10 +386,11 @@ export class Hud {
     this.elements.waveText.textContent = snapshot.announcement;
     this.elements.waveTitle.textContent = snapshot.announcementTitle ?? '';
     this.elements.waveTitle.hidden = !snapshot.announcementTitle;
-    if (snapshot.announcementKind === 'baron' && this.elements.wavePortrait.src !== baronPortraitUrl) {
+    const baronAnnouncement = snapshot.announcementKind === 'baron' || snapshot.announcementKind === 'baron-defeat';
+    if (baronAnnouncement && this.elements.wavePortrait.src !== baronPortraitUrl) {
       this.elements.wavePortrait.src = baronPortraitUrl;
     }
-    this.elements.wavePortrait.hidden = snapshot.announcementKind !== 'baron';
+    this.elements.wavePortrait.hidden = !baronAnnouncement;
     this.elements.waveEdge.textContent = snapshot.announcementEdge ? edgeGlyph(snapshot.announcementEdge) : '';
     this.elements.waveEdge.dataset.edge = snapshot.announcementEdge ?? '';
     this.elements.root.dataset.announcementKind = snapshot.announcementKind;

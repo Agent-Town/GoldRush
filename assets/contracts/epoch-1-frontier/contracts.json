@@ -241,8 +241,17 @@
           "tauntWaves": [5, 12, 18],
           "taunt": "The Baron sends his regards. The claim won't hold.",
           "defeatBeat": "Dragged off by his own men, swearing revenge.",
-          "medalBlurb": "He'll be back — with machines.",
-          "sciencePayoutMult": 2
+          "medalBlurb": "The Rocket Cart — captured. He'll be back — with machines.",
+          "sciencePayoutMult": 2,
+          "rocketVolley": {
+            "count": 3,
+            "damage": 18,
+            "radius": 2.35,
+            "cadenceSeconds": 8,
+            "telegraphSeconds": 1.2,
+            "airTime": 1.1,
+            "spreadRadius": 0.9
+          }
         }
       },
       "boardRow": {

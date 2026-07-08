@@ -102,6 +102,7 @@ export class CombatSystem {
   private readonly lastBlastDetonationPosition = new THREE.Vector3();
   private hasLastBlastDetonation = false;
   private buildingDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
+  private buildingTargetsResolver: ((position: THREE.Vector3, radius: number) => BuildingTarget[]) | null = null;
 
   constructor(
     private readonly events: EventBus,
@@ -198,6 +199,10 @@ export class CombatSystem {
     this.buildingDamageResolver = resolve;
   }
 
+  registerBuildingTargetsResolver(resolve: (position: THREE.Vector3, radius: number) => BuildingTarget[]): void {
+    this.buildingTargetsResolver = resolve;
+  }
+
   setTime(at: number): void {
     this.currentAt = at;
   }
@@ -236,7 +241,18 @@ export class CombatSystem {
   readonly handleEnemyContact = (enemy: ClaimJumperEnemy): void => {
     if (isCombatDamageDisabled()) return;
 
-    const amount = enemy.contactDamage;
+    this.damageHero(enemy.contactDamage, enemy.id);
+  };
+
+  launchLob(origin: THREE.Vector3, target: THREE.Vector3, airTime: number, damage: number, radius: number, ownerId: string): boolean {
+    const launched = this.blastCharges.activate(origin, target, airTime, damage, radius, ownerId);
+    if (!launched) return false;
+    this.recordShot('lob', ownerId);
+    this.audio.playShot('lob', ownerId);
+    return true;
+  }
+
+  private damageHero(amount: number, sourceId: number): void {
     const result = this.primaryActor.takeDamage(amount);
     if (!result.applied) return;
 
@@ -246,11 +262,11 @@ export class CombatSystem {
       amount,
       hp: this.primaryActor.hp,
       maxHp: this.primaryActor.maxHp,
-      sourceId: enemy.id,
+      sourceId,
     });
 
     if (result.died) this.onHeroDied();
-  };
+  }
 
   readonly handleBuildingHit = (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number): void => {
     this.damageBuilding(target, amount ?? enemy.buildingDamageFor(target.family), enemy.id, enemy.impactScale, enemy.eliteKind === 'baron');
@@ -426,6 +442,18 @@ export class CombatSystem {
     this.vfx.detonationRing(position, radius);
     this.audio.playDetonation(ownerId);
     if (isCombatDamageDisabled()) return;
+
+    if (ownerId.startsWith('baron_rocket')) {
+      const sourceId = Number(ownerId.split(':')[1] ?? -1);
+      const heroDx = this.primaryActor.group.position.x - position.x;
+      const heroDz = this.primaryActor.group.position.z - position.z;
+      const heroRadius = radius + Balance.hero.radius;
+      if (heroDx * heroDx + heroDz * heroDz <= heroRadius * heroRadius) this.damageHero(damage, sourceId);
+      for (const target of this.buildingTargetsResolver?.(position, radius) ?? []) {
+        this.damageBuilding(target, damage, sourceId, Math.max(1, radius * 0.65), true);
+      }
+      return;
+    }
 
     if (ownerId === 'turrets') {
       let closest: ClaimJumperEnemy | null = null;

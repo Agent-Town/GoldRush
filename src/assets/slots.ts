@@ -13,6 +13,7 @@ export const assetSlots = {
   propStump: 'prop.stump',
   propClaimPost: 'prop.claim_post',
   propBaronBanner: 'prop.baron_banner',
+  propRocketCart: 'prop.rocket_cart',
   vfxBolt: 'vfx.bolt',
   bldSentryBeacon: 'bld.sentry_beacon',
   bldPortraitPalisade: 'bld.portrait.palisade',

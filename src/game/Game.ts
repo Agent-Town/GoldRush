@@ -1,18 +1,19 @@
 import * as THREE from 'three';
-import { disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
+import { applyGeneratedMap, disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
 import {
   beginSpriteStatsFrame,
   setSpriteTestClip,
   spriteAnimationDiagnostics,
   spriteStatsDiagnostics,
 } from '../assets/SpriteAnimator';
-import { type AssetSlotId } from '../assets/slots';
+import { assetSlots, tagPlaceholder, type AssetSlotId } from '../assets/slots';
 import { EventBus } from '../core/EventBus';
 import {
   activeContract as selectActiveContract,
   activeContractDiagnostics,
   activeEpoch as selectActiveEpoch,
   activeTileDescriptor,
+  type ContractBaronTwist,
   type ContractManifest,
   type RailPathDescriptor,
 } from '../meta/ContractFamilies';
@@ -29,6 +30,7 @@ import {
   scienceMeter,
   skipResearchPick,
   takeNode,
+  type ResearchUnlockFlags,
   type ResearchState,
 } from '../meta/ResearchTree';
 import { loadEpoch } from '../meta/ContractFamilies';
@@ -55,7 +57,7 @@ import {
 import { emitStorySignal } from '../story';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
-import { awardBaronMedal, loadMedals } from './Medals';
+import { awardBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { AgentConsentStore } from '../agent/AgentConsent';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
@@ -73,6 +75,7 @@ import {
   getTimescale,
   isCharmPauseDisabled,
   isLevelUpDisabled,
+  isPauseDisabled,
   isPingDisabled,
   isProfileEnabled,
   isSpawnDisabled,
@@ -171,6 +174,12 @@ const STAMP_MILL_RAIL_SPUR: RailPathDescriptor[] = [
   },
 ];
 const BARON_ARRIVAL_TITLE = 'THE CLAIM-JUMPER BARON';
+const BARON_DEFEAT_TITLE = 'THE BARON IS DEFEATED';
+const BARON_KILL_STOP_SECONDS = 2.2;
+const BARON_DEFEAT_CARD_SECONDS = 4;
+const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
+type BaronRocketTargetKind = 'hero' | 'building';
+type BaronRocketVolleyConfig = NonNullable<ContractBaronTwist['rocketVolley']>;
 
 export class Game {
   private readonly renderer: THREE.WebGLRenderer;
@@ -185,6 +194,34 @@ export class Game {
   private readonly xpMotes = new XpMotePool();
   private readonly goldPickups = new GoldPickupPool();
   private readonly combatVfx = new CombatVfx();
+  private readonly baronStandardGroup = new THREE.Group();
+  private readonly baronStandardPoleGeometry = new THREE.CylinderGeometry(0.035, 0.045, 1.75, 8);
+  private readonly baronStandardClothGeometry = new THREE.PlaneGeometry(0.86, 0.58);
+  private readonly baronStandardPoleMaterial = new THREE.MeshStandardMaterial({ color: '#4b2a17', roughness: 0.82 });
+  private readonly baronStandardClothMaterial = new THREE.MeshStandardMaterial({
+    color: '#7f2633',
+    roughness: 0.76,
+    metalness: 0.03,
+    transparent: true,
+    alphaTest: 0.04,
+    side: THREE.DoubleSide,
+  });
+  private readonly baronRocketCartGroup = new THREE.Group();
+  private readonly baronRocketCartBodyGeometry = new THREE.BoxGeometry(0.92, 0.3, 0.58);
+  private readonly baronRocketCartWheelGeometry = new THREE.CylinderGeometry(0.16, 0.16, 0.08, 14);
+  private readonly baronRocketCartRailGeometry = new THREE.BoxGeometry(1.12, 0.08, 0.08);
+  private readonly baronRocketCartRocketGeometry = new THREE.CylinderGeometry(0.055, 0.075, 0.76, 10);
+  private readonly baronRocketCartFuseGeometry = new THREE.SphereGeometry(0.07, 8, 6);
+  private readonly baronRocketCartWoodMaterial = new THREE.MeshStandardMaterial({ color: '#4b2a17', roughness: 0.88 });
+  private readonly baronRocketCartWheelMaterial = new THREE.MeshStandardMaterial({ color: '#2f2a22', roughness: 0.74, metalness: 0.18 });
+  private readonly baronRocketCartBrassMaterial = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.42, metalness: 0.42 });
+  private readonly baronRocketCartTealMaterial = new THREE.MeshStandardMaterial({
+    color: '#83ded7',
+    emissive: '#2f8f85',
+    emissiveIntensity: 0.35,
+    roughness: 0.4,
+    metalness: 0.18,
+  });
   private readonly audio = new SoundSystem();
   private readonly state = new GameState();
   private readonly economy = new Economy();
@@ -437,8 +474,19 @@ export class Game {
   private timeAlive = 0;
   private kills = 0;
   private baronBeatenThisRun = false;
+  private baronCeremony: { atSim: number; startedElapsed: number } | null = null;
+  private readonly baronStandardPosition = new THREE.Vector3();
+  private baronStandardPlanted = false;
+  private baronStandardDropStartedAt = 0;
+  private baronRocketNextAt = 0;
+  private baronRocketTelegraphStartedAt = -1;
+  private baronRocketVolleys = 0;
+  private baronRocketSuppressed = false;
+  private baronRocketTargetKind: BaronRocketTargetKind | null = null;
+  private readonly baronRocketTarget = new THREE.Vector3();
+  private readonly baronRocketLastTarget = new THREE.Vector3();
+  private baronRocketLastOwnerId = '';
   private baronAnnouncementTimer = 0;
-  private baronDefeatTimer = 0;
   private pendingBaronBanner: { text: string; atSim: number; title: string } | null = null;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
@@ -508,7 +556,7 @@ export class Game {
   private prospectorIntroShown = false;
   private agentPolicySlotBonus = 0;
   private readonly researchStorage = browserResearchStorage();
-  private researchState: ResearchState = loadResearchState(this.researchStorage);
+  private researchState: ResearchState = loadResearchState(this.researchStorage, this.researchStorage, this.researchUnlockFlags());
   private appliedMetaProgress: MetaProgress = freshMetaProgress();
   private runStartMetaRecapPending = false;
   private readonly craftingProfile = normalizeQueueProfile(new URLSearchParams(window.location.search).get('profile'));
@@ -590,6 +638,8 @@ export class Game {
     this.upgradeOverlay = new UpgradeOverlay(this.getElement('#app'), (intent) => this.handleUpgradeIntent(intent));
     this.damageVignette.className = 'damage-vignette';
     this.getElement('#app').append(this.damageVignette);
+    window.addEventListener('pointerdown', this.skipBaronCeremony, { passive: true });
+    window.addEventListener('keydown', this.skipBaronCeremony);
     this.combat.registerShooter(this.heroShooter);
     this.combat.registerShooter(this.blastShooter);
     this.events.on('hero_damaged', () => {
@@ -684,7 +734,7 @@ export class Game {
     });
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
-      if (event.eliteKind === 'baron') this.onBaronDefeated(event.at);
+      if (event.eliteKind === 'baron') this.onBaronDefeated(event.at, event.enemyId);
     });
     this.events.on('building_damaged', () => {
       this.buildingHitsResolved += 1;
@@ -775,7 +825,7 @@ export class Game {
         setBeaconWave: (wave: number | null) => {
           this.debugBeaconWaveOverride = wave;
         },
-        announceForTest: (text: string, kind: 'wave' | 'baron' = 'wave') => {
+        announceForTest: (text: string, kind: 'wave' | 'baron' | 'baron-defeat' = 'wave') => {
           this.uiBridge.announce(text, this.timeAlive, null, 4, kind);
           this.syncUi();
           this.publishDiagnostics();
@@ -941,7 +991,8 @@ export class Game {
     this.agentStub?.dispose();
     this.loop.stop();
     window.clearTimeout(this.baronAnnouncementTimer);
-    window.clearTimeout(this.baronDefeatTimer);
+    window.removeEventListener('pointerdown', this.skipBaronCeremony);
+    window.removeEventListener('keydown', this.skipBaronCeremony);
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     this.input.dispose();
     this.hud.dispose();
@@ -969,6 +1020,21 @@ export class Game {
     this.megaprojectBarrelMaterial.dispose();
     this.megaprojectPlaqueTexture.dispose();
     this.megaprojectPlaqueMaterial.dispose();
+    this.baronStandardGroup.clear();
+    this.baronStandardPoleGeometry.dispose();
+    this.baronStandardClothGeometry.dispose();
+    this.baronStandardPoleMaterial.dispose();
+    this.baronStandardClothMaterial.dispose();
+    this.baronRocketCartGroup.clear();
+    this.baronRocketCartBodyGeometry.dispose();
+    this.baronRocketCartWheelGeometry.dispose();
+    this.baronRocketCartRailGeometry.dispose();
+    this.baronRocketCartRocketGeometry.dispose();
+    this.baronRocketCartFuseGeometry.dispose();
+    this.baronRocketCartWoodMaterial.dispose();
+    this.baronRocketCartWheelMaterial.dispose();
+    this.baronRocketCartBrassMaterial.dispose();
+    this.baronRocketCartTealMaterial.dispose();
     this.railPath?.dispose();
     this.megaprojectRailPath?.dispose();
     this.powerGraph?.dispose();
@@ -998,6 +1064,16 @@ export class Game {
     const intents = this.input.readIntents();
     if (intents.mute && !this.lastMuteIntent) this.toggleAudioMute();
     this.lastMuteIntent = intents.mute;
+    if (this.baronCeremony) {
+      if (this.elapsed - this.baronCeremony.startedElapsed >= BARON_KILL_STOP_SECONDS) this.finishBaronCeremony();
+      if (this.baronCeremony) {
+        this.rememberIntents(intents);
+        this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
+        resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+        this.updatePresentation(delta);
+        return;
+      }
+    }
     if (this.secureClaimChoicePending()) {
       this.rememberIntents(intents);
       this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
@@ -1092,6 +1168,7 @@ export class Game {
         if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
         this.vfx.floatText(this.primaryActor.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
+      this.updateBaronRocketVolley();
       this.combat.update(simDelta, this.timeAlive);
       this.maybeProspectorRepair();
       this.maybeProspectorCollectGold();
@@ -1114,6 +1191,9 @@ export class Game {
     this.prospector.update(prospectorDelta, this.timeAlive, this.state.isPaused ? undefined : this.primaryActor.group.position);
     this.syncAudioLoops();
     this.vfx.update(delta);
+    if (this.baronCeremony) this.combatVfx.update(delta);
+    this.syncBaronStandardDrop();
+    this.syncBaronRocketCart();
     this.syncHeroVisualHeight();
     const visualStress =
       this.enemies.activeCount >= Balance.world.detailStressEnemyThreshold ||
@@ -1274,6 +1354,10 @@ export class Game {
     this.scene.add(this.buildSystem.group);
     this.createMegaprojectVisuals();
     this.scene.add(this.megaprojectGroup);
+    this.createBaronStandardVisual();
+    this.scene.add(this.baronStandardGroup);
+    this.createBaronRocketCartVisual();
+    this.scene.add(this.baronRocketCartGroup);
     this.scene.add(this.projectiles.group);
     this.scene.add(this.blastCharges.group);
     this.scene.add(this.blastAimReticle);
@@ -1355,6 +1439,65 @@ export class Game {
       this.megaprojectVisuals.push(beam);
     }
     this.megaprojectGroup.visible = false;
+  }
+
+  private createBaronStandardVisual(): void {
+    if (this.baronStandardGroup.children.length > 0) return;
+    this.baronStandardGroup.name = 'BaronStandard';
+    this.baronStandardGroup.visible = false;
+    if (this.activeContract.twist.baron) applyGeneratedMap(this.baronStandardClothMaterial, assetSlots.propBaronBanner);
+
+    const pole = new THREE.Mesh(this.baronStandardPoleGeometry, this.baronStandardPoleMaterial);
+    pole.name = 'BaronStandardPole';
+    pole.position.y = 0.88;
+    const cloth = new THREE.Mesh(this.baronStandardClothGeometry, this.baronStandardClothMaterial);
+    cloth.name = 'BaronStandardCloth';
+    cloth.position.set(0.42, 1.3, 0.035);
+    cloth.rotation.y = -0.08;
+    this.baronStandardGroup.add(pole, cloth);
+  }
+
+  private createBaronRocketCartVisual(): void {
+    if (this.baronRocketCartGroup.children.length > 0) return;
+    this.baronRocketCartGroup.name = 'BaronRocketCart';
+    this.baronRocketCartGroup.visible = false;
+
+    const body = new THREE.Mesh(this.baronRocketCartBodyGeometry, this.baronRocketCartWoodMaterial);
+    body.name = 'BaronRocketCartBody';
+    body.position.y = 0.28;
+
+    const railLeft = new THREE.Mesh(this.baronRocketCartRailGeometry, this.baronRocketCartBrassMaterial);
+    railLeft.name = 'BaronRocketCartRailLeft';
+    railLeft.position.set(0, 0.5, -0.18);
+    const railRight = new THREE.Mesh(this.baronRocketCartRailGeometry, this.baronRocketCartBrassMaterial);
+    railRight.name = 'BaronRocketCartRailRight';
+    railRight.position.set(0, 0.5, 0.18);
+
+    const wheels: THREE.Mesh[] = [];
+    for (const x of [-0.34, 0.34]) {
+      for (const z of [-0.34, 0.34]) {
+        const wheel = new THREE.Mesh(this.baronRocketCartWheelGeometry, this.baronRocketCartWheelMaterial);
+        wheel.name = 'BaronRocketCartWheel';
+        wheel.rotation.z = Math.PI / 2;
+        wheel.position.set(x, 0.17, z);
+        wheels.push(wheel);
+      }
+    }
+
+    const rockets: THREE.Object3D[] = [];
+    for (const x of [-0.24, 0, 0.24]) {
+      const rocket = new THREE.Mesh(this.baronRocketCartRocketGeometry, this.baronRocketCartBrassMaterial);
+      rocket.name = 'BaronRocketCartRocket';
+      rocket.rotation.x = Math.PI / 2;
+      rocket.position.set(x, 0.66, 0);
+      const fuse = new THREE.Mesh(this.baronRocketCartFuseGeometry, this.baronRocketCartTealMaterial);
+      fuse.name = 'BaronRocketCartFuse';
+      fuse.position.set(x, 0.66, -0.4);
+      rockets.push(rocket, fuse);
+    }
+
+    this.baronRocketCartGroup.add(body, railLeft, railRight, ...wheels, ...rockets);
+    tagPlaceholder(this.baronRocketCartGroup, assetSlots.propRocketCart);
   }
 
   private createStampMillSiteDressing(manifest: MegaprojectManifest): void {
@@ -1826,6 +1969,20 @@ export class Game {
       charmPause: this.charmPauseActive,
       camImpulseActive: this.cameraRig.impulseActive,
       baronSpawnImpulses: this.baronSpawnImpulses,
+      baronCeremony: this.baronCeremony
+        ? {
+            active: true,
+            elapsed: this.elapsed - this.baronCeremony.startedElapsed,
+            holdSeconds: BARON_KILL_STOP_SECONDS,
+          }
+        : { active: false, elapsed: 0, holdSeconds: BARON_KILL_STOP_SECONDS },
+      baronStandard: {
+        visible: this.baronStandardGroup.visible,
+        x: this.baronStandardPosition.x,
+        z: this.baronStandardPosition.z,
+        dropElapsed: this.baronStandardPlanted ? this.elapsed - this.baronStandardDropStartedAt : 0,
+      },
+      baronRocket: this.baronRocketDiagnostics(),
       lighting: this.lightRig?.diagnostics(),
       enemyDimming: this.enemies.dimmingDiagnostics,
       vfx: {
@@ -1851,7 +2008,6 @@ export class Game {
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
         playerZone: Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone,
-        ground: this.terrainView?.groundDiagnostics(),
         sim: simHeightDiagnostics(),
         water: this.terrainView?.diagnostics(),
         rails: this.railDiagnostics(),
@@ -2006,28 +2162,51 @@ export class Game {
     this.publishDiagnostics();
   }
 
-  private onBaronDefeated(atSim: number): void {
-    if (this.baronBeatenThisRun) return;
+  private onBaronDefeated(atSim: number, enemyId: number): void {
+    if (this.baronBeatenThisRun || this.baronCeremony || this.state.current !== 'playing') return;
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
-    if (this.pendingBaronBanner?.title === BARON_ARRIVAL_TITLE) {
-      const pending = this.pendingBaronBanner;
-      window.clearTimeout(this.baronAnnouncementTimer);
-      this.showBaronBanner(pending);
-      this.state.setPaused(true);
-      window.clearTimeout(this.baronDefeatTimer);
-      this.baronDefeatTimer = window.setTimeout(() => {
-        this.baronDefeatTimer = 0;
-        this.state.setPaused(false);
-        this.completeBaronDefeat(atSim);
-      }, 2000);
+    const enemy = this.enemies.all.find((entry) => entry.id === enemyId);
+    const position = enemy?.position.clone() ?? this.primaryActor.group.position.clone();
+    const pendingArrivalBanner = this.pendingBaronBanner?.title === BARON_ARRIVAL_TITLE ? this.pendingBaronBanner : null;
+    window.clearTimeout(this.baronAnnouncementTimer);
+    this.baronAnnouncementTimer = 0;
+    this.charmPauseActive = false;
+    this.charmPauseRemaining = 0;
+    this.charmPauseCooldown = 0;
+    this.plantBaronStandard(position);
+    const burstScale = Math.max(3, enemy?.visualScale ?? 3);
+    this.combatVfx.dustPuff(position, burstScale);
+    this.combatVfx.detonationRing(position, Math.min(7, burstScale * 1.45));
+    this.audio.play('victory-sting');
+    if (pendingArrivalBanner) {
+      this.showBaronBanner(pendingArrivalBanner);
+    } else {
+      this.pendingBaronBanner = null;
+      this.uiBridge.announce(baron.defeatBeat, atSim, null, BARON_DEFEAT_CARD_SECONDS, 'baron-defeat', BARON_DEFEAT_TITLE);
+    }
+    if (isPauseDisabled()) {
+      this.completeBaronDefeat(atSim);
       return;
     }
-    this.completeBaronDefeat(atSim);
+
+    this.playerPauseActive = false;
+    this.baronCeremony = { atSim, startedElapsed: this.elapsed };
+    this.state.setPaused(true);
+    this.syncUi();
+    this.publishDiagnostics();
+  }
+
+  private finishBaronCeremony(): void {
+    const ceremony = this.baronCeremony;
+    if (!ceremony) return;
+    this.baronCeremony = null;
+    this.state.setPaused(false);
+    this.completeBaronDefeat(ceremony.atSim);
   }
 
   private completeBaronDefeat(atSim: number): void {
-    if (this.baronBeatenThisRun) return;
+    if (this.baronBeatenThisRun || this.state.current !== 'playing') return;
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     this.baronBeatenThisRun = true;
@@ -2040,7 +2219,179 @@ export class Game {
     this.pendingBaronBanner = null;
     this.baronAnnouncementTimer = 0;
     awardBaronMedal();
-    this.uiBridge.announce(`The Baron is DEFEATED. ${baron.defeatBeat}`, atSim, null, 3.8, 'baron', BARON_ARRIVAL_TITLE);
+    this.researchState = saveResearchState(
+      this.researchStorage,
+      loadResearchState(this.researchStorage, this.researchStorage, this.researchUnlockFlags()),
+    );
+    this.uiBridge.announce(baron.defeatBeat, atSim, null, BARON_DEFEAT_CARD_SECONDS, 'baron-defeat', BARON_DEFEAT_TITLE);
+  }
+
+  private readonly skipBaronCeremony = (event: Event): void => {
+    if (!this.baronCeremony || (event instanceof KeyboardEvent && event.repeat)) return;
+    this.finishBaronCeremony();
+  };
+
+  private plantBaronStandard(position: THREE.Vector3): void {
+    this.baronStandardPosition.set(position.x, 0, position.z);
+    this.baronStandardPlanted = true;
+    this.baronStandardDropStartedAt = this.elapsed;
+    this.baronStandardGroup.visible = true;
+    this.syncBaronStandardDrop();
+  }
+
+  private syncBaronStandardDrop(): void {
+    if (!this.baronStandardPlanted) return;
+    const t = THREE.MathUtils.clamp((this.elapsed - this.baronStandardDropStartedAt) / 0.72, 0, 1);
+    const eased = easeOutCubic(t);
+    const y = Terrain.visualY(this.baronStandardPosition.x, this.baronStandardPosition.z, 0.04);
+    this.baronStandardGroup.position.set(this.baronStandardPosition.x, y + (1 - eased) * 0.78, this.baronStandardPosition.z);
+    this.baronStandardGroup.rotation.set(0, -0.28, -0.96 + eased * 0.78);
+  }
+
+  private updateBaronRocketVolley(): void {
+    const config = this.baronRocketConfig();
+    const baron = config ? this.activeBaronEnemy() : null;
+    if (!config || !baron || this.baronBeatenThisRun || this.baronCeremony || this.state.current !== 'playing') {
+      this.clearBaronRocketTelegraph();
+      this.baronRocketSuppressed = false;
+      return;
+    }
+
+    const suppressed = this.baronRocketMeleeSuppressed(baron);
+    this.baronRocketSuppressed = suppressed;
+    if (suppressed) {
+      this.clearBaronRocketTelegraph();
+      return;
+    }
+
+    if (this.baronRocketTelegraphStartedAt >= 0) {
+      const telegraphSeconds = Math.max(0.1, config.telegraphSeconds);
+      if (this.timeAlive - this.baronRocketTelegraphStartedAt < telegraphSeconds) return;
+      this.launchBaronRocketVolley(baron, config);
+      this.clearBaronRocketTelegraph();
+      this.baronRocketNextAt = this.timeAlive + Math.max(0.2, config.cadenceSeconds);
+      return;
+    }
+
+    if (this.timeAlive < this.baronRocketNextAt) return;
+    if (!this.acquireBaronRocketTarget(baron)) {
+      this.baronRocketNextAt = this.timeAlive + 0.25;
+      return;
+    }
+
+    this.baronRocketTelegraphStartedAt = this.timeAlive;
+    this.audio.play('blast-charge-arm');
+    baron.setAnimationClip('grab');
+  }
+
+  private baronRocketConfig(): BaronRocketVolleyConfig | null {
+    return this.activeContract.twist.baron?.rocketVolley ?? null;
+  }
+
+  private activeBaronEnemy(): ClaimJumperEnemy | null {
+    return this.enemies.all.find((enemy) => enemy.isAlive && enemy.eliteKind === 'baron') ?? null;
+  }
+
+  private clearBaronRocketTelegraph(): void {
+    this.baronRocketTelegraphStartedAt = -1;
+    this.baronRocketTargetKind = null;
+  }
+
+  private baronRocketMeleeSuppressed(baron: ClaimJumperEnemy): boolean {
+    const heroRadius = baron.hitRadius + Balance.hero.radius + 0.35;
+    if (distanceSq2(baron.position.x, baron.position.z, this.primaryActor.group.position.x, this.primaryActor.group.position.z) <= heroRadius * heroRadius) {
+      return true;
+    }
+
+    const building = this.goldTargeting.nearestBuilding(baron.position);
+    if (!building) return false;
+    const reach = Balance.wreck.reach * Math.max(1, baron.visualScale) + 0.35;
+    return distanceSqToBuildingPoint(baron.position, building) <= reach * reach;
+  }
+
+  private acquireBaronRocketTarget(baron: ClaimJumperEnemy): boolean {
+    const building = this.goldTargeting.nearestBuilding(baron.position);
+    const hero = this.primaryActor.group.position;
+    const heroRange = Math.max(16, baron.heroPursuitRange || 45);
+    const heroInRange = distanceSq2(baron.position.x, baron.position.z, hero.x, hero.z) <= heroRange * heroRange;
+    if (heroInRange || !building) {
+      this.baronRocketTarget.copy(hero);
+      this.baronRocketTargetKind = 'hero';
+      return true;
+    }
+
+    this.baronRocketTarget.copy(building.position);
+    this.baronRocketTargetKind = 'building';
+    return true;
+  }
+
+  private launchBaronRocketVolley(baron: ClaimJumperEnemy, config: BaronRocketVolleyConfig): void {
+    const count = THREE.MathUtils.clamp(Math.floor(config.count), 1, 6);
+    const radius = Math.max(0.2, config.radius);
+    const spreadRadius = Math.max(0, config.spreadRadius);
+    const ownerId = `${BARON_ROCKET_OWNER_PREFIX}:${baron.id}`;
+    const seed = getDebugSeed() ?? 'gold-rush';
+    const origin = baron.position;
+    const target = new THREE.Vector3();
+    this.baronRocketLastOwnerId = ownerId;
+    this.baronRocketLastTarget.copy(this.baronRocketTarget);
+
+    for (let index = 0; index < count; index += 1) {
+      const rng = createRng(`${seed}:baron-rocket:${this.baronRocketVolleys}:${index}`);
+      const angle = (Math.PI * 2 * index) / count + rng.range(-0.24, 0.24);
+      const spread = index === 0 ? 0 : spreadRadius * rng.range(0.55, 1);
+      target.set(
+        this.baronRocketTarget.x + Math.cos(angle) * spread,
+        this.baronRocketTarget.y,
+        this.baronRocketTarget.z + Math.sin(angle) * spread,
+      );
+      this.combat.launchLob(origin, target, Math.max(0.1, config.airTime), Math.max(0, config.damage), radius, ownerId);
+    }
+    this.baronRocketVolleys += 1;
+  }
+
+  private syncBaronRocketCart(): void {
+    const baron = this.activeBaronEnemy();
+    if (!baron) {
+      this.baronRocketCartGroup.visible = false;
+      return;
+    }
+
+    const scale = Math.max(1, baron.visualScale * 0.5);
+    const yaw = baron.group.rotation.y;
+    const distance = Math.max(0.9, baron.visualScale * 0.72);
+    const x = baron.position.x - Math.sin(yaw) * distance;
+    const z = baron.position.z + Math.cos(yaw) * distance;
+    const active = this.baronRocketTelegraphStartedAt >= 0;
+    const pulse = active ? 0.5 + Math.sin(this.elapsed * 18) * 0.5 : 0;
+    this.baronRocketCartTealMaterial.emissiveIntensity = active ? 0.55 + pulse * 0.55 : 0.3;
+    this.baronRocketCartGroup.visible = true;
+    this.baronRocketCartGroup.position.set(x, Terrain.visualY(x, z, 0.06), z);
+    this.baronRocketCartGroup.rotation.set(active ? -0.08 - pulse * 0.05 : 0, yaw, active ? 0.08 : 0);
+    this.baronRocketCartGroup.scale.setScalar(scale);
+  }
+
+  private baronRocketDiagnostics() {
+    const manifest = this.baronRocketConfig();
+    return {
+      cartVisible: this.baronRocketCartGroup.visible,
+      telegraphActive: this.baronRocketTelegraphStartedAt >= 0,
+      telegraphElapsed: this.baronRocketTelegraphStartedAt >= 0 ? this.timeAlive - this.baronRocketTelegraphStartedAt : 0,
+      nextVolleyIn: Math.max(0, this.baronRocketNextAt - this.timeAlive),
+      volleys: this.baronRocketVolleys,
+      suppressed: this.baronRocketSuppressed,
+      targetKind: this.baronRocketTargetKind,
+      lastOwnerId: this.baronRocketLastOwnerId,
+      lastTarget: {
+        x: this.baronRocketLastTarget.x,
+        z: this.baronRocketLastTarget.z,
+      },
+      target: {
+        x: this.baronRocketTarget.x,
+        z: this.baronRocketTarget.z,
+      },
+      manifest: manifest ? { ...manifest } : null,
+    };
   }
 
   private syncNightShiftLighting(): void {
@@ -2459,6 +2810,7 @@ export class Game {
     for (const ford of Terrain.fordRanges()) {
       add('ford', ford.centerX, 0, ford.halfWidth + 1.35);
     }
+    if (this.baronStandardPlanted) add('baron_standard', this.baronStandardPosition.x, this.baronStandardPosition.z, 2.5, 4);
     if (this.territoryRingPresent) {
       for (const gap of this.territoryRingGapCenters()) add('territory_ring_gap', gap.x, gap.z, 2.4, 2);
     }
@@ -2571,9 +2923,18 @@ export class Game {
     this.lastUpgradeOfferAudioKey = '';
     this.kills = 0;
     this.baronBeatenThisRun = false;
+    this.baronCeremony = null;
+    this.baronStandardPlanted = false;
+    this.baronStandardGroup.visible = false;
+    this.baronRocketCartGroup.visible = false;
+    this.baronRocketNextAt = 0;
+    this.baronRocketTelegraphStartedAt = -1;
+    this.baronRocketVolleys = 0;
+    this.baronRocketSuppressed = false;
+    this.baronRocketTargetKind = null;
+    this.baronRocketLastOwnerId = '';
     this.baronSpawnImpulses = 0;
     window.clearTimeout(this.baronAnnouncementTimer);
-    window.clearTimeout(this.baronDefeatTimer);
     this.pendingBaronBanner = null;
     this.stolenTotal = 0;
     this.reclaimedTotal = 0;
@@ -3260,8 +3621,12 @@ export class Game {
     }
   }
 
+  private researchUnlockFlags(): ResearchUnlockFlags {
+    return { rocketCartCaptured: hasRocketCartCaptured() };
+  }
+
   private researchOverlayOptions(totalRounds: number): DeathOverlayOptions {
-    this.researchState = loadResearchState(this.researchStorage);
+    this.researchState = loadResearchState(this.researchStorage, this.researchStorage, this.researchUnlockFlags());
     let roundsRemaining = Math.max(0, totalRounds);
     const state = (): DeathResearchState => ({
       totalRounds,
@@ -3296,7 +3661,7 @@ export class Game {
   }
 
   private takeResearchNodeForTest(id: string): boolean {
-    this.researchState = loadResearchState(this.researchStorage);
+    this.researchState = loadResearchState(this.researchStorage, this.researchStorage, this.researchUnlockFlags());
     for (let guard = 0; guard < 8 && !availablePicks(this.researchState).some((node) => node.id === id); guard += 1) {
       this.researchState = skipResearchPick(this.researchState);
     }
@@ -3632,6 +3997,16 @@ function distanceSq2(ax: number, az: number, bx: number, bz: number): number {
   const dx = ax - bx;
   const dz = az - bz;
   return dx * dx + dz * dz;
+}
+
+function distanceSqToBuildingPoint(point: THREE.Vector3, building: Pick<BuildingTarget, 'position' | 'halfX' | 'halfZ'>): number {
+  const dx = Math.max(Math.abs(point.x - building.position.x) - building.halfX, 0);
+  const dz = Math.max(Math.abs(point.z - building.position.z) - building.halfZ, 0);
+  return dx * dx + dz * dz;
+}
+
+function easeOutCubic(t: number): number {
+  return 1 - Math.pow(1 - t, 3);
 }
 
 function buildableIdFromString(value: string): BuildableId | null {

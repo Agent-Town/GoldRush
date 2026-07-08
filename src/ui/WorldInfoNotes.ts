@@ -13,6 +13,7 @@ export type WorldInfoObjectClass =
   | 'spring_pond'
   | 'ford'
   | 'territory_ring_gap'
+  | 'baron_standard'
   | 'megaproject_site'
   | 'prospector'
   | 'town_tavern'
@@ -93,6 +94,11 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
     objectClass: 'territory_ring_gap',
     title: 'Kill-Lane Gap',
     lines: ['Your kill-lanes. Enemies funnel here.'],
+  },
+  {
+    objectClass: 'baron_standard',
+    title: "The Baron's Standard",
+    lines: ["The Baron's standard. He'll want it back."],
   },
   {
     objectClass: 'megaproject_site',

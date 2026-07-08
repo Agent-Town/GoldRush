@@ -1,5 +1,6 @@
 import type { StorySignal } from './signals';
 import type { StorySpeakerId } from './speakers';
+import { hasRocketCartCaptured } from '../game/Medals';
 
 export type StoryBeat = {
   id: string;
@@ -67,6 +68,14 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'elder',
     oncePerProfile: true,
     lines: ['Frontier science is complete.', 'The Steamworks waits for a town to build it.'],
+  },
+  {
+    id: 'sky-rocket-captured',
+    trigger: 'science-complete',
+    speaker: 'elder',
+    oncePerProfile: true,
+    when: () => hasRocketCartCaptured(),
+    lines: ['His science.', 'Your arsenal now.'],
   },
   {
     id: 'stamp-site-found',
