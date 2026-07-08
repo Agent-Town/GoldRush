@@ -1,0 +1,19 @@
+# Task e2-stamp-mill-manifest: the Steamworks rises — the first REAL megaproject (LANE-D, branch lane/perf, commit prefix "e2:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-d. READ FIRST: AGENTS.md; **specs/epoch-saga/e2-steamworks-bundle.md (the Stamp Mill & Rail Spur megaproject: stages, materials, the fantasy) + specs/epoch-saga/README.md §1 (science completes → megaproject buildable → completion IS the transition)**; src/meta/Megaproject.ts (045's engine — this task writes its first REAL manifest + the claim-side site); the town growth manifest (T4 renders construction progress on the square's edge — wire the data link if T4 has merged, else note it); bld-stamp-mill + bld-boiler-house art (batch-010, LEDGER processing state — placeholder-first applies). Pre-flight: safe-dupe rule (ahead-merged lane commits → `git checkout -B lane/perf main && git clean -fd`, proceed; STOP only on unmerged content or foreign edits); npm install; build green. SEQUENCING: after e2-rail-entity (this lane's queue — the site includes its Rail Spur visual).
+
+## Why (WP-E2 slice ④ — the owner has +9 banked and a ceiling that names this building)
+045 shipped the engine with a dev manifest. This slice ships THE Stamp Mill: the thing the science ceiling has been promising ("the Steamworks awaits a town to build it"), buildable at last — through the epoch transition's DOOR but not through it (the ceremony is attended+owner-played, NEVER this task).
+
+## Scope
+1. **The manifest** (epoch-1's megaproject — it's built IN E1 to reach E2, per the saga spine): `stamp-mill` — unlock: science-complete (frontier tree exhausted; banked steps displayed as already-contributed progress per the ceiling copy) · 3 stages per the bundle (foundation & rail spur → boiler house → the mill itself), materials in gold (pressure doesn't exist yet in E1 — bundle-tuned costs), defense waves per stage · siteFootprint at the manifest-designated claim location (045's placement law).
+2. **Site visuals per stage**: 045's procedural scaffold for stage 1 + the processed bld-* sprites topping out stages 2/3 when available (placeholder-first otherwise); the Rail Spur = a rail path (slice-①'s entity) growing with stage 1.
+3. **Progress voice**: the ledger chip lines per the bundle ("The Stamp Mill rises: the boilers are seated") + the science-ceiling copy UPDATES once stage 1 is funded ("the town is building it").
+4. **STOP AT THE DOOR**: stage-3 completion sets `megaproject.complete=true` + one beat line ("The Stamp Mill stands ready. The era waits on its whistle.") — NO transition, NO ceremony, NO epoch switch (attended+owner-gated, in writing, per the WP-E2 order).
+5. Town link: if T4's growth manifest is on main, the construction stage mirrors on the square's edge (data link only); else flag for T4.
+
+## Firewall
+Touch ONLY: the stamp-mill manifest data, site stage visuals (through 045's socket + slice-①'s rails), the ceiling-copy update line, the completion flag + beat line, e2e, artifacts. NO transition/ceremony/epoch-switch logic, NO 045 engine changes (data through its socket — flag can't-express per reject-don't-stretch), NO science tree edits, NO Balance beyond the manifest's own costs.
+
+## Self-check
+tsc/build; new `e2e/e2-stamp-mill.spec.ts` (seeded science-complete + banked): site appears + footprint reserved · stage funding → building across waves → damage delays not destroys (045 laws re-asserted on real data) · stage visuals advance · completion sets the flag + the beat line + NOTHING ELSE (epoch still 1 — asserted) · ceiling copy updated post-funding; 045 spec + sci-ceiling + m1-01 + m2-01 + task-025 unmodified green both projects; zero console errors; screenshots (each stage, the rail spur) into artifacts/e2-stamp-mill/. Commit on lane/perf. End: READY-FOR-GATES + stage cost table + results.

@@ -1,0 +1,10 @@
+import { readFileSync, writeFileSync } from 'fs';
+const p = 'STATUS.md';
+const lines = readFileSync(p, 'utf8').split('\n');
+const old1 = lines[0];
+const stamp = '2026-07-08T00:05:00Z';
+const newLine1 = `Last updated: ${stamp} ACTIVE ${stamp} (s181 fire) — DRAIN lane/m3 e3-power-graph-core (bce5c63, lane-a codex EXITED) — dormant 471-line PowerGraph engine, ABSENT on main; lanes b/c/d codex LIVE (skip, gate-contamination). Attended idle (HEAD 06:54 +0700, no src writes 9min+).`;
+const archive = `- **s180 handoff (line-1 archive):** ${old1.replace(/^Last updated: /, '')}`;
+const out = [newLine1, archive, ...lines.slice(1)].join('\n');
+writeFileSync(p, out);
+console.log('line-1 rewritten; s180 handoff archived');

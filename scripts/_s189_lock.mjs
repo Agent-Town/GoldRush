@@ -1,0 +1,12 @@
+import fs from 'fs';
+const p='STATUS.md';
+const s=fs.readFileSync(p,'utf8');
+const lines=s.split('\n');
+const old=lines[0];
+const stamp='2026-07-08T03:05:00Z';
+const active=`Last updated: ${stamp} ACTIVE ${stamp} (s189 fire) — quiet-board verify + re-queue lane-c tr-01 (transient 401 auth-blip RESOLVED, un-stick idle lane); codex LIVE on 055(lane-b)+gt-04(lane-d), all lanes 0-ahead, nothing to drain.`;
+const archive=`- **s188 handoff (line-1 archive):** ${old}`;
+lines[0]=active;
+lines.splice(1,0,archive);
+fs.writeFileSync(p,lines.join('\n'));
+console.log('lock written');

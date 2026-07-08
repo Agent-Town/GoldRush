@@ -1,0 +1,12 @@
+import { readFileSync, writeFileSync } from 'node:fs';
+const p = 'STATUS.md';
+const raw = readFileSync(p, 'utf8');
+const nl = raw.indexOf('\n');
+const oldLine1 = raw.slice(0, nl);
+const rest = raw.slice(nl + 1);
+const stamp = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+const intent = `ACTIVE ${stamp} (s179 fire) — no drain available (all 4 lanes LIVE: e3-power-graph/baron-presence/contract-briefings/gt-05); attended idle post e2-wave (HEAD c15e250 ~10min); queue fix-025 wet-powder test-hardening → main.`;
+const trimmed = oldLine1.length > 900 ? oldLine1.slice(0, 900) + ' …[full text in git @e94b9f7]' : oldLine1;
+const archiveBullet = `- **s178 handoff (line-1 archive):** ${trimmed}`;
+writeFileSync(p, `${intent}\n${archiveBullet}\n${rest}`);
+console.log('LOCKED s179:', stamp);
