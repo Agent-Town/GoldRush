@@ -65,6 +65,10 @@
   position: absolute;
   left: 50%;
   bottom: calc(max(18px, env(safe-area-inset-bottom)) + 88px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
   width: min(520px, calc(100vw - 32px));
   transform: translateX(-50%);
   pointer-events: none;
@@ -207,7 +211,7 @@
   display: flex;
   flex-direction: column;
   gap: 9px;
-  min-height: 260px;
+  min-height: 348px;
   border: 2px solid rgba(46, 27, 14, 0.82);
   border-radius: 8px;
   padding: 12px;
@@ -265,6 +269,35 @@
   color: rgba(46, 27, 14, 0.78);
   font-size: 0.84rem;
   line-height: 1.26;
+}
+
+.town-ui__contract-geography {
+  min-height: 2.4em;
+}
+
+.town-ui__contract-briefing {
+  display: grid;
+  align-content: start;
+  gap: 4px;
+  min-width: 0;
+}
+
+.town-ui__contract-briefing-label {
+  color: #5b8a8a !important;
+  font-size: 0.66rem !important;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.town-ui__contract-briefing ul {
+  display: grid;
+  gap: 3px;
+  margin: 0 0 5px;
+  padding-left: 1rem;
+  color: rgba(46, 27, 14, 0.84);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.22;
 }
 
 .town-ui__contract-best {
@@ -446,7 +479,7 @@
   }
 
   .town-ui__contract {
-    min-height: 236px;
+    min-height: 330px;
   }
 
   .town-ui__title span {

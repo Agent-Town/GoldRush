@@ -2,6 +2,7 @@ import type { UiSnapshot } from '../systems/UiBridge';
 import type { BuildableId } from '../game/buildables';
 import type { AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
+import type { ContractBriefing } from '../meta/ContractFamilies';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../story/settings';
 import { BuildButton } from './BuildButton';
@@ -24,8 +25,13 @@ export type UiIntent =
   | { type: 'set_agent_rung'; level: AgentPermissionLevel; granted: boolean }
   | { type: 'set_agent_ability'; ability: AgentAbility; granted: boolean };
 
+export type ContractBriefingSnapshot = ContractBriefing & {
+  name: string;
+};
+
 export type PauseMetaSnapshot = {
   save: string;
+  contract: ContractBriefingSnapshot;
   science: string;
   territory: string;
   boons: Array<{ name: string; effect: string }>;
@@ -34,6 +40,7 @@ export type PauseMetaSnapshot = {
 
 type HudElements = {
   root: HTMLElement;
+  contractBriefing: HTMLElement;
   metaRecap: HTMLElement;
   pauseMeta: HTMLElement;
   hpText: HTMLElement;
@@ -70,6 +77,7 @@ export class Hud {
   private lastAnnouncementAt = -1;
   private announcementClearTimer = 0;
   private metaRecapClearTimer = 0;
+  private contractBriefingTimer = 0;
   private pauseMetaKey = '';
   private disposeAudioSettings: () => void = () => undefined;
   private disposeStorySettings: () => void = () => undefined;
@@ -79,6 +87,8 @@ export class Hud {
 
   constructor(root: HTMLElement, private readonly onIntent: (intent: UiIntent) => void) {
     root.innerHTML = `
+      <section class="contract-briefing" data-testid="contract-briefing" aria-live="polite" role="status" hidden></section>
+
       <div class="hud-meta-recap" data-testid="run-meta-recap" aria-live="polite" hidden></div>
 
       <div class="hud__wave" data-testid="hud-wave" aria-label="Wave status">
@@ -158,6 +168,7 @@ export class Hud {
 
     this.elements = {
       root,
+      contractBriefing: this.get(root, '[data-testid="contract-briefing"]'),
       metaRecap: this.get(root, '[data-testid="run-meta-recap"]'),
       pauseMeta: this.get(root, '[data-testid="pause-meta-panel"]'),
       hpText: this.get(root, '[data-hud-hp]'),
@@ -192,6 +203,7 @@ export class Hud {
     root.append(this.prospectorPanel.element);
 
     this.elements.pauseHint.addEventListener('click', this.onPauseClick);
+    this.elements.contractBriefing.addEventListener('click', this.onBriefingClick);
     this.elements.agentChip.addEventListener('click', this.onAgentChipClick);
     window.addEventListener('keydown', this.onKeyDown, { capture: true });
   }
@@ -236,12 +248,48 @@ export class Hud {
     this.disposeAudioSettings();
     this.disposeStorySettings();
     this.elements.pauseHint.removeEventListener('click', this.onPauseClick);
+    this.elements.contractBriefing.removeEventListener('click', this.onBriefingClick);
     this.elements.agentChip.removeEventListener('click', this.onAgentChipClick);
     window.removeEventListener('keydown', this.onKeyDown, { capture: true });
     this.prospectorPanel.dispose();
     this.buildButton.dispose();
     window.clearTimeout(this.announcementClearTimer);
     window.clearTimeout(this.metaRecapClearTimer);
+    window.clearTimeout(this.contractBriefingTimer);
+  }
+
+  showContractBriefing(briefing: ContractBriefingSnapshot): void {
+    window.clearTimeout(this.contractBriefingTimer);
+    window.clearTimeout(this.metaRecapClearTimer);
+    this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
+    this.elements.metaRecap.hidden = true;
+    this.elements.contractBriefing.innerHTML = `
+      <div class="contract-briefing__paper">
+        <div class="contract-briefing__topline">
+          <p class="contract-briefing__eyebrow">The Contract</p>
+          <button class="contract-briefing__dismiss" type="button" data-testid="contract-briefing-dismiss">Begin</button>
+        </div>
+        <h2 data-testid="contract-briefing-name">${this.escape(briefing.name)}</h2>
+        <p class="contract-briefing__geography" data-testid="contract-briefing-geography">${this.escape(
+          briefing.geographyLine,
+        )}</p>
+        <div class="contract-briefing__columns">
+          <section>
+            <p class="contract-briefing__label">Goals</p>
+            ${this.renderBriefingLines(briefing.goals, 'contract-briefing-goals')}
+          </section>
+          <section>
+            <p class="contract-briefing__label">Rules</p>
+            ${this.renderBriefingLines(briefing.rules, 'contract-briefing-rules')}
+          </section>
+        </div>
+      </div>
+    `;
+    this.elements.contractBriefing.hidden = false;
+    this.elements.contractBriefing.classList.remove('contract-briefing--visible');
+    void this.elements.contractBriefing.offsetWidth;
+    this.elements.contractBriefing.classList.add('contract-briefing--visible');
+    this.contractBriefingTimer = window.setTimeout(() => this.hideContractBriefing(), 8000);
   }
 
   showMetaRecap(text: string | null, durationSeconds = 4): void {
@@ -262,6 +310,10 @@ export class Hud {
 
   private readonly onPauseClick = () => {
     this.onIntent({ type: 'pause' });
+  };
+
+  private readonly onBriefingClick = () => {
+    this.hideContractBriefing();
   };
 
   private readonly onAgentChipClick = () => {
@@ -371,6 +423,15 @@ export class Hud {
     this.elements.pauseMeta.innerHTML = `
       <p class="hud-meta__eyebrow">Claim Memory</p>
       <p class="hud-meta__line" data-testid="pause-meta-save">${this.escape(meta.save)}</p>
+      <section class="hud-meta__contract" data-testid="pause-contract">
+        <p class="hud-meta__label">The Contract</p>
+        <strong data-testid="pause-contract-name">${this.escape(meta.contract.name)}</strong>
+        <span data-testid="pause-contract-geography">${this.escape(meta.contract.geographyLine)}</span>
+        <p class="hud-meta__label">Goals</p>
+        ${this.renderBriefingLines(meta.contract.goals, 'pause-contract-goals')}
+        <p class="hud-meta__label">Rules</p>
+        ${this.renderBriefingLines(meta.contract.rules, 'pause-contract-rules')}
+      </section>
       <p class="hud-meta__line" data-testid="pause-meta-science">${this.escape(meta.science)}</p>
       <p class="hud-meta__line" data-testid="pause-meta-territory">${this.escape(meta.territory)}</p>
       <div class="hud-meta__audio" data-testid="pause-audio-settings">
@@ -403,6 +464,20 @@ export class Hud {
         `,
       )
       .join('');
+  }
+
+  private renderBriefingLines(lines: readonly string[], testId: string): string {
+    return `
+      <ul class="briefing-lines" data-testid="${testId}">
+        ${lines.map((line) => `<li>${this.escape(line)}</li>`).join('')}
+      </ul>
+    `;
+  }
+
+  private hideContractBriefing(): void {
+    window.clearTimeout(this.contractBriefingTimer);
+    this.elements.contractBriefing.classList.remove('contract-briefing--visible');
+    this.elements.contractBriefing.hidden = true;
   }
 
   private escape(value: string): string {

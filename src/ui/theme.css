@@ -231,6 +231,103 @@
   opacity: 1;
 }
 
+.contract-briefing {
+  position: absolute;
+  top: calc(max(16px, env(safe-area-inset-top)) + 56px);
+  left: 50%;
+  z-index: 8;
+  width: min(580px, calc(100vw - 32px));
+  color: var(--at-wood-950);
+  pointer-events: auto;
+  transform: translate(-50%, -8px);
+  opacity: 0;
+  transition:
+    opacity 180ms ease,
+    transform 180ms ease;
+}
+
+.contract-briefing--visible {
+  transform: translate(-50%, 0);
+  opacity: 1;
+}
+
+.contract-briefing__paper {
+  display: grid;
+  gap: 10px;
+  border: 2px solid rgba(88, 56, 30, 0.82);
+  border-radius: 8px;
+  padding: 14px 16px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 223, 0.98), rgba(232, 213, 168, 0.96)),
+    repeating-linear-gradient(90deg, rgba(91, 54, 28, 0.06) 0 2px, transparent 2px 9px);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.52),
+    0 18px 40px rgba(29, 20, 13, 0.34);
+}
+
+.contract-briefing__topline {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.contract-briefing__eyebrow,
+.contract-briefing__label {
+  margin: 0;
+  color: var(--at-teal-600);
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.contract-briefing h2 {
+  margin: 0;
+  font-size: 1.38rem;
+  line-height: 1.08;
+}
+
+.contract-briefing__geography {
+  margin: 0;
+  color: rgba(46, 27, 14, 0.78);
+  font-size: 0.92rem;
+  line-height: 1.32;
+}
+
+.contract-briefing__columns {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  gap: 12px;
+}
+
+.briefing-lines {
+  display: grid;
+  gap: 5px;
+  margin: 5px 0 0;
+  padding-left: 1.05rem;
+  font-size: 0.88rem;
+  font-weight: 800;
+  line-height: 1.28;
+}
+
+.contract-briefing__dismiss {
+  min-height: 34px;
+  border: 2px solid var(--at-wood-950);
+  border-radius: 7px;
+  padding: 6px 12px;
+  color: #fff8e8;
+  background: var(--at-teal-600);
+  font: 900 0.78rem/1 Georgia, "Iowan Old Style", serif;
+  box-shadow: 0 3px 0 rgba(46, 27, 14, 0.5);
+  cursor: pointer;
+}
+
+.contract-briefing__dismiss:hover,
+.contract-briefing__dismiss:focus-visible {
+  outline: 2px solid var(--at-ochre-500);
+  outline-offset: 2px;
+}
+
 .hud-row {
   display: flex;
   align-items: baseline;
@@ -351,6 +448,28 @@
 
 .hud-meta__line {
   margin: 0;
+  font-weight: 800;
+}
+
+.hud-meta__contract {
+  display: grid;
+  gap: 5px;
+  border-bottom: 1px solid rgba(46, 27, 14, 0.18);
+  padding-bottom: 7px;
+}
+
+.hud-meta__contract strong {
+  font-size: 0.9rem;
+}
+
+.hud-meta__contract span {
+  color: rgba(46, 27, 14, 0.74);
+  font-weight: 800;
+}
+
+.hud-meta__contract .briefing-lines {
+  margin-top: 0;
+  font-size: 0.76rem;
   font-weight: 800;
 }
 
@@ -1183,6 +1302,27 @@
     bottom: calc(max(16px, env(safe-area-inset-bottom)) + 112px);
     min-width: 18ch;
     font-size: 0.78rem;
+  }
+
+  .contract-briefing {
+    top: calc(max(12px, env(safe-area-inset-top)) + 142px);
+    width: calc(100vw - 24px);
+    max-height: calc(100vh - 224px);
+    overflow: auto;
+    overscroll-behavior: contain;
+  }
+
+  .contract-briefing__paper {
+    padding: 12px;
+  }
+
+  .contract-briefing h2 {
+    font-size: 1.18rem;
+  }
+
+  .contract-briefing__columns {
+    grid-template-columns: 1fr;
+    gap: 9px;
   }
 
   .upgrade-overlay {
