@@ -130,7 +130,110 @@
         }
       },
       "twist": {
-        "secureWave": 25
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "rail_tough",
+            "label": "Rail Tough",
+            "waveMin": 1,
+            "hpScale": 1.35,
+            "speedMult": 1.12,
+            "visualScale": 1.16,
+            "tint": "#46576b",
+            "boltDamageMult": 0.65,
+            "spawnEdges": ["west", "east"],
+            "spawnGates": [
+              { "edge": "west", "x": -46, "z": 6.25 },
+              { "edge": "east", "x": 46, "z": 6.25 }
+            ]
+          },
+          {
+            "id": "steam_wrecker",
+            "label": "Steam Wrecker",
+            "waveMin": 1,
+            "hpScale": 1.65,
+            "speedMult": 0.74,
+            "visualScale": 1.28,
+            "tint": "#8b7d3c",
+            "wrecker": true,
+            "buildingDamageScale": 1.35,
+            "spawnEdges": ["north"],
+            "spawnGates": [{ "edge": "north", "x": 0, "z": 46 }]
+          },
+          {
+            "id": "coal_thief",
+            "label": "Coal Thief",
+            "waveMin": 1,
+            "hpScale": 0.72,
+            "speedMult": 1.35,
+            "visualScale": 0.88,
+            "tint": "#3e332b",
+            "thief": true,
+            "contactDamageScale": 0.65,
+            "spawnEdges": ["east"],
+            "spawnGates": [{ "edge": "east", "x": 46, "z": 24 }]
+          }
+        ],
+        "baron": {
+          "wave": 12,
+          "bossKind": "railcar",
+          "hpScale": 30,
+          "speedScale": 0.68,
+          "scale": 3.2,
+          "contactDamageScale": 2.5,
+          "buildingDamageScale": 7,
+          "supportBuildingDamageScale": 5,
+          "pursuitRange": 0,
+          "escortCount": 6,
+          "tauntWaves": [4, 8],
+          "taunt": "The Baron's railcar is on the spur. Keep the cut open.",
+          "arrivalTitle": "THE ARMORED RAILCAR",
+          "tauntTitle": "The Rail Spurs",
+          "defeatTitle": "THE RAILCAR IS DISABLED",
+          "defeatLine": "The Railcar is DEFEATED.",
+          "ledgerLabel": "THE ARMORED RAILCAR",
+          "secureCallout": "+Steamworks graduation",
+          "awardMedal": false,
+          "defeatBeat": "Boiler cold, wheels locked, the town can graduate into steam.",
+          "medalBlurb": "Railcar disabled.",
+          "sciencePayoutMult": 3,
+          "railRouteIndex": 0,
+          "railSpeed": 1.9,
+          "componentDegradeSpeedMult": 0.82,
+          "components": [
+            {
+              "id": "wheels",
+              "label": "Wheel Trucks",
+              "hpScale": 0.9,
+              "visualScale": 0.9,
+              "xOffset": 0,
+              "zOffset": -0.55,
+              "tint": "#2f2a22",
+              "boltDamageMult": 0.8
+            },
+            {
+              "id": "boiler",
+              "label": "Boiler",
+              "hpScale": 1.25,
+              "visualScale": 1.08,
+              "xOffset": 1.15,
+              "zOffset": 0,
+              "tint": "#8b7d3c",
+              "boltDamageMult": 0.7,
+              "buildingDamageScale": 1.15
+            },
+            {
+              "id": "cabin",
+              "label": "Cabin",
+              "hpScale": 0.85,
+              "visualScale": 0.96,
+              "xOffset": 2.3,
+              "zOffset": 0.55,
+              "tint": "#46576b",
+              "boltDamageMult": 0.85
+            }
+          ]
+        }
       },
       "boardRow": {
         "name": "The Hill Mine",

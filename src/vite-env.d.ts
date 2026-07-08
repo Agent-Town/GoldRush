@@ -473,6 +473,10 @@ interface ThreeGameDiagnostics {
       visible: boolean;
       ratio: number;
       segments: number;
+      groupId: string | null;
+      aliveComponents: number;
+      destroyedComponents: number;
+      components: Array<{ id: string; label: string; hp: number; maxHp: number }>;
     };
     turretPulses: number;
     activeTurretPulses: number;
@@ -769,7 +773,7 @@ interface Window {
         speedScale?: number;
         speedMult?: number;
         hpScale?: number;
-        eliteKind?: 'baron';
+        eliteKind?: 'baron' | 'railcar';
         visualScale?: number;
         banner?: boolean;
         wrecker?: boolean;
@@ -777,6 +781,16 @@ interface Window {
         buildingDamageScale?: number;
         supportBuildingDamageScale?: number;
         heroPursuitRange?: number;
+        variantId?: string;
+        variantLabel?: string;
+        tint?: string;
+        boltDamageMult?: number;
+        bossGroupId?: string;
+        bossGroupSize?: number;
+        bossGroupTotalHp?: number;
+        bossComponentId?: string;
+        bossComponentLabel?: string;
+        bossDegradeSpeedMult?: number;
       },
     ) => void;
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
@@ -875,7 +889,16 @@ interface Window {
       supportBuildingDamage: number;
       heroPursuitRange: number;
       hitRadius: number;
-      eliteKind?: 'baron';
+      eliteKind?: 'baron' | 'railcar';
+      variantId?: string;
+      variantLabel?: string;
+      boltDamageMult: number;
+      bossGroupId?: string;
+      bossGroupSize: number;
+      bossGroupTotalHp: number;
+      bossComponentId?: string;
+      bossComponentLabel?: string;
+      bossDegradeSpeedMult: number;
       scale: number;
       hasBanner: boolean;
       spreadOffset: number;

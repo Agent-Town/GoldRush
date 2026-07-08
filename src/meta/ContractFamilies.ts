@@ -132,6 +132,7 @@ export type ContractLightRamp = {
 };
 export type ContractBaronTwist = {
   wave: number;
+  bossKind?: 'baron' | 'railcar';
   hpScale: number;
   speedScale: number;
   scale: number;
@@ -142,9 +143,20 @@ export type ContractBaronTwist = {
   escortCount: number;
   tauntWaves: readonly number[];
   taunt: string;
+  arrivalTitle?: string;
+  tauntTitle?: string;
+  defeatTitle?: string;
+  defeatLine?: string;
+  ledgerLabel?: string;
+  secureCallout?: string;
+  awardMedal?: boolean;
   defeatBeat: string;
   medalBlurb: string;
   sciencePayoutMult: number;
+  railRouteIndex?: number;
+  railSpeed?: number;
+  componentDegradeSpeedMult?: number;
+  components?: readonly ContractBossComponent[];
   rocketVolley?: {
     count: number;
     damage: number;
@@ -154,6 +166,42 @@ export type ContractBaronTwist = {
     airTime: number;
     spreadRadius: number;
   };
+};
+export type ContractEnemyVariant = {
+  id: string;
+  label: string;
+  waveMin?: number;
+  hpScale?: number;
+  speedMult?: number;
+  visualScale?: number;
+  tint?: string;
+  boltDamageMult?: number;
+  thief?: boolean;
+  wrecker?: boolean;
+  contactDamageScale?: number;
+  buildingDamageScale?: number;
+  supportBuildingDamageScale?: number;
+  heroPursuitRange?: number;
+  spawnEdges?: readonly ContractEdge[];
+  spawnGates?: readonly ContractEnemySpawnGate[];
+};
+export type ContractEnemySpawnGate = {
+  edge: ContractEdge;
+  x: number;
+  z: number;
+};
+export type ContractBossComponent = {
+  id: string;
+  label: string;
+  hpScale: number;
+  visualScale?: number;
+  xOffset?: number;
+  zOffset?: number;
+  tint?: string;
+  boltDamageMult?: number;
+  contactDamageScale?: number;
+  buildingDamageScale?: number;
+  supportBuildingDamageScale?: number;
 };
 export type ContractFord = {
   id: string;
@@ -297,6 +345,7 @@ export type ContractManifest = {
     secureWave?: number;
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
+    enemyRoster?: readonly ContractEnemyVariant[];
     baron?: ContractBaronTwist;
   };
   boardRow: {

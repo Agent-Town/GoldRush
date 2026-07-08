@@ -37,6 +37,11 @@ export type GameEvent =
       enemyId: number;
       xp: number;
       eliteKind?: string;
+      variantId?: string;
+      bossGroupId?: string;
+      bossComponentId?: string;
+      bossRemaining?: number;
+      bossComponents?: number;
     }
   | {
       type: 'building_damaged';

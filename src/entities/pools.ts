@@ -17,7 +17,8 @@ import {
 import type { RotationDirection } from '../assets/OrientationResolver';
 
 const ENEMY_SPRITE_Y = 0.72;
-const BOSS_HP_SEGMENTS = 8;
+const BOSS_HP_MAX_SEGMENTS = 8;
+const BARON_HP_SEGMENTS = 8;
 const BOSS_HP_WIDTH = 1.9;
 const BOSS_HP_FILL_WIDTH = 1.72;
 const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
@@ -49,6 +50,22 @@ export type BossHpBarDiagnostics = {
   visible: boolean;
   ratio: number;
   segments: number;
+  groupId: string | null;
+  aliveComponents: number;
+  destroyedComponents: number;
+  components: Array<{ id: string; label: string; hp: number; maxHp: number }>;
+};
+type BossBarState = {
+  x: number;
+  y: number;
+  z: number;
+  scale: number;
+  ratio: number;
+  segments: number;
+  groupId: string | null;
+  aliveComponents: number;
+  destroyedComponents: number;
+  components: Array<{ id: string; label: string; hp: number; maxHp: number }>;
 };
 
 function animationSpeed(enemy: ClaimJumperEnemy): number {
@@ -269,12 +286,15 @@ export class EnemyPool {
   }
 
   get bossHpBarDiagnostics(): BossHpBarDiagnostics {
-    const baron = this.activeBaron();
-    const ratio = baron ? THREE.MathUtils.clamp(baron.currentHp / Math.max(1, baron.maxHp), 0, 1) : 0;
+    const state = this.bossBarState();
     return {
       visible: this.bossHpGroup.visible,
-      ratio: round3(ratio),
-      segments: this.bossHpGroup.visible ? BOSS_HP_SEGMENTS : 0,
+      ratio: round3(state?.ratio ?? 0),
+      segments: this.bossHpGroup.visible ? state?.segments ?? 0 : 0,
+      groupId: state?.groupId ?? null,
+      aliveComponents: state?.aliveComponents ?? 0,
+      destroyedComponents: state?.destroyedComponents ?? 0,
+      components: state?.components ?? [],
     };
   }
 
@@ -356,6 +376,21 @@ export class EnemyPool {
       return enemy;
     }
     return null;
+  }
+
+  degradeBossGroup(killed: ClaimJumperEnemy): { remaining: number; total: number } | null {
+    const groupId = killed.bossGroupId;
+    if (!groupId) return null;
+    let remaining = 0;
+    for (const enemy of this.enemies) {
+      if (!enemy.isAlive || enemy === killed || enemy.bossGroupId !== groupId) continue;
+      remaining += 1;
+      enemy.applyBossDegradation(killed.bossDegradeSpeedMult);
+    }
+    return {
+      remaining,
+      total: Math.max(killed.bossGroupSize, remaining + 1),
+    };
   }
 
   update(
@@ -562,6 +597,63 @@ export class EnemyPool {
     return null;
   }
 
+  private bossBarState(): BossBarState | null {
+    const grouped = this.enemies.find((enemy) => enemy.isAlive && enemy.bossGroupId);
+    if (grouped?.bossGroupId) {
+      const members = this.enemies.filter((enemy) => enemy.isAlive && enemy.bossGroupId === grouped.bossGroupId);
+      if (members.length === 0) return null;
+      let hp = 0;
+      let totalHp = grouped.bossGroupTotalHp;
+      let x = 0;
+      let y = Number.NEGATIVE_INFINITY;
+      let z = 0;
+      let scale = 1;
+      const components: BossBarState['components'] = [];
+      for (const enemy of members) {
+        hp += enemy.currentHp;
+        x += enemy.position.x;
+        z += enemy.position.z;
+        y = Math.max(y, enemy.position.y + 1.5 * enemy.visualScale);
+        scale = Math.max(scale, enemy.visualScale * 0.74);
+        components.push({
+          id: enemy.bossComponentId ?? enemy.variantId ?? `part-${enemy.id}`,
+          label: enemy.bossComponentLabel ?? enemy.variantLabel ?? 'Component',
+          hp: round2(enemy.currentHp),
+          maxHp: round2(enemy.maxHp),
+        });
+      }
+      if (totalHp <= 0) totalHp = members.reduce((sum, enemy) => sum + enemy.maxHp, 0);
+      const segments = Math.max(1, Math.min(BOSS_HP_MAX_SEGMENTS, grouped.bossGroupSize || members.length));
+      return {
+        x: x / members.length,
+        y: y + 0.95,
+        z: z / members.length,
+        scale: Math.max(1, scale),
+        ratio: THREE.MathUtils.clamp(hp / Math.max(1, totalHp), 0, 1),
+        segments,
+        groupId: grouped.bossGroupId,
+        aliveComponents: members.length,
+        destroyedComponents: Math.max(0, segments - members.length),
+        components,
+      };
+    }
+
+    const baron = this.activeBaron();
+    if (!baron) return null;
+    return {
+      x: baron.position.x,
+      y: baron.position.y + 1.75 * baron.visualScale,
+      z: baron.position.z,
+      scale: Math.max(1, baron.visualScale * 0.88),
+      ratio: THREE.MathUtils.clamp(baron.currentHp / Math.max(1, baron.maxHp), 0, 1),
+      segments: BARON_HP_SEGMENTS,
+      groupId: null,
+      aliveComponents: 1,
+      destroyedComponents: 0,
+      components: [{ id: 'baron', label: 'Baron', hp: round2(baron.currentHp), maxHp: round2(baron.maxHp) }],
+    };
+  }
+
   private createRenderParts(): void {
     this.localMatrices.push(
       this.createLocalMatrix(new THREE.Vector3(0, 0.012, 0), new THREE.Euler(-Math.PI / 2, 0, 0)),
@@ -647,9 +739,9 @@ export class EnemyPool {
     }
     this.bossHpFill.position.z = 0.01;
     this.bossHpGroup.add(this.bossHpBack, this.bossHpFill, this.bossHpSegments);
-    for (let i = 1; i < BOSS_HP_SEGMENTS; i += 1) {
+    for (let i = 1; i < BOSS_HP_MAX_SEGMENTS; i += 1) {
       const segment = new THREE.Mesh(this.bossHpSegmentGeometry, this.bossHpSegmentMaterial);
-      segment.position.x = -BOSS_HP_FILL_WIDTH / 2 + (BOSS_HP_FILL_WIDTH * i) / BOSS_HP_SEGMENTS;
+      segment.position.x = -BOSS_HP_FILL_WIDTH / 2 + (BOSS_HP_FILL_WIDTH * i) / BOSS_HP_MAX_SEGMENTS;
       segment.position.z = 0.02;
       segment.frustumCulled = false;
       segment.renderOrder = RenderLayers.worldUi + 0.03;
@@ -680,19 +772,23 @@ export class EnemyPool {
   }
 
   private syncBossHpBar(): void {
-    const baron = this.activeBaron();
-    if (!baron) {
+    const state = this.bossBarState();
+    if (!state) {
       this.bossHpGroup.visible = false;
       return;
     }
-    const ratio = THREE.MathUtils.clamp(baron.currentHp / Math.max(1, baron.maxHp), 0, 1);
-    const scale = Math.max(1, baron.visualScale * 0.88);
     this.bossHpGroup.visible = true;
-    this.bossHpGroup.position.set(baron.position.x, baron.position.y + 1.75 * baron.visualScale, baron.position.z);
+    this.bossHpGroup.position.set(state.x, state.y, state.z);
     if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
-    this.bossHpGroup.scale.setScalar(scale);
-    this.bossHpFill.scale.x = Math.max(0.001, ratio);
-    this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - ratio) * 0.5;
+    this.bossHpGroup.scale.setScalar(state.scale);
+    this.bossHpFill.scale.x = Math.max(0.001, state.ratio);
+    this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - state.ratio) * 0.5;
+    for (let i = 0; i < this.bossHpSegments.children.length; i += 1) {
+      const segment = this.bossHpSegments.children[i] as THREE.Object3D | undefined;
+      if (!segment) continue;
+      segment.visible = i < state.segments - 1;
+      segment.position.x = -BOSS_HP_FILL_WIDTH / 2 + (BOSS_HP_FILL_WIDTH * (i + 1)) / state.segments;
+    }
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
@@ -724,7 +820,9 @@ export class EnemyPool {
           enemy.id,
           enemy.eliteKind === 'baron'
             ? this.baronPonchoColor
-            : enemy.carriedAmount > 0
+            : enemy.variantTintColor
+              ? enemy.variantTintColor
+              : enemy.carriedAmount > 0
               ? this.carryingPonchoColor
               : enemy.isWrecker
                 ? this.wreckerPonchoColor

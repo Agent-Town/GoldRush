@@ -1,17 +1,20 @@
-import type { StorySignal } from './signals';
+import type { RuntimeStorySignal, StorySignal } from './signals';
 import type { StorySpeakerId } from './speakers';
 import { hasRocketCartCaptured } from '../game/Medals';
 
-export type StoryBeat = {
+export type StoryBeatFor<TSignal extends { type: string }> = {
   id: string;
-  trigger: StorySignal['type'];
+  trigger: TSignal['type'];
   speaker: StorySpeakerId;
-  lines: readonly string[] | ((signal: StorySignal) => readonly string[]);
+  lines: readonly string[] | ((signal: TSignal) => readonly string[]);
   pointer?: string;
   oncePerProfile: boolean;
-  when?: (signal: StorySignal) => boolean;
-  seenKey?: (signal: StorySignal) => string;
+  when?: (signal: TSignal) => boolean;
+  seenKey?: (signal: TSignal) => string;
 };
+
+export type StoryBeat = StoryBeatFor<StorySignal>;
+export type RuntimeStoryBeat = StoryBeatFor<RuntimeStorySignal>;
 
 const contractLine = (signal: StorySignal, fallback: string): string =>
   signal.type === 'contract-unlocked' ? signal.ledgerBlurb : fallback;
@@ -191,3 +194,26 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     lines: (signal) => ['The Baron card is open.', contractLine(signal, 'An oxblood banner marks the outfit that keeps buying trouble.')],
   },
 ];
+
+export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    id: 'e2-railcar-arrival',
+    trigger: 'boss-arrival',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e2-hill-mine',
+    lines: ['Railcar on the cut.', 'Break the wheels, boiler, and cabin before the town signs the next ledger.'],
+  },
+  {
+    id: 'e2-railcar-defeat',
+    trigger: 'boss-defeat',
+    speaker: 'elder',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e2-hill-mine',
+    lines: ['The rail spur is quiet.', 'That is enough steam for a graduation bell.'],
+  },
+];
+
+const STORY_RUNTIME_CORE_BEATS = STORY_BEATS as unknown as readonly RuntimeStoryBeat[];
+
+export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = [...STORY_RUNTIME_CORE_BEATS, ...E2_STORY_BEATS];

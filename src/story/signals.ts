@@ -14,6 +14,12 @@ export type StorySignal =
   | { type: 'building-lost' }
   | { type: 'xp-collected' };
 
+export type BossStorySignal =
+  | { type: 'boss-arrival'; contractId: string; contractName: string }
+  | { type: 'boss-defeat'; contractId: string; contractName: string };
+
+export type RuntimeStorySignal = StorySignal | BossStorySignal;
+
 export const STORY_SIGNAL_REGISTRY = [
   'first-boot',
   'town-named',
@@ -31,7 +37,9 @@ export const STORY_SIGNAL_REGISTRY = [
   'xp-collected',
 ] as const;
 
-type StorySignalListener = (signal: StorySignal) => void;
+export const STORY_RUNTIME_SIGNAL_REGISTRY = [...STORY_SIGNAL_REGISTRY, 'boss-arrival', 'boss-defeat'] as const;
+
+type StorySignalListener = (signal: RuntimeStorySignal) => void;
 
 const listeners = new Set<StorySignalListener>();
 
@@ -40,6 +48,6 @@ export function onStorySignal(listener: StorySignalListener): () => void {
   return () => listeners.delete(listener);
 }
 
-export function emitStorySignal(signal: StorySignal): void {
+export function emitStorySignal(signal: RuntimeStorySignal): void {
   for (const listener of listeners) listener(signal);
 }

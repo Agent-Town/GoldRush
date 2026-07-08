@@ -12,7 +12,7 @@ import type { PalisadeBlocker } from './Palisade';
 export type CompassEdge = 'north' | 'south' | 'east' | 'west';
 export type ThiefState = 'none' | 'seekHolding' | 'grabbing' | 'fleeing';
 export type WreckerState = 'none' | 'seekBuilding' | 'swinging';
-export type EnemyEliteKind = 'baron';
+export type EnemyEliteKind = 'baron' | 'railcar';
 
 export type ClaimJumperAssets = {
   ponchoGeometry: THREE.ConeGeometry;
@@ -43,6 +43,16 @@ export type EnemySpawnParams = {
   buildingDamageScale?: number;
   supportBuildingDamageScale?: number;
   heroPursuitRange?: number;
+  variantId?: string;
+  variantLabel?: string;
+  tint?: string;
+  boltDamageMult?: number;
+  bossGroupId?: string;
+  bossGroupSize?: number;
+  bossGroupTotalHp?: number;
+  bossComponentId?: string;
+  bossComponentLabel?: string;
+  bossDegradeSpeedMult?: number;
 };
 
 export type ThiefUpdateContext = {
@@ -117,6 +127,7 @@ export class ClaimJumperEnemy {
   private readonly routeTarget = new THREE.Vector3();
   private readonly terrainRouteTarget = new THREE.Vector3();
   private readonly scriptedTarget = new THREE.Vector3();
+  private readonly scriptedRoute: THREE.Vector3[] = [];
   private alive = false;
   private hp = 0;
   private maxHpValue = 0;
@@ -128,8 +139,20 @@ export class ClaimJumperEnemy {
   private buildingDamageScaleValue = 1;
   private supportBuildingDamageScaleValue = 1;
   private heroPursuitRangeValue = 0;
+  private variantIdValue: string | null = null;
+  private variantLabelValue: string | null = null;
+  private variantTintColorValue: THREE.Color | null = null;
+  private boltDamageMultValue = 1;
+  private bossGroupIdValue: string | null = null;
+  private bossGroupSizeValue = 0;
+  private bossGroupTotalHpValue = 0;
+  private bossComponentIdValue: string | null = null;
+  private bossComponentLabelValue: string | null = null;
+  private bossDegradeSpeedMultValue = 1;
   private scriptedSpeed = 0;
   private scripted = false;
+  private scriptedIgnoresTerrain = false;
+  private scriptedRouteIndex = 0;
   private activationDelay = 0;
   private contactCooldown = 0;
   private spriteClip: CharacterSpriteClip = 'idle';
@@ -206,8 +229,48 @@ export class ClaimJumperEnemy {
     return this.heroPursuitRangeValue;
   }
 
+  get variantId(): string | null {
+    return this.variantIdValue;
+  }
+
+  get variantLabel(): string | null {
+    return this.variantLabelValue;
+  }
+
+  get variantTintColor(): THREE.Color | null {
+    return this.variantTintColorValue;
+  }
+
+  get boltDamageMult(): number {
+    return this.boltDamageMultValue;
+  }
+
+  get bossGroupId(): string | null {
+    return this.bossGroupIdValue;
+  }
+
+  get bossGroupSize(): number {
+    return this.bossGroupSizeValue;
+  }
+
+  get bossGroupTotalHp(): number {
+    return this.bossGroupTotalHpValue;
+  }
+
+  get bossComponentId(): string | null {
+    return this.bossComponentIdValue;
+  }
+
+  get bossComponentLabel(): string | null {
+    return this.bossComponentLabelValue;
+  }
+
+  get bossDegradeSpeedMult(): number {
+    return this.bossDegradeSpeedMultValue;
+  }
+
   get impactScale(): number {
-    return this.elite === 'baron' ? Math.max(1, this.visualScaleValue) : 1;
+    return this.elite ? Math.max(1, this.visualScaleValue) : 1;
   }
 
   get hitRadius(): number {
@@ -215,7 +278,7 @@ export class ClaimJumperEnemy {
   }
 
   buildingDamageFor(family: string): number {
-    if (this.elite === 'baron' && (family === 'sluice' || family === 'turret')) return this.supportBuildingDamage;
+    if (this.elite && (family === 'sluice' || family === 'turret')) return this.supportBuildingDamage;
     return this.buildingDamage;
   }
 
@@ -291,6 +354,16 @@ export class ClaimJumperEnemy {
     this.buildingDamageScaleValue = Math.max(0, params.buildingDamageScale ?? 1);
     this.supportBuildingDamageScaleValue = Math.max(0, params.supportBuildingDamageScale ?? params.buildingDamageScale ?? 1);
     this.heroPursuitRangeValue = Math.max(0, params.heroPursuitRange ?? 0);
+    this.variantIdValue = params.variantId ?? null;
+    this.variantLabelValue = params.variantLabel ?? null;
+    this.variantTintColorValue = params.tint ? new THREE.Color(params.tint) : null;
+    this.boltDamageMultValue = Math.max(0, params.boltDamageMult ?? 1);
+    this.bossGroupIdValue = params.bossGroupId ?? null;
+    this.bossGroupSizeValue = Math.max(0, Math.floor(params.bossGroupSize ?? 0));
+    this.bossGroupTotalHpValue = Math.max(0, params.bossGroupTotalHp ?? 0);
+    this.bossComponentIdValue = params.bossComponentId ?? null;
+    this.bossComponentLabelValue = params.bossComponentLabel ?? null;
+    this.bossDegradeSpeedMultValue = Math.max(0, params.bossDegradeSpeedMult ?? 1);
     this.activationDelay = Math.max(0, params.activationDelay ?? 0);
     this.contactCooldown = 0;
     this.thief = params.thief === true;
@@ -348,8 +421,9 @@ export class ClaimJumperEnemy {
       return false;
     }
 
+    const scriptedRailRoute = this.scripted && this.scriptedIgnoresTerrain;
     const targetPosition = this.scripted ? this.scriptedTarget : this.chooseTarget(delta, heroPosition, thiefContext, wreckerContext);
-    const moveTarget = this.terrainAwareTarget(this.routedTarget(targetPosition));
+    const moveTarget = scriptedRailRoute ? this.scriptedTarget : this.terrainAwareTarget(this.routedTarget(targetPosition));
     const speed = this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
     this.heading.set(moveTarget.x - this.group.position.x, 0, moveTarget.z - this.group.position.z);
@@ -360,39 +434,45 @@ export class ClaimJumperEnemy {
       this.heading.set(0, 0, 0);
     }
 
-    const spread = safeFormationSpread();
-    const lateralOffset = THREE.MathUtils.clamp(this.formationOffset, -spread, spread);
-    let spreadBiasX = 0;
-    let spreadBiasZ = 0;
-    if (spread > 0) {
-      if (Math.abs(this.heading.z) >= Math.abs(this.heading.x)) {
-        spreadBiasX = THREE.MathUtils.clamp((moveTarget.x + lateralOffset - this.group.position.x) / spread, -1, 1) * FORMATION_STEER;
-      } else {
-        let laneZ = moveTarget.z + lateralOffset;
-        const currentSide = riverSide(this.group.position.z);
-        if (Balance.pathing.riverBlocksEnemies && currentSide === 'north') {
-          laneZ = Math.max(laneZ, Terrain.RIVER_MAX_Z + FORMATION_GAP_CLEARANCE);
-        } else if (Balance.pathing.riverBlocksEnemies && currentSide === 'south') {
-          laneZ = Math.min(laneZ, Terrain.RIVER_MIN_Z - FORMATION_GAP_CLEARANCE);
+    if (scriptedRailRoute) {
+      this.velocity.copy(this.heading);
+    } else {
+      const spread = safeFormationSpread();
+      const lateralOffset = THREE.MathUtils.clamp(this.formationOffset, -spread, spread);
+      let spreadBiasX = 0;
+      let spreadBiasZ = 0;
+      if (spread > 0) {
+        if (Math.abs(this.heading.z) >= Math.abs(this.heading.x)) {
+          spreadBiasX = THREE.MathUtils.clamp((moveTarget.x + lateralOffset - this.group.position.x) / spread, -1, 1) * FORMATION_STEER;
+        } else {
+          let laneZ = moveTarget.z + lateralOffset;
+          const currentSide = riverSide(this.group.position.z);
+          if (Balance.pathing.riverBlocksEnemies && currentSide === 'north') {
+            laneZ = Math.max(laneZ, Terrain.RIVER_MAX_Z + FORMATION_GAP_CLEARANCE);
+          } else if (Balance.pathing.riverBlocksEnemies && currentSide === 'south') {
+            laneZ = Math.min(laneZ, Terrain.RIVER_MIN_Z - FORMATION_GAP_CLEARANCE);
+          }
+          spreadBiasZ = THREE.MathUtils.clamp((laneZ - this.group.position.z) / spread, -1, 1) * FORMATION_STEER;
         }
-        spreadBiasZ = THREE.MathUtils.clamp((laneZ - this.group.position.z) / spread, -1, 1) * FORMATION_STEER;
       }
+      this.velocity.set(
+        this.heading.x +
+          spreadBiasX +
+          separationX * Balance.enemy.separationStrength +
+          formationSeparationX * Balance.enemy.formationSeparationStrength,
+        0,
+        this.heading.z +
+          spreadBiasZ +
+          separationZ * Balance.enemy.separationStrength +
+          formationSeparationZ * Balance.enemy.formationSeparationStrength,
+      );
     }
-    this.velocity.set(
-      this.heading.x +
-        spreadBiasX +
-        separationX * Balance.enemy.separationStrength +
-        formationSeparationX * Balance.enemy.formationSeparationStrength,
-      0,
-      this.heading.z +
-        spreadBiasZ +
-        separationZ * Balance.enemy.separationStrength +
-        formationSeparationZ * Balance.enemy.formationSeparationStrength,
-    );
     if (this.velocity.lengthSq() > 1) this.velocity.normalize();
 
     if (this.thiefState === 'grabbing' || this.wreckerState === 'swinging') {
       this.velocity.set(0, 0, 0);
+    } else if (scriptedRailRoute) {
+      this.moveScripted(delta, speed, moveTarget);
     } else {
       this.move(delta, blockers, speed, moveTarget);
     }
@@ -435,6 +515,13 @@ export class ClaimJumperEnemy {
     return this.hp <= 0;
   }
 
+  applyBossDegradation(speedMult: number): void {
+    if (!this.alive) return;
+    const clamped = THREE.MathUtils.clamp(speedMult, 0.1, 1);
+    this.speed *= clamped;
+    this.scriptedSpeed *= clamped;
+  }
+
   recycle(): void {
     this.alive = false;
     this.hp = 0;
@@ -446,6 +533,16 @@ export class ClaimJumperEnemy {
     this.buildingDamageScaleValue = 1;
     this.supportBuildingDamageScaleValue = 1;
     this.heroPursuitRangeValue = 0;
+    this.variantIdValue = null;
+    this.variantLabelValue = null;
+    this.variantTintColorValue = null;
+    this.boltDamageMultValue = 1;
+    this.bossGroupIdValue = null;
+    this.bossGroupSizeValue = 0;
+    this.bossGroupTotalHpValue = 0;
+    this.bossComponentIdValue = null;
+    this.bossComponentLabelValue = null;
+    this.bossDegradeSpeedMultValue = 1;
     this.activationDelay = 0;
     this.contactCooldown = 0;
     this.thief = false;
@@ -465,6 +562,9 @@ export class ClaimJumperEnemy {
     this.terrainSlideSide = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
+    this.scriptedIgnoresTerrain = false;
+    this.scriptedRoute.length = 0;
+    this.scriptedRouteIndex = 0;
     this.velocity.set(0, 0, 0);
     this.leadVelocity.set(0, 0, 0);
     this.orientationResolver.reset();
@@ -485,10 +585,30 @@ export class ClaimJumperEnemy {
     return amount;
   }
 
-  scriptMoveTo(x: number, z: number, speed: number): void {
+  scriptMoveTo(x: number, z: number, speed: number, options?: { ignoreTerrain?: boolean }): void {
     this.scriptedTarget.set(x, Balance.enemy.groundY, z);
     this.scriptedSpeed = Math.max(0, speed);
     this.scripted = true;
+    this.scriptedIgnoresTerrain = options?.ignoreTerrain === true;
+    this.scriptedRoute.length = 0;
+    this.scriptedRouteIndex = 0;
+  }
+
+  scriptMoveRoute(
+    points: readonly { x: number; z: number }[],
+    speed: number,
+    options?: { ignoreTerrain?: boolean; offsetX?: number; offsetZ?: number },
+  ): void {
+    this.scriptedRoute.length = 0;
+    const offsetX = options?.offsetX ?? 0;
+    const offsetZ = options?.offsetZ ?? 0;
+    for (const point of points) this.scriptedRoute.push(new THREE.Vector3(point.x + offsetX, Balance.enemy.groundY, point.z + offsetZ));
+    this.scriptedSpeed = Math.max(0, speed);
+    this.scripted = this.scriptedRoute.length > 0;
+    this.scriptedIgnoresTerrain = options?.ignoreTerrain === true;
+    this.scriptedRouteIndex = Math.min(1, Math.max(0, this.scriptedRoute.length - 1));
+    const target = this.scriptedRoute[this.scriptedRouteIndex];
+    if (target) this.scriptedTarget.copy(target);
   }
 
   private updateThief(delta: number, context?: ThiefUpdateContext): THREE.Vector3 | null {
@@ -723,6 +843,25 @@ export class ClaimJumperEnemy {
       this.resolveTerrain(moveTarget);
       this.group.position.copy(this.nextPosition);
     }
+  }
+
+  private moveScripted(delta: number, speed: number, moveTarget: THREE.Vector3): void {
+    const stepDistance = Math.max(0, speed * delta);
+    if (stepDistance <= 0 || this.velocity.lengthSq() <= 0.0001) return;
+    const remainingSq = this.group.position.distanceToSquared(moveTarget);
+    if (remainingSq <= stepDistance * stepDistance) {
+      this.group.position.copy(moveTarget);
+      this.advanceScriptedRoute();
+      return;
+    }
+    this.group.position.addScaledVector(this.velocity, stepDistance);
+  }
+
+  private advanceScriptedRoute(): void {
+    if (this.scriptedRouteIndex >= this.scriptedRoute.length - 1) return;
+    this.scriptedRouteIndex += 1;
+    const target = this.scriptedRoute[this.scriptedRouteIndex];
+    if (target) this.scriptedTarget.copy(target);
   }
 
   private resolveTerrain(moveTarget: THREE.Vector3): void {
