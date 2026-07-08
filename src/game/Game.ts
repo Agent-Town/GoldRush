@@ -2965,9 +2965,10 @@ export class Game {
     this.state.restart();
     this.playerPauseActive = false;
     this.prospector.reset(this.primaryActor.group.position);
-    this.uiBridge.announce('Stake your claim.', 0);
     this.prefetchContractPresentation();
     this.showProspectorIntro();
+    this.uiBridge.announce('Stake your claim.', 0);
+    this.syncUi();
     if (deferMetaRecap) {
       this.runStartMetaRecapPending = true;
     } else {
