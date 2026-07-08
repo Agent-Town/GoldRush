@@ -8,7 +8,7 @@ import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
-const ARTIFACT_DIR = path.resolve('artifacts/e2-stamp-mill');
+const ARTIFACT_DIR = path.resolve('artifacts/stamp-site-read');
 const TAKEN_FRONTIER_NODES = RESEARCH_NODES.map((node) => node.id);
 const SCIENCE_STEPS = STEAMWORKS_THRESHOLD + 9;
 const STAGE_COSTS = [90, 140, 190];
@@ -58,6 +58,33 @@ async function openGame(page: Page): Promise<ErrorBucket> {
   return errors;
 }
 
+async function openScienceIncompleteGame(page: Page): Promise<ErrorBucket> {
+  const errors = collectErrors(page);
+  await page.addInitScript(
+    ({ metaKey, megaprojectKey, researchKey, scoreKey }) => {
+      localStorage.removeItem(megaprojectKey);
+      localStorage.removeItem(researchKey);
+      localStorage.removeItem(scoreKey);
+      localStorage.setItem(
+        metaKey,
+        JSON.stringify({
+          version: 1,
+          tracks: { territory: 0, science: 0, hero: 0, agent: 0 },
+        }),
+      );
+    },
+    {
+      metaKey: META_PROGRESS_KEY,
+      megaprojectKey: MEGAPROJECT_STATE_KEY,
+      researchKey: RESEARCH_STATE_KEY,
+      scoreKey: SCOREBOARD_KEY,
+    },
+  );
+  await page.goto('/?debug&timescale=4&nolevel&nopause&seed=e2-stamp-mill-locked');
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  return errors;
+}
+
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   mkdirSync(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: false });
@@ -85,6 +112,25 @@ async function megaproject(page: Page) {
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.megaproject);
 }
 
+async function teleportToStampSitePrompt(page: Page): Promise<void> {
+  const site = await megaproject(page);
+  const footprint = site.siteFootprint;
+  if (!footprint) throw new Error('Stamp Mill site footprint missing');
+  await page.evaluate(
+    (pos) => window.__GR_TEST__?.teleport(pos.x, pos.z),
+    { x: footprint.x, z: footprint.z - footprint.d * 0.5 - 0.72 },
+  );
+}
+
+async function expectFundPrompt(page: Page, stageIndex: number) {
+  await teleportToStampSitePrompt(page);
+  const button = page.getByTestId('stamp-site-fund');
+  await expect(button).toBeVisible();
+  await expect(button).toContainText(`Fund stage ${stageIndex + 1} — ${STAGE_COSTS[stageIndex]}g`);
+  await expect(page.getByTestId('building-context-prompt')).toContainText('STAMP MILL & RAIL SPUR');
+  return button;
+}
+
 async function fundStage(page: Page, stageIndex: number): Promise<void> {
   const cost = STAGE_COSTS[stageIndex]!;
   await page.evaluate(() => {
@@ -92,8 +138,11 @@ async function fundStage(page: Page, stageIndex: number): Promise<void> {
     window.__GR_TEST__?.setWave(window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0);
   });
   await page.evaluate((amount) => window.__GR_TEST__?.grantGold(amount), cost);
-  expect(await page.evaluate(() => window.__GR_TEST__?.fundMegaproject())).toBe(true);
+  const beforeGold = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0);
+  const button = await expectFundPrompt(page, stageIndex);
+  await button.click();
   await expect.poll(() => megaproject(page).then((site) => site.funded)).toBe(true);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0)).toBe(beforeGold - cost);
   expect(await megaproject(page).then((site) => site.materials.gold)).toBe(cost);
 }
 
@@ -122,6 +171,16 @@ test('Stamp Mill manifest builds to the door without switching epochs', async ({
     materials: { gold: STAGE_COSTS[0] },
   });
   expect(initial.siteFootprint).toEqual({ x: -8, z: 16, w: 5, d: 3 });
+  expect(initial.siteRead).toMatchObject({
+    packedEarth: true,
+    stakes: 4,
+    stringLines: 4,
+    walkwayPlanks: 5,
+    signboard: true,
+    constructionProps: 0,
+    surveyVisible: true,
+  });
+  expect(initial.siteRead?.plaque).toContain('surveyed for the town');
   expect(await page.evaluate(() => window.__GR_TEST__?.researchState().overflow)).toBe(9);
   expect(await page.evaluate(() => window.__GR_TEST__?.researchState().meter)).toContain('the Steamworks awaits a town to build it');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.rails.active)).toBe(false);
@@ -133,8 +192,26 @@ test('Stamp Mill manifest builds to the door without switching epochs', async ({
   });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? true)).toBe(false);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.reservedFootprints[0]?.id)).toBe('stamp-mill');
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+
+  const firstFundButton = await expectFundPrompt(page, 0);
+  await expect.poll(() => megaproject(page).then((site) => site.siteRead?.promptReady ?? false)).toBe(true);
+  await expect(page.getByTestId('story-beat-card')).toBeVisible({ timeout: 8_000 });
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'stamp-site-found');
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-speaker', 'elder');
+  await expect(page.getByTestId('story-beat-card')).toContainText("The survey's done.");
+  await expect(page.getByTestId('story-beat-card')).toContainText("The Steamworks wants a founder's gold.");
+  await expect(firstFundButton).toHaveAttribute('data-story-pointer', 'true');
+  await shot(page, testInfo, 'pre-funding-surveyed-site');
+  await page.mouse.click(6, 6);
+  await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+  await page.evaluate(() => window.__GR_STORY__?.emit({ type: 'stamp-site-found' }));
+  await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
 
   await fundStage(page, 0);
+  await expect.poll(() => megaproject(page).then((site) => site.siteRead?.surveyVisible ?? true)).toBe(false);
+  expect(await megaproject(page).then((site) => site.siteRead?.constructionProps ?? 0)).toBeGreaterThan(0);
+  expect(await megaproject(page).then((site) => site.siteRead?.plaque ?? '')).toContain('stage 1');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcement)).toBe(
     'The Stamp Mill rises: the rail spur is staked.',
   );
@@ -171,6 +248,32 @@ test('Stamp Mill manifest builds to the door without switching epochs', async ({
   await page.reload();
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   expect(await megaproject(page)).toMatchObject({ id: 'stamp-mill', stage: 3, complete: true, funded: false });
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('Stamp Mill claim site stays hidden before Steamworks science', async ({ page }) => {
+  const errors = await openScienceIncompleteGame(page);
+  const locked = await megaproject(page);
+  expect(locked).toMatchObject({
+    id: 'stamp-mill',
+    unlocked: false,
+    active: false,
+    complete: false,
+    funded: false,
+  });
+  expect(locked.siteRead).toMatchObject({
+    packedEarth: false,
+    stakes: 0,
+    stringLines: 0,
+    walkwayPlanks: 0,
+    signboard: false,
+    constructionProps: 0,
+    promptReady: false,
+    surveyVisible: false,
+  });
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.reservedFootprints.length)).toBe(0);
+  await expect(page.getByTestId('building-context-prompt')).toBeHidden();
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

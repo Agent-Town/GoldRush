@@ -20,6 +20,12 @@ export type WaterDiagnostics = {
   visualHalfWidth: number;
   springPonds: number;
   waterPhaseVariance: number;
+  depth: {
+    river: number;
+    ford: number;
+    wade: number;
+    deep: number;
+  };
 };
 
 type WaterUniforms = {
@@ -28,6 +34,10 @@ type WaterUniforms = {
   repeat: THREE.IUniform<number>;
   ford: THREE.IUniform<number>;
   flowSpeed: THREE.IUniform<number>;
+  riverDepth: THREE.IUniform<number>;
+  fordDepth: THREE.IUniform<number>;
+  wadeDepth: THREE.IUniform<number>;
+  deepDepth: THREE.IUniform<number>;
 };
 
 type WaterMaterialConfig = {
@@ -35,6 +45,10 @@ type WaterMaterialConfig = {
   riverHalfWidth: number;
   visualHalfWidth: number;
   fordHalfWidth: number;
+  riverDepth: number;
+  fordDepth: number;
+  wadeDepth: number;
+  deepDepth: number;
   anchors: Array<{ x: number; z: number }>;
 };
 
@@ -45,6 +59,10 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     repeat: { value: config.ford ? 1 : 8 },
     ford: { value: config.ford ? 1 : 0 },
     flowSpeed: { value: Balance.world.waterFlowSpeed },
+    riverDepth: { value: config.riverDepth },
+    fordDepth: { value: config.fordDepth },
+    wadeDepth: { value: config.wadeDepth },
+    deepDepth: { value: config.deepDepth },
   };
   const material = new THREE.MeshStandardMaterial({
     color: '#ffffff',
@@ -65,6 +83,10 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     shader.uniforms.waterRepeat = uniforms.repeat;
     shader.uniforms.waterFord = uniforms.ford;
     shader.uniforms.waterFlowSpeed = uniforms.flowSpeed;
+    shader.uniforms.waterRiverDepth = uniforms.riverDepth;
+    shader.uniforms.waterFordDepth = uniforms.fordDepth;
+    shader.uniforms.waterWadeDepth = uniforms.wadeDepth;
+    shader.uniforms.waterDeepDepth = uniforms.deepDepth;
     shader.vertexShader = shader.vertexShader
       .replace('#include <common>', '#include <common>\nvarying vec2 vWaterUv;\nvarying vec2 vWaterWorld;')
       .replace('#include <uv_vertex>', '#include <uv_vertex>\nvWaterUv = uv;\nvWaterWorld = (modelMatrix * vec4(position, 1.0)).xz;');
@@ -75,6 +97,10 @@ uniform float waterQuality;
 uniform float waterRepeat;
 uniform float waterFord;
 uniform float waterFlowSpeed;
+uniform float waterRiverDepth;
+uniform float waterFordDepth;
+uniform float waterWadeDepth;
+uniform float waterDeepDepth;
 varying vec2 vWaterUv;
 varying vec2 vWaterWorld;
 
@@ -124,8 +150,10 @@ float waterNoise(vec2 p) {
   vec4 baseTexel = texture2D(map, flowUv);
   float visualEdgeDist = max(0.0, ${config.visualHalfWidth.toFixed(3)} - abs(vWaterWorld.y));
   float riverDist = max(0.0, ${config.riverHalfWidth.toFixed(3)} - abs(vWaterWorld.y));
-  float depth = smoothstep(0.05, ${config.riverHalfWidth.toFixed(3)}, riverDist);
   float fordBand = max(waterFord, 1.0 - smoothstep(${config.fordHalfWidth.toFixed(3)}, ${(config.fordHalfWidth + 0.9).toFixed(3)}, abs(vWaterWorld.x)));
+  float channelDepth = mix(waterWadeDepth * 0.5, waterRiverDepth, smoothstep(0.05, ${config.riverHalfWidth.toFixed(3)}, riverDist));
+  float declaredDepth = mix(channelDepth, waterFordDepth, fordBand);
+  float depth = smoothstep(max(0.001, waterWadeDepth), max(waterWadeDepth + 0.001, waterDeepDepth), declaredDepth);
   float rippleFreq = mix(1.05, 2.45, lengthNoise);
   float rippleAmp = mix(0.06, 0.17, crossNoise);
   float ripple = sin(vWaterWorld.x * rippleFreq + vWaterWorld.y * mix(-0.46, 0.72, crossNoise) + phaseWarp * 4.0 - waterTime * mix(2.1, 4.4, lengthNoise)) * 0.5 + 0.5;
@@ -203,6 +231,8 @@ export function updateWaterMaterial(mesh: THREE.Mesh, delta: number): void {
   uniforms.time.value += delta;
   uniforms.quality.value = waterQuality();
   uniforms.flowSpeed.value = Balance.world.waterFlowSpeed;
+  uniforms.wadeDepth.value = Balance.terrainSim.wadeDepth;
+  uniforms.deepDepth.value = Balance.terrainSim.deepDepth;
 }
 
 export function waterDiagnostics(
@@ -230,6 +260,12 @@ export function waterDiagnostics(
     visualHalfWidth: round3(visualHalfWidth),
     springPonds: 0,
     waterPhaseVariance: round3(waterPhaseVariance()),
+    depth: {
+      river: round3(riverUniforms?.riverDepth.value ?? 0),
+      ford: round3(fordUniforms?.fordDepth.value ?? riverUniforms?.fordDepth.value ?? 0),
+      wade: round3(riverUniforms?.wadeDepth.value ?? Balance.terrainSim.wadeDepth),
+      deep: round3(riverUniforms?.deepDepth.value ?? Balance.terrainSim.deepDepth),
+    },
   };
 }
 
@@ -249,6 +285,12 @@ export function dryWaterDiagnostics(springPonds: number): WaterDiagnostics {
     visualHalfWidth: 0,
     springPonds,
     waterPhaseVariance: 0,
+    depth: {
+      river: 0,
+      ford: 0,
+      wade: round3(Balance.terrainSim.wadeDepth),
+      deep: round3(Balance.terrainSim.deepDepth),
+    },
   };
 }
 

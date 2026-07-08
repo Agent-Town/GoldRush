@@ -1,15 +1,23 @@
 import type { DemolishCandidate, UpgradeCandidate } from '../systems/BuildSystem';
 import type { BuildableId } from '../game/buildables';
 
+export type MegaprojectFundCandidate = {
+  title: string;
+  stage: number;
+  cost: number;
+  line: string;
+};
+
 export class BuildingContextPrompt {
   private readonly root = document.createElement('div');
   private readonly icon = document.createElement('span');
   private readonly title = document.createElement('span');
   private readonly loss = document.createElement('span');
   private readonly upgradeButton = document.createElement('button');
+  private readonly fundButton = document.createElement('button');
   private readonly demolishButton = document.createElement('button');
 
-  constructor(parent: HTMLElement, onUpgrade: () => void, onDemolish: () => void) {
+  constructor(parent: HTMLElement, onUpgrade: () => void, onDemolish: () => void, onFund: () => void) {
     this.root.className = 'building-context-prompt';
     this.root.dataset.testid = 'building-context-prompt';
     this.root.setAttribute('role', 'status');
@@ -26,6 +34,14 @@ export class BuildingContextPrompt {
       onUpgrade();
       this.upgradeButton.blur();
     });
+    this.fundButton.className = 'building-context-prompt__button building-context-prompt__button--fund';
+    this.fundButton.type = 'button';
+    this.fundButton.dataset.testid = 'stamp-site-fund';
+    this.fundButton.hidden = true;
+    this.fundButton.addEventListener('click', () => {
+      onFund();
+      this.fundButton.blur();
+    });
     this.demolishButton.className = 'building-context-prompt__button building-context-prompt__button--demolish';
     this.demolishButton.type = 'button';
     this.demolishButton.dataset.testid = 'demolish-confirm';
@@ -33,12 +49,31 @@ export class BuildingContextPrompt {
       onDemolish();
       this.demolishButton.blur();
     });
-    this.root.append(this.icon, this.title, this.upgradeButton, this.demolishButton, this.loss);
+    this.root.append(this.icon, this.title, this.upgradeButton, this.fundButton, this.demolishButton, this.loss);
     parent.append(this.root);
   }
 
-  update(demolish: DemolishCandidate | null, upgrade: UpgradeCandidate | null, enterEnabled: boolean): void {
-    this.root.hidden = demolish === null;
+  update(
+    demolish: DemolishCandidate | null,
+    upgrade: UpgradeCandidate | null,
+    enterEnabled: boolean,
+    fund: MegaprojectFundCandidate | null = null,
+  ): void {
+    this.root.hidden = demolish === null && fund === null;
+    if (fund) {
+      this.icon.textContent = 'M';
+      this.title.textContent = fund.title;
+      this.loss.textContent = fund.line;
+      this.upgradeButton.hidden = true;
+      this.demolishButton.hidden = true;
+      this.fundButton.hidden = false;
+      this.fundButton.disabled = false;
+      this.fundButton.textContent = `Fund stage ${fund.stage} — ${fund.cost}g${enterEnabled ? ' Enter' : ''}`;
+      return;
+    }
+    this.fundButton.hidden = true;
+    this.upgradeButton.hidden = false;
+    this.demolishButton.hidden = false;
     if (!demolish) return;
     this.icon.textContent = buildingGlyph(demolish.id);
     this.title.textContent = `${demolish.displayName}${upgrade ? ` · Tier ${upgrade.tier}` : ''}`;

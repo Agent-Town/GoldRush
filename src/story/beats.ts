@@ -69,6 +69,14 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     lines: ['Frontier science is complete.', 'The Steamworks waits for a town to build it.'],
   },
   {
+    id: 'stamp-site-found',
+    trigger: 'stamp-site-found',
+    speaker: 'elder',
+    pointer: '[data-testid="stamp-site-fund"]',
+    oncePerProfile: true,
+    lines: ["The survey's done.", "The Steamworks wants a founder's gold."],
+  },
+  {
     id: 'board-unlock-generic',
     trigger: 'contract-unlocked',
     speaker: 'tavernkeeper',

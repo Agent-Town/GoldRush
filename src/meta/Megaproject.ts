@@ -47,6 +47,19 @@ export type MegaprojectDiagnostics = {
   delayTicks: number;
   materials: MegaprojectMaterials;
   siteFootprint: MegaprojectManifest['siteFootprint'] | null;
+  siteRead: MegaprojectSiteReadDiagnostics | null;
+};
+
+export type MegaprojectSiteReadDiagnostics = {
+  packedEarth: boolean;
+  stakes: number;
+  stringLines: number;
+  walkwayPlanks: number;
+  signboard: boolean;
+  plaque: string;
+  constructionProps: number;
+  promptReady: boolean;
+  surveyVisible: boolean;
 };
 
 export type MegaprojectBuildResult =
@@ -205,6 +218,7 @@ export function megaprojectDiagnostics(
     delayTicks: project.delayTicks,
     materials: stage?.materials ?? {},
     siteFootprint: manifest.siteFootprint,
+    siteRead: null,
   };
 }
 
@@ -297,4 +311,5 @@ const emptyDiagnostics: MegaprojectDiagnostics = {
   delayTicks: 0,
   materials: {},
   siteFootprint: null,
+  siteRead: null,
 };

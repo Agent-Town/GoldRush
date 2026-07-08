@@ -6,12 +6,32 @@
   "threshold": 6,
   "tile": {
     "id": "frontier-river-claim",
-    "biome": "river-claim"
+    "biome": "river-claim",
+    "water": {
+      "id": "frontier-river-depth",
+      "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.2, "springPond": 0.2 },
+      "speedMul": { "river": 0.55, "ford": 0.85, "shallows": 0.8, "springPond": 0.8 },
+      "heroCanWadeDeep": true
+    }
   },
   "devTiles": [
     {
+      "id": "gt-flat-water",
+      "biome": "dev-flat-water",
+      "water": {
+        "id": "gt-flat-water-depth",
+        "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.2, "springPond": 0.2 },
+        "speedMul": { "river": 0.55, "ford": 0.85, "shallows": 0.8, "springPond": 0.8 }
+      }
+    },
+    {
       "id": "gt-test-basin",
       "biome": "dev-basin",
+      "water": {
+        "id": "gt-test-basin-water-depth",
+        "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.2, "springPond": 0.2 },
+        "speedMul": { "river": 0.55, "ford": 0.85, "shallows": 0.8, "springPond": 0.8 }
+      },
       "elevation": {
         "cellSize": 2,
         "slopeMax": 0.35,

@@ -6,8 +6,11 @@ import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/s
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import {
+  activeTileDescriptor,
+  activeWaterDescriptor,
   activeContract,
   type ContractGravelBar,
+  type ContractWaterZone,
   type ContractStakeMarker,
   type ContractWaterSource,
 } from '../meta/ContractFamilies';
@@ -35,6 +38,8 @@ export type TerrainSample = {
   speedMul: number;
   zone: TerrainZone;
   waterSource?: 'river' | 'spring_pond';
+  waterDepth?: number;
+  waterClass?: 'wade' | 'deep';
 };
 
 export type TerrainFeatureSample = {
@@ -73,12 +78,25 @@ export const WATER_Y = 0.025;
 export const VISTA_RADIUS = 90;
 
 const ACTIVE_CONTRACT = activeContract();
+const ACTIVE_TILE = activeTileDescriptor();
 const ELEVATION_TILE = hasElevationTile();
 const TILE_HEIGHTFIELD = ACTIVE_CONTRACT.tileParams.heightfield;
 const TILE_PALETTE = ACTIVE_CONTRACT.tileParams.palette;
-const TILE_WATER = ACTIVE_CONTRACT.tileParams.water;
+const TILE_WATER = activeWaterDescriptor();
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
 const FORD_RANGES = resolveFordRanges();
+const DEFAULT_WATER_DEPTH: Record<ContractWaterZone, number> = {
+  river: 1.25,
+  ford: 0.35,
+  shallows: 0.2,
+  springPond: 0.2,
+};
+const DEFAULT_WATER_SPEED: Record<ContractWaterZone, number> = {
+  river: 0.55,
+  ford: 0.85,
+  shallows: 0.8,
+  springPond: 0.8,
+};
 
 export const bounds: TerrainBounds = {
   minX: -CLAIM_HALF,
@@ -131,22 +149,44 @@ export function sample(x: number, z: number): TerrainSample {
   if (ELEVATION_TILE && !isSimTraversable(x, z)) return { walkable: false, speedMul: 0, zone: 'out' };
 
   const spring = springPondAt(x, z);
-  if (spring) return { walkable: true, speedMul: 0.8, zone: 'shallows', waterSource: 'spring_pond' };
+  if (spring) return waterSample('shallows', 'springPond', 'spring_pond');
 
   if (!ACTIVE_CONTRACT.tileParams.river) return { walkable: true, speedMul: 1, zone: 'bank' };
 
   const inFord = fordAt(x, z) !== null;
-  if (ACTIVE_CONTRACT.tileParams.ford && inFord) return { walkable: true, speedMul: 0.85, zone: 'ford', waterSource: 'river' };
+  if (ACTIVE_CONTRACT.tileParams.ford && inFord) return waterSample('ford', 'ford', 'river');
 
   const inRiver = z >= RIVER_MIN_Z && z <= RIVER_MAX_Z;
-  if (inRiver) return { walkable: true, speedMul: 0.55, zone: 'river', waterSource: 'river' };
+  if (inRiver) return waterSample('river', 'river', 'river');
 
   const inShallows =
     (z > RIVER_MAX_Z && z <= RIVER_MAX_Z + SHALLOWS_WIDTH) ||
     (z < RIVER_MIN_Z && z >= RIVER_MIN_Z - SHALLOWS_WIDTH);
-  if (inShallows) return { walkable: true, speedMul: 0.8, zone: 'shallows', waterSource: 'river' };
+  if (inShallows) return waterSample('shallows', 'shallows', 'river');
 
   return { walkable: true, speedMul: 1, zone: 'bank' };
+}
+
+export function waterDepth(zone: ContractWaterZone): number {
+  return TILE_WATER?.depths?.[zone] ?? DEFAULT_WATER_DEPTH[zone];
+}
+
+function waterSpeedMul(zone: ContractWaterZone): number {
+  return TILE_WATER?.speedMul?.[zone] ?? DEFAULT_WATER_SPEED[zone];
+}
+
+function waterSample(zone: Exclude<TerrainZone, 'bank' | 'out'>, depthZone: ContractWaterZone, waterSource: 'river' | 'spring_pond'): TerrainSample {
+  const depth = waterDepth(depthZone);
+  const deep = depth >= Balance.terrainSim.deepDepth;
+  const walkable = depth <= Balance.terrainSim.wadeDepth || (deep && TILE_WATER?.heroCanWadeDeep === true && ACTIVE_TILE.id === 'frontier-river-claim');
+  return {
+    walkable,
+    speedMul: walkable ? waterSpeedMul(depthZone) : 0,
+    zone,
+    waterSource,
+    waterDepth: depth,
+    waterClass: deep ? 'deep' : 'wade',
+  };
 }
 
 export function spawnEdges(): Vec2[] {
@@ -1025,6 +1065,10 @@ function waterMaterialConfig(ford: boolean, range: FordRange = defaultFordRange(
     riverHalfWidth,
     visualHalfWidth: visualWaterWidth() / 2,
     fordHalfWidth: range.halfWidth,
+    riverDepth: waterDepth('river'),
+    fordDepth: waterDepth('ford'),
+    wadeDepth: Balance.terrainSim.wadeDepth,
+    deepDepth: Balance.terrainSim.deepDepth,
     anchors: nodeAnchors.map((anchor) => ({
       x: anchor.x,
       z: anchor.z < 0 ? RIVER_MIN_Z + 0.55 : RIVER_MAX_Z - 0.55,

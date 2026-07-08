@@ -212,10 +212,14 @@ export type ContractGravelBar = {
   width: number;
   rotation: number;
 };
+export type ContractWaterZone = 'river' | 'ford' | 'shallows' | 'springPond';
 export type ContractWaterDescriptor = {
   id: string;
   visualHalfWidth?: number;
   gravelBars?: ContractGravelBar[];
+  depths?: Partial<Record<ContractWaterZone, number>>;
+  speedMul?: Partial<Record<ContractWaterZone, number>>;
+  heroCanWadeDeep?: boolean;
 };
 export type ContractBuildableFixture = {
   id: 'lantern_post';
@@ -291,6 +295,7 @@ export type EpochTileDescriptor = {
   id: string;
   biome: string;
   elevation?: TileElevationDescriptor;
+  water?: ContractWaterDescriptor;
   rails?: RailPathDescriptor[];
 };
 
@@ -411,6 +416,15 @@ export function activeTileDescriptor(): EpochTileDescriptor {
   if (contract.tileParams.rails) tile.rails = contract.tileParams.rails;
   if (!tile) throw new Error('Missing active tile descriptor: epoch-1-frontier');
   return tile;
+}
+
+export function activeWaterDescriptor(): ContractWaterDescriptor | undefined {
+  const devWater = activeDevTileWaterOverride();
+  if (devWater) return devWater;
+  const contract = activeContract();
+  const epochTile = manifestsById.get(DEFAULT_EPOCH_ID)?.tile;
+  if (epochTile?.id === contract.tileParams.tileId) return mergeWaterDescriptor(epochTile.water, contract.tileParams.water);
+  return contract.tileParams.water;
 }
 
 export function listContracts(epochId = DEFAULT_EPOCH_ID): ContractManifest[] {
@@ -553,6 +567,28 @@ function activeDevTileOverride(): EpochTileDescriptor | null {
   return active;
 }
 
+function activeDevTileWaterOverride(): ContractWaterDescriptor | undefined {
+  const params = readSearchParams();
+  const requestedId = params.get('tile');
+  if (!requestedId || !params.has('debug')) return undefined;
+  return manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((entry) => entry.id === requestedId)?.water;
+}
+
+function mergeWaterDescriptor(
+  base: ContractWaterDescriptor | undefined,
+  override: ContractWaterDescriptor | undefined,
+): ContractWaterDescriptor | undefined {
+  if (!base) return override;
+  if (!override) return base;
+  return {
+    ...base,
+    ...override,
+    depths: { ...base.depths, ...override.depths },
+    speedMul: { ...base.speedMul, ...override.speedMul },
+    gravelBars: override.gravelBars ?? base.gravelBars,
+  };
+}
+
 function defaultContractFor(manifest: EpochManifest): ContractManifest {
   return {
     id: DEFAULT_CONTRACT_ID,
@@ -603,6 +639,7 @@ try {
       activeContract,
       activeContractDiagnostics,
       activeTileDescriptor,
+      activeWaterDescriptor,
       contractTierBudget,
       contractBudgetOk,
     };

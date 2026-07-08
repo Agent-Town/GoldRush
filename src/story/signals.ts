@@ -6,6 +6,7 @@ export type StorySignal =
   | { type: 'first-victory' }
   | { type: 'science-threshold'; threshold: number }
   | { type: 'science-complete' }
+  | { type: 'stamp-site-found' }
   | { type: 'contract-unlocked'; contractId: string; contractName: string; ledgerBlurb: string }
   | { type: 'rung-promotion'; level: number }
   | { type: 'rung-denied-toggle' }
@@ -20,6 +21,7 @@ export const STORY_SIGNAL_REGISTRY = [
   'first-victory',
   'science-threshold',
   'science-complete',
+  'stamp-site-found',
   'contract-unlocked',
   'rung-promotion',
   'rung-denied-toggle',
