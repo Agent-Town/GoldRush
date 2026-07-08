@@ -78,6 +78,7 @@ export type BuildDiagnostics = {
     panRateMult?: number;
     yieldPerCycle?: number;
     repairProgress: number;
+    repairCost: number;
     position: { x: number; z: number };
   }>;
   ruins: number;
@@ -117,6 +118,11 @@ export type DemolishCandidate = {
   invested: number;
   refund: number;
   position: { x: number; z: number };
+};
+
+type FreePlacementOptions = {
+  wrecked?: boolean;
+  repairCost?: number;
 };
 
 export type UpgradeCandidate = {
@@ -237,6 +243,7 @@ export class BuildSystem {
   private readonly hpMax = createNumberStore();
   private readonly tier = createNumberStore();
   private readonly buildCosts = createNumberStore();
+  private readonly repairCostOverrides = createNumberStore();
   private readonly wrecked = createBooleanStore();
   private readonly repairProgress = createNumberStore();
   private readonly repairNeedGoldShown = createBooleanStore();
@@ -615,7 +622,7 @@ export class BuildSystem {
     return true;
   }
 
-  placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0): boolean {
+  placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0, options: FreePlacementOptions = {}): boolean {
     const def = getBuildableDef(id);
     if (!def || !this.isBuildableEnabled(def.id) || this.countFor(def.id) >= def.maxCount) return false;
 
@@ -625,7 +632,14 @@ export class BuildSystem {
     this.snap(target);
     const ok = this.matchesPlacement(def, target) && !this.overlapsExisting(def.id, target);
     const placed = ok ? this.place(def.id, target) : -1;
-    if (placed >= 0) this.finishPlacement(def.id, placed, 0);
+    if (placed >= 0) {
+      this.finishPlacement(def.id, placed, 0);
+      this.repairCostOverrides[def.id][placed] = Math.max(0, Math.ceil(options.repairCost ?? 0));
+      if (options.wrecked) {
+        this.hp[def.id][placed] = 0;
+        this.wreck(def.id, placed);
+      }
+    }
     this.ghostRotationSteps = previousRotation;
     this.syncGhostShape();
     return placed >= 0;
@@ -639,6 +653,7 @@ export class BuildSystem {
         this.hpMax[id][i] = 0;
         this.tier[id][i] = 0;
         this.buildCosts[id][i] = 0;
+        this.repairCostOverrides[id][i] = 0;
         this.wrecked[id][i] = false;
         this.repairProgress[id][i] = 0;
         this.repairNeedGoldShown[id][i] = false;
@@ -1215,6 +1230,7 @@ export class BuildSystem {
     this.hpMax[id][index] = 0;
     this.tier[id][index] = 0;
     this.buildCosts[id][index] = 0;
+    this.repairCostOverrides[id][index] = 0;
     this.wrecked[id][index] = false;
     this.repairProgress[id][index] = 0;
     this.repairNeedGoldShown[id][index] = false;
@@ -1318,6 +1334,7 @@ export class BuildSystem {
           panRateMult: id === 'sluice' ? this.effectiveSluicePanRateMult(index) : undefined,
           yieldPerCycle: id === 'sluice' ? this.effectiveSluiceYieldPerCycle(index) : undefined,
           repairProgress: this.repairProgress[id][index] ?? 0,
+          repairCost: this.repairCost(id, index),
           position: { x: position?.x ?? 0, z: position?.z ?? 0 },
         });
       }
@@ -1761,6 +1778,8 @@ export class BuildSystem {
     const hp = this.wrecked[id][index] ? 0 : (this.hp[id][index] ?? maxHp);
     const missingFraction = maxHp > 0 ? Math.max(0, maxHp - hp) / maxHp : 0;
     if (missingFraction <= 0) return 0;
+    const override = this.repairCostOverrides[id][index] ?? 0;
+    if (override > 0 && this.wrecked[id][index]) return override;
     const cost = this.buildCosts[id][index] || def?.costCurve(0) || 0;
     const pct = Math.min(Balance.repair.capPctOfCost, Balance.repair.pctOfCost * missingFraction);
     return Math.ceil(cost * Math.max(0, pct));

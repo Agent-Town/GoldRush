@@ -46,11 +46,11 @@ const CONTRACTS: readonly Briefing[] = [
   {
     id: 'e1-night-shift',
     name: 'Night Shift',
-    geographyLine: 'Same claim bones, duskier banks, and a lantern on the stake.',
+    geographyLine: 'The claim, gone dark, dotted with cold lanterns.',
     goals: ['Survive to DAWN at wave 25.'],
     rules: [
-      'Dark from wave 10; light is your sight.',
-      'Lantern posts and beacons keep enemies readable.',
+      'Beyond your light, the night owns the claim.',
+      'Relight cold lanterns or build new posts to see threats.',
       'Turrets still target in the dark.',
     ],
   },

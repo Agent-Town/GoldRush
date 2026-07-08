@@ -61,7 +61,7 @@ export class EnemyPool {
   private readonly assets: ClaimJumperAssets = createClaimJumperAssets();
   private readonly enemies: ClaimJumperEnemy[] = [];
   private readonly renderParts: THREE.InstancedMesh[] = [];
-  private readonly sackMesh = new THREE.InstancedMesh(
+  private readonly sackMesh: THREE.InstancedMesh = new THREE.InstancedMesh(
     this.assets.sackGeometry,
     this.assets.sackMaterial,
     Balance.enemy.poolSize,
@@ -75,6 +75,20 @@ export class EnemyPool {
     blending: THREE.AdditiveBlending,
   });
   private readonly hitFlashes = new THREE.InstancedMesh(this.hitFlashGeometry, this.hitFlashMaterial, Balance.enemy.poolSize);
+  private readonly nightReadabilityGeometry = new THREE.PlaneGeometry(0.95, 1.28);
+  private readonly nightReadabilityMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffd88a',
+    transparent: true,
+    opacity: 0.82,
+    depthWrite: false,
+    fog: false,
+    side: THREE.DoubleSide,
+  });
+  private readonly nightReadability = new THREE.InstancedMesh(
+    this.nightReadabilityGeometry,
+    this.nightReadabilityMaterial,
+    Balance.enemy.poolSize,
+  );
   private readonly bannerPoleGeometry = new THREE.CylinderGeometry(0.025, 0.025, 1.36, 8);
   private readonly bannerClothGeometry = new THREE.BoxGeometry(0.52, 0.34, 0.035);
   private readonly bannerPoleMaterial = new THREE.MeshStandardMaterial({
@@ -87,8 +101,9 @@ export class EnemyPool {
     roughness: 0.82,
     metalness: 0.03,
   });
-  private readonly bannerPoleMesh = new THREE.InstancedMesh(this.bannerPoleGeometry, this.bannerPoleMaterial, Balance.enemy.poolSize);
-  private readonly bannerClothMesh = new THREE.InstancedMesh(this.bannerClothGeometry, this.bannerClothMaterial, Balance.enemy.poolSize);
+  private readonly nightBasicMaterial = new THREE.MeshBasicMaterial({ color: '#ffffff', fog: false });
+  private readonly bannerPoleMesh: THREE.InstancedMesh = new THREE.InstancedMesh(this.bannerPoleGeometry, this.bannerPoleMaterial, Balance.enemy.poolSize);
+  private readonly bannerClothMesh: THREE.InstancedMesh = new THREE.InstancedMesh(this.bannerClothGeometry, this.bannerClothMaterial, Balance.enemy.poolSize);
   private readonly bossHpGroup = new THREE.Group();
   private readonly bossHpBackGeometry = new THREE.BoxGeometry(BOSS_HP_WIDTH, 0.16, 0.05);
   private readonly bossHpFillGeometry = new THREE.BoxGeometry(BOSS_HP_FILL_WIDTH, 0.08, 0.06);
@@ -194,6 +209,8 @@ export class EnemyPool {
   private activeHitFlashes = 0;
   private warmHitFlashFrames = 0;
   private spawnSerial = 0;
+  private enemyFogEnabled = true;
+  private nightBasicActive = false;
   private baronSpriteAnimator: SpriteAnimator | null = null;
 
   constructor(private readonly camera?: THREE.Camera) {
@@ -312,7 +329,7 @@ export class EnemyPool {
         break;
       }
       const falloffT = THREE.MathUtils.clamp((distance - source.radius) / dimming.falloff, 0, 1);
-      const light = dimming.minLight + (1 - dimming.minLight) * (1 - falloffT);
+      const light = dimming.minLight + (1 - dimming.minLight) * (1 - falloffT) ** 3;
       sourceLight = Math.max(sourceLight, light);
     }
     return THREE.MathUtils.clamp(1 - dimming.darkness * (1 - sourceLight), 0, 1);
@@ -484,10 +501,13 @@ export class EnemyPool {
     this.bossHpSegmentMaterial.dispose();
     this.hitFlashGeometry.dispose();
     this.hitFlashMaterial.dispose();
+    this.nightReadabilityGeometry.dispose();
+    this.nightReadabilityMaterial.dispose();
     this.bannerPoleGeometry.dispose();
     this.bannerClothGeometry.dispose();
     this.bannerPoleMaterial.dispose();
     this.bannerClothMaterial.dispose();
+    this.nightBasicMaterial.dispose();
     disposeClaimJumperAssets(this.assets);
   }
 
@@ -588,12 +608,19 @@ export class EnemyPool {
     this.hitFlashes.frustumCulled = false;
     this.hitFlashes.renderOrder = RenderLayers.impactVfx;
     this.hitFlashes.visible = false;
+    this.nightReadability.count = Balance.enemy.poolSize;
+    this.nightReadability.frustumCulled = false;
+    this.nightReadability.renderOrder = RenderLayers.gameplay - 0.01;
+    this.nightReadability.visible = false;
     tagPlaceholder(this.hitFlashes, assetSlots.charClaimJumper);
-    this.group.add(this.hitFlashes);
+    tagPlaceholder(this.nightReadability, assetSlots.charClaimJumper);
+    this.group.add(this.nightReadability, this.hitFlashes);
     for (let i = 0; i < Balance.enemy.poolSize; i += 1) {
       this.hitFlashes.setMatrixAt(i, this.hiddenMatrix);
+      this.nightReadability.setMatrixAt(i, this.hiddenMatrix);
     }
     this.hitFlashes.instanceMatrix.needsUpdate = true;
+    this.nightReadability.instanceMatrix.needsUpdate = true;
   }
 
   private createBannerMeshes(): void {
@@ -639,11 +666,13 @@ export class EnemyPool {
   }
 
   private syncInstances(): void {
+    this.syncEnemyFog();
     this.syncRenderInstances();
     this.syncSpriteVisuals();
   }
 
   private syncRenderInstances(): void {
+    this.nightReadability.visible = this.fullDarkRenderCutoffActive();
     for (const enemy of this.enemies) {
       this.syncEnemyInstance(enemy);
     }
@@ -667,7 +696,7 @@ export class EnemyPool {
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
-    const lightFactor = this.lightFactorFor(enemy);
+    const lightFactor = this.renderLightFactor(this.lightFactorFor(enemy));
     const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
     const motion =
       enemy.eliteKind === 'baron' && this.baronSprites.isLoaded
@@ -703,7 +732,7 @@ export class EnemyPool {
           lightFactor,
         );
       } else if (i === 0) {
-        this.setInstanceColor(part, enemy.id, this.shadowColor, lightFactor);
+        this.setInstanceColor(part, enemy.id, this.shadowColor, this.fullDarkRenderCutoffActive() ? Math.min(lightFactor, 1) : lightFactor);
       } else if (i === 2) {
         this.setInstanceColor(part, enemy.id, this.faceColor, lightFactor);
       } else {
@@ -716,10 +745,27 @@ export class EnemyPool {
     this.setInstanceColor(this.sackMesh, enemy.id, this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
     this.syncBanner(enemy, lightFactor);
+    this.syncNightReadability(enemy, lightFactor);
+  }
+
+  private syncNightReadability(enemy: ClaimJumperEnemy, lightFactor: number): void {
+    const visible = this.fullDarkRenderCutoffActive() && enemy.isAlive && lightFactor > 0;
+    if (visible) {
+      this.syncObject.position.copy(enemy.group.position);
+      this.syncObject.position.y += 0.94 * enemy.visualScale;
+      this.syncObject.rotation.set(0, 0, 0);
+      if (this.camera) this.syncObject.quaternion.copy(this.camera.quaternion);
+      this.syncObject.scale.setScalar(enemy.visualScale);
+      this.syncObject.updateMatrix();
+      this.nightReadability.setMatrixAt(enemy.id, this.syncObject.matrix);
+    } else {
+      this.nightReadability.setMatrixAt(enemy.id, this.hiddenMatrix);
+    }
+    this.nightReadability.instanceMatrix.needsUpdate = true;
   }
 
   private syncBanner(enemy: ClaimJumperEnemy, lightFactor: number): void {
-    const visible = enemy.isAlive && enemy.hasBanner && !this.baronBannerSprites.isLoaded;
+    const visible = enemy.isAlive && lightFactor > 0 && enemy.hasBanner && !this.baronBannerSprites.isLoaded;
     this.instanceMatrix.multiplyMatrices(visible ? this.baseMatrix : this.hiddenMatrix, this.bannerPoleLocalMatrix);
     this.bannerPoleMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.setInstanceColor(this.bannerPoleMesh, enemy.id, this.bannerPoleColor, lightFactor);
@@ -744,16 +790,18 @@ export class EnemyPool {
   }
 
   private syncEnemySprite(enemy: ClaimJumperEnemy): void {
-    const baronVisible = enemy.isAlive && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
-    const normalVisible = enemy.isAlive && !enemy.isThief && !baronVisible;
-    const thiefVisible = enemy.isAlive && enemy.isThief;
+    const lightFactor = this.renderLightFactor(this.lightFactorFor(enemy));
+    const litVisible = lightFactor > 0;
+    const useProceduralDark = this.fullDarkRenderCutoffActive();
+    const baronVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
+    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && !enemy.isThief && !baronVisible;
+    const thiefVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.isThief;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
     const showFade = this.active <= 32;
     const normalMotion = this.spriteAnimator.motion;
     const thiefMotion = this.thiefSpriteAnimator.motion;
     const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
     const baronOverlayActive = this.baronSpriteAnimator?.overlayActive === true;
-    const lightFactor = this.lightFactorFor(enemy);
     this.generatedSprites.setTintScalar(enemy.id, lightFactor);
     this.generatedSpriteFades.setTintScalar(enemy.id, lightFactor);
     this.thiefSprites.setTintScalar(enemy.id, lightFactor);
@@ -767,7 +815,11 @@ export class EnemyPool {
     this.thiefSpriteFades.set(enemy.id, enemy.group.position, showFade && thiefVisible && this.thiefSpriteAnimator.overlayActive);
     this.baronSprites.set(enemy.id, enemy.group.position, baronVisible);
     this.baronSpriteFades.set(enemy.id, enemy.group.position, showFade && baronVisible && baronOverlayActive);
-    this.baronBannerSprites.set(enemy.id, enemy.group.position, enemy.isAlive && enemy.hasBanner && this.baronBannerSprites.isLoaded);
+    this.baronBannerSprites.set(
+      enemy.id,
+      enemy.group.position,
+      !useProceduralDark && enemy.isAlive && litVisible && enemy.hasBanner && this.baronBannerSprites.isLoaded,
+    );
     this.applySpriteBob(this.generatedSprites.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, enemy.visualScale);
     this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, enemy.visualScale);
     this.applySpriteBob(this.thiefSprites.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, enemy.visualScale);
@@ -832,10 +884,65 @@ export class EnemyPool {
     for (const part of this.renderParts) part.visible = visible;
   }
 
+  private syncEnemyFog(): void {
+    const fullDark = this.fullDarkRenderCutoffActive();
+    const enabled = !fullDark;
+    const proceduralVisible = fullDark || !this.generatedSprites.isLoaded;
+    this.syncNightBasicMaterials(fullDark);
+    if (this.enemyFogEnabled === enabled) {
+      this.setProceduralVisible(proceduralVisible);
+      return;
+    }
+    this.enemyFogEnabled = enabled;
+    for (const material of [
+      this.generatedSprites.material,
+      this.generatedSpriteFades.material,
+      this.thiefSprites.material,
+      this.thiefSpriteFades.material,
+      this.baronSprites.material,
+      this.baronSpriteFades.material,
+      this.baronBannerSprites.material,
+    ]) {
+      setMaterialFog(material, enabled);
+    }
+    for (const mesh of [...this.renderParts, this.sackMesh, this.bannerPoleMesh, this.bannerClothMesh]) {
+      setMaterialFog(mesh.material, enabled);
+    }
+    this.setProceduralVisible(proceduralVisible);
+  }
+
+  private syncNightBasicMaterials(enabled: boolean): void {
+    if (this.nightBasicActive === enabled) return;
+    this.nightBasicActive = enabled;
+    const basic = this.nightBasicMaterial;
+    this.renderParts.forEach((part, index) => {
+      if (index === 0) return;
+      const standard =
+        index === 1 ? this.assets.ponchoMaterial : index === 2 ? this.assets.faceMaterial : this.assets.hatMaterial;
+      part.material = enabled ? basic : standard;
+      part.material.needsUpdate = true;
+    });
+    this.sackMesh.material = enabled ? basic : this.assets.sackMaterial;
+    this.bannerPoleMesh.material = enabled ? basic : this.bannerPoleMaterial;
+    this.bannerClothMesh.material = enabled ? basic : this.bannerClothMaterial;
+    this.sackMesh.material.needsUpdate = true;
+    this.bannerPoleMesh.material.needsUpdate = true;
+    this.bannerClothMesh.material.needsUpdate = true;
+  }
+
   private setInstanceColor(mesh: THREE.InstancedMesh, index: number, base: THREE.Color, lightFactor: number): void {
     this.dimmedColor.copy(base).multiplyScalar(lightFactor);
     mesh.setColorAt(index, this.dimmedColor);
     if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
+  }
+
+  private renderLightFactor(lightFactor: number): number {
+    if (!this.fullDarkRenderCutoffActive()) return lightFactor;
+    return lightFactor < Balance.contracts.nightShift.renderVisibilityCutoff ? 0 : Balance.contracts.nightShift.renderVisibleBoost;
+  }
+
+  private fullDarkRenderCutoffActive(): boolean {
+    return this.lightDimming.enabled && this.lightDimming.darkness >= 0.99;
   }
 
   private rebuildSpatialHash(): void {
@@ -881,6 +988,17 @@ export class EnemyPool {
 
 function round2(value: number): number {
   return Math.round(value * 100) / 100;
+}
+
+function setMaterialFog(material: THREE.Material | THREE.Material[], enabled: boolean): void {
+  if (Array.isArray(material)) {
+    for (const item of material) setMaterialFog(item, enabled);
+    return;
+  }
+  const fogMaterial = material as THREE.Material & { fog?: boolean };
+  if (fogMaterial.fog === enabled) return;
+  fogMaterial.fog = enabled;
+  fogMaterial.needsUpdate = true;
 }
 
 function round3(value: number): number {

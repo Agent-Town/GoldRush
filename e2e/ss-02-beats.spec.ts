@@ -275,7 +275,7 @@ test('full E1 thread fires each authored arc once with portraits', async ({ page
   const contracts = [
     ['e1-dry-gulch', 'The Dry Gulch', 'Mesa country; dry washes fall toward one sunken spring.', 'board-unlock-dry-gulch'],
     ['e1-twin-banks', 'Twin Banks', 'A braided river claim with twin fords, gravel bars, and damp reeds.', 'board-unlock-twin-banks'],
-    ['e1-night-shift', 'Night Shift', 'Same claim bones, duskier banks, and a lantern on the stake.', 'board-unlock-night-shift'],
+    ['e1-night-shift', 'Night Shift', 'The claim, gone dark, dotted with cold lanterns.', 'board-unlock-night-shift'],
     ['e1-baron', 'The Claim-Jumper Baron', 'An oxblood banner marks the outfit that keeps buying trouble.', 'board-unlock-baron'],
   ] as const;
   for (const [contractId, contractName, ledgerBlurb, id] of contracts) {

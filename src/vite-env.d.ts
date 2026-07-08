@@ -363,6 +363,7 @@ interface ThreeGameDiagnostics {
       panRateMult?: number;
       yieldPerCycle?: number;
       repairProgress: number;
+      repairCost: number;
       position: { x: number; z: number };
     }>;
     ruins: number;
@@ -781,6 +782,8 @@ interface Window {
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     spawnWrecker: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
     wreck: (family: GrBuildableId, index: number) => boolean;
+    repair: (family: GrBuildableId, index: number) => false | unknown;
+    screenPoint: (x: number, z: number, y?: number) => { x: number; y: number; z: number; inView: boolean };
     demolish: (family: GrBuildableId, index: number) => boolean;
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     setManualSim: (enabled: boolean) => boolean;

@@ -1,11 +1,37 @@
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { PNG } from 'pngjs';
+import { Balance } from '../src/game/Balance';
+import { RUN_SUSPEND_KEY } from '../src/game/ProfileStorage';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+type SavedNightSuspend = {
+  wave: number;
+  buildings: {
+    id: string;
+    index: number;
+    wrecked: boolean;
+    repairCostOverride?: number;
+    position: { x: number; z: number };
+  }[];
+};
 
-const ARTIFACT_DIR = path.resolve('artifacts/e1-night-shift');
+const ARTIFACT_DIR = path.resolve('artifacts/night-bite');
 const NIGHT_QUERY = '?debug&contract=e1-night-shift&timescale=8&nolevel&nowaves&seed=e1-night-shift';
+const RELIGHT_COST = Math.ceil(Balance.lanternPost.cost / 2);
+const COLD_LANTERNS = [
+  { id: 'lantern_post', x: 0, z: 16, rotationSteps: 0, wrecked: true, relightCost: RELIGHT_COST },
+  { id: 'lantern_post', x: -16, z: 18, rotationSteps: 1, wrecked: true, relightCost: RELIGHT_COST },
+  { id: 'lantern_post', x: 16, z: 18, rotationSteps: 3, wrecked: true, relightCost: RELIGHT_COST },
+  { id: 'lantern_post', x: -22, z: -12, rotationSteps: 1, wrecked: true, relightCost: RELIGHT_COST },
+  { id: 'lantern_post', x: 22, z: -12, rotationSteps: 3, wrecked: true, relightCost: RELIGHT_COST },
+  { id: 'lantern_post', x: -10, z: -24, rotationSteps: 2, wrecked: true, relightCost: RELIGHT_COST },
+  { id: 'lantern_post', x: 10, z: -24, rotationSteps: 2, wrecked: true, relightCost: RELIGHT_COST },
+] as const;
+const COLD_LANTERN_POSITIONS = COLD_LANTERNS.map(({ x, z }) => ({ x, z }));
+const VISIBLE_LIGHT = 0.35;
+const DARK_LIGHT = 0.06;
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.clear());
@@ -29,6 +55,13 @@ async function openGame(page: Page, query = NIGHT_QUERY): Promise<ErrorBucket> {
 async function gotoGame(page: Page, query: string): Promise<void> {
   await page.goto(`/${query}`);
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await dismissBriefing(page);
+}
+
+async function dismissBriefing(page: Page): Promise<void> {
+  const briefing = page.getByTestId('contract-briefing');
+  if (await briefing.isVisible().catch(() => false)) await page.getByTestId('contract-briefing-dismiss').click();
+  await expect(briefing).toBeHidden();
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
@@ -59,6 +92,120 @@ async function selectBuildable(page: Page, id: string): Promise<boolean> {
   return page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId) ?? false, id);
 }
 
+async function lanternHp(page: Page) {
+  return page.evaluate(() =>
+    window.__THREE_GAME_DIAGNOSTICS__?.build.hp
+      .filter((entry) => entry.id === 'lantern_post')
+      .map((entry) => ({
+        index: entry.index,
+        hp: entry.hp,
+        maxHp: entry.maxHp,
+        wrecked: entry.wrecked,
+        repairCost: entry.repairCost,
+        position: entry.position,
+      })) ?? [],
+  );
+}
+
+async function relightLantern(page: Page, index = 0): Promise<unknown> {
+  const target = COLD_LANTERN_POSITIONS[index]!;
+  await grantGold(page, 20);
+  await teleport(page, target.x, target.z);
+  const result = await page.evaluate((targetIndex) => window.__GR_TEST__?.repair('lantern_post', targetIndex), index);
+  await expect.poll(() => lanternHp(page).then((entries) => entries[index]?.wrecked)).toBe(false);
+  return result;
+}
+
+async function spawnAssault(page: Page): Promise<void> {
+  const lantern = COLD_LANTERN_POSITIONS[0]!;
+  for (const point of [
+    { x: lantern.x - 2, z: lantern.z },
+    { x: lantern.x, z: lantern.z + 2 },
+    { x: lantern.x + 4, z: lantern.z },
+    { x: lantern.x + 9, z: lantern.z },
+  ]) {
+    await expect(page.evaluate((pos) => window.__GR_TEST__?.spawnEnemyAt(pos.x, pos.z), point)).resolves.toBe(true);
+  }
+  await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().length ?? 0)).toBe(4);
+}
+
+async function enemyLights(page: Page): Promise<number[]> {
+  return page.evaluate(() => window.__GR_TEST__?.enemyPositions().map((enemy) => enemy.light ?? 1).sort((a, b) => a - b) ?? []);
+}
+
+async function waitForSavedNightWave(page: Page, wave: number): Promise<SavedNightSuspend> {
+  await page.waitForFunction(
+    ([key, wanted]) => {
+      const raw = localStorage.getItem(key);
+      if (!raw) return false;
+      try {
+        return (JSON.parse(raw) as { wave?: number }).wave === wanted;
+      } catch {
+        return false;
+      }
+    },
+    [RUN_SUSPEND_KEY, wave] as const,
+    { timeout: 15_000 },
+  );
+  const raw = await page.evaluate((key) => localStorage.getItem(key), RUN_SUSPEND_KEY);
+  expect(raw).toBeTruthy();
+  return JSON.parse(raw!) as SavedNightSuspend;
+}
+
+async function enemyLightNear(page: Page, point: { x: number; z: number }): Promise<number> {
+  const light = await page.evaluate((target) => {
+    const enemies = window.__GR_TEST__?.enemyPositions() ?? [];
+    let best = null as { distanceSq: number; light: number } | null;
+    for (const enemy of enemies) {
+      const dx = enemy.x - target.x;
+      const dz = enemy.z - target.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (!best || distanceSq < best.distanceSq) best = { distanceSq, light: enemy.light ?? 1 };
+    }
+    return best;
+  }, point);
+  expect(light).toBeTruthy();
+  expect(light!.distanceSq).toBeLessThan(1);
+  return light!.light;
+}
+
+async function spriteLuminance(page: Page, point: { x: number; z: number }): Promise<number> {
+  const screen = await page.evaluate((pos) => window.__GR_TEST__?.screenPoint(pos.x, pos.z, 1.25) ?? null, point);
+  expect(screen).toBeTruthy();
+  expect(screen!.inView).toBe(true);
+
+  const canvas = page.locator('#game-canvas');
+  const [box, buffer] = await Promise.all([canvas.boundingBox(), canvas.screenshot()]);
+  expect(box).toBeTruthy();
+  const png = PNG.sync.read(buffer);
+  const scaleX = png.width / box!.width;
+  const scaleY = png.height / box!.height;
+  const centerX = Math.round(screen!.x * scaleX);
+  const centerY = Math.round(screen!.y * scaleY);
+  const samples: number[] = [];
+
+  for (let y = centerY - 8; y <= centerY + 8; y += 1) {
+    if (y < 0 || y >= png.height) continue;
+    for (let x = centerX - 6; x <= centerX + 6; x += 1) {
+      if (x < 0 || x >= png.width) continue;
+      const offset = (y * png.width + x) * 4;
+      if (png.data[offset + 3] < 64) continue;
+      const r = png.data[offset] / 255;
+      const g = png.data[offset + 1] / 255;
+      const b = png.data[offset + 2] / 255;
+      samples.push(0.2126 * r + 0.7152 * g + 0.0722 * b);
+    }
+  }
+
+  expect(samples.length).toBeGreaterThan(0);
+  samples.sort((a, b) => a - b);
+  return samples[Math.floor(samples.length * 0.95)] ?? 0;
+}
+
+function visibleThreats(lights: readonly number[]): number {
+  return lights.filter((light) => light >= VISIBLE_LIGHT).length;
+}
+
 async function expectClean(errors: ErrorBucket): Promise<void> {
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
@@ -79,15 +226,25 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
   expect(snapshot.active?.id).toBe('e1-night-shift');
   expect(snapshot.simTile).toBe('frontier-river-claim');
   expect(snapshot.menuIds).toContain('lantern_post');
-  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts)).toBe(1);
-  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPostPositions)).toEqual([{ x: 0, z: 12 }]);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts)).toBe(COLD_LANTERNS.length);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPostPositions)).toEqual(COLD_LANTERN_POSITIONS);
+  expect(await lanternHp(page)).toEqual(
+    COLD_LANTERNS.map(({ x, z }, index) => ({
+      index,
+      hp: 0,
+      maxHp: 35,
+      wrecked: true,
+      repairCost: RELIGHT_COST,
+      position: { x, z },
+    })),
+  );
   expect(snapshot.registry).toMatchObject({
     name: 'Night Shift',
     tileParams: {
       tileId: 'frontier-river-claim',
       river: true,
       ford: true,
-      prePlacedBuildables: [{ id: 'lantern_post', x: 0, z: 12, rotationSteps: 0 }],
+      prePlacedBuildables: COLD_LANTERNS,
     },
     twist: {
       secureWave: 25,
@@ -103,13 +260,20 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
   expect(snapshot.lighting).toMatchObject({ enabled: true, phase: 'full', darkness: 0 });
 
   await setWave(page, 5);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift.phase)).toBe('dusk');
-  await shot(page, testInfo, 'dusk-wave-5');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift)).toMatchObject({
+    phase: 'dusk',
+    darkness: 0.62,
+  });
+  await shot(page, testInfo, 'cold-camp-dusk');
 
   await setWave(page, 10);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift)).toMatchObject({
     phase: 'dark',
     darkness: 1,
+  });
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting)).toMatchObject({
+    fogNear: 18,
+    fogFar: 42,
   });
 
   await setWave(page, 25);
@@ -118,7 +282,7 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
   await expectClean(errors);
 });
 
-test('lantern post is Night Shift gated and creates a true-dark light ring', async ({ page }, testInfo) => {
+test('lantern post is Night Shift gated and relights a true-dark light ring', async ({ page }, testInfo) => {
   const defaultErrors = await openGame(page, '?debug&timescale=3&nolevel&nowaves&seed=e1-night-default');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildables.map((entry) => entry.id))).not.toContain(
     'lantern_post',
@@ -130,39 +294,88 @@ test('lantern post is Night Shift gated and creates a true-dark light ring', asy
   await setBalance(page, 'enemy.hp', 500);
   await setBalance(page, 'enemy.speed', 0);
   await setWave(page, 10);
-  await grantGold(page, 80);
-  await teleport(page, 4, 12);
   await expect(selectBuildable(page, 'lantern_post')).resolves.toBe(true);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
-  await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts ?? 0)).toBe(2);
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  const repair = await relightLantern(page, 0);
+  expect(repair).toMatchObject({ id: 'lantern_post', index: 0, cost: RELIGHT_COST });
 
-  await teleport(page, 12, 10);
-  await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(0, 10))).resolves.toBe(true);
-  await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(24, 10))).resolves.toBe(true);
+  const lantern = COLD_LANTERN_POSITIONS[0]!;
+  const inRadius = { x: lantern.x + 4, z: lantern.z };
+  const outOfRadius = { x: lantern.x + 12, z: lantern.z };
+  await expect(page.evaluate((pos) => window.__GR_TEST__?.spawnEnemyAt(pos.x, pos.z), inRadius)).resolves.toBe(true);
+  await expect(page.evaluate((pos) => window.__GR_TEST__?.spawnEnemyAt(pos.x, pos.z), outOfRadius)).resolves.toBe(true);
   await expect
-    .poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().map((enemy) => enemy.light ?? 1) ?? []))
-    .toEqual(expect.arrayContaining([1, expect.any(Number)]));
-  const light = await page.evaluate(() => (window.__GR_TEST__?.enemyPositions().map((enemy) => enemy.light ?? 1) ?? []).sort());
-  expect(light[0]).toBeLessThanOrEqual(0.2);
-  expect(light.at(-1)).toBeGreaterThanOrEqual(0.98);
+    .poll(() => enemyLights(page))
+    .toEqual(expect.arrayContaining([expect.any(Number), expect.any(Number)]));
+  const light = await enemyLights(page);
+  expect(light[0]).toBeLessThanOrEqual(DARK_LIGHT);
+  expect(light.at(-1)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+
+  await teleport(page, (inRadius.x + outOfRadius.x) / 2, lantern.z + 8);
+  await page.waitForTimeout(180);
+  expect(await enemyLightNear(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+  expect(await enemyLightNear(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
+  expect(await spriteLuminance(page, outOfRadius)).toBeLessThanOrEqual(DARK_LIGHT);
+  expect(await spriteLuminance(page, inRadius)).toBeGreaterThanOrEqual(VISIBLE_LIGHT);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemyDimming.sources)).toBeGreaterThanOrEqual(2);
   await shot(page, testInfo, 'true-dark-lantern-ring');
 
-  const lanternCount = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts ?? 0);
-  for (let index = 0; index < lanternCount; index += 1) {
-    await expect(page.evaluate((target) => window.__GR_TEST__?.wreck('lantern_post', target), index)).resolves.toBe(true);
-  }
-  await expect
-    .poll(() =>
-      page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.filter((entry) => entry.id === 'lantern_post').every((entry) => entry.wrecked)),
-    )
-    .toBe(true);
-  await expect
-    .poll(() =>
-      page.evaluate(() => window.__GR_TEST__?.enemyPositions().find((enemy) => Math.abs(enemy.x) < 1)?.light ?? 1),
-    )
-    .toBeLessThanOrEqual(0.2);
+  await expectClean(errors);
+});
+
+test('lantern coverage is necessary for threat visibility', async ({ page }) => {
+  const errors = await openGame(page, '?debug&contract=e1-night-shift&timescale=8&nolevel&nowaves&seed=e1-night-necessity');
+  await setBalance(page, 'enemy.hp', 500);
+  await setBalance(page, 'enemy.speed', 0);
+  await setWave(page, 10);
+  await teleport(page, 28, -28);
+  await spawnAssault(page);
+  const coldLights = await enemyLights(page);
+  const coldVisible = visibleThreats(coldLights);
+  expect(Math.max(...coldLights)).toBeLessThanOrEqual(DARK_LIGHT);
+
+  await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
+  await relightLantern(page, 0);
+  await teleport(page, 28, -28);
+  await spawnAssault(page);
+  const litLights = await enemyLights(page);
+  const litVisible = visibleThreats(litLights);
+  expect(litVisible - coldVisible).toBeGreaterThanOrEqual(3);
+  expect(litVisible).toBeGreaterThanOrEqual(3);
+  await expectClean(errors);
+});
+
+test('cold lantern relight costs survive run suspend and continue', async ({ page, context }) => {
+  const errors = await openGame(page, '?debug&contract=e1-night-shift&timescale=40&nokill&nolevel&nosteal&nowreck&seed=e1-night-suspend');
+  const saved = await waitForSavedNightWave(page, 1);
+  expect(
+    saved.buildings
+      .filter((entry) => entry.id === 'lantern_post')
+      .map((entry) => ({
+        index: entry.index,
+        wrecked: entry.wrecked,
+        repairCostOverride: entry.repairCostOverride,
+        position: entry.position,
+      })),
+  ).toEqual(
+    COLD_LANTERNS.map(({ x, z }, index) => ({
+      index,
+      wrecked: true,
+      repairCostOverride: RELIGHT_COST,
+      position: { x, z },
+    })),
+  );
+
+  const restoredPage = await context.newPage();
+  const restoredErrors = await openGame(
+    restoredPage,
+    '?debug&contract=e1-night-shift&timescale=8&nolevel&nowaves&seed=e1-night-suspend',
+  );
+  await restoredPage.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restored === true);
+  await expect.poll(() => lanternHp(restoredPage).then((entries) => entries[0]?.repairCost)).toBe(RELIGHT_COST);
+  expect(await relightLantern(restoredPage, 0)).toMatchObject({ id: 'lantern_post', index: 0, cost: RELIGHT_COST });
+  await expectClean(restoredErrors);
+  await restoredPage.close();
   await expectClean(errors);
 });
 
@@ -173,6 +386,7 @@ test('render dimming does not stop turret acquisition or damage', async ({ page 
   );
   await setBalance(page, 'enemy.hp', 400);
   await setBalance(page, 'enemy.speed', 0);
+  await setBalance(page, 'turret.range', 20);
   await setWave(page, 10);
   await grantGold(page, 120);
   await teleport(page, 4, 12);
@@ -184,7 +398,7 @@ test('render dimming does not stop turret acquisition or damage', async ({ page 
 
   await expect
     .poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions()[0]?.light ?? 1), { timeout: 8_000 })
-    .toBeLessThanOrEqual(0.2);
+    .toBeLessThanOrEqual(DARK_LIGHT);
   await expect
     .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.damageByOwner.turrets ?? 0), { timeout: 8_000 })
     .toBeGreaterThan(0);

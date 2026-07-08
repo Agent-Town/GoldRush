@@ -2,6 +2,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { createHash } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
+import { Balance } from '../src/game/Balance';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type DetailClass = 'rocks' | 'stumps' | 'dry_grass' | 'wagon_ruts' | 'claim_posts' | 'cactus' | 'reeds';
@@ -9,6 +10,17 @@ type ContractId = 'e1-dry-gulch' | 'e1-twin-banks' | 'e1-night-shift';
 
 const ARTIFACT_DIR = path.resolve('artifacts/tile-identity');
 const CONTRACTS: readonly ContractId[] = ['e1-dry-gulch', 'e1-twin-banks', 'e1-night-shift'];
+const NIGHT_RELIGHT_COST = Math.ceil(Balance.lanternPost.cost / 2);
+const NIGHT_LANTERNS = [
+  { id: 'lantern_post', x: 0, z: 16, rotationSteps: 0, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
+  { id: 'lantern_post', x: -16, z: 18, rotationSteps: 1, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
+  { id: 'lantern_post', x: 16, z: 18, rotationSteps: 3, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
+  { id: 'lantern_post', x: -22, z: -12, rotationSteps: 1, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
+  { id: 'lantern_post', x: 22, z: -12, rotationSteps: 3, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
+  { id: 'lantern_post', x: -10, z: -24, rotationSteps: 2, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
+  { id: 'lantern_post', x: 10, z: -24, rotationSteps: 2, wrecked: true, relightCost: NIGHT_RELIGHT_COST },
+] as const;
+const NIGHT_LANTERN_POSITIONS = NIGHT_LANTERNS.map(({ x, z }) => ({ x, z }));
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(() => localStorage.clear());
@@ -145,10 +157,10 @@ async function assertContractIdentity(page: Page, contractId: ContractId): Promi
   if (contractId === 'e1-night-shift') {
     expect(snapshot.contract.boardRow.ledgerBlurb).toContain('lantern');
     expect(snapshot.contract.tileParams.palette?.id).toBe('night-shift-dusk');
-    expect(snapshot.contract.tileParams.prePlacedBuildables).toEqual([{ id: 'lantern_post', x: 0, z: 12, rotationSteps: 0 }]);
+    expect(snapshot.contract.tileParams.prePlacedBuildables).toEqual(NIGHT_LANTERNS);
     expect(snapshot.menuIds).toContain('lantern_post');
-    expect(snapshot.build.lanternPosts).toBe(1);
-    expect(snapshot.build.lanternPostPositions).toEqual([{ x: 0, z: 12 }]);
+    expect(snapshot.build.lanternPosts).toBe(NIGHT_LANTERNS.length);
+    expect(snapshot.build.lanternPostPositions).toEqual(NIGHT_LANTERN_POSITIONS);
     expect(snapshot.contract.tileParams.tileId).toBe('frontier-river-claim');
     expect(snapshot.contract.tileParams.river).toBe(true);
     expect(snapshot.contract.tileParams.ford).toBe(true);

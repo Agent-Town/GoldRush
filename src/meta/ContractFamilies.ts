@@ -255,6 +255,8 @@ export type ContractBuildableFixture = {
   x: number;
   z: number;
   rotationSteps?: number;
+  wrecked?: boolean;
+  relightCost?: number;
 };
 export type ContractBriefing = {
   goals: string[];

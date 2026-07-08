@@ -97,6 +97,7 @@ type BuildingSuspend = {
   maxHp: number;
   baseMaxHp?: number;
   buildCost: number;
+  repairCostOverride?: number;
   wrecked: boolean;
   repairProgress: number;
   position: { x: number; z: number };
@@ -560,6 +561,7 @@ function captureBuildings(buildSystem: AnyGame | undefined): BuildingSuspend[] {
         maxHp: cleanNumber(entry.maxHp),
         baseMaxHp: cleanNumber(buildSystem.hpMax?.[id]?.[index], cleanNumber(entry.maxHp)),
         buildCost: cleanNumber(buildSystem.buildCosts?.[id]?.[index]),
+        repairCostOverride: cleanNumber(buildSystem.repairCostOverrides?.[id]?.[index]),
         wrecked: entry.wrecked === true,
         repairProgress: cleanNumber(entry.repairProgress),
         position: {
@@ -586,6 +588,7 @@ function restoreBuildings(game: AnyGame, buildings: readonly BuildingSuspend[]):
     buildSystem.hpMax[building.id][index] = cleanNumber(building.baseMaxHp, Math.round(building.maxHp / maxHpMult));
     buildSystem.hp[building.id][index] = building.hp;
     buildSystem.buildCosts[building.id][index] = building.buildCost;
+    buildSystem.repairCostOverrides[building.id][index] = cleanNumber(building.repairCostOverride);
     buildSystem.repairProgress[building.id][index] = building.repairProgress;
     buildSystem.wrecked[building.id][index] = building.wrecked;
     buildSystem.syncTierVisual?.(building.id, index);

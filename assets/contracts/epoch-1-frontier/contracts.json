@@ -121,7 +121,15 @@
             "antiTile": 0.56
           }
         },
-        "prePlacedBuildables": [{ "id": "lantern_post", "x": 0, "z": 12, "rotationSteps": 0 }],
+        "prePlacedBuildables": [
+          { "id": "lantern_post", "x": 0, "z": 16, "rotationSteps": 0, "wrecked": true, "relightCost": 8 },
+          { "id": "lantern_post", "x": -16, "z": 18, "rotationSteps": 1, "wrecked": true, "relightCost": 8 },
+          { "id": "lantern_post", "x": 16, "z": 18, "rotationSteps": 3, "wrecked": true, "relightCost": 8 },
+          { "id": "lantern_post", "x": -22, "z": -12, "rotationSteps": 1, "wrecked": true, "relightCost": 8 },
+          { "id": "lantern_post", "x": 22, "z": -12, "rotationSteps": 3, "wrecked": true, "relightCost": 8 },
+          { "id": "lantern_post", "x": -10, "z": -24, "rotationSteps": 2, "wrecked": true, "relightCost": 8 },
+          { "id": "lantern_post", "x": 10, "z": -24, "rotationSteps": 2, "wrecked": true, "relightCost": 8 }
+        ],
         "lanes": {
           "spawnEdges": ["north", "south", "east", "west"],
           "territoryRingBiasWaves": 3,
@@ -138,18 +146,18 @@
       },
       "boardRow": {
         "name": "Night Shift",
-        "ledgerBlurb": "Same claim bones, duskier banks, and a lantern on the stake.",
+        "ledgerBlurb": "The claim, gone dark, dotted with cold lanterns.",
         "tags": ["vein-hunter"],
         "unlock": "science≥3"
       },
       "briefing": {
         "goals": ["Survive to DAWN at wave 25."],
         "rules": [
-          "Dark from wave 10; light is your sight.",
-          "Lantern posts and beacons keep enemies readable.",
+          "Beyond your light, the night owns the claim.",
+          "Relight cold lanterns or build new posts to see threats.",
           "Turrets still target in the dark."
         ],
-        "geographyLine": "Same claim bones, duskier banks, and a lantern on the stake."
+        "geographyLine": "The claim, gone dark, dotted with cold lanterns."
       }
     },
     {

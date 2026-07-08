@@ -777,6 +777,22 @@ export class Game {
         spawnThief: (edge?: CompassEdge) => this.spawnHarnessThief(edge),
         spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
+        repair: (family: BuildableId, index: number) => {
+          const repaired = this.buildSystem.repairBuilding(family, index, this.timeAlive, this.primaryActor.group.position);
+          this.publishDiagnostics();
+          return repaired;
+        },
+        screenPoint: (x: number, z: number, y = 0.8) => {
+          this.camera.updateMatrixWorld();
+          const point = new THREE.Vector3(x, y, z).project(this.camera);
+          const rect = this.canvas.getBoundingClientRect();
+          return {
+            x: (point.x * 0.5 + 0.5) * rect.width,
+            y: (-point.y * 0.5 + 0.5) * rect.height,
+            z: point.z,
+            inView: point.x >= -1 && point.x <= 1 && point.y >= -1 && point.y <= 1 && point.z >= -1 && point.z <= 1,
+          };
+        },
         demolish: (family: BuildableId, index: number) => this.demolishBuilding(family, index),
         upgradeBuilding: (family: BuildableId, index: number) => this.upgradeBuilding(family, index),
         setManualSim: (enabled: boolean) => {
@@ -1612,7 +1628,10 @@ export class Game {
   private placeContractFixtures(): void {
     for (const fixture of this.activeContract.tileParams.prePlacedBuildables ?? []) {
       if (fixture.id === 'lantern_post') {
-        this.buildSystem.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0);
+        this.buildSystem.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
+          wrecked: fixture.wrecked,
+          repairCost: fixture.relightCost,
+        });
       }
     }
   }
@@ -2804,7 +2823,10 @@ export class Game {
       if (node.active) add('gold_seam', node.position.x, node.position.z, 2.25, 3);
     }
     for (const entry of this.buildSystem.diagnostics.hp) {
-      if (entry.wrecked || entry.hp <= 0) continue;
+      if (entry.wrecked || entry.hp <= 0) {
+        if (entry.id === 'lantern_post' && entry.wrecked) add('lantern_post', entry.position.x, entry.position.z, 2.35, 2);
+        continue;
+      }
       add(buildingInfoClass(entry.id), entry.position.x, entry.position.z, 2.35, 2);
     }
     const stake = Terrain.lossStakeMarker() ?? this.heroStart;

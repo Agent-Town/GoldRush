@@ -239,7 +239,7 @@ export class GeneratedSpriteBatch {
 
   setTintScalar(index: number, scalar: number): void {
     if (index < 0 || index >= this.tintScalars.length) return;
-    this.tintScalars[index] = THREE.MathUtils.clamp(scalar, 0, 1);
+    this.tintScalars[index] = THREE.MathUtils.clamp(scalar, 0, 12);
   }
 
   dispose(): void {

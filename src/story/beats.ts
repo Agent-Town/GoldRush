@@ -180,7 +180,7 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'tavernkeeper',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-night-shift',
-    lines: (signal) => ['Night Shift is open.', contractLine(signal, 'Same claim bones, duskier banks, and a lantern on the stake.')],
+    lines: (signal) => ['Night Shift is open.', contractLine(signal, 'The claim, gone dark, dotted with cold lanterns.')],
   },
   {
     id: 'board-unlock-baron',

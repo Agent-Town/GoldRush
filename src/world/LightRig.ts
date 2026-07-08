@@ -32,11 +32,11 @@ export class LightRig {
   private readonly fog = new THREE.Fog('#ead2a3', Balance.world.fogNear, Balance.world.fogFar);
   private readonly dayBackground = new THREE.Color('#f1c887');
   private readonly duskBackground = new THREE.Color('#8a6b6c');
-  private readonly darkBackground = new THREE.Color('#101824');
+  private readonly darkBackground = new THREE.Color('#000000');
   private readonly dawnBackground = new THREE.Color('#f5cfa0');
   private readonly dayFog = new THREE.Color('#ead2a3');
   private readonly duskFog = new THREE.Color('#8b6c6c');
-  private readonly darkFog = new THREE.Color('#17202a');
+  private readonly darkFog = new THREE.Color('#000000');
   private readonly dawnFog = new THREE.Color('#f5d7b2');
   private readonly blobShadows = new SpriteBlobShadows();
   private readonly post = new LedgerPostPass();
@@ -67,8 +67,10 @@ export class LightRig {
   update(): void {
     const quality = effectiveShadowQuality(this.stressFallback);
     const darkness = this.nightShift.enabled ? THREE.MathUtils.clamp(this.nightShift.darkness, 0, 1) : 0;
-    const fogNear = THREE.MathUtils.lerp(Balance.world.fogNear, 28, darkness);
-    const fogFar = Math.max(fogNear + 8, THREE.MathUtils.lerp(Balance.world.fogFar, 58, darkness));
+    const baseFogNear = this.nightShift.enabled ? 34 : Balance.world.fogNear;
+    const baseFogFar = this.nightShift.enabled ? 72 : Balance.world.fogFar;
+    const fogNear = THREE.MathUtils.lerp(baseFogNear, 18, darkness);
+    const fogFar = Math.max(fogNear + 8, THREE.MathUtils.lerp(baseFogFar, 42, darkness));
     this.applyNightShiftPalette(darkness);
     this.scene.background = this.background;
     this.scene.fog = this.fog;
@@ -162,11 +164,11 @@ export class LightRig {
     const targetFog = this.nightShift.phase === 'dusk' ? this.duskFog : this.darkFog;
     this.background.copy(this.dayBackground).lerp(targetBackground, darkness);
     this.fog.color.copy(this.dayFog).lerp(targetFog, darkness);
-    this.sun.color.set('#ffd28a').lerp(new THREE.Color('#7894b8'), darkness);
-    this.sun.intensity = THREE.MathUtils.lerp(2.35, 0.38, darkness);
-    this.fill.color.set('#fff2cc').lerp(new THREE.Color('#6c83a6'), darkness);
-    this.fill.groundColor.set('#8b6c3f').lerp(new THREE.Color('#0b1018'), darkness);
-    this.fill.intensity = THREE.MathUtils.lerp(1.12, 0.36, darkness);
+    this.sun.color.set('#ffd28a').lerp(new THREE.Color('#40516f'), darkness);
+    this.sun.intensity = THREE.MathUtils.lerp(2.35, 0, darkness);
+    this.fill.color.set('#fff2cc').lerp(new THREE.Color('#28324a'), darkness);
+    this.fill.groundColor.set('#8b6c3f').lerp(new THREE.Color('#000000'), darkness);
+    this.fill.intensity = THREE.MathUtils.lerp(1.12, 0, darkness);
   }
 }
 
