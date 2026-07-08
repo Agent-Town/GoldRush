@@ -15,7 +15,9 @@ import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
 import { renderResearchChart } from '../ResearchChart';
-import { clearRunSuspend, readRunSuspend, runSuspendLabel } from '../../game/RunSuspend';
+import { clearRunSuspend, readRunSuspend } from '../../game/RunSuspend';
+import { loadContract } from '../../meta/ContractFamilies';
+import { readTownName } from '../../town/TownNaming';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
@@ -86,14 +88,16 @@ export class StartMenu {
         <div class="gr-start-menu__emblem" data-testid="start-menu-emblem" data-asset-slot="ui-title-emblem" data-asset-state="ready" style="background-image:url('${emblemUrl}')" aria-hidden="true"></div>
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
         <p class="gr-start-menu__subtitle">an Agent Town tale</p>
-        ${suspend ? `<p class="gr-start-menu__saved-claim" data-testid="start-menu-saved-claim">${runSuspendLabel(suspend)}</p>` : ''}
+        ${suspend ? `<p class="gr-start-menu__saved-claim" data-testid="start-menu-saved-claim">${escapeHtml(savedClaimLabel(suspend))}</p>` : ''}
         ${
           this.firstBoot
             ? this.renderFirstBoot()
             : `<nav class="gr-start-menu__nav" aria-label="Claim actions">
           ${
             suspend
-              ? `<button class="gr-start-menu__button" type="button" data-menu-action="continue" data-testid="start-menu-continue">Continue Wave ${suspend.wave}</button>`
+              ? `<button class="gr-start-menu__button" type="button" data-menu-action="continue" data-testid="start-menu-continue">${escapeHtml(
+                  continueLabel(suspend),
+                )}</button>`
               : ''
           }
           <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="new" data-testid="start-menu-new-claim">New Claim</button>
@@ -267,7 +271,7 @@ export class StartMenu {
   private confirmNewClaim(): boolean {
     const suspend = readRunSuspend();
     if (!suspend) return true;
-    if (!window.confirm(`Abandon the saved claim at wave ${suspend.wave}?`)) return false;
+    if (!window.confirm(`Abandon ${suspendContext(suspend)} and start a new claim?`)) return false;
     clearRunSuspend();
     return true;
   }
@@ -304,4 +308,27 @@ function escapeHtml(value: string): string {
     if (char === '"') return '&quot;';
     return '&#39;';
   });
+}
+
+function continueLabel(suspend: { wave: number; contractId: string }): string {
+  return `Continue — ${suspendContext(suspend)}`;
+}
+
+function savedClaimLabel(suspend: { wave: number; contractId: string }): string {
+  return `Saved claim: ${suspendContext(suspend)}. Closing the tab keeps your place.`;
+}
+
+function suspendContext(suspend: { wave: number; contractId: string }): string {
+  const parts = [`wave ${suspend.wave}`, contractName(suspend.contractId)];
+  const townName = readTownName();
+  if (townName) parts.push(townName);
+  return parts.join(' · ');
+}
+
+function contractName(contractId: string): string {
+  try {
+    return loadContract(contractId).name;
+  } catch {
+    return contractId;
+  }
 }

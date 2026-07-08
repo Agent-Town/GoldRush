@@ -129,7 +129,9 @@ test('Continue appears only for an existing suspend slot and enters the run path
   await page.goto('/');
 
   await expect(page.getByTestId('start-menu-continue')).toBeVisible();
+  await expect(page.getByTestId('start-menu-continue')).toHaveText('Continue — wave 4 · The Claim');
   await expect(page.getByTestId('start-menu-saved-claim')).toContainText('wave 4');
+  await expect(page.getByTestId('start-menu-saved-claim')).toContainText('The Claim');
   await page.getByTestId('start-menu-continue').click();
   await expect(page.getByTestId('start-menu')).toHaveCount(0);
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);

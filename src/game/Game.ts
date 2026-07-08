@@ -147,6 +147,7 @@ import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 import { buildableDefs, type BuildableId } from './buildables';
+import { readRunSuspend, type RunSuspendWrite } from './RunSuspend';
 
 const frontierEpoch = loadEpoch('epoch-1-frontier');
 const STAMP_MILL_ID = 'stamp-mill';
@@ -281,6 +282,7 @@ export class Game {
   private readonly damageVignette = document.createElement('div');
   private readonly activeEpoch = selectActiveEpoch();
   private readonly activeContract = selectActiveContract();
+  private runSuspendSaveLine = runSuspendPauseLine(this.activeContract.id);
   private readonly heroStart = contractHeroStart(this.activeContract);
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
@@ -3014,11 +3016,17 @@ export class Game {
   private pauseMetaSnapshot(): PauseMetaSnapshot {
     const meter = scienceMeter(this.researchState);
     return {
+      save: this.runSuspendSaveLine,
       science: `Science: ${meter.steps}/${meter.threshold} steps; banked +${meter.overflow}`,
       territory: territoryPauseLine(this.metaProgressForPresence()),
       boons: activeResearchBoons(this.researchState).map(({ name, effect }) => ({ name, effect })),
       mastery: this.masteryProgressLines(),
     };
+  }
+
+  onRunSuspendWrite(write: RunSuspendWrite): void {
+    this.runSuspendSaveLine = runSuspendSavedLine(write.wave);
+    this.hud.showMetaRecap(`Wave ${write.wave} ledgered ✓`, 2);
   }
 
   private metaProgressForPresence(): MetaProgress {
@@ -3130,6 +3138,19 @@ function runStartMetaRecap(meta: MetaProgress, research: ResearchState, townName
   for (const boon of activeResearchBoons(research)) items.push(boon.recap);
   const prefix = townName ? `${townName} remembers` : 'Your claim remembers';
   return items.length > 0 ? `${prefix}: ${items.slice(0, 3).join(' | ')}` : null;
+}
+
+function runSuspendPauseLine(contractId: string): string {
+  const saved = readRunSuspend();
+  return saved?.contractId === contractId ? runSuspendSavedLine(saved.wave) : runSuspendEmptyLine();
+}
+
+function runSuspendSavedLine(wave: number): string {
+  return `📒 Ledger saved at wave ${wave} — closing the tab keeps your place.`;
+}
+
+function runSuspendEmptyLine(): string {
+  return "The ledger saves at each wave's end.";
 }
 
 function territoryPauseLine(meta: MetaProgress): string {

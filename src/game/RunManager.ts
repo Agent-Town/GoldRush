@@ -14,7 +14,7 @@ import {
   type MetaProgressStorage,
   type MetaTrack,
 } from './MetaProgress';
-import { RunSuspendController, type RunSuspendDiagnostics } from './RunSuspend';
+import { RunSuspendController, type RunSuspendDiagnostics, type RunSuspendWrite } from './RunSuspend';
 
 type EconomyLog = {
   log: readonly EconomyEvent[];
@@ -33,6 +33,7 @@ type RunManagerHost = {
   secureBark?: () => string | undefined;
   secureLedgerLine?: () => string | undefined;
   secureCallout?: () => string | undefined;
+  onSuspendWrite?: (write: RunSuspendWrite) => void;
 };
 
 type InstallOptions = {
@@ -75,7 +76,8 @@ export class RunManager {
       this.endRun(this.stayedForRushRunId === this.runId ? 'rush' : 'death', event.at, event.wavesSurvived),
     );
     this.offWaveStarted = host.events.on('wave_started', (event) => {
-      this.runSuspend?.captureBoundary(event.wave, event.at);
+      const write = this.runSuspend?.captureBoundary(event.wave, event.at);
+      if (write) host.onSuspendWrite?.(write);
       this.maybeSecureRun(event.wave);
     });
     this.patchResetRun();
@@ -360,6 +362,7 @@ function resolveHost(game: unknown): RunManagerHost {
     secureBarkForRun?: () => string | undefined;
     secureLedgerLineForRun?: () => string | undefined;
     secureCalloutForRun?: () => string | undefined;
+    onRunSuspendWrite?: (write: RunSuspendWrite) => void;
   };
 
   if (!host.events || !host.economy) {
@@ -379,6 +382,7 @@ function resolveHost(game: unknown): RunManagerHost {
     secureBark: () => host.secureBarkForRun?.(),
     secureLedgerLine: () => host.secureLedgerLineForRun?.(),
     secureCallout: () => host.secureCalloutForRun?.(),
+    onSuspendWrite: (write) => host.onRunSuspendWrite?.(write),
   };
 }
 
