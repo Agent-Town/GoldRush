@@ -1,0 +1,19 @@
+# Task 057: THE ROCKET CART — the Baron's weapon, and the player's prize (LANE-B, branch lane/m4, commit prefix "feat:")
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b. READ FIRST: AGENTS.md; **specs/epoch-saga/e2-steamworks-bundle.md §B2 (the Sky-Rocket Battery — festival rockets, ADR-001-clean, "the Baron fields it first")**; 054's epic Baron (stats/rampage — this rides on it; file-probe its merge, else STOP "054 not landed"); CombatSystem 'lob' kind + blast vfx (the rockets REUSE this machinery, festival-tinted); the E2 science tree data (merged — the Sky-Rocket node gains a captured-science condition); the baron medal persistence. Pre-flight: safe-dupe rule (ahead-merged lane commits → `git checkout -B lane/m4 main && git clean -fd`, proceed; STOP only on unmerged content or foreign edits); npm install; build green. SEQUENCING: after 055 in this lane's queue (the boss chain stays serialized — same surfaces).
+
+## OWNER RULING (2026-07-08 ~07:35 — his remembered design, adopted over the banked version because it's better)
+The E1 Baron WIELDS the proto sky-rocket weapon; beating him is how the science reaches E2. "Right now the Baron does not have a weapon and does not really do much."
+
+## Scope
+1. **The ranged attack — THE ROCKET VOLLEY**: when no target is in melee/rampage range (i.e., the player kites), the Baron plants (telegraph: the banner dips + a fuse-hiss beat, ~1.2s) and fires a 3-rocket volley — 'lob'-kind projectiles on high festival arcs, gold-and-teal burst on impact (blast-class vfx, festival tint), AoE damage to buildings AND hero (CombatSystem-resolved, no new damage paths). Cadence ~8s. Design intent: kiting stays correct but stops being FREE — you dodge arcs while you chip.
+2. **The kit visual**: v1 placeholder-first — the banner-bearer sheet + a cart-silhouette prop attached behind him (the §B2 rocket-cart SPRITE is an E2 art-batch entry — add the LEDGER slot row PENDING-ART; wire when it lands).
+3. **THE CAPTURE**: on his defeat, the medal gains "the Rocket Cart — captured" (board card shows it) + a per-profile `rocketCartCaptured` flag; **the E2 science tree's Sky-Rocket Battery node reads the flag: captured = the node starts UNLOCKED when E2 activates** (data condition on the already-merged tree), with a beat at E2 activation: "His science. Your arsenal now." Uncaptured profiles research it normally — both paths asserted.
+4. **Difficulty knobs**: volley damage/cadence/arc-time as manifest data (the 055 knob table grows — the owner tunes after playing).
+5. Determinism (seeded volley targeting, two-run identical) + the governor handles the new sounds (fuse-hiss = existing arm sound; bursts = blast-boom, festival variant flag).
+
+## Firewall
+Touch ONLY: baron manifest (volley data), the plant/volley behavior (elite-scoped — no regular-enemy changes), the cart prop attach, medal/flag persistence, the E2 tree node condition (data), the beat entry, LEDGER slot row, e2e, artifacts. NO CombatSystem forks, NO E2 tree structure changes beyond the one condition, NO hero weapon changes (the PLAYER'S battery arrives via E2 science — this task ships the villain's version + the key).
+
+## Self-check
+tsc/build; extended baron e2e: kited Baron plants + volleys on cadence (telegraph asserted) · rockets damage buildings + hero via CombatSystem events · melee-range suppresses volleys · defeat sets flag + medal line · seeded E2-activation with flag = Sky-Rocket node unlocked; without = locked-normal · determinism two-run identical; 054/055 + baron + m1-01 + m2-01 unmodified green both projects; zero console errors; screenshots (the volley arcs mid-flight, the burst, the medal with the cart line) into artifacts/057/. Commit on lane/m4. End: READY-FOR-GATES + the knob table + results.
