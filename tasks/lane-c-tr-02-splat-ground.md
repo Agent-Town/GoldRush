@@ -10,7 +10,7 @@ You are Codex, implementer for Gold Rush, running natively on Robin's Mac in wor
 5. **Perf**: shader cost measured (ms/frame delta at stress, both projects); mobile within envelopes; still one ground draw call.
 
 ## Firewall
-Touch ONLY: the splat shader + weight-field derivation (render), descriptor weight params (additive), e2e, artifacts. NO sim, NO texture file changes (inputs as-is), NO water shader, NO default-flag flip, NO camera.
+Touch ONLY: the splat shader + weight-field derivation (render), descriptor weight params (additive), e2e, artifacts. NO sim, texture inputs: prefer batch-014 seamless grounds when processed (ter-*-seamless in assets/processed); else current as-is + note the swap-later, NO water shader, NO default-flag flip, NO camera.
 
 ## Self-check
 tsc/build; extended tr suite: flag-off byte-identity STANDS · splat-on: zero seam assertion (sample a grid of cross-boundary pixel pairs — gradient, never step), all four geographies distinct (palette sampling), determinism (seeded noise stable two-run) · perf table; w1 + identity + m1-01 + m2-01 + task-025 green both projects (splat-on run too — findings reported); zero console errors; the triptychs into artifacts/tr-02/. Commit on lane/polish. End: READY-FOR-GATES + the triptychs called out for the owner + perf numbers.
