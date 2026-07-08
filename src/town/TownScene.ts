@@ -1,5 +1,8 @@
 import './town.css';
 import * as THREE from 'three';
+import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
+import { SpriteAnimator } from '../assets/SpriteAnimator';
+import { tagPlaceholder } from '../assets/slots';
 import { CameraRig } from '../systems/CameraRig';
 import { Hero } from '../entities/Hero';
 import { InputController } from '../core/InputController';
@@ -26,6 +29,7 @@ import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoN
 import { disposeObject3D } from '../utils/dispose';
 import { earnedTownBuildings, townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
+import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 
 const loadTavernBackdropUrl = () =>
   import('../../assets/processed/tavern-interior-backdrop.png?url').then((module) => module.default);
@@ -47,6 +51,7 @@ export type TownDiagnostics = {
   elapsed: number;
   player: { x: number; z: number };
   activePrompt: TownBuildingId | null;
+  activeBark: { actorId: TownActorId; speaker: string; text: string } | null;
   townName: string | null;
   namingPrompt: boolean;
   boardOpen: boolean;
@@ -56,6 +61,18 @@ export type TownDiagnostics = {
     visible: boolean;
     territoryRequired: number | null;
     barkSlot: string | null;
+  }>;
+  actors: Array<{
+    id: TownActorId;
+    name: string;
+    post: string;
+    visible: boolean;
+    anchor: TownBuildingId;
+    position: { x: number; z: number };
+    bark: string | null;
+    loaded: boolean;
+    loop: boolean;
+    assetSlot: string;
   }>;
   stampMill: {
     visible: boolean;
@@ -106,11 +123,15 @@ export class TownScene {
   private readonly hiddenButtons: HiddenButtonState[];
   private readonly metaProgress = readTownMetaProgress();
   private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
+  private readonly visibleActors = visibleTownActors(this.visibleBuildings);
   private readonly stampMill = readTownStampMill(this.metaProgress);
   private readonly stampMillGroup = new THREE.Group();
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
   private readonly stampMillConstructionProps: THREE.Object3D[] = [];
+  private readonly townActors: TownActorRuntime[] = [];
+  private readonly actorBarkVisits = new Map<TownActorId, number>();
+  private readonly barkCard = document.createElement('div');
   private townTitle?: HTMLElement;
   private townSubtitle?: HTMLElement;
   private nameInput?: HTMLInputElement;
@@ -119,6 +140,8 @@ export class TownScene {
   private frame = 0;
   private elapsed = 0;
   private activePrompt: TownBuilding | null = null;
+  private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
+  private activeBarkActor: TownActorRuntime | null = null;
   private promptKey = '';
   private townName = readTownName();
   private nameMode: TownNameMode = 'founding';
@@ -160,6 +183,7 @@ export class TownScene {
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.infoNote?.dispose();
+    for (const actor of this.townActors) actor.dispose();
     this.ui.remove();
     this.hero.dispose();
     disposeObject3D(this.scene);
@@ -175,9 +199,11 @@ export class TownScene {
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
     if (this.boardOpen) {
+      for (const actor of this.townActors) actor.update(delta, this.elapsed);
       if (rawExitIntent && !this.lastExitIntent) this.closeBoard();
       this.lastExitIntent = rawExitIntent;
       this.syncPrompt();
+      this.syncBark();
       this.publishDiagnostics();
       return;
     }
@@ -189,8 +215,10 @@ export class TownScene {
     this.lastExitIntent = rawExitIntent;
 
     this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: this.sampleTown });
+    for (const actor of this.townActors) actor.update(delta, this.elapsed);
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.syncPrompt();
+    this.syncBark();
     this.publishDiagnostics();
   }
 
@@ -240,6 +268,11 @@ export class TownScene {
       this.scene.add(createShell(building));
     }
     this.createStampMillVignette();
+    for (const actor of this.visibleActors) {
+      const runtime = new TownActorRuntime(actor);
+      this.townActors.push(runtime);
+      this.scene.add(runtime.group);
+    }
 
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
@@ -366,6 +399,11 @@ export class TownScene {
     this.prompt.setAttribute('role', 'status');
     this.prompt.setAttribute('aria-live', 'polite');
     this.prompt.hidden = true;
+    this.barkCard.className = 'town-ui__bark';
+    this.barkCard.dataset.testid = 'town-bark-card';
+    this.barkCard.setAttribute('role', 'status');
+    this.barkCard.setAttribute('aria-live', 'polite');
+    this.barkCard.hidden = true;
     this.board.className = 'town-ui__board';
     this.board.dataset.testid = 'contract-board';
     this.board.setAttribute('aria-label', 'Tavern contract board');
@@ -391,6 +429,7 @@ export class TownScene {
     const promptStack = this.ui.querySelector<HTMLElement>('[data-testid="town-prompt-stack"]');
     promptStack?.append(this.prompt);
     if (promptStack) this.infoNote = new WorldInfoNotePrompt(promptStack);
+    promptStack?.append(this.barkCard);
     this.ui.append(this.nameCard);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
@@ -524,6 +563,57 @@ export class TownScene {
     }
   }
 
+  private syncBark(): void {
+    if (this.boardOpen || this.nameCardOpen) {
+      this.hideBark();
+      return;
+    }
+
+    const position = this.hero.group.position;
+    let nearest: TownActorRuntime | null = null;
+    let nearestDistanceSq = Number.POSITIVE_INFINITY;
+    for (const actor of this.townActors) {
+      const dx = position.x - actor.position.x;
+      const dz = position.z - actor.position.z;
+      const distanceSq = dx * dx + dz * dz;
+      const radiusSq = actor.definition.barkRadius * actor.definition.barkRadius;
+      if (distanceSq <= radiusSq && distanceSq < nearestDistanceSq) {
+        nearest = actor;
+        nearestDistanceSq = distanceSq;
+      }
+    }
+
+    if (!nearest) {
+      this.hideBark();
+      return;
+    }
+    if (nearest === this.activeBarkActor) return;
+
+    const count = this.actorBarkVisits.get(nearest.definition.id) ?? 0;
+    this.actorBarkVisits.set(nearest.definition.id, count + 1);
+    const text = townActorBark(nearest.definition, this.townName, count);
+    this.activeBarkActor = nearest;
+    this.activeBark = { actorId: nearest.definition.id, speaker: nearest.definition.name, text };
+    this.barkCard.innerHTML = `
+      <img class="town-ui__bark-portrait" src="${escapeHtml(nearest.definition.portraitUrl)}" alt="" />
+      <div class="town-ui__bark-copy">
+        <strong data-testid="town-bark-speaker">${escapeHtml(nearest.definition.name)}</strong>
+        <span>${escapeHtml(nearest.definition.post)}</span>
+        <p data-testid="town-bark-text">${escapeHtml(text)}</p>
+      </div>
+    `;
+    this.barkCard.dataset.actorId = nearest.definition.id;
+    this.barkCard.hidden = false;
+  }
+
+  private hideBark(): void {
+    this.activeBarkActor = null;
+    this.activeBark = null;
+    this.barkCard.hidden = true;
+    this.barkCard.textContent = '';
+    delete this.barkCard.dataset.actorId;
+  }
+
   private openBoard(): void {
     this.renderBoard();
     this.emitBoardStorySignals();
@@ -545,10 +635,16 @@ export class TownScene {
     const rows = listBoardContracts();
     const scores = loadScores();
     const backdropStyle = this.tavernBackdropUrl ? ` style="background-image:url('${this.tavernBackdropUrl}')"` : '';
+    const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
     this.board.innerHTML = `
       <div class="town-ui__board-backdrop"${backdropStyle} aria-hidden="true"></div>
       <div class="town-ui__board-shell">
         <header class="town-ui__board-header">
+          ${
+            host
+              ? `<img class="town-ui__board-host" src="${escapeHtml(host.portraitUrl)}" alt="" data-testid="contract-board-host" />`
+              : ''
+          }
           <div>
             <p class="town-ui__board-eyebrow">Tavern Ledger</p>
             <h2>Contract Board</h2>
@@ -633,6 +729,7 @@ export class TownScene {
         z: round2(this.hero.group.position.z),
       },
       activePrompt: this.activePrompt?.id ?? null,
+      activeBark: this.activeBark,
       townName: this.townName,
       namingPrompt: this.nameCardOpen,
       boardOpen: this.boardOpen,
@@ -643,6 +740,24 @@ export class TownScene {
         territoryRequired: building.requires?.territory ?? null,
         barkSlot: building.barkSlot ?? null,
       })),
+      actors: TOWN_ACTORS.map((actor) => {
+        const runtime = this.townActors.find((item) => item.definition.id === actor.id);
+        return {
+          id: actor.id,
+          name: actor.name,
+          post: actor.post,
+          visible: !!runtime,
+          anchor: actor.anchor,
+          position: {
+            x: round2(runtime?.position.x ?? actor.position.x),
+            z: round2(runtime?.position.z ?? actor.position.z),
+          },
+          bark: this.activeBark?.actorId === actor.id ? this.activeBark.text : null,
+          loaded: runtime?.loaded ?? false,
+          loop: !!actor.loop,
+          assetSlot: actor.assetSlot,
+        };
+      }),
       stampMill: this.stampMillDiagnostics(),
       renderer: {
         calls: this.renderer.info.render.calls,
@@ -687,6 +802,65 @@ export class TownScene {
     const element = document.querySelector<T>(selector);
     if (!element) throw new Error(`Missing ${selector}`);
     return element;
+  }
+}
+
+class TownActorRuntime {
+  readonly group = new THREE.Group();
+  private readonly material = new THREE.SpriteMaterial({
+    transparent: true,
+    alphaTest: 0.04,
+    depthWrite: false,
+  });
+  private readonly sprite = new THREE.Sprite(this.material);
+  private readonly animator: SpriteAnimator;
+  private readonly orientationResolver = new OrientationResolver();
+  private currentDirection: RotationDirection;
+
+  constructor(readonly definition: TownActorDefinition) {
+    this.group.name = `TownActor:${definition.id}`;
+    this.group.position.set(definition.position.x, 0, definition.position.z);
+    this.sprite.name = `TownActorSprite:${definition.id}`;
+    this.sprite.scale.setScalar(definition.scale);
+    this.sprite.position.y = definition.scale * 0.55 + 0.08;
+    this.sprite.renderOrder = RenderLayers.companion;
+    this.sprite.visible = true;
+    this.group.add(this.sprite);
+    this.currentDirection = definition.facing;
+    this.orientationResolver.reset(definition.facing);
+    this.animator = new SpriteAnimator(definition.assetSlot, this.material, this.sprite);
+    tagPlaceholder(this.group, definition.assetSlot);
+  }
+
+  get position(): THREE.Vector3 {
+    return this.group.position;
+  }
+
+  get loaded(): boolean {
+    return !!this.material.map;
+  }
+
+  update(delta: number, elapsed: number): void {
+    const previousX = this.group.position.x;
+    const previousZ = this.group.position.z;
+    const point = this.definition.loop ? loopPoint(this.definition.loop, elapsed) : this.definition.position;
+    this.group.position.x = point.x;
+    this.group.position.z = point.z;
+    const dx = point.x - previousX;
+    const dz = point.z - previousZ;
+    if (dx * dx + dz * dz > 0.0004) this.currentDirection = this.orientationResolver.resolve(dx, dz);
+
+    const phase = actorPhase(this.definition);
+    const breathe = Math.sin((elapsed * 0.58 + phase) * Math.PI * 2);
+    const sway = Math.sin((elapsed * 0.31 + phase) * Math.PI * 2);
+    this.group.position.y = breathe * 0.035;
+    this.material.rotation = THREE.MathUtils.degToRad(sway * 1.7);
+    this.animator.update(delta, 'idle', this.currentDirection);
+  }
+
+  dispose(): void {
+    this.animator.dispose();
+    this.material.dispose();
   }
 }
 
@@ -998,6 +1172,43 @@ function townInfoClass(id: TownBuildingId): WorldInfoObjectClass | null {
   if (id === 'assay_office') return 'town_assay_office';
   if (id === 'general_store' || id === 'chapel') return null;
   return 'town_tavern';
+}
+
+function loopPoint(loop: NonNullable<TownActorDefinition['loop']>, elapsed: number): { x: number; z: number } {
+  const points = loop.points;
+  if (points.length === 0) return { x: 0, z: 0 };
+  if (points.length === 1) return points[0]!;
+
+  let total = 0;
+  const lengths: number[] = [];
+  for (let index = 0; index < points.length; index += 1) {
+    const from = points[index]!;
+    const to = points[(index + 1) % points.length]!;
+    const length = Math.hypot(to.x - from.x, to.z - from.z);
+    lengths.push(length);
+    total += length;
+  }
+  if (total <= 0) return points[0]!;
+
+  let distance = ((((elapsed / Math.max(0.001, loop.seconds) + loop.phase) % 1) + 1) % 1) * total;
+  for (let index = 0; index < points.length; index += 1) {
+    const length = lengths[index] ?? 0;
+    if (distance > length) {
+      distance -= length;
+      continue;
+    }
+    const from = points[index]!;
+    const to = points[(index + 1) % points.length]!;
+    const t = length > 0 ? distance / length : 0;
+    return { x: THREE.MathUtils.lerp(from.x, to.x, t), z: THREE.MathUtils.lerp(from.z, to.z, t) };
+  }
+  return points[0]!;
+}
+
+function actorPhase(actor: TownActorDefinition): number {
+  let hash = 0;
+  for (const char of actor.id) hash += char.charCodeAt(0);
+  return ((actor.loop?.phase ?? 0) + (hash % 17) / 17) % 1;
 }
 
 function round2(value: number): number {
