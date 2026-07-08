@@ -5,19 +5,10 @@ import {
   installProfileStorageScope,
   loadProfileState,
 } from '../../game/ProfileStorage';
-import { hasRocketCartCaptured } from '../../game/Medals';
-import {
-  browserResearchStorage,
-  loadResearchState,
-  saveResearchState,
-  setPinnedResearchTarget,
-  type ResearchState,
-} from '../../meta/ResearchTree';
 import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
-import { renderResearchChart } from '../ResearchChart';
-import { clearRunSuspend, readRunSuspend } from '../../game/RunSuspend';
+import { readRunSuspend } from '../../game/RunSuspend';
 import { loadContract } from '../../meta/ContractFamilies';
 import { readTownName } from '../../town/TownNaming';
 import { accountSync } from '../../game/AccountSync';
@@ -50,8 +41,6 @@ export class StartMenu {
   private firstBoot = false;
   private profileMessage = '';
   private settingsOpen = false;
-  private researchOpen = false;
-  private selectedResearchNodeId: string | undefined;
   private backdropUrl: string | undefined;
   private backdropRequest: Promise<string> | undefined;
   private disposeAccountSync: () => void = () => undefined;
@@ -88,7 +77,7 @@ export class StartMenu {
     const suspend = readRunSuspend();
     const account = accountSync.snapshot();
     const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
-    this.root.className = `gr-start-menu${this.researchOpen ? ' gr-start-menu--research-open' : ''}`;
+    this.root.className = 'gr-start-menu';
     this.root.innerHTML = `
       <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="${this.backdropUrl ? 'ready' : 'placeholder'}"${backdropStyle}></div>
       <div class="gr-start-menu__column">
@@ -108,10 +97,8 @@ export class StartMenu {
                 )}</button>`
               : ''
           }
-          <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="new" data-testid="start-menu-new-claim">New Claim</button>
-          <button class="gr-start-menu__button" type="button" data-menu-action="town" data-testid="start-menu-enter-town">Enter Town</button>
+          <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="town" data-testid="start-menu-enter-town">Enter Town</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="profile" data-testid="start-menu-profile">Profile</button>
-          <button class="gr-start-menu__button" type="button" data-menu-action="research" data-testid="start-menu-research">Research</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
         </nav>`
         }
@@ -119,9 +106,6 @@ export class StartMenu {
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
           ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
         </section>
-        <section class="gr-start-menu__research" data-testid="research-overlay" aria-label="Research ledger" ${
-          this.researchOpen ? '' : 'hidden'
-        }>${this.renderResearch()}</section>
       </div>
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
@@ -158,36 +142,16 @@ export class StartMenu {
     });
   }
 
-  private renderResearch(): string {
-    if (!this.researchOpen) return '';
-    const state = activeProfileResearchState();
-    return `${renderResearchChart(state, this.selectedResearchNodeId)}
-      <button class="gr-start-menu__small-button" type="button" data-menu-action="research-close">Close</button>`;
-  }
-
   private readonly onClick = (event: MouseEvent) => {
     const target = event.target as HTMLElement;
-    const nodeButton = target.closest<HTMLElement>('[data-research-node]');
-    if (this.researchOpen && nodeButton?.dataset.researchNode) {
-      this.selectResearchNode(nodeButton.dataset.researchNode);
-      return;
-    }
-    const pinButton = target.closest<HTMLElement>('[data-research-pin]');
-    if (this.researchOpen && pinButton) {
-      this.pinResearchTarget(pinButton.dataset.researchPin || null);
-      return;
-    }
     const button = target.closest<HTMLButtonElement>('[data-menu-action]');
     const action = button?.dataset.menuAction;
     if (!action) return;
-    this.audio.play(action === 'research' ? 'ledger-open' : 'menu-tap');
-    if (action === 'new' && this.confirmNewClaim()) this.options.onNewClaim();
+    this.audio.play('menu-tap');
     if (action === 'continue') this.options.onContinue();
     if (action === 'town') this.options.onEnterTown();
     if (action === 'profile') this.options.onProfile();
     if (action === 'settings') this.toggleSettings();
-    if (action === 'research') this.toggleResearch(true);
-    if (action === 'research-close') this.toggleResearch(false);
   };
 
   private createFirstProfile(): void {
@@ -220,8 +184,7 @@ export class StartMenu {
     if (event.key === 'Escape') {
       event.preventDefault();
       event.stopPropagation();
-      if (this.researchOpen) this.toggleResearch(false);
-      else if (this.settingsOpen) {
+      if (this.settingsOpen) {
         this.settingsOpen = false;
         this.render();
         this.root.querySelector<HTMLElement>('[data-testid="start-menu-settings"]')?.focus({ preventScroll: true });
@@ -245,30 +208,6 @@ export class StartMenu {
     this.root.querySelector<HTMLElement>('[data-testid="start-menu-settings"]')?.focus({ preventScroll: true });
   }
 
-  private toggleResearch(open: boolean): void {
-    this.researchOpen = open;
-    if (open) this.selectedResearchNodeId = activeProfileResearchState().pinnedTarget ?? this.selectedResearchNodeId;
-    this.render();
-    this.root.querySelector<HTMLElement>(open ? '[data-testid="research-overlay"]' : '[data-testid="start-menu-research"]')?.focus({
-      preventScroll: true,
-    });
-  }
-
-  private selectResearchNode(id: string): void {
-    this.selectedResearchNodeId = id;
-    this.render();
-    this.root.querySelector<HTMLElement>(`[data-research-node="${id}"]`)?.focus({ preventScroll: true });
-  }
-
-  private pinResearchTarget(id: string | null): void {
-    const storage = browserResearchStorage();
-    const state = activeProfileResearchState();
-    const next = saveResearchState(storage, setPinnedResearchTarget(state, id));
-    this.selectedResearchNodeId = next.pinnedTarget ?? this.selectedResearchNodeId;
-    this.render();
-    this.root.querySelector<HTMLElement>('[data-testid="research-chart-pin"]')?.focus({ preventScroll: true });
-  }
-
   private focusAction(delta: number): void {
     const actions = this.actionButtons();
     if (actions.length === 0) return;
@@ -283,14 +222,6 @@ export class StartMenu {
 
   private actionButtons(): HTMLButtonElement[] {
     return [...this.root.querySelectorAll<HTMLButtonElement>('.gr-start-menu__nav [data-menu-action]')];
-  }
-
-  private confirmNewClaim(): boolean {
-    const suspend = readRunSuspend();
-    if (!suspend) return true;
-    if (!window.confirm(`Abandon ${suspendContext(suspend)} and start a new claim?`)) return false;
-    clearRunSuspend();
-    return true;
   }
 }
 
@@ -308,11 +239,6 @@ function setupProfileStorage(): Storage | undefined {
   } catch {
     return undefined;
   }
-}
-
-function activeProfileResearchState(): ResearchState {
-  const storage = browserResearchStorage();
-  return loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
 }
 
 function hasLegacyProfileData(storage: Storage): boolean {

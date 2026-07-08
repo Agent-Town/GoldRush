@@ -10,11 +10,13 @@ import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
+import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
-import { BARON_MEDAL_BLURB, hasBaronMedal } from '../game/Medals';
+import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
 import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
+import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
-import { DEFAULT_CONTRACT_ID, listBoardContracts, loadEpoch, type ContractManifest } from '../meta/ContractFamilies';
+import { DEFAULT_CONTRACT_ID, listBoardContracts, loadContract, loadEpoch, type ContractManifest } from '../meta/ContractFamilies';
 import {
   ensureMegaprojectProject,
   isMegaprojectUnlocked,
@@ -23,8 +25,9 @@ import {
   type MegaprojectManifest,
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
-import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
+import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
+import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
 import { earnedTownBuildings, townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
@@ -55,6 +58,8 @@ export type TownDiagnostics = {
   townName: string | null;
   namingPrompt: boolean;
   boardOpen: boolean;
+  schoolhouseOpen: boolean;
+  assayOpen: boolean;
   buildings: Array<{
     id: TownBuildingId;
     name: string;
@@ -120,6 +125,7 @@ export class TownScene {
   private infoNote?: WorldInfoNotePrompt;
   private readonly nameCard = document.createElement('form');
   private readonly board = document.createElement('section');
+  private readonly schoolhouse = document.createElement('section');
   private readonly hiddenButtons: HiddenButtonState[];
   private readonly metaProgress = readTownMetaProgress();
   private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
@@ -142,11 +148,14 @@ export class TownScene {
   private activePrompt: TownBuilding | null = null;
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
+  private assayBench?: ReturnType<typeof installAssayBench>;
   private promptKey = '';
   private townName = readTownName();
   private nameMode: TownNameMode = 'founding';
   private nameCardOpen = false;
   private boardOpen = false;
+  private schoolhouseOpen = false;
+  private selectedResearchNodeId: string | undefined;
   private nameBeatTimer = 0;
   private lastExitIntent = false;
   private tavernBackdropUrl: string | undefined;
@@ -180,9 +189,12 @@ export class TownScene {
     window.clearTimeout(this.nameBeatTimer);
     this.prompt.removeEventListener('click', this.onPromptClick);
     this.board.removeEventListener('click', this.onBoardClick);
+    this.schoolhouse.removeEventListener('click', this.onSchoolhouseClick);
+    this.schoolhouse.removeEventListener('keydown', this.onSchoolhouseKeyDown);
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.infoNote?.dispose();
+    this.assayBench?.dispose();
     for (const actor of this.townActors) actor.dispose();
     this.ui.remove();
     this.hero.dispose();
@@ -198,9 +210,13 @@ export class TownScene {
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
-    if (this.boardOpen) {
+    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
-      if (rawExitIntent && !this.lastExitIntent) this.closeBoard();
+      if (rawExitIntent && !this.lastExitIntent) {
+        if (this.boardOpen) this.closeBoard();
+        else if (this.schoolhouseOpen) this.closeSchoolhouse();
+        else this.closeAssayBench();
+      }
       this.lastExitIntent = rawExitIntent;
       this.syncPrompt();
       this.syncBark();
@@ -408,6 +424,10 @@ export class TownScene {
     this.board.dataset.testid = 'contract-board';
     this.board.setAttribute('aria-label', 'Tavern contract board');
     this.board.hidden = true;
+    this.schoolhouse.className = 'town-ui__surface town-ui__schoolhouse';
+    this.schoolhouse.dataset.testid = 'schoolhouse-view';
+    this.schoolhouse.setAttribute('aria-label', 'Schoolhouse research chart');
+    this.schoolhouse.hidden = true;
     this.nameCard.className = 'town-ui__name-card';
     this.nameCard.dataset.testid = 'town-name-card';
     this.nameCard.hidden = true;
@@ -434,8 +454,11 @@ export class TownScene {
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
     this.board.addEventListener('click', this.onBoardClick);
+    this.schoolhouse.addEventListener('click', this.onSchoolhouseClick);
+    this.schoolhouse.addEventListener('keydown', this.onSchoolhouseKeyDown);
     this.nameCard.addEventListener('submit', this.onNameSubmit);
     this.ui.append(this.board);
+    this.ui.append(this.schoolhouse);
     this.getElement('#app').append(this.ui);
     this.syncTownTitle();
     if (!this.townName) this.openNameCard('founding');
@@ -451,6 +474,8 @@ export class TownScene {
     const target = event.target as HTMLElement | null;
     if (target?.closest('[data-town-board]')) this.openBoard();
     if (target?.closest('[data-town-rename]')) this.openNameCard('rename');
+    if (target?.closest('[data-town-schoolhouse]')) this.openSchoolhouse();
+    if (target?.closest('[data-town-assay]')) this.openAssayBench();
   };
 
   private readonly onBoardClick = (event: Event) => {
@@ -461,7 +486,34 @@ export class TownScene {
     }
     const launch = target?.closest<HTMLButtonElement>('[data-contract-launch]');
     const id = launch?.dataset.contractLaunch;
-    if (id && !launch.disabled) this.options.onLaunchContract?.(id);
+    if (id && !launch.disabled) {
+      if (!this.confirmFreshContractLaunch(id)) return;
+      clearRunSuspend();
+      this.options.onLaunchContract?.(id);
+    }
+  };
+
+  private readonly onSchoolhouseClick = (event: Event) => {
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('[data-schoolhouse-close]')) {
+      this.closeSchoolhouse();
+      return;
+    }
+    const nodeButton = target?.closest<HTMLElement>('[data-research-node]');
+    if (nodeButton?.dataset.researchNode) {
+      this.selectResearchNode(nodeButton.dataset.researchNode);
+      return;
+    }
+    const pinButton = target?.closest<HTMLElement>('[data-research-pin]');
+    if (pinButton) this.pinResearchTarget(pinButton.dataset.researchPin || null);
+  };
+
+  private readonly onSchoolhouseKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.closeSchoolhouse();
+    }
+    event.stopPropagation();
   };
 
   private readonly onNameSubmit = (event: Event) => {
@@ -518,7 +570,7 @@ export class TownScene {
   }
 
   private syncPrompt(): void {
-    if (this.boardOpen) {
+    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) {
       this.prompt.hidden = true;
       this.infoNote?.update(null);
       return;
@@ -558,13 +610,23 @@ export class TownScene {
         <span>${nearest.name} ... opens soon</span>
         <button class="town-ui__prompt-button" type="button" data-town-board data-testid="town-open-board">Board</button>
       `;
+    } else if (nearest.id === 'schoolhouse') {
+      this.prompt.innerHTML = `
+        <span>${nearest.name} ... Elder's Survey Chart</span>
+        <button class="town-ui__prompt-button" type="button" data-town-schoolhouse data-testid="town-open-schoolhouse">Chart</button>
+      `;
+    } else if (nearest.id === 'assay_office') {
+      this.prompt.innerHTML = `
+        <span>${nearest.name} ... order status</span>
+        <button class="town-ui__prompt-button" type="button" data-town-assay data-testid="town-open-assay">Orders</button>
+      `;
     } else {
       this.prompt.textContent = `${nearest.name} ... opens soon`;
     }
   }
 
   private syncBark(): void {
-    if (this.boardOpen || this.nameCardOpen) {
+    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.nameCardOpen) {
       this.hideBark();
       return;
     }
@@ -629,6 +691,71 @@ export class TownScene {
     this.boardOpen = false;
     this.syncPrompt();
     this.publishDiagnostics();
+  }
+
+  private openSchoolhouse(): void {
+    this.schoolhouseOpen = true;
+    this.selectedResearchNodeId = activeProfileResearchState().pinnedTarget ?? this.selectedResearchNodeId;
+    this.renderSchoolhouse();
+    this.schoolhouse.hidden = false;
+    this.schoolhouse.querySelector<HTMLElement>('[data-research-node], [data-schoolhouse-close]')?.focus({ preventScroll: true });
+    this.publishDiagnostics();
+  }
+
+  private closeSchoolhouse(): void {
+    this.schoolhouse.hidden = true;
+    this.schoolhouseOpen = false;
+    this.syncPrompt();
+    this.publishDiagnostics();
+  }
+
+  private renderSchoolhouse(): void {
+    this.schoolhouse.innerHTML = `
+      <div class="town-ui__surface-shell">
+        <header class="town-ui__surface-header">
+          <div>
+            <p class="town-ui__board-eyebrow">Schoolhouse</p>
+            <h2>Elder's Survey Chart</h2>
+          </div>
+          <button class="town-ui__board-close" type="button" data-schoolhouse-close data-testid="schoolhouse-close">Back</button>
+        </header>
+        <div class="town-ui__surface-body">
+          ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}
+        </div>
+      </div>
+    `;
+  }
+
+  private selectResearchNode(id: string): void {
+    this.selectedResearchNodeId = id;
+    this.renderSchoolhouse();
+    this.schoolhouse.querySelector<HTMLElement>(`[data-research-node="${id}"]`)?.focus({ preventScroll: true });
+  }
+
+  private pinResearchTarget(id: string | null): void {
+    const storage = browserResearchStorage();
+    const next = saveResearchState(storage, setPinnedResearchTarget(activeProfileResearchState(), id));
+    this.selectedResearchNodeId = next.pinnedTarget ?? this.selectedResearchNodeId;
+    this.renderSchoolhouse();
+    this.schoolhouse.querySelector<HTMLElement>('[data-testid="research-chart-pin"]')?.focus({ preventScroll: true });
+  }
+
+  private openAssayBench(): void {
+    this.assayBench ??= installAssayBench(this.getElement('#app'), { initiallyOpen: false });
+    this.assayBench?.focus();
+    this.publishDiagnostics();
+  }
+
+  private closeAssayBench(): void {
+    this.assayBenchRoot()?.querySelector<HTMLButtonElement>('[data-testid="assay-close"]')?.click();
+    this.syncPrompt();
+    this.publishDiagnostics();
+  }
+
+  private confirmFreshContractLaunch(contractId: string): boolean {
+    const suspend = readRunSuspend();
+    if (!suspend) return true;
+    return window.confirm(`Abandon ${suspendContext(suspend)} and launch ${contractName(contractId)}?`);
   }
 
   private renderBoard(): void {
@@ -733,6 +860,8 @@ export class TownScene {
       townName: this.townName,
       namingPrompt: this.nameCardOpen,
       boardOpen: this.boardOpen,
+      schoolhouseOpen: this.schoolhouseOpen,
+      assayOpen: this.assayBenchOpen(),
       buildings: townBuildings.map((building) => ({
         id: building.id,
         name: building.name,
@@ -802,6 +931,14 @@ export class TownScene {
     const element = document.querySelector<T>(selector);
     if (!element) throw new Error(`Missing ${selector}`);
     return element;
+  }
+
+  private assayBenchRoot(): HTMLElement | null {
+    return document.querySelector<HTMLElement>('[data-testid="assay-bench"]');
+  }
+
+  private assayBenchOpen(): boolean {
+    return this.assayBenchRoot()?.hidden === false;
   }
 }
 
@@ -935,6 +1072,23 @@ function escapeHtml(value: string): string {
     if (char === '"') return '&quot;';
     return '&#39;';
   });
+}
+
+function activeProfileResearchState() {
+  const storage = browserResearchStorage();
+  return loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
+}
+
+function suspendContext(suspend: RunSuspendEnvelope): string {
+  return `wave ${suspend.wave} · ${contractName(suspend.contractId)}`;
+}
+
+function contractName(contractId: string): string {
+  try {
+    return loadContract(contractId).name;
+  } catch {
+    return contractId;
+  }
 }
 
 function browserStorage(): Storage | undefined {

@@ -53,8 +53,12 @@ test('plain boot shows the Storybook start menu without Continue', async ({ page
   await expect(page.getByTestId('start-menu-wordmark')).toHaveText('GOLD RUSH');
   await expect(page.getByText('an Agent Town tale')).toBeVisible();
   await expect(page.getByTestId('start-menu-continue')).toHaveCount(0);
-  await expect(page.getByTestId('start-menu-new-claim')).toBeFocused();
+  await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
+  await expect(page.getByTestId('start-menu-research')).toHaveCount(0);
+  await expect(page.getByTestId('start-menu-enter-town')).toBeFocused();
   await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+  await expect(page.getByTestId('start-menu-profile')).toBeVisible();
+  await expect(page.getByTestId('start-menu-settings')).toBeVisible();
 
   await shot(page, testInfo, 'menu');
   await page.getByTestId('start-menu-emblem').screenshot({
@@ -73,14 +77,15 @@ test('debug boot skips the start menu and enters the game', async ({ page }) => 
   assertNoErrors(errors);
 });
 
-test('New Claim starts the existing run flow and disposes the menu', async ({ page }) => {
+test('Enter Town opens the town scene and disposes the menu', async ({ page }) => {
   await clearStorage(page);
   const errors = collectErrors(page);
   await page.goto('/');
 
-  await page.getByTestId('start-menu-new-claim').click();
+  await page.getByTestId('start-menu-enter-town').click();
   await expect(page.getByTestId('start-menu')).toHaveCount(0);
-  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await expect(page.getByTestId('town-ui')).toBeVisible();
   assertNoErrors(errors);
 });
 
@@ -90,23 +95,16 @@ test('Profile opens the existing selector with arrow and Enter', async ({ page }
   await page.goto('/');
 
   await page.keyboard.press('ArrowDown');
-  await expect(page.getByTestId('start-menu-enter-town')).toBeFocused();
-  await page.keyboard.press('ArrowDown');
   await expect(page.getByTestId('start-menu-profile')).toBeFocused();
   await page.keyboard.press('Enter');
   await expect(page.getByTestId('profile-title')).toBeVisible();
   assertNoErrors(errors);
 });
 
-test('Research is readable between runs and Settings volume writes through', async ({ page }) => {
+test('Settings volume writes through', async ({ page }) => {
   await clearStorage(page);
   const errors = collectErrors(page);
   await page.goto('/');
-
-  await page.getByTestId('start-menu-research').click();
-  await expect(page.getByTestId('research-overlay')).toBeVisible();
-  await expect(page.getByTestId('science-meter')).toContainText('Science: 0 steps');
-  await expect(page.locator('[data-research-id]')).toHaveCount(0);
 
   await page.getByTestId('start-menu-settings').click();
   await page.getByTestId('start-menu-volume').evaluate((element) => {
@@ -130,6 +128,11 @@ test('Continue appears only for an existing suspend slot and enters the run path
 
   await expect(page.getByTestId('start-menu-continue')).toBeVisible();
   await expect(page.getByTestId('start-menu-continue')).toHaveText('Continue — wave 4 · The Claim');
+  await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
+  await expect(page.getByTestId('start-menu-research')).toHaveCount(0);
+  await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+  await expect(page.getByTestId('start-menu-profile')).toBeVisible();
+  await expect(page.getByTestId('start-menu-settings')).toBeVisible();
   await expect(page.getByTestId('start-menu-saved-claim')).toContainText('wave 4');
   await expect(page.getByTestId('start-menu-saved-claim')).toContainText('The Claim');
   await page.getByTestId('start-menu-continue').click();

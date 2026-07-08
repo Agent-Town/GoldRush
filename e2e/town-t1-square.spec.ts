@@ -50,11 +50,11 @@ async function hold(page: Page, key: string, ms: number): Promise<void> {
   await page.keyboard.up(key);
 }
 
-async function approach(page: Page, keys: [string, number][], prompt: TownPrompt, name: string): Promise<void> {
+async function approach(page: Page, keys: [string, number][], prompt: TownPrompt, name: string, expectedText = 'opens soon'): Promise<void> {
   for (const [key, ms] of keys) await hold(page, key, ms);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe(prompt);
   await expect(page.getByTestId('town-approach-prompt')).toContainText(name);
-  await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');
+  await expect(page.getByTestId('town-approach-prompt')).toContainText(expectedText);
 }
 
 function assertNoErrors(errors: ErrorBucket): void {
@@ -76,15 +76,21 @@ test('menu enters town square, prompts at four shells, exits, then starts normal
   await approach(page, [['KeyA', 850], ['KeyW', 850]], 'tavern', 'Tavern');
   await shot(page, testInfo, 'shell-prompt');
   await approach(page, [['KeyD', 2_000], ['KeyS', 350]], 'claim_office', 'Claim Office');
-  await approach(page, [['KeyA', 2_300], ['KeyS', 1_200]], 'schoolhouse', 'Schoolhouse');
-  await approach(page, [['KeyD', 2_250], ['KeyS', 350]], 'assay_office', 'Assay Office');
+  await approach(page, [['KeyA', 2_300], ['KeyS', 1_200]], 'schoolhouse', 'Schoolhouse', "Elder's Survey Chart");
+  await approach(page, [['KeyD', 2_250], ['KeyS', 350]], 'assay_office', 'Assay Office', 'order status');
 
   await page.getByTestId('town-exit').click();
   await expect(page.getByTestId('start-menu')).toBeVisible();
-  await page.getByTestId('start-menu-new-claim').click();
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await approach(page, [['KeyA', 850], ['KeyW', 850]], 'tavern', 'Tavern');
+  await page.getByTestId('town-open-board').click();
+  await expect(page.getByTestId('contract-board')).toBeVisible();
+  await page.getByTestId('contract-launch-the-claim').click();
   await expect(page.getByTestId('start-menu')).toHaveCount(0);
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('playing');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId)).toBe('the-claim');
   assertNoErrors(errors);
 });
 

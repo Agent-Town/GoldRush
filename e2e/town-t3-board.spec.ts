@@ -183,7 +183,8 @@ test('board launch loads Dry Gulch and New Claim hashes to the default contract 
 
   await seedStorage(page);
   await page.evaluate(() => history.replaceState(null, '', '/?debug&timescale=3&nowaves&seed=town-t3-hash'));
-  await page.getByTestId('start-menu-new-claim').click();
+  await openBoard(page);
+  await page.getByTestId('contract-launch-the-claim').click();
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const menuHash = contractHash(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!));
 
@@ -198,7 +199,8 @@ test('post-run overrun returns straight to the town board and records a contract
   const errors = collectErrors(page);
   await seedStorage(page);
   await page.evaluate(() => history.replaceState(null, '', '/?debug&timescale=8&nowaves&nolevel&seed=town-t3-return'));
-  await page.getByTestId('start-menu-new-claim').click();
+  await openBoard(page);
+  await page.getByTestId('contract-launch-the-claim').click();
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await page.evaluate(() => {
     window.__GR_TEST__?.setBalance('enemy.contactDamage', 999);
