@@ -236,13 +236,14 @@ export class CombatSystem {
   readonly handleEnemyContact = (enemy: ClaimJumperEnemy): void => {
     if (isCombatDamageDisabled()) return;
 
-    const result = this.primaryActor.takeDamage(Balance.enemy.contactDamage);
+    const amount = enemy.contactDamage;
+    const result = this.primaryActor.takeDamage(amount);
     if (!result.applied) return;
 
     this.events.emit({
       type: 'hero_damaged',
       at: this.currentAt,
-      amount: Balance.enemy.contactDamage,
+      amount,
       hp: this.primaryActor.hp,
       maxHp: this.primaryActor.maxHp,
       sourceId: enemy.id,
@@ -251,19 +252,20 @@ export class CombatSystem {
     if (result.died) this.onHeroDied();
   };
 
-  readonly handleBuildingHit = (enemy: ClaimJumperEnemy, target: BuildingTarget, amount: number = Balance.wreck.damage): void => {
-    this.damageBuilding(target, amount, enemy.id);
+  readonly handleBuildingHit = (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number): void => {
+    this.damageBuilding(target, amount ?? enemy.buildingDamageFor(target.family), enemy.id, enemy.impactScale, enemy.eliteKind === 'baron');
   };
 
-  damageBuilding(target: BuildingTarget, amount: number = Balance.wreck.damage, sourceId = -1): void {
+  damageBuilding(target: BuildingTarget, amount: number = Balance.wreck.damage, sourceId = -1, impactScale = 1, forceCrack = false): void {
     if (!this.buildingDamageResolver) return;
 
     const result = this.buildingDamageResolver(target, amount);
     if (!result.applied) return;
 
-    this.vfx.hit(target.position);
-    this.vfx.dustPuff(target.position);
-    this.audio.playBuildingDamage(result.family, result.hp, result.maxHp, result.wrecked);
+    this.vfx.hit(target.position, impactScale);
+    this.vfx.dustPuff(target.position, impactScale);
+    if (impactScale > 1.01) this.vfx.detonationRing(target.position, Math.min(4.5, impactScale));
+    this.audio.playBuildingDamage(result.family, result.hp, result.maxHp, result.wrecked, forceCrack);
     this.events.emit({
       type: 'building_damaged',
       at: this.currentAt,
@@ -425,17 +427,17 @@ export class CombatSystem {
     this.audio.playDetonation(ownerId);
     if (isCombatDamageDisabled()) return;
 
-    const radiusSq = radius * radius;
     if (ownerId === 'turrets') {
       let closest: ClaimJumperEnemy | null = null;
-      let closestSq = radiusSq;
+      let closestSq = Number.POSITIVE_INFINITY;
       for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
         const enemy = this.enemies.all[enemyIndex];
         if (!enemy?.isAlive) continue;
         const dx = enemy.position.x - position.x;
         const dz = enemy.position.z - position.z;
         const distanceSq = dx * dx + dz * dz;
-        if (distanceSq > closestSq) continue;
+        const hitRadius = radius + enemy.hitRadius;
+        if (distanceSq > hitRadius * hitRadius || distanceSq > closestSq) continue;
         closest = enemy;
         closestSq = distanceSq;
       }
@@ -453,7 +455,8 @@ export class CombatSystem {
       if (!enemy?.isAlive) continue;
       const dx = enemy.position.x - position.x;
       const dz = enemy.position.z - position.z;
-      if (dx * dx + dz * dz > radiusSq) continue;
+      const hitRadius = radius + enemy.hitRadius;
+      if (dx * dx + dz * dz > hitRadius * hitRadius) continue;
       this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
       const died = enemy.takeDamage(damage);
       this.vfx.hit(enemy.position);
@@ -464,8 +467,6 @@ export class CombatSystem {
   private resolveBoltHits(at: number): void {
     if (isCombatDamageDisabled()) return;
 
-    const hitRadius = Balance.sparkRig.boltRadius + Balance.enemy.touchRadius;
-    const hitRadiusSq = hitRadius * hitRadius;
     for (let boltIndex = 0; boltIndex < this.projectiles.capacity; boltIndex += 1) {
       if (!this.projectiles.isActive(boltIndex)) continue;
       const boltPosition = this.projectiles.positionAt(boltIndex);
@@ -475,6 +476,8 @@ export class CombatSystem {
         if (!enemy?.isAlive) continue;
         const dx = enemy.position.x - boltPosition.x;
         const dz = enemy.position.z - boltPosition.z;
+        const hitRadius = Balance.sparkRig.boltRadius + enemy.hitRadius;
+        const hitRadiusSq = hitRadius * hitRadius;
         if (dx * dx + dz * dz > hitRadiusSq) continue;
 
         const damage = this.projectiles.damageAt(boltIndex);

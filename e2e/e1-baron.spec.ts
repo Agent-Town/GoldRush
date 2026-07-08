@@ -18,8 +18,13 @@ type BaronSnapshot = {
   hp: number;
   maxHp: number;
   speed: number;
+  contactDamage: number;
+  buildingDamage: number;
+  supportBuildingDamage: number;
+  heroPursuitRange: number;
   scale: number;
   hasBanner: boolean;
+  wrecker: boolean | undefined;
   edge: string | null | undefined;
 };
 
@@ -161,7 +166,6 @@ async function setWave(page: Page, wave: number): Promise<void> {
 
 async function tuneFastBaronWave(page: Page, extra: Record<string, number | boolean | string> = {}): Promise<void> {
   await setBalances(page, {
-    'enemy.contactDamage': 0,
     'waves.waveInterval': 0.45,
     'waves.trickleInterval': 999,
     'waves.pulseBase': 0,
@@ -186,8 +190,13 @@ async function waitForBaron(page: Page): Promise<BaronSnapshot> {
       hp: baron.hp,
       maxHp: baron.maxHp,
       speed: baron.speed,
+      contactDamage: baron.contactDamage,
+      buildingDamage: baron.buildingDamage,
+      supportBuildingDamage: baron.supportBuildingDamage,
+      heroPursuitRange: baron.heroPursuitRange,
       scale: baron.scale,
       hasBanner: baron.hasBanner,
+      wrecker: baron.wrecker,
       edge: baron.edge,
     };
   });
@@ -359,7 +368,7 @@ test('board launch uses the live Baron contract for cadence and wave 20 spawn', 
   await tuneFastBaronWave(page);
   await setWave(page, 19);
   const baron = await waitForBaron(page);
-  expect(baron.scale).toBe(1.4);
+  expect(baron.scale).toBe(4);
   expect(baron.hasBanner).toBe(true);
   await expect(page.getByTestId('claim-secured')).toHaveCount(0);
   expectClean(errors);
@@ -384,9 +393,13 @@ test('Baron manifest loads and taunts fire at waves 5, 12, and 18', async ({ pag
       waveCadenceMult: 1.15,
       baron: {
         wave: 20,
-        hpScale: 40,
-        speedScale: 0.8,
-        scale: 1.4,
+        hpScale: 160,
+        speedScale: 0.75,
+        scale: 4,
+        contactDamageScale: 4.25,
+        buildingDamageScale: 12,
+        supportBuildingDamageScale: 8,
+        pursuitRange: 45,
         taunt: BARON_TAUNT,
         defeatBeat: BARON_DEFEAT,
       },
@@ -445,13 +458,18 @@ test('wave 20 spawns the Baron with elite stats, banner, escorts, and stable see
   const baron = await waitForBaron(page);
   await expectBaronBanner(page, BARON_ARRIVAL_TITLE);
   await expectBaronArtLoaded(page);
-  const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 40;
-  const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.8;
+  const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 160;
+  const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.75;
   expect(baron.maxHp).toBeCloseTo(expectedHp, 4);
   expect(baron.hp).toBeCloseTo(expectedHp, 4);
   expect(baron.speed).toBeCloseTo(expectedSpeed, 3);
-  expect(baron.scale).toBe(1.4);
+  expect(baron.contactDamage).toBeCloseTo(Balance.enemy.contactDamage * 4.25, 4);
+  expect(baron.buildingDamage).toBeCloseTo(Balance.wreck.damage * 12, 4);
+  expect(baron.supportBuildingDamage).toBeCloseTo(Balance.wreck.damage * 8, 4);
+  expect(baron.heroPursuitRange).toBe(45);
+  expect(baron.scale).toBe(4);
   expect(baron.hasBanner).toBe(true);
+  expect(baron.wrecker).toBe(true);
   await expect
     .poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().filter((enemy) => enemy.eliteKind !== 'baron').length ?? 0))
     .toBeGreaterThanOrEqual(8);
@@ -485,9 +503,9 @@ test('standard rig damage defeats the Baron, doubles science, and persists the m
   await page.evaluate(() =>
     window.__GR_TEST__?.spawnPack(1, 4, {
       eliteKind: 'baron',
-      hpScale: 40,
+      hpScale: 160,
       speedScale: 0,
-      visualScale: 1.4,
+      visualScale: 4,
       banner: true,
     }),
   );
@@ -538,7 +556,7 @@ test('fast Baron kill preserves the queued arrival card before secure', async ({
       eliteKind: 'baron',
       hpScale: 1,
       speedScale: 0,
-      visualScale: 1.4,
+      visualScale: 4,
       banner: true,
     }),
   );
@@ -606,7 +624,7 @@ test('same-frame overrun and Baron kill does not award the medal', async ({ page
       eliteKind: 'baron',
       hpScale: 1,
       speedScale: 0,
-      visualScale: 1.4,
+      visualScale: 4,
       banner: true,
     }),
   );
@@ -642,6 +660,10 @@ async function baronDeterminismSnapshot(page: Page): Promise<unknown> {
         ? {
             maxHp: Math.round(baron.maxHp * 1000) / 1000,
             speed: Math.round(baron.speed * 1000) / 1000,
+            contactDamage: Math.round(baron.contactDamage * 1000) / 1000,
+            buildingDamage: Math.round(baron.buildingDamage * 1000) / 1000,
+            supportBuildingDamage: Math.round(baron.supportBuildingDamage * 1000) / 1000,
+            heroPursuitRange: baron.heroPursuitRange,
             scale: baron.scale,
             hasBanner: baron.hasBanner,
           }

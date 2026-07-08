@@ -17,6 +17,9 @@ import {
 import type { RotationDirection } from '../assets/OrientationResolver';
 
 const ENEMY_SPRITE_Y = 0.72;
+const BOSS_HP_SEGMENTS = 8;
+const BOSS_HP_WIDTH = 1.9;
+const BOSS_HP_FILL_WIDTH = 1.72;
 const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
   active: false,
   phase: 0,
@@ -41,6 +44,11 @@ export type EnemyDimmingDiagnostics = {
   sources: number;
   dimmed: number;
   minFactor: number;
+};
+export type BossHpBarDiagnostics = {
+  visible: boolean;
+  ratio: number;
+  segments: number;
 };
 
 function animationSpeed(enemy: ClaimJumperEnemy): number {
@@ -81,6 +89,16 @@ export class EnemyPool {
   });
   private readonly bannerPoleMesh = new THREE.InstancedMesh(this.bannerPoleGeometry, this.bannerPoleMaterial, Balance.enemy.poolSize);
   private readonly bannerClothMesh = new THREE.InstancedMesh(this.bannerClothGeometry, this.bannerClothMaterial, Balance.enemy.poolSize);
+  private readonly bossHpGroup = new THREE.Group();
+  private readonly bossHpBackGeometry = new THREE.BoxGeometry(BOSS_HP_WIDTH, 0.16, 0.05);
+  private readonly bossHpFillGeometry = new THREE.BoxGeometry(BOSS_HP_FILL_WIDTH, 0.08, 0.06);
+  private readonly bossHpSegmentGeometry = new THREE.BoxGeometry(0.018, 0.18, 0.07);
+  private readonly bossHpBackMaterial = new THREE.MeshBasicMaterial({ color: '#24150d', transparent: true, opacity: 0.72, depthTest: false });
+  private readonly bossHpFillMaterial = new THREE.MeshBasicMaterial({ color: '#7f2633', depthTest: false });
+  private readonly bossHpSegmentMaterial = new THREE.MeshBasicMaterial({ color: '#f5e6c8', transparent: true, opacity: 0.85, depthTest: false });
+  private readonly bossHpBack = new THREE.Mesh(this.bossHpBackGeometry, this.bossHpBackMaterial);
+  private readonly bossHpFill = new THREE.Mesh(this.bossHpFillGeometry, this.bossHpFillMaterial);
+  private readonly bossHpSegments = new THREE.Group();
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
     y: ENEMY_SPRITE_Y,
@@ -178,7 +196,7 @@ export class EnemyPool {
   private spawnSerial = 0;
   private baronSpriteAnimator: SpriteAnimator | null = null;
 
-  constructor() {
+  constructor(private readonly camera?: THREE.Camera) {
     this.group.name = 'EnemyPool';
     this.cellSize = Balance.enemy.spatialHashCellSize;
     this.gridMin = Balance.enemy.spatialHashWorldMin;
@@ -188,6 +206,7 @@ export class EnemyPool {
     this.createSackMesh();
     this.createHitFlashMesh();
     this.createBannerMeshes();
+    this.createBossHpBar();
     this.group.add(
       this.generatedSprites.group,
       this.generatedSpriteFades.group,
@@ -196,6 +215,7 @@ export class EnemyPool {
       this.baronSprites.group,
       this.baronSpriteFades.group,
       this.baronBannerSprites.group,
+      this.bossHpGroup,
     );
 
     for (let i = 0; i < this.gridSize * this.gridSize; i += 1) {
@@ -229,6 +249,16 @@ export class EnemyPool {
     let total = 0;
     for (const enemy of this.enemies) total += enemy.hitFlashCount;
     return total;
+  }
+
+  get bossHpBarDiagnostics(): BossHpBarDiagnostics {
+    const baron = this.activeBaron();
+    const ratio = baron ? THREE.MathUtils.clamp(baron.currentHp / Math.max(1, baron.maxHp), 0, 1) : 0;
+    return {
+      visible: this.bossHpGroup.visible,
+      ratio: round3(ratio),
+      segments: this.bossHpGroup.visible ? BOSS_HP_SEGMENTS : 0,
+    };
   }
 
   get dimmingDiagnostics(): EnemyDimmingDiagnostics {
@@ -304,6 +334,7 @@ export class EnemyPool {
       this.spawnSerial += 1;
       this.active += 1;
       this.syncEnemyInstance(enemy);
+      this.syncBossHpBar();
       return enemy;
     }
     return null;
@@ -406,6 +437,7 @@ export class EnemyPool {
     }
     if (baronAnimation.active || this.baronSpriteAnimator) updateBaronSprites();
     this.syncSpriteVisuals();
+    this.syncBossHpBar();
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
@@ -414,6 +446,7 @@ export class EnemyPool {
     this.active = Math.max(0, this.active - 1);
     this.syncEnemyInstance(enemy);
     this.syncHitFlashes();
+    this.syncBossHpBar();
   }
 
   recycleAll(): void {
@@ -441,6 +474,12 @@ export class EnemyPool {
     this.baronSpriteFades.dispose();
     this.baronSpriteAnimator?.dispose();
     this.baronBannerSprites.dispose();
+    this.bossHpBackGeometry.dispose();
+    this.bossHpFillGeometry.dispose();
+    this.bossHpSegmentGeometry.dispose();
+    this.bossHpBackMaterial.dispose();
+    this.bossHpFillMaterial.dispose();
+    this.bossHpSegmentMaterial.dispose();
     this.hitFlashGeometry.dispose();
     this.hitFlashMaterial.dispose();
     this.bannerPoleGeometry.dispose();
@@ -492,6 +531,13 @@ export class EnemyPool {
       this.baronSpriteFades.material,
     );
     return this.baronSpriteAnimator;
+  }
+
+  private activeBaron(): ClaimJumperEnemy | null {
+    for (const enemy of this.enemies) {
+      if (enemy.isAlive && enemy.eliteKind === 'baron') return enemy;
+    }
+    return null;
   }
 
   private createRenderParts(): void {
@@ -562,6 +608,26 @@ export class EnemyPool {
     }
   }
 
+  private createBossHpBar(): void {
+    this.bossHpGroup.name = 'BossHpBar';
+    this.bossHpGroup.visible = false;
+    this.bossHpGroup.frustumCulled = false;
+    for (const mesh of [this.bossHpBack, this.bossHpFill]) {
+      mesh.frustumCulled = false;
+      mesh.renderOrder = RenderLayers.worldUi + 0.02;
+    }
+    this.bossHpFill.position.z = 0.01;
+    this.bossHpGroup.add(this.bossHpBack, this.bossHpFill, this.bossHpSegments);
+    for (let i = 1; i < BOSS_HP_SEGMENTS; i += 1) {
+      const segment = new THREE.Mesh(this.bossHpSegmentGeometry, this.bossHpSegmentMaterial);
+      segment.position.x = -BOSS_HP_FILL_WIDTH / 2 + (BOSS_HP_FILL_WIDTH * i) / BOSS_HP_SEGMENTS;
+      segment.position.z = 0.02;
+      segment.frustumCulled = false;
+      segment.renderOrder = RenderLayers.worldUi + 0.03;
+      this.bossHpSegments.add(segment);
+    }
+  }
+
   private createLocalMatrix(position: THREE.Vector3, rotation = new THREE.Euler()): THREE.Matrix4 {
     this.syncObject.position.copy(position);
     this.syncObject.rotation.copy(rotation);
@@ -574,6 +640,23 @@ export class EnemyPool {
     for (const enemy of this.enemies) {
       this.syncEnemyInstance(enemy);
     }
+    this.syncBossHpBar();
+  }
+
+  private syncBossHpBar(): void {
+    const baron = this.activeBaron();
+    if (!baron) {
+      this.bossHpGroup.visible = false;
+      return;
+    }
+    const ratio = THREE.MathUtils.clamp(baron.currentHp / Math.max(1, baron.maxHp), 0, 1);
+    const scale = Math.max(1, baron.visualScale * 0.88);
+    this.bossHpGroup.visible = true;
+    this.bossHpGroup.position.set(baron.position.x, baron.position.y + 1.75 * baron.visualScale, baron.position.z);
+    if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
+    this.bossHpGroup.scale.setScalar(scale);
+    this.bossHpFill.scale.x = Math.max(0.001, ratio);
+    this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - ratio) * 0.5;
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {

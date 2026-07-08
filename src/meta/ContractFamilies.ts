@@ -134,6 +134,10 @@ export type ContractBaronTwist = {
   hpScale: number;
   speedScale: number;
   scale: number;
+  contactDamageScale?: number;
+  buildingDamageScale?: number;
+  supportBuildingDamageScale?: number;
+  pursuitRange?: number;
   escortCount: number;
   tauntWaves: readonly number[];
   taunt: string;

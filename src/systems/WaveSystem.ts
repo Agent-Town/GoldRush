@@ -15,6 +15,10 @@ export type SpawnPackOptions = {
   visualScale?: number;
   banner?: boolean;
   wrecker?: boolean;
+  contactDamageScale?: number;
+  buildingDamageScale?: number;
+  supportBuildingDamageScale?: number;
+  heroPursuitRange?: number;
 };
 
 type PlannedPulse = {
@@ -112,6 +116,7 @@ export class WaveSystem {
     private readonly liveThiefCount: () => number = () => 0,
     private readonly hasTerritoryRing: () => boolean = () => false,
     private readonly territoryRingCenter: THREE.Vector3 = heroPosition,
+    private readonly onBaronSpawned: (position: THREE.Vector3, atSim: number) => void = () => {},
   ) {
     this.nextWaveAt = this.waveInterval();
     this.nextPlanWaveAt = this.nextWaveAt;
@@ -401,6 +406,10 @@ export class WaveSystem {
       eliteKind: params.eliteKind,
       visualScale: params.visualScale,
       banner: params.banner,
+      contactDamageScale: params.contactDamageScale,
+      buildingDamageScale: params.buildingDamageScale,
+      supportBuildingDamageScale: params.supportBuildingDamageScale,
+      heroPursuitRange: params.heroPursuitRange,
     });
     if (!enemy) return false;
     this.waveSpawnedTotal += 1;
@@ -515,22 +524,28 @@ export class WaveSystem {
     for (let index = 0; index < escorts; index += 1) {
       this.spawnAt(edge, index, wave, groupCount);
     }
-    this.spawnAt(
+    const spawned = this.spawnAt(
       edge,
       escorts,
       wave,
       groupCount,
       false,
-      false,
+      true,
       {
         eliteKind: 'baron',
         hpScale: baron.hpScale,
         speedMult: baron.speedScale,
         visualScale: baron.scale,
         banner: true,
+        wrecker: true,
+        contactDamageScale: baron.contactDamageScale,
+        buildingDamageScale: baron.buildingDamageScale,
+        supportBuildingDamageScale: baron.supportBuildingDamageScale,
+        heroPursuitRange: baron.pursuitRange,
       },
       false,
     );
+    if (spawned) this.onBaronSpawned(this.spawnPosition, this.currentAtSim);
   }
 
   private maxTelegraphLead(): number {

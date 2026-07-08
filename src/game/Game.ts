@@ -175,7 +175,7 @@ export class Game {
   private readonly events = new EventBus();
   private readonly input: InputController;
   private readonly actors = [new Hero()];
-  private readonly enemies = new EnemyPool();
+  private readonly enemies = new EnemyPool(this.camera);
   private readonly projectiles = new ProjectilePool();
   private readonly blastCharges = new BlastChargePool();
   private readonly xpMotes = new XpMotePool();
@@ -269,6 +269,8 @@ export class Game {
     aoe: { radius: Balance.blast.radius, airTime: Balance.blast.airTime },
   };
   private readonly simTimeScale = getTimescale();
+  private manualSimForTest = false;
+  private manualAdvanceForTest = false;
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
@@ -328,6 +330,7 @@ export class Game {
     maxHp: 0,
     reachRadius: 0,
   };
+  private baronSpawnImpulses = 0;
   private readonly waveSystem = new WaveSystem(
     this.enemies,
     this.primaryActor.group.position,
@@ -345,6 +348,10 @@ export class Game {
     () => this.liveThiefCount(),
     () => this.territoryRingPresent,
     this.heroStart,
+    (position) => {
+      this.baronSpawnImpulses += 1;
+      this.cameraRig.impulse(position, 0.12);
+    },
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -657,6 +664,10 @@ export class Game {
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         demolish: (family: BuildableId, index: number) => this.demolishBuilding(family, index),
         upgradeBuilding: (family: BuildableId, index: number) => this.upgradeBuilding(family, index),
+        setManualSim: (enabled: boolean) => {
+          this.manualSimForTest = enabled;
+          return this.manualSimForTest;
+        },
         advanceSim: (seconds: number, stepSeconds?: number) => this.advanceSimForTest(seconds, stepSeconds),
         resetRun: () => this.resetRun(),
         toggleWeapon: () => this.toggleWeapon(),
@@ -721,6 +732,11 @@ export class Game {
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
         rotateBuildGhost: () => this.buildSystem.rotateGhost(),
+        placeFree: (id: BuildableId, x: number, z: number, rotationSteps = 0) => {
+          const placed = this.buildSystem.placeFree(id, { x, z }, rotationSteps);
+          this.publishDiagnostics();
+          return placed;
+        },
         confirmBuild: () => {
           const placed = this.buildSystem.confirm(this.timeAlive);
           this.publishDiagnostics();
@@ -741,6 +757,11 @@ export class Game {
                 hp: enemy.currentHp,
                 maxHp: enemy.maxHp,
                 speed: enemy.moveSpeed,
+                contactDamage: enemy.contactDamage,
+                buildingDamage: enemy.buildingDamage,
+                supportBuildingDamage: enemy.supportBuildingDamage,
+                heroPursuitRange: enemy.heroPursuitRange,
+                hitRadius: enemy.hitRadius,
                 eliteKind: enemy.eliteKind ?? undefined,
                 scale: enemy.visualScale,
                 hasBanner: enemy.hasBanner,
@@ -949,7 +970,7 @@ export class Game {
     this.updateCharmPause(delta);
 
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
-    if (this.state.simActive) {
+    if (this.state.simActive && (!this.manualSimForTest || this.manualAdvanceForTest)) {
       const simDelta = delta * this.simTimeScale;
       this.timeAlive += simDelta;
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
@@ -1551,6 +1572,7 @@ export class Game {
       wreck: this.wreckDiagnostics(),
       charmPause: this.charmPauseActive,
       camImpulseActive: this.cameraRig.impulseActive,
+      baronSpawnImpulses: this.baronSpawnImpulses,
       lighting: this.lightRig?.diagnostics(),
       enemyDimming: this.enemies.dimmingDiagnostics,
       vfx: {
@@ -1560,6 +1582,7 @@ export class Game {
         enemyHitFlashes: this.enemies.hitFlashCount,
         activeEnemyFlashes: this.enemies.activeFlashCount,
         buildingHpBars: buildDiagnostics.hpBars,
+        bossHpBar: this.enemies.bossHpBarDiagnostics,
         turretPulses: buildDiagnostics.turretPulses,
         activeTurretPulses: buildDiagnostics.activeTurretPulses,
       },
@@ -2175,10 +2198,15 @@ export class Game {
     const step = Number.isFinite(stepSeconds) ? Math.max(0.001, stepSeconds) : 1 / 5;
     const scale = Math.max(0.001, this.simTimeScale);
     let remaining = total;
-    while (remaining > 0) {
-      const simStep = Math.min(step, remaining);
-      this.update(simStep / scale);
-      remaining -= simStep;
+    this.manualAdvanceForTest = true;
+    try {
+      while (remaining > 0) {
+        const simStep = Math.min(step, remaining);
+        this.update(simStep / scale);
+        remaining -= simStep;
+      }
+    } finally {
+      this.manualAdvanceForTest = false;
     }
   }
 
@@ -2222,6 +2250,7 @@ export class Game {
     this.lastUpgradeOfferAudioKey = '';
     this.kills = 0;
     this.baronBeatenThisRun = false;
+    this.baronSpawnImpulses = 0;
     window.clearTimeout(this.baronAnnouncementTimer);
     window.clearTimeout(this.baronDefeatTimer);
     this.pendingBaronBanner = null;

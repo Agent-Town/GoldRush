@@ -38,6 +38,10 @@ export type EnemySpawnParams = {
   eliteKind?: EnemyEliteKind;
   visualScale?: number;
   banner?: boolean;
+  contactDamageScale?: number;
+  buildingDamageScale?: number;
+  supportBuildingDamageScale?: number;
+  heroPursuitRange?: number;
 };
 
 export type ThiefUpdateContext = {
@@ -118,6 +122,10 @@ export class ClaimJumperEnemy {
   private elite: EnemyEliteKind | null = null;
   private visualScaleValue = 1;
   private banner = false;
+  private contactDamageScaleValue = 1;
+  private buildingDamageScaleValue = 1;
+  private supportBuildingDamageScaleValue = 1;
+  private heroPursuitRangeValue = 0;
   private scriptedSpeed = 0;
   private scripted = false;
   private activationDelay = 0;
@@ -178,6 +186,35 @@ export class ClaimJumperEnemy {
 
   get hasBanner(): boolean {
     return this.banner;
+  }
+
+  get contactDamage(): number {
+    return Balance.enemy.contactDamage * this.contactDamageScaleValue;
+  }
+
+  get buildingDamage(): number {
+    return Balance.wreck.damage * this.buildingDamageScaleValue;
+  }
+
+  get supportBuildingDamage(): number {
+    return Balance.wreck.damage * this.supportBuildingDamageScaleValue;
+  }
+
+  get heroPursuitRange(): number {
+    return this.heroPursuitRangeValue;
+  }
+
+  get impactScale(): number {
+    return this.elite === 'baron' ? Math.max(1, this.visualScaleValue) : 1;
+  }
+
+  get hitRadius(): number {
+    return Balance.enemy.touchRadius * Math.max(1, this.visualScaleValue);
+  }
+
+  buildingDamageFor(family: string): number {
+    if (this.elite === 'baron' && (family === 'sluice' || family === 'turret')) return this.supportBuildingDamage;
+    return this.buildingDamage;
   }
 
   get animationClip(): CharacterSpriteClip {
@@ -248,6 +285,10 @@ export class ClaimJumperEnemy {
     this.elite = params.eliteKind ?? null;
     this.visualScaleValue = Math.max(0.1, params.visualScale ?? 1);
     this.banner = params.banner === true;
+    this.contactDamageScaleValue = Math.max(0, params.contactDamageScale ?? 1);
+    this.buildingDamageScaleValue = Math.max(0, params.buildingDamageScale ?? 1);
+    this.supportBuildingDamageScaleValue = Math.max(0, params.supportBuildingDamageScale ?? params.buildingDamageScale ?? 1);
+    this.heroPursuitRangeValue = Math.max(0, params.heroPursuitRange ?? 0);
     this.activationDelay = Math.max(0, params.activationDelay ?? 0);
     this.contactCooldown = 0;
     this.thief = params.thief === true;
@@ -305,9 +346,7 @@ export class ClaimJumperEnemy {
       return false;
     }
 
-    const targetPosition = this.scripted
-      ? this.scriptedTarget
-      : this.updateThief(delta, thiefContext) ?? this.updateWrecker(delta, wreckerContext) ?? heroPosition;
+    const targetPosition = this.scripted ? this.scriptedTarget : this.chooseTarget(delta, heroPosition, thiefContext, wreckerContext);
     const moveTarget = this.terrainAwareTarget(this.routedTarget(targetPosition));
     const speed = this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
@@ -369,7 +408,7 @@ export class ClaimJumperEnemy {
       this.spriteOrientation = this.orientationResolver.idleDirection();
     }
 
-    const touchRadius = Balance.hero.radius + Balance.enemy.touchRadius;
+    const touchRadius = Balance.hero.radius + this.hitRadius;
     const dx = heroPosition.x - this.group.position.x;
     const dz = heroPosition.z - this.group.position.z;
     if (this.contactCooldown <= 0 && dx * dx + dz * dz <= touchRadius * touchRadius) {
@@ -401,6 +440,10 @@ export class ClaimJumperEnemy {
     this.elite = null;
     this.visualScaleValue = 1;
     this.banner = false;
+    this.contactDamageScaleValue = 1;
+    this.buildingDamageScaleValue = 1;
+    this.supportBuildingDamageScaleValue = 1;
+    this.heroPursuitRangeValue = 0;
     this.activationDelay = 0;
     this.contactCooldown = 0;
     this.thief = false;
@@ -506,6 +549,30 @@ export class ClaimJumperEnemy {
     return holding?.active === true && holding.amount > 0;
   }
 
+  private chooseTarget(
+    delta: number,
+    heroPosition: THREE.Vector3,
+    thiefContext?: ThiefUpdateContext,
+    wreckerContext?: WreckerUpdateContext,
+  ): THREE.Vector3 {
+    const thiefTarget = this.updateThief(delta, thiefContext);
+    if (thiefTarget) return thiefTarget;
+    if (this.wrecker && this.shouldPursueHero(heroPosition)) {
+      this.currentBuilding = null;
+      this.wreckerState = 'seekBuilding';
+      this.spriteClip = 'walk';
+      return heroPosition;
+    }
+    return this.updateWrecker(delta, wreckerContext) ?? heroPosition;
+  }
+
+  private shouldPursueHero(heroPosition: THREE.Vector3): boolean {
+    if (this.heroPursuitRangeValue <= 0) return false;
+    const dx = heroPosition.x - this.group.position.x;
+    const dz = heroPosition.z - this.group.position.z;
+    return dx * dx + dz * dz <= this.heroPursuitRangeValue * this.heroPursuitRangeValue;
+  }
+
   private updateWrecker(delta: number, context?: WreckerUpdateContext): THREE.Vector3 | null {
     if (!this.wrecker || !context) return null;
 
@@ -522,7 +589,8 @@ export class ClaimJumperEnemy {
       return null;
     }
 
-    if (this.distanceSqToBuilding(this.currentBuilding) <= Balance.wreck.reach * Balance.wreck.reach) {
+    const reach = this.wreckerReach();
+    if (this.distanceSqToBuilding(this.currentBuilding) <= reach * reach) {
       this.wreckerState = 'swinging';
       this.spriteClip = 'grab';
       this.swingTimer -= delta;
@@ -550,6 +618,10 @@ export class ClaimJumperEnemy {
     const dx = Math.max(Math.abs(this.group.position.x - building.position.x) - building.halfX, 0);
     const dz = Math.max(Math.abs(this.group.position.z - building.position.z) - building.halfZ, 0);
     return dx * dx + dz * dz;
+  }
+
+  private wreckerReach(): number {
+    return Balance.wreck.reach * Math.max(1, this.visualScaleValue);
   }
 
   private updateFleeTarget(): void {
@@ -743,7 +815,7 @@ export class ClaimJumperEnemy {
   }
 
   private resolveBlocker(blocker: PalisadeBlocker, stepDistance: number): void {
-    const pad = Balance.palisade.avoidancePad;
+    const pad = Balance.palisade.avoidancePad + this.hitRadius - Balance.enemy.touchRadius;
     const minX = blocker.x - blocker.halfX - pad;
     const maxX = blocker.x + blocker.halfX + pad;
     const minZ = blocker.z - blocker.halfZ - pad;
