@@ -178,12 +178,11 @@ test('hero still wades but wet powder disables and then restores weapons', async
   const deep = await page.evaluate(() => ({
     bolts: window.__THREE_GAME_DIAGNOSTICS__?.boltsAlive ?? -1,
     disarmed: window.__GR_TEST__?.state().arsenal.disarmed,
-    announcement: window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcement,
     reticleDisarmed: document.querySelector('#game-canvas')?.classList.contains('aim-reticle--disarmed') ?? false,
   }));
   expect(deep.bolts).toBe(0);
   expect(deep.disarmed).toBe(true);
-  expect(deep.announcement).toContain('Wet powder');
+  await expect(page.getByTestId('hud-wave')).toContainText(/Wet powder/);
   expect(deep.reticleDisarmed).toBe(true);
 
   await teleport(page, -12, 7);
