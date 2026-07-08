@@ -451,9 +451,23 @@ type TerrainShaderUniforms = {
   atlasRows: THREE.IUniform<number>;
   featureMix: THREE.IUniform<number>;
   seed: THREE.IUniform<number>;
+  splat: THREE.IUniform<number>;
+  rockAmount: THREE.IUniform<number>;
+  dampBand: THREE.IUniform<number>;
+  scrubAmount: THREE.IUniform<number>;
+  macroWarmth: THREE.IUniform<number>;
+  antiTile: THREE.IUniform<number>;
   paletteTint: THREE.IUniform<THREE.Vector3>;
   dampTint: THREE.IUniform<THREE.Vector3>;
   dampAmount: THREE.IUniform<number>;
+};
+
+type TerrainSplatParams = {
+  rockAmount: number;
+  dampBand: number;
+  scrubAmount: number;
+  macroWarmth: number;
+  antiTile: number;
 };
 
 const BANK_TILE_REPEATS = 4;
@@ -555,14 +569,22 @@ export function createTerrainView(): TerrainView {
 }
 
 function createGroundMesh(): THREE.Mesh {
-  if (!terrainMeshEnabled()) return createBankPlaceholder();
+  const splat = terrainSplatEnabled();
+  if (!terrainMeshEnabled() && !splat) return createBankPlaceholder();
   const mesh = createContinuousGroundMesh({
     size: CLAIM_SIZE,
     segments: terrainMeshSegments(),
-    material: createBankMaterial(),
+    material: createBankMaterial(splat),
     heightAt: sampleHeight,
     normalHeightAt: sampleUnclampedHeight,
   });
+  if (splat) {
+    const stats = mesh.userData.groundStats as ContinuousGroundMeshStats | undefined;
+    if (stats) {
+      stats.textureSource = 'bank-atlas-splat';
+      stats.textureSeams = 'per-pixel splat gradients';
+    }
+  }
   return tagPlaceholder(mesh, assetSlots.terrainBank);
 }
 
@@ -680,14 +702,21 @@ function distanceToSpringCenter(x: number, z: number, source: ContractWaterSourc
   return Math.hypot(x - source.x, z - source.z);
 }
 
-function createBankMaterial(): THREE.MeshStandardMaterial {
+function createBankMaterial(splat = false): THREE.MeshStandardMaterial {
   const material = bankMaterial.clone();
+  const splatParams = terrainSplatParams();
   const uniforms: TerrainShaderUniforms = {
     repeat: { value: BANK_TILE_REPEATS },
     variantCount: { value: 1 },
     atlasRows: { value: 1 },
     featureMix: { value: Balance.terrain.featureMix },
     seed: { value: terrainSeed() },
+    splat: { value: splat ? 1 : 0 },
+    rockAmount: { value: splatParams.rockAmount },
+    dampBand: { value: splatParams.dampBand },
+    scrubAmount: { value: splatParams.scrubAmount },
+    macroWarmth: { value: splatParams.macroWarmth },
+    antiTile: { value: splatParams.antiTile },
     paletteTint: { value: paletteVector(TILE_PALETTE?.tint, [1, 1, 1]) },
     dampTint: { value: paletteVector(TILE_PALETTE?.dampTint, [0.4, 0.37, 0.29]) },
     dampAmount: { value: TILE_PALETTE?.dampAmount ?? 0.28 },
@@ -701,6 +730,12 @@ function createBankMaterial(): THREE.MeshStandardMaterial {
     shader.uniforms.terrainAtlasRows = uniforms.atlasRows;
     shader.uniforms.terrainFeatureMix = uniforms.featureMix;
     shader.uniforms.terrainSeed = uniforms.seed;
+    shader.uniforms.terrainSplat = uniforms.splat;
+    shader.uniforms.terrainRockAmount = uniforms.rockAmount;
+    shader.uniforms.terrainDampBand = uniforms.dampBand;
+    shader.uniforms.terrainScrubAmount = uniforms.scrubAmount;
+    shader.uniforms.terrainMacroWarmth = uniforms.macroWarmth;
+    shader.uniforms.terrainAntiTile = uniforms.antiTile;
     shader.uniforms.terrainPaletteTint = uniforms.paletteTint;
     shader.uniforms.terrainDampTint = uniforms.dampTint;
     shader.uniforms.terrainDampAmount = uniforms.dampAmount;
@@ -717,6 +752,12 @@ uniform float terrainVariantCount;
 uniform float terrainAtlasRows;
 uniform float terrainFeatureMix;
 uniform float terrainSeed;
+uniform float terrainSplat;
+uniform float terrainRockAmount;
+uniform float terrainDampBand;
+uniform float terrainScrubAmount;
+uniform float terrainMacroWarmth;
+uniform float terrainAntiTile;
 uniform vec3 terrainPaletteTint;
 uniform vec3 terrainDampTint;
 uniform float terrainDampAmount;
@@ -786,6 +827,17 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
   vec4 packedSand = terrainAtlasSample(tileUv, terrainVariant(terrainCell, vec2(23.0, 29.0)));
   vec4 dryDirt = terrainAtlasSample(terrainOrientUv(fract(repeatedUv * 0.73 + jitter * 0.11), terrainCell + vec2(3.0, 7.0)), terrainVariant(terrainCell, vec2(43.0, 61.0)));
   vec4 scrub = terrainAtlasSample(terrainOrientUv(fract(repeatedUv * 1.21 - jitter * 0.13), terrainCell + vec2(11.0, 5.0)), terrainVariant(terrainCell, vec2(89.0, 31.0)));
+  vec4 wideSand = terrainAtlasSample(
+    terrainOrientUv(fract(repeatedUv * 0.47 + jitter * 0.09 + terrainSeed), terrainCell + vec2(17.0, 41.0)),
+    terrainVariant(terrainCell, vec2(7.0, 101.0))
+  );
+  vec4 wideDirt = terrainAtlasSample(
+    terrainOrientUv(fract(repeatedUv * 0.36 - jitter * 0.07 + terrainSeed * 2.0), terrainCell + vec2(29.0, 2.0)),
+    terrainVariant(terrainCell, vec2(109.0, 5.0))
+  );
+  float antiTileMix = clamp(terrainAntiTile, 0.0, 1.0) * terrainSplat;
+  packedSand = mix(packedSand, wideSand, antiTileMix * smoothstep(0.18, 0.86, terrainValueNoise(vTerrainWorld * 0.11 + terrainSeed * 67.0)));
+  dryDirt = mix(dryDirt, wideDirt, antiTileMix * smoothstep(0.24, 0.82, terrainValueNoise(vTerrainWorld * 0.095 - terrainSeed * 43.0)));
   float dirtBlend = smoothstep(0.22, 0.78, terrainValueNoise(vTerrainWorld * 0.075 + terrainSeed * 17.0));
   float shoreDistance = max(0.0, abs(vTerrainWorld.y) - 5.0);
   float shoreBand = 1.0 - smoothstep(1.1, 8.0, shoreDistance);
@@ -796,17 +848,60 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
   sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, mix(dryDirt.rgb, vec3(0.47, 0.44, 0.37), 0.46), rockBlend * 0.42);
   float dampGully = terrainGullyMask(vTerrainWorld) * (1.0 - smoothstep(4.0, 22.0, shoreDistance));
   sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, terrainDampTint, dampGully * terrainDampAmount);
+  float dampWeight = max(
+    (1.0 - smoothstep(max(0.35, terrainDampBand * 0.38), max(0.7, terrainDampBand), shoreDistance)) * terrainDampAmount,
+    dampGully * terrainDampAmount
+  );
+  float reliefNoise = smoothstep(0.32, 0.92, terrainValueNoise(vTerrainWorld * 0.16 + terrainSeed * 53.0));
+  float rockWeight = clamp((rockBlend + dampGully * 0.55 + reliefNoise * 0.16) * terrainRockAmount, 0.0, 0.88);
+  float scrubWeight = clamp((scrubBlend + shoreBand * 0.18) * terrainScrubAmount, 0.0, 0.72);
+  float dirtWeight = clamp(0.22 + dirtBlend * 0.34 + rockWeight * 0.18, 0.0, 0.72);
+  float sandWeight = max(0.18, 1.0 - dampWeight * 0.58 - rockWeight * 0.48 - scrubWeight * 0.28 - dirtWeight * 0.18);
+  float fineGrain = terrainValueNoise(vTerrainWorld * 0.82 + terrainSeed * 131.0) * 2.0 - 1.0;
+  float pebbleGrain = terrainValueNoise(vTerrainWorld * 1.75 - terrainSeed * 91.0) * 2.0 - 1.0;
+  vec3 sandLayer = mix(packedSand.rgb, vec3(0.68, 0.49, 0.255), 0.42) * (1.0 + fineGrain * 0.045 + pebbleGrain * 0.022);
+  vec3 dirtLayer = mix(dryDirt.rgb, vec3(0.55, 0.37, 0.185), 0.42) * (1.0 + fineGrain * 0.052 - pebbleGrain * 0.018);
+  vec3 dampLayer = mix(dirtLayer, terrainDampTint, 0.72);
+  vec3 rockLayer = mix(dirtLayer, vec3(0.46, 0.415, 0.34), 0.66);
+  vec3 scrubLayer = mix(scrub.rgb, vec3(0.255, 0.305, 0.17), 0.32) * (1.0 + pebbleGrain * 0.026);
+  vec3 atlasGrain = mix(packedSand.rgb, dryDirt.rgb, 0.48);
+  atlasGrain = mix(atlasGrain, scrub.rgb, scrubWeight * 0.28);
+  float atlasLuma = dot(atlasGrain, vec3(0.299, 0.587, 0.114));
+  float atlasDetail = mix(1.0, clamp(atlasLuma * 1.25, 0.86, 1.14), 0.16 * clamp(terrainAntiTile, 0.0, 1.0));
+  float weightTotal = max(0.001, sandWeight + dirtWeight + dampWeight + rockWeight + scrubWeight);
+  vec3 splatColor = (
+    sandLayer * sandWeight +
+    dirtLayer * dirtWeight +
+    dampLayer * dampWeight +
+    rockLayer * rockWeight +
+		scrubLayer * scrubWeight
+	  ) / weightTotal * atlasDetail;
+	  vec3 splatMood = clamp(vec3(
+	    1.0 + (terrainMacroWarmth - 0.75) * 0.16 - terrainScrubAmount * 0.04,
+	    1.0 - (terrainMacroWarmth - 0.75) * 0.06 + terrainScrubAmount * 0.10,
+	    1.0 - (terrainMacroWarmth - 0.75) * 0.18 + (terrainDampBand - 3.0) * 0.012
+	  ), vec3(0.82), vec3(1.2));
+	  splatColor *= splatMood;
+	  sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, splatColor, terrainSplat);
   sampledDiffuseColor.rgb = mix(vec3(1.0), sampledDiffuseColor.rgb, clamp(terrainFeatureMix, 0.0, 1.0));
   float macro = terrainValueNoise(vTerrainUv * 2.15 + terrainSeed * 11.0) * 2.0 - 1.0;
+  float activeMacroWarmth = mix(1.0, terrainMacroWarmth, terrainSplat);
   vec3 macroTint = vec3(
-    1.0 + macro * 0.052 + max(macro, 0.0) * 0.008,
-    1.0 + macro * 0.038,
-    1.0 + macro * 0.026 - max(macro, 0.0) * 0.010
+    1.0 + macro * (0.052 + terrainSplat * 0.018 * activeMacroWarmth) + max(macro, 0.0) * 0.008 * max(1.0, activeMacroWarmth),
+    1.0 + macro * (0.038 + terrainSplat * 0.010 * activeMacroWarmth),
+    1.0 + macro * (0.026 - terrainSplat * 0.006 * activeMacroWarmth) - max(macro, 0.0) * 0.010 * max(1.0, activeMacroWarmth)
   );
-  sampledDiffuseColor.rgb *= terrainPaletteTint * macroTint * mix(vec3(1.0), vec3(0.92, 1.0, 0.86), scrubBlend * 0.18);
-  diffuseColor *= sampledDiffuseColor;
-#endif`);
-  };
+	  sampledDiffuseColor.rgb *= terrainPaletteTint * macroTint * mix(vec3(1.0), vec3(0.92, 1.0, 0.86), scrubBlend * 0.18);
+	  diffuseColor *= sampledDiffuseColor;
+	#endif`);
+    shader.fragmentShader = shader.fragmentShader.replace(
+      '#include <normal_fragment_begin>',
+      `#include <normal_fragment_begin>
+  vec3 terrainUpNormal = normalize((viewMatrix * vec4(0.0, 1.0, 0.0, 0.0)).xyz);
+  normal = normalize(mix(normal, terrainUpNormal, terrainSplat * 0.24));
+  nonPerturbedNormal = normal;`,
+    );
+	  };
   void loadBankVariantAtlas().then((atlas) => {
     if (!atlas) return;
     // Do NOT resize the live map's backing canvas: three.js allocates immutable
@@ -919,6 +1014,15 @@ function terrainMeshEnabled(): boolean {
   }
   if (import.meta.env.VITE_GR_TERRAIN_MESH === '1' || import.meta.env.VITE_GR_TERRAIN_MESH === 'true') return true;
   return Balance.world.terrainMesh;
+}
+
+function terrainSplatEnabled(): boolean {
+  if (typeof window !== 'undefined') {
+    const value = new URLSearchParams(window.location.search).get('terrainSplat');
+    if (value !== null) return value !== '0' && value !== 'false';
+  }
+  if (import.meta.env.VITE_GR_TERRAIN_SPLAT === '1' || import.meta.env.VITE_GR_TERRAIN_SPLAT === 'true') return true;
+  return Balance.world.terrainSplat;
 }
 
 function terrainMeshSegments(): number {
@@ -1151,6 +1255,20 @@ function syncBankMaterial(mesh: THREE.Mesh): void {
   if (uniforms) uniforms.featureMix.value = Balance.terrain.featureMix;
 }
 
+function terrainSplatParams(): TerrainSplatParams {
+  const declared = TILE_PALETTE?.splat ?? {};
+  const riverDampBand = (TILE_WATER?.visualHalfWidth ?? (RIVER_MAX_Z - RIVER_MIN_Z) / 2 + SHALLOWS_WIDTH) + 0.9;
+  const defaultRock = TILE_HEIGHTFIELD?.washChannels ? 0.62 : TILE_HEIGHTFIELD?.bankRelief ? 0.28 : 0.22;
+  const defaultScrub = ACTIVE_CONTRACT.tileParams.scatter?.nearWaterBias ? 0.42 : ACTIVE_CONTRACT.tileParams.river ? 0.2 : 0.14;
+  return {
+    rockAmount: clamp01(declared.rockAmount ?? defaultRock),
+    dampBand: Math.max(0.5, declared.dampBand ?? (ACTIVE_CONTRACT.tileParams.river ? riverDampBand : SPRING_PONDS.length ? 2.8 : 1.4)),
+    scrubAmount: clamp01(declared.scrubAmount ?? defaultScrub),
+    macroWarmth: Math.max(0, Math.min(1.5, declared.macroWarmth ?? 1)),
+    antiTile: clamp01(declared.antiTile ?? 0.58),
+  };
+}
+
 function paletteVector(value: [number, number, number] | undefined, fallback: [number, number, number]): THREE.Vector3 {
   const [r, g, b] = value ?? fallback;
   return new THREE.Vector3(r, g, b);
@@ -1253,6 +1371,10 @@ function smoothstep(edge0: number, edge1: number, value: number): number {
 
 function smooth01(value: number): number {
   return value * value * (3 - 2 * value);
+}
+
+function clamp01(value: number): number {
+  return THREE.MathUtils.clamp(value, 0, 1);
 }
 
 function fract(value: number): number {

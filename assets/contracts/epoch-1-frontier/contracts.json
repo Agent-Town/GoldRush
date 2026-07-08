@@ -52,7 +52,14 @@
           "id": "dry-gulch-ochre-red",
           "tint": [1.1, 0.9, 0.72],
           "dampTint": [0.78, 0.58, 0.42],
-          "dampAmount": 0.2
+          "dampAmount": 0.2,
+          "splat": {
+            "rockAmount": 0.72,
+            "dampBand": 2.2,
+            "scrubAmount": 0.12,
+            "macroWarmth": 1.22,
+            "antiTile": 0.72
+          }
         },
         "scatter": {
           "id": "dry-gulch-cactus-sparse",
@@ -105,7 +112,14 @@
           "id": "night-shift-dusk",
           "tint": [0.74, 0.78, 0.86],
           "dampTint": [0.34, 0.4, 0.44],
-          "dampAmount": 0.12
+          "dampAmount": 0.12,
+          "splat": {
+            "rockAmount": 0.2,
+            "dampBand": 5.2,
+            "scrubAmount": 0.14,
+            "macroWarmth": 0.46,
+            "antiTile": 0.56
+          }
         },
         "prePlacedBuildables": [{ "id": "lantern_post", "x": 0, "z": 12, "rotationSteps": 0 }],
         "lanes": {
@@ -168,7 +182,14 @@
           "id": "twin-banks-damp",
           "tint": [0.92, 0.96, 0.88],
           "dampTint": [0.45, 0.53, 0.4],
-          "dampAmount": 0.28
+          "dampAmount": 0.28,
+          "splat": {
+            "rockAmount": 0.18,
+            "dampBand": 8.2,
+            "scrubAmount": 0.45,
+            "macroWarmth": 0.78,
+            "antiTile": 0.64
+          }
         },
         "scatter": {
           "id": "twin-banks-reeds",

@@ -547,8 +547,8 @@ interface ThreeGameDiagnostics {
       vertices: number;
       triangles: number;
       heightSource: 'visual';
-      textureSource: 'bank-atlas';
-      textureSeams: 'texture seams remain until TR-02';
+      textureSource: 'bank-atlas' | 'bank-atlas-splat';
+      textureSeams: 'texture seams remain until TR-02' | 'per-pixel splat gradients';
     };
     sim: {
       flat: boolean;

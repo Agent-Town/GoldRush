@@ -214,6 +214,13 @@ export type ContractPaletteDescriptor = {
   tint: [number, number, number];
   dampTint?: [number, number, number];
   dampAmount?: number;
+  splat?: {
+    rockAmount?: number;
+    dampBand?: number;
+    scrubAmount?: number;
+    macroWarmth?: number;
+    antiTile?: number;
+  };
 };
 export type ContractDetailClass = 'rocks' | 'stumps' | 'dry_grass' | 'wagon_ruts' | 'claim_posts' | 'cactus' | 'reeds';
 export type ContractScatterDescriptor = {
