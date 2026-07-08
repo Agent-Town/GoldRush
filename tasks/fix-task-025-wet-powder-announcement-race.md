@@ -1,3 +1,5 @@
+> ✅ **RETIRED — DO NOT QUEUE (s236, 2026-07-08).** This corrective is ALREADY SHIPPED on main as `fa9e289` ("fix: harden wet powder announcement test", attended, 2026-07-08). Verified: `e2e/task-025-bandits-dont-swim.spec.ts:185` now asserts against the durable Wave-status DOM (`page.getByTestId('hud-wave')).toContainText(/Wet powder/)`) exactly as scope item 1 specified — the transient `diagnostics.ui.announcement` read is gone. Queuing this master would re-derive an already-merged diff → Silent No-Op (Mistake #1) / 824k-Flail (Mistake #8). Master kept for history only.
+
 # fix-task-025-wet-powder-announcement-race — FIRE-AUTHORED (attended review welcome)
 
 **Slot:** main (repo root) · **Role:** Codex implementer, native Mac, cwd = repo root.

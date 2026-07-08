@@ -1,3 +1,5 @@
+> ✅ **RETIRED — DO NOT QUEUE (s236, 2026-07-08).** ALREADY SHIPPED on main as `b7315f6` ("fix: restore reset claim banner", attended, s205 2026-07-08); its consumed queue copy was retired s233 (`3933099`), but this master template lingered in `tasks/` as a re-queue hazard. Re-queuing would re-derive an already-merged diff → Silent No-Op (Mistake #1). Master kept for history only.
+
 # fix-m1-03-reset-claim-banner — FIRE-AUTHORED (attended review welcome)
 
 **Slot:** main (repo root) · **Role:** Codex implementer, native Mac, cwd = repo root.
