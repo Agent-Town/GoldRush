@@ -17,6 +17,9 @@ worktrees/
 # session scratch + probe backups — NEVER track (s198 broad-add guard: the art
 # runner's `git add -A` in the repo root swept these into bfadfc2, 4th instance).
 # Ignoring them makes a repo-root -A safe-by-construction for future runs.
+# `.s<N>-*` = per-fire scratch (line-1 backups, merge captures, probe helpers);
+# covers all session numbers incl. legacy .s89/.s90/.s195 and future .s3xx.
+.s[0-9]*
 .s195-probe-bak/
 scripts/_s*
 playwright.s*.config.ts
