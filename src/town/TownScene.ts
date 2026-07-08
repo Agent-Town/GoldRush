@@ -9,14 +9,22 @@ import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal } from '../game/Medals';
-import { loadMetaProgress } from '../game/MetaProgress';
+import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
-import { DEFAULT_CONTRACT_ID, listContracts, type ContractManifest } from '../meta/ContractFamilies';
+import { DEFAULT_CONTRACT_ID, listContracts, loadEpoch, type ContractManifest } from '../meta/ContractFamilies';
+import {
+  ensureMegaprojectProject,
+  isMegaprojectUnlocked,
+  loadMegaprojectState,
+  megaprojectComplete,
+  type MegaprojectManifest,
+  type MegaprojectProjectState,
+} from '../meta/Megaproject';
 import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
-import { townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
+import { earnedTownBuildings, townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 
 const loadTavernBackdropUrl = () =>
@@ -25,6 +33,14 @@ const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 0);
 const APPROACH_RADIUS = 5.2;
+const STAMP_MILL_ID = 'stamp-mill';
+const STAMP_MILL_TOWN_SITE = { x: 0, z: 13.45, w: 6.2, d: 1.65 };
+const STAMP_MILL_COMPLETE_LINE = 'awaits the whistle';
+const STAMP_MILL_PROGRESS_LINES = [
+  'The Stamp Mill rises: the rail spur is staked.',
+  'The Stamp Mill rises: the boilers are seated.',
+  'The Stamp Mill rises: the stamps are set.',
+] as const;
 
 export type TownDiagnostics = {
   frame: number;
@@ -34,6 +50,24 @@ export type TownDiagnostics = {
   townName: string | null;
   namingPrompt: boolean;
   boardOpen: boolean;
+  buildings: Array<{
+    id: TownBuildingId;
+    name: string;
+    visible: boolean;
+    territoryRequired: number | null;
+    barkSlot: string | null;
+  }>;
+  stampMill: {
+    visible: boolean;
+    stage: number;
+    totalStages: number;
+    funded: boolean;
+    complete: boolean;
+    plaque: string;
+    visibleStages: string[];
+    constructionProps: number;
+    surveyVisible: boolean;
+  };
   renderer: { calls: number; geometries: number; textures: number };
   canvas: { width: number; height: number; dpr: number };
 };
@@ -50,6 +84,12 @@ type HiddenButtonState = {
 
 type TownNameMode = 'founding' | 'rename';
 
+type TownStampMill = {
+  manifest: MegaprojectManifest | null;
+  project: MegaprojectProjectState | null;
+  visible: boolean;
+};
+
 export class TownScene {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly scene = new THREE.Scene();
@@ -64,6 +104,13 @@ export class TownScene {
   private readonly nameCard = document.createElement('form');
   private readonly board = document.createElement('section');
   private readonly hiddenButtons: HiddenButtonState[];
+  private readonly metaProgress = readTownMetaProgress();
+  private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
+  private readonly stampMill = readTownStampMill(this.metaProgress);
+  private readonly stampMillGroup = new THREE.Group();
+  private readonly stampMillStageVisuals: THREE.Object3D[] = [];
+  private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
+  private readonly stampMillConstructionProps: THREE.Object3D[] = [];
   private townTitle?: HTMLElement;
   private townSubtitle?: HTMLElement;
   private nameInput?: HTMLInputElement;
@@ -81,6 +128,7 @@ export class TownScene {
   private lastExitIntent = false;
   private tavernBackdropUrl: string | undefined;
   private tavernBackdropRequest: Promise<string> | undefined;
+  private stampMillPlaqueText = '';
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -140,7 +188,7 @@ export class TownScene {
     }
     this.lastExitIntent = rawExitIntent;
 
-    this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: townSample });
+    this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: this.sampleTown });
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.syncPrompt();
     this.publishDiagnostics();
@@ -150,6 +198,17 @@ export class TownScene {
     this.renderer.info.reset();
     this.renderer.render(this.scene, this.camera);
   }
+
+  private readonly sampleTown = (x: number, z: number) => {
+    if (x < TOWN_BOUNDS.minX || x > TOWN_BOUNDS.maxX || z < TOWN_BOUNDS.minZ || z > TOWN_BOUNDS.maxZ) {
+      return { walkable: false, speedMul: 0, zone: 'out' as const };
+    }
+    return {
+      walkable: !shellAt(this.visibleBuildings, x, z) && !stampMillAt(this.stampMill.visible, x, z),
+      speedMul: 1,
+      zone: 'bank' as const,
+    };
+  };
 
   private createScene(): void {
     this.scene.name = 'TownScene';
@@ -177,12 +236,113 @@ export class TownScene {
     ground.renderOrder = RenderLayers.terrain;
     this.scene.add(ground, createSquareEdge());
 
-    for (const building of townBuildings) {
+    for (const building of this.visibleBuildings) {
       this.scene.add(createShell(building));
     }
+    this.createStampMillVignette();
 
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
+  }
+
+  private createStampMillVignette(): void {
+    const { manifest, project, visible } = this.stampMill;
+    if (!manifest || !project || !visible) return;
+
+    const complete = megaprojectComplete(manifest, project);
+    const total = Math.max(1, manifest.stages.length);
+    const visibleStages = Math.max(1, Math.min(total, project.stage + (project.funded ? 1 : 0)));
+    const surveyVisible = project.stage === 0 && !project.funded && !complete;
+    const site = STAMP_MILL_TOWN_SITE;
+    const halfX = site.w * 0.5;
+    const halfZ = site.d * 0.5;
+    const baseMaterial = new THREE.MeshStandardMaterial({ color: '#8b6c3f', roughness: 0.86, metalness: 0.02 });
+    const stageMaterial = new THREE.MeshStandardMaterial({ color: '#5b8a8a', roughness: 0.7, metalness: 0.18 });
+    const ghostMaterial = new THREE.MeshStandardMaterial({ color: '#8b7d3c', roughness: 0.78, metalness: 0.08, transparent: true, opacity: 0.46 });
+    const woodMaterial = new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.84, metalness: 0.02 });
+    const brassMaterial = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.58, metalness: 0.16 });
+
+    this.stampMillGroup.name = 'TownStampMillSite';
+    this.stampMillGroup.position.set(site.x, 0, site.z);
+
+    const addBox = (
+      name: string,
+      material: THREE.Material,
+      position: [number, number, number],
+      scale: [number, number, number],
+      target?: THREE.Object3D[],
+    ) => {
+      const mesh = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), material);
+      mesh.name = name;
+      mesh.position.set(...position);
+      mesh.scale.set(...scale);
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+      this.stampMillGroup.add(mesh);
+      target?.push(mesh);
+      return mesh;
+    };
+
+    addBox('TownStampMillPackedEarth', baseMaterial, [0, 0.04, 0], [site.w, 0.08, site.d]);
+
+    for (const [x, z] of [
+      [-halfX, -halfZ],
+      [halfX, -halfZ],
+      [halfX, halfZ],
+      [-halfX, halfZ],
+    ] as const) {
+      const stake = addBox('TownStampMillSurveyStake', woodMaterial, [x, 0.4, z], [0.09, 0.72, 0.09], this.stampMillSurveyVisuals);
+      stake.visible = surveyVisible;
+    }
+    for (const line of [
+      { x: 0, z: -halfZ, sx: site.w, sz: 0.035 },
+      { x: 0, z: halfZ, sx: site.w, sz: 0.035 },
+      { x: -halfX, z: 0, sx: 0.035, sz: site.d },
+      { x: halfX, z: 0, sx: 0.035, sz: site.d },
+    ]) {
+      const stringLine = addBox(
+        'TownStampMillSurveyStringLine',
+        brassMaterial,
+        [line.x, 0.32, line.z],
+        [line.sx, 0.035, line.sz],
+        this.stampMillSurveyVisuals,
+      );
+      stringLine.visible = surveyVisible;
+    }
+
+    const stages = [
+      { name: 'TownStampMillScaffold', x: -site.w * 0.28, y: 0.54, z: 0, sx: 0.34, sy: 0.9, sz: site.d * 0.82 },
+      { name: 'TownStampMillBoilers', x: 0, y: 0.42, z: -site.d * 0.08, sx: site.w * 0.36, sy: 0.64, sz: site.d * 0.58 },
+      { name: 'TownStampMillReadyMill', x: site.w * 0.26, y: 0.72, z: site.d * 0.05, sx: site.w * 0.26, sy: 1.2, sz: site.d * 0.52 },
+    ] as const;
+    stages.forEach((stage, index) => {
+      const built = complete || index + 1 <= project.stage;
+      const mesh = addBox(
+        stage.name,
+        built ? stageMaterial : ghostMaterial,
+        [stage.x, stage.y, stage.z],
+        [stage.sx, stage.sy, stage.sz],
+        this.stampMillStageVisuals,
+      );
+      mesh.visible = index < visibleStages || complete;
+    });
+
+    for (const [x, z] of [
+      [-halfX + 0.45, halfZ - 0.25],
+      [halfX - 0.48, halfZ - 0.22],
+      [0.1, -halfZ + 0.35],
+    ] as const) {
+      const crate = addBox('TownStampMillConstructionProp', woodMaterial, [x, 0.25, z], [0.38, 0.38, 0.38], this.stampMillConstructionProps);
+      crate.visible = !surveyVisible && !complete;
+    }
+
+    const plaqueLines = stampMillPlaqueLines(manifest, project);
+    this.stampMillPlaqueText = plaqueLines.join(' / ');
+    const plaque = createPlaqueSprite(plaqueLines);
+    plaque.name = 'TownStampMillLedgerPlaque';
+    plaque.position.set(0, 1.55, -halfZ - 0.25);
+    this.stampMillGroup.add(plaque);
+    this.scene.add(this.stampMillGroup);
   }
 
   private createUi(): void {
@@ -241,6 +401,7 @@ export class TownScene {
     this.syncTownTitle();
     if (!this.townName) this.openNameCard('founding');
     if (this.options.openBoard) this.openBoard();
+    this.emitGrowthSightBeats();
   }
 
   private readonly onExitClick = () => {
@@ -310,6 +471,13 @@ export class TownScene {
     if (this.townSubtitle) this.townSubtitle.textContent = this.townName ? 'Town Square' : 'Four doors stand ready.';
   }
 
+  private emitGrowthSightBeats(): void {
+    for (const building of this.visibleBuildings) {
+      if (building.id !== 'general_store' && building.id !== 'chapel') continue;
+      emitStorySignal({ type: 'town-growth-seen', buildingId: building.id, buildingName: building.name });
+    }
+  }
+
   private syncPrompt(): void {
     if (this.boardOpen) {
       this.prompt.hidden = true;
@@ -319,7 +487,7 @@ export class TownScene {
     const position = this.hero.group.position;
     let nearest: TownBuilding | null = null;
     let nearestDistanceSq = APPROACH_RADIUS * APPROACH_RADIUS;
-    for (const building of townBuildings) {
+    for (const building of this.visibleBuildings) {
       const dx = position.x - building.position.x;
       const dz = position.z - building.position.z;
       const distanceSq = dx * dx + dz * dz;
@@ -336,7 +504,8 @@ export class TownScene {
       this.infoNote?.update(null);
       return;
     }
-    this.infoNote?.update({ objectClass: townInfoClass(nearest.id) });
+    const infoClass = townInfoClass(nearest.id);
+    this.infoNote?.update(infoClass ? { objectClass: infoClass } : null);
     const promptKey = `${nearest.id}:${this.townName ?? ''}`;
     if (promptKey === this.promptKey) return;
     this.promptKey = promptKey;
@@ -467,6 +636,14 @@ export class TownScene {
       townName: this.townName,
       namingPrompt: this.nameCardOpen,
       boardOpen: this.boardOpen,
+      buildings: townBuildings.map((building) => ({
+        id: building.id,
+        name: building.name,
+        visible: this.visibleBuildings.includes(building),
+        territoryRequired: building.requires?.territory ?? null,
+        barkSlot: building.barkSlot ?? null,
+      })),
+      stampMill: this.stampMillDiagnostics(),
       renderer: {
         calls: this.renderer.info.render.calls,
         geometries: this.renderer.info.memory.geometries,
@@ -477,6 +654,21 @@ export class TownScene {
         height: this.canvas.height,
         dpr,
       },
+    };
+  }
+
+  private stampMillDiagnostics(): TownDiagnostics['stampMill'] {
+    const { manifest, project, visible } = this.stampMill;
+    return {
+      visible,
+      stage: project?.stage ?? 0,
+      totalStages: manifest?.stages.length ?? 0,
+      funded: project?.funded ?? false,
+      complete: !!manifest && !!project && megaprojectComplete(manifest, project),
+      plaque: this.stampMillPlaqueText,
+      visibleStages: this.stampMillStageVisuals.filter((visual) => visual.visible).map((visual) => visual.name),
+      constructionProps: this.stampMillConstructionProps.filter((visual) => visual.visible).length,
+      surveyVisible: this.stampMillSurveyVisuals.some((visual) => visual.visible),
     };
   }
 
@@ -578,24 +770,43 @@ function browserStorage(): Storage | undefined {
   }
 }
 
-function townSample(x: number, z: number) {
-  if (x < TOWN_BOUNDS.minX || x > TOWN_BOUNDS.maxX || z < TOWN_BOUNDS.minZ || z > TOWN_BOUNDS.maxZ) {
-    return { walkable: false, speedMul: 0, zone: 'out' as const };
+function readTownMetaProgress(): MetaProgress {
+  const storage = browserStorage();
+  let raw: unknown = null;
+  try {
+    const saved = storage?.getItem(META_PROGRESS_KEY);
+    raw = saved ? JSON.parse(saved) : null;
+  } catch {
+    raw = null;
   }
-  return {
-    walkable: !shellAt(x, z),
-    speedMul: 1,
-    zone: 'bank' as const,
-  };
+  return migrateMetaProgress(raw);
 }
 
-function shellAt(x: number, z: number): boolean {
+function readTownStampMill(meta: MetaProgress): TownStampMill {
+  const manifest = loadEpoch('epoch-1-frontier').megaprojects.find((entry) => entry.id === STAMP_MILL_ID) ?? null;
+  if (!manifest) return { manifest: null, project: null, visible: false };
+  const state = loadMegaprojectState(browserStorage());
+  const project = ensureMegaprojectProject(state, manifest);
+  const visible = isMegaprojectUnlocked(manifest, meta.tracks.science) || project.stage > 0 || project.funded;
+  return { manifest, project, visible };
+}
+
+function shellAt(buildings: readonly TownBuilding[], x: number, z: number): boolean {
   const pad = Balance.hero.radius + 0.08;
-  return townBuildings.some((building) => {
+  return buildings.some((building) => {
     const halfX = building.footprint.w / 2 + pad;
     const halfZ = building.footprint.d / 2 + pad;
     return Math.abs(x - building.position.x) <= halfX && Math.abs(z - building.position.z) <= halfZ;
   });
+}
+
+function stampMillAt(visible: boolean, x: number, z: number): boolean {
+  if (!visible) return false;
+  const pad = Balance.hero.radius + 0.08;
+  return (
+    Math.abs(x - STAMP_MILL_TOWN_SITE.x) <= STAMP_MILL_TOWN_SITE.w / 2 + pad &&
+    Math.abs(z - STAMP_MILL_TOWN_SITE.z) <= STAMP_MILL_TOWN_SITE.d / 2 + pad
+  );
 }
 
 function createShell(building: TownBuilding): THREE.Group {
@@ -668,6 +879,56 @@ function createLabel(text: string): THREE.Sprite {
   return sprite;
 }
 
+function createPlaqueSprite(lines: readonly string[]): THREE.Sprite {
+  const width = 640;
+  const height = 220;
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.fillStyle = 'rgba(245, 230, 200, 0.97)';
+    roundRect(ctx, 18, 24, width - 36, height - 48, 16);
+    ctx.fill();
+    ctx.strokeStyle = '#2e1b0e';
+    ctx.lineWidth = 8;
+    ctx.stroke();
+    ctx.fillStyle = '#2e1b0e';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    lines.slice(0, 3).forEach((line, index) => {
+      ctx.font = fitCanvasFont(ctx, line, index === 0 ? 42 : 28, index === 0 ? 540 : 580);
+      ctx.fillText(line, width / 2, 62 + index * 52);
+    });
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
+  const sprite = new THREE.Sprite(material);
+  sprite.scale.set(4.4, 1.5, 1);
+  sprite.renderOrder = RenderLayers.worldUi;
+  return sprite;
+}
+
+function fitCanvasFont(ctx: CanvasRenderingContext2D, line: string, baseSize: number, maxWidth: number): string {
+  for (let size = baseSize; size >= 18; size -= 2) {
+    const font = `700 ${size}px Georgia, serif`;
+    ctx.font = font;
+    if (ctx.measureText(line).width <= maxWidth) return font;
+  }
+  return '700 18px Georgia, serif';
+}
+
+function stampMillPlaqueLines(manifest: MegaprojectManifest, project: MegaprojectProjectState): readonly string[] {
+  if (megaprojectComplete(manifest, project)) return ['STAMP MILL & RAIL SPUR', 'ready mill', STAMP_MILL_COMPLETE_LINE];
+  if (project.stage === 0 && !project.funded) return ['STAMP MILL & RAIL SPUR', 'surveyed for the town', 'Claim Office takes pledges'];
+  return [
+    'STAMP MILL & RAIL SPUR',
+    `stage ${Math.min(project.stage + 1, manifest.stages.length)} of ${manifest.stages.length}`,
+    STAMP_MILL_PROGRESS_LINES[project.stage] ?? STAMP_MILL_PROGRESS_LINES[0],
+  ];
+}
+
 function createGroundTexture(): THREE.CanvasTexture {
   const size = 512;
   const canvas = document.createElement('canvas');
@@ -730,10 +991,11 @@ function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, width: n
   ctx.closePath();
 }
 
-function townInfoClass(id: TownBuildingId): WorldInfoObjectClass {
+function townInfoClass(id: TownBuildingId): WorldInfoObjectClass | null {
   if (id === 'claim_office') return 'town_claim_office';
   if (id === 'schoolhouse') return 'town_schoolhouse';
   if (id === 'assay_office') return 'town_assay_office';
+  if (id === 'general_store' || id === 'chapel') return null;
   return 'town_tavern';
 }
 

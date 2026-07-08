@@ -1,5 +1,6 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 
 const SHOT_DIR = 'artifacts/town-t1';
 
@@ -16,10 +17,26 @@ function collectErrors(page: Page): ErrorBucket {
 }
 
 async function clearStorage(page: Page): Promise<void> {
-  await page.addInitScript(() => {
+  await page.addInitScript(({ profileKey, townKey }) => {
     localStorage.clear();
     sessionStorage.clear();
-  });
+    const state: ProfileState = {
+      version: 2,
+      activeId: 'robin',
+      profiles: [
+        {
+          id: 'robin',
+          name: 'Robin',
+          createdAt: 1,
+          updatedAt: 1,
+          difficultyPreset: 'trail',
+          hintsSeen: [],
+        },
+      ],
+    };
+    localStorage.setItem(profileKey, JSON.stringify(state));
+    localStorage.setItem(townKey, 'Quartz Hill');
+  }, { profileKey: PROFILE_KEY, townKey: profileDataKey('robin', TOWN_NAME_KEY) });
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {

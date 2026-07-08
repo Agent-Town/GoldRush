@@ -33,6 +33,22 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     lines: ['First contract is on the board.', 'The Claim is where every ledger starts.'],
   },
   {
+    id: 'town-growth-general-store',
+    trigger: 'town-growth-seen',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'town-growth-seen' && signal.buildingId === 'general_store',
+    lines: ["The store came in on Tuesday's wagon.", "We're a town now."],
+  },
+  {
+    id: 'town-growth-chapel',
+    trigger: 'town-growth-seen',
+    speaker: 'tavernkeeper',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'town-growth-seen' && signal.buildingId === 'chapel',
+    lines: ['Chapel bell went up at sundown.', 'Folks are putting roots under their boots.'],
+  },
+  {
     id: 'first-loss',
     trigger: 'building-lost',
     speaker: 'clerk',

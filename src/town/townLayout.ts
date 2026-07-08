@@ -1,4 +1,4 @@
-export type TownBuildingId = 'tavern' | 'claim_office' | 'schoolhouse' | 'assay_office';
+export type TownBuildingId = 'tavern' | 'claim_office' | 'schoolhouse' | 'assay_office' | 'general_store' | 'chapel';
 
 export type TownBuilding = {
   id: TownBuildingId;
@@ -8,6 +8,8 @@ export type TownBuilding = {
   color: string;
   roof: string;
   accent: string;
+  requires?: { territory: number };
+  barkSlot?: string;
 };
 
 export const townBuildings: readonly TownBuilding[] = [
@@ -47,4 +49,30 @@ export const townBuildings: readonly TownBuilding[] = [
     roof: '#5b8a8a',
     accent: '#c4883a',
   },
+  {
+    id: 'general_store',
+    name: 'General Store',
+    position: { x: 0.4, z: -10.8 },
+    footprint: { w: 4.8, d: 3.3 },
+    color: '#d9a45f',
+    roof: '#5f4930',
+    accent: '#5b8a8a',
+    requires: { territory: 2 },
+    barkSlot: 'storekeeper-porch',
+  },
+  {
+    id: 'chapel',
+    name: 'Chapel',
+    position: { x: -0.5, z: 9.6 },
+    footprint: { w: 4.2, d: 3.2 },
+    color: '#f5e6c8',
+    roof: '#8b7d3c',
+    accent: '#a0522d',
+    requires: { territory: 3 },
+    barkSlot: 'preacher-porch',
+  },
 ] as const;
+
+export function earnedTownBuildings(territory: number): readonly TownBuilding[] {
+  return townBuildings.filter((building) => !building.requires || territory >= building.requires.territory);
+}
