@@ -23,6 +23,7 @@ const PAUSE_STORY_SETTINGS_IDS = {
 
 export type UiIntent =
   | { type: 'restart' | 'toggle_build_menu' | 'close_build_menu' | 'pause' }
+  | { type: 'save_claim'; name: string }
   | { type: 'select_buildable'; id: BuildableId | string }
   | { type: 'set_agent_rung'; level: AgentPermissionLevel; granted: boolean }
   | { type: 'set_agent_ability'; ability: AgentAbility; granted: boolean };
@@ -33,6 +34,12 @@ export type ContractBriefingSnapshot = ContractBriefing & {
 
 export type PauseMetaSnapshot = {
   save: string;
+  manualSave: {
+    canSave: boolean;
+    defaultName: string;
+    message: string;
+    open: boolean;
+  };
   contract: ContractBriefingSnapshot;
   science: string;
   territory: string;
@@ -460,6 +467,7 @@ export class Hud {
     this.elements.pauseMeta.innerHTML = `
       <p class="hud-meta__eyebrow">Claim Memory</p>
       <p class="hud-meta__line" data-testid="pause-meta-save">${this.escape(meta.save)}</p>
+      ${this.renderManualSave(meta.manualSave)}
       <p class="hud-meta__line gr-account-chip gr-account-chip--pause" data-testid="pause-account-status-chip">${this.escape(syncStatus)}</p>
       <section class="hud-meta__contract" data-testid="pause-contract">
         <p class="hud-meta__label">The Contract</p>
@@ -488,6 +496,26 @@ export class Hud {
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.elements.pauseMeta, PAUSE_AUDIO_SETTINGS_IDS);
     this.disposeStorySettings = bindStorySettingsControl(this.elements.pauseMeta, PAUSE_STORY_SETTINGS_IDS);
+    this.elements.pauseMeta.querySelector<HTMLFormElement>('[data-testid="manual-save-form"]')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = this.elements.pauseMeta.querySelector<HTMLInputElement>('[data-testid="manual-save-name"]');
+      this.onIntent({ type: 'save_claim', name: input?.value ?? '' });
+    });
+  }
+
+  private renderManualSave(save: PauseMetaSnapshot['manualSave']): string {
+    return `
+      <details class="hud-meta__save" data-testid="manual-save-card" ${save.open ? 'open' : ''}>
+        <summary>📒 Save this claim…</summary>
+        <form class="hud-meta__save-form" data-testid="manual-save-form">
+          <input data-testid="manual-save-name" name="manualSaveName" minlength="2" maxlength="24" autocomplete="off" value="${this.escape(
+            save.defaultName,
+          )}" ${save.canSave ? '' : 'disabled'} />
+          <button class="hud-meta__chip" type="submit" data-testid="manual-save-confirm" ${save.canSave ? '' : 'disabled'}>Save</button>
+        </form>
+        <p class="hud-meta__save-message" data-testid="manual-save-message">${this.escape(save.message)}</p>
+      </details>
+    `;
   }
 
   private renderMetaLines(lines: PauseMetaSnapshot['boons'], emptyName: string, emptyEffect: string): string {
