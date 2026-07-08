@@ -1,0 +1,40 @@
+# Task town-T6-spec-align: align town-t1-square + town-t3-board to the town-v1 nav model (LANE-B, commit prefix "test:")
+
+**FIRE-AUTHORED s217 (attended review welcome).** This is the corrective F-t6-1 named in `reviews/town-t6.md`. It STACKS on the **undrained** town-T6 commit — read the pre-flight twice.
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `lane/m4`).
+READ FIRST: `AGENTS.md`; `reviews/town-t6.md` (the finding F-t6-1 you are closing); the two PASSING reference specs `e2e/town-t6-surfaces.spec.ts` + `e2e/044-start-screen.spec.ts` (they encode the exact town-v1 idioms — mirror them, do NOT edit them); the town-T6 code `src/town/TownScene.ts` + `src/ui/menu/StartMenu.ts` (already correct — READ ONLY, do NOT touch).
+
+## PRE-FLIGHT — NON-RESETTING, BASE-VERIFYING (town-T6 is UNDRAINED — resetting DESTROYS it)
+The lane-b worktree is intentionally sitting on the **undrained** town-T6 commit `541dac8`, NOT on main. Your job stacks two test-file edits ON TOP of it so a future fire can drain town-T6 + these aligns to main in ONE merge.
+1. `git rev-parse HEAD` — it MUST print `541dac8...`. If it prints anything else (e.g. main's tip), **STOP and report "lane/m4 no longer at town-T6 541dac8 — base lost, do not proceed"** — do NOT reset, do NOT run.
+2. Confirm town-T6 is present: `grep -c start-menu-new-claim src/ui/menu/StartMenu.ts` MUST be `0` (town-T6 removed it) AND `e2e/town-t6-surfaces.spec.ts` MUST exist. If either fails → STOP and report "town-T6 code absent from base".
+3. `git status --short` — the only tracked dirt permitted is none (a clean 541dac8 worktree). If there are uncommitted TRACKED edits you did not make → STOP and report them (someone else owns this tree). Untracked scratch is fine.
+4. **NEVER run** `git reset --hard`, `git checkout -B lane/m4 main`, `git checkout main`, or `git clean -fd` in this task. There is NO safe-dupe reset here — the base is deliberately ahead of main and MUST stay 541dac8.
+5. `npm install --no-audit --no-fund` if needed; `npm run build` must be green before you touch anything.
+
+## Why (reviews/town-t6.md F-t6-1, s216, VERIFIED on lane/m4 by s217)
+town-T6 (owner-intended, already correct) thinned the StartMenu (removed `start-menu-new-claim`; New Claim now launches via Enter Town → the tavern board) and promoted two shells from "opens soon" placeholders to **live surfaces**: Schoolhouse → Research chart, Assay Office → order-status porch. It updated `044-start-screen.spec.ts` + added `town-t6-surfaces.spec.ts` to match, but LEFT two adjacent specs asserting the pre-T6 behavior, so the town-T6 drain gate reds:
+- **`e2e/town-t1-square.spec.ts`** — the generic `approach()` helper (line ~57) asserts EVERY shell prompt `toContainText('opens soon')`, but Schoolhouse (approached line ~79) now reads **"Schoolhouse … Elder's Survey Chart"** and Assay Office (line ~80) now reads **"Assay Office … order status"** (verified `src/town/TownScene.ts` lines ~613–621 on lane/m4). And the tail (line ~84) clicks the removed `start-menu-new-claim`.
+- **`e2e/town-t3-board.spec.ts`** — two tests (`:175` "board launch…default contract" line ~186, and `:197` "post-run overrun returns to board" line ~201) call `getByTestId('start-menu-new-claim').click()` → 30 s timeout on the removed locator.
+
+VERIFIED FACTS (lane/m4 `src/town/TownScene.ts`): prompt element keeps testid `town-approach-prompt` (line 414); tavern + claim_office prompts STILL contain `"opens soon"` (tavern additionally has a `town-open-board` Board button, line 611); schoolhouse prompt = `"… Elder's Survey Chart"` + `town-open-schoolhouse` button; assay prompt = `"… order status"` + `town-open-assay` button; contract launch buttons are `contract-launch-<id>` (line 840), e.g. `contract-launch-the-claim`. Re-confirm these strings against the code before asserting — quote what you find.
+
+## Scope (each item must end GREEN when you run the spec — do not guess, run it)
+1. **`e2e/town-t1-square.spec.ts` — make the shell-prompt assertions surface-aware.** Generalize the `approach()` helper so the expected prompt text is a parameter (default `'opens soon'`): keep `'opens soon'` for **tavern** and **claim_office**; assert the LIVE surface text for **schoolhouse** (`Elder's Survey Chart`) and **assay_office** (`order status`). The assertions must stay MEANINGFUL (Mistake #10 — prove the real player-facing surface, not a tautology): assert the actual live copy the shell now shows, matching `town-t6-surfaces.spec.ts`.
+2. **`e2e/town-t1-square.spec.ts` — replace the removed-menu run launch.** The test title is "menu enters town square, prompts at four shells, exits, then starts normal run." Preserve its spirit using the town-v1 idiom from `town-t6-surfaces.spec.ts` ("run launch remains reachable through the tavern board"): after the four shell prompts, launch a run via the live path — Enter Town (if not already in town) → walk to tavern → `town-open-board` → `contract-board` visible → `contract-launch-the-claim` → assert `__THREE_GAME_DIAGNOSTICS__.state === 'playing'` (or `.contract.activeId === 'the-claim'`). Keep the town-exit → `start-menu` visibility assertion if you can do so faithfully; drop `start-menu-new-claim` entirely. Zero console/page errors preserved.
+3. **`e2e/town-t3-board.spec.ts` — swap both `start-menu-new-claim` launches for the board idiom.** This file ALREADY has an `openBoard(page)` helper (Enter Town → tavern → `town-open-board` → `contract-board` visible) and a `contractHash()` helper — reuse them. In the `:175` test, replace the second-segment `start-menu-new-claim.click()` (line ~186) with `openBoard(page)` then `getByTestId('contract-launch-the-claim').click()`, keeping the menu-hash-vs-direct-hash comparison intact (the `?debug&…` `history.replaceState` params must still be in effect when the run launches, so the launched contract config still hashes equal to the `?contract=the-claim` direct boot). In the `:197` test, replace `start-menu-new-claim.click()` (line ~201) with the same `openBoard` + `contract-launch-the-claim` launch, then let the existing overrun→`stake-again`→board flow run unchanged.
+4. **No-op guard:** if you find yourself about to exit without changing these two files, WRITE WHY into your report first (e.g. "specs already aligned" with the git evidence). A silent no-op wastes the slot.
+
+## Firewall
+Touch ONLY: `e2e/town-t1-square.spec.ts`, `e2e/town-t3-board.spec.ts`, and the `artifacts/town-t1/*` + `artifacts/town-t3/*` screenshots those specs write.
+NO changes to: any `src/**` (town-T6's `StartMenu.ts`/`TownScene.ts`/`town.css` are correct — read-only), `e2e/town-t6-surfaces.spec.ts`, `e2e/044-start-screen.spec.ts` (correct references — mirror, never edit), any other e2e spec, any sim/Balance/economy code, the StartMenu/TownScene contracts. Do NOT add or remove test IDs in src. Do NOT weaken assertions to force green — they must genuinely exercise the live surfaces.
+
+## Self-check (evidence, not vibes — this makes the town-T6 drain gate GREEN)
+- `npx tsc --noEmit` clean · `npm run build` green.
+- `e2e/town-t1-square.spec.ts` **green desktop + mobile** (both playwright projects).
+- `e2e/town-t3-board.spec.ts` **green desktop + mobile**.
+- Unmodified-green both projects (do NOT edit them, just prove no regression): `e2e/town-t6-surfaces.spec.ts`, `e2e/044-start-screen.spec.ts`, `e2e/town-t2-*`, `e2e/town-t4-*`, `e2e/town-t5-*`, `e2e/m1-01-*`, `e2e/m2-01-*`. (Single-worker if concurrent load flakes; note any isolated-green.)
+- Zero console/page errors in every town spec.
+- Screenshots land under `artifacts/town-t1/` + `artifacts/town-t3/` as the specs already define.
+End: **READY-FOR-GATES** + report: exact prompt strings you asserted for schoolhouse/assay (quoted from TownScene), the launch idiom you used for the town-t1 "starts normal run" tail, whether the town-t3 menu-vs-direct hash still matches, and the full green/red suite counts. Note that this output stacks on undrained town-T6 (`541dac8`) — the DRAIN fire lands `lane/m4` (town-T6 + this align) as ONE merge.
