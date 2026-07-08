@@ -46,6 +46,7 @@ interface ThreeGameDiagnostics {
       selected: boolean;
       iconSlot: string;
       portraitSlug?: string;
+      tierLine?: string;
     }>;
     stockpileCount: number;
     beaconCount: number;
