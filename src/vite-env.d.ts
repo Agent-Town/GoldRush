@@ -293,12 +293,20 @@ interface ThreeGameDiagnostics {
     started: number;
     missing: number;
     active: number;
+    concurrentVoices: number;
+    voiceCap: number;
+    dropsPerSecond: number;
+    headroomGain: number;
     loops: string[];
+    loopSourceCounts: Record<string, number>;
+    loopVolumes: Record<string, number>;
     lastRequested: string | null;
     lastStarted: string | null;
     playsPerSecond: Record<string, number>;
     startedBySound: Record<string, number>;
     droppedBySound: Record<string, number>;
+    droppedByFamily: Record<string, number>;
+    droppedByPriority: Record<string, number>;
   };
   build: {
     mode: boolean;
@@ -424,6 +432,7 @@ interface ThreeGameDiagnostics {
   };
   charmPause: boolean;
   camImpulseActive: boolean;
+  baronSpawnImpulses: number;
   vfx: {
     activeFloatTexts: number;
   };
@@ -431,6 +440,11 @@ interface ThreeGameDiagnostics {
     enemyHitFlashes: number;
     activeEnemyFlashes: number;
     buildingHpBars: number;
+    bossHpBar: {
+      visible: boolean;
+      ratio: number;
+      segments: number;
+    };
     turretPulses: number;
     activeTurretPulses: number;
   };
@@ -704,6 +718,10 @@ interface Window {
         visualScale?: number;
         banner?: boolean;
         wrecker?: boolean;
+        contactDamageScale?: number;
+        buildingDamageScale?: number;
+        supportBuildingDamageScale?: number;
+        heroPursuitRange?: number;
       },
     ) => void;
     spawnThief: (edge?: 'north' | 'south' | 'east' | 'west') => boolean;
@@ -711,6 +729,7 @@ interface Window {
     wreck: (family: GrBuildableId, index: number) => boolean;
     demolish: (family: GrBuildableId, index: number) => boolean;
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
+    setManualSim: (enabled: boolean) => boolean;
     advanceSim: (seconds: number, stepSeconds?: number) => void;
     resetRun: () => void;
     toggleWeapon: () => 'rig' | 'blast';
@@ -783,6 +802,7 @@ interface Window {
     setBuildMode: (on: boolean) => void;
     selectBuildable: (id: string) => boolean;
     rotateBuildGhost: () => boolean;
+    placeFree: (id: GrBuildableId, x: number, z: number, rotationSteps?: number) => boolean;
     confirmBuild: () => boolean;
     testAudio: (name: string) => void;
     enemyPositions: () => Array<{
@@ -793,6 +813,11 @@ interface Window {
       hp: number;
       maxHp: number;
       speed: number;
+      contactDamage: number;
+      buildingDamage: number;
+      supportBuildingDamage: number;
+      heroPursuitRange: number;
+      hitRadius: number;
       eliteKind?: 'baron';
       scale: number;
       hasBanner: boolean;

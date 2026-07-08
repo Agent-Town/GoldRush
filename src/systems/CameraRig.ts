@@ -22,7 +22,7 @@ export class CameraRig {
     this.camera.lookAt(this.lookTarget);
   }
 
-  impulse(target: THREE.Vector3, amount = Balance.charm.camImpulse): void {
+  impulse(target: THREE.Vector3, amount: number = Balance.charm.camImpulse): void {
     const clamped = Math.max(0, Math.min(0.15, amount));
     if (clamped <= 0) return;
     this.impulseOffset.set(this.camera.position.x - target.x, 0, this.camera.position.z - target.z);

@@ -179,12 +179,12 @@ export class SoundSystem {
     this.play(ownerId === 'hero_blast' ? 'blast-charge-boom' : 'spark-bolt-hit');
   }
 
-  playBuildingDamage(family: string, hp: number, maxHp: number, wrecked: boolean): void {
+  playBuildingDamage(family: string, hp: number, maxHp: number, wrecked: boolean, forceCrack = false): void {
     if (wrecked) {
       this.play('palisade-collapse');
       return;
     }
-    if (family === 'palisade' && maxHp > 0 && hp / maxHp <= 0.35) this.play('palisade-crack');
+    if (forceCrack || (family === 'palisade' && maxHp > 0 && hp / maxHp <= 0.35)) this.play('palisade-crack');
     else this.play('palisade-hit');
   }
 
