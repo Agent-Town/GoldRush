@@ -9,6 +9,7 @@
         "tileId": "e2-hill-mine",
         "biome": "steamworks-hill-mine",
         "size": 96,
+        "render": { "terrainMesh": "required" },
         "river": true,
         "ford": true,
         "fords": [{ "id": "trestle", "x": 0, "halfWidth": 4 }],
@@ -97,7 +98,14 @@
           "id": "hill-mine-scree-road",
           "tint": [0.86, 0.82, 0.74],
           "dampTint": [0.35, 0.43, 0.42],
-          "dampAmount": 0.36
+          "dampAmount": 0.36,
+          "splat": {
+            "rockAmount": 0.84,
+            "dampBand": 2.4,
+            "scrubAmount": 0.1,
+            "macroWarmth": 0.78,
+            "antiTile": 0.72
+          }
         },
         "scatter": {
           "id": "hill-mine-scree-ruts",

@@ -452,6 +452,7 @@ type TerrainShaderUniforms = {
   featureMix: THREE.IUniform<number>;
   seed: THREE.IUniform<number>;
   splat: THREE.IUniform<number>;
+  slopeShade: THREE.IUniform<number>;
   rockAmount: THREE.IUniform<number>;
   dampBand: THREE.IUniform<number>;
   scrubAmount: THREE.IUniform<number>;
@@ -570,7 +571,8 @@ export function createTerrainView(): TerrainView {
 
 function createGroundMesh(): THREE.Mesh {
   const splat = terrainSplatEnabled();
-  if (!terrainMeshEnabled() && !splat) return createBankPlaceholder();
+  const meshEnabled = terrainMeshEnabled() || splat;
+  if (!meshEnabled) return createBankPlaceholder();
   const mesh = createContinuousGroundMesh({
     size: CLAIM_SIZE,
     segments: terrainMeshSegments(),
@@ -712,6 +714,7 @@ function createBankMaterial(splat = false): THREE.MeshStandardMaterial {
     featureMix: { value: Balance.terrain.featureMix },
     seed: { value: terrainSeed() },
     splat: { value: splat ? 1 : 0 },
+    slopeShade: { value: terrainSlopeShade() },
     rockAmount: { value: splatParams.rockAmount },
     dampBand: { value: splatParams.dampBand },
     scrubAmount: { value: splatParams.scrubAmount },
@@ -731,6 +734,7 @@ function createBankMaterial(splat = false): THREE.MeshStandardMaterial {
     shader.uniforms.terrainFeatureMix = uniforms.featureMix;
     shader.uniforms.terrainSeed = uniforms.seed;
     shader.uniforms.terrainSplat = uniforms.splat;
+    shader.uniforms.terrainSlopeShade = uniforms.slopeShade;
     shader.uniforms.terrainRockAmount = uniforms.rockAmount;
     shader.uniforms.terrainDampBand = uniforms.dampBand;
     shader.uniforms.terrainScrubAmount = uniforms.scrubAmount;
@@ -753,6 +757,7 @@ uniform float terrainAtlasRows;
 uniform float terrainFeatureMix;
 uniform float terrainSeed;
 uniform float terrainSplat;
+uniform float terrainSlopeShade;
 uniform float terrainRockAmount;
 uniform float terrainDampBand;
 uniform float terrainScrubAmount;
@@ -845,7 +850,7 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
   vec4 sampledDiffuseColor = mix(packedSand, dryDirt, dirtBlend * 0.48);
   sampledDiffuseColor = mix(sampledDiffuseColor, scrub, scrubBlend * 0.24);
   float rockBlend = smoothstep(0.10, 0.72, vTerrainSlope) * (0.55 + terrainValueNoise(vTerrainWorld * 0.18 + terrainSeed * 47.0) * 0.45);
-  sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, mix(dryDirt.rgb, vec3(0.47, 0.44, 0.37), 0.46), rockBlend * 0.42);
+  sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, mix(dryDirt.rgb, vec3(0.47, 0.44, 0.37), 0.46), rockBlend * terrainSlopeShade);
   float dampGully = terrainGullyMask(vTerrainWorld) * (1.0 - smoothstep(4.0, 22.0, shoreDistance));
   sampledDiffuseColor.rgb = mix(sampledDiffuseColor.rgb, terrainDampTint, dampGully * terrainDampAmount);
   float dampWeight = max(
@@ -1008,6 +1013,9 @@ function terrainSegments(): number {
 }
 
 function terrainMeshEnabled(): boolean {
+  const mode = ACTIVE_TILE.render?.terrainMesh;
+  if (mode === 'required') return true;
+  if (mode === 'off') return false;
   if (typeof window !== 'undefined') {
     const value = new URLSearchParams(window.location.search).get('terrainMesh');
     if (value !== null) return value !== '0' && value !== 'false';
@@ -1017,12 +1025,17 @@ function terrainMeshEnabled(): boolean {
 }
 
 function terrainSplatEnabled(): boolean {
+  if (ACTIVE_TILE.render?.terrainMesh === 'off') return false;
   if (typeof window !== 'undefined') {
     const value = new URLSearchParams(window.location.search).get('terrainSplat');
     if (value !== null) return value !== '0' && value !== 'false';
   }
   if (import.meta.env.VITE_GR_TERRAIN_SPLAT === '1' || import.meta.env.VITE_GR_TERRAIN_SPLAT === 'true') return true;
   return Balance.world.terrainSplat;
+}
+
+function terrainSlopeShade(): number {
+  return ACTIVE_TILE.render?.terrainMesh === 'required' ? 0.62 : 0.42;
 }
 
 function terrainMeshSegments(): number {

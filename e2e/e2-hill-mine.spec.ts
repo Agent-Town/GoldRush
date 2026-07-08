@@ -1,12 +1,15 @@
 import { expect, test, type Browser, type Page, type TestInfo } from '@playwright/test';
 import { createHash } from 'node:crypto';
+import fs from 'node:fs';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
+import { PNG } from 'pngjs';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type Point = { x: number; z: number };
 
 const ARTIFACT_DIR = path.resolve('artifacts/e2-hill-mine');
+const RELIEF_ARTIFACT_DIR = path.resolve('artifacts/hill-mine-relief');
 const QUERY = '?debug&contract=e2-hill-mine&nowaves&nolevel&nopause&nosteal&nowreck';
 const T2_TURRET = { x: 24, z: 25 };
 const VALLEY_TARGET = { x: 24, z: 5.6 };
@@ -122,6 +125,59 @@ test('loads the locked Steamworks poster contract and ships the Hill Mine elevat
 
   await page.evaluate(() => window.__GR_TEST__?.teleport(-6, 41));
   await shot(page, testInfo, 'mine-mouth');
+  assertNoErrors(errors);
+});
+
+test('Hill Mine render descriptor auto-activates mesh relief and leaves the flat claim fallback alone', async ({ page }) => {
+  const errors = await openHillMine(page, 'hillmine-render-required');
+  const hill = await page.evaluate(() => {
+    const sim = (x: number, z: number) => window.__GR_TEST__?.terrainSim(x, z).height ?? Number.NaN;
+    const visual = (x: number, z: number) => window.__GR_TEST__?.terrainVisualY(x, z) ?? Number.NaN;
+    return {
+      tile: window.__GR_CONTRACT_REGISTRY__?.activeTileDescriptor(),
+      render: window.__THREE_GAME_DIAGNOSTICS__?.contract.tileParams.render,
+      ground: window.__THREE_GAME_DIAGNOSTICS__?.terrain.ground,
+      sim: {
+        creek: sim(0, -18),
+        railCut: sim(-24, 0),
+        t1: sim(0, 14),
+        t2: sim(24, 26),
+        t3: sim(28, 40),
+      },
+      visual: {
+        creek: visual(0, -18),
+        railCut: visual(-24, 0),
+        t1: visual(0, 14),
+        t2: visual(24, 26),
+        t3: visual(28, 40),
+      },
+    };
+  });
+
+  expect(hill.tile?.render).toEqual({ terrainMesh: 'required' });
+  expect(hill.render).toEqual({ terrainMesh: 'required' });
+  expect(hill.ground).toMatchObject({
+    enabled: true,
+    mode: 'continuous-mesh',
+    heightSource: 'visual',
+    textureSeams: 'texture seams remain until TR-02',
+  });
+  for (const key of ['creek', 'railCut', 't1', 't2', 't3'] as const) {
+    expect(hill.visual[key]).toBeCloseTo(hill.sim[key], 5);
+  }
+  expect(hill.visual.t3 - hill.visual.railCut).toBeGreaterThan(4.25);
+
+  await page.goto('/?debug&nowaves&nolevel&nopause&nosteal&nowreck&seed=hillmine-flat-claim-guard');
+  await page.waitForFunction(() => window.__GR_TEST__ && window.__GR_CONTRACT_REGISTRY__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 16);
+  const claim = await page.evaluate(() => ({
+    tile: window.__GR_CONTRACT_REGISTRY__?.activeTileDescriptor(),
+    render: window.__THREE_GAME_DIAGNOSTICS__?.contract.tileParams.render,
+    ground: window.__THREE_GAME_DIAGNOSTICS__?.terrain.ground,
+  }));
+  expect(claim.tile?.id).toBe('frontier-river-claim');
+  expect(claim.tile?.render).toBeUndefined();
+  expect(claim.render).toBeUndefined();
+  expect(claim.ground).toMatchObject({ enabled: false, mode: 'fallback', textureSource: 'bank-atlas' });
   assertNoErrors(errors);
 });
 
@@ -264,11 +320,33 @@ test('Hill Mine terrain simulation is deterministic for a seeded route', async (
   await mkdir(ARTIFACT_DIR, { recursive: true });
   const first = await hillMineHash(browser, 'hillmine-determinism');
   const second = await hillMineHash(browser, 'hillmine-determinism');
+  const splatVisual = await hillMineHash(browser, 'hillmine-determinism', '&terrainSplat=1');
   expect(second.hash).toBe(first.hash);
+  expect(splatVisual.hash).toBe(first.hash);
   expect(first.errors.consoleErrors).toEqual([]);
   expect(first.errors.pageErrors).toEqual([]);
   expect(second.errors.consoleErrors).toEqual([]);
   expect(second.errors.pageErrors).toEqual([]);
+  expect(splatVisual.errors.consoleErrors).toEqual([]);
+  expect(splatVisual.errors.pageErrors).toEqual([]);
+});
+
+test('captures the Hill Mine relief before-after wide shot', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one wide desktop comparison is enough');
+  const errors = await openHillMine(page, 'hillmine-relief-shot');
+  await page.evaluate(() => window.__GR_TEST__?.teleport(0, 24));
+  await page.waitForTimeout(450);
+  fs.mkdirSync(RELIEF_ARTIFACT_DIR, { recursive: true });
+  const beforePath = path.join(ARTIFACT_DIR, 'desktop-chrome-terraces-wide.png');
+  expect(fs.existsSync(beforePath)).toBe(true);
+  const before = PNG.sync.read(fs.readFileSync(beforePath));
+  const after = PNG.sync.read(await page.screenshot({ fullPage: false }));
+  const afterBuffer = PNG.sync.write(after);
+  fs.writeFileSync(path.join(RELIEF_ARTIFACT_DIR, 'desktop-chrome-terraces-wide-after.png'), afterBuffer);
+  const comparison = PNG.sync.write(stitchHorizontal([before, after]));
+  fs.writeFileSync(path.join(RELIEF_ARTIFACT_DIR, 'desktop-chrome-terraces-wide-before-after.png'), comparison);
+  await testInfo.attach('hill-mine-relief-before-after', { body: comparison, contentType: 'image/png' });
+  assertNoErrors(errors);
 });
 
 test('Hill Mine 200-enemy stress stays inside envelope', async ({ page }, testInfo) => {
@@ -328,9 +406,9 @@ async function waitForAxis(page: Page, axis: 'x' | 'z', target: number, increasi
     [increasing ? 'toBeGreaterThanOrEqual' : 'toBeLessThanOrEqual'](target);
 }
 
-async function hillMineHash(browser: Browser, seed: string): Promise<{ hash: string; payload: unknown; errors: ErrorBucket }> {
+async function hillMineHash(browser: Browser, seed: string, extra = ''): Promise<{ hash: string; payload: unknown; errors: ErrorBucket }> {
   const page = await browser.newPage({ viewport: { width: 1280, height: 800 } });
-  const errors = await openHillMine(page, seed, '&timescale=8&nokill');
+  const errors = await openHillMine(page, seed, `&timescale=8&nokill${extra}`);
   const payload = await page.evaluate(() => {
     window.__GR_TEST__?.clearEnemies();
     window.__GR_TEST__?.scriptEnemyAt(0, 6.6, 0, 34, 5);
@@ -358,4 +436,16 @@ async function hillMineHash(browser: Browser, seed: string): Promise<{ hash: str
   });
   await page.close();
   return { hash: createHash('sha256').update(JSON.stringify(payload)).digest('hex'), payload, errors };
+}
+
+function stitchHorizontal(images: PNG[]): PNG {
+  const width = images.reduce((sum, image) => sum + image.width, 0);
+  const height = Math.max(...images.map((image) => image.height));
+  const out = new PNG({ width, height });
+  let x = 0;
+  for (const image of images) {
+    PNG.bitblt(image, out, 0, 0, image.width, image.height, x, 0);
+    x += image.width;
+  }
+  return out;
 }

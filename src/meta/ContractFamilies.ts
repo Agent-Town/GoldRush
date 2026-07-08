@@ -209,6 +209,10 @@ export type ContractHeightfieldDescriptor = {
     width: number;
   };
 };
+export type TerrainMeshRenderMode = 'required' | 'preferred' | 'off';
+export type TileRenderDescriptor = {
+  terrainMesh?: TerrainMeshRenderMode;
+};
 export type ContractPaletteDescriptor = {
   id: string;
   tint: [number, number, number];
@@ -272,6 +276,7 @@ export type ContractManifest = {
     rails?: RailPathDescriptor[];
     waterSources: ContractWaterSource[];
     harvestAnchors?: ContractHarvestAnchor[];
+    render?: TileRenderDescriptor;
     elevation?: TileElevationDescriptor;
     heightfield?: ContractHeightfieldDescriptor;
     palette?: ContractPaletteDescriptor;
@@ -328,6 +333,7 @@ export type TileElevationDescriptor = {
 export type EpochTileDescriptor = {
   id: string;
   biome: string;
+  render?: TileRenderDescriptor;
   elevation?: TileElevationDescriptor;
   water?: ContractWaterDescriptor;
   rails?: RailPathDescriptor[];
@@ -448,6 +454,7 @@ export function activeTileDescriptor(): EpochTileDescriptor {
     id: contract.tileParams.tileId,
     biome: contract.tileParams.biome,
   };
+  if (contract.tileParams.render) tile.render = contract.tileParams.render;
   if (contract.tileParams.elevation) tile.elevation = contract.tileParams.elevation;
   if (contract.tileParams.rails) tile.rails = contract.tileParams.rails;
   if (!tile) throw new Error('Missing active tile descriptor: epoch-1-frontier');
@@ -604,6 +611,7 @@ function activeDevTileOverride(): EpochTileDescriptor | null {
   const tile = manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((entry) => entry.id === requestedId);
   if (!tile) return null;
   const active: EpochTileDescriptor = { id: tile.id, biome: tile.biome };
+  if (tile.render) active.render = tile.render;
   if (tile.elevation) active.elevation = tile.elevation;
   if (tile.rails && params.get('rails') === 'dev') active.rails = tile.rails;
   return active;

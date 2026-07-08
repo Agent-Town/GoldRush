@@ -27,6 +27,7 @@
     {
       "id": "gt-test-basin",
       "biome": "dev-basin",
+      "render": { "terrainMesh": "required" },
       "water": {
         "id": "gt-test-basin-water-depth",
         "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.2, "springPond": 0.2 },
