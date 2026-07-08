@@ -3,9 +3,12 @@ import {
   PROFILE_DATA_KEYS,
   activeProfile,
   importProfileRecord,
+  loadProfileState,
   profileDataKey,
+  saveProfileState,
   type ProfileRecord,
   type ProfileStorage,
+  type ProfileState,
 } from './ProfileStorage';
 
 const TRANSFER_KIND = 'goldrush.profile.ledger';
@@ -72,10 +75,47 @@ export function unpackProfile(storage: ProfileStorage, envelope: ProfileTransfer
   return { ok: true, profile };
 }
 
+export function restoreProfileBundle(storage: ProfileStorage, envelope: ProfileTransferEnvelope): ProfileTransferResult {
+  if (!isEnvelope(envelope)) return { ok: false, message: 'That ledger does not match this trail.' };
+  const profile = normalizeCloudProfile(envelope.profile);
+  if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
+
+  const state = loadProfileState(storage) ?? { version: 2 as const, activeId: profile.id, profiles: [] };
+  const profiles = state.profiles.filter((entry) => entry.id !== profile.id);
+  const next: ProfileState = { version: 2, activeId: profile.id, profiles: [...profiles, profile] };
+  saveProfileState(storage, next);
+
+  for (const key of PROFILE_DATA_KEYS) storage.removeItem(profileDataKey(profile.id, key));
+  for (const key of PROFILE_DATA_KEYS) {
+    if (!(key in envelope.data)) continue;
+    try {
+      storage.setItem(profileDataKey(profile.id, key), encodeDatum(envelope.data[key]));
+    } catch {
+      return { ok: false, message: 'The browser would not store that ledger.' };
+    }
+  }
+  return { ok: true, profile };
+}
+
 function isEnvelope(value: unknown): value is ProfileTransferEnvelope {
   if (!isRecord(value) || value.kind !== TRANSFER_KIND || value.version !== TRANSFER_VERSION) return false;
-  if (!isRecord(value.profile) || typeof value.profile.name !== 'string') return false;
+  if (!isRecord(value.profile) || typeof value.profile.id !== 'string' || typeof value.profile.name !== 'string') return false;
   return isRecord(value.data);
+}
+
+function normalizeCloudProfile(profile: ProfileRecord): ProfileRecord | null {
+  const id = profile.id.toLowerCase().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 64);
+  const name = profile.name.replace(/\s+/g, ' ').trim().slice(0, 24);
+  if (!id || !name) return null;
+  const now = Date.now();
+  return {
+    ...profile,
+    id,
+    name,
+    createdAt: readTime(profile.createdAt) || now,
+    updatedAt: readTime(profile.updatedAt) || now,
+    hintsSeen: Array.isArray(profile.hintsSeen) ? profile.hintsSeen.filter((hint): hint is string => typeof hint === 'string') : [],
+  };
 }
 
 function previewLine(envelope: ProfileTransferEnvelope): string {
@@ -110,6 +150,10 @@ function readString(value: unknown): string | null {
 
 function readNumber(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) ? Math.max(0, Math.floor(value)) : 0;
+}
+
+function readTime(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 ? value : 0;
 }
 
 function roman(value: number): string {

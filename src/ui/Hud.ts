@@ -7,6 +7,7 @@ import { bindAudioSettingsControls, renderAudioSettingsControls } from '../audio
 import { bindStorySettingsControl, renderStorySettingsControl } from '../story/settings';
 import { BuildButton } from './BuildButton';
 import { ProspectorPanel } from './ProspectorPanel';
+import { accountSync } from '../game/AccountSync';
 
 const prospectorPortraitUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
 const baronPortraitUrl = new URL('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png', import.meta.url).href;
@@ -409,7 +410,8 @@ export class Hud {
   }
 
   private updatePauseMeta(paused: boolean, meta: PauseMetaSnapshot): void {
-    const key = paused ? JSON.stringify(meta) : '';
+    const syncStatus = accountSync.snapshot().label;
+    const key = paused ? JSON.stringify({ ...meta, syncStatus }) : '';
     if (key === this.pauseMetaKey) return;
     this.pauseMetaKey = key;
     this.disposeAudioSettings();
@@ -424,6 +426,7 @@ export class Hud {
     this.elements.pauseMeta.innerHTML = `
       <p class="hud-meta__eyebrow">Claim Memory</p>
       <p class="hud-meta__line" data-testid="pause-meta-save">${this.escape(meta.save)}</p>
+      <p class="hud-meta__line gr-account-chip gr-account-chip--pause" data-testid="pause-account-status-chip">${this.escape(syncStatus)}</p>
       <section class="hud-meta__contract" data-testid="pause-contract">
         <p class="hud-meta__label">The Contract</p>
         <strong data-testid="pause-contract-name">${this.escape(meta.contract.name)}</strong>

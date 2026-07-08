@@ -217,12 +217,15 @@ export function installProfileStorageScope(storage: Storage): void {
       nativeStorage.setItem!.call(this, key, value);
       return;
     }
+    const profileDatum = isProfileDataStorageKey(key);
     nativeStorage.setItem!.call(this, scopedDataKey(this, key), value);
     if (key === DIFFICULTY_PRESET_STORAGE_KEY) setActiveProfileDifficulty(this, value);
+    if (profileDatum) notifyProfileDataChanged(key);
   };
 
   Storage.prototype.removeItem = function removeProfileScopedItem(key: string): void {
     nativeStorage.removeItem!.call(this, this === scopedStorage ? scopedDataKey(this, key) : key);
+    if (this === scopedStorage && isProfileDataStorageKey(key)) notifyProfileDataChanged(key);
   };
 }
 
@@ -231,6 +234,14 @@ function scopedDataKey(storage: Storage, key: string): string {
   const state = loadProfileState(storage);
   if (!state) return key;
   return profileDataKey(selectedProfileId(state), key);
+}
+
+function isProfileDataStorageKey(key: string): boolean {
+  if (PROFILE_DATA_KEYS.has(key)) return true;
+  if (!key.startsWith(`${PROFILE_KEY}.`)) return false;
+  const remainder = key.slice(PROFILE_KEY.length + 1);
+  const firstDot = remainder.indexOf('.');
+  return firstDot > 0 && PROFILE_DATA_KEYS.has(remainder.slice(firstDot + 1));
 }
 
 function migrateLegacyData(storage: ProfileStorage, profileId: string): void {
@@ -381,6 +392,14 @@ function rawSet(storage: Pick<Storage, 'setItem'>, key: string, value: string): 
 
 function isNativeStorage(storage: unknown): storage is Storage {
   return typeof Storage !== 'undefined' && storage instanceof Storage;
+}
+
+function notifyProfileDataChanged(key: string): void {
+  try {
+    globalThis.window?.dispatchEvent(new CustomEvent('gr:profile-data-changed', { detail: { key } }));
+  } catch {
+    // Storage still wrote; sync is best-effort.
+  }
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

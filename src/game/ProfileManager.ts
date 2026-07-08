@@ -13,6 +13,7 @@ import {
   type ProfileStorage,
   type ProfileState,
 } from './ProfileStorage';
+import { accountSync } from './AccountSync';
 import { packActiveProfile, unpackPreview, unpackProfile, type ProfileTransferEnvelope } from './ProfileTransfer';
 
 type StartGame = () => void;
@@ -29,6 +30,8 @@ export class ProfileManager {
   private started = false;
   private importEnvelope?: ProfileTransferEnvelope;
   private message = '';
+  private burnConfirm = false;
+  private unsubscribeAccountSync: () => void = () => undefined;
 
   constructor(
     private readonly startGame: StartGame,
@@ -53,6 +56,10 @@ export class ProfileManager {
     }
 
     this.selectedId = this.state?.activeId ?? '';
+    this.unsubscribeAccountSync = accountSync.subscribe(() => {
+      this.refreshStateFromStorage();
+      this.render();
+    });
     this.exposeDebug();
 
     if (this.state && !shouldShowProfileTitle(this.options)) {
@@ -68,6 +75,7 @@ export class ProfileManager {
 
   dispose(): void {
     this.root?.remove();
+    this.unsubscribeAccountSync();
     if (globalThis.window?.__GR_PROFILE__) globalThis.window.__GR_PROFILE__ = undefined;
   }
 
@@ -76,6 +84,7 @@ export class ProfileManager {
     if (!setActiveProfile(this.storage, profileId)) return false;
     this.state = ensureProfileState(this.storage);
     this.selectedId = this.state.activeId;
+    accountSync.queuePush();
     this.render();
     return true;
   }
@@ -87,6 +96,7 @@ export class ProfileManager {
     this.state = ensureProfileState(this.storage);
     installProfileStorageScope(this.storage);
     this.selectedId = profile.id;
+    accountSync.queuePush();
     this.render();
     return profile;
   }
@@ -126,9 +136,11 @@ export class ProfileManager {
             <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Prospector name" />
             <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
           </form>
+          ${this.renderAccountCard()}
         </div>
       `;
       this.bindCreateForm();
+      this.bindAccountControls();
       this.root.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]')?.focus({ preventScroll: true });
       return;
     }
@@ -154,6 +166,7 @@ export class ProfileManager {
             <input type="file" data-testid="profile-import-file" accept="application/json,.json" />
           </label>
         </div>
+        ${this.renderAccountCard()}
         ${this.importEnvelope ? `<div class="gr-profile-import" data-testid="profile-import-confirm">
           <p>${escapeHtml(this.message)}</p>
           <button class="death-overlay__button" type="button" data-testid="profile-import-apply">Bring them in</button>
@@ -173,6 +186,57 @@ export class ProfileManager {
     });
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-import-apply"]')?.addEventListener('click', () => this.applyImport());
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-start"]')?.addEventListener('click', () => this.startProfile());
+    this.bindAccountControls();
+  }
+
+  private renderAccountCard(): string {
+    const account = accountSync.snapshot();
+    const disabled = account.busy ? ' disabled' : '';
+    if (!account.signedIn) {
+      return `
+        <section class="gr-account-card" data-testid="account-card">
+          <p class="gr-account-chip" data-testid="account-status-chip">${escapeHtml(account.label)}</p>
+          <form class="gr-account-form" data-testid="account-email-form">
+            <input data-testid="account-email" name="accountEmail" type="email" autocomplete="email" placeholder="family@email.com" value="${escapeHtml(
+              account.pendingEmail,
+            )}"${disabled} />
+            <button class="death-overlay__button" type="submit" data-testid="account-request-code"${disabled}>Send code</button>
+          </form>
+          ${
+            account.pendingEmail
+              ? `<form class="gr-account-form" data-testid="account-code-form">
+                <input data-testid="account-code" name="accountCode" inputmode="numeric" maxlength="6" autocomplete="one-time-code" placeholder="6-digit code"${disabled} />
+                <button class="death-overlay__button" type="submit" data-testid="account-verify"${disabled}>Sign in</button>
+              </form>
+              ${account.devCode ? `<p class="gr-account-dev-code" data-testid="account-dev-code">${escapeHtml(account.devCode)}</p>` : ''}`
+              : ''
+          }
+          <p class="gr-account-note" data-testid="account-message">${escapeHtml(account.message)}</p>
+        </section>
+      `;
+    }
+
+    return `
+      <section class="gr-account-card" data-testid="account-card">
+        <p class="gr-account-chip" data-testid="account-status-chip">${escapeHtml(account.label)}</p>
+        <p class="gr-account-note" data-testid="account-message">${escapeHtml(account.message)}</p>
+        ${account.compare ? `<div class="gr-account-compare" data-testid="account-compare-card">
+          <p>${escapeHtml(account.compare.line)}</p>
+          <button class="death-overlay__button" type="button" data-testid="account-use-cloud"${disabled}>Use cloud</button>
+          <button class="death-overlay__button" type="button" data-testid="account-keep-local"${disabled}>Keep local</button>
+        </div>` : ''}
+        <div class="gr-account-actions">
+          <button class="death-overlay__button" type="button" data-testid="account-sync-now"${disabled}>Back up now</button>
+          <button class="death-overlay__button" type="button" data-testid="account-sign-out"${disabled}>Sign out</button>
+          <button class="death-overlay__button gr-account-danger" type="button" data-testid="account-burn"${disabled}>Burn cloud ledger</button>
+        </div>
+        ${this.burnConfirm ? `<div class="gr-account-burn" data-testid="account-burn-confirm-card">
+          <p>Delete the cloud account and its saved ledgers? This browser stays local.</p>
+          <button class="death-overlay__button gr-account-danger" type="button" data-testid="account-burn-confirm"${disabled}>Burn it</button>
+          <button class="death-overlay__button" type="button" data-testid="account-burn-cancel"${disabled}>Keep it</button>
+        </div>` : ''}
+      </section>
+    `;
   }
 
   private loadInitialState(): ProfileState | undefined {
@@ -181,6 +245,15 @@ export class ProfileManager {
     if (saved) return saved;
     if (shouldSeedDefaultProfile() || hasLegacyProfileData(this.storage)) return ensureProfileState(this.storage);
     return undefined;
+  }
+
+  private refreshStateFromStorage(): void {
+    if (this.started || !this.storage) return;
+    const saved = loadProfileState(this.storage);
+    if (!saved) return;
+    this.state = saved;
+    this.selectedId = saved.activeId;
+    installProfileStorageScope(this.storage);
   }
 
   private bindCreateForm(): void {
@@ -193,6 +266,45 @@ export class ProfileManager {
         this.message = 'Use a ledger name the family can read.';
         this.render();
       }
+    });
+  }
+
+  private bindAccountControls(): void {
+    this.root?.querySelector<HTMLFormElement>('[data-testid="account-email-form"]')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = this.root?.querySelector<HTMLInputElement>('[data-testid="account-email"]');
+      void accountSync.requestCode(input?.value ?? '');
+    });
+    this.root?.querySelector<HTMLFormElement>('[data-testid="account-code-form"]')?.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const input = this.root?.querySelector<HTMLInputElement>('[data-testid="account-code"]');
+      void accountSync.verifyCode(input?.value ?? '');
+    });
+    this.root?.querySelector<HTMLButtonElement>('[data-testid="account-sync-now"]')?.addEventListener('click', () => {
+      void accountSync.pushNow();
+    });
+    this.root?.querySelector<HTMLButtonElement>('[data-testid="account-use-cloud"]')?.addEventListener('click', () => {
+      void accountSync.useCloud();
+    });
+    this.root?.querySelector<HTMLButtonElement>('[data-testid="account-keep-local"]')?.addEventListener('click', () => {
+      void accountSync.keepLocal();
+    });
+    this.root?.querySelector<HTMLButtonElement>('[data-testid="account-sign-out"]')?.addEventListener('click', () => {
+      this.burnConfirm = false;
+      accountSync.signOut();
+      this.render();
+    });
+    this.root?.querySelector<HTMLButtonElement>('[data-testid="account-burn"]')?.addEventListener('click', () => {
+      this.burnConfirm = true;
+      this.render();
+    });
+    this.root?.querySelector<HTMLButtonElement>('[data-testid="account-burn-cancel"]')?.addEventListener('click', () => {
+      this.burnConfirm = false;
+      this.render();
+    });
+    this.root?.querySelector<HTMLButtonElement>('[data-testid="account-burn-confirm"]')?.addEventListener('click', () => {
+      this.burnConfirm = false;
+      void accountSync.deleteAccount();
     });
   }
 
@@ -234,6 +346,7 @@ export class ProfileManager {
     this.state = ensureProfileState(this.storage);
     this.selectedId = result.profile.id;
     this.message = `${result.profile.name} joined the ledger.`;
+    accountSync.queuePush();
     this.render();
   }
 
