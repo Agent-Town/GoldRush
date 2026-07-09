@@ -1,0 +1,25 @@
+# THE STORY ARC — one spine, ten eras
+Status: SYNTHESIS 2026-07-09 (existing ratified/PLANNED threads, cited) + **PROPOSAL sections marked** (uncited lore is a proposal — wiki law). Owner questions batched at bottom. Trigger: owner 2026-07-09: "other than time moving by and things progressing, do we have another clear story arch? Why is there the Baron? What happened?"
+
+## The question the saga asks (SYNTHESIS — this already lives in the bundles, stated here as one line)
+**What is a claim?** E1 answers *gold*. Every era re-answers, and the answers climb: steam answers *power*, the grid answers *night*, motors answer *distance*, the sea answers *depth*, the atom answers *home*, signal answers *voice*, orbit answers *sky* — then E9 answers **the ground itself** (the green that returns is E1's exact riverbank swatch — e9 bundle: "Epoch 1, rebuilt by hand… the saga's heart-era") and E10 answers **what you hand on** (final contracts PRESERVE, not extract; the last science node opens the Charter Press and gives it to the children — e10 bundle). The last enemy, the Static, is "the only enemy that was never greed" (e10) — every earlier foe was greed in era-costume; the finale outgrows greed itself. **Title thesis: the gold rush was never about the gold.**
+
+## The three braided arcs (EXISTING — characters.md, PLANNED)
+1. **The Hero — labor.** Stakes the claim (E1) → names the town (T2) → mid-life in the era of engines (E4, codex-hero-e4) → elder stateswoman (E8) → hands the Charter Press to the next generation (E10). She never leaves the valley; the valley becomes her.
+2. **The Prospector — the agent.** Deputy (E1, rungs-as-growth: trust earned by WORK) → present at the Calculating House where agents BEGIN (E6 — ADR-003, universe-level canon: Gold Rush is Agent Town's founding tale) → patinaed and century-medaled (E8: "agents age in dignity, not decay") → the Ark's eldest voice (E10). The instrument that became a citizen, then a memory that walks.
+3. **The Generations — time made visible.** The youngsters grow (codex-youngsters-e4 = the next leads) → one parents the moon-born line (E8) → the moon-born child grown swims the first canal (E9) → the children receive the Press (E10). The Persistence Law (canon-rules) is this arc in art form: nothing loved is erased.
+
+## THE BARON — why he exists (facts EXISTING; the *why* is PROPOSAL)
+EXISTING (characters.md, ratified behaviors): the Claim-JUMPER; E1 graduation boss; "dragged off by his own men, swearing revenge"; returns E2 with machines; thereafter era-adapted, "each era's tech, same coat, same grudge"; beating him always yields his science to the town (the sky-rocket → E2's first blueprint-drop).
+
+**PROPOSAL — what happened:** the Baron was in the valley FIRST. Years before the hero, he panned the easy gold of the first creek, judged the ground spent, and moved on — his whole science is TAKE-AND-LEAVE. He has sold the "worthless" valley's map to strangers a dozen times over; jumping claims is just the same trick at speed. Then the hero *stayed* — and staying worked. Every era, the town invents a new way to make tended ground worth more (steam, the grid, oil, the deep sea, the atom, signal, orbit), and every era he returns with the same suit pressed and the same suit filed: **"it was mine before it was anything."** He is not after the gold; he is affronted that the valley became something after he pronounced it nothing. *The Baron is what the town would be if it never loved the ground.* His each-era defeat converting his tech into the town's inheritance is the arc in one mechanic: extraction, converted to bequest, ten times.
+
+**PROPOSAL — the last act (owner question):** the Static (E10) is take-and-leave universalized — entropy, the claim-jumper of everything. Even the Baron's line has something to lose to it. The saga's warmest available beat: the old rival's heirs arrive at the Ark yards with the family fleet — "The valley's mine too, isn't it? Always said so." Rivalry retired as kinship, stage-melodrama style, warm never grim (canon §9).
+
+## Era spine in one line each (theses live in specs/epoch-saga/ — those files are truth)
+E1 stake the claim (Baron: graduation) · E2 he's back with machines (rail, steam) · E3 the grid buys back the night · E4 distance dies, roads are built things (Land-Yacht) · E5 the sea asks for a different science · E6 the atom domesticates; the Calculating House — agents begin · E7 the valley learns to speak at a distance · E8 the moon-born · E9 the red field turns E1-green — the claim rebuilt by hand · E10 the Ark, the Static, the Press to the children.
+
+## RATIFICATION QUESTIONS (owner)
+1. The Baron's origin — "was here first, take-and-leave, affronted that staying worked" — ratify, adjust, or replace?
+2. The E10 kinship beat (the Baron's heirs join at the Ark) — yes / no / soften?
+3. Cadence: does the Baron front a rival contract EVERY era, or rest some eras so his returns land harder (recommend: E1/E2 ratified, then every second era + E10)?
