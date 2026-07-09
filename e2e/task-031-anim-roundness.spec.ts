@@ -206,10 +206,11 @@ test('default frame blending and gait motion are active for hero and bandits', a
   expect(hero.maxLean).toBeGreaterThan(1);
 
   await expect(page.evaluate(() => window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 4))).resolves.toBe(true);
-  await waitForSprite(page, 'char.claim_jumper');
+  await waitForSprite(page, 'char.claim_jumper', 8);
   const enemy = await collectSpriteSamples(page, 'char.claim_jumper', 1_700);
-  expect(enemy.frameCount).toBe(4);
-  expect(enemy.fps).toBeCloseTo(6.33, 2);
+  expect(enemy.frameCount).toBe(8);
+  expect(enemy.fps).toBeGreaterThan(12);
+  expect(enemy.fps).toBeLessThan(13);
   expect(enemy.sawFrameBlend).toBe(true);
   expect(enemy.maxBob).toBeGreaterThan(0.015);
   expect(enemy.maxLean).toBeGreaterThan(1);

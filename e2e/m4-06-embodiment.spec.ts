@@ -9,6 +9,7 @@ type SpriteSnapshot = {
   clip: string;
   frame: number;
   frameKey: string;
+  sourceFrameKey?: string;
   frameCount: number;
   fps: number;
   loaded: boolean;
@@ -98,8 +99,8 @@ async function waitForProspectorSprite(page: Page, timeout = 5_000): Promise<Spr
     const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.prospector_agent'];
     return (
       snapshot?.loaded === true &&
-      snapshot.frameCount === 4 &&
-      snapshot.frameKey.startsWith('char-prospector-sheet-hover4-')
+      snapshot.frameCount === 8 &&
+      (snapshot.sourceFrameKey ?? snapshot.frameKey).startsWith('char-prospector-sheet-hover8-')
     );
   }, undefined, { timeout });
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.spriteAnimations['char.prospector_agent'] as SpriteSnapshot);
@@ -292,7 +293,7 @@ test('real Prospector sprite loads and faces pan movement', async ({ page }, tes
 
   const idle = await waitForProspectorSprite(page);
   expect(['idle', 'walk']).toContain(idle.clip);
-  expect(idle.fps).toBe(4);
+  expect(idle.fps).toBe(8);
   expect(idle.frameKey).not.toContain('createProspectorTexture');
   await saveM407Shot(page, testInfo, 'idle');
 
@@ -343,15 +344,15 @@ test('real Prospector sprite loads and faces pan movement', async ({ page }, tes
         sprite?.loaded === true &&
         sprite.clip === 'walk' &&
         sprite.direction === direction &&
-        sprite.frameKey.startsWith('char-prospector-sheet-hover4-')
+        (sprite.sourceFrameKey ?? sprite.frameKey).startsWith('char-prospector-sheet-hover8-')
       );
     },
     direction,
   );
   const rate = await sampleProspectorFrameAdvances(page, 950);
   expect(rate.samples).toBeGreaterThan(8);
-  expect(rate.advances).toBeGreaterThanOrEqual(2);
-  expect(rate.advances).toBeLessThanOrEqual(5);
+  expect(rate.advances).toBeGreaterThanOrEqual(5);
+  expect(rate.advances).toBeLessThanOrEqual(10);
   await saveM407Shot(page, testInfo, 'mid-action');
 
   const moving = await companion(page);

@@ -20,6 +20,7 @@ type SpriteSnapshot = {
   fadeActive?: boolean;
   fadeMsRemaining?: number;
   fadeWindow?: number;
+  frameBlendActive?: boolean;
 };
 
 const shotDir = path.resolve('reviews/shots-vp-02');
@@ -251,22 +252,35 @@ async function trackedDirections(page: Page): Promise<string[]> {
 
 async function trackHeroFades(page: Page): Promise<void> {
   await page.evaluate(() => {
-    const w = window as unknown as { __vp02cFades: Array<{ fw: number; fa: boolean; at: number }>; __vp02cFadeTracking?: boolean };
+    const w = window as unknown as {
+      __vp02cFades: Array<{ fw: number; fa: boolean; fba: boolean; at: number }>;
+      __vp02cFadeTracking?: boolean;
+    };
     w.__vp02cFades = [];
     w.__vp02cFadeTracking = true;
     const tick = () => {
       if (!w.__vp02cFadeTracking) return;
       const snap = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'] as SpriteSnapshot | undefined;
-      if (snap) w.__vp02cFades.push({ fw: snap.fadeWindow ?? 0, fa: snap.fadeActive === true, at: performance.now() });
+      if (snap) {
+        w.__vp02cFades.push({
+          fw: snap.fadeWindow ?? 0,
+          fa: snap.fadeActive === true,
+          fba: snap.frameBlendActive === true,
+          at: performance.now(),
+        });
+      }
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
   });
 }
 
-async function trackedFades(page: Page): Promise<Array<{ fw: number; fa: boolean; at: number }>> {
+async function trackedFades(page: Page): Promise<Array<{ fw: number; fa: boolean; fba: boolean; at: number }>> {
   return page.evaluate(() => {
-    const w = window as unknown as { __vp02cFades: Array<{ fw: number; fa: boolean; at: number }>; __vp02cFadeTracking?: boolean };
+    const w = window as unknown as {
+      __vp02cFades: Array<{ fw: number; fa: boolean; fba: boolean; at: number }>;
+      __vp02cFadeTracking?: boolean;
+    };
     w.__vp02cFadeTracking = false;
     return w.__vp02cFades ?? [];
   });
@@ -641,6 +655,9 @@ test('orientation swap crossfades once and adds no draw call at rest', async ({ 
   await startStick(page, 0, 1);
   await waitForHeroDirection(page, 's');
   await sampleHero(page, 200);
+  await page.waitForFunction(
+    () => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'] as SpriteSnapshot | undefined)?.fadeActive !== true,
+  );
   const before = await page.evaluate(() => {
     const snap = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'] as SpriteSnapshot | undefined;
     return { fadeWindow: snap?.fadeWindow ?? 0, calls: window.__THREE_GAME_DIAGNOSTICS__?.renderer.calls ?? 0 };
@@ -663,7 +680,7 @@ test('orientation swap crossfades once and adds no draw call at rest', async ({ 
   const windowIds = [...new Set(fades.map((fade) => fade.fw))];
   expect(Math.max(...windowIds)).toBe(before.fadeWindow + 1); // the swap opened a window
   expect(Math.min(...windowIds)).toBeGreaterThanOrEqual(before.fadeWindow); // ...exactly one (no double-fire)
-  const sightings = fades.filter((fade) => fade.fa);
+  const sightings = fades.filter((fade) => fade.fa && !fade.fba);
   if (sightings.length > 1) {
     expect(sightings[sightings.length - 1]!.at - sightings[0]!.at).toBeLessThanOrEqual(150);
   }

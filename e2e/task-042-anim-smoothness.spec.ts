@@ -32,13 +32,20 @@ async function heroIdle(page: Page): Promise<void> {
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.clip === 'idle');
 }
 
-async function spriteSmoothness(page: Page, slot: string): Promise<{ fps: number; stride: number; frame: number; sourceFrameKey: string }> {
+async function spriteSmoothness(page: Page, slot: string): Promise<{
+  fps: number;
+  stride: number;
+  frame: number;
+  frameCount: number;
+  sourceFrameKey: string;
+}> {
   return page.evaluate((wantedSlot) => {
     const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations[wantedSlot];
     return {
       fps: snapshot?.fps ?? 0,
       stride: snapshot?.strideUnitsPerCycle ?? 0,
       frame: snapshot?.frame ?? -1,
+      frameCount: snapshot?.frameCount ?? 0,
       sourceFrameKey: snapshot?.sourceFrameKey ?? '',
     };
   }, slot);
@@ -49,7 +56,10 @@ test('walk cadence is speed-scaled and restart keeps phase', async ({ page }) =>
   await expect(page.evaluate(() => window.__GR_TEST__?.setBalance('hero.decel', 999))).resolves.toBe(true);
 
   await heroWalk(page);
-  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frame === 2);
+  await page.waitForFunction(() => {
+    const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'];
+    return snapshot?.clip === 'walk' && snapshot.frameCount === 4 && (snapshot.frame ?? 0) > 0;
+  });
   const heroBeforeStop = await spriteSmoothness(page, 'char.hero');
   await heroIdle(page);
   await heroWalk(page);
@@ -61,24 +71,29 @@ test('walk cadence is speed-scaled and restart keeps phase', async ({ page }) =>
     window.__GR_TEST__?.clearEnemies();
     window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 2.7);
   });
-  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.clip === 'walk');
+  await page.waitForFunction(
+    () =>
+      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.clip === 'walk' &&
+      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.frameCount === 8,
+  );
   const jumper = await spriteSmoothness(page, 'char.claim_jumper');
 
   await page.evaluate(() => {
     window.__GR_TEST__?.clearEnemies();
     window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 5.4);
   });
-  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.fps ?? 0) > 8);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.fps ?? 0) > 12);
   const fastJumper = await spriteSmoothness(page, 'char.claim_jumper');
 
   expect(heroBeforeStop.fps).toBeCloseTo(9.5, 1);
-  expect(jumper.fps).toBeCloseTo(4.3, 1);
-  expect(fastJumper.fps).toBeCloseTo(8.55, 2);
+  expect(jumper.frameCount).toBe(8);
+  expect(jumper.fps).toBeCloseTo(8.55, 1);
+  expect(fastJumper.fps).toBeCloseTo(17.1, 2);
   expect(jumper.stride).toBeCloseTo(heroBeforeStop.stride, 1);
   expect(fastJumper.stride).toBeCloseTo(heroBeforeStop.stride, 1);
   expect(heroBeforeStop.sourceFrameKey).toContain('walk4');
-  expect(jumper.sourceFrameKey).toContain('walk4');
-  expect([heroBeforeStop.frame, (heroBeforeStop.frame + 1) % 4]).toContain(heroRestart.frame);
+  expect(jumper.sourceFrameKey).toContain('walk8');
+  expect([heroBeforeStop.frame, (heroBeforeStop.frame + 1) % 4, (heroBeforeStop.frame + 2) % 4]).toContain(heroRestart.frame);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

@@ -62,6 +62,17 @@
           "sw": { "frames": { "files": ["char-hero-sheet-walk4-b-r3c0.png", "char-hero-sheet-walk4-b-r3c1.png", "char-hero-sheet-walk4-b-r3c2.png", "char-hero-sheet-walk4-b-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
         }
       },
+      "walk8": {
+        "version": 1,
+        "status": "READY",
+        "enabled": false,
+        "frameCount": 8,
+        "fps": 16,
+        "cadenceReferenceFrames": 4,
+        "grid": { "file": "char-hero-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" },
+        "notes": "066 walk8 engine: v3 video-source 4-row sheet processed and registered but HERO FLAG OFF until the owner passes the pan-fixed v3 sheet. Rows are down/left/right/up with 8 frames. Diagonals intentionally alias to side rows until a future 8-direction video sheet exists. One-line activation: enabled true."
+      },
       "orientations": {
         "side": {
           "frames": {
@@ -188,6 +199,17 @@
           "sw": { "frames": { "files": ["char-jumper-sheet-walk4-b-r3c0.png", "char-jumper-sheet-walk4-b-r3c1.png", "char-jumper-sheet-walk4-b-r3c2.png", "char-jumper-sheet-walk4-b-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
         }
       },
+      "walk8": {
+        "version": 1,
+        "status": "ACTIVE",
+        "enabled": true,
+        "frameCount": 8,
+        "fps": 16,
+        "cadenceReferenceFrames": 4,
+        "grid": { "file": "char-jumper-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" },
+        "notes": "066 walk8 engine: video-source Claim Jumper sheet selected when all processed walk8 cells exist, otherwise walk4 remains the fallback. Rows are down/left/right/up; diagonals alias to side rows because this production sheet is 4-direction. 8 frames run over the same cycle duration as walk4 via cadenceReferenceFrames=4."
+      },
       "orientations": {
         "side": {
           "frames": {
@@ -277,6 +299,17 @@
           "e":  { "frames": { "files": ["char-baron-sheet-walk4-a-r2c0.png", "char-baron-sheet-walk4-a-r2c1.png", "char-baron-sheet-walk4-a-r2c2.png", "char-baron-sheet-walk4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
           "se": { "frames": { "files": ["char-baron-sheet-walk4-b-r2c0.png", "char-baron-sheet-walk4-b-r2c1.png", "char-baron-sheet-walk4-b-r2c2.png", "char-baron-sheet-walk4-b-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
         }
+      },
+      "walk8": {
+        "version": 1,
+        "status": "READY",
+        "enabled": false,
+        "frameCount": 8,
+        "fps": 16,
+        "cadenceReferenceFrames": 4,
+        "grid": { "file": "char-baron-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" },
+        "notes": "066 walk8 engine: Baron walk8 cells are processed and registered dormant only. The task activation policy names Prospector and Claim Jumper, so Baron keeps walk4 until a Baron-specific activation gate flips enabled true."
       }
     },
     {
@@ -297,6 +330,17 @@
           "w":  { "frames": { "files": ["char-prospector-sheet-hover4-b-r2c0.png", "char-prospector-sheet-hover4-b-r2c1.png", "char-prospector-sheet-hover4-b-r2c2.png", "char-prospector-sheet-hover4-b-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } },
           "sw": { "frames": { "files": ["char-prospector-sheet-hover4-b-r3c0.png", "char-prospector-sheet-hover4-b-r3c1.png", "char-prospector-sheet-hover4-b-r3c2.png", "char-prospector-sheet-hover4-b-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 4 } } }
         }
+      },
+      "walk8": {
+        "version": 1,
+        "status": "ACTIVE",
+        "enabled": true,
+        "frameCount": 8,
+        "fps": 8,
+        "cadenceReferenceFrames": 4,
+        "grid": { "file": "char-prospector-sheet-hover8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" },
+        "notes": "066 walk8 engine: Prospector hover8 is active when processed cells exist, with hover4 fallback otherwise. Rows are down/left/right/up; diagonals alias to side rows. The 8-frame hover loop keeps the same cycle duration as hover4 through cadenceReferenceFrames=4."
       },
       "notes": "M4-07 activates the real illustrated Prospector companion body, replacing the M4-06 procedural canvas billboard. Canon guardrails: the agent is the Prospector, warm brass/copper machinefolk frontier-tech with teal agent glow, no realistic firearms, no gore, no text."
     }

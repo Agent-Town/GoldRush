@@ -29,14 +29,37 @@ type ContractSlot = {
   };
   walk4?: {
     status?: string;
+    enabled?: boolean;
     directions?: Record<string, OrientationSource>;
     mirrors?: Record<string, string>;
   };
+  walk8?: WalkSheetSource;
 };
 
 type OrientationSource = {
   frames?: FrameSource;
   clips?: Record<string, ClipSource>;
+};
+
+type WalkSheetSource = {
+  status?: string;
+  enabled?: boolean;
+  frameCount?: number;
+  fps?: number;
+  cadenceReferenceFrames?: number;
+  grid?: {
+    file?: string;
+    cols?: number;
+    rows?: number;
+    rowDirections?: string[];
+  };
+  aliases?: Record<string, string>;
+  directions?: Record<string, WalkSheetDirectionSource>;
+  mirrors?: Record<string, string>;
+};
+
+type WalkSheetDirectionSource = OrientationSource & {
+  row?: number;
 };
 
 type FrameSource = {
@@ -53,6 +76,7 @@ type FrameSource = {
 type ClipSource = {
   frames?: number[];
   fps?: number;
+  cadenceReferenceFrames?: number;
 };
 
 type RuntimeFrame = {
@@ -70,6 +94,7 @@ type RuntimeFrame = {
 type RuntimeClip = {
   frames: RuntimeFrame[];
   fps: number;
+  cadenceReferenceFrames?: number;
 };
 
 type RuntimeOrientation = {
@@ -529,7 +554,7 @@ export class SpriteAnimator {
 
   private effectiveFps(clip: RuntimeClip, clipName: CharacterSpriteClip): number {
     const walkFps = Number(Balance.anim.walkFps);
-    if (!this.overrideClip && clipName === 'walk' && walkFps > 0) return this.walkFpsForSlot(walkFps);
+    if (!this.overrideClip && clipName === 'walk' && walkFps > 0) return this.walkFpsForSlot(walkFps) * cadenceFrameScale(clip);
     return clip.fps;
   }
 
@@ -735,22 +760,24 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
     rotationMirrors.set(targetDirection, sourceDirection);
   }
 
-  if (slot?.walk4 && slot.walk4.status !== 'RUNTIME-DORMANT') {
-    for (const [name, source] of Object.entries(slot.walk4.directions ?? {})) {
+  const walkSheet = selectWalkSheet(slot);
+  if (walkSheet) {
+    const walkSources = expandWalkSheetSources(walkSheet);
+    for (const [name, source] of walkSources) {
       const direction = name.toLowerCase();
       if (!isRotationDirection(direction)) continue;
-      const mirrorSource = slot.rotations?.mirrors?.[direction]?.toLowerCase();
-      const rotationSource = slot.rotations?.directions?.[direction] ?? (mirrorSource ? slot.rotations?.directions?.[mirrorSource] : undefined);
-      const merged = mergeWalk4WithRotationIdle(source, rotationSource);
+      const mirrorSource = slot?.rotations?.mirrors?.[direction]?.toLowerCase();
+      const rotationSource = slot?.rotations?.directions?.[direction] ?? (mirrorSource ? slot?.rotations?.directions?.[mirrorSource] : undefined);
+      const merged = mergeWalkSheetWithRotationIdle(source, rotationSource);
       const orientation = await createRuntimeOrientation(merged.frames, merged.clips ?? {}, fallbackClip);
       if (orientation) {
         orientations.set(direction, orientation);
         rotationDirections.add(direction);
-        if (!slot.rotations?.directions?.[direction] && mirrorSource) diagnosticMirrors.add(direction);
+        if (!slot?.rotations?.directions?.[direction] && mirrorSource) diagnosticMirrors.add(direction);
       }
     }
 
-    for (const [target, source] of Object.entries(slot.walk4.mirrors ?? {})) {
+    for (const [target, source] of Object.entries(walkSheet.mirrors ?? {})) {
       const targetDirection = target.toLowerCase();
       const sourceDirection = source.toLowerCase();
       if (!isRotationDirection(targetDirection) || !isRotationDirection(sourceDirection)) continue;
@@ -766,22 +793,115 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
   return orientations.size > 0 ? { orientations, rotationDirections, rotationMirrors, diagnosticMirrors } : null;
 }
 
-function mergeWalk4WithRotationIdle(walk4: OrientationSource, rotation: OrientationSource | undefined): OrientationSource {
-  const walkFiles = resolveFrameFiles(walk4.frames);
+function selectWalkSheet(slot: ContractSlot | undefined): WalkSheetSource | null {
+  const walk8 = slot?.walk8;
+  if (walkSheetEnabled(walk8) && walkSheetHasProcessedCells(walk8)) return walk8;
+  const walk4 = slot?.walk4;
+  return walk4 && walk4.status !== 'RUNTIME-DORMANT' && walk4.enabled !== false ? walk4 : null;
+}
+
+function walkSheetEnabled(sheet: WalkSheetSource | undefined): sheet is WalkSheetSource {
+  return !!sheet && sheet.status !== 'RUNTIME-DORMANT' && sheet.enabled === true;
+}
+
+function walkSheetHasProcessedCells(sheet: WalkSheetSource): boolean {
+  const files = new Set<string>();
+  for (const source of expandWalkSheetSources(sheet).values()) {
+    for (const file of resolveFrameFiles(source.frames)) files.add(file);
+  }
+  return files.size > 0 && [...files].every((file) => processedTextureUrlsByFile.has(file));
+}
+
+function expandWalkSheetSources(sheet: WalkSheetSource): Map<string, OrientationSource> {
+  const sources = new Map<string, OrientationSource>();
+  const explicit = sheet.directions ?? {};
+  const rowDirections = sheet.grid?.rowDirections ?? [];
+
+  for (const direction of rowDirections) {
+    const normalized = direction.toLowerCase();
+    const source = materializeWalkSheetDirection(sheet, explicit[normalized] ?? {}, normalized);
+    if (source) sources.set(normalized, source);
+  }
+
+  for (const [name, source] of Object.entries(explicit)) {
+    const normalized = name.toLowerCase();
+    const materialized = materializeWalkSheetDirection(sheet, source, normalized);
+    if (materialized) sources.set(normalized, materialized);
+  }
+
+  for (const [target, source] of Object.entries(sheet.aliases ?? {})) {
+    const targetDirection = target.toLowerCase();
+    const sourceDirection = source.toLowerCase();
+    const materialized = sources.get(sourceDirection) ?? materializeWalkSheetDirection(sheet, explicit[sourceDirection] ?? {}, sourceDirection);
+    if (materialized) sources.set(targetDirection, materialized);
+  }
+
+  return sources;
+}
+
+function materializeWalkSheetDirection(
+  sheet: WalkSheetSource,
+  source: WalkSheetDirectionSource,
+  direction: string,
+): OrientationSource | null {
+  if (source.frames) return withWalkSheetCadence(source, sheet);
+  const grid = sheet.grid;
+  if (!grid?.file) return null;
+  const rowDirections = grid.rowDirections ?? [];
+  const row = source.row ?? rowDirections.findIndex((candidate) => candidate.toLowerCase() === direction);
+  if (row < 0) return null;
+  const frameCount = Math.max(1, sheet.frameCount ?? grid.cols ?? 1);
+  const base = grid.file.replace(/\.png$/i, '');
+  const files = Array.from({ length: frameCount }, (_, col) => `${base}-r${row}c${col}.png`);
+  const walkClip = source.clips?.walk ?? {};
+  return withWalkSheetCadence(
+    {
+      frames: { files },
+      clips: {
+        ...source.clips,
+        walk: {
+          ...walkClip,
+          frames: walkClip.frames ?? files.map((_, index) => index),
+          fps: walkClip.fps ?? sheet.fps ?? frameCount,
+        },
+      },
+    },
+    sheet,
+  );
+}
+
+function withWalkSheetCadence(source: OrientationSource, sheet: WalkSheetSource): OrientationSource {
+  const cadenceReferenceFrames = sheet.cadenceReferenceFrames;
+  const walk = source.clips?.walk;
+  if (!cadenceReferenceFrames || !walk) return source;
+  return {
+    ...source,
+    clips: {
+      ...source.clips,
+      walk: {
+        ...walk,
+        cadenceReferenceFrames,
+      },
+    },
+  };
+}
+
+function mergeWalkSheetWithRotationIdle(walkSheet: OrientationSource, rotation: OrientationSource | undefined): OrientationSource {
+  const walkFiles = resolveFrameFiles(walkSheet.frames);
   const rotationFiles = resolveFrameFiles(rotation?.frames);
   const rotationWalkFrames = rotation?.clips?.walk?.frames ?? [];
   const idleIndex = rotation?.clips?.idle?.frames?.[0];
   const idleFile = idleIndex === undefined ? undefined : rotationFiles[idleIndex];
-  if (walkFiles.length === 0) return walk4;
+  if (walkFiles.length === 0) return walkSheet;
   const diagnosticKeys = walkFiles.map((file, index) => {
     const rotationIndex = rotationWalkFrames[index % Math.max(1, rotationWalkFrames.length)];
     return rotationIndex === undefined ? file : rotationFiles[rotationIndex] ?? file;
   });
-  if (!idleFile) return { ...walk4, frames: diagnosticKeys ? { files: walkFiles, diagnosticKeys } : { files: walkFiles } };
+  if (!idleFile) return { ...walkSheet, frames: diagnosticKeys ? { files: walkFiles, diagnosticKeys } : { files: walkFiles } };
   return {
     frames: { files: [...walkFiles, idleFile], diagnosticKeys: [...diagnosticKeys, idleFile] },
     clips: {
-      ...walk4.clips,
+      ...walkSheet.clips,
       idle: { frames: [walkFiles.length], fps: rotation?.clips?.idle?.fps ?? 1 },
     },
   };
@@ -793,6 +913,11 @@ function rotationDirectionFor(runtime: RuntimeSlot, orientation: string): Rotati
 
 function isLocomotionClip(clip: CharacterSpriteClip): boolean {
   return clip === 'walk' || clip === 'idle';
+}
+
+function cadenceFrameScale(clip: RuntimeClip): number {
+  const reference = clip.cadenceReferenceFrames;
+  return reference && reference > 0 ? clip.frames.length / reference : 1;
 }
 
 async function createRuntimeOrientation(
@@ -814,7 +939,9 @@ async function createRuntimeOrientation(
   for (const [name, source] of Object.entries(clipSources)) {
     const indexes = source.frames ?? [0];
     const clipFrames = indexes.map((index) => atlasFrames[index]);
-    if (clipFrames.every((frame): frame is RuntimeFrame => !!frame)) clips.set(name, { frames: clipFrames, fps: source.fps ?? 1 });
+    if (clipFrames.every((frame): frame is RuntimeFrame => !!frame)) {
+      clips.set(name, { frames: clipFrames, fps: source.fps ?? 1, cadenceReferenceFrames: source.cadenceReferenceFrames });
+    }
   }
   // s15 + task 016: an orientation must always resolve idle without replacing a real walk
   // pair. Walk-only direction blocks keep cycling; idle falls back to the billboard.
