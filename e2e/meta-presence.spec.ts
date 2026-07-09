@@ -269,7 +269,7 @@ test('secured new claim shows recap after research ledger closes', async ({ page
 
   await expect(page.getByTestId('research-overlay')).toBeVisible();
   await expect(page.getByTestId('run-meta-recap')).toBeHidden();
-  await page.getByTestId('stake-again').click();
+  await page.getByTestId('run-secondary-action').click();
   await expect(page.getByTestId('death-overlay')).toHaveAttribute('aria-hidden', 'true');
   await expect(page.getByTestId('run-meta-recap')).toBeVisible();
   await expect(page.getByTestId('run-meta-recap')).toContainText('palisade ring (Territory I)');

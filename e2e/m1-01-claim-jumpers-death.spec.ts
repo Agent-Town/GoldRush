@@ -44,7 +44,8 @@ test('T spawns Claim Jumpers, contact kills hero, R restarts in place', async ({
 
   await waitForDeath(page);
   await expect(page.getByTestId('death-overlay')).toBeVisible();
-  await expect(page.getByTestId('stake-again')).toContainText('Try Again');
+  await expect(page.getByTestId('stake-again')).toContainText('Return to Town');
+  await expect(page.getByTestId('run-secondary-action')).toContainText('Try Again');
 
   await page.keyboard.press('KeyR');
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('playing');

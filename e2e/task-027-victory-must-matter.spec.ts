@@ -56,7 +56,7 @@ async function readJson<T>(page: Page, key: string, fallback: string): Promise<T
 
 async function finishSecuredLedger(page: Page): Promise<void> {
   await expect(page.getByTestId('stake-again')).toBeVisible();
-  await page.getByTestId('stake-again').click();
+  await page.getByTestId('run-secondary-action').click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? true)).toBe(false);
 }
 

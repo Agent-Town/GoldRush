@@ -304,7 +304,7 @@ test('a single secured victory increments every meta track exactly once', async 
   await expect(page.locator('[data-death-damage]')).toContainText(`${Math.round(frozenStats.damage.hero ?? 0)} / 0`);
   await expect(page.locator('[data-death-upgrades]')).toContainText('damage 1');
   await expect(page.locator('[data-death-upgrades]')).toContainText('blast 1');
-  await page.getByTestId('stake-again').click();
+  await page.getByTestId('run-secondary-action').click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? true)).toBe(false);
 
   const paidAfterLedger = await readJson<{ tracks: Record<string, number> }>(page, META_STORAGE_KEY, 'null');

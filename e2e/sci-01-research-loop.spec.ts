@@ -204,7 +204,7 @@ test('death ledger offers research, persists the pick, and changes the next prop
   expect(saved.meta.tracks.science).toBe(1);
   expect(saved.research.taken).toContain(picked);
 
-  await page.getByTestId('stake-again').click();
+  await page.getByTestId('run-secondary-action').click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.runState)).toBe('playing');
   await killFast(page);
   const after = await researchCardIds(page);

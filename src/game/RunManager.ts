@@ -132,6 +132,7 @@ export class RunManager {
     this.host.setPaused?.(false);
     this.endRun('secured', this.host.at() ?? 0, this.host.secureWave?.() ?? Balance.run.secureWave);
     this.host.resetRun?.();
+    this.host.setPaused?.(true);
     return true;
   }
 

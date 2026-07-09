@@ -4,7 +4,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 
-const ARTIFACT_DIR = path.resolve('artifacts/story-loop');
+const ARTIFACT_DIR = path.resolve('artifacts/062');
 const SEEN_FIRST_CONTRACT = 'story:first-contract';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
@@ -56,14 +56,63 @@ async function openBoardAndLaunch(page: Page, query: string): Promise<void> {
   await page.goto('/');
   await page.evaluate((nextQuery) => history.replaceState(null, '', `/${nextQuery}`), query);
   await page.getByTestId('start-menu-enter-town').click();
+  await openTownBoard(page);
+  await page.getByTestId('contract-launch-the-claim').click();
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+}
+
+async function openTownBoard(page: Page): Promise<void> {
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
   await hold(page, 'KeyA', 850);
   await hold(page, 'KeyW', 850);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
   await expect(page.getByTestId('contract-board')).toBeVisible();
+}
+
+async function openFreshProfileFirstRun(page: Page): Promise<void> {
+  await page.goto('/');
+  await tunePlainFastSecure(page);
+  await expect(page.getByTestId('profile-title')).toContainText("Who's prospecting?");
+  await page.getByTestId('profile-name-input').fill('Mina');
+  await page.getByTestId('profile-create').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await expect(page.getByTestId('town-name-card')).toBeVisible();
+  await page.getByTestId('town-name-input').fill('Aurora Bend');
+  await page.getByTestId('town-name-submit').click();
+  await expect(page.getByTestId('town-name-card')).toBeHidden({ timeout: 2_500 });
+  await dismissStoryBeat(page);
+  await openTownBoard(page);
+  await dismissStoryBeat(page);
   await page.getByTestId('contract-launch-the-claim').click();
-  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+}
+
+async function tunePlainFastSecure(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const importViteModule = new Function('specifier', 'return import(specifier)') as (specifier: string) => Promise<unknown>;
+    const mod = (await importViteModule('/src/game/Balance.ts')) as {
+      Balance: {
+        run: { secureWave: number };
+        waves: { waveInterval: number; trickleInterval: number; pulseBase: number; pulsePerWave: number; pulsesPerWave: number };
+        enemy: { contactDamage: number };
+      };
+    };
+    mod.Balance.run.secureWave = 1;
+    mod.Balance.waves.waveInterval = 0.25;
+    mod.Balance.waves.trickleInterval = 9999;
+    mod.Balance.waves.pulseBase = 0;
+    mod.Balance.waves.pulsePerWave = 0;
+    mod.Balance.waves.pulsesPerWave = 1;
+    mod.Balance.enemy.contactDamage = 0;
+  });
+}
+
+async function dismissStoryBeat(page: Page): Promise<void> {
+  if (await page.getByTestId('story-beat-card').isVisible().catch(() => false)) {
+    await page.mouse.click(6, 6);
+    await page.waitForTimeout(150);
+  }
 }
 
 async function hold(page: Page, key: string, ms: number): Promise<void> {
@@ -130,6 +179,49 @@ test('secured contract returns to town, fires the secured beat, and leaves the b
   await expect(page.getByTestId('contract-board')).toBeVisible({ timeout: 8_000 });
   await expectReturnBeat(page, 'return-secured', 'The town heard. Drinks tonight.');
   await shot(page, testInfo, 'secured-return-beat');
+  assertNoErrors(errors);
+});
+
+test('fresh-profile first boot returns to town after the first ending', async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  const errors = collectErrors(page);
+
+  await openFreshProfileFirstRun(page);
+  await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 18_000 });
+  await expect(page.getByTestId('bank-secured-claim')).toHaveText('Return to Town');
+  await page.getByTestId('bank-secured-claim').click();
+
+  await expect(page.getByTestId('death-overlay')).toBeVisible({ timeout: 8_000 });
+  await expect(page.getByTestId('stake-again')).toHaveText('Return to Town');
+  await expect(page.getByTestId('run-secondary-action')).toHaveText('New Claim');
+  await shot(page, testInfo, 'first-boot-return-primary');
+  await page.getByTestId('stake-again').click();
+
+  await expect(page.getByTestId('start-menu')).toHaveCount(0);
+  await expect(page.getByTestId('contract-board')).toBeVisible({ timeout: 8_000 });
+  await expectReturnBeat(page, 'return-secured', 'The town heard. Drinks tonight.');
+  assertNoErrors(errors);
+});
+
+test('direct contract route returns to town after the ending', async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  await seedProfile(page);
+  const errors = collectErrors(page);
+
+  await page.goto('/?debug&contract=the-claim&timescale=24&nolevel&seed=story-loop-contract-route');
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await forceSecure(page);
+  await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
+  await page.getByTestId('bank-secured-claim').click();
+
+  await expect(page.getByTestId('death-overlay')).toBeVisible({ timeout: 8_000 });
+  await expect(page.getByTestId('stake-again')).toHaveText('Return to Town');
+  await shot(page, testInfo, 'direct-contract-return-primary');
+  await page.getByTestId('stake-again').click();
+
+  await expect(page.getByTestId('start-menu')).toHaveCount(0);
+  await expect(page.getByTestId('contract-board')).toBeVisible({ timeout: 8_000 });
+  await expectReturnBeat(page, 'return-secured', 'The town heard. Drinks tonight.');
   assertNoErrors(errors);
 });
 

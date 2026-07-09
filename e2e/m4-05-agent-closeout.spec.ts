@@ -315,7 +315,7 @@ test('victory pause agent calls do not bank gold into the stale or next run', as
   await page.getByTestId('bank-secured-claim').click();
   await expect(page.getByTestId('claim-secured')).toBeHidden({ timeout: 4_000 });
   await expect(page.getByTestId('death-overlay')).toBeVisible({ timeout: 4_000 });
-  await page.getByTestId('stake-again').click();
+  await page.getByTestId('run-secondary-action').click();
   await expect
     .poll(() => page.getByTestId('death-overlay').getAttribute('aria-hidden'), { timeout: 4_000 })
     .toBe('true');

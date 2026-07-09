@@ -101,7 +101,7 @@ test('legacy meta profile still reaches the live Claim Secured ceremony', async 
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('Bank Claim opens the secured ledger and Enter New Claim resets fresh', async ({ page }) => {
+test('Bank Claim opens the secured ledger and secondary New Claim resets fresh', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=100&nolevel&seed=task-023-bank');
   await fastWave20(page);
 
@@ -111,8 +111,9 @@ test('Bank Claim opens the secured ledger and Enter New Claim resets fresh', asy
 
   await expect(page.getByTestId('claim-secured')).toBeHidden();
   await expect(page.getByTestId('death-overlay')).toBeVisible();
-  await expect(page.getByTestId('stake-again')).toHaveText('Enter New Claim');
-  await page.getByTestId('stake-again').click();
+  await expect(page.getByTestId('stake-again')).toHaveText('Return to Town');
+  await expect(page.getByTestId('run-secondary-action')).toHaveText('New Claim');
+  await page.getByTestId('run-secondary-action').click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.secured ?? true)).toBe(false);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.lastRunEndedReason)).toBe('secured');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave)).toBe(0);

@@ -115,7 +115,7 @@ async function waitForDeath(page: Page): Promise<void> {
   await expect.poll(async () => (await diagnostics(page)).runState, { timeout: 15_000 }).toBe('dead');
 }
 
-test('death overlay shows flavor line and Try Again restarts', async ({ page }) => {
+test('death overlay shows flavor line and secondary Try Again restarts', async ({ page }) => {
   const errors = await openGame(page, '?debug&nowaves&nolevel&seed=m1-07-death');
   await page.evaluate(() => window.__GR_TEST__?.setBalance('enemy.contactDamage', 999));
 
@@ -123,8 +123,9 @@ test('death overlay shows flavor line and Try Again restarts', async ({ page }) 
   await waitForDeath(page);
   await expect(page.getByTestId('death-overlay')).toBeVisible();
   await expect(page.locator('.death-overlay__flavor')).toContainText('The claim was overrun. The gold remembers.');
-  await expect(page.getByTestId('stake-again')).toContainText('Try Again');
-  await page.getByTestId('stake-again').click();
+  await expect(page.getByTestId('stake-again')).toContainText('Return to Town');
+  await expect(page.getByTestId('run-secondary-action')).toContainText('Try Again');
+  await page.getByTestId('run-secondary-action').click();
   await expect.poll(async () => (await diagnostics(page)).runState).toBe('playing');
 
   await assertNoErrors(errors);
@@ -171,7 +172,7 @@ test('scoreboard records two deaths and highlights current run', async ({ page }
 
   await overwhelm(page);
   await waitForDeath(page);
-  await page.getByTestId('stake-again').click();
+  await page.getByTestId('run-secondary-action').click();
   await expect.poll(async () => (await diagnostics(page)).runState).toBe('playing');
   await page.waitForTimeout(350);
   await overwhelm(page);
@@ -182,7 +183,7 @@ test('scoreboard records two deaths and highlights current run', async ({ page }
   await expect(page.locator('[data-current-run="true"]')).toHaveCount(1);
   const waveValues = await rows.evaluateAll((items) => items.map((item) => Number((item.textContent ?? '').match(/^\d+/)?.[0] ?? 0)));
   expect(waveValues[0]).toBeGreaterThanOrEqual(waveValues[1]);
-  await expect(page.getByTestId('stake-again')).toContainText('Try Again');
+  await expect(page.getByTestId('run-secondary-action')).toContainText('Try Again');
 
   await assertNoErrors(errors);
 });

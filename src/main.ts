@@ -55,19 +55,18 @@ let assayBench: AssayBench | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
 let town: TownScene | undefined;
-let runReturnTarget: 'menu' | 'board' = 'menu';
 const uninstallClaimLedgerRequest = installClaimLedgerRequestHandler((entryId) => openClaimLedger(entryId));
 
 afterFirstFrame(() => {
   void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
 });
 
-function startGame(returnToMenu: boolean): void {
+function startGame(): void {
   const currentSearch = new URLSearchParams(window.location.search);
   applyStoredDifficultyPreset();
   applyStoredPerformanceTier();
   applyUpgradeBudgetsFromBalance();
-  game = new Game(gameCanvas, () => assayBench?.focus(), returnToMenu ? runReturnCallback : undefined);
+  game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback);
   game.start();
   releaseStartupAssetGateOnFirstGameFrame();
   installWaveTelegraphPrefetch();
@@ -81,9 +80,9 @@ function startGame(returnToMenu: boolean): void {
   });
 }
 
-function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; returnToMenu?: boolean } = {}): void {
+function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean } = {}): void {
   profiles?.dispose();
-  profiles = installProfiles(() => startGame(options.returnToMenu === true), {
+  profiles = installProfiles(() => startGame(), {
     showTitle: options.showTitle,
     skipTitle: options.skipTitle,
   });
@@ -113,7 +112,7 @@ function showStartMenu(): void {
       onProfile: () => {
         startMenu?.dispose();
         startMenu = undefined;
-        startWithProfiles({ showTitle: true, returnToMenu: true });
+        startWithProfiles({ showTitle: true });
       },
     });
   });
@@ -129,11 +128,10 @@ function continueSavedRun(): void {
   }
   startMenu?.dispose();
   startMenu = undefined;
-  startWithProfiles({ skipTitle: true, returnToMenu: true });
+  startWithProfiles({ skipTitle: true });
 }
 
 function launchContract(contractId: string): void {
-  runReturnTarget = 'board';
   stagePlayerContractLaunch(contractId);
   const nextSearch = new URLSearchParams(window.location.search);
   nextSearch.set('contract', contractId);
@@ -142,12 +140,11 @@ function launchContract(contractId: string): void {
   startMenu = undefined;
   town?.dispose();
   town = undefined;
-  startWithProfiles({ skipTitle: true, returnToMenu: true });
+  startWithProfiles({ skipTitle: true });
 }
 
 function runReturnCallback(result: RunReturnResult): void {
-  if (runReturnTarget === 'board') returnToTownBoard(result);
-  else returnToStartMenu();
+  returnToTownBoard(result);
 }
 
 function returnToTownBoard(result: RunReturnResult): void {
@@ -165,7 +162,6 @@ function returnToTownBoard(result: RunReturnResult): void {
 }
 
 function returnToStartMenu(): void {
-  runReturnTarget = 'menu';
   town?.dispose();
   town = undefined;
   game?.dispose();

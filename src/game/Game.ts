@@ -712,13 +712,13 @@ export class Game {
       const returnResult: RunReturnResult = this.runWasSecured(event.wavesSurvived) ? 'secured' : 'overrun';
       this.deathOverlay.show(this.deathLedger, scores, scoreAt, {
         ...this.researchOverlayOptions(1),
-        actionLabel: this.onReturnToMenu ? 'Return to Town' : undefined,
-        secondaryActionLabel: this.onReturnToMenu ? 'Try Again' : undefined,
+        actionLabel: 'Return to Town',
+        secondaryActionLabel: 'Try Again',
         runStats,
         agentAutonomyDelta: this.agentAutonomyDelta(returnResult === 'secured'),
         townName: readTownName(),
-        onDone: this.onReturnToMenu ? () => this.onReturnToMenu?.(returnResult) : undefined,
-        onSecondaryAction: this.onReturnToMenu ? () => this.resetRun() : undefined,
+        onDone: () => this.returnToTown(returnResult),
+        onSecondaryAction: () => this.resetRun(),
       });
     });
     this.events.on('run_ended', (event) => {
@@ -756,20 +756,16 @@ export class Game {
         this.deathOverlay.show(ledger, scores, scoreAt, {
           ...this.researchOverlayOptions(2),
           outcome: 'secured',
-          actionLabel: this.onReturnToMenu ? 'Return to Town' : 'Enter New Claim',
-          secondaryActionLabel: this.onReturnToMenu ? 'New Claim' : undefined,
+          actionLabel: 'Return to Town',
+          secondaryActionLabel: 'New Claim',
           runStats,
           agentAutonomyDelta,
           townName: readTownName(),
           onDone: () => {
-            if (this.onReturnToMenu) {
-              this.runStartMetaRecapPending = false;
-              this.onReturnToMenu('secured');
-              return;
-            }
-            this.finishSecuredLedgerQuickLoop();
+            this.runStartMetaRecapPending = false;
+            this.returnToTown('secured');
           },
-          onSecondaryAction: this.onReturnToMenu ? () => this.finishSecuredLedgerQuickLoop() : undefined,
+          onSecondaryAction: () => this.finishSecuredLedgerQuickLoop(),
         });
       }, 0);
     });
@@ -3349,11 +3345,12 @@ export class Game {
   }
 
   private finishRunLedger(): void {
-    if (this.onReturnToMenu) {
-      this.onReturnToMenu('overrun');
-      return;
-    }
-    this.resetRun();
+    this.returnToTown('overrun');
+  }
+
+  private returnToTown(result: RunReturnResult): void {
+    if (!this.onReturnToMenu) throw new Error('Return to Town requested without a return callback.');
+    this.onReturnToMenu(result);
   }
 
   private finishSecuredLedgerQuickLoop(): void {

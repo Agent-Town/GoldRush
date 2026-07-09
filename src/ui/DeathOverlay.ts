@@ -386,7 +386,8 @@ export class DeathOverlay {
     }
     if (event.code !== 'KeyR') return;
     event.preventDefault();
-    this.finish();
+    if (this.options.onSecondaryAction) this.secondaryAction();
+    else this.finish();
   };
 
   private rerenderResearch(): void {
