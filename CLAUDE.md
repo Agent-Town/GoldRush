@@ -75,5 +75,7 @@ gpt-image-2 via Codex `image_gen` in the ART slot — never an owner chore. Slot
 ## 9. Roadmap state (2026-07-07)
 M0/M1/M2 SIGNED OFF · M3 science dimension COMPLETE (SCI-01..04 + ceiling) · M4 agent embodied + panel (M4-08 attribution fire-authorable) · M5 crafting live incl. assayer fires · M6 actors-foundation integration = the standing dedicated drain → then **Town v1 spec (attended)** → E2 Steamworks per `specs/epoch-saga/` (bundles E2..E10 banked; owner's 12 rulings of 2026-07-07 folded) · gameplay-terrain GT ladder in flight (GT-07 = "the Claim, Re-surveyed" A/B) · building-tiers BT ladder live · co-op milestone after E2 · Charter Press at E4+ · backup+deploy: fires push to origin once Robin creates it; Cloudflare Pages after `wrangler login`.
 
+## 9b. THE LORE WIKI (lore/) — the source of truth for all CONTENT facts (characters/institutions/places/eras). Its laws: read-before-write for any content-touching task; new canon lands same-commit; cited+dated; the future lives there too (PLANNED arcs). Uncited lore is a proposal.
+
 ## 10. Skills (executable playbooks in `.claude/skills/`)
 `/drain` — gate+merge a finished task correctly · `/author-task` — write a master that can't fail the known ways · `/playtest-intake` — owner feedback → verified finding → task + ledger in one pass. USE THEM; they encode this file's laws as steps.
