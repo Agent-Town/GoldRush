@@ -156,6 +156,7 @@ import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '..
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { readTownName } from '../town/TownNaming';
 import { GameState } from './GameState';
+import { performanceTierDiagnostics } from './PerformanceTier';
 import { Progression } from './Progression';
 import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgradeEffect, upgradeFamilyId } from './Upgrades';
 import { clearScores, recordScore } from './Scoreboard';
@@ -2328,7 +2329,10 @@ export class Game {
       enemyDimming: this.enemies.dimmingDiagnostics,
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
+        floatTextPool: this.vfx.capacity,
+        combat: this.combatVfx.diagnostics(),
       },
+      performance: performanceTierDiagnostics(),
       readability: {
         enemyHitFlashes: this.enemies.hitFlashCount,
         activeEnemyFlashes: this.enemies.activeFlashCount,

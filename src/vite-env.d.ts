@@ -465,6 +465,46 @@ interface ThreeGameDiagnostics {
   };
   vfx: {
     activeFloatTexts: number;
+    floatTextPool: number;
+    combat: {
+      puffs: { active: number; capacity: number };
+      ticks: { active: number; capacity: number };
+      rings: { active: number; capacity: number };
+    };
+  };
+  performance: {
+    tier: 'full' | 'balanced' | 'lite';
+    override: 'auto' | 'full' | 'balanced' | 'lite';
+    source: 'auto' | 'override';
+    reason: string;
+    gpuRenderer: string;
+    deviceMemory: number | null;
+    userAgent: string;
+    config: {
+      maxDpr: number;
+      shadowsQuality: 'soft' | 'blob';
+      shadowMapSize: number;
+      fogNear: number;
+      fogFar: number;
+      postEnabled: boolean;
+      postPaperGrainOpacity: number;
+      detailDensity: number;
+      detailMobileDensity: number;
+      terrainSegments: number;
+      terrainMobileSegments: number;
+      vistaSegments: number;
+      vistaMobileSegments: number;
+      waterQuality: number;
+      waterMobileQuality: number;
+      terrainMesh: boolean;
+      terrainSplat: boolean;
+      terrainMeshVertexStep: number;
+      floatTextPool: number;
+      combatVfxPuffs: number;
+      combatVfxTicks: number;
+      combatVfxRings: number;
+      enemyBarCap: number;
+    };
   };
   readability: {
     enemyHitFlashes: number;

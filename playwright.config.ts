@@ -16,11 +16,6 @@ export default defineConfig({
     baseURL,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
-    // channel 'chromium' = full-binary new headless. The default
-    // chromium_headless_shell-1228 SIGSEGVs on the 2026-07-03 sandbox image
-    // (repro: headless_shell --dump-dom about:blank → rc 139); full chrome
-    // + libXdamage from ~/locallibs works. See STATUS.md environment notes.
-    channel: 'chromium',
   },
   webServer: process.env.GR_CAPTURE_EXTERNAL_SERVER === '1' ? undefined : {
     command: 'npm run dev',
@@ -34,6 +29,11 @@ export default defineConfig({
       use: {
         ...devices['Desktop Chrome'],
         viewport: { width: 1280, height: 800 },
+        // channel 'chromium' = full-binary new headless. The default
+        // chromium_headless_shell-1228 SIGSEGVs on the 2026-07-03 sandbox image
+        // (repro: headless_shell --dump-dom about:blank → rc 139); full chrome
+        // + libXdamage from ~/locallibs works. See STATUS.md environment notes.
+        channel: 'chromium',
       },
     },
     {
@@ -42,6 +42,15 @@ export default defineConfig({
         ...devices['Pixel 5'],
         browserName: 'chromium',
         viewport: { width: 390, height: 844 },
+        channel: 'chromium',
+      },
+    },
+    {
+      name: 'desktop-webkit',
+      testMatch: /058-device-tiers\.spec\.ts/,
+      use: {
+        ...devices['Desktop Safari'],
+        viewport: { width: 1280, height: 800 },
       },
     },
   ],

@@ -332,7 +332,10 @@ function getMaxTouchPoints(): number {
 function readGpuRenderer(): string {
   try {
     const canvas = globalThis.document?.createElement('canvas');
-    const gl = canvas?.getContext('webgl') ?? canvas?.getContext('experimental-webgl');
+    const gl = (canvas?.getContext('webgl') ?? canvas?.getContext('experimental-webgl')) as
+      | WebGLRenderingContext
+      | WebGL2RenderingContext
+      | null;
     if (!gl) return 'unknown';
     const debug = gl.getExtension('WEBGL_debug_renderer_info') as { UNMASKED_RENDERER_WEBGL: number } | null;
     const renderer = debug ? gl.getParameter(debug.UNMASKED_RENDERER_WEBGL) : gl.getParameter(gl.RENDERER);
