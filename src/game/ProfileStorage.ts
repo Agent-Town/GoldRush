@@ -12,6 +12,7 @@ export const RUN_SUSPEND_KEY = 'gr.run.v1';
 export const RUN_HISTORY_KEY = 'gr.history.v1';
 export const TOWN_NAME_KEY = 'gr.town.name.v1';
 export const MEDALS_KEY = 'gr.medals.v1';
+export const FIRST_CLAIM_DONE_KEY = 'gr.firstClaim.done.v1';
 export const DEFAULT_PROFILE_NAME = 'Robin';
 export const DEFAULT_DIFFICULTY_PRESET: DifficultyPresetId = 'trail';
 
@@ -21,6 +22,7 @@ export const PROFILE_DATA_KEYS = new Set([
   RUN_HISTORY_KEY,
   TOWN_NAME_KEY,
   MEDALS_KEY,
+  FIRST_CLAIM_DONE_KEY,
   LEGACY_SCOREBOARD_KEY,
   SCOREBOARD_KEY,
   RESEARCH_STATE_KEY,
