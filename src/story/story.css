@@ -33,6 +33,11 @@
   opacity: 1;
 }
 
+.story-beat-card[data-beat-id^='ledger-page:'] {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
 .story-beat-card__portrait {
   width: 74px;
   height: 90px;

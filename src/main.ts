@@ -11,6 +11,8 @@ import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
 import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
+import { installClaimLedgerRequestHandler } from './encyclopedia/events';
+import type { LedgerEntryId } from './encyclopedia/registry';
 
 type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
 type StartMenu = import('./ui/menu/StartMenu').StartMenu;
@@ -53,6 +55,7 @@ let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
 let town: TownScene | undefined;
 let runReturnTarget: 'menu' | 'board' = 'menu';
+const uninstallClaimLedgerRequest = installClaimLedgerRequestHandler((entryId) => openClaimLedger(entryId));
 
 afterFirstFrame(() => {
   void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
@@ -104,6 +107,7 @@ function showStartMenu(): void {
         startMenu = undefined;
         openTown();
       },
+      onOpenLedger: () => openClaimLedger(),
       onProfile: () => {
         startMenu?.dispose();
         startMenu = undefined;
@@ -189,6 +193,14 @@ function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult
   });
 }
 
+function openClaimLedger(entryId?: LedgerEntryId): void {
+  if (game) {
+    game.openClaimLedger(entryId);
+    return;
+  }
+  void import('./encyclopedia/reader').then(({ openClaimLedger }) => openClaimLedger({ entryId }));
+}
+
 function afterFirstFrame(task: () => void): void {
   requestAnimationFrame(() => requestAnimationFrame(task));
 }
@@ -232,6 +244,7 @@ function prefetchNonCriticalStartupAssets(): void {
 
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
+    uninstallClaimLedgerRequest();
     startMenu?.dispose();
     profiles?.dispose();
     assayBench?.dispose();

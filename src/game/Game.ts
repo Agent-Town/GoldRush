@@ -55,6 +55,8 @@ import {
   type MegaprojectStorage,
 } from '../meta/Megaproject';
 import { emitStorySignal } from '../story/signals';
+import { discoverLedgerBuildable, discoverLedgerEntry } from '../encyclopedia/state';
+import type { LedgerEntryId } from '../encyclopedia/registry';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
@@ -767,6 +769,7 @@ export class Game {
     });
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
+      if (!event.eliteKind && !event.variantId && !event.bossGroupId) discoverLedgerEntry('claim_jumper');
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
       }
@@ -896,11 +899,14 @@ export class Game {
         rotateBuildGhost: () => this.buildSystem.rotateGhost(),
         placeFree: (id: BuildableId, x: number, z: number, rotationSteps = 0) => {
           const placed = this.buildSystem.placeFree(id, { x, z }, rotationSteps);
+          if (placed) discoverLedgerBuildable(id);
           this.publishDiagnostics();
           return placed;
         },
         confirmBuild: () => {
+          const id = this.buildSystem.diagnostics.selectedBuildable;
           const placed = this.buildSystem.confirm(this.timeAlive);
+          if (placed) discoverLedgerBuildable(id);
           this.publishDiagnostics();
           return placed;
         },
@@ -1044,6 +1050,23 @@ export class Game {
 
   start(): void {
     this.loop.start();
+  }
+
+  openClaimLedger(entryId?: LedgerEntryId): void {
+    const resumeOnClose = this.state.current === 'playing';
+    this.state.setPaused(true);
+    this.playerPauseActive = false;
+    this.syncUi();
+    void import('../encyclopedia/reader').then(({ openClaimLedger }) =>
+      openClaimLedger({
+        entryId,
+        onClose: () => {
+          if (resumeOnClose) this.state.setPaused(false);
+          this.syncUi();
+          this.publishDiagnostics();
+        },
+      }),
+    );
   }
 
   dispose(): void {
@@ -3148,6 +3171,11 @@ export class Game {
     if (intent.type === 'set_agent_rung') this.agentConsent.setRung(intent.level, intent.granted);
     if (intent.type === 'set_agent_ability') this.agentConsent.setAbility(intent.ability, intent.granted);
     if (intent.type === 'set_agent_rung' || intent.type === 'set_agent_ability') return;
+    if (intent.type === 'open_ledger') {
+      this.audio.play('ledger-open');
+      this.openClaimLedger();
+      return;
+    }
     if (intent.type === 'save_claim') {
       this.audio.play('ledger-open');
       this.saveManualClaim(intent.name);
@@ -3809,7 +3837,8 @@ export class Game {
 
   private confirmAction(): void {
     if (this.buildSystem.isBuildMode) {
-      this.buildSystem.confirm(this.timeAlive);
+      const id = this.buildSystem.diagnostics.selectedBuildable;
+      if (this.buildSystem.confirm(this.timeAlive)) discoverLedgerBuildable(id);
       return;
     }
     if (this.buildSystem.assayOfficeInRange(this.primaryActor.group.position)) {

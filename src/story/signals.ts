@@ -19,7 +19,9 @@ export type BossStorySignal =
   | { type: 'boss-arrival'; contractId: string; contractName: string }
   | { type: 'boss-defeat'; contractId: string; contractName: string };
 
-export type RuntimeStorySignal = StorySignal | BossStorySignal;
+export type LedgerStorySignal = { type: 'ledger-page'; entryId: string; entryName: string };
+
+export type RuntimeStorySignal = StorySignal | BossStorySignal | LedgerStorySignal;
 
 export const STORY_SIGNAL_REGISTRY = [
   'first-boot',
@@ -39,7 +41,7 @@ export const STORY_SIGNAL_REGISTRY = [
   'xp-collected',
 ] as const;
 
-export const STORY_RUNTIME_SIGNAL_REGISTRY = [...STORY_SIGNAL_REGISTRY, 'boss-arrival', 'boss-defeat'] as const;
+export const STORY_RUNTIME_SIGNAL_REGISTRY = [...STORY_SIGNAL_REGISTRY, 'boss-arrival', 'boss-defeat', 'ledger-page'] as const;
 
 type StorySignalListener = (signal: RuntimeStorySignal) => void;
 

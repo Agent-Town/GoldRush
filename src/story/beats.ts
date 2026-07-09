@@ -211,6 +211,20 @@ export const STORY_BEATS: readonly StoryBeat[] = [
   },
 ];
 
+export const LEDGER_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    id: 'claim-ledger-page',
+    trigger: 'ledger-page',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    seenKey: (signal) => (signal.type === 'ledger-page' ? `ledger-page:${signal.entryId}` : 'ledger-page'),
+    lines: (signal) => [
+      signal.type === 'ledger-page' ? `The ledger gains a page: ${signal.entryName}.` : 'The ledger gains a page.',
+      'Open it before the next trail.',
+    ],
+  },
+];
+
 export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
     id: 'e2-railcar-arrival',
@@ -232,4 +246,4 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 
 const STORY_RUNTIME_CORE_BEATS = STORY_BEATS as unknown as readonly RuntimeStoryBeat[];
 
-export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = [...STORY_RUNTIME_CORE_BEATS, ...E2_STORY_BEATS];
+export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = [...STORY_RUNTIME_CORE_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];

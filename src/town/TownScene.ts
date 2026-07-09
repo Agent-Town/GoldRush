@@ -27,6 +27,8 @@ import {
 } from '../meta/Megaproject';
 import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
+import { requestOpenClaimLedger } from '../encyclopedia/events';
+import { discoverLedgerEntry } from '../encyclopedia/state';
 import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
@@ -465,6 +467,7 @@ export class TownScene {
     this.syncTownTitle();
     if (!this.townName) this.openNameCard('founding');
     if (this.options.openBoard) this.openBoard();
+    discoverLedgerEntry('the_claim');
     this.emitGrowthSightBeats();
   }
 
@@ -499,6 +502,10 @@ export class TownScene {
     const target = event.target as HTMLElement | null;
     if (target?.closest('[data-schoolhouse-close]')) {
       this.closeSchoolhouse();
+      return;
+    }
+    if (target?.closest('[data-schoolhouse-ledger]')) {
+      requestOpenClaimLedger();
       return;
     }
     const nodeButton = target?.closest<HTMLElement>('[data-research-node]');
@@ -721,6 +728,7 @@ export class TownScene {
             <h2>Elder's Survey Chart</h2>
           </div>
           <button class="town-ui__board-close" type="button" data-schoolhouse-close data-testid="schoolhouse-close">Back</button>
+          <button class="town-ui__board-close" type="button" data-schoolhouse-ledger data-testid="schoolhouse-open-ledger">Claim Ledger</button>
         </header>
         <div class="town-ui__surface-body">
           ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}

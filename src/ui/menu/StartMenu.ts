@@ -38,6 +38,7 @@ type StartMenuOptions = {
   onContinue: () => void;
   onLoadSlot: () => void;
   onEnterTown: () => void;
+  onOpenLedger: () => void;
   onProfile: () => void;
 };
 
@@ -115,6 +116,7 @@ export class StartMenu {
               : ''
           }
           <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="town" data-testid="start-menu-enter-town">Enter Town</button>
+          <button class="gr-start-menu__button" type="button" data-menu-action="ledger" data-testid="start-menu-claim-ledger">Claim Ledger</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="profile" data-testid="start-menu-profile">Profile</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
         </nav>`
@@ -176,6 +178,7 @@ export class StartMenu {
     this.audio.play('menu-tap');
     if (action === 'continue') this.options.onContinue();
     if (action === 'town') this.options.onEnterTown();
+    if (action === 'ledger') this.options.onOpenLedger();
     if (action === 'profile') this.options.onProfile();
     if (action === 'load') this.toggleLoad();
     if (action === 'settings') this.toggleSettings();
