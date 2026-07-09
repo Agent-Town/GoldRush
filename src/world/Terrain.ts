@@ -396,6 +396,19 @@ export type VistaDiagnostics = {
   vertices: number;
   seamMaxDelta: number;
   seam: Array<{ x: number; z: number; clamped: number; unclamped: number; delta: number }>;
+  river: {
+    present: boolean;
+    drawCalls: 0 | 1;
+    radius: number;
+    vertices: number;
+    visualHalfWidth: number;
+    fadeStart: number;
+    westEdgeCenterZ: number;
+    eastEdgeCenterZ: number;
+    westFarCenterZ: number;
+    eastFarCenterZ: number;
+    meanderAmplitude: number;
+  };
 };
 
 export function vistaDiagnostics(): VistaDiagnostics {
@@ -412,6 +425,7 @@ export function vistaDiagnostics(): VistaDiagnostics {
     vertices: vistaVertexCount(),
     seamMaxDelta: Math.max(...seam.map((entry) => entry.delta)),
     seam,
+    river: vistaRiverDiagnostics(),
   };
 }
 
@@ -791,6 +805,18 @@ float terrainValueNoise(vec2 p) {
   return mix(mix(a, b, f.x), mix(c, d, f.x), f.y);
 }
 
+float terrainVistaRiverCenterZ(float worldX) {
+  float side = worldX < 0.0 ? -1.0 : 1.0;
+  float outside = max(0.0, abs(worldX) - ${CLAIM_HALF.toFixed(3)});
+  float dx = worldX - side * ${CLAIM_HALF.toFixed(3)};
+  float ramp = smoothstep(0.0, 18.0, outside);
+  return ramp * (sin(dx * 0.065) * 2.6 + sin(dx * 0.137) * 0.8);
+}
+
+float terrainShoreDistance(vec2 worldPos) {
+  return max(0.0, abs(worldPos.y - terrainVistaRiverCenterZ(worldPos.x)) - ${RIVER_MAX_Z.toFixed(3)});
+}
+
 vec2 terrainOrientUv(vec2 tileUv, vec2 cell) {
   if (terrainHash(cell + vec2(11.0, 3.0)) < 0.5) tileUv.x = 1.0 - tileUv.x;
   float rotation = floor(terrainHash(cell + vec2(5.0, 17.0)) * 4.0);
@@ -806,8 +832,7 @@ float terrainVariant(vec2 cell, vec2 salt) {
 }
 
 float terrainGullyMask(vec2 worldPos) {
-  float absZ = abs(worldPos.y);
-  float bankDistance = max(0.0, absZ - 5.0);
+  float bankDistance = terrainShoreDistance(worldPos);
   float bankMask = smoothstep(2.0, 8.0, bankDistance) * (1.0 - smoothstep(18.0, 30.0, bankDistance));
   float warpedX = worldPos.x + sin(worldPos.y * 0.19) * 3.0 + sin(worldPos.y * 0.061) * 6.0;
   float cell = floor((warpedX + 6.5) / 13.0);
@@ -847,7 +872,7 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
   packedSand = mix(packedSand, wideSand, antiTileMix * smoothstep(0.18, 0.86, terrainValueNoise(vTerrainWorld * 0.11 + terrainSeed * 67.0)));
   dryDirt = mix(dryDirt, wideDirt, antiTileMix * smoothstep(0.24, 0.82, terrainValueNoise(vTerrainWorld * 0.095 - terrainSeed * 43.0)));
   float dirtBlend = smoothstep(0.22, 0.78, terrainValueNoise(vTerrainWorld * 0.075 + terrainSeed * 17.0));
-  float shoreDistance = max(0.0, abs(vTerrainWorld.y) - 5.0);
+  float shoreDistance = terrainShoreDistance(vTerrainWorld);
   float shoreBand = 1.0 - smoothstep(1.1, 8.0, shoreDistance);
   float scrubBlend = shoreBand * smoothstep(0.42, 0.88, terrainValueNoise(vTerrainWorld * 0.22 + terrainSeed * 31.0));
   vec4 sampledDiffuseColor = mix(packedSand, dryDirt, dirtBlend * 0.48);
@@ -970,11 +995,31 @@ function createVistaRingGeometry(): THREE.BufferGeometry {
 
 function createExtendedRiverGeometry(): THREE.BufferGeometry {
   const halfWidth = visualWaterWidth() / 2;
+  const axis = vistaAxes().fullAxis;
+  const acrossSegments = 4;
   const geometry = new THREE.BufferGeometry();
   const positions: number[] = [];
   const uvs: number[] = [];
   const indices: number[] = [];
-  addVistaGrid(positions, uvs, indices, [-VISTA_RADIUS, VISTA_RADIUS], [-halfWidth, halfWidth], () => 0);
+  for (let row = 0; row <= acrossSegments; row += 1) {
+    const t = row / acrossSegments;
+    const across = THREE.MathUtils.lerp(-halfWidth, halfWidth, t);
+    for (const x of axis) {
+      const z = vistaRiverCenterZ(x) + across;
+      positions.push(x, -z, 0);
+      uvs.push((x + CLAIM_HALF) / CLAIM_SIZE, t);
+    }
+  }
+  const width = axis.length;
+  for (let row = 0; row < acrossSegments; row += 1) {
+    for (let xi = 0; xi < width - 1; xi += 1) {
+      const a = row * width + xi;
+      const b = a + 1;
+      const c = a + width;
+      const d = c + 1;
+      indices.push(a, c, b, b, c, d);
+    }
+  }
   geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
   geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
   geometry.setIndex(indices);
@@ -1233,6 +1278,41 @@ function vistaVertexCount(): number {
   return fullAxis.length * outer * 2 + rightAxis.length * innerAxis.length + leftAxis.length * innerAxis.length;
 }
 
+function vistaRiverDiagnostics(): VistaDiagnostics['river'] {
+  const axis = vistaAxes().fullAxis;
+  const centers = axis.map((x) => vistaRiverCenterZ(x));
+  const meanderAmplitude = centers.reduce((max, center) => Math.max(max, Math.abs(center)), 0);
+  return {
+    present: ACTIVE_CONTRACT.tileParams.river,
+    drawCalls: ACTIVE_CONTRACT.tileParams.river ? 1 : 0,
+    radius: VISTA_RADIUS,
+    vertices: riverVistaVertexCount(),
+    visualHalfWidth: round3(visualWaterWidth() / 2),
+    fadeStart: riverFadeStart(),
+    westEdgeCenterZ: round3(vistaRiverCenterZ(bounds.minX)),
+    eastEdgeCenterZ: round3(vistaRiverCenterZ(bounds.maxX)),
+    westFarCenterZ: round3(vistaRiverCenterZ(-VISTA_RADIUS)),
+    eastFarCenterZ: round3(vistaRiverCenterZ(VISTA_RADIUS)),
+    meanderAmplitude: round3(meanderAmplitude),
+  };
+}
+
+function riverVistaVertexCount(): number {
+  return vistaAxes().fullAxis.length * 5;
+}
+
+function vistaRiverCenterZ(x: number): number {
+  const side = x < 0 ? -1 : 1;
+  const outside = Math.max(0, Math.abs(x) - CLAIM_HALF);
+  const dx = x - side * CLAIM_HALF;
+  const ramp = smoothstep(0, 18, outside);
+  return ramp * (Math.sin(dx * 0.065) * 2.6 + Math.sin(dx * 0.137) * 0.8);
+}
+
+function riverFadeStart(): number {
+  return VISTA_RADIUS - 12;
+}
+
 function vistaSeamProbePoints(): Array<{ x: number; z: number }> {
   return [
     { x: -CLAIM_HALF, z: -24 },
@@ -1250,6 +1330,8 @@ function waterMaterialConfig(ford: boolean, range: FordRange = defaultFordRange(
     ford,
     riverHalfWidth,
     visualHalfWidth: visualWaterWidth() / 2,
+    lengthHalf: VISTA_RADIUS,
+    fadeStart: riverFadeStart(),
     fordHalfWidth: range.halfWidth,
     riverDepth: waterDepth('river'),
     fordDepth: waterDepth('ford'),
@@ -1391,6 +1473,10 @@ function smooth01(value: number): number {
 
 function clamp01(value: number): number {
   return THREE.MathUtils.clamp(value, 0, 1);
+}
+
+function round3(value: number): number {
+  return Math.round(value * 1000) / 1000;
 }
 
 function fract(value: number): number {

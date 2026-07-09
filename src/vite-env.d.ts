@@ -630,6 +630,19 @@ interface ThreeGameDiagnostics {
         unclamped: number;
         delta: number;
       }>;
+      river: {
+        present: boolean;
+        drawCalls: 0 | 1;
+        radius: number;
+        vertices: number;
+        visualHalfWidth: number;
+        fadeStart: number;
+        westEdgeCenterZ: number;
+        eastEdgeCenterZ: number;
+        westFarCenterZ: number;
+        eastFarCenterZ: number;
+        meanderAmplitude: number;
+      };
     };
     detailScatter?: {
       instanceClasses: number;
