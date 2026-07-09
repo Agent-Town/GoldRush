@@ -311,6 +311,22 @@ export function clearRunSuspend(storage: Storage | undefined = browserStorage())
   } catch {}
 }
 
+export function captureRunSuspendSnapshot(
+  game: unknown,
+  meta: MetaProgress,
+  wave: number,
+  at: number,
+  trigger: RunSuspendEnvelope['trigger'] = 'wave-boundary',
+): RunSuspendEnvelope {
+  return captureSnapshot(game, meta, wave, at, trigger);
+}
+
+export function restoreRunSuspendSnapshot(game: unknown, snapshot: unknown): boolean {
+  if (!isRunSuspendEnvelope(snapshot)) return false;
+  restoreSnapshot(game as AnyGame, snapshot);
+  return true;
+}
+
 export function runSuspendLabel(snapshot: RunSuspendEnvelope): string {
   return `Saved claim: wave ${snapshot.wave}. Mid-wave trail after that boundary will be replayed.`;
 }
