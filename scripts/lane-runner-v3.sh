@@ -49,7 +49,11 @@ while true; do
     log="$ROOT/tasks/runs/$stamp-$slot-$name.log"
     echo "[lane-runner-v3] $stamp START $slot :: $name (log: $log)"
     (
-      cd "$wd" && codex exec "Do the task in the file at: $run" >"$log" 2>&1
+      # s283 (owner-authorized 2026-07-10): per-master model/effort routing — masters may carry
+      # a "CODEX: model=<m> effort=<e>" line; absent = terra@medium (sol@ultra is REQUESTED, never ambient).
+      cx_model=$(grep -m1 '^CODEX:' "$run" 2>/dev/null | sed -n 's/.*model=\([^ ]*\).*/\1/p')
+      cx_effort=$(grep -m1 '^CODEX:' "$run" 2>/dev/null | sed -n 's/.*effort=\([^ ]*\).*/\1/p')
+      cd "$wd" && codex exec -m "${cx_model:-gpt-5.6-terra}" -c model_reasoning_effort="${cx_effort:-medium}" "Do the task in the file at: $run" >"$log" 2>&1
       rc=$?
       if [ $rc -eq 0 ]; then
         # s76 ROOT-CAUSE FIX: persist LANE output to its branch so gate-fires can merge a
@@ -59,7 +63,14 @@ while true; do
         # deliberately excluded. Commit-to-branch also makes janitor reset --hard survivable
         # (work becomes reflog-recoverable instead of lost) — LANE-SAFETY improvement.
         if [ "$slot" != "main" ]; then
-          ( cd "$wd" && git add -A && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
+          if [ "$wd" = "$ROOT" ]; then
+            # s283 (owner-authorized 2026-07-10): a slot resolving to repo ROOT (art, when
+            # worktrees/art is absent) must NEVER `add -A` — five sweep incidents (bfadfc2,
+            # ff46a53, ...). Scope to the surfaces art tasks legitimately write.
+            ( cd "$wd" && git add -A -- assets artifacts && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
+          else
+            ( cd "$wd" && git add -A && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
+          fi
         fi
         mv "$run" "$ROOT/tasks/done/$stamp-$name"
       else
