@@ -28,7 +28,7 @@ import {
 import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
-import { discoverLedgerEntry } from '../encyclopedia/state';
+import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
 import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
@@ -665,6 +665,7 @@ export class TownScene {
     const text = townActorBark(nearest.definition, this.townName, count);
     this.activeBarkActor = nearest;
     this.activeBark = { actorId: nearest.definition.id, speaker: nearest.definition.name, text };
+    discoverLedgerTownActor(nearest.definition.id);
     this.barkCard.innerHTML = `
       <img class="town-ui__bark-portrait" src="${escapeHtml(nearest.definition.portraitUrl)}" alt="" />
       <div class="town-ui__bark-copy">
@@ -771,6 +772,7 @@ export class TownScene {
 
   private renderBoard(): void {
     const rows = listBoardContracts();
+    for (const contract of rows) discoverLedgerContract(contract.id);
     const scores = loadScores();
     const backdropStyle = this.tavernBackdropUrl ? ` style="background-image:url('${this.tavernBackdropUrl}')"` : '';
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');

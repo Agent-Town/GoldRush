@@ -1,5 +1,5 @@
 import './reader.css';
-import { LEDGER_CATEGORIES, ledgerEntries, type LedgerEntry, type LedgerEntryId } from './registry';
+import { LEDGER_CATEGORIES, ledgerEntries, type LedgerDiscoveryId, type LedgerEntry, type LedgerEntryId } from './registry';
 import { readLedgerDiscovered } from './state';
 
 export const LEDGER_FACT_LINE_CAP = 4;
@@ -61,7 +61,7 @@ function renderLedger(selectedId?: LedgerEntryId): string {
   `;
 }
 
-function renderShelf(category: string, discovered: Set<LedgerEntryId>, selectedId?: LedgerEntryId): string {
+function renderShelf(category: string, discovered: Set<LedgerDiscoveryId>, selectedId?: LedgerEntryId): string {
   const entries = ledgerEntries.filter((entry) => entry.category === category);
   return `
     <section class="claim-ledger__shelf" data-testid="claim-ledger-shelf-${slug(category)}">
@@ -75,6 +75,7 @@ function renderShelf(category: string, discovered: Set<LedgerEntryId>, selectedI
 
 function renderCard(entry: LedgerEntry, discovered: boolean, selected: boolean): string {
   const facts = discovered ? entry.factLines().map((line) => line.trim()).filter(Boolean).slice(0, LEDGER_FACT_LINE_CAP) : [];
+  const portraitVisible = discovered && entry.portraitLocked?.() !== true;
   return `
     <article class="claim-ledger-card${discovered ? '' : ' claim-ledger-card--locked'}${selected ? ' claim-ledger-card--selected' : ''}"
       tabindex="0"
@@ -84,7 +85,7 @@ function renderCard(entry: LedgerEntry, discovered: boolean, selected: boolean):
       data-unlock-signal="${escapeHtml(entry.unlockSignal)}">
       <div class="claim-ledger-card__portrait" data-asset-slot="${escapeHtml(entry.spriteRef.slot)}">
         ${
-          discovered
+          portraitVisible
             ? `<img src="${entry.spriteRef.imageUrl}" alt="" />`
             : '<div class="claim-ledger-card__silhouette" data-testid="claim-ledger-locked-silhouette" aria-hidden="true"></div>'
         }

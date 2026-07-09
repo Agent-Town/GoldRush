@@ -1,4 +1,4 @@
-import type { LedgerEntryId } from './registry';
+import { ledgerEntryIdForDiscoveryId, type LedgerDiscoveryId, type LedgerEntryId } from './registry';
 
 type LedgerOpenHandler = (entryId?: LedgerEntryId) => void;
 
@@ -28,7 +28,8 @@ export function installLedgerBeatClick(): void {
     (event) => {
       const target = event.target instanceof Element ? event.target : null;
       const card = target?.closest<HTMLElement>('[data-beat-id^="ledger-page:"]');
-      const entryId = card?.dataset.beatId?.slice('ledger-page:'.length) as LedgerEntryId | undefined;
+      const discoveryId = card?.dataset.beatId?.slice('ledger-page:'.length) as LedgerDiscoveryId | undefined;
+      const entryId = discoveryId ? ledgerEntryIdForDiscoveryId(discoveryId) : undefined;
       if (entryId) requestOpenClaimLedger(entryId);
     },
     { capture: true },

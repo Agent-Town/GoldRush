@@ -1,5 +1,30 @@
 import * as THREE from 'three';
 
+export const HERO_INPUT_BINDINGS = {
+  moveLeft: ['KeyA', 'ArrowLeft'],
+  moveRight: ['KeyD', 'ArrowRight'],
+  moveUp: ['KeyW', 'ArrowUp'],
+  moveDown: ['KeyS', 'ArrowDown'],
+  confirm: ['Space', 'Enter', 'TouchConfirm'],
+  upgrade: ['KeyU'],
+  rotateBuild: ['KeyR', 'TouchRotate'],
+  weaponToggle: ['KeyQ', 'TouchWeaponToggle'],
+  build: ['KeyB'],
+  cancel: ['Escape'],
+  pause: ['KeyP', 'Escape'],
+  mute: ['KeyM'],
+  debugSpawn: ['KeyT'],
+  debugXp: ['KeyX'],
+} as const;
+
+export function heroLedgerControlLines(): string[] {
+  return [
+    `Move: ${labelKeys([...HERO_INPUT_BINDINGS.moveUp, ...HERO_INPUT_BINDINGS.moveLeft, ...HERO_INPUT_BINDINGS.moveDown, ...HERO_INPUT_BINDINGS.moveRight])} or touch stick`,
+    'Primary: Spark Rig auto-fires nearest threat',
+    `Ability: ${labelKeys(HERO_INPUT_BINDINGS.weaponToggle)} toggles Spark Rig / Blast Charge`,
+  ];
+}
+
 type PointerState = {
   active: boolean;
   id: number | null;
@@ -172,21 +197,22 @@ export class InputController {
 
   readIntents(): Intents {
     const down = (code: string): boolean => this.keys.has(code) || this.tapped.has(code);
+    const anyDown = (codes: readonly string[]): boolean => codes.some(down);
     this.readMovement(this.intents.move);
-    this.intents.confirm = down('Space') || down('Enter') || down('TouchConfirm');
-    const upgradeHeld = down('KeyU');
+    this.intents.confirm = anyDown(HERO_INPUT_BINDINGS.confirm);
+    const upgradeHeld = anyDown(HERO_INPUT_BINDINGS.upgrade);
     this.intents.upgrade = upgradeHeld && !this.previousUpgrade;
     this.previousUpgrade = this.keys.has('KeyU');
-    const rotateHeld = down('KeyR') || down('TouchRotate');
+    const rotateHeld = anyDown(HERO_INPUT_BINDINGS.rotateBuild);
     this.intents.rotateBuild = rotateHeld && !this.previousRotateBuild;
     this.previousRotateBuild = this.keys.has('KeyR') || this.keys.has('TouchRotate');
-    const weaponHeld = down('KeyQ') || down('TouchWeaponToggle');
+    const weaponHeld = anyDown(HERO_INPUT_BINDINGS.weaponToggle);
     this.intents.weaponToggle = weaponHeld && !this.previousWeaponToggle;
     this.previousWeaponToggle = this.keys.has('KeyQ') || this.keys.has('TouchWeaponToggle');
-    const buildHeld = down('KeyB');
+    const buildHeld = anyDown(HERO_INPUT_BINDINGS.build);
     this.intents.build = buildHeld && !this.previousBuild;
     this.previousBuild = this.keys.has('KeyB');
-    this.intents.cancel = down('Escape');
+    this.intents.cancel = anyDown(HERO_INPUT_BINDINGS.cancel);
     this.intents.buildSlot =
       down('Digit1') || down('Numpad1')
         ? 0
@@ -202,12 +228,12 @@ export class InputController {
                   ? 5
                   : null;
     this.intents.restart = down('KeyR');
-    this.intents.pause = down('KeyP') || down('Escape');
-    const muteHeld = down('KeyM');
+    this.intents.pause = anyDown(HERO_INPUT_BINDINGS.pause);
+    const muteHeld = anyDown(HERO_INPUT_BINDINGS.mute);
     this.intents.mute = muteHeld && !this.previousMute;
     this.previousMute = this.keys.has('KeyM');
-    this.intents.debugSpawn = down('KeyT');
-    const debugXpHeld = down('KeyX');
+    this.intents.debugSpawn = anyDown(HERO_INPUT_BINDINGS.debugSpawn);
+    const debugXpHeld = anyDown(HERO_INPUT_BINDINGS.debugXp);
     this.intents.debugXp = debugXpHeld && !this.previousDebugXp;
     this.previousDebugXp = this.keys.has('KeyX');
     this.tapped.clear();
@@ -216,10 +242,10 @@ export class InputController {
 
   readMovement(target: THREE.Vector2): THREE.Vector2 {
     this.keyVector.set(0, 0);
-    if (this.keys.has('KeyA') || this.keys.has('ArrowLeft')) this.keyVector.x -= 1;
-    if (this.keys.has('KeyD') || this.keys.has('ArrowRight')) this.keyVector.x += 1;
-    if (this.keys.has('KeyW') || this.keys.has('ArrowUp')) this.keyVector.y -= 1;
-    if (this.keys.has('KeyS') || this.keys.has('ArrowDown')) this.keyVector.y += 1;
+    if (HERO_INPUT_BINDINGS.moveLeft.some((code) => this.keys.has(code))) this.keyVector.x -= 1;
+    if (HERO_INPUT_BINDINGS.moveRight.some((code) => this.keys.has(code))) this.keyVector.x += 1;
+    if (HERO_INPUT_BINDINGS.moveUp.some((code) => this.keys.has(code))) this.keyVector.y -= 1;
+    if (HERO_INPUT_BINDINGS.moveDown.some((code) => this.keys.has(code))) this.keyVector.y += 1;
 
     target.copy(this.keyVector).add(this.pointer);
     if (target.lengthSq() > 1) target.normalize();
@@ -261,4 +287,17 @@ export class InputController {
     const distance = 38;
     this.knob.style.transform = `translate(calc(-50% + ${this.pointer.x * distance}px), calc(-50% + ${this.pointer.y * distance}px))`;
   }
+}
+
+function labelKeys(codes: readonly string[]): string {
+  return codes.map(labelKey).join(' / ');
+}
+
+function labelKey(code: string): string {
+  if (code === 'TouchWeaponToggle') return 'touch Q';
+  if (code === 'TouchRotate') return 'touch R';
+  if (code === 'TouchConfirm') return 'touch confirm';
+  if (code.startsWith('Key')) return code.slice(3);
+  if (code.startsWith('Arrow')) return code.slice(5);
+  return code;
 }

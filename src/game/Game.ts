@@ -55,8 +55,8 @@ import {
   type MegaprojectStorage,
 } from '../meta/Megaproject';
 import { emitStorySignal } from '../story/signals';
-import { discoverLedgerBuildable, discoverLedgerEntry } from '../encyclopedia/state';
-import type { LedgerEntryId } from '../encyclopedia/registry';
+import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revealLedgerEnemyStats } from '../encyclopedia/state';
+import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
 import { install as installRunManager, type RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
@@ -215,6 +215,9 @@ export class Game {
   private readonly mpRemoteBodyGeometry = new THREE.CylinderGeometry(0.28, 0.34, 0.78, 12);
   private readonly mpRemoteHatGeometry = new THREE.ConeGeometry(0.36, 0.22, 12);
   private readonly enemies = new EnemyPool(this.camera);
+  private readonly enemyLedgerKinds = new Map<number, EnemyLedgerEntryId>();
+  private readonly enemyLedgerEntriesSeenThisRun = new Set<EnemyLedgerEntryId>();
+  private readonly enemyLedgerStatsSeenThisRun = new Set<EnemyLedgerEntryId>();
   private readonly projectiles = new ProjectilePool();
   private readonly blastCharges = new BlastChargePool();
   private readonly xpMotes = new XpMotePool();
@@ -769,7 +772,9 @@ export class Game {
     });
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
-      if (!event.eliteKind && !event.variantId && !event.bossGroupId) discoverLedgerEntry('claim_jumper');
+      const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
+      this.discoverLedgerEnemyEntry(entryId);
+      this.revealLedgerEnemyStats(entryId);
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
       }
@@ -1260,6 +1265,7 @@ export class Game {
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
       );
+      this.discoverVisibleLedgerEnemies();
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
         this.timeAlive,
@@ -1289,6 +1295,27 @@ export class Game {
     }
     this.updatePresentation(delta);
     this.finishMultiplayerTick();
+  }
+
+  private discoverVisibleLedgerEnemies(): void {
+    for (const enemy of this.enemies.all) {
+      if (!enemy.isAlive) continue;
+      const entryId = ledgerEnemyEntryId(enemy);
+      this.enemyLedgerKinds.set(enemy.id, entryId);
+      this.discoverLedgerEnemyEntry(entryId);
+    }
+  }
+
+  private discoverLedgerEnemyEntry(entryId: EnemyLedgerEntryId): void {
+    if (this.enemyLedgerEntriesSeenThisRun.has(entryId)) return;
+    this.enemyLedgerEntriesSeenThisRun.add(entryId);
+    discoverLedgerEntry(entryId);
+  }
+
+  private revealLedgerEnemyStats(entryId: EnemyLedgerEntryId): void {
+    if (this.enemyLedgerStatsSeenThisRun.has(entryId)) return;
+    this.enemyLedgerStatsSeenThisRun.add(entryId);
+    revealLedgerEnemyStats(entryId);
   }
 
   private updatePresentation(delta: number): void {
