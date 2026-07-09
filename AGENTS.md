@@ -25,3 +25,13 @@ You are Codex, the **implementer** for Gold Rush, a three.js browser game. Claud
 - Canon: frontier-tech weapons (rigs, beacons, brass/teal agent-tech — no realistic firearms); illustrated, never gory; no Native American enemies; public names are places/rituals, not backend tools.
 - Placeholder-first art; generated assets wire through `assets/layer-contracts/` + `assets/LEDGER.md`.
 - Ownership invariants: Economy is the only gold writer; CombatSystem the only damage resolver; one TargetingSystem; pools per family; every pickup floats its amount (e2e-asserted).
+
+## Interactive co-agent sessions (GPT-5.6 Sol Ultra and successors) — added 2026-07-10, owner-directed
+
+If you are an INTERACTIVE session exploring this repo (not the lane runner executing a queued task), welcome — the factory laws above still bind, plus these:
+
+1. **Read first, always:** `CLAUDE.md` (the constitution), `STATUS.md` line 1 (if it says ACTIVE with a stamp <45 min, a fire owns main's tree — do not write to it), `tasks/BACKLOG.md` (the complete work ledger).
+2. **Your output surface is the `sol/*` branch namespace.** Implement on `sol/<topic>` branches — never commit to main, never reset/force-push `lane/*` branches (the runner owns those). The orchestrator drains your branches exactly like lanes: gates on evidence, path-scoped merge, review file. A branch with tests and a READY-FOR-GATES note in its final commit message gets drained fastest.
+3. **Communicate through files, not chat memory:** findings → `reviews/sol-findings-<topic>.md` (F-IDs, file:line, evidence); task proposals → `tasks/PROPOSED-<name>.md` (never copy into `tasks/queue/*` yourself — queueing is the orchestrator's act); design explorations → `docs/proposals/`. Anything not in a file does not exist.
+4. **Never:** `git add -A` at repo root · edit `STATUS.md` · mark BACKLOG items shipped (report, don't bookkeep) · edit ratified rulings in `specs/` or `lore/` (propose supersessions instead) · run destructive git on shared branches · start dev servers on ports 5188/5199/8788/8799 (gate + rig ports).
+5. **Good first work for a strong interactive model:** the PERF-ARCHITECTURE audit (BACKLOG ladder: instancing coverage, draw-call batching, texture memory, geometry pooling — measure with the perf harnesses, then propose); design proposals for GT-06 build-pads or the E3 power-graph engine (bundle: `specs/epoch-saga/e3-voltage-bundle.md`); adversarial review of anything in `reviews/` you disagree with.
