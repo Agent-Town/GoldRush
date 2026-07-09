@@ -13,7 +13,7 @@ import {
   type ResearchState,
 } from '../meta/ResearchTree';
 
-type ResearchIconKey =
+export type ResearchIconKey =
   | 'ui.upgrade.icon.panning'
   | 'ui.upgrade.icon.prospecting'
   | 'ui.upgrade.icon.beacon'
@@ -29,7 +29,7 @@ type ResearchIconKey =
   | 'char.prospector_agent.portrait'
   | 'node.gold_seam';
 
-const RESEARCH_ICON_REGISTRY: Record<ResearchIconKey, { url: string; label: string }> = {
+export const RESEARCH_ICON_REGISTRY: Record<ResearchIconKey, { url: string; label: string }> = {
   'ui.upgrade.icon.panning': { url: new URL('../../assets/processed/icon-panning.png', import.meta.url).href, label: 'gold pan' },
   'ui.upgrade.icon.prospecting': {
     url: new URL('../../assets/processed/icon-prospecting.png', import.meta.url).href,
@@ -63,8 +63,8 @@ export const RESEARCH_NODE_ICON_KEYS: Record<string, ResearchIconKey> = {
   mother_lode_survey: 'node.gold_seam',
   sluice_accounting: 'bld.sluice_works',
   claim_map_table: 'ui.upgrade.icon.panning',
-  pact_ledger: 'ui.upgrade.icon.gold',
-  chain_spark_primer: 'ui.upgrade.icon.firerate',
+  pact_ledger: 'ui.upgrade.icon.prospecting',
+  chain_spark_primer: 'ui.upgrade.icon.volley',
   beacon_cadence: 'ui.upgrade.icon.beacon',
   brass_coil_standards: 'bld.sentry_beacon',
   powder_math: 'ui.upgrade.icon.blast',
@@ -73,8 +73,75 @@ export const RESEARCH_NODE_ICON_KEYS: Record<string, ResearchIconKey> = {
   second_order_slot: 'ui.upgrade.icon.mend',
   refined_assay: 'ui.upgrade.icon.prospecting',
   pattern_library: 'ui.upgrade.icon.range',
-  agent_schooling: 'char.prospector_agent.portrait',
+  agent_schooling: 'ui.upgrade.icon.beacon',
   prospector_lessons: 'char.prospector_agent.portrait',
+};
+
+export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: string }> = {
+  assay_grading: {
+    name: 'Assay Grading',
+    line: 'Seam cards add stockpile room and carry more offer weight.',
+  },
+  mother_lode_survey: {
+    name: 'Mother Lode Survey',
+    line: 'Long claims start building toward better seam returns.',
+  },
+  sluice_accounting: {
+    name: 'Sluice Accounting',
+    line: 'Sluice card families move one economy step closer.',
+  },
+  claim_map_table: {
+    name: 'Claim Map Table',
+    line: 'Map picks start remembering better seams.',
+  },
+  pact_ledger: {
+    name: 'Rich Seam Pact',
+    line: 'Seams can pay +18 gold, with a slower panning rhythm.',
+  },
+  chain_spark_primer: {
+    name: 'Chain Spark Arc',
+    line: 'Your rigs and beacons fire 12% faster.',
+  },
+  beacon_cadence: {
+    name: 'Beacon Handoff',
+    line: 'Beacons fire 18% faster and rigs fire 6% faster.',
+  },
+  brass_coil_standards: {
+    name: 'Brass Coil Standards',
+    line: 'Arsenal mastery moves toward wider spark pressure rings.',
+  },
+  powder_math: {
+    name: 'Powder Math',
+    line: 'Blast mastery moves toward the Frontier radius cap.',
+  },
+  sky_rocket_battery: {
+    name: 'Sky-Rocket Battery',
+    line: 'The Steamworks arsenal gains a three-rocket festival battery.',
+  },
+  rush_pattern: {
+    name: 'Rush Pattern',
+    line: 'Rare rush offers move closer for the wave-30 wall.',
+  },
+  second_order_slot: {
+    name: 'Second Order Slot',
+    line: 'The Assay bench can hold 2 pending orders.',
+  },
+  refined_assay: {
+    name: 'Tier 2 Orders',
+    line: 'New orders carry the 20% higher assay ceiling.',
+  },
+  pattern_library: {
+    name: 'Pattern Library',
+    line: 'Approved inventions can enter run offers, capped at 2 per offer.',
+  },
+  agent_schooling: {
+    name: 'Agent Schooling',
+    line: 'Late-run offers can add 1 Prospector policy slot for that run.',
+  },
+  prospector_lessons: {
+    name: 'Prospector Lessons',
+    line: 'A future permanent Prospector policy slot is marked in the ledger.',
+  },
 };
 
 const BRANCHES: Array<{ id: ResearchBranch; label: string }> = [
@@ -148,7 +215,7 @@ function renderNode(
   const pinned = state.pinnedTarget === node.id;
   const onPinnedPath = pinnedPath.has(node.id);
   const requires = node.requires?.map((id) => researchNodeById[id]?.name ?? id).join(', ');
-  const iconKey = RESEARCH_NODE_ICON_KEYS[node.id] ?? BRANCH_ICON_KEYS[node.branch];
+  const iconKey = researchIconKeyForNode(node);
   return `
     <button
       class="research-chart__node"
@@ -175,6 +242,14 @@ function renderNode(
       ${pinned ? '<b class="research-chart__pin" data-testid="research-chart-pin-mark">survey pin</b>' : ''}
     </button>
   `;
+}
+
+export function researchIconKeyForNode(node: Pick<ResearchNode, 'id' | 'branch'>): ResearchIconKey {
+  return RESEARCH_NODE_ICON_KEYS[node.id] ?? BRANCH_ICON_KEYS[node.branch];
+}
+
+export function researchRevealForNode(node: ResearchNode): { name: string; line: string } {
+  return RESEARCH_UNLOCK_REVEALS[node.id] ?? { name: node.name, line: node.effect };
 }
 
 function renderSelection(state: ResearchState, selected?: ResearchNode): string {

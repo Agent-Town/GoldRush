@@ -1,5 +1,6 @@
 import type { ResearchNode } from '../meta/ResearchTree';
 import { upgradeDefById } from '../game/Upgrades';
+import { RESEARCH_ICON_REGISTRY, researchIconKeyForNode, researchRevealForNode } from './ResearchChart';
 
 export type DeathLedger = {
   timeAlive: number;
@@ -234,7 +235,9 @@ export class DeathOverlay {
     const proposals = research.proposals.slice(0, 2);
     const done = research.roundsRemaining <= 0 || proposals.length === 0;
     const receipt = this.lastPicked
-      ? `<p data-testid="research-receipt">The Elder logs it: ${this.escape(this.lastPicked.effect)}</p>`
+      ? `<p data-testid="research-receipt">The Elder logs it: ${this.escape(this.lastPicked.effect)}</p>${this.renderResearchReveal(
+          this.lastPicked,
+        )}`
       : '';
     if (done) {
       return `
@@ -277,6 +280,24 @@ export class DeathOverlay {
         </div>
         <p class="research-ledger__skip">Skip banks nothing.</p>
       </section>
+    `;
+  }
+
+  private renderResearchReveal(node: ResearchNode): string {
+    const iconKey = researchIconKeyForNode(node);
+    const icon = RESEARCH_ICON_REGISTRY[iconKey];
+    const reveal = researchRevealForNode(node);
+    return `
+      <article class="research-unlock-reveal" data-testid="research-unlock-reveal" data-research-icon-key="${this.escape(iconKey)}">
+        <span class="research-unlock-reveal__icon" data-testid="research-unlock-icon" aria-label="${this.escape(
+          icon.label,
+        )}" role="img" style="background-image:url('${this.escape(icon.url)}')"></span>
+        <span class="research-unlock-reveal__copy">
+          <span class="research-unlock-reveal__kicker">Surveyed unlock</span>
+          <strong data-testid="research-unlock-name">${this.escape(reveal.name)}</strong>
+          <span data-testid="research-unlock-line">${this.escape(reveal.line)}</span>
+        </span>
+      </article>
     `;
   }
 

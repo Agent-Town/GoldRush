@@ -3,7 +3,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
-import { RESEARCH_NODE_ICON_KEYS } from '../src/ui/ResearchChart';
+import { RESEARCH_NODE_ICON_KEYS, researchIconKeyForNode, researchRevealForNode } from '../src/ui/ResearchChart';
 
 const SHOT_DIR = 'artifacts/060';
 const SEEDED_TAKEN = ['assay_grading', 'mother_lode_survey', 'chain_spark_primer'];
@@ -101,6 +101,20 @@ function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.pageErrors).toEqual([]);
 }
 
+test('live unlock nodes use the same icon key and reveal copy as their run cards', () => {
+  const chainSpark = RESEARCH_NODES.find((node) => node.id === 'chain_spark_primer');
+  const pact = RESEARCH_NODES.find((node) => node.id === 'pact_ledger');
+  expect(chainSpark).toBeTruthy();
+  expect(pact).toBeTruthy();
+  expect(researchIconKeyForNode(chainSpark!)).toBe('ui.upgrade.icon.volley');
+  expect(researchRevealForNode(chainSpark!)).toEqual({
+    name: 'Chain Spark Arc',
+    line: 'Your rigs and beacons fire 12% faster.',
+  });
+  expect(researchIconKeyForNode(pact!)).toBe('ui.upgrade.icon.prospecting');
+  expect(researchRevealForNode(pact!).name).toBe('Rich Seam Pact');
+});
+
 test('survey chart renders node states, traces locked requirements, and persists one pin', async ({ page }, testInfo) => {
   await seedResearch(page, SEEDED_TAKEN);
   const errors = collectErrors(page);
@@ -166,7 +180,7 @@ test('survey chart renders node states, traces locked requirements, and persists
   assertNoErrors(errors);
 });
 
-test('pinned path marks post-run proposals without auto-picking', async ({ page }) => {
+test('pinned path marks post-run proposals without auto-picking', async ({ page }, testInfo) => {
   await seedResearch(page, SEEDED_TAKEN, { pinnedTarget: 'claim_map_table', proposalSalt: 0 });
   const errors = collectErrors(page);
   await page.goto('/?debug&nowaves&nolevel&seed=research-chart-pin');
@@ -176,6 +190,17 @@ test('pinned path marks post-run proposals without auto-picking', async ({ page 
   await expect(page.getByTestId('death-overlay')).toBeVisible();
   await expect(page.locator('[data-testid^="research-pin-hint-"]').first()).toHaveText('on your surveyed route');
   await expect(page.locator('[data-research-id="sluice_accounting"]')).toBeVisible();
+  const pick = page.locator('[data-research-id]').first();
+  const pickedId = await pick.getAttribute('data-research-id');
+  expect(pickedId).toBeTruthy();
+  const iconKey = RESEARCH_NODE_ICON_KEYS[pickedId!];
+  expect(iconKey).toBeTruthy();
+  await pick.click();
+  await expect(page.getByTestId('research-unlock-reveal')).toBeVisible();
+  await expect(page.getByTestId('research-unlock-reveal')).toHaveAttribute('data-research-icon-key', iconKey!);
+  await expect(page.getByTestId('research-unlock-name')).not.toHaveText('');
+  await expect(page.getByTestId('research-unlock-line')).not.toHaveText('');
+  await shot(page, testInfo, 'unlock-reveal');
   assertNoErrors(errors);
 });
 
