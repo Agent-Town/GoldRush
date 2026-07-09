@@ -20,3 +20,6 @@ Codes: hashed at rest, 10-min TTL, 5 attempts then cooldown, constant-time compa
 
 ## Explicitly OUT (v1)
 Passwords · OAuth/social · real-time sync · shared/multiplayer state · public-scale abuse hardening beyond the rate limits (revisit at the PUBLIC gate) · account merging.
+
+## TELEMETRY — anonymous run-stats (owner order 2026-07-09: 'do we keep information about the runs? Could give us information for optimizations. Of course anonymous, not attached to the user.')
+**TL-01 (fire-authorable):** per-run stat beacon on run END only: {contract, waves, duration, upgradesTaken, tier(FULL/BALANCED/LITE), frameP95, deviceClass, buildHash} → POST to a functions/ route → KV aggregate. LAWS: NO identifiers (no profile/email/wallet/IP-storage; a per-install random nonce rotated monthly, used only for dedup); kids indistinguishable from adults by design; a Settings toggle ('Share anonymous run stats') default ON with plain-words disclosure in the panel + the Claim Ledger encyclopedia; the landing page's no-tracking promise updated honestly ('anonymous gameplay statistics, no personal data, opt-out in Settings'). USES: balance evidence at population scale (047-class decisions from real runs) + perf targeting (which tier/device suffers where). Never sold, never shared, never joined to accounts.
