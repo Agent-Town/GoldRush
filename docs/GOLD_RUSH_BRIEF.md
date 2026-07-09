@@ -295,3 +295,6 @@ For **in-game AI crafting**, the analogous discipline: every generated item pass
 ---
 
 *Prepared for the Gold Rush implementation team. When this brief and the cited files disagree, the files win — and `docs/design/agent-town-design-pack/` is marked canonical.*
+
+
+## HERO CANON (owner ruling 2026-07-09, after a generation drifted male): THE HERO IS FEMALE — a young woman (the miner, the claim-holder; NEVER call her 'prospector' in prompts — THE PROSPECTOR IS THE AGENT, owner ruling same day) (hat, work coat, satchel — per char-hero-sheet processed sprites). EVERY character generation (image or video) names her explicitly: "a young female prospector". A canonical plate kit-the-hero.png joins the continuity kit (conditioned on the in-game sprite). Generic "prospector" prompting is banned — models default male and invent strangers.
