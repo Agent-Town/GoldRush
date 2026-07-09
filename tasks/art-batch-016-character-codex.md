@@ -8,6 +8,8 @@ E1-AGE (the present canon, conditioned on processed sprites):
 AGED VARIANTS (the saga spans generations — each conditions on its E1 plate; SAME face, older):
 8. codex-hero-e4 (mid-life: weathered, silver streaks, the same eyes) · 9. codex-hero-e8 (elder stateswoman of the town) · 10. codex-elder-e2 (the Elder's last era — frailer, brighter-eyed) · 11. codex-youngsters-e4 (grown: the next generation's leads) · 12. codex-prospector-e8 (patinaed brass, medals of a century's service, SAME silhouette — agents age in dignity, not decay)
 
+## ERA OUTFITS ADDENDUM (owner 2026-07-09: hero + agent in different outfits per epoch — nail these down hard): 13. codex-hero-e2-outfit (steam-era workwear: leather apron, brass goggles up on the hat — SAME face/build as e1) · 14. codex-prospector-e2-outfit (riveted boiler-plate wrap, same silhouette) · further era outfits ride later batches conditioned on these. Identity-chain QA applies.
+
 ## QA per plate (run file codex-art-run-013)
 Identity chain: each aged plate side-by-side vs its E1 anchor — "same person, older" stated honestly (fail → retake ≤2) · sprite fidelity for E1 plates vs processed art · no letters · palette band · the hero never masculinized (the drift that birthed this codex).
 LEDGER rows (codex section). NO processing, NO src/. End: READY-FOR-GATES + the identity-chain table.
