@@ -211,7 +211,7 @@ export class CombatVfx {
       this.tickActive[i] = true;
       this.tickAge[i] = 0;
       this.tickScale[i] = Math.max(1, scale);
-      this.tickPos[i]?.set(position.x, 0.95, position.z);
+      this.tickPos[i]?.set(position.x, Terrain.visualY(position.x, position.z, 0.95), position.z);
       this.syncTick(i);
       this.ticks.instanceMatrix.needsUpdate = true;
       return;

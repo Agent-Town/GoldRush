@@ -993,6 +993,16 @@ interface Window {
     spawnXpMote: (x: number, z: number, value: number) => boolean;
     goldPickups: () => Array<{ active: boolean; amount: number; position: { x: number; z: number } }>;
     placeBeacon: () => boolean;
+    projectileVisuals: () => Array<{
+      ownerId: string;
+      targetId: number;
+      x: number;
+      y: number;
+      z: number;
+      startY: number;
+      endY: number;
+      progress: number;
+    }>;
     state: () => {
       enemiesAlive: number;
       xp: number;
