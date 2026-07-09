@@ -1,0 +1,6 @@
+# Task sprite-production-03: THE CLAIM JUMPER — walk videos → walk8 sheet (ART slot; SIBLING of 01-hero, recipe PROVEN by its 2026-07-09 run)
+Follow `tasks/art-sprite-production-01-hero.md` EXACTLY (READ FIRST list, tools, `/tmp` imageio-ffmpeg workaround, 280×340 bottom-aligned cells, 4×8 `#ff00ff` grid, NO mirrors, QA + credit-log discipline) with these substitutions:
+1. **Character**: the Claim Jumper (outlaw rustler enemy). Identity anchors: `assets/raw/enemy-claim-jumper.png` + `assets/processed-full/char-jumper-sheet-walk4-a-r*c0.png`.
+2. **⚡ EXTRACT-FIRST: all four take-1 videos ARE ON DISK** at `assets/motion-pilot/production-jumper/videos/jumper-{down,left,right,up}-take1.mp4` (registry `JOBS.md` beside them). Contact-sheet + QA them FIRST; fresh generations ONLY for failing directions (≤2 per direction; the 01 run's 126-cr regeneration mistake — don't repeat).
+3. **Output**: `assets/raw/char-jumper-sheet-walk8.png` (rows down/left/right/up × 8). Evidence → `assets/motion-pilot/production-jumper/`. LEDGER rows + run note.
+Firewall: those paths + LEDGER ONLY — NO src/, NO other characters, NO dependency install. End: READY-FOR-GATES + grid + per-direction verdicts + credit log.

@@ -1,0 +1,6 @@
+# Task sprite-production-04: THE BARON — walk videos → walk8 sheet (ART slot; SIBLING of 01-hero, recipe PROVEN by its 2026-07-09 run)
+Follow `tasks/art-sprite-production-01-hero.md` EXACTLY (READ FIRST list, tools, `/tmp` imageio-ffmpeg workaround, bottom-aligned cells, 4×8 `#ff00ff` grid, NO mirrors, QA + credit-log discipline) with these substitutions:
+1. **Character**: the Baron — enormous outlaw, oxblood greatcoat, waxed mustache, warm never grim. Identity anchors: `assets/raw/kit-the-baron.png` + `assets/raw/turn-baron-coat.png` + `assets/processed-full/char-baron-sheet-walk4-a-r*c0.png`. NOTE his larger scale: verify the cell canvas against the baron band (walk4 used a taller band — match it; do NOT shrink him to 280×340 if his band is bigger).
+2. **⚡ EXTRACT-FIRST: all four take-1 videos ARE ON DISK** at `assets/motion-pilot/production-baron/videos/baron-{down,left,right,up}-take1.mp4` (registry `JOBS.md` beside them). Contact-sheet + QA them FIRST; fresh generations ONLY for failing directions (≤2 per direction).
+3. **Output**: `assets/raw/char-baron-sheet-walk8.png` (rows down/left/right/up × 8). Evidence → `assets/motion-pilot/production-baron/`. LEDGER rows + run note.
+Firewall: those paths + LEDGER ONLY — NO src/, NO other characters, NO dependency install. End: READY-FOR-GATES + grid + per-direction verdicts + credit log.

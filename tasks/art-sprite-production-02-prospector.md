@@ -4,7 +4,7 @@
 ## Substitutions
 1. **Character**: the Prospector — small round brass automaton, riveted plates, glowing teal core, hover-jet, NO legs (it floats). Identity anchors: `assets/raw/turn-prospector.png` + `assets/processed-full/char-prospector-sheet-hover4-a-r*c0.png` (all four VERIFIED present). Canon: the agent is THE PROSPECTOR; the hero is never called that.
 2. **Motion**: hover-bob cycle, not a gait — QA gates on a clean rhythmic vertical bob + jet flicker, LOCKED ALTITUDE BAND (the footline law's hover twin: bbox center stability, report the metric).
-3. **⚡ TAKE-1 PARTIALLY CREATED (attended, 2026-07-09 — do NOT regenerate):** down `475075a8-33d4-4936-95a3-b5d0a2c5c289`; left/right/up were rate-limit-queued by the attended feeder — CHECK `assets/motion-pilot/production-prospector/JOBS.md` for their IDs before creating anything; fetch existing results with `higgsfield generate wait <id>`. New generations ONLY as ≤1 retake per failing direction.
+3. **⚡ EXTRACT-FIRST — all four take-1 VIDEOS ARE ALREADY ON DISK at `assets/motion-pilot/production-prospector/videos/prospector-{down,left,right,up}-take1.mp4` (attended wave, 2026-07-09; registry `JOBS.md` beside them).** Contact-sheet + QA these FIRST; generate a fresh take ONLY for a direction that fails QA (≤2 new takes per failing direction). The 01-hero run burned 126 cr regenerating available takes — do not repeat that.
 4. **Output**: 4 directions × 8 frames on `#ff00ff`, 4×8 grid → `assets/raw/char-prospector-sheet-hover8.png` (rows down/left/right/up). NO mirrors. Videos/frames/contact-sheets → `assets/motion-pilot/production-prospector/`.
 5. **LEDGER** rows (hover8 PENDING-PROCESSING) + per-gen credit log + run note.
 
