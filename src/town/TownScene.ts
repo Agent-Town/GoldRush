@@ -38,6 +38,20 @@ import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition
 
 const loadTavernBackdropUrl = () =>
   import('../../assets/processed/tavern-interior-backdrop.png?url').then((module) => module.default);
+const contractArtUrls = {
+  river: new URL('../../assets/processed/terrain-river-tile.png', import.meta.url).href,
+  dampBank: new URL('../../assets/processed/terrain-bank-tile-c.png', import.meta.url).href,
+  baron: new URL('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png', import.meta.url).href,
+  banner: new URL('../../assets/processed/prop-baron-banner.png', import.meta.url).href,
+} as const;
+const contractArtRegistry: Record<string, { key: string; imageUrl?: string; insetUrl?: string }> = {
+  [DEFAULT_CONTRACT_ID]: { key: 'river-tile', imageUrl: contractArtUrls.river },
+  'e1-dry-gulch': { key: 'mesa' },
+  'e1-night-shift': { key: 'dusk-lantern' },
+  'e1-twin-banks': { key: 'braided-river', imageUrl: contractArtUrls.river, insetUrl: contractArtUrls.dampBank },
+  'e1-baron': { key: 'kit-the-baron', imageUrl: contractArtUrls.baron, insetUrl: contractArtUrls.banner },
+  'e2-hill-mine': { key: 'steam-terraces' },
+};
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 0);
@@ -98,6 +112,7 @@ export type TownDiagnostics = {
 
 type TownSceneOptions = {
   openBoard?: boolean;
+  initialBoardContractId?: string;
   returnResult?: 'secured' | 'overrun';
   onLaunchContract?: (id: string) => void;
 };
@@ -165,12 +180,15 @@ export class TownScene {
   private tavernBackdropRequest: Promise<string> | undefined;
   private stampMillPlaqueText = '';
   private returnBeatEmitted = false;
+  private boardPageIndex = 0;
+  private boardSwipeStartX: number | null = null;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
     private readonly onExit: () => void,
     private readonly options: TownSceneOptions = {},
   ) {
+    this.boardPageIndex = boardPageIndexForContract(options.initialBoardContractId);
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = 1.02;
     this.input = new InputController(this.getElement('#touch-stick'), this.getElement('#touch-knob'), this.getElement('#confirm-button'));
@@ -193,6 +211,10 @@ export class TownScene {
     window.clearTimeout(this.nameBeatTimer);
     this.prompt.removeEventListener('click', this.onPromptClick);
     this.board.removeEventListener('click', this.onBoardClick);
+    this.board.removeEventListener('keydown', this.onBoardKeyDown);
+    this.board.removeEventListener('pointerdown', this.onBoardPointerDown);
+    this.board.removeEventListener('pointerup', this.onBoardPointerUp);
+    this.board.removeEventListener('pointercancel', this.onBoardPointerCancel);
     this.schoolhouse.removeEventListener('click', this.onSchoolhouseClick);
     this.schoolhouse.removeEventListener('keydown', this.onSchoolhouseKeyDown);
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
@@ -458,6 +480,10 @@ export class TownScene {
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
     this.board.addEventListener('click', this.onBoardClick);
+    this.board.addEventListener('keydown', this.onBoardKeyDown);
+    this.board.addEventListener('pointerdown', this.onBoardPointerDown);
+    this.board.addEventListener('pointerup', this.onBoardPointerUp);
+    this.board.addEventListener('pointercancel', this.onBoardPointerCancel);
     this.schoolhouse.addEventListener('click', this.onSchoolhouseClick);
     this.schoolhouse.addEventListener('keydown', this.onSchoolhouseKeyDown);
     this.nameCard.addEventListener('submit', this.onNameSubmit);
@@ -489,6 +515,16 @@ export class TownScene {
       this.closeBoard();
       return;
     }
+    const pageButton = target?.closest<HTMLButtonElement>('[data-contract-page]');
+    if (pageButton?.dataset.contractPage) {
+      this.selectBoardPage(Number.parseInt(pageButton.dataset.contractPage, 10));
+      return;
+    }
+    const pageStep = target?.closest<HTMLButtonElement>('[data-contract-page-step]');
+    if (pageStep?.dataset.contractPageStep) {
+      this.selectBoardPage(this.boardPageIndex + Number.parseInt(pageStep.dataset.contractPageStep, 10));
+      return;
+    }
     const launch = target?.closest<HTMLButtonElement>('[data-contract-launch]');
     const id = launch?.dataset.contractLaunch;
     if (id && !launch.disabled) {
@@ -496,6 +532,30 @@ export class TownScene {
       clearRunSuspend();
       this.options.onLaunchContract?.(id);
     }
+  };
+
+  private readonly onBoardKeyDown = (event: KeyboardEvent) => {
+    if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.selectBoardPage(this.boardPageIndex + (event.key === 'ArrowRight' ? 1 : -1));
+  };
+
+  private readonly onBoardPointerDown = (event: PointerEvent) => {
+    if (!this.boardOpen || event.pointerType === 'mouse' || event.button !== 0) return;
+    this.boardSwipeStartX = event.clientX;
+  };
+
+  private readonly onBoardPointerUp = (event: PointerEvent) => {
+    if (this.boardSwipeStartX === null) return;
+    const delta = event.clientX - this.boardSwipeStartX;
+    this.boardSwipeStartX = null;
+    if (Math.abs(delta) < 52) return;
+    this.selectBoardPage(this.boardPageIndex + (delta < 0 ? 1 : -1));
+  };
+
+  private readonly onBoardPointerCancel = () => {
+    this.boardSwipeStartX = null;
   };
 
   private readonly onSchoolhouseClick = (event: Event) => {
@@ -774,6 +834,9 @@ export class TownScene {
     const rows = listBoardContracts();
     for (const contract of rows) discoverLedgerContract(contract.id);
     const scores = loadScores();
+    const pageIndex = clampBoardPage(this.boardPageIndex, rows.length);
+    this.boardPageIndex = pageIndex;
+    const contract = rows[pageIndex];
     const backdropStyle = this.tavernBackdropUrl ? ` style="background-image:url('${this.tavernBackdropUrl}')"` : '';
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
     this.board.innerHTML = `
@@ -791,10 +854,89 @@ export class TownScene {
           </div>
           <button class="town-ui__board-close" type="button" data-contract-close data-testid="contract-board-close">Back</button>
         </header>
-        <div class="town-ui__contracts" data-testid="contract-card-list">
-          ${rows.map((contract) => this.renderContractCard(contract, scores)).join('')}
+        <div class="town-ui__contracts" data-testid="contract-card-list" data-contract-page-index="${pageIndex}">
+          <button class="town-ui__catalog-arrow town-ui__catalog-arrow--prev" type="button" data-contract-page-step="-1" data-testid="contract-page-prev" aria-label="Previous contract" ${
+            pageIndex === 0 ? 'disabled' : ''
+          }>&lsaquo;</button>
+          ${contract ? this.renderContractCard(contract, scores, pageIndex, rows.length) : ''}
+          <button class="town-ui__catalog-arrow town-ui__catalog-arrow--next" type="button" data-contract-page-step="1" data-testid="contract-page-next" aria-label="Next contract" ${
+            pageIndex >= rows.length - 1 ? 'disabled' : ''
+          }>&rsaquo;</button>
         </div>
+        <nav class="town-ui__catalog-nav" data-testid="contract-page-nav" aria-label="Contract pages">
+          <span class="town-ui__catalog-count" data-testid="contract-page-count">${pageIndex + 1} / ${rows.length}</span>
+          <div class="town-ui__catalog-dots">
+            ${rows
+              .map(
+                (row, index) => `
+                  <button class="town-ui__catalog-dot" type="button" data-contract-page="${index}" data-testid="contract-page-dot-${escapeHtml(
+                    row.id,
+                  )}" aria-label="${escapeHtml(`Open ${row.boardRow.name}`)}" aria-current="${index === pageIndex ? 'page' : 'false'}"></button>
+                `,
+              )
+              .join('')}
+          </div>
+        </nav>
       </div>
+    `;
+  }
+
+  private selectBoardPage(index: number): void {
+    this.boardPageIndex = clampBoardPage(index, listBoardContracts().length);
+    this.renderBoard();
+    this.board.querySelector<HTMLElement>('.town-ui__contract')?.focus({ preventScroll: true });
+  }
+
+  private renderContractCard(contract: ContractManifest, scores: readonly ScoreRecord[], pageIndex: number, pageCount: number): string {
+    const unlock = contractUnlock(contract);
+    const best = bestContractScore(contract.id, scores);
+    const tags = contract.boardRow.tags.length > 0 ? contract.boardRow.tags : ['trail'];
+    const medal = contract.id === 'e1-baron' && hasBaronMedal();
+    const baronStakes =
+      contract.id === 'e1-baron' && unlock.unlocked
+        ? `<p class="town-ui__contract-stakes" data-testid="contract-stakes-e1-baron">The Baron's outfit rides at 20 — cadence runs hot (+15%).</p>`
+        : '';
+    return `
+      <article class="town-ui__contract ${unlock.unlocked ? '' : 'town-ui__contract--locked'}" tabindex="-1" data-testid="contract-card-${escapeHtml(
+        contract.id,
+      )}" data-contract-id="${escapeHtml(contract.id)}" data-contract-locked="${unlock.unlocked ? 'false' : 'true'}" aria-label="${escapeHtml(
+        `${contract.boardRow.name}, page ${pageIndex + 1} of ${pageCount}`,
+      )}">
+        ${renderContractArt(contract)}
+        <div class="town-ui__contract-copy">
+          <div class="town-ui__contract-topline">
+            <span class="town-ui__contract-tag">${escapeHtml(formatTag(tags[0] ?? 'trail'))}</span>
+            <span class="town-ui__contract-state">${unlock.unlocked ? 'Open' : 'Locked'}</span>
+          </div>
+          <h3>${escapeHtml(contract.boardRow.name)}</h3>
+          <p class="town-ui__contract-flavor" data-testid="contract-flavor-${escapeHtml(contract.id)}">${escapeHtml(
+            contract.boardRow.ledgerBlurb,
+          )}</p>
+          ${
+            unlock.unlocked
+              ? `
+                ${renderContractBriefing(contract)}
+                ${baronStakes}
+                ${
+                  medal
+                    ? `<p class="town-ui__contract-best town-ui__contract-medal" data-testid="contract-medal-e1-baron">Baron beaten. ${escapeHtml(BARON_MEDAL_BLURB)}</p>`
+                    : `<p class="town-ui__contract-best" data-testid="contract-best-${escapeHtml(contract.id)}">${escapeHtml(formatBest(best))}</p>`
+                }
+              `
+              : `
+                <p class="town-ui__contract-lock" data-testid="contract-lock-${escapeHtml(contract.id)}">${escapeHtml(unlock.condition)}</p>
+                <p class="town-ui__contract-teaser" data-testid="contract-teaser-${escapeHtml(
+                  contract.id,
+                )}">The clerk draws up the terms when you're ready.</p>
+              `
+          }
+          <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
+            contract.id,
+          )}" ${unlock.unlocked ? '' : 'disabled'}>
+            ${escapeHtml(unlock.unlocked ? 'Launch' : unlock.condition)}
+          </button>
+        </div>
+      </article>
     `;
   }
 
@@ -824,45 +966,6 @@ export class TownScene {
       const backdrop = this.board.querySelector<HTMLElement>('.town-ui__board-backdrop');
       if (backdrop) backdrop.style.backgroundImage = `url("${url}")`;
     });
-  }
-
-  private renderContractCard(contract: ContractManifest, scores: readonly ScoreRecord[]): string {
-    const unlock = contractUnlock(contract);
-    const best = bestContractScore(contract.id, scores);
-    const tags = contract.boardRow.tags.length > 0 ? contract.boardRow.tags : ['trail'];
-    const medal = contract.id === 'e1-baron' && hasBaronMedal();
-    const baronStakes =
-      contract.id === 'e1-baron'
-        ? `<p class="town-ui__contract-stakes" data-testid="contract-stakes-e1-baron">The Baron's outfit rides at 20 — cadence runs hot (+15%).</p>`
-        : '';
-    return `
-      <article class="town-ui__contract ${unlock.unlocked ? '' : 'town-ui__contract--locked'}" data-testid="contract-card-${escapeHtml(
-        contract.id,
-      )}" data-contract-id="${escapeHtml(contract.id)}" data-contract-locked="${unlock.unlocked ? 'false' : 'true'}">
-        <div class="town-ui__contract-topline">
-          <span class="town-ui__contract-tag">${escapeHtml(formatTag(tags[0] ?? 'trail'))}</span>
-          <span class="town-ui__contract-state">${unlock.unlocked ? 'Open' : 'Locked'}</span>
-        </div>
-        <h3>${escapeHtml(contract.boardRow.name)}</h3>
-        <p>${escapeHtml(contract.boardRow.ledgerBlurb)}</p>
-        <p class="town-ui__contract-geography" data-testid="contract-board-geography-${escapeHtml(contract.id)}">${escapeHtml(
-          contract.briefing.geographyLine,
-        )}</p>
-        ${renderContractBriefing(contract)}
-        ${baronStakes}
-        ${medal ? '' : `<p class="town-ui__contract-best" data-testid="contract-best-${escapeHtml(contract.id)}">${escapeHtml(formatBest(best))}</p>`}
-        ${
-          medal
-            ? `<p class="town-ui__contract-best town-ui__contract-medal" data-testid="contract-medal-e1-baron">Baron beaten. ${escapeHtml(BARON_MEDAL_BLURB)}</p>`
-            : ''
-        }
-        <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
-          contract.id,
-        )}" ${unlock.unlocked ? '' : 'disabled'}>
-          ${escapeHtml(unlock.unlocked ? 'Launch' : unlock.condition)}
-        </button>
-      </article>
-    `;
   }
 
   private publishDiagnostics(): void {
@@ -1024,6 +1127,32 @@ function stopKeyPropagation(event: KeyboardEvent): void {
   event.stopPropagation();
 }
 
+function clampBoardPage(index: number, count: number): number {
+  if (count <= 0) return 0;
+  if (!Number.isFinite(index)) return 0;
+  return Math.max(0, Math.min(count - 1, index));
+}
+
+function boardPageIndexForContract(id: string | undefined): number {
+  if (!id) return 0;
+  const index = listBoardContracts().findIndex((contract) => contract.id === id);
+  return index >= 0 ? index : 0;
+}
+
+function renderContractArt(contract: ContractManifest): string {
+  const art = contractArtRegistry[contract.id] ?? contractArtRegistry[DEFAULT_CONTRACT_ID];
+  const image = art?.imageUrl ? `<img class="town-ui__contract-art-image" src="${escapeHtml(art.imageUrl)}" alt="" />` : '';
+  const inset = art?.insetUrl ? `<img class="town-ui__contract-art-inset" src="${escapeHtml(art.insetUrl)}" alt="" />` : '';
+  return `
+    <figure class="town-ui__contract-art town-ui__contract-art--${escapeHtml(art?.key ?? 'river-tile')}" data-contract-art-key="${escapeHtml(
+      art?.key ?? 'river-tile',
+    )}" data-testid="contract-art-${escapeHtml(contract.id)}" aria-hidden="true">
+      ${image}
+      ${inset}
+    </figure>
+  `;
+}
+
 function contractUnlock(contract: ContractManifest): { unlocked: boolean; condition: string } {
   const unlock = contract.boardRow.unlock;
   if (unlock === 'default') return { unlocked: true, condition: '' };
@@ -1065,12 +1194,25 @@ function formatBest(score: ScoreRecord | null): string {
 }
 
 function renderContractBriefing(contract: ContractManifest): string {
+  const geographyLine = contract.briefing.geographyLine.trim();
+  const duplicateFlavor = geographyLine === contract.boardRow.ledgerBlurb.trim();
   return `
     <div class="town-ui__contract-briefing" data-testid="contract-board-briefing-${escapeHtml(contract.id)}">
-      <p class="town-ui__contract-briefing-label">Goals</p>
-      <ul>${contract.briefing.goals.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>
-      <p class="town-ui__contract-briefing-label">Rules</p>
-      <ul>${contract.briefing.rules.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>
+      ${
+        geographyLine && !duplicateFlavor
+          ? `<p class="town-ui__contract-briefing-geography" data-testid="contract-board-geography-${escapeHtml(
+              contract.id,
+            )}">${escapeHtml(geographyLine)}</p>`
+          : ''
+      }
+      <section>
+        <p class="town-ui__contract-briefing-label">Goals</p>
+        <ul>${contract.briefing.goals.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>
+      </section>
+      <section>
+        <p class="town-ui__contract-briefing-label">Rules</p>
+        <ul>${contract.briefing.rules.map((line) => `<li>${escapeHtml(line)}</li>`).join('')}</ul>
+      </section>
     </div>
   `;
 }

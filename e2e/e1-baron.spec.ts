@@ -128,6 +128,11 @@ async function openBoard(page: Page): Promise<void> {
   await expect(page.getByTestId('contract-board')).toBeVisible();
 }
 
+async function openBaronBoardPage(page: Page): Promise<void> {
+  await page.getByTestId('contract-page-dot-e1-baron').click();
+  await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
+}
+
 async function openGame(page: Page, query = BARON_QUERY): Promise<ErrorBucket> {
   const errors = collectErrors(page);
   await page.goto(`/${query}`);
@@ -329,25 +334,29 @@ test('contract board locks Baron until science-complete and shows the profile me
 
   await seedStorage(page);
   await openBoard(page);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
+  await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
-  await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
+  await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveCount(0);
   await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText('Complete Frontier science first');
 
   await seedStorage(page, { science: 6 });
   await openBoard(page);
+  await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'false');
   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
   await expect(page.getByTestId('contract-medal-e1-baron')).toHaveCount(0);
 
   await seedStorage(page, { science: 6, medal: true });
   await openBoard(page);
+  await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-medal-e1-baron')).toHaveText(`Baron beaten. ${BARON_MEDAL_BLURB}`);
   await frameForShot(page, 'contract-card-e1-baron');
   await shot(page, testInfo, 'medal-card');
 
   await seedStorage(page, { science: 6, medal: true, activeId: 'casey', medalProfileId: 'robin' });
   await openBoard(page);
+  await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'false');
   await expect(page.getByTestId('contract-medal-e1-baron')).toHaveCount(0);
   expectClean(errors);
@@ -360,6 +369,7 @@ test('board launch uses the live Baron contract for cadence and wave 20 spawn', 
   await seedStorage(page, { science: 6 });
   await page.evaluate(() => history.replaceState(null, '', '/?debug'));
   await openBoard(page);
+  await openBaronBoardPage(page);
   await page.getByTestId('contract-launch-e1-baron').click();
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId)).toBe('e1-baron');
@@ -528,6 +538,7 @@ test('standard rig damage defeats the Baron, doubles science, and persists the m
 
   await page.goto('/');
   await openBoard(page);
+  await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
   await expect(page.getByTestId('contract-medal-e1-baron')).toContainText(BARON_MEDAL_BLURB);
   await frameForShot(page, 'contract-card-e1-baron');

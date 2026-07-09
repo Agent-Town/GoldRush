@@ -21,6 +21,19 @@ type SeedState = {
   science?: number;
 };
 
+const BOARD_CONTRACTS = [
+  { id: 'the-claim', flavor: 'The classic river claim.', artKey: 'river-tile' },
+  { id: 'e1-dry-gulch', flavor: 'Mesa country; dry washes fall toward one sunken spring.', artKey: 'mesa' },
+  { id: 'e1-night-shift', flavor: 'The claim, gone dark, dotted with cold lanterns.', artKey: 'dusk-lantern' },
+  { id: 'e1-twin-banks', flavor: 'A braided river claim with twin fords, gravel bars, and damp reeds.', artKey: 'braided-river' },
+  { id: 'e1-baron', flavor: 'An oxblood banner marks the outfit that keeps buying trouble.', artKey: 'kit-the-baron' },
+  {
+    id: 'e2-hill-mine',
+    flavor: 'Terraced steamworks ground: hold the mine mouth, the rail cut, and the flooded gallery.',
+    artKey: 'steam-terraces',
+  },
+] as const;
+
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
   page.on('console', (message) => {
@@ -104,6 +117,27 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: true });
 }
 
+async function goToContractPage(page: Page, id: string): Promise<void> {
+  await page.getByTestId(`contract-page-dot-${id}`).click();
+  await expect(page.getByTestId(`contract-card-${id}`)).toBeVisible();
+}
+
+async function assertFlavorOnce(page: Page, id: string, flavor: string): Promise<void> {
+  await expect(page.getByTestId(`contract-flavor-${id}`)).toHaveText(flavor);
+  const text = (await page.getByTestId(`contract-card-${id}`).textContent()) ?? '';
+  expect(countOccurrences(text, flavor)).toBe(1);
+}
+
+function countOccurrences(text: string, needle: string): number {
+  let count = 0;
+  let index = text.indexOf(needle);
+  while (index !== -1) {
+    count += 1;
+    index = text.indexOf(needle, index + needle.length);
+  }
+  return count;
+}
+
 function contractHash(diagnostics: NonNullable<Window['__THREE_GAME_DIAGNOSTICS__']>): string {
   return JSON.stringify({
     activeId: diagnostics.contract.activeId,
@@ -154,17 +188,30 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
   for (const entry of cases) {
     await seedStorage(page, entry.seed);
     await openBoard(page);
-    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
+    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
+    await expect(page.getByTestId('contract-page-count')).toHaveText('1 / 6');
     await expect(page.getByTestId('contract-card-the-claim')).toHaveAttribute('data-contract-locked', 'false');
+    await assertFlavorOnce(page, 'the-claim', BOARD_CONTRACTS[0].flavor);
     for (const [id, locked] of Object.entries(entry.locked)) {
+      await goToContractPage(page, id);
+      const contract = BOARD_CONTRACTS.find((item) => item.id === id)!;
+      await assertFlavorOnce(page, id, contract.flavor);
+      await expect(page.getByTestId(`contract-art-${id}`)).toHaveAttribute('data-contract-art-key', contract.artKey);
       await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', locked ? 'true' : 'false');
     }
     if (entry.name === 'fresh') {
+      await goToContractPage(page, 'e1-twin-banks');
       await expect(page.getByTestId('contract-launch-e1-twin-banks')).toHaveText('Secure a claim first');
+      await expect(page.getByTestId('contract-board-briefing-e1-twin-banks')).toHaveCount(0);
+      await expect(page.getByTestId('contract-teaser-e1-twin-banks')).toHaveText("The clerk draws up the terms when you're ready.");
+      await goToContractPage(page, 'e2-hill-mine');
       await expect(page.getByTestId('contract-launch-e2-hill-mine')).toHaveText('Awaits the Steamworks era');
+      await shot(page, testInfo, 'locked-teaser');
+      await goToContractPage(page, 'the-claim');
       await expect(page.getByTestId('contract-best-the-claim')).toHaveText('No result yet');
     }
     if (entry.name === 'wave-10') {
+      await goToContractPage(page, 'e1-dry-gulch');
       await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Overrun - wave 12 - 88 gold');
       await shot(page, testInfo, 'mixed-locks');
     }
@@ -176,6 +223,7 @@ test('board launch loads Dry Gulch and New Claim hashes to the default contract 
   const errors = collectErrors(page);
   await seedStorage(page, { scores: [{ waves: 10, contractId: 'the-claim' }] });
   await openBoard(page);
+  await goToContractPage(page, 'e1-dry-gulch');
   await page.getByTestId('contract-launch-e1-dry-gulch').dispatchEvent('click');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId)).toBe('e1-dry-gulch');
@@ -197,10 +245,11 @@ test('board launch loads Dry Gulch and New Claim hashes to the default contract 
 
 test('post-run overrun returns straight to the town board and records a contract result', async ({ page }) => {
   const errors = collectErrors(page);
-  await seedStorage(page);
+  await seedStorage(page, { scores: [{ waves: 10, contractId: 'the-claim' }] });
   await page.evaluate(() => history.replaceState(null, '', '/?debug&timescale=8&nowaves&nolevel&seed=town-t3-return'));
   await openBoard(page);
-  await page.getByTestId('contract-launch-the-claim').click();
+  await goToContractPage(page, 'e1-dry-gulch');
+  await page.getByTestId('contract-launch-e1-dry-gulch').click();
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await page.evaluate(() => {
     window.__GR_TEST__?.setBalance('enemy.contactDamage', 999);
@@ -211,18 +260,51 @@ test('post-run overrun returns straight to the town board and records a contract
   await expect(page.getByTestId('run-secondary-action')).toHaveText('Try Again');
   await page.getByTestId('stake-again').click();
   await expect(page.getByTestId('contract-board')).toBeVisible({ timeout: 8_000 });
-  await expect(page.getByTestId('contract-best-the-claim')).not.toHaveText('No result yet');
+  await expect(page.getByTestId('contract-card-e1-dry-gulch')).toBeVisible();
+  await expect(page.getByTestId('contract-best-e1-dry-gulch')).not.toHaveText('No result yet');
   assertNoErrors(errors);
 });
 
-test('contract board scrolls and keeps tap targets usable at 390px', async ({ page }, testInfo) => {
+test('contract catalog navigation remembers the last page', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await seedStorage(page, { science: 6, scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] });
+  await openBoard(page);
+  await page.getByTestId('contract-page-next').click();
+  await expect(page.getByTestId('contract-card-e1-dry-gulch')).toBeVisible();
+  await expect(page.getByTestId('contract-page-count')).toHaveText('2 / 6');
+  await page.keyboard.press('ArrowRight');
+  await expect(page.getByTestId('contract-card-e1-night-shift')).toBeVisible();
+  await goToContractPage(page, 'e1-baron');
+  await expect(page.getByTestId('contract-page-count')).toHaveText('5 / 6');
+  await page.getByTestId('contract-board-close').click();
+  await expect(page.getByTestId('contract-board')).toBeHidden();
+  await page.getByTestId('town-open-board').click();
+  await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
+  await shot(page, testInfo, 'baron-page');
+  assertNoErrors(errors);
+});
+
+test('contract board swipes and keeps tap targets usable at 390px', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await page.setViewportSize({ width: 390, height: 844 });
   await seedStorage(page, { science: 6, scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] });
   await openBoard(page);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(6);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
+  const box = await page.getByTestId('contract-card-list').boundingBox();
+  expect(box).not.toBeNull();
+  if (box) {
+    const list = page.getByTestId('contract-card-list');
+    const y = box.y + box.height / 2;
+    await list.dispatchEvent('pointerdown', { pointerType: 'touch', button: 0, clientX: box.x + box.width - 28, clientY: y });
+    await list.dispatchEvent('pointerup', { pointerType: 'touch', button: 0, clientX: box.x + 28, clientY: y });
+  }
+  await expect(page.getByTestId('contract-card-e1-dry-gulch')).toBeVisible();
+  await goToContractPage(page, 'e1-night-shift');
   const buttonBox = await page.getByTestId('contract-launch-e1-night-shift').boundingBox();
   expect(buttonBox?.height ?? 0).toBeGreaterThanOrEqual(44);
+  const dotBox = await page.getByTestId('contract-page-dot-e1-night-shift').boundingBox();
+  expect(dotBox?.width ?? 0).toBeGreaterThanOrEqual(44);
+  expect(dotBox?.height ?? 0).toBeGreaterThanOrEqual(44);
   await shot(page, testInfo, 'mobile-390-board');
   assertNoErrors(errors);
 });
