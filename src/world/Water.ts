@@ -44,6 +44,8 @@ type WaterMaterialConfig = {
   ford: boolean;
   riverHalfWidth: number;
   visualHalfWidth: number;
+  lengthHalf: number;
+  fadeStart: number;
   fordHalfWidth: number;
   riverDepth: number;
   fordDepth: number;
@@ -148,8 +150,9 @@ float waterNoise(vec2 p) {
     waterQuality;
   flowUv.y += slowWarp + (crossNoise - 0.5) * 0.045 * waterQuality;
   vec4 baseTexel = texture2D(map, flowUv);
-  float visualEdgeDist = max(0.0, ${config.visualHalfWidth.toFixed(3)} - abs(vWaterWorld.y));
-  float riverDist = max(0.0, ${config.riverHalfWidth.toFixed(3)} - abs(vWaterWorld.y));
+  float riverAcross = mix((vWaterUv.y - 0.5) * ${(config.visualHalfWidth * 2).toFixed(3)}, vWaterWorld.y, waterFord);
+  float visualEdgeDist = max(0.0, ${config.visualHalfWidth.toFixed(3)} - abs(riverAcross));
+  float riverDist = max(0.0, ${config.riverHalfWidth.toFixed(3)} - abs(riverAcross));
   float fordBand = max(waterFord, 1.0 - smoothstep(${config.fordHalfWidth.toFixed(3)}, ${(config.fordHalfWidth + 0.9).toFixed(3)}, abs(vWaterWorld.x)));
   float channelDepth = mix(waterWadeDepth * 0.5, waterRiverDepth, smoothstep(0.05, ${config.riverHalfWidth.toFixed(3)}, riverDist));
   float declaredDepth = mix(channelDepth, waterFordDepth, fordBand);
@@ -162,7 +165,7 @@ float waterNoise(vec2 p) {
     fineRipple = sin(vWaterWorld.x * mix(3.7, 6.2, crossNoise) + vWaterWorld.y * mix(0.8, 2.4, lengthNoise) - waterTime * mix(3.8, 6.7, crossNoise) + phaseWarp * 2.0) * 0.5 + 0.5;
   }
   float foamNoise = smoothstep(0.26, 0.92, waterNoise(vec2(vWaterWorld.x * 0.42 - waterTime * 0.7, vWaterWorld.y * 1.25 + lengthNoise * 3.0)));
-  float bankLine = abs(abs(vWaterWorld.y) - ${config.riverHalfWidth.toFixed(3)});
+  float bankLine = abs(abs(riverAcross) - ${config.riverHalfWidth.toFixed(3)});
   float bankFoam = (1.0 - smoothstep(0.04, 0.72, bankLine)) * foamNoise * (0.35 + waterQuality * 0.65);
   vec3 shallow = vec3(0.35, 0.51, 0.45);
   vec3 mid = vec3(0.18, 0.40, 0.40);
@@ -179,6 +182,7 @@ float waterNoise(vec2 p) {
   alpha = mix(alpha, 0.58, fordBand * 0.72);
   alpha = mix(alpha, 0.72, bankFoam * 0.4);
   alpha *= smoothstep(0.0, 0.95, visualEdgeDist);
+  alpha *= mix(1.0 - smoothstep(${config.fadeStart.toFixed(3)}, ${config.lengthHalf.toFixed(3)}, abs(vWaterWorld.x)), 1.0, waterFord);
   float fordOverlayFade = smoothstep(0.0, 0.18, vWaterUv.x) * (1.0 - smoothstep(0.82, 1.0, vWaterUv.x));
   alpha *= mix(1.0, fordOverlayFade, waterFord);
   vec4 sampledDiffuseColor = vec4(waterColor, alpha);
