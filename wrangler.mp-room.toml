@@ -1,0 +1,11 @@
+name = "gold-rush-mp-room"
+main = "functions/api/_multiplayer.ts"
+compatibility_date = "2026-07-08"
+
+[[durable_objects.bindings]]
+name = "MULTIPLAYER_ROOMS"
+class_name = "MultiplayerRoom"
+
+[[migrations]]
+tag = "mp-01"
+new_sqlite_classes = ["MultiplayerRoom"]
