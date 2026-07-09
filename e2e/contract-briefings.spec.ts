@@ -88,6 +88,8 @@ const CONTRACTS: readonly Briefing[] = [
     ],
   },
 ];
+const UNLOCKED_BOARD_CONTRACTS = new Set(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+const DISTINCT_BOARD_GEOGRAPHY = new Set(['e1-baron']);
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -208,10 +210,21 @@ async function assertPauseContract(page: Page, expected: Briefing): Promise<void
 }
 
 async function assertBoardBriefing(page: Page, expected: Briefing): Promise<void> {
-  await expect(page.getByTestId(`contract-board-geography-${expected.id}`)).toHaveText(expected.geographyLine);
-  await page.getByTestId(`contract-card-${expected.id}`).scrollIntoViewIfNeeded();
+  await page.getByTestId(`contract-page-dot-${expected.id}`).click();
+  const unlocked = UNLOCKED_BOARD_CONTRACTS.has(expected.id);
+  await expect(page.getByTestId(`contract-card-${expected.id}`)).toHaveAttribute('data-contract-locked', unlocked ? 'false' : 'true');
   const board = page.getByTestId(`contract-board-briefing-${expected.id}`);
+  if (!unlocked) {
+    await expect(board).toHaveCount(0);
+    await expect(page.getByTestId(`contract-teaser-${expected.id}`)).toHaveText("The clerk draws up the terms when you're ready.");
+    return;
+  }
   await expect(board).toBeVisible();
+  if (DISTINCT_BOARD_GEOGRAPHY.has(expected.id)) {
+    await expect(page.getByTestId(`contract-board-geography-${expected.id}`)).toHaveText(expected.geographyLine);
+  } else {
+    await expect(page.getByTestId(`contract-board-geography-${expected.id}`)).toHaveCount(0);
+  }
   for (const line of [...expected.goals, ...expected.rules]) await expect(board).toContainText(line);
   await expectStacked(board, page.getByTestId(`contract-best-${expected.id}`));
   await expectStacked(page.getByTestId(`contract-best-${expected.id}`), page.getByTestId(`contract-launch-${expected.id}`));
@@ -297,11 +310,9 @@ test('plain no-debug board launch still briefs The Claim', async ({ page }) => {
 test('board cards show the same briefing data', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await openBoard(page);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(CONTRACTS.length);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
   for (const contract of CONTRACTS) await assertBoardBriefing(page, contract);
-  await page.getByTestId('contract-card-list').evaluate((element) => {
-    element.scrollTop = 0;
-  });
+  await page.getByTestId('contract-page-dot-the-claim').click();
   await shot(page, testInfo, 'board-briefings');
   assertNoErrors(errors);
 });

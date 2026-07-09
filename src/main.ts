@@ -142,6 +142,7 @@ function runReturnCallback(result: RunReturnResult): void {
 }
 
 function returnToTownBoard(result: RunReturnResult): void {
+  const returnedContractId = new URLSearchParams(window.location.search).get('contract') || DEFAULT_CONTRACT_ID;
   town?.dispose();
   town = undefined;
   game?.dispose();
@@ -152,7 +153,7 @@ function returnToTownBoard(result: RunReturnResult): void {
   profiles = undefined;
   startMenu?.dispose();
   startMenu = undefined;
-  openTown({ openBoard: true, returnResult: result });
+  openTown({ openBoard: true, returnResult: result, initialBoardContractId: returnedContractId });
 }
 
 function returnToStartMenu(): void {
@@ -176,7 +177,7 @@ if (window.location.search === '') {
 
 installFullBaseBenchmark();
 
-function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult } = {}): void {
+function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult; initialBoardContractId?: string } = {}): void {
   markStartupFrameReady();
   void import('./town/TownScene').then(({ TownScene }) => {
     if (game || profiles) return;

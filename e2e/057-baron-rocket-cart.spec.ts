@@ -82,6 +82,11 @@ async function openBoard(page: Page): Promise<void> {
   await expect(page.getByTestId('contract-board')).toBeVisible();
 }
 
+async function openBaronBoardPage(page: Page): Promise<void> {
+  await page.getByTestId('contract-page-dot-e1-baron').click();
+  await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
+}
+
 async function hold(page: Page, key: string, ms: number): Promise<void> {
   await page.keyboard.down(key);
   await page.waitForTimeout(ms);
@@ -292,6 +297,7 @@ test('defeating the Baron captures the cart, shows the medal line, and unlocks c
   await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.research.taken ?? [])).resolves.toContain(SKY_ROCKET_BATTERY_NODE_ID);
 
   await openBoard(page);
+  await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-medal-e1-baron')).toContainText(ROCKET_MEDAL_LINE);
   await page.getByTestId('contract-card-e1-baron').evaluate((node) => node.scrollIntoView({ block: 'start', inline: 'nearest' }));
   await shot(page, testInfo, 'medal-rocket-cart');

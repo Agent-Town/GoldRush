@@ -256,9 +256,9 @@
 .town-ui__board-shell {
   position: relative;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
-  width: min(980px, calc(100vw - 28px));
-  max-height: min(720px, calc(100vh - 28px));
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  width: min(1040px, calc(100vw - 28px));
+  max-height: min(760px, calc(100vh - 28px));
   border: 2px solid #2e1b0e;
   border-radius: 8px;
   color: #2e1b0e;
@@ -323,33 +323,146 @@
 
 .town-ui__contracts {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-  align-items: start;
-  gap: 12px;
+  grid-template-columns: 50px minmax(0, 1fr) 50px;
+  align-items: center;
+  gap: 14px;
   min-height: 0;
-  padding: 14px;
+  padding: 16px;
   overflow: auto;
   overscroll-behavior: contain;
+  touch-action: pan-y;
   -webkit-overflow-scrolling: touch;
 }
 
+.town-ui__catalog-arrow {
+  width: 50px;
+  min-height: 72px;
+  border: 2px solid #2e1b0e;
+  border-radius: 8px;
+  color: #2e1b0e;
+  background: rgba(255, 228, 160, 0.92);
+  box-shadow: 0 4px 0 rgba(46, 27, 14, 0.5);
+  font: 900 2rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+}
+
+.town-ui__catalog-arrow:disabled {
+  opacity: 0.38;
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
 .town-ui__contract {
-  display: flex;
-  flex-direction: column;
-  gap: 9px;
+  display: grid;
+  grid-template-rows: minmax(190px, 28vh) auto;
+  gap: 14px;
+  min-height: 0;
   border: 2px solid rgba(46, 27, 14, 0.82);
   border-radius: 8px;
-  padding: 12px;
+  padding: 14px;
   background:
     linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(232, 213, 168, 0.98)),
     #f5e6c8;
-  box-shadow: inset 0 0 0 1px rgba(139, 125, 60, 0.3);
+  box-shadow:
+    inset 0 0 0 1px rgba(139, 125, 60, 0.3),
+    0 2px 0 rgba(46, 27, 14, 0.46);
 }
 
 .town-ui__contract--locked {
   background:
     linear-gradient(135deg, rgba(232, 213, 168, 0.9), rgba(174, 144, 93, 0.72)),
     #e8d5a8;
+}
+
+.town-ui__contract-art {
+  position: relative;
+  min-height: 190px;
+  margin: 0;
+  border: 2px solid rgba(46, 27, 14, 0.74);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 24% 22%, rgba(255, 228, 160, 0.35), transparent 34%),
+    linear-gradient(135deg, #f5e6c8, #b98249 52%, #5b8a8a);
+  box-shadow: inset 0 0 0 1px rgba(255, 248, 232, 0.54);
+  overflow: hidden;
+}
+
+.town-ui__contract-art::before,
+.town-ui__contract-art::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  pointer-events: none;
+}
+
+.town-ui__contract-art::before {
+  background:
+    linear-gradient(90deg, rgba(46, 27, 14, 0.18), transparent 36%, rgba(46, 27, 14, 0.22)),
+    repeating-linear-gradient(135deg, rgba(46, 27, 14, 0.08) 0 1px, transparent 1px 8px);
+  mix-blend-mode: multiply;
+}
+
+.town-ui__contract-art::after {
+  box-shadow: inset 0 -56px 76px rgba(46, 27, 14, 0.34);
+}
+
+.town-ui__contract-art-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: saturate(0.92) sepia(0.08);
+}
+
+.town-ui__contract-art-inset {
+  position: absolute;
+  right: 18px;
+  bottom: 12px;
+  width: min(27%, 132px);
+  max-height: 78%;
+  object-fit: contain;
+  filter: drop-shadow(0 7px 8px rgba(46, 27, 14, 0.46));
+}
+
+.town-ui__contract-art--dusk-lantern {
+  background:
+    radial-gradient(circle at 72% 46%, rgba(255, 228, 160, 0.52), transparent 18%),
+    linear-gradient(135deg, #2e3142, #5b6572 52%, #2e1b0e);
+}
+
+.town-ui__contract-art--dusk-lantern .town-ui__contract-art-image,
+.town-ui__contract-art--kit-the-baron .town-ui__contract-art-image {
+  object-fit: contain;
+  padding: 14px;
+}
+
+.town-ui__contract-art--kit-the-baron {
+  background:
+    radial-gradient(circle at 48% 46%, rgba(255, 228, 160, 0.38), transparent 32%),
+    linear-gradient(135deg, #7f2633, #b98249 48%, #2e1b0e);
+}
+
+.town-ui__contract-art--steam-terraces {
+  background:
+    linear-gradient(180deg, rgba(255, 248, 232, 0.34), transparent 42%),
+    repeating-linear-gradient(168deg, rgba(46, 27, 14, 0.28) 0 4px, transparent 4px 24px),
+    repeating-linear-gradient(0deg, #8b7d3c 0 24px, #5b8a8a 24px 31px, #b98249 31px 54px);
+}
+
+.town-ui__contract--locked .town-ui__contract-art {
+  filter: grayscale(0.65) sepia(0.2);
+}
+
+.town-ui__contract--locked .town-ui__contract-art::before {
+  background:
+    linear-gradient(90deg, rgba(46, 27, 14, 0.32), rgba(255, 248, 232, 0.12), rgba(46, 27, 14, 0.38)),
+    repeating-linear-gradient(135deg, rgba(46, 27, 14, 0.16) 0 2px, transparent 2px 10px);
+}
+
+.town-ui__contract-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  min-width: 0;
 }
 
 .town-ui__contract-topline {
@@ -386,25 +499,40 @@
 }
 
 .town-ui__contract h3 {
-  font-size: 1.18rem;
+  font-size: 2rem;
   line-height: 1.1;
 }
 
 .town-ui__contract p {
   color: rgba(46, 27, 14, 0.78);
-  font-size: 0.84rem;
-  line-height: 1.26;
+  font-size: 0.94rem;
+  line-height: 1.34;
 }
 
-.town-ui__contract-geography {
-  min-height: 2.4em;
+.town-ui__contract-flavor {
+  max-width: 68ch;
+  color: rgba(46, 27, 14, 0.84) !important;
+  font-size: 1rem !important;
+  font-weight: 800;
 }
 
 .town-ui__contract-briefing {
   display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-content: start;
-  gap: 4px;
+  gap: 12px;
   min-width: 0;
+}
+
+.town-ui__contract-briefing section {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  min-width: 0;
+  border: 1px solid rgba(46, 27, 14, 0.22);
+  border-radius: 8px;
+  padding: 10px;
+  background: rgba(255, 248, 232, 0.4);
 }
 
 .town-ui__contract-briefing-label {
@@ -414,19 +542,25 @@
   text-transform: uppercase;
 }
 
+.town-ui__contract-briefing-geography {
+  grid-column: 1 / -1;
+  color: rgba(46, 27, 14, 0.78) !important;
+  font-size: 0.86rem !important;
+  font-weight: 900;
+}
+
 .town-ui__contract-briefing ul {
   display: grid;
-  gap: 3px;
-  margin: 0 0 5px;
+  gap: 5px;
+  margin: 0;
   padding-left: 1rem;
   color: rgba(46, 27, 14, 0.84);
-  font-size: 0.78rem;
+  font-size: 0.82rem;
   font-weight: 800;
-  line-height: 1.22;
+  line-height: 1.28;
 }
 
 .town-ui__contract-best {
-  align-self: end;
   min-height: 1.4em;
   font-weight: 900;
 }
@@ -436,7 +570,9 @@
 }
 
 .town-ui__contract-stakes,
-.town-ui__contract-medal {
+.town-ui__contract-medal,
+.town-ui__contract-lock,
+.town-ui__contract-teaser {
   align-self: stretch;
   padding: 6px 8px;
   border: 1px solid rgba(127, 38, 51, 0.42);
@@ -449,8 +585,23 @@
   color: #7f2633;
 }
 
+.town-ui__contract-lock {
+  color: #7f2633 !important;
+  background: rgba(127, 38, 51, 0.12);
+  font-size: 1.35rem !important;
+  font-weight: 900;
+}
+
+.town-ui__contract-teaser {
+  border-color: rgba(91, 138, 138, 0.42);
+  color: rgba(46, 27, 14, 0.76) !important;
+  background: rgba(91, 138, 138, 0.11);
+  font-weight: 900;
+}
+
 .town-ui__contract-action {
   width: 100%;
+  margin-top: auto;
   padding: 9px 10px;
   color: #fff8e8;
   background: #5b8a8a;
@@ -464,10 +615,73 @@
   cursor: not-allowed;
 }
 
+.town-ui__catalog-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  padding: 0 16px 14px;
+}
+
+.town-ui__catalog-count {
+  min-width: 52px;
+  font-size: 0.82rem;
+  font-weight: 900;
+  text-align: center;
+}
+
+.town-ui__catalog-dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 4px;
+}
+
+.town-ui__catalog-dot {
+  position: relative;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 8px;
+  padding: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.town-ui__catalog-dot::after {
+  width: 16px;
+  height: 16px;
+  border: 2px solid #2e1b0e;
+  border-radius: 999px;
+  background: rgba(255, 248, 232, 0.72);
+  content: "";
+}
+
+.town-ui__catalog-dot[aria-current="page"]::after {
+  background: #5b8a8a;
+}
+
 .town-ui__board-close:hover,
 .town-ui__board-close:focus-visible,
+.town-ui__catalog-arrow:hover,
+.town-ui__catalog-arrow:focus-visible,
+.town-ui__catalog-dot:hover,
+.town-ui__catalog-dot:focus-visible,
 .town-ui__contract-action:hover,
 .town-ui__contract-action:focus-visible {
+  outline: 3px solid rgba(91, 138, 138, 0.72);
+  outline-offset: 3px;
+}
+
+.town-ui__catalog-dot:hover,
+.town-ui__catalog-dot:focus-visible {
+  outline: 0;
+}
+
+.town-ui__catalog-dot:hover::after,
+.town-ui__catalog-dot:focus-visible::after {
   outline: 3px solid rgba(91, 138, 138, 0.72);
   outline-offset: 3px;
 }
@@ -597,13 +811,124 @@
 
   .town-ui__board-header,
   .town-ui__surface-header {
-    padding: 12px;
+    align-items: center;
+    padding: 8px 10px;
+  }
+
+  .town-ui__board-host {
+    width: 52px;
+    height: 52px;
+  }
+
+  .town-ui__board-eyebrow {
+    margin-bottom: 2px;
+    font-size: 0.68rem;
+  }
+
+  .town-ui__board-header h2 {
+    font-size: 1.34rem;
+    line-height: 1;
+  }
+
+  .town-ui__board-close {
+    min-height: 48px;
+    padding: 7px 10px;
   }
 
   .town-ui__contracts {
+    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+  }
+
+  .town-ui__catalog-arrow {
+    width: 42px;
+    min-height: 62px;
+    font-size: 1.55rem;
+  }
+
+  .town-ui__contract {
+    grid-template-rows: minmax(120px, 18vh) auto;
+    gap: 8px;
+    min-height: 0;
+    padding: 8px;
+  }
+
+  .town-ui__contract-art {
+    min-height: 120px;
+  }
+
+  .town-ui__contract-copy {
+    gap: 8px;
+  }
+
+  .town-ui__contract-topline {
+    min-height: 24px;
+  }
+
+  .town-ui__contract h3 {
+    font-size: 1.26rem;
+    line-height: 1.08;
+  }
+
+  .town-ui__contract p {
+    font-size: 0.82rem;
+  }
+
+  .town-ui__contract-flavor {
+    font-size: 0.82rem !important;
+    line-height: 1.22 !important;
+  }
+
+  .town-ui__contract-briefing {
     grid-template-columns: 1fr;
-    gap: 10px;
-    padding: 10px;
+    gap: 7px;
+  }
+
+  .town-ui__contract-briefing section {
+    gap: 4px;
+    padding: 7px;
+  }
+
+  .town-ui__contract-briefing ul {
+    font-size: 0.76rem;
+    gap: 3px;
+    line-height: 1.2;
+  }
+
+  .town-ui__contract-stakes,
+  .town-ui__contract-medal,
+  .town-ui__contract-lock,
+  .town-ui__contract-teaser {
+    padding: 5px 7px;
+  }
+
+  .town-ui__contract-action {
+    padding: 7px 10px;
+  }
+
+  .town-ui__catalog-nav {
+    gap: 8px;
+    padding: 0 8px 8px;
+  }
+
+  .town-ui__catalog-count {
+    min-width: 42px;
+  }
+
+  .town-ui__catalog-dots {
+    gap: 0;
+  }
+
+  .town-ui__catalog-dot {
+    width: 44px;
+    height: 44px;
+  }
+
+  .town-ui__catalog-dot::after {
+    width: 14px;
+    height: 14px;
   }
 
   .town-ui__title span {
