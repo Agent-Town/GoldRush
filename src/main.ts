@@ -133,7 +133,6 @@ function continueSavedRun(): void {
 }
 
 function launchContract(contractId: string): void {
-  runReturnTarget = 'board';
   markFirstClaimDone();
   stagePlayerContractLaunch(contractId);
   const nextSearch = new URLSearchParams(window.location.search);
@@ -144,14 +143,6 @@ function launchContract(contractId: string): void {
   town?.dispose();
   town = undefined;
   startWithProfiles({ skipTitle: true });
-}
-
-function markFirstClaimDone(): void {
-  try {
-    window.localStorage.setItem(FIRST_CLAIM_DONE_KEY, '1');
-  } catch {
-    // Storage is optional; the run should still launch.
-  }
 }
 
 function markFirstClaimDone(): void {
