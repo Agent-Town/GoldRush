@@ -38,6 +38,7 @@
       <nav class="nav" aria-label="Page sections">
         <a href="#teaser">Teaser</a>
         <a href="#pillars">Pillars</a>
+        <a href="#assay-office">Assay Office</a>
         <a href="#devlog">Devlog</a>
         <a href="mailto:hello@agenttown.app?subject=Agent%20Town%20waitlist">Waitlist</a>
       </nav>
@@ -124,6 +125,47 @@
         </div>
       </section>
 
+      <section id="assay-office" class="section assay-office-section" aria-labelledby="assay-office-title">
+        <div class="section-copy narrow">
+          <p class="eyebrow">Live from the claim</p>
+          <h2 id="assay-office-title">The Assay Office is open.</h2>
+          <p>
+            Daily ledgers from anonymous runs, posted as the wire brings them in.
+          </p>
+          <p class="assay-honesty">Anonymous gameplay statistics, no personal data, opt-out in Settings.</p>
+        </div>
+        <div class="assay-board" data-assay="office">
+          <p class="assay-status" data-assay="status">The clerk is tallying today's ledgers.</p>
+          <p class="assay-message" data-assay="message" hidden></p>
+          <dl class="assay-stat-grid" data-assay="grid">
+            <div class="assay-stat">
+              <dt>Today</dt>
+              <dd data-assay="runs-today">tallying...</dd>
+            </div>
+            <div class="assay-stat">
+              <dt>7 days</dt>
+              <dd data-assay="runs-seven-days">tallying...</dd>
+            </div>
+            <div class="assay-stat">
+              <dt>All time</dt>
+              <dd data-assay="runs-all-time">tallying...</dd>
+            </div>
+            <div class="assay-stat">
+              <dt>Deepest wave</dt>
+              <dd data-assay="deepest-wave">tallying...</dd>
+            </div>
+            <div class="assay-stat">
+              <dt>Typical run</dt>
+              <dd data-assay="typical-run">tallying...</dd>
+            </div>
+            <div class="assay-stat">
+              <dt>Busiest contract</dt>
+              <dd data-assay="busiest-contract">tallying...</dd>
+            </div>
+          </dl>
+        </div>
+      </section>
+
       <section id="devlog" class="section devlog-section" aria-labelledby="devlog-title">
         <div class="devlog-copy">
           <p class="eyebrow">Devlog</p>
@@ -142,7 +184,8 @@
 
     <footer class="site-footer">
       <p>Played by the founder's family since 2026.</p>
-      <p>No tracking, no analytics, no third-party beacons.</p>
+      <p>Anonymous gameplay statistics only — no personal data, no third-party trackers, opt-out in Settings.</p>
     </footer>
+    <script defer src="assay-office.js"></script>
   </body>
 </html>
