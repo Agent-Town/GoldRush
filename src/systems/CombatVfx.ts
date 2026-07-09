@@ -1,14 +1,20 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
+import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
-const PUFFS = 32;
-const TICKS = 48;
-const RINGS = 8;
+type CombatVfxDiagnostics = {
+  puffs: { active: number; capacity: number };
+  ticks: { active: number; capacity: number };
+  rings: { active: number; capacity: number };
+};
 
 export class CombatVfx {
   readonly group = new THREE.Group();
 
+  private readonly puffCapacity = poolSize('combatVfxPuffs', 32);
+  private readonly tickCapacity = poolSize('combatVfxTicks', 48);
+  private readonly ringCapacity = poolSize('combatVfxRings', 8);
   private readonly puffActive: boolean[] = [];
   private readonly puffAge: number[] = [];
   private readonly puffPos: THREE.Vector3[] = [];
@@ -48,9 +54,9 @@ export class CombatVfx {
     polygonOffsetFactor: -2,
     polygonOffsetUnits: -2,
   });
-  private readonly puffs = new THREE.InstancedMesh(this.puffGeometry, this.puffMaterial, PUFFS);
-  private readonly ticks = new THREE.InstancedMesh(this.tickGeometry, this.tickMaterial, TICKS);
-  private readonly rings = new THREE.InstancedMesh(this.ringGeometry, this.ringMaterial, RINGS);
+  private readonly puffs = new THREE.InstancedMesh(this.puffGeometry, this.puffMaterial, this.puffCapacity);
+  private readonly ticks = new THREE.InstancedMesh(this.tickGeometry, this.tickMaterial, this.tickCapacity);
+  private readonly rings = new THREE.InstancedMesh(this.ringGeometry, this.ringMaterial, this.ringCapacity);
   private readonly syncObject = new THREE.Object3D();
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private ringAlive = 0;
@@ -65,21 +71,21 @@ export class CombatVfx {
     this.rings.renderOrder = RenderLayers.impactVfx;
     this.rings.visible = false;
     this.group.add(this.puffs, this.ticks, this.rings);
-    for (let i = 0; i < PUFFS; i += 1) {
+    for (let i = 0; i < this.puffCapacity; i += 1) {
       this.puffActive.push(false);
       this.puffAge.push(0);
       this.puffPos.push(new THREE.Vector3());
       this.puffScale.push(1);
       this.puffs.setMatrixAt(i, this.hiddenMatrix);
     }
-    for (let i = 0; i < TICKS; i += 1) {
+    for (let i = 0; i < this.tickCapacity; i += 1) {
       this.tickActive.push(false);
       this.tickAge.push(0);
       this.tickPos.push(new THREE.Vector3());
       this.tickScale.push(1);
       this.ticks.setMatrixAt(i, this.hiddenMatrix);
     }
-    for (let i = 0; i < RINGS; i += 1) {
+    for (let i = 0; i < this.ringCapacity; i += 1) {
       this.ringActive.push(false);
       this.ringAge.push(0);
       this.ringPos.push(new THREE.Vector3());
@@ -94,7 +100,7 @@ export class CombatVfx {
   }
 
   dustPuff(position: THREE.Vector3, scale = 1): void {
-    for (let i = 0; i < PUFFS; i += 1) {
+    for (let i = 0; i < this.puffCapacity; i += 1) {
       if (this.puffActive[i]) continue;
       this.puffActive[i] = true;
       this.puffAge[i] = 0;
@@ -107,7 +113,7 @@ export class CombatVfx {
   }
 
   detonationRing(position: THREE.Vector3, radius: number): void {
-    for (let i = 0; i < RINGS; i += 1) {
+    for (let i = 0; i < this.ringCapacity; i += 1) {
       if (this.ringActive[i]) continue;
       this.ringActive[i] = true;
       this.ringAge[i] = 0;
@@ -122,7 +128,7 @@ export class CombatVfx {
   }
 
   update(delta: number): void {
-    for (let i = 0; i < PUFFS; i += 1) {
+    for (let i = 0; i < this.puffCapacity; i += 1) {
       if (!this.puffActive[i]) continue;
       this.puffAge[i] = (this.puffAge[i] ?? 0) + delta;
       if ((this.puffAge[i] ?? 0) >= 0.38) {
@@ -132,7 +138,7 @@ export class CombatVfx {
         this.syncPuff(i);
       }
     }
-    for (let i = 0; i < TICKS; i += 1) {
+    for (let i = 0; i < this.tickCapacity; i += 1) {
       if (!this.tickActive[i]) continue;
       this.tickAge[i] = (this.tickAge[i] ?? 0) + delta;
       if ((this.tickAge[i] ?? 0) >= 0.42) {
@@ -142,7 +148,7 @@ export class CombatVfx {
         this.syncTick(i);
       }
     }
-    for (let i = 0; i < RINGS; i += 1) {
+    for (let i = 0; i < this.ringCapacity; i += 1) {
       if (!this.ringActive[i]) continue;
       this.ringAge[i] = (this.ringAge[i] ?? 0) + delta;
       if ((this.ringAge[i] ?? 0) >= 0.48) {
@@ -159,19 +165,19 @@ export class CombatVfx {
   }
 
   reset(): void {
-    for (let i = 0; i < PUFFS; i += 1) {
+    for (let i = 0; i < this.puffCapacity; i += 1) {
       this.puffActive[i] = false;
       this.puffAge[i] = 0;
       this.puffScale[i] = 1;
       this.puffs.setMatrixAt(i, this.hiddenMatrix);
     }
-    for (let i = 0; i < TICKS; i += 1) {
+    for (let i = 0; i < this.tickCapacity; i += 1) {
       this.tickActive[i] = false;
       this.tickAge[i] = 0;
       this.tickScale[i] = 1;
       this.ticks.setMatrixAt(i, this.hiddenMatrix);
     }
-    for (let i = 0; i < RINGS; i += 1) {
+    for (let i = 0; i < this.ringCapacity; i += 1) {
       this.ringActive[i] = false;
       this.ringAge[i] = 0;
       this.ringRadius[i] = 1;
@@ -191,8 +197,16 @@ export class CombatVfx {
     this.ringMaterial.dispose();
   }
 
+  diagnostics(): CombatVfxDiagnostics {
+    return {
+      puffs: { active: this.puffActive.filter(Boolean).length, capacity: this.puffCapacity },
+      ticks: { active: this.tickActive.filter(Boolean).length, capacity: this.tickCapacity },
+      rings: { active: this.ringAlive, capacity: this.ringCapacity },
+    };
+  }
+
   private spawnTick(position: THREE.Vector3, scale = 1): void {
-    for (let i = 0; i < TICKS; i += 1) {
+    for (let i = 0; i < this.tickCapacity; i += 1) {
       if (this.tickActive[i]) continue;
       this.tickActive[i] = true;
       this.tickAge[i] = 0;
@@ -243,4 +257,9 @@ export class CombatVfx {
     this.ticks.instanceMatrix.needsUpdate = true;
     this.rings.instanceMatrix.needsUpdate = true;
   }
+}
+
+function poolSize(key: 'combatVfxPuffs' | 'combatVfxTicks' | 'combatVfxRings', fallback: number): number {
+  const value = Number((Balance.render as Record<typeof key, number>)[key] ?? fallback);
+  return Math.max(1, Math.floor(Number.isFinite(value) ? value : fallback));
 }

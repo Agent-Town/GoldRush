@@ -357,6 +357,11 @@ export const Balance = {
   render: {
     exposure: 0.75,
     maxDpr: 2,
+    floatTextPool: 12,
+    combatVfxPuffs: 32,
+    combatVfxTicks: 48,
+    combatVfxRings: 8,
+    enemyBarCap: 60,
   },
   world: {
     terrainSegments: 64,

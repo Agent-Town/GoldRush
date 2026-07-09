@@ -7,6 +7,7 @@ import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import type { RunReturnResult } from './game/Game';
+import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
 import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
@@ -64,6 +65,7 @@ afterFirstFrame(() => {
 function startGame(returnToMenu: boolean): void {
   const currentSearch = new URLSearchParams(window.location.search);
   applyStoredDifficultyPreset();
+  applyStoredPerformanceTier();
   applyUpgradeBudgetsFromBalance();
   game = new Game(gameCanvas, () => assayBench?.focus(), returnToMenu ? runReturnCallback : undefined);
   game.start();

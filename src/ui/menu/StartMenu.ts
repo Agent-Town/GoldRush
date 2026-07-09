@@ -8,6 +8,7 @@ import {
 import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
+import { bindPerformanceTierControl, renderPerformanceTierControl } from '../../game/PerformanceTier';
 import { readRunSuspend } from '../../game/RunSuspend';
 import {
   AUTO_SAVE_SLOT_NAME,
@@ -32,6 +33,7 @@ const AUDIO_SETTINGS_IDS = {
 const STORY_SETTINGS_IDS = {
   tales: 'start-menu-tales',
 };
+const PERFORMANCE_TIER_ID = 'start-menu-performance-tier';
 
 type StartMenuOptions = {
   onNewClaim: () => void;
@@ -47,6 +49,7 @@ export class StartMenu {
   private readonly audio = new SoundSystem();
   private disposeAudioSettings: () => void = () => undefined;
   private disposeStorySettings: () => void = () => undefined;
+  private disposePerformanceSettings: () => void = () => undefined;
   private storage?: Storage;
   private firstBoot = false;
   private profileMessage = '';
@@ -76,6 +79,7 @@ export class StartMenu {
   dispose(): void {
     this.disposeAudioSettings();
     this.disposeStorySettings();
+    this.disposePerformanceSettings();
     this.disposeAccountSync();
     this.root.removeEventListener('click', this.onClick);
     this.root.removeEventListener('keydown', this.onKeyDown);
@@ -86,6 +90,7 @@ export class StartMenu {
   private render(): void {
     this.disposeAudioSettings();
     this.disposeStorySettings();
+    this.disposePerformanceSettings();
     const suspend = readRunSuspend();
     const slots = readSaveSlots(this.storage);
     const account = accountSync.snapshot();
@@ -127,11 +132,13 @@ export class StartMenu {
         <section class="gr-start-menu__settings" data-testid="start-menu-settings-panel" ${this.settingsOpen ? '' : 'hidden'}>
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
           ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
+          ${renderPerformanceTierControl(PERFORMANCE_TIER_ID)}
         </section>
       </div>
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
     this.disposeStorySettings = bindStorySettingsControl(this.root, STORY_SETTINGS_IDS);
+    this.disposePerformanceSettings = bindPerformanceTierControl(this.root, PERFORMANCE_TIER_ID);
     this.root.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
       event.preventDefault();
       this.createFirstProfile();

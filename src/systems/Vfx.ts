@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
+import { Balance } from '../game/Balance';
 
 type FloatingText = {
   sprite: THREE.Sprite;
@@ -13,7 +14,6 @@ type FloatingText = {
   start: THREE.Vector3;
 };
 
-const POOL_SIZE = 12;
 const FLOAT_HEIGHT = 1.2;
 const FLOAT_DURATION = 0.8;
 
@@ -25,7 +25,7 @@ export class Vfx {
 
   constructor() {
     this.group.name = 'Vfx';
-    for (let index = 0; index < POOL_SIZE; index += 1) {
+    for (let index = 0; index < floatTextPoolSize(); index += 1) {
       const textTexture = createTextTexture('', '#c4883a');
       const material = new THREE.SpriteMaterial({
         map: textTexture.texture,
@@ -70,6 +70,10 @@ export class Vfx {
 
   get activeFloatTexts(): number {
     return this.pool.reduce((count, item) => count + (item.active ? 1 : 0), 0);
+  }
+
+  get capacity(): number {
+    return this.pool.length;
   }
 
   /**
@@ -159,4 +163,8 @@ function toCssColor(colorHex: string | number): string {
 
 function easeOutCubic(t: number): number {
   return 1 - Math.pow(1 - t, 3);
+}
+
+function floatTextPoolSize(): number {
+  return Math.max(1, Math.floor(Balance.render.floatTextPool));
 }
