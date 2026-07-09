@@ -1,5 +1,5 @@
 # Task mp-04-ride-together: multiplayer without URL surgery — invite from town, join with a short code (lane-d; commit prefix "feat:")
-CODEX: model=gpt-5.6-terra effort=medium
+CODEX: model=gpt-5.5 effort=medium
 FROM `specs/multiplayer/README.md` (MP-v1 ratified; MP-01 relay + MP-02 lockstep + MP-03 second-hero SHIPPED — this is the family-facing door; MP-05 = the family playtest gate after this).
 You are Codex in worktrees/lane-d. Pre-flight per LANE-SAFETY. **067-mp-resync-two-actors may still be queued/running ahead of you — it owns the snapshot-restore seam; do NOT touch that seam here.** READ FIRST: `src/mp/LockstepClient.ts` (`multiplayerConfigFromSearch` — the dev door stays), the town scene surfaces (town-T6 moved surfaces home), `functions/api/multiplayer/create.ts` + `docs/api-multiplayer.md`, `e2e/mp-02-lockstep.spec.ts` env helpers.
 
