@@ -10,6 +10,7 @@ interface ThreeGameDiagnostics {
   runState: 'boot' | 'playing' | 'levelup' | 'dead';
   paused: boolean;
   state: 'boot' | 'playing' | 'levelup' | 'dead' | 'paused';
+  mp: GrMultiplayerState | null;
   difficultyPreset: 'greenhorn' | 'trail' | 'vein-hunter';
   renderLayers: Record<string, number>;
   renderLayerOf: (name: string) => number | null;
@@ -704,6 +705,7 @@ type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
+type GrMultiplayerState = import('./mp/LockstepClient').MultiplayerState;
 
 interface Window {
   __GR_STORY__?: {
@@ -715,6 +717,10 @@ interface Window {
   };
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
   __GR_STAT_SIM__?: GrStatSimWindow;
+  __GR_MP__?: {
+    state: () => GrMultiplayerState | null;
+    injectDesyncAt: (tick: number) => void;
+  };
   __GR_TOWN_DIAGNOSTICS__?: import('./town/TownScene').TownDiagnostics;
   __BENCH_REPORT__?: unknown;
   __GR_GUI__?: GoldRushGui;

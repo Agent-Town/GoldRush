@@ -87,6 +87,14 @@ import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { RenderLayers, renderLayerOf } from '../core/RenderLayers';
 import { createRng } from '../core/Rng';
+import {
+  LockstepClient,
+  intentsFromLockstepInput,
+  lockstepInputFromIntents,
+  multiplayerConfigFromSearch,
+  stableHash,
+  type LockstepTick,
+} from '../mp/LockstepClient';
 import { Hero } from '../entities/Hero';
 import { BlastChargePool } from '../entities/BlastCharge';
 import { GoldPickupPool } from '../entities/GoldPickup';
@@ -152,7 +160,12 @@ import { clearScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 import { buildableDefs, type BuildableId } from './buildables';
-import { readRunSuspend, type RunSuspendWrite } from './RunSuspend';
+import {
+  captureRunSuspendSnapshot,
+  readRunSuspend,
+  restoreRunSuspendSnapshot,
+  type RunSuspendWrite,
+} from './RunSuspend';
 import { defaultSaveSlotName, formatBudgetWarning, saveManualSlot, saveSlotsBudget } from './SaveSlots';
 
 const frontierEpoch = loadEpoch('epoch-1-frontier');
@@ -191,6 +204,14 @@ export class Game {
   private readonly events = new EventBus();
   private readonly input: InputController;
   private readonly actors = [new Hero()];
+  private mpClient?: LockstepClient;
+  private mpTickThisFrame: number | null = null;
+  private mpCard?: HTMLElement;
+  private readonly mpRemoteGroup = new THREE.Group();
+  private readonly mpRemoteHeroes = new Map<string, THREE.Group>();
+  private readonly mpRemotePositions = new Map<string, THREE.Vector3>();
+  private readonly mpRemoteBodyGeometry = new THREE.CylinderGeometry(0.28, 0.34, 0.78, 12);
+  private readonly mpRemoteHatGeometry = new THREE.ConeGeometry(0.36, 0.22, 12);
   private readonly enemies = new EnemyPool(this.camera);
   private readonly projectiles = new ProjectilePool();
   private readonly blastCharges = new BlastChargePool();
@@ -984,6 +1005,7 @@ export class Game {
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
     // Meta defenses need to exist before the opening stress spawns pick lanes.
     this.runManager = installRunManager(this);
+    this.installMultiplayerDev();
     this.waveSystem.spawnStressEnemies();
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     this.applyStats(this.progression.stats, null);
@@ -1028,6 +1050,8 @@ export class Game {
     this.runManager?.dispose();
     this.unsubscribeAgentReceipts?.();
     this.agentStub?.dispose();
+    this.mpClient?.dispose();
+    window.__GR_MP__ = undefined;
     this.loop.stop();
     window.clearTimeout(this.baronAnnouncementTimer);
     window.removeEventListener('pointerdown', this.skipBaronCeremony);
@@ -1059,6 +1083,14 @@ export class Game {
     this.megaprojectBarrelMaterial.dispose();
     this.megaprojectPlaqueTexture.dispose();
     this.megaprojectPlaqueMaterial.dispose();
+    for (const group of this.mpRemoteHeroes.values()) {
+      if (typeof group.userData.dispose === 'function') group.userData.dispose();
+    }
+    this.mpRemoteHeroes.clear();
+    this.mpRemoteBodyGeometry.dispose();
+    this.mpRemoteHatGeometry.dispose();
+    this.mpRemoteGroup.clear();
+    this.mpCard?.remove();
     this.baronStandardGroup.clear();
     this.baronStandardPoleGeometry.dispose();
     this.baronStandardClothGeometry.dispose();
@@ -1097,10 +1129,20 @@ export class Game {
 
   private update(delta: number): void {
     this.frame += 1;
+    this.mpTickThisFrame = null;
     beginSpriteStatsFrame(this.frame);
     this.recordFrameMs(delta * 1000);
+    const sampledIntents = this.input.readIntents();
+    const lockstepTick = this.mpClient?.pump(lockstepInputFromIntents(sampledIntents)) ?? null;
+    if (this.mpClient && !lockstepTick) {
+      this.rememberIntents(sampledIntents);
+      resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+      this.updatePresentation(delta);
+      return;
+    }
+    const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : sampledIntents;
+    if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
     this.elapsed += delta;
-    const intents = this.input.readIntents();
     if (intents.mute && !this.lastMuteIntent) this.toggleAudioMute();
     this.lastMuteIntent = intents.mute;
     if (this.baronCeremony) {
@@ -1223,6 +1265,7 @@ export class Game {
       this.combatVfx.update(simDelta);
     }
     this.updatePresentation(delta);
+    this.finishMultiplayerTick();
   }
 
   private updatePresentation(delta: number): void {
@@ -1233,6 +1276,7 @@ export class Game {
     if (this.baronCeremony) this.combatVfx.update(delta);
     this.syncBaronStandardDrop();
     this.syncBaronRocketCart();
+    this.syncMultiplayerRemoteHeroes();
     this.syncHeroVisualHeight();
     const visualStress =
       this.enemies.activeCount >= Balance.world.detailStressEnemyThreshold ||
@@ -1249,6 +1293,202 @@ export class Game {
     this.syncBuildingContextPrompt();
     this.syncWorldInfoNotePrompt();
     this.publishDiagnostics();
+  }
+
+  private consumeMultiplayerTick(bundle: LockstepTick): Intents {
+    this.mpTickThisFrame = bundle.tick;
+    this.stepMultiplayerRemoteHeroes(bundle);
+    // ponytail: MP-02 has one simulated hero; promote inputs to real actor ownership in the MP-03/M6 slice.
+    return intentsFromLockstepInput(bundle.inputs[0]?.input);
+  }
+
+  private finishMultiplayerTick(): void {
+    const tick = this.mpTickThisFrame;
+    if (!this.mpClient || tick === null) return;
+    const snapshot = this.mpClient.shouldExchangeHash(tick)
+      ? captureRunSuspendSnapshot(
+          this,
+          this.runManager?.metaProgress ?? this.appliedMetaProgress,
+          this.waveSystem.diagnostics.wave,
+          this.timeAlive,
+        )
+      : null;
+    this.mpClient.afterSimTick(tick, this.multiplayerStateHash(tick), snapshot);
+    this.mpTickThisFrame = null;
+  }
+
+  private multiplayerStateHash(tick: number): string {
+    const round = (value: number) => Math.round(value * 1000) / 1000;
+    return stableHash({
+      tick,
+      timeAlive: round(this.timeAlive),
+      hero: {
+        hp: round(this.primaryActor.hp),
+        x: round(this.primaryActor.group.position.x),
+        y: round(this.primaryActor.group.position.y),
+        z: round(this.primaryActor.group.position.z),
+      },
+      wave: this.waveSystem.diagnostics.wave,
+      waveState: this.waveSystem.diagnostics.waveState,
+      economy: {
+        gold: round(this.economy.gold),
+        bankCap: round(this.economy.bankCap),
+        logLength: this.economy.log.length,
+      },
+      progression: {
+        level: this.progression.level,
+        xpInto: round(this.progression.xpInto),
+        pendingLevels: this.progression.snapshot.pendingLevels,
+        stacks: this.progression.snapshot.stacks,
+      },
+      enemies: this.enemies.all
+        .filter((enemy) => enemy.isAlive)
+        .map((enemy) => ({
+          id: enemy.id,
+          hp: round(enemy.currentHp),
+          x: round(enemy.position.x),
+          y: round(enemy.position.y),
+          z: round(enemy.position.z),
+          thief: enemy.isThief,
+          wrecker: enemy.isWrecker,
+        })),
+      buildings: this.buildSystem.diagnostics.hp.map((entry) => ({
+        id: entry.id,
+        index: entry.index,
+        tier: entry.tier,
+        hp: round(entry.hp),
+        wrecked: entry.wrecked,
+        x: round(entry.position.x),
+        z: round(entry.position.z),
+      })),
+      kills: this.kills,
+      weapon: this.activeWeapon,
+      blastTime: round(this.blastTime),
+    });
+  }
+
+  private installMultiplayerDev(): void {
+    const config = multiplayerConfigFromSearch();
+    if (!config) return;
+    this.mpClient = new LockstepClient({
+      ...config,
+      onDesync: (tick) => {
+        this.state.setPaused(true);
+        this.playerPauseActive = false;
+        this.showMultiplayerCard('The wire crossed', `Tick ${tick} disagreed. Restoring the latest trail ledger.`);
+      },
+      onSnapshot: (snapshot) => {
+        const restored = restoreRunSuspendSnapshot(this, snapshot);
+        if (restored) {
+          this.state.setPaused(false);
+          this.showMultiplayerCard('The wire crossed', 'Trail ledger restored. Riding together again.');
+        }
+        return restored;
+      },
+    });
+    window.__GR_MP__ = {
+      state: () => this.mpClient?.state() ?? null,
+      injectDesyncAt: (tick: number) => this.mpClient?.injectDesyncAt(tick),
+    };
+    void this.mpClient.connect();
+  }
+
+  private showMultiplayerCard(title: string, message: string): void {
+    if (!this.mpCard) {
+      const card = document.createElement('section');
+      card.className = 'death-overlay death-overlay--visible gr-mp-card';
+      card.dataset.testid = 'mp-desync-card';
+      card.setAttribute('aria-label', 'Multiplayer sync');
+      card.innerHTML = `
+        <div class="death-overlay__panel">
+          <p class="death-overlay__eyebrow">Ride Together</p>
+          <h1 data-mp-card-title></h1>
+          <p class="death-overlay__flavor" data-mp-card-message></p>
+        </div>
+      `;
+      this.getElement('#app').append(card);
+      this.mpCard = card;
+    }
+    this.mpCard.querySelector('[data-mp-card-title]')!.textContent = title;
+    this.mpCard.querySelector('[data-mp-card-message]')!.textContent = message;
+    this.mpCard.classList.add('death-overlay--visible');
+  }
+
+  private stepMultiplayerRemoteHeroes(bundle: LockstepTick): void {
+    const dt = this.mpClient?.stepSeconds ?? 1 / 30;
+    for (const entry of bundle.inputs) {
+      if (!this.mpClient || entry.playerId === bundle.inputs[0]?.playerId) continue;
+      const position = this.mpRemotePositions.get(entry.playerId) ?? this.initialMultiplayerRemotePosition(entry.playerId);
+      position.x += entry.input.mx * Balance.hero.speed * dt;
+      position.z += entry.input.my * Balance.hero.speed * dt;
+      position.x = Math.max(Terrain.bounds.minX, Math.min(Terrain.bounds.maxX, position.x));
+      position.z = Math.max(Terrain.bounds.minZ, Math.min(Terrain.bounds.maxZ, position.z));
+      this.mpRemotePositions.set(entry.playerId, position);
+    }
+  }
+
+  private syncMultiplayerRemoteHeroes(): void {
+    const state = this.mpClient?.state();
+    if (!state?.connected || state.roster.length < 2) {
+      this.mpRemoteGroup.visible = false;
+      return;
+    }
+    this.mpRemoteGroup.visible = true;
+    const remoteIds = new Set(state.roster.map((player) => player.playerId).filter((id) => id !== state.playerId));
+    for (const [id, group] of this.mpRemoteHeroes) {
+      if (remoteIds.has(id)) continue;
+      group.removeFromParent();
+      this.mpRemoteHeroes.delete(id);
+      this.mpRemotePositions.delete(id);
+    }
+    state.roster.forEach((player, index) => {
+      if (player.playerId === state.playerId) return;
+      const group = this.mpRemoteHeroes.get(player.playerId) ?? this.createMultiplayerRemoteHero(player.playerId, index);
+      const position = this.mpRemotePositions.get(player.playerId) ?? this.initialMultiplayerRemotePosition(player.playerId, index);
+      position.y = Terrain.visualY(position.x, position.z, Balance.enemy.groundY);
+      group.position.copy(position);
+      group.visible = true;
+    });
+  }
+
+  private createMultiplayerRemoteHero(playerId: string, index: number): THREE.Group {
+    const tint = multiplayerTint(index);
+    const material = new THREE.MeshStandardMaterial({ color: tint, roughness: 0.78, metalness: 0.05 });
+    const lamp = new THREE.MeshStandardMaterial({
+      color: '#83ded7',
+      emissive: '#2f8f85',
+      emissiveIntensity: 0.5,
+      roughness: 0.45,
+    });
+    const group = new THREE.Group();
+    group.name = `RemoteHero-${playerId}`;
+    const body = new THREE.Mesh(this.mpRemoteBodyGeometry, material);
+    body.name = 'RemoteHeroBody';
+    body.position.y = 0.48;
+    const hat = new THREE.Mesh(this.mpRemoteHatGeometry, material);
+    hat.name = 'RemoteHeroHat';
+    hat.position.y = 1;
+    const light = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 6), lamp);
+    light.name = 'RemoteHeroLamp';
+    light.position.set(0, 0.65, -0.24);
+    group.add(body, hat, light);
+    group.userData.dispose = () => {
+      material.dispose();
+      lamp.dispose();
+      light.geometry.dispose();
+    };
+    this.mpRemoteGroup.add(group);
+    this.mpRemoteHeroes.set(playerId, group);
+    return group;
+  }
+
+  private initialMultiplayerRemotePosition(playerId: string, index = this.mpRemotePositions.size + 1): THREE.Vector3 {
+    const angle = index * 1.7;
+    const position = this.primaryActor.group.position
+      .clone()
+      .add(new THREE.Vector3(Math.cos(angle) * 1.35, 0, Math.sin(angle) * 1.35));
+    this.mpRemotePositions.set(playerId, position);
+    return position;
   }
 
   private syncAudioLoops(): void {
@@ -1407,6 +1647,9 @@ export class Game {
     this.syncHeroVisualHeight();
     this.prospector.reset(this.primaryActor.group.position);
     this.scene.add(this.prospector.group);
+    this.mpRemoteGroup.name = 'MultiplayerRemoteHeroes';
+    this.mpRemoteGroup.visible = false;
+    this.scene.add(this.mpRemoteGroup);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.scene.add(this.primaryActor.group);
@@ -1917,6 +2160,7 @@ export class Game {
       runState: this.state.current,
       paused: this.state.isPaused,
       state: this.state.isPaused ? 'paused' : this.state.current,
+      mp: this.mpClient?.state() ?? null,
       difficultyPreset: this.difficultyPreset,
       renderLayers: RenderLayers,
       renderLayerOf,
@@ -4085,6 +4329,10 @@ function edgeFromPosition(position: THREE.Vector3): CompassEdge {
 function contractHeroStart(contract: ContractManifest): THREE.Vector3 {
   const lossStake = contract.tileParams.stakeMarkers?.find((marker) => marker.lossCondition);
   return new THREE.Vector3(lossStake?.x ?? 0, 0.06, lossStake?.z ?? 12);
+}
+
+function multiplayerTint(index: number): string {
+  return ['#5b8a8a', '#c4883a', '#a0522d', '#8b7d3c'][index % 4];
 }
 
 function edgePlace(edge: CompassEdge): string {
