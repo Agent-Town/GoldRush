@@ -18,7 +18,7 @@ note "building…"
 if ! npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; exit 0; fi
 
 note "deploying dist/ to Pages project 'gold-rush'…"
-if wrangler pages deploy dist --project-name gold-rush --commit-dirty=true >> "$LOG" 2>&1; then
+if wrangler pages deploy --commit-dirty=true >> "$LOG" 2>&1; then
   URL=$(grep -oE 'https://[a-z0-9.-]*pages\.dev[^ ]*' "$LOG" | tail -1)
   note "DEPLOYED ok ${URL:-'(url in log)'}"
 else
