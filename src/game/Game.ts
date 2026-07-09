@@ -96,6 +96,7 @@ import {
   multiplayerConfigFromSearch,
   stableHash,
   type LockstepTick,
+  type MultiplayerPlayer,
 } from '../mp/LockstepClient';
 import { Hero } from '../entities/Hero';
 import { BlastChargePool } from '../entities/BlastCharge';
@@ -168,6 +169,7 @@ import {
   captureRunSuspendSnapshot,
   readRunSuspend,
   restoreRunSuspendSnapshot,
+  type RunSuspendEnvelope,
   type RunSuspendWrite,
 } from './RunSuspend';
 import { defaultSaveSlotName, formatBudgetWarning, saveManualSlot, saveSlotsBudget } from './SaveSlots';
@@ -196,6 +198,24 @@ const BARON_DEFEAT_TITLE = 'THE BARON IS DEFEATED';
 const BARON_KILL_STOP_SECONDS = 2.2;
 const BARON_DEFEAT_CARD_SECONDS = 4;
 const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
+const MULTIPLAYER_SPAWN_RADIUS = 1.2;
+const MULTIPLAYER_TINTS = ['#5b8a8a', '#c4883a', '#8fbc8f', '#a78bfa'] as const;
+type MultiplayerActorMeta = {
+  playerId: string;
+  slot: number;
+  name: string;
+  town: string;
+  local: boolean;
+};
+type MultiplayerActorSnapshot = {
+  hp: number;
+  position: { x: number; y: number; z: number };
+  velocity: { x: number; y: number; z: number };
+  visible: boolean;
+};
+type MultiplayerRunSuspendSnapshot = RunSuspendEnvelope & {
+  mpActors?: MultiplayerActorSnapshot[];
+};
 type BaronRocketTargetKind = 'hero' | 'building';
 type BaronRocketVolleyConfig = NonNullable<ContractBaronTwist['rocketVolley']>;
 
@@ -210,12 +230,14 @@ export class Game {
   private readonly actors = [new Hero()];
   private mpClient?: LockstepClient;
   private mpTickThisFrame: number | null = null;
+  private mpActorIntents: Intents[] | null = null;
+  private mpLocalSlot = 0;
+  private mpActionSlot = 0;
   private mpCard?: HTMLElement;
-  private readonly mpRemoteGroup = new THREE.Group();
-  private readonly mpRemoteHeroes = new Map<string, THREE.Group>();
-  private readonly mpRemotePositions = new Map<string, THREE.Vector3>();
-  private readonly mpRemoteBodyGeometry = new THREE.CylinderGeometry(0.28, 0.34, 0.78, 12);
-  private readonly mpRemoteHatGeometry = new THREE.ConeGeometry(0.36, 0.22, 12);
+  private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
+  private readonly mpHeroChips = new Map<string, HTMLElement>();
+  private readonly heroShooterUnsubscribes: Array<() => void> = [];
+  private readonly actionActorPosition = new THREE.Vector3();
   private readonly enemies = new EnemyPool(this.camera);
   private readonly enemyLedgerKinds = new Map<number, EnemyLedgerEntryId>();
   private readonly enemyLedgerEntriesSeenThisRun = new Set<EnemyLedgerEntryId>();
@@ -318,7 +340,7 @@ export class Game {
   );
   private readonly heroShooter: ShooterHandle = {
     id: 'hero',
-    enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabled(),
+    enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabledFor(this.primaryActor),
     getPos: () => this.primaryActor.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
@@ -333,17 +355,19 @@ export class Game {
   private readonly blastShooter: ShooterHandle = {
     id: 'hero_blast',
     kind: 'lob',
-    enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabled(),
+    enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabledFor(this.primaryActor),
     getPos: () => this.primaryActor.group.position,
     range: Balance.blast.range,
     cooldown: Balance.blast.cooldown,
     damage: Balance.blast.damage,
     getDamage: () => this.currentBlastDamage(),
-    targetPoint: (_origin, target) => this.currentBlastTarget(target.position),
+    targetPoint: (_origin, target) => this.currentBlastTargetFor(this.primaryActor, target.position),
     projSpeed: 0,
     volley: Balance.blast.volley,
     aoe: { radius: Balance.blast.radius, airTime: Balance.blast.airTime },
   };
+  private readonly heroShooters: ShooterHandle[] = [this.heroShooter];
+  private readonly blastShooters: ShooterHandle[] = [this.blastShooter];
   private readonly simTimeScale = getTimescale();
   private manualSimForTest = false;
   private manualAdvanceForTest = false;
@@ -494,6 +518,96 @@ export class Game {
     return this.actors[0];
   }
 
+  private get localActor(): Hero {
+    return this.actors[this.mpLocalSlot] ?? this.primaryActor;
+  }
+
+  private get actionActor(): Hero {
+    return this.actors[this.mpActionSlot] ?? this.primaryActor;
+  }
+
+  private nearestActorTo(position: THREE.Vector3): Hero {
+    let best = this.primaryActor;
+    let bestDistanceSq = Number.POSITIVE_INFINITY;
+    for (const actor of this.actors) {
+      if (!actor.group.visible) continue;
+      const dx = actor.group.position.x - position.x;
+      const dz = actor.group.position.z - position.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq < bestDistanceSq) {
+        best = actor;
+        bestDistanceSq = distanceSq;
+      }
+    }
+    return best;
+  }
+
+  private visibleActorPositions(): THREE.Vector3[] {
+    return this.actors.filter((actor) => actor.group.visible).map((actor) => actor.group.position);
+  }
+
+  private visibleHarvestTargets(): Array<{ position: THREE.Vector3; speed: number }> {
+    const targets = this.actors
+      .filter((actor) => actor.group.visible)
+      .map((actor) => ({ position: actor.group.position, speed: actor.velocity.length() }));
+    return targets.length > 0 ? targets : [{ position: this.primaryActor.group.position, speed: this.primaryActor.velocity.length() }];
+  }
+
+  private lastHarvestGoldPosition(): THREE.Vector3 {
+    const position = this.harvestSnapshot.lastGoldPosition;
+    return position ? new THREE.Vector3(position.x, position.y, position.z) : this.primaryActor.group.position;
+  }
+
+  private multiplayerActive(): boolean {
+    const state = this.mpClient?.state();
+    return state?.connected === true && state.roster.length >= 2;
+  }
+
+  private updateActionActorPosition(): void {
+    this.actionActorPosition.copy(this.actionActor.group.position);
+  }
+
+  private registerHeroShooters(actor: Hero, heroShooter = this.createHeroShooter(actor), blastShooter = this.createBlastShooter(actor)): void {
+    this.heroShooters.push(...(heroShooter === this.heroShooter ? [] : [heroShooter]));
+    this.blastShooters.push(...(blastShooter === this.blastShooter ? [] : [blastShooter]));
+    this.heroShooterUnsubscribes.push(this.combat.registerShooter(heroShooter), this.combat.registerShooter(blastShooter));
+  }
+
+  private createHeroShooter(actor: Hero): ShooterHandle {
+    const handle: ShooterHandle = {
+      id: 'hero',
+      enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabledFor(actor),
+      getPos: () => actor.group.position,
+      range: Balance.sparkRig.range,
+      cooldown: 1 / Balance.sparkRig.fireRate,
+      damage: Balance.sparkRig.damage,
+      canTarget: hasElevationTile() ? (target) => terrainLineOfSight(actor.group.position, target.position) : undefined,
+      effectiveRange: hasElevationTile()
+        ? () => highGroundRange(handle.range, actor.group.position.x, actor.group.position.z)
+        : undefined,
+      projSpeed: Balance.sparkRig.boltSpeed,
+      volley: Balance.sparkRig.volley,
+    };
+    return handle;
+  }
+
+  private createBlastShooter(actor: Hero): ShooterHandle {
+    return {
+      id: 'hero_blast',
+      kind: 'lob',
+      enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabledFor(actor),
+      getPos: () => actor.group.position,
+      range: Balance.blast.range,
+      cooldown: Balance.blast.cooldown,
+      damage: Balance.blast.damage,
+      getDamage: () => this.currentBlastDamage(),
+      targetPoint: (_origin, target) => this.currentBlastTargetFor(actor, target.position),
+      projSpeed: 0,
+      volley: Balance.blast.volley,
+      aoe: { radius: Balance.blast.radius, airTime: Balance.blast.airTime },
+    };
+  }
+
   private readonly tuning: DebugTuning = {
     exposure: Balance.render.exposure,
     maxDpr: Balance.render.maxDpr,
@@ -613,13 +727,14 @@ export class Game {
     this.blastAimReticle.renderOrder = RenderLayers.groundDecals;
     this.blastAimReticle.visible = false;
     this.canvas.addEventListener('pointermove', this.onBlastAimPointerMove);
+    this.updateActionActorPosition();
     this.buildSystem = new BuildSystem(
       canvas,
       this.camera,
       this.economy,
       this.combat,
       this.goldTargeting,
-      this.primaryActor.group.position,
+      this.actionActorPosition,
       () => this.debugBeaconWaveOverride ?? this.waveSystem.diagnostics.wave,
       (position, text, color) => this.vfx.floatText(position, text, color),
       (sound) => this.audio.play(sound),
@@ -641,13 +756,16 @@ export class Game {
           source: 'upgrade_assay',
           amount,
         });
-        this.vfx.floatText(this.primaryActor.group.position, `+${amount}`, '#c4883a');
+        this.vfx.floatText(this.localActor.group.position, `+${amount}`, '#c4883a');
       },
       onHeal: (amount) => {
-        const before = this.primaryActor.hp;
-        this.primaryActor.heal(amount);
-        const healed = Math.round(this.primaryActor.hp - before);
-        if (healed > 0) this.vfx.floatText(this.primaryActor.group.position, `+${healed}`, '#6bb36b');
+        let healed = 0;
+        for (const actor of this.actors) {
+          const before = actor.hp;
+          actor.heal(amount);
+          healed = Math.max(healed, Math.round(actor.hp - before));
+        }
+        if (healed > 0) this.vfx.floatText(this.localActor.group.position, `+${healed}`, '#6bb36b');
       },
       hasResearchNode: (id) => hasResearchNode(this.researchState, id),
       getCraftingProfile: () => this.craftingProfile,
@@ -667,7 +785,7 @@ export class Game {
       this.promptStack,
       () => this.confirmUpgrade(),
       () => this.confirmDemolish(),
-      () => this.fundMegaprojectStage(this.primaryActor.group.position),
+      () => this.fundMegaprojectStage(this.actionActor.group.position),
     );
     this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
     this.worldInfoNotePrompt = new WorldInfoNotePrompt(this.promptStack);
@@ -677,8 +795,7 @@ export class Game {
     this.getElement('#app').append(this.damageVignette);
     window.addEventListener('pointerdown', this.skipBaronCeremony, { passive: true });
     window.addEventListener('keydown', this.skipBaronCeremony);
-    this.combat.registerShooter(this.heroShooter);
-    this.combat.registerShooter(this.blastShooter);
+    this.registerHeroShooters(this.primaryActor, this.heroShooter, this.blastShooter);
     this.events.on('hero_damaged', () => {
       this.damageFlashRemaining = Balance.hero.iframes;
     });
@@ -720,6 +837,7 @@ export class Game {
         onDone: () => this.returnToTown(returnResult),
         onSecondaryAction: () => this.resetRun(),
       });
+      this.syncMultiplayerLedgerRiders();
     });
     this.events.on('run_ended', (event) => {
       if (event.reason !== 'secured') return;
@@ -767,6 +885,7 @@ export class Game {
           },
           onSecondaryAction: () => this.finishSecuredLedgerQuickLoop(),
         });
+        this.syncMultiplayerLedgerRiders();
       }, 0);
     });
     this.disposeRunTelemetry = installRunTelemetry({
@@ -811,9 +930,9 @@ export class Game {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
         teleport: (x: number, z: number) => {
-          this.primaryActor.group.position.set(x, this.primaryActor.group.position.y, z);
+          this.localActor.group.position.set(x, this.localActor.group.position.y, z);
           this.syncHeroVisualHeight();
-          this.primaryActor.velocity.set(0, 0, 0);
+          this.localActor.velocity.set(0, 0, 0);
         },
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
           this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
@@ -821,7 +940,7 @@ export class Game {
         spawnWrecker: (edge?: CompassEdge) => this.spawnHarnessWrecker(edge),
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         repair: (family: BuildableId, index: number) => {
-          const repaired = this.buildSystem.repairBuilding(family, index, this.timeAlive, this.primaryActor.group.position);
+          const repaired = this.buildSystem.repairBuilding(family, index, this.timeAlive, this.localActor.group.position);
           this.publishDiagnostics();
           return repaired;
         },
@@ -844,11 +963,12 @@ export class Game {
         },
         advanceSim: (seconds: number, stepSeconds?: number) => this.advanceSimForTest(seconds, stepSeconds),
         resetRun: () => this.resetRun(),
+        endRunForTest: () => this.endRun(),
         toggleWeapon: () => this.toggleWeapon(),
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
         setDifficultyPreset: (preset: string) => this.setDifficultyPreset(preset),
         warmVfx: () =>
-          Promise.all([this.vfx.warm(this.primaryActor.group.position), this.enemies.warmHitFlashes(this.primaryActor.group.position)]).then(
+          Promise.all([this.vfx.warm(this.localActor.group.position), this.enemies.warmHitFlashes(this.localActor.group.position)]).then(
             () => undefined,
           ),
         clearScores: () => clearScores(),
@@ -1014,7 +1134,7 @@ export class Game {
         }),
       };
     }
-    this.cameraRig.snapTo(this.primaryActor.group.position);
+    this.cameraRig.snapTo(this.localActor.group.position);
     this.state.transition('playing');
     this.uiBridge.announce('Stake your claim.', 0);
     this.prefetchContractPresentation();
@@ -1116,13 +1236,11 @@ export class Game {
     this.megaprojectBarrelMaterial.dispose();
     this.megaprojectPlaqueTexture.dispose();
     this.megaprojectPlaqueMaterial.dispose();
-    for (const group of this.mpRemoteHeroes.values()) {
-      if (typeof group.userData.dispose === 'function') group.userData.dispose();
-    }
-    this.mpRemoteHeroes.clear();
-    this.mpRemoteBodyGeometry.dispose();
-    this.mpRemoteHatGeometry.dispose();
-    this.mpRemoteGroup.clear();
+    for (const unsubscribe of this.heroShooterUnsubscribes) unsubscribe();
+    this.heroShooterUnsubscribes.length = 0;
+    for (const chip of this.mpHeroChips.values()) chip.remove();
+    this.mpHeroChips.clear();
+    this.mpActorMeta.clear();
     this.mpCard?.remove();
     this.baronStandardGroup.clear();
     this.baronStandardPoleGeometry.dispose();
@@ -1153,7 +1271,7 @@ export class Game {
     (this.blastAimReticle.material as THREE.Material).dispose();
     this.goldPickups.dispose();
     this.enemies.dispose();
-    this.primaryActor.dispose();
+    for (const actor of this.actors) actor.dispose();
     disposeGeneratedAssets();
     this.disposeRunTelemetry();
     this.events.clear();
@@ -1164,6 +1282,7 @@ export class Game {
   private update(delta: number): void {
     this.frame += 1;
     this.mpTickThisFrame = null;
+    this.mpActorIntents = null;
     beginSpriteStatsFrame(this.frame);
     this.recordFrameMs(delta * 1000);
     const sampledIntents = this.input.readIntents();
@@ -1177,8 +1296,9 @@ export class Game {
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : sampledIntents;
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
     this.elapsed += delta;
-    if (intents.mute && !this.lastMuteIntent) this.toggleAudioMute();
-    this.lastMuteIntent = intents.mute;
+    this.updateActionActorPosition();
+    if (sampledIntents.mute && !this.lastMuteIntent) this.toggleAudioMute();
+    this.lastMuteIntent = sampledIntents.mute;
     if (this.baronCeremony) {
       if (this.elapsed - this.baronCeremony.startedElapsed >= BARON_KILL_STOP_SECONDS) this.finishBaronCeremony();
       if (this.baronCeremony) {
@@ -1229,7 +1349,7 @@ export class Game {
     this.lastUpgradeIntent = intents.upgrade;
     this.lastRotateIntent = intents.rotateBuild;
     this.lastWeaponToggleIntent = intents.weaponToggle;
-    this.lastMuteIntent = intents.mute;
+    this.lastMuteIntent = sampledIntents.mute;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
@@ -1241,7 +1361,7 @@ export class Game {
       this.timeAlive += simDelta;
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
       this.terrainView?.update(simDelta);
-      this.primaryActor.update(simDelta, intents, { bounds: Terrain.bounds, sample: Terrain.sample });
+      this.updateActors(simDelta, intents);
       this.updateBlastAim(intents);
       this.updateWetPowderHint(simDelta);
       this.combat.setTime(this.timeAlive);
@@ -1265,7 +1385,7 @@ export class Game {
       this.syncStockpileHoldings();
       this.enemies.update(
         simDelta,
-        this.primaryActor.group.position,
+        this.visibleActorPositions(),
         this.combat.handleEnemyContact,
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
@@ -1275,14 +1395,13 @@ export class Game {
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
         this.timeAlive,
-        this.primaryActor.group.position,
-        this.primaryActor.velocity.length(),
+        this.visibleHarvestTargets(),
       );
       if (this.harvestSnapshot.channeling && !this.lastHarvestChanneling) this.audio.play('pan-swish');
       this.lastHarvestChanneling = this.harvestSnapshot.channeling;
       if (this.harvestSnapshot.lastGoldGain > 0) {
         if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
-        this.vfx.floatText(this.primaryActor.group.position, `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
+        this.vfx.floatText(this.lastHarvestGoldPosition(), `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
       }
       this.updateBaronRocketVolley();
       this.combat.update(simDelta, this.timeAlive);
@@ -1291,7 +1410,7 @@ export class Game {
       this.maybeProspectorCollectXp();
       this.goldPickups.update(
         simDelta,
-        this.primaryActor.group.position,
+        this.visibleActorPositions(),
         (amount) => this.economy.canReceiveIncome(this.reclaimAmount(amount)),
         (position, amount) => this.reclaimGold(position, amount),
         (position) => this.blockedGoldPickup(position),
@@ -1324,21 +1443,36 @@ export class Game {
     revealLedgerEnemyStats(entryId);
   }
 
+  private updateActors(simDelta: number, fallbackIntents: Intents): void {
+    if (!this.mpActorIntents) {
+      this.primaryActor.update(simDelta, fallbackIntents, { bounds: Terrain.bounds, sample: Terrain.sample });
+      return;
+    }
+    for (let slot = 0; slot < this.actors.length; slot += 1) {
+      const actor = this.actors[slot];
+      if (!actor?.group.visible) continue;
+      actor.update(simDelta, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), {
+        bounds: Terrain.bounds,
+        sample: Terrain.sample,
+      });
+    }
+  }
+
   private updatePresentation(delta: number): void {
     const prospectorDelta = this.state.isPaused ? 0 : delta;
-    this.prospector.update(prospectorDelta, this.timeAlive, this.state.isPaused ? undefined : this.primaryActor.group.position);
+    this.prospector.update(prospectorDelta, this.timeAlive, this.state.isPaused ? undefined : this.localActor.group.position);
     this.syncAudioLoops();
     this.vfx.update(delta);
     if (this.baronCeremony) this.combatVfx.update(delta);
     this.syncBaronStandardDrop();
     this.syncBaronRocketCart();
-    this.syncMultiplayerRemoteHeroes();
     this.syncHeroVisualHeight();
     const visualStress =
       this.enemies.activeCount >= Balance.world.detailStressEnemyThreshold ||
       this.waveSystem.diagnostics.wave >= Balance.world.detailStressWaveThreshold;
     this.detailScatter?.syncBuildingClearings(this.detailClearings());
-    this.cameraRig.update(delta, this.primaryActor.group.position, this.primaryActor.velocity);
+    this.cameraRig.update(delta, this.localActor.group.position, this.localActor.velocity);
+    this.syncMultiplayerNameChips();
     this.lightRig?.setStressFallback(visualStress);
     this.syncNightShiftLighting();
     this.lightRig?.update();
@@ -1353,24 +1487,83 @@ export class Game {
 
   private consumeMultiplayerTick(bundle: LockstepTick): Intents {
     this.mpTickThisFrame = bundle.tick;
-    this.stepMultiplayerRemoteHeroes(bundle);
-    // ponytail: MP-02 has one simulated hero; promote inputs to real actor ownership in the MP-03/M6 slice.
-    return intentsFromLockstepInput(bundle.inputs[0]?.input);
+    this.syncMultiplayerActors();
+    const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
+    const byPlayer = new Map(bundle.inputs.map((entry) => [entry.playerId, entry.input]));
+    this.mpActorIntents = roster.map((player) => intentsFromLockstepInput(byPlayer.get(player.playerId)));
+    this.mpActionSlot = this.multiplayerActionSlot(this.mpActorIntents);
+    return this.mpActorIntents[this.mpActionSlot] ?? intentsFromLockstepInput(null);
+  }
+
+  private multiplayerActionSlot(intents: readonly Intents[]): number {
+    const actionSlot = intents.findIndex(hasMultiplayerActionIntent);
+    if (actionSlot >= 0) return actionSlot;
+    return THREE.MathUtils.clamp(this.mpActionSlot, 0, Math.max(0, intents.length - 1));
   }
 
   private finishMultiplayerTick(): void {
     const tick = this.mpTickThisFrame;
     if (!this.mpClient || tick === null) return;
-    const snapshot = this.mpClient.shouldExchangeHash(tick)
-      ? captureRunSuspendSnapshot(
-          this,
-          this.runManager?.metaProgress ?? this.appliedMetaProgress,
-          this.waveSystem.diagnostics.wave,
-          this.timeAlive,
-        )
-      : null;
+    const snapshot = this.mpClient.shouldExchangeHash(tick) ? this.captureMultiplayerRunSuspendSnapshot() : null;
     this.mpClient.afterSimTick(tick, this.multiplayerStateHash(tick), snapshot);
     this.mpTickThisFrame = null;
+  }
+
+  private captureMultiplayerRunSuspendSnapshot(): MultiplayerRunSuspendSnapshot {
+    const snapshot = captureRunSuspendSnapshot(
+      this,
+      this.runManager?.metaProgress ?? this.appliedMetaProgress,
+      this.waveSystem.diagnostics.wave,
+      this.timeAlive,
+    ) as MultiplayerRunSuspendSnapshot;
+    if (this.actors.length > 1) {
+      snapshot.mpActors = this.actors.map((actor) => ({
+        hp: actor.hp,
+        position: {
+          x: actor.group.position.x,
+          y: actor.group.position.y,
+          z: actor.group.position.z,
+        },
+        velocity: {
+          x: actor.velocity.x,
+          y: actor.velocity.y,
+          z: actor.velocity.z,
+        },
+        visible: actor.group.visible,
+      }));
+    }
+    return snapshot;
+  }
+
+  private restoreMultiplayerRunSuspendSnapshot(snapshot: unknown): boolean {
+    const restored = restoreRunSuspendSnapshot(this, snapshot);
+    if (!restored) return false;
+    this.restoreMultiplayerActorSnapshots(snapshot);
+    return true;
+  }
+
+  private restoreMultiplayerActorSnapshots(snapshot: unknown): void {
+    const mpActors = isMultiplayerRunSuspendSnapshot(snapshot) ? snapshot.mpActors : null;
+    if (!mpActors?.length) return;
+    this.syncMultiplayerActors();
+    const restoredActors: Array<{ actor: Hero; saved: MultiplayerActorSnapshot }> = [];
+    for (let slot = 0; slot < mpActors.length; slot += 1) {
+      const actor = this.actors[slot];
+      const saved = mpActors[slot];
+      if (!actor || !saved) continue;
+      const position = new THREE.Vector3(saved.position.x, saved.position.y, saved.position.z);
+      actor.resetRun(position);
+      restoredActors.push({ actor, saved });
+    }
+    this.applyStats(this.progression.stats, null);
+    for (const { actor, saved } of restoredActors) {
+      actor.hp = Math.min(actor.maxHp, Math.max(0, saved.hp));
+      actor.velocity.set(saved.velocity.x, saved.velocity.y, saved.velocity.z);
+      actor.group.visible = saved.visible;
+    }
+    this.syncHeroVisualHeight();
+    this.cameraRig.snapTo(this.localActor.group.position);
+    this.prospector.reset(this.localActor.group.position);
   }
 
   private multiplayerStateHash(tick: number): string {
@@ -1384,6 +1577,13 @@ export class Game {
         y: round(this.primaryActor.group.position.y),
         z: round(this.primaryActor.group.position.z),
       },
+      actors: this.actors.map((actor, slot) => ({
+        slot,
+        hp: round(actor.hp),
+        x: round(actor.group.position.x),
+        y: round(actor.group.position.y),
+        z: round(actor.group.position.z),
+      })),
       wave: this.waveSystem.diagnostics.wave,
       waveState: this.waveSystem.diagnostics.waveState,
       economy: {
@@ -1434,7 +1634,7 @@ export class Game {
         this.showMultiplayerCard('The wire crossed', `Tick ${tick} disagreed. Restoring the latest trail ledger.`);
       },
       onSnapshot: (snapshot) => {
-        const restored = restoreRunSuspendSnapshot(this, snapshot);
+        const restored = this.restoreMultiplayerRunSuspendSnapshot(snapshot);
         if (restored) {
           this.state.setPaused(false);
           this.showMultiplayerCard('The wire crossed', 'Trail ledger restored. Riding together again.');
@@ -1470,81 +1670,156 @@ export class Game {
     this.mpCard.classList.add('death-overlay--visible');
   }
 
-  private stepMultiplayerRemoteHeroes(bundle: LockstepTick): void {
-    const dt = this.mpClient?.stepSeconds ?? 1 / 30;
-    for (const entry of bundle.inputs) {
-      if (!this.mpClient || entry.playerId === bundle.inputs[0]?.playerId) continue;
-      const position = this.mpRemotePositions.get(entry.playerId) ?? this.initialMultiplayerRemotePosition(entry.playerId);
-      position.x += entry.input.mx * Balance.hero.speed * dt;
-      position.z += entry.input.my * Balance.hero.speed * dt;
-      position.x = Math.max(Terrain.bounds.minX, Math.min(Terrain.bounds.maxX, position.x));
-      position.z = Math.max(Terrain.bounds.minZ, Math.min(Terrain.bounds.maxZ, position.z));
-      this.mpRemotePositions.set(entry.playerId, position);
-    }
-  }
-
-  private syncMultiplayerRemoteHeroes(): void {
+  private syncMultiplayerActors(): void {
     const state = this.mpClient?.state();
     if (!state?.connected || state.roster.length < 2) {
-      this.mpRemoteGroup.visible = false;
+      this.mpLocalSlot = 0;
+      this.mpActionSlot = 0;
+      this.primaryActor.setIdentityTint(null);
+      for (let slot = 1; slot < this.actors.length; slot += 1) {
+        const actor = this.actors[slot];
+        if (actor) actor.group.visible = false;
+      }
+      this.mpActorMeta.clear();
+      this.removeAllMultiplayerChips();
       return;
     }
-    this.mpRemoteGroup.visible = true;
-    const remoteIds = new Set(state.roster.map((player) => player.playerId).filter((id) => id !== state.playerId));
-    for (const [id, group] of this.mpRemoteHeroes) {
-      if (remoteIds.has(id)) continue;
-      group.removeFromParent();
-      this.mpRemoteHeroes.delete(id);
-      this.mpRemotePositions.delete(id);
+
+    const roster: MultiplayerPlayer[] = state.roster.slice(0, 4);
+    const localSlot = roster.findIndex((player) => player.playerId === state.playerId);
+    this.mpLocalSlot = localSlot >= 0 ? localSlot : 0;
+
+    let createdActor = false;
+    while (this.actors.length < roster.length) {
+      const actor = new Hero();
+      actor.group.name = `MultiplayerHero-${this.actors.length}`;
+      this.actors.push(actor);
+      this.registerHeroShooters(actor);
+      this.scene.add(actor.group);
+      createdActor = true;
     }
-    state.roster.forEach((player, index) => {
-      if (player.playerId === state.playerId) return;
-      const group = this.mpRemoteHeroes.get(player.playerId) ?? this.createMultiplayerRemoteHero(player.playerId, index);
-      const position = this.mpRemotePositions.get(player.playerId) ?? this.initialMultiplayerRemotePosition(player.playerId, index);
-      position.y = Terrain.visualY(position.x, position.z, Balance.enemy.groundY);
-      group.position.copy(position);
-      group.visible = true;
-    });
+    for (let slot = 0; slot < this.actors.length; slot += 1) {
+      const actor = this.actors[slot];
+      if (!actor) continue;
+      const player = roster[slot];
+      if (!player) {
+        actor.group.visible = false;
+        continue;
+      }
+      actor.group.visible = true;
+      const local = player.playerId === state.playerId;
+      const previous = this.mpActorMeta.get(actor);
+      this.mpActorMeta.set(actor, { playerId: player.playerId, slot, name: player.name, town: player.town, local });
+      actor.setIdentityTint(local ? null : multiplayerTint(slot));
+      if (!previous || previous.playerId !== player.playerId || previous.slot !== slot) {
+        actor.resetRun(this.multiplayerSpawnPosition(slot, roster.length));
+      }
+    }
+    if (createdActor) this.applyStats(this.progression.stats, null);
+
+    for (const [playerId, chip] of this.mpHeroChips) {
+      if (roster.some((player) => player.playerId === playerId)) continue;
+      chip.remove();
+      this.mpHeroChips.delete(playerId);
+    }
+    this.updateActionActorPosition();
   }
 
-  private createMultiplayerRemoteHero(playerId: string, index: number): THREE.Group {
-    const tint = multiplayerTint(index);
-    const material = new THREE.MeshStandardMaterial({ color: tint, roughness: 0.78, metalness: 0.05 });
-    const lamp = new THREE.MeshStandardMaterial({
-      color: '#83ded7',
-      emissive: '#2f8f85',
-      emissiveIntensity: 0.5,
-      roughness: 0.45,
-    });
-    const group = new THREE.Group();
-    group.name = `RemoteHero-${playerId}`;
-    const body = new THREE.Mesh(this.mpRemoteBodyGeometry, material);
-    body.name = 'RemoteHeroBody';
-    body.position.y = 0.48;
-    const hat = new THREE.Mesh(this.mpRemoteHatGeometry, material);
-    hat.name = 'RemoteHeroHat';
-    hat.position.y = 1;
-    const light = new THREE.Mesh(new THREE.SphereGeometry(0.09, 8, 6), lamp);
-    light.name = 'RemoteHeroLamp';
-    light.position.set(0, 0.65, -0.24);
-    group.add(body, hat, light);
-    group.userData.dispose = () => {
-      material.dispose();
-      lamp.dispose();
-      light.geometry.dispose();
-    };
-    this.mpRemoteGroup.add(group);
-    this.mpRemoteHeroes.set(playerId, group);
-    return group;
-  }
-
-  private initialMultiplayerRemotePosition(playerId: string, index = this.mpRemotePositions.size + 1): THREE.Vector3 {
-    const angle = index * 1.7;
-    const position = this.primaryActor.group.position
-      .clone()
-      .add(new THREE.Vector3(Math.cos(angle) * 1.35, 0, Math.sin(angle) * 1.35));
-    this.mpRemotePositions.set(playerId, position);
+  private multiplayerSpawnPosition(slot: number, total: number): THREE.Vector3 {
+    const center = Terrain.lossStakeMarker() ?? this.heroStart;
+    const count = Math.max(2, total);
+    const angle = -Math.PI / 2 + (Math.PI * 2 * slot) / count;
+    const position = new THREE.Vector3(
+      center.x + Math.cos(angle) * MULTIPLAYER_SPAWN_RADIUS,
+      this.heroStart.y,
+      center.z + Math.sin(angle) * MULTIPLAYER_SPAWN_RADIUS,
+    );
+    position.x = THREE.MathUtils.clamp(position.x, Terrain.bounds.minX + Balance.hero.radius, Terrain.bounds.maxX - Balance.hero.radius);
+    position.z = THREE.MathUtils.clamp(position.z, Terrain.bounds.minZ + Balance.hero.radius, Terrain.bounds.maxZ - Balance.hero.radius);
+    for (let attempt = 0; attempt < count; attempt += 1) {
+      if (Terrain.sample(position.x, position.z).walkable) break;
+      const nextAngle = angle + ((attempt + 1) * Math.PI * 2) / count;
+      position.x = THREE.MathUtils.clamp(
+        center.x + Math.cos(nextAngle) * MULTIPLAYER_SPAWN_RADIUS,
+        Terrain.bounds.minX + Balance.hero.radius,
+        Terrain.bounds.maxX - Balance.hero.radius,
+      );
+      position.z = THREE.MathUtils.clamp(
+        center.z + Math.sin(nextAngle) * MULTIPLAYER_SPAWN_RADIUS,
+        Terrain.bounds.minZ + Balance.hero.radius,
+        Terrain.bounds.maxZ - Balance.hero.radius,
+      );
+    }
+    position.y = Terrain.visualY(position.x, position.z, this.heroStart.y);
     return position;
+  }
+
+  private syncMultiplayerNameChips(): void {
+    if (!this.mpClient?.state().connected) {
+      this.removeAllMultiplayerChips();
+      return;
+    }
+    for (const actor of this.actors) {
+      const meta = this.mpActorMeta.get(actor);
+      if (!meta || meta.local || !actor.group.visible) continue;
+      const chip = this.mpHeroChips.get(meta.playerId) ?? this.createMultiplayerNameChip(meta);
+      chip.querySelector('[data-mp-rider-name]')!.textContent = meta.name;
+      chip.querySelector('[data-mp-rider-town]')!.textContent = meta.town;
+      const screen = actor.group.position.clone();
+      screen.y += 2.15;
+      screen.project(this.camera);
+      chip.hidden = screen.z < -1 || screen.z > 1;
+      if (chip.hidden) continue;
+      chip.style.left = `${(screen.x * 0.5 + 0.5) * 100}%`;
+      chip.style.top = `${(-screen.y * 0.5 + 0.5) * 100}%`;
+    }
+  }
+
+  private createMultiplayerNameChip(meta: MultiplayerActorMeta): HTMLElement {
+    const chip = document.createElement('div');
+    chip.dataset.testid = 'mp-rider-chip';
+    chip.dataset.playerId = meta.playerId;
+    chip.style.position = 'absolute';
+    chip.style.transform = 'translate(-50%, -100%)';
+    chip.style.zIndex = '12';
+    chip.style.pointerEvents = 'none';
+    chip.style.padding = '4px 8px';
+    chip.style.border = '2px solid #2e1b0e';
+    chip.style.borderRadius = '6px';
+    chip.style.background = 'rgba(245, 230, 200, 0.94)';
+    chip.style.boxShadow = '0 2px 0 rgba(46, 27, 14, 0.35)';
+    chip.style.color = '#2e1b0e';
+    chip.style.fontFamily = 'Wellfleet, serif';
+    chip.style.fontSize = '12px';
+    chip.style.lineHeight = '1.1';
+    chip.style.textAlign = 'center';
+    chip.style.whiteSpace = 'nowrap';
+    chip.innerHTML = '<strong data-mp-rider-name></strong><span data-mp-rider-town style="display:block; opacity:0.72;"></span>';
+    this.getElement('#app').append(chip);
+    this.mpHeroChips.set(meta.playerId, chip);
+    return chip;
+  }
+
+  private removeAllMultiplayerChips(): void {
+    for (const chip of this.mpHeroChips.values()) chip.remove();
+    this.mpHeroChips.clear();
+  }
+
+  private syncMultiplayerLedgerRiders(): void {
+    const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
+    const existing = this.getElement('#app').querySelector<HTMLElement>('[data-testid="mp-run-riders"]');
+    if (roster.length < 2) {
+      existing?.remove();
+      return;
+    }
+    const panel = this.getElement('#app').querySelector<HTMLElement>('.death-overlay--visible .death-overlay__panel');
+    if (!panel) return;
+    const line = roster.map((player) => `${player.name} of ${player.town}`).join(' + ');
+    const node = existing ?? document.createElement('p');
+    node.className = 'death-overlay__town';
+    node.dataset.testid = 'mp-run-riders';
+    node.textContent = `Riders credited: ${line}.`;
+    if (!existing) panel.append(node);
   }
 
   private syncAudioLoops(): void {
@@ -1701,11 +1976,9 @@ export class Game {
     this.scene.add(this.combatVfx.group);
     this.primaryActor.group.position.copy(this.heroStart);
     this.syncHeroVisualHeight();
-    this.prospector.reset(this.primaryActor.group.position);
+    this.updateActionActorPosition();
+    this.prospector.reset(this.localActor.group.position);
     this.scene.add(this.prospector.group);
-    this.mpRemoteGroup.name = 'MultiplayerRemoteHeroes';
-    this.mpRemoteGroup.visible = false;
-    this.scene.add(this.mpRemoteGroup);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.scene.add(this.primaryActor.group);
@@ -2177,7 +2450,7 @@ export class Game {
       signboard: active && this.megaprojectSignVisuals.some((visual) => visual.visible && visual.name === 'MegaprojectSurveySignboard'),
       plaque: this.megaprojectPlaqueText,
       constructionProps: this.megaprojectConstructionDressing.filter((visual) => visual.visible).length,
-      promptReady: this.megaprojectFundCandidate(this.primaryActor.group.position) !== null,
+      promptReady: this.megaprojectFundCandidate(this.localActor.group.position) !== null,
       surveyVisible: active && this.megaprojectGroup.visible && this.megaprojectSurveyVisuals.some((visual) => visual.visible),
     };
   }
@@ -2199,12 +2472,13 @@ export class Game {
       delete assets[assetSlots.charBaron];
       delete assets[assetSlots.propBaronBanner];
     }
+    const localActor = this.localActor;
     const heroPos = {
-      x: this.primaryActor.group.position.x,
-      y: this.primaryActor.group.position.y,
-      z: this.primaryActor.group.position.z,
+      x: localActor.group.position.x,
+      y: localActor.group.position.y,
+      z: localActor.group.position.z,
     };
-    const speed = this.primaryActor.velocity.length();
+    const speed = localActor.velocity.length();
     const economyLog = this.economy.log;
     const economyReplay = economyLog.reduce(reduceEconomy, initialEconomyState);
     const economySummary = summarizeLog(economyLog);
@@ -2221,9 +2495,9 @@ export class Game {
       renderLayers: RenderLayers,
       renderLayerOf,
       ui: this.uiSnapshot,
-      hp: this.primaryActor.hp,
-      maxHp: this.primaryActor.maxHp,
-      heroIframes: this.primaryActor.hasIframes,
+      hp: localActor.hp,
+      maxHp: localActor.maxHp,
+      heroIframes: localActor.hasIframes,
       enemiesAlive: this.enemies.activeCount,
       enemyPoolSize: this.enemies.capacity,
       boltsAlive: this.combat.boltsAlive,
@@ -2254,6 +2528,25 @@ export class Game {
         position: heroPos,
         speed,
       },
+      actors: this.actors.map((actor, slot) => {
+        const meta = this.mpActorMeta.get(actor);
+        return {
+          slot,
+          playerId: meta?.playerId ?? (slot === 0 ? 'local' : `actor-${slot}`),
+          name: meta?.name ?? (slot === 0 ? 'Rider' : `Rider ${slot + 1}`),
+          town: meta?.town ?? null,
+          local: meta?.local ?? actor === localActor,
+          hp: actor.hp,
+          maxHp: actor.maxHp,
+          position: {
+            x: actor.group.position.x,
+            y: actor.group.position.y,
+            z: actor.group.position.z,
+          },
+          speed: actor.velocity.length(),
+          visible: actor.group.visible,
+        };
+      }),
       economy: {
         gold: this.economy.gold,
         banked: this.economy.gold,
@@ -2357,7 +2650,7 @@ export class Game {
       spriteAnimations: spriteAnimationDiagnostics(),
       spriteStats: spriteStatsDiagnostics(this.fadeOverlaysActive()),
       terrain: {
-        playerZone: Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).zone,
+        playerZone: Terrain.sample(localActor.group.position.x, localActor.group.position.z).zone,
         ground: this.terrainView?.groundDiagnostics(),
         sim: simHeightDiagnostics(),
         water: this.terrainView?.diagnostics(),
@@ -2366,8 +2659,8 @@ export class Game {
         detailScatter: this.detailScatter?.diagnostics(),
         height: {
           ...Terrain.heightDiagnostics(),
-          heroGround: Terrain.sampleHeight(this.primaryActor.group.position.x, this.primaryActor.group.position.z),
-          heroVisualY: this.primaryActor.group.position.y,
+          heroGround: Terrain.sampleHeight(localActor.group.position.x, localActor.group.position.z),
+          heroVisualY: localActor.group.position.y,
         },
         probes: {
           bank: Terrain.sample(-12, -12),
@@ -2657,7 +2950,8 @@ export class Game {
 
   private baronRocketMeleeSuppressed(baron: ClaimJumperEnemy): boolean {
     const heroRadius = baron.hitRadius + Balance.hero.radius + 0.35;
-    if (distanceSq2(baron.position.x, baron.position.z, this.primaryActor.group.position.x, this.primaryActor.group.position.z) <= heroRadius * heroRadius) {
+    const hero = this.nearestActorTo(baron.position).group.position;
+    if (distanceSq2(baron.position.x, baron.position.z, hero.x, hero.z) <= heroRadius * heroRadius) {
       return true;
     }
 
@@ -2669,7 +2963,7 @@ export class Game {
 
   private acquireBaronRocketTarget(baron: ClaimJumperEnemy): boolean {
     const building = this.goldTargeting.nearestBuilding(baron.position);
-    const hero = this.primaryActor.group.position;
+    const hero = this.nearestActorTo(baron.position).group.position;
     const heroRange = Math.max(16, baron.heroPursuitRange || 45);
     const heroInRange = distanceSq2(baron.position.x, baron.position.z, hero.x, hero.z) <= heroRange * heroRange;
     if (heroInRange || !building) {
@@ -2767,13 +3061,13 @@ export class Game {
     }
 
     const diagnostics = this.buildSystem.diagnostics;
-    const sources: EnemyLightSource[] = [
-      {
-        x: this.primaryActor.group.position.x,
-        z: this.primaryActor.group.position.z,
+    const sources: EnemyLightSource[] = this.actors
+      .filter((actor) => actor.group.visible)
+      .map((actor) => ({
+        x: actor.group.position.x,
+        z: actor.group.position.z,
         radius: Balance.contracts.nightShift.heroLightRadius,
-      },
-    ];
+      }));
     const liveLightPositions = (id: BuildableId): Array<{ x: number; z: number }> =>
       diagnostics.hp
         .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
@@ -2871,8 +3165,8 @@ export class Game {
     this.uiSnapshot = this.uiBridge.build(
       this.state,
       this.timeAlive,
-      this.primaryActor.hp,
-      this.primaryActor.maxHp,
+      this.localActor.hp,
+      this.localActor.maxHp,
       this.enemies.activeCount,
       this.economy.gold,
       this.economy.bankCap,
@@ -3111,18 +3405,18 @@ export class Game {
     this.assayOfficePrompt.update(
       this.state.current === 'playing' &&
         !this.buildSystem.isBuildMode &&
-        this.buildSystem.assayOfficeInRange(this.primaryActor.group.position),
+        this.buildSystem.assayOfficeInRange(this.localActor.group.position),
     );
   }
 
   private syncBuildingContextPrompt(): void {
     const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
-    const assayInRange = this.buildSystem.assayOfficeInRange(this.primaryActor.group.position);
+    const assayInRange = this.buildSystem.assayOfficeInRange(this.localActor.group.position);
     const canShowPrompt = this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
-    const fund = canShowPrompt ? this.megaprojectFundCandidate(this.primaryActor.group.position) : null;
+    const fund = canShowPrompt ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
     let demolish =
       canShowPrompt && !fund
-        ? this.buildSystem.nearestBuildingTo(this.primaryActor.group.position)
+        ? this.buildSystem.nearestBuildingTo(this.localActor.group.position)
         : null;
     const key = demolish ? demolishKey(demolish) : null;
     if (!key) this.demolishSuppressedKey = null;
@@ -3143,7 +3437,7 @@ export class Game {
       this.buildSystem.isBuildMode ||
       document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null ||
       document.querySelector('[data-testid="contract-briefing"]:not([hidden])') !== null;
-    this.worldInfoNotePrompt.update(blocked ? null : this.nearestWorldInfoTarget(this.primaryActor.group.position));
+    this.worldInfoNotePrompt.update(blocked ? null : this.nearestWorldInfoTarget(this.localActor.group.position));
   }
 
   private nearestWorldInfoTarget(position: THREE.Vector3): WorldInfoNoteTarget | null {
@@ -3280,9 +3574,24 @@ export class Game {
     this.wetPowderHintCooldown = 0;
     this.progression.reset();
     this.agentConsent.reset();
-    this.primaryActor.resetRun(this.heroStart);
+    const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
+    if (roster.length >= 2) {
+      this.syncMultiplayerActors();
+      for (let slot = 0; slot < this.actors.length; slot += 1) {
+        const actor = this.actors[slot];
+        if (!actor || !roster[slot]) continue;
+        actor.resetRun(this.multiplayerSpawnPosition(slot, roster.length));
+      }
+    } else {
+      this.primaryActor.resetRun(this.heroStart);
+      for (let slot = 1; slot < this.actors.length; slot += 1) {
+        const actor = this.actors[slot];
+        if (actor) actor.group.visible = false;
+      }
+    }
     this.syncHeroVisualHeight();
-    this.cameraRig.snapTo(this.primaryActor.group.position);
+    this.updateActionActorPosition();
+    this.cameraRig.snapTo(this.localActor.group.position);
     this.timeAlive = 0;
     this.nextProspectorXpSweepAt = 0;
     this.nextProspectorGoldSweepAt = 0;
@@ -3330,7 +3639,7 @@ export class Game {
     };
     this.state.restart();
     this.playerPauseActive = false;
-    this.prospector.reset(this.primaryActor.group.position);
+    this.prospector.reset(this.localActor.group.position);
     this.prefetchContractPresentation();
     this.showProspectorIntro();
     this.uiBridge.announce('Stake your claim.', 0);
@@ -3517,7 +3826,7 @@ export class Game {
   private setBlastAimForTest(x: number, z: number): { x: number; z: number } {
     this.pointerAimPoint.set(x, 0.08, z);
     this.pointerAimReady = true;
-    this.clampBlastAim(this.primaryActor.group.position, this.pointerAimPoint, this.blastAimPoint);
+    this.clampBlastAim(this.localActor.group.position, this.pointerAimPoint, this.blastAimPoint);
     return { x: this.blastAimPoint.x, z: this.blastAimPoint.z };
   }
 
@@ -3538,13 +3847,13 @@ export class Game {
     const aimMode = Balance.blast.aimMode as BlastAimMode;
     const disarmed = this.heroWeaponsDisarmed();
     this.canvas.classList.toggle('aim-reticle--disarmed', disarmed);
-    if (this.activeWeapon !== 'blast' || aimMode === 'auto' || disarmed) {
+    if (this.activeWeapon !== 'blast' || aimMode === 'auto' || this.multiplayerActive() || disarmed) {
       this.blastAimReticle.visible = false;
       return;
     }
 
     if (this.pointerAimReady) {
-      this.clampBlastAim(this.primaryActor.group.position, this.pointerAimPoint, this.blastAimPoint);
+      this.clampBlastAim(this.localActor.group.position, this.pointerAimPoint, this.blastAimPoint);
     } else {
       this.leadBlastAim(intents);
     }
@@ -3560,23 +3869,28 @@ export class Game {
     this.wetPowderHintCooldown = 1.4;
   }
 
-  private heroWeaponsEnabled(): boolean {
-    return !this.heroWeaponsDisarmed();
-  }
-
   private heroWeaponsDisarmed(): boolean {
-    return Balance.pathing.deepWaterDisarmsHero && Terrain.sample(this.primaryActor.group.position.x, this.primaryActor.group.position.z).waterClass === 'deep';
+    return this.heroWeaponsDisarmedFor(this.localActor);
   }
 
-  private currentBlastTarget(autoTarget: THREE.Vector3): THREE.Vector3 {
-    if ((Balance.blast.aimMode as BlastAimMode) === 'auto') return autoTarget;
+  private heroWeaponsEnabledFor(actor: Hero): boolean {
+    return actor.group.visible && !this.heroWeaponsDisarmedFor(actor);
+  }
+
+  private heroWeaponsDisarmedFor(actor: Hero): boolean {
+    return Balance.pathing.deepWaterDisarmsHero && Terrain.sample(actor.group.position.x, actor.group.position.z).waterClass === 'deep';
+  }
+
+  private currentBlastTargetFor(actor: Hero, autoTarget: THREE.Vector3): THREE.Vector3 {
+    if ((Balance.blast.aimMode as BlastAimMode) === 'auto' || this.multiplayerActive()) return autoTarget;
+    if (actor !== this.localActor) return autoTarget;
     return this.blastAimPoint;
   }
 
   private leadBlastAim(intents: Intents): void {
-    const origin = this.primaryActor.group.position;
-    const dx = Math.abs(intents.move.x) > 0.01 ? intents.move.x : this.primaryActor.velocity.x;
-    const dz = Math.abs(intents.move.y) > 0.01 ? intents.move.y : this.primaryActor.velocity.z;
+    const origin = this.localActor.group.position;
+    const dx = Math.abs(intents.move.x) > 0.01 ? intents.move.x : this.localActor.velocity.x;
+    const dz = Math.abs(intents.move.y) > 0.01 ? intents.move.y : this.localActor.velocity.z;
     const len = Math.hypot(dx, dz);
     const range = Balance.blast.range * 0.72;
     if (len > 0.01) {
@@ -3685,7 +3999,9 @@ export class Game {
   }
 
   private syncHeroVisualHeight(): void {
-    this.primaryActor.group.position.y = Terrain.visualY(this.primaryActor.group.position.x, this.primaryActor.group.position.z, this.heroStart.y);
+    for (const actor of this.actors) {
+      actor.group.position.y = Terrain.visualY(actor.group.position.x, actor.group.position.z, this.heroStart.y);
+    }
   }
 
   private resolveProspectorReceiptPoint(receipt: ToolReceipt): ProspectorPoint | null {
@@ -3825,8 +4141,8 @@ export class Game {
   private spawnHarnessThief(edge?: CompassEdge): boolean {
     if (isSpawnDisabled() || this.state.current !== 'playing' || isStealDisabled()) return false;
     const radius = Math.min(14, Balance.waves.spawnRingRadius);
-    const x = this.primaryActor.group.position.x;
-    const z = this.primaryActor.group.position.z;
+    const x = this.localActor.group.position.x;
+    const z = this.localActor.group.position.z;
     if (edge === 'south') this.debugSpawnPosition.set(x, Balance.enemy.groundY, z - radius);
     else if (edge === 'east') this.debugSpawnPosition.set(x + radius, Balance.enemy.groundY, z);
     else if (edge === 'west') this.debugSpawnPosition.set(x - radius, Balance.enemy.groundY, z);
@@ -3839,8 +4155,8 @@ export class Game {
   private spawnHarnessWrecker(edge?: CompassEdge): boolean {
     if (isSpawnDisabled() || this.state.current !== 'playing' || isWreckDisabled()) return false;
     const radius = Math.min(14, Balance.waves.spawnRingRadius);
-    const x = this.primaryActor.group.position.x;
-    const z = this.primaryActor.group.position.z;
+    const x = this.localActor.group.position.x;
+    const z = this.localActor.group.position.z;
     if (edge === 'south') this.debugSpawnPosition.set(x, Balance.enemy.groundY, z - radius);
     else if (edge === 'east') this.debugSpawnPosition.set(x + radius, Balance.enemy.groundY, z);
     else if (edge === 'west') this.debugSpawnPosition.set(x - radius, Balance.enemy.groundY, z);
@@ -3875,15 +4191,16 @@ export class Game {
   private confirmAction(): void {
     if (this.buildSystem.isBuildMode) {
       const id = this.buildSystem.diagnostics.selectedBuildable;
+      this.updateActionActorPosition();
       if (this.buildSystem.confirm(this.timeAlive)) discoverLedgerBuildable(id);
       return;
     }
-    if (this.buildSystem.assayOfficeInRange(this.primaryActor.group.position)) {
+    if (this.buildSystem.assayOfficeInRange(this.actionActor.group.position)) {
       this.audio.play('ledger-open');
       this.openAssayBench?.();
       return;
     }
-    if (this.fundMegaprojectStage(this.primaryActor.group.position)) return;
+    if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
     this.confirmDemolish();
   }
 
@@ -3920,7 +4237,7 @@ export class Game {
   }
 
   private upgradeBuilding(id: BuildableId, index: number): boolean {
-    const upgraded = this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.primaryActor.group.position);
+    const upgraded = this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.actionActor.group.position);
     if (!upgraded) return false;
     this.syncStockpileHoldings();
     this.publishDiagnostics();
@@ -3928,7 +4245,7 @@ export class Game {
   }
 
   private demolishBuilding(id: BuildableId, index: number): boolean {
-    const removed = this.buildSystem.demolish(id, index, this.timeAlive, this.primaryActor.group.position);
+    const removed = this.buildSystem.demolish(id, index, this.timeAlive, this.actionActor.group.position);
     if (!removed) return false;
     this.syncStockpileHoldings();
     this.publishDiagnostics();
@@ -3945,22 +4262,26 @@ export class Game {
   }
 
   private applyStats(stats: EffectiveStats, pickedId: UpgradeId | null): void {
-    this.heroShooter.cooldown = 1 / (Balance.sparkRig.fireRate * stats.fireRateMult);
-    this.heroShooter.damage = Balance.sparkRig.damage * stats.damageMult;
-    this.heroShooter.range = Balance.sparkRig.range * stats.rangeMult;
-    this.heroShooter.projSpeed = Balance.sparkRig.boltSpeed * stats.boltSpeedMult;
-    this.heroShooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
+    for (const shooter of this.heroShooters) {
+      shooter.cooldown = 1 / (Balance.sparkRig.fireRate * stats.fireRateMult);
+      shooter.damage = Balance.sparkRig.damage * stats.damageMult;
+      shooter.range = Balance.sparkRig.range * stats.rangeMult;
+      shooter.projSpeed = Balance.sparkRig.boltSpeed * stats.boltSpeedMult;
+      shooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
+    }
     this.blastDamageMult = stats.blastDamageMult;
     this.blastRadiusMult = stats.blastRadiusMult;
     this.blastCooldownMult = stats.blastCooldownMult;
-    this.blastShooter.cooldown = Math.max(0.35, Balance.blast.cooldown * this.blastCooldownMult);
     const blastRadius = Balance.blast.radius * this.blastRadiusMult;
-    if (this.blastShooter.aoe) this.blastShooter.aoe.radius = blastRadius;
+    for (const shooter of this.blastShooters) {
+      shooter.cooldown = Math.max(0.35, Balance.blast.cooldown * this.blastCooldownMult);
+      if (shooter.aoe) shooter.aoe.radius = blastRadius;
+    }
     this.syncBlastReticleRadius(blastRadius);
-    this.primaryActor.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
+    for (const actor of this.actors) actor.applyStats(stats.maxHpBonus, stats.moveSpeedMult);
     const platingHeal = upgradeDefById.tinkers_plating.deltas.heal;
     if (pickedId === 'tinkers_plating' && platingHeal !== undefined) {
-      this.primaryActor.heal(platingHeal);
+      for (const actor of this.actors) actor.heal(platingHeal);
     }
     const continued = continuedStudyBonuses(this.researchState);
     this.harvestSystem.applyStats(
@@ -4398,7 +4719,7 @@ function contractHeroStart(contract: ContractManifest): THREE.Vector3 {
 }
 
 function multiplayerTint(index: number): string {
-  return ['#5b8a8a', '#c4883a', '#a0522d', '#8b7d3c'][index % 4];
+  return MULTIPLAYER_TINTS[index % MULTIPLAYER_TINTS.length]!;
 }
 
 function edgePlace(edge: CompassEdge): string {
@@ -4444,6 +4765,53 @@ function pointFromUnknown(value: unknown): ProspectorPoint | null {
   return typeof point.x === 'number' && Number.isFinite(point.x) && typeof point.z === 'number' && Number.isFinite(point.z)
     ? { x: point.x, z: point.z }
     : null;
+}
+
+function isMultiplayerRunSuspendSnapshot(value: unknown): value is MultiplayerRunSuspendSnapshot {
+  if (!value || typeof value !== 'object') return false;
+  const mpActors = (value as { mpActors?: unknown }).mpActors;
+  return mpActors === undefined || (Array.isArray(mpActors) && mpActors.every(isMultiplayerActorSnapshot));
+}
+
+function isMultiplayerActorSnapshot(value: unknown): value is MultiplayerActorSnapshot {
+  if (!value || typeof value !== 'object') return false;
+  const snapshot = value as MultiplayerActorSnapshot;
+  return (
+    isFiniteVector3(snapshot.position) &&
+    isFiniteVector3(snapshot.velocity) &&
+    typeof snapshot.hp === 'number' &&
+    Number.isFinite(snapshot.hp) &&
+    typeof snapshot.visible === 'boolean'
+  );
+}
+
+function isFiniteVector3(value: unknown): value is { x: number; y: number; z: number } {
+  if (!value || typeof value !== 'object') return false;
+  const vector = value as { x?: unknown; y?: unknown; z?: unknown };
+  return (
+    typeof vector.x === 'number' &&
+    Number.isFinite(vector.x) &&
+    typeof vector.y === 'number' &&
+    Number.isFinite(vector.y) &&
+    typeof vector.z === 'number' &&
+    Number.isFinite(vector.z)
+  );
+}
+
+function hasMultiplayerActionIntent(intents: Intents): boolean {
+  return (
+    intents.confirm ||
+    intents.upgrade ||
+    intents.rotateBuild ||
+    intents.weaponToggle ||
+    intents.build ||
+    intents.cancel ||
+    intents.buildSlot !== null ||
+    intents.restart ||
+    intents.pause ||
+    intents.debugSpawn ||
+    intents.debugXp
+  );
 }
 
 function pointFromVector(value: THREE.Vector3): ProspectorPoint {

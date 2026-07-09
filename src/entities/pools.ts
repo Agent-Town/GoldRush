@@ -395,16 +395,18 @@ export class EnemyPool {
 
   update(
     delta: number,
-    heroPosition: THREE.Vector3,
+    heroPosition: THREE.Vector3 | readonly THREE.Vector3[],
     onContact: (enemy: ClaimJumperEnemy) => void,
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
   ): void {
     this.rebuildSpatialHash();
+    const heroPositions = Array.isArray(heroPosition) ? heroPosition : [heroPosition];
 
     for (const enemy of this.enemies) {
       if (!enemy.isAlive) continue;
+      const enemyTarget = nearestPosition(heroPositions, enemy.group.position);
 
       let separationX = 0;
       let separationZ = 0;
@@ -457,7 +459,7 @@ export class EnemyPool {
       if (
         enemy.update(
           delta,
-          heroPosition,
+          enemyTarget,
           separationX,
           separationZ,
           formationSeparationX,
@@ -1097,6 +1099,21 @@ function setMaterialFog(material: THREE.Material | THREE.Material[], enabled: bo
   if (fogMaterial.fog === enabled) return;
   fogMaterial.fog = enabled;
   fogMaterial.needsUpdate = true;
+}
+
+function nearestPosition(positions: readonly THREE.Vector3[], target: THREE.Vector3): THREE.Vector3 {
+  let best = positions[0] ?? target;
+  let bestDistanceSq = Number.POSITIVE_INFINITY;
+  for (const position of positions) {
+    const dx = position.x - target.x;
+    const dz = position.z - target.z;
+    const distanceSq = dx * dx + dz * dz;
+    if (distanceSq < bestDistanceSq) {
+      best = position;
+      bestDistanceSq = distanceSq;
+    }
+  }
+  return best;
 }
 
 function round3(value: number): number {

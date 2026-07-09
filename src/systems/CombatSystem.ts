@@ -226,7 +226,7 @@ export class CombatSystem {
       remaining -= step;
     }
 
-    const gained = this.motes.update(delta, this.primaryActor.group.position, this.handleXpCollect);
+    const gained = this.motes.update(delta, this.visibleActorPositions(), this.handleXpCollect);
     if (gained > 0) this.xp += gained;
   }
 
@@ -247,7 +247,7 @@ export class CombatSystem {
   readonly handleEnemyContact = (enemy: ClaimJumperEnemy): void => {
     if (isCombatDamageDisabled()) return;
 
-    this.damageHero(enemy.contactDamage, enemy.id);
+    this.damageHero(enemy.contactDamage, enemy.id, this.actorNearestTo(enemy.position));
   };
 
   launchLob(origin: THREE.Vector3, target: THREE.Vector3, airTime: number, damage: number, radius: number, ownerId: string): boolean {
@@ -258,16 +258,16 @@ export class CombatSystem {
     return true;
   }
 
-  private damageHero(amount: number, sourceId: number): void {
-    const result = this.primaryActor.takeDamage(amount);
+  private damageHero(amount: number, sourceId: number, actor: Hero = this.primaryActor): void {
+    const result = actor.takeDamage(amount);
     if (!result.applied) return;
 
     this.events.emit({
       type: 'hero_damaged',
       at: this.currentAt,
       amount,
-      hp: this.primaryActor.hp,
-      maxHp: this.primaryActor.maxHp,
+      hp: actor.hp,
+      maxHp: actor.maxHp,
       sourceId,
     });
 
@@ -464,10 +464,13 @@ export class CombatSystem {
 
     if (ownerId.startsWith('baron_rocket')) {
       const sourceId = Number(ownerId.split(':')[1] ?? -1);
-      const heroDx = this.primaryActor.group.position.x - position.x;
-      const heroDz = this.primaryActor.group.position.z - position.z;
       const heroRadius = radius + Balance.hero.radius;
-      if (heroDx * heroDx + heroDz * heroDz <= heroRadius * heroRadius) this.damageHero(damage, sourceId);
+      for (const actor of this.actors) {
+        if (!actor.group.visible) continue;
+        const heroDx = actor.group.position.x - position.x;
+        const heroDz = actor.group.position.z - position.z;
+        if (heroDx * heroDx + heroDz * heroDz <= heroRadius * heroRadius) this.damageHero(damage, sourceId, actor);
+      }
       for (const target of this.buildingTargetsResolver?.(position, radius) ?? []) {
         this.damageBuilding(target, damage, sourceId, Math.max(1, radius * 0.65), true);
       }
@@ -620,6 +623,26 @@ export class CombatSystem {
   private recordDamage(ownerId: string, amount: number): void {
     if (amount <= 0) return;
     this.ownerDamage[ownerId] = (this.ownerDamage[ownerId] ?? 0) + amount;
+  }
+
+  private visibleActorPositions(): THREE.Vector3[] {
+    return this.actors.filter((actor) => actor.group.visible).map((actor) => actor.group.position);
+  }
+
+  private actorNearestTo(position: THREE.Vector3): Hero {
+    let best = this.primaryActor;
+    let bestDistanceSq = Number.POSITIVE_INFINITY;
+    for (const actor of this.actors) {
+      if (!actor.group.visible) continue;
+      const dx = actor.group.position.x - position.x;
+      const dz = actor.group.position.z - position.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq < bestDistanceSq) {
+        best = actor;
+        bestDistanceSq = distanceSq;
+      }
+    }
+    return best;
   }
 
   private readonly handleXpCollect = (position: THREE.Vector3, value: number): void => {

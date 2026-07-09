@@ -3,17 +3,24 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import path from 'node:path';
 import { expect, test, type Browser, type Page, type TestInfo } from '@playwright/test';
+import type { ScoreRecord } from '../src/game/Scoreboard';
+import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type RelayProcess = { url: string; stop: () => Promise<void> };
 type RelayEnv = RelayProcess & { worker: RelayProcess; pages: RelayProcess };
 type MpState = NonNullable<ThreeGameDiagnostics['mp']>;
+type ActorDiagnostic = ThreeGameDiagnostics['actors'][number];
+type MpPlayerSeed = { id: string; name: string; town: string };
 
 const ROOT = process.cwd();
 const SCRIPT_NAME = 'gold-rush-mp-room';
 const STATE_ROOT = path.join(ROOT, 'test-results/mp-02-relay-state');
 const ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-02');
+const MP03_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-03');
 const MP_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&nokill&seed=mp-02-lockstep';
+const ALICE: MpPlayerSeed = { id: 'alice', name: 'Alice', town: 'Dawn Claim' };
+const BOB: MpPlayerSeed = { id: 'bob', name: 'Bob', town: 'River Bend' };
 let relay: RelayEnv;
 
 test.describe.configure({ mode: 'serial' });
@@ -28,6 +35,7 @@ test.afterAll(async () => {
 
 test('two clients advance 500 ticks with identical lockstep hashes', async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab lockstep proof is enough');
+  test.setTimeout(60_000);
   const code = await createRoom();
   const run = await openPair(browser, code);
   const { alice, bob, aliceErrors, bobErrors } = run;
@@ -58,6 +66,7 @@ test('two clients advance 500 ticks with identical lockstep hashes', async ({ br
 
 test('hash mismatch pauses, shows the wire card, and restores from relay snapshot', async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one injected-desync proof is enough');
+  test.setTimeout(60_000);
   const code = await createRoom();
   const run = await openPair(browser, code, '&mpDesyncAt=60');
   const { alice, bob, aliceErrors, bobErrors } = run;
@@ -93,6 +102,108 @@ test('hash mismatch pauses, shows the wire card, and restores from relay snapsho
   }
 });
 
+test('two clients promote both roster slots to real local-camera heroes and shared run credit', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab lockstep proof is enough');
+  test.setTimeout(60_000);
+  const code = await createRoom();
+  const run = await openPair(browser, code);
+  const { alice, bob, aliceErrors, bobErrors } = run;
+  try {
+    await waitRoster(alice);
+    await waitRoster(bob);
+    await waitForActors(alice);
+    await waitForActors(bob);
+
+    const aliceInitial = await gameDiagnostics(alice);
+    const bobInitial = await gameDiagnostics(bob);
+    assertSameRosterSlots(aliceInitial.actors, bobInitial.actors);
+    assertLocalHero(aliceInitial, ALICE.name);
+    assertLocalHero(bobInitial, BOB.name);
+    const initialAliceActor = actorByName(aliceInitial.actors, ALICE.name);
+    const initialBobActor = actorByName(aliceInitial.actors, BOB.name);
+    const spawnDistance = distance2d(initialAliceActor.position, initialBobActor.position);
+    expect(spawnDistance).toBeGreaterThan(2);
+    expect(spawnDistance).toBeLessThan(3.2);
+
+    await expect(alice.getByTestId('mp-rider-chip')).toBeVisible();
+    await expect(alice.getByTestId('mp-rider-chip')).toContainText(BOB.name);
+    await expect(alice.getByTestId('mp-rider-chip')).toContainText(BOB.town);
+    await expect(bob.getByTestId('mp-rider-chip')).toBeVisible();
+    await expect(bob.getByTestId('mp-rider-chip')).toContainText(ALICE.name);
+    await expect(bob.getByTestId('mp-rider-chip')).toContainText(ALICE.town);
+
+    const aliceCamera = await localScreenDistance(alice);
+    const bobCamera = await localScreenDistance(bob);
+    expect(aliceCamera.inView).toBe(true);
+    expect(aliceCamera.distance).toBeLessThan(260);
+    expect(bobCamera.inView).toBe(true);
+    expect(bobCamera.distance).toBeLessThan(260);
+
+    await bob.keyboard.press('KeyQ');
+    await expect
+      .poll(async () => {
+        const [aliceView, bobView] = await Promise.all([gameDiagnostics(alice), gameDiagnostics(bob)]);
+        return { alice: aliceView.arsenal.active, bob: bobView.arsenal.active };
+      }, { timeout: 5_000 })
+      .toEqual({ alice: 'blast', bob: 'blast' });
+    await bob.keyboard.press('KeyQ');
+    await expect
+      .poll(async () => {
+        const [aliceView, bobView] = await Promise.all([gameDiagnostics(alice), gameDiagnostics(bob)]);
+        return { alice: aliceView.arsenal.active, bob: bobView.arsenal.active };
+      }, { timeout: 5_000 })
+      .toEqual({ alice: 'rig', bob: 'rig' });
+
+    let movedPair: [ThreeGameDiagnostics, ThreeGameDiagnostics] | null = null;
+    await alice.keyboard.down('KeyW');
+    try {
+      await waitForTick(alice, 240);
+      await waitForTick(bob, 240);
+      movedPair = await syncedGameDiagnostics(alice, bob, 240);
+    } finally {
+      await alice.keyboard.up('KeyW');
+    }
+    if (!movedPair) throw new Error('missing synced multiplayer diagnostics');
+    const [aliceMoved, bobMoved] = movedPair;
+
+    assertSameRosterSlots(aliceMoved.actors, bobMoved.actors);
+    const movedAliceOnAlice = actorByName(aliceMoved.actors, ALICE.name);
+    const movedAliceOnBob = actorByName(bobMoved.actors, ALICE.name);
+    expect(distance2d(initialAliceActor.position, movedAliceOnAlice.position)).toBeGreaterThan(0.5);
+    expect(distance2d(movedAliceOnAlice.position, movedAliceOnBob.position)).toBeLessThan(0.06);
+    expect(distance2d(actorByName(aliceMoved.actors, BOB.name).position, actorByName(bobMoved.actors, BOB.name).position)).toBeLessThan(0.06);
+
+    const aliceState = await mpState(alice);
+    const bobState = await mpState(bob);
+    await writeReport(testInfo, 'mp-03-second-hero', { alice: aliceMoved, bob: bobMoved, mp: { alice: aliceState, bob: bobState } }, MP03_ARTIFACT_DIR);
+    expect(aliceState.tick).toBeGreaterThanOrEqual(240);
+    expect(bobState.tick).toBeGreaterThanOrEqual(240);
+    expect(aliceState.hashes.length).toBeGreaterThanOrEqual(6);
+    expect(aliceState.hashes).toEqual(bobState.hashes);
+
+    await shotMp03(alice, testInfo, 'alice-two-heroes');
+    await shotMp03(bob, testInfo, 'bob-two-heroes');
+
+    await Promise.all([alice.evaluate(() => window.__GR_TEST__?.endRunForTest()), bob.evaluate(() => window.__GR_TEST__?.endRunForTest())]);
+    await expect(alice.getByTestId('mp-run-riders')).toContainText('Alice of Dawn Claim');
+    await expect(alice.getByTestId('mp-run-riders')).toContainText('Bob of River Bend');
+    await expect(bob.getByTestId('mp-run-riders')).toContainText('Alice of Dawn Claim');
+    await expect(bob.getByTestId('mp-run-riders')).toContainText('Bob of River Bend');
+
+    const aliceScores = await scoresFor(alice, ALICE.id);
+    const bobScores = await scoresFor(bob, BOB.id);
+    expect(aliceScores[0]?.profileName).toBe(ALICE.name);
+    expect(bobScores[0]?.profileName).toBe(BOB.name);
+    expect(sharedScoreShape(aliceScores[0])).toEqual(sharedScoreShape(bobScores[0]));
+    expect(aliceErrors.consoleErrors).toEqual([]);
+    expect(aliceErrors.pageErrors).toEqual([]);
+    expect(bobErrors.consoleErrors).toEqual([]);
+    expect(bobErrors.pageErrors).toEqual([]);
+  } finally {
+    await run.close();
+  }
+});
+
 async function openPair(browser: Browser, code: string, bobExtra = ''): Promise<{
   alice: Page;
   bob: Page;
@@ -107,8 +218,8 @@ async function openPair(browser: Browser, code: string, bobExtra = ''): Promise<
   const aliceErrors = collectErrors(alice);
   const bobErrors = collectErrors(bob);
   await Promise.all([
-    openClient(alice, code, 'Alice', 'Dawn Claim'),
-    openClient(bob, code, 'Bob', 'River Bend', bobExtra),
+    openClient(alice, code, ALICE),
+    openClient(bob, code, BOB, bobExtra),
   ]);
   return {
     alice,
@@ -122,10 +233,45 @@ async function openPair(browser: Browser, code: string, bobExtra = ''): Promise<
   };
 }
 
-async function openClient(page: Page, code: string, name: string, town: string, extra = ''): Promise<void> {
-  const query = `${MP_QUERY}&mpRelay=${encodeURIComponent(relay.url)}&mpCode=${code}&mpName=${encodeURIComponent(name)}&mpTown=${encodeURIComponent(town)}${extra}`;
+async function openClient(page: Page, code: string, player: MpPlayerSeed, extra = ''): Promise<void> {
+  await seedProfile(page, player);
+  const query = `${MP_QUERY}&mpRelay=${encodeURIComponent(relay.url)}&mpCode=${code}&mpName=${encodeURIComponent(player.name)}&mpTown=${encodeURIComponent(player.town)}${extra}`;
   await page.goto(`/?${query}`);
   await page.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
+}
+
+async function seedProfile(page: Page, player: MpPlayerSeed): Promise<void> {
+  await page.addInitScript(
+    ({ profileKey, townKey, scoreKey, player: seeded }) => {
+      localStorage.clear();
+      sessionStorage.clear();
+      localStorage.setItem(
+        profileKey,
+        JSON.stringify({
+          version: 2,
+          activeId: seeded.id,
+          profiles: [
+            {
+              id: seeded.id,
+              name: seeded.name,
+              createdAt: 1,
+              updatedAt: 1,
+              difficultyPreset: 'trail',
+              hintsSeen: [],
+            },
+          ],
+        }),
+      );
+      localStorage.setItem(townKey, seeded.town);
+      localStorage.setItem(scoreKey, '[]');
+    },
+    {
+      profileKey: PROFILE_KEY,
+      townKey: profileDataKey(player.id, TOWN_NAME_KEY),
+      scoreKey: profileDataKey(player.id, SCOREBOARD_KEY),
+      player,
+    },
+  );
 }
 
 async function waitRoster(page: Page): Promise<void> {
@@ -136,8 +282,33 @@ async function waitForTick(page: Page, tick: number): Promise<void> {
   await page.waitForFunction((target) => (window.__GR_MP__?.state()?.tick ?? 0) >= target, tick, { timeout: 30_000 });
 }
 
+async function waitForActors(page: Page): Promise<void> {
+  await page.waitForFunction(() => {
+    const actors = window.__THREE_GAME_DIAGNOSTICS__?.actors?.filter((actor) => actor.visible) ?? [];
+    return actors.length === 2 && actors.some((actor) => actor.local) && actors.some((actor) => !actor.local);
+  }, undefined, { timeout: 15_000 });
+}
+
 async function mpState(page: Page): Promise<MpState> {
   return page.evaluate(() => window.__GR_MP__!.state()!);
+}
+
+async function gameDiagnostics(page: Page): Promise<ThreeGameDiagnostics> {
+  return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!);
+}
+
+async function syncedGameDiagnostics(left: Page, right: Page, minTick: number): Promise<[ThreeGameDiagnostics, ThreeGameDiagnostics]> {
+  const deadline = Date.now() + 10_000;
+  let lastTicks = 'none';
+  while (Date.now() < deadline) {
+    const [leftDiagnostics, rightDiagnostics] = await Promise.all([gameDiagnostics(left), gameDiagnostics(right)]);
+    const leftTick = leftDiagnostics.mp?.tick ?? 0;
+    const rightTick = rightDiagnostics.mp?.tick ?? 0;
+    lastTicks = `${leftTick}/${rightTick}`;
+    if (leftTick >= minTick && leftTick === rightTick) return [leftDiagnostics, rightDiagnostics];
+    await left.waitForTimeout(40);
+  }
+  throw new Error(`clients did not align on a shared tick >= ${minTick}; last ticks ${lastTicks}`);
 }
 
 function collectErrors(page: Page): ErrorBucket {
@@ -149,11 +320,70 @@ function collectErrors(page: Page): ErrorBucket {
   return bucket;
 }
 
-async function writeReport(testInfo: TestInfo, name: string, body: unknown): Promise<void> {
+async function writeReport(testInfo: TestInfo, name: string, body: unknown, artifactDir = ARTIFACT_DIR): Promise<void> {
   const text = `${JSON.stringify(body, null, 2)}\n`;
-  await mkdir(ARTIFACT_DIR, { recursive: true });
-  await writeFile(path.join(ARTIFACT_DIR, `${name}.json`), text);
+  await mkdir(artifactDir, { recursive: true });
+  await writeFile(path.join(artifactDir, `${name}.json`), text);
   await testInfo.attach(name, { body: text, contentType: 'application/json' });
+}
+
+async function shotMp03(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  await mkdir(MP03_ARTIFACT_DIR, { recursive: true });
+  const file = path.join(MP03_ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`);
+  await page.screenshot({ path: file, fullPage: true });
+  await testInfo.attach(name, { path: file, contentType: 'image/png' });
+}
+
+async function localScreenDistance(page: Page): Promise<{ distance: number; inView: boolean }> {
+  return page.evaluate(() => {
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    const local = diagnostics.actors.find((actor) => actor.local && actor.visible)!;
+    const screen = window.__GR_TEST__!.screenPoint(local.position.x, local.position.z, 1);
+    const center = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+    return { distance: Math.hypot(screen.x - center.x, screen.y - center.y), inView: screen.inView };
+  });
+}
+
+async function scoresFor(page: Page, profileId: string): Promise<ScoreRecord[]> {
+  return page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '[]') as ScoreRecord[], profileDataKey(profileId, SCOREBOARD_KEY));
+}
+
+function assertSameRosterSlots(left: ActorDiagnostic[], right: ActorDiagnostic[], positionTolerance = 0.06): void {
+  const visibleLeft = left.filter((actor) => actor.visible).sort((a, b) => a.slot - b.slot);
+  const visibleRight = right.filter((actor) => actor.visible).sort((a, b) => a.slot - b.slot);
+  expect(visibleLeft.map((actor) => [actor.slot, actor.name, actor.town])).toEqual(visibleRight.map((actor) => [actor.slot, actor.name, actor.town]));
+  for (const actor of visibleLeft) {
+    const peer = visibleRight.find((candidate) => candidate.slot === actor.slot);
+    expect(peer).toBeTruthy();
+    expect(distance2d(actor.position, peer!.position)).toBeLessThan(positionTolerance);
+  }
+}
+
+function assertLocalHero(diagnostics: ThreeGameDiagnostics, name: string): void {
+  const local = diagnostics.actors.find((actor) => actor.local && actor.visible);
+  expect(local?.name).toBe(name);
+  expect(distance2d(diagnostics.heroPos, local!.position)).toBeLessThan(0.06);
+}
+
+function actorByName(actors: ActorDiagnostic[], name: string): ActorDiagnostic {
+  const actor = actors.find((entry) => entry.visible && entry.name === name);
+  expect(actor, `missing actor ${name}`).toBeTruthy();
+  return actor!;
+}
+
+function distance2d(a: { x: number; z: number }, b: { x: number; z: number }): number {
+  return Math.hypot(a.x - b.x, a.z - b.z);
+}
+
+function sharedScoreShape(score: ScoreRecord | undefined): Pick<ScoreRecord, 'waves' | 'kills' | 'gold' | 'secured' | 'contractId'> {
+  expect(score).toBeTruthy();
+  return {
+    waves: score!.waves,
+    kills: score!.kills,
+    gold: score!.gold,
+    secured: score!.secured,
+    contractId: score!.contractId,
+  };
 }
 
 async function createRoom(): Promise<string> {

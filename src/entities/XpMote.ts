@@ -68,10 +68,11 @@ export class XpMotePool {
 
   update(
     delta: number,
-    heroPosition: THREE.Vector3,
+    heroPosition: THREE.Vector3 | readonly THREE.Vector3[],
     onCollect?: (position: THREE.Vector3, value: number) => void,
   ): number {
     let gained = 0;
+    const collectors = Array.isArray(heroPosition) ? heroPosition : [heroPosition];
     const magnetRadiusSq = Balance.xp.moteMagnetRadius * Balance.xp.moteMagnetRadius;
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
@@ -79,8 +80,9 @@ export class XpMotePool {
       if (!position) continue;
 
       this.age[i] = (this.age[i] ?? 0) + delta;
-      const dx = heroPosition.x - position.x;
-      const dz = heroPosition.z - position.z;
+      const collector = nearestCollector(collectors, position);
+      const dx = collector.x - position.x;
+      const dz = collector.z - position.z;
       const distanceSq = dx * dx + dz * dz;
       if (distanceSq <= 0.16) {
         const value = this.values[i] ?? 0;
@@ -193,6 +195,21 @@ function routeThroughFord(from: { x: number; z: number }, to: { x: number; z: nu
   if (from.z > Terrain.RIVER_MAX_Z && to.z < Terrain.RIVER_MIN_Z) return [from, { x: 0, z: from.z }, { x: 0, z: to.z }, to];
   if (from.z < Terrain.RIVER_MIN_Z && to.z > Terrain.RIVER_MAX_Z) return [from, { x: 0, z: from.z }, { x: 0, z: to.z }, to];
   return [from, to];
+}
+
+function nearestCollector(collectors: readonly THREE.Vector3[], position: THREE.Vector3): THREE.Vector3 {
+  let best = collectors[0] ?? position;
+  let bestDistanceSq = Number.POSITIVE_INFINITY;
+  for (const collector of collectors) {
+    const dx = collector.x - position.x;
+    const dz = collector.z - position.z;
+    const distanceSq = dx * dx + dz * dz;
+    if (distanceSq < bestDistanceSq) {
+      best = collector;
+      bestDistanceSq = distanceSq;
+    }
+  }
+  return best;
 }
 
 function sampleRoute(route: Array<{ x: number; z: number }>): Array<{ x: number; z: number }> {

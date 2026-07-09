@@ -13,6 +13,17 @@ export type HarvestSnapshot = {
   channelNodeId: string | null;
   progress: number;
   lastGoldGain: number;
+  lastGoldPosition: { x: number; y: number; z: number } | null;
+};
+
+type HarvestTarget = {
+  position: THREE.Vector3;
+  speed: number;
+};
+
+type ChannelTarget = {
+  node: GoldNode;
+  collector: HarvestTarget;
 };
 
 export class HarvestSystem {
@@ -27,6 +38,7 @@ export class HarvestSystem {
   private channelNode: GoldNode | null = null;
   private progress = 0;
   private lastGoldGain = 0;
+  private lastGoldPosition: THREE.Vector3 | null = null;
   private panTickMult = 1;
   private panYieldMult = 1;
   private seamCapacityBonus = 0;
@@ -97,8 +109,15 @@ export class HarvestSystem {
     return this.buildSnapshot(0);
   }
 
-  update(delta: number, at: number, heroPosition: THREE.Vector3, heroSpeed: number): HarvestSnapshot {
+  update(
+    delta: number,
+    at: number,
+    heroPosition: THREE.Vector3 | readonly HarvestTarget[],
+    heroSpeed = 0,
+  ): HarvestSnapshot {
     this.lastGoldGain = 0;
+    this.lastGoldPosition = null;
+    const collectors = Array.isArray(heroPosition) ? heroPosition : [{ position: heroPosition, speed: heroSpeed }];
 
     for (const node of this.nodes) {
       if (node.isRespawnReady(at)) {
@@ -108,12 +127,12 @@ export class HarvestSystem {
       node.update(delta, at);
     }
 
-    const target = this.findChannelTarget(heroPosition, heroSpeed);
+    const target = this.findChannelTarget(collectors);
     if (target) {
-      if (target !== this.channelNode) this.panCapBlocked = false;
-      this.channelNode = target;
+      if (target.node !== this.channelNode) this.panCapBlocked = false;
+      this.channelNode = target.node;
       this.progress = Math.min(1, this.progress + delta / (Balance.goldSeam.tickSeconds * this.panTickMult));
-      this.collectReadyTicks(at, target);
+      this.collectReadyTicks(at, target.node, target.collector.position);
     } else {
       this.progress = Math.max(
         0,
@@ -150,6 +169,7 @@ export class HarvestSystem {
     this.channelNode = null;
     this.progress = 0;
     this.lastGoldGain = 0;
+    this.lastGoldPosition = null;
     this.panCapBlocked = false;
     this.progressGroup.visible = false;
     this.progressFill.geometry.setDrawRange(0, 0);
@@ -182,7 +202,7 @@ export class HarvestSystem {
     node.place(this.anchors[anchorIndex], anchorIndex);
   }
 
-  private collectReadyTicks(at: number, node: GoldNode): void {
+  private collectReadyTicks(at: number, node: GoldNode, collectorPosition: THREE.Vector3): void {
     while (this.progress >= 1 && node.isActive) {
       const gained = Math.min(Balance.goldSeam.tickGold * this.panYieldMult, node.remainingGold);
       if (gained <= 0) break;
@@ -207,6 +227,7 @@ export class HarvestSystem {
         node.takeGold(gained);
         this.panCapBlocked = false;
         this.lastGoldGain += gained;
+        this.lastGoldPosition = collectorPosition.clone();
         this.onGoldTick?.(gained);
       } else {
         break;
@@ -220,19 +241,20 @@ export class HarvestSystem {
     }
   }
 
-  private findChannelTarget(heroPosition: THREE.Vector3, heroSpeed: number): GoldNode | null {
-    if (heroSpeed > Balance.goldSeam.slowSpeed) return null;
-
-    let nearest: GoldNode | null = null;
+  private findChannelTarget(collectors: readonly HarvestTarget[]): ChannelTarget | null {
+    let nearest: ChannelTarget | null = null;
     let nearestDistanceSq = Balance.goldSeam.channelRange * Balance.goldSeam.channelRange;
-    for (const node of this.nodes) {
-      if (!node.isActive) continue;
-      const dx = node.group.position.x - heroPosition.x;
-      const dz = node.group.position.z - heroPosition.z;
-      const distanceSq = dx * dx + dz * dz;
-      if (distanceSq <= nearestDistanceSq) {
-        nearest = node;
-        nearestDistanceSq = distanceSq;
+    for (const collector of collectors) {
+      if (collector.speed > Balance.goldSeam.slowSpeed) continue;
+      for (const node of this.nodes) {
+        if (!node.isActive) continue;
+        const dx = node.group.position.x - collector.position.x;
+        const dz = node.group.position.z - collector.position.z;
+        const distanceSq = dx * dx + dz * dz;
+        if (distanceSq <= nearestDistanceSq) {
+          nearest = { node, collector };
+          nearestDistanceSq = distanceSq;
+        }
       }
     }
     return nearest;
@@ -277,6 +299,9 @@ export class HarvestSystem {
       channelNodeId: this.channelNode?.id ?? null,
       progress: this.progress,
       lastGoldGain: this.lastGoldGain,
+      lastGoldPosition: this.lastGoldPosition
+        ? { x: this.lastGoldPosition.x, y: this.lastGoldPosition.y, z: this.lastGoldPosition.z }
+        : null,
     };
   }
 }

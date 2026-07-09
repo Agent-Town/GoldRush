@@ -214,6 +214,26 @@ export class Hero {
     this.applyProceduralMotion();
   }
 
+  setIdentityTint(tint: string | null): void {
+    const spriteMaterial = this.generatedSprite.sprite.material as THREE.SpriteMaterial;
+    if (!tint) {
+      this.bodyMaterial.color.set('#c4883a');
+      this.sleeveMaterial.color.set('#e8d5a8');
+      this.brassMaterial.color.set('#8b7d3c');
+      this.lampMaterial.color.set('#5b8a8a');
+      this.lampMaterial.emissive.set('#5b8a8a');
+      spriteMaterial.color.set('#ffffff');
+      return;
+    }
+
+    this.bodyMaterial.color.set(tint);
+    this.sleeveMaterial.color.set('#f5e6c8');
+    this.brassMaterial.color.set(tint);
+    this.lampMaterial.color.set('#83ded7');
+    this.lampMaterial.emissive.set('#2f8f85');
+    spriteMaterial.color.set(tint);
+  }
+
   dispose(): void {
     this.bodyGeometry.dispose();
     this.coatGeometry.dispose();

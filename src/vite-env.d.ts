@@ -167,6 +167,18 @@ interface ThreeGameDiagnostics {
     position: { x: number; y: number; z: number };
     speed: number;
   };
+  actors: Array<{
+    slot: number;
+    playerId: string;
+    name: string;
+    town: string | null;
+    local: boolean;
+    hp: number;
+    maxHp: number;
+    position: { x: number; y: number; z: number };
+    speed: number;
+    visible: boolean;
+  }>;
   economy: {
     gold: number;
     banked: number;
@@ -417,6 +429,7 @@ interface ThreeGameDiagnostics {
     channelNodeId: string | null;
     progress: number;
     lastGoldGain: number;
+    lastGoldPosition: { x: number; y: number; z: number } | null;
   };
   steal: {
     thieves: number;
@@ -870,6 +883,7 @@ interface Window {
     setManualSim: (enabled: boolean) => boolean;
     advanceSim: (seconds: number, stepSeconds?: number) => void;
     resetRun: () => void;
+    endRunForTest: () => void;
     toggleWeapon: () => 'rig' | 'blast';
     setBlastAim: (x: number, z: number) => { x: number; z: number };
     setDifficultyPreset: (preset: string) => 'greenhorn' | 'trail' | 'vein-hunter';

@@ -132,11 +132,12 @@ export class GoldPickupPool {
 
   update(
     delta: number,
-    heroPosition: THREE.Vector3,
+    heroPosition: THREE.Vector3 | readonly THREE.Vector3[],
     canCollect: (amount: number) => boolean,
     onCollect: (position: THREE.Vector3, amount: number) => void,
     onBlocked: (position: THREE.Vector3) => void,
   ): void {
+    const collectors = Array.isArray(heroPosition) ? heroPosition : [heroPosition];
     let dirty = false;
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
@@ -145,9 +146,7 @@ export class GoldPickupPool {
 
       this.age[i] = (this.age[i] ?? 0) + delta;
       this.blockedCooldown[i] = Math.max(0, (this.blockedCooldown[i] ?? 0) - delta);
-      const dx = heroPosition.x - position.x;
-      const dz = heroPosition.z - position.z;
-      if (dx * dx + dz * dz <= collectRadiusSq) {
+      if (isCollectedByAny(collectors, position)) {
         const amount = this.amounts[i] ?? 0;
         if (canCollect(amount)) {
           onCollect(position, amount);
@@ -269,4 +268,13 @@ export class GoldPickupPool {
   private hide(index: number): void {
     this.mesh.setMatrixAt(index, this.hiddenMatrix);
   }
+}
+
+function isCollectedByAny(collectors: readonly THREE.Vector3[], position: THREE.Vector3): boolean {
+  for (const collector of collectors) {
+    const dx = collector.x - position.x;
+    const dz = collector.z - position.z;
+    if (dx * dx + dz * dz <= collectRadiusSq) return true;
+  }
+  return false;
 }
