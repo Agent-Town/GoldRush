@@ -14,6 +14,7 @@ import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
 import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
+import { FIRST_CLAIM_DONE_KEY } from '../game/ProfileStorage';
 import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { DEFAULT_CONTRACT_ID, listBoardContracts, loadContract, loadEpoch, type ContractManifest } from '../meta/ContractFamilies';
@@ -55,6 +56,9 @@ const contractArtRegistry: Record<string, { key: string; imageUrl?: string; inse
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 0);
+const TAVERN_DOOR = new THREE.Vector3(-6, 0.08, -6.95);
+const FIRST_CLAIM_GREETING = "The valley's open. The tavern keeps the contracts. Go stake your first claim.";
+const FIRST_CLAIM_PENDING = 'pending';
 const APPROACH_RADIUS = 5.2;
 const STAMP_MILL_ID = 'stamp-mill';
 const STAMP_MILL_TOWN_SITE = { x: 0, z: 13.45, w: 6.2, d: 1.65 };
@@ -106,6 +110,13 @@ export type TownDiagnostics = {
     constructionProps: number;
     surveyVisible: boolean;
   };
+  firstClaimGuide: {
+    active: boolean;
+    done: boolean;
+    greetingVisible: boolean;
+    trailVisible: boolean;
+    flagKey: typeof FIRST_CLAIM_DONE_KEY;
+  };
   renderer: { calls: number; geometries: number; textures: number };
   canvas: { width: number; height: number; dpr: number };
 };
@@ -153,6 +164,20 @@ export class TownScene {
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
   private readonly stampMillConstructionProps: THREE.Object3D[] = [];
+  private readonly firstClaimGuideGroup = new THREE.Group();
+  private readonly firstClaimTrailDots: THREE.Mesh[] = [];
+  private readonly firstClaimTrailMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffe4a0',
+    transparent: true,
+    opacity: 0.52,
+    depthWrite: false,
+  });
+  private readonly firstClaimPulseMaterial = new THREE.MeshBasicMaterial({
+    color: '#5b8a8a',
+    transparent: true,
+    opacity: 0.36,
+    depthWrite: false,
+  });
   private readonly townActors: TownActorRuntime[] = [];
   private readonly actorBarkVisits = new Map<TownActorId, number>();
   private readonly barkCard = document.createElement('div');
@@ -182,6 +207,10 @@ export class TownScene {
   private returnBeatEmitted = false;
   private boardPageIndex = 0;
   private boardSwipeStartX: number | null = null;
+  private firstClaimGuideActive = false;
+  private firstClaimPulseRing?: THREE.Mesh;
+  private firstClaimGreetingVisible = false;
+  private firstClaimGreetingDismissed = false;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -193,8 +222,12 @@ export class TownScene {
     this.renderer.toneMappingExposure = 1.02;
     this.input = new InputController(this.getElement('#touch-stick'), this.getElement('#touch-knob'), this.getElement('#confirm-button'));
     this.hiddenButtons = this.hideTownActionButtons();
+    this.firstClaimGuideActive = shouldStartFirstClaimGuide(this.townName, this.metaProgress);
+    if (this.firstClaimGuideActive) markFirstClaimGuidePending();
     this.createScene();
     this.createUi();
+    window.addEventListener('keydown', this.onFirstClaimInput, true);
+    window.addEventListener('pointerdown', this.onFirstClaimInput, true);
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     this.cameraRig.snapTo(this.hero.group.position);
     this.publishDiagnostics();
@@ -209,6 +242,8 @@ export class TownScene {
     this.input.dispose();
     for (const state of this.hiddenButtons) state.element.hidden = state.hidden;
     window.clearTimeout(this.nameBeatTimer);
+    window.removeEventListener('keydown', this.onFirstClaimInput, true);
+    window.removeEventListener('pointerdown', this.onFirstClaimInput, true);
     this.prompt.removeEventListener('click', this.onPromptClick);
     this.board.removeEventListener('click', this.onBoardClick);
     this.board.removeEventListener('keydown', this.onBoardKeyDown);
@@ -244,6 +279,7 @@ export class TownScene {
         else this.closeAssayBench();
       }
       this.lastExitIntent = rawExitIntent;
+      this.updateFirstClaimGuide();
       this.syncPrompt();
       this.syncBark();
       this.publishDiagnostics();
@@ -259,6 +295,7 @@ export class TownScene {
     this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: this.sampleTown });
     for (const actor of this.townActors) actor.update(delta, this.elapsed);
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
+    this.updateFirstClaimGuide();
     this.syncPrompt();
     this.syncBark();
     this.publishDiagnostics();
@@ -310,6 +347,7 @@ export class TownScene {
       this.scene.add(createShell(building));
     }
     this.createStampMillVignette();
+    this.createFirstClaimGuide();
     for (const actor of this.visibleActors) {
       const runtime = new TownActorRuntime(actor);
       this.townActors.push(runtime);
@@ -534,6 +572,13 @@ export class TownScene {
     }
   };
 
+  private readonly onFirstClaimInput = () => {
+    if (!this.firstClaimGreetingVisible) return;
+    this.firstClaimGreetingDismissed = true;
+    this.hideBark();
+    this.publishDiagnostics();
+  };
+
   private readonly onBoardKeyDown = (event: KeyboardEvent) => {
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
     event.preventDefault();
@@ -700,6 +745,20 @@ export class TownScene {
       return;
     }
 
+    if (this.firstClaimGuideActive && !this.firstClaimGreetingDismissed) {
+      if (this.storyBeatVisible()) {
+        this.hideBark();
+        return;
+      }
+      const greeter = this.firstClaimGreeter();
+      if (greeter) {
+        if (this.activeBarkActor !== greeter || !this.firstClaimGreetingVisible) {
+          this.showBark(greeter, FIRST_CLAIM_GREETING, true);
+        }
+        return;
+      }
+    }
+
     const position = this.hero.group.position;
     let nearest: TownActorRuntime | null = null;
     let nearestDistanceSq = Number.POSITIVE_INFINITY;
@@ -723,9 +782,30 @@ export class TownScene {
     const count = this.actorBarkVisits.get(nearest.definition.id) ?? 0;
     this.actorBarkVisits.set(nearest.definition.id, count + 1);
     const text = townActorBark(nearest.definition, this.townName, count);
+    discoverLedgerTownActor(nearest.definition.id);
+    this.showBark(nearest, text);
+  }
+
+  private firstClaimGreeter(): TownActorRuntime | null {
+    const position = this.hero.group.position;
+    let nearest: TownActorRuntime | null = null;
+    let nearestDistanceSq = Number.POSITIVE_INFINITY;
+    for (const actor of this.townActors) {
+      if (actor.definition.id !== 'tavernkeeper' && actor.definition.id !== 'elder') continue;
+      const dx = position.x - actor.position.x;
+      const dz = position.z - actor.position.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq >= nearestDistanceSq) continue;
+      nearest = actor;
+      nearestDistanceSq = distanceSq;
+    }
+    return nearest;
+  }
+
+  private showBark(nearest: TownActorRuntime, text: string, firstClaim = false): void {
+    this.firstClaimGreetingVisible = firstClaim;
     this.activeBarkActor = nearest;
     this.activeBark = { actorId: nearest.definition.id, speaker: nearest.definition.name, text };
-    discoverLedgerTownActor(nearest.definition.id);
     this.barkCard.innerHTML = `
       <img class="town-ui__bark-portrait" src="${escapeHtml(nearest.definition.portraitUrl)}" alt="" />
       <div class="town-ui__bark-copy">
@@ -735,15 +815,19 @@ export class TownScene {
       </div>
     `;
     this.barkCard.dataset.actorId = nearest.definition.id;
+    if (firstClaim) this.barkCard.dataset.firstClaim = 'true';
+    else delete this.barkCard.dataset.firstClaim;
     this.barkCard.hidden = false;
   }
 
   private hideBark(): void {
     this.activeBarkActor = null;
     this.activeBark = null;
+    this.firstClaimGreetingVisible = false;
     this.barkCard.hidden = true;
     this.barkCard.textContent = '';
     delete this.barkCard.dataset.actorId;
+    delete this.barkCard.dataset.firstClaim;
   }
 
   private openBoard(): void {
@@ -892,6 +976,7 @@ export class TownScene {
     const best = bestContractScore(contract.id, scores);
     const tags = contract.boardRow.tags.length > 0 ? contract.boardRow.tags : ['trail'];
     const medal = contract.id === 'e1-baron' && hasBaronMedal();
+    const firstClaimHint = this.firstClaimGuideActive && contract.id === DEFAULT_CONTRACT_ID && unlock.unlocked;
     const baronStakes =
       contract.id === 'e1-baron' && unlock.unlocked
         ? `<p class="town-ui__contract-stakes" data-testid="contract-stakes-e1-baron">The Baron's outfit rides at 20 — cadence runs hot (+15%).</p>`
@@ -930,9 +1015,10 @@ export class TownScene {
                 )}">The clerk draws up the terms when you're ready.</p>
               `
           }
+          ${firstClaimHint ? '<p class="town-ui__first-claim-tooltip" data-testid="first-claim-launch-tooltip">Stake your first claim</p>' : ''}
           <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
             contract.id,
-          )}" ${unlock.unlocked ? '' : 'disabled'}>
+          )}" ${firstClaimHint ? 'data-first-claim-launch="true" title="Stake your first claim"' : ''} ${unlock.unlocked ? '' : 'disabled'}>
             ${escapeHtml(unlock.unlocked ? 'Launch' : unlock.condition)}
           </button>
         </div>
@@ -1010,6 +1096,13 @@ export class TownScene {
         };
       }),
       stampMill: this.stampMillDiagnostics(),
+      firstClaimGuide: {
+        active: this.firstClaimGuideActive,
+        done: firstClaimDone(),
+        greetingVisible: this.firstClaimGreetingVisible,
+        trailVisible: this.firstClaimGuideGroup.visible,
+        flagKey: FIRST_CLAIM_DONE_KEY,
+      },
       renderer: {
         calls: this.renderer.info.render.calls,
         geometries: this.renderer.info.memory.geometries,
@@ -1049,6 +1142,10 @@ export class TownScene {
     return states;
   }
 
+  private storyBeatVisible(): boolean {
+    return document.querySelector('[data-testid="story-beat-card"]') !== null;
+  }
+
   private getElement<T extends HTMLElement>(selector: string): T {
     const element = document.querySelector<T>(selector);
     if (!element) throw new Error(`Missing ${selector}`);
@@ -1061,6 +1158,51 @@ export class TownScene {
 
   private assayBenchOpen(): boolean {
     return this.assayBenchRoot()?.hidden === false;
+  }
+
+  private createFirstClaimGuide(): void {
+    this.firstClaimGuideGroup.name = 'FirstClaimGuide';
+    this.firstClaimGuideGroup.visible = false;
+    const dotGeometry = new THREE.CircleGeometry(0.18, 24);
+    for (let index = 0; index < 8; index += 1) {
+      const dot = new THREE.Mesh(dotGeometry, this.firstClaimTrailMaterial);
+      dot.name = `FirstClaimTrailDot:${index}`;
+      dot.rotation.x = -Math.PI / 2;
+      dot.renderOrder = RenderLayers.worldUi;
+      this.firstClaimTrailDots.push(dot);
+      this.firstClaimGuideGroup.add(dot);
+    }
+
+    const ring = new THREE.Mesh(new THREE.RingGeometry(1.25, 1.46, 48), this.firstClaimPulseMaterial);
+    ring.name = 'FirstClaimTavernPulse';
+    ring.position.copy(TAVERN_DOOR);
+    ring.rotation.x = -Math.PI / 2;
+    ring.renderOrder = RenderLayers.worldUi;
+    this.firstClaimPulseRing = ring;
+    this.firstClaimGuideGroup.add(ring);
+    this.scene.add(this.firstClaimGuideGroup);
+  }
+
+  private updateFirstClaimGuide(): void {
+    const visible = this.firstClaimGuideActive && !this.nameCardOpen && !this.boardOpen && !this.schoolhouseOpen && !this.assayBenchOpen();
+    this.firstClaimGuideGroup.visible = visible;
+    if (!visible) return;
+
+    const phase = (Math.sin(this.elapsed * 2.6) + 1) * 0.5;
+    this.firstClaimTrailMaterial.opacity = 0.42 + phase * 0.16;
+    this.firstClaimPulseMaterial.opacity = 0.24 + phase * 0.22;
+    const start = this.hero.group.position;
+    const count = this.firstClaimTrailDots.length + 1;
+    this.firstClaimTrailDots.forEach((dot, index) => {
+      const t = (index + 1) / count;
+      dot.position.set(
+        THREE.MathUtils.lerp(start.x, TAVERN_DOOR.x, t),
+        0.075,
+        THREE.MathUtils.lerp(start.z, TAVERN_DOOR.z, t),
+      );
+      dot.scale.setScalar(0.82 + phase * 0.22);
+    });
+    this.firstClaimPulseRing?.scale.setScalar(1 + phase * 0.08);
   }
 }
 
@@ -1238,6 +1380,34 @@ function escapeHtml(value: string): string {
 function activeProfileResearchState() {
   const storage = browserResearchStorage();
   return loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
+}
+
+function shouldStartFirstClaimGuide(townName: string | null, meta: MetaProgress): boolean {
+  const flag = firstClaimFlag();
+  if (flag === '1' || readRunSuspend() || loadScores().length > 0) return false;
+  if (!Object.values(meta.tracks).every((value) => value === 0)) return false;
+  return flag === FIRST_CLAIM_PENDING || !townName;
+}
+
+function markFirstClaimGuidePending(): void {
+  try {
+    const storage = browserStorage();
+    if (storage?.getItem(FIRST_CLAIM_DONE_KEY) === null) storage.setItem(FIRST_CLAIM_DONE_KEY, FIRST_CLAIM_PENDING);
+  } catch {
+    // Optional storage; the visual guide can still run for this session.
+  }
+}
+
+function firstClaimDone(): boolean {
+  return firstClaimFlag() === '1';
+}
+
+function firstClaimFlag(): string | null {
+  try {
+    return browserStorage()?.getItem(FIRST_CLAIM_DONE_KEY) ?? null;
+  } catch {
+    return null;
+  }
 }
 
 function suspendContext(suspend: RunSuspendEnvelope): string {

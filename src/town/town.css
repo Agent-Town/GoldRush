@@ -608,11 +608,45 @@
   box-shadow: 0 4px 0 rgba(46, 27, 14, 0.55);
 }
 
+.town-ui__contract-action[data-first-claim-launch="true"] {
+  animation: town-first-claim-button 1.55s ease-in-out infinite;
+}
+
+.town-ui__first-claim-tooltip {
+  align-self: center;
+  width: max-content;
+  max-width: 100%;
+  padding: 5px 8px;
+  border: 1px solid rgba(46, 27, 14, 0.36);
+  border-radius: 6px;
+  color: #2e1b0e !important;
+  background: rgba(255, 228, 160, 0.78);
+  font-size: 0.78rem !important;
+  font-weight: 900;
+  line-height: 1.1 !important;
+}
+
 .town-ui__contract-action:disabled {
   color: rgba(46, 27, 14, 0.76);
   background: #d6b478;
   box-shadow: none;
   cursor: not-allowed;
+}
+
+@keyframes town-first-claim-button {
+  0%,
+  100% {
+    box-shadow: 0 4px 0 rgba(46, 27, 14, 0.55), 0 0 0 rgba(255, 228, 160, 0);
+  }
+  50% {
+    box-shadow: 0 5px 0 rgba(46, 27, 14, 0.5), 0 0 18px rgba(255, 228, 160, 0.72);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .town-ui__contract-action[data-first-claim-launch="true"] {
+    animation: none;
+  }
 }
 
 .town-ui__catalog-nav {

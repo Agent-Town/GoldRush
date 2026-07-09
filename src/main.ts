@@ -7,6 +7,7 @@ import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import { Game } from './game/Game';
 import type { RunReturnResult } from './game/Game';
+import { FIRST_CLAIM_DONE_KEY } from './game/ProfileStorage';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
@@ -132,6 +133,7 @@ function continueSavedRun(): void {
 }
 
 function launchContract(contractId: string): void {
+  markFirstClaimDone();
   stagePlayerContractLaunch(contractId);
   const nextSearch = new URLSearchParams(window.location.search);
   nextSearch.set('contract', contractId);
@@ -141,6 +143,14 @@ function launchContract(contractId: string): void {
   town?.dispose();
   town = undefined;
   startWithProfiles({ skipTitle: true });
+}
+
+function markFirstClaimDone(): void {
+  try {
+    window.localStorage.setItem(FIRST_CLAIM_DONE_KEY, '1');
+  } catch {
+    // Storage is optional; the run should still launch.
+  }
 }
 
 function runReturnCallback(result: RunReturnResult): void {
