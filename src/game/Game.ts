@@ -840,6 +840,7 @@ export class Game {
       this.syncMultiplayerLedgerRiders();
     });
     this.events.on('run_ended', (event) => {
+      discoverLedgerEntry('assay_office_records');
       if (event.reason !== 'secured') return;
       emitStorySignal({ type: 'first-victory' });
       this.audio.play('victory-sting');
