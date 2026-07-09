@@ -1481,6 +1481,7 @@ export class BuildSystem {
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
       damage: Balance.beacon.damage,
       getDamage: () => Balance.beacon.damage + Balance.beacon.damagePerWave * this.getWave(),
+      visualOriginPadRadius: () => Balance.beacon.overlapRadius,
       canTarget: hasElevationTile()
         ? (target) => {
             const origin = this.beacons.allPositions[placed] ?? this.ghostPos;
@@ -1501,6 +1502,7 @@ export class BuildSystem {
       cooldown: 1 / this.effectiveTurretFireRate(placed),
       damage: this.effectiveTurretDamage(placed),
       getDamage: () => this.effectiveTurretDamage(placed),
+      visualOriginPadRadius: () => Balance.turret.overlapRadius,
       canTarget: hasElevationTile()
         ? (target) => {
             const origin = this.turrets.allPositions[placed] ?? this.ghostPos;

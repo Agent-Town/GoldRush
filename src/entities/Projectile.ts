@@ -2,6 +2,20 @@ import * as THREE from 'three';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import * as Terrain from '../world/Terrain';
+
+const BOLT_VISUAL_Y = 0.72;
+
+export type ProjectileVisualSample = {
+  ownerId: string;
+  targetId: number;
+  x: number;
+  y: number;
+  z: number;
+  startY: number;
+  endY: number;
+  progress: number;
+};
 
 export class ProjectilePool {
   readonly group = new THREE.Group();
@@ -14,6 +28,10 @@ export class ProjectilePool {
   private readonly ownerIds: string[] = [];
   private readonly shooterIds: number[] = [];
   private readonly targetIds: number[] = [];
+  private readonly visualStartY: number[] = [];
+  private readonly visualEndY: number[] = [];
+  private readonly visualDistance: number[] = [];
+  private readonly visualTravel: number[] = [];
   private readonly boltGeometry = new THREE.SphereGeometry(0.12, 10, 6);
   private readonly tracerGeometry = new THREE.BoxGeometry(0.055, 0.055, 0.62);
   private readonly boltMaterial = new THREE.MeshStandardMaterial({
@@ -64,6 +82,10 @@ export class ProjectilePool {
       this.ownerIds.push('hero');
       this.shooterIds.push(-1);
       this.targetIds.push(-1);
+      this.visualStartY.push(BOLT_VISUAL_Y);
+      this.visualEndY.push(BOLT_VISUAL_Y);
+      this.visualDistance.push(1);
+      this.visualTravel.push(0);
       this.hide(i);
     }
     this.markNeedsUpdate();
@@ -110,6 +132,8 @@ export class ProjectilePool {
     ownerId = 'hero',
     shooterId = -1,
     targetId = -1,
+    targetPoint?: THREE.Vector3,
+    visualOriginPadRadius = 0,
   ): boolean {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
@@ -119,7 +143,13 @@ export class ProjectilePool {
 
       this.active[i] = true;
       this.alive += 1;
-      position.set(origin.x, 0.72, origin.z);
+      const targetX = targetPoint?.x ?? origin.x;
+      const targetZ = targetPoint?.z ?? origin.z;
+      this.visualStartY[i] = Terrain.visualY(origin.x, origin.z, BOLT_VISUAL_Y, visualOriginPadRadius);
+      this.visualEndY[i] = Terrain.visualY(targetX, targetZ, BOLT_VISUAL_Y);
+      this.visualDistance[i] = Math.max(0.001, Math.hypot(targetX - origin.x, targetZ - origin.z));
+      this.visualTravel[i] = 0;
+      position.set(origin.x, this.visualStartY[i] ?? BOLT_VISUAL_Y, origin.z);
       velocity.set(dirX * speed, 0, dirZ * speed);
       this.life[i] = Balance.sparkRig.boltLife;
       this.damage[i] = damage;
@@ -139,6 +169,8 @@ export class ProjectilePool {
       const velocity = this.velocities[i];
       if (!position || !velocity) continue;
       position.addScaledVector(velocity, delta);
+      this.visualTravel[i] = (this.visualTravel[i] ?? 0) + Math.hypot(velocity.x, velocity.z) * delta;
+      this.syncVisualY(i);
       this.life[i] = (this.life[i] ?? 0) - delta;
       if ((this.life[i] ?? 0) <= 0) {
         onExpired?.(this.shooterIdAt(i), this.targetIdAt(i));
@@ -150,6 +182,26 @@ export class ProjectilePool {
     this.markNeedsUpdate();
   }
 
+  visualDiagnostics(limit = 8): ProjectileVisualSample[] {
+    const samples: ProjectileVisualSample[] = [];
+    for (let i = 0; i < this.active.length && samples.length < limit; i += 1) {
+      if (!this.active[i]) continue;
+      const position = this.positions[i];
+      if (!position) continue;
+      samples.push({
+        ownerId: this.ownerIds[i] ?? 'hero',
+        targetId: this.targetIds[i] ?? -1,
+        x: round3(position.x),
+        y: round3(position.y),
+        z: round3(position.z),
+        startY: round3(this.visualStartY[i] ?? BOLT_VISUAL_Y),
+        endY: round3(this.visualEndY[i] ?? BOLT_VISUAL_Y),
+        progress: round3(this.visualProgress(i)),
+      });
+    }
+    return samples;
+  }
+
   deactivate(index: number): void {
     if (!this.active[index]) return;
     this.active[index] = false;
@@ -158,6 +210,10 @@ export class ProjectilePool {
     this.ownerIds[index] = 'hero';
     this.shooterIds[index] = -1;
     this.targetIds[index] = -1;
+    this.visualStartY[index] = BOLT_VISUAL_Y;
+    this.visualEndY[index] = BOLT_VISUAL_Y;
+    this.visualDistance[index] = 1;
+    this.visualTravel[index] = 0;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
   }
@@ -170,6 +226,10 @@ export class ProjectilePool {
       this.ownerIds[i] = 'hero';
       this.shooterIds[i] = -1;
       this.targetIds[i] = -1;
+      this.visualStartY[i] = BOLT_VISUAL_Y;
+      this.visualEndY[i] = BOLT_VISUAL_Y;
+      this.visualDistance[i] = 1;
+      this.visualTravel[i] = 0;
       this.hide(i);
     }
     this.alive = 0;
@@ -181,6 +241,20 @@ export class ProjectilePool {
     this.tracerGeometry.dispose();
     this.boltMaterial.dispose();
     this.tracerMaterial.dispose();
+  }
+
+  private syncVisualY(index: number): void {
+    const position = this.positions[index];
+    if (!position) return;
+    position.y = THREE.MathUtils.lerp(
+      this.visualStartY[index] ?? BOLT_VISUAL_Y,
+      this.visualEndY[index] ?? BOLT_VISUAL_Y,
+      this.visualProgress(index),
+    );
+  }
+
+  private visualProgress(index: number): number {
+    return Math.min(1, Math.max(0, (this.visualTravel[index] ?? 0) / Math.max(0.001, this.visualDistance[index] ?? 1)));
   }
 
   private sync(index: number): void {
@@ -208,4 +282,8 @@ export class ProjectilePool {
     this.boltMesh.instanceMatrix.needsUpdate = true;
     this.tracerMesh.instanceMatrix.needsUpdate = true;
   }
+}
+
+function round3(value: number): number {
+  return Math.round(value * 1000) / 1000;
 }

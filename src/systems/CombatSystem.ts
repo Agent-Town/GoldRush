@@ -3,7 +3,7 @@ import type { EventBus } from '../core/EventBus';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import type { Hero } from '../entities/Hero';
 import type { BlastChargePool } from '../entities/BlastCharge';
-import type { ProjectilePool } from '../entities/Projectile';
+import type { ProjectilePool, ProjectileVisualSample } from '../entities/Projectile';
 import type { XpMotePool } from '../entities/XpMote';
 import type { EnemyPool } from '../entities/pools';
 import { isCombatDamageDisabled } from '../core/DebugParams';
@@ -24,6 +24,7 @@ export type ShooterHandle = {
   canTarget?: (target: ClaimJumperEnemy) => boolean;
   effectiveRange?: (target: ClaimJumperEnemy) => number;
   targetPoint?: (origin: THREE.Vector3, target: ClaimJumperEnemy) => THREE.Vector3 | null;
+  visualOriginPadRadius?: () => number;
   aoe?: { radius: number; airTime: number };
   airTime?: (origin: THREE.Vector3, targetPoint: THREE.Vector3) => number;
   getPos: () => THREE.Vector3;
@@ -129,6 +130,10 @@ export class CombatSystem {
 
   get boltsAlive(): number {
     return this.projectiles.activeCount;
+  }
+
+  get projectileVisuals(): ProjectileVisualSample[] {
+    return this.projectiles.visualDiagnostics();
   }
 
   get blastsAlive(): number {
@@ -401,7 +406,20 @@ export class CombatSystem {
     for (let i = 0; i < count; i += 1) {
       const damage = handle.getDamage?.() ?? handle.damage;
       const ownerId = handle.id ?? 'hero';
-      if (this.projectiles.activate(this.scratchOrigin, dirX, dirZ, handle.projSpeed, damage, ownerId, state.id, target.id)) {
+      if (
+        this.projectiles.activate(
+          this.scratchOrigin,
+          dirX,
+          dirZ,
+          handle.projSpeed,
+          damage,
+          ownerId,
+          state.id,
+          target.id,
+          targetPoint,
+          handle.visualOriginPadRadius?.() ?? 0,
+        )
+      ) {
         this.recordShot('bolt', ownerId);
         handle.onFire?.(this.currentAt);
         this.audio.playShot('bolt', ownerId);

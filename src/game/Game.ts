@@ -949,6 +949,7 @@ export class Game {
           this.buildSystem.selectBuildable('sentry_beacon', true);
           return this.buildSystem.confirm(this.timeAlive);
         },
+        projectileVisuals: () => this.combat.projectileVisuals,
         state: () => ({
           enemiesAlive: this.enemies.activeCount,
           xp: this.combat.xpCount,
