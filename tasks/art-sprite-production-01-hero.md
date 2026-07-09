@@ -1,8 +1,31 @@
-# Task sprite-production-01: THE PIPELINE — turnaround → walk videos → walk8 sheets (ART slot, higgsfield CLI + ffmpeg)
-READ: assets/motion-pilot/NOTES.md (the pilot's verdicts/learnings) + turn-hero-base/e1-outfit (the conditioning anchors) + lore/canon-rules (hero canon: young woman miner, never 'prospector'). OWNER ORDER 2026-07-09: "from these inputs to sprite sheets so we can extract new animations. Adaptive over time."
+# Task sprite-production-01: THE PIPELINE — turnaround → walk videos → walk8 sheet (ART slot, higgsfield CLI + imageio-ffmpeg)
+**FIRE-HARDENED s257 (attended review welcome)** — enriched from the motion-pilot evidence (`assets/motion-pilot/NOTES.md` + `logs/*-generate.json`) so it cannot fail the known ways. Original 9-line master preserved in intent; s257 added: the exact Seedance invocation + params, the broken-ffmpeg workaround, the "locked footline" prompt hardening the pilot flagged for production, per-direction reference mapping (all VERIFIED to exist), and per-gen credit logging.
+
+You are Codex on Robin's Mac. **OWNER ORDER 2026-07-09 (verbatim, `tasks/BACKLOG.md` Cast Motion Ladder):** "These moves look much better - this is the way to go. We just need them for the new reference characters now." M-1 = the combat trio; THIS task = HERO ONLY (siblings jumper/baron follow this template once the owner verdicts these sheets). Economics ratified: ~90 cr/character + ~20% retake margin ≈ 108 cr; balance ~753.5 cr (owner-owned, Plus plan). Stay within budget.
+
+## READ FIRST
+- `assets/motion-pilot/NOTES.md` — the pilot's verdicts + learnings (all three clips "pipeline-worthy"; the down-walk drifted 499→559px → production needs a locked footline).
+- `assets/motion-pilot/logs/hero-side-generate.json` — the PROVEN canon-clean prompt + params (Seedance 2.0, 4s, 720p, 1:1, std, no audio).
+- `assets/raw/turn-hero-e1-outfit.png` + `assets/raw/hero-homesteader.png` — the identity anchors (hero canon: young woman miner, NEVER 'prospector'; tan frontier coat, brimmed hat, satchel, brass pan, small teal chest lantern).
+- `lore/` canon-rules — no firearms, no text/letters, illustrated-not-gory.
+
+## TOOLS (verified present in the pilot's run today)
+- `higgsfield` CLI (logged-in, workspace set): `generate create seedance_2_0 --prompt "<PROMPT>" --start-image <path> --wait` — 4s, 720p, 1:1, std mode, generate-audio off. (Optional second `--image <identity-anchor>` role as the pilot used; keep the start-image as the direction pose.)
+- ffmpeg: **the Homebrew `ffmpeg`/`ffprobe` are BROKEN on this Mac (missing `libx265.215.dylib`)** — the pilot decoded with an isolated `/tmp` `imageio-ffmpeg` binary and added NO repo dependency. Do the same; do NOT `npm install` or add any dependency.
 
 ## Scope (HERO ONLY — the production pilot; the cast follows once the owner verdicts these sheets)
-1. Per direction (down/left/right/up): Seedance walk-in-place video conditioned on turn-hero-e1-outfit ("constant framing, plain flat sand background, seamless loop, no camera motion" + anchor; the turnaround pose matching the direction as --start-image where sensible). ≤2 takes each.
-2. Extract 8 evenly-spaced frames per direction from one clean gait cycle (ffmpeg); align/crop constant; composite onto #ff00ff in a 4×8 grid → `assets/raw/char-hero-sheet-walk8.png` (rows: down/left/right/up × 8 frames — the walk4 grid law extended).
-3. Contact sheet + honest QA: silhouette consistency, style vs in-game sprite, limb coherence per direction; any direction failing = note, don't fake.
-4. LEDGER rows (walk8 PENDING-PROCESSING). NO src/ (SpriteAnimator walk8 support = the laddered engine task). End: READY-FOR-GATES + the grid + QA.
+1. **Generate one walk video per direction** (down/left/right/up), Seedance, conditioned on the matching processed walk4 cell as `--start-image` + `hero-homesteader.png` identity anchor (all four VERIFIED present):
+   - **down** ← `assets/processed-full/char-hero-sheet-walk4-a-r0c0.png`
+   - **left** ← `assets/processed-full/char-hero-sheet-walk4-a-r1c0.png`
+   - **right** ← `assets/processed-full/char-hero-sheet-walk4-a-r2c0.png`
+   - **up** ← `assets/processed-full/char-hero-sheet-walk4-a-r3c0.png`
+   Base prompt (from the pilot's proven clean generation, per direction view): *"Frontier Ledger illustrated game sprite reference. Use the exact referenced hero: tan frontier coat, brimmed hat, satchel, brass pan, small teal chest lantern. Full body <DIRECTION> view, walking steadily in place against a plain flat sand-colored background. Constant centered framing, **locked footline and fixed scale, feet on a fixed ground line, no vertical drift**, no camera motion, no zoom, no turn, no extra characters, no text or letters, no realistic firearms, no gore. Seamless 4-second loop with one clean readable gait cycle; keep proportions, silhouette, clothing, colors, and linework consistent frame to frame."* (The **bold** clause is s257's production hardening for the pilot's flagged down-walk drift.)
+   **BUDGET: ≤2 takes per direction → ≤8 generations total (~90–108 cr).** Log EACH generation in the LEDGER: job ID + credits + running balance (the pilot's discipline — `assets/motion-pilot/NOTES.md` Run Summary is the reference shape).
+2. **Extract 8 evenly-spaced frames** per direction from ONE clean gait cycle (imageio-ffmpeg, `fps=2` decode as the pilot did); 5% trim, bottom alignment, fixed frame canvas (pilot used 280×340 — verify vs the hero band). Composite the 4 directions × 8 frames onto `#ff00ff` in a **4×8 grid** → `assets/raw/char-hero-sheet-walk8.png` (rows: down/left/right/up × 8 frames — the walk4 grid law extended to walk8). NO mirrors.
+3. **Contact sheet + honest QA** per direction: silhouette consistency across frames, style vs the in-game sprite, limb coherence, and **drift** (bbox height stability — the production gate the pilot named; report the metric). Any direction failing = NOTE it, do NOT fake or hand-touch.
+4. **LEDGER rows** (walk8 sheet PENDING-PROCESSING) + a run note. Videos/frames/contact-sheets → `assets/motion-pilot/production-hero/` (near the pilot evidence). **NO src/** — SpriteAnimator walk8 support is a separate laddered ENGINE task, not this one.
+
+## Firewall
+Touch ONLY: `assets/raw/char-hero-sheet-walk8.png`, `assets/motion-pilot/production-hero/**`, `assets/LEDGER.md` (walk8 + per-gen credit rows), the run note. **NO src/**, NO processed-sprite changes, NO other characters (hero only), NO dependency install, NO wiring.
+
+End: **READY-FOR-GATES** + the 4×8 grid called out + per-direction QA verdicts + the per-generation credit log (job IDs + total spend + ending balance) for the owner.
