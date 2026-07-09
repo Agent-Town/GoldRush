@@ -155,6 +155,7 @@ import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { readTownName } from '../town/TownNaming';
+import { installRunTelemetry } from '../telemetry/runBeacon';
 import { GameState } from './GameState';
 import { performanceTierDiagnostics } from './PerformanceTier';
 import { Progression } from './Progression';
@@ -597,6 +598,7 @@ export class Game {
   private readonly craftingProfile = normalizeQueueProfile(new URLSearchParams(window.location.search).get('profile'));
   private lastHarvestChanneling = false;
   private lastUpgradeOfferAudioKey = '';
+  private disposeRunTelemetry: () => void = () => undefined;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -770,6 +772,11 @@ export class Game {
           onSecondaryAction: this.onReturnToMenu ? () => this.finishSecuredLedgerQuickLoop() : undefined,
         });
       }, 0);
+    });
+    this.disposeRunTelemetry = installRunTelemetry({
+      events: this.events,
+      contract: () => this.activeContract.id,
+      upgradeStacks: () => this.progression.snapshot.stacks,
     });
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
@@ -1151,6 +1158,7 @@ export class Game {
     this.enemies.dispose();
     this.primaryActor.dispose();
     disposeGeneratedAssets();
+    this.disposeRunTelemetry();
     this.events.clear();
     this.renderer.dispose();
     window.__THREE_GAME_DIAGNOSTICS__ = undefined;

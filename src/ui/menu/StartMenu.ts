@@ -9,6 +9,7 @@ import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
 import { bindPerformanceTierControl, renderPerformanceTierControl } from '../../game/PerformanceTier';
+import { bindTelemetrySettingsControl, renderTelemetrySettingsControl } from '../../telemetry/payload';
 import { readRunSuspend } from '../../game/RunSuspend';
 import {
   AUTO_SAVE_SLOT_NAME,
@@ -34,6 +35,7 @@ const STORY_SETTINGS_IDS = {
   tales: 'start-menu-tales',
 };
 const PERFORMANCE_TIER_ID = 'start-menu-performance-tier';
+const TELEMETRY_STATS_ID = 'start-menu-telemetry-stats';
 
 type StartMenuOptions = {
   onNewClaim: () => void;
@@ -50,6 +52,7 @@ export class StartMenu {
   private disposeAudioSettings: () => void = () => undefined;
   private disposeStorySettings: () => void = () => undefined;
   private disposePerformanceSettings: () => void = () => undefined;
+  private disposeTelemetrySettings: () => void = () => undefined;
   private storage?: Storage;
   private firstBoot = false;
   private profileMessage = '';
@@ -80,6 +83,7 @@ export class StartMenu {
     this.disposeAudioSettings();
     this.disposeStorySettings();
     this.disposePerformanceSettings();
+    this.disposeTelemetrySettings();
     this.disposeAccountSync();
     this.root.removeEventListener('click', this.onClick);
     this.root.removeEventListener('keydown', this.onKeyDown);
@@ -91,6 +95,7 @@ export class StartMenu {
     this.disposeAudioSettings();
     this.disposeStorySettings();
     this.disposePerformanceSettings();
+    this.disposeTelemetrySettings();
     const suspend = readRunSuspend();
     const slots = readSaveSlots(this.storage);
     const account = accountSync.snapshot();
@@ -133,12 +138,14 @@ export class StartMenu {
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
           ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
           ${renderPerformanceTierControl(PERFORMANCE_TIER_ID)}
+          ${renderTelemetrySettingsControl(TELEMETRY_STATS_ID)}
         </section>
       </div>
     `;
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
     this.disposeStorySettings = bindStorySettingsControl(this.root, STORY_SETTINGS_IDS);
     this.disposePerformanceSettings = bindPerformanceTierControl(this.root, PERFORMANCE_TIER_ID);
+    this.disposeTelemetrySettings = bindTelemetrySettingsControl(this.root, TELEMETRY_STATS_ID);
     this.root.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
       event.preventDefault();
       this.createFirstProfile();

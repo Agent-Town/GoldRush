@@ -17,6 +17,9 @@ import {
 
 export default defineConfig({
   base: './',
+  define: {
+    __APP_BUILD__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA?.slice(0, 8) ?? 'dev'),
+  },
   plugins: [craftingQueuePlugin()],
   server: {
     host: '127.0.0.1',

@@ -1,7 +1,11 @@
 /// <reference types="vite/client" />
 
+declare const __APP_BUILD__: string;
+
 type GrBuildableId = any;
 type GrStorySignal = import('./story').StorySignal;
+type GrRunEndedEvent = Extract<import('./core/EventBus').GameEvent, { type: 'run_ended' }>;
+type GrRunTelemetryPayload = import('./telemetry/payload').RunTelemetryPayload;
 
 interface ThreeGameDiagnostics {
   frame: number;
@@ -760,6 +764,10 @@ interface Window {
   __GR_MP__?: {
     state: () => GrMultiplayerState | null;
     injectDesyncAt: (tick: number) => void;
+  };
+  __GR_TELEMETRY__?: {
+    recordRunEndedForTest: (event: GrRunEndedEvent) => void;
+    lastPayload: () => GrRunTelemetryPayload | null;
   };
   __GR_TOWN_DIAGNOSTICS__?: import('./town/TownScene').TownDiagnostics;
   __BENCH_REPORT__?: unknown;
