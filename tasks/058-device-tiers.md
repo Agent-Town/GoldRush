@@ -9,6 +9,8 @@ You are Codex on Robin's Mac, repo root. READ FIRST: AGENTS.md; the render pipel
 4. Sim untouched (tiers are RENDER-ONLY — determinism/hashes identical across tiers, asserted).
 5. iPad reality-check note for the owner: the exact URL + tier expected for his son's device class.
 
+## THE SETTINGS SURFACE (owner extension, same order): the pause screen gains a SETTINGS button that swaps the whole sidebar to an options panel (in-run AND from the menu): quality tier selector + GRANULAR feature toggles (shadows / scatter density / vfx / enemy bars / splat-mesh flags / audio sliders relocated here) — ALL LIVE-APPLY so the owner workflow works: adjust → unpause → test → re-adjust until it feels right. Persisted per profile. The existing pause audio/tales controls MOVE into this panel (one settings home).
+
 ## Firewall
 Touch ONLY: render-knob tiering + detection, Settings entry, webkit playwright project + probes, cache-header verification, e2e, artifacts. NO sim, NO gameplay values, NO asset changes.
 
