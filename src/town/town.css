@@ -657,6 +657,66 @@
   padding: 0 16px 14px;
 }
 
+.town-ui__ride-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) auto minmax(180px, 0.75fr);
+  align-items: center;
+  gap: 12px;
+  margin: 0 16px 16px;
+  padding: 12px;
+  border: 2px solid rgba(46, 27, 14, 0.82);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(214, 180, 120, 0.9)),
+    #f5e6c8;
+  box-shadow: inset 0 0 0 1px rgba(139, 125, 60, 0.32);
+}
+
+.town-ui__ride-card h3,
+.town-ui__ride-card p {
+  margin: 0;
+}
+
+.town-ui__ride-card h3 {
+  color: #2e1b0e;
+  font-size: 1.18rem;
+  line-height: 1.05;
+}
+
+.town-ui__ride-card p {
+  color: rgba(46, 27, 14, 0.78);
+  font-size: 0.82rem;
+  font-weight: 900;
+  line-height: 1.25;
+}
+
+.town-ui__ride-actions,
+.town-ui__ride-join {
+  display: grid;
+  gap: 8px;
+}
+
+.town-ui__ride-code {
+  min-width: 0;
+  border: 2px dashed rgba(46, 27, 14, 0.58);
+  border-radius: 8px;
+  padding: 10px;
+  color: #2e1b0e;
+  background: rgba(255, 248, 232, 0.68);
+  font: 900 0.92rem/1.15 Wellfleet, Georgia, serif;
+  overflow-wrap: anywhere;
+  text-align: center;
+}
+
+.town-ui__ride-code--empty {
+  color: rgba(46, 27, 14, 0.58);
+}
+
+.town-ui__ride-status {
+  grid-column: 1 / -1;
+  min-height: 1.2em;
+}
+
 .town-ui__catalog-count {
   min-width: 52px;
   font-size: 0.82rem;
@@ -945,6 +1005,26 @@
   .town-ui__catalog-nav {
     gap: 8px;
     padding: 0 8px 8px;
+  }
+
+  .town-ui__ride-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 0 8px 8px;
+    padding: 8px;
+  }
+
+  .town-ui__ride-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .town-ui__ride-card h3 {
+    font-size: 1rem;
+  }
+
+  .town-ui__ride-code {
+    padding: 8px;
+    font-size: 0.78rem;
   }
 
   .town-ui__catalog-count {

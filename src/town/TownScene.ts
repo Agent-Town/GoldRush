@@ -14,7 +14,7 @@ import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
 import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
-import { FIRST_CLAIM_DONE_KEY } from '../game/ProfileStorage';
+import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
 import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { DEFAULT_CONTRACT_ID, listBoardContracts, loadContract, loadEpoch, type ContractManifest } from '../meta/ContractFamilies';
@@ -33,6 +33,7 @@ import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } 
 import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
+import { createRideRoom, probeRideRoom, relayBaseFromTownSearch, resolveJoinPhrase, stageRideConfig } from '../mp/RideTogether';
 import { earnedTownBuildings, townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
@@ -211,6 +212,9 @@ export class TownScene {
   private firstClaimPulseRing?: THREE.Mesh;
   private firstClaimGreetingVisible = false;
   private firstClaimGreetingDismissed = false;
+  private ridePhrase: string | null = null;
+  private rideStatus = '';
+  private rideBusy = false;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -563,6 +567,18 @@ export class TownScene {
       this.selectBoardPage(this.boardPageIndex + Number.parseInt(pageStep.dataset.contractPageStep, 10));
       return;
     }
+    if (target?.closest('[data-ride-open]')) {
+      void this.openRideTogetherClaim();
+      return;
+    }
+    if (target?.closest('[data-ride-start]')) {
+      this.launchRideTogether();
+      return;
+    }
+    if (target?.closest('[data-ride-join]')) {
+      void this.joinRideTogether();
+      return;
+    }
     const launch = target?.closest<HTMLButtonElement>('[data-contract-launch]');
     const id = launch?.dataset.contractLaunch;
     if (id && !launch.disabled) {
@@ -580,6 +596,14 @@ export class TownScene {
   };
 
   private readonly onBoardKeyDown = (event: KeyboardEvent) => {
+    if ((event.target as HTMLElement | null)?.closest('[data-ride-join-input]')) {
+      event.stopPropagation();
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        void this.joinRideTogether();
+      }
+      return;
+    }
     if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
     event.preventDefault();
     event.stopPropagation();
@@ -961,6 +985,7 @@ export class TownScene {
               .join('')}
           </div>
         </nav>
+        ${this.renderRideTogetherCard()}
       </div>
     `;
   }
@@ -1024,6 +1049,99 @@ export class TownScene {
         </div>
       </article>
     `;
+  }
+
+  private renderRideTogetherCard(): string {
+    const phrase = this.ridePhrase;
+    const status = this.rideStatus || (phrase ? 'Give this claim word to the other rider.' : 'Open a claim or join with a claim word.');
+    return `
+      <aside class="town-ui__ride-card" data-testid="ride-together-card">
+        <div>
+          <p class="town-ui__board-eyebrow">Ride Together</p>
+          <h3>Share this claim</h3>
+          <p>${escapeHtml(status)}</p>
+        </div>
+        <div class="town-ui__ride-actions">
+          <button class="town-ui__contract-action" type="button" data-ride-open data-testid="ride-open-claim" ${this.rideBusy ? 'disabled' : ''}>
+            Open the Claim
+          </button>
+          ${
+            phrase
+              ? `<button class="town-ui__contract-action" type="button" data-ride-start data-testid="ride-start" ${this.rideBusy ? 'disabled' : ''}>Start Ride</button>`
+              : ''
+          }
+        </div>
+        ${
+          phrase
+            ? `<output class="town-ui__ride-code" data-testid="ride-code-word">${escapeHtml(phrase)}</output>`
+            : '<output class="town-ui__ride-code town-ui__ride-code--empty" data-testid="ride-code-word">No claim open</output>'
+        }
+        <div class="town-ui__ride-join">
+          <input class="town-ui__name-input" data-ride-join-input data-testid="ride-join-input" aria-label="Claim word" autocomplete="off" spellcheck="false" />
+          <button class="town-ui__contract-action" type="button" data-ride-join data-testid="ride-join-submit" ${this.rideBusy ? 'disabled' : ''}>
+            Join a Ride
+          </button>
+        </div>
+        <p class="town-ui__ride-status" data-testid="ride-status">${escapeHtml(status)}</p>
+      </aside>
+    `;
+  }
+
+  private async openRideTogetherClaim(): Promise<void> {
+    if (this.rideBusy) return;
+    this.rideBusy = true;
+    this.rideStatus = 'Opening the claim wire...';
+    this.renderBoard();
+    try {
+      const ride = await createRideRoom(relayBaseFromTownSearch(), this.ridePlayer());
+      this.ridePhrase = ride.phrase;
+      this.rideStatus = 'Claim open. Give this word to the other rider.';
+    } catch {
+      this.rideStatus = "The claim wire isn't ready yet.";
+    } finally {
+      this.rideBusy = false;
+      this.renderBoard();
+    }
+  }
+
+  private launchRideTogether(): void {
+    if (!this.ridePhrase) return;
+    if (!this.confirmFreshContractLaunch(DEFAULT_CONTRACT_ID)) return;
+    clearRunSuspend();
+    this.options.onLaunchContract?.(DEFAULT_CONTRACT_ID);
+  }
+
+  private async joinRideTogether(): Promise<void> {
+    if (this.rideBusy) return;
+    const input = this.board.querySelector<HTMLInputElement>('[data-ride-join-input]');
+    const code = resolveJoinPhrase(input?.value ?? '');
+    if (!code) {
+      this.rideStatus = "That claim's gone quiet.";
+      this.renderBoard();
+      return;
+    }
+    this.rideBusy = true;
+    this.rideStatus = 'Checking the claim wire...';
+    this.renderBoard();
+    const relayBase = relayBaseFromTownSearch();
+    const player = this.ridePlayer();
+    const ok = await probeRideRoom(relayBase, code, player);
+    if (!ok) {
+      this.rideBusy = false;
+      this.rideStatus = "That claim's gone quiet.";
+      this.renderBoard();
+      return;
+    }
+    stageRideConfig({ relayBase, code, player, phrase: input?.value.trim().toUpperCase() || code });
+    clearRunSuspend();
+    this.options.onLaunchContract?.(DEFAULT_CONTRACT_ID);
+  }
+
+  private ridePlayer(): { name: string; town: string } {
+    return {
+      name: activeProfileName(),
+      town: this.townName ?? 'Home Claim',
+    };
   }
 
   private emitBoardStorySignals(): void {
