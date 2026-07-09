@@ -142,11 +142,19 @@
 }
 
 .claim-ledger-card__lore,
+.claim-ledger-card__quote,
 .claim-ledger-card__locked-copy {
   margin: 9px 0 0;
   color: #684728;
   font-size: 0.84rem;
   line-height: 1.32;
+}
+
+.claim-ledger-card__quote {
+  padding-left: 10px;
+  border-left: 3px solid rgba(91, 138, 138, 0.42);
+  color: #4d3320;
+  font-style: italic;
 }
 
 .claim-ledger-card--locked {

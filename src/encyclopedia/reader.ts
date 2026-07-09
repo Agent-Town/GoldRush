@@ -74,7 +74,15 @@ function renderShelf(category: string, discovered: Set<LedgerDiscoveryId>, selec
 }
 
 function renderCard(entry: LedgerEntry, discovered: boolean, selected: boolean): string {
-  const facts = discovered ? entry.factLines().map((line) => line.trim()).filter(Boolean).slice(0, LEDGER_FACT_LINE_CAP) : [];
+  const facts = discovered
+    ? entry
+        .factLines()
+        .map(playerLedgerLine)
+        .filter((line): line is string => Boolean(line))
+        .slice(0, LEDGER_FACT_LINE_CAP)
+    : [];
+  const quote = discovered ? playerLedgerLine(characterQuote(entry.id) ?? '') : undefined;
+  const loreLine = discovered && !quote ? playerLedgerLine(entry.loreLine) : undefined;
   const portraitVisible = discovered && entry.portraitLocked?.() !== true;
   return `
     <article class="claim-ledger-card${discovered ? '' : ' claim-ledger-card--locked'}${selected ? ' claim-ledger-card--selected' : ''}"
@@ -95,15 +103,75 @@ function renderCard(entry: LedgerEntry, discovered: boolean, selected: boolean):
         <h4>${escapeHtml(discovered ? entry.name : 'Not yet met')}</h4>
         ${
           discovered
-            ? `<ul class="claim-ledger-card__facts" data-testid="claim-ledger-facts-${entry.id}">
-                ${facts.map((line) => `<li data-testid="claim-ledger-fact-line">${escapeHtml(line)}</li>`).join('')}
-              </ul>
-              <p class="claim-ledger-card__lore" data-testid="claim-ledger-lore-${entry.id}">${escapeHtml(entry.loreLine)}</p>`
+            ? `${renderFacts(entry, facts)}
+              ${
+                quote
+                  ? `<p class="claim-ledger-card__quote" data-testid="claim-ledger-character-quote">&ldquo;${escapeHtml(quote)}&rdquo;</p>`
+                  : loreLine
+                    ? `<p class="claim-ledger-card__lore" data-testid="claim-ledger-lore-${entry.id}">${escapeHtml(loreLine)}</p>`
+                    : ''
+              }`
             : '<p class="claim-ledger-card__locked-copy" data-testid="claim-ledger-locked-copy">Not yet met</p>'
         }
       </div>
     </article>
   `;
+}
+
+function renderFacts(entry: LedgerEntry, facts: readonly string[]): string {
+  if (facts.length === 0) return '';
+  return `<ul class="claim-ledger-card__facts" data-testid="claim-ledger-facts-${entry.id}">
+    ${facts.map((line) => `<li data-testid="claim-ledger-fact-line">${escapeHtml(line)}</li>`).join('')}
+  </ul>`;
+}
+
+function playerLedgerLine(value: string): string | undefined {
+  const line = value
+    .replace(/\s*\([^)]*(?:lore\/|docs\/|\.md|20\d{2}-\d{2}-\d{2})[^)]*\)\s*$/i, '')
+    .trim();
+  if (!line) return undefined;
+  return INTERNAL_LEDGER_PATTERNS.some((pattern) => pattern.test(line)) ? undefined : line;
+}
+
+const INTERNAL_LEDGER_PATTERNS = [
+  /\(lore\//i,
+  /\.md\b/i,
+  /\bbatch-/i,
+  /\b20\d{2}-\d{2}-\d{2}\b/,
+  /\bOWNER RULING\b/i,
+  /\bNEVER\b/,
+  /\broster\b/i,
+  /\bwiki\b/i,
+  /\bbackend\b/i,
+  /\bdocs\//i,
+  /\bcodex-/i,
+  /^Ability:/i,
+  /^Bark range:/i,
+  /^First survey:/i,
+  /^Home post:/i,
+  /^Move:/i,
+  /^Move speed:/i,
+  /^Priority chase mark:/i,
+  /^Spawn edges:/i,
+] as const;
+
+const CHARACTER_QUOTES: Partial<Record<LedgerEntryId, string>> = {
+  hero: 'This claim has room for every honest hand.',
+  prospector: 'I will keep the claim books steady.',
+  town_tavernkeeper: 'The board is warm; pick your trail.',
+  town_storekeeper: 'If you can count it, I can stock it.',
+  town_elder: 'Write it plainly; learn it once.',
+  town_preacher: 'The bell is for courage, not judgment.',
+  town_schoolteacher: 'A good question is a lantern.',
+  town_assay_clerk: "Gold in, proof out. That's the bargain.",
+  town_youngster_a: 'I found a shiny rock. It is probably science.',
+  town_youngster_b: 'If the Baron comes, he has to do sums first.',
+  claim_jumper: "That pan looks lonely; I'll carry it off.",
+  baron: 'My banner arrives before my bill.',
+};
+
+function characterQuote(id: LedgerEntryId): string | undefined {
+  return CHARACTER_QUOTES[id];
 }
 
 function onLedgerClick(event: MouseEvent): void {

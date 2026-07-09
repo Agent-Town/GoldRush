@@ -114,7 +114,8 @@ test('EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fa
   await beat.click();
   await expect(page.getByTestId('claim-ledger')).toBeVisible();
   await expect(page.getByTestId('claim-ledger-card-the_claim')).toHaveAttribute('data-ledger-discovered', 'true');
-  await expect(page.getByTestId('claim-ledger-facts-the_claim').getByTestId('claim-ledger-fact-line')).toHaveCount(4);
+  await expect(page.getByTestId('claim-ledger-facts-the_claim').getByTestId('claim-ledger-fact-line')).toHaveCount(3);
+  await expect(page.getByTestId('claim-ledger-facts-the_claim')).not.toContainText('Spawn edges');
   await expectFactCap(page);
   await shot(page, testInfo, 'beat-open-reader');
   await closeLedger(page);
