@@ -48,3 +48,5 @@ PRIMARY: X/Twitter (indie-dev + AI-builder audience overlap — both pillars lan
 
 ## Landing page (mkt-02, factory-built)
 `site/` static one-pager in this repo → own Cloudflare Pages project (`agenttown`) → owner points agenttown.app DNS (one-time, ~5 min, when the page is review-approved). Content v1: brand mark + "Gold Rush — an Agent Town tale" + hero key art + teaser slot (poster frame until Stage 1) + 3 pillar blurbs + devlog link + email/waitlist (simple mailto or CF form later) + "played by the founder's family since 2026" honesty line. NO tracking/analytics v1 (privacy = public-readiness pack later); NO game embed yet (owner gates when the public build is ready).
+
+**THE LIBRARY-AS-CALENDAR (owner alignment 2026-07-09): once plates pass the owner verdict, the Visual Saga Library doubles as the channels' launch content — era-plate reveals as Gazette stories, 'meet the Outfit' enemy/boss reels, era-chain segments as Ticker clips, outfit evolutions as threads. One canon feeds the game, the trailer, AND the feed — nothing generated twice, everything cited to its plate.**
