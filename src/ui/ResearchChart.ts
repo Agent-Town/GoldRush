@@ -13,6 +13,70 @@ import {
   type ResearchState,
 } from '../meta/ResearchTree';
 
+type ResearchIconKey =
+  | 'ui.upgrade.icon.panning'
+  | 'ui.upgrade.icon.prospecting'
+  | 'ui.upgrade.icon.beacon'
+  | 'ui.upgrade.icon.blast'
+  | 'ui.upgrade.icon.firerate'
+  | 'ui.upgrade.icon.gold'
+  | 'ui.upgrade.icon.mend'
+  | 'ui.upgrade.icon.mobility'
+  | 'ui.upgrade.icon.range'
+  | 'ui.upgrade.icon.volley'
+  | 'bld.sentry_beacon'
+  | 'bld.sluice_works'
+  | 'char.prospector_agent.portrait'
+  | 'node.gold_seam';
+
+const RESEARCH_ICON_REGISTRY: Record<ResearchIconKey, { url: string; label: string }> = {
+  'ui.upgrade.icon.panning': { url: new URL('../../assets/processed/icon-panning.png', import.meta.url).href, label: 'gold pan' },
+  'ui.upgrade.icon.prospecting': {
+    url: new URL('../../assets/processed/icon-prospecting.png', import.meta.url).href,
+    label: 'prospecting glass',
+  },
+  'ui.upgrade.icon.beacon': { url: new URL('../../assets/processed/icon-beacon.png', import.meta.url).href, label: 'beacon' },
+  'ui.upgrade.icon.blast': { url: new URL('../../assets/processed/icon-blast.png', import.meta.url).href, label: 'rocket burst' },
+  'ui.upgrade.icon.firerate': { url: new URL('../../assets/processed/icon-firerate.png', import.meta.url).href, label: 'spark cadence' },
+  'ui.upgrade.icon.gold': { url: new URL('../../assets/processed/icon-gold.png', import.meta.url).href, label: 'gold ledger' },
+  'ui.upgrade.icon.mend': { url: new URL('../../assets/processed/icon-mend.png', import.meta.url).href, label: 'bench work' },
+  'ui.upgrade.icon.mobility': { url: new URL('../../assets/processed/icon-mobility.png', import.meta.url).href, label: 'rush route' },
+  'ui.upgrade.icon.range': { url: new URL('../../assets/processed/icon-range.png', import.meta.url).href, label: 'survey range' },
+  'ui.upgrade.icon.volley': { url: new URL('../../assets/processed/icon-volley.png', import.meta.url).href, label: 'volley rig' },
+  'bld.sentry_beacon': { url: new URL('../../assets/processed/bld-sentry-beacon.png', import.meta.url).href, label: 'sentry beacon' },
+  'bld.sluice_works': { url: new URL('../../assets/processed/bld-sluice-works.png', import.meta.url).href, label: 'sluice works' },
+  'char.prospector_agent.portrait': {
+    url: new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href,
+    label: 'the Prospector',
+  },
+  'node.gold_seam': { url: new URL('../../assets/processed/node-gold-seam.png', import.meta.url).href, label: 'gold seam' },
+};
+
+const BRANCH_ICON_KEYS: Record<ResearchBranch, ResearchIconKey> = {
+  'Prospecting Works': 'bld.sluice_works',
+  'Arsenal Works': 'bld.sentry_beacon',
+  'Assay Works': 'char.prospector_agent.portrait',
+};
+
+export const RESEARCH_NODE_ICON_KEYS: Record<string, ResearchIconKey> = {
+  assay_grading: 'ui.upgrade.icon.prospecting',
+  mother_lode_survey: 'node.gold_seam',
+  sluice_accounting: 'bld.sluice_works',
+  claim_map_table: 'ui.upgrade.icon.panning',
+  pact_ledger: 'ui.upgrade.icon.gold',
+  chain_spark_primer: 'ui.upgrade.icon.firerate',
+  beacon_cadence: 'ui.upgrade.icon.beacon',
+  brass_coil_standards: 'bld.sentry_beacon',
+  powder_math: 'ui.upgrade.icon.blast',
+  sky_rocket_battery: 'ui.upgrade.icon.volley',
+  rush_pattern: 'ui.upgrade.icon.mobility',
+  second_order_slot: 'ui.upgrade.icon.mend',
+  refined_assay: 'ui.upgrade.icon.prospecting',
+  pattern_library: 'ui.upgrade.icon.range',
+  agent_schooling: 'char.prospector_agent.portrait',
+  prospector_lessons: 'char.prospector_agent.portrait',
+};
+
 const BRANCHES: Array<{ id: ResearchBranch; label: string }> = [
   { id: 'Prospecting Works', label: 'mining economy' },
   { id: 'Arsenal Works', label: 'arsenal' },
@@ -60,10 +124,12 @@ function renderBranch(
 ): string {
   return `
     <section class="research-chart__branch" data-research-branch="${escapeHtml(branch.id)}">
-      <h3>${escapeHtml(branch.label)}</h3>
+      <h3>${renderIcon(BRANCH_ICON_KEYS[branch.id], 'research-chart__branch-icon', `research-branch-icon-${branch.id}`)}<span>${escapeHtml(
+        branch.label,
+      )}</span></h3>
       <div class="research-chart__nodes">
         ${RESEARCH_NODES.filter((node) => node.branch === branch.id)
-          .map((node) => renderNode(node, state, frontier, selectedPath, pinnedPath))
+          .map((node) => `${renderSurveyLine(node)}${renderNode(node, state, frontier, selectedPath, pinnedPath)}`)
           .join('')}
       </div>
     </section>
@@ -82,6 +148,7 @@ function renderNode(
   const pinned = state.pinnedTarget === node.id;
   const onPinnedPath = pinnedPath.has(node.id);
   const requires = node.requires?.map((id) => researchNodeById[id]?.name ?? id).join(', ');
+  const iconKey = RESEARCH_NODE_ICON_KEYS[node.id] ?? BRANCH_ICON_KEYS[node.branch];
   return `
     <button
       class="research-chart__node"
@@ -89,18 +156,23 @@ function renderNode(
       data-testid="research-chart-node-${escapeHtml(node.id)}"
       data-research-node="${escapeHtml(node.id)}"
       data-research-state="${status}"
+      data-research-icon-key="${escapeHtml(iconKey)}"
       data-selected-path="${selected}"
       data-pinned-path="${onPinnedPath}"
       data-pinned-target="${pinned}"
       ${node.requires?.length ? 'data-has-requires="true"' : ''}
+      ${node.requires?.length ? `data-research-requires="${escapeHtml(node.requires.join(' '))}"` : ''}
       aria-pressed="${selected}"
     >
-      <span class="research-chart__state">${stateLabel(status)}</span>
+      <span class="research-chart__node-topline">
+        ${renderIcon(iconKey, 'research-chart__node-icon', `research-chart-icon-${node.id}`)}
+        <span class="research-chart__state">${stateLabel(status)}</span>
+      </span>
       <strong>${escapeHtml(node.name)}</strong>
-      <span>${escapeHtml(node.effect)}</span>
+      <span class="research-chart__effect">${escapeHtml(node.effect)}</span>
       ${requires ? `<em>Requires ${escapeHtml(requires)}</em>` : ''}
-      ${status === 'taken' ? '<b>Elder mark</b>' : ''}
-      ${pinned ? '<b data-testid="research-chart-pin-mark">survey pin</b>' : ''}
+      ${status === 'taken' ? '<b class="research-chart__stamp">SURVEYED</b>' : ''}
+      ${pinned ? '<b class="research-chart__pin" data-testid="research-chart-pin-mark">survey pin</b>' : ''}
     </button>
   `;
 }
@@ -108,7 +180,8 @@ function renderNode(
 function renderSelection(state: ResearchState, selected?: ResearchNode): string {
   if (!selected) {
     return `
-      <aside class="research-chart__selection" data-testid="research-chart-selection">
+      <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="${state.pinnedTarget ? 'true' : 'false'}">
+        <p class="research-chart__selection-kicker">Pinned route</p>
         <h3>Survey Route</h3>
         <p>${state.pinnedTarget ? 'Pinned route held in the town ledger.' : 'No route pinned.'}</p>
       </aside>
@@ -118,7 +191,8 @@ function renderSelection(state: ResearchState, selected?: ResearchNode): string 
   const path = researchPathIds(selected.id);
   const pinned = state.pinnedTarget === selected.id;
   return `
-    <aside class="research-chart__selection" data-testid="research-chart-selection">
+    <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="${pinned ? 'true' : 'false'}">
+      <p class="research-chart__selection-kicker">Survey Route</p>
       <h3>${escapeHtml(selected.name)}</h3>
       <p>${escapeHtml(selected.description)}</p>
       <strong data-testid="research-chart-distance">${distance === 0 ? 'already marked' : `${distance} ${distance === 1 ? 'pick' : 'picks'} away`}</strong>
@@ -132,6 +206,20 @@ function renderSelection(state: ResearchState, selected?: ResearchNode): string 
       </button>
     </aside>
   `;
+}
+
+function renderSurveyLine(node: ResearchNode): string {
+  if (!node.requires?.length) return '';
+  return `<span class="research-chart__survey-line" data-survey-line="${escapeHtml(node.id)}" data-survey-from="${escapeHtml(
+    node.requires.join(' '),
+  )}" aria-hidden="true"></span>`;
+}
+
+function renderIcon(key: ResearchIconKey, className: string, testId: string): string {
+  const icon = RESEARCH_ICON_REGISTRY[key];
+  return `<span class="${className}" data-testid="${escapeHtml(testId)}" data-research-icon-key="${escapeHtml(
+    key,
+  )}" data-asset-state="ready" aria-label="${escapeHtml(icon.label)}" role="img" style="background-image:url('${escapeHtml(icon.url)}')"></span>`;
 }
 
 function renderContinuedStudy(state: ResearchState): string {
@@ -152,7 +240,7 @@ function nodeStatus(node: ResearchNode, state: ResearchState, frontier: Set<stri
 }
 
 function stateLabel(status: 'taken' | 'available' | 'locked'): string {
-  if (status === 'taken') return 'taken';
+  if (status === 'taken') return 'surveyed';
   if (status === 'available') return 'available';
   return 'locked';
 }
