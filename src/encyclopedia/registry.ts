@@ -167,7 +167,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
     category: 'The Claim',
     unlockSignal: 'town:entered',
     spriteRef: { slot: 'contract.the-claim', imageUrl: claimOfficeUrl },
-    loreLine: 'The river stake is where the town begins. (lore/README.md places law; docs/GOLD_RUSH_BRIEF.md §2)',
+    loreLine: 'The river stake is where the town begins.',
     factLines: () => {
       const contract = loadContract('the-claim');
       return [
@@ -187,7 +187,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
     category: 'The Eras',
     unlockSignal: 'profile:init',
     spriteRef: { slot: 'epoch.frontier', imageUrl: titleEmblemUrl },
-    loreLine: 'The future lives in the lore wiki, but players earn pages in order. (lore/README.md, 2026-07-09)',
+    loreLine: 'Frontier days begin at the river claim.',
     factLines: () => {
       const epoch = loadEpoch('epoch-1-frontier');
       return [
@@ -263,8 +263,8 @@ function enemyEntry(
     spriteRef: { slot, imageUrl },
     loreLine:
       id === 'baron'
-        ? 'The Baron is an enormous outlaw with an oxblood banner, warm but never grim. (lore/characters.md, 2026-07-09)'
-        : 'The first antagonist line starts with outlaw pressure, warm but never grim. (lore/characters.md, 2026-07-09; docs/GOLD_RUSH_BRIEF.md §9.3)',
+        ? 'The Baron rides under an oxblood banner.'
+        : 'Claim jumpers press the town without making it cruel.',
     portraitLocked: () => !isDiscoveryStored(enemyStatsDiscoveryByEntryId[id]),
     factLines: () =>
       isDiscoveryStored(enemyStatsDiscoveryByEntryId[id])
@@ -280,7 +280,7 @@ function buildableEntry(id: LedgerEntryId, buildableId: BuildableId, imageUrl: s
     category: 'The Buildings',
     unlockSignal: `build:${buildableId}`,
     spriteRef: { slot, imageUrl },
-    loreLine: 'Buildings are places and rituals, not backend tools. (lore/README.md institutions law; docs/GOLD_RUSH_BRIEF.md §9.4)',
+    loreLine: 'Town works stand where hands and plans meet.',
     factLines: () => {
       const def = getBuildableDef(buildableId);
       if (!def) return [];
@@ -303,7 +303,7 @@ function contractEntry(contractId: string): LedgerEntry {
     category: 'The Claim',
     unlockSignal: `contract:seen:${contractId}`,
     spriteRef: { slot: `contract.${contractId}`, imageUrl: titleEmblemUrl },
-    loreLine: 'Contracts are place-trails selected from the town board. (lore/README.md places law; docs/VISION-EPOCHS.md)',
+    loreLine: 'Trail cards are chosen from the town board.',
     factLines: () => {
       const live = loadContract(contractId);
       return [

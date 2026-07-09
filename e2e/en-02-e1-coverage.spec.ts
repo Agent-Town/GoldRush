@@ -1,4 +1,4 @@
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { buildableDefs } from '../src/game/buildables';
@@ -27,7 +27,13 @@ const CONTRACT_ENTRY_IDS = Object.values(contractLedgerEntryById);
 const CHARACTER_ENTRY_IDS = ledgerEntries
   .filter((entry) => entry.category === 'The People' || entry.category === 'The Deputy')
   .map((entry) => entry.id);
+const CHARACTER_QUOTE_ENTRY_IDS = [
+  ...CHARACTER_ENTRY_IDS,
+  'claim_jumper',
+  'baron',
+] as const satisfies readonly LedgerEntryId[];
 const FULL_DISCOVERY_IDS = [...ledgerEntries.map((entry) => entry.id), ...enemyStatsDiscoveryIds] as LedgerDiscoveryId[];
+const FORBIDDEN_PLAYER_LEDGER_PATTERNS = [/\(lore\//i, /\.md\b/i, /\bbatch-/i, /\b20\d{2}-\d{2}-\d{2}\b/];
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -113,11 +119,53 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: true });
 }
 
+async function taskShot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  const dir = path.resolve('artifacts/063');
+  await mkdir(dir, { recursive: true });
+  await page.screenshot({ path: path.join(dir, `${testInfo.project.name}-${name}.png`), fullPage: true });
+}
+
 async function expectFactCap(page: Page): Promise<void> {
   const maxFacts = await page.locator('[data-testid^="claim-ledger-facts-"]').evaluateAll((lists) =>
     Math.max(0, ...lists.map((list) => list.querySelectorAll('[data-testid="claim-ledger-fact-line"]').length)),
   );
   expect(maxFacts).toBeLessThanOrEqual(LEDGER_FACT_LINE_CAP);
+}
+
+async function expectNoInternalLedgerText(page: Page): Promise<void> {
+  const discoveredTexts = await page.locator('[data-ledger-discovered="true"]').allInnerTexts();
+  expect(discoveredTexts.length).toBeGreaterThan(0);
+  for (const text of discoveredTexts) {
+    for (const pattern of FORBIDDEN_PLAYER_LEDGER_PATTERNS) expect(text).not.toMatch(pattern);
+  }
+}
+
+async function expectCharacterQuotes(page: Page): Promise<void> {
+  const expectedQuotes = await readCharacterQuoteLines();
+  for (const id of CHARACTER_QUOTE_ENTRY_IDS) {
+    const card = page.getByTestId(`claim-ledger-card-${id}`);
+    await expect(card).toHaveAttribute('data-ledger-discovered', 'true');
+    const quote = card.getByTestId('claim-ledger-character-quote');
+    await expect(quote).toHaveCount(1);
+    const text = (await quote.textContent())?.trim() ?? '';
+    const expected = expectedQuotes.get(id);
+    expect(expected, `missing QUOTE line for ${id}`).toBeTruthy();
+    expect(text.startsWith('\u201c')).toBe(true);
+    expect(text.endsWith('\u201d')).toBe(true);
+    expect(text.slice(1, -1)).toBe(expected);
+    expect(text.slice(1, -1).split(/\s+/).filter(Boolean).length).toBeLessThanOrEqual(12);
+  }
+}
+
+async function readCharacterQuoteLines(): Promise<Map<LedgerEntryId, string>> {
+  const text = await readFile(path.resolve('lore/characters.md'), 'utf8');
+  return new Map(
+    text
+      .split(/\r?\n/)
+      .map((line) => line.match(/^QUOTE:\s*([a-z0-9_]+):\s*(.+)$/i))
+      .filter((match): match is RegExpMatchArray => Boolean(match))
+      .map((match) => [match[1] as LedgerEntryId, match[2]!.trim()]),
+  );
 }
 
 async function hold(page: Page, key: string, ms: number): Promise<void> {
@@ -219,7 +267,11 @@ test('EN-02 full E1 roster has manifest-backed entries and capped facts', async 
     await expect(page.getByTestId(`claim-ledger-card-${id}`)).toHaveCount(1);
   }
   await expectFactCap(page);
+  await expectNoInternalLedgerText(page);
+  await expectCharacterQuotes(page);
   await shot(page, testInfo, 'full-shelves-populated');
+  await page.getByTestId('claim-ledger-card-hero').scrollIntoViewIfNeeded();
+  await taskShot(page, testInfo, 'character-quote-hero');
 
   expectNoErrors(errors);
 });
@@ -297,6 +349,7 @@ test('EN-02 enemy stats reveal once, persist, and hero facts live-read abilities
   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).not.toContainText('Not yet measured');
   await expect(page.getByTestId('claim-ledger-facts-claim_jumper')).toContainText('HP:');
   await expect(page.getByTestId('claim-ledger-facts-hero')).toContainText(/blast 25 dmg\/2\.5wu/);
+  await expect(page.getByTestId('claim-ledger-card-hero').getByTestId('claim-ledger-character-quote')).toHaveCount(1);
   await shot(page, testInfo, 'hero-live-ability-and-persisted-stats');
   await expectFactCap(page);
 
