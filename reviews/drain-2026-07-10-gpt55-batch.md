@@ -16,3 +16,5 @@ Merges: lane/m4 + lane/perf + lane/m3 → main (reconciliation `fb7a7eb`: restor
 
 ## F-drain-1 (harness, corrective owed): mp-02-lockstep suite is order-dependent
 4 tests share one relay env; combined runs fail randomly (:68 or :208), each passes isolated. Same family as F-mp02-1 (shared persist dir). Corrective: per-test relay isolation (fresh room worker port + persist dir per test, or serial-with-reset). TEST-ONLY task, low priority, but it blocks clean full-suite reads — author before MP-05.
+
+## Drain #2 same day (ts-01 + 074 + 075 + 076) — 23/23 GREEN desktop single-worker (ts-01 plaza ring + routes · en-01/en-02 incl. 074 lock assertions · restore-validation + run-suspend incl. 076 atomicity · 072 · town-t3-board · m1-01). Merged clean (zero src conflicts), tsc+build green, DEPLOYED (plaza live). gpt-5.5 first-pass streak: 10/10 gateable.
