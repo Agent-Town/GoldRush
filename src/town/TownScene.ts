@@ -44,7 +44,7 @@ import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
 import { createRideRoom, probeRideRoom, relayBaseFromTownSearch, resolveJoinPhrase, stageRideConfig } from '../mp/RideTogether';
-import { earnedTownBuildings, townBuildings, type TownBuilding, type TownBuildingId } from './townLayout';
+import { earnedTownBuildings, townBuildings, townPlazaLayout, townPlazaSlot, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 
@@ -69,13 +69,13 @@ const contractArtRegistry: Record<string, { key: string; imageUrl?: string; inse
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 0);
-const TAVERN_DOOR = new THREE.Vector3(-6, 0.08, -6.95);
+const TAVERN_DOOR = new THREE.Vector3(townPlazaSlot('tavern').approach.x, 0.08, townPlazaSlot('tavern').approach.z);
 const FIRST_CLAIM_GREETING = "The valley's open. The tavern keeps the contracts. Go stake your first claim.";
 const FIRST_CLAIM_PENDING = 'pending';
 const APPROACH_RADIUS = 5.2;
 const STAMP_MILL_ID = 'stamp-mill';
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
-const STAMP_MILL_TOWN_SITE = { x: 0, z: 13.45, w: 6.2, d: 1.65 };
+const STAMP_MILL_TOWN_SITE = { ...townPlazaSlot('stamp-mill').position, w: 6.2, d: 1.65 };
 const STAMP_MILL_COMPLETE_LINE = 'awaits the whistle';
 const STAMP_MILL_PROGRESS_LINES = [
   'The Stamp Mill rises: the rail spur is staked.',
@@ -101,7 +101,11 @@ export type TownDiagnostics = {
     visible: boolean;
     territoryRequired: number | null;
     barkSlot: string | null;
+    position: { x: number; z: number };
+    approach: { x: number; z: number };
+    plotVisible: boolean;
   }>;
+  plaza: { clearRadius: number; gate: { x: number; z: number }; emptyPlots: number; trailCount: number };
   actors: Array<{
     id: TownActorId;
     name: string;
@@ -359,15 +363,18 @@ export class TownScene {
     ground.rotation.x = -Math.PI / 2;
     ground.receiveShadow = true;
     ground.renderOrder = RenderLayers.terrain;
-    this.scene.add(ground, createSquareEdge());
+    this.scene.add(ground);
 
     for (const building of this.visibleBuildings) {
       this.scene.add(createShell(building));
     }
+    for (const building of townBuildings) {
+      if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
+    }
     this.createStampMillVignette();
     this.createFirstClaimGuide();
     for (const actor of this.visibleActors) {
-      const runtime = new TownActorRuntime(actor);
+      const runtime = new TownActorRuntime(townActorPlazaPlacement(actor));
       this.townActors.push(runtime);
       this.scene.add(runtime.group);
     }
@@ -1238,9 +1245,19 @@ export class TownScene {
         visible: this.visibleBuildings.includes(building),
         territoryRequired: building.requires?.territory ?? null,
         barkSlot: building.barkSlot ?? null,
+        position: building.position,
+        approach: townPlazaSlot(building.id).approach,
+        plotVisible: !this.visibleBuildings.includes(building),
       })),
+      plaza: {
+        clearRadius: townPlazaLayout.clearRadius,
+        gate: townPlazaLayout.gate,
+        emptyPlots: townBuildings.length - this.visibleBuildings.length,
+        trailCount: townPlazaLayout.slots.length + 1,
+      },
       actors: TOWN_ACTORS.map((actor) => {
         const runtime = this.townActors.find((item) => item.definition.id === actor.id);
+        const placement = townActorPlazaPlacement(actor);
         return {
           id: actor.id,
           name: actor.name,
@@ -1248,8 +1265,8 @@ export class TownScene {
           visible: !!runtime,
           anchor: actor.anchor,
           position: {
-            x: round2(runtime?.position.x ?? actor.position.x),
-            z: round2(runtime?.position.z ?? actor.position.z),
+            x: round2(runtime?.position.x ?? placement.position.x),
+            z: round2(runtime?.position.z ?? placement.position.z),
           },
           bark: this.activeBark?.actorId === actor.id ? this.activeBark.text : null,
           loaded: runtime?.loaded ?? false,
@@ -1754,55 +1771,116 @@ function stampMillPlaqueLines(manifest: MegaprojectManifest, project: Megaprojec
 }
 
 function createGroundTexture(): THREE.CanvasTexture {
-  const size = 512;
+  const size = 1024;
   const canvas = document.createElement('canvas');
   canvas.width = size;
   canvas.height = size;
   const ctx = canvas.getContext('2d');
   if (ctx) {
-    ctx.fillStyle = palette.sand;
+    ctx.fillStyle = '#e8c98f';
     ctx.fillRect(0, 0, size, size);
-    ctx.strokeStyle = 'rgba(139, 125, 60, 0.22)';
+
+    const wash = ctx.createRadialGradient(size * 0.48, size * 0.44, size * 0.04, size * 0.5, size * 0.5, size * 0.68);
+    wash.addColorStop(0, 'rgba(255, 235, 180, 0.44)');
+    wash.addColorStop(0.52, 'rgba(231, 190, 116, 0.18)');
+    wash.addColorStop(1, 'rgba(122, 81, 50, 0.16)');
+    ctx.fillStyle = wash;
+    ctx.fillRect(0, 0, size, size);
+
+    ctx.fillStyle = 'rgba(196, 136, 58, 0.16)';
+    for (let i = 0; i < 1_800; i += 1) {
+      const x = (i * 71) % size;
+      const y = (i * 149) % size;
+      ctx.fillRect(x, y, i % 5 === 0 ? 2 : 1, 1);
+    }
+
+    const point = ({ x, z }: { x: number; z: number }) => ({
+      x: ((x + TOWN_HALF) / (TOWN_HALF * 2)) * size,
+      y: ((TOWN_HALF - z) / (TOWN_HALF * 2)) * size,
+    });
+    const center = point(townPlazaLayout.center);
+    const trails = [...townPlazaLayout.slots.map((slot) => slot.approach), townPlazaLayout.gate];
+    for (const [index, destination] of trails.entries()) {
+      const end = point(destination);
+      const dx = end.x - center.x;
+      const dy = end.y - center.y;
+      const length = Math.max(1, Math.hypot(dx, dy));
+      const ox = (-dy / length) * 5.5;
+      const oy = (dx / length) * 5.5;
+      const bend = (index % 2 === 0 ? 1 : -1) * 10;
+      ctx.strokeStyle = 'rgba(93, 57, 31, 0.2)';
+      ctx.lineWidth = 3.2;
+      ctx.lineCap = 'round';
+      for (const side of [-1, 1]) {
+        ctx.beginPath();
+        ctx.moveTo(center.x + ox * side, center.y + oy * side);
+        ctx.quadraticCurveTo((center.x + end.x) / 2 + ox * side + bend, (center.y + end.y) / 2 + oy * side - bend * 0.35, end.x + ox * side, end.y + oy * side);
+        ctx.stroke();
+      }
+    }
+
+    ctx.strokeStyle = 'rgba(93, 57, 31, 0.16)';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, (8 / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = 'rgba(255, 235, 180, 0.4)';
     ctx.lineWidth = 2;
-    for (let i = 0; i <= size; i += 32) {
-      ctx.beginPath();
-      ctx.moveTo(i, 0);
-      ctx.lineTo(i - size * 0.3, size);
-      ctx.stroke();
-    }
-    ctx.strokeStyle = 'rgba(255, 248, 232, 0.34)';
-    for (let i = 0; i <= size; i += 64) {
-      ctx.beginPath();
-      ctx.moveTo(0, i);
-      ctx.lineTo(size, i + size * 0.18);
-      ctx.stroke();
-    }
+    ctx.beginPath();
+    ctx.arc(center.x, center.y, (townPlazaLayout.clearRadius / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
+    ctx.stroke();
   }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
-  texture.wrapS = THREE.RepeatWrapping;
-  texture.wrapT = THREE.RepeatWrapping;
-  texture.repeat.set(2, 2);
   return texture;
 }
 
-function createSquareEdge(): THREE.Group {
+function createSurveyPlot(building: TownBuilding): THREE.Group {
   const group = new THREE.Group();
-  group.name = 'TownSquareEdge';
-  const material = new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.82, metalness: 0.02 });
-  const long = new THREE.BoxGeometry(TOWN_HALF * 2, 0.12, 0.18);
-  const short = new THREE.BoxGeometry(0.18, 0.12, TOWN_HALF * 2);
-  for (const z of [-TOWN_HALF, TOWN_HALF]) {
-    const rail = new THREE.Mesh(long, material);
-    rail.position.set(0, 0.08, z);
-    group.add(rail);
-  }
-  for (const x of [-TOWN_HALF, TOWN_HALF]) {
-    const rail = new THREE.Mesh(short, material);
-    rail.position.set(x, 0.08, 0);
-    group.add(rail);
-  }
+  group.name = `TownSurveyPlot:${building.id}`;
+  group.position.set(building.position.x, 0, building.position.z);
+  const halfX = building.footprint.w * 0.5;
+  const halfZ = building.footprint.d * 0.5;
+  const corners = [
+    [-halfX, -halfZ],
+    [halfX, -halfZ],
+    [halfX, halfZ],
+    [-halfX, halfZ],
+  ] as const;
+  const pegs = new THREE.InstancedMesh(
+    new THREE.BoxGeometry(0.09, 0.72, 0.09),
+    new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.86, metalness: 0.02 }),
+    corners.length,
+  );
+  const matrix = new THREE.Matrix4();
+  corners.forEach(([x, z], index) => pegs.setMatrixAt(index, matrix.makeTranslation(x, 0.36, z)));
+  pegs.name = `TownSurveyPegs:${building.id}`;
+  pegs.castShadow = true;
+
+  const linePoints: THREE.Vector3[] = [];
+  corners.forEach(([x, z], index) => {
+    const next = corners[(index + 1) % corners.length]!;
+    linePoints.push(new THREE.Vector3(x, 0.34, z), new THREE.Vector3(next[0], 0.34, next[1]));
+  });
+  const string = new THREE.LineSegments(
+    new THREE.BufferGeometry().setFromPoints(linePoints),
+    new THREE.LineBasicMaterial({ color: '#c4883a', transparent: true, opacity: 0.82 }),
+  );
+  string.name = `TownSurveyString:${building.id}`;
+  group.add(pegs, string);
   return group;
+}
+
+function townActorPlazaPlacement(actor: TownActorDefinition): TownActorDefinition {
+  if (actor.loop) return actor;
+  const offset = townPlazaLayout.actorOffsets[actor.id as keyof typeof townPlazaLayout.actorOffsets];
+  if (!offset) return actor;
+  const anchor = townBuildings.find((building) => building.id === actor.anchor);
+  if (!anchor) return actor;
+  return {
+    ...actor,
+    position: { x: anchor.position.x + offset.x, z: anchor.position.z + offset.z },
+  };
 }
 
 function roundRect(ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: number): void {
