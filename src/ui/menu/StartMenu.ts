@@ -38,7 +38,6 @@ const PERFORMANCE_TIER_ID = 'start-menu-performance-tier';
 const TELEMETRY_STATS_ID = 'start-menu-telemetry-stats';
 
 type StartMenuOptions = {
-  onNewClaim: () => void;
   onContinue: () => void;
   onLoadSlot: () => void;
   onEnterTown: () => void;
@@ -128,7 +127,7 @@ export class StartMenu {
               : ''
           }
           <button class="gr-start-menu__button gr-start-menu__button--primary" type="button" data-menu-action="town" data-testid="start-menu-enter-town">Enter Town</button>
-          <button class="gr-start-menu__button" type="button" data-menu-action="ledger" data-testid="start-menu-claim-ledger">Claim Ledger</button>
+          <button class="gr-start-menu__button" type="button" data-menu-action="ledger" data-menu-secondary data-testid="start-menu-claim-ledger">Claim Ledger</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="profile" data-testid="start-menu-profile">Profile</button>
           <button class="gr-start-menu__button" type="button" data-menu-action="settings" data-testid="start-menu-settings">Settings</button>
         </nav>`
@@ -271,7 +270,7 @@ export class StartMenu {
   }
 
   private actionButtons(): HTMLButtonElement[] {
-    return [...this.root.querySelectorAll<HTMLButtonElement>('.gr-start-menu__nav [data-menu-action]')];
+    return [...this.root.querySelectorAll<HTMLButtonElement>('.gr-start-menu__nav [data-menu-action]:not([data-menu-secondary])')];
   }
 
   private toggleLoad(): void {

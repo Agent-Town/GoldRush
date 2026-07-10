@@ -66,7 +66,8 @@ export class StoryRuntime {
     for (const beat of STORY_RUNTIME_BEATS) {
       if (beat.trigger !== signal.type || (beat.when && !beat.when(signal))) continue;
       const key = beat.seenKey?.(signal) ?? beat.id;
-      if (beat.oncePerProfile && hasStoryBeatSeen(key)) continue;
+      const aliases = beat.seenKeyAliases?.map((seenKey) => seenKey(signal)) ?? [];
+      if (beat.oncePerProfile && [key, ...aliases].some((seenKey) => hasStoryBeatSeen(seenKey))) continue;
       const lines = this.linesFor(beat, signal);
       if (lines.length === 0) continue;
       if (beat.oncePerProfile) markStoryBeatSeen(key);

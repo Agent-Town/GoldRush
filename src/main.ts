@@ -98,9 +98,6 @@ function showStartMenu(): void {
     if (game || town || profiles) return;
     startMenu?.dispose();
     startMenu = install(app, {
-      onNewClaim: () => {
-        launchContract(DEFAULT_CONTRACT_ID);
-      },
       onContinue: () => {
         continueSavedRun();
       },
