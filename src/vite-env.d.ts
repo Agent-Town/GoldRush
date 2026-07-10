@@ -787,6 +787,16 @@ type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnost
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
 type GrMultiplayerState = import('./mp/LockstepClient').MultiplayerState;
+type GrSimulationTickSample = {
+  time: number;
+  enemies: number;
+  bolts: number;
+  blasts: number;
+  goldPickups: number;
+  xpMotes: number;
+  wave: number;
+  economyLog: number;
+};
 
 interface Window {
   __GR_STORY__?: {
@@ -892,7 +902,7 @@ interface Window {
     demolish: (family: GrBuildableId, index: number) => boolean;
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     setManualSim: (enabled: boolean) => boolean;
-    advanceSim: (seconds: number, stepSeconds?: number) => void;
+    advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => void;
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;
       simTicks: number;

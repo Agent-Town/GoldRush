@@ -80,7 +80,7 @@ async function prepareManualBaronKill(page: Page, seed: string, extraQuery = '',
   );
 
   for (let i = 0; i < 40; i += 1) {
-    await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.1, 1 / 60));
+    await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.1));
     const done = await page.evaluate(() => {
       const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
       return Boolean(diagnostics?.baronCeremony.active || diagnostics?.run.secured || diagnostics?.runState === 'dead');

@@ -68,6 +68,7 @@ export type WreckerUpdateContext = {
 
 const THIEF_RETARGET_SECONDS = 0.35;
 const WRECKER_RETARGET_SECONDS = 0.35;
+const FORD_ENTRY_INSET = 0.1;
 const FLEE_EDGE = 37.5;
 const FORMATION_STEER = 0.38;
 const FORMATION_GAP_CLEARANCE = 0.25;
@@ -796,7 +797,9 @@ export class ClaimJumperEnemy {
 
     const currentSide = riverSide(current.z);
     if (currentSide && targetSide && currentSide !== targetSide && riverBlocksEnemyCrossingAt(current.x)) {
-      return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, currentSide === 'north' ? Terrain.RIVER_MAX_Z : Terrain.RIVER_MIN_Z);
+      const entryZ =
+        currentSide === 'north' ? Terrain.RIVER_MAX_Z - FORD_ENTRY_INSET : Terrain.RIVER_MIN_Z + FORD_ENTRY_INSET;
+      return this.routeTarget.set(ford.centerX, Balance.enemy.groundY, entryZ);
     }
 
     if (currentZone === 'river' && riverBlocksEnemyAt(current.x, current.z)) {

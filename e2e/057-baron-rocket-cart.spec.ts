@@ -107,14 +107,15 @@ async function setBalance(page: Page, key: string, value: number | boolean): Pro
   await expect(page.evaluate(([pathKey, next]) => window.__GR_TEST__?.setBalance(pathKey, next), [key, value] as const)).resolves.toBe(true);
 }
 
-async function advance(page: Page, seconds: number, stepSeconds = 1 / 60): Promise<void> {
-  await page.evaluate(([duration, step]) => window.__GR_TEST__?.advanceSim(duration, step), [seconds, stepSeconds] as const);
+async function advance(page: Page, seconds: number): Promise<void> {
+  await page.evaluate((duration) => window.__GR_TEST__?.advanceSim(duration), seconds);
 }
 
 async function advanceUntil<T>(page: Page, read: () => Promise<T>, pass: (value: T) => boolean, seconds = 4): Promise<T> {
-  const steps = Math.ceil(seconds / 0.05);
+  const stepSeconds = 1 / 15;
+  const steps = Math.ceil(seconds / stepSeconds);
   for (let index = 0; index < steps; index += 1) {
-    await advance(page, 0.05);
+    await advance(page, stepSeconds);
     const value = await read();
     if (pass(value)) return value;
   }

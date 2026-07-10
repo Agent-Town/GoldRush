@@ -365,18 +365,20 @@ test('cold lantern relight costs survive run suspend and continue', async ({ pag
       position: { x, z },
     })),
   );
+  await expectClean(errors);
+  await page.close();
 
   const restoredPage = await context.newPage();
   const restoredErrors = await openGame(
     restoredPage,
-    '?debug&contract=e1-night-shift&timescale=8&nolevel&nowaves&seed=e1-night-suspend',
+    '?debug&contract=e1-night-shift&timescale=1&nolevel&nowaves&seed=e1-night-suspend',
   );
   await restoredPage.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restored === true);
+  await expect(restoredPage.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave)).resolves.toBe(1);
   await expect.poll(() => lanternHp(restoredPage).then((entries) => entries[0]?.repairCost)).toBe(RELIGHT_COST);
   expect(await relightLantern(restoredPage, 0)).toMatchObject({ id: 'lantern_post', index: 0, cost: RELIGHT_COST });
   await expectClean(restoredErrors);
   await restoredPage.close();
-  await expectClean(errors);
 });
 
 test('render dimming does not stop turret acquisition or damage', async ({ page }) => {

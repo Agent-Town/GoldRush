@@ -32,7 +32,7 @@ const targetWall = [
 ];
 const durationSeconds = 60;
 const debugTimeScale = 12;
-const fixedSimStepSeconds = 1 / 5;
+const advanceChunkSeconds = 1 / 5;
 const ownerToggleCadencePerMinute = 85;
 const ownerToggleIntervalSeconds = 60 / ownerToggleCadencePerMinute;
 
@@ -109,7 +109,7 @@ async function probe(page: Page, scenario: Scenario, run: number): Promise<Probe
   await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   const row = await page.evaluate(
-    ({ scenario, targetWall, durationSeconds, fixedSimStepSeconds, ownerToggleCadencePerMinute, ownerToggleIntervalSeconds }) => {
+    ({ scenario, targetWall, durationSeconds, advanceChunkSeconds, ownerToggleCadencePerMinute, ownerToggleIntervalSeconds }) => {
       const round1InPage = (value: number): number => Math.round(value * 10) / 10;
       const round3InPage = (value: number): number => Math.round(value * 1000) / 1000;
       const testHarness = window.__GR_TEST__;
@@ -137,10 +137,11 @@ async function probe(page: Page, scenario: Scenario, run: number): Promise<Probe
       const scheduledRapidToggleLimit = ownerToggleCadencePerMinute - 1;
 
       const readDamage = (owner: string): number => Number(window.__THREE_GAME_DIAGNOSTICS__?.build.damageByOwner?.[owner] ?? 0);
-      while ((window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? start) < start + durationSeconds) {
+      const advanceChunks = Math.round(durationSeconds / advanceChunkSeconds);
+      for (let chunk = 0; chunk < advanceChunks; chunk += 1) {
         const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
         const now = diagnostics?.timeAlive ?? start;
-        const next = Math.min(start + durationSeconds, now + fixedSimStepSeconds);
+        const next = now + advanceChunkSeconds;
         if (scenario === 'rapid-cycle') {
           while (next >= nextToggleAt && scheduledRapidToggles < scheduledRapidToggleLimit) {
             testHarness.toggleWeapon();
@@ -148,7 +149,7 @@ async function probe(page: Page, scenario: Scenario, run: number): Promise<Probe
             nextToggleAt += ownerToggleIntervalSeconds;
           }
         }
-        testHarness.advanceSim(next - now, fixedSimStepSeconds);
+        testHarness.advanceSim(next - now);
       }
 
       const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
@@ -173,7 +174,7 @@ async function probe(page: Page, scenario: Scenario, run: number): Promise<Probe
         detonations: (diagnostics?.arsenal.detonations ?? 0) - startDetonations,
       };
     },
-    { scenario, targetWall, durationSeconds, fixedSimStepSeconds, ownerToggleCadencePerMinute, ownerToggleIntervalSeconds },
+    { scenario, targetWall, durationSeconds, advanceChunkSeconds, ownerToggleCadencePerMinute, ownerToggleIntervalSeconds },
   );
 
   row.run = run;

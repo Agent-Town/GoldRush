@@ -992,7 +992,7 @@ export class Game {
           this.manualSimForTest = enabled;
           return this.manualSimForTest;
         },
-        advanceSim: (seconds: number, stepSeconds?: number) => this.advanceSimForTest(seconds, stepSeconds),
+        advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => this.advanceSimForTest(seconds, onTick),
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         resetRun: () => this.resetRun(),
         endRunForTest: () => this.endRun(),
@@ -3609,29 +3609,45 @@ export class Game {
     if (picked) this.progression.applyUpgrade(picked.id);
   }
 
-  private advanceSimForTest(seconds: number, stepSeconds = 1 / 5): void {
+  private advanceSimForTest(seconds: number, onTick?: (sample: GrSimulationTickSample) => void): void {
     const total = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
-    const step = Number.isFinite(stepSeconds) ? Math.max(0.001, stepSeconds) : 1 / 5;
+    const ticks = Math.round(total / FIXED_SIM_STEP_SECONDS);
     const scale = Math.max(0.001, this.simTimeScale);
-    let remaining = total;
+    let pendingPresentationSteps = 0;
+    const presentPendingSteps = () => {
+      if (pendingPresentationSteps === 0) return;
+      const presentationDelta = (pendingPresentationSteps * FIXED_SIM_STEP_SECONDS) / scale;
+      this.present(
+        {
+          deltaSeconds: presentationDelta,
+          presentationDeltaSeconds: presentationDelta,
+          alpha: 1,
+          steps: pendingPresentationSteps,
+          droppedSeconds: 0,
+        },
+        false,
+      );
+      pendingPresentationSteps = 0;
+    };
     this.manualAdvanceForTest = true;
     try {
-      while (remaining > 0) {
-        const simStep = Math.min(step, remaining);
-        const frameDelta = simStep / scale;
+      for (let tick = 0; tick < ticks; tick += 1) {
+        const frameDelta = FIXED_SIM_STEP_SECONDS / scale;
         if (!this.update(frameDelta)) break;
-        this.present(
-          {
-            deltaSeconds: frameDelta,
-            presentationDeltaSeconds: frameDelta,
-            alpha: 1,
-            steps: 1,
-            droppedSeconds: 0,
-          },
-          false,
-        );
-        remaining -= simStep;
+        onTick?.({
+          time: this.timeAlive,
+          enemies: this.enemies.activeCount,
+          bolts: this.combat.boltsAlive,
+          blasts: this.combat.blastsAlive,
+          goldPickups: this.goldPickups.activeCount,
+          xpMotes: this.xpMotes.activeCount,
+          wave: this.waveSystem.diagnostics.wave,
+          economyLog: this.economy.log.length,
+        });
+        pendingPresentationSteps += 1;
+        if (pendingPresentationSteps === MAX_FIXED_STEPS_PER_FRAME) presentPendingSteps();
       }
+      presentPendingSteps();
     } finally {
       this.manualAdvanceForTest = false;
     }

@@ -222,7 +222,7 @@ test('deep water blocks hero and enemy through the shared resolver', async ({ pa
     window.__GR_TEST__?.scriptEnemyAt(-14, -6.35, -14, 6, 4);
     const track = { samples: 0, riverSamples: 0, maxZ: -Infinity, maxX: -Infinity, endX: -14, endZ: -6.35 };
     for (let i = 0; i < 900; i += 1) {
-      window.__GR_TEST__?.advanceSim(1 / 15, 1 / 15);
+      window.__GR_TEST__?.advanceSim(1 / 15);
       const enemy = window.__GR_TEST__?.enemyPositions()[0];
       if (enemy) {
         track.samples += 1;
@@ -264,7 +264,7 @@ test('wadeable river depth lets enemies cross without ford routing', async ({ pa
     window.__GR_TEST__?.scriptEnemyAt(-14, -6.35, -14, 6, 4);
     const track = { samples: 0, riverSamples: 0, maxZ: -Infinity, minX: Infinity, maxX: -Infinity, endX: -14, endZ: -6.35 };
     for (let i = 0; i < 900; i += 1) {
-      window.__GR_TEST__?.advanceSim(1 / 15, 1 / 15);
+      window.__GR_TEST__?.advanceSim(1 / 15);
       const enemy = window.__GR_TEST__?.enemyPositions()[0];
       if (enemy) {
         track.samples += 1;
@@ -299,7 +299,7 @@ test('flat wadeable river applies enemy water speed', async ({ page }, testInfo)
     const runSegment = (startZ: number, targetZ: number) => {
       window.__GR_TEST__?.clearEnemies();
       window.__GR_TEST__?.scriptEnemyAt(-14, startZ, -14, targetZ, 4);
-      window.__GR_TEST__?.advanceSim(0.8, 1 / 60);
+      window.__GR_TEST__?.advanceSim(0.8);
       const enemy = window.__GR_TEST__?.enemyPositions()[0];
       return {
         startZ,
@@ -360,7 +360,7 @@ test('classic claim keeps legacy water behavior while carrying equivalent depth 
     const runSegment = (x: number, startZ: number, targetZ: number) => {
       window.__GR_TEST__?.clearEnemies();
       window.__GR_TEST__?.scriptEnemyAt(x, startZ, x, targetZ, 4);
-      window.__GR_TEST__?.advanceSim(0.8, 1 / 60);
+      window.__GR_TEST__?.advanceSim(0.8);
       const enemy = window.__GR_TEST__?.enemyPositions()[0];
       return {
         startZ,
@@ -436,7 +436,7 @@ async function gtHash(browser: Browser, seed: string): Promise<{ hash: string; e
     window.__GR_TEST__?.teleport(-14, -6.35);
     window.__GR_TEST__?.clearEnemies();
     window.__GR_TEST__?.scriptEnemyAt(-14, -6.35, -14, 6, 4);
-    window.__GR_TEST__?.advanceSim(1.2, 1 / 60);
+    window.__GR_TEST__?.advanceSim(1.2);
     const hero = window.__THREE_GAME_DIAGNOSTICS__?.heroPos ?? { x: 0, y: 0, z: 0 };
     return {
       tile: window.__GR_CONTRACT_REGISTRY__?.activeTileDescriptor(),

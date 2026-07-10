@@ -218,7 +218,7 @@ async function simSignature(page: Page, tier: PerformanceTier): Promise<{ signat
     testApi?.setBalance('enemy.contactDamage', 0);
     const node = window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((entry) => entry.active);
     if (node) testApi?.teleport(node.position.x, node.position.z);
-    testApi?.advanceSim(8, 1 / 10);
+    testApi?.advanceSim(8);
     const log = (testApi?.economyLog() ?? []) as Record<string, unknown>[];
     return {
       economy: testApi?.summarizeLog(log),
