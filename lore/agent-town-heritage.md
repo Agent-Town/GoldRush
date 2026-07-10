@@ -8,6 +8,6 @@ Source: OWNER TESTIMONY 2026-07-10 (verbatim): "In Agent Town there was the Town
 4. **Town Hall ← the Claim Office.** Lineage: registering CLAIMS (E1's water-and-land law) matures into registering INHABITANTS (the town hall). The clerk's ledger is the future citizen registry.
 5. **THE PONY EXPRESS ← the message lineage's ROOT.** The old app's inter-house messaging system originates here as the Pony Express STATION (growth-unlocked town building, TS-roster addition): (a) it DELIVERS the Claim Herald — the newsie (Juniper?) anchors at its porch (amends specs/gazette-house GZ-H1/H2: the Gazette House PRINTS, the Pony Express DELIVERS); (b) E7 Signal's exchange/relay towers are its descendants ("the valley learns to speak at a distance" — the rider becomes the wire); (c) LATER: multiplayer's Ride Together words themed as express letters ("send a rider to a friend").
 
-## Ratification asks (owner)
-- [RATIFY-1] The fountain evolution (Pan Monument → fountain when water arrives)?
-- [RATIFY-2] Pony Express Station joins the town growth roster (a 7th ring building) — yes?
+## RATIFIED 2026-07-10 (owner verbatim: 'Yes, this sounds great')
+- ✅ THE FOUNTAIN EVOLUTION: the Pan Monument gains water as the saga delivers it — by late eras it IS the old app's fountain, pan at the crown. (TS-03 builds the dry plinth; era transforms add the water states.)
+- ✅ THE PONY EXPRESS STATION: 7th ring building, growth-unlocked — prints nothing, DELIVERS everything (the Herald, later the Ride-Together letters); E7 signal lineage root. (Town roster + facade batch + GZ-H2 re-anchor inherit this.)

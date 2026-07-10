@@ -21,3 +21,5 @@ Touches: town scene layout/render, art registry, prop instancing, townsfolk path
 1. The Pan Monument as the center feature — ratify? (Alternatives: town well, flagpole with the town's name-banner.)
 2. Wagon ring canon: settlers' wagons parked forever, or do they thin as buildings arrive (growth = wagons → houses)? Recommend: thin-as-they-build (growth made visible).
 3. Camera: keep the current framing (recommend — zero risk) or add a gentle orbit/zoom-in-town-only later slice?
+
+## HERITAGE ADDENDUM (RATIFIED 2026-07-10): the Pony Express Station joins the ring (7th building, growth-unlocked; facade in the TS-02 style family; the newsie re-anchors to its porch when built) · the Pan Monument carries WATER STATES (dry plinth → basin → the fountain) applied by era transforms per lore/agent-town-heritage.md.
