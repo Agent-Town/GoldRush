@@ -13,4 +13,4 @@ Tiled/generic editors fit CLASSIC tilemaps; our contracts are DESCRIPTORS (analy
 **T2 — THE PRESS:** T1 + vocabulary guardrails + kid-grade UX + sharing = the Charter Press engine (E4+ per the owner's timing ruling). The validator IS the ratified reject-don't-stretch law made visual.
 
 ## Sequencing
-T0: schedule anytime (attended session + open game). T1: after MP-03/04 land (the same lanes free up); ED-01 fire-authorable from this spec then. T2: unchanged (owner's E4+ ruling).
+T0: schedule anytime (attended session + open game). T1: after MP-03/04 land (the same lanes free up). ⭐ OWNER DIRECTION 2026-07-10 ('that might also be something to bring in GPT 5.6 Sol for? Yes, lets keep going down that direction.'): T1 = a SOL ASSIGNMENT — ED-01 (descriptor inspector + live-apply) on sol/editor-ed01 once its fixed-step branch drains; the attended session writes the ED-01 brief when Sol is free. T2: unchanged (owner's E4+ ruling).
