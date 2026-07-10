@@ -1,5 +1,5 @@
 # Task 073-tier-param-crash: the tier URL param must not crash the Start Menu (MAIN slot; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM swarm finding [high] `reviews/swarm-48h-confirmed.json` ("Tier URL param triggers infinite read→save→notify recursion, crashing the Start Menu") — root: `src/game/PerformanceTier.ts:156` region: the URL-param apply path writes the stored tier, the write notifies listeners, a listener re-reads/re-applies the param → unbounded recursion.
 Pre-flight: main-slot tracked-clean (artifacts/logs/docs/tasks exempt). READ FIRST: the finding's full evidence JSON entry, `PerformanceTier.ts` (read/save/notify + the URL-param path from 058), `StartMenu.ts` tier control wiring.
 ## Scope

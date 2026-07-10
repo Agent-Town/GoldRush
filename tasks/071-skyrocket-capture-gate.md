@@ -1,5 +1,5 @@
 # Task 071-skyrocket-capture-gate: the Sky-Rocket science is CAPTURED from the Baron, not researched past him (MAIN slot; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM **F-SOL-PRODUCT-001 [P1]** (`reviews/sol-findings-product-content-accessibility.md` — read FIRST): `ResearchTree.ts:151-157` names the node "Captured Baron science" but gates it on `powder_math` only; the capture story beat (`story/beats.ts:149-154`) listens for `science-complete` + a capture flag that nothing sets — while the Baron defeat (`Game.ts:2858-2877`) emits `boss-defeat`. CANON (lore/characters.md, ratified): beating the Baron captures the sky-rocket science into E2 — "pride's tuition." The code contradicts the story.
 Pre-flight: main-slot tracked-clean (artifacts/logs/docs/tasks exempt).
 

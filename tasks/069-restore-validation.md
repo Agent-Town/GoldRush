@@ -1,5 +1,5 @@
 # Task 069-restore-validation: malformed save data never crashes, never poisons (lane-b; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM **F-SOL-PERSIST-001 [P0]** (`reviews/sol-findings-persistence-multiplayer.md` — read it FIRST, the evidence is file:line precise): `RunSuspend.ts` validates a shallow subset then dereferences deep (`snapshot.rng.waves`, counters, nested vectors) and trusts `snapshot.economy.log`; `SaveSlots.ts:240-251` is shallower still for IMPORTED slots (user-supplied files!).
 You are Codex in worktrees/lane-b. Pre-flight per LANE-SAFETY.
 

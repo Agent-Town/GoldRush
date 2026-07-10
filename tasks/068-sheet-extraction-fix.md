@@ -1,5 +1,5 @@
 # Task 068-sheet-extraction-fix: re-extract the six rejected walk8 sheets — no holes, no purple, no trapped sand (ART slot)
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 **OWNER CONTACT-SHEET VERDICTS 2026-07-10 (verbatim): youngster-m "gaps in his legs, cut out pixels that are purple", same for youngster-f, tavernkeeper, storekeeper, elder; "hero has some background stuck between her legs in some frames"; "baron has a bit of green ground but looks good"; prospector PASS.**
 DIAGNOSIS: extraction-stage defects, NOT generation — the approved take videos are the source of truth; do NOT regenerate any video. Two failure modes: (a) key/matting eating INTO character pixels (tan clothing ≈ sand/magenta tolerance) → transparent holes with purple fringes; (b) border-flood background removal cannot reach ENCLOSED background (between the hero's legs) → trapped sand.
 

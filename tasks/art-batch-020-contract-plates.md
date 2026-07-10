@@ -1,5 +1,5 @@
 # Task art-batch-020-contract-plates: every contract gets ITS OWN catalog plate — topic, teased (ART slot)
-CODEX: model=gpt-5.5 effort=low
+CODEX: model=gpt-5.6-sol effort=medium
 **OWNER ORDER 2026-07-10 (verbatim): "each contract should have an image depicting what it is about, its topic and tease that. Not a generic image."**
 Pipeline per CLAUDE.md §8 + LEDGER ({ANCHOR} verbatim in every prompt). READ FIRST: the 059 catalog art-key registry (grep the contract→art map in `src/town/` — your files must match its keys or extend its map), `specs/e1-contracts/README.md` (each contract's fantasy), the MYSTERY LAW (locked pages render these DIMMED — so each plate TEASES the topic, never spoils the encounter), `lore/canon-rules.md`.
 

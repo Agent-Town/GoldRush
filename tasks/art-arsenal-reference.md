@@ -1,5 +1,5 @@
 # Task art-arsenal-reference: THE ARSENAL PLATES — weapons & tools reference, per era (ART slot)
-CODEX: model=gpt-5.5 effort=low
+CODEX: model=gpt-5.6-sol effort=medium
 **OWNER GAP-CALL 2026-07-10 ("artwork and reference images for the characters, bosses, monsters, buildings and WEAPONS for the epochs") — verified: zero weapon reference plates exist (icons only).** Pipeline per CLAUDE.md §8 + LEDGER ({ANCHOR}). READ: canon (ADR-001: frontier-tech, NO firearms EVER — rigs, beacons, charges, rockets, arcs, tools) + each bundle's weapon/icon manifest + the in-game arsenal (grep Upgrades/weapons: spark rig, sentry beacon, blast charge, sky-rocket battery…).
 ## Deliverables → assets/raw/ (reference tier; museum-plate composition: the kit laid out on parchment like a surveyor's equipment board, labeled by PICTOGRAM only, no letters)
 1. `plate-arsenal-e1.png` — the founding kit: brass pan, spark rig, sentry beacon, blast charge, the teal chest lantern, pickaxe + sluice tools. {ANCHOR}

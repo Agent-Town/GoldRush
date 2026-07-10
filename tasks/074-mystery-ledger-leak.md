@@ -1,5 +1,5 @@
 # Task 074-mystery-ledger-leak: locked contracts keep their secrets EVERYWHERE (lane-b; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM swarm finding [high] `reviews/swarm-48h-confirmed.json` ("Mystery law leak: locked contracts' goals and rules readable in the Claim Ledger after one board open") — `src/town/TownScene.ts:919` region: board-open discovery registers contract ledger entries with FULL goals/rules regardless of lock state; the encyclopedia renders them → the 059 teaser law is defeated by the side door.
 You are Codex in worktrees/lane-b. Pre-flight per LANE-SAFETY. READ FIRST: the finding's evidence entry, the MYSTERY LAW (tasks/059-contract-catalog.md: locked = name + dimmed art + one rumor line + unlock terms ONLY), the contract ledger entry registration in TownScene/encyclopedia registry, 063's voice law.
 ## Scope

@@ -1,5 +1,5 @@
 # Task 076-save-transfer-atomicity: restores never half-write, stale devices never clobber (lane-b, AFTER 074; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=high
+CODEX: model=gpt-5.6-sol effort=high
 FROM swarm findings [2×high + mediums] `reviews/swarm-48h-confirmed.json`, all save-safety: `ProfileTransfer.ts:94` restoreProfileBundle DELETES all local profile data then writes — a mid-write failure loses everything, no rollback; `AccountSync.ts:79` a stale device silently overwrites a newer cloud save (push without freshness compare outside sign-in); `AccountSync.ts:235` boot auto-restore races profile creation; `ProfileTransfer.ts:52` round-trip silently drops manual slots beyond 5; `SaveSlots.ts:62` unknown version/corrupt store → destructive delete of ALL manual saves.
 You are Codex in worktrees/lane-b. Pre-flight per LANE-SAFETY. READ FIRST: all five evidence entries, ProfileTransfer/AccountSync/SaveSlots current flows, 069's rejection-card pattern (reuse its UX + validation boundary).
 ## Scope

@@ -1,5 +1,5 @@
 # Task ts-03-prop-ring: wagons, fences, cacti, lanterns — and the Pan Monument (lane-c, AFTER ts-02b; commit prefix "feat:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM specs/town-v2-style/README.md TS-03 (RATIFIED incl. ARRIVAL CANON + heritage addendum). READ: the spec + lore/agent-town-heritage.md (RATIFIED: Pan Monument water states later; Pony Express Station = 7th ring building).
 ## Scope
 1. Instanced prop ring per a data descriptor: covered wagons (the Arrival Canon — front-door placement), fences, cacti, water trough, lantern posts (join the night lighting language).

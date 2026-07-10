@@ -1,5 +1,5 @@
 # Task tl-03b-ledger-stats-window: the Assay Office Records page in the Claim Ledger (lane-a; commit prefix "feat:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM `specs/accounts/README.md` §TELEMETRY TL-03 window 2 (window 1 = the site section SHIPPED s261; the spine endpoint `GET /api/stats` SHIPPED s278 with contract `docs/api-stats.md`).
 You are Codex in worktrees/lane-a. Pre-flight per LANE-SAFETY. READ FIRST: the Claim Ledger reader + registry + live-read pattern (EN-01/02, `src/encyclopedia/`), `docs/api-stats.md` (the aggregate shapes), the 063 in-world voice law (a fact renders only if a kid could overhear it in the tavern — frame stats as the Assay Office's tallies, no tech words).
 

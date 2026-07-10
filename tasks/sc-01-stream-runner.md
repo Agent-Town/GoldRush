@@ -1,5 +1,5 @@
 # Task sc-01-stream-runner: the Factory Channel's engine — headed QA runs with a ledger overlay (lane-a; commit prefix "feat:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM `specs/marketing/README.md` STAGE 2.8 SC-01 (owner re-push 2026-07-10: "what about the streaming and video generation/highlight setup?"). SC-02 (RTMP keys) stays on the owner desk; this slice makes the content EXIST without any platform.
 You are Codex in worktrees/lane-a. Pre-flight per LANE-SAFETY. READ FIRST: Stage 2.8 verbatim (its LAWS: scheduled windows, honesty absolute — red tests stream too, no token talk), `scripts/capture-footage.mjs` + `marketing/shots.json` (the proven rig), the seeded-run debug params (`?debug&seed=`).
 ## Scope

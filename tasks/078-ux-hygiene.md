@@ -1,5 +1,5 @@
 # Task 078-ux-hygiene: the swarm's accepted UX/meta smalls, one pass (lane-b; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM `reviews/swarm-triage-2026-07-10.md` §accepted-low/medium + `reviews/swarm-48h-confirmed.json` (READ each finding's evidence entry FIRST — file:line + fix sketches are there).
 You are Codex in worktrees/lane-b. Pre-flight per LANE-SAFETY.
 ## Scope (five findings, each its own commit)

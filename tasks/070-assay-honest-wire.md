@@ -1,5 +1,5 @@
 # Task 070-assay-honest-wire: the Assay bench never promises what production can't deliver (lane-a; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM **F-SOL-TRUST-002 [P0]** (`reviews/sol-findings-ai-accounts-trust.md` — read FIRST): the bench says the Assayer "takes orders now" + a Post button, but the queue routes live ONLY in vite `configureServer` (dev) — production 404s (reproduced: "JSON ready (HTTP 404)"). Deployed clients can never reach the repo-filesystem queue the assayer fires read. This also closes the F-m503-1 mystery (assay-bench prod behavior unproven).
 You are Codex in worktrees/lane-a. Pre-flight per LANE-SAFETY.
 

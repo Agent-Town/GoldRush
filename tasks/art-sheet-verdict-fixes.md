@@ -1,5 +1,5 @@
 # Task art-sheet-verdict-fixes: three owner sheet verdicts, fixed (ART slot)
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 OWNER VERDICTS 2026-07-11 (verbatim). IMAGE LAW applies (stills native-only; higgsfield = seedance video only).
 ## 1. TAVERNKEEPER — "two left animation rows, no right animation row"
 Compositing bug: the walk8 sheet duplicated the LEFT row into the RIGHT slot. Do NOT regenerate: the selected right-walk take exists in `assets/motion-pilot/production-tavernkeeper/` evidence — re-extract the RIGHT row from it and rebuild the sheet (rows down/left/right/up, verify each row's facing before compositing; add a per-row facing check to the run note).

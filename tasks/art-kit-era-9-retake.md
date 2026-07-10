@@ -1,5 +1,5 @@
 # Task art-kit-era-9-retake: kit-era-9 is ANOTHER WORLD — retake per canon (ART slot)
-CODEX: model=gpt-5.5 effort=low
+CODEX: model=gpt-5.6-sol effort=medium
 CANON CORRECTION (attended, 2026-07-10): the shipped kit-era-9 was painted as the HOME VALLEY turned red (image-edit of kit-era-8) — but `specs/epoch-saga/e9-redfields-bundle.md` is design-locked: E9 is **"a dead red world"** — a NEW planet, not the valley. The Persistence Law applies WITHIN a world; E9 begins a fresh claim with the town's lineages carried as craft, not geography.
 Pipeline per CLAUDE.md §8 + LEDGER ({ANCHOR}). READ: the e9 bundle §era thesis + palette note + terrain/props, `lore/story-arc.md` (E8's ache → E9's payoff).
 ## Deliverable → assets/raw/

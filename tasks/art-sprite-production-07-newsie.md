@@ -1,5 +1,5 @@
 # Task sprite-production-07: MEI THE NEWSIE — turnaround, stills, walk8 (ART slot)
-CODEX: model=gpt-5.5 effort=low
+CODEX: model=gpt-5.6-sol effort=medium
 FROM `lore/characters.md` §THE NEWSIE (RULED 2026-07-10: NEW character — a girl, different heritage; seed name Mei, gold-rush-era Chinese-American heritage honored warmly). READ: the character entry + lore/canon-rules (MINORS ALWAYS CLOTHED — hard law; warm, illustrated) + the v2 pipeline template (`tasks/art-sprite-production-05-town-cast.md`).
 ## Order of work
 1. **`turn-newsie-mei.png`** — the turnaround FIRST (A-pose, 5 angles, {ANCHOR}): a girl ~10-12, Chinese-American gold-rush heritage, cap over a braid, paper satchel on her LEFT (side-pinned forever), quick bright expression, sturdy frontier clothes. Owner-eye grade — she's a named principal.

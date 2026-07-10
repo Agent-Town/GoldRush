@@ -1,5 +1,5 @@
 # Task art-saga-library-e9: THE VISUAL SAGA LIBRARY — Epoch 9 Redfields (ART slot; THE HEART ERA)
-CODEX: model=gpt-5.5 effort=low
+CODEX: model=gpt-5.6-sol effort=medium
 Pipeline per CLAUDE.md §8 + LEDGER ({ANCHOR}). READ: **specs/epoch-saga/e9-redfields-bundle.md (§art manifest + palette note)** + lore/canon-rules (PERSISTENCE LAW) + lore/story-arc.md (E9 = the era that resolves the reset-ache: "what you shape STAYS") + the e8 batch's run note (template).
 ## Deliverables → assets/raw/ (reference tier, full-bleed; condition on named anchors)
 1. `kit-era-9.png` — image-EDIT **base = kit-era-8.png**: every prior work remains, weathered — and the valley now RED: rust-red engraved dunes over parchment, domes warm-lit from within, dust devils as hatch-spiral columns, canals cut and waiting — **and the green that spreads along them is E1's EXACT riverbank swatch (sample kit-valley-master — literally the same color; the point IS the callback)**. {ANCHOR}

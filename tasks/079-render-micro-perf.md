@@ -1,5 +1,5 @@
 # Task 079-render-micro-perf: the swarm's accepted render smalls, one pass (lane-c; commit prefix "perf:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM `reviews/swarm-triage-2026-07-10.md` + `reviews/swarm-48h-confirmed.json` (READ each evidence entry FIRST).
 You are Codex in worktrees/lane-c. Pre-flight per LANE-SAFETY.
 ## Scope (five findings, each its own commit)

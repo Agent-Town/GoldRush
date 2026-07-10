@@ -1,5 +1,5 @@
 # Task 075-worker-abuse-hardening: rate limits + input allowlists on the public workers (lane-a; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM swarm findings [high+medium] `reviews/swarm-48h-confirmed.json`: telemetry ingest (`functions/api/telemetry.ts:41`) has NO rate limit and aggregates ATTACKER-CHOSEN contract keys (one curl loop pollutes the public Assay Office stats — "busiest contract: xxx-garbage"); multiplayer create/connect (`functions/api/_multiplayer.ts:51`) has no rate limit either (Origin is the only gate).
 You are Codex in worktrees/lane-a. Pre-flight per LANE-SAFETY. READ FIRST: both findings' evidence entries, the accounts worker's EXISTING per-IP KV rate-limit pattern (`functions/api/_accounts.ts` — reuse it, don't invent), `docs/api-stats.md` + the TL-01 payload shape, MP-01's caps (`docs/api-multiplayer.md`).
 ## Scope

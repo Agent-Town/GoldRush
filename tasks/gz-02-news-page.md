@@ -1,5 +1,5 @@
 # Task gz-02-news-page: agenttown.app/news — the Gazette's public window (lane-d; commit prefix "feat:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM specs/marketing/README.md STAGE 2.6 GZ-02. READ: the stage verbatim (owner-approval law; ≤3/week cadence), news/herald.json (GZ-H1's feed — ONE spine), site/ structure + deploy-site.sh.
 ## Scope
 1. site/news.html (+ nav link): renders news/herald.json newest-first — headline, lines, date, optional image ref; the game's parchment web styling; empty state "No fresh ink yet."

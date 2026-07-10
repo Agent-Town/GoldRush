@@ -27,6 +27,8 @@ You are Codex, the **implementer** for Gold Rush, a three.js browser game. Claud
 - Placeholder-first art; generated assets wire through `assets/layer-contracts/` + `assets/LEDGER.md`.
 - Ownership invariants: Economy is the only gold writer; CombatSystem the only damage resolver; one TargetingSystem; pools per family; every pickup floats its amount (e2e-asserted).
 
+## Model routing (owner ruling 2026-07-11, re-affirmed): the runner default and the AUTHORING default for CODEX headers = **gpt-5.6-sol @ medium**. gpt-5.5 headers are RESERVED for art batches and purely mechanical tasks only; sol@high for sim-critical; ultra = requested, never ambient.
+
 ## Interactive co-agent sessions (GPT-5.6 Sol Ultra and successors) — added 2026-07-10, owner-directed
 
 If you are an INTERACTIVE session exploring this repo (not the lane runner executing a queued task), welcome — the factory laws above still bind, plus these:

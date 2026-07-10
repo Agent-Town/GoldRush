@@ -1,5 +1,5 @@
 # Task 080b-save-surfaces-reland: re-land 080's three save surfaces ON TOP of 076's stale-save protocol (lane-a; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=high
+CODEX: model=gpt-5.6-sol effort=high
 **FIRE-AUTHORED (attended review welcome) — s290, 2026-07-10.** This is a RE-LAND of task 080 (`080-save-surfaces`). 080 completed cleanly on `lane/m3` (`4740246`, self-gated green: build + `test:accounts` 39 + accounts playwright 12) but **cannot merge to main** — it was authored against a pre-076 base and forks the save-atomicity model against 076 (`076-save-transfer-atomicity`, already SHIPPED on main). The completed-but-unmergeable attempt is preserved at **`save/080-save-surfaces` (`4740246`)** — read `git show 4740246` for the full salvage diff; RE-IMPLEMENT its intent on current main, do NOT cherry-pick it.
 
 You are Codex in worktrees/lane-a. Pre-flight per LANE-SAFETY (safe-dupe): `lane/m3`'s current tip `4740246` is the 080 salvage, already preserved in `save/080-save-surfaces` → it is SAFE to reset `lane/m3` to `origin/main`/`main` before starting. Confirm `git branch --list save/080-save-surfaces` shows the ref BEFORE any reset; if it is absent, STOP and report (do not destroy the only copy).

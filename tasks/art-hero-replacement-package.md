@@ -1,5 +1,5 @@
 # Task art-hero-replacement-package: EVERYTHING female-hero, staged for the flip (ART slot)
-CODEX: model=gpt-5.5 effort=high
+CODEX: model=gpt-5.6-sol effort=high
 FROM `reviews/sol-findings-character-orientation.md` + `docs/CHARACTER-MAP.md` (READ FIRST — the full inventory of male-hero-depicting runtime assets and the v3 provenance trail). OWNER GATE: the walk-flip itself waits for the owner's pan verdict on `assets/motion-pilot/production-hero-v3/contact-sheets/` — THIS TASK PREPARES EVERYTHING ELSE so the flip is one data change.
 ## Scope
 1. **Restore the true v3 sheet**: the raw `char-hero-sheet-walk8.png` currently holds a rejected mixed-identity rebuild — `mv` it to `char-hero-sheet-walk8-rejected-mixed.png` and restore the correct v3 output from the production-hero-v3 evidence (CHARACTER-MAP names the surviving source). LEDGER the provenance.

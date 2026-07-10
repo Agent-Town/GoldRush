@@ -1,5 +1,5 @@
 # Task art-saga-library-e8: THE VISUAL SAGA LIBRARY — Epoch 8 Orbital + the kit-chain repair through E8 (ART slot)
-CODEX: model=gpt-5.5 effort=low
+CODEX: model=gpt-5.6-sol effort=medium
 Pipeline per CLAUDE.md §8 + LEDGER ({ANCHOR}). READ: **specs/epoch-saga/e8-orbital-bundle.md (§art manifest — the Moon claim: air-as-wall, lava tubes)** + lore/canon-rules (PERSISTENCE LAW) + `tasks/art-kit-era-4-retake.md` (the cascade mechanism — you EXTEND it two links).
 
 ## Deliverables → assets/raw/ (STRICTLY in order; each conditions on the previous output)

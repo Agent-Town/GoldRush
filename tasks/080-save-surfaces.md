@@ -1,5 +1,5 @@
 # Task 080-save-surfaces: the remaining three of MP-004's five save surfaces (lane-a; commit prefix "fix:")
-CODEX: model=gpt-5.5 effort=high
+CODEX: model=gpt-5.6-sol effort=high
 FROM `docs/MASTERPLAN-2026-07-10.md` amendment §4 (saves = five surfaces; 069+076 shipped two) + the cited Sol evidence: `reviews/sol-findings-persistence-multiplayer.md` (PERSIST-004/008/009) + `reviews/sol-findings-ai-accounts-trust.md` (TRUST-005/009). READ those entries FIRST — file:line evidence stands.
 You are Codex in worktrees/lane-a. Pre-flight per LANE-SAFETY.
 ## Scope

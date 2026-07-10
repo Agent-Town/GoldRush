@@ -1,5 +1,5 @@
 # Task gz-h1-newsie: THE CLAIM HERALD hits the plaza — the newsie + the one-page paper (lane-b; commit prefix "feat:")
-CODEX: model=gpt-5.5 effort=medium
+CODEX: model=gpt-5.6-sol effort=medium
 FROM `specs/gazette-house/README.md` GZ-H1 + `lore/agent-town-heritage.md` §5 (the Pony Express DELIVERS — v1 the newsie works the plaza; re-anchors to the station when GZ-H2/heritage builds it).
 You are Codex in worktrees/lane-b. Pre-flight per LANE-SAFETY. READ FIRST: the gazette spec (laws: owner approval = publication; 063 in-world voice — fires TRANSLATE, "the river now runs past the claim's edge" never "064 shipped"; no token talk ever), the town actor pattern (townsfolk barks, youngster loop), the Claim Ledger reader page pattern, `marketing/outbox/gazette-queue.md` (the fires' GZ-01 duty output — your content source shape).
 ## Scope
