@@ -68,8 +68,8 @@ test('contract registry lists Frontier and locked Steamworks in order', async ({
     };
   });
 
-  expect(registry.epochs.map((epoch) => epoch.id)).toEqual(['epoch-1-frontier', 'epoch-2-steamworks']);
-  expect(registry.epochs.map((epoch) => epoch.displayName)).toEqual(['Frontier', 'Steamworks']);
+  expect(registry.epochs.map((epoch) => epoch.id)).toEqual(['epoch-1-frontier', 'epoch-2-steamworks', 'epoch-3-voltage']);
+  expect(registry.epochs.map((epoch) => epoch.displayName)).toEqual(['Frontier', 'Steamworks', 'Voltage Age']);
   expect(registry.frontier).toMatchObject({ locked: false, threshold: 6 });
   expect(registry.frontier.gates).toEqual(['chain_spark_primer', 'beacon_cadence', 'pact_ledger', 'agent_schooling']);
   expect(registry.frontier.families.flatMap((family) => family.cards.map((card) => card.id))).toEqual([
@@ -83,14 +83,17 @@ test('contract registry lists Frontier and locked Steamworks in order', async ({
     id: 'epoch-2-steamworks',
     displayName: 'Steamworks',
     locked: true,
-    threshold: null,
+    threshold: 8,
     families: [],
     gates: [],
     masteryConversions: [],
     synergyCards: [],
     contractTiers: [],
     contracts: [{ id: 'e2-hill-mine' }],
+    successor: 'epoch-3-voltage',
   });
+  expect(registry.steamworks.research.branches).toHaveLength(3);
+  expect(registry.steamworks.research.branches.flatMap((branch) => branch.nodes)).toHaveLength(18);
   assertNoErrors(errors);
 });
 

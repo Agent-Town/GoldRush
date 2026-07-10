@@ -1,0 +1,42 @@
+{
+  "id": "epoch-3-voltage",
+  "displayName": "Voltage Age",
+  "order": 3,
+  "locked": true,
+  "scienceThreshold": 10,
+  "research": {
+    "branches": [
+      {
+        "id": "Grid Craft",
+        "label": "current economy",
+        "iconKey": "ui.upgrade.icon.firerate",
+        "nodes": []
+      },
+      {
+        "id": "Arsenal",
+        "label": "voltage arsenal",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": []
+      },
+      {
+        "id": "Fabrication",
+        "label": "crafting & agent",
+        "iconKey": "char.prospector_agent.portrait",
+        "nodes": []
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "refinery",
+    "surfaceRef": "bld.refinery",
+    "cost": { "gold": 0, "bankedScience": 10 },
+    "raiseActionText": "Raise the Refinery"
+  },
+  "transition": {
+    "ceremonyBeatId": "e4-ceremony-refinery",
+    "kitArtKey": "kit-era-4",
+    "displayName": "The Motor Frontier"
+  },
+  "successor": null,
+  "parts": {}
+}

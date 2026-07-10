@@ -3,7 +3,210 @@
   "displayName": "Frontier",
   "order": 1,
   "locked": false,
-  "threshold": 6,
+  "scienceThreshold": 6,
+  "research": {
+    "branches": [
+      {
+        "id": "Prospecting Works",
+        "label": "mining economy",
+        "iconKey": "bld.sluice_works",
+        "nodes": [
+          {
+            "id": "assay_grading",
+            "name": "Assay Grading",
+            "description": "Seam cards become a stockpile plan: +35 cap per prospecting stack and +1.25 offer weight.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Seam cards now add +35 stockpile cap per prospecting stack and carry +1.25 offer weight.",
+            "effectRef": "frontier.assay_grading",
+            "cost": 1,
+            "live": true
+          },
+          {
+            "id": "mother_lode_survey",
+            "name": "Mother Lode Survey",
+            "description": "Banks +1 economy step toward seam returns that scale with waves survived.",
+            "iconKey": "node.gold_seam",
+            "effect": "Mother Lode Survey banks +1 economy step toward long-claim seam scaling.",
+            "effectRef": "frontier.mother_lode_survey",
+            "cost": 1,
+            "requires": ["assay_grading"]
+          },
+          {
+            "id": "sluice_accounting",
+            "name": "Sluice Accounting",
+            "description": "Banks +1 economy step toward deeper Sluice card families.",
+            "iconKey": "bld.sluice_works",
+            "effect": "Sluice Accounting banks +1 economy step toward deeper Sluice card families.",
+            "effectRef": "frontier.sluice_accounting",
+            "cost": 1,
+            "requires": ["mother_lode_survey"]
+          },
+          {
+            "id": "claim_map_table",
+            "name": "Claim Map Table",
+            "description": "Banks +1 economy step toward map picks that remember better seams.",
+            "iconKey": "ui.upgrade.icon.panning",
+            "effect": "Claim Map Table banks +1 economy step toward map picks that remember better seams.",
+            "effectRef": "frontier.claim_map_table",
+            "cost": 1,
+            "requires": ["sluice_accounting"]
+          },
+          {
+            "id": "pact_ledger",
+            "name": "Pact Ledger",
+            "description": "Rich Seam Pact enters the pool with +18 seam gold and 10% slower panning.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Unlocks Rich Seam Pact: +18 gold per seam and 10% slower panning.",
+            "effectRef": "frontier.pact_ledger",
+            "cost": 1,
+            "requires": ["claim_map_table"],
+            "live": true
+          }
+        ]
+      },
+      {
+        "id": "Arsenal Works",
+        "label": "arsenal",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "chain_spark_primer",
+            "name": "Chain Spark Primer",
+            "description": "Chain Spark Arc enters the pool with +12% rig fire rate and +12% beacon fire rate.",
+            "iconKey": "ui.upgrade.icon.volley",
+            "effect": "Unlocks Chain Spark Arc: +12% rig fire rate and +12% beacon fire rate.",
+            "effectRef": "frontier.chain_spark_primer",
+            "cost": 1,
+            "live": true
+          },
+          {
+            "id": "beacon_cadence",
+            "name": "Beacon Cadence",
+            "description": "Beacon Handoff enters the pool with +18% beacon fire rate and +6% rig fire rate.",
+            "iconKey": "ui.upgrade.icon.beacon",
+            "effect": "Unlocks Beacon Handoff: +18% beacon fire rate and +6% rig fire rate.",
+            "effectRef": "frontier.beacon_cadence",
+            "cost": 1,
+            "requires": ["chain_spark_primer"],
+            "live": true
+          },
+          {
+            "id": "brass_coil_standards",
+            "name": "Brass Coil Standards",
+            "description": "Banks +1 arsenal step toward mastery offers like Spark Pressure Ring's +8% blast radius.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Brass Coil Standards banks +1 arsenal step toward Spark Pressure Ring's +8% blast radius mastery.",
+            "effectRef": "frontier.brass_coil_standards",
+            "cost": 1,
+            "requires": ["beacon_cadence"]
+          },
+          {
+            "id": "powder_math",
+            "name": "Powder Math",
+            "description": "Banks +1 arsenal step toward blast mastery while Frontier blast radius stays capped at 1.4x.",
+            "iconKey": "ui.upgrade.icon.blast",
+            "effect": "Powder Math banks +1 arsenal step toward the 1.4x Frontier blast-radius cap.",
+            "effectRef": "frontier.powder_math",
+            "cost": 1,
+            "requires": ["brass_coil_standards"]
+          },
+          {
+            "id": "sky_rocket_battery",
+            "name": "Sky-Rocket Battery",
+            "description": "Captured Baron science unlocks a 3-rocket festival-burst battery for the Steamworks arsenal.",
+            "iconKey": "ui.upgrade.icon.volley",
+            "effect": "Unlocks the Sky-Rocket Battery branch: 3 arcing festival rockets, burst radius, and ember upgrades.",
+            "effectRef": "frontier.sky_rocket_battery",
+            "cost": 1,
+            "requires": ["powder_math"],
+            "live": true
+          },
+          {
+            "id": "rush_pattern",
+            "name": "Rush Pattern",
+            "description": "Banks +1 arsenal step toward rare rush offers for the wave-30 wall.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Rush Pattern banks +1 arsenal step toward rare rush offers for the wave-30 wall.",
+            "effectRef": "frontier.rush_pattern",
+            "cost": 1,
+            "requires": ["powder_math"]
+          }
+        ]
+      },
+      {
+        "id": "Assay Works",
+        "label": "crafting & agent",
+        "iconKey": "char.prospector_agent.portrait",
+        "nodes": [
+          {
+            "id": "second_order_slot",
+            "name": "Second Order Slot",
+            "description": "Order room rises to 2 pending Assay bench orders.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Pending Assay orders rise to 2.",
+            "effectRef": "frontier.second_order_slot",
+            "cost": 1,
+            "live": true
+          },
+          {
+            "id": "refined_assay",
+            "name": "Refined Assay",
+            "description": "Tier 2 orders raise common/uncommon/rare stat budgets by 20%: 3.6 / 6 / 9.6.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Contract tier becomes 2; new orders carry the 20% higher assay ceiling.",
+            "effectRef": "frontier.refined_assay",
+            "cost": 1,
+            "requires": ["second_order_slot"],
+            "live": true
+          },
+          {
+            "id": "pattern_library",
+            "name": "Pattern Library",
+            "description": "Tier 3 lets up to 2 approved crafted cards enter each run offer pool.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Approved family-tagged inventions can appear as run cards, capped at 2 per offer.",
+            "effectRef": "frontier.pattern_library",
+            "cost": 1,
+            "requires": ["refined_assay"],
+            "live": true
+          },
+          {
+            "id": "agent_schooling",
+            "name": "Agent Schooling",
+            "description": "After wave 15, schooling offers can grant the Prospector +1 policy slot for that run.",
+            "iconKey": "ui.upgrade.icon.beacon",
+            "effect": "Unlocks late-run Agent Schooling offers with +1 run-only policy slot.",
+            "effectRef": "frontier.agent_schooling",
+            "cost": 1,
+            "requires": ["pattern_library"],
+            "live": true
+          },
+          {
+            "id": "prospector_lessons",
+            "name": "Prospector Lessons",
+            "description": "Not yet live: banks the Agent Schooling +1 policy slot toward a permanent run-start head start.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Design hook for a permanent +1 Prospector policy slot; not yet applied in a run.",
+            "effectRef": "frontier.prospector_lessons",
+            "cost": 1,
+            "requires": ["agent_schooling"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "stamp-mill",
+    "surfaceRef": "bld.stamp_mill",
+    "cost": { "gold": 420, "bankedScience": 6 },
+    "raiseActionText": "Raise the Stamp Mill"
+  },
+  "transition": {
+    "ceremonyBeatId": "e2-ceremony-mill",
+    "kitArtKey": "kit-era-2",
+    "displayName": "The Steamworks"
+  },
+  "successor": "epoch-2-steamworks",
   "tile": {
     "id": "frontier-river-claim",
     "biome": "river-claim",

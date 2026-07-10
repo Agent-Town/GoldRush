@@ -1,34 +1,27 @@
 import {
-  RESEARCH_NODES,
   continuedStudyBonuses,
   frontierNodes,
   pinnedResearchPath,
+  researchBranches,
   researchDistance,
   researchNodeById,
+  researchNodes,
   researchPathIds,
-  savedStampMillBuildStarted,
+  savedEpochMegaprojectBuildStarted,
   scienceMeter,
-  type ResearchBranch,
   type ResearchNode,
   type ResearchState,
 } from '../meta/ResearchTree';
-import { epochIsActive } from '../meta/ContractFamilies';
+import {
+  activeEpochId,
+  epochIsActive,
+  epochMegaprojectComplete,
+  loadEpoch,
+  type EpochResearchBranch,
+  type ResearchIconKey,
+} from '../meta/ContractFamilies';
 
-export type ResearchIconKey =
-  | 'ui.upgrade.icon.panning'
-  | 'ui.upgrade.icon.prospecting'
-  | 'ui.upgrade.icon.beacon'
-  | 'ui.upgrade.icon.blast'
-  | 'ui.upgrade.icon.firerate'
-  | 'ui.upgrade.icon.gold'
-  | 'ui.upgrade.icon.mend'
-  | 'ui.upgrade.icon.mobility'
-  | 'ui.upgrade.icon.range'
-  | 'ui.upgrade.icon.volley'
-  | 'bld.sentry_beacon'
-  | 'bld.sluice_works'
-  | 'char.prospector_agent.portrait'
-  | 'node.gold_seam';
+export type { ResearchIconKey } from '../meta/ContractFamilies';
 
 export const RESEARCH_ICON_REGISTRY: Record<ResearchIconKey, { url: string; label: string }> = {
   'ui.upgrade.icon.panning': { url: new URL('../../assets/processed/icon-panning.png', import.meta.url).href, label: 'gold pan' },
@@ -53,30 +46,13 @@ export const RESEARCH_ICON_REGISTRY: Record<ResearchIconKey, { url: string; labe
   'node.gold_seam': { url: new URL('../../assets/processed/node-gold-seam.png', import.meta.url).href, label: 'gold seam' },
 };
 
-const BRANCH_ICON_KEYS: Record<ResearchBranch, ResearchIconKey> = {
-  'Prospecting Works': 'bld.sluice_works',
-  'Arsenal Works': 'bld.sentry_beacon',
-  'Assay Works': 'char.prospector_agent.portrait',
-};
-
-export const RESEARCH_NODE_ICON_KEYS: Record<string, ResearchIconKey> = {
-  assay_grading: 'ui.upgrade.icon.prospecting',
-  mother_lode_survey: 'node.gold_seam',
-  sluice_accounting: 'bld.sluice_works',
-  claim_map_table: 'ui.upgrade.icon.panning',
-  pact_ledger: 'ui.upgrade.icon.prospecting',
-  chain_spark_primer: 'ui.upgrade.icon.volley',
-  beacon_cadence: 'ui.upgrade.icon.beacon',
-  brass_coil_standards: 'bld.sentry_beacon',
-  powder_math: 'ui.upgrade.icon.blast',
-  sky_rocket_battery: 'ui.upgrade.icon.volley',
-  rush_pattern: 'ui.upgrade.icon.mobility',
-  second_order_slot: 'ui.upgrade.icon.mend',
-  refined_assay: 'ui.upgrade.icon.prospecting',
-  pattern_library: 'ui.upgrade.icon.range',
-  agent_schooling: 'ui.upgrade.icon.beacon',
-  prospector_lessons: 'char.prospector_agent.portrait',
-};
+export const RESEARCH_NODE_ICON_KEYS = Object.values(researchNodeById).reduce(
+  (icons, node) => {
+    icons[node.id] = node.iconKey;
+    return icons;
+  },
+  {} as Record<string, ResearchIconKey>,
+);
 
 export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: string }> = {
   assay_grading: {
@@ -145,19 +121,16 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   },
 };
 
-const BRANCHES: Array<{ id: ResearchBranch; label: string }> = [
-  { id: 'Prospecting Works', label: 'mining economy' },
-  { id: 'Arsenal Works', label: 'arsenal' },
-  { id: 'Assay Works', label: 'crafting & agent' },
-];
-
 export function renderResearchChart(state: ResearchState, selectedId?: string): string {
-  const selected = selectedId ? researchNodeById[selectedId] : undefined;
-  const selectedPath = new Set(selected ? researchPathIds(selected.id) : []);
+  const epochId = state.epochId ?? activeEpochId();
+  const epoch = loadEpoch(epochId);
+  const nodes = researchNodes(epochId);
+  const nodesById = Object.fromEntries(nodes.map((node) => [node.id, node])) as Record<string, ResearchNode>;
+  const selected = selectedId ? nodesById[selectedId] : undefined;
+  const selectedPath = new Set(selected ? researchPathIds(selected.id, epochId) : []);
   const pinnedPath = new Set(pinnedResearchPath(state));
-  const meter = scienceMeter(state, savedStampMillBuildStarted() ? 'building' : 'awaiting-town');
+  const meter = scienceMeter(state, savedEpochMegaprojectBuildStarted(epochId) ? 'building' : 'awaiting-town');
   const frontier = new Set(frontierNodes(state).map((node) => node.id));
-  const steamworksActive = epochIsActive('epoch-2-steamworks');
   return `
     <div class="research-chart" data-testid="research-chart">
       <header class="research-chart__header">
@@ -171,15 +144,12 @@ export function renderResearchChart(state: ResearchState, selectedId?: string): 
       </header>
       <div class="research-chart__body">
         <div class="research-chart__branches" data-testid="research-chart-branches">
-          ${BRANCHES.map((branch) => renderBranch(branch, state, frontier, selectedPath, pinnedPath)).join('')}
-          <section class="research-chart__epoch" data-testid="research-next-epoch" data-epoch-id="epoch-2-steamworks" data-epoch-state="${
-            steamworksActive ? 'active' : 'locked'
-          }" aria-label="${steamworksActive ? 'Steamworks active in town' : 'Steamworks awaits the town'}">
-            <span>Steamworks</span>
-            <strong>${steamworksActive ? 'active in town' : 'awaits the town'}</strong>
-          </section>
+          ${researchBranches(epochId)
+            .map((branch) => renderBranch(branch, nodes, nodesById, state, frontier, selectedPath, pinnedPath))
+            .join('')}
+          ${renderNextEpoch(epoch)}
         </div>
-        ${renderSelection(state, selected)}
+        ${renderSelection(state, selected, nodesById)}
       </div>
       ${frontier.size === 0 ? renderContinuedStudy(state) : ''}
     </div>
@@ -187,7 +157,9 @@ export function renderResearchChart(state: ResearchState, selectedId?: string): 
 }
 
 function renderBranch(
-  branch: { id: ResearchBranch; label: string },
+  branch: EpochResearchBranch,
+  nodes: readonly ResearchNode[],
+  nodesById: Record<string, ResearchNode>,
   state: ResearchState,
   frontier: Set<string>,
   selectedPath: Set<string>,
@@ -195,12 +167,13 @@ function renderBranch(
 ): string {
   return `
     <section class="research-chart__branch" data-research-branch="${escapeHtml(branch.id)}">
-      <h3>${renderIcon(BRANCH_ICON_KEYS[branch.id], 'research-chart__branch-icon', `research-branch-icon-${branch.id}`)}<span>${escapeHtml(
+      <h3>${renderIcon(branch.iconKey, 'research-chart__branch-icon', `research-branch-icon-${branch.id}`)}<span>${escapeHtml(
         branch.label,
       )}</span></h3>
       <div class="research-chart__nodes">
-        ${RESEARCH_NODES.filter((node) => node.branch === branch.id)
-          .map((node) => `${renderSurveyLine(node)}${renderNode(node, state, frontier, selectedPath, pinnedPath)}`)
+        ${nodes
+          .filter((node) => node.branch === branch.id)
+          .map((node) => `${renderSurveyLine(node)}${renderNode(node, nodesById, state, frontier, selectedPath, pinnedPath)}`)
           .join('')}
       </div>
     </section>
@@ -209,6 +182,7 @@ function renderBranch(
 
 function renderNode(
   node: ResearchNode,
+  nodesById: Record<string, ResearchNode>,
   state: ResearchState,
   frontier: Set<string>,
   selectedPath: Set<string>,
@@ -218,7 +192,7 @@ function renderNode(
   const selected = selectedPath.has(node.id);
   const pinned = state.pinnedTarget === node.id;
   const onPinnedPath = pinnedPath.has(node.id);
-  const requires = node.requires?.map((id) => researchNodeById[id]?.name ?? id).join(', ');
+  const requires = node.requires?.map((id) => nodesById[id]?.name ?? id).join(', ');
   const iconKey = researchIconKeyForNode(node);
   return `
     <button
@@ -248,15 +222,32 @@ function renderNode(
   `;
 }
 
-export function researchIconKeyForNode(node: Pick<ResearchNode, 'id' | 'branch'>): ResearchIconKey {
-  return RESEARCH_NODE_ICON_KEYS[node.id] ?? BRANCH_ICON_KEYS[node.branch];
+export function researchIconKeyForNode(node: Pick<ResearchNode, 'iconKey'>): ResearchIconKey {
+  return node.iconKey;
 }
 
 export function researchRevealForNode(node: ResearchNode): { name: string; line: string } {
   return RESEARCH_UNLOCK_REVEALS[node.id] ?? { name: node.name, line: node.effect };
 }
 
-function renderSelection(state: ResearchState, selected?: ResearchNode): string {
+function renderNextEpoch(epoch: ReturnType<typeof loadEpoch>): string {
+  if (!epoch.successor) return '';
+  const successor = loadEpoch(epoch.successor);
+  const active = epochIsActive(successor.id);
+  const ready = !active && epochMegaprojectComplete(epoch);
+  const state = active ? 'active' : ready ? 'ready' : 'locked';
+  const status = active ? 'active in town' : ready ? epoch.megaproject.raiseActionText : 'awaits the town';
+  return `
+    <section class="research-chart__epoch" data-testid="research-next-epoch" data-epoch-id="${escapeHtml(
+      successor.id,
+    )}" data-epoch-state="${state}" aria-label="${escapeHtml(`${successor.displayName} ${status}`)}">
+      <span>${escapeHtml(successor.displayName)}</span>
+      <strong>${escapeHtml(status)}</strong>
+    </section>
+  `;
+}
+
+function renderSelection(state: ResearchState, selected: ResearchNode | undefined, nodesById: Record<string, ResearchNode>): string {
   if (!selected) {
     return `
       <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="${state.pinnedTarget ? 'true' : 'false'}">
@@ -267,7 +258,7 @@ function renderSelection(state: ResearchState, selected?: ResearchNode): string 
     `;
   }
   const distance = researchDistance(state, selected.id);
-  const path = researchPathIds(selected.id);
+  const path = researchPathIds(selected.id, state.epochId ?? activeEpochId());
   const pinned = state.pinnedTarget === selected.id;
   return `
     <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="${pinned ? 'true' : 'false'}">
@@ -277,7 +268,7 @@ function renderSelection(state: ResearchState, selected?: ResearchNode): string 
       <strong data-testid="research-chart-distance">${distance === 0 ? 'already marked' : `${distance} ${distance === 1 ? 'pick' : 'picks'} away`}</strong>
       <ol>
         ${path
-          .map((id) => `<li data-path-id="${escapeHtml(id)}">${escapeHtml(researchNodeById[id]?.name ?? id)}</li>`)
+          .map((id) => `<li data-path-id="${escapeHtml(id)}">${escapeHtml(nodesById[id]?.name ?? id)}</li>`)
           .join('')}
       </ol>
       <button class="gr-start-menu__small-button" type="button" data-research-pin="${pinned ? '' : escapeHtml(selected.id)}" data-testid="research-chart-pin">

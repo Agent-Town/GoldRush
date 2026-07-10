@@ -4,7 +4,8 @@ import frontierFamilies from '../../assets/contracts/epoch-1-frontier/families.j
 import frontierManifest from '../../assets/contracts/epoch-1-frontier/manifest.json' with { type: 'json' };
 import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import steamworksManifest from '../../assets/contracts/epoch-2-steamworks/manifest.json' with { type: 'json' };
-import type { MegaprojectManifest } from './Megaproject';
+import voltageManifest from '../../assets/contracts/epoch-3-voltage/manifest.json' with { type: 'json' };
+import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 
 export type EpochUpgradeDeltas = {
   fireRateMult?: number;
@@ -66,6 +67,61 @@ export type EpochMeta = {
   order: number;
   locked: boolean;
   threshold: number | null;
+};
+
+export const RESEARCH_ICON_KEYS = [
+  'ui.upgrade.icon.panning',
+  'ui.upgrade.icon.prospecting',
+  'ui.upgrade.icon.beacon',
+  'ui.upgrade.icon.blast',
+  'ui.upgrade.icon.firerate',
+  'ui.upgrade.icon.gold',
+  'ui.upgrade.icon.mend',
+  'ui.upgrade.icon.mobility',
+  'ui.upgrade.icon.range',
+  'ui.upgrade.icon.volley',
+  'bld.sentry_beacon',
+  'bld.sluice_works',
+  'char.prospector_agent.portrait',
+  'node.gold_seam',
+] as const;
+
+export type ResearchIconKey = (typeof RESEARCH_ICON_KEYS)[number];
+
+export type EpochResearchNode = {
+  id: string;
+  name: string;
+  description: string;
+  iconKey: ResearchIconKey;
+  effect: string;
+  effectRef: string;
+  cost: number;
+  requires?: readonly string[];
+  live?: boolean;
+};
+
+export type EpochResearchBranch = {
+  id: string;
+  label: string;
+  iconKey: ResearchIconKey;
+  nodes: readonly EpochResearchNode[];
+};
+
+export type EpochResearchManifest = {
+  branches: readonly EpochResearchBranch[];
+};
+
+export type EpochMegaprojectTarget = {
+  id: string;
+  surfaceRef: string;
+  cost: { gold: number; bankedScience: number };
+  raiseActionText: string;
+};
+
+export type EpochTransition = {
+  ceremonyBeatId: string;
+  kitArtKey: string;
+  displayName: string;
 };
 
 export type EpochResourceDeclaration = {
@@ -402,14 +458,24 @@ export type EpochBundle = EpochMeta & {
   masteryConversions: MasteryConversionRule[];
   synergyCards: EpochUpgradeCard[];
   contractTiers: ContractTierBudget[];
+  research: EpochResearchManifest;
+  scienceThreshold: number;
+  megaproject: EpochMegaprojectTarget;
+  transition: EpochTransition;
+  successor: string | null;
 };
 
-type EpochManifest = EpochMeta & {
+type EpochManifest = Omit<EpochMeta, 'threshold'> & {
   tile?: EpochTileDescriptor;
   devTiles?: EpochTileDescriptor[];
   megaprojects?: MegaprojectManifest[];
   resources?: EpochResourceDeclaration[];
   claimOffice?: ClaimOfficeManifest;
+  research: EpochResearchManifest;
+  scienceThreshold: number;
+  megaproject: EpochMegaprojectTarget;
+  transition: EpochTransition;
+  successor: string | null;
   parts: {
     families?: string;
     caps?: string;
@@ -429,6 +495,7 @@ const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
 const fallbackManifests: Record<string, EpochManifest> = {
   '../../assets/contracts/epoch-1-frontier/manifest.json': frontierManifest as EpochManifest,
   '../../assets/contracts/epoch-2-steamworks/manifest.json': steamworksManifest as EpochManifest,
+  '../../assets/contracts/epoch-3-voltage/manifest.json': voltageManifest as EpochManifest,
 };
 const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
   '../../assets/contracts/epoch-1-frontier/families.json': frontierFamilies as EpochFamiliesBundle,
@@ -480,6 +547,7 @@ export function listEpochs(): EpochMeta[] {
 export function loadEpoch(id: string): EpochBundle {
   const manifest = manifestsById.get(id);
   if (!manifest) throw new Error(`Unknown contract epoch: ${id}`);
+  validateEpochManifest(manifest);
   const families = loadFamilies(manifest);
   const caps = loadCaps(manifest);
   const contracts = loadContracts(manifest);
@@ -496,6 +564,11 @@ export function loadEpoch(id: string): EpochBundle {
     masteryConversions: families.masteryConversions,
     synergyCards: families.synergyCards,
     contractTiers: caps.contractTiers,
+    research: manifest.research,
+    scienceThreshold: manifest.scienceThreshold,
+    megaproject: manifest.megaproject,
+    transition: manifest.transition,
+    successor: manifest.successor,
   };
 }
 
@@ -528,7 +601,7 @@ export function listContracts(epochId = DEFAULT_EPOCH_ID): ContractManifest[] {
 }
 
 export function listBoardContracts(): ContractManifest[] {
-  return orderedManifests.flatMap((manifest) => loadContracts(manifest).contracts);
+  return orderedManifests.flatMap((manifest) => (manifest.parts.contracts ? loadContracts(manifest).contracts : []));
 }
 
 export function loadContract(id: string, epochId?: string): ContractManifest {
@@ -560,9 +633,9 @@ export function epochIsActive(id: string): boolean {
 }
 
 export function activateEpoch(id: string): boolean {
-  const active = manifestsById.get(activeEpochId());
-  const requested = manifestsById.get(id);
-  if (!active || !requested || requested.order !== active.order + 1 || id !== 'epoch-2-steamworks') return false;
+  const active = loadEpoch(activeEpochId());
+  if (active.successor !== id || !epochMegaprojectComplete(active)) return false;
+  loadEpoch(id);
   try {
     globalThis.localStorage?.setItem(EPOCH_CEREMONY_KEY, id);
     globalThis.localStorage?.setItem(ACTIVE_EPOCH_KEY, id);
@@ -570,6 +643,22 @@ export function activateEpoch(id: string): boolean {
   } catch {
     return false;
   }
+}
+
+export function epochMegaprojectComplete(epoch: EpochBundle): boolean {
+  let raw: unknown;
+  try {
+    const saved = globalThis.localStorage?.getItem(MEGAPROJECT_STATE_KEY);
+    raw = saved ? JSON.parse(saved) : null;
+  } catch {
+    return false;
+  }
+  if (!isRecord(raw) || !isRecord(raw.projects)) return false;
+  const project = raw.projects[epoch.megaproject.id];
+  if (!isRecord(project)) return false;
+  if (project.complete === true) return true;
+  const legacy = epoch.megaprojects.find((entry) => entry.id === epoch.megaproject.id);
+  return !!legacy && typeof project.stage === 'number' && project.stage >= legacy.stages.length;
 }
 
 export function activeContract(): ContractManifest {
@@ -624,7 +713,7 @@ function toMeta(manifest: EpochManifest): EpochMeta {
     displayName: manifest.displayName,
     order: manifest.order,
     locked: manifest.locked,
-    threshold: manifest.threshold,
+    threshold: manifest.scienceThreshold,
   };
 }
 
@@ -714,6 +803,90 @@ function mergeWaterDescriptor(
     speedMul: { ...base.speedMul, ...override.speedMul },
     gravelBars: override.gravelBars ?? base.gravelBars,
   };
+}
+
+function validateEpochManifest(manifest: EpochManifest): void {
+  const fail = (path: string): never => {
+    throw new Error(`Invalid contract epoch ${manifest.id}: ${path}`);
+  };
+  const text = (value: unknown, path: string) => {
+    if (typeof value !== 'string' || value.trim() === '') fail(path);
+  };
+  const whole = (value: unknown, path: string, minimum = 0) => {
+    if (typeof value !== 'number' || !Number.isInteger(value) || value < minimum) fail(path);
+  };
+  const icon = (value: unknown, path: string) => {
+    if (!RESEARCH_ICON_KEYS.includes(value as ResearchIconKey)) fail(path);
+  };
+
+  whole(manifest.scienceThreshold, 'scienceThreshold must be a positive integer', 1);
+  if (!isRecord(manifest.research) || !Array.isArray(manifest.research.branches) || manifest.research.branches.length !== 3) {
+    fail('research.branches must contain exactly three branches');
+  }
+
+  const branchIds = new Set<string>();
+  const nodes = new Map<string, EpochResearchNode>();
+  for (const [branchIndex, branch] of manifest.research.branches.entries()) {
+    if (!isRecord(branch)) fail(`research.branches[${branchIndex}] must be an object`);
+    text(branch.id, `research.branches[${branchIndex}].id must be non-empty`);
+    text(branch.label, `research.branches[${branchIndex}].label must be non-empty`);
+    icon(branch.iconKey, `research.branches[${branchIndex}].iconKey is unknown`);
+    if (branchIds.has(branch.id)) fail(`research branch id is duplicated: ${branch.id}`);
+    branchIds.add(branch.id);
+    if (!Array.isArray(branch.nodes)) fail(`research.branches[${branchIndex}].nodes must be an array`);
+    for (const [nodeIndex, node] of branch.nodes.entries()) {
+      if (!isRecord(node)) fail(`research.branches[${branchIndex}].nodes[${nodeIndex}] must be an object`);
+      text(node.id, `research node id at ${branchIndex}:${nodeIndex} must be non-empty`);
+      text(node.name, `research node ${node.id}.name must be non-empty`);
+      text(node.description, `research node ${node.id}.description must be non-empty`);
+      text(node.effect, `research node ${node.id}.effect must be non-empty`);
+      text(node.effectRef, `research node ${node.id}.effectRef must be non-empty`);
+      icon(node.iconKey, `research node ${node.id}.iconKey is unknown`);
+      whole(node.cost, `research node ${node.id}.cost must be a positive integer`, 1);
+      if (node.requires !== undefined && (!Array.isArray(node.requires) || node.requires.some((id) => typeof id !== 'string'))) {
+        fail(`research node ${node.id}.requires must contain ids`);
+      }
+      if (nodes.has(node.id)) fail(`research node id is duplicated: ${node.id}`);
+      nodes.set(node.id, node as unknown as EpochResearchNode);
+    }
+  }
+  for (const node of nodes.values()) {
+    for (const required of node.requires ?? []) {
+      if (!nodes.has(required) || required === node.id) fail(`research node ${node.id} has invalid requirement: ${required}`);
+    }
+  }
+  const visiting = new Set<string>();
+  const visited = new Set<string>();
+  const visit = (id: string) => {
+    if (visiting.has(id)) fail(`research requirements contain a cycle at ${id}`);
+    if (visited.has(id)) return;
+    visiting.add(id);
+    for (const required of nodes.get(id)?.requires ?? []) visit(required);
+    visiting.delete(id);
+    visited.add(id);
+  };
+  for (const id of nodes.keys()) visit(id);
+
+  if (!isRecord(manifest.megaproject)) fail('megaproject must be an object');
+  text(manifest.megaproject.id, 'megaproject.id must be non-empty');
+  text(manifest.megaproject.surfaceRef, 'megaproject.surfaceRef must be non-empty');
+  text(manifest.megaproject.raiseActionText, 'megaproject.raiseActionText must be non-empty');
+  if (!isRecord(manifest.megaproject.cost)) fail('megaproject.cost must be an object');
+  whole(manifest.megaproject.cost.gold, 'megaproject.cost.gold must be a non-negative integer');
+  whole(manifest.megaproject.cost.bankedScience, 'megaproject.cost.bankedScience must be a non-negative integer');
+
+  if (!isRecord(manifest.transition)) fail('transition must be an object');
+  text(manifest.transition.ceremonyBeatId, 'transition.ceremonyBeatId must be non-empty');
+  text(manifest.transition.kitArtKey, 'transition.kitArtKey must be non-empty');
+  text(manifest.transition.displayName, 'transition.displayName must be non-empty');
+  if (manifest.successor !== null) {
+    text(manifest.successor, 'successor must be a non-empty id or null');
+    if (manifest.successor === manifest.id) fail('successor cannot be the current epoch');
+  }
+}
+
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === 'object' && value !== null;
 }
 
 function defaultContractFor(manifest: EpochManifest): ContractManifest {

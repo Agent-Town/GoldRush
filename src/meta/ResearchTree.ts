@@ -5,27 +5,31 @@ import {
   type MetaProgress,
   type MetaProgressStorage,
 } from '../game/MetaProgress';
-import { loadEpoch, type ContractTier } from './ContractFamilies';
+import {
+  activeEpochId,
+  DEFAULT_EPOCH_ID,
+  listEpochs,
+  loadEpoch,
+  type ContractTier,
+  type EpochResearchBranch,
+  type EpochResearchNode,
+} from './ContractFamilies';
 import { MEGAPROJECT_STATE_KEY } from './Megaproject';
 
+/** Legacy Frontier key; retained as an additive first-read migration source. */
 export const RESEARCH_STATE_KEY = 'gr.research.v1';
-export const STEAMWORKS_THRESHOLD = loadEpoch('epoch-1-frontier').threshold ?? 6;
+export const STEAMWORKS_THRESHOLD = loadEpoch(DEFAULT_EPOCH_ID).scienceThreshold;
 export const SKY_ROCKET_BATTERY_NODE_ID = 'sky_rocket_battery';
 export const SCIENCE_CEILING_TEXT =
   'Epoch science complete — the Steamworks awaits a town to build it. (Steps beyond the threshold are banked for the new era.)';
 export const SCIENCE_BUILDING_TEXT =
   'Epoch science complete — the town is building the Steamworks. (Steps beyond the threshold are already in the ledger.)';
 
-export type ResearchBranch = 'Prospecting Works' | 'Arsenal Works' | 'Assay Works';
+export type ResearchBranch = string;
 
-export type ResearchNode = {
-  id: string;
+export type ResearchNode = Omit<EpochResearchNode, 'requires'> & {
   branch: ResearchBranch;
-  name: string;
-  description: string;
-  effect: string;
-  requires?: readonly string[];
-  live?: boolean;
+  requires: readonly string[];
   repeatable?: boolean;
 };
 
@@ -39,7 +43,8 @@ export type ScienceMeter = {
   bankedText?: string;
 };
 
-export type SteamworksBuildStatus = 'awaiting-town' | 'building';
+export type ScienceBuildStatus = 'awaiting-town' | 'building';
+export type SteamworksBuildStatus = ScienceBuildStatus;
 
 export type ContinuedStudyBonuses = {
   seamYieldMult: number;
@@ -49,6 +54,8 @@ export type ContinuedStudyBonuses = {
 
 export type ResearchState = {
   version: 1;
+  epochId?: string;
+  metaScienceCursor?: number;
   progress: MetaProgress;
   taken: string[];
   proposalSalt: number;
@@ -61,6 +68,8 @@ export type ResearchUnlockFlags = {
 
 type ResearchRegistry = {
   version: 1;
+  steps: number;
+  metaScienceCursor?: number;
   taken: string[];
   proposalSalt: number;
   pinnedTarget?: string | null;
@@ -72,196 +81,80 @@ const RESEARCH_ID_MIGRATIONS: Record<string, string> = {
   schoolhouse_notes: 'agent_schooling',
 };
 
-export const RESEARCH_NODES = [
-  {
-    id: 'assay_grading',
-    branch: 'Prospecting Works',
-    name: 'Assay Grading',
-    description: 'Seam cards become a stockpile plan: +35 cap per prospecting stack and +1.25 offer weight.',
-    effect: 'Seam cards now add +35 stockpile cap per prospecting stack and carry +1.25 offer weight.',
-    live: true,
-  },
-  {
-    id: 'mother_lode_survey',
-    branch: 'Prospecting Works',
-    name: 'Mother Lode Survey',
-    description: 'Banks +1 economy step toward seam returns that scale with waves survived.',
-    effect: 'Mother Lode Survey banks +1 economy step toward long-claim seam scaling.',
-    requires: ['assay_grading'],
-  },
-  {
-    id: 'sluice_accounting',
-    branch: 'Prospecting Works',
-    name: 'Sluice Accounting',
-    description: 'Banks +1 economy step toward deeper Sluice card families.',
-    effect: 'Sluice Accounting banks +1 economy step toward deeper Sluice card families.',
-    requires: ['mother_lode_survey'],
-  },
-  {
-    id: 'claim_map_table',
-    branch: 'Prospecting Works',
-    name: 'Claim Map Table',
-    description: 'Banks +1 economy step toward map picks that remember better seams.',
-    effect: 'Claim Map Table banks +1 economy step toward map picks that remember better seams.',
-    requires: ['sluice_accounting'],
-  },
-  {
-    id: 'pact_ledger',
-    branch: 'Prospecting Works',
-    name: 'Pact Ledger',
-    description: 'Rich Seam Pact enters the pool with +18 seam gold and 10% slower panning.',
-    effect: 'Unlocks Rich Seam Pact: +18 gold per seam and 10% slower panning.',
-    requires: ['claim_map_table'],
-    live: true,
-  },
-  {
-    id: 'chain_spark_primer',
-    branch: 'Arsenal Works',
-    name: 'Chain Spark Primer',
-    description: 'Chain Spark Arc enters the pool with +12% rig fire rate and +12% beacon fire rate.',
-    effect: 'Unlocks Chain Spark Arc: +12% rig fire rate and +12% beacon fire rate.',
-    live: true,
-  },
-  {
-    id: 'beacon_cadence',
-    branch: 'Arsenal Works',
-    name: 'Beacon Cadence',
-    description: 'Beacon Handoff enters the pool with +18% beacon fire rate and +6% rig fire rate.',
-    effect: 'Unlocks Beacon Handoff: +18% beacon fire rate and +6% rig fire rate.',
-    requires: ['chain_spark_primer'],
-    live: true,
-  },
-  {
-    id: 'brass_coil_standards',
-    branch: 'Arsenal Works',
-    name: 'Brass Coil Standards',
-    description: "Banks +1 arsenal step toward mastery offers like Spark Pressure Ring's +8% blast radius.",
-    effect: "Brass Coil Standards banks +1 arsenal step toward Spark Pressure Ring's +8% blast radius mastery.",
-    requires: ['beacon_cadence'],
-  },
-  {
-    id: 'powder_math',
-    branch: 'Arsenal Works',
-    name: 'Powder Math',
-    description: 'Banks +1 arsenal step toward blast mastery while Frontier blast radius stays capped at 1.4x.',
-    effect: 'Powder Math banks +1 arsenal step toward the 1.4x Frontier blast-radius cap.',
-    requires: ['brass_coil_standards'],
-  },
-  {
-    id: SKY_ROCKET_BATTERY_NODE_ID,
-    branch: 'Arsenal Works',
-    name: 'Sky-Rocket Battery',
-    description: 'Captured Baron science unlocks a 3-rocket festival-burst battery for the Steamworks arsenal.',
-    effect: 'Unlocks the Sky-Rocket Battery branch: 3 arcing festival rockets, burst radius, and ember upgrades.',
-    requires: ['powder_math'],
-    live: true,
-  },
-  {
-    id: 'rush_pattern',
-    branch: 'Arsenal Works',
-    name: 'Rush Pattern',
-    description: 'Banks +1 arsenal step toward rare rush offers for the wave-30 wall.',
-    effect: 'Rush Pattern banks +1 arsenal step toward rare rush offers for the wave-30 wall.',
-    requires: ['powder_math'],
-  },
-  {
-    id: 'second_order_slot',
-    branch: 'Assay Works',
-    name: 'Second Order Slot',
-    description: 'Order room rises to 2 pending Assay bench orders.',
-    effect: 'Pending Assay orders rise to 2.',
-    live: true,
-  },
-  {
-    id: 'refined_assay',
-    branch: 'Assay Works',
-    name: 'Refined Assay',
-    description: 'Tier 2 orders raise common/uncommon/rare stat budgets by 20%: 3.6 / 6 / 9.6.',
-    effect: 'Contract tier becomes 2; new orders carry the 20% higher assay ceiling.',
-    requires: ['second_order_slot'],
-    live: true,
-  },
-  {
-    id: 'pattern_library',
-    branch: 'Assay Works',
-    name: 'Pattern Library',
-    description: 'Tier 3 lets up to 2 approved crafted cards enter each run offer pool.',
-    effect: 'Approved family-tagged inventions can appear as run cards, capped at 2 per offer.',
-    requires: ['refined_assay'],
-    live: true,
-  },
-  {
-    id: 'agent_schooling',
-    branch: 'Assay Works',
-    name: 'Agent Schooling',
-    description: 'After wave 15, schooling offers can grant the Prospector +1 policy slot for that run.',
-    effect: 'Unlocks late-run Agent Schooling offers with +1 run-only policy slot.',
-    requires: ['pattern_library'],
-    live: true,
-  },
-  {
-    id: 'prospector_lessons',
-    branch: 'Assay Works',
-    name: 'Prospector Lessons',
-    description: 'Not yet live: banks the Agent Schooling +1 policy slot toward a permanent run-start head start.',
-    effect: 'Design hook for a permanent +1 Prospector policy slot; not yet applied in a run.',
-    requires: ['agent_schooling'],
-  },
-] as const satisfies readonly ResearchNode[];
+export function researchStateKey(epochId: string): string {
+  return `gr.research.${epochId}.v1`;
+}
 
-const CONTINUED_STUDY_PREFIX = 'continued_study:';
-type ContinuedStudyTemplate = Omit<ResearchNode, 'id' | 'repeatable'> & { slug: string };
+export function researchBranches(epochId = activeEpochId()): readonly EpochResearchBranch[] {
+  return loadEpoch(epochId).research.branches;
+}
 
-const CONTINUED_STUDIES = [
-  {
-    slug: 'seam_yield',
-    branch: 'Prospecting Works',
-    name: 'Continued Study: Seam Yield',
-    description: 'Repeatable: seam pans yield +1% gold for each take.',
-    effect: '+1% seam panning yield.',
-  },
-  {
-    slug: 'turret_damage',
-    branch: 'Arsenal Works',
-    name: 'Continued Study: Turret Damage',
-    description: 'Repeatable: turret sparks hit +1% harder for each take.',
-    effect: '+1% turret damage.',
-  },
-  {
-    slug: 'stockpile_cap',
-    branch: 'Assay Works',
-    name: 'Continued Study: Stockpile Ledger',
-    description: 'Repeatable: stockpile ledgers hold +5 more gold for each take.',
-    effect: '+5 stockpile cap.',
-  },
-] as const satisfies readonly ContinuedStudyTemplate[];
+export function researchNodes(epochId = activeEpochId()): ResearchNode[] {
+  return researchBranches(epochId).flatMap((branch) =>
+    branch.nodes.map((node) => ({ ...node, branch: branch.id, requires: node.requires ?? [] })),
+  );
+}
 
-export const researchNodeById = RESEARCH_NODES.reduce(
-  (nodes, node) => {
-    nodes[node.id] = node;
+// ponytail: array Proxy preserves legacy imports; delete it when callers use researchNodes().
+export const RESEARCH_NODES = new Proxy([] as ResearchNode[], {
+  get: (_target, property) => {
+    const nodes = researchNodes();
+    const value = Reflect.get(nodes, property, nodes);
+    return typeof value === 'function' ? value.bind(nodes) : value;
+  },
+}) as readonly ResearchNode[];
+
+export const researchNodeById = listEpochs().reduce(
+  (nodes, epoch) => {
+    for (const node of researchNodes(epoch.id)) nodes[node.id] = node;
     return nodes;
   },
   {} as Record<string, ResearchNode>,
 );
 
-export function freshResearchState(progress: MetaProgress = freshMetaProgress()): ResearchState {
-  return { version: 1, progress, taken: [], proposalSalt: 0, pinnedTarget: null };
+export function freshResearchState(
+  progress: MetaProgress = freshMetaProgress(),
+  epochId = activeEpochId(),
+): ResearchState {
+  return {
+    version: 1,
+    epochId,
+    metaScienceCursor: progress.tracks.science,
+    progress: progressForEpoch(progress, epochId, progress.tracks.science),
+    taken: [],
+    proposalSalt: 0,
+    pinnedTarget: null,
+  };
 }
 
 export function loadResearchState(
   registryStorage?: MetaProgressStorage,
   progressStorage: MetaProgressStorage | undefined = registryStorage,
   unlocks: ResearchUnlockFlags = {},
+  epochId = activeEpochId(),
 ): ResearchState {
   const progress = progressStorage ? loadMetaProgress(progressStorage) : freshMetaProgress();
-  let raw: unknown = null;
-  try {
-    const saved = registryStorage?.getItem(RESEARCH_STATE_KEY);
-    raw = saved ? JSON.parse(saved) : null;
-  } catch {
-    raw = null;
-  }
-  return applyResearchUnlockFlags(migrateResearchState(raw, progress), unlocks);
+  const key = researchStateKey(epochId);
+  const saved = readStorage(registryStorage, key);
+  const legacy = epochId === DEFAULT_EPOCH_ID && saved === null ? readStorage(registryStorage, RESEARCH_STATE_KEY) : null;
+  const raw = parseRegistry(saved ?? legacy);
+  const storedSteps =
+    epochId === DEFAULT_EPOCH_ID
+      ? progress.tracks.science
+      : saved === null
+        ? initialEpochSteps(registryStorage, progress, epochId, raw)
+        : registrySteps(raw);
+  const cursor = registryScienceCursor(raw, progress.tracks.science);
+  const steps =
+    epochId === DEFAULT_EPOCH_ID || saved === null
+      ? storedSteps
+      : storedSteps + Math.max(0, progress.tracks.science - cursor);
+  const next = applyResearchUnlockFlags(
+    migrateResearchState(raw, progressForEpoch(progress, epochId, steps), epochId, progress.tracks.science),
+    unlocks,
+  );
+  if (saved === null || steps !== storedSteps) writeStorage(registryStorage, key, JSON.stringify(toRegistry(next)));
+  return next;
 }
 
 export function saveResearchState(
@@ -269,11 +162,16 @@ export function saveResearchState(
   state: ResearchState,
   progressStorage: MetaProgressStorage | undefined = registryStorage,
 ): ResearchState {
-  const next = migrateResearchState(toRegistry(state), state.progress);
-  try {
-    registryStorage?.setItem(RESEARCH_STATE_KEY, JSON.stringify(toRegistry(next)));
-  } catch {}
-  if (progressStorage) next.progress = saveMetaProgress(progressStorage, next.progress);
+  const epochId = state.epochId ?? activeEpochId();
+  const cursor =
+    epochId === DEFAULT_EPOCH_ID
+      ? state.progress.tracks.science
+      : state.metaScienceCursor ?? (progressStorage ? loadMetaProgress(progressStorage).tracks.science : 0);
+  const next = migrateResearchState(toRegistry(state), state.progress, epochId, cursor);
+  const serialized = JSON.stringify(toRegistry(next));
+  writeStorage(registryStorage, researchStateKey(epochId), serialized);
+  if (epochId === DEFAULT_EPOCH_ID) writeStorage(registryStorage, RESEARCH_STATE_KEY, serialized);
+  if (epochId === DEFAULT_EPOCH_ID && progressStorage) next.progress = saveMetaProgress(progressStorage, next.progress);
   return next;
 }
 
@@ -285,11 +183,7 @@ export function availablePicks(state: ResearchState): ResearchNode[] {
 
 export function frontierNodes(state: ResearchState): ResearchNode[] {
   const taken = new Set(state.taken);
-  return RESEARCH_NODES.filter((node) => {
-    if (taken.has(node.id)) return false;
-    const requires = (node as ResearchNode).requires ?? [];
-    return requires.every((id) => taken.has(id));
-  });
+  return nodesForState(state).filter((node) => !taken.has(node.id) && (node.requires ?? []).every((id) => taken.has(id)));
 }
 
 export function takeNode(state: ResearchState, id: string): ResearchState {
@@ -297,13 +191,9 @@ export function takeNode(state: ResearchState, id: string): ResearchState {
   if (!pick || (!pick.repeatable && state.taken.includes(id))) return state;
   return {
     version: 1,
-    progress: {
-      ...state.progress,
-      tracks: {
-        ...state.progress.tracks,
-        science: state.progress.tracks.science + 1,
-      },
-    },
+    epochId: stateEpochId(state),
+    metaScienceCursor: state.metaScienceCursor,
+    progress: progressForEpoch(state.progress, stateEpochId(state), state.progress.tracks.science + pick.cost),
     taken: [...state.taken, id],
     proposalSalt: state.proposalSalt + 1,
     pinnedTarget: state.pinnedTarget,
@@ -319,20 +209,21 @@ export function hasResearchNode(state: ResearchState, id: string): boolean {
 }
 
 export function setPinnedResearchTarget(state: ResearchState, id: string | null): ResearchState {
-  return { ...state, pinnedTarget: id && id in researchNodeById ? id : null };
+  return { ...state, pinnedTarget: id && id in nodeMapForState(state) ? id : null };
 }
 
 export function pinnedResearchPath(state: ResearchState): string[] {
-  return state.pinnedTarget ? researchPathIds(state.pinnedTarget) : [];
+  return state.pinnedTarget ? researchPathIds(state.pinnedTarget, stateEpochId(state)) : [];
 }
 
-export function researchPathIds(id: string): string[] {
+export function researchPathIds(id: string, epochId = activeEpochId()): string[] {
+  const nodes = nodeMap(epochId);
   const path: string[] = [];
   const seen = new Set<string>();
   const visit = (nodeId: string) => {
     if (seen.has(nodeId)) return;
     seen.add(nodeId);
-    const node = researchNodeById[nodeId];
+    const node = nodes[nodeId];
     if (!node) return;
     for (const required of node.requires ?? []) visit(required);
     path.push(nodeId);
@@ -343,7 +234,7 @@ export function researchPathIds(id: string): string[] {
 
 export function researchDistance(state: ResearchState, id: string): number {
   const taken = new Set(state.taken);
-  return researchPathIds(id).filter((nodeId) => !taken.has(nodeId)).length;
+  return researchPathIds(id, stateEpochId(state)).filter((nodeId) => !taken.has(nodeId)).length;
 }
 
 export function contractTierForResearch(state: ResearchState): ContractTier {
@@ -365,38 +256,42 @@ export function continuedStudyBonuses(state: ResearchState): ContinuedStudyBonus
   };
 }
 
-export function scienceMeter(state: ResearchState, steamworksBuildStatus: SteamworksBuildStatus = 'awaiting-town'): ScienceMeter {
+export function scienceMeter(state: ResearchState, buildStatus: ScienceBuildStatus = 'awaiting-town'): ScienceMeter {
+  const epoch = loadEpoch(stateEpochId(state));
   const steps = Math.max(0, Math.floor(state.progress.tracks.science));
-  const remaining = Math.max(0, STEAMWORKS_THRESHOLD - steps);
-  const overflow = Math.max(0, steps - STEAMWORKS_THRESHOLD);
-  const complete = steps >= STEAMWORKS_THRESHOLD;
-  const bankedText = complete ? `banked: +${overflow} toward the Steamworks` : undefined;
+  const remaining = Math.max(0, epoch.scienceThreshold - steps);
+  const overflow = Math.max(0, steps - epoch.scienceThreshold);
+  const complete = steps >= epoch.scienceThreshold;
+  const nextEpoch = epoch.transition.displayName.replace(/^The\s+/, 'the ');
+  const bankedText = complete ? `banked: +${overflow} toward ${nextEpoch}` : undefined;
   return {
     steps,
     remaining,
-    threshold: STEAMWORKS_THRESHOLD,
+    threshold: epoch.scienceThreshold,
     overflow,
     complete,
     bankedText,
     text: complete
-      ? steamworksBuildStatus === 'building'
-        ? SCIENCE_BUILDING_TEXT
-        : SCIENCE_CEILING_TEXT
-      : `Science: ${steps} steps - ${remaining} to the Steamworks`,
+      ? buildStatus === 'building'
+        ? `Epoch science complete — the town is building ${nextEpoch}. (Steps beyond the threshold are already in the ledger.)`
+        : `Epoch science complete — ${nextEpoch} awaits a town to build it. (Steps beyond the threshold are banked for the new era.)`
+      : `Science: ${steps} steps - ${remaining} to ${nextEpoch}`,
   };
 }
 
-export function savedStampMillBuildStarted(): boolean {
+export function savedEpochMegaprojectBuildStarted(epochId = activeEpochId()): boolean {
   try {
-    const saved = globalThis.localStorage?.getItem(MEGAPROJECT_STATE_KEY);
-    if (!saved) return false;
-    const project = (JSON.parse(saved) as { projects?: { 'stamp-mill'?: { funded?: boolean; stage?: number } } }).projects?.[
-      'stamp-mill'
-    ];
-    return project?.funded === true || (project?.stage ?? 0) > 0;
+    const project = (JSON.parse(globalThis.localStorage?.getItem(MEGAPROJECT_STATE_KEY) ?? 'null') as {
+      projects?: Record<string, { funded?: boolean; stage?: number; complete?: boolean }>;
+    } | null)?.projects?.[loadEpoch(epochId).megaproject.id];
+    return project?.funded === true || project?.complete === true || (project?.stage ?? 0) > 0;
   } catch {
     return false;
   }
+}
+
+export function savedStampMillBuildStarted(): boolean {
+  return savedEpochMegaprojectBuildStarted(DEFAULT_EPOCH_ID);
 }
 
 export function browserResearchStorage(): MetaProgressStorage | undefined {
@@ -407,39 +302,150 @@ export function browserResearchStorage(): MetaProgressStorage | undefined {
   }
 }
 
-function migrateResearchState(raw: unknown, progress: MetaProgress): ResearchState {
-  if (!isRecord(raw)) return freshResearchState(progress);
+function migrateResearchState(raw: unknown, progress: MetaProgress, epochId: string, metaScienceCursor: number): ResearchState {
+  if (!isRecord(raw)) {
+    return { ...freshResearchState(progress, epochId), metaScienceCursor: Math.max(0, Math.floor(metaScienceCursor)) };
+  }
+  const nodes = nodeMap(epochId);
   const rawTaken = Array.isArray(raw.taken) ? raw.taken : [];
   const taken = rawTaken
     .map((id) => (typeof id === 'string' ? (RESEARCH_ID_MIGRATIONS[id] ?? id) : id))
-    .filter((id): id is string => typeof id === 'string' && (id in researchNodeById || isContinuedStudyId(id)));
+    .filter((id): id is string => typeof id === 'string' && (id in nodes || isContinuedStudyId(id)));
   const proposalSalt =
     typeof raw.proposalSalt === 'number' && Number.isFinite(raw.proposalSalt) ? Math.max(0, Math.floor(raw.proposalSalt)) : 0;
   const rawPinnedTarget = typeof raw.pinnedTarget === 'string' ? (RESEARCH_ID_MIGRATIONS[raw.pinnedTarget] ?? raw.pinnedTarget) : null;
-  const pinnedTarget = rawPinnedTarget && rawPinnedTarget in researchNodeById ? rawPinnedTarget : null;
-  return { version: 1, progress, taken: [...new Set(taken)], proposalSalt, pinnedTarget };
+  const pinnedTarget = rawPinnedTarget && rawPinnedTarget in nodes ? rawPinnedTarget : null;
+  return {
+    version: 1,
+    epochId,
+    metaScienceCursor: Math.max(0, Math.floor(metaScienceCursor)),
+    progress,
+    taken: [...new Set(taken)],
+    proposalSalt,
+    pinnedTarget,
+  };
 }
 
 function applyResearchUnlockFlags(state: ResearchState, unlocks: ResearchUnlockFlags): ResearchState {
-  if (!unlocks.rocketCartCaptured || state.taken.includes(SKY_ROCKET_BATTERY_NODE_ID)) return state;
+  if (
+    stateEpochId(state) !== DEFAULT_EPOCH_ID ||
+    !unlocks.rocketCartCaptured ||
+    state.taken.includes(SKY_ROCKET_BATTERY_NODE_ID)
+  ) {
+    return state;
+  }
   return { ...state, taken: [...state.taken, SKY_ROCKET_BATTERY_NODE_ID] };
 }
 
 function toRegistry(state: ResearchState): ResearchRegistry {
-  return { version: 1, taken: state.taken, proposalSalt: state.proposalSalt, pinnedTarget: state.pinnedTarget };
+  const registry: ResearchRegistry = {
+    version: 1,
+    steps: Math.max(0, Math.floor(state.progress.tracks.science)),
+    taken: state.taken,
+    proposalSalt: state.proposalSalt,
+    pinnedTarget: state.pinnedTarget,
+  };
+  if (stateEpochId(state) !== DEFAULT_EPOCH_ID) {
+    registry.metaScienceCursor = Math.max(0, Math.floor(state.metaScienceCursor ?? 0));
+  }
+  return registry;
 }
 
+function stateEpochId(state: ResearchState): string {
+  return state.epochId ?? activeEpochId();
+}
+
+function nodesForState(state: ResearchState): ResearchNode[] {
+  return researchNodes(stateEpochId(state));
+}
+
+function nodeMapForState(state: ResearchState): Record<string, ResearchNode> {
+  return nodeMap(stateEpochId(state));
+}
+
+function nodeMap(epochId: string): Record<string, ResearchNode> {
+  return researchNodes(epochId).reduce((nodes, node) => {
+    nodes[node.id] = node;
+    return nodes;
+  }, {} as Record<string, ResearchNode>);
+}
+
+function initialEpochSteps(
+  storage: MetaProgressStorage | undefined,
+  progress: MetaProgress,
+  epochId: string,
+  currentRaw: unknown,
+): number {
+  if (epochId === DEFAULT_EPOCH_ID) return progress.tracks.science;
+  if (isRecord(currentRaw)) return registrySteps(currentRaw);
+  const epochs = listEpochs();
+  const currentIndex = epochs.findIndex((epoch) => epoch.id === epochId);
+  const previous = currentIndex > 0 ? loadEpoch(epochs[currentIndex - 1]!.id) : null;
+  if (!previous) return 0;
+  const previousSaved = readStorage(storage, researchStateKey(previous.id));
+  const previousLegacy = previous.id === DEFAULT_EPOCH_ID && previousSaved === null ? readStorage(storage, RESEARCH_STATE_KEY) : null;
+  const previousRaw = parseRegistry(previousSaved ?? previousLegacy);
+  const previousSteps = previous.id === DEFAULT_EPOCH_ID ? progress.tracks.science : registrySteps(previousRaw);
+  return Math.max(0, previousSteps - previous.scienceThreshold);
+}
+
+function progressForEpoch(progress: MetaProgress, _epochId: string, science: number): MetaProgress {
+  return { version: 1, tracks: { ...progress.tracks, science: Math.max(0, Math.floor(science)) } };
+}
+
+function registrySteps(raw: unknown): number {
+  return isRecord(raw) && typeof raw.steps === 'number' && Number.isFinite(raw.steps) ? Math.max(0, Math.floor(raw.steps)) : 0;
+}
+
+function registryScienceCursor(raw: unknown, fallback: number): number {
+  return isRecord(raw) && typeof raw.metaScienceCursor === 'number' && Number.isFinite(raw.metaScienceCursor)
+    ? Math.max(0, Math.floor(raw.metaScienceCursor))
+    : Math.max(0, Math.floor(fallback));
+}
+
+const CONTINUED_STUDY_PREFIX = 'continued_study:';
+const CONTINUED_STUDIES = [
+  {
+    slug: 'seam_yield',
+    name: 'Continued Study: Seam Yield',
+    description: 'Repeatable: seam pans yield +1% gold for each take.',
+    effect: '+1% seam panning yield.',
+    iconKey: 'ui.upgrade.icon.gold',
+  },
+  {
+    slug: 'turret_damage',
+    name: 'Continued Study: Turret Damage',
+    description: 'Repeatable: turret sparks hit +1% harder for each take.',
+    effect: '+1% turret damage.',
+    iconKey: 'bld.sentry_beacon',
+  },
+  {
+    slug: 'stockpile_cap',
+    name: 'Continued Study: Stockpile Ledger',
+    description: 'Repeatable: stockpile ledgers hold +5 more gold for each take.',
+    effect: '+5 stockpile cap.',
+    iconKey: 'ui.upgrade.icon.mend',
+  },
+] as const;
+
 function proposalSeed(state: ResearchState): string {
-  return `${state.proposalSalt}:${state.progress.tracks.science}:${state.taken.join(',')}`;
+  const legacy = `${state.proposalSalt}:${state.progress.tracks.science}:${state.taken.join(',')}`;
+  return stateEpochId(state) === DEFAULT_EPOCH_ID ? legacy : `${stateEpochId(state)}:${legacy}`;
 }
 
 function continuedStudyPicks(state: ResearchState): ResearchNode[] {
   const start = state.taken.filter(isContinuedStudyId).length + state.proposalSalt;
+  const branches = researchBranches(stateEpochId(state));
   return [0, 1].map((offset) => {
-    const template = CONTINUED_STUDIES[(start + offset) % CONTINUED_STUDIES.length]!;
+    const index = (start + offset) % CONTINUED_STUDIES.length;
+    const template = CONTINUED_STUDIES[index]!;
     return {
       ...template,
       id: `${CONTINUED_STUDY_PREFIX}${template.slug}:${state.progress.tracks.science}:${state.proposalSalt}:${offset}`,
+      branch: branches[index]?.id ?? branches[0]!.id,
+      effectRef: `continued.${template.slug}`,
+      cost: 1,
+      requires: [],
       repeatable: true,
       live: true,
     };
@@ -474,6 +480,28 @@ function hash(value: string): number {
     h = Math.imul(h, 16777619);
   }
   return h >>> 0;
+}
+
+function readStorage(storage: MetaProgressStorage | undefined, key: string): string | null {
+  try {
+    return storage?.getItem(key) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function writeStorage(storage: MetaProgressStorage | undefined, key: string, value: string): void {
+  try {
+    storage?.setItem(key, value);
+  } catch {}
+}
+
+function parseRegistry(saved: string | null): unknown {
+  try {
+    return saved ? JSON.parse(saved) : null;
+  } catch {
+    return null;
+  }
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
