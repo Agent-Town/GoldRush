@@ -26,3 +26,7 @@ The sim is FIXED-TIMESTEP, SEEDED, EVENT-LOGGED with per-tick determinism hashes
 1. Pause semantics: any player pauses → all pause (family-friendly) — DEFAULT yes.
 2. Overrun: shared fate (claim falls = run ends for all) — DEFAULT yes v1.
 3. Disconnect grace: 60s hold-and-rejoin before the run continues without them — DEFAULT yes.
+
+## MP-BALANCE — rider-count scaling (owner design session 2026-07-10)
+**THE SHARED-CLAIM MODEL (ratified lineage):** one economy pool, one set of buildings, every rider may build/repair/upgrade ANYTHING — there are no per-player buildings or wallets (owner shared-credit ruling extended; per-player wallets would CREATE resource competition, the shared pot dissolves it). 2–4 riders per room (relay cap).
+**THE SCALING LAW (owner verbatim: 'larger amount of gold to collect so players dont have to fight each other for ressources… two players means also more firepower and that has to be accounted for'):** a data-driven riderCount multiplier table in Balance — wave pressure (enemy budget/HP) scales UP with riders; seam richness scales modestly (each rider pans, so income already multiplies — tune the CURVE not a flat 2x); one knob set per rider count, deterministic (part of the shared-setup handshake, sol/lockstep-actions brief). Tuning evidence: a StatSimHarness sibling (seeded N-rider sims → survival/gold-rate deltas) + THE FAMILY PLAYTEST as the feel gate (MP-05 findings feed the table). AUTHORABLE after sol/lockstep-actions lands (the handshake carries the table).
