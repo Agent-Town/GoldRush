@@ -23,6 +23,7 @@ You are Codex, the **implementer** for Gold Rush, a three.js browser game. Claud
 - `npm run build` green; zero console/page errors; relevant Playwright specs pass; full regression whenever sim semantics change.
 - TypeScript + Vite + three.js only. No heavy frameworks. No secrets in client code.
 - Canon: frontier-tech weapons (rigs, beacons, brass/teal agent-tech — no realistic firearms); illustrated, never gory; no Native American enemies; public names are places/rituals, not backend tools.
+- **IMAGE GENERATION LAW (owner directive 2026-07-11): still images come from your NATIVE image_gen tool ONLY — it is free. NEVER generate images through the higgsfield CLI (no `gpt_image_2`, `nano_banana`, `flux_*`, or ANY higgsfield image model — those bill the owner's paid credits). Higgsfield is for VIDEO (seedance) only, and only when the task explicitly says so. If your native image tool is unavailable, STOP and report — do not substitute.**
 - Placeholder-first art; generated assets wire through `assets/layer-contracts/` + `assets/LEDGER.md`.
 - Ownership invariants: Economy is the only gold writer; CombatSystem the only damage resolver; one TargetingSystem; pools per family; every pickup floats its amount (e2e-asserted).
 
