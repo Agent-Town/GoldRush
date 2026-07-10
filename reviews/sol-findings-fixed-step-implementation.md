@@ -2,11 +2,32 @@
 
 Branch: `sol/fixed-step-unification`
 
-Implementation base: `2cdcf210b51bb265661c7a232d49e43c54948bba`
+Initial implementation base: `2cdcf210b51bb265661c7a232d49e43c54948bba`
+Final merged main comparison: `e374f47`
 
-Status: **PARKED — not READY-FOR-GATES**
+Status: **PARKED — NOT READY-FOR-GATES**
 
-The production, multiplayer, and rAF-driven test paths preserve the five decisions in `specs/sim-fixed-step/README.md:7-12`. A pre-existing direct-advance test API still permits caller-selected simulation steps outside the Loop; removing that escape hatch would require changing legacy fixtures and is included in F-SOL-SIM-IMPL-001. The new fixed-step suite and the production performance comparison are green. Two required dependencies/gates are not drainable without orchestrator action, so this branch stops here rather than silently changing harness policy or taking task 067's seam.
+The original park record is retained below. Fable authorized the fixture corrections in `specs/mp-snapshot-completeness/README.md`; task 067's main lineage was merged; the legacy driver was constrained to 30 Hz; Night Shift was root-caused; and the full, performance, multiplayer-isolation, and feel gates were attempted. The required isolated MP resync gate is still red, and the focused diagnostic disproves the assumption that task 067 established post-restore determinism. Current evidence is `artifacts/sol/fixed-step-gates/FINAL-EVIDENCE.md` and `MP-BLOCKER-EVIDENCE.md`.
+
+## Authorization resolution — 2026-07-10
+
+No gameplay assertion or `Balance.ts` value was changed. The corrected fixtures are:
+
+1. `e2e/054-baron-epic.spec.ts` — removed caller cadence selection and changed the repeated 20-second rampage window from 80 × 0.25 seconds to 75 × 4/15 seconds, preserving the exact cap at whole 30 Hz ticks.
+2. `e2e/055-baron-kill-stop.spec.ts` — removed its 60 Hz caller-selected step; the requested 0.1 seconds remains exactly three ticks.
+3. `e2e/057-baron-rocket-cart.spec.ts` — removed its 60 Hz step and changed four-second polling from 80 × 0.05 seconds to 60 × 1/15 seconds, preserving the exact window.
+4. `e2e/058-device-tiers.spec.ts` — removed its 10 Hz caller-selected step; the deterministic eight-second signature now runs 240 fixed ticks.
+5. `e2e/e1-night-shift.spec.ts` — root cause first: the source used `nokill`, the restore resumed live combat at `timescale=8` behind a non-pausing briefing, and the still-open source page could overwrite the shared suspend. The fixture now closes the writer, asserts restored wave 1, and observes the restore at product `timescale=1`. It passes 2/2 without adding immunity or changing pause/Balance behavior.
+6. `e2e/e2-enemies.spec.ts` — removed 30/60 Hz caller steps, made former half-tick polls explicit two-tick advances, and reduced loop counts to preserve the original 8/11/36-second caps.
+7. `e2e/e2-hill-mine.spec.ts` — removed 15/30 Hz caller steps. The unchanged ford-crossing assertion exposed a 30 Hz boundary oscillation; `Enemy.routedTarget()` now aims 0.1 units inside the ford so routing remains cadence-invariant.
+8. `e2e/e2-rail-entity.spec.ts` — removed its 50 ms caller step; the 1.2-second proof remains 36 ticks.
+9. `e2e/gt-05-water-depth.spec.ts` — removed 15/60 Hz caller steps. Its unchanged deep-water and ford-route assertions pass with the same ford-entry correction.
+10. `e2e/task-053-weapon-cycling-audit.spec.ts` — removed the 200 ms systems step, kept 200 ms orchestration chunks, and replaced a floating end-condition with an exact chunk count. The seeded DPS ordering and run-to-run equality remain unchanged.
+11. `src/diagnostics/DeterminismHarness.ts` — consumes a cheap per-tick sample callback so its definition remains 18,000 samples over 600 seconds without forcing unrelated fixtures through presentation work.
+
+`advanceSimForTest()` accepts duration only, rounds to complete 30 Hz ticks, never runs a partial final tick, and batches presentation by the production five-tick catch-up cap. The independent review caught and caused correction of a temporary 5:1 timeline downsample and inflated fractional polling windows before commit.
+
+Current-tip non-MP observations: fixed-step 6/6, perf-04 2/2 with unchanged hash, Night Shift 2/2, authorized driver battery 42 pass / 1 project-skip, and build/TypeScript green. Their current-tip reporter output, plus the later p95 and full-desktop output, was not retained; all are recorded as non-gate observations in `FINAL-EVIDENCE.md`, not presented as checksummed proof. The checksummed focused logs predate `23cd01d`.
 
 ## F-SOL-SIM-IMPL-001 — a legacy accelerated test encodes the removed render-driven cadence
 
@@ -37,6 +58,8 @@ Authorize test-only corrections that preserve the 30 Hz ruling: remove or constr
 
 ## F-SOL-SIM-IMPL-002 — task 067 still owns the failing mp-02 resync seam
 
+**Resolution update.** Task 067's lineage landed and was merged, but the authorization premise that the isolated desync gate is green does not hold on this branch. A fresh exact isolated repeat is 0/2. Focused instrumentation, removed immediately after the run, showed Alice at tick 714 with 22 desyncs/22 resyncs while Bob was at tick 713 with 0/0; both were unpaused, but every hash after the injected tick 60 differed. The tracked task-067 “green” artifact also contains unequal peer hashes at ticks 90 and 120. F-drain-1 permits judging tests in isolation; it does not authorize an isolated red or a false-positive green that never asserts equal post-restore futures.
+
 **Finding.** The required `mp-02` gate is blocked by the already-sequenced task 067 corrective. Sol must not repair or absorb that seam on this branch.
 
 **Locations.**
@@ -52,6 +75,25 @@ Authorize test-only corrections that preserve the 30 Hz ruling: remove or constr
 
 **Dependency.** Land task 067 on main, update this branch through the orchestrator's normal drain flow, then rerun `mp-02` 3/3. F-SOL-PERSIST-002 remains untouched.
 
+## F-SOL-SIM-IMPL-003 — the task-067 green is timing-dependent and does not prove equal futures
+
+**Finding.** Fixed-step scheduling makes the MP hash-order defect deterministic: only the peer that already has its local hash when the remote hash arrives detects the mismatch. The other peer never enters resync, so the isolated task-067 test waits forever for `bob.resyncs >= 1`. Independently, the v1 restore does not restore equal futures; hashes remain unequal after every restore. Making this gate honest requires work outside the fixed-step firewall.
+
+**Locations.**
+
+- `src/mp/LockstepClient.ts:153-163,220-231` — `afterSimTick()` records the local hash, but an arriving remote hash is discarded when the local hash is not present; there is no pending-remote comparison when the local hash is later recorded.
+- `e2e/mp-02-lockstep.spec.ts:78-96` — the test waits for both peers to report a resync, then asserts only counters/unpaused state; it never asserts equal hashes after restore.
+- `artifacts/mp-02/desync-resync.json` — the checked-in green artifact already has unequal Alice/Bob hashes at ticks 90 and 120.
+
+**Evidence.**
+
+1. Exact isolated command, repeated twice on the branch: **0/2**, both timing out at Bob's wait. See `artifacts/sol/fixed-step-gates/mp-02-isolated-repeat-final.txt`.
+2. Temporary read-only diagnostic instrumentation captured Alice `tick=714, desyncs=22, resyncs=22` and Bob `tick=713, desyncs=0, resyncs=0`; both were unpaused, both remained connected, and every post-injection hash differed. The instrumentation was removed and `git diff --exit-code -- e2e/mp-02-lockstep.spec.ts` returned zero. See `artifacts/sol/fixed-step-gates/MP-BLOCKER-EVIDENCE.md`.
+3. The checked-in green artifact has Alice/Bob tick-90 hashes `fnv1a32:88f71e9f` / `fnv1a32:a35ea391` and tick-120 hashes `fnv1a32:d90e03ca` / `fnv1a32:cb359b78`; task 067's stated “hash-identical within 30 ticks” condition was not enforced by its gate.
+4. An independent fresh detached `1b575fd` checkout with fresh dependencies and Vite on port 5294 reproduced the isolated failure; `--repeat-each=5` produced 1 pass / 4 failures. `LockstepClient.ts` is byte-identical to `e374f47`, ruling out a stale merge or branch-local MP edit.
+
+**Decision required.** One of these must be explicitly authorized: (a) permit the MP hash-order correction on this branch, (b) re-sequence F-SOL-PERSIST-002 ahead of the fixed-step READY tail and then merge it back, or (c) amend the branch-1 gate. Sol will not change MP protocol/test semantics or claim READY without that ruling.
+
 ## Gate ledger at park time
 
 | Gate | Result | Evidence |
@@ -66,4 +108,4 @@ Authorize test-only corrections that preserve the 30 Hz ruling: remove or constr
 | Feel A/B + owner eye gate | NOT RUN after the hard blocker was established | Required after policy ruling |
 | Mobile/full re-run and READY tail | NOT RUN / NOT WRITTEN | Required after both blockers clear |
 
-No `READY-FOR-GATES` claim is made by this parked branch.
+This park-time ledger is superseded by the authorization resolution and `artifacts/sol/fixed-step-gates/FINAL-EVIDENCE.md`.
