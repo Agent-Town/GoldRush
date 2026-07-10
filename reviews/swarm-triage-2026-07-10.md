@@ -1,0 +1,18 @@
+# Triage — the 48h review swarm (35 raw → 32 confirmed by 3-lens adversarial verify)
+2026-07-10, attended. Full evidence: `reviews/swarm-48h-confirmed.json` (per-finding claims/evidence/votes) + `reviews/swarm-48h-synthesis.md` (the ranked synthesis). Range reviewed: `1166e86..HEAD` (the 48h window), 112 agents.
+
+## THE HEADLINE CLUSTER — lockstep is transport-clean but ACTION-dirty (5 high + 3 medium, determinism)
+Movement runs through the intent stream; these do NOT: build PLACEMENT resolves from the LOCAL mouse (`BuildSystem.ts:1003` — the build toggle syncs, the position doesn't); level-up picks/HUD/death-overlay/ceremony-skip mutate the sim locally (`Game.ts:3528`); roster changes apply at websocket arrival not tick-aligned (`LockstepClient.ts:209`); desync recovery can't truly converge — snapshot tick ignored, `nextSimTick` never rewound (`LockstepClient.ts:226` — the e2e passes because its INJECTED desync leaves state identical; a real divergence wouldn't heal); enemy variant/boss/rail fields dropped by suspend capture (`RunSuspend.ts:466` = **Sol PERSIST-002, independently confirmed**); harvest RNG excluded (`RunSuspend.ts:359`); no shared-setup handshake — contract/seed/meta per-client (`Game.ts:1626`); consumed ticks skip hash exchange during ceremonies (`Game.ts:1369`).
+**DISPOSITION: Sol brief #3 (`specs/lockstep-actions/`) + PERSIST-002 amendment. This is the REAL "two players build together" engine slice — MP-05 family playtest should stick to ride-and-fight until it lands.**
+
+## Queued NOW (runner correctives, authored this pass)
+- **073 tier-param crash** [high]: `PerformanceTier.ts:156` URL param → infinite read→save→notify recursion → Start Menu crash.
+- **074 mystery-law leak** [high]: `TownScene.ts:919` — locked contracts' goals/rules readable in the Claim Ledger after one board open (the encyclopedia side-door defeats 059's teaser law).
+- **075 telemetry hardening** [high]: `telemetry.ts:41` no rate limit + attacker-chosen contract keys pollute the public stats; also covers `_multiplayer.ts:51` room-endpoint limits (same worker, same pattern).
+- **076 save-transfer atomicity** [2× high save-safety]: `ProfileTransfer.ts:94` restore deletes-all-then-writes with no rollback; `AccountSync.ts:79` stale device silently overwrites newer cloud save (last-write-wins without a freshness compare). + the medium cluster in the same files (boot race `:235`, slot-cap silent drop `:52`, `SaveSlots.ts:62` destructive wipe on unknown version — fold in).
+
+## Accepted, batched LOW/MEDIUM (one hygiene master when lanes idle)
+Dead `onNewClaim` wiring · story-beat seen-key migration (one-time dup card) · `state.ts:40` encyclopedia forward-compat (unknown ids dropped on write-back) · `reader.ts:182` Escape leak + `:34` focus trap · board focus order (`TownScene.ts:840`) · perf micro-set (`pools.ts:602` per-frame alloc, `Projectile.ts:148` height-lookup caching, `LightRig.ts:167` night allocs, `SpriteAnimator.ts:815` walk8 atlas memory, `pools.ts:987` dark-regime engagement) · `LockstepClient.ts:177` unbounded session bookkeeping · `ProfileStorage.ts:38` tier-travels-with-profile (cross-device wrongness; also feeds 073's fix).
+
+## Dedupe vs Sol's 58
+Overlaps confirmed independently: RunSuspend enemy-field completeness (PERSIST-002), restore validation depth (PERSIST-001 → 069 shipped, swarm confirms the remaining SaveSlots.ts:62 corner), telemetry abuse surface (TRUST family). Non-overlaps: the swarm went deeper on lockstep ACTION integrity + save-transfer atomicity; Sol went deeper on architecture/product/process. Pass-2 of Sol's 50 remains owed — fold into the same corrective ladder.
