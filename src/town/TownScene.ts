@@ -37,6 +37,7 @@ import {
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
 import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
+import { openClaimHerald } from '../news/heraldReader';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
@@ -267,6 +268,7 @@ export class TownScene {
     window.removeEventListener('keydown', this.onFirstClaimInput, true);
     window.removeEventListener('pointerdown', this.onFirstClaimInput, true);
     this.prompt.removeEventListener('click', this.onPromptClick);
+    this.barkCard.removeEventListener('click', this.onBarkClick);
     this.board.removeEventListener('click', this.onBoardClick);
     this.board.removeEventListener('keydown', this.onBoardKeyDown);
     this.board.removeEventListener('pointerdown', this.onBoardPointerDown);
@@ -542,6 +544,7 @@ export class TownScene {
     this.ui.append(this.nameCard);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
+    this.barkCard.addEventListener('click', this.onBarkClick);
     this.board.addEventListener('click', this.onBoardClick);
     this.board.addEventListener('keydown', this.onBoardKeyDown);
     this.board.addEventListener('pointerdown', this.onBoardPointerDown);
@@ -570,6 +573,11 @@ export class TownScene {
     if (target?.closest('[data-town-rename]')) this.openNameCard('rename');
     if (target?.closest('[data-town-schoolhouse]')) this.openSchoolhouse();
     if (target?.closest('[data-town-assay]')) this.openAssayBench();
+  };
+
+  private readonly onBarkClick = (event: Event) => {
+    const target = event.target as HTMLElement | null;
+    if (target?.closest('[data-town-herald]')) openClaimHerald();
   };
 
   private readonly onBoardClick = (event: Event) => {
@@ -861,6 +869,11 @@ export class TownScene {
         <strong data-testid="town-bark-speaker">${escapeHtml(nearest.definition.name)}</strong>
         <span>${escapeHtml(nearest.definition.post)}</span>
         <p data-testid="town-bark-text">${escapeHtml(text)}</p>
+        ${
+          nearest.definition.id === 'newsie'
+            ? '<button class="town-ui__bark-action" type="button" data-town-herald data-testid="town-open-herald">Read</button>'
+            : ''
+        }
       </div>
     `;
     this.barkCard.dataset.actorId = nearest.definition.id;
@@ -1409,6 +1422,7 @@ class TownActorRuntime {
     this.currentDirection = definition.facing;
     this.orientationResolver.reset(definition.facing);
     this.animator = new SpriteAnimator(definition.assetSlot, this.material, this.sprite);
+    if (definition.id === 'newsie') this.group.add(createNewsieProps());
     tagPlaceholder(this.group, definition.assetSlot);
   }
 
@@ -1442,6 +1456,32 @@ class TownActorRuntime {
     this.animator.dispose();
     this.material.dispose();
   }
+}
+
+function createNewsieProps(): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownNewsieProps';
+  const capMaterial = new THREE.MeshStandardMaterial({ color: '#5b8a8a', roughness: 0.74, metalness: 0.04 });
+  const brimMaterial = new THREE.MeshStandardMaterial({ color: '#2e1b0e', roughness: 0.78, metalness: 0.02 });
+  const satchelMaterial = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.82, metalness: 0.02 });
+
+  const crown = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.12, 0.36), capMaterial);
+  crown.name = 'TownNewsieCapCrown';
+  crown.position.set(0, 1.42, 0.02);
+  crown.castShadow = true;
+
+  const brim = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.035, 0.22), brimMaterial);
+  brim.name = 'TownNewsieCapBrim';
+  brim.position.set(0, 1.38, 0.22);
+  brim.castShadow = true;
+
+  const satchel = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.26, 0.09), satchelMaterial);
+  satchel.name = 'TownNewsieSatchel';
+  satchel.position.set(0.35, 0.72, 0.05);
+  satchel.castShadow = true;
+
+  group.add(crown, brim, satchel);
+  return group;
 }
 
 function stopKeyPropagation(event: KeyboardEvent): void {

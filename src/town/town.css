@@ -118,6 +118,10 @@
   pointer-events: none;
 }
 
+.town-ui__bark:has(.town-ui__bark-action) {
+  pointer-events: auto;
+}
+
 .town-ui__bark[hidden] {
   display: none;
 }
@@ -156,6 +160,20 @@
   font-size: 0.8rem;
   font-weight: 900;
   line-height: 1.18;
+}
+
+.town-ui__bark-action {
+  justify-self: start;
+  min-height: 34px;
+  margin-top: 4px;
+  border: 2px solid #2e1b0e;
+  border-radius: 7px;
+  padding: 6px 10px;
+  color: #fff8e8;
+  background: #5b8a8a;
+  font: 900 0.78rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .town-ui__prompt-button {

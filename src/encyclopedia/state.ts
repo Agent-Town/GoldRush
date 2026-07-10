@@ -61,7 +61,7 @@ export function discoverLedgerContract(id: string): boolean {
 
 export function discoverLedgerTownActor(id: TownActorId): boolean {
   const entryId = townActorLedgerEntryById[id];
-  return discoverLedgerEntry(entryId);
+  return entryId ? discoverLedgerEntry(entryId) : false;
 }
 
 export function ledgerEnemyEntryId(enemy: LedgerEnemySource): EnemyLedgerEntryId {

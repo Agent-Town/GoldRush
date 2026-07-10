@@ -175,6 +175,7 @@ test('seeded growth tiers show the correct townsfolk roster with no run sim diag
   expect(visibleActorIds(diagnostics).sort()).toEqual([
     'assay_clerk',
     'elder',
+    'newsie',
     'prospector',
     'schoolteacher',
     'tavernkeeper',

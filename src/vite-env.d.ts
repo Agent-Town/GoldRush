@@ -817,6 +817,7 @@ interface Window {
     lastPayload: () => GrRunTelemetryPayload | null;
   };
   __GR_TOWN_DIAGNOSTICS__?: import('./town/TownScene').TownDiagnostics;
+  __GR_HERALD_FEED__?: readonly import('./news/herald').HeraldItem[];
   __BENCH_REPORT__?: unknown;
   __GR_GUI__?: GoldRushGui;
   __GR_PROFILE__?: {
