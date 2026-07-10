@@ -53,8 +53,8 @@ while true; do
       # a "CODEX: model=<m> effort=<e>" line; absent = terra@medium (sol@ultra is REQUESTED, never ambient).
       cx_model=$(grep -m1 '^CODEX:' "$run" 2>/dev/null | sed -n 's/.*model=\([^ ]*\).*/\1/p')
       cx_effort=$(grep -m1 '^CODEX:' "$run" 2>/dev/null | sed -n 's/.*effort=\([^ ]*\).*/\1/p')
-      # default gpt-5.5@medium until the CLI knows the 5.6 terra/luna ids (400 upgrade error, s283)
-      cd "$wd" && codex exec -m "${cx_model:-gpt-5.5}" -c model_reasoning_effort="${cx_effort:-medium}" "Do the task in the file at: $run" >"$log" 2>&1
+      # default gpt-5.6-sol@medium (owner ruling 2026-07-10: Sol over Terra, mid effort for normal tasks; CLI 0.144.1 knows 5.6 ids)
+      cd "$wd" && codex exec -m "${cx_model:-gpt-5.6-sol}" -c model_reasoning_effort="${cx_effort:-medium}" "Do the task in the file at: $run" >"$log" 2>&1
       rc=$?
       if [ $rc -eq 0 ]; then
         # s76 ROOT-CAUSE FIX: persist LANE output to its branch so gate-fires can merge a

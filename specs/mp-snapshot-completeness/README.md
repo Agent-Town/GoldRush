@@ -1,0 +1,16 @@
+# MP Snapshot Completeness — Sol brief #2 (F-SOL-PERSIST-002) + the fixed-step authorizations
+Status: BRIEFED 2026-07-10 (attended). Implementer: **Sol**, branch `sol/mp-snapshot-completeness`, AFTER finishing `sol/fixed-step-unification` per the authorizations below.
+
+## AUTHORIZATIONS for finishing the fixed-step branch (ruled by the orchestrator, 2026-07-10)
+1. **Legacy accelerated fixtures + the arbitrary-step `advanceSimForTest()` seam: AUTHORIZED to correct** — with the guardrail: each fixture keeps its test's INTENT (assertions unchanged in meaning; only time-advancement becomes tick-honest at 30 Hz). List every corrected fixture in the run note. Any test whose assertions must MATERIALLY change is not a fixture fix — stop and document it as a finding instead.
+2. **Night Shift 0/2 (branch) vs 2/2 (base): NOT authorized to fixture-paper.** That's a behavior delta — root-cause it first (suspicion: lantern relight/night timers quantized differently under fixed ticks). If the new behavior is CORRECT-under-the-law and the visible difference is negligible, document + update; if play-feel changes, it goes to the owner's feel A/B with a note.
+3. **067 has LANDED and the desync-restore gate is GREEN on main (isolated-confirmed)** — rebase/merge main into your branch, then mp-02 3/3 is unblocked. Note: the mp-02 suite has a known ORDER-DEPENDENT harness flake (F-drain-1, `reviews/drain-2026-07-10-gpt55-batch.md`) — judge tests ISOLATED until the isolation corrective lands; do not chase combined-run ghosts.
+4. Then: full battery → feel A/B captures → owner eye → READY-FOR-GATES tail. Unchanged.
+
+## Brief #2: the snapshot becomes a complete future-state contract
+From your F-SOL-PERSIST-002 evidence (all file:line cites stand). Decisions:
+1. **Additive envelope v2**: enemies carry full identity (elite/variant/boss-group, maxHp, damage/visual multipliers, behavior fields per `Enemy.ts:31-56`); capture projectiles, blast charges, pickups, XP motes, shooter cooldowns, harvest channel state, ceremony/megaproject states. v1 snapshots stay readable (069's normalization boundary derives what it can, documented per field).
+2. **Respawn fidelity**: restore rebuilds enemies through the SAME factory paths as live spawns (no bespoke reconstruction drift).
+3. **The hash widens to match**: equal hashes must mean equal futures — every field the snapshot carries that affects simulation joins the hash. Expect the hash VALUE to change; the perf-04 baseline re-records once, in the same commit, with a note.
+4. **Gates**: a resync e2e where the desync happens mid-wave among ELITE + boss-group enemies → post-restore, both clients hash-identical for 100+ ticks AND the enemy roster (identities, HP) is asserted field-equal; 069's fuzz corpus extended with v1→v2 cases; mp-02 suite isolated-green; save/suspend regression green.
+5. **Firewall**: RunSuspend capture/restore + hash composition + the e2e. NO relay changes, NO Balance, NO fixed-step scope (that's branch #1), NO save-key renames (additive envelope only).

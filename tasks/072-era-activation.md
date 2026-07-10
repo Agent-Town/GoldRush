@@ -1,0 +1,16 @@
+# Task 072-era-activation: the world can BECOME Epoch 2 — the engine the ceremony needs (lane-b; commit prefix "feat:")
+CODEX: model=gpt-5.6-sol effort=high
+**WHY NOW (owner, 2026-07-10): "we can do (1) today" — the E2 transition ceremony. VERIFIED GAP: `src/game/Game.ts:177` hard-pins `loadEpoch('epoch-1-frontier')`; `ContractFamilies.ts:539` already has `activeEpochId()` — the concept exists, nothing flips it.** This is the long-flagged era-activation engine (the EN-03 + WP-E3 blocker).
+You are Codex in worktrees/lane-b. Pre-flight per LANE-SAFETY. READ FIRST: `src/meta/ContractFamilies.ts` (loadEpoch/activeEpochId/EpochBundle), the Steamworks banked-science machinery (SCI-04 ceiling: "Epoch science complete — the Steamworks awaits a town to build it", steps banked beyond threshold), the Stamp Mill surfaces (`ResearchChart.ts`/`TownScene.ts`/`ResearchTree.ts` hits), `specs/epoch-saga/e2-steamworks-bundle.md` §engine, the story-beat pattern (`story/beats.ts`).
+
+## Scope
+1. **The persisted active epoch**: an additive per-profile key (`gr.activeEpoch.v1`, default `epoch-1-frontier`); `activeEpochId()` reads it; `Game.ts:177` and every epoch consumer load THROUGH it (board contracts, tile descriptors, enemy roster selection, encyclopedia era pages).
+2. **THE STAMP MILL COMPLETION FLIPS IT**: the megaproject's town-side completion (funded with banked science + gold per the bundle) sets `epoch-2-steamworks`, once, with a persisted ceremony flag. If the mill's town-build surface does not yet exist, BUILD ITS MINIMUM: a schoolhouse/claim-office action "Raise the Stamp Mill" available when the science ceiling is banked, consuming the bundle's cost.
+3. **THE TRANSITION BEAT (the ceremony's stage)**: on the flip — a full-screen ceremony card sequence (the beat pattern, skippable): the mill raises → the valley takes its first steam transform (kit-era-2 as the backdrop art key) → "Epoch 2: the Steamworks" title → return to town, which now offers E2 content. The OWNER PLAYS THIS LIVE with the attended session as the ratification ceremony — make the moment worth it.
+4. **E2 content becomes reachable**: the board shows the E2 contracts (Hill Mine already shipped + the E1 roster stays per the Replay Law); enemy roster per the E2 bundle on E2 contracts; EN-03's epoch-page hook gets its signal (`epoch-activated` event).
+5. **Safety**: E1 profiles untouched until they flip; flag-off determinism identical (hash asserted); the flip is one-way in v1 (no downgrade UI; the key is data, revertible by hand if the ceremony finds problems).
+6. **e2e**: fresh profile plays E1 (unchanged, asserted) · a science-ceiling profile raises the mill → ceremony sequence renders → activeEpoch persists epoch-2 → board offers Hill Mine + E1 roster → reload keeps E2 · determinism hash unchanged pre-flip.
+
+## Firewall
+Touch ONLY: the epoch key + activeEpochId plumbing, the mill-raise action + cost consumption, the ceremony beat sequence + its art keys, the epoch-consumer load paths, its e2e. **NO Balance values, NO E2 contract/enemy content changes (shipped), NO save-schema beyond the two additive keys, NO WP-E3 content.**
+End: **READY-FOR-GATES** + the ceremony sequence screenshots + the e2e output. Flag the attended session: THE CEREMONY IS STAGED.

@@ -33,6 +33,7 @@ const CHARACTER_QUOTE_ENTRY_IDS = [
   'baron',
 ] as const satisfies readonly LedgerEntryId[];
 const FULL_DISCOVERY_IDS = [...ledgerEntries.map((entry) => entry.id), ...enemyStatsDiscoveryIds] as LedgerDiscoveryId[];
+const FRESH_VISIBLE_ENTRY_COUNT = ledgerEntries.filter((entry) => entry.hiddenUntilDiscovered !== true).length;
 const FORBIDDEN_PLAYER_LEDGER_PATTERNS = [/\(lore\//i, /\.md\b/i, /\bbatch-/i, /\b20\d{2}-\d{2}-\d{2}\b/];
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
@@ -221,7 +222,7 @@ test('EN-02 plain ledger access and fresh seeds stay intact', async ({ page }, t
 
   await openMenuLedger(page);
   await expect(page.locator('[data-testid^="claim-ledger-shelf-"]')).toHaveCount(LEDGER_CATEGORIES.length);
-  await expect(page.locator('[data-ledger-entry]')).toHaveCount(ledgerEntries.length);
+  await expect(page.locator('[data-ledger-entry]')).toHaveCount(FRESH_VISIBLE_ENTRY_COUNT);
   await expect(page.locator('[data-ledger-discovered="true"]')).toHaveCount(alwaysDiscoveredEntryIds.length);
   for (const id of alwaysDiscoveredEntryIds) {
     await expect(page.getByTestId(`claim-ledger-card-${id}`)).toHaveAttribute('data-ledger-discovered', 'true');
@@ -252,6 +253,13 @@ test('EN-02 full E1 roster has manifest-backed entries and capped facts', async 
   test.setTimeout(60_000);
   await seedProfile(page, FULL_DISCOVERY_IDS);
   const errors = collectErrors(page);
+  await page.route('**/api/stats*', (route) =>
+    route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({ ok: true, empty: true, message: 'the office opens with the first assay' }),
+    }),
+  );
 
   await openMenuLedger(page);
   for (const category of LEDGER_CATEGORIES) {

@@ -28,6 +28,7 @@ export type CraftingQueueSnapshot = {
   pending: CraftingPendingNotice[];
   approved: CraftedItemDef[];
   rejected: CraftingRejectedNotice[];
+  queueAvailable: boolean | null;
 };
 
 export type PendingPostResult = {
@@ -39,18 +40,19 @@ export type PendingPostResult = {
 };
 
 export function loadCraftingQueue(profile: string): CraftingQueueSnapshot {
-  return snapshotFromQueueEntries([], [], [], normalizeQueueProfile(profile));
+  return { ...snapshotFromQueueEntries([], [], [], normalizeQueueProfile(profile)), queueAvailable: null };
 }
 
 export async function loadCraftingQueueState(profile: string): Promise<CraftingQueueSnapshot> {
   const normalizedProfile = normalizeQueueProfile(profile);
   try {
     const response = await fetch(`/__goldrush/crafting-queue/state?profile=${encodeURIComponent(normalizedProfile)}`);
-    if (!response.ok) return loadStaticCraftingQueue(normalizedProfile);
+    if (!response.ok) return { ...(await loadStaticCraftingQueue(normalizedProfile)), queueAvailable: false };
     const body: unknown = await response.json();
-    return parseQueueState(body, normalizedProfile) ?? loadStaticCraftingQueue(normalizedProfile);
+    const queue = parseQueueState(body, normalizedProfile);
+    return queue ? { ...queue, queueAvailable: true } : { ...(await loadStaticCraftingQueue(normalizedProfile)), queueAvailable: false };
   } catch {
-    return loadStaticCraftingQueue(normalizedProfile);
+    return { ...(await loadStaticCraftingQueue(normalizedProfile)), queueAvailable: false };
   }
 }
 
@@ -121,7 +123,7 @@ export function snapshotFromQueueEntries(
     text: entry.request.text,
     reasons: entry.reasons.length ? entry.reasons : [...entry.contractVerdict.reasons, ...(entry.simVerdict?.reasons ?? [])],
   }));
-  return { pending, approved, rejected };
+  return { pending, approved, rejected, queueAvailable: true };
 }
 
 function parseMany<T>(values: unknown[], parse: (value: unknown) => T | null): T[] {

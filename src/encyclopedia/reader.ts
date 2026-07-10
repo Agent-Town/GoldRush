@@ -1,4 +1,5 @@
 import './reader.css';
+import { installAssayOfficeRecordsLiveRead } from './liveStats';
 import { LEDGER_CATEGORIES, ledgerEntries, type LedgerDiscoveryId, type LedgerEntry, type LedgerEntryId } from './registry';
 import { readLedgerDiscovered } from './state';
 
@@ -11,6 +12,7 @@ type OpenClaimLedgerOptions = {
 
 let currentRoot: HTMLElement | null = null;
 let currentClose: (() => void) | undefined;
+let currentLiveReads: (() => void)[] = [];
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   closeClaimLedger(false);
@@ -26,6 +28,7 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   root.addEventListener('click', onLedgerClick);
   root.addEventListener('keydown', onLedgerKeyDown);
   (document.querySelector<HTMLElement>('#app') ?? document.body).append(root);
+  currentLiveReads = [installAssayOfficeRecordsLiveRead(root)];
   root.querySelector<HTMLElement>(options.entryId ? `[data-ledger-entry="${options.entryId}"]` : '[data-ledger-close]')?.focus({
     preventScroll: true,
   });
@@ -36,7 +39,10 @@ export function closeClaimLedger(notify = true): void {
   if (!root) return;
   currentRoot = null;
   const onClose = currentClose;
+  const liveReads = currentLiveReads;
   currentClose = undefined;
+  currentLiveReads = [];
+  for (const dispose of liveReads) dispose();
   root.removeEventListener('click', onLedgerClick);
   root.removeEventListener('keydown', onLedgerKeyDown);
   root.remove();
@@ -62,7 +68,9 @@ function renderLedger(selectedId?: LedgerEntryId): string {
 }
 
 function renderShelf(category: string, discovered: Set<LedgerDiscoveryId>, selectedId?: LedgerEntryId): string {
-  const entries = ledgerEntries.filter((entry) => entry.category === category);
+  const entries = ledgerEntries.filter(
+    (entry) => entry.category === category && (!entry.hiddenUntilDiscovered || discovered.has(entry.id)),
+  );
   return `
     <section class="claim-ledger__shelf" data-testid="claim-ledger-shelf-${slug(category)}">
       <h3>${escapeHtml(category)}</h3>

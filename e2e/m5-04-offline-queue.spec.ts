@@ -6,6 +6,7 @@ import { makePendingQueueRequest, normalizeQueueProfile, pendingQueuePath } from
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type Box = { x: number; y: number; width: number; height: number };
 const localSampleSuffix = '_steady_brass_pan_receipt_for_faster_claim_work.json';
+const HONEST_WIRE_LINE = 'The wire to the Assayer is still being strung — orders open soon.';
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -22,6 +23,25 @@ async function openBench(page: Page, query: string): Promise<ErrorBucket> {
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   await expect(page.getByTestId('assay-bench')).toBeVisible();
   return errors;
+}
+
+async function queueEndpointAvailable(baseURL: string | undefined): Promise<boolean> {
+  try {
+    const url = new URL('/__goldrush/crafting-queue/state?profile=e2e_probe', baseURL ?? 'http://127.0.0.1:5188');
+    const response = await fetch(url);
+    if (!response.ok) return false;
+    const value: unknown = await response.json().catch(() => null);
+    return (
+      typeof value === 'object' &&
+      value !== null &&
+      !Array.isArray(value) &&
+      Array.isArray((value as { pending?: unknown }).pending) &&
+      Array.isArray((value as { approved?: unknown }).approved) &&
+      Array.isArray((value as { rejected?: unknown }).rejected)
+    );
+  } catch {
+    return false;
+  }
 }
 
 function overlaps(a: Box | null, b: Box | null): boolean {
@@ -86,7 +106,50 @@ test('booting never posts the default local sample order', async ({ page }) => {
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('post the order writes the exact pending request JSON', async ({ page }, testInfo) => {
+test('queue capability gates posting honestly for this runtime', async ({ page, baseURL }, testInfo) => {
+  const profile = `e2e_capability_${testInfo.project.name}`;
+  const text = 'capability probe order';
+  const timestamp = '2026-07-10T06:55:03.000Z';
+  const expected = makePendingQueueRequest(text, profile, timestamp);
+  const filePath = resolve(process.cwd(), pendingQueuePath(expected.id));
+  await rm(filePath, { force: true });
+  const pendingResponses: number[] = [];
+  page.on('response', (response) => {
+    if (response.url().includes('/__goldrush/crafting-queue/pending')) pendingResponses.push(response.status());
+  });
+
+  const errors = await openBench(
+    page,
+    `?debug&nowaves&nolevel&profile=${encodeURIComponent(profile)}&queueNow=${encodeURIComponent(timestamp)}`,
+  );
+
+  try {
+    if (!(await queueEndpointAvailable(baseURL))) {
+      await expect(page.getByTestId('assay-wire-status')).toHaveText(HONEST_WIRE_LINE);
+      await expect(page.getByTestId('assay-post')).toBeHidden();
+      await page.getByTestId('assay-text').fill(text);
+      await expect(page.getByTestId('assay-pending-status')).toHaveText('No order posted');
+      await expect(page.getByTestId('assay-pending-status')).not.toContainText('HTTP 404');
+      expect(pendingResponses).toEqual([]);
+      await expect(readFile(filePath, 'utf8')).rejects.toThrow();
+    } else {
+      await expect(page.getByTestId('assay-wire-status')).toHaveText('The wire to the Assayer is open.');
+      await expect(page.getByTestId('assay-post')).toBeVisible();
+      await page.getByTestId('assay-text').fill(text);
+      await page.getByTestId('assay-post').click();
+      await expect(page.getByTestId('assay-pending-status')).toHaveText('Posted');
+      expect(JSON.parse(await readFile(filePath, 'utf8'))).toEqual(expected);
+      expect(pendingResponses.every((status) => status !== 404)).toBe(true);
+    }
+    expect(errors.consoleErrors).toEqual([]);
+    expect(errors.pageErrors).toEqual([]);
+  } finally {
+    await rm(filePath, { force: true });
+  }
+});
+
+test('post the order writes the exact pending request JSON', async ({ page, baseURL }, testInfo) => {
+  test.skip(!(await queueEndpointAvailable(baseURL)), 'this runtime has no filesystem queue route');
   const text = 'steady teal coil for careful claim work';
   const profile = `e2e_${testInfo.project.name}`;
   const expected = makePendingQueueRequest(text, profile, '2026-07-05T14:20:00.000Z');
@@ -119,7 +182,8 @@ test('post the order writes the exact pending request JSON', async ({ page }, te
   }
 });
 
-test('posted orders stay visible across reloads and refresh to verdicts on reopen', async ({ page }, testInfo) => {
+test('posted orders stay visible across reloads and refresh to verdicts on reopen', async ({ page, baseURL }, testInfo) => {
+  test.skip(!(await queueEndpointAvailable(baseURL)), 'this runtime has no filesystem queue route');
   const text = 'brass teal spark rig coupler for steady target splits';
   const profile = `e2e_status_${testInfo.project.name}`;
   const expected = makePendingQueueRequest(text, profile, '2026-07-06T10:39:00.000Z');
@@ -140,22 +204,31 @@ test('posted orders stay visible across reloads and refresh to verdicts on reope
 
     await page.reload();
     await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+    const beginButton = page.getByRole('button', { name: 'Begin' });
+    if (await beginButton.isVisible()) {
+      await beginButton.click();
+      await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.state)).toBe('playing');
+    }
     const pendingRows = page.getByTestId('assay-queue-pending').locator('li');
     await expect(pendingRows).toHaveCount(1);
     await expect(pendingRows.first()).toContainText(text);
     await expect(pendingRows.first()).toContainText('at the assay works, check back next run');
 
+    await page.getByTestId('assay-close').click();
+    await expect(page.getByTestId('assay-bench')).toBeHidden();
     await page.evaluate(() => {
       window.__GR_TEST__?.grantGold(120);
       window.__GR_TEST__?.teleport(0, 9);
       window.__GR_TEST__?.selectBuildable('assay_office');
+    });
+    await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.selectedBuildable)).toBe('assay_office');
+    await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+    await page.evaluate(() => {
       window.__GR_TEST__?.confirmBuild();
       window.__GR_TEST__?.setBuildMode(false);
       window.__GR_TEST__?.teleport(0, 7);
     });
     await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.assayOffices ?? 0)).toBe(1);
-    await page.getByTestId('assay-close').click();
-    await expect(page.getByTestId('assay-bench')).toBeHidden();
 
     await mkdir(resolve(process.cwd(), 'assets/crafting-queue/approved'), { recursive: true });
     await writeFile(
@@ -198,7 +271,8 @@ test('posted orders stay visible across reloads and refresh to verdicts on reope
   }
 });
 
-test('stale open refresh cannot hide a newly posted pending order', async ({ page }, testInfo) => {
+test('stale open refresh cannot hide a newly posted pending order', async ({ page, baseURL }, testInfo) => {
+  test.skip(!(await queueEndpointAvailable(baseURL)), 'this runtime has no filesystem queue route');
   const text = 'brass teal queue race check';
   const profile = `e2e_race_${testInfo.project.name}`;
   const expected = makePendingQueueRequest(text, profile, '2026-07-06T10:41:00.000Z');
@@ -240,7 +314,8 @@ test('stale open refresh cannot hide a newly posted pending order', async ({ pag
   }
 });
 
-test('verdicted order ids cannot be recreated as pending', async ({ page }) => {
+test('verdicted order ids cannot be recreated as pending', async ({ page, baseURL }) => {
+  test.skip(!(await queueEndpointAvailable(baseURL)), 'this runtime has no filesystem queue route');
   const duplicates = [
     {
       profile: 'local_prospector',
@@ -273,7 +348,8 @@ test('verdicted order ids cannot be recreated as pending', async ({ page }) => {
   }
 });
 
-test('blank bench submits stay local', async ({ page }) => {
+test('blank bench submits stay local', async ({ page, baseURL }) => {
+  test.skip(!(await queueEndpointAvailable(baseURL)), 'this runtime has no filesystem queue route');
   await cleanLocalSamplePendingOrders();
   const errors = await openBench(page, '?debug&nowaves&nolevel&profile=local_prospector');
 
@@ -285,7 +361,8 @@ test('blank bench submits stay local', async ({ page }) => {
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('first-run pipeline consumes pending orders and keeps verdicts flexible', async ({ page }) => {
+test('first-run pipeline consumes pending orders and keeps verdicts flexible', async ({ page, baseURL }) => {
+  test.skip(!(await queueEndpointAvailable(baseURL)), 'this runtime cannot import source modules directly');
   const consumed = [
     'order_m5_example_prospector_20260705t140000000z_steady_brass_pan_receipt_for_faster_claim_work.json',
     'order_local_prospector_20260705t235401057z_steady_brass_pan_receipt_for_faster_claim_work.json',
@@ -314,7 +391,8 @@ test('first-run pipeline consumes pending orders and keeps verdicts flexible', a
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('approved fixtures enter a profile history once', async ({ page }) => {
+test('approved fixtures enter a profile history once', async ({ page, baseURL }) => {
+  test.skip(!(await queueEndpointAvailable(baseURL)), 'this runtime cannot import source modules directly');
   const errors = await openBench(page, '?debug&nowaves&nolevel&profile=m5_example_prospector');
 
   const rows = page.getByTestId('assay-log').locator('li');
@@ -342,7 +420,7 @@ test('approved fixtures enter a profile history once', async ({ page }) => {
 test('bench hint is visible, avoids HUD chips, and closes both ways', async ({ page }) => {
   const errors = await openBench(page, '?debug&nowaves&nolevel&profile=m5_example_prospector');
   await expect(page.getByTestId('assay-hint')).toHaveText(
-    'Write what you need — the Assayer takes orders now, fills them between sessions.',
+    'Write what you need — the Assayer takes orders between sessions when the wire is open.',
   );
   await expect(page.getByTestId('assay-close')).toBeVisible();
 

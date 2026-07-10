@@ -40,3 +40,6 @@ ROUTING LAWS for the orchestrator:
 2. Interactive judgment + design + drains = the attended account. Cadence bookkeeping = fires. Embarrassingly-batchable analysis/authoring = batch account via claude -p.
 3. Before dispatching to an account, probe its meter mood: a refusal/limit error on dispatch = route the job elsewhere and note the wall (fire.md wall protocol applies).
 4. The session-5h and weekly meters are visible only in the app UI — when the owner posts a screenshot, record burn-relevant rulings here.
+
+## E. CAPACITY TOPOLOGY — thinking ahead (owner 2026-07-10: 2 spare full Anthropic subs; ChatGPT subs draining under Sol; 'continue as it is for a bit')
+When the switch is wanted, the shape is ready: a CLAUDE IMPLEMENTER LANE — a runner slot variant that feeds task masters to headless claude -p (CLAUDE_CONFIG_DIR=<spare-sub-dir>) instead of codex exec. Masters are model-agnostic by design (READ-FIRST + firewall + gates), so the same file drives either implementer. Target topology when activated: Sol/Codex = deepest engine slices (when its meters breathe) · Opus 4.8 claude-lanes = standard feature implementation (spare sub #1) · gpt-5.5@low = art/mechanical · fires = bookkeeping (existing sub) · spare sub #2 = the batch/audit account (§D). Activation = one owner login per new config dir + a ~20-line runner variant; NOT NOW by owner word.

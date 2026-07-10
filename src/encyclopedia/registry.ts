@@ -50,6 +50,7 @@ export type BuildableLedgerEntryId =
   | 'building_lantern_post';
 export type ContractLedgerEntryId =
   | 'the_claim'
+  | 'assay_office_records'
   | 'contract_e1_dry_gulch'
   | 'contract_e1_night_shift'
   | 'contract_e1_twin_banks'
@@ -70,6 +71,7 @@ export type LedgerEntry = {
   category: LedgerCategory;
   unlockSignal: string;
   factLines: () => string[];
+  hiddenUntilDiscovered?: boolean;
   portraitLocked?: () => boolean;
   loreLine: string;
   spriteRef: {
@@ -177,6 +179,16 @@ export const ledgerEntries: readonly LedgerEntry[] = [
         `Spawn edges: ${contract.tileParams.lanes.spawnEdges.join(', ')}`,
       ].filter(Boolean);
     },
+  },
+  {
+    id: 'assay_office_records',
+    name: 'The Assay Office — Records',
+    category: 'The Claim',
+    unlockSignal: 'run:completed:first',
+    spriteRef: { slot: 'assay-office.records', imageUrl: claimOfficeUrl },
+    loreLine: 'The Assay Office keeps public tallies after the first claim returns.',
+    hiddenUntilDiscovered: true,
+    factLines: () => ['the office opens with the first assay.'],
   },
   ...listContracts()
     .filter((contract) => contract.id !== DEFAULT_CONTRACT_ID)

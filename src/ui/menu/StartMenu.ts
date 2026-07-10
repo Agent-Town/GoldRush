@@ -10,7 +10,7 @@ import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../au
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
 import { bindPerformanceTierControl, renderPerformanceTierControl } from '../../game/PerformanceTier';
 import { bindTelemetrySettingsControl, renderTelemetrySettingsControl } from '../../telemetry/payload';
-import { readRunSuspend } from '../../game/RunSuspend';
+import { readRunSuspend, readRunSuspendRejection } from '../../game/RunSuspend';
 import {
   AUTO_SAVE_SLOT_NAME,
   deleteSaveSlot,
@@ -98,6 +98,7 @@ export class StartMenu {
     this.disposeTelemetrySettings();
     const suspend = readRunSuspend();
     const slots = readSaveSlots(this.storage);
+    const suspendRejection = readRunSuspendRejection();
     const account = accountSync.snapshot();
     const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
     this.root.className = `gr-start-menu${this.loadOpen ? ' gr-start-menu--load-open' : ''}`;
@@ -108,6 +109,7 @@ export class StartMenu {
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
         <p class="gr-start-menu__subtitle">an Agent Town tale</p>
         ${suspend ? `<p class="gr-start-menu__saved-claim" data-testid="start-menu-saved-claim">${escapeHtml(savedClaimLabel(suspend))}</p>` : ''}
+        ${suspendRejection ? `<p class="gr-start-menu__saved-claim gr-start-menu__saved-claim--rejected" data-testid="start-menu-rejected-claim">${escapeHtml(suspendRejection.message)}</p>` : ''}
         <p class="gr-account-chip gr-account-chip--menu" data-testid="account-status-chip">${escapeHtml(account.label)}</p>
         ${
           this.firstBoot
