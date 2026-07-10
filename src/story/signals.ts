@@ -19,7 +19,9 @@ export type BossStorySignal =
   | { type: 'boss-arrival'; contractId: string; contractName: string }
   | { type: 'boss-defeat'; contractId: string; contractName: string };
 
-export type RuntimeStorySignal = StorySignal | BossStorySignal;
+export type EpochStorySignal = { type: 'epoch-activated'; epochId: string; displayName: string };
+
+export type RuntimeStorySignal = StorySignal | BossStorySignal | EpochStorySignal;
 
 export const STORY_SIGNAL_REGISTRY = [
   'first-boot',
@@ -39,7 +41,7 @@ export const STORY_SIGNAL_REGISTRY = [
   'xp-collected',
 ] as const;
 
-export const STORY_RUNTIME_SIGNAL_REGISTRY = [...STORY_SIGNAL_REGISTRY, 'boss-arrival', 'boss-defeat'] as const;
+export const STORY_RUNTIME_SIGNAL_REGISTRY = [...STORY_SIGNAL_REGISTRY, 'boss-arrival', 'boss-defeat', 'epoch-activated'] as const;
 
 type StorySignalListener = (signal: RuntimeStorySignal) => void;
 

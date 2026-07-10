@@ -9,6 +9,7 @@ export type SoundName =
   | 'chirp-refuse'
   | 'defeat-sting'
   | 'demolish'
+  | 'epoch-door-sting'
   | 'gold-chime'
   | 'invalid'
   | 'ledger-open'
@@ -55,6 +56,7 @@ export const soundManifest = {
   'chirp-refuse': { file: 'chirp-refuse.mp3', volume: 0.3, group: 'voice' },
   'defeat-sting': { file: 'defeat-sting.mp3', volume: 0.42, group: 'ui' },
   demolish: { file: 'demolish.mp3', volume: 0.42, group: 'ui' },
+  'epoch-door-sting': { file: 'epoch-door-sting.mp3', volume: 0.46, group: 'ui' },
   'gold-chime': { file: 'gold-chime.mp3', volume: 0.3, group: 'sfx' },
   invalid: { file: 'invalid.mp3', volume: 0.34, group: 'ui' },
   'ledger-open': { file: 'ledger-open.mp3', volume: 0.36, group: 'ui' },

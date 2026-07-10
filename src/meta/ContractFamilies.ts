@@ -418,7 +418,9 @@ type EpochManifest = EpochMeta & {
   };
 };
 
-const DEFAULT_EPOCH_ID = 'epoch-1-frontier';
+export const DEFAULT_EPOCH_ID = 'epoch-1-frontier';
+export const ACTIVE_EPOCH_KEY = 'gr.activeEpoch.v1';
+export const EPOCH_CEREMONY_KEY = 'gr.epochCeremony.v1';
 export const DEFAULT_CONTRACT_ID = 'the-claim';
 const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
 
@@ -529,8 +531,8 @@ export function listBoardContracts(): ContractManifest[] {
   return orderedManifests.flatMap((manifest) => loadContracts(manifest).contracts);
 }
 
-export function loadContract(id: string, epochId = DEFAULT_EPOCH_ID): ContractManifest {
-  const contract = listContracts(epochId).find((entry) => entry.id === id);
+export function loadContract(id: string, epochId?: string): ContractManifest {
+  const contract = (epochId ? listContracts(epochId) : listBoardContracts()).find((entry) => entry.id === id);
   if (!contract) throw new Error(`Unknown contract: ${id}`);
   return contract;
 }
@@ -543,7 +545,31 @@ export function activeEpochId(): string {
   const params = readSearchParams();
   const requestedId = params.get('epoch');
   const debug = params.has('debug') || params.get('bench') === 'fullbase';
-  return requestedId && debug && manifestsById.has(requestedId) ? requestedId : DEFAULT_EPOCH_ID;
+  if (requestedId && debug && manifestsById.has(requestedId)) return requestedId;
+  try {
+    const persisted = globalThis.localStorage?.getItem(ACTIVE_EPOCH_KEY);
+    if (persisted && manifestsById.has(persisted)) return persisted;
+  } catch {}
+  return DEFAULT_EPOCH_ID;
+}
+
+export function epochIsActive(id: string): boolean {
+  const active = manifestsById.get(activeEpochId());
+  const requested = manifestsById.get(id);
+  return !!active && !!requested && active.order >= requested.order;
+}
+
+export function activateEpoch(id: string): boolean {
+  const active = manifestsById.get(activeEpochId());
+  const requested = manifestsById.get(id);
+  if (!active || !requested || requested.order !== active.order + 1 || id !== 'epoch-2-steamworks') return false;
+  try {
+    globalThis.localStorage?.setItem(EPOCH_CEREMONY_KEY, id);
+    globalThis.localStorage?.setItem(ACTIVE_EPOCH_KEY, id);
+    return globalThis.localStorage?.getItem(ACTIVE_EPOCH_KEY) === id;
+  } catch {
+    return false;
+  }
 }
 
 export function activeContract(): ContractManifest {
@@ -740,6 +766,7 @@ try {
       loadEpoch,
       activeEpoch,
       activeEpochId,
+      epochIsActive,
       listContracts,
       listBoardContracts,
       loadContract,

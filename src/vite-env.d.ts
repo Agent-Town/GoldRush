@@ -753,6 +753,7 @@ interface Window {
     loadEpoch: (id: string) => GrContractEpochBundle;
     activeEpoch: () => GrContractEpochBundle;
     activeEpochId: () => string;
+    epochIsActive: (id: string) => boolean;
     listContracts: (epochId?: string) => GrContractManifest[];
     listBoardContracts: () => GrContractManifest[];
     loadContract: (id: string, epochId?: string) => GrContractManifest;

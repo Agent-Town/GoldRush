@@ -12,6 +12,7 @@ import {
   type ResearchNode,
   type ResearchState,
 } from '../meta/ResearchTree';
+import { epochIsActive } from '../meta/ContractFamilies';
 
 const BRANCHES: Array<{ id: ResearchBranch; label: string }> = [
   { id: 'Prospecting Works', label: 'mining economy' },
@@ -25,6 +26,7 @@ export function renderResearchChart(state: ResearchState, selectedId?: string): 
   const pinnedPath = new Set(pinnedResearchPath(state));
   const meter = scienceMeter(state, savedStampMillBuildStarted() ? 'building' : 'awaiting-town');
   const frontier = new Set(frontierNodes(state).map((node) => node.id));
+  const steamworksActive = epochIsActive('epoch-2-steamworks');
   return `
     <div class="research-chart" data-testid="research-chart">
       <header class="research-chart__header">
@@ -39,9 +41,11 @@ export function renderResearchChart(state: ResearchState, selectedId?: string): 
       <div class="research-chart__body">
         <div class="research-chart__branches" data-testid="research-chart-branches">
           ${BRANCHES.map((branch) => renderBranch(branch, state, frontier, selectedPath, pinnedPath)).join('')}
-          <section class="research-chart__epoch" data-testid="research-next-epoch" aria-label="Steamworks awaits the town">
+          <section class="research-chart__epoch" data-testid="research-next-epoch" data-epoch-id="epoch-2-steamworks" data-epoch-state="${
+            steamworksActive ? 'active' : 'locked'
+          }" aria-label="${steamworksActive ? 'Steamworks active in town' : 'Steamworks awaits the town'}">
             <span>Steamworks</span>
-            <strong>awaits the town</strong>
+            <strong>${steamworksActive ? 'active in town' : 'awaits the town'}</strong>
           </section>
         </div>
         ${renderSelection(state, selected)}
