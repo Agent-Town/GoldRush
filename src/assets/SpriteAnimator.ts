@@ -785,6 +785,18 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
       rotationDirections.add(sourceDirection);
       rotationMirrors.set(targetDirection, sourceDirection);
     }
+
+    for (const [target, source] of Object.entries(walkSheet.aliases ?? {})) {
+      const targetDirection = target.toLowerCase();
+      const sourceDirection = source.toLowerCase();
+      if (!isRotationDirection(targetDirection) || !isRotationDirection(sourceDirection)) continue;
+      const orientation = orientations.get(sourceDirection);
+      if (!orientation) continue;
+      orientations.set(targetDirection, orientation);
+      rotationDirections.add(targetDirection);
+      rotationDirections.add(sourceDirection);
+      rotationMirrors.set(targetDirection, sourceDirection);
+    }
   }
 
   if (orientations.size === 0 && fallbackClip) {
@@ -827,13 +839,6 @@ function expandWalkSheetSources(sheet: WalkSheetSource): Map<string, Orientation
     const normalized = name.toLowerCase();
     const materialized = materializeWalkSheetDirection(sheet, source, normalized);
     if (materialized) sources.set(normalized, materialized);
-  }
-
-  for (const [target, source] of Object.entries(sheet.aliases ?? {})) {
-    const targetDirection = target.toLowerCase();
-    const sourceDirection = source.toLowerCase();
-    const materialized = sources.get(sourceDirection) ?? materializeWalkSheetDirection(sheet, explicit[sourceDirection] ?? {}, sourceDirection);
-    if (materialized) sources.set(targetDirection, materialized);
   }
 
   return sources;
