@@ -4,8 +4,8 @@ import { Balance } from '../game/Balance';
 import { loadMetaProgress } from '../game/MetaProgress';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { buildableBlurb, buildableDefs, buildableTierEffectLine, getBuildableDef, type BuildableId } from '../game/buildables';
-import { browserResearchStorage, loadResearchState, scienceMeter, STEAMWORKS_THRESHOLD } from '../meta/ResearchTree';
-import { DEFAULT_CONTRACT_ID, epochIsActive, listContracts, loadContract, loadEpoch } from '../meta/ContractFamilies';
+import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
+import { DEFAULT_CONTRACT_ID, epochIsActive, listContracts, listEpochs, loadContract, loadEpoch } from '../meta/ContractFamilies';
 import { TOWN_ACTORS, townActorBark, type TownActorDefinition, type TownActorId } from '../town/townsfolk';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from './storage';
 
@@ -22,6 +22,11 @@ const claimOfficeUrl = new URL('../../assets/processed/bld-claim-office.png', im
 const titleEmblemUrl = new URL('../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const CONTRACT_LOCKED_TERMS_LINE = "The clerk draws up the terms when you're ready.";
+const epochLedgerEntryById = {
+  'epoch-1-frontier': 'era_frontier',
+  'epoch-2-steamworks': 'era_steamworks',
+  'epoch-3-voltage': 'era_voltage',
+} as const;
 
 export const LEDGER_CATEGORIES = [
   'The People',
@@ -59,6 +64,7 @@ export type ContractLedgerEntryId =
   | 'contract_e1_night_shift'
   | 'contract_e1_twin_banks'
   | 'contract_e1_baron';
+export type EpochLedgerEntryId = (typeof epochLedgerEntryById)[keyof typeof epochLedgerEntryById];
 export type LedgerEntryId =
   | 'hero'
   | 'prospector'
@@ -66,7 +72,7 @@ export type LedgerEntryId =
   | EnemyLedgerEntryId
   | BuildableLedgerEntryId
   | ContractLedgerEntryId
-  | 'era_frontier';
+  | EpochLedgerEntryId;
 export type LedgerDiscoveryId = LedgerEntryId | EnemyStatsDiscoveryId;
 
 export type LedgerEntry = {
@@ -132,6 +138,7 @@ const buildableSpriteById: Record<BuildableId, { imageUrl: string; slot: string 
   lantern_post: { imageUrl: titleEmblemUrl, slot: 'building.lantern_post' },
 };
 
+export const epochLedgerEntryByIdForEpoch: Readonly<Record<string, EpochLedgerEntryId | undefined>> = epochLedgerEntryById;
 export const alwaysDiscoveredEntryIds: readonly LedgerEntryId[] = ['hero', 'prospector', 'era_frontier'];
 
 export const ledgerEntries: readonly LedgerEntry[] = [
@@ -197,23 +204,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   ...listContracts()
     .filter((contract) => contract.id !== DEFAULT_CONTRACT_ID)
     .map((contract) => contractEntry(contract.id)),
-  {
-    id: 'era_frontier',
-    name: 'Epoch 1 Frontier',
-    category: 'The Eras',
-    unlockSignal: 'profile:init',
-    spriteRef: { slot: 'epoch.frontier', imageUrl: titleEmblemUrl },
-    loreLine: 'Frontier days begin at the river claim.',
-    factLines: () => {
-      const epoch = loadEpoch('epoch-1-frontier');
-      return [
-        epoch.displayName,
-        `${epoch.contracts.length} contract cards in the board set`,
-        `Steamworks threshold: ${STEAMWORKS_THRESHOLD} science steps`,
-        `${epoch.families.length} upgrade families in this era`,
-      ];
-    },
-  },
+  ...listEpochs().map((epoch) => epochEntry(epoch.id)),
 ] as const;
 
 export const ledgerEntryById: Record<LedgerEntryId, LedgerEntry> = Object.fromEntries(
@@ -366,6 +357,59 @@ function contractUnlock(contract: ReturnType<typeof loadContract>): { unlocked: 
 
 function contractIdOf(score: ScoreRecord): string {
   return score.contractId?.trim() || DEFAULT_CONTRACT_ID;
+}
+
+function epochEntry(epochId: string): LedgerEntry {
+  const id = epochLedgerEntryByIdForEpoch[epochId];
+  if (!id) throw new Error(`Missing ledger entry id for epoch: ${epochId}`);
+  const epoch = loadEpoch(epochId);
+  return {
+    id,
+    name: epochName(epoch.displayName),
+    category: 'The Eras',
+    unlockSignal: epochId === 'epoch-1-frontier' ? 'profile:init' : `epoch-activated:${epochId}`,
+    hiddenUntilDiscovered: epochId !== 'epoch-1-frontier',
+    spriteRef: { slot: `epoch.${epochId}`, imageUrl: titleEmblemUrl },
+    loreLine: `${epoch.displayName} keeps its pages beside the older ones.`,
+    factLines: () => epochFactLines(epochId),
+  };
+}
+
+function epochFactLines(epochId: string): string[] {
+  const epoch = loadEpoch(epochId);
+  const contracts = epoch.contracts.map((contract) => contract.boardRow.name || contract.name);
+  const opponents = epoch.contracts
+    .flatMap((contract) => [
+      ...(contract.twist.enemyRoster ?? []).map((enemy) => enemy.label),
+      contract.twist.baron?.ledgerLabel ?? contract.twist.baron?.arrivalTitle ?? '',
+    ])
+    .filter(Boolean);
+  const works = [
+    ...epoch.resources.map((resource) => resource.name),
+    titleizeRef(epoch.megaproject.surfaceRef),
+    ...buildableDefs.map((def) => def.displayName),
+  ].filter(Boolean);
+  return [
+    `${epoch.displayName}: ${epoch.contracts.length || 1} claim page${epoch.contracts.length === 1 ? '' : 's'} in this era`,
+    contracts.length > 0 ? `Claims: ${contracts.join(', ')}` : '',
+    works.length > 0 ? `Works: ${works.slice(0, 4).join(', ')}` : '',
+    opponents.length > 0 ? `Opponents: ${opponents.slice(0, 4).join(', ')}` : '',
+  ].filter(Boolean);
+}
+
+function epochName(displayName: string): string {
+  if (displayName === 'Frontier') return 'The Age of the Frontier';
+  return displayName.startsWith('The ') ? displayName : `The Age of ${displayName}`;
+}
+
+function titleizeRef(ref: string): string {
+  return ref
+    .split('.')
+    .at(-1)!
+    .split(/[-_]/)
+    .filter(Boolean)
+    .map((part) => part[0]!.toUpperCase() + part.slice(1))
+    .join(' ');
 }
 
 function claimJumperFactLines(): string[] {

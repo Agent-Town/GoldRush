@@ -29,9 +29,9 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   root.addEventListener('keydown', onLedgerKeyDown);
   (document.querySelector<HTMLElement>('#app') ?? document.body).append(root);
   currentLiveReads = [installAssayOfficeRecordsLiveRead(root)];
-  root.querySelector<HTMLElement>(options.entryId ? `[data-ledger-entry="${options.entryId}"]` : '[data-ledger-close]')?.focus({
-    preventScroll: true,
-  });
+  const focusTarget = root.querySelector<HTMLElement>(options.entryId ? `[data-ledger-entry="${options.entryId}"]` : '[data-ledger-close]');
+  focusTarget?.focus({ preventScroll: true });
+  if (options.entryId) focusTarget?.scrollIntoView({ block: 'center', inline: 'nearest' });
 }
 
 export function closeClaimLedger(notify = true): void {

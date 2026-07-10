@@ -14,6 +14,7 @@ import { readRunSuspend } from './game/RunSuspend';
 import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { installClaimLedgerRequestHandler } from './encyclopedia/events';
+import { installEpochLedgerDiscovery } from './encyclopedia/state';
 import type { LedgerEntryId } from './encyclopedia/registry';
 
 type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
@@ -57,6 +58,7 @@ let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
 let town: TownScene | undefined;
 const uninstallClaimLedgerRequest = installClaimLedgerRequestHandler((entryId) => openClaimLedger(entryId));
+installEpochLedgerDiscovery();
 
 afterFirstFrame(() => {
   void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));

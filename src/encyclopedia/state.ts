@@ -1,4 +1,4 @@
-import { emitStorySignal } from '../story/signals';
+import { emitStorySignal, onStorySignal } from '../story/signals';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from './storage';
 import { installLedgerBeatClick } from './events';
 import {
@@ -7,6 +7,7 @@ import {
   contractLedgerEntryById,
   enemyStatsDiscoveryByEntryId,
   enemyStatsDiscoveryIds,
+  epochLedgerEntryByIdForEpoch,
   ledgerEntryNameForDiscoveryId,
   ledgerEntries,
   townActorLedgerEntryById,
@@ -20,6 +21,7 @@ import type { TownActorId } from '../town/townsfolk';
 const validEntryIds = new Set<LedgerEntryId>(ledgerEntries.map((entry) => entry.id));
 const validDiscoveryIds = new Set<LedgerDiscoveryId>([...validEntryIds, ...enemyStatsDiscoveryIds]);
 const alwaysDiscovered = new Set<LedgerEntryId>(alwaysDiscoveredEntryIds);
+let epochDiscoveryInstalled = false;
 
 export type LedgerEnemySource = {
   eliteKind?: string | null;
@@ -57,6 +59,23 @@ export function discoverLedgerBuildable(id: BuildableId): boolean {
 export function discoverLedgerContract(id: string): boolean {
   const entryId = contractLedgerEntryById[id];
   return entryId ? discoverLedgerEntry(entryId) : false;
+}
+
+export function discoverLedgerEpoch(id: string): boolean {
+  const entryId = epochLedgerEntryByIdForEpoch[id];
+  return entryId ? discoverLedgerEntry(entryId) : false;
+}
+
+export function installEpochLedgerDiscovery(): () => void {
+  if (epochDiscoveryInstalled) return () => undefined;
+  epochDiscoveryInstalled = true;
+  const unsubscribe = onStorySignal((signal) => {
+    if (signal.type === 'epoch-activated') discoverLedgerEpoch(signal.epochId);
+  });
+  return () => {
+    epochDiscoveryInstalled = false;
+    unsubscribe();
+  };
 }
 
 export function discoverLedgerTownActor(id: TownActorId): boolean {
