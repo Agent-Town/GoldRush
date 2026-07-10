@@ -313,6 +313,16 @@ export type ContractHeightfieldDescriptor = {
     width: number;
   };
 };
+export type ContractAuthoredTerrainLayer = {
+  version: 1;
+  mode: 'visual-delta';
+  columns: number;
+  rows: number;
+  cellSize: number;
+  originX: number;
+  originZ: number;
+  heightDeltas: number[];
+};
 export type TerrainMeshRenderMode = 'required' | 'preferred' | 'off';
 export type TileRenderDescriptor = {
   terrainMesh?: TerrainMeshRenderMode;
@@ -385,6 +395,7 @@ export type ContractManifest = {
     render?: TileRenderDescriptor;
     elevation?: TileElevationDescriptor;
     heightfield?: ContractHeightfieldDescriptor;
+    authoredTerrain?: ContractAuthoredTerrainLayer;
     palette?: ContractPaletteDescriptor;
     scatter?: ContractScatterDescriptor;
     water?: ContractWaterDescriptor;
@@ -489,8 +500,15 @@ export const ACTIVE_EPOCH_KEY = 'gr.activeEpoch.v1';
 export const EPOCH_CEREMONY_KEY = 'gr.epochCeremony.v1';
 export const DEFAULT_CONTRACT_ID = 'the-claim';
 export const CONTRACT_EDITOR_PARAM = 'editorDescriptor';
+export const CONTRACT_EDITOR_SESSION_REF = 'session';
+export const CONTRACT_EDITOR_DOCUMENT_KEY = 'gr.editor.contract.v1';
 export const CONTRACT_EDITOR_REJECTION_LINE = 'This page of the ledger is water-damaged. The contract stayed as it was.';
 const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
+const CONTRACT_EDITOR_MAX_DOCUMENT_CHARS = 512 * 1_024;
+const AUTHORED_TERRAIN_MAX_DIMENSION = 41;
+const AUTHORED_TERRAIN_MAX_CELLS = AUTHORED_TERRAIN_MAX_DIMENSION * AUTHORED_TERRAIN_MAX_DIMENSION;
+const AUTHORED_TERRAIN_MAX_DELTA = 16;
+const AUTHORED_TERRAIN_MAX_ORIGIN = 512;
 
 // Future locked-stub example:
 // tile: { id: 'steamworks-forge-yard', biome: 'steamworks', elevation: { grid: { columns: 33, rows: 33 }, cellSize: 2, heightsRef: 'tiles/forge-yard.hf32', slopeMax: 0.7, waterline: -0.1 } }
@@ -636,16 +654,41 @@ export function contractNumberRange(path: string, value: number): ContractNumber
 }
 
 export function parseContractDescriptor(text: string, template: ContractManifest): ContractDescriptorParseResult {
+  if (text.length > CONTRACT_EDITOR_MAX_DOCUMENT_CHARS) return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
   let candidate: unknown;
   try {
     candidate = JSON.parse(text);
   } catch {
     return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
   }
-  if (!sameDescriptorShape(candidate, template) || (candidate as ContractManifest).id !== template.id) {
+  const normalized = normalizeContractDescriptor(candidate, template);
+  if (!normalized || normalized.id !== template.id) {
     return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
   }
-  return { ok: true, contract: candidate as ContractManifest };
+  return { ok: true, contract: normalized };
+}
+
+export function readContractEditorDocument(template: ContractManifest): ContractDescriptorParseResult | null {
+  try {
+    const text = globalThis.sessionStorage?.getItem(contractEditorDocumentKey(template.id));
+    return text === null || text === undefined ? null : parseContractDescriptor(text, template);
+  } catch {
+    return null;
+  }
+}
+
+export function stageContractEditorDocument(text: string, template: ContractManifest): ContractDescriptorParseResult {
+  const parsed = parseContractDescriptor(text, template);
+  if (!parsed.ok) return parsed;
+  try {
+    if (!globalThis.sessionStorage) return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+    globalThis.sessionStorage.setItem(contractEditorDocumentKey(template.id), contractDescriptorJson(parsed.contract));
+  } catch {
+    return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+  }
+  activeSelection = null;
+  activeSelectionSearch = '';
+  return parsed;
 }
 
 export function activeEpoch(): EpochBundle {
@@ -787,9 +830,22 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
     if (contract.id !== requestedId) fallbackReason = 'unknown-contract';
   }
 
-  if (params.has('editor') && params.has(CONTRACT_EDITOR_PARAM)) {
-    const override = parseContractDescriptor(params.get(CONTRACT_EDITOR_PARAM)!, contract);
-    if (override.ok) contract = override.contract;
+  if (params.has('editor')) {
+    const legacyText = params.get(CONTRACT_EDITOR_PARAM);
+    if (legacyText === CONTRACT_EDITOR_SESSION_REF) {
+      const staged = readContractEditorDocument(contract);
+      if (staged?.ok) contract = staged.contract;
+    } else if (legacyText !== null) {
+      const legacy = parseContractDescriptor(legacyText, contract);
+      if (legacy.ok) contract = legacy.contract;
+      else {
+        const staged = readContractEditorDocument(contract);
+        if (staged?.ok) contract = staged.contract;
+      }
+    } else {
+      const staged = readContractEditorDocument(contract);
+      if (staged?.ok) contract = staged.contract;
+    }
   }
 
   activeSelection = {
@@ -943,6 +999,8 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
 };
 
 function sameDescriptorShape(value: unknown, template: unknown, path = ''): boolean {
+  const variableArray = variableDescriptorArrayShape(value, path);
+  if (variableArray !== null) return variableArray;
   if (typeof template === 'number') {
     if (typeof value !== 'number' || !Number.isFinite(value)) return false;
     const range = contractNumberRange(path, template);
@@ -959,8 +1017,126 @@ function sameDescriptorShape(value: unknown, template: unknown, path = ''): bool
   }
   if (!isRecord(template) || !isRecord(value) || Array.isArray(value)) return false;
   const templateKeys = Object.keys(template);
-  if (Object.keys(value).some((key) => !(key in template)) || templateKeys.some((key) => !(key in value))) return false;
-  return templateKeys.every((key) => sameDescriptorShape(value[key], template[key], path ? `${path}.${key}` : key));
+  const valueKeys = Object.keys(value);
+  const childPath = (key: string) => (path ? `${path}.${key}` : key);
+  if (valueKeys.some((key) => !Object.hasOwn(template, key) && !optionalDescriptorPath(childPath(key)))) return false;
+  if (templateKeys.some((key) => !Object.hasOwn(value, key) && !optionalDescriptorPath(childPath(key)))) return false;
+  return [...new Set([...templateKeys, ...valueKeys])].every((key) => sameDescriptorShape(value[key], template[key], childPath(key)));
+}
+
+function normalizeContractDescriptor(value: unknown, template: ContractManifest): ContractManifest | null {
+  if (!isRecord(value) || !isRecord(value.tileParams)) return null;
+  const candidateShape = withoutAuthoredTerrain(value);
+  const templateShape = withoutAuthoredTerrain(template as unknown as Record<string, unknown>);
+  if (!sameDescriptorShape(candidateShape, templateShape)) return null;
+
+  const rawLayer = Object.hasOwn(value.tileParams, 'authoredTerrain') ? value.tileParams.authoredTerrain : undefined;
+  const claimSize = typeof value.tileParams.size === 'number' ? value.tileParams.size : 64;
+  const authoredTerrain = rawLayer === undefined ? undefined : decodeAuthoredTerrainLayer(rawLayer, claimSize);
+  if (rawLayer !== undefined && !authoredTerrain) return null;
+
+  const normalized = structuredClone(value) as unknown as ContractManifest;
+  if (authoredTerrain) normalized.tileParams.authoredTerrain = authoredTerrain;
+  else delete normalized.tileParams.authoredTerrain;
+  return normalized;
+}
+
+function decodeAuthoredTerrainLayer(value: unknown, claimSize: number): ContractAuthoredTerrainLayer | null {
+  if (!isRecord(value) || Array.isArray(value)) return null;
+  const keys = ['version', 'mode', 'columns', 'rows', 'cellSize', 'originX', 'originZ', 'heightDeltas'];
+  if (Object.keys(value).length !== keys.length || keys.some((key) => !Object.hasOwn(value, key))) return null;
+  if (value.version !== 1 || value.mode !== 'visual-delta') return null;
+  if (!Number.isInteger(value.columns) || !Number.isInteger(value.rows)) return null;
+  const columns = value.columns as number;
+  const rows = value.rows as number;
+  if (columns < 3 || rows !== columns || columns > AUTHORED_TERRAIN_MAX_DIMENSION) return null;
+  const cellCount = columns * rows;
+  if (cellCount > AUTHORED_TERRAIN_MAX_CELLS || !Array.isArray(value.heightDeltas) || value.heightDeltas.length !== cellCount) return null;
+  if (claimSize <= 0) return null;
+  const expectedOrigin = -claimSize / 2;
+  const expectedCellSize = claimSize / (columns - 1);
+  if (!approximately(value.cellSize, expectedCellSize) || !approximately(value.originX, expectedOrigin) || !approximately(value.originZ, expectedOrigin)) {
+    return null;
+  }
+  if (!value.heightDeltas.every((entry) => finiteInRange(entry, -AUTHORED_TERRAIN_MAX_DELTA, AUTHORED_TERRAIN_MAX_DELTA))) return null;
+  for (let row = 0; row < rows; row += 1) {
+    for (let column = 0; column < columns; column += 1) {
+      if (row !== 0 && row !== rows - 1 && column !== 0 && column !== columns - 1) continue;
+      if (value.heightDeltas[row * columns + column] !== 0) return null;
+    }
+  }
+  return structuredClone(value) as unknown as ContractAuthoredTerrainLayer;
+}
+
+function withoutAuthoredTerrain(value: Record<string, unknown>): Record<string, unknown> {
+  const copy = { ...value };
+  if (!isRecord(copy.tileParams)) return copy;
+  const tileParams = { ...copy.tileParams };
+  delete tileParams.authoredTerrain;
+  copy.tileParams = tileParams;
+  return copy;
+}
+
+function optionalDescriptorPath(path: string): boolean {
+  return path === 'tileParams.buildZones';
+}
+
+function variableDescriptorArrayShape(value: unknown, path: string): boolean | null {
+  if (path === 'tileParams.buildZones') {
+    if (value === undefined) return true;
+    if (!Array.isArray(value) || value.length > 32) return false;
+    const ids = new Set<string>();
+    return value.every((entry) => {
+      if (!exactRecord(entry, ['id', 'bank', 'minX', 'maxX', 'minZ', 'maxZ'])) return false;
+      if (!shortText(entry.id) || ids.has(entry.id)) return false;
+      ids.add(entry.id);
+      return (
+        (entry.bank === 'north' || entry.bank === 'south') &&
+        finiteInRange(entry.minX, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
+        finiteInRange(entry.maxX, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
+        finiteInRange(entry.minZ, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
+        finiteInRange(entry.maxZ, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
+        (entry.minX as number) <= (entry.maxX as number) &&
+        (entry.minZ as number) <= (entry.maxZ as number)
+      );
+    });
+  }
+  if (path === 'tileParams.waterSources') {
+    if (!Array.isArray(value) || value.length > 32) return false;
+    return value.every(
+      (entry) =>
+        exactRecord(entry, ['kind', 'x', 'z', 'radius']) &&
+        entry.kind === 'spring_pond' &&
+        finiteInRange(entry.x, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
+        finiteInRange(entry.z, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
+        finiteInRange(entry.radius, 0.01, 128),
+    );
+  }
+  if (path === 'tileParams.lanes.spawnEdges') {
+    if (!Array.isArray(value) || value.length < 1 || value.length > 4) return false;
+    return new Set(value).size === value.length && value.every((entry) => DESCRIPTOR_ENUMS['tileParams.lanes.spawnEdges[]']!.includes(entry as string));
+  }
+  return null;
+}
+
+function exactRecord(value: unknown, keys: readonly string[]): value is Record<string, unknown> {
+  return isRecord(value) && !Array.isArray(value) && Object.keys(value).length === keys.length && keys.every((key) => Object.hasOwn(value, key));
+}
+
+function shortText(value: unknown): value is string {
+  return typeof value === 'string' && value.trim().length > 0 && value.length <= 96;
+}
+
+function finiteInRange(value: unknown, min: number, max: number): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max;
+}
+
+function approximately(value: unknown, expected: number): boolean {
+  return typeof value === 'number' && Number.isFinite(value) && Math.abs(value - expected) <= 1e-9;
+}
+
+function contractEditorDocumentKey(contractId: string): string {
+  return `${CONTRACT_EDITOR_DOCUMENT_KEY}:${contractId}`;
 }
 
 function defaultContractFor(manifest: EpochManifest): ContractManifest {

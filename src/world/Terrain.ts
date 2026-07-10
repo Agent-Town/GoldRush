@@ -83,6 +83,7 @@ export const VISTA_RADIUS = 90;
 
 const ELEVATION_TILE = hasElevationTile();
 const TILE_HEIGHTFIELD = ACTIVE_CONTRACT.tileParams.heightfield;
+const AUTHORED_TERRAIN = ACTIVE_CONTRACT.tileParams.authoredTerrain;
 const TILE_PALETTE = ACTIVE_CONTRACT.tileParams.palette;
 const TILE_WATER = activeWaterDescriptor();
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
@@ -263,13 +264,31 @@ export function isWaterSourceAdjacent(x: number, z: number, pad: number): boolea
 }
 
 export function sampleHeight(x: number, z: number): number {
-  if (ELEVATION_TILE) return simHeight(x, z);
-  return sampleHeightFamily(THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX), THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ), false);
+  const base = ELEVATION_TILE
+    ? simHeight(x, z)
+    : sampleHeightFamily(THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX), THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ), false);
+  return AUTHORED_TERRAIN ? base + authoredTerrainDelta(x, z) : base;
 }
 
 export function sampleUnclampedHeight(x: number, z: number): number {
-  if (ELEVATION_TILE) return simHeight(x, z);
-  return sampleHeightFamily(x, z, true);
+  const base = ELEVATION_TILE ? simHeight(x, z) : sampleHeightFamily(x, z, true);
+  return AUTHORED_TERRAIN ? base + authoredTerrainDelta(x, z) : base;
+}
+
+function authoredTerrainDelta(x: number, z: number): number {
+  if (!AUTHORED_TERRAIN) return 0;
+  const gridX = (x - AUTHORED_TERRAIN.originX) / AUTHORED_TERRAIN.cellSize;
+  const gridZ = (z - AUTHORED_TERRAIN.originZ) / AUTHORED_TERRAIN.cellSize;
+  if (gridX < 0 || gridZ < 0 || gridX > AUTHORED_TERRAIN.columns - 1 || gridZ > AUTHORED_TERRAIN.rows - 1) return 0;
+
+  const x0 = Math.floor(gridX);
+  const z0 = Math.floor(gridZ);
+  const x1 = Math.min(x0 + 1, AUTHORED_TERRAIN.columns - 1);
+  const z1 = Math.min(z0 + 1, AUTHORED_TERRAIN.rows - 1);
+  const at = (column: number, row: number) => AUTHORED_TERRAIN.heightDeltas[row * AUTHORED_TERRAIN.columns + column]!;
+  const north = THREE.MathUtils.lerp(at(x0, z0), at(x1, z0), gridX - x0);
+  const south = THREE.MathUtils.lerp(at(x0, z1), at(x1, z1), gridX - x0);
+  return THREE.MathUtils.lerp(north, south, gridZ - z0);
 }
 
 export function routingLaneDistance(x: number, z: number): number {

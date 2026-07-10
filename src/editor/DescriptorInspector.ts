@@ -1,11 +1,14 @@
 import {
   CONTRACT_EDITOR_PARAM,
   CONTRACT_EDITOR_REJECTION_LINE,
+  CONTRACT_EDITOR_SESSION_REF,
   contractDescriptorJson,
   contractNumberRange,
   activeContract,
   loadContract,
   parseContractDescriptor,
+  readContractEditorDocument,
+  stageContractEditorDocument,
   type ContractManifest,
 } from '../meta/ContractFamilies';
 import './descriptor-inspector.css';
@@ -50,9 +53,6 @@ export function installDescriptorInspector(root: HTMLElement): void {
     </section>`;
 
   shell.querySelector<HTMLElement>('[data-testid="editor-contract-name"]')!.textContent = `${contract.name} · ${contract.id}`;
-  const fields = shell.querySelector<HTMLElement>('[data-testid="editor-fields"]')!;
-  renderSections(fields, contract, () => applyDescriptor(contract));
-
   const status = shell.querySelector<HTMLElement>('[data-testid="editor-status"]')!;
   const rejection = shell.querySelector<HTMLElement>('[data-testid="editor-rejection"]')!;
   const textarea = shell.querySelector<HTMLTextAreaElement>('[data-testid="editor-import-text"]')!;
@@ -61,6 +61,13 @@ export function installDescriptorInspector(root: HTMLElement): void {
     rejection.textContent = message;
     status.textContent = 'The open contract was left untouched.';
   };
+  const apply = (next: ContractManifest): boolean => {
+    const accepted = applyDescriptor(next, template);
+    if (!accepted) showRejection(CONTRACT_EDITOR_REJECTION_LINE);
+    return accepted;
+  };
+  const fields = shell.querySelector<HTMLElement>('[data-testid="editor-fields"]')!;
+  renderSections(fields, contract, () => apply(contract));
   const importText = (text: string) => {
     const parsed = parseContractDescriptor(text, template);
     if (!parsed.ok) {
@@ -69,7 +76,7 @@ export function installDescriptorInspector(root: HTMLElement): void {
     }
     rejection.hidden = true;
     status.textContent = 'Applying the imported descriptor…';
-    applyDescriptor(parsed.contract);
+    apply(parsed.contract);
   };
 
   shell.querySelector<HTMLButtonElement>('[data-testid="editor-copy"]')!.addEventListener('click', async () => {
@@ -96,19 +103,26 @@ export function installDescriptorInspector(root: HTMLElement): void {
 
   root.append(shell);
   const rawOverride = new URLSearchParams(location.search).get(CONTRACT_EDITOR_PARAM);
-  if (rawOverride && !parseContractDescriptor(rawOverride, template).ok) showRejection(CONTRACT_EDITOR_REJECTION_LINE);
+  const staged = rawOverride === null || rawOverride === CONTRACT_EDITOR_SESSION_REF ? readContractEditorDocument(template) : null;
+  const invalidSessionRef = rawOverride === CONTRACT_EDITOR_SESSION_REF && staged?.ok !== true;
+  if ((rawOverride !== null && rawOverride !== CONTRACT_EDITOR_SESSION_REF && !parseContractDescriptor(rawOverride, template).ok) || staged?.ok === false || invalidSessionRef) {
+    showRejection(CONTRACT_EDITOR_REJECTION_LINE);
+  }
   window.__GR_EDITOR__ = { descriptorJson: () => contractDescriptorJson(contract), wavesPaused: true };
 }
 
-function renderSections(root: HTMLElement, contract: ContractManifest, apply: () => void): void {
+function renderSections(root: HTMLElement, contract: ContractManifest, apply: () => boolean): void {
   const tileParams = contract.tileParams as JsonRecord;
   const basics: JsonRecord = {};
   for (const [key, value] of Object.entries(tileParams)) {
     if (isLeaf(value) || isColorTuple(key, value)) basics[key] = value;
   }
-  const commit = () => {
+  const commit = (): boolean => {
+    const previous = Object.fromEntries(Object.keys(basics).map((key) => [key, tileParams[key]]));
     Object.assign(tileParams, basics);
-    apply();
+    if (apply()) return true;
+    Object.assign(tileParams, previous);
+    return false;
   };
   root.append(section('Tile', basics, 'tileParams', commit));
   for (const [key, value] of Object.entries(tileParams)) {
@@ -117,7 +131,7 @@ function renderSections(root: HTMLElement, contract: ContractManifest, apply: ()
   }
 }
 
-function section(title: string, value: unknown, path: string, apply: () => void): HTMLElement {
+function section(title: string, value: unknown, path: string, apply: () => boolean): HTMLElement {
   const details = document.createElement('details');
   details.className = 'descriptor-inspector__section';
   details.dataset.editorPath = path;
@@ -129,7 +143,7 @@ function section(title: string, value: unknown, path: string, apply: () => void)
   return details;
 }
 
-function renderValue(root: HTMLElement, value: unknown, path: string, apply: () => void): void {
+function renderValue(root: HTMLElement, value: unknown, path: string, apply: () => boolean): void {
   if (Array.isArray(value)) {
     if (isColorTuple(path.split('.').at(-1) ?? '', value)) {
       root.append(colorControl(value, path, apply));
@@ -158,7 +172,7 @@ function renderValue(root: HTMLElement, value: unknown, path: string, apply: () 
   }
 }
 
-function control(owner: JsonRecord, key: string, path: string, value: unknown, apply: () => void, name = label(key)): HTMLElement {
+function control(owner: JsonRecord, key: string, path: string, value: unknown, apply: () => boolean, name = label(key)): HTMLElement {
   const row = document.createElement('label');
   row.className = 'descriptor-inspector__control';
   row.append(Object.assign(document.createElement('span'), { textContent: name }));
@@ -168,8 +182,12 @@ function control(owner: JsonRecord, key: string, path: string, value: unknown, a
     select.dataset.editorPath = path;
     choices.forEach((choice) => select.add(new Option(label(choice), choice, false, choice === value)));
     select.addEventListener('change', () => {
+      const previous = owner[key];
       owner[key] = select.value;
-      apply();
+      if (!apply()) {
+        owner[key] = previous;
+        select.value = String(previous);
+      }
     });
     row.append(select);
   } else if (typeof value === 'boolean') {
@@ -178,8 +196,12 @@ function control(owner: JsonRecord, key: string, path: string, value: unknown, a
     input.checked = value;
     input.dataset.editorPath = path;
     input.addEventListener('change', () => {
+      const previous = owner[key];
       owner[key] = input.checked;
-      apply();
+      if (!apply()) {
+        owner[key] = previous;
+        input.checked = Boolean(previous);
+      }
     });
     row.append(input);
   } else if (typeof value === 'number') {
@@ -187,8 +209,16 @@ function control(owner: JsonRecord, key: string, path: string, value: unknown, a
     const slider = numberInput('range', value, range, path);
     const number = numberInput('number', value, range, path);
     slider.addEventListener('input', () => { number.value = slider.value; });
-    slider.addEventListener('change', () => { owner[key] = Number(slider.value); apply(); });
-    number.addEventListener('change', () => { owner[key] = Number(number.value); apply(); });
+    const commitNumber = (next: string) => {
+      const previous = owner[key];
+      owner[key] = Number(next);
+      if (apply()) return;
+      owner[key] = previous;
+      slider.value = String(previous);
+      number.value = String(previous);
+    };
+    slider.addEventListener('change', () => commitNumber(slider.value));
+    number.addEventListener('change', () => commitNumber(number.value));
     const pair = document.createElement('span');
     pair.className = 'descriptor-inspector__number';
     pair.append(slider, number);
@@ -199,15 +229,19 @@ function control(owner: JsonRecord, key: string, path: string, value: unknown, a
     input.value = String(value);
     input.dataset.editorPath = path;
     input.addEventListener('change', () => {
+      const previous = owner[key];
       owner[key] = input.value;
-      apply();
+      if (!apply()) {
+        owner[key] = previous;
+        input.value = String(previous);
+      }
     });
     row.append(input);
   }
   return row;
 }
 
-function colorControl(value: number[], path: string, apply: () => void): HTMLElement {
+function colorControl(value: number[], path: string, apply: () => boolean): HTMLElement {
   const row = document.createElement('label');
   row.className = 'descriptor-inspector__control';
   row.append(Object.assign(document.createElement('span'), { textContent: label(path.split('.').at(-1) ?? 'color') }));
@@ -216,9 +250,13 @@ function colorControl(value: number[], path: string, apply: () => void): HTMLEle
   input.value = rgbToHex(value);
   input.dataset.editorPath = path;
   input.addEventListener('change', () => {
+    const previous = [...value];
     const rgb = hexToRgb(input.value);
     value.splice(0, 3, ...rgb);
-    apply();
+    if (!apply()) {
+      value.splice(0, 3, ...previous);
+      input.value = rgbToHex(previous);
+    }
   });
   row.append(input);
   return row;
@@ -235,12 +273,15 @@ function numberInput(type: 'range' | 'number', value: number, range: ReturnType<
   return input;
 }
 
-function applyDescriptor(contract: ContractManifest): void {
+function applyDescriptor(contract: ContractManifest, template: ContractManifest): boolean {
+  const staged = stageContractEditorDocument(contractDescriptorJson(contract), template);
+  if (!staged.ok) return false;
   const url = new URL(location.href);
   url.searchParams.set('editor', '');
   url.searchParams.set('contract', contract.id);
-  url.searchParams.set(CONTRACT_EDITOR_PARAM, contractDescriptorJson(contract));
+  url.searchParams.set(CONTRACT_EDITOR_PARAM, CONTRACT_EDITOR_SESSION_REF);
   location.replace(url);
+  return true;
 }
 
 function downloadDescriptor(contract: ContractManifest): void {
