@@ -29,3 +29,10 @@ QUOTE: town_storekeeper: If you can count it, I can stock it.
 QUOTE: town_schoolteacher: A good question is a lantern.
 QUOTE: town_youngster_a: I found a shiny rock. It is probably science.
 QUOTE: town_youngster_b: If the Baron comes, he has to do sums first.
+
+## THE NEWSIE — the Herald's voice (RULED 2026-07-10, owner verbatim: 'new kid, different heritage, should be a girl, lots of men in this town')
+FACTS: a NEW character (not Pip, not Juniper, not a youngster variant): a girl, different heritage from the founding cast — SEED NAME **MEI** (gold-rush-era Chinese-American heritage, historically true to the rushes and honoring it warmly; owner may rename with one word). Cap, satchel of papers, quick on the plaza; anchors at the Pony Express Station porch when it builds (heritage §5). Voice: sharp, fast, first with the news. Placeholder-first: youngster-f sheet tinted until her turnaround + walk8 ship (art follow-up).
+ARC (PLANNED): E1 plaza newsie → the Gazette House's first editor (E2+) → the E7 signal era's exchange operator — the message lineage personified.
+
+## MARKETING KIDS-RULE (CLARIFIED 2026-07-10, owner verbatim: 'nono, this is all good - this is no problem, don't overrate it')
+Fictional youngsters MAY appear in marketing/media. The privacy law only ever meant the owner's REAL family (capture-profile law). MINORS-CLOTHED law unchanged.
