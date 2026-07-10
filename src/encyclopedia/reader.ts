@@ -13,9 +13,11 @@ type OpenClaimLedgerOptions = {
 let currentRoot: HTMLElement | null = null;
 let currentClose: (() => void) | undefined;
 let currentLiveReads: (() => void)[] = [];
+let currentRestoreFocus: HTMLElement | null = null;
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   closeClaimLedger(false);
+  currentRestoreFocus = document.activeElement instanceof HTMLElement ? document.activeElement : null;
   const root = document.createElement('section');
   currentRoot = root;
   currentClose = options.onClose;
@@ -40,12 +42,15 @@ export function closeClaimLedger(notify = true): void {
   currentRoot = null;
   const onClose = currentClose;
   const liveReads = currentLiveReads;
+  const restoreFocus = currentRestoreFocus;
   currentClose = undefined;
   currentLiveReads = [];
+  currentRestoreFocus = null;
   for (const dispose of liveReads) dispose();
   root.removeEventListener('click', onLedgerClick);
   root.removeEventListener('keydown', onLedgerKeyDown);
   root.remove();
+  if (notify && restoreFocus?.isConnected) restoreFocus.focus({ preventScroll: true });
   if (notify) onClose?.();
 }
 
@@ -188,9 +193,32 @@ function onLedgerClick(event: MouseEvent): void {
 }
 
 function onLedgerKeyDown(event: KeyboardEvent): void {
+  if (event.key === 'Tab') {
+    trapLedgerFocus(event);
+    return;
+  }
   if (event.key !== 'Escape') return;
   event.preventDefault();
+  event.stopPropagation();
   closeClaimLedger();
+}
+
+function trapLedgerFocus(event: KeyboardEvent): void {
+  const root = currentRoot;
+  if (!root) return;
+  const focusable = Array.from(
+    root.querySelectorAll<HTMLElement>('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'),
+  ).filter((element) => !element.hasAttribute('disabled') && !element.hidden);
+  if (focusable.length === 0) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last.focus({ preventScroll: true });
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first.focus({ preventScroll: true });
+  }
 }
 
 function escapeHtml(value: string): string {
