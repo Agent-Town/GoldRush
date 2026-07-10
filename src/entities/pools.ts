@@ -472,6 +472,7 @@ export class EnemyPool {
         onContact(enemy);
       }
     }
+    this.syncEnemyFog();
     this.syncRenderInstances();
     this.syncHitFlashes();
     const normalAnimation = this.activeAnimation(false);
