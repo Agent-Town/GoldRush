@@ -8,7 +8,7 @@ import {
 import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
-import { readRunSuspend } from '../../game/RunSuspend';
+import { readRunSuspend, readRunSuspendRejection } from '../../game/RunSuspend';
 import { loadContract } from '../../meta/ContractFamilies';
 import { readTownName } from '../../town/TownNaming';
 import { accountSync } from '../../game/AccountSync';
@@ -75,6 +75,7 @@ export class StartMenu {
     this.disposeAudioSettings();
     this.disposeStorySettings();
     const suspend = readRunSuspend();
+    const suspendRejection = readRunSuspendRejection();
     const account = accountSync.snapshot();
     const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
     this.root.className = 'gr-start-menu';
@@ -85,6 +86,7 @@ export class StartMenu {
         <h1 data-testid="start-menu-wordmark">GOLD RUSH</h1>
         <p class="gr-start-menu__subtitle">an Agent Town tale</p>
         ${suspend ? `<p class="gr-start-menu__saved-claim" data-testid="start-menu-saved-claim">${escapeHtml(savedClaimLabel(suspend))}</p>` : ''}
+        ${suspendRejection ? `<p class="gr-start-menu__saved-claim gr-start-menu__saved-claim--rejected" data-testid="start-menu-rejected-claim">${escapeHtml(suspendRejection.message)}</p>` : ''}
         <p class="gr-account-chip gr-account-chip--menu" data-testid="account-status-chip">${escapeHtml(account.label)}</p>
         ${
           this.firstBoot
