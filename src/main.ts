@@ -69,6 +69,9 @@ function startGame(): void {
   applyUpgradeBudgetsFromBalance();
   game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback);
   game.start();
+  if (currentSearch.has('editor')) {
+    void import('./editor/DescriptorInspector').then(({ installDescriptorInspector }) => installDescriptorInspector(app));
+  }
   releaseStartupAssetGateOnFirstGameFrame();
   installWaveTelegraphPrefetch();
   afterFirstFrame(() => {
