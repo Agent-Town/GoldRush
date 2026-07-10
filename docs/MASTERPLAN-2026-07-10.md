@@ -29,3 +29,14 @@ OWNER-ONLY: ceremonies, verdicts, legal, posting, play.
 
 ## Next 72 hours, concretely
 072 lands → E2 CEREMONY (evening 1) → WP-E3 auto-fires · Sol finishes fixed-step → feel A/B verdict → snapshot v2 · swarm + pass-2 triage → correctives stream · TS-01 + GZ-H1 queued · MP-05 when the family's free · funnel flips → posts go out.
+
+## AMENDMENT v2 — Sol's review folded in (2026-07-10, reviews/sol-findings-masterplan.md; verdict NEEDS REVISION, granted)
+1. **THE EPOCH SUBSTRATE is the new critical path (MP-001, P0):** 072 = the E1→E2 vertical slice, NOT the spine — activateEpoch() hard-rejects E3+, era research nodes have no manifest socket. INSERT before WP-E3: generic epoch substrate (manifest-declared research nodes/thresholds, data-driven megaproject+transition targets, generic activation, migration rules, one E2→E3 proof). Attended spec-let next; likely Sol brief #4.
+2. **Engine-spec lane one epoch ahead (MP-002):** bundles are creative banks; each era gets substrate/integration/content/transition/acceptance slices, spec'd one era ahead. 'Auto-fire' applies to art/data/content only.
+3. **Thread D corrected (MP-003, P0):** non-movement MP actions currently collapse to the FIRST actor with any intent; late-join lacks the room tick; relay recovery trusts any peer. Family sessions now = DISCOVERY ONLY; formal MP-05 after fixed-step + snapshot v2 + sol/lockstep-actions + authoritative join/resync + green production worker harness.
+4. **Saves = five surfaces (MP-004):** versioned run state · transactional import (✅ 076 landed post-review) · blank-device family-profile discovery · bounded/flushable cloud sync (page-exit flush!) · concurrent version recovery. Snapshot v2 is one gate of five.
+5. **TIME v1 RESTORED to Thread A (MP-005):** docs/VISION-EPOCHS.md is binding — calendar, aging, succession are pillars; no lineage mutation ships until the owner rules cadence/consent/permanence. OWNER DESIGN SESSION required before any E2-era lineage content.
+6. **A whole-product FAMILY GATE before scaling E3 (MP-006):** fresh profile, unaided town→board→contract→build→return→save/reopen→voluntary second session. Product acceptance, distinct from era ceremonies.
+7. Finished ≠ public (MP-007): the public gate stays Thread E with its own checklist.
+8. Spare subs: batch/audit FIRST, file-disjoint implementation second (Sol concurs with runbook §E).
+E3 NOTE: the deterministic graph solver is ALREADY MERGED dormant (6/6 gates) — E3's hard part is integration, not the solver.
