@@ -51,6 +51,9 @@ if (initialSearch.get('bench') === 'fullbase') {
 }
 
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
+if (initialSearch.has('debug') && initialSearch.has('playbook')) {
+  void import('./spikes/playbook/PlaybookLab').then(({ installPlaybookLab }) => installPlaybookLab(app));
+}
 accountSync.install();
 let game: Game | undefined;
 let assayBench: AssayBench | undefined;
