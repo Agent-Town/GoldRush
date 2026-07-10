@@ -38,6 +38,14 @@ export class LightRig {
   private readonly duskFog = new THREE.Color('#8b6c6c');
   private readonly darkFog = new THREE.Color('#000000');
   private readonly dawnFog = new THREE.Color('#f5d7b2');
+  private readonly daySun = new THREE.Color('#ffd28a');
+  private readonly dawnSun = new THREE.Color('#ffd6a2');
+  private readonly darkSun = new THREE.Color('#40516f');
+  private readonly dayFill = new THREE.Color('#fff2cc');
+  private readonly darkFill = new THREE.Color('#28324a');
+  private readonly dayGround = new THREE.Color('#8b6c3f');
+  private readonly dawnGround = new THREE.Color('#a6815c');
+  private readonly darkGround = new THREE.Color('#000000');
   private readonly blobShadows = new SpriteBlobShadows();
   private readonly post = new LedgerPostPass();
   private currentShadowMapSize = -1;
@@ -141,10 +149,10 @@ export class LightRig {
     if (!this.nightShift.enabled) {
       this.background.copy(this.dayBackground);
       this.fog.color.copy(this.dayFog);
-      this.sun.color.set('#ffd28a');
+      this.sun.color.copy(this.daySun);
       this.sun.intensity = 2.35;
-      this.fill.color.set('#fff2cc');
-      this.fill.groundColor.set('#8b6c3f');
+      this.fill.color.copy(this.dayFill);
+      this.fill.groundColor.copy(this.dayGround);
       this.fill.intensity = 1.12;
       return;
     }
@@ -152,10 +160,10 @@ export class LightRig {
     if (this.nightShift.phase === 'dawn') {
       this.background.copy(this.dawnBackground);
       this.fog.color.copy(this.dawnFog);
-      this.sun.color.set('#ffd6a2');
+      this.sun.color.copy(this.dawnSun);
       this.sun.intensity = 2.05;
-      this.fill.color.set('#fff2cc');
-      this.fill.groundColor.set('#a6815c');
+      this.fill.color.copy(this.dayFill);
+      this.fill.groundColor.copy(this.dawnGround);
       this.fill.intensity = 1.2;
       return;
     }
@@ -164,10 +172,10 @@ export class LightRig {
     const targetFog = this.nightShift.phase === 'dusk' ? this.duskFog : this.darkFog;
     this.background.copy(this.dayBackground).lerp(targetBackground, darkness);
     this.fog.color.copy(this.dayFog).lerp(targetFog, darkness);
-    this.sun.color.set('#ffd28a').lerp(new THREE.Color('#40516f'), darkness);
+    this.sun.color.copy(this.daySun).lerp(this.darkSun, darkness);
     this.sun.intensity = THREE.MathUtils.lerp(2.35, 0, darkness);
-    this.fill.color.set('#fff2cc').lerp(new THREE.Color('#28324a'), darkness);
-    this.fill.groundColor.set('#8b6c3f').lerp(new THREE.Color('#000000'), darkness);
+    this.fill.color.copy(this.dayFill).lerp(this.darkFill, darkness);
+    this.fill.groundColor.copy(this.dayGround).lerp(this.darkGround, darkness);
     this.fill.intensity = THREE.MathUtils.lerp(1.12, 0, darkness);
   }
 }
