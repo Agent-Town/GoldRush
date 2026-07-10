@@ -1,4 +1,4 @@
-import { emitStorySignal } from '../story/signals';
+import { emitStorySignal, onStorySignal } from '../story/signals';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from './storage';
 import { installLedgerBeatClick } from './events';
 import {
@@ -7,6 +7,7 @@ import {
   contractLedgerEntryById,
   enemyStatsDiscoveryByEntryId,
   enemyStatsDiscoveryIds,
+  epochLedgerEntryByIdForEpoch,
   ledgerEntryNameForDiscoveryId,
   ledgerEntries,
   townActorLedgerEntryById,
@@ -20,6 +21,7 @@ import type { TownActorId } from '../town/townsfolk';
 const validEntryIds = new Set<LedgerEntryId>(ledgerEntries.map((entry) => entry.id));
 const validDiscoveryIds = new Set<LedgerDiscoveryId>([...validEntryIds, ...enemyStatsDiscoveryIds]);
 const alwaysDiscovered = new Set<LedgerEntryId>(alwaysDiscoveredEntryIds);
+let epochDiscoveryInstalled = false;
 
 export type LedgerEnemySource = {
   eliteKind?: string | null;
@@ -34,8 +36,8 @@ export function readLedgerDiscovered(storage = browserStorage()): Set<LedgerDisc
 
 export function discoverLedgerEntry(id: LedgerDiscoveryId, storage = browserStorage()): boolean {
   if (!storage || !validDiscoveryIds.has(id)) return false;
-  const stored = readStoredDiscoveryValues(storage);
-  const known = new Set<string>([...alwaysDiscoveredEntryIds, ...stored]);
+  const stored = readStoredDiscovered(storage);
+  const known = new Set([...alwaysDiscoveredEntryIds, ...stored]);
   if (known.has(id)) return false;
   const next = [...stored, id];
   try {
@@ -59,6 +61,23 @@ export function discoverLedgerContract(id: string): boolean {
   return entryId ? discoverLedgerEntry(entryId) : false;
 }
 
+export function discoverLedgerEpoch(id: string): boolean {
+  const entryId = epochLedgerEntryByIdForEpoch[id];
+  return entryId ? discoverLedgerEntry(entryId) : false;
+}
+
+export function installEpochLedgerDiscovery(): () => void {
+  if (epochDiscoveryInstalled) return () => undefined;
+  epochDiscoveryInstalled = true;
+  const unsubscribe = onStorySignal((signal) => {
+    if (signal.type === 'epoch-activated') discoverLedgerEpoch(signal.epochId);
+  });
+  return () => {
+    epochDiscoveryInstalled = false;
+    unsubscribe();
+  };
+}
+
 export function discoverLedgerTownActor(id: TownActorId): boolean {
   const entryId = townActorLedgerEntryById[id];
   return entryId ? discoverLedgerEntry(entryId) : false;
@@ -76,19 +95,13 @@ export function revealLedgerEnemyStats(id: EnemyLedgerEntryId): boolean {
 }
 
 function readStoredDiscovered(storage = browserStorage()): LedgerDiscoveryId[] {
-  return readStoredDiscoveryValues(storage).filter(
-    (id): id is LedgerDiscoveryId => validDiscoveryIds.has(id as LedgerDiscoveryId) && !alwaysDiscovered.has(id as LedgerEntryId),
-  );
-}
-
-function readStoredDiscoveryValues(storage = browserStorage()): string[] {
   if (!storage) return [];
   try {
     const raw = storage.getItem(LEDGER_DISCOVERED_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return [...new Set(parsed.filter((id): id is string => typeof id === 'string' && !alwaysDiscovered.has(id as LedgerEntryId)))];
+    return parsed.filter((id): id is LedgerDiscoveryId => validDiscoveryIds.has(id) && !alwaysDiscovered.has(id as LedgerEntryId));
   } catch {
     return [];
   }
