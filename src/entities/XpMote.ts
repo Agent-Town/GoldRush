@@ -14,8 +14,11 @@ export class XpMotePool {
 
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
+  private readonly previousActive: boolean[] = [];
+  private readonly previousPositions: THREE.Vector3[] = [];
   private readonly values: number[] = [];
   private readonly age: number[] = [];
+  private readonly previousAge: number[] = [];
   private readonly geometry = new THREE.TetrahedronGeometry(0.16, 0);
   private readonly material = new THREE.MeshStandardMaterial({
     color: '#a8fff4',
@@ -38,8 +41,11 @@ export class XpMotePool {
     for (let i = 0; i < Balance.xp.motePool; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
+      this.previousActive.push(false);
+      this.previousPositions.push(new THREE.Vector3());
       this.values.push(0);
       this.age.push(0);
+      this.previousAge.push(0);
       this.hide(i);
     }
     this.mesh.instanceMatrix.needsUpdate = true;
@@ -55,6 +61,7 @@ export class XpMotePool {
       const motePosition = this.positions[i];
       if (!motePosition) return false;
       this.active[i] = true;
+      this.previousActive[i] = false;
       this.values[i] = value;
       this.age[i] = 0;
       this.alive += 1;
@@ -99,10 +106,40 @@ export class XpMotePool {
         position.z += (dz / distance) * speed * delta;
       }
       position.y = Terrain.visualY(position.x, position.z, 0.52 + Math.sin((this.age[i] ?? 0) * 8) * 0.07);
-      this.sync(i);
     }
     this.mesh.instanceMatrix.needsUpdate = true;
     return gained;
+  }
+
+  captureRenderState(): void {
+    for (let i = 0; i < this.active.length; i += 1) {
+      this.previousActive[i] = this.active[i] === true;
+      this.previousPositions[i]?.copy(this.positions[i] ?? this.previousPositions[i]!);
+      this.previousAge[i] = this.age[i] ?? 0;
+    }
+  }
+
+  applyRenderInterpolation(alpha: number): void {
+    const amount = THREE.MathUtils.clamp(alpha, 0, 1);
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i]) continue;
+      const position = this.positions[i];
+      const previous = this.previousPositions[i];
+      if (!position || !previous || !this.previousActive[i]) {
+        this.sync(i);
+        continue;
+      }
+      const x = position.x;
+      const y = position.y;
+      const z = position.z;
+      const currentAge = this.age[i] ?? 0;
+      position.lerpVectors(previous, position, amount);
+      this.age[i] = THREE.MathUtils.lerp(this.previousAge[i] ?? currentAge, currentAge, amount);
+      this.sync(i);
+      position.set(x, y, z);
+      this.age[i] = currentAge;
+    }
+    this.mesh.instanceMatrix.needsUpdate = true;
   }
 
   hasCollectible(minAgeS: number, from: THREE.Vector3, maxDistance: number): boolean {
@@ -154,6 +191,7 @@ export class XpMotePool {
   recycleAll(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
+      this.previousActive[i] = false;
       this.values[i] = 0;
       this.age[i] = 0;
       this.hide(i);

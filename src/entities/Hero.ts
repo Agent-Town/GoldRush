@@ -14,8 +14,10 @@ export type TerrainSampler = (x: number, z: number) => TerrainSample;
 export class Hero {
   readonly group = new THREE.Group();
   readonly velocity = new THREE.Vector3();
+  readonly renderPosition = new THREE.Vector3();
   hp: number = Balance.hero.maxHp;
 
+  private readonly interpolationGroup = new THREE.Group();
   private readonly visualGroup = new THREE.Group();
   private readonly placeholderGroup = new THREE.Group();
   private readonly generatedSprite: GeneratedSprite;
@@ -27,6 +29,8 @@ export class Hero {
   private moveSpeedMult = 1;
   private readonly targetVelocity = new THREE.Vector3();
   private readonly nextPosition = new THREE.Vector3();
+  private readonly previousPosition = new THREE.Vector3();
+  private previousRotationY = 0;
   private iframeRemaining = 0;
   private readonly bodyGeometry = new THREE.CapsuleGeometry(0.34, 0.78, 8, 16);
   private readonly coatGeometry = new THREE.BoxGeometry(0.42, 0.34, 0.12);
@@ -58,6 +62,7 @@ export class Hero {
 
   constructor() {
     this.group.name = 'HomesteaderHero';
+    this.interpolationGroup.name = 'HomesteaderHeroInterpolation';
     this.visualGroup.name = 'HomesteaderHeroVisuals';
     this.placeholderGroup.name = 'HomesteaderHeroPlaceholder';
 
@@ -87,7 +92,8 @@ export class Hero {
 
     this.placeholderGroup.add(body, coat, brim, hat, lamp, glow);
     this.visualGroup.add(this.placeholderGroup);
-    this.group.add(this.visualGroup);
+    this.interpolationGroup.add(this.visualGroup);
+    this.group.add(this.interpolationGroup);
     this.generatedSprite = attachGeneratedSprite(this.visualGroup, assetSlots.charHero, {
       name: 'GeneratedHeroHomesteader',
       position: [0, 0.9, 0],
@@ -103,6 +109,7 @@ export class Hero {
       this.generatedSprite.sprite,
     );
     tagPlaceholder(this.group, assetSlots.charHero);
+    this.snapRenderState();
   }
 
   update(dt: number, intents: Intents, terrain: { bounds: TerrainBounds; sample: TerrainSampler }): void {
@@ -173,6 +180,38 @@ export class Hero {
     return Balance.hero.maxHp + this.maxHpBonus;
   }
 
+  captureRenderState(): void {
+    this.previousPosition.copy(this.group.position);
+    this.previousRotationY = this.group.rotation.y;
+  }
+
+  applyRenderInterpolation(alpha: number, terrainHeightAt: (x: number, z: number) => number): void {
+    const amount = THREE.MathUtils.clamp(alpha, 0, 1);
+    this.renderPosition.lerpVectors(this.previousPosition, this.group.position, amount);
+    this.renderPosition.y = terrainHeightAt(this.renderPosition.x, this.renderPosition.z);
+
+    const currentRotation = this.group.rotation.y;
+    const worldOffsetX = this.renderPosition.x - this.group.position.x;
+    const worldOffsetZ = this.renderPosition.z - this.group.position.z;
+    const cos = Math.cos(currentRotation);
+    const sin = Math.sin(currentRotation);
+    this.interpolationGroup.position.set(
+      worldOffsetX * cos - worldOffsetZ * sin,
+      this.renderPosition.y - this.group.position.y,
+      worldOffsetX * sin + worldOffsetZ * cos,
+    );
+    const renderRotation = this.previousRotationY + signedAngleDeltaRadians(this.previousRotationY, currentRotation) * amount;
+    this.interpolationGroup.rotation.y = signedAngleDeltaRadians(currentRotation, renderRotation);
+  }
+
+  snapRenderState(): void {
+    this.previousPosition.copy(this.group.position);
+    this.previousRotationY = this.group.rotation.y;
+    this.renderPosition.copy(this.group.position);
+    this.interpolationGroup.position.set(0, 0, 0);
+    this.interpolationGroup.rotation.set(0, 0, 0);
+  }
+
   get hasIframes(): boolean {
     return this.iframeRemaining > 0;
   }
@@ -212,6 +251,7 @@ export class Hero {
     this.group.rotation.y = 0;
     this.spriteAnimator.reset('idle');
     this.applyProceduralMotion();
+    this.snapRenderState();
   }
 
   setIdentityTint(tint: string | null): void {
@@ -276,6 +316,10 @@ function normalizeDegrees(degrees: number): number {
 function signedAngleDelta(from: number, to: number): number {
   const delta = ((to - from + 540) % 360) - 180;
   return delta === -180 ? 180 : delta;
+}
+
+function signedAngleDeltaRadians(from: number, to: number): number {
+  return Math.atan2(Math.sin(to - from), Math.cos(to - from));
 }
 
 function finiteOrZero(value: number): number {

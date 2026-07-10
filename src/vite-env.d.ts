@@ -11,6 +11,16 @@ interface ThreeGameDiagnostics {
   frame: number;
   elapsed: number;
   timeAlive: number;
+  simulation: {
+    tick: number;
+    fixed: boolean;
+    stepSeconds: number;
+    alpha: number;
+    stepsLastFrame: number;
+    totalSteps: number;
+    droppedSeconds: number;
+    droppedTicks: number;
+  };
   runState: 'boot' | 'playing' | 'levelup' | 'dead';
   paused: boolean;
   state: 'boot' | 'playing' | 'levelup' | 'dead' | 'paused';
@@ -162,6 +172,7 @@ interface ThreeGameDiagnostics {
   targetScore: number;
   complete: boolean;
   heroPos: { x: number; y: number; z: number };
+  heroRenderPos: { x: number; y: number; z: number };
   speed: number;
   player: {
     position: { x: number; y: number; z: number };
@@ -882,6 +893,19 @@ interface Window {
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     setManualSim: (enabled: boolean) => boolean;
     advanceSim: (seconds: number, stepSeconds?: number) => void;
+    driveRenderSchedule: (seconds: number, renderFps: number) => {
+      renderFrames: number;
+      simTicks: number;
+      loop: {
+        fixed: boolean;
+        stepSeconds: number;
+        alpha: number;
+        stepsLastFrame: number;
+        totalSteps: number;
+        droppedSeconds: number;
+        droppedTicks: number;
+      };
+    };
     resetRun: () => void;
     endRunForTest: () => void;
     toggleWeapon: () => 'rig' | 'blast';

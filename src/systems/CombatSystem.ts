@@ -230,6 +230,18 @@ export class CombatSystem {
     if (gained > 0) this.xp += gained;
   }
 
+  captureRenderState(): void {
+    this.projectiles.captureRenderState();
+    this.blastCharges.captureRenderState();
+    this.motes.captureRenderState();
+  }
+
+  applyRenderInterpolation(alpha: number): void {
+    this.projectiles.applyRenderInterpolation(alpha);
+    this.blastCharges.applyRenderInterpolation(alpha);
+    this.motes.applyRenderInterpolation(alpha);
+  }
+
   hasProspectorXp(options: AgentCollectXpOptions, agentPosition: THREE.Vector3): boolean {
     return this.motes.hasCollectible(options.minAgeS, agentPosition, Balance.sparkRig.range);
   }
@@ -369,7 +381,6 @@ export class CombatSystem {
 
       this.emitVolley(state, origin, target);
       state.timer += handle.cooldown;
-      if (state.timer < 0) state.timer = handle.cooldown;
     }
   }
 

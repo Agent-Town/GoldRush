@@ -28,7 +28,9 @@ type FloatText = (position: THREE.Vector3, text: string, color: string) => void;
 
 export class ProspectorEmbodiment {
   readonly group = new THREE.Group();
+  readonly renderPosition = new THREE.Vector3();
 
+  private readonly visualGroup = new THREE.Group();
   private readonly material = new THREE.SpriteMaterial({
     transparent: true,
     alphaTest: 0.04,
@@ -40,10 +42,12 @@ export class ProspectorEmbodiment {
   private readonly orientationResolver = new OrientationResolver();
   private readonly target = new THREE.Vector3(Balance.agent.homeX, 0, Balance.agent.homeZ);
   private readonly idleTarget = new THREE.Vector3(Balance.agent.homeX, 0, Balance.agent.homeZ);
+  private readonly previousPosition = new THREE.Vector3();
   private currentDirection: RotationDirection = 's';
   private moving = false;
   private drifting = false;
   private workRemaining = 0;
+  private presentationAt = 0;
   private nextWorkSeconds: number = Balance.agent.workSeconds;
   private nextSurveyAt: number = Balance.agent.surveyFirstSeconds;
   private receiptCount = 0;
@@ -52,10 +56,12 @@ export class ProspectorEmbodiment {
 
   constructor(private readonly floatText: FloatText) {
     this.group.name = 'ProspectorEmbodiment';
+    this.visualGroup.name = 'ProspectorInterpolation';
     this.sprite.name = 'ProspectorSprite';
     this.sprite.scale.setScalar(Balance.agent.spriteScale);
     this.sprite.renderOrder = RenderLayers.companion;
-    this.group.add(this.sprite);
+    this.visualGroup.add(this.sprite);
+    this.group.add(this.visualGroup);
     this.animator = new SpriteAnimator(assetSlots.charProspectorAgent, this.material, this.sprite);
     tagPlaceholder(this.group, assetSlots.charProspectorAgent);
     this.reset();
@@ -72,8 +78,10 @@ export class ProspectorEmbodiment {
     this.moving = false;
     this.drifting = false;
     this.workRemaining = 0;
+    this.presentationAt = 0;
     this.nextWorkSeconds = Balance.agent.workSeconds;
     this.nextSurveyAt = Balance.agent.surveyFirstSeconds;
+    this.snapRenderState();
   }
 
   assignWork(point: ProspectorPoint, workSeconds: number = Balance.agent.workSeconds): void {
@@ -100,7 +108,7 @@ export class ProspectorEmbodiment {
     this.workRemaining = 0;
   }
 
-  update(delta: number, at: number, hero?: ProspectorPoint): void {
+  updateSimulation(delta: number, at: number, hero?: ProspectorPoint): void {
     if (delta > 0) {
       if (this.moving) this.stepTowardTarget(delta);
       else if (this.workRemaining > 0) this.workRemaining = Math.max(0, this.workRemaining - delta);
@@ -113,9 +121,22 @@ export class ProspectorEmbodiment {
       }
     }
 
-    const idleBob = Math.sin(at * Math.PI * 2 * Balance.agent.idleBobHz) * Balance.agent.idleBobAmplitude;
-    const workBob = this.workRemaining > 0 ? Math.sin(at * 18) * Balance.agent.workBobAmplitude : 0;
-    this.group.position.y = this.floatY(this.group.position.x, this.group.position.z, idleBob + workBob);
+    this.group.position.y = this.floatY(this.group.position.x, this.group.position.z, 0);
+  }
+
+  captureRenderState(): void {
+    this.previousPosition.copy(this.group.position);
+  }
+
+  updatePresentation(delta: number, alpha: number): void {
+    this.presentationAt += Math.max(0, delta);
+    const amount = THREE.MathUtils.clamp(alpha, 0, 1);
+    this.renderPosition.lerpVectors(this.previousPosition, this.group.position, amount);
+
+    const idleBob = Math.sin(this.presentationAt * Math.PI * 2 * Balance.agent.idleBobHz) * Balance.agent.idleBobAmplitude;
+    const workBob = this.workRemaining > 0 ? Math.sin(this.presentationAt * 18) * Balance.agent.workBobAmplitude : 0;
+    this.renderPosition.y = this.floatY(this.renderPosition.x, this.renderPosition.z, idleBob + workBob);
+    this.visualGroup.position.copy(this.renderPosition).sub(this.group.position);
     // The Prospector's walk4 cells are a hover loop; keep them at the agent cadence
     // even though SpriteAnimator applies the global stride FPS to generic walk clips.
     const animating = this.moving || this.drifting;
@@ -123,6 +144,12 @@ export class ProspectorEmbodiment {
       animating && Balance.anim.walkFps > 0 ? delta * (Balance.agent.hoverFps / Balance.anim.walkFps) : delta;
     this.animator.update(animationDelta, animating ? 'walk' : 'idle', this.currentDirection);
     if (this.material.map) this.material.opacity = 1;
+  }
+
+  snapRenderState(): void {
+    this.previousPosition.copy(this.group.position);
+    this.renderPosition.copy(this.group.position);
+    this.visualGroup.position.set(0, 0, 0);
   }
 
   get position(): THREE.Vector3 {

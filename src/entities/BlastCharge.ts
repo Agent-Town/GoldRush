@@ -17,11 +17,13 @@ export class BlastChargePool {
   readonly group = new THREE.Group();
 
   private readonly active: boolean[] = [];
+  private readonly previousActive: boolean[] = [];
   private readonly origins: THREE.Vector3[] = [];
   private readonly targets: THREE.Vector3[] = [];
   private readonly positions: THREE.Vector3[] = [];
   private readonly apexY: number[] = [];
   private readonly age: number[] = [];
+  private readonly previousAge: number[] = [];
   private readonly duration: number[] = [];
   private readonly damage: number[] = [];
   private readonly radius: number[] = [];
@@ -59,11 +61,13 @@ export class BlastChargePool {
     this.group.add(this.lines, this.chargeMesh);
     for (let i = 0; i < Balance.blast.pool; i += 1) {
       this.active.push(false);
+      this.previousActive.push(false);
       this.origins.push(new THREE.Vector3());
       this.targets.push(new THREE.Vector3());
       this.positions.push(new THREE.Vector3());
       this.apexY.push(0);
       this.age.push(0);
+      this.previousAge.push(0);
       this.duration.push(0);
       this.damage.push(0);
       this.radius.push(0);
@@ -86,6 +90,7 @@ export class BlastChargePool {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       this.active[i] = true;
+      this.previousActive[i] = false;
       this.alive += 1;
       this.origins[i]?.set(origin.x, Terrain.visualY(origin.x, origin.z, LAUNCH_Y), origin.z);
       this.targets[i]?.set(target.x, Terrain.visualY(target.x, target.z, IMPACT_Y), target.z);
@@ -112,9 +117,26 @@ export class BlastChargePool {
         const target = this.targets[i];
         if (target) onDetonate(target, this.damage[i] ?? 0, this.radius[i] ?? 0, this.ownerIds[i] ?? 'hero_blast');
         this.deactivate(i);
-      } else {
-        this.sync(i);
       }
+    }
+    this.markNeedsUpdate();
+  }
+
+  captureRenderState(): void {
+    for (let i = 0; i < this.active.length; i += 1) {
+      this.previousActive[i] = this.active[i] === true;
+      this.previousAge[i] = this.age[i] ?? 0;
+    }
+  }
+
+  applyRenderInterpolation(alpha: number): void {
+    const amount = THREE.MathUtils.clamp(alpha, 0, 1);
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i]) continue;
+      const currentAge = this.age[i] ?? 0;
+      if (this.previousActive[i]) this.age[i] = THREE.MathUtils.lerp(this.previousAge[i] ?? currentAge, currentAge, amount);
+      this.sync(i);
+      this.age[i] = currentAge;
     }
     this.markNeedsUpdate();
   }
@@ -122,6 +144,7 @@ export class BlastChargePool {
   recycleAll(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
+      this.previousActive[i] = false;
       this.age[i] = 0;
       this.duration[i] = 0;
       this.damage[i] = 0;

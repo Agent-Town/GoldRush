@@ -85,7 +85,7 @@ import {
   isWreckDisabled,
 } from '../core/DebugParams';
 import { InputController, type Intents } from '../core/InputController';
-import { Loop } from '../core/Loop';
+import { FIXED_SIM_STEP_SECONDS, Loop, MAX_FIXED_STEPS_PER_FRAME, type LoopFrame } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { RenderLayers, renderLayerOf } from '../core/RenderLayers';
 import { createRng } from '../core/Rng';
@@ -386,6 +386,7 @@ export class Game {
   private runSuspendSaveLine = runSuspendPauseLine(this.activeContract.id);
   private manualSaveMessage = '';
   private readonly heroStart = contractHeroStart(this.activeContract);
+  private readonly heroVisualYAt = (x: number, z: number): number => Terrain.visualY(x, z, this.heroStart.y);
   private readonly debugSpawnPosition = new THREE.Vector3();
   private terrainView?: TerrainView;
   private railPath?: RailPathView;
@@ -511,7 +512,11 @@ export class Game {
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
-    () => this.render(),
+    (frame) => this.present(frame),
+    {
+      stepSeconds: FIXED_SIM_STEP_SECONDS,
+      maxStepsPerFrame: MAX_FIXED_STEPS_PER_FRAME,
+    },
   );
 
   private get primaryActor(): Hero {
@@ -620,11 +625,14 @@ export class Game {
 
   private readonly debugTools: DebugTools;
   private frame = 0;
+  private simTick = 0;
   private elapsed = 0;
+  private fixedTickElapsed = 0;
+  private activeTickElapsed = 0;
   private timeAlive = 0;
   private kills = 0;
   private baronBeatenThisRun = false;
-  private baronCeremony: { atSim: number; startedElapsed: number } | null = null;
+  private baronCeremony: { atSim: number; startedTickElapsed: number } | null = null;
   private readonly baronStandardPosition = new THREE.Vector3();
   private baronStandardPlanted = false;
   private baronStandardDropStartedAt = 0;
@@ -933,6 +941,7 @@ export class Game {
           this.localActor.group.position.set(x, this.localActor.group.position.y, z);
           this.syncHeroVisualHeight();
           this.localActor.velocity.set(0, 0, 0);
+          this.localActor.snapRenderState();
         },
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
           this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
@@ -962,6 +971,7 @@ export class Game {
           return this.manualSimForTest;
         },
         advanceSim: (seconds: number, stepSeconds?: number) => this.advanceSimForTest(seconds, stepSeconds),
+        driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         resetRun: () => this.resetRun(),
         endRunForTest: () => this.endRun(),
         toggleWeapon: () => this.toggleWeapon(),
@@ -1279,43 +1289,40 @@ export class Game {
     window.__THREE_GAME_DIAGNOSTICS__ = undefined;
   }
 
-  private update(delta: number): void {
-    this.frame += 1;
+  private update(delta: number): boolean {
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
-    beginSpriteStatsFrame(this.frame);
-    this.recordFrameMs(delta * 1000);
     const sampledIntents = this.input.readIntents();
     const lockstepTick = this.mpClient?.pump(lockstepInputFromIntents(sampledIntents)) ?? null;
     if (this.mpClient && !lockstepTick) {
       this.rememberIntents(sampledIntents);
-      resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
-      this.updatePresentation(delta);
-      return;
+      return false;
     }
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : sampledIntents;
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
-    this.elapsed += delta;
+    this.simTick += 1;
+    this.fixedTickElapsed += delta;
     this.updateActionActorPosition();
+    this.updateBuildingContextCandidates();
     if (sampledIntents.mute && !this.lastMuteIntent) this.toggleAudioMute();
     this.lastMuteIntent = sampledIntents.mute;
     if (this.baronCeremony) {
-      if (this.elapsed - this.baronCeremony.startedElapsed >= BARON_KILL_STOP_SECONDS) this.finishBaronCeremony();
+      if (this.fixedTickElapsed - this.baronCeremony.startedTickElapsed >= BARON_KILL_STOP_SECONDS) {
+        this.finishBaronCeremony();
+      }
       if (this.baronCeremony) {
         this.rememberIntents(intents);
         this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
-        resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
-        this.updatePresentation(delta);
-        return;
+        this.captureRenderState();
+        return true;
       }
     }
     if (this.secureClaimChoicePending()) {
       this.rememberIntents(intents);
       this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
       this.updateCharmPause(delta);
-      resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
-      this.updatePresentation(delta);
-      return;
+      this.captureRenderState();
+      return true;
     }
     if (intents.build && !this.lastBuildIntent) this.toggleBuildMenu();
     if (intents.buildSlot !== null && this.buildMenuOpen) this.selectBuildableByIndex(intents.buildSlot);
@@ -1355,20 +1362,20 @@ export class Game {
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
     this.updateCharmPause(delta);
 
-    resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
     if (this.state.simActive && (!this.manualSimForTest || this.manualAdvanceForTest)) {
+      this.captureRenderState();
+      this.activeTickElapsed += delta;
       const simDelta = delta * this.simTimeScale;
       this.timeAlive += simDelta;
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
-      this.terrainView?.update(simDelta);
       this.updateActors(simDelta, intents);
+      this.syncHeroVisualHeight();
       this.updateBlastAim(intents);
       this.updateWetPowderHint(simDelta);
       this.combat.setTime(this.timeAlive);
       this.waveSystem.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
-        this.updatePresentation(delta);
-        return;
+        return true;
       }
       this.buildSystem.update(
         simDelta,
@@ -1416,10 +1423,44 @@ export class Game {
         (position) => this.blockedGoldPickup(position),
       );
       this.progression.consumeXpTotal(this.combat.xpCount);
-      this.combatVfx.update(simDelta);
+      this.prospector.updateSimulation(delta, this.timeAlive, this.localActor.group.position);
+    } else {
+      this.captureRenderState();
     }
-    this.updatePresentation(delta);
     this.finishMultiplayerTick();
+    return true;
+  }
+
+  private present(frame: Readonly<LoopFrame>, draw = true): void {
+    this.frame += 1;
+    beginSpriteStatsFrame(this.frame);
+    this.recordFrameMs(frame.deltaSeconds * 1000);
+    this.elapsed += frame.presentationDeltaSeconds;
+    resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+    if (this.state.simActive && (!this.manualSimForTest || this.manualAdvanceForTest)) {
+      this.terrainView?.update(frame.presentationDeltaSeconds * this.simTimeScale);
+    }
+    this.applyRenderInterpolation(frame.alpha);
+    this.prospector.updatePresentation(this.state.isPaused ? 0 : frame.presentationDeltaSeconds, frame.alpha);
+    this.updatePresentation(frame.presentationDeltaSeconds);
+    if (draw) this.render();
+  }
+
+  private captureRenderState(): void {
+    for (const actor of this.actors) actor.captureRenderState();
+    this.enemies.captureRenderState();
+    this.combat.captureRenderState();
+    this.goldPickups.captureRenderState();
+    this.prospector.captureRenderState();
+  }
+
+  private applyRenderInterpolation(alpha: number): void {
+    for (const actor of this.actors) {
+      actor.applyRenderInterpolation(alpha, this.heroVisualYAt);
+    }
+    this.enemies.applyRenderInterpolation(alpha);
+    this.combat.applyRenderInterpolation(alpha);
+    this.goldPickups.applyRenderInterpolation(alpha);
   }
 
   private discoverVisibleLedgerEnemies(): void {
@@ -1459,19 +1500,16 @@ export class Game {
   }
 
   private updatePresentation(delta: number): void {
-    const prospectorDelta = this.state.isPaused ? 0 : delta;
-    this.prospector.update(prospectorDelta, this.timeAlive, this.state.isPaused ? undefined : this.localActor.group.position);
     this.syncAudioLoops();
     this.vfx.update(delta);
-    if (this.baronCeremony) this.combatVfx.update(delta);
+    this.combatVfx.update(delta);
     this.syncBaronStandardDrop();
     this.syncBaronRocketCart();
-    this.syncHeroVisualHeight();
     const visualStress =
       this.enemies.activeCount >= Balance.world.detailStressEnemyThreshold ||
       this.waveSystem.diagnostics.wave >= Balance.world.detailStressWaveThreshold;
     this.detailScatter?.syncBuildingClearings(this.detailClearings());
-    this.cameraRig.update(delta, this.localActor.group.position, this.localActor.velocity);
+    this.cameraRig.update(delta, this.localActor.renderPosition, this.localActor.velocity);
     this.syncMultiplayerNameChips();
     this.lightRig?.setStressFallback(visualStress);
     this.syncNightShiftLighting();
@@ -1562,6 +1600,7 @@ export class Game {
       actor.group.visible = saved.visible;
     }
     this.syncHeroVisualHeight();
+    for (const actor of this.actors) actor.snapRenderState();
     this.cameraRig.snapTo(this.localActor.group.position);
     this.prospector.reset(this.localActor.group.position);
   }
@@ -1765,7 +1804,7 @@ export class Game {
       const chip = this.mpHeroChips.get(meta.playerId) ?? this.createMultiplayerNameChip(meta);
       chip.querySelector('[data-mp-rider-name]')!.textContent = meta.name;
       chip.querySelector('[data-mp-rider-town]')!.textContent = meta.town;
-      const screen = actor.group.position.clone();
+      const screen = actor.renderPosition.clone();
       screen.y += 2.15;
       screen.project(this.camera);
       chip.hidden = screen.z < -1 || screen.z > 1;
@@ -1976,6 +2015,7 @@ export class Game {
     this.scene.add(this.combatVfx.group);
     this.primaryActor.group.position.copy(this.heroStart);
     this.syncHeroVisualHeight();
+    for (const actor of this.actors) actor.snapRenderState();
     this.updateActionActorPosition();
     this.prospector.reset(this.localActor.group.position);
     this.scene.add(this.prospector.group);
@@ -2487,6 +2527,10 @@ export class Game {
       frame: this.frame,
       elapsed: this.elapsed,
       timeAlive: this.timeAlive,
+      simulation: {
+        tick: this.simTick,
+        ...this.loop.diagnostics,
+      },
       runState: this.state.current,
       paused: this.state.isPaused,
       state: this.state.isPaused ? 'paused' : this.state.current,
@@ -2523,6 +2567,11 @@ export class Game {
       targetScore: 0,
       complete: false,
       heroPos,
+      heroRenderPos: {
+        x: localActor.renderPosition.x,
+        y: localActor.renderPosition.y,
+        z: localActor.renderPosition.z,
+      },
       speed,
       player: {
         position: heroPos,
@@ -2612,7 +2661,7 @@ export class Game {
       baronCeremony: this.baronCeremony
         ? {
             active: true,
-            elapsed: this.elapsed - this.baronCeremony.startedElapsed,
+            elapsed: this.fixedTickElapsed - this.baronCeremony.startedTickElapsed,
             holdSeconds: BARON_KILL_STOP_SECONDS,
           }
         : { active: false, elapsed: 0, holdSeconds: BARON_KILL_STOP_SECONDS },
@@ -2841,7 +2890,7 @@ export class Game {
     }
 
     this.playerPauseActive = false;
-    this.baronCeremony = { atSim, startedElapsed: this.elapsed };
+    this.baronCeremony = { atSim, startedTickElapsed: this.fixedTickElapsed };
     this.state.setPaused(true);
     this.syncUi();
     this.publishDiagnostics();
@@ -3010,10 +3059,11 @@ export class Game {
     }
 
     const scale = Math.max(1, baron.visualScale * 0.5);
-    const yaw = baron.group.rotation.y;
+    const position = this.enemies.renderPositionOf(baron);
+    const yaw = this.enemies.renderRotationOf(baron);
     const distance = Math.max(0.9, baron.visualScale * 0.72);
-    const x = baron.position.x - Math.sin(yaw) * distance;
-    const z = baron.position.z + Math.cos(yaw) * distance;
+    const x = position.x - Math.sin(yaw) * distance;
+    const z = position.z + Math.cos(yaw) * distance;
     const active = this.baronRocketTelegraphStartedAt >= 0;
     const pulse = active ? 0.5 + Math.sin(this.elapsed * 18) * 0.5 : 0;
     this.baronRocketCartTealMaterial.emissiveIntensity = active ? 0.55 + pulse * 0.55 : 0.3;
@@ -3343,8 +3393,8 @@ export class Game {
       this.prospectorRepairDwellStartedAt = null;
       return;
     }
-    this.prospectorRepairDwellStartedAt ??= this.elapsed;
-    const progress = (this.elapsed - this.prospectorRepairDwellStartedAt) / Balance.wreck.repairSeconds;
+    this.prospectorRepairDwellStartedAt ??= this.activeTickElapsed;
+    const progress = (this.activeTickElapsed - this.prospectorRepairDwellStartedAt) / Balance.wreck.repairSeconds;
     this.buildSystem.previewRepairProgress(target.id, target.index, progress, this.timeAlive);
   }
 
@@ -3412,12 +3462,19 @@ export class Game {
   private syncBuildingContextPrompt(): void {
     const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
     const assayInRange = this.buildSystem.assayOfficeInRange(this.localActor.group.position);
-    const canShowPrompt = this.state.current === 'playing' && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
+    const canShowPrompt =
+      this.state.current === 'playing' && !this.state.isPaused && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
     const fund = canShowPrompt ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
-    let demolish =
-      canShowPrompt && !fund
-        ? this.buildSystem.nearestBuildingTo(this.localActor.group.position)
-        : null;
+    const demolish = canShowPrompt && !fund ? this.demolishCandidate : null;
+    const upgrade = demolish ? this.upgradeCandidate : null;
+    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
+  }
+
+  private updateBuildingContextCandidates(): void {
+    const canInteract =
+      this.state.current === 'playing' && !this.state.isPaused && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
+    const fund = canInteract ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
+    let demolish = canInteract && !fund ? this.buildSystem.nearestBuildingTo(this.localActor.group.position) : null;
     const key = demolish ? demolishKey(demolish) : null;
     if (!key) this.demolishSuppressedKey = null;
     if (key && this.demolishSuppressedKey && key !== this.demolishSuppressedKey) this.demolishSuppressedKey = null;
@@ -3426,7 +3483,6 @@ export class Game {
     this.demolishCandidate = demolish;
     this.upgradeCandidate = upgrade;
     this.maybeEmitStampSiteBeat(fund);
-    this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
   }
 
   private syncWorldInfoNotePrompt(): void {
@@ -3540,12 +3596,45 @@ export class Game {
     try {
       while (remaining > 0) {
         const simStep = Math.min(step, remaining);
-        this.update(simStep / scale);
+        const frameDelta = simStep / scale;
+        if (!this.update(frameDelta)) break;
+        this.present(
+          {
+            deltaSeconds: frameDelta,
+            presentationDeltaSeconds: frameDelta,
+            alpha: 1,
+            steps: 1,
+            droppedSeconds: 0,
+          },
+          false,
+        );
         remaining -= simStep;
       }
     } finally {
       this.manualAdvanceForTest = false;
     }
+  }
+
+  private driveRenderScheduleForTest(seconds: number, renderFps: number) {
+    const total = Number.isFinite(seconds) ? Math.max(0, seconds) : 0;
+    const fps = Number.isFinite(renderFps) ? Math.max(1, renderFps) : 1;
+    const renderFrames = Math.round(total * fps);
+    const startFrame = this.frame;
+    const startTick = this.simTick;
+    const previousManualAdvance = this.manualAdvanceForTest;
+    this.loop.stop();
+    this.loop.resetTiming();
+    this.manualAdvanceForTest = true;
+    try {
+      for (let i = 0; i < renderFrames; i += 1) this.loop.advanceFrame(1 / fps);
+    } finally {
+      this.manualAdvanceForTest = previousManualAdvance;
+    }
+    return {
+      renderFrames: this.frame - startFrame,
+      simTicks: this.simTick - startTick,
+      loop: { ...this.loop.diagnostics },
+    };
   }
 
   resetRun(): void {
@@ -3590,9 +3679,11 @@ export class Game {
       }
     }
     this.syncHeroVisualHeight();
+    for (const actor of this.actors) actor.snapRenderState();
     this.updateActionActorPosition();
     this.cameraRig.snapTo(this.localActor.group.position);
     this.timeAlive = 0;
+    this.simTick = 0;
     this.nextProspectorXpSweepAt = 0;
     this.nextProspectorGoldSweepAt = 0;
     this.nextProspectorRepairSweepAt = 0;
