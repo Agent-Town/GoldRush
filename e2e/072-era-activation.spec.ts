@@ -246,7 +246,7 @@ test('the completed Stamp Mill activates E2 once, stages the ceremony, and makes
   ).toBe(false);
 
   await page.locator('[data-story-ceremony-continue]').click();
-  await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+  await expect(page.locator('.story-beat-card--ceremony')).toHaveCount(0); // ceremony gone; OTHER queued beats (e.g. ledger-page discoveries) are legitimate on the merged tree
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-state', 'active');
   await expect(page.getByTestId('research-next-epoch')).toContainText('active in town');
 
@@ -302,7 +302,7 @@ test('the E2 ceremony can be skipped without undoing activation', async ({ page 
   await page.getByTestId('raise-stamp-mill').click();
   await expectCeremonyStep(page, 'e2-ceremony-mill', 'kit-stamp-mill', 'The Stamp Mill rises.');
   await page.locator('[data-story-ceremony-skip]').click();
-  await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
+  await expect(page.locator('.story-beat-card--ceremony')).toHaveCount(0); // ceremony gone; OTHER queued beats (e.g. ledger-page discoveries) are legitimate on the merged tree
   expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(STEAMWORKS);
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-state', 'active');
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
