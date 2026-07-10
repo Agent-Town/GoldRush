@@ -1,0 +1,45 @@
+# Install as .github/workflows/gate.yml with workflow-scoped GitHub authority.
+name: Release gate advisory
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release-gate-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  release-gate:
+    name: release-gate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    env:
+      CI: 'true'
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci
+      - name: Install Chromium and system dependencies
+        run: npm exec -- playwright install --with-deps chromium
+      - name: Run release gate
+        run: npm run release-gate
+      - name: Upload failure evidence
+        if: ${{ failure() && !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: release-gate-${{ github.run_id }}-${{ github.run_attempt }}
+          if-no-files-found: ignore
+          retention-days: 7
+          path: |
+            test-results/release-gate/
+            artifacts/sol/release-gate/*.json
+            artifacts/sol/perf-chunk-atlas/runtime-release-*.json
