@@ -37,8 +37,9 @@ ARC (PLANNED): E1 plaza newsie → the Gazette House's first editor (E2+) → th
 ## MARKETING KIDS-RULE (CLARIFIED 2026-07-10, owner verbatim: 'nono, this is all good - this is no problem, don't overrate it')
 Fictional youngsters MAY appear in marketing/media. The privacy law only ever meant the owner's REAL family (capture-profile law). MINORS-CLOTHED law unchanged.
 
-## THE CHEN FAMILY — Mei's household (HOUSEHOLD LAW, 2026-07-10; seed names renameable)
-**CHEN WEI (father)** — THE EXPRESS RIDER: the Pony Express Station's rider once it builds (until then he carries claim-office letters between camps). The message lineage is the FAMILY TRADE: father rides the mail, daughter runs the news. Weathered, quiet, punctual as sunrise.
-**CHEN LAN (mother)** — THE COOKHOUSE: the town's eating house (distinct from the tavern: the tavern pours, the cookhouse FEEDS; gold-rush-era Chinese cookhouses honored warmly). A future ring building candidate; until built she cooks at the tavern's back kitchen. Voice: feeds everyone, argues with nobody, knows everything first anyway.
-**CHEN MEI (daughter)** — the newsie (entry above). The family arc: express rider → first editor's father; the cookhouse → where every story in town is overheard (Lan feeds the Herald more scoops than the wire ever will).
-PROPOSAL (same law, batched): the existing youngsters get households — youngster-m = the STOREKEEPER's son (counter-work after school); youngster-f = the SCHOOLTEACHER's daughter (chalk monitor). The moon-born child (E8+) and all future era children arrive WITH families per the law. [RATIFY-BATCH]
+## THE CHEN FAMILY — the GAZETTE is the family business (RE-RULED 2026-07-10, owner verbatim: 'Traditionally all family members worked in the same business.' — THE FAMILY-BUSINESS TRADITION, now canon: one household works ONE trade, together; children learn the family trade)
+**CHEN WEI (father)** — THE PRESSMAN: runs the Gazette House press (until it builds: hand-copies notices at the claim office board).
+**CHEN LAN (mother)** — THE TYPESETTER & OFFICE: sets the type, keeps the subscription ledger, edits Wei's spelling. Knows everything first anyway.
+**CHEN MEI (daughter)** — the newsie: sells what the family prints. The whole message-trade arc is the FAMILY arc: the Gazette House (E2+) → Mei inherits as first editor → the E7 exchange (the family paper becomes the family signal house).
+THE PONY EXPRESS is a SEPARATE business (delivery, not printing) — its rider family = a future household [SEED-LATER]. The cookhouse likewise detaches to its own future family.
+PROPOSAL (household law, batched): youngster-m = the STOREKEEPER's son (counter after school) · youngster-f = the SCHOOLTEACHER's daughter (chalk monitor) — both already inside the family-business tradition. [RATIFY-BATCH]

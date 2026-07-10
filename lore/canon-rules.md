@@ -8,3 +8,5 @@ ADR-001: frontier-tech, NO firearms ever (brass/steam/spark/rockets-as-fireworks
 
 ## THE HOUSEEHOLD LAW (owner-ruled 2026-07-10, verbatim: 'Who are her parents in town? We always have to think about this as well. Families or singles. Most likely not children alone - they could not survive.')
 EVERY MINOR IN THE CAST BELONGS TO A HOUSEHOLD — a named parent/guardian in the roster with a livelihood. No unaccompanied children, ever (frontier reality + family-game warmth). Applies to all eras: new child characters land WITH their family or an explicit guardian, same commit. Singles are fine for adults; children are not alone.
+
+## THE FAMILY-BUSINESS TRADITION (owner-ruled 2026-07-10): a household works ONE trade, together — children learn the family trade. New families land with their business named. (Pairs with the Household Law above.)
