@@ -41,5 +41,5 @@ Fictional youngsters MAY appear in marketing/media. The privacy law only ever me
 **CHEN WEI (father)** — THE PRESSMAN: runs the Gazette House press (until it builds: hand-copies notices at the claim office board).
 **CHEN LAN (mother)** — THE TYPESETTER & OFFICE: sets the type, keeps the subscription ledger, edits Wei's spelling. Knows everything first anyway.
 **CHEN MEI (daughter)** — the newsie: sells what the family prints. The whole message-trade arc is the FAMILY arc: the Gazette House (E2+) → Mei inherits as first editor → the E7 exchange (the family paper becomes the family signal house).
-THE PONY EXPRESS is a SEPARATE business (delivery, not printing) — its rider family = a future household [SEED-LATER]. The cookhouse likewise detaches to its own future family.
+THE PONY EXPRESS is a SEPARATE business (delivery, not printing) — its rider family = a future household [SEED-LATER]. ~~Cookhouse~~ CUT (owner 2026-07-10: 'I don't think we need a cookhouse, the tavern is fine for now.' — the tavern feeds the town; no cookhouse building or family).
 PROPOSAL (household law, batched): youngster-m = the STOREKEEPER's son (counter after school) · youngster-f = the SCHOOLTEACHER's daughter (chalk monitor) — both already inside the family-business tradition. [RATIFY-BATCH]
