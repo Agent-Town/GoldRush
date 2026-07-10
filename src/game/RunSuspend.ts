@@ -391,8 +391,9 @@ export function captureRunSuspendSnapshot(
 }
 
 export function restoreRunSuspendSnapshot(game: unknown, snapshot: unknown): boolean {
-  if (!isRunSuspendEnvelope(snapshot)) return false;
-  restoreSnapshot(game as AnyGame, snapshot);
+  const normalized = normalizeRunSuspendDatum(snapshot);
+  if (!normalized) return false;
+  restoreSnapshot(game as AnyGame, normalized);
   return true;
 }
 
