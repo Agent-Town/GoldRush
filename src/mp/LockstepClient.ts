@@ -107,6 +107,7 @@ export class LockstepClient {
   private paused = false;
   private error: string | null = null;
   private pendingDesyncTick: number | null = null;
+  private pendingWeaponToggles = 0;
   private snapshotSendQueue: Promise<void> = Promise.resolve();
   private desyncAtTick: number | null;
   private readonly inputDelayTicks: number;
@@ -150,8 +151,16 @@ export class LockstepClient {
 
   pump(localInput: LockstepInput): LockstepTick | null {
     if (!this.connected || this.paused || this.roster.length < 2) return null;
+    if (localInput.weaponToggle) this.pendingWeaponToggles += 1;
     while (this.nextInputTick <= this.nextSimTick + this.inputDelayTicks) {
-      this.send({ v: VERSION, type: 'input', tick: this.nextInputTick, input: localInput });
+      const weaponToggle = this.pendingWeaponToggles > 0;
+      this.send({
+        v: VERSION,
+        type: 'input',
+        tick: this.nextInputTick,
+        input: weaponToggle === localInput.weaponToggle ? localInput : { ...localInput, weaponToggle },
+      });
+      if (weaponToggle) this.pendingWeaponToggles -= 1;
       this.sendTimes.set(this.nextInputTick, performance.now());
       this.nextInputTick += 1;
     }

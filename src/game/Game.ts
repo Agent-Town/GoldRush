@@ -724,7 +724,7 @@ export class Game {
   private lastConfirmIntent = false;
   private lastUpgradeIntent = false;
   private lastRotateIntent = false;
-  private lastWeaponToggleIntent = false;
+  lastWeaponToggleIntent = false; // RunSuspend v2 compatibility latch.
   private lastMuteIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
@@ -1409,7 +1409,7 @@ export class Game {
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
     const upgradedThisFrame = intents.upgrade && !this.lastUpgradeIntent ? this.confirmUpgrade() : false;
     if (intents.rotateBuild && !this.lastRotateIntent && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
-    if (intents.weaponToggle && !this.lastWeaponToggleIntent) this.toggleWeapon();
+    if (intents.weaponToggle) this.toggleWeapon();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
     if (
       intents.debugXp &&
