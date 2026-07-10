@@ -1,5 +1,5 @@
 import { expect, test, type Page } from '@playwright/test';
-import { DIFFICULTY_PRESET_STORAGE_KEY } from '../src/game/Balance';
+import { Balance, DIFFICULTY_PRESET_STORAGE_KEY } from '../src/game/Balance';
 import { type MetaProgress } from '../src/game/MetaProgress';
 import {
   PROFILE_KEY,
@@ -185,23 +185,62 @@ async function seedProfileData(page: Page): Promise<void> {
         JSON.stringify([{ waves: 6, kills: 10, gold: 40, timeAlive: 90, at: 2, profileName: 'Bob' }]),
       );
     },
-    { aliceMeta, bobMeta, aliceSlot: suspendFixture(4), bobSlot: suspendFixture(8), scoreKey: SCOREBOARD_KEY },
+    { aliceMeta, bobMeta, aliceSlot: suspendFixture(4, aliceMeta), bobSlot: suspendFixture(8, bobMeta), scoreKey: SCOREBOARD_KEY },
   );
 }
 
-function suspendFixture(wave: number): unknown {
+function suspendFixture(wave: number, meta: MetaProgress): unknown {
+  const timeAlive = wave * Balance.waves.waveInterval;
   return {
     v: 1,
     wave,
-    timeAlive: wave * 10,
-    contractId: 'stored-profile-slot',
-    economy: {},
-    hero: {},
+    timeAlive,
+    contractId: 'the-claim',
+    rng: { waves: null, upgrades: null },
+    waveSystem: {
+      wave,
+      pulse: 0,
+      edge: null,
+      budget: 0,
+      waveSpawnedTotal: 0,
+      nextTrickleAt: timeAlive + Balance.waves.trickleInterval,
+      nextWaveAt: timeAlive + Balance.waves.waveInterval,
+      nextPlanWaveAt: timeAlive + Balance.waves.waveInterval,
+      nextPlanWave: wave + 1,
+      plannedPulses: [],
+      copyCursor: 0,
+      currentAtSim: timeAlive,
+      waveState: 'quiet',
+      lastPulseAt: null,
+    },
+    enemies: { spawnSerial: 0, active: [] },
+    economy: { gold: 0, bankCap: Balance.economy.bankCap, log: [] },
+    hero: {
+      level: 1,
+      xpTotal: 0,
+      spentXp: 0,
+      xpInto: 0,
+      pendingLevels: 0,
+      offer: null,
+      stacks: {},
+      hp: Balance.hero.maxHp,
+      maxHp: Balance.hero.maxHp,
+      position: { x: 0, y: 0.06, z: 12 },
+      velocity: { x: 0, y: 0, z: 0 },
+    },
     buildings: [],
-    waveSystem: {},
-    enemies: { active: [] },
-    meta: {},
-    research: {},
+    counters: {
+      kills: 0,
+      stolenTotal: 0,
+      reclaimedTotal: 0,
+      buildingHitsResolved: 0,
+      buildingsWrecked: 0,
+      weapon: 'rig',
+      weaponToggleCount: 0,
+      blastTime: 0,
+    },
+    meta,
+    research: { version: 1, progress: meta, taken: [], proposalSalt: 0, pinnedTarget: null },
   };
 }
 

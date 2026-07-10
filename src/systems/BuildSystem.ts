@@ -3,7 +3,7 @@ import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { createBuildingSignFromUrlLoader, disposeBuildingSign } from '../entities/BuildingSign';
 import { PalisadePool, type PalisadeBlocker } from '../entities/Palisade';
 import { SentryBeaconPool } from '../entities/SentryBeacon';
-import { SluicePool, type SluiceSnapshot } from '../entities/Sluice';
+import { SluicePool, type SluiceFutureState, type SluiceSnapshot } from '../entities/Sluice';
 import { StockpilePool, type StockpileSnapshot } from '../entities/Stockpile';
 import { TurretPool } from '../entities/Turret';
 import { Balance } from '../game/Balance';
@@ -123,6 +123,22 @@ export type DemolishCandidate = {
 type FreePlacementOptions = {
   wrecked?: boolean;
   repairCost?: number;
+};
+
+export type BuildingRestoreState = {
+  id: BuildableId;
+  index: number;
+  tier: number;
+  hp: number;
+  maxHp: number;
+  baseMaxHp?: number;
+  buildCost: number;
+  repairCostOverride?: number;
+  wrecked: boolean;
+  repairProgress: number;
+  position: { x: number; z: number };
+  rotationSteps: number;
+  sluice: SluiceFutureState | null;
 };
 
 export type UpgradeCandidate = {
@@ -645,6 +661,47 @@ export class BuildSystem {
     return placed >= 0;
   }
 
+  restoreBuilding(state: BuildingRestoreState): boolean {
+    const def = getBuildableDef(state.id);
+    if (!def || !Number.isInteger(state.index) || state.index < 0 || state.index >= def.maxCount) return false;
+
+    const previousRotation = this.ghostRotationSteps;
+    this.ghostRotationSteps = ((Math.round(state.rotationSteps) % 4) + 4) % 4;
+    const position = new THREE.Vector3(state.position.x, 0, state.position.z);
+    const placed = this.place(state.id, position, state.index);
+    this.ghostRotationSteps = previousRotation;
+    if (placed !== state.index) return false;
+
+    this.finishPlacement(state.id, state.index, state.buildCost);
+    this.tier[state.id][state.index] = Math.max(1, Math.floor(state.tier));
+    const maxHpMultiplier = this.effectiveStat(state.id, state.index, 1, 'maxHpMult');
+    this.hpMax[state.id][state.index] =
+      typeof state.baseMaxHp === 'number' && Number.isFinite(state.baseMaxHp)
+        ? state.baseMaxHp
+        : Math.round(state.maxHp / Math.max(0.001, maxHpMultiplier));
+    this.hp[state.id][state.index] = state.hp;
+    this.buildCosts[state.id][state.index] = state.buildCost;
+    this.repairCostOverrides[state.id][state.index] = state.repairCostOverride ?? 0;
+    this.repairProgress[state.id][state.index] = state.repairProgress;
+    this.wrecked[state.id][state.index] = false;
+    this.syncTierVisual(state.id, state.index);
+    if (state.wrecked) {
+      this.wreck(state.id, state.index);
+      this.repairProgress[state.id][state.index] = state.repairProgress;
+    } else {
+      this.syncBuildingTarget(state.id, state.index, true);
+    }
+    this.refreshShooterStats(state.id, state.index);
+    if (state.id === 'sluice' && (!state.sluice || !this.sluices.restoreFutureState(state.index, state.sluice))) return false;
+    if (state.id !== 'sluice' && state.sluice !== null) return false;
+    this.visualDirty = true;
+    return true;
+  }
+
+  captureBuildingFutureState(id: BuildableId, index: number): Pick<BuildingRestoreState, 'sluice'> {
+    return { sluice: id === 'sluice' ? this.sluices.captureFutureState(index) : null };
+  }
+
   reset(): void {
     for (const id of buildableIds) {
       for (let i = 0; i < this.unregisterShooters[id].length; i += 1) this.unregisterShooter(id, i);
@@ -1158,14 +1215,14 @@ export class BuildSystem {
     return this.beacons.activeCount;
   }
 
-  private place(id: BuildableId, position: THREE.Vector3): number {
-    if (id === 'palisade') return this.palisades.place(position, this.ghostRotationSteps);
-    if (id === 'sluice') return this.sluices.place(position);
-    if (id === 'stockpile') return this.stockpiles.place(position);
-    if (id === 'turret') return this.turrets.place(position);
-    if (id === 'lantern_post') return this.lanternPosts.place(position);
-    if (id === 'assay_office') return this.placeAssayOffice(position);
-    return this.beacons.place(position);
+  private place(id: BuildableId, position: THREE.Vector3, preferredSlot?: number): number {
+    if (id === 'palisade') return this.palisades.place(position, this.ghostRotationSteps, preferredSlot);
+    if (id === 'sluice') return this.sluices.place(position, preferredSlot);
+    if (id === 'stockpile') return this.stockpiles.place(position, preferredSlot);
+    if (id === 'turret') return this.turrets.place(position, preferredSlot);
+    if (id === 'lantern_post') return this.lanternPosts.place(position, preferredSlot);
+    if (id === 'assay_office') return this.placeAssayOffice(position, preferredSlot);
+    return this.beacons.place(position, preferredSlot);
   }
 
   private isSlotActive(id: BuildableId, index: number): boolean {
@@ -1476,6 +1533,7 @@ export class BuildSystem {
   private registerBeaconShooter(placed: number): void {
     const handle: ShooterHandle = {
       id: 'beacons',
+      resumeKey: `building:sentry_beacon:${placed}`,
       getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
       range: Balance.beacon.range,
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
@@ -1497,6 +1555,7 @@ export class BuildSystem {
   private registerTurretShooter(placed: number): void {
     const handle: ShooterHandle = {
       id: 'turrets',
+      resumeKey: `building:turret:${placed}`,
       getPos: () => this.shooterPos.copy(this.turrets.allPositions[placed] ?? this.ghostPos),
       range: Balance.turret.range,
       cooldown: 1 / this.effectiveTurretFireRate(placed),
@@ -1848,8 +1907,8 @@ export class BuildSystem {
     );
   }
 
-  private placeAssayOffice(position: THREE.Vector3): number {
-    if (this.assayOfficeActive) return -1;
+  private placeAssayOffice(position: THREE.Vector3, preferredSlot?: number): number {
+    if ((preferredSlot !== undefined && preferredSlot !== 0) || this.assayOfficeActive) return -1;
     this.assayOfficeActive = true;
     this.assayOfficePosition.copy(position);
     this.assayOffice.position.set(position.x, this.visualYFor('assay_office', position), position.z);
@@ -2090,17 +2149,15 @@ class LanternPostPool {
     return this.active[index] === true;
   }
 
-  place(position: THREE.Vector3): number {
-    for (let i = 0; i < this.active.length; i += 1) {
-      if (this.active[i]) continue;
-      this.active[i] = true;
-      this.positions[i]?.copy(position);
-      this.alive += 1;
-      this.sync(i, 0);
-      this.markNeedsUpdate();
-      return i;
-    }
-    return -1;
+  place(position: THREE.Vector3, preferredSlot?: number): number {
+    const slot = preferredSlot ?? this.active.findIndex((active) => !active);
+    if (!Number.isInteger(slot) || slot < 0 || slot >= this.active.length || this.active[slot]) return -1;
+    this.active[slot] = true;
+    this.positions[slot]?.copy(position);
+    this.alive += 1;
+    this.sync(slot, 0);
+    this.markNeedsUpdate();
+    return slot;
   }
 
   deactivate(index: number): boolean {

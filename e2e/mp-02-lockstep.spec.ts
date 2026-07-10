@@ -20,6 +20,7 @@ const ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-02');
 const MP03_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-03');
 const MP04_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-04');
 const MP_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&nokill&seed=mp-02-lockstep';
+const MP_CONVERGENCE_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&seed=mp-02-convergence';
 const ALICE: MpPlayerSeed = { id: 'alice', name: 'Alice', town: 'Dawn Claim' };
 const BOB: MpPlayerSeed = { id: 'bob', name: 'Bob', town: 'River Bend' };
 let relay: RelayEnv;
@@ -103,6 +104,95 @@ test('hash mismatch pauses, shows the wire card, and restores from relay snapsho
   }
 });
 
+test('real elite and boss-group divergence restores exact future state for 120 ticks', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab convergence proof is enough');
+  test.setTimeout(70_000);
+  const code = await createRoom();
+  const run = await openPair(browser, code, '', MP_CONVERGENCE_QUERY);
+  const { alice, bob, aliceErrors, bobErrors } = run;
+  try {
+    await waitRoster(alice);
+    await waitRoster(bob);
+    await waitForActors(alice);
+    await waitForActors(bob);
+    const resumeAt = await seedConvergenceScenario(alice, bob);
+
+    const setupCheckpoint = Math.ceil((resumeAt + 15) / 30) * 30;
+    await Promise.all([waitForTick(alice, setupCheckpoint + 2), waitForTick(bob, setupCheckpoint + 2)]);
+    const [aliceSetup, bobSetup] = await Promise.all([mpState(alice), mpState(bob)]);
+    const [aliceHashState, bobHashState] = await Promise.all([
+      alice.evaluate(() => window.__GR_TEST__!.lastMultiplayerHashState()),
+      bob.evaluate(() => window.__GR_TEST__!.lastMultiplayerHashState()),
+    ]);
+    expect(hashAt(aliceSetup, setupCheckpoint)).toBeTruthy();
+    expect(
+      hashAt(aliceSetup, setupCheckpoint),
+      stateDifferences(aliceHashState?.state, bobHashState?.state).join('\n'),
+    ).toBe(hashAt(bobSetup, setupCheckpoint));
+
+    const hostName = aliceSetup.roster[0]?.name;
+    const host = hostName === ALICE.name ? alice : bob;
+    const divergent = host === alice ? bob : alice;
+    const canonicalRoster = await suspendEnemyRoster(host);
+    const baselineTimeAlive = (await gameDiagnostics(host)).timeAlive;
+    expect(canonicalRoster).toHaveLength(4);
+    expect(canonicalRoster.some((enemy) => enemy.eliteKind === 'baron')).toBe(true);
+    expect(canonicalRoster.filter((enemy) => enemy.bossGroupId === 'railcar-alpha')).toHaveLength(3);
+
+    await divergent.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(18, 18));
+    await Promise.all([
+      alice.waitForFunction(() => {
+        const state = window.__GR_MP__?.state();
+        return state && state.desyncs >= 1 && state.resyncs >= 1 && state.lastResyncTick !== null;
+      }, undefined, { timeout: 20_000 }),
+      bob.waitForFunction(() => {
+        const state = window.__GR_MP__?.state();
+        return state && state.desyncs >= 1 && state.resyncs >= 1 && state.lastResyncTick !== null;
+      }, undefined, { timeout: 20_000 }),
+    ]);
+
+    const [aliceRestored, bobRestored] = await Promise.all([mpState(alice), mpState(bob)]);
+    expect(aliceRestored.lastResyncTick).toBe(bobRestored.lastResyncTick);
+    const restoredAt = aliceRestored.lastResyncTick!;
+    const [aliceRestoredRoster, bobRestoredRoster] = await syncedHashedEnemyRosters(alice, bob, restoredAt + 1);
+    expect(aliceRestoredRoster).toEqual(bobRestoredRoster);
+    expect(aliceRestoredRoster).toHaveLength(canonicalRoster.length);
+    expect(enemyRosterIdentity(aliceRestoredRoster)).toEqual(enemyRosterIdentity(canonicalRoster));
+    await Promise.all([waitForTick(alice, restoredAt + 125), waitForTick(bob, restoredAt + 125)]);
+
+    const [aliceRoster, bobRoster] = await syncedHashedEnemyRosters(alice, bob, restoredAt + 120);
+    const [aliceFinal, bobFinal, aliceGame, bobGame] = await Promise.all([
+      mpState(alice),
+      mpState(bob),
+      gameDiagnostics(alice),
+      gameDiagnostics(bob),
+    ]);
+    expect(aliceRoster).toEqual(bobRoster);
+    expect(aliceRoster).toHaveLength(canonicalRoster.length);
+    expect(enemyRosterIdentity(aliceRoster)).toEqual(enemyRosterIdentity(canonicalRoster));
+    expect(aliceGame.timeAlive).toBeGreaterThan(baselineTimeAlive + 3.5);
+    expect(bobGame.timeAlive).toBeGreaterThan(baselineTimeAlive + 3.5);
+    expect(aliceRoster.some((enemy, index) => enemy.hp < (canonicalRoster[index]?.hp ?? enemy.hp))).toBe(true);
+    for (const offset of [30, 60, 90, 120]) {
+      expect(hashAt(aliceFinal, restoredAt + offset), `Alice hash at +${offset}`).toBeTruthy();
+      expect(hashAt(aliceFinal, restoredAt + offset)).toBe(hashAt(bobFinal, restoredAt + offset));
+    }
+    expect(aliceFinal).toMatchObject({ paused: false, desyncs: 1, resyncs: 1, error: null });
+    expect(bobFinal).toMatchObject({ paused: false, desyncs: 1, resyncs: 1, error: null });
+    expect(aliceErrors).toEqual({ consoleErrors: [], pageErrors: [] });
+    expect(bobErrors).toEqual({ consoleErrors: [], pageErrors: [] });
+    await writeReport(testInfo, 'real-divergence-convergence', {
+      restoredAt,
+      canonicalRoster,
+      hashes: [30, 60, 90, 120].map((offset) => ({ tick: restoredAt + offset, hash: hashAt(aliceFinal, restoredAt + offset) })),
+      alice: aliceFinal,
+      bob: bobFinal,
+    });
+  } finally {
+    await run.close();
+  }
+});
+
 test('two clients promote both roster slots to real local-camera heroes and shared run credit', async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab lockstep proof is enough');
   test.setTimeout(60_000);
@@ -170,13 +260,29 @@ test('two clients promote both roster slots to real local-camera heroes and shar
     assertSameRosterSlots(aliceMoved.actors, bobMoved.actors);
     const movedAliceOnAlice = actorByName(aliceMoved.actors, ALICE.name);
     const movedAliceOnBob = actorByName(bobMoved.actors, ALICE.name);
+    const movedBobOnAlice = actorByName(aliceMoved.actors, BOB.name);
     expect(distance2d(initialAliceActor.position, movedAliceOnAlice.position)).toBeGreaterThan(0.5);
     expect(distance2d(movedAliceOnAlice.position, movedAliceOnBob.position)).toBeLessThan(0.06);
     expect(distance2d(actorByName(aliceMoved.actors, BOB.name).position, actorByName(bobMoved.actors, BOB.name).position)).toBeLessThan(0.06);
 
+    const independentStartTick = Math.max((await mpState(alice)).tick, (await mpState(bob)).tick);
+    await Promise.all([alice.keyboard.down('KeyA'), bob.keyboard.down('KeyD')]);
+    let independentPair: [ThreeGameDiagnostics, ThreeGameDiagnostics] | null = null;
+    try {
+      await Promise.all([waitForTick(alice, independentStartTick + 75), waitForTick(bob, independentStartTick + 75)]);
+      independentPair = await syncedGameDiagnostics(alice, bob, independentStartTick + 75);
+    } finally {
+      await Promise.all([alice.keyboard.up('KeyA'), bob.keyboard.up('KeyD')]);
+    }
+    if (!independentPair) throw new Error('missing independently moved multiplayer diagnostics');
+    const [aliceIndependent, bobIndependent] = independentPair;
+    assertSameRosterSlots(aliceIndependent.actors, bobIndependent.actors);
+    expect(distance2d(movedAliceOnAlice.position, actorByName(aliceIndependent.actors, ALICE.name).position)).toBeGreaterThan(0.5);
+    expect(distance2d(movedBobOnAlice.position, actorByName(aliceIndependent.actors, BOB.name).position)).toBeGreaterThan(0.5);
+
     const aliceState = await mpState(alice);
     const bobState = await mpState(bob);
-    await writeReport(testInfo, 'mp-03-second-hero', { alice: aliceMoved, bob: bobMoved, mp: { alice: aliceState, bob: bobState } }, MP03_ARTIFACT_DIR);
+    await writeReport(testInfo, 'mp-03-second-hero', { alice: aliceIndependent, bob: bobIndependent, mp: { alice: aliceState, bob: bobState } }, MP03_ARTIFACT_DIR);
     expect(aliceState.tick).toBeGreaterThanOrEqual(240);
     expect(bobState.tick).toBeGreaterThanOrEqual(240);
     expect(aliceState.hashes.length).toBeGreaterThanOrEqual(6);
@@ -240,7 +346,7 @@ test('town Ride Together card creates a claim word and joins two named riders', 
     await expect(bob.getByTestId('mp-rider-chip')).toContainText(ALICE.town);
     await shotMp04(alice, testInfo, 'two-named-riders');
 
-    const [aliceDiagnostics, bobDiagnostics] = await syncedGameDiagnostics(alice, bob, 120);
+    const [aliceDiagnostics, bobDiagnostics] = await syncedGameDiagnostics(alice, bob, 120, 3);
     assertSameRosterSlots(aliceDiagnostics.actors, bobDiagnostics.actors);
     assertLocalHero(aliceDiagnostics, ALICE.name);
     assertLocalHero(bobDiagnostics, BOB.name);
@@ -267,7 +373,7 @@ test('town Ride Together invalid word stays friendly at 390px', async ({ page },
   expect(errors.pageErrors).toEqual([]);
 });
 
-async function openPair(browser: Browser, code: string, bobExtra = ''): Promise<{
+async function openPair(browser: Browser, code: string, bobExtra = '', query = MP_QUERY): Promise<{
   alice: Page;
   bob: Page;
   aliceErrors: ErrorBucket;
@@ -281,8 +387,8 @@ async function openPair(browser: Browser, code: string, bobExtra = ''): Promise<
   const aliceErrors = collectErrors(alice);
   const bobErrors = collectErrors(bob);
   await Promise.all([
-    openClient(alice, code, ALICE),
-    openClient(bob, code, BOB, bobExtra),
+    openClient(alice, code, ALICE, '', query),
+    openClient(bob, code, BOB, bobExtra, query),
   ]);
   return {
     alice,
@@ -296,10 +402,10 @@ async function openPair(browser: Browser, code: string, bobExtra = ''): Promise<
   };
 }
 
-async function openClient(page: Page, code: string, player: MpPlayerSeed, extra = ''): Promise<void> {
+async function openClient(page: Page, code: string, player: MpPlayerSeed, extra = '', query = MP_QUERY): Promise<void> {
   await seedProfile(page, player);
-  const query = `${MP_QUERY}&mpRelay=${encodeURIComponent(relay.url)}&mpCode=${code}&mpName=${encodeURIComponent(player.name)}&mpTown=${encodeURIComponent(player.town)}${extra}`;
-  await page.goto(`/?${query}`);
+  const fullQuery = `${query}&mpRelay=${encodeURIComponent(relay.url)}&mpCode=${code}&mpName=${encodeURIComponent(player.name)}&mpTown=${encodeURIComponent(player.town)}${extra}`;
+  await page.goto(`/?${fullQuery}`);
   await page.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
 }
 
@@ -373,6 +479,161 @@ async function waitForActors(page: Page): Promise<void> {
   }, undefined, { timeout: 15_000 });
 }
 
+async function seedConvergenceScenario(source: Page, peer: Page): Promise<number> {
+  await Promise.all([
+    source.evaluate(() => window.__GR_TEST__!.setManualSim(true)),
+    peer.evaluate(() => window.__GR_TEST__!.setManualSim(true)),
+  ]);
+  await source.evaluate(() => {
+    const test = window.__GR_TEST__!;
+    test.clearEnemies();
+    test.setWave(7);
+    test.spawnPack(1, 4, {
+      speedScale: 0,
+      hpScale: 25,
+      eliteKind: 'baron',
+      visualScale: 2.6,
+      banner: true,
+      contactDamageScale: 1.7,
+      buildingDamageScale: 2.1,
+      supportBuildingDamageScale: 1.4,
+      heroPursuitRange: 34,
+      variantId: 'baron-convergence',
+      variantLabel: 'Ledger Baron',
+      tint: '#a0522d',
+      boltDamageMult: 0.7,
+    });
+    for (let component = 0; component < 3; component += 1) {
+      test.spawnPack(1, 6 + component, {
+        speedScale: 0,
+        hpScale: 25 + component,
+        eliteKind: 'railcar',
+        visualScale: 1.5 + component * 0.1,
+        contactDamageScale: 1.2,
+        buildingDamageScale: 1.6,
+        supportBuildingDamageScale: 1.3,
+        heroPursuitRange: 26,
+        variantId: `railcar-${component + 1}`,
+        variantLabel: `Railcar ${component + 1}`,
+        tint: '#5b8a8a',
+        boltDamageMult: 0.85,
+        bossGroupId: 'railcar-alpha',
+        bossGroupSize: 3,
+        bossGroupTotalHp: 420,
+        bossComponentId: `component-${component + 1}`,
+        bossComponentLabel: `Car ${component + 1}`,
+        bossDegradeSpeedMult: 0.82,
+      });
+    }
+  });
+  const snapshot = await source.evaluate(() => window.__GR_TEST__!.captureSuspend());
+  const restored = await Promise.all([
+    source.evaluate(async (saved) => {
+      const ok = window.__GR_TEST__!.restoreSuspend(saved);
+      const suspend = (await Function('return import("/src/game/RunSuspend.ts")')()) as typeof import('../src/game/RunSuspend');
+      return { ok, failure: suspend.runSuspendRestoreFailure() };
+    }, snapshot),
+    peer.evaluate(async (saved) => {
+      const ok = window.__GR_TEST__!.restoreSuspend(saved);
+      const suspend = (await Function('return import("/src/game/RunSuspend.ts")')()) as typeof import('../src/game/RunSuspend');
+      return { ok, failure: suspend.runSuspendRestoreFailure() };
+    }, snapshot),
+  ]);
+  expect(restored).toEqual([{ ok: true, failure: null }, { ok: true, failure: null }]);
+  const currentTick = Math.max((await mpState(source)).tick, (await mpState(peer)).tick);
+  const resumeAt = currentTick + 15;
+  await Promise.all([
+    source.evaluate((tick) => window.__GR_TEST__!.resumeManualSimAtMpTick(tick), resumeAt),
+    peer.evaluate((tick) => window.__GR_TEST__!.resumeManualSimAtMpTick(tick), resumeAt),
+  ]);
+  return resumeAt;
+}
+
+async function suspendEnemyRoster(page: Page): Promise<ReturnType<typeof sortEnemyRoster>> {
+  const roster = await page.evaluate(() => window.__GR_TEST__!.captureSuspend().enemies.active);
+  return sortEnemyRoster(roster);
+}
+
+async function syncedHashedEnemyRosters(
+  left: Page,
+  right: Page,
+  minTick: number,
+): Promise<[ReturnType<typeof sortEnemyRoster>, ReturnType<typeof sortEnemyRoster>]> {
+  const capture = (page: Page) =>
+    page.evaluate(() => {
+      const latest = window.__GR_TEST__!.lastMultiplayerHashState();
+      const run = latest?.state && typeof latest.state === 'object'
+        ? (latest.state as { run?: { enemies?: { active?: unknown } } }).run
+        : undefined;
+      return {
+        tick: latest?.tick ?? 0,
+        roster: Array.isArray(run?.enemies?.active) ? run.enemies.active : [],
+      };
+    });
+  const deadline = Date.now() + 10_000;
+  let lastTicks = 'none';
+  while (Date.now() < deadline) {
+    const [leftState, rightState] = await Promise.all([capture(left), capture(right)]);
+    lastTicks = `${leftState.tick}/${rightState.tick}`;
+    if (leftState.tick >= minTick && leftState.tick === rightState.tick) {
+      return [
+        sortEnemyRoster(leftState.roster as Array<import('../src/entities/Enemy').EnemySuspendSnapshot>),
+        sortEnemyRoster(rightState.roster as Array<import('../src/entities/Enemy').EnemySuspendSnapshot>),
+      ];
+    }
+    await left.waitForTimeout(40);
+  }
+  throw new Error(`clients did not publish a shared roster hash at tick >= ${minTick}; last hash ticks ${lastTicks}`);
+}
+
+function sortEnemyRoster(roster: Array<import('../src/entities/Enemy').EnemySuspendSnapshot>) {
+  return [...roster].sort((left, right) => left.slot - right.slot);
+}
+
+function enemyRosterIdentity(roster: ReturnType<typeof sortEnemyRoster>) {
+  return roster.map((enemy) => ({
+    slot: enemy.slot,
+    maxHp: enemy.maxHp,
+    speed: enemy.speed,
+    eliteKind: enemy.eliteKind,
+    visualScale: enemy.visualScale,
+    banner: enemy.banner,
+    contactDamageScale: enemy.contactDamageScale,
+    buildingDamageScale: enemy.buildingDamageScale,
+    supportBuildingDamageScale: enemy.supportBuildingDamageScale,
+    heroPursuitRange: enemy.heroPursuitRange,
+    variantId: enemy.variantId,
+    variantLabel: enemy.variantLabel,
+    variantTint: enemy.variantTint,
+    boltDamageMult: enemy.boltDamageMult,
+    bossGroupId: enemy.bossGroupId,
+    bossGroupSize: enemy.bossGroupSize,
+    bossGroupTotalHp: enemy.bossGroupTotalHp,
+    bossComponentId: enemy.bossComponentId,
+    bossComponentLabel: enemy.bossComponentLabel,
+    bossDegradeSpeedMult: enemy.bossDegradeSpeedMult,
+    thief: enemy.thief,
+    wrecker: enemy.wrecker,
+  }));
+}
+
+function stateDifferences(left: unknown, right: unknown, path = 'state', output: string[] = []): string[] {
+  if (output.length >= 24 || Object.is(left, right)) return output;
+  if (!left || !right || typeof left !== 'object' || typeof right !== 'object') {
+    output.push(`${path}: ${JSON.stringify(left)} != ${JSON.stringify(right)}`);
+    return output;
+  }
+  const leftRecord = left as Record<string, unknown>;
+  const rightRecord = right as Record<string, unknown>;
+  const keys = new Set([...Object.keys(leftRecord), ...Object.keys(rightRecord)]);
+  for (const key of keys) stateDifferences(leftRecord[key], rightRecord[key], `${path}.${key}`, output);
+  return output;
+}
+
+function hashAt(state: MpState, tick: number): string | undefined {
+  return state.hashes.find((entry) => entry.tick === tick)?.hash;
+}
+
 async function mpState(page: Page): Promise<MpState> {
   return page.evaluate(() => window.__GR_MP__!.state()!);
 }
@@ -381,7 +642,12 @@ async function gameDiagnostics(page: Page): Promise<ThreeGameDiagnostics> {
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!);
 }
 
-async function syncedGameDiagnostics(left: Page, right: Page, minTick: number): Promise<[ThreeGameDiagnostics, ThreeGameDiagnostics]> {
+async function syncedGameDiagnostics(
+  left: Page,
+  right: Page,
+  minTick: number,
+  maxTickDelta = 0,
+): Promise<[ThreeGameDiagnostics, ThreeGameDiagnostics]> {
   const deadline = Date.now() + 10_000;
   let lastTicks = 'none';
   while (Date.now() < deadline) {
@@ -389,7 +655,9 @@ async function syncedGameDiagnostics(left: Page, right: Page, minTick: number): 
     const leftTick = leftDiagnostics.mp?.tick ?? 0;
     const rightTick = rightDiagnostics.mp?.tick ?? 0;
     lastTicks = `${leftTick}/${rightTick}`;
-    if (leftTick >= minTick && leftTick === rightTick) return [leftDiagnostics, rightDiagnostics];
+    if (leftTick >= minTick && rightTick >= minTick && Math.abs(leftTick - rightTick) <= maxTickDelta) {
+      return [leftDiagnostics, rightDiagnostics];
+    }
     await left.waitForTimeout(40);
   }
   throw new Error(`clients did not align on a shared tick >= ${minTick}; last ticks ${lastTicks}`);
@@ -564,6 +832,8 @@ async function startPages(worker: RelayProcess): Promise<RelayProcess> {
     '--show-interactive-dev-session=false',
     '--do',
     `MULTIPLAYER_ROOMS=MultiplayerRoom@${SCRIPT_NAME}`,
+    '--kv',
+    'MULTIPLAYER_RATE_LIMITS',
   ], port);
   await waitForServer(worker.url, '/');
   return child;

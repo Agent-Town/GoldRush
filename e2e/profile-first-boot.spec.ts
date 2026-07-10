@@ -93,7 +93,7 @@ test('pack the ledger downloads human-readable active profile data', async ({ pa
   expect(packed).toMatchObject({ kind: 'goldrush.profile.ledger', version: 1, profile: { id: 'robin', name: 'Robin' } });
   expect(packed.data[TOWN_NAME_KEY]).toBe('Quartz Hill');
   expect(packed.data[META_PROGRESS_KEY].tracks).toMatchObject({ science: 6, territory: 3 });
-  expect(packed.data[RUN_SUSPEND_KEY]).toMatchObject({ v: 1, wave: 7 });
+  expect(packed.data[RUN_SUSPEND_KEY]).toMatchObject({ v: 2, migratedFromV1: true, wave: 7 });
   assertNoErrors(errors);
 });
 

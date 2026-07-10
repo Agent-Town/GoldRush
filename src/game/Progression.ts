@@ -1,4 +1,4 @@
-import type { Rng } from '../core/Rng';
+import type { Rng, RngState } from '../core/Rng';
 import type { GameState } from './GameState';
 import { Balance } from './Balance';
 import { effectiveStats, type EffectiveStats, type UpgradeStacks } from './StatSheet';
@@ -23,6 +23,15 @@ export type ProgressionSnapshot = {
   stacks: Record<string, number>;
   stats: EffectiveStats;
   eligibility: string[];
+};
+
+export type ProgressionSuspendState = {
+  level: number;
+  xpTotal: number;
+  spentXp: number;
+  pendingLevels: number;
+  offer: string[] | null;
+  stacks: Record<string, number>;
 };
 
 type ProgressionOptions = {
@@ -83,6 +92,14 @@ export class Progression {
       stats: this.statsValue,
       eligibility: this.eligibleDefs().map((def) => def.id),
     };
+  }
+
+  captureRngState(): RngState {
+    return this.options.rng.snapshot();
+  }
+
+  restoreRngState(state: RngState): void {
+    this.options.rng.restore(state);
   }
 
   consumeXpTotal(xpTotal: number): void {
@@ -160,6 +177,7 @@ export class Progression {
   }
 
   reset(): void {
+    this.options.rng.reset();
     this.levelValue = 1;
     this.xpTotal = 0;
     this.spentXp = 0;
@@ -168,6 +186,37 @@ export class Progression {
     for (const id of Object.keys(this.stacksValue) as UpgradeId[]) delete this.stacksValue[id];
     this.statsValue = effectiveStats(this.stacksValue);
     this.options.onStatsChanged(this.statsValue, null);
+  }
+
+  restoreSuspend(state: ProgressionSuspendState): boolean {
+    const offer = state.offer?.map((id) => (isUpgradeId(id) ? upgradeDefById[id] : null)) ?? null;
+    if (offer?.some((def) => def === null)) return false;
+    if (offer && (state.pendingLevels <= 0 || new Set(state.offer ?? []).size !== offer.length)) return false;
+
+    const stacks: UpgradeStacks = {};
+    for (const [id, count] of Object.entries(state.stacks)) {
+      if (!isUpgradeId(id) || !Number.isInteger(count) || count < 0) return false;
+      const maxStacks = upgradeDefById[id].maxStacks;
+      if (Number.isFinite(maxStacks) && count > maxStacks) return false;
+      if (count > 0) stacks[id] = count;
+    }
+
+    this.levelValue = state.level;
+    this.xpTotal = state.xpTotal;
+    this.spentXp = state.spentXp;
+    this.pendingLevelsValue = state.pendingLevels;
+    this.currentOffer = offer as UpgradeDef[] | null;
+    for (const id of Object.keys(this.stacksValue) as UpgradeId[]) delete this.stacksValue[id];
+    Object.assign(this.stacksValue, stacks);
+    this.statsValue = effectiveStats(this.stacksValue);
+    this.options.onStatsChanged(this.statsValue, null);
+    return true;
+  }
+
+  resumeSuspendChoice(): void {
+    if (this.currentOffer && this.pendingLevelsValue > 0 && this.options.state.current === 'playing') {
+      this.options.state.transition('levelup');
+    }
   }
 
   private addXp(amount: number): void {

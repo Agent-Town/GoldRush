@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
+import { OrientationResolver, rotationDirections, type RotationDirection } from '../assets/OrientationResolver';
 import { type CharacterSpriteClip } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
@@ -53,6 +53,66 @@ export type EnemySpawnParams = {
   bossComponentId?: string;
   bossComponentLabel?: string;
   bossDegradeSpeedMult?: number;
+};
+
+export type EnemySuspendSnapshot = {
+  slot: number;
+  hp: number;
+  maxHp: number;
+  speed: number;
+  eliteKind: EnemyEliteKind | null;
+  visualScale: number;
+  banner: boolean;
+  contactDamageScale: number;
+  buildingDamageScale: number;
+  supportBuildingDamageScale: number;
+  heroPursuitRange: number;
+  variantId: string | null;
+  variantLabel: string | null;
+  variantTint: string | null;
+  boltDamageMult: number;
+  bossGroupId: string | null;
+  bossGroupSize: number;
+  bossGroupTotalHp: number;
+  bossComponentId: string | null;
+  bossComponentLabel: string | null;
+  bossDegradeSpeedMult: number;
+  activationDelay: number;
+  contactCooldown: number;
+  thief: boolean;
+  wrecker: boolean;
+  thiefState: ThiefState;
+  wreckerState: WreckerState;
+  carriedGold: number;
+  grabTimer: number;
+  swingTimer: number;
+  retargetTimer: number;
+  wreckerRetargetTimer: number;
+  currentHoldingId: string | null;
+  currentBuildingId: string | null;
+  edge: CompassEdge | null;
+  formationOffset: number;
+  flashRemaining: number;
+  flashCount: number;
+  terrainSlideSide: number;
+  scripted: boolean;
+  scriptedSpeed: number;
+  scriptedIgnoresTerrain: boolean;
+  scriptedRoute: Array<{ x: number; y: number; z: number }>;
+  scriptedRouteIndex: number;
+  position: { x: number; y: number; z: number };
+  velocity: { x: number; y: number; z: number };
+  leadVelocity: { x: number; y: number; z: number };
+  heading: { x: number; y: number; z: number };
+  scriptedTarget: { x: number; y: number; z: number };
+  rotationY: number;
+  spriteClip: CharacterSpriteClip;
+  spriteOrientation: RotationDirection;
+};
+
+export type EnemySuspendRestoreRefs = {
+  goldHoldingById?: (id: string) => GoldHolding | null;
+  buildingById?: (id: string) => BuildingTarget | null;
 };
 
 export type ThiefUpdateContext = {
@@ -341,6 +401,123 @@ export class ClaimJumperEnemy {
 
   setAnimationClip(clip: CharacterSpriteClip): void {
     this.spriteClip = clip;
+  }
+
+  captureSuspend(): EnemySuspendSnapshot {
+    return {
+      slot: this.id,
+      hp: this.hp,
+      maxHp: this.maxHpValue,
+      speed: this.speed,
+      eliteKind: this.elite,
+      visualScale: this.visualScaleValue,
+      banner: this.banner,
+      contactDamageScale: this.contactDamageScaleValue,
+      buildingDamageScale: this.buildingDamageScaleValue,
+      supportBuildingDamageScale: this.supportBuildingDamageScaleValue,
+      heroPursuitRange: this.heroPursuitRangeValue,
+      variantId: this.variantIdValue,
+      variantLabel: this.variantLabelValue,
+      variantTint: this.variantTintColorValue ? `#${this.variantTintColorValue.getHexString()}` : null,
+      boltDamageMult: this.boltDamageMultValue,
+      bossGroupId: this.bossGroupIdValue,
+      bossGroupSize: this.bossGroupSizeValue,
+      bossGroupTotalHp: this.bossGroupTotalHpValue,
+      bossComponentId: this.bossComponentIdValue,
+      bossComponentLabel: this.bossComponentLabelValue,
+      bossDegradeSpeedMult: this.bossDegradeSpeedMultValue,
+      activationDelay: this.activationDelay,
+      contactCooldown: this.contactCooldown,
+      thief: this.thief,
+      wrecker: this.wrecker,
+      thiefState: this.thiefState,
+      wreckerState: this.wreckerState,
+      carriedGold: this.carriedGold,
+      grabTimer: this.grabTimer,
+      swingTimer: this.swingTimer,
+      retargetTimer: this.retargetTimer,
+      wreckerRetargetTimer: this.wreckerRetargetTimer,
+      currentHoldingId: this.isHoldingValid(this.currentHolding) ? this.currentHolding.id : null,
+      currentBuildingId: this.isBuildingValid(this.currentBuilding) ? this.currentBuilding.id : null,
+      edge: this.spawnEdge,
+      formationOffset: this.formationOffset,
+      flashRemaining: this.flashRemaining,
+      flashCount: this.flashCount,
+      terrainSlideSide: this.terrainSlideSide,
+      scripted: this.scripted,
+      scriptedSpeed: this.scriptedSpeed,
+      scriptedIgnoresTerrain: this.scriptedIgnoresTerrain,
+      scriptedRoute: this.scriptedRoute.map(vectorSnapshot),
+      scriptedRouteIndex: this.scriptedRouteIndex,
+      position: vectorSnapshot(this.group.position),
+      velocity: vectorSnapshot(this.velocity),
+      leadVelocity: vectorSnapshot(this.leadVelocity),
+      heading: vectorSnapshot(this.heading),
+      scriptedTarget: vectorSnapshot(this.scriptedTarget),
+      rotationY: this.group.rotation.y,
+      spriteClip: this.spriteClip,
+      spriteOrientation: this.spriteOrientation,
+    };
+  }
+
+  restoreRuntime(snapshot: EnemySuspendSnapshot, refs: EnemySuspendRestoreRefs = {}): void {
+    this.alive = true;
+    this.hp = snapshot.hp;
+    this.maxHpValue = snapshot.maxHp;
+    this.speed = snapshot.speed;
+    this.elite = snapshot.eliteKind;
+    this.visualScaleValue = snapshot.visualScale;
+    this.banner = snapshot.banner;
+    this.contactDamageScaleValue = snapshot.contactDamageScale;
+    this.buildingDamageScaleValue = snapshot.buildingDamageScale;
+    this.supportBuildingDamageScaleValue = snapshot.supportBuildingDamageScale;
+    this.heroPursuitRangeValue = snapshot.heroPursuitRange;
+    this.variantIdValue = snapshot.variantId;
+    this.variantLabelValue = snapshot.variantLabel;
+    this.variantTintColorValue = snapshot.variantTint ? new THREE.Color(snapshot.variantTint) : null;
+    this.boltDamageMultValue = snapshot.boltDamageMult;
+    this.bossGroupIdValue = snapshot.bossGroupId;
+    this.bossGroupSizeValue = snapshot.bossGroupSize;
+    this.bossGroupTotalHpValue = snapshot.bossGroupTotalHp;
+    this.bossComponentIdValue = snapshot.bossComponentId;
+    this.bossComponentLabelValue = snapshot.bossComponentLabel;
+    this.bossDegradeSpeedMultValue = snapshot.bossDegradeSpeedMult;
+    this.activationDelay = snapshot.activationDelay;
+    this.contactCooldown = snapshot.contactCooldown;
+    this.thief = snapshot.thief;
+    this.wrecker = snapshot.wrecker;
+    this.thiefState = snapshot.thiefState;
+    this.wreckerState = snapshot.wreckerState;
+    this.carriedGold = snapshot.carriedGold;
+    this.grabTimer = snapshot.grabTimer;
+    this.swingTimer = snapshot.swingTimer;
+    this.retargetTimer = snapshot.retargetTimer;
+    this.wreckerRetargetTimer = snapshot.wreckerRetargetTimer;
+    this.currentHolding = snapshot.currentHoldingId ? refs.goldHoldingById?.(snapshot.currentHoldingId) ?? null : null;
+    this.currentBuilding = snapshot.currentBuildingId ? refs.buildingById?.(snapshot.currentBuildingId) ?? null : null;
+    this.spawnEdge = snapshot.edge;
+    this.formationOffset = snapshot.formationOffset;
+    this.flashRemaining = snapshot.flashRemaining;
+    this.flashCount = snapshot.flashCount;
+    this.terrainSlideSide = snapshot.terrainSlideSide;
+    this.scripted = snapshot.scripted;
+    this.scriptedSpeed = snapshot.scriptedSpeed;
+    this.scriptedIgnoresTerrain = snapshot.scriptedIgnoresTerrain;
+    this.scriptedRoute.length = 0;
+    for (const point of snapshot.scriptedRoute) this.scriptedRoute.push(new THREE.Vector3(point.x, point.y, point.z));
+    this.scriptedRouteIndex = Math.max(0, Math.min(snapshot.scriptedRouteIndex, Math.max(0, this.scriptedRoute.length - 1)));
+    this.group.position.set(snapshot.position.x, snapshot.position.y, snapshot.position.z);
+    this.velocity.set(snapshot.velocity.x, snapshot.velocity.y, snapshot.velocity.z);
+    this.leadVelocity.set(snapshot.leadVelocity.x, snapshot.leadVelocity.y, snapshot.leadVelocity.z);
+    this.heading.set(snapshot.heading.x, snapshot.heading.y, snapshot.heading.z);
+    this.scriptedTarget.set(snapshot.scriptedTarget.x, snapshot.scriptedTarget.y, snapshot.scriptedTarget.z);
+    this.group.rotation.y = snapshot.rotationY;
+    this.group.visible = true;
+    this.spriteClip = snapshot.spriteClip;
+    this.spriteOrientation = snapshot.spriteOrientation;
+    this.orientationResolver.reset(snapshot.spriteOrientation);
+    const orientationAngle = rotationDirections.indexOf(snapshot.spriteOrientation) * (Math.PI / 4);
+    this.orientationResolver.resolve(Math.sin(orientationAngle), Math.cos(orientationAngle));
   }
 
   spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): void {
@@ -1035,6 +1212,10 @@ function riverBlocksEnemyCrossingAt(x: number): boolean {
 
 function riverDepthWadeableForEnemy(depth: number | undefined): boolean {
   return (depth ?? Number.POSITIVE_INFINITY) <= Balance.terrainSim.wadeDepth;
+}
+
+function vectorSnapshot(vector: THREE.Vector3): { x: number; y: number; z: number } {
+  return { x: vector.x, y: vector.y, z: vector.z };
 }
 
 function seededOffset(seed: number): number {

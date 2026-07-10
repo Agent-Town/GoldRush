@@ -11,6 +11,8 @@ import {
   disposeClaimJumperAssets,
   type ClaimJumperAssets,
   type EnemySpawnParams,
+  type EnemySuspendRestoreRefs,
+  type EnemySuspendSnapshot,
   type ThiefUpdateContext,
   type WreckerUpdateContext,
 } from './Enemy';
@@ -54,6 +56,10 @@ export type BossHpBarDiagnostics = {
   aliveComponents: number;
   destroyedComponents: number;
   components: Array<{ id: string; label: string; hp: number; maxHp: number }>;
+};
+export type EnemyPoolSuspendSnapshot = {
+  spawnSerial: number;
+  active: EnemySuspendSnapshot[];
 };
 type BossBarState = {
   x: number;
@@ -386,19 +392,93 @@ export class EnemyPool {
     });
   }
 
-  spawn(position: THREE.Vector3, params: EnemySpawnParams = {}): ClaimJumperEnemy | null {
-    for (const enemy of this.enemies) {
-      if (enemy.isAlive) continue;
-      enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
-      this.previousActive[enemy.id] = false;
-      this.spawnSerial += 1;
-      this.active += 1;
-      this.syncEnemyInstance(enemy);
-      this.syncEnemySprite(enemy);
-      this.syncBossHpBar();
-      return enemy;
+  spawn(position: THREE.Vector3, params: EnemySpawnParams = {}, preferredSlot?: number): ClaimJumperEnemy | null {
+    const enemy =
+      preferredSlot === undefined
+        ? this.enemies.find((candidate) => !candidate.isAlive)
+        : Number.isInteger(preferredSlot) && preferredSlot >= 0 && preferredSlot < this.enemies.length
+          ? this.enemies[preferredSlot]
+          : undefined;
+    if (!enemy || enemy.isAlive) return null;
+    enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
+    this.previousActive[enemy.id] = false;
+    this.spawnSerial += 1;
+    this.active += 1;
+    this.syncEnemyInstance(enemy);
+    this.syncEnemySprite(enemy);
+    this.syncBossHpBar();
+    return enemy;
+  }
+
+  captureSuspend(): EnemyPoolSuspendSnapshot {
+    return {
+      spawnSerial: this.spawnSerial,
+      active: this.enemies.filter((enemy) => enemy.isAlive).map((enemy) => enemy.captureSuspend()),
+    };
+  }
+
+  restoreSuspend(snapshot: EnemyPoolSuspendSnapshot, refs: EnemySuspendRestoreRefs = {}): boolean {
+    const slots = new Set<number>();
+    if (!Number.isInteger(snapshot.spawnSerial) || snapshot.spawnSerial < 0) return false;
+    for (const saved of snapshot.active) {
+      if (!Number.isInteger(saved.slot) || saved.slot < 0 || saved.slot >= this.enemies.length || slots.has(saved.slot)) return false;
+      slots.add(saved.slot);
     }
-    return null;
+
+    this.recycleAll();
+    const restored: Array<{ enemy: ClaimJumperEnemy; saved: EnemySuspendSnapshot }> = [];
+    for (const saved of snapshot.active) {
+      const enemy = this.spawn(
+        new THREE.Vector3(saved.position.x, saved.position.y, saved.position.z),
+        {
+          speedScale: Balance.enemy.speed > 0 ? saved.speed / Balance.enemy.speed : 1,
+          hpScale: Balance.enemy.hp > 0 ? saved.maxHp / Balance.enemy.hp : 1,
+          activationDelay: saved.activationDelay,
+          edge: saved.edge ?? undefined,
+          thief: saved.thief,
+          wrecker: saved.wrecker,
+          eliteKind: saved.eliteKind ?? undefined,
+          visualScale: saved.visualScale,
+          banner: saved.banner,
+          contactDamageScale: saved.contactDamageScale,
+          buildingDamageScale: saved.buildingDamageScale,
+          supportBuildingDamageScale: saved.supportBuildingDamageScale,
+          heroPursuitRange: saved.heroPursuitRange,
+          variantId: saved.variantId ?? undefined,
+          variantLabel: saved.variantLabel ?? undefined,
+          tint: saved.variantTint ?? undefined,
+          boltDamageMult: saved.boltDamageMult,
+          bossGroupId: saved.bossGroupId ?? undefined,
+          bossGroupSize: saved.bossGroupSize,
+          bossGroupTotalHp: saved.bossGroupTotalHp,
+          bossComponentId: saved.bossComponentId ?? undefined,
+          bossComponentLabel: saved.bossComponentLabel ?? undefined,
+          bossDegradeSpeedMult: saved.bossDegradeSpeedMult,
+        },
+        saved.slot,
+      );
+      if (!enemy) {
+        this.recycleAll();
+        return false;
+      }
+      restored.push({ enemy, saved });
+    }
+
+    for (const { enemy, saved } of restored) {
+      enemy.restoreRuntime(saved, refs);
+      this.previousActive[enemy.id] = false;
+      this.previousPositions[enemy.id]?.copy(enemy.position);
+      this.currentPositions[enemy.id]?.copy(enemy.position);
+      this.renderPositions[enemy.id]?.copy(enemy.position);
+      this.previousRotations[enemy.id] = enemy.group.rotation.y;
+      this.currentRotations[enemy.id] = enemy.group.rotation.y;
+      this.renderRotations[enemy.id] = enemy.group.rotation.y;
+    }
+    this.spawnSerial = snapshot.spawnSerial;
+    this.clearSpatialHash();
+    this.syncInstances();
+    this.syncHitFlashes();
+    return true;
   }
 
   degradeBossGroup(killed: ClaimJumperEnemy): { remaining: number; total: number } | null {

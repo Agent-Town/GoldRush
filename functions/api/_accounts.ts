@@ -70,6 +70,7 @@ const MAX_REQUESTS_PER_EMAIL = 5;
 const MAX_REQUESTS_PER_IP = 20;
 const MAX_JSON_BYTES = 200 * 1024;
 const SMALL_JSON_BYTES = 8 * 1024;
+const CLOUD_DATA_CODEC_KEY = '$goldRushGzipDataV1';
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 
 export async function requestCode(context: AccountsContext): Promise<Response> {
@@ -384,8 +385,20 @@ function normalizeVersion(value: unknown): number | false | null {
 }
 
 function validateEnvelope(envelope: JsonRecord, profileId: string): SaveMetadata | null {
-  if (envelope.kind !== 'gold-rush-ledger-bundle' || envelope.version !== 1) return null;
+  if (
+    envelope.kind !== 'gold-rush-ledger-bundle' ||
+    (envelope.version !== 1 && envelope.version !== 2)
+  ) {
+    return null;
+  }
   if (!isRecord(envelope.profile) || !isRecord(envelope.data)) return null;
+  if (envelope.version === 1 && CLOUD_DATA_CODEC_KEY in envelope.data) return null;
+  if (envelope.version === 2) {
+    const entries = Object.entries(envelope.data);
+    if (entries.length !== 1 || entries[0]?.[0] !== CLOUD_DATA_CODEC_KEY || typeof entries[0][1] !== 'string') {
+      return null;
+    }
+  }
   if (envelope.profile.id !== profileId) return null;
   const profileName = typeof envelope.profile.name === 'string' ? envelope.profile.name.trim().slice(0, 24) : '';
   if (!profileName) return null;

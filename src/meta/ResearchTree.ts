@@ -269,12 +269,24 @@ export function saveResearchState(
   state: ResearchState,
   progressStorage: MetaProgressStorage | undefined = registryStorage,
 ): ResearchState {
-  const next = migrateResearchState(toRegistry(state), state.progress);
+  const next = saveResearchRegistryState(registryStorage, state);
+  if (progressStorage) next.progress = saveMetaProgress(progressStorage, next.progress);
+  return next;
+}
+
+export function saveResearchRegistryState(
+  registryStorage: MetaProgressStorage | undefined,
+  state: ResearchState,
+): ResearchState {
+  const next = normalizeResearchState(state);
   try {
     registryStorage?.setItem(RESEARCH_STATE_KEY, JSON.stringify(toRegistry(next)));
   } catch {}
-  if (progressStorage) next.progress = saveMetaProgress(progressStorage, next.progress);
   return next;
+}
+
+export function normalizeResearchState(state: ResearchState): ResearchState {
+  return migrateResearchState(toRegistry(state), state.progress);
 }
 
 export function availablePicks(state: ResearchState): ResearchNode[] {

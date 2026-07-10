@@ -1,11 +1,20 @@
 const DEFAULT_SEED = 0x9e3779b9;
 
+export type RngState = {
+  seed: number;
+  calls: number;
+};
+
 export type Rng = {
   readonly seed: number;
+  readonly calls: number;
   next(): number;
   range(min: number, max: number): number;
   int(minInclusive: number, maxExclusive: number): number;
   chance(probability: number): boolean;
+  snapshot(): RngState;
+  reset(seed?: string | number | null): void;
+  restore(state: RngState): void;
 };
 
 export function normalizeSeed(seed: string | number | null | undefined): number {
@@ -44,20 +53,53 @@ export function mulberry32(seed: number): () => number {
 }
 
 export function createRng(seed: string | number | null | undefined = readSeedFromUrl()): Rng {
-  const normalizedSeed = normalizeSeed(seed);
-  const nextValue = mulberry32(normalizedSeed);
+  let normalizedSeed = normalizeSeed(seed);
+  let calls = 0;
+  let nextValue = mulberry32(normalizedSeed);
+  const next = () => {
+    calls += 1;
+    return nextValue();
+  };
 
   return {
-    seed: normalizedSeed,
-    next: nextValue,
+    get seed() {
+      return normalizedSeed;
+    },
+    get calls() {
+      return calls;
+    },
+    next,
     range(min: number, max: number) {
-      return min + (max - min) * nextValue();
+      return min + (max - min) * next();
     },
     int(minInclusive: number, maxExclusive: number) {
       return Math.floor(this.range(minInclusive, maxExclusive));
     },
     chance(probability: number) {
-      return nextValue() < probability;
+      return next() < probability;
+    },
+    snapshot() {
+      return { seed: normalizedSeed, calls };
+    },
+    reset(nextSeed = normalizedSeed) {
+      normalizedSeed = normalizeSeed(nextSeed);
+      calls = 0;
+      nextValue = mulberry32(normalizedSeed);
+    },
+    restore(state) {
+      if (
+        !Number.isInteger(state.seed) ||
+        state.seed < 0 ||
+        state.seed > 0xffffffff ||
+        !Number.isSafeInteger(state.calls) ||
+        state.calls < 0
+      ) {
+        throw new RangeError('Invalid RNG state');
+      }
+      normalizedSeed = state.seed;
+      calls = state.calls;
+      nextValue = mulberry32(normalizedSeed);
+      for (let call = 0; call < calls; call += 1) nextValue();
     },
   };
 }

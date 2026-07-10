@@ -93,17 +93,15 @@ export class SentryBeaconPool {
     return this.active[index] === true;
   }
 
-  place(position: THREE.Vector3): number {
-    for (let i = 0; i < this.active.length; i += 1) {
-      if (this.active[i]) continue;
-      this.active[i] = true;
-      this.positions[i]?.copy(position);
-      this.alive += 1;
-      this.sync(i, 0);
-      this.markNeedsUpdate();
-      return i;
-    }
-    return -1;
+  place(position: THREE.Vector3, preferredSlot?: number): number {
+    const slot = preferredSlot ?? this.active.findIndex((active) => !active);
+    if (!Number.isInteger(slot) || slot < 0 || slot >= this.active.length || this.active[slot]) return -1;
+    this.active[slot] = true;
+    this.positions[slot]?.copy(position);
+    this.alive += 1;
+    this.sync(slot, 0);
+    this.markNeedsUpdate();
+    return slot;
   }
 
   deactivate(index: number): boolean {

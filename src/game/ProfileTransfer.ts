@@ -1,7 +1,9 @@
 import { META_PROGRESS_KEY } from './MetaProgress';
+import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
 import {
   PROFILE_DATA_KEYS,
   PROFILE_KEY,
+  RUN_SUSPEND_KEY,
   activeProfile,
   importProfileRecord,
   loadProfileState,
@@ -16,12 +18,15 @@ import { RUN_SUSPEND_REJECTION_KEY, RUN_SUSPEND_REJECTION_LINE, normalizeRunSusp
 
 const TRANSFER_KIND = 'goldrush.profile.ledger';
 const TRANSFER_VERSION = 1;
+const CLOUD_TRANSFER_VERSION = 2;
 const TRANSFER_SOFT_LIMIT_BYTES = 190 * 1024;
 const RESTORE_TEMP_PREFIX = `${TRANSFER_KIND}.restore`;
+const CLOUD_DATA_CODEC_KEY = '$goldRushGzipDataV1';
+const CLOUD_DATA_MAX_OUTPUT_BYTES = 10 * 1024 * 1024;
 
 export type ProfileTransferEnvelope = {
   kind: typeof TRANSFER_KIND;
-  version: typeof TRANSFER_VERSION;
+  version: typeof TRANSFER_VERSION | typeof CLOUD_TRANSFER_VERSION;
   exportedAt: string;
   profile: ProfileRecord;
   data: Record<string, unknown>;
@@ -59,6 +64,40 @@ export function packActiveProfile(storage: ProfileStorage): { envelope: ProfileT
   return { envelope, filename: `goldrush-${slug(profile.name)}-${dateStamp()}.json` };
 }
 
+export async function packActiveProfileForCloud(
+  storage: ProfileStorage,
+): Promise<{ envelope: ProfileTransferEnvelope; filename: string }> {
+  const packed = packActiveProfile(storage);
+  if (byteSize(JSON.stringify(packed.envelope)) <= TRANSFER_SOFT_LIMIT_BYTES) return packed;
+  const compressed = await gzipTextBase64(JSON.stringify(packed.envelope.data));
+  return {
+    ...packed,
+    envelope: {
+      ...packed.envelope,
+      version: CLOUD_TRANSFER_VERSION,
+      data: { [CLOUD_DATA_CODEC_KEY]: compressed },
+    },
+  };
+}
+
+export async function expandCloudProfileTransfer(
+  envelope: ProfileTransferEnvelope,
+): Promise<ProfileTransferEnvelope | null> {
+  if (envelope.version === TRANSFER_VERSION) {
+    return CLOUD_DATA_CODEC_KEY in envelope.data ? null : envelope;
+  }
+  const entries = Object.entries(envelope.data);
+  if (entries.length !== 1 || entries[0]?.[0] !== CLOUD_DATA_CODEC_KEY) return null;
+  const encoded = entries[0][1];
+  if (typeof encoded !== 'string') return null;
+  try {
+    const data = await gunzipJsonBase64(encoded, CLOUD_DATA_MAX_OUTPUT_BYTES);
+    return isRecord(data) ? { ...envelope, version: TRANSFER_VERSION, data } : null;
+  } catch {
+    return null;
+  }
+}
+
 export function unpackPreview(text: string): ProfileTransferFailure | ProfileTransferPreview {
   let raw: unknown;
   try {
@@ -71,6 +110,7 @@ export function unpackPreview(text: string): ProfileTransferFailure | ProfileTra
 }
 
 export function unpackProfile(storage: ProfileStorage, envelope: ProfileTransferEnvelope): ProfileTransferResult {
+  if (envelope.version !== TRANSFER_VERSION) return { ok: false, message: 'That ledger does not match this trail.' };
   const profile = importProfileRecord(storage, envelope.profile);
   if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
   for (const key of PROFILE_DATA_KEYS) {
@@ -87,7 +127,9 @@ export function unpackProfile(storage: ProfileStorage, envelope: ProfileTransfer
 }
 
 export function restoreProfileBundle(storage: ProfileStorage, envelope: ProfileTransferEnvelope): ProfileTransferResult {
-  if (!isEnvelope(envelope)) return { ok: false, message: 'That ledger does not match this trail.' };
+  if (!isEnvelope(envelope) || envelope.version !== TRANSFER_VERSION) {
+    return { ok: false, message: 'That ledger does not match this trail.' };
+  }
   const profile = normalizeCloudProfile(envelope.profile);
   if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
 
@@ -135,6 +177,11 @@ function stageRestoreData(
   for (const key of PROFILE_DATA_KEYS) {
     if (!(key in envelope.data)) continue;
     const datum = normalizeDatum(storage, profileId, key, envelope.data[key]);
+    if (datum === null && requiresValidatedDatum(key)) {
+      cleanupTempKeys(storage, keys);
+      writeRestoreRejection(storage, `restore rejected invalid ${key}; previous ledger left untouched`);
+      return { ok: false, message: 'That ledger contains a damaged saved claim.' };
+    }
     if (datum === null) continue;
     const tempKey = `${RESTORE_TEMP_PREFIX}.${token}.${key}`;
     try {
@@ -150,9 +197,20 @@ function stageRestoreData(
 }
 
 function isEnvelope(value: unknown): value is ProfileTransferEnvelope {
-  if (!isRecord(value) || value.kind !== TRANSFER_KIND || value.version !== TRANSFER_VERSION) return false;
+  if (
+    !isRecord(value) ||
+    value.kind !== TRANSFER_KIND ||
+    (value.version !== TRANSFER_VERSION && value.version !== CLOUD_TRANSFER_VERSION)
+  ) {
+    return false;
+  }
   if (!isRecord(value.profile) || typeof value.profile.id !== 'string' || typeof value.profile.name !== 'string') return false;
-  return isRecord(value.data);
+  if (!isRecord(value.data)) return false;
+  if (value.version === CLOUD_TRANSFER_VERSION) {
+    const entries = Object.entries(value.data);
+    return entries.length === 1 && entries[0]?.[0] === CLOUD_DATA_CODEC_KEY && typeof entries[0][1] === 'string';
+  }
+  return !(CLOUD_DATA_CODEC_KEY in value.data);
 }
 
 function normalizeCloudProfile(profile: ProfileRecord): ProfileRecord | null {
@@ -204,7 +262,12 @@ function normalizeDatum(storage: ProfileStorage, profileId: string, key: string,
 
 function normalizeImportDatum(key: string, value: unknown): unknown | null {
   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
+  if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(null, value);
   return value;
+}
+
+function requiresValidatedDatum(key: string): boolean {
+  return key === RUN_SUSPEND_KEY || key === SAVE_SLOTS_KEY;
 }
 
 function safeGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
@@ -284,5 +347,5 @@ function byteSize(value: string): number {
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }

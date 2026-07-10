@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { getStressCount, isSpawnDisabled } from '../core/DebugParams';
 import type { CompassEdge, EnemyEliteKind } from '../entities/Enemy';
-import type { Rng } from '../core/Rng';
+import type { Rng, RngState } from '../core/Rng';
 import type { EnemyPool } from '../entities/pools';
 import { Balance } from '../game/Balance';
 import {
@@ -162,6 +162,14 @@ export class WaveSystem {
     };
   }
 
+  captureRngState(): RngState {
+    return this.rng.snapshot();
+  }
+
+  restoreRngState(state: RngState): void {
+    this.rng.restore(state);
+  }
+
   update(atSim: number): void {
     this.currentAtSim = atSim;
     if (this.scheduledDisabled()) {
@@ -199,6 +207,7 @@ export class WaveSystem {
   }
 
   reset(): void {
+    this.rng.reset();
     this.nextTrickleAt = Balance.waves.graceSeconds + Balance.waves.trickleInterval;
     this.nextWaveAt = this.waveInterval();
     this.nextPlanWaveAt = this.nextWaveAt;

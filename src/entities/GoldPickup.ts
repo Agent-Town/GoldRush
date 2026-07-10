@@ -8,6 +8,13 @@ export type GoldPickupSnapshot = {
   amount: number;
   position: { x: number; z: number };
 };
+export type GoldPickupSuspendSnapshot = {
+  slot: number;
+  amount: number;
+  age: number;
+  blockedCooldown: number;
+  position: { x: number; y: number; z: number };
+};
 export type GoldPickupCollectResult = {
   index: number;
   amount: number;
@@ -225,6 +232,52 @@ export class GoldPickupPool {
       amount: this.amounts[index] ?? 0,
       position: { x: position.x, z: position.z },
     }));
+  }
+
+  captureSuspend(): GoldPickupSuspendSnapshot[] {
+    const snapshots: GoldPickupSuspendSnapshot[] = [];
+    for (let slot = 0; slot < this.active.length; slot += 1) {
+      if (!this.active[slot]) continue;
+      const position = this.positions[slot];
+      if (!position) continue;
+      snapshots.push({
+        slot,
+        amount: this.amounts[slot] ?? 0,
+        age: this.age[slot] ?? 0,
+        blockedCooldown: this.blockedCooldown[slot] ?? 0,
+        position: { x: position.x, y: position.y, z: position.z },
+      });
+    }
+    return snapshots;
+  }
+
+  restoreSuspend(snapshots: readonly GoldPickupSuspendSnapshot[]): boolean {
+    const slots = new Set<number>();
+    for (const snapshot of snapshots) {
+      if (!Number.isInteger(snapshot.slot) || snapshot.slot < 0 || snapshot.slot >= this.active.length || slots.has(snapshot.slot)) return false;
+      slots.add(snapshot.slot);
+    }
+
+    this.recycleAll();
+    for (const snapshot of snapshots) {
+      const slot = snapshot.slot;
+      const position = this.positions[slot];
+      if (!position) return false;
+      this.active[slot] = true;
+      this.previousActive[slot] = false;
+      position.set(snapshot.position.x, snapshot.position.y, snapshot.position.z);
+      this.previousPositions[slot]?.copy(position);
+      this.amounts[slot] = snapshot.amount;
+      this.age[slot] = snapshot.age;
+      this.previousAge[slot] = snapshot.age;
+      this.blockedCooldown[slot] = snapshot.blockedCooldown;
+      this.alive += 1;
+      this.total += snapshot.amount;
+      this.syncHolding(slot);
+      this.sync(slot);
+    }
+    this.mesh.instanceMatrix.needsUpdate = true;
+    return true;
   }
 
   dispose(): void {

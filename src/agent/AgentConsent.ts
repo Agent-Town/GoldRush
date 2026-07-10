@@ -25,11 +25,25 @@ type AgentConsentState = {
   abilities: Record<AgentAbility, boolean>;
 };
 
+export type AgentConsentFutureState = AgentConsentState;
+
 export class AgentConsentStore {
   private state = freshConsentState();
 
   reset(): void {
     this.state = freshConsentState();
+  }
+
+  captureFutureState(): AgentConsentFutureState {
+    return { rungs: { ...this.state.rungs }, abilities: { ...this.state.abilities } };
+  }
+
+  restoreFutureState(state: AgentConsentFutureState): boolean {
+    const rungValues = [state.rungs?.[0], state.rungs?.[1], state.rungs?.[2], state.rungs?.[3]];
+    const abilityValues = [state.abilities?.auto_collect, state.abilities?.auto_repair, state.abilities?.auto_pan];
+    if (![...rungValues, ...abilityValues].every((value) => typeof value === 'boolean')) return false;
+    this.state = { rungs: { ...state.rungs }, abilities: { ...state.abilities } };
+    return true;
   }
 
   setRung(level: AgentPermissionLevel, granted: boolean): void {

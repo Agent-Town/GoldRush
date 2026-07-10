@@ -1,7 +1,9 @@
 import { META_PROGRESS_KEY } from './MetaProgress';
 import { activeProfile, loadProfileState, type ProfileStorage } from './ProfileStorage';
 import {
+  expandCloudProfileTransfer,
   packActiveProfile,
+  packActiveProfileForCloud,
   restoreProfileBundle,
   unpackPreview,
   type ProfileTransferEnvelope,
@@ -160,7 +162,7 @@ class AccountSync {
     if (!this.session || !this.storage || !loadProfileState(this.storage)) return;
     if (this.compare && !options.force) return this.setMessage('Choose cloud or local ledger before backing up.');
     await this.run(async () => {
-      const { envelope } = packActiveProfile(this.storage!);
+      const { envelope } = await packActiveProfileForCloud(this.storage!);
       let response: SavePushResponse;
       try {
         response = await this.request<SavePushResponse>(
@@ -321,7 +323,7 @@ class AccountSync {
   private async pull(profileId: string): Promise<{ savedAt: string; envelope: ProfileTransferEnvelope } | null> {
     try {
       const response = await this.request<SavePullResponse>('/api/save/pull', { profileId }, this.session?.token);
-      const envelope = fromServerEnvelope(response.envelope);
+      const envelope = await fromServerEnvelope(response.envelope);
       return envelope ? { savedAt: response.savedAt, envelope } : null;
     } catch (err) {
       if (err instanceof ApiError && err.status === 404) return null;
@@ -441,12 +443,12 @@ function toServerEnvelope(envelope: ProfileTransferEnvelope): Record<string, unk
   return { ...envelope, kind: 'gold-rush-ledger-bundle' };
 }
 
-function fromServerEnvelope(value: unknown): ProfileTransferEnvelope | null {
+async function fromServerEnvelope(value: unknown): Promise<ProfileTransferEnvelope | null> {
   if (!isRecord(value)) return null;
   const kind = value.kind;
   const translated = kind === 'gold-rush-ledger-bundle' ? { ...value, kind: 'goldrush.profile.ledger' } : value;
   const preview = unpackPreview(JSON.stringify(translated));
-  return 'ok' in preview ? null : preview.envelope;
+  return 'ok' in preview ? null : expandCloudProfileTransfer(preview.envelope);
 }
 
 function sameLedgerContent(left: ProfileTransferEnvelope, right: ProfileTransferEnvelope): boolean {

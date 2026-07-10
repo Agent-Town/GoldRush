@@ -129,33 +129,35 @@ test('stale device opens compare instead of overwriting newer cloud save', async
   assertNoErrors(errors);
 });
 
-test('signed-out boot leaves profile bytes alone and makes no account request', async ({ page }) => {
+test('signed-out boot leaves non-suspend profile bytes alone and makes no account request', async ({ page }) => {
   let accountRequests = 0;
   await page.route('http://127.0.0.1:8788/api/**', (route) => {
     accountRequests += 1;
     return route.abort();
   });
   await seedProfile(page, { town: 'Offline Claim', science: 4 });
-  await page.addInitScript(() => {
+  await page.addInitScript((runKey) => {
     const snapshot = JSON.stringify(
       Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index) ?? '')
-        .filter(Boolean)
+        .filter((key) => Boolean(key) && key !== runKey && !key.endsWith(`.${runKey}`))
         .map((key) => [key, localStorage.getItem(key)])
         .sort(),
     );
     (window as Window & { __GR_BEFORE_STORAGE__?: string }).__GR_BEFORE_STORAGE__ = snapshot;
-  });
+  }, RUN_SUSPEND_KEY);
   const errors = collectErrors(page);
 
   await page.goto('/');
   await page.getByTestId('start-menu-profile').click();
-  const after = await page.evaluate(() =>
-    JSON.stringify(
-      Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index) ?? '')
-        .filter(Boolean)
-        .map((key) => [key, localStorage.getItem(key)])
-        .sort(),
-    ),
+  const after = await page.evaluate(
+    (runKey) =>
+      JSON.stringify(
+        Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index) ?? '')
+          .filter((key) => Boolean(key) && key !== runKey && !key.endsWith(`.${runKey}`))
+          .map((key) => [key, localStorage.getItem(key)])
+          .sort(),
+      ),
+    RUN_SUSPEND_KEY,
   );
   const before = await page.evaluate(() => (window as Window & { __GR_BEFORE_STORAGE__?: string }).__GR_BEFORE_STORAGE__);
 

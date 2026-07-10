@@ -133,27 +133,25 @@ export class PalisadePool {
     this.syncColors(index);
   }
 
-  place(position: THREE.Vector3, rotationSteps = 0): number {
-    for (let i = 0; i < this.active.length; i += 1) {
-      if (this.active[i]) continue;
-      this.active[i] = true;
-      this.positions[i]?.copy(position);
-      this.rotationSteps[i] = rotationSteps % 4;
-      this.worn[i] = false;
-      this.tiers[i] = 1;
-      const rotated = this.rotationSteps[i] % 2 === 1;
-      this.blockers[i] = {
-        x: position.x,
-        z: position.z,
-        halfX: (rotated ? Balance.palisade.depth : Balance.palisade.width) / 2,
-        halfZ: (rotated ? Balance.palisade.width : Balance.palisade.depth) / 2,
-      };
-      this.alive += 1;
-      this.sync(i);
-      this.markNeedsUpdate();
-      return i;
-    }
-    return -1;
+  place(position: THREE.Vector3, rotationSteps = 0, preferredSlot?: number): number {
+    const slot = preferredSlot ?? this.active.findIndex((active) => !active);
+    if (!Number.isInteger(slot) || slot < 0 || slot >= this.active.length || this.active[slot]) return -1;
+    this.active[slot] = true;
+    this.positions[slot]?.copy(position);
+    this.rotationSteps[slot] = ((rotationSteps % 4) + 4) % 4;
+    this.worn[slot] = false;
+    this.tiers[slot] = 1;
+    const rotated = this.rotationSteps[slot] % 2 === 1;
+    this.blockers[slot] = {
+      x: position.x,
+      z: position.z,
+      halfX: (rotated ? Balance.palisade.depth : Balance.palisade.width) / 2,
+      halfZ: (rotated ? Balance.palisade.width : Balance.palisade.depth) / 2,
+    };
+    this.alive += 1;
+    this.sync(slot);
+    this.markNeedsUpdate();
+    return slot;
   }
 
   deactivate(index: number): boolean {

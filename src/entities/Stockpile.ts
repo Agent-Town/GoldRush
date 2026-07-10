@@ -98,18 +98,17 @@ export class StockpilePool {
     return this.active[index] === true;
   }
 
-  place(position: THREE.Vector3): number {
-    for (let i = 0; i < this.active.length; i += 1) {
-      if (this.active[i]) continue;
-      this.active[i] = true;
-      this.group.visible = true;
-      this.positions[i]?.copy(position);
-      this.alive += 1;
-      this.sync(i);
-      this.markNeedsUpdate();
-      return i;
-    }
-    return -1;
+  place(position: THREE.Vector3, preferredSlot?: number): number {
+    const slot = preferredSlot ?? this.active.findIndex((active) => !active);
+    if (!Number.isInteger(slot) || slot < 0 || slot >= this.active.length || this.active[slot]) return -1;
+    this.active[slot] = true;
+    this.group.visible = true;
+    this.positions[slot]?.copy(position);
+    this.pileSteps[slot] = 0;
+    this.alive += 1;
+    this.sync(slot);
+    this.markNeedsUpdate();
+    return slot;
   }
 
   deactivate(index: number): boolean {
