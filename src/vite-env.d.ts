@@ -799,6 +799,10 @@ type GrSimulationTickSample = {
 };
 
 interface Window {
+  __GR_EDITOR__?: {
+    descriptorJson: () => string;
+    wavesPaused: true;
+  };
   __GR_STORY__?: {
     emit: (signal: GrStorySignal) => void;
     registry: string[];

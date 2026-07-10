@@ -31,13 +31,14 @@ const DEFAULT_PARAMS: DebugParams = {
 export function readDebugParams(search = getSearch()): DebugParams {
   const params = new URLSearchParams(search);
   const fullbaseBench = params.get('bench') === 'fullbase';
+  const editor = params.has('editor');
 
   return {
-    debug: readFlag(params, 'debug') || fullbaseBench,
+    debug: readFlag(params, 'debug') || fullbaseBench || editor,
     seed: params.get('seed') ?? (fullbaseBench ? 'perf-02-fullbase' : DEFAULT_PARAMS.seed),
     timescale: readPositiveNumber(params, 'timescale', fullbaseBench ? 24 : DEFAULT_PARAMS.timescale),
     nospawn: readFlag(params, 'nospawn'),
-    nowaves: readFlag(params, 'nowaves'),
+    nowaves: readFlag(params, 'nowaves') || editor,
     nokill: readFlag(params, 'nokill'),
     nopause: readFlag(params, 'nopause'),
     nosteal: readFlag(params, 'nosteal'),

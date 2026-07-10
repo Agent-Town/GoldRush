@@ -488,6 +488,8 @@ export const DEFAULT_EPOCH_ID = 'epoch-1-frontier';
 export const ACTIVE_EPOCH_KEY = 'gr.activeEpoch.v1';
 export const EPOCH_CEREMONY_KEY = 'gr.epochCeremony.v1';
 export const DEFAULT_CONTRACT_ID = 'the-claim';
+export const CONTRACT_EDITOR_PARAM = 'editorDescriptor';
+export const CONTRACT_EDITOR_REJECTION_LINE = 'This page of the ledger is water-damaged. The contract stayed as it was.';
 const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
 
 // Future locked-stub example:
@@ -610,6 +612,42 @@ export function loadContract(id: string, epochId?: string): ContractManifest {
   return contract;
 }
 
+export type ContractDescriptorParseResult =
+  | { ok: true; contract: ContractManifest }
+  | { ok: false; message: typeof CONTRACT_EDITOR_REJECTION_LINE };
+
+export function contractDescriptorJson(contract: ContractManifest): string {
+  return `${JSON.stringify(contract, null, 2)}\n`;
+}
+
+export type ContractNumberRange = { min: number; max: number; step: number };
+
+export function contractNumberRange(path: string, value: number): ContractNumberRange {
+  const key = path.split('.').at(-1) ?? '';
+  const signed = path.includes('.elevation.analytic.') || /^(?:.*X|.*Z|xOffset|zOffset|angle|rotation|waterline|.*Height)$/i.test(key);
+  const discrete = path.includes('.classCounts.') || /^(?:size|columns|rows|rotationSteps|territoryRingBiasWaves)$/i.test(key);
+  const magnitude = Math.max(1, Math.abs(value) * 3);
+  if (key === 'rotationSteps') return { min: 0, max: 3, step: 1 };
+  return {
+    min: signed ? -Math.max(64, magnitude) : 0,
+    max: signed ? Math.max(64, magnitude) : Math.max(discrete ? 20 : 1, magnitude),
+    step: discrete ? 1 : 0.01,
+  };
+}
+
+export function parseContractDescriptor(text: string, template: ContractManifest): ContractDescriptorParseResult {
+  let candidate: unknown;
+  try {
+    candidate = JSON.parse(text);
+  } catch {
+    return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+  }
+  if (!sameDescriptorShape(candidate, template) || (candidate as ContractManifest).id !== template.id) {
+    return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+  }
+  return { ok: true, contract: candidate as ContractManifest };
+}
+
 export function activeEpoch(): EpochBundle {
   return loadEpoch(activeEpochId());
 }
@@ -617,7 +655,7 @@ export function activeEpoch(): EpochBundle {
 export function activeEpochId(): string {
   const params = readSearchParams();
   const requestedId = params.get('epoch');
-  const debug = params.has('debug') || params.get('bench') === 'fullbase';
+  const debug = params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase';
   if (requestedId && debug && manifestsById.has(requestedId)) return requestedId;
   try {
     const persisted = globalThis.localStorage?.getItem(ACTIVE_EPOCH_KEY);
@@ -736,7 +774,7 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
   const fallback = contracts.find((contract) => contract.id === DEFAULT_CONTRACT_ID) ?? defaultContractFor(manifestsById.get(DEFAULT_EPOCH_ID)!);
   const params = new URLSearchParams(search);
   const requestedId = params.get('contract');
-  const debug = params.has('debug') || params.get('bench') === 'fullbase';
+  const debug = params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase';
   const launched = requestedId ? isPlayerContractLaunch(requestedId) : false;
   let contract = fallback;
   let fallbackReason: ActiveContractDiagnostics['fallbackReason'] = null;
@@ -747,6 +785,11 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
     const candidates = debug || launched ? listBoardContracts() : contracts;
     contract = candidates.find((entry) => entry.id === requestedId) ?? fallback;
     if (contract.id !== requestedId) fallbackReason = 'unknown-contract';
+  }
+
+  if (params.has('editor') && params.has(CONTRACT_EDITOR_PARAM)) {
+    const override = parseContractDescriptor(params.get(CONTRACT_EDITOR_PARAM)!, contract);
+    if (override.ok) contract = override.contract;
   }
 
   activeSelection = {
@@ -889,6 +932,37 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null;
 }
 
+const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
+  'tileParams.render.terrainMesh': ['required', 'preferred', 'off'],
+  'tileParams.heightfield.mode': ['visual'],
+  'tileParams.waterSources[].kind': ['spring_pond'],
+  'tileParams.buildZones[].bank': ['north', 'south'],
+  'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur'],
+  'tileParams.prePlacedBuildables[].id': ['lantern_post'],
+  'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
+};
+
+function sameDescriptorShape(value: unknown, template: unknown, path = ''): boolean {
+  if (typeof template === 'number') {
+    if (typeof value !== 'number' || !Number.isFinite(value)) return false;
+    const range = contractNumberRange(path, template);
+    return value >= range.min && value <= range.max && (range.step !== 1 || Number.isInteger(value));
+  }
+  if (typeof template === 'string') {
+    const choices = DESCRIPTOR_ENUMS[path];
+    return typeof value === 'string' && value.trim().length > 0 && value.length <= 1_024 && (!choices || choices.includes(value));
+  }
+  if (typeof template === 'boolean' || template === null) return typeof value === typeof template;
+  if (Array.isArray(template)) {
+    if (!Array.isArray(value)) return false;
+    return value.length === template.length && value.every((entry, index) => sameDescriptorShape(entry, template[index], `${path}[]`));
+  }
+  if (!isRecord(template) || !isRecord(value) || Array.isArray(value)) return false;
+  const templateKeys = Object.keys(template);
+  if (Object.keys(value).some((key) => !(key in template)) || templateKeys.some((key) => !(key in value))) return false;
+  return templateKeys.every((key) => sameDescriptorShape(value[key], template[key], path ? `${path}.${key}` : key));
+}
+
 function defaultContractFor(manifest: EpochManifest): ContractManifest {
   return {
     id: DEFAULT_CONTRACT_ID,
@@ -933,7 +1007,7 @@ function currentSearch(): string {
 }
 
 try {
-  if (typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('debug')) {
+  if (typeof window !== 'undefined' && readDebugParamsForRegistry().debug) {
     window.__GR_CONTRACT_REGISTRY__ = {
       listEpochs,
       loadEpoch,
@@ -952,3 +1026,8 @@ try {
     };
   }
 } catch {}
+
+function readDebugParamsForRegistry(): { debug: boolean } {
+  const params = new URLSearchParams(window.location.search);
+  return { debug: params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase' };
+}
