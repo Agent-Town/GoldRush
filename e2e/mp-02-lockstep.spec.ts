@@ -245,40 +245,40 @@ test('two clients promote both roster slots to real local-camera heroes and shar
       }, { timeout: 5_000 })
       .toEqual({ alice: 'rig', bob: 'rig' });
 
-    let movedPair: [ThreeGameDiagnostics, ThreeGameDiagnostics] | null = null;
+    let movedPair: [ActorDiagnostic[], ActorDiagnostic[]] | null = null;
     await alice.keyboard.down('KeyW');
     try {
       await waitForTick(alice, 240);
       await waitForTick(bob, 240);
-      movedPair = await syncedGameDiagnostics(alice, bob, 240);
+      movedPair = await syncedHashedActorDiagnostics(alice, bob, 240);
     } finally {
       await alice.keyboard.up('KeyW');
     }
     if (!movedPair) throw new Error('missing synced multiplayer diagnostics');
     const [aliceMoved, bobMoved] = movedPair;
 
-    assertSameRosterSlots(aliceMoved.actors, bobMoved.actors);
-    const movedAliceOnAlice = actorByName(aliceMoved.actors, ALICE.name);
-    const movedAliceOnBob = actorByName(bobMoved.actors, ALICE.name);
-    const movedBobOnAlice = actorByName(aliceMoved.actors, BOB.name);
+    assertSameRosterSlots(aliceMoved, bobMoved);
+    const movedAliceOnAlice = actorByName(aliceMoved, ALICE.name);
+    const movedAliceOnBob = actorByName(bobMoved, ALICE.name);
+    const movedBobOnAlice = actorByName(aliceMoved, BOB.name);
     expect(distance2d(initialAliceActor.position, movedAliceOnAlice.position)).toBeGreaterThan(0.5);
     expect(distance2d(movedAliceOnAlice.position, movedAliceOnBob.position)).toBeLessThan(0.06);
-    expect(distance2d(actorByName(aliceMoved.actors, BOB.name).position, actorByName(bobMoved.actors, BOB.name).position)).toBeLessThan(0.06);
+    expect(distance2d(actorByName(aliceMoved, BOB.name).position, actorByName(bobMoved, BOB.name).position)).toBeLessThan(0.06);
 
     const independentStartTick = Math.max((await mpState(alice)).tick, (await mpState(bob)).tick);
     await Promise.all([alice.keyboard.down('KeyA'), bob.keyboard.down('KeyD')]);
-    let independentPair: [ThreeGameDiagnostics, ThreeGameDiagnostics] | null = null;
+    let independentPair: [ActorDiagnostic[], ActorDiagnostic[]] | null = null;
     try {
       await Promise.all([waitForTick(alice, independentStartTick + 75), waitForTick(bob, independentStartTick + 75)]);
-      independentPair = await syncedGameDiagnostics(alice, bob, independentStartTick + 75);
+      independentPair = await syncedHashedActorDiagnostics(alice, bob, independentStartTick + 75);
     } finally {
       await Promise.all([alice.keyboard.up('KeyA'), bob.keyboard.up('KeyD')]);
     }
     if (!independentPair) throw new Error('missing independently moved multiplayer diagnostics');
     const [aliceIndependent, bobIndependent] = independentPair;
-    assertSameRosterSlots(aliceIndependent.actors, bobIndependent.actors);
-    expect(distance2d(movedAliceOnAlice.position, actorByName(aliceIndependent.actors, ALICE.name).position)).toBeGreaterThan(0.5);
-    expect(distance2d(movedBobOnAlice.position, actorByName(aliceIndependent.actors, BOB.name).position)).toBeGreaterThan(0.5);
+    assertSameRosterSlots(aliceIndependent, bobIndependent);
+    expect(distance2d(movedAliceOnAlice.position, actorByName(aliceIndependent, ALICE.name).position)).toBeGreaterThan(0.5);
+    expect(distance2d(movedBobOnAlice.position, actorByName(aliceIndependent, BOB.name).position)).toBeGreaterThan(0.5);
 
     const aliceState = await mpState(alice);
     const bobState = await mpState(bob);
@@ -584,6 +584,63 @@ async function syncedHashedEnemyRosters(
     await left.waitForTimeout(40);
   }
   throw new Error(`clients did not publish a shared roster hash at tick >= ${minTick}; last hash ticks ${lastTicks}`);
+}
+
+async function syncedHashedActorDiagnostics(
+  left: Page,
+  right: Page,
+  minTick: number,
+): Promise<[ActorDiagnostic[], ActorDiagnostic[]]> {
+  const capture = (page: Page) =>
+    page.evaluate(() => {
+      const latest = window.__GR_TEST__!.lastMultiplayerHashState();
+      const actorSnapshots = latest?.state && typeof latest.state === 'object'
+        ? (latest.state as {
+            actors?: Array<{
+              hp: number;
+              position: { x: number; y: number; z: number };
+              velocity: { x: number; y: number; z: number };
+              visible: boolean;
+            }>;
+          }).actors
+        : undefined;
+      const liveActors = (window.__THREE_GAME_DIAGNOSTICS__?.actors ?? []).filter((actor) => actor.visible);
+      const hash = window.__GR_MP__?.state()?.hashes.find((entry) => entry.tick === latest?.tick)?.hash ?? null;
+      const actors: ActorDiagnostic[] = [];
+      if (Array.isArray(actorSnapshots)) {
+        for (let slot = 0; slot < actorSnapshots.length; slot += 1) {
+          const saved = actorSnapshots[slot];
+          const live = liveActors[slot];
+          if (!saved || !live) continue;
+          actors.push({
+            ...live,
+            hp: saved.hp,
+            position: saved.position,
+            speed: Math.hypot(saved.velocity.x, saved.velocity.y, saved.velocity.z),
+            visible: saved.visible,
+          });
+        }
+      }
+      return { tick: latest?.tick ?? 0, hash, actors };
+    });
+  const deadline = Date.now() + 10_000;
+  let lastTicks = 'none';
+  while (Date.now() < deadline) {
+    const [leftState, rightState] = await Promise.all([capture(left), capture(right)]);
+    lastTicks = `${leftState.tick}/${rightState.tick}`;
+    if (
+      leftState.tick >= minTick &&
+      leftState.tick === rightState.tick &&
+      leftState.hash !== null &&
+      leftState.hash === rightState.hash &&
+      leftState.actors.length > 0 &&
+      leftState.actors.length === rightState.actors.length
+    ) {
+      return [leftState.actors, rightState.actors];
+    }
+    await left.waitForTimeout(40);
+  }
+  throw new Error(`clients did not publish shared actor diagnostics at tick >= ${minTick}; last hash ticks ${lastTicks}`);
 }
 
 function sortEnemyRoster(roster: Array<import('../src/entities/Enemy').EnemySuspendSnapshot>) {
