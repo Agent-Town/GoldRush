@@ -37,7 +37,6 @@ import {
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
 import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
-import { openClaimHerald } from '../news/heraldReader';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
@@ -45,7 +44,16 @@ import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
 import { createRideRoom, probeRideRoom, relayBaseFromTownSearch, resolveJoinPhrase, stageRideConfig } from '../mp/RideTogether';
-import { earnedTownBuildings, townBuildings, townPlazaLayout, townPlazaSlot, type TownBuilding, type TownBuildingId } from './townLayout';
+import {
+  earnedTownBuildings,
+  townBuildings,
+  townPlazaLayout,
+  townPlazaSlot,
+  townPropRing,
+  type TownBuilding,
+  type TownBuildingId,
+  type TownPropKind,
+} from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 
@@ -67,6 +75,16 @@ const contractArtRegistry: Record<string, { key: string; imageUrl?: string; inse
   'e1-baron': { key: 'contract-baron', imageUrl: contractArtUrls.baronPlate },
   'e2-hill-mine': { key: 'contract-hill-mine', imageUrl: contractArtUrls.hillMinePlate },
 };
+const townFacadeUrls: Partial<Record<TownBuildingId, { key: string; url: string }>> = {
+  tavern: { key: 'bld-tavern', url: new URL('../../assets/processed/bld-tavern.png', import.meta.url).href },
+  claim_office: { key: 'bld-claim-office', url: new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href },
+  schoolhouse: { key: 'bld-schoolhouse', url: new URL('../../assets/processed/bld-schoolhouse.png', import.meta.url).href },
+  assay_office: { key: 'bld-claim-office', url: new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href },
+  general_store: { key: 'bld-general-store', url: new URL('../../assets/processed/bld-general-store.png', import.meta.url).href },
+  chapel: { key: 'bld-chapel', url: new URL('../../assets/processed/bld-chapel.png', import.meta.url).href },
+};
+const townFacadeLoader = new THREE.TextureLoader();
+const townFacadeTextures = new Map<string, Promise<THREE.Texture | null>>();
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 0);
@@ -105,6 +123,7 @@ export type TownDiagnostics = {
     position: { x: number; z: number };
     approach: { x: number; z: number };
     plotVisible: boolean;
+    facadeKey: string;
   }>;
   plaza: { clearRadius: number; gate: { x: number; z: number }; emptyPlots: number; trailCount: number };
   actors: Array<{
@@ -129,6 +148,15 @@ export type TownDiagnostics = {
     visibleStages: string[];
     constructionProps: number;
     surveyVisible: boolean;
+  };
+  propRing: {
+    enabled: boolean;
+    night: boolean;
+    drawCallBudget: number;
+    counts: Record<TownPropKind, number>;
+    panMonument: { visible: boolean; x: number; z: number; waterState: 'dry' };
+    ponyExpressPlot: { visible: boolean; x: number; z: number; pictogram: 'rider-horn' };
+    lanterns: number;
   };
   firstClaimGuide: {
     active: boolean;
@@ -198,6 +226,8 @@ export class TownScene {
     opacity: 0.36,
     depthWrite: false,
   });
+  private readonly propRingEnabled = !new URLSearchParams(window.location.search).has('noTownProps');
+  private readonly townNight = new URLSearchParams(window.location.search).has('townNight');
   private readonly townActors: TownActorRuntime[] = [];
   private readonly actorBarkVisits = new Map<TownActorId, number>();
   private readonly barkCard = document.createElement('div');
@@ -268,7 +298,6 @@ export class TownScene {
     window.removeEventListener('keydown', this.onFirstClaimInput, true);
     window.removeEventListener('pointerdown', this.onFirstClaimInput, true);
     this.prompt.removeEventListener('click', this.onPromptClick);
-    this.barkCard.removeEventListener('click', this.onBarkClick);
     this.board.removeEventListener('click', this.onBoardClick);
     this.board.removeEventListener('keydown', this.onBoardKeyDown);
     this.board.removeEventListener('pointerdown', this.onBoardPointerDown);
@@ -343,11 +372,13 @@ export class TownScene {
 
   private createScene(): void {
     this.scene.name = 'TownScene';
-    this.scene.background = new THREE.Color('#e9c98d');
-    this.scene.fog = new THREE.Fog('#e9c98d', 34, 76);
-    this.scene.add(new THREE.HemisphereLight('#fff2cc', '#8b6c3f', 1.15));
+    this.scene.background = new THREE.Color(this.townNight ? '#41365a' : '#e9c98d');
+    this.scene.fog = new THREE.Fog(this.townNight ? '#41365a' : '#e9c98d', this.townNight ? 24 : 34, this.townNight ? 58 : 76);
+    this.scene.add(
+      new THREE.HemisphereLight(this.townNight ? '#ddc6a0' : '#fff2cc', this.townNight ? '#2e2642' : '#8b6c3f', this.townNight ? 0.62 : 1.15),
+    );
 
-    const sun = new THREE.DirectionalLight('#ffd28a', 2.2);
+    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 2.2);
     sun.position.set(-22, 18, -18);
     sun.castShadow = true;
     this.scene.add(sun);
@@ -373,6 +404,7 @@ export class TownScene {
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
+    if (this.propRingEnabled) this.scene.add(createTownPropRing(this.townNight));
     this.createStampMillVignette();
     this.createFirstClaimGuide();
     for (const actor of this.visibleActors) {
@@ -544,7 +576,6 @@ export class TownScene {
     this.ui.append(this.nameCard);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
-    this.barkCard.addEventListener('click', this.onBarkClick);
     this.board.addEventListener('click', this.onBoardClick);
     this.board.addEventListener('keydown', this.onBoardKeyDown);
     this.board.addEventListener('pointerdown', this.onBoardPointerDown);
@@ -573,11 +604,6 @@ export class TownScene {
     if (target?.closest('[data-town-rename]')) this.openNameCard('rename');
     if (target?.closest('[data-town-schoolhouse]')) this.openSchoolhouse();
     if (target?.closest('[data-town-assay]')) this.openAssayBench();
-  };
-
-  private readonly onBarkClick = (event: Event) => {
-    const target = event.target as HTMLElement | null;
-    if (target?.closest('[data-town-herald]')) openClaimHerald();
   };
 
   private readonly onBoardClick = (event: Event) => {
@@ -869,11 +895,6 @@ export class TownScene {
         <strong data-testid="town-bark-speaker">${escapeHtml(nearest.definition.name)}</strong>
         <span>${escapeHtml(nearest.definition.post)}</span>
         <p data-testid="town-bark-text">${escapeHtml(text)}</p>
-        ${
-          nearest.definition.id === 'newsie'
-            ? '<button class="town-ui__bark-action" type="button" data-town-herald data-testid="town-open-herald">Read</button>'
-            : ''
-        }
       </div>
     `;
     this.barkCard.dataset.actorId = nearest.definition.id;
@@ -899,8 +920,7 @@ export class TownScene {
     this.boardOpen = true;
     this.board.hidden = false;
     this.loadTavernBackdrop();
-    (this.board.querySelector<HTMLButtonElement>('[data-contract-launch]:not(:disabled)') ??
-      this.board.querySelector<HTMLButtonElement>('[data-contract-close]'))?.focus({ preventScroll: true });
+    this.board.querySelector<HTMLButtonElement>('[data-contract-launch]:not(:disabled), [data-contract-close]')?.focus({ preventScroll: true });
     this.publishDiagnostics();
   }
 
@@ -1262,6 +1282,7 @@ export class TownScene {
         position: building.position,
         approach: townPlazaSlot(building.id).approach,
         plotVisible: !this.visibleBuildings.includes(building),
+        facadeKey: townFacadeKey(building),
       })),
       plaza: {
         clearRadius: townPlazaLayout.clearRadius,
@@ -1289,6 +1310,7 @@ export class TownScene {
         };
       }),
       stampMill: this.stampMillDiagnostics(),
+      propRing: this.propRingDiagnostics(),
       firstClaimGuide: {
         active: this.firstClaimGuideActive,
         done: firstClaimDone(),
@@ -1321,6 +1343,43 @@ export class TownScene {
       visibleStages: this.stampMillStageVisuals.filter((visual) => visual.visible).map((visual) => visual.name),
       constructionProps: this.stampMillConstructionProps.filter((visual) => visual.visible).length,
       surveyVisible: this.stampMillSurveyVisuals.some((visual) => visual.visible),
+    };
+  }
+
+  private propRingDiagnostics(): TownDiagnostics['propRing'] {
+    const counts = townPropRing.props.reduce(
+      (acc, prop) => {
+        acc[prop.kind] += 1;
+        return acc;
+      },
+      {
+        covered_wagon: 0,
+        fence: 0,
+        cactus: 0,
+        water_trough: 0,
+        lantern_post: 0,
+        pony_express_plot: 0,
+      } satisfies Record<TownPropKind, number>,
+    );
+    const pony = townPropRing.props.find((prop) => prop.kind === 'pony_express_plot');
+    return {
+      enabled: this.propRingEnabled,
+      night: this.townNight,
+      drawCallBudget: 12,
+      counts,
+      panMonument: {
+        visible: this.propRingEnabled,
+        x: townPropRing.panMonument.position.x,
+        z: townPropRing.panMonument.position.z,
+        waterState: 'dry',
+      },
+      ponyExpressPlot: {
+        visible: this.propRingEnabled && !!pony,
+        x: pony?.position.x ?? 0,
+        z: pony?.position.z ?? 0,
+        pictogram: 'rider-horn',
+      },
+      lanterns: counts.lantern_post,
     };
   }
 
@@ -1423,7 +1482,6 @@ class TownActorRuntime {
     this.currentDirection = definition.facing;
     this.orientationResolver.reset(definition.facing);
     this.animator = new SpriteAnimator(definition.assetSlot, this.material, this.sprite);
-    if (definition.id === 'newsie') this.group.add(createNewsieProps());
     tagPlaceholder(this.group, definition.assetSlot);
   }
 
@@ -1457,32 +1515,6 @@ class TownActorRuntime {
     this.animator.dispose();
     this.material.dispose();
   }
-}
-
-function createNewsieProps(): THREE.Group {
-  const group = new THREE.Group();
-  group.name = 'TownNewsieProps';
-  const capMaterial = new THREE.MeshStandardMaterial({ color: '#5b8a8a', roughness: 0.74, metalness: 0.04 });
-  const brimMaterial = new THREE.MeshStandardMaterial({ color: '#2e1b0e', roughness: 0.78, metalness: 0.02 });
-  const satchelMaterial = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.82, metalness: 0.02 });
-
-  const crown = new THREE.Mesh(new THREE.BoxGeometry(0.52, 0.12, 0.36), capMaterial);
-  crown.name = 'TownNewsieCapCrown';
-  crown.position.set(0, 1.42, 0.02);
-  crown.castShadow = true;
-
-  const brim = new THREE.Mesh(new THREE.BoxGeometry(0.34, 0.035, 0.22), brimMaterial);
-  brim.name = 'TownNewsieCapBrim';
-  brim.position.set(0, 1.38, 0.22);
-  brim.castShadow = true;
-
-  const satchel = new THREE.Mesh(new THREE.BoxGeometry(0.32, 0.26, 0.09), satchelMaterial);
-  satchel.name = 'TownNewsieSatchel';
-  satchel.position.set(0.35, 0.72, 0.05);
-  satchel.castShadow = true;
-
-  group.add(crown, brim, satchel);
-  return group;
 }
 
 function stopKeyPropagation(event: KeyboardEvent): void {
@@ -1691,74 +1723,371 @@ function stampMillAt(visible: boolean, x: number, z: number): boolean {
   );
 }
 
+type BoxPart = { x: number; y: number; z: number; sx: number; sy: number; sz: number; rotation?: number };
+type CylinderPart = { x: number; y: number; z: number; scale: [number, number, number]; rotation: THREE.Euler };
+
+function createTownPropRing(night: boolean): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownPropRing';
+  const woodParts: BoxPart[] = [];
+  const canvasParts: BoxPart[] = [];
+  const cactusParts: CylinderPart[] = [];
+  const wheelParts: CylinderPart[] = [];
+  const lanternPositions: THREE.Vector3[] = [];
+
+  const addBox = (parts: BoxPart[], x: number, y: number, z: number, sx: number, sy: number, sz: number, rotation = 0) =>
+    parts.push({ x, y, z, sx, sy, sz, rotation });
+
+  for (const prop of townPropRing.props) {
+    const scale = prop.scale ?? 1;
+    if (prop.kind === 'covered_wagon') {
+      addBox(woodParts, prop.position.x, 0.32, prop.position.z, 1.6 * scale, 0.48 * scale, 0.86 * scale, prop.rotation);
+      addBox(canvasParts, prop.position.x, 0.82, prop.position.z, 1.35 * scale, 0.72 * scale, 0.72 * scale, prop.rotation);
+      for (const sx of [-0.52, 0.52]) {
+        for (const sz of [-0.36, 0.36]) {
+          const p = localPoint(prop, sx * scale, sz * scale);
+          wheelParts.push({ x: p.x, y: 0.28, z: p.z, scale: [0.18 * scale, 0.12 * scale, 0.18 * scale], rotation: new THREE.Euler(Math.PI / 2, 0, -prop.rotation) });
+        }
+      }
+      continue;
+    }
+    if (prop.kind === 'fence') {
+      addBox(woodParts, prop.position.x, 0.38, prop.position.z, 2.4 * scale, 0.1, 0.1, prop.rotation);
+      for (const offset of [-1.05, 0, 1.05]) {
+        const p = localPoint(prop, offset * scale, 0);
+        addBox(woodParts, p.x, 0.38, p.z, 0.08, 0.76, 0.08, prop.rotation);
+      }
+      continue;
+    }
+    if (prop.kind === 'cactus') {
+      cactusParts.push({ x: prop.position.x, y: 0.62 * scale, z: prop.position.z, scale: [0.16 * scale, 0.62 * scale, 0.16 * scale], rotation: new THREE.Euler(0, 0, 0) });
+      const left = localPoint(prop, -0.23 * scale, 0);
+      const right = localPoint(prop, 0.24 * scale, 0.03 * scale);
+      cactusParts.push({ x: left.x, y: 0.82 * scale, z: left.z, scale: [0.08 * scale, 0.26 * scale, 0.08 * scale], rotation: new THREE.Euler(0, prop.rotation, Math.PI / 2) });
+      cactusParts.push({ x: right.x, y: 0.56 * scale, z: right.z, scale: [0.08 * scale, 0.22 * scale, 0.08 * scale], rotation: new THREE.Euler(0, prop.rotation, -Math.PI / 2) });
+      continue;
+    }
+    if (prop.kind === 'water_trough') {
+      addBox(woodParts, prop.position.x, 0.28, prop.position.z, 1.55 * scale, 0.46 * scale, 0.62 * scale, prop.rotation);
+      addBox(canvasParts, prop.position.x, 0.53, prop.position.z, 1.28 * scale, 0.04, 0.4 * scale, prop.rotation);
+      continue;
+    }
+    if (prop.kind === 'lantern_post') {
+      addBox(woodParts, prop.position.x, 0.85 * scale, prop.position.z, 0.09 * scale, 1.7 * scale, 0.09 * scale, prop.rotation);
+      addBox(woodParts, prop.position.x, 1.65 * scale, prop.position.z, 0.42 * scale, 0.08 * scale, 0.08 * scale, prop.rotation);
+      lanternPositions.push(new THREE.Vector3(prop.position.x, 1.48 * scale, prop.position.z));
+      continue;
+    }
+    if (prop.kind === 'pony_express_plot') {
+      for (const [x, z] of [
+        [-1.45, -0.92],
+        [1.45, -0.92],
+        [1.45, 0.92],
+        [-1.45, 0.92],
+      ] as const) {
+        const p = localPoint(prop, x * scale, z * scale);
+        addBox(woodParts, p.x, 0.38, p.z, 0.08, 0.76, 0.08, prop.rotation);
+      }
+      const signRail = localPoint(prop, 0, -0.96 * scale);
+      addBox(woodParts, signRail.x, 0.68, signRail.z, 0.86 * scale, 0.1, 0.08, prop.rotation);
+      const pictogram = createPonyExpressPictogram();
+      pictogram.name = 'TownProp:PonyExpressStation:Pictogram';
+      const sign = localPoint(prop, 0, -1.08 * scale);
+      pictogram.position.set(sign.x, 1.05, sign.z);
+      pictogram.rotation.y = prop.rotation;
+      group.add(pictogram);
+    }
+  }
+
+  addPanMonumentParts(woodParts, group);
+  group.add(
+    createBoxInstances('TownPropWoodInstances', woodParts, new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.84, metalness: 0.03 })),
+    createBoxInstances('TownPropCanvasInstances', canvasParts, new THREE.MeshStandardMaterial({ color: '#e8d5a8', roughness: 0.88, metalness: 0.01 })),
+    createCylinderInstances('TownPropWagonWheels', new THREE.CylinderGeometry(1, 1, 1, 16), wheelParts, new THREE.MeshStandardMaterial({ color: '#3b2416', roughness: 0.82 })),
+    createCylinderInstances('TownPropCacti', new THREE.CylinderGeometry(1, 1, 1, 10), cactusParts, new THREE.MeshStandardMaterial({ color: '#5b8a72', roughness: 0.9 })),
+    createLanternGlow(lanternPositions, night),
+    createPanBowl(),
+  );
+  return group;
+}
+
+function localPoint(prop: { position: { x: number; z: number }; rotation: number }, x: number, z: number): { x: number; z: number } {
+  const cos = Math.cos(prop.rotation);
+  const sin = Math.sin(prop.rotation);
+  return {
+    x: prop.position.x + x * cos + z * sin,
+    z: prop.position.z - x * sin + z * cos,
+  };
+}
+
+function addPanMonumentParts(parts: BoxPart[], group: THREE.Group): void {
+  const { x, z } = townPropRing.panMonument.position;
+  parts.push({ x, y: 0.11, z: z - 0.68, sx: 1.62, sy: 0.22, sz: 0.16 });
+  parts.push({ x, y: 0.11, z: z + 0.68, sx: 1.62, sy: 0.22, sz: 0.16 });
+  parts.push({ x: x - 0.68, y: 0.11, z, sx: 0.16, sy: 0.22, sz: 1.18 });
+  parts.push({ x: x + 0.68, y: 0.11, z, sx: 0.16, sy: 0.22, sz: 1.18 });
+  parts.push({ x: x + 0.92, y: 0.36, z, sx: 0.28, sy: 0.52, sz: 0.28 });
+  parts.push({ x: x + 0.92, y: 0.64, z, sx: 0.62, sy: 0.06, sz: 0.08, rotation: -0.2 });
+  const ring = new THREE.Mesh(
+    new THREE.RingGeometry(townPropRing.panMonument.radius, townPropRing.panMonument.radius + 0.04, 48),
+    new THREE.MeshBasicMaterial({ color: '#fff0bd', transparent: true, opacity: 0.24, depthWrite: false }),
+  );
+  ring.name = 'TownProp:PanMonument:DryClearRing';
+  ring.position.set(x, 0.035, z);
+  ring.rotation.x = -Math.PI / 2;
+  ring.renderOrder = RenderLayers.groundDecals;
+  group.add(ring);
+}
+
+function createBoxInstances(name: string, parts: readonly BoxPart[], material: THREE.Material): THREE.InstancedMesh {
+  const mesh = new THREE.InstancedMesh(new THREE.BoxGeometry(1, 1, 1), material, Math.max(1, parts.length));
+  mesh.name = name;
+  const object = new THREE.Object3D();
+  parts.forEach((part, index) => {
+    object.position.set(part.x, part.y, part.z);
+    object.rotation.set(0, part.rotation ?? 0, 0);
+    object.scale.set(part.sx, part.sy, part.sz);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = parts.length;
+  return mesh;
+}
+
+function createCylinderInstances(name: string, geometry: THREE.BufferGeometry, parts: readonly CylinderPart[], material: THREE.Material): THREE.InstancedMesh {
+  const mesh = new THREE.InstancedMesh(geometry, material, Math.max(1, parts.length));
+  mesh.name = name;
+  const object = new THREE.Object3D();
+  parts.forEach((part, index) => {
+    object.position.set(part.x, part.y, part.z);
+    object.rotation.copy(part.rotation);
+    object.scale.set(...part.scale);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = parts.length;
+  return mesh;
+}
+
+function createLanternGlow(positions: readonly THREE.Vector3[], night: boolean): THREE.InstancedMesh {
+  const material = new THREE.MeshBasicMaterial({
+    color: night ? '#ffe4a0' : '#fff0bd',
+    transparent: true,
+    opacity: night ? 0.86 : 0.48,
+    depthWrite: false,
+  });
+  const mesh = new THREE.InstancedMesh(new THREE.SphereGeometry(0.18, 12, 8), material, Math.max(1, positions.length));
+  mesh.name = 'TownPropLanternGlow';
+  const object = new THREE.Object3D();
+  positions.forEach((position, index) => {
+    object.position.copy(position);
+    object.scale.setScalar(night ? 1.35 : 1);
+    object.updateMatrix();
+    mesh.setMatrixAt(index, object.matrix);
+  });
+  mesh.count = positions.length;
+  mesh.renderOrder = RenderLayers.worldUi;
+  return mesh;
+}
+
+function createPanBowl(): THREE.Mesh {
+  const { x, z } = townPropRing.panMonument.position;
+  const pan = new THREE.Mesh(
+    new THREE.CylinderGeometry(0.48, 0.34, 0.12, 32),
+    new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.48, metalness: 0.32 }),
+  );
+  pan.name = 'TownProp:PanMonument:BrassPan';
+  pan.position.set(x + 0.92, 0.78, z);
+  pan.rotation.z = -0.12;
+  return pan;
+}
+
+function createPonyExpressPictogram(): THREE.Mesh {
+  const canvas = document.createElement('canvas');
+  canvas.width = 160;
+  canvas.height = 120;
+  const ctx = canvas.getContext('2d');
+  if (ctx) {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = 'rgba(245, 230, 200, 0.94)';
+    roundRect(ctx, 14, 14, 132, 92, 10);
+    ctx.fill();
+    ctx.strokeStyle = '#2e1b0e';
+    ctx.lineWidth = 6;
+    ctx.stroke();
+    ctx.fillStyle = '#2e1b0e';
+    ctx.beginPath();
+    ctx.arc(58, 58, 15, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(70, 55, 42, 8);
+    ctx.beginPath();
+    ctx.moveTo(110, 42);
+    ctx.lineTo(136, 32);
+    ctx.lineTo(136, 82);
+    ctx.lineTo(110, 72);
+    ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = '#5b8a8a';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(42, 84, 12, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  const texture = new THREE.CanvasTexture(canvas);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  const mesh = new THREE.Mesh(
+    new THREE.PlaneGeometry(0.9, 0.68),
+    new THREE.MeshBasicMaterial({ map: texture, transparent: true, alphaTest: 0.04, depthWrite: false, side: THREE.DoubleSide }),
+  );
+  mesh.renderOrder = RenderLayers.worldUi;
+  return mesh;
+}
+
 function createShell(building: TownBuilding): THREE.Group {
   const group = new THREE.Group();
   group.name = `TownShell:${building.id}`;
   group.position.set(building.position.x, 0, building.position.z);
+  const shell = new THREE.Group();
+  shell.name = `TownFacadeAssembly:${building.id}`;
+  const approach = townPlazaSlot(building.id).approach;
+  shell.rotation.y = Math.atan2(approach.x - building.position.x, approach.z - building.position.z);
+  const halfX = building.footprint.w * 0.5;
+  const halfZ = building.footprint.d * 0.5;
+  const facadeWidth = building.footprint.w * 0.86;
+  const facadeHeight = facadeWidth;
+  const facadeKey = townFacadeKey(building);
+  const sideMaterial = new THREE.MeshStandardMaterial({ color: building.color, roughness: 0.86, metalness: 0.02 });
+  const trimMaterial = new THREE.MeshStandardMaterial({ color: building.roof, roughness: 0.74, metalness: 0.06 });
 
   const base = new THREE.Mesh(
-    new THREE.BoxGeometry(building.footprint.w, 1.38, building.footprint.d),
-    new THREE.MeshStandardMaterial({ color: building.color, roughness: 0.82, metalness: 0.03 }),
+    new THREE.BoxGeometry(building.footprint.w, 0.16, building.footprint.d),
+    new THREE.MeshStandardMaterial({ color: '#8b6c3f', roughness: 0.9, metalness: 0.02 }),
   );
-  base.position.y = 0.69;
+  base.name = `TownFacadeBase:${building.id}`;
+  base.position.y = 0.08;
   base.castShadow = true;
   base.receiveShadow = true;
 
-  const roof = new THREE.Mesh(
-    new THREE.BoxGeometry(building.footprint.w + 0.5, 0.34, building.footprint.d + 0.42),
-    new THREE.MeshStandardMaterial({ color: building.roof, roughness: 0.72, metalness: 0.1 }),
+  const ao = new THREE.Mesh(
+    new THREE.PlaneGeometry(building.footprint.w + 0.55, 0.58),
+    new THREE.MeshBasicMaterial({ color: '#2e1b0e', transparent: true, opacity: 0.22, depthWrite: false }),
   );
-  roof.position.y = 1.52;
-  roof.rotation.z = -0.035;
-  roof.castShadow = true;
+  ao.name = `TownFacadeAO:${building.id}`;
+  ao.rotation.x = -Math.PI / 2;
+  ao.position.set(0, 0.022, halfZ + 0.18);
+  ao.renderOrder = RenderLayers.groundDecals;
+
+  const front = new THREE.Mesh(new THREE.PlaneGeometry(facadeWidth, facadeHeight), createFacadeMaterial(building));
+  front.name = `TownFacade:${building.id}:${facadeKey}`;
+  front.position.set(0, facadeHeight * 0.48 + 0.08, halfZ + 0.045);
+  front.renderOrder = RenderLayers.gameplay;
+
+  const back = new THREE.Mesh(new THREE.BoxGeometry(building.footprint.w, 1.35, 0.18), sideMaterial);
+  back.name = `TownFacadeBack:${building.id}`;
+  back.position.set(0, 0.75, -halfZ + 0.09);
+  back.castShadow = true;
+  back.receiveShadow = true;
 
   const porch = new THREE.Mesh(
     new THREE.BoxGeometry(building.footprint.w * 0.72, 0.12, 0.78),
     new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.8, metalness: 0.02 }),
   );
+  porch.name = `TownFacadePorch:${building.id}`;
   porch.position.set(0, 0.1, building.footprint.d / 2 + 0.36);
 
-  const plaque = new THREE.Mesh(
-    new THREE.BoxGeometry(Math.min(2.2, building.footprint.w * 0.5), 0.24, 0.05),
-    new THREE.MeshStandardMaterial({ color: building.accent, roughness: 0.64, metalness: 0.08 }),
-  );
-  plaque.position.set(0, 0.88, building.footprint.d / 2 + 0.04);
+  const left = new THREE.Mesh(new THREE.BoxGeometry(0.18, 1.48, building.footprint.d), sideMaterial);
+  left.name = `TownFacadeSide:${building.id}:left`;
+  left.position.set(-halfX + 0.09, 0.82, 0);
+  left.castShadow = true;
+  left.receiveShadow = true;
 
-  const label = createLabel(building.name);
-  label.position.set(0, 2.28, building.footprint.d / 2 + 0.26);
+  const right = left.clone();
+  right.name = `TownFacadeSide:${building.id}:right`;
+  right.position.x = halfX - 0.09;
 
-  group.add(base, roof, porch, plaque, label);
+  const cap = new THREE.Mesh(new THREE.BoxGeometry(building.footprint.w + 0.24, 0.18, 0.32), trimMaterial);
+  cap.name = `TownFacadeCap:${building.id}`;
+  cap.position.set(0, 1.58, halfZ - 0.02);
+  cap.castShadow = true;
+
+  shell.add(base, ao, back, left, right, porch, front, cap);
+  group.add(shell);
   return group;
 }
 
-function createLabel(text: string): THREE.Sprite {
+function townFacadeKey(building: TownBuilding): string {
+  return townFacadeUrls[building.id]?.key ?? `fallback-${building.id.replace(/_/g, '-')}`;
+}
+
+function createFacadeMaterial(building: TownBuilding): THREE.MeshStandardMaterial {
+  const material = new THREE.MeshStandardMaterial({
+    color: '#ffffff',
+    map: createFallbackFacadeTexture(building),
+    transparent: true,
+    alphaTest: 0.04,
+    roughness: 0.78,
+    metalness: 0.02,
+    side: THREE.DoubleSide,
+  });
+  const facade = townFacadeUrls[building.id];
+  if (!facade) return material;
+  loadTownFacadeTexture(facade).then((texture) => {
+    if (!texture) return;
+    const previous = material.map;
+    material.map = texture;
+    material.needsUpdate = true;
+    if (previous && previous !== texture) previous.dispose();
+  });
+  return material;
+}
+
+function loadTownFacadeTexture(facade: { key: string; url: string }): Promise<THREE.Texture | null> {
+  const cached = townFacadeTextures.get(facade.key);
+  if (cached) return cached;
+  const promise = new Promise<THREE.Texture | null>((resolve) => {
+    townFacadeLoader.load(
+      facade.url,
+      (texture) => {
+        texture.colorSpace = THREE.SRGBColorSpace;
+        texture.anisotropy = 4;
+        resolve(texture);
+      },
+      undefined,
+      () => resolve(null),
+    );
+  });
+  townFacadeTextures.set(facade.key, promise);
+  return promise;
+}
+
+function createFallbackFacadeTexture(building: TownBuilding): THREE.CanvasTexture {
   const width = 512;
-  const height = 160;
+  const height = 512;
   const canvas = document.createElement('canvas');
   canvas.width = width;
   canvas.height = height;
   const ctx = canvas.getContext('2d');
   if (ctx) {
-    ctx.fillStyle = 'rgba(245, 230, 200, 0.96)';
-    roundRect(ctx, 18, 28, width - 36, 92, 18);
+    ctx.fillStyle = building.color;
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = 'rgba(255, 248, 232, 0.44)';
+    roundRect(ctx, 46, 74, width - 92, height - 126, 28);
     ctx.fill();
-    ctx.strokeStyle = '#2e1b0e';
-    ctx.lineWidth = 8;
+    ctx.strokeStyle = building.roof;
+    ctx.lineWidth = 18;
     ctx.stroke();
+    ctx.fillStyle = building.accent;
+    ctx.beginPath();
+    ctx.arc(width / 2, height * 0.42, 72, 0, Math.PI * 2);
+    ctx.fill();
     ctx.fillStyle = '#2e1b0e';
-    ctx.font = '700 46px Georgia, serif';
-    ctx.textAlign = 'center';
-    ctx.textBaseline = 'middle';
-    ctx.fillText(text, width / 2, 74);
+    ctx.fillRect(width / 2 - 82, height * 0.69, 164, 82);
+    ctx.fillStyle = '#ffe4a0';
+    ctx.fillRect(width / 2 - 8, height * 0.69, 16, 82);
   }
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
-  const material = new THREE.SpriteMaterial({ map: texture, transparent: true, depthWrite: false });
-  const sprite = new THREE.Sprite(material);
-  sprite.name = `TownPlaque:${text}`;
-  sprite.scale.set(3.5, 1.1, 1);
-  sprite.renderOrder = RenderLayers.worldUi;
-  return sprite;
+  return texture;
 }
 
 function createPlaqueSprite(lines: readonly string[]): THREE.Sprite {

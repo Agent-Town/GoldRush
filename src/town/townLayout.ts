@@ -12,6 +12,22 @@ export type TownBuilding = {
   barkSlot?: string;
 };
 
+export type TownPropKind =
+  | 'covered_wagon'
+  | 'fence'
+  | 'cactus'
+  | 'water_trough'
+  | 'lantern_post'
+  | 'pony_express_plot';
+
+export type TownPropDescriptor = {
+  id: string;
+  kind: TownPropKind;
+  position: { x: number; z: number };
+  rotation: number;
+  scale?: number;
+};
+
 export const townPlazaLayout = {
   center: { x: 0, z: 0 },
   clearRadius: 3.1,
@@ -34,6 +50,33 @@ export const townPlazaLayout = {
     assay_clerk: { x: -1.05, z: 2.1 },
     prospector: { x: 1.25, z: 2.05 },
   },
+} as const;
+
+export const townPropRing = {
+  panMonument: {
+    id: 'pan_monument',
+    position: townPlazaLayout.center,
+    radius: 0.82,
+  },
+  props: [
+    { id: 'wagon-gate-west', kind: 'covered_wagon', position: { x: -3.35, z: 12.25 }, rotation: -0.42, scale: 1.05 },
+    { id: 'wagon-gate-east', kind: 'covered_wagon', position: { x: 3.2, z: 12.35 }, rotation: 0.34, scale: 1 },
+    { id: 'wagon-north-store', kind: 'covered_wagon', position: { x: -4.85, z: -12.05 }, rotation: 2.72, scale: 0.9 },
+    { id: 'fence-west-low', kind: 'fence', position: { x: -12.15, z: -2.2 }, rotation: 0.22, scale: 1.25 },
+    { id: 'fence-east-low', kind: 'fence', position: { x: 12.1, z: -2.1 }, rotation: -0.18, scale: 1.2 },
+    { id: 'fence-west-ridge', kind: 'fence', position: { x: -10.75, z: 7.35 }, rotation: -0.74, scale: 1.05 },
+    { id: 'fence-east-ridge', kind: 'fence', position: { x: 10.8, z: 7.2 }, rotation: 0.68, scale: 1.05 },
+    { id: 'cactus-northwest', kind: 'cactus', position: { x: -12.55, z: -7.4 }, rotation: -0.18, scale: 0.95 },
+    { id: 'cactus-northeast', kind: 'cactus', position: { x: 12.35, z: -7.15 }, rotation: 0.22, scale: 1.05 },
+    { id: 'cactus-southwest', kind: 'cactus', position: { x: -12.7, z: 5.4 }, rotation: 0.08, scale: 0.8 },
+    { id: 'water-trough-gate', kind: 'water_trough', position: { x: 0, z: 11.25 }, rotation: 0, scale: 1 },
+    { id: 'lantern-gate-west', kind: 'lantern_post', position: { x: -5.8, z: 9.85 }, rotation: 0, scale: 1 },
+    { id: 'lantern-gate-east', kind: 'lantern_post', position: { x: 5.8, z: 9.85 }, rotation: 0, scale: 1 },
+    { id: 'lantern-tavern-trail', kind: 'lantern_post', position: { x: -6.25, z: -3.4 }, rotation: 0, scale: 0.92 },
+    { id: 'lantern-claim-trail', kind: 'lantern_post', position: { x: 6.25, z: -3.4 }, rotation: 0, scale: 0.92 },
+    { id: 'lantern-store-trail', kind: 'lantern_post', position: { x: 0, z: -8.2 }, rotation: 0, scale: 0.88 },
+    { id: 'pony-express-station-plot', kind: 'pony_express_plot', position: { x: 10.55, z: 10.15 }, rotation: -0.28, scale: 1 },
+  ] satisfies readonly TownPropDescriptor[],
 } as const;
 
 export function townPlazaSlot(id: (typeof townPlazaLayout.slots)[number]['id']) {
