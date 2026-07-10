@@ -107,6 +107,11 @@ export class DeathOverlay {
     this.root.setAttribute('aria-hidden', 'true');
   }
 
+  updateResearch(research: DeathResearchState): void {
+    this.options.research = research;
+    this.rerenderResearch();
+  }
+
   dispose(): void {
     this.root.removeEventListener('click', this.handleClick);
     window.removeEventListener('keydown', this.handleKeyDown);

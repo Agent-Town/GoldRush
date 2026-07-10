@@ -129,6 +129,10 @@ export function getBuildableDef(id: string): BuildableDef | undefined {
   return buildableDefs.find((def) => def.id === id);
 }
 
+export function isBuildableId(id: unknown): id is BuildableId {
+  return typeof id === 'string' && buildableDefs.some((def) => def.id === id);
+}
+
 export function buildableBlurb(def: BuildableDef): string | undefined {
   return typeof def.blurb === 'function' ? def.blurb() : def.blurb;
 }

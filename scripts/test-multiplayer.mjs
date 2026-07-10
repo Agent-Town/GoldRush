@@ -9,6 +9,19 @@ const ORIGIN = 'http://localhost:5188';
 const SCRIPT_NAME = 'gold-rush-mp-room';
 const ARTIFACT_DIR = path.join(ROOT, 'artifacts/multiplayer-relay');
 const STATE_ROOT = path.join(ROOT, 'test-results/multiplayer-relay-state');
+const SETUP = {
+  contractId: 'the-claim',
+  seed: 'multiplayer-relay-test',
+  difficultyPreset: 'trail',
+  meta: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+  research: {
+    version: 1,
+    progress: { version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 0 } },
+    taken: [],
+    proposalSalt: 0,
+    pinnedTarget: null,
+  },
+};
 const checks = [];
 
 await main();
@@ -46,12 +59,20 @@ async function checkRelayFlow() {
     const badCors = await post(relay.url, '/api/multiplayer/create', {}, 'https://evil.example');
     assertEqual(badCors.status, 403, 'bad CORS origin rejected');
 
-    const created = await post(relay.url, '/api/multiplayer/create', {});
+    const created = await post(relay.url, '/api/multiplayer/create', { setup: SETUP });
     assertEqual(created.status, 200, 'room create succeeds');
     assert(/^[A-F0-9]{24}$/.test(created.body.code), 'room code is 96-bit hex');
     const code = created.body.code;
 
     const alice = await connectClient(relay.url, code, 'Alice', 'Dawn Claim');
+    const inspected = await get(relay.url, `/api/multiplayer/inspect?code=${code}`);
+    assertEqual(inspected.status, 200, 'room inspect succeeds without joining roster');
+    assertEqual(JSON.stringify(inspected.body.setup), JSON.stringify(SETUP), 'room inspect returns canonical setup');
+    const mismatch = await rejectedJoin(relay.url, code, 'Mallory', 'Wrong Claim', {
+      ...SETUP,
+      difficultyPreset: 'greenhorn',
+    });
+    assertEqual(mismatch.error, 'setup_mismatch', 'setup mismatch is rejected before roster mutation');
     const bob = await connectClient(relay.url, code, 'Bob', 'River Bend');
     await alice.take('roster', (msg) => msg.players.length === 2);
     await bob.take('roster', (msg) => msg.players.length === 2);
@@ -59,8 +80,8 @@ async function checkRelayFlow() {
     const aliceTicks = collectTicks(alice, 200);
     const bobTicks = collectTicks(bob, 200);
     for (let tick = 0; tick < 200; tick += 1) {
-      alice.send({ v: 1, type: 'input', tick, input: { dx: 1, seq: tick } });
-      bob.send({ v: 1, type: 'input', tick, input: { dx: -1, seq: tick } });
+      alice.send({ v: 2, type: 'input', tick, input: { dx: 1, seq: tick } });
+      bob.send({ v: 2, type: 'input', tick, input: { dx: -1, seq: tick } });
     }
     const [aliceInputs, bobInputs] = await Promise.all([aliceTicks, bobTicks]);
     assertEqual(JSON.stringify(aliceInputs), JSON.stringify(bobInputs), 'both clients receive identical tick batches');
@@ -69,27 +90,26 @@ async function checkRelayFlow() {
       assertEqual(aliceInputs[tick].inputs.length, 2, `tick ${tick} includes both players`);
     }
 
-    alice.send({ v: 1, type: 'hash', tick: 200, hash: 'fnv1a32:alice' });
+    alice.send({ v: 2, type: 'hash', tick: 200, hash: 'fnv1a32:alice' });
     const hashAtBob = await bob.take('hash', (msg) => msg.from === alice.playerId && msg.hash === 'fnv1a32:alice');
     assertEqual(hashAtBob.tick, 200, 'hash reaches peer');
-    bob.send({ v: 1, type: 'hash', tick: 200, hash: 'fnv1a32:bob' });
+    bob.send({ v: 2, type: 'hash', tick: 200, hash: 'fnv1a32:bob' });
     await alice.take('hash', (msg) => msg.from === bob.playerId && msg.hash === 'fnv1a32:bob');
     assert(true, 'hash round-trip succeeds');
 
     const snapshot = { kind: 'run-suspend', v: 1, wave: 6, gold: 123 };
-    alice.send({ v: 1, type: 'snapshot-push', tick: 200, snapshot });
+    alice.send({ v: 2, type: 'snapshot-push', tick: 200, snapshot });
     await bob.take('snapshot-available', (msg) => msg.from === alice.playerId && msg.tick === 200);
+    bob.send({ v: 2, type: 'snapshot-request' });
+    const pulled = await bob.take('snapshot', (msg) => msg.tick === 200);
+    assertEqual(JSON.stringify(pulled.snapshot), JSON.stringify(snapshot), 'active peer pulls latest snapshot');
 
     bob.close();
     await alice.take('roster', (msg) => msg.players.length === 1);
-    const bobAgain = await connectClient(relay.url, code, 'Bob', 'River Bend');
-    await alice.take('roster', (msg) => msg.players.length === 2);
-    bobAgain.send({ v: 1, type: 'snapshot-request' });
-    const pulled = await bobAgain.take('snapshot', (msg) => msg.tick === 200);
-    assertEqual(JSON.stringify(pulled.snapshot), JSON.stringify(snapshot), 'rejoined client pulls latest snapshot');
+    const rejected = await rejectedJoin(relay.url, code, 'Bob', 'River Bend');
+    assertEqual(rejected.error, 'ride_started', 'late rejoin is rejected before roster mutation');
 
     alice.close();
-    bobAgain.close();
   } finally {
     await relay.stop();
   }
@@ -349,10 +369,30 @@ async function connectClient(baseUrl, code, name, town) {
       socket.close();
     },
   };
-  client.send({ v: 1, type: 'join', code, player: { name, town } });
+  client.send({ v: 2, type: 'join', code, player: { name, town }, setup: SETUP });
   const joined = await client.take('joined');
   client.playerId = joined.playerId;
   return client;
+}
+
+async function rejectedJoin(baseUrl, code, name, town, setup = SETUP) {
+  const url = `${baseUrl.replace(/^http/, 'ws')}/api/multiplayer/connect?code=${code}`;
+  const socket = new WebSocket(url);
+  await new Promise((resolve, reject) => {
+    socket.addEventListener('open', resolve, { once: true });
+    socket.addEventListener('error', reject, { once: true });
+  });
+  socket.send(JSON.stringify({ v: 2, type: 'join', code, player: { name, town }, setup }));
+  return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => reject(new Error('timed out waiting for rejected join')), 5_000);
+    socket.addEventListener('message', (event) => {
+      const message = JSON.parse(event.data);
+      if (message.type !== 'error') return;
+      clearTimeout(timer);
+      socket.close();
+      resolve(message);
+    });
+  });
 }
 
 function assert(value, label) {

@@ -188,6 +188,10 @@ function onLedgerClick(event: MouseEvent): void {
 }
 
 function onLedgerKeyDown(event: KeyboardEvent): void {
+  // The modal owns keyboard input while open. In multiplayer the simulation
+  // intentionally continues, so allowing these events to reach the global
+  // InputController would move the hero or turn Escape into a shared pause.
+  event.stopPropagation();
   if (event.key !== 'Escape') return;
   event.preventDefault();
   closeClaimLedger();

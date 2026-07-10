@@ -1,7 +1,14 @@
-import type { LockstepClientOptions } from './LockstepClient';
+import { getDebugSeed } from '../core/DebugParams';
+import { readDifficultyPreset } from '../game/Balance';
+import { freshMetaProgress, loadMetaProgress } from '../game/MetaProgress';
+import { hasRocketCartCaptured } from '../game/Medals';
+import { DEFAULT_CONTRACT_ID } from '../meta/ContractFamilies';
+import { browserResearchStorage, loadResearchState } from '../meta/ResearchTree';
+import type { LockstepClientOptions, MultiplayerSetup } from './LockstepClient';
 
 export type RideTogetherConfig = Pick<LockstepClientOptions, 'relayBase' | 'code' | 'player'> & {
   phrase: string;
+  setup: MultiplayerSetup;
 };
 
 const STAGED_RIDE_KEY = 'gr.mp.ride.v1';
@@ -52,11 +59,15 @@ export function relayBaseFromTownSearch(search = window.location.search): string
   return (debugRelay || window.location.origin).replace(/\/$/, '');
 }
 
-export async function createRideRoom(relayBase: string, player: RideTogetherConfig['player']): Promise<RideTogetherConfig> {
+export async function createRideRoom(
+  relayBase: string,
+  player: RideTogetherConfig['player'],
+  setup = currentMultiplayerSetup(),
+): Promise<RideTogetherConfig> {
   const response = await fetch(`${relayBase}/api/multiplayer/create`, {
     method: 'POST',
     headers: { 'content-type': 'application/json' },
-    body: '{}',
+    body: JSON.stringify({ setup }),
   });
   const body = (await response.json().catch(() => ({}))) as { code?: string; error?: string; message?: string };
   if (!response.ok || !body.code) throw new Error(body.message || body.error || 'room_create_failed');
@@ -64,7 +75,7 @@ export async function createRideRoom(relayBase: string, player: RideTogetherConf
   if (!code) throw new Error('room_create_failed');
   const phrase = codeToJoinPhrase(code);
   rememberCodeWord(phrase, code);
-  const config = { relayBase, code, player, phrase };
+  const config = { relayBase, code, player, phrase, setup };
   stageRideConfig(config);
   return config;
 }
@@ -87,7 +98,9 @@ export function consumeStagedRideConfig(): LockstepClientOptions | null {
     const relayBase = typeof parsed.relayBase === 'string' ? parsed.relayBase.replace(/\/$/, '') : '';
     const player = parsed.player;
     if (!code || !relayBase || !player || typeof player.name !== 'string' || typeof player.town !== 'string') return null;
-    return { relayBase, code, player: { name: player.name, town: player.town } };
+    const setup = normalizeStagedSetup(parsed.setup);
+    if (!setup) return null;
+    return { relayBase, code, player: { name: player.name, town: player.town }, setup };
   } catch {
     return null;
   }
@@ -104,37 +117,36 @@ export function resolveJoinPhrase(value: string): string | null {
   return codeFromSuffix(suffix);
 }
 
-export async function probeRideRoom(relayBase: string, code: string, player: RideTogetherConfig['player']): Promise<boolean> {
+export async function probeRideRoom(
+  relayBase: string,
+  code: string,
+  _player: RideTogetherConfig['player'],
+  setup = currentMultiplayerSetup(),
+): Promise<boolean> {
   const normalized = normalizeRoomCode(code);
   if (!normalized) return false;
-  return new Promise((resolve) => {
-    let settled = false;
-    const done = (ok: boolean, socket?: WebSocket) => {
-      if (settled) return;
-      settled = true;
-      window.clearTimeout(timer);
-      try {
-        socket?.close();
-      } catch {}
-      resolve(ok);
-    };
-    const timer = window.setTimeout(() => done(false, socket), 4_000);
-    const socket = new WebSocket(`${relayBase.replace(/^http/, 'ws')}/api/multiplayer/connect?code=${normalized}`);
-    socket.addEventListener('open', () => {
-      socket.send(JSON.stringify({ v: 1, type: 'join', code: normalized, player }));
-    });
-    socket.addEventListener('message', (event) => {
-      try {
-        const message = JSON.parse(String(event.data)) as { type?: string };
-        if (message.type === 'joined') done(true, socket);
-        if (message.type === 'error') done(false, socket);
-      } catch {
-        done(false, socket);
-      }
-    });
-    socket.addEventListener('error', () => done(false, socket), { once: true });
-    socket.addEventListener('close', () => done(false, socket), { once: true });
-  });
+  try {
+    const response = await fetch(`${relayBase}/api/multiplayer/inspect?code=${normalized}`);
+    const body = (await response.json()) as { setup?: unknown; started?: unknown };
+    if (!response.ok || body.started === true) return false;
+    const roomSetup = normalizeStagedSetup(body.setup);
+    return roomSetup === null || stableStringify(roomSetup) === stableStringify(setup);
+  } catch {
+    return false;
+  }
+}
+
+export function currentMultiplayerSetup(contractId = DEFAULT_CONTRACT_ID): MultiplayerSetup {
+  const storage = browserResearchStorage();
+  const meta = storage ? loadMetaProgress(storage) : freshMetaProgress();
+  const research = loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
+  return {
+    contractId,
+    seed: getDebugSeed() ?? 'gold-rush',
+    difficultyPreset: readDifficultyPreset(),
+    meta,
+    research,
+  };
 }
 
 export function codeToJoinPhrase(code: string): string {
@@ -187,6 +199,39 @@ function normalizeRoomCode(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const code = value.replace(/[^a-f0-9]/gi, '').toUpperCase();
   return /^[A-F0-9]{24}$/.test(code) ? code : null;
+}
+
+function normalizeStagedSetup(value: unknown): MultiplayerSetup | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const setup = value as Partial<MultiplayerSetup>;
+  if (
+    typeof setup.contractId !== 'string' ||
+    typeof setup.seed !== 'string' ||
+    typeof setup.difficultyPreset !== 'string' ||
+    !setup.meta ||
+    typeof setup.meta !== 'object' ||
+    !setup.research ||
+    typeof setup.research !== 'object'
+  ) {
+    return null;
+  }
+  return {
+    contractId: setup.contractId,
+    seed: setup.seed,
+    difficultyPreset: setup.difficultyPreset,
+    meta: setup.meta,
+    research: setup.research,
+  };
+}
+
+function stableStringify(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
+  if (!value || typeof value !== 'object') return JSON.stringify(value);
+  const record = value as Record<string, unknown>;
+  return `{${Object.keys(record)
+    .sort()
+    .map((key) => `${JSON.stringify(key)}:${stableStringify(record[key])}`)
+    .join(',')}}`;
 }
 
 function readStorage(key: string): string | null {

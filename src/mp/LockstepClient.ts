@@ -1,8 +1,36 @@
 import * as THREE from 'three';
 import type { Intents } from '../core/InputController';
 import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
+import { isBuildableId } from '../game/buildables';
+
+export type LockstepPoint = { x: number; z: number };
+export type LockstepBuildingRef = { id: string; index: number };
+
+export type LockstepAction =
+  | { type: 'place_build'; id: string; position: LockstepPoint; rotationSteps: number }
+  | { type: 'weapon_toggle' }
+  | { type: 'restart' }
+  | { type: 'set_pause'; paused: boolean }
+  | { type: 'debug_spawn' }
+  | { type: 'debug_xp' }
+  | { type: 'pick_upgrade'; id: string }
+  | { type: 'skip_ceremony' }
+  | { type: 'death_action'; choice: 'done' | 'secondary' }
+  | { type: 'research_pick'; id: string }
+  | { type: 'research_skip' }
+  | { type: 'secure_choice'; choice: 'bank' | 'rush' }
+  | { type: 'context_action'; action: 'upgrade' | 'demolish'; target: LockstepBuildingRef }
+  | { type: 'context_action'; action: 'fund' }
+  | { type: 'set_agent_rung'; level: number; granted: boolean }
+  | { type: 'set_agent_ability'; ability: string; granted: boolean };
 
 export type LockstepInput = {
+  mx: number;
+  my: number;
+  actions: LockstepAction[];
+};
+
+export type LockstepSample = {
   mx: number;
   my: number;
   confirm: boolean;
@@ -14,8 +42,18 @@ export type LockstepInput = {
   buildSlot: number | null;
   restart: boolean;
   pause: boolean;
+  pauseTarget: boolean | null;
   debugSpawn: boolean;
   debugXp: boolean;
+  queuedActions: LockstepAction[];
+};
+
+export type MultiplayerSetup = {
+  contractId: string;
+  seed: string;
+  difficultyPreset: string;
+  meta: unknown;
+  research: unknown;
 };
 
 export type MultiplayerPlayer = {
@@ -26,6 +64,7 @@ export type MultiplayerPlayer = {
 
 export type LockstepTick = {
   tick: number;
+  roster: MultiplayerPlayer[];
   inputs: Array<{ playerId: string; input: LockstepInput }>;
 };
 
@@ -45,6 +84,7 @@ export type MultiplayerState = {
   lastResyncTick: number | null;
   paused: boolean;
   error: string | null;
+  setup: MultiplayerSetup | null;
 };
 
 type WireMessage = Record<string, unknown>;
@@ -56,20 +96,26 @@ export type LockstepClientOptions = {
   inputDelayTicks?: number;
   hashEveryTicks?: number;
   desyncAtTick?: number | null;
+  setup?: MultiplayerSetup;
   onDesync?: (tick: number) => void;
   onSnapshot?: (snapshot: unknown, tick: number) => boolean;
 };
 
-const VERSION = 1;
+const VERSION = 2;
 const DEFAULT_DELAY_TICKS = 3;
 const DEFAULT_HASH_EVERY_TICKS = 30;
 const MAX_HASH_HISTORY = 128;
+const MAX_ACTIONS_PER_TICK = 24;
 const SNAPSHOT_RAW_LIMIT_BYTES = 180 * 1024;
 const SNAPSHOT_WIRE_LIMIT_BYTES = 190 * 1024;
 const SNAPSHOT_CODEC = 'gzip-base64-v1';
 const ZERO_INPUT: LockstepInput = {
   mx: 0,
   my: 0,
+  actions: [],
+};
+type SampleActionState = Omit<LockstepSample, 'mx' | 'my' | 'queuedActions' | 'pauseTarget'>;
+const ZERO_SAMPLE: SampleActionState = {
   confirm: false,
   upgrade: false,
   rotateBuild: false,
@@ -90,6 +136,7 @@ export class LockstepClient {
   private code = '';
   private playerId: string | null = null;
   private roster: MultiplayerPlayer[] = [];
+  private setup: MultiplayerSetup | null = null;
   private nextInputTick = 0;
   private nextSimTick = 0;
   private readonly bundles = new Map<number, LockstepTick>();
@@ -111,6 +158,8 @@ export class LockstepClient {
   private desyncAtTick: number | null;
   private readonly inputDelayTicks: number;
   private readonly hashEveryTicks: number;
+  private readonly pendingActions: LockstepAction[] = [];
+  private previousSample = { ...ZERO_SAMPLE };
 
   constructor(private readonly options: LockstepClientOptions) {
     this.code = options.code ?? '';
@@ -136,7 +185,7 @@ export class LockstepClient {
         socket.addEventListener('open', () => resolve(), { once: true });
         socket.addEventListener('error', () => reject(new Error('websocket_error')), { once: true });
       });
-      this.send({ v: VERSION, type: 'join', code: this.code, player: this.options.player });
+      this.send({ v: VERSION, type: 'join', code: this.code, player: this.options.player, setup: this.options.setup });
     } catch (error) {
       this.error = error instanceof Error ? error.message : String(error);
     }
@@ -148,10 +197,16 @@ export class LockstepClient {
     this.connected = false;
   }
 
-  pump(localInput: LockstepInput): LockstepTick | null {
+  pump(localInput: LockstepSample): LockstepTick | null {
+    this.captureLocalActions(localInput);
     if (!this.connected || this.paused || this.roster.length < 2) return null;
     while (this.nextInputTick <= this.nextSimTick + this.inputDelayTicks) {
-      this.send({ v: VERSION, type: 'input', tick: this.nextInputTick, input: localInput });
+      const input: LockstepInput = {
+        mx: roundAxis(localInput.mx),
+        my: roundAxis(localInput.my),
+        actions: this.pendingActions.splice(0, MAX_ACTIONS_PER_TICK),
+      };
+      this.send({ v: VERSION, type: 'input', tick: this.nextInputTick, input });
       this.sendTimes.set(this.nextInputTick, performance.now());
       this.nextInputTick += 1;
     }
@@ -164,6 +219,7 @@ export class LockstepClient {
     this.latencyMs = Math.round(performance.now() - (this.sendTimes.get(tick) ?? performance.now()));
     this.sendTimes.delete(tick);
     this.nextSimTick = tick + 1;
+    this.roster = bundle.roster;
     return bundle;
   }
 
@@ -220,6 +276,7 @@ export class LockstepClient {
       lastResyncTick: this.lastResyncTick,
       paused: this.paused,
       error: this.error,
+      setup: this.setup ? structuredClone(this.setup) : null,
     };
   }
 
@@ -231,7 +288,7 @@ export class LockstepClient {
     const response = await fetch(`${this.options.relayBase}/api/multiplayer/create`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: '{}',
+      body: JSON.stringify({ setup: this.options.setup }),
     });
     const body = (await response.json()) as { code?: string; error?: string };
     if (!response.ok || !body.code) throw new Error(body.error ?? 'room_create_failed');
@@ -243,17 +300,23 @@ export class LockstepClient {
       this.connected = true;
       this.playerId = typeof message.playerId === 'string' ? message.playerId : null;
       this.roster = normalizeRoster(message.roster);
+      this.setup = normalizeSetup(message.setup) ?? normalizeSetup(this.options.setup);
       this.startedAt = performance.now();
       return;
     }
     if (message.type === 'roster') {
-      this.roster = normalizeRoster(message.players);
+      const roster = normalizeRoster(message.players);
+      const effectiveTick = normalizeTick(message.effectiveTick);
+      // Once tick 0 starts, only the roster embedded in an authoritative tick
+      // bundle may change simulation membership.
+      if (effectiveTick === null || effectiveTick === 0) this.roster = roster;
       return;
     }
     if (message.type === 'tick-inputs') {
       const tick = normalizeTick(message.tick);
       if (tick === null || tick < this.nextSimTick) return;
-      this.bundles.set(tick, { tick, inputs: normalizeInputs(message.inputs) });
+      const roster = normalizeRoster(message.roster);
+      this.bundles.set(tick, { tick, roster: roster.length > 0 ? roster : this.roster, inputs: normalizeInputs(message.inputs) });
       return;
     }
     if (message.type === 'hash') {
@@ -419,6 +482,36 @@ export class LockstepClient {
   private send(value: WireMessage): void {
     if (this.socket?.readyState === WebSocket.OPEN) this.socket.send(JSON.stringify(value));
   }
+
+  private captureLocalActions(sample: LockstepSample): void {
+    const edge = (key: keyof typeof ZERO_SAMPLE): boolean => sample[key] === true && this.previousSample[key] !== true;
+    // InputController already emits these as one-sample pulses. Edge-detecting
+    // them a second time drops legitimate consecutive samples (the rapid-Q
+    // race that parked the snapshot gate).
+    if (sample.weaponToggle) this.pendingActions.push({ type: 'weapon_toggle' });
+    if (edge('restart')) this.pendingActions.push({ type: 'restart' });
+    if (edge('pause')) this.pendingActions.push({ type: 'set_pause', paused: sample.pauseTarget ?? true });
+    if (edge('debugSpawn')) this.pendingActions.push({ type: 'debug_spawn' });
+    if (sample.debugXp) this.pendingActions.push({ type: 'debug_xp' });
+    for (const action of sample.queuedActions) {
+      const normalized = normalizeAction(action);
+      if (normalized) this.pendingActions.push(normalized);
+    }
+    this.previousSample = {
+      confirm: sample.confirm,
+      upgrade: sample.upgrade,
+      rotateBuild: sample.rotateBuild,
+      weaponToggle: sample.weaponToggle,
+      build: sample.build,
+      cancel: sample.cancel,
+      buildSlot: sample.buildSlot,
+      restart: sample.restart,
+      pause: sample.pause,
+      debugSpawn: sample.debugSpawn,
+      debugXp: sample.debugXp,
+    };
+  }
+
 }
 
 type EncodedLockstepSnapshot = {
@@ -464,7 +557,13 @@ export function multiplayerConfigFromSearch(search = window.location.search): Lo
   };
 }
 
-export function lockstepInputFromIntents(intents: Intents): LockstepInput {
+export function lockstepInputFromIntents(
+  intents: Intents,
+  options: {
+    pauseTarget?: boolean | null;
+    queuedActions?: LockstepAction[];
+  } = {},
+): LockstepSample {
   return {
     mx: roundAxis(intents.move.x),
     my: roundAxis(intents.move.y),
@@ -477,8 +576,10 @@ export function lockstepInputFromIntents(intents: Intents): LockstepInput {
     buildSlot: intents.buildSlot,
     restart: intents.restart,
     pause: intents.pause,
+    pauseTarget: options.pauseTarget ?? null,
     debugSpawn: intents.debugSpawn,
     debugXp: intents.debugXp,
+    queuedActions: options.queuedActions ?? [],
   };
 }
 
@@ -486,18 +587,18 @@ export function intentsFromLockstepInput(input: LockstepInput | null | undefined
   const source = input ?? ZERO_INPUT;
   return {
     move: new THREE.Vector2(source.mx, source.my),
-    confirm: source.confirm,
-    upgrade: source.upgrade,
-    rotateBuild: source.rotateBuild,
-    weaponToggle: source.weaponToggle,
-    build: source.build,
-    cancel: source.cancel,
-    buildSlot: source.buildSlot,
-    restart: source.restart,
-    pause: source.pause,
+    confirm: false,
+    upgrade: false,
+    rotateBuild: false,
+    weaponToggle: false,
+    build: false,
+    cancel: false,
+    buildSlot: null,
+    restart: false,
+    pause: false,
     mute: false,
-    debugSpawn: source.debugSpawn,
-    debugXp: source.debugXp,
+    debugSpawn: false,
+    debugXp: false,
   };
 }
 
@@ -541,18 +642,94 @@ function normalizeInput(value: unknown): LockstepInput {
   return {
     mx: roundAxis(value.mx),
     my: roundAxis(value.my),
-    confirm: value.confirm === true,
-    upgrade: value.upgrade === true,
-    rotateBuild: value.rotateBuild === true,
-    weaponToggle: value.weaponToggle === true,
-    build: value.build === true,
-    cancel: value.cancel === true,
-    buildSlot: Number.isInteger(value.buildSlot) ? Number(value.buildSlot) : null,
-    restart: value.restart === true,
-    pause: value.pause === true,
-    debugSpawn: value.debugSpawn === true,
-    debugXp: value.debugXp === true,
+    actions: Array.isArray(value.actions)
+      ? value.actions.map(normalizeAction).filter((action): action is LockstepAction => action !== null).slice(0, MAX_ACTIONS_PER_TICK)
+      : [],
   };
+}
+
+function normalizeAction(value: unknown): LockstepAction | null {
+  if (!isRecord(value) || typeof value.type !== 'string') return null;
+  if (value.type === 'place_build') {
+    const id = cleanToken(value.id, 64);
+    const position = normalizePoint(value.position);
+    const rotationSteps = Number.isInteger(value.rotationSteps) ? ((Number(value.rotationSteps) % 4) + 4) % 4 : 0;
+    return id && position ? { type: 'place_build', id, position, rotationSteps } : null;
+  }
+  if (
+    value.type === 'weapon_toggle' ||
+    value.type === 'restart' ||
+    value.type === 'debug_spawn' ||
+    value.type === 'debug_xp' ||
+    value.type === 'skip_ceremony' ||
+    value.type === 'research_skip'
+  ) {
+    return { type: value.type };
+  }
+  if (value.type === 'set_pause' && typeof value.paused === 'boolean') return { type: 'set_pause', paused: value.paused };
+  if (value.type === 'pick_upgrade') {
+    const id = cleanToken(value.id, 64);
+    return id ? { type: 'pick_upgrade', id } : null;
+  }
+  if (value.type === 'death_action' && (value.choice === 'done' || value.choice === 'secondary')) {
+    return { type: 'death_action', choice: value.choice };
+  }
+  if (value.type === 'research_pick') {
+    const id = cleanToken(value.id, 64);
+    return id ? { type: 'research_pick', id } : null;
+  }
+  if (value.type === 'secure_choice' && (value.choice === 'bank' || value.choice === 'rush')) {
+    return { type: 'secure_choice', choice: value.choice };
+  }
+  if (value.type === 'context_action' && value.action === 'fund') return { type: 'context_action', action: 'fund' };
+  if (value.type === 'context_action' && (value.action === 'upgrade' || value.action === 'demolish')) {
+    const target = normalizeBuildingRef(value.target);
+    return target ? { type: 'context_action', action: value.action, target } : null;
+  }
+  if (value.type === 'set_agent_rung' && Number.isInteger(value.level) && typeof value.granted === 'boolean') {
+    return { type: 'set_agent_rung', level: Math.max(0, Math.min(3, Number(value.level))), granted: value.granted };
+  }
+  if (value.type === 'set_agent_ability' && typeof value.granted === 'boolean') {
+    const ability = cleanToken(value.ability, 64);
+    return ability === 'auto_collect' || ability === 'auto_repair' || ability === 'auto_pan'
+      ? { type: 'set_agent_ability', ability, granted: value.granted }
+      : null;
+  }
+  return null;
+}
+
+function normalizePoint(value: unknown): LockstepPoint | null {
+  if (!isRecord(value)) return null;
+  const x = quantizedCoordinate(value.x);
+  const z = quantizedCoordinate(value.z);
+  return x === null || z === null ? null : { x, z };
+}
+
+function normalizeBuildingRef(value: unknown): LockstepBuildingRef | null {
+  if (!isRecord(value)) return null;
+  const id = cleanToken(value.id, 64);
+  const index = Number.isInteger(value.index) ? Math.max(0, Math.min(255, Number(value.index))) : null;
+  return isBuildableId(id) && index !== null ? { id, index } : null;
+}
+
+function quantizedCoordinate(value: unknown): number | null {
+  if (typeof value !== 'number' || !Number.isFinite(value)) return null;
+  return Math.round(Math.max(-256, Math.min(256, value)) * 1000) / 1000;
+}
+
+function normalizeSetup(value: unknown): MultiplayerSetup | null {
+  if (!isRecord(value)) return null;
+  const contractId = cleanToken(value.contractId, 64);
+  const seed = cleanToken(value.seed, 96);
+  const difficultyPreset = cleanToken(value.difficultyPreset, 32);
+  if (!contractId || !seed || !difficultyPreset || !isRecord(value.meta) || !isRecord(value.research)) return null;
+  return { contractId, seed, difficultyPreset, meta: structuredClone(value.meta), research: structuredClone(value.research) };
+}
+
+function cleanToken(value: unknown, maxLength: number): string | null {
+  if (typeof value !== 'string') return null;
+  const cleaned = value.trim().slice(0, maxLength);
+  return cleaned || null;
 }
 
 function normalizeTick(value: unknown): number | null {
