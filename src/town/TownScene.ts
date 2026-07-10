@@ -17,7 +17,17 @@ import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProg
 import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
 import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
-import { DEFAULT_CONTRACT_ID, listBoardContracts, loadContract, loadEpoch, type ContractManifest } from '../meta/ContractFamilies';
+import {
+  activateEpoch,
+  activeEpochId,
+  DEFAULT_CONTRACT_ID,
+  DEFAULT_EPOCH_ID,
+  epochIsActive,
+  listBoardContracts,
+  loadContract,
+  loadEpoch,
+  type ContractManifest,
+} from '../meta/ContractFamilies';
 import {
   ensureMegaprojectProject,
   isMegaprojectUnlocked,
@@ -64,6 +74,7 @@ const FIRST_CLAIM_GREETING = "The valley's open. The tavern keeps the contracts.
 const FIRST_CLAIM_PENDING = 'pending';
 const APPROACH_RADIUS = 5.2;
 const STAMP_MILL_ID = 'stamp-mill';
+const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const STAMP_MILL_TOWN_SITE = { x: 0, z: 13.45, w: 6.2, d: 1.65 };
 const STAMP_MILL_COMPLETE_LINE = 'awaits the whistle';
 const STAMP_MILL_PROGRESS_LINES = [
@@ -82,6 +93,7 @@ export type TownDiagnostics = {
   namingPrompt: boolean;
   boardOpen: boolean;
   schoolhouseOpen: boolean;
+  activeEpochId: string;
   assayOpen: boolean;
   buildings: Array<{
     id: TownBuildingId;
@@ -639,6 +651,10 @@ export class TownScene {
       requestOpenClaimLedger();
       return;
     }
+    if (target?.closest('[data-raise-stamp-mill]')) {
+      this.raiseStampMill();
+      return;
+    }
     const nodeButton = target?.closest<HTMLElement>('[data-research-node]');
     if (nodeButton?.dataset.researchNode) {
       this.selectResearchNode(nodeButton.dataset.researchNode);
@@ -903,9 +919,34 @@ export class TownScene {
         </header>
         <div class="town-ui__surface-body">
           ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}
+          ${this.renderEpochActivationAction()}
         </div>
       </div>
     `;
+  }
+
+  private renderEpochActivationAction(): string {
+    const { manifest, project } = this.stampMill;
+    if (!manifest || !project || epochIsActive(STEAMWORKS_EPOCH_ID)) return '';
+    if (!scienceMeter(activeProfileResearchState()).complete || !megaprojectComplete(manifest, project)) return '';
+    const pledgedGold = manifest.stages.reduce((sum, stage) => sum + Math.max(0, Math.floor(stage.materials.gold ?? 0)), 0);
+    return `
+      <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door">
+        <p class="town-ui__board-eyebrow">The town's next ledger</p>
+        <h3>The Stamp Mill is ready.</h3>
+        <p>Frontier science banked · ${pledgedGold} gold pledged across three defended stages.</p>
+        <button type="button" data-raise-stamp-mill data-testid="raise-stamp-mill">Raise the Stamp Mill</button>
+      </section>
+    `;
+  }
+
+  private raiseStampMill(): void {
+    const { manifest, project } = this.stampMill;
+    if (!manifest || !project || !megaprojectComplete(manifest, project)) return;
+    if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(STEAMWORKS_EPOCH_ID)) return;
+    this.renderSchoolhouse();
+    emitStorySignal({ type: 'epoch-activated', epochId: STEAMWORKS_EPOCH_ID, displayName: 'The Steamworks' });
+    this.publishDiagnostics();
   }
 
   private selectResearchNode(id: string): void {
@@ -1189,6 +1230,7 @@ export class TownScene {
       namingPrompt: this.nameCardOpen,
       boardOpen: this.boardOpen,
       schoolhouseOpen: this.schoolhouseOpen,
+      activeEpochId: activeEpochId(),
       assayOpen: this.assayBenchOpen(),
       buildings: townBuildings.map((building) => ({
         id: building.id,
@@ -1432,7 +1474,9 @@ function contractUnlock(contract: ContractManifest): { unlocked: boolean; condit
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
   }
-  if (unlock === 'epoch-2-steamworks') return { unlocked: false, condition: 'Awaits the Steamworks era' };
+  if (unlock === STEAMWORKS_EPOCH_ID) {
+    return { unlocked: epochIsActive(STEAMWORKS_EPOCH_ID), condition: 'Awaits the Steamworks era' };
+  }
   if (unlock.startsWith('science')) {
     const required = Number.parseInt(unlock.match(/\d+/)?.[0] ?? '0', 10);
     const storage = browserStorage();
@@ -1563,7 +1607,7 @@ function readTownMetaProgress(): MetaProgress {
 }
 
 function readTownStampMill(meta: MetaProgress): TownStampMill {
-  const manifest = loadEpoch('epoch-1-frontier').megaprojects.find((entry) => entry.id === STAMP_MILL_ID) ?? null;
+  const manifest = loadEpoch(DEFAULT_EPOCH_ID).megaprojects.find((entry) => entry.id === STAMP_MILL_ID) ?? null;
   if (!manifest) return { manifest: null, project: null, visible: false };
   const state = loadMegaprojectState(browserStorage());
   const project = ensureMegaprojectProject(state, manifest);

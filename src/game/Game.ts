@@ -13,6 +13,7 @@ import {
   activeContractDiagnostics,
   activeEpoch as selectActiveEpoch,
   activeTileDescriptor,
+  DEFAULT_EPOCH_ID,
   type ContractBaronTwist,
   type ContractManifest,
   type RailPathDescriptor,
@@ -175,7 +176,8 @@ import {
 } from './RunSuspend';
 import { defaultSaveSlotName, formatBudgetWarning, saveManualSlot, saveSlotsBudget } from './SaveSlots';
 
-const frontierEpoch = loadEpoch('epoch-1-frontier');
+// Replay Law: Frontier upgrades remain available after later epochs activate.
+const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
 const STAMP_MILL_ID = 'stamp-mill';
 const STAMP_MILL_COMPLETE_LINE = 'The Stamp Mill stands ready. The era waits on its whistle.';
 const STAMP_MILL_PROGRESS_LINES = [
@@ -396,7 +398,7 @@ export class Game {
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
-  private readonly megaprojectManifest: MegaprojectManifest | null = activeMegaprojectManifest(frontierEpoch);
+  private readonly megaprojectManifest: MegaprojectManifest | null = activeMegaprojectManifest(this.activeEpoch);
   private readonly megaprojectStorage: MegaprojectStorage | undefined = browserMegaprojectStorage();
   private megaprojectState: MegaprojectState = loadMegaprojectState(this.megaprojectStorage);
   private megaprojectProject: MegaprojectProjectState | null = this.megaprojectManifest
@@ -4531,7 +4533,7 @@ export class Game {
   private masteryProgressLines(): PauseMetaSnapshot['mastery'] {
     const stacks = this.progression.snapshot.stacks;
     const hasNode = (id: string) => hasResearchNode(this.researchState, id);
-    return frontierEpoch.masteryConversions
+    return replayEpoch.masteryConversions
       .map((rule) => {
         const family = upgradeDefs.filter(
           (def) =>

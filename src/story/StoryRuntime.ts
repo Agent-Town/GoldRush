@@ -4,6 +4,7 @@ import { hasStoryBeatSeen, markStoryBeatSeen } from './seenState';
 import { emitStorySignal, onStorySignal, STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal, type StorySignal } from './signals';
 import { STORY_SPEAKERS } from './speakers';
 import { readStoryTalesEnabled, subscribeStorySettings } from './settings';
+import { SoundSystem } from '../audio/SoundSystem';
 
 const CARD_MS = 6000;
 const GAP_MS = 3000;
@@ -26,12 +27,14 @@ export class StoryRuntime {
   private readonly root = document.createElement('div');
   private readonly unsubscribeSignal: () => void;
   private readonly unsubscribeSettings: () => void;
+  private readonly audio = new SoundSystem();
   private queue: QueueItem[] = [];
   private active: QueueItem | null = null;
   private dismissTimer = 0;
   private scheduleTimer = 0;
   private lastDismissedAt = 0;
   private pointerCleanup: () => void = () => undefined;
+  private ceremonyCleanup: () => void = () => undefined;
   private readonly onDocumentPointerDown = () => this.dismiss();
 
   constructor(parent: HTMLElement) {
@@ -49,6 +52,8 @@ export class StoryRuntime {
     window.clearTimeout(this.dismissTimer);
     window.clearTimeout(this.scheduleTimer);
     this.pointerCleanup();
+    this.ceremonyCleanup();
+    this.audio.dispose();
     this.unsubscribeSignal();
     this.unsubscribeSettings();
     this.root.remove();
@@ -68,7 +73,7 @@ export class StoryRuntime {
       items.push({ beat, key, lines, signal });
     }
     if (items.length === 0) return;
-    if (signal.type === 'run-return-town') {
+    if (signal.type === 'run-return-town' || signal.type === 'epoch-activated') {
       const interrupted = this.interruptActiveBeat();
       this.queue.unshift(...items, ...(interrupted ? [interrupted] : []));
     } else {
@@ -86,7 +91,8 @@ export class StoryRuntime {
     if (this.active || this.queue.length === 0) return;
     window.clearTimeout(this.scheduleTimer);
     const now = Date.now();
-    const waitForGap = Math.max(0, this.lastDismissedAt + GAP_MS - now);
+    const ceremonyNext = this.queue[0]?.beat.presentation === 'epoch-ceremony';
+    const waitForGap = ceremonyNext ? 0 : Math.max(0, this.lastDismissedAt + GAP_MS - now);
     const waitForBanner = this.waveBannerVisible() ? 250 : 0;
     const delay = Math.max(waitForGap, waitForBanner);
     if (delay > 0) {
@@ -99,9 +105,16 @@ export class StoryRuntime {
 
   private show(item: QueueItem): void {
     this.active = item;
+    const ceremony = item.beat.presentation === 'epoch-ceremony';
+    this.root.classList.toggle('story-beat-layer--ceremony', ceremony);
     this.render(item);
     this.setupPointer(item.beat.pointer);
-    document.addEventListener('pointerdown', this.onDocumentPointerDown, { capture: true, once: true });
+    if (ceremony) {
+      this.setupCeremonyControls();
+      if (item.beat.ceremonyStep === 'mill') this.audio.play('epoch-door-sting');
+    } else {
+      document.addEventListener('pointerdown', this.onDocumentPointerDown, { capture: true, once: true });
+    }
     window.clearTimeout(this.dismissTimer);
     this.dismissTimer = window.setTimeout(() => this.dismiss(), CARD_MS);
     window.requestAnimationFrame(() => {
@@ -111,10 +124,13 @@ export class StoryRuntime {
 
   private render(item: QueueItem): void {
     const speaker = STORY_SPEAKERS[item.beat.speaker];
+    const ceremony = item.beat.presentation === 'epoch-ceremony';
     this.root.innerHTML = `
-      <article class="story-beat-card" data-testid="story-beat-card" data-beat-id="${escapeHtml(item.key)}" data-speaker="${
-        speaker.id
-      }" aria-live="polite" role="status">
+      <article class="story-beat-card${ceremony ? ' story-beat-card--ceremony' : ''}" data-testid="story-beat-card" data-beat-id="${escapeHtml(
+        item.key,
+      )}" data-speaker="${speaker.id}" data-art-key="${escapeHtml(item.beat.artKey ?? '')}" data-ceremony-step="${escapeHtml(
+        item.beat.ceremonyStep ?? '',
+      )}" aria-live="polite" role="${ceremony ? 'dialog' : 'status'}" ${ceremony ? 'aria-modal="true"' : ''}>
         <img class="story-beat-card__portrait" data-testid="story-beat-portrait" alt="" src="${speaker.portraitUrl}" style="object-position:${
           speaker.objectPosition
         }" />
@@ -122,18 +138,29 @@ export class StoryRuntime {
           <p class="story-beat-card__speaker">${escapeHtml(speaker.name)}</p>
           ${item.lines.map((line) => `<p class="story-beat-card__line">${escapeHtml(line)}</p>`).join('')}
         </div>
+        ${
+          ceremony
+            ? `<div class="story-beat-card__ceremony-actions">
+                <button type="button" data-story-ceremony-continue>${item.beat.ceremonyStep === 'title' ? 'Enter the Steamworks' : 'Continue'}</button>
+                <button type="button" data-story-ceremony-skip>Skip ceremony</button>
+              </div>`
+            : ''
+        }
       </article>
     `;
   }
 
   private dismiss(): void {
     this.pointerCleanup();
+    this.ceremonyCleanup();
     if (!this.active) return;
+    const ceremony = this.active.beat.presentation === 'epoch-ceremony';
     window.clearTimeout(this.dismissTimer);
     document.removeEventListener('pointerdown', this.onDocumentPointerDown, { capture: true });
     this.root.innerHTML = '';
+    this.root.classList.remove('story-beat-layer--ceremony');
     this.active = null;
-    this.lastDismissedAt = Date.now();
+    this.lastDismissedAt = ceremony ? 0 : Date.now();
     this.schedule();
   }
 
@@ -141,9 +168,11 @@ export class StoryRuntime {
     if (!this.active) return null;
     const active = this.active;
     this.pointerCleanup();
+    this.ceremonyCleanup();
     window.clearTimeout(this.dismissTimer);
     document.removeEventListener('pointerdown', this.onDocumentPointerDown, { capture: true });
     this.root.innerHTML = '';
+    this.root.classList.remove('story-beat-layer--ceremony');
     this.active = null;
     return active;
   }
@@ -164,6 +193,34 @@ export class StoryRuntime {
       delete target.dataset.storyPointer;
       for (const event of events) target.removeEventListener(event, clear);
       this.pointerCleanup = () => undefined;
+    };
+  }
+
+  private setupCeremonyControls(): void {
+    this.ceremonyCleanup();
+    const continueButton = this.root.querySelector<HTMLButtonElement>('[data-story-ceremony-continue]');
+    const skipButton = this.root.querySelector<HTMLButtonElement>('[data-story-ceremony-skip]');
+    const continueCeremony = () => this.dismiss();
+    const skipCeremony = () => {
+      this.queue = this.queue.filter((item) => item.beat.presentation !== 'epoch-ceremony');
+      this.dismiss();
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') skipCeremony();
+      else if (event.key === 'Enter') continueCeremony();
+      else return;
+      event.preventDefault();
+      event.stopPropagation();
+    };
+    continueButton?.addEventListener('click', continueCeremony);
+    skipButton?.addEventListener('click', skipCeremony);
+    window.addEventListener('keydown', onKeyDown, true);
+    continueButton?.focus({ preventScroll: true });
+    this.ceremonyCleanup = () => {
+      continueButton?.removeEventListener('click', continueCeremony);
+      skipButton?.removeEventListener('click', skipCeremony);
+      window.removeEventListener('keydown', onKeyDown, true);
+      this.ceremonyCleanup = () => undefined;
     };
   }
 

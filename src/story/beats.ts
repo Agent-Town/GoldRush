@@ -11,6 +11,9 @@ export type StoryBeatFor<TSignal extends { type: string }> = {
   oncePerProfile: boolean;
   when?: (signal: TSignal) => boolean;
   seenKey?: (signal: TSignal) => string;
+  presentation?: 'card' | 'epoch-ceremony';
+  artKey?: string;
+  ceremonyStep?: 'mill' | 'valley' | 'title';
 };
 
 export type StoryBeat = StoryBeatFor<StorySignal>;
@@ -226,6 +229,39 @@ export const LEDGER_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 ];
 
 export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
+  {
+    id: 'e2-ceremony-mill',
+    trigger: 'epoch-activated',
+    speaker: 'elder',
+    oncePerProfile: false,
+    presentation: 'epoch-ceremony',
+    artKey: 'kit-stamp-mill',
+    ceremonyStep: 'mill',
+    when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
+    lines: ['The Stamp Mill rises.', 'Iron stamps answer the valley.'],
+  },
+  {
+    id: 'e2-ceremony-valley',
+    trigger: 'epoch-activated',
+    speaker: 'prospector',
+    oncePerProfile: false,
+    presentation: 'epoch-ceremony',
+    artKey: 'kit-era-2',
+    ceremonyStep: 'valley',
+    when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
+    lines: ['Steam finds every roofline.', 'The valley takes its first new shape.'],
+  },
+  {
+    id: 'e2-ceremony-title',
+    trigger: 'epoch-activated',
+    speaker: 'elder',
+    oncePerProfile: false,
+    presentation: 'epoch-ceremony',
+    artKey: 'kit-era-2',
+    ceremonyStep: 'title',
+    when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
+    lines: ['Epoch 2', 'The Steamworks'],
+  },
   {
     id: 'e2-railcar-arrival',
     trigger: 'boss-arrival',

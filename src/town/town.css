@@ -238,6 +238,40 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.town-ui__epoch-door {
+  margin: 16px auto 2px;
+  padding: 18px;
+  border: 2px solid #5b8a8a;
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(196, 136, 58, 0.24)),
+    repeating-linear-gradient(90deg, transparent 0 18px, rgba(139, 125, 60, 0.1) 18px 20px);
+  box-shadow: inset 0 0 0 2px rgba(139, 125, 60, 0.22), 0 8px 20px rgba(46, 27, 14, 0.18);
+  text-align: center;
+}
+
+.town-ui__epoch-door h3,
+.town-ui__epoch-door p {
+  margin: 4px 0 10px;
+}
+
+.town-ui__epoch-door button {
+  min-width: min(100%, 320px);
+  min-height: 48px;
+  border: 2px solid #2e1b0e;
+  border-radius: 7px;
+  color: #fff8e8;
+  background: #5b8a8a;
+  box-shadow: 0 4px 0 rgba(46, 27, 14, 0.62);
+  font: 900 1rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+}
+
+.town-ui__epoch-door button:focus-visible {
+  outline: 3px solid #ffe4a0;
+  outline-offset: 3px;
+}
+
 .town-ui__board-backdrop {
   position: absolute;
   inset: 0;

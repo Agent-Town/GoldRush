@@ -21,7 +21,9 @@ export type BossStorySignal =
 
 export type LedgerStorySignal = { type: 'ledger-page'; entryId: string; entryName: string };
 
-export type RuntimeStorySignal = StorySignal | BossStorySignal | LedgerStorySignal;
+export type EpochStorySignal = { type: 'epoch-activated'; epochId: string; displayName: string };
+
+export type RuntimeStorySignal = StorySignal | BossStorySignal | LedgerStorySignal | EpochStorySignal;
 
 export const STORY_SIGNAL_REGISTRY = [
   'first-boot',
@@ -41,7 +43,7 @@ export const STORY_SIGNAL_REGISTRY = [
   'xp-collected',
 ] as const;
 
-export const STORY_RUNTIME_SIGNAL_REGISTRY = [...STORY_SIGNAL_REGISTRY, 'boss-arrival', 'boss-defeat', 'ledger-page'] as const;
+export const STORY_RUNTIME_SIGNAL_REGISTRY = [...STORY_SIGNAL_REGISTRY, 'boss-arrival', 'boss-defeat', 'ledger-page', 'epoch-activated'] as const;
 
 type StorySignalListener = (signal: RuntimeStorySignal) => void;
 
