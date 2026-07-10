@@ -26,7 +26,14 @@ fi
 LOG="logs/deploy-site.log"
 mkdir -p logs
 log_note() { echo "[deploy-site] $(date '+%F %T') $*" >> "$LOG"; note "$*"; }
-deploy() { wrangler pages deploy site --project-name agenttown --commit-dirty=true >> "$LOG" 2>&1; }
+STAGE="$(mktemp -d "${TMPDIR:-/tmp}/agenttown-site.XXXXXX")"
+trap 'rm -rf "$STAGE"' EXIT
+cp -R site/. "$STAGE"/
+if [ -d news ]; then
+  mkdir -p "$STAGE/news"
+  cp -R news/. "$STAGE/news"/
+fi
+deploy() { wrangler pages deploy "$STAGE" --project-name agenttown --commit-dirty=true >> "$LOG" 2>&1; }
 
 log_note "deploying site/ to Pages project 'agenttown'..."
 if deploy; then
