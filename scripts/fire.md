@@ -35,3 +35,7 @@ Rewrite STATUS.md line-1: `Last updated: <ISO> s<N> handoff, lock CLEARED — <w
 - After the above: unpause `mv tasks/queue-paused/* tasks/queue/main/` (021/026/027/030), serial.
 - Robin owes (nag politely in handoffs, never block on it): lane-d attempt-3 verdict (3a recommended), turret-feel + water-feel playtests, Mac full-regression evidence, favicon 16px eyeball.
 - Canon guardrails always: brief §9 (no firearms — frontier-tech only; illustrated never gory; no Native American enemies; naming per §9.4; the agent is "the Prospector").
+
+## GZ-01 + TK-01 DUTIES (added 2026-07-10, attended — the news pipeline goes live)
+ON EVERY REAL-CHANGE MERGE you drain (the filter law: the review names a player-visible change): APPEND a news item to marketing/outbox/gazette-queue.md — {ledger-voice headline ≤80 chars, ≤3 plain lines, merge hash, screenshot/artifact ref}. Frontier speak per the 063 voice law; NEVER token/price talk; bugs-on-camera get an owner-choice note. ≤3 GAZETTE items/week reach the owner (batch the rest into the weekly roundup item).
+DAILY (first fire after 06:00 local): compile yesterday's merges into ONE ticker digest appended to marketing/outbox/ticker-digest-<date>.md (micro-headlines ≤140 chars + hashes). The owner approves digests in one morning action. Publication stays owner-only, always.
