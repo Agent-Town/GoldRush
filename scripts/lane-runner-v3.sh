@@ -7,7 +7,18 @@ set -u
 ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 LOCKDIR="$ROOT/tasks/.runner.lock"
 if ! mkdir "$LOCKDIR" 2>/dev/null; then
-  echo "[lane-runner-v3] another instance running ($LOCKDIR). Remove if stale."; exit 1
+  # s284: self-heal a stale lock — if no OTHER runner process exists, the lock is a corpse
+  # (kill→relaunch race, 2026-07-10 incident: new instance exited on the dying old one's lock).
+  others=$(pgrep -f "lane-runner-v3.sh" | grep -v "^$$\$" | wc -l | tr -d ' ')
+  if [ "$others" = "0" ]; then
+    rmdir "$LOCKDIR" 2>/dev/null
+    if ! mkdir "$LOCKDIR" 2>/dev/null; then
+      echo "[lane-runner-v3] lock respawn failed ($LOCKDIR)."; exit 1
+    fi
+    echo "[lane-runner-v3] stale lock self-healed (no other runner process)"
+  else
+    echo "[lane-runner-v3] another instance running ($LOCKDIR). Remove if stale."; exit 1
+  fi
 fi
 cleanup() { rmdir "$LOCKDIR" 2>/dev/null; }
 trap 'cleanup; echo "[lane-runner-v3] stopped (background tasks finish on their own)"; exit 130' INT TERM
