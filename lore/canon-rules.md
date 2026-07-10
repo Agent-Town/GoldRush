@@ -5,3 +5,6 @@ Eras ACCUMULATE, never erase: each epoch ADDS its works onto the last; older inf
 
 ## THE STANDING GUARDRAILS
 ADR-001: frontier-tech, NO firearms ever (brass/steam/spark/rockets-as-fireworks). Warm, illustrated, never gory. Enemies = outlaws/companies/machines/nature — never peoples. The agent = THE PROSPECTOR; the hero = the young woman miner (NEVER prompted 'prospector'). Agents originate at the Calculating House (ADR-003). Minors always clothed in all reference art. The green of E9 = E1's exact swatch.
+
+## THE HOUSEEHOLD LAW (owner-ruled 2026-07-10, verbatim: 'Who are her parents in town? We always have to think about this as well. Families or singles. Most likely not children alone - they could not survive.')
+EVERY MINOR IN THE CAST BELONGS TO A HOUSEHOLD — a named parent/guardian in the roster with a livelihood. No unaccompanied children, ever (frontier reality + family-game warmth). Applies to all eras: new child characters land WITH their family or an explicit guardian, same commit. Singles are fine for adults; children are not alone.
