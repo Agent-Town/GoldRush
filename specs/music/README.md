@@ -1,5 +1,5 @@
 # The Music of the Saga — spec seed
-Status: DRAFT 2026-07-11 (owner raised it; generator = ELEVENLABS by owner ruling, key in .env.local — **PILOT BLOCKED 2026-07-11: the Music API returned 402 `paid_plan_required` (the current ElevenLabs key is a free-tier key; sfx may have worked before, music is paid-only). OWNER ONE-TIME: upgrade the ElevenLabs plan OR rule the sonilo_music (Higgsfield, video-credit-priced) backup in.** Nothing else blocks.)
+Status: ACTIVE 2026-07-11 — **GENERATOR = SONILO (owner ears on take-1: 'This is really good - quite fun to listen to'); 3.75cr/60s. ElevenLabs upgrade NOT needed for music (stays the sfx/voice path).** MU-01 in flight.
 
 ## THE PAN THEME (the law of the score)
 One melodic motif — THE PAN THEME — recurs in every era's track, re-instrumented per era exactly as the pan object recurs in every arsenal plate: E1 states it simply; every era plays it in its own voice; E10 plays them ALL (the medley aboard the Ark). The Static's approach = the mix losing channels until only the theme's heartbeat remains (the e10 bundle's audio thesis, already design-locked).
@@ -11,6 +11,7 @@ E1 frontier warmth: acoustic guitar, fiddle, brushes; creek-water tempo · E2 st
 - **MU-01 PILOT** (after the owner one-time): title-theme candidates ×2-3 (the prompt is written, in this spec's history) + one E1 era track → owner picks; the chosen title = the PAN THEME's canonical statement, and every later track derives from it.
 - **MU-02**: per-era loops (60–90s, loop-clean) generated era-by-era as epochs ship; wired via the existing SoundSystem + the Settings panel audio home (menu = title, in-run = era track, ceremony stingers).
 - **MU-03**: the Static mix-ducking mechanic (engine; rides the e10 era work).
+**MU-04 (SEED, owner 2026-07-11: 'we could even have music during the game and have different tracks for different encounters. But ok, lets not get ahead of ourselves.'):** encounter/contract-keyed tracks (Night Shift dark-verse, Baron leitmotif over the era track, boss stingers) — banked, NOT scheduled; revisit after MU-02 ships two eras.
 LAWS: loop-clean · no vocals v1 · warm never bombastic · the theme audibly present in every track (owner-checkable) · generated-first (owner-ratified 2026-07-07).
 
 ## The pilot prompt (ready to fire the moment the key can)
