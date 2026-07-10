@@ -18,6 +18,7 @@ const SCRIPT_NAME = 'gold-rush-mp-room';
 const STATE_ROOT = path.join(ROOT, 'test-results/mp-02-relay-state');
 const ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-02');
 const MP03_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-03');
+const MP04_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-04');
 const MP_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&nokill&seed=mp-02-lockstep';
 const ALICE: MpPlayerSeed = { id: 'alice', name: 'Alice', town: 'Dawn Claim' };
 const BOB: MpPlayerSeed = { id: 'bob', name: 'Bob', town: 'River Bend' };
@@ -204,6 +205,68 @@ test('two clients promote both roster slots to real local-camera heroes and shar
   }
 });
 
+test('town Ride Together card creates a claim word and joins two named riders', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab town flow proof is enough');
+  test.setTimeout(70_000);
+  const aliceContext = await browser.newContext();
+  const bobContext = await browser.newContext();
+  const alice = await aliceContext.newPage();
+  const bob = await bobContext.newPage();
+  const aliceErrors = collectErrors(alice);
+  const bobErrors = collectErrors(bob);
+  try {
+    await openTownBoard(alice, ALICE);
+    await expect(alice.getByTestId('ride-together-card')).toBeVisible();
+    await shotMp04(alice, testInfo, 'card');
+    await alice.getByTestId('ride-open-claim').click();
+    await expect(alice.getByTestId('ride-code-word')).not.toHaveText('No claim open', { timeout: 15_000 });
+    const phrase = ((await alice.getByTestId('ride-code-word').textContent()) ?? '').trim();
+    expect(phrase).toMatch(/^[A-Z]+-[A-Z]+-[0-9A-V]{20}$/);
+    await alice.getByTestId('ride-start').click();
+    await alice.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
+
+    await openTownBoard(bob, BOB);
+    await bob.getByTestId('ride-join-input').fill(phrase);
+    await shotMp04(bob, testInfo, 'join');
+    await bob.getByTestId('ride-join-submit').click();
+    await waitRoster(alice);
+    await waitRoster(bob);
+    await waitForActors(alice);
+    await waitForActors(bob);
+
+    await expect(alice.getByTestId('mp-rider-chip')).toContainText(BOB.name);
+    await expect(alice.getByTestId('mp-rider-chip')).toContainText(BOB.town);
+    await expect(bob.getByTestId('mp-rider-chip')).toContainText(ALICE.name);
+    await expect(bob.getByTestId('mp-rider-chip')).toContainText(ALICE.town);
+    await shotMp04(alice, testInfo, 'two-named-riders');
+
+    const [aliceDiagnostics, bobDiagnostics] = await syncedGameDiagnostics(alice, bob, 120);
+    assertSameRosterSlots(aliceDiagnostics.actors, bobDiagnostics.actors);
+    assertLocalHero(aliceDiagnostics, ALICE.name);
+    assertLocalHero(bobDiagnostics, BOB.name);
+    expect(aliceErrors.consoleErrors).toEqual([]);
+    expect(aliceErrors.pageErrors).toEqual([]);
+    expect(bobErrors.consoleErrors).toEqual([]);
+    expect(bobErrors.pageErrors).toEqual([]);
+  } finally {
+    await aliceContext.close();
+    await bobContext.close();
+  }
+});
+
+test('town Ride Together invalid word stays friendly at 390px', async ({ page }, testInfo) => {
+  await page.setViewportSize({ width: 390, height: 740 });
+  const errors = collectErrors(page);
+  await openTownBoard(page, ALICE);
+  await page.getByTestId('ride-join-input').fill('QUIET-CLAIM');
+  await page.getByTestId('ride-join-submit').click();
+  await expect(page.getByTestId('ride-status')).toContainText("That claim's gone quiet.");
+  await expect(page.getByTestId('contract-board')).toBeVisible();
+  await shotMp04(page, testInfo, 'mobile-390-invalid-word');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 async function openPair(browser: Browser, code: string, bobExtra = ''): Promise<{
   alice: Page;
   bob: Page;
@@ -242,9 +305,10 @@ async function openClient(page: Page, code: string, player: MpPlayerSeed, extra 
 
 async function seedProfile(page: Page, player: MpPlayerSeed): Promise<void> {
   await page.addInitScript(
-    ({ profileKey, townKey, scoreKey, player: seeded }) => {
+    ({ profileKey, townKey, scoreKey, relayKey, relayUrl, player: seeded }) => {
       localStorage.clear();
       sessionStorage.clear();
+      localStorage.setItem(relayKey, relayUrl);
       localStorage.setItem(
         profileKey,
         JSON.stringify({
@@ -269,9 +333,29 @@ async function seedProfile(page: Page, player: MpPlayerSeed): Promise<void> {
       profileKey: PROFILE_KEY,
       townKey: profileDataKey(player.id, TOWN_NAME_KEY),
       scoreKey: profileDataKey(player.id, SCOREBOARD_KEY),
+      relayKey: 'gr.mp.relayBase.v1',
+      relayUrl: relay.url,
       player,
     },
   );
+}
+
+async function openTownBoard(page: Page, player: MpPlayerSeed): Promise<void> {
+  await seedProfile(page, player);
+  await page.goto('/');
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10, undefined, { timeout: 15_000 });
+  await hold(page, 'KeyA', 850);
+  await hold(page, 'KeyW', 850);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
+  await page.getByTestId('town-open-board').click();
+  await expect(page.getByTestId('contract-board')).toBeVisible();
+}
+
+async function hold(page: Page, key: string, ms: number): Promise<void> {
+  await page.keyboard.down(key);
+  await page.waitForTimeout(ms);
+  await page.keyboard.up(key);
 }
 
 async function waitRoster(page: Page): Promise<void> {
@@ -330,6 +414,13 @@ async function writeReport(testInfo: TestInfo, name: string, body: unknown, arti
 async function shotMp03(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   await mkdir(MP03_ARTIFACT_DIR, { recursive: true });
   const file = path.join(MP03_ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`);
+  await page.screenshot({ path: file, fullPage: true });
+  await testInfo.attach(name, { path: file, contentType: 'image/png' });
+}
+
+async function shotMp04(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  await mkdir(MP04_ARTIFACT_DIR, { recursive: true });
+  const file = path.join(MP04_ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`);
   await page.screenshot({ path: file, fullPage: true });
   await testInfo.attach(name, { path: file, contentType: 'image/png' });
 }

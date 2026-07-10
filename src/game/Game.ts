@@ -98,6 +98,7 @@ import {
   type LockstepTick,
   type MultiplayerPlayer,
 } from '../mp/LockstepClient';
+import { consumeStagedRideConfig } from '../mp/RideTogether';
 import { Hero } from '../entities/Hero';
 import { BlastChargePool } from '../entities/BlastCharge';
 import { GoldPickupPool } from '../entities/GoldPickup';
@@ -229,6 +230,7 @@ export class Game {
   private readonly input: InputController;
   private readonly actors = [new Hero()];
   private mpClient?: LockstepClient;
+  private mpHadParty = false;
   private mpTickThisFrame: number | null = null;
   private mpActorIntents: Intents[] | null = null;
   private mpLocalSlot = 0;
@@ -561,6 +563,25 @@ export class Game {
   private multiplayerActive(): boolean {
     const state = this.mpClient?.state();
     return state?.connected === true && state.roster.length >= 2;
+  }
+
+  private releaseFailedMultiplayer(): boolean {
+    const state = this.mpClient?.state();
+    if (!state) return false;
+    if (state.roster.length >= 2) this.mpHadParty = true;
+    const failedBeforeRide = !state.connected && !!state.error;
+    const droppedParty = this.mpHadParty && state.connected && state.roster.length < 2;
+    const closedParty = this.mpHadParty && !state.connected;
+    if (!failedBeforeRide && !droppedParty && !closedParty) return false;
+    this.mpClient?.dispose();
+    this.mpClient = undefined;
+    this.mpHadParty = false;
+    this.syncMultiplayerActors();
+    this.showMultiplayerCard(
+      'Riding solo',
+      failedBeforeRide ? "That claim's gone quiet. Starting this ride solo." : 'The other rider dropped. The next wave carries on solo.',
+    );
+    return true;
   }
 
   private updateActionActorPosition(): void {
@@ -1288,10 +1309,14 @@ export class Game {
     const sampledIntents = this.input.readIntents();
     const lockstepTick = this.mpClient?.pump(lockstepInputFromIntents(sampledIntents)) ?? null;
     if (this.mpClient && !lockstepTick) {
-      this.rememberIntents(sampledIntents);
-      resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
-      this.updatePresentation(delta);
-      return;
+      if (this.releaseFailedMultiplayer()) {
+        this.rememberIntents(sampledIntents);
+      } else {
+        this.rememberIntents(sampledIntents);
+        resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+        this.updatePresentation(delta);
+        return;
+      }
     }
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : sampledIntents;
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
@@ -1624,7 +1649,7 @@ export class Game {
   }
 
   private installMultiplayerDev(): void {
-    const config = multiplayerConfigFromSearch();
+    const config = multiplayerConfigFromSearch() ?? consumeStagedRideConfig();
     if (!config) return;
     this.mpClient = new LockstepClient({
       ...config,

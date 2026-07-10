@@ -47,7 +47,7 @@ export type MultiplayerState = {
 
 type WireMessage = Record<string, unknown>;
 
-type LockstepClientOptions = {
+export type LockstepClientOptions = {
   relayBase: string;
   code: string | null;
   player: { name: string; town: string };
@@ -114,6 +114,7 @@ export class LockstepClient {
       this.socket = socket;
       socket.addEventListener('message', (event) => this.handle(JSON.parse(String(event.data)) as WireMessage));
       socket.addEventListener('close', () => {
+        if (this.connected) this.error = this.error ?? 'websocket_closed';
         this.connected = false;
       });
       socket.addEventListener('error', () => {
