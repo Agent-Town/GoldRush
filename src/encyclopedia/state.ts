@@ -34,8 +34,8 @@ export function readLedgerDiscovered(storage = browserStorage()): Set<LedgerDisc
 
 export function discoverLedgerEntry(id: LedgerDiscoveryId, storage = browserStorage()): boolean {
   if (!storage || !validDiscoveryIds.has(id)) return false;
-  const stored = readStoredDiscovered(storage);
-  const known = new Set([...alwaysDiscoveredEntryIds, ...stored]);
+  const stored = readStoredDiscoveryValues(storage);
+  const known = new Set<string>([...alwaysDiscoveredEntryIds, ...stored]);
   if (known.has(id)) return false;
   const next = [...stored, id];
   try {
@@ -76,13 +76,19 @@ export function revealLedgerEnemyStats(id: EnemyLedgerEntryId): boolean {
 }
 
 function readStoredDiscovered(storage = browserStorage()): LedgerDiscoveryId[] {
+  return readStoredDiscoveryValues(storage).filter(
+    (id): id is LedgerDiscoveryId => validDiscoveryIds.has(id as LedgerDiscoveryId) && !alwaysDiscovered.has(id as LedgerEntryId),
+  );
+}
+
+function readStoredDiscoveryValues(storage = browserStorage()): string[] {
   if (!storage) return [];
   try {
     const raw = storage.getItem(LEDGER_DISCOVERED_STORAGE_KEY);
     if (!raw) return [];
     const parsed = JSON.parse(raw);
     if (!Array.isArray(parsed)) return [];
-    return parsed.filter((id): id is LedgerDiscoveryId => validDiscoveryIds.has(id) && !alwaysDiscovered.has(id as LedgerEntryId));
+    return [...new Set(parsed.filter((id): id is string => typeof id === 'string' && !alwaysDiscovered.has(id as LedgerEntryId)))];
   } catch {
     return [];
   }
