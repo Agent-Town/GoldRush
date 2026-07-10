@@ -5,6 +5,7 @@ import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
 const BOLT_VISUAL_Y = 0.72;
+const ORIGIN_HEIGHT_CACHE_LIMIT = 256;
 
 export type ProjectileVisualSample = {
   ownerId: string;
@@ -34,6 +35,7 @@ export class ProjectilePool {
   private readonly visualEndY: number[] = [];
   private readonly visualDistance: number[] = [];
   private readonly visualTravel: number[] = [];
+  private readonly originHeightCache = new Map<string, number>();
   private readonly boltGeometry = new THREE.SphereGeometry(0.12, 10, 6);
   private readonly tracerGeometry = new THREE.BoxGeometry(0.055, 0.055, 0.62);
   private readonly boltMaterial = new THREE.MeshStandardMaterial({
@@ -150,7 +152,7 @@ export class ProjectilePool {
       this.alive += 1;
       const targetX = targetPoint?.x ?? origin.x;
       const targetZ = targetPoint?.z ?? origin.z;
-      this.visualStartY[i] = Terrain.visualY(origin.x, origin.z, BOLT_VISUAL_Y, visualOriginPadRadius);
+      this.visualStartY[i] = this.originVisualY(origin.x, origin.z, visualOriginPadRadius);
       this.visualEndY[i] = Terrain.visualY(targetX, targetZ, BOLT_VISUAL_Y);
       this.visualDistance[i] = Math.max(0.001, Math.hypot(targetX - origin.x, targetZ - origin.z));
       this.visualTravel[i] = 0;
@@ -266,14 +268,28 @@ export class ProjectilePool {
       this.hide(i);
     }
     this.alive = 0;
+    this.originHeightCache.clear();
     this.markNeedsUpdate();
   }
 
   dispose(): void {
+    this.originHeightCache.clear();
     this.boltGeometry.dispose();
     this.tracerGeometry.dispose();
     this.boltMaterial.dispose();
     this.tracerMaterial.dispose();
+  }
+
+  private originVisualY(x: number, z: number, padRadius: number): number {
+    if (padRadius <= 0.01) return Terrain.visualY(x, z, BOLT_VISUAL_Y);
+    const key = `${round3(x)}:${round3(z)}:${round3(padRadius)}`;
+    const cached = this.originHeightCache.get(key);
+    if (cached !== undefined) return cached;
+    const y = Terrain.visualY(x, z, BOLT_VISUAL_Y, padRadius);
+    const oldest = this.originHeightCache.keys().next().value;
+    if (this.originHeightCache.size >= ORIGIN_HEIGHT_CACHE_LIMIT && oldest !== undefined) this.originHeightCache.delete(oldest);
+    this.originHeightCache.set(key, y);
+    return y;
   }
 
   private syncVisualY(index: number): void {
