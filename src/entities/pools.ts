@@ -65,7 +65,7 @@ type BossBarState = {
   groupId: string | null;
   aliveComponents: number;
   destroyedComponents: number;
-  components: Array<{ id: string; label: string; hp: number; maxHp: number }>;
+  components?: Array<{ id: string; label: string; hp: number; maxHp: number }>;
 };
 
 function animationSpeed(enemy: ClaimJumperEnemy): number {
@@ -286,7 +286,7 @@ export class EnemyPool {
   }
 
   get bossHpBarDiagnostics(): BossHpBarDiagnostics {
-    const state = this.bossBarState();
+    const state = this.bossBarState(true);
     return {
       visible: this.bossHpGroup.visible,
       ratio: round3(state?.ratio ?? 0),
@@ -492,7 +492,6 @@ export class EnemyPool {
     }
     if (baronAnimation.active || this.baronSpriteAnimator) updateBaronSprites();
     this.syncSpriteVisuals();
-    this.syncBossHpBar();
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
@@ -599,43 +598,53 @@ export class EnemyPool {
     return null;
   }
 
-  private bossBarState(): BossBarState | null {
-    const grouped = this.enemies.find((enemy) => enemy.isAlive && enemy.bossGroupId);
+  private bossBarState(includeComponents = false): BossBarState | null {
+    let grouped: ClaimJumperEnemy | null = null;
+    for (const enemy of this.enemies) {
+      if (enemy.isAlive && enemy.bossGroupId) {
+        grouped = enemy;
+        break;
+      }
+    }
     if (grouped?.bossGroupId) {
-      const members = this.enemies.filter((enemy) => enemy.isAlive && enemy.bossGroupId === grouped.bossGroupId);
-      if (members.length === 0) return null;
       let hp = 0;
       let totalHp = grouped.bossGroupTotalHp;
       let x = 0;
       let y = Number.NEGATIVE_INFINITY;
       let z = 0;
       let scale = 1;
-      const components: BossBarState['components'] = [];
-      for (const enemy of members) {
+      let members = 0;
+      let maxHp = 0;
+      const components: BossBarState['components'] = includeComponents ? [] : undefined;
+      for (const enemy of this.enemies) {
+        if (!enemy.isAlive || enemy.bossGroupId !== grouped.bossGroupId) continue;
+        members += 1;
         hp += enemy.currentHp;
+        maxHp += enemy.maxHp;
         x += enemy.position.x;
         z += enemy.position.z;
         y = Math.max(y, enemy.position.y + 1.5 * enemy.visualScale);
         scale = Math.max(scale, enemy.visualScale * 0.74);
-        components.push({
+        components?.push({
           id: enemy.bossComponentId ?? enemy.variantId ?? `part-${enemy.id}`,
           label: enemy.bossComponentLabel ?? enemy.variantLabel ?? 'Component',
           hp: round2(enemy.currentHp),
           maxHp: round2(enemy.maxHp),
         });
       }
-      if (totalHp <= 0) totalHp = members.reduce((sum, enemy) => sum + enemy.maxHp, 0);
-      const segments = Math.max(1, Math.min(BOSS_HP_MAX_SEGMENTS, grouped.bossGroupSize || members.length));
+      if (members === 0) return null;
+      if (totalHp <= 0) totalHp = maxHp;
+      const segments = Math.max(1, Math.min(BOSS_HP_MAX_SEGMENTS, grouped.bossGroupSize || members));
       return {
-        x: x / members.length,
+        x: x / members,
         y: y + 0.95,
-        z: z / members.length,
+        z: z / members,
         scale: Math.max(1, scale),
         ratio: THREE.MathUtils.clamp(hp / Math.max(1, totalHp), 0, 1),
         segments,
         groupId: grouped.bossGroupId,
-        aliveComponents: members.length,
-        destroyedComponents: Math.max(0, segments - members.length),
+        aliveComponents: members,
+        destroyedComponents: Math.max(0, segments - members),
         components,
       };
     }
@@ -652,7 +661,7 @@ export class EnemyPool {
       groupId: null,
       aliveComponents: 1,
       destroyedComponents: 0,
-      components: [{ id: 'baron', label: 'Baron', hp: round2(baron.currentHp), maxHp: round2(baron.maxHp) }],
+      components: includeComponents ? [{ id: 'baron', label: 'Baron', hp: round2(baron.currentHp), maxHp: round2(baron.maxHp) }] : undefined,
     };
   }
 
