@@ -40,18 +40,20 @@ import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition
 const loadTavernBackdropUrl = () =>
   import('../../assets/processed/tavern-interior-backdrop.png?url').then((module) => module.default);
 const contractArtUrls = {
-  river: new URL('../../assets/processed/terrain-river-tile.png', import.meta.url).href,
-  dampBank: new URL('../../assets/processed/terrain-bank-tile-c.png', import.meta.url).href,
-  baron: new URL('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png', import.meta.url).href,
-  banner: new URL('../../assets/processed/prop-baron-banner.png', import.meta.url).href,
+  theClaimPlate: new URL('../../assets/raw/plate-contract-the-claim.png', import.meta.url).href,
+  dryGulchPlate: new URL('../../assets/raw/plate-contract-dry-gulch.png', import.meta.url).href,
+  nightShiftPlate: new URL('../../assets/raw/plate-contract-night-shift.png', import.meta.url).href,
+  twinBanksPlate: new URL('../../assets/raw/plate-contract-twin-banks.png', import.meta.url).href,
+  baronPlate: new URL('../../assets/raw/plate-contract-baron.png', import.meta.url).href,
+  hillMinePlate: new URL('../../assets/raw/plate-contract-hill-mine.png', import.meta.url).href,
 } as const;
 const contractArtRegistry: Record<string, { key: string; imageUrl?: string; insetUrl?: string }> = {
-  [DEFAULT_CONTRACT_ID]: { key: 'river-tile', imageUrl: contractArtUrls.river },
-  'e1-dry-gulch': { key: 'mesa' },
-  'e1-night-shift': { key: 'dusk-lantern' },
-  'e1-twin-banks': { key: 'braided-river', imageUrl: contractArtUrls.river, insetUrl: contractArtUrls.dampBank },
-  'e1-baron': { key: 'kit-the-baron', imageUrl: contractArtUrls.baron, insetUrl: contractArtUrls.banner },
-  'e2-hill-mine': { key: 'steam-terraces' },
+  [DEFAULT_CONTRACT_ID]: { key: 'contract-the-claim', imageUrl: contractArtUrls.theClaimPlate },
+  'e1-dry-gulch': { key: 'contract-dry-gulch', imageUrl: contractArtUrls.dryGulchPlate },
+  'e1-night-shift': { key: 'contract-night-shift', imageUrl: contractArtUrls.nightShiftPlate },
+  'e1-twin-banks': { key: 'contract-twin-banks', imageUrl: contractArtUrls.twinBanksPlate },
+  'e1-baron': { key: 'contract-baron', imageUrl: contractArtUrls.baronPlate },
+  'e2-hill-mine': { key: 'contract-hill-mine', imageUrl: contractArtUrls.hillMinePlate },
 };
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
