@@ -1,9 +1,11 @@
-import type { RunSuspendEnvelope } from './RunSuspend';
+import { RUN_SUSPEND_REJECTION_KEY, RUN_SUSPEND_REJECTION_LINE, type RunSuspendEnvelope } from './RunSuspend';
 import { RUN_SUSPEND_KEY, SAVE_SLOTS_KEY } from './ProfileStorage';
 
 export { SAVE_SLOTS_KEY };
 export const AUTO_SAVE_SLOT_NAME = "The Ledger's Copy";
 export const MANUAL_SAVE_SLOT_LIMIT = 12;
+export const SAVE_SLOT_TRANSFER_MANUAL_LIMIT = 5;
+export const SAVE_SLOTS_RECOVERY_KEY = `${SAVE_SLOTS_KEY}.recovery`;
 export const SAVE_SLOT_STORAGE_BUDGET_BYTES = 5 * 1024 * 1024;
 const SAVE_SLOT_WARN_RATIO = 0.8;
 const SAVE_SLOT_TRANSFER_LIMIT_BYTES = 180 * 1024;
@@ -59,9 +61,7 @@ export function readSaveSlots(storage: SaveSlotStorage | undefined = browserStor
     const envelope = normalizeEnvelope(parsed);
     if (envelope) return envelope;
   } catch {}
-  try {
-    storage.removeItem(SAVE_SLOTS_KEY);
-  } catch {}
+  preserveCorruptSaveSlots(storage, raw);
   return emptyEnvelope();
 }
 
@@ -183,12 +183,36 @@ export function formatBudgetWarning(budget: SaveSlotBudget): string | null {
 export function compactSaveSlotsForTransfer(value: unknown): unknown {
   const envelope = normalizeEnvelope(value);
   if (!envelope) return value;
-  if (byteSize(JSON.stringify(envelope)) <= SAVE_SLOT_TRANSFER_LIMIT_BYTES || envelope.manual.length <= 5) return envelope;
+  if (byteSize(JSON.stringify(envelope)) <= SAVE_SLOT_TRANSFER_LIMIT_BYTES || envelope.manual.length <= SAVE_SLOT_TRANSFER_MANUAL_LIMIT) {
+    return envelope;
+  }
   return {
     v: 1,
-    manual: sortSlots(envelope.manual).slice(0, 5),
-    transferNote: 'Packed the 5 most recent manual claims to keep the ledger bundle small.',
+    manual: sortSlots(envelope.manual).slice(0, SAVE_SLOT_TRANSFER_MANUAL_LIMIT),
+    transferNote: 'Packed the 5 most recent manual claims to keep the ledger bundle small; older claims stay on this device.',
   } satisfies SaveSlotsEnvelope;
+}
+
+export function mergeSaveSlotsForRestore(existingRaw: string | null, incoming: unknown): SaveSlotsEnvelope | null {
+  const incomingEnvelope = normalizeEnvelope(incoming);
+  if (!incomingEnvelope) return null;
+  if (!existingRaw) return incomingEnvelope;
+  let existingEnvelope: SaveSlotsEnvelope | null = null;
+  try {
+    existingEnvelope = normalizeEnvelope(JSON.parse(existingRaw));
+  } catch {
+    existingEnvelope = null;
+  }
+  if (!existingEnvelope) return incomingEnvelope;
+  const byId = new Map<string, SaveSlot>();
+  for (const slot of sortSlots([...incomingEnvelope.manual, ...existingEnvelope.manual])) {
+    if (!byId.has(slot.id)) byId.set(slot.id, slot);
+  }
+  return {
+    v: 1,
+    manual: sortSlots([...byId.values()]).slice(0, MANUAL_SAVE_SLOT_LIMIT),
+    transferNote: incomingEnvelope.transferNote ?? existingEnvelope.transferNote,
+  };
 }
 
 function validateSlotName(input: string): { ok: true; value: string } | { ok: false; message: string } {
@@ -221,6 +245,23 @@ function normalizeEnvelope(value: unknown): SaveSlotsEnvelope | null {
     manual: sortSlots(value.manual.filter(isSaveSlot)),
     transferNote: typeof value.transferNote === 'string' ? value.transferNote : undefined,
   };
+}
+
+function preserveCorruptSaveSlots(storage: SaveSlotStorage, raw: string): void {
+  try {
+    storage.setItem(SAVE_SLOTS_RECOVERY_KEY, raw);
+  } catch {}
+  try {
+    storage.setItem(
+      RUN_SUSPEND_REJECTION_KEY,
+      JSON.stringify({
+        message: RUN_SUSPEND_REJECTION_LINE,
+        reasons: ['manual save shelf was set aside for recovery'],
+        droppedEconomyEvents: 0,
+        at: Date.now(),
+      }),
+    );
+  } catch {}
 }
 
 function isSaveSlot(value: unknown): value is SaveSlot {

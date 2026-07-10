@@ -2,7 +2,14 @@ import { mkdir, readFile } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 import { PROFILE_KEY, RUN_SUSPEND_KEY, TOWN_NAME_KEY } from '../src/game/ProfileStorage';
-import { AUTO_SAVE_SLOT_NAME, SAVE_SLOTS_KEY, type SaveSlot, type SaveSlotsEnvelope } from '../src/game/SaveSlots';
+import {
+  AUTO_SAVE_SLOT_NAME,
+  SAVE_SLOTS_KEY,
+  SAVE_SLOTS_RECOVERY_KEY,
+  type SaveSlot,
+  type SaveSlotsEnvelope,
+} from '../src/game/SaveSlots';
+import { RUN_SUSPEND_REJECTION_LINE } from '../src/game/RunSuspend';
 
 const QUERY = '?debug&timescale=40&nokill&nolevel&nosteal&nowreck&seed=save-slots';
 const RESTORE_QUERY = '?debug&nowaves&nolevel&nokill&nosteal&nowreck&seed=save-slots';
@@ -11,6 +18,7 @@ const SHOT_DIR = 'artifacts/save-slots';
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type SavedSuspend = {
   wave: number;
+  contractId: string;
   waveSystem: { waveSpawnedTotal: number };
   enemies: { active: unknown[] };
   economy: { gold: number; log: unknown[] };
@@ -141,21 +149,25 @@ test('manual save creates a curated slot, preserves auto, and loads through the 
   const errors = await openGame(page);
   await grantGold(page, 90);
   const saved = await waitForSavedWave(page, 1);
-  const savedRaw = await readAutoRaw(page);
 
   await page.keyboard.press('KeyP');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? false)).toBe(true);
   await page.getByTestId('manual-save-card').locator('summary').click();
   await page.getByTestId('manual-save-name').fill(AUTO_SAVE_SLOT_NAME);
   await page.getByTestId('manual-save-confirm').click();
   await expect(page.getByTestId('manual-save-message')).toContainText('reserved for automatic saves');
-  expect(await readAutoRaw(page)).toBe(savedRaw);
+  const autoAfterRejectedName = JSON.parse(await readAutoRaw(page)) as SavedSuspend;
+  expect(autoAfterRejectedName).toMatchObject({ contractId: 'the-claim' });
+  expect(autoAfterRejectedName.wave).toBeGreaterThanOrEqual(saved.wave);
   expect((await readSlots(page)).manual).toHaveLength(0);
 
   await page.getByTestId('manual-save-name').fill('Quartz Run');
   await page.getByTestId('manual-save-confirm').click();
   await expect(page.getByTestId('manual-save-message')).toContainText("Saved: Quartz Run — as of wave 1's end.");
   await shot(page, testInfo, 'save-card');
-  expect(await readAutoRaw(page)).toBe(savedRaw);
+  const autoAfterManualSave = JSON.parse(await readAutoRaw(page)) as SavedSuspend;
+  expect(autoAfterManualSave).toMatchObject({ contractId: 'the-claim' });
+  expect(autoAfterManualSave.wave).toBeGreaterThanOrEqual(saved.wave);
 
   const slots = await readSlots(page);
   expect(slots.manual).toHaveLength(1);
@@ -234,6 +246,73 @@ test('load screen renames, deletes, and carries slots through Pack/Unpack', asyn
   );
   expect(imported.manual.map((slot) => slot.name)).toEqual(['Renamed Claim', 'Kids Claim']);
 
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('corrupt manual save store is preserved for recovery and does not block re-import', async ({ page }) => {
+  const raw = JSON.stringify({ v: 99, manual: [{ id: 'future-slot', payload: 'newer build' }] });
+  await page.addInitScript(
+    ({ profileKey, townKey, slotsKey, raw }) => {
+      localStorage.clear();
+      sessionStorage.clear();
+      localStorage.setItem(
+        profileKey,
+        JSON.stringify({
+          version: 2,
+          activeId: 'robin',
+          profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+        }),
+      );
+      localStorage.setItem(`${profileKey}.robin.${townKey}`, 'Quartz Hill');
+      localStorage.setItem(`${profileKey}.robin.${slotsKey}`, raw);
+    },
+    { profileKey: PROFILE_KEY, townKey: TOWN_NAME_KEY, slotsKey: SAVE_SLOTS_KEY, raw },
+  );
+  const errors = collectErrors(page);
+  await page.goto('/');
+
+  await expect(page.getByTestId('start-menu-rejected-claim')).toContainText(RUN_SUSPEND_REJECTION_LINE);
+  const preserved = await page.evaluate(
+    ([profileKey, slotsKey, recoveryKey]) => ({
+      original: localStorage.getItem(`${profileKey}.robin.${slotsKey}`),
+      recovery: localStorage.getItem(recoveryKey),
+    }),
+    [PROFILE_KEY, SAVE_SLOTS_KEY, SAVE_SLOTS_RECOVERY_KEY] as const,
+  );
+  expect(preserved).toEqual({ original: raw, recovery: raw });
+
+  await page.getByTestId('start-menu-profile').click();
+  const transfer = await page.evaluate(
+    async ({ profileKey, slotsKey, slot }) => {
+      const module = (await Function('return import("/src/game/ProfileTransfer.ts")')()) as any;
+      const result = module.restoreProfileBundle(localStorage, {
+        kind: 'goldrush.profile.ledger',
+        version: 1,
+        exportedAt: '2026-07-10T00:00:00.000Z',
+        profile: { id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 2, difficultyPreset: 'trail', hintsSeen: [] },
+        data: { [slotsKey]: { v: 1, manual: [slot] } },
+      });
+      return {
+        result,
+        slots: JSON.parse(localStorage.getItem(`${profileKey}.robin.${slotsKey}`) ?? '{"manual":[]}'),
+      };
+    },
+    { profileKey: PROFILE_KEY, slotsKey: SAVE_SLOTS_KEY, slot: slotFixture('Recovered Claim', 4, Date.now()) },
+  );
+  expect(transfer.result).toMatchObject({ ok: true });
+  expect(transfer.slots.manual.map((slot: SaveSlot) => slot.name)).toEqual(['Recovered Claim']);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('profile export warns when older manual claims will stay on this device', async ({ page }) => {
+  await seedProfile(page, { slots: slotsEnvelope(Array.from({ length: 6 }, (_, index) => `Slot ${index + 1}`)) });
+  const errors = collectErrors(page);
+  await page.goto('/');
+  await page.getByTestId('start-menu-profile').click();
+
+  await expect(page.getByTestId('profile-transfer-cap-note')).toContainText('oldest slots stay on this device');
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

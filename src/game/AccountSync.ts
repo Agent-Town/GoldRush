@@ -40,7 +40,8 @@ type RequestCodeResponse = { ok: true; code?: string; dev?: true };
 type VerifyResponse = { ok: true; token: string; accountId: string; expiresAt: string };
 type SavePullResponse = { ok: true; profileId: string; savedAt: string; envelope: unknown };
 type SavePushResponse = { ok: true; savedAt: string };
-type SaveVersionsResponse = { ok: true; versions: unknown[] };
+type SaveVersionSummary = { version: number | null; savedAt: string };
+type SaveVersionsResponse = { ok: true; versions: SaveVersionSummary[] };
 
 const SESSION_KEY = 'gr.account.v1';
 const CHANGE_EVENT = 'gr:profile-data-changed';
@@ -51,6 +52,7 @@ class ApiError extends Error {
     readonly status: number,
     readonly code: string,
     message: string,
+    readonly payload: unknown = null,
   ) {
     super(message);
   }
@@ -159,11 +161,25 @@ class AccountSync {
     if (this.compare && !options.force) return this.setMessage('Choose cloud or local ledger before backing up.');
     await this.run(async () => {
       const { envelope } = packActiveProfile(this.storage!);
-      const response = await this.request<SavePushResponse>(
-        '/api/save/push',
-        { profileId: envelope.profile.id, envelope: toServerEnvelope(envelope) },
-        this.session!.token,
-      );
+      let response: SavePushResponse;
+      try {
+        response = await this.request<SavePushResponse>(
+          '/api/save/push',
+          {
+            profileId: envelope.profile.id,
+            envelope: toServerEnvelope(envelope),
+            baseSavedAt: options.force ? undefined : (this.session!.lastSavedAt ?? null),
+            acknowledgeConflict: options.force === true,
+          },
+          this.session!.token,
+        );
+      } catch (err) {
+        if (err instanceof ApiError && err.code === 'stale_save') {
+          await this.openCloudCompare(envelope.profile.id, 'Cloud has a newer ledger. Pick one before backing up.');
+          return;
+        }
+        throw err;
+      }
       this.session = { ...this.session!, profileId: envelope.profile.id, lastSavedAt: response.savedAt };
       this.compare = undefined;
       this.message = `ledger backed up ${checkMark()} ${timeAgo(response.savedAt)}`;
@@ -233,18 +249,73 @@ class AccountSync {
   }
 
   private async pullStoredProfile(): Promise<void> {
-    if (!this.session?.profileId || !this.storage) return;
-    if (!(await this.hasCloudSave(this.session.profileId).catch(() => false))) return;
-    const cloud = await this.pull(this.session.profileId).catch(() => null);
-    if (!cloud) return;
-    this.suppressChangeUntil = Date.now() + 1500;
-    const restored = restoreProfileBundle(this.storage, cloud.envelope);
-    if (restored.ok) {
-      this.session = { ...this.session, lastSavedAt: cloud.savedAt };
-      this.writeSession();
-      this.message = `cloud ledger restored ${checkMark()}`;
+    try {
+      if (!this.session?.profileId || !this.storage) return;
+      if (!(await this.hasCloudSave(this.session.profileId).catch(() => false))) return;
+      const cloud = await this.pull(this.session.profileId).catch(() => null);
+      if (!cloud) return;
+      const local = this.localEnvelope();
+      if (local) {
+        this.compare = {
+          profileId: this.session.profileId,
+          savedAt: cloud.savedAt,
+          envelope: cloud.envelope,
+          line: cloudLine(cloud.envelope, cloud.savedAt),
+        };
+        this.message = sameLedgerContent(local, cloud.envelope)
+          ? `ledger backed up ${checkMark()} ${timeAgo(cloud.savedAt)}`
+          : 'Cloud ledger found. Choose how to open it.';
+        this.session = { ...this.session, lastSavedAt: cloud.savedAt };
+        this.writeSession();
+        this.emit();
+        return;
+      }
+      if (loadProfileState(this.storage)) {
+        this.compare = {
+          profileId: this.session.profileId,
+          savedAt: cloud.savedAt,
+          envelope: cloud.envelope,
+          line: cloudLine(cloud.envelope, cloud.savedAt),
+        };
+        this.message = 'Cloud ledger found. Choose how to open it.';
+        this.emit();
+        return;
+      }
+      this.suppressChangeUntil = Date.now() + 1500;
+      const restored = restoreProfileBundle(this.storage, cloud.envelope);
+      if (restored.ok) {
+        this.session = { ...this.session, lastSavedAt: cloud.savedAt };
+        this.writeSession();
+        this.message = `cloud ledger restored ${checkMark()}`;
+        this.emit();
+      } else {
+        this.message = restored.message;
+        this.emit();
+      }
+    } catch {
+      this.message = "the wire's down - your ledger stays safe here.";
       this.emit();
     }
+  }
+
+  private async openCloudCompare(profileId: string, message: string): Promise<void> {
+    const cloud = await this.pull(profileId);
+    if (!cloud) {
+      this.message = message;
+      return;
+    }
+    const local = this.localEnvelope();
+    if (local && sameLedgerContent(local, cloud.envelope)) {
+      this.session = { ...this.session!, profileId, lastSavedAt: cloud.savedAt };
+      this.compare = undefined;
+      this.message = `ledger backed up ${checkMark()} ${timeAgo(cloud.savedAt)}`;
+      this.writeSession();
+      return;
+    }
+    this.compare = { profileId, savedAt: cloud.savedAt, envelope: cloud.envelope, line: cloudLine(cloud.envelope, cloud.savedAt) };
+    this.session = { ...this.session!, profileId, lastSavedAt: cloud.savedAt };
+    this.message = message;
+    this.writeSession();
   }
 
   private async pull(profileId: string): Promise<{ savedAt: string; envelope: ProfileTransferEnvelope } | null> {
@@ -260,6 +331,11 @@ class AccountSync {
 
   private async hasCloudSave(profileId: string): Promise<boolean> {
     const response = await this.request<SaveVersionsResponse>('/api/save/versions', { profileId }, this.session?.token);
+    const current = response.versions.find((version) => version.version === null);
+    if (current && this.session) {
+      this.session = { ...this.session, lastSavedAt: current.savedAt };
+      this.writeSession();
+    }
     return response.versions.length > 0;
   }
 
@@ -307,6 +383,7 @@ class AccountSync {
         response.status,
         isRecord(payload) && typeof payload.error === 'string' ? payload.error : 'request_failed',
         isRecord(payload) && typeof payload.message === 'string' ? payload.message : 'The ledger office did not answer.',
+        payload,
       );
     }
     return payload as T;
@@ -345,8 +422,12 @@ class AccountSync {
 
   private writeSession(): void {
     if (!this.storage) return;
-    if (this.session) this.storage.setItem(SESSION_KEY, JSON.stringify(this.session));
-    else this.storage.removeItem(SESSION_KEY);
+    try {
+      if (this.session) this.storage.setItem(SESSION_KEY, JSON.stringify(this.session));
+      else this.storage.removeItem(SESSION_KEY);
+    } catch {
+      // Session metadata is best-effort; the local ledger remains the source of truth.
+    }
   }
 
   private emit(): void {
@@ -396,6 +477,8 @@ function scienceLevel(value: unknown): number {
 
 function friendlyError(err: unknown): string {
   if (err instanceof ApiError && err.code === 'sign_in_not_enabled') return 'sign-in is not enabled yet; your ledger stays safe here.';
+  if (err instanceof ApiError && err.code === 'payload_too_large') return 'That ledger is too large to back up; oldest manual claims stay on this device.';
+  if (err instanceof Error && err.message) return err.message;
   return "the wire's down - your ledger stays safe here.";
 }
 
