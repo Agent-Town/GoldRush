@@ -11,6 +11,7 @@ export type StoryBeatFor<TSignal extends { type: string }> = {
   oncePerProfile: boolean;
   when?: (signal: TSignal) => boolean;
   seenKey?: (signal: TSignal) => string;
+  seenKeyAliases?: readonly ((signal: TSignal) => string)[];
   presentation?: 'card' | 'epoch-ceremony';
   artKey?: string;
   ceremonyStep?: 'mill' | 'valley' | 'title';
@@ -21,6 +22,9 @@ export type RuntimeStoryBeat = StoryBeatFor<RuntimeStorySignal>;
 
 const contractLine = (signal: StorySignal, fallback: string): string =>
   signal.type === 'contract-unlocked' ? signal.ledgerBlurb : fallback;
+
+const legacyBoardUnlockSeenKey = (signal: StorySignal): string =>
+  signal.type === 'contract-unlocked' ? `board-unlock-generic:${signal.contractId}` : 'board-unlock-generic';
 
 export const STORY_BEATS: readonly StoryBeat[] = [
   {
@@ -186,6 +190,7 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'tavernkeeper',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-dry-gulch',
+    seenKeyAliases: [legacyBoardUnlockSeenKey],
     lines: (signal) => ['The Dry Gulch is open.', contractLine(signal, 'Mesa country; dry washes fall toward one sunken spring.')],
   },
   {
@@ -194,6 +199,7 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'tavernkeeper',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-twin-banks',
+    seenKeyAliases: [legacyBoardUnlockSeenKey],
     lines: (signal) => ['Twin Banks is open.', contractLine(signal, 'A braided river claim with twin fords, gravel bars, and damp reeds.')],
   },
   {
@@ -202,6 +208,7 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'tavernkeeper',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-night-shift',
+    seenKeyAliases: [legacyBoardUnlockSeenKey],
     lines: (signal) => ['Night Shift is open.', contractLine(signal, 'The claim, gone dark, dotted with cold lanterns.')],
   },
   {
@@ -210,6 +217,7 @@ export const STORY_BEATS: readonly StoryBeat[] = [
     speaker: 'tavernkeeper',
     oncePerProfile: true,
     when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e1-baron',
+    seenKeyAliases: [legacyBoardUnlockSeenKey],
     lines: (signal) => ['The Baron card is open.', contractLine(signal, 'An oxblood banner marks the outfit that keeps buying trouble.')],
   },
 ];
