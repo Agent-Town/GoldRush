@@ -44,8 +44,12 @@ export class AssayBenchPanel {
   private readonly pendingOrders: HTMLElement;
   private readonly history: HTMLElement;
   private readonly rejections: HTMLElement;
+  private readonly postButton: HTMLButtonElement;
+  private readonly wireStatus: HTMLElement;
   private readonly closeButton: HTMLButtonElement;
   private refreshSeq = 0;
+  private queueAvailable: boolean | null = null;
+  private loggedQueueProbe = false;
 
   constructor(parent: HTMLElement, options: { profile?: string; initiallyOpen?: boolean } = {}) {
     const profile = normalizeQueueProfile(options.profile ?? new URLSearchParams(window.location.search).get('profile'));
@@ -63,7 +67,7 @@ export class AssayBenchPanel {
       <header class="assay-bench__header">
         <div>
           <strong>Assay Bench</strong>
-          <p class="assay-bench__hint" data-testid="assay-hint">Write what you need — the Assayer takes orders now, fills them between sessions.</p>
+          <p class="assay-bench__hint" data-testid="assay-hint">Write what you need — the Assayer takes orders between sessions when the wire is open.</p>
         </div>
         <button class="assay-bench__close" type="button" aria-label="Close Assay Bench" data-testid="assay-close">✕</button>
       </header>
@@ -76,7 +80,8 @@ export class AssayBenchPanel {
           <span>Profile</span>
           <input data-testid="assay-profile" value="${escapeAttr(profile)}" />
         </label>
-        <button type="button" data-testid="assay-post">Post the order</button>
+        <button type="button" data-testid="assay-post" hidden>Post the order</button>
+        <p class="assay-bench__wire" data-testid="assay-wire-status">Checking the wire to the Assayer.</p>
       </form>
       <article class="assay-bench__card assay-bench__pending" data-testid="assay-pending-card">
         <strong data-testid="assay-pending-status">No order posted</strong>
@@ -105,9 +110,11 @@ export class AssayBenchPanel {
     this.pendingOrders = this.get('[data-testid="assay-queue-pending"]');
     this.history = this.get('[data-testid="assay-log"]');
     this.rejections = this.get('[data-testid="assay-queue-rejections"]');
+    this.postButton = this.get('[data-testid="assay-post"]');
+    this.wireStatus = this.get('[data-testid="assay-wire-status"]');
     this.closeButton = this.get('[data-testid="assay-close"]');
 
-    this.root.querySelector('[data-testid="assay-post"]')?.addEventListener('click', this.postOrder);
+    this.postButton.addEventListener('click', this.postOrder);
     this.closeButton.addEventListener('click', this.close);
     this.root.addEventListener('keydown', this.onRootKeyDown);
     this.root.addEventListener('keyup', this.stopGameHotkeys);
@@ -125,7 +132,7 @@ export class AssayBenchPanel {
   }
 
   dispose(): void {
-    this.root.querySelector('[data-testid="assay-post"]')?.removeEventListener('click', this.postOrder);
+    this.postButton.removeEventListener('click', this.postOrder);
     this.closeButton.removeEventListener('click', this.close);
     this.root.removeEventListener('keydown', this.onRootKeyDown);
     this.root.removeEventListener('keyup', this.stopGameHotkeys);
@@ -158,6 +165,11 @@ export class AssayBenchPanel {
   };
 
   private readonly postOrder = async () => {
+    if (this.queueAvailable !== true) {
+      this.renderQueueCapability(this.queueAvailable === false ? false : null);
+      return;
+    }
+
     const text = this.text.value.trim();
     if (!text) {
       this.root.dataset.pendingSaved = 'false';
@@ -184,18 +196,37 @@ export class AssayBenchPanel {
   }
 
   private async refreshQueue(): Promise<void> {
+    if (this.queueAvailable === false) return;
     const seq = ++this.refreshSeq;
     const queue = await loadCraftingQueueState(this.profile.value);
     if (seq === this.refreshSeq) this.renderQueue(queue);
   }
 
   private renderQueue(queue: CraftingQueueSnapshot): void {
+    this.renderQueueCapability(queue.queueAvailable);
     this.bench.replaceApproved(queue.approved);
     this.pending = queue.pending;
     this.rejected = queue.rejected;
     this.renderPendingOrders();
     this.renderHistory();
     this.renderRejections();
+  }
+
+  private renderQueueCapability(available: boolean | null): void {
+    this.queueAvailable = available;
+    this.postButton.hidden = available !== true;
+    this.postButton.setAttribute('aria-hidden', String(available !== true));
+    if (available === true) {
+      this.wireStatus.textContent = 'The wire to the Assayer is open.';
+    } else if (available === false) {
+      this.wireStatus.textContent = 'The wire to the Assayer is still being strung — orders open soon.';
+    } else {
+      this.wireStatus.textContent = 'Checking the wire to the Assayer.';
+    }
+    if (available !== null && !this.loggedQueueProbe) {
+      this.loggedQueueProbe = true;
+      console.info(`[gold-rush] assay queue endpoint ${available ? 'available' : 'unavailable'}`);
+    }
   }
 
   private renderPendingOrders(): void {
