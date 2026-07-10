@@ -42,10 +42,13 @@ type SavePullResponse = { ok: true; profileId: string; savedAt: string; envelope
 type SavePushResponse = { ok: true; savedAt: string };
 type SaveVersionSummary = { version: number | null; savedAt: string };
 type SaveVersionsResponse = { ok: true; versions: SaveVersionSummary[] };
+type SaveProfileSummary = { profileId: string; profileName: string; savedAt: string };
+type SaveProfilesResponse = { ok: true; profiles: SaveProfileSummary[] };
 
 const SESSION_KEY = 'gr.account.v1';
 const CHANGE_EVENT = 'gr:profile-data-changed';
 const SYNC_DEBOUNCE_MS = 30_000;
+const MAX_KEEPALIVE_BYTES = 60 * 1024;
 
 class ApiError extends Error {
   constructor(
@@ -78,6 +81,8 @@ class AccountSync {
     this.storage = browserStorage();
     this.session = this.readSession();
     globalThis.window?.addEventListener(CHANGE_EVENT, this.onProfileDataChanged);
+    globalThis.window?.addEventListener('pagehide', this.onPageHide);
+    globalThis.document?.addEventListener('visibilitychange', this.onVisibilityChange);
     if (this.session && !loadProfileState(this.storage!)) void this.pullStoredProfile();
     return this;
   }
@@ -152,11 +157,18 @@ class AccountSync {
     this.install();
     if (!this.session || this.compare || Date.now() < this.suppressChangeUntil) return;
     window.clearTimeout(this.syncTimer);
-    this.syncTimer = window.setTimeout(() => void this.pushNow(), SYNC_DEBOUNCE_MS);
+    this.syncTimer = window.setTimeout(() => {
+      this.syncTimer = 0;
+      void this.pushNow();
+    }, SYNC_DEBOUNCE_MS);
   }
 
-  async pushNow(options: { force?: boolean } = {}): Promise<void> {
+  async pushNow(options: { force?: boolean; keepalive?: boolean } = {}): Promise<void> {
     this.install();
+    if (this.syncTimer) {
+      window.clearTimeout(this.syncTimer);
+      this.syncTimer = 0;
+    }
     if (!this.session || !this.storage || !loadProfileState(this.storage)) return;
     if (this.compare && !options.force) return this.setMessage('Choose cloud or local ledger before backing up.');
     await this.run(async () => {
@@ -172,9 +184,15 @@ class AccountSync {
             acknowledgeConflict: options.force === true,
           },
           this.session!.token,
+          { keepalive: options.keepalive },
         );
       } catch (err) {
         if (err instanceof ApiError && err.code === 'stale_save') {
+          if (options.keepalive) {
+            this.message = 'Cloud has a newer ledger. Reopen to choose before backing up.';
+            this.writeSession();
+            return;
+          }
           await this.openCloudCompare(envelope.profile.id, 'Cloud has a newer ledger. Pick one before backing up.');
           return;
         }
@@ -220,10 +238,31 @@ class AccountSync {
   }
 
   private readonly onProfileDataChanged = () => this.queuePush();
+  private readonly onPageHide = () => this.flushQueuedPush();
+  private readonly onVisibilityChange = () => {
+    if (globalThis.document?.visibilityState === 'hidden') this.flushQueuedPush();
+  };
+
+  private flushQueuedPush(): void {
+    if (!this.syncTimer) return;
+    window.clearTimeout(this.syncTimer);
+    this.syncTimer = 0;
+    void this.pushNow({ keepalive: true });
+  }
 
   private async pullAfterSignIn(): Promise<void> {
     const profileId = this.currentProfileId() ?? this.session?.profileId;
-    if (!profileId) return this.setMessage('Signed in. Create a ledger, then it can back up.');
+    if (!profileId) {
+      const [profile] = await this.listProfiles();
+      if (!profile) return this.setMessage('Signed in. Create a ledger, then it can back up.');
+      const cloud = await this.pull(profile.profileId);
+      if (!cloud) return this.setMessage('Signed in. Create a ledger, then it can back up.');
+      this.session = { ...this.session!, profileId: profile.profileId, lastSavedAt: cloud.savedAt };
+      this.compare = { profileId: profile.profileId, savedAt: cloud.savedAt, envelope: cloud.envelope, line: cloudLine(cloud.envelope, cloud.savedAt) };
+      this.message = 'Cloud ledger found. Choose how to open it.';
+      this.writeSession();
+      return;
+    }
     this.session = { ...this.session!, profileId };
     this.writeSession();
     if (!(await this.hasCloudSave(profileId))) {
@@ -339,6 +378,11 @@ class AccountSync {
     return response.versions.length > 0;
   }
 
+  private async listProfiles(): Promise<SaveProfileSummary[]> {
+    const response = await this.request<SaveProfilesResponse>('/api/save/profiles', {}, this.session?.token);
+    return response.profiles.filter(isSaveProfileSummary);
+  }
+
   private localEnvelope(): ProfileTransferEnvelope | null {
     if (!this.storage || !loadProfileState(this.storage)) return null;
     try {
@@ -369,13 +413,19 @@ class AccountSync {
     }
   }
 
-  private async request<T extends { ok: true }>(route: string, body: unknown, token?: string): Promise<T> {
+  private async request<T extends { ok: true }>(
+    route: string,
+    body: unknown,
+    token?: string,
+    options: { keepalive?: boolean } = {},
+  ): Promise<T> {
     const headers: Record<string, string> = { 'content-type': 'application/json' };
     if (token) headers.authorization = `Bearer ${token}`;
+    const bodyText = JSON.stringify(body);
+    const request = { method: 'POST', headers, body: bodyText };
     const response = await fetch(`${apiBase()}${route}`, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify(body),
+      ...request,
+      keepalive: options.keepalive === true && byteLength(bodyText) <= MAX_KEEPALIVE_BYTES,
     });
     const payload = await response.json().catch(() => ({}));
     if (!response.ok || !isRecord(payload) || payload.ok !== true) {
@@ -466,7 +516,7 @@ function cloudLine(envelope: ProfileTransferEnvelope, savedAt: string): string {
   const data = envelope.data;
   const town = typeof data['gr.town.name.v1'] === 'string' && data['gr.town.name.v1'].trim() ? data['gr.town.name.v1'].trim() : 'unnamed town';
   const science = scienceLevel(data[META_PROGRESS_KEY]);
-  return `Cloud has ${town} at science ${science} from ${timeAgo(savedAt)}.`;
+  return `Cloud has ${town} at science ${science} (${envelope.profile.name}) from ${timeAgo(savedAt)}.`;
 }
 
 function scienceLevel(value: unknown): number {
@@ -508,6 +558,19 @@ function browserStorage(): ProfileStorage | undefined {
   } catch {
     return undefined;
   }
+}
+
+function byteLength(value: string): number {
+  return new TextEncoder().encode(value).byteLength;
+}
+
+function isSaveProfileSummary(value: unknown): value is SaveProfileSummary {
+  return (
+    isRecord(value) &&
+    typeof value.profileId === 'string' &&
+    typeof value.profileName === 'string' &&
+    typeof value.savedAt === 'string'
+  );
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {

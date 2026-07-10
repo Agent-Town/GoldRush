@@ -70,10 +70,12 @@ async function checkDevFlow() {
     token = revokeVerify.body.token;
     assertEqual((await post(server.url, '/api/session', {}, token)).status, 200, 'new session survives revoke');
 
-    const firstEnvelope = ledgerEnvelope(6);
-    const secondEnvelope = ledgerEnvelope(7);
-    assertEqual((await post(server.url, '/api/save/push', { profileId: 'robin', envelope: firstEnvelope }, token)).status, 200, 'first save pushes');
-    assertEqual((await post(server.url, '/api/save/push', { profileId: 'robin', envelope: secondEnvelope }, token)).status, 200, 'second save pushes');
+    const firstSave = await pushSave(server.url, token, ledgerEnvelope(6));
+    assertEqual(firstSave.status, 200, 'first save pushes');
+    let baseSavedAt = firstSave.body.savedAt;
+    const secondSave = await pushSave(server.url, token, ledgerEnvelope(7), baseSavedAt);
+    assertEqual(secondSave.status, 200, 'second save pushes');
+    baseSavedAt = secondSave.body.savedAt;
 
     const current = await post(server.url, '/api/save/pull', { profileId: 'robin' }, token);
     assertEqual(current.status, 200, 'current save pulls');
@@ -86,6 +88,36 @@ async function checkDevFlow() {
     const versions = await post(server.url, '/api/save/versions', { profileId: 'robin' }, token);
     assertEqual(versions.status, 200, 'save versions list');
     assert(versions.body.versions.some((entry) => entry.version === 1), 'versions include v1');
+    const profiles = await post(server.url, '/api/save/profiles', {}, token);
+    assertEqual(profiles.status, 200, 'save profile index lists');
+    assert(profiles.body.profiles.some((entry) => entry.profileId === 'robin' && entry.profileName === 'Robin'), 'profile index includes Robin');
+
+    for (let science = 8; science <= 13; science += 1) {
+      await sleep(2);
+      const pushed = await pushSave(server.url, token, ledgerEnvelope(science), baseSavedAt);
+      assertEqual(pushed.status, 200, `version-order push ${science} succeeds`);
+      baseSavedAt = pushed.body.savedAt;
+    }
+    const ordered = await post(server.url, '/api/save/versions', { profileId: 'robin' }, token);
+    assertEqual(ordered.status, 200, 'version-order versions list');
+    assertEqual(ordered.body.versions.length, 6, 'version-order keeps current plus five versions');
+    assertEqual(ordered.body.versions[0].version, null, 'version-order current marker');
+    assertEqual(ordered.body.versions[0].savedAt >= ordered.body.versions[1].savedAt, true, 'version-order newest first');
+    const orderedSciences = ordered.body.versions.map((entry) => entry.updatedAt).filter((value) => typeof value === 'number');
+    assertEqual(orderedSciences.join(','), '13,12,11,10,9,8', 'version-order preserves newest-to-oldest saves');
+
+    const stale = await pushSave(server.url, token, ledgerEnvelope(20), '1900-01-01T00:00:00.000Z');
+    assertEqual(stale.status, 200, 'stale-save response returns conflict payload');
+    assertEqual(stale.body.error, 'stale_save', 'stale-save conflict still fires under immutable store');
+    assertEqual(stale.body.savedAt, baseSavedAt, 'stale-save compares against derived current save');
+    const acknowledged = await post(
+      server.url,
+      '/api/save/push',
+      { profileId: 'robin', envelope: ledgerEnvelope(20), baseSavedAt: '1900-01-01T00:00:00.000Z', acknowledgeConflict: true },
+      token,
+    );
+    assertEqual(acknowledged.status, 200, 'acknowledged stale-save push succeeds');
+    baseSavedAt = acknowledged.body.savedAt;
 
     const badEnvelope = await post(server.url, '/api/save/push', { profileId: 'robin', envelope: { version: 1 } }, token);
     assertEqual(badEnvelope.status, 400, 'bad envelope rejected');
@@ -134,7 +166,7 @@ function ledgerEnvelope(science, filler = '') {
     profile: {
       id: 'robin',
       name: 'Robin',
-      updatedAt: Date.now(),
+      updatedAt: science,
     },
     data: {
       'gr.meta.v1': { science },
@@ -142,6 +174,10 @@ function ledgerEnvelope(science, filler = '') {
       filler,
     },
   };
+}
+
+async function pushSave(baseUrl, token, envelope, baseSavedAt = null) {
+  return post(baseUrl, '/api/save/push', { profileId: 'robin', envelope, baseSavedAt }, token);
 }
 
 async function startWrangler(name, devAuth) {

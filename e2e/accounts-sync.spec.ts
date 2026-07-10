@@ -5,6 +5,7 @@ import { PROFILE_KEY, RUN_SUSPEND_KEY, TOWN_NAME_KEY } from '../src/game/Profile
 
 const SHOT_DIR = 'artifacts/ac-02';
 const ACCOUNT_KEY = 'gr.account.v1';
+const ACCOUNTS_URL = process.env.GR_ACCOUNTS_WORKER_URL ?? 'http://127.0.0.1:8788';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -55,6 +56,28 @@ test('compare card can use cloud over local', async ({ page }, testInfo) => {
   assertNoErrors(errors);
 });
 
+test('fresh signed-in device discovers cloud profiles by name', async ({ page }, testInfo) => {
+  const email = emailFor(testInfo, 'new-device');
+  await seedProfile(page, { town: 'Family Trail', science: 9 });
+  const errors = collectErrors(page);
+  await page.goto('/?profiles');
+  await signIn(page, email);
+  await page.getByTestId('account-sign-out').click();
+
+  await page.evaluate(() => {
+    localStorage.clear();
+    sessionStorage.clear();
+  });
+  await page.goto('/?profiles');
+  await signIn(page, email);
+  await expect(page.getByTestId('account-compare-card')).toContainText('Family Trail');
+  await expect(page.getByTestId('account-compare-card')).toContainText('Robin');
+  await page.getByTestId('account-use-cloud').click();
+  await expect(readProfileDatum(page, TOWN_NAME_KEY)).resolves.toBe('Family Trail');
+  await expect(readScience(page)).resolves.toBe(9);
+  assertNoErrors(errors);
+});
+
 test('compare card can keep local, then burn the cloud ledger', async ({ page }, testInfo) => {
   const email = emailFor(testInfo, 'keep-local');
   await seedProfile(page, { town: 'Old Cloud', science: 2 });
@@ -85,6 +108,26 @@ test('compare card can keep local, then burn the cloud ledger', async ({ page },
   assertNoErrors(errors);
 });
 
+test('pagehide flushes a queued cloud push before debounce expires', async ({ page }, testInfo) => {
+  const email = emailFor(testInfo, 'exit-flush');
+  await seedProfile(page, { town: 'Before Exit', science: 3 });
+  const errors = collectErrors(page);
+  await page.goto('/?profiles');
+  await signIn(page, email);
+
+  const pushed = page.waitForResponse((response) => {
+    const request = response.request();
+    return request.url().includes('/api/save/push') && (request.postData() ?? '').includes('Exit Flush');
+  });
+  await writeProfileDatum(page, TOWN_NAME_KEY, 'Exit Flush');
+  await page.evaluate(() => {
+    window.dispatchEvent(new Event('gr:profile-data-changed'));
+    window.dispatchEvent(new Event('pagehide'));
+  });
+  expect((await pushed).status()).toBe(200);
+  assertNoErrors(errors);
+});
+
 test('stale device opens compare instead of overwriting newer cloud save', async ({ page }, testInfo) => {
   const email = emailFor(testInfo, 'stale-device');
   await seedProfile(page, { town: 'Morning Claim', science: 2 });
@@ -98,9 +141,15 @@ test('stale device opens compare instead of overwriting newer cloud save', async
 
   await writeProfileDatum(page, TOWN_NAME_KEY, 'Evening Cloud');
   await writeProfileDatum(page, META_PROGRESS_KEY, { version: 1, tracks: { territory: 3, science: 9, hero: 0, agent: 0 } });
+  const newerCloudPush = page.waitForResponse((response) => {
+    const request = response.request();
+    return request.url().includes('/api/save/push') && (request.postData() ?? '').includes('Evening Cloud');
+  });
   await page.getByTestId('account-sync-now').click();
+  expect((await newerCloudPush).status()).toBe(200);
   await expect(page.getByTestId('account-status-chip')).toContainText('ledger backed up');
 
+  await page.goto('/favicon-16.png');
   await page.evaluate(
     ({ accountKey, profileKey, townKey, metaKey, staleSession }) => {
       localStorage.clear();
@@ -119,8 +168,7 @@ test('stale device opens compare instead of overwriting newer cloud save', async
     },
     { accountKey: ACCOUNT_KEY, profileKey: PROFILE_KEY, townKey: TOWN_NAME_KEY, metaKey: META_PROGRESS_KEY, staleSession },
   );
-  await page.reload();
-  await page.getByTestId('start-menu-profile').click();
+  await page.goto('/?profiles');
   await page.getByTestId('account-sync-now').click();
 
   await expect(page.getByTestId('account-compare-card')).toContainText('Cloud has Evening Cloud at science 9');
@@ -131,7 +179,7 @@ test('stale device opens compare instead of overwriting newer cloud save', async
 
 test('signed-out boot leaves profile bytes alone and makes no account request', async ({ page }) => {
   let accountRequests = 0;
-  await page.route('http://127.0.0.1:8788/api/**', (route) => {
+  await page.route(`${ACCOUNTS_URL}/api/**`, (route) => {
     accountRequests += 1;
     return route.abort();
   });

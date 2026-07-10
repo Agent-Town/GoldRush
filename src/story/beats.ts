@@ -23,7 +23,7 @@ export type RuntimeStoryBeat = StoryBeatFor<RuntimeStorySignal>;
 const contractLine = (signal: RuntimeStorySignal, fallback: string): string =>
   signal.type === 'contract-unlocked' ? signal.ledgerBlurb : fallback;
 
-const legacyBoardUnlockSeenKey = (signal: StorySignal): string =>
+const legacyBoardUnlockSeenKey = (signal: RuntimeStorySignal): string =>
   signal.type === 'contract-unlocked' ? `board-unlock-generic:${signal.contractId}` : 'board-unlock-generic';
 
 export const STORY_BEATS: readonly StoryBeat[] = [
