@@ -20,3 +20,5 @@ Merges: lane/m4 + lane/perf + lane/m3 → main (reconciliation `fb7a7eb`: restor
 ## Drain #2 same day (ts-01 + 074 + 075 + 076) — 23/23 GREEN desktop single-worker (ts-01 plaza ring + routes · en-01/en-02 incl. 074 lock assertions · restore-validation + run-suspend incl. 076 atomicity · 072 · town-t3-board · m1-01). Merged clean (zero src conflicts), tsc+build green, DEPLOYED (plaza live). gpt-5.5 first-pass streak: 10/10 gateable.
 
 ## Drain #3, night (ed-01 editor + sc-01 stream-runner + gz-h1 newsie) — 11/11 GREEN (ed-01 + gz-h1 specs + m1-01 + town-t3-board); sc-01 evidence = real recordings in marketing/raw/stream/ (claim-wave-20 webm + first-frames). Merged clean ×3, tsc+build green. DEPLOYED with this note.
+
+## Drain #4, morning 07-11 (079 render-micro-perf RE-LAND) — 19/19 GREEN (night-shift + combat-readability + m1-01 + sim-fixed-step 6/6). Conflict resolved BOTH-INTENTS: lane's sync-dedup structure + main's fixed-step interpolation restore-loop kept (the lane predated it). tsc+build green. DEPLOYED.
