@@ -54,6 +54,11 @@ type SaveRecord = {
   metadata: SaveMetadata;
 };
 
+type SaveProfileSummary = SaveMetadata & {
+  savedAt: string;
+  byteLength: number;
+};
+
 type SaveMetadata = {
   profileId: string;
   profileName: string;
@@ -187,9 +192,7 @@ export async function pushSave(context: AccountsContext): Promise<Response> {
     const metadata = validateEnvelope(envelope, profileId);
     if (!metadata) return error(cors, 400, 'bad_envelope', 'Save envelope not accepted.');
 
-    const key = saveKey(session.record.accountId, profileId);
-    const previous = await kv.get(key);
-    const previousSave = parseSave(previous);
+    const previousSave = (await loadSaveHistory(kv, session.record.accountId, profileId))[0] ?? null;
     const baseSavedAt = typeof body.baseSavedAt === 'string' ? body.baseSavedAt : body.baseSavedAt === null ? null : undefined;
     const acknowledged = body.acknowledgeConflict === true;
     if (previousSave && !acknowledged && baseSavedAt !== previousSave.savedAt) {
@@ -204,13 +207,8 @@ export async function pushSave(context: AccountsContext): Promise<Response> {
         },
       );
     }
-    for (let index = 5; index >= 2; index -= 1) {
-      const older = await kv.get(`${key}:v${index - 1}`);
-      if (older) await kv.put(`${key}:v${index}`, older);
-    }
-    if (previous) await kv.put(`${key}:v1`, previous);
 
-    const savedAt = nowIso();
+    const savedAt = nextSavedAt(previousSave?.savedAt);
     const save: SaveRecord = {
       version: 1,
       accountId: session.record.accountId,
@@ -220,7 +218,10 @@ export async function pushSave(context: AccountsContext): Promise<Response> {
       envelope,
       metadata,
     };
-    await kv.put(key, JSON.stringify(save));
+    // Atomicity invariant: saves are immutable entries; current and v1..v5 are
+    // derived newest-first, so a concurrent push cannot clobber history with a
+    // stale rotation write. stale_save still compares against derived current.
+    await kv.put(`${saveEntryPrefix(session.record.accountId, profileId)}${savedAt}:${randomHex(4)}`, JSON.stringify(save));
     return json(cors, { ok: true, profileId, savedAt });
   });
 }
@@ -237,8 +238,7 @@ export async function pullSave(context: AccountsContext): Promise<Response> {
     const version = normalizeVersion(body.version);
     if (!profileId || version === false) return error(cors, 400, 'bad_request', 'Save request not accepted.');
 
-    const raw = await kv.get(version ? `${saveKey(session.record.accountId, profileId)}:v${version}` : saveKey(session.record.accountId, profileId));
-    const save = parseSave(raw);
+    const save = (await loadSaveHistory(kv, session.record.accountId, profileId))[version ?? 0] ?? null;
     if (!save) return error(cors, 404, 'not_found', 'Save not found.');
     return json(cors, {
       ok: true,
@@ -261,15 +261,28 @@ export async function saveVersions(context: AccountsContext): Promise<Response> 
     const profileId = normalizeProfileId(body.profileId);
     if (!profileId) return error(cors, 400, 'bad_request', 'Save request not accepted.');
 
-    const key = saveKey(session.record.accountId, profileId);
-    const versions = [];
-    const current = parseSave(await kv.get(key));
-    if (current) versions.push(versionSummary(current, null));
-    for (let index = 1; index <= 5; index += 1) {
-      const save = parseSave(await kv.get(`${key}:v${index}`));
-      if (save) versions.push(versionSummary(save, index));
-    }
+    const versions = (await loadSaveHistory(kv, session.record.accountId, profileId)).map((save, index) =>
+      versionSummary(save, index || null),
+    );
     return json(cors, { ok: true, profileId, versions });
+  });
+}
+
+export async function saveProfiles(context: AccountsContext): Promise<Response> {
+  return route(context, async ({ request, env, cors }) => {
+    if (request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
+    const kv = requireAccounts(env, cors);
+    if (kv instanceof Response) return kv;
+    const session = await requireSession(request, kv, cors);
+    if (session instanceof Response) return session;
+
+    const profiles: SaveProfileSummary[] = [];
+    for (const profileId of await listProfileIds(kv, session.record.accountId)) {
+      const current = (await loadSaveHistory(kv, session.record.accountId, profileId))[0];
+      if (current) profiles.push({ ...current.metadata, savedAt: current.savedAt, byteLength: current.byteLength });
+    }
+    profiles.sort((left, right) => compareIsoDesc(left.savedAt, right.savedAt));
+    return json(cors, { ok: true, profiles });
   });
 }
 
@@ -545,6 +558,60 @@ function saveKey(accountId: string, profileId: string): string {
   return `save:${accountId}:${profileId}`;
 }
 
+function saveEntryPrefix(accountId: string, profileId: string): string {
+  return `${saveKey(accountId, profileId)}:entry:`;
+}
+
+async function loadSaveHistory(kv: KVNamespaceLike, accountId: string, profileId: string): Promise<SaveRecord[]> {
+  const saves: { save: SaveRecord; key: string }[] = [];
+  const key = saveKey(accountId, profileId);
+  const legacyCurrent = parseSave(await kv.get(key));
+  if (legacyCurrent) saves.push({ save: legacyCurrent, key });
+  for (let index = 1; index <= 5; index += 1) {
+    const legacyKey = `${key}:v${index}`;
+    const legacy = parseSave(await kv.get(legacyKey));
+    if (legacy) saves.push({ save: legacy, key: legacyKey });
+  }
+  for (const entryKey of await newestSaveEntryKeys(kv, saveEntryPrefix(accountId, profileId), 6)) {
+    const save = parseSave(await kv.get(entryKey));
+    if (save) saves.push({ save, key: entryKey });
+  }
+  return saves
+    .sort((left, right) => compareIsoDesc(left.save.savedAt, right.save.savedAt) || right.key.localeCompare(left.key))
+    .slice(0, 6)
+    .map(({ save }) => save);
+}
+
+async function newestSaveEntryKeys(kv: KVNamespaceLike, prefix: string, limit: number): Promise<string[]> {
+  const keys: string[] = [];
+  let cursor: string | undefined;
+  do {
+    const page = await kv.list({ prefix, cursor });
+    keys.push(...page.keys.map(({ name }) => name));
+    keys.sort((left, right) => right.localeCompare(left));
+    keys.length = Math.min(keys.length, limit);
+    cursor = page.cursor;
+    if (page.list_complete) break;
+  } while (cursor);
+  return keys;
+}
+
+async function listProfileIds(kv: KVNamespaceLike, accountId: string): Promise<string[]> {
+  const ids = new Set<string>();
+  const prefix = `save:${accountId}:`;
+  let cursor: string | undefined;
+  do {
+    const page = await kv.list({ prefix, cursor });
+    for (const { name } of page.keys) {
+      const profileId = name.slice(prefix.length).split(':')[0] ?? '';
+      if (normalizeProfileId(profileId)) ids.add(profileId);
+    }
+    cursor = page.cursor;
+    if (page.list_complete) break;
+  } while (cursor);
+  return [...ids];
+}
+
 function versionSummary(save: SaveRecord, version: number | null): JsonRecord {
   return {
     version,
@@ -554,6 +621,10 @@ function versionSummary(save: SaveRecord, version: number | null): JsonRecord {
     profileName: save.metadata.profileName,
     updatedAt: save.metadata.updatedAt,
   };
+}
+
+function compareIsoDesc(left: string, right: string): number {
+  return Date.parse(right) - Date.parse(left) || right.localeCompare(left);
 }
 
 async function sendEmail(env: AccountsEnv, email: string, code: string): Promise<boolean> {
@@ -620,6 +691,12 @@ function numberOrZero(value: string | null): number {
 
 function nowIso(): string {
   return new Date().toISOString();
+}
+
+function nextSavedAt(previousSavedAt?: string): string {
+  const now = Date.now();
+  const previous = previousSavedAt ? Date.parse(previousSavedAt) : NaN;
+  return new Date(Number.isFinite(previous) && now <= previous ? previous + 1 : now).toISOString();
 }
 
 function utf8Length(value: string): number {
