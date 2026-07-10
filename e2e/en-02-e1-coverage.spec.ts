@@ -16,7 +16,6 @@ import {
   type LedgerDiscoveryId,
   type LedgerEntryId,
 } from '../src/encyclopedia/registry';
-import { TOWN_ACTORS } from '../src/town/townsfolk';
 
 const ARTIFACT_DIR = path.resolve('artifacts/en-02');
 const PROFILE_ID = 'robin';
@@ -296,7 +295,7 @@ test('EN-02 full E1 roster has manifest-backed entries and capped facts', async 
   await expect(page.locator('[data-ledger-discovered="true"]')).toHaveCount(ledgerEntries.length);
   expect(BUILDING_ENTRY_IDS).toHaveLength(buildableDefs.length);
   expect(ENEMY_ENTRY_IDS).toHaveLength(4);
-  expect(CHARACTER_ENTRY_IDS).toHaveLength(TOWN_ACTORS.length + 1);
+  expect(CHARACTER_ENTRY_IDS).toHaveLength(Object.keys(townActorLedgerEntryById).length + 1);
   expect(CONTRACT_ENTRY_IDS).toHaveLength(listContracts().length);
   for (const id of [...BUILDING_ENTRY_IDS, ...ENEMY_ENTRY_IDS, ...CHARACTER_ENTRY_IDS, ...CONTRACT_ENTRY_IDS]) {
     await expect(page.getByTestId(`claim-ledger-card-${id}`)).toHaveCount(1);

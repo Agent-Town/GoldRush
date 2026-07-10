@@ -1,5 +1,6 @@
 import { assetSlots, type AssetSlotId } from '../assets/slots';
 import type { RotationDirection } from '../assets/OrientationResolver';
+import { latestHeraldHeadline } from '../news/herald';
 import type { TownBuilding, TownBuildingId } from './townLayout';
 
 export type TownActorId =
@@ -11,6 +12,7 @@ export type TownActorId =
   | 'assay_clerk'
   | 'youngster_a'
   | 'youngster_b'
+  | 'newsie'
   | 'prospector';
 
 export type TownActorDefinition = {
@@ -171,6 +173,19 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     },
   },
   {
+    id: 'newsie',
+    name: 'Pip Quick',
+    post: 'Newsie',
+    assetSlot: assetSlots.charTownYoungsterA,
+    portraitUrl: youngsterAPortraitUrl,
+    anchor: 'tavern',
+    position: { x: -1.5, z: -3.3 },
+    facing: 's',
+    scale: 1.12,
+    barkRadius: 3.1,
+    e1Barks: ['EXTRA! Fresh ink by the tavern!', 'Paper is warm. Read it before the wind does.'],
+  },
+  {
     id: 'prospector',
     name: 'The Prospector',
     post: 'Claim Partner',
@@ -191,6 +206,9 @@ export function visibleTownActors(buildings: readonly TownBuilding[]): readonly 
 }
 
 export function townActorBark(actor: TownActorDefinition, townName: string | null, visitCount: number): string {
+  if (actor.id === 'newsie') {
+    return `EXTRA! ${latestHeraldHeadline()}`;
+  }
   const town = townName?.trim() || 'this town';
   return actor.e1Barks[visitCount % actor.e1Barks.length]!.replaceAll('{town}', town);
 }

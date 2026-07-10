@@ -84,7 +84,7 @@ export type LedgerEntry = {
   };
 };
 
-export const townActorLedgerEntryById: Record<TownActorId, LedgerEntryId> = {
+export const townActorLedgerEntryById: Partial<Record<TownActorId, LedgerEntryId>> = {
   tavernkeeper: 'town_tavernkeeper',
   storekeeper: 'town_storekeeper',
   elder: 'town_elder',
@@ -158,7 +158,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
       `Priority chase mark: ${Balance.agent.priorityChaseMark}`,
     ],
   },
-  ...TOWN_ACTORS.filter((actor) => actor.id !== 'prospector').map(townActorEntry),
+  ...TOWN_ACTORS.filter((actor) => actor.id !== 'prospector' && townActorLedgerEntryById[actor.id]).map(townActorEntry),
   enemyEntry('claim_jumper', 'Claim Jumper', claimJumperUrl, assetSlots.charClaimJumper, claimJumperFactLines),
   enemyEntry('outlaw', 'Outlaw Runner', claimJumperUrl, assetSlots.charClaimJumper, outlawFactLines),
   enemyEntry('wrecker', 'Wrecker', claimJumperUrl, assetSlots.charClaimJumper, wreckerFactLines),
@@ -248,8 +248,9 @@ function heroFactLines(): string[] {
 }
 
 function townActorEntry(actor: TownActorDefinition): LedgerEntry {
+  const id = townActorLedgerEntryById[actor.id] as TownActorLedgerEntryId;
   return {
-    id: townActorLedgerEntryById[actor.id] as TownActorLedgerEntryId,
+    id,
     name: actor.name,
     category: 'The People',
     unlockSignal: `town:met:${actor.id}`,
