@@ -258,7 +258,7 @@ test('bandits route switchbacks and flooded gallery depth blocks deep water but 
     window.__GR_TEST__?.scriptEnemyAt(0, 6.6, 0, 34, 5);
     const track = { samples: 0, faceSamples: 0, minX: Infinity, maxZ: -Infinity, endX: 0, endZ: 6.6 };
     for (let i = 0; i < 1200; i += 1) {
-      window.__GR_TEST__?.advanceSim(1 / 30, 1 / 30);
+      window.__GR_TEST__?.advanceSim(1 / 30);
       const enemy = window.__GR_TEST__?.enemyPositions()[0];
       if (!enemy) break;
       track.samples += 1;
@@ -290,7 +290,7 @@ test('bandits route switchbacks and flooded gallery depth blocks deep water but 
     window.__GR_TEST__?.scriptEnemyAt(-14, -6.35, -14, 6, 4);
     const track = { samples: 0, riverSamples: 0, maxX: -Infinity, maxZ: -Infinity };
     for (let i = 0; i < 900; i += 1) {
-      window.__GR_TEST__?.advanceSim(1 / 15, 1 / 15);
+      window.__GR_TEST__?.advanceSim(1 / 15);
       const enemy = window.__GR_TEST__?.enemyPositions()[0];
       if (!enemy) break;
       track.samples += 1;
@@ -412,7 +412,7 @@ async function hillMineHash(browser: Browser, seed: string, extra = ''): Promise
   const payload = await page.evaluate(() => {
     window.__GR_TEST__?.clearEnemies();
     window.__GR_TEST__?.scriptEnemyAt(0, 6.6, 0, 34, 5);
-    window.__GR_TEST__?.advanceSim(1.5, 1 / 30);
+    window.__GR_TEST__?.advanceSim(1.5);
     return {
       contract: window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId,
       tile: window.__GR_CONTRACT_REGISTRY__?.activeTileDescriptor(),

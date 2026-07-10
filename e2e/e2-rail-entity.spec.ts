@@ -76,7 +76,7 @@ async function simHash(browser: Browser, query: string): Promise<{ hash: string;
     window.__GR_TEST__?.spawnEnemyAt(-8, -20);
     window.__GR_TEST__?.spawnEnemyAt(8, -20);
     window.__GR_TEST__?.spawnEnemyAt(0, 20);
-    window.__GR_TEST__?.advanceSim(1.2, 0.05);
+    window.__GR_TEST__?.advanceSim(1.2);
     return {
       sim: window.__THREE_GAME_DIAGNOSTICS__?.terrain.sim,
       samples: [

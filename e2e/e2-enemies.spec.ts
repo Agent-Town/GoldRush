@@ -58,7 +58,7 @@ async function spawnWaveOne(page: Page): Promise<EnemySnapshot[]> {
   await tuneSinglePulse(page, 9);
   await page.evaluate(() => window.__GR_TEST__?.setManualSim(true));
   await page.evaluate(() => window.__GR_TEST__?.setWave(0));
-  await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.2, 1 / 30));
+  await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.2));
   await expect.poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().length ?? 0), { timeout: 6_000 }).toBeGreaterThanOrEqual(9);
   return page.evaluate(() => window.__GR_TEST__?.enemyPositions() ?? []);
 }
@@ -152,7 +152,7 @@ test('armored railcar arrives as three rail-bound boss components and degrades a
   });
   await refreshStats(page);
   await page.evaluate(() => window.__GR_TEST__?.setWave(11));
-  await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.2, 1 / 30));
+  await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.2));
   await expect
     .poll(() => page.evaluate(() => window.__GR_TEST__?.enemyPositions().filter((enemy) => enemy.eliteKind === 'railcar').length ?? 0), {
       timeout: 6_000,
@@ -186,7 +186,7 @@ test('armored railcar arrives as three rail-bound boss components and degrades a
   const initialSpeed = Math.max(...initial.railcars.map((enemy) => enemy.speed));
   const initialSpan = Math.max(...initial.railcars.map((enemy) => enemy.x)) - Math.min(...initial.railcars.map((enemy) => enemy.x));
   expect(initialSpan).toBeGreaterThan(2);
-  await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.5, 1 / 60));
+  await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.5));
   const rolling = await page.evaluate(() =>
     (window.__GR_TEST__?.enemyPositions() ?? [])
       .filter((enemy) => enemy.eliteKind === 'railcar')
@@ -198,8 +198,8 @@ test('armored railcar arrives as three rail-bound boss components and degrades a
   await page.evaluate(() => window.__GR_TEST__?.teleport(-42, 8));
   await setBalance(page, 'sparkRig.range', 300);
   await refreshStats(page);
-  for (let i = 0; i < 160; i += 1) {
-    await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.05, 1 / 60));
+  for (let i = 0; i < 120; i += 1) {
+    await page.evaluate(() => window.__GR_TEST__?.advanceSim(1 / 15));
     const alive = await page.evaluate(() => window.__GR_TEST__?.enemyPositions().filter((enemy) => enemy.eliteKind === 'railcar').length ?? 0);
     if (alive === 2) break;
   }
@@ -221,8 +221,8 @@ test('armored railcar arrives as three rail-bound boss components and degrades a
     'sparkRig.boltSpeed': 120,
   });
   await refreshStats(page);
-  for (let i = 0; i < 220; i += 1) {
-    await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.05, 1 / 60));
+  for (let i = 0; i < 165; i += 1) {
+    await page.evaluate(() => window.__GR_TEST__?.advanceSim(1 / 15));
     const secured = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.secured === true);
     if (secured) break;
   }
@@ -294,8 +294,8 @@ test('Coal Thief and Steam Wrecker behavior runs through E2 roster variants', as
   for (const variant of behavior.variants) {
     if (variant) seenVariants.add(variant);
   }
-  for (let i = 0; i < 720 && (behavior.stolen <= 0 || behavior.hits <= 0); i += 1) {
-    await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.05, 1 / 60));
+  for (let i = 0; i < 540 && (behavior.stolen <= 0 || behavior.hits <= 0); i += 1) {
+    await page.evaluate(() => window.__GR_TEST__?.advanceSim(1 / 15));
     behavior = await page.evaluate(() => ({
       stolen: window.__THREE_GAME_DIAGNOSTICS__?.steal.stolenTotal ?? 0,
       hits: window.__THREE_GAME_DIAGNOSTICS__?.wreck.hitsResolved ?? 0,

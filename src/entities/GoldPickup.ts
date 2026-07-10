@@ -22,8 +22,11 @@ export class GoldPickupPool {
 
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
+  private readonly previousActive: boolean[] = [];
+  private readonly previousPositions: THREE.Vector3[] = [];
   private readonly amounts: number[] = [];
   private readonly age: number[] = [];
+  private readonly previousAge: number[] = [];
   private readonly blockedCooldown: number[] = [];
   private readonly geometry = new THREE.DodecahedronGeometry(0.2, 0);
   private readonly material = new THREE.MeshStandardMaterial({
@@ -50,8 +53,11 @@ export class GoldPickupPool {
       const position = new THREE.Vector3();
       this.active.push(false);
       this.positions.push(position);
+      this.previousActive.push(false);
+      this.previousPositions.push(new THREE.Vector3());
       this.amounts.push(0);
       this.age.push(0);
+      this.previousAge.push(0);
       this.blockedCooldown.push(0);
       this.holdings.push({
         id: `pickup:${i}`,
@@ -83,6 +89,7 @@ export class GoldPickupPool {
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
       this.active[i] = true;
+      this.previousActive[i] = false;
       this.positions[i]?.set(position.x, Terrain.visualY(position.x, position.z, pickupY), position.z);
       this.amounts[i] = amount;
       this.age[i] = 0;
@@ -161,15 +168,46 @@ export class GoldPickupPool {
       }
 
       position.y = Terrain.visualY(position.x, position.z, pickupY + Math.sin((this.age[i] ?? 0) * 4.5) * 0.06);
-      this.sync(i);
       dirty = true;
     }
     if (dirty) this.mesh.instanceMatrix.needsUpdate = true;
   }
 
+  captureRenderState(): void {
+    for (let i = 0; i < this.active.length; i += 1) {
+      this.previousActive[i] = this.active[i] === true;
+      this.previousPositions[i]?.copy(this.positions[i] ?? this.previousPositions[i]!);
+      this.previousAge[i] = this.age[i] ?? 0;
+    }
+  }
+
+  applyRenderInterpolation(alpha: number): void {
+    const amount = THREE.MathUtils.clamp(alpha, 0, 1);
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i]) continue;
+      const position = this.positions[i];
+      const previous = this.previousPositions[i];
+      if (!position || !previous || !this.previousActive[i]) {
+        this.sync(i);
+        continue;
+      }
+      const x = position.x;
+      const y = position.y;
+      const z = position.z;
+      const currentAge = this.age[i] ?? 0;
+      position.lerpVectors(previous, position, amount);
+      this.age[i] = THREE.MathUtils.lerp(this.previousAge[i] ?? currentAge, currentAge, amount);
+      this.sync(i);
+      position.set(x, y, z);
+      this.age[i] = currentAge;
+    }
+    this.mesh.instanceMatrix.needsUpdate = true;
+  }
+
   recycleAll(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
+      this.previousActive[i] = false;
       this.amounts[i] = 0;
       this.age[i] = 0;
       this.blockedCooldown[i] = 0;

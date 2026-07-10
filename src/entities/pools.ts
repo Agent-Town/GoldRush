@@ -77,6 +77,13 @@ export class EnemyPool {
 
   private readonly assets: ClaimJumperAssets = createClaimJumperAssets();
   private readonly enemies: ClaimJumperEnemy[] = [];
+  private readonly previousActive: boolean[] = [];
+  private readonly previousPositions: THREE.Vector3[] = [];
+  private readonly currentPositions: THREE.Vector3[] = [];
+  private readonly renderPositions: THREE.Vector3[] = [];
+  private readonly previousRotations: number[] = [];
+  private readonly currentRotations: number[] = [];
+  private readonly renderRotations: number[] = [];
   private readonly renderParts: THREE.InstancedMesh[] = [];
   private readonly sackMesh: THREE.InstancedMesh = new THREE.InstancedMesh(
     this.assets.sackGeometry,
@@ -259,6 +266,13 @@ export class EnemyPool {
     for (let i = 0; i < Balance.enemy.poolSize; i += 1) {
       const enemy = new ClaimJumperEnemy(i, this.assets);
       this.enemies.push(enemy);
+      this.previousActive.push(false);
+      this.previousPositions.push(new THREE.Vector3());
+      this.currentPositions.push(new THREE.Vector3());
+      this.renderPositions.push(new THREE.Vector3());
+      this.previousRotations.push(0);
+      this.currentRotations.push(0);
+      this.renderRotations.push(0);
     }
     this.syncInstances();
   }
@@ -273,6 +287,14 @@ export class EnemyPool {
 
   get all(): readonly ClaimJumperEnemy[] {
     return this.enemies;
+  }
+
+  renderPositionOf(enemy: ClaimJumperEnemy): THREE.Vector3 {
+    return this.renderPositions[enemy.id] ?? enemy.group.position;
+  }
+
+  renderRotationOf(enemy: ClaimJumperEnemy): number {
+    return this.renderRotations[enemy.id] ?? enemy.group.rotation.y;
   }
 
   get activeFlashCount(): number {
@@ -368,6 +390,7 @@ export class EnemyPool {
     for (const enemy of this.enemies) {
       if (enemy.isAlive) continue;
       enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
+      this.previousActive[enemy.id] = false;
       this.spawnSerial += 1;
       this.active += 1;
       this.syncEnemyInstance(enemy);
@@ -472,8 +495,6 @@ export class EnemyPool {
         onContact(enemy);
       }
     }
-    this.syncRenderInstances();
-    this.syncHitFlashes();
     const normalAnimation = this.activeAnimation(false);
     const thiefAnimation = this.activeAnimation(true);
     const baronAnimation = this.activeBaronAnimation();
@@ -491,8 +512,42 @@ export class EnemyPool {
       updateThiefSprites();
     }
     if (baronAnimation.active || this.baronSpriteAnimator) updateBaronSprites();
+  }
+
+  captureRenderState(): void {
+    for (const enemy of this.enemies) {
+      this.previousActive[enemy.id] = enemy.isAlive;
+      this.previousPositions[enemy.id]?.copy(enemy.group.position);
+      this.previousRotations[enemy.id] = enemy.group.rotation.y;
+    }
+  }
+
+  applyRenderInterpolation(alpha: number): void {
+    const amount = THREE.MathUtils.clamp(alpha, 0, 1);
+    for (const enemy of this.enemies) {
+      if (!enemy.isAlive) continue;
+      this.currentPositions[enemy.id]?.copy(enemy.group.position);
+      this.currentRotations[enemy.id] = enemy.group.rotation.y;
+      const previous = this.previousPositions[enemy.id];
+      if (previous && this.previousActive[enemy.id]) {
+        enemy.group.position.lerpVectors(previous, enemy.group.position, amount);
+        const previousRotation = this.previousRotations[enemy.id] ?? enemy.group.rotation.y;
+        enemy.group.rotation.y = previousRotation + signedAngleDeltaRadians(previousRotation, enemy.group.rotation.y) * amount;
+      }
+      this.renderPositions[enemy.id]?.copy(enemy.group.position);
+      this.renderRotations[enemy.id] = enemy.group.rotation.y;
+    }
+
+    this.syncRenderInstances();
     this.syncSpriteVisuals();
-    this.syncBossHpBar();
+    this.syncHitFlashes();
+
+    for (const enemy of this.enemies) {
+      if (!enemy.isAlive) continue;
+      const current = this.currentPositions[enemy.id];
+      if (current) enemy.group.position.copy(current);
+      enemy.group.rotation.y = this.currentRotations[enemy.id] ?? enemy.group.rotation.y;
+    }
   }
 
   recycle(enemy: ClaimJumperEnemy): void {
@@ -508,6 +563,7 @@ export class EnemyPool {
   recycleAll(): void {
     for (const enemy of this.enemies) {
       enemy.recycle();
+      this.previousActive[enemy.id] = false;
     }
     this.active = 0;
     this.spawnSerial = 0;
@@ -1084,6 +1140,10 @@ export class EnemyPool {
     const clamped = THREE.MathUtils.clamp(value, this.gridMin, this.gridMax - 0.001);
     return Math.floor((clamped - this.gridMin) / this.cellSize);
   }
+}
+
+function signedAngleDeltaRadians(from: number, to: number): number {
+  return Math.atan2(Math.sin(to - from), Math.cos(to - from));
 }
 
 function round2(value: number): number {

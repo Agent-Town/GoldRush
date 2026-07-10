@@ -11,6 +11,16 @@ interface ThreeGameDiagnostics {
   frame: number;
   elapsed: number;
   timeAlive: number;
+  simulation: {
+    tick: number;
+    fixed: boolean;
+    stepSeconds: number;
+    alpha: number;
+    stepsLastFrame: number;
+    totalSteps: number;
+    droppedSeconds: number;
+    droppedTicks: number;
+  };
   runState: 'boot' | 'playing' | 'levelup' | 'dead';
   paused: boolean;
   state: 'boot' | 'playing' | 'levelup' | 'dead' | 'paused';
@@ -162,6 +172,7 @@ interface ThreeGameDiagnostics {
   targetScore: number;
   complete: boolean;
   heroPos: { x: number; y: number; z: number };
+  heroRenderPos: { x: number; y: number; z: number };
   speed: number;
   player: {
     position: { x: number; y: number; z: number };
@@ -776,6 +787,16 @@ type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnost
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
 type GrMultiplayerState = import('./mp/LockstepClient').MultiplayerState;
+type GrSimulationTickSample = {
+  time: number;
+  enemies: number;
+  bolts: number;
+  blasts: number;
+  goldPickups: number;
+  xpMotes: number;
+  wave: number;
+  economyLog: number;
+};
 
 interface Window {
   __GR_STORY__?: {
@@ -882,7 +903,20 @@ interface Window {
     demolish: (family: GrBuildableId, index: number) => boolean;
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     setManualSim: (enabled: boolean) => boolean;
-    advanceSim: (seconds: number, stepSeconds?: number) => void;
+    advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => void;
+    driveRenderSchedule: (seconds: number, renderFps: number) => {
+      renderFrames: number;
+      simTicks: number;
+      loop: {
+        fixed: boolean;
+        stepSeconds: number;
+        alpha: number;
+        stepsLastFrame: number;
+        totalSteps: number;
+        droppedSeconds: number;
+        droppedTicks: number;
+      };
+    };
     resetRun: () => void;
     endRunForTest: () => void;
     toggleWeapon: () => 'rig' | 'blast';

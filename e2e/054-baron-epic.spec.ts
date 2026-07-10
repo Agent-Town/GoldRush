@@ -90,8 +90,8 @@ async function teleport(page: Page, x: number, z: number): Promise<void> {
   await page.evaluate((pos) => window.__GR_TEST__?.teleport(pos.x, pos.z), { x, z });
 }
 
-async function advanceSim(page: Page, seconds: number, stepSeconds = 1 / 20): Promise<void> {
-  await page.evaluate(([total, step]) => window.__GR_TEST__?.advanceSim(total, step), [seconds, stepSeconds] as const);
+async function advanceSim(page: Page, seconds: number): Promise<void> {
+  await page.evaluate((total) => window.__GR_TEST__?.advanceSim(total), seconds);
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
@@ -232,8 +232,8 @@ test('unkited Baron wrecks structures with boss hit counts and governed crack au
   let firstHitHp: number | null = null;
   let palisadeHitCount = 0;
   let lastHits = hitsBefore;
-  for (let i = 0; i < 80; i += 1) {
-    await advanceSim(page, 0.25, 1 / 30);
+  for (let i = 0; i < 75; i += 1) {
+    await advanceSim(page, 4 / 15);
     const [entry] = (await hpEntries(page, 'palisade')).filter((next) => next.index === palisade.index);
     const hits = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wreck.hitsResolved ?? 0);
     if (hits > lastHits) {
@@ -278,7 +278,7 @@ test('stationary unplated hero dies within three Baron contacts, while base-spee
   let contacts = 0;
   let lastHp = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.hp ?? 100);
   for (let i = 0; i < 30; i += 1) {
-    await advanceSim(page, 0.2, 1 / 30);
+    await advanceSim(page, 0.2);
     const hp = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.hp ?? 0);
     if (hp < lastHp) {
       contacts += 1;
@@ -327,7 +327,7 @@ test('scaled Baron collider accepts weapon hits at the visible edge', async ({ p
   const edgeOffset = Balance.enemy.touchRadius + Balance.blast.radius + 0.35;
   await page.evaluate(() => window.__GR_TEST__?.toggleWeapon());
   await page.evaluate(({ x, z }) => window.__GR_TEST__?.setBlastAim(x, z), { x: spawned.x + edgeOffset, z: spawned.z });
-  await advanceSim(page, 1, 1 / 60);
+  await advanceSim(page, 1);
   expect((await baron(page)).hp).toBeLessThan(spawned.hp);
   assertNoErrors(errors);
 });
@@ -454,7 +454,7 @@ async function kiteFor(
         };
         maxHeroStep = Math.max(maxHeroStep, Math.hypot(hero.x - previousHero.x, hero.z - previousHero.z));
         window.__GR_TEST__?.teleport(hero.x, hero.z);
-        window.__GR_TEST__?.advanceSim(stepSeconds, 1 / 20);
+        window.__GR_TEST__?.advanceSim(stepSeconds);
         previousHero = hero;
         lastBoss = window.__GR_TEST__?.enemyPositions().find((enemy) => enemy.eliteKind === 'baron');
         if (lastBoss) minGap = Math.min(minGap, Math.hypot(lastBoss.x - hero.x, lastBoss.z - hero.z));

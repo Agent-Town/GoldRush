@@ -66,7 +66,8 @@ async function runDeterminismHarness(): Promise<DeterminismReport> {
   moveToHarvestNode();
   await waitFrames(1);
 
-  const entityTimeline = captureTimeline(() => test.advanceSim(SIM_SECONDS, STEP_SECONDS));
+  const entityTimeline: TimelineEntry[] = [];
+  test.advanceSim(SIM_SECONDS, (sample) => entityTimeline.push({ tick: entityTimeline.length + 1, ...sample, time: round(sample.time, 3) }));
 
   const economyLog = test.economyLog();
   const economy = test.summarizeLog(economyLog);
@@ -114,46 +115,6 @@ function failedReport(error: unknown): DeterminismReport {
 function moveToHarvestNode(): void {
   const node = window.__THREE_GAME_DIAGNOSTICS__?.harvest.activeNodes.find((entry) => entry.active);
   if (node) window.__GR_TEST__?.teleport(node.position.x, node.position.z);
-}
-
-function captureTimeline(run: () => void): TimelineEntry[] {
-  const timeline: TimelineEntry[] = [];
-  const descriptor = Object.getOwnPropertyDescriptor(window, '__THREE_GAME_DIAGNOSTICS__');
-  let current = window.__THREE_GAME_DIAGNOSTICS__;
-  let capturing = true;
-  Object.defineProperty(window, '__THREE_GAME_DIAGNOSTICS__', {
-    configurable: true,
-    get: () => current,
-    set: (next: ThreeGameDiagnostics | undefined) => {
-      current = next;
-      if (capturing && next) timeline.push(sampleTimeline(next, timeline.length + 1));
-    },
-  });
-  try {
-    run();
-  } finally {
-    capturing = false;
-    if (descriptor) Object.defineProperty(window, '__THREE_GAME_DIAGNOSTICS__', descriptor);
-    else {
-      delete (window as Partial<Window>).__THREE_GAME_DIAGNOSTICS__;
-      window.__THREE_GAME_DIAGNOSTICS__ = current;
-    }
-  }
-  return timeline;
-}
-
-function sampleTimeline(diagnostics: ThreeGameDiagnostics, tick: number): TimelineEntry {
-  return {
-    tick,
-    time: round(diagnostics.timeAlive, 3),
-    enemies: diagnostics.enemiesAlive,
-    bolts: diagnostics.boltsAlive,
-    blasts: diagnostics.arsenal.blastsAlive,
-    goldPickups: diagnostics.steal.pickups,
-    xpMotes: diagnostics.xpMotesAlive,
-    wave: diagnostics.wave,
-    economyLog: diagnostics.economy.logLength,
-  };
 }
 
 function waitFrames(count: number): Promise<void> {

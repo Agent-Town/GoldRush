@@ -22,6 +22,8 @@ export class ProjectilePool {
 
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
+  private readonly previousActive: boolean[] = [];
+  private readonly previousPositions: THREE.Vector3[] = [];
   private readonly velocities: THREE.Vector3[] = [];
   private readonly life: number[] = [];
   private readonly damage: number[] = [];
@@ -76,6 +78,8 @@ export class ProjectilePool {
     for (let i = 0; i < Balance.projectile.pool; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
+      this.previousActive.push(false);
+      this.previousPositions.push(new THREE.Vector3());
       this.velocities.push(new THREE.Vector3());
       this.life.push(0);
       this.damage.push(0);
@@ -142,6 +146,7 @@ export class ProjectilePool {
       if (!position || !velocity) return false;
 
       this.active[i] = true;
+      this.previousActive[i] = false;
       this.alive += 1;
       const targetX = targetPoint?.x ?? origin.x;
       const targetZ = targetPoint?.z ?? origin.z;
@@ -175,9 +180,36 @@ export class ProjectilePool {
       if ((this.life[i] ?? 0) <= 0) {
         onExpired?.(this.shooterIdAt(i), this.targetIdAt(i));
         this.deactivate(i);
-      } else {
-        this.sync(i);
       }
+    }
+    this.markNeedsUpdate();
+  }
+
+  captureRenderState(): void {
+    for (let i = 0; i < this.active.length; i += 1) {
+      this.previousActive[i] = this.active[i] === true;
+      const position = this.positions[i];
+      const previous = this.previousPositions[i];
+      if (position && previous) previous.copy(position);
+    }
+  }
+
+  applyRenderInterpolation(alpha: number): void {
+    const amount = THREE.MathUtils.clamp(alpha, 0, 1);
+    for (let i = 0; i < this.active.length; i += 1) {
+      if (!this.active[i]) continue;
+      const position = this.positions[i];
+      const previous = this.previousPositions[i];
+      if (!position || !previous || !this.previousActive[i]) {
+        this.sync(i);
+        continue;
+      }
+      const x = position.x;
+      const y = position.y;
+      const z = position.z;
+      position.lerpVectors(previous, position, amount);
+      this.sync(i);
+      position.set(x, y, z);
     }
     this.markNeedsUpdate();
   }
@@ -221,6 +253,7 @@ export class ProjectilePool {
   recycleAll(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
+      this.previousActive[i] = false;
       this.life[i] = 0;
       this.damage[i] = 0;
       this.ownerIds[i] = 'hero';
