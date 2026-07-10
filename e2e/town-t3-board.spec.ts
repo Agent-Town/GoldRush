@@ -22,15 +22,15 @@ type SeedState = {
 };
 
 const BOARD_CONTRACTS = [
-  { id: 'the-claim', flavor: 'The classic river claim.', artKey: 'river-tile' },
-  { id: 'e1-dry-gulch', flavor: 'Mesa country; dry washes fall toward one sunken spring.', artKey: 'mesa' },
-  { id: 'e1-night-shift', flavor: 'The claim, gone dark, dotted with cold lanterns.', artKey: 'dusk-lantern' },
-  { id: 'e1-twin-banks', flavor: 'A braided river claim with twin fords, gravel bars, and damp reeds.', artKey: 'braided-river' },
-  { id: 'e1-baron', flavor: 'An oxblood banner marks the outfit that keeps buying trouble.', artKey: 'kit-the-baron' },
+  { id: 'the-claim', flavor: 'The classic river claim.', artKey: 'contract-the-claim' },
+  { id: 'e1-dry-gulch', flavor: 'Mesa country; dry washes fall toward one sunken spring.', artKey: 'contract-dry-gulch' },
+  { id: 'e1-night-shift', flavor: 'The claim, gone dark, dotted with cold lanterns.', artKey: 'contract-night-shift' },
+  { id: 'e1-twin-banks', flavor: 'A braided river claim with twin fords, gravel bars, and damp reeds.', artKey: 'contract-twin-banks' },
+  { id: 'e1-baron', flavor: 'An oxblood banner marks the outfit that keeps buying trouble.', artKey: 'contract-baron' },
   {
     id: 'e2-hill-mine',
     flavor: 'Terraced steamworks ground: hold the mine mouth, the rail cut, and the flooded gallery.',
-    artKey: 'steam-terraces',
+    artKey: 'contract-hill-mine',
   },
 ] as const;
 
