@@ -35,8 +35,23 @@ type TelemetryPayload = {
 
 const MAX_JSON_BYTES = 4 * 1024;
 const DEDUP_TTL_SECONDS = 62 * 24 * 60 * 60;
+const RATE_TTL_SECONDS = 60 * 60;
+const MAX_REQUESTS_PER_IP = 30;
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 const IDENTIFIER_KEYS = new Set(['email', 'profile', 'profileid', 'profilename', 'wallet', 'ip', 'name', 'userid', 'user_id']);
+const ALLOWED_PAYLOAD_KEYS = new Set([
+  'contract',
+  'waves',
+  'duration',
+  'upgradesTaken',
+  'tier',
+  'frameP95',
+  'deviceClass',
+  'buildHash',
+  'nonce',
+]);
+const KNOWN_CONTRACTS = new Set(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron', 'e2-hill-mine']);
+const OTHER_CONTRACT = 'other';
 
 export async function onRequest(context: TelemetryContext): Promise<Response> {
   const cors = corsHeaders(context.request);
@@ -47,9 +62,12 @@ export async function onRequest(context: TelemetryContext): Promise<Response> {
   try {
     const body = await readJson(context.request, MAX_JSON_BYTES);
     if (hasIdentifierKey(body)) return error(cors, 400, 'identifier_rejected', 'Telemetry cannot carry identifiers.');
+    if (!hasOnlyAllowedPayloadKeys(body)) return error(cors, 400, 'bad_payload', 'Telemetry payload not accepted.');
     const payload = validatePayload(body);
     if (!payload) return error(cors, 400, 'bad_payload', 'Telemetry payload not accepted.');
     if (!context.env.TELEMETRY) return json(cors, { ok: true, stored: false });
+    const ipAllowed = await bumpCounter(context.env.TELEMETRY, `telemetry:ratelimit:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP);
+    if (!ipAllowed) return error(cors, 429, 'rate_limited', 'The wire is busy. Try again later.');
 
     const duplicate = await storeAggregate(context.env.TELEMETRY, payload);
     return json(cors, { ok: true, stored: true, duplicate });
@@ -69,7 +87,7 @@ async function storeAggregate(kv: KVNamespaceLike, payload: TelemetryPayload): P
   await Promise.all([
     bump(kv, 'telemetry:runs:total'),
     bump(kv, `telemetry:runs:day:${day}`),
-    bump(kv, `telemetry:contract:${payload.contract}`),
+    bump(kv, `telemetry:contract:${contractBucket(payload.contract)}`),
     bump(kv, `telemetry:tier:${payload.tier}`),
     bump(kv, `telemetry:device:${payload.deviceClass}`),
     bump(kv, `telemetry:frameP95:${frameBucket(payload.frameP95)}`),
@@ -85,6 +103,14 @@ async function storeAggregate(kv: KVNamespaceLike, payload: TelemetryPayload): P
 async function bump(kv: KVNamespaceLike, key: string): Promise<void> {
   const current = Number(await kv.get(key));
   await kv.put(key, String((Number.isFinite(current) && current > 0 ? current : 0) + 1));
+}
+
+async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number): Promise<boolean> {
+  const current = Number(await kv.get(key));
+  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
+  if (count >= limit) return false;
+  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
+  return true;
 }
 
 async function maxValue(kv: KVNamespaceLike, key: string, value: number): Promise<void> {
@@ -107,6 +133,10 @@ function validatePayload(value: JsonRecord): TelemetryPayload | null {
   if (!payload.contract || payload.waves === null || payload.duration === null || payload.upgradesTaken === null) return null;
   if (!payload.tier || payload.frameP95 === null || !payload.deviceClass || !payload.buildHash || !payload.nonce) return null;
   return payload as TelemetryPayload;
+}
+
+function contractBucket(contract: string): string {
+  return KNOWN_CONTRACTS.has(contract) ? contract : OTHER_CONTRACT;
 }
 
 function integerInRange(value: unknown, min: number, max: number): number | null {
@@ -160,6 +190,12 @@ async function digestPayload(payload: TelemetryPayload): Promise<string> {
   return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
+async function clientIpHash(request: Request): Promise<string> {
+  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() ?? 'local';
+  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 32);
+}
+
 function hasIdentifierKey(value: unknown): boolean {
   if (Array.isArray(value)) return value.some(hasIdentifierKey);
   if (!isRecord(value)) return false;
@@ -168,6 +204,10 @@ function hasIdentifierKey(value: unknown): boolean {
     if (hasIdentifierKey(nested)) return true;
   }
   return false;
+}
+
+function hasOnlyAllowedPayloadKeys(value: JsonRecord): boolean {
+  return Object.keys(value).every((key) => ALLOWED_PAYLOAD_KEYS.has(key));
 }
 
 async function readJson(request: Request, maxBytes: number): Promise<JsonRecord> {

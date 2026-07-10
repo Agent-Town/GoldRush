@@ -13,6 +13,17 @@ Without the Durable Object binding, both endpoints return:
 { "ok": false, "error": "multiplayer_not_enabled", "message": "riding together isn't saddled yet" }
 ```
 
+With multiplayer enabled, both endpoints also require a `MULTIPLAYER_RATE_LIMITS` KV binding for fixed-window abuse counters. Public limits are intentionally generous for real players:
+
+- room create: 10 rooms per IP per hour
+- room connect attempts: 30 attempts per IP per hour
+
+When a limit trips, the route returns:
+
+```json
+{ "ok": false, "error": "rate_limited", "message": "The wire is busy. Try again later." }
+```
+
 ## Binding
 
 Pages cannot create and deploy a Durable Object class inside the Pages project; bind a companion Worker exporting `MultiplayerRoom` to the Pages project as `MULTIPLAYER_ROOMS`.
@@ -21,7 +32,7 @@ Local harness shape:
 
 ```sh
 wrangler dev functions/api/_multiplayer.ts --name gold-rush-mp-room
-wrangler pages dev public --do MULTIPLAYER_ROOMS=MultiplayerRoom@gold-rush-mp-room
+wrangler pages dev public --do MULTIPLAYER_ROOMS=MultiplayerRoom@gold-rush-mp-room --kv MULTIPLAYER_RATE_LIMITS
 ```
 
 Production Wrangler config shape for the owner/fire to apply:
@@ -31,6 +42,10 @@ Production Wrangler config shape for the owner/fire to apply:
 name = "MULTIPLAYER_ROOMS"
 class_name = "MultiplayerRoom"
 script_name = "gold-rush-mp-room"
+
+[[kv_namespaces]]
+binding = "MULTIPLAYER_RATE_LIMITS"
+id = "<kv namespace id>"
 ```
 
 The companion Worker needs the class migration:

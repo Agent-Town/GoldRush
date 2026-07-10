@@ -21,6 +21,8 @@ async function main() {
   try {
     await checkEmptyState();
     await checkPopulatedAggregates();
+    await checkTelemetryIngestHardening();
+    await checkTelemetryRateLimit();
     await writeSummary('passed');
     console.log(`stats worker checks passed (${checks.length})`);
   } catch (err) {
@@ -73,7 +75,7 @@ async function checkPopulatedAggregates() {
     assertEqual(stats.runs.allTime, 42, 'runs allTime reads total counter');
     assertEqual(stats.deepestWave, 37, 'deepest wave reads max counter');
     assertEqual(stats.medianDurationBucket, '3-5m', 'median duration bucket crosses target count');
-    assertEqual(stats.busiestContract.id, 'steady-hands', 'busiest contract uses highest counter');
+    assertEqual(stats.busiestContract.id, 'e1-dry-gulch', 'busiest contract uses highest known-contract counter');
     assertEqual(stats.busiestContract.runs, 30, 'busiest contract run count');
     assertEqual(stats.tierSplit.FULL, 10, 'tier FULL count');
     assertEqual(stats.tierSplit.BALANCED, 20, 'tier BALANCED count');
@@ -89,6 +91,56 @@ async function checkPopulatedAggregates() {
     assertEqual(stats.wavesHistogram['40plus'], 6, 'wave histogram bucket');
     assertEqual(stats.updatedAt, '2026-07-09T09:00:00.000Z', 'updatedAt passes through aggregate timestamp');
     assertAggregateOnly(response.body, 'populated stats response');
+  } finally {
+    await server.stop();
+  }
+}
+
+async function checkTelemetryIngestHardening() {
+  const server = await startPages('ingest');
+  try {
+    const known = await postJson(server.url, '/api/telemetry', telemetryPayload({ contract: 'e1-dry-gulch', nonce: '00000000000000000000000000000001' }));
+    assertEqual(known.status, 200, 'known telemetry shape accepted');
+    assertEqual(known.body.stored, true, 'known telemetry stored');
+
+    const garbage = await postJson(server.url, '/api/telemetry', telemetryPayload({ contract: 'xxx-garbage', nonce: '00000000000000000000000000000002' }));
+    assertEqual(garbage.status, 200, 'garbage contract telemetry accepted into internal bucket');
+    assertEqual(garbage.body.stored, true, 'garbage contract telemetry stored');
+
+    const statsResponse = await getJson(server.url, '/api/stats');
+    assertEqual(statsResponse.status, 200, 'stats read after telemetry ingest succeeds');
+    assertEqual(statsResponse.body.stats.runs.allTime, 2, 'unknown contract still counts as a run');
+    assertEqual(statsResponse.body.stats.busiestContract.id, 'e1-dry-gulch', 'garbage contract never becomes busiest contract');
+    assert(!JSON.stringify(statsResponse.body).includes('xxx-garbage'), 'stats response does not surface garbage contract key');
+    assert(!JSON.stringify(statsResponse.body).includes('"other"'), 'stats response does not render internal other bucket');
+
+    const badIdentifier = await postJson(
+      server.url,
+      '/api/telemetry',
+      { ...telemetryPayload({ contract: 'the-claim', nonce: '00000000000000000000000000000003' }), email: 'robin@example.com' },
+    );
+    assertEqual(badIdentifier.status, 400, 'identifier-shaped telemetry field rejected');
+  } finally {
+    await server.stop();
+  }
+}
+
+async function checkTelemetryRateLimit() {
+  const server = await startPages('rate-limit');
+  try {
+    let limited = null;
+    for (let index = 0; index < 31; index += 1) {
+      const nonce = index.toString(16).padStart(32, '0');
+      const response = await postJson(server.url, '/api/telemetry', telemetryPayload({ contract: 'the-claim', nonce }), undefined);
+      if (response.status === 429) {
+        limited = response;
+        break;
+      }
+      assertEqual(response.status, 200, `telemetry request ${index + 1} before limit accepted`);
+    }
+    assert(limited, 'telemetry rate limit trips');
+    assertEqual(limited.body.error, 'rate_limited', 'telemetry rate limit error code');
+    assertEqual(limited.body.message, 'The wire is busy. Try again later.', 'telemetry rate limit friendly copy');
   } finally {
     await server.stop();
   }
@@ -219,6 +271,32 @@ async function getJson(baseUrl, route, origin = ORIGIN) {
   return { status: response.status, headers: response.headers, body: await response.json().catch(() => ({})) };
 }
 
+async function postJson(baseUrl, route, body, origin = ORIGIN) {
+  const headers = { 'content-type': 'application/json' };
+  if (origin) headers.Origin = origin;
+  const response = await fetch(`${baseUrl}${route}`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(body),
+  });
+  return { status: response.status, headers: response.headers, body: await response.json().catch(() => ({})) };
+}
+
+function telemetryPayload(overrides = {}) {
+  return {
+    contract: 'the-claim',
+    waves: 12,
+    duration: 240_000,
+    upgradesTaken: 4,
+    tier: 'BALANCED',
+    frameP95: 24.5,
+    deviceClass: 'desktop',
+    buildHash: 'dev',
+    nonce: 'abcdefabcdefabcdefabcdefabcdefab',
+    ...overrides,
+  };
+}
+
 function populatedSeed() {
   const [today, yesterday, twoDaysAgo, , , , sixDaysAgo, sevenDaysAgo] = lastUtcDays(8);
   return [
@@ -228,8 +306,10 @@ function populatedSeed() {
     [`telemetry:runs:day:${twoDaysAgo}`, '3'],
     [`telemetry:runs:day:${sixDaysAgo}`, '2'],
     [`telemetry:runs:day:${sevenDaysAgo}`, '99'],
-    ['telemetry:contract:deep-vein', '12'],
-    ['telemetry:contract:steady-hands', '30'],
+    ['telemetry:contract:e1-baron', '12'],
+    ['telemetry:contract:e1-dry-gulch', '30'],
+    ['telemetry:contract:xxx-garbage', '999'],
+    ['telemetry:contract:other', '1000'],
     ['telemetry:tier:FULL', '10'],
     ['telemetry:tier:BALANCED', '20'],
     ['telemetry:tier:LITE', '12'],

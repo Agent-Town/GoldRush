@@ -28,6 +28,7 @@ const FRAME_BUCKETS = ['lt16', '16-25', '25-33', '33-50', '50plus'] as const;
 const WAVE_BUCKETS = ['0-4', '5-9', '10-19', '20-29', '30-39', '40plus'] as const;
 const TIER_KEYS = ['FULL', 'BALANCED', 'LITE'] as const;
 const DEVICE_CLASSES = ['desktop', 'mobile', 'tablet'] as const;
+const KNOWN_CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron', 'e2-hill-mine'] as const;
 
 type DurationBucket = (typeof DURATION_BUCKETS)[number];
 type FrameBucket = (typeof FRAME_BUCKETS)[number];
@@ -116,11 +117,10 @@ async function loadStats(kv: KVNamespaceLike): Promise<Stats> {
 
 async function readBusiestContract(kv: KVNamespaceLike): Promise<Stats['busiestContract']> {
   const prefix = 'telemetry:contract:';
-  const keys = await listKeys(kv, prefix);
   const rows = await Promise.all(
-    keys.map(async (key) => ({
-      id: key.slice(prefix.length),
-      runs: await readCounter(kv, key),
+    KNOWN_CONTRACTS.map(async (id) => ({
+      id,
+      runs: await readCounter(kv, `${prefix}${id}`),
     })),
   );
   let best: Stats['busiestContract'] = null;
@@ -150,17 +150,6 @@ async function readCounterMap<Key extends readonly string[]>(
 async function readCounter(kv: KVNamespaceLike, key: string): Promise<number> {
   const value = Number(await kv.get(key));
   return Number.isFinite(value) && value > 0 ? Math.trunc(value) : 0;
-}
-
-async function listKeys(kv: KVNamespaceLike, prefix: string): Promise<string[]> {
-  const names: string[] = [];
-  let cursor: string | undefined;
-  do {
-    const page = await kv.list(cursor ? { prefix, cursor } : { prefix });
-    names.push(...page.keys.map((key) => key.name).filter((name) => name.startsWith(prefix)));
-    cursor = page.list_complete ? undefined : page.cursor;
-  } while (cursor);
-  return names;
 }
 
 function medianBucket(histogram: CounterMap<DurationBucket>): DurationBucket | null {

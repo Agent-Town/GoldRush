@@ -4,7 +4,7 @@ The Assay Office reads anonymous run telemetry through one public aggregate rout
 
 - `GET /api/stats`
 
-The route reads the same `TELEMETRY` KV aggregate keys written by `POST /api/telemetry`. It never serves single-run rows and never reads or returns dedup keys.
+The route reads the same `TELEMETRY` KV aggregate keys written by `POST /api/telemetry`. It never serves single-run rows, never reads or returns dedup keys, and never exposes unknown contract IDs.
 
 ## Response
 
@@ -62,7 +62,7 @@ The public shape is built only from these TL-01 aggregate keys:
 
 - `telemetry:runs:total`
 - `telemetry:runs:day:<yyyy-mm-dd>`
-- `telemetry:contract:<contract-id>`
+- `telemetry:contract:<known-contract-id>`
 - `telemetry:tier:<FULL|BALANCED|LITE>`
 - `telemetry:device:<desktop|mobile|tablet>`
 - `telemetry:frameP95:<bucket>`
@@ -74,6 +74,17 @@ The public shape is built only from these TL-01 aggregate keys:
 
 Duration median is a bucket median because TL-01 stores duration buckets, not raw run durations. Busiest contract is the highest contract counter, with lexical tie-breaks for stable output.
 
+Known contract IDs are mirrored from the shipped contract registry:
+
+- `the-claim`
+- `e1-dry-gulch`
+- `e1-night-shift`
+- `e1-twin-banks`
+- `e1-baron`
+- `e2-hill-mine`
+
+`POST /api/telemetry` accepts the TL-01 payload shape only, caps JSON at 4KB, rejects identifier-shaped fields, and applies a generous per-IP fixed-window KV limit of 30 accepted telemetry attempts per hour. Contract IDs outside the known set are counted under the internal `telemetry:contract:other` bucket so total run counts remain honest, but `GET /api/stats` deliberately does not read or render `other` and does not enumerate arbitrary `telemetry:contract:*` keys.
+
 ## Local Harness
 
 Run:
@@ -82,4 +93,4 @@ Run:
 node scripts/test-stats.mjs
 ```
 
-The harness starts `wrangler pages dev public --kv TELEMETRY`, seeds local KV through `wrangler kv bulk put --namespace-id TELEMETRY --local --persist-to ...`, reads `GET /api/stats`, and asserts empty state, aggregate math, cache headers, CORS/method guards, and that no identifier-shaped keys such as email, profile, wallet, IP, or nonce escape.
+The harness starts `wrangler pages dev public --kv TELEMETRY`, seeds local KV through `wrangler kv bulk put --namespace-id TELEMETRY --local --persist-to ...`, reads `GET /api/stats`, and asserts empty state, aggregate math, cache headers, CORS/method guards, telemetry rate limiting, garbage-contract bucketing, and that no identifier-shaped keys such as email, profile, wallet, IP, or nonce escape.
