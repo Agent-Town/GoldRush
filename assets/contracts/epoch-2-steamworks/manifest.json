@@ -3,7 +3,226 @@
   "displayName": "Steamworks",
   "order": 2,
   "locked": true,
-  "threshold": null,
+  "scienceThreshold": 8,
+  "research": {
+    "branches": [
+      {
+        "id": "Geology",
+        "label": "ore & pressure",
+        "iconKey": "node.gold_seam",
+        "nodes": [
+          {
+            "id": "pressure_assay",
+            "name": "Pressure Assay",
+            "description": "Read boiler pressure as carefully as a seam ledger.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Pressure gauges expose safe working bands for Steamworks contracts.",
+            "effectRef": "steamworks.pressure_assay",
+            "cost": 1,
+            "live": true
+          },
+          {
+            "id": "vein_mapping",
+            "name": "Vein Mapping",
+            "description": "Survey the Hill Mine for ore seams hidden under scree.",
+            "iconKey": "node.gold_seam",
+            "effect": "Hill Mine surveys can reveal additional ore seams.",
+            "effectRef": "steamworks.vein_mapping",
+            "cost": 1,
+            "requires": ["pressure_assay"]
+          },
+          {
+            "id": "stamp_yield",
+            "name": "Stamp Yield",
+            "description": "Tune the five stamp heads to waste less gold-bearing gravel.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the Steamworks stamp-yield improvement.",
+            "effectRef": "steamworks.stamp_yield",
+            "cost": 1,
+            "requires": ["vein_mapping"]
+          },
+          {
+            "id": "coal_survey",
+            "name": "Coal Survey",
+            "description": "Mark coal seams near the minehead before the boilers run hot.",
+            "iconKey": "ui.upgrade.icon.panning",
+            "effect": "Coal survey marks become available on Steamworks tiles.",
+            "effectRef": "steamworks.coal_survey",
+            "cost": 1,
+            "requires": ["pressure_assay"]
+          },
+          {
+            "id": "pressure_ledger",
+            "name": "Pressure Ledger",
+            "description": "Bank surplus pressure without hiding the over-pressure hazard.",
+            "iconKey": "ui.upgrade.icon.firerate",
+            "effect": "Banks the pressure-ledger contract hook.",
+            "effectRef": "steamworks.pressure_ledger",
+            "cost": 1,
+            "requires": ["coal_survey"]
+          },
+          {
+            "id": "dynamo_site_survey",
+            "name": "Dynamo Site Survey",
+            "description": "Choose the town footing that can carry the Dynamo Hall.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "The Dynamo Hall site is surveyed for the next epoch.",
+            "effectRef": "steamworks.dynamo_site_survey",
+            "cost": 1,
+            "requires": ["stamp_yield", "pressure_ledger"]
+          }
+        ]
+      },
+      {
+        "id": "Arsenal",
+        "label": "pressure arsenal",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "boiler_lance",
+            "name": "Boiler Lance",
+            "description": "Shape a readable steam jet from the Spark Rig lineage.",
+            "iconKey": "ui.upgrade.icon.firerate",
+            "effect": "Banks the Boiler Lance arsenal family.",
+            "effectRef": "steamworks.boiler_lance",
+            "cost": 1,
+            "live": true
+          },
+          {
+            "id": "pressure_mortar",
+            "name": "Pressure Mortar",
+            "description": "Lob warm pressure bursts along the Blast Charge lineage.",
+            "iconKey": "ui.upgrade.icon.blast",
+            "effect": "Banks the Pressure Mortar arsenal family.",
+            "effectRef": "steamworks.pressure_mortar",
+            "cost": 1,
+            "requires": ["boiler_lance"],
+            "live": true
+          },
+          {
+            "id": "boiler_battery",
+            "name": "Boiler Battery",
+            "description": "Feed a sentry battery from a compact pony boiler.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the boiler-fed battery building tier.",
+            "effectRef": "steamworks.boiler_battery",
+            "cost": 1,
+            "requires": ["boiler_lance"]
+          },
+          {
+            "id": "iron_wall",
+            "name": "Iron-Banded Wall",
+            "description": "Rivet iron straps onto the palisade without changing its footprint.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the iron-banded wall building tier.",
+            "effectRef": "steamworks.iron_wall",
+            "cost": 1,
+            "requires": ["boiler_battery"]
+          },
+          {
+            "id": "coil_groundwork",
+            "name": "Coil Groundwork",
+            "description": "Wind the first safe coils that will outgrow steam pressure.",
+            "iconKey": "ui.upgrade.icon.volley",
+            "effect": "Banks the coil groundwork for the Voltage Age.",
+            "effectRef": "steamworks.coil_groundwork",
+            "cost": 1,
+            "requires": ["pressure_mortar", "iron_wall"]
+          },
+          {
+            "id": "railcar_components",
+            "name": "Railcar Components",
+            "description": "Read wheels, boiler, and cabin as separate machine targets.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the component-target lesson from the Baron's railcar.",
+            "effectRef": "steamworks.railcar_components",
+            "cost": 1,
+            "requires": ["pressure_mortar"]
+          }
+        ]
+      },
+      {
+        "id": "Fabrication",
+        "label": "crafting & agent",
+        "iconKey": "char.prospector_agent.portrait",
+        "nodes": [
+          {
+            "id": "steam_parts",
+            "name": "Steam Parts",
+            "description": "Assay pistons, valves, and gauges as typed invention parts.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Steam parts enter the fabrication vocabulary.",
+            "effectRef": "steamworks.steam_parts",
+            "cost": 1,
+            "live": true
+          },
+          {
+            "id": "steam_order_slots",
+            "name": "Steam Order Slots",
+            "description": "Machine-shop racks make room for 2 additional pending orders.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks 2 additional Steamworks order slots.",
+            "effectRef": "steamworks.steam_order_slots",
+            "cost": 1,
+            "requires": ["steam_parts"]
+          },
+          {
+            "id": "depot_logistics",
+            "name": "Depot Logistics",
+            "description": "Route typed parts through the Rail Depot without losing receipts.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the Rail Depot logistics hook.",
+            "effectRef": "steamworks.depot_logistics",
+            "cost": 1,
+            "requires": ["steam_parts"]
+          },
+          {
+            "id": "machine_shop_patterns",
+            "name": "Machine-Shop Patterns",
+            "description": "Record repeatable piston and gasket patterns at the Machine Shop.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks Steamworks pattern-library expansion.",
+            "effectRef": "steamworks.machine_shop_patterns",
+            "cost": 1,
+            "requires": ["steam_order_slots"]
+          },
+          {
+            "id": "recruited_agent_slot",
+            "name": "Recruited Agent Slot",
+            "description": "The Depot opens one permission-bounded helper slot.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the first recruited-agent slot at the Depot.",
+            "effectRef": "steamworks.recruited_agent_slot",
+            "cost": 1,
+            "requires": ["depot_logistics"],
+            "live": true
+          },
+          {
+            "id": "dynamo_blueprints",
+            "name": "Dynamo Blueprints",
+            "description": "Join the shop patterns and Depot receipts into a Dynamo Hall plan.",
+            "iconKey": "ui.upgrade.icon.beacon",
+            "effect": "The Dynamo Hall blueprints are ready for the town ledger.",
+            "effectRef": "steamworks.dynamo_blueprints",
+            "cost": 1,
+            "requires": ["machine_shop_patterns", "recruited_agent_slot"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "dynamo-hall",
+    "surfaceRef": "bld.dynamo_hall",
+    "cost": { "gold": 0, "bankedScience": 8 },
+    "raiseActionText": "Raise the Dynamo Hall"
+  },
+  "transition": {
+    "ceremonyBeatId": "e3-ceremony-dynamo",
+    "kitArtKey": "kit-era-3",
+    "displayName": "The Voltage Age"
+  },
+  "successor": "epoch-3-voltage",
   "resources": [
     {
       "id": "pressure",

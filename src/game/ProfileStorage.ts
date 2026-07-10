@@ -1,12 +1,12 @@
 import { DIFFICULTY_PRESET_STORAGE_KEY, normalizeDifficultyPreset, type DifficultyPresetId } from './Balance';
 import { META_PROGRESS_KEY } from './MetaProgress';
-import { RESEARCH_STATE_KEY } from '../meta/ResearchTree';
+import { RESEARCH_STATE_KEY, researchStateKey } from '../meta/ResearchTree';
 import { MEGAPROJECT_STATE_KEY } from '../meta/Megaproject';
 import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY } from '../audio/settings';
 import { STORY_TALES_STORAGE_KEY } from '../story/settings';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../encyclopedia/storage';
 import { PERFORMANCE_TIER_STORAGE_KEY } from './PerformanceTier';
-import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY } from '../meta/ContractFamilies';
+import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY, listEpochs } from '../meta/ContractFamilies';
 
 export const PROFILE_KEY = 'gr.profile.v2';
 export const LEGACY_SCOREBOARD_KEY = 'gr.scores.v1';
@@ -40,6 +40,7 @@ export const PROFILE_DATA_KEYS = new Set([
   LEDGER_DISCOVERED_STORAGE_KEY,
   ACTIVE_EPOCH_KEY,
   EPOCH_CEREMONY_KEY,
+  ...listEpochs().map((epoch) => researchStateKey(epoch.id)),
 ]);
 const LATE_PROFILE_DATA_KEYS = [
   AUDIO_VOLUME_STORAGE_KEY,
