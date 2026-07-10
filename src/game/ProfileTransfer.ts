@@ -11,6 +11,7 @@ import {
   type ProfileState,
 } from './ProfileStorage';
 import { SAVE_SLOTS_KEY, compactSaveSlotsForTransfer } from './SaveSlots';
+import { normalizeRunSuspendDatum } from './RunSuspend';
 
 const TRANSFER_KIND = 'goldrush.profile.ledger';
 const TRANSFER_VERSION = 1;
@@ -72,8 +73,10 @@ export function unpackProfile(storage: ProfileStorage, envelope: ProfileTransfer
   if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
   for (const key of PROFILE_DATA_KEYS) {
     if (!(key in envelope.data)) continue;
+    const datum = normalizeDatum(key, envelope.data[key]);
+    if (datum === null) continue;
     try {
-      storage.setItem(profileDataKey(profile.id, key), encodeDatum(envelope.data[key]));
+      storage.setItem(profileDataKey(profile.id, key), encodeDatum(datum));
     } catch {
       return { ok: false, message: 'The browser would not store that ledger.' };
     }
@@ -94,8 +97,10 @@ export function restoreProfileBundle(storage: ProfileStorage, envelope: ProfileT
   for (const key of PROFILE_DATA_KEYS) storage.removeItem(profileDataKey(profile.id, key));
   for (const key of PROFILE_DATA_KEYS) {
     if (!(key in envelope.data)) continue;
+    const datum = normalizeDatum(key, envelope.data[key]);
+    if (datum === null) continue;
     try {
-      storage.setItem(profileDataKey(profile.id, key), encodeDatum(envelope.data[key]));
+      storage.setItem(profileDataKey(profile.id, key), encodeDatum(datum));
     } catch {
       return { ok: false, message: 'The browser would not store that ledger.' };
     }
@@ -148,6 +153,11 @@ function decodeDatum(raw: string): unknown {
 
 function encodeDatum(value: unknown): string {
   return typeof value === 'string' ? value : JSON.stringify(value);
+}
+
+function normalizeDatum(key: string, value: unknown): unknown | null {
+  if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
+  return value;
 }
 
 function readString(value: unknown): string | null {
