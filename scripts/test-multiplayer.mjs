@@ -20,6 +20,7 @@ async function main() {
   try {
     await checkUnconfigured503();
     await checkRelayFlow();
+    await checkRateLimits();
     await writeSummary('passed');
     console.log(`multiplayer relay checks passed (${checks.length})`);
   } catch (err) {
@@ -89,6 +90,46 @@ async function checkRelayFlow() {
 
     alice.close();
     bobAgain.close();
+  } finally {
+    await relay.stop();
+  }
+}
+
+async function checkRateLimits() {
+  const relay = await startRelayEnv();
+  try {
+    const createIp = { 'CF-Connecting-IP': '203.0.113.55' };
+    let created = null;
+    for (let index = 0; index < 11; index += 1) {
+      const response = await post(relay.url, '/api/multiplayer/create', {}, ORIGIN, createIp);
+      if (response.status === 429) {
+        created = response;
+        break;
+      }
+      assertEqual(response.status, 200, `room create ${index + 1} before limit succeeds`);
+    }
+    assert(created, 'create rate limit trips');
+    assertEqual(created.body.error, 'rate_limited', 'create rate limit error code');
+    assertEqual(created.body.message, 'The wire is busy. Try again later.', 'create rate limit friendly copy');
+
+    const alternateIp = { 'CF-Connecting-IP': '203.0.113.44' };
+    const room = await post(relay.url, '/api/multiplayer/create', {}, ORIGIN, alternateIp);
+    assertEqual(room.status, 200, 'alternate IP can create room for connect limit check');
+    const code = room.body.code;
+
+    const connectIp = { 'CF-Connecting-IP': '203.0.113.66' };
+    let connected = null;
+    for (let index = 0; index < 31; index += 1) {
+      const response = await get(relay.url, `/api/multiplayer/connect?code=${code}`, ORIGIN, connectIp);
+      if (response.status === 429) {
+        connected = response;
+        break;
+      }
+      assertEqual(response.status, 426, `connect attempt ${index + 1} before limit reaches room`);
+    }
+    assert(connected, 'connect rate limit trips');
+    assertEqual(connected.body.error, 'rate_limited', 'connect rate limit error code');
+    assertEqual(connected.body.message, 'The wire is busy. Try again later.', 'connect rate limit friendly copy');
   } finally {
     await relay.stop();
   }
@@ -177,7 +218,7 @@ async function startPages(name, doScriptName) {
     'error',
     '--show-interactive-dev-session=false',
   ];
-  if (doScriptName) args.push('--do', `MULTIPLAYER_ROOMS=MultiplayerRoom@${doScriptName}`);
+  if (doScriptName) args.push('--do', `MULTIPLAYER_ROOMS=MultiplayerRoom@${doScriptName}`, '--kv', 'MULTIPLAYER_RATE_LIMITS');
   const child = spawnWrangler(args, `pages ${name}`);
   const url = `http://127.0.0.1:${port}`;
   await waitForServer(url, child, '/api/multiplayer/create');
@@ -243,12 +284,17 @@ async function waitForServer(url, child, route = '/') {
   throw new Error(`${child.label} did not become ready:\n${child.logs()}`);
 }
 
-async function post(baseUrl, route, body, origin = ORIGIN) {
+async function post(baseUrl, route, body, origin = ORIGIN, extraHeaders = {}) {
   const response = await fetch(`${baseUrl}${route}`, {
     method: 'POST',
-    headers: { 'content-type': 'application/json', Origin: origin },
+    headers: { 'content-type': 'application/json', Origin: origin, ...extraHeaders },
     body: JSON.stringify(body),
   });
+  return { status: response.status, body: await response.json().catch(() => ({})) };
+}
+
+async function get(baseUrl, route, origin = ORIGIN, extraHeaders = {}) {
+  const response = await fetch(`${baseUrl}${route}`, { headers: { Origin: origin, ...extraHeaders } });
   return { status: response.status, body: await response.json().catch(() => ({})) };
 }
 

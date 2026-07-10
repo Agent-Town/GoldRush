@@ -286,6 +286,27 @@ test('server route rejects GET and identifier-shaped payloads', async () => {
   });
   expect(dev.status).toBe(200);
   await expect(dev.json()).resolves.toMatchObject({ ok: true, stored: false });
+
+  const extraField = await telemetryRoute({
+    request: new Request('http://127.0.0.1/api/telemetry', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({
+        contract: 'the-claim',
+        waves: 1,
+        duration: 1000,
+        upgradesTaken: 0,
+        tier: 'FULL',
+        frameP95: 16,
+        deviceClass: 'desktop',
+        buildHash: 'dev',
+        nonce: '0123456789abcdef0123456789abcdef',
+        arbitrary: 'not allowed',
+      }),
+    }),
+    env: {},
+  });
+  expect(extraField.status).toBe(400);
 });
 
 test('opt-out remains honored when localStorage writes fail', async () => {
@@ -314,7 +335,7 @@ test('server route stores aggregate-only counters when KV is bound', async () =>
   const store = new Map<string, string>();
   const kv = {
     get: async (key: string) => store.get(key) ?? null,
-    put: async (key: string, value: string) => {
+    put: async (key: string, value: string, _options?: { expirationTtl?: number }) => {
       store.set(key, value);
     },
     list: async () => ({ keys: [], list_complete: true }),
@@ -344,6 +365,7 @@ test('server route stores aggregate-only counters when KV is bound', async () =>
   expect(store.get('telemetry:waves:max')).toBe('21');
   expect(store.get('telemetry:waves:20-29')).toBe('1');
   expect(store.get('telemetry:duration:3-5m')).toBe('1');
+  expect(store.get('telemetry:contract:e1-dry-gulch')).toBe('1');
   expect(store.get('telemetry:device:mobile:frameP95:25-33')).toBe('1');
   expect([...store.keys()].some((key) => key.includes(':raw:') || key.includes(':row:'))).toBe(false);
 
@@ -351,4 +373,58 @@ test('server route stores aggregate-only counters when KV is bound', async () =>
   expect(duplicate.status).toBe(200);
   await expect(duplicate.json()).resolves.toMatchObject({ ok: true, stored: true, duplicate: true });
   expect(store.get('telemetry:runs:total')).toBe('1');
+
+  const garbage = await telemetryRoute({
+    request: new Request('http://127.0.0.1/api/telemetry', {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ ...body, contract: 'xxx-garbage', nonce: '00000000000000000000000000000002' }),
+    }),
+    env: { TELEMETRY: kv },
+  });
+  expect(garbage.status).toBe(200);
+  expect(store.get('telemetry:runs:total')).toBe('2');
+  expect(store.get('telemetry:contract:xxx-garbage')).toBeUndefined();
+  expect(store.get('telemetry:contract:other')).toBe('1');
+});
+
+test('server route rate-limits bound telemetry by client IP', async () => {
+  const store = new Map<string, string>();
+  const kv = {
+    get: async (key: string) => store.get(key) ?? null,
+    put: async (key: string, value: string, _options?: { expirationTtl?: number }) => {
+      store.set(key, value);
+    },
+    list: async () => ({ keys: [], list_complete: true }),
+  };
+
+  let limited: Response | null = null;
+  for (let index = 0; index < 31; index += 1) {
+    const response = await telemetryRoute({
+      request: new Request('http://127.0.0.1/api/telemetry', {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          contract: 'the-claim',
+          waves: 1,
+          duration: 1000,
+          upgradesTaken: 0,
+          tier: 'FULL',
+          frameP95: 16,
+          deviceClass: 'desktop',
+          buildHash: 'dev',
+          nonce: index.toString(16).padStart(32, '0'),
+        }),
+      }),
+      env: { TELEMETRY: kv },
+    });
+    if (response.status === 429) {
+      limited = response;
+      break;
+    }
+    expect(response.status).toBe(200);
+  }
+
+  expect(limited?.status).toBe(429);
+  await expect(limited!.json()).resolves.toMatchObject({ ok: false, error: 'rate_limited', message: 'The wire is busy. Try again later.' });
 });

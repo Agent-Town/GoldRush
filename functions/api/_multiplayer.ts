@@ -5,8 +5,21 @@ type DurableObjectNamespaceLike = {
   get(id: unknown): { fetch(request: Request): Promise<Response> };
 };
 
+type KVListResult = {
+  keys: { name: string }[];
+  list_complete: boolean;
+  cursor?: string;
+};
+
+type KVNamespaceLike = {
+  get(key: string): Promise<string | null>;
+  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
+  list(options?: { prefix?: string; cursor?: string }): Promise<KVListResult>;
+};
+
 type MultiplayerEnv = {
   MULTIPLAYER_ROOMS?: DurableObjectNamespaceLike;
+  MULTIPLAYER_RATE_LIMITS?: KVNamespaceLike;
 };
 
 type MultiplayerContext = {
@@ -45,6 +58,10 @@ const MAX_MESSAGE_BYTES = 220 * 1024;
 const MAX_SNAPSHOT_BYTES = 200 * 1024;
 const MAX_FUTURE_TICKS = 512;
 const ROOM_UNAVAILABLE_MESSAGE = "riding together isn't saddled yet";
+const RATE_LIMIT_MESSAGE = 'The wire is busy. Try again later.';
+const RATE_TTL_SECONDS = 60 * 60;
+const MAX_CREATE_REQUESTS_PER_IP = 10;
+const MAX_CONNECT_REQUESTS_PER_IP = 30;
 const HANDSHAKE_TIMEOUT_MS = 10_000;
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 
@@ -53,6 +70,10 @@ export async function createRoom(context: MultiplayerContext): Promise<Response>
     if (request.method !== 'POST') return error(cors, 405, 'method_not_allowed', 'POST only');
     const rooms = requireRooms(env, cors);
     if (rooms instanceof Response) return rooms;
+    const limiter = requireRateLimits(env, cors);
+    if (limiter instanceof Response) return limiter;
+    const allowed = await bumpCounter(limiter, `mp:ratelimit:create:${await clientIpHash(request)}`, MAX_CREATE_REQUESTS_PER_IP);
+    if (!allowed) return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
     await readJson(request, SMALL_JSON_BYTES);
 
     for (let attempt = 0; attempt < 3; attempt += 1) {
@@ -71,6 +92,10 @@ export async function connectRoom(context: MultiplayerContext): Promise<Response
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   const rooms = requireRooms(context.env, cors);
   if (rooms instanceof Response) return rooms;
+  const limiter = requireRateLimits(context.env, cors);
+  if (limiter instanceof Response) return limiter;
+  const allowed = await bumpCounter(limiter, `mp:ratelimit:connect:${await clientIpHash(context.request)}`, MAX_CONNECT_REQUESTS_PER_IP);
+  if (!allowed) return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
 
   const code = normalizeRoomCode(new URL(context.request.url).searchParams.get('code'));
   if (!code) return error(cors, 400, 'bad_room_code', 'Room code not accepted.');
@@ -355,7 +380,8 @@ async function route(
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   try {
     return await handler({ request: context.request, env: context.env, cors });
-  } catch {
+  } catch (err) {
+    if (err instanceof HttpError) return error(cors, err.status, err.code, err.message);
     return error(cors, 500, 'server_error', 'The relay office could not finish that request.');
   }
 }
@@ -379,6 +405,10 @@ function requireRooms(env: MultiplayerEnv, cors: Record<string, string>): Durabl
   return env.MULTIPLAYER_ROOMS ?? error(cors, 503, 'multiplayer_not_enabled', ROOM_UNAVAILABLE_MESSAGE);
 }
 
+function requireRateLimits(env: MultiplayerEnv, cors: Record<string, string>): KVNamespaceLike | Response {
+  return env.MULTIPLAYER_RATE_LIMITS ?? error(cors, 503, 'multiplayer_not_enabled', ROOM_UNAVAILABLE_MESSAGE);
+}
+
 function withCors(response: Response, cors: Record<string, string>): Response {
   const headers = new Headers(response.headers);
   for (const [key, value] of Object.entries(cors)) headers.set(key, value);
@@ -395,14 +425,33 @@ function roomRequest(path: string, body: JsonRecord): Request {
 
 async function readJson(request: Request, maxBytes: number): Promise<JsonRecord> {
   const type = request.headers.get('content-type') ?? '';
-  if (!/^application\/json\b/i.test(type)) throw new Error('unsupported_media_type');
+  if (!/^application\/json\b/i.test(type)) throw new HttpError(415, 'unsupported_media_type', 'Send application/json.');
   const declared = Number(request.headers.get('content-length') ?? '0');
-  if (Number.isFinite(declared) && declared > maxBytes) throw new Error('payload_too_large');
+  if (Number.isFinite(declared) && declared > maxBytes) throw new HttpError(413, 'payload_too_large', 'Request payload is too large.');
   const text = await request.text();
-  if (utf8Length(text) > maxBytes) throw new Error('payload_too_large');
-  const value = JSON.parse(text || '{}');
-  if (!isRecord(value)) throw new Error('bad_json');
+  if (utf8Length(text) > maxBytes) throw new HttpError(413, 'payload_too_large', 'Request payload is too large.');
+  let value: unknown;
+  try {
+    value = JSON.parse(text || '{}');
+  } catch {
+    throw new HttpError(400, 'bad_json', 'JSON not accepted.');
+  }
+  if (!isRecord(value)) throw new HttpError(400, 'bad_json', 'JSON not accepted.');
   return value;
+}
+
+async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number): Promise<boolean> {
+  const current = Number(await kv.get(key));
+  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
+  if (count >= limit) return false;
+  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
+  return true;
+}
+
+async function clientIpHash(request: Request): Promise<string> {
+  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() ?? 'local';
+  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 32);
 }
 
 function parseSocketMessage(raw: unknown): JsonRecord {
@@ -468,4 +517,14 @@ function utf8Length(value: string): number {
 
 function isRecord(value: unknown): value is JsonRecord {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+class HttpError extends Error {
+  constructor(
+    public readonly status: number,
+    public readonly code: string,
+    message: string,
+  ) {
+    super(message);
+  }
 }

@@ -78,8 +78,10 @@ function populatedSeed(): Record<string, string> {
     [`telemetry:runs:day:${twoDaysAgo}`]: '3',
     [`telemetry:runs:day:${sixDaysAgo}`]: '2',
     [`telemetry:runs:day:${sevenDaysAgo}`]: '99',
-    'telemetry:contract:deep-vein': '12',
-    'telemetry:contract:steady-hands': '30',
+    'telemetry:contract:e1-baron': '12',
+    'telemetry:contract:e1-dry-gulch': '30',
+    'telemetry:contract:other': '1000',
+    'telemetry:contract:xxx-garbage': '999',
     'telemetry:tier:FULL': '10',
     'telemetry:tier:BALANCED': '20',
     'telemetry:tier:LITE': '12',
@@ -143,7 +145,7 @@ test('GET /api/stats returns populated aggregate counters', async ({}, testInfo)
     deepestWave: 37,
     medianDurationBucket: '3-5m',
     durationHistogram: { lt1m: 1, '1-3m': 9, '3-5m': 15, '5-10m': 12, '10-20m': 5, '20mplus': 0 },
-    busiestContract: { id: 'steady-hands', runs: 30 },
+    busiestContract: { id: 'e1-dry-gulch', runs: 30 },
     tierSplit: { FULL: 10, BALANCED: 20, LITE: 12 },
     deviceSplit: { desktop: 20, mobile: 15, tablet: 7 },
     frameP95Global: { lt16: 3, '16-25': 10, '25-33': 20, '33-50': 8, '50plus': 1 },
@@ -155,6 +157,8 @@ test('GET /api/stats returns populated aggregate counters', async ({}, testInfo)
     wavesHistogram: { '0-4': 1, '5-9': 4, '10-19': 9, '20-29': 12, '30-39': 10, '40plus': 6 },
     updatedAt: '2026-07-09T09:00:00.000Z',
   });
+  expect(JSON.stringify(body)).not.toContain('xxx-garbage');
+  expect(JSON.stringify(body)).not.toContain('"other"');
   expectAggregateOnly(body);
   await writeJsonArtifact(testInfo, 'populated-response', body);
 });
