@@ -1,5 +1,5 @@
 # The Music of the Saga — spec seed
-Status: ACTIVE 2026-07-11 — **GENERATOR = SONILO (owner ears on take-1: 'This is really good - quite fun to listen to'); 3.75cr/60s. ElevenLabs upgrade NOT needed for music (stays the sfx/voice path).** MU-01 in flight.
+Status: ACTIVE 2026-07-11 — **GENERATOR = SONILO (owner ears on take-1: 'This is really good - quite fun to listen to'); 3.75cr/60s. ElevenLabs upgrade NOT needed for music (stays the sfx/voice path).** **MU-01 VERDICT (owner 2026-07-11): TAKE-1 = THE CANONICAL PAN THEME ('the first one is the best'; take-3 runner-up); the E1 loop PASSES; production pieces LONGER (title 2-3min, era loops 2min+); ONE THEME EVERYWHERE (owner: 'we should really stick to one') — every MU-02 era-track prompt must describe take-1's melody as the recurring theme.** MU-02 authorable era-by-era.
 
 ## THE PAN THEME (the law of the score)
 One melodic motif — THE PAN THEME — recurs in every era's track, re-instrumented per era exactly as the pan object recurs in every arsenal plate: E1 states it simply; every era plays it in its own voice; E10 plays them ALL (the medley aboard the Ark). The Static's approach = the mix losing channels until only the theme's heartbeat remains (the e10 bundle's audio thesis, already design-locked).
