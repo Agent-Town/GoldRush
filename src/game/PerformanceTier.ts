@@ -160,6 +160,7 @@ export function readPerformanceTierOverride(): PerformanceTierOverride {
 }
 
 export function savePerformanceTierOverride(value: PerformanceTierOverride): PerformanceTierOverride {
+  if (readStoredOverride() === value) return value;
   try {
     globalThis.localStorage?.setItem(PERFORMANCE_TIER_STORAGE_KEY, value);
   } catch {}

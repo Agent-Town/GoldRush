@@ -36,7 +36,6 @@ export const PROFILE_DATA_KEYS = new Set([
   AUDIO_VOLUME_STORAGE_KEY,
   AUDIO_MUTED_STORAGE_KEY,
   STORY_TALES_STORAGE_KEY,
-  PERFORMANCE_TIER_STORAGE_KEY,
   LEDGER_DISCOVERED_STORAGE_KEY,
   ACTIVE_EPOCH_KEY,
   EPOCH_CEREMONY_KEY,
@@ -46,10 +45,10 @@ const LATE_PROFILE_DATA_KEYS = [
   AUDIO_VOLUME_STORAGE_KEY,
   AUDIO_MUTED_STORAGE_KEY,
   STORY_TALES_STORAGE_KEY,
-  PERFORMANCE_TIER_STORAGE_KEY,
   ACTIVE_EPOCH_KEY,
   EPOCH_CEREMONY_KEY,
 ] as const;
+const DEVICE_LOCAL_MIGRATION_KEYS = [PERFORMANCE_TIER_STORAGE_KEY] as const;
 
 export type ProfileRecord = {
   id: string;
@@ -82,6 +81,7 @@ export function ensureProfileState(storage: ProfileStorage): ProfileState {
   const saved = loadProfileState(storage);
   if (saved) {
     migrateProfileDataKeys(storage, saved.profiles.map((profile) => profile.id), LATE_PROFILE_DATA_KEYS);
+    migrateDeviceLocalDataKeys(storage, saved, DEVICE_LOCAL_MIGRATION_KEYS);
     return saved;
   }
 
@@ -225,6 +225,7 @@ export function installProfileStorageScope(storage: Storage): void {
   // ponytail: one-page storage shim; replace with injected storage if callers stop using localStorage directly.
   Storage.prototype.getItem = function getProfileScopedItem(key: string): string | null {
     if (this !== scopedStorage) return nativeStorage.getItem!.call(this, key);
+    if (key === PERFORMANCE_TIER_STORAGE_KEY) return readDeviceLocalDatum(this, key);
     const scoped = scopedDataKey(this, key);
     const value = nativeStorage.getItem!.call(this, scoped);
     if (value === null && key === DIFFICULTY_PRESET_STORAGE_KEY) return activeProfile(this).difficultyPreset;
@@ -275,6 +276,25 @@ function migrateProfileDataKeys(storage: ProfileStorage, profileIds: readonly st
       if (rawGet(storage, profileDataKey(profileId, key)) === null) saveProfileDatum(storage, profileId, key, legacy);
     }
   }
+}
+
+function migrateDeviceLocalDataKeys(storage: ProfileStorage, state: ProfileState, keys: Iterable<string>): void {
+  for (const key of keys) {
+    if (rawGet(storage, key) !== null) continue;
+    const legacy = rawGet(storage, profileDataKey(selectedProfileId(state), key));
+    if (legacy !== null) rawSet(storage, key, legacy);
+  }
+}
+
+function readDeviceLocalDatum(storage: Storage, key: string): string | null {
+  const value = nativeStorage.getItem!.call(storage, key);
+  if (value !== null) return value;
+  const state = loadProfileState(storage);
+  if (!state) return null;
+  const legacy = nativeStorage.getItem!.call(storage, profileDataKey(selectedProfileId(state), key));
+  if (legacy === null) return null;
+  nativeStorage.setItem!.call(storage, key, legacy);
+  return legacy;
 }
 
 function saveProfileDatum(storage: Pick<Storage, 'setItem'>, profileId: string, key: string, value: string): void {

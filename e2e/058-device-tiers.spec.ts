@@ -2,7 +2,8 @@ import { expect, test, webkit, type Browser, type Page, type TestInfo } from '@p
 import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import { PERFORMANCE_TIER_CONFIGS, type PerformanceTier } from '../src/game/PerformanceTier';
+import { PERFORMANCE_TIER_CONFIGS, PERFORMANCE_TIER_STORAGE_KEY, type PerformanceTier } from '../src/game/PerformanceTier';
+import { PROFILE_KEY } from '../src/game/ProfileStorage';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type PerfSample = {
@@ -40,6 +41,18 @@ async function seedProfile(page: Page): Promise<void> {
     localStorage.setItem('gr.profile.v2', JSON.stringify(state));
     sessionStorage.setItem('__gr_058_profile_seeded__', '1');
   }, PROFILE_STATE);
+}
+
+async function countTierWrites(page: Page): Promise<void> {
+  await page.addInitScript((tierKey) => {
+    let tierWrites = 0;
+    const nativeSetItem = Storage.prototype.setItem;
+    Storage.prototype.setItem = function countPerformanceTierWrites(key: string, value: string): void {
+      if (key === tierKey) tierWrites += 1;
+      return nativeSetItem.call(this, key, value);
+    };
+    (window as unknown as { __grTierWrites: () => number }).__grTierWrites = () => tierWrites;
+  }, PERFORMANCE_TIER_STORAGE_KEY);
 }
 
 async function openGame(page: Page, tier: PerformanceTier | 'auto', seed: string, extra = ''): Promise<ErrorBucket> {
@@ -90,6 +103,71 @@ test('Settings performance override persists and applies Lite render knobs', asy
   expect(diagnostics.vfx.combat.puffs.capacity).toBe(config.combatVfxPuffs);
   expect(diagnostics.performance.config.enemyBarCap).toBe(config.enemyBarCap);
 
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('tier URL param does not recurse when the Start Menu re-renders', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'menu recursion proof only needs one browser');
+  await seedProfile(page);
+  await countTierWrites(page);
+  const errors = collectErrors(page);
+
+  await page.goto('/');
+  await expect(page.getByTestId('start-menu')).toBeVisible();
+  await page.evaluate(() => history.pushState(null, '', '/?tier=lite'));
+  await page.getByTestId('start-menu-settings').click();
+
+  await expect(page.getByTestId('start-menu')).toBeVisible();
+  await expect(page.getByTestId('start-menu-performance-tier')).toHaveValue('lite');
+  await expect(page.evaluate(() => localStorage.getItem('gr.performance.tier.v1'))).resolves.toBe('lite');
+  await expect(page.evaluate(() => (window as unknown as { __grTierWrites: () => number }).__grTierWrites())).resolves.toBe(1);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('profile transfer excludes the device-local tier key and migrates old scoped values', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'transfer proof only needs one browser');
+  await seedProfile(page);
+  const errors = collectErrors(page);
+
+  await page.goto('/');
+  const result = await page.evaluate(
+    async ({ profileKey, tierKey }) => {
+      const scopedTierKey = `${profileKey}.robin.${tierKey}`;
+      localStorage.removeItem(tierKey);
+      localStorage.setItem(scopedTierKey, 'balanced');
+      const transfer = (await Function('return import("/src/game/ProfileTransfer.ts")')()) as {
+        packActiveProfile: (storage: Storage) => { envelope: { data: Record<string, unknown> } };
+        restoreProfileBundle: (storage: Storage, envelope: unknown) => { ok: boolean };
+      };
+      const tier = localStorage.getItem(tierKey);
+      const packed = transfer.packActiveProfile(localStorage).envelope;
+      const restored = transfer.restoreProfileBundle(localStorage, {
+        kind: 'goldrush.profile.ledger',
+        version: 1,
+        exportedAt: '2026-07-10T00:00:00.000Z',
+        profile: { id: 'cloud', name: 'Cloud', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] },
+        data: { [tierKey]: 'lite' },
+      });
+      return {
+        tier,
+        scopedTier: localStorage.getItem(scopedTierKey),
+        packedHasTier: Object.prototype.hasOwnProperty.call(packed.data, tierKey),
+        restoredOk: restored.ok,
+        cloudScopedTier: localStorage.getItem(`${profileKey}.cloud.${tierKey}`),
+      };
+    },
+    { profileKey: PROFILE_KEY, tierKey: PERFORMANCE_TIER_STORAGE_KEY },
+  );
+
+  expect(result).toEqual({
+    tier: 'balanced',
+    scopedTier: 'balanced',
+    packedHasTier: false,
+    restoredOk: true,
+    cloudScopedTier: null,
+  });
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

@@ -60,6 +60,7 @@ export type ResearchState = {
   taken: string[];
   proposalSalt: number;
   pinnedTarget: string | null;
+  unlocks?: ResearchUnlockFlags;
 };
 
 export type ResearchUnlockFlags = {
@@ -124,6 +125,7 @@ export function freshResearchState(
     taken: [],
     proposalSalt: 0,
     pinnedTarget: null,
+    unlocks: {},
   };
 }
 
@@ -149,10 +151,7 @@ export function loadResearchState(
     epochId === DEFAULT_EPOCH_ID || saved === null
       ? storedSteps
       : storedSteps + Math.max(0, progress.tracks.science - cursor);
-  const next = applyResearchUnlockFlags(
-    migrateResearchState(raw, progressForEpoch(progress, epochId, steps), epochId, progress.tracks.science),
-    unlocks,
-  );
+  const next = { ...migrateResearchState(raw, progressForEpoch(progress, epochId, steps), epochId, progress.tracks.science), unlocks };
   if (saved === null || steps !== storedSteps) writeStorage(registryStorage, key, JSON.stringify(toRegistry(next)));
   return next;
 }
@@ -183,7 +182,7 @@ export function availablePicks(state: ResearchState): ResearchNode[] {
 
 export function frontierNodes(state: ResearchState): ResearchNode[] {
   const taken = new Set(state.taken);
-  return nodesForState(state).filter((node) => !taken.has(node.id) && (node.requires ?? []).every((id) => taken.has(id)));
+  return nodesForState(state).filter((node) => !taken.has(node.id) && nodeAvailable(state, node, taken));
 }
 
 export function takeNode(state: ResearchState, id: string): ResearchState {
@@ -197,6 +196,7 @@ export function takeNode(state: ResearchState, id: string): ResearchState {
     taken: [...state.taken, id],
     proposalSalt: state.proposalSalt + 1,
     pinnedTarget: state.pinnedTarget,
+    unlocks: state.unlocks,
   };
 }
 
@@ -323,18 +323,8 @@ function migrateResearchState(raw: unknown, progress: MetaProgress, epochId: str
     taken: [...new Set(taken)],
     proposalSalt,
     pinnedTarget,
+    unlocks: {},
   };
-}
-
-function applyResearchUnlockFlags(state: ResearchState, unlocks: ResearchUnlockFlags): ResearchState {
-  if (
-    stateEpochId(state) !== DEFAULT_EPOCH_ID ||
-    !unlocks.rocketCartCaptured ||
-    state.taken.includes(SKY_ROCKET_BATTERY_NODE_ID)
-  ) {
-    return state;
-  }
-  return { ...state, taken: [...state.taken, SKY_ROCKET_BATTERY_NODE_ID] };
 }
 
 function toRegistry(state: ResearchState): ResearchRegistry {
@@ -450,6 +440,11 @@ function continuedStudyPicks(state: ResearchState): ResearchNode[] {
       live: true,
     };
   });
+}
+
+function nodeAvailable(state: ResearchState, node: ResearchNode, taken: Set<string>): boolean {
+  if (node.id === SKY_ROCKET_BATTERY_NODE_ID && !state.unlocks?.rocketCartCaptured) return false;
+  return (node.requires ?? []).every((id) => taken.has(id));
 }
 
 function isContinuedStudyId(id: string): boolean {

@@ -9,6 +9,7 @@ import {
   researchPathIds,
   savedEpochMegaprojectBuildStarted,
   scienceMeter,
+  SKY_ROCKET_BATTERY_NODE_ID,
   type ResearchNode,
   type ResearchState,
 } from '../meta/ResearchTree';
@@ -93,7 +94,7 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   },
   sky_rocket_battery: {
     name: 'Sky-Rocket Battery',
-    line: 'The Steamworks arsenal gains a three-rocket festival battery.',
+    line: 'Captured Baron science: the Sky-Rocket Battery is marked in the Steamworks arsenal.',
   },
   rush_pattern: {
     name: 'Rush Pattern',
@@ -193,6 +194,7 @@ function renderNode(
   const pinned = state.pinnedTarget === node.id;
   const onPinnedPath = pinnedPath.has(node.id);
   const requires = node.requires?.map((id) => nodesById[id]?.name ?? id).join(', ');
+  const lockedReason = researchLockedReason(node, state, status);
   const iconKey = researchIconKeyForNode(node);
   return `
     <button
@@ -215,6 +217,7 @@ function renderNode(
       </span>
       <strong>${escapeHtml(node.name)}</strong>
       <span class="research-chart__effect">${escapeHtml(node.effect)}</span>
+      ${lockedReason ? `<em data-testid="research-lock-${escapeHtml(node.id)}">${escapeHtml(lockedReason)}</em>` : ''}
       ${requires ? `<em>Requires ${escapeHtml(requires)}</em>` : ''}
       ${status === 'taken' ? '<b class="research-chart__stamp">SURVEYED</b>' : ''}
       ${pinned ? '<b class="research-chart__pin" data-testid="research-chart-pin-mark">survey pin</b>' : ''}
@@ -307,6 +310,11 @@ function renderContinuedStudy(state: ResearchState): string {
 function nodeStatus(node: ResearchNode, state: ResearchState, frontier: Set<string>): 'taken' | 'available' | 'locked' {
   if (state.taken.includes(node.id)) return 'taken';
   return frontier.has(node.id) ? 'available' : 'locked';
+}
+
+function researchLockedReason(node: ResearchNode, state: ResearchState, status: 'taken' | 'available' | 'locked'): string {
+  if (status !== 'locked' || node.id !== SKY_ROCKET_BATTERY_NODE_ID || state.unlocks?.rocketCartCaptured) return '';
+  return 'The Baron still holds this science.';
 }
 
 function stateLabel(status: 'taken' | 'available' | 'locked'): string {

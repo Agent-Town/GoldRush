@@ -1,4 +1,4 @@
-import type { RuntimeStorySignal, StorySignal } from './signals';
+import type { RuntimeStorySignal } from './signals';
 import type { StorySpeakerId } from './speakers';
 import { hasRocketCartCaptured } from '../game/Medals';
 
@@ -16,10 +16,10 @@ export type StoryBeatFor<TSignal extends { type: string }> = {
   ceremonyStep?: 'mill' | 'valley' | 'title';
 };
 
-export type StoryBeat = StoryBeatFor<StorySignal>;
+export type StoryBeat = StoryBeatFor<RuntimeStorySignal>;
 export type RuntimeStoryBeat = StoryBeatFor<RuntimeStorySignal>;
 
-const contractLine = (signal: StorySignal, fallback: string): string =>
+const contractLine = (signal: RuntimeStorySignal, fallback: string): string =>
   signal.type === 'contract-unlocked' ? signal.ledgerBlurb : fallback;
 
 export const STORY_BEATS: readonly StoryBeat[] = [
@@ -150,11 +150,11 @@ export const STORY_BEATS: readonly StoryBeat[] = [
   },
   {
     id: 'sky-rocket-captured',
-    trigger: 'science-complete',
+    trigger: 'boss-defeat',
     speaker: 'elder',
     oncePerProfile: true,
-    when: () => hasRocketCartCaptured(),
-    lines: ['His science.', 'Your arsenal now.'],
+    when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e1-baron' && hasRocketCartCaptured(),
+    lines: ["The Baron's sky-rocket science is captured.", 'Pride pays tuition to the town.'],
   },
   {
     id: 'stamp-site-found',
@@ -280,6 +280,4 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-const STORY_RUNTIME_CORE_BEATS = STORY_BEATS as unknown as readonly RuntimeStoryBeat[];
-
-export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = [...STORY_RUNTIME_CORE_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
+export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];

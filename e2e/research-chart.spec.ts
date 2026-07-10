@@ -103,14 +103,17 @@ function assertNoErrors(errors: ErrorBucket): void {
 
 test('live unlock nodes use the same icon key and reveal copy as their run cards', () => {
   const chainSpark = RESEARCH_NODES.find((node) => node.id === 'chain_spark_primer');
+  const skyRocket = RESEARCH_NODES.find((node) => node.id === 'sky_rocket_battery');
   const pact = RESEARCH_NODES.find((node) => node.id === 'pact_ledger');
   expect(chainSpark).toBeTruthy();
+  expect(skyRocket).toBeTruthy();
   expect(pact).toBeTruthy();
   expect(researchIconKeyForNode(chainSpark!)).toBe('ui.upgrade.icon.volley');
   expect(researchRevealForNode(chainSpark!)).toEqual({
     name: 'Chain Spark Arc',
     line: 'Your rigs and beacons fire 12% faster.',
   });
+  expect(researchRevealForNode(skyRocket!).line).toContain('Captured Baron science');
   expect(researchIconKeyForNode(pact!)).toBe('ui.upgrade.icon.prospecting');
   expect(researchRevealForNode(pact!).name).toBe('Rich Seam Pact');
 });

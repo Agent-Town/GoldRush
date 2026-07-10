@@ -10,9 +10,11 @@ import {
   RESEARCH_STATE_KEY,
   SKY_ROCKET_BATTERY_NODE_ID,
 } from '../src/meta/ResearchTree';
+import { renderResearchChart } from '../src/ui/ResearchChart';
+import { loadMedals } from '../src/game/Medals';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
-type MemoryStorage = Pick<Storage, 'getItem' | 'setItem'>;
+type MemoryStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;
 
 const ARTIFACT_DIR = path.resolve('artifacts/057');
 const BASE_QUERY = '?debug&contract=e1-baron&timescale=1&nolevel&nowaves&nosteal&nowreck';
@@ -32,10 +34,10 @@ function isDevServerTransportError(text: string): boolean {
   return text.includes("WebSocket connection to 'ws://127.0.0.1:5188/") || text === 'Failed to load resource: net::ERR_CONNECTION_REFUSED';
 }
 
-async function seedProfile(page: Page, science = 6): Promise<void> {
+async function seedProfile(page: Page, science = 6, taken: readonly string[] = []): Promise<void> {
   await page.goto('/');
   await page.evaluate(
-    ({ profileKey, keys, scienceSteps }) => {
+    ({ profileKey, keys, scienceSteps, takenNodes }) => {
       localStorage.clear();
       sessionStorage.clear();
       const profiles: ProfileState['profiles'] = [
@@ -45,7 +47,7 @@ async function seedProfile(page: Page, science = 6): Promise<void> {
       localStorage.setItem(profileKey, JSON.stringify(state));
       localStorage.setItem(keys.town, 'Quartz Hill');
       localStorage.setItem(keys.meta, JSON.stringify({ version: 1, tracks: { territory: 0, science: scienceSteps, hero: 0, agent: 0 } }));
-      localStorage.setItem(keys.research, JSON.stringify({ version: 1, taken: [], proposalSalt: 0, pinnedTarget: null }));
+      localStorage.setItem(keys.research, JSON.stringify({ version: 1, taken: takenNodes, proposalSalt: 0, pinnedTarget: null }));
     },
     {
       profileKey: PROFILE_KEY,
@@ -55,6 +57,7 @@ async function seedProfile(page: Page, science = 6): Promise<void> {
         research: profileDataKey('robin', RESEARCH_STATE_KEY),
       },
       scienceSteps: science,
+      takenNodes: taken,
     },
   );
 }
@@ -96,6 +99,16 @@ async function hold(page: Page, key: string, ms: number): Promise<void> {
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: false });
+}
+
+async function showStoryBeat(page: Page, beatId: string): Promise<void> {
+  const card = page.getByTestId('story-beat-card');
+  for (let guard = 0; guard < 6; guard += 1) {
+    await expect(card).toBeVisible({ timeout: 8_000 });
+    if ((await card.getAttribute('data-beat-id')) === beatId) return;
+    await page.mouse.click(6, 6);
+    await page.waitForTimeout(3_200);
+  }
 }
 
 async function unlockAudio(page: Page): Promise<void> {
@@ -213,6 +226,9 @@ function memoryStorage(taken: string[], science = taken.length): MemoryStorage {
     setItem: (key, value) => {
       values.set(key, value);
     },
+    removeItem: (key) => {
+      values.delete(key);
+    },
   };
 }
 
@@ -271,8 +287,14 @@ test('melee range suppresses the Baron rocket volley', async ({ page }) => {
 });
 
 test('defeating the Baron captures the cart, shows the medal line, and unlocks captured research', async ({ page }, testInfo) => {
-  await seedProfile(page, 6);
+  await seedProfile(page, ROCKET_PREREQS.length, ROCKET_PREREQS);
   const errors = await openGame(page, '057-capture', '&nopause');
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.research.taken ?? [])).resolves.not.toContain(
+    SKY_ROCKET_BATTERY_NODE_ID,
+  );
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.research.available ?? [])).resolves.not.toContain(
+    SKY_ROCKET_BATTERY_NODE_ID,
+  );
   await setBalance(page, 'enemy.hp', 1);
   await setBalance(page, 'sparkRig.damage', 9999);
   await setBalance(page, 'sparkRig.fireRate', 60);
@@ -295,7 +317,22 @@ test('defeating the Baron captures the cart, shows the medal line, and unlocks c
   await expect(page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '{}').rocketCartCaptured, profileDataKey('robin', MEDALS_KEY))).resolves.toBe(
     true,
   );
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.research.taken ?? [])).resolves.not.toContain(
+    SKY_ROCKET_BATTERY_NODE_ID,
+  );
+  await expect(page.evaluate((id) => window.__GR_TEST__?.takeResearchNode(id), SKY_ROCKET_BATTERY_NODE_ID)).resolves.toBe(true);
   await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.research.taken ?? [])).resolves.toContain(SKY_ROCKET_BATTERY_NODE_ID);
+  const beat = page.getByTestId('story-beat-card');
+  await showStoryBeat(page, 'sky-rocket-captured');
+  await expect(beat).toHaveAttribute('data-beat-id', 'sky-rocket-captured', { timeout: 8_000 });
+  await expect(beat).toContainText('sky-rocket science is captured');
+  await shot(page, testInfo, 'capture-beat');
+  await page.mouse.click(6, 6);
+  await expect(beat).toHaveCount(0);
+  await page.evaluate(() =>
+    window.__GR_STORY__?.emit({ type: 'boss-defeat', contractId: 'e1-baron', contractName: 'The Claim-Jumper Baron' }),
+  );
+  await expect(page.getByTestId('story-beat-card')).toHaveCount(0);
 
   await openBoard(page);
   await openBaronBoardPage(page);
@@ -305,21 +342,33 @@ test('defeating the Baron captures the cart, shows the medal line, and unlocks c
   assertNoErrors(errors);
 });
 
-test('Sky-Rocket Battery starts unlocked only for captured profiles and remains normally researchable', () => {
-  const capturedStorage = memoryStorage([]);
+test('Sky-Rocket Battery requires Baron capture and preserves veteran profiles', () => {
+  const capturedStorage = memoryStorage(ROCKET_PREREQS);
   const captured = loadResearchState(capturedStorage, capturedStorage, { rocketCartCaptured: true });
-  expect(captured.taken).toContain(SKY_ROCKET_BATTERY_NODE_ID);
-  expect(captured.progress.tracks.science).toBe(0);
+  expect(captured.taken).not.toContain(SKY_ROCKET_BATTERY_NODE_ID);
+  expect(captured.progress.tracks.science).toBe(ROCKET_PREREQS.length);
+  expect(frontierNodes(captured).map((node) => node.id)).toContain(SKY_ROCKET_BATTERY_NODE_ID);
 
-  const uncapturedStorage = memoryStorage([]);
+  const uncapturedStorage = memoryStorage(ROCKET_PREREQS);
   const uncaptured = loadResearchState(uncapturedStorage, uncapturedStorage, { rocketCartCaptured: false });
   expect(uncaptured.taken).not.toContain(SKY_ROCKET_BATTERY_NODE_ID);
   expect(frontierNodes(uncaptured).map((node) => node.id)).not.toContain(SKY_ROCKET_BATTERY_NODE_ID);
+  expect(renderResearchChart(uncaptured)).toContain('The Baron still holds this science.');
 
-  const readyStorage = memoryStorage(ROCKET_PREREQS);
-  const ready = loadResearchState(readyStorage, readyStorage, { rocketCartCaptured: false });
-  expect(ready.taken).not.toContain(SKY_ROCKET_BATTERY_NODE_ID);
-  expect(frontierNodes(ready).map((node) => node.id)).toContain(SKY_ROCKET_BATTERY_NODE_ID);
+  const veteran = loadResearchState(memoryStorage([...ROCKET_PREREQS, SKY_ROCKET_BATTERY_NODE_ID]), undefined, { rocketCartCaptured: false });
+  expect(veteran.taken).toContain(SKY_ROCKET_BATTERY_NODE_ID);
+
+  const medalStorage = memoryStorage([]);
+  medalStorage.setItem(
+    PROFILE_KEY,
+    JSON.stringify({
+      version: 2,
+      activeId: 'robin',
+      profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+    }),
+  );
+  medalStorage.setItem(profileDataKey('robin', MEDALS_KEY), JSON.stringify({ version: 1, baronBeaten: true }));
+  expect(loadMedals(medalStorage).rocketCartCaptured).toBe(true);
 });
 
 test('Baron rocket volley targeting is deterministic for the same seed', async ({ page, browser }, testInfo) => {

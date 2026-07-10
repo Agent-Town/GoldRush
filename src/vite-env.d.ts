@@ -3,7 +3,7 @@
 declare const __APP_BUILD__: string;
 
 type GrBuildableId = any;
-type GrStorySignal = import('./story').StorySignal;
+type GrStorySignal = import('./story').RuntimeStorySignal;
 type GrRunEndedEvent = Extract<import('./core/EventBus').GameEvent, { type: 'run_ended' }>;
 type GrRunTelemetryPayload = import('./telemetry/payload').RunTelemetryPayload;
 

@@ -2947,6 +2947,7 @@ export class Game {
       this.researchStorage,
       loadResearchState(this.researchStorage, this.researchStorage, this.researchUnlockFlags()),
     );
+    this.publishDiagnostics();
     this.uiBridge.announce(baron.defeatBeat, atSim, null, BARON_DEFEAT_CARD_SECONDS, 'baron-defeat', bossDefeatTitle(baron));
   }
 

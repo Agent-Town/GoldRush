@@ -4,7 +4,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { MEDALS_KEY, PROFILE_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { STORY_BEATS } from '../src/story/beats';
-import { STORY_SIGNAL_REGISTRY, type StorySignal } from '../src/story/signals';
+import { STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal } from '../src/story/signals';
 import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
 import { STORY_SPEAKERS } from '../src/story/speakers';
 
@@ -97,7 +97,7 @@ async function installFastStoryClock(page: Page): Promise<void> {
   });
 }
 
-async function emit(page: Page, signal: StorySignal): Promise<void> {
+async function emit(page: Page, signal: RuntimeStorySignal): Promise<void> {
   await page.evaluate((nextSignal) => {
     const clock = window as unknown as { __SS02_NOW__?: number };
     clock.__SS02_NOW__ = (clock.__SS02_NOW__ ?? Date.now()) + 4_000;
@@ -117,7 +117,7 @@ async function expectBeat(page: Page, expected: ExpectedCard, testInfo: TestInfo
   await expect(card).toHaveCount(0);
 }
 
-async function emitAndExpect(page: Page, signal: StorySignal, expected: ExpectedCard, testInfo: TestInfo): Promise<void> {
+async function emitAndExpect(page: Page, signal: RuntimeStorySignal, expected: ExpectedCard, testInfo: TestInfo): Promise<void> {
   await emit(page, signal);
   await expectBeat(page, expected, testInfo);
 }
@@ -127,7 +127,7 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: false });
 }
 
-function sampleSignal(trigger: StorySignal['type']): StorySignal {
+function sampleSignal(trigger: RuntimeStorySignal['type']): RuntimeStorySignal {
   switch (trigger) {
     case 'town-named':
       return { type: 'town-named', townName: 'Aurora Bend' };
@@ -159,6 +159,14 @@ function sampleSignal(trigger: StorySignal['type']): StorySignal {
       return { type: 'xp-collected' };
     case 'first-boot':
       return { type: 'first-boot' };
+    case 'boss-arrival':
+      return { type: 'boss-arrival', contractId: 'e1-baron', contractName: 'The Claim-Jumper Baron' };
+    case 'boss-defeat':
+      return { type: 'boss-defeat', contractId: 'e1-baron', contractName: 'The Claim-Jumper Baron' };
+    case 'ledger-page':
+      return { type: 'ledger-page', entryId: 'claim_jumper', entryName: 'Claim-Jumper' };
+    case 'epoch-activated':
+      return { type: 'epoch-activated', epochId: 'epoch-2-steamworks', displayName: 'The Steamworks' };
   }
 }
 
@@ -173,7 +181,7 @@ test('SS-02 table is 23 registered, attributed, two-line E1 beats', () => {
   expect(new Set(ids).size).toBe(STORY_BEATS.length);
 
   for (const beat of STORY_BEATS) {
-    expect(STORY_SIGNAL_REGISTRY).toContain(beat.trigger);
+    expect(STORY_RUNTIME_SIGNAL_REGISTRY).toContain(beat.trigger);
     expect(STORY_SPEAKERS[beat.speaker]).toBeTruthy();
     const lines = linesFor(beat);
     expect(lines.length).toBeGreaterThan(0);
@@ -302,11 +310,11 @@ test('full E1 thread fires each authored arc once with portraits', async ({ page
   await page.evaluate((key) => {
     localStorage.setItem(key, JSON.stringify({ version: 1, baronBeaten: true, rocketCartCaptured: true }));
   }, profileDataKey('robin', MEDALS_KEY));
-  await emitAndExpect(page, { type: 'science-complete' }, {
+  await emitAndExpect(page, { type: 'boss-defeat', contractId: 'e1-baron', contractName: 'The Claim-Jumper Baron' }, {
     id: 'sky-rocket-captured',
     speaker: 'elder',
     portrait: 'townsfolk-elder',
-    text: 'Your arsenal now.',
+    text: 'sky-rocket science is captured',
   }, testInfo);
   await emitAndExpect(page, { type: 'stamp-site-found' }, {
     id: 'stamp-site-found',

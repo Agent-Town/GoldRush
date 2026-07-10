@@ -1,7 +1,7 @@
 import './story.css';
 import { STORY_RUNTIME_BEATS, type RuntimeStoryBeat } from './beats';
 import { hasStoryBeatSeen, markStoryBeatSeen } from './seenState';
-import { emitStorySignal, onStorySignal, STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal, type StorySignal } from './signals';
+import { emitStorySignal, onStorySignal, STORY_RUNTIME_SIGNAL_REGISTRY, type RuntimeStorySignal } from './signals';
 import { STORY_SPEAKERS } from './speakers';
 import { readStoryTalesEnabled, subscribeStorySettings } from './settings';
 import { SoundSystem } from '../audio/SoundSystem';
@@ -236,7 +236,7 @@ export class StoryRuntime {
   private installDebugHandle(): void {
     try {
       window.__GR_STORY__ = {
-        emit: (signal: StorySignal) => emitStorySignal(signal),
+        emit: (signal: RuntimeStorySignal) => emitStorySignal(signal),
         registry: [...STORY_RUNTIME_SIGNAL_REGISTRY],
         active: () => this.active?.key ?? null,
         pending: () => this.queue.map((item) => item.key),
