@@ -189,6 +189,21 @@ export async function pushSave(context: AccountsContext): Promise<Response> {
 
     const key = saveKey(session.record.accountId, profileId);
     const previous = await kv.get(key);
+    const previousSave = parseSave(previous);
+    const baseSavedAt = typeof body.baseSavedAt === 'string' ? body.baseSavedAt : body.baseSavedAt === null ? null : undefined;
+    const acknowledged = body.acknowledgeConflict === true;
+    if (previousSave && !acknowledged && baseSavedAt !== previousSave.savedAt) {
+      return json(
+        cors,
+        {
+          ok: false,
+          error: 'stale_save',
+          message: 'Cloud has a newer ledger.',
+          profileId,
+          savedAt: previousSave.savedAt,
+        },
+      );
+    }
     for (let index = 5; index >= 2; index -= 1) {
       const older = await kv.get(`${key}:v${index - 1}`);
       if (older) await kv.put(`${key}:v${index}`, older);

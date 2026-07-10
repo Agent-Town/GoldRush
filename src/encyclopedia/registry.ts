@@ -1,9 +1,11 @@
 import { assetSlots } from '../assets/slots';
 import { heroLedgerControlLines } from '../core/InputController';
 import { Balance } from '../game/Balance';
+import { loadMetaProgress } from '../game/MetaProgress';
+import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import { buildableBlurb, buildableDefs, buildableTierEffectLine, getBuildableDef, type BuildableId } from '../game/buildables';
-import { STEAMWORKS_THRESHOLD } from '../meta/ResearchTree';
-import { DEFAULT_CONTRACT_ID, listContracts, loadContract, loadEpoch } from '../meta/ContractFamilies';
+import { browserResearchStorage, loadResearchState, scienceMeter, STEAMWORKS_THRESHOLD } from '../meta/ResearchTree';
+import { DEFAULT_CONTRACT_ID, epochIsActive, listContracts, loadContract, loadEpoch } from '../meta/ContractFamilies';
 import { TOWN_ACTORS, townActorBark, type TownActorDefinition, type TownActorId } from '../town/townsfolk';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from './storage';
 
@@ -18,6 +20,8 @@ const stockpileUrl = new URL('../../assets/processed/bld-stockpile-yard.png', im
 const turretUrl = new URL('../../assets/processed/bld-signal-turret.png', import.meta.url).href;
 const claimOfficeUrl = new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href;
 const titleEmblemUrl = new URL('../../assets/processed/ui-title-emblem.png', import.meta.url).href;
+const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
+const CONTRACT_LOCKED_TERMS_LINE = "The clerk draws up the terms when you're ready.";
 
 export const LEDGER_CATEGORIES = [
   'The People',
@@ -315,9 +319,11 @@ function contractEntry(contractId: string): LedgerEntry {
     category: 'The Claim',
     unlockSignal: `contract:seen:${contractId}`,
     spriteRef: { slot: `contract.${contractId}`, imageUrl: titleEmblemUrl },
-    loreLine: 'Trail cards are chosen from the town board.',
+    loreLine: '',
     factLines: () => {
       const live = loadContract(contractId);
+      const unlock = contractUnlock(live);
+      if (!unlock.unlocked) return [live.boardRow.ledgerBlurb, unlock.condition, CONTRACT_LOCKED_TERMS_LINE].filter(Boolean);
       return [
         live.boardRow.ledgerBlurb,
         live.briefing.goals[0] ?? '',
@@ -326,6 +332,39 @@ function contractEntry(contractId: string): LedgerEntry {
       ].filter(Boolean);
     },
   };
+}
+
+function contractUnlock(contract: ReturnType<typeof loadContract>): { unlocked: boolean; condition: string } {
+  const unlock = contract.boardRow.unlock;
+  if (unlock === 'default') return { unlocked: true, condition: '' };
+
+  const scores = loadScores();
+  if (unlock === 'wave10OnClaim') {
+    return {
+      unlocked: scores.some((score) => contractIdOf(score) === DEFAULT_CONTRACT_ID && score.waves >= 10),
+      condition: 'Reach wave 10 on The Claim',
+    };
+  }
+  if (unlock === 'firstSecuredClaim') {
+    return { unlocked: scores.some((score) => score.secured === true), condition: 'Secure a claim first' };
+  }
+  if (unlock === 'science-complete') {
+    return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
+  }
+  if (unlock === STEAMWORKS_EPOCH_ID) {
+    return { unlocked: epochIsActive(STEAMWORKS_EPOCH_ID), condition: 'Awaits the Steamworks era' };
+  }
+  if (unlock.startsWith('science')) {
+    const required = Number.parseInt(unlock.match(/\d+/)?.[0] ?? '0', 10);
+    const storage = browserStorage();
+    const science = storage ? loadMetaProgress(storage).tracks.science : 0;
+    return { unlocked: science >= required, condition: `Bank ${required} science first` };
+  }
+  return { unlocked: false, condition: 'Progress farther first' };
+}
+
+function contractIdOf(score: ScoreRecord): string {
+  return score.contractId?.trim() || DEFAULT_CONTRACT_ID;
 }
 
 function claimJumperFactLines(): string[] {

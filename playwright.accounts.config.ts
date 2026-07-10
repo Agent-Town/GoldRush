@@ -1,7 +1,9 @@
 import { defineConfig, devices } from '@playwright/test';
 
-const baseURL = 'http://127.0.0.1:5188';
-const accountsURL = 'http://127.0.0.1:8788';
+const baseURL = process.env.GR_ACCOUNTS_GAME_URL ?? 'http://127.0.0.1:5188';
+const accountsURL = process.env.GR_ACCOUNTS_WORKER_URL ?? 'http://127.0.0.1:8788';
+const gamePort = new URL(baseURL).port || '5188';
+const accountsPort = new URL(accountsURL).port || '8788';
 
 export default defineConfig({
   testDir: './e2e',
@@ -17,13 +19,13 @@ export default defineConfig({
   webServer: [
     {
       command:
-        'rm -rf test-results/accounts-sync-worker && wrangler pages dev public --kv ACCOUNTS --binding DEV_AUTH=1 --port 8788 --ip 127.0.0.1 --persist-to test-results/accounts-sync-worker --log-level error --show-interactive-dev-session=false',
+        `rm -rf test-results/accounts-sync-worker && wrangler pages dev public --kv ACCOUNTS --binding DEV_AUTH=1 --port ${accountsPort} --ip 127.0.0.1 --persist-to test-results/accounts-sync-worker --log-level error --show-interactive-dev-session=false`,
       url: `${accountsURL}/favicon-16.png`,
       reuseExistingServer: false,
       timeout: 30_000,
     },
     {
-      command: `VITE_ACCOUNTS_API_URL=${accountsURL} npm run dev -- --port 5188 --strictPort`,
+      command: `VITE_ACCOUNTS_API_URL=${accountsURL} npm run dev -- --port ${gamePort} --strictPort`,
       url: baseURL,
       reuseExistingServer: false,
       timeout: 20_000,

@@ -2,8 +2,8 @@ import { mkdir, readFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { buildableDefs } from '../src/game/buildables';
-import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
-import { listContracts } from '../src/meta/ContractFamilies';
+import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { DEFAULT_CONTRACT_ID, listContracts, loadContract } from '../src/meta/ContractFamilies';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../src/encyclopedia/storage';
 import {
   LEDGER_CATEGORIES,
@@ -126,6 +126,12 @@ async function taskShot(page: Page, testInfo: TestInfo, name: string): Promise<v
   await page.screenshot({ path: path.join(dir, `${testInfo.project.name}-${name}.png`), fullPage: true });
 }
 
+async function mysteryLeakShot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  const dir = path.resolve('artifacts/074');
+  await mkdir(dir, { recursive: true });
+  await page.screenshot({ path: path.join(dir, `${testInfo.project.name}-${name}.png`), fullPage: true });
+}
+
 async function expectFactCap(page: Page): Promise<void> {
   const maxFacts = await page.locator('[data-testid^="claim-ledger-facts-"]').evaluateAll((lists) =>
     Math.max(0, ...lists.map((list) => list.querySelectorAll('[data-testid="claim-ledger-fact-line"]').length)),
@@ -192,6 +198,27 @@ async function ledgerStorage(page: Page): Promise<LedgerDiscoveryId[]> {
     const raw = localStorage.getItem(key);
     return raw ? JSON.parse(raw) : [];
   }, LEDGER_DISCOVERED_STORAGE_KEY);
+}
+
+async function seedScoreboard(page: Page, scores: Array<{ waves: number; secured?: boolean; contractId?: string }>): Promise<void> {
+  await page.evaluate(
+    ({ scoreKey, seededScores }) => {
+      localStorage.setItem(
+        scoreKey,
+        JSON.stringify(
+          seededScores.map((score, index) => ({
+            kills: 0,
+            gold: 0,
+            timeAlive: 60,
+            at: index + 1,
+            profileName: 'Robin',
+            ...score,
+          })),
+        ),
+      );
+    },
+    { scoreKey: profileDataKey(PROFILE_ID, SCOREBOARD_KEY), seededScores: scores },
+  );
 }
 
 async function storyHintCount(page: Page, hint: string): Promise<number> {
@@ -300,6 +327,44 @@ test('EN-02 town board and bark discover contracts and townsfolk', async ({ page
   for (const id of CONTRACT_ENTRY_IDS) {
     await expect.poll(() => ledgerStorage(page)).toContain(id);
   }
+
+  expectNoErrors(errors);
+});
+
+test('EN-02 locked contract ledger pages keep terms hidden until unlock', async ({ page }, testInfo) => {
+  await seedProfile(page);
+  const errors = collectErrors(page);
+  const contract = loadContract('e1-dry-gulch');
+  const entryId = contractLedgerEntryById[contract.id]!;
+
+  await page.goto('/');
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await approachTavern(page);
+  await page.getByTestId('town-open-board').click();
+  await expect(page.getByTestId('contract-board')).toBeVisible();
+  await expect.poll(() => ledgerStorage(page)).toContain(entryId);
+
+  await openLedgerDirect(page, entryId);
+  const lockedCard = page.getByTestId(`claim-ledger-card-${entryId}`);
+  await expect(lockedCard).toHaveAttribute('data-ledger-discovered', 'true');
+  await expect(lockedCard).toContainText(contract.boardRow.name);
+  await expect(lockedCard).toContainText(contract.boardRow.ledgerBlurb);
+  await expect(lockedCard).toContainText('Reach wave 10 on The Claim');
+  await expect(lockedCard).toContainText("The clerk draws up the terms when you're ready.");
+  for (const line of [...contract.briefing.goals, ...contract.briefing.rules]) await expect(lockedCard).not.toContainText(line);
+  await lockedCard.scrollIntoViewIfNeeded();
+  await mysteryLeakShot(page, testInfo, 'locked-contract-teaser');
+  await closeLedger(page);
+
+  await seedScoreboard(page, [{ waves: 10, contractId: DEFAULT_CONTRACT_ID }]);
+  await openLedgerDirect(page, entryId);
+  const unlockedCard = page.getByTestId(`claim-ledger-card-${entryId}`);
+  await expect(unlockedCard).toContainText(contract.briefing.goals[0]!);
+  await expect(unlockedCard).toContainText(contract.briefing.rules[0]!);
+  await expect(unlockedCard).not.toContainText("The clerk draws up the terms when you're ready.");
+  await unlockedCard.scrollIntoViewIfNeeded();
+  await mysteryLeakShot(page, testInfo, 'unlocked-contract-terms');
 
   expectNoErrors(errors);
 });

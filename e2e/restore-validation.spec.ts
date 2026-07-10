@@ -5,6 +5,7 @@ import {
   TOWN_NAME_KEY,
   type ProfileState,
 } from '../src/game/ProfileStorage';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { RUN_SUSPEND_REJECTION_KEY, RUN_SUSPEND_REJECTION_LINE } from '../src/game/RunSuspend';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
@@ -123,6 +124,59 @@ test('imported and cloud-pulled ledgers drop hostile suspend payloads before sto
   );
 
   expect(result).toEqual({ importedOk: true, cloudOk: true, importedSuspend: null, cloudSuspend: null });
+  assertNoErrors(errors);
+});
+
+test('cloud restore write failure leaves local profile bytes intact and records the rejection card', async ({ page }) => {
+  await seedProfile(page, validSuspend());
+  const errors = collectErrors(page);
+  await page.goto('/');
+
+  const result = await page.evaluate(
+    async ({ profileKey, townKey, metaKey, rejectionKey }) => {
+      localStorage.setItem(`${profileKey}.robin.${townKey}`, 'Local Quartz');
+      localStorage.setItem(`${profileKey}.robin.${metaKey}`, JSON.stringify({ version: 1, tracks: { territory: 1, science: 3, hero: 0, agent: 0 } }));
+      const before = new Map<string, string | null>([
+        [profileKey, localStorage.getItem(profileKey)],
+        [`${profileKey}.robin.${townKey}`, localStorage.getItem(`${profileKey}.robin.${townKey}`)],
+        [`${profileKey}.robin.${metaKey}`, localStorage.getItem(`${profileKey}.robin.${metaKey}`)],
+      ]);
+      const transfer = (await Function('return import("/src/game/ProfileTransfer.ts")')()) as any;
+      const nativeSetItem = Storage.prototype.setItem;
+      Storage.prototype.setItem = function setItemWithInjectedFailure(key: string, value: string): void {
+        if (key === `${profileKey}.robin.${townKey}`) throw new DOMException('quota', 'QuotaExceededError');
+        return nativeSetItem.call(this, key, value);
+      };
+      try {
+        const restored = transfer.restoreProfileBundle(localStorage, {
+          kind: 'goldrush.profile.ledger',
+          version: 1,
+          exportedAt: '2026-07-10T00:00:00.000Z',
+          profile: { id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 2, difficultyPreset: 'trail', hintsSeen: [] },
+          data: {
+            [townKey]: 'Cloud Bend',
+            [metaKey]: { version: 1, tracks: { territory: 4, science: 9, hero: 0, agent: 0 } },
+          },
+        });
+        return {
+          restored,
+          after: [...before].map(([key, value]) => [key, value, localStorage.getItem(key)]),
+          rejection: JSON.parse(localStorage.getItem(rejectionKey) ?? '{}').message,
+          leakedTemp: Array.from({ length: localStorage.length }, (_, index) => localStorage.key(index) ?? '').some((key) =>
+            key.startsWith('goldrush.profile.ledger.restore.'),
+          ),
+        };
+      } finally {
+        Storage.prototype.setItem = nativeSetItem;
+      }
+    },
+    { profileKey: PROFILE_KEY, townKey: TOWN_NAME_KEY, metaKey: META_PROGRESS_KEY, rejectionKey: RUN_SUSPEND_REJECTION_KEY },
+  );
+
+  expect(result.restored).toMatchObject({ ok: false });
+  expect(result.after).toEqual(result.after.map(([key, before]) => [key, before, before]));
+  expect(result.rejection).toBe(RUN_SUSPEND_REJECTION_LINE);
+  expect(result.leakedTemp).toBe(false);
   assertNoErrors(errors);
 });
 

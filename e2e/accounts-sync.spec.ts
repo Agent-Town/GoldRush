@@ -85,6 +85,50 @@ test('compare card can keep local, then burn the cloud ledger', async ({ page },
   assertNoErrors(errors);
 });
 
+test('stale device opens compare instead of overwriting newer cloud save', async ({ page }, testInfo) => {
+  const email = emailFor(testInfo, 'stale-device');
+  await seedProfile(page, { town: 'Morning Claim', science: 2 });
+  const errors = collectErrors(page);
+  await page.goto('/');
+  await page.getByTestId('start-menu-profile').click();
+  await signIn(page, email);
+  await expect(page.getByTestId('account-status-chip')).toContainText('ledger backed up');
+  const staleSession = await page.evaluate((accountKey) => localStorage.getItem(accountKey), ACCOUNT_KEY);
+  expect(staleSession).toContain('lastSavedAt');
+
+  await writeProfileDatum(page, TOWN_NAME_KEY, 'Evening Cloud');
+  await writeProfileDatum(page, META_PROGRESS_KEY, { version: 1, tracks: { territory: 3, science: 9, hero: 0, agent: 0 } });
+  await page.getByTestId('account-sync-now').click();
+  await expect(page.getByTestId('account-status-chip')).toContainText('ledger backed up');
+
+  await page.evaluate(
+    ({ accountKey, profileKey, townKey, metaKey, staleSession }) => {
+      localStorage.clear();
+      sessionStorage.clear();
+      localStorage.setItem(accountKey, staleSession!);
+      localStorage.setItem(
+        profileKey,
+        JSON.stringify({
+          version: 2,
+          activeId: 'robin',
+          profiles: [{ id: 'robin', name: 'Robin', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+        }),
+      );
+      localStorage.setItem(`${profileKey}.robin.${townKey}`, 'Morning Claim');
+      localStorage.setItem(`${profileKey}.robin.${metaKey}`, JSON.stringify({ version: 1, tracks: { territory: 3, science: 2, hero: 0, agent: 0 } }));
+    },
+    { accountKey: ACCOUNT_KEY, profileKey: PROFILE_KEY, townKey: TOWN_NAME_KEY, metaKey: META_PROGRESS_KEY, staleSession },
+  );
+  await page.reload();
+  await page.getByTestId('start-menu-profile').click();
+  await page.getByTestId('account-sync-now').click();
+
+  await expect(page.getByTestId('account-compare-card')).toContainText('Cloud has Evening Cloud at science 9');
+  await expect(readProfileDatum(page, TOWN_NAME_KEY)).resolves.toBe('Morning Claim');
+  await expect(readScience(page)).resolves.toBe(2);
+  assertNoErrors(errors);
+});
+
 test('signed-out boot leaves profile bytes alone and makes no account request', async ({ page }) => {
   let accountRequests = 0;
   await page.route('http://127.0.0.1:8788/api/**', (route) => {
@@ -236,7 +280,22 @@ function suspendFixture(): unknown {
       bankCap: 200,
       resources: { pressure: { amount: 0, cap: 100 } },
       log: [],
-      summary: {},
+      summary: {
+        panned: 0,
+        sluiced: 0,
+        granted: 0,
+        stolen: 0,
+        reclaimed: 0,
+        pannedByProspector: 0,
+        sluicedByProspector: 0,
+        reclaimedByProspector: 0,
+        spent: 0,
+        baseValue: 0,
+        buildingsBuilt: 0,
+        beaconsBuilt: 0,
+        repairSpent: 0,
+        repairs: 0,
+      },
     },
     hero: {
       level: 1,

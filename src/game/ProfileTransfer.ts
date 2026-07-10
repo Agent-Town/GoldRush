@@ -1,6 +1,7 @@
 import { META_PROGRESS_KEY } from './MetaProgress';
 import {
   PROFILE_DATA_KEYS,
+  PROFILE_KEY,
   activeProfile,
   importProfileRecord,
   loadProfileState,
@@ -10,12 +11,13 @@ import {
   type ProfileStorage,
   type ProfileState,
 } from './ProfileStorage';
-import { SAVE_SLOTS_KEY, compactSaveSlotsForTransfer } from './SaveSlots';
-import { normalizeRunSuspendDatum } from './RunSuspend';
+import { SAVE_SLOTS_KEY, compactSaveSlotsForTransfer, mergeSaveSlotsForRestore } from './SaveSlots';
+import { RUN_SUSPEND_REJECTION_KEY, RUN_SUSPEND_REJECTION_LINE, normalizeRunSuspendDatum } from './RunSuspend';
 
 const TRANSFER_KIND = 'goldrush.profile.ledger';
 const TRANSFER_VERSION = 1;
 const TRANSFER_SOFT_LIMIT_BYTES = 190 * 1024;
+const RESTORE_TEMP_PREFIX = `${TRANSFER_KIND}.restore`;
 
 export type ProfileTransferEnvelope = {
   kind: typeof TRANSFER_KIND;
@@ -73,7 +75,7 @@ export function unpackProfile(storage: ProfileStorage, envelope: ProfileTransfer
   if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
   for (const key of PROFILE_DATA_KEYS) {
     if (!(key in envelope.data)) continue;
-    const datum = normalizeDatum(key, envelope.data[key]);
+    const datum = normalizeImportDatum(key, envelope.data[key]);
     if (datum === null) continue;
     try {
       storage.setItem(profileDataKey(profile.id, key), encodeDatum(datum));
@@ -89,23 +91,62 @@ export function restoreProfileBundle(storage: ProfileStorage, envelope: ProfileT
   const profile = normalizeCloudProfile(envelope.profile);
   if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
 
-  const state = loadProfileState(storage) ?? { version: 2 as const, activeId: profile.id, profiles: [] };
-  const profiles = state.profiles.filter((entry) => entry.id !== profile.id);
-  const next: ProfileState = { version: 2, activeId: profile.id, profiles: [...profiles, profile] };
-  saveProfileState(storage, next);
+  const staged = stageRestoreData(storage, profile.id, envelope);
+  if (!staged.ok) return staged;
 
-  for (const key of PROFILE_DATA_KEYS) storage.removeItem(profileDataKey(profile.id, key));
+  const stateRaw = safeGet(storage, PROFILE_KEY);
+  const prior = new Map<string, string | null>();
+  for (const key of PROFILE_DATA_KEYS) {
+    const dataKey = profileDataKey(profile.id, key);
+    prior.set(dataKey, safeGet(storage, dataKey));
+  }
+
+  const touched: string[] = [];
+  try {
+    for (const key of PROFILE_DATA_KEYS) {
+      const dataKey = profileDataKey(profile.id, key);
+      const tempKey = staged.keys.get(key);
+      if (tempKey) storage.setItem(dataKey, storage.getItem(tempKey) ?? '');
+      else storage.removeItem(dataKey);
+      touched.push(dataKey);
+    }
+    const state = loadProfileState(storage) ?? { version: 2 as const, activeId: profile.id, profiles: [] };
+    const profiles = state.profiles.filter((entry) => entry.id !== profile.id);
+    const next: ProfileState = { version: 2, activeId: profile.id, profiles: [...profiles, profile] };
+    saveProfileState(storage, next);
+  } catch {
+    rollbackRestore(storage, stateRaw, prior, touched);
+    cleanupTempKeys(storage, staged.keys);
+    writeRestoreRejection(storage, 'restore write failed; previous ledger left untouched');
+    return { ok: false, message: 'The browser would not store that ledger.' };
+  }
+
+  cleanupTempKeys(storage, staged.keys);
+  return { ok: true, profile };
+}
+
+function stageRestoreData(
+  storage: ProfileStorage,
+  profileId: string,
+  envelope: ProfileTransferEnvelope,
+): { ok: true; keys: Map<string, string> } | ProfileTransferFailure {
+  const keys = new Map<string, string>();
+  const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
   for (const key of PROFILE_DATA_KEYS) {
     if (!(key in envelope.data)) continue;
-    const datum = normalizeDatum(key, envelope.data[key]);
+    const datum = normalizeDatum(storage, profileId, key, envelope.data[key]);
     if (datum === null) continue;
+    const tempKey = `${RESTORE_TEMP_PREFIX}.${token}.${key}`;
     try {
-      storage.setItem(profileDataKey(profile.id, key), encodeDatum(datum));
+      storage.setItem(tempKey, encodeDatum(datum));
+      keys.set(key, tempKey);
     } catch {
+      cleanupTempKeys(storage, keys);
+      writeRestoreRejection(storage, 'restore staging failed; previous ledger left untouched');
       return { ok: false, message: 'The browser would not store that ledger.' };
     }
   }
-  return { ok: true, profile };
+  return { ok: true, keys };
 }
 
 function isEnvelope(value: unknown): value is ProfileTransferEnvelope {
@@ -155,9 +196,62 @@ function encodeDatum(value: unknown): string {
   return typeof value === 'string' ? value : JSON.stringify(value);
 }
 
-function normalizeDatum(key: string, value: unknown): unknown | null {
+function normalizeDatum(storage: ProfileStorage, profileId: string, key: string, value: unknown): unknown | null {
+  if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
+  if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(safeGet(storage, profileDataKey(profileId, SAVE_SLOTS_KEY)), value);
+  return value;
+}
+
+function normalizeImportDatum(key: string, value: unknown): unknown | null {
   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
   return value;
+}
+
+function safeGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
+  try {
+    return storage.getItem(key);
+  } catch {
+    return null;
+  }
+}
+
+function rollbackRestore(
+  storage: ProfileStorage,
+  stateRaw: string | null,
+  prior: ReadonlyMap<string, string | null>,
+  touched: readonly string[],
+): void {
+  for (const key of [...touched].reverse()) restoreRaw(storage, key, prior.get(key) ?? null);
+  restoreRaw(storage, PROFILE_KEY, stateRaw);
+}
+
+function restoreRaw(storage: ProfileStorage, key: string, value: string | null): void {
+  try {
+    if (value === null) storage.removeItem(key);
+    else storage.setItem(key, value);
+  } catch {}
+}
+
+function cleanupTempKeys(storage: ProfileStorage, keys: ReadonlyMap<string, string>): void {
+  for (const key of keys.values()) {
+    try {
+      storage.removeItem(key);
+    } catch {}
+  }
+}
+
+function writeRestoreRejection(storage: ProfileStorage, reason: string): void {
+  try {
+    storage.setItem(
+      RUN_SUSPEND_REJECTION_KEY,
+      JSON.stringify({
+        message: RUN_SUSPEND_REJECTION_LINE,
+        reasons: [reason],
+        droppedEconomyEvents: 0,
+        at: Date.now(),
+      }),
+    );
+  } catch {}
 }
 
 function readString(value: unknown): string | null {

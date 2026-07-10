@@ -15,6 +15,7 @@ import {
 } from './ProfileStorage';
 import { accountSync } from './AccountSync';
 import { packActiveProfile, unpackPreview, unpackProfile, type ProfileTransferEnvelope } from './ProfileTransfer';
+import { SAVE_SLOT_TRANSFER_MANUAL_LIMIT, readSaveSlots } from './SaveSlots';
 
 type StartGame = () => void;
 type InstallOptions = {
@@ -146,6 +147,7 @@ export class ProfileManager {
     }
 
     const selected = this.state.profiles.find((profile) => profile.id === this.selectedId) ?? this.state.profiles[0]!;
+    const transferCapNotice = this.transferCapNotice();
     this.root.innerHTML = `
       <div class="death-overlay__panel gr-profile-title__panel">
         <p class="death-overlay__eyebrow">Claim Ledger</p>
@@ -166,6 +168,7 @@ export class ProfileManager {
             <input type="file" data-testid="profile-import-file" accept="application/json,.json" />
           </label>
         </div>
+        ${transferCapNotice}
         ${this.renderAccountCard()}
         ${this.importEnvelope ? `<div class="gr-profile-import" data-testid="profile-import-confirm">
           <p>${escapeHtml(this.message)}</p>
@@ -245,6 +248,13 @@ export class ProfileManager {
     if (saved) return saved;
     if (shouldSeedDefaultProfile() || hasLegacyProfileData(this.storage)) return ensureProfileState(this.storage);
     return undefined;
+  }
+
+  private transferCapNotice(): string {
+    if (!this.storage) return '';
+    const slots = readSaveSlots(this.storage).manual.length;
+    if (slots <= SAVE_SLOT_TRANSFER_MANUAL_LIMIT) return '';
+    return `<p class="gr-profile-transfer__note" data-testid="profile-transfer-cap-note">Pack keeps the ${SAVE_SLOT_TRANSFER_MANUAL_LIMIT} most recent manual claims when the ledger is large; oldest slots stay on this device.</p>`;
   }
 
   private refreshStateFromStorage(): void {
