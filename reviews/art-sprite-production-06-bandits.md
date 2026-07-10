@@ -18,18 +18,17 @@ Both 2240×1360, 8 cols × 4 rows (frame × direction: down / left-profile / lef
   - **base** → 32/32 cells @512px + `char-bandit-base-sheet-walk8.frames.json`, keyed 75.2%, despilled 18247px, **scale = 1** (figure fits natively, never upscaled).
   - **thief** → 32/32 cells @512px + `char-bandit-thief-sheet-walk8.frames.json`, keyed 81.4%, despilled 16682px, **scale = 1**.
 
-## Seam-law check (adult band + intra-sheet alignment)
-All cells share the normalized frame → **footline spread = 0 within each sheet** (feet land on one baseline; no per-frame bob when animating). Adult-proportion confirmation, apples-to-apples in the identical pipeline (all `scale=1`, 512 cell):
+## Seam-law check (intra-sheet alignment + silhouette read)
+The extractor normalizes each sheet independently (largest bbox → a fixed fraction of the 512 cell), so **normalized content height is ~333–334 for every character** (adult, minor, outlaw) — it does **not** carry the true adult/child scale, which lives in the raw proportions and is set at wire time in the enemy binding. What the landed `frames.json` *does* certify:
 
-| Character | normalized content height | median content width | read |
+| Sheet | footline spread (within sheet) | median content width | read |
 |---|---:|---:|---|
-| **bandit-base (adult)** | 334 | 213 | full-cell adult ✓ |
-| **bandit-thief (adult, lighter)** | 334 | 198 | adult, narrower silhouette ✓ (thief build) |
-| newsie (Mei, child — s292) | 291 | — | correctly shorter than the adults |
+| **bandit-base** | **0** | 213 | feet on one baseline — no per-frame bob |
+| **bandit-thief** | **0** | 198 | one baseline; narrower silhouette (lighter build ✓) |
 
-- Both bandits sit **above** the child (334 vs 291) and read as full adults filling the cell — **no shrink, no child-scaling** of the outlaws.
-- Thief medW (198) < base medW (213) — the lighter quick-step build reads in the silhouette, as specced.
-- Final on-screen scale + cross-character foot anchoring are set at wire time in the enemy binding; nothing here can size-pop until then.
+- **Intra-sheet footline spread = 0** on both — every frame's feet land on the same baseline, so no vertical bob when the walk cycle plays. (The older town-cast sheets, by contrast, carry 23–34px spread — this newer production is tighter.)
+- Thief medW (198) < base medW (213) in the identical normalization — the lighter quick-step build reads in the silhouette, as specced.
+- **Adult proportion confirmed VISUALLY** (raw sheets + processed cells — both are full-height adult outlaws, not shrunk), not from the normalized height. Cross-character on-screen scale + foot anchoring are wire-slice work; nothing here can size-pop until then.
 
 ## Art QA (visual — raw sheets + processed down/front cells, first-hand this fire)
 - **No firearms — hard canon §9 gate PASS**: base carries a coiled rope + grapple hooks on the hip; thief carries a waist satchel + rope. Melee/grapple/tool gear only, both. Zero firearm read in any frame.
