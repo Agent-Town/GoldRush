@@ -107,6 +107,7 @@ const STAMP_MILL_ID = 'stamp-mill';
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const STAMP_MILL_TOWN_SITE = { ...townPlazaSlot('stamp-mill').position, w: 6.2, d: 1.65 };
 const STAMP_MILL_COMPLETE_LINE = 'awaits the whistle';
+const RIDE_DISCLOSURE_KEY = 'gold-rush:ride-together-open';
 const STAMP_MILL_PROGRESS_LINES = [
   'The Stamp Mill rises: the rail spur is staked.',
   'The Stamp Mill rises: the boilers are seated.',
@@ -281,6 +282,7 @@ export class TownScene {
   private ridePhrase: string | null = null;
   private rideStatus = '';
   private rideBusy = false;
+  private rideExpanded = sessionStorage.getItem(RIDE_DISCLOSURE_KEY) === '1';
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -656,6 +658,14 @@ export class TownScene {
     const target = event.target as HTMLElement | null;
     if (target?.closest('[data-contract-close]')) {
       this.closeBoard();
+      return;
+    }
+    if (target?.closest('[data-ride-toggle]')) {
+      event.preventDefault();
+      this.rideExpanded = !this.rideExpanded;
+      sessionStorage.setItem(RIDE_DISCLOSURE_KEY, this.rideExpanded ? '1' : '0');
+      const disclosure = this.board.querySelector<HTMLDetailsElement>('[data-ride-disclosure]');
+      if (disclosure) disclosure.open = this.rideExpanded;
       return;
     }
     const pageButton = target?.closest<HTMLButtonElement>('[data-contract-page]');
@@ -1196,7 +1206,12 @@ export class TownScene {
     const phrase = this.ridePhrase;
     const status = this.rideStatus || (phrase ? 'Give this claim word to the other rider.' : 'Open a claim or join with a claim word.');
     return `
-      <aside class="town-ui__ride-card" data-testid="ride-together-card">
+      <details class="town-ui__ride-card" data-ride-disclosure data-testid="ride-together-card" ${this.rideExpanded ? 'open' : ''}>
+        <summary class="town-ui__ride-toggle" data-ride-toggle data-testid="ride-together-toggle">
+          <span>Ride Together</span>
+          <span aria-hidden="true">${this.rideExpanded ? 'Close' : 'Open'}</span>
+        </summary>
+        <div class="town-ui__ride-body" data-testid="ride-together-controls">
         <div>
           <p class="town-ui__board-eyebrow">Ride Together</p>
           <h3>Share this claim</h3>
@@ -1224,7 +1239,8 @@ export class TownScene {
           </button>
         </div>
         <p class="town-ui__ride-status" data-testid="ride-status">${escapeHtml(status)}</p>
-      </aside>
+        </div>
+      </details>
     `;
   }
 
@@ -1666,7 +1682,7 @@ function contractIdOf(score: ScoreRecord): string {
 
 function formatBest(score: ScoreRecord | null): string {
   if (!score) return 'No result yet';
-  return `${score.secured ? 'Secured' : 'Overrun'} - wave ${score.waves} - ${score.gold} gold`;
+  return `${score.secured ? 'Secured' : 'Overrun'} — wave ${score.waves} — ${score.gold} gold`;
 }
 
 function renderContractBriefing(contract: ContractManifest): string {

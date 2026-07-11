@@ -308,7 +308,7 @@
 .town-ui__board-shell {
   position: relative;
   display: grid;
-  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-rows: auto minmax(0, 1fr) auto auto;
   width: min(1040px, calc(100vw - 28px));
   max-height: min(760px, calc(100vh - 28px));
   border: 2px solid #2e1b0e;
@@ -406,7 +406,7 @@
 
 .town-ui__contract {
   display: grid;
-  grid-template-rows: minmax(190px, 28vh) auto;
+  grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
   gap: 14px;
   min-height: 0;
   border: 2px solid rgba(46, 27, 14, 0.82);
@@ -710,18 +710,43 @@
 }
 
 .town-ui__ride-card {
-  display: grid;
-  grid-template-columns: minmax(0, 1.2fr) auto minmax(180px, 0.75fr);
-  align-items: center;
-  gap: 12px;
   margin: 0 16px 16px;
-  padding: 12px;
   border: 2px solid rgba(46, 27, 14, 0.82);
   border-radius: 8px;
   background:
     linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(214, 180, 120, 0.9)),
     #f5e6c8;
   box-shadow: inset 0 0 0 1px rgba(139, 125, 60, 0.32);
+}
+
+.town-ui__ride-toggle {
+  display: flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 12px;
+  color: #2e1b0e;
+  font: 900 0.86rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+  list-style: none;
+}
+
+.town-ui__ride-toggle::-webkit-details-marker {
+  display: none;
+}
+
+.town-ui__ride-toggle:focus-visible {
+  outline: 3px solid rgba(91, 138, 138, 0.72);
+  outline-offset: -3px;
+}
+
+.town-ui__ride-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) auto minmax(180px, 0.75fr);
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px 12px;
 }
 
 .town-ui__ride-card h3,
@@ -982,19 +1007,32 @@
   }
 
   .town-ui__contracts {
-    grid-template-columns: 42px minmax(0, 1fr) 42px;
+    position: relative;
+    grid-template-columns: minmax(0, 1fr);
     align-items: center;
     gap: 8px;
     padding: 8px;
   }
 
   .town-ui__catalog-arrow {
+    position: absolute;
+    z-index: 1;
+    top: 68px;
     width: 42px;
     min-height: 62px;
     font-size: 1.55rem;
   }
 
+  .town-ui__catalog-arrow--prev {
+    left: 12px;
+  }
+
+  .town-ui__catalog-arrow--next {
+    right: 12px;
+  }
+
   .town-ui__contract {
+    grid-template-columns: 1fr;
     grid-template-rows: minmax(120px, 18vh) auto;
     gap: 8px;
     min-height: 0;
@@ -1060,10 +1098,13 @@
   }
 
   .town-ui__ride-card {
+    margin: 0 8px 8px;
+  }
+
+  .town-ui__ride-body {
     grid-template-columns: 1fr;
     gap: 8px;
-    margin: 0 8px 8px;
-    padding: 8px;
+    padding: 0 8px 8px;
   }
 
   .town-ui__ride-actions {

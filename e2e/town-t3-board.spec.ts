@@ -4,7 +4,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 
-const ARTIFACT_DIR = path.resolve('artifacts/town-t3');
+const ARTIFACT_DIR = path.resolve('artifacts/board-full-picture');
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type SeedScore = {
@@ -212,7 +212,7 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
     }
     if (entry.name === 'wave-10') {
       await goToContractPage(page, 'e1-dry-gulch');
-      await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Overrun - wave 12 - 88 gold');
+      await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Overrun — wave 12 — 88 gold');
       await shot(page, testInfo, 'mixed-locks');
     }
   }
@@ -281,6 +281,43 @@ test('contract catalog navigation remembers the last page', async ({ page }, tes
   await page.getByTestId('town-open-board').click();
   await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
   await shot(page, testInfo, 'baron-page');
+  assertNoErrors(errors);
+});
+
+test('contract board shows the full contract picture and remembers the Ride Together disclosure', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await seedStorage(page, {
+    scores: [
+      { waves: 18, secured: true, contractId: 'the-claim' },
+      { waves: 14, gold: 96, secured: true, contractId: 'e1-dry-gulch' },
+    ],
+  });
+  await openBoard(page);
+  await goToContractPage(page, 'e1-dry-gulch');
+
+  await expect(page.getByTestId('ride-together-card')).not.toHaveAttribute('open', '');
+  await expect(page.getByTestId('ride-together-controls')).not.toBeVisible();
+  await expect(page.getByTestId('contract-best-e1-dry-gulch')).toHaveText('Secured — wave 14 — 96 gold');
+  for (const testId of [
+    'contract-art-e1-dry-gulch',
+    'contract-board-briefing-e1-dry-gulch',
+    'contract-best-e1-dry-gulch',
+    'contract-launch-e1-dry-gulch',
+  ]) {
+    await expect(page.getByTestId(testId)).toBeInViewport();
+  }
+  expect(await page.getByTestId('contract-card-list').evaluate((node) => node.scrollTop)).toBe(0);
+  await shot(page, testInfo, 'collapsed');
+
+  await page.getByTestId('ride-together-toggle').click();
+  await expect(page.getByTestId('ride-together-card')).toHaveAttribute('open', '');
+  await expect(page.getByTestId('ride-join-input')).toBeVisible();
+  await page.getByTestId('ride-join-input').fill('quiet');
+  await page.getByTestId('ride-join-submit').click();
+  await expect(page.getByTestId('ride-status')).toHaveText("That claim's gone quiet.");
+  await page.getByTestId('contract-board-close').click();
+  await page.getByTestId('town-open-board').click();
+  await expect(page.getByTestId('ride-together-card')).toHaveAttribute('open', '');
   assertNoErrors(errors);
 });
 
