@@ -1,7 +1,7 @@
 # CHARACTERS — the named souls (seeded 2026-07-09; population task extends)
 
 ## THE HERO — the miner, the claim-holder
-FACTS: **THE PAN RIDES AT HER BELT (owner ruling 2026-07-11: 'one side pan, keep it in the same side. Can be at the belt, not in the hand' — belt-hung on her RIGHT hip, both hands free; consistency by construction across all animation).** a young woman (OWNER RULING 2026-07-09: "Why is the hero male now? It was female before"); hat, work coat, satchel (char-hero-sheet). **NEVER prompted as "prospector" — that word belongs to the agent** (owner, same day). Player-embodied; per-profile identity.
+FACTS: **PAN VERDICT PASSED (owner 2026-07-11, re-affirmed after a lost message: 'I saw the new animations from today, it looks good.') — the v4 belt-pan sheets + the verdict-fix sheets are APPROVED; the flip is GO.** **THE PAN RIDES AT HER BELT (owner ruling 2026-07-11: 'one side pan, keep it in the same side. Can be at the belt, not in the hand' — belt-hung on her RIGHT hip, both hands free; consistency by construction across all animation).** a young woman (OWNER RULING 2026-07-09: "Why is the hero male now? It was female before"); hat, work coat, satchel (char-hero-sheet). **NEVER prompted as "prospector" — that word belongs to the agent** (owner, same day). Player-embodied; per-profile identity.
 QUOTE: hero: This claim has room for every honest hand.
 ARC (PLANNED): E1 stakes the claim → founds the town (T2 naming) → E4 mid-life, the era of engines (codex-hero-e4: silver streaks, same eyes) → E8 elder stateswoman (codex-hero-e8) → E10 hands the Charter Press to the next generation. Art anchors: codex-hero-e1/e4/e8.
 
