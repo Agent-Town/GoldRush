@@ -3824,7 +3824,7 @@ export class Game {
     if (intent.type === 'pause') this.togglePlayerPause();
     if (intent.type === 'restart' && this.state.current === 'dead') this.resetRun();
     if (intent.type === 'toggle_build_menu') this.toggleBuildMenu();
-    if (intent.type === 'close_build_menu') this.closeBuildMenu();
+    if (intent.type === 'close_build_menu') this.collapseBuildMenu();
     if (intent.type === 'select_buildable') this.selectBuildable(intent.id);
   }
 
@@ -4600,6 +4600,12 @@ export class Game {
   private closeBuildMenu(): void {
     this.buildMenuOpen = false;
     this.buildSystem.setBuildMode(false);
+  }
+
+  /** Outside-pointerdown folds the menu UI but keeps placement mode: the pointerdown
+   * fires before the canvas 'click', so exiting mode here would eat every mouse placement. */
+  private collapseBuildMenu(): void {
+    this.buildMenuOpen = false;
   }
 
   private confirmAction(): void {

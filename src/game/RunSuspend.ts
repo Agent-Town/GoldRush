@@ -2459,7 +2459,29 @@ function decodeResearchState(value: unknown, reasons: string[], requireCanonical
   const pinnedTarget = record.pinnedTarget === null ? null : stringInRange(record.pinnedTarget, 1, 128);
   if (record.pinnedTarget !== null && pinnedTarget === null) reasons.push('research.pinnedTarget must be a string or null');
   if (!progress || taken === undefined || taken === null || proposalSalt === null || (record.pinnedTarget !== null && pinnedTarget === null)) return null;
-  const decoded: ResearchState = { version: 1, progress, taken, proposalSalt, pinnedTarget };
+  // Post-077 states carry per-epoch identity + unlock flags; decode them IN THE CANONICAL KEY
+  // ORDER migrateResearchState emits (version, epochId, metaScienceCursor, progress, taken,
+  // proposalSalt, pinnedTarget, unlocks) or the string compare below rejects every capture.
+  const epochId = stringInRange(record.epochId, 1, 64);
+  if (!epochId && record.epochId !== undefined && record.epochId !== null) reasons.push('research.epochId must be a string');
+  const rawCursor = record.metaScienceCursor;
+  const metaScienceCursor =
+    typeof rawCursor === 'number' && Number.isFinite(rawCursor) && rawCursor >= 0 ? Math.floor(rawCursor) : null;
+  if (metaScienceCursor === null && rawCursor !== undefined && rawCursor !== null) {
+    reasons.push('research.metaScienceCursor must be a finite non-negative number');
+  }
+  const unlocks = isRecord(record.unlocks) ? (record.unlocks as ResearchState['unlocks']) : undefined;
+  if (record.unlocks !== undefined && unlocks === undefined) reasons.push('research.unlocks must be an object');
+  const decoded: ResearchState = {
+    version: 1,
+    ...(epochId ? { epochId } : {}),
+    ...(metaScienceCursor !== null ? { metaScienceCursor } : {}),
+    progress,
+    taken,
+    proposalSalt,
+    pinnedTarget,
+    ...(unlocks !== undefined ? { unlocks } : {}),
+  };
   const normalized = normalizeResearchState(decoded);
   if (requireCanonical && JSON.stringify(decoded) !== JSON.stringify(normalized)) reasons.push('research must already be canonical');
   return normalized;
