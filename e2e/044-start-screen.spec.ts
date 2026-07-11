@@ -101,6 +101,21 @@ test('Profile opens the existing selector with arrow and Enter', async ({ page }
   assertNoErrors(errors);
 });
 
+test('the profiles page offers a way back to the menu', async ({ page }, testInfo) => {
+  await clearStorage(page);
+  const errors = collectErrors(page);
+  await page.goto('/');
+
+  await page.getByTestId('start-menu-profile').click();
+  await expect(page.getByTestId('profile-list')).toBeVisible();
+  await expect(page.getByTestId('profile-back')).toBeVisible();
+  await shot(page, testInfo, 'profile-back');
+  await page.getByTestId('profile-back').click();
+  await expect(page.getByTestId('start-menu')).toBeVisible();
+  await expect(page.getByTestId('start-menu-profile')).toBeVisible();
+  assertNoErrors(errors);
+});
+
 test('Settings volume writes through', async ({ page }) => {
   await clearStorage(page);
   const errors = collectErrors(page);

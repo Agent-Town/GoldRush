@@ -21,6 +21,7 @@ type StartGame = () => void;
 type InstallOptions = {
   showTitle?: boolean;
   skipTitle?: boolean;
+  onBack?: () => void;
 };
 
 export class ProfileManager {
@@ -175,6 +176,7 @@ export class ProfileManager {
           <button class="death-overlay__button" type="button" data-testid="profile-import-apply">Bring them in</button>
         </div>` : ''}
         <button class="death-overlay__button" type="button" data-testid="profile-start">Enter claim as ${escapeHtml(selected.name)}</button>
+        ${this.options.onBack ? '<button class="death-overlay__button gr-profile-back" type="button" data-testid="profile-back">Back to the menu</button>' : ''}
       </div>
     `;
 
@@ -189,6 +191,7 @@ export class ProfileManager {
     });
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-import-apply"]')?.addEventListener('click', () => this.applyImport());
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-start"]')?.addEventListener('click', () => this.startProfile());
+    this.root.querySelector<HTMLButtonElement>('[data-testid="profile-back"]')?.addEventListener('click', () => this.options.onBack?.());
     this.bindAccountControls();
   }
 

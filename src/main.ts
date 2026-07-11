@@ -95,11 +95,12 @@ function startGame(): void {
   });
 }
 
-function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean } = {}): void {
+function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; onBack?: () => void } = {}): void {
   profiles?.dispose();
   profiles = installProfiles(() => startGame(), {
     showTitle: options.showTitle,
     skipTitle: options.skipTitle,
+    onBack: options.onBack,
   });
 }
 
@@ -124,7 +125,14 @@ function showStartMenu(): void {
       onProfile: () => {
         startMenu?.dispose();
         startMenu = undefined;
-        startWithProfiles({ showTitle: true });
+        startWithProfiles({
+          showTitle: true,
+          onBack: () => {
+            profiles?.dispose();
+            profiles = undefined;
+            showStartMenu();
+          },
+        });
       },
     });
   });
