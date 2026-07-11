@@ -770,7 +770,7 @@ export class WaveSystem {
   }
 
   private clampSpawn(value: number): number {
-    return Math.max(-38, Math.min(38, value));
+    return THREE.MathUtils.clamp(value, -Terrain.CLAIM_HALF, Terrain.CLAIM_HALF);
   }
 }
 
