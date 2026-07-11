@@ -1027,7 +1027,9 @@ export class ClaimJumperEnemy {
 
   private moveScripted(delta: number, speed: number, moveTarget: THREE.Vector3): void {
     const stepDistance = Math.max(0, speed * delta);
-    if (stepDistance <= 0 || this.velocity.lengthSq() <= 0.0001) return;
+    if (stepDistance <= 0) return;
+    // Arrival must be checked BEFORE the velocity guard: within the heading epsilon the
+    // velocity zeroes, and the final snap would otherwise be unreachable (planar law).
     const remainingX = moveTarget.x - this.group.position.x;
     const remainingZ = moveTarget.z - this.group.position.z;
     const remainingSq = remainingX * remainingX + remainingZ * remainingZ;
@@ -1037,6 +1039,7 @@ export class ClaimJumperEnemy {
       this.advanceScriptedRoute();
       return;
     }
+    if (this.velocity.lengthSq() <= 0.0001) return;
     this.group.position.addScaledVector(this.velocity, stepDistance);
   }
 
