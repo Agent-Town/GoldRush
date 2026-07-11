@@ -93,6 +93,7 @@ const townFacadeUrls: Partial<Record<TownBuildingId, { key: string; url: string 
   general_store: { key: 'bld-general-store', url: new URL('../../assets/processed/bld-general-store.png', import.meta.url).href },
   chapel: { key: 'bld-chapel', url: new URL('../../assets/processed/bld-chapel.png', import.meta.url).href },
 };
+const STAMP_MILL_FACADE = { key: 'bld-stamp-mill', url: new URL('../../assets/processed/bld-stamp-mill.png', import.meta.url).href };
 const townFacadeLoader = new THREE.TextureLoader();
 const townFacadeTextures = new Map<string, Promise<THREE.Texture | null>>();
 const TOWN_HALF = 15;
@@ -450,7 +451,7 @@ export class TownScene {
     const halfX = site.w * 0.5;
     const halfZ = site.d * 0.5;
     const baseMaterial = new THREE.MeshStandardMaterial({ color: '#8b6c3f', roughness: 0.86, metalness: 0.02 });
-    const stageMaterial = new THREE.MeshStandardMaterial({ color: '#5b8a8a', roughness: 0.7, metalness: 0.18 });
+    const stageMaterial = new THREE.MeshStandardMaterial({ color: '#8a5f38', roughness: 0.8, metalness: 0.06 });
     const ghostMaterial = new THREE.MeshStandardMaterial({ color: '#8b7d3c', roughness: 0.78, metalness: 0.08, transparent: true, opacity: 0.46 });
     const woodMaterial = new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.84, metalness: 0.02 });
     const brassMaterial = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.58, metalness: 0.16 });
@@ -529,11 +530,35 @@ export class TownScene {
       crate.visible = !surveyVisible && !complete;
     }
 
+    // The painted mill rises behind the scaffolds: ghosted like the surveyor's
+    // elevation drawing while stages build, full-color once it awaits the whistle.
+    const portraitMaterial = new THREE.MeshStandardMaterial({
+      color: '#ffffff',
+      transparent: true,
+      opacity: complete ? 1 : 0.34,
+      alphaTest: 0.04,
+      roughness: 0.78,
+      metalness: 0.02,
+      side: THREE.DoubleSide,
+    });
+    loadTownFacadeTexture(STAMP_MILL_FACADE).then((texture) => {
+      if (!texture) return;
+      portraitMaterial.map = texture;
+      portraitMaterial.needsUpdate = true;
+    });
+    const portraitHeight = 2.9;
+    const portrait = new THREE.Mesh(new THREE.PlaneGeometry(portraitHeight, portraitHeight), portraitMaterial);
+    portrait.name = 'TownStampMillPortrait';
+    portrait.position.set(0, portraitHeight * 0.5 + 0.06, -halfZ + 0.06);
+    portrait.renderOrder = RenderLayers.gameplay;
+    portrait.visible = !surveyVisible;
+    this.stampMillGroup.add(portrait);
+
     const plaqueLines = stampMillPlaqueLines(manifest, project);
     this.stampMillPlaqueText = plaqueLines.join(' / ');
     const plaque = createPlaqueSprite(plaqueLines);
     plaque.name = 'TownStampMillLedgerPlaque';
-    plaque.position.set(0, 1.55, -halfZ - 0.25);
+    plaque.position.set(0, 3.35, -halfZ - 0.25);
     this.stampMillGroup.add(plaque);
     this.scene.add(this.stampMillGroup);
   }
@@ -980,8 +1005,8 @@ export class TownScene {
           <button class="town-ui__board-close" type="button" data-schoolhouse-ledger data-testid="schoolhouse-open-ledger">Claim Ledger</button>
         </header>
         <div class="town-ui__surface-body">
-          ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}
           ${this.renderEpochActivationAction()}
+          ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}
         </div>
       </div>
     `;
@@ -990,10 +1015,21 @@ export class TownScene {
   private renderEpochActivationAction(): string {
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || epochIsActive(STEAMWORKS_EPOCH_ID)) return '';
-    if (!scienceMeter(activeProfileResearchState()).complete || !megaprojectComplete(manifest, project)) return '';
+    if (!megaprojectComplete(manifest, project)) return '';
+    const meter = scienceMeter(activeProfileResearchState());
+    // A ready mill is never silent: if the chart still wants science, say so in-world.
+    if (!meter.complete) {
+      return `
+        <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-science">
+          <p class="town-ui__board-eyebrow">The town's next ledger</p>
+          <h3>The Stamp Mill stands ready.</h3>
+          <p>The chart wants ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'} before the whistle.</p>
+        </section>
+      `;
+    }
     const pledgedGold = manifest.stages.reduce((sum, stage) => sum + Math.max(0, Math.floor(stage.materials.gold ?? 0)), 0);
     return `
-      <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door">
+      <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="ready">
         <p class="town-ui__board-eyebrow">The town's next ledger</p>
         <h3>The Stamp Mill is ready.</h3>
         <p>Frontier science banked · ${pledgedGold} gold pledged across three defended stages.</p>
