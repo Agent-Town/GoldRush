@@ -499,7 +499,7 @@ export class EnemyPool {
   update(
     delta: number,
     heroPosition: THREE.Vector3 | readonly THREE.Vector3[],
-    onContact: (enemy: ClaimJumperEnemy) => void,
+    onContact: (enemy: ClaimJumperEnemy) => boolean,
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
@@ -559,21 +559,18 @@ export class EnemyPool {
         formationSeparationZ *= scale;
       }
 
-      if (
-        enemy.update(
-          delta,
-          enemyTarget,
-          separationX,
-          separationZ,
-          formationSeparationX,
-          formationSeparationZ,
-          blockers,
-          thiefContext,
-          wreckerContext,
-        )
-      ) {
-        onContact(enemy);
-      }
+      const contacted = enemy.update(
+        delta,
+        enemyTarget,
+        separationX,
+        separationZ,
+        formationSeparationX,
+        formationSeparationZ,
+        blockers,
+        thiefContext,
+        wreckerContext,
+      );
+      if (contacted && onContact(enemy)) break;
     }
     this.syncEnemyFog();
     this.syncRenderInstances();

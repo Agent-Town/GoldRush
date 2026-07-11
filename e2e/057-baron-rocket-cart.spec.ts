@@ -261,6 +261,65 @@ test('kited Baron telegraphs and launches rockets that damage hero and buildings
   assertNoErrors(errors);
 });
 
+test('lethal Baron rocket stops the death tick before XP and gold collection', async ({ page }) => {
+  const errors = await prepareKitedBaron(page, '057-lethal-boundary');
+  await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.rocket.telegraphActive);
+  await advanceUntil(page, () => rocketSnapshot(page), (snapshot) => snapshot.blastsAlive >= 3);
+
+  const before = await page.evaluate(() => {
+    const harness = window.__GR_TEST__;
+    if (!harness) throw new Error('missing test harness');
+    const snapshot = structuredClone(harness.captureSuspend());
+    const rockets = snapshot.combat.blastCharges.filter((charge) => charge.ownerId.startsWith('baron_rocket'));
+    if (rockets.length < 3) throw new Error('missing in-flight Baron rocket volley');
+    snapshot.hero.iframeRemaining = 0;
+    for (const rocket of rockets) {
+      rocket.target.x = snapshot.hero.position.x;
+      rocket.target.z = snapshot.hero.position.z;
+      rocket.age = Math.max(0, rocket.duration - 1 / 60);
+      rocket.damage = 999;
+      rocket.radius = 3;
+    }
+    if (!harness.restoreSuspend(snapshot)) throw new Error('failed to arm lethal rocket boundary fixture');
+    if (!harness.spawnXpMote(snapshot.hero.position.x, snapshot.hero.position.z, 7)) throw new Error('failed to spawn XP fixture');
+    if (!harness.spawnGoldPickup(snapshot.hero.position.x, snapshot.hero.position.z, 17)) throw new Error('failed to spawn gold fixture');
+    return {
+      xp: harness.state().xp,
+      gold: harness.state().economy.banked,
+      blasts: rockets.length,
+      detonations: snapshot.combat.audit.blastDetonationCount,
+    };
+  });
+
+  await advance(page, 1 / 30);
+  const after = await page.evaluate(() => {
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    const harness = window.__GR_TEST__!;
+    return {
+      state: diagnostics.runState,
+      hp: diagnostics.hp,
+      xp: harness.state().xp,
+      xpMotes: diagnostics.xpMotesAlive,
+      gold: harness.state().economy.banked,
+      goldPickups: harness.goldPickups().filter((pickup) => pickup.active),
+      blasts: diagnostics.arsenal.blastsAlive,
+      detonations: diagnostics.arsenal.detonations,
+    };
+  });
+
+  expect(after.state).toBe('dead');
+  expect(after.hp).toBe(0);
+  expect(after.xp).toBe(before.xp);
+  expect(after.xpMotes).toBe(1);
+  expect(after.gold).toBe(before.gold);
+  expect(after.goldPickups).toEqual([
+    expect.objectContaining({ active: true, amount: 17 }),
+  ]);
+  expect(after.detonations).toBe(before.detonations + 1);
+  expect(after.blasts).toBe(before.blasts - 1);
+  assertNoErrors(errors);
+});
+
 test('melee range suppresses the Baron rocket volley', async ({ page }) => {
   await seedProfile(page);
   const errors = await openGame(page, '057-melee-suppressed');

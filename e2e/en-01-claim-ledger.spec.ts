@@ -137,12 +137,29 @@ test('EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fa
 
   await page.goto('/?contract=the-claim&seed=en-01-pause');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.evaluate(async () => {
+    const ledger = (await Function('return import("/src/encyclopedia/events.ts")')()) as typeof import('../src/encyclopedia/events');
+    ledger.requestOpenClaimLedger();
+  });
+  await expect(page.getByTestId('claim-ledger')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(true);
+  await closeLedger(page);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(false);
+  const resumedAt = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.timeAlive);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0)).toBeGreaterThan(resumedAt);
+
   await page.keyboard.press('KeyP');
   await expect(page.getByTestId('pause-meta-panel')).toBeVisible();
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(true);
+  const playerPausedAt = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.timeAlive);
   await page.getByTestId('pause-open-ledger').click();
   await expect(page.getByTestId('claim-ledger')).toBeVisible();
   await shot(page, testInfo, 'pause-reader');
   await closeLedger(page);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(true);
+  await expect(page.getByTestId('pause-meta-panel')).toBeVisible();
+  await page.waitForTimeout(150);
+  await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.timeAlive)).resolves.toBe(playerPausedAt);
 
   await page.goto('/');
   await expect(page.getByTestId('start-menu')).toBeVisible();

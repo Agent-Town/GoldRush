@@ -1028,9 +1028,12 @@ export class ClaimJumperEnemy {
   private moveScripted(delta: number, speed: number, moveTarget: THREE.Vector3): void {
     const stepDistance = Math.max(0, speed * delta);
     if (stepDistance <= 0 || this.velocity.lengthSq() <= 0.0001) return;
-    const remainingSq = this.group.position.distanceToSquared(moveTarget);
+    const remainingX = moveTarget.x - this.group.position.x;
+    const remainingZ = moveTarget.z - this.group.position.z;
+    const remainingSq = remainingX * remainingX + remainingZ * remainingZ;
     if (remainingSq <= stepDistance * stepDistance) {
-      this.group.position.copy(moveTarget);
+      this.group.position.x = moveTarget.x;
+      this.group.position.z = moveTarget.z;
       this.advanceScriptedRoute();
       return;
     }

@@ -3,7 +3,8 @@ import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 
-export type BlastDetonation = (position: THREE.Vector3, damage: number, radius: number, ownerId: string) => void;
+/** Returns true when the detonation ends the run and later charges must not resolve this tick. */
+export type BlastDetonation = (position: THREE.Vector3, damage: number, radius: number, ownerId: string) => boolean;
 
 export type BlastChargeSuspendSnapshot = {
   slot: number;
@@ -121,17 +122,24 @@ export class BlastChargePool {
     return false;
   }
 
-  update(delta: number, onDetonate: BlastDetonation): void {
+  update(delta: number, onDetonate: BlastDetonation): boolean {
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
       this.age[i] = (this.age[i] ?? 0) + delta;
       if ((this.age[i] ?? 0) >= (this.duration[i] ?? 0)) {
         const target = this.targets[i];
-        if (target) onDetonate(target, this.damage[i] ?? 0, this.radius[i] ?? 0, this.ownerIds[i] ?? 'hero_blast');
+        const stop = target
+          ? onDetonate(target, this.damage[i] ?? 0, this.radius[i] ?? 0, this.ownerIds[i] ?? 'hero_blast')
+          : false;
         this.deactivate(i);
+        if (stop) {
+          this.markNeedsUpdate();
+          return true;
+        }
       }
     }
     this.markNeedsUpdate();
+    return false;
   }
 
   captureRenderState(): void {
