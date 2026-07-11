@@ -161,6 +161,17 @@ export function saveResearchState(
   state: ResearchState,
   progressStorage: MetaProgressStorage | undefined = registryStorage,
 ): ResearchState {
+  const next = saveResearchRegistryState(registryStorage, state, progressStorage);
+  const epochId = state.epochId ?? activeEpochId();
+  if (epochId === DEFAULT_EPOCH_ID && progressStorage) next.progress = saveMetaProgress(progressStorage, next.progress);
+  return next;
+}
+
+export function saveResearchRegistryState(
+  registryStorage: MetaProgressStorage | undefined,
+  state: ResearchState,
+  progressStorage: MetaProgressStorage | undefined = registryStorage,
+): ResearchState {
   const epochId = state.epochId ?? activeEpochId();
   const cursor =
     epochId === DEFAULT_EPOCH_ID
@@ -170,8 +181,11 @@ export function saveResearchState(
   const serialized = JSON.stringify(toRegistry(next));
   writeStorage(registryStorage, researchStateKey(epochId), serialized);
   if (epochId === DEFAULT_EPOCH_ID) writeStorage(registryStorage, RESEARCH_STATE_KEY, serialized);
-  if (epochId === DEFAULT_EPOCH_ID && progressStorage) next.progress = saveMetaProgress(progressStorage, next.progress);
   return next;
+}
+
+export function normalizeResearchState(state: ResearchState): ResearchState {
+  return migrateResearchState(toRegistry(state), state.progress);
 }
 
 export function availablePicks(state: ResearchState): ResearchNode[] {

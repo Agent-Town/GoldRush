@@ -18,6 +18,21 @@ export type ProjectileVisualSample = {
   progress: number;
 };
 
+export type ProjectileSuspendSnapshot = {
+  slot: number;
+  position: { x: number; y: number; z: number };
+  velocity: { x: number; y: number; z: number };
+  life: number;
+  damage: number;
+  ownerId: string;
+  shooterKey: string;
+  targetId: number;
+  visualStartY: number;
+  visualEndY: number;
+  visualDistance: number;
+  visualTravel: number;
+};
+
 export class ProjectilePool {
   readonly group = new THREE.Group();
 
@@ -29,7 +44,7 @@ export class ProjectilePool {
   private readonly life: number[] = [];
   private readonly damage: number[] = [];
   private readonly ownerIds: string[] = [];
-  private readonly shooterIds: number[] = [];
+  private readonly shooterKeys: string[] = [];
   private readonly targetIds: number[] = [];
   private readonly visualStartY: number[] = [];
   private readonly visualEndY: number[] = [];
@@ -86,7 +101,7 @@ export class ProjectilePool {
       this.life.push(0);
       this.damage.push(0);
       this.ownerIds.push('hero');
-      this.shooterIds.push(-1);
+      this.shooterKeys.push('');
       this.targetIds.push(-1);
       this.visualStartY.push(BOLT_VISUAL_Y);
       this.visualEndY.push(BOLT_VISUAL_Y);
@@ -121,8 +136,8 @@ export class ProjectilePool {
     return this.ownerIds[index] ?? null;
   }
 
-  shooterIdAt(index: number): number {
-    return this.shooterIds[index] ?? -1;
+  shooterKeyAt(index: number): string {
+    return this.shooterKeys[index] ?? '';
   }
 
   targetIdAt(index: number): number {
@@ -136,7 +151,7 @@ export class ProjectilePool {
     speed: number,
     damage: number,
     ownerId = 'hero',
-    shooterId = -1,
+    shooterKey = '',
     targetId = -1,
     targetPoint?: THREE.Vector3,
     visualOriginPadRadius = 0,
@@ -161,7 +176,7 @@ export class ProjectilePool {
       this.life[i] = Balance.sparkRig.boltLife;
       this.damage[i] = damage;
       this.ownerIds[i] = ownerId;
-      this.shooterIds[i] = shooterId;
+      this.shooterKeys[i] = shooterKey;
       this.targetIds[i] = targetId;
       this.sync(i);
       return true;
@@ -169,7 +184,7 @@ export class ProjectilePool {
     return false;
   }
 
-  update(delta: number, onExpired?: (shooterId: number, targetId: number) => void): void {
+  update(delta: number, onExpired?: (shooterKey: string, targetId: number) => void): void {
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
       const position = this.positions[i];
@@ -180,7 +195,7 @@ export class ProjectilePool {
       this.syncVisualY(i);
       this.life[i] = (this.life[i] ?? 0) - delta;
       if ((this.life[i] ?? 0) <= 0) {
-        onExpired?.(this.shooterIdAt(i), this.targetIdAt(i));
+        onExpired?.(this.shooterKeyAt(i), this.targetIdAt(i));
         this.deactivate(i);
       }
     }
@@ -236,13 +251,72 @@ export class ProjectilePool {
     return samples;
   }
 
+  captureSuspend(): ProjectileSuspendSnapshot[] {
+    const snapshots: ProjectileSuspendSnapshot[] = [];
+    for (let slot = 0; slot < this.active.length; slot += 1) {
+      if (!this.active[slot]) continue;
+      const position = this.positions[slot];
+      const velocity = this.velocities[slot];
+      if (!position || !velocity) continue;
+      snapshots.push({
+        slot,
+        position: { x: position.x, y: position.y, z: position.z },
+        velocity: { x: velocity.x, y: velocity.y, z: velocity.z },
+        life: this.life[slot] ?? 0,
+        damage: this.damage[slot] ?? 0,
+        ownerId: this.ownerIds[slot] ?? 'hero',
+        shooterKey: this.shooterKeys[slot] ?? '',
+        targetId: this.targetIds[slot] ?? -1,
+        visualStartY: this.visualStartY[slot] ?? BOLT_VISUAL_Y,
+        visualEndY: this.visualEndY[slot] ?? BOLT_VISUAL_Y,
+        visualDistance: this.visualDistance[slot] ?? 1,
+        visualTravel: this.visualTravel[slot] ?? 0,
+      });
+    }
+    return snapshots;
+  }
+
+  restoreSuspend(snapshots: readonly ProjectileSuspendSnapshot[]): boolean {
+    const slots = new Set<number>();
+    for (const snapshot of snapshots) {
+      if (!Number.isInteger(snapshot.slot) || snapshot.slot < 0 || snapshot.slot >= this.active.length || slots.has(snapshot.slot)) return false;
+      slots.add(snapshot.slot);
+    }
+
+    this.recycleAll();
+    for (const snapshot of snapshots) {
+      const slot = snapshot.slot;
+      const position = this.positions[slot];
+      const velocity = this.velocities[slot];
+      if (!position || !velocity) return false;
+      this.active[slot] = true;
+      this.previousActive[slot] = false;
+      position.set(snapshot.position.x, snapshot.position.y, snapshot.position.z);
+      this.previousPositions[slot]?.copy(position);
+      velocity.set(snapshot.velocity.x, snapshot.velocity.y, snapshot.velocity.z);
+      this.life[slot] = snapshot.life;
+      this.damage[slot] = snapshot.damage;
+      this.ownerIds[slot] = snapshot.ownerId;
+      this.shooterKeys[slot] = snapshot.shooterKey;
+      this.targetIds[slot] = snapshot.targetId;
+      this.visualStartY[slot] = snapshot.visualStartY;
+      this.visualEndY[slot] = snapshot.visualEndY;
+      this.visualDistance[slot] = snapshot.visualDistance;
+      this.visualTravel[slot] = snapshot.visualTravel;
+      this.alive += 1;
+      this.sync(slot);
+    }
+    this.markNeedsUpdate();
+    return true;
+  }
+
   deactivate(index: number): void {
     if (!this.active[index]) return;
     this.active[index] = false;
     this.life[index] = 0;
     this.damage[index] = 0;
     this.ownerIds[index] = 'hero';
-    this.shooterIds[index] = -1;
+    this.shooterKeys[index] = '';
     this.targetIds[index] = -1;
     this.visualStartY[index] = BOLT_VISUAL_Y;
     this.visualEndY[index] = BOLT_VISUAL_Y;
@@ -259,7 +333,7 @@ export class ProjectilePool {
       this.life[i] = 0;
       this.damage[i] = 0;
       this.ownerIds[i] = 'hero';
-      this.shooterIds[i] = -1;
+      this.shooterKeys[i] = '';
       this.targetIds[i] = -1;
       this.visualStartY[i] = BOLT_VISUAL_Y;
       this.visualEndY[i] = BOLT_VISUAL_Y;

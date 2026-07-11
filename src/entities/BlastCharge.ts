@@ -5,6 +5,18 @@ import * as Terrain from '../world/Terrain';
 
 export type BlastDetonation = (position: THREE.Vector3, damage: number, radius: number, ownerId: string) => void;
 
+export type BlastChargeSuspendSnapshot = {
+  slot: number;
+  origin: { x: number; y: number; z: number };
+  target: { x: number; y: number; z: number };
+  age: number;
+  duration: number;
+  damage: number;
+  radius: number;
+  ownerId: string;
+  apexY: number;
+};
+
 const ARC_SEGMENTS = 10;
 const MARKER_SEGMENTS = 24;
 const LINES_PER_SLOT = ARC_SEGMENTS + MARKER_SEGMENTS;
@@ -139,6 +151,60 @@ export class BlastChargePool {
       this.age[i] = currentAge;
     }
     this.markNeedsUpdate();
+  }
+
+  captureSuspend(): BlastChargeSuspendSnapshot[] {
+    const snapshots: BlastChargeSuspendSnapshot[] = [];
+    for (let slot = 0; slot < this.active.length; slot += 1) {
+      if (!this.active[slot]) continue;
+      const origin = this.origins[slot];
+      const target = this.targets[slot];
+      if (!origin || !target) continue;
+      snapshots.push({
+        slot,
+        origin: { x: origin.x, y: origin.y, z: origin.z },
+        target: { x: target.x, y: target.y, z: target.z },
+        age: this.age[slot] ?? 0,
+        duration: this.duration[slot] ?? 0,
+        damage: this.damage[slot] ?? 0,
+        radius: this.radius[slot] ?? 0,
+        ownerId: this.ownerIds[slot] ?? 'hero_blast',
+        apexY: this.apexY[slot] ?? 0,
+      });
+    }
+    return snapshots;
+  }
+
+  restoreSuspend(snapshots: readonly BlastChargeSuspendSnapshot[]): boolean {
+    const slots = new Set<number>();
+    for (const snapshot of snapshots) {
+      if (!Number.isInteger(snapshot.slot) || snapshot.slot < 0 || snapshot.slot >= this.active.length || slots.has(snapshot.slot)) return false;
+      slots.add(snapshot.slot);
+    }
+
+    this.recycleAll();
+    for (const snapshot of snapshots) {
+      const slot = snapshot.slot;
+      const origin = this.origins[slot];
+      const target = this.targets[slot];
+      if (!origin || !target) return false;
+      this.active[slot] = true;
+      this.previousActive[slot] = false;
+      origin.set(snapshot.origin.x, snapshot.origin.y, snapshot.origin.z);
+      target.set(snapshot.target.x, snapshot.target.y, snapshot.target.z);
+      this.age[slot] = snapshot.age;
+      this.previousAge[slot] = snapshot.age;
+      this.duration[slot] = snapshot.duration;
+      this.damage[slot] = snapshot.damage;
+      this.radius[slot] = snapshot.radius;
+      this.ownerIds[slot] = snapshot.ownerId;
+      this.apexY[slot] = snapshot.apexY;
+      this.alive += 1;
+      this.sync(slot);
+    }
+    this.setVisible(this.alive > 0);
+    this.markNeedsUpdate();
+    return true;
   }
 
   recycleAll(): void {

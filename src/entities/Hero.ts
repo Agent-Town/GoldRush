@@ -216,6 +216,14 @@ export class Hero {
     return this.iframeRemaining > 0;
   }
 
+  get iframeSecondsRemaining(): number {
+    return this.iframeRemaining;
+  }
+
+  restoreIframes(seconds: number): void {
+    this.iframeRemaining = Math.max(0, seconds);
+  }
+
   takeDamage(amount: number): { applied: boolean; died: boolean } {
     if (this.iframeRemaining > 0 || this.hp <= 0) {
       return { applied: false, died: this.hp <= 0 };

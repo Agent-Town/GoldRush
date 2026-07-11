@@ -3,7 +3,7 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 import { RUN_SUSPEND_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
-const QUERY = '?debug&timescale=40&nokill&nolevel&nosteal&nowreck&seed=run-suspend';
+const QUERY = '?debug&timescale=10&nokill&nolevel&nosteal&nowreck&seed=run-suspend';
 const SHOT_DIR = 'artifacts/run-suspend';
 const SAVE_VISIBILITY_SHOT_DIR = 'artifacts/save-visibility';
 
@@ -52,13 +52,6 @@ async function openGame(page: Page, query = QUERY): Promise<ErrorBucket> {
 async function grantGold(page: Page, amount: number): Promise<void> {
   await page.evaluate((value) => window.__GR_TEST__?.grantGold(value), amount);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0)).toBeGreaterThanOrEqual(amount);
-}
-
-async function placeBuildableAt(page: Page, id: BuildableId, x: number, z: number): Promise<void> {
-  await page.evaluate((pos) => window.__GR_TEST__?.teleport(pos.x, pos.z + 2), { x, z });
-  await page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId), id);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
-  await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
 }
 
 async function upgradeBuildableAt(page: Page, id: BuildableId, index: number, x: number, z: number): Promise<void> {
@@ -180,15 +173,17 @@ test('pause overlay explains the ledger before the first boundary save', async (
 });
 
 test('wave-boundary suspend restores state and matches the uninterrupted seeded run', async ({ page }, testInfo) => {
-  test.setTimeout(45_000);
+  test.setTimeout(90_000);
   await clearStorage(page);
   const errors = await openGame(page);
+  await page.evaluate(() => window.__GR_TEST__?.setManualSim(true));
   await grantGold(page, 600);
-  await placeBuildableAt(page, 'stockpile', -3, 10);
-  await placeBuildableAt(page, 'palisade', 0, 10);
+  await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('stockpile', -3, 10))).resolves.toBe(true);
+  await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('palisade', 0, 10))).resolves.toBe(true);
   await upgradeBuildableAt(page, 'palisade', 0, 0, 10);
-  await placeBuildableAt(page, 'sentry_beacon', 3, 10);
+  await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('sentry_beacon', 3, 10))).resolves.toBe(true);
   await page.evaluate(() => window.__GR_TEST__?.grantXp(60));
+  await page.evaluate(() => window.__GR_TEST__?.setManualSim(false));
 
   const saved = await waitForSavedWave(page, 3);
   const savedRaw = await savedSuspendRaw(page);

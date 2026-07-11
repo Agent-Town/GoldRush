@@ -2,9 +2,9 @@ import * as THREE from 'three';
 import type { EventBus } from '../core/EventBus';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import type { Hero } from '../entities/Hero';
-import type { BlastChargePool } from '../entities/BlastCharge';
-import type { ProjectilePool, ProjectileVisualSample } from '../entities/Projectile';
-import type { XpMotePool } from '../entities/XpMote';
+import type { BlastChargePool, BlastChargeSuspendSnapshot } from '../entities/BlastCharge';
+import type { ProjectilePool, ProjectileSuspendSnapshot, ProjectileVisualSample } from '../entities/Projectile';
+import type { XpMotePool, XpMoteSuspendSnapshot } from '../entities/XpMote';
 import type { EnemyPool } from '../entities/pools';
 import { isCombatDamageDisabled } from '../core/DebugParams';
 import { Balance } from '../game/Balance';
@@ -17,6 +17,7 @@ import type { CombatVfx } from './CombatVfx';
 export type ProjectileKind = 'bolt' | 'lob';
 
 export type ShooterHandle = {
+  resumeKey: string;
   id?: string;
   kind?: ProjectileKind;
   projectileKind?: (origin: THREE.Vector3, target: ClaimJumperEnemy, targetPoint: THREE.Vector3) => ProjectileKind;
@@ -39,11 +40,44 @@ export type ShooterHandle = {
 
 type ShooterState = {
   handle: ShooterHandle;
-  id: number;
   timer: number;
   targeting: TargetingSystem<ClaimJumperEnemy>;
   missTargetId: number;
   misses: number;
+};
+
+export type ShooterSuspendSnapshot = {
+  resumeKey: string;
+  timer: number;
+  targetId: number;
+  missTargetId: number;
+  misses: number;
+};
+
+export type CombatSuspendSnapshot = {
+  xp: number;
+  audit: {
+    ownerKills: Record<string, number>;
+    ownerDamage: Record<string, number>;
+    boltHits: number;
+    boltMisses: number;
+    staleTargetSwitches: number;
+    shots: Record<ProjectileKind, number>;
+    lastShotKind: ProjectileKind | null;
+    lastShotOwnerId: string | null;
+    xpDeaths: number;
+    xpMotesSpawned: number;
+    xpMotesCollected: number;
+    xpMotesCollectedValue: number;
+    xpOverflowBanked: number;
+    xpExpiredBanked: number;
+    blastDetonationCount: number;
+    lastBlastDetonation: { x: number; y: number; z: number } | null;
+  };
+  shooters: ShooterSuspendSnapshot[];
+  projectiles: ProjectileSuspendSnapshot[];
+  blastCharges: BlastChargeSuspendSnapshot[];
+  xpMotes: XpMoteSuspendSnapshot[];
 };
 
 type BuildingDamageResult = {
@@ -85,7 +119,6 @@ export class CombatSystem {
   private readonly scratchAimPoint = new THREE.Vector3();
   private readonly ownerKills: Record<string, number> = {};
   private readonly ownerDamage: Record<string, number> = {};
-  private nextShooterId = 1;
   private boltHits = 0;
   private boltMisses = 0;
   private staleTargetSwitches = 0;
@@ -185,15 +218,16 @@ export class CombatSystem {
   }
 
   registerShooter(handle: ShooterHandle): () => void {
+    if (!handle.resumeKey || this.rigs.some((state) => state.handle.resumeKey === handle.resumeKey)) {
+      throw new Error(`duplicate or missing shooter resumeKey: ${handle.resumeKey || '(empty)'}`);
+    }
     const state = {
       handle,
-      id: this.nextShooterId,
       timer: 0,
       targeting: new TargetingSystem<ClaimJumperEnemy>(),
       missTargetId: -1,
       misses: 0,
     };
-    this.nextShooterId += 1;
     this.rigs.push(state);
     return () => {
       const index = this.rigs.indexOf(state);
@@ -211,6 +245,110 @@ export class CombatSystem {
 
   setTime(at: number): void {
     this.currentAt = at;
+  }
+
+  captureSuspend(): CombatSuspendSnapshot {
+    return {
+      xp: this.xp,
+      audit: {
+        ownerKills: { ...this.ownerKills },
+        ownerDamage: { ...this.ownerDamage },
+        boltHits: this.boltHits,
+        boltMisses: this.boltMisses,
+        staleTargetSwitches: this.staleTargetSwitches,
+        shots: { ...this.shotsByKind },
+        lastShotKind: this.lastShotKind,
+        lastShotOwnerId: this.lastShotOwnerId,
+        xpDeaths: this.xpDeaths,
+        xpMotesSpawned: this.xpMotesSpawned,
+        xpMotesCollected: this.xpMotesCollected,
+        xpMotesCollectedValue: this.xpMotesCollectedValue,
+        xpOverflowBanked: this.xpOverflowBanked,
+        xpExpiredBanked: this.xpExpiredBanked,
+        blastDetonationCount: this.blastDetonationCount,
+        lastBlastDetonation: this.hasLastBlastDetonation
+          ? {
+              x: this.lastBlastDetonationPosition.x,
+              y: this.lastBlastDetonationPosition.y,
+              z: this.lastBlastDetonationPosition.z,
+            }
+          : null,
+      },
+      shooters: this.rigs.map((state) => ({
+        resumeKey: state.handle.resumeKey,
+        timer: state.timer,
+        targetId: state.targeting.currentTarget?.isAlive ? state.targeting.currentTarget.id : -1,
+        missTargetId: state.missTargetId,
+        misses: state.misses,
+      })),
+      projectiles: this.projectiles.captureSuspend(),
+      blastCharges: this.blastCharges.captureSuspend(),
+      xpMotes: this.motes.captureSuspend(),
+    };
+  }
+
+  restoreSuspend(snapshot: CombatSuspendSnapshot): boolean {
+    if (!this.canRestoreSuspend(snapshot)) return false;
+    const liveByKey = new Map(this.rigs.map((state) => [state.handle.resumeKey, state]));
+    const orderedRigs = snapshot.shooters.map((saved) => liveByKey.get(saved.resumeKey)!);
+    const savedByKey = new Map<string, ShooterSuspendSnapshot>();
+    for (const saved of snapshot.shooters) {
+      savedByKey.set(saved.resumeKey, saved);
+    }
+    if (!this.projectiles.restoreSuspend(snapshot.projectiles)) return false;
+    if (!this.blastCharges.restoreSuspend(snapshot.blastCharges)) return false;
+    if (!this.motes.restoreSuspend(snapshot.xpMotes)) return false;
+    this.rigs.splice(0, this.rigs.length, ...orderedRigs);
+
+    this.xp = snapshot.xp;
+    replaceNumberRecord(this.ownerKills, snapshot.audit.ownerKills);
+    replaceNumberRecord(this.ownerDamage, snapshot.audit.ownerDamage);
+    this.boltHits = snapshot.audit.boltHits;
+    this.boltMisses = snapshot.audit.boltMisses;
+    this.staleTargetSwitches = snapshot.audit.staleTargetSwitches;
+    this.shotsByKind.bolt = snapshot.audit.shots.bolt;
+    this.shotsByKind.lob = snapshot.audit.shots.lob;
+    this.lastShotKind = snapshot.audit.lastShotKind;
+    this.lastShotOwnerId = snapshot.audit.lastShotOwnerId;
+    this.xpDeaths = snapshot.audit.xpDeaths;
+    this.xpMotesSpawned = snapshot.audit.xpMotesSpawned;
+    this.xpMotesCollected = snapshot.audit.xpMotesCollected;
+    this.xpMotesCollectedValue = snapshot.audit.xpMotesCollectedValue;
+    this.xpOverflowBanked = snapshot.audit.xpOverflowBanked;
+    this.xpExpiredBanked = snapshot.audit.xpExpiredBanked;
+    this.blastDetonationCount = snapshot.audit.blastDetonationCount;
+    this.hasLastBlastDetonation = snapshot.audit.lastBlastDetonation !== null;
+    if (snapshot.audit.lastBlastDetonation) {
+      this.lastBlastDetonationPosition.set(
+        snapshot.audit.lastBlastDetonation.x,
+        snapshot.audit.lastBlastDetonation.y,
+        snapshot.audit.lastBlastDetonation.z,
+      );
+    } else {
+      this.lastBlastDetonationPosition.set(0, 0, 0);
+    }
+    for (const state of this.rigs) {
+      const saved = savedByKey.get(state.handle.resumeKey);
+      state.timer = saved?.timer ?? 0;
+      state.missTargetId = saved?.missTargetId ?? -1;
+      state.misses = saved?.misses ?? 0;
+      const target = saved && saved.targetId >= 0 ? this.enemies.all[saved.targetId] ?? null : null;
+      state.targeting.restoreCurrent(target?.isAlive ? target : null);
+    }
+    return true;
+  }
+
+  canRestoreSuspend(snapshot: CombatSuspendSnapshot, expectedKeys: readonly string[] = this.rigs.map((state) => state.handle.resumeKey)): boolean {
+    const savedKeys = new Set(snapshot.shooters.map((saved) => saved.resumeKey));
+    const expected = new Set(expectedKeys);
+    return (
+      savedKeys.size === snapshot.shooters.length &&
+      savedKeys.size === expected.size &&
+      [...savedKeys].every((key) => key.length > 0 && expected.has(key)) &&
+      hasUniqueSlots(snapshot.projectiles, this.projectiles.capacity) &&
+      hasUniqueSlots(snapshot.blastCharges, this.blastCharges.capacity) &&
+      hasUniqueSlots(snapshot.xpMotes, Balance.xp.motePool)
+    );
   }
 
   update(delta: number, at: number): void {
@@ -425,7 +563,7 @@ export class CombatSystem {
           handle.projSpeed,
           damage,
           ownerId,
-          state.id,
+          handle.resumeKey,
           target.id,
           targetPoint,
           handle.visualOriginPadRadius?.() ?? 0,
@@ -543,10 +681,10 @@ export class CombatSystem {
 
         const damage = this.projectiles.damageAt(boltIndex) * enemy.boltDamageMult;
         const ownerId = this.projectiles.ownerIdAt(boltIndex) ?? 'hero';
-        const shooterId = this.projectiles.shooterIdAt(boltIndex);
+        const shooterKey = this.projectiles.shooterKeyAt(boltIndex);
         const targetId = this.projectiles.targetIdAt(boltIndex);
         this.projectiles.deactivate(boltIndex);
-        this.recordBoltHit(shooterId, targetId, enemy.id);
+        this.recordBoltHit(shooterKey, targetId, enemy.id);
         this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
         const died = enemy.takeDamage(damage);
         this.vfx.hit(enemy.position);
@@ -557,30 +695,30 @@ export class CombatSystem {
     }
   }
 
-  private readonly handleBoltExpired = (shooterId: number, targetId: number): void => {
-    this.recordBoltMiss(shooterId, targetId);
+  private readonly handleBoltExpired = (shooterKey: string, targetId: number): void => {
+    this.recordBoltMiss(shooterKey, targetId);
   };
 
-  private recordBoltHit(shooterId: number, targetId: number, hitId: number): void {
+  private recordBoltHit(shooterKey: string, targetId: number, hitId: number): void {
     this.boltHits += 1;
     if (targetId === hitId) {
-      const state = this.shooterById(shooterId);
+      const state = this.shooterByKey(shooterKey);
       if (state && state.missTargetId === targetId) {
         state.missTargetId = -1;
         state.misses = 0;
       }
       return;
     }
-    this.recordBoltMiss(shooterId, targetId);
+    this.recordBoltMiss(shooterKey, targetId);
   }
 
-  private recordBoltMiss(shooterId: number, targetId: number): void {
+  private recordBoltMiss(shooterKey: string, targetId: number): void {
     if (targetId < 0) return;
     this.boltMisses += 1;
     const switchCount = Math.floor(Balance.sparkRig.missSwitchCount);
     if (switchCount <= 0) return;
 
-    const state = this.shooterById(shooterId);
+    const state = this.shooterByKey(shooterKey);
     if (!state) return;
     if (state.missTargetId === targetId) state.misses += 1;
     else {
@@ -595,10 +733,10 @@ export class CombatSystem {
     this.staleTargetSwitches += 1;
   }
 
-  private shooterById(id: number): ShooterState | null {
+  private shooterByKey(resumeKey: string): ShooterState | null {
     for (let i = 0; i < this.rigs.length; i += 1) {
       const state = this.rigs[i];
-      if (state?.id === id) return state;
+      if (state?.handle.resumeKey === resumeKey) return state;
     }
     return null;
   }
@@ -670,4 +808,18 @@ export class CombatSystem {
     else this.xpExpiredBanked += 1;
     this.onXpCollect?.(position, value);
   }
+}
+
+function replaceNumberRecord(target: Record<string, number>, source: Readonly<Record<string, number>>): void {
+  for (const key of Object.keys(target)) delete target[key];
+  Object.assign(target, source);
+}
+
+function hasUniqueSlots(snapshots: readonly { slot: number }[], capacity: number): boolean {
+  const slots = new Set<number>();
+  for (const snapshot of snapshots) {
+    if (!Number.isInteger(snapshot.slot) || snapshot.slot < 0 || snapshot.slot >= capacity || slots.has(snapshot.slot)) return false;
+    slots.add(snapshot.slot);
+  }
+  return true;
 }

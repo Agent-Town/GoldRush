@@ -58,7 +58,7 @@ import {
 import { emitStorySignal } from '../story/signals';
 import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revealLedgerEnemyStats } from '../encyclopedia/state';
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
-import { install as installRunManager, type RunManager } from './RunManager';
+import { RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { AgentConsentStore } from '../agent/AgentConsent';
@@ -163,12 +163,14 @@ import { GameState } from './GameState';
 import { performanceTierDiagnostics } from './PerformanceTier';
 import { Progression } from './Progression';
 import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgradeEffect, upgradeFamilyId } from './Upgrades';
-import { clearScores, recordScore } from './Scoreboard';
+import { clearScores, loadScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 import { buildableDefs, type BuildableId } from './buildables';
 import {
   captureRunSuspendSnapshot,
+  multiplayerRunSuspendFutureState,
+  normalizeRunSuspendDatum,
   readRunSuspend,
   restoreRunSuspendSnapshot,
   type RunSuspendEnvelope,
@@ -212,6 +214,7 @@ type MultiplayerActorMeta = {
 };
 type MultiplayerActorSnapshot = {
   hp: number;
+  iframeRemaining: number;
   position: { x: number; y: number; z: number };
   velocity: { x: number; y: number; z: number };
   visible: boolean;
@@ -237,6 +240,8 @@ export class Game {
   private mpActorIntents: Intents[] | null = null;
   private mpLocalSlot = 0;
   private mpActionSlot = 0;
+  private lastMultiplayerHashState: { tick: number; state: unknown } | null = null;
+  private mpPauseBeforeResync: { paused: boolean; playerPauseActive: boolean } | null = null;
   private mpCard?: HTMLElement;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
   private readonly mpHeroChips = new Map<string, HTMLElement>();
@@ -343,6 +348,7 @@ export class Game {
     }),
   );
   private readonly heroShooter: ShooterHandle = {
+    resumeKey: 'hero:0:rig',
     id: 'hero',
     enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabledFor(this.primaryActor),
     getPos: () => this.primaryActor.group.position,
@@ -357,6 +363,7 @@ export class Game {
     volley: Balance.sparkRig.volley,
   };
   private readonly blastShooter: ShooterHandle = {
+    resumeKey: 'hero:0:blast',
     id: 'hero_blast',
     kind: 'lob',
     enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabledFor(this.primaryActor),
@@ -375,6 +382,7 @@ export class Game {
   private readonly simTimeScale = getTimescale();
   private manualSimForTest = false;
   private manualAdvanceForTest = false;
+  private manualResumeAtMpTickForTest: number | null = null;
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
@@ -583,6 +591,11 @@ export class Game {
     this.mpClient?.dispose();
     this.mpClient = undefined;
     this.mpHadParty = false;
+    if (this.mpPauseBeforeResync) {
+      this.state.setPaused(this.mpPauseBeforeResync.paused);
+      this.playerPauseActive = this.mpPauseBeforeResync.playerPauseActive;
+      this.mpPauseBeforeResync = null;
+    }
     this.syncMultiplayerActors();
     this.showMultiplayerCard(
       'Riding solo',
@@ -602,7 +615,9 @@ export class Game {
   }
 
   private createHeroShooter(actor: Hero): ShooterHandle {
+    const slot = Math.max(0, this.actors.indexOf(actor));
     const handle: ShooterHandle = {
+      resumeKey: `hero:${slot}:rig`,
       id: 'hero',
       enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabledFor(actor),
       getPos: () => actor.group.position,
@@ -620,7 +635,9 @@ export class Game {
   }
 
   private createBlastShooter(actor: Hero): ShooterHandle {
+    const slot = Math.max(0, this.actors.indexOf(actor));
     return {
+      resumeKey: `hero:${slot}:blast`,
       id: 'hero_blast',
       kind: 'lob',
       enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabledFor(actor),
@@ -707,7 +724,7 @@ export class Game {
   private lastConfirmIntent = false;
   private lastUpgradeIntent = false;
   private lastRotateIntent = false;
-  private lastWeaponToggleIntent = false;
+  lastWeaponToggleIntent = false; // RunSuspend v2 compatibility latch.
   private lastMuteIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
@@ -992,12 +1009,21 @@ export class Game {
         upgradeBuilding: (family: BuildableId, index: number) => this.upgradeBuilding(family, index),
         setManualSim: (enabled: boolean) => {
           this.manualSimForTest = enabled;
+          if (!enabled) this.manualResumeAtMpTickForTest = null;
           return this.manualSimForTest;
+        },
+        resumeManualSimAtMpTick: (tick: number) => {
+          this.manualSimForTest = true;
+          this.manualResumeAtMpTickForTest = Math.max(0, Math.floor(tick));
+          return this.manualResumeAtMpTickForTest;
         },
         advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => this.advanceSimForTest(seconds, onTick),
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         resetRun: () => this.resetRun(),
-        endRunForTest: () => this.endRun(),
+        endRunForTest: () => {
+          for (const actor of this.actors) if (actor.group.visible) actor.hp = 0;
+          this.endRun();
+        },
         toggleWeapon: () => this.toggleWeapon(),
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
         setDifficultyPreset: (preset: string) => this.setDifficultyPreset(preset),
@@ -1132,10 +1158,22 @@ export class Game {
           return true;
         },
         clearEnemies: () => this.enemies.recycleAll(),
+        captureSuspend: () => this.captureMultiplayerRunSuspendSnapshot(),
+        restoreSuspend: (snapshot: unknown) => this.restoreMultiplayerRunSuspendSnapshot(snapshot),
+        lastMultiplayerHashState: () => structuredClone(this.lastMultiplayerHashState),
         spawnGoldPickup: (x: number, z: number, amount: number) =>
           this.goldPickups.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z), amount) >= 0,
         spawnXpMote: (x: number, z: number, value: number) =>
           this.xpMotes.spawn(new THREE.Vector3(x, Balance.enemy.groundY, z), value),
+        launchBlastAt: (x: number, z: number, airTime = 1) =>
+          this.combat.launchLob(
+            this.primaryActor.group.position,
+            new THREE.Vector3(x, Balance.enemy.groundY, z),
+            airTime,
+            this.currentBlastDamage(),
+            this.blastShooter.aoe?.radius ?? Balance.blast.radius,
+            'hero_blast',
+          ),
         goldPickups: () => this.goldPickups.snapshot(),
         placeBeacon: () => {
           this.buildSystem.selectBuildable('sentry_beacon', true);
@@ -1174,7 +1212,8 @@ export class Game {
     this.prefetchContractPresentation();
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
     // Meta defenses need to exist before the opening stress spawns pick lanes.
-    this.runManager = installRunManager(this);
+    this.runManager = new RunManager(this);
+    this.runManager.install();
     this.installMultiplayerDev();
     this.waveSystem.spawnStressEnemies();
     resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
@@ -1324,6 +1363,14 @@ export class Game {
     }
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : sampledIntents;
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
+    if (
+      lockstepTick &&
+      this.manualResumeAtMpTickForTest !== null &&
+      lockstepTick.tick >= this.manualResumeAtMpTickForTest
+    ) {
+      this.manualSimForTest = false;
+      this.manualResumeAtMpTickForTest = null;
+    }
     this.simTick += 1;
     this.fixedTickElapsed += delta;
     this.updateActionActorPosition();
@@ -1338,6 +1385,7 @@ export class Game {
         this.rememberIntents(intents);
         this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
         this.captureRenderState();
+        this.finishMultiplayerTick();
         return true;
       }
     }
@@ -1346,6 +1394,7 @@ export class Game {
       this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
       this.updateCharmPause(delta);
       this.captureRenderState();
+      this.finishMultiplayerTick();
       return true;
     }
     if (intents.build && !this.lastBuildIntent) this.toggleBuildMenu();
@@ -1360,7 +1409,7 @@ export class Game {
     if (intents.restart && !this.lastRestartIntent && this.state.current === 'dead') this.resetRun();
     const upgradedThisFrame = intents.upgrade && !this.lastUpgradeIntent ? this.confirmUpgrade() : false;
     if (intents.rotateBuild && !this.lastRotateIntent && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
-    if (intents.weaponToggle && !this.lastWeaponToggleIntent) this.toggleWeapon();
+    if (intents.weaponToggle) this.toggleWeapon();
     if (intents.debugSpawn && !this.lastDebugSpawnIntent) this.spawnDebugPack();
     if (
       intents.debugXp &&
@@ -1399,6 +1448,7 @@ export class Game {
       this.combat.setTime(this.timeAlive);
       this.waveSystem.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
+        this.finishMultiplayerTick();
         return true;
       }
       this.buildSystem.update(
@@ -1447,7 +1497,7 @@ export class Game {
         (position) => this.blockedGoldPickup(position),
       );
       this.progression.consumeXpTotal(this.combat.xpCount);
-      this.prospector.updateSimulation(delta, this.timeAlive, this.localActor.group.position);
+      this.prospector.updateSimulation(delta, this.timeAlive, this.primaryActor.group.position);
     } else {
       this.captureRenderState();
     }
@@ -1567,7 +1617,7 @@ export class Game {
     const tick = this.mpTickThisFrame;
     if (!this.mpClient || tick === null) return;
     const snapshot = this.mpClient.shouldExchangeHash(tick) ? this.captureMultiplayerRunSuspendSnapshot() : null;
-    this.mpClient.afterSimTick(tick, this.multiplayerStateHash(tick), snapshot);
+    this.mpClient.afterSimTick(tick, snapshot ? this.multiplayerStateHash(tick, snapshot) : '', snapshot);
     this.mpTickThisFrame = null;
   }
 
@@ -1579,8 +1629,9 @@ export class Game {
       this.timeAlive,
     ) as MultiplayerRunSuspendSnapshot;
     if (this.actors.length > 1) {
-      snapshot.mpActors = this.actors.map((actor) => ({
+      snapshot.mpActors = this.actors.filter((actor) => actor.group.visible).map((actor) => ({
         hp: actor.hp,
+        iframeRemaining: actor.iframeSecondsRemaining,
         position: {
           x: actor.group.position.x,
           y: actor.group.position.y,
@@ -1598,21 +1649,26 @@ export class Game {
   }
 
   private restoreMultiplayerRunSuspendSnapshot(snapshot: unknown): boolean {
-    const restored = restoreRunSuspendSnapshot(this, snapshot);
+    const rosterSize = this.mpClient?.state().roster.length ?? 0;
+    const normalized = normalizeRunSuspendDatum(snapshot);
+    if (!normalized) return false;
+    const mpActors = multiplayerActorsForRestore(snapshot, normalized, rosterSize);
+    if (rosterSize >= 2 && !mpActors) return false;
+    if (mpActors && mpActors.length > this.actors.length) this.syncMultiplayerActors();
+    const restored = restoreRunSuspendSnapshot(this, normalized, { persistProfile: false });
     if (!restored) return false;
-    this.restoreMultiplayerActorSnapshots(snapshot);
-    return true;
+    return this.restoreMultiplayerActorSnapshots(mpActors);
   }
 
-  private restoreMultiplayerActorSnapshots(snapshot: unknown): void {
-    const mpActors = isMultiplayerRunSuspendSnapshot(snapshot) ? snapshot.mpActors : null;
-    if (!mpActors?.length) return;
+  private restoreMultiplayerActorSnapshots(mpActors: readonly MultiplayerActorSnapshot[] | null): boolean {
+    if (!mpActors?.length) return true;
     this.syncMultiplayerActors();
+    if (mpActors.length !== this.actors.filter((actor) => actor.group.visible).length) return false;
     const restoredActors: Array<{ actor: Hero; saved: MultiplayerActorSnapshot }> = [];
     for (let slot = 0; slot < mpActors.length; slot += 1) {
       const actor = this.actors[slot];
       const saved = mpActors[slot];
-      if (!actor || !saved) continue;
+      if (!actor || !saved) return false;
       const position = new THREE.Vector3(saved.position.x, saved.position.y, saved.position.z);
       actor.resetRun(position);
       restoredActors.push({ actor, saved });
@@ -1620,70 +1676,26 @@ export class Game {
     this.applyStats(this.progression.stats, null);
     for (const { actor, saved } of restoredActors) {
       actor.hp = Math.min(actor.maxHp, Math.max(0, saved.hp));
+      actor.restoreIframes(saved.iframeRemaining);
       actor.velocity.set(saved.velocity.x, saved.velocity.y, saved.velocity.z);
       actor.group.visible = saved.visible;
     }
     this.syncHeroVisualHeight();
     for (const actor of this.actors) actor.snapRenderState();
     this.cameraRig.snapTo(this.localActor.group.position);
-    this.prospector.reset(this.localActor.group.position);
+    return true;
   }
 
-  private multiplayerStateHash(tick: number): string {
-    const round = (value: number) => Math.round(value * 1000) / 1000;
-    return stableHash({
+  private multiplayerStateHash(tick: number, snapshot: MultiplayerRunSuspendSnapshot): string {
+    const state = {
       tick,
-      timeAlive: round(this.timeAlive),
-      hero: {
-        hp: round(this.primaryActor.hp),
-        x: round(this.primaryActor.group.position.x),
-        y: round(this.primaryActor.group.position.y),
-        z: round(this.primaryActor.group.position.z),
-      },
-      actors: this.actors.map((actor, slot) => ({
-        slot,
-        hp: round(actor.hp),
-        x: round(actor.group.position.x),
-        y: round(actor.group.position.y),
-        z: round(actor.group.position.z),
-      })),
-      wave: this.waveSystem.diagnostics.wave,
-      waveState: this.waveSystem.diagnostics.waveState,
-      economy: {
-        gold: round(this.economy.gold),
-        bankCap: round(this.economy.bankCap),
-        logLength: this.economy.log.length,
-      },
-      progression: {
-        level: this.progression.level,
-        xpInto: round(this.progression.xpInto),
-        pendingLevels: this.progression.snapshot.pendingLevels,
-        stacks: this.progression.snapshot.stacks,
-      },
-      enemies: this.enemies.all
-        .filter((enemy) => enemy.isAlive)
-        .map((enemy) => ({
-          id: enemy.id,
-          hp: round(enemy.currentHp),
-          x: round(enemy.position.x),
-          y: round(enemy.position.y),
-          z: round(enemy.position.z),
-          thief: enemy.isThief,
-          wrecker: enemy.isWrecker,
-        })),
-      buildings: this.buildSystem.diagnostics.hp.map((entry) => ({
-        id: entry.id,
-        index: entry.index,
-        tier: entry.tier,
-        hp: round(entry.hp),
-        wrecked: entry.wrecked,
-        x: round(entry.position.x),
-        z: round(entry.position.z),
-      })),
-      kills: this.kills,
-      weapon: this.activeWeapon,
-      blastTime: round(this.blastTime),
-    });
+      run: multiplayerRunSuspendFutureState(snapshot),
+      actors: snapshot.mpActors ?? null,
+    };
+    if (new URLSearchParams(window.location.search).has('debug')) {
+      this.lastMultiplayerHashState = { tick, state };
+    }
+    return stableHash(state);
   }
 
   private installMultiplayerDev(): void {
@@ -1692,14 +1704,16 @@ export class Game {
     this.mpClient = new LockstepClient({
       ...config,
       onDesync: (tick) => {
+        this.mpPauseBeforeResync ??= { paused: this.state.isPaused, playerPauseActive: this.playerPauseActive };
         this.state.setPaused(true);
         this.playerPauseActive = false;
         this.showMultiplayerCard('The wire crossed', `Tick ${tick} disagreed. Restoring the latest trail ledger.`);
       },
-      onSnapshot: (snapshot) => {
+      onSnapshot: (snapshot, tick) => {
         const restored = this.restoreMultiplayerRunSuspendSnapshot(snapshot);
         if (restored) {
-          this.state.setPaused(false);
+          this.mpPauseBeforeResync = null;
+          this.simTick = tick + 1;
           this.showMultiplayerCard('The wire crossed', 'Trail ledger restored. Riding together again.');
         }
         return restored;
@@ -2041,7 +2055,7 @@ export class Game {
     this.syncHeroVisualHeight();
     for (const actor of this.actors) actor.snapRenderState();
     this.updateActionActorPosition();
-    this.prospector.reset(this.localActor.group.position);
+    this.prospector.reset(this.primaryActor.group.position);
     this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
@@ -3681,6 +3695,8 @@ export class Game {
   resetRun(): void {
     const deferMetaRecap =
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
+    this.timeAlive = 0;
+    this.simTick = 0;
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -3723,8 +3739,6 @@ export class Game {
     for (const actor of this.actors) actor.snapRenderState();
     this.updateActionActorPosition();
     this.cameraRig.snapTo(this.localActor.group.position);
-    this.timeAlive = 0;
-    this.simTick = 0;
     this.nextProspectorXpSweepAt = 0;
     this.nextProspectorGoldSweepAt = 0;
     this.nextProspectorRepairSweepAt = 0;
@@ -3771,7 +3785,7 @@ export class Game {
     };
     this.state.restart();
     this.playerPauseActive = false;
-    this.prospector.reset(this.localActor.group.position);
+    this.prospector.reset(this.primaryActor.group.position);
     this.prefetchContractPresentation();
     this.showProspectorIntro();
     this.uiBridge.announce('Stake your claim.', 0);
@@ -3788,6 +3802,39 @@ export class Game {
 
   private finishRunLedger(): void {
     this.returnToTown('overrun');
+  }
+
+  restoreDeathOverlayForSuspend(): void {
+    const economySummary = summarizeLog(this.economy.log);
+    const runStats = this.deathRunStats(economySummary);
+    this.deathLedger = {
+      timeAlive: this.timeAlive,
+      kills: this.kills,
+      goldPanned: economySummary.panned,
+      spent: economySummary.spent,
+      beaconsBuilt: economySummary.beaconsBuilt,
+      wavesSurvived: this.waveSystem.diagnostics.wave,
+      weaponToggles: this.weaponToggleCount,
+      blastTime: this.blastTime,
+    };
+    const scores = loadScores();
+    const matchingScore = scores.find(
+      (score) =>
+        score.waves === this.deathLedger.wavesSurvived &&
+        score.kills === this.deathLedger.kills &&
+        score.gold === this.deathLedger.goldPanned &&
+        score.timeAlive === this.deathLedger.timeAlive,
+    );
+    this.deathOverlay.show(this.deathLedger, scores, matchingScore?.at ?? 0, {
+      ...this.researchOverlayOptions(1),
+      actionLabel: 'Return to Town',
+      secondaryActionLabel: 'Try Again',
+      runStats,
+      townName: readTownName(),
+      onDone: () => this.returnToTown('overrun'),
+      onSecondaryAction: () => this.resetRun(),
+    });
+    this.syncMultiplayerLedgerRiders();
   }
 
   private returnToTown(result: RunReturnResult): void {
@@ -3820,8 +3867,9 @@ export class Game {
     this.hud.showMetaRecap(muted ? 'The claim goes quiet.' : 'Sound returns.', 1.8);
   }
 
-  applyMetaProgress(meta: MetaProgress): void {
+  applyMetaProgress(meta: MetaProgress, options: { placeDefenses?: boolean } = {}): void {
     this.appliedMetaProgress = cloneMetaProgress(meta);
+    if (options.placeDefenses === false) return;
     this.territoryRingPresent = false;
     if (meta.tracks.territory < Balance.meta.territoryTier1) return;
     let placed = 0;
@@ -4899,10 +4947,28 @@ function pointFromUnknown(value: unknown): ProspectorPoint | null {
     : null;
 }
 
-function isMultiplayerRunSuspendSnapshot(value: unknown): value is MultiplayerRunSuspendSnapshot {
-  if (!value || typeof value !== 'object') return false;
+function multiplayerActorsForRestore(
+  value: unknown,
+  base: RunSuspendEnvelope,
+  rosterSize: number,
+): MultiplayerActorSnapshot[] | null {
+  if (!value || typeof value !== 'object') return null;
   const mpActors = (value as { mpActors?: unknown }).mpActors;
-  return mpActors === undefined || (Array.isArray(mpActors) && mpActors.every(isMultiplayerActorSnapshot));
+  if (mpActors === undefined) return null;
+  if (!Array.isArray(mpActors) || mpActors.length !== rosterSize || !mpActors.every(isMultiplayerActorSnapshot)) return null;
+  if (mpActors.some((actor) => !actor.visible || actor.hp < 0 || actor.hp > base.hero.maxHp)) return null;
+
+  const primary = mpActors[0];
+  if (
+    !primary ||
+    primary.hp !== base.hero.hp ||
+    primary.iframeRemaining !== base.hero.iframeRemaining ||
+    !sameFiniteVector3(primary.position, base.hero.position) ||
+    !sameFiniteVector3(primary.velocity, base.hero.velocity)
+  ) {
+    return null;
+  }
+  return mpActors;
 }
 
 function isMultiplayerActorSnapshot(value: unknown): value is MultiplayerActorSnapshot {
@@ -4913,6 +4979,9 @@ function isMultiplayerActorSnapshot(value: unknown): value is MultiplayerActorSn
     isFiniteVector3(snapshot.velocity) &&
     typeof snapshot.hp === 'number' &&
     Number.isFinite(snapshot.hp) &&
+    typeof snapshot.iframeRemaining === 'number' &&
+    Number.isFinite(snapshot.iframeRemaining) &&
+    snapshot.iframeRemaining >= 0 &&
     typeof snapshot.visible === 'boolean'
   );
 }
@@ -4928,6 +4997,13 @@ function isFiniteVector3(value: unknown): value is { x: number; y: number; z: nu
     typeof vector.z === 'number' &&
     Number.isFinite(vector.z)
   );
+}
+
+function sameFiniteVector3(
+  left: { x: number; y: number; z: number },
+  right: { x: number; y: number; z: number },
+): boolean {
+  return left.x === right.x && left.y === right.y && left.z === right.z;
 }
 
 function hasMultiplayerActionIntent(intents: Intents): boolean {

@@ -9,6 +9,13 @@ export type XpMoteSweepResult = {
   sweptIds: string[];
 };
 
+export type XpMoteSuspendSnapshot = {
+  slot: number;
+  value: number;
+  age: number;
+  position: { x: number; y: number; z: number };
+};
+
 export class XpMotePool {
   readonly group = new THREE.Group();
 
@@ -186,6 +193,48 @@ export class XpMotePool {
 
     this.mesh.instanceMatrix.needsUpdate = true;
     return { xp, motes: sweptIds.length, agentPath: path, sweptIds };
+  }
+
+  captureSuspend(): XpMoteSuspendSnapshot[] {
+    const snapshots: XpMoteSuspendSnapshot[] = [];
+    for (let slot = 0; slot < this.active.length; slot += 1) {
+      if (!this.active[slot]) continue;
+      const position = this.positions[slot];
+      if (!position) continue;
+      snapshots.push({
+        slot,
+        value: this.values[slot] ?? 0,
+        age: this.age[slot] ?? 0,
+        position: { x: position.x, y: position.y, z: position.z },
+      });
+    }
+    return snapshots;
+  }
+
+  restoreSuspend(snapshots: readonly XpMoteSuspendSnapshot[]): boolean {
+    const slots = new Set<number>();
+    for (const snapshot of snapshots) {
+      if (!Number.isInteger(snapshot.slot) || snapshot.slot < 0 || snapshot.slot >= this.active.length || slots.has(snapshot.slot)) return false;
+      slots.add(snapshot.slot);
+    }
+
+    this.recycleAll();
+    for (const snapshot of snapshots) {
+      const slot = snapshot.slot;
+      const position = this.positions[slot];
+      if (!position) return false;
+      this.active[slot] = true;
+      this.previousActive[slot] = false;
+      position.set(snapshot.position.x, snapshot.position.y, snapshot.position.z);
+      this.previousPositions[slot]?.copy(position);
+      this.values[slot] = snapshot.value;
+      this.age[slot] = snapshot.age;
+      this.previousAge[slot] = snapshot.age;
+      this.alive += 1;
+      this.sync(slot);
+    }
+    this.mesh.instanceMatrix.needsUpdate = true;
+    return true;
   }
 
   recycleAll(): void {

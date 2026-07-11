@@ -28,7 +28,7 @@ type RunManagerHost = {
   at: () => number | undefined;
   setPaused?: (paused: boolean) => void;
   resetRun?: () => void;
-  applyMetaProgress?: (meta: MetaProgress) => void;
+  applyMetaProgress?: (meta: MetaProgress, options?: { placeDefenses?: boolean }) => void;
   securePayoutMult?: () => Partial<Record<MetaTrack, number>> | undefined;
   secureBark?: () => string | undefined;
   secureLedgerLine?: () => string | undefined;
@@ -38,6 +38,13 @@ type RunManagerHost = {
 
 type InstallOptions = {
   storage?: MetaProgressStorage;
+};
+
+export type RunManagerSuspendState = {
+  secured: boolean;
+  rush: boolean;
+  meta: MetaProgress;
+  payout: MetaPayout | null;
 };
 
 export class RunManager {
@@ -57,6 +64,7 @@ export class RunManager {
   private debugReadout?: HTMLElement;
   private secureOverlay?: HTMLElement;
   private runSuspend?: RunSuspendController;
+  private pendingSuspendState: RunManagerSuspendState | null = null;
 
   constructor(
     private readonly game: unknown,
@@ -98,6 +106,50 @@ export class RunManager {
 
   get metaProgress(): MetaProgress {
     return this.meta;
+  }
+
+  captureSuspend(): RunManagerSuspendState {
+    const secured = this.securedRunId === this.runId;
+    return {
+      secured,
+      rush: this.stayedForRushRunId === this.runId,
+      meta: cloneMeta(this.meta),
+      payout: secured && this.lastPayout ? { ...this.lastPayout } : null,
+    };
+  }
+
+  restoreSuspend(
+    state: RunManagerSuspendState,
+    options: { materializeMeta?: boolean; persistMeta?: boolean } = {},
+  ): void {
+    this.meta = cloneMeta(state.meta);
+    if (options.persistMeta && this.storage) this.meta = saveMetaProgress(this.storage, this.meta);
+    this.host?.applyMetaProgress?.(this.meta, { placeDefenses: options.materializeMeta !== false });
+    if (this.runId === 0) {
+      this.pendingSuspendState = cloneSuspendState(state);
+      this.hideSecureOverlay();
+      this.renderDebugReadoutValue();
+      return;
+    }
+    this.applySuspendRunState(state);
+  }
+
+  finalizeSuspendRestore(): void {
+    this.hideSecureOverlay();
+    if (this.securedRunId === this.runId && this.stayedForRushRunId !== this.runId) {
+      this.renderSecureOverlay(this.host?.wave() ?? Balance.run.secureWave);
+    }
+  }
+
+  private applySuspendRunState(state: RunManagerSuspendState): void {
+    this.securedRunId = state.secured ? this.runId : 0;
+    this.stayedForRushRunId = state.rush ? this.runId : 0;
+    this.paidRunId = state.secured ? this.runId : 0;
+    this.lastPayout = state.payout ? { ...state.payout } : null;
+    this.endedRunId = 0;
+    this.lastRunEndedReason = null;
+    this.hideSecureOverlay();
+    this.renderDebugReadoutValue();
   }
 
   get diagnostics(): {
@@ -154,6 +206,11 @@ export class RunManager {
     if (!this.host) return;
     this.runId += 1;
     this.host.events.emit({ type: 'run_started', at, runId: this.runId });
+    if (this.pendingSuspendState) {
+      this.applySuspendRunState(this.pendingSuspendState);
+      this.pendingSuspendState = null;
+      this.finalizeSuspendRestore();
+    }
   }
 
   private endRun(reason: RunEndReason, at: number, fallbackWave: number): void {
@@ -220,6 +277,10 @@ export class RunManager {
     readout.textContent = formatMetaProgress(this.meta);
     documentRef.body.append(readout);
     this.debugReadout = readout;
+  }
+
+  private renderDebugReadoutValue(): void {
+    if (this.debugReadout) this.debugReadout.textContent = formatMetaProgress(this.meta);
   }
 
   private renderSecureOverlay(wave: number): void {
@@ -357,7 +418,7 @@ function resolveHost(game: unknown): RunManagerHost {
     timeAlive?: number;
     state?: { setPaused?: (paused: boolean) => void };
     resetRun?: () => void;
-    applyMetaProgress?: (meta: MetaProgress) => void;
+    applyMetaProgress?: (meta: MetaProgress, options?: { placeDefenses?: boolean }) => void;
     autoSecureWaveForRun?: () => number;
     securePayoutMultForRun?: () => Partial<Record<MetaTrack, number>> | undefined;
     secureBarkForRun?: () => string | undefined;
@@ -378,7 +439,7 @@ function resolveHost(game: unknown): RunManagerHost {
     at: () => host.timeAlive,
     setPaused: (paused) => host.state?.setPaused?.(paused),
     resetRun: () => host.resetRun?.(),
-    applyMetaProgress: (meta) => host.applyMetaProgress?.(meta),
+    applyMetaProgress: (meta, applyOptions) => host.applyMetaProgress?.(meta, applyOptions),
     securePayoutMult: () => host.securePayoutMultForRun?.(),
     secureBark: () => host.secureBarkForRun?.(),
     secureLedgerLine: () => host.secureLedgerLineForRun?.(),
@@ -407,6 +468,14 @@ function isDebugPage(): boolean {
 function formatMetaProgress(meta: MetaProgress): string {
   const tracks = META_TRACKS.map((track) => `${track}: ${meta.tracks[track]}`).join(' | ');
   return `Meta ${tracks} | agent autonomy: ${agentAutonomyLevel(meta)}`;
+}
+
+function cloneMeta(meta: MetaProgress): MetaProgress {
+  return { version: 1, tracks: { ...meta.tracks } };
+}
+
+function cloneSuspendState(state: RunManagerSuspendState): RunManagerSuspendState {
+  return { ...state, meta: cloneMeta(state.meta), payout: state.payout ? { ...state.payout } : null };
 }
 
 function zeroPayout(): MetaPayout {

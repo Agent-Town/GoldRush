@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import type { Intents } from '../core/InputController';
+import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
 
 export type LockstepInput = {
   mx: number;
@@ -41,6 +42,7 @@ export type MultiplayerState = {
   hashes: Array<{ tick: number; hash: string }>;
   desyncs: number;
   resyncs: number;
+  lastResyncTick: number | null;
   paused: boolean;
   error: string | null;
 };
@@ -55,12 +57,16 @@ export type LockstepClientOptions = {
   hashEveryTicks?: number;
   desyncAtTick?: number | null;
   onDesync?: (tick: number) => void;
-  onSnapshot?: (snapshot: unknown) => boolean;
+  onSnapshot?: (snapshot: unknown, tick: number) => boolean;
 };
 
 const VERSION = 1;
 const DEFAULT_DELAY_TICKS = 3;
 const DEFAULT_HASH_EVERY_TICKS = 30;
+const MAX_HASH_HISTORY = 128;
+const SNAPSHOT_RAW_LIMIT_BYTES = 180 * 1024;
+const SNAPSHOT_WIRE_LIMIT_BYTES = 190 * 1024;
+const SNAPSHOT_CODEC = 'gzip-base64-v1';
 const ZERO_INPUT: LockstepInput = {
   mx: 0,
   my: 0,
@@ -87,15 +93,22 @@ export class LockstepClient {
   private nextInputTick = 0;
   private nextSimTick = 0;
   private readonly bundles = new Map<number, LockstepTick>();
+  private readonly consumedBundles = new Map<number, LockstepTick>();
   private readonly sendTimes = new Map<number, number>();
   private readonly localHashes = new Map<number, string>();
+  private readonly remoteHashes = new Map<number, Map<string, string>>();
+  private readonly authoritySnapshots = new Map<number, unknown>();
   private readonly hashLog: Array<{ tick: number; hash: string }> = [];
   private startedAt = performance.now();
   private latencyMs: number | null = null;
   private desyncs = 0;
   private resyncs = 0;
+  private lastResyncTick: number | null = null;
   private paused = false;
   private error: string | null = null;
+  private pendingDesyncTick: number | null = null;
+  private pendingWeaponToggles = 0;
+  private snapshotSendQueue: Promise<void> = Promise.resolve();
   private desyncAtTick: number | null;
   private readonly inputDelayTicks: number;
   private readonly hashEveryTicks: number;
@@ -138,17 +151,28 @@ export class LockstepClient {
 
   pump(localInput: LockstepInput): LockstepTick | null {
     if (!this.connected || this.paused || this.roster.length < 2) return null;
+    if (localInput.weaponToggle) this.pendingWeaponToggles += 1;
     while (this.nextInputTick <= this.nextSimTick + this.inputDelayTicks) {
-      this.send({ v: VERSION, type: 'input', tick: this.nextInputTick, input: localInput });
+      const weaponToggle = this.pendingWeaponToggles > 0;
+      this.send({
+        v: VERSION,
+        type: 'input',
+        tick: this.nextInputTick,
+        input: weaponToggle === localInput.weaponToggle ? localInput : { ...localInput, weaponToggle },
+      });
+      if (weaponToggle) this.pendingWeaponToggles -= 1;
       this.sendTimes.set(this.nextInputTick, performance.now());
       this.nextInputTick += 1;
     }
     const bundle = this.bundles.get(this.nextSimTick);
     if (!bundle) return null;
-    this.bundles.delete(this.nextSimTick);
-    this.latencyMs = Math.round(performance.now() - (this.sendTimes.get(this.nextSimTick) ?? performance.now()));
-    this.sendTimes.delete(this.nextSimTick);
-    this.nextSimTick += 1;
+    const tick = this.nextSimTick;
+    this.bundles.delete(tick);
+    this.consumedBundles.set(tick, bundle);
+    this.pruneConsumedBundles(tick);
+    this.latencyMs = Math.round(performance.now() - (this.sendTimes.get(tick) ?? performance.now()));
+    this.sendTimes.delete(tick);
+    this.nextSimTick = tick + 1;
     return bundle;
   }
 
@@ -158,11 +182,34 @@ export class LockstepClient {
 
   afterSimTick(tick: number, hash: string, snapshot: unknown | null): void {
     if (!this.connected || !this.shouldExchangeHash(tick)) return;
-    if (snapshot) this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot });
     const sentHash = tick === this.desyncAtTick ? `${hash}:injected` : hash;
+    if (snapshot && this.playerId === this.roster[0]?.playerId) {
+      const prepared = prepareLockstepSnapshotTransport(snapshot);
+      if (prepared instanceof Promise) {
+        this.snapshotSendQueue = this.snapshotSendQueue
+          .then(async () => {
+            const wireSnapshot = await prepared;
+            if (!this.connected) return;
+            this.rememberAuthoritySnapshot(tick, wireSnapshot);
+            this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot: wireSnapshot });
+            this.recordHash(tick, sentHash);
+          })
+          .catch(() => this.failSession('snapshot_encode_failed'));
+        return;
+      }
+      this.rememberAuthoritySnapshot(tick, prepared);
+      this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot: prepared });
+    }
+    this.recordHash(tick, sentHash);
+  }
+
+  private recordHash(tick: number, sentHash: string): void {
     this.localHashes.set(tick, sentHash);
     this.hashLog.push({ tick, hash: sentHash });
+    if (this.hashLog.length > MAX_HASH_HISTORY) this.hashLog.splice(0, this.hashLog.length - MAX_HASH_HISTORY);
     this.send({ v: VERSION, type: 'hash', tick, hash: sentHash });
+    this.pruneHashState(tick);
+    this.compareHashes(tick);
   }
 
   state(): MultiplayerState {
@@ -179,6 +226,7 @@ export class LockstepClient {
       hashes: [...this.hashLog],
       desyncs: this.desyncs,
       resyncs: this.resyncs,
+      lastResyncTick: this.lastResyncTick,
       paused: this.paused,
       error: this.error,
     };
@@ -213,22 +261,43 @@ export class LockstepClient {
     }
     if (message.type === 'tick-inputs') {
       const tick = normalizeTick(message.tick);
-      if (tick === null) return;
+      if (tick === null || tick < this.nextSimTick) return;
       this.bundles.set(tick, { tick, inputs: normalizeInputs(message.inputs) });
       return;
     }
     if (message.type === 'hash') {
       const tick = normalizeTick(message.tick);
       if (tick === null || typeof message.hash !== 'string') return;
-      const local = this.localHashes.get(tick);
-      if (local && local !== message.hash) this.desync(tick);
+      if (this.lastResyncTick !== null && tick <= this.lastResyncTick) return;
+      const from = typeof message.from === 'string' ? message.from : 'remote';
+      const peers = this.remoteHashes.get(tick) ?? new Map<string, string>();
+      peers.set(from, message.hash);
+      this.remoteHashes.set(tick, peers);
+      this.compareHashes(tick);
       return;
     }
     if (message.type === 'snapshot') {
-      if (this.options.onSnapshot?.(message.snapshot)) {
-        this.paused = false;
-        this.resyncs += 1;
+      const tick = normalizeTick(message.tick);
+      const from = typeof message.from === 'string' ? message.from : null;
+      if (tick !== null) void this.restoreSnapshot(message.snapshot, tick, from);
+      return;
+    }
+    if (message.type === 'snapshot-available') {
+      const tick = normalizeTick(message.tick);
+      const from = typeof message.from === 'string' ? message.from : null;
+      if (
+        tick !== null &&
+        this.paused &&
+        tick === this.pendingDesyncTick &&
+        from === this.roster[0]?.playerId &&
+        this.playerId !== from
+      ) {
+        this.send({ v: VERSION, type: 'snapshot-request', tick });
       }
+      return;
+    }
+    if (message.type === 'snapshot-missing' && this.paused) {
+      this.failSession('snapshot_missing');
       return;
     }
     if (message.type === 'error') this.error = typeof message.error === 'string' ? message.error : 'relay_error';
@@ -237,14 +306,157 @@ export class LockstepClient {
   private desync(tick: number): void {
     if (this.paused) return;
     this.paused = true;
+    this.pendingDesyncTick = tick;
     this.desyncs += 1;
     this.options.onDesync?.(tick);
-    this.send({ v: VERSION, type: 'snapshot-request' });
+    if (this.playerId === this.roster[0]?.playerId) this.republishAuthoritySnapshot(tick);
+  }
+
+  private compareHashes(tick: number): void {
+    const local = this.localHashes.get(tick);
+    const remotes = this.remoteHashes.get(tick);
+    if (!local || !remotes || remotes.size < Math.max(1, this.roster.length - 1)) return;
+    this.localHashes.delete(tick);
+    this.remoteHashes.delete(tick);
+    if ([...remotes.values()].some((remote) => remote !== local)) this.desync(tick);
+  }
+
+  private async restoreSnapshot(snapshot: unknown, tick: number, from: string | null): Promise<void> {
+    if (this.lastResyncTick !== null && tick <= this.lastResyncTick) {
+      if (this.paused) this.failSession('snapshot_stale');
+      return;
+    }
+    if (!this.paused || this.pendingDesyncTick === null || tick !== this.pendingDesyncTick) {
+      this.failSession('snapshot_tick_mismatch');
+      return;
+    }
+    if (!from || from !== this.roster[0]?.playerId) {
+      this.failSession('snapshot_authority_mismatch');
+      return;
+    }
+    const resumeTick = tick + 1;
+    const replay: LockstepTick[] = [];
+    for (let replayTick = resumeTick; replayTick < this.nextSimTick; replayTick += 1) {
+      const bundle = this.consumedBundles.get(replayTick);
+      if (!bundle) {
+        this.failSession('snapshot_replay_incomplete');
+        return;
+      }
+      replay.push(bundle);
+    }
+    let decoded: unknown;
+    try {
+      decoded = await decodeLockstepSnapshotTransport(snapshot);
+    } catch {
+      this.failSession('snapshot_decode_failed');
+      return;
+    }
+    if (!this.options.onSnapshot?.(decoded, tick)) {
+      this.failSession('snapshot_restore_failed');
+      return;
+    }
+
+    for (const bufferedTick of this.bundles.keys()) {
+      if (bufferedTick < resumeTick) this.bundles.delete(bufferedTick);
+    }
+    for (const bundle of replay) this.bundles.set(bundle.tick, bundle);
+    for (const consumedTick of this.consumedBundles.keys()) {
+      if (consumedTick < resumeTick) this.consumedBundles.delete(consumedTick);
+    }
+    for (const sentTick of this.sendTimes.keys()) {
+      if (sentTick < resumeTick) this.sendTimes.delete(sentTick);
+    }
+    this.localHashes.clear();
+    this.remoteHashes.clear();
+    for (let index = this.hashLog.length - 1; index >= 0; index -= 1) {
+      if ((this.hashLog[index]?.tick ?? -1) > tick) this.hashLog.splice(index, 1);
+    }
+    this.nextSimTick = resumeTick;
+    this.nextInputTick = Math.max(this.nextInputTick, resumeTick);
+    this.lastResyncTick = tick;
+    this.pendingDesyncTick = null;
+    this.paused = false;
+    this.resyncs += 1;
+  }
+
+  private rememberAuthoritySnapshot(tick: number, snapshot: unknown): void {
+    this.authoritySnapshots.set(tick, snapshot);
+    const oldestRetainedTick = tick - this.hashEveryTicks * 2;
+    for (const savedTick of this.authoritySnapshots.keys()) {
+      if (savedTick < oldestRetainedTick) this.authoritySnapshots.delete(savedTick);
+    }
+  }
+
+  private republishAuthoritySnapshot(tick: number): void {
+    const snapshot = this.authoritySnapshots.get(tick);
+    if (snapshot === undefined) {
+      this.failSession('snapshot_authority_missing');
+      return;
+    }
+    this.snapshotSendQueue = this.snapshotSendQueue
+      .then(() => {
+        if (!this.connected || !this.paused || this.pendingDesyncTick !== tick) return;
+        this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot });
+        // WebSocket message order makes the exact-tick republish visible to the
+        // relay before this request; peers request after snapshot-available.
+        this.send({ v: VERSION, type: 'snapshot-request', tick });
+      })
+      .catch(() => this.failSession('snapshot_republish_failed'));
+  }
+
+  private pruneConsumedBundles(latestTick: number): void {
+    const oldestRetainedTick = latestTick - (this.hashEveryTicks * 2 + this.inputDelayTicks);
+    for (const tick of this.consumedBundles.keys()) {
+      if (tick < oldestRetainedTick) this.consumedBundles.delete(tick);
+    }
+  }
+
+  private pruneHashState(latestTick: number): void {
+    const oldestRetainedTick = latestTick - this.hashEveryTicks * MAX_HASH_HISTORY;
+    for (const tick of this.localHashes.keys()) if (tick < oldestRetainedTick) this.localHashes.delete(tick);
+    for (const tick of this.remoteHashes.keys()) if (tick < oldestRetainedTick) this.remoteHashes.delete(tick);
+  }
+
+  private failSession(error: string): void {
+    this.error = error;
+    this.paused = false;
+    this.pendingDesyncTick = null;
+    this.connected = false;
+    this.socket?.close(4001, error.slice(0, 120));
   }
 
   private send(value: WireMessage): void {
     if (this.socket?.readyState === WebSocket.OPEN) this.socket.send(JSON.stringify(value));
   }
+}
+
+type EncodedLockstepSnapshot = {
+  codec: typeof SNAPSHOT_CODEC;
+  data: string;
+};
+
+export function prepareLockstepSnapshotTransport(snapshot: unknown): unknown | Promise<EncodedLockstepSnapshot> {
+  const json = JSON.stringify(snapshot);
+  const bytes = new TextEncoder().encode(json);
+  if (bytes.byteLength <= SNAPSHOT_RAW_LIMIT_BYTES) return snapshot;
+  return gzipTextBase64(json).then((data) => {
+    const encoded: EncodedLockstepSnapshot = { codec: SNAPSHOT_CODEC, data };
+    if (new TextEncoder().encode(JSON.stringify(encoded)).byteLength > SNAPSHOT_WIRE_LIMIT_BYTES) {
+      throw new Error('snapshot_too_large');
+    }
+    return encoded;
+  });
+}
+
+export async function decodeLockstepSnapshotTransport(snapshot: unknown): Promise<unknown> {
+  if (!isEncodedLockstepSnapshot(snapshot)) return snapshot;
+  return gunzipJsonBase64(snapshot.data, 5_000_000);
+}
+
+function isEncodedLockstepSnapshot(value: unknown): value is EncodedLockstepSnapshot {
+  if (!value || typeof value !== 'object') return false;
+  const encoded = value as { codec?: unknown; data?: unknown };
+  return encoded.codec === SNAPSHOT_CODEC && typeof encoded.data === 'string';
 }
 
 export function multiplayerConfigFromSearch(search = window.location.search): LockstepClientOptions | null {

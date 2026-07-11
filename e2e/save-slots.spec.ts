@@ -306,6 +306,25 @@ test('corrupt manual save store is preserved for recovery and does not block re-
   expect(errors.pageErrors).toEqual([]);
 });
 
+test('one malformed manual slot does not hide the valid shelf', async ({ page }) => {
+  const valid = slotFixture('Good Claim', 4, Date.now());
+  const slots = { v: 1, manual: [valid, { ...valid, id: 'broken-slot', snapshot: { v: 99 } }] } as unknown as SaveSlotsEnvelope;
+  const original = JSON.stringify(slots);
+  await seedProfile(page, { slots });
+  const errors = collectErrors(page);
+  await page.goto('/');
+
+  const normalized = await page.evaluate(async () => {
+    const saves = (await Function('return import("/src/game/SaveSlots.ts")')()) as typeof import('../src/game/SaveSlots');
+    return saves.readSaveSlots();
+  });
+  expect(normalized.manual.map((slot) => slot.name)).toEqual(['Good Claim']);
+  expect((await readSlots(page)).manual.map((slot) => slot.name)).toEqual(['Good Claim']);
+  await expect(page.evaluate((recoveryKey) => localStorage.getItem(recoveryKey), SAVE_SLOTS_RECOVERY_KEY)).resolves.toBe(original);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('profile export warns when older manual claims will stay on this device', async ({ page }) => {
   await seedProfile(page, { slots: slotsEnvelope(Array.from({ length: 6 }, (_, index) => `Slot ${index + 1}`)) });
   const errors = collectErrors(page);

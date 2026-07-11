@@ -24,6 +24,17 @@ export type ProspectorEmbodimentSnapshot = {
   clearance: number;
 };
 
+export type ProspectorFutureState = {
+  visible: boolean;
+  position: ProspectorPoint;
+  target: ProspectorPoint;
+  moving: boolean;
+  workRemaining: number;
+  nextWorkSeconds: number;
+  nextSurveyIn: number;
+  receiptCount: number;
+};
+
 type FloatText = (position: THREE.Vector3, text: string, color: string) => void;
 
 export class ProspectorEmbodiment {
@@ -158,6 +169,52 @@ export class ProspectorEmbodiment {
 
   get hasActiveTask(): boolean {
     return this.moving || this.workRemaining > 0;
+  }
+
+  captureFutureState(at: number): ProspectorFutureState {
+    return {
+      visible: this.group.visible,
+      position: { x: this.group.position.x, z: this.group.position.z },
+      target: { x: this.target.x, z: this.target.z },
+      moving: this.moving,
+      workRemaining: this.workRemaining,
+      nextWorkSeconds: this.nextWorkSeconds,
+      nextSurveyIn: Math.max(0, this.nextSurveyAt - at),
+      receiptCount: this.receiptCount,
+    };
+  }
+
+  restoreFutureState(state: ProspectorFutureState, at: number): boolean {
+    if (
+      !Number.isFinite(state.position?.x) ||
+      !Number.isFinite(state.position?.z) ||
+      !Number.isFinite(state.target?.x) ||
+      !Number.isFinite(state.target?.z) ||
+      !Number.isFinite(state.workRemaining) ||
+      state.workRemaining < 0 ||
+      !Number.isFinite(state.nextWorkSeconds) ||
+      state.nextWorkSeconds < 0 ||
+      !Number.isFinite(state.nextSurveyIn) ||
+      state.nextSurveyIn < 0 ||
+      !Number.isInteger(state.receiptCount) ||
+      state.receiptCount < 0 ||
+      (state.moving && state.workRemaining > 0)
+    ) {
+      return false;
+    }
+    this.group.visible = state.visible;
+    this.group.position.set(state.position.x, this.floatY(state.position.x, state.position.z, 0), state.position.z);
+    this.target.set(state.target.x, 0, state.target.z);
+    this.idleTarget.copy(this.target);
+    this.moving = state.moving;
+    this.drifting = false;
+    this.workRemaining = state.workRemaining;
+    this.nextWorkSeconds = state.nextWorkSeconds;
+    this.nextSurveyAt = at + state.nextSurveyIn;
+    this.receiptCount = state.receiptCount;
+    this.orientationResolver.reset();
+    this.snapRenderState();
+    return true;
   }
 
   speak(line: string): void {

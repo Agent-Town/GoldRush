@@ -17,6 +17,12 @@ export type SluiceSnapshot = {
   capped: boolean;
 };
 
+export type SluiceFutureState = {
+  timer: number;
+  contested: boolean;
+  capped: boolean;
+};
+
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const troughTierColors = [new THREE.Color('#b9824c'), new THREE.Color('#8b7d3c'), new THREE.Color('#5b8a8a')];
 const waterTierColors = [new THREE.Color('#5b8a8a'), new THREE.Color('#6fa0a0'), new THREE.Color('#83ded7')];
@@ -149,25 +155,40 @@ export class SluicePool {
     this.yieldPerCycles[index] = cleanYield(amount);
   }
 
-  place(position: THREE.Vector3): number {
-    for (let i = 0; i < this.active.length; i += 1) {
-      if (this.active[i]) continue;
-      this.active[i] = true;
-      this.group.visible = true;
-      this.positions[i]?.copy(position);
-      this.timers[i] = 0;
-      this.tiers[i] = 1;
-      this.panRateMults[i] = 1;
-      this.yieldPerCycles[i] = Balance.sluice.goldPerCycle;
-      this.contested[i] = false;
-      this.capped[i] = false;
-      this.alive += 1;
-      this.syncTrough(i);
-      this.syncWater(i, 0, true);
-      this.markNeedsUpdate();
-      return i;
-    }
-    return -1;
+  captureFutureState(index: number): SluiceFutureState | null {
+    if (!this.active[index]) return null;
+    return {
+      timer: this.timers[index] ?? 0,
+      contested: this.contested[index] === true,
+      capped: this.capped[index] === true,
+    };
+  }
+
+  restoreFutureState(index: number, state: SluiceFutureState): boolean {
+    if (!this.active[index] || !Number.isFinite(state.timer) || state.timer < 0) return false;
+    this.timers[index] = state.timer;
+    this.contested[index] = state.contested;
+    this.capped[index] = state.capped;
+    return true;
+  }
+
+  place(position: THREE.Vector3, preferredSlot?: number): number {
+    const slot = preferredSlot ?? this.active.findIndex((active) => !active);
+    if (!Number.isInteger(slot) || slot < 0 || slot >= this.active.length || this.active[slot]) return -1;
+    this.active[slot] = true;
+    this.group.visible = true;
+    this.positions[slot]?.copy(position);
+    this.timers[slot] = 0;
+    this.tiers[slot] = 1;
+    this.panRateMults[slot] = 1;
+    this.yieldPerCycles[slot] = Balance.sluice.goldPerCycle;
+    this.contested[slot] = false;
+    this.capped[slot] = false;
+    this.alive += 1;
+    this.syncTrough(slot);
+    this.syncWater(slot, 0, true);
+    this.markNeedsUpdate();
+    return slot;
   }
 
   deactivate(index: number): boolean {

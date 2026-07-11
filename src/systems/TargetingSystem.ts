@@ -76,12 +76,20 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     this.current = null;
   }
 
+  restoreCurrent(target: T | null): void {
+    this.current = target?.isAlive ? target : null;
+  }
+
   registerGoldHolding(holding: GoldHolding): void {
     if (!this.goldHoldings.includes(holding)) this.goldHoldings.push(holding);
   }
 
   clearGoldHoldings(): void {
     this.goldHoldings.length = 0;
+  }
+
+  goldHoldingById(id: string): GoldHolding | null {
+    return this.goldHoldings.find((holding) => holding.id === id) ?? null;
   }
 
   nearestGoldHolding(from: THREE.Vector3): GoldHolding | null {
@@ -114,6 +122,10 @@ export class TargetingSystem<T extends Damageable = Damageable> {
 
   clearBuildings(): void {
     this.buildings.length = 0;
+  }
+
+  buildingById(id: string): BuildingTarget | null {
+    return this.buildings.find((building) => building.id === id) ?? null;
   }
 
   nearestBuilding(from: THREE.Vector3): BuildingTarget | null {

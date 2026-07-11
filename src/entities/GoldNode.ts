@@ -11,8 +11,11 @@ export type GoldNodeSnapshot = {
   anchorIndex: number;
   position: { x: number; z: number };
   remaining: number;
+  respawnScheduled: boolean;
   respawnIn: number;
 };
+
+export type GoldNodeFutureState = GoldNodeSnapshot;
 
 const nuggetClusterGeometry = createNuggetClusterGeometry();
 const glintGeometry = new THREE.OctahedronGeometry(0.13, 0);
@@ -205,8 +208,25 @@ export class GoldNode {
         z: this.group.position.z,
       },
       remaining: this.remaining,
+      respawnScheduled: !this.active && this.respawnAt > 0,
       respawnIn: this.active || this.respawnAt === 0 ? 0 : Math.max(0, this.respawnAt - at),
     };
+  }
+
+  restoreFutureState(state: GoldNodeFutureState, at: number): void {
+    this.active = state.active;
+    this.anchorIndex = state.anchorIndex;
+    this.anchor = { x: state.position.x, z: state.position.z };
+    this.remaining = state.remaining;
+    this.respawnAt = state.active || !state.respawnScheduled ? 0 : at + state.respawnIn;
+    this.group.visible = state.active;
+    this.group.position.set(state.position.x, visualY(state.position.x, state.position.z, 0.05), state.position.z);
+    if (state.active) {
+      this.visuals.show(this.visualIndex, this.anchor);
+      this.visuals.updateGlint(this.visualIndex, this.anchor, state.anchorIndex, at);
+    } else {
+      this.visuals.hide(this.visualIndex);
+    }
   }
 }
 

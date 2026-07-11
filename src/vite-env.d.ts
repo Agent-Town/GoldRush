@@ -434,6 +434,7 @@ interface ThreeGameDiagnostics {
       anchorIndex: number;
       position: { x: number; z: number };
       remaining: number;
+      respawnScheduled: boolean;
       respawnIn: number;
     }>;
     channeling: boolean;
@@ -908,6 +909,7 @@ interface Window {
     demolish: (family: GrBuildableId, index: number) => boolean;
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     setManualSim: (enabled: boolean) => boolean;
+    resumeManualSimAtMpTick: (tick: number) => number;
     advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => void;
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;
@@ -1043,8 +1045,12 @@ interface Window {
     spawnEnemyAt: (x: number, z: number) => boolean;
     scriptEnemyAt: (x: number, z: number, targetX: number, targetZ: number, speed: number) => boolean;
     clearEnemies: () => void;
+    captureSuspend: () => import('./game/RunSuspend').RunSuspendEnvelope;
+    lastMultiplayerHashState: () => { tick: number; state: unknown } | null;
+    restoreSuspend: (snapshot: unknown) => boolean;
     spawnGoldPickup: (x: number, z: number, amount: number) => boolean;
     spawnXpMote: (x: number, z: number, value: number) => boolean;
+    launchBlastAt: (x: number, z: number, airTime?: number) => boolean;
     goldPickups: () => Array<{ active: boolean; amount: number; position: { x: number; z: number } }>;
     placeBeacon: () => boolean;
     projectileVisuals: () => Array<{

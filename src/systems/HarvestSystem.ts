@@ -1,8 +1,8 @@
 import * as THREE from 'three';
-import { createRng, type Rng } from '../core/Rng';
+import { createRng, type Rng, type RngState } from '../core/Rng';
 import { getDebugSeed } from '../core/DebugParams';
 import { RenderLayers } from '../core/RenderLayers';
-import { GoldNode, GoldNodeVisualBatch, type GoldNodeSnapshot } from '../entities/GoldNode';
+import { GoldNode, GoldNodeVisualBatch, type GoldNodeFutureState, type GoldNodeSnapshot } from '../entities/GoldNode';
 import { Balance } from '../game/Balance';
 import type { Economy } from '../game/Economy';
 import { visualY, type Vec2 } from '../world/Terrain';
@@ -14,6 +14,14 @@ export type HarvestSnapshot = {
   progress: number;
   lastGoldGain: number;
   lastGoldPosition: { x: number; y: number; z: number } | null;
+};
+
+export type HarvestFutureState = {
+  rng: RngState;
+  nodes: GoldNodeFutureState[];
+  channelNodeId: string | null;
+  progress: number;
+  panCapBlocked: boolean;
 };
 
 type HarvestTarget = {
@@ -109,6 +117,40 @@ export class HarvestSystem {
     return this.buildSnapshot(0);
   }
 
+  captureFutureState(at: number): HarvestFutureState {
+    return {
+      rng: this.rng.snapshot(),
+      nodes: this.nodes.map((node) => node.snapshot(at)),
+      channelNodeId: this.channelNode?.id ?? null,
+      progress: this.progress,
+      panCapBlocked: this.panCapBlocked,
+    };
+  }
+
+  restoreFutureState(state: HarvestFutureState, at: number): boolean {
+    if (!this.canRestoreFutureState(state)) return false;
+
+    this.rng.restore(state.rng);
+    const byId = new Map(state.nodes.map((node) => [node.id, node]));
+    for (const node of this.nodes) node.restoreFutureState(byId.get(node.id)!, at);
+    this.channelNode = state.channelNodeId === null ? null : (this.nodes.find((node) => node.id === state.channelNodeId) ?? null);
+    this.progress = state.progress;
+    this.panCapBlocked = state.panCapBlocked;
+    this.lastGoldGain = 0;
+    this.lastGoldPosition = null;
+    this.updateProgressRing(at);
+    return true;
+  }
+
+  canRestoreFutureState(state: HarvestFutureState): boolean {
+    return this.validFutureState(state);
+  }
+
+  resetFromSeed(seed: string | number | null | undefined): void {
+    this.rng.reset(seed);
+    this.resetState();
+  }
+
   update(
     delta: number,
     at: number,
@@ -162,6 +204,11 @@ export class HarvestSystem {
   }
 
   reset(): void {
+    this.rng.reset();
+    this.resetState();
+  }
+
+  private resetState(): void {
     this.panTickMult = 1;
     this.panYieldMult = 1;
     this.seamCapacityBonus = 0;
@@ -303,6 +350,61 @@ export class HarvestSystem {
         ? { x: this.lastGoldPosition.x, y: this.lastGoldPosition.y, z: this.lastGoldPosition.z }
         : null,
     };
+  }
+
+  private validFutureState(state: HarvestFutureState): boolean {
+    if (
+      !state ||
+      !Number.isInteger(state.rng?.seed) ||
+      state.rng.seed < 0 ||
+      state.rng.seed > 0xffffffff ||
+      !Number.isInteger(state.rng.calls) ||
+      state.rng.calls < 0 ||
+      state.rng.calls > 1_000_000 ||
+      !Number.isFinite(state.progress) ||
+      state.progress < 0 ||
+      state.progress > 1 ||
+      typeof state.panCapBlocked !== 'boolean' ||
+      !Array.isArray(state.nodes) ||
+      state.nodes.length !== this.nodes.length
+    ) {
+      return false;
+    }
+
+    const expectedIds = new Set(this.nodes.map((node) => node.id));
+    const seenIds = new Set<string>();
+    for (const node of state.nodes) {
+      if (
+        !node ||
+        !expectedIds.has(node.id) ||
+        seenIds.has(node.id) ||
+        typeof node.active !== 'boolean' ||
+        !Number.isInteger(node.anchorIndex) ||
+        node.anchorIndex < -1 ||
+        node.anchorIndex >= this.anchors.length ||
+        (node.active && node.anchorIndex < 0) ||
+        !Number.isFinite(node.position?.x) ||
+        Math.abs(node.position.x) > 10_000 ||
+        !Number.isFinite(node.position?.z) ||
+        Math.abs(node.position.z) > 10_000 ||
+        !Number.isFinite(node.remaining) ||
+        node.remaining < 0 ||
+        node.remaining > 1_000_000 ||
+        typeof node.respawnScheduled !== 'boolean' ||
+        !Number.isFinite(node.respawnIn) ||
+        node.respawnIn < 0 ||
+        node.respawnIn > 1000 * 60 * 60 * 24 * 365 * 10 ||
+        (node.active && (node.respawnScheduled || node.respawnIn !== 0)) ||
+        (!node.respawnScheduled && node.respawnIn !== 0)
+      ) {
+        return false;
+      }
+      seenIds.add(node.id);
+    }
+
+    if (state.channelNodeId === null) return state.progress === 0;
+    const channelNode = state.nodes.find((node) => node.id === state.channelNodeId);
+    return channelNode?.active === true;
   }
 }
 

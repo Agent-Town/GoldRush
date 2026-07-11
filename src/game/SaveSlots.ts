@@ -1,4 +1,9 @@
-import { RUN_SUSPEND_REJECTION_KEY, RUN_SUSPEND_REJECTION_LINE, type RunSuspendEnvelope } from './RunSuspend';
+import {
+  RUN_SUSPEND_REJECTION_KEY,
+  RUN_SUSPEND_REJECTION_LINE,
+  normalizeRunSuspendDatum,
+  type RunSuspendEnvelope,
+} from './RunSuspend';
 import { RUN_SUSPEND_KEY, SAVE_SLOTS_KEY } from './ProfileStorage';
 
 export { SAVE_SLOTS_KEY };
@@ -59,7 +64,18 @@ export function readSaveSlots(storage: SaveSlotStorage | undefined = browserStor
   try {
     const parsed = JSON.parse(raw);
     const envelope = normalizeEnvelope(parsed);
-    if (envelope) return envelope;
+    if (envelope) {
+      if (isRecord(parsed) && Array.isArray(parsed.manual) && envelope.manual.length < parsed.manual.length) {
+        preserveCorruptSaveSlots(storage, raw);
+      }
+      const canonical = JSON.stringify(envelope);
+      if (canonical !== raw) {
+        try {
+          storage.setItem(SAVE_SLOTS_KEY, canonical);
+        } catch {}
+      }
+      return envelope;
+    }
   } catch {}
   preserveCorruptSaveSlots(storage, raw);
   return emptyEnvelope();
@@ -194,7 +210,7 @@ export function compactSaveSlotsForTransfer(value: unknown): unknown {
 }
 
 export function mergeSaveSlotsForRestore(existingRaw: string | null, incoming: unknown): SaveSlotsEnvelope | null {
-  const incomingEnvelope = normalizeEnvelope(incoming);
+  const incomingEnvelope = normalizeEnvelope(incoming, true);
   if (!incomingEnvelope) return null;
   if (!existingRaw) return incomingEnvelope;
   let existingEnvelope: SaveSlotsEnvelope | null = null;
@@ -238,11 +254,13 @@ function writeEnvelope(
   return { ok: true, budget: saveSlotsBudget(storage) };
 }
 
-function normalizeEnvelope(value: unknown): SaveSlotsEnvelope | null {
+function normalizeEnvelope(value: unknown, rejectInvalidSlots = false): SaveSlotsEnvelope | null {
   if (!isRecord(value) || value.v !== 1 || !Array.isArray(value.manual)) return null;
+  const manual = value.manual.map(normalizeSaveSlot);
+  if (rejectInvalidSlots && manual.some((slot) => slot === null)) return null;
   return {
     v: 1,
-    manual: sortSlots(value.manual.filter(isSaveSlot)),
+    manual: sortSlots(manual.filter((slot): slot is SaveSlot => slot !== null)),
     transferNote: typeof value.transferNote === 'string' ? value.transferNote : undefined,
   };
 }
@@ -264,32 +282,30 @@ function preserveCorruptSaveSlots(storage: SaveSlotStorage, raw: string): void {
   } catch {}
 }
 
-function isSaveSlot(value: unknown): value is SaveSlot {
-  if (!isRecord(value) || !isRunSuspendSnapshot(value.snapshot)) return false;
-  return (
-    typeof value.id === 'string' &&
-    typeof value.name === 'string' &&
-    typeof value.contractId === 'string' &&
-    typeof value.contractName === 'string' &&
-    cleanNumber(value.wave, -1) >= 0 &&
-    cleanNumber(value.timestamp, -1) > 0 &&
-    cleanNumber(value.snapshotSizeBytes, -1) >= 0 &&
-    (value.townName === null || typeof value.townName === 'string')
-  );
-}
-
-function isRunSuspendSnapshot(value: unknown): value is RunSuspendEnvelope {
-  if (!isRecord(value)) return false;
-  return (
-    value.v === 1 &&
-    cleanNumber(value.wave, -1) >= 0 &&
-    typeof value.contractId === 'string' &&
-    isRecord(value.waveSystem) &&
-    isRecord(value.enemies) &&
-    isRecord(value.economy) &&
-    isRecord(value.hero) &&
-    Array.isArray(value.buildings)
-  );
+function normalizeSaveSlot(value: unknown): SaveSlot | null {
+  if (!isRecord(value)) return null;
+  const snapshot = normalizeRunSuspendDatum(value.snapshot);
+  if (
+    !snapshot ||
+    typeof value.id !== 'string' ||
+    typeof value.name !== 'string' ||
+    typeof value.contractName !== 'string' ||
+    cleanNumber(value.timestamp, -1) <= 0 ||
+    (value.townName !== null && typeof value.townName !== 'string')
+  ) {
+    return null;
+  }
+  return {
+    id: value.id,
+    name: value.name,
+    wave: snapshot.wave,
+    contractId: snapshot.contractId,
+    contractName: value.contractName,
+    townName: value.townName,
+    timestamp: value.timestamp as number,
+    snapshotSizeBytes: byteSize(JSON.stringify(snapshot)),
+    snapshot,
+  };
 }
 
 function sortSlots(slots: SaveSlot[]): SaveSlot[] {
@@ -338,7 +354,7 @@ function deepClone<T>(value: T): T {
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
-  return typeof value === 'object' && value !== null;
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
 function browserStorage(): Storage | undefined {

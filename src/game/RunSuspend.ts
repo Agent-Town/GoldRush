@@ -1,11 +1,19 @@
 import * as THREE from 'three';
+import type { AgentConsentFutureState } from '../agent/AgentConsent';
+import type { ProspectorFutureState } from '../agent/Embodiment';
 import { getDebugSeed } from '../core/DebugParams';
-import { createRng, type Rng } from '../core/Rng';
-import type { CompassEdge } from '../entities/Enemy';
+import { createRng, type RngState } from '../core/Rng';
+import type { CompassEdge, EnemySuspendSnapshot } from '../entities/Enemy';
+import type { GoldPickupSuspendSnapshot } from '../entities/GoldPickup';
+import type { EnemyPoolSuspendSnapshot } from '../entities/pools';
 import type { ResearchState } from '../meta/ResearchTree';
-import { saveResearchState } from '../meta/ResearchTree';
+import { normalizeResearchState, saveResearchRegistryState } from '../meta/ResearchTree';
+import type { MegaprojectProjectState } from '../meta/Megaproject';
+import type { HarvestFutureState } from '../systems/HarvestSystem';
+import type { CombatSuspendSnapshot } from '../systems/CombatSystem';
 import { Balance } from './Balance';
 import { buildableDefs, type BuildableId } from './buildables';
+import { effectiveStats } from './StatSheet';
 import {
   initialEconomyState,
   createEconomyState,
@@ -14,14 +22,18 @@ import {
   type EconomyEvent,
   type EconomySummary,
 } from './Economy';
-import type { MetaProgress } from './MetaProgress';
+import type { MetaPayout, MetaProgress } from './MetaProgress';
 import { RUN_SUSPEND_KEY } from './ProfileStorage';
+import type { RunManagerSuspendState } from './RunManager';
+import { isUpgradeId, upgradeDefById } from './Upgrades';
 
 export const RUN_SUSPEND_REJECTION_KEY = `${RUN_SUSPEND_KEY}.rejected`;
 export const RUN_SUSPEND_REJECTION_LINE = 'This page of the ledger is water-damaged. The saved claim was set aside.';
+let lastRestoreFailure: string | null = null;
 
 export type RunSuspendEnvelope = {
-  v: 1;
+  v: 2;
+  migratedFromV1: boolean;
   wave: number;
   timeAlive: number;
   writtenAt: number;
@@ -32,11 +44,12 @@ export type RunSuspendEnvelope = {
   contractId: string;
   seed: string | null;
   rng: {
-    waves: RngCounter | null;
-    upgrades: RngCounter | null;
+    waves: RngState | null;
+    upgrades: RngState | null;
+    harvest: RngState | null;
   };
   waveSystem: WaveSystemSuspend;
-  enemies: EnemyPoolSuspend;
+  enemies: EnemyPoolSuspendSnapshot;
   economy: {
     gold: number;
     bankCap: number;
@@ -54,10 +67,19 @@ export type RunSuspendEnvelope = {
     stacks: Record<string, number>;
     hp: number;
     maxHp: number;
+    iframeRemaining: number;
     position: { x: number; y: number; z: number };
     velocity: { x: number; y: number; z: number };
   };
   buildings: BuildingSuspend[];
+  goldPickups: GoldPickupSuspendSnapshot[];
+  combat: CombatSuspendSnapshot;
+  harvest: HarvestSuspend | null;
+  baron: BaronSuspend;
+  megaproject: MegaprojectSuspend | null;
+  runManager: RunManagerSuspendState;
+  agent: AgentSuspend | null;
+  controls: ControlsSuspend | null;
   counters: {
     kills: number;
     stolenTotal: number;
@@ -99,9 +121,59 @@ type RunSuspendDecodeResult =
   | { ok: true; value: RunSuspendEnvelope; diagnostics: RunSuspendRejection | null }
   | { ok: false; diagnostics: RunSuspendRejection };
 
-type RngCounter = {
-  seed: number;
-  calls: number;
+type Vec3Suspend = { x: number; y: number; z: number };
+type HarvestSuspend = Omit<HarvestFutureState, 'rng'>;
+
+type BaronSuspend = {
+  beaten: boolean;
+  ceremony: { atSim: number; elapsedSeconds: number } | null;
+  standard: { planted: boolean; position: { x: number; z: number }; dropElapsed: number };
+  rocket: {
+    nextVolleyIn: number;
+    telegraphElapsed: number | null;
+    volleys: number;
+    targetKind: 'hero' | 'building' | null;
+    target: Vec3Suspend;
+  };
+};
+
+type MegaprojectSuspend = {
+  id: string;
+  project: MegaprojectProjectState;
+  targetActive: boolean;
+};
+
+type AgentSuspend = {
+  consent: AgentConsentFutureState;
+  prospector: ProspectorFutureState;
+  sweeps: {
+    xpIn: number;
+    goldIn: number;
+    repairIn: number;
+    repairTarget: { id: BuildableId; index: number } | null;
+    repairDwellElapsed: number | null;
+  };
+};
+
+type ControlsSuspend = {
+  runState: 'playing' | 'levelup' | 'dead';
+  paused: boolean;
+  playerPauseActive: boolean;
+  territoryRingPresent: boolean;
+  charm: { active: boolean; remaining: number; cooldown: number };
+  blastAim: { ready: boolean; pointer: { x: number; z: number }; target: { x: number; z: number } };
+  latches: {
+    pause: boolean;
+    restart: boolean;
+    build: boolean;
+    cancel: boolean;
+    confirm: boolean;
+    upgrade: boolean;
+    rotate: boolean;
+    weaponToggle: boolean;
+    debugSpawn: boolean;
+    debugXp: boolean;
+  };
 };
 
 type BuildingSuspend = {
@@ -117,6 +189,7 @@ type BuildingSuspend = {
   repairProgress: number;
   position: { x: number; z: number };
   rotationSteps: number;
+  sluice: { timer: number; contested: boolean; capped: boolean } | null;
 };
 
 type WaveSystemSuspend = {
@@ -135,6 +208,7 @@ type WaveSystemSuspend = {
   currentAtSim: number;
   waveState: 'quiet' | 'warning' | 'active' | 'cleared';
   lastPulseAt: number;
+  baronSpawned: boolean;
 };
 
 type PlannedPulseSuspend = {
@@ -146,43 +220,6 @@ type PlannedPulseSuspend = {
   budget: number;
   telegraphed: boolean[];
   spawned: boolean;
-};
-
-type EnemyPoolSuspend = {
-  spawnSerial: number;
-  active: EnemySuspend[];
-};
-
-type EnemySuspend = {
-  index: number;
-  hp: number;
-  speed: number;
-  activationDelay: number;
-  contactCooldown: number;
-  thief: boolean;
-  wrecker: boolean;
-  thiefState: string;
-  wreckerState: string;
-  carriedGold: number;
-  grabTimer: number;
-  swingTimer: number;
-  retargetTimer: number;
-  wreckerRetargetTimer: number;
-  edge: 'north' | 'south' | 'east' | 'west' | null;
-  formationOffset: number;
-  flashRemaining: number;
-  flashCount: number;
-  terrainSlideSide: number;
-  scripted: boolean;
-  scriptedSpeed: number;
-  position: { x: number; y: number; z: number };
-  velocity: { x: number; y: number; z: number };
-  leadVelocity: { x: number; y: number; z: number };
-  heading: { x: number; y: number; z: number };
-  scriptedTarget: { x: number; y: number; z: number };
-  rotationY: number;
-  spriteClip: string;
-  spriteOrientation: string;
 };
 
 type AnyRecord = Record<string, unknown>;
@@ -206,7 +243,6 @@ export class RunSuspendController {
 
   install(): this {
     const restored = this.restoreIfAvailable();
-    this.instrumentRngs();
     this.restored = restored;
     this.installPageHooks();
     return this;
@@ -252,7 +288,7 @@ export class RunSuspendController {
     }
     if (!snapshot) return false;
     if (snapshot.contractId !== game.activeContract?.id) return false;
-    restoreSnapshot(game, snapshot);
+    if (!restoreSnapshot(game, snapshot)) return false;
     this.lastSnapshot = snapshot;
     this.lastWrite = {
       wave: snapshot.wave,
@@ -307,11 +343,6 @@ export class RunSuspendController {
     this.removeVisibilityChange = () => document.removeEventListener('visibilitychange', onVisibilityChange);
   }
 
-  private instrumentRngs(): void {
-    const game = this.game as AnyGame;
-    instrumentRng(game.waveSystem?.rng);
-    instrumentRng(game.progression?.options?.rng);
-  }
 }
 
 export function readRunSuspend(storage: Storage | undefined = browserStorage()): RunSuspendEnvelope | null {
@@ -350,6 +381,66 @@ export function normalizeRunSuspendDatum(value: unknown): RunSuspendEnvelope | n
   return decoded.ok ? decoded.value : null;
 }
 
+export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
+  return {
+    v: snapshot.v,
+    wave: snapshot.wave,
+    timeAlive: snapshot.timeAlive,
+    contractId: snapshot.contractId,
+    seed: snapshot.seed,
+    rng: snapshot.rng,
+    waveSystem: snapshot.waveSystem,
+    enemies: {
+      spawnSerial: snapshot.enemies.spawnSerial,
+      active: snapshot.enemies.active.map(({ flashRemaining: _flash, flashCount: _flashes, rotationY: _rotation, spriteClip: _clip, spriteOrientation: _orientation, ...enemy }) => enemy),
+    },
+    economy: {
+      gold: snapshot.economy.gold,
+      bankCap: snapshot.economy.bankCap,
+      resources: snapshot.economy.resources,
+      log: snapshot.economy.log.map(({ id: _id, ...event }) => event),
+    },
+    hero: snapshot.hero,
+    buildings: snapshot.buildings,
+    goldPickups: snapshot.goldPickups,
+    combat: {
+      xp: snapshot.combat.xp,
+      audit: snapshot.combat.audit,
+      shooters: snapshot.combat.shooters,
+      projectiles: snapshot.combat.projectiles.map(
+        ({ visualStartY: _startY, visualEndY: _endY, visualDistance: _distance, visualTravel: _travel, ...projectile }) => projectile,
+      ),
+      blastCharges: snapshot.combat.blastCharges,
+      xpMotes: snapshot.combat.xpMotes,
+    },
+    harvest: snapshot.harvest,
+    baron: {
+      beaten: snapshot.baron.beaten,
+      ceremony: snapshot.baron.ceremony,
+      rocket: snapshot.baron.rocket,
+    },
+    megaproject: snapshot.megaproject,
+    runManager: snapshot.runManager,
+    agent: snapshot.agent,
+    controls: snapshot.controls,
+    counters: snapshot.counters,
+    meta: snapshot.meta,
+    research: snapshot.research,
+  };
+}
+
+/**
+ * Project a suspend envelope onto shared simulation state. Pointer-derived blast
+ * aim is presentation/input state and is deliberately ignored while multiplayer
+ * uses automatic aim, so it must not manufacture a peer hash disagreement.
+ */
+export function multiplayerRunSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
+  const future = runSuspendFutureState(snapshot) as Record<string, unknown>;
+  if (!snapshot.controls) return future;
+  const { blastAim: _localBlastAim, ...sharedControls } = snapshot.controls;
+  return { ...future, controls: sharedControls };
+}
+
 export function readRunSuspendRejection(storage: Storage | undefined = browserStorage()): RunSuspendRejection | null {
   try {
     const raw = storage?.getItem(RUN_SUSPEND_REJECTION_KEY) ?? null;
@@ -360,7 +451,7 @@ export function readRunSuspendRejection(storage: Storage | undefined = browserSt
       message: parsed.message,
       reasons: parsed.reasons.filter((reason): reason is string => typeof reason === 'string').slice(0, 12),
       droppedEconomyEvents: integerInRange(parsed.droppedEconomyEvents, 0, MAX_ECONOMY_EVENTS) ?? 0,
-      at: numberInRange(parsed.at, 0, MAX_TIME) ?? Date.now(),
+      at: numberInRange(parsed.at, 0, MAX_TIMESTAMP) ?? Date.now(),
     };
   } catch {
     return null;
@@ -390,15 +481,22 @@ export function captureRunSuspendSnapshot(
   return captureSnapshot(game, meta, wave, at, trigger);
 }
 
-export function restoreRunSuspendSnapshot(game: unknown, snapshot: unknown): boolean {
+export function restoreRunSuspendSnapshot(
+  game: unknown,
+  snapshot: unknown,
+  options: { persistProfile?: boolean } = {},
+): boolean {
   const normalized = normalizeRunSuspendDatum(snapshot);
   if (!normalized) return false;
-  restoreSnapshot(game as AnyGame, normalized);
-  return true;
+  return restoreSnapshot(game as AnyGame, normalized, options.persistProfile !== false);
 }
 
 export function runSuspendLabel(snapshot: RunSuspendEnvelope): string {
   return `Saved claim: wave ${snapshot.wave}. Mid-wave trail after that boundary will be replayed.`;
+}
+
+export function runSuspendRestoreFailure(): string | null {
+  return lastRestoreFailure;
 }
 
 function captureSnapshot(
@@ -414,9 +512,13 @@ function captureSnapshot(
   const hero = game.actors?.[0] as AnyGame;
   const heroPosition = hero?.group?.position ?? { x: 0, y: 0, z: 0 };
   const heroVelocity = hero?.velocity ?? { x: 0, y: 0, z: 0 };
+  const harvest = game.harvestSystem?.captureFutureState?.(at) as HarvestFutureState | undefined;
+  const runManager = game.runManager?.captureSuspend?.() as RunManagerSuspendState | undefined;
+  const buildings = captureBuildings(game.buildSystem);
 
   return {
-    v: 1,
+    v: 2,
+    migratedFromV1: false,
     wave,
     timeAlive: at,
     writtenAt: Date.now(),
@@ -427,8 +529,9 @@ function captureSnapshot(
     contractId: String(game.activeContract?.id ?? 'the-claim'),
     seed: getDebugSeed(),
     rng: {
-      waves: rngCounter(game.waveSystem?.rng),
-      upgrades: rngCounter(progression?.options?.rng),
+      waves: game.waveSystem?.captureRngState?.() ?? null,
+      upgrades: progression?.captureRngState?.() ?? null,
+      harvest: harvest ? { ...harvest.rng } : null,
     },
     waveSystem: captureWaveSystem(game.waveSystem),
     enemies: captureEnemyPool(game.enemies),
@@ -449,10 +552,26 @@ function captureSnapshot(
       stacks: { ...(progression?.snapshot?.stacks ?? {}) },
       hp: cleanNumber(hero?.hp),
       maxHp: cleanNumber(hero?.maxHp),
+      iframeRemaining: cleanNumber(hero?.iframeSecondsRemaining),
       position: vector3Snapshot(heroPosition),
       velocity: vector3Snapshot(heroVelocity),
     },
-    buildings: captureBuildings(game.buildSystem),
+    buildings,
+    goldPickups: deepClone(game.goldPickups?.captureSuspend?.() ?? []),
+    combat: deepClone(game.combat?.captureSuspend?.() ?? emptyCombat(cleanNumber(progression?.xpTotal))),
+    harvest: harvest
+      ? {
+          nodes: deepClone(harvest.nodes),
+          channelNodeId: harvest.channelNodeId,
+          progress: harvest.progress,
+          panCapBlocked: harvest.panCapBlocked,
+        }
+      : null,
+    baron: captureBaron(game, at),
+    megaproject: captureMegaproject(game),
+    runManager: runManager ?? { secured: false, rush: false, meta: deepClone(meta), payout: null },
+    agent: captureAgent(game, at, buildings),
+    controls: captureControls(game),
     counters: {
       kills: cleanNumber(game.kills),
       stolenTotal: cleanNumber(game.stolenTotal),
@@ -468,7 +587,153 @@ function captureSnapshot(
   };
 }
 
-function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope): void {
+function emptyCombat(xp: number, buildings: readonly BuildingSuspend[] = []): CombatSuspendSnapshot {
+  const shooters = [zeroShooter('hero:0:rig'), zeroShooter('hero:0:blast')];
+  for (const building of buildings) {
+    if (building.wrecked || (building.id !== 'sentry_beacon' && building.id !== 'turret')) continue;
+    shooters.push(zeroShooter(`building:${building.id}:${building.index}`));
+  }
+  return {
+    xp,
+    audit: {
+      ownerKills: {},
+      ownerDamage: {},
+      boltHits: 0,
+      boltMisses: 0,
+      staleTargetSwitches: 0,
+      shots: { bolt: 0, lob: 0 },
+      lastShotKind: null,
+      lastShotOwnerId: null,
+      xpDeaths: 0,
+      xpMotesSpawned: 0,
+      xpMotesCollected: 0,
+      xpMotesCollectedValue: 0,
+      xpOverflowBanked: 0,
+      xpExpiredBanked: 0,
+      blastDetonationCount: 0,
+      lastBlastDetonation: null,
+    },
+    shooters,
+    projectiles: [],
+    blastCharges: [],
+    xpMotes: [],
+  };
+}
+
+function zeroShooter(resumeKey: string): CombatSuspendSnapshot['shooters'][number] {
+  return { resumeKey, timer: 0, targetId: -1, missTargetId: -1, misses: 0 };
+}
+
+function captureBaron(game: AnyGame, at: number): BaronSuspend {
+  const ceremony = game.baronCeremony as { atSim?: unknown; startedTickElapsed?: unknown } | null | undefined;
+  const fixedTickElapsed = cleanNumber(game.fixedTickElapsed);
+  const standardPosition = game.baronStandardPosition ?? {};
+  const rocketTarget = game.baronRocketTarget ?? {};
+  const telegraphStartedAt = cleanNumber(game.baronRocketTelegraphStartedAt, -1);
+  return {
+    beaten: game.baronBeatenThisRun === true,
+    ceremony: ceremony
+      ? {
+          atSim: cleanNumber(ceremony.atSim, at),
+          elapsedSeconds: Math.max(0, fixedTickElapsed - cleanNumber(ceremony.startedTickElapsed, fixedTickElapsed)),
+        }
+      : null,
+    standard: {
+      planted: game.baronStandardPlanted === true,
+      position: { x: cleanNumber(standardPosition.x), z: cleanNumber(standardPosition.z) },
+      dropElapsed: Math.max(0, cleanNumber(game.elapsed) - cleanNumber(game.baronStandardDropStartedAt)),
+    },
+    rocket: {
+      nextVolleyIn: Math.max(0, cleanNumber(game.baronRocketNextAt) - at),
+      telegraphElapsed: telegraphStartedAt >= 0 ? Math.max(0, at - telegraphStartedAt) : null,
+      volleys: cleanNumber(game.baronRocketVolleys),
+      targetKind: game.baronRocketTargetKind === 'hero' || game.baronRocketTargetKind === 'building' ? game.baronRocketTargetKind : null,
+      target: vector3Snapshot(rocketTarget),
+    },
+  };
+}
+
+function captureMegaproject(game: AnyGame): MegaprojectSuspend | null {
+  const id = game.megaprojectManifest?.id;
+  const project = game.megaprojectProject;
+  if (typeof id !== 'string' || !project) return null;
+  return {
+    id,
+    targetActive: game.megaprojectTarget?.active === true,
+    project: {
+      stage: cleanNumber(project.stage),
+      funded: project.funded === true,
+      ticksRemaining: cleanNumber(project.ticksRemaining),
+      hp: cleanNumber(project.hp),
+      delayTicks: cleanNumber(project.delayTicks),
+      defenseWave: cleanNumber(project.defenseWave),
+    },
+  };
+}
+
+function captureAgent(game: AnyGame, at: number, buildings: readonly BuildingSuspend[]): AgentSuspend | null {
+  const consent = game.agentConsent?.captureFutureState?.() as AgentConsentFutureState | undefined;
+  const prospector = game.prospector?.captureFutureState?.(at) as ProspectorFutureState | undefined;
+  if (!consent || !prospector) return null;
+  const repairTarget = game.prospectorRepairTarget as { id?: unknown; index?: unknown } | null | undefined;
+  const validRepairTarget =
+    repairTarget &&
+    buildableIds.includes(repairTarget.id as BuildableId) &&
+    Number.isInteger(repairTarget.index) &&
+    buildings.some((building) => building.id === repairTarget.id && building.index === repairTarget.index);
+  return {
+    consent: deepClone(consent),
+    prospector: deepClone(prospector),
+    sweeps: {
+      xpIn: Math.max(0, cleanNumber(game.nextProspectorXpSweepAt) - at),
+      goldIn: Math.max(0, cleanNumber(game.nextProspectorGoldSweepAt) - at),
+      repairIn: Math.max(0, cleanNumber(game.nextProspectorRepairSweepAt) - at),
+      repairTarget: validRepairTarget
+        ? { id: repairTarget.id as BuildableId, index: repairTarget.index as number }
+        : null,
+      repairDwellElapsed:
+        typeof game.prospectorRepairDwellStartedAt === 'number'
+          ? Math.max(0, cleanNumber(game.activeTickElapsed) - game.prospectorRepairDwellStartedAt)
+          : null,
+    },
+  };
+}
+
+function captureControls(game: AnyGame): ControlsSuspend {
+  const state = game.state?.current;
+  return {
+    runState: state === 'levelup' || state === 'dead' ? state : 'playing',
+    paused: game.state?.isPaused === true,
+    playerPauseActive: game.playerPauseActive === true,
+    territoryRingPresent: game.territoryRingPresent === true,
+    charm: {
+      active: game.charmPauseActive === true,
+      remaining: cleanNumber(game.charmPauseRemaining),
+      cooldown: cleanNumber(game.charmPauseCooldown),
+    },
+    blastAim: {
+      ready: game.pointerAimReady === true,
+      pointer: { x: cleanNumber(game.pointerAimPoint?.x), z: cleanNumber(game.pointerAimPoint?.z) },
+      target: { x: cleanNumber(game.blastAimPoint?.x), z: cleanNumber(game.blastAimPoint?.z) },
+    },
+    latches: {
+      pause: game.lastPauseIntent === true,
+      restart: game.lastRestartIntent === true,
+      build: game.lastBuildIntent === true,
+      cancel: game.lastCancelIntent === true,
+      confirm: game.lastConfirmIntent === true,
+      upgrade: game.lastUpgradeIntent === true,
+      rotate: game.lastRotateIntent === true,
+      weaponToggle: game.lastWeaponToggleIntent === true,
+      debugSpawn: game.lastDebugSpawnIntent === true,
+      debugXp: game.lastDebugXpIntent === true,
+    },
+  };
+}
+
+function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistProfile = true): boolean {
+  lastRestoreFailure = null;
+  if (!canRestoreSnapshot(game, snapshot)) return restoreFailed('context-preflight');
   game.enemies?.recycleAll?.();
   game.goldPickups?.recycleAll?.();
   game.xpMotes?.recycleAll?.();
@@ -478,19 +743,37 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope): void {
   game.progression?.reset?.();
   game.agentConsent?.reset?.();
 
+  if (snapshot.harvest === null) game.harvestSystem?.resetFromSeed?.(snapshot.seed);
+
   game.researchState = deepClone(snapshot.research);
-  game.researchState = saveResearchState(game.researchStorage, game.researchState);
   game.applyResearchEffects?.();
+  game.timeAlive = snapshot.timeAlive;
+
+  if (!restoreProgression(game, snapshot)) return restoreFailed('progression');
+  restoreWaveSystem(game.waveSystem, snapshot.waveSystem, snapshot.rng.waves);
+  restoreMegaproject(game, snapshot.megaproject);
   game.syncMegaprojectSite?.();
 
-  restoreWaveSystem(game.waveSystem, snapshot.waveSystem, snapshot.rng.waves);
-  restoreProgression(game, snapshot);
-  restoreBuildings(game, snapshot.buildings);
+  if (!restoreBuildings(game, snapshot.buildings)) return restoreFailed('buildings');
   restoreEconomy(game, snapshot);
-  restoreEnemyPool(game.enemies, snapshot.enemies);
+  game.syncMegaprojectSite?.();
+  if (game.goldPickups?.restoreSuspend?.(snapshot.goldPickups) === false) return restoreFailed('gold-pickups');
+  game.syncStockpileHoldings?.();
+  if (!restoreEnemyPool(game, snapshot.enemies)) return restoreFailed('enemies');
   const hero = restoreHero(game, snapshot);
+  if (game.combat?.restoreSuspend?.(snapshot.combat) === false) return restoreFailed('combat');
+  if (
+    snapshot.harvest &&
+    game.harvestSystem?.restoreFutureState?.(
+      { ...deepClone(snapshot.harvest), rng: deepClone(snapshot.rng.harvest) },
+      snapshot.timeAlive,
+    ) === false
+  ) {
+    return restoreFailed('harvest');
+  }
+  game.harvestSnapshot = game.harvestSystem?.snapshot ?? game.harvestSnapshot;
+  game.lastHarvestChanneling = snapshot.harvest?.channelNodeId !== null && snapshot.harvest?.channelNodeId !== undefined;
 
-  game.timeAlive = snapshot.timeAlive;
   game.kills = snapshot.counters.kills;
   game.stolenTotal = snapshot.counters.stolenTotal;
   game.reclaimedTotal = snapshot.counters.reclaimedTotal;
@@ -503,20 +786,94 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope): void {
   game.upgradeCandidate = null;
   game.demolishCandidate = null;
   game.demolishSuppressedKey = null;
-  game.playerPauseActive = false;
-  game.charmPauseRemaining = 0;
-  game.charmPauseCooldown = 0;
-  game.charmPauseActive = false;
   game.damageFlashRemaining = 0;
   game.state?.restart?.();
+  restoreControls(game, snapshot.controls, snapshot.meta);
+  if (snapshot.controls?.runState === 'levelup' || (!snapshot.controls && snapshot.hero.offer)) {
+    game.progression?.resumeSuspendChoice?.();
+  }
+  restoreBaron(game, snapshot.baron);
+  if (snapshot.baron.ceremony || (snapshot.runManager.secured && !snapshot.runManager.rush)) {
+    game.state?.setPaused?.(true);
+  }
   game.syncHeroVisualHeight?.();
   game.cameraRig?.snapTo?.(hero?.group?.position);
   game.syncStockpileHoldings?.();
-  game.prospector?.reset?.(hero?.group?.position);
+  if (!restoreAgent(game, snapshot, hero)) return restoreFailed('agent');
+  game.runManager?.restoreSuspend?.(deepClone(snapshot.runManager), {
+    materializeMeta: false,
+    persistMeta: persistProfile,
+  });
+  if (persistProfile) game.researchState = saveResearchRegistryState(game.researchStorage, game.researchState);
+  game.runManager?.finalizeSuspendRestore?.();
   game.uiBridge?.announce?.(snapshot.copy, snapshot.timeAlive, null, 4.8);
-  game.deathOverlay?.hide?.();
+  if (snapshot.controls?.runState === 'dead') game.restoreDeathOverlayForSuspend?.();
+  else game.deathOverlay?.hide?.();
   game.upgradeOverlay?.hide?.();
   game.publishDiagnostics?.();
+  return true;
+}
+
+function restoreFailed(stage: string): false {
+  lastRestoreFailure = stage;
+  return false;
+}
+
+function canRestoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope): boolean {
+  if (snapshot.megaproject && snapshot.megaproject.id !== game.megaprojectManifest?.id) return false;
+  if (snapshot.harvest) {
+    const current = game.harvestSystem?.captureFutureState?.(snapshot.timeAlive) as HarvestFutureState | undefined;
+    if (!current) return false;
+    const expected = current.nodes.map((node) => node.id).sort();
+    const incoming = snapshot.harvest.nodes.map((node) => node.id).sort();
+    if (expected.length !== incoming.length || expected.some((id, index) => id !== incoming[index])) return false;
+    if (
+      !snapshot.rng.harvest ||
+      game.harvestSystem?.canRestoreFutureState?.({ ...snapshot.harvest, rng: snapshot.rng.harvest }) === false
+    ) {
+      return false;
+    }
+  }
+  const currentShooters = (game.combat?.captureSuspend?.() as CombatSuspendSnapshot | undefined)?.shooters ?? [];
+  const expectedShooterKeys = currentShooters
+    .map((shooter) => shooter.resumeKey)
+    .filter((key) => !key.startsWith('building:'));
+  for (const building of snapshot.buildings) {
+    if (!building.wrecked && (building.id === 'sentry_beacon' || building.id === 'turret')) {
+      expectedShooterKeys.push(`building:${building.id}:${building.index}`);
+    }
+  }
+  if (game.combat?.canRestoreSuspend?.(snapshot.combat, expectedShooterKeys) === false) return false;
+  return true;
+}
+
+function restoreMegaproject(game: AnyGame, snapshot: MegaprojectSuspend | null): void {
+  if (!snapshot) return;
+  if (!game.megaprojectState?.projects) game.megaprojectState = { version: 1, projects: {} };
+  game.megaprojectState.projects[snapshot.id] = deepClone(snapshot.project);
+  game.megaprojectProject = game.megaprojectState.projects[snapshot.id];
+}
+
+function restoreBaron(game: AnyGame, snapshot: BaronSuspend): void {
+  game.baronBeatenThisRun = snapshot.beaten;
+  game.baronCeremony = snapshot.ceremony
+    ? {
+        atSim: snapshot.ceremony.atSim,
+        startedTickElapsed: cleanNumber(game.fixedTickElapsed) - snapshot.ceremony.elapsedSeconds,
+      }
+    : null;
+  game.baronStandardPlanted = snapshot.standard.planted;
+  game.baronStandardPosition?.set?.(snapshot.standard.position.x, 0, snapshot.standard.position.z);
+  game.baronStandardDropStartedAt = cleanNumber(game.elapsed) - snapshot.standard.dropElapsed;
+  if (game.baronStandardGroup) game.baronStandardGroup.visible = snapshot.standard.planted;
+  game.baronRocketNextAt = game.timeAlive + snapshot.rocket.nextVolleyIn;
+  game.baronRocketTelegraphStartedAt =
+    snapshot.rocket.telegraphElapsed === null ? -1 : game.timeAlive - snapshot.rocket.telegraphElapsed;
+  game.baronRocketVolleys = snapshot.rocket.volleys;
+  game.baronRocketSuppressed = false;
+  game.baronRocketTargetKind = snapshot.rocket.targetKind;
+  game.baronRocketTarget?.set?.(snapshot.rocket.target.x, snapshot.rocket.target.y, snapshot.rocket.target.z);
+  game.syncBaronStandardDrop?.();
 }
 
 function restoreHero(game: AnyGame, snapshot: RunSuspendEnvelope): AnyGame | undefined {
@@ -528,107 +885,91 @@ function restoreHero(game: AnyGame, snapshot: RunSuspendEnvelope): AnyGame | und
   hero.hp = Math.min(cleanNumber(hero.maxHp, snapshot.hero.maxHp), Math.max(0, snapshot.hero.hp));
   hero.group?.position?.copy(position);
   hero.velocity?.set(snapshot.hero.velocity.x, snapshot.hero.velocity.y, snapshot.hero.velocity.z);
+  hero.restoreIframes?.(snapshot.hero.iframeRemaining);
   hero.targetVelocity?.set(0, 0, 0);
   hero.nextPosition?.copy(position);
   return hero;
 }
 
-function captureEnemyPool(enemyPool: AnyGame | undefined): EnemyPoolSuspend {
-  const all = Array.isArray(enemyPool?.all) ? enemyPool.all : [];
-  return {
-    spawnSerial: cleanNumber(enemyPool?.spawnSerial),
-    active: all
-      .filter((enemy: AnyGame | undefined) => enemy?.isAlive === true)
-      .map((enemy: AnyGame, index: number) => ({
-        index: cleanNumber(enemy.id, index),
-        hp: cleanNumber(enemy.currentHp ?? enemy.hp),
-        speed: cleanNumber(enemy.speed),
-        activationDelay: cleanNumber(enemy.activationDelay),
-        contactCooldown: cleanNumber(enemy.contactCooldown),
-        thief: enemy.isThief === true || enemy.thief === true,
-        wrecker: enemy.isWrecker === true || enemy.wrecker === true,
-        thiefState: typeof enemy.thiefState === 'string' ? enemy.thiefState : 'none',
-        wreckerState: typeof enemy.wreckerState === 'string' ? enemy.wreckerState : 'none',
-        carriedGold: cleanNumber(enemy.carriedAmount ?? enemy.carriedGold),
-        grabTimer: cleanNumber(enemy.grabTimer),
-        swingTimer: cleanNumber(enemy.swingTimer),
-        retargetTimer: cleanNumber(enemy.retargetTimer),
-        wreckerRetargetTimer: cleanNumber(enemy.wreckerRetargetTimer),
-        edge: isCompassEdge(enemy.ownEdge ?? enemy.spawnEdge) ? (enemy.ownEdge ?? enemy.spawnEdge) : null,
-        formationOffset: cleanNumber(enemy.spreadOffset ?? enemy.formationOffset),
-        flashRemaining: cleanNumber(enemy.hitFlashRemaining ?? enemy.flashRemaining),
-        flashCount: cleanNumber(enemy.hitFlashCount ?? enemy.flashCount),
-        terrainSlideSide: cleanNumber(enemy.terrainSlideSide),
-        scripted: enemy.scripted === true,
-        scriptedSpeed: cleanNumber(enemy.scriptedSpeed),
-        position: vector3Snapshot(enemy.position ?? enemy.group?.position ?? {}),
-        velocity: vector3Snapshot(enemy.velocity ?? {}),
-        leadVelocity: vector3Snapshot(enemy.leadVelocity ?? {}),
-        heading: vector3Snapshot(enemy.heading ?? {}),
-        scriptedTarget: vector3Snapshot(enemy.scriptedTarget ?? {}),
-        rotationY: cleanNumber(enemy.group?.rotation?.y),
-        spriteClip: typeof enemy.animationClip === 'string' ? enemy.animationClip : typeof enemy.spriteClip === 'string' ? enemy.spriteClip : 'walk',
-        spriteOrientation:
-          typeof enemy.animationOrientation === 'string'
-            ? enemy.animationOrientation
-            : typeof enemy.spriteOrientation === 'string'
-              ? enemy.spriteOrientation
-              : 's',
-      })),
-  };
-}
-
-function restoreEnemyPool(enemyPool: AnyGame | undefined, snapshot: EnemyPoolSuspend): void {
-  if (!enemyPool) return;
-  enemyPool.recycleAll?.();
-  for (const saved of snapshot.active) {
-    const enemy = enemyPool.spawn?.(new THREE.Vector3(saved.position.x, saved.position.y, saved.position.z), {
-      edge: saved.edge ?? undefined,
-      thief: saved.thief,
-      wrecker: saved.wrecker,
-      activationDelay: saved.activationDelay,
-    });
-    if (!enemy) continue;
-    restoreEnemy(enemy as AnyGame, saved);
+function restoreAgent(game: AnyGame, snapshot: RunSuspendEnvelope, hero: AnyGame | undefined): boolean {
+  const agent = snapshot.agent;
+  if (!agent) {
+    game.agentConsent?.reset?.();
+    game.prospector?.reset?.(hero?.group?.position);
+    game.nextProspectorXpSweepAt = 0;
+    game.nextProspectorGoldSweepAt = 0;
+    game.nextProspectorRepairSweepAt = 0;
+    game.prospectorRepairTarget = null;
+    game.prospectorRepairDwellStartedAt = null;
+    return true;
   }
-  enemyPool.spawnSerial = snapshot.spawnSerial;
-  enemyPool.syncInstances?.();
-  enemyPool.syncHitFlashes?.();
+  if (game.agentConsent?.restoreFutureState?.(agent.consent) === false) return false;
+  if (game.prospector?.restoreFutureState?.(agent.prospector, snapshot.timeAlive) === false) return false;
+  game.nextProspectorXpSweepAt = snapshot.timeAlive + agent.sweeps.xpIn;
+  game.nextProspectorGoldSweepAt = snapshot.timeAlive + agent.sweeps.goldIn;
+  game.nextProspectorRepairSweepAt = snapshot.timeAlive + agent.sweeps.repairIn;
+  game.prospectorRepairTarget = agent.sweeps.repairTarget ? { ...agent.sweeps.repairTarget } : null;
+  game.prospectorRepairDwellStartedAt =
+    agent.sweeps.repairDwellElapsed === null
+      ? null
+      : cleanNumber(game.activeTickElapsed) - agent.sweeps.repairDwellElapsed;
+  return true;
 }
 
-function restoreEnemy(enemy: AnyGame, saved: EnemySuspend): void {
-  enemy.hp = saved.hp;
-  enemy.speed = saved.speed;
-  enemy.activationDelay = saved.activationDelay;
-  enemy.contactCooldown = saved.contactCooldown;
-  enemy.thief = saved.thief;
-  enemy.wrecker = saved.wrecker;
-  enemy.thiefState = saved.thiefState;
-  enemy.wreckerState = saved.wreckerState;
-  enemy.carriedGold = saved.carriedGold;
-  enemy.grabTimer = saved.grabTimer;
-  enemy.swingTimer = saved.swingTimer;
-  enemy.retargetTimer = saved.retargetTimer;
-  enemy.wreckerRetargetTimer = saved.wreckerRetargetTimer;
-  enemy.currentHolding = null;
-  enemy.currentBuilding = null;
-  enemy.spawnEdge = saved.edge;
-  enemy.formationOffset = saved.formationOffset;
-  enemy.flashRemaining = saved.flashRemaining;
-  enemy.flashCount = saved.flashCount;
-  enemy.terrainSlideSide = saved.terrainSlideSide;
-  enemy.scripted = saved.scripted;
-  enemy.scriptedSpeed = saved.scriptedSpeed;
-  enemy.velocity?.set(saved.velocity.x, saved.velocity.y, saved.velocity.z);
-  enemy.leadVelocity?.set(saved.leadVelocity.x, saved.leadVelocity.y, saved.leadVelocity.z);
-  enemy.heading?.set(saved.heading.x, saved.heading.y, saved.heading.z);
-  enemy.scriptedTarget?.set(saved.scriptedTarget.x, saved.scriptedTarget.y, saved.scriptedTarget.z);
-  enemy.group?.position?.set(saved.position.x, saved.position.y, saved.position.z);
-  if (enemy.group?.rotation) enemy.group.rotation.y = saved.rotationY;
-  if (enemy.group) enemy.group.visible = true;
-  enemy.spriteClip = saved.spriteClip;
-  enemy.spriteOrientation = saved.spriteOrientation;
-  enemy.syncVisualY?.();
+function restoreControls(game: AnyGame, controls: ControlsSuspend | null, meta: MetaProgress): void {
+  const restored = controls ?? {
+    runState: 'playing',
+    paused: false,
+    playerPauseActive: false,
+    territoryRingPresent: meta.tracks.territory >= Balance.meta.territoryTier1,
+    charm: { active: false, remaining: 0, cooldown: 0 },
+    blastAim: { ready: false, pointer: { x: 0, z: 0 }, target: { x: 0, z: 2 } },
+    latches: {
+      pause: false,
+      restart: false,
+      build: false,
+      cancel: false,
+      confirm: false,
+      upgrade: false,
+      rotate: false,
+      weaponToggle: false,
+      debugSpawn: false,
+      debugXp: false,
+    },
+  } satisfies ControlsSuspend;
+  game.playerPauseActive = restored.playerPauseActive;
+  game.territoryRingPresent = restored.territoryRingPresent;
+  game.charmPauseRemaining = restored.charm.remaining;
+  game.charmPauseCooldown = restored.charm.cooldown;
+  game.charmPauseActive = restored.charm.active;
+  game.lastPauseIntent = restored.latches.pause;
+  game.lastRestartIntent = restored.latches.restart;
+  game.lastBuildIntent = restored.latches.build;
+  game.lastCancelIntent = restored.latches.cancel;
+  game.lastConfirmIntent = restored.latches.confirm;
+  game.lastUpgradeIntent = restored.latches.upgrade;
+  game.lastRotateIntent = restored.latches.rotate;
+  game.lastWeaponToggleIntent = restored.latches.weaponToggle;
+  game.lastDebugSpawnIntent = restored.latches.debugSpawn;
+  game.lastDebugXpIntent = restored.latches.debugXp;
+  game.pointerAimReady = restored.blastAim.ready;
+  game.pointerAimPoint?.set?.(restored.blastAim.pointer.x, 0.08, restored.blastAim.pointer.z);
+  game.blastAimPoint?.set?.(restored.blastAim.target.x, 0.08, restored.blastAim.target.z);
+  if (restored.runState === 'dead') game.state?.transition?.('dead');
+  if (restored.paused && restored.runState === 'playing') game.state?.setPaused?.(true);
+}
+
+function captureEnemyPool(enemyPool: AnyGame | undefined): EnemyPoolSuspendSnapshot {
+  return deepClone(enemyPool?.captureSuspend?.() ?? { spawnSerial: 0, active: [] });
+}
+
+function restoreEnemyPool(game: AnyGame, snapshot: EnemyPoolSuspendSnapshot): boolean {
+  const enemyPool = game.enemies as AnyGame | undefined;
+  if (!enemyPool?.restoreSuspend) return snapshot.active.length === 0;
+  return enemyPool.restoreSuspend(snapshot, {
+    goldHoldingById: (id: string) => game.goldTargeting?.goldHoldingById?.(id) ?? null,
+    buildingById: (id: string) => game.goldTargeting?.buildingById?.(id) ?? null,
+  });
 }
 
 function captureBuildings(buildSystem: AnyGame | undefined): BuildingSuspend[] {
@@ -655,37 +996,15 @@ function captureBuildings(buildSystem: AnyGame | undefined): BuildingSuspend[] {
           z: cleanNumber((entry.position as AnyRecord | undefined)?.z),
         },
         rotationSteps: id === 'palisade' ? cleanNumber(buildSystem.palisades?.rotationStepsAt?.(index)) : 0,
+        ...(buildSystem.captureBuildingFutureState?.(id, index) ?? { sluice: null }),
       };
     });
 }
 
-function restoreBuildings(game: AnyGame, buildings: readonly BuildingSuspend[]): void {
+function restoreBuildings(game: AnyGame, buildings: readonly BuildingSuspend[]): boolean {
   const buildSystem = game.buildSystem as AnyGame | undefined;
-  if (!buildSystem) return;
-  buildSystem.reset?.();
-  for (const building of buildings) {
-    const position = new THREE.Vector3(building.position.x, 0, building.position.z);
-    buildSystem.ghostRotationSteps = building.rotationSteps;
-    const index = buildSystem.place?.(building.id, position);
-    if (typeof index !== 'number' || index < 0) continue;
-    buildSystem.finishPlacement?.(building.id, index, building.buildCost);
-    buildSystem.tier[building.id][index] = building.tier;
-    const maxHpMult = buildingMaxHpMultiplier(building.id, building.tier);
-    buildSystem.hpMax[building.id][index] = cleanNumber(building.baseMaxHp, Math.round(building.maxHp / maxHpMult));
-    buildSystem.hp[building.id][index] = building.hp;
-    buildSystem.buildCosts[building.id][index] = building.buildCost;
-    buildSystem.repairCostOverrides[building.id][index] = cleanNumber(building.repairCostOverride);
-    buildSystem.repairProgress[building.id][index] = building.repairProgress;
-    buildSystem.wrecked[building.id][index] = building.wrecked;
-    buildSystem.syncTierVisual?.(building.id, index);
-    if (building.wrecked) buildSystem.teardownBuilding?.(building.id, index);
-    else buildSystem.syncBuildingTarget?.(building.id, index, true);
-    buildSystem.refreshShooterStats?.(building.id, index);
-  }
-  buildSystem.ghostRotationSteps = 0;
-  buildSystem.syncGhostShape?.();
-  buildSystem.setBuildMode?.(false);
-  buildSystem.visualDirty = true;
+  if (!buildSystem?.restoreBuilding) return buildings.length === 0;
+  return buildings.every((building) => buildSystem.restoreBuilding(deepClone(building)) === true);
 }
 
 function restoreEconomy(game: AnyGame, snapshot: RunSuspendEnvelope): void {
@@ -704,17 +1023,24 @@ function restoreEconomy(game: AnyGame, snapshot: RunSuspendEnvelope): void {
   }
 }
 
-function restoreProgression(game: AnyGame, snapshot: RunSuspendEnvelope): void {
+function restoreProgression(game: AnyGame, snapshot: RunSuspendEnvelope): boolean {
   const progression = game.progression as AnyGame | undefined;
-  if (!progression) return;
-  progression.setStacksForTest?.(snapshot.hero.stacks);
-  progression.levelValue = Math.max(1, Math.floor(snapshot.hero.level));
-  progression.xpTotal = Math.max(0, snapshot.hero.xpTotal);
-  progression.spentXp = Math.max(0, snapshot.hero.spentXp);
-  progression.pendingLevelsValue = Math.max(0, Math.floor(snapshot.hero.pendingLevels));
-  progression.currentOffer = null;
-  restoreRng(progression.options, 'rng', snapshot.rng.upgrades);
+  if (!progression?.restoreSuspend) return false;
+  if (
+    progression.restoreSuspend({
+      level: snapshot.hero.level,
+      xpTotal: snapshot.hero.xpTotal,
+      spentXp: snapshot.hero.spentXp,
+      pendingLevels: snapshot.hero.pendingLevels,
+      offer: snapshot.hero.offer,
+      stacks: snapshot.hero.stacks,
+    }) === false
+  ) {
+    return false;
+  }
+  if (snapshot.rng.upgrades) progression.restoreRngState?.(snapshot.rng.upgrades);
   game.applyStats?.(progression.snapshot.stats, null);
+  return true;
 }
 
 function captureWaveSystem(waveSystem: AnyGame | undefined): WaveSystemSuspend {
@@ -734,10 +1060,11 @@ function captureWaveSystem(waveSystem: AnyGame | undefined): WaveSystemSuspend {
     currentAtSim: cleanNumber(waveSystem?.currentAtSim),
     waveState: isWaveState(waveSystem?.waveState) ? waveSystem.waveState : 'quiet',
     lastPulseAt: cleanNumber(waveSystem?.lastPulseAt, Number.NEGATIVE_INFINITY),
+    baronSpawned: waveSystem?.baronSpawned === true,
   };
 }
 
-function restoreWaveSystem(waveSystem: AnyGame | undefined, snapshot: WaveSystemSuspend, rng: RngCounter | null): void {
+function restoreWaveSystem(waveSystem: AnyGame | undefined, snapshot: WaveSystemSuspend, rng: RngState | null): void {
   if (!waveSystem) return;
   waveSystem.nextTrickleAt = snapshot.nextTrickleAt;
   waveSystem.nextWaveAt = snapshot.nextWaveAt;
@@ -758,38 +1085,12 @@ function restoreWaveSystem(waveSystem: AnyGame | undefined, snapshot: WaveSystem
   waveSystem.currentAtSim = snapshot.currentAtSim;
   waveSystem.waveState = snapshot.waveState;
   waveSystem.lastPulseAt = snapshot.lastPulseAt;
-  restoreRng(waveSystem, 'rng', rng);
-}
-
-function restoreRng(owner: AnyGame | undefined, key: string, counter: RngCounter | null): void {
-  if (!owner || !counter) return;
-  const rng = createRng(counter.seed);
-  for (let i = 0; i < counter.calls; i += 1) rng.next();
-  owner[key] = rng;
-  instrumentRng(owner[key], counter.calls);
-}
-
-function instrumentRng(rng: Rng | undefined, initialCalls = 0): void {
-  const target = rng as (Rng & { __grSuspendCounter?: RngCounter }) | undefined;
-  if (!target || target.__grSuspendCounter) return;
-  const counter: RngCounter = { seed: target.seed, calls: Math.max(0, Math.floor(initialCalls)) };
-  const next = target.next.bind(target);
-  target.next = () => {
-    counter.calls += 1;
-    return next();
-  };
-  target.range = (min, max) => min + (max - min) * target.next();
-  target.int = (minInclusive, maxExclusive) => Math.floor(target.range(minInclusive, maxExclusive));
-  target.chance = (probability) => target.next() < probability;
-  target.__grSuspendCounter = counter;
-}
-
-function rngCounter(rng: (Rng & { __grSuspendCounter?: RngCounter }) | undefined): RngCounter | null {
-  if (!rng) return null;
-  return { seed: rng.__grSuspendCounter?.seed ?? rng.seed, calls: rng.__grSuspendCounter?.calls ?? 0 };
+  waveSystem.baronSpawned = snapshot.baronSpawned;
+  if (rng) waveSystem.restoreRngState?.(rng);
 }
 
 const MAX_TIME = 1000 * 60 * 60 * 24 * 365 * 10;
+const MAX_TIMESTAMP = 8_640_000_000_000_000;
 const MAX_COUNT = 1_000_000;
 const MAX_COORD = 10_000;
 const MAX_ECONOMY_AMOUNT = 1_000_000;
@@ -801,20 +1102,71 @@ const MAX_RNG_SEED = 0xffffffff;
 function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const reasons: string[] = [];
   if (!isRecord(value)) return rejected(['snapshot is not an object'], 0);
-  if (value.v !== 1) reasons.push('version must be 1');
+  const sourceVersion = value.v === 1 || value.v === 2 ? value.v : null;
+  if (sourceVersion === null) reasons.push('version must be 1 or 2');
+  const isV2 = sourceVersion === 2;
+  const migratedFromV1 = isV2 ? value.migratedFromV1 === true : true;
+  if (isV2 && typeof value.migratedFromV1 !== 'boolean') reasons.push('migratedFromV1 must be boolean');
 
   const wave = requiredInteger(value.wave, 0, MAX_COUNT, 'wave', reasons);
   const timeAlive = requiredNumber(value.timeAlive, 0, MAX_TIME, 'timeAlive', reasons);
   const contractId = requiredString(value.contractId, 'contractId', reasons, 96);
-  const economy = decodeEconomy(value.economy, reasons);
-  const hero = decodeHero(value.hero, reasons);
-  const buildings = decodeBuildings(value.buildings, reasons);
+  const economy = decodeEconomy(value.economy, reasons, isV2);
+  const hero = decodeHero(value.hero, reasons, isV2);
+  const buildings = decodeBuildings(value.buildings, reasons, isV2);
   const counters = decodeCounters(value.counters, reasons);
-  const rng = decodeRngState(value.rng, reasons);
-  const waveSystem = decodeWaveSystem(value.waveSystem, reasons);
-  const enemies = decodeEnemyPool(value.enemies, reasons);
+  const decodedRng = decodeRngState(value.rng, reasons, isV2);
+  const legacySeed = typeof value.seed === 'string' ? value.seed.slice(0, 128) : null;
+  const rng =
+    decodedRng && !isV2
+      ? {
+          ...decodedRng,
+          waves: decodedRng.waves ?? initialRngCounter(`${legacySeed ?? 'gold-rush'}:waves`),
+          upgrades: decodedRng.upgrades ?? initialRngCounter(`${legacySeed ?? 'gold-rush'}:upgrades`),
+        }
+      : decodedRng;
+  const waveSystem = decodeWaveSystem(value.waveSystem, reasons, isV2);
+  const enemies = decodeEnemyPool(value.enemies, reasons, isV2);
   const meta = decodeMetaProgress(value.meta, reasons);
-  const research = decodeResearchState(value.research, reasons);
+  const decodedResearch = decodeResearchState(value.research, reasons, isV2);
+  const research = decodedResearch;
+  const goldPickups = isV2 ? decodeGoldPickups(value.goldPickups, reasons) : [];
+  const combat = isV2 ? decodeCombat(value.combat, reasons) : hero && buildings ? emptyCombat(hero.xpTotal, buildings) : null;
+  const harvest = isV2 ? decodeHarvest(value.harvest, reasons) : null;
+  const baron = isV2 ? decodeBaron(value.baron, reasons) : emptyBaron();
+  const megaproject = isV2 ? decodeMegaproject(value.megaproject, reasons) : null;
+  const runManager = isV2 ? decodeRunManager(value.runManager, reasons) : meta ? { secured: false, rush: false, meta, payout: null } : null;
+  const agent = isV2 ? decodeAgent(value.agent, reasons) : null;
+  const controls = isV2 ? decodeControls(value.controls, reasons) : null;
+  if (isV2 && rng && (!rng.waves || !rng.upgrades)) reasons.push('v2 wave and upgrade RNG counters are required');
+  if (isV2 && !migratedFromV1 && harvest === null) reasons.push('native v2 harvest state is required');
+  if (isV2 && !migratedFromV1 && agent === null) reasons.push('native v2 agent state is required');
+  if (isV2 && !migratedFromV1 && controls === null) reasons.push('native v2 controls state is required');
+  if (isV2 && rng && harvest !== undefined && (rng.harvest === null) !== (harvest === null)) {
+    reasons.push('rng.harvest and harvest must both be present or both be null');
+  }
+  if (isV2 && meta && runManager && JSON.stringify(meta.tracks) !== JSON.stringify(runManager.meta.tracks)) {
+    reasons.push('runManager.meta must match meta');
+  }
+  if (combat && buildings) validateShooterTopology(combat, buildings, reasons);
+  if (combat && hero && combat.xp > hero.xpTotal) reasons.push('combat.xp cannot lead hero.xpTotal');
+  if (combat && buildings && enemies && goldPickups) {
+    validateOwnerReferences(combat, buildings, enemies, goldPickups, megaproject, reasons);
+  }
+  if (
+    agent?.sweeps.repairTarget &&
+    buildings &&
+    !buildings.some(
+      (building) => building.id === agent.sweeps.repairTarget?.id && building.index === agent.sweeps.repairTarget.index,
+    )
+  ) {
+    reasons.push('agent.sweeps.repairTarget must identify a restored building');
+  }
+  if (controls?.runState === 'levelup' && !hero?.offer) reasons.push('controls.levelup requires hero.offer');
+  if (controls?.runState === 'dead' && hero?.hp !== 0) reasons.push('controls.dead requires zero hero HP');
+  if (controls && (baron?.ceremony || (runManager?.secured && !runManager.rush)) && !controls.paused) {
+    reasons.push('controls.paused must cover ceremony and secured-claim stops');
+  }
 
   if (
     reasons.length ||
@@ -829,16 +1181,24 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     waveSystem === null ||
     enemies === null ||
     meta === null ||
-    research === null
+    research === null ||
+    goldPickups === null ||
+    combat === null ||
+    harvest === undefined ||
+    baron === null ||
+    megaproject === undefined ||
+    runManager === null
+    || agent === undefined || controls === undefined
   ) {
     return rejected(reasons, economy?.dropped ?? 0);
   }
 
   const normalized: RunSuspendEnvelope = {
-    v: 1,
+    v: 2,
+    migratedFromV1,
     wave,
     timeAlive,
-    writtenAt: numberInRange(value.writtenAt, 0, MAX_TIME) ?? Date.now(),
+    writtenAt: numberInRange(value.writtenAt, 0, MAX_TIMESTAMP) ?? Date.now(),
     lastWriteMs: numberInRange(value.lastWriteMs, 0, 60_000) ?? 0,
     sizeBytes: integerInRange(value.sizeBytes, 0, 5_000_000) ?? 0,
     trigger: isRunSuspendTrigger(value.trigger) ? value.trigger : 'wave-boundary',
@@ -860,6 +1220,14 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     },
     hero,
     buildings,
+    goldPickups,
+    combat,
+    harvest,
+    baron,
+    megaproject,
+    runManager: deepClone(runManager),
+    agent: deepClone(agent),
+    controls: deepClone(controls),
     counters,
     meta: deepClone(meta) as MetaProgress,
     research: deepClone(research) as ResearchState,
@@ -874,9 +1242,14 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   };
 }
 
+function initialRngCounter(seed: string): RngState {
+  return createRng(seed).snapshot();
+}
+
 function decodeEconomy(
   value: unknown,
   reasons: string[],
+  requireV2: boolean,
 ): { gold: number; bankCap: number; resources: Record<string, { amount: number; cap: number }>; log: EconomyEvent[]; dropped: number } | null {
   const record = requiredRecord(value, 'economy', reasons);
   if (!record) return null;
@@ -887,7 +1260,7 @@ function decodeEconomy(
     return null;
   }
   if (record.log.length > MAX_ECONOMY_EVENTS) reasons.push('economy.log is too long');
-  const resources = decodeResources(record.resources, reasons);
+  const resources = decodeResources(record.resources, reasons, requireV2);
   const log: EconomyEvent[] = [];
   let dropped = 0;
   for (const entry of record.log.slice(0, MAX_ECONOMY_EVENTS)) {
@@ -896,7 +1269,15 @@ function decodeEconomy(
     else dropped += 1;
   }
   if (gold === null || bankCap === null || !resources) return null;
-  return { gold, bankCap, resources, log, dropped };
+  const normalizedResources = {
+    gold: requireV2 ? resources.gold : { amount: gold, cap: bankCap },
+    pressure: resources.pressure ?? deepClone(initialEconomyState.resources.pressure),
+  };
+  if (requireV2 && (normalizedResources.gold.amount !== gold || normalizedResources.gold.cap !== bankCap)) {
+    reasons.push('economy.resources.gold must match economy.gold and economy.bankCap');
+    return null;
+  }
+  return { gold, bankCap, resources: normalizedResources, log, dropped };
 }
 
 function decodeEconomyEvent(value: unknown): EconomyEvent | null {
@@ -957,7 +1338,7 @@ function compactEvent<T extends AnyRecord>(event: T): T {
   return event;
 }
 
-function decodeHero(value: unknown, reasons: string[]): RunSuspendEnvelope['hero'] | null {
+function decodeHero(value: unknown, reasons: string[], requireV2: boolean): RunSuspendEnvelope['hero'] | null {
   const record = requiredRecord(value, 'hero', reasons);
   if (!record) return null;
   const level = requiredInteger(record.level, 1, MAX_COUNT, 'hero.level', reasons);
@@ -967,6 +1348,9 @@ function decodeHero(value: unknown, reasons: string[]): RunSuspendEnvelope['hero
   const pendingLevels = requiredInteger(record.pendingLevels, 0, MAX_COUNT, 'hero.pendingLevels', reasons);
   const hp = requiredNumber(record.hp, 0, MAX_ECONOMY_AMOUNT, 'hero.hp', reasons);
   const maxHp = requiredNumber(record.maxHp, 1, MAX_ECONOMY_AMOUNT, 'hero.maxHp', reasons);
+  const iframeRemaining = requireV2
+    ? requiredNumber(record.iframeRemaining, 0, MAX_TIME, 'hero.iframeRemaining', reasons)
+    : 0;
   const position = decodeVector3(record.position, 'hero.position', reasons);
   const velocity = decodeVector3(record.velocity, 'hero.velocity', reasons);
   const stacks = decodeNumberRecord(record.stacks, 'hero.stacks', reasons);
@@ -979,6 +1363,7 @@ function decodeHero(value: unknown, reasons: string[]): RunSuspendEnvelope['hero
     pendingLevels === null ||
     hp === null ||
     maxHp === null ||
+    iframeRemaining === null ||
     !position ||
     !velocity ||
     !stacks ||
@@ -986,10 +1371,25 @@ function decodeHero(value: unknown, reasons: string[]): RunSuspendEnvelope['hero
   ) {
     return null;
   }
-  return { level, xpTotal, spentXp, xpInto, pendingLevels, offer, stacks, hp, maxHp, position, velocity };
+  if (spentXp > xpTotal || xpInto !== xpTotal - spentXp) reasons.push('hero XP totals are inconsistent');
+  if (hp > maxHp) reasons.push('hero.hp cannot exceed hero.maxHp');
+  if (offer && offer.some((id) => !isUpgradeId(id))) reasons.push('hero.offer contains an unknown upgrade');
+  if (offer && new Set(offer).size !== offer.length) reasons.push('hero.offer contains duplicates');
+  if (offer && pendingLevels === 0) reasons.push('hero.offer requires a pending level');
+  for (const id of Object.keys(stacks)) {
+    if (!isUpgradeId(id)) {
+      reasons.push(`hero.stacks.${id} is unknown`);
+      continue;
+    }
+    const maxStacks = upgradeDefById[id].maxStacks;
+    if (Number.isFinite(maxStacks) && stacks[id] > maxStacks) reasons.push(`hero.stacks.${id} exceeds its stack limit`);
+  }
+  const expectedMaxHp = Balance.hero.maxHp + effectiveStats(stacks).maxHpBonus;
+  if (maxHp !== expectedMaxHp) reasons.push('hero.maxHp must match the restored upgrade stacks');
+  return { level, xpTotal, spentXp, xpInto, pendingLevels, offer, stacks, hp, maxHp, iframeRemaining, position, velocity };
 }
 
-function decodeBuildings(value: unknown, reasons: string[]): BuildingSuspend[] | null {
+function decodeBuildings(value: unknown, reasons: string[], requireV2: boolean): BuildingSuspend[] | null {
   const before = reasons.length;
   if (!Array.isArray(value)) {
     reasons.push('buildings must be an array');
@@ -997,12 +1397,14 @@ function decodeBuildings(value: unknown, reasons: string[]): BuildingSuspend[] |
   }
   if (value.length > MAX_BUILDINGS) reasons.push('buildings is too long');
   const output: BuildingSuspend[] = [];
+  const slots = new Set<string>();
   for (const [i, entry] of value.slice(0, MAX_BUILDINGS).entries()) {
     const record = requiredRecord(entry, `buildings[${i}]`, reasons);
     if (!record) continue;
     const id = buildableIds.includes(record.id as BuildableId) ? (record.id as BuildableId) : null;
     if (!id) reasons.push(`buildings[${i}].id is unknown`);
-    const index = requiredInteger(record.index, 0, MAX_BUILDINGS, `buildings[${i}].index`, reasons);
+    const maxIndex = id ? Math.max(0, (buildableDefs.find((def) => def.id === id)?.maxCount ?? 1) - 1) : MAX_BUILDINGS;
+    const index = requiredInteger(record.index, 0, maxIndex, `buildings[${i}].index`, reasons);
     const tier = requiredInteger(record.tier, 1, 20, `buildings[${i}].tier`, reasons);
     const hp = requiredNumber(record.hp, 0, MAX_ECONOMY_AMOUNT, `buildings[${i}].hp`, reasons);
     const maxHp = requiredNumber(record.maxHp, 1, MAX_ECONOMY_AMOUNT, `buildings[${i}].maxHp`, reasons);
@@ -1010,7 +1412,18 @@ function decodeBuildings(value: unknown, reasons: string[]): BuildingSuspend[] |
     const repairProgress = requiredNumber(record.repairProgress, 0, MAX_TIME, `buildings[${i}].repairProgress`, reasons);
     const position = decodeVector2(record.position, `buildings[${i}].position`, reasons);
     const rotationSteps = requiredInteger(record.rotationSteps, -1000, 1000, `buildings[${i}].rotationSteps`, reasons);
-    if (!id || index === null || tier === null || hp === null || maxHp === null || buildCost === null || repairProgress === null || !position || rotationSteps === null || typeof record.wrecked !== 'boolean') continue;
+    const sluice = decodeSluiceFutureState(record.sluice, `buildings[${i}].sluice`, reasons, requireV2, id === 'sluice');
+    if (!id || index === null || tier === null || hp === null || maxHp === null || buildCost === null || repairProgress === null || !position || rotationSteps === null || sluice === undefined || typeof record.wrecked !== 'boolean') continue;
+    if (hp > maxHp) reasons.push(`buildings[${i}].hp cannot exceed maxHp`);
+    if ((record.wrecked && hp !== 0) || (!record.wrecked && hp === 0)) {
+      reasons.push(`buildings[${i}].wrecked must match zero HP`);
+    }
+    const slotKey = `${id}:${index}`;
+    if (slots.has(slotKey)) {
+      reasons.push(`buildings[${i}] duplicates ${slotKey}`);
+      continue;
+    }
+    slots.add(slotKey);
     output.push({
       id,
       index,
@@ -1024,9 +1437,32 @@ function decodeBuildings(value: unknown, reasons: string[]): BuildingSuspend[] |
       repairProgress,
       position,
       rotationSteps,
+      sluice,
     });
   }
   return reasons.length === before ? output : null;
+}
+
+function decodeSluiceFutureState(
+  value: unknown,
+  label: string,
+  reasons: string[],
+  requireV2: boolean,
+  isSluice: boolean,
+): BuildingSuspend['sluice'] | undefined {
+  if (!requireV2) return isSluice ? { timer: 0, contested: false, capped: false } : null;
+  if (!isSluice) {
+    if (value !== null) reasons.push(`${label} must be null for non-sluice buildings`);
+    return value === null ? null : undefined;
+  }
+  const record = requiredRecord(value, label, reasons);
+  if (!record) return undefined;
+  const timer = requiredNumber(record.timer, 0, MAX_TIME, `${label}.timer`, reasons);
+  if (typeof record.contested !== 'boolean') reasons.push(`${label}.contested must be boolean`);
+  if (typeof record.capped !== 'boolean') reasons.push(`${label}.capped must be boolean`);
+  return timer === null || typeof record.contested !== 'boolean' || typeof record.capped !== 'boolean'
+    ? undefined
+    : { timer, contested: record.contested, capped: record.capped };
 }
 
 function decodeCounters(value: unknown, reasons: string[]): RunSuspendEnvelope['counters'] | null {
@@ -1056,16 +1492,17 @@ function decodeCounters(value: unknown, reasons: string[]): RunSuspendEnvelope['
   return { kills, stolenTotal, reclaimedTotal, buildingHitsResolved, buildingsWrecked, weapon, weaponToggleCount, blastTime };
 }
 
-function decodeRngState(value: unknown, reasons: string[]): RunSuspendEnvelope['rng'] | null {
+function decodeRngState(value: unknown, reasons: string[], requireHarvest: boolean): RunSuspendEnvelope['rng'] | null {
   const record = requiredRecord(value, 'rng', reasons);
   if (!record) return null;
   const waves = decodeRngCounter(record.waves, 'rng.waves', reasons);
   const upgrades = decodeRngCounter(record.upgrades, 'rng.upgrades', reasons);
-  if (waves === undefined || upgrades === undefined) return null;
-  return { waves, upgrades };
+  const harvest = requireHarvest ? decodeRngCounter(record.harvest, 'rng.harvest', reasons) : null;
+  if (waves === undefined || upgrades === undefined || harvest === undefined) return null;
+  return { waves, upgrades, harvest };
 }
 
-function decodeRngCounter(value: unknown, label: string, reasons: string[]): RngCounter | null | undefined {
+function decodeRngCounter(value: unknown, label: string, reasons: string[]): RngState | null | undefined {
   if (value === null) return null;
   const record = requiredRecord(value, label, reasons);
   if (!record) return undefined;
@@ -1074,7 +1511,7 @@ function decodeRngCounter(value: unknown, label: string, reasons: string[]): Rng
   return seed === null || calls === null ? undefined : { seed, calls };
 }
 
-function decodeWaveSystem(value: unknown, reasons: string[]): WaveSystemSuspend | null {
+function decodeWaveSystem(value: unknown, reasons: string[], requireV2: boolean): WaveSystemSuspend | null {
   const record = requiredRecord(value, 'waveSystem', reasons);
   if (!record) return null;
   const wave = requiredInteger(record.wave, 0, MAX_COUNT, 'waveSystem.wave', reasons);
@@ -1088,12 +1525,16 @@ function decodeWaveSystem(value: unknown, reasons: string[]): WaveSystemSuspend 
   const copyCursor = requiredInteger(record.copyCursor, 0, MAX_COUNT, 'waveSystem.copyCursor', reasons);
   const currentAtSim = requiredNumber(record.currentAtSim, 0, MAX_TIME, 'waveSystem.currentAtSim', reasons);
   const lastPulseAt =
-    record.lastPulseAt === null ? Number.NEGATIVE_INFINITY : requiredNumber(record.lastPulseAt, -MAX_TIME, MAX_TIME, 'waveSystem.lastPulseAt', reasons);
+    record.lastPulseAt === null || record.lastPulseAt === Number.NEGATIVE_INFINITY
+      ? Number.NEGATIVE_INFINITY
+      : requiredNumber(record.lastPulseAt, -MAX_TIME, MAX_TIME, 'waveSystem.lastPulseAt', reasons);
   const edge = record.edge === null || isCompassEdge(record.edge) ? record.edge : null;
   if (record.edge !== null && !isCompassEdge(record.edge)) reasons.push('waveSystem.edge is invalid');
   const waveState = isWaveState(record.waveState) ? record.waveState : null;
   if (!waveState) reasons.push('waveSystem.waveState is invalid');
   const plannedPulses = decodePlannedPulses(record.plannedPulses, reasons);
+  const baronSpawned = requireV2 ? record.baronSpawned : false;
+  if (requireV2 && typeof baronSpawned !== 'boolean') reasons.push('waveSystem.baronSpawned must be boolean');
   if (
     wave === null ||
     pulse === null ||
@@ -1127,6 +1568,7 @@ function decodeWaveSystem(value: unknown, reasons: string[]): WaveSystemSuspend 
     currentAtSim,
     waveState,
     lastPulseAt,
+    baronSpawned: baronSpawned === true,
   };
 }
 
@@ -1170,7 +1612,7 @@ function decodePlannedPulses(value: unknown, reasons: string[]): PlannedPulseSus
   return reasons.length === before ? pulses : null;
 }
 
-function decodeEnemyPool(value: unknown, reasons: string[]): EnemyPoolSuspend | null {
+function decodeEnemyPool(value: unknown, reasons: string[], requireV2: boolean): EnemyPoolSuspendSnapshot | null {
   const before = reasons.length;
   const record = requiredRecord(value, 'enemies', reasons);
   if (!record) return null;
@@ -1179,20 +1621,25 @@ function decodeEnemyPool(value: unknown, reasons: string[]): EnemyPoolSuspend | 
     reasons.push('enemies.active must be an array');
     return null;
   }
-  if (record.active.length > MAX_ENEMIES) reasons.push('enemies.active is too long');
-  const active: EnemySuspend[] = [];
+  if (record.active.length > Balance.enemy.poolSize) reasons.push('enemies.active is too long');
+  const active: EnemySuspendSnapshot[] = [];
+  const slots = new Set<number>();
   for (const [i, entry] of record.active.slice(0, MAX_ENEMIES).entries()) {
-    const enemy = decodeEnemy(entry, `enemies.active[${i}]`, reasons);
-    if (enemy) active.push(enemy);
+    const enemy = decodeEnemy(entry, `enemies.active[${i}]`, reasons, requireV2);
+    if (!enemy) continue;
+    if (slots.has(enemy.slot)) reasons.push(`enemies.active[${i}].slot is duplicated`);
+    slots.add(enemy.slot);
+    active.push(enemy);
   }
   return spawnSerial === null || reasons.length !== before ? null : { spawnSerial, active };
 }
 
-function decodeEnemy(value: unknown, label: string, reasons: string[]): EnemySuspend | null {
+function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2: boolean): EnemySuspendSnapshot | null {
   const record = requiredRecord(value, label, reasons);
   if (!record) return null;
+  const slotValue = requireV2 ? record.slot : record.index;
   const required = {
-    index: requiredInteger(record.index, 0, MAX_ENEMIES, `${label}.index`, reasons),
+    slot: requiredInteger(slotValue, 0, Balance.enemy.poolSize - 1, `${label}.${requireV2 ? 'slot' : 'index'}`, reasons),
     hp: requiredNumber(record.hp, 0, MAX_ECONOMY_AMOUNT, `${label}.hp`, reasons),
     speed: requiredNumber(record.speed, 0, MAX_COUNT, `${label}.speed`, reasons),
     activationDelay: requiredNumber(record.activationDelay, 0, MAX_TIME, `${label}.activationDelay`, reasons),
@@ -1216,6 +1663,43 @@ function decodeEnemy(value: unknown, label: string, reasons: string[]): EnemySus
   const scriptedTarget = decodeVector3(record.scriptedTarget, `${label}.scriptedTarget`, reasons);
   const edge = record.edge === null || isCompassEdge(record.edge) ? record.edge : null;
   if (record.edge !== null && !isCompassEdge(record.edge)) reasons.push(`${label}.edge is invalid`);
+  const maxHp = versionedNumber(record.maxHp, Math.max(cleanNumber(record.hp), Balance.enemy.hp), 0, MAX_ECONOMY_AMOUNT, `${label}.maxHp`, reasons, requireV2);
+  const visualScale = versionedNumber(record.visualScale, 1, 0.1, MAX_COUNT, `${label}.visualScale`, reasons, requireV2);
+  const contactDamageScale = versionedNumber(record.contactDamageScale, 1, 0, MAX_COUNT, `${label}.contactDamageScale`, reasons, requireV2);
+  const buildingDamageScale = versionedNumber(record.buildingDamageScale, 1, 0, MAX_COUNT, `${label}.buildingDamageScale`, reasons, requireV2);
+  const supportBuildingDamageScale = versionedNumber(
+    record.supportBuildingDamageScale,
+    buildingDamageScale ?? 1,
+    0,
+    MAX_COUNT,
+    `${label}.supportBuildingDamageScale`,
+    reasons,
+    requireV2,
+  );
+  const heroPursuitRange = versionedNumber(record.heroPursuitRange, 0, 0, MAX_COORD, `${label}.heroPursuitRange`, reasons, requireV2);
+  const boltDamageMult = versionedNumber(record.boltDamageMult, 1, 0, MAX_COUNT, `${label}.boltDamageMult`, reasons, requireV2);
+  const bossGroupSize = versionedInteger(record.bossGroupSize, 0, 0, MAX_COUNT, `${label}.bossGroupSize`, reasons, requireV2);
+  const bossGroupTotalHp = versionedNumber(record.bossGroupTotalHp, 0, 0, MAX_ECONOMY_AMOUNT, `${label}.bossGroupTotalHp`, reasons, requireV2);
+  const bossDegradeSpeedMult = versionedNumber(record.bossDegradeSpeedMult, 1, 0, MAX_COUNT, `${label}.bossDegradeSpeedMult`, reasons, requireV2);
+  const scriptedRouteIndex = versionedInteger(record.scriptedRouteIndex, 0, 0, MAX_COUNT, `${label}.scriptedRouteIndex`, reasons, requireV2);
+  const scriptedRoute = requireV2 ? decodeVector3Array(record.scriptedRoute, `${label}.scriptedRoute`, reasons, 128) : [];
+  const eliteKind = record.eliteKind === null || record.eliteKind === 'baron' || record.eliteKind === 'railcar' ? record.eliteKind : null;
+  if (requireV2 && record.eliteKind !== null && eliteKind === null) reasons.push(`${label}.eliteKind is invalid`);
+  const variantId = versionedNullableString(record.variantId, `${label}.variantId`, reasons, requireV2);
+  const variantLabel = versionedNullableString(record.variantLabel, `${label}.variantLabel`, reasons, requireV2);
+  const bossGroupId = versionedNullableString(record.bossGroupId, `${label}.bossGroupId`, reasons, requireV2);
+  const bossComponentId = versionedNullableString(record.bossComponentId, `${label}.bossComponentId`, reasons, requireV2);
+  const bossComponentLabel = versionedNullableString(record.bossComponentLabel, `${label}.bossComponentLabel`, reasons, requireV2);
+  const currentHoldingId = versionedNullableString(record.currentHoldingId, `${label}.currentHoldingId`, reasons, requireV2);
+  const currentBuildingId = versionedNullableString(record.currentBuildingId, `${label}.currentBuildingId`, reasons, requireV2);
+  const variantTint = requireV2 ? versionedNullableString(record.variantTint, `${label}.variantTint`, reasons, true) : null;
+  if (variantTint && !/^#[0-9a-f]{6}$/i.test(variantTint)) reasons.push(`${label}.variantTint is invalid`);
+  const thiefState = isThiefState(record.thiefState) ? record.thiefState : record.thief === true ? 'seekHolding' : 'none';
+  const wreckerState = isWreckerState(record.wreckerState) ? record.wreckerState : record.wrecker === true ? 'seekBuilding' : 'none';
+  if (requireV2 && !isThiefState(record.thiefState)) reasons.push(`${label}.thiefState is invalid`);
+  if (requireV2 && !isWreckerState(record.wreckerState)) reasons.push(`${label}.wreckerState is invalid`);
+  const spriteOrientation = isSpriteOrientation(record.spriteOrientation) ? record.spriteOrientation : 's';
+  if (requireV2 && !isSpriteOrientation(record.spriteOrientation)) reasons.push(`${label}.spriteOrientation is invalid`);
   if (
     Object.values(required).some((entry) => entry === null) ||
     !position ||
@@ -1223,45 +1707,732 @@ function decodeEnemy(value: unknown, label: string, reasons: string[]): EnemySus
     !leadVelocity ||
     !heading ||
     !scriptedTarget ||
+    maxHp === null ||
+    visualScale === null ||
+    contactDamageScale === null ||
+    buildingDamageScale === null ||
+    supportBuildingDamageScale === null ||
+    heroPursuitRange === null ||
+    boltDamageMult === null ||
+    bossGroupSize === null ||
+    bossGroupTotalHp === null ||
+    bossDegradeSpeedMult === null ||
+    scriptedRouteIndex === null ||
+    !scriptedRoute ||
+    variantId === undefined ||
+    variantLabel === undefined ||
+    bossGroupId === undefined ||
+    bossComponentId === undefined ||
+    bossComponentLabel === undefined ||
+    currentHoldingId === undefined ||
+    currentBuildingId === undefined ||
+    variantTint === undefined ||
     typeof record.thief !== 'boolean' ||
     typeof record.wrecker !== 'boolean' ||
-    typeof record.scripted !== 'boolean'
+    typeof record.scripted !== 'boolean' ||
+    (requireV2 && typeof record.banner !== 'boolean') ||
+    (requireV2 && typeof record.scriptedIgnoresTerrain !== 'boolean')
   ) {
     return null;
   }
+  if ((required.hp ?? 0) <= 0 || (required.hp ?? 0) > maxHp) {
+    reasons.push(`${label}.hp must be positive and no greater than maxHp`);
+  }
+  if (scriptedRoute.length === 0 ? scriptedRouteIndex !== 0 : scriptedRouteIndex >= scriptedRoute.length) {
+    reasons.push(`${label}.scriptedRouteIndex is outside scriptedRoute`);
+  }
+  if (record.thief && record.wrecker) reasons.push(`${label} cannot be both thief and wrecker`);
+  if ((record.thief && thiefState === 'none') || (!record.thief && thiefState !== 'none')) {
+    reasons.push(`${label}.thiefState does not match thief`);
+  }
+  if ((record.wrecker && wreckerState === 'none') || (!record.wrecker && wreckerState !== 'none')) {
+    reasons.push(`${label}.wreckerState does not match wrecker`);
+  }
+  if (!record.thief && currentHoldingId !== null) reasons.push(`${label}.currentHoldingId requires thief`);
+  if (!record.wrecker && currentBuildingId !== null) reasons.push(`${label}.currentBuildingId requires wrecker`);
   return {
-    ...(required as {
-      index: number;
-      hp: number;
-      speed: number;
-      activationDelay: number;
-      contactCooldown: number;
-      carriedGold: number;
-      grabTimer: number;
-      swingTimer: number;
-      retargetTimer: number;
-      wreckerRetargetTimer: number;
-      formationOffset: number;
-      flashRemaining: number;
-      flashCount: number;
-      terrainSlideSide: number;
-      scriptedSpeed: number;
-      rotationY: number;
-    }),
+    ...(required as Omit<
+      EnemySuspendSnapshot,
+      | 'maxHp'
+      | 'eliteKind'
+      | 'visualScale'
+      | 'banner'
+      | 'contactDamageScale'
+      | 'buildingDamageScale'
+      | 'supportBuildingDamageScale'
+      | 'heroPursuitRange'
+      | 'variantId'
+      | 'variantLabel'
+      | 'variantTint'
+      | 'boltDamageMult'
+      | 'bossGroupId'
+      | 'bossGroupSize'
+      | 'bossGroupTotalHp'
+      | 'bossComponentId'
+      | 'bossComponentLabel'
+      | 'bossDegradeSpeedMult'
+      | 'thief'
+      | 'wrecker'
+      | 'thiefState'
+      | 'wreckerState'
+      | 'currentHoldingId'
+      | 'currentBuildingId'
+      | 'edge'
+      | 'scripted'
+      | 'scriptedIgnoresTerrain'
+      | 'scriptedRoute'
+      | 'scriptedRouteIndex'
+      | 'position'
+      | 'velocity'
+      | 'leadVelocity'
+      | 'heading'
+      | 'scriptedTarget'
+      | 'spriteClip'
+      | 'spriteOrientation'
+    >),
+    maxHp,
+    eliteKind,
+    visualScale,
+    banner: requireV2 ? record.banner === true : false,
+    contactDamageScale,
+    buildingDamageScale,
+    supportBuildingDamageScale,
+    heroPursuitRange,
+    variantId,
+    variantLabel,
+    variantTint,
+    boltDamageMult,
+    bossGroupId,
+    bossGroupSize,
+    bossGroupTotalHp,
+    bossComponentId,
+    bossComponentLabel,
+    bossDegradeSpeedMult,
     thief: record.thief,
     wrecker: record.wrecker,
-    thiefState: stringInRange(record.thiefState, 0, 64) ?? 'none',
-    wreckerState: stringInRange(record.wreckerState, 0, 64) ?? 'none',
+    thiefState,
+    wreckerState,
+    currentHoldingId,
+    currentBuildingId,
     edge,
     scripted: record.scripted,
+    scriptedIgnoresTerrain: requireV2 && record.scriptedIgnoresTerrain === true,
+    scriptedRoute,
+    scriptedRouteIndex,
     position,
     velocity,
     leadVelocity,
     heading,
     scriptedTarget,
     spriteClip: stringInRange(record.spriteClip, 0, 64) ?? 'walk',
-    spriteOrientation: stringInRange(record.spriteOrientation, 0, 64) ?? 's',
+    spriteOrientation,
   };
+}
+
+function decodeGoldPickups(value: unknown, reasons: string[]): GoldPickupSuspendSnapshot[] | null {
+  if (!Array.isArray(value)) {
+    reasons.push('goldPickups must be an array');
+    return null;
+  }
+  if (value.length > Balance.steal.pickupCap) reasons.push('goldPickups is too long');
+  const output: GoldPickupSuspendSnapshot[] = [];
+  const slots = new Set<number>();
+  for (const [index, entry] of value.slice(0, Balance.steal.pickupCap).entries()) {
+    const label = `goldPickups[${index}]`;
+    const record = requiredRecord(entry, label, reasons);
+    if (!record) continue;
+    const slot = requiredInteger(record.slot, 0, Balance.steal.pickupCap - 1, `${label}.slot`, reasons);
+    const amount = requiredNumber(record.amount, 0, MAX_ECONOMY_AMOUNT, `${label}.amount`, reasons);
+    const age = requiredNumber(record.age, 0, MAX_TIME, `${label}.age`, reasons);
+    const blockedCooldown = requiredNumber(record.blockedCooldown, 0, MAX_TIME, `${label}.blockedCooldown`, reasons);
+    const position = decodeVector3(record.position, `${label}.position`, reasons);
+    if (slot === null || amount === null || age === null || blockedCooldown === null || !position) continue;
+    if (slots.has(slot)) reasons.push(`${label}.slot is duplicated`);
+    slots.add(slot);
+    output.push({ slot, amount, age, blockedCooldown, position });
+  }
+  return output;
+}
+
+function decodeCombat(value: unknown, reasons: string[]): CombatSuspendSnapshot | null {
+  const record = requiredRecord(value, 'combat', reasons);
+  if (!record) return null;
+  const xp = requiredNumber(record.xp, 0, MAX_ECONOMY_AMOUNT, 'combat.xp', reasons);
+  const audit = decodeCombatAudit(record.audit, reasons);
+  if (!Array.isArray(record.shooters) || !Array.isArray(record.projectiles) || !Array.isArray(record.blastCharges) || !Array.isArray(record.xpMotes)) {
+    reasons.push('combat transient fields must be arrays');
+    return null;
+  }
+  const shooters: CombatSuspendSnapshot['shooters'] = [];
+  const shooterKeys = new Set<string>();
+  for (const [index, entry] of record.shooters.slice(0, 128).entries()) {
+    const label = `combat.shooters[${index}]`;
+    const saved = requiredRecord(entry, label, reasons);
+    if (!saved) continue;
+    const resumeKey = requiredString(saved.resumeKey, `${label}.resumeKey`, reasons, 128);
+    const timer = requiredNumber(saved.timer, -MAX_TIME, MAX_TIME, `${label}.timer`, reasons);
+    const targetId = requiredInteger(saved.targetId, -1, Balance.enemy.poolSize - 1, `${label}.targetId`, reasons);
+    const missTargetId = requiredInteger(saved.missTargetId, -1, Balance.enemy.poolSize - 1, `${label}.missTargetId`, reasons);
+    const misses = requiredInteger(saved.misses, 0, MAX_COUNT, `${label}.misses`, reasons);
+    if (!resumeKey || timer === null || targetId === null || missTargetId === null || misses === null) continue;
+    if (shooterKeys.has(resumeKey)) reasons.push(`${label}.resumeKey is duplicated`);
+    shooterKeys.add(resumeKey);
+    shooters.push({ resumeKey, timer, targetId, missTargetId, misses });
+  }
+  if (record.shooters.length > 128) reasons.push('combat.shooters is too long');
+  const projectiles = decodeProjectiles(record.projectiles, reasons);
+  const blastCharges = decodeBlastCharges(record.blastCharges, reasons);
+  const xpMotes = decodeXpMotes(record.xpMotes, reasons);
+  return xp === null || !audit || !projectiles || !blastCharges || !xpMotes
+    ? null
+    : { xp, audit, shooters, projectiles, blastCharges, xpMotes };
+}
+
+function decodeCombatAudit(value: unknown, reasons: string[]): CombatSuspendSnapshot['audit'] | null {
+  const record = requiredRecord(value, 'combat.audit', reasons);
+  if (!record) return null;
+  const ownerKills = decodeNumberRecord(record.ownerKills, 'combat.audit.ownerKills', reasons);
+  const ownerDamage = decodeNonnegativeNumberRecord(record.ownerDamage, 'combat.audit.ownerDamage', reasons);
+  const boltHits = requiredInteger(record.boltHits, 0, MAX_COUNT, 'combat.audit.boltHits', reasons);
+  const boltMisses = requiredInteger(record.boltMisses, 0, MAX_COUNT, 'combat.audit.boltMisses', reasons);
+  const staleTargetSwitches = requiredInteger(
+    record.staleTargetSwitches,
+    0,
+    MAX_COUNT,
+    'combat.audit.staleTargetSwitches',
+    reasons,
+  );
+  const shots = requiredRecord(record.shots, 'combat.audit.shots', reasons);
+  const boltShots = shots ? requiredInteger(shots.bolt, 0, MAX_COUNT, 'combat.audit.shots.bolt', reasons) : null;
+  const lobShots = shots ? requiredInteger(shots.lob, 0, MAX_COUNT, 'combat.audit.shots.lob', reasons) : null;
+  const lastShotKind = record.lastShotKind === null || record.lastShotKind === 'bolt' || record.lastShotKind === 'lob'
+    ? record.lastShotKind
+    : undefined;
+  if (lastShotKind === undefined) reasons.push('combat.audit.lastShotKind is invalid');
+  const lastShotOwnerId = record.lastShotOwnerId === null
+    ? null
+    : requiredString(record.lastShotOwnerId, 'combat.audit.lastShotOwnerId', reasons, 128);
+  const xpDeaths = requiredInteger(record.xpDeaths, 0, MAX_COUNT, 'combat.audit.xpDeaths', reasons);
+  const xpMotesSpawned = requiredInteger(record.xpMotesSpawned, 0, MAX_COUNT, 'combat.audit.xpMotesSpawned', reasons);
+  const xpMotesCollected = requiredInteger(record.xpMotesCollected, 0, MAX_COUNT, 'combat.audit.xpMotesCollected', reasons);
+  const xpMotesCollectedValue = requiredNumber(
+    record.xpMotesCollectedValue,
+    0,
+    MAX_ECONOMY_AMOUNT,
+    'combat.audit.xpMotesCollectedValue',
+    reasons,
+  );
+  const xpOverflowBanked = requiredInteger(record.xpOverflowBanked, 0, MAX_COUNT, 'combat.audit.xpOverflowBanked', reasons);
+  const xpExpiredBanked = requiredInteger(record.xpExpiredBanked, 0, MAX_COUNT, 'combat.audit.xpExpiredBanked', reasons);
+  const blastDetonationCount = requiredInteger(
+    record.blastDetonationCount,
+    0,
+    MAX_COUNT,
+    'combat.audit.blastDetonationCount',
+    reasons,
+  );
+  const lastBlastDetonation = record.lastBlastDetonation === null
+    ? null
+    : decodeVector3(record.lastBlastDetonation, 'combat.audit.lastBlastDetonation', reasons);
+  if (
+    !ownerKills ||
+    !ownerDamage ||
+    boltHits === null ||
+    boltMisses === null ||
+    staleTargetSwitches === null ||
+    boltShots === null ||
+    lobShots === null ||
+    lastShotKind === undefined ||
+    (record.lastShotOwnerId !== null && lastShotOwnerId === null) ||
+    xpDeaths === null ||
+    xpMotesSpawned === null ||
+    xpMotesCollected === null ||
+    xpMotesCollectedValue === null ||
+    xpOverflowBanked === null ||
+    xpExpiredBanked === null ||
+    blastDetonationCount === null ||
+    (record.lastBlastDetonation !== null && !lastBlastDetonation)
+  ) {
+    return null;
+  }
+  return {
+    ownerKills,
+    ownerDamage,
+    boltHits,
+    boltMisses,
+    staleTargetSwitches,
+    shots: { bolt: boltShots, lob: lobShots },
+    lastShotKind,
+    lastShotOwnerId,
+    xpDeaths,
+    xpMotesSpawned,
+    xpMotesCollected,
+    xpMotesCollectedValue,
+    xpOverflowBanked,
+    xpExpiredBanked,
+    blastDetonationCount,
+    lastBlastDetonation,
+  };
+}
+
+function validateShooterTopology(
+  combat: CombatSuspendSnapshot,
+  buildings: readonly BuildingSuspend[],
+  reasons: string[],
+): void {
+  const saved = new Set(combat.shooters.map((shooter) => shooter.resumeKey));
+  const buildingKeys = new Set(
+    buildings
+      .filter((building) => !building.wrecked && (building.id === 'sentry_beacon' || building.id === 'turret'))
+      .map((building) => `building:${building.id}:${building.index}`),
+  );
+  for (const key of buildingKeys) if (!saved.has(key)) reasons.push(`combat.shooters is missing ${key}`);
+
+  const heroSlots = new Map<number, Set<string>>();
+  for (const key of saved) {
+    if (key.startsWith('building:')) {
+      if (!buildingKeys.has(key)) reasons.push(`combat.shooters contains unexpected ${key}`);
+      continue;
+    }
+    const match = /^hero:(\d+):(rig|blast)$/.exec(key);
+    if (!match) {
+      reasons.push(`combat.shooters contains unknown ${key}`);
+      continue;
+    }
+    const slot = Number(match[1]);
+    const kinds = heroSlots.get(slot) ?? new Set<string>();
+    kinds.add(match[2]);
+    heroSlots.set(slot, kinds);
+  }
+  if (!heroSlots.has(0)) reasons.push('combat.shooters must include hero slot 0');
+  for (const [slot, kinds] of heroSlots) {
+    if (!kinds.has('rig') || !kinds.has('blast')) reasons.push(`combat.shooters hero slot ${slot} is incomplete`);
+  }
+}
+
+function validateOwnerReferences(
+  combat: CombatSuspendSnapshot,
+  buildings: readonly BuildingSuspend[],
+  enemies: EnemyPoolSuspendSnapshot,
+  goldPickups: readonly GoldPickupSuspendSnapshot[],
+  megaproject: MegaprojectSuspend | null | undefined,
+  reasons: string[],
+): void {
+  const activeEnemySlots = new Set(enemies.active.map((enemy) => enemy.slot));
+  const activeBuildings = new Set(
+    buildings.filter((building) => !building.wrecked).map((building) => `${building.id}:${building.index}`),
+  );
+  const activeHoldings = new Set(goldPickups.map((pickup) => `pickup:${pickup.slot}`));
+  for (const building of buildings) {
+    if (!building.wrecked && building.id === 'stockpile') activeHoldings.add(`stockpile:${building.index}`);
+  }
+  if (megaproject?.targetActive) activeBuildings.add(`megaproject:${megaproject.id}`);
+  for (const shooter of combat.shooters) {
+    if (shooter.targetId >= 0 && !activeEnemySlots.has(shooter.targetId)) {
+      reasons.push(`${shooter.resumeKey} targets an inactive enemy`);
+    }
+  }
+  for (const enemy of enemies.active) {
+    if (enemy.currentHoldingId && !activeHoldings.has(enemy.currentHoldingId)) {
+      reasons.push(`enemy slot ${enemy.slot} references an inactive gold holding`);
+    }
+    if (enemy.currentBuildingId && !activeBuildings.has(enemy.currentBuildingId)) {
+      reasons.push(`enemy slot ${enemy.slot} references an inactive building`);
+    }
+  }
+}
+
+function decodeProjectiles(value: unknown[], reasons: string[]): CombatSuspendSnapshot['projectiles'] | null {
+  if (value.length > Balance.projectile.pool) reasons.push('combat.projectiles is too long');
+  const output: CombatSuspendSnapshot['projectiles'] = [];
+  const slots = new Set<number>();
+  for (const [index, entry] of value.slice(0, Balance.projectile.pool).entries()) {
+    const label = `combat.projectiles[${index}]`;
+    const saved = requiredRecord(entry, label, reasons);
+    if (!saved) continue;
+    const slot = requiredInteger(saved.slot, 0, Balance.projectile.pool - 1, `${label}.slot`, reasons);
+    const position = decodeVector3(saved.position, `${label}.position`, reasons);
+    const velocity = decodeVector3(saved.velocity, `${label}.velocity`, reasons);
+    const life = requiredNumber(saved.life, 0, MAX_TIME, `${label}.life`, reasons);
+    const damage = requiredNumber(saved.damage, 0, MAX_ECONOMY_AMOUNT, `${label}.damage`, reasons);
+    const ownerId = requiredString(saved.ownerId, `${label}.ownerId`, reasons, 128);
+    const shooterKey = requiredString(saved.shooterKey, `${label}.shooterKey`, reasons, 128);
+    const targetId = requiredInteger(saved.targetId, -1, Balance.enemy.poolSize - 1, `${label}.targetId`, reasons);
+    const visualStartY = requiredNumber(saved.visualStartY, -MAX_COORD, MAX_COORD, `${label}.visualStartY`, reasons);
+    const visualEndY = requiredNumber(saved.visualEndY, -MAX_COORD, MAX_COORD, `${label}.visualEndY`, reasons);
+    const visualDistance = requiredNumber(saved.visualDistance, 0, MAX_COORD, `${label}.visualDistance`, reasons);
+    const visualTravel = requiredNumber(saved.visualTravel, 0, MAX_COORD, `${label}.visualTravel`, reasons);
+    if (
+      slot === null ||
+      !position ||
+      !velocity ||
+      life === null ||
+      damage === null ||
+      !ownerId ||
+      !shooterKey ||
+      targetId === null ||
+      visualStartY === null ||
+      visualEndY === null ||
+      visualDistance === null ||
+      visualTravel === null
+    ) {
+      continue;
+    }
+    if (slots.has(slot)) reasons.push(`${label}.slot is duplicated`);
+    slots.add(slot);
+    output.push({ slot, position, velocity, life, damage, ownerId, shooterKey, targetId, visualStartY, visualEndY, visualDistance, visualTravel });
+  }
+  return output;
+}
+
+function decodeBlastCharges(value: unknown[], reasons: string[]): CombatSuspendSnapshot['blastCharges'] | null {
+  if (value.length > Balance.blast.pool) reasons.push('combat.blastCharges is too long');
+  const output: CombatSuspendSnapshot['blastCharges'] = [];
+  const slots = new Set<number>();
+  for (const [index, entry] of value.slice(0, Balance.blast.pool).entries()) {
+    const label = `combat.blastCharges[${index}]`;
+    const saved = requiredRecord(entry, label, reasons);
+    if (!saved) continue;
+    const slot = requiredInteger(saved.slot, 0, Balance.blast.pool - 1, `${label}.slot`, reasons);
+    const origin = decodeVector3(saved.origin, `${label}.origin`, reasons);
+    const target = decodeVector3(saved.target, `${label}.target`, reasons);
+    const age = requiredNumber(saved.age, 0, MAX_TIME, `${label}.age`, reasons);
+    const duration = requiredNumber(saved.duration, 0, MAX_TIME, `${label}.duration`, reasons);
+    const damage = requiredNumber(saved.damage, 0, MAX_ECONOMY_AMOUNT, `${label}.damage`, reasons);
+    const radius = requiredNumber(saved.radius, 0, MAX_COORD, `${label}.radius`, reasons);
+    const ownerId = requiredString(saved.ownerId, `${label}.ownerId`, reasons, 128);
+    const apexY = requiredNumber(saved.apexY, -MAX_COORD, MAX_COORD, `${label}.apexY`, reasons);
+    if (slot === null || !origin || !target || age === null || duration === null || damage === null || radius === null || !ownerId || apexY === null) continue;
+    if (slots.has(slot)) reasons.push(`${label}.slot is duplicated`);
+    slots.add(slot);
+    output.push({ slot, origin, target, age, duration, damage, radius, ownerId, apexY });
+  }
+  return output;
+}
+
+function decodeXpMotes(value: unknown[], reasons: string[]): CombatSuspendSnapshot['xpMotes'] | null {
+  if (value.length > Balance.xp.motePool) reasons.push('combat.xpMotes is too long');
+  const output: CombatSuspendSnapshot['xpMotes'] = [];
+  const slots = new Set<number>();
+  for (const [index, entry] of value.slice(0, Balance.xp.motePool).entries()) {
+    const label = `combat.xpMotes[${index}]`;
+    const saved = requiredRecord(entry, label, reasons);
+    if (!saved) continue;
+    const slot = requiredInteger(saved.slot, 0, Balance.xp.motePool - 1, `${label}.slot`, reasons);
+    const position = decodeVector3(saved.position, `${label}.position`, reasons);
+    const xp = requiredNumber(saved.value, 0, MAX_ECONOMY_AMOUNT, `${label}.value`, reasons);
+    const age = requiredNumber(saved.age, 0, MAX_TIME, `${label}.age`, reasons);
+    if (slot === null || !position || xp === null || age === null) continue;
+    if (slots.has(slot)) reasons.push(`${label}.slot is duplicated`);
+    slots.add(slot);
+    output.push({ slot, position, value: xp, age });
+  }
+  return output;
+}
+
+function decodeHarvest(value: unknown, reasons: string[]): HarvestSuspend | null | undefined {
+  if (value === null) return null;
+  const record = requiredRecord(value, 'harvest', reasons);
+  if (!record) return undefined;
+  if (!Array.isArray(record.nodes)) {
+    reasons.push('harvest.nodes must be an array');
+    return undefined;
+  }
+  if (record.nodes.length > 64) reasons.push('harvest.nodes is too long');
+  const nodes: HarvestSuspend['nodes'] = [];
+  const ids = new Set<string>();
+  for (const [index, entry] of record.nodes.slice(0, 64).entries()) {
+    const label = `harvest.nodes[${index}]`;
+    const node = requiredRecord(entry, label, reasons);
+    if (!node) continue;
+    const id = requiredString(node.id, `${label}.id`, reasons, 96);
+    const anchorIndex = requiredInteger(node.anchorIndex, -1, 63, `${label}.anchorIndex`, reasons);
+    const position = decodeVector2(node.position, `${label}.position`, reasons);
+    const remaining = requiredNumber(node.remaining, 0, MAX_ECONOMY_AMOUNT, `${label}.remaining`, reasons);
+    const respawnIn = requiredNumber(node.respawnIn, 0, MAX_TIME, `${label}.respawnIn`, reasons);
+    if (typeof node.respawnScheduled !== 'boolean') reasons.push(`${label}.respawnScheduled must be boolean`);
+    if (!id || anchorIndex === null || !position || remaining === null || respawnIn === null || typeof node.active !== 'boolean' || typeof node.respawnScheduled !== 'boolean') {
+      if (typeof node.active !== 'boolean') reasons.push(`${label}.active must be boolean`);
+      continue;
+    }
+    if (node.active && node.respawnScheduled) reasons.push(`${label} active nodes cannot have a scheduled respawn`);
+    if (!node.respawnScheduled && respawnIn !== 0) reasons.push(`${label} unscheduled nodes must have respawnIn 0`);
+    if (ids.has(id)) reasons.push(`${label}.id is duplicated`);
+    ids.add(id);
+    nodes.push({ id, active: node.active, anchorIndex, position, remaining, respawnScheduled: node.respawnScheduled, respawnIn });
+  }
+  const channelNodeId = record.channelNodeId === null ? null : stringInRange(record.channelNodeId, 1, 96);
+  if (record.channelNodeId !== null && channelNodeId === null) reasons.push('harvest.channelNodeId must be a string or null');
+  const progress = requiredNumber(record.progress, 0, 1, 'harvest.progress', reasons);
+  if (typeof record.panCapBlocked !== 'boolean') reasons.push('harvest.panCapBlocked must be boolean');
+  const channelNode = channelNodeId ? nodes.find((node) => node.id === channelNodeId) : null;
+  if (channelNodeId && !channelNode?.active) reasons.push('harvest.channelNodeId must identify an active node');
+  if (channelNodeId === null && progress !== null && progress !== 0) {
+    reasons.push('harvest.progress must be 0 without an active channel node');
+  }
+  if (progress === null || typeof record.panCapBlocked !== 'boolean' || (record.channelNodeId !== null && channelNodeId === null)) return undefined;
+  return { nodes, channelNodeId, progress, panCapBlocked: record.panCapBlocked };
+}
+
+function decodeBaron(value: unknown, reasons: string[]): BaronSuspend | null {
+  const record = requiredRecord(value, 'baron', reasons);
+  if (!record) return null;
+  if (typeof record.beaten !== 'boolean') reasons.push('baron.beaten must be boolean');
+  let ceremony: BaronSuspend['ceremony'] = null;
+  if (record.ceremony !== null) {
+    const saved = requiredRecord(record.ceremony, 'baron.ceremony', reasons);
+    const atSim = saved ? requiredNumber(saved.atSim, 0, MAX_TIME, 'baron.ceremony.atSim', reasons) : null;
+    const elapsedSeconds = saved ? requiredNumber(saved.elapsedSeconds, 0, MAX_TIME, 'baron.ceremony.elapsedSeconds', reasons) : null;
+    if (atSim !== null && elapsedSeconds !== null) ceremony = { atSim, elapsedSeconds };
+  }
+  const standard = requiredRecord(record.standard, 'baron.standard', reasons);
+  const standardPosition = standard ? decodeVector2(standard.position, 'baron.standard.position', reasons) : null;
+  const dropElapsed = standard ? requiredNumber(standard.dropElapsed, 0, MAX_TIME, 'baron.standard.dropElapsed', reasons) : null;
+  if (standard && typeof standard.planted !== 'boolean') reasons.push('baron.standard.planted must be boolean');
+  const rocket = requiredRecord(record.rocket, 'baron.rocket', reasons);
+  const nextVolleyIn = rocket ? requiredNumber(rocket.nextVolleyIn, 0, MAX_TIME, 'baron.rocket.nextVolleyIn', reasons) : null;
+  const telegraphElapsed = rocket?.telegraphElapsed === null ? null : rocket ? requiredNumber(rocket.telegraphElapsed, 0, MAX_TIME, 'baron.rocket.telegraphElapsed', reasons) : null;
+  const volleys = rocket ? requiredInteger(rocket.volleys, 0, MAX_COUNT, 'baron.rocket.volleys', reasons) : null;
+  const targetKind = rocket?.targetKind === null || rocket?.targetKind === 'hero' || rocket?.targetKind === 'building' ? rocket.targetKind : null;
+  if (rocket && rocket.targetKind !== null && targetKind === null) reasons.push('baron.rocket.targetKind is invalid');
+  const target = rocket ? decodeVector3(rocket.target, 'baron.rocket.target', reasons) : null;
+  if (
+    typeof record.beaten !== 'boolean' ||
+    !standard ||
+    !standardPosition ||
+    dropElapsed === null ||
+    typeof standard.planted !== 'boolean' ||
+    !rocket ||
+    nextVolleyIn === null ||
+    volleys === null ||
+    !target
+  ) {
+    return null;
+  }
+  return {
+    beaten: record.beaten,
+    ceremony,
+    standard: { planted: standard.planted, position: standardPosition, dropElapsed },
+    rocket: { nextVolleyIn, telegraphElapsed, volleys, targetKind, target },
+  };
+}
+
+function emptyBaron(): BaronSuspend {
+  return {
+    beaten: false,
+    ceremony: null,
+    standard: { planted: false, position: { x: 0, z: 0 }, dropElapsed: 0 },
+    rocket: { nextVolleyIn: 0, telegraphElapsed: null, volleys: 0, targetKind: null, target: { x: 0, y: 0, z: 0 } },
+  };
+}
+
+function decodeMegaproject(value: unknown, reasons: string[]): MegaprojectSuspend | null | undefined {
+  if (value === null) return null;
+  const record = requiredRecord(value, 'megaproject', reasons);
+  if (!record) return undefined;
+  const id = requiredString(record.id, 'megaproject.id', reasons, 128);
+  const project = requiredRecord(record.project, 'megaproject.project', reasons);
+  if (!project) return undefined;
+  const stage = requiredInteger(project.stage, 0, MAX_COUNT, 'megaproject.project.stage', reasons);
+  const ticksRemaining = requiredInteger(project.ticksRemaining, 0, MAX_COUNT, 'megaproject.project.ticksRemaining', reasons);
+  const hp = requiredNumber(project.hp, 0, MAX_ECONOMY_AMOUNT, 'megaproject.project.hp', reasons);
+  const delayTicks = requiredInteger(project.delayTicks, 0, MAX_COUNT, 'megaproject.project.delayTicks', reasons);
+  const defenseWave = requiredInteger(project.defenseWave, 0, MAX_COUNT, 'megaproject.project.defenseWave', reasons);
+  if (typeof project.funded !== 'boolean') reasons.push('megaproject.project.funded must be boolean');
+  if (typeof record.targetActive !== 'boolean') reasons.push('megaproject.targetActive must be boolean');
+  if (record.targetActive === true && (project.funded !== true || hp === 0)) {
+    reasons.push('megaproject.targetActive requires a funded project with HP');
+  }
+  if (!id || stage === null || ticksRemaining === null || hp === null || delayTicks === null || defenseWave === null || typeof project.funded !== 'boolean' || typeof record.targetActive !== 'boolean') {
+    return undefined;
+  }
+  return { id, targetActive: record.targetActive, project: { stage, funded: project.funded, ticksRemaining, hp, delayTicks, defenseWave } };
+}
+
+function decodeControls(value: unknown, reasons: string[]): ControlsSuspend | null | undefined {
+  if (value === null) return null;
+  const record = requiredRecord(value, 'controls', reasons);
+  if (!record) return undefined;
+  const runState = record.runState === 'playing' || record.runState === 'levelup' || record.runState === 'dead' ? record.runState : null;
+  if (!runState) reasons.push('controls.runState is invalid');
+  if (typeof record.paused !== 'boolean') reasons.push('controls.paused must be boolean');
+  if (typeof record.playerPauseActive !== 'boolean') reasons.push('controls.playerPauseActive must be boolean');
+  if (typeof record.territoryRingPresent !== 'boolean') reasons.push('controls.territoryRingPresent must be boolean');
+  const charm = requiredRecord(record.charm, 'controls.charm', reasons);
+  const remaining = charm ? requiredNumber(charm.remaining, 0, MAX_TIME, 'controls.charm.remaining', reasons) : null;
+  const cooldown = charm ? requiredNumber(charm.cooldown, 0, MAX_TIME, 'controls.charm.cooldown', reasons) : null;
+  if (charm && typeof charm.active !== 'boolean') reasons.push('controls.charm.active must be boolean');
+  const blastAim = requiredRecord(record.blastAim, 'controls.blastAim', reasons);
+  const pointer = blastAim ? decodeVector2(blastAim.pointer, 'controls.blastAim.pointer', reasons) : null;
+  const target = blastAim ? decodeVector2(blastAim.target, 'controls.blastAim.target', reasons) : null;
+  if (blastAim && typeof blastAim.ready !== 'boolean') reasons.push('controls.blastAim.ready must be boolean');
+  const latches = requiredRecord(record.latches, 'controls.latches', reasons);
+  const latchNames = ['pause', 'restart', 'build', 'cancel', 'confirm', 'upgrade', 'rotate', 'weaponToggle', 'debugSpawn', 'debugXp'] as const;
+  if (latches && latchNames.some((name) => typeof latches[name] !== 'boolean')) reasons.push('controls.latches must contain booleans');
+  if (record.paused === true && runState !== 'playing') reasons.push('controls.paused is only valid while playing');
+  if (record.playerPauseActive === true && record.paused !== true) reasons.push('controls.playerPauseActive requires pause');
+  if (charm?.active === true && (record.paused !== true || (remaining ?? 0) <= 0)) reasons.push('controls active charm pause is inconsistent');
+  if (
+    !runState ||
+    typeof record.paused !== 'boolean' ||
+    typeof record.playerPauseActive !== 'boolean' ||
+    typeof record.territoryRingPresent !== 'boolean' ||
+    !charm ||
+    remaining === null ||
+    cooldown === null ||
+    typeof charm.active !== 'boolean' ||
+    !blastAim ||
+    !pointer ||
+    !target ||
+    typeof blastAim.ready !== 'boolean' ||
+    !latches ||
+    latchNames.some((name) => typeof latches[name] !== 'boolean')
+  ) {
+    return undefined;
+  }
+  return {
+    runState,
+    paused: record.paused,
+    playerPauseActive: record.playerPauseActive,
+    territoryRingPresent: record.territoryRingPresent,
+    charm: { active: charm.active, remaining, cooldown },
+    blastAim: { ready: blastAim.ready, pointer, target },
+    latches: Object.fromEntries(latchNames.map((name) => [name, latches[name]])) as ControlsSuspend['latches'],
+  };
+}
+
+function decodeAgent(value: unknown, reasons: string[]): AgentSuspend | null | undefined {
+  if (value === null) return null;
+  const record = requiredRecord(value, 'agent', reasons);
+  if (!record) return undefined;
+  const consentRecord = requiredRecord(record.consent, 'agent.consent', reasons);
+  const rungs = consentRecord ? requiredRecord(consentRecord.rungs, 'agent.consent.rungs', reasons) : null;
+  const abilities = consentRecord ? requiredRecord(consentRecord.abilities, 'agent.consent.abilities', reasons) : null;
+  const rungValues = rungs ? [rungs[0], rungs[1], rungs[2], rungs[3]] : [];
+  const abilityValues = abilities ? [abilities.auto_collect, abilities.auto_repair, abilities.auto_pan] : [];
+  if (rungValues.length !== 4 || !rungValues.every((entry) => typeof entry === 'boolean')) {
+    reasons.push('agent.consent.rungs must contain four booleans');
+  }
+  if (abilityValues.length !== 3 || !abilityValues.every((entry) => typeof entry === 'boolean')) {
+    reasons.push('agent.consent.abilities must contain three booleans');
+  }
+
+  const prospectorRecord = requiredRecord(record.prospector, 'agent.prospector', reasons);
+  const position = prospectorRecord ? decodeVector2(prospectorRecord.position, 'agent.prospector.position', reasons) : null;
+  const target = prospectorRecord ? decodeVector2(prospectorRecord.target, 'agent.prospector.target', reasons) : null;
+  const workRemaining = prospectorRecord
+    ? requiredNumber(prospectorRecord.workRemaining, 0, MAX_TIME, 'agent.prospector.workRemaining', reasons)
+    : null;
+  const nextWorkSeconds = prospectorRecord
+    ? requiredNumber(prospectorRecord.nextWorkSeconds, 0, MAX_TIME, 'agent.prospector.nextWorkSeconds', reasons)
+    : null;
+  const nextSurveyIn = prospectorRecord
+    ? requiredNumber(prospectorRecord.nextSurveyIn, 0, MAX_TIME, 'agent.prospector.nextSurveyIn', reasons)
+    : null;
+  const receiptCount = prospectorRecord
+    ? requiredInteger(prospectorRecord.receiptCount, 0, MAX_COUNT, 'agent.prospector.receiptCount', reasons)
+    : null;
+  if (prospectorRecord && typeof prospectorRecord.visible !== 'boolean') reasons.push('agent.prospector.visible must be boolean');
+  if (prospectorRecord && typeof prospectorRecord.moving !== 'boolean') reasons.push('agent.prospector.moving must be boolean');
+  if (prospectorRecord?.moving === true && (workRemaining ?? 0) > 0) reasons.push('agent.prospector cannot move and work together');
+
+  const sweeps = requiredRecord(record.sweeps, 'agent.sweeps', reasons);
+  const xpIn = sweeps ? requiredNumber(sweeps.xpIn, 0, MAX_TIME, 'agent.sweeps.xpIn', reasons) : null;
+  const goldIn = sweeps ? requiredNumber(sweeps.goldIn, 0, MAX_TIME, 'agent.sweeps.goldIn', reasons) : null;
+  const repairIn = sweeps ? requiredNumber(sweeps.repairIn, 0, MAX_TIME, 'agent.sweeps.repairIn', reasons) : null;
+  const repairDwellElapsed =
+    sweeps?.repairDwellElapsed === null
+      ? null
+      : sweeps
+        ? requiredNumber(sweeps.repairDwellElapsed, 0, MAX_TIME, 'agent.sweeps.repairDwellElapsed', reasons)
+        : undefined;
+  let repairTarget: AgentSuspend['sweeps']['repairTarget'] = null;
+  if (sweeps?.repairTarget !== null) {
+    const targetRecord = sweeps ? requiredRecord(sweeps.repairTarget, 'agent.sweeps.repairTarget', reasons) : null;
+    const id = targetRecord && buildableIds.includes(targetRecord.id as BuildableId) ? (targetRecord.id as BuildableId) : null;
+    const def = id ? buildableDefs.find((entry) => entry.id === id) : null;
+    const index = targetRecord
+      ? requiredInteger(targetRecord.index, 0, Math.max(0, (def?.maxCount ?? 1) - 1), 'agent.sweeps.repairTarget.index', reasons)
+      : null;
+    if (!id) reasons.push('agent.sweeps.repairTarget.id is unknown');
+    if (id && index !== null) repairTarget = { id, index };
+  }
+  if (repairDwellElapsed !== null && repairDwellElapsed !== undefined && !repairTarget) {
+    reasons.push('agent.sweeps.repairDwellElapsed requires a repair target');
+  }
+
+  if (
+    !rungs ||
+    !abilities ||
+    rungValues.some((entry) => typeof entry !== 'boolean') ||
+    abilityValues.some((entry) => typeof entry !== 'boolean') ||
+    !prospectorRecord ||
+    !position ||
+    !target ||
+    workRemaining === null ||
+    nextWorkSeconds === null ||
+    nextSurveyIn === null ||
+    receiptCount === null ||
+    typeof prospectorRecord.visible !== 'boolean' ||
+    typeof prospectorRecord.moving !== 'boolean' ||
+    !sweeps ||
+    xpIn === null ||
+    goldIn === null ||
+    repairIn === null ||
+    repairDwellElapsed === undefined
+  ) {
+    return undefined;
+  }
+
+  return {
+    consent: {
+      rungs: { 0: rungs[0] as boolean, 1: rungs[1] as boolean, 2: rungs[2] as boolean, 3: rungs[3] as boolean },
+      abilities: {
+        auto_collect: abilities.auto_collect as boolean,
+        auto_repair: abilities.auto_repair as boolean,
+        auto_pan: abilities.auto_pan as boolean,
+      },
+    },
+    prospector: {
+      visible: prospectorRecord.visible,
+      position,
+      target,
+      moving: prospectorRecord.moving,
+      workRemaining,
+      nextWorkSeconds,
+      nextSurveyIn,
+      receiptCount,
+    },
+    sweeps: { xpIn, goldIn, repairIn, repairTarget, repairDwellElapsed },
+  };
+}
+
+function decodeRunManager(value: unknown, reasons: string[]): RunManagerSuspendState | null {
+  const record = requiredRecord(value, 'runManager', reasons);
+  if (!record) return null;
+  if (typeof record.secured !== 'boolean') reasons.push('runManager.secured must be boolean');
+  if (typeof record.rush !== 'boolean') reasons.push('runManager.rush must be boolean');
+  if (record.rush === true && record.secured !== true) reasons.push('runManager.rush requires secured');
+  const meta = decodeMetaProgress(record.meta, reasons);
+  const payout = decodeMetaPayout(record.payout, reasons);
+  if (record.secured === true && payout === null) reasons.push('runManager.secured requires payout');
+  if (record.secured === false && payout !== null) reasons.push('runManager.payout requires secured');
+  return typeof record.secured === 'boolean' && typeof record.rush === 'boolean' && meta && payout !== undefined
+    ? { secured: record.secured, rush: record.rush, meta, payout }
+    : null;
+}
+
+function decodeMetaPayout(value: unknown, reasons: string[]): MetaPayout | null | undefined {
+  if (value === null) return null;
+  const record = requiredRecord(value, 'runManager.payout', reasons);
+  if (!record) return undefined;
+  const territory = requiredNumber(record.territory, 0, MAX_COUNT, 'runManager.payout.territory', reasons);
+  const science = requiredNumber(record.science, 0, MAX_COUNT, 'runManager.payout.science', reasons);
+  const hero = requiredNumber(record.hero, 0, MAX_COUNT, 'runManager.payout.hero', reasons);
+  const agent = requiredNumber(record.agent, 0, MAX_COUNT, 'runManager.payout.agent', reasons);
+  return territory === null || science === null || hero === null || agent === null
+    ? undefined
+    : { territory, science, hero, agent };
 }
 
 function decodeMetaProgress(value: unknown, reasons: string[]): MetaProgress | null {
@@ -1279,7 +2450,7 @@ function decodeMetaProgress(value: unknown, reasons: string[]): MetaProgress | n
   return { version: 1, tracks: { territory, science, hero, agent } };
 }
 
-function decodeResearchState(value: unknown, reasons: string[]): ResearchState | null {
+function decodeResearchState(value: unknown, reasons: string[], requireCanonical: boolean): ResearchState | null {
   const record = requiredRecord(value, 'research', reasons);
   if (!record) return null;
   const progress = decodeMetaProgress(record.progress, reasons);
@@ -1288,7 +2459,10 @@ function decodeResearchState(value: unknown, reasons: string[]): ResearchState |
   const pinnedTarget = record.pinnedTarget === null ? null : stringInRange(record.pinnedTarget, 1, 128);
   if (record.pinnedTarget !== null && pinnedTarget === null) reasons.push('research.pinnedTarget must be a string or null');
   if (!progress || taken === undefined || taken === null || proposalSalt === null || (record.pinnedTarget !== null && pinnedTarget === null)) return null;
-  return { version: 1, progress, taken, proposalSalt, pinnedTarget };
+  const decoded: ResearchState = { version: 1, progress, taken, proposalSalt, pinnedTarget };
+  const normalized = normalizeResearchState(decoded);
+  if (requireCanonical && JSON.stringify(decoded) !== JSON.stringify(normalized)) reasons.push('research must already be canonical');
+  return normalized;
 }
 
 function rejected(reasons: string[], droppedEconomyEvents: number): RunSuspendDecodeResult {
@@ -1337,6 +2511,39 @@ function requiredInteger(value: unknown, min: number, max: number, label: string
   return null;
 }
 
+function versionedNumber(
+  value: unknown,
+  fallback: number,
+  min: number,
+  max: number,
+  label: string,
+  reasons: string[],
+  required: boolean,
+): number | null {
+  return required ? requiredNumber(value, min, max, label, reasons) : numberInRange(value, min, max) ?? fallback;
+}
+
+function versionedInteger(
+  value: unknown,
+  fallback: number,
+  min: number,
+  max: number,
+  label: string,
+  reasons: string[],
+  required: boolean,
+): number | null {
+  return required ? requiredInteger(value, min, max, label, reasons) : integerInRange(value, min, max) ?? fallback;
+}
+
+function versionedNullableString(value: unknown, label: string, reasons: string[], required: boolean): string | null | undefined {
+  if (!required) return null;
+  if (value === null) return null;
+  const text = stringInRange(value, 1, 128);
+  if (text) return text;
+  reasons.push(`${label} must be a string or null`);
+  return undefined;
+}
+
 function numberInRange(value: unknown, min: number, max: number): number | null {
   return typeof value === 'number' && Number.isFinite(value) && value >= min && value <= max ? value : null;
 }
@@ -1383,23 +2590,49 @@ function decodeNumberRecord(value: unknown, label: string, reasons: string[]): R
   return output;
 }
 
-function decodeResources(value: unknown, reasons: string[]): Record<string, { amount: number; cap: number }> | null {
+function decodeNonnegativeNumberRecord(value: unknown, label: string, reasons: string[]): Record<string, number> | null {
+  const record = requiredRecord(value, label, reasons);
+  if (!record) return null;
+  const output: Record<string, number> = {};
+  for (const [key, entry] of Object.entries(record)) {
+    if (key.length > 96) {
+      reasons.push(`${label} key is too long`);
+      continue;
+    }
+    const number = requiredNumber(entry, 0, MAX_ECONOMY_AMOUNT, `${label}.${key}`, reasons);
+    if (number !== null) output[key] = number;
+  }
+  return output;
+}
+
+function decodeResources(
+  value: unknown,
+  reasons: string[],
+  requireV2: boolean,
+): Record<string, { amount: number; cap: number }> | null {
   const before = reasons.length;
   if (!isRecord(value)) {
+    if (!requireV2 && value === undefined) return {};
     reasons.push('economy.resources must be an object');
     return null;
   }
   const output: Record<string, { amount: number; cap: number }> = {};
   for (const [key, entry] of Object.entries(value)) {
-    if (key.length > 96) {
-      reasons.push('economy.resources key is too long');
+    if (key !== 'gold' && key !== 'pressure') {
+      reasons.push(`economy.resources.${key} is unknown`);
       continue;
     }
     const record = requiredRecord(entry, `economy.resources.${key}`, reasons);
     if (!record) continue;
     const amount = requiredNumber(record.amount, 0, MAX_ECONOMY_AMOUNT, `economy.resources.${key}.amount`, reasons);
     const cap = requiredNumber(record.cap, 0, MAX_ECONOMY_AMOUNT, `economy.resources.${key}.cap`, reasons);
-    if (amount !== null && cap !== null) output[key] = { amount, cap };
+    if (amount !== null && cap !== null) {
+      if (key !== 'gold' && amount > cap) reasons.push(`economy.resources.${key}.amount cannot exceed cap`);
+      output[key] = { amount, cap };
+    }
+  }
+  if (requireV2 && (!output.gold || !output.pressure)) {
+    reasons.push('economy.resources must contain gold and pressure');
   }
   return reasons.length === before ? output : null;
 }
@@ -1455,6 +2688,20 @@ function decodeVector3(value: unknown, label: string, reasons: string[]): { x: n
   return x === null || y === null || z === null ? null : { x, y, z };
 }
 
+function decodeVector3Array(value: unknown, label: string, reasons: string[], maxLength: number): Vec3Suspend[] | null {
+  if (!Array.isArray(value)) {
+    reasons.push(`${label} must be an array`);
+    return null;
+  }
+  if (value.length > maxLength) reasons.push(`${label} is too long`);
+  const output: Vec3Suspend[] = [];
+  for (const [index, entry] of value.slice(0, maxLength).entries()) {
+    const point = decodeVector3(entry, `${label}[${index}]`, reasons);
+    if (point) output.push(point);
+  }
+  return output.length === value.slice(0, maxLength).length ? output : null;
+}
+
 function decodeVector2(value: unknown, label: string, reasons: string[]): { x: number; z: number } | null {
   const record = requiredRecord(value, label, reasons);
   if (!record) return null;
@@ -1475,13 +2722,6 @@ function cleanNumber(value: unknown, fallback = 0): number {
   return typeof value === 'number' && Number.isFinite(value) ? value : fallback;
 }
 
-function buildingMaxHpMultiplier(id: BuildableId, tier: number): number {
-  const tiers = (Balance.tiers as Partial<Record<BuildableId, readonly AnyRecord[]>>)[id];
-  const rung = tiers?.[Math.max(1, Math.floor(tier)) - 1] ?? tiers?.[0];
-  const multiplier = cleanNumber(rung?.maxHpMult, 1);
-  return multiplier > 0 ? multiplier : 1;
-}
-
 function vector3Snapshot(value: { x?: unknown; y?: unknown; z?: unknown }): { x: number; y: number; z: number } {
   return {
     x: cleanNumber(value.x),
@@ -1496,6 +2736,18 @@ function isWaveState(value: unknown): value is WaveSystemSuspend['waveState'] {
 
 function isCompassEdge(value: unknown): value is CompassEdge {
   return value === 'north' || value === 'south' || value === 'east' || value === 'west';
+}
+
+function isThiefState(value: unknown): value is EnemySuspendSnapshot['thiefState'] {
+  return value === 'none' || value === 'seekHolding' || value === 'grabbing' || value === 'fleeing';
+}
+
+function isWreckerState(value: unknown): value is EnemySuspendSnapshot['wreckerState'] {
+  return value === 'none' || value === 'seekBuilding' || value === 'swinging';
+}
+
+function isSpriteOrientation(value: unknown): value is EnemySuspendSnapshot['spriteOrientation'] {
+  return value === 's' || value === 'se' || value === 'e' || value === 'ne' || value === 'n' || value === 'nw' || value === 'w' || value === 'sw';
 }
 
 function deepClone<T>(value: T): T {

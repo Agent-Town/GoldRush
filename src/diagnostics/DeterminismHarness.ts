@@ -1,5 +1,6 @@
 import { getDebugSeed, getTimescale } from '../core/DebugParams';
 import { normalizeSeed } from '../core/Rng';
+import { runSuspendFutureState } from '../game/RunSuspend';
 
 type TimelineEntry = {
   tick: number;
@@ -24,6 +25,7 @@ type DeterminismReport = {
   simSeconds: number;
   ticks: number;
   economyHash: string;
+  futureStateHash: string;
   economy: ReturnType<NonNullable<Window['__GR_TEST__']>['summarizeLog']>;
   economyLogLength: number;
   entityTimeline: TimelineEntry[];
@@ -63,8 +65,8 @@ async function runDeterminismHarness(): Promise<DeterminismReport> {
   test.resetRun();
   test.setManualSim(true);
   test.setBalance('enemy.contactDamage', 0);
-  moveToHarvestNode();
   await waitFrames(1);
+  moveToHarvestNode();
 
   const entityTimeline: TimelineEntry[] = [];
   test.advanceSim(SIM_SECONDS, (sample) => entityTimeline.push({ tick: entityTimeline.length + 1, ...sample, time: round(sample.time, 3) }));
@@ -72,6 +74,7 @@ async function runDeterminismHarness(): Promise<DeterminismReport> {
   const economyLog = test.economyLog();
   const economy = test.summarizeLog(economyLog);
   const economyHash = hashText(stableStringify({ economy, logLength: economyLog.length }));
+  const futureStateHash = hashText(stableStringify(runSuspendFutureState(test.captureSuspend())));
   return {
     name: 'determinism',
     version: 1,
@@ -83,6 +86,7 @@ async function runDeterminismHarness(): Promise<DeterminismReport> {
     simSeconds: SIM_SECONDS,
     ticks: entityTimeline.length,
     economyHash,
+    futureStateHash,
     economy,
     economyLogLength: economyLog.length,
     entityTimeline,
@@ -104,6 +108,7 @@ function failedReport(error: unknown): DeterminismReport {
     simSeconds: SIM_SECONDS,
     ticks: 0,
     economyHash: 'fnv1a32:00000000',
+    futureStateHash: 'fnv1a32:00000000',
     economy: emptyEconomySummary(),
     economyLogLength: 0,
     entityTimeline: [],
