@@ -577,11 +577,14 @@ export class Game {
     return this.actors.filter((actor) => actor.group.visible).map((actor) => actor.group.position);
   }
 
-  private visibleHarvestTargets(): Array<{ position: THREE.Vector3; speed: number }> {
+  private visibleHarvestTargets(): Array<{ actorId: string; position: THREE.Vector3; speed: number }> {
     const targets = this.actors
-      .filter((actor) => actor.group.visible)
-      .map((actor) => ({ position: actor.group.position, speed: actor.velocity.length() }));
-    return targets.length > 0 ? targets : [{ position: this.primaryActor.group.position, speed: this.primaryActor.velocity.length() }];
+      .map((actor, slot) => ({ actor, slot }))
+      .filter(({ actor }) => actor.group.visible)
+      .map(({ actor, slot }) => ({ actorId: String(slot), position: actor.group.position, speed: actor.velocity.length() }));
+    return targets.length > 0
+      ? targets
+      : [{ actorId: '0', position: this.primaryActor.group.position, speed: this.primaryActor.velocity.length() }];
   }
 
   private lastHarvestGoldPosition(): THREE.Vector3 {
