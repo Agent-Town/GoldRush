@@ -109,7 +109,7 @@
 }
 
 .terrain-brush__tools button,
-.terrain-brush__history button { min-height: 42px; }
+.terrain-brush__history button { min-height: 44px; }
 .terrain-brush__tools button[aria-pressed='true'] { color: #fff8e8; background: #3f7778; box-shadow: inset 0 0 0 2px rgba(46, 27, 14, 0.34); }
 .terrain-brush button:disabled { cursor: not-allowed; opacity: 0.45; box-shadow: none; }
 
@@ -148,6 +148,8 @@
   cursor: crosshair;
   touch-action: none;
 }
+.terrain-brush canvas[data-mode='select'] { cursor: grab; }
+.terrain-brush canvas[data-mode='select']:active { cursor: grabbing; }
 .terrain-brush canvas:focus-visible { outline: 3px solid #5b8a8a; outline-offset: 2px; }
 .terrain-brush__readout { margin-top: 6px; color: rgba(46, 27, 14, 0.68); font-size: 10px; }
 .terrain-brush__readout span:first-child { color: #5b3a1f; font-weight: 900; }

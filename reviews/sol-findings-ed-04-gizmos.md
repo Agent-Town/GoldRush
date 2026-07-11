@@ -4,7 +4,15 @@ Branch: `sol/ed-04-gizmos`
 
 Base: deployed `origin/main@8deaaba8`
 
-Verdict: **BLOCKED — the Hand brief names gestures that the current descriptor/runtime contract cannot truthfully perform. No product code written.**
+Verdict: **RESOLVED BY `f99c66b7` — ED-04 v1 is READY-FOR-GATES; the two task-086 upgrades remain deliberately gated.**
+
+## Ruling resolution
+
+All four findings became the v1 capability contract. The existing Terrain Brush survey owns one Select mode and one source-relative draft per pointer gesture. Zones move and resize from four corners; spring ponds move and resize from one radius handle; positional variant spawn gates move only along their declared tangent; pre-placed fixtures move only. A completed changed gesture crosses the existing ED-03 boundary once and therefore adds one B5/B6 history mark; selection taps and cancellation add none. Every canvas target has a 44-CSS-pixel effective hit diameter.
+
+The canonical boundary now rejects ponds whose circles leave the claim, unknown spawn-gate edges, and fixture points outside the claim. It does not duplicate runtime bank/overlap legality. Fixture rotation remains absent. Both the shared fixture predicate and quarter-turn handle stay gated on task 086 reaching `origin/main`.
+
+Static evidence: TypeScript and production build green; ED-04 pure model/boundary gate green; five adjacent B5/B6/ED-03 pure gates green; ten desktop/mobile browser gates discovered. Browser and touch execution remain Fable-owned.
 
 ## F-ED04-01 — “spawn markers” has two incompatible owners
 
