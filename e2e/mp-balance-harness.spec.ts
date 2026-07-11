@@ -64,7 +64,8 @@ test('seeded rider simulations are deterministic and obey balance invariants', a
   expect(first.assumptions).toMatchObject({
     difficultyPreset: 'trail',
     survivalEndsAt: 'first-rider-death',
-    harvest: 'single-shared-progress-channel',
+    harvest: 'per-rider-progress-channels',
+    harvestRiderEffect: 'parallel-on-separate-seams-first-claim-on-shared-seam',
     riderFormation: 'solo-centered-multiplayer-1.2-radius',
     waveSpawns: 'seeded-distinct-edges-with-live-group-spread',
     enemyTargeting: 'nearest-stationary-rider-from-seeded-edge-spawn',
@@ -131,6 +132,93 @@ test('the browser channel requires both debug and mpbalance query gates', async 
 
   expect(channel?.ok).toBe(true);
   if (channel?.ok) expect(channel.result.rows.map((row) => row.riderCount)).toEqual([1, 2, 3, 4]);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('harvest channels preserve solo behavior and arbitrate seams per rider', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/?debug&nowaves&nolevel&seed=mp-harvest-channels');
+
+  const result = await page.evaluate(async () => {
+    const systemPath = '/src/systems/HarvestSystem.ts';
+    const economyPath = '/src/game/Economy.ts';
+    const rngPath = '/src/core/Rng.ts';
+    const { HarvestSystem } = (await import(/* @vite-ignore */ systemPath)) as typeof import('../src/systems/HarvestSystem');
+    const { Economy } = (await import(/* @vite-ignore */ economyPath)) as typeof import('../src/game/Economy');
+    const { createRng } = (await import(/* @vite-ignore */ rngPath)) as typeof import('../src/core/Rng');
+    const anchors = Array.from({ length: 6 }, (_, index) => ({ x: index * 10, z: 0 }));
+    const point = (position: { x: number; z: number }) => ({
+      x: position.x,
+      y: 0,
+      z: position.z,
+      clone() { return point(this); },
+    });
+    const economyLog = (economy: InstanceType<typeof Economy>) => economy.log.map(({ id: _id, ...event }) => event);
+
+    const soloA = new Economy();
+    const soloB = new Economy();
+    const legacy = new HarvestSystem(soloA, anchors, createRng('mp-harvest-solo'));
+    const keyed = new HarvestSystem(soloB, anchors, createRng('mp-harvest-solo'));
+    const soloNode = legacy.snapshot.activeNodes.find((node) => node.active)!;
+    for (let tick = 1; tick <= 100; tick += 1) {
+      const at = tick / 30;
+      legacy.update(1 / 30, at, point(soloNode.position) as never);
+      keyed.update(1 / 30, at, [{ actorId: '0', position: point(soloNode.position) as never, speed: 0 }]);
+    }
+    const solo = {
+      snapshotsMatch: JSON.stringify(legacy.snapshot) === JSON.stringify(keyed.snapshot),
+      statesMatch: JSON.stringify(soloA.state) === JSON.stringify(soloB.state),
+      logsMatch: JSON.stringify(economyLog(soloA)) === JSON.stringify(economyLog(soloB)),
+    };
+    legacy.dispose();
+    keyed.dispose();
+
+    const simulate = (sameNode: boolean) => {
+      const economy = new Economy();
+      const system = new HarvestSystem(economy, anchors, createRng('mp-harvest-parallel'));
+      const active = system.snapshot.activeNodes.filter((node) => node.active);
+      const targets = [
+        { actorId: '0', position: point(active[0].position) as never, speed: 0 },
+        { actorId: '1', position: point(active[sameNode ? 0 : 1].position) as never, speed: 0 },
+      ];
+      let mid = system.snapshot;
+      for (let tick = 1; tick <= 100; tick += 1) {
+        const snapshot = system.update(1 / 30, tick / 30, targets);
+        if (tick === 20) mid = snapshot;
+      }
+      const output = { mid, final: system.snapshot, gold: economy.state.gold, log: economyLog(economy) };
+      system.dispose();
+      return output;
+    };
+
+    const source = new HarvestSystem(new Economy(), anchors, createRng('mp-harvest-restore'));
+    const restoreNodes = source.snapshot.activeNodes.filter((node) => node.active);
+    for (let tick = 1; tick <= 20; tick += 1) {
+      source.update(1 / 30, tick / 30, [
+        { actorId: '0', position: point(restoreNodes[0].position) as never, speed: 0 },
+        { actorId: '1', position: point(restoreNodes[1].position) as never, speed: 0 },
+      ]);
+    }
+    const captured = source.captureFutureState(20 / 30);
+    const restored = new HarvestSystem(new Economy(), anchors, createRng('different-seed'));
+    const restoredOk = restored.restoreFutureState(captured, 20 / 30);
+    const restoreMatch = JSON.stringify(restored.captureFutureState(20 / 30)) === JSON.stringify(captured);
+    source.dispose();
+    restored.dispose();
+
+    return { solo, separate: simulate(false), same: simulate(true), restore: { restoredOk, restoreMatch, channels: captured.channels?.length } };
+  });
+
+  expect(result.solo).toEqual({ snapshotsMatch: true, statesMatch: true, logsMatch: true });
+  expect(result.separate.mid.channels).toHaveLength(2);
+  expect(result.separate.mid.channels.every((channel) => channel.progress > 0)).toBe(true);
+  expect(new Set(result.separate.mid.channels.map((channel) => channel.channelNodeId)).size).toBe(2);
+  expect(result.separate.gold).toBe(result.same.gold * 2);
+  expect(result.separate.log.filter((event) => event.type === 'gold_panned')).toHaveLength(4);
+  expect(result.same.final.channels.filter((channel) => channel.channeling)).toHaveLength(1);
+  expect(result.same.log.filter((event) => event.type === 'gold_panned')).toHaveLength(2);
+  expect(result.restore).toEqual({ restoredOk: true, restoreMatch: true, channels: 2 });
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

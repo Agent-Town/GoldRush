@@ -565,6 +565,7 @@ function captureSnapshot(
           channelNodeId: harvest.channelNodeId,
           progress: harvest.progress,
           panCapBlocked: harvest.panCapBlocked,
+          ...(harvest.channels ? { channels: deepClone(harvest.channels) } : {}),
         }
       : null,
     baron: captureBaron(game, at),
@@ -772,7 +773,8 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
     return restoreFailed('harvest');
   }
   game.harvestSnapshot = game.harvestSystem?.snapshot ?? game.harvestSnapshot;
-  game.lastHarvestChanneling = snapshot.harvest?.channelNodeId !== null && snapshot.harvest?.channelNodeId !== undefined;
+  game.lastHarvestChanneling = snapshot.harvest?.channels?.some((channel) => channel.channeling)
+    ?? (snapshot.harvest?.channelNodeId !== null && snapshot.harvest?.channelNodeId !== undefined);
 
   game.kills = snapshot.counters.kills;
   game.stolenTotal = snapshot.counters.stolenTotal;
@@ -2171,7 +2173,41 @@ function decodeHarvest(value: unknown, reasons: string[]): HarvestSuspend | null
     reasons.push('harvest.progress must be 0 without an active channel node');
   }
   if (progress === null || typeof record.panCapBlocked !== 'boolean' || (record.channelNodeId !== null && channelNodeId === null)) return undefined;
-  return { nodes, channelNodeId, progress, panCapBlocked: record.panCapBlocked };
+  let channels: HarvestSuspend['channels'];
+  if (record.channels !== undefined) {
+    if (!Array.isArray(record.channels) || record.channels.length < 2 || record.channels.length > 4) {
+      reasons.push('harvest.channels must contain 2 to 4 channels');
+    } else {
+      const actorIds = new Set<string>();
+      const activeNodeIds = new Set<string>();
+      channels = [];
+      for (const [index, entry] of record.channels.entries()) {
+        const label = `harvest.channels[${index}]`;
+        const channel = requiredRecord(entry, label, reasons);
+        if (!channel) continue;
+        const actorId = requiredString(channel.actorId, `${label}.actorId`, reasons, 96);
+        const savedNodeId = channel.channelNodeId === null ? null : stringInRange(channel.channelNodeId, 1, 96);
+        const savedProgress = requiredNumber(channel.progress, 0, 1, `${label}.progress`, reasons);
+        if (channel.channelNodeId !== null && savedNodeId === null) reasons.push(`${label}.channelNodeId must be a string or null`);
+        if (typeof channel.panCapBlocked !== 'boolean') reasons.push(`${label}.panCapBlocked must be boolean`);
+        if (typeof channel.channeling !== 'boolean') reasons.push(`${label}.channeling must be boolean`);
+        if (!actorId || savedProgress === null || typeof channel.panCapBlocked !== 'boolean' || typeof channel.channeling !== 'boolean') continue;
+        if (actorIds.has(actorId)) reasons.push(`${label}.actorId is duplicated`);
+        const savedNode = savedNodeId ? nodes.find((node) => node.id === savedNodeId) : null;
+        if (savedNodeId && !savedNode?.active) reasons.push(`${label}.channelNodeId must identify an active node`);
+        if (savedNodeId === null && savedProgress !== 0) reasons.push(`${label}.progress must be 0 without a channel node`);
+        if (channel.channeling && (!savedNodeId || activeNodeIds.has(savedNodeId))) reasons.push(`${label} cannot share an active seam`);
+        actorIds.add(actorId);
+        if (channel.channeling && savedNodeId) activeNodeIds.add(savedNodeId);
+        channels.push({ actorId, channelNodeId: savedNodeId, progress: savedProgress, panCapBlocked: channel.panCapBlocked, channeling: channel.channeling });
+      }
+      const primary = channels.find((channel) => channel.actorId === '0');
+      if (!primary || primary.channelNodeId !== channelNodeId || primary.progress !== progress || primary.panCapBlocked !== record.panCapBlocked) {
+        reasons.push('harvest.channels actor 0 must match the legacy channel fields');
+      }
+    }
+  }
+  return { nodes, channelNodeId, progress, panCapBlocked: record.panCapBlocked, ...(channels ? { channels } : {}) };
 }
 
 function decodeBaron(value: unknown, reasons: string[]): BaronSuspend | null {
