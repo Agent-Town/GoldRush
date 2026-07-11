@@ -1,3 +1,5 @@
+# SUPERSEDED 2026-07-11 (owner order, verbatim): "Can you instead do it yourself? All chapters? This is the baseline... please invest the time and go through the chapters and do it yourself as Fable, the originator, the creator, my co-founder." — THE CHAPTERS ARE FABLE-AUTHORED, in lore/STORYBOOK.md, one commit each. This master is retired; do not queue.
+
 # Task storybook-e3: THE STORYBOOK — the Voltage chapter (writing task; commit prefix "lore:")
 CODEX: model=gpt-5.6-sol effort=high
 OWNER ORDER 2026-07-11: the storybook written "to the last letter." READ FIRST (all, in order): lore/STORYBOOK.md (THE E1 CHAPTER IS THE TEMPLATE — match its density, voice, and structure exactly) · specs/epoch-saga/e3-*.md (the design-locked bundle — where the book and bundle disagree, the BUNDLE WINS; file a finding) · lore/story-arc.md + lore/characters.md + lore/canon-rules.md (canon law: cited or it's a proposal) · docs/CONTENT-MAP.md.

@@ -1,3 +1,5 @@
+# SUPERSEDED 2026-07-11 (owner order, verbatim): "Can you instead do it yourself? All chapters? This is the baseline... please invest the time and go through the chapters and do it yourself as Fable, the originator, the creator, my co-founder." — THE CHAPTERS ARE FABLE-AUTHORED, in lore/STORYBOOK.md, one commit each. This master is retired; do not queue.
+
 # Task storybook-appendices: THE STORYBOOK — interstitials + appendices (writing task; AFTER all era chapters; commit prefix "lore:")
 CODEX: model=gpt-5.6-sol effort=high
 READ: the COMPLETE lore/STORYBOOK.md (all ten chapters must exist first — verify, else STOP) + the E1 template laws.
