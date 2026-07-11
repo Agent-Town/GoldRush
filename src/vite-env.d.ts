@@ -184,7 +184,6 @@ interface ThreeGameDiagnostics {
     name: string;
     town: string | null;
     local: boolean;
-    tint: string | null;
     hp: number;
     maxHp: number;
     position: { x: number; y: number; z: number };

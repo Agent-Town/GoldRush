@@ -213,7 +213,6 @@ type MultiplayerActorMeta = {
   name: string;
   town: string;
   local: boolean;
-  tint: string;
 };
 type MultiplayerActorSnapshot = {
   hp: number;
@@ -1998,9 +1997,8 @@ export class Game {
       actor.group.visible = true;
       const local = player.playerId === state.playerId;
       const previous = this.mpActorMeta.get(actor);
-      const tint = multiplayerTint(slot);
-      this.mpActorMeta.set(actor, { playerId: player.playerId, slot, name: player.name, town: player.town, local, tint });
-      actor.setIdentityTint(tint);
+      this.mpActorMeta.set(actor, { playerId: player.playerId, slot, name: player.name, town: player.town, local });
+      actor.setIdentityTint(local ? null : multiplayerTint(slot));
       if (!previous || previous.playerId !== player.playerId || previous.slot !== slot) {
         actor.resetRun(this.multiplayerSpawnPosition(slot, roster.length));
       }
@@ -2838,7 +2836,6 @@ export class Game {
           name: meta?.name ?? (slot === 0 ? 'Rider' : `Rider ${slot + 1}`),
           town: meta?.town ?? null,
           local: meta?.local ?? actor === localActor,
-          tint: meta?.tint ?? null,
           hp: actor.hp,
           maxHp: actor.maxHp,
           position: {
