@@ -12,6 +12,7 @@ import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
 import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
+import { performanceTierDiagnostics, type PerformanceTier } from '../game/PerformanceTier';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
 import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
@@ -57,6 +58,7 @@ import {
   townPlazaLayout,
   townPlazaSlot,
   townPropRing,
+  townTrailLayout,
   type TownBuilding,
   type TownBuildingId,
   type TownPropKind,
@@ -143,6 +145,7 @@ export type TownDiagnostics = {
     bark: string | null;
     loaded: boolean;
     loop: boolean;
+    trailId: string | null;
     assetSlot: string;
   }>;
   stampMill: {
@@ -165,6 +168,7 @@ export type TownDiagnostics = {
     ponyExpressPlot: { visible: boolean; x: number; z: number; pictogram: 'rider-horn' };
     lanterns: number;
   };
+  ambientDust: { enabled: boolean; tier: PerformanceTier; count: number; drawCalls: number };
   firstClaimGuide: {
     active: boolean;
     done: boolean;
@@ -235,6 +239,9 @@ export class TownScene {
   });
   private readonly propRingEnabled = !new URLSearchParams(window.location.search).has('noTownProps');
   private readonly townNight = new URLSearchParams(window.location.search).has('townNight');
+  private readonly performanceTier = performanceTierDiagnostics().tier;
+  private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
+  private readonly ambientDustObject = new THREE.Object3D();
   private readonly townActors: TownActorRuntime[] = [];
   private readonly actorBarkVisits = new Map<TownActorId, number>();
   private readonly barkCard = document.createElement('div');
@@ -333,6 +340,7 @@ export class TownScene {
     const rawExitIntent = intents.cancel || intents.pause;
     if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
+      this.updateAmbientDust();
       if (rawExitIntent && !this.lastExitIntent) {
         if (this.boardOpen) this.closeBoard();
         else if (this.schoolhouseOpen) this.closeSchoolhouse();
@@ -354,6 +362,7 @@ export class TownScene {
 
     this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: this.sampleTown });
     for (const actor of this.townActors) actor.update(delta, this.elapsed);
+    this.updateAmbientDust();
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.updateFirstClaimGuide();
     this.syncPrompt();
@@ -412,6 +421,7 @@ export class TownScene {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
     if (this.propRingEnabled) this.scene.add(createTownPropRing(this.townNight));
+    if (this.ambientDust) this.scene.add(this.ambientDust);
     this.createStampMillVignette();
     this.createFirstClaimGuide();
     for (const actor of this.visibleActors) {
@@ -1314,11 +1324,18 @@ export class TownScene {
           bark: this.activeBark?.actorId === actor.id ? this.activeBark.text : null,
           loaded: runtime?.loaded ?? false,
           loop: !!actor.loop,
+          trailId: actor.loop?.trailId ?? null,
           assetSlot: actor.assetSlot,
         };
       }),
       stampMill: this.stampMillDiagnostics(),
       propRing: this.propRingDiagnostics(),
+      ambientDust: {
+        enabled: !!this.ambientDust,
+        tier: this.performanceTier,
+        count: this.ambientDust?.count ?? 0,
+        drawCalls: this.ambientDust ? 1 : 0,
+      },
       firstClaimGuide: {
         active: this.firstClaimGuideActive,
         done: firstClaimDone(),
@@ -1441,6 +1458,21 @@ export class TownScene {
     this.firstClaimPulseRing = ring;
     this.firstClaimGuideGroup.add(ring);
     this.scene.add(this.firstClaimGuideGroup);
+  }
+
+  private updateAmbientDust(): void {
+    if (!this.ambientDust) return;
+    const object = this.ambientDustObject;
+    for (let index = 0; index < this.ambientDust.count; index += 1) {
+      const seed = index * 17.17;
+      const radius = 3.8 + (index % 9) * 1.15;
+      const angle = seed + this.elapsed * (0.045 + (index % 5) * 0.008);
+      object.position.set(Math.sin(angle) * radius, 0.55 + ((seed + this.elapsed * 0.16) % 2.8), Math.cos(angle) * radius);
+      object.scale.setScalar(0.035 + (index % 4) * 0.012);
+      object.updateMatrix();
+      this.ambientDust.setMatrixAt(index, object.matrix);
+    }
+    this.ambientDust.instanceMatrix.needsUpdate = true;
   }
 
   private updateFirstClaimGuide(): void {
@@ -2177,22 +2209,22 @@ function createGroundTexture(): THREE.CanvasTexture {
       y: ((TOWN_HALF - z) / (TOWN_HALF * 2)) * size,
     });
     const center = point(townPlazaLayout.center);
-    const trails = [...townPlazaLayout.slots.map((slot) => slot.approach), townPlazaLayout.gate];
-    for (const [index, destination] of trails.entries()) {
-      const end = point(destination);
-      const dx = end.x - center.x;
-      const dy = end.y - center.y;
-      const length = Math.max(1, Math.hypot(dx, dy));
-      const ox = (-dy / length) * 5.5;
-      const oy = (dx / length) * 5.5;
-      const bend = (index % 2 === 0 ? 1 : -1) * 10;
+    for (const trail of townTrailLayout.radial) {
+      const screenPoints = trail.points.map(point);
       ctx.strokeStyle = 'rgba(93, 57, 31, 0.2)';
       ctx.lineWidth = 3.2;
       ctx.lineCap = 'round';
       for (const side of [-1, 1]) {
         ctx.beginPath();
-        ctx.moveTo(center.x + ox * side, center.y + oy * side);
-        ctx.quadraticCurveTo((center.x + end.x) / 2 + ox * side + bend, (center.y + end.y) / 2 + oy * side - bend * 0.35, end.x + ox * side, end.y + oy * side);
+        screenPoints.forEach((screenPoint, index) => {
+          const previous = screenPoints[Math.max(0, index - 1)]!;
+          const next = screenPoints[Math.min(screenPoints.length - 1, index + 1)]!;
+          const length = Math.max(1, Math.hypot(next.x - previous.x, next.y - previous.y));
+          const x = screenPoint.x + (-(next.y - previous.y) / length) * 5.5 * side;
+          const y = screenPoint.y + ((next.x - previous.x) / length) * 5.5 * side;
+          if (index === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        });
         ctx.stroke();
       }
     }
@@ -2200,7 +2232,8 @@ function createGroundTexture(): THREE.CanvasTexture {
     ctx.strokeStyle = 'rgba(93, 57, 31, 0.16)';
     ctx.lineWidth = 4;
     ctx.beginPath();
-    ctx.arc(center.x, center.y, (8 / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
+    const ringRadius = Math.hypot(townTrailLayout.ringRoad.points[0]!.x, townTrailLayout.ringRoad.points[0]!.z);
+    ctx.arc(center.x, center.y, (ringRadius / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
     ctx.stroke();
     ctx.strokeStyle = 'rgba(255, 235, 180, 0.4)';
     ctx.lineWidth = 2;
@@ -2211,6 +2244,21 @@ function createGroundTexture(): THREE.CanvasTexture {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
+}
+
+function createAmbientDust(tier: PerformanceTier, night: boolean): THREE.InstancedMesh | null {
+  if (tier === 'lite' || night) return null;
+  const count = tier === 'full' ? 48 : 28;
+  const mesh = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(1, 5, 4),
+    new THREE.MeshBasicMaterial({ color: '#ffe4a0', transparent: true, opacity: 0.34, depthWrite: false }),
+    count,
+  );
+  mesh.name = 'TownAmbientDust';
+  mesh.count = count;
+  mesh.frustumCulled = false;
+  mesh.renderOrder = RenderLayers.worldUi;
+  return mesh;
 }
 
 function createSurveyPlot(building: TownBuilding): THREE.Group {
@@ -2284,27 +2332,33 @@ function loopPoint(loop: NonNullable<TownActorDefinition['loop']>, elapsed: numb
   if (points.length === 0) return { x: 0, z: 0 };
   if (points.length === 1) return points[0]!;
 
-  let total = 0;
+  let pathLength = 0;
   const lengths: number[] = [];
   for (let index = 0; index < points.length; index += 1) {
     const from = points[index]!;
     const to = points[(index + 1) % points.length]!;
     const length = Math.hypot(to.x - from.x, to.z - from.z);
     lengths.push(length);
-    total += length;
+    pathLength += length;
   }
-  if (total <= 0) return points[0]!;
-
-  let distance = ((((elapsed / Math.max(0.001, loop.seconds) + loop.phase) % 1) + 1) % 1) * total;
+  if (pathLength <= 0) return points[0]!;
+  const cycleSeconds = Math.max(0.001, loop.seconds);
+  const pauseSeconds = Object.values(loop.pauses ?? {}).reduce((sum, seconds) => sum + seconds, 0);
+  const speed = pathLength / Math.max(0.001, cycleSeconds - pauseSeconds);
+  let time = ((((elapsed / cycleSeconds + loop.phase) % 1) + 1) % 1) * cycleSeconds;
   for (let index = 0; index < points.length; index += 1) {
+    const pause = loop.pauses?.[index] ?? 0;
+    if (time <= pause) return points[index]!;
+    time -= pause;
     const length = lengths[index] ?? 0;
-    if (distance > length) {
-      distance -= length;
+    const duration = length / speed;
+    if (time > duration) {
+      time -= duration;
       continue;
     }
     const from = points[index]!;
     const to = points[(index + 1) % points.length]!;
-    const t = length > 0 ? distance / length : 0;
+    const t = duration > 0 ? time / duration : 0;
     return { x: THREE.MathUtils.lerp(from.x, to.x, t), z: THREE.MathUtils.lerp(from.z, to.z, t) };
   }
   return points[0]!;
