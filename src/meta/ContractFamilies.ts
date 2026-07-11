@@ -1006,6 +1006,7 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur'],
   'tileParams.prePlacedBuildables[].id': ['lantern_post'],
   'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
+  'twist.enemyRoster[].spawnGates[].edge': ['north', 'south', 'east', 'west'],
 };
 
 const CONTRACT_DESCRIPTOR_REASON_LIMIT = 12;
@@ -1281,6 +1282,20 @@ function validateContractMap(contract: ContractManifest, reasons: ContractDescri
       hasOppositeDryGround
         ? reason('build_zone_wrong_bank', `This ${zone.bank}-bank zone reaches dry ground only on the other bank.`, path)
         : reason('build_zone_no_dry_ground', 'This build zone contains no dry bank ground.', path),
+    );
+  }
+  for (const [index, source] of contract.tileParams.waterSources.entries()) {
+    if (Math.abs(source.x) + source.radius <= claimHalf && Math.abs(source.z) + source.radius <= claimHalf) continue;
+    addDescriptorReason(
+      reasons,
+      reason('water_source_outside_claim', 'This spring pond reaches beyond the claim stakes.', `tileParams.waterSources[${index}]`),
+    );
+  }
+  for (const [index, fixture] of (contract.tileParams.prePlacedBuildables ?? []).entries()) {
+    if (Math.abs(fixture.x) <= claimHalf && Math.abs(fixture.z) <= claimHalf) continue;
+    addDescriptorReason(
+      reasons,
+      reason('fixture_outside_claim', 'This fixture stands beyond the claim stakes.', `tileParams.prePlacedBuildables[${index}]`),
     );
   }
 }

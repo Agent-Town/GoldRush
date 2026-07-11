@@ -1,6 +1,7 @@
 import type { ContractAuthoredTerrainLayer, ContractEdge, ContractManifest } from '../meta/ContractFamilies';
 
 export type TerrainBrushTool = 'raise' | 'lower' | 'smooth' | 'zone' | 'water' | 'lane';
+type SurveyTool = TerrainBrushTool | 'select';
 
 export type TerrainBrushAction = {
   tool: TerrainBrushTool;
@@ -12,6 +13,19 @@ export type TerrainBrushAction = {
 
 export type TerrainBrushPoint = { x: number; z: number };
 export type TerrainBrushResult = { changed: boolean; message: string };
+export type TerrainGizmoRef =
+  | { kind: 'zone'; index: number }
+  | { kind: 'pond'; index: number }
+  | { kind: 'spawnGate'; rosterIndex: number; gateIndex: number }
+  | { kind: 'fixture'; index: number };
+export type TerrainGizmoHandle = 'move' | 'zone-nw' | 'zone-ne' | 'zone-se' | 'zone-sw' | 'pond-radius';
+export type TerrainGizmoHit = { ref: TerrainGizmoRef; handle: TerrainGizmoHandle };
+export type TerrainGizmoAction = {
+  ref: TerrainGizmoRef;
+  handle: TerrainGizmoHandle;
+  from: TerrainBrushPoint;
+  to: TerrainBrushPoint;
+};
 
 type TerrainBrushPanelOptions = {
   contract: ContractManifest;
@@ -24,7 +38,7 @@ type TerrainBrushPanelOptions = {
 
 type TerrainBrushUiState = {
   version: 1;
-  tool: TerrainBrushTool;
+  tool: SurveyTool;
   radiusCells: number;
   strength: number;
   bank: 'north' | 'south';
@@ -35,15 +49,18 @@ const GRID_DIMENSION = 41;
 const MAX_DELTA = 16;
 const MAX_PAINT_SHAPES = 32;
 const CANVAS_SIZE = 360;
+const GIZMO_HIT_RADIUS_CSS = 22;
+const MIN_ZONE_EXTENT = 0.1;
 const BRUSH_STATE_KEY = 'gr.editor.brush.v1';
 const TERRAIN_TOOLS: readonly TerrainBrushTool[] = ['raise', 'lower', 'smooth'];
-const TOOLS: ReadonlyArray<{ id: TerrainBrushTool; label: string }> = [
+const TOOLS: ReadonlyArray<{ id: SurveyTool; label: string }> = [
   { id: 'raise', label: 'Raise' },
   { id: 'lower', label: 'Lower' },
   { id: 'smooth', label: 'Smooth' },
   { id: 'zone', label: 'Build zone' },
   { id: 'water', label: 'Spring pond' },
   { id: 'lane', label: 'Spawn edge' },
+  { id: 'select', label: 'Select & move' },
 ];
 
 export function applyTerrainBrush(contract: ContractManifest, action: TerrainBrushAction): TerrainBrushResult {
@@ -54,6 +71,136 @@ export function applyTerrainBrush(contract: ContractManifest, action: TerrainBru
   if (action.tool === 'zone') return paintBuildZone(contract, action);
   if (action.tool === 'water') return paintWater(contract, action);
   return paintSpawnEdge(contract, action);
+}
+
+export function applyTerrainGizmo(
+  draft: ContractManifest,
+  source: ContractManifest,
+  action: TerrainGizmoAction,
+): TerrainBrushResult {
+  const half = claimSize(source) / 2;
+  const dx = action.to.x - action.from.x;
+  const dz = action.to.z - action.from.z;
+
+  if (action.ref.kind === 'zone') {
+    const before = source.tileParams.buildZones?.[action.ref.index];
+    const next = draft.tileParams.buildZones?.[action.ref.index];
+    if (!before || !next) return unchangedGizmo();
+    if (action.handle === 'move') {
+      const moveX = clamp(dx, -half - before.minX, half - before.maxX);
+      const moveZ = clamp(dz, -half - before.minZ, half - before.maxZ);
+      next.minX = quantize(before.minX + moveX);
+      next.maxX = quantize(before.maxX + moveX);
+      next.minZ = quantize(before.minZ + moveZ);
+      next.maxZ = quantize(before.maxZ + moveZ);
+    } else if (action.handle.startsWith('zone-')) {
+      const corner = action.handle.slice(-2);
+      if (corner.endsWith('w')) next.minX = quantize(clamp(before.minX + dx, -half, before.maxX - MIN_ZONE_EXTENT));
+      if (corner.endsWith('e')) next.maxX = quantize(clamp(before.maxX + dx, before.minX + MIN_ZONE_EXTENT, half));
+      if (corner.startsWith('n')) next.maxZ = quantize(clamp(before.maxZ + dz, before.minZ + MIN_ZONE_EXTENT, half));
+      if (corner.startsWith('s')) next.minZ = quantize(clamp(before.minZ + dz, -half, before.maxZ - MIN_ZONE_EXTENT));
+    } else {
+      return unchangedGizmo();
+    }
+    return changedFields(before, next)
+      ? { changed: true, message: action.handle === 'move' ? 'Build zone moved on the descriptor.' : 'Build zone resized on the descriptor.' }
+      : unchangedGizmo();
+  }
+
+  if (action.ref.kind === 'pond') {
+    const before = source.tileParams.waterSources[action.ref.index];
+    const next = draft.tileParams.waterSources[action.ref.index];
+    if (!before || !next) return unchangedGizmo();
+    if (action.handle === 'move') {
+      next.x = quantize(clamp(before.x + dx, -half + before.radius, half - before.radius));
+      next.z = quantize(clamp(before.z + dz, -half + before.radius, half - before.radius));
+    } else if (action.handle === 'pond-radius') {
+      const maxRadius = Math.max(0.01, Math.min(128, half - Math.abs(before.x), half - Math.abs(before.z)));
+      const radiusDelta = pointDistance(action.to, before) - pointDistance(action.from, before);
+      next.radius = quantize(clamp(before.radius + radiusDelta, 0.01, maxRadius));
+    } else {
+      return unchangedGizmo();
+    }
+    return changedFields(before, next)
+      ? { changed: true, message: action.handle === 'move' ? 'Spring pond moved on the descriptor.' : 'Spring pond resized on the descriptor.' }
+      : unchangedGizmo();
+  }
+
+  if (action.ref.kind === 'spawnGate') {
+    const before = source.twist.enemyRoster?.[action.ref.rosterIndex]?.spawnGates?.[action.ref.gateIndex];
+    const next = draft.twist.enemyRoster?.[action.ref.rosterIndex]?.spawnGates?.[action.ref.gateIndex];
+    if (!before || !next || action.handle !== 'move') return unchangedGizmo();
+    if (before.edge === 'north' || before.edge === 'south') next.x = quantize(clamp(before.x + dx, -half, half));
+    else next.z = quantize(clamp(before.z + dz, -half, half));
+    return changedFields(before, next) ? { changed: true, message: 'Spawn gate moved along its claim edge.' } : unchangedGizmo();
+  }
+
+  const before = source.tileParams.prePlacedBuildables?.[action.ref.index];
+  const next = draft.tileParams.prePlacedBuildables?.[action.ref.index];
+  if (!before || !next || action.handle !== 'move') return unchangedGizmo();
+  if (Math.abs(dx) > 1e-9) next.x = Math.round(clamp(before.x + dx, -half, half));
+  if (Math.abs(dz) > 1e-9) next.z = Math.round(clamp(before.z + dz, -half, half));
+  return changedFields(before, next) ? { changed: true, message: 'Fixture moved on the descriptor.' } : unchangedGizmo();
+}
+
+export function terrainGizmoHitRadiusWorld(contract: ContractManifest, canvasCssWidth: number): number {
+  return canvasCssWidth > 0 ? (GIZMO_HIT_RADIUS_CSS / canvasCssWidth) * claimSize(contract) : 0;
+}
+
+export function hitTerrainGizmo(
+  contract: ContractManifest,
+  point: TerrainBrushPoint,
+  hitRadius: number,
+  selected: TerrainGizmoRef | null = null,
+): TerrainGizmoHit | null {
+  if (selected?.kind === 'zone') {
+    const zone = contract.tileParams.buildZones?.[selected.index];
+    if (zone) {
+      const handles: Array<[TerrainGizmoHandle, TerrainBrushPoint]> = [
+        ['zone-nw', { x: zone.minX, z: zone.maxZ }],
+        ['zone-ne', { x: zone.maxX, z: zone.maxZ }],
+        ['zone-se', { x: zone.maxX, z: zone.minZ }],
+        ['zone-sw', { x: zone.minX, z: zone.minZ }],
+      ];
+      const handle = handles
+        .map(([name, position]) => [name, pointDistance(point, position)] as const)
+        .filter(([, distance]) => distance <= hitRadius)
+        .sort((left, right) => left[1] - right[1])[0];
+      if (handle) return { ref: selected, handle: handle[0] };
+    }
+  } else if (selected?.kind === 'pond') {
+    const pond = contract.tileParams.waterSources[selected.index];
+    const handleOffset = pond ? Math.max(pond.radius, hitRadius * 1.25) : 0;
+    if (pond && pointDistance(point, { x: pond.x + handleOffset, z: pond.z }) <= hitRadius) {
+      return { ref: selected, handle: 'pond-radius' };
+    }
+  }
+
+  const gates = contract.twist.enemyRoster?.flatMap((variant, rosterIndex) =>
+    (variant.spawnGates ?? []).map((gate, gateIndex) => ({ gate, ref: { kind: 'spawnGate', rosterIndex, gateIndex } as TerrainGizmoRef })),
+  ) ?? [];
+  for (const { gate, ref } of gates.reverse()) {
+    if (pointDistance(point, gate) <= hitRadius) return { ref, handle: 'move' };
+  }
+  const fixtures = contract.tileParams.prePlacedBuildables ?? [];
+  for (let index = fixtures.length - 1; index >= 0; index -= 1) {
+    if (pointDistance(point, fixtures[index]!) <= hitRadius) return { ref: { kind: 'fixture', index }, handle: 'move' };
+  }
+  for (let index = contract.tileParams.waterSources.length - 1; index >= 0; index -= 1) {
+    const pond = contract.tileParams.waterSources[index]!;
+    if (pointDistance(point, pond) <= pond.radius + hitRadius) return { ref: { kind: 'pond', index }, handle: 'move' };
+  }
+  const zones = contract.tileParams.buildZones ?? [];
+  for (let index = zones.length - 1; index >= 0; index -= 1) {
+    const zone = zones[index]!;
+    if (
+      point.x >= zone.minX - hitRadius && point.x <= zone.maxX + hitRadius &&
+      point.z >= zone.minZ - hitRadius && point.z <= zone.maxZ + hitRadius
+    ) {
+      return { ref: { kind: 'zone', index }, handle: 'move' };
+    }
+  }
+  return null;
 }
 
 export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTMLElement {
@@ -76,14 +223,14 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
       ${TOOLS.map(({ id, label }, index) => `<button type="button" data-tool="${id}" data-testid="terrain-brush-mode-${id}" aria-pressed="${index === 0}">${label}</button>`).join('')}
     </div>
     <div class="terrain-brush__settings">
-      <label>Brush size <input type="range" min="1" max="8" step="1" value="3" data-testid="terrain-brush-size"><output>3 cells</output></label>
+      <label data-size-row>Brush size <input type="range" min="1" max="8" step="1" value="3" data-testid="terrain-brush-size"><output>3 cells</output></label>
       <label data-strength-row>Strength <input type="range" min="0.05" max="1" step="0.05" value="0.5" data-testid="terrain-brush-strength"><output>0.50</output></label>
       <label data-bank-row hidden>Zone bank <select data-testid="terrain-brush-bank"><option value="north">North</option><option value="south">South</option></select></label>
     </div>
     <canvas width="${CANVAS_SIZE}" height="${CANVAS_SIZE}" tabindex="0" data-testid="terrain-brush-map" aria-label="Top-down claim survey. Arrow keys move the cursor; Space applies the selected tool."></canvas>
     <div class="terrain-brush__readout">
       <span aria-live="polite" data-testid="terrain-brush-coordinates">x 0.0 · z 0.0</span>
-      <span>Drag terrain and zones; tap ponds and edges.</span>
+      <span>Brush marks or select descriptor handles.</span>
     </div>
     <p class="terrain-brush__status" role="status" aria-live="polite" data-testid="terrain-brush-status">Ready to mark the descriptor.</p>`;
 
@@ -93,6 +240,7 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
   const bankInput = panel.querySelector<HTMLSelectElement>('[data-testid="terrain-brush-bank"]')!;
   const sizeOutput = sizeInput.nextElementSibling as HTMLOutputElement;
   const strengthOutput = strengthInput.nextElementSibling as HTMLOutputElement;
+  const sizeRow = panel.querySelector<HTMLElement>('[data-size-row]')!;
   const strengthRow = panel.querySelector<HTMLElement>('[data-strength-row]')!;
   const bankRow = panel.querySelector<HTMLElement>('[data-bank-row]')!;
   const coordinates = panel.querySelector<HTMLElement>('[data-testid="terrain-brush-coordinates"]')!;
@@ -101,28 +249,29 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
   let cursor = savedState.cursor;
   let pointerId: number | null = null;
   let points: TerrainBrushPoint[] = [];
+  let selected: TerrainGizmoRef | null = null;
+  let gizmo: { hit: TerrainGizmoHit; from: TerrainBrushPoint; draft: ContractManifest; result: TerrainBrushResult } | null = null;
+  let activeTool: SurveyTool | null = null;
+  let activeBrush: Omit<TerrainBrushAction, 'points'> | null = null;
 
   sizeInput.value = String(savedState.radiusCells);
   strengthInput.value = String(savedState.strength);
   bankInput.value = savedState.bank;
   sizeOutput.value = `${savedState.radiusCells} cells`;
   strengthOutput.value = savedState.strength.toFixed(2);
-  strengthRow.hidden = !TERRAIN_TOOLS.includes(tool);
-  bankRow.hidden = tool !== 'zone';
   panel.querySelectorAll<HTMLButtonElement>('[data-tool]').forEach((button) => {
     button.setAttribute('aria-pressed', String(button.dataset.tool === tool));
   });
 
-  const action = (actionPoints: readonly TerrainBrushPoint[]) => ({
-    tool,
-    points: actionPoints,
+  const brushSettings = (): Omit<TerrainBrushAction, 'points'> => ({
+    tool: tool as TerrainBrushTool,
     radiusCells: Number(sizeInput.value),
     strength: Number(strengthInput.value),
     bank: bankInput.value as 'north' | 'south',
   });
-  const commit = (actionPoints: readonly TerrainBrushPoint[]) => {
+  const commitBrush = (actionPoints: readonly TerrainBrushPoint[], settings = brushSettings()) => {
     const next = structuredClone(options.contract);
-    const result = applyTerrainBrush(next, action(actionPoints));
+    const result = applyTerrainBrush(next, { ...settings, points: actionPoints });
     status.textContent = result.message;
     if (result.changed && !options.onCommit(next, result.message)) status.textContent = 'The descriptor rejected that mark.';
   };
@@ -130,7 +279,20 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
     cursor = point;
     coordinates.textContent = `x ${point.x.toFixed(1)} · z ${point.z.toFixed(1)}`;
   };
-  const draw = () => drawSurvey(canvas, options.contract, cursor, Number(sizeInput.value), points, tool);
+  const draw = () => drawSurvey(canvas, gizmo?.draft ?? options.contract, cursor, Number(sizeInput.value), points, tool, selected, gizmo?.hit ?? null);
+  const updateToolRows = () => {
+    const selecting = tool === 'select';
+    sizeRow.hidden = selecting;
+    strengthRow.hidden = selecting || !TERRAIN_TOOLS.includes(tool as TerrainBrushTool);
+    bankRow.hidden = selecting || tool !== 'zone';
+    canvas.dataset.mode = tool;
+    canvas.setAttribute(
+      'aria-label',
+      selecting
+        ? 'Top-down claim survey. Arrow keys move the cursor; Space or Enter selects a mark. Use its inspector fields for keyboard editing.'
+        : 'Top-down claim survey. Arrow keys move the cursor; Space or Enter applies the selected brush.',
+    );
+  };
   const persist = () => writeBrushState(options.contract, {
     version: 1,
     tool,
@@ -142,10 +304,11 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
 
   panel.querySelectorAll<HTMLButtonElement>('[data-tool]').forEach((button) => {
     button.addEventListener('click', () => {
-      tool = button.dataset.tool as TerrainBrushTool;
+      if (pointerId !== null) return;
+      tool = button.dataset.tool as SurveyTool;
       panel.querySelectorAll<HTMLButtonElement>('[data-tool]').forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button)));
-      strengthRow.hidden = !TERRAIN_TOOLS.includes(tool);
-      bankRow.hidden = tool !== 'zone';
+      selected = null;
+      updateToolRows();
       status.textContent = `${button.textContent} selected.`;
       persist();
       draw();
@@ -161,23 +324,46 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
     persist();
   });
   bankInput.addEventListener('change', persist);
-  panel.querySelector<HTMLButtonElement>('[data-testid="terrain-brush-undo"]')!.addEventListener('click', options.onUndo);
-  panel.querySelector<HTMLButtonElement>('[data-testid="terrain-brush-redo"]')!.addEventListener('click', options.onRedo);
+  panel.querySelector<HTMLButtonElement>('[data-testid="terrain-brush-undo"]')!.addEventListener('click', () => {
+    if (pointerId === null) options.onUndo();
+  });
+  panel.querySelector<HTMLButtonElement>('[data-testid="terrain-brush-redo"]')!.addEventListener('click', () => {
+    if (pointerId === null) options.onRedo();
+  });
 
   canvas.addEventListener('pointerdown', (event) => {
     if (event.button !== 0 || pointerId !== null) return;
     event.preventDefault();
+    updateCursor(canvasPoint(canvas, event.clientX, event.clientY, options.contract));
+    if (tool === 'select') {
+      const hit = hitTerrainGizmo(options.contract, cursor, terrainGizmoHitRadiusWorld(options.contract, canvas.getBoundingClientRect().width), selected);
+      if (!hit) {
+        selected = null;
+        status.textContent = 'No placed descriptor mark at that spot.';
+        draw();
+        return;
+      }
+      selected = hit.ref;
+      gizmo = { hit, from: cursor, draft: structuredClone(options.contract), result: unchangedGizmo() };
+      status.textContent = `${gizmoLabel(hit.ref)} selected. Drag to ${hit.handle === 'move' ? 'move it' : 'resize it'}.`;
+    } else {
+      points = [cursor];
+      activeBrush = brushSettings();
+    }
+    activeTool = tool;
     pointerId = event.pointerId;
     canvas.setPointerCapture(event.pointerId);
-    updateCursor(canvasPoint(canvas, event.clientX, event.clientY, options.contract));
-    points = [cursor];
     draw();
   });
   canvas.addEventListener('pointermove', (event) => {
+    if (pointerId !== null && pointerId !== event.pointerId) return;
     updateCursor(canvasPoint(canvas, event.clientX, event.clientY, options.contract));
     if (pointerId === event.pointerId) {
-      if (TERRAIN_TOOLS.includes(tool)) points.push(cursor);
-      else if (tool === 'zone') points = [points[0] ?? cursor, cursor];
+      if (activeTool === 'select' && gizmo) {
+        gizmo.result = applyTerrainGizmo(gizmo.draft, options.contract, { ...gizmo.hit, from: gizmo.from, to: cursor });
+        if (gizmo.result.changed) status.textContent = `${gizmo.result.message} Release to commit.`;
+      } else if (TERRAIN_TOOLS.includes(activeTool as TerrainBrushTool)) points.push(cursor);
+      else if (activeTool === 'zone') points = [points[0] ?? cursor, cursor];
     }
     draw();
   });
@@ -185,21 +371,46 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
     if (pointerId !== event.pointerId) return;
     event.preventDefault();
     updateCursor(canvasPoint(canvas, event.clientX, event.clientY, options.contract));
-    if (TERRAIN_TOOLS.includes(tool)) points.push(cursor);
-    else if (tool === 'zone') points = [points[0] ?? cursor, cursor];
+    if (activeTool === 'select' && gizmo) {
+      gizmo.result = applyTerrainGizmo(gizmo.draft, options.contract, { ...gizmo.hit, from: gizmo.from, to: cursor });
+      canvas.releasePointerCapture(event.pointerId);
+      pointerId = null;
+      activeTool = null;
+      const completed = gizmo;
+      gizmo = null;
+      persist();
+      draw();
+      if (!completed.result.changed) {
+        status.textContent = `${gizmoLabel(completed.hit.ref)} selected.`;
+      } else if (!options.onCommit(completed.draft, completed.result.message)) {
+        status.textContent = 'The descriptor rejected that gizmo move.';
+      }
+      return;
+    }
+    if (TERRAIN_TOOLS.includes(activeTool as TerrainBrushTool)) points.push(cursor);
+    else if (activeTool === 'zone') points = [points[0] ?? cursor, cursor];
     else points = [cursor];
     canvas.releasePointerCapture(event.pointerId);
     pointerId = null;
     const committedPoints = points;
+    const committedBrush = activeBrush ?? brushSettings();
     points = [];
+    activeBrush = null;
+    activeTool = null;
     persist();
     draw();
-    commit(committedPoints);
+    commitBrush(committedPoints, committedBrush);
   });
-  canvas.addEventListener('pointercancel', () => {
+  canvas.addEventListener('pointercancel', (event) => {
+    if (event.pointerId !== pointerId) return;
+    if (pointerId !== null && canvas.hasPointerCapture(pointerId)) canvas.releasePointerCapture(pointerId);
     pointerId = null;
+    activeTool = null;
+    activeBrush = null;
     points = [];
-    status.textContent = 'Survey stroke cancelled.';
+    const cancelledGizmo = gizmo !== null;
+    gizmo = null;
+    status.textContent = cancelledGizmo ? 'Gizmo gesture cancelled.' : 'Survey stroke cancelled.';
     draw();
   });
   canvas.addEventListener('keydown', (event) => {
@@ -211,7 +422,13 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
     else if (event.key === ' ' || event.key === 'Enter') {
       event.preventDefault();
       persist();
-      commit([cursor]);
+      if (tool === 'select') {
+        selected = hitTerrainGizmo(options.contract, cursor, terrainGizmoHitRadiusWorld(options.contract, canvas.getBoundingClientRect().width), selected)?.ref ?? null;
+        status.textContent = selected ? `${gizmoLabel(selected)} selected. Use its inspector fields or drag it on the survey.` : 'No placed descriptor mark at the cursor.';
+        draw();
+      } else {
+        commitBrush([cursor]);
+      }
       return;
     } else return;
     event.preventDefault();
@@ -221,6 +438,7 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
     draw();
   });
 
+  updateToolRows();
   updateCursor(cursor);
   draw();
   return panel;
@@ -369,7 +587,9 @@ function drawSurvey(
   cursor: TerrainBrushPoint,
   radiusCells: number,
   stroke: readonly TerrainBrushPoint[],
-  tool: TerrainBrushTool,
+  tool: SurveyTool,
+  selected: TerrainGizmoRef | null,
+  activeGizmo: TerrainGizmoHit | null,
 ): void {
   const context = canvas.getContext('2d');
   if (!context) return;
@@ -440,10 +660,28 @@ function drawSurvey(
     for (const point of stroke.slice(1)) context.lineTo(toX(point.x), toY(point.z));
     context.stroke();
   }
+  if (tool === 'select') {
+    drawGizmoLayer(
+      context,
+      contract,
+      toX,
+      toY,
+      selected,
+      terrainGizmoHitRadiusWorld(contract, canvas.getBoundingClientRect().width),
+      activeGizmo,
+      cursor,
+    );
+  }
   context.beginPath();
   context.strokeStyle = '#2e1b0e';
   context.lineWidth = 2;
-  context.arc(toX(cursor.x), toY(cursor.z), (radiusCells * brushCellSize(contract) / size) * canvas.width, 0, Math.PI * 2);
+  context.arc(
+    toX(cursor.x),
+    toY(cursor.z),
+    tool === 'select' ? 4 : (radiusCells * brushCellSize(contract) / size) * canvas.width,
+    0,
+    Math.PI * 2,
+  );
   context.stroke();
   context.fillStyle = '#2e1b0e';
   context.font = 'bold 13px Georgia';
@@ -451,6 +689,98 @@ function drawSurvey(
   context.strokeStyle = '#2e1b0e';
   context.lineWidth = 2;
   context.strokeRect(1, 1, canvas.width - 2, canvas.height - 2);
+}
+
+function drawGizmoLayer(
+  context: CanvasRenderingContext2D,
+  contract: ContractManifest,
+  toX: (x: number) => number,
+  toY: (z: number) => number,
+  selected: TerrainGizmoRef | null,
+  hitRadius: number,
+  activeGizmo: TerrainGizmoHit | null,
+  cursor: TerrainBrushPoint,
+): void {
+  context.save();
+  context.lineWidth = 2;
+  for (const [rosterIndex, variant] of (contract.twist.enemyRoster ?? []).entries()) {
+    for (const [gateIndex, gate] of (variant.spawnGates ?? []).entries()) {
+      const x = toX(gate.x);
+      const y = toY(gate.z);
+      context.beginPath();
+      context.fillStyle = '#3f7778';
+      context.strokeStyle = sameGizmoRef(selected, { kind: 'spawnGate', rosterIndex, gateIndex }) ? '#a0522d' : '#2e1b0e';
+      context.moveTo(x, y - 7);
+      context.lineTo(x + 7, y);
+      context.lineTo(x, y + 7);
+      context.lineTo(x - 7, y);
+      context.closePath();
+      context.fill();
+      context.stroke();
+    }
+  }
+  for (const [index, fixture] of (contract.tileParams.prePlacedBuildables ?? []).entries()) {
+    const x = toX(fixture.x);
+    const y = toY(fixture.z);
+    context.fillStyle = '#c4883a';
+    context.strokeStyle = sameGizmoRef(selected, { kind: 'fixture', index }) ? '#a0522d' : '#2e1b0e';
+    context.fillRect(x - 6, y - 6, 12, 12);
+    context.strokeRect(x - 6, y - 6, 12, 12);
+    context.beginPath();
+    context.moveTo(x, y - 9);
+    context.lineTo(x, y + 9);
+    context.stroke();
+  }
+
+  if (selected?.kind === 'zone') {
+    const zone = contract.tileParams.buildZones?.[selected.index];
+    if (zone) {
+      context.strokeStyle = '#a0522d';
+      context.lineWidth = 3;
+      context.strokeRect(toX(zone.minX), toY(zone.maxZ), toX(zone.maxX) - toX(zone.minX), toY(zone.minZ) - toY(zone.maxZ));
+      drawGizmoHandle(context, toX(zone.minX), toY(zone.maxZ));
+      drawGizmoHandle(context, toX(zone.maxX), toY(zone.maxZ));
+      drawGizmoHandle(context, toX(zone.maxX), toY(zone.minZ));
+      drawGizmoHandle(context, toX(zone.minX), toY(zone.minZ));
+    }
+  } else if (selected?.kind === 'pond') {
+    const pond = contract.tileParams.waterSources[selected.index];
+    if (pond) {
+      const centerX = toX(pond.x);
+      const centerY = toY(pond.z);
+      const activeRadius = activeGizmo?.handle === 'pond-radius' && sameGizmoRef(selected, activeGizmo.ref);
+      const handle = activeRadius ? cursor : { x: pond.x + Math.max(pond.radius, hitRadius * 1.25), z: pond.z };
+      const directionLength = Math.max(1e-9, pointDistance(handle, pond));
+      const edge = {
+        x: pond.x + (handle.x - pond.x) / directionLength * pond.radius,
+        z: pond.z + (handle.z - pond.z) / directionLength * pond.radius,
+      };
+      const edgeX = toX(edge.x);
+      const edgeY = toY(edge.z);
+      const handleX = toX(handle.x);
+      const handleY = toY(handle.z);
+      const circleRadius = Math.hypot(edgeX - centerX, edgeY - centerY);
+      context.beginPath();
+      context.strokeStyle = '#a0522d';
+      context.lineWidth = 3;
+      context.arc(centerX, centerY, circleRadius, 0, Math.PI * 2);
+      context.stroke();
+      context.beginPath();
+      context.moveTo(edgeX, edgeY);
+      context.lineTo(handleX, handleY);
+      context.stroke();
+      drawGizmoHandle(context, handleX, handleY);
+    }
+  }
+  context.restore();
+}
+
+function drawGizmoHandle(context: CanvasRenderingContext2D, x: number, y: number): void {
+  context.fillStyle = '#fff8e8';
+  context.strokeStyle = '#a0522d';
+  context.lineWidth = 2;
+  context.fillRect(x - 6, y - 6, 12, 12);
+  context.strokeRect(x - 6, y - 6, 12, 12);
 }
 
 function drawSpawnEdges(context: CanvasRenderingContext2D, edges: readonly ContractEdge[], width: number, height: number): void {
@@ -525,7 +855,7 @@ function readBrushState(contract: ContractManifest): TerrainBrushUiState {
     const half = claimSize(contract) / 2;
     return {
       version: 1,
-      tool: value.tool as TerrainBrushTool,
+      tool: value.tool as SurveyTool,
       radiusCells: value.radiusCells as number,
       strength: value.strength,
       bank: value.bank,
@@ -566,6 +896,33 @@ function brushCellSize(contract: ContractManifest): number {
 function quantize(value: number): number {
   const result = Math.round(value * 1_000) / 1_000;
   return Object.is(result, -0) ? 0 : result;
+}
+
+function unchangedGizmo(): TerrainBrushResult {
+  return { changed: false, message: 'That gesture left the descriptor unchanged.' };
+}
+
+function changedFields(before: object, after: object): boolean {
+  return JSON.stringify(before) !== JSON.stringify(after);
+}
+
+function pointDistance(left: TerrainBrushPoint, right: TerrainBrushPoint): number {
+  return Math.hypot(left.x - right.x, left.z - right.z);
+}
+
+function sameGizmoRef(left: TerrainGizmoRef | null, right: TerrainGizmoRef): boolean {
+  if (!left || left.kind !== right.kind) return false;
+  if (left.kind === 'spawnGate' && right.kind === 'spawnGate') {
+    return left.rosterIndex === right.rosterIndex && left.gateIndex === right.gateIndex;
+  }
+  return left.kind !== 'spawnGate' && right.kind !== 'spawnGate' && left.index === right.index;
+}
+
+function gizmoLabel(ref: TerrainGizmoRef): string {
+  if (ref.kind === 'zone') return 'Build zone';
+  if (ref.kind === 'pond') return 'Spring pond';
+  if (ref.kind === 'spawnGate') return 'Spawn gate';
+  return 'Fixture';
 }
 
 function clamp(value: number, min: number, max: number): number {
