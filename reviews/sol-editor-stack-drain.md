@@ -6,3 +6,5 @@ The bounded, versioned AUTHORED TERRAIN LAYER with its strict decoder (069-bound
 Combined battery 24/24 (4.1m): ed-01 inspector · ed-02-authored-grid-substrate · ed-02-terrain-brush (paint→reload→snapshot-restore→reimport byte-identical) · ed-03-placement-validator (valid commits + atomic in-world rejections) · 044 · m1-01 · sim-fixed-step 6/6. tsc+build green. Two prior honest refusals (B1, ED-03 seam) became the architecture.
 ## Consequences
 The editor ladder proceeds to THE TWO PILLARS (ED-04 gizmos → ED-05 palette → ED-06 start-fresh → ED-07 chat). B7 + PG-02 reading = next in the conveyor. DEPLOYED with this drain.
+
+## ED-04 v1 MERGED (2026-07-11 evening) — 21/21 browser+touch gates (desktop + mobile-chrome), zero fails, clean merge. Capability-specific gizmos live: zones move+4-corner resize · ponds move+radius · spawn-gates tangent-slide · fixtures move; 44px touch targets; one history commit per gesture; canonical pond/edge/fixture-boundary reasons through the ONE boundary. Deferred by ruling: fixture rotation + canonical predicate wiring (the 086 same-branch follow-up). THE HAND has hands.
