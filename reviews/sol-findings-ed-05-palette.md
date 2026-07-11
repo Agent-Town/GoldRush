@@ -31,3 +31,9 @@ The picker converts through 8-bit sRGB and the Dry Gulch base tint contains an o
 ## Proposed disposition
 
 Implement F-ED05-02 now with exact-byte and undo/redo coverage. Hold independent water/scatter color controls behind F-ED05-01 rather than inventing dead descriptor fields or crossing ungranted runtime territory.
+
+## Implemented checkpoint
+
+F-ED05-02 is implemented on `sol/ed-05-palette`: the two canonical terrain tint tuples are explicitly recognized as native color controls, picker targets are 44px, and the existing single `change` event still crosses the shared validator/history/document seam. `e2e/ed-05-palette.spec.ts` compares the complete serialized descriptor after changing only `dampTint`, asserts the untouched overbright base tint remains exact, and proves one history mark plus byte-exact undo/redo in both configured browser projects.
+
+Session B static gates: `npm run build` green; `npx tsc --noEmit` green; Playwright discovery lists 2/2 intended gates (desktop + mobile); independent diff review reports no P1/P2. Browser execution remains Fable-owned. F-ED05-01 remains open, so this checkpoint does not claim independent water/scatter color editing.

@@ -22,6 +22,10 @@ type EditorHistory = { version: 1; head: string; past: string[]; future: string[
 const EDITOR_HISTORY_KEY = 'gr.editor.history.v1';
 const EDITOR_HISTORY_MAX_STEPS = 20;
 const EDITOR_HISTORY_MAX_CHARS = 1_000_000;
+const COLOR_TUPLE_PATHS = new Set([
+  'tileParams.palette.tint',
+  'tileParams.palette.dampTint',
+]);
 
 const ENUMS: Record<string, readonly string[]> = {
   'tileParams.render.terrainMesh': ['required', 'preferred', 'off'],
@@ -181,7 +185,7 @@ function renderSections(root: HTMLElement, contract: ContractManifest, apply: ()
   const tileParams = contract.tileParams as JsonRecord;
   const basics: JsonRecord = {};
   for (const [key, value] of Object.entries(tileParams)) {
-    if (isLeaf(value) || isColorTuple(key, value)) basics[key] = value;
+    if (isLeaf(value)) basics[key] = value;
   }
   const commit = (): boolean => {
     const previous = Object.fromEntries(Object.keys(basics).map((key) => [key, tileParams[key]]));
@@ -267,7 +271,7 @@ function section(title: string, value: unknown, path: string, apply: () => boole
 
 function renderValue(root: HTMLElement, value: unknown, path: string, apply: () => boolean): void {
   if (Array.isArray(value)) {
-    if (isColorTuple(path.split('.').at(-1) ?? '', value)) {
+    if (isColorTuple(path, value)) {
       root.append(colorControl(value, path, apply));
       return;
     }
@@ -288,7 +292,7 @@ function renderValue(root: HTMLElement, value: unknown, path: string, apply: () 
   if (!isRecord(value)) return;
   for (const [key, child] of Object.entries(value)) {
     const childPath = `${path}.${key}`;
-    if (isColorTuple(key, child)) root.append(colorControl(child, childPath, apply));
+    if (isColorTuple(childPath, child)) root.append(colorControl(child, childPath, apply));
     else if (isLeaf(child)) root.append(control(value, key, childPath, child, apply));
     else root.append(section(label(key), child, childPath, apply));
   }
@@ -501,8 +505,8 @@ function hexToRgb(value: string): number[] {
   return [1, 3, 5].map((index) => Number.parseInt(value.slice(index, index + 2), 16) / 255);
 }
 
-function isColorTuple(key: string, value: unknown): value is number[] {
-  return /(?:^|\.)tint$/i.test(key) && Array.isArray(value) && value.length === 3 && value.every((entry) => typeof entry === 'number');
+function isColorTuple(path: string, value: unknown): value is number[] {
+  return COLOR_TUPLE_PATHS.has(path) && Array.isArray(value) && value.length === 3 && value.every((entry) => typeof entry === 'number');
 }
 
 function isLeaf(value: unknown): value is string | number | boolean {
