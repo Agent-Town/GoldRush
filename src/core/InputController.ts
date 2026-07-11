@@ -56,6 +56,7 @@ export class InputController {
   private readonly tapped = new Set<string>();
   private readonly pointer = new THREE.Vector2();
   private readonly keyVector = new THREE.Vector2();
+  private previousConfirm = false;
   private previousBuild = false;
   private previousUpgrade = false;
   private previousRotateBuild = false;
@@ -199,7 +200,9 @@ export class InputController {
     const down = (code: string): boolean => this.keys.has(code) || this.tapped.has(code);
     const anyDown = (codes: readonly string[]): boolean => codes.some(down);
     this.readMovement(this.intents.move);
-    this.intents.confirm = anyDown(HERO_INPUT_BINDINGS.confirm);
+    const confirmHeld = anyDown(HERO_INPUT_BINDINGS.confirm);
+    this.intents.confirm = confirmHeld && !this.previousConfirm;
+    this.previousConfirm = HERO_INPUT_BINDINGS.confirm.some((code) => this.keys.has(code));
     const upgradeHeld = anyDown(HERO_INPUT_BINDINGS.upgrade);
     this.intents.upgrade = upgradeHeld && !this.previousUpgrade;
     this.previousUpgrade = this.keys.has('KeyU');

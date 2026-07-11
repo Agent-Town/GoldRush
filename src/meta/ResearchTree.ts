@@ -185,7 +185,13 @@ export function saveResearchRegistryState(
 }
 
 export function normalizeResearchState(state: ResearchState): ResearchState {
-  return migrateResearchState(toRegistry(state), state.progress);
+  const epochId = state.epochId ?? activeEpochId();
+  return migrateResearchState(
+    toRegistry(state),
+    state.progress,
+    epochId,
+    state.metaScienceCursor ?? state.progress.tracks.science,
+  );
 }
 
 export function availablePicks(state: ResearchState): ResearchNode[] {

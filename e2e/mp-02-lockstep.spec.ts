@@ -21,6 +21,7 @@ const MP03_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-03');
 const MP04_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-04');
 const MP_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&nokill&seed=mp-02-lockstep';
 const MP_CONVERGENCE_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&seed=mp-02-convergence';
+const MP_ACTION_QUERY = 'debug&mp=dev&nowaves&nosteal&nowreck&nokill&seed=mp-05-actions';
 const ALICE: MpPlayerSeed = { id: 'alice', name: 'Alice', town: 'Dawn Claim' };
 const BOB: MpPlayerSeed = { id: 'bob', name: 'Bob', town: 'River Bend' };
 let relay: RelayEnv;
@@ -33,6 +34,87 @@ test.beforeAll(async () => {
 
 test.afterAll(async () => {
   await relay?.stop();
+});
+
+test('consecutive action pulses survive the filled input-delay window exactly once', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one action FIFO proof is enough');
+  await page.goto('/?debug&nospawn&nowaves&nolevel');
+  const sent = await page.evaluate(async () => {
+    const { LockstepClient } = await import('../src/mp/LockstepClient');
+    const messages: Array<{ type?: string; tick?: number; input?: { actions?: Array<{ type?: string }> } }> = [];
+    const client = new LockstepClient({
+      relayBase: location.origin,
+      code: '000000000000000000000000',
+      player: { name: 'Pulse', town: 'Test Claim' },
+    });
+    const internals = client as unknown as {
+      connected: boolean;
+      nextSimTick: number;
+      pendingActions: Array<{ type: string }>;
+      roster: Array<{ playerId: string; name: string; town: string; slot: number }>;
+      socket: { readyState: number; send: (value: string) => void };
+      bundles: Map<number, { inputs: Array<{ input: { actions: Array<{ type: string }> } }> }>;
+      handle: (message: Record<string, unknown>) => void;
+    };
+    internals.connected = true;
+    internals.roster = [
+      { playerId: 'p1', name: 'Pulse', town: 'Test Claim', slot: 0 },
+      { playerId: 'p2', name: 'Peer', town: 'Other Claim', slot: 1 },
+    ];
+    internals.socket = {
+      readyState: WebSocket.OPEN,
+      send: (value) => messages.push(JSON.parse(value)),
+    };
+    const sample = (weaponToggle: boolean) => ({
+      mx: 0,
+      my: 0,
+      confirm: false,
+      upgrade: false,
+      rotateBuild: false,
+      weaponToggle,
+      build: false,
+      cancel: false,
+      buildSlot: null,
+      restart: false,
+      pause: false,
+      pauseTarget: null,
+      debugSpawn: false,
+      debugXp: false,
+      queuedActions: [],
+    });
+
+    client.pump(sample(true));
+    client.pump(sample(true));
+    const pendingAfterSecondPulse = internals.pendingActions.map((action) => action.type);
+    internals.nextSimTick = 1;
+    client.pump(sample(false));
+    internals.handle({
+      type: 'tick-inputs',
+      tick: 1,
+      roster: internals.roster,
+      inputs: [{
+        playerId: 'p1',
+        input: {
+          mx: 0,
+          my: 0,
+          actions: [{ type: 'context_action', action: 'demolish', target: { id: 'bogus', index: 0 } }],
+        },
+      }],
+    });
+    return {
+      pendingAfterSecondPulse,
+      malformedActions: internals.bundles.get(1)?.inputs[0]?.input.actions ?? [],
+      inputs: messages
+        .filter((message) => message.type === 'input')
+        .map((message) => ({ tick: message.tick, actions: message.input?.actions?.map((action) => action.type) ?? [] })),
+    };
+  });
+  expect(sent.pendingAfterSecondPulse).toEqual(['weapon_toggle']);
+  expect(sent.malformedActions).toEqual([]);
+  expect(sent.inputs.filter((input) => input.actions.includes('weapon_toggle'))).toEqual([
+    { tick: 0, actions: ['weapon_toggle'] },
+    { tick: 4, actions: ['weapon_toggle'] },
+  ]);
 });
 
 test('two clients advance 500 ticks with identical lockstep hashes', async ({ browser }, testInfo) => {
@@ -311,6 +393,103 @@ test('two clients promote both roster slots to real local-camera heroes and shar
   }
 });
 
+test('both riders place buildings and pick upgrades with equal hashes for 300 ticks', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab action-stream proof is enough');
+  test.setTimeout(75_000);
+  const code = await createRoom();
+  const run = await openPair(browser, code, '', MP_ACTION_QUERY);
+  const { alice, bob, aliceErrors, bobErrors } = run;
+  try {
+    await Promise.all([waitRoster(alice), waitRoster(bob), waitForActors(alice), waitForActors(bob)]);
+    const isolationStartTick = Math.max((await mpState(alice)).tick, (await mpState(bob)).tick);
+    const aliceBeforeLedger = actorByName((await gameDiagnostics(alice)).actors, ALICE.name).position;
+    await alice.evaluate(async () => {
+      const { requestOpenClaimLedger } = await import('../src/encyclopedia/events');
+      requestOpenClaimLedger();
+    });
+    await expect(alice.getByTestId('claim-ledger')).toBeVisible();
+    await alice.keyboard.down('KeyW');
+    try {
+      await Promise.all([waitForTick(alice, isolationStartTick + 45), waitForTick(bob, isolationStartTick + 45)]);
+    } finally {
+      await alice.keyboard.up('KeyW');
+    }
+    const aliceAfterLedger = actorByName((await gameDiagnostics(alice)).actors, ALICE.name).position;
+    expect(distance2d(aliceBeforeLedger, aliceAfterLedger)).toBeLessThan(0.06);
+    expect((await gameDiagnostics(alice)).paused).toBe(false);
+    expect((await gameDiagnostics(bob)).paused).toBe(false);
+    await alice.keyboard.press('Escape');
+    await expect(alice.getByTestId('claim-ledger')).toHaveCount(0);
+    await alice.getByTestId('hud-build').click();
+    await expect(alice.getByTestId('hud-build-menu')).toBeVisible();
+    await alice.keyboard.press('Escape');
+    await expect(alice.getByTestId('hud-build-menu')).toBeHidden();
+    await expect.poll(async () => ({
+      alice: (await gameDiagnostics(alice)).paused,
+      bob: (await gameDiagnostics(bob)).paused,
+    })).toEqual({ alice: false, bob: false });
+    await seedActionScenario(alice, bob);
+
+    await expect(alice.getByTestId('upgrade-overlay')).toHaveAttribute('aria-hidden', 'false');
+    await expect(bob.getByTestId('upgrade-overlay')).toHaveAttribute('aria-hidden', 'false');
+    await alice.getByTestId('upgrade-card-0').click();
+    await expect.poll(() => totalUpgradeStacks(alice)).toBe(1);
+    await expect.poll(() => totalUpgradeStacks(bob)).toBe(1);
+    await bob.getByTestId('upgrade-card-0').click();
+    await expect.poll(() => totalUpgradeStacks(alice)).toBe(2);
+    await expect.poll(() => totalUpgradeStacks(bob)).toBe(2);
+
+    const bobPresentationBeforeRemoteBuild = await bob.evaluate(() => ({
+      mode: window.__THREE_GAME_DIAGNOSTICS__!.build.mode,
+      selected: window.__THREE_GAME_DIAGNOSTICS__!.build.selectedBuildable,
+    }));
+    const alicePlacement = await placeBuildFromRider(alice, 'sentry_beacon', { x: -2, z: -2 });
+    await expect.poll(async () => (await gameDiagnostics(bob)).build.beacons).toBe(1);
+    await expect.poll(() => bob.evaluate(() => ({
+      mode: window.__THREE_GAME_DIAGNOSTICS__!.build.mode,
+      selected: window.__THREE_GAME_DIAGNOSTICS__!.build.selectedBuildable,
+    }))).toEqual(bobPresentationBeforeRemoteBuild);
+    const bobPlacement = await placeBuildFromRider(bob, 'palisade', { x: 2, z: 2 });
+    await expect.poll(async () => (await gameDiagnostics(alice)).build.palisades).toBe(1);
+    expect(alicePlacement).not.toEqual(bobPlacement);
+
+    const actionTick = Math.max((await mpState(alice)).tick, (await mpState(bob)).tick);
+    await Promise.all([waitForTick(alice, actionTick + 330), waitForTick(bob, actionTick + 330)]);
+    const [aliceGame, bobGame, aliceState, bobState] = await Promise.all([
+      gameDiagnostics(alice),
+      gameDiagnostics(bob),
+      mpState(alice),
+      mpState(bob),
+    ]);
+    expect(aliceGame.build.beaconPositions).toEqual(bobGame.build.beaconPositions);
+    expect(aliceGame.build.palisadePositions).toEqual(bobGame.build.palisadePositions);
+    expect(aliceGame.build.beaconPositions).toEqual([alicePlacement]);
+    expect(aliceGame.build.palisadePositions).toEqual([bobPlacement]);
+    expect(aliceGame.progression.stacks).toEqual(bobGame.progression.stacks);
+    expect(aliceGame.economy.state).toEqual(bobGame.economy.state);
+    expect(aliceState.hashes).toEqual(bobState.hashes);
+    const postActionHashes = aliceState.hashes.filter(({ tick }) => tick >= actionTick);
+    expect(postActionHashes.length).toBeGreaterThanOrEqual(10);
+    expect(postActionHashes.at(-1)?.tick).toBeGreaterThanOrEqual(actionTick + 300);
+    expect(aliceState.desyncs).toBe(0);
+    expect(bobState.desyncs).toBe(0);
+    expect(aliceErrors).toEqual({ consoleErrors: [], pageErrors: [] });
+    expect(bobErrors).toEqual({ consoleErrors: [], pageErrors: [] });
+    await writeReport(testInfo, 'lockstep-actions', {
+      actionTick,
+      finalTick: Math.min(aliceState.tick, bobState.tick),
+      buildings: {
+        beacons: aliceGame.build.beaconPositions,
+        palisades: aliceGame.build.palisadePositions,
+      },
+      upgrades: aliceGame.progression.stacks,
+      hashes: aliceState.hashes,
+    });
+  } finally {
+    await run.close();
+  }
+});
+
 test('town Ride Together card creates a claim word and joins two named riders', async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab town flow proof is enough');
   test.setTimeout(70_000);
@@ -547,6 +726,62 @@ async function seedConvergenceScenario(source: Page, peer: Page): Promise<number
     peer.evaluate((tick) => window.__GR_TEST__!.resumeManualSimAtMpTick(tick), resumeAt),
   ]);
   return resumeAt;
+}
+
+async function seedActionScenario(source: Page, peer: Page): Promise<void> {
+  await Promise.all([
+    source.evaluate(() => window.__GR_TEST__!.setManualSim(true)),
+    peer.evaluate(() => window.__GR_TEST__!.setManualSim(true)),
+  ]);
+  await source.evaluate(() => {
+    window.__GR_TEST__!.grantGold(500);
+    window.__GR_TEST__!.grantXp(40);
+  });
+  const snapshot = await source.evaluate(() => window.__GR_TEST__!.captureSuspend());
+  const restored = await Promise.all([
+    source.evaluate((saved) => window.__GR_TEST__!.restoreSuspend(saved), snapshot),
+    peer.evaluate((saved) => window.__GR_TEST__!.restoreSuspend(saved), snapshot),
+  ]);
+  expect(restored).toEqual([true, true]);
+  const resumeAt = Math.max((await mpState(source)).tick, (await mpState(peer)).tick) + 15;
+  await Promise.all([
+    source.evaluate((tick) => window.__GR_TEST__!.resumeManualSimAtMpTick(tick), resumeAt),
+    peer.evaluate((tick) => window.__GR_TEST__!.resumeManualSimAtMpTick(tick), resumeAt),
+  ]);
+  await Promise.all([waitForTick(source, resumeAt + 1), waitForTick(peer, resumeAt + 1)]);
+}
+
+async function totalUpgradeStacks(page: Page): Promise<number> {
+  return page.evaluate(() => Object.values(window.__THREE_GAME_DIAGNOSTICS__!.progression.stacks).reduce((sum, count) => sum + count, 0));
+}
+
+async function placeBuildFromRider(
+  page: Page,
+  id: 'sentry_beacon' | 'palisade',
+  offset: { x: number; z: number },
+): Promise<{ x: number; z: number }> {
+  const menu = page.getByTestId('hud-build-menu');
+  for (let attempt = 0; attempt < 3 && !(await menu.isVisible()); attempt += 1) {
+    await page.getByTestId('hud-build').click();
+    await page.waitForTimeout(120);
+  }
+  await expect(menu).toBeVisible();
+  await page.getByTestId(`hud-build-tile-${id}`).click();
+  await expect.poll(async () => (await gameDiagnostics(page)).build.selectedBuildable).toBe(id);
+  const point = await page.evaluate(({ dx, dz }) => {
+    const local = window.__THREE_GAME_DIAGNOSTICS__!.actors.find((actor) => actor.local && actor.visible)!;
+    const x = local.position.x + dx;
+    const z = local.position.z + dz;
+    return {
+      ...window.__GR_TEST__!.screenPoint(x, z, 0.1),
+      expected: { x: Math.round(x), z: Math.round(z) },
+    };
+  }, { dx: offset.x, dz: offset.z });
+  expect(point.inView).toBe(true);
+  await page.locator('#game-canvas').click({ position: { x: point.x, y: point.y } });
+  const countKey = id === 'sentry_beacon' ? 'beacons' : 'palisades';
+  await expect.poll(async () => (await gameDiagnostics(page)).build[countKey]).toBe(1);
+  return point.expected;
 }
 
 async function suspendEnemyRoster(page: Page): Promise<ReturnType<typeof sortEnemyRoster>> {

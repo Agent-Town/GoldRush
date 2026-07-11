@@ -13,6 +13,7 @@ import {
   buildableDefs,
   buildableTierEffectLine,
   getBuildableDef,
+  isBuildableId,
   type BuildableDef,
   type BuildableId,
 } from '../game/buildables';
@@ -359,6 +360,7 @@ export class BuildSystem {
     private readonly onFloatText?: (position: THREE.Vector3, text: string, color: string) => void,
     private readonly onSound?: (name: BuildSystemSound, position?: THREE.Vector3) => void,
     private readonly isBuildableEnabled: (id: BuildableId) => boolean = () => true,
+    private readonly onPlacementRequest?: (position: { x: number; z: number }) => boolean,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(
@@ -579,6 +581,7 @@ export class BuildSystem {
     enemies: readonly ClaimJumperEnemy[],
     onSluiceGold: (position: THREE.Vector3, amount: number) => void,
     onBankFull: (position: THREE.Vector3) => void,
+    previewOrigin: THREE.Vector3 = this.heroPosition,
   ): void {
     this.currentAt = at;
     this.beacons.update(at);
@@ -599,8 +602,8 @@ export class BuildSystem {
     this.updateRepairs(delta, at);
     this.updateBuildingVisuals(at);
     if (!this.mode) return;
-    this.updateGhostPosition();
-    this.valid = this.computeValid();
+    this.updateGhostPosition(previewOrigin);
+    this.valid = this.computeValid(previewOrigin);
     this.ghost.position.set(
       this.ghostPos.x,
       this.visualYFor(this.selectedId, this.ghostPos, this.ghostRotationSteps),
@@ -613,9 +616,19 @@ export class BuildSystem {
     this.ghost.scale.setScalar(pulse);
   }
 
-  confirm(at: number): boolean {
+  placementPoint(origin: THREE.Vector3 = this.heroPosition): { x: number; z: number } {
+    this.updateGhostPosition(origin);
+    return { x: this.ghostPos.x, z: this.ghostPos.z };
+  }
+
+  confirm(at: number, position?: { x: number; z: number }): boolean {
     if (!this.mode) return false;
-    this.updateGhostPosition();
+    if (position) {
+      this.ghostPos.set(position.x, 0, position.z);
+      this.snap(this.ghostPos);
+    } else {
+      this.updateGhostPosition();
+    }
     this.valid = this.computeValid();
     if (!this.valid) return this.invalidBuild();
 
@@ -636,6 +649,32 @@ export class BuildSystem {
     this.onSound?.('build-place', this.ghostPos);
     this.valid = this.computeValid();
     return true;
+  }
+
+  confirmPlacement(
+    at: number,
+    placement: { id: string; position: { x: number; z: number }; rotationSteps: number },
+  ): boolean {
+    const previous = {
+      id: this.selectedId,
+      mode: this.mode,
+      rotationSteps: this.ghostRotationSteps,
+      valid: this.valid,
+      position: this.ghostPos.clone(),
+    };
+    try {
+      if (!this.selectBuildable(placement.id, true)) return false;
+      this.ghostRotationSteps = ((Math.round(placement.rotationSteps) % 4) + 4) % 4;
+      this.syncGhostShape();
+      return this.confirm(at, placement.position);
+    } finally {
+      this.selectedId = previous.id;
+      this.ghostRotationSteps = previous.rotationSteps;
+      this.ghostPos.copy(previous.position);
+      this.valid = previous.valid;
+      this.syncGhostShape();
+      this.setBuildMode(previous.mode);
+    }
   }
 
   placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0, options: FreePlacementOptions = {}): boolean {
@@ -905,7 +944,7 @@ export class BuildSystem {
     position: THREE.Vector3 = this.heroPosition,
     radius = Balance.demolish.interactRadius,
   ): boolean {
-    if (!this.isSlotActive(id, index)) return false;
+    if (!isBuildableId(id) || !this.isSlotActive(id, index)) return false;
     const buildingPosition = this.positionFor(id, index);
     if (!buildingPosition) return false;
     const dx = buildingPosition.x - position.x;
@@ -1058,10 +1097,13 @@ export class BuildSystem {
   };
 
   private readonly onCanvasClick = (): void => {
-    this.confirm(this.currentAt);
+    if (!this.mode) return;
+    const position = this.placementPoint();
+    if (this.onPlacementRequest?.(position)) return;
+    this.confirm(this.currentAt, position);
   };
 
-  private updateGhostPosition(): void {
+  private updateGhostPosition(origin: THREE.Vector3 = this.heroPosition): void {
     if (this.pointerReady) {
       const rect = this.canvas.getBoundingClientRect();
       this.pointerNdc.set(
@@ -1075,19 +1117,19 @@ export class BuildSystem {
     } else {
       // Keyboard fallback: 2 m north of the hero so the ghost reads on screen
       // instead of vanishing inside the hero mesh (review m1-05 finding A).
-      this.ghostPos.copy(this.heroPosition);
+      this.ghostPos.copy(origin);
       this.ghostPos.z -= 2;
     }
     this.snap(this.ghostPos);
   }
 
-  private computeValid(): boolean {
+  private computeValid(origin: THREE.Vector3 = this.heroPosition): boolean {
     const def = this.selectedDef();
     if (this.countFor(def.id) >= def.maxCount) return false;
     if (this.economy.gold < def.costCurve(this.countFor(def.id))) return false;
     if (!this.matchesPlacement(def, this.ghostPos)) return false;
-    const dx = this.ghostPos.x - this.heroPosition.x;
-    const dz = this.ghostPos.z - this.heroPosition.z;
+    const dx = this.ghostPos.x - origin.x;
+    const dz = this.ghostPos.z - origin.z;
     const placeRadius = this.placeRadius(def.id);
     if (dx * dx + dz * dz > placeRadius * placeRadius) return false;
     return !this.overlapsExisting(def.id, this.ghostPos);
@@ -2264,10 +2306,6 @@ function stockpileCapSource(index: number): string {
 
 function isUpgradeableBuildable(id: BuildableId): id is UpgradeableBuildableId {
   return id === 'palisade' || id === 'sluice' || id === 'turret';
-}
-
-function isBuildableId(id: string): id is BuildableId {
-  return buildableIds.includes(id as BuildableId);
 }
 
 export function tierUnlockAllowed(_id: BuildableId, _tier: number): boolean {

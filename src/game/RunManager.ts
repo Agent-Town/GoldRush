@@ -38,6 +38,7 @@ type RunManagerHost = {
 
 type InstallOptions = {
   storage?: MetaProgressStorage;
+  onSecureChoice?: (choice: 'bank' | 'rush') => boolean;
 };
 
 export type RunManagerSuspendState = {
@@ -338,8 +339,12 @@ export class RunManager {
     `;
     root
       .querySelector<HTMLButtonElement>('[data-testid="bank-secured-claim"]')
-      ?.addEventListener('click', () => this.endSecuredRun());
-    root.querySelector<HTMLButtonElement>('[data-testid="stay-for-rush"]')?.addEventListener('click', () => this.stayForRush());
+      ?.addEventListener('click', () => {
+        if (!this.options.onSecureChoice?.('bank')) this.endSecuredRun();
+      });
+    root.querySelector<HTMLButtonElement>('[data-testid="stay-for-rush"]')?.addEventListener('click', () => {
+      if (!this.options.onSecureChoice?.('rush')) this.stayForRush();
+    });
     parent.append(root);
     this.secureOverlay = root;
   }

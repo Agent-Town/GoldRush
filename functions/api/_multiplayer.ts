@@ -46,7 +46,15 @@ type Snapshot = {
   snapshot: unknown;
 };
 
-const PROTOCOL_VERSION = 1;
+type RoomSetup = {
+  contractId: string;
+  seed: string;
+  difficultyPreset: string;
+  meta: JsonRecord;
+  research: JsonRecord;
+};
+
+const PROTOCOL_VERSION = 2;
 const MAX_PLAYERS = 4;
 const ROOM_CODE_BYTES = 12;
 const EMPTY_TTL_MS = 120_000;
@@ -62,6 +70,7 @@ const RATE_LIMIT_MESSAGE = 'The wire is busy. Try again later.';
 const RATE_TTL_SECONDS = 60 * 60;
 const MAX_CREATE_REQUESTS_PER_IP = 10;
 const MAX_CONNECT_REQUESTS_PER_IP = 30;
+const MAX_INSPECT_REQUESTS_PER_IP = 120;
 const HANDSHAKE_TIMEOUT_MS = 10_000;
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 
@@ -74,12 +83,12 @@ export async function createRoom(context: MultiplayerContext): Promise<Response>
     if (limiter instanceof Response) return limiter;
     const allowed = await bumpCounter(limiter, `mp:ratelimit:create:${await clientIpHash(request)}`, MAX_CREATE_REQUESTS_PER_IP);
     if (!allowed) return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
-    await readJson(request, SMALL_JSON_BYTES);
+    const body = await readJson(request, SMALL_JSON_BYTES);
 
     for (let attempt = 0; attempt < 3; attempt += 1) {
       const code = randomRoomCode();
       const stub = rooms.get(rooms.idFromName(code));
-      const response = await stub.fetch(roomRequest('/create', { code }));
+      const response = await stub.fetch(roomRequest('/create', { code, setup: body.setup }));
       if (response.status !== 409) return withCors(response, cors);
     }
     return error(cors, 503, 'room_unavailable', ROOM_UNAVAILABLE_MESSAGE);
@@ -104,11 +113,34 @@ export async function connectRoom(context: MultiplayerContext): Promise<Response
   return stub.fetch(context.request);
 }
 
+export async function inspectRoom(context: MultiplayerContext): Promise<Response> {
+  const cors = corsHeaders(context.request);
+  if (!cors) return json({}, { ok: false, error: 'cors_forbidden', message: 'Origin not allowed.' }, 403);
+  if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
+  if (context.request.method !== 'GET') return error(cors, 405, 'method_not_allowed', 'GET only');
+  const rooms = requireRooms(context.env, cors);
+  if (rooms instanceof Response) return rooms;
+  const limiter = requireRateLimits(context.env, cors);
+  if (limiter instanceof Response) return limiter;
+  const allowed = await bumpCounter(
+    limiter,
+    `mp:ratelimit:inspect:${await clientIpHash(context.request)}`,
+    MAX_INSPECT_REQUESTS_PER_IP,
+  );
+  if (!allowed) return error(cors, 429, 'rate_limited', RATE_LIMIT_MESSAGE);
+  const code = normalizeRoomCode(new URL(context.request.url).searchParams.get('code'));
+  if (!code) return error(cors, 400, 'bad_room_code', 'Room code not accepted.');
+  const stub = rooms.get(rooms.idFromName(code));
+  const response = await stub.fetch(new Request('https://gold-rush-room.local/inspect'));
+  return withCors(response, cors);
+}
+
 export class MultiplayerRoom {
   private code: string | null = null;
   private readonly players = new Map<string, Player>();
   private readonly inputTicks = new Map<number, Map<string, unknown>>();
   private latestSnapshot: Snapshot | null = null;
+  private setup: RoomSetup | null = null;
   private nextFlushTick = 0;
   private nextPlayerNumber = 1;
   private emptySince = 0;
@@ -117,6 +149,7 @@ export class MultiplayerRoom {
   async fetch(request: Request): Promise<Response> {
     const url = new URL(request.url);
     if (url.pathname.endsWith('/create')) return this.create(request);
+    if (url.pathname.endsWith('/inspect')) return this.inspect();
     if (url.pathname.endsWith('/connect')) return this.connect(request);
     return json({}, { ok: false, error: 'not_found', message: 'Room route not found.' }, 404);
   }
@@ -130,6 +163,11 @@ export class MultiplayerRoom {
       return json({}, { ok: false, error: 'room_exists', message: 'Room is already riding.' }, 409);
     }
     this.code = code;
+    const setup = normalizeSetup(body.setup);
+    if (body.setup !== undefined && !setup) {
+      return json({}, { ok: false, error: 'bad_setup', message: 'Ride setup not accepted.' }, 400);
+    }
+    this.setup = setup;
     this.armEmptyTimer();
     return json({}, {
       ok: true,
@@ -190,12 +228,31 @@ export class MultiplayerRoom {
     return new Response(null, { status: 101, webSocket: client });
   }
 
+  private inspect(): Response {
+    if (!this.code) return json({}, { ok: false, error: 'room_not_found', message: 'Room not found.' }, 404);
+    return json({}, {
+      ok: true,
+      v: PROTOCOL_VERSION,
+      type: 'room-info',
+      code: this.code,
+      setup: this.setup,
+      started: this.nextFlushTick > 0,
+      players: this.players.size,
+    });
+  }
+
   private join(socket: WebSocket, raw: unknown): string | null {
     const message = parseSocketMessage(raw);
     if (message.type !== 'join') throw new Error('join_required');
     const code = normalizeRoomCode(message.code);
     if (!code || code !== this.code) throw new Error('bad_room_code');
     if (this.players.size >= MAX_PLAYERS) throw new Error('room_full');
+    if (this.nextFlushTick > 0) throw new Error('ride_started');
+
+    const setup = normalizeSetup(message.setup);
+    if (!setup) throw new Error('setup_required');
+    if (this.setup && stableStringify(this.setup) !== stableStringify(setup)) throw new Error('setup_mismatch');
+    this.setup ??= setup;
 
     const player = normalizePlayer(message.player);
     const id = `p${this.nextPlayerNumber}`;
@@ -218,6 +275,7 @@ export class MultiplayerRoom {
       playerId: id,
       maxPlayers: MAX_PLAYERS,
       roster: this.roster(),
+      setup: this.setup,
     });
     this.broadcastRoster();
     this.armIdleTimer(id);
@@ -260,6 +318,7 @@ export class MultiplayerRoom {
         v: PROTOCOL_VERSION,
         type: 'tick-inputs',
         tick: this.nextFlushTick,
+        roster: this.roster(),
         inputs: roster.map((player) => ({ playerId: player.id, input: inputs?.get(player.id) ?? null })),
       });
       this.inputTicks.delete(this.nextFlushTick);
@@ -338,6 +397,7 @@ export class MultiplayerRoom {
       this.code = null;
       this.inputTicks.clear();
       this.latestSnapshot = null;
+      this.setup = null;
       this.nextFlushTick = 0;
       this.nextPlayerNumber = 1;
     }, EMPTY_TTL_MS);
@@ -355,7 +415,14 @@ export class MultiplayerRoom {
   }
 
   private broadcastRoster(): void {
-    this.broadcast({ v: PROTOCOL_VERSION, type: 'roster', code: this.code, players: this.roster(), maxPlayers: MAX_PLAYERS });
+    this.broadcast({
+      v: PROTOCOL_VERSION,
+      type: 'roster',
+      code: this.code,
+      players: this.roster(),
+      maxPlayers: MAX_PLAYERS,
+      effectiveTick: this.nextFlushTick,
+    });
   }
 
   private broadcast(value: JsonRecord, except?: string): void {
@@ -475,6 +542,21 @@ function normalizePlayer(value: unknown): { name: string; town: string } {
   return { name, town };
 }
 
+function normalizeSetup(value: unknown): RoomSetup | null {
+  if (!isRecord(value)) return null;
+  const contractId = cleanName(value.contractId, '', 64);
+  const seed = cleanName(value.seed, '', 96);
+  const difficultyPreset = cleanName(value.difficultyPreset, '', 32);
+  if (!contractId || !seed || !difficultyPreset || !isRecord(value.meta) || !isRecord(value.research)) return null;
+  return {
+    contractId,
+    seed,
+    difficultyPreset,
+    meta: value.meta,
+    research: value.research,
+  };
+}
+
 function cleanName(value: unknown, fallback: string, maxLength: number): string {
   if (typeof value !== 'string') return fallback;
   const cleaned = value.replace(/\s+/g, ' ').trim().slice(0, maxLength);
@@ -494,6 +576,15 @@ function normalizeTick(value: unknown): number | null {
 function randomRoomCode(): string {
   const values = crypto.getRandomValues(new Uint8Array(ROOM_CODE_BYTES));
   return [...values].map((value) => value.toString(16).padStart(2, '0')).join('').toUpperCase();
+}
+
+function stableStringify(value: unknown): string {
+  if (Array.isArray(value)) return `[${value.map(stableStringify).join(',')}]`;
+  if (!isRecord(value)) return JSON.stringify(value);
+  return `{${Object.keys(value)
+    .sort()
+    .map((key) => `${JSON.stringify(key)}:${stableStringify(value[key])}`)
+    .join(',')}}`;
 }
 
 function send(socket: WebSocket, value: JsonRecord): void {

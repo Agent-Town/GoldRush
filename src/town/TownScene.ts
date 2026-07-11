@@ -43,7 +43,14 @@ import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } 
 import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
-import { createRideRoom, probeRideRoom, relayBaseFromTownSearch, resolveJoinPhrase, stageRideConfig } from '../mp/RideTogether';
+import {
+  createRideRoom,
+  currentMultiplayerSetup,
+  probeRideRoom,
+  relayBaseFromTownSearch,
+  resolveJoinPhrase,
+  stageRideConfig,
+} from '../mp/RideTogether';
 import {
   earnedTownBuildings,
   townBuildings,
@@ -1209,14 +1216,15 @@ export class TownScene {
     this.renderBoard();
     const relayBase = relayBaseFromTownSearch();
     const player = this.ridePlayer();
-    const ok = await probeRideRoom(relayBase, code, player);
+    const setup = currentMultiplayerSetup(DEFAULT_CONTRACT_ID);
+    const ok = await probeRideRoom(relayBase, code, player, setup);
     if (!ok) {
       this.rideBusy = false;
       this.rideStatus = "That claim's gone quiet.";
       this.renderBoard();
       return;
     }
-    stageRideConfig({ relayBase, code, player, phrase: input?.value.trim().toUpperCase() || code });
+    stageRideConfig({ relayBase, code, player, phrase: input?.value.trim().toUpperCase() || code, setup });
     clearRunSuspend();
     this.options.onLaunchContract?.(DEFAULT_CONTRACT_ID);
   }

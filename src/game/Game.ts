@@ -61,7 +61,8 @@ import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry
 import { RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
-import { AgentConsentStore } from '../agent/AgentConsent';
+import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
+import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import type {
@@ -96,10 +97,11 @@ import {
   lockstepInputFromIntents,
   multiplayerConfigFromSearch,
   stableHash,
+  type LockstepAction,
   type LockstepTick,
   type MultiplayerPlayer,
 } from '../mp/LockstepClient';
-import { consumeStagedRideConfig } from '../mp/RideTogether';
+import { consumeStagedRideConfig, currentMultiplayerSetup } from '../mp/RideTogether';
 import { Hero } from '../entities/Hero';
 import { BlastChargePool } from '../entities/BlastCharge';
 import { GoldPickupPool } from '../entities/GoldPickup';
@@ -166,7 +168,7 @@ import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgra
 import { clearScores, loadScores, recordScore } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
-import { buildableDefs, type BuildableId } from './buildables';
+import { buildableDefs, isBuildableId, type BuildableId } from './buildables';
 import {
   captureRunSuspendSnapshot,
   multiplayerRunSuspendFutureState,
@@ -238,6 +240,15 @@ export class Game {
   private mpHadParty = false;
   private mpTickThisFrame: number | null = null;
   private mpActorIntents: Intents[] | null = null;
+  private mpActionsThisTick: Array<{ slot: number; action: LockstepAction }> = [];
+  private readonly mpQueuedActions: LockstepAction[] = [];
+  private readonly mpDeathActionHandlers: Partial<Record<'done' | 'secondary', () => void>> = {};
+  private readonly mpResearchActionHandlers: {
+    pick?: (id: string) => DeathResearchState;
+    skip?: () => DeathResearchState;
+  } = {};
+  private readonly mpDeferredActions: Array<() => void> = [];
+  private mpCancelSuppressPause = false;
   private mpLocalSlot = 0;
   private mpActionSlot = 0;
   private lastMultiplayerHashState: { tick: number; state: unknown } | null = null;
@@ -787,6 +798,17 @@ export class Game {
       (position, text, color) => this.vfx.floatText(position, text, color),
       (sound) => this.audio.play(sound),
       (id) => this.isBuildableEnabled(id),
+      (position) => {
+        if (!this.mpClient) return false;
+        const build = this.buildSystem.diagnostics;
+        this.mpQueuedActions.push({
+          type: 'place_build',
+          id: build.selectedBuildable,
+          position,
+          rotationSteps: build.ghostRotationSteps,
+        });
+        return true;
+      },
     );
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
@@ -831,9 +853,20 @@ export class Game {
     this.getElement('#hud').append(this.promptStack);
     this.buildingContextPrompt = new BuildingContextPrompt(
       this.promptStack,
-      () => this.confirmUpgrade(),
-      () => this.confirmDemolish(),
-      () => this.fundMegaprojectStage(this.actionActor.group.position),
+      () => {
+        if (!this.mpClient) return void this.confirmUpgrade();
+        const target = this.upgradeCandidate;
+        if (target) this.mpQueuedActions.push({ type: 'context_action', action: 'upgrade', target });
+      },
+      () => {
+        if (!this.mpClient) return void this.confirmDemolish();
+        const target = this.demolishCandidate;
+        if (target) this.mpQueuedActions.push({ type: 'context_action', action: 'demolish', target });
+      },
+      () => {
+        if (this.mpClient) this.mpQueuedActions.push({ type: 'context_action', action: 'fund' });
+        else this.fundMegaprojectStage(this.actionActor.group.position);
+      },
     );
     this.assayOfficePrompt = new AssayOfficePrompt(this.promptStack);
     this.worldInfoNotePrompt = new WorldInfoNotePrompt(this.promptStack);
@@ -875,6 +908,9 @@ export class Game {
         contractId: this.activeContract.id,
       });
       const returnResult: RunReturnResult = this.runWasSecured(event.wavesSurvived) ? 'secured' : 'overrun';
+      const onDone = () => this.returnToTown(returnResult);
+      const onSecondary = () => this.resetRun();
+      this.setMultiplayerDeathActions(onDone, onSecondary);
       this.deathOverlay.show(this.deathLedger, scores, scoreAt, {
         ...this.researchOverlayOptions(1),
         actionLabel: 'Return to Town',
@@ -882,8 +918,8 @@ export class Game {
         runStats,
         agentAutonomyDelta: this.agentAutonomyDelta(returnResult === 'secured'),
         townName: readTownName(),
-        onDone: () => this.returnToTown(returnResult),
-        onSecondaryAction: () => this.resetRun(),
+        onDone: () => this.requestDeathAction('done', onDone),
+        onSecondaryAction: () => this.requestDeathAction('secondary', onSecondary),
       });
       this.syncMultiplayerLedgerRiders();
     });
@@ -920,6 +956,12 @@ export class Game {
       const agentAutonomyDelta = this.agentAutonomyDelta(true);
       window.setTimeout(() => {
         this.state.setPaused(true);
+        const onDone = () => {
+          this.runStartMetaRecapPending = false;
+          this.returnToTown('secured');
+        };
+        const onSecondary = () => this.finishSecuredLedgerQuickLoop();
+        this.setMultiplayerDeathActions(onDone, onSecondary);
         this.deathOverlay.show(ledger, scores, scoreAt, {
           ...this.researchOverlayOptions(2),
           outcome: 'secured',
@@ -928,11 +970,8 @@ export class Game {
           runStats,
           agentAutonomyDelta,
           townName: readTownName(),
-          onDone: () => {
-            this.runStartMetaRecapPending = false;
-            this.returnToTown('secured');
-          },
-          onSecondaryAction: () => this.finishSecuredLedgerQuickLoop(),
+          onDone: () => this.requestDeathAction('done', onDone),
+          onSecondaryAction: () => this.requestDeathAction('secondary', onSecondary),
         });
         this.syncMultiplayerLedgerRiders();
       }, 0);
@@ -1212,7 +1251,13 @@ export class Game {
     this.prefetchContractPresentation();
     // ADR-002 section 4: M3 exposes install(game); wiring happens at merge (m3-01 gate, s31).
     // Meta defenses need to exist before the opening stress spawns pick lanes.
-    this.runManager = new RunManager(this);
+    this.runManager = new RunManager(this, {
+      onSecureChoice: (choice) => {
+        if (!this.mpClient) return false;
+        this.mpQueuedActions.push({ type: 'secure_choice', choice });
+        return true;
+      },
+    });
     this.runManager.install();
     this.installMultiplayerDev();
     this.waveSystem.spawnStressEnemies();
@@ -1256,10 +1301,15 @@ export class Game {
   }
 
   openClaimLedger(entryId?: LedgerEntryId): void {
-    const resumeOnClose = this.state.current === 'playing';
-    this.state.setPaused(true);
-    this.playerPauseActive = false;
-    this.syncUi();
+    // The ledger is local presentation in multiplayer. Pausing here would stop
+    // only this client's GameState while the lockstep client kept consuming
+    // ticks, guaranteeing a hash disagreement on the next boundary.
+    const resumeOnClose = !this.mpClient && this.state.current === 'playing';
+    if (resumeOnClose) {
+      this.state.setPaused(true);
+      this.playerPauseActive = false;
+      this.syncUi();
+    }
     void import('../encyclopedia/reader').then(({ openClaimLedger }) =>
       openClaimLedger({
         entryId,
@@ -1355,10 +1405,18 @@ export class Game {
   private update(delta: number): boolean {
     this.mpTickThisFrame = null;
     this.mpActorIntents = null;
+    this.mpActionsThisTick = [];
     const sampledIntents = this.input.readIntents();
-    const lockstepTick = this.mpClient?.pump(lockstepInputFromIntents(sampledIntents)) ?? null;
+    const cancelConsumed = this.mpClient ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
+    const lockstepSample = this.mpClient
+      ? lockstepInputFromIntents(sampledIntents, {
+          pauseTarget: sampledIntents.pause ? !this.state.isPaused : null,
+          queuedActions: this.multiplayerSampleActions(sampledIntents),
+        })
+      : null;
+    if (lockstepSample && cancelConsumed) lockstepSample.pause = false;
+    const lockstepTick = this.mpClient && lockstepSample ? this.mpClient.pump(lockstepSample) : null;
     if (this.mpClient && !lockstepTick) {
-      this.rememberIntents(sampledIntents);
       if (!this.releaseFailedMultiplayer()) return false;
     }
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : sampledIntents;
@@ -1377,6 +1435,7 @@ export class Game {
     this.updateBuildingContextCandidates();
     if (sampledIntents.mute && !this.lastMuteIntent) this.toggleAudioMute();
     this.lastMuteIntent = sampledIntents.mute;
+    if (lockstepTick) this.applyMultiplayerActions();
     if (this.baronCeremony) {
       if (this.fixedTickElapsed - this.baronCeremony.startedTickElapsed >= BARON_KILL_STOP_SECONDS) {
         this.finishBaronCeremony();
@@ -1461,6 +1520,7 @@ export class Game {
           this.vfx.floatText(position, `+${amount}`, '#c4883a');
         },
         (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
+        this.localActor.group.position,
       );
       this.powerGraph?.update(this.timeAlive);
       this.syncStockpileHoldings();
@@ -1600,17 +1660,147 @@ export class Game {
   private consumeMultiplayerTick(bundle: LockstepTick): Intents {
     this.mpTickThisFrame = bundle.tick;
     this.syncMultiplayerActors();
-    const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
+    const roster = bundle.roster.slice(0, 4);
     const byPlayer = new Map(bundle.inputs.map((entry) => [entry.playerId, entry.input]));
     this.mpActorIntents = roster.map((player) => intentsFromLockstepInput(byPlayer.get(player.playerId)));
-    this.mpActionSlot = this.multiplayerActionSlot(this.mpActorIntents);
-    return this.mpActorIntents[this.mpActionSlot] ?? intentsFromLockstepInput(null);
+    this.mpActionsThisTick = roster.flatMap((player, slot) =>
+      (byPlayer.get(player.playerId)?.actions ?? []).map((action) => ({ slot, action })),
+    );
+    return this.mpActorIntents[this.mpLocalSlot] ?? intentsFromLockstepInput(null);
   }
 
-  private multiplayerActionSlot(intents: readonly Intents[]): number {
-    const actionSlot = intents.findIndex(hasMultiplayerActionIntent);
-    if (actionSlot >= 0) return actionSlot;
-    return THREE.MathUtils.clamp(this.mpActionSlot, 0, Math.max(0, intents.length - 1));
+  private applyMultiplayerActions(): void {
+    for (const entry of this.mpActionsThisTick) {
+      this.mpActionSlot = entry.slot;
+      this.updateActionActorPosition();
+      if (this.applyMultiplayerAction(entry.action)) break;
+    }
+    this.mpActionSlot = 0;
+    this.updateActionActorPosition();
+    this.updateBuildingContextCandidates(this.localActor.group.position);
+  }
+
+  /** Returns true when the action schedules a run transition and later actions from this tick must be ignored. */
+  private applyMultiplayerAction(action: LockstepAction): boolean {
+    if (action.type === 'place_build') {
+      if (this.buildSystem.confirmPlacement(this.timeAlive, action)) discoverLedgerBuildable(action.id as BuildableId);
+    }
+    if (action.type === 'weapon_toggle') this.toggleWeapon();
+    if (action.type === 'restart' && this.state.current === 'dead') {
+      this.deferMultiplayerTransition(() => this.resetRun());
+      return true;
+    }
+    if (action.type === 'set_pause' && !this.secureClaimChoicePending() && this.state.isPaused !== action.paused) {
+      this.togglePlayerPause();
+    }
+    if (action.type === 'debug_spawn') this.spawnDebugPack();
+    if (
+      action.type === 'debug_xp' &&
+      new URLSearchParams(window.location.search).has('debug') &&
+      !this.secureClaimChoicePending()
+    ) {
+      this.progression.debugGrant(50);
+    }
+    if (action.type === 'pick_upgrade' && this.state.current === 'levelup') {
+      const picked = this.progression.offer?.find((choice) => choice.id === action.id);
+      if (picked) this.progression.applyUpgrade(picked.id);
+    }
+    if (action.type === 'skip_ceremony' && this.baronCeremony) this.finishBaronCeremony();
+    if (action.type === 'death_action') {
+      const handler = this.mpDeathActionHandlers[action.choice];
+      if (handler) {
+        this.deferMultiplayerTransition(handler);
+        return true;
+      }
+    }
+    if (action.type === 'research_pick') {
+      const research = this.mpResearchActionHandlers.pick?.(action.id);
+      if (research) this.deathOverlay.updateResearch(research);
+    }
+    if (action.type === 'research_skip') {
+      const research = this.mpResearchActionHandlers.skip?.();
+      if (research) this.deathOverlay.updateResearch(research);
+    }
+    if (action.type === 'secure_choice') {
+      if (action.choice === 'bank') {
+        this.deferMultiplayerTransition(() => this.runManager?.endSecuredRun());
+        return true;
+      }
+      this.deferMultiplayerTransition(() => this.runManager?.stayForRush());
+      return true;
+    }
+    if (action.type === 'context_action') {
+      if (action.action !== 'fund' && !isBuildableId(action.target.id)) return false;
+      if (action.action === 'upgrade') this.upgradeBuilding(action.target.id as BuildableId, action.target.index);
+      if (action.action === 'demolish') this.demolishBuilding(action.target.id as BuildableId, action.target.index);
+      if (action.action === 'fund') this.fundMegaprojectStage(this.actionActor.group.position);
+    }
+    if (action.type === 'set_agent_rung') this.agentConsent.setRung(action.level as AgentPermissionLevel, action.granted);
+    if (action.type === 'set_agent_ability') this.agentConsent.setAbility(action.ability as AgentAbility, action.granted);
+    return false;
+  }
+
+  private multiplayerSampleActions(intents: Intents): LockstepAction[] {
+    const actions = this.mpQueuedActions.splice(0);
+    if (intents.upgrade && this.upgradeCandidate) {
+      actions.push({ type: 'context_action', action: 'upgrade', target: this.upgradeCandidate });
+    }
+    if (!intents.confirm) return actions;
+    if (this.buildSystem.isBuildMode) {
+      const build = this.buildSystem.diagnostics;
+      actions.push({
+        type: 'place_build',
+        id: build.selectedBuildable,
+        position: this.buildSystem.placementPoint(this.localActor.group.position),
+        rotationSteps: build.ghostRotationSteps,
+      });
+      return actions;
+    }
+    if (this.buildSystem.assayOfficeInRange(this.localActor.group.position)) {
+      this.audio.play('ledger-open');
+      this.openAssayBench?.();
+      return actions;
+    }
+    if (this.megaprojectFundCandidate(this.localActor.group.position)) {
+      actions.push({ type: 'context_action', action: 'fund' });
+    } else if (this.demolishCandidate) {
+      actions.push({ type: 'context_action', action: 'demolish', target: this.demolishCandidate });
+    }
+    return actions;
+  }
+
+  private applyLocalMultiplayerPresentation(intents: Intents): boolean {
+    if (!intents.cancel) this.mpCancelSuppressPause = false;
+    if (intents.build) this.toggleBuildMenu();
+    if (intents.buildSlot !== null && this.buildMenuOpen) this.selectBuildableByIndex(intents.buildSlot);
+    if (intents.rotateBuild && this.buildSystem.isBuildMode) this.buildSystem.rotateGhost();
+    if (intents.cancel && !this.mpCancelSuppressPause) this.mpCancelSuppressPause = this.applyLocalCancelAction();
+    return this.mpCancelSuppressPause;
+  }
+
+  private applyLocalCancelAction(): boolean {
+    if (this.upgradeCandidate || this.demolishCandidate) {
+      this.cancelInteractionPrompts();
+      return true;
+    } else if (this.buildMenuOpen || this.buildSystem.isBuildMode) {
+      this.closeBuildMenu();
+      return true;
+    }
+    return false;
+  }
+
+  private deferMultiplayerTransition(action: () => void): void {
+    this.mpDeferredActions.push(() => {
+      this.clearMultiplayerOverlayActions();
+      action();
+    });
+  }
+
+  private clearMultiplayerOverlayActions(): void {
+    delete this.mpDeathActionHandlers.done;
+    delete this.mpDeathActionHandlers.secondary;
+    delete this.mpResearchActionHandlers.pick;
+    delete this.mpResearchActionHandlers.skip;
   }
 
   private finishMultiplayerTick(): void {
@@ -1619,6 +1809,7 @@ export class Game {
     const snapshot = this.mpClient.shouldExchangeHash(tick) ? this.captureMultiplayerRunSuspendSnapshot() : null;
     this.mpClient.afterSimTick(tick, snapshot ? this.multiplayerStateHash(tick, snapshot) : '', snapshot);
     this.mpTickThisFrame = null;
+    for (const action of this.mpDeferredActions.splice(0)) action();
   }
 
   private captureMultiplayerRunSuspendSnapshot(): MultiplayerRunSuspendSnapshot {
@@ -1652,6 +1843,7 @@ export class Game {
     const rosterSize = this.mpClient?.state().roster.length ?? 0;
     const normalized = normalizeRunSuspendDatum(snapshot);
     if (!normalized) return false;
+    if (normalized.contractId !== this.activeContract.id) return false;
     const mpActors = multiplayerActorsForRestore(snapshot, normalized, rosterSize);
     if (rosterSize >= 2 && !mpActors) return false;
     if (mpActors && mpActors.length > this.actors.length) this.syncMultiplayerActors();
@@ -1689,6 +1881,7 @@ export class Game {
   private multiplayerStateHash(tick: number, snapshot: MultiplayerRunSuspendSnapshot): string {
     const state = {
       tick,
+      roster: (this.mpClient?.state().roster ?? []).map(({ playerId, name, town }) => ({ playerId, name, town })),
       run: multiplayerRunSuspendFutureState(snapshot),
       actors: snapshot.mpActors ?? null,
     };
@@ -1703,6 +1896,7 @@ export class Game {
     if (!config) return;
     this.mpClient = new LockstepClient({
       ...config,
+      setup: currentMultiplayerSetup(this.activeContract.id),
       onDesync: (tick) => {
         this.mpPauseBeforeResync ??= { paused: this.state.isPaused, playerPauseActive: this.playerPauseActive };
         this.state.setPaused(true);
@@ -2967,6 +3161,10 @@ export class Game {
 
   private readonly skipBaronCeremony = (event: Event): void => {
     if (!this.baronCeremony || (event instanceof KeyboardEvent && event.repeat)) return;
+    if (this.mpClient) {
+      this.mpQueuedActions.push({ type: 'skip_ceremony' });
+      return;
+    }
     this.finishBaronCeremony();
   };
 
@@ -3509,11 +3707,11 @@ export class Game {
     this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
   }
 
-  private updateBuildingContextCandidates(): void {
+  private updateBuildingContextCandidates(position = this.localActor.group.position): void {
     const canInteract =
       this.state.current === 'playing' && !this.state.isPaused && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
-    const fund = canInteract ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
-    let demolish = canInteract && !fund ? this.buildSystem.nearestBuildingTo(this.localActor.group.position) : null;
+    const fund = canInteract ? this.megaprojectFundCandidate(position) : null;
+    let demolish = canInteract && !fund ? this.buildSystem.nearestBuildingTo(position) : null;
     const key = demolish ? demolishKey(demolish) : null;
     if (!key) this.demolishSuppressedKey = null;
     if (key && this.demolishSuppressedKey && key !== this.demolishSuppressedKey) this.demolishSuppressedKey = null;
@@ -3593,6 +3791,21 @@ export class Game {
   }
 
   private handleUiIntent(intent: UiIntent): void {
+    if (this.mpClient) {
+      if (intent.type === 'set_agent_rung') {
+        this.mpQueuedActions.push({ type: 'set_agent_rung', level: intent.level, granted: intent.granted });
+        return;
+      }
+      if (intent.type === 'set_agent_ability') {
+        this.mpQueuedActions.push({ type: 'set_agent_ability', ability: intent.ability, granted: intent.granted });
+        return;
+      }
+      if (intent.type === 'pause') this.mpQueuedActions.push({ type: 'set_pause', paused: !this.state.isPaused });
+      if (intent.type === 'restart') this.mpQueuedActions.push({ type: 'restart' });
+      if (intent.type === 'pause' || intent.type === 'restart') {
+        return;
+      }
+    }
     if (intent.type === 'set_agent_rung') this.agentConsent.setRung(intent.level, intent.granted);
     if (intent.type === 'set_agent_ability') this.agentConsent.setAbility(intent.ability, intent.granted);
     if (intent.type === 'set_agent_rung' || intent.type === 'set_agent_ability') return;
@@ -3623,7 +3836,12 @@ export class Game {
   private handleUpgradeIntent(intent: UpgradeIntent): void {
     if (intent.type !== 'pick_upgrade' || this.state.current !== 'levelup') return;
     const picked = this.progression.offer?.[intent.index];
-    if (picked) this.progression.applyUpgrade(picked.id);
+    if (!picked) return;
+    if (this.mpClient) {
+      this.mpQueuedActions.push({ type: 'pick_upgrade', id: picked.id });
+      return;
+    }
+    this.progression.applyUpgrade(picked.id);
   }
 
   private advanceSimForTest(seconds: number, onTick?: (sample: GrSimulationTickSample) => void): void {
@@ -3804,6 +4022,19 @@ export class Game {
     this.returnToTown('overrun');
   }
 
+  private setMultiplayerDeathActions(done: () => void, secondary: () => void): void {
+    this.mpDeathActionHandlers.done = done;
+    this.mpDeathActionHandlers.secondary = secondary;
+  }
+
+  private requestDeathAction(choice: 'done' | 'secondary', action: () => void): void {
+    if (this.mpClient) {
+      this.mpQueuedActions.push({ type: 'death_action', choice });
+      return;
+    }
+    action();
+  }
+
   restoreDeathOverlayForSuspend(): void {
     const economySummary = summarizeLog(this.economy.log);
     const runStats = this.deathRunStats(economySummary);
@@ -3825,14 +4056,17 @@ export class Game {
         score.gold === this.deathLedger.goldPanned &&
         score.timeAlive === this.deathLedger.timeAlive,
     );
+    const onDone = () => this.returnToTown('overrun');
+    const onSecondary = () => this.resetRun();
+    this.setMultiplayerDeathActions(onDone, onSecondary);
     this.deathOverlay.show(this.deathLedger, scores, matchingScore?.at ?? 0, {
       ...this.researchOverlayOptions(1),
       actionLabel: 'Return to Town',
       secondaryActionLabel: 'Try Again',
       runStats,
       townName: readTownName(),
-      onDone: () => this.returnToTown('overrun'),
-      onSecondaryAction: () => this.resetRun(),
+      onDone: () => this.requestDeathAction('done', onDone),
+      onSecondaryAction: () => this.requestDeathAction('secondary', onSecondary),
     });
     this.syncMultiplayerLedgerRiders();
   }
@@ -4521,27 +4755,45 @@ export class Game {
       proposals: roundsRemaining > 0 ? availablePicks(this.researchState) : [],
       pinnedPath: pinnedResearchPath(this.researchState),
     });
+    const applyPick = (id: string): DeathResearchState => {
+      if (roundsRemaining <= 0) return state();
+      const next = takeNode(this.researchState, id);
+      if (next !== this.researchState) {
+        this.researchState = saveResearchState(this.researchStorage, next);
+        this.audio.play('research-pick');
+        roundsRemaining = Math.max(0, roundsRemaining - 1);
+        this.applyResearchEffects();
+        this.syncMegaprojectSite();
+        this.emitScienceCompleteIfReady();
+        this.publishDiagnostics();
+      }
+      return state();
+    };
+    const applySkip = (): DeathResearchState => {
+      if (roundsRemaining <= 0) return state();
+      this.researchState = saveResearchState(this.researchStorage, skipResearchPick(this.researchState));
+      roundsRemaining = 0;
+      this.publishDiagnostics();
+      return state();
+    };
+    this.mpResearchActionHandlers.pick = applyPick;
+    this.mpResearchActionHandlers.skip = applySkip;
 
     return {
       research: state(),
       onResearchPick: (id) => {
-        const next = takeNode(this.researchState, id);
-        if (next !== this.researchState) {
-          this.researchState = saveResearchState(this.researchStorage, next);
-          this.audio.play('research-pick');
-          roundsRemaining = Math.max(0, roundsRemaining - 1);
-          this.applyResearchEffects();
-          this.syncMegaprojectSite();
-          this.emitScienceCompleteIfReady();
-          this.publishDiagnostics();
+        if (this.mpClient) {
+          this.mpQueuedActions.push({ type: 'research_pick', id });
+          return state();
         }
-        return state();
+        return applyPick(id);
       },
       onResearchSkip: () => {
-        this.researchState = saveResearchState(this.researchStorage, skipResearchPick(this.researchState));
-        roundsRemaining = 0;
-        this.publishDiagnostics();
-        return state();
+        if (this.mpClient) {
+          this.mpQueuedActions.push({ type: 'research_skip' });
+          return state();
+        }
+        return applySkip();
       },
     };
   }
@@ -5004,22 +5256,6 @@ function sameFiniteVector3(
   right: { x: number; y: number; z: number },
 ): boolean {
   return left.x === right.x && left.y === right.y && left.z === right.z;
-}
-
-function hasMultiplayerActionIntent(intents: Intents): boolean {
-  return (
-    intents.confirm ||
-    intents.upgrade ||
-    intents.rotateBuild ||
-    intents.weaponToggle ||
-    intents.build ||
-    intents.cancel ||
-    intents.buildSlot !== null ||
-    intents.restart ||
-    intents.pause ||
-    intents.debugSpawn ||
-    intents.debugXp
-  );
 }
 
 function pointFromVector(value: THREE.Vector3): ProspectorPoint {
