@@ -36,6 +36,7 @@
       "tileParams": {
         "tileId": "e1-dry-gulch",
         "biome": "dry-gulch",
+        "render": { "terrainMesh": "required" },
         "river": false,
         "ford": false,
         "waterSources": [{ "kind": "spring_pond", "x": -18, "z": -18, "radius": 1.4 }],
@@ -58,7 +59,7 @@
             "dampBand": 2.2,
             "scrubAmount": 0.12,
             "macroWarmth": 1.22,
-            "antiTile": 0.72
+            "antiTile": 0.86
           }
         },
         "scatter": {
