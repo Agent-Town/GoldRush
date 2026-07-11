@@ -16,6 +16,8 @@ const PAUSE_AUDIO_SETTINGS_IDS = {
   volume: 'pause-volume',
   volumeValue: 'pause-volume-value',
   mute: 'pause-mute',
+  music: 'pause-music-volume',
+  musicValue: 'pause-music-volume-value',
 };
 const PAUSE_STORY_SETTINGS_IDS = {
   tales: 'pause-tales',

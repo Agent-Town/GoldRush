@@ -31,6 +31,8 @@ const AUDIO_SETTINGS_IDS = {
   volume: 'start-menu-volume',
   volumeValue: 'start-menu-volume-value',
   mute: 'start-menu-mute',
+  music: 'start-menu-music-volume',
+  musicValue: 'start-menu-music-volume-value',
 };
 const STORY_SETTINGS_IDS = {
   tales: 'start-menu-tales',
@@ -76,6 +78,7 @@ export class StartMenu {
     this.onAccountSync();
     parent.append(this.root);
     this.loadBackdrop();
+    this.audio.setLoop('title-theme', true);
     this.firstAction()?.focus({ preventScroll: true });
   }
 
