@@ -37,6 +37,12 @@ if (initialSearch.has('debug') && initialSearch.has('determinism')) {
   void import('./diagnostics/DeterminismHarness').then(({ installDeterminismHarnessFromSearch }) => installDeterminismHarnessFromSearch());
 }
 
+if (initialSearch.has('debug') && initialSearch.has('mpbalance')) {
+  void import('./mp/MultiplayerBalanceHarness').then(({ installMultiplayerBalanceHarnessFromSearch }) =>
+    installMultiplayerBalanceHarnessFromSearch(),
+  );
+}
+
 if (initialSearch.get('bench') === 'fullbase') {
   const defaults = { debug: '', nolevel: '', nopause: '', seed: 'perf-02-fullbase', timescale: '24' };
   let changed = false;
