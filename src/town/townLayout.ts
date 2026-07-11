@@ -28,6 +28,13 @@ export type TownPropDescriptor = {
   scale?: number;
 };
 
+export type TownTrailPoint = { x: number; z: number };
+export type TownTrailRoute = {
+  id: string;
+  points: readonly TownTrailPoint[];
+  closed?: boolean;
+};
+
 export const townPlazaLayout = {
   center: { x: 0, z: 0 },
   clearRadius: 3.1,
@@ -51,6 +58,44 @@ export const townPlazaLayout = {
     prospector: { x: 1.25, z: 2.05 },
   },
 } as const;
+
+const trailPoint = (from: TownTrailPoint, control: TownTrailPoint, to: TownTrailPoint, t: number): TownTrailPoint => ({
+  x: (1 - t) ** 2 * from.x + 2 * (1 - t) * t * control.x + t ** 2 * to.x,
+  z: (1 - t) ** 2 * from.z + 2 * (1 - t) * t * control.z + t ** 2 * to.z,
+});
+
+const radialTrail = (id: string, destination: TownTrailPoint, index: number): TownTrailRoute => {
+  const start = townPlazaLayout.center;
+  const dx = destination.x - start.x;
+  const dz = destination.z - start.z;
+  const length = Math.max(1, Math.hypot(dx, dz));
+  const bend = (index % 2 === 0 ? 1 : -1) * 0.34;
+  const control = {
+    x: (start.x + destination.x) * 0.5 + (-dz / length) * bend,
+    z: (start.z + destination.z) * 0.5 + (dx / length) * bend,
+  };
+  return { id, points: Array.from({ length: 7 }, (_, pointIndex) => trailPoint(start, control, destination, pointIndex / 6)) };
+};
+
+const radialDestinations = [...townPlazaLayout.slots.map((slot) => slot.approach), townPlazaLayout.gate] as const;
+
+export const townTrailLayout = {
+  radial: radialDestinations.map((destination, index) => radialTrail(index < townPlazaLayout.slots.length ? townPlazaLayout.slots[index]!.id : 'gate', destination, index)),
+  ringRoad: {
+    id: 'ring-road',
+    closed: true,
+    points: Array.from({ length: 16 }, (_, index) => {
+      const angle = (index / 16) * Math.PI * 2;
+      return { x: Math.sin(angle) * 6, z: Math.cos(angle) * 6 };
+    }),
+  } satisfies TownTrailRoute,
+} as const;
+
+export function townTrail(id: string): TownTrailRoute {
+  const route = id === townTrailLayout.ringRoad.id ? townTrailLayout.ringRoad : townTrailLayout.radial.find((trail) => trail.id === id);
+  if (!route) throw new Error(`Missing town trail: ${id}`);
+  return route;
+}
 
 export const townPropRing = {
   panMonument: {

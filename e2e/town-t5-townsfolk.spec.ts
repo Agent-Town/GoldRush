@@ -220,7 +220,7 @@ test('approach barks identify sampled speakers and the Prospector greets by town
   assertNoErrors(errors);
 });
 
-test('youngsters stay on their small square loops', async ({ page }) => {
+test('youngsters ride the town ring road', async ({ page }) => {
   const errors = collectErrors(page);
   await seedStorage(page, { territory: 3, townName: 'Quartz Hill', hintsSeen: GROWTH_BEATS_SEEN });
   await openTown(page);
@@ -232,10 +232,8 @@ test('youngsters stay on their small square loops', async ({ page }) => {
     const start = actor(before, id).position;
     const end = actor(after, id).position;
     expect(Math.hypot(end.x - start.x, end.z - start.z)).toBeGreaterThan(0.25);
-    expect(end.x).toBeGreaterThanOrEqual(-3.35);
-    expect(end.x).toBeLessThanOrEqual(2.75);
-    expect(end.z).toBeGreaterThanOrEqual(-2.55);
-    expect(end.z).toBeLessThanOrEqual(2.6);
+    expect(Math.hypot(end.x, end.z)).toBeGreaterThanOrEqual(5.8);
+    expect(Math.hypot(end.x, end.z)).toBeLessThanOrEqual(6.05);
   }
   assertNoErrors(errors);
 });
