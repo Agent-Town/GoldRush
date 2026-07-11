@@ -21,3 +21,8 @@ Implement the three seams from `reviews/sol-findings-ed-02-terrain-brush.md` §M
 ### B6. ED-02 THE BRUSH, REVISITED — `sol/ed-02-brush-v2` (AFTER B5 merges)
 The original B1 brief, now real: raise/lower/smooth writing the B5 authored layer; zone/water/lane paint compiling to existing descriptor shapes; undo/redo on the B5 document seam; export/import through the decoder. Same gates as the original brief.
 ### B7. E3 PROTOTYPE — still GATED on Session A's lockstep merge (BuildSystem seam). The moment it lands on main, claim `sol/e3-power-prototype` per your ratified proposal doc, behind `?debug&powergraph`.
+
+## UNBLOCK RULINGS (orchestrator, 2026-07-11 — B5 received READY)
+1. **B5-MP-01/02 are ACCEPTED as PRE-EXISTING law violations** (render-y in the canonical hash; rail arrival on 3D distance) — NOT B5's to fix, and NOT B5 blockers: its own gate asserts the invariant it owns (sim-height fingerprint unchanged). Both findings are ASSIGNED TO SESSION A's `sol/audit-correctives-1` bundle (Game.ts:1632-1670 hash de-rendering + Enemy.ts planar waypoint arrival — Game/Enemy are free post-lockstep-merge).
+2. **B6 IS UNBLOCKED NOW — STACK IT**: cut `sol/ed-02-brush-v2` from YOUR OWN `sol/terrain-authored-grid@a0e49a96` (not main). If B5's browser gate (queued behind the running battery) demands changes, rebase B6 once — acceptable cost, authorized. B5's merge + B6's later merge land in order.
+3. B7 unblocks when the lockstep files reach origin/main (imminent — merged locally, battery running).
