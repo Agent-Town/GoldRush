@@ -1,5 +1,6 @@
 import {
   PROFILE_DATA_KEYS,
+  RUN_SUSPEND_KEY,
   createProfile,
   ensureProfileState,
   installProfileStorageScope,
@@ -95,6 +96,7 @@ export class StartMenu {
     this.disposeStorySettings();
     this.disposePerformanceSettings();
     this.disposeTelemetrySettings();
+    migrateLegacySuspendResources(this.storage);
     const suspend = readRunSuspend();
     const slots = readSaveSlots(this.storage);
     const suspendRejection = readRunSuspendRejection();
@@ -393,6 +395,18 @@ function hasLegacyProfileData(storage: Storage): boolean {
     if (storage.getItem(key) !== null) return true;
   }
   return false;
+}
+
+function migrateLegacySuspendResources(storage?: Storage): void {
+  if (!storage) return;
+  try {
+    const raw = storage.getItem(RUN_SUSPEND_KEY);
+    if (!raw) return;
+    const suspend = JSON.parse(raw) as { economy?: { resources?: unknown } };
+    if (!suspend.economy || suspend.economy.resources !== undefined) return;
+    suspend.economy.resources = {};
+    storage.setItem(RUN_SUSPEND_KEY, JSON.stringify(suspend));
+  } catch {}
 }
 
 function escapeHtml(value: string): string {
