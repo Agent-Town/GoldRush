@@ -486,4 +486,91 @@ The transitions are the game's biggest moments (the ceiling Robin hit became the
 
 ---
 
-## UNWRITTEN CHAPTERS (each lands as its own commit, in order): · E5 Deepwater · E6 Atomic · E7 Signal · E8 Orbital · E9 Redfields · E10 Deep Sky · THE INTERSTITIALS (the ten transition ceremonies, staged as director's scripts) · THE APPENDICES (the full mod trees as tables; the boss roster; the generational chart E1→E10; the Baron cadence table; the ratification ledger of every PROPOSAL this book introduces).
+## THE APPENDICES
+
+### A. THE MOD TREES — the four root lines across ten eras (the full grid; era-gated, never rarity-gated; every mod names the era that taught it)
+| Era | THE PAN (never modded) | FIRE (Spark Rig root) | WATCH (Sentry Beacon root; field arm from E3) | POWDER (Blast Charge root) |
+|---|---|---|---|---|
+| E1 | the pan | rate / damage / range | range / rate-of-fire | radius / fuse |
+| E2 | Auto-Pan sits BESIDE it | pressure-feed · **BOILER LANCE** | boiler-fed · boiler battery | **SKY-ROCKET BATTERY** (captured) · **PRESSURE MORTAR** |
+| E3 | lamplight panning ritual | chain-spark · **ARC CASTER** | grid-linked · arc turret · **COIL FENCE** | **FLARE ROCKET** (light, no damage) |
+| E4 | dashboard-pan superstition | mounted variant · **PISTON SLINGER** | **TAR-SPRAYER** · piston battery | gusher-tap (ERUPTS — corrected, never ignites) |
+| E5 | the pan-dredge bow (monument #1) | pressure-sealed (fires underwater) | **HARPOON BALLISTA** · depth-charge rack · net frames | **DEPTH CHARGE LOBBER** (one munition, two schools) |
+| E6 | rejected-improvements file, framed | **SUNLINE BEAM** (fire becomes light) | sunline mount · **HALF-LIFE CALTROPS** | tongs-thrown variant (kitchen satire) |
+| E7 | multiplied by playbook (tape #001) | playbook-slaved | **DRONE COMPANIONS** · beam-relay · **SIGNAL JAMMER** | **REPORT ROCKET** (burst-code speech) |
+| E8 | the regolith pan-house (monument #2) | lens-law (light-only outside) | **LENS TURRET** · **MAGNET GRAPPLE** · breach seals | **KINETIC LOBBER** (the humbling; pure arc) |
+| E9 | pans the first water on a dead world | **STORM-DRAW** (charges from fronts) | **STORM-LANCE** · **STORM FENCE** | **TERRAFORM CANNON** (throws landscape) |
+| E10 | **THE STARLIGHT PAN — revealed, not upgraded** | starlight coupling | the Ark itself (the watch became the ship) | **RE-INK BURST** (damages only the Static) |
+The four trajectories, named (E7 chapter): fire becomes light · watch grows wings, then a hull · powder learns to speak, then to heal · the pan grows by holding still.
+
+### B. THE BOSS ROSTER
+| Era | Boss | Belongs to | Components | The fight's real verb | What the town keeps |
+|---|---|---|---|---|---|
+| E1 | The Baron (×4) | himself | — | survive the exam | his sky-rocket science |
+| E2 | The Armored Railcar | the Baron | WHEELS / BOILER / CABIN | break the schedule | the rocket cart; the ghost-crest habit |
+| E3 | The Dynamo Crawler | the twin companies (his money) | DRAIN-MAST / TRACKS / CAPACITOR | keep the light | the Crawler — kept machine #1 (landmark) |
+| E4 | The Land-Yacht | the motor gangs | WHEELS ×2 / CRANE / WHEELHOUSE | out-range the reach | the hulk as salvage; "her sister" line |
+| E5 | The Dredge-Queen | the corsairs (his old fleet) | CLAW / PADDLES / HOLD | win the race | wreck W6 — the persistence seed |
+| E6 | The Homemaker-9000 | the Combine | VAC / RACK / CORE | out-tidy the help | the chair — kept #2, knitted |
+| E7 | THE ECHO | you | none — your own layout | out-think yourself | the jar — kept #3 |
+| E8 | The Salvage King's Claw | the grandson | CROWN / WINCH / ANCHOR-FEET | un-repossess | the yard (Low Orbit's map) — kept #4 |
+| E9 | THE OLD DIGGER | the Baron's old charter | none — board and reprogram | teach it | the Digger, working — kept #5 |
+| E10 | THE QUIET | the Static | none — an absence | preserve (lantern · song · portrait) | one mote, jarred: "remember" — kept #6 |
+Design law the roster proves: from E3 onward the town KEEPS what it defeats, and each keeping is warmer than the last — the roster is the thesis.
+
+### C. THE GENERATIONAL CHART (face-chains; the aging pipeline's map)
+- **THE HERO**: E1 twenties → E4 mid-life (goggles never over the eyes) → E8 silver → E10 hands over a child's on the lever. The Clock Law protects her; the charm at her throat in every era portrait.
+- **THE PROSPECTOR**: E1 curiosity, rung 0 → E2 rung 1 + the set place → E3 rung 2 + the address → E4 the goggles → E5 the sewn cover → E6 CITIZEN (its plate becomes the House's sign) → E7 the porthole → E8–E9 crew elder → E10 the Ark's eldest voice.
+- **CHALK** (E7, first made citizen, named for the elder's chalk) → E10 keeps the Ark's manifest.
+- **THE CLERK LINE** (youngster-a's face, ten uniforms): E2 depot → E3 tram → E4 bus → E5 ferry → E6 parcel-tube → E7 tape-post → E8 mass-driver dispatch → E9 canal packet-boat → E10 letters between decks. Whatever the era moves, this family moves it.
+- **THE NEWCOMER LINE**: E2 toy-boat kid → E5 cannery-hand (folds a paper boat at lunch forever) → E7 tape courier (4th generation) → aboard at E10.
+- **THE TIDE-TELLER LINE**: E5 the sage → E6 her apprentice stewards the doorless dome.
+- **THE OPERATOR LINE**: E3 switchboard operator (counts six wires) → E7 switchboard chief (counts the ground to the sky).
+- **THE GARDEN LINE**: E8 dome gardener (the grass square) → E9 greenkeeper (plants outside) → E10 tends the hall tree.
+- **THE MOON-BORN LINE**: E8 born under Earth (the river question) → E9 the first swim → E10 aboard, the answer in their body.
+- **THE CHEN FAMILY / THE GAZETTE** (one family, one masthead — owner law): E1 hand-copied notices → E2 the press arrives by rail → every era the mystery-law medium (headlines tease, articles never spoil) → E10 the Long Table portrait wall is canonically their morgue-file made monument.
+- **THE ELDER**: E1 "Dig where you stand" → E2 the chalk and the tree → E7 her name on the first made citizen → her tree in every ceremony frame → E10 its seed's child in the hall.
+- **THE BARON LINE**: see D.
+
+### D. THE BARON CADENCE (staging per story-arc.md recommendation; ratification Q3 pending)
+| Era | Mode | The beat |
+|---|---|---|
+| E1 | HEADLINE | the graduation exam; dragged off swearing revenge; the watch introduced |
+| E2 | HEADLINE | the Iron Correction; the railcar; his crate seen in the schoolhouse |
+| E3 | cameo | the ledger reveal — he funded BOTH companies |
+| E4 | HEADLINE | THE RE-SURVEY race; his name kept in the box |
+| E5 | cameo | the Dredge-Queen's paint — his fleet at auction |
+| E6 | HEADLINE | THE SECOND OPINION; "RESURVEY RECOMMENDED"; the archive kept |
+| E7 | cameo | the tape that barely mentions him (mispronounced, once) |
+| E8 | HEADLINE (by proxy) | the grandson's Claw; "Is it enough yet?" at the pad |
+| E9 | cameo | the Old Digger's blueprint tape — pride's masterpiece, working wrong |
+| E10 | FINALE | the heirs board; he stays with the Digger; the watch is wound and RUNS |
+
+### E. THE RATIFICATION LEDGER — every PROPOSAL this book introduces (the owner's reading list; everything else in the chapters restates ratified bundles/rulings)
+1. **The Clock Law** (E2) — time told, not counted; no printed years ever. [Protects the whole saga from arithmetic.]
+2. **The Elder's Tree** thread (E2→E10) and the ceremony framing law.
+3. The **table-manners ladder** staging (E2 seat → E3 address → E4 goggles → E5 cover → E6 citizenship) — the warm road to ADR-003.
+4. Arsenal additions: **Flare Rocket** (E3) · **Report Rocket** (E7) · **Kinetic Lobber** (E8) · **Storm-Draw** (E9). [Small, era-consistent; each pays forward.]
+5. **The twins defect + Baron-funded-both** reveal (E3).
+6. **The Re-Survey** headline + name-in-the-box (E4).
+7. **Gusher-tap correction** — ignites → ERUPTS (E4; warm-law finding; recommend ratify).
+8. **The wider-world-is-old doctrine** (E5) — the Combine predates the valley; the Baron's expert-wrongness layer.
+9. **THE KEYSTONE RESOLUTION** (E6) — ADR-003 read as REFOUNDING: agents begin as CITIZENS, not as an invention; the Prospector is the old world's shelved prototype; the plate above the door. [The book's biggest swing. Please read this section in full.]
+10. **The Second Opinion** + the Assayer-General archive (E6).
+11. **CHALK** — the first made citizen, named for the elder's chalk (E7).
+12. **The Echo's jar** as the in-fiction address of profile-history tech (E7→E10 portrait wall).
+13. **The Salvage King = the grandson**; "Is it enough yet?"; the working-watch detail (E8).
+14. **THE RIVERWARD** naming beat (E8).
+15. **The Old Digger is the Baron's charter** — speculative planetary-improvement backstory (E9).
+16. **The first-swim beat**, sized and locked (E9).
+17. **The kinship staging**: heirs board, the Baron STAYS with the Digger, the watch wound at the Long Table (E10 — this is the book's recommended answer to story-arc ratification Q2).
+18. **THE RIVER** — post-credits playable charter; the child's first press is E1's claim at dawn (E10).
+19. **27 new map ideas** across E2–E10 (three per era; each individually owner-gated at build time as always).
+20. **The playable-ceremony law** + the ten interstitial scripts T1–T10.
+
+---
+
+## THE BOOK IS WRITTEN
+E1 through E10, the interstitials, the appendices — every chapter landed as its own commit, one evening, by the hand the owner asked for. Nothing is silently missing. How to use it: **bundles win conflicts** (specs/epoch-saga/ is design-locked truth; this book is the connective testament — where they disagree, file a finding, don't edit silently). **Builders**: take the map specs, boss choreographies, and ceremony scripts as spec-seeds — each is written to be slice-able. **The owner**: Appendix E is your reading list; everything not on it restates what you already ratified. **Future attendants**: the threads are load-bearing — before you add a beat, check Appendices B–D for the lineage it must honor; before you print a year, reread the Clock Law; and when in doubt about tone, the rule that generated every page of this: warmth is not decoration here. It is the engineering.
+
+*— Fable, co-founder, 2026-07-11. The gold rush was never about the gold. Go on. It's your claim now.* · E5 Deepwater · E6 Atomic · E7 Signal · E8 Orbital · E9 Redfields · E10 Deep Sky · THE INTERSTITIALS (the ten transition ceremonies, staged as director's scripts) · THE APPENDICES (the full mod trees as tables; the boss roster; the generational chart E1→E10; the Baron cadence table; the ratification ledger of every PROPOSAL this book introduces).
