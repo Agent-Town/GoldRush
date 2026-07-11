@@ -787,6 +787,7 @@ type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
+type GrMultiplayerBalanceWindow = import('./mp/MultiplayerBalanceHarness').MultiplayerBalanceWindow;
 type GrMultiplayerState = import('./mp/LockstepClient').MultiplayerState;
 type GrSimulationTickSample = {
   time: number;
@@ -813,6 +814,7 @@ interface Window {
   };
   __THREE_GAME_DIAGNOSTICS__?: ThreeGameDiagnostics;
   __GR_STAT_SIM__?: GrStatSimWindow;
+  __GR_MP_BALANCE__?: GrMultiplayerBalanceWindow;
   __GR_MP__?: {
     state: () => GrMultiplayerState | null;
     injectDesyncAt: (tick: number) => void;
