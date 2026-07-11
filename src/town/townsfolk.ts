@@ -1,7 +1,7 @@
 import { assetSlots, type AssetSlotId } from '../assets/slots';
 import type { RotationDirection } from '../assets/OrientationResolver';
 import { latestHeraldHeadline } from '../news/herald';
-import type { TownBuilding, TownBuildingId } from './townLayout';
+import { townTrail, type TownBuilding, type TownBuildingId } from './townLayout';
 
 export type TownActorId =
   | 'tavernkeeper'
@@ -29,11 +29,16 @@ export type TownActorDefinition = {
   barkRadius: number;
   e1Barks: readonly string[];
   loop?: {
+    trailId: string;
     points: readonly { x: number; z: number }[];
     seconds: number;
     phase: number;
+    pauses?: Readonly<Record<number, number>>;
   };
 };
+
+const reverseTrail = (id: string) => [...townTrail(id).points].reverse();
+const ringRoad = townTrail('ring-road').points;
 
 const tavernkeeperPortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper.png', import.meta.url).href;
 const storekeeperPortraitUrl = new URL('../../assets/processed/townsfolk-storekeeper.png', import.meta.url).href;
@@ -139,13 +144,9 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     barkRadius: 2.45,
     e1Barks: ['Race you from the trough to the office!', 'I found a shiny rock. It is probably science.', 'The Prospector hummed at me. I hummed back.'],
     loop: {
-      points: [
-        { x: -2.8, z: -1.5 },
-        { x: -0.4, z: 1.9 },
-        { x: 2.7, z: 0.7 },
-        { x: 0.9, z: -2.5 },
-      ],
-      seconds: 11,
+      trailId: 'ring-road',
+      points: ringRoad,
+      seconds: 18,
       phase: 0,
     },
   },
@@ -162,28 +163,31 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     barkRadius: 2.45,
     e1Barks: ['We drew the store before it was real.', 'If the Baron comes here, he has to do sums first.', 'I can see the whole square from the rail.'],
     loop: {
-      points: [
-        { x: 2.2, z: 1.25 },
-        { x: -0.9, z: 2.55 },
-        { x: -3.2, z: -0.8 },
-        { x: 1.2, z: -2.15 },
-      ],
-      seconds: 13,
+      trailId: 'ring-road',
+      points: ringRoad,
+      seconds: 21,
       phase: 0.34,
     },
   },
   {
     id: 'newsie',
-    name: 'Pip Quick',
+    name: 'Chen Mei',
     post: 'Newsie',
     assetSlot: assetSlots.charTownYoungsterA,
     portraitUrl: youngsterAPortraitUrl,
     anchor: 'tavern',
-    position: { x: -1.5, z: -3.3 },
+    position: { x: -4.35, z: -4.25 },
     facing: 's',
     scale: 1.12,
     barkRadius: 3.1,
     e1Barks: ['EXTRA! Fresh ink by the tavern!', 'Paper is warm. Read it before the wind does.'],
+    loop: {
+      trailId: 'tavern',
+      points: [...reverseTrail('tavern'), ...townTrail('tavern').points.slice(1)],
+      seconds: 19,
+      phase: 0.16,
+      pauses: { 0: 4 },
+    },
   },
   {
     id: 'prospector',
@@ -195,8 +199,15 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     position: { x: 8.45, z: -4.55 },
     facing: 's',
     scale: 1.5,
-    barkRadius: 5.1,
-    e1Barks: ['I am watching {town} from the office steps.', '{town} is logged. I will keep near the claim books.', 'Call from the board; I will follow to the claim.'],
+    barkRadius: 6.5,
+    e1Barks: ['I am watching {town} from the office steps.', '{town} is logged. I will keep near the claim books.', 'Call from the board; I will follow {town} to the claim.'],
+    loop: {
+      trailId: 'claim_office',
+      points: [...townTrail('claim_office').points.slice(1), ...reverseTrail('claim_office').slice(1, -1)],
+      seconds: 23,
+      phase: 0,
+      pauses: { 0: 6 },
+    },
   },
 ] as const;
 

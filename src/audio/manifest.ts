@@ -1,4 +1,4 @@
-export type SoundGroup = 'sfx' | 'ui' | 'ambience' | 'voice';
+export type SoundGroup = 'sfx' | 'ui' | 'ambience' | 'voice' | 'music';
 
 export type SoundName =
   | 'agent-works'
@@ -10,6 +10,7 @@ export type SoundName =
   | 'defeat-sting'
   | 'demolish'
   | 'epoch-door-sting'
+  | 'era-e1-frontier-loop'
   | 'gold-chime'
   | 'invalid'
   | 'ledger-open'
@@ -26,6 +27,7 @@ export type SoundName =
   | 'spark-bolt-hit'
   | 'stockpile-deposit'
   | 'tier-up'
+  | 'title-theme'
   | 'turret-fire'
   | 'victory-sting'
   | 'wave-start-horn'
@@ -57,6 +59,7 @@ export const soundManifest = {
   'defeat-sting': { file: 'defeat-sting.mp3', volume: 0.42, group: 'ui' },
   demolish: { file: 'demolish.mp3', volume: 0.42, group: 'ui' },
   'epoch-door-sting': { file: 'epoch-door-sting.mp3', volume: 0.46, group: 'ui' },
+  'era-e1-frontier-loop': { file: 'era-e1-frontier-loop.mp3', volume: 0.42, group: 'music', loop: true },
   'gold-chime': { file: 'gold-chime.mp3', volume: 0.3, group: 'sfx' },
   invalid: { file: 'invalid.mp3', volume: 0.34, group: 'ui' },
   'ledger-open': { file: 'ledger-open.mp3', volume: 0.36, group: 'ui' },
@@ -73,6 +76,7 @@ export const soundManifest = {
   'spark-bolt-hit': { file: 'spark-bolt-hit.mp3', volume: 0.24, group: 'sfx', minIntervalMs: 50, pitchVariance: 0.04 },
   'stockpile-deposit': { file: 'stockpile-deposit.mp3', volume: 0.34, group: 'sfx' },
   'tier-up': { file: 'tier-up.mp3', volume: 0.38, group: 'ui' },
+  'title-theme': { file: 'title-theme.mp3', volume: 0.48, group: 'music', loop: true },
   'turret-fire': { file: 'turret-fire.mp3', volume: 0.24, group: 'sfx', minIntervalMs: 70, pitchVariance: 0.04 },
   'victory-sting': { file: 'victory-sting.mp3', volume: 0.42, group: 'ui' },
   'wave-start-horn': { file: 'wave-start-horn.mp3', volume: 0.4, group: 'sfx' },

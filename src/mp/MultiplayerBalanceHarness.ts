@@ -39,8 +39,8 @@ export type MultiplayerBalanceReport = {
     difficultyPreset: 'trail';
     contract: 'The Claim';
     survivalEndsAt: 'first-rider-death';
-    harvest: 'single-shared-progress-channel';
-    harvestRiderEffect: 'rider-count-improves-uptime-not-progress-rate';
+    harvest: 'per-rider-progress-channels';
+    harvestRiderEffect: 'parallel-on-separate-seams-first-claim-on-shared-seam';
     harvestAvailability: 'seeded-58-to-72-percent-duty-cycles';
     aggregation: 'median-over-common-seed-corpus';
     combatResolution: 'stationary-instant-hit-base-spark-rig-at-range';
@@ -132,8 +132,8 @@ function buildReport(seed: string): MultiplayerBalanceReport {
       difficultyPreset: 'trail' as const,
       contract: 'The Claim' as const,
       survivalEndsAt: 'first-rider-death' as const,
-      harvest: 'single-shared-progress-channel' as const,
-      harvestRiderEffect: 'rider-count-improves-uptime-not-progress-rate' as const,
+      harvest: 'per-rider-progress-channels' as const,
+      harvestRiderEffect: 'parallel-on-separate-seams-first-claim-on-shared-seam' as const,
       harvestAvailability: 'seeded-58-to-72-percent-duty-cycles' as const,
       aggregation: 'median-over-common-seed-corpus' as const,
       combatResolution: 'stationary-instant-hit-base-spark-rig-at-range' as const,
@@ -292,8 +292,7 @@ function runGold(riderCount: RiderCount, seed: string): number {
     const cycle = rng.range(7.2, 8.8);
     return { cycle, activeSeconds: cycle * rng.range(0.58, 0.72), phase: rng.range(0, cycle) };
   });
-  let channelNode = -1;
-  let progress = 0;
+  const channels = Array.from({ length: riderCount }, () => ({ node: -1, progress: 0 }));
   let gold = 0;
 
   for (let tick = 0; tick < DURATION_SECONDS / STEP_SECONDS; tick += 1) {
@@ -301,29 +300,49 @@ function runGold(riderCount: RiderCount, seed: string): number {
     for (const node of nodes) {
       if (node.remaining <= 0 && node.respawnAt <= at) node.remaining = Balance.goldSeam.capacity;
     }
-    const channeling = riders.some((rider) => (at + rider.phase) % rider.cycle < rider.activeSeconds);
-    if (!channeling) {
-      progress = Math.max(
-        0,
-        progress - (STEP_SECONDS / Balance.goldSeam.tickSeconds) * Balance.goldSeam.decayMultiplier,
-      );
-      if (progress === 0) channelNode = -1;
-      continue;
+    const active = riders.map((rider) => (at + rider.phase) % rider.cycle < rider.activeSeconds);
+    const claimed = new Set<number>();
+    for (let rider = 0; rider < riderCount; rider += 1) {
+      const channel = channels[rider];
+      if (active[rider] && channel.node >= 0 && nodes[channel.node].remaining > 0 && !claimed.has(channel.node)) {
+        claimed.add(channel.node);
+      } else {
+        channel.node = -1;
+      }
     }
+    for (let rider = 0; rider < riderCount; rider += 1) {
+      const channel = channels[rider];
+      if (active[rider] && channel.node < 0) {
+        for (let offset = 0; offset < nodes.length; offset += 1) {
+          const candidate = (rider + offset) % nodes.length;
+          if (nodes[candidate].remaining > 0 && !claimed.has(candidate)) {
+            channel.node = candidate;
+            claimed.add(candidate);
+            break;
+          }
+        }
+      }
 
-    if (channelNode < 0 || nodes[channelNode].remaining <= 0) channelNode = nodes.findIndex((node) => node.remaining > 0);
-    if (channelNode < 0) continue;
-    progress = Math.min(1, progress + STEP_SECONDS / Balance.goldSeam.tickSeconds);
-    while (progress >= 1 && channelNode >= 0) {
-      const node = nodes[channelNode];
-      const gained = Math.min(Balance.goldSeam.tickGold, node.remaining);
-      gold += gained;
-      node.remaining -= gained;
-      progress -= 1;
-      if (node.remaining <= 0) {
-        node.respawnAt = at + Balance.goldSeam.respawnSeconds;
-        channelNode = -1;
-        progress = 0;
+      if (channel.node < 0) {
+        channel.progress = Math.max(
+          0,
+          channel.progress - (STEP_SECONDS / Balance.goldSeam.tickSeconds) * Balance.goldSeam.decayMultiplier,
+        );
+        continue;
+      }
+
+      channel.progress = Math.min(1, channel.progress + STEP_SECONDS / Balance.goldSeam.tickSeconds);
+      while (channel.progress >= 1 && channel.node >= 0) {
+        const node = nodes[channel.node];
+        const gained = Math.min(Balance.goldSeam.tickGold, node.remaining);
+        gold += gained;
+        node.remaining -= gained;
+        channel.progress -= 1;
+        if (node.remaining <= 0) {
+          node.respawnAt = at + Balance.goldSeam.respawnSeconds;
+          channel.node = -1;
+          channel.progress = 0;
+        }
       }
     }
   }
@@ -414,6 +433,7 @@ function balanceInputs(): unknown {
   return {
     model: {
       multiplayerSpawnRadius: MULTIPLAYER_SPAWN_RADIUS,
+      harvest: 'per-rider-progress-channels-first-claim-per-seam',
       waveSpawns: 'seeded-distinct-edges-with-live-group-spread',
       enemyTargeting: 'nearest-stationary-rider-from-seeded-edge-spawn',
     },
