@@ -26,7 +26,9 @@ for m in tasks/running/*--*; do
   slot=${base%%--*}; rest=${base#*--}; stamp=$(echo "$rest" | cut -c1-15); name=${rest:16}
   se=$(stamp_to_epoch "$stamp")
   el=$([ "$se" -gt 0 ] && mins_ago "$se" || echo "?")
-  RUNNING="$RUNNING$(printf '%-7s %-52s started %s   %s min in' "$slot" "${name%.md}" "$(echo "$stamp" | cut -c10-11):$(echo "$stamp" | cut -c12-13)" "$el")
+  RMODEL=$(grep -m1 '^CODEX:' "$m" 2>/dev/null | sed -E 's/^CODEX: *model=([^ ]+) *effort=([^ ]+).*/[\1@\2]/')
+  [ -z "$RMODEL" ] && RMODEL='[gpt-5.6-sol@medium·default]'
+  RUNNING="$RUNNING$(printf '%-7s %-46s %s started %s   %s min in' "$slot" "${name%.md}" "$RMODEL" "$(echo "$stamp" | cut -c10-11):$(echo "$stamp" | cut -c12-13)" "$el")
 "
 done
 [ -z "$RUNNING" ] && RUNNING="(all slots idle)"
@@ -106,7 +108,14 @@ for b in lane/m3 lane/m4 lane/polish lane/perf lane/m6-r3a-apply save/w1-04-scat
   if [ "${N:-0}" != "0" ]; then
     AGE=$(git log -1 --format=%ct "$b" 2>/dev/null || echo "$NOW_EPOCH")
     SUBJ=$(git log "main..$b" --format='%s' 2>/dev/null | head -1 | cut -c1-80)
-    LANES="$LANES$(printf '%-28s [%s commit(s), newest %s min ago]  %s' "$b" "$N" "$(mins_ago "$AGE")" "$SUBJ")
+    # s334: show WHICH MODEL ran the job — resolve the task md from the commit subject, read its CODEX header (absent = the runner default).
+    TASKMD=$(printf '%s' "$SUBJ" | grep -oE '[A-Za-z0-9_-]+\.md' | head -1)
+    MODEL=""
+    if [ -n "$TASKMD" ] && [ -f "tasks/$TASKMD" ]; then
+      MODEL=$(grep -m1 '^CODEX:' "tasks/$TASKMD" 2>/dev/null | sed -E 's/^CODEX: *model=([^ ]+) *effort=([^ ]+).*/[\1@\2]/')
+    fi
+    [ -z "$MODEL" ] && case "$SUBJ" in runner*) MODEL='[gpt-5.6-sol@medium·default]';; *) MODEL='[attended/fire]';; esac
+    LANES="$LANES$(printf '%-28s [%s commit(s), newest %s min ago]  %s  %s' "$b" "$N" "$(mins_ago "$AGE")" "$SUBJ" "$MODEL")
 "
   fi
 done
