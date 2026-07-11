@@ -997,7 +997,12 @@ function captureBuildings(buildSystem: AnyGame | undefined): BuildingSuspend[] {
           x: cleanNumber((entry.position as AnyRecord | undefined)?.x),
           z: cleanNumber((entry.position as AnyRecord | undefined)?.z),
         },
-        rotationSteps: id === 'palisade' ? cleanNumber(buildSystem.palisades?.rotationStepsAt?.(index)) : 0,
+        rotationSteps:
+          id === 'palisade'
+            ? cleanNumber(buildSystem.palisades?.rotationStepsAt?.(index))
+            : id === 'lantern_post'
+              ? cleanNumber(buildSystem.lanternPosts?.rotationStepsAt?.(index))
+              : 0,
         ...(buildSystem.captureBuildingFutureState?.(id, index) ?? { sluice: null }),
       };
     });

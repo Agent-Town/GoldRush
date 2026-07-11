@@ -14,6 +14,7 @@ type SavedNightSuspend = {
     wrecked: boolean;
     repairCostOverride?: number;
     position: { x: number; z: number };
+    rotationSteps: number;
   }[];
 };
 
@@ -356,13 +357,15 @@ test('cold lantern relight costs survive run suspend and continue', async ({ pag
         wrecked: entry.wrecked,
         repairCostOverride: entry.repairCostOverride,
         position: entry.position,
+        rotationSteps: entry.rotationSteps,
       })),
   ).toEqual(
-    COLD_LANTERNS.map(({ x, z }, index) => ({
+    COLD_LANTERNS.map(({ x, z, rotationSteps }, index) => ({
       index,
       wrecked: true,
       repairCostOverride: RELIGHT_COST,
       position: { x, z },
+      rotationSteps,
     })),
   );
   await expectClean(errors);
@@ -375,6 +378,10 @@ test('cold lantern relight costs survive run suspend and continue', async ({ pag
   );
   await restoredPage.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restored === true);
   await expect(restoredPage.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave)).resolves.toBe(1);
+  await expect(
+    restoredPage.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__?.build as unknown as { lanternPostRotations: number[] }).lanternPostRotations),
+  ).resolves.toEqual(COLD_LANTERNS.map(({ rotationSteps }) => rotationSteps));
+  await shot(restoredPage, test.info(), 'authored-lantern-rotations-after-restore');
   await expect.poll(() => lanternHp(restoredPage).then((entries) => entries[0]?.repairCost)).toBe(RELIGHT_COST);
   expect(await relightLantern(restoredPage, 0)).toMatchObject({ id: 'lantern_post', index: 0, cost: RELIGHT_COST });
   await expectClean(restoredErrors);

@@ -24,6 +24,7 @@ import type { BuildingTarget, TargetingSystem } from './TargetingSystem';
 import { RenderLayers } from '../core/RenderLayers';
 import { hasElevationTile, highGroundRange, terrainLineOfSight } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
+import { matchesPlacement, overlapsExisting, type PlacementDescriptor } from './BuildPlacement';
 
 export type BuildableSnapshot = {
   id: BuildableId;
@@ -60,6 +61,7 @@ export type BuildDiagnostics = {
   turretPositions: Array<{ x: number; z: number }>;
   assayOfficePositions: Array<{ x: number; z: number }>;
   lanternPostPositions: Array<{ x: number; z: number }>;
+  lanternPostRotations: number[];
   reservedFootprints: Array<{ id: string; x: number; z: number; halfX: number; halfZ: number }>;
   buildables: Array<{ id: BuildableId; count: number }>;
   sluicesState: SluiceSnapshot[];
@@ -509,6 +511,7 @@ export class BuildSystem {
       turretPositions: this.activePositions(this.turrets),
       assayOfficePositions: this.assayOfficeActive ? [{ x: this.assayOfficePosition.x, z: this.assayOfficePosition.z }] : emptyPositions,
       lanternPostPositions: this.activePositions(this.lanternPosts),
+      lanternPostRotations: this.lanternPosts.activeRotations,
       reservedFootprints: this.reservedFootprints
         .filter((entry) => entry.active)
         .map(({ id, x, z, halfX, halfZ }) => ({ id, x, z, halfX, halfZ })),
@@ -1136,81 +1139,53 @@ export class BuildSystem {
   }
 
   private matchesPlacement(def: BuildableDef, position: THREE.Vector3): boolean {
-    if (def.placement === 'any') return Terrain.sample(position.x, position.z).walkable;
-    if (def.placement === 'bank') return Terrain.isBuildable(position.x, position.z);
-    return this.isWaterSourceAdjacent(position);
-  }
-
-  private isWaterSourceAdjacent(position: THREE.Vector3): boolean {
-    return Terrain.isBuildable(position.x, position.z) && Terrain.isWaterSourceAdjacent(position.x, position.z, Balance.sluice.riverPad);
+    const buildable = Terrain.isBuildable(position.x, position.z);
+    return matchesPlacement(def.placement, {
+      walkable: Terrain.sample(position.x, position.z).walkable,
+      buildable,
+      waterSourceAdjacent: buildable && Terrain.isWaterSourceAdjacent(position.x, position.z, Balance.sluice.riverPad),
+    });
   }
 
   private overlapsExisting(id: BuildableId, position: THREE.Vector3): boolean {
+    const existing: PlacementDescriptor[] = [];
     for (let i = 0; i < this.beacons.capacity; i += 1) {
       if (!this.beacons.isActive(i)) continue;
       const pos = this.beacons.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'sentry_beacon', pos, 0)) return true;
+      if (pos) existing.push(this.placementDescriptor('sentry_beacon', pos, 0));
     }
     for (let i = 0; i < this.palisades.capacity; i += 1) {
       if (!this.palisades.isActive(i)) continue;
       const pos = this.palisades.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'palisade', pos, this.palisades.rotationStepsAt(i))) {
-        return true;
-      }
+      if (pos) existing.push(this.placementDescriptor('palisade', pos, this.palisades.rotationStepsAt(i)));
     }
     for (let i = 0; i < this.sluices.capacity; i += 1) {
       if (!this.sluices.isActive(i)) continue;
       const pos = this.sluices.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'sluice', pos, 0)) return true;
+      if (pos) existing.push(this.placementDescriptor('sluice', pos, 0));
     }
     for (let i = 0; i < this.stockpiles.capacity; i += 1) {
       if (!this.stockpiles.isActive(i)) continue;
       const pos = this.stockpiles.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'stockpile', pos, 0)) return true;
+      if (pos) existing.push(this.placementDescriptor('stockpile', pos, 0));
     }
     for (let i = 0; i < this.turrets.capacity; i += 1) {
       if (!this.turrets.isActive(i)) continue;
       const pos = this.turrets.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'turret', pos, 0)) return true;
+      if (pos) existing.push(this.placementDescriptor('turret', pos, 0));
     }
     for (let i = 0; i < this.lanternPosts.capacity; i += 1) {
       if (!this.lanternPosts.isActive(i)) continue;
       const pos = this.lanternPosts.allPositions[i];
-      if (pos && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'lantern_post', pos, 0)) return true;
+      if (pos) existing.push(this.placementDescriptor('lantern_post', pos, this.lanternPosts.rotationStepsAt(i)));
     }
-    if (this.assayOfficeActive && this.overlapsBuildable(id, position, this.ghostRotationSteps, 'assay_office', this.assayOfficePosition, 0)) {
-      return true;
-    }
-    for (const footprint of this.reservedFootprints) {
-      if (!footprint.active) continue;
-      const half = this.footprintHalfExtents(id, this.ghostRotationSteps);
-      if (Math.abs(position.x - footprint.x) < half.x + footprint.halfX && Math.abs(position.z - footprint.z) < half.z + footprint.halfZ) {
-        return true;
-      }
-    }
-    return false;
+    if (this.assayOfficeActive) existing.push(this.placementDescriptor('assay_office', this.assayOfficePosition, 0));
+    return overlapsExisting(this.placementDescriptor(id, position, this.ghostRotationSteps), existing, this.reservedFootprints.filter((entry) => entry.active));
   }
 
-  private overlapsBuildable(
-    aId: BuildableId,
-    a: THREE.Vector3,
-    aRotationSteps: number,
-    bId: BuildableId,
-    b: THREE.Vector3,
-    bRotationSteps: number,
-  ): boolean {
-    if (aId === 'sentry_beacon' && bId === 'sentry_beacon') {
-      return this.overlaps(a, b, this.overlapRadius('sentry_beacon'));
-    }
-    const aHalf = this.footprintHalfExtents(aId, aRotationSteps);
-    const bHalf = this.footprintHalfExtents(bId, bRotationSteps);
-    return Math.abs(a.x - b.x) < aHalf.x + bHalf.x && Math.abs(a.z - b.z) < aHalf.z + bHalf.z;
-  }
-
-  private overlaps(a: THREE.Vector3, b: THREE.Vector3, radius: number): boolean {
-    const dx = a.x - b.x;
-    const dz = a.z - b.z;
-    return dx * dx + dz * dz < radius * radius;
+  private placementDescriptor(id: BuildableId, position: { x: number; z: number }, rotationSteps: number): PlacementDescriptor {
+    const half = this.footprintHalfExtents(id, rotationSteps);
+    return { id, x: position.x, z: position.z, rotationSteps, halfX: half.x, halfZ: half.z, overlapRadius: this.overlapRadius(id) };
   }
 
   private overlapRadius(id: BuildableId): number {
@@ -1262,7 +1237,7 @@ export class BuildSystem {
     if (id === 'sluice') return this.sluices.place(position, preferredSlot);
     if (id === 'stockpile') return this.stockpiles.place(position, preferredSlot);
     if (id === 'turret') return this.turrets.place(position, preferredSlot);
-    if (id === 'lantern_post') return this.lanternPosts.place(position, preferredSlot);
+    if (id === 'lantern_post') return this.lanternPosts.place(position, this.ghostRotationSteps, preferredSlot);
     if (id === 'assay_office') return this.placeAssayOffice(position, preferredSlot);
     return this.beacons.place(position, preferredSlot);
   }
@@ -2127,6 +2102,7 @@ class LanternPostPool {
 
   private readonly active: boolean[] = [];
   private readonly positions: THREE.Vector3[] = [];
+  private readonly rotationSteps: number[] = [];
   private readonly postGeometry = new THREE.CylinderGeometry(0.045, 0.06, 1.35, 6);
   private readonly armGeometry = new THREE.BoxGeometry(0.62, 0.07, 0.07);
   private readonly lanternGeometry = new THREE.BoxGeometry(0.22, 0.28, 0.18);
@@ -2170,6 +2146,7 @@ class LanternPostPool {
     for (let i = 0; i < Balance.lanternPost.maxCount; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
+      this.rotationSteps.push(0);
       this.hide(i);
     }
     this.markNeedsUpdate();
@@ -2187,15 +2164,24 @@ class LanternPostPool {
     return this.positions;
   }
 
+  get activeRotations(): number[] {
+    return this.rotationSteps.filter((_, index) => this.active[index]);
+  }
+
+  rotationStepsAt(index: number): number {
+    return this.rotationSteps[index] ?? 0;
+  }
+
   isActive(index: number): boolean {
     return this.active[index] === true;
   }
 
-  place(position: THREE.Vector3, preferredSlot?: number): number {
+  place(position: THREE.Vector3, rotationSteps = 0, preferredSlot?: number): number {
     const slot = preferredSlot ?? this.active.findIndex((active) => !active);
     if (!Number.isInteger(slot) || slot < 0 || slot >= this.active.length || this.active[slot]) return -1;
     this.active[slot] = true;
     this.positions[slot]?.copy(position);
+    this.rotationSteps[slot] = ((rotationSteps % 4) + 4) % 4;
     this.alive += 1;
     this.sync(slot, 0);
     this.markNeedsUpdate();
@@ -2205,6 +2191,7 @@ class LanternPostPool {
   deactivate(index: number): boolean {
     if (!this.active[index]) return false;
     this.active[index] = false;
+    this.rotationSteps[index] = 0;
     this.alive = Math.max(0, this.alive - 1);
     this.hide(index);
     this.markNeedsUpdate();
@@ -2229,6 +2216,7 @@ class LanternPostPool {
   reset(): void {
     for (let i = 0; i < this.active.length; i += 1) {
       this.active[i] = false;
+      this.rotationSteps[i] = 0;
       this.hide(i);
     }
     this.alive = 0;
@@ -2251,14 +2239,17 @@ class LanternPostPool {
     if (!position) return;
     const groundY = Terrain.visualY(position.x, position.z, 0, Balance.lanternPost.overlapRadius);
     const sway = Math.sin(at * 0.85 + index) * 0.035;
+    const yaw = this.rotationStepsAt(index) * (Math.PI / 2);
+    const sideX = Math.cos(yaw);
+    const sideZ = -Math.sin(yaw);
     this.syncPart(this.postMesh, index, position.x, groundY + 0.66, position.z, 1, 0);
-    this.syncPart(this.armMesh, index, position.x + 0.22, groundY + 1.22, position.z, 1, sway);
+    this.syncPart(this.armMesh, index, position.x + sideX * 0.22, groundY + 1.22, position.z + sideZ * 0.22, 1, yaw + sway);
     if (!lit) {
       this.hideLight(index);
       return;
     }
-    this.syncPart(this.lanternMesh, index, position.x + 0.52, groundY + 1.03, position.z, 1, sway * 1.4);
-    this.syncPart(this.haloMesh, index, position.x + 0.52, groundY + 1.03, position.z, 1 + Math.sin(at * 1.6 + index) * 0.06, 0);
+    this.syncPart(this.lanternMesh, index, position.x + sideX * 0.52, groundY + 1.03, position.z + sideZ * 0.52, 1, yaw + sway * 1.4);
+    this.syncPart(this.haloMesh, index, position.x + sideX * 0.52, groundY + 1.03, position.z + sideZ * 0.52, 1 + Math.sin(at * 1.6 + index) * 0.06, 0);
   }
 
   private syncPart(mesh: THREE.InstancedMesh, index: number, x: number, y: number, z: number, scale: number, yaw: number): void {
