@@ -11,9 +11,15 @@ import {
   stageContractEditorDocument,
   type ContractManifest,
 } from '../meta/ContractFamilies';
+import { createTerrainBrushPanel } from './TerrainBrush';
 import './descriptor-inspector.css';
 
 type JsonRecord = Record<string, unknown>;
+type EditorHistory = { version: 1; head: string; past: string[]; future: string[] };
+
+const EDITOR_HISTORY_KEY = 'gr.editor.history.v1';
+const EDITOR_HISTORY_MAX_STEPS = 20;
+const EDITOR_HISTORY_MAX_CHARS = 1_000_000;
 
 const ENUMS: Record<string, readonly string[]> = {
   'tileParams.render.terrainMesh': ['required', 'preferred', 'off'],
@@ -28,6 +34,8 @@ const ENUMS: Record<string, readonly string[]> = {
 export function installDescriptorInspector(root: HTMLElement): void {
   const contract = structuredClone(activeContract());
   const template = loadContract(contract.id);
+  const currentBytes = contractDescriptorJson(contract);
+  const history = readEditorHistory(template, currentBytes);
   const shell = document.createElement('aside');
   shell.className = 'descriptor-inspector';
   shell.dataset.testid = 'descriptor-inspector';
@@ -61,12 +69,53 @@ export function installDescriptorInspector(root: HTMLElement): void {
     rejection.textContent = message;
     status.textContent = 'The open contract was left untouched.';
   };
-  const apply = (next: ContractManifest): boolean => {
-    const accepted = applyDescriptor(next, template);
-    if (!accepted) showRejection(CONTRACT_EDITOR_REJECTION_LINE);
-    return accepted;
+  const commit = (text: string, nextHistory: EditorHistory, message: string): boolean => {
+    rejection.hidden = true;
+    status.textContent = message;
+    if (stageDescriptorWithHistory(text, template, nextHistory)) return true;
+    showRejection(CONTRACT_EDITOR_REJECTION_LINE);
+    return false;
+  };
+  const apply = (next: ContractManifest, message = 'Applying the descriptor…'): boolean => {
+    const nextBytes = contractDescriptorJson(next);
+    if (nextBytes === currentBytes) {
+      status.textContent = 'That mark left the descriptor unchanged.';
+      return true;
+    }
+    const nextHistory = boundEditorHistory({ version: 1, head: documentFingerprint(nextBytes), past: [...history.past, currentBytes], future: [] });
+    return commit(nextBytes, nextHistory, message);
+  };
+  const undo = () => {
+    const target = history.past.at(-1);
+    if (!target) return;
+    const nextHistory = boundEditorHistory({
+      version: 1,
+      head: documentFingerprint(target),
+      past: history.past.slice(0, -1),
+      future: [...history.future, currentBytes],
+    });
+    commit(target, nextHistory, 'Undoing the last descriptor mark…');
+  };
+  const redo = () => {
+    const target = history.future.at(-1);
+    if (!target) return;
+    const nextHistory = boundEditorHistory({
+      version: 1,
+      head: documentFingerprint(target),
+      past: [...history.past, currentBytes],
+      future: history.future.slice(0, -1),
+    });
+    commit(target, nextHistory, 'Restoring the next descriptor mark…');
   };
   const fields = shell.querySelector<HTMLElement>('[data-testid="editor-fields"]')!;
+  fields.append(createTerrainBrushPanel({
+    contract,
+    canUndo: history.past.length > 0,
+    canRedo: history.future.length > 0,
+    onCommit: (next, message) => apply(next, message),
+    onUndo: undo,
+    onRedo: redo,
+  }));
   renderSections(fields, contract, () => apply(contract));
   const importText = (text: string) => {
     const parsed = parseContractDescriptor(text, template);
@@ -75,8 +124,7 @@ export function installDescriptorInspector(root: HTMLElement): void {
       return;
     }
     rejection.hidden = true;
-    status.textContent = 'Applying the imported descriptor…';
-    apply(parsed.contract);
+    apply(parsed.contract, 'Applying the imported descriptor…');
   };
 
   shell.querySelector<HTMLButtonElement>('[data-testid="editor-copy"]')!.addEventListener('click', async () => {
@@ -126,7 +174,7 @@ function renderSections(root: HTMLElement, contract: ContractManifest, apply: ()
   };
   root.append(section('Tile', basics, 'tileParams', commit));
   for (const [key, value] of Object.entries(tileParams)) {
-    if (key in basics) continue;
+    if (key in basics || key === 'authoredTerrain') continue;
     root.append(section(label(key), value, `tileParams.${key}`, commit));
   }
 }
@@ -273,15 +321,82 @@ function numberInput(type: 'range' | 'number', value: number, range: ReturnType<
   return input;
 }
 
-function applyDescriptor(contract: ContractManifest, template: ContractManifest): boolean {
-  const staged = stageContractEditorDocument(contractDescriptorJson(contract), template);
-  if (!staged.ok) return false;
+function stageDescriptorWithHistory(text: string, template: ContractManifest, history: EditorHistory): boolean {
+  if (!parseContractDescriptor(text, template).ok || history.head !== documentFingerprint(text)) return false;
+  const key = editorHistoryKey(template.id);
+  let previous: string | null;
+  try {
+    previous = sessionStorage.getItem(key);
+    sessionStorage.setItem(key, JSON.stringify(history));
+  } catch {
+    return false;
+  }
+  const staged = stageContractEditorDocument(text, template);
+  if (!staged.ok) {
+    try {
+      if (previous === null) sessionStorage.removeItem(key);
+      else sessionStorage.setItem(key, previous);
+    } catch {}
+    return false;
+  }
   const url = new URL(location.href);
   url.searchParams.set('editor', '');
-  url.searchParams.set('contract', contract.id);
+  url.searchParams.set('contract', template.id);
   url.searchParams.set(CONTRACT_EDITOR_PARAM, CONTRACT_EDITOR_SESSION_REF);
   location.replace(url);
   return true;
+}
+
+function readEditorHistory(template: ContractManifest, currentBytes: string): EditorHistory {
+  try {
+    const raw = sessionStorage.getItem(editorHistoryKey(template.id));
+    if (!raw || raw.length > EDITOR_HISTORY_MAX_CHARS) return emptyEditorHistory(currentBytes);
+    const value: unknown = JSON.parse(raw);
+    if (
+      !isRecord(value) ||
+      Object.keys(value).length !== 4 ||
+      value.version !== 1 ||
+      typeof value.head !== 'string' ||
+      value.head !== documentFingerprint(currentBytes) ||
+      !Array.isArray(value.past) ||
+      !Array.isArray(value.future)
+    ) {
+      return emptyEditorHistory(currentBytes);
+    }
+    const snapshots = [...value.past, ...value.future];
+    if (snapshots.some((snapshot) => typeof snapshot !== 'string' || !parseContractDescriptor(snapshot, template).ok)) {
+      return emptyEditorHistory(currentBytes);
+    }
+    return boundEditorHistory({ version: 1, head: value.head, past: [...value.past] as string[], future: [...value.future] as string[] });
+  } catch {
+    return emptyEditorHistory(currentBytes);
+  }
+}
+
+function boundEditorHistory(history: EditorHistory): EditorHistory {
+  const bounded: EditorHistory = { version: 1, head: history.head, past: [...history.past], future: [...history.future] };
+  while (
+    bounded.past.length + bounded.future.length > EDITOR_HISTORY_MAX_STEPS ||
+    JSON.stringify(bounded).length > EDITOR_HISTORY_MAX_CHARS
+  ) {
+    if (bounded.past.length > 0) bounded.past.shift();
+    else bounded.future.shift();
+  }
+  return bounded;
+}
+
+function emptyEditorHistory(currentBytes: string): EditorHistory {
+  return { version: 1, head: documentFingerprint(currentBytes), past: [], future: [] };
+}
+
+function editorHistoryKey(contractId: string): string {
+  return `${EDITOR_HISTORY_KEY}:${contractId}`;
+}
+
+function documentFingerprint(text: string): string {
+  let hash = 0x811c9dc5;
+  for (let index = 0; index < text.length; index += 1) hash = Math.imul(hash ^ text.charCodeAt(index), 0x01000193);
+  return `${text.length}:${(hash >>> 0).toString(16).padStart(8, '0')}`;
 }
 
 function downloadDescriptor(contract: ContractManifest): void {
