@@ -133,12 +133,18 @@ test('two clients advance 500 ticks with identical lockstep hashes', async ({ br
 
     const aliceState = await mpState(alice);
     const bobState = await mpState(bob);
+    const [aliceHashState, bobHashState] = await Promise.all([
+      alice.evaluate(() => window.__GR_TEST__!.lastMultiplayerHashState()),
+      bob.evaluate(() => window.__GR_TEST__!.lastMultiplayerHashState()),
+    ]);
     await writeReport(testInfo, 'identity', { alice: aliceState, bob: bobState });
 
     expect(aliceState.tick).toBeGreaterThanOrEqual(520);
     expect(bobState.tick).toBeGreaterThanOrEqual(520);
     expect(aliceState.hashes.length).toBeGreaterThanOrEqual(16);
     expect(aliceState.hashes).toEqual(bobState.hashes);
+    expect(renderHeightPaths(aliceHashState?.state)).toEqual([]);
+    expect(renderHeightPaths(bobHashState?.state)).toEqual([]);
     expect(aliceErrors.consoleErrors).toEqual([]);
     expect(aliceErrors.pageErrors).toEqual([]);
     expect(bobErrors.consoleErrors).toEqual([]);
@@ -833,8 +839,8 @@ async function syncedHashedActorDiagnostics(
         ? (latest.state as {
             actors?: Array<{
               hp: number;
-              position: { x: number; y: number; z: number };
-              velocity: { x: number; y: number; z: number };
+              position: { x: number; z: number };
+              velocity: { x: number; z: number };
               visible: boolean;
             }>;
           }).actors
@@ -850,8 +856,8 @@ async function syncedHashedActorDiagnostics(
           actors.push({
             ...live,
             hp: saved.hp,
-            position: saved.position,
-            speed: Math.hypot(saved.velocity.x, saved.velocity.y, saved.velocity.z),
+            position: { ...live.position, x: saved.position.x, z: saved.position.z },
+            speed: Math.hypot(saved.velocity.x, saved.velocity.z),
             visible: saved.visible,
           });
         }
@@ -924,6 +930,19 @@ function stateDifferences(left: unknown, right: unknown, path = 'state', output:
 
 function hashAt(state: MpState, tick: number): string | undefined {
   return state.hashes.find((entry) => entry.tick === tick)?.hash;
+}
+
+function renderHeightPaths(value: unknown, path = '$', output: string[] = []): string[] {
+  if (Array.isArray(value)) {
+    value.forEach((entry, index) => renderHeightPaths(entry, `${path}[${index}]`, output));
+    return output;
+  }
+  if (!value || typeof value !== 'object') return output;
+  for (const [key, nested] of Object.entries(value)) {
+    if (key === 'y') output.push(`${path}.y`);
+    else renderHeightPaths(nested, `${path}.${key}`, output);
+  }
+  return output;
 }
 
 async function mpState(page: Page): Promise<MpState> {

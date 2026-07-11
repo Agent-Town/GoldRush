@@ -314,6 +314,7 @@ export class Game {
     if (Balance.charm.coinTick > 0) this.audio.playCoin();
   }, (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'));
   private readonly vfx = new Vfx();
+  private deathPending = false;
   private readonly combat = new CombatSystem(
     this.events,
     this.actors,
@@ -323,7 +324,9 @@ export class Game {
     this.xpMotes,
     this.combatVfx,
     this.audio,
-    () => this.endRun(),
+    () => {
+      this.deathPending = true;
+    },
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
     (position) => this.onEnemyKilled(position),
   );
@@ -1304,8 +1307,11 @@ export class Game {
     // The ledger is local presentation in multiplayer. Pausing here would stop
     // only this client's GameState while the lockstep client kept consuming
     // ticks, guaranteeing a hash disagreement on the next boundary.
-    const resumeOnClose = !this.mpClient && this.state.current === 'playing';
-    if (resumeOnClose) {
+    const pauseBeforeLedger =
+      !this.mpClient && this.state.current === 'playing'
+        ? { paused: this.state.isPaused, playerPauseActive: this.playerPauseActive }
+        : null;
+    if (pauseBeforeLedger && !pauseBeforeLedger.paused) {
       this.state.setPaused(true);
       this.playerPauseActive = false;
       this.syncUi();
@@ -1314,7 +1320,10 @@ export class Game {
       openClaimLedger({
         entryId,
         onClose: () => {
-          if (resumeOnClose) this.state.setPaused(false);
+          if (pauseBeforeLedger) {
+            this.state.setPaused(pauseBeforeLedger.paused);
+            this.playerPauseActive = pauseBeforeLedger.playerPauseActive;
+          }
           this.syncUi();
           this.publishDiagnostics();
         },
@@ -1527,11 +1536,15 @@ export class Game {
       this.enemies.update(
         simDelta,
         this.visibleActorPositions(),
-        this.combat.handleEnemyContact,
+        (enemy) => {
+          this.combat.handleEnemyContact(enemy);
+          return this.deathPending;
+        },
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
       );
+      if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
       this.harvestSnapshot = this.harvestSystem.update(
         simDelta,
@@ -1546,6 +1559,7 @@ export class Game {
       }
       this.updateBaronRocketVolley();
       this.combat.update(simDelta, this.timeAlive);
+      if (this.finishPendingDeath()) return true;
       this.maybeProspectorRepair();
       this.maybeProspectorCollectGold();
       this.maybeProspectorCollectXp();
@@ -1879,12 +1893,12 @@ export class Game {
   }
 
   private multiplayerStateHash(tick: number, snapshot: MultiplayerRunSuspendSnapshot): string {
-    const state = {
+    const state = planarHashState({
       tick,
       roster: (this.mpClient?.state().roster ?? []).map(({ playerId, name, town }) => ({ playerId, name, town })),
       run: multiplayerRunSuspendFutureState(snapshot),
       actors: snapshot.mpActors ?? null,
-    };
+    });
     if (new URLSearchParams(window.location.search).has('debug')) {
       this.lastMultiplayerHashState = { tick, state };
     }
@@ -3915,6 +3929,7 @@ export class Game {
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;
     this.simTick = 0;
+    this.deathPending = false;
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -4143,6 +4158,7 @@ export class Game {
   }
 
   private endRun(): void {
+    this.deathPending = false;
     if (this.state.current === 'dead') return;
     this.playerPauseActive = false;
     this.state.transition('dead');
@@ -4159,6 +4175,13 @@ export class Game {
       weaponToggles: this.weaponToggleCount,
       blastTime: this.blastTime,
     });
+  }
+
+  private finishPendingDeath(): boolean {
+    if (!this.deathPending) return false;
+    this.endRun();
+    this.finishMultiplayerTick();
+    return true;
   }
 
   private registerGoldHoldings(): void {
@@ -5272,6 +5295,17 @@ function distanceSq2(ax: number, az: number, bx: number, bz: number): number {
   const dx = ax - bx;
   const dz = az - bz;
   return dx * dx + dz * dz;
+}
+
+function planarHashState(value: unknown): unknown {
+  // Lockstep is planar; suspend snapshots retain y only for restore and rendering.
+  if (Array.isArray(value)) return value.map(planarHashState);
+  if (!value || typeof value !== 'object') return value;
+  return Object.fromEntries(
+    Object.entries(value)
+      .filter(([key]) => key !== 'y')
+      .map(([key, nested]) => [key, planarHashState(nested)]),
+  );
 }
 
 function distanceSqToBuildingPoint(point: THREE.Vector3, building: Pick<BuildingTarget, 'position' | 'halfX' | 'halfZ'>): number {

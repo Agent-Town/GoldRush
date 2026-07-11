@@ -359,7 +359,7 @@ export class CombatSystem {
     while (remaining > 0) {
       const step = Math.min(remaining, 1 / 30);
       this.projectiles.update(step, this.handleBoltExpired);
-      this.blastCharges.update(step, this.onBlastDetonated);
+      if (this.blastCharges.update(step, this.onBlastDetonated)) return;
       this.resolveBoltHits(at);
       remaining -= step;
     }
@@ -408,9 +408,9 @@ export class CombatSystem {
     return true;
   }
 
-  private damageHero(amount: number, sourceId: number, actor: Hero = this.primaryActor): void {
+  private damageHero(amount: number, sourceId: number, actor: Hero = this.primaryActor): boolean {
     const result = actor.takeDamage(amount);
-    if (!result.applied) return;
+    if (!result.applied) return false;
 
     this.events.emit({
       type: 'hero_damaged',
@@ -421,7 +421,9 @@ export class CombatSystem {
       sourceId,
     });
 
-    if (result.died) this.onHeroDied();
+    if (!result.died) return false;
+    this.onHeroDied();
+    return true;
   }
 
   readonly handleBuildingHit = (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number): void => {
@@ -603,27 +605,30 @@ export class CombatSystem {
     return this.scratchAimPoint;
   }
 
-  private readonly onBlastDetonated = (position: THREE.Vector3, damage: number, radius: number, ownerId: string): void => {
+  private readonly onBlastDetonated = (position: THREE.Vector3, damage: number, radius: number, ownerId: string): boolean => {
     this.blastDetonationCount += 1;
     this.lastBlastDetonationPosition.copy(position);
     this.hasLastBlastDetonation = true;
     this.vfx.detonationRing(position, radius);
     this.audio.playDetonation(ownerId);
-    if (isCombatDamageDisabled()) return;
+    if (isCombatDamageDisabled()) return false;
 
     if (ownerId.startsWith('baron_rocket')) {
       const sourceId = Number(ownerId.split(':')[1] ?? -1);
       const heroRadius = radius + Balance.hero.radius;
+      let heroDied = false;
       for (const actor of this.actors) {
         if (!actor.group.visible) continue;
         const heroDx = actor.group.position.x - position.x;
         const heroDz = actor.group.position.z - position.z;
-        if (heroDx * heroDx + heroDz * heroDz <= heroRadius * heroRadius) this.damageHero(damage, sourceId, actor);
+        if (heroDx * heroDx + heroDz * heroDz <= heroRadius * heroRadius) {
+          heroDied = this.damageHero(damage, sourceId, actor) || heroDied;
+        }
       }
       for (const target of this.buildingTargetsResolver?.(position, radius) ?? []) {
         this.damageBuilding(target, damage, sourceId, Math.max(1, radius * 0.65), true);
       }
-      return;
+      return heroDied;
     }
 
     if (ownerId === 'turrets') {
@@ -646,7 +651,7 @@ export class CombatSystem {
         this.vfx.hit(closest.position);
         if (died) this.killEnemy(closest, this.currentAt, ownerId);
       }
-      return;
+      return false;
     }
 
     for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
@@ -661,6 +666,7 @@ export class CombatSystem {
       this.vfx.hit(enemy.position);
       if (died) this.killEnemy(enemy, this.currentAt, ownerId);
     }
+    return false;
   };
 
   private resolveBoltHits(at: number): void {

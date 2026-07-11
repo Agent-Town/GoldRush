@@ -154,6 +154,81 @@ test('a stalled frame runs at most five ticks and reports dropped time', async (
   expect(errors.pageErrors).toEqual([]);
 });
 
+test('lethal contact ends the tick before XP and gold pickups mutate the run', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one browser proves the death boundary');
+  const errors = collectErrors(page);
+  await openGame(page);
+
+  const result = await page.evaluate(() => {
+    const harness = window.__GR_TEST__!;
+    harness.setManualSim(true);
+    harness.resetRun();
+    harness.setManualSim(true);
+    const { x, z } = window.__THREE_GAME_DIAGNOSTICS__!.heroPos;
+    const goldSpawned = harness.spawnGoldPickup(x, z, 17);
+    const xpSpawned = harness.spawnXpMote(x, z, 7);
+    harness.spawnPack(1, 0, { speedScale: 0, hpScale: 1_000, contactDamageScale: 100 });
+    harness.advanceSim(1 / 30);
+    const diagnostics = window.__THREE_GAME_DIAGNOSTICS__!;
+    return {
+      goldSpawned,
+      xpSpawned,
+      state: diagnostics.state,
+      gold: diagnostics.economy.gold,
+      xp: diagnostics.xp,
+      xpMotes: diagnostics.xpMotesAlive,
+      goldPickups: harness.goldPickups().filter((pickup) => pickup.active),
+    };
+  });
+
+  expect(result.goldSpawned).toBe(true);
+  expect(result.xpSpawned).toBe(true);
+  expect(result.state).toBe('dead');
+  expect(result.gold).toBe(0);
+  expect(result.xp).toBe(0);
+  expect(result.xpMotes).toBe(1);
+  expect(result.goldPickups).toEqual([{ active: true, amount: 17, position: expect.any(Object) }]);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('scripted waypoint arrival uses planar distance despite visual height', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one browser proves planar arrival');
+  const errors = collectErrors(page);
+  await openGame(page);
+
+  const result = await page.evaluate(() => {
+    const harness = window.__GR_TEST__!;
+    harness.setManualSim(true);
+    harness.resetRun();
+    harness.setManualSim(true);
+    const start = { x: 10, z: 10 };
+    const target = { x: start.x + 0.01, z: start.z };
+    harness.clearEnemies();
+    harness.scriptEnemyAt(start.x, start.z, target.x, target.z, 1);
+    const snapshot = harness.captureSuspend() as any;
+    const enemy = snapshot.enemies.active[0];
+    enemy.scriptedIgnoresTerrain = true;
+    enemy.scriptedTarget.y = enemy.position.y + 1;
+    const restored = harness.restoreSuspend(snapshot);
+    harness.advanceSim(0.2);
+    const arrived = harness.enemyPositions()[0]!;
+    return {
+      restored,
+      verticalGap: Math.abs(enemy.position.y - enemy.scriptedTarget.y),
+      target,
+      arrived: { x: arrived.x, z: arrived.z },
+    };
+  });
+
+  expect(result.restored).toBe(true);
+  expect(result.verticalGap).toBeGreaterThan(0.05);
+  expect(result.arrived.x).toBeCloseTo(result.target.x, 8);
+  expect(result.arrived.z).toBeCloseTo(result.target.z, 8);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('fixed ticks carry fractional cooldown debt instead of losing volleys', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one browser proves cooldown accounting');
   const errors = collectErrors(page);
