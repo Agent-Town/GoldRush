@@ -24,7 +24,7 @@ const PAUSE_STORY_SETTINGS_IDS = {
 };
 
 export type UiIntent =
-  | { type: 'restart' | 'toggle_build_menu' | 'close_build_menu' | 'pause' | 'open_ledger' }
+  | { type: 'restart' | 'toggle_build_menu' | 'close_build_menu' | 'pause' | 'open_ledger' | 'back_to_town' }
   | { type: 'save_claim'; name: string }
   | { type: 'select_buildable'; id: BuildableId | string }
   | { type: 'set_agent_rung'; level: AgentPermissionLevel; granted: boolean }
@@ -469,6 +469,7 @@ export class Hud {
     this.elements.pauseMeta.innerHTML = `
       <p class="hud-meta__eyebrow">Claim Memory</p>
       <button class="hud-meta__chip" type="button" data-testid="pause-open-ledger">Claim Ledger</button>
+      <button class="hud-meta__chip" type="button" data-testid="pause-back-to-town">Back to Town - the claim keeps your place</button>
       <p class="hud-meta__line" data-testid="pause-meta-save">${this.escape(meta.save)}</p>
       ${this.renderManualSave(meta.manualSave)}
       <p class="hud-meta__line gr-account-chip gr-account-chip--pause" data-testid="pause-account-status-chip">${this.escape(syncStatus)}</p>
@@ -506,6 +507,9 @@ export class Hud {
     });
     this.elements.pauseMeta.querySelector<HTMLButtonElement>('[data-testid="pause-open-ledger"]')?.addEventListener('click', () => {
       this.onIntent({ type: 'open_ledger' });
+    });
+    this.elements.pauseMeta.querySelector<HTMLButtonElement>('[data-testid="pause-back-to-town"]')?.addEventListener('click', () => {
+      this.onIntent({ type: 'back_to_town' });
     });
   }
 

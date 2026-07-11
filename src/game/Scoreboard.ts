@@ -21,10 +21,26 @@ export type ScoreRecord = {
 
 const STORAGE_KEY = SCOREBOARD_KEY;
 const MAX_SCORES = 5;
+const FALLBACK_CONTRACT_ID = 'the-claim';
+
+// Global top-5 PLUS each contract's own best: a strong Claim ledger must never
+// erase another map's only record (the board reads per-contract bests).
+function trimScores(scores: ScoreRecord[]): ScoreRecord[] {
+  const sorted = [...scores].sort(compareScores);
+  const kept = new Set<ScoreRecord>(sorted.slice(0, MAX_SCORES));
+  const seenContracts = new Set<string>();
+  for (const score of sorted) {
+    const id = score.contractId?.trim() || FALLBACK_CONTRACT_ID;
+    if (seenContracts.has(id)) continue;
+    seenContracts.add(id);
+    kept.add(score);
+  }
+  return sorted.filter((score) => kept.has(score));
+}
 
 export function loadScores(): ScoreRecord[] {
   try {
-    return migrateLegacyScores().filter(isScoreRecord).map(withProfileName).sort(compareScores).slice(0, MAX_SCORES);
+    return trimScores(migrateLegacyScores().filter(isScoreRecord).map(withProfileName));
   } catch {
     return [];
   }
@@ -32,7 +48,7 @@ export function loadScores(): ScoreRecord[] {
 
 export function recordScore(record: ScoreRecord): ScoreRecord[] {
   try {
-    const scores = [...loadScores(), withRunStats(record)].sort(compareScores).slice(0, MAX_SCORES);
+    const scores = trimScores([...loadScores(), withRunStats(record)]);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
     return scores;
   } catch {

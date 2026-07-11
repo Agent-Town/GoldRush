@@ -172,6 +172,24 @@ test('pause overlay explains the ledger before the first boundary save', async (
   expect(errors.pageErrors).toEqual([]);
 });
 
+test('pause Back-to-Town exits the run, keeps the suspend, and Continue resumes it', async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  await clearStorage(page);
+  const errors = await openGame(page);
+  await waitForSavedWave(page, 2);
+
+  await page.keyboard.press('KeyP');
+  await expect(page.getByTestId('pause-back-to-town')).toBeVisible();
+  await saveVisibilityShot(page, testInfo, 'pause-back-to-town');
+  await page.getByTestId('pause-back-to-town').click();
+
+  await expect(page.getByTestId('start-menu')).toBeVisible({ timeout: 10_000 });
+  await expect(page.getByTestId('start-menu-continue')).toBeVisible();
+  const saved = await savedSuspend(page);
+  expect(saved.wave).toBeGreaterThanOrEqual(2);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('wave-boundary suspend restores state and matches the uninterrupted seeded run', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   await clearStorage(page);

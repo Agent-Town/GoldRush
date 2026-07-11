@@ -917,7 +917,7 @@ export class Game {
       const onDone = () => this.returnToTown(returnResult);
       const onSecondary = () => this.resetRun();
       this.setMultiplayerDeathActions(onDone, onSecondary);
-      this.deathOverlay.show(this.deathLedger, scores, scoreAt, {
+      this.deathOverlay.show(this.deathLedger, scores.slice(0, 5), scoreAt, {
         ...this.researchOverlayOptions(1),
         actionLabel: 'Return to Town',
         secondaryActionLabel: 'Try Again',
@@ -968,7 +968,7 @@ export class Game {
         };
         const onSecondary = () => this.finishSecuredLedgerQuickLoop();
         this.setMultiplayerDeathActions(onDone, onSecondary);
-        this.deathOverlay.show(ledger, scores, scoreAt, {
+        this.deathOverlay.show(ledger, scores.slice(0, 5), scoreAt, {
           ...this.researchOverlayOptions(2),
           outcome: 'secured',
           actionLabel: 'Return to Town',
@@ -3838,6 +3838,12 @@ export class Game {
       this.saveManualClaim(intent.name);
       return;
     }
+    if (intent.type === 'back_to_town') {
+      // Plain boot exits the ?contract auto-launch loop; pagehide flushes the
+      // run-suspend on the way out, so Continue picks this run back up.
+      window.location.assign(`${window.location.origin}${window.location.pathname}`);
+      return;
+    }
     if (this.secureClaimChoicePending()) return;
     this.audio.play('menu-tap');
     if (intent.type === 'pause') this.togglePlayerPause();
@@ -4079,7 +4085,7 @@ export class Game {
     const onDone = () => this.returnToTown('overrun');
     const onSecondary = () => this.resetRun();
     this.setMultiplayerDeathActions(onDone, onSecondary);
-    this.deathOverlay.show(this.deathLedger, scores, matchingScore?.at ?? 0, {
+    this.deathOverlay.show(this.deathLedger, scores.slice(0, 5), matchingScore?.at ?? 0, {
       ...this.researchOverlayOptions(1),
       actionLabel: 'Return to Town',
       secondaryActionLabel: 'Try Again',
