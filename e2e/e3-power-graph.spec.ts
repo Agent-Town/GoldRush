@@ -51,16 +51,16 @@ test('flag-off boot has zero power graph work', async ({ page }) => {
     nodeCount: 0,
     wireCount: 0,
     solveCount: 0,
-    totalSupply: 0,
-    totalDemand: 0,
+    totalSupplyWatts: 0,
+    totalDemandWatts: 0,
     render: { active: false, spans: 0, drawCalls: 0 },
   });
   await clean(errors);
 });
 
-test('dev graph solves producer, pylons, consumers, invalid span, and brown-out branch', async ({ page }, testInfo) => {
+test('dev graph solves producer, pylons, consumers, and brown-out branch', async ({ page }, testInfo) => {
   const errors = await openGame(page, DEV_QUERY);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.power.solveCount ?? 0)).toBeGreaterThan(1);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.power.solveCount ?? 0)).toBe(1);
 
   const snapshot = await page.evaluate(() => ({
     power: window.__THREE_GAME_DIAGNOSTICS__!.power,
@@ -74,16 +74,14 @@ test('dev graph solves producer, pylons, consumers, invalid span, and brown-out 
     id: 'e3-dev-power-graph',
     budgetMs: 0.5,
     nodeCount: 6,
-    wireCount: 5,
-    validWireCount: 4,
-    invalidWireCount: 1,
-    totalSupply: 5,
-    totalDemand: 13,
-    render: { active: true, renderSlot: 'gameplay', spans: 5, drawCalls: 2 },
+    wireCount: 4,
+    intactWireCount: 4,
+    cutWireCount: 0,
+    totalSupplyWatts: 5,
+    totalDemandWatts: 13,
+    render: { active: true, renderSlot: 'gameplay', spans: 4, drawCalls: 1, rebuildCount: 1 },
   });
   expect(snapshot.power.render.renderLayer).toBe(snapshot.layer);
-  expect(snapshot.power.lastSolveMs).toBeLessThan(0.5);
-  expect(snapshot.power.overBudget).toBe(false);
 
   const states = Object.fromEntries(snapshot.power.nodes.map((node) => [node.id, node.state]));
   expect(states).toEqual({
@@ -94,11 +92,7 @@ test('dev graph solves producer, pylons, consumers, invalid span, and brown-out 
     'relay-east': 'powered',
     'relay-west': 'powered',
   });
-  expect(snapshot.power.wires.find((wire) => wire.id === 'consumer-gamma--relay-east')).toMatchObject({
-    length: 14,
-    maxLength: 9,
-    valid: false,
-  });
+  expect(snapshot.power.nodes.find((node) => node.id === 'consumer-beta')).toMatchObject({ allocatedWatts: 2, allocationRatio: 0.5 });
   expect(snapshot.power.events.map((event) => `${event.nodeId}:${event.from ?? 'new'}>${event.to}`)).toEqual([
     'consumer-alpha:new>powered',
     'consumer-beta:new>browned-out',

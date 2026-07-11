@@ -162,10 +162,6 @@ export const Balance = {
     placeRadius: 6,
     overlapRadius: 0.9,
   },
-  powerGraph: {
-    maxWireLength: 9,
-    solveBudgetMs: 0.5,
-  },
   palisade: {
     cost: 10,
     maxCount: 48,

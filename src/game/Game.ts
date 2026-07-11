@@ -136,7 +136,7 @@ import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
-import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics } from '../systems/PowerGraph';
+import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, type PowerGraphCommand } from '../systems/PowerGraph';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
@@ -158,6 +158,7 @@ import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfS
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
+import { PowerWireView } from '../world/PowerWireView';
 import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { readTownName } from '../town/TownNaming';
@@ -420,6 +421,7 @@ export class Game {
   private railPath?: RailPathView;
   private megaprojectRailPath?: RailPathView;
   private powerGraph?: PowerGraphSystem;
+  private powerWireView?: PowerWireView;
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -1081,6 +1083,7 @@ export class Game {
           this.manualResumeAtMpTickForTest = Math.max(0, Math.floor(tick));
           return this.manualResumeAtMpTickForTest;
         },
+        queuePowerGraphCommand: (command: PowerGraphCommand) => this.queueDevPowerGraphCommand(command),
         advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => this.advanceSimForTest(seconds, onTick),
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         resetRun: () => this.resetRun(),
@@ -1423,7 +1426,7 @@ export class Game {
     this.baronRocketCartTealMaterial.dispose();
     this.railPath?.dispose();
     this.megaprojectRailPath?.dispose();
-    this.powerGraph?.dispose();
+    this.powerWireView?.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -1564,7 +1567,7 @@ export class Game {
         this.localActor.group.position,
       );
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
-      this.powerGraph?.update(this.timeAlive);
+      this.powerGraph?.step(this.simTick);
       this.syncStockpileHoldings();
       this.enemies.update(
         simDelta,
@@ -1623,6 +1626,7 @@ export class Game {
     }
     this.applyRenderInterpolation(frame.alpha);
     this.prospector.updatePresentation(this.state.isPaused ? 0 : frame.presentationDeltaSeconds, frame.alpha);
+    if (this.powerGraph && this.powerWireView) this.powerWireView.update(this.powerGraph.snapshot());
     this.updatePresentation(frame.presentationDeltaSeconds);
     if (draw) this.render();
   }
@@ -2276,7 +2280,9 @@ export class Game {
     }
     if (isDevPowerGraphEnabled()) {
       this.powerGraph = new PowerGraphSystem(devPowerGraphDefinition());
-      this.scene.add(this.powerGraph.group);
+      this.powerWireView = new PowerWireView();
+      this.powerWireView.update(this.powerGraph.snapshot());
+      this.scene.add(this.powerWireView.group);
     }
     this.detailScatter = new DetailScatter();
     this.scene.add(this.detailScatter.group);
@@ -2926,7 +2932,7 @@ export class Game {
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
-      power: this.powerGraph?.diagnostics() ?? emptyPowerGraphDiagnostics(),
+      power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -3980,12 +3986,20 @@ export class Game {
     };
   }
 
+  private queueDevPowerGraphCommand(command: PowerGraphCommand): boolean {
+    return !this.mpClient && isDevPowerGraphEnabled() && this.powerGraph?.queueCommand(command) === true;
+  }
+
   resetRun(): void {
     const deferMetaRecap =
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;
     this.simTick = 0;
     this.deathPending = false;
+    if (this.powerGraph) {
+      this.powerGraph.reset(0);
+      this.powerWireView?.invalidate();
+    }
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -5393,7 +5407,7 @@ function browserMegaprojectStorage(): MegaprojectStorage | undefined {
 
 function isDevPowerGraphEnabled(): boolean {
   const params = new URLSearchParams(window.location.search);
-  return params.has('debug') && params.get('power') === 'dev';
+  return params.has('debug') && (params.has('powergraph') || params.get('power') === 'dev');
 }
 
 function createMegaprojectPlaqueTexture(lines: readonly string[]): THREE.CanvasTexture {

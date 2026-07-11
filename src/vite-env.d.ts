@@ -923,6 +923,7 @@ interface Window {
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     setManualSim: (enabled: boolean) => boolean;
     resumeManualSimAtMpTick: (tick: number) => number;
+    queuePowerGraphCommand: (command: import('./systems/PowerGraph').PowerGraphCommand) => boolean;
     advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => void;
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;

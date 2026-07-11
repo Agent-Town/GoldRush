@@ -10,6 +10,7 @@
     "test": "playwright test",
     "test:accounts": "node scripts/test-accounts.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
+    "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
     "verify:visual": "playwright test e2e/visual.spec.ts",
     "test:preview": "playwright test --config playwright.preview.config.ts",
     "inspect:canvas": "node scripts/inspect-threejs-canvas.mjs"
