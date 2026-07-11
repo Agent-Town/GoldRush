@@ -632,7 +632,13 @@ export function loadContract(id: string, epochId?: string): ContractManifest {
 
 export type ContractDescriptorParseResult =
   | { ok: true; contract: ContractManifest }
-  | { ok: false; message: typeof CONTRACT_EDITOR_REJECTION_LINE };
+  | { ok: false; message: typeof CONTRACT_EDITOR_REJECTION_LINE; reasons: ContractDescriptorReason[] };
+
+export type ContractDescriptorReason = {
+  code: string;
+  message: string;
+  path?: string;
+};
 
 export function contractDescriptorJson(contract: ContractManifest): string {
   return `${JSON.stringify(contract, null, 2)}\n`;
@@ -654,17 +660,19 @@ export function contractNumberRange(path: string, value: number): ContractNumber
 }
 
 export function parseContractDescriptor(text: string, template: ContractManifest): ContractDescriptorParseResult {
-  if (text.length > CONTRACT_EDITOR_MAX_DOCUMENT_CHARS) return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+  if (text.length > CONTRACT_EDITOR_MAX_DOCUMENT_CHARS) {
+    return descriptorRejection(reason('document_too_large', 'This contract page is too large for the ledger.'));
+  }
   let candidate: unknown;
   try {
     candidate = JSON.parse(text);
   } catch {
-    return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+    return descriptorRejection(reason('document_unreadable', 'The marks on this contract page could not be read.'));
   }
-  const normalized = normalizeContractDescriptor(candidate, template);
-  if (!normalized || normalized.id !== template.id) {
-    return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
-  }
+  const reasons: ContractDescriptorReason[] = [];
+  const normalized = normalizeContractDescriptor(candidate, template, reasons);
+  if (!normalized) return descriptorRejection(reasons);
+  if (normalized.id !== template.id) return descriptorRejection(reason('contract_id', 'This page belongs to a different contract.', 'id'));
   return { ok: true, contract: normalized };
 }
 
@@ -681,10 +689,12 @@ export function stageContractEditorDocument(text: string, template: ContractMani
   const parsed = parseContractDescriptor(text, template);
   if (!parsed.ok) return parsed;
   try {
-    if (!globalThis.sessionStorage) return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+    if (!globalThis.sessionStorage) {
+      return descriptorRejection(reason('document_storage', 'The ledger could not hold this contract page for the next scene.'));
+    }
     globalThis.sessionStorage.setItem(contractEditorDocumentKey(template.id), contractDescriptorJson(parsed.contract));
   } catch {
-    return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE };
+    return descriptorRejection(reason('document_storage', 'The ledger could not hold this contract page for the next scene.'));
   }
   activeSelection = null;
   activeSelectionSearch = '';
@@ -998,46 +1008,113 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
 };
 
-function sameDescriptorShape(value: unknown, template: unknown, path = ''): boolean {
-  const variableArray = variableDescriptorArrayShape(value, path);
+const CONTRACT_DESCRIPTOR_REASON_LIMIT = 12;
+const CONTRACT_DEFAULT_CLAIM_SIZE = 64;
+const CONTRACT_RIVER_DRY_BANK_Z = 6.25;
+
+function sameDescriptorShape(
+  value: unknown,
+  template: unknown,
+  path: string,
+  reasons: ContractDescriptorReason[],
+): boolean {
+  const variableArray = variableDescriptorArrayShape(value, path, reasons);
   if (variableArray !== null) return variableArray;
   if (typeof template === 'number') {
-    if (typeof value !== 'number' || !Number.isFinite(value)) return false;
-    const range = contractNumberRange(path, template);
-    return value >= range.min && value <= range.max && (range.step !== 1 || Number.isInteger(value));
+    const range = contractNumberRange(descriptorSchemaPath(path), template);
+    const valid =
+      typeof value === 'number' &&
+      Number.isFinite(value) &&
+      value >= range.min &&
+      value <= range.max &&
+      (range.step !== 1 || Number.isInteger(value));
+    if (!valid) addDescriptorReason(reasons, reason('field_number', 'A number on this contract page is outside its allowed range.', path));
+    return valid;
   }
   if (typeof template === 'string') {
-    const choices = DESCRIPTOR_ENUMS[path];
-    return typeof value === 'string' && value.trim().length > 0 && value.length <= 1_024 && (!choices || choices.includes(value));
+    const choices = DESCRIPTOR_ENUMS[descriptorSchemaPath(path)];
+    const valid = typeof value === 'string' && value.trim().length > 0 && value.length <= 1_024 && (!choices || choices.includes(value));
+    if (!valid) addDescriptorReason(reasons, textDescriptorReason(path, value, choices));
+    return valid;
   }
-  if (typeof template === 'boolean' || template === null) return typeof value === typeof template;
+  if (typeof template === 'boolean' || template === null) {
+    const valid = typeof value === typeof template;
+    if (!valid) addDescriptorReason(reasons, reason('field_type', 'A contract mark has the wrong kind of value.', path));
+    return valid;
+  }
   if (Array.isArray(template)) {
-    if (!Array.isArray(value)) return false;
-    return value.length === template.length && value.every((entry, index) => sameDescriptorShape(entry, template[index], `${path}[]`));
+    if (!Array.isArray(value)) {
+      addDescriptorReason(reasons, reason('field_list', 'A contract list has the wrong shape.', path));
+      return false;
+    }
+    if (value.length !== template.length) {
+      addDescriptorReason(reasons, arrayLengthDescriptorReason(path));
+      return false;
+    }
+    let valid = true;
+    value.forEach((entry, index) => {
+      if (!sameDescriptorShape(entry, template[index], `${path}[${index}]`, reasons)) valid = false;
+    });
+    return valid;
   }
-  if (!isRecord(template) || !isRecord(value) || Array.isArray(value)) return false;
+  if (!isRecord(template) || !isRecord(value) || Array.isArray(value)) {
+    addDescriptorReason(reasons, reason('field_section', 'A contract section has the wrong shape.', path || undefined));
+    return false;
+  }
   const templateKeys = Object.keys(template);
   const valueKeys = Object.keys(value);
   const childPath = (key: string) => (path ? `${path}.${key}` : key);
-  if (valueKeys.some((key) => !Object.hasOwn(template, key) && !optionalDescriptorPath(childPath(key)))) return false;
-  if (templateKeys.some((key) => !Object.hasOwn(value, key) && !optionalDescriptorPath(childPath(key)))) return false;
-  return [...new Set([...templateKeys, ...valueKeys])].every((key) => sameDescriptorShape(value[key], template[key], childPath(key)));
+  let valid = true;
+  for (const key of [...new Set([...templateKeys, ...valueKeys])].sort()) {
+    const nextPath = childPath(key);
+    const inTemplate = Object.hasOwn(template, key);
+    const inValue = Object.hasOwn(value, key);
+    if (!inTemplate && !optionalDescriptorPath(nextPath)) {
+      addDescriptorReason(reasons, reason('field_unknown', 'This contract page carries an unknown field.', nextPath));
+      valid = false;
+      continue;
+    }
+    if (!inValue && !optionalDescriptorPath(nextPath)) {
+      addDescriptorReason(reasons, reason('field_missing', 'This contract page is missing a required field.', nextPath));
+      valid = false;
+      continue;
+    }
+    if (!sameDescriptorShape(value[key], template[key], nextPath, reasons)) valid = false;
+  }
+  return valid;
 }
 
-function normalizeContractDescriptor(value: unknown, template: ContractManifest): ContractManifest | null {
-  if (!isRecord(value) || !isRecord(value.tileParams)) return null;
+function normalizeContractDescriptor(
+  value: unknown,
+  template: ContractManifest,
+  reasons: ContractDescriptorReason[],
+): ContractManifest | null {
+  if (!isRecord(value) || Array.isArray(value)) {
+    addDescriptorReason(reasons, reason('field_section', 'The contract page must be one complete ledger record.'));
+    return null;
+  }
+  if (!isRecord(value.tileParams) || Array.isArray(value.tileParams)) {
+    addDescriptorReason(reasons, reason('field_section', 'The terrain section has the wrong shape.', 'tileParams'));
+    return null;
+  }
   const candidateShape = withoutAuthoredTerrain(value);
   const templateShape = withoutAuthoredTerrain(template as unknown as Record<string, unknown>);
-  if (!sameDescriptorShape(candidateShape, templateShape)) return null;
+  if (!sameDescriptorShape(candidateShape, templateShape, '', reasons)) return null;
 
   const rawLayer = Object.hasOwn(value.tileParams, 'authoredTerrain') ? value.tileParams.authoredTerrain : undefined;
   const claimSize = typeof value.tileParams.size === 'number' ? value.tileParams.size : 64;
   const authoredTerrain = rawLayer === undefined ? undefined : decodeAuthoredTerrainLayer(rawLayer, claimSize);
-  if (rawLayer !== undefined && !authoredTerrain) return null;
+  if (rawLayer !== undefined && !authoredTerrain) {
+    addDescriptorReason(reasons, reason('authored_terrain', 'The authored terrain marks do not fit this claim.', 'tileParams.authoredTerrain'));
+    return null;
+  }
 
   const normalized = structuredClone(value) as unknown as ContractManifest;
   if (authoredTerrain) normalized.tileParams.authoredTerrain = authoredTerrain;
   else delete normalized.tileParams.authoredTerrain;
+  const semanticStart = reasons.length;
+  validateContractMap(normalized, reasons);
+  if (reasons.length > semanticStart) return null;
   return normalized;
 }
 
@@ -1081,42 +1158,207 @@ function optionalDescriptorPath(path: string): boolean {
   return path === 'tileParams.buildZones';
 }
 
-function variableDescriptorArrayShape(value: unknown, path: string): boolean | null {
+function variableDescriptorArrayShape(
+  value: unknown,
+  path: string,
+  reasons: ContractDescriptorReason[],
+): boolean | null {
   if (path === 'tileParams.buildZones') {
     if (value === undefined) return true;
-    if (!Array.isArray(value) || value.length > 32) return false;
+    if (!Array.isArray(value)) {
+      addDescriptorReason(reasons, reason('build_zone_list', 'Build zones must be a list of surveyed rectangles.', path));
+      return false;
+    }
+    if (value.length > 32) {
+      addDescriptorReason(reasons, reason('build_zone_limit', 'A contract can hold at most 32 build zones.', path));
+      return false;
+    }
     const ids = new Set<string>();
-    return value.every((entry) => {
-      if (!exactRecord(entry, ['id', 'bank', 'minX', 'maxX', 'minZ', 'maxZ'])) return false;
-      if (!shortText(entry.id) || ids.has(entry.id)) return false;
-      ids.add(entry.id);
-      return (
-        (entry.bank === 'north' || entry.bank === 'south') &&
-        finiteInRange(entry.minX, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
-        finiteInRange(entry.maxX, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
-        finiteInRange(entry.minZ, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
-        finiteInRange(entry.maxZ, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
-        (entry.minX as number) <= (entry.maxX as number) &&
-        (entry.minZ as number) <= (entry.maxZ as number)
-      );
+    let valid = true;
+    value.forEach((entry, index) => {
+      const itemPath = `${path}[${index}]`;
+      if (!exactRecord(entry, ['id', 'bank', 'minX', 'maxX', 'minZ', 'maxZ'])) {
+        addDescriptorReason(reasons, reason('build_zone_shape', 'A build zone must carry one ID, bank, and rectangle.', itemPath));
+        valid = false;
+        return;
+      }
+      if (!shortText(entry.id)) {
+        addDescriptorReason(reasons, reason('build_zone_id', 'Every build zone needs a short ID.', `${itemPath}.id`));
+        valid = false;
+      } else if (ids.has(entry.id)) {
+        addDescriptorReason(reasons, reason('build_zone_duplicate', 'Each build zone needs a different ID.', `${itemPath}.id`));
+        valid = false;
+      } else {
+        ids.add(entry.id);
+      }
+      if (entry.bank !== 'north' && entry.bank !== 'south') {
+        addDescriptorReason(reasons, reason('build_zone_bank', 'Choose the north or south bank for this build zone.', `${itemPath}.bank`));
+        valid = false;
+      }
+      for (const key of ['minX', 'maxX', 'minZ', 'maxZ'] as const) {
+        if (!finiteInRange(entry[key], -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN)) {
+          addDescriptorReason(reasons, reason('build_zone_coordinate', 'A build-zone edge lies beyond the survey ledger.', `${itemPath}.${key}`));
+          valid = false;
+        }
+      }
+      if (typeof entry.minX === 'number' && typeof entry.maxX === 'number' && entry.minX > entry.maxX) {
+        addDescriptorReason(reasons, reason('build_zone_order', 'A build zone must begin before it ends on the east-west line.', `${itemPath}.minX`));
+        valid = false;
+      }
+      if (typeof entry.minZ === 'number' && typeof entry.maxZ === 'number' && entry.minZ > entry.maxZ) {
+        addDescriptorReason(reasons, reason('build_zone_order', 'A build zone must begin before it ends on the north-south line.', `${itemPath}.minZ`));
+        valid = false;
+      }
     });
+    return valid;
   }
   if (path === 'tileParams.waterSources') {
-    if (!Array.isArray(value) || value.length > 32) return false;
-    return value.every(
-      (entry) =>
-        exactRecord(entry, ['kind', 'x', 'z', 'radius']) &&
-        entry.kind === 'spring_pond' &&
-        finiteInRange(entry.x, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
-        finiteInRange(entry.z, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) &&
-        finiteInRange(entry.radius, 0.01, 128),
-    );
+    if (!Array.isArray(value) || value.length > 32) {
+      addDescriptorReason(reasons, reason('water_source_list', 'Water sources must be a list of at most 32 spring ponds.', path));
+      return false;
+    }
+    let valid = true;
+    value.forEach((entry, index) => {
+      if (
+        !exactRecord(entry, ['kind', 'x', 'z', 'radius']) ||
+        entry.kind !== 'spring_pond' ||
+        !finiteInRange(entry.x, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) ||
+        !finiteInRange(entry.z, -AUTHORED_TERRAIN_MAX_ORIGIN, AUTHORED_TERRAIN_MAX_ORIGIN) ||
+        !finiteInRange(entry.radius, 0.01, 128)
+      ) {
+        addDescriptorReason(reasons, reason('water_source_shape', 'A spring pond needs a surveyed center and radius.', `${path}[${index}]`));
+        valid = false;
+      }
+    });
+    return valid;
   }
   if (path === 'tileParams.lanes.spawnEdges') {
-    if (!Array.isArray(value) || value.length < 1 || value.length > 4) return false;
-    return new Set(value).size === value.length && value.every((entry) => DESCRIPTOR_ENUMS['tileParams.lanes.spawnEdges[]']!.includes(entry as string));
+    if (!Array.isArray(value)) {
+      addDescriptorReason(reasons, reason('spawn_edge_list', 'Spawn edges must be a list of compass sides.', path));
+      return false;
+    }
+    if (value.length === 0) {
+      addDescriptorReason(reasons, reason('spawn_edge_required', 'Keep at least one open edge for incoming waves.', path));
+      return false;
+    }
+    if (value.length > 4) {
+      addDescriptorReason(reasons, reason('spawn_edge_limit', 'A claim has only four compass edges.', path));
+    }
+    let valid = value.length <= 4;
+    const seen = new Set<unknown>();
+    value.forEach((entry, index) => {
+      const itemPath = `${path}[${index}]`;
+      if (!DESCRIPTOR_ENUMS['tileParams.lanes.spawnEdges[]']!.includes(entry as string)) {
+        addDescriptorReason(reasons, reason('spawn_edge_unknown', 'Choose north, south, east, or west for a spawn edge.', itemPath));
+        valid = false;
+      } else if (seen.has(entry)) {
+        addDescriptorReason(reasons, reason('spawn_edge_duplicate', 'Each spawn edge may appear only once.', itemPath));
+        valid = false;
+      }
+      seen.add(entry);
+    });
+    return valid;
   }
   return null;
+}
+
+function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
+  const claimHalf = (contract.tileParams.size ?? CONTRACT_DEFAULT_CLAIM_SIZE) / 2;
+  for (const [index, zone] of (contract.tileParams.buildZones ?? []).entries()) {
+    const path = `tileParams.buildZones[${index}]`;
+    if (zone.minX < -claimHalf || zone.maxX > claimHalf || zone.minZ < -claimHalf || zone.maxZ > claimHalf) {
+      addDescriptorReason(reasons, reason('build_zone_outside_claim', 'This build zone reaches beyond the claim stakes.', path));
+    }
+    if (zone.minX >= zone.maxX || zone.minZ >= zone.maxZ) {
+      addDescriptorReason(reasons, reason('build_zone_zero_area', 'This build zone needs both width and depth.', path));
+    }
+    if (!contract.tileParams.river) continue;
+    const hasDeclaredDryGround = zone.bank === 'north' ? zone.maxZ > CONTRACT_RIVER_DRY_BANK_Z : zone.minZ < -CONTRACT_RIVER_DRY_BANK_Z;
+    if (hasDeclaredDryGround) continue;
+    const hasOppositeDryGround = zone.bank === 'north' ? zone.minZ < -CONTRACT_RIVER_DRY_BANK_Z : zone.maxZ > CONTRACT_RIVER_DRY_BANK_Z;
+    addDescriptorReason(
+      reasons,
+      hasOppositeDryGround
+        ? reason('build_zone_wrong_bank', `This ${zone.bank}-bank zone reaches dry ground only on the other bank.`, path)
+        : reason('build_zone_no_dry_ground', 'This build zone contains no dry bank ground.', path),
+    );
+  }
+}
+
+function descriptorRejection(
+  value: ContractDescriptorReason | ContractDescriptorReason[],
+): Extract<ContractDescriptorParseResult, { ok: false }> {
+  const reasons = (Array.isArray(value) ? value : [value]).slice();
+  if (reasons.length === 0) reasons.push(reason('descriptor_invalid', 'This contract page could not pass the Assayer.'));
+  reasons.sort(compareDescriptorReasons);
+  return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE, reasons: reasons.slice(0, CONTRACT_DESCRIPTOR_REASON_LIMIT) };
+}
+
+function reason(code: string, message: string, path?: string): ContractDescriptorReason {
+  return path === undefined ? { code, message } : { code, message, path };
+}
+
+function addDescriptorReason(reasons: ContractDescriptorReason[], next: ContractDescriptorReason): void {
+  if (reasons.some((entry) => entry.code === next.code && entry.path === next.path)) return;
+  if (reasons.length < CONTRACT_DESCRIPTOR_REASON_LIMIT) {
+    reasons.push(next);
+    return;
+  }
+  let lowestPriority = 0;
+  for (let index = 1; index < reasons.length; index += 1) {
+    if (compareDescriptorReasons(reasons[index]!, reasons[lowestPriority]!) > 0) lowestPriority = index;
+  }
+  if (compareDescriptorReasons(next, reasons[lowestPriority]!) < 0) reasons[lowestPriority] = next;
+}
+
+function compareDescriptorReasons(a: ContractDescriptorReason, b: ContractDescriptorReason): number {
+  const rank = descriptorReasonRank(a.path) - descriptorReasonRank(b.path);
+  if (rank !== 0) return rank;
+  const path = compareDescriptorPaths(a.path ?? '', b.path ?? '');
+  return path || compareDescriptorPaths(a.code, b.code);
+}
+
+function descriptorReasonRank(path?: string): number {
+  if (path?.startsWith('tileParams.buildZones')) return 0;
+  if (path?.startsWith('tileParams.lanes.spawnEdges')) return 1;
+  if (path?.startsWith('briefing')) return 2;
+  return 3;
+}
+
+function compareDescriptorPaths(a: string, b: string): number {
+  const left = a.replace(/\[(\d+)\]/g, (_, index: string) => `[${index.padStart(6, '0')}]`);
+  const right = b.replace(/\[(\d+)\]/g, (_, index: string) => `[${index.padStart(6, '0')}]`);
+  return left < right ? -1 : left > right ? 1 : 0;
+}
+
+function descriptorSchemaPath(path: string): string {
+  return path.replace(/\[\d+\]/g, '[]');
+}
+
+function textDescriptorReason(path: string, value: unknown, choices?: readonly string[]): ContractDescriptorReason {
+  if (typeof value !== 'string') return reason('field_type', 'A contract line has the wrong kind of value.', path);
+  if (value.length > 1_024) {
+    return path.startsWith('briefing.')
+      ? reason('briefing_too_long', 'This briefing line must fit within 1,024 characters.', path)
+      : reason('field_text_too_long', 'This contract line must fit within 1,024 characters.', path);
+  }
+  if (choices && !choices.includes(value)) return reason('field_choice', 'Choose one of the authored values for this contract line.', path);
+  if (path === 'briefing.geographyLine') {
+    return reason('briefing_blank', 'The briefing needs a geography line.', path);
+  }
+  if (path.startsWith('briefing.goals[')) {
+    return reason('briefing_blank', 'Every briefing goal needs plainspoken text.', path);
+  }
+  if (path.startsWith('briefing.rules[')) {
+    return reason('briefing_blank', 'Every briefing rule needs plainspoken text.', path);
+  }
+  return reason('field_text', 'A line on this contract page is blank, unknown, or too long.', path);
+}
+
+function arrayLengthDescriptorReason(path: string): ContractDescriptorReason {
+  if (path === 'briefing.goals') return reason('briefing_goal_count', 'Keep the contract briefing\'s authored goal rows.', path);
+  if (path === 'briefing.rules') return reason('briefing_rule_count', 'Keep the contract briefing\'s authored rule rows.', path);
+  return reason('field_list_length', 'A contract list has the wrong number of entries.', path);
 }
 
 function exactRecord(value: unknown, keys: readonly string[]): value is Record<string, unknown> {

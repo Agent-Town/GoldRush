@@ -153,6 +153,70 @@
 .terrain-brush__readout span:first-child { color: #5b3a1f; font-weight: 900; }
 .terrain-brush__status { min-height: 16px; margin-top: 6px; color: #5b3a1f; font-size: 11px; }
 
+.contract-validator {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #3f7778;
+  border-radius: 7px;
+  background: rgba(226, 239, 221, 0.88);
+}
+
+.contract-validator[data-verdict='rejected'] {
+  border-color: #a0522d;
+  background: repeating-linear-gradient(-12deg, rgba(160, 82, 45, 0.1) 0 5px, rgba(255, 248, 232, 0.88) 5px 12px);
+}
+
+.contract-validator header,
+.placement-editor__heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.contract-validator header p,
+.contract-validator header h2,
+.contract-validator__summary,
+.placement-editor__heading p,
+.placement-editor__heading h2 { margin: 0; }
+.contract-validator header p,
+.placement-editor__heading p { color: #6f5732; font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+.contract-validator header h2,
+.placement-editor__heading h2 { color: #5b3a1f; font-size: 19px; }
+.contract-validator header strong { padding: 4px 7px; border-radius: 999px; color: #fff8e8; background: #3f7778; font-size: 10px; text-transform: uppercase; }
+.contract-validator[data-verdict='rejected'] header strong { background: #a0522d; }
+.contract-validator__summary { margin-top: 7px; color: #365c4d; font-size: 11px; font-weight: 900; }
+.contract-validator[data-verdict='rejected'] .contract-validator__summary { color: #7a2e18; }
+.contract-validator__reasons { display: grid; gap: 5px; margin: 8px 0 0; padding: 0; list-style: none; }
+.contract-validator__reasons[hidden] { display: none; }
+.contract-validator__reasons li { padding: 7px 8px 7px 24px; border-left: 3px solid #a0522d; color: #5b3a1f; background: rgba(255, 248, 232, 0.78); font-size: 11px; font-weight: 900; }
+.contract-validator__reasons li::before { float: left; margin-left: -16px; content: '!'; color: #a0522d; }
+
+.placement-editor {
+  margin-bottom: 10px;
+  padding: 10px;
+  border: 2px solid #8b7d3c;
+  border-radius: 7px;
+  background: rgba(255, 248, 232, 0.82);
+}
+
+.placement-editor__heading > span { color: #3f7778; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+.placement-editor__section { margin-top: 10px; padding-top: 9px; border-top: 1px solid rgba(139, 125, 60, 0.45); }
+.placement-editor__section > h3 { margin: 0; color: #5b3a1f; font-size: 14px; }
+.placement-editor__section > p { margin: 3px 0 7px; color: rgba(46, 27, 14, 0.68); font-size: 10px; line-height: 1.35; }
+.placement-editor__zone { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; min-width: 0; margin: 8px 0 0; padding: 8px; border: 1px solid rgba(139, 125, 60, 0.62); border-radius: 5px; }
+.placement-editor__zone legend { padding: 0 5px; color: #6f5732; font-size: 11px; font-weight: 900; }
+.placement-editor__control { display: grid; gap: 3px; min-width: 0; color: #5b3a1f; font-size: 10px; font-weight: 900; }
+.placement-editor__control > input,
+.placement-editor__control > select { min-height: 34px; }
+.placement-editor__remove { grid-column: 1 / -1; min-height: 36px; color: #7a2e18 !important; background: #f2d9c7 !important; }
+.placement-editor__checks { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; }
+.placement-editor__checks label { display: flex; min-height: 40px; align-items: center; justify-content: center; gap: 4px; border: 1px solid rgba(139, 125, 60, 0.62); border-radius: 4px; color: #5b3a1f; background: rgba(245, 230, 200, 0.75); font-size: 10px; font-weight: 900; }
+.placement-editor__empty { padding: 7px; border: 1px dashed rgba(139, 125, 60, 0.55); border-radius: 4px; }
+
 .descriptor-inspector__transfer { padding: 11px 12px 12px; border-top: 3px double #8b7d3c; background: rgba(232, 213, 168, 0.66); }
 .descriptor-inspector__transfer h2 { margin: 0 0 8px; font-size: 15px; }
 .descriptor-inspector__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
@@ -173,5 +237,10 @@
   .terrain-brush__tools { grid-template-columns: repeat(2, 1fr); }
   .terrain-brush__settings { grid-template-columns: 1fr; }
   .terrain-brush__tools button,
-  .terrain-brush__history button { min-height: 44px; }
+  .terrain-brush__history button,
+  .placement-editor__control > input,
+  .placement-editor__control > select,
+  .placement-editor__remove,
+  .placement-editor__checks label { min-height: 44px; }
+  .placement-editor__checks { grid-template-columns: repeat(2, 1fr); }
 }

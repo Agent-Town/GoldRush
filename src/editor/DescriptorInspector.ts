@@ -9,8 +9,10 @@ import {
   parseContractDescriptor,
   readContractEditorDocument,
   stageContractEditorDocument,
+  type ContractDescriptorParseResult,
   type ContractManifest,
 } from '../meta/ContractFamilies';
+import { createPlacementEditorPanel } from './PlacementEditor';
 import { createTerrainBrushPanel } from './TerrainBrush';
 import './descriptor-inspector.css';
 
@@ -25,11 +27,11 @@ const ENUMS: Record<string, readonly string[]> = {
   'tileParams.render.terrainMesh': ['required', 'preferred', 'off'],
   'tileParams.heightfield.mode': ['visual'],
   'tileParams.waterSources[].kind': ['spring_pond'],
-  'tileParams.buildZones[].bank': ['north', 'south'],
   'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur'],
   'tileParams.prePlacedBuildables[].id': ['lantern_post'],
-  'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
 };
+
+type ContractDescriptorRejection = Extract<ContractDescriptorParseResult, { ok: false }>;
 
 export function installDescriptorInspector(root: HTMLElement): void {
   const contract = structuredClone(activeContract());
@@ -64,22 +66,34 @@ export function installDescriptorInspector(root: HTMLElement): void {
   const status = shell.querySelector<HTMLElement>('[data-testid="editor-status"]')!;
   const rejection = shell.querySelector<HTMLElement>('[data-testid="editor-rejection"]')!;
   const textarea = shell.querySelector<HTMLTextAreaElement>('[data-testid="editor-import-text"]')!;
-  const showRejection = (message: string) => {
+  const fields = shell.querySelector<HTMLElement>('[data-testid="editor-fields"]')!;
+  const validator = createContractValidator();
+  fields.append(validator.element);
+  validator.render({ ok: true, contract });
+  const showAccepted = (message: string) => {
+    rejection.hidden = true;
+    validator.render({ ok: true, contract });
+    status.textContent = message;
+  };
+  const showRejection = (result: ContractDescriptorRejection) => {
     rejection.hidden = false;
-    rejection.textContent = message;
+    rejection.textContent = result.message;
+    validator.render(result);
     status.textContent = 'The open contract was left untouched.';
   };
   const commit = (text: string, nextHistory: EditorHistory, message: string): boolean => {
-    rejection.hidden = true;
-    status.textContent = message;
-    if (stageDescriptorWithHistory(text, template, nextHistory)) return true;
-    showRejection(CONTRACT_EDITOR_REJECTION_LINE);
+    const staged = stageDescriptorWithHistory(text, template, nextHistory);
+    if (staged.ok) {
+      showAccepted(message);
+      return true;
+    }
+    showRejection(staged);
     return false;
   };
   const apply = (next: ContractManifest, message = 'Applying the descriptor…'): boolean => {
     const nextBytes = contractDescriptorJson(next);
     if (nextBytes === currentBytes) {
-      status.textContent = 'That mark left the descriptor unchanged.';
+      showAccepted('That mark left the descriptor unchanged.');
       return true;
     }
     const nextHistory = boundEditorHistory({ version: 1, head: documentFingerprint(nextBytes), past: [...history.past, currentBytes], future: [] });
@@ -107,7 +121,6 @@ export function installDescriptorInspector(root: HTMLElement): void {
     });
     commit(target, nextHistory, 'Restoring the next descriptor mark…');
   };
-  const fields = shell.querySelector<HTMLElement>('[data-testid="editor-fields"]')!;
   fields.append(createTerrainBrushPanel({
     contract,
     canUndo: history.past.length > 0,
@@ -116,14 +129,17 @@ export function installDescriptorInspector(root: HTMLElement): void {
     onUndo: undo,
     onRedo: redo,
   }));
+  fields.append(createPlacementEditorPanel({
+    contract,
+    onCommit: (next, message) => apply(next, message),
+  }));
   renderSections(fields, contract, () => apply(contract));
   const importText = (text: string) => {
     const parsed = parseContractDescriptor(text, template);
     if (!parsed.ok) {
-      showRejection(parsed.message);
+      showRejection(parsed);
       return;
     }
-    rejection.hidden = true;
     apply(parsed.contract, 'Applying the imported descriptor…');
   };
 
@@ -152,9 +168,11 @@ export function installDescriptorInspector(root: HTMLElement): void {
   root.append(shell);
   const rawOverride = new URLSearchParams(location.search).get(CONTRACT_EDITOR_PARAM);
   const staged = rawOverride === null || rawOverride === CONTRACT_EDITOR_SESSION_REF ? readContractEditorDocument(template) : null;
-  const invalidSessionRef = rawOverride === CONTRACT_EDITOR_SESSION_REF && staged?.ok !== true;
-  if ((rawOverride !== null && rawOverride !== CONTRACT_EDITOR_SESSION_REF && !parseContractDescriptor(rawOverride, template).ok) || staged?.ok === false || invalidSessionRef) {
-    showRejection(CONTRACT_EDITOR_REJECTION_LINE);
+  const direct = rawOverride !== null && rawOverride !== CONTRACT_EDITOR_SESSION_REF ? parseContractDescriptor(rawOverride, template) : null;
+  if (direct?.ok === false) showRejection(direct);
+  else if (staged?.ok === false) showRejection(staged);
+  else if (rawOverride === CONTRACT_EDITOR_SESSION_REF && staged === null) {
+    showRejection(editorRejection('document_missing', 'The staged contract page is no longer in this tab.'));
   }
   window.__GR_EDITOR__ = { descriptorJson: () => contractDescriptorJson(contract), wavesPaused: true };
 }
@@ -174,9 +192,65 @@ function renderSections(root: HTMLElement, contract: ContractManifest, apply: ()
   };
   root.append(section('Tile', basics, 'tileParams', commit));
   for (const [key, value] of Object.entries(tileParams)) {
-    if (key in basics || key === 'authoredTerrain') continue;
+    if (key in basics || key === 'authoredTerrain' || key === 'buildZones') continue;
+    if (key === 'lanes' && isRecord(value)) {
+      const laneFields = { ...value };
+      delete laneFields.spawnEdges;
+      const laneCommit = (): boolean => {
+        const previous = Object.fromEntries(Object.keys(laneFields).map((field) => [field, value[field]]));
+        Object.assign(value, laneFields);
+        if (apply()) return true;
+        Object.assign(value, previous);
+        return false;
+      };
+      root.append(section(label(key), laneFields, `tileParams.${key}`, laneCommit));
+      continue;
+    }
     root.append(section(label(key), value, `tileParams.${key}`, commit));
   }
+}
+
+function createContractValidator(): {
+  element: HTMLElement;
+  render: (result: ContractDescriptorParseResult) => void;
+} {
+  const element = document.createElement('section');
+  element.className = 'contract-validator';
+  element.dataset.testid = 'contract-validator';
+  element.innerHTML = `
+    <header><div><p>Assayer's gate</p><h2>Contract verdict</h2></div><strong data-testid="contract-validator-seal"></strong></header>
+    <p class="contract-validator__summary" role="status" aria-live="polite" data-testid="contract-validator-summary"></p>
+    <ul class="contract-validator__reasons" aria-live="polite" aria-atomic="true" data-testid="contract-validator-reasons"></ul>`;
+  const seal = element.querySelector<HTMLElement>('[data-testid="contract-validator-seal"]')!;
+  const summary = element.querySelector<HTMLElement>('[data-testid="contract-validator-summary"]')!;
+  const reasons = element.querySelector<HTMLUListElement>('[data-testid="contract-validator-reasons"]')!;
+  const render = (result: ContractDescriptorParseResult) => {
+    reasons.replaceChildren();
+    if (result.ok) {
+      element.dataset.verdict = 'accepted';
+      seal.textContent = 'Accepted';
+      summary.textContent = 'Placement, wave approaches, and briefing pass the contract gate.';
+      reasons.hidden = true;
+      return;
+    }
+    element.dataset.verdict = 'rejected';
+    seal.textContent = 'Rejected';
+    const firstReason = result.reasons[0]?.message ?? 'The contract page did not pass.';
+    summary.textContent = result.reasons.length === 1
+      ? `Rejected. ${firstReason} The open contract was not changed.`
+      : `${result.reasons.length} reasons found. First: ${firstReason} The open contract was not changed.`;
+    const items: HTMLLIElement[] = [];
+    for (const reason of result.reasons) {
+      const item = document.createElement('li');
+      item.dataset.reasonCode = reason.code;
+      if (reason.path) item.dataset.reasonPath = reason.path;
+      item.textContent = reason.message;
+      items.push(item);
+    }
+    reasons.replaceChildren(...items);
+    reasons.hidden = false;
+  };
+  return { element, render };
 }
 
 function section(title: string, value: unknown, path: string, apply: () => boolean): HTMLElement {
@@ -321,15 +395,23 @@ function numberInput(type: 'range' | 'number', value: number, range: ReturnType<
   return input;
 }
 
-function stageDescriptorWithHistory(text: string, template: ContractManifest, history: EditorHistory): boolean {
-  if (!parseContractDescriptor(text, template).ok || history.head !== documentFingerprint(text)) return false;
+function stageDescriptorWithHistory(
+  text: string,
+  template: ContractManifest,
+  history: EditorHistory,
+): ContractDescriptorParseResult {
+  const parsed = parseContractDescriptor(text, template);
+  if (!parsed.ok) return parsed;
+  if (history.head !== documentFingerprint(text)) {
+    return editorRejection('document_history', 'This contract page no longer matches its history mark.');
+  }
   const key = editorHistoryKey(template.id);
   let previous: string | null;
   try {
     previous = sessionStorage.getItem(key);
     sessionStorage.setItem(key, JSON.stringify(history));
   } catch {
-    return false;
+    return editorRejection('document_storage', 'The ledger could not hold this contract page for the next scene.');
   }
   const staged = stageContractEditorDocument(text, template);
   if (!staged.ok) {
@@ -337,14 +419,18 @@ function stageDescriptorWithHistory(text: string, template: ContractManifest, hi
       if (previous === null) sessionStorage.removeItem(key);
       else sessionStorage.setItem(key, previous);
     } catch {}
-    return false;
+    return staged;
   }
   const url = new URL(location.href);
   url.searchParams.set('editor', '');
   url.searchParams.set('contract', template.id);
   url.searchParams.set(CONTRACT_EDITOR_PARAM, CONTRACT_EDITOR_SESSION_REF);
   location.replace(url);
-  return true;
+  return parsed;
+}
+
+function editorRejection(code: string, message: string): ContractDescriptorRejection {
+  return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE, reasons: [{ code, message }] };
 }
 
 function readEditorHistory(template: ContractManifest, currentBytes: string): EditorHistory {
