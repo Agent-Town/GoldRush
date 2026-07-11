@@ -317,6 +317,7 @@ interface ThreeGameDiagnostics {
     unlocked: boolean;
     muted: boolean;
     volume: number;
+    musicVolume: number;
     requests: number;
     started: number;
     missing: number;
@@ -799,6 +800,13 @@ type GrSimulationTickSample = {
 };
 
 interface Window {
+  __GR_AUDIO_DIAGNOSTICS__?: {
+    unlocked: boolean;
+    muted: boolean;
+    volume: number;
+    musicVolume: number;
+    loops: string[];
+  };
   __GR_EDITOR__?: {
     descriptorJson: () => string;
     wavesPaused: true;

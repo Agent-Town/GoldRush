@@ -1,21 +1,25 @@
 import type { ProjectileKind } from '../systems/CombatSystem';
 import { soundManifest, soundUrlLoader, type SoundManifestEntry, type SoundName } from './manifest';
-import { readAudioMuted, readAudioVolume, subscribeAudioPreferences } from './settings';
+import { readAudioMuted, readAudioVolume, readMusicVolume, subscribeAudioPreferences } from './settings';
 
 export { soundManifest, type SoundName } from './manifest';
 export {
   AUDIO_MUTED_STORAGE_KEY,
   AUDIO_VOLUME_STORAGE_KEY,
+  MUSIC_VOLUME_STORAGE_KEY,
   readAudioMuted,
   readAudioVolume,
+  readMusicVolume,
   setAudioMuted,
   setAudioVolume,
+  setMusicVolume,
 } from './settings';
 
 const MAX_PER_SOUND = 4;
 const GLOBAL_VOICE_CAP = 12;
 const HEADROOM_AFTER_VOICES = 6;
 const HEADROOM_GAIN_FLOOR = 0.45;
+let audioWasUnlocked = false;
 const FAMILY_INTERVAL_MS = {
   gold: 120,
   hit: 60,
@@ -28,6 +32,7 @@ type SoundDiagnostics = {
   unlocked: boolean;
   muted: boolean;
   volume: number;
+  musicVolume: number;
   requests: number;
   started: number;
   missing: number;
@@ -89,11 +94,13 @@ export class SoundSystem {
   private readonly lastAcceptedAtByFamily = new Map<SoundFamily, number>();
   private readonly loops = new Map<SoundName, LoopState>();
   private readonly startingLoops = new Set<SoundName>();
+  private readonly desiredLoops = new Map<SoundName, number>();
   private readonly unsubscribePreferences = subscribeAudioPreferences(() => this.applyMasterVolume());
 
   constructor() {
     window.addEventListener('pointerdown', this.unlock, { passive: true });
     window.addEventListener('keydown', this.unlock);
+    if (audioWasUnlocked) this.unlock();
   }
 
   play(name: SoundName | string, volume = 1): void {
@@ -118,6 +125,8 @@ export class SoundSystem {
   }
 
   setLoop(name: SoundName, on: boolean, volume = 1): void {
+    if (on) this.desiredLoops.set(name, volume);
+    else this.desiredLoops.delete(name);
     if (!on || readAudioMuted() || readAudioVolume() <= 0) {
       this.stopLoop(name);
       return;
@@ -136,7 +145,7 @@ export class SoundSystem {
     if (!loop || !entry) return;
     loop.volume = volume;
     loop.sourceCount = this.loopSourceCount(name, loop.sourceCount);
-    loop.gain.gain.value = this.effectiveVolume(entry.volume * volume * loopSourceScale(loop.sourceCount));
+    loop.gain.gain.value = this.effectiveVolume(entry.volume * volume * loopSourceScale(loop.sourceCount) * this.groupVolume(entry));
   }
 
   stopLoop(name: SoundName): void {
@@ -197,6 +206,7 @@ export class SoundSystem {
     void this.context?.close();
     this.context = null;
     this.masterGain = null;
+    window.__GR_AUDIO_DIAGNOSTICS__ = undefined;
   }
 
   diagnostics(): SoundDiagnostics {
@@ -205,6 +215,7 @@ export class SoundSystem {
       unlocked: this.unlocked,
       muted: readAudioMuted(),
       volume: readAudioVolume(),
+      musicVolume: readMusicVolume(),
       requests: this.requests,
       started: this.started,
       missing: this.missing,
@@ -228,14 +239,17 @@ export class SoundSystem {
 
   private readonly unlock = (): void => {
     if (this.disposed) return;
+    audioWasUnlocked = true;
     const context = this.ensureContext();
     if (context.state === 'running') {
       this.unlocked = true;
+      this.startDesiredLoops();
       return;
     }
     void context.resume()
       .then(() => {
         if (!this.disposed && context.state === 'running') this.unlocked = true;
+        if (this.unlocked) this.startDesiredLoops();
       })
       .catch(() => undefined);
   };
@@ -268,7 +282,7 @@ export class SoundSystem {
     const gain = context.createGain();
     source.buffer = buffer;
     source.playbackRate.value = this.playbackRate(entry.pitchVariance);
-    gain.gain.value = this.effectiveVolume(entry.volume * volume);
+    gain.gain.value = this.effectiveVolume(entry.volume * volume * this.groupVolume(entry));
     source.connect(gain).connect(this.masterGain ?? context.destination);
     voice.source = source;
     source.onended = () => this.releaseVoice(voiceId);
@@ -469,9 +483,10 @@ export class SoundSystem {
   }
 
   private publishAudioDiagnostics(): void {
-    if (typeof window !== 'undefined' && window.__THREE_GAME_DIAGNOSTICS__) {
-      window.__THREE_GAME_DIAGNOSTICS__.audio = this.diagnostics();
-    }
+    if (typeof window === 'undefined') return;
+    const diagnostics = this.diagnostics();
+    window.__GR_AUDIO_DIAGNOSTICS__ = diagnostics;
+    if (window.__THREE_GAME_DIAGNOSTICS__) window.__THREE_GAME_DIAGNOSTICS__.audio = diagnostics;
   }
 
   private loopSourceCount(name: SoundName, fallback: number): number {
@@ -489,7 +504,17 @@ export class SoundSystem {
     for (const [name, loop] of this.loops) this.setLoopVolume(name, loop.volume);
     if (readAudioMuted() || readAudioVolume() <= 0) {
       for (const name of [...this.loops.keys()]) this.stopLoop(name);
+    } else {
+      this.startDesiredLoops();
     }
+  }
+
+  private groupVolume(entry: SoundManifestEntry): number {
+    return entry.group === 'music' ? readMusicVolume() : 1;
+  }
+
+  private startDesiredLoops(): void {
+    for (const [name, volume] of this.desiredLoops) this.setLoop(name, true, volume);
   }
 }
 

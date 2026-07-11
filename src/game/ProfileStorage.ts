@@ -2,7 +2,7 @@ import { DIFFICULTY_PRESET_STORAGE_KEY, normalizeDifficultyPreset, type Difficul
 import { META_PROGRESS_KEY } from './MetaProgress';
 import { RESEARCH_STATE_KEY, researchStateKey } from '../meta/ResearchTree';
 import { MEGAPROJECT_STATE_KEY } from '../meta/Megaproject';
-import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY } from '../audio/settings';
+import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY, MUSIC_VOLUME_STORAGE_KEY } from '../audio/settings';
 import { STORY_TALES_STORAGE_KEY } from '../story/settings';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../encyclopedia/storage';
 import { PERFORMANCE_TIER_STORAGE_KEY } from './PerformanceTier';
@@ -35,6 +35,7 @@ export const PROFILE_DATA_KEYS = new Set([
   DIFFICULTY_PRESET_STORAGE_KEY,
   AUDIO_VOLUME_STORAGE_KEY,
   AUDIO_MUTED_STORAGE_KEY,
+  MUSIC_VOLUME_STORAGE_KEY,
   STORY_TALES_STORAGE_KEY,
   LEDGER_DISCOVERED_STORAGE_KEY,
   ACTIVE_EPOCH_KEY,
@@ -44,6 +45,7 @@ export const PROFILE_DATA_KEYS = new Set([
 const LATE_PROFILE_DATA_KEYS = [
   AUDIO_VOLUME_STORAGE_KEY,
   AUDIO_MUTED_STORAGE_KEY,
+  MUSIC_VOLUME_STORAGE_KEY,
   STORY_TALES_STORAGE_KEY,
   ACTIVE_EPOCH_KEY,
   EPOCH_CEREMONY_KEY,

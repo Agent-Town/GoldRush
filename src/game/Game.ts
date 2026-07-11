@@ -1888,12 +1888,14 @@ export class Game {
   private syncAudioLoops(): void {
     const active = this.state.current === 'playing' && !this.state.isPaused;
     if (!active) {
+      this.audio.setLoop('era-e1-frontier-loop', false);
       this.audio.setLoop('river-ambience-loop', false);
       this.audio.setLoop('sluice-water-loop', false);
       this.audio.setLoop('prospector-hover-loop', false);
       return;
     }
 
+    this.audio.setLoop('era-e1-frontier-loop', true);
     this.audio.setLoop('river-ambience-loop', true, 0.35 + this.spatialAudioVolume({ x: this.camera.position.x, z: 0 }, 34) * 0.65);
 
     const sluices = this.buildSystem.diagnostics.sluicePositions;

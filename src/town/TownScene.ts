@@ -44,6 +44,7 @@ import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } 
 import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
+import { SoundSystem } from '../audio/SoundSystem';
 import { createRideRoom, probeRideRoom, relayBaseFromTownSearch, resolveJoinPhrase, stageRideConfig } from '../mp/RideTogether';
 import { earnedTownBuildings, townBuildings, townPlazaLayout, townPlazaSlot, type TownBuilding, type TownBuildingId } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
@@ -167,6 +168,7 @@ export class TownScene {
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly hero = new Hero();
+  private readonly audio = new SoundSystem();
   private readonly input: InputController;
   private readonly loop = new Loop((delta) => this.update(delta), () => this.render());
   private readonly ui = document.createElement('section');
@@ -257,6 +259,7 @@ export class TownScene {
   }
 
   start(): void {
+    this.audio.setLoop('title-theme', true);
     this.loop.start();
   }
 
@@ -283,6 +286,7 @@ export class TownScene {
     for (const actor of this.townActors) actor.dispose();
     this.ui.remove();
     this.hero.dispose();
+    this.audio.dispose();
     disposeObject3D(this.scene);
     this.scene.clear();
     this.renderer.dispose();
