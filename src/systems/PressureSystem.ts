@@ -55,6 +55,7 @@ export class PressureSystem {
     private readonly isOperational: (index: number) => boolean,
     private readonly hasResearch: (id: string) => boolean,
     private readonly onFloatText: (position: THREE.Vector3, text: string, color: string) => void,
+    private readonly onSound: (name: 'blast-charge-arm' | 'wind-gust') => void,
   ) {
     this.group.name = 'PressureSystem';
     this.group.visible = this.enabled();
@@ -101,6 +102,7 @@ export class PressureSystem {
           amount: Balance.boilerHouse.pressurePerTick,
         });
         if (!granted.ok) break;
+        this.onSound('blast-charge-arm');
       }
     }
     if (this.economy.resourceBalance('pressure').amount > Balance.boilerHouse.safeMax) this.vent(at);
@@ -190,6 +192,7 @@ export class PressureSystem {
     this.vents += 1;
     const position = this.boilers.allPositions[index]!;
     this.onFloatText(position, 'PFFFFT!', '#fff8e8');
+    this.onSound('wind-gust');
   }
 
   private updateObjective(wave: number): void {

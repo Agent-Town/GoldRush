@@ -11,6 +11,8 @@ export type SoundName =
   | 'demolish'
   | 'epoch-door-sting'
   | 'era-e1-frontier-loop'
+  | 'era-e2-steamworks-loop'
+  | 'era-e3-voltage-loop'
   | 'gold-chime'
   | 'invalid'
   | 'ledger-open'
@@ -60,6 +62,8 @@ export const soundManifest = {
   demolish: { file: 'demolish.mp3', volume: 0.42, group: 'ui' },
   'epoch-door-sting': { file: 'epoch-door-sting.mp3', volume: 0.46, group: 'ui' },
   'era-e1-frontier-loop': { file: 'era-e1-frontier-loop.mp3', volume: 0.42, group: 'music', loop: true },
+  'era-e2-steamworks-loop': { file: 'era-e2-steamworks-loop.mp3', volume: 0.42, group: 'music', loop: true },
+  'era-e3-voltage-loop': { file: 'era-e3-voltage-loop.mp3', volume: 0.42, group: 'music', loop: true },
   'gold-chime': { file: 'gold-chime.mp3', volume: 0.3, group: 'sfx' },
   invalid: { file: 'invalid.mp3', volume: 0.34, group: 'ui' },
   'ledger-open': { file: 'ledger-open.mp3', volume: 0.36, group: 'ui' },

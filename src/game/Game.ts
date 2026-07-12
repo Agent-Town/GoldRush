@@ -14,6 +14,8 @@ import {
   activeEpoch as selectActiveEpoch,
   activeTileDescriptor,
   DEFAULT_EPOCH_ID,
+  listEpochs,
+  loadEpoch,
   type ContractBaronTwist,
   type ContractLightKeyframe,
   type ContractManifest,
@@ -35,7 +37,6 @@ import {
   type ResearchUnlockFlags,
   type ResearchState,
 } from '../meta/ResearchTree';
-import { loadEpoch } from '../meta/ContractFamilies';
 import {
   activeMegaprojectManifest,
   advanceMegaprojectBuild as advanceMegaprojectStateBuild,
@@ -426,6 +427,7 @@ export class Game {
   private readonly damageVignette = document.createElement('div');
   private readonly activeEpoch = selectActiveEpoch();
   private readonly activeContract = selectActiveContract();
+  private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private runSuspendSaveLine = runSuspendPauseLine(this.activeContract.id);
   private manualSaveMessage = '';
   private readonly heroStart = contractHeroStart(this.activeContract);
@@ -850,6 +852,7 @@ export class Game {
       (index) => this.buildSystem.buildingTarget('boiler_house', index)?.active === true,
       (id) => hasResearchNode(this.researchState, id),
       (position, text, color) => this.vfx.floatText(position, text, color),
+      (sound) => this.audio.play(sound),
     );
     this.pressureArsenalSystem = new PressureArsenalSystem(
       this.combat,
@@ -2183,15 +2186,21 @@ export class Game {
 
   private syncAudioLoops(): void {
     const active = this.state.current === 'playing' && !this.state.isPaused;
+    const musicLoop = this.contractEpoch?.id === 'epoch-2-steamworks'
+      ? 'era-e2-steamworks-loop'
+      : (this.contractEpoch?.order ?? 1) >= 3
+        ? 'era-e3-voltage-loop'
+        : 'era-e1-frontier-loop';
+    for (const loop of ['era-e1-frontier-loop', 'era-e2-steamworks-loop', 'era-e3-voltage-loop'] as const) {
+      this.audio.setLoop(loop, active && loop === musicLoop);
+    }
     if (!active) {
-      this.audio.setLoop('era-e1-frontier-loop', false);
       this.audio.setLoop('river-ambience-loop', false);
       this.audio.setLoop('sluice-water-loop', false);
       this.audio.setLoop('prospector-hover-loop', false);
       return;
     }
 
-    this.audio.setLoop('era-e1-frontier-loop', true);
     this.audio.setLoop('river-ambience-loop', true, 0.35 + this.spatialAudioVolume({ x: this.camera.position.x, z: 0 }, 34) * 0.65);
 
     const sluices = this.buildSystem.diagnostics.sluicePositions;

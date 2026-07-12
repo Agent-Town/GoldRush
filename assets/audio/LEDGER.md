@@ -51,3 +51,5 @@
 | slot-save-confirm | short slot save confirm, ledger book closing with soft leather and paper puff, warm UI confirm, no voice/music, -14 LUFS | 1 | 0 | 1 | generated; duration 1.04s OK; reads as ledger book close | 9279 |
 | sign-in-chime | short sign-in chime, two gentle post-code teal notes with paper-soft tail, no voice/music bed, -14 LUFS | 1.2 | 0 | 1 | generated; duration 1.23s OK; reads as two-note post-code chime | 9279 |
 | batch-credit-recheck | post-run subscription recheck after audio-batch-002 | 0 | 338 | 0 | final remaining after delayed ElevenLabs counter update; batch-002 total spent 338 of 4000 cap | 9279 |
+| era-e2-steamworks-loop | Sonilo take 1 selected by owner; Steamworks in-run music | 120 | 0 | 1 | source preserved in marketing/raw/audio; encoded MP3 44.1kHz stereo 160kbps; lazy music chunk | 9279 |
+| era-e3-voltage-loop | Sonilo take 1 selected by owner; Voltage Age in-run music | 120 | 0 | 1 | source preserved in marketing/raw/audio; encoded MP3 44.1kHz stereo 160kbps; lazy music chunk | 9279 |
