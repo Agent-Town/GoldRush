@@ -235,6 +235,10 @@
 }
 
 .town-ui__surface-shell {
+  /* above the absolutely-positioned era backdrop, or the panel chrome (header,
+     era tabs, branch labels) paints underneath the plate (owner, 2026-07-13) */
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-rows: auto minmax(0, 1fr);
   width: min(1180px, calc(100vw - 28px));
