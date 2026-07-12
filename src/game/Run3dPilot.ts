@@ -6,6 +6,7 @@ import * as Terrain from '../world/Terrain';
 
 const registry = {
   sluice: { url: new URL('../../assets/pilots/run3d/sluice.glb', import.meta.url).href, fallback: 'SluicePool', groundPad: 0.9 },
+  stockpile: { url: new URL('../../assets/pilots/run3d/stockpile.glb', import.meta.url).href, fallback: 'StockpilePool', groundPad: 0.75 },
 } as const;
 
 type Buildable3dId = keyof typeof registry;
