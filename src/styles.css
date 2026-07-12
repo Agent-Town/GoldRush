@@ -59,7 +59,9 @@ body {
 }
 
 .gr-start-menu__backdrop {
-  position: absolute;
+  /* fixed, not absolute: the menu scrolls on short viewports and the painting
+     must stay under the content past the first screenful (owner, 2026-07-13) */
+  position: fixed;
   inset: 0;
   opacity: 0.82;
   background:
