@@ -229,11 +229,12 @@ test('owner-eye view mounts the Chapel beside every registered 3D building and t
   page.on('request', (request) => { if (request.url().includes('.glb')) modelRequests.push(request.url()); });
   await openTown(page, '?town3dPilot=all&tier=full');
   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.town3dPilotRenderSource === 'glb' && performance.getEntriesByType('resource').filter((entry) => entry.name.includes('.glb')).length >= 4);
-  expect(modelRequests).toHaveLength(4);
+  // Presence checks, not an exact count: the 'all' set grows as each town3d sibling lands
+  // (schoolhouse, assay-office, ...). Assert this slice mounts beside its registered neighbours.
+  await expect.poll(() => modelRequests.some((url) => url.includes('chapel'))).toBe(true);
   expect(modelRequests.some((url) => url.includes('town-v3-tavern'))).toBe(true);
   expect(modelRequests.some((url) => url.includes('general-store'))).toBe(true);
   expect(modelRequests.some((url) => url.includes('claim-office'))).toBe(true);
-  expect(modelRequests.some((url) => url.includes('chapel'))).toBe(true);
   await walkToChapel(page);
   await page.waitForTimeout(400);
   await shot(page, testInfo, 'owner-chapel-vs-tavern-and-cast');
