@@ -161,3 +161,12 @@ OWNER: science pacing — DATA POINT banked (5 steps, 1-to-Steamworks in one 35-
 
 ## Stale / superseded — retired, do NOT queue without review
 lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent bench shipped), 016 sprite-direction-fixes (likely superseded by 031/032-era anim work), 019-m1-02 reset-memory (verify vs M3 suspend/resume), 031/032/033 masters (s79: partially shipped via other routes — re-evaluate before any use).
+
+## 2026-07-12 — attended final-night refill (all six QUEUED; masters carry RESET AUTHORIZATION for the content-merged lanes)
+- **mu-03-era-audio** → queue/lane-a — BUILD-PLAN E2 ⑧ (the LAST unbuilt E2 slice): wire the already-generated sonilo takes (`era-e2-steamworks-take1.m4a`, `era-e3-voltage-take1.m4a`) into era-aware in-run loops + E2 steam SFX. GATE: mu-03 spec + mu-02 unmodified-green.
+- **town3d-01-general-store** → queue/lane-b — THIRD queue; predecessors all content-on-main (attended picks), pre-flight now carries explicit reset authorization naming tip `8a96df91`; 085 preserved at `save/085-four-rider`. Owner A/B verdict rider unchanged.
+- **wire-e2-enemy-walk4** → queue/lane-c — process + wire the drained E2 trio walk4 sheets (a/b selection → extract 4x4 → jumper-pattern wiring). Retires the LEDGER PENDING-PROCESSING line.
+- **process-e2-building-art** → queue/lane-c (#2, after walk4) — promote rail depot / machine shop / boiler house + extract rail elements + E2 icons; retires five PENDING-PROCESSING lines; placeholders die.
+- **wire-townsfolk-walk8-trio** → queue/lane-d — preacher/schoolteacher/assay clerk walk8 (a/b selection → 8x4 → metrology-law wiring); retires the LAST bust stand-ins; updates ONLY those three expectations in cast-motion-wiring.spec.
+- **art-kit-era-1** → queue/art — the missing ROOT plate of the kit chain (9/10 → 10/10): image-EDIT of kit-era-2 minus the E2 layer, persistence-law checked.
+- Context: Mei motion bug fixed on main `38711b52` (pause-aware loopPoint + stillness debounce — pauses were typed+data'd but never implemented); cast-motion green both projects; 51-test battery green; deployed `https://1212aeab.gold-rush-3in.pages.dev`.
