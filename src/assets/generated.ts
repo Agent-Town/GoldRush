@@ -56,6 +56,8 @@ const loader = new THREE.TextureLoader();
 const textureCache = new Map<AssetSlotId, Promise<THREE.Texture | null>>();
 const status: GeneratedAssetStatusMap = {};
 const renderedSprites: Partial<Record<AssetSlotId, number>> = {};
+const worldSpriteTint = new THREE.Color('#ffffff');
+const spriteTintState = new WeakMap<THREE.SpriteMaterial, { base: THREE.Color; applied: THREE.Color }>();
 let assetGeneration = 0;
 let startupFramePassed = typeof requestAnimationFrame !== 'function';
 let resolveStartupFrame: () => void = () => undefined;
@@ -71,6 +73,28 @@ export function generatedAssetStatuses(): GeneratedAssetStatusMap {
 
 export function generatedAssetRenderCounts(): Partial<Record<AssetSlotId, number>> {
   return { ...renderedSprites };
+}
+
+export function setWorldSpriteTint(color: THREE.ColorRepresentation): void {
+  worldSpriteTint.set(color);
+}
+
+export function bindWorldSpriteTint(sprite: THREE.Sprite, scalar: () => number = () => 1): void {
+  if (sprite.userData.worldSpriteTintBound === true) return;
+  sprite.userData.worldSpriteTintBound = true;
+  const beforeRender = sprite.onBeforeRender;
+  sprite.onBeforeRender = function (...args): void {
+    beforeRender.call(this, ...args);
+    const material = this.material as THREE.SpriteMaterial;
+    const state = spriteTintState.get(material) ?? {
+      base: material.color.clone(),
+      applied: material.color.clone(),
+    };
+    if (!material.color.equals(state.applied)) state.base.copy(material.color);
+    material.color.copy(state.base).multiply(worldSpriteTint).multiplyScalar(scalar());
+    state.applied.copy(material.color);
+    spriteTintState.set(material, state);
+  };
 }
 
 export function loadGeneratedTexture(slotId: AssetSlotId): Promise<THREE.Texture | null> {
@@ -220,6 +244,7 @@ export function attachGeneratedSprite(
   sprite.position.set(...options.position);
   sprite.scale.set(options.scale[0], options.scale[1], 1);
   sprite.renderOrder = options.renderOrder ?? RenderLayers.gameplay;
+  bindWorldSpriteTint(sprite);
   parent.add(sprite);
 
   loadGeneratedTexture(slotId).then((texture) => {
@@ -273,9 +298,7 @@ export class GeneratedSpriteBatch {
     this.group.name = options.name;
     for (let i = 0; i < capacity; i += 1) {
       const sprite = new THREE.Sprite(this.material);
-      sprite.onBeforeRender = () => {
-        this.material.color.setScalar(this.tintScalars[i] ?? 1);
-      };
+      bindWorldSpriteTint(sprite, () => this.tintScalars[i] ?? 1);
       sprite.visible = false;
       sprite.scale.set(options.scale[0], options.scale[1], 1);
       sprite.renderOrder = options.renderOrder ?? RenderLayers.gameplay;

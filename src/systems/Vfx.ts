@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import { bindWorldSpriteTint } from '../assets/generated';
 
 type FloatingText = {
   sprite: THREE.Sprite;
@@ -37,6 +38,7 @@ export class Vfx {
       sprite.visible = false;
       sprite.renderOrder = RenderLayers.impactVfx;
       sprite.scale.set(1.6, 0.8, 1);
+      bindWorldSpriteTint(sprite);
       this.group.add(sprite);
       this.pool.push({
         sprite,

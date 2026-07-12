@@ -20,6 +20,7 @@ type SavedNightSuspend = {
 
 const ARTIFACT_DIR = path.resolve('artifacts/night-bite');
 const LANTERN_ARTIFACT_DIR = path.resolve('artifacts/night-lanterns');
+const DUSK_ARTIFACT_DIR = path.resolve('artifacts/night-dusk');
 const NIGHT_QUERY = '?debug&contract=e1-night-shift&timescale=8&nolevel&nowaves&seed=e1-night-shift';
 const RELIGHT_COST = Math.ceil(Balance.lanternPost.cost / 2);
 const COLD_LANTERNS = [
@@ -69,6 +70,27 @@ async function dismissBriefing(page: Page): Promise<void> {
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: false });
+}
+
+async function captureDuskStrip(page: Page, testInfo: TestInfo): Promise<void> {
+  await mkdir(DUSK_ARTIFACT_DIR, { recursive: true });
+  const frames: PNG[] = [];
+  for (const [name, wave] of [['day', 4], ['golden', 7], ['dusk', 8], ['dark', 10]] as const) {
+    await setWave(page, wave);
+    await page.waitForTimeout(80);
+    const buffer = await page.locator('#game-canvas').screenshot();
+    await writeFile(path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), buffer);
+    frames.push(PNG.sync.read(buffer));
+  }
+  const width = frames[0]!.width;
+  const height = frames[0]!.height;
+  const strip = new PNG({ width: width * frames.length, height });
+  for (const [index, frame] of frames.entries()) {
+    for (let y = 0; y < height; y += 1) {
+      frame.data.copy(strip.data, (y * strip.width + index * width) * 4, y * width * 4, (y + 1) * width * 4);
+    }
+  }
+  await writeFile(path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-day-golden-dusk-dark-strip.png`), PNG.sync.write(strip));
 }
 
 async function setBalance(page: Page, key: string, value: number | boolean): Promise<void> {
@@ -291,15 +313,23 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
       unlock: 'science≥3',
     },
   });
+  expect(snapshot.registry?.twist.lightRamp?.keyframes?.map((keyframe) => keyframe.phase)).toEqual([
+    'full',
+    'golden',
+    'dusk',
+    'dark',
+  ]);
   expect(snapshot.diagnostics?.secureWave).toBe(25);
   expect(snapshot.lighting).toMatchObject({ enabled: true, phase: 'full', darkness: 0 });
 
   await setWave(page, 5);
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift)).toMatchObject({
-    phase: 'dusk',
-    darkness: 0.62,
-  });
-  await shot(page, testInfo, 'cold-camp-dusk');
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift.darkness ?? 1)).toBeLessThan(0.03);
+
+  await setWave(page, 7);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift.darkness ?? 0)).toBeGreaterThan(0.25);
+
+  await setWave(page, 8);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift.darkness ?? 0)).toBeGreaterThan(0.6);
 
   await setWave(page, 10);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift)).toMatchObject({
@@ -310,6 +340,28 @@ test('loads Night Shift contract data and ramps full, dusk, dark, dawn lighting'
     fogNear: 18,
     fogFar: 42,
   });
+
+  await setWave(page, 4);
+  await page.waitForTimeout(80);
+  const dayHero = await spriteLuminance(page, { x: 0, z: 0 });
+  await setWave(page, 10);
+  await page.waitForTimeout(80);
+  const darkHero = await spriteLuminance(page, { x: 0, z: 0 });
+  const heroRatio = darkHero / Math.max(dayHero, 0.001);
+  const darkTint = snapshot.registry?.twist.lightRamp?.keyframes?.find((keyframe) => keyframe.phase === 'dark')?.spriteTint;
+  expect(darkTint).toBe('#34405a');
+  const linear = (channel: number): number => {
+    const srgb = channel / 255;
+    return srgb <= 0.04045 ? srgb / 12.92 : ((srgb + 0.055) / 1.055) ** 2.4;
+  };
+  const tintLuminance = 0.2126 * linear(0x34) + 0.7152 * linear(0x40) + 0.0722 * linear(0x5a);
+  expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeGreaterThan(tintLuminance - 0.04);
+  expect(heroRatio, JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance })).toBeLessThan(tintLuminance + 0.04);
+  await captureDuskStrip(page, testInfo);
+  await writeFile(
+    path.join(DUSK_ARTIFACT_DIR, `${testInfo.project.name}-hero-brightness.json`),
+    JSON.stringify({ dayHero, darkHero, heroRatio, tintLuminance }, null, 2),
+  );
 
   await setWave(page, 25);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift.phase)).toBe('dawn');

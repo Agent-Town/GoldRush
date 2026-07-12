@@ -15,6 +15,7 @@ import {
   activeTileDescriptor,
   DEFAULT_EPOCH_ID,
   type ContractBaronTwist,
+  type ContractLightKeyframe,
   type ContractManifest,
   type RailPathDescriptor,
 } from '../meta/ContractFamilies';
@@ -159,7 +160,13 @@ import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { PowerWireView } from '../world/PowerWireView';
-import { LightRig, type LightRigNightShiftState, type NightPoolSource, type NightShiftPhase } from '../world/LightRig';
+import {
+  LightRig,
+  type LightRigNightShiftState,
+  type LightRigRampPalette,
+  type NightPoolSource,
+  type NightShiftPhase,
+} from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { readTownName } from '../town/TownNaming';
 import { installRunTelemetry } from '../telemetry/runBeacon';
@@ -3494,11 +3501,17 @@ export class Game {
   private nightShiftLightingState(): LightRigNightShiftState {
     if (!this.isNightShiftContract()) return { enabled: false, phase: 'full', darkness: 0 };
     const ramp = this.activeContract.twist.lightRamp ?? Balance.contracts.nightShift;
-    const wave = Math.max(0, Math.floor(this.waveSystem.diagnostics.wave));
+    const diagnostics = this.waveSystem.diagnostics;
+    const waveInterval = Math.max(0.1, Balance.waves.waveInterval / Math.max(0.1, this.activeContract.twist.waveCadenceMult ?? 1));
+    const wave = Math.max(0, diagnostics.wave + THREE.MathUtils.clamp(1 - diagnostics.nextWaveInSim / waveInterval, 0, 1));
     let phase: NightShiftPhase = 'full';
     let darkness = 0;
     if (wave >= ramp.dawnWave) {
       phase = 'dawn';
+    } else if ('keyframes' in ramp && ramp.keyframes?.length) {
+      const palette = lightRampPalette(ramp.keyframes, wave);
+      const phase: NightShiftPhase = palette.phase === 'full' ? 'full' : palette.phase === 'dark' ? 'dark' : 'dusk';
+      return { enabled: true, phase, darkness: palette.darkness, palette };
     } else if (wave >= ramp.darkWave) {
       phase = 'dark';
       darkness = Balance.contracts.nightShift.darkDarkness;
@@ -5181,6 +5194,54 @@ export class Game {
     if (!element) throw new Error(`Missing element: ${selector}`);
     return element;
   }
+}
+
+type InterpolatedLightRamp = LightRigRampPalette & { phase: ContractLightKeyframe['phase']; darkness: number };
+
+const lightRampColors = new Map<string, THREE.Color>();
+const interpolatedLightRamp: InterpolatedLightRamp = {
+  phase: 'full',
+  darkness: 0,
+  background: new THREE.Color(),
+  fog: new THREE.Color(),
+  sun: new THREE.Color(),
+  sunIntensity: 0,
+  fill: new THREE.Color(),
+  ground: new THREE.Color(),
+  fillIntensity: 0,
+  sunHeight: 0,
+  spriteTint: new THREE.Color(),
+};
+
+function lightRampColor(value: string): THREE.Color {
+  let color = lightRampColors.get(value);
+  if (!color) {
+    color = new THREE.Color(value);
+    lightRampColors.set(value, color);
+  }
+  return color;
+}
+
+function lightRampPalette(keyframes: readonly ContractLightKeyframe[], wave: number): InterpolatedLightRamp {
+  const first = keyframes[0]!;
+  const last = keyframes.at(-1)!;
+  const clampedWave = THREE.MathUtils.clamp(wave, first.wave, last.wave);
+  const nextIndex = Math.max(1, keyframes.findIndex((keyframe) => keyframe.wave >= clampedWave));
+  const next = keyframes[nextIndex]!;
+  const previous = keyframes[nextIndex - 1]!;
+  const t = THREE.MathUtils.clamp((clampedWave - previous.wave) / Math.max(0.001, next.wave - previous.wave), 0, 1);
+  interpolatedLightRamp.phase = clampedWave === next.wave ? next.phase : previous.phase;
+  interpolatedLightRamp.darkness = THREE.MathUtils.lerp(previous.darkness, next.darkness, t);
+  interpolatedLightRamp.background.copy(lightRampColor(previous.background)).lerp(lightRampColor(next.background), t);
+  interpolatedLightRamp.fog.copy(lightRampColor(previous.fog)).lerp(lightRampColor(next.fog), t);
+  interpolatedLightRamp.sun.copy(lightRampColor(previous.sun)).lerp(lightRampColor(next.sun), t);
+  interpolatedLightRamp.sunIntensity = THREE.MathUtils.lerp(previous.sunIntensity, next.sunIntensity, t);
+  interpolatedLightRamp.fill.copy(lightRampColor(previous.fill)).lerp(lightRampColor(next.fill), t);
+  interpolatedLightRamp.ground.copy(lightRampColor(previous.ground)).lerp(lightRampColor(next.ground), t);
+  interpolatedLightRamp.fillIntensity = THREE.MathUtils.lerp(previous.fillIntensity, next.fillIntensity, t);
+  interpolatedLightRamp.sunHeight = THREE.MathUtils.lerp(previous.sunHeight, next.sunHeight, t);
+  interpolatedLightRamp.spriteTint.copy(lightRampColor(previous.spriteTint)).lerp(lightRampColor(next.spriteTint), t);
+  return interpolatedLightRamp;
 }
 
 type MetaPresenceLine = { name: string; effect: string; recap: string };

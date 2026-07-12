@@ -185,6 +185,21 @@ export type ContractLightRamp = {
   duskWave: number;
   darkWave: number;
   dawnWave: number;
+  keyframes?: readonly ContractLightKeyframe[];
+};
+export type ContractLightKeyframe = {
+  wave: number;
+  phase: 'full' | 'golden' | 'dusk' | 'dark';
+  darkness: number;
+  background: string;
+  fog: string;
+  sun: string;
+  sunIntensity: number;
+  fill: string;
+  ground: string;
+  fillIntensity: number;
+  sunHeight: number;
+  spriteTint: string;
 };
 export type ContractBaronTwist = {
   wave: number;
@@ -1018,6 +1033,7 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.prePlacedBuildables[].id': ['lantern_post'],
   'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
   'twist.enemyRoster[].spawnGates[].edge': ['north', 'south', 'east', 'west'],
+  'twist.lightRamp.keyframes[].phase': ['full', 'golden', 'dusk', 'dark'],
 };
 
 const CONTRACT_DESCRIPTOR_REASON_LIMIT = 12;
@@ -1275,6 +1291,7 @@ function variableDescriptorArrayShape(
 }
 
 function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
+  validateLightRamp(contract.twist.lightRamp, reasons);
   const claimHalf = (contract.tileParams.size ?? CONTRACT_DEFAULT_CLAIM_SIZE) / 2;
   for (const [index, zone] of (contract.tileParams.buildZones ?? []).entries()) {
     const path = `tileParams.buildZones[${index}]`;
@@ -1307,6 +1324,37 @@ function validateContractMap(contract: ContractManifest, reasons: ContractDescri
     addDescriptorReason(
       reasons,
       reason('fixture_outside_claim', 'This fixture stands beyond the claim stakes.', `tileParams.prePlacedBuildables[${index}]`),
+    );
+  }
+}
+
+function validateLightRamp(ramp: ContractLightRamp | undefined, reasons: ContractDescriptorReason[]): void {
+  const keyframes = ramp?.keyframes;
+  if (!ramp || !keyframes) return;
+  const phases: readonly ContractLightKeyframe['phase'][] = ['full', 'golden', 'dusk', 'dark'];
+  const colorFields = ['background', 'fog', 'sun', 'fill', 'ground', 'spriteTint'] as const;
+  const hexColor = /^#[0-9a-f]{6}$/i;
+  keyframes.forEach((keyframe, index) => {
+    const path = `twist.lightRamp.keyframes[${index}]`;
+    if (keyframe.phase !== phases[index]) {
+      addDescriptorReason(reasons, reason('light_ramp_phase_order', 'The light ramp must run full, golden, dusk, then dark.', `${path}.phase`));
+    }
+    if (index > 0 && keyframe.wave <= keyframes[index - 1]!.wave) {
+      addDescriptorReason(reasons, reason('light_ramp_wave_order', 'Light-ramp waves must rise in strict order.', `${path}.wave`));
+    }
+    if (index > 0 && keyframe.darkness < keyframes[index - 1]!.darkness) {
+      addDescriptorReason(reasons, reason('light_ramp_darkness_order', 'Light-ramp darkness cannot decrease before dawn.', `${path}.darkness`));
+    }
+    for (const field of colorFields) {
+      if (!hexColor.test(keyframe[field])) {
+        addDescriptorReason(reasons, reason('light_ramp_color', 'Light-ramp colors must use six-digit hex marks.', `${path}.${field}`));
+      }
+    }
+  });
+  if (keyframes[0]?.wave !== ramp.duskWave || keyframes.at(-1)?.wave !== ramp.darkWave) {
+    addDescriptorReason(
+      reasons,
+      reason('light_ramp_window', 'The light-ramp endpoints must match its dusk and dark waves.', 'twist.lightRamp.keyframes'),
     );
   }
 }

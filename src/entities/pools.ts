@@ -1187,8 +1187,11 @@ export class EnemyPool {
   }
 
   private renderLightFactor(lightFactor: number): number {
-    if (!this.fullDarkRenderCutoffActive()) return lightFactor;
-    return lightFactor < Balance.contracts.nightShift.renderVisibilityCutoff ? 0 : Balance.contracts.nightShift.renderVisibleBoost;
+    if (!this.lightDimming.enabled) return lightFactor;
+    const visibilityBlend = THREE.MathUtils.smoothstep(this.lightDimming.darkness, 0.9, 0.99);
+    const boosted = THREE.MathUtils.lerp(lightFactor, lightFactor * Balance.contracts.nightShift.renderVisibleBoost, visibilityBlend);
+    if (!this.fullDarkRenderCutoffActive()) return boosted;
+    return lightFactor < Balance.contracts.nightShift.renderVisibilityCutoff ? 0 : boosted;
   }
 
   private isWatchPainted(enemy: ClaimJumperEnemy): boolean {

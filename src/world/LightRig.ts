@@ -1,14 +1,28 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import { setWorldSpriteTint } from '../assets/generated';
 import * as Terrain from './Terrain';
 
 export type ShadowsQuality = 'soft' | 'blob';
 export type NightShiftPhase = 'full' | 'dusk' | 'dark' | 'dawn';
+export type LightRigRampPalette = {
+  background: THREE.Color;
+  fog: THREE.Color;
+  sun: THREE.Color;
+  sunIntensity: number;
+  fill: THREE.Color;
+  ground: THREE.Color;
+  fillIntensity: number;
+  sunHeight: number;
+  spriteTint: THREE.Color;
+};
 export type LightRigNightShiftState = {
   enabled: boolean;
   phase: NightShiftPhase;
   darkness: number;
+  palette?: LightRigRampPalette;
+  spriteTint?: string;
 };
 
 export type NightPoolSource = {
@@ -160,6 +174,7 @@ export class LightRig {
       enabled: state.enabled,
       phase: state.phase,
       darkness: THREE.MathUtils.clamp(state.darkness, 0, 1),
+      ...(state.palette ? { palette: state.palette } : {}),
     };
     this.syncNightPools(sources);
   }
@@ -203,7 +218,12 @@ export class LightRig {
         fill: `#${this.fill.color.getHexString()}`,
         fillIntensity: round2(this.fill.intensity),
       },
-      nightShift: { ...this.nightShift },
+      nightShift: {
+        enabled: this.nightShift.enabled,
+        phase: this.nightShift.phase,
+        darkness: this.nightShift.darkness,
+        ...(this.nightShift.palette ? { spriteTint: `#${this.nightShift.palette.spriteTint.getHexString()}` } : {}),
+      },
       nightPools: this.nightPoolLights.filter((light) => light.visible).length,
       enemyLanterns: this.lanternBulbs.count,
       prospectorLights: this.nightPoolLights.filter((light) => light.visible && light.userData.kind === 'prospector').length,
@@ -216,6 +236,7 @@ export class LightRig {
   }
 
   dispose(): void {
+    setWorldSpriteTint('#ffffff');
     this.scene.remove(this.group, this.blobShadows.group);
     this.sun.dispose();
     this.fill.dispose();
@@ -245,6 +266,8 @@ export class LightRig {
       this.fill.color.copy(this.dayFill);
       this.fill.groundColor.copy(this.dayGround);
       this.fill.intensity = 1.12;
+      this.sun.position.y = 18;
+      setWorldSpriteTint('#ffffff');
       return;
     }
 
@@ -256,6 +279,22 @@ export class LightRig {
       this.fill.color.copy(this.dayFill);
       this.fill.groundColor.copy(this.dawnGround);
       this.fill.intensity = 1.2;
+      this.sun.position.y = 18;
+      setWorldSpriteTint('#ffffff');
+      return;
+    }
+
+    const palette = this.nightShift.palette;
+    if (palette) {
+      this.background.copy(palette.background);
+      this.fog.color.copy(palette.fog);
+      this.sun.color.copy(palette.sun);
+      this.sun.intensity = palette.sunIntensity;
+      this.sun.position.y = palette.sunHeight;
+      this.fill.color.copy(palette.fill);
+      this.fill.groundColor.copy(palette.ground);
+      this.fill.intensity = palette.fillIntensity;
+      setWorldSpriteTint(palette.spriteTint);
       return;
     }
 
@@ -268,6 +307,7 @@ export class LightRig {
     this.fill.color.copy(this.dayFill).lerp(this.darkFill, darkness);
     this.fill.groundColor.copy(this.dayGround).lerp(this.darkGround, darkness);
     this.fill.intensity = THREE.MathUtils.lerp(1.12, 0, darkness);
+    setWorldSpriteTint(this.fill.color);
   }
 
   private syncNightPools(sources: readonly NightPoolSource[]): void {

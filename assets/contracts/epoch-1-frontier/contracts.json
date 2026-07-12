@@ -142,7 +142,13 @@
         "lightRamp": {
           "duskWave": 5,
           "darkWave": 10,
-          "dawnWave": 25
+          "dawnWave": 25,
+          "keyframes": [
+            { "wave": 5, "phase": "full", "darkness": 0, "background": "#f1c887", "fog": "#ead2a3", "sun": "#ffd28a", "sunIntensity": 2.35, "fill": "#fff2cc", "ground": "#8b6c3f", "fillIntensity": 1.12, "sunHeight": 18, "spriteTint": "#ffffff" },
+            { "wave": 6.5, "phase": "golden", "darkness": 0.18, "background": "#d99058", "fog": "#d79b68", "sun": "#ff9655", "sunIntensity": 2.05, "fill": "#ffc184", "ground": "#8b4e37", "fillIntensity": 0.92, "sunHeight": 10, "spriteTint": "#ffd0a8" },
+            { "wave": 8, "phase": "dusk", "darkness": 0.62, "background": "#79636e", "fog": "#806a70", "sun": "#c36f68", "sunIntensity": 0.7, "fill": "#75687e", "ground": "#352b36", "fillIntensity": 0.42, "sunHeight": 5, "spriteTint": "#8b7180" },
+            { "wave": 10, "phase": "dark", "darkness": 1, "background": "#000000", "fog": "#000000", "sun": "#40516f", "sunIntensity": 0, "fill": "#28324a", "ground": "#000000", "fillIntensity": 0, "sunHeight": 3, "spriteTint": "#34405a" }
+          ]
         },
         "enemyLanternClasses": ["rusher", "thief"]
       },

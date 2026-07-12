@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import characterContractText from '../../assets/layer-contracts/characters.v2.json?raw';
 import { Balance } from '../game/Balance';
-import { afterStartupFrame, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
+import { afterStartupFrame, bindWorldSpriteTint, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
 import {
   coarseOrientationForDirection,
   idleDirectionFor,
@@ -234,6 +234,7 @@ export class SpriteAnimator {
     private readonly sprite?: THREE.Sprite,
     fadeMaterial?: THREE.SpriteMaterial,
   ) {
+    if (sprite) bindWorldSpriteTint(sprite);
     animationDiagnostics[slotId] = {
       clip: 'idle',
       frame: 0,
@@ -261,6 +262,7 @@ export class SpriteAnimator {
       this.fadeSprite.position.copy(sprite.position);
       this.fadeSprite.scale.copy(sprite.scale);
       this.fadeSprite.renderOrder = sprite.renderOrder + 0.01;
+      bindWorldSpriteTint(this.fadeSprite);
       sprite.parent.add(this.fadeSprite);
     }
     const wait = isCriticalStartupAssetSlot(slotId) ? Promise.resolve() : afterStartupFrame();
