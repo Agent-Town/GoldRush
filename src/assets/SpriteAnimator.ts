@@ -32,6 +32,7 @@ type ContractSlot = {
     enabled?: boolean;
     directions?: Record<string, OrientationSource>;
     mirrors?: Record<string, string>;
+    aliases?: Record<string, string>;
   };
   walk8?: WalkSheetSource;
 };

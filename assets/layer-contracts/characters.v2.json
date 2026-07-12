@@ -176,6 +176,51 @@
       }
     },
     {
+      "slot": "char.e2.rail_tough",
+      "fallback": { "file": "char-railtough-sheet-walk4-a-r0c0.png" },
+      "walk4": {
+        "version": 1, "status": "ACTIVE", "enabled": true,
+        "notes": "wire-e2-enemy-walk4: candidate A selected for consistent Rail Tough identity, clean company-coat silhouette, distinct four-phase gait, and no text, firearms, gore, mirrors, or repeated frames.",
+        "directions": {
+          "s": { "frames": { "files": ["char-railtough-sheet-walk4-a-r0c0.png", "char-railtough-sheet-walk4-a-r0c1.png", "char-railtough-sheet-walk4-a-r0c2.png", "char-railtough-sheet-walk4-a-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "w": { "frames": { "files": ["char-railtough-sheet-walk4-a-r1c0.png", "char-railtough-sheet-walk4-a-r1c1.png", "char-railtough-sheet-walk4-a-r1c2.png", "char-railtough-sheet-walk4-a-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "e": { "frames": { "files": ["char-railtough-sheet-walk4-a-r2c0.png", "char-railtough-sheet-walk4-a-r2c1.png", "char-railtough-sheet-walk4-a-r2c2.png", "char-railtough-sheet-walk4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "n": { "frames": { "files": ["char-railtough-sheet-walk4-a-r3c0.png", "char-railtough-sheet-walk4-a-r3c1.png", "char-railtough-sheet-walk4-a-r3c2.png", "char-railtough-sheet-walk4-a-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
+        },
+        "mirrors": {}, "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" }
+      }
+    },
+    {
+      "slot": "char.e2.steam_wrecker",
+      "fallback": { "file": "char-steamwrecker-sheet-walk4-a-r0c0.png" },
+      "walk4": {
+        "version": 1, "status": "ACTIVE", "enabled": true,
+        "notes": "wire-e2-enemy-walk4: candidate A selected for consistent machine identity, stable amber eye and wrench-arm silhouette, distinct four-phase gait, and no text, firearms, gore, mirrors, or repeated frames.",
+        "directions": {
+          "s": { "frames": { "files": ["char-steamwrecker-sheet-walk4-a-r0c0.png", "char-steamwrecker-sheet-walk4-a-r0c1.png", "char-steamwrecker-sheet-walk4-a-r0c2.png", "char-steamwrecker-sheet-walk4-a-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "w": { "frames": { "files": ["char-steamwrecker-sheet-walk4-a-r1c0.png", "char-steamwrecker-sheet-walk4-a-r1c1.png", "char-steamwrecker-sheet-walk4-a-r1c2.png", "char-steamwrecker-sheet-walk4-a-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "e": { "frames": { "files": ["char-steamwrecker-sheet-walk4-a-r2c0.png", "char-steamwrecker-sheet-walk4-a-r2c1.png", "char-steamwrecker-sheet-walk4-a-r2c2.png", "char-steamwrecker-sheet-walk4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "n": { "frames": { "files": ["char-steamwrecker-sheet-walk4-a-r3c0.png", "char-steamwrecker-sheet-walk4-a-r3c1.png", "char-steamwrecker-sheet-walk4-a-r3c2.png", "char-steamwrecker-sheet-walk4-a-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
+        },
+        "mirrors": {}, "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" }
+      }
+    },
+    {
+      "slot": "char.e2.coal_thief",
+      "fallback": { "file": "char-coalthief-sheet-walk4-a-r0c0.png" },
+      "walk4": {
+        "version": 1, "status": "ACTIVE", "enabled": true,
+        "notes": "wire-e2-enemy-walk4: candidate A selected for consistent Coal Thief identity, stable left-shoulder sack and low silhouette, distinct four-phase gait, and no text, firearms, gore, mirrors, or repeated frames.",
+        "directions": {
+          "s": { "frames": { "files": ["char-coalthief-sheet-walk4-a-r0c0.png", "char-coalthief-sheet-walk4-a-r0c1.png", "char-coalthief-sheet-walk4-a-r0c2.png", "char-coalthief-sheet-walk4-a-r0c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "w": { "frames": { "files": ["char-coalthief-sheet-walk4-a-r1c0.png", "char-coalthief-sheet-walk4-a-r1c1.png", "char-coalthief-sheet-walk4-a-r1c2.png", "char-coalthief-sheet-walk4-a-r1c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "e": { "frames": { "files": ["char-coalthief-sheet-walk4-a-r2c0.png", "char-coalthief-sheet-walk4-a-r2c1.png", "char-coalthief-sheet-walk4-a-r2c2.png", "char-coalthief-sheet-walk4-a-r2c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } },
+          "n": { "frames": { "files": ["char-coalthief-sheet-walk4-a-r3c0.png", "char-coalthief-sheet-walk4-a-r3c1.png", "char-coalthief-sheet-walk4-a-r3c2.png", "char-coalthief-sheet-walk4-a-r3c3.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3], "fps": 8 } } }
+        },
+        "mirrors": {}, "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" }
+      }
+    },
+    {
       "slot": "char.claim_jumper",
       "fallback": {
         "file": "enemy-claim-jumper.png"
