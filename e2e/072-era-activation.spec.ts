@@ -17,6 +17,7 @@ import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
 
 const ARTIFACT_DIR = path.resolve('artifacts/072-era-activation');
+const SITE_ARTIFACT_DIR = path.resolve('artifacts/raise-at-site');
 const FRONTIER = 'epoch-1-frontier';
 const STEAMWORKS = 'epoch-2-steamworks';
 const E1_CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'];
@@ -131,6 +132,13 @@ async function openSchoolhouse(page: Page): Promise<void> {
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('schoolhouse');
   await page.getByTestId('town-open-schoolhouse').click();
   await expect(page.getByTestId('schoolhouse-view')).toBeVisible();
+}
+
+async function approachStampMill(page: Page): Promise<void> {
+  await openTown(page);
+  await hold(page, 'KeyD', 650);
+  await hold(page, 'KeyS', 1_150);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('stamp-mill');
 }
 
 async function openBoard(page: Page): Promise<void> {
@@ -324,5 +332,53 @@ test('the E2 ceremony can be skipped without undoing activation', async ({ page 
   expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(STEAMWORKS);
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-id', 'epoch-3-voltage');
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-state', 'locked');
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+test('the Stamp Mill site raises E2 once and removes the action after activation', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const errors = collectErrors(page);
+  await seedProfile(page, true);
+  await page.evaluate((key) => {
+    const meta = JSON.parse(localStorage.getItem(key) ?? '{}');
+    meta.tracks.science = 0;
+    localStorage.setItem(key, JSON.stringify(meta));
+  }, profileDataKey('robin', META_PROGRESS_KEY));
+  await page.reload();
+  await approachStampMill(page);
+  await expect(page.getByTestId('town-approach-prompt')).toContainText('needs science');
+
+  await page.evaluate(
+    ({ key, threshold }) => {
+      const meta = JSON.parse(localStorage.getItem(key) ?? '{}');
+      meta.tracks.science = threshold;
+      localStorage.setItem(key, JSON.stringify(meta));
+    },
+    { key: profileDataKey('robin', META_PROGRESS_KEY), threshold: STEAMWORKS_THRESHOLD },
+  );
+  await page.reload();
+  await approachStampMill(page);
+  const action = page.getByTestId('raise-stamp-mill-site');
+  await expect(action).toHaveText('Raise the Stamp Mill');
+  expect((await action.boundingBox())?.height).toBeGreaterThanOrEqual(44);
+  await mkdir(SITE_ARTIFACT_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(SITE_ARTIFACT_DIR, `${testInfo.project.name}-site-prompt.png`), fullPage: false });
+
+  await page.evaluate(async () => {
+    const signals = (await Function('return import("/src/story/signals.ts")')()) as typeof import('../src/story/signals');
+    (window as Window & { __epochActivationCount?: number }).__epochActivationCount = 0;
+    signals.onStorySignal((signal) => {
+      const state = window as Window & { __epochActivationCount?: number };
+      if (signal.type === 'epoch-activated') state.__epochActivationCount = (state.__epochActivationCount ?? 0) + 1;
+    });
+  });
+  await action.click();
+  await expectCeremonyStep(page, 'e2-ceremony-mill', 'kit-stamp-mill', 'The Stamp Mill rises.');
+  expect(await page.evaluate(() => (window as Window & { __epochActivationCount?: number }).__epochActivationCount)).toBe(1);
+  await page.locator('[data-story-ceremony-skip]').click();
+  await expect(page.locator('.story-beat-card--ceremony')).toHaveCount(0);
+  await expect(page.getByTestId('raise-stamp-mill-site')).toHaveCount(0);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(STEAMWORKS);
+  expect(await page.evaluate(() => (window as Window & { __epochActivationCount?: number }).__epochActivationCount)).toBe(1);
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });

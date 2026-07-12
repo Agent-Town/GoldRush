@@ -118,7 +118,7 @@ export type TownDiagnostics = {
   frame: number;
   elapsed: number;
   player: { x: number; z: number };
-  activePrompt: TownBuildingId | null;
+  activePrompt: TownBuildingId | typeof STAMP_MILL_ID | null;
   activeBark: { actorId: TownActorId; speaker: string; text: string } | null;
   townName: string | null;
   namingPrompt: boolean;
@@ -257,7 +257,7 @@ export class TownScene {
   private nameBeat?: HTMLElement;
   private frame = 0;
   private elapsed = 0;
-  private activePrompt: TownBuilding | null = null;
+  private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | null = null;
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
   private assayBench?: ReturnType<typeof installAssayBench>;
@@ -660,6 +660,7 @@ export class TownScene {
 
   private readonly onPromptClick = (event: Event) => {
     const target = event.target as HTMLElement | null;
+    if (target?.closest('[data-raise-stamp-mill]')) this.raiseStampMill();
     if (target?.closest('[data-town-board]')) this.openBoard();
     if (target?.closest('[data-town-rename]')) this.openNameCard('rename');
     if (target?.closest('[data-town-schoolhouse]')) this.openSchoolhouse();
@@ -841,7 +842,7 @@ export class TownScene {
       return;
     }
     const position = this.hero.group.position;
-    let nearest: TownBuilding | null = null;
+    let nearest: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | null = null;
     let nearestDistanceSq = APPROACH_RADIUS * APPROACH_RADIUS;
     for (const building of this.visibleBuildings) {
       const dx = position.x - building.position.x;
@@ -852,6 +853,13 @@ export class TownScene {
         nearestDistanceSq = distanceSq;
       }
     }
+    if (this.stampMill.visible) {
+      const approach = townPlazaSlot(STAMP_MILL_ID).approach;
+      const dx = position.x - approach.x;
+      const dz = position.z - approach.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq < nearestDistanceSq) nearest = { id: STAMP_MILL_ID, name: 'Stamp Mill' };
+    }
     this.activePrompt = nearest;
     this.prompt.hidden = nearest === null;
     if (!nearest) {
@@ -860,12 +868,16 @@ export class TownScene {
       this.infoNote?.update(null);
       return;
     }
-    const infoClass = townInfoClass(nearest.id);
+    const infoClass = nearest.id === STAMP_MILL_ID ? null : townInfoClass(nearest.id);
     this.infoNote?.update(infoClass ? { objectClass: infoClass } : null);
-    const promptKey = `${nearest.id}:${this.townName ?? ''}`;
+    const promptKey = `${nearest.id}:${this.townName ?? ''}:${activeEpochId()}:${scienceMeter(activeProfileResearchState()).complete}`;
     if (promptKey === this.promptKey) return;
     this.promptKey = promptKey;
-    if (nearest.id === 'claim_office' && this.townName) {
+    if (nearest.id === STAMP_MILL_ID) {
+      const action = this.renderEpochActivationAction('site');
+      this.prompt.hidden = !action;
+      this.prompt.innerHTML = action;
+    } else if (nearest.id === 'claim_office' && this.townName) {
       this.prompt.innerHTML = `
         <span>${nearest.name} ... opens soon</span>
         <button class="town-ui__prompt-button" type="button" data-town-rename data-testid="town-rename">Rename</button>
@@ -1034,13 +1046,14 @@ export class TownScene {
     `;
   }
 
-  private renderEpochActivationAction(): string {
+  private renderEpochActivationAction(surface: 'schoolhouse' | 'site' = 'schoolhouse'): string {
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || epochIsActive(STEAMWORKS_EPOCH_ID)) return '';
     if (!megaprojectComplete(manifest, project)) return '';
     const meter = scienceMeter(activeProfileResearchState());
     // A ready mill is never silent: if the chart still wants science, say so in-world.
     if (!meter.complete) {
+      if (surface === 'site') return `<span>The Stamp Mill waits on ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'}.</span>`;
       return `
         <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-science">
           <p class="town-ui__board-eyebrow">The town's next ledger</p>
@@ -1051,6 +1064,7 @@ export class TownScene {
     }
     // Owner ruling 2026-07-12: the transition is E1's graduation — the Baron answers first.
     if (!hasBaronMedal()) {
+      if (surface === 'site') return `<span>The valley has one answer left to give — the Baron still rides.</span>`;
       return `
         <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-baron">
           <p class="town-ui__board-eyebrow">The town's next ledger</p>
@@ -1058,6 +1072,9 @@ export class TownScene {
           <p>The valley has one answer left to give — the Baron still rides.</p>
         </section>
       `;
+    }
+    if (surface === 'site') {
+      return `<span>The Stamp Mill is ready.</span><button class="town-ui__prompt-button" type="button" data-raise-stamp-mill data-testid="raise-stamp-mill-site">Raise the Stamp Mill</button>`;
     }
     const pledgedGold = manifest.stages.reduce((sum, stage) => sum + Math.max(0, Math.floor(stage.materials.gold ?? 0)), 0);
     return `
@@ -1077,6 +1094,7 @@ export class TownScene {
     if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(STEAMWORKS_EPOCH_ID)) return;
     this.renderSchoolhouse();
     emitStorySignal({ type: 'epoch-activated', epochId: STEAMWORKS_EPOCH_ID, displayName: 'The Steamworks' });
+    this.syncPrompt();
     this.publishDiagnostics();
   }
 
