@@ -1,0 +1,17 @@
+# night-light-doctrine — both fictions, the deputy's beam, and honest flashes
+ROLE: light gameplay-render. WORKDIR: lane-d (worktrees/lane-d), after night-lantern-pools-and-build-light (same rig family; final slice of the night stack).
+CODEX: model=gpt-5.6-sol effort=high
+
+## WHY (owner rulings 2026-07-12, verbatim): "Both, prospector light as ladder ability: yes - it is useful in later epochs as well. If these light effects are doable that would be great. Be sure to avoid the weird plane effect from the hit boxes we once had on impact." + "in the very dark it is not readable more to update buildings... I was confused but could not spend the gold anymore."
+## THE DOCTRINE (ruled): the dark stays absolute · light only from things that honestly have it · enemies visible ONLY via their own fear-lights or your watch's paint.
+## READ-FIRST: the two queued night masters (dusk-ramp, lantern-pools — this stacks third; reuse their rig hooks) · src/world/LightRig.ts · src/agent/AgentConsent.ts + PermissionLadder + the agent panel (ability grammar) · Enemy render seam · the OLD impact-plane bug: search reviews/ + git log for the hitbox plane-flash incident — its fix is the pattern to NOT regress (billboarded textured planes on hits = the named failure mode; all new lights go through the light rig, never ad-hoc plane sprites).
+## SCOPE
+1. CARRIED LANTERNS (fiction A): night-contract enemies carry dim swinging hand-lanterns (data-driven per contract/enemy class; rushers+thieves yes, per bundle grammar) — small warm point-lights, visible before the sprite is.
+2. WATCH-PAINT (fiction B): enemies currently TRACKED by a Sentry Beacon or turret get the faint lamp-gold rim; untracked enemies stay dark. Coverage gaps = honest blindness (lanterns matter more).
+3. PROSPECTOR LIGHT DUTY (ladder ability, defaults OFF, granted like every ability — consent law): when granted, the agent's teal lamp becomes a real moving light; behavior: hover slightly ahead of the hero's facing, lighting the path. Designed as a PERSISTENT ability (later epochs reuse: E3 grid nights, E5 depths, E8 vacuum — keep the seam generic).
+4. MUZZLE-FLASH ILLUMINATION: each shot briefly lights a small cone ahead via the LIGHT RIG (point/spot flash, ~100ms falloff) — NO textured planes, NO billboards on impact (the named failure mode); impacts may glint via existing vfx only.
+5. UI NEVER TINTS: in-world interaction affordances (upgrade/repair prompts, fund buttons, approach lines) render on the UI layer unaffected by night — the owner's "could not spend gold" confusion dies here. (NOTE: fix-building-prompt-flicker moves the deed card to build mode — coordinate, don't collide: this slice guarantees READABILITY, that one owns VISIBILITY policy.)
+## TOUCH-ONLY: LightRig + enemy/agent light attachments, AgentConsent ability registry + panel row, weapon-fire light hook, night contract data rows, one e2e, artifacts/night-doctrine/.
+## NO: damage/aim mechanics, Balance combat numbers, ambient darkness level, plane/billboard impact sprites (forbidden), other lanes' night files beyond the stack.
+## SELF-CHECK: tsc; build; the full night stack suites + agent-consent + m1-01/m2-01 green BOTH projects; zero console; evidence strip: enemy lantern approach in pure dark · watch-paint on/off vs beacon coverage · light-duty granted and lighting the path · muzzle strobe sequence · an upgrade performed at darkest night.
+END: READY-FOR-GATES + the strip + one line confirming no plane-flash regression (test asserts no new billboard geometry on impact).
