@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { disposeObject3D } from '../utils/dispose';
-import { townBuildings, townPlazaSlot } from './townLayout';
+import { townBuildings, townPlazaSlot, townPropRing } from './townLayout';
 
 const TAVERN_MODEL_URL = new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href;
 const GENERAL_STORE_MODEL_URL = new URL('../../assets/pilots/general-store-3d/general-store.glb', import.meta.url).href;
@@ -10,6 +10,11 @@ const CHAPEL_MODEL_URL = new URL('../../assets/pilots/chapel-3d/chapel.glb', imp
 const SCHOOLHOUSE_MODEL_URL = new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href;
 const STAMP_MILL_MODEL_URL = new URL('../../assets/pilots/stamp-mill-3d/stamp-mill.glb', import.meta.url).href;
 const DYNAMO_HALL_MODEL_URL = new URL('../../assets/pilots/dynamo-hall-3d/dynamo-hall.glb', import.meta.url).href;
+const PROP_MODEL_URLS = {
+  covered_wagon: new URL('../../assets/pilots/plaza-props-3d/covered_wagon.glb', import.meta.url).href,
+  water_trough: new URL('../../assets/pilots/plaza-props-3d/water_trough.glb', import.meta.url).href,
+  pan_monument: new URL('../../assets/pilots/plaza-props-3d/pan_monument.glb', import.meta.url).href,
+} as const;
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
@@ -193,4 +198,54 @@ export function installTownSchoolhousePilot(host: Host): () => void {
 
 export function installTownStampMillPilot(host: Host): () => void {
   return installTownBuildingPilot(host, 'stamp-mill', STAMP_MILL_MODEL_URL, 'TownStampMillPilot');
+}
+
+export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void {
+  let disposed = false;
+  const mounted: THREE.Object3D[] = [];
+  const descriptors = townPropRing.props.filter((prop) => prop.kind === 'covered_wagon' || prop.kind === 'water_trough');
+
+  void Promise.all(Object.entries(PROP_MODEL_URLS).map(async ([kind, url]) => {
+    const source = (await new GLTFLoader().loadAsync(url)).scene;
+    const metrics = inspect(source);
+    if (metrics.triangles > 4_000 || metrics.materials > 1 || metrics.forbiddenNodes > 0) throw new Error(`Invalid plaza prop: ${kind}`);
+    return { kind, source, metrics };
+  })).then((loaded) => {
+    const metrics = loaded.map((entry) => entry.metrics);
+    for (const { kind, source } of loaded) {
+    const placements = kind === 'pan_monument' ? [townPropRing.panMonument] : descriptors.filter((prop) => prop.kind === kind);
+    for (const placement of placements) {
+      const model = source.clone(true);
+      model.name = `TownPlazaPropsPilot:${placement.id}`;
+      model.position.set(placement.position.x, 0, placement.position.z);
+      model.rotation.y = 'rotation' in placement ? placement.rotation : 0;
+      model.scale.setScalar('scale' in placement ? (placement.scale ?? 1) : 1);
+      mounted.push(model);
+    }
+    }
+    if (disposed) {
+      mounted.forEach(disposeObject3D);
+      return;
+    }
+    scene.add(...mounted);
+    canvas.dataset.town3dPilotInstances = String(mounted.length);
+    publish(canvas, 'loaded', 'glb', {
+      meshes: mounted.length,
+      triangles: metrics.reduce((sum, metric, index) => sum + metric.triangles * (index === 0 ? 3 : 1), 0),
+      materials: 3,
+    });
+  }).catch(() => {
+    mounted.forEach(disposeObject3D);
+    mounted.length = 0;
+    if (!disposed) publish(canvas, 'error', 'facade');
+  });
+
+  return () => {
+    disposed = true;
+    for (const model of mounted) {
+      scene.remove(model);
+      disposeObject3D(model);
+    }
+    mounted.length = 0;
+  };
 }
