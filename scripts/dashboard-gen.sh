@@ -51,20 +51,40 @@ $LINE"
 done
 QUEUES=$(printf '%s' "$QUEUES" | esc)
 
-# --- Done: start stamp from filename, finish = mtime, duration ---
+# --- Done: real start/finish, model, and outcome for the last 24h ---
 DONE_TAIL=""
-for f in $(ls -t tasks/done/ 2>/dev/null | head -10); do
-  stamp=$(echo "$f" | cut -c1-15); name=$(echo "$f" | cut -c17- | sed 's/\.md$//')
-  se=$(stamp_to_epoch "$stamp"); mt=$(stat -f %m "tasks/done/$f" 2>/dev/null || echo 0)
-  if [ "$se" -gt 0 ] && [ "$mt" -gt 0 ]; then
-    dur=$(( (mt - se) / 60 ))
-    DONE_TAIL="$DONE_TAIL$(printf '%-56s started %s  took %3s min' "$name" "$(echo "$stamp" | cut -c10-11):$(echo "$stamp" | cut -c12-13)" "$dur")
-"
-  else
-    DONE_TAIL="$DONE_TAIL$name
-"
+for path in $(find tasks/done -type f -mtime -1 -print 2>/dev/null | sort -r); do
+  f=$(basename "$path")
+  stamp=$(echo "$f" | cut -c1-15); taskfile=$(echo "$f" | cut -c17-); name=${taskfile%.md}
+  se=$(stamp_to_epoch "$stamp"); mt=$(stat -f %m "$path" 2>/dev/null || echo 0)
+  model=$(grep -m1 '^CODEX:' "$path" 2>/dev/null | sed -E 's/^CODEX: *model=([^ ]+) *effort=([^ ]+).*/\1@\2/')
+  [ -z "$model" ] && model='gpt-5.6-sol@medium·default'
+  duration='~'
+  if [ "$se" -gt 0 ] && [ "$mt" -gt "$se" ]; then
+    seconds=$((mt - se))
+    duration="$(( (seconds + 59) / 60 )) min"
   fi
+  runlog=$(find tasks/runs -name "$stamp-*-$taskfile.log" -print 2>/dev/null | head -1)
+  if { [ "$duration" = '~' ] || [ "$duration" = '0 min' ]; } && [ -n "$runlog" ]; then
+    log_mt=$(stat -f %m "$runlog" 2>/dev/null || echo 0)
+    [ "$log_mt" -gt "$se" ] && duration="$(( (log_mt - se + 59) / 60 )) min"
+    first=$(grep -m1 -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}[ T][0-9]{2}:[0-9]{2}:[0-9]{2}' "$runlog" 2>/dev/null | tr 'T' ' ')
+    last=$(grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}[ T][0-9]{2}:[0-9]{2}:[0-9]{2}' "$runlog" 2>/dev/null | tail -1 | tr 'T' ' ')
+    fe=$(date -j -f '%Y-%m-%d %H:%M:%S' "$first" +%s 2>/dev/null || echo 0)
+    le=$(date -j -f '%Y-%m-%d %H:%M:%S' "$last" +%s 2>/dev/null || echo 0)
+    [ "$duration" = '~' ] && [ "$le" -gt "$fe" ] && duration="$(( (le - fe + 59) / 60 )) min"
+  fi
+  failed=$(find tasks/failed -type f -name "*$name*.md" -print -quit 2>/dev/null)
+  merged=$(git log main --format='%h' --fixed-strings --grep="$name" -1 2>/dev/null)
+  committed=$(git log --all --format='%h' --fixed-strings --grep="$name" -1 2>/dev/null)
+  if [ -n "$failed" ]; then outcome='FAILED';
+  elif [ -n "$merged" ]; then outcome="MERGED $merged";
+  elif [ -n "$committed" ]; then outcome='done-moved awaiting drain';
+  else outcome='NO-OP'; fi
+  DONE_TAIL="$DONE_TAIL$(printf '%-42s · started %s · %7s · %-31s · %s' "$name" "$(echo "$stamp" | cut -c10-11):$(echo "$stamp" | cut -c12-13)" "$duration" "$model" "$outcome")
+"
 done
+[ -z "$DONE_TAIL" ] && DONE_TAIL="(no task runs finished in the last 24 hours)"
 DONE_TAIL=$(printf '%s' "$DONE_TAIL" | esc)
 
 # --- Waiting to start: paused items + gated BACKLOG ladder, with tracked block-age ---
@@ -103,6 +123,7 @@ done < <(grep '^OWNER:' tasks/BACKLOG.md 2>/dev/null)
 OWNERS=$(printf '%s' "$OWNERS" | esc)
 
 LANES=""
+RETIRED=""
 for b in lane/m3 lane/m4 lane/polish lane/perf lane/m6-r3a-apply save/w1-04-scatter save/demo-profiles-v1 save/m4-embodiment-voice-v1; do
   N=$(git log --oneline "main..$b" 2>/dev/null | wc -l | tr -d ' ')
   if [ "${N:-0}" != "0" ]; then
@@ -115,8 +136,14 @@ for b in lane/m3 lane/m4 lane/polish lane/perf lane/m6-r3a-apply save/w1-04-scat
       MODEL=$(grep -m1 '^CODEX:' "tasks/$TASKMD" 2>/dev/null | sed -E 's/^CODEX: *model=([^ ]+) *effort=([^ ]+).*/[\1@\2]/')
     fi
     [ -z "$MODEL" ] && case "$SUBJ" in runner*) MODEL='[gpt-5.6-sol@medium·default]';; *) MODEL='[attended/fire]';; esac
-    LANES="$LANES$(printf '%-28s [%s commit(s), newest %s min ago]  %s  %s' "$b" "$N" "$(mins_ago "$AGE")" "$SUBJ" "$MODEL")
+    CHERRY=$(git cherry main "$b" 2>/dev/null)
+    if [ -n "$CHERRY" ] && ! printf '%s\n' "$CHERRY" | grep -q '^+'; then
+      RETIRED="$RETIRED$(printf '%-28s MERGED, branch retirement pending' "$b")
 "
+    else
+      LANES="$LANES$(printf '%-28s [%s commit(s), newest %s min ago]  %s  %s' "$b" "$N" "$(mins_ago "$AGE")" "$SUBJ" "$MODEL")
+"
+    fi
   fi
 done
 [ -z "$LANES" ] && LANES="(nothing waiting — all lane work merged)"
@@ -154,6 +181,9 @@ cat > "$OUT" <<HTML
 <body>
 <h1>⛏ Gold Rush — Factory Ledger <small>refreshed $TODAY $NOW · auto-reloads every 30s</small></h1>
 
+<h2>What really happened (last 24h)</h2>
+<div class="card"><pre>$DONE_TAIL</pre></div>
+
 <div class="row">
   <div class="card"><h2 style="margin-top:0">Machines</h2><pre>
 runner  <span class="$( [ "$RUNNER_STATE" = ALIVE ] && echo ok || echo bad )">$RUNNER_STATE</span>
@@ -164,6 +194,9 @@ pending crafting orders: $PENDING</pre></div>
 
 <h2>Waiting to merge (branches ahead of main — drain/salvage list)</h2>
 <div class="card"><pre>$LANES</pre></div>
+
+<h2>Merged, branch retirement pending</h2>
+<div class="card"><pre>${RETIRED:-"(none)"}</pre></div>
 
 <h2>Recently merged into the game</h2>
 <div class="card"><pre>$MERGES</pre></div>
@@ -178,7 +211,6 @@ pending crafting orders: $PENDING</pre></div>
 <div class="card" style="border-color:#a03020"><pre>$OWNERS</pre></div>
 
 <div class="row">
-  <div class="card"><h2 style="margin-top:0">Recently finished (start → duration)</h2><pre>$DONE_TAIL</pre></div>
   <div class="card"><h2 style="margin-top:0">Watchdog alerts</h2><pre>$ALERTS</pre>
   <h2>Failed (tail)</h2><pre>${FAILED_TAIL:-"(none)"}</pre></div>
 </div>
