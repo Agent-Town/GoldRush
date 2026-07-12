@@ -61,7 +61,7 @@ import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revea
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
 import { RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
-import { awardBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
+import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
@@ -109,6 +109,7 @@ import { GoldPickupPool } from '../entities/GoldPickup';
 import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
 import { PressureSystem } from '../systems/PressureSystem';
+import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
 import { EnemyPool, type EnemyLightSource } from '../entities/pools';
 import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
 import { normalizeQueueProfile } from '../crafting/CraftingQueueContract';
@@ -343,6 +344,7 @@ export class Game {
   private readonly prospector = new ProspectorEmbodiment((position, text, color) => this.vfx.floatText(position, text, color));
   private readonly buildSystem: BuildSystem;
   private readonly pressureSystem: PressureSystem;
+  private readonly pressureArsenalSystem: PressureArsenalSystem;
   private readonly progression: Progression;
   private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
   private activeWeapon: 'rig' | 'blast' = 'rig';
@@ -844,6 +846,17 @@ export class Game {
       (index) => this.buildSystem.buildingTarget('boiler_house', index)?.active === true,
       (id) => hasResearchNode(this.researchState, id),
       (position, text, color) => this.vfx.floatText(position, text, color),
+    );
+    this.pressureArsenalSystem = new PressureArsenalSystem(
+      this.combat,
+      this.pressureSystem,
+      () => this.primaryActor.group.position,
+      (id) => hasResearchNode(this.researchState, id),
+      () => hasBaronMedal(),
+      () =>
+        this.activeEpoch.id === 'epoch-2-steamworks' &&
+        !this.multiplayerActive() &&
+        this.heroWeaponsEnabledFor(this.primaryActor),
     );
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
@@ -1398,6 +1411,7 @@ export class Game {
     this.debugTools.dispose();
     this.buildSystem.dispose();
     this.pressureSystem.dispose();
+    this.pressureArsenalSystem.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1577,6 +1591,15 @@ export class Game {
         this.localActor.group.position,
       );
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
+      this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult);
+      this.applyHarvestStats(
+        this.pressureArsenalSystem.updateAutoPan(
+          simDelta,
+          this.timeAlive,
+          this.harvestSnapshot.channeling,
+          (this.progression.snapshot.stacks.auto_pan ?? 0) > 0,
+        ),
+      );
       this.powerGraph?.step(this.simTick);
       this.syncStockpileHoldings();
       this.enemies.update(
@@ -2914,6 +2937,7 @@ export class Game {
         summary: economySummary,
       },
       pressure: this.pressureSystem.diagnostics,
+      pressureArsenal: this.pressureArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -4078,6 +4102,7 @@ export class Game {
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
     this.pressureSystem.reset();
+    this.pressureArsenalSystem.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
@@ -4866,16 +4891,24 @@ export class Game {
       for (const actor of this.actors) actor.heal(platingHeal);
     }
     const continued = continuedStudyBonuses(this.researchState);
-    this.harvestSystem.applyStats(
-      stats.panTickMult,
-      stats.seamCapacityBonus,
-      stats.seamRespawnReduction,
-      (1 + continued.seamYieldMult) * this.contractSeamYieldMult(),
-    );
+    this.applyHarvestStats();
     this.buildSystem.applyStats(stats.beaconFireRateMult, 1 + continued.turretDamageMult);
     this.agentPolicySlotBonus = Math.max(0, Math.floor(stats.agentPolicySlots));
     this.applyUpgradeCapEffects(stats);
     this.applyResearchEffects();
+  }
+
+  private applyHarvestStats(autoPanMult = 1): void {
+    const snapshot = this.progression.snapshot;
+    const stats = snapshot.stats;
+    const autoPanDelta = (snapshot.stacks.auto_pan ?? 0) > 0 ? Balance.steamworksArsenal.autoPan.panTickMult : 0;
+    const continued = continuedStudyBonuses(this.researchState);
+    this.harvestSystem.applyStats(
+      stats.panTickMult - autoPanDelta + (autoPanMult - 1),
+      stats.seamCapacityBonus,
+      stats.seamRespawnReduction,
+      (1 + continued.seamYieldMult) * this.contractSeamYieldMult(),
+    );
   }
 
   private contractSeamYieldMult(): number {

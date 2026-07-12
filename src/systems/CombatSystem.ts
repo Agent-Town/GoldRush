@@ -27,12 +27,16 @@ export type ShooterHandle = {
   targetPoint?: (origin: THREE.Vector3, target: ClaimJumperEnemy) => THREE.Vector3 | null;
   visualOriginPadRadius?: () => number;
   aoe?: { radius: number; airTime: number };
+  spreadRadius?: number;
+  spreadRadians?: number;
   airTime?: (origin: THREE.Vector3, targetPoint: THREE.Vector3) => number;
   getPos: () => THREE.Vector3;
   range: number;
   cooldown: number;
   damage: number;
   getDamage?: () => number;
+  suspend?: boolean;
+  onVolleyFired?: (at: number) => void;
   onFire?: (at: number) => void;
   projSpeed: number;
   volley: number;
@@ -117,6 +121,7 @@ export class CombatSystem {
   private readonly rigs: ShooterState[] = [];
   private readonly scratchOrigin = new THREE.Vector3();
   private readonly scratchAimPoint = new THREE.Vector3();
+  private readonly scratchVolleyTarget = new THREE.Vector3();
   private readonly ownerKills: Record<string, number> = {};
   private readonly ownerDamage: Record<string, number> = {};
   private boltHits = 0;
@@ -275,13 +280,15 @@ export class CombatSystem {
             }
           : null,
       },
-      shooters: this.rigs.map((state) => ({
-        resumeKey: state.handle.resumeKey,
-        timer: state.timer,
-        targetId: state.targeting.currentTarget?.isAlive ? state.targeting.currentTarget.id : -1,
-        missTargetId: state.missTargetId,
-        misses: state.misses,
-      })),
+      shooters: this.rigs
+        .filter((state) => state.handle.suspend !== false)
+        .map((state) => ({
+          resumeKey: state.handle.resumeKey,
+          timer: state.timer,
+          targetId: state.targeting.currentTarget?.isAlive ? state.targeting.currentTarget.id : -1,
+          missTargetId: state.missTargetId,
+          misses: state.misses,
+        })),
       projectiles: this.projectiles.captureSuspend(),
       blastCharges: this.blastCharges.captureSuspend(),
       xpMotes: this.motes.captureSuspend(),
@@ -292,6 +299,7 @@ export class CombatSystem {
     if (!this.canRestoreSuspend(snapshot)) return false;
     const liveByKey = new Map(this.rigs.map((state) => [state.handle.resumeKey, state]));
     const orderedRigs = snapshot.shooters.map((saved) => liveByKey.get(saved.resumeKey)!);
+    const transientRigs = this.rigs.filter((state) => state.handle.suspend === false);
     const savedByKey = new Map<string, ShooterSuspendSnapshot>();
     for (const saved of snapshot.shooters) {
       savedByKey.set(saved.resumeKey, saved);
@@ -299,7 +307,7 @@ export class CombatSystem {
     if (!this.projectiles.restoreSuspend(snapshot.projectiles)) return false;
     if (!this.blastCharges.restoreSuspend(snapshot.blastCharges)) return false;
     if (!this.motes.restoreSuspend(snapshot.xpMotes)) return false;
-    this.rigs.splice(0, this.rigs.length, ...orderedRigs);
+    this.rigs.splice(0, this.rigs.length, ...orderedRigs, ...transientRigs);
 
     this.xp = snapshot.xp;
     replaceNumberRecord(this.ownerKills, snapshot.audit.ownerKills);
@@ -339,7 +347,12 @@ export class CombatSystem {
     return true;
   }
 
-  canRestoreSuspend(snapshot: CombatSuspendSnapshot, expectedKeys: readonly string[] = this.rigs.map((state) => state.handle.resumeKey)): boolean {
+  canRestoreSuspend(
+    snapshot: CombatSuspendSnapshot,
+    expectedKeys: readonly string[] = this.rigs
+      .filter((state) => state.handle.suspend !== false)
+      .map((state) => state.handle.resumeKey),
+  ): boolean {
     const savedKeys = new Set(snapshot.shooters.map((saved) => saved.resumeKey));
     const expected = new Set(expectedKeys);
     return (
@@ -520,14 +533,14 @@ export class CombatSystem {
         state.timer = Math.max(0, state.timer);
         continue;
       }
-
-      this.emitVolley(state, origin, target);
-      state.timer += handle.cooldown;
+      if (this.emitVolley(state, origin, target)) state.timer += handle.cooldown;
+      else state.timer = Math.max(0, state.timer);
     }
   }
 
-  private emitVolley(state: ShooterState, origin: THREE.Vector3, target: ClaimJumperEnemy): void {
+  private emitVolley(state: ShooterState, origin: THREE.Vector3, target: ClaimJumperEnemy): boolean {
     const handle = state.handle;
+    let fired = false;
     this.scratchOrigin.copy(origin);
     const targetPoint = handle.targetPoint?.(this.scratchOrigin, target) ?? this.boltAimPoint(handle, target);
     const kind = handle.projectileKind?.(this.scratchOrigin, target, targetPoint) ?? handle.kind ?? 'bolt';
@@ -538,20 +551,28 @@ export class CombatSystem {
       for (let i = 0; i < count; i += 1) {
         const damage = handle.getDamage?.() ?? handle.damage;
         const ownerId = handle.id ?? 'hero_blast';
-        if (this.blastCharges.activate(this.scratchOrigin, targetPoint, airTime, damage, aoe.radius, ownerId)) {
+        const volleyTarget = this.scratchVolleyTarget.copy(targetPoint);
+        if (handle.spreadRadius && count > 1) {
+          const angle = (i / count) * Math.PI * 2;
+          volleyTarget.x += Math.cos(angle) * handle.spreadRadius;
+          volleyTarget.z += Math.sin(angle) * handle.spreadRadius;
+        }
+        if (this.blastCharges.activate(this.scratchOrigin, volleyTarget, airTime, damage, aoe.radius, ownerId)) {
+          fired = true;
           this.recordShot('lob', ownerId);
           this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint);
           handle.onFire?.(this.currentAt);
           this.audio.playShot('lob', ownerId);
         }
       }
-      return;
+      if (fired) handle.onVolleyFired?.(this.currentAt);
+      return fired;
     }
 
     const dx = targetPoint.x - this.scratchOrigin.x;
     const dz = targetPoint.z - this.scratchOrigin.z;
     const lenSq = dx * dx + dz * dz;
-    if (lenSq <= 0.0001) return;
+    if (lenSq <= 0.0001) return false;
 
     const invLen = 1 / Math.sqrt(lenSq);
     const dirX = dx * invLen;
@@ -560,11 +581,14 @@ export class CombatSystem {
     for (let i = 0; i < count; i += 1) {
       const damage = handle.getDamage?.() ?? handle.damage;
       const ownerId = handle.id ?? 'hero';
+      const offset = count > 1 ? ((i / (count - 1)) - 0.5) * (handle.spreadRadians ?? 0) : 0;
+      const shotDirX = offset === 0 ? dirX : dirX * Math.cos(offset) - dirZ * Math.sin(offset);
+      const shotDirZ = offset === 0 ? dirZ : dirX * Math.sin(offset) + dirZ * Math.cos(offset);
       if (
         this.projectiles.activate(
           this.scratchOrigin,
-          dirX,
-          dirZ,
+          shotDirX,
+          shotDirZ,
           handle.projSpeed,
           damage,
           ownerId,
@@ -574,12 +598,15 @@ export class CombatSystem {
           handle.visualOriginPadRadius?.() ?? 0,
         )
       ) {
+        fired = true;
         this.recordShot('bolt', ownerId);
         this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint);
         handle.onFire?.(this.currentAt);
         this.audio.playShot('bolt', ownerId);
       }
     }
+    if (fired) handle.onVolleyFired?.(this.currentAt);
+    return fired;
   }
 
   private recordShot(kind: ProjectileKind, ownerId: string): void {

@@ -97,6 +97,16 @@ const baselineUpgradeDefs = [
     deltas: { panTickMult: -0.3 },
   },
   {
+    id: 'auto_pan',
+    name: 'Auto-Pan',
+    description: 'A pressure-fed shaking tool that works beside the untouched pan.',
+    iconFamily: 'panning',
+    familyGate: 'steam_parts',
+    maxStacks: 1,
+    weight: 0.45,
+    deltas: { panTickMult: Balance.steamworksArsenal.autoPan.panTickMult },
+  },
+  {
     id: 'prospectors_luck',
     name: "Prospector's Luck",
     description: 'A ledger margin where richer seams keep appearing.',

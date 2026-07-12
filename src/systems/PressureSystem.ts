@@ -18,6 +18,8 @@ export type PressureDiagnostics = {
   objective: { active: boolean; failed: boolean; complete: boolean; hotBoilers: number; waves: string };
 };
 
+export type PressureBand = 'empty' | 'low' | 'working' | 'high';
+
 const seamPositions = [
   { x: -12, z: 39 },
   { x: -5, z: 43 },
@@ -44,6 +46,7 @@ export class PressureSystem {
   private objectiveStarted = false;
   private objectiveFailed = false;
   private objectiveComplete = false;
+  private spendSerial = 0;
 
   constructor(
     private readonly economy: Economy,
@@ -112,9 +115,33 @@ export class PressureSystem {
     this.objectiveStarted = false;
     this.objectiveFailed = false;
     this.objectiveComplete = false;
+    this.spendSerial = 0;
     for (const seam of this.seams) Object.assign(seam, { harvested: false, progress: 0 });
     for (const state of this.states) Object.assign(state, { fuel: 0, tick: 0, cooldown: 0, hot: false, cooling: false });
     this.syncSeams();
+  }
+
+  get stored(): number {
+    return this.economy.resourceBalance('pressure').amount;
+  }
+
+  get band(): PressureBand {
+    if (this.stored <= 0) return 'empty';
+    if (this.stored < Balance.boilerHouse.safeMin) return 'low';
+    if (this.stored <= Balance.boilerHouse.safeMax) return 'working';
+    return 'high';
+  }
+
+  spend(amount: number, at: number, sink: string): boolean {
+    if (amount <= 0) return true;
+    return this.economy.apply({
+      id: `pressure:${sink}:${this.spendSerial++}`,
+      at,
+      type: 'resource_spent',
+      resource: 'pressure',
+      sink,
+      amount,
+    }).ok;
   }
 
   get diagnostics(): PressureDiagnostics {

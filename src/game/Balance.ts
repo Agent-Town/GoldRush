@@ -114,6 +114,13 @@ export const Balance = {
     pool: 8,
     volley: 1,
   },
+  steamworksArsenal: {
+    boilerLance: { damage: 5, range: 7, fireRate: 5, boltSpeed: 16, pressureCost: 1 },
+    pressureMortar: { damage: 34, radius: 2.7, range: 12, cooldown: 3.2, airTime: 0.85, pressureCost: 8 },
+    skyRocket: { damage: 18, radius: 2.25, range: 13, cooldown: 4.5, airTime: 1, volley: 3, pressureCost: 12 },
+    autoPan: { panTickMult: -0.25, pressurePerSecond: 2 },
+    boilerBatteryBands: { low: 1, working: 1.2, high: 1.45 },
+  },
   xp: {
     perKill: 4,
     moteMagnetRadius: 2,

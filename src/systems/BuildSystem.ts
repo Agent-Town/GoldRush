@@ -348,6 +348,7 @@ export class BuildSystem {
   private ghostRotationSteps = 0;
   private beaconFireRateMult = 1;
   private turretDamageMult = 1;
+  private turretPressureFireRateMult = 1;
   private pointerReady = false;
   private pointerClientX = 0;
   private pointerClientY = 0;
@@ -806,6 +807,7 @@ export class BuildSystem {
     this.shooterHandles.length = 0;
     this.beaconFireRateMult = 1;
     this.turretDamageMult = 1;
+    this.turretPressureFireRateMult = 1;
     this.targeting.clearBuildings();
     this.beacons.reset();
     this.palisades.reset();
@@ -843,6 +845,13 @@ export class BuildSystem {
         this.refreshShooterStats(id, index);
       }
     }
+  }
+
+  applyTurretPressureFireRateMult(mult: number): void {
+    const next = Math.max(1, mult);
+    if (next === this.turretPressureFireRateMult) return;
+    this.turretPressureFireRateMult = next;
+    for (let index = 0; index < this.turrets.capacity; index += 1) this.refreshShooterStats('turret', index);
   }
 
   dispose(): void {
@@ -1578,7 +1587,7 @@ export class BuildSystem {
   }
 
   private effectiveTurretFireRate(index: number): number {
-    return this.effectiveStat('turret', index, Balance.turret.fireRate, 'fireRateMult');
+    return this.effectiveStat('turret', index, Balance.turret.fireRate, 'fireRateMult') * this.turretPressureFireRateMult;
   }
 
   private syncTierVisual(id: BuildableId, index: number): void {
