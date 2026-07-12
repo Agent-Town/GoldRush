@@ -489,12 +489,12 @@ export class TownScene {
     this.canvas.dataset.town3dPilotState = pilot !== null ? (pilotLite ? 'lite' : 'loading') : 'off';
     this.canvas.dataset.town3dPilotRenderSource = 'facade';
     if (pilot !== null && !pilotLite) {
-      void import('./TownTavernPilot').then(({ installTownGeneralStorePilot, installTownTavernPilot }) => {
+      void import('./TownTavernPilot').then(({ installTownClaimOfficePilot, installTownGeneralStorePilot, installTownTavernPilot }) => {
         const disposers = pilot === 'all'
-          ? [installTownTavernPilot({ scene: this.scene, canvas: this.canvas }), installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas })]
+          ? [installTownTavernPilot({ scene: this.scene, canvas: this.canvas }), installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas }), installTownClaimOfficePilot({ scene: this.scene, canvas: this.canvas })]
           : [pilot === 'general_store'
               ? installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas })
-              : installTownTavernPilot({ scene: this.scene, canvas: this.canvas })];
+              : pilot === 'claim_office' ? installTownClaimOfficePilot({ scene: this.scene, canvas: this.canvas }) : installTownTavernPilot({ scene: this.scene, canvas: this.canvas })];
         this.town3dPilotDispose = () => disposers.forEach((dispose) => dispose());
       });
     }
