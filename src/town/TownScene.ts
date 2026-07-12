@@ -248,6 +248,7 @@ export class TownScene {
   private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
   private readonly visibleActors = visibleTownActors(this.visibleBuildings);
   private readonly stampMill = readTownStampMill(this.metaProgress);
+  private town3dPilotDispose?: () => void;
   private readonly dynamoHall = readTownMegaproject(STEAMWORKS_EPOCH_ID, DYNAMO_HALL_ID);
   private readonly dynamoHallGroup = new THREE.Group();
   private readonly dynamoHallStageVisuals: THREE.Object3D[] = [];
@@ -374,6 +375,8 @@ export class TownScene {
     clearProcessedCharacterTextureCache();
     this.ui.remove();
     this.hero.dispose();
+    this.canvas.dataset.town3dPilotState = 'disposed';
+    this.town3dPilotDispose?.();
     disposeObject3D(this.scene);
     this.scene.clear();
     this.renderer.dispose();
@@ -472,6 +475,22 @@ export class TownScene {
     if (this.ambientDust) this.scene.add(this.ambientDust);
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
+
+    const pilotSearch = new URLSearchParams(window.location.search);
+    const pilot = pilotSearch.get('town3dPilot');
+    const pilotLite = pilotSearch.get('tier') === 'lite' || this.performanceTier === 'lite';
+    this.canvas.dataset.town3dPilotState = pilot !== null ? (pilotLite ? 'lite' : 'loading') : 'off';
+    this.canvas.dataset.town3dPilotRenderSource = 'facade';
+    if (pilot !== null && !pilotLite) {
+      void import('./TownTavernPilot').then(({ installTownGeneralStorePilot, installTownTavernPilot }) => {
+        const disposers = pilot === 'all'
+          ? [installTownTavernPilot({ scene: this.scene, canvas: this.canvas }), installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas })]
+          : [pilot === 'general_store'
+              ? installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas })
+              : installTownTavernPilot({ scene: this.scene, canvas: this.canvas })];
+        this.town3dPilotDispose = () => disposers.forEach((dispose) => dispose());
+      });
+    }
   }
 
   private dressScene(): void {

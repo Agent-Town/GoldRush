@@ -3,7 +3,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { disposeObject3D } from '../utils/dispose';
 import { townBuildings, townPlazaSlot } from './townLayout';
 
-const MODEL_URL = new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href;
+const TAVERN_MODEL_URL = new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href;
+const GENERAL_STORE_MODEL_URL = new URL('../../assets/pilots/general-store-3d/general-store.glb', import.meta.url).href;
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
@@ -77,17 +78,22 @@ function inspect(model: THREE.Object3D): {
   };
 }
 
-export function installTownTavernPilot({ scene, canvas }: Host): () => void {
+function installTownBuildingPilot(
+  { scene, canvas }: Host,
+  id: 'tavern' | 'general_store',
+  modelUrl: string,
+  modelName: string,
+): () => void {
   if (canvas.dataset.town3dPilotState === 'disposed') return () => {};
   let disposed = false;
   let model: THREE.Object3D | undefined;
-  const shell = scene.getObjectByName('TownFacadeAssembly:tavern');
-  const building = townBuildings.find((entry) => entry.id === 'tavern')!;
-  const slot = townPlazaSlot('tavern');
+  const shell = scene.getObjectByName(`TownFacadeAssembly:${id}`);
+  const building = townBuildings.find((entry) => entry.id === id)!;
+  const slot = townPlazaSlot(id);
   publish(canvas, 'loading', 'facade');
 
   new GLTFLoader().load(
-    MODEL_URL,
+    modelUrl,
     (gltf) => {
       const loaded = gltf.scene;
       const metrics = inspect(loaded);
@@ -104,7 +110,7 @@ export function installTownTavernPilot({ scene, canvas }: Host): () => void {
         if (!disposed) publish(canvas, 'error', 'facade', metrics);
         return;
       }
-      loaded.name = 'TownTavernPilot';
+      loaded.name = modelName;
       loaded.position.set(slot.position.x, 0, slot.position.z);
       loaded.rotation.y = Math.atan2(slot.approach.x - slot.position.x, slot.approach.z - slot.position.z);
       model = loaded;
@@ -126,4 +132,12 @@ export function installTownTavernPilot({ scene, canvas }: Host): () => void {
     disposeObject3D(model);
     model = undefined;
   };
+}
+
+export function installTownTavernPilot(host: Host): () => void {
+  return installTownBuildingPilot(host, 'tavern', TAVERN_MODEL_URL, 'TownTavernPilot');
+}
+
+export function installTownGeneralStorePilot(host: Host): () => void {
+  return installTownBuildingPilot(host, 'general_store', GENERAL_STORE_MODEL_URL, 'TownGeneralStorePilot');
 }
