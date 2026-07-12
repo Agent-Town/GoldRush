@@ -257,3 +257,13 @@ Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGP
 - **batch-001 visual review (raw/processed, pre-integration):** hero — excellent, pan + nuggets + teal chest lantern, androgynous-leaning-feminine, keying clean; claim_jumper — excellent, rust poncho + bandana + grasping hands, weaponless, fringe edges survived; gold_seam — excellent, nuggets + pan in gravel, gray pebbles preserved; sentry_beacon — excellent design (brass/wood, teal core, energy arc, zero firearm silhouette), minor dark speckle at feet reads as ground wear, faint pale haze between rear trusses (invisible at billboard scale); terrain.bank — exemplary Frontier Ledger sheet, note the diagonal dry wash is a strong feature so the tile is NOT seamless when repeated (fine for M1 single-claim ground); terrain.river — dusty teal + engraved flow-lines + parchment sandbar corners, tiles acceptably, UV-scroll friendly.
 - Integration = filename → slot via `assets/layer-contracts/*.json`, then in-game screenshot + visual review against brief §4 before a slot is marked done.
 - Terrain tiles are full-bleed (no gray-bg cutout) and must fade to plain parchment at edges per the Frontier Ledger pipeline rules.
+
+## 2026-07-12 — E2 completion batch drained from the art slot (attended)
+| Slot | Generated | State |
+|---|---|---|
+| bld.rail_depot | ✓ `assets/raw/bld-rail-depot.png` | PENDING-PROCESSING (384px promote) |
+| bld.machine_shop | ✓ `assets/raw/bld-machine-shop.png` | PENDING-PROCESSING (384px promote) |
+| ter.rail_elements | ✓ `assets/raw/ter-rail-elements.png` | PENDING-PROCESSING (extract-alpha ff00ff) |
+| icons.e2 | ✓ `assets/raw/icons-e2.png` | PENDING-PROCESSING (extract-alpha ff00ff) |
+| char.hero pose idle8/work8/attack8 | ⚠ raw drained for reference | **QA-BLOCKED per art slot: pinned-pan + chroma failures — DO NOT PROCESS/WIRE** (regen ride next art batch) |
+| bld.boiler_house | raw exists (07-07) | PENDING-PROCESSING (384px promote — never regenerate) |
