@@ -129,6 +129,7 @@ export type DemolishCandidate = {
 type FreePlacementOptions = {
   wrecked?: boolean;
   repairCost?: number;
+  preplaced?: boolean;
 };
 
 export type BuildingRestoreState = {
@@ -145,6 +146,7 @@ export type BuildingRestoreState = {
   position: { x: number; z: number };
   rotationSteps: number;
   sluice: SluiceFutureState | null;
+  preplaced?: boolean;
 };
 
 export type UpgradeCandidate = {
@@ -269,6 +271,7 @@ export class BuildSystem {
   private readonly tier = createNumberStore();
   private readonly buildCosts = createNumberStore();
   private readonly repairCostOverrides = createNumberStore();
+  private readonly preplaced = createBooleanStore();
   private readonly wrecked = createBooleanStore();
   private readonly repairProgress = createNumberStore();
   private readonly repairNeedGoldShown = createBooleanStore();
@@ -701,6 +704,7 @@ export class BuildSystem {
     const placed = ok ? this.place(def.id, target) : -1;
     if (placed >= 0) {
       this.finishPlacement(def.id, placed, 0);
+      this.preplaced[def.id][placed] = options.preplaced === true;
       this.repairCostOverrides[def.id][placed] = Math.max(0, Math.ceil(options.repairCost ?? 0));
       if (options.wrecked) {
         this.hp[def.id][placed] = 0;
@@ -714,7 +718,9 @@ export class BuildSystem {
 
   restoreBuilding(state: BuildingRestoreState): boolean {
     const def = getBuildableDef(state.id);
-    if (!def || !Number.isInteger(state.index) || state.index < 0 || state.index >= def.maxCount) return false;
+    if (!def) return false;
+    const capacity = state.id === 'lantern_post' ? this.lanternPosts.capacity : def.maxCount;
+    if (!Number.isInteger(state.index) || state.index < 0 || state.index >= capacity) return false;
 
     const previousRotation = this.ghostRotationSteps;
     this.ghostRotationSteps = ((Math.round(state.rotationSteps) % 4) + 4) % 4;
@@ -724,6 +730,7 @@ export class BuildSystem {
     if (placed !== state.index) return false;
 
     this.finishPlacement(state.id, state.index, state.buildCost);
+    this.preplaced[state.id][state.index] = state.preplaced === true;
     this.tier[state.id][state.index] = Math.max(1, Math.floor(state.tier));
     const maxHpMultiplier = this.effectiveStat(state.id, state.index, 1, 'maxHpMult');
     this.hpMax[state.id][state.index] =
@@ -765,6 +772,7 @@ export class BuildSystem {
         this.wrecked[id][i] = false;
         this.repairProgress[id][i] = 0;
         this.repairNeedGoldShown[id][i] = false;
+        this.preplaced[id][i] = false;
         const target = this.targets[id][i];
         if (target) {
           target.active = false;
@@ -1244,7 +1252,12 @@ export class BuildSystem {
     if (id === 'stockpile') return this.stockpiles.activeCount;
     if (id === 'boiler_house') return this.boilerHouses.activeCount;
     if (id === 'turret') return this.turrets.activeCount;
-    if (id === 'lantern_post') return this.lanternPosts.activeCount;
+    if (id === 'lantern_post') {
+      return this.preplaced.lantern_post.reduce(
+        (count, fixture, index) => count + (this.lanternPosts.isActive(index) && !fixture ? 1 : 0),
+        0,
+      );
+    }
     if (id === 'assay_office') return this.assayOfficeActive ? 1 : 0;
     return this.beacons.activeCount;
   }
@@ -1325,6 +1338,7 @@ export class BuildSystem {
     this.tier[id][index] = 0;
     this.buildCosts[id][index] = 0;
     this.repairCostOverrides[id][index] = 0;
+    this.preplaced[id][index] = false;
     this.wrecked[id][index] = false;
     this.repairProgress[id][index] = 0;
     this.repairNeedGoldShown[id][index] = false;
@@ -2163,10 +2177,11 @@ class LanternPostPool {
     opacity: 0.22,
     depthWrite: false,
   });
-  private readonly postMesh = new THREE.InstancedMesh(this.postGeometry, this.postMaterial, Balance.lanternPost.maxCount);
-  private readonly armMesh = new THREE.InstancedMesh(this.armGeometry, this.postMaterial, Balance.lanternPost.maxCount);
-  private readonly lanternMesh = new THREE.InstancedMesh(this.lanternGeometry, this.lanternMaterial, Balance.lanternPost.maxCount);
-  private readonly haloMesh = new THREE.InstancedMesh(this.haloGeometry, this.haloMaterial, Balance.lanternPost.maxCount);
+  private readonly capacityLimit = Balance.lanternPost.maxCount * 2;
+  private readonly postMesh = new THREE.InstancedMesh(this.postGeometry, this.postMaterial, this.capacityLimit);
+  private readonly armMesh = new THREE.InstancedMesh(this.armGeometry, this.postMaterial, this.capacityLimit);
+  private readonly lanternMesh = new THREE.InstancedMesh(this.lanternGeometry, this.lanternMaterial, this.capacityLimit);
+  private readonly haloMesh = new THREE.InstancedMesh(this.haloGeometry, this.haloMaterial, this.capacityLimit);
   private readonly syncObject = new THREE.Object3D();
   private alive = 0;
 
@@ -2179,7 +2194,7 @@ class LanternPostPool {
     }
     this.haloMesh.renderOrder = RenderLayers.groundDecals + 1;
     this.haloMesh.visible = false;
-    for (let i = 0; i < Balance.lanternPost.maxCount; i += 1) {
+    for (let i = 0; i < this.capacityLimit; i += 1) {
       this.active.push(false);
       this.positions.push(new THREE.Vector3());
       this.rotationSteps.push(0);
@@ -2193,7 +2208,7 @@ class LanternPostPool {
   }
 
   get capacity(): number {
-    return Balance.lanternPost.maxCount;
+    return this.capacityLimit;
   }
 
   get allPositions(): readonly THREE.Vector3[] {

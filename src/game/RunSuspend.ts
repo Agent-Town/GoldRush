@@ -190,6 +190,7 @@ type BuildingSuspend = {
   position: { x: number; z: number };
   rotationSteps: number;
   sluice: { timer: number; contested: boolean; capped: boolean } | null;
+  preplaced?: boolean;
 };
 
 type WaveSystemSuspend = {
@@ -1003,6 +1004,7 @@ function captureBuildings(buildSystem: AnyGame | undefined): BuildingSuspend[] {
             : id === 'lantern_post'
               ? cleanNumber(buildSystem.lanternPosts?.rotationStepsAt?.(index))
               : 0,
+        preplaced: buildSystem.preplaced?.[id]?.[index] === true,
         ...(buildSystem.captureBuildingFutureState?.(id, index) ?? { sluice: null }),
       };
     });
@@ -1410,7 +1412,9 @@ function decodeBuildings(value: unknown, reasons: string[], requireV2: boolean):
     if (!record) continue;
     const id = buildableIds.includes(record.id as BuildableId) ? (record.id as BuildableId) : null;
     if (!id) reasons.push(`buildings[${i}].id is unknown`);
-    const maxIndex = id ? Math.max(0, (buildableDefs.find((def) => def.id === id)?.maxCount ?? 1) - 1) : MAX_BUILDINGS;
+    const maxIndex = id
+      ? Math.max(0, (buildableDefs.find((def) => def.id === id)?.maxCount ?? 1) * (id === 'lantern_post' ? 2 : 1) - 1)
+      : MAX_BUILDINGS;
     const index = requiredInteger(record.index, 0, maxIndex, `buildings[${i}].index`, reasons);
     const tier = requiredInteger(record.tier, 1, 20, `buildings[${i}].tier`, reasons);
     const hp = requiredNumber(record.hp, 0, MAX_ECONOMY_AMOUNT, `buildings[${i}].hp`, reasons);
@@ -1440,6 +1444,7 @@ function decodeBuildings(value: unknown, reasons: string[], requireV2: boolean):
       baseMaxHp: numberInRange(record.baseMaxHp, 0, MAX_ECONOMY_AMOUNT) ?? undefined,
       buildCost,
       repairCostOverride: numberInRange(record.repairCostOverride, 0, MAX_ECONOMY_AMOUNT) ?? undefined,
+      preplaced: record.preplaced === true,
       wrecked: record.wrecked,
       repairProgress,
       position,

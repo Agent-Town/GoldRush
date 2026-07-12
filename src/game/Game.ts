@@ -2550,6 +2550,7 @@ export class Game {
         this.buildSystem.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
           wrecked: fixture.wrecked,
           repairCost: fixture.relightCost,
+          preplaced: true,
         });
       }
     }

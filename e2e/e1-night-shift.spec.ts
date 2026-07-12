@@ -388,6 +388,41 @@ test('cold lantern relight costs survive run suspend and continue', async ({ pag
   await restoredPage.close();
 });
 
+test('pre-placed lanterns leave the full player build cap available', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&contract=e1-night-shift&timescale=1&nolevel&nowaves&seed=e1-night-player-cap');
+  const placed = await page.evaluate((maxCount) => {
+    const game = window.__GR_TEST__!;
+    let count = 0;
+    for (let x = -28; x <= 28 && count < maxCount; x += 7) {
+      if (game.placeFree('lantern_post', x, 28)) count += 1;
+    }
+    return count;
+  }, Balance.lanternPost.maxCount);
+
+  expect(placed).toBe(Balance.lanternPost.maxCount);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts)).toBe(
+    COLD_LANTERNS.length + Balance.lanternPost.maxCount,
+  );
+  expect(
+    await page.evaluate(() =>
+      window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildables.find((entry) => entry.id === 'lantern_post')?.count,
+    ),
+  ).toBe(Balance.lanternPost.maxCount);
+  const ownership = await page.evaluate(() => {
+    const game = window.__GR_TEST__!;
+    const snapshot = game.captureSuspend();
+    const before = snapshot.buildings.filter((entry) => entry.id === 'lantern_post').map((entry) => entry.preplaced === true);
+    const restored = game.restoreSuspend(snapshot);
+    const after = game.captureSuspend().buildings.filter((entry) => entry.id === 'lantern_post').map((entry) => entry.preplaced === true);
+    return { before, restored, after };
+  });
+  expect(ownership.restored).toBe(true);
+  expect(ownership.before).toEqual([...Array(COLD_LANTERNS.length).fill(true), ...Array(Balance.lanternPost.maxCount).fill(false)]);
+  expect(ownership.after).toEqual(ownership.before);
+  await shot(page, testInfo, 'full-player-lantern-cap');
+  await expectClean(errors);
+});
+
 test('render dimming does not stop turret acquisition or damage', async ({ page }) => {
   const errors = await openGame(
     page,
