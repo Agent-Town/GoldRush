@@ -69,13 +69,33 @@
   box-shadow: inset 0 0 0 2px rgba(196, 136, 58, 0.55), inset 0 0 120px rgba(0, 0, 0, 0.48);
   pointer-events: auto;
   transform: scale(1.015);
+  isolation: isolate;
+  overflow: hidden;
 }
 
-.story-beat-card--ceremony[data-art-key="kit-era-2"] {
-  background:
-    radial-gradient(ellipse at 50% 94%, rgba(91, 138, 138, 0.48), transparent 34%),
-    repeating-linear-gradient(90deg, transparent 0 78px, rgba(196, 136, 58, 0.12) 78px 82px),
-    linear-gradient(160deg, rgba(36, 43, 40, 0.97), rgba(69, 53, 34, 0.96));
+.story-beat-card__backdrop,
+.story-beat-card__vignette {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+}
+
+.story-beat-card__backdrop[data-art-loaded='true'] {
+  background: var(--ceremony-art) center / cover no-repeat;
+}
+
+.story-beat-card--ceremony[data-ceremony-step='valley'] .story-beat-card__backdrop[data-art-loaded='true']::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--ceremony-art-outgoing) center / cover no-repeat;
+  animation: ceremony-era-blend 4.5s ease-in-out forwards;
+}
+
+.story-beat-card__vignette {
+  z-index: -1;
+  background: radial-gradient(ellipse at center, rgba(35, 22, 12, 0.22) 0 30%, rgba(20, 14, 10, 0.82) 100%);
 }
 
 .story-beat-card--ceremony.story-beat-card--visible {
@@ -93,6 +113,8 @@
   padding: 24px clamp(20px, 4vw, 48px);
   border-block: 1px solid rgba(255, 228, 160, 0.45);
   text-shadow: 0 3px 18px rgba(0, 0, 0, 0.72);
+  background: rgba(34, 24, 15, 0.42);
+  backdrop-filter: blur(2px);
 }
 
 .story-beat-card--ceremony .story-beat-card__speaker {
@@ -212,6 +234,11 @@
   }
 }
 
+@keyframes ceremony-era-blend {
+  0%, 18% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 @media (max-width: 560px) {
   .story-beat-card {
     left: 12px;
@@ -266,8 +293,13 @@
 
 @media (prefers-reduced-motion: reduce) {
   .story-beat-card,
-  .story-pointer-glow {
+  .story-pointer-glow,
+  .story-beat-card__backdrop::before {
     transition: none;
     animation: none;
+  }
+
+  .story-beat-card__backdrop::before {
+    opacity: 0;
   }
 }

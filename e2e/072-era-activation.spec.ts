@@ -162,6 +162,10 @@ async function expectCeremonyStep(page: Page, id: string, artKey: string, text: 
   await expect(card).toHaveAttribute('data-art-key', artKey);
   await expect(card).toContainText(text);
   await expect(card).toHaveClass(/story-beat-card--visible/);
+  const backdrop = card.locator('[data-story-ceremony-backdrop]');
+  await expect(backdrop).toHaveAttribute('data-art-loaded', 'true');
+  await expect(backdrop).toHaveCSS('background-image', new RegExp(`${artKey}[^)]*\\.png`));
+  await expect(card.locator('[data-story-ceremony-vignette]')).toHaveCSS('background-image', /radial-gradient/);
   await page.waitForTimeout(240);
 }
 
@@ -253,6 +257,7 @@ test('the completed Stamp Mill activates E2 once, stages the ceremony, and makes
   await shot(page, testInfo, 'ceremony-1-mill-rises');
   await page.locator('[data-story-ceremony-continue]').click();
   await expectCeremonyStep(page, 'e2-ceremony-valley', 'kit-era-2', 'The valley takes its first new shape.');
+  await expect(page.locator('[data-story-ceremony-backdrop]')).toHaveCSS('--ceremony-art-outgoing', /kit-era-1/);
   await shot(page, testInfo, 'ceremony-2-valley-transforms');
   await page.locator('[data-story-ceremony-continue]').click();
   await expectCeremonyStep(page, 'e2-ceremony-title', 'kit-era-2', 'Epoch 2');

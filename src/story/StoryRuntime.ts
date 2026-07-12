@@ -8,6 +8,10 @@ import { SoundSystem } from '../audio/SoundSystem';
 
 const CARD_MS = 6000;
 const GAP_MS = 3000;
+const ceremonyArtLoaders = import.meta.glob<string>('../../assets/processed/kit-*.png', {
+  query: '?url',
+  import: 'default',
+});
 
 type QueueItem = {
   beat: RuntimeStoryBeat;
@@ -112,6 +116,10 @@ export class StoryRuntime {
     this.setupPointer(item.beat.pointer);
     if (ceremony) {
       this.setupCeremonyControls();
+      void this.loadCeremonyArt(item);
+      for (const queued of this.queue) {
+        if (queued.beat.presentation === 'epoch-ceremony') void this.ceremonyArtUrls(queued);
+      }
       if (item.beat.ceremonyStep === 'mill') this.audio.play('epoch-door-sting');
     } else {
       document.addEventListener('pointerdown', this.onDocumentPointerDown, { capture: true, once: true });
@@ -132,6 +140,7 @@ export class StoryRuntime {
       )}" data-speaker="${speaker.id}" data-art-key="${escapeHtml(item.beat.artKey ?? '')}" data-ceremony-step="${escapeHtml(
         item.beat.ceremonyStep ?? '',
       )}" aria-live="polite" role="${ceremony ? 'dialog' : 'status'}" ${ceremony ? 'aria-modal="true"' : ''}>
+        ${ceremony ? '<div class="story-beat-card__backdrop" data-story-ceremony-backdrop aria-hidden="true"></div><div class="story-beat-card__vignette" data-story-ceremony-vignette aria-hidden="true"></div>' : ''}
         <img class="story-beat-card__portrait" data-testid="story-beat-portrait" alt="" src="${speaker.portraitUrl}" style="object-position:${
           speaker.objectPosition
         }" />
@@ -149,6 +158,26 @@ export class StoryRuntime {
         }
       </article>
     `;
+  }
+
+  private async ceremonyArtUrls(item: QueueItem): Promise<string[]> {
+    const artKey = item.beat.artKey;
+    if (!artKey) return [];
+    const keys = item.beat.ceremonyStep === 'valley' ? [outgoingEraKey(artKey), artKey] : [artKey];
+    const urls = await Promise.all(
+      keys.map(async (key) => ceremonyArtLoaders[`../../assets/processed/${key}.png`]?.().catch(() => undefined)),
+    );
+    return urls.filter((url): url is string => Boolean(url));
+  }
+
+  private async loadCeremonyArt(item: QueueItem): Promise<void> {
+    const urls = await this.ceremonyArtUrls(item);
+    if (this.active !== item || urls.length === 0) return;
+    const backdrop = this.root.querySelector<HTMLElement>('[data-story-ceremony-backdrop]');
+    if (!backdrop) return;
+    backdrop.style.setProperty('--ceremony-art', `url("${urls.at(-1)}")`);
+    if (urls.length > 1) backdrop.style.setProperty('--ceremony-art-outgoing', `url("${urls[0]}")`);
+    backdrop.dataset.artLoaded = 'true';
   }
 
   private dismiss(): void {
@@ -255,4 +284,8 @@ function escapeHtml(value: string): string {
     if (char === '"') return '&quot;';
     return '&#39;';
   });
+}
+
+function outgoingEraKey(artKey: string): string {
+  return artKey.replace(/(kit-era-)(\d+)$/, (_, prefix: string, era: string) => `${prefix}${Math.max(1, Number(era) - 1)}`);
 }
