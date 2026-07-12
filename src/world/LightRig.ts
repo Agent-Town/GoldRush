@@ -11,6 +11,13 @@ export type LightRigNightShiftState = {
   darkness: number;
 };
 
+export type NightPoolSource = {
+  x: number;
+  z: number;
+  radius: number;
+  kind: 'hero' | 'lantern';
+};
+
 export type LightRigDiagnostics = {
   sunPresent: boolean;
   shadowsQuality: ShadowsQuality;
@@ -30,6 +37,7 @@ export type LightRigDiagnostics = {
     fillIntensity: number;
   };
   nightShift: LightRigNightShiftState;
+  nightPools: number;
 };
 
 export class LightRig {
@@ -56,6 +64,7 @@ export class LightRig {
   private readonly darkGround = new THREE.Color('#000000');
   private readonly blobShadows = new SpriteBlobShadows();
   private readonly post = new LedgerPostPass();
+  private readonly nightPoolLights = Array.from({ length: 20 }, () => new THREE.PointLight());
   private currentShadowMapSize = -1;
   private stressFallback = false;
   private nightShift: LightRigNightShiftState = { enabled: false, phase: 'full', darkness: 0 };
@@ -76,6 +85,12 @@ export class LightRig {
     this.sun.shadow.normalBias = 0.018;
     this.sun.shadow.radius = 2.5;
     this.group.add(this.fill, this.sun, this.sun.target);
+    for (const light of this.nightPoolLights) {
+      light.castShadow = false;
+      light.decay = 2;
+      light.visible = false;
+      this.group.add(light);
+    }
     this.scene.add(this.group, this.blobShadows.group);
   }
 
@@ -109,12 +124,13 @@ export class LightRig {
     this.stressFallback = active;
   }
 
-  setNightShift(state: LightRigNightShiftState): void {
+  setNightShift(state: LightRigNightShiftState, sources: readonly NightPoolSource[] = []): void {
     this.nightShift = {
       enabled: state.enabled,
       phase: state.phase,
       darkness: THREE.MathUtils.clamp(state.darkness, 0, 1),
     };
+    this.syncNightPools(sources);
   }
 
   diagnostics(): LightRigDiagnostics {
@@ -139,6 +155,7 @@ export class LightRig {
         fillIntensity: round2(this.fill.intensity),
       },
       nightShift: { ...this.nightShift },
+      nightPools: this.nightPoolLights.filter((light) => light.visible).length,
     };
   }
 
@@ -192,6 +209,20 @@ export class LightRig {
     this.fill.color.copy(this.dayFill).lerp(this.darkFill, darkness);
     this.fill.groundColor.copy(this.dayGround).lerp(this.darkGround, darkness);
     this.fill.intensity = THREE.MathUtils.lerp(1.12, 0, darkness);
+  }
+
+  private syncNightPools(sources: readonly NightPoolSource[]): void {
+    const darkness = this.nightShift.enabled ? this.nightShift.darkness : 0;
+    for (let index = 0; index < this.nightPoolLights.length; index += 1) {
+      const light = this.nightPoolLights[index]!;
+      const source = sources[index];
+      light.visible = darkness > 0 && source !== undefined;
+      if (!light.visible || !source) continue;
+      light.color.set(source.kind === 'lantern' ? '#ffd28a' : '#8fded3');
+      light.intensity = (source.kind === 'lantern' ? Balance.contracts.nightShift.lanternRenderIntensity : Balance.contracts.nightShift.heroRenderIntensity) * darkness;
+      light.distance = source.radius;
+      light.position.set(source.x, Terrain.visualY(source.x, source.z, 1.45), source.z);
+    }
   }
 }
 

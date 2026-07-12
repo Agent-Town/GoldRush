@@ -159,7 +159,7 @@ import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
 import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { PowerWireView } from '../world/PowerWireView';
-import { LightRig, type LightRigNightShiftState, type NightShiftPhase } from '../world/LightRig';
+import { LightRig, type LightRigNightShiftState, type NightPoolSource, type NightShiftPhase } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { readTownName } from '../town/TownNaming';
 import { installRunTelemetry } from '../telemetry/runBeacon';
@@ -3402,8 +3402,9 @@ export class Game {
 
   private syncNightShiftLighting(): void {
     const state = this.nightShiftLightingState();
-    this.lightRig?.setNightShift(state);
     if (!state.enabled || state.darkness <= 0) {
+      this.lightRig?.setNightShift(state);
+      this.buildSystem.setNightLighting(0, []);
       this.enemies.setLightDimming({
         enabled: false,
         darkness: 0,
@@ -3436,6 +3437,23 @@ export class Game {
     for (const position of liveLightPositions('lantern_post')) {
       sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.lanternPostLightRadius });
     }
+
+    const nightPools: NightPoolSource[] = [
+      ...liveLightPositions('lantern_post').map((position) => ({
+        x: position.x,
+        z: position.z,
+        radius: Balance.contracts.nightShift.lanternPostLightRadius,
+        kind: 'lantern' as const,
+      })),
+      ...this.actors.filter((actor) => actor.group.visible).map((actor) => ({
+        x: actor.renderPosition.x,
+        z: actor.renderPosition.z,
+        radius: Balance.contracts.nightShift.heroLightRadius,
+        kind: 'hero' as const,
+      })),
+    ];
+    this.lightRig?.setNightShift(state, nightPools);
+    this.buildSystem.setNightLighting(state.darkness, nightPools);
 
     this.enemies.setLightDimming({
       enabled: true,

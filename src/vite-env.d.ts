@@ -341,6 +341,7 @@ interface ThreeGameDiagnostics {
   build: {
     mode: boolean;
     ghostValid: boolean;
+    ghostLight: number;
     ghostPos: { x: number; z: number };
     ghostRotationSteps: number;
     ghostFootprint: { w: number; d: number };
@@ -570,6 +571,7 @@ interface ThreeGameDiagnostics {
     shadowMapSize: number;
     shadowMapTargetSize: number;
     blobShadows: number;
+    nightPools: number;
     nightShift: {
       enabled: boolean;
       phase: 'full' | 'dusk' | 'dark' | 'dawn';

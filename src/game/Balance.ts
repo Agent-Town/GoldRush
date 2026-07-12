@@ -342,9 +342,11 @@ export const Balance = {
       renderVisibilityCutoff: 0.35,
       renderVisibleBoost: 12,
       heroLightRadius: 4.8,
+      heroRenderIntensity: 8,
       beaconLightMult: 1.5,
       turretLightRadius: 4.2,
       lanternPostLightRadius: 7,
+      lanternRenderIntensity: 34,
     },
   },
   eraCaps: {

@@ -45,6 +45,7 @@ export type BuildDiagnostics = {
   mode: boolean;
   selectedBuildable: BuildableId;
   ghostValid: boolean;
+  ghostLight: number;
   ghostPos: { x: number; z: number };
   ghostRotationSteps: number;
   ghostFootprint: { w: number; d: number };
@@ -264,6 +265,9 @@ export class BuildSystem {
   private readonly groundPlane = new THREE.Plane(new THREE.Vector3(0, 1, 0), 0);
   private readonly rayHit = new THREE.Vector3();
   private readonly ghostPos = new THREE.Vector3();
+  private nightDarkness = 0;
+  private nightLightSources: readonly { x: number; z: number; radius: number }[] = [];
+  private ghostLight = 1;
   private readonly shooterPos = new THREE.Vector3();
   private readonly visualObject = new THREE.Object3D();
   private readonly hp = createNumberStore();
@@ -504,6 +508,7 @@ export class BuildSystem {
       mode: this.mode,
       selectedBuildable: this.selectedId,
       ghostValid: this.valid,
+      ghostLight: this.ghostLight,
       ghostPos: { x: this.ghostPos.x, z: this.ghostPos.z },
       ghostRotationSteps: this.ghostRotationSteps,
       ghostFootprint: footprint,
@@ -558,6 +563,11 @@ export class BuildSystem {
     this.mode = on;
     this.ghost.visible = on;
     if (!on) this.valid = false;
+  }
+
+  setNightLighting(darkness: number, sources: readonly { x: number; z: number; radius: number }[]): void {
+    this.nightDarkness = THREE.MathUtils.clamp(darkness, 0, 1);
+    this.nightLightSources = sources;
   }
 
   toggleBuildMode(): void {
@@ -627,8 +637,21 @@ export class BuildSystem {
     this.ghost.rotation.y = this.ghostRotationSteps * (Math.PI / 2);
     this.ghostMaterial.color.copy(this.valid ? validColor : invalidColor);
     this.ghostMaterial.emissive.copy(this.valid ? validColor : invalidColor);
+    this.ghostLight = this.lightAt(this.ghostPos.x, this.ghostPos.z);
+    this.ghostMaterial.opacity = THREE.MathUtils.lerp(0.12, 0.78, this.ghostLight);
+    this.ghostMaterial.emissiveIntensity = THREE.MathUtils.lerp(0.04, 0.55, this.ghostLight);
     const pulse = 1 + Math.sin(at * Math.PI * 2) * 0.03;
     this.ghost.scale.setScalar(pulse);
+  }
+
+  private lightAt(x: number, z: number): number {
+    if (this.nightDarkness <= 0) return 1;
+    let light = 0;
+    for (const source of this.nightLightSources) {
+      const distance = Math.hypot(x - source.x, z - source.z);
+      light = Math.max(light, THREE.MathUtils.clamp(1 - distance / source.radius, 0, 1));
+    }
+    return THREE.MathUtils.lerp(1, light, this.nightDarkness);
   }
 
   placementPoint(origin: THREE.Vector3 = this.heroPosition): { x: number; z: number } {

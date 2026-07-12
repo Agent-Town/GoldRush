@@ -1,5 +1,5 @@
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { mkdir } from 'node:fs/promises';
+import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { PNG } from 'pngjs';
 import { Balance } from '../src/game/Balance';
@@ -19,6 +19,7 @@ type SavedNightSuspend = {
 };
 
 const ARTIFACT_DIR = path.resolve('artifacts/night-bite');
+const LANTERN_ARTIFACT_DIR = path.resolve('artifacts/night-lanterns');
 const NIGHT_QUERY = '?debug&contract=e1-night-shift&timescale=8&nolevel&nowaves&seed=e1-night-shift';
 const RELIGHT_COST = Math.ceil(Balance.lanternPost.cost / 2);
 const COLD_LANTERNS = [
@@ -91,6 +92,16 @@ async function teleport(page: Page, x: number, z: number): Promise<void> {
 
 async function selectBuildable(page: Page, id: string): Promise<boolean> {
   return page.evaluate((buildableId) => window.__GR_TEST__?.selectBuildable(buildableId) ?? false, id);
+}
+
+async function aimBuildAt(page: Page, point: { x: number; z: number }, tolerance = 1): Promise<void> {
+  const screen = await page.evaluate((target) => window.__GR_TEST__?.screenPoint(target.x, target.z, 0.03) ?? null, point);
+  expect(screen?.inView).toBe(true);
+  await page.mouse.move(screen!.x, screen!.y);
+  await expect.poll(() => page.evaluate((target) => {
+    const ghost = window.__THREE_GAME_DIAGNOSTICS__?.build.ghostPos;
+    return ghost ? Math.hypot(ghost.x - target.x, ghost.z - target.z) : Number.POSITIVE_INFINITY;
+  }, point)).toBeLessThan(tolerance);
 }
 
 async function lanternHp(page: Page) {
@@ -201,6 +212,29 @@ async function spriteLuminance(page: Page, point: { x: number; z: number }): Pro
   expect(samples.length).toBeGreaterThan(0);
   samples.sort((a, b) => a - b);
   return samples[Math.floor(samples.length * 0.95)] ?? 0;
+}
+
+async function groundLuminances(page: Page, points: readonly { x: number; z: number }[]): Promise<number[]> {
+  const screen = await page.evaluate((worldPoints) => worldPoints.map((point) => window.__GR_TEST__?.screenPoint(point.x, point.z, 0.03) ?? null), points);
+  expect(screen.every((point) => point?.inView)).toBe(true);
+  const canvas = page.locator('#game-canvas');
+  const [box, buffer] = await Promise.all([canvas.boundingBox(), canvas.screenshot()]);
+  expect(box).toBeTruthy();
+  const png = PNG.sync.read(buffer);
+
+  return screen.map((point) => {
+    const centerX = Math.round(point!.x * png.width / box!.width);
+    const centerY = Math.round(point!.y * png.height / box!.height);
+    const samples: number[] = [];
+    for (let y = centerY - 4; y <= centerY + 4; y += 1) {
+      for (let x = centerX - 4; x <= centerX + 4; x += 1) {
+        const offset = (y * png.width + x) * 4;
+        samples.push((0.2126 * png.data[offset]! + 0.7152 * png.data[offset + 1]! + 0.0722 * png.data[offset + 2]!) / 255);
+      }
+    }
+    samples.sort((a, b) => a - b);
+    return samples[Math.floor(samples.length / 2)] ?? 0;
+  });
 }
 
 function visibleThreats(lights: readonly number[]): number {
@@ -343,6 +377,49 @@ test('lantern coverage is necessary for threat visibility', async ({ page }) => 
   const litVisible = visibleThreats(litLights);
   expect(litVisible - coldVisible).toBeGreaterThanOrEqual(3);
   expect(litVisible).toBeGreaterThanOrEqual(3);
+  await expectClean(errors);
+});
+
+test('a lantern pool makes only its build island readable at true dark', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&contract=e1-night-shift&timescale=3&nolevel&nowaves&seed=e1-night-pool');
+  await setWave(page, 10);
+  await relightLantern(page, 0);
+  const lantern = COLD_LANTERN_POSITIONS[0]!;
+  await teleport(page, lantern.x + 1, lantern.z + 1);
+  await page.waitForTimeout(180);
+
+  const [inside, outside] = await groundLuminances(page, [
+    { x: lantern.x + 2, z: lantern.z },
+    testInfo.project.name === 'mobile-chrome'
+      ? { x: lantern.x, z: lantern.z + 8 }
+      : { x: lantern.x + 11, z: lantern.z },
+  ]);
+  const ratio = inside / Math.max(outside, 0.001);
+  expect(ratio, JSON.stringify({ inside, outside })).toBeGreaterThanOrEqual(3);
+  expect(outside).toBeLessThanOrEqual(0.06);
+
+  await teleport(page, lantern.x, lantern.z - 5);
+  await grantGold(page, 100);
+  await expect(selectBuildable(page, 'palisade')).resolves.toBe(true);
+  await page.waitForTimeout(180);
+  await aimBuildAt(page, { x: lantern.x, z: lantern.z + 1 });
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostLight ?? 0)).toBeGreaterThan(0.2);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightPools ?? 0)).toBeGreaterThanOrEqual(2);
+
+  await mkdir(LANTERN_ARTIFACT_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(LANTERN_ARTIFACT_DIR, `${testInfo.project.name}-lit-build-island.png`) });
+  await writeFile(
+    path.join(LANTERN_ARTIFACT_DIR, `${testInfo.project.name}-brightness.json`),
+    JSON.stringify({ inside, outside, ratio }, null, 2),
+  );
+  await testInfo.attach('lantern-brightness', {
+    body: JSON.stringify({ inside, outside, ratio }, null, 2),
+    contentType: 'application/json',
+  });
+  await teleport(page, 20, -20);
+  await page.waitForTimeout(180);
+  await aimBuildAt(page, { x: 20, z: -14 }, 3);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostLight ?? 1)).toBeLessThan(0.05);
   await expectClean(errors);
 });
 
