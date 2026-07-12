@@ -272,3 +272,10 @@ Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGP
 | icons.e2 | ✓ `assets/raw/icons-e2.png` | PENDING-PROCESSING (extract-alpha ff00ff) |
 | char.hero pose idle8/work8/attack8 | ⚠ raw drained for reference | **QA-BLOCKED per art slot: pinned-pan + chroma failures — DO NOT PROCESS/WIRE** (regen ride next art batch) |
 | bld.boiler_house | raw exists (07-07) | PENDING-PROCESSING (384px promote — never regenerate) |
+
+## 2026-07-12 late — attended drain from the art slot
+| Slot | State |
+|---|---|
+| char.e2 rail_tough / steam_wrecker / coal_thief walk4 a+b | ✓ raw drained (6 sheets) — PENDING-PROCESSING |
+| char preacher / schoolteacher / assay_clerk walk8 a+b | ✓ raw drained (6 sheets) — PENDING-PROCESSING; retires the bust stand-ins when wired |
+| stream overlay pack (starting-soon/brb/ending/frame/live-badge) | ✓ raw drained (5) — OBS-ready per docs/marketing/STREAMING.md |
