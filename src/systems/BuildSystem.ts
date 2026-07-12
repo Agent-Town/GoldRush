@@ -226,7 +226,7 @@ type BuildingDamageResult = {
   maxHp: number;
   wrecked: boolean;
 };
-type BuildSystemSound = 'build-place' | 'demolish' | 'invalid' | 'tier-up';
+type BuildSystemSound = 'agent-works' | 'build-place' | 'demolish' | 'invalid' | 'tier-up';
 
 export class BuildSystem {
   readonly group = new THREE.Group();
@@ -686,6 +686,7 @@ export class BuildSystem {
     if (placed < 0) return this.invalidBuild();
     this.finishPlacement(def.id, placed, cost);
     this.onSound?.('build-place', this.ghostPos);
+    if (def.id === 'boiler_house') this.onSound?.('agent-works', this.ghostPos);
     this.valid = this.computeValid();
     return true;
   }
