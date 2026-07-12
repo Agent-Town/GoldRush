@@ -1,0 +1,18 @@
+# town3d-06-stamp-mill — THE STAMP MILL MONUMENT in 3D (TOWN-3D slice 6) (lane-a; commit prefix "feat:")
+ROLE: Blender modeler + web wiring. WORKDIR: lane-a (worktrees/lane-a). CODEX: model=gpt-5.6-sol effort=high
+ATTENDED-AUTHORED 2026-07-13 — owner order verbatim (2026-07-13): "Yes, this is amazing - lets hit it start the queue, let it do all the houses and all other 3D objects that we have in game."
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. **OVERNIGHT LADDER NOTE (attended authorization 2026-07-13): if you STOP because the lane's previous town3d/run3d slice is done but undrained, report exactly "LADDER-STALL: waiting on drain of <slice>" — the fires drain and re-queue this master; such re-queues are pre-authorized and do NOT count toward twice-then-escalate.** Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+## WHY: specs/town-3d/README.md ladder slice 6 — the post-ceremony centerpiece: the complete Stamp Mill is the town's monument to E1→E2 and deserves geometry. Calibration PASSED (spec RULINGS 2026-07-13); tier sol@high.
+
+## READ-FIRST: specs/town-3d/RECIPE.md + README.md RULINGS · src/town/townLayout.ts (`stamp-mill` slot — DO NOT change values) · the Stamp Mill COMPLETE-state art: locate via the megaproject manifest (src/meta/ + LEDGER — the complete-stage painting is the texture source; the mill has BUILD STAGES, model the COMPLETE state only) · the landed sibling pattern `git show ecafb140 -- src/town/TownScene.ts src/town/TownTavernPilot.ts` + any town3d-02..05 drains on main by the time you run · e2e/town-general-store-blender.spec.ts (gate grammar).
+
+## SCOPE: (1) Model+bake `assets/pilots/stamp-mill-3d/stamp-mill.blend` + .glb per RECIPE.md (≤15k tris, ONE ≤1024² material, four sides+roof, base-center origin, footprint from townLayout). The mill only RENDERS in 3D when the town's mill state is COMPLETE (read the existing stamp-mill state the scene already uses — visual-only, no state writes). (2) Re-export verification → artifacts/town3d-stamp-mill/reexport-evidence.md. (3) Wire ADDITIVELY into the ?town3dPilot set (one const + one union member + one installer + one dispatch entry; 'all' mounts everything). The painted mill stays LITE + fallback + flag-off FOREVER. (4) Clone the store spec → e2e/town-stamp-mill-blender.spec.ts (all assertions incl. flag-off zero-GLB, lite, load-failure, disposal, p95 ≤115%) + one extra: pre-complete mill state renders NO 3D mill even with the flag on. (5) Tonal match ≤5% + owner contact sheet → artifacts/town3d-stamp-mill/.
+
+## Firewall
+Touch ONLY: assets/pilots/stamp-mill-3d/, e2e/town-stamp-mill-blender.spec.ts, artifacts/town3d-stamp-mill/, additive pilot wiring in src/town/TownScene.ts + TownTavernPilot.ts. NO townLayout values, NO megaproject/ceremony state logic, NO sibling GLBs/spec assertions, NO sim/coordinates, NO grounding work (owner-deferred).
+
+## Self-check
+tsc + build green · your spec green desktop+mobile-390 · tavern + general-store specs UNMODIFIED-green · zero console/page errors · artifacts complete. If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.
+END: READY-FOR-GATES + tri/bounds/luminance/p95 numbers.

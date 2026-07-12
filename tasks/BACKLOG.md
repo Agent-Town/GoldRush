@@ -175,3 +175,14 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 ## 2026-07-13 — TOWN-3D LADDER OPEN (owner calibration verdict: "amazing... let it do all the houses and all other 3D objects")
 - **town3d-02-schoolhouse** → queue/lane-a · **town3d-03-claim-office** → queue/lane-b · **town3d-04-chapel** → queue/lane-c · **town3d-05-assay-office** → queue/lane-d (#2 behind fix-town-fresh-boot-textures). All sol@high per calibration; masters carry per-lane reset authorizations; sibling-pilot specs must stay unmodified-green per master.
 - NEXT RUNGS (refill-on-merge, fire-authorable from specs/town-3d/README.md + the town3d-02..05 master pattern): **06 Stamp Mill monument** (post-ceremony centerpiece) → **07+ contract buildables** in spec order: sluice → palisade → turret → stockpile → sentry beacon → boiler house → assay bench → lantern post (run-scene, own e2e family). Grounding work stays OFF the ladder (owner-deferred 2026-07-13).
+
+## 2026-07-13 late — FULL 3D QUEUE LOADED (owner: "make a long queue here until tomorrow morning")
+- QUEUED: town3d-06-stamp-mill (lane-a) · town3d-06b-dynamo-hall (lane-b) · run3d-07-sluice GRAMMAR (lane-c) · run3d-08-palisade (lane-a) · run3d-09-turret (lane-b) · run3d-10-stockpile (lane-c) · run3d-11-sentry-beacon (lane-d) · run3d-12-boiler-house (lane-c) · run3d-13-assay-bench (lane-d) · run3d-14-lantern-post (lane-a) · town3d-15-plaza-props (lane-d). RUN-RECIPE.md ratified (the buildables seam; parallelization-safe). LADDER-STALL re-queues pre-authorized (HANDOVER §4-appendix).
+- FUTURE (owner-gated): **town3d-promotion** — 3D default-on once the set completes (lazy loading + bytes budget + owner verdict). **run3d riders** (fire-authorable after 07 lands): rail elements, gold nodes, megaproject site stages.
+
+## OWNER'S DESK (2026-07-13 refresh)
+- MORNING DEPLOY: merges after 9225ad1d await deploy — one command: `bash scripts/deploy.sh` (or any attended session).
+- E2 era-gate replay verification (BUILD-PLAN ⑨) — still yours.
+- Marketing §5 approval table — still yours.
+- Higgsfield credits ≈24: Seedance motion gen blocked until top-up — decide if/when.
+- 3D promotion verdict comes AFTER the ladder completes (see HANDOVER §4-appendix item 6).
