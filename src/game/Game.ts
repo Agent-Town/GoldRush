@@ -3543,7 +3543,11 @@ export class Game {
 
   private activeResourceSnapshots(): UiSnapshot['resources'] {
     const objective = this.pressureSystem.diagnostics.objective;
-    return this.activeEpoch.resources.map((resource) => {
+    // Contract-scoped resources: no pressure gauge on tiles without boilers (owner finding 2026-07-12).
+    const resources = this.activeEpoch.resources.filter(
+      (resource) => resource.id !== 'pressure' || this.pressureSystem.diagnostics.enabled,
+    );
+    return resources.map((resource) => {
       const balance = this.economy.resourceBalance(resource.id);
       return {
         ...resource,
