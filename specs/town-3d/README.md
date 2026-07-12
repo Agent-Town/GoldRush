@@ -7,5 +7,9 @@ Owner order (verbatim): "start lanes to work on new 3D models for all buildings 
 3. Every building lands flag-gated behind ?town3dPilot (one flag, growing set); painted facades remain LITE-tier + fallback FOREVER; visual-only, zero coordinate/sim changes; per-building e2e mirrors e2e/town-tavern-blender.spec.ts.
 4. Blender 5.1.2 headless (blender --background --python) is lane-legal; .blend sources commit beside GLBs (assets/pilots/<building>-3d/).
 
+## RULINGS (2026-07-13)
+- **CALIBRATION PASSED** — owner verdict on the general store, verbatim: "Yes, this is amazing - lets hit it start the queue, let it do all the houses and all other 3D objects that we have in game." Tier law resolves: the ENTIRE ladder executes at sol@high with RECIPE.md. Slices 02-05 queued 2026-07-13 (schoolhouse/claim-office/chapel/assay-office, lanes a-d); 06+ refill-on-merge per the ladder below. The owner's "all other 3D objects" ratifies the 7+ contract-buildables arm as ordered work, not optional.
+- **GROUNDING DEFERRED** — owner, verbatim: "grounding question is fine for now. we will see later." No shadow/grounding work rides any ladder slice until a new ruling; 2D actors stand against 3D walls as-is.
+
 ## THE LADDER (one building per lane task, refill-on-merge)
 Slice 0 RECIPE.md (extraction, lane task) → 1 general_store (CALIBRATION @high) → 2 schoolhouse → 3 claim_office → 4 chapel → 5 assay_office → 6 THE STAMP MILL MONUMENT (the complete-state portrait becomes geometry — the post-ceremony centerpiece) → 7+ THE CONTRACT BUILDABLES (run scene, same recipe, own e2e family): sluice → palisade → turret → stockpile → sentry beacon → boiler house → assay bench → lantern post. Gates per slice; owner-eye contact sheet per building; the bartender-grounding question rides slice 1 (2D actor shadows vs 3D walls — owner judges).
