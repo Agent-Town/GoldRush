@@ -5,7 +5,6 @@ import { prefetchNonCriticalSpriteRuntimes } from './assets/SpriteAnimator';
 import { installFullBaseBenchmark } from './diagnostics/fullBaseBenchmark';
 import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
-import { Game } from './game/Game';
 import type { RunReturnResult } from './game/Game';
 import { FIRST_CLAIM_DONE_KEY } from './game/ProfileStorage';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
@@ -18,6 +17,7 @@ import { installEpochLedgerDiscovery } from './encyclopedia/state';
 import type { LedgerEntryId } from './encyclopedia/registry';
 
 type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
+type Game = import('./game/Game').Game;
 type StartMenu = import('./ui/menu/StartMenu').StartMenu;
 type TownScene = import('./town/TownScene').TownScene;
 
@@ -73,8 +73,9 @@ afterFirstFrame(() => {
   void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
 });
 
-function startGame(): void {
+async function startGame(): Promise<void> {
   const currentSearch = new URLSearchParams(window.location.search);
+  const { Game } = await import('./game/Game');
   applyStoredDifficultyPreset();
   applyStoredPerformanceTier();
   applyUpgradeBudgetsFromBalance();

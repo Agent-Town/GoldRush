@@ -127,6 +127,15 @@ export type TownDiagnostics = {
   schoolhouseOpen: boolean;
   activeEpochId: string;
   assayOpen: boolean;
+  lighting: {
+    night: boolean;
+    background: string;
+    fog: string;
+    fogNear: number;
+    fogFar: number;
+    sunIntensity: number;
+    fillIntensity: number;
+  };
   buildings: Array<{
     id: TownBuildingId;
     name: string;
@@ -316,6 +325,7 @@ export class TownScene {
     this.firstClaimGuideActive = shouldStartFirstClaimGuide(this.townName, this.metaProgress);
     if (this.firstClaimGuideActive) markFirstClaimGuidePending();
     this.createScene();
+    this.dressScene();
     this.createUi();
     window.addEventListener('keydown', this.onFirstClaimInput, true);
     window.addEventListener('pointerdown', this.onFirstClaimInput, true);
@@ -427,17 +437,6 @@ export class TownScene {
 
   private createScene(): void {
     this.scene.name = 'TownScene';
-    this.scene.background = new THREE.Color(this.townNight ? '#41365a' : '#e9c98d');
-    this.scene.fog = new THREE.Fog(this.townNight ? '#41365a' : '#e9c98d', this.townNight ? 24 : 34, this.townNight ? 58 : 76);
-    this.scene.add(
-      new THREE.HemisphereLight(this.townNight ? '#ddc6a0' : '#fff2cc', this.townNight ? '#2e2642' : '#8b6c3f', this.townNight ? 0.62 : 1.15),
-    );
-
-    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 2.2);
-    sun.position.set(-22, 18, -18);
-    sun.castShadow = true;
-    this.scene.add(sun);
-
     const ground = new THREE.Mesh(
       new THREE.PlaneGeometry(TOWN_HALF * 2, TOWN_HALF * 2),
       new THREE.MeshStandardMaterial({
@@ -472,6 +471,22 @@ export class TownScene {
     if (this.ambientDust) this.scene.add(this.ambientDust);
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
+  }
+
+  private dressScene(): void {
+    this.scene.background = new THREE.Color(this.townNight ? '#41365a' : '#e9c98d');
+    this.scene.fog = new THREE.Fog(this.townNight ? '#41365a' : '#e9c98d', this.townNight ? 24 : 34, this.townNight ? 58 : 76);
+    const fill = new THREE.HemisphereLight(
+      this.townNight ? '#ddc6a0' : '#fff2cc',
+      this.townNight ? '#2e2642' : '#8b6c3f',
+      this.townNight ? 0.62 : 1.15,
+    );
+    fill.name = 'TownFill';
+    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 2.2);
+    sun.name = 'TownSun';
+    sun.position.set(-22, 18, -18);
+    sun.castShadow = true;
+    this.scene.add(fill, sun);
   }
 
   private createStampMillVignette(): void {
@@ -1516,6 +1531,10 @@ export class TownScene {
 
   private publishDiagnostics(): void {
     const dpr = this.renderer.getPixelRatio();
+    const background = this.scene.background as THREE.Color;
+    const fog = this.scene.fog as THREE.Fog;
+    const sun = this.scene.getObjectByName('TownSun') as THREE.DirectionalLight | undefined;
+    const fill = this.scene.getObjectByName('TownFill') as THREE.HemisphereLight | undefined;
     window.__GR_TOWN_DIAGNOSTICS__ = {
       frame: this.frame,
       elapsed: this.elapsed,
@@ -1531,6 +1550,15 @@ export class TownScene {
       schoolhouseOpen: this.schoolhouseOpen,
       activeEpochId: activeEpochId(),
       assayOpen: this.assayBenchOpen(),
+      lighting: {
+        night: this.townNight,
+        background: `#${background.getHexString()}`,
+        fog: `#${fog.color.getHexString()}`,
+        fogNear: fog.near,
+        fogFar: fog.far,
+        sunIntensity: sun?.intensity ?? 0,
+        fillIntensity: fill?.intensity ?? 0,
+      },
       buildings: townBuildings.map((building) => ({
         id: building.id,
         name: building.name,

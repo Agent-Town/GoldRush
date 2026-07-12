@@ -21,6 +21,14 @@ export type LightRigDiagnostics = {
   shadowMapSize: number;
   shadowMapTargetSize: number;
   blobShadows: number;
+  palette: {
+    background: string;
+    fog: string;
+    sun: string;
+    sunIntensity: number;
+    fill: string;
+    fillIntensity: number;
+  };
   nightShift: LightRigNightShiftState;
 };
 
@@ -69,7 +77,6 @@ export class LightRig {
     this.sun.shadow.radius = 2.5;
     this.group.add(this.fill, this.sun, this.sun.target);
     this.scene.add(this.group, this.blobShadows.group);
-    this.update();
   }
 
   update(): void {
@@ -123,6 +130,14 @@ export class LightRig {
       shadowMapSize: shadowMapSize(quality),
       shadowMapTargetSize: quality === 'soft' ? shadowTargetSize : 0,
       blobShadows: this.blobShadows.count,
+      palette: {
+        background: `#${this.background.getHexString()}`,
+        fog: `#${this.fog.color.getHexString()}`,
+        sun: `#${this.sun.color.getHexString()}`,
+        sunIntensity: round2(this.sun.intensity),
+        fill: `#${this.fill.color.getHexString()}`,
+        fillIntensity: round2(this.fill.intensity),
+      },
       nightShift: { ...this.nightShift },
     };
   }

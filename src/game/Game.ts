@@ -1041,6 +1041,7 @@ export class Game {
     this.registerGoldHoldings();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
+    this.dressScene();
     if (new URLSearchParams(window.location.search).has('debug')) {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
@@ -2310,6 +2311,11 @@ export class Game {
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.scene.add(this.primaryActor.group);
+  }
+
+  private dressScene(): void {
+    this.syncNightShiftLighting();
+    this.lightRig?.update();
   }
 
   private createMegaprojectVisuals(): void {
