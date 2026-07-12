@@ -44,6 +44,7 @@ type SoundDiagnostics = {
   loops: string[];
   loopSourceCounts: Record<string, number>;
   loopVolumes: Record<string, number>;
+  loopElapsedSeconds: Record<string, number>;
   lastRequested: string | null;
   lastStarted: string | null;
   playsPerSecond: Record<string, number>;
@@ -59,6 +60,7 @@ type LoopState = {
   voiceId: number;
   volume: number;
   sourceCount: number;
+  startedAt: number;
 };
 
 type VoiceState = {
@@ -73,6 +75,7 @@ type VoiceState = {
 export class SoundSystem {
   private context: AudioContext | null = null;
   private masterGain: GainNode | null = null;
+  private musicGain: GainNode | null = null;
   private unlocked = false;
   private disposed = false;
   private requests = 0;
@@ -206,6 +209,7 @@ export class SoundSystem {
     void this.context?.close();
     this.context = null;
     this.masterGain = null;
+    this.musicGain = null;
     window.__GR_AUDIO_DIAGNOSTICS__ = undefined;
   }
 
@@ -220,13 +224,14 @@ export class SoundSystem {
       started: this.started,
       missing: this.missing,
       active,
-      concurrentVoices: active,
+      concurrentVoices: this.governedVoiceCount(),
       voiceCap: GLOBAL_VOICE_CAP,
       dropsPerSecond: this.dropsPerSecondSnapshot(),
       headroomGain: this.headroomGain(),
       loops: [...this.loops.keys()],
       loopSourceCounts: Object.fromEntries([...this.loops].map(([name, loop]) => [name, loop.sourceCount])),
       loopVolumes: Object.fromEntries([...this.loops].map(([name, loop]) => [name, loop.gain.gain.value])),
+      loopElapsedSeconds: Object.fromEntries([...this.loops].map(([name, loop]) => [name, Math.max(0, (this.context?.currentTime ?? loop.startedAt) - loop.startedAt)])),
       lastRequested: this.lastRequested,
       lastStarted: this.lastStarted,
       playsPerSecond: this.playsPerSecondSnapshot(),
@@ -258,7 +263,9 @@ export class SoundSystem {
     if (!this.context) {
       this.context = new AudioContext();
       this.masterGain = this.context.createGain();
+      this.musicGain = this.context.createGain();
       this.masterGain.connect(this.context.destination);
+      this.musicGain.connect(this.context.destination);
       this.updateMasterGain();
     }
     return this.context;
@@ -283,7 +290,7 @@ export class SoundSystem {
     source.buffer = buffer;
     source.playbackRate.value = this.playbackRate(entry.pitchVariance);
     gain.gain.value = this.effectiveVolume(entry.volume * volume * this.groupVolume(entry));
-    source.connect(gain).connect(this.masterGain ?? context.destination);
+    source.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
     voice.source = source;
     source.onended = () => this.releaseVoice(voiceId);
     source.start();
@@ -314,11 +321,12 @@ export class SoundSystem {
     }
     const source = context.createBufferSource();
     const gain = context.createGain();
+    const entry: SoundManifestEntry = soundManifest[name];
     source.buffer = buffer;
     source.loop = true;
-    source.connect(gain).connect(this.masterGain ?? context.destination);
+    source.connect(gain).connect(entry.group === 'music' ? (this.musicGain ?? context.destination) : (this.masterGain ?? context.destination));
     voice.source = source;
-    this.loops.set(name, { source, gain, voiceId, volume, sourceCount: this.loopSourceCount(name, 1) });
+    this.loops.set(name, { source, gain, voiceId, volume, sourceCount: this.loopSourceCount(name, 1), startedAt: context.currentTime });
     this.setLoopVolume(name, volume);
     source.onended = () => {
       if (this.loops.get(name)?.source === source) this.loops.delete(name);
@@ -354,7 +362,7 @@ export class SoundSystem {
 
   private reserveVoice(name: SoundName, loop: boolean, countsPerSound: boolean): number | null {
     const priority = soundPriority(name);
-    if (this.voices.size >= GLOBAL_VOICE_CAP) {
+    if (soundManifest[name].group !== 'music' && this.governedVoiceCount() >= GLOBAL_VOICE_CAP) {
       const evicted = this.lowestEvictableVoice(priority);
       if (!evicted) {
         this.recordDrop(name);
@@ -373,6 +381,7 @@ export class SoundSystem {
   private lowestEvictableVoice(incoming: SoundPriority): VoiceState | null {
     let lowest: VoiceState | null = null;
     for (const voice of this.voices.values()) {
+      if (soundManifest[voice.name].group === 'music') continue;
       if (!lowest || priorityRank(voice.priority) < priorityRank(lowest.priority)) lowest = voice;
     }
     return lowest && priorityRank(lowest.priority) < priorityRank(incoming) ? lowest : null;
@@ -471,15 +480,22 @@ export class SoundSystem {
   }
 
   private headroomGain(): number {
-    const voices = this.voices.size;
+    const voices = this.governedVoiceCount();
     if (voices <= HEADROOM_AFTER_VOICES) return 1;
     // Poor-man limiter: preserve headroom as mixes get dense, capped so the game never disappears.
     return Math.max(HEADROOM_GAIN_FLOOR, Math.sqrt(HEADROOM_AFTER_VOICES / voices));
   }
 
   private updateMasterGain(): void {
-    if (!this.masterGain) return;
-    this.masterGain.gain.value = readAudioMuted() ? 0 : readAudioVolume() * this.headroomGain();
+    const volume = readAudioMuted() ? 0 : readAudioVolume();
+    if (this.masterGain) this.masterGain.gain.value = volume * this.headroomGain();
+    if (this.musicGain) this.musicGain.gain.value = volume;
+  }
+
+  private governedVoiceCount(): number {
+    let count = 0;
+    for (const voice of this.voices.values()) if (soundManifest[voice.name].group !== 'music') count += 1;
+    return count;
   }
 
   private publishAudioDiagnostics(): void {
