@@ -224,6 +224,7 @@ export class TownScene {
   private readonly visibleActors = visibleTownActors(this.visibleBuildings);
   private readonly stampMill = readTownStampMill(this.metaProgress);
   private town3dDispose?: () => void;
+  private town3dPilotDispose?: () => void;
   private readonly stampMillGroup = new THREE.Group();
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
@@ -334,6 +335,7 @@ export class TownScene {
     this.ui.remove();
     this.hero.dispose();
     this.audio.dispose();
+    this.canvas.dataset.town3dPilotState = 'disposed'; this.town3dPilotDispose?.();
     disposeObject3D(this.scene);
     this.scene.clear();
     this.renderer.dispose();
@@ -443,6 +445,14 @@ export class TownScene {
     this.scene.add(this.hero.group);
 
     const search = new URLSearchParams(window.location.search);
+    const pilotEnabled = search.has('town3dPilot');
+    this.canvas.dataset.town3dPilotState = pilotEnabled ? (this.performanceTier === 'lite' ? 'lite' : 'loading') : 'off';
+    this.canvas.dataset.town3dPilotRenderSource = 'facade';
+    if (pilotEnabled && this.performanceTier !== 'lite') {
+      void import('./TownTavernPilot').then(({ installTownTavernPilot }) => {
+        this.town3dPilotDispose = installTownTavernPilot({ scene: this.scene, canvas: this.canvas });
+      });
+    }
     if (search.has('debug') && search.has('town3d')) {
       void import('./Town3dViewer').then(({ installTown3dViewer }) => {
         this.town3dDispose = installTown3dViewer({
