@@ -188,3 +188,4 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - 3D promotion verdict comes AFTER the ladder completes (see HANDOVER §4-appendix item 6).
 
 - **fix-chapel-cross** → queue/lane-b 2026-07-13 (owner: floating cross → seat it on the steeple; model-only, chapel spec unmodified-green). Owner verdict same message: other 3D houses "great".
+- **F-claim-tone (owner, 2026-07-13): "The Claim office looks much darker than the other buildings."** Gate had measured +4.76% (inside the 5% limit) — the limit is evidently looser than the owner's eye; future slices should target ≤3%. **HOLD: owner is trying a hands-on Blender fix first** (his ask, same message; `scripts/reexport-pilot.sh` written for the loop). If he passes, author fix-claim-office-tone (rebake brighter to match painted neighbors, model-only, spec unmodified-green).
