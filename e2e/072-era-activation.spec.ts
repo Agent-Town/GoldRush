@@ -2,10 +2,10 @@ import { expect, test, type Browser, type Page, type TestInfo } from '@playwrigh
 import { createHash } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import {
-  MEDALS_KEY, META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import {
   FIRST_CLAIM_DONE_KEY,
+  MEDALS_KEY,
   PROFILE_KEY,
   SCOREBOARD_KEY,
   TOWN_NAME_KEY,
