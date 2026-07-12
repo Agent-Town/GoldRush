@@ -343,6 +343,13 @@ function contractUnlock(contract: ReturnType<typeof loadContract>): { unlocked: 
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
   }
+  if (unlock === 'science-complete+2-secured') {
+    const securedContracts = new Set(scores.filter((score) => score.secured === true).map((score) => contractIdOf(score)));
+    return {
+      unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete && securedContracts.size >= 2,
+      condition: 'Complete Frontier science and secure two different claims',
+    };
+  }
   if (unlock === STEAMWORKS_EPOCH_ID) {
     return { unlocked: epochIsActive(STEAMWORKS_EPOCH_ID), condition: 'Awaits the Steamworks era' };
   }

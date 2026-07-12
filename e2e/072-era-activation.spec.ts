@@ -2,7 +2,8 @@ import { expect, test, type Browser, type Page, type TestInfo } from '@playwrigh
 import { createHash } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
-import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import {
+  MEDALS_KEY, META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import {
   FIRST_CLAIM_DONE_KEY,
   PROFILE_KEY,
@@ -30,10 +31,10 @@ function collectErrors(page: Page): ErrorBucket {
   return bucket;
 }
 
-async function seedProfile(page: Page, ready: boolean): Promise<void> {
+async function seedProfile(page: Page, ready: boolean, baronBeaten = true): Promise<void> {
   await page.goto('/');
   await page.evaluate(
-    ({ keys, readyForEpoch, threshold, taken }) => {
+    ({ keys, readyForEpoch, threshold, taken, baron }) => {
       localStorage.clear();
       sessionStorage.clear();
       const state: ProfileState = {
@@ -70,6 +71,9 @@ async function seedProfile(page: Page, ready: boolean): Promise<void> {
         JSON.stringify({ version: 1, taken: readyForEpoch ? taken : [], proposalSalt: 0, pinnedTarget: null }),
       );
       localStorage.setItem(keys.scores, JSON.stringify([]));
+      if (readyForEpoch && baron) {
+        localStorage.setItem(keys.medals, JSON.stringify({ version: 1, baronBeaten: true, rocketCartCaptured: true }));
+      }
       if (readyForEpoch) {
         localStorage.setItem(
           keys.megaproject,
@@ -91,6 +95,7 @@ async function seedProfile(page: Page, ready: boolean): Promise<void> {
     },
     {
       readyForEpoch: ready,
+      baron: baronBeaten,
       threshold: STEAMWORKS_THRESHOLD,
       taken: RESEARCH_NODES.map((node) => node.id),
       keys: {
@@ -101,6 +106,7 @@ async function seedProfile(page: Page, ready: boolean): Promise<void> {
         research: profileDataKey('robin', RESEARCH_STATE_KEY),
         scores: profileDataKey('robin', SCOREBOARD_KEY),
         megaproject: profileDataKey('robin', MEGAPROJECT_STATE_KEY),
+        medals: profileDataKey('robin', MEDALS_KEY),
       },
     },
   );
@@ -212,6 +218,17 @@ test('fresh E1 profile stays unchanged and the pre-flip determinism hash is iden
   expect(absent.payload).toEqual(explicit.payload);
   expect(absent.errors).toEqual({ consoleErrors: [], pageErrors: [] });
   expect(explicit.errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+test('the ready mill waits for the Baron (owner ruling 2026-07-12)', async ({ page }) => {
+  const errors = collectErrors(page);
+  await seedProfile(page, true, false);
+  await openSchoolhouse(page);
+
+  await expect(page.getByTestId('stamp-mill-epoch-door')).toHaveAttribute('data-door-state', 'needs-baron');
+  await expect(page.getByTestId('stamp-mill-epoch-door')).toContainText('the Baron still rides');
+  await expect(page.getByTestId('raise-stamp-mill')).toHaveCount(0);
+  expect(errors.pageErrors).toEqual([]);
 });
 
 test('the completed Stamp Mill activates E2 once, stages the ceremony, and makes Hill Mine playable after reload', async ({ page }, testInfo) => {

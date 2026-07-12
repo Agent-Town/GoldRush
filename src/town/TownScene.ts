@@ -1037,6 +1037,16 @@ export class TownScene {
         </section>
       `;
     }
+    // Owner ruling 2026-07-12: the transition is E1's graduation — the Baron answers first.
+    if (!hasBaronMedal()) {
+      return `
+        <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-baron">
+          <p class="town-ui__board-eyebrow">The town's next ledger</p>
+          <h3>The Stamp Mill stands ready.</h3>
+          <p>The valley has one answer left to give — the Baron still rides.</p>
+        </section>
+      `;
+    }
     const pledgedGold = manifest.stages.reduce((sum, stage) => sum + Math.max(0, Math.floor(stage.materials.gold ?? 0)), 0);
     return `
       <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="ready">
@@ -1051,6 +1061,7 @@ export class TownScene {
   private raiseStampMill(): void {
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || !megaprojectComplete(manifest, project)) return;
+    if (!hasBaronMedal()) return;
     if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(STEAMWORKS_EPOCH_ID)) return;
     this.renderSchoolhouse();
     emitStorySignal({ type: 'epoch-activated', epochId: STEAMWORKS_EPOCH_ID, displayName: 'The Steamworks' });
@@ -1659,6 +1670,13 @@ function contractUnlock(contract: ContractManifest): { unlocked: boolean; condit
   }
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
+  }
+  if (unlock === 'science-complete+2-secured') {
+    const securedContracts = new Set(scores.filter((score) => score.secured === true).map((score) => contractIdOf(score)));
+    return {
+      unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete && securedContracts.size >= 2,
+      condition: 'Complete Frontier science and secure two different claims',
+    };
   }
   if (unlock === STEAMWORKS_EPOCH_ID) {
     return { unlocked: epochIsActive(STEAMWORKS_EPOCH_ID), condition: 'Awaits the Steamworks era' };
