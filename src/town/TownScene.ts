@@ -127,6 +127,11 @@ export type TownDiagnostics = {
   schoolhouseOpen: boolean;
   activeEpochId: string;
   assayOpen: boolean;
+  textures: {
+    ground: 'placeholder';
+    facades: Record<string, 'placeholder' | 'loaded' | 'error'>;
+    barkPortrait: 'hidden' | 'pending' | 'loaded' | 'fallback';
+  };
   lighting: {
     night: boolean;
     background: string;
@@ -1114,13 +1119,29 @@ export class TownScene {
     this.activeBarkActor = nearest;
     this.activeBark = { actorId: nearest.definition.id, speaker: nearest.definition.name, text };
     this.barkCard.innerHTML = `
-      <img class="town-ui__bark-portrait" src="${escapeHtml(nearest.definition.portraitUrl)}" alt="" />
+      <img class="town-ui__bark-portrait" src="${escapeHtml(nearest.definition.portraitUrl)}" alt="" data-state="pending" />
       <div class="town-ui__bark-copy">
         <strong data-testid="town-bark-speaker">${escapeHtml(nearest.definition.name)}</strong>
         <span>${escapeHtml(nearest.definition.post)}</span>
         <p data-testid="town-bark-text">${escapeHtml(text)}</p>
       </div>
     `;
+    const portrait = this.barkCard.querySelector<HTMLImageElement>('.town-ui__bark-portrait');
+    if (portrait) {
+      portrait.addEventListener('load', () => {
+        portrait.dataset.state = portrait.src.startsWith('data:') ? 'fallback' : 'loaded';
+      });
+      portrait.addEventListener('error', () => {
+        if (portrait.dataset.retried !== 'true') {
+          portrait.dataset.retried = 'true';
+          const retry = new URL(nearest.definition.portraitUrl, window.location.href);
+          retry.searchParams.set('retry', '1');
+          portrait.src = retry.href;
+          return;
+        }
+        portrait.src = portraitFallbackUrl(nearest.definition.name);
+      });
+    }
     this.barkCard.dataset.actorId = nearest.definition.id;
     if (firstClaim) this.barkCard.dataset.firstClaim = 'true';
     else delete this.barkCard.dataset.firstClaim;
@@ -1576,6 +1597,13 @@ export class TownScene {
     const fog = this.scene.fog as THREE.Fog;
     const sun = this.scene.getObjectByName('TownSun') as THREE.DirectionalLight | undefined;
     const fill = this.scene.getObjectByName('TownFill') as THREE.HemisphereLight | undefined;
+    const facades: Record<string, 'placeholder' | 'loaded' | 'error'> = {};
+    this.scene.traverse((object) => {
+      if (!object.name.startsWith('TownFacade:')) return;
+      const material = (object as THREE.Mesh).material as THREE.MeshStandardMaterial;
+      facades[object.name.split(':')[1] ?? object.name] = material.userData.textureState ?? 'placeholder';
+    });
+    const barkPortrait = this.barkCard.querySelector<HTMLImageElement>('.town-ui__bark-portrait');
     window.__GR_TOWN_DIAGNOSTICS__ = {
       frame: this.frame,
       elapsed: this.elapsed,
@@ -1591,6 +1619,11 @@ export class TownScene {
       schoolhouseOpen: this.schoolhouseOpen,
       activeEpochId: activeEpochId(),
       assayOpen: this.assayBenchOpen(),
+      textures: {
+        ground: 'placeholder',
+        facades,
+        barkPortrait: this.barkCard.hidden ? 'hidden' : (barkPortrait?.dataset.state as 'pending' | 'loaded' | 'fallback' | undefined) ?? 'fallback',
+      },
       lighting: {
         night: this.townNight,
         background: `#${background.getHexString()}`,
@@ -2567,16 +2600,26 @@ function createFacadeMaterial(building: TownBuilding): THREE.MeshStandardMateria
     metalness: 0.02,
     side: THREE.DoubleSide,
   });
+  material.userData.textureState = 'placeholder';
   const facade = townFacadeUrls[building.id];
   if (!facade) return material;
   loadTownFacadeTexture(facade).then((texture) => {
-    if (!texture) return;
+    if (!texture) {
+      material.userData.textureState = 'error';
+      return;
+    }
     const previous = material.map;
     material.map = texture;
     material.needsUpdate = true;
+    material.userData.textureState = 'loaded';
     if (previous && previous !== texture) previous.dispose();
   });
   return material;
+}
+
+function portraitFallbackUrl(name: string): string {
+  const initial = escapeHtml(name.trim().charAt(0).toUpperCase() || '?');
+  return `data:image/svg+xml,${encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" width="54" height="54"><rect width="54" height="54" fill="#e8d5a8"/><text x="27" y="36" text-anchor="middle" font-family="Georgia,serif" font-size="30" font-weight="700" fill="#2e1b0e">${initial}</text></svg>`)}`;
 }
 
 function loadTownFacadeTexture(facade: { key: string; url: string }): Promise<THREE.Texture | null> {
