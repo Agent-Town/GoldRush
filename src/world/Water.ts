@@ -70,6 +70,7 @@ export function createLivingWaterMaterial(config: WaterMaterialConfig): THREE.Me
     color: '#ffffff',
     transparent: true,
     opacity: config.ford ? 0.74 : 0.92,
+    depthTest: config.ford,
     depthWrite: false,
     roughness: config.ford ? 0.58 : 0.36,
     metalness: 0.01,
