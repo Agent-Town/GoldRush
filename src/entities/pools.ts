@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import { GeneratedSpriteBatch } from '../assets/generated';
 import { SpriteAnimator, type CharacterSpriteClip, type SpriteMotionSnapshot } from '../assets/SpriteAnimator';
-import { assetSlots, tagPlaceholder } from '../assets/slots';
+import { assetSlots, tagPlaceholder, type AssetSlotId } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import type { PalisadeBlocker } from './Palisade';
@@ -30,6 +30,23 @@ const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
   leanDeg: 0,
   leanRad: 0,
 };
+
+type EnemySpritePresentation = {
+  variantId: string;
+  sprites: GeneratedSpriteBatch;
+  fades: GeneratedSpriteBatch;
+  animator: SpriteAnimator;
+};
+
+function createEnemySpritePresentation(variantId: string, slotId: AssetSlotId): EnemySpritePresentation {
+  const sprites = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
+    name: `${variantId}Sprites`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplay, lazy: true,
+  });
+  const fades = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
+    name: `${variantId}SpriteFades`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplayFade, lazy: true,
+  });
+  return { variantId, sprites, fades, animator: new SpriteAnimator(slotId, sprites.material, undefined, fades.material) };
+}
 
 export type EnemyLightSource = { x: number; z: number; radius: number; kind?: 'light' | 'watch' };
 export type EnemyLightDimmingConfig = {
@@ -176,6 +193,11 @@ export class EnemyPool {
     undefined,
     this.thiefSpriteFades.material,
   );
+  private readonly e2SpritePresentations = [
+    createEnemySpritePresentation('rail_tough', assetSlots.charE2RailTough),
+    createEnemySpritePresentation('steam_wrecker', assetSlots.charE2SteamWrecker),
+    createEnemySpritePresentation('coal_thief', assetSlots.charE2CoalThief),
+  ];
   private readonly baronSprites = new GeneratedSpriteBatch(assetSlots.charBaron, Balance.enemy.poolSize, {
     name: 'GeneratedBaronSprites',
     y: ENEMY_SPRITE_Y,
@@ -256,6 +278,7 @@ export class EnemyPool {
       this.generatedSpriteFades.group,
       this.thiefSprites.group,
       this.thiefSpriteFades.group,
+      ...this.e2SpritePresentations.flatMap(({ sprites, fades }) => [sprites.group, fades.group]),
       this.baronSprites.group,
       this.baronSpriteFades.group,
       this.baronBannerSprites.group,
@@ -594,6 +617,16 @@ export class EnemyPool {
       updateThiefSprites();
     }
     if (baronAnimation.active || this.baronSpriteAnimator) updateBaronSprites();
+    for (const presentation of this.e2SpritePresentations) {
+      const animation = this.activeVariantAnimation(presentation.variantId);
+      // Mirror the baron lazy-load pattern: leave the E2 sheets/animator untouched until
+      // this variant is actually on the field, so non-E2 contracts upload no E2 textures
+      // (was a persistent +1 renderer-texture regression in vp-02:382 at wire time).
+      if (!animation.active && !presentation.sprites.isLoaded) continue;
+      presentation.sprites.ensureLoaded();
+      presentation.fades.ensureLoaded();
+      presentation.animator.update(delta, animation.clip, animation.active ? animation.orientation : 'side', false, animation.speed);
+    }
   }
 
   captureRenderState(): void {
@@ -662,6 +695,11 @@ export class EnemyPool {
     this.thiefSprites.dispose();
     this.thiefSpriteFades.dispose();
     this.thiefSpriteAnimator.dispose();
+    for (const { sprites, fades, animator } of this.e2SpritePresentations) {
+      sprites.dispose();
+      fades.dispose();
+      animator.dispose();
+    }
     this.baronSprites.dispose();
     this.baronSpriteFades.dispose();
     this.baronSpriteAnimator?.dispose();
@@ -698,6 +736,15 @@ export class EnemyPool {
     }
     for (const enemy of this.enemies) {
       if (enemy.isAlive && enemy.isThief === thieves && (!this.baronSprites.isLoaded || enemy.eliteKind !== 'baron')) {
+        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
+      }
+    }
+    return { clip: 'idle', orientation: 's', active: false, speed: 0 };
+  }
+
+  private activeVariantAnimation(variantId: string): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean; speed: number } {
+    for (const enemy of this.enemies) {
+      if (enemy.isAlive && enemy.variantId === variantId) {
         return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
       }
     }
@@ -1035,6 +1082,10 @@ export class EnemyPool {
     this.thiefSpriteFades.material.rotation = thiefMotion.leanRad;
     this.baronSprites.material.rotation = baronMotion.leanRad;
     this.baronSpriteFades.material.rotation = baronMotion.leanRad;
+    for (const { sprites, fades, animator } of this.e2SpritePresentations) {
+      sprites.material.rotation = animator.motion.leanRad;
+      fades.material.rotation = animator.motion.leanRad;
+    }
     for (const enemy of this.enemies) this.syncEnemySprite(enemy);
   }
 
@@ -1043,8 +1094,9 @@ export class EnemyPool {
     const litVisible = lightFactor > 0;
     const useProceduralDark = this.fullDarkRenderCutoffActive();
     const baronVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
-    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && !enemy.isThief && !baronVisible;
-    const thiefVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.isThief;
+    const e2Presentation = this.e2SpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
+    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && !enemy.isThief && !baronVisible && !e2Presentation;
+    const thiefVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.isThief && !e2Presentation;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
     const showFade = this.active <= 32;
     const normalMotion = this.spriteAnimator.motion;
@@ -1058,6 +1110,15 @@ export class EnemyPool {
     this.baronSprites.setTintScalar(enemy.id, lightFactor);
     this.baronSpriteFades.setTintScalar(enemy.id, lightFactor);
     this.baronBannerSprites.setTintScalar(enemy.id, lightFactor);
+    for (const presentation of this.e2SpritePresentations) {
+      const visible = presentation === e2Presentation && !useProceduralDark && enemy.isAlive && litVisible;
+      presentation.sprites.setTintScalar(enemy.id, lightFactor);
+      presentation.fades.setTintScalar(enemy.id, lightFactor);
+      presentation.sprites.set(enemy.id, enemy.group.position, visible);
+      presentation.fades.set(enemy.id, enemy.group.position, visible && showFade && presentation.animator.overlayActive);
+      this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, enemy.visualScale);
+      this.applySpriteBob(presentation.fades.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, enemy.visualScale);
+    }
     this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
     this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
     this.thiefSprites.set(enemy.id, enemy.group.position, thiefVisible);
@@ -1152,6 +1213,7 @@ export class EnemyPool {
       this.baronSprites.material,
       this.baronSpriteFades.material,
       this.baronBannerSprites.material,
+      ...this.e2SpritePresentations.flatMap(({ sprites, fades }) => [sprites.material, fades.material]),
     ]) {
       setMaterialFog(material, enabled);
     }
