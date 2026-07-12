@@ -181,7 +181,7 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - FUTURE (owner-gated): **town3d-promotion** — 3D default-on once the set completes (lazy loading + bytes budget + owner verdict). **run3d riders** (fire-authorable after 07 lands): rail elements, gold nodes, megaproject site stages.
 
 ## OWNER'S DESK (2026-07-13 refresh)
-- MORNING DEPLOY: merges after 9225ad1d await deploy — one command: `bash scripts/deploy.sh` (or any attended session).
+- ~~MORNING DEPLOY~~ CLEARED: attended deployed through the fresh-boot/trio/mu-03/store/kit merges 2026-07-13 ~01:45. Overnight ladder merges will re-owe one (fires flag DEPLOY OWED).
 - E2 era-gate replay verification (BUILD-PLAN ⑨) — still yours.
 - Marketing §5 approval table — still yours.
 - Higgsfield credits ≈24: Seedance motion gen blocked until top-up — decide if/when.
