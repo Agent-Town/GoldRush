@@ -11,5 +11,10 @@ Owner order (verbatim): "start lanes to work on new 3D models for all buildings 
 - **CALIBRATION PASSED** — owner verdict on the general store, verbatim: "Yes, this is amazing - lets hit it start the queue, let it do all the houses and all other 3D objects that we have in game." Tier law resolves: the ENTIRE ladder executes at sol@high with RECIPE.md. Slices 02-05 queued 2026-07-13 (schoolhouse/claim-office/chapel/assay-office, lanes a-d); 06+ refill-on-merge per the ladder below. The owner's "all other 3D objects" ratifies the 7+ contract-buildables arm as ordered work, not optional.
 - **GROUNDING DEFERRED** — owner, verbatim: "grounding question is fine for now. we will see later." No shadow/grounding work rides any ladder slice until a new ruling; 2D actors stand against 3D walls as-is.
 
+## RULINGS (2026-07-13, second pass — owner playtest of the deployed 3D town)
+- Houses verdict, verbatim: "the others are great" — the shipped 3D set (tavern, store, schoolhouse, claim office, stamp mill, dynamo hall, props) holds the bar.
+- F-chapel-1, verbatim: "just for the chapel the cross is floating over the building, that has to be fixed." → corrective `fix-chapel-cross` queued lane-b 2026-07-13.
+- Assay office: never built (3× LADDER-STALL burns, all legitimate LANE-SAFETY stops); 4th attempt running since 06:09 local.
+
 ## THE LADDER (one building per lane task, refill-on-merge)
 Slice 0 RECIPE.md (extraction, lane task) → 1 general_store (CALIBRATION @high) → 2 schoolhouse → 3 claim_office → 4 chapel → 5 assay_office → 6 THE STAMP MILL MONUMENT (the complete-state portrait becomes geometry — the post-ceremony centerpiece) → 7+ THE CONTRACT BUILDABLES (run scene, same recipe, own e2e family): sluice → palisade → turret → stockpile → sentry beacon → boiler house → assay bench → lantern post. Gates per slice; owner-eye contact sheet per building; the bartender-grounding question rides slice 1 (2D actor shadows vs 3D walls — owner judges).

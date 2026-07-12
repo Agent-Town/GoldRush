@@ -186,3 +186,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - Marketing §5 approval table — still yours.
 - Higgsfield credits ≈24: Seedance motion gen blocked until top-up — decide if/when.
 - 3D promotion verdict comes AFTER the ladder completes (see HANDOVER §4-appendix item 6).
+
+- **fix-chapel-cross** → queue/lane-b 2026-07-13 (owner: floating cross → seat it on the steeple; model-only, chapel spec unmodified-green). Owner verdict same message: other 3D houses "great".
