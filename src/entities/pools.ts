@@ -139,39 +139,39 @@ export class EnemyPool {
   private readonly bossHpBack = new THREE.Mesh(this.bossHpBackGeometry, this.bossHpBackMaterial);
   private readonly bossHpFill = new THREE.Mesh(this.bossHpFillGeometry, this.bossHpFillMaterial);
   private readonly bossHpSegments = new THREE.Group();
-  private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+  private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
     y: ENEMY_SPRITE_Y,
-    scale: [1.55, 1.55],
+    scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplay,
     onLoaded: () => this.setProceduralVisible(false),
   });
-  private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+  private readonly generatedSpriteFades = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSpriteFades',
     y: ENEMY_SPRITE_Y,
-    scale: [1.55, 1.55],
+    scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplayFade,
   });
   private readonly spriteAnimator = new SpriteAnimator(
-    assetSlots.charClaimJumper,
+    assetSlots.charBanditBase,
     this.generatedSprites.material,
     undefined,
     this.generatedSpriteFades.material,
   );
-  private readonly thiefSprites = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+  private readonly thiefSprites = new GeneratedSpriteBatch(assetSlots.charBanditThief, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSprites',
     y: ENEMY_SPRITE_Y,
-    scale: [1.55, 1.55],
+    scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplay,
   });
-  private readonly thiefSpriteFades = new GeneratedSpriteBatch(assetSlots.charClaimJumper, Balance.enemy.poolSize, {
+  private readonly thiefSpriteFades = new GeneratedSpriteBatch(assetSlots.charBanditThief, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperThiefSpriteFades',
     y: ENEMY_SPRITE_Y,
-    scale: [1.55, 1.55],
+    scale: [1.28, 1.55],
     renderOrder: RenderLayers.gameplayFade,
   });
   private readonly thiefSpriteAnimator = new SpriteAnimator(
-    assetSlots.charClaimJumper,
+    assetSlots.charBanditThief,
     this.thiefSprites.material,
     undefined,
     this.thiefSpriteFades.material,

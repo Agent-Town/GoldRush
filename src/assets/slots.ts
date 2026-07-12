@@ -3,6 +3,8 @@ import * as THREE from 'three';
 export const assetSlots = {
   charHero: 'char.hero',
   charClaimJumper: 'char.claim_jumper',
+  charBanditBase: 'char.bandit_base',
+  charBanditThief: 'char.bandit_thief',
   charBaron: 'char.baron',
   charProspectorAgent: 'char.prospector_agent',
   charTownTavernkeeper: 'char.town.tavernkeeper',

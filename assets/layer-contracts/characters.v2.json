@@ -148,6 +148,34 @@
       }
     },
     {
+      "slot": "char.bandit_base",
+      "fallback": { "file": "char-bandit-base-sheet-walk8-r0c0.png" },
+      "walk8": {
+        "version": 1,
+        "status": "ACTIVE",
+        "enabled": true,
+        "frameCount": 8,
+        "fps": 16,
+        "cadenceReferenceFrames": 4,
+        "grid": { "file": "char-bandit-base-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" }
+      }
+    },
+    {
+      "slot": "char.bandit_thief",
+      "fallback": { "file": "char-bandit-thief-sheet-walk8-r0c0.png" },
+      "walk8": {
+        "version": 1,
+        "status": "ACTIVE",
+        "enabled": true,
+        "frameCount": 8,
+        "fps": 16,
+        "cadenceReferenceFrames": 4,
+        "grid": { "file": "char-bandit-thief-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
+        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" }
+      }
+    },
+    {
       "slot": "char.claim_jumper",
       "fallback": {
         "file": "enemy-claim-jumper.png"

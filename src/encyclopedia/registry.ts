@@ -12,6 +12,7 @@ import { LEDGER_DISCOVERED_STORAGE_KEY } from './storage';
 const heroUrl = new URL('../../assets/processed/char-hero-sheet-front-r0c0.png', import.meta.url).href;
 const prospectorUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
 const claimJumperUrl = new URL('../../assets/processed/char-jumper-sheet-front-r0c0.png', import.meta.url).href;
+const banditBaseUrl = new URL('../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png', import.meta.url).href;
 const baronUrl = new URL('../../assets/processed/char-baron-sheet-walk4-b-r0c0.png', import.meta.url).href;
 const sentryBeaconUrl = new URL('../../assets/processed/bld-sentry-beacon.png', import.meta.url).href;
 const palisadeUrl = new URL('../../assets/processed/bld-palisade.png', import.meta.url).href;
@@ -170,7 +171,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   },
   ...TOWN_ACTORS.filter((actor) => actor.id !== 'prospector' && townActorLedgerEntryById[actor.id]).map(townActorEntry),
   enemyEntry('claim_jumper', 'Claim Jumper', claimJumperUrl, assetSlots.charClaimJumper, claimJumperFactLines),
-  enemyEntry('outlaw', 'Outlaw Runner', claimJumperUrl, assetSlots.charClaimJumper, outlawFactLines),
+  enemyEntry('outlaw', 'Outlaw Runner', banditBaseUrl, assetSlots.charBanditBase, outlawFactLines),
   enemyEntry('wrecker', 'Wrecker', claimJumperUrl, assetSlots.charClaimJumper, wreckerFactLines),
   enemyEntry('baron', 'The Claim-Jumper Baron', baronUrl, assetSlots.charBaron, baronFactLines),
   ...buildableDefs.map((def) => {
