@@ -2,6 +2,7 @@ import './town.css';
 import * as THREE from 'three';
 import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
 import { SpriteAnimator } from '../assets/SpriteAnimator';
+import { clearProcessedCharacterTextureCache, loadProcessedCharacterTexture } from '../assets/generated';
 import { tagPlaceholder } from '../assets/slots';
 import { CameraRig } from '../systems/CameraRig';
 import { Hero } from '../entities/Hero';
@@ -150,6 +151,9 @@ export type TownDiagnostics = {
     loop: boolean;
     trailId: string | null;
     assetSlot: string;
+    spriteAspect: number;
+    frameKey: string;
+    fullBodyStandIn: boolean;
   }>;
   stampMill: {
     visible: boolean;
@@ -331,6 +335,7 @@ export class TownScene {
     this.infoNote?.dispose();
     this.assayBench?.dispose();
     for (const actor of this.townActors) actor.dispose();
+    clearProcessedCharacterTextureCache();
     this.ui.remove();
     this.hero.dispose();
     this.audio.dispose();
@@ -1423,6 +1428,9 @@ export class TownScene {
           loop: !!actor.loop,
           trailId: actor.loop?.trailId ?? null,
           assetSlot: actor.assetSlot,
+          spriteAspect: runtime?.spriteAspect ?? 0,
+          frameKey: runtime?.frameKey ?? '',
+          fullBodyStandIn: !!actor.fullBody.standIn,
         };
       }),
       stampMill: this.stampMillDiagnostics(),
@@ -1603,7 +1611,11 @@ class TownActorRuntime {
     depthWrite: false,
   });
   private readonly sprite = new THREE.Sprite(this.material);
-  private readonly animator: SpriteAnimator;
+  private readonly animator: SpriteAnimator | null;
+  private frameElapsed = 0;
+  private frame = 0;
+  private currentFrameKey = '';
+  private disposed = false;
   private readonly orientationResolver = new OrientationResolver();
   private currentDirection: RotationDirection;
 
@@ -1611,14 +1623,15 @@ class TownActorRuntime {
     this.group.name = `TownActor:${definition.id}`;
     this.group.position.set(definition.position.x, 0, definition.position.z);
     this.sprite.name = `TownActorSprite:${definition.id}`;
-    this.sprite.scale.setScalar(definition.scale);
-    this.sprite.position.y = definition.scale * 0.55 + 0.08;
+    this.sprite.scale.set(definition.scale * 1.25, definition.scale * 3, 1);
+    this.sprite.position.y = definition.scale * 1.5 + 0.08;
     this.sprite.renderOrder = RenderLayers.companion;
     this.sprite.visible = true;
     this.group.add(this.sprite);
     this.currentDirection = definition.facing;
     this.orientationResolver.reset(definition.facing);
-    this.animator = new SpriteAnimator(definition.assetSlot, this.material, this.sprite);
+    this.animator = definition.id === 'prospector' ? new SpriteAnimator(definition.assetSlot, this.material, this.sprite) : null;
+    this.applyFullBodyFrame(0);
     tagPlaceholder(this.group, definition.assetSlot);
   }
 
@@ -1628,6 +1641,14 @@ class TownActorRuntime {
 
   get loaded(): boolean {
     return !!this.material.map;
+  }
+
+  get spriteAspect(): number {
+    return this.sprite.scale.y / this.sprite.scale.x;
+  }
+
+  get frameKey(): string {
+    return this.definition.id === 'prospector' ? 'SpriteAnimator:char.prospector_agent' : this.currentFrameKey;
   }
 
   update(delta: number, elapsed: number): void {
@@ -1645,13 +1666,42 @@ class TownActorRuntime {
     const sway = Math.sin((elapsed * 0.31 + phase) * Math.PI * 2);
     this.group.position.y = breathe * 0.035;
     this.material.rotation = THREE.MathUtils.degToRad(sway * 1.7);
-    this.animator.update(delta, 'idle', this.currentDirection);
+    if (this.definition.id === 'prospector') {
+      this.animator?.update(delta, 'walk', this.currentDirection);
+    } else if (this.definition.fullBody.animated) {
+      this.frameElapsed += delta;
+      if (this.frameElapsed >= 0.125) {
+        this.frameElapsed %= 0.125;
+        this.frame = (this.frame + 1) % 8;
+        this.applyFullBodyFrame(this.frame);
+      }
+    }
   }
 
   dispose(): void {
-    this.animator.dispose();
+    this.disposed = true;
+    this.animator?.dispose();
     this.material.dispose();
   }
+
+  private applyFullBodyFrame(frame: number): void {
+    if (this.definition.id === 'prospector') return;
+    const row = directionRow(this.currentDirection);
+    const key = `${this.definition.fullBody.sheet}-r${row}c${this.definition.fullBody.animated ? frame : 0}.png`;
+    this.currentFrameKey = key;
+    void loadProcessedCharacterTexture(key).then((texture) => {
+      if (texture && !this.disposed && this.currentFrameKey === key) {
+        this.material.map = texture;
+        this.material.needsUpdate = true;
+      }
+    });
+  }
+}
+
+function directionRow(direction: RotationDirection): number {
+  if (direction === 'w' || direction === 'sw' || direction === 'nw') return 1;
+  if (direction === 'e' || direction === 'se' || direction === 'ne') return 2;
+  return direction === 'n' ? 3 : 0;
 }
 
 function stopKeyPropagation(event: KeyboardEvent): void {

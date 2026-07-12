@@ -346,7 +346,7 @@ test('the Stamp Mill site raises E2 once and removes the action after activation
   }, profileDataKey('robin', META_PROGRESS_KEY));
   await page.reload();
   await approachStampMill(page);
-  await expect(page.getByTestId('town-approach-prompt')).toContainText('needs science');
+  await expect(page.getByTestId('town-approach-prompt')).toContainText('waits on');
 
   await page.evaluate(
     ({ key, threshold }) => {

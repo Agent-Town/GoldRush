@@ -26,6 +26,11 @@ const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string
   [assetSlots.bldPortraitStockpile]: () => import('../../assets/processed/bld-stockpile-yard.png?url').then((module) => module.default),
   [assetSlots.bldPortraitTurret]: () => import('../../assets/processed/bld-signal-turret.png?url').then((module) => module.default),
 };
+const processedCharacterUrls = import.meta.glob<string>('../../assets/processed/char-*.png', {
+  query: '?url',
+  import: 'default',
+});
+const processedCharacterTextureCache = new Map<string, Promise<THREE.Texture | null>>();
 const nonCriticalGeneratedAssetSlots: readonly AssetSlotId[] = [
   assetSlots.bldSentryBeacon,
   assetSlots.bldPortraitPalisade,
@@ -112,6 +117,30 @@ export function loadGeneratedTexture(slotId: AssetSlotId): Promise<THREE.Texture
   return promise;
 }
 
+export function loadProcessedCharacterTexture(file: string): Promise<THREE.Texture | null> {
+  const cached = processedCharacterTextureCache.get(file);
+  if (cached) return cached;
+  const urlLoader = processedCharacterUrls[`../../assets/processed/${file}`];
+  const promise = urlLoader
+    ? urlLoader().then(
+        (url) =>
+          new Promise<THREE.Texture | null>((resolve) => {
+            loader.load(url, (texture) => {
+              texture.colorSpace = THREE.SRGBColorSpace;
+              texture.anisotropy = 4;
+              resolve(texture);
+            }, undefined, () => resolve(null));
+          }),
+      )
+    : Promise.resolve(null);
+  processedCharacterTextureCache.set(file, promise);
+  return promise;
+}
+
+export function clearProcessedCharacterTextureCache(): void {
+  processedCharacterTextureCache.clear();
+}
+
 export function prefetchNonCriticalGeneratedTextures(): Promise<void> {
   return Promise.all(nonCriticalGeneratedAssetSlots.map((slotId) => loadGeneratedTexture(slotId))).then(() => undefined);
 }
@@ -142,6 +171,8 @@ export function disposeGeneratedAssets(): void {
     void promise.then((texture) => texture?.dispose());
   }
   textureCache.clear();
+  for (const promise of processedCharacterTextureCache.values()) void promise.then((texture) => texture?.dispose());
+  clearProcessedCharacterTextureCache();
   for (const key of Object.keys(status) as AssetSlotId[]) delete status[key];
   for (const key of Object.keys(renderedSprites) as AssetSlotId[]) delete renderedSprites[key];
 }

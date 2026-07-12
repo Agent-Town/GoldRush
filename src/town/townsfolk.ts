@@ -27,6 +27,7 @@ export type TownActorDefinition = {
   facing: RotationDirection;
   scale: number;
   barkRadius: number;
+  fullBody: { sheet: string; animated: boolean; standIn?: boolean };
   e1Barks: readonly string[];
   loop?: {
     trailId: string;
@@ -62,6 +63,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.45,
     barkRadius: 3.2,
+    fullBody: { sheet: 'char-tavernkeeper-sheet-walk8', animated: true },
     e1Barks: ['Board is warm. Pick a trail when {town} is ready.', "Coffee's on; contracts wait by the hearth.", 'Every trail starts with a name on the board.'],
   },
   {
@@ -76,6 +78,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.4,
     barkRadius: 3,
+    fullBody: { sheet: 'char-storekeeper-sheet-walk8', animated: true },
     e1Barks: ["Tuesday's wagon brought nails, beans, and better luck.", 'If {town} can count it, I can stock it.', 'The shelf is small; the want is not.'],
   },
   {
@@ -89,6 +92,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.46,
     barkRadius: 5.4,
+    fullBody: { sheet: 'char-elder-sheet-walk8', animated: true },
     e1Barks: ['{town} learns faster when the children ask why.', 'Science is patience written clearly.', 'Bring questions; leave with a plan.'],
   },
   {
@@ -103,6 +107,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.42,
     barkRadius: 3,
+    fullBody: { sheet: 'char-tavernkeeper-sheet-walk8', animated: false, standIn: true },
     e1Barks: ['The bell is for courage, not judgment.', 'Some days a town needs quiet more than gold.', '{town} has roots now. Tend them.'],
   },
   {
@@ -116,6 +121,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 'se',
     scale: 1.36,
     barkRadius: 2.8,
+    fullBody: { sheet: 'char-storekeeper-sheet-walk8', animated: false, standIn: true },
     e1Barks: ['Chalk today, Steamworks tomorrow.', 'The little ones count waves faster than I do.', 'A good question is a lantern.'],
   },
   {
@@ -129,6 +135,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.36,
     barkRadius: 3.05,
+    fullBody: { sheet: 'char-elder-sheet-walk8', animated: false, standIn: true },
     e1Barks: ['Ore talks. My scale makes it honest.', 'Bring the odd bits here before they become trouble.', 'Gold in, proof out. That is the office bargain.'],
   },
   {
@@ -142,6 +149,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.15,
     barkRadius: 2.45,
+    fullBody: { sheet: 'char-youngster-m-sheet-walk8', animated: true },
     e1Barks: ['Race you from the trough to the office!', 'I found a shiny rock. It is probably science.', 'The Prospector hummed at me. I hummed back.'],
     loop: {
       trailId: 'ring-road',
@@ -161,6 +169,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 'sw',
     scale: 1.14,
     barkRadius: 2.45,
+    fullBody: { sheet: 'char-youngster-f-sheet-walk8', animated: true },
     e1Barks: ['We drew the store before it was real.', 'If the Baron comes here, he has to do sums first.', 'I can see the whole square from the rail.'],
     loop: {
       trailId: 'ring-road',
@@ -180,6 +189,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.12,
     barkRadius: 3.1,
+    fullBody: { sheet: 'char-newsie-mei-sheet-walk8', animated: true },
     e1Barks: ['EXTRA! Fresh ink by the tavern!', 'Paper is warm. Read it before the wind does.'],
     loop: {
       trailId: 'tavern',
@@ -200,6 +210,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.5,
     barkRadius: 6.5,
+    fullBody: { sheet: 'char-prospector-sheet-hover8', animated: true },
     e1Barks: ['I am watching {town} from the office steps.', '{town} is logged. I will keep near the claim books.', 'Call from the board; I will follow {town} to the claim.'],
     loop: {
       trailId: 'claim_office',
