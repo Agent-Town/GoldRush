@@ -26,6 +26,7 @@ import {
   DEFAULT_EPOCH_ID,
   epochIsActive,
   listBoardContracts,
+  listEpochs,
   loadContract,
   loadEpoch,
   type ContractManifest,
@@ -38,7 +39,16 @@ import {
   type MegaprojectManifest,
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
-import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
+import {
+  RESEARCH_STATE_KEY,
+  browserResearchStorage,
+  loadResearchState,
+  researchStateKey,
+  saveResearchState,
+  scienceMeter,
+  setPinnedResearchTarget,
+  type ResearchState,
+} from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
@@ -272,6 +282,7 @@ export class TownScene {
   private boardOpen = false;
   private schoolhouseOpen = false;
   private selectedResearchNodeId: string | undefined;
+  private selectedResearchEpochId = activeEpochId();
   private nameBeatTimer = 0;
   private lastExitIntent = false;
   private tavernBackdropUrl: string | undefined;
@@ -770,6 +781,11 @@ export class TownScene {
       this.raiseStampMill();
       return;
     }
+    const eraButton = target?.closest<HTMLElement>('[data-research-era]');
+    if (eraButton?.dataset.researchEra) {
+      this.selectResearchEra(eraButton.dataset.researchEra);
+      return;
+    }
     const nodeButton = target?.closest<HTMLElement>('[data-research-node]');
     if (nodeButton?.dataset.researchNode) {
       this.selectResearchNode(nodeButton.dataset.researchNode);
@@ -1018,6 +1034,7 @@ export class TownScene {
 
   private openSchoolhouse(): void {
     this.schoolhouseOpen = true;
+    this.selectedResearchEpochId = activeEpochId();
     this.selectedResearchNodeId = activeProfileResearchState().pinnedTarget ?? this.selectedResearchNodeId;
     this.renderSchoolhouse();
     this.schoolhouse.hidden = false;
@@ -1033,6 +1050,10 @@ export class TownScene {
   }
 
   private renderSchoolhouse(): void {
+    const eras = activeProfileResearchStates();
+    const activeId = activeEpochId();
+    const selected = eras.find((state) => state.epochId === this.selectedResearchEpochId) ?? eras.find((state) => state.epochId === activeId)!;
+    const readonly = selected.epochId !== activeId;
     this.schoolhouse.innerHTML = `
       <div class="town-ui__surface-shell">
         <header class="town-ui__surface-header">
@@ -1045,7 +1066,7 @@ export class TownScene {
         </header>
         <div class="town-ui__surface-body">
           ${this.renderEpochActivationAction()}
-          ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}
+          ${renderResearchChart(selected, readonly ? undefined : this.selectedResearchNodeId, { readonly, eras })}
         </div>
       </div>
     `;
@@ -1097,6 +1118,7 @@ export class TownScene {
     if (!manifest || !project || !megaprojectComplete(manifest, project)) return;
     if (!hasBaronMedal()) return;
     if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(STEAMWORKS_EPOCH_ID)) return;
+    this.selectedResearchEpochId = activeEpochId();
     this.renderSchoolhouse();
     emitStorySignal({ type: 'epoch-activated', epochId: STEAMWORKS_EPOCH_ID, displayName: 'The Steamworks' });
     this.syncPrompt();
@@ -1107,6 +1129,13 @@ export class TownScene {
     this.selectedResearchNodeId = id;
     this.renderSchoolhouse();
     this.schoolhouse.querySelector<HTMLElement>(`[data-research-node="${id}"]`)?.focus({ preventScroll: true });
+  }
+
+  private selectResearchEra(epochId: string): void {
+    this.selectedResearchEpochId = epochId;
+    this.selectedResearchNodeId = undefined;
+    this.renderSchoolhouse();
+    this.schoolhouse.querySelector<HTMLElement>(`[data-research-era="${epochId}"]`)?.focus({ preventScroll: true });
   }
 
   private pinResearchTarget(id: string | null): void {
@@ -1828,6 +1857,20 @@ function escapeHtml(value: string): string {
 function activeProfileResearchState() {
   const storage = browserResearchStorage();
   return loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
+}
+
+function activeProfileResearchStates(): ResearchState[] {
+  const storage = browserResearchStorage();
+  const activeId = activeEpochId();
+  return listEpochs()
+    .filter(
+      (epoch) =>
+        epoch.order <= loadEpoch(activeId).order &&
+        (epoch.id === activeId ||
+          storage?.getItem(researchStateKey(epoch.id)) !== null ||
+          (epoch.id === DEFAULT_EPOCH_ID && storage?.getItem(RESEARCH_STATE_KEY) !== null)),
+    )
+    .map((epoch) => loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, epoch.id));
 }
 
 function shouldStartFirstClaimGuide(townName: string | null, meta: MetaProgress): boolean {

@@ -122,9 +122,15 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   },
 };
 
-export function renderResearchChart(state: ResearchState, selectedId?: string): string {
+export type ResearchChartOptions = {
+  readonly?: boolean;
+  eras?: readonly ResearchState[];
+};
+
+export function renderResearchChart(state: ResearchState, selectedId?: string, options: ResearchChartOptions = {}): string {
   const epochId = state.epochId ?? activeEpochId();
   const epoch = loadEpoch(epochId);
+  const readonly = options.readonly === true;
   const nodes = researchNodes(epochId);
   const nodesById = Object.fromEntries(nodes.map((node) => [node.id, node])) as Record<string, ResearchNode>;
   const selected = selectedId ? nodesById[selectedId] : undefined;
@@ -133,7 +139,8 @@ export function renderResearchChart(state: ResearchState, selectedId?: string): 
   const meter = scienceMeter(state, savedEpochMegaprojectBuildStarted(epochId) ? 'building' : 'awaiting-town');
   const frontier = new Set(frontierNodes(state).map((node) => node.id));
   return `
-    <div class="research-chart" data-testid="research-chart">
+    <div class="research-chart" data-testid="research-chart" data-research-readonly="${readonly}">
+      ${renderEraRow(options.eras ?? [state], epochId)}
       <header class="research-chart__header">
         <div>
           <p class="research-ledger__eyebrow">The Elder's Survey Chart</p>
@@ -146,11 +153,11 @@ export function renderResearchChart(state: ResearchState, selectedId?: string): 
       <div class="research-chart__body">
         <div class="research-chart__branches" data-testid="research-chart-branches">
           ${researchBranches(epochId)
-            .map((branch) => renderBranch(branch, nodes, nodesById, state, frontier, selectedPath, pinnedPath))
+            .map((branch) => renderBranch(branch, nodes, nodesById, state, frontier, selectedPath, pinnedPath, readonly))
             .join('')}
-          ${renderNextEpoch(epoch)}
+          ${readonly ? '' : renderNextEpoch(epoch)}
         </div>
-        ${renderSelection(state, selected, nodesById)}
+        ${renderSelection(state, selected, nodesById, readonly)}
       </div>
       ${frontier.size === 0 ? renderContinuedStudy(state) : ''}
     </div>
@@ -165,6 +172,7 @@ function renderBranch(
   frontier: Set<string>,
   selectedPath: Set<string>,
   pinnedPath: Set<string>,
+  readonly: boolean,
 ): string {
   return `
     <section class="research-chart__branch" data-research-branch="${escapeHtml(branch.id)}">
@@ -174,7 +182,7 @@ function renderBranch(
       <div class="research-chart__nodes">
         ${nodes
           .filter((node) => node.branch === branch.id)
-          .map((node) => `${renderSurveyLine(node)}${renderNode(node, nodesById, state, frontier, selectedPath, pinnedPath)}`)
+          .map((node) => `${renderSurveyLine(node)}${renderNode(node, nodesById, state, frontier, selectedPath, pinnedPath, readonly)}`)
           .join('')}
       </div>
     </section>
@@ -188,6 +196,7 @@ function renderNode(
   frontier: Set<string>,
   selectedPath: Set<string>,
   pinnedPath: Set<string>,
+  readonly: boolean,
 ): string {
   const status = nodeStatus(node, state, frontier);
   const selected = selectedPath.has(node.id);
@@ -210,6 +219,7 @@ function renderNode(
       ${node.requires?.length ? 'data-has-requires="true"' : ''}
       ${node.requires?.length ? `data-research-requires="${escapeHtml(node.requires.join(' '))}"` : ''}
       aria-pressed="${selected}"
+      ${readonly ? 'disabled aria-disabled="true"' : ''}
     >
       <span class="research-chart__node-topline">
         ${renderIcon(iconKey, 'research-chart__node-icon', `research-chart-icon-${node.id}`)}
@@ -222,6 +232,26 @@ function renderNode(
       ${status === 'taken' ? '<b class="research-chart__stamp">SURVEYED</b>' : ''}
       ${pinned ? '<b class="research-chart__pin" data-testid="research-chart-pin-mark">survey pin</b>' : ''}
     </button>
+  `;
+}
+
+function renderEraRow(eras: readonly ResearchState[], selectedEpochId: string): string {
+  if (eras.length < 2) return '';
+  const active = activeEpochId();
+  return `
+    <nav class="research-chart__eras" data-testid="research-era-row" aria-label="Research eras">
+      ${eras
+        .map((era) => {
+          const id = era.epochId ?? active;
+          const selected = id === selectedEpochId;
+          const name = loadEpoch(id).displayName;
+          const label = `${name.startsWith('The ') ? name : `The ${name}`} — ${id === active ? 'active' : 'complete ✓'}`;
+          return `<button class="gr-start-menu__small-button" type="button" data-research-era="${escapeHtml(id)}" data-testid="research-era-${escapeHtml(
+            id,
+          )}" aria-pressed="${selected}">${escapeHtml(label)}</button>`;
+        })
+        .join('')}
+    </nav>
   `;
 }
 
@@ -250,7 +280,21 @@ function renderNextEpoch(epoch: ReturnType<typeof loadEpoch>): string {
   `;
 }
 
-function renderSelection(state: ResearchState, selected: ResearchNode | undefined, nodesById: Record<string, ResearchNode>): string {
+function renderSelection(
+  state: ResearchState,
+  selected: ResearchNode | undefined,
+  nodesById: Record<string, ResearchNode>,
+  readonly: boolean,
+): string {
+  if (readonly) {
+    return `
+      <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="false">
+        <p class="research-chart__selection-kicker">Completed era</p>
+        <h3>Survey kept</h3>
+        <p>This chart is read-only. Its science still serves the town.</p>
+      </aside>
+    `;
+  }
   if (!selected) {
     return `
       <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="${state.pinnedTarget ? 'true' : 'false'}">

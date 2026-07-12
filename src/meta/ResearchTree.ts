@@ -76,6 +76,11 @@ type ResearchRegistry = {
   pinnedTarget?: string | null;
 };
 
+const NO_RESEARCH_STORAGE = {};
+const inheritedByStorage = new WeakMap<object, Map<string, ReadonlySet<string>>>();
+const inheritedByEpoch = new Map<string, ReadonlySet<string>>();
+const inheritedByState = new WeakMap<ResearchState, ReadonlySet<string>>();
+
 const RESEARCH_ID_MIGRATIONS: Record<string, string> = {
   receipt_shelves: 'refined_assay',
   contract_tier_one: 'pattern_library',
@@ -135,6 +140,7 @@ export function loadResearchState(
   unlocks: ResearchUnlockFlags = {},
   epochId = activeEpochId(),
 ): ResearchState {
+  const inherited = cacheInheritedTaken(registryStorage, epochId);
   const progress = progressStorage ? loadMetaProgress(progressStorage) : freshMetaProgress();
   const key = researchStateKey(epochId);
   const saved = readStorage(registryStorage, key);
@@ -153,6 +159,7 @@ export function loadResearchState(
       : storedSteps + Math.max(0, progress.tracks.science - cursor);
   const next = { ...migrateResearchState(raw, progressForEpoch(progress, epochId, steps), epochId, progress.tracks.science), unlocks };
   if (saved === null || steps !== storedSteps) writeStorage(registryStorage, key, JSON.stringify(toRegistry(next)));
+  inheritedByState.set(next, inherited);
   return next;
 }
 
@@ -182,6 +189,7 @@ export function saveResearchRegistryState(
   const serialized = JSON.stringify(toRegistry(next));
   writeStorage(registryStorage, researchStateKey(epochId), serialized);
   if (epochId === DEFAULT_EPOCH_ID) writeStorage(registryStorage, RESEARCH_STATE_KEY, serialized);
+  inheritedByState.set(next, cacheInheritedTaken(registryStorage, epochId));
   return next;
 }
 
@@ -196,6 +204,7 @@ export function normalizeResearchState(state: ResearchState): ResearchState {
   // migrate zeroes unlocks; normalization must preserve them (071 flags live here).
   if (state.unlocks !== undefined) next.unlocks = state.unlocks;
   else delete (next as { unlocks?: unknown }).unlocks;
+  inheritedByState.set(next, inheritedByState.get(state) ?? inheritedTaken(epochId));
   return next;
 }
 
@@ -230,7 +239,7 @@ export function skipResearchPick(state: ResearchState): ResearchState {
 }
 
 export function hasResearchNode(state: ResearchState, id: string): boolean {
-  return state.taken.includes(id);
+  return state.taken.includes(id) || (inheritedByState.get(state) ?? inheritedTaken(stateEpochId(state))).has(id);
 }
 
 export function setPinnedResearchTarget(state: ResearchState, id: string | null): ResearchState {
@@ -368,6 +377,41 @@ function toRegistry(state: ResearchState): ResearchRegistry {
 
 function stateEpochId(state: ResearchState): string {
   return state.epochId ?? activeEpochId();
+}
+
+function inheritedTaken(epochId: string): ReadonlySet<string> {
+  return inheritedByEpoch.get(epochId) ?? new Set();
+}
+
+function cacheInheritedTaken(storage: MetaProgressStorage | undefined, epochId: string): ReadonlySet<string> {
+  const activeIds = new Set(researchNodes(epochId).map((node) => node.id));
+  const taken = new Set<string>();
+  let prior = loadEpoch(DEFAULT_EPOCH_ID);
+  while (prior.id !== epochId) {
+    for (const id of storedTaken(storage, prior.id)) if (!activeIds.has(id)) taken.add(id);
+    if (!prior.successor) {
+      taken.clear();
+      break;
+    }
+    prior = loadEpoch(prior.successor);
+  }
+  const identity = (storage as object | undefined) ?? NO_RESEARCH_STORAGE;
+  let cache = inheritedByStorage.get(identity);
+  if (!cache) inheritedByStorage.set(identity, (cache = new Map()));
+  cache.set(epochId, taken);
+  inheritedByEpoch.set(epochId, taken);
+  return taken;
+}
+
+function storedTaken(storage: MetaProgressStorage | undefined, epochId: string): string[] {
+  const saved = readStorage(storage, researchStateKey(epochId));
+  const legacy = epochId === DEFAULT_EPOCH_ID && saved === null ? readStorage(storage, RESEARCH_STATE_KEY) : null;
+  const raw = parseRegistry(saved ?? legacy);
+  if (!isRecord(raw) || !Array.isArray(raw.taken)) return [];
+  const nodes = nodeMap(epochId);
+  return raw.taken
+    .map((id) => (typeof id === 'string' ? (RESEARCH_ID_MIGRATIONS[id] ?? id) : ''))
+    .filter((id) => id in nodes);
 }
 
 function nodesForState(state: ResearchState): ResearchNode[] {
