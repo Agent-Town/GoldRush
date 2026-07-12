@@ -9,6 +9,7 @@ const registry = {
   sluice: { url: new URL('../../assets/pilots/run3d/sluice.glb', import.meta.url).href, fallback: 'SluicePool', groundPad: 0.9 },
   turret: { url: new URL('../../assets/pilots/run3d/turret.glb', import.meta.url).href, fallback: 'TurretPool', groundPad: 1.2 },
   stockpile: { url: new URL('../../assets/pilots/run3d/stockpile.glb', import.meta.url).href, fallback: 'StockpilePool', groundPad: 0.75 },
+  sentry_beacon: { url: new URL('../../assets/pilots/run3d/sentry-beacon.glb', import.meta.url).href, fallback: 'SentryBeaconPool', groundPad: 0.4 },
 } as const;
 
 type Buildable3dId = keyof typeof registry;
