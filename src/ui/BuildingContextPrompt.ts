@@ -9,6 +9,7 @@ export type MegaprojectFundCandidate = {
 };
 
 export class BuildingContextPrompt {
+  private contentKey = '';
   private readonly root = document.createElement('div');
   private readonly icon = document.createElement('span');
   private readonly title = document.createElement('span');
@@ -59,6 +60,13 @@ export class BuildingContextPrompt {
     enterEnabled: boolean,
     fund: MegaprojectFundCandidate | null = null,
   ): void {
+    const contentKey = fund
+      ? `fund:${fund.title}:${fund.stage}:${fund.cost}:${fund.line}:${enterEnabled}`
+      : demolish
+        ? `building:${demolish.id}:${demolish.index}:${demolish.invested}:${demolish.refund}:${upgrade?.tier ?? 0}:${upgrade?.cost ?? 0}:${upgrade?.canUpgrade ?? false}:${upgrade?.reason ?? 'none'}:${enterEnabled}`
+        : 'hidden';
+    if (contentKey === this.contentKey) return;
+    this.contentKey = contentKey;
     this.root.hidden = demolish === null && fund === null;
     if (fund) {
       this.icon.textContent = 'M';

@@ -3774,19 +3774,17 @@ export class Game {
   private syncBuildingContextPrompt(): void {
     const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
     const assayInRange = this.buildSystem.assayOfficeInRange(this.localActor.group.position);
-    const canShowPrompt =
-      this.state.current === 'playing' && !this.state.isPaused && !benchOpen && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
-    const fund = canShowPrompt ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
-    const demolish = canShowPrompt && !fund ? this.demolishCandidate : null;
+    const canInteract = this.state.current === 'playing' && !this.state.isPaused && !benchOpen;
+    const fund = canInteract && !this.buildMenuOpen && !this.buildSystem.isBuildMode ? this.megaprojectFundCandidate(this.localActor.group.position) : null;
+    const demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.demolishCandidate : null;
     const upgrade = demolish ? this.upgradeCandidate : null;
     this.buildingContextPrompt.update(demolish, upgrade, !assayInRange, fund);
   }
 
   private updateBuildingContextCandidates(position = this.localActor.group.position): void {
-    const canInteract =
-      this.state.current === 'playing' && !this.state.isPaused && !this.buildMenuOpen && !this.buildSystem.isBuildMode;
-    const fund = canInteract ? this.megaprojectFundCandidate(position) : null;
-    let demolish = canInteract && !fund ? this.buildSystem.nearestBuildingTo(position) : null;
+    const canInteract = this.state.current === 'playing' && !this.state.isPaused;
+    const fund = canInteract && !this.buildMenuOpen && !this.buildSystem.isBuildMode ? this.megaprojectFundCandidate(position) : null;
+    let demolish = canInteract && this.buildSystem.isBuildMode && !fund ? this.buildSystem.nearestBuildingTo(position) : null;
     const key = demolish ? demolishKey(demolish) : null;
     if (!key) this.demolishSuppressedKey = null;
     if (key && this.demolishSuppressedKey && key !== this.demolishSuppressedKey) this.demolishSuppressedKey = null;
