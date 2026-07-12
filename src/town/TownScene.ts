@@ -223,6 +223,7 @@ export class TownScene {
   private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
   private readonly visibleActors = visibleTownActors(this.visibleBuildings);
   private readonly stampMill = readTownStampMill(this.metaProgress);
+  private town3dDispose?: () => void;
   private readonly stampMillGroup = new THREE.Group();
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
@@ -336,6 +337,7 @@ export class TownScene {
     disposeObject3D(this.scene);
     this.scene.clear();
     this.renderer.dispose();
+    this.town3dDispose?.();
     window.__GR_TOWN_DIAGNOSTICS__ = undefined;
   }
 
@@ -439,6 +441,16 @@ export class TownScene {
 
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
+
+    const search = new URLSearchParams(window.location.search);
+    if (search.has('debug') && search.has('town3d')) {
+      void import('./Town3dViewer').then(({ installTown3dViewer }) => {
+        this.town3dDispose = installTown3dViewer({
+          scene: this.scene,
+          buildingFootprint: (id) => townBuildings.find((building) => building.id === id)?.footprint ?? null,
+        });
+      });
+    }
   }
 
   private createStampMillVignette(): void {
