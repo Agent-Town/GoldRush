@@ -84,6 +84,14 @@ export const RESEARCH_ICON_KEYS = [
   'bld.sluice_works',
   'char.prospector_agent.portrait',
   'node.gold_seam',
+  'ui.e2.boiler_lance',
+  'ui.e2.pressure_mortar',
+  'ui.e2.iron_wall',
+  'ui.e2.boiler_battery',
+  'ui.e2.pressure',
+  'ui.e2.pressure_card',
+  'ui.e2.rail_card',
+  'ui.e2.iron_card',
 ] as const;
 
 export type ResearchIconKey = (typeof RESEARCH_ICON_KEYS)[number];

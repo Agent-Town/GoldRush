@@ -45,6 +45,14 @@ export const RESEARCH_ICON_REGISTRY: Record<ResearchIconKey, { url: string; labe
     label: 'the Prospector',
   },
   'node.gold_seam': { url: new URL('../../assets/processed/node-gold-seam.png', import.meta.url).href, label: 'gold seam' },
+  'ui.e2.boiler_lance': { url: new URL('../../assets/processed/icons-e2-r0c0.png', import.meta.url).href, label: 'boiler lance' },
+  'ui.e2.pressure_mortar': { url: new URL('../../assets/processed/icons-e2-r0c1.png', import.meta.url).href, label: 'pressure mortar' },
+  'ui.e2.iron_wall': { url: new URL('../../assets/processed/icons-e2-r0c2.png', import.meta.url).href, label: 'iron wall' },
+  'ui.e2.boiler_battery': { url: new URL('../../assets/processed/icons-e2-r0c3.png', import.meta.url).href, label: 'boiler battery' },
+  'ui.e2.pressure': { url: new URL('../../assets/processed/icons-e2-r0c4.png', import.meta.url).href, label: 'pressure gauge' },
+  'ui.e2.pressure_card': { url: new URL('../../assets/processed/icons-e2-r0c5.png', import.meta.url).href, label: 'pressure card' },
+  'ui.e2.rail_card': { url: new URL('../../assets/processed/icons-e2-r0c6.png', import.meta.url).href, label: 'rail card' },
+  'ui.e2.iron_card': { url: new URL('../../assets/processed/icons-e2-r0c7.png', import.meta.url).href, label: 'iron card' },
 };
 
 export const RESEARCH_NODE_ICON_KEYS = Object.values(researchNodeById).reduce(
