@@ -807,6 +807,7 @@ export class Game {
   private lastHarvestChanneling = false;
   private lastUpgradeOfferAudioKey = '';
   private disposeRunTelemetry: () => void = () => undefined;
+  private run3dPilot?: { update: () => void; dispose: () => void };
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -1066,6 +1067,9 @@ export class Game {
     });
 
     this.createScene();
+    const run3dSelection = new URLSearchParams(window.location.search).get('run3dPilot');
+    this.canvas.dataset.run3dPilotState = run3dSelection ? 'loading' : 'off';
+    if (run3dSelection) void import('./Run3dPilot').then(({ installRun3dPilot }) => (this.run3dPilot = installRun3dPilot({ scene: this.scene, canvas: this.canvas, diagnostics: () => this.buildSystem.diagnostics })));
     this.registerGoldHoldings();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
@@ -1416,6 +1420,7 @@ export class Game {
     this.upgradeOverlay.dispose();
     this.damageVignette.remove();
     this.debugTools.dispose();
+    this.run3dPilot?.dispose();
     this.buildSystem.dispose();
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
@@ -1668,6 +1673,7 @@ export class Game {
     this.prospector.updatePresentation(this.state.isPaused ? 0 : frame.presentationDeltaSeconds, frame.alpha);
     if (this.powerGraph && this.powerWireView) this.powerWireView.update(this.powerGraph.snapshot());
     this.updatePresentation(frame.presentationDeltaSeconds);
+    this.run3dPilot?.update();
     if (draw) this.render();
   }
 
