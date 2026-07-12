@@ -5,6 +5,7 @@ import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
 
 const registry = {
+  boiler_house: { url: new URL('../../assets/pilots/run3d/boiler-house.glb', import.meta.url).href, fallback: 'BoilerHousePool', groundPad: 1.1 },
   palisade: { url: new URL('../../assets/pilots/run3d/palisade.glb', import.meta.url).href, fallback: 'PalisadePool', groundPad: 1.5 },
   sluice: { url: new URL('../../assets/pilots/run3d/sluice.glb', import.meta.url).href, fallback: 'SluicePool', groundPad: 0.9 },
   turret: { url: new URL('../../assets/pilots/run3d/turret.glb', import.meta.url).href, fallback: 'TurretPool', groundPad: 1.2 },
