@@ -235,6 +235,16 @@
           ]
         }
       },
+      "modes": [
+        {
+          "id": "escort",
+          "label": "Railhead Escort",
+          "objective": "See 1 ore cart safely across the rail cut.",
+          "cartsRequired": 1,
+          "payout": 40,
+          "railRouteIndex": 0
+        }
+      ],
       "boardRow": {
         "name": "The Hill Mine",
         "ledgerBlurb": "Terraced steamworks ground: hold the mine mouth, the rail cut, and the flooded gallery.",
@@ -242,7 +252,10 @@
         "unlock": "epoch-2-steamworks"
       },
       "briefing": {
-        "goals": ["Hold the Boiler House pad and keep the rail cut open."],
+        "goals": [
+          "Hold the Boiler House pad and keep the rail cut open.",
+          "Railhead Escort: see the ore cart safely across for a town payout."
+        ],
         "rules": [
           "T2 and T3 pads out-range the valley, but cliff faces block bolts.",
           "Claim-jumpers must climb the switchbacks; cliff bands are impassable.",

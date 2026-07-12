@@ -377,6 +377,14 @@ export type ContractBriefing = {
   rules: string[];
   geographyLine: string;
 };
+export type ContractEscortMode = {
+  id: 'escort';
+  label: string;
+  objective: string;
+  cartsRequired: number;
+  payout: number;
+  railRouteIndex: number;
+};
 export type ContractManifest = {
   id: string;
   name: string;
@@ -415,6 +423,7 @@ export type ContractManifest = {
     enemyRoster?: readonly ContractEnemyVariant[];
     baron?: ContractBaronTwist;
   };
+  modes?: ContractEscortMode[];
   boardRow: {
     name: string;
     ledgerBlurb: string;

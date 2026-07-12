@@ -1307,7 +1307,7 @@ function decodeEconomyEvent(value: unknown): EconomyEvent | null {
       return value.amount === 0 ? { id, at, type: value.type, amount: 0 } : null;
     case 'gold_granted':
       if (amount === null) return null;
-      if (value.source === 'upgrade_assay' || value.source === 'debug') return { id, at, type: value.type, source: value.source, amount };
+      if (value.source === 'upgrade_assay' || value.source === 'debug' || value.source === 'escort') return { id, at, type: value.type, source: value.source, amount };
       if (value.source === 'demolish') {
         const buildCost = numberInRange(value.buildCost, 0, MAX_ECONOMY_AMOUNT);
         return compactEvent({ id, at, type: value.type, source: value.source, amount, buildCost: buildCost ?? undefined }) as EconomyEvent;

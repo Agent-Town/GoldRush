@@ -324,6 +324,14 @@ export const Balance = {
     secondOrderSlots: 2,
   },
   contracts: {
+    escortCart: {
+      hp: 180,
+      speed: 2.4,
+      stopHpRatio: 0.5,
+      repairSeconds: 2,
+      repairRadius: 2.6,
+      enemyPreferenceRange: 18,
+    },
     dryGulch: {
       seamYieldMult: 1.4,
     },

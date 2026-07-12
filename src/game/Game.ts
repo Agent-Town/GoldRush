@@ -537,6 +537,15 @@ export class Game {
       this.baronSpawnImpulses += 1;
       this.cameraRig.impulse(position, 0.12);
     },
+    (target) => this.goldTargeting.registerBuilding(target),
+    (amount, position, atSim) => {
+      this.economy.apply({ id: crypto.randomUUID(), at: atSim, type: 'gold_granted', source: 'escort', amount });
+      this.vfx.floatText(position, `+${amount}`, '#c4883a');
+    },
+    () => [
+      this.localActor.group.position,
+      ...((this.agentStub?.state.permissionLevel ?? 0) >= 1 ? [this.prospector.position] : []),
+    ],
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -729,7 +738,7 @@ export class Game {
     onThiefFled: (enemy: ClaimJumperEnemy) => this.onThiefFled(enemy),
   };
   private readonly wreckerContext = {
-    nearestBuilding: (from: THREE.Vector3) => this.goldTargeting.nearestBuilding(from),
+    nearestBuilding: (from: THREE.Vector3) => this.waveSystem.preferredEscortTarget(from) ?? this.goldTargeting.nearestBuilding(from),
     hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget) => this.combat.handleBuildingHit(enemy, target),
   };
   private buildMenuOpen = false;
@@ -1134,6 +1143,15 @@ export class Game {
         megaproject: () => this.megaprojectDiagnostics(),
         fundMegaproject: () => this.fundMegaprojectStage(),
         damageMegaproject: (amount: number) => this.damageMegaprojectForTest(amount),
+        escort: () => this.waveSystem.escortDiagnostics,
+        damageEscort: (amount: number) => {
+          const target = this.waveSystem.activeEscortTarget;
+          if (!target) return false;
+          this.combat.setTime(this.timeAlive);
+          this.combat.damageBuilding(target, amount, -1);
+          this.publishDiagnostics();
+          return true;
+        },
         terrainSample: (x: number, z: number) => Terrain.sample(x, z),
         terrainVisualY: (x: number, z: number, base = 0, padRadius = 0) => Terrain.visualY(x, z, base, padRadius),
         terrainSim: (x: number, z: number) => terrainSimSample(x, z),
@@ -2666,6 +2684,8 @@ export class Game {
     maxHp: number;
     wrecked: boolean;
   } {
+    const escort = this.waveSystem.resolveEscortDamage(target, amount);
+    if (escort) return escort;
     const manifest = this.megaprojectManifest;
     const project = this.megaprojectProject;
     if (target !== this.megaprojectTarget || !manifest || !project || !this.megaprojectUnlocked()) {
@@ -2905,6 +2925,7 @@ export class Game {
       },
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
+      escort: this.waveSystem.escortDiagnostics,
       power: this.powerGraph?.diagnostics() ?? emptyPowerGraphDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,

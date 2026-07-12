@@ -3,6 +3,7 @@ import { getStressCount, isSpawnDisabled } from '../core/DebugParams';
 import type { CompassEdge, EnemyEliteKind } from '../entities/Enemy';
 import type { Rng, RngState } from '../core/Rng';
 import type { EnemyPool } from '../entities/pools';
+import { OreCart, type OreCartDiagnostics } from '../entities/OreCart';
 import { Balance } from '../game/Balance';
 import {
   activeContract,
@@ -12,6 +13,7 @@ import {
   type RailPathPoint,
 } from '../meta/ContractFamilies';
 import * as Terrain from '../world/Terrain';
+import type { BuildingTarget } from './TargetingSystem';
 
 export type SpawnPackOptions = {
   speedScale?: number;
@@ -60,6 +62,7 @@ export type WaveDiagnostics = {
   edge: CompassEdge | null;
   budget: number;
   lastPulseAt: number;
+  escort: (OreCartDiagnostics & { enabled: true; objectiveLost: boolean; arrived: number; required: number; payout: number }) | { enabled: false };
 };
 
 const TELEGRAPH_SECONDS = 2;
@@ -120,6 +123,10 @@ export class WaveSystem {
   private waveState: WaveDiagnostics['waveState'] = 'quiet';
   private lastPulseAt = Number.NEGATIVE_INFINITY;
   private baronSpawned = false;
+  private readonly escortCart: OreCart | null;
+  private escortArrived = 0;
+  private escortLost = false;
+  private escortSettled = false;
 
   constructor(
     private readonly enemies: EnemyPool,
@@ -135,9 +142,28 @@ export class WaveSystem {
     private readonly hasTerritoryRing: () => boolean = () => false,
     private readonly territoryRingCenter: THREE.Vector3 = heroPosition,
     private readonly onBaronSpawned: (position: THREE.Vector3, atSim: number) => void = () => {},
+    registerEscortTarget: (target: BuildingTarget) => void = () => {},
+    private readonly onEscortPayout: (amount: number, position: THREE.Vector3, atSim: number) => void = () => {},
+    private readonly escortRepairers: () => readonly THREE.Vector3[] = () => [heroPosition],
   ) {
     this.nextWaveAt = this.waveInterval();
     this.nextPlanWaveAt = this.nextWaveAt;
+    const mode = this.escortMode;
+    const route = mode ? this.contract.tileParams.rails?.[mode.railRouteIndex] : undefined;
+    this.escortCart = mode && route?.points.length
+      ? new OreCart(
+          route.points,
+          Balance.contracts.escortCart.speed,
+          Balance.contracts.escortCart.hp,
+          Balance.contracts.escortCart.stopHpRatio,
+          Balance.contracts.escortCart.repairSeconds,
+          Balance.contracts.escortCart.repairRadius,
+        )
+      : null;
+    if (this.escortCart) {
+      this.enemies.group.add(this.escortCart.group);
+      registerEscortTarget(this.escortCart.target);
+    }
   }
 
   private get contract(): ContractManifest {
@@ -146,6 +172,12 @@ export class WaveSystem {
 
   private get spawnEdges(): readonly CompassEdge[] {
     return this.contract.tileParams.lanes.spawnEdges;
+  }
+
+  private get escortMode() {
+    const params = new URLSearchParams(globalThis.location?.search ?? '');
+    if (params.get('mode') !== 'escort' || params.get('mp') === 'dev') return undefined;
+    return this.contract.modes?.find((mode) => mode.id === 'escort');
   }
 
   get diagnostics(): WaveDiagnostics {
@@ -159,7 +191,36 @@ export class WaveSystem {
       edge: this.edge,
       budget: this.budget,
       lastPulseAt: this.lastPulseAt,
+      escort: this.escortDiagnostics,
     };
+  }
+
+  get escortDiagnostics(): WaveDiagnostics['escort'] {
+    const mode = this.escortMode;
+    if (!mode || !this.escortCart) return { enabled: false };
+    return {
+      enabled: true,
+      ...this.escortCart.diagnostics,
+      objectiveLost: this.escortLost,
+      arrived: this.escortArrived,
+      required: mode.cartsRequired,
+      payout: mode.payout,
+    };
+  }
+
+  preferredEscortTarget(from: THREE.Vector3): BuildingTarget | null {
+    const target = this.escortCart?.target;
+    if (!target?.active) return null;
+    return from.distanceToSquared(target.position) <= Balance.contracts.escortCart.enemyPreferenceRange ** 2 ? target : null;
+  }
+
+  get activeEscortTarget(): BuildingTarget | null {
+    return this.escortCart?.target.active ? this.escortCart.target : null;
+  }
+
+  resolveEscortDamage(target: BuildingTarget, amount: number) {
+    if (target !== this.escortCart?.target) return null;
+    return this.escortCart.damage(amount);
   }
 
   captureRngState(): RngState {
@@ -171,6 +232,7 @@ export class WaveSystem {
   }
 
   update(atSim: number): void {
+    this.updateEscort(atSim);
     this.currentAtSim = atSim;
     if (this.scheduledDisabled()) {
       this.waveState = 'quiet';
@@ -224,6 +286,27 @@ export class WaveSystem {
     this.waveState = 'quiet';
     this.lastPulseAt = Number.NEGATIVE_INFINITY;
     this.baronSpawned = false;
+    this.escortArrived = 0;
+    this.escortLost = false;
+    this.escortSettled = false;
+    this.escortCart?.reset();
+  }
+
+  private updateEscort(atSim: number): void {
+    if (!this.escortCart || this.escortSettled) return;
+    const state = this.escortCart.update(Math.max(0, atSim - this.currentAtSim), this.escortRepairers());
+    if (state === 'destroyed') {
+      this.escortLost = true;
+      this.escortSettled = true;
+      this.announce('ORE CART LOST - the run continues.', atSim);
+      return;
+    }
+    if (state !== 'arrived') return;
+    const mode = this.escortMode;
+    this.escortArrived += 1;
+    this.escortSettled = true;
+    if (mode) this.onEscortPayout(mode.payout, this.escortCart.group.position, atSim);
+    this.announce(`ORE CART DELIVERED - +${mode?.payout ?? 0} gold at the railhead.`, atSim);
   }
 
   setWaveForTest(wave: number): void {
@@ -536,7 +619,7 @@ export class WaveSystem {
   private optionsForVariant(variant: ContractEnemyVariant): SpawnPackOptions {
     return {
       thief: variant.thief,
-      wrecker: variant.wrecker,
+      wrecker: variant.wrecker || (this.escortCart?.target.active === true && variant.id === 'rail_tough'),
       variantId: variant.id,
       variantLabel: variant.label,
       hpScale: variant.hpScale,

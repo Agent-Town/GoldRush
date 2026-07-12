@@ -25,7 +25,7 @@ export type EconomyEvent = EconomyEventBase &
     | { type: 'gold_panned'; nodeId: string; amount: number; actor?: EconomyActor }
     | { type: 'gold_sluiced'; sluiceId: string; amount: number; actor?: EconomyActor }
     | { type: 'gold_capped'; amount: 0 }
-    | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug'; amount: number }
+    | { type: 'gold_granted'; source: 'upgrade_assay' | 'debug' | 'escort'; amount: number }
     | { type: 'gold_granted'; source: 'demolish'; amount: number; buildCost?: number }
     | { type: 'gold_stolen'; amount: number }
     | { type: 'gold_reclaimed'; amount: number; actor?: EconomyActor }

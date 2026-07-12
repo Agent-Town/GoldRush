@@ -287,6 +287,7 @@ interface ThreeGameDiagnostics {
     contractTier: number;
   };
   megaproject: GrMegaprojectDiagnostics;
+  escort: GrEscortDiagnostics;
   power: GrPowerGraphDiagnostics;
   agent: {
     stub: {
@@ -787,6 +788,7 @@ type GrContractManifest = import('./meta/ContractFamilies').ContractManifest;
 type GrActiveContractDiagnostics = import('./meta/ContractFamilies').ActiveContractDiagnostics;
 type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
+type GrEscortDiagnostics = import('./systems/WaveSystem').WaveDiagnostics['escort'];
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
 type GrMultiplayerBalanceWindow = import('./mp/MultiplayerBalanceHarness').MultiplayerBalanceWindow;
@@ -994,6 +996,8 @@ interface Window {
     megaproject: () => GrMegaprojectDiagnostics;
     fundMegaproject: () => boolean;
     damageMegaproject: (amount: number) => boolean;
+    escort: () => GrEscortDiagnostics;
+    damageEscort: (amount: number) => boolean;
     terrainSample: (x: number, z: number) => GrTerrainSample;
     terrainVisualY: (x: number, z: number, base?: number, padRadius?: number) => number;
     terrainSim: (x: number, z: number) => {

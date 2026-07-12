@@ -601,7 +601,8 @@ export class ClaimJumperEnemy {
 
     const scriptedRailRoute = this.scripted && this.scriptedIgnoresTerrain;
     const targetPosition = this.scripted ? this.scriptedTarget : this.chooseTarget(delta, heroPosition, thiefContext, wreckerContext);
-    const moveTarget = scriptedRailRoute ? this.scriptedTarget : this.terrainAwareTarget(this.routedTarget(targetPosition));
+    const escortRailTarget = this.currentBuilding?.id === 'escort:ore-cart';
+    const moveTarget = scriptedRailRoute || escortRailTarget ? targetPosition : this.terrainAwareTarget(this.routedTarget(targetPosition));
     const speed = this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
     this.heading.set(moveTarget.x - this.group.position.x, 0, moveTarget.z - this.group.position.z);
@@ -651,6 +652,8 @@ export class ClaimJumperEnemy {
       this.velocity.set(0, 0, 0);
     } else if (scriptedRailRoute) {
       this.moveScripted(delta, speed, moveTarget);
+    } else if (escortRailTarget) {
+      this.moveIgnoringTerrain(delta, speed, moveTarget);
     } else {
       this.move(delta, blockers, speed, moveTarget);
     }
@@ -1041,6 +1044,12 @@ export class ClaimJumperEnemy {
     }
     if (this.velocity.lengthSq() <= 0.0001) return;
     this.group.position.addScaledVector(this.velocity, stepDistance);
+  }
+
+  private moveIgnoringTerrain(delta: number, speed: number, target: THREE.Vector3): void {
+    const distance = Math.hypot(target.x - this.group.position.x, target.z - this.group.position.z);
+    const step = Math.min(distance, Math.max(0, speed * delta));
+    this.group.position.addScaledVector(this.velocity, step);
   }
 
   private advanceScriptedRoute(): void {
