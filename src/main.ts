@@ -206,7 +206,10 @@ function returnToStartMenu(): void {
   showStartMenu();
 }
 
-if (window.location.search === '') {
+// Visual pilot flags are menu-safe: they configure the town/run scenes but must
+// not hijack the boot into a contract launch (owner hit /?town3dPilot=all → The Claim).
+const MENU_SAFE_PARAMS = new Set(['town3dPilot', 'run3dPilot', 'tier']);
+if ([...initialSearch.keys()].every((key) => MENU_SAFE_PARAMS.has(key))) {
   showStartMenu();
 } else {
   startWithProfiles();
