@@ -1636,7 +1636,8 @@ class TownActorRuntime {
   readonly group = new THREE.Group();
   private readonly material = new THREE.SpriteMaterial({
     transparent: true,
-    alphaTest: 0.04,
+    // Chroma-cut walk8 cells carry key-tinted edge pixels; a firm alpha clip kills the fringe.
+    alphaTest: 0.35,
     depthWrite: false,
   });
   private readonly sprite = new THREE.Sprite(this.material);
@@ -1645,6 +1646,7 @@ class TownActorRuntime {
   private frame = 0;
   private currentFrameKey = '';
   private disposed = false;
+  private fitted = false;
   private readonly orientationResolver = new OrientationResolver();
   private currentDirection: RotationDirection;
 
@@ -1652,8 +1654,13 @@ class TownActorRuntime {
     this.group.name = `TownActor:${definition.id}`;
     this.group.position.set(definition.position.x, 0, definition.position.z);
     this.sprite.name = `TownActorSprite:${definition.id}`;
-    this.sprite.scale.set(definition.scale * 1.25, definition.scale * 3, 1);
-    this.sprite.position.y = definition.scale * 1.5 + 0.08;
+    if (definition.id === 'prospector') {
+      this.sprite.scale.setScalar(definition.scale);
+      this.sprite.position.y = definition.scale * 0.55 + 0.08;
+    } else {
+      this.sprite.scale.set(definition.scale * 1.25, definition.scale * 3, 1);
+      this.sprite.position.y = definition.scale * 1.5 + 0.08;
+    }
     this.sprite.renderOrder = RenderLayers.companion;
     this.sprite.visible = true;
     this.group.add(this.sprite);
@@ -1681,6 +1688,7 @@ class TownActorRuntime {
   }
 
   update(delta: number, elapsed: number): void {
+    if (!this.fitted && this.definition.id !== 'prospector' && this.material.map) this.fitSpriteToTexture(this.material.map);
     const previousX = this.group.position.x;
     const previousZ = this.group.position.z;
     const point = this.definition.loop ? loopPoint(this.definition.loop, elapsed) : this.definition.position;
@@ -1722,8 +1730,22 @@ class TownActorRuntime {
       if (texture && !this.disposed && this.currentFrameKey === key) {
         this.material.map = texture;
         this.material.needsUpdate = true;
+        this.fitSpriteToTexture(texture);
       }
     });
+  }
+
+  // Size the billboard from the cell's real aspect: fixed height band, width follows
+  // the sheet — a 2.4:1 plane on a 1.2:1 cell was the town-wide vertical stretch.
+  private fitSpriteToTexture(texture: THREE.Texture): void {
+    const image = texture.image as { width?: number; height?: number } | undefined;
+    const width = typeof image?.width === 'number' ? image.width : 0;
+    const height = typeof image?.height === 'number' ? image.height : 0;
+    if (!width || !height) return;
+    this.fitted = true;
+    const targetHeight = this.definition.scale * 3;
+    this.sprite.scale.set(targetHeight * (width / height), targetHeight, 1);
+    this.sprite.position.y = targetHeight / 2 + 0.08;
   }
 }
 

@@ -27,7 +27,7 @@ async function bootTown(page: Page): Promise<void> {
   );
   await page.reload();
   await page.getByTestId('start-menu-enter-town').click();
-  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded))).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded && actor.spriteAspect > 0 && actor.spriteAspect <= 1.6))).toBe(true);
 }
 
 test('the whole visible plaza cast is full-body and three motion sheets advance', async ({ page }, testInfo) => {
@@ -38,7 +38,7 @@ test('the whole visible plaza cast is full-body and three motion sheets advance'
 
   const before = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.filter((actor) => actor.visible));
   expect(before).toHaveLength(10);
-  expect(before.every((actor) => actor.spriteAspect >= 1.8)).toBe(true);
+  expect(before.every((actor) => actor.spriteAspect >= 0.7 && actor.spriteAspect <= 1.6)).toBe(true); // natural cell aspect — >=1.8 was the codified stretch (owner finding 2026-07-12)
   await page.waitForTimeout(500);
   const after = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.filter((actor) => actor.visible));
   for (const id of ['tavernkeeper', 'elder', 'newsie'] as const) {
@@ -49,6 +49,6 @@ test('the whole visible plaza cast is full-body and three motion sheets advance'
   await page.locator('#game-canvas').screenshot({ path: path.join(artifactDir, `${testInfo.project.name}-plaza-cast.png`) });
   await page.getByTestId('town-exit').click();
   await page.getByTestId('start-menu-enter-town').click();
-  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded))).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded && actor.spriteAspect > 0 && actor.spriteAspect <= 1.6))).toBe(true);
   expect(errors).toEqual([]);
 });
