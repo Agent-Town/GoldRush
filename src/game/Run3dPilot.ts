@@ -5,6 +5,7 @@ import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
 
 const registry = {
+  assay_office: { url: new URL('../../assets/pilots/run3d/assay-bench.glb', import.meta.url).href, fallback: 'AssayOfficeTimberShell', groundPad: 1 },
   boiler_house: { url: new URL('../../assets/pilots/run3d/boiler-house.glb', import.meta.url).href, fallback: 'BoilerHousePool', groundPad: 1.1 },
   lantern_post: { url: new URL('../../assets/pilots/run3d/lantern-post.glb', import.meta.url).href, fallback: 'LanternPostPool', groundPad: 0.4 },
   palisade: { url: new URL('../../assets/pilots/run3d/palisade.glb', import.meta.url).href, fallback: 'PalisadePool', groundPad: 1.5 },
@@ -23,6 +24,11 @@ function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' 
   canvas.dataset.run3dPilotState = state;
   canvas.dataset.run3dPilotMeshes = String(meshes);
   canvas.dataset.run3dPilotTriangles = String(triangles);
+}
+
+function fallback(host: Host, id: Buildable3dId): THREE.Object3D | undefined {
+  const object = host.scene.getObjectByName(registry[id].fallback);
+  return id === 'assay_office' ? object?.parent ?? undefined : object;
 }
 
 export function installRun3dPilot(host: Host): Run3dPilot {
@@ -88,8 +94,8 @@ export function installRun3dPilot(host: Host): Run3dPilot {
     () => {
       if (disposed) return;
       for (const id of ids) {
-        const fallback = host.scene.getObjectByName(registry[id].fallback);
-        if (fallback) fallback.visible = false;
+        const sprite = fallback(host, id);
+        if (sprite) sprite.visible = false;
       }
       publish(host.canvas, 'ready');
       update();
@@ -104,8 +110,8 @@ export function installRun3dPilot(host: Host): Run3dPilot {
   function update(): void {
     if (disposed || templates.size !== ids.length) return;
     for (const id of ids) {
-      const fallback = host.scene.getObjectByName(registry[id].fallback);
-      if (fallback) fallback.visible = false;
+      const sprite = fallback(host, id);
+      if (sprite) sprite.visible = false;
     }
     const alive = new Set<string>();
     const diagnostics = host.diagnostics();
@@ -160,8 +166,8 @@ export function installRun3dPilot(host: Host): Run3dPilot {
     dispose: () => {
       disposed = true;
       for (const id of ids) {
-        const fallback = host.scene.getObjectByName(registry[id].fallback);
-        if (fallback) fallback.visible = true;
+        const sprite = fallback(host, id);
+        if (sprite) sprite.visible = true;
       }
       host.scene.remove(group);
       for (const [key, instance] of instances) {
