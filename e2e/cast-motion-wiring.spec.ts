@@ -3,8 +3,9 @@ import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
+import { TOWN_CAST_METROLOGY } from '../src/town/townsfolk';
 
-const artifactDir = path.resolve('artifacts/cast-motion-wiring-e2e');
+const artifactDir = path.resolve('artifacts/cast-metrology');
 
 async function bootTown(page: Page): Promise<void> {
   await page.goto('/');
@@ -41,6 +42,15 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   expect(before).toHaveLength(10);
   expect(before.every((actor) => actor.spriteAspect >= 0.7 && actor.spriteAspect <= 1.6)).toBe(true);
   expect(before.every((actor) => !actor.fullBodyStandIn)).toBe(true);
+  const height = (id: string) => before.find((actor) => actor.id === id)!.spriteHeight / TOWN_CAST_METROLOGY.worldUnitsPerHero;
+  expect(height('tavernkeeper')).toBeCloseTo(TOWN_CAST_METROLOGY.tallAdult, 2);
+  expect(height('elder')).toBeCloseTo(TOWN_CAST_METROLOGY.elder, 2);
+  expect(height('youngster_a')).toBeCloseTo(TOWN_CAST_METROLOGY.child, 2);
+  expect(height('prospector')).toBeCloseTo(TOWN_CAST_METROLOGY.prospector, 2);
+  for (const id of ['preacher', 'schoolteacher', 'assay_clerk'] as const) {
+    expect(before.find((actor) => actor.id === id)?.presentation).toBe('portrait_post');
+  }
+  expect(before.find((actor) => actor.id === 'assay_clerk')?.position).toEqual({ x: 6.6, z: 2.4 });
   const presentations = before
     .filter((actor) => actor.id !== 'prospector')
     .map((actor) => actor.frameKey.replace(/-r\d+c\d+\.png$/, ''));
@@ -69,7 +79,7 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
 
   await page.waitForTimeout(10_000);
   await mkdir(artifactDir, { recursive: true });
-  await page.locator('#game-canvas').screenshot({ path: path.join(artifactDir, `${testInfo.project.name}-plaza-cast-10s.png`) });
+  await page.locator('#game-canvas').screenshot({ path: path.join(artifactDir, `${testInfo.project.name}-plaza-after.png`) });
   await page.getByTestId('town-exit').click();
   await page.getByTestId('start-menu-enter-town').click();
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded && actor.spriteAspect > 0 && actor.spriteAspect <= 1.6))).toBe(true);

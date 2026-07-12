@@ -66,7 +66,7 @@ import {
   type TownPropKind,
 } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
-import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
+import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 
 const contractArtUrls = {
   theClaimPlate: new URL('../../assets/raw/plate-contract-the-claim.png', import.meta.url).href,
@@ -160,7 +160,9 @@ export type TownDiagnostics = {
     loop: boolean;
     assetSlot: string;
     spriteAspect: number;
+    spriteHeight: number;
     frameKey: string;
+    presentation: 'full_body' | 'portrait_post';
     fullBodyStandIn: boolean;
     moving: boolean;
     motion: { x: number; z: number };
@@ -1612,7 +1614,9 @@ export class TownScene {
           loop: !!actor.loop,
           assetSlot: actor.assetSlot,
           spriteAspect: runtime?.spriteAspect ?? 0,
+          spriteHeight: runtime?.spriteHeight ?? 0,
           frameKey: runtime?.frameKey ?? '',
+          presentation: actor.fullBody ? 'full_body' : 'portrait_post',
           fullBodyStandIn: false,
           moving: runtime?.moving ?? false,
           motion: runtime?.motion ?? { x: 0, z: 0 },
@@ -1829,12 +1833,18 @@ class TownActorRuntime {
     this.group.name = `TownActor:${definition.id}`;
     this.group.position.set(definition.position.x, 0, definition.position.z);
     this.sprite.name = `TownActorSprite:${definition.id}`;
-    if (definition.id === 'prospector' || !definition.fullBody) {
-      this.sprite.scale.setScalar(definition.scale);
-      this.sprite.position.y = definition.scale * 0.55 + 0.08;
+    const worldHeight = definition.scale * TOWN_CAST_METROLOGY.worldUnitsPerHero;
+    if (!definition.fullBody) {
+      const cardSize = worldHeight * 0.58;
+      this.sprite.scale.setScalar(cardSize);
+      this.sprite.position.y = 0.62 + cardSize / 2;
+      this.group.add(createPortraitPost(cardSize));
+    } else if (definition.id === 'prospector') {
+      this.sprite.scale.setScalar(worldHeight);
+      this.sprite.position.y = worldHeight * 0.55 + 0.08;
     } else {
-      this.sprite.scale.set(definition.scale * 1.25, definition.scale * 3, 1);
-      this.sprite.position.y = definition.scale * 1.5 + 0.08;
+      this.sprite.scale.set(worldHeight * 0.42, worldHeight, 1);
+      this.sprite.position.y = worldHeight / 2 + 0.08;
     }
     this.sprite.renderOrder = RenderLayers.companion;
     this.sprite.visible = true;
@@ -1857,6 +1867,10 @@ class TownActorRuntime {
 
   get spriteAspect(): number {
     return this.sprite.scale.y / this.sprite.scale.x;
+  }
+
+  get spriteHeight(): number {
+    return this.sprite.scale.y;
   }
 
   get frameKey(): string {
@@ -1890,17 +1904,18 @@ class TownActorRuntime {
     const phase = actorPhase(this.definition);
     const breathe = Math.sin((elapsed * 0.58 + phase) * Math.PI * 2);
     const sway = Math.sin((elapsed * 0.31 + phase) * Math.PI * 2);
-    this.group.position.y = breathe * 0.035;
-    this.material.rotation = THREE.MathUtils.degToRad(sway * 1.7);
+    this.group.position.y = this.definition.fullBody ? breathe * 0.035 : 0;
+    this.material.rotation = this.definition.fullBody ? THREE.MathUtils.degToRad(sway * 1.7) : 0;
     if (this.definition.id === 'prospector') {
       if (wasMoving && !this.movedThisTick) this.animator?.reset('walk');
       this.animator?.update(this.movedThisTick ? delta : 0, 'walk', this.currentDirection);
     } else if (this.definition.fullBody?.animated && this.movedThisTick) {
       if (this.currentDirection !== previousDirection) this.applyFullBodyFrame(this.frame);
       this.frameElapsed += delta;
-      if (this.frameElapsed >= 0.125) {
-        this.frameElapsed %= 0.125;
-        this.frame = (this.frame + 1) % 8;
+      const frameDuration = 1 / (this.definition.fullBody.fps ?? 8);
+      if (this.frameElapsed >= frameDuration) {
+        this.frameElapsed %= frameDuration;
+        this.frame = (this.frame + 1) % (this.definition.fullBody.frameMap?.length ?? 8);
         this.applyFullBodyFrame(this.frame);
       }
     } else if (this.definition.fullBody?.animated && this.frame !== 0) {
@@ -1920,7 +1935,8 @@ class TownActorRuntime {
     const fullBody = this.definition.fullBody;
     if (this.definition.id === 'prospector' || !fullBody) return;
     const row = directionRow(this.currentDirection);
-    const key = `${fullBody.sheet}-r${row}c${fullBody.animated ? frame : 0}.png`;
+    const sourceFrame = fullBody.frameMap?.[frame] ?? frame;
+    const key = `${fullBody.sheet}-r${row}c${fullBody.animated ? sourceFrame : 0}.png`;
     this.currentFrameKey = key;
     void loadProcessedCharacterTexture(key).then((texture) => {
       if (texture && !this.disposed && this.currentFrameKey === key) {
@@ -1949,10 +1965,28 @@ class TownActorRuntime {
     const height = typeof image?.height === 'number' ? image.height : 0;
     if (!width || !height) return;
     this.fitted = true;
-    const targetHeight = this.definition.scale * 3;
+    const targetHeight = this.definition.scale * TOWN_CAST_METROLOGY.worldUnitsPerHero;
     this.sprite.scale.set(targetHeight * (width / height), targetHeight, 1);
     this.sprite.position.y = targetHeight / 2 + 0.08;
   }
+}
+
+function createPortraitPost(cardSize: number): THREE.Group {
+  const group = new THREE.Group();
+  group.name = 'TownPortraitPost';
+  const wood = new THREE.MeshStandardMaterial({ color: '#6f4528', roughness: 0.9 });
+  const parchment = new THREE.SpriteMaterial({ color: '#f5e6c8', depthWrite: false });
+  const post = new THREE.Mesh(new THREE.BoxGeometry(0.11, 0.72, 0.11), wood);
+  post.position.y = 0.36;
+  const base = new THREE.Mesh(new THREE.BoxGeometry(0.62, 0.08, 0.32), wood);
+  base.position.y = 0.04;
+  const card = new THREE.Sprite(parchment);
+  card.name = 'TownPortraitPostCard';
+  card.scale.setScalar(cardSize * 1.12);
+  card.position.y = 0.62 + cardSize / 2;
+  card.renderOrder = RenderLayers.companion - 0.01;
+  group.add(post, base, card);
+  return group;
 }
 
 function directionRow(direction: RotationDirection): number {
@@ -2734,7 +2768,7 @@ function createSurveyPlot(building: TownBuilding): THREE.Group {
 
 function townActorPlazaPlacement(actor: TownActorDefinition): TownActorDefinition {
   if (actor.loop) return actor;
-  const offset = townPlazaLayout.actorOffsets[actor.id as keyof typeof townPlazaLayout.actorOffsets];
+  const offset = actor.portraitPost?.offset ?? townPlazaLayout.actorOffsets[actor.id as keyof typeof townPlazaLayout.actorOffsets];
   if (!offset) return actor;
   const anchor = townBuildings.find((building) => building.id === actor.anchor);
   if (!anchor) return actor;

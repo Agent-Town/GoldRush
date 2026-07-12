@@ -27,7 +27,8 @@ export type TownActorDefinition = {
   facing: RotationDirection;
   scale: number;
   barkRadius: number;
-  fullBody?: { sheet: string; animated: boolean };
+  fullBody?: { sheet: string; animated: boolean; frameMap?: readonly number[]; fps?: number };
+  portraitPost?: { offset: { x: number; z: number } };
   e1Barks: readonly string[];
   loop?: {
     trailId: string;
@@ -40,6 +41,15 @@ export type TownActorDefinition = {
 
 const reverseTrail = (id: string) => [...townTrail(id).points].reverse();
 const ringRoad = townTrail('ring-road').points;
+export const TOWN_CAST_METROLOGY = {
+  worldUnitsPerHero: 1.85,
+  hero: 1,
+  adult: 1,
+  tallAdult: 1.02,
+  elder: 0.96,
+  child: 0.85,
+  prospector: 0.6,
+} as const;
 
 const tavernkeeperPortraitUrl = new URL('../../assets/processed/townsfolk-tavernkeeper.png', import.meta.url).href;
 const storekeeperPortraitUrl = new URL('../../assets/processed/townsfolk-storekeeper.png', import.meta.url).href;
@@ -61,7 +71,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'tavern',
     position: { x: -5.4, z: -6.75 },
     facing: 's',
-    scale: 1.45,
+    scale: TOWN_CAST_METROLOGY.tallAdult,
     barkRadius: 3.2,
     fullBody: { sheet: 'char-tavernkeeper-sheet-walk8', animated: true },
     e1Barks: ['Board is warm. Pick a trail when {town} is ready.', "Coffee's on; contracts wait by the hearth.", 'Every trail starts with a name on the board.'],
@@ -76,7 +86,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     requiresBuilding: 'general_store',
     position: { x: 1.55, z: -8.8 },
     facing: 's',
-    scale: 1.4,
+    scale: TOWN_CAST_METROLOGY.adult,
     barkRadius: 3,
     fullBody: { sheet: 'char-storekeeper-sheet-walk8', animated: true },
     e1Barks: ["Tuesday's wagon brought nails, beans, and better luck.", 'If {town} can count it, I can stock it.', 'The shelf is small; the want is not.'],
@@ -90,7 +100,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'schoolhouse',
     position: { x: -6.65, z: 7.35 },
     facing: 's',
-    scale: 1.46,
+    scale: TOWN_CAST_METROLOGY.elder,
     barkRadius: 5.4,
     fullBody: { sheet: 'char-elder-sheet-walk8', animated: true },
     e1Barks: ['{town} learns faster when the children ask why.', 'Science is patience written clearly.', 'Bring questions; leave with a plan.'],
@@ -105,8 +115,9 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     requiresBuilding: 'chapel',
     position: { x: -1.55, z: 11.35 },
     facing: 's',
-    scale: 1.42,
+    scale: TOWN_CAST_METROLOGY.tallAdult,
     barkRadius: 3,
+    portraitPost: { offset: { x: 1.45, z: -2.65 } },
     e1Barks: ['The bell is for courage, not judgment.', 'Some days a town needs quiet more than gold.', '{town} has roots now. Tend them.'],
   },
   {
@@ -118,8 +129,9 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'schoolhouse',
     position: { x: -10.2, z: 6.85 },
     facing: 'se',
-    scale: 1.36,
+    scale: TOWN_CAST_METROLOGY.adult,
     barkRadius: 2.8,
+    portraitPost: { offset: { x: -2.6, z: 0 } },
     e1Barks: ['Chalk today, Steamworks tomorrow.', 'The little ones count waves faster than I do.', 'A good question is a lantern.'],
   },
   {
@@ -131,8 +143,9 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'assay_office',
     position: { x: 5.55, z: 9.3 },
     facing: 's',
-    scale: 1.36,
+    scale: TOWN_CAST_METROLOGY.adult,
     barkRadius: 3.05,
+    portraitPost: { offset: { x: -2.8, z: -1 } },
     e1Barks: ['Ore talks. My scale makes it honest.', 'Bring the odd bits here before they become trouble.', 'Gold in, proof out. That is the office bargain.'],
   },
   {
@@ -144,7 +157,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'schoolhouse',
     position: { x: -2.8, z: -1.5 },
     facing: 's',
-    scale: 1.15,
+    scale: TOWN_CAST_METROLOGY.child,
     barkRadius: 2.45,
     fullBody: { sheet: 'char-youngster-m-sheet-walk8', animated: true },
     e1Barks: ['Race you from the trough to the office!', 'I found a shiny rock. It is probably science.', 'The Prospector hummed at me. I hummed back.'],
@@ -164,7 +177,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'schoolhouse',
     position: { x: 2.2, z: 1.25 },
     facing: 'sw',
-    scale: 1.14,
+    scale: TOWN_CAST_METROLOGY.child,
     barkRadius: 2.45,
     fullBody: { sheet: 'char-youngster-f-sheet-walk8', animated: true },
     e1Barks: ['We drew the store before it was real.', 'If the Baron comes here, he has to do sums first.', 'I can see the whole square from the rail.'],
@@ -184,9 +197,9 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'tavern',
     position: { x: -4.35, z: -4.25 },
     facing: 's',
-    scale: 1.12,
+    scale: TOWN_CAST_METROLOGY.child,
     barkRadius: 3.1,
-    fullBody: { sheet: 'char-newsie-mei-sheet-walk8', animated: true },
+    fullBody: { sheet: 'char-newsie-mei-sheet-walk8', animated: true, frameMap: [0, 1, 6, 7], fps: 8 },
     e1Barks: ['EXTRA! Fresh ink by the tavern!', 'Paper is warm. Read it before the wind does.'],
     loop: {
       trailId: 'tavern',
@@ -205,7 +218,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     anchor: 'claim_office',
     position: { x: 8.45, z: -4.55 },
     facing: 's',
-    scale: 1.5,
+    scale: TOWN_CAST_METROLOGY.prospector,
     barkRadius: 6.5,
     fullBody: { sheet: 'char-prospector-sheet-hover8', animated: true },
     e1Barks: ['I am watching {town} from the office steps.', '{town} is logged. I will keep near the claim books.', 'Call from the board; I will follow {town} to the claim.'],
