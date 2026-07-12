@@ -1818,6 +1818,7 @@ class TownActorRuntime {
   private readonly sprite = new THREE.Sprite(this.material);
   private readonly animator: SpriteAnimator | null;
   private frameElapsed = 0;
+  private stillElapsed = 0;
   private frame = 0;
   private currentFrameKey = '';
   private disposed = false;
@@ -1910,6 +1911,7 @@ class TownActorRuntime {
       if (wasMoving && !this.movedThisTick) this.animator?.reset('walk');
       this.animator?.update(this.movedThisTick ? delta : 0, 'walk', this.currentDirection);
     } else if (this.definition.fullBody?.animated && this.movedThisTick) {
+      this.stillElapsed = 0;
       if (this.currentDirection !== previousDirection) this.applyFullBodyFrame(this.frame);
       this.frameElapsed += delta;
       const frameDuration = 1 / (this.definition.fullBody.fps ?? 8);
@@ -1919,9 +1921,14 @@ class TownActorRuntime {
         this.applyFullBodyFrame(this.frame);
       }
     } else if (this.definition.fullBody?.animated && this.frame !== 0) {
-      this.frameElapsed = 0;
-      this.frame = 0;
-      this.applyFullBodyFrame(0);
+      // Loop points can be float-identical on alternate frames; only snap to the
+      // standing frame after a real stop, or the walk thrashes back to column 0.
+      this.stillElapsed += delta;
+      if (this.stillElapsed >= 0.15) {
+        this.frameElapsed = 0;
+        this.frame = 0;
+        this.applyFullBodyFrame(0);
+      }
     }
   }
 
@@ -2812,17 +2819,26 @@ function loopPoint(loop: NonNullable<TownActorDefinition['loop']>, elapsed: numb
   }
   if (total <= 0) return points[0]!;
 
-  let distance = ((((elapsed / Math.max(0.001, loop.seconds) + loop.phase) % 1) + 1) % 1) * total;
+  const pauses = loop.pauses ?? {};
+  let pauseTotal = 0;
+  for (const seconds of Object.values(pauses)) pauseTotal += seconds;
+  const walkSeconds = Math.max(0.001, loop.seconds);
+  const cycle = walkSeconds + pauseTotal;
+  let time = ((((elapsed / cycle + loop.phase) % 1) + 1) % 1) * cycle;
+  const speed = total / walkSeconds;
   for (let index = 0; index < points.length; index += 1) {
+    const pause = pauses[index] ?? 0;
+    if (time < pause) return points[index]!;
+    time -= pause;
     const length = lengths[index] ?? 0;
-    if (distance > length) {
-      distance -= length;
-      continue;
+    const segmentSeconds = length / speed;
+    if (time < segmentSeconds) {
+      const from = points[index]!;
+      const to = points[(index + 1) % points.length]!;
+      const t = segmentSeconds > 0 ? time / segmentSeconds : 0;
+      return { x: THREE.MathUtils.lerp(from.x, to.x, t), z: THREE.MathUtils.lerp(from.z, to.z, t) };
     }
-    const from = points[index]!;
-    const to = points[(index + 1) % points.length]!;
-    const t = length > 0 ? distance / length : 0;
-    return { x: THREE.MathUtils.lerp(from.x, to.x, t), z: THREE.MathUtils.lerp(from.z, to.z, t) };
+    time -= segmentSeconds;
   }
   return points[0]!;
 }

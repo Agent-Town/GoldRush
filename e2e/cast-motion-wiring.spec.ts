@@ -32,7 +32,7 @@ async function bootTown(page: Page): Promise<void> {
 }
 
 test('the plaza cast stands, walks, and faces truthfully without borrowed sheets', async ({ page }, testInfo) => {
-  test.setTimeout(45_000);
+  test.setTimeout(75_000);
   const errors: string[] = [];
   page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
   page.on('pageerror', (error) => errors.push(error.message));
@@ -58,7 +58,7 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   await expect.poll(async () => {
     const newsie = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie'));
     return newsie && !newsie.moving ? newsie.frameKey : '';
-  }, { timeout: 20_000 }).toMatch(/c0\.png$/);
+  }, { timeout: 40_000 }).toMatch(/c0\.png$/); // Mei's loop is ~19s with one pause; give a full cycle + margin
 
   await page.waitForTimeout(500);
   const after = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.filter((actor) => actor.visible));
