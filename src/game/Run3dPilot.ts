@@ -6,6 +6,7 @@ import * as Terrain from '../world/Terrain';
 
 const registry = {
   boiler_house: { url: new URL('../../assets/pilots/run3d/boiler-house.glb', import.meta.url).href, fallback: 'BoilerHousePool', groundPad: 1.1 },
+  lantern_post: { url: new URL('../../assets/pilots/run3d/lantern-post.glb', import.meta.url).href, fallback: 'LanternPostPool', groundPad: 0.4 },
   palisade: { url: new URL('../../assets/pilots/run3d/palisade.glb', import.meta.url).href, fallback: 'PalisadePool', groundPad: 1.5 },
   sluice: { url: new URL('../../assets/pilots/run3d/sluice.glb', import.meta.url).href, fallback: 'SluicePool', groundPad: 0.9 },
   turret: { url: new URL('../../assets/pilots/run3d/turret.glb', import.meta.url).href, fallback: 'TurretPool', groundPad: 1.2 },
@@ -129,6 +130,7 @@ export function installRun3dPilot(host: Host): Run3dPilot {
         Terrain.visualY(entry.position.x, entry.position.z, 0, registry[entry.id as Buildable3dId].groundPad),
         entry.position.z,
       );
+      if (entry.id === 'lantern_post') instance.rotation.y = (diagnostics.lanternPostRotations[entry.index] ?? 0) * Math.PI / 2;
       if (entry.id === 'palisade') {
         const posts = host.scene.getObjectByName('PalisadePosts') as THREE.InstancedMesh | undefined;
         if (posts) {
