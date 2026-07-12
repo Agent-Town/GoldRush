@@ -15,6 +15,7 @@ import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { installClaimLedgerRequestHandler } from './encyclopedia/events';
 import { installEpochLedgerDiscovery } from './encyclopedia/state';
 import type { LedgerEntryId } from './encyclopedia/registry';
+import { installBuildFreshness } from './app/BuildFreshness';
 
 type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
 type Game = import('./game/Game').Game;
@@ -66,6 +67,7 @@ let assayBench: AssayBench | undefined;
 let profiles: ReturnType<typeof installProfiles> | undefined;
 let startMenu: StartMenu | undefined;
 let town: TownScene | undefined;
+const uninstallBuildFreshness = installBuildFreshness(app, () => !game && !profiles && Boolean(startMenu || town));
 const uninstallClaimLedgerRequest = installClaimLedgerRequestHandler((entryId) => openClaimLedger(entryId));
 installEpochLedgerDiscovery();
 
@@ -274,6 +276,7 @@ function prefetchNonCriticalStartupAssets(): void {
 if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     uninstallClaimLedgerRequest();
+    uninstallBuildFreshness();
     startMenu?.dispose();
     profiles?.dispose();
     assayBench?.dispose();

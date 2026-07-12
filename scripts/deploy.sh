@@ -15,7 +15,9 @@ if [ -f .env.local ]; then set -a; . ./.env.local; set +a; fi
 [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || { note "SKIP: CLOUDFLARE_API_TOKEN missing from .env.local (owner one-time: create a token with 'Cloudflare Pages: Edit' permission)"; exit 0; }
 
 note "building…"
-if ! npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; exit 0; fi
+BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD)}"
+if ! CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; exit 0; fi
+printf '{"build":"%s","builtAt":"%s"}\n' "$BUILD_ID" "$(date -u '+%Y-%m-%dT%H:%M:%SZ')" > dist/version.json
 
 note "deploying dist/ to Pages project 'gold-rush'…"
 if wrangler pages deploy --commit-dirty=true >> "$LOG" 2>&1; then
