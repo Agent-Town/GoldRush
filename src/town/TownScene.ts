@@ -39,7 +39,7 @@ import {
   type MegaprojectManifest,
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
-import { RESEARCH_STATE_KEY, browserResearchStorage, loadResearchState, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
+import { RESEARCH_STATE_KEY, browserResearchStorage, loadResearchState, reconcileActiveEpoch, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
@@ -318,6 +318,8 @@ export class TownScene {
     private readonly onExit: () => void,
     private readonly options: TownSceneOptions = {},
   ) {
+    reconcileActiveEpoch();
+    this.selectedResearchEpochId = activeEpochId();
     this.boardPageIndex = boardPageIndexForContract(options.initialBoardContractId);
     this.renderer = createRenderer(canvas);
     this.renderer.toneMappingExposure = 1.02;

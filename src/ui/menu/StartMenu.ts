@@ -6,6 +6,7 @@ import {
   installProfileStorageScope,
   loadProfileState,
 } from '../../game/ProfileStorage';
+import { reconcileActiveEpoch } from '../../meta/ResearchTree';
 import { SoundSystem } from '../../audio/SoundSystem';
 import { bindAudioSettingsControls, renderAudioSettingsControls } from '../../audio/AudioSettingsControl';
 import { bindStorySettingsControl, renderStorySettingsControl } from '../../story/settings';
@@ -218,6 +219,7 @@ export class StartMenu {
       return;
     }
     installProfileStorageScope(this.storage);
+    reconcileActiveEpoch();
     this.firstBoot = false;
     this.profileMessage = '';
     accountSync.queuePush();
@@ -227,6 +229,7 @@ export class StartMenu {
   private readonly onAccountSync = () => {
     if (this.storage && loadProfileState(this.storage)) {
       installProfileStorageScope(this.storage);
+    reconcileActiveEpoch();
       this.firstBoot = false;
       this.profileMessage = '';
     }
@@ -390,7 +393,10 @@ function setupProfileStorage(): Storage | undefined {
     const storage = globalThis.localStorage;
     if (!storage) return undefined;
     if (!loadProfileState(storage) && hasLegacyProfileData(storage)) ensureProfileState(storage);
-    if (loadProfileState(storage)) installProfileStorageScope(storage);
+    if (loadProfileState(storage)) {
+      installProfileStorageScope(storage);
+      reconcileActiveEpoch();
+    }
     return storage;
   } catch {
     return undefined;

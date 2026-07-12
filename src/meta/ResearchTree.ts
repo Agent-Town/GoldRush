@@ -6,6 +6,7 @@ import {
   type MetaProgressStorage,
 } from '../game/MetaProgress';
 import {
+  ACTIVE_EPOCH_KEY,
   activeEpochId,
   DEFAULT_EPOCH_ID,
   listEpochs,
@@ -326,6 +327,21 @@ export function savedEpochMegaprojectBuildStarted(epochId = activeEpochId()): bo
 
 export function savedStampMillBuildStarted(): boolean {
   return savedEpochMegaprojectBuildStarted(DEFAULT_EPOCH_ID);
+}
+
+// A profile that ever held an era ACTIVE owns that era's research registry; the
+// active-epoch pointer can lag it when a write landed under another profile's
+// storage scope (stale tab / profile switch). Research evidence never exists
+// for an unpressed era door, so healing forward can't skip a ceremony.
+export function reconcileActiveEpoch(storage: MetaProgressStorage | undefined = browserResearchStorage()): void {
+  if (!storage) return;
+  try {
+    let latest = loadEpoch(activeEpochId());
+    for (const epoch of listEpochs()) {
+      if (epoch.order > latest.order && storage.getItem(researchStateKey(epoch.id)) !== null) latest = loadEpoch(epoch.id);
+    }
+    if (latest.id !== activeEpochId()) storage.setItem(ACTIVE_EPOCH_KEY, latest.id);
+  } catch {}
 }
 
 export function browserResearchStorage(): MetaProgressStorage | undefined {
