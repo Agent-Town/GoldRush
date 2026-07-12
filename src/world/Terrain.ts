@@ -5,6 +5,7 @@ import { palette } from '../assets/palette';
 import { assetSlots, tagPlaceholder, type PlaceholderFactory } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import {
   activeTileDescriptor,
   activeWaterDescriptor,
@@ -743,6 +744,8 @@ function distanceToSpringCenter(x: number, z: number, source: ContractWaterSourc
 function createBankMaterial(splat = false): THREE.MeshStandardMaterial {
   const material = bankMaterial.clone();
   const splatParams = terrainSplatParams();
+  const liteAntiTile = performanceTierDiagnostics().tier === 'lite';
+  const antiTileDisabled = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('terrainSeamless') === '0';
   const uniforms: TerrainShaderUniforms = {
     repeat: { value: BANK_TILE_REPEATS },
     variantCount: { value: 1 },
@@ -755,7 +758,7 @@ function createBankMaterial(splat = false): THREE.MeshStandardMaterial {
     dampBand: { value: splatParams.dampBand },
     scrubAmount: { value: splatParams.scrubAmount },
     macroWarmth: { value: splatParams.macroWarmth },
-    antiTile: { value: splatParams.antiTile },
+    antiTile: { value: antiTileDisabled ? 0 : splatParams.antiTile },
     paletteTint: { value: paletteVector(TILE_PALETTE?.tint, [1, 1, 1]) },
     dampTint: { value: paletteVector(TILE_PALETTE?.dampTint, [0.4, 0.37, 0.29]) },
     dampAmount: { value: TILE_PALETTE?.dampAmount ?? 0.28 },
@@ -866,30 +869,30 @@ vec4 terrainAtlasSample(vec2 tileUv, float variant) {
   float atlasRow = max(1.0, terrainAtlasRows) - 1.0 - variant;
   vec2 atlasUv = vec2(tileUv.x, (clamp(tileUv.y, 0.001, 0.999) + atlasRow) / max(1.0, terrainAtlasRows));
   return texture2D(map, atlasUv);
+}
+
+vec4 terrainLayerSample(vec2 repeatedUv, float scale, vec2 salt) {
+  vec2 layerKey = floor(vec2(terrainSeed * 31.0, terrainSeed * 47.0) + salt);
+  vec2 offset = vec2(terrainHash(layerKey + 17.0), terrainHash(layerKey + 53.0));
+  vec2 tileUv = terrainOrientUv(fract(repeatedUv * scale + offset), layerKey);
+  return terrainAtlasSample(tileUv, terrainVariant(layerKey, salt));
 }`)
       .replace('#include <map_fragment>', `
 #ifdef USE_MAP
   vec2 repeatedUv = vTerrainUv * terrainRepeat;
-  vec2 terrainCell = floor(repeatedUv);
-  vec2 jitter = vec2(
-    terrainHash(terrainCell + vec2(71.0, 19.0)),
-    terrainHash(terrainCell + vec2(13.0, 83.0))
-  ) - 0.5;
-  vec2 tileUv = terrainOrientUv(fract(repeatedUv + jitter * 0.18), terrainCell);
-  vec4 packedSand = terrainAtlasSample(tileUv, terrainVariant(terrainCell, vec2(23.0, 29.0)));
-  vec4 dryDirt = terrainAtlasSample(terrainOrientUv(fract(repeatedUv * 0.73 + jitter * 0.11), terrainCell + vec2(3.0, 7.0)), terrainVariant(terrainCell, vec2(43.0, 61.0)));
-  vec4 scrub = terrainAtlasSample(terrainOrientUv(fract(repeatedUv * 1.21 - jitter * 0.13), terrainCell + vec2(11.0, 5.0)), terrainVariant(terrainCell, vec2(89.0, 31.0)));
-  vec4 wideSand = terrainAtlasSample(
-    terrainOrientUv(fract(repeatedUv * 0.47 + jitter * 0.09 + terrainSeed), terrainCell + vec2(17.0, 41.0)),
-    terrainVariant(terrainCell, vec2(7.0, 101.0))
-  );
-  vec4 wideDirt = terrainAtlasSample(
-    terrainOrientUv(fract(repeatedUv * 0.36 - jitter * 0.07 + terrainSeed * 2.0), terrainCell + vec2(29.0, 2.0)),
-    terrainVariant(terrainCell, vec2(109.0, 5.0))
-  );
-  float antiTileMix = clamp(terrainAntiTile, 0.0, 1.0) * terrainSplat;
+  vec4 packedSand = terrainLayerSample(repeatedUv, 1.0, vec2(23.0, 29.0));
+  vec4 dryDirt = terrainLayerSample(repeatedUv, 0.73, vec2(43.0, 61.0));
+  vec4 scrub = terrainLayerSample(repeatedUv, 1.21, vec2(89.0, 31.0));
+  vec4 wideSand = terrainLayerSample(repeatedUv, 0.47, vec2(7.0, 101.0));
+  ${liteAntiTile ? '' : `
+  vec4 wideDirt = terrainLayerSample(repeatedUv, 0.36, vec2(109.0, 5.0));`}
+  float antiTileMix = clamp(terrainAntiTile, 0.0, 1.0);
+  ${liteAntiTile ? `
+  float antiTileNoise = smoothstep(0.18, 0.86, terrainValueNoise(vTerrainWorld * 0.105 + terrainSeed * 67.0));
+  packedSand = mix(packedSand, wideSand, antiTileMix * antiTileNoise);
+  dryDirt = mix(dryDirt, wideSand, antiTileMix * (1.0 - antiTileNoise) * 0.55);` : `
   packedSand = mix(packedSand, wideSand, antiTileMix * smoothstep(0.18, 0.86, terrainValueNoise(vTerrainWorld * 0.11 + terrainSeed * 67.0)));
-  dryDirt = mix(dryDirt, wideDirt, antiTileMix * smoothstep(0.24, 0.82, terrainValueNoise(vTerrainWorld * 0.095 - terrainSeed * 43.0)));
+  dryDirt = mix(dryDirt, wideDirt, antiTileMix * smoothstep(0.24, 0.82, terrainValueNoise(vTerrainWorld * 0.095 - terrainSeed * 43.0)));`}
   float dirtBlend = smoothstep(0.22, 0.78, terrainValueNoise(vTerrainWorld * 0.075 + terrainSeed * 17.0));
   float shoreDistance = terrainShoreDistance(vTerrainWorld);
   float shoreBand = 1.0 - smoothstep(1.1, 8.0, shoreDistance);
