@@ -216,6 +216,20 @@
   pointer-events: auto;
 }
 
+.town-ui__era-backdrop {
+  position: absolute;
+  inset: 0;
+  background: #2e1b0e center / cover no-repeat;
+  pointer-events: none;
+}
+
+.town-ui__era-backdrop::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: radial-gradient(ellipse at center, rgba(35, 22, 12, 0.2) 0 30%, rgba(20, 14, 10, 0.82) 100%);
+}
+
 .town-ui__surface[hidden] {
   display: none;
 }

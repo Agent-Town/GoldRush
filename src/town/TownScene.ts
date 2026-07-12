@@ -27,6 +27,7 @@ import {
   epochIsActive,
   listBoardContracts,
   loadContract,
+  listEpochs,
   loadEpoch,
   type ContractManifest,
 } from '../meta/ContractFamilies';
@@ -38,11 +39,12 @@ import {
   type MegaprojectManifest,
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
-import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
+import { RESEARCH_STATE_KEY, browserResearchStorage, loadResearchState, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
 import { renderResearchChart } from '../ui/ResearchChart';
+import { eraBackdropRef, loadEraBackdrop } from '../ui/EraBackdrop';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
 import {
@@ -66,8 +68,6 @@ import {
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 
-const loadTavernBackdropUrl = () =>
-  import('../../assets/processed/tavern-interior-backdrop.png?url').then((module) => module.default);
 const contractArtUrls = {
   theClaimPlate: new URL('../../assets/raw/plate-contract-the-claim.png', import.meta.url).href,
   dryGulchPlate: new URL('../../assets/raw/plate-contract-dry-gulch.png', import.meta.url).href,
@@ -295,10 +295,9 @@ export class TownScene {
   private boardOpen = false;
   private schoolhouseOpen = false;
   private selectedResearchNodeId: string | undefined;
+  private selectedResearchEpochId = activeEpochId();
   private nameBeatTimer = 0;
   private lastExitIntent = false;
-  private tavernBackdropUrl: string | undefined;
-  private tavernBackdropRequest: Promise<string> | undefined;
   private stampMillPlaqueText = '';
   private returnBeatEmitted = false;
   private boardPageIndex = 0;
@@ -874,6 +873,11 @@ export class TownScene {
       this.raiseStampMill();
       return;
     }
+    const eraButton = target?.closest<HTMLElement>('[data-research-era]');
+    if (eraButton?.dataset.researchEra) {
+      this.selectResearchEra(eraButton.dataset.researchEra);
+      return;
+    }
     const nodeButton = target?.closest<HTMLElement>('[data-research-node]');
     if (nodeButton?.dataset.researchNode) {
       this.selectResearchNode(nodeButton.dataset.researchNode);
@@ -1116,7 +1120,6 @@ export class TownScene {
     this.emitBoardStorySignals();
     this.boardOpen = true;
     this.board.hidden = false;
-    this.loadTavernBackdrop();
     this.board.querySelector<HTMLButtonElement>('[data-contract-launch]:not(:disabled), [data-contract-close]')?.focus({ preventScroll: true });
     this.publishDiagnostics();
   }
@@ -1145,7 +1148,13 @@ export class TownScene {
   }
 
   private renderSchoolhouse(): void {
+    const eras = activeProfileResearchStates();
+    const activeId = activeEpochId();
+    const selected = eras.find((state) => state.epochId === this.selectedResearchEpochId) ?? activeProfileResearchState();
+    const selectedEpochId = selected.epochId ?? activeId;
+    const readonly = selectedEpochId !== activeId;
     this.schoolhouse.innerHTML = `
+      <div class="town-ui__era-backdrop" data-era-backdrop="${eraBackdropRef(selectedEpochId)}" aria-hidden="true"></div>
       <div class="town-ui__surface-shell">
         <header class="town-ui__surface-header">
           <div>
@@ -1156,11 +1165,21 @@ export class TownScene {
           <button class="town-ui__board-close" type="button" data-schoolhouse-ledger data-testid="schoolhouse-open-ledger">Claim Ledger</button>
         </header>
         <div class="town-ui__surface-body">
-          ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}
           ${this.renderEpochActivationAction()}
+          ${renderResearchChart(selected, readonly ? undefined : this.selectedResearchNodeId, { readonly, eras })}
         </div>
       </div>
     `;
+    this.loadSurfaceEraBackdrop(this.schoolhouse, selectedEpochId);
+  }
+
+  private loadSurfaceEraBackdrop(surface: HTMLElement, epochId: string): void {
+    void loadEraBackdrop(epochId).then((url) => {
+      const backdrop = surface.querySelector<HTMLElement>(`.town-ui__era-backdrop[data-era-backdrop="${eraBackdropRef(epochId)}"]`);
+      if (!url) return;
+      document.documentElement.style.setProperty('--gr-era-backdrop', `url("${url}")`);
+      if (backdrop) backdrop.style.backgroundImage = `url("${url}")`;
+    });
   }
 
   private renderEpochActivationAction(surface: 'schoolhouse' | 'site' = 'schoolhouse'): string {
@@ -1256,6 +1275,13 @@ export class TownScene {
     this.publishDiagnostics();
   }
 
+  private selectResearchEra(epochId: string): void {
+    this.selectedResearchEpochId = epochId;
+    this.selectedResearchNodeId = undefined;
+    this.renderSchoolhouse();
+    this.schoolhouse.querySelector<HTMLElement>(`[data-research-era="${epochId}"]`)?.focus({ preventScroll: true });
+  }
+
   private selectResearchNode(id: string): void {
     this.selectedResearchNodeId = id;
     this.renderSchoolhouse();
@@ -1295,10 +1321,10 @@ export class TownScene {
     const pageIndex = clampBoardPage(this.boardPageIndex, rows.length);
     this.boardPageIndex = pageIndex;
     const contract = rows[pageIndex];
-    const backdropStyle = this.tavernBackdropUrl ? ` style="background-image:url('${this.tavernBackdropUrl}')"` : '';
+    const boardEpochId = activeEpochId();
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
     this.board.innerHTML = `
-      <div class="town-ui__board-backdrop"${backdropStyle} aria-hidden="true"></div>
+      <div class="town-ui__board-backdrop town-ui__era-backdrop" data-era-backdrop="${eraBackdropRef(boardEpochId)}" aria-hidden="true"></div>
       <div class="town-ui__board-shell">
         <header class="town-ui__board-header">
           ${
@@ -1338,6 +1364,7 @@ export class TownScene {
         ${this.renderRideTogetherCard()}
       </div>
     `;
+    this.loadSurfaceEraBackdrop(this.board, boardEpochId);
   }
 
   private selectBoardPage(index: number): void {
@@ -1518,15 +1545,6 @@ export class TownScene {
     if (!this.options.returnResult || this.returnBeatEmitted) return;
     this.returnBeatEmitted = true;
     emitStorySignal({ type: 'run-return-town', result: this.options.returnResult });
-  }
-
-  private loadTavernBackdrop(): void {
-    this.tavernBackdropRequest ??= loadTavernBackdropUrl();
-    void this.tavernBackdropRequest.then((url) => {
-      this.tavernBackdropUrl = url;
-      const backdrop = this.board.querySelector<HTMLElement>('.town-ui__board-backdrop');
-      if (backdrop) backdrop.style.backgroundImage = `url("${url}")`;
-    });
   }
 
   private publishDiagnostics(): void {
@@ -2055,6 +2073,20 @@ function escapeHtml(value: string): string {
     if (char === '"') return '&quot;';
     return '&#39;';
   });
+}
+
+function activeProfileResearchStates(): ResearchState[] {
+  const storage = browserResearchStorage();
+  const activeId = activeEpochId();
+  return listEpochs()
+    .filter(
+      (epoch: ReturnType<typeof listEpochs>[number]) =>
+        epoch.order <= loadEpoch(activeId).order &&
+        (epoch.id === activeId ||
+          storage?.getItem(researchStateKey(epoch.id)) !== null ||
+          (epoch.id === DEFAULT_EPOCH_ID && storage?.getItem(RESEARCH_STATE_KEY) !== null)),
+    )
+    .map((epoch: ReturnType<typeof listEpochs>[number]) => loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, epoch.id));
 }
 
 function activeProfileResearchState() {

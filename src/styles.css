@@ -74,6 +74,13 @@ body {
   background-size: cover;
 }
 
+.gr-start-menu__backdrop::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  background: radial-gradient(ellipse at center, rgba(35, 22, 12, 0.12) 0 30%, rgba(20, 14, 10, 0.82) 100%);
+}
+
 .gr-start-menu__column {
   position: relative;
   z-index: 1;

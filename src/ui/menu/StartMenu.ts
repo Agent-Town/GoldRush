@@ -20,13 +20,13 @@ import {
   restoreSaveSlotToAuto,
   type SaveSlot,
 } from '../../game/SaveSlots';
-import { loadContract } from '../../meta/ContractFamilies';
+import { activeEpochId, loadContract } from '../../meta/ContractFamilies';
 import { readTownName } from '../../town/TownNaming';
 import { accountSync } from '../../game/AccountSync';
+import { eraBackdropRef, loadEraBackdrop } from '../EraBackdrop';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
-const loadBackdropUrl = () => import('../../../assets/processed/ui-menu-backdrop.png?url').then((module) => module.default);
 const AUDIO_SETTINGS_IDS = {
   volume: 'start-menu-volume',
   volumeValue: 'start-menu-volume-value',
@@ -175,9 +175,13 @@ export class StartMenu {
   }
 
   private loadBackdrop(): void {
-    this.backdropRequest ??= loadBackdropUrl();
+    const epochId = activeEpochId();
+    this.root.querySelector<HTMLElement>('.gr-start-menu__backdrop')?.setAttribute('data-era-backdrop', eraBackdropRef(epochId));
+    this.backdropRequest ??= loadEraBackdrop(epochId).then((url) => url ?? '');
     void this.backdropRequest.then((url) => {
+      if (!url) return;
       this.backdropUrl = url;
+      document.documentElement.style.setProperty('--gr-era-backdrop', `url("${url}")`);
       const backdrop = this.root.querySelector<HTMLElement>('.gr-start-menu__backdrop');
       if (!backdrop) return;
       backdrop.dataset.assetState = 'ready';

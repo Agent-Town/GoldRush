@@ -308,10 +308,14 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     id: 'e2-railcar-arrival',
     trigger: 'boss-arrival',
     speaker: 'clerk',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e2-hill-mine',
+    lines: ['Railcar on the cut.', 'Break the wheels, boiler, and cabin before the town signs the next ledger.'],
+  },
+  {
     id: 'e2-rail-arrives',
     trigger: 'epoch-activated',
     speaker: 'newsie',
-
     oncePerProfile: true,
     when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
     lines: ['Rail over the ridge! The first graduate has the Depot flag.', 'The town just grew a timetable.'],
