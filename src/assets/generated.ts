@@ -3,14 +3,14 @@ import { RenderLayers } from '../core/RenderLayers';
 import { assetSlots, type AssetSlotId } from './slots';
 
 const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
-  [assetSlots.charHero]: new URL('../../assets/processed/hero-homesteader.png', import.meta.url).href,
+  [assetSlots.charHero]: new URL('../../assets/processed/hero-homesteader-f.png', import.meta.url).href,
   [assetSlots.charClaimJumper]: new URL('../../assets/processed/enemy-claim-jumper.png', import.meta.url).href,
   [assetSlots.nodeGoldSeam]: new URL('../../assets/processed/node-gold-seam.png', import.meta.url).href,
   [assetSlots.terrainBank]: new URL('../../assets/processed/terrain-bank-tile.png', import.meta.url).href,
   [assetSlots.terrainRiver]: new URL('../../assets/processed/terrain-river-tile.png', import.meta.url).href,
 };
 const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string>>> = {
-  [assetSlots.charBaron]: () => import('../../assets/processed/char-baron-sheet-walk4-a-r0c0.png?url').then((module) => module.default),
+  [assetSlots.charBaron]: () => import('../../assets/processed/char-baron-sheet-walk8-r0c0.png?url').then((module) => module.default),
   [assetSlots.charTownTavernkeeper]: () => import('../../assets/processed/townsfolk-tavernkeeper.png?url').then((module) => module.default),
   [assetSlots.charTownStorekeeper]: () => import('../../assets/processed/townsfolk-storekeeper.png?url').then((module) => module.default),
   [assetSlots.charTownElder]: () => import('../../assets/processed/townsfolk-elder.png?url').then((module) => module.default),
