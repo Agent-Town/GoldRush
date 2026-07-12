@@ -5,6 +5,7 @@ import { townBuildings, townPlazaSlot } from './townLayout';
 
 const TAVERN_MODEL_URL = new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href;
 const GENERAL_STORE_MODEL_URL = new URL('../../assets/pilots/general-store-3d/general-store.glb', import.meta.url).href;
+const SCHOOLHOUSE_MODEL_URL = new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href;
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
@@ -80,7 +81,7 @@ function inspect(model: THREE.Object3D): {
 
 function installTownBuildingPilot(
   { scene, canvas }: Host,
-  id: 'tavern' | 'general_store',
+  id: 'tavern' | 'general_store' | 'schoolhouse',
   modelUrl: string,
   modelName: string,
 ): () => void {
@@ -140,4 +141,8 @@ export function installTownTavernPilot(host: Host): () => void {
 
 export function installTownGeneralStorePilot(host: Host): () => void {
   return installTownBuildingPilot(host, 'general_store', GENERAL_STORE_MODEL_URL, 'TownGeneralStorePilot');
+}
+
+export function installTownSchoolhousePilot(host: Host): () => void {
+  return installTownBuildingPilot(host, 'schoolhouse', SCHOOLHOUSE_MODEL_URL, 'TownSchoolhousePilot');
 }
