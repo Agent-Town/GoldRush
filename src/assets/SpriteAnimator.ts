@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 import characterContractText from '../../assets/layer-contracts/characters.v2.json?raw';
 import { Balance } from '../game/Balance';
-import { afterStartupFrame, bindWorldSpriteTint, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
+import { afterStartupFrame, bindWorldSpriteTint, heroPoseFrameFiles, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
 import {
   coarseOrientationForDirection,
   idleDirectionFor,
@@ -252,7 +252,7 @@ export class SpriteAnimator {
     } else if (sprite?.parent) {
       this.fadeMaterial = new THREE.SpriteMaterial({
         transparent: true,
-        alphaTest: 0.04,
+        alphaTest: 0.35,
         depthWrite: false,
         opacity: 0,
       });
@@ -390,7 +390,7 @@ export class SpriteAnimator {
     if (!runtime) return null;
 
     const direction = rotationDirectionFor(runtime, orientation);
-    if (direction && isLocomotionClip(requestedClip)) {
+    if (direction) {
       const clipDirection = requestedClip === 'idle' ? idleDirectionFor(direction) : direction;
       const hasExplicitDirection = runtime.orientations.has(clipDirection);
       const sourceDirection = hasExplicitDirection ? clipDirection : runtime.rotationMirrors.get(clipDirection) ?? clipDirection;
@@ -801,10 +801,27 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
     }
   }
 
+  if (slotId === assetSlots.charHero) await addHeroPoseClips(orientations);
+
   if (orientations.size === 0 && fallbackClip) {
     orientations.set('side', { clips: new Map([['idle', fallbackClip], ['walk', fallbackClip]]) });
   }
   return orientations.size > 0 ? { orientations, rotationDirections, rotationMirrors, diagnosticMirrors } : null;
+}
+
+async function addHeroPoseClips(orientations: Map<string, RuntimeOrientation>): Promise<void> {
+  for (const [clipName, directions] of Object.entries(heroPoseFrameFiles)) {
+    for (const [direction, files] of Object.entries(directions)) {
+      const clip = await createRuntimeOrientation(
+        { files: [...files] },
+        { [clipName]: { frames: files.map((_, index) => index), fps: clipName === 'attack' ? 12 : 8 } },
+        null,
+      );
+      const runtimeClip = clip?.clips.get(clipName);
+      const orientation = orientations.get(direction);
+      if (runtimeClip && orientation) orientation.clips.set(clipName, runtimeClip);
+    }
+  }
 }
 
 function selectWalkSheet(slot: ContractSlot | undefined): WalkSheetSource | null {
@@ -916,10 +933,6 @@ function mergeWalkSheetWithRotationIdle(walkSheet: OrientationSource, rotation: 
 
 function rotationDirectionFor(runtime: RuntimeSlot, orientation: string): RotationDirection | null {
   return runtime.rotationDirections.has(orientation) && isRotationDirection(orientation) ? orientation : null;
-}
-
-function isLocomotionClip(clip: CharacterSpriteClip): boolean {
-  return clip === 'walk' || clip === 'idle';
 }
 
 function cadenceFrameScale(clip: RuntimeClip): number {

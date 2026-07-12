@@ -339,7 +339,11 @@ export class Game {
     },
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
     (position) => this.onEnemyKilled(position),
-    (at, origin, target) => this.lightRig?.triggerMuzzleFlash(at, origin, target),
+    (at, origin, target) => {
+      this.lightRig?.triggerMuzzleFlash(at, origin, target);
+      const actor = this.nearestActorTo(origin);
+      if (this.activeWeapon === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
+    },
   );
   private readonly prospector = new ProspectorEmbodiment((position, text, color) => this.vfx.floatText(position, text, color));
   private readonly buildSystem: BuildSystem;
@@ -1704,7 +1708,7 @@ export class Game {
 
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
     if (!this.mpActorIntents) {
-      this.primaryActor.update(simDelta, fallbackIntents, { bounds: Terrain.bounds, sample: Terrain.sample });
+      this.primaryActor.update(simDelta, fallbackIntents, { bounds: Terrain.bounds, sample: Terrain.sample }, this.harvestSnapshot.channeling);
       return;
     }
     for (let slot = 0; slot < this.actors.length; slot += 1) {
@@ -1713,7 +1717,7 @@ export class Game {
       actor.update(simDelta, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), {
         bounds: Terrain.bounds,
         sample: Terrain.sample,
-      });
+      }, this.harvestSnapshot.channeling && slot === this.mpActionSlot);
     }
   }
 

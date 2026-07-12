@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { OrientationResolver } from '../assets/OrientationResolver';
+import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
 import { attachGeneratedSprite, type GeneratedSprite } from '../assets/generated';
 import { SpriteAnimator } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder } from '../assets/slots';
@@ -23,10 +23,13 @@ export class Hero {
   private readonly generatedSprite: GeneratedSprite;
   private readonly spriteAnimator: SpriteAnimator;
   private readonly orientationResolver = new OrientationResolver();
+  private readonly attackOrientationResolver = new OrientationResolver();
+  private attackDirection: RotationDirection = 'e';
   private facingAngleDeg = 0;
   private hasFacingAngle = false;
   private maxHpBonus = 0;
   private moveSpeedMult = 1;
+  private attackPoseRemaining = 0;
   private readonly targetVelocity = new THREE.Vector3();
   private readonly nextPosition = new THREE.Vector3();
   private readonly previousPosition = new THREE.Vector3();
@@ -112,8 +115,9 @@ export class Hero {
     this.snapRenderState();
   }
 
-  update(dt: number, intents: Intents, terrain: { bounds: TerrainBounds; sample: TerrainSampler }): void {
+  update(dt: number, intents: Intents, terrain: { bounds: TerrainBounds; sample: TerrainSampler }, panning = false): void {
     this.iframeRemaining = Math.max(0, this.iframeRemaining - dt);
+    this.attackPoseRemaining = Math.max(0, this.attackPoseRemaining - dt);
 
     const moveX = finiteOrZero(intents.move.x);
     const moveY = finiteOrZero(intents.move.y);
@@ -172,8 +176,15 @@ export class Hero {
     const moving = speedSq > 0.0025 || intentSpeedSq > 0.0025;
     const heading = intentSpeedSq > 0.0025 ? this.targetVelocity : this.velocity;
     const direction = moving ? this.orientationResolver.resolve(...this.smoothedHeadingVector(dt, heading)) : this.orientationResolver.idleDirection();
-    this.spriteAnimator.update(dt, moving ? 'walk' : 'idle', direction, false, actualSpeed);
+    const clip = this.attackPoseRemaining > 0 ? 'attack' : panning ? 'pan' : moving ? 'walk' : 'idle';
+    this.spriteAnimator.update(dt, clip, this.attackPoseRemaining > 0 ? this.attackDirection : direction, false, actualSpeed);
     this.applyProceduralMotion();
+  }
+
+  playAttackPose(target: THREE.Vector3): void {
+    this.attackOrientationResolver.reset();
+    this.attackDirection = this.attackOrientationResolver.resolve(target.x - this.group.position.x, target.z - this.group.position.z);
+    this.attackPoseRemaining = 0.5;
   }
 
   get maxHp(): number {
@@ -250,11 +261,14 @@ export class Hero {
     this.moveSpeedMult = 1;
     this.hp = this.maxHp;
     this.iframeRemaining = 0;
+    this.attackPoseRemaining = 0;
     this.velocity.set(0, 0, 0);
     this.targetVelocity.set(0, 0, 0);
     this.facingAngleDeg = 0;
     this.hasFacingAngle = false;
     this.orientationResolver.reset();
+    this.attackOrientationResolver.reset();
+    this.attackDirection = 'e';
     this.group.position.copy(position);
     this.group.rotation.y = 0;
     this.spriteAnimator.reset('idle');
