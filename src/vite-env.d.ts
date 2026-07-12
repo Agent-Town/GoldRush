@@ -819,6 +819,8 @@ interface Window {
     volume: number;
     musicVolume: number;
     loops: string[];
+    loopElapsedSeconds: Record<string, number>;
+    startedBySound: Record<string, number>;
   };
   __GR_EDITOR__?: {
     descriptorJson: () => string;

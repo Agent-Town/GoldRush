@@ -2191,14 +2191,17 @@ export class Game {
   }
 
   private syncAudioLoops(): void {
-    const active = this.state.current === 'playing' && !this.state.isPaused;
+    const inRun = this.state.current === 'playing';
+    const active = inRun && !this.state.isPaused;
     const musicLoop = this.contractEpoch?.id === 'epoch-2-steamworks'
       ? 'era-e2-steamworks-loop'
       : (this.contractEpoch?.order ?? 1) >= 3
         ? 'era-e3-voltage-loop'
         : 'era-e1-frontier-loop';
     for (const loop of ['era-e1-frontier-loop', 'era-e2-steamworks-loop', 'era-e3-voltage-loop'] as const) {
-      this.audio.setLoop(loop, active && loop === musicLoop);
+      // Music rides through pause overlays (level-up choices pause on most kills —
+      // stopping the voice restarted the track every time; owner, Baron run 2026-07-13).
+      this.audio.setLoop(loop, inRun && loop === musicLoop);
     }
     if (!active) {
       this.audio.setLoop('river-ambience-loop', false);
