@@ -6,6 +6,7 @@ import { townBuildings, townPlazaSlot } from './townLayout';
 const TAVERN_MODEL_URL = new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href;
 const GENERAL_STORE_MODEL_URL = new URL('../../assets/pilots/general-store-3d/general-store.glb', import.meta.url).href;
 const CLAIM_OFFICE_MODEL_URL = new URL('../../assets/pilots/claim-office-3d/claim-office.glb', import.meta.url).href;
+const CHAPEL_MODEL_URL = new URL('../../assets/pilots/chapel-3d/chapel.glb', import.meta.url).href;
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
@@ -81,7 +82,7 @@ function inspect(model: THREE.Object3D): {
 
 function installTownBuildingPilot(
   { scene, canvas }: Host,
-  id: 'tavern' | 'general_store' | 'claim_office',
+  id: 'tavern' | 'general_store' | 'claim_office' | 'chapel',
   modelUrl: string,
   modelName: string,
 ): () => void {
@@ -145,4 +146,8 @@ export function installTownGeneralStorePilot(host: Host): () => void {
 
 export function installTownClaimOfficePilot(host: Host): () => void {
   return installTownBuildingPilot(host, 'claim_office', CLAIM_OFFICE_MODEL_URL, 'TownClaimOfficePilot');
+}
+
+export function installTownChapelPilot(host: Host): () => void {
+  return installTownBuildingPilot(host, 'chapel', CHAPEL_MODEL_URL, 'TownChapelPilot');
 }
