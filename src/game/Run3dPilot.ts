@@ -5,6 +5,7 @@ import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
 
 const registry = {
+  palisade: { url: new URL('../../assets/pilots/run3d/palisade.glb', import.meta.url).href, fallback: 'PalisadePool', groundPad: 1.5 },
   sluice: { url: new URL('../../assets/pilots/run3d/sluice.glb', import.meta.url).href, fallback: 'SluicePool', groundPad: 0.9 },
 } as const;
 
@@ -32,9 +33,15 @@ export function installRun3dPilot(host: Host): Run3dPilot {
   );
   const group = new THREE.Group();
   const templates = new Map<Buildable3dId, THREE.Object3D>();
+  const triangleCounts = new Map<Buildable3dId, number>();
   const instances = new Map<string, THREE.Object3D>();
+  const matrix = new THREE.Matrix4();
+  const matrixPosition = new THREE.Vector3();
+  const matrixRotation = new THREE.Quaternion();
+  const matrixScale = new THREE.Vector3();
+  const euler = new THREE.Euler();
+  const color = new THREE.Color();
   let disposed = false;
-  let trianglesPerInstance = 0;
   publish(host.canvas, 'loading');
   host.scene.add(group);
 
@@ -63,7 +70,7 @@ export function installRun3dPilot(host: Host): Run3dPilot {
                 reject(new Error('run3d triangle budget exceeded'));
                 return;
               }
-              trianglesPerInstance += triangles;
+              triangleCounts.set(id, triangles);
               templates.set(id, scene);
               resolve();
             },
@@ -96,13 +103,20 @@ export function installRun3dPilot(host: Host): Run3dPilot {
       if (fallback) fallback.visible = false;
     }
     const alive = new Set<string>();
-    for (const entry of host.diagnostics().hp) {
+    const diagnostics = host.diagnostics();
+    for (const entry of diagnostics.hp) {
       if (!ids.includes(entry.id as Buildable3dId) || entry.wrecked || entry.hp <= 0) continue;
       const key = `${entry.id}:${entry.index}`;
       alive.add(key);
       let instance = instances.get(key);
       if (!instance) {
         instance = templates.get(entry.id as Buildable3dId)!.clone(true);
+        if (entry.id === 'palisade') {
+          instance.traverse((node) => {
+            const mesh = node as THREE.Mesh;
+            if (mesh.isMesh) mesh.material = (mesh.material as THREE.Material).clone();
+          });
+        }
         instances.set(key, instance);
         group.add(instance);
       }
@@ -111,13 +125,28 @@ export function installRun3dPilot(host: Host): Run3dPilot {
         Terrain.visualY(entry.position.x, entry.position.z, 0, registry[entry.id as Buildable3dId].groundPad),
         entry.position.z,
       );
+      if (entry.id === 'palisade') {
+        const posts = host.scene.getObjectByName('PalisadePosts') as THREE.InstancedMesh | undefined;
+        if (posts) {
+          posts.getMatrixAt(entry.index * 2, matrix);
+          posts.getColorAt(entry.index * 2, color);
+          matrix.decompose(matrixPosition, matrixRotation, matrixScale);
+          instance.rotation.y = euler.setFromQuaternion(matrixRotation).y;
+          instance.traverse((node) => {
+            const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+            if (mesh.isMesh) mesh.material.color.copy(color);
+          });
+        }
+      }
     }
     for (const [key, instance] of instances) {
       if (alive.has(key)) continue;
       group.remove(instance);
+      if (key.startsWith('palisade:')) instance.traverse((node) => (node as THREE.Mesh).isMesh && ((node as THREE.Mesh).material as THREE.Material).dispose());
       instances.delete(key);
     }
-    publish(host.canvas, 'ready', instances.size, instances.size * trianglesPerInstance);
+    const triangles = [...instances.keys()].reduce((total, key) => total + (triangleCounts.get(key.split(':')[0] as Buildable3dId) ?? 0), 0);
+    publish(host.canvas, 'ready', instances.size, triangles);
   }
 
   return {
@@ -129,6 +158,9 @@ export function installRun3dPilot(host: Host): Run3dPilot {
         if (fallback) fallback.visible = true;
       }
       host.scene.remove(group);
+      for (const [key, instance] of instances) {
+        if (key.startsWith('palisade:')) instance.traverse((node) => (node as THREE.Mesh).isMesh && ((node as THREE.Mesh).material as THREE.Material).dispose());
+      }
       instances.clear();
       for (const template of templates.values()) disposeObject3D(template);
       templates.clear();
