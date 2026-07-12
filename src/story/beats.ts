@@ -1,5 +1,6 @@
 import type { RuntimeStorySignal } from './signals';
 import type { StorySpeakerId } from './speakers';
+import { hasStoryBeatSeen } from './seenState';
 import { hasRocketCartCaptured } from '../game/Medals';
 
 export type StoryBeatFor<TSignal extends { type: string }> = {
@@ -307,17 +308,77 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
     id: 'e2-railcar-arrival',
     trigger: 'boss-arrival',
     speaker: 'clerk',
+    id: 'e2-rail-arrives',
+    trigger: 'epoch-activated',
+    speaker: 'newsie',
+
     oncePerProfile: true,
-    when: (signal) => signal.type === 'boss-arrival' && signal.contractId === 'e2-hill-mine',
-    lines: ['Railcar on the cut.', 'Break the wheels, boiler, and cabin before the town signs the next ledger.'],
+    when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
+    lines: ['Rail over the ridge! The first graduate has the Depot flag.', 'The town just grew a timetable.'],
   },
   {
-    id: 'e2-railcar-defeat',
+    id: 'e2-gazette-press',
+    trigger: 'epoch-activated',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'epoch-activated' && signal.epochId === 'epoch-2-steamworks',
+    lines: ['The Gazette press is running.', 'First edition: the whistle means vent.'],
+  },
+  {
+    id: 'e2-hill-mine-first-visit',
+    trigger: 'contract-unlocked',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e2-hill-mine',
+    lines: ['Hill Mine: three terraces above an open rail cut.', 'Keep the track clear; the creek below still takes the old pan.'],
+  },
+  {
+    id: 'e2-elder-tree',
+    trigger: 'contract-unlocked',
+    speaker: 'schoolteacher',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e2-hill-mine',
+    lines: ["Her chair is empty. Her chalk still says, 'What you close, know how to open.'", 'We planted the cottonwood where she taught.'],
+  },
+  {
+    id: 'e2-depot-wedding',
+    trigger: 'contract-unlocked',
+    speaker: 'preacher',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e2-hill-mine',
+    lines: ['The Depot household begins at sunset.', "Leave the Prospector's place set; it kept their first timetable."],
+  },
+  {
+    id: 'e2-iron-correction-rumor-one',
+    trigger: 'contract-unlocked',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'contract-unlocked' && signal.contractId === 'e2-hill-mine',
+    lines: ['Iron Correction rumor: someone bought a timetable in cash.', 'The buyer asked for no return date.'],
+  },
+  {
+    id: 'e2-iron-correction-rumor-three',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e2-iron-correction-rumor-two'),
+    lines: ['Iron Correction rumor: a rich man asked what year it is.', 'Nobody answered twice.'],
+  },
+  {
+    id: 'e2-iron-correction-rumor-two',
+    trigger: 'run-return-town',
+    speaker: 'newsie',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'run-return-town' && hasStoryBeatSeen('e2-iron-correction-rumor-one'),
+    lines: ['Iron Correction rumor: something on the rails is too heavy for the trestle.', 'That is all the Gazette can prove.'],
+  },
+  {
+    id: 'e2-prides-tuition-crate',
     trigger: 'boss-defeat',
-    speaker: 'elder',
+    speaker: 'schoolteacher',
     oncePerProfile: true,
     when: (signal) => signal.type === 'boss-defeat' && signal.contractId === 'e2-hill-mine',
-    lines: ['The rail spur is quiet.', 'That is enough steam for a graduation bell.'],
+    lines: ["The rocket rack came to the Schoolhouse in the Baron's crate.", "We painted over the crest. It still ghosts through: Pride's Tuition."],
   },
 ];
 
