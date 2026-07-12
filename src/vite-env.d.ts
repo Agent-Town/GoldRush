@@ -428,6 +428,7 @@ interface ThreeGameDiagnostics {
       wheelPhase?: number;
     }>;
   };
+  pressure: import('./systems/PressureSystem').PressureDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;

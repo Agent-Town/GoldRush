@@ -20,6 +20,9 @@ export type UiSnapshot = {
     cap: number;
     iconSlot: string;
     ledgerBlurb: string;
+    safeMin?: number;
+    safeMax?: number;
+    objective?: string;
   }>;
   xp: number;
   xpNeed: number;

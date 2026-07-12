@@ -5,6 +5,7 @@ export type BuildableId =
   | 'palisade'
   | 'sluice'
   | 'stockpile'
+  | 'boiler_house'
   | 'turret'
   | 'assay_office'
   | 'lantern_post';
@@ -84,6 +85,18 @@ export const buildableDefs: readonly BuildableDef[] = [
     maxCount: Balance.stockpile.maxCount,
     iconSlot: 'ui.build.icon.stockpile',
     portraitSlug: 'stockpile-yard',
+  },
+  {
+    id: 'boiler_house',
+    displayName: 'Boiler House',
+    blurb: 'Feeds coal into the Steamworks pressure line.',
+    costCurve: () => Balance.boilerHouse.cost,
+    footprint: { w: 2, d: 2 },
+    hpMax: Balance.wreck.hp.boiler_house,
+    placement: 'bank',
+    slotFamily: 'building.boiler_house',
+    maxCount: Balance.boilerHouse.maxCount,
+    iconSlot: 'ui.build.icon.boiler_house',
   },
   {
     id: 'turret',

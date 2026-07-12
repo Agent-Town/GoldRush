@@ -54,6 +54,7 @@ export type BuildableLedgerEntryId =
   | 'building_palisade'
   | 'building_sluice'
   | 'building_stockpile'
+  | 'building_boiler_house'
   | 'building_turret'
   | 'building_assay_office'
   | 'building_lantern_post';
@@ -115,6 +116,7 @@ export const buildableLedgerEntryById: Record<BuildableId, BuildableLedgerEntryI
   palisade: 'building_palisade',
   sluice: 'building_sluice',
   stockpile: 'building_stockpile',
+  boiler_house: 'building_boiler_house',
   turret: 'building_turret',
   assay_office: 'building_assay_office',
   lantern_post: 'building_lantern_post',
@@ -133,6 +135,7 @@ const buildableSpriteById: Record<BuildableId, { imageUrl: string; slot: string 
   palisade: { imageUrl: palisadeUrl, slot: assetSlots.bldPortraitPalisade },
   sluice: { imageUrl: sluiceUrl, slot: assetSlots.bldPortraitSluice },
   stockpile: { imageUrl: stockpileUrl, slot: assetSlots.bldPortraitStockpile },
+  boiler_house: { imageUrl: titleEmblemUrl, slot: 'building.boiler_house' },
   turret: { imageUrl: turretUrl, slot: assetSlots.bldPortraitTurret },
   assay_office: { imageUrl: claimOfficeUrl, slot: 'building.assay_office' },
   lantern_post: { imageUrl: titleEmblemUrl, slot: 'building.lantern_post' },

@@ -61,6 +61,7 @@ type HudElements = {
   pressurePanel: HTMLElement;
   pressureLabel: HTMLElement;
   pressureText: HTMLElement;
+  pressureFill: HTMLElement;
   weaponChip: HTMLElement;
   agentChip: HTMLElement;
   agentDetail: HTMLElement;
@@ -143,6 +144,7 @@ export class Hud {
         <span class="hud-gauge" aria-hidden="true"></span>
         <span class="hud-label" data-hud-pressure-label>Pressure</span>
         <strong class="hud-value" data-hud-pressure>0</strong>
+        <span class="hud-pressure-track" aria-hidden="true"><span class="hud-pressure-safe" data-hud-pressure-safe></span><span class="hud-pressure-fill" data-hud-pressure-fill></span></span>
       </section>
 
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
@@ -193,6 +195,7 @@ export class Hud {
       pressurePanel: this.get(root, '[data-testid="hud-pressure"]'),
       pressureLabel: this.get(root, '[data-hud-pressure-label]'),
       pressureText: this.get(root, '[data-hud-pressure]'),
+      pressureFill: this.get(root, '[data-hud-pressure-fill]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
       agentChip: this.get(root, '[data-testid="hud-agent"]'),
       agentDetail: this.get(root, '[data-hud-agent-detail]'),
@@ -386,8 +389,16 @@ export class Hud {
     this.elements.root.classList.toggle('hud--pressure-visible', Boolean(pressure));
     this.elements.pressurePanel.hidden = !pressure;
     if (!pressure) return;
-    this.elements.pressureLabel.textContent = pressure.name;
+    this.elements.pressureLabel.textContent = pressure.objective ? `${pressure.name} · ${pressure.objective}` : pressure.name;
     this.elements.pressureText.textContent = `${pressure.amount}/${pressure.cap}`;
+    this.elements.pressureFill.style.width = `${this.percent(pressure.amount, pressure.cap)}%`;
+    const safe = this.elements.pressurePanel.querySelector<HTMLElement>('[data-hud-pressure-safe]');
+    if (safe) {
+      safe.hidden = pressure.safeMin === undefined || pressure.safeMax === undefined;
+      safe.style.left = `${this.percent(pressure.safeMin ?? 0, pressure.cap)}%`;
+      safe.style.width = `${this.percent((pressure.safeMax ?? 0) - (pressure.safeMin ?? 0), pressure.cap)}%`;
+    }
+    this.elements.pressurePanel.dataset.state = pressure.amount > (pressure.safeMax ?? pressure.cap) ? 'vent' : pressure.safeMax === undefined ? 'unassayed' : 'safe';
   }
 
   private updateAnnouncement(snapshot: UiSnapshot): void {

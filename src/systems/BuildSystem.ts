@@ -5,6 +5,7 @@ import { PalisadePool, type PalisadeBlocker } from '../entities/Palisade';
 import { SentryBeaconPool } from '../entities/SentryBeacon';
 import { SluicePool, type SluiceFutureState, type SluiceSnapshot } from '../entities/Sluice';
 import { StockpilePool, type StockpileSnapshot } from '../entities/Stockpile';
+import { BoilerHousePool } from '../entities/BoilerHouse';
 import { TurretPool } from '../entities/Turret';
 import { Balance } from '../game/Balance';
 import {
@@ -51,6 +52,7 @@ export type BuildDiagnostics = {
   palisades: number;
   sluices: number;
   stockpiles: number;
+  boilerHouses: number;
   turrets: number;
   assayOffices: number;
   lanternPosts: number;
@@ -58,6 +60,7 @@ export type BuildDiagnostics = {
   palisadePositions: Array<{ x: number; z: number }>;
   sluicePositions: Array<{ x: number; z: number }>;
   stockpilePositions: Array<{ x: number; z: number }>;
+  boilerHousePositions: Array<{ x: number; z: number }>;
   turretPositions: Array<{ x: number; z: number }>;
   assayOfficePositions: Array<{ x: number; z: number }>;
   lanternPostPositions: Array<{ x: number; z: number }>;
@@ -103,7 +106,7 @@ export type BuildDiagnostics = {
   tierUpgrades: number;
   repairs: number;
   repairGold: number;
-  shells: Record<'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office', BuildingShellDiagnostics>;
+  shells: Record<'palisade' | 'sluice' | 'stockpile' | 'boiler_house' | 'turret' | 'assay_office', BuildingShellDiagnostics>;
 };
 
 export type BuildingShellDiagnostics = {
@@ -189,6 +192,7 @@ const buildableIds: readonly BuildableId[] = [
   'palisade',
   'sluice',
   'stockpile',
+  'boiler_house',
   'turret',
   'lantern_post',
   'assay_office',
@@ -228,6 +232,7 @@ export class BuildSystem {
   private readonly palisades = new PalisadePool();
   private readonly sluices = new SluicePool();
   private readonly stockpiles = new StockpilePool();
+  readonly boilerHouses = new BoilerHousePool();
   private readonly turrets = new TurretPool();
   private readonly lanternPosts = new LanternPostPool();
   private readonly assayOffice = new THREE.Group();
@@ -236,6 +241,7 @@ export class BuildSystem {
   private readonly palisadeGhost = new THREE.Group();
   private readonly sluiceGhost = new THREE.Group();
   private readonly stockpileGhost = new THREE.Group();
+  private readonly boilerHouseGhost = new THREE.Group();
   private readonly turretGhost = new THREE.Group();
   private readonly lanternPostGhost = new THREE.Group();
   private readonly assayOfficeGhost = new THREE.Group();
@@ -370,6 +376,7 @@ export class BuildSystem {
       this.palisades.group,
       this.sluices.group,
       this.stockpiles.group,
+      this.boilerHouses.group,
       this.turrets.group,
       this.lanternPosts.group,
       this.assayOffice,
@@ -501,6 +508,7 @@ export class BuildSystem {
       palisades: this.palisades.activeCount,
       sluices: this.sluices.activeCount,
       stockpiles: this.stockpiles.activeCount,
+      boilerHouses: this.boilerHouses.activeCount,
       turrets: this.turrets.activeCount,
       assayOffices: this.assayOfficeActive ? 1 : 0,
       lanternPosts: this.lanternPosts.activeCount,
@@ -508,6 +516,7 @@ export class BuildSystem {
       palisadePositions: this.activePositions(this.palisades),
       sluicePositions: sluicesActive ? this.activePositions(this.sluices) : emptyPositions,
       stockpilePositions: stockpilesActive ? this.activePositions(this.stockpiles) : emptyPositions,
+      boilerHousePositions: this.activePositions(this.boilerHouses),
       turretPositions: this.activePositions(this.turrets),
       assayOfficePositions: this.assayOfficeActive ? [{ x: this.assayOfficePosition.x, z: this.assayOfficePosition.z }] : emptyPositions,
       lanternPostPositions: this.activePositions(this.lanternPosts),
@@ -774,6 +783,7 @@ export class BuildSystem {
     this.lanternPosts.reset();
     for (let i = 0; i < this.stockpiles.capacity; i += 1) this.economy.removeCapSource(stockpileCapSource(i));
     this.stockpiles.reset();
+    this.boilerHouses.reset();
     this.assayOfficeActive = false;
     this.assayOffice.visible = false;
     this.assayOfficePosition.set(0, 0, 0);
@@ -812,6 +822,7 @@ export class BuildSystem {
     this.palisades.dispose();
     this.sluices.dispose();
     this.stockpiles.dispose();
+    this.boilerHouses.dispose();
     this.turrets.dispose();
     this.lanternPosts.dispose();
     this.ghost.traverse((child) => {
@@ -1169,6 +1180,11 @@ export class BuildSystem {
       const pos = this.stockpiles.allPositions[i];
       if (pos) existing.push(this.placementDescriptor('stockpile', pos, 0));
     }
+    for (let i = 0; i < this.boilerHouses.capacity; i += 1) {
+      if (!this.boilerHouses.isActive(i)) continue;
+      const pos = this.boilerHouses.allPositions[i];
+      if (pos) existing.push(this.placementDescriptor('boiler_house', pos, 0));
+    }
     for (let i = 0; i < this.turrets.capacity; i += 1) {
       if (!this.turrets.isActive(i)) continue;
       const pos = this.turrets.allPositions[i];
@@ -1226,6 +1242,7 @@ export class BuildSystem {
     if (id === 'palisade') return this.palisades.activeCount;
     if (id === 'sluice') return this.sluices.activeCount;
     if (id === 'stockpile') return this.stockpiles.activeCount;
+    if (id === 'boiler_house') return this.boilerHouses.activeCount;
     if (id === 'turret') return this.turrets.activeCount;
     if (id === 'lantern_post') return this.lanternPosts.activeCount;
     if (id === 'assay_office') return this.assayOfficeActive ? 1 : 0;
@@ -1236,6 +1253,7 @@ export class BuildSystem {
     if (id === 'palisade') return this.palisades.place(position, this.ghostRotationSteps, preferredSlot);
     if (id === 'sluice') return this.sluices.place(position, preferredSlot);
     if (id === 'stockpile') return this.stockpiles.place(position, preferredSlot);
+    if (id === 'boiler_house') return this.boilerHouses.place(position, preferredSlot);
     if (id === 'turret') return this.turrets.place(position, preferredSlot);
     if (id === 'lantern_post') return this.lanternPosts.place(position, this.ghostRotationSteps, preferredSlot);
     if (id === 'assay_office') return this.placeAssayOffice(position, preferredSlot);
@@ -1247,6 +1265,7 @@ export class BuildSystem {
     if (id === 'palisade') return this.palisades.isActive(index);
     if (id === 'sluice') return this.sluices.isActive(index);
     if (id === 'stockpile') return this.stockpiles.isActive(index);
+    if (id === 'boiler_house') return this.boilerHouses.isActive(index);
     if (id === 'turret') return this.turrets.isActive(index);
     if (id === 'lantern_post') return this.lanternPosts.isActive(index);
     return this.beacons.isActive(index);
@@ -1262,6 +1281,7 @@ export class BuildSystem {
     if (id === 'palisade') return this.palisades.deactivate(index);
     if (id === 'sluice') return this.sluices.deactivate(index);
     if (id === 'stockpile') return this.stockpiles.deactivate(index);
+    if (id === 'boiler_house') return this.boilerHouses.deactivate(index);
     if (id === 'turret') return this.turrets.deactivate(index);
     if (id === 'lantern_post') return this.lanternPosts.deactivate(index);
     return this.beacons.deactivate(index);
@@ -1329,7 +1349,7 @@ export class BuildSystem {
   }
 
   private activePositions(
-    pool: SentryBeaconPool | PalisadePool | SluicePool | StockpilePool | TurretPool | LanternPostPool,
+    pool: SentryBeaconPool | PalisadePool | SluicePool | StockpilePool | BoilerHousePool | TurretPool | LanternPostPool,
   ): Array<{ x: number; z: number }> {
     return pool.allPositions
       .map((pos, i) => ({ x: pos.x, z: pos.z, active: pool.isActive(i) }))
@@ -1366,6 +1386,7 @@ export class BuildSystem {
     if (id === 'palisade') return this.palisades.allPositions[index];
     if (id === 'sluice') return this.sluices.allPositions[index];
     if (id === 'stockpile') return this.stockpiles.allPositions[index];
+    if (id === 'boiler_house') return this.boilerHouses.allPositions[index];
     if (id === 'turret') return this.turrets.allPositions[index];
     if (id === 'lantern_post') return this.lanternPosts.allPositions[index];
     return this.beacons.allPositions[index];
@@ -1885,6 +1906,7 @@ export class BuildSystem {
     this.palisadeGhost.visible = this.selectedId === 'palisade';
     this.sluiceGhost.visible = this.selectedId === 'sluice';
     this.stockpileGhost.visible = this.selectedId === 'stockpile';
+    this.boilerHouseGhost.visible = this.selectedId === 'boiler_house';
     this.turretGhost.visible = this.selectedId === 'turret';
     this.lanternPostGhost.visible = this.selectedId === 'lantern_post';
     this.assayOfficeGhost.visible = this.selectedId === 'assay_office';
@@ -1895,6 +1917,7 @@ export class BuildSystem {
       palisade: this.palisades.diagnostics(),
       sluice: this.sluices.diagnostics(),
       stockpile: this.stockpiles.diagnostics(),
+      boiler_house: { active: this.boilerHouses.activeCount, signs: this.boilerHouses.activeCount, meshes: ['BoilerHousePlaceholder', 'BoilerHouseBrassDrum', 'BoilerHouseStack', 'BoilerHouseSign'], lit: true },
       turret: this.turrets.diagnostics(),
       assay_office: {
         active: this.assayOfficeActive ? 1 : 0,
@@ -1910,6 +1933,7 @@ export class BuildSystem {
     this.createPalisadeGhost();
     this.createSluiceGhost();
     this.createStockpileGhost();
+    this.createBoilerHouseGhost();
     this.createTurretGhost();
     this.createLanternPostGhost();
     this.createAssayOfficeGhost();
@@ -1918,6 +1942,7 @@ export class BuildSystem {
       this.palisadeGhost,
       this.sluiceGhost,
       this.stockpileGhost,
+      this.boilerHouseGhost,
       this.turretGhost,
       this.lanternPostGhost,
       this.assayOfficeGhost,
@@ -2023,6 +2048,17 @@ export class BuildSystem {
     const head = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.18, 0.36, 10), this.ghostMaterial);
     head.position.set(0, 0.92, 0);
     this.turretGhost.add(head);
+  }
+
+  private createBoilerHouseGhost(): void {
+    const body = new THREE.Mesh(new THREE.BoxGeometry(1.7, 1.05, 1.3), this.ghostMaterial);
+    body.position.y = 0.52;
+    const drum = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 1.45, 14), this.ghostMaterial);
+    drum.position.y = 1.04;
+    drum.rotation.z = Math.PI / 2;
+    const stack = new THREE.Mesh(new THREE.CylinderGeometry(0.12, 0.17, 1.25, 10), this.ghostMaterial);
+    stack.position.set(0.55, 1.65, 0.32);
+    this.boilerHouseGhost.add(body, drum, stack);
   }
 
   private createLanternPostGhost(): void {
@@ -2351,6 +2387,7 @@ function createStore<T>(make: (id: BuildableId, index: number) => T): BuildingFa
     palisade: createFamily('palisade', make),
     sluice: createFamily('sluice', make),
     stockpile: createFamily('stockpile', make),
+    boiler_house: createFamily('boiler_house', make),
     turret: createFamily('turret', make),
     lantern_post: createFamily('lantern_post', make),
     assay_office: createFamily('assay_office', make),

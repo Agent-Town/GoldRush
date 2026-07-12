@@ -107,6 +107,7 @@ import { BlastChargePool } from '../entities/BlastCharge';
 import { GoldPickupPool } from '../entities/GoldPickup';
 import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
+import { PressureSystem } from '../systems/PressureSystem';
 import { EnemyPool, type EnemyLightSource } from '../entities/pools';
 import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
 import { normalizeQueueProfile } from '../crafting/CraftingQueueContract';
@@ -332,6 +333,7 @@ export class Game {
   );
   private readonly prospector = new ProspectorEmbodiment((position, text, color) => this.vfx.floatText(position, text, color));
   private readonly buildSystem: BuildSystem;
+  private readonly pressureSystem: PressureSystem;
   private readonly progression: Progression;
   private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
   private activeWeapon: 'rig' | 'blast' = 'rig';
@@ -815,6 +817,14 @@ export class Game {
         });
         return true;
       },
+    );
+    this.pressureSystem = new PressureSystem(
+      this.economy,
+      this.buildSystem.boilerHouses,
+      () => this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive(),
+      (index) => this.buildSystem.buildingTarget('boiler_house', index)?.active === true,
+      (id) => hasResearchNode(this.researchState, id),
+      (position, text, color) => this.vfx.floatText(position, text, color),
     );
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
@@ -1356,6 +1366,7 @@ export class Game {
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.buildSystem.dispose();
+    this.pressureSystem.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1534,6 +1545,7 @@ export class Game {
         (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
         this.localActor.group.position,
       );
+      this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
       this.powerGraph?.update(this.timeAlive);
       this.syncStockpileHoldings();
       this.enemies.update(
@@ -2252,6 +2264,7 @@ export class Game {
     this.scene.add(this.detailScatter.group);
     this.scene.add(this.harvestSystem.group);
     this.scene.add(this.buildSystem.group);
+    this.scene.add(this.pressureSystem.group);
     this.createMegaprojectVisuals();
     this.scene.add(this.megaprojectGroup);
     this.createBaronStandardVisual();
@@ -2858,6 +2871,7 @@ export class Game {
         replay: economyReplay,
         summary: economySummary,
       },
+      pressure: this.pressureSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -3423,7 +3437,9 @@ export class Game {
   }
 
   private isBuildableEnabled(id: BuildableId): boolean {
-    return id !== 'lantern_post' || this.isNightShiftContract();
+    if (id === 'lantern_post') return this.isNightShiftContract();
+    if (id === 'boiler_house') return this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive();
+    return true;
   }
 
   private detailClearings(): DetailScatterClearPoint[] {
@@ -3433,6 +3449,7 @@ export class Game {
       ...diagnostics.palisadePositions,
       ...diagnostics.sluicePositions,
       ...diagnostics.stockpilePositions,
+      ...diagnostics.boilerHousePositions,
       ...diagnostics.turretPositions,
       ...diagnostics.lanternPostPositions,
       ...diagnostics.assayOfficePositions,
@@ -3498,12 +3515,19 @@ export class Game {
   }
 
   private activeResourceSnapshots(): UiSnapshot['resources'] {
+    const objective = this.pressureSystem.diagnostics.objective;
     return this.activeEpoch.resources.map((resource) => {
       const balance = this.economy.resourceBalance(resource.id);
       return {
         ...resource,
         amount: Math.floor(balance.amount),
         cap: Math.floor(balance.cap || resource.capDefault),
+        ...(resource.id === 'pressure' && hasResearchNode(this.researchState, 'pressure_assay')
+          ? { safeMin: Balance.boilerHouse.safeMin, safeMax: Balance.boilerHouse.safeMax }
+          : {}),
+        ...(resource.id === 'pressure' && this.activeContract.id === 'e2-hill-mine'
+          ? { objective: `PRESSURIZE ${objective.complete ? 'COMPLETE' : objective.failed ? 'FAILED' : `${objective.hotBoilers}/2 · W8–12`}` }
+          : {}),
       };
     });
   }
@@ -3951,6 +3975,7 @@ export class Game {
     this.demolishCandidate = null;
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
+    this.pressureSystem.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);

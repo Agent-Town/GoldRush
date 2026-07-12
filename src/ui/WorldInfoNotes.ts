@@ -6,6 +6,7 @@ export type WorldInfoObjectClass =
   | 'palisade'
   | 'sluice'
   | 'stockpile'
+  | 'boiler_house'
   | 'turret'
   | 'lantern_post'
   | 'assay_office'
@@ -58,6 +59,11 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
     objectClass: 'stockpile',
     title: 'Stockpile Yard',
     lines: ['Raises the bank cap and gives thieves a place to raid instead of your pockets.'],
+  },
+  {
+    objectClass: 'boiler_house',
+    title: 'Boiler House',
+    lines: ['Coal goes in; pressure climbs. Above the safe band, the valve vents with a warm puff.'],
   },
   {
     objectClass: 'turret',
