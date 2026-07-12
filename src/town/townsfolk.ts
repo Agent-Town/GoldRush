@@ -117,7 +117,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: TOWN_CAST_METROLOGY.tallAdult,
     barkRadius: 3,
-    portraitPost: { offset: { x: 1.45, z: -2.65 } },
+    fullBody: { sheet: 'char-preacher-sheet-walk8-a', animated: true },
     e1Barks: ['The bell is for courage, not judgment.', 'Some days a town needs quiet more than gold.', '{town} has roots now. Tend them.'],
   },
   {
@@ -131,7 +131,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 'se',
     scale: TOWN_CAST_METROLOGY.adult,
     barkRadius: 2.8,
-    portraitPost: { offset: { x: -2.6, z: 0 } },
+    fullBody: { sheet: 'char-schoolteacher-sheet-walk8-a', animated: true },
     e1Barks: ['Chalk today, Steamworks tomorrow.', 'The little ones count waves faster than I do.', 'A good question is a lantern.'],
   },
   {
@@ -145,7 +145,7 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: TOWN_CAST_METROLOGY.adult,
     barkRadius: 3.05,
-    portraitPost: { offset: { x: -2.8, z: -1 } },
+    fullBody: { sheet: 'char-assay-clerk-sheet-walk8-a', animated: true },
     e1Barks: ['Ore talks. My scale makes it honest.', 'Bring the odd bits here before they become trouble.', 'Gold in, proof out. That is the office bargain.'],
   },
   {

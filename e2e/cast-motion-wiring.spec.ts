@@ -47,10 +47,9 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
   expect(height('elder')).toBeCloseTo(TOWN_CAST_METROLOGY.elder, 2);
   expect(height('youngster_a')).toBeCloseTo(TOWN_CAST_METROLOGY.child, 2);
   expect(height('prospector')).toBeCloseTo(TOWN_CAST_METROLOGY.prospector, 2);
-  for (const id of ['preacher', 'schoolteacher', 'assay_clerk'] as const) {
-    expect(before.find((actor) => actor.id === id)?.presentation).toBe('portrait_post');
-  }
-  expect(before.find((actor) => actor.id === 'assay_clerk')?.position).toEqual({ x: 6.6, z: 2.4 });
+  expect(height('preacher')).toBeCloseTo(TOWN_CAST_METROLOGY.tallAdult, 2);
+  for (const id of ['schoolteacher', 'assay_clerk'] as const) expect(height(id)).toBeCloseTo(TOWN_CAST_METROLOGY.adult, 2);
+  expect(before.find((actor) => actor.id === 'assay_clerk')?.position).toEqual({ x: 8.35, z: 5.5 });
   const presentations = before
     .filter((actor) => actor.id !== 'prospector')
     .map((actor) => actor.frameKey.replace(/-r\d+c\d+\.png$/, ''));
@@ -66,9 +65,10 @@ test('the plaza cast stands, walks, and faces truthfully without borrowed sheets
     expect(after.find((actor) => actor.id === id)?.frameKey).toBe(before.find((actor) => actor.id === id)?.frameKey);
     expect(after.find((actor) => actor.id === id)?.frameKey).toMatch(/c0\.png$/);
   }
-  expect(after.find((actor) => actor.id === 'preacher')?.frameKey).toBe('portrait:preacher');
-  expect(after.find((actor) => actor.id === 'schoolteacher')?.frameKey).toBe('portrait:schoolteacher');
-  expect(after.find((actor) => actor.id === 'assay_clerk')?.frameKey).toBe('portrait:assay_clerk');
+  for (const id of ['preacher', 'schoolteacher', 'assay_clerk'] as const) {
+    expect(after.find((actor) => actor.id === id)?.presentation).toBe('full_body');
+    expect(after.find((actor) => actor.id === id)?.frameKey).toMatch(new RegExp(`char-${id.replace('_', '-')}-sheet-walk8-a-r\\d+c\\d+\\.png$`));
+  }
 
   await expect.poll(async () => {
     const actors = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors);
