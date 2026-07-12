@@ -9,6 +9,7 @@ const CLAIM_OFFICE_MODEL_URL = new URL('../../assets/pilots/claim-office-3d/clai
 const CHAPEL_MODEL_URL = new URL('../../assets/pilots/chapel-3d/chapel.glb', import.meta.url).href;
 const SCHOOLHOUSE_MODEL_URL = new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href;
 const STAMP_MILL_MODEL_URL = new URL('../../assets/pilots/stamp-mill-3d/stamp-mill.glb', import.meta.url).href;
+const DYNAMO_HALL_MODEL_URL = new URL('../../assets/pilots/dynamo-hall-3d/dynamo-hall.glb', import.meta.url).href;
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
@@ -131,6 +132,38 @@ function installTownBuildingPilot(
   return () => {
     disposed = true;
     if (shell) shell.visible = true;
+    if (!model) return;
+    scene.remove(model);
+    disposeObject3D(model);
+    model = undefined;
+  };
+}
+
+export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footprint: { x: number; z: number; w: number; d: number }): () => void {
+  const { scene, canvas } = host;
+  let disposed = false;
+  let model: THREE.Object3D | undefined;
+  publish(canvas, 'loading', 'facade');
+  new GLTFLoader().load(DYNAMO_HALL_MODEL_URL, ({ scene: loaded }) => {
+    const metrics = inspect(loaded);
+    const valid = metrics.triangles <= MAX_TRIANGLES && metrics.materials <= MAX_MATERIALS &&
+      metrics.width <= footprint.w + BOUNDS_EPSILON && metrics.depth <= footprint.d + BOUNDS_EPSILON &&
+      metrics.grounded && metrics.centered && metrics.forbiddenNodes === 0;
+    if (disposed || !valid) {
+      disposeObject3D(loaded);
+      if (!disposed) publish(canvas, 'error', 'facade', metrics);
+      return;
+    }
+    loaded.name = 'TownDynamoHallPilot';
+    loaded.position.set(footprint.x, 0, footprint.z);
+    model = loaded;
+    scene.add(loaded);
+    group.visible = false;
+    publish(canvas, 'loaded', 'glb', metrics);
+  }, undefined, () => { if (!disposed) publish(canvas, 'error', 'facade'); });
+  return () => {
+    disposed = true;
+    group.visible = true;
     if (!model) return;
     scene.remove(model);
     disposeObject3D(model);

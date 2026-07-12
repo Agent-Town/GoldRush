@@ -262,6 +262,7 @@ export class TownScene {
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
   private readonly stampMillConstructionProps: THREE.Object3D[] = [];
+  private disposed = false;
   private dynamoCrankTimer = 0;
   private readonly firstClaimGuideGroup = new THREE.Group();
   private readonly firstClaimTrailDots: THREE.Mesh[] = [];
@@ -348,6 +349,7 @@ export class TownScene {
   }
 
   dispose(): void {
+    this.disposed = true;
     this.loop.stop();
     this.input.dispose();
     for (const state of this.hiddenButtons) state.element.hidden = state.hidden;
@@ -489,10 +491,17 @@ export class TownScene {
     this.canvas.dataset.town3dPilotState = pilot !== null ? (pilotLite ? 'lite' : 'loading') : 'off';
     this.canvas.dataset.town3dPilotRenderSource = 'facade';
     if (pilot !== null && !pilotLite) {
-      void import('./TownTavernPilot').then(({ installTownChapelPilot, installTownClaimOfficePilot, installTownGeneralStorePilot, installTownSchoolhousePilot, installTownStampMillPilot, installTownTavernPilot }) => {
+      void import('./TownTavernPilot').then(({ installTownChapelPilot, installTownClaimOfficePilot, installTownDynamoHallPilot, installTownGeneralStorePilot, installTownSchoolhousePilot, installTownStampMillPilot, installTownTavernPilot }) => {
+        if (this.disposed) return;
         const stampMillComplete = !!this.stampMill.manifest && !!this.stampMill.project && megaprojectComplete(this.stampMill.manifest, this.stampMill.project);
+        const dynamoReady = this.dynamoHall.manifest && this.dynamoHall.project && megaprojectComplete(this.dynamoHall.manifest, this.dynamoHall.project);
+        const dynamoDispose = () => {
+          if (dynamoReady) return installTownDynamoHallPilot({ scene: this.scene, canvas: this.canvas }, this.dynamoHallGroup, this.dynamoHall.manifest!.siteFootprint);
+          if (pilot === 'dynamo_hall') this.canvas.dataset.town3dPilotState = 'off';
+          return () => {};
+        };
         const disposers = pilot === 'all'
-          ? [installTownTavernPilot({ scene: this.scene, canvas: this.canvas }), installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas }), installTownClaimOfficePilot({ scene: this.scene, canvas: this.canvas }), installTownChapelPilot({ scene: this.scene, canvas: this.canvas }), installTownSchoolhousePilot({ scene: this.scene, canvas: this.canvas }), ...(stampMillComplete ? [installTownStampMillPilot({ scene: this.scene, canvas: this.canvas })] : [])]
+          ? [installTownTavernPilot({ scene: this.scene, canvas: this.canvas }), installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas }), installTownClaimOfficePilot({ scene: this.scene, canvas: this.canvas }), installTownChapelPilot({ scene: this.scene, canvas: this.canvas }), installTownSchoolhousePilot({ scene: this.scene, canvas: this.canvas }), ...(stampMillComplete ? [installTownStampMillPilot({ scene: this.scene, canvas: this.canvas })] : []), dynamoDispose()]
           : [pilot === 'general_store'
               ? installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas })
               : pilot === 'claim_office'
@@ -503,7 +512,9 @@ export class TownScene {
                     ? installTownSchoolhousePilot({ scene: this.scene, canvas: this.canvas })
                     : pilot === 'stamp-mill'
                       ? (stampMillComplete ? installTownStampMillPilot({ scene: this.scene, canvas: this.canvas }) : () => {})
-                      : installTownTavernPilot({ scene: this.scene, canvas: this.canvas })];
+                      : pilot === 'dynamo_hall'
+                        ? dynamoDispose()
+                        : installTownTavernPilot({ scene: this.scene, canvas: this.canvas })];
         this.town3dPilotDispose = () => disposers.forEach((dispose) => dispose());
       });
     }
