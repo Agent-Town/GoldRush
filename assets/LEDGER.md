@@ -266,12 +266,12 @@ Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGP
 ## 2026-07-12 — E2 completion batch drained from the art slot (attended)
 | Slot | Generated | State |
 |---|---|---|
-| bld.rail_depot | ✓ `assets/raw/bld-rail-depot.png` | PENDING-PROCESSING (384px promote) |
-| bld.machine_shop | ✓ `assets/raw/bld-machine-shop.png` | PENDING-PROCESSING (384px promote) |
-| ter.rail_elements | ✓ `assets/raw/ter-rail-elements.png` | PENDING-PROCESSING (extract-alpha ff00ff) |
-| icons.e2 | ✓ `assets/raw/icons-e2.png` | PENDING-PROCESSING (extract-alpha ff00ff) |
+| bld.rail_depot | ✓ `assets/raw/bld-rail-depot.png` | **PROCESSED 2026-07-12** — 1254px raw → 384px RGB; registered `bld.rail_depot` in `e2-steamworks.v1.json` (no live consumer yet; no gameplay invented) |
+| bld.machine_shop | ✓ `assets/raw/bld-machine-shop.png` | **PROCESSED 2026-07-12** — 1254px raw → 384px RGB; registered `bld.machine_shop` in `e2-steamworks.v1.json` (no live consumer yet; no gameplay invented) |
+| ter.rail_elements | ✓ `assets/raw/ter-rail-elements.png` | **PROCESSED 2026-07-12** — 2172×724, inspected as 7×1; `--key ff00ff --grid 7x1`, 7 alpha cells + frames manifest; contract slots registered |
+| icons.e2 | ✓ `assets/raw/icons-e2.png` | **PROCESSED + WIRED 2026-07-12** — 2172×724, inspected as 8×1; `--key ff00ff --grid 8x1`, 8 alpha cells + frames manifest; E2 research/build UI evidence `artifacts/process-e2-building-art/*-icon-row.png` |
 | char.hero pose idle8/work8/attack8 | ⚠ raw drained for reference | **QA-BLOCKED per art slot: pinned-pan + chroma failures — DO NOT PROCESS/WIRE** (regen ride next art batch) |
-| bld.boiler_house | raw exists (07-07) | PENDING-PROCESSING (384px promote — never regenerate) |
+| bld.boiler_house | raw exists (07-07) | **PROCESSED + WIRED 2026-07-12** — 1254px raw → 384px RGB; Boiler House build-menu portrait replaces missing icon; evidence `artifacts/process-e2-building-art/` |
 
 ## 2026-07-12 late — attended drain from the art slot
 | Slot | State |

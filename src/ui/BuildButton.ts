@@ -9,6 +9,7 @@ const buildPortraitUrls = import.meta.glob<string>(
     '../../assets/processed/bld-stockpile-yard.png',
     '../../assets/processed/bld-signal-turret.png',
     '../../assets/processed/bld-claim-office.png',
+    '../../assets/processed/bld-boiler-house.png',
   ],
   {
     query: '?url',

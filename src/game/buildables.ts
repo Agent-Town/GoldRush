@@ -97,6 +97,7 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.boiler_house',
     maxCount: Balance.boilerHouse.maxCount,
     iconSlot: 'ui.build.icon.boiler_house',
+    portraitSlug: 'boiler-house',
   },
   {
     id: 'turret',
