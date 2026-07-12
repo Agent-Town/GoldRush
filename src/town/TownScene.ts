@@ -489,9 +489,10 @@ export class TownScene {
     this.canvas.dataset.town3dPilotState = pilot !== null ? (pilotLite ? 'lite' : 'loading') : 'off';
     this.canvas.dataset.town3dPilotRenderSource = 'facade';
     if (pilot !== null && !pilotLite) {
-      void import('./TownTavernPilot').then(({ installTownChapelPilot, installTownClaimOfficePilot, installTownGeneralStorePilot, installTownSchoolhousePilot, installTownTavernPilot }) => {
+      void import('./TownTavernPilot').then(({ installTownChapelPilot, installTownClaimOfficePilot, installTownGeneralStorePilot, installTownSchoolhousePilot, installTownStampMillPilot, installTownTavernPilot }) => {
+        const stampMillComplete = !!this.stampMill.manifest && !!this.stampMill.project && megaprojectComplete(this.stampMill.manifest, this.stampMill.project);
         const disposers = pilot === 'all'
-          ? [installTownTavernPilot({ scene: this.scene, canvas: this.canvas }), installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas }), installTownClaimOfficePilot({ scene: this.scene, canvas: this.canvas }), installTownChapelPilot({ scene: this.scene, canvas: this.canvas }), installTownSchoolhousePilot({ scene: this.scene, canvas: this.canvas })]
+          ? [installTownTavernPilot({ scene: this.scene, canvas: this.canvas }), installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas }), installTownClaimOfficePilot({ scene: this.scene, canvas: this.canvas }), installTownChapelPilot({ scene: this.scene, canvas: this.canvas }), installTownSchoolhousePilot({ scene: this.scene, canvas: this.canvas }), ...(stampMillComplete ? [installTownStampMillPilot({ scene: this.scene, canvas: this.canvas })] : [])]
           : [pilot === 'general_store'
               ? installTownGeneralStorePilot({ scene: this.scene, canvas: this.canvas })
               : pilot === 'claim_office'
@@ -500,7 +501,9 @@ export class TownScene {
                   ? installTownChapelPilot({ scene: this.scene, canvas: this.canvas })
                   : pilot === 'schoolhouse'
                     ? installTownSchoolhousePilot({ scene: this.scene, canvas: this.canvas })
-                    : installTownTavernPilot({ scene: this.scene, canvas: this.canvas })];
+                    : pilot === 'stamp-mill'
+                      ? (stampMillComplete ? installTownStampMillPilot({ scene: this.scene, canvas: this.canvas }) : () => {})
+                      : installTownTavernPilot({ scene: this.scene, canvas: this.canvas })];
         this.town3dPilotDispose = () => disposers.forEach((dispose) => dispose());
       });
     }

@@ -8,6 +8,7 @@ const GENERAL_STORE_MODEL_URL = new URL('../../assets/pilots/general-store-3d/ge
 const CLAIM_OFFICE_MODEL_URL = new URL('../../assets/pilots/claim-office-3d/claim-office.glb', import.meta.url).href;
 const CHAPEL_MODEL_URL = new URL('../../assets/pilots/chapel-3d/chapel.glb', import.meta.url).href;
 const SCHOOLHOUSE_MODEL_URL = new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href;
+const STAMP_MILL_MODEL_URL = new URL('../../assets/pilots/stamp-mill-3d/stamp-mill.glb', import.meta.url).href;
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
@@ -83,15 +84,15 @@ function inspect(model: THREE.Object3D): {
 
 function installTownBuildingPilot(
   { scene, canvas }: Host,
-  id: 'tavern' | 'general_store' | 'claim_office' | 'chapel' | 'schoolhouse',
+  id: 'tavern' | 'general_store' | 'claim_office' | 'chapel' | 'schoolhouse' | 'stamp-mill',
   modelUrl: string,
   modelName: string,
 ): () => void {
   if (canvas.dataset.town3dPilotState === 'disposed') return () => {};
   let disposed = false;
   let model: THREE.Object3D | undefined;
-  const shell = scene.getObjectByName(`TownFacadeAssembly:${id}`);
-  const building = townBuildings.find((entry) => entry.id === id)!;
+  const shell = scene.getObjectByName(id === 'stamp-mill' ? 'TownStampMillSite' : `TownFacadeAssembly:${id}`);
+  const building = id === 'stamp-mill' ? { footprint: { w: 6.2, d: 1.65 } } : townBuildings.find((entry) => entry.id === id)!;
   const slot = townPlazaSlot(id);
   publish(canvas, 'loading', 'facade');
 
@@ -155,4 +156,8 @@ export function installTownChapelPilot(host: Host): () => void {
 
 export function installTownSchoolhousePilot(host: Host): () => void {
   return installTownBuildingPilot(host, 'schoolhouse', SCHOOLHOUSE_MODEL_URL, 'TownSchoolhousePilot');
+}
+
+export function installTownStampMillPilot(host: Host): () => void {
+  return installTownBuildingPilot(host, 'stamp-mill', STAMP_MILL_MODEL_URL, 'TownStampMillPilot');
 }
