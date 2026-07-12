@@ -47,7 +47,9 @@ body {
   position: absolute;
   inset: 0;
   z-index: 40;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
   color: #fff8e8;
   background:
     radial-gradient(circle at 72% 18%, rgba(255, 228, 160, 0.18), transparent 23rem),
