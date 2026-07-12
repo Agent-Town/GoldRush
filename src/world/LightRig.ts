@@ -15,7 +15,8 @@ export type NightPoolSource = {
   x: number;
   z: number;
   radius: number;
-  kind: 'hero' | 'lantern';
+  height?: number;
+  kind: 'hero' | 'lantern' | 'enemy-lantern' | 'prospector';
 };
 
 export type LightRigDiagnostics = {
@@ -38,6 +39,18 @@ export type LightRigDiagnostics = {
   };
   nightShift: LightRigNightShiftState;
   nightPools: number;
+  enemyLanterns: number;
+  prospectorLights: number;
+  muzzleFlashes: number;
+  muzzleFlashCount: number;
+  billboardLights: number;
+};
+
+type MuzzleFlash = {
+  light: THREE.SpotLight;
+  target: THREE.Object3D;
+  startedAt: number;
+  endsAt: number;
 };
 
 export class LightRig {
@@ -64,7 +77,19 @@ export class LightRig {
   private readonly darkGround = new THREE.Color('#000000');
   private readonly blobShadows = new SpriteBlobShadows();
   private readonly post = new LedgerPostPass();
-  private readonly nightPoolLights = Array.from({ length: 20 }, () => new THREE.PointLight());
+  // ponytail: dynamic lights cap at 32; use clustered lighting if night encounters outgrow this render budget.
+  private readonly nightPoolLights = Array.from({ length: 32 }, () => new THREE.PointLight());
+  private readonly lanternBulbGeometry = new THREE.SphereGeometry(0.09, 8, 6);
+  private readonly lanternBulbMaterial = new THREE.MeshBasicMaterial({ color: '#ffd28a' });
+  private readonly lanternBulbs = new THREE.InstancedMesh(this.lanternBulbGeometry, this.lanternBulbMaterial, 32);
+  private readonly lightMatrix = new THREE.Object3D();
+  private readonly muzzleFlashes: MuzzleFlash[] = Array.from({ length: 6 }, () => {
+    const light = new THREE.SpotLight('#fff0b0', 0, 7, Math.PI / 7, 0.7, 2);
+    const target = new THREE.Object3D();
+    light.target = target;
+    return { light, target, startedAt: -1, endsAt: -1 };
+  });
+  private firedMuzzleFlashes = 0;
   private currentShadowMapSize = -1;
   private stressFallback = false;
   private nightShift: LightRigNightShiftState = { enabled: false, phase: 'full', darkness: 0 };
@@ -85,16 +110,21 @@ export class LightRig {
     this.sun.shadow.normalBias = 0.018;
     this.sun.shadow.radius = 2.5;
     this.group.add(this.fill, this.sun, this.sun.target);
+    this.lanternBulbs.name = 'EnemyHandLanternBulbs';
+    this.lanternBulbs.frustumCulled = false;
+    this.lanternBulbs.count = 0;
+    this.group.add(this.lanternBulbs);
     for (const light of this.nightPoolLights) {
       light.castShadow = false;
       light.decay = 2;
       light.visible = false;
       this.group.add(light);
     }
+    for (const flash of this.muzzleFlashes) this.group.add(flash.light, flash.target);
     this.scene.add(this.group, this.blobShadows.group);
   }
 
-  update(): void {
+  update(at = 0): void {
     const quality = effectiveShadowQuality(this.stressFallback);
     const darkness = this.nightShift.enabled ? THREE.MathUtils.clamp(this.nightShift.darkness, 0, 1) : 0;
     const baseFogNear = this.nightShift.enabled ? 34 : Balance.world.fogNear;
@@ -102,6 +132,7 @@ export class LightRig {
     const fogNear = THREE.MathUtils.lerp(baseFogNear, 18, darkness);
     const fogFar = Math.max(fogNear + 8, THREE.MathUtils.lerp(baseFogFar, 42, darkness));
     this.applyNightShiftPalette(darkness);
+    this.updateMuzzleFlashes(at);
     this.scene.background = this.background;
     this.scene.fog = this.fog;
     this.fog.near = fogNear;
@@ -133,6 +164,24 @@ export class LightRig {
     this.syncNightPools(sources);
   }
 
+  triggerMuzzleFlash(at: number, origin: THREE.Vector3, target: THREE.Vector3): void {
+    const flash = this.muzzleFlashes.find((entry) => entry.endsAt <= at) ?? this.muzzleFlashes[0]!;
+    flash.startedAt = at;
+    flash.endsAt = at + Balance.contracts.nightShift.muzzleFlashSeconds;
+    flash.light.position.set(origin.x, Terrain.visualY(origin.x, origin.z, 0.82), origin.z);
+    flash.target.position.set(target.x, Terrain.visualY(target.x, target.z, 0.65), target.z);
+    this.firedMuzzleFlashes += 1;
+  }
+
+  resetTransientLights(): void {
+    this.firedMuzzleFlashes = 0;
+    for (const flash of this.muzzleFlashes) {
+      flash.startedAt = -1;
+      flash.endsAt = -1;
+      flash.light.intensity = 0;
+    }
+  }
+
   diagnostics(): LightRigDiagnostics {
     const quality = effectiveShadowQuality(this.stressFallback);
     const shadowTargetSize = this.sun.shadow.map?.width ?? 0;
@@ -156,6 +205,13 @@ export class LightRig {
       },
       nightShift: { ...this.nightShift },
       nightPools: this.nightPoolLights.filter((light) => light.visible).length,
+      enemyLanterns: this.lanternBulbs.count,
+      prospectorLights: this.nightPoolLights.filter((light) => light.visible && light.userData.kind === 'prospector').length,
+      muzzleFlashes: this.muzzleFlashes.filter((flash) => flash.light.intensity > 0).length,
+      muzzleFlashCount: this.firedMuzzleFlashes,
+      billboardLights: this.group.children.filter(
+        (object) => object instanceof THREE.Mesh && object.geometry instanceof THREE.PlaneGeometry,
+      ).length,
     };
   }
 
@@ -163,6 +219,9 @@ export class LightRig {
     this.scene.remove(this.group, this.blobShadows.group);
     this.sun.dispose();
     this.fill.dispose();
+    this.lanternBulbGeometry.dispose();
+    this.lanternBulbMaterial.dispose();
+    for (const flash of this.muzzleFlashes) flash.light.dispose();
     this.blobShadows.dispose();
     this.post.dispose();
   }
@@ -213,15 +272,46 @@ export class LightRig {
 
   private syncNightPools(sources: readonly NightPoolSource[]): void {
     const darkness = this.nightShift.enabled ? this.nightShift.darkness : 0;
+    let lanternCount = 0;
     for (let index = 0; index < this.nightPoolLights.length; index += 1) {
       const light = this.nightPoolLights[index]!;
       const source = sources[index];
       light.visible = darkness > 0 && source !== undefined;
       if (!light.visible || !source) continue;
-      light.color.set(source.kind === 'lantern' ? '#ffd28a' : '#8fded3');
-      light.intensity = (source.kind === 'lantern' ? Balance.contracts.nightShift.lanternRenderIntensity : Balance.contracts.nightShift.heroRenderIntensity) * darkness;
+      light.userData.kind = source.kind;
+      const warm = source.kind === 'lantern' || source.kind === 'enemy-lantern';
+      light.color.set(warm ? '#ffd28a' : '#8fded3');
+      light.intensity = this.nightPoolIntensity(source.kind) * darkness;
       light.distance = source.radius;
-      light.position.set(source.x, Terrain.visualY(source.x, source.z, 1.45), source.z);
+      light.position.set(source.x, Terrain.visualY(source.x, source.z, source.height ?? 1.45), source.z);
+      if (source.kind !== 'enemy-lantern') continue;
+      this.lightMatrix.position.copy(light.position);
+      this.lightMatrix.scale.setScalar(1);
+      this.lightMatrix.updateMatrix();
+      this.lanternBulbs.setMatrixAt(lanternCount, this.lightMatrix.matrix);
+      lanternCount += 1;
+    }
+    this.lanternBulbs.count = darkness > 0 ? lanternCount : 0;
+    this.lanternBulbs.instanceMatrix.needsUpdate = true;
+  }
+
+  private nightPoolIntensity(kind: NightPoolSource['kind']): number {
+    if (kind === 'lantern') return Balance.contracts.nightShift.lanternRenderIntensity;
+    if (kind === 'enemy-lantern') return Balance.contracts.nightShift.enemyLanternIntensity;
+    if (kind === 'prospector') return Balance.contracts.nightShift.agentLightIntensity;
+    return Balance.contracts.nightShift.heroRenderIntensity;
+  }
+
+  private updateMuzzleFlashes(at: number): void {
+    for (const flash of this.muzzleFlashes) {
+      const remaining = flash.endsAt - at;
+      flash.light.intensity = remaining <= 0
+        ? 0
+        : Balance.contracts.nightShift.muzzleFlashIntensity * THREE.MathUtils.clamp(
+            remaining / Math.max(0.001, flash.endsAt - flash.startedAt),
+            0,
+            1,
+          );
     }
   }
 }

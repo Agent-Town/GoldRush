@@ -347,6 +347,12 @@ export const Balance = {
       turretLightRadius: 4.2,
       lanternPostLightRadius: 7,
       lanternRenderIntensity: 34,
+      enemyLanternRadius: 4.6,
+      enemyLanternIntensity: 5.5,
+      agentLightRadius: 6.2,
+      agentLightIntensity: 11,
+      muzzleFlashSeconds: 0.1,
+      muzzleFlashIntensity: 18,
     },
   },
   eraCaps: {

@@ -151,6 +151,7 @@ export class CombatSystem {
     private readonly onHeroDied: () => void,
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
     private readonly onEnemyKilled?: (position: THREE.Vector3) => void,
+    private readonly onShot?: (at: number, origin: THREE.Vector3, target: THREE.Vector3) => void,
   ) {}
 
   private get primaryActor(): Hero {
@@ -404,6 +405,7 @@ export class CombatSystem {
     const launched = this.blastCharges.activate(origin, target, airTime, damage, radius, ownerId);
     if (!launched) return false;
     this.recordShot('lob', ownerId);
+    this.onShot?.(this.currentAt, origin, target);
     this.audio.playShot('lob', ownerId);
     return true;
   }
@@ -538,6 +540,7 @@ export class CombatSystem {
         const ownerId = handle.id ?? 'hero_blast';
         if (this.blastCharges.activate(this.scratchOrigin, targetPoint, airTime, damage, aoe.radius, ownerId)) {
           this.recordShot('lob', ownerId);
+          this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint);
           handle.onFire?.(this.currentAt);
           this.audio.playShot('lob', ownerId);
         }
@@ -572,6 +575,7 @@ export class CombatSystem {
         )
       ) {
         this.recordShot('bolt', ownerId);
+        this.onShot?.(this.currentAt, this.scratchOrigin, targetPoint);
         handle.onFire?.(this.currentAt);
         this.audio.playShot('bolt', ownerId);
       }

@@ -1,4 +1,4 @@
-import type { AgentAbility } from '../agent/AgentConsent';
+import { AGENT_ABILITIES, type AgentAbility } from '../agent/AgentConsent';
 import { AGENT_PERMISSION_LABELS, type AgentPermissionLevel } from '../agent/PermissionLadder';
 import type { UiIntent } from './Hud';
 import type { UiSnapshot } from '../systems/UiBridge';
@@ -131,7 +131,10 @@ export class ProspectorPanel {
 
   private abilities(): string {
     const consent = this.snapshot?.agent?.consent;
-    const capabilities = this.snapshot?.agent?.capabilities ?? [];
+    const capabilities = [
+      ...(this.snapshot?.agent?.capabilities ?? []),
+      ...AGENT_ABILITIES.filter((ability) => ability.id === 'light_duty').map((ability) => ({ ...ability, tools: [] })),
+    ];
     if (capabilities.length === 0) return '<p class="prospector-panel__hint">No chores are wired yet.</p>';
     if ((this.snapshot?.agent?.permissionLevel ?? 0) === 0) {
       return capabilities.map((ability) => this.lockedAbility(ability)).join('');

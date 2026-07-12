@@ -572,6 +572,11 @@ interface ThreeGameDiagnostics {
     shadowMapTargetSize: number;
     blobShadows: number;
     nightPools: number;
+    enemyLanterns: number;
+    prospectorLights: number;
+    muzzleFlashes: number;
+    muzzleFlashCount: number;
+    billboardLights: number;
     nightShift: {
       enabled: boolean;
       phase: 'full' | 'dusk' | 'dark' | 'dawn';
@@ -900,6 +905,7 @@ interface Window {
         visualScale?: number;
         banner?: boolean;
         wrecker?: boolean;
+        carriedLantern?: boolean;
         contactDamageScale?: number;
         buildingDamageScale?: number;
         supportBuildingDamageScale?: number;
@@ -1053,6 +1059,7 @@ interface Window {
       edge?: 'north' | 'south' | 'east' | 'west' | null;
       zone?: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
       light?: number;
+      watchPainted?: boolean;
       terrain?: {
         grounded: boolean;
         slope: { dx: number; dz: number };

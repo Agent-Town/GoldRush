@@ -24,6 +24,7 @@ export type SpawnPackOptions = {
   visualScale?: number;
   banner?: boolean;
   wrecker?: boolean;
+  carriedLantern?: boolean;
   contactDamageScale?: number;
   buildingDamageScale?: number;
   supportBuildingDamageScale?: number;
@@ -522,6 +523,7 @@ export class WaveSystem {
       edge: params.edge,
       thief: params.thief === true,
       wrecker: params.wrecker === true,
+      carriedLantern: params.carriedLantern ?? this.enemyCarriesLantern(params.thief === true, params.wrecker === true),
       eliteKind: params.eliteKind,
       visualScale: params.visualScale,
       banner: params.banner,
@@ -575,6 +577,11 @@ export class WaveSystem {
     const slots = this.thiefCap(wave) - this.liveThiefCount();
     if (slots <= 0) return 0;
     return Math.min(groupCount, slots, Math.max(1, count));
+  }
+
+  private enemyCarriesLantern(thief: boolean, wrecker: boolean): boolean {
+    const classes = this.contract.twist.enemyLanternClasses ?? [];
+    return thief ? classes.includes('thief') : !wrecker && classes.includes('rusher');
   }
 
   private thiefCap(wave: number): number {

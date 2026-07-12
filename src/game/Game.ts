@@ -331,6 +331,7 @@ export class Game {
     },
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
     (position) => this.onEnemyKilled(position),
+    (at, origin, target) => this.lightRig?.triggerMuzzleFlash(at, origin, target),
   );
   private readonly prospector = new ProspectorEmbodiment((position, text, color) => this.vfx.floatText(position, text, color));
   private readonly buildSystem: BuildSystem;
@@ -1219,6 +1220,7 @@ export class Game {
                 edge: enemy.ownEdge,
                 zone: terrainSample.zone,
                 light: Number(this.enemies.lightFactorFor(enemy).toFixed(3)),
+                watchPainted: this.enemies.watchPaintedFor(enemy),
                 terrain: {
                   grounded: Math.abs(enemy.position.y - Terrain.visualY(enemy.position.x, enemy.position.z, Balance.enemy.groundY)) < 0.01,
                   slope: sim.slope,
@@ -1699,7 +1701,7 @@ export class Game {
     this.syncMultiplayerNameChips();
     this.lightRig?.setStressFallback(visualStress);
     this.syncNightShiftLighting();
-    this.lightRig?.update();
+    this.lightRig?.update(this.timeAlive);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
@@ -2315,7 +2317,7 @@ export class Game {
 
   private dressScene(): void {
     this.syncNightShiftLighting();
-    this.lightRig?.update();
+    this.lightRig?.update(this.timeAlive);
   }
 
   private createMegaprojectVisuals(): void {
@@ -3422,6 +3424,7 @@ export class Game {
         x: actor.group.position.x,
         z: actor.group.position.z,
         radius: Balance.contracts.nightShift.heroLightRadius,
+        kind: 'light' as const,
       }));
     const liveLightPositions = (id: BuildableId): Array<{ x: number; z: number }> =>
       diagnostics.hp
@@ -3429,14 +3432,36 @@ export class Game {
         .map((entry) => entry.position);
 
     for (const position of liveLightPositions('sentry_beacon')) {
-      sources.push({ x: position.x, z: position.z, radius: Balance.beacon.range * Balance.contracts.nightShift.beaconLightMult });
+      sources.push({ x: position.x, z: position.z, radius: Balance.beacon.range * Balance.contracts.nightShift.beaconLightMult, kind: 'watch' });
     }
     for (const position of liveLightPositions('turret')) {
-      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.turretLightRadius });
+      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.turretLightRadius, kind: 'watch' });
     }
     for (const position of liveLightPositions('lantern_post')) {
-      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.lanternPostLightRadius });
+      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.lanternPostLightRadius, kind: 'light' });
     }
+
+    const enemyLanterns = this.enemies.all
+      .filter((enemy) => enemy.isAlive && enemy.carriesLantern)
+      .map((enemy) => {
+        const position = this.enemies.renderPositionOf(enemy);
+        const swing = this.timeAlive * 3.4 + enemy.id * 1.7;
+        return {
+          x: position.x + Math.sin(swing) * 0.18,
+          z: position.z + Math.cos(swing) * 0.18,
+          radius: Balance.contracts.nightShift.enemyLanternRadius,
+        };
+      });
+    for (const lantern of enemyLanterns) sources.push({ ...lantern, kind: 'light' });
+
+    const agentLight = this.prospectorCan('light_duty') && this.prospector.group.visible
+      ? {
+          x: this.localActor.renderPosition.x + Math.sin(this.localActor.group.rotation.y) * 2.2,
+          z: this.localActor.renderPosition.z - Math.cos(this.localActor.group.rotation.y) * 2.2,
+          radius: Balance.contracts.nightShift.agentLightRadius,
+        }
+      : null;
+    if (agentLight) sources.push({ ...agentLight, kind: 'light' });
 
     const nightPools: NightPoolSource[] = [
       ...liveLightPositions('lantern_post').map((position) => ({
@@ -3451,6 +3476,8 @@ export class Game {
         radius: Balance.contracts.nightShift.heroLightRadius,
         kind: 'hero' as const,
       })),
+      ...(agentLight ? [{ ...agentLight, height: 1.15, kind: 'prospector' as const }] : []),
+      ...enemyLanterns.map((lantern) => ({ ...lantern, height: 0.82, kind: 'enemy-lantern' as const })),
     ];
     this.lightRig?.setNightShift(state, nightPools);
     this.buildSystem.setNightLighting(state.darkness, nightPools);
@@ -3750,7 +3777,7 @@ export class Game {
     };
   }
 
-  private prospectorCan(ability: 'auto_collect' | 'auto_repair'): boolean {
+  private prospectorCan(ability: 'auto_collect' | 'auto_repair' | 'light_duty'): boolean {
     if (!this.agentStub) return false;
     const level = this.agentStub.state.permissionLevel;
     return level > 0 && this.agentConsent.allows(ability, level);
@@ -4043,6 +4070,7 @@ export class Game {
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
+    this.lightRig?.resetTransientLights();
     this.activeWeapon = 'rig';
     this.blastAimReticle.visible = false;
     this.canvas.classList.remove('aim-reticle--disarmed');

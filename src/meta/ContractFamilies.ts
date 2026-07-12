@@ -241,6 +241,7 @@ export type ContractEnemyVariant = {
   spawnEdges?: readonly ContractEdge[];
   spawnGates?: readonly ContractEnemySpawnGate[];
 };
+export type ContractEnemyLanternClass = 'rusher' | 'thief';
 export type ContractEnemySpawnGate = {
   edge: ContractEdge;
   x: number;
@@ -420,6 +421,7 @@ export type ContractManifest = {
     secureWave?: number;
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
+    enemyLanternClasses?: readonly ContractEnemyLanternClass[];
     enemyRoster?: readonly ContractEnemyVariant[];
     baron?: ContractBaronTwist;
   };

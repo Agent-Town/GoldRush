@@ -1785,6 +1785,7 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
       | 'bossDegradeSpeedMult'
       | 'thief'
       | 'wrecker'
+      | 'carriedLantern'
       | 'thiefState'
       | 'wreckerState'
       | 'currentHoldingId'
@@ -1822,6 +1823,7 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
     bossDegradeSpeedMult,
     thief: record.thief,
     wrecker: record.wrecker,
+    carriedLantern: record.carriedLantern === true,
     thiefState,
     wreckerState,
     currentHoldingId,
@@ -2437,6 +2439,7 @@ function decodeAgent(value: unknown, reasons: string[]): AgentSuspend | null | u
         auto_collect: abilities.auto_collect as boolean,
         auto_repair: abilities.auto_repair as boolean,
         auto_pan: abilities.auto_pan as boolean,
+        light_duty: abilities.light_duty === true,
       },
     },
     prospector: {

@@ -35,6 +35,7 @@ export type EnemySpawnParams = {
   edge?: CompassEdge;
   thief?: boolean;
   wrecker?: boolean;
+  carriedLantern?: boolean;
   formationSeed?: number;
   eliteKind?: EnemyEliteKind;
   visualScale?: number;
@@ -81,6 +82,7 @@ export type EnemySuspendSnapshot = {
   contactCooldown: number;
   thief: boolean;
   wrecker: boolean;
+  carriedLantern: boolean;
   thiefState: ThiefState;
   wreckerState: WreckerState;
   carriedGold: number;
@@ -220,6 +222,7 @@ export class ClaimJumperEnemy {
   private spriteOrientation: RotationDirection = 's';
   private thief = false;
   private wrecker = false;
+  private carriedLanternValue = false;
   private thiefState: ThiefState = 'none';
   private wreckerState: WreckerState = 'none';
   private carriedGold = 0;
@@ -359,6 +362,10 @@ export class ClaimJumperEnemy {
     return this.wrecker;
   }
 
+  get carriesLantern(): boolean {
+    return this.carriedLanternValue;
+  }
+
   get stealState(): ThiefState {
     return this.thiefState;
   }
@@ -430,6 +437,7 @@ export class ClaimJumperEnemy {
       contactCooldown: this.contactCooldown,
       thief: this.thief,
       wrecker: this.wrecker,
+      carriedLantern: this.carriedLanternValue,
       thiefState: this.thiefState,
       wreckerState: this.wreckerState,
       carriedGold: this.carriedGold,
@@ -486,6 +494,7 @@ export class ClaimJumperEnemy {
     this.contactCooldown = snapshot.contactCooldown;
     this.thief = snapshot.thief;
     this.wrecker = snapshot.wrecker;
+    this.carriedLanternValue = snapshot.carriedLantern;
     this.thiefState = snapshot.thiefState;
     this.wreckerState = snapshot.wreckerState;
     this.carriedGold = snapshot.carriedGold;
@@ -546,6 +555,7 @@ export class ClaimJumperEnemy {
     this.contactCooldown = 0;
     this.thief = params.thief === true;
     this.wrecker = !this.thief && params.wrecker === true;
+    this.carriedLanternValue = params.carriedLantern === true;
     this.thiefState = this.thief ? 'seekHolding' : 'none';
     this.wreckerState = this.wrecker ? 'seekBuilding' : 'none';
     this.carriedGold = 0;
@@ -728,6 +738,7 @@ export class ClaimJumperEnemy {
     this.contactCooldown = 0;
     this.thief = false;
     this.wrecker = false;
+    this.carriedLanternValue = false;
     this.thiefState = 'none';
     this.wreckerState = 'none';
     this.carriedGold = 0;

@@ -31,7 +31,7 @@ const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
   leanRad: 0,
 };
 
-export type EnemyLightSource = { x: number; z: number; radius: number };
+export type EnemyLightSource = { x: number; z: number; radius: number; kind?: 'light' | 'watch' };
 export type EnemyLightDimmingConfig = {
   enabled: boolean;
   darkness: number;
@@ -91,6 +91,15 @@ export class EnemyPool {
   private readonly currentRotations: number[] = [];
   private readonly renderRotations: number[] = [];
   private readonly renderParts: THREE.InstancedMesh[] = [];
+  private readonly watchPaintMaterial = new THREE.MeshBasicMaterial({
+    color: '#d7a84c',
+    transparent: true,
+    opacity: 0.5,
+    depthWrite: false,
+    fog: false,
+    side: THREE.BackSide,
+  });
+  private readonly watchPaintMeshes: THREE.InstancedMesh[] = [];
   private readonly sackMesh: THREE.InstancedMesh = new THREE.InstancedMesh(
     this.assets.sackGeometry,
     this.assets.sackMaterial,
@@ -105,20 +114,6 @@ export class EnemyPool {
     blending: THREE.AdditiveBlending,
   });
   private readonly hitFlashes = new THREE.InstancedMesh(this.hitFlashGeometry, this.hitFlashMaterial, Balance.enemy.poolSize);
-  private readonly nightReadabilityGeometry = new THREE.PlaneGeometry(0.95, 1.28);
-  private readonly nightReadabilityMaterial = new THREE.MeshBasicMaterial({
-    color: '#ffd88a',
-    transparent: true,
-    opacity: 0.82,
-    depthWrite: false,
-    fog: false,
-    side: THREE.DoubleSide,
-  });
-  private readonly nightReadability = new THREE.InstancedMesh(
-    this.nightReadabilityGeometry,
-    this.nightReadabilityMaterial,
-    Balance.enemy.poolSize,
-  );
   private readonly bannerPoleGeometry = new THREE.CylinderGeometry(0.025, 0.025, 1.36, 8);
   private readonly bannerClothGeometry = new THREE.BoxGeometry(0.52, 0.34, 0.035);
   private readonly bannerPoleMaterial = new THREE.MeshStandardMaterial({
@@ -207,6 +202,8 @@ export class EnemyPool {
   private readonly touchedCells: number[] = [];
   private readonly baseMatrix = new THREE.Matrix4();
   private readonly instanceMatrix = new THREE.Matrix4();
+  private readonly watchPaintBaseMatrix = new THREE.Matrix4();
+  private readonly watchPaintScaleMatrix = new THREE.Matrix4().makeScale(1.08, 1.08, 1.08);
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private readonly syncObject = new THREE.Object3D();
   private readonly warmHitFlashPosition = new THREE.Vector3();
@@ -360,6 +357,7 @@ export class EnemyPool {
         x: source.x,
         z: source.z,
         radius: Math.max(0.1, source.radius),
+        kind: source.kind,
       })),
     };
   }
@@ -381,6 +379,10 @@ export class EnemyPool {
       sourceLight = Math.max(sourceLight, light);
     }
     return THREE.MathUtils.clamp(1 - dimming.darkness * (1 - sourceLight), 0, 1);
+  }
+
+  watchPaintedFor(enemy: ClaimJumperEnemy): boolean {
+    return this.isWatchPainted(enemy);
   }
 
   warmHitFlashes(position: THREE.Vector3): Promise<void> {
@@ -672,8 +674,7 @@ export class EnemyPool {
     this.bossHpSegmentMaterial.dispose();
     this.hitFlashGeometry.dispose();
     this.hitFlashMaterial.dispose();
-    this.nightReadabilityGeometry.dispose();
-    this.nightReadabilityMaterial.dispose();
+    this.watchPaintMaterial.dispose();
     this.bannerPoleGeometry.dispose();
     this.bannerClothGeometry.dispose();
     this.bannerPoleMaterial.dispose();
@@ -816,6 +817,12 @@ export class EnemyPool {
       new THREE.InstancedMesh(this.assets.brimGeometry, this.assets.hatMaterial, Balance.enemy.poolSize),
       new THREE.InstancedMesh(this.assets.crownGeometry, this.assets.hatMaterial, Balance.enemy.poolSize),
     );
+    this.watchPaintMeshes.push(
+      new THREE.InstancedMesh(this.assets.ponchoGeometry, this.watchPaintMaterial, Balance.enemy.poolSize),
+      new THREE.InstancedMesh(this.assets.faceGeometry, this.watchPaintMaterial, Balance.enemy.poolSize),
+      new THREE.InstancedMesh(this.assets.brimGeometry, this.watchPaintMaterial, Balance.enemy.poolSize),
+      new THREE.InstancedMesh(this.assets.crownGeometry, this.watchPaintMaterial, Balance.enemy.poolSize),
+    );
 
     for (const part of this.renderParts) {
       part.count = Balance.enemy.poolSize;
@@ -826,6 +833,15 @@ export class EnemyPool {
       this.group.add(part);
     }
     this.renderParts[0].renderOrder = RenderLayers.groundShadows;
+    for (const part of this.watchPaintMeshes) {
+      part.count = Balance.enemy.poolSize;
+      part.castShadow = false;
+      part.frustumCulled = false;
+      part.renderOrder = RenderLayers.gameplay - 0.01;
+      this.group.add(part);
+      for (let index = 0; index < Balance.enemy.poolSize; index += 1) part.setMatrixAt(index, this.hiddenMatrix);
+      part.instanceMatrix.needsUpdate = true;
+    }
   }
 
   private createSackMesh(): void {
@@ -846,19 +862,12 @@ export class EnemyPool {
     this.hitFlashes.frustumCulled = false;
     this.hitFlashes.renderOrder = RenderLayers.impactVfx;
     this.hitFlashes.visible = false;
-    this.nightReadability.count = Balance.enemy.poolSize;
-    this.nightReadability.frustumCulled = false;
-    this.nightReadability.renderOrder = RenderLayers.gameplay - 0.01;
-    this.nightReadability.visible = false;
     tagPlaceholder(this.hitFlashes, assetSlots.charClaimJumper);
-    tagPlaceholder(this.nightReadability, assetSlots.charClaimJumper);
-    this.group.add(this.nightReadability, this.hitFlashes);
+    this.group.add(this.hitFlashes);
     for (let i = 0; i < Balance.enemy.poolSize; i += 1) {
       this.hitFlashes.setMatrixAt(i, this.hiddenMatrix);
-      this.nightReadability.setMatrixAt(i, this.hiddenMatrix);
     }
     this.hitFlashes.instanceMatrix.needsUpdate = true;
-    this.nightReadability.instanceMatrix.needsUpdate = true;
   }
 
   private createBannerMeshes(): void {
@@ -910,7 +919,6 @@ export class EnemyPool {
   }
 
   private syncRenderInstances(): void {
-    this.nightReadability.visible = this.fullDarkRenderCutoffActive();
     for (const enemy of this.enemies) {
       this.syncEnemyInstance(enemy);
     }
@@ -939,6 +947,7 @@ export class EnemyPool {
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
     const lightFactor = this.renderLightFactor(this.lightFactorFor(enemy));
+    const watchPainted = this.isWatchPainted(enemy);
     const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
     const motion =
       enemy.eliteKind === 'baron' && this.baronSprites.isLoaded
@@ -988,24 +997,8 @@ export class EnemyPool {
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.setInstanceColor(this.sackMesh, enemy.id, this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
+    this.syncWatchPaint(enemy, watchPainted);
     this.syncBanner(enemy, lightFactor);
-    this.syncNightReadability(enemy, lightFactor);
-  }
-
-  private syncNightReadability(enemy: ClaimJumperEnemy, lightFactor: number): void {
-    const visible = this.fullDarkRenderCutoffActive() && enemy.isAlive && lightFactor > 0;
-    if (visible) {
-      this.syncObject.position.copy(enemy.group.position);
-      this.syncObject.position.y += 0.94 * enemy.visualScale;
-      this.syncObject.rotation.set(0, 0, 0);
-      if (this.camera) this.syncObject.quaternion.copy(this.camera.quaternion);
-      this.syncObject.scale.setScalar(enemy.visualScale);
-      this.syncObject.updateMatrix();
-      this.nightReadability.setMatrixAt(enemy.id, this.syncObject.matrix);
-    } else {
-      this.nightReadability.setMatrixAt(enemy.id, this.hiddenMatrix);
-    }
-    this.nightReadability.instanceMatrix.needsUpdate = true;
   }
 
   private syncBanner(enemy: ClaimJumperEnemy, lightFactor: number): void {
@@ -1018,6 +1011,18 @@ export class EnemyPool {
     this.setInstanceColor(this.bannerClothMesh, enemy.id, this.bannerClothColor, lightFactor);
     this.bannerPoleMesh.instanceMatrix.needsUpdate = true;
     this.bannerClothMesh.instanceMatrix.needsUpdate = true;
+  }
+
+  private syncWatchPaint(enemy: ClaimJumperEnemy, visible: boolean): void {
+    this.watchPaintBaseMatrix.multiplyMatrices(visible ? this.baseMatrix : this.hiddenMatrix, this.watchPaintScaleMatrix);
+    for (let index = 0; index < this.watchPaintMeshes.length; index += 1) {
+      const mesh = this.watchPaintMeshes[index];
+      const localMatrix = this.localMatrices[index + 1];
+      if (!mesh || !localMatrix) continue;
+      this.instanceMatrix.multiplyMatrices(this.watchPaintBaseMatrix, localMatrix);
+      mesh.setMatrixAt(enemy.id, this.instanceMatrix);
+      mesh.instanceMatrix.needsUpdate = true;
+    }
   }
 
   private syncSpriteVisuals(): void {
@@ -1126,6 +1131,7 @@ export class EnemyPool {
 
   private setProceduralVisible(visible: boolean): void {
     for (const part of this.renderParts) part.visible = visible;
+    for (const part of this.watchPaintMeshes) part.visible = visible;
   }
 
   private syncEnemyFog(): void {
@@ -1183,6 +1189,13 @@ export class EnemyPool {
   private renderLightFactor(lightFactor: number): number {
     if (!this.fullDarkRenderCutoffActive()) return lightFactor;
     return lightFactor < Balance.contracts.nightShift.renderVisibilityCutoff ? 0 : Balance.contracts.nightShift.renderVisibleBoost;
+  }
+
+  private isWatchPainted(enemy: ClaimJumperEnemy): boolean {
+    if (!this.fullDarkRenderCutoffActive() || !enemy.isAlive) return false;
+    return this.lightDimming.sources.some((source) =>
+      source.kind === 'watch' && Math.hypot(enemy.group.position.x - source.x, enemy.group.position.z - source.z) <= source.radius,
+    );
   }
 
   private fullDarkRenderCutoffActive(): boolean {

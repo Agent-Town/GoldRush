@@ -691,7 +691,7 @@ function normalizeAction(value: unknown): LockstepAction | null {
   }
   if (value.type === 'set_agent_ability' && typeof value.granted === 'boolean') {
     const ability = cleanToken(value.ability, 64);
-    return ability === 'auto_collect' || ability === 'auto_repair' || ability === 'auto_pan'
+    return ability === 'auto_collect' || ability === 'auto_repair' || ability === 'auto_pan' || ability === 'light_duty'
       ? { type: 'set_agent_ability', ability, granted: value.granted }
       : null;
   }
