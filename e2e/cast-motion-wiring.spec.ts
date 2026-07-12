@@ -30,7 +30,8 @@ async function bootTown(page: Page): Promise<void> {
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded && actor.spriteAspect > 0 && actor.spriteAspect <= 1.6))).toBe(true);
 }
 
-test('the whole visible plaza cast is full-body and three motion sheets advance', async ({ page }, testInfo) => {
+test('the plaza cast stands, walks, and faces truthfully without borrowed sheets', async ({ page }, testInfo) => {
+  test.setTimeout(45_000);
   const errors: string[] = [];
   page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
   page.on('pageerror', (error) => errors.push(error.message));
@@ -38,15 +39,37 @@ test('the whole visible plaza cast is full-body and three motion sheets advance'
 
   const before = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.filter((actor) => actor.visible));
   expect(before).toHaveLength(10);
-  expect(before.every((actor) => actor.spriteAspect >= 0.7 && actor.spriteAspect <= 1.6)).toBe(true); // natural cell aspect — >=1.8 was the codified stretch (owner finding 2026-07-12)
+  expect(before.every((actor) => actor.spriteAspect >= 0.7 && actor.spriteAspect <= 1.6)).toBe(true);
+  expect(before.every((actor) => !actor.fullBodyStandIn)).toBe(true);
+  const presentations = before
+    .filter((actor) => actor.id !== 'prospector')
+    .map((actor) => actor.frameKey.replace(/-r\d+c\d+\.png$/, ''));
+  expect(new Set(presentations).size).toBe(presentations.length);
+  await expect.poll(async () => {
+    const newsie = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie'));
+    return newsie && !newsie.moving ? newsie.frameKey : '';
+  }, { timeout: 20_000 }).toMatch(/c0\.png$/);
+
   await page.waitForTimeout(500);
   const after = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.filter((actor) => actor.visible));
-  for (const id of ['tavernkeeper', 'elder', 'newsie'] as const) {
-    expect(after.find((actor) => actor.id === id)?.frameKey).not.toBe(before.find((actor) => actor.id === id)?.frameKey);
+  for (const id of ['tavernkeeper', 'elder'] as const) {
+    expect(after.find((actor) => actor.id === id)?.frameKey).toBe(before.find((actor) => actor.id === id)?.frameKey);
+    expect(after.find((actor) => actor.id === id)?.frameKey).toMatch(/c0\.png$/);
   }
+  expect(after.find((actor) => actor.id === 'preacher')?.frameKey).toBe('portrait:preacher');
+  expect(after.find((actor) => actor.id === 'schoolteacher')?.frameKey).toBe('portrait:schoolteacher');
+  expect(after.find((actor) => actor.id === 'assay_clerk')?.frameKey).toBe('portrait:assay_clerk');
 
+  await expect.poll(async () => {
+    const actors = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors);
+    return actors.some(
+      (actor) => actor.visible && actor.moving && actor.motion.z > Math.abs(actor.motion.x) && /-r0c[1-7]\.png$/.test(actor.frameKey),
+    );
+  }, { timeout: 20_000 }).toBe(true);
+
+  await page.waitForTimeout(10_000);
   await mkdir(artifactDir, { recursive: true });
-  await page.locator('#game-canvas').screenshot({ path: path.join(artifactDir, `${testInfo.project.name}-plaza-cast.png`) });
+  await page.locator('#game-canvas').screenshot({ path: path.join(artifactDir, `${testInfo.project.name}-plaza-cast-10s.png`) });
   await page.getByTestId('town-exit').click();
   await page.getByTestId('start-menu-enter-town').click();
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible).every((actor) => actor.loaded && actor.spriteAspect > 0 && actor.spriteAspect <= 1.6))).toBe(true);

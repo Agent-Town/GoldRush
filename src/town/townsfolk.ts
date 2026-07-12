@@ -27,7 +27,7 @@ export type TownActorDefinition = {
   facing: RotationDirection;
   scale: number;
   barkRadius: number;
-  fullBody: { sheet: string; animated: boolean; standIn?: boolean };
+  fullBody?: { sheet: string; animated: boolean };
   e1Barks: readonly string[];
   loop?: {
     trailId: string;
@@ -107,7 +107,6 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.42,
     barkRadius: 3,
-    fullBody: { sheet: 'char-tavernkeeper-sheet-walk8', animated: false, standIn: true },
     e1Barks: ['The bell is for courage, not judgment.', 'Some days a town needs quiet more than gold.', '{town} has roots now. Tend them.'],
   },
   {
@@ -121,7 +120,6 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 'se',
     scale: 1.36,
     barkRadius: 2.8,
-    fullBody: { sheet: 'char-storekeeper-sheet-walk8', animated: false, standIn: true },
     e1Barks: ['Chalk today, Steamworks tomorrow.', 'The little ones count waves faster than I do.', 'A good question is a lantern.'],
   },
   {
@@ -135,7 +133,6 @@ export const TOWN_ACTORS: readonly TownActorDefinition[] = [
     facing: 's',
     scale: 1.36,
     barkRadius: 3.05,
-    fullBody: { sheet: 'char-elder-sheet-walk8', animated: false, standIn: true },
     e1Barks: ['Ore talks. My scale makes it honest.', 'Bring the odd bits here before they become trouble.', 'Gold in, proof out. That is the office bargain.'],
   },
   {

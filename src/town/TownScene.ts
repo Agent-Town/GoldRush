@@ -1,8 +1,9 @@
 import './town.css';
+import { performanceTierDiagnostics, type PerformanceTier } from '../game/PerformanceTier';
 import * as THREE from 'three';
 import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
 import { SpriteAnimator } from '../assets/SpriteAnimator';
-import { clearProcessedCharacterTextureCache, loadProcessedCharacterTexture } from '../assets/generated';
+import { clearProcessedCharacterTextureCache, loadGeneratedTexture, loadProcessedCharacterTexture } from '../assets/generated';
 import { tagPlaceholder } from '../assets/slots';
 import { CameraRig } from '../systems/CameraRig';
 import { Hero } from '../entities/Hero';
@@ -13,7 +14,6 @@ import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
 import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
-import { performanceTierDiagnostics, type PerformanceTier } from '../game/PerformanceTier';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
 import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
@@ -26,7 +26,6 @@ import {
   DEFAULT_EPOCH_ID,
   epochIsActive,
   listBoardContracts,
-  listEpochs,
   loadContract,
   loadEpoch,
   type ContractManifest,
@@ -39,23 +38,13 @@ import {
   type MegaprojectManifest,
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
-import {
-  RESEARCH_STATE_KEY,
-  browserResearchStorage,
-  loadResearchState,
-  researchStateKey,
-  saveResearchState,
-  scienceMeter,
-  setPinnedResearchTarget,
-  type ResearchState,
-} from '../meta/ResearchTree';
+import { browserResearchStorage, loadResearchState, saveResearchState, scienceMeter, setPinnedResearchTarget } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
 import { renderResearchChart } from '../ui/ResearchChart';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
 import { disposeObject3D } from '../utils/dispose';
-import { SoundSystem } from '../audio/SoundSystem';
 import {
   createRideRoom,
   currentMultiplayerSetup,
@@ -70,7 +59,6 @@ import {
   townPlazaLayout,
   townPlazaSlot,
   townPropRing,
-  townTrailLayout,
   type TownBuilding,
   type TownBuildingId,
   type TownPropKind,
@@ -104,7 +92,6 @@ const townFacadeUrls: Partial<Record<TownBuildingId, { key: string; url: string 
   general_store: { key: 'bld-general-store', url: new URL('../../assets/processed/bld-general-store.png', import.meta.url).href },
   chapel: { key: 'bld-chapel', url: new URL('../../assets/processed/bld-chapel.png', import.meta.url).href },
 };
-const STAMP_MILL_FACADE = { key: 'bld-stamp-mill', url: new URL('../../assets/processed/bld-stamp-mill.png', import.meta.url).href };
 const townFacadeLoader = new THREE.TextureLoader();
 const townFacadeTextures = new Map<string, Promise<THREE.Texture | null>>();
 const TOWN_HALF = 15;
@@ -159,11 +146,13 @@ export type TownDiagnostics = {
     bark: string | null;
     loaded: boolean;
     loop: boolean;
-    trailId: string | null;
     assetSlot: string;
     spriteAspect: number;
     frameKey: string;
     fullBodyStandIn: boolean;
+    moving: boolean;
+    motion: { x: number; z: number };
+    trailId: string | null;
   }>;
   stampMill: {
     visible: boolean;
@@ -223,7 +212,6 @@ export class TownScene {
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
   private readonly cameraRig = new CameraRig(this.camera);
   private readonly hero = new Hero();
-  private readonly audio = new SoundSystem();
   private readonly input: InputController;
   private readonly loop = new Loop((delta) => this.update(delta), () => this.render());
   private readonly ui = document.createElement('section');
@@ -237,8 +225,6 @@ export class TownScene {
   private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
   private readonly visibleActors = visibleTownActors(this.visibleBuildings);
   private readonly stampMill = readTownStampMill(this.metaProgress);
-  private town3dDispose?: () => void;
-  private town3dPilotDispose?: () => void;
   private readonly stampMillGroup = new THREE.Group();
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
@@ -283,7 +269,6 @@ export class TownScene {
   private boardOpen = false;
   private schoolhouseOpen = false;
   private selectedResearchNodeId: string | undefined;
-  private selectedResearchEpochId = activeEpochId();
   private nameBeatTimer = 0;
   private lastExitIntent = false;
   private tavernBackdropUrl: string | undefined;
@@ -323,7 +308,6 @@ export class TownScene {
   }
 
   start(): void {
-    this.audio.setLoop('title-theme', true);
     this.loop.start();
   }
 
@@ -350,24 +334,21 @@ export class TownScene {
     clearProcessedCharacterTextureCache();
     this.ui.remove();
     this.hero.dispose();
-    this.audio.dispose();
-    this.canvas.dataset.town3dPilotState = 'disposed'; this.town3dPilotDispose?.();
     disposeObject3D(this.scene);
     this.scene.clear();
     this.renderer.dispose();
-    this.town3dDispose?.();
     window.__GR_TOWN_DIAGNOSTICS__ = undefined;
   }
 
   private update(delta: number): void {
     this.frame += 1;
     this.elapsed += delta;
+    this.updateAmbientDust();
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
     if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
-      this.updateAmbientDust();
       if (rawExitIntent && !this.lastExitIntent) {
         if (this.boardOpen) this.closeBoard();
         else if (this.schoolhouseOpen) this.closeSchoolhouse();
@@ -389,7 +370,6 @@ export class TownScene {
 
     this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: this.sampleTown });
     for (const actor of this.townActors) actor.update(delta, this.elapsed);
-    this.updateAmbientDust();
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.updateFirstClaimGuide();
     this.syncPrompt();
@@ -448,7 +428,6 @@ export class TownScene {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
     if (this.propRingEnabled) this.scene.add(createTownPropRing(this.townNight));
-    if (this.ambientDust) this.scene.add(this.ambientDust);
     this.createStampMillVignette();
     this.createFirstClaimGuide();
     for (const actor of this.visibleActors) {
@@ -457,26 +436,9 @@ export class TownScene {
       this.scene.add(runtime.group);
     }
 
+    if (this.ambientDust) this.scene.add(this.ambientDust);
     this.hero.group.position.copy(HERO_START);
     this.scene.add(this.hero.group);
-
-    const search = new URLSearchParams(window.location.search);
-    const pilotEnabled = search.has('town3dPilot');
-    this.canvas.dataset.town3dPilotState = pilotEnabled ? (this.performanceTier === 'lite' ? 'lite' : 'loading') : 'off';
-    this.canvas.dataset.town3dPilotRenderSource = 'facade';
-    if (pilotEnabled && this.performanceTier !== 'lite') {
-      void import('./TownTavernPilot').then(({ installTownTavernPilot }) => {
-        this.town3dPilotDispose = installTownTavernPilot({ scene: this.scene, canvas: this.canvas });
-      });
-    }
-    if (search.has('debug') && search.has('town3d')) {
-      void import('./Town3dViewer').then(({ installTown3dViewer }) => {
-        this.town3dDispose = installTown3dViewer({
-          scene: this.scene,
-          buildingFootprint: (id) => townBuildings.find((building) => building.id === id)?.footprint ?? null,
-        });
-      });
-    }
   }
 
   private createStampMillVignette(): void {
@@ -491,7 +453,7 @@ export class TownScene {
     const halfX = site.w * 0.5;
     const halfZ = site.d * 0.5;
     const baseMaterial = new THREE.MeshStandardMaterial({ color: '#8b6c3f', roughness: 0.86, metalness: 0.02 });
-    const stageMaterial = new THREE.MeshStandardMaterial({ color: '#8a5f38', roughness: 0.8, metalness: 0.06 });
+    const stageMaterial = new THREE.MeshStandardMaterial({ color: '#5b8a8a', roughness: 0.7, metalness: 0.18 });
     const ghostMaterial = new THREE.MeshStandardMaterial({ color: '#8b7d3c', roughness: 0.78, metalness: 0.08, transparent: true, opacity: 0.46 });
     const woodMaterial = new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.84, metalness: 0.02 });
     const brassMaterial = new THREE.MeshStandardMaterial({ color: '#c4883a', roughness: 0.58, metalness: 0.16 });
@@ -570,35 +532,11 @@ export class TownScene {
       crate.visible = !surveyVisible && !complete;
     }
 
-    // The painted mill rises behind the scaffolds: ghosted like the surveyor's
-    // elevation drawing while stages build, full-color once it awaits the whistle.
-    const portraitMaterial = new THREE.MeshStandardMaterial({
-      color: '#ffffff',
-      transparent: true,
-      opacity: complete ? 1 : 0.34,
-      alphaTest: 0.04,
-      roughness: 0.78,
-      metalness: 0.02,
-      side: THREE.DoubleSide,
-    });
-    loadTownFacadeTexture(STAMP_MILL_FACADE).then((texture) => {
-      if (!texture) return;
-      portraitMaterial.map = texture;
-      portraitMaterial.needsUpdate = true;
-    });
-    const portraitHeight = 2.9;
-    const portrait = new THREE.Mesh(new THREE.PlaneGeometry(portraitHeight, portraitHeight), portraitMaterial);
-    portrait.name = 'TownStampMillPortrait';
-    portrait.position.set(0, portraitHeight * 0.5 + 0.06, -halfZ + 0.06);
-    portrait.renderOrder = RenderLayers.gameplay;
-    portrait.visible = !surveyVisible;
-    this.stampMillGroup.add(portrait);
-
     const plaqueLines = stampMillPlaqueLines(manifest, project);
     this.stampMillPlaqueText = plaqueLines.join(' / ');
     const plaque = createPlaqueSprite(plaqueLines);
     plaque.name = 'TownStampMillLedgerPlaque';
-    plaque.position.set(0, 3.35, -halfZ - 0.25);
+    plaque.position.set(0, 1.55, -halfZ - 0.25);
     this.stampMillGroup.add(plaque);
     this.scene.add(this.stampMillGroup);
   }
@@ -789,11 +727,6 @@ export class TownScene {
     }
     if (target?.closest('[data-raise-stamp-mill]')) {
       this.raiseStampMill();
-      return;
-    }
-    const eraButton = target?.closest<HTMLElement>('[data-research-era]');
-    if (eraButton?.dataset.researchEra) {
-      this.selectResearchEra(eraButton.dataset.researchEra);
       return;
     }
     const nodeButton = target?.closest<HTMLElement>('[data-research-node]');
@@ -1044,7 +977,6 @@ export class TownScene {
 
   private openSchoolhouse(): void {
     this.schoolhouseOpen = true;
-    this.selectedResearchEpochId = activeEpochId();
     this.selectedResearchNodeId = activeProfileResearchState().pinnedTarget ?? this.selectedResearchNodeId;
     this.renderSchoolhouse();
     this.schoolhouse.hidden = false;
@@ -1060,10 +992,6 @@ export class TownScene {
   }
 
   private renderSchoolhouse(): void {
-    const eras = activeProfileResearchStates();
-    const activeId = activeEpochId();
-    const selected = eras.find((state) => state.epochId === this.selectedResearchEpochId) ?? eras.find((state) => state.epochId === activeId)!;
-    const readonly = selected.epochId !== activeId;
     this.schoolhouse.innerHTML = `
       <div class="town-ui__surface-shell">
         <header class="town-ui__surface-header">
@@ -1075,8 +1003,8 @@ export class TownScene {
           <button class="town-ui__board-close" type="button" data-schoolhouse-ledger data-testid="schoolhouse-open-ledger">Claim Ledger</button>
         </header>
         <div class="town-ui__surface-body">
+          ${renderResearchChart(activeProfileResearchState(), this.selectedResearchNodeId)}
           ${this.renderEpochActivationAction()}
-          ${renderResearchChart(selected, readonly ? undefined : this.selectedResearchNodeId, { readonly, eras })}
         </div>
       </div>
     `;
@@ -1086,35 +1014,13 @@ export class TownScene {
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || epochIsActive(STEAMWORKS_EPOCH_ID)) return '';
     if (!megaprojectComplete(manifest, project)) return '';
-    const meter = scienceMeter(activeProfileResearchState());
-    // A ready mill is never silent: if the chart still wants science, say so in-world.
-    if (!meter.complete) {
-      if (surface === 'site') return `<span>The Stamp Mill waits on ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'}.</span>`;
-      return `
-        <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-science">
-          <p class="town-ui__board-eyebrow">The town's next ledger</p>
-          <h3>The Stamp Mill stands ready.</h3>
-          <p>The chart wants ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'} before the whistle.</p>
-        </section>
-      `;
-    }
-    // Owner ruling 2026-07-12: the transition is E1's graduation — the Baron answers first.
-    if (!hasBaronMedal()) {
-      if (surface === 'site') return `<span>The valley has one answer left to give — the Baron still rides.</span>`;
-      return `
-        <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-baron">
-          <p class="town-ui__board-eyebrow">The town's next ledger</p>
-          <h3>The Stamp Mill stands ready.</h3>
-          <p>The valley has one answer left to give — the Baron still rides.</p>
-        </section>
-      `;
-    }
+    if (!scienceMeter(activeProfileResearchState()).complete) return surface === 'site' ? '<span>Stamp Mill ... needs science</span>' : '';
     if (surface === 'site') {
       return `<span>The Stamp Mill is ready.</span><button class="town-ui__prompt-button" type="button" data-raise-stamp-mill data-testid="raise-stamp-mill-site">Raise the Stamp Mill</button>`;
     }
     const pledgedGold = manifest.stages.reduce((sum, stage) => sum + Math.max(0, Math.floor(stage.materials.gold ?? 0)), 0);
     return `
-      <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="ready">
+      <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door">
         <p class="town-ui__board-eyebrow">The town's next ledger</p>
         <h3>The Stamp Mill is ready.</h3>
         <p>Frontier science banked · ${pledgedGold} gold pledged across three defended stages.</p>
@@ -1126,9 +1032,7 @@ export class TownScene {
   private raiseStampMill(): void {
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || !megaprojectComplete(manifest, project)) return;
-    if (!hasBaronMedal()) return;
     if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(STEAMWORKS_EPOCH_ID)) return;
-    this.selectedResearchEpochId = activeEpochId();
     this.renderSchoolhouse();
     emitStorySignal({ type: 'epoch-activated', epochId: STEAMWORKS_EPOCH_ID, displayName: 'The Steamworks' });
     this.syncPrompt();
@@ -1139,13 +1043,6 @@ export class TownScene {
     this.selectedResearchNodeId = id;
     this.renderSchoolhouse();
     this.schoolhouse.querySelector<HTMLElement>(`[data-research-node="${id}"]`)?.focus({ preventScroll: true });
-  }
-
-  private selectResearchEra(epochId: string): void {
-    this.selectedResearchEpochId = epochId;
-    this.selectedResearchNodeId = undefined;
-    this.renderSchoolhouse();
-    this.schoolhouse.querySelector<HTMLElement>(`[data-research-era="${epochId}"]`)?.focus({ preventScroll: true });
   }
 
   private pinResearchTarget(id: string | null): void {
@@ -1465,11 +1362,13 @@ export class TownScene {
           bark: this.activeBark?.actorId === actor.id ? this.activeBark.text : null,
           loaded: runtime?.loaded ?? false,
           loop: !!actor.loop,
-          trailId: actor.loop?.trailId ?? null,
           assetSlot: actor.assetSlot,
           spriteAspect: runtime?.spriteAspect ?? 0,
           frameKey: runtime?.frameKey ?? '',
-          fullBodyStandIn: !!actor.fullBody.standIn,
+          fullBodyStandIn: false,
+          moving: runtime?.moving ?? false,
+          motion: runtime?.motion ?? { x: 0, z: 0 },
+          trailId: actor.loop?.trailId ?? null,
         };
       }),
       stampMill: this.stampMillDiagnostics(),
@@ -1657,14 +1556,18 @@ class TownActorRuntime {
   private currentFrameKey = '';
   private disposed = false;
   private fitted = false;
+  private movedThisTick = false;
+  private motionX = 0;
+  private motionZ = 0;
   private readonly orientationResolver = new OrientationResolver();
   private currentDirection: RotationDirection;
 
   constructor(readonly definition: TownActorDefinition) {
+    if (!definition.fullBody) this.material.alphaTest = 0.04;
     this.group.name = `TownActor:${definition.id}`;
     this.group.position.set(definition.position.x, 0, definition.position.z);
     this.sprite.name = `TownActorSprite:${definition.id}`;
-    if (definition.id === 'prospector') {
+    if (definition.id === 'prospector' || !definition.fullBody) {
       this.sprite.scale.setScalar(definition.scale);
       this.sprite.position.y = definition.scale * 0.55 + 0.08;
     } else {
@@ -1677,7 +1580,8 @@ class TownActorRuntime {
     this.currentDirection = definition.facing;
     this.orientationResolver.reset(definition.facing);
     this.animator = definition.id === 'prospector' ? new SpriteAnimator(definition.assetSlot, this.material, this.sprite) : null;
-    this.applyFullBodyFrame(0);
+    if (definition.fullBody) this.applyFullBodyFrame(0);
+    else this.loadPortrait();
     tagPlaceholder(this.group, definition.assetSlot);
   }
 
@@ -1697,8 +1601,16 @@ class TownActorRuntime {
     return this.definition.id === 'prospector' ? 'SpriteAnimator:char.prospector_agent' : this.currentFrameKey;
   }
 
+  get moving(): boolean {
+    return this.movedThisTick;
+  }
+
+  get motion(): { x: number; z: number } {
+    return { x: this.motionX, z: this.motionZ };
+  }
+
   update(delta: number, elapsed: number): void {
-    if (!this.fitted && this.definition.id !== 'prospector' && this.material.map) this.fitSpriteToTexture(this.material.map);
+    if (!this.fitted && this.definition.fullBody && this.definition.id !== 'prospector' && this.material.map) this.fitSpriteToTexture(this.material.map);
     const previousX = this.group.position.x;
     const previousZ = this.group.position.z;
     const point = this.definition.loop ? loopPoint(this.definition.loop, elapsed) : this.definition.position;
@@ -1706,7 +1618,12 @@ class TownActorRuntime {
     this.group.position.z = point.z;
     const dx = point.x - previousX;
     const dz = point.z - previousZ;
-    if (dx * dx + dz * dz > 0.0004) this.currentDirection = this.orientationResolver.resolve(dx, dz);
+    this.motionX = dx;
+    this.motionZ = dz;
+    const previousDirection = this.currentDirection;
+    const wasMoving = this.movedThisTick;
+    this.movedThisTick = dx * dx + dz * dz > 1e-8;
+    if (this.movedThisTick) this.currentDirection = this.orientationResolver.resolve(dx, dz);
 
     const phase = actorPhase(this.definition);
     const breathe = Math.sin((elapsed * 0.58 + phase) * Math.PI * 2);
@@ -1714,14 +1631,20 @@ class TownActorRuntime {
     this.group.position.y = breathe * 0.035;
     this.material.rotation = THREE.MathUtils.degToRad(sway * 1.7);
     if (this.definition.id === 'prospector') {
-      this.animator?.update(delta, 'walk', this.currentDirection);
-    } else if (this.definition.fullBody.animated) {
+      if (wasMoving && !this.movedThisTick) this.animator?.reset('walk');
+      this.animator?.update(this.movedThisTick ? delta : 0, 'walk', this.currentDirection);
+    } else if (this.definition.fullBody?.animated && this.movedThisTick) {
+      if (this.currentDirection !== previousDirection) this.applyFullBodyFrame(this.frame);
       this.frameElapsed += delta;
       if (this.frameElapsed >= 0.125) {
         this.frameElapsed %= 0.125;
         this.frame = (this.frame + 1) % 8;
         this.applyFullBodyFrame(this.frame);
       }
+    } else if (this.definition.fullBody?.animated && this.frame !== 0) {
+      this.frameElapsed = 0;
+      this.frame = 0;
+      this.applyFullBodyFrame(0);
     }
   }
 
@@ -1732,15 +1655,26 @@ class TownActorRuntime {
   }
 
   private applyFullBodyFrame(frame: number): void {
-    if (this.definition.id === 'prospector') return;
+    const fullBody = this.definition.fullBody;
+    if (this.definition.id === 'prospector' || !fullBody) return;
     const row = directionRow(this.currentDirection);
-    const key = `${this.definition.fullBody.sheet}-r${row}c${this.definition.fullBody.animated ? frame : 0}.png`;
+    const key = `${fullBody.sheet}-r${row}c${fullBody.animated ? frame : 0}.png`;
     this.currentFrameKey = key;
     void loadProcessedCharacterTexture(key).then((texture) => {
       if (texture && !this.disposed && this.currentFrameKey === key) {
         this.material.map = texture;
         this.material.needsUpdate = true;
         this.fitSpriteToTexture(texture);
+      }
+    });
+  }
+
+  private loadPortrait(): void {
+    this.currentFrameKey = `portrait:${this.definition.id}`;
+    void loadGeneratedTexture(this.definition.assetSlot).then((texture) => {
+      if (texture && !this.disposed) {
+        this.material.map = texture;
+        this.material.needsUpdate = true;
       }
     });
   }
@@ -1812,13 +1746,6 @@ function contractUnlock(contract: ContractManifest): { unlocked: boolean; condit
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
   }
-  if (unlock === 'science-complete+2-secured') {
-    const securedContracts = new Set(scores.filter((score) => score.secured === true).map((score) => contractIdOf(score)));
-    return {
-      unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete && securedContracts.size >= 2,
-      condition: 'Complete Frontier science and secure two different claims',
-    };
-  }
   if (unlock === STEAMWORKS_EPOCH_ID) {
     return { unlocked: epochIsActive(STEAMWORKS_EPOCH_ID), condition: 'Awaits the Steamworks era' };
   }
@@ -1889,20 +1816,6 @@ function escapeHtml(value: string): string {
 function activeProfileResearchState() {
   const storage = browserResearchStorage();
   return loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
-}
-
-function activeProfileResearchStates(): ResearchState[] {
-  const storage = browserResearchStorage();
-  const activeId = activeEpochId();
-  return listEpochs()
-    .filter(
-      (epoch) =>
-        epoch.order <= loadEpoch(activeId).order &&
-        (epoch.id === activeId ||
-          storage?.getItem(researchStateKey(epoch.id)) !== null ||
-          (epoch.id === DEFAULT_EPOCH_ID && storage?.getItem(RESEARCH_STATE_KEY) !== null)),
-    )
-    .map((epoch) => loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, epoch.id));
 }
 
 function shouldStartFirstClaimGuide(townName: string | null, meta: MetaProgress): boolean {
@@ -2438,22 +2351,22 @@ function createGroundTexture(): THREE.CanvasTexture {
       y: ((TOWN_HALF - z) / (TOWN_HALF * 2)) * size,
     });
     const center = point(townPlazaLayout.center);
-    for (const trail of townTrailLayout.radial) {
-      const screenPoints = trail.points.map(point);
+    const trails = [...townPlazaLayout.slots.map((slot) => slot.approach), townPlazaLayout.gate];
+    for (const [index, destination] of trails.entries()) {
+      const end = point(destination);
+      const dx = end.x - center.x;
+      const dy = end.y - center.y;
+      const length = Math.max(1, Math.hypot(dx, dy));
+      const ox = (-dy / length) * 5.5;
+      const oy = (dx / length) * 5.5;
+      const bend = (index % 2 === 0 ? 1 : -1) * 10;
       ctx.strokeStyle = 'rgba(93, 57, 31, 0.2)';
       ctx.lineWidth = 3.2;
       ctx.lineCap = 'round';
       for (const side of [-1, 1]) {
         ctx.beginPath();
-        screenPoints.forEach((screenPoint, index) => {
-          const previous = screenPoints[Math.max(0, index - 1)]!;
-          const next = screenPoints[Math.min(screenPoints.length - 1, index + 1)]!;
-          const length = Math.max(1, Math.hypot(next.x - previous.x, next.y - previous.y));
-          const x = screenPoint.x + (-(next.y - previous.y) / length) * 5.5 * side;
-          const y = screenPoint.y + ((next.x - previous.x) / length) * 5.5 * side;
-          if (index === 0) ctx.moveTo(x, y);
-          else ctx.lineTo(x, y);
-        });
+        ctx.moveTo(center.x + ox * side, center.y + oy * side);
+        ctx.quadraticCurveTo((center.x + end.x) / 2 + ox * side + bend, (center.y + end.y) / 2 + oy * side - bend * 0.35, end.x + ox * side, end.y + oy * side);
         ctx.stroke();
       }
     }
@@ -2461,8 +2374,7 @@ function createGroundTexture(): THREE.CanvasTexture {
     ctx.strokeStyle = 'rgba(93, 57, 31, 0.16)';
     ctx.lineWidth = 4;
     ctx.beginPath();
-    const ringRadius = Math.hypot(townTrailLayout.ringRoad.points[0]!.x, townTrailLayout.ringRoad.points[0]!.z);
-    ctx.arc(center.x, center.y, (ringRadius / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
+    ctx.arc(center.x, center.y, (8 / (TOWN_HALF * 2)) * size, 0, Math.PI * 2);
     ctx.stroke();
     ctx.strokeStyle = 'rgba(255, 235, 180, 0.4)';
     ctx.lineWidth = 2;
@@ -2561,33 +2473,27 @@ function loopPoint(loop: NonNullable<TownActorDefinition['loop']>, elapsed: numb
   if (points.length === 0) return { x: 0, z: 0 };
   if (points.length === 1) return points[0]!;
 
-  let pathLength = 0;
+  let total = 0;
   const lengths: number[] = [];
   for (let index = 0; index < points.length; index += 1) {
     const from = points[index]!;
     const to = points[(index + 1) % points.length]!;
     const length = Math.hypot(to.x - from.x, to.z - from.z);
     lengths.push(length);
-    pathLength += length;
+    total += length;
   }
-  if (pathLength <= 0) return points[0]!;
-  const cycleSeconds = Math.max(0.001, loop.seconds);
-  const pauseSeconds = Object.values(loop.pauses ?? {}).reduce((sum, seconds) => sum + seconds, 0);
-  const speed = pathLength / Math.max(0.001, cycleSeconds - pauseSeconds);
-  let time = ((((elapsed / cycleSeconds + loop.phase) % 1) + 1) % 1) * cycleSeconds;
+  if (total <= 0) return points[0]!;
+
+  let distance = ((((elapsed / Math.max(0.001, loop.seconds) + loop.phase) % 1) + 1) % 1) * total;
   for (let index = 0; index < points.length; index += 1) {
-    const pause = loop.pauses?.[index] ?? 0;
-    if (time <= pause) return points[index]!;
-    time -= pause;
     const length = lengths[index] ?? 0;
-    const duration = length / speed;
-    if (time > duration) {
-      time -= duration;
+    if (distance > length) {
+      distance -= length;
       continue;
     }
     const from = points[index]!;
     const to = points[(index + 1) % points.length]!;
-    const t = duration > 0 ? time / duration : 0;
+    const t = length > 0 ? distance / length : 0;
     return { x: THREE.MathUtils.lerp(from.x, to.x, t), z: THREE.MathUtils.lerp(from.z, to.z, t) };
   }
   return points[0]!;
