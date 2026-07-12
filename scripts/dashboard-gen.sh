@@ -56,7 +56,13 @@ DONE_TAIL=""
 for path in $(find tasks/done -type f -mtime -1 -print 2>/dev/null | sort -r); do
   f=$(basename "$path")
   stamp=$(echo "$f" | cut -c1-15); taskfile=$(echo "$f" | cut -c17-); name=${taskfile%.md}
-  se=$(stamp_to_epoch "$stamp"); mt=$(stat -f %m "$path" 2>/dev/null || echo 0)
+  mt=$(stat -f %m "$path" 2>/dev/null || echo 0)
+  if echo "$stamp" | grep -qE '^[0-9]{8}-[0-9]{6}$'; then
+    se=$(stamp_to_epoch "$stamp"); start_hm="$(echo "$stamp" | cut -c10-11):$(echo "$stamp" | cut -c12-13)"
+  else
+    # janitor receipts etc. carry no timestamp prefix — show mtime, keep the full name
+    se=0; name=${f%.md}; name=${name%.req}; start_hm=$(date -r "$mt" +%H:%M 2>/dev/null || echo '~')
+  fi
   model=$(grep -m1 '^CODEX:' "$path" 2>/dev/null | sed -E 's/^CODEX: *model=([^ ]+) *effort=([^ ]+).*/\1@\2/')
   [ -z "$model" ] && model='gpt-5.6-sol@medium·default'
   duration='~'
@@ -81,7 +87,7 @@ for path in $(find tasks/done -type f -mtime -1 -print 2>/dev/null | sort -r); d
   elif [ -n "$merged" ]; then outcome="MERGED $merged";
   elif [ -n "$committed" ]; then outcome='done-moved awaiting drain';
   else outcome='NO-OP'; fi
-  DONE_TAIL="$DONE_TAIL$(printf '%-42s · started %s · %7s · %-31s · %s' "$name" "$(echo "$stamp" | cut -c10-11):$(echo "$stamp" | cut -c12-13)" "$duration" "$model" "$outcome")
+  DONE_TAIL="$DONE_TAIL$(printf '%-42s · started %s · %7s · %-31s · %s' "$name" "$start_hm" "$duration" "$model" "$outcome")
 "
 done
 [ -z "$DONE_TAIL" ] && DONE_TAIL="(no task runs finished in the last 24 hours)"
