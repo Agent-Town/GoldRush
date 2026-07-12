@@ -217,6 +217,19 @@
     "cost": { "gold": 0, "bankedScience": 8 },
     "raiseActionText": "Raise the Dynamo Hall"
   },
+  "megaprojects": [
+    {
+      "id": "dynamo-hall",
+      "name": "The Dynamo Hall",
+      "siteFootprint": { "x": 10, "z": 10, "w": 5.5, "d": 3.5 },
+      "unlockCondition": { "science": 8 },
+      "stages": [
+        { "materials": { "gold": 160, "pressure": 20 }, "buildTicks": 3, "defenseWaves": [1, 3, 5], "hp": 120 },
+        { "materials": { "gold": 240, "pressure": 35 }, "buildTicks": 4, "defenseWaves": [1, 3, 5, 7], "hp": 160 },
+        { "materials": { "gold": 320, "pressure": 50 }, "buildTicks": 5, "defenseWaves": [1, 2, 4, 6, 8], "hp": 210 }
+      ]
+    }
+  ],
   "transition": {
     "ceremonyBeatId": "e3-ceremony-dynamo",
     "kitArtKey": "kit-era-3",

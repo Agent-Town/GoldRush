@@ -103,6 +103,9 @@ const FIRST_CLAIM_PENDING = 'pending';
 const APPROACH_RADIUS = 5.2;
 const STAMP_MILL_ID = 'stamp-mill';
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
+const DYNAMO_HALL_ID = 'dynamo-hall';
+const VOLTAGE_EPOCH_ID = 'epoch-3-voltage';
+const DYNAMO_CRANK_MS = 1_200;
 const STAMP_MILL_TOWN_SITE = { ...townPlazaSlot('stamp-mill').position, w: 6.2, d: 1.65 };
 const STAMP_MILL_COMPLETE_LINE = 'awaits the whistle';
 const RIDE_DISCLOSURE_KEY = 'gold-rush:ride-together-open';
@@ -116,7 +119,7 @@ export type TownDiagnostics = {
   frame: number;
   elapsed: number;
   player: { x: number; z: number };
-  activePrompt: TownBuildingId | typeof STAMP_MILL_ID | null;
+  activePrompt: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | null;
   activeBark: { actorId: TownActorId; speaker: string; text: string } | null;
   townName: string | null;
   namingPrompt: boolean;
@@ -165,6 +168,15 @@ export type TownDiagnostics = {
     constructionProps: number;
     surveyVisible: boolean;
   };
+  dynamoHall: {
+    visible: boolean;
+    stage: number;
+    totalStages: number;
+    funded: boolean;
+    complete: boolean;
+    visibleStages: string[];
+    surveyVisible: boolean;
+  };
   propRing: {
     enabled: boolean;
     night: boolean;
@@ -200,7 +212,7 @@ type HiddenButtonState = {
 
 type TownNameMode = 'founding' | 'rename';
 
-type TownStampMill = {
+type TownMegaproject = {
   manifest: MegaprojectManifest | null;
   project: MegaprojectProjectState | null;
   visible: boolean;
@@ -225,10 +237,15 @@ export class TownScene {
   private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
   private readonly visibleActors = visibleTownActors(this.visibleBuildings);
   private readonly stampMill = readTownStampMill(this.metaProgress);
+  private readonly dynamoHall = readTownMegaproject(STEAMWORKS_EPOCH_ID, DYNAMO_HALL_ID);
+  private readonly dynamoHallGroup = new THREE.Group();
+  private readonly dynamoHallStageVisuals: THREE.Object3D[] = [];
+  private readonly dynamoHallSurveyVisuals: THREE.Object3D[] = [];
   private readonly stampMillGroup = new THREE.Group();
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
   private readonly stampMillConstructionProps: THREE.Object3D[] = [];
+  private dynamoCrankTimer = 0;
   private readonly firstClaimGuideGroup = new THREE.Group();
   private readonly firstClaimTrailDots: THREE.Mesh[] = [];
   private readonly firstClaimTrailMaterial = new THREE.MeshBasicMaterial({
@@ -258,7 +275,7 @@ export class TownScene {
   private nameBeat?: HTMLElement;
   private frame = 0;
   private elapsed = 0;
-  private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | null = null;
+  private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | null = null;
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
   private assayBench?: ReturnType<typeof installAssayBench>;
@@ -316,9 +333,16 @@ export class TownScene {
     this.input.dispose();
     for (const state of this.hiddenButtons) state.element.hidden = state.hidden;
     window.clearTimeout(this.nameBeatTimer);
+    window.clearTimeout(this.dynamoCrankTimer);
     window.removeEventListener('keydown', this.onFirstClaimInput, true);
     window.removeEventListener('pointerdown', this.onFirstClaimInput, true);
     this.prompt.removeEventListener('click', this.onPromptClick);
+    this.prompt.removeEventListener('pointerdown', this.onDynamoCrankStart);
+    this.prompt.removeEventListener('pointerup', this.onDynamoCrankStop);
+    this.prompt.removeEventListener('pointercancel', this.onDynamoCrankStop);
+    this.prompt.removeEventListener('pointerleave', this.onDynamoCrankStop);
+    this.prompt.removeEventListener('keydown', this.onDynamoCrankKeyDown);
+    this.prompt.removeEventListener('keyup', this.onDynamoCrankKeyUp);
     this.board.removeEventListener('click', this.onBoardClick);
     this.board.removeEventListener('keydown', this.onBoardKeyDown);
     this.board.removeEventListener('pointerdown', this.onBoardPointerDown);
@@ -326,6 +350,11 @@ export class TownScene {
     this.board.removeEventListener('pointercancel', this.onBoardPointerCancel);
     this.schoolhouse.removeEventListener('click', this.onSchoolhouseClick);
     this.schoolhouse.removeEventListener('keydown', this.onSchoolhouseKeyDown);
+    this.schoolhouse.removeEventListener('pointerdown', this.onDynamoCrankStart);
+    this.schoolhouse.removeEventListener('pointerup', this.onDynamoCrankStop);
+    this.schoolhouse.removeEventListener('pointercancel', this.onDynamoCrankStop);
+    this.schoolhouse.removeEventListener('pointerleave', this.onDynamoCrankStop);
+    this.schoolhouse.removeEventListener('keyup', this.onDynamoCrankKeyUp);
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.infoNote?.dispose();
@@ -387,7 +416,10 @@ export class TownScene {
       return { walkable: false, speedMul: 0, zone: 'out' as const };
     }
     return {
-      walkable: !shellAt(this.visibleBuildings, x, z) && !stampMillAt(this.stampMill.visible, x, z),
+      walkable:
+        !shellAt(this.visibleBuildings, x, z) &&
+        !megaprojectAt(this.stampMill, STAMP_MILL_TOWN_SITE, x, z) &&
+        !megaprojectAt(this.dynamoHall, this.dynamoHall.manifest?.siteFootprint, x, z),
       speedMul: 1,
       zone: 'bank' as const,
     };
@@ -429,6 +461,7 @@ export class TownScene {
     }
     if (this.propRingEnabled) this.scene.add(createTownPropRing(this.townNight));
     this.createStampMillVignette();
+    this.createDynamoHallVignette();
     this.createFirstClaimGuide();
     for (const actor of this.visibleActors) {
       const runtime = new TownActorRuntime(townActorPlazaPlacement(actor));
@@ -541,6 +574,62 @@ export class TownScene {
     this.scene.add(this.stampMillGroup);
   }
 
+  private createDynamoHallVignette(): void {
+    const { manifest, project, visible } = this.dynamoHall;
+    if (!manifest || !project || !visible || epochIsActive(VOLTAGE_EPOCH_ID)) return;
+    const complete = megaprojectComplete(manifest, project);
+    const visibleStages = Math.min(manifest.stages.length, project.stage + (project.funded ? 1 : 0));
+    const site = manifest.siteFootprint;
+    const group = this.dynamoHallGroup;
+    group.name = 'TownDynamoHallSite';
+    group.position.set(site.x, 0, site.z);
+    const material = new THREE.MeshStandardMaterial({ color: complete ? '#c4883a' : '#5b8a8a', roughness: 0.72, metalness: 0.12 });
+    const base = new THREE.Mesh(new THREE.BoxGeometry(site.w, 0.1, site.d), material);
+    base.name = 'TownDynamoHallPackedEarth';
+    base.position.y = 0.05;
+    group.add(base);
+    const surveyVisible = project.stage === 0 && !project.funded && !complete;
+    for (const [x, z] of [[-site.w / 2, -site.d / 2], [site.w / 2, -site.d / 2], [site.w / 2, site.d / 2], [-site.w / 2, site.d / 2]] as const) {
+      const stake = new THREE.Mesh(new THREE.BoxGeometry(0.08, 0.7, 0.08), material);
+      stake.name = 'TownDynamoHallSurveyStake';
+      stake.position.set(x, 0.35, z);
+      stake.visible = surveyVisible;
+      this.dynamoHallSurveyVisuals.push(stake);
+      group.add(stake);
+    }
+    for (let index = 0; index < manifest.stages.length; index += 1) {
+      const height = 0.7 + index * 0.28;
+      const section = new THREE.Mesh(new THREE.BoxGeometry(site.w / 3 - 0.12, height, site.d * 0.72), material);
+      section.name = `TownDynamoHallStage${index + 1}`;
+      section.position.set((index - 1) * (site.w / 3), height / 2 + 0.1, 0);
+      section.visible = complete || index < visibleStages;
+      this.dynamoHallStageVisuals.push(section);
+      group.add(section);
+    }
+    const portraitMaterial = new THREE.MeshStandardMaterial({
+      color: complete ? '#c4883a' : '#5b8a8a',
+      transparent: true,
+      opacity: complete ? 0.92 : 0.25,
+      roughness: 0.8,
+      side: THREE.DoubleSide,
+    });
+    const portrait = new THREE.Mesh(new THREE.PlaneGeometry(3.2, 2.4), portraitMaterial);
+    portrait.name = 'TownDynamoHallPortrait';
+    portrait.position.set(0, 1.3, -site.d / 2 + 0.05);
+    portrait.visible = project.stage > 0 || project.funded || complete;
+    group.add(portrait);
+    const plaque = createPlaqueSprite(
+      complete
+        ? ['DYNAMO HALL', 'ready to crank', 'the tree waits for light']
+        : project.stage === 0 && !project.funded
+          ? ['DYNAMO HALL', 'surveyed for the town', 'gold + pressure pledged']
+          : ['DYNAMO HALL', `stage ${Math.min(project.stage + 1, manifest.stages.length)} of ${manifest.stages.length}`, 'the flywheels rise'],
+    );
+    plaque.position.set(0, 3.1, -site.d / 2 - 0.2);
+    group.add(plaque);
+    this.scene.add(group);
+  }
+
   private createUi(): void {
     this.ui.className = 'town-ui';
     this.ui.dataset.testid = 'town-ui';
@@ -600,6 +689,12 @@ export class TownScene {
     this.ui.append(this.nameCard);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
+    this.prompt.addEventListener('pointerdown', this.onDynamoCrankStart);
+    this.prompt.addEventListener('pointerup', this.onDynamoCrankStop);
+    this.prompt.addEventListener('pointercancel', this.onDynamoCrankStop);
+    this.prompt.addEventListener('pointerleave', this.onDynamoCrankStop);
+    this.prompt.addEventListener('keydown', this.onDynamoCrankKeyDown);
+    this.prompt.addEventListener('keyup', this.onDynamoCrankKeyUp);
     this.board.addEventListener('click', this.onBoardClick);
     this.board.addEventListener('keydown', this.onBoardKeyDown);
     this.board.addEventListener('pointerdown', this.onBoardPointerDown);
@@ -607,6 +702,11 @@ export class TownScene {
     this.board.addEventListener('pointercancel', this.onBoardPointerCancel);
     this.schoolhouse.addEventListener('click', this.onSchoolhouseClick);
     this.schoolhouse.addEventListener('keydown', this.onSchoolhouseKeyDown);
+    this.schoolhouse.addEventListener('pointerdown', this.onDynamoCrankStart);
+    this.schoolhouse.addEventListener('pointerup', this.onDynamoCrankStop);
+    this.schoolhouse.addEventListener('pointercancel', this.onDynamoCrankStop);
+    this.schoolhouse.addEventListener('pointerleave', this.onDynamoCrankStop);
+    this.schoolhouse.addEventListener('keyup', this.onDynamoCrankKeyUp);
     this.nameCard.addEventListener('submit', this.onNameSubmit);
     this.ui.append(this.board);
     this.ui.append(this.schoolhouse);
@@ -629,6 +729,36 @@ export class TownScene {
     if (target?.closest('[data-town-rename]')) this.openNameCard('rename');
     if (target?.closest('[data-town-schoolhouse]')) this.openSchoolhouse();
     if (target?.closest('[data-town-assay]')) this.openAssayBench();
+  };
+
+  private readonly onDynamoCrankStart = (event: Event) => {
+    const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('[data-crank-dynamo]');
+    if (!button || this.dynamoCrankTimer) return;
+    button.dataset.crankState = 'cranking';
+    button.textContent = 'Keep cranking…';
+    this.dynamoCrankTimer = window.setTimeout(() => {
+      this.dynamoCrankTimer = 0;
+      this.activateVoltage();
+    }, DYNAMO_CRANK_MS);
+  };
+
+  private readonly onDynamoCrankStop = (event: Event) => {
+    if (!(event.target as HTMLElement | null)?.closest('[data-crank-dynamo]') || !this.dynamoCrankTimer) return;
+    window.clearTimeout(this.dynamoCrankTimer);
+    this.dynamoCrankTimer = 0;
+    this.renderSchoolhouse();
+    this.syncPrompt();
+  };
+
+  private readonly onDynamoCrankKeyDown = (event: KeyboardEvent) => {
+    if ((event.key === ' ' || event.key === 'Enter') && (event.target as HTMLElement | null)?.closest('[data-crank-dynamo]')) {
+      event.preventDefault();
+      this.onDynamoCrankStart(event);
+    }
+  };
+
+  private readonly onDynamoCrankKeyUp = (event: KeyboardEvent) => {
+    if (event.key === ' ' || event.key === 'Enter') this.onDynamoCrankStop(event);
   };
 
   private readonly onBoardClick = (event: Event) => {
@@ -739,6 +869,7 @@ export class TownScene {
   };
 
   private readonly onSchoolhouseKeyDown = (event: KeyboardEvent) => {
+    this.onDynamoCrankKeyDown(event);
     if (event.key === 'Escape') {
       event.preventDefault();
       this.closeSchoolhouse();
@@ -806,7 +937,7 @@ export class TownScene {
       return;
     }
     const position = this.hero.group.position;
-    let nearest: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | null = null;
+    let nearest: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | null = null;
     let nearestDistanceSq = APPROACH_RADIUS * APPROACH_RADIUS;
     for (const building of this.visibleBuildings) {
       const dx = position.x - building.position.x;
@@ -824,6 +955,13 @@ export class TownScene {
       const distanceSq = dx * dx + dz * dz;
       if (distanceSq < nearestDistanceSq) nearest = { id: STAMP_MILL_ID, name: 'Stamp Mill' };
     }
+    if (this.dynamoHall.visible && !epochIsActive(VOLTAGE_EPOCH_ID) && this.dynamoHall.manifest) {
+      const site = this.dynamoHall.manifest.siteFootprint;
+      const dx = position.x - site.x;
+      const dz = position.z - (site.z - site.d / 2 - 1.2);
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq < nearestDistanceSq) nearest = { id: DYNAMO_HALL_ID, name: 'Dynamo Hall' };
+    }
     this.activePrompt = nearest;
     this.prompt.hidden = nearest === null;
     if (!nearest) {
@@ -832,12 +970,12 @@ export class TownScene {
       this.infoNote?.update(null);
       return;
     }
-    const infoClass = nearest.id === STAMP_MILL_ID ? null : townInfoClass(nearest.id);
+    const infoClass = nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID ? null : townInfoClass(nearest.id);
     this.infoNote?.update(infoClass ? { objectClass: infoClass } : null);
     const promptKey = `${nearest.id}:${this.townName ?? ''}:${activeEpochId()}:${scienceMeter(activeProfileResearchState()).complete}`;
     if (promptKey === this.promptKey) return;
     this.promptKey = promptKey;
-    if (nearest.id === STAMP_MILL_ID) {
+    if (nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID) {
       const action = this.renderEpochActivationAction('site');
       this.prompt.hidden = !action;
       this.prompt.innerHTML = action;
@@ -1011,16 +1149,39 @@ export class TownScene {
   }
 
   private renderEpochActivationAction(surface: 'schoolhouse' | 'site' = 'schoolhouse'): string {
+    if (activeEpochId() === STEAMWORKS_EPOCH_ID) return this.renderDynamoActivationAction(surface);
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || epochIsActive(STEAMWORKS_EPOCH_ID)) return '';
     if (!megaprojectComplete(manifest, project)) return '';
-    if (!scienceMeter(activeProfileResearchState()).complete) return surface === 'site' ? '<span>Stamp Mill ... needs science</span>' : '';
+    const meter = scienceMeter(activeProfileResearchState());
+    // A ready mill is never silent: if the chart still wants science, say so in-world.
+    if (!meter.complete) {
+      if (surface === 'site') return `<span>The Stamp Mill waits on ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'}.</span>`;
+      return `
+        <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-science">
+          <p class="town-ui__board-eyebrow">The town's next ledger</p>
+          <h3>The Stamp Mill stands ready.</h3>
+          <p>The chart wants ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'} before the whistle.</p>
+        </section>
+      `;
+    }
+    // Owner ruling 2026-07-12: the transition is E1's graduation — the Baron answers first.
+    if (!hasBaronMedal()) {
+      if (surface === 'site') return `<span>The valley has one answer left to give — the Baron still rides.</span>`;
+      return `
+        <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="needs-baron">
+          <p class="town-ui__board-eyebrow">The town's next ledger</p>
+          <h3>The Stamp Mill stands ready.</h3>
+          <p>The valley has one answer left to give — the Baron still rides.</p>
+        </section>
+      `;
+    }
     if (surface === 'site') {
       return `<span>The Stamp Mill is ready.</span><button class="town-ui__prompt-button" type="button" data-raise-stamp-mill data-testid="raise-stamp-mill-site">Raise the Stamp Mill</button>`;
     }
     const pledgedGold = manifest.stages.reduce((sum, stage) => sum + Math.max(0, Math.floor(stage.materials.gold ?? 0)), 0);
     return `
-      <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door">
+      <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="ready">
         <p class="town-ui__board-eyebrow">The town's next ledger</p>
         <h3>The Stamp Mill is ready.</h3>
         <p>Frontier science banked · ${pledgedGold} gold pledged across three defended stages.</p>
@@ -1029,12 +1190,53 @@ export class TownScene {
     `;
   }
 
+  private renderDynamoActivationAction(surface: 'schoolhouse' | 'site'): string {
+    const { manifest, project } = this.dynamoHall;
+    if (!manifest || !project || epochIsActive(VOLTAGE_EPOCH_ID) || !megaprojectComplete(manifest, project)) return '';
+    const meter = scienceMeter(activeProfileResearchState());
+    if (!meter.complete) {
+      if (surface === 'site') return `<span>The Dynamo Hall waits on ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'}.</span>`;
+      return `
+        <section class="town-ui__epoch-door" data-testid="dynamo-hall-epoch-door" data-door-state="needs-science">
+          <p class="town-ui__board-eyebrow">The town's next ledger</p>
+          <h3>The Dynamo Hall stands ready.</h3>
+          <p>The chart wants ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'} before current can take.</p>
+        </section>
+      `;
+    }
+    const action = `<button class="town-ui__prompt-button" type="button" data-crank-dynamo data-testid="crank-dynamo">Hold to crank the flywheel</button>`;
+    if (surface === 'site') return `<span>The Dynamo Hall is ready.</span>${action}`;
+    const pledged = manifest.stages.reduce(
+      (sum, stage) => ({ gold: sum.gold + (stage.materials.gold ?? 0), pressure: sum.pressure + (stage.materials.pressure ?? 0) }),
+      { gold: 0, pressure: 0 },
+    );
+    return `
+      <section class="town-ui__epoch-door" data-testid="dynamo-hall-epoch-door" data-door-state="ready">
+        <p class="town-ui__board-eyebrow">The town's next ledger</p>
+        <h3>The Dynamo Hall is ready.</h3>
+        <p>Steamworks science banked · ${pledged.gold} gold and ${pledged.pressure} pressure pledged across three defended stages.</p>
+        ${action}
+      </section>
+    `;
+  }
+
   private raiseStampMill(): void {
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || !megaprojectComplete(manifest, project)) return;
+    if (!hasBaronMedal()) return;
     if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(STEAMWORKS_EPOCH_ID)) return;
     this.renderSchoolhouse();
     emitStorySignal({ type: 'epoch-activated', epochId: STEAMWORKS_EPOCH_ID, displayName: 'The Steamworks' });
+    this.syncPrompt();
+    this.publishDiagnostics();
+  }
+
+  private activateVoltage(): void {
+    const { manifest, project } = this.dynamoHall;
+    if (!manifest || !project || !megaprojectComplete(manifest, project)) return;
+    if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(VOLTAGE_EPOCH_ID)) return;
+    this.renderSchoolhouse();
+    emitStorySignal({ type: 'epoch-activated', epochId: VOLTAGE_EPOCH_ID, displayName: 'The Voltage Age' });
     this.syncPrompt();
     this.publishDiagnostics();
   }
@@ -1372,6 +1574,7 @@ export class TownScene {
         };
       }),
       stampMill: this.stampMillDiagnostics(),
+      dynamoHall: this.dynamoHallDiagnostics(),
       propRing: this.propRingDiagnostics(),
       ambientDust: {
         enabled: !!this.ambientDust,
@@ -1411,6 +1614,19 @@ export class TownScene {
       visibleStages: this.stampMillStageVisuals.filter((visual) => visual.visible).map((visual) => visual.name),
       constructionProps: this.stampMillConstructionProps.filter((visual) => visual.visible).length,
       surveyVisible: this.stampMillSurveyVisuals.some((visual) => visual.visible),
+    };
+  }
+
+  private dynamoHallDiagnostics(): TownDiagnostics['dynamoHall'] {
+    const { manifest, project, visible } = this.dynamoHall;
+    return {
+      visible,
+      stage: project?.stage ?? 0,
+      totalStages: manifest?.stages.length ?? 0,
+      funded: project?.funded ?? false,
+      complete: !!manifest && !!project && megaprojectComplete(manifest, project),
+      visibleStages: this.dynamoHallStageVisuals.filter((visual) => visual.visible).map((visual) => visual.name),
+      surveyVisible: this.dynamoHallSurveyVisuals.some((visual) => visual.visible),
     };
   }
 
@@ -1878,13 +2094,26 @@ function readTownMetaProgress(): MetaProgress {
   return migrateMetaProgress(raw);
 }
 
-function readTownStampMill(meta: MetaProgress): TownStampMill {
+function readTownStampMill(meta: MetaProgress): TownMegaproject {
   const manifest = loadEpoch(DEFAULT_EPOCH_ID).megaprojects.find((entry) => entry.id === STAMP_MILL_ID) ?? null;
   if (!manifest) return { manifest: null, project: null, visible: false };
   const state = loadMegaprojectState(browserStorage());
   const project = ensureMegaprojectProject(state, manifest);
   const visible = isMegaprojectUnlocked(manifest, meta.tracks.science) || project.stage > 0 || project.funded;
   return { manifest, project, visible };
+}
+
+function readTownMegaproject(epochId: string, id: string): TownMegaproject {
+  const manifest = loadEpoch(epochId).megaprojects.find((entry) => entry.id === id) ?? null;
+  if (!manifest) return { manifest: null, project: null, visible: false };
+  const storage = browserStorage();
+  const project = ensureMegaprojectProject(loadMegaprojectState(storage), manifest);
+  const steps = scienceMeter(loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, epochId)).steps;
+  return {
+    manifest,
+    project,
+    visible: epochIsActive(epochId) && (isMegaprojectUnlocked(manifest, steps) || project.stage > 0 || project.funded),
+  };
 }
 
 function shellAt(buildings: readonly TownBuilding[], x: number, z: number): boolean {
@@ -1896,12 +2125,17 @@ function shellAt(buildings: readonly TownBuilding[], x: number, z: number): bool
   });
 }
 
-function stampMillAt(visible: boolean, x: number, z: number): boolean {
-  if (!visible) return false;
+function megaprojectAt(
+  megaproject: TownMegaproject,
+  site: MegaprojectManifest['siteFootprint'] | undefined,
+  x: number,
+  z: number,
+): boolean {
+  if (!megaproject.visible || !site) return false;
   const pad = Balance.hero.radius + 0.08;
   return (
-    Math.abs(x - STAMP_MILL_TOWN_SITE.x) <= STAMP_MILL_TOWN_SITE.w / 2 + pad &&
-    Math.abs(z - STAMP_MILL_TOWN_SITE.z) <= STAMP_MILL_TOWN_SITE.d / 2 + pad
+    Math.abs(x - site.x) <= site.w / 2 + pad &&
+    Math.abs(z - site.z) <= site.d / 2 + pad
   );
 }
 
