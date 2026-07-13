@@ -24,3 +24,5 @@ Pick ONE shipped tile — recommend THE CLAIM (the owner knows it by heart; ever
 
 ## SPIKE — MERGED, OWNER VERDICT PENDING (attended, 2026-07-13 evening)
 Tip 8511e352 merged (renders + GLB + findings; render-only per charter, zero src). The proposed next step is on record: a default-off pilot feeding Terrain.visualY while movement/collision/water/placement stay planar — ATTENDED authors that slice IF the owner's render verdict says GO. Do not build further until the verdict.
+
+## CONSECUTIVE-GOAL WAVE — MERGED (attended, 2026-07-14). Owner verdict on the Claim: GO — the promotion pilot is factory-queued (terrain3d-01-claim-pilot; your MODEL-HANDOFF is its spec voice). HOLD further map sculpts until the pilot proves the seam in-game; Twin Banks braided-water waits on the author-masks-first flow your handoff correctly demands.

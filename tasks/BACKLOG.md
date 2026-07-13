@@ -234,3 +234,8 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - **SOL 3D-C WAVE 3 MERGED** (tavern full-wrap repair — the darkside finding closed by its finder) · **SOL 3D-D SPIKE MERGED** (The Claim sculpted-terrain + clutter, render-only; OWNER'S DESK: render verdict → GO authors the visualY pilot slice) · e2-clarity-and-wreckers DRAINED (boiler card, Fevered plates, wrecker separation+threat).
 
 - **fix-board-gating-and-profiles RE-QUEUED 2026-07-14** — first run no-op'd + falsely retired (s466, announced-drain class); pending-dress half shipped via surveys slice; remaining scope = ERA GATE (fresh accounts must not see Hill Mine open) + playable-only counter.
+
+## 2026-07-14 — E3+ DIRECTION OPENS (owner: "how about work on E3/E4/E5 and so on. Can we move in this direction?") + TERRAIN PROMOTION GO
+- **terrain3d-01-claim-pilot** → lane-a — Sol's sculpted Claim mounts behind ?terrain3dPilot (visualY feed, all participants, water agreement, determinism fingerprint) — THE OWNER'S TEST PATH.
+- **e3-02-power-graph** → lane-b · **e3-03-day-night-cycle** → lane-c — Canyon Works prerequisites 1+2 (system-only, harness-gated). NEXT RUNGS (attended authors on drain): e3-04 wire-span rendering (instanced catenary) · e3-05 tram path (rail follower v2) · e3-06 moth swarm · e3-07 dam surge · THEN the Canyon Works tile assembles (attended-reviewed). E4/E5 open per BUILD-PLAN after E3's spine stands; their bundles are banked; art rides native image_gen.
+- SOL 3D-D consecutive-goal wave MERGED (a666d8fe): Dry Gulch themed terrain + Twin Banks honest gate (braided water needs authored masks — the handoff's author-masks-first law) + Night Shift/Baron verdict renders. The MODEL-HANDOFF is the terrain program's constitution.
