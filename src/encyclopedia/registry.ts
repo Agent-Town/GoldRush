@@ -285,6 +285,8 @@ function enemyEntry(
     loreLine:
       id === 'baron'
         ? 'The Baron rides under an oxblood banner.'
+        : id === 'wrecker'
+          ? 'Wreckers go for your buildings; the rest take the gaps.'
         : 'Claim jumpers press the town without making it cruel.',
     portraitLocked: () => !isDiscoveryStored(enemyStatsDiscoveryByEntryId[id]),
     factLines: () =>

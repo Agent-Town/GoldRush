@@ -110,6 +110,13 @@ export type BuildDiagnostics = {
   shells: Record<'palisade' | 'sluice' | 'stockpile' | 'boiler_house' | 'turret' | 'assay_office', BuildingShellDiagnostics>;
 };
 
+export type PalisadeRoute = {
+  blocker: BuildingTarget;
+  routeId: string;
+  open: boolean;
+  waypoint: { x: number; z: number };
+};
+
 export type BuildingShellDiagnostics = {
   active: number;
   signs: number;
@@ -478,6 +485,99 @@ export class BuildSystem {
       if (footprint.active && footprint.blocksRouting !== false) this.filteredBlockers.push(footprint);
     }
     return this.filteredBlockers;
+  }
+
+  palisadeRoute(from: THREE.Vector3, to: THREE.Vector3, clearance: number): PalisadeRoute | null {
+    // ponytail: The 48-segment cap keeps this direct scan cheap; add a spatial index if that cap grows.
+    let blocker: BuildingTarget | null = null;
+    let hitAt = Number.POSITIVE_INFINITY;
+    for (const target of this.targets.palisade) {
+      if (!target?.active || target.hp <= 0) continue;
+      const hit = segmentAabbHit(
+        from.x,
+        from.z,
+        to.x,
+        to.z,
+        target.position.x - target.halfX - clearance,
+        target.position.x + target.halfX + clearance,
+        target.position.z - target.halfZ - clearance,
+        target.position.z + target.halfZ + clearance,
+      );
+      if (hit !== null && hit < hitAt) {
+        blocker = target;
+        hitAt = hit;
+      }
+    }
+    if (!blocker) return null;
+
+    const alongX = blocker.halfX >= blocker.halfZ;
+    let runMin = (alongX ? blocker.position.x - blocker.halfX : blocker.position.z - blocker.halfZ) - clearance;
+    let runMax = (alongX ? blocker.position.x + blocker.halfX : blocker.position.z + blocker.halfZ) + clearance;
+    let changed = true;
+    while (changed) {
+      changed = false;
+      for (const target of this.targets.palisade) {
+        if (!target?.active || target.hp <= 0 || (target.halfX >= target.halfZ) !== alongX) continue;
+        const normalDistance = alongX
+          ? Math.abs(target.position.z - blocker.position.z)
+          : Math.abs(target.position.x - blocker.position.x);
+        const normalReach = alongX
+          ? target.halfZ + blocker.halfZ + 0.1
+          : target.halfX + blocker.halfX + 0.1;
+        if (normalDistance > normalReach) continue;
+        const min = (alongX ? target.position.x - target.halfX : target.position.z - target.halfZ) - clearance;
+        const max = (alongX ? target.position.x + target.halfX : target.position.z + target.halfZ) + clearance;
+        if (max < runMin - 0.1 || min > runMax + 0.1) continue;
+        if (min < runMin || max > runMax) {
+          runMin = Math.min(runMin, min);
+          runMax = Math.max(runMax, max);
+          changed = true;
+        }
+      }
+    }
+
+    const nearNormal = alongX
+      ? blocker.position.z + Math.sign(from.z - blocker.position.z || 1) * (blocker.halfZ + clearance)
+      : blocker.position.x + Math.sign(from.x - blocker.position.x || 1) * (blocker.halfX + clearance);
+    const component = this.palisadeComponent(blocker, clearance);
+    const openingDistance = this.palisadeOpeningDistances(component, clearance);
+    const endpointPad = 0.08;
+    const componentCenter = component.reduce(
+      (sum, target) => ({ x: sum.x + target.position.x / component.length, z: sum.z + target.position.z / component.length }),
+      { x: 0, z: 0 },
+    );
+    const candidates = component.filter((target) => openingDistance.get(target) === 0).flatMap((step) => {
+      const neighbors = palisadeNeighbors(step, component, clearance * 2 + 0.1);
+      const neighbor = neighbors[0];
+      const stepAlongX = neighbor
+        ? Math.abs(neighbor.position.x - step.position.x) >= Math.abs(neighbor.position.z - step.position.z)
+        : step.halfX >= step.halfZ;
+      const signs = neighbors.length > 0
+        ? neighbors.map((target) => -Math.sign((stepAlongX ? target.position.x - step.position.x : target.position.z - step.position.z) || 1))
+        : [-1, 1];
+      return [...new Set(signs)].flatMap((sign) => {
+        const major = (stepAlongX ? step.halfX : step.halfZ) + clearance + endpointPad;
+        const normal = (stepAlongX ? step.halfZ : step.halfX) + clearance + endpointPad;
+        const centerDelta = stepAlongX ? step.position.z - componentCenter.z : step.position.x - componentCenter.x;
+        const normalSigns = Math.abs(centerDelta) > 0.1 ? [Math.sign(centerDelta)] : [-1, 1];
+        return stepAlongX
+          ? normalSigns.map((normalSign) => ({ target: step, x: step.position.x + sign * major, z: step.position.z + normalSign * normal }))
+          : normalSigns.map((normalSign) => ({ target: step, x: step.position.x + normalSign * normal, z: step.position.z + sign * major }));
+      });
+    }).filter((point) =>
+      !this.pointInsidePalisade(point.x, point.z, clearance)
+      && distanceSq2(point.x, point.z, from.x, from.z) > 0.4 * 0.4,
+    );
+    const pathLength = (point: { x: number; z: number }) =>
+      Math.hypot(point.x - from.x, point.z - from.z) + Math.hypot(to.x - point.x, to.z - point.z);
+    const chosen = candidates.sort((a, b) => pathLength(a) - pathLength(b))[0];
+    const waypoint = chosen
+      ? { x: chosen.x, z: chosen.z }
+      : alongX
+          ? { x: THREE.MathUtils.clamp(from.x, runMin, runMax), z: nearNormal }
+          : { x: nearNormal, z: THREE.MathUtils.clamp(from.z, runMin, runMax) };
+    const routeId = component.map((target) => target.id).sort().join('|');
+    return { blocker, routeId, open: chosen !== undefined, waypoint };
   }
 
   get hasAnyBuildable(): boolean {
@@ -1411,6 +1511,52 @@ export class BuildSystem {
         if (target) this.targeting.registerBuilding(target);
       }
     }
+  }
+
+  private pointInsidePalisade(x: number, z: number, clearance: number): boolean {
+    return this.targets.palisade.some((target) =>
+      target?.active === true && target.hp > 0
+      && Math.abs(x - target.position.x) <= target.halfX + clearance
+      && Math.abs(z - target.position.z) <= target.halfZ + clearance,
+    );
+  }
+
+  private palisadeComponent(start: BuildingTarget, clearance: number): BuildingTarget[] {
+    const component: BuildingTarget[] = [];
+    const seen = new Set<BuildingTarget>([start]);
+    const queue = [start];
+    while (queue.length > 0) {
+      const current = queue.shift();
+      if (!current) continue;
+      component.push(current);
+      for (const target of this.targets.palisade) {
+        if (!target?.active || target.hp <= 0 || seen.has(target) || !palisadesConnect(current, target, clearance * 2 + 0.1)) continue;
+        seen.add(target);
+        queue.push(target);
+      }
+    }
+    return component;
+  }
+
+  private palisadeOpeningDistances(component: readonly BuildingTarget[], clearance: number): Map<BuildingTarget, number> {
+    const distances = new Map<BuildingTarget, number>();
+    const queue: BuildingTarget[] = [];
+    for (const target of component) {
+      if (palisadeNeighbors(target, component, clearance * 2 + 0.1).length > 1) continue;
+      distances.set(target, 0);
+      queue.push(target);
+    }
+    while (queue.length > 0) {
+      const current = queue.shift();
+      if (!current) continue;
+      const distance = distances.get(current) ?? 0;
+      for (const target of palisadeNeighbors(current, component, clearance * 2 + 0.1)) {
+        if (distances.has(target)) continue;
+        distances.set(target, distance + 1);
+        queue.push(target);
+      }
+    }
+    return distances;
   }
 
   private syncBuildingTarget(id: BuildableId, index: number, active: boolean): void {
@@ -2373,6 +2519,57 @@ function repairSink(id: BuildableId): BuildSink {
 
 function upgradeSink(id: BuildableId): BuildSink {
   return `upgrade_${id}`;
+}
+
+function distanceSq2(ax: number, az: number, bx: number, bz: number): number {
+  const dx = ax - bx;
+  const dz = az - bz;
+  return dx * dx + dz * dz;
+}
+
+function palisadesConnect(a: BuildingTarget, b: BuildingTarget, joinPad = 0.1): boolean {
+  return Math.abs(a.position.x - b.position.x) <= a.halfX + b.halfX + joinPad
+    && Math.abs(a.position.z - b.position.z) <= a.halfZ + b.halfZ + joinPad;
+}
+
+function palisadeNeighbors(target: BuildingTarget, component: readonly BuildingTarget[], joinPad: number): BuildingTarget[] {
+  const nearestByDirection = new Map<number, { target: BuildingTarget; distanceSq: number }>();
+  for (const other of component) {
+    if (other === target || !palisadesConnect(target, other, joinPad)) continue;
+    const dx = other.position.x - target.position.x;
+    const dz = other.position.z - target.position.z;
+    const direction = Math.round(Math.atan2(dz, dx) / (Math.PI / 4));
+    const distanceSq = dx * dx + dz * dz;
+    const nearest = nearestByDirection.get(direction);
+    if (!nearest || distanceSq < nearest.distanceSq) nearestByDirection.set(direction, { target: other, distanceSq });
+  }
+  return [...nearestByDirection.values()].map((entry) => entry.target);
+}
+
+function segmentAabbHit(
+  ax: number,
+  az: number,
+  bx: number,
+  bz: number,
+  minX: number,
+  maxX: number,
+  minZ: number,
+  maxZ: number,
+): number | null {
+  let near = 0;
+  let far = 1;
+  for (const [start, delta, min, max] of [[ax, bx - ax, minX, maxX], [az, bz - az, minZ, maxZ]] as const) {
+    if (Math.abs(delta) < 1e-9) {
+      if (start < min || start > max) return null;
+      continue;
+    }
+    const first = (min - start) / delta;
+    const second = (max - start) / delta;
+    near = Math.max(near, Math.min(first, second));
+    far = Math.min(far, Math.max(first, second));
+    if (near > far) return null;
+  }
+  return near;
 }
 
 function stockpileCapSource(index: number): string {

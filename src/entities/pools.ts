@@ -312,6 +312,7 @@ export class EnemyPool {
   private readonly faceColor = new THREE.Color('#d9a268');
   private readonly hatColor = new THREE.Color('#4b2a17');
   private readonly sackColor = new THREE.Color('#8b7d3c');
+  private readonly wreckerMarkerColor = new THREE.Color('#a0522d');
   private readonly bannerPoleColor = new THREE.Color('#4b2a17');
   private readonly bannerClothColor = new THREE.Color('#7f2633');
   private readonly dimmedColor = new THREE.Color();
@@ -398,7 +399,7 @@ export class EnemyPool {
     return this.renderRotations[enemy.id] ?? enemy.group.rotation.y;
   }
 
-  railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number } {
+  railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number; wreckerMarker: boolean; markerColor: string } {
     const damaged = enemy.currentHp / Math.max(1, enemy.maxHp) <= RAILCAR_DAMAGE_THRESHOLD;
     return {
       mesh: enemy.eliteKind === 'railcar',
@@ -408,6 +409,8 @@ export class EnemyPool {
       textureKey: `boss-railcar-${enemy.bossComponentId ?? 'unknown'}${damaged ? '-damaged' : ''}`,
       damaged,
       damageThreshold: RAILCAR_DAMAGE_THRESHOLD,
+      wreckerMarker: enemy.isAlive && enemy.isWrecker,
+      markerColor: '#a0522d',
     };
   }
 
@@ -1183,9 +1186,11 @@ export class EnemyPool {
       }
       part.instanceMatrix.needsUpdate = true;
     }
-    this.instanceMatrix.multiplyMatrices(enemy.isAlive && enemy.carriedAmount > 0 ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
+    const carryMarkerVisible = enemy.isAlive && (enemy.carriedAmount > 0 || enemy.isWrecker)
+      && (enemy.eliteKind !== 'railcar' || this.railcarVisible(enemy));
+    this.instanceMatrix.multiplyMatrices(carryMarkerVisible ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
-    this.setInstanceColor(this.sackMesh, enemy.id, this.sackColor, lightFactor);
+    this.setInstanceColor(this.sackMesh, enemy.id, enemy.isWrecker ? this.wreckerMarkerColor : this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
     this.syncWatchPaint(enemy, watchPainted);
     this.syncBanner(enemy, lightFactor);

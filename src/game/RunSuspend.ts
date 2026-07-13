@@ -1673,6 +1673,12 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
   const leadVelocity = decodeVector3(record.leadVelocity, `${label}.leadVelocity`, reasons);
   const heading = decodeVector3(record.heading, `${label}.heading`, reasons);
   const scriptedTarget = decodeVector3(record.scriptedTarget, `${label}.scriptedTarget`, reasons);
+  const gapWaypoint = record.gapWaypoint === undefined
+    ? position
+    : decodeVector3(record.gapWaypoint, `${label}.gapWaypoint`, reasons);
+  const watchdogAnchor = record.watchdogAnchor === undefined
+    ? position
+    : decodeVector3(record.watchdogAnchor, `${label}.watchdogAnchor`, reasons);
   const edge = record.edge === null || isCompassEdge(record.edge) ? record.edge : null;
   if (record.edge !== null && !isCompassEdge(record.edge)) reasons.push(`${label}.edge is invalid`);
   const maxHp = versionedNumber(record.maxHp, Math.max(cleanNumber(record.hp), Balance.enemy.hp), 0, MAX_ECONOMY_AMOUNT, `${label}.maxHp`, reasons, requireV2);
@@ -1704,6 +1710,19 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
   const bossComponentLabel = versionedNullableString(record.bossComponentLabel, `${label}.bossComponentLabel`, reasons, requireV2);
   const currentHoldingId = versionedNullableString(record.currentHoldingId, `${label}.currentHoldingId`, reasons, requireV2);
   const currentBuildingId = versionedNullableString(record.currentBuildingId, `${label}.currentBuildingId`, reasons, requireV2);
+  const gapBlockerId = record.gapBlockerId === undefined
+    ? null
+    : versionedNullableString(record.gapBlockerId, `${label}.gapBlockerId`, reasons, true);
+  const gnawTargetId = record.gnawTargetId === undefined
+    ? null
+    : versionedNullableString(record.gnawTargetId, `${label}.gnawTargetId`, reasons, true);
+  const watchdogElapsed = record.watchdogElapsed === undefined
+    ? 0
+    : requiredNumber(record.watchdogElapsed, 0, MAX_TIME, `${label}.watchdogElapsed`, reasons);
+  const watchdogTrips = record.watchdogTrips === undefined
+    ? 0
+    : requiredInteger(record.watchdogTrips, 0, MAX_COUNT, `${label}.watchdogTrips`, reasons);
+  const gnawing = record.gnawing === undefined ? false : record.gnawing;
   const variantTint = requireV2 ? versionedNullableString(record.variantTint, `${label}.variantTint`, reasons, true) : null;
   if (variantTint && !/^#[0-9a-f]{6}$/i.test(variantTint)) reasons.push(`${label}.variantTint is invalid`);
   const thiefState = isThiefState(record.thiefState) ? record.thiefState : record.thief === true ? 'seekHolding' : 'none';
@@ -1719,6 +1738,8 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
     !leadVelocity ||
     !heading ||
     !scriptedTarget ||
+    !gapWaypoint ||
+    !watchdogAnchor ||
     maxHp === null ||
     visualScale === null ||
     contactDamageScale === null ||
@@ -1738,10 +1759,15 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
     bossComponentLabel === undefined ||
     currentHoldingId === undefined ||
     currentBuildingId === undefined ||
+    gapBlockerId === undefined ||
+    gnawTargetId === undefined ||
+    watchdogElapsed === null ||
+    watchdogTrips === null ||
     variantTint === undefined ||
     typeof record.thief !== 'boolean' ||
     typeof record.wrecker !== 'boolean' ||
     typeof record.scripted !== 'boolean' ||
+    typeof gnawing !== 'boolean' ||
     (requireV2 && typeof record.banner !== 'boolean') ||
     (requireV2 && typeof record.scriptedIgnoresTerrain !== 'boolean')
   ) {
@@ -1790,6 +1816,13 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
       | 'wreckerState'
       | 'currentHoldingId'
       | 'currentBuildingId'
+      | 'gapBlockerId'
+      | 'gapWaypoint'
+      | 'watchdogElapsed'
+      | 'watchdogAnchor'
+      | 'watchdogTrips'
+      | 'gnawTargetId'
+      | 'gnawing'
       | 'edge'
       | 'scripted'
       | 'scriptedIgnoresTerrain'
@@ -1828,6 +1861,13 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
     wreckerState,
     currentHoldingId,
     currentBuildingId,
+    gapBlockerId,
+    gapWaypoint,
+    watchdogElapsed,
+    watchdogAnchor,
+    watchdogTrips,
+    gnawTargetId,
+    gnawing,
     edge,
     scripted: record.scripted,
     scriptedIgnoresTerrain: requireV2 && record.scriptedIgnoresTerrain === true,
