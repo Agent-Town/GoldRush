@@ -21,3 +21,6 @@ Pick ONE shipped tile — recommend THE CLAIM (the owner knows it by heart; ever
 2. Owner-verdict renders: the run camera angle (the REAL angle from a live run screenshot), a low sunset angle, and an A/B against the shipped flat tile — same framing.
 3. Findings: where the flat-sim/3D-render seam will bite (river crossings, building pads, spawn edges), measured draw-call/tri budget notes.
 4. READY-FOR-GATES + branch tip; attended gates/merges. The owner's render verdict decides whether this becomes a ladder.
+
+## SPIKE — MERGED, OWNER VERDICT PENDING (attended, 2026-07-13 evening)
+Tip 8511e352 merged (renders + GLB + findings; render-only per charter, zero src). The proposed next step is on record: a default-off pilot feeding Terrain.visualY while movement/collision/water/placement stay planar — ATTENDED authors that slice IF the owner's render verdict says GO. Do not build further until the verdict.
