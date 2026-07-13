@@ -11,6 +11,7 @@ QUOTE: prospector: I will keep the claim books steady.
 ARC (PLANNED): E1 deputy → E6 present at the Calculating House (where agents BEGIN — ADR-003: universe-level canon) → E8 patinaed, century-medaled (codex-prospector-e8: "agents age in dignity, not decay") → E10 the Ark's eldest voice.
 
 ## THE CLAIM-JUMPER BARON — the first antagonist
+METHOD (OWNER RULING 2026-07-13): inventor of the GOLD FEVER — he infects ordinary folk on purpose; they become zombie-like hunters of gold, claims, and prospectors (see lore/story-arc.md §THE GOLD FEVER). His armies are victims; turned back, never slain.
 FACTS: enormous outlaw, oxblood greatcoat, waxed mustache, crossed-pickaxes banner; stage-melodrama menace, warm never grim (canon §9). ×4 scale, structure-rampage, sky-rocket volleys (the Rocket Cart). Defeat: "Dragged off by his own men, swearing revenge." Beating him captures the sky-rocket science into E2 (the first blueprint-drop).
 QUOTE: claim_jumper: That pan looks lonely; I'll carry it off.
 QUOTE: baron: My banner arrives before my bill.

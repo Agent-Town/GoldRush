@@ -6,6 +6,8 @@ Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead 
 
 ## WHY: E2's new mechanics shipped without their teaching moments: the Boiler House has no in-run explanation; the E2 enemy trio is visually new but unnamed in play and un-threatening; wreckers clump into a single overlapping blob (no separation), reading as one confused machine pile.
 
+**CANON AMENDMENT (owner ruling 2026-07-13): THE GOLD FEVER — read lore/story-arc.md §THE GOLD FEVER before writing ANY copy. Enemy name plates and ledger entries frame the crowd as THE FEVERED (the Baron's infected, victims turned back never slain); wreckers/thieves are Fever castes. Voice: warm, never gory.**
+
 ## READ-FIRST: the first-run reveal/teaching affordance the game already has (research unlock reveal cards / first-claim guide in TownScene+Game — find the pattern) · the boiler/pressure system (what the Boiler House ACTUALLY does: pressure generation → battery scaling → pressurize verb) · src/entities/pools.ts E2 variant presentations + movement (separation forces — do enemies have any?) · lore/characters or enemy naming canon (rail tough / steam wrecker / coal thief names are canon) · Balance E2 enemy scalars.
 
 ## SCOPE:
