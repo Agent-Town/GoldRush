@@ -187,6 +187,12 @@ Night Shift deliberately reuses the Claim terrain and landmark layout. `artifact
 
 The seven temporary post proxies use the exact pre-placed contract coordinates. The warm frame is a state demonstration, not a change to the authored start: all seven remain wrecked in the descriptor until the player pays to relight one. No duplicate terrain or GLB is needed; this identity belongs to the lighting and fixture state layered over The Claim.
 
+### Sequential loop checkpoint 5 — The Claim-Jumper Baron
+
+`artifacts/map-rebuild-spike/baron-siege-verdict.png` keeps the same daylight, camera, river, ford, camp, and terrain on both sides. The Baron state changes only the far-bank story: oxblood standards, dark enemy tents, wreckage, and a three-tube rocket cart occupy the approach across the river. This is enough to communicate that the familiar Claim is under occupation without pretending the boss contract is a new biome.
+
+Map-scale rocket trails were rejected during the render pass because the run camera turned them into dominant lines across the whole playfield. Rocket flight and impact telegraphs remain combat VFX; the static map dressing only establishes their launcher and siege camp. No Baron terrain or GLB was duplicated.
+
 ## Recommendation
 
 Use this revision to approve the **relief grammar**, not the Claim landmark kit. The next visual comparison should keep the same terrain and camera while replacing the desert landmarks with the living working-claim kit. The desert composition should become the reference for a dedicated Dry Gulch rebuild. Any permanent landmark must still follow editor- or manifest-authored water, fixture, build, and spawn truth before Blender production work begins.
