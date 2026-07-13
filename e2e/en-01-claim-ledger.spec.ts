@@ -164,6 +164,12 @@ test('EN-01 claim ledger access, discovery beat, dupe guard, persistence, and fa
   await page.goto('/');
   await expect(page.getByTestId('start-menu')).toBeVisible();
   await page.getByTestId('start-menu-claim-ledger').click();
+  await expect(page.getByTestId('claim-ledger')).toBeVisible();
+  // Ledger-era-chapters: the reader opens on the player's active era chapter; frontier
+  // discoveries (the_claim et al.) live under the Frontier chapter tab. Select it before
+  // asserting persisted frontier discovery. Idempotent when already on Frontier.
+  await page.getByTestId('claim-ledger-era-epoch-1-frontier').click();
+  await expect(page.getByTestId('claim-ledger-chapter-epoch-1-frontier')).toBeVisible();
   await expect(page.getByTestId('claim-ledger-card-the_claim')).toHaveAttribute('data-ledger-discovered', 'true');
   await expect.poll(() => page.locator('[data-ledger-discovered="true"]').count()).toBeGreaterThanOrEqual(4);
   await shot(page, testInfo, 'persisted-reader-mobile-safe');

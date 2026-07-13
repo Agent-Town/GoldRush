@@ -1,6 +1,17 @@
 import './reader.css';
+import { activeEpochId, listEpochs, loadEpoch } from '../meta/ContractFamilies';
+import { loadEraBackdrop } from '../ui/EraBackdrop';
 import { installAssayOfficeRecordsLiveRead } from './liveStats';
-import { LEDGER_CATEGORIES, ledgerEntries, type LedgerDiscoveryId, type LedgerEntry, type LedgerEntryId } from './registry';
+import {
+  LEDGER_CATEGORIES,
+  ledgerEntries,
+  ledgerEntryById,
+  epochLedgerEntryById,
+  type LedgerDiscoveryId,
+  type LedgerEntry,
+  type LedgerEntryId,
+  type LedgerEpochId,
+} from './registry';
 import { readLedgerDiscovered } from './state';
 
 export const LEDGER_FACT_LINE_CAP = 4;
@@ -13,22 +24,25 @@ type OpenClaimLedgerOptions = {
 let currentRoot: HTMLElement | null = null;
 let currentClose: (() => void) | undefined;
 let currentLiveReads: (() => void)[] = [];
+let currentEntryId: LedgerEntryId | undefined;
+let currentEpochId: LedgerEpochId = 'epoch-1-frontier';
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   closeClaimLedger(false);
   const root = document.createElement('section');
   currentRoot = root;
   currentClose = options.onClose;
+  currentEntryId = options.entryId;
+  currentEpochId = initialEpochId(options.entryId);
   root.className = 'claim-ledger';
   root.dataset.testid = 'claim-ledger';
   root.setAttribute('role', 'dialog');
   root.setAttribute('aria-modal', 'true');
   root.setAttribute('aria-label', 'Claim Ledger');
-  root.innerHTML = renderLedger(options.entryId);
   root.addEventListener('click', onLedgerClick);
   root.addEventListener('keydown', onLedgerKeyDown);
   (document.querySelector<HTMLElement>('#app') ?? document.body).append(root);
-  currentLiveReads = [installAssayOfficeRecordsLiveRead(root)];
+  renderCurrentLedger();
   const focusTarget = root.querySelector<HTMLElement>(options.entryId ? `[data-ledger-entry="${options.entryId}"]` : '[data-ledger-close]');
   focusTarget?.focus({ preventScroll: true });
   if (options.entryId) focusTarget?.scrollIntoView({ block: 'center', inline: 'nearest' });
@@ -41,6 +55,7 @@ export function closeClaimLedger(notify = true): void {
   const onClose = currentClose;
   const liveReads = currentLiveReads;
   currentClose = undefined;
+  currentEntryId = undefined;
   currentLiveReads = [];
   for (const dispose of liveReads) dispose();
   root.removeEventListener('click', onLedgerClick);
@@ -49,8 +64,27 @@ export function closeClaimLedger(notify = true): void {
   if (notify) onClose?.();
 }
 
-function renderLedger(selectedId?: LedgerEntryId): string {
+function renderCurrentLedger(): void {
+  const root = currentRoot;
+  if (!root) return;
+  for (const dispose of currentLiveReads) dispose();
+  root.innerHTML = renderLedger(currentEntryId, currentEpochId);
+  currentLiveReads = currentEpochId === 'epoch-1-frontier' ? [installAssayOfficeRecordsLiveRead(root)] : [];
+  const renderedEpochId = currentEpochId;
+  void loadEraBackdrop(renderedEpochId).then((url) => {
+    if (!url || currentRoot !== root) return;
+    const plate = root.querySelector<HTMLImageElement>(`[data-ledger-era-plate="${renderedEpochId}"]`);
+    if (!plate) return;
+    plate.src = url;
+    plate.hidden = false;
+  });
+}
+
+function renderLedger(selectedId: LedgerEntryId | undefined, selectedEpochId: LedgerEpochId): string {
   const discovered = readLedgerDiscovered();
+  const eras = ledgerEras(discovered);
+  const selectedEra = eras.open.find((era) => era.id === selectedEpochId) ?? eras.open.at(-1)!;
+  currentEpochId = selectedEra.id;
   return `
     <div class="claim-ledger__shell">
       <header class="claim-ledger__header">
@@ -60,25 +94,123 @@ function renderLedger(selectedId?: LedgerEntryId): string {
         </div>
         <button class="claim-ledger__close" type="button" data-ledger-close data-testid="claim-ledger-close" aria-label="Close Claim Ledger">Back</button>
       </header>
+      ${renderEraRow(eras.open, eras.locked?.id, selectedEra.id)}
       <div class="claim-ledger__shelves" data-testid="claim-ledger-shelves">
-        ${LEDGER_CATEGORIES.map((category) => renderShelf(category, discovered, selectedId)).join('')}
+        <section class="claim-ledger__shelf" data-testid="claim-ledger-chapter-${selectedEra.id}" data-ledger-era-state="open">
+          <h3>${escapeHtml(eraName(selectedEra.id))}</h3>
+          <img hidden data-ledger-era-plate="${selectedEra.id}" alt="" style="width:100%;height:88px;object-fit:cover;object-position:center;border:1px solid rgba(76,48,23,.36);border-radius:8px;margin:0 0 14px" />
+        </section>
+        ${LEDGER_CATEGORIES.filter((category) => hasVisibleEntries(category, discovered, selectedEra.id))
+          .map((category) => renderShelf(category, discovered, selectedId, selectedEra.id))
+          .join('')}
+        ${eras.locked ? renderLockedChapter(eras.locked.id) : ''}
       </div>
     </div>
   `;
 }
 
-function renderShelf(category: string, discovered: Set<LedgerDiscoveryId>, selectedId?: LedgerEntryId): string {
+function renderShelf(
+  category: string,
+  discovered: Set<LedgerDiscoveryId>,
+  selectedId: LedgerEntryId | undefined,
+  epochId: LedgerEpochId,
+): string {
   const entries = ledgerEntries.filter(
-    (entry) => entry.category === category && (!entry.hiddenUntilDiscovered || discovered.has(entry.id)),
+    (entry) =>
+      entry.category === category &&
+      entry.epochId === epochId &&
+      (!entry.hiddenUntilDiscovered || discovered.has(entry.id)),
+  );
+  const legacyReferences = ledgerEntries.filter(
+    (entry) =>
+      entry.category === category &&
+      entry.epochId !== epochId &&
+      (discovered.has(entry.id) || !entry.hiddenUntilDiscovered),
   );
   return `
     <section class="claim-ledger__shelf" data-testid="claim-ledger-shelf-${slug(category)}">
       <h3>${escapeHtml(category)}</h3>
       <div class="claim-ledger__cards">
         ${entries.map((entry) => renderCard(entry, discovered.has(entry.id), selectedId === entry.id)).join('')}
+        ${
+          legacyReferences.length === 0
+            ? ''
+            : `<div hidden aria-hidden="true">${legacyReferences.map((entry) => renderCard(entry, discovered.has(entry.id), false)).join('')}</div>`
+        }
       </div>
     </section>
   `;
+}
+
+function hasVisibleEntries(category: string, discovered: Set<LedgerDiscoveryId>, epochId: LedgerEpochId): boolean {
+  return ledgerEntries.some(
+    (entry) =>
+      entry.category === category &&
+      entry.epochId === epochId &&
+      (!entry.hiddenUntilDiscovered || discovered.has(entry.id)),
+  );
+}
+
+function ledgerEras(discovered: Set<LedgerDiscoveryId>): {
+  open: Array<{ id: LedgerEpochId; order: number }>;
+  locked?: { id: LedgerEpochId; order: number };
+} {
+  const eras = listEpochs() as Array<{ id: LedgerEpochId; order: number }>;
+  const activeOrder = loadEpoch(activeEpochId()).order;
+  const discoveredOrder = Math.max(
+    0,
+    ...eras.filter((era) => discovered.has(epochOverviewEntryId(era.id))).map((era) => era.order),
+  );
+  const openOrder = Math.max(activeOrder, discoveredOrder);
+  return {
+    open: eras.filter((era) => era.order <= openOrder),
+    locked: eras.find((era) => era.order === openOrder + 1),
+  };
+}
+
+function renderEraRow(
+  eras: readonly { id: LedgerEpochId; order: number }[],
+  lockedId: LedgerEpochId | undefined,
+  selectedEpochId: LedgerEpochId,
+): string {
+  return `
+    <nav class="research-chart__eras" data-testid="claim-ledger-era-row" aria-label="Claim Ledger eras" style="display:flex;gap:8px;overflow-x:auto;padding:14px 20px 0">
+      ${eras
+        .map((era, index) => {
+          const selected = era.id === selectedEpochId;
+          const label = `${eraName(era.id)}${index === eras.length - 1 ? ' — active' : ' ✓'}`;
+          return `<button class="gr-start-menu__small-button" type="button" data-ledger-era="${era.id}" data-ledger-era-state="open" data-testid="claim-ledger-era-${era.id}" aria-pressed="${selected}">${escapeHtml(label)}</button>`;
+        })
+        .join('')}
+      ${
+        lockedId
+          ? `<button class="gr-start-menu__small-button" type="button" disabled data-ledger-era="${lockedId}" data-ledger-era-state="locked" data-testid="claim-ledger-era-${lockedId}" aria-label="A future era remains locked">Next Era — locked</button>`
+          : ''
+      }
+    </nav>
+  `;
+}
+
+function renderLockedChapter(epochId: LedgerEpochId): string {
+  return `
+    <section class="claim-ledger__shelf claim-ledger-card--locked" data-testid="claim-ledger-locked-chapter" data-ledger-era="${epochId}" data-ledger-era-state="locked" style="padding:14px;border:1px solid rgba(76,48,23,.36);border-radius:8px">
+      <p class="claim-ledger-card__locked-copy">The ledger has pages yet unwritten</p>
+    </section>
+  `;
+}
+
+function initialEpochId(entryId?: LedgerEntryId): LedgerEpochId {
+  if (entryId) return ledgerEntryById[entryId].epochId;
+  return activeEpochId() as LedgerEpochId;
+}
+
+function epochOverviewEntryId(epochId: LedgerEpochId): LedgerEntryId {
+  return epochLedgerEntryById[epochId];
+}
+
+function eraName(epochId: LedgerEpochId): string {
+  const name = loadEpoch(epochId).displayName;
+  return name.startsWith('The ') ? name : `The ${name}`;
 }
 
 function renderCard(entry: LedgerEntry, discovered: boolean, selected: boolean): string {
@@ -185,6 +317,13 @@ function characterQuote(id: LedgerEntryId): string | undefined {
 function onLedgerClick(event: MouseEvent): void {
   const target = event.target instanceof Element ? event.target : null;
   if (target?.closest('[data-ledger-close]')) closeClaimLedger();
+  const eraButton = target?.closest<HTMLButtonElement>('[data-ledger-era-state="open"]');
+  const epochId = eraButton?.dataset.ledgerEra as LedgerEpochId | undefined;
+  if (!epochId || epochId === currentEpochId) return;
+  currentEpochId = epochId;
+  currentEntryId = undefined;
+  renderCurrentLedger();
+  currentRoot?.querySelector<HTMLElement>(`[data-ledger-era="${epochId}"]`)?.focus();
 }
 
 function onLedgerKeyDown(event: KeyboardEvent): void {

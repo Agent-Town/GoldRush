@@ -26,7 +26,7 @@ const claimOfficeUrl = new URL('../../assets/processed/bld-claim-office.png', im
 const titleEmblemUrl = new URL('../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const CONTRACT_LOCKED_TERMS_LINE = "The clerk draws up the terms when you're ready.";
-const epochLedgerEntryById = {
+export const epochLedgerEntryById = {
   'epoch-1-frontier': 'era_frontier',
   'epoch-2-steamworks': 'era_steamworks',
   'epoch-3-voltage': 'era_voltage',
@@ -70,6 +70,7 @@ export type ContractLedgerEntryId =
   | 'contract_e1_twin_banks'
   | 'contract_e1_baron';
 export type EpochLedgerEntryId = (typeof epochLedgerEntryById)[keyof typeof epochLedgerEntryById];
+export type LedgerEpochId = keyof typeof epochLedgerEntryById;
 export type LedgerEntryId =
   | 'hero'
   | 'prospector'
@@ -82,6 +83,7 @@ export type LedgerDiscoveryId = LedgerEntryId | EnemyStatsDiscoveryId;
 
 export type LedgerEntry = {
   id: LedgerEntryId;
+  epochId: LedgerEpochId;
   name: string;
   category: LedgerCategory;
   unlockSignal: string;
@@ -154,6 +156,7 @@ export const alwaysDiscoveredEntryIds: readonly LedgerEntryId[] = ['hero', 'pros
 export const ledgerEntries: readonly LedgerEntry[] = [
   {
     id: 'hero',
+    epochId: 'epoch-1-frontier',
     name: 'The Hero',
     category: 'The People',
     unlockSignal: 'profile:init',
@@ -163,6 +166,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   },
   {
     id: 'prospector',
+    epochId: 'epoch-1-frontier',
     name: 'The Prospector',
     category: 'The Deputy',
     unlockSignal: 'profile:init',
@@ -189,6 +193,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   }),
   {
     id: 'the_claim',
+    epochId: 'epoch-1-frontier',
     name: 'The Claim',
     category: 'The Claim',
     unlockSignal: 'town:entered',
@@ -206,6 +211,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   },
   {
     id: 'assay_office_records',
+    epochId: 'epoch-1-frontier',
     name: 'The Assay Office — Records',
     category: 'The Claim',
     unlockSignal: 'run:completed:first',
@@ -255,6 +261,7 @@ function townActorEntry(actor: TownActorDefinition): LedgerEntry {
   const id = townActorLedgerEntryById[actor.id] as TownActorLedgerEntryId;
   return {
     id,
+    epochId: 'epoch-1-frontier',
     name: actor.name,
     category: 'The People',
     unlockSignal: `town:met:${actor.id}`,
@@ -278,6 +285,7 @@ function enemyEntry(
 ): LedgerEntry {
   return {
     id,
+    epochId: 'epoch-1-frontier',
     name,
     category: 'The Opponents',
     unlockSignal: `enemy:sighted:${id}`,
@@ -299,6 +307,7 @@ function enemyEntry(
 function e2EnemyEntry(id: EnemyLedgerEntryId, name: string, imageUrl: string, slot: string, fiction: string, tactics: string): LedgerEntry {
   return {
     id,
+    epochId: 'epoch-2-steamworks',
     name,
     category: 'The Opponents',
     unlockSignal: `enemy:sighted:${id}`,
@@ -311,6 +320,7 @@ function e2EnemyEntry(id: EnemyLedgerEntryId, name: string, imageUrl: string, sl
 function buildableEntry(id: LedgerEntryId, buildableId: BuildableId, imageUrl: string, slot: string): LedgerEntry {
   return {
     id,
+    epochId: buildableId === 'boiler_house' ? 'epoch-2-steamworks' : 'epoch-1-frontier',
     name: getBuildableDef(buildableId)?.displayName ?? buildableId,
     category: 'The Buildings',
     unlockSignal: `build:${buildableId}`,
@@ -334,6 +344,7 @@ function contractEntry(contractId: string): LedgerEntry {
   const contract = loadContract(contractId);
   return {
     id,
+    epochId: 'epoch-1-frontier',
     name: contract.boardRow.name,
     category: 'The Claim',
     unlockSignal: `contract:seen:${contractId}`,
@@ -399,6 +410,7 @@ function epochEntry(epochId: string): LedgerEntry {
   const epoch = loadEpoch(epochId);
   return {
     id,
+    epochId: epochId as LedgerEpochId,
     name: epochName(epoch.displayName),
     category: 'The Eras',
     unlockSignal: epochId === 'epoch-1-frontier' ? 'profile:init' : `epoch-activated:${epochId}`,
