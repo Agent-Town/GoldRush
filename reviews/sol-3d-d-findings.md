@@ -1,224 +1,124 @@
 ---
 source: codex
 project: Gold Rush
-date: 2026-07-13
+date: 2026-07-14
 type: digest
 branch: sol/map-rebuild-spike
 ---
 
-# Session 3D-D — Claim terrain and landmark composition spike
+# Session 3D-D — five unique Epoch 1 contract terrains
 
 ## Result
 
-The flat-sim / 3D-render seam still holds, and the map now has an authored composition rather than one uninterrupted ground plate. The terrain mesh adds dry-land shelves, cuts, tailings, a wash, and hummocks. Four procedural landmark families test the larger rhythm Robin requested:
+The reuse shortcut is removed from the final terrain set. The Claim, Dry Gulch, Twin Banks, Night Shift, and the Claim-Jumper Baron now each own a separate Blender file, GLB, painted atlas, contract record, terrain heightfield, and owner-verdict composition.
 
-- a dense two-bank cactus thicket kept clear of the river and ford;
-- a ruined mining headframe, rails, cart, shed, and tailings;
-- a weathered farmhouse with porch, chimney, and broken fence;
-- a bison skeleton in a shallow wash.
+They remain one region by sharing the same painted source plates, ochre/rust/river-stone palette family, weathered timber and iron language, sparse acclimated vegetation, illustrated proportions, and camera grammar. They differ at the level that matters to play: macro silhouette, enclosure, water/ford read, spatial rhythm, focal landmark, and story condition.
 
-The owner-approved composition now also includes a restrained support-rubble pass: 36 rocks and eight broken timbers in loose, edge-weighted clusters. The ford and central claim apron remain open so the debris adds scale and lived-in texture without disguising the primary work/combat space.
+No `src/` file changed. Simulation, collision, placement, spawns, range, line of sight, and water classification remain planar and code-owned. All landmarks, water surfaces, ford stones, lights, and cameras shown in verdict renders are temporary helpers removed before terrain save/export.
 
-These landmarks are **owner-verdict render helpers**, not shipped assets. They are generated for the renders and deleted before the `.blend` and `.glb` are saved. The saved deliverable contains exactly one terrain mesh and one material. No collision, movement, damage, pathing, line-of-sight, spawn, or placement behavior was added.
+The durable design and rebuild guidance is in `artifacts/map-rebuild-spike/MODEL-HANDOFF.md`. Exact asset measurements and hashes live in the adjacent terrain contracts and `artifacts/map-rebuild-spike/verification.json`.
 
-Owner verdict set:
+## Findings
 
-- `artifacts/map-rebuild-spike/owner-run-camera-sculpted.png` — the exact run-camera angle;
-- `artifacts/map-rebuild-spike/owner-layout-overview.png` — whole-tile composition read;
-- `artifacts/map-rebuild-spike/owner-low-sunset.png` — low angle showing relief and the mine silhouette;
-- `artifacts/map-rebuild-spike/owner-ab-shipped-flat-vs-sculpted.png` — identical-framing A/B;
-- `artifacts/map-rebuild-spike/owner-progression-flat-terrain-landmarks.png` — flat → terrain → composition progression.
+### F-3D-D-01 — Regional cohesion belongs to the grammar, not to duplicated land
 
-## Hard-law evidence
+Evidence: `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png` compares all five real run-camera renders at identical framing. The ochre/rust substrate, water and stone family, sparse greens, timber/iron props, and illustrated scale read as one county. River width, dry-basin scarcity, lantern light, and siege occupation separate the contract stories.
 
-- `src/` is untouched. The final GLB node extras declare `render_only=true`, `sim_surface=planar`, and `height_socket=Terrain.visualY`.
-- The exported mesh authors game X/Z as Blender X/-Y and visual height as Blender Z. Blender's glTF conversion therefore lands at game `(X, visualY, Z)` without mirroring north/south.
-- The simulation river remains `z=-5..5`; visible shallows remain `±6.25`; the sole ford remains `x=-3..3`.
-- The cactus thicket never places a preview cactus inside `|z|<7`. New local landform relief fades in only across `|z|=7.5..9.5`, so it contributes zero extra height at the `z=±6.5` sluice aprons.
-- Across `x=-24..24`, the north/south apron along-bank grades remain at most `0.0700 / 0.0595` per metre. The local landmark relief begins farther inland.
-- The outer 512 terrain vertices remain capped at `1.10 m`, below the current vista inner-edge ceiling of `1.18 m`.
-- Opening the final `.blend` shows one object (`TheClaimTerrain`), one material, zero cameras, and zero lights. Parsing the GLB shows the same one-mesh/one-material contract and no landmark nodes.
+Decision: future Epoch 1 contracts may reuse source plates, material recipes, vegetation species, and prop construction language. They must not reuse another contract's exported terrain mesh as their identity solution.
 
-## Export contract and cost
+### F-3D-D-02 — Every contract now owns a distinct render asset
 
-`scripts/reexport-pilot.sh` reports one mesh, one material, 32,768 triangles, zero cameras, and zero lights.
+Evidence: `assets/pilots/map-rebuild-spike/verify_contract_terrains.py` requires five unique geometry fingerprints, five unique GLB hashes, and five unique embedded-atlas hashes. The current machine result records `5 / 5 / 5` under `identityChecks`.
 
-- GLB: `8,114,748` bytes
-- GLB SHA-256: `d9dbaf34295e62e7f57890f1b4e1649d19ce84f6cecdd2ed4ed8e74037460661`
-- vertices: `16,641`
-- triangles: `32,768 / 60,000` budget
-- material: one, metallic `0`, roughness `0.9`, no emission
-- image: one embedded `2048×2048` PNG
-- terrain primitives / attributable draw calls: one
-- animations / cameras / lights: zero
+This is stronger than renaming files or moving props. The check hashes the saved vertex positions separately from the complete GLB and texture payloads.
 
-The Claim builder produced stable GLB and atlas hashes across the repeated rebuilds performed in this session. Dry Gulch repeat determinism is not separately asserted. `.blend` bytes retain Blender session/path metadata, and Eevee shadow sampling can change render bytes without changing the authored composition, so render pixel identity is not claimed.
+### F-3D-D-03 — Shared runtime topology does not imply shared render terrain
 
-The preview composition itself creates 230 temporary objects, 13 temporary materials, and about 4,740 mesh triangles before curve tessellation. That is explicitly **not** a proposed runtime asset budget; it is the cheap deterministic layout model used to answer whether these landmarks and support rubble belong on the map.
+Night Shift and the Baron still point at the `frontier-river-claim` runtime tile because their canonical river, ford, placement, and spawn semantics are unchanged. Their GLBs carry separate `contract_id` metadata and separate visual heightfields.
 
-The generic recipe re-export passes geometry and budget, but omits custom node extras because it does not pass `export_extras`. The build script is authoritative until an attended promotion deliberately fixes that export seam. Full hashes and probes are in `artifacts/map-rebuild-spike/verification.json` and `assets/pilots/map-rebuild-spike/the-claim-terrain-contract.json`.
+Night Shift uses side shoulders, lantern terraces, and a work corridor. Baron uses an occupied far-bank plateau, trench, bastions, and a calm player approach. Both preserve the same river/ford mask as The Claim without reopening The Claim's Blender file.
 
-## Same-camera evidence
+### F-3D-D-04 — Twin Banks is honest about the current water descriptor
 
-The A/B uses the game's 42° vertical FOV, hero start `(0, 0.06, 12)`, camera offset `(0, 26.2, 18.3)`, and the established look target. A fixed `814×560` center crop removes the HUD without changing framing.
+Twin Banks now has a separate broad floodplain mesh, two asymmetric settlement shelves, two fixed fords, two gravel bars, oversized paired riverbank winches, opposing homesteads, and irrigated furrow fields. Its water surface remains one wide code-owned band because the current descriptor does not authorize irregular side channels.
 
-- shipped average luminance: `119.67525`
-- composed average luminance: `113.57696`
-- shipped edge energy: `0.05760`
-- composed edge energy: `0.10535` (`1.83×`)
+The contract prose calls the river braided; the present honest rendering communicates braiding through submerged gravel bars and two crossings, not through fake dry islands or channels that would disagree with runtime water sampling. A true multi-channel silhouette still requires an authored water-mask capability first.
 
-The slightly darker value comes from the lower daylight angle used to reveal forms and shadows. These metrics locate the visual delta; they are not a pixel-parity gate.
+### F-3D-D-05 — The planar law prevents uncontestable firing perches
 
-## Independent visual critique
+All five GLBs declare `render_only=true`, `sim_surface=planar`, and `height_socket=Terrain.visualY`. Their heightfields are visual grounding data only.
 
-An unprimed screenshot reviewer found that the first landmark render's ford looked like a hard rectangular overlay, the skeleton and chimney lost their identity, the shadows were too hard, and the sunset spent too much of its frame on orange sky. Those concrete defects were fixed: verdict water now uses its own procedural render material, the bones are thicker and brighter, the chimney is a capped dark masonry shape, daylight shadows are softer, and the sunset uses a higher camera plus cool fill and a contrasting dusk sky.
+If any hill became collision, reachability, cover, or line-of-sight truth, the long-range heroine could occupy ground opponents cannot contest. Rope traversal remains outside this ladder because it would require shared hero/enemy traversal and shooting rules, not just a character animation.
 
-The reviewer also called out the overview's rectangular slab read, the straight river, weak small-prop hierarchy, and proxy softness. Those are retained as owner-verdict limitations rather than disguised: straight outer banks are forced by this Claim's water mask, and the landmarks are intentionally massing models awaiting an approval decision. Cactus overlap was retained because a dense thicket, not individually readable scatter, is the requested landmark.
+### F-3D-D-06 — Landmark proxies are composition evidence, not production fixtures
 
-A second unprimed critique focused on the rubble pass. It confirmed the ford and central play corridor remained readable, but found stamped cactus orientation, an intersecting southwest cactus/timber pair, and debris that stopped too abruptly before the outer fields. The final pass varies cactus arm directions, moves the intersecting props clear of the boulder group, and feathers small rock clusters toward the tile edges. The critique also repeated the already documented mine crop and farmhouse proxy-read limitations; those remain promotion decisions rather than scope-expanding edits to this render spike.
+The verdict builds use deterministic low-poly landmarks to test focal scale, rhythm, and contract story. They do not reach the complete painted-wrap standard of the approved town building work, and none survives in a saved terrain file.
 
-The independent repository-review process recursively launched another `codex review` and was terminated rather than allowed to loop. Its completed diagnostics were still actionable: they found a Blender/game yaw mismatch in the farmhouse attachments, a cactus path condition that could never run after the dry-bank filter, and fence rails grounded from the wrong post. The yaw and rail grounding were corrected; the dead path condition was deleted. Because the reviewer never returned a final verdict, the build/parse/recipe/diff checks below remain the formal gates.
+Production landmarks need editor- or manifest-authored fixture, build-exclusion, and routing footprints. Blender bounds must not silently become gameplay collision.
 
-## Findings for an attended follow-up
+### F-3D-D-07 — Night identity must remain playable, not merely dark
 
-### F-3D-D-01 — The planar law forbids gameplay perches
+The first unique Night Shift pass hid its new terrain under near-black lighting. The final verdict raises cold moon fill, preserves blue river orientation, and gives the central relight a broad warm pool. The map still reads as night, but the work corridor, ford, and bank shapes remain visible at the real play camera.
 
-The tile rises to `2.238 m` internally, but Claim simulation height remains flat. Hero, opponents, buildings, pickups, and effects must receive the same render-side `Terrain.visualY` placement. Nothing in this GLB may become collision, cover, line-of-sight, range, or pathing data. This keeps the long-range heroine from acquiring a visual perch enemies cannot contest.
+The low-angle render contains a strong warm reflection on the water. Treat that as an atmospheric verdict effect, not a promise about the production water shader.
 
-### F-3D-D-02 — A cactus barrier is a gameplay feature, not scatter art
+### F-3D-D-08 — Baron occupation must enter the run-camera frame
 
-The dense cactus thicket is visually convincing as a slow or hazardous passage, but this spike does not make that promise. If the owner ratifies cactus terrain later, one attended gameplay slice must define hero and enemy traversal together, projectile/line-of-sight behavior, damage cadence, spawn exits, and anti-farming escape routes. Making only the heroine slow while opponents ignore the thicket — or allowing shots through an impassable wall — would create the exact unfair safe spot raised in discussion.
+The first unique Baron pass concentrated its fortress on the far bank, leaving the player-facing half visually empty. The final composition adds side guard towers, broken barricades, a supply cache, and near-bank standards while retaining the far-bank headframe, siege line, tents, rocket cart, trench, and bastions.
 
-### F-3D-D-03 — Permanent landmarks need editor-authored footprints
+The real run camera still crops the tops of the side towers. The overview is therefore required for the full macro verdict. Production landmark layout should be playtested before those proxies receive final geometry.
 
-The mine, farmhouse, thicket, and skeleton currently have no sim footprint. Production versions need explicit fixture/build-exclusion shapes in the new contract manifest or map editor, with enemy routing and spawn validation performed against the same shapes. Their Blender geometry must not silently become the collision owner.
+### F-3D-D-09 — The builders, not the generic re-export script, own safety metadata
 
-### F-3D-D-04 — Dynamic buildings still need padded visual grounding
+Each authoritative build removes helper geometry before save, exports one terrain mesh with one rough non-metallic atlas, and records render-only, planar, contract, water, and height-socket metadata.
 
-The Claim has no authored build-zone subset; every bank remains potentially buildable. A promotion must place each dynamic building at the established padded `Terrain.visualY(x,z,base,padRadius)` result, then verify footprints at runtime. Do not flatten the sim, move pads, or make Blender geometry the placement validator.
+The strict verifier independently re-exports each `.blend` to a temporary GLB and compares its binary payload and semantic contract. `scripts/reexport-pilot.sh` remains a useful geometry/material/budget probe, but should not replace the builder output until its metadata behavior is deliberately aligned.
 
-### F-3D-D-05 — Keep shipped water as the runtime owner
+### F-3D-D-10 — Run-camera review must be allowed to reject a technically unique map
 
-The GLB is the land/river-bed visual. Water and ford stones in the verdict renders are temporary copies of shipped runtime geometry and are removed before save/export. The procedural verdict water material is not a substitute for the animated, transparent `LivingWaterShader`; it only avoids the terrain-atlas rectangle in a static Blender render. Promotion should keep `src/world/Water.ts` as water/ford owner and overlay it at the established water level; it must not load a second gameplay-water mask.
+A fresh unprimed visual critique accepted the regional cohesion and the distinct reads for Dry Gulch, Night Shift, and Baron, but rejected the pre-final Twin Banks board because its broad river-and-buildings read still rhymed too closely with The Claim.
 
-### F-3D-D-06 — Camera composition and rubble are deliberately edge-weighted
+The final pass did not change labels to manufacture distinction. It enlarged and moved the paired winches and homesteads into the gameplay frame, added opposed furrow-field rhythms, and retained the two fords, wider water band, wet bars, and asymmetric shelves. The machine identity checks remain necessary, but the identical-camera board is the higher-value art-direction gate.
 
-The run camera keeps the central claim apron readable and places the mine, farmhouse, cactus mass, and low support rubble toward the frame edges. The overview and sunset renders show the whole landmark silhouettes and feathered outer debris. That composition gives the player an open working area surrounded by place identity, but the owner should decide whether the far mine is too cropped before any production-quality landmark assets are commissioned.
+## Contract identity summary
 
-### F-3D-D-07 — The preview landmarks are massing models, not final art
+| Contract | Macro identity | Contract focal read |
+| --- | --- | --- |
+| The Claim | Open working river valley | Maintained extraction, camp, central ford, riparian edge |
+| Dry Gulch | Enclosed failed basin | One spring, draining washes, ruins, cactus, bones |
+| Twin Banks | Broad dual-shelf floodplain | Two fords, opposed furrow fields and homesteads, giant winches, wet bars |
+| Night Shift | Rock-bound lantern corridor | Seven fixed lantern terraces, cold pools, warm relight |
+| Baron | Occupied river fortress | Far-bank hierarchy, trench, towers, banners, rocket cart |
 
-The low-poly ruin, farmhouse, cactus, and bones are deterministic procedural proxies built from Blender primitives. They prove size, placement, silhouette, and shadow. They do not yet reach the painted full-wrap quality of the approved town Tavern model. A promoted ladder should replace only the landmarks the owner approves, one asset family at a time, using the town handoff's complete-geometry and locked-camera rules.
-
-### F-3D-D-08 — The generic recipe does not preserve safety extras
-
-The final build-script GLB contains the render-only / planar / `Terrain.visualY` metadata. `scripts/reexport-pilot.sh` passes the mandated geometry check but produces a geometry-equivalent GLB without those extras. Do not substitute its output for the authoritative build until the promotion export path is deliberately extended.
+This table is an art-direction test, not a runtime registry. The contract descriptor remains the source of truth for exact masks, coordinates, fixtures, and rules.
 
 ## Sourcing and reference ledger
 
-- Existing project plates only: the three processed terrain-bank variants, processed river tile, and `kit-era-1` palette plate.
-- Existing 3D standard consulted: `artifacts/town-blender-v3/MODEL-HANDOFF.md` from the attended Tavern build, especially complete geometry, narrow painted edges, locked-camera silhouette, and separate debug/evidence paths.
-- Tripo, Gemini, and ElevenLabs credential probes were blank. No external generation call, paid model, or new still image was used.
-- Procedural proxies were chosen because this is an owner-composition gate and deterministic rebuild matters more than prematurely polishing assets that may be rejected.
-
-## Contract theme differentiation audit
-
-### Finding — the spike is The Claim, but its landmarks mostly read as Dry Gulch
-
-The terrain deliverable is unambiguously wired to `frontier-river-claim`: its river band, central ford, metadata, camera evidence, and export contract all belong to **The Claim**. The confusion is thematic rather than technical. The cactus thicket, ruined mine, abandoned farmhouse, bison skeleton, ochre dryness, and broad empty desert are a much closer match for the approved **Dry Gulch** plate than for the approved **Claim** plate.
-
-The runtime comparison supports Robin's observation. A shared dry-bank crop from the current Claim and Dry Gulch gameplay shots has screenshot distance `0.01153`, mean absolute error `4.76741`, and almost identical edge energy (`0.07933` versus `0.07721`). The measurements are only locators, not acceptance gates, but visual inspection reaches the same conclusion: away from the water feature, both places use nearly the same ground, scale, detail rhythm, and camera composition. Dry Gulch's defining spring is not visible from its opening view, so the map initially loses its strongest distinguishing landmark.
-
-An unprimed comparison against the approved contract plates independently described the Blender result as “Claim infrastructure placed inside Dry Gulch dressing.” It assigned the river and ford to The Claim; cactus, skeleton, bare sand, and angular dry rock to Dry Gulch; and noted that the mine and shack can read as Claim only when they look active rather than abandoned. Its highest-impact recommendations were distinct macro silhouettes, theme-controlled landmark kits, and separated moisture/material treatment. Those judgments match the descriptor and screenshot evidence without relying on labels.
-
-The maps need distinct *place grammars*, not merely different tint values:
-
-| Contract | Current authored distinction | Why the present read converges | Stronger identity |
-| --- | --- | --- | --- |
-| **The Claim** | Classic river, one ford, otherwise mostly default terrain | Its current flat bank and the spike's desert ruins both borrow Dry Gulch's visual language | A living first claim: greener wet banks, riparian growth, fresh stake, working tent, sluice timber, barrels, pan, wagon and camp traces |
-| **Dry Gulch** | Mesa relief, dry washes, sparse cactus, and one sunken spring | Its ochre surface and generic scatter resemble the Claim until the distant spring enters view | Scarcity and abandonment: mesa walls, washes visibly draining toward the only green oasis, ruined mine, abandoned farmhouse, cactus thicket, bones and bleached debris |
-| **Twin Banks** | Wider river, two fords, gravel bars, reeds and two build areas | The fixed straight river still reads as the Claim with extra reeds | Wet braided homestead: islands, multiple channels, reed beds, driftwood and two unmistakable claimed parcels; this needs authored water topology before Blender can depict it honestly |
-| **Night Shift** | The Claim geography under a dusk-to-dark lighting rule and lantern chain | Its similarity is intentional, but it separates only once darkness arrives | Keep the same physical Claim; make cold darkness, warm lantern pools and reflected river light the transformation |
-| **Baron** | The Claim geography under boss pressure | It is currently distinguished mainly by combat and UI | Keep the same physical Claim; add an occupation/siege dressing state with oxblood banners, wreckage, enemy-camp silhouettes and a rocket launcher; keep flight telegraphs in combat VFX |
-
-### Landmark ownership
-
-The existing sculpted relief is useful for **The Claim**, but the visible landmark kit should not be promoted there unchanged.
-
-- Move the cactus thicket, *ruined* mine, abandoned farmhouse, bison skeleton, sun-bleached rubble and harsher mesa silhouettes into the visual plan for **Dry Gulch**.
-- Give **The Claim** inhabited river-valley evidence: active headframe or sluice work, maintained timber and shack, fresh staking, a camp, damp-bank vegetation, river debris, darker stone, and only sparse desert growth on the remote uplands.
-- Let **Twin Banks** own saturated wetland density and complex water silhouettes rather than trying to distinguish it with reeds alone.
-- Treat **Night Shift** and **Baron** as states of The Claim, not as additional biomes. Their recognition should come from lighting and scenario dressing while the terrain remains familiar.
-
-This creates an intentional contrast: **The Claim is a place being made; Dry Gulch is a place that failed and dried out.** That narrative difference gives every prop, color, silhouette, and route cue a consistent test.
-
-### Recommended order
-
-1. Keep the current Claim terrain relief and river agreement, but produce a same-camera render variant with the desert landmark kit replaced by the living working-claim kit.
-2. Reuse the rejected desert composition as the starting art direction for a dedicated Dry Gulch rebuild, shaped around its existing mesa, washes, and spring descriptor.
-3. Promote either terrain only as a default-off visual pilot through the existing `Terrain.visualY` seam; movement, placement, spawning, damage, and water ownership remain planar.
-4. Design an authored water-mask capability before rebuilding Twin Banks. Gravel bars inside one straight strip cannot deliver the approved braided-water identity.
-5. Build Night Shift and Baron as render dressing layers over the approved Claim base rather than duplicating terrain assets.
-
-The current editor can already carry bounded render-height deltas and circular spring ponds, which is enough to iterate Claim and Dry Gulch. It cannot yet author the irregular multi-channel water shape Twin Banks needs. Palette controls are also currently terrain-only; water and scatter colors remain code-owned, so a theme pass must not promise editor controls that do not exist.
-
-### Sequential loop checkpoint 1 — The Claim
-
-The first themed revision keeps the approved Claim terrain, river band, ford, camera, and export contract. It replaces the cactus thicket and skeleton with a working tent camp, fresh stake, maintained house, active extraction equipment, cottonwoods, reeds, and darker river stones. The damp corridor also receives a restrained cooler tint while the dry uplands retain the shared painted-terrain source.
-
-`artifacts/map-rebuild-spike/claim-theme-ab.png` is the identical-camera decision image. It shows that the change can separate the Claim without new gameplay topology: the before side reads as abandoned desert, while the revision reads as inhabited river work. The final GLB remains one mesh, one material, 32,768 triangles, and one 2048² texture; all landmarks remain excluded render helpers.
-
-### Sequential loop checkpoint 2 — Dry Gulch
-
-Dry Gulch now has its own render-only terrain build rather than borrowing the Claim surface. The mesh follows the existing descriptor: no river, a basin centered on the fixed `(-18,-18)` spring, the southwest and east dry washes, and a raised mesa rim. The palette is hotter red ochre; oasis green is concentrated around the one spring. The Claim's rejected desert props become purposeful here: ruined extraction, abandoned house, cactus thicket, bison bones, and bleached rubble.
-
-`artifacts/map-rebuild-spike/claim-vs-dry-gulch-theme-ab.png` uses identical framing and now reads as two different places before labels are considered. The real run camera sees the spring only at the far upper edge; `artifacts/map-rebuild-spike/dry-gulch-topology-verdict.png` pairs it with the necessary overview showing both washes feeding its basin. The headframe was moved away from the pond in the preview so the only water source remains readable without changing its authored coordinates or radius.
-
-The Dry Gulch GLB independently passes the same recipe ceiling: one mesh, one material, 32,768 triangles, one 2048² texture, zero cameras, and zero lights. The pond and all landmarks are render helpers removed before export; runtime water remains the spring circle from the contract.
-
-### Sequential loop checkpoint 3 — Twin Banks
-
-`artifacts/map-rebuild-spike/twin-banks-topology-verdict.png` renders every distinction the current descriptor can honestly own: the wider `7.8` half-width water strip, west and east fords, both gravel bars, north and south stake markers, and damp-bank reeds. These elements make the contract's two-front play readable, but the overview also proves the limitation: they remain features inside one rectangular channel and do not form a braided river.
-
-No Twin Banks GLB was created. Duplicating the Claim terrain and baking fake side channels into its color or height would make the render disagree with water sampling, opponent routing, and building placement. Twin Banks therefore stops at an owner-reviewable render/capability gate until an authored water-mask or versioned multi-channel descriptor exists. The state renderer reuses the approved Claim terrain file and creates only temporary descriptor-owned water and dressing geometry.
-
-### Sequential loop checkpoint 4 — Night Shift
-
-Night Shift deliberately reuses the Claim terrain and landmark layout. `artifacts/map-rebuild-spike/night-shift-lighting-verdict.png` compares the true-dark cold lantern chain with one post relit at identical framing. The first frame preserves just enough cold blue silhouette to orient the player; the second makes the gameplay promise immediately legible through one concentrated warm pool and river reflections.
-
-The seven temporary post proxies use the exact pre-placed contract coordinates. The warm frame is a state demonstration, not a change to the authored start: all seven remain wrecked in the descriptor until the player pays to relight one. No duplicate terrain or GLB is needed; this identity belongs to the lighting and fixture state layered over The Claim.
-
-### Sequential loop checkpoint 5 — The Claim-Jumper Baron
-
-`artifacts/map-rebuild-spike/baron-siege-verdict.png` keeps the same daylight, camera, river, ford, camp, and terrain on both sides. The Baron state changes only the far-bank story: oxblood standards, dark enemy tents, wreckage, and a three-tube rocket cart occupy the approach across the river. This is enough to communicate that the familiar Claim is under occupation without pretending the boss contract is a new biome.
-
-Map-scale rocket trails were rejected during the render pass because the run camera turned them into dominant lines across the whole playfield. Rocket flight and impact telegraphs remain combat VFX; the static map dressing only establishes their launcher and siege camp. No Baron terrain or GLB was duplicated.
-
-### Final unprimed screenshot critique
-
-A fresh reviewer correctly rejected the first final set as presentation-complete. Three issues were fixed: Night Shift now preserves more cold-blue route and water information while reducing the relit pool's overexposure; the lantern proxy has a hanging lens instead of an ambiguous `F` silhouette; and the Baron far bank now has planted banner bases plus a visible barricade line. All verdict labels now sit on solid contrast bands rather than outline-only text over props.
-
-The remaining high-confidence findings are intentional gates, not accepted production quality. Twin Banks still looks like one straight channel with flat gravel-bar decals and incomplete-looking stone lanes; that is the reason no braided GLB exists. Dry Gulch's spring is clipped at the real opening camera and its descriptor basin can read crater-like at proxy quality; the overview is required until an attended camera/topology decision changes that authored truth. The static water and landmark helpers remain softer and simpler than runtime/production art, and several far-bank props are cropped by the real camera. A worn path connecting the Claim camp is a useful later material detail, but it does not justify another terrain system or gameplay route.
-
-## Recommendation
-
-Use the verdict set to choose the next attended promotion, not to expand the spike further. The smallest useful runtime test is a default-off Claim/Dry Gulch terrain pilot through `Terrain.visualY`, with shipped water, fixtures, movement, placement, and spawning left untouched. Twin Banks remains blocked on authored water topology; Night Shift and Baron should consume their approved Claim base as lighting/fixture and siege-state overlays. Any permanent landmark must still follow editor- or manifest-authored water, fixture, build, and spawn truth before production work begins.
-
-Rope/climb mechanics should remain outside this terrain ladder. They reopen combat reachability and farming risks that the render-only approach deliberately avoids.
+- Existing project terrain-bank and river plates supply the regional material grammar.
+- The approved town Blender handoff remains the quality reference for complete geometry, painted edge treatment, locked-camera silhouette, and clean debug/evidence separation.
+- The repository forbids paid still-image generation for this work. The native still generator was not needed because approved project plates and deterministic Blender procedures were sufficient.
+- Tripo, Gemini, and ElevenLabs credential probes were blank. No external generation call, paid model, or downloaded asset was used.
 
 ## Gate state
 
-- Claim and Dry Gulch terrain GLB + atlas builds: PASS
-- recipe mesh/material/budget verification for both terrains: PASS; generic recipe metadata preservation remains documented
-- independent GLB and `.blend` parse for both terrains: PASS; semantic and binary-payload re-export matches
-- triangle/material/texture budget: PASS
-- saved-mesh river, ford, spring-basin, and wash geometry probes: PASS alongside the canonical per-map contract values
-- embedded 2048² texture payload and verdict/source-input PNG content hashes: PASS
-- Twin Banks, Night Shift, and Baron state renders: PASS; no duplicate terrain exports
-- landmark runtime behavior: intentionally absent
-- independent screenshot critique: ACTIONED twice; fixed water/ford, bone/chimney readability, shadow hardness, sunset framing, stamped cactus orientation, rubble intersections, and abrupt debris falloff; retained documented mask/proxy limitations
+- Five distinct `.blend` / `.glb` / atlas / contract terrain sets: PASS
+- Five unique saved geometry fingerprints: PASS
+- Five unique GLB and embedded-atlas hashes: PASS
+- One mesh, one material, one embedded 2048² atlas per terrain: PASS
+- 32,768 triangles per terrain against the 60,000 ceiling: PASS
+- Zero saved cameras, lights, animations, water helpers, or landmark nodes: PASS
+- Semantic and binary-payload re-export comparison: PASS
+- Saved-mesh probes for Claim river/ford, Dry Gulch basin/washes, Twin Banks two fords/banks, Night Shift shoulders/terraces, and Baron trench/bastions: PASS
+- Identical-framing regional-family and layout verdict boards pinned by content hash: PASS
 - `src/` edits: none
-- runtime/build/e2e gates: intentionally deferred to the attended promotion session
+- Runtime loading, placement, disposal, gameplay, and performance: intentionally deferred to an attended promotion
 
-Two final independent code-review passes found verification overclaims rather than render regressions. The verifier now compares the complete GLB binary payload after re-export, samples the saved mesh for the Claim river/ford and Dry Gulch basin/washes, parses and hashes the embedded 2048² PNG, pins every verdict plus its raw image inputs by content hash, and derives the no-`src/` result from tracked and untracked branch state. It also suppresses imported-helper bytecode so the documented gate does not dirty foreign territory. The unmeasured Dry Gulch determinism claim was removed rather than inferred.
+## Owner verdict images
+
+- `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png`
+- `artifacts/map-rebuild-spike/all-contracts-unique-layout-verdict.png`
+- per-map run-camera, overview, and low-angle renders live in the same artifact folder
+
+The first board answers whether the maps belong to the same world. The second answers whether they are genuinely different levels.
 
 READY-FOR-GATES
