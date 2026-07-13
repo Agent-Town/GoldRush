@@ -17,6 +17,7 @@ import {
   type WreckerUpdateContext,
 } from './Enemy';
 import type { RotationDirection } from '../assets/OrientationResolver';
+import * as Terrain from '../world/Terrain';
 
 const ENEMY_SPRITE_Y = 0.72;
 const BOSS_HP_MAX_SEGMENTS = 8;
@@ -108,6 +109,8 @@ export class EnemyPool {
   private readonly currentRotations: number[] = [];
   private readonly renderRotations: number[] = [];
   private readonly renderParts: THREE.InstancedMesh[] = [];
+  private readonly railcarParts: THREE.InstancedMesh[] = [];
+  private readonly railcarLocalMatrices: THREE.Matrix4[] = [];
   private readonly watchPaintMaterial = new THREE.MeshBasicMaterial({
     color: '#d7a84c',
     transparent: true,
@@ -269,6 +272,7 @@ export class EnemyPool {
     this.gridMax = Balance.enemy.spatialHashWorldMax;
     this.gridSize = Math.ceil((this.gridMax - this.gridMin) / this.cellSize);
     this.createRenderParts();
+    this.createRailcarParts();
     this.createSackMesh();
     this.createHitFlashMesh();
     this.createBannerMeshes();
@@ -321,6 +325,14 @@ export class EnemyPool {
 
   renderRotationOf(enemy: ClaimJumperEnemy): number {
     return this.renderRotations[enemy.id] ?? enemy.group.rotation.y;
+  }
+
+  railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number } {
+    return {
+      mesh: enemy.eliteKind === 'railcar',
+      visible: this.railcarVisible(enemy),
+      railY: Terrain.visualY(enemy.position.x, enemy.position.z, Balance.enemy.groundY),
+    };
   }
 
   get activeFlashCount(): number {
@@ -717,6 +729,8 @@ export class EnemyPool {
     this.bannerClothGeometry.dispose();
     this.bannerPoleMaterial.dispose();
     this.bannerClothMaterial.dispose();
+    for (const mesh of this.railcarParts) mesh.geometry.dispose();
+    for (const material of new Set(this.railcarParts.map((mesh) => mesh.material as THREE.Material))) material.dispose();
     this.nightBasicMaterial.dispose();
     disposeClaimJumperAssets(this.assets);
   }
@@ -891,6 +905,33 @@ export class EnemyPool {
     }
   }
 
+  private createRailcarParts(): void {
+    const iron = new THREE.MeshStandardMaterial({ color: '#3f4545', roughness: 0.6, metalness: 0.62 });
+    const darkIron = new THREE.MeshStandardMaterial({ color: '#202827', roughness: 0.72, metalness: 0.48 });
+    const teal = new THREE.MeshStandardMaterial({ color: '#83ded7', emissive: '#216d68', emissiveIntensity: 0.28, roughness: 0.38, metalness: 0.35 });
+    const parts: Array<[THREE.BufferGeometry, THREE.Material, THREE.Vector3, THREE.Euler?]> = [
+      [new THREE.BoxGeometry(1.45, 0.58, 0.92), iron, new THREE.Vector3(0, 0.55, 0)],
+      [new THREE.BoxGeometry(1.18, 0.22, 0.76), darkIron, new THREE.Vector3(0, 0.94, 0)],
+      [new THREE.BoxGeometry(1.28, 0.08, 0.98), teal, new THREE.Vector3(0, 0.73, 0)],
+    ];
+    for (const x of [-0.48, 0.48]) {
+      for (const z of [-0.5, 0.5]) {
+        parts.push([new THREE.CylinderGeometry(0.22, 0.22, 0.12, 12), darkIron, new THREE.Vector3(x, 0.23, z), new THREE.Euler(Math.PI / 2, 0, 0)]);
+      }
+    }
+    for (const [geometry, material, position, rotation] of parts) {
+      const mesh = new THREE.InstancedMesh(geometry, material, Balance.enemy.poolSize);
+      mesh.count = Balance.enemy.poolSize;
+      mesh.frustumCulled = false;
+      mesh.renderOrder = RenderLayers.gameplay;
+      this.railcarParts.push(mesh);
+      this.railcarLocalMatrices.push(this.createLocalMatrix(position, rotation));
+      this.group.add(mesh);
+      for (let index = 0; index < Balance.enemy.poolSize; index += 1) mesh.setMatrixAt(index, this.hiddenMatrix);
+      mesh.instanceMatrix.needsUpdate = true;
+    }
+  }
+
   private createSackMesh(): void {
     this.sackLocalMatrix.copy(this.createLocalMatrix(new THREE.Vector3(-0.38, 0.66, 0.12), new THREE.Euler(0.2, 0.1, -0.38)));
     this.sackMesh.count = Balance.enemy.poolSize;
@@ -1008,7 +1049,7 @@ export class EnemyPool {
     this.syncObject.rotation.z = motion.leanRad;
     this.syncObject.scale.setScalar(enemy.visualScale);
     this.syncObject.updateMatrix();
-    this.baseMatrix.copy(enemy.isAlive ? this.syncObject.matrix : this.hiddenMatrix);
+    this.baseMatrix.copy(enemy.isAlive && enemy.eliteKind !== 'railcar' ? this.syncObject.matrix : this.hiddenMatrix);
 
     for (let i = 0; i < this.renderParts.length; i += 1) {
       const part = this.renderParts[i];
@@ -1046,6 +1087,21 @@ export class EnemyPool {
     this.sackMesh.instanceMatrix.needsUpdate = true;
     this.syncWatchPaint(enemy, watchPainted);
     this.syncBanner(enemy, lightFactor);
+    const railcarBase = this.railcarVisible(enemy) ? this.syncObject.matrix : this.hiddenMatrix;
+    for (let index = 0; index < this.railcarParts.length; index += 1) {
+      const mesh = this.railcarParts[index];
+      const local = this.railcarLocalMatrices[index];
+      if (!mesh || !local) continue;
+      this.instanceMatrix.multiplyMatrices(railcarBase, local);
+      mesh.setMatrixAt(enemy.id, this.instanceMatrix);
+      mesh.instanceMatrix.needsUpdate = true;
+    }
+  }
+
+  private railcarVisible(enemy: ClaimJumperEnemy): boolean {
+    const fogRim = 6;
+    return enemy.isAlive && enemy.eliteKind === 'railcar' && enemy.position.x > Terrain.bounds.minX + fogRim && enemy.position.x < Terrain.bounds.maxX - fogRim
+      && enemy.position.z > Terrain.bounds.minZ + fogRim && enemy.position.z < Terrain.bounds.maxZ - fogRim;
   }
 
   private syncBanner(enemy: ClaimJumperEnemy, lightFactor: number): void {
@@ -1095,7 +1151,7 @@ export class EnemyPool {
     const useProceduralDark = this.fullDarkRenderCutoffActive();
     const baronVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
     const e2Presentation = this.e2SpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
-    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && !enemy.isThief && !baronVisible && !e2Presentation;
+    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !e2Presentation;
     const thiefVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.isThief && !e2Presentation;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
     const showFade = this.active <= 32;
