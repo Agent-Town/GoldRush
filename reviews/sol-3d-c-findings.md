@@ -6,7 +6,7 @@ Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`
 
 Tip: exact Wave 3 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — Wave 3 Tavern full-wrap repair complete; stable runtime interface preserved.**
+Verdict: **READY-FOR-GATES — Wave 3 Tavern full-wrap repair and owner-directed all-angle polish complete; stable runtime interface preserved.**
 
 ## Wave 3 — Tavern full-wrap repair
 
@@ -16,21 +16,22 @@ Verdict: **READY-FOR-GATES — Wave 3 Tavern full-wrap repair complete; stable r
 - Preserved the former asset's exact base-centered bounds (`4.229571w x 3.960802h x 3.349d`) so the existing slot, frontage direction, footprint, interaction, and approach remain unchanged.
 - Added a deterministic repair builder, a GLB contract verifier, and a render script for locked-camera and four-angle evidence.
 - Added the authoritative actual-game TS-04 A/B, a focused parcel A/B, and front-left/front-right/back-left/back-right turntable evidence.
+- Closed the false-front crest's rear through-gap with a recessed atlas-backed arch band and connected the projecting sign to its bracket with two short dark-wood straps; all other facade/rear asymmetry remains intentional.
 
 ### Gate evidence
 
 | Check | Evidence | Result |
 | --- | --- | --- |
-| Geometry budget | production Tavern GLB | 10,864 triangles; pass under 15,000 |
+| Geometry budget | production Tavern GLB | 10,988 triangles; pass under 15,000 |
 | Baked surface | production Tavern GLB | 1 mesh, 1 primitive, 1 material, 1 embedded 1024 x 1024 PNG |
 | Export hygiene | production Tavern GLB | 0 cameras, 0 lights, 0 animations |
 | Footprint and silhouette envelope | parsed production bounds | exact former size `4.229571 x 3.960802 x 3.349`; grounded and base-centered |
-| Determinism | checked versus recipe re-export | byte-identical SHA-256 `1b9352953504de446414c4554368191d93318cf2c20fd13cff4f5ac791039523` |
-| App build | candidate GLB on latest observed main `57c9705d` | `npm run build` pass |
+| Determinism | checked versus recipe re-export | byte-identical SHA-256 `edec4934d6d956170078b521fe526ccadcde015567094aec59001e2d4b71b90d` |
+| App build | exact final GLB on latest observed main `fd38b44f` | `npm run build` pass |
 | Tavern seam | unmodified spec, desktop and mobile | 6/6 pass; exact bounds, prompt, Board, LITE/load-failure fallbacks, and disposal preserved |
-| Frame-time ceiling | desktop/mobile Tavern spec | p95 `0%` / `+2.04%`; pass under 15% |
+| Frame-time ceiling | desktop/mobile Tavern spec on exact final GLB | p95 `-2.11%` / `0%`; pass under 15% |
 | Locked-camera localization | actual-game TS-04 A/B | `0.515%` of pixels differ above 32 grayscale; luminance `+0.015`; edge energy `+0.853%` |
-| Visual QA | authoritative game A/B plus four-angle sheet | SHIP; frontage aligned, full exterior coverage, no gameplay-scale blocker |
+| Visual QA | authoritative game A/B, all-angle before/after, and final four-angle sheet | fresh post-fix review: SHIP; no confident blocker remains |
 
 ### F-3DC-09 — Full-wrap repair closes the Tavern dark-plane finding
 
@@ -39,6 +40,14 @@ Verdict: **READY-FOR-GATES — Wave 3 Tavern full-wrap repair complete; stable r
 **Evidence:** the former production GLB exposed unpainted dark side planes in the top-right parcel. The repaired production file uses the previously owner-approved warm frontier-saloon shell, now conformed to the exact former production envelope. The in-game A/B preserves frontage and anchor while replacing every void face with authored siding, windows, trim, roof, porch, and rear treatment. The four-angle turntable shows complete coverage.
 
 **Decision:** close F-3DC-06 at the building-owned interface. Keep the Town plate workyard separate and leave the production GLB path unchanged.
+
+### F-3DC-10 — All-angle polish closes the crest gap and floating sign
+
+**Severity:** resolved medium
+
+**Evidence:** a fresh front-left/front-right/back-left/back-right audit of the accepted full-wrap asset found two small construction inconsistencies: the false-front arch exposed the background as a bright crescent from rear three-quarter views, and the projecting sign stopped below its bracket without a visible hanger. The final all-angle A/B shows an opaque, recessed arch band replacing the bright crescent and two short straps joining sign to bracket. The repair adds 124 triangles, stays inside the exact mounted bounds, and reuses the existing atlas and material.
+
+**Decision:** keep the intentional side/rear variation—mismatched awnings, window rhythms, barrel, steps, and simpler rear walls—as lived-in frontier asymmetry. Do not homogenize those details into facade repetition.
 
 ## Wave 2 — detail and decoration
 
@@ -180,7 +189,7 @@ The pilot intentionally contains no runtime mount. The permanent painted ground 
 ## Wave 3 merge classification
 
 - Branch base: `1281a8f1`.
-- Main observed during final review: `57c9705d`; it advanced after the branch was cut.
+- Main observed during final review: `fd38b44f`; it advanced after the branch was cut and records Wave 3 as accepted at tip `6929c16e`.
 - LANE-TOUCHED: the production Tavern `.blend`/GLB, new Tavern-local builder/verifier/render evidence, and this findings file.
-- MAIN-MOVED-ONLY: `TownScene.ts` changed to suppress duplicate primitive props when the independent props pilot mounts. The Tavern production path, Tavern loader/spec, Wave 3 queue, and Town recipe are unchanged, and the final 6/6 Tavern gate passed with the candidate GLB on `57c9705d`.
+- MAIN-MOVED-ONLY: `TownScene.ts` changed to suppress duplicate primitive props when the independent props pilot mounts. The Tavern production path, Tavern loader/spec, and Town recipe are unchanged; the queue only records accepted Wave 3. The final 6/6 Tavern gate and build passed with GLB SHA `edec4934…` on `fd38b44f`.
 - Expected integration: path-scoped replacement/add under `assets/pilots/tavern-3d/` plus this findings file; no runtime source or conflict resolution is required.
