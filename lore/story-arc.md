@@ -44,6 +44,17 @@ SYNTHESIS: the Fever MUTATES on contact with new technology — and the town is 
 - GAMEPLAY ALREADY AGREES: each era's enemy roster IS the current mutation's craving expressed — E2's fevered engines want the steamworks, E3's saboteurs cut the grid they crave, the escort raids want the cargo. Future era bundles should name their roster's craving in one line (a lore line, not a mechanics change).
 - PROPOSAL (E10, owner may rule later): the Static is the FINAL STRAIN — the Fever having consumed every lesser want, mutated past objects entirely: it hungers for meaning itself (ink, color, memory — the Static's established diet). The saga's last enemy is the hunger with no master left; even the Baron's line arrives at the Ark fleeing what he began. If ruled, E10's "re-ink burst damages only the Static" becomes the cure beat's descendant: meaning, re-applied, is the final medicine.
 
+**THE MAKER (OWNER DIRECTION 2026-07-13, verbatim): "We could still have the Baron force someone to invent it - like scientist or a shaman. Something ocult?"** — DIRECTION SET: the Baron did not invent the Fever himself; he FORCED its maker. The maker is the Fever's first victim, and the natural carrier of the cure thread (whoever made it left notes, regret, or both — dispatch/beat material for every era).
+
+THREE SHAPED CANDIDATES (owner picks or blends; all warm-weird-west, stage-melodrama register, never horror):
+- **A. THE CHEMIST (recommended)** — a brilliant assay chemist who discovered that WANT can be measured in a person the way gold is graded in ore… and therefore, with the right reagents, CONCENTRATED. The Baron locked him in a railcar laboratory until the formula worked. Rhymes with the game's own bones (the assay bench, the Claim Office, "the assay is sealed"); makes every assay mechanic quietly poignant. His scattered LAB NOTES are the cure thread across eras.
+- **B. THE MESMERIST** — a traveling stage hypnotist whose act was slightly, terribly real; the Baron bought the theater and never let the curtain fall. Showbiz-occult, fits the melodrama voice; the Fever as a suggestion that never wears off.
+- **C. THE DOWSER** — a folk dowser whose rod found more than water: it could dowse WANT itself. The Baron turned the gift inward, into people. Frontier-folk occult without any real-world tradition attached.
+
+THE OCCULT LAW (proposed, needed for any of the three): the occult stays UNVERIFIED in-world — the Gazette can never confirm it, believers and skeptics are both left right, and the engravings always claim a little more than the text will stand behind (the Frontier Ledger style already does this). Weird stays weird; the game never rules on magic.
+
+SENSITIVITY NOTE (canon §9 "enemies are never peoples"): recommend AGAINST "shaman" specifically — sourcing the plague in an indigenous practice touches real-world traditions the canon's warmth laws protect. The three candidates above keep every drop of the occult flavor with no real people attached.
+
 OPEN (owner, when convenient): does any era earn a CURE beat (the schoolhouse/academy studying the Fever — a warm mid-saga victory), and does the Gazette ever print the truth about where the Fever comes from?
 
 ## THE BARON CADENCE (answers owner Q of 2026-07-09: "But then the Baron will be part of the boss fight in every Epoch?")
