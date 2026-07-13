@@ -229,7 +229,7 @@ export class Hud {
   }
 
   update(snapshot: UiSnapshot, meta: PauseMetaSnapshot, showPauseMeta = snapshot.paused): void {
-    this.elements.hpText.textContent = `${snapshot.hp} / ${snapshot.maxHp}`;
+    this.elements.hpText.textContent = `${Math.ceil(snapshot.hp)} / ${Math.round(snapshot.maxHp)}`;
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
     this.elements.goldText.textContent = this.goldText(snapshot);
     this.updatePressure(snapshot);

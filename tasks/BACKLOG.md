@@ -190,3 +190,10 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - **fix-chapel-cross** → queue/lane-b 2026-07-13 (owner: floating cross → seat it on the steeple; model-only, chapel spec unmodified-green). Owner verdict same message: other 3D houses "great".
 - **F-claim-tone (owner, 2026-07-13): "The Claim office looks much darker than the other buildings."** Gate had measured +4.76% (inside the 5% limit) — the limit is evidently looser than the owner's eye; future slices should target ≤3%. **HOLD: owner is trying a hands-on Blender fix first** (his ask, same message; `scripts/reexport-pilot.sh` written for the loop). If he passes, author fix-claim-office-tone (rebake brighter to match painted neighbors, model-only, spec unmodified-green).
 - **fix-baron-boss-fight** → queue/lane-c 2026-07-13 — owner Baron playtest: F-BAR-1 healthbar never moved (probe-first), F-BAR-2 RULING "the Baron can just carry it himself" (launcher rides him; volley+capture intact), F-BAR-3 boss not threatening (e1-baron twist tuning). PRAISE recorded: "the size is great."
+
+## 2026-07-13 — owner's FIRST E2 playtest wave (4 masters queued + 1 attended fix)
+- ATTENDED-FIXED: HP HUD showed raw float ("48.19999999999999 / 125") → ceil/round at display (src/ui/Hud.ts:232).
+- **fix-e2-sluice-water** → lane-a — owner locked out of sluices on E2 (water-adjacency gate never passes there; probe-first: tile water vs helper encoding) + placement-feedback line so "not sure why" can't recur.
+- **fix-e2-railcar-read** → lane-a #2 — "it is not a train?": railcar components borrow bandit sprites + float in the off-field fog; procedural armored-car mesh per the rocket-cart precedent, rail-seated, fog-gated.
+- **fix-e2-hud-pressure-pill** → lane-b — pressure pill overlaps gold; "less text" (owner): compact gauge, W8–12 jargon out of the pill.
+- **e2-clarity-and-wreckers** → lane-d #2 — boiler-house teaching card, E2 enemy name plates + ledger entries, wrecker separation + threat tuning ("did not really do too much").
