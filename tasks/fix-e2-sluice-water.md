@@ -1,5 +1,6 @@
 # fix-e2-sluice-water — sluices return to the Steamworks (lane-a; commit prefix "fix:")
-ROLE: gameplay. WORKDIR: lane-a (worktrees/lane-a). CODEX: model=gpt-5.6-sol effort=high
+ROLE: gameplay. WORKDIR: lane-a (worktrees/lane-a).
+CODEX: model=gpt-5.6-sol effort=high
 ATTENDED-AUTHORED 2026-07-13 — owner first E2 playtest, 2026-07-13 (~07:00-07:10 screenshots), verbatim: "I was not able to place sluices anymore. Not sure why."
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work), or the worktree holds uncommitted edits you did not make. If the stop-reason is an undrained sibling of this same playtest wave, report "LADDER-STALL: waiting on drain of <slice>" (fires re-queue, pre-authorized). Then `npm install --no-audit --no-fund`; `npm run build` green.
