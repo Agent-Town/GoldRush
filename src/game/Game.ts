@@ -2458,27 +2458,12 @@ export class Game {
     this.baronRocketCartGroup.name = 'BaronRocketCart';
     this.baronRocketCartGroup.visible = false;
 
-    const body = new THREE.Mesh(this.baronRocketCartBodyGeometry, this.baronRocketCartWoodMaterial);
-    body.name = 'BaronRocketCartBody';
-    body.position.y = 0.28;
-
     const railLeft = new THREE.Mesh(this.baronRocketCartRailGeometry, this.baronRocketCartBrassMaterial);
     railLeft.name = 'BaronRocketCartRailLeft';
     railLeft.position.set(0, 0.5, -0.18);
     const railRight = new THREE.Mesh(this.baronRocketCartRailGeometry, this.baronRocketCartBrassMaterial);
     railRight.name = 'BaronRocketCartRailRight';
     railRight.position.set(0, 0.5, 0.18);
-
-    const wheels: THREE.Mesh[] = [];
-    for (const x of [-0.34, 0.34]) {
-      for (const z of [-0.34, 0.34]) {
-        const wheel = new THREE.Mesh(this.baronRocketCartWheelGeometry, this.baronRocketCartWheelMaterial);
-        wheel.name = 'BaronRocketCartWheel';
-        wheel.rotation.z = Math.PI / 2;
-        wheel.position.set(x, 0.17, z);
-        wheels.push(wheel);
-      }
-    }
 
     const rockets: THREE.Object3D[] = [];
     for (const x of [-0.24, 0, 0.24]) {
@@ -2492,7 +2477,7 @@ export class Game {
       rockets.push(rocket, fuse);
     }
 
-    this.baronRocketCartGroup.add(body, railLeft, railRight, ...wheels, ...rockets);
+    this.baronRocketCartGroup.add(railLeft, railRight, ...rockets);
     tagPlaceholder(this.baronRocketCartGroup, assetSlots.propRocketCart);
   }
 
@@ -3417,22 +3402,26 @@ export class Game {
     const scale = Math.max(1, baron.visualScale * 0.5);
     const position = this.enemies.renderPositionOf(baron);
     const yaw = this.enemies.renderRotationOf(baron);
-    const distance = Math.max(0.9, baron.visualScale * 0.72);
+    const distance = baron.visualScale * 0.12;
     const x = position.x - Math.sin(yaw) * distance;
     const z = position.z + Math.cos(yaw) * distance;
     const active = this.baronRocketTelegraphStartedAt >= 0;
     const pulse = active ? 0.5 + Math.sin(this.elapsed * 18) * 0.5 : 0;
     this.baronRocketCartTealMaterial.emissiveIntensity = active ? 0.55 + pulse * 0.55 : 0.3;
     this.baronRocketCartGroup.visible = true;
-    this.baronRocketCartGroup.position.set(x, Terrain.visualY(x, z, 0.06), z);
+    this.baronRocketCartGroup.position.set(x, position.y + baron.visualScale * 0.42, z);
     this.baronRocketCartGroup.rotation.set(active ? -0.08 - pulse * 0.05 : 0, yaw, active ? 0.08 : 0);
     this.baronRocketCartGroup.scale.setScalar(scale);
   }
 
   private baronRocketDiagnostics() {
     const manifest = this.baronRocketConfig();
+    const baron = this.activeBaronEnemy();
+    const baronPosition = baron ? this.enemies.renderPositionOf(baron) : null;
     return {
       cartVisible: this.baronRocketCartGroup.visible,
+      carried: baron !== null,
+      distanceFromBaron: baronPosition ? this.baronRocketCartGroup.position.distanceTo(baronPosition) : 0,
       telegraphActive: this.baronRocketTelegraphStartedAt >= 0,
       telegraphElapsed: this.baronRocketTelegraphStartedAt >= 0 ? this.timeAlive - this.baronRocketTelegraphStartedAt : 0,
       nextVolleyIn: Math.max(0, this.baronRocketNextAt - this.timeAlive),

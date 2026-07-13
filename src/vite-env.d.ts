@@ -482,6 +482,8 @@ interface ThreeGameDiagnostics {
   };
   baronRocket: {
     cartVisible: boolean;
+    carried: boolean;
+    distanceFromBaron: number;
     telegraphActive: boolean;
     telegraphElapsed: number;
     nextVolleyIn: number;
@@ -547,6 +549,8 @@ interface ThreeGameDiagnostics {
     bossHpBar: {
       visible: boolean;
       ratio: number;
+      renderedRatio: number;
+      litSegments: number;
       segments: number;
       groupId: string | null;
       aliveComponents: number;
