@@ -26,3 +26,18 @@ Pick ONE shipped tile — recommend THE CLAIM (the owner knows it by heart; ever
 Tip 8511e352 merged (renders + GLB + findings; render-only per charter, zero src). The proposed next step is on record: a default-off pilot feeding Terrain.visualY while movement/collision/water/placement stay planar — ATTENDED authors that slice IF the owner's render verdict says GO. Do not build further until the verdict.
 
 ## CONSECUTIVE-GOAL WAVE — MERGED (attended, 2026-07-14). Owner verdict on the Claim: GO — the promotion pilot is factory-queued (terrain3d-01-claim-pilot; your MODEL-HANDOFF is its spec voice). HOLD further map sculpts until the pilot proves the seam in-game; Twin Banks braided-water waits on the author-masks-first flow your handoff correctly demands.
+
+## THE GRIT LAW (owner art-direction ruling, 2026-07-14 — verbatim): "the style does not yet reflect the mood/theme of the world when the player plays these maps. It has to be more grungy, frontier style, hard, desperate, brutal and rough - the player is fighting for their life not on a holiday."
+THE NAMED FAILURE: **the holiday read** — smooth clay surfaces, pastel water, clean untouched ground. The composition of the five terrains is ACCEPTED; the MATERIAL LANGUAGE must be rebuilt to the game's own engraved-hardship style.
+
+### The texture bible (bake FROM these, exactly as the town buildings baked from their paintings)
+- `assets/processed/` terrain tiles (the shipped painted bank/river/gulch art) — scratchy engraved hatching, stained sepia earth, grit and grain in every stroke.
+- The kit plates (kit-era-1/2) — value range and weathering: deep shadow pockets, sun-bleached bone-dry lights, NOTHING evenly lit.
+- The contract plates (plate-contract-*) — how each map's HARDSHIP reads as illustration.
+
+### The grunge vocabulary (per terrain, composed not sprinkled)
+Wheel-rut scars and drag marks · stained and salt-crusted earth · sun-bleached splintered timber · rockfall rubble and tailings that look DUMPED, not decorated · dead brush, burnt stumps · rope-worn posts · murky working water (engraved flow-lines, foam streaks, mud-fouled banks — never resort-blue/green) · old scorch and blast pockmarks near the fought-over ground · the ONE tended exception stays readable: crops/camp kept alive by effort (the contrast IS the story — hard land, stubborn care).
+- STILL LAW: warm never gory (no blood, no corpses; hardship not horror) · pictograms only · water/coordinates/masks agreement unchanged · same tri/material contract.
+
+### Acceptance gate (added to every terrain wave from now on)
+Each verdict board includes a MOOD A/B: the sculpted terrain at the gameplay camera NEXT TO the shipped painted tile of the same map — the 3D must read as the SAME WORLD, harder. A fresh unprimed critique answers one question first: "holiday or fight?" Anything reading holiday returns to the easel.

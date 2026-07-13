@@ -248,3 +248,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - **F-e2-coal** (owner: "pressure stays at zero, I dont understand") + **F-hillmine-banks** → fix-e2-fuel-and-banks (lane-d): boiler cold/hot states + coal teaching + sluice-bank placement shimmer.
 - **F-railcar-park** (owner: "stopped at the end and went kind of invisible") → fix-railcar-patrol-visibility (lane-a): patrol law + alive⇒visible law.
 - **SOL 3D-C WAVE 4 granted**: the real 3D railcar from the boss plate (three damage components, factory wires on delivery).
+
+- **THE GRIT LAW ruled** (owner 2026-07-14): terrain program material language = engraved hardship (bake from the painted tiles/kit plates; the 'holiday read' is the named failure; MOOD A/B joins every terrain gate). Composition of the five-terrain family ACCEPTED; atlas/material pass returns to Sol 3D-D.
