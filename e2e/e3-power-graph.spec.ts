@@ -1,8 +1,9 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 
-const ARTIFACT_DIR = 'artifacts/e3-power';
-const DEV_QUERY = '?debug&power=dev&nowaves&nolevel&nopause&seed=e3-power-dev';
+const ARTIFACT_DIR = 'artifacts/e3-power-graph';
+const DEV_QUERY = '?debug&powergraph&nowaves&nolevel&nopause&seed=e3-power-dev';
+const TRUNK_WIRE_ID = 'relay-east--relay-west';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 
@@ -55,6 +56,7 @@ test('flag-off boot has zero power graph work', async ({ page }) => {
     totalDemandWatts: 0,
     render: { active: false, spans: 0, drawCalls: 0 },
   });
+  await expect(page.getByTestId('hud-power')).toBeHidden();
   await clean(errors);
 });
 
@@ -93,6 +95,10 @@ test('dev graph solves producer, pylons, consumers, and brown-out branch', async
     'relay-west': 'powered',
   });
   expect(snapshot.power.nodes.find((node) => node.id === 'consumer-beta')).toMatchObject({ allocatedWatts: 2, allocationRatio: 0.5 });
+  expect(snapshot.power.components.map(({ supplyWatts, demandWatts, state, shedOrder }) => ({ supplyWatts, demandWatts, state, shedOrder }))).toEqual([
+    { supplyWatts: 5, demandWatts: 7, state: 'brown', shedOrder: ['consumer-beta', 'consumer-alpha'] },
+    { supplyWatts: 0, demandWatts: 6, state: 'dark', shedOrder: ['consumer-gamma'] },
+  ]);
   expect(snapshot.power.events.map((event) => `${event.nodeId}:${event.from ?? 'new'}>${event.to}`)).toEqual([
     'consumer-alpha:new>powered',
     'consumer-beta:new>browned-out',
@@ -101,7 +107,32 @@ test('dev graph solves producer, pylons, consumers, and brown-out branch', async
     'relay-east:new>powered',
     'relay-west:new>powered',
   ]);
+  await expect(page.getByTestId('hud-power')).toContainText('5/13W · 0L 1B 1D');
   await shot(page, testInfo, 'dev-catenary');
+  await clean(errors);
+});
+
+test('cut and repair recompute the component ledger on fixed ticks', async ({ page }) => {
+  const errors = await openGame(page, DEV_QUERY);
+  const table = await page.evaluate(({ wireId }) => {
+    const harness = window.__GR_TEST__!;
+    harness.setManualSim(true);
+    const read = () => window.__THREE_GAME_DIAGNOSTICS__!.power.components.map(({ supplyWatts, demandWatts, state }) => ({ supplyWatts, demandWatts, state }));
+    const rows = [{ phase: 'seed', components: read() }];
+    harness.queuePowerGraphCommand({ type: 'set-wire-state', wireId, state: 'cut' });
+    harness.advanceSim(1 / 30);
+    rows.push({ phase: 'cut', components: read() });
+    harness.queuePowerGraphCommand({ type: 'set-wire-state', wireId, state: 'intact' });
+    harness.advanceSim(1 / 30);
+    rows.push({ phase: 'repair', components: read() });
+    return rows;
+  }, { wireId: TRUNK_WIRE_ID });
+
+  expect(table).toEqual([
+    { phase: 'seed', components: [{ supplyWatts: 5, demandWatts: 7, state: 'brown' }, { supplyWatts: 0, demandWatts: 6, state: 'dark' }] },
+    { phase: 'cut', components: [{ supplyWatts: 5, demandWatts: 3, state: 'lit' }, { supplyWatts: 0, demandWatts: 4, state: 'dark' }, { supplyWatts: 0, demandWatts: 6, state: 'dark' }] },
+    { phase: 'repair', components: [{ supplyWatts: 5, demandWatts: 7, state: 'brown' }, { supplyWatts: 0, demandWatts: 6, state: 'dark' }] },
+  ]);
   await clean(errors);
 });
 

@@ -1,5 +1,6 @@
 export type PowerNodeKind = 'producer' | 'relay' | 'consumer';
 export type PowerNodeState = 'powered' | 'browned-out' | 'dark';
+export type PowerComponentState = 'lit' | 'brown' | 'dark';
 export type PowerWireState = 'intact' | 'cut';
 
 type PowerNodeBase = {
@@ -71,6 +72,8 @@ export type PowerComponentSnapshot = Readonly<{
   supplyWatts: number;
   demandWatts: number;
   unusedWatts: number;
+  state: PowerComponentState;
+  shedOrder: readonly string[];
 }>;
 
 export type PowerGridSnapshot = Readonly<{
@@ -476,7 +479,21 @@ function solveDefinition(
     const nodeIds = collectComponent(node.id, adjacency, componentByNode, id);
     const supplyWatts = sum(nodeIds, (nodeId) => nodeOutput(nodeById.get(nodeId)!));
     const demandWatts = sum(nodeIds, (nodeId) => nodeDemand(nodeById.get(nodeId)!));
-    components.push(Object.freeze({ id, nodeIds: Object.freeze(nodeIds), supplyWatts, demandWatts, unusedWatts: 0 }));
+    components.push(Object.freeze({
+      id,
+      nodeIds: Object.freeze(nodeIds),
+      supplyWatts,
+      demandWatts,
+      unusedWatts: 0,
+      state: componentState(supplyWatts, demandWatts),
+      shedOrder: Object.freeze(
+        nodeIds
+          .map((nodeId) => nodeById.get(nodeId)!)
+          .filter((entry): entry is Extract<PowerNodeInput, { kind: 'consumer' }> => entry.kind === 'consumer')
+          .sort((left, right) => right.priority - left.priority || asciiCompare(left.id, right.id))
+          .map((entry) => entry.id),
+      ),
+    }));
   }
 
   const stateByNode = new Map<string, PowerNodeState>();
@@ -744,6 +761,11 @@ function nodeOutput(node: PowerNodeInput): number {
 
 function nodeDemand(node: PowerNodeInput): number {
   return node.kind === 'consumer' ? node.drawWatts : 0;
+}
+
+function componentState(supplyWatts: number, demandWatts: number): PowerComponentState {
+  if (supplyWatts <= 0) return 'dark';
+  return demandWatts <= supplyWatts ? 'lit' : 'brown';
 }
 
 function rejection(code: PowerGraphValidationCode): PowerGraphValidationResult {
