@@ -32,3 +32,9 @@ Surface detail AND town decoration per the owner's direct ask, all baked into th
 - PLACEMENT LAWS: building pads stay FLAT and CLEAR (nothing on them, nothing overhanging them); walk loops + approach paths stay clear and ≤0.05 relief (decor lives between the paths — the cast must never visually clip a barrel); the plaza CENTER ring stays open (it is the town's stage).
 - Deliver the same way: READY-FOR-GATES + tip; the attended session gates (tri/material/re-export + pad-flatness + loop-clearance) and merges.
 NOTE: the wire seam is FACTORY-SIDE (tasks/wire-town-plate.md) — you never need src/ access; keep modeling.
+
+## WAVE 2 — ACCEPTED + MERGED (attended, 2026-07-13)
+Tip f2d9a8d8 merged. 17,596 tris / 30k · flat-walk 0.037 · clearance 3.68 · pads clear · byte-identical. Owner-visible in-game via the factory wire (mounted, gated 18/18, deployed).
+**F-3DC-1 (territory)**: wave 2 also replaced `assets/pilots/plaza-props-3d/pan_monument.*` — EXCLUDED files (the props pilot owns them). The factory's shipped monument was KEPT; your version stayed in your branch. No harm done — but keep to the granted paths; if you believe a shared asset needs replacing, write it as a FINDING and the attended session arbitrates.
+**Your tavern finding is accepted**: the dark side planes on the Tavern model (full-wrap repair) — logged for session 3D-A / the factory. Good catch, correctly reported not fixed.
+## WAVE 3 — awaiting owner direction (candidates: micro-detail pass; or STOP here — the plate may be done)
