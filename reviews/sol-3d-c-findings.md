@@ -1,12 +1,44 @@
 # SOL 3D-C — Town plate pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`
 
-Tip: exact Wave 2 SHA is reported in the attended handoff
+Tip: exact Wave 3 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — Wave 2 decoration complete; stable runtime interface preserved.**
+Verdict: **READY-FOR-GATES — Wave 3 Tavern full-wrap repair complete; stable runtime interface preserved.**
+
+## Wave 3 — Tavern full-wrap repair
+
+### Delivered
+
+- Replaced the production `town-v3-tavern.glb` in place with the owner-approved full-wrap Tavern shell; no loader or gameplay source changed.
+- Preserved the former asset's exact base-centered bounds (`4.229571w x 3.960802h x 3.349d`) so the existing slot, frontage direction, footprint, interaction, and approach remain unchanged.
+- Added a deterministic repair builder, a GLB contract verifier, and a render script for locked-camera and four-angle evidence.
+- Added the authoritative actual-game TS-04 A/B, a focused parcel A/B, and front-left/front-right/back-left/back-right turntable evidence.
+
+### Gate evidence
+
+| Check | Evidence | Result |
+| --- | --- | --- |
+| Geometry budget | production Tavern GLB | 10,864 triangles; pass under 15,000 |
+| Baked surface | production Tavern GLB | 1 mesh, 1 primitive, 1 material, 1 embedded 1024 x 1024 PNG |
+| Export hygiene | production Tavern GLB | 0 cameras, 0 lights, 0 animations |
+| Footprint and silhouette envelope | parsed production bounds | exact former size `4.229571 x 3.960802 x 3.349`; grounded and base-centered |
+| Determinism | checked versus recipe re-export | byte-identical SHA-256 `1b9352953504de446414c4554368191d93318cf2c20fd13cff4f5ac791039523` |
+| App build | candidate GLB on latest observed main `57c9705d` | `npm run build` pass |
+| Tavern seam | unmodified spec, desktop and mobile | 6/6 pass; exact bounds, prompt, Board, LITE/load-failure fallbacks, and disposal preserved |
+| Frame-time ceiling | desktop/mobile Tavern spec | p95 `0%` / `+2.04%`; pass under 15% |
+| Locked-camera localization | actual-game TS-04 A/B | `0.515%` of pixels differ above 32 grayscale; luminance `+0.015`; edge energy `+0.853%` |
+| Visual QA | authoritative game A/B plus four-angle sheet | SHIP; frontage aligned, full exterior coverage, no gameplay-scale blocker |
+
+### F-3DC-09 — Full-wrap repair closes the Tavern dark-plane finding
+
+**Severity:** resolved high
+
+**Evidence:** the former production GLB exposed unpainted dark side planes in the top-right parcel. The repaired production file uses the previously owner-approved warm frontier-saloon shell, now conformed to the exact former production envelope. The in-game A/B preserves frontage and anchor while replacing every void face with authored siding, windows, trim, roof, porch, and rear treatment. The four-angle turntable shows complete coverage.
+
+**Decision:** close F-3DC-06 at the building-owned interface. Keep the Town plate workyard separate and leave the production GLB path unchanged.
 
 ## Wave 2 — detail and decoration
 
@@ -144,3 +176,11 @@ The pilot intentionally contains no runtime mount. The permanent painted ground 
 - LANE-TOUCHED: the existing Town plate asset/artifact paths, the independent Pan Monument build and binary at its existing plaza-prop path, and this findings file.
 - MAIN-MOVED-ONLY: unrelated handoff/coordination work; none of `townLayout.ts`, `TownScene.ts`, the Dynamo manifest, the Wave 2 queue, or the Town recipe changed between the branch base and observed main.
 - Expected integration: path-scoped merge of the listed asset and evidence files; no runtime source or queue/spec edit is part of this branch.
+
+## Wave 3 merge classification
+
+- Branch base: `1281a8f1`.
+- Main observed during final review: `57c9705d`; it advanced after the branch was cut.
+- LANE-TOUCHED: the production Tavern `.blend`/GLB, new Tavern-local builder/verifier/render evidence, and this findings file.
+- MAIN-MOVED-ONLY: `TownScene.ts` changed to suppress duplicate primitive props when the independent props pilot mounts. The Tavern production path, Tavern loader/spec, Wave 3 queue, and Town recipe are unchanged, and the final 6/6 Tavern gate passed with the candidate GLB on `57c9705d`.
+- Expected integration: path-scoped replacement/add under `assets/pilots/tavern-3d/` plus this findings file; no runtime source or conflict resolution is required.
