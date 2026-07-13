@@ -228,6 +228,7 @@ export class SpriteAnimator {
   private walkFrameIndex = 0;
   private walkFrameElapsed = 0;
   private walkCadenceSpeed: number | undefined;
+  private walkGroundSpeed: number | undefined;
 
   constructor(
     private readonly slotId: AssetSlotId,
@@ -281,9 +282,17 @@ export class SpriteAnimator {
     return this.currentMotion();
   }
 
-  update(delta: number, requestedClip: CharacterSpriteClip, orientation = 'side', mirrored = false, walkCadenceSpeed?: number): void {
+  update(
+    delta: number,
+    requestedClip: CharacterSpriteClip,
+    orientation = 'side',
+    mirrored = false,
+    walkCadenceSpeed?: number,
+    walkGroundSpeed?: number,
+  ): void {
     this.syncTestClip();
     this.walkCadenceSpeed = Number.isFinite(walkCadenceSpeed) ? Math.max(0, Number(walkCadenceSpeed)) : undefined;
+    this.walkGroundSpeed = Number.isFinite(walkGroundSpeed) ? Math.max(0, Number(walkGroundSpeed)) : undefined;
     this.updateFade(delta);
     if (this.frameBlendHoldoff > 0) this.frameBlendHoldoff = Math.max(0, this.frameBlendHoldoff - delta);
     const next = this.pickClip(requestedClip, orientation);
@@ -356,6 +365,7 @@ export class SpriteAnimator {
     this.walkFrameIndex = 0;
     this.walkFrameElapsed = 0;
     this.walkCadenceSpeed = undefined;
+    this.walkGroundSpeed = undefined;
     this.currentFrame = null;
     this.currentDirection = undefined;
     this.currentMirrored = false;
@@ -557,15 +567,21 @@ export class SpriteAnimator {
 
   private effectiveFps(clip: RuntimeClip, clipName: CharacterSpriteClip): number {
     const walkFps = Number(Balance.anim.walkFps);
-    if (!this.overrideClip && clipName === 'walk' && walkFps > 0) return this.walkFpsForSlot(walkFps) * cadenceFrameScale(clip);
+    if (!this.overrideClip && this.usesGaitCadence(clipName) && walkFps > 0) {
+      return this.walkFpsForSlot(walkFps, clipName) * cadenceFrameScale(clip);
+    }
     return clip.fps;
   }
 
-  private walkFpsForSlot(fallback: number): number {
+  private walkFpsForSlot(fallback: number, clipName: CharacterSpriteClip): number {
     const speed = this.walkSpeedForSlot();
     const fpsPerSpeed = this.walkFpsPerSpeed();
-    if (speed <= 0 || fpsPerSpeed <= 0) return this.walkCadenceSpeed === undefined ? fallback : 0;
-    return Math.max(Number(Balance.anim.walkMinFps) || 0, speed * fpsPerSpeed);
+    const minimum = Number(Balance.anim.walkMinFps) || 0;
+    if (speed <= 0 || fpsPerSpeed <= 0) {
+      if (this.walkCadenceSpeed === undefined) return fallback;
+      return clipName === 'grab' ? minimum : 0;
+    }
+    return Math.max(minimum, speed * fpsPerSpeed);
   }
 
   private frameBlendHoldoffFps(clip: RuntimeClip, clipName: CharacterSpriteClip): number {
@@ -578,6 +594,10 @@ export class SpriteAnimator {
     return Number(Balance.anim.walkFpsPerSpeed) || 0;
   }
 
+  private usesGaitCadence(clipName: CharacterSpriteClip): boolean {
+    return isGaitClip(clipName) && !(this.slotId === assetSlots.charBaron && clipName !== 'walk');
+  }
+
   private walkSpeedForSlot(): number {
     if (this.walkCadenceSpeed !== undefined) return this.walkCadenceSpeed;
     if (this.slotId === assetSlots.charHero) return Balance.hero.speed;
@@ -586,7 +606,7 @@ export class SpriteAnimator {
   }
 
   private strideUnitsPerCycle(clip: RuntimeClip): number {
-    const speed = this.walkSpeedForSlot();
+    const speed = this.walkGroundSpeed ?? this.walkSpeedForSlot();
     const fps = this.effectiveFps(clip, this.clipName);
     return speed > 0 && fps > 0 && clip.frames.length > 0 ? speed / (fps / clip.frames.length) : 0;
   }
@@ -937,8 +957,12 @@ function rotationDirectionFor(runtime: RuntimeSlot, orientation: string): Rotati
 }
 
 function cadenceFrameScale(clip: RuntimeClip): number {
-  const reference = clip.cadenceReferenceFrames;
-  return reference && reference > 0 ? clip.frames.length / reference : 1;
+  const reference = clip.cadenceReferenceFrames ?? 4;
+  return reference > 0 ? clip.frames.length / reference : 1;
+}
+
+function isGaitClip(clip: CharacterSpriteClip): boolean {
+  return clip === 'walk' || clip === 'grab' || clip === 'flee';
 }
 
 async function createRuntimeOrientation(

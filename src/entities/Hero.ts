@@ -29,6 +29,7 @@ export class Hero {
   private hasFacingAngle = false;
   private maxHpBonus = 0;
   private moveSpeedMult = 1;
+  private readonly runGait: boolean;
   private attackPoseRemaining = 0;
   private readonly targetVelocity = new THREE.Vector3();
   private readonly nextPosition = new THREE.Vector3();
@@ -63,7 +64,8 @@ export class Hero {
     metalness: 0.05,
   });
 
-  constructor(visualScale = 1) {
+  constructor(private readonly visualScale = 1) {
+    this.runGait = visualScale !== 1;
     this.group.name = 'HomesteaderHero';
     this.interpolationGroup.name = 'HomesteaderHeroInterpolation';
     this.visualGroup.name = 'HomesteaderHeroVisuals';
@@ -177,8 +179,11 @@ export class Hero {
     const moving = speedSq > 0.0025 || intentSpeedSq > 0.0025;
     const heading = intentSpeedSq > 0.0025 ? this.targetVelocity : this.velocity;
     const direction = moving ? this.orientationResolver.resolve(...this.smoothedHeadingVector(dt, heading)) : this.orientationResolver.idleDirection();
-    const clip = this.attackPoseRemaining > 0 ? 'attack' : panning ? 'pan' : moving ? 'walk' : 'idle';
-    this.spriteAnimator.update(dt, clip, this.attackPoseRemaining > 0 ? this.attackDirection : direction, false, actualSpeed);
+    const clip = this.attackPoseRemaining > 0 ? 'attack' : panning ? 'pan' : actualSpeed > 0.01 ? 'walk' : 'idle';
+    const gaitSpeed = this.runGait
+      ? actualSpeed * 4 / (Balance.anim.strideUnits * this.visualScale * Balance.anim.walkFpsPerSpeed)
+      : actualSpeed;
+    this.spriteAnimator.update(dt, clip, this.attackPoseRemaining > 0 ? this.attackDirection : direction, false, gaitSpeed, actualSpeed);
     this.applyProceduralMotion();
   }
 
