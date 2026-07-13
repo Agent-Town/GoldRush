@@ -210,5 +210,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - ~~cast-review-room~~ RETIRED same-day by owner ("I don't need it in game - if I can see the sheets that is ok") → replaced by scripts/cast-sheets.sh (static gallery, logs/cast-sheets.html). Queue copy dequeued unrun.
 
 - **fix-walk-cutout-pockets** → lane-b 2026-07-13 — owner gallery pass: opaque cream wedges in enclosed sprite gaps (hero walk8 + LEDGER #33 caveat class); full audit → bounded pocket clears, raws untouched.
-- **run-cast-scale-up** → lane-c 2026-07-13 — OWNER ORDER: run-scene characters ×1.5 visual scale, boss excluded; rendering-only law; bars/anchors track; perf budgets hold.
+- **run-cast-scale-up** ✅ SHIPPED `96d49eb4` (s457, recovered dead-s456 re-land) — run-scene cast ×1.5, boss/railcar excluded; render-only; own spec PASS both projects, tsc+build green; adjacent vp-02/e2-enemies reds fingerprint-matched to PRE-EXISTING main (F-2 corrective owed). review `reviews/run-cast-scale-up.md`.
 - **run-gait-stride** → lane-c #2 2026-07-13 (behind run-cast-scale-up, same lane by design) — owner: "their feet move so fast... many steps to get somewhere" — gait law: cycle speed = ground speed / (stride × visualScale); hero+enemies; baron/prospector/town excluded.
