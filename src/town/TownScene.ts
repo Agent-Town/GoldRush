@@ -879,6 +879,9 @@ export class TownScene {
     if (id && !launch.disabled) {
       if (!this.confirmFreshContractLaunch(id)) return;
       clearRunSuspend();
+      const search = new URLSearchParams(window.location.search);
+      launch.dataset.contractMode ? search.set('mode', launch.dataset.contractMode) : search.delete('mode');
+      history.replaceState(null, '', `${window.location.pathname}?${search.toString()}${window.location.hash}`);
       this.options.onLaunchContract?.(id);
     }
   };
@@ -1534,7 +1537,7 @@ export class TownScene {
           ${firstClaimHint ? '<p class="town-ui__first-claim-tooltip" data-testid="first-claim-launch-tooltip">Stake your first claim</p>' : ''}
           <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
             contract.id,
-          )}" ${firstClaimHint ? 'data-first-claim-launch="true" title="Stake your first claim"' : ''} ${unlock.unlocked ? '' : 'disabled'}>
+          )}" data-contract-mode="${escapeHtml(contract.modes?.[0]?.id ?? '')}" ${firstClaimHint ? 'data-first-claim-launch="true" title="Stake your first claim"' : ''} ${unlock.unlocked ? '' : 'disabled'}>
             ${escapeHtml(unlock.unlocked ? 'Launch' : unlock.condition)}
           </button>
         </div>
@@ -2172,6 +2175,12 @@ function contractUnlock(contract: ContractManifest): { unlocked: boolean; condit
   }
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
+  }
+  if (unlock === 'secured:e2-hill-mine') {
+    return {
+      unlocked: scores.some((score) => contractIdOf(score) === 'e2-hill-mine' && score.secured === true),
+      condition: 'Secure The Hill Mine first',
+    };
   }
   if (unlock === STEAMWORKS_EPOCH_ID) {
     return { unlocked: epochIsActive(STEAMWORKS_EPOCH_ID), condition: 'Awaits the Steamworks era' };
