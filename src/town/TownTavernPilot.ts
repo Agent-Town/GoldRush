@@ -6,6 +6,7 @@ import { townBuildings, townPlazaSlot, townPropRing } from './townLayout';
 const TAVERN_MODEL_URL = new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href;
 const GENERAL_STORE_MODEL_URL = new URL('../../assets/pilots/general-store-3d/general-store.glb', import.meta.url).href;
 const CLAIM_OFFICE_MODEL_URL = new URL('../../assets/pilots/claim-office-3d/claim-office.glb', import.meta.url).href;
+const ASSAY_OFFICE_MODEL_URL = new URL('../../assets/pilots/assay-office-3d/assay-office.glb', import.meta.url).href;
 const CHAPEL_MODEL_URL = new URL('../../assets/pilots/chapel-3d/chapel.glb', import.meta.url).href;
 const SCHOOLHOUSE_MODEL_URL = new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href;
 const STAMP_MILL_MODEL_URL = new URL('../../assets/pilots/stamp-mill-3d/stamp-mill.glb', import.meta.url).href;
@@ -38,7 +39,7 @@ function publish(
     .join('x');
 }
 
-function inspect(model: THREE.Object3D): {
+function inspect(model: THREE.Object3D, runtimeEmissive = true): {
   meshes: number;
   triangles: number;
   materials: number;
@@ -67,8 +68,10 @@ function inspect(model: THREE.Object3D): {
       if (material instanceof THREE.MeshStandardMaterial) {
         material.roughness = Math.max(material.roughness, 0.82);
         material.metalness = 0;
-        material.emissive.set(0x4a2a17);
-        material.emissiveIntensity = Math.max(material.emissiveIntensity, 0.2);
+        if (runtimeEmissive) {
+          material.emissive.set(0x4a2a17);
+          material.emissiveIntensity = Math.max(material.emissiveIntensity, 0.2);
+        }
       }
     }
   });
@@ -90,7 +93,7 @@ function inspect(model: THREE.Object3D): {
 
 function installTownBuildingPilot(
   { scene, canvas }: Host,
-  id: 'tavern' | 'general_store' | 'claim_office' | 'chapel' | 'schoolhouse' | 'stamp-mill',
+  id: 'tavern' | 'general_store' | 'claim_office' | 'assay_office' | 'chapel' | 'schoolhouse' | 'stamp-mill',
   modelUrl: string,
   modelName: string,
 ): () => void {
@@ -106,7 +109,7 @@ function installTownBuildingPilot(
     modelUrl,
     (gltf) => {
       const loaded = gltf.scene;
-      const metrics = inspect(loaded);
+      const metrics = inspect(loaded, id !== 'assay_office');
       const valid =
         metrics.triangles <= MAX_TRIANGLES &&
         metrics.materials <= MAX_MATERIALS &&
@@ -125,6 +128,7 @@ function installTownBuildingPilot(
       loaded.rotation.y = Math.atan2(slot.approach.x - slot.position.x, slot.approach.z - slot.position.z);
       model = loaded;
       scene.add(model);
+      canvas.dataset.town3dPilotLoadedIds = [...new Set([...(canvas.dataset.town3dPilotLoadedIds ?? '').split(',').filter(Boolean), id])].join(',');
       if (shell) shell.visible = false;
       publish(canvas, 'loaded', 'glb', metrics);
     },
@@ -141,6 +145,7 @@ function installTownBuildingPilot(
     scene.remove(model);
     disposeObject3D(model);
     model = undefined;
+    canvas.dataset.town3dPilotLoadedIds = (canvas.dataset.town3dPilotLoadedIds ?? '').split(',').filter((entry) => entry && entry !== id).join(',');
   };
 }
 
@@ -186,6 +191,10 @@ export function installTownGeneralStorePilot(host: Host): () => void {
 
 export function installTownClaimOfficePilot(host: Host): () => void {
   return installTownBuildingPilot(host, 'claim_office', CLAIM_OFFICE_MODEL_URL, 'TownClaimOfficePilot');
+}
+
+export function installTownAssayOfficePilot(host: Host): () => void {
+  return installTownBuildingPilot(host, 'assay_office', ASSAY_OFFICE_MODEL_URL, 'TownAssayOfficePilot');
 }
 
 export function installTownChapelPilot(host: Host): () => void {
