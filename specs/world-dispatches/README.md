@@ -12,6 +12,9 @@ World-state backstory REVEALS THROUGH PROGRESS — milestones unlock dispatches;
 ## Voice & canon laws
 Ledger voice, warm, never grim-dark (canon §9); the Fevered are victims; the Baron is the author of the madness; the town's tone is stubborn hope, not dread. Every dispatch cites its era in the lore wiki when authored (content lands in lore/world-dispatches.md as the single source, entries reference it).
 
+## The content engine (Mutation Law, owner 2026-07-13)
+Each era's dispatches REPORT THE CURRENT MUTATION: what the Fever learned to want out in the world ("They say the coast fever changed after the rail came through — now it strips engines, not lockboxes."), how far it spread, and the one warm counter-note (someone, somewhere, holding out). Ceremony postscripts (vehicle 3) may hint the NEXT mutation the moment the town invents: "The whistle carries down the valley. Somewhere, something acquires a taste for steam."
+
 ## Slices (after owner nod; all fire-authorable from this spec + lore)
 WD-01 the dispatch content table E1-E3 (lore file, owner-reviewable text, no code) → WD-02 Mei's progress-gated bark pool → WD-03 ledger "World Outside" entries (rides era-chapters) → WD-04 ceremony postscripts → WD-05+ content tables E4+ authored era-by-era with the bundles.
 
