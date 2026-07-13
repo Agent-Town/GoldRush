@@ -10,19 +10,169 @@
         "id": "Grid Craft",
         "label": "current economy",
         "iconKey": "ui.upgrade.icon.firerate",
-        "nodes": []
+        "nodes": [
+          {
+            "id": "line_survey",
+            "name": "Line Survey",
+            "description": "Mark safe H-frame routes before the Canyon Works takes current.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the pylon-span family.",
+            "effectRef": "voltage.line_survey",
+            "cost": 1
+          },
+          {
+            "id": "looped_grid",
+            "name": "Looped Grid",
+            "description": "Close a second path so one cut line does not darken the whole claim.",
+            "iconKey": "ui.upgrade.icon.beacon",
+            "effect": "Banks the looped-pylon tier.",
+            "effectRef": "voltage.looped_grid",
+            "cost": 1,
+            "requires": ["line_survey"]
+          },
+          {
+            "id": "lamp_districts",
+            "name": "Lamp Districts",
+            "description": "Number each pool of warm light against the night ledger.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the arc-lamp family.",
+            "effectRef": "voltage.lamp_districts",
+            "cost": 1,
+            "requires": ["line_survey"]
+          },
+          {
+            "id": "brownout_ledger",
+            "name": "Brown-Out Ledger",
+            "description": "Write what stays lit, what stays armed, and what waits for current.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the brown-out ledger family.",
+            "effectRef": "voltage.brownout_ledger",
+            "cost": 1,
+            "requires": ["looped_grid", "lamp_districts"]
+          },
+          {
+            "id": "rimline_conductors",
+            "name": "Rimline Conductors",
+            "description": "Carry the town line across the gorge without surrendering the rims.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the long pylon-span tier.",
+            "effectRef": "voltage.rimline_conductors",
+            "cost": 1,
+            "requires": ["brownout_ledger"]
+          }
+        ]
       },
       {
         "id": "Arsenal",
         "label": "voltage arsenal",
         "iconKey": "bld.sentry_beacon",
-        "nodes": []
+        "nodes": [
+          {
+            "id": "arc_caster",
+            "name": "Arc Caster",
+            "description": "Wind the Spark Rig lineage for drawn-lightning pressure.",
+            "iconKey": "ui.upgrade.icon.volley",
+            "effect": "Banks the arc-caster arsenal family.",
+            "effectRef": "voltage.arc_caster",
+            "cost": 1
+          },
+          {
+            "id": "quickened_contacts",
+            "name": "Quickened Contacts",
+            "description": "File clean contacts so the familiar rigs lose no cadence.",
+            "iconKey": "ui.upgrade.icon.firerate",
+            "effect": "Banks the Voltage fire-rate tier.",
+            "effectRef": "voltage.quickened_contacts",
+            "cost": 1,
+            "requires": ["arc_caster"]
+          },
+          {
+            "id": "arc_turret",
+            "name": "Arc Turret",
+            "description": "Trade the pony boiler for a capacitor stack without changing the tripod.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the arc-turret building tier.",
+            "effectRef": "voltage.arc_turret",
+            "cost": 1,
+            "requires": ["arc_caster"]
+          },
+          {
+            "id": "coil_fence",
+            "name": "Coil Fence",
+            "description": "Cap the iron wall with one guarded copper run.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the coil-fence building tier.",
+            "effectRef": "voltage.coil_fence",
+            "cost": 1,
+            "requires": ["arc_turret"]
+          },
+          {
+            "id": "drain_mast_science",
+            "name": "Drain-Mast Science",
+            "description": "A future Crawler medal will release the captured mast diagrams.",
+            "iconKey": "ui.upgrade.icon.blast",
+            "effect": "Banks the Crawler drain-mast science behind the reserved crawlerDrainMastCaptured medal flag.",
+            "effectRef": "voltage.drain_mast_science",
+            "cost": 1,
+            "requires": ["quickened_contacts", "coil_fence"]
+          }
+        ]
       },
       {
         "id": "Fabrication",
         "label": "crafting & agent",
         "iconKey": "char.prospector_agent.portrait",
-        "nodes": []
+        "nodes": [
+          {
+            "id": "copper_parts",
+            "name": "Copper Parts",
+            "description": "Assay coils, contacts, and ceramic insulators as typed parts.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the Voltage fabrication vocabulary.",
+            "effectRef": "voltage.copper_parts",
+            "cost": 1
+          },
+          {
+            "id": "capacitor_crate",
+            "name": "Capacitor Crate",
+            "description": "Pack stored current behind a receipt and a stout carrying frame.",
+            "iconKey": "ui.e2.iron_card",
+            "effect": "Banks the capacitor-crate family.",
+            "effectRef": "voltage.capacitor_crate",
+            "cost": 1,
+            "requires": ["copper_parts"]
+          },
+          {
+            "id": "tram_receipts",
+            "name": "Tram Receipts",
+            "description": "Keep every hauled crate tied to its rail and power receipt.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the powered-tram family.",
+            "effectRef": "voltage.tram_receipts",
+            "cost": 1,
+            "requires": ["copper_parts"]
+          },
+          {
+            "id": "exchange_patterns",
+            "name": "Exchange Patterns",
+            "description": "Patch six town lines without confusing one receipt for another.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the Exchange Annex pattern tier.",
+            "effectRef": "voltage.exchange_patterns",
+            "cost": 1,
+            "requires": ["capacitor_crate"]
+          },
+          {
+            "id": "canyon_dispatch",
+            "name": "Canyon Dispatch",
+            "description": "Join tram receipts and exchange patterns into one town route book.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the Canyon Works tram-dispatch tier.",
+            "effectRef": "voltage.canyon_dispatch",
+            "cost": 1,
+            "requires": ["tram_receipts", "exchange_patterns"]
+          }
+        ]
       }
     ]
   },
