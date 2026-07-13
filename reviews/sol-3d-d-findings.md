@@ -175,6 +175,12 @@ Dry Gulch now has its own render-only terrain build rather than borrowing the Cl
 
 The Dry Gulch GLB independently passes the same recipe ceiling: one mesh, one material, 32,768 triangles, one 2048² texture, zero cameras, and zero lights. The pond and all landmarks are render helpers removed before export; runtime water remains the spring circle from the contract.
 
+### Sequential loop checkpoint 3 — Twin Banks
+
+`artifacts/map-rebuild-spike/twin-banks-topology-verdict.png` renders every distinction the current descriptor can honestly own: the wider `7.8` half-width water strip, west and east fords, both gravel bars, north and south stake markers, and damp-bank reeds. These elements make the contract's two-front play readable, but the overview also proves the limitation: they remain features inside one rectangular channel and do not form a braided river.
+
+No Twin Banks GLB was created. Duplicating the Claim terrain and baking fake side channels into its color or height would make the render disagree with water sampling, opponent routing, and building placement. Twin Banks therefore stops at an owner-reviewable render/capability gate until an authored water-mask or versioned multi-channel descriptor exists. The state renderer reuses the approved Claim terrain file and creates only temporary descriptor-owned water and dressing geometry.
+
 ## Recommendation
 
 Use this revision to approve the **relief grammar**, not the Claim landmark kit. The next visual comparison should keep the same terrain and camera while replacing the desert landmarks with the living working-claim kit. The desert composition should become the reference for a dedicated Dry Gulch rebuild. Any permanent landmark must still follow editor- or manifest-authored water, fixture, build, and spawn truth before Blender production work begins.
