@@ -29,7 +29,9 @@ import {
   loadContract,
   listEpochs,
   loadEpoch,
+  pendingEpochContracts,
   type ContractManifest,
+  type EpochUpcomingContract,
 } from '../meta/ContractFamilies';
 import {
   ensureMegaprojectProject,
@@ -1383,8 +1385,16 @@ export class TownScene {
   }
 
   private renderBoard(): void {
-    const rows = listBoardContracts();
-    for (const contract of rows) discoverLedgerContract(contract.id);
+    const contracts = listBoardContracts();
+    const activeEpoch = loadEpoch(activeEpochId());
+    const rows: Array<ContractManifest | EpochUpcomingContract | { id: string; name: string; line: string; successor: true }> = [
+      ...contracts,
+      ...pendingEpochContracts(activeEpoch, contracts),
+      ...(activeEpoch.upcoming.length > 0 && activeEpoch.successor
+        ? [{ id: activeEpoch.successor, name: loadEpoch(activeEpoch.successor).displayName, line: 'Awaits the town beyond the Dynamo.', successor: true as const }]
+        : []),
+    ];
+    for (const contract of contracts) discoverLedgerContract(contract.id);
     const scores = loadScores();
     const pageIndex = clampBoardPage(this.boardPageIndex, rows.length);
     this.boardPageIndex = pageIndex;
@@ -1410,20 +1420,26 @@ export class TownScene {
           <button class="town-ui__catalog-arrow town-ui__catalog-arrow--prev" type="button" data-contract-page-step="-1" data-testid="contract-page-prev" aria-label="Previous contract" ${
             pageIndex === 0 ? 'disabled' : ''
           }>&lsaquo;</button>
-          ${contract ? this.renderContractCard(contract, scores, pageIndex, rows.length) : ''}
+          ${
+            contract
+              ? 'boardRow' in contract
+                ? this.renderContractCard(contract, scores, pageIndex, rows.length)
+                : this.renderUpcomingContractCard(contract, pageIndex, rows.length)
+              : ''
+          }
           <button class="town-ui__catalog-arrow town-ui__catalog-arrow--next" type="button" data-contract-page-step="1" data-testid="contract-page-next" aria-label="Next contract" ${
             pageIndex >= rows.length - 1 ? 'disabled' : ''
           }>&rsaquo;</button>
         </div>
         <nav class="town-ui__catalog-nav" data-testid="contract-page-nav" aria-label="Contract pages">
-          <span class="town-ui__catalog-count" data-testid="contract-page-count">${pageIndex + 1} / ${rows.length}</span>
+          <span class="town-ui__catalog-count" data-testid="contract-page-count">${Math.min(pageIndex + 1, contracts.length)} / ${contracts.length}</span>
           <div class="town-ui__catalog-dots">
             ${rows
               .map(
                 (row, index) => `
                   <button class="town-ui__catalog-dot" type="button" data-contract-page="${index}" data-testid="contract-page-dot-${escapeHtml(
                     row.id,
-                  )}" aria-label="${escapeHtml(`Open ${row.boardRow.name}`)}" aria-current="${index === pageIndex ? 'page' : 'false'}"></button>
+                  )}" aria-label="${escapeHtml(`Open ${'boardRow' in row ? row.boardRow.name : row.name}`)}" aria-current="${index === pageIndex ? 'page' : 'false'}"></button>
                 `,
               )
               .join('')}
@@ -1436,9 +1452,30 @@ export class TownScene {
   }
 
   private selectBoardPage(index: number): void {
-    this.boardPageIndex = clampBoardPage(index, listBoardContracts().length);
+    this.boardPageIndex = index;
     this.renderBoard();
     this.board.querySelector<HTMLElement>('.town-ui__contract')?.focus({ preventScroll: true });
+  }
+
+  private renderUpcomingContractCard(
+    entry: EpochUpcomingContract | { id: string; name: string; line: string; successor: true },
+    pageIndex: number,
+    pageCount: number,
+  ): string {
+    const successor = 'successor' in entry;
+    return `
+      <article class="town-ui__contract town-ui__contract--locked" tabindex="-1" data-testid="${successor ? 'contract-next-epoch' : `contract-upcoming-${escapeHtml(entry.id)}`}" data-contract-id="${escapeHtml(entry.id)}" data-contract-locked="true" aria-label="${escapeHtml(`${entry.name}, page ${pageIndex + 1} of ${pageCount}`)}">
+        <div class="town-ui__contract-copy">
+          <div class="town-ui__contract-topline">
+            <span class="town-ui__contract-tag">${successor ? 'Next epoch' : 'Upcoming contract'}</span>
+            <span class="town-ui__contract-state">${successor ? 'Awaits the town' : 'Survey pending'}</span>
+          </div>
+          <h3>${escapeHtml(entry.name)}</h3>
+          <p class="town-ui__contract-flavor">${escapeHtml(entry.line)}</p>
+          <p class="town-ui__contract-lock">${successor ? 'The Voltage Age waits behind the Dynamo.' : 'SURVEY PENDING'}</p>
+        </div>
+      </article>
+    `;
   }
 
   private renderContractCard(contract: ContractManifest, scores: readonly ScoreRecord[], pageIndex: number, pageCount: number): string {
