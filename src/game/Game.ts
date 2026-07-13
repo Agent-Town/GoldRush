@@ -1239,6 +1239,7 @@ export class Game {
                 bossComponentId: enemy.bossComponentId ?? undefined,
                 bossComponentLabel: enemy.bossComponentLabel ?? undefined,
                 bossDegradeSpeedMult: enemy.bossDegradeSpeedMult,
+                presentation: this.enemies.railcarPresentation(enemy),
                 scale: enemy.visualScale,
                 hasBanner: enemy.hasBanner,
                 vx: enemy.velocityX,

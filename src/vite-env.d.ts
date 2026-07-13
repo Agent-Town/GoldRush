@@ -1047,6 +1047,7 @@ interface Window {
       bossComponentId?: string;
       bossComponentLabel?: string;
       bossDegradeSpeedMult: number;
+      presentation: { mesh: boolean; visible: boolean; railY: number };
       scale: number;
       hasBanner: boolean;
       spreadOffset: number;
