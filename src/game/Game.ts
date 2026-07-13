@@ -67,6 +67,7 @@ import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
+import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import type {
   AgentBuildingRef,
   AgentCollectGoldResult,
@@ -246,7 +247,7 @@ export class Game {
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
   private readonly events = new EventBus();
   private readonly input: InputController;
-  private readonly actors = [new Hero()];
+  private readonly actors = [new Hero(RUN_CAST_SCALE)];
   private mpClient?: LockstepClient;
   private mpHadParty = false;
   private mpTickThisFrame: number | null = null;
@@ -2060,7 +2061,7 @@ export class Game {
 
     let createdActor = false;
     while (this.actors.length < roster.length) {
-      const actor = new Hero();
+      const actor = new Hero(RUN_CAST_SCALE);
       actor.group.name = `MultiplayerHero-${this.actors.length}`;
       this.actors.push(actor);
       this.registerHeroShooters(actor);

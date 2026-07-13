@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
+import { RUN_CAST_SCALE } from './runCastScale';
 
 export type XpMoteSweepResult = {
   xp: number;
@@ -72,7 +73,7 @@ export class XpMotePool {
       this.values[i] = value;
       this.age[i] = 0;
       this.alive += 1;
-      motePosition.set(position.x, Terrain.visualY(position.x, position.z, 0.52), position.z);
+      motePosition.set(position.x, Terrain.visualY(position.x, position.z, 0.52 * RUN_CAST_SCALE), position.z);
       this.sync(i);
       this.mesh.instanceMatrix.needsUpdate = true;
       return true;
@@ -112,7 +113,7 @@ export class XpMotePool {
         position.x += (dx / distance) * speed * delta;
         position.z += (dz / distance) * speed * delta;
       }
-      position.y = Terrain.visualY(position.x, position.z, 0.52 + Math.sin((this.age[i] ?? 0) * 8) * 0.07);
+      position.y = Terrain.visualY(position.x, position.z, 0.52 * RUN_CAST_SCALE + Math.sin((this.age[i] ?? 0) * 8) * 0.07);
     }
     this.mesh.instanceMatrix.needsUpdate = true;
     return gained;
@@ -268,7 +269,7 @@ export class XpMotePool {
     if (!position) return;
     this.syncObject.position.copy(position);
     this.syncObject.rotation.set(0.8, (this.age[index] ?? 0) * 3, 0.4);
-    this.syncObject.scale.set(1, 1, 1);
+    this.syncObject.scale.setScalar(RUN_CAST_SCALE);
     this.syncObject.updateMatrix();
     this.mesh.setMatrixAt(index, this.syncObject.matrix);
   }

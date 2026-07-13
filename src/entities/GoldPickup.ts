@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { Balance } from '../game/Balance';
 import type { GoldHolding } from '../systems/TargetingSystem';
 import * as Terrain from '../world/Terrain';
+import { RUN_CAST_SCALE } from './runCastScale';
 
 export type GoldPickupSnapshot = {
   active: boolean;
@@ -21,7 +22,7 @@ export type GoldPickupCollectResult = {
   position: { x: number; z: number };
 };
 
-const pickupY = 0.42;
+const pickupY = 0.42 * RUN_CAST_SCALE;
 const collectRadiusSq = (Balance.hero.radius + 0.35) * (Balance.hero.radius + 0.35);
 
 export class GoldPickupPool {
@@ -344,7 +345,7 @@ export class GoldPickupPool {
     const scale = 0.84 + Math.min(1.2, (this.amounts[index] ?? 0) / Math.max(1, Balance.steal.grabAmount)) * 0.22;
     this.syncObject.position.copy(position);
     this.syncObject.rotation.set(0.45, (this.age[index] ?? 0) * 1.8, 0.2);
-    this.syncObject.scale.setScalar(scale);
+    this.syncObject.scale.setScalar(scale * RUN_CAST_SCALE);
     this.syncObject.updateMatrix();
     this.mesh.setMatrixAt(index, this.syncObject.matrix);
   }

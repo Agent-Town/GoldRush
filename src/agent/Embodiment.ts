@@ -7,6 +7,7 @@ import { Balance } from '../game/Balance';
 import * as Terrain from '../world/Terrain';
 import type { GoldRushToolName, ToolReceipt } from './ToolSurface';
 import { agentBark, barkForReceipt } from './Voice';
+import { RUN_CAST_SCALE } from '../entities/runCastScale';
 
 export type ProspectorPoint = { x: number; z: number };
 
@@ -69,7 +70,8 @@ export class ProspectorEmbodiment {
     this.group.name = 'ProspectorEmbodiment';
     this.visualGroup.name = 'ProspectorInterpolation';
     this.sprite.name = 'ProspectorSprite';
-    this.sprite.scale.setScalar(Balance.agent.spriteScale);
+    this.sprite.scale.setScalar(Balance.agent.spriteScale * RUN_CAST_SCALE);
+    this.sprite.position.y = (Balance.agent.spriteScale * (RUN_CAST_SCALE - 1)) / 2;
     this.sprite.renderOrder = RenderLayers.companion;
     this.visualGroup.add(this.sprite);
     this.group.add(this.visualGroup);
@@ -305,7 +307,9 @@ export class ProspectorEmbodiment {
 
   private say(line: string): void {
     this.lastLine = line;
-    this.floatText(this.group.position, line, '#83ded7');
+    const anchor = this.group.position.clone();
+    anchor.y += Balance.agent.spriteScale * (RUN_CAST_SCALE - 1);
+    this.floatText(anchor, line, '#83ded7');
   }
 }
 

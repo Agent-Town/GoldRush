@@ -17,6 +17,7 @@ import {
   type WreckerUpdateContext,
 } from './Enemy';
 import type { RotationDirection } from '../assets/OrientationResolver';
+import { RUN_CAST_SCALE } from './runCastScale';
 import * as Terrain from '../world/Terrain';
 import railcarBoilerUrl from '../../assets/processed/boss-railcar-boiler.png?url';
 import railcarBoilerDamagedUrl from '../../assets/processed/boss-railcar-boiler-damaged.png?url';
@@ -1065,7 +1066,7 @@ export class EnemyPool {
     this.syncObject.position.y += motion.bobOffset;
     this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
     this.syncObject.rotation.z = motion.leanRad;
-    this.syncObject.scale.setScalar(enemy.visualScale);
+    this.syncObject.scale.setScalar(this.renderScale(enemy));
     this.syncObject.updateMatrix();
     this.baseMatrix.copy(enemy.isAlive && enemy.eliteKind !== 'railcar' ? this.syncObject.matrix : this.hiddenMatrix);
 
@@ -1194,8 +1195,8 @@ export class EnemyPool {
       presentation.fades.setTintScalar(enemy.id, lightFactor);
       presentation.sprites.set(enemy.id, enemy.group.position, visible);
       presentation.fades.set(enemy.id, enemy.group.position, visible && showFade && presentation.animator.overlayActive);
-      this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, enemy.visualScale);
-      this.applySpriteBob(presentation.fades.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, enemy.visualScale);
+      this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, this.renderScale(enemy));
+      this.applySpriteBob(presentation.fades.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, this.renderScale(enemy));
     }
     this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
     this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
@@ -1208,10 +1209,11 @@ export class EnemyPool {
       enemy.group.position,
       !useProceduralDark && enemy.isAlive && litVisible && enemy.hasBanner && this.baronBannerSprites.isLoaded,
     );
-    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, enemy.visualScale);
-    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, enemy.visualScale);
-    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, enemy.visualScale);
-    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, enemy.visualScale);
+    const renderScale = this.renderScale(enemy);
+    this.applySpriteBob(this.generatedSprites.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, renderScale);
+    this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, renderScale);
+    this.applySpriteBob(this.thiefSprites.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, renderScale);
+    this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, renderScale);
     this.applySpriteBob(this.baronSprites.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale);
     this.applySpriteBob(this.baronSpriteFades.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale);
     this.applyBannerSprite(enemy, this.baronBannerSprites.group.children[enemy.id], baronMotion.bobOffset);
@@ -1234,8 +1236,8 @@ export class EnemyPool {
       }
 
       const t = Math.min(1, flash / Math.max(0.001, Balance.combatReadability.enemyFlashSeconds));
-      const scale = (1 + t * Balance.combatReadability.enemyFlashIntensity * 0.18) * enemy.visualScale;
-      this.syncObject.position.set(enemy.group.position.x, enemy.group.position.y + ENEMY_SPRITE_Y * enemy.visualScale, enemy.group.position.z);
+      const scale = (1 + t * Balance.combatReadability.enemyFlashIntensity * 0.18) * this.renderScale(enemy);
+      this.syncObject.position.set(enemy.group.position.x, enemy.group.position.y + ENEMY_SPRITE_Y * this.renderScale(enemy), enemy.group.position.z);
       this.syncObject.rotation.set(0, enemy.group.rotation.y, 0);
       this.syncObject.scale.set(1.55 * scale, 1.42 * scale, 0.08);
       this.syncObject.updateMatrix();
@@ -1259,6 +1261,10 @@ export class EnemyPool {
     if (!sprite) return;
     sprite.position.y = baseY + ENEMY_SPRITE_Y * visualScale + bobOffset;
     sprite.scale.set(1.55 * visualScale, 1.55 * visualScale, 1);
+  }
+
+  private renderScale(enemy: ClaimJumperEnemy): number {
+    return enemy.visualScale * (enemy.eliteKind ? 1 : RUN_CAST_SCALE);
   }
 
   private applyBannerSprite(enemy: ClaimJumperEnemy, sprite: THREE.Object3D | undefined, bobOffset: number): void {

@@ -63,7 +63,7 @@ export class Hero {
     metalness: 0.05,
   });
 
-  constructor() {
+  constructor(visualScale = 1) {
     this.group.name = 'HomesteaderHero';
     this.interpolationGroup.name = 'HomesteaderHeroInterpolation';
     this.visualGroup.name = 'HomesteaderHeroVisuals';
@@ -95,6 +95,7 @@ export class Hero {
 
     this.placeholderGroup.add(body, coat, brim, hat, lamp, glow);
     this.visualGroup.add(this.placeholderGroup);
+    this.visualGroup.scale.setScalar(visualScale);
     this.interpolationGroup.add(this.visualGroup);
     this.group.add(this.interpolationGroup);
     this.generatedSprite = attachGeneratedSprite(this.visualGroup, assetSlots.charHero, {
