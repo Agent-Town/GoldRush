@@ -69,6 +69,8 @@ export type EnemyDimmingDiagnostics = {
 export type BossHpBarDiagnostics = {
   visible: boolean;
   ratio: number;
+  renderedRatio: number;
+  litSegments: number;
   segments: number;
   groupId: string | null;
   aliveComponents: number;
@@ -350,6 +352,8 @@ export class EnemyPool {
     return {
       visible: this.bossHpGroup.visible,
       ratio: round3(state?.ratio ?? 0),
+      renderedRatio: round3(this.bossHpFill.scale.x),
+      litSegments: this.bossHpSegments.children.filter((segment) => segment.visible).length,
       segments: this.bossHpGroup.visible ? state?.segments ?? 0 : 0,
       groupId: state?.groupId ?? null,
       aliveComponents: state?.aliveComponents ?? 0,
@@ -1023,12 +1027,12 @@ export class EnemyPool {
     this.bossHpGroup.position.set(state.x, state.y, state.z);
     if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
     this.bossHpGroup.scale.setScalar(state.scale);
-    this.bossHpFill.scale.x = Math.max(0.001, state.ratio);
+    this.bossHpFill.scale.x = state.ratio;
     this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - state.ratio) * 0.5;
     for (let i = 0; i < this.bossHpSegments.children.length; i += 1) {
       const segment = this.bossHpSegments.children[i] as THREE.Object3D | undefined;
       if (!segment) continue;
-      segment.visible = i < state.segments - 1;
+      segment.visible = i < state.segments - 1 && state.ratio > (i + 1) / state.segments;
       segment.position.x = -BOSS_HP_FILL_WIDTH / 2 + (BOSS_HP_FILL_WIDTH * (i + 1)) / state.segments;
     }
   }

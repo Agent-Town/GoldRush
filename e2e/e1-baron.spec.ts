@@ -496,6 +496,37 @@ test('wave 20 spawns the Baron with elite stats, banner, escorts, and stable see
   expectClean(errors);
 });
 
+test('Baron damage visibly drains bar segments and the launcher stays carried', async ({ page }, testInfo) => {
+  const errors = await openGame(page, '?debug&contract=e1-baron&timescale=1&nolevel&nowaves&nokill&nosteal&nowreck&seed=e1-baron-bar-probe');
+  await page.evaluate(() => window.__GR_TEST__?.setManualSim(true));
+  await page.evaluate(() =>
+    window.__GR_TEST__?.spawnPack(1, 8, {
+      eliteKind: 'baron', hpScale: 240, speedScale: 0, visualScale: 4, banner: true,
+    }),
+  );
+
+  for (const [ratio, litSegments, shotName] of [[2 / 3, 5, 'baron-bar-two-thirds'], [1 / 3, 2, 'baron-bar-one-third']] as const) {
+    await page.evaluate((nextRatio) => {
+      const harness = window.__GR_TEST__!;
+      const snapshot = structuredClone(harness.captureSuspend());
+      const baron = snapshot.enemies.active.find((enemy) => enemy.eliteKind === 'baron');
+      if (!baron) throw new Error('missing Baron probe target');
+      baron.hp = baron.maxHp * nextRatio;
+      if (!harness.restoreSuspend(snapshot)) throw new Error('failed to restore Baron damage probe');
+      harness.advanceSim(1 / 30);
+    }, ratio);
+    await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.bossHpBar)).toMatchObject({
+      ratio: Number(ratio.toFixed(3)), renderedRatio: Number(ratio.toFixed(3)), litSegments,
+    });
+    await shot(page, testInfo, shotName);
+  }
+
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.baronRocket)).toMatchObject({ carried: true });
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.baronRocket.distanceFromBaron ?? 99)).toBeLessThan(2.5);
+  await shot(page, testInfo, 'baron-carried-launcher');
+  expectClean(errors);
+});
+
 test('standard rig damage defeats the Baron, doubles science, and persists the medal', async ({ page }, testInfo) => {
   await seedStorage(page, { science: 6 });
   const errors = await openGame(page, '?debug&contract=e1-baron&timescale=8&nolevel&nowaves&nosteal&nowreck&seed=e1-baron-victory');
