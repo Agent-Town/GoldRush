@@ -21,3 +21,9 @@ A ground plate under the town plaza: the packed-earth square, the ring road, app
 2. The locked ts-04-camera A/B: painted ground vs plate, same framing, plus a walk-loop overlay render proving the flat-walk law (paths drawn on the relief).
 3. Findings file: what the plate wants from the buildings (skirts? contact shadows?) — observations only, no cross-territory edits.
 4. The attended session gates and merges — never self-merge, never push main.
+
+## WAVE 1 — ACCEPTED + MERGED (attended, 2026-07-13)
+Tip 2b81dd4f merged to main. Gates verified: 8,192 tris · one 2048² material · zero lights/cameras · byte-identical re-export · flat-walk 0.037/0.034/0.0001 vs the 0.05 law · owner verdict: "the foundation is good."
+## WAVE 2 — DETAIL PASS (owner-directed, in progress)
+More surface detail per the owner's direct ask. Same laws, same paths — REPLACE town-plate.blend/.glb in place (the factory's wire mounts whatever lives at that path; your re-export contract is the interface). Watch: keep pads flat and walk-loops ≤0.05; detail lives between the paths. Deliver the same way (READY-FOR-GATES + tip).
+NOTE: the wire seam is FACTORY-SIDE (tasks/wire-town-plate.md) — you never need src/ access; keep modeling.

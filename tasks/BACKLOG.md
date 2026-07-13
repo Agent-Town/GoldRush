@@ -222,3 +222,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - **fevered-tell** → lane-b 2026-07-13 — Gold Fever visual read: gold gleam on infected humans + gold-glowing rivets on infected MACHINES (owner: "it also infects machines"); Baron pristine (the author, not a victim); art-batch sheet-bake banked as follow-up. STORYBOOK woven (the Fever thread, chapter-by-chapter one-liners).
 
 - **THE QUACK RATIFIED** (owner 2026-07-13) — the Fever's maker canon-complete: Baron keeps him, first victim, cure arc FAILS the world (Ark = triage done with love), backstory-only law. WD-01 dispatch texts now have their full cast; world-dispatches still awaits the owner's vehicle-mix nod (2 questions in the spec).
+
+- **SOL 3D-C WAVE 1 MERGED** (2b81dd4f — the town plate; owner: "the foundation is good"; flat-walk law held 0.037<0.05) · **wire-town-plate** → lane-c (factory mounts it behind ?town3dPilot; survives Sol's wave-2 GLB replacement) · Sol wave 2 = owner-directed detail pass, same contract.
