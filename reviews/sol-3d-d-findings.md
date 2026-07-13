@@ -161,6 +161,12 @@ This creates an intentional contrast: **The Claim is a place being made; Dry Gul
 
 The current editor can already carry bounded render-height deltas and circular spring ponds, which is enough to iterate Claim and Dry Gulch. It cannot yet author the irregular multi-channel water shape Twin Banks needs. Palette controls are also currently terrain-only; water and scatter colors remain code-owned, so a theme pass must not promise editor controls that do not exist.
 
+### Sequential loop checkpoint 1 — The Claim
+
+The first themed revision keeps the approved Claim terrain, river band, ford, camera, and export contract. It replaces the cactus thicket and skeleton with a working tent camp, fresh stake, maintained house, active extraction equipment, cottonwoods, reeds, and darker river stones. The damp corridor also receives a restrained cooler tint while the dry uplands retain the shared painted-terrain source.
+
+`artifacts/map-rebuild-spike/claim-theme-ab.png` is the identical-camera decision image. It shows that the change can separate the Claim without new gameplay topology: the before side reads as abandoned desert, while the revision reads as inhabited river work. The final GLB remains one mesh, one material, 32,768 triangles, and one 2048² texture; all landmarks remain excluded render helpers.
+
 ## Recommendation
 
 Use this revision to approve the **relief grammar**, not the Claim landmark kit. The next visual comparison should keep the same terrain and camera while replacing the desert landmarks with the living working-claim kit. The desert composition should become the reference for a dedicated Dry Gulch rebuild. Any permanent landmark must still follow editor- or manifest-authored water, fixture, build, and spawn truth before Blender production work begins.
