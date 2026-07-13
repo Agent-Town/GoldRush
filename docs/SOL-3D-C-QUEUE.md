@@ -42,3 +42,6 @@ Your own wave-2 finding becomes your assignment: the Tavern model's unfinished d
 
 ## WAVE 3 — ACCEPTED + MERGED (attended, 2026-07-13 evening)
 Tip 6929c16e merged: the tavern is full-wrap (10,864 tris, 1024² material, exact former bounds, byte-identical re-export; tavern+plate battery 10/10 at the gate). The set's oldest model now matches its youngest. NO WAVE 4 QUEUED — awaiting owner direction.
+
+## WAVE 3.1 POLISH — ACCEPTED + MERGED + DEPLOYED (attended, 2026-07-14)
+Tip 2587c0b8: crest rear gap closed, sign straps added, lived-in asymmetry preserved (10,988 tris, contract clean, tavern suite green at the gate). **THE 3D TOWN SET IS COMPLETE AND POLISHED — all nine buildings + plate + decoration + props at full-wrap standard.** Session 3D-C's ledger closes with distinction; no further waves queued. Next Sol targets (owner's call): terrain program (3D-D's masks-first flow) or E3-era building models when the Canyon Works approaches.
