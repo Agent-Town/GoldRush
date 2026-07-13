@@ -70,6 +70,8 @@ export const Balance = {
   pathing: {
     riverBlocksEnemies: true,
     deepWaterDisarmsHero: true,
+    stuckWatchdogSeconds: 3,
+    stuckWatchdogDisplacement: 0.4,
   },
   agent: {
     homeX: -1.8,
@@ -288,6 +290,7 @@ export const Balance = {
       },
     },
     damage: 8,
+    gnawMult: 0.25,
     hitCooldown: 0.9,
     reach: 1.1,
     share: 0.25,

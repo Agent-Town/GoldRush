@@ -5,6 +5,7 @@ import { assetSlots, tagPlaceholder } from '../assets/slots';
 import { Balance } from '../game/Balance';
 import { activeTileDescriptor } from '../meta/ContractFamilies';
 import { hasElevationTile, resolveTerrainMove, terrainDetourWaypoint, terrainSpeedMultiplier } from '../sim/TileHeight';
+import type { PalisadeRoute } from '../systems/BuildSystem';
 import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
 import * as Terrain from '../world/Terrain';
 import type { PalisadeBlocker } from './Palisade';
@@ -97,6 +98,13 @@ export type EnemySuspendSnapshot = {
   flashRemaining: number;
   flashCount: number;
   terrainSlideSide: number;
+  gapBlockerId: string | null;
+  gapWaypoint: { x: number; y: number; z: number };
+  watchdogElapsed: number;
+  watchdogAnchor: { x: number; y: number; z: number };
+  watchdogTrips: number;
+  gnawTargetId: string | null;
+  gnawing: boolean;
   scripted: boolean;
   scriptedSpeed: number;
   scriptedIgnoresTerrain: boolean;
@@ -125,7 +133,8 @@ export type ThiefUpdateContext = {
 
 export type WreckerUpdateContext = {
   nearestBuilding: (from: THREE.Vector3) => BuildingTarget | null;
-  hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget) => void;
+  hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number) => void;
+  palisadeRoute: (from: THREE.Vector3, to: THREE.Vector3, clearance: number) => PalisadeRoute | null;
 };
 
 const THIEF_RETARGET_SECONDS = 0.35;
@@ -237,6 +246,13 @@ export class ClaimJumperEnemy {
   private flashRemaining = 0;
   private flashCount = 0;
   private terrainSlideSide = 0;
+  private readonly gapWaypoint = new THREE.Vector3();
+  private gapBlockerId: string | null = null;
+  private watchdogElapsed = 0;
+  private readonly watchdogAnchor = new THREE.Vector3();
+  private watchdogTrips = 0;
+  private gnawTarget: BuildingTarget | null = null;
+  private gnawing = false;
 
   constructor(readonly id: number, assets: ClaimJumperAssets) {
     void assets;
@@ -374,6 +390,14 @@ export class ClaimJumperEnemy {
     return this.wreckerState;
   }
 
+  get isGnawing(): boolean {
+    return this.gnawing;
+  }
+
+  get stuckWatchdogTrips(): number {
+    return this.watchdogTrips;
+  }
+
   get carriedAmount(): number {
     return this.carriedGold;
   }
@@ -452,6 +476,13 @@ export class ClaimJumperEnemy {
       flashRemaining: this.flashRemaining,
       flashCount: this.flashCount,
       terrainSlideSide: this.terrainSlideSide,
+      gapBlockerId: this.gapBlockerId,
+      gapWaypoint: vectorSnapshot(this.gapWaypoint),
+      watchdogElapsed: this.watchdogElapsed,
+      watchdogAnchor: vectorSnapshot(this.watchdogAnchor),
+      watchdogTrips: this.watchdogTrips,
+      gnawTargetId: this.isBuildingValid(this.gnawTarget) ? this.gnawTarget.id : null,
+      gnawing: this.gnawing,
       scripted: this.scripted,
       scriptedSpeed: this.scriptedSpeed,
       scriptedIgnoresTerrain: this.scriptedIgnoresTerrain,
@@ -520,6 +551,13 @@ export class ClaimJumperEnemy {
     this.leadVelocity.set(snapshot.leadVelocity.x, snapshot.leadVelocity.y, snapshot.leadVelocity.z);
     this.heading.set(snapshot.heading.x, snapshot.heading.y, snapshot.heading.z);
     this.scriptedTarget.set(snapshot.scriptedTarget.x, snapshot.scriptedTarget.y, snapshot.scriptedTarget.z);
+    this.gapBlockerId = snapshot.gapBlockerId;
+    this.gapWaypoint.set(snapshot.gapWaypoint.x, snapshot.gapWaypoint.y, snapshot.gapWaypoint.z);
+    this.watchdogElapsed = snapshot.watchdogElapsed;
+    this.watchdogAnchor.set(snapshot.watchdogAnchor.x, snapshot.watchdogAnchor.y, snapshot.watchdogAnchor.z);
+    this.watchdogTrips = snapshot.watchdogTrips;
+    this.gnawTarget = snapshot.gnawTargetId ? refs.buildingById?.(snapshot.gnawTargetId) ?? null : null;
+    this.gnawing = snapshot.gnawing && this.isBuildingValid(this.gnawTarget);
     this.group.rotation.y = snapshot.rotationY;
     this.group.visible = true;
     this.spriteClip = snapshot.spriteClip;
@@ -569,6 +607,8 @@ export class ClaimJumperEnemy {
     this.formationOffset = seededOffset(params.formationSeed ?? this.id);
     this.flashRemaining = 0;
     this.terrainSlideSide = 0;
+    this.resetGapFlow();
+    this.watchdogTrips = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
     this.velocity.set(0, 0, 0);
@@ -612,7 +652,10 @@ export class ClaimJumperEnemy {
     const scriptedRailRoute = this.scripted && this.scriptedIgnoresTerrain;
     const targetPosition = this.scripted ? this.scriptedTarget : this.chooseTarget(delta, heroPosition, thiefContext, wreckerContext);
     const escortRailTarget = this.currentBuilding?.id === 'escort:ore-cart';
-    const moveTarget = scriptedRailRoute || escortRailTarget ? targetPosition : this.terrainAwareTarget(this.routedTarget(targetPosition));
+    const gapTarget = !this.scripted && !this.thief && !this.wrecker
+      ? this.updateGapFlow(delta, targetPosition, wreckerContext)
+      : targetPosition;
+    const moveTarget = scriptedRailRoute || escortRailTarget ? gapTarget : this.terrainAwareTarget(this.routedTarget(gapTarget));
     const speed = this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
 
     this.heading.set(moveTarget.x - this.group.position.x, 0, moveTarget.z - this.group.position.z);
@@ -658,7 +701,7 @@ export class ClaimJumperEnemy {
     }
     if (this.velocity.lengthSq() > 1) this.velocity.normalize();
 
-    if (this.thiefState === 'grabbing' || this.wreckerState === 'swinging') {
+    if (this.thiefState === 'grabbing' || this.wreckerState === 'swinging' || this.gnawing) {
       this.velocity.set(0, 0, 0);
     } else if (scriptedRailRoute) {
       this.moveScripted(delta, speed, moveTarget);
@@ -752,6 +795,8 @@ export class ClaimJumperEnemy {
     this.formationOffset = 0;
     this.flashRemaining = 0;
     this.terrainSlideSide = 0;
+    this.resetGapFlow();
+    this.watchdogTrips = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
     this.scriptedIgnoresTerrain = false;
@@ -885,6 +930,79 @@ export class ClaimJumperEnemy {
     const dx = heroPosition.x - this.group.position.x;
     const dz = heroPosition.z - this.group.position.z;
     return dx * dx + dz * dz <= this.heroPursuitRangeValue * this.heroPursuitRangeValue;
+  }
+
+  private updateGapFlow(delta: number, target: THREE.Vector3, context?: WreckerUpdateContext): THREE.Vector3 {
+    if (!context) {
+      this.resetGapFlow();
+      return target;
+    }
+    const clearance = Balance.palisade.avoidancePad + this.hitRadius - Balance.enemy.touchRadius;
+    const route = context.palisadeRoute(this.group.position, target, clearance);
+    if (!route) {
+      this.resetGapFlow();
+      return target;
+    }
+
+    if (this.gnawTarget) {
+      if (route.open || route.blocker !== this.gnawTarget || !this.isBuildingValid(this.gnawTarget)) {
+        this.gnawTarget = null;
+        this.gnawing = false;
+      } else if (this.distanceSqToBuilding(this.gnawTarget) <= Balance.wreck.reach * Balance.wreck.reach) {
+        this.gnawing = true;
+        this.spriteClip = 'grab';
+        this.swingTimer -= delta;
+        if (this.swingTimer <= 0) {
+          context.hitBuilding(this, this.gnawTarget, this.buildingDamageFor(this.gnawTarget.family) * Balance.wreck.gnawMult);
+          this.swingTimer += Balance.wreck.hitCooldown;
+        }
+        return this.gnawTarget.position;
+      } else {
+        this.gnawing = false;
+      }
+    }
+
+    if (this.gapBlockerId !== route.routeId) {
+      const startingRun = this.gapBlockerId === null;
+      this.gapBlockerId = route.routeId;
+      if (startingRun) {
+        this.watchdogAnchor.copy(this.group.position);
+        this.watchdogElapsed = 0;
+      }
+      this.gapWaypoint.set(route.waypoint.x, Balance.enemy.groundY, route.waypoint.z);
+    } else if (
+      (this.group.position.x - this.gapWaypoint.x) ** 2 + (this.group.position.z - this.gapWaypoint.z) ** 2 <= 0.3 * 0.3
+    ) {
+      this.gapWaypoint.set(route.waypoint.x, Balance.enemy.groundY, route.waypoint.z);
+    }
+
+    const displacementSq = this.group.position.distanceToSquared(this.watchdogAnchor);
+    if (displacementSq >= Balance.pathing.stuckWatchdogDisplacement ** 2) {
+      this.watchdogAnchor.copy(this.group.position);
+      this.watchdogElapsed = 0;
+    } else {
+      this.watchdogElapsed += delta;
+    }
+    if (this.watchdogElapsed >= Balance.pathing.stuckWatchdogSeconds) {
+      this.watchdogTrips += 1;
+      this.watchdogElapsed = 0;
+      this.gnawTarget = route.blocker;
+      this.gnawing = this.distanceSqToBuilding(route.blocker) <= Balance.wreck.reach * Balance.wreck.reach;
+      this.swingTimer = 0;
+      this.spriteClip = this.gnawing ? 'grab' : 'walk';
+      return route.blocker.position;
+    }
+
+    this.spriteClip = 'walk';
+    return this.gapWaypoint;
+  }
+
+  private resetGapFlow(): void {
+    this.gapBlockerId = null;
+    this.watchdogElapsed = 0;
+    this.watchdogAnchor.copy(this.group.position);
+    this.gnawTarget = null;
+    this.gnawing = false;
   }
 
   private updateWrecker(delta: number, context?: WreckerUpdateContext): THREE.Vector3 | null {
@@ -1183,16 +1301,16 @@ export class ClaimJumperEnemy {
 
     if (fromWest) {
       this.nextPosition.x = minX - outsideNudge;
-      this.nextPosition.z += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.z += this.blockerSlideDirection('z') * stepDistance * Balance.palisade.slideBias;
     } else if (fromEast) {
       this.nextPosition.x = maxX + outsideNudge;
-      this.nextPosition.z += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.z += this.blockerSlideDirection('z') * stepDistance * Balance.palisade.slideBias;
     } else if (fromSouth) {
       this.nextPosition.z = minZ - outsideNudge;
-      this.nextPosition.x += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.x += this.blockerSlideDirection('x') * stepDistance * Balance.palisade.slideBias;
     } else if (fromNorth) {
       this.nextPosition.z = maxZ + outsideNudge;
-      this.nextPosition.x += this.avoidanceSide() * stepDistance * Balance.palisade.slideBias;
+      this.nextPosition.x += this.blockerSlideDirection('x') * stepDistance * Balance.palisade.slideBias;
     } else {
       const pushWest = Math.abs(this.nextPosition.x - minX);
       const pushEast = Math.abs(maxX - this.nextPosition.x);
@@ -1204,6 +1322,14 @@ export class ClaimJumperEnemy {
       else if (push === pushSouth) this.nextPosition.z = minZ;
       else this.nextPosition.z = maxZ;
     }
+  }
+
+  private blockerSlideDirection(axis: 'x' | 'z'): number {
+    if (this.gapBlockerId !== null) {
+      const delta = this.gapWaypoint[axis] - this.group.position[axis];
+      return Math.abs(delta) > 0.01 ? Math.sign(delta) : 0;
+    }
+    return this.avoidanceSide();
   }
 
   private avoidanceSide(): number {

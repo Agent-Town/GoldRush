@@ -758,7 +758,8 @@ export class Game {
   };
   private readonly wreckerContext = {
     nearestBuilding: (from: THREE.Vector3) => this.waveSystem.preferredEscortTarget(from) ?? this.goldTargeting.nearestBuilding(from),
-    hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget) => this.combat.handleBuildingHit(enemy, target),
+    hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number) => this.combat.handleBuildingHit(enemy, target, amount),
+    palisadeRoute: (from: THREE.Vector3, to: THREE.Vector3, clearance: number) => this.buildSystem.palisadeRoute(from, to, clearance),
   };
   private buildMenuOpen = false;
   private demolishCandidate: DemolishCandidate | null = null;
@@ -4708,6 +4709,8 @@ export class Game {
   private wreckDiagnostics(): {
     wreckers: number;
     swinging: number;
+    gnawing: number;
+    stuckWatchdogTrips: number;
     ruins: number;
     hitsResolved: number;
     wrecked: number;
@@ -4716,14 +4719,22 @@ export class Game {
   } {
     let wreckers = 0;
     let swinging = 0;
+    let gnawing = 0;
+    let stuckWatchdogTrips = 0;
     for (const enemy of this.enemies.all) {
-      if (!enemy.isAlive || !enemy.isWrecker) continue;
-      wreckers += 1;
-      if (enemy.wreckState === 'swinging') swinging += 1;
+      if (!enemy.isAlive) continue;
+      stuckWatchdogTrips += enemy.stuckWatchdogTrips;
+      if (enemy.isGnawing) gnawing += 1;
+      if (enemy.isWrecker) {
+        wreckers += 1;
+        if (enemy.wreckState === 'swinging') swinging += 1;
+      }
     }
     return {
       wreckers,
       swinging,
+      gnawing,
+      stuckWatchdogTrips,
       ruins: this.buildSystem.ruinCount,
       hitsResolved: this.buildingHitsResolved,
       wrecked: this.buildingsWrecked,

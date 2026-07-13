@@ -460,6 +460,8 @@ interface ThreeGameDiagnostics {
   wreck: {
     wreckers: number;
     swinging: number;
+    gnawing: number;
+    stuckWatchdogTrips: number;
     ruins: number;
     hitsResolved: number;
     wrecked: number;
@@ -1053,7 +1055,7 @@ interface Window {
       bossComponentId?: string;
       bossComponentLabel?: string;
       bossDegradeSpeedMult: number;
-      presentation: { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number };
+      presentation: { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number; wreckerMarker: boolean; markerColor: string };
       scale: number;
       hasBanner: boolean;
       spreadOffset: number;
@@ -1141,6 +1143,8 @@ interface Window {
       wreck: {
         wreckers: number;
         swinging: number;
+        gnawing: number;
+        stuckWatchdogTrips: number;
         ruins: number;
         hitsResolved: number;
         wrecked: number;
