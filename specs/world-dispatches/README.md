@@ -15,6 +15,9 @@ Ledger voice, warm, never grim-dark (canon §9); the Fevered are victims; the Ba
 ## The content engine (Mutation Law, owner 2026-07-13)
 Each era's dispatches REPORT THE CURRENT MUTATION: what the Fever learned to want out in the world ("They say the coast fever changed after the rail came through — now it strips engines, not lockboxes."), how far it spread, and the one warm counter-note (someone, somewhere, holding out). Ceremony postscripts (vehicle 3) may hint the NEXT mutation the moment the town invents: "The whistle carries down the valley. Somewhere, something acquires a taste for steam."
 
+## The climate thread (owner-ruled content spine)
+Dispatches carry the darkening world from E1 on: dust storms where there were fields, noon skies the color of tea, crop letters that stop mentioning crops — worsening each era until E5's flood arrives as consequence, not surprise. Fable, never lecture: the Fever is the cause on every page; the valley's green is the counter-note.
+
 ## Slices (after owner nod; all fire-authorable from this spec + lore)
 WD-01 the dispatch content table E1-E3 (lore file, owner-reviewable text, no code) → WD-02 Mei's progress-gated bark pool → WD-03 ledger "World Outside" entries (rides era-chapters) → WD-04 ceremony postscripts → WD-05+ content tables E4+ authored era-by-era with the bundles.
 
