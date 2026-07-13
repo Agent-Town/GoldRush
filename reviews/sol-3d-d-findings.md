@@ -181,6 +181,12 @@ The Dry Gulch GLB independently passes the same recipe ceiling: one mesh, one ma
 
 No Twin Banks GLB was created. Duplicating the Claim terrain and baking fake side channels into its color or height would make the render disagree with water sampling, opponent routing, and building placement. Twin Banks therefore stops at an owner-reviewable render/capability gate until an authored water-mask or versioned multi-channel descriptor exists. The state renderer reuses the approved Claim terrain file and creates only temporary descriptor-owned water and dressing geometry.
 
+### Sequential loop checkpoint 4 — Night Shift
+
+Night Shift deliberately reuses the Claim terrain and landmark layout. `artifacts/map-rebuild-spike/night-shift-lighting-verdict.png` compares the true-dark cold lantern chain with one post relit at identical framing. The first frame preserves just enough cold blue silhouette to orient the player; the second makes the gameplay promise immediately legible through one concentrated warm pool and river reflections.
+
+The seven temporary post proxies use the exact pre-placed contract coordinates. The warm frame is a state demonstration, not a change to the authored start: all seven remain wrecked in the descriptor until the player pays to relight one. No duplicate terrain or GLB is needed; this identity belongs to the lighting and fixture state layered over The Claim.
+
 ## Recommendation
 
 Use this revision to approve the **relief grammar**, not the Claim landmark kit. The next visual comparison should keep the same terrain and camera while replacing the desert landmarks with the living working-claim kit. The desert composition should become the reference for a dedicated Dry Gulch rebuild. Any permanent landmark must still follow editor- or manifest-authored water, fixture, build, and spawn truth before Blender production work begins.
