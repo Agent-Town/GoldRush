@@ -24,6 +24,11 @@ A ground plate under the town plaza: the packed-earth square, the ring road, app
 
 ## WAVE 1 — ACCEPTED + MERGED (attended, 2026-07-13)
 Tip 2b81dd4f merged to main. Gates verified: 8,192 tris · one 2048² material · zero lights/cameras · byte-identical re-export · flat-walk 0.037/0.034/0.0001 vs the 0.05 law · owner verdict: "the foundation is good."
-## WAVE 2 — DETAIL PASS (owner-directed, in progress)
-More surface detail per the owner's direct ask. Same laws, same paths — REPLACE town-plate.blend/.glb in place (the factory's wire mounts whatever lives at that path; your re-export contract is the interface). Watch: keep pads flat and walk-loops ≤0.05; detail lives between the paths. Deliver the same way (READY-FOR-GATES + tip).
+## WAVE 2 — DETAIL + DECORATION (owner-directed, in progress; scope expanded 2026-07-13)
+Surface detail AND town decoration per the owner's direct ask, all baked into the SAME single GLB (one file, one material — the factory's wire mounts whatever lives at town-plate.glb; keep that interface).
+- BUDGET RAISED for decoration: ≤30,000 tris, material may go 2048² (unchanged). Still ONE mesh-tree, ONE material, zero lights/cameras, byte-identical re-export.
+- DECOR VOCABULARY (era-1 frontier, painted-warm): barrels, crates, sacks, hitching posts, rope coils, buckets, lantern posts (unlit geometry — light belongs to the rig), a notice-board, planks, small planters, laundry line between buildings ONLY if it clears actor heads. Signage stays PICTOGRAM-ONLY (zero readable letters — house law).
+- EXCLUSIONS (already shipped separately — do NOT model): the covered wagons, the water trough, the Pan Monument (plaza-props pilot owns them), all nine buildings (their GLBs mount on your flat pads), the townsfolk.
+- PLACEMENT LAWS: building pads stay FLAT and CLEAR (nothing on them, nothing overhanging them); walk loops + approach paths stay clear and ≤0.05 relief (decor lives between the paths — the cast must never visually clip a barrel); the plaza CENTER ring stays open (it is the town's stage).
+- Deliver the same way: READY-FOR-GATES + tip; the attended session gates (tri/material/re-export + pad-flatness + loop-clearance) and merges.
 NOTE: the wire seam is FACTORY-SIDE (tasks/wire-town-plate.md) — you never need src/ access; keep modeling.
