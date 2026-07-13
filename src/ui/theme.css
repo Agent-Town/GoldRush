@@ -97,13 +97,23 @@
 
 .hud-panel--resource {
   top: max(16px, env(safe-area-inset-top));
-  right: calc(max(16px, env(safe-area-inset-right)) + 148px);
+  right: calc(max(16px, env(safe-area-inset-right)) + 180px);
   display: grid;
-  grid-template-columns: 18px max-content minmax(5ch, 8ch);
+  grid-template-columns: 18px max-content max-content minmax(5ch, 8ch);
   align-items: center;
   column-gap: 8px;
   min-width: 152px;
   max-width: calc(100vw - 180px);
+}
+
+.hud-pressure-uses {
+  padding: 1px 5px;
+  border: 1px solid rgba(91, 138, 138, 0.45);
+  border-radius: 999px;
+  font-size: 10px;
+  line-height: 1.2;
+  color: #315f61;
+  background: rgba(131, 222, 215, 0.2);
 }
 
 .hud-pressure-track {
@@ -1519,7 +1529,7 @@
     right: max(12px, env(safe-area-inset-right));
     min-width: 126px;
     max-width: calc(100vw - 24px);
-    grid-template-columns: 16px max-content minmax(4ch, 7ch);
+    grid-template-columns: 16px max-content max-content minmax(4ch, 7ch);
     column-gap: 6px;
   }
 

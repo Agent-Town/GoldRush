@@ -40,8 +40,22 @@ test('coal feeds boilers, pressure vents, and PRESSURIZE completes', async ({ pa
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure.objective.hotBoilers)).toBe(2);
   await page.evaluate(() => window.__GR_TEST__?.teleport(0, 12));
   await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.1));
-  await expect(page.getByTestId('hud-pressure')).toBeVisible();
-  await expect(page.getByTestId('hud-pressure')).toContainText('PRESSURIZE 2/2');
+  const pressureHud = page.getByTestId('hud-pressure');
+  await expect(pressureHud).toBeVisible();
+  await expect(pressureHud.locator('[data-hud-pressure-label]')).toHaveText('Pressure');
+  await expect(pressureHud.locator('[data-hud-pressure-uses]')).toHaveText('×2');
+  await expect(pressureHud.locator('[data-hud-pressure]')).toHaveText(/^\d+\/100$/);
+  await expect(pressureHud).not.toContainText('PRESSURIZE');
+  await expect(pressureHud).not.toContainText('W8–12');
+  await expect(pressureHud).toHaveAttribute('title', 'Pressurize windows open waves 8–12');
+  const goldBox = await page.getByTestId('hud-gold').boundingBox();
+  const pressureBox = await pressureHud.boundingBox();
+  expect(goldBox && pressureBox && (
+    pressureBox.x + pressureBox.width <= goldBox.x
+    || goldBox.x + goldBox.width <= pressureBox.x
+    || pressureBox.y + pressureBox.height <= goldBox.y
+    || goldBox.y + goldBox.height <= pressureBox.y
+  )).toBe(true);
   await shot(page, testInfo, 'gauge-safe-band');
 
   await page.evaluate(() => {
@@ -63,7 +77,7 @@ test('coal feeds boilers, pressure vents, and PRESSURIZE completes', async ({ pa
   await page.evaluate(() => window.__GR_TEST__?.setWave(12));
   await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.2));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure.objective.complete)).toBe(true);
-  await expect(page.getByTestId('hud-pressure')).toContainText('PRESSURIZE COMPLETE');
+  await expect(pressureHud.locator('[data-hud-pressure-uses]')).toHaveText('×2');
 
   const pressureBeforeWreck = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.resources.pressure.amount);
   await page.evaluate(() => window.__GR_TEST__?.setBalance('boilerHouse.pressurePerTick', 4));
