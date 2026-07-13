@@ -25,6 +25,7 @@ let epochDiscoveryInstalled = false;
 
 export type LedgerEnemySource = {
   eliteKind?: string | null;
+  variantId?: string | null;
   bossGroupId?: string | null;
   isThief?: boolean;
   isWrecker?: boolean;
@@ -84,6 +85,7 @@ export function discoverLedgerTownActor(id: TownActorId): boolean {
 }
 
 export function ledgerEnemyEntryId(enemy: LedgerEnemySource): EnemyLedgerEntryId {
+  if (enemy.variantId === 'rail_tough' || enemy.variantId === 'steam_wrecker' || enemy.variantId === 'coal_thief') return enemy.variantId;
   if (enemy.eliteKind === 'baron' || enemy.eliteKind === 'railcar' || enemy.bossGroupId) return 'baron';
   if (enemy.isWrecker === true) return 'wrecker';
   if (enemy.isThief === true) return 'outlaw';

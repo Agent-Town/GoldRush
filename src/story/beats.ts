@@ -239,6 +239,23 @@ export const LEDGER_STORY_BEATS: readonly RuntimeStoryBeat[] = [
 
 export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   {
+    id: 'e2-boiler-house-teaching',
+    trigger: 'ledger-page',
+    speaker: 'prospector',
+    oncePerProfile: true,
+    when: (signal) => signal.type === 'ledger-page' && signal.entryId === 'building_boiler_house',
+    lines: ['The boiler feeds pressure; pressure feeds the new machines.', 'Working pressure strengthens the Boiler Battery.'],
+  },
+  {
+    id: 'e2-enemy-name',
+    trigger: 'ledger-page',
+    speaker: 'clerk',
+    oncePerProfile: true,
+    seenKey: (signal) => (signal.type === 'ledger-page' ? `e2-enemy-name:${signal.entryId}` : 'e2-enemy-name'),
+    when: (signal) => signal.type === 'ledger-page' && ['rail_tough', 'steam_wrecker', 'coal_thief'].includes(signal.entryId),
+    lines: (signal) => [signal.type === 'ledger-page' ? signal.entryName : 'Steamworks outlaw', 'Name entered. Tactics follow in the Claim Ledger.'],
+  },
+  {
     id: 'e2-ceremony-mill',
     trigger: 'epoch-activated',
     speaker: 'elder',
