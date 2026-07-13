@@ -18,12 +18,19 @@ import {
 } from './Enemy';
 import type { RotationDirection } from '../assets/OrientationResolver';
 import * as Terrain from '../world/Terrain';
+import railcarBoilerUrl from '../../assets/processed/boss-railcar-boiler.png?url';
+import railcarBoilerDamagedUrl from '../../assets/processed/boss-railcar-boiler-damaged.png?url';
+import railcarCabinUrl from '../../assets/processed/boss-railcar-cabin.png?url';
+import railcarCabinDamagedUrl from '../../assets/processed/boss-railcar-cabin-damaged.png?url';
+import railcarWheelsUrl from '../../assets/processed/boss-railcar-wheels.png?url';
+import railcarWheelsDamagedUrl from '../../assets/processed/boss-railcar-wheels-damaged.png?url';
 
 const ENEMY_SPRITE_Y = 0.72;
 const BOSS_HP_MAX_SEGMENTS = 8;
 const BARON_HP_SEGMENTS = 8;
 const BOSS_HP_WIDTH = 1.9;
 const BOSS_HP_FILL_WIDTH = 1.72;
+const RAILCAR_DAMAGE_THRESHOLD = 0.5;
 const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
   active: false,
   phase: 0,
@@ -111,7 +118,7 @@ export class EnemyPool {
   private readonly currentRotations: number[] = [];
   private readonly renderRotations: number[] = [];
   private readonly renderParts: THREE.InstancedMesh[] = [];
-  private readonly railcarParts: THREE.InstancedMesh[] = [];
+  private readonly railcarParts: Array<{ id: string; healthy: THREE.InstancedMesh; damaged: THREE.InstancedMesh }> = [];
   private readonly railcarLocalMatrices: THREE.Matrix4[] = [];
   private readonly watchPaintMaterial = new THREE.MeshBasicMaterial({
     color: '#d7a84c',
@@ -329,11 +336,16 @@ export class EnemyPool {
     return this.renderRotations[enemy.id] ?? enemy.group.rotation.y;
   }
 
-  railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number } {
+  railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number } {
+    const damaged = enemy.currentHp / Math.max(1, enemy.maxHp) <= RAILCAR_DAMAGE_THRESHOLD;
     return {
       mesh: enemy.eliteKind === 'railcar',
       visible: this.railcarVisible(enemy),
       railY: Terrain.visualY(enemy.position.x, enemy.position.z, Balance.enemy.groundY),
+      railRotation: this.renderRotationOf(enemy),
+      textureKey: `boss-railcar-${enemy.bossComponentId ?? 'unknown'}${damaged ? '-damaged' : ''}`,
+      damaged,
+      damageThreshold: RAILCAR_DAMAGE_THRESHOLD,
     };
   }
 
@@ -733,8 +745,11 @@ export class EnemyPool {
     this.bannerClothGeometry.dispose();
     this.bannerPoleMaterial.dispose();
     this.bannerClothMaterial.dispose();
-    for (const mesh of this.railcarParts) mesh.geometry.dispose();
-    for (const material of new Set(this.railcarParts.map((mesh) => mesh.material as THREE.Material))) material.dispose();
+    for (const part of this.railcarParts) {
+      part.healthy.geometry.dispose();
+      (part.healthy.material as THREE.Material).dispose();
+      (part.damaged.material as THREE.Material).dispose();
+    }
     this.nightBasicMaterial.dispose();
     disposeClaimJumperAssets(this.assets);
   }
@@ -910,29 +925,28 @@ export class EnemyPool {
   }
 
   private createRailcarParts(): void {
-    const iron = new THREE.MeshStandardMaterial({ color: '#3f4545', roughness: 0.6, metalness: 0.62 });
-    const darkIron = new THREE.MeshStandardMaterial({ color: '#202827', roughness: 0.72, metalness: 0.48 });
-    const teal = new THREE.MeshStandardMaterial({ color: '#83ded7', emissive: '#216d68', emissiveIntensity: 0.28, roughness: 0.38, metalness: 0.35 });
-    const parts: Array<[THREE.BufferGeometry, THREE.Material, THREE.Vector3, THREE.Euler?]> = [
-      [new THREE.BoxGeometry(1.45, 0.58, 0.92), iron, new THREE.Vector3(0, 0.55, 0)],
-      [new THREE.BoxGeometry(1.18, 0.22, 0.76), darkIron, new THREE.Vector3(0, 0.94, 0)],
-      [new THREE.BoxGeometry(1.28, 0.08, 0.98), teal, new THREE.Vector3(0, 0.73, 0)],
-    ];
-    for (const x of [-0.48, 0.48]) {
-      for (const z of [-0.5, 0.5]) {
-        parts.push([new THREE.CylinderGeometry(0.22, 0.22, 0.12, 12), darkIron, new THREE.Vector3(x, 0.23, z), new THREE.Euler(Math.PI / 2, 0, 0)]);
-      }
-    }
-    for (const [geometry, material, position, rotation] of parts) {
-      const mesh = new THREE.InstancedMesh(geometry, material, Balance.enemy.poolSize);
-      mesh.count = Balance.enemy.poolSize;
-      mesh.frustumCulled = false;
-      mesh.renderOrder = RenderLayers.gameplay;
-      this.railcarParts.push(mesh);
-      this.railcarLocalMatrices.push(this.createLocalMatrix(position, rotation));
-      this.group.add(mesh);
-      for (let index = 0; index < Balance.enemy.poolSize; index += 1) mesh.setMatrixAt(index, this.hiddenMatrix);
-      mesh.instanceMatrix.needsUpdate = true;
+    const loader = new THREE.TextureLoader();
+    const parts = [
+      { id: 'wheels', urls: [railcarWheelsUrl, railcarWheelsDamagedUrl], size: [1.55, 0.85] },
+      { id: 'boiler', urls: [railcarBoilerUrl, railcarBoilerDamagedUrl], size: [1.9, 1.15] },
+      { id: 'cabin', urls: [railcarCabinUrl, railcarCabinDamagedUrl], size: [1.45, 1.15] },
+    ] as const;
+    for (const part of parts) {
+      const geometry = new THREE.PlaneGeometry(...part.size);
+      const meshes = part.urls.map((url) => {
+        const texture = loader.load(url);
+        texture.colorSpace = THREE.SRGBColorSpace;
+        const mesh = new THREE.InstancedMesh(geometry, new THREE.MeshBasicMaterial({ map: texture, transparent: true, alphaTest: 0.04, side: THREE.DoubleSide }), Balance.enemy.poolSize);
+        mesh.count = Balance.enemy.poolSize;
+        mesh.frustumCulled = false;
+        mesh.renderOrder = RenderLayers.gameplay;
+        this.group.add(mesh);
+        for (let index = 0; index < Balance.enemy.poolSize; index += 1) mesh.setMatrixAt(index, this.hiddenMatrix);
+        mesh.instanceMatrix.needsUpdate = true;
+        return mesh;
+      });
+      this.railcarParts.push({ id: part.id, healthy: meshes[0]!, damaged: meshes[1]! });
+      this.railcarLocalMatrices.push(this.createLocalMatrix(new THREE.Vector3(0, part.size[1] * 0.5, 0), new THREE.Euler(0, -Math.PI / 2, 0)));
     }
   }
 
@@ -1093,12 +1107,16 @@ export class EnemyPool {
     this.syncBanner(enemy, lightFactor);
     const railcarBase = this.railcarVisible(enemy) ? this.syncObject.matrix : this.hiddenMatrix;
     for (let index = 0; index < this.railcarParts.length; index += 1) {
-      const mesh = this.railcarParts[index];
+      const part = this.railcarParts[index];
       const local = this.railcarLocalMatrices[index];
-      if (!mesh || !local) continue;
+      if (!part || !local) continue;
       this.instanceMatrix.multiplyMatrices(railcarBase, local);
-      mesh.setMatrixAt(enemy.id, this.instanceMatrix);
-      mesh.instanceMatrix.needsUpdate = true;
+      const belongs = enemy.bossComponentId === part.id;
+      const damaged = enemy.currentHp / Math.max(1, enemy.maxHp) <= RAILCAR_DAMAGE_THRESHOLD;
+      part.healthy.setMatrixAt(enemy.id, belongs && !damaged ? this.instanceMatrix : this.hiddenMatrix);
+      part.damaged.setMatrixAt(enemy.id, belongs && damaged ? this.instanceMatrix : this.hiddenMatrix);
+      part.healthy.instanceMatrix.needsUpdate = true;
+      part.damaged.instanceMatrix.needsUpdate = true;
     }
   }
 

@@ -1053,7 +1053,7 @@ interface Window {
       bossComponentId?: string;
       bossComponentLabel?: string;
       bossDegradeSpeedMult: number;
-      presentation: { mesh: boolean; visible: boolean; railY: number };
+      presentation: { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number };
       scale: number;
       hasBanner: boolean;
       spreadOffset: number;
