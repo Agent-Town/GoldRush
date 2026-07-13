@@ -11,6 +11,7 @@ const CHAPEL_MODEL_URL = new URL('../../assets/pilots/chapel-3d/chapel.glb', imp
 const SCHOOLHOUSE_MODEL_URL = new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href;
 const STAMP_MILL_MODEL_URL = new URL('../../assets/pilots/stamp-mill-3d/stamp-mill.glb', import.meta.url).href;
 const DYNAMO_HALL_MODEL_URL = new URL('../../assets/pilots/dynamo-hall-3d/dynamo-hall.glb', import.meta.url).href;
+const TOWN_PLATE_MODEL_URL = new URL('../../assets/pilots/town-plate-3d/town-plate.glb', import.meta.url).href;
 const PROP_MODEL_URLS = {
   covered_wagon: new URL('../../assets/pilots/plaza-props-3d/covered_wagon.glb', import.meta.url).href,
   water_trough: new URL('../../assets/pilots/plaza-props-3d/water_trough.glb', import.meta.url).href,
@@ -21,12 +22,12 @@ const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
 
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement };
-type PilotState = 'loading' | 'loaded' | 'error';
+type PilotState = 'loading' | 'loaded' | 'error' | 'failed';
 
 function publish(
   canvas: HTMLCanvasElement,
   state: PilotState,
-  source: 'facade' | 'glb',
+  source: 'facade' | 'painted' | 'glb',
   metrics: { meshes?: number; triangles?: number; materials?: number; width?: number; height?: number; depth?: number } = {},
 ): void {
   canvas.dataset.town3dPilotState = state;
@@ -207,6 +208,50 @@ export function installTownSchoolhousePilot(host: Host): () => void {
 
 export function installTownStampMillPilot(host: Host): () => void {
   return installTownBuildingPilot(host, 'stamp-mill', STAMP_MILL_MODEL_URL, 'TownStampMillPilot');
+}
+
+export function installTownPlatePilot({ scene, canvas }: Host): () => void {
+  let disposed = false;
+  let model: THREE.Object3D | undefined;
+  const ground = scene.getObjectByName('TownSquareGround');
+  const setState = (state: 'loading' | 'loaded' | 'failed' | 'disposed', source: 'painted' | 'glb', metrics?: Parameters<typeof publish>[3]): void => {
+    canvas.dataset.town3dPlateState = state;
+    canvas.dataset.town3dPlateGround = source;
+    if (state !== 'disposed') publish(canvas, state, source, metrics);
+  };
+  setState('loading', 'painted');
+
+  new GLTFLoader().load(TOWN_PLATE_MODEL_URL, ({ scene: loaded }) => {
+    const metrics = inspect(loaded, false);
+    const valid = metrics.triangles <= 20_000 && metrics.materials === 1 && metrics.forbiddenNodes === 0;
+    if (disposed || !valid) {
+      disposeObject3D(loaded);
+      if (!disposed) setState('failed', 'painted');
+      return;
+    }
+    loaded.name = 'TownPlatePilot';
+    loaded.position.set(0, -0.002, 0);
+    loaded.traverse((node) => { if ((node as THREE.Mesh).isMesh) node.renderOrder = ground?.renderOrder ?? 0; });
+    model = loaded;
+    scene.add(loaded);
+    if (ground) ground.visible = false;
+    canvas.dataset.town3dPilotLoadedIds = [...new Set([...(canvas.dataset.town3dPilotLoadedIds ?? '').split(',').filter(Boolean), 'plate'])].join(',');
+    setState('loaded', 'glb', metrics);
+  }, undefined, () => {
+    if (!disposed) setState('failed', 'painted');
+  });
+
+  return () => {
+    disposed = true;
+    if (ground) ground.visible = true;
+    if (model) {
+      scene.remove(model);
+      disposeObject3D(model);
+      model = undefined;
+    }
+    canvas.dataset.town3dPilotLoadedIds = (canvas.dataset.town3dPilotLoadedIds ?? '').split(',').filter((entry) => entry && entry !== 'plate').join(',');
+    setState('disposed', 'painted');
+  };
 }
 
 export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void {
