@@ -30,6 +30,12 @@ SYNTHESIS (integrating the ruled pride-wound canon): the Baron's armies were nev
 - **Pride and the Fever**: he infects rather than pays because payment admits need. The Fever is pride's perfect instrument — an army that never argues with his judgment.
 - The Prospector-hunger explains why the Fevered press the hero specifically; the gold/claim hungers explain the thief and wrecker castes. Future intelligence work (superseded specs/outlaw-intelligence) is UNNECESSARY for the base crowd — simple IS the fiction now. Smarter behavior belongs only to the UNFEVERED: the Baron's lieutenants, era factions, and machines.
 
+**EXTENSION — THE FEVERED WORLD (OWNER RULING 2026-07-13, verbatim): "We can then also use that to motivate the change of the world over the epochs. It relates to the progress of the Baron and the 'Gold Fever' in the world. But the little town is pushing to survive and escape the madness. We could even add some backstory elements over time when the user makes progress and show what is happening in the world."**
+
+SYNTHESIS: the era transformations are not neutral progress — they are the town OUTRUNNING a world that is succumbing. Each epoch, the Baron's reach and his Fever spread further through the outside world (his rail, his companies, his signals travel with it); each epoch the valley answers with new science — not for gold's sake, but to stay free of the madness. The saga's spine in one line: THE WORLD CATCHES THE FEVER; THE TOWN CATCHES THE FUTURE.
+- PROPOSAL (natural reading of the ruled arc, owner may adjust): the late-saga ascent IS the escape made literal — E8 leaves the ground, E9 breaks a NEW world the Fever has never touched (the red field turned E1-green: starting clean), E10's Ark carries the claim beyond reach. The E10 Static then reads as the final teacher: the hunger that even the Baron serves — and the kinship beat (his heirs at the Ark) is the Fever's last victims coming home.
+- THE WORLD DISPATCH LAW (from the ruling's third sentence): world-state backstory is REVEALED THROUGH PLAYER PROGRESS, never dumped — see specs/world-dispatches/.
+
 OPEN (owner, when convenient): does any era earn a CURE beat (the schoolhouse/academy studying the Fever — a warm mid-saga victory), and does the Gazette ever print the truth about where the Fever comes from?
 
 ## THE BARON CADENCE (answers owner Q of 2026-07-09: "But then the Baron will be part of the boss fight in every Epoch?")
