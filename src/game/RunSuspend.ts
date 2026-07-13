@@ -1703,6 +1703,13 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
   const scriptedRoute = requireV2 ? decodeVector3Array(record.scriptedRoute, `${label}.scriptedRoute`, reasons, 128) : [];
   const eliteKind = record.eliteKind === null || record.eliteKind === 'baron' || record.eliteKind === 'railcar' ? record.eliteKind : null;
   if (requireV2 && record.eliteKind !== null && eliteKind === null) reasons.push(`${label}.eliteKind is invalid`);
+  const scriptedRouteLength = scriptedRoute?.length ?? 0;
+  const railcarEnteredField = record.railcarEnteredField === undefined
+    ? eliteKind === 'railcar' && scriptedRouteLength > 0 && scriptedRouteIndex === scriptedRouteLength - 1
+    : record.railcarEnteredField === true;
+  if (record.railcarEnteredField !== undefined && typeof record.railcarEnteredField !== 'boolean') {
+    reasons.push(`${label}.railcarEnteredField must be boolean`);
+  }
   const variantId = versionedNullableString(record.variantId, `${label}.variantId`, reasons, requireV2);
   const variantLabel = versionedNullableString(record.variantLabel, `${label}.variantLabel`, reasons, requireV2);
   const bossGroupId = versionedNullableString(record.bossGroupId, `${label}.bossGroupId`, reasons, requireV2);
@@ -1828,6 +1835,7 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
       | 'scriptedIgnoresTerrain'
       | 'scriptedRoute'
       | 'scriptedRouteIndex'
+      | 'railcarEnteredField'
       | 'position'
       | 'velocity'
       | 'leadVelocity'
@@ -1873,6 +1881,7 @@ function decodeEnemy(value: unknown, label: string, reasons: string[], requireV2
     scriptedIgnoresTerrain: requireV2 && record.scriptedIgnoresTerrain === true,
     scriptedRoute,
     scriptedRouteIndex,
+    railcarEnteredField,
     position,
     velocity,
     leadVelocity,

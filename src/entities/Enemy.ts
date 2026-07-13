@@ -110,6 +110,7 @@ export type EnemySuspendSnapshot = {
   scriptedIgnoresTerrain: boolean;
   scriptedRoute: Array<{ x: number; y: number; z: number }>;
   scriptedRouteIndex: number;
+  railcarEnteredField: boolean;
   position: { x: number; y: number; z: number };
   velocity: { x: number; y: number; z: number };
   leadVelocity: { x: number; y: number; z: number };
@@ -225,6 +226,7 @@ export class ClaimJumperEnemy {
   private scripted = false;
   private scriptedIgnoresTerrain = false;
   private scriptedRouteIndex = 0;
+  private railcarEnteredFieldValue = false;
   private activationDelay = 0;
   private contactCooldown = 0;
   private spriteClip: CharacterSpriteClip = 'idle';
@@ -347,6 +349,14 @@ export class ClaimJumperEnemy {
 
   get bossDegradeSpeedMult(): number {
     return this.bossDegradeSpeedMultValue;
+  }
+
+  get railcarEnteredField(): boolean {
+    return this.railcarEnteredFieldValue;
+  }
+
+  markRailcarEnteredField(): void {
+    this.railcarEnteredFieldValue = true;
   }
 
   get impactScale(): number {
@@ -488,6 +498,7 @@ export class ClaimJumperEnemy {
       scriptedIgnoresTerrain: this.scriptedIgnoresTerrain,
       scriptedRoute: this.scriptedRoute.map(vectorSnapshot),
       scriptedRouteIndex: this.scriptedRouteIndex,
+      railcarEnteredField: this.railcarEnteredFieldValue,
       position: vectorSnapshot(this.group.position),
       velocity: vectorSnapshot(this.velocity),
       leadVelocity: vectorSnapshot(this.leadVelocity),
@@ -546,6 +557,7 @@ export class ClaimJumperEnemy {
     this.scriptedRoute.length = 0;
     for (const point of snapshot.scriptedRoute) this.scriptedRoute.push(new THREE.Vector3(point.x, point.y, point.z));
     this.scriptedRouteIndex = Math.max(0, Math.min(snapshot.scriptedRouteIndex, Math.max(0, this.scriptedRoute.length - 1)));
+    this.railcarEnteredFieldValue = snapshot.railcarEnteredField;
     this.group.position.set(snapshot.position.x, snapshot.position.y, snapshot.position.z);
     this.velocity.set(snapshot.velocity.x, snapshot.velocity.y, snapshot.velocity.z);
     this.leadVelocity.set(snapshot.leadVelocity.x, snapshot.leadVelocity.y, snapshot.leadVelocity.z);
@@ -611,6 +623,7 @@ export class ClaimJumperEnemy {
     this.watchdogTrips = 0;
     this.scripted = false;
     this.scriptedSpeed = 0;
+    this.railcarEnteredFieldValue = false;
     this.velocity.set(0, 0, 0);
     this.leadVelocity.set(0, 0, 0);
     this.heading.set(0, 0, -1);
@@ -802,6 +815,7 @@ export class ClaimJumperEnemy {
     this.scriptedIgnoresTerrain = false;
     this.scriptedRoute.length = 0;
     this.scriptedRouteIndex = 0;
+    this.railcarEnteredFieldValue = false;
     this.velocity.set(0, 0, 0);
     this.leadVelocity.set(0, 0, 0);
     this.orientationResolver.reset();
@@ -1182,8 +1196,13 @@ export class ClaimJumperEnemy {
   }
 
   private advanceScriptedRoute(): void {
-    if (this.scriptedRouteIndex >= this.scriptedRoute.length - 1) return;
-    this.scriptedRouteIndex += 1;
+    if (this.scriptedRoute.length < 2) return;
+    if (this.scriptedRouteIndex >= this.scriptedRoute.length - 1) {
+      this.scriptedRoute.reverse();
+      this.scriptedRouteIndex = 1;
+    } else {
+      this.scriptedRouteIndex += 1;
+    }
     const target = this.scriptedRoute[this.scriptedRouteIndex];
     if (target) this.scriptedTarget.copy(target);
   }

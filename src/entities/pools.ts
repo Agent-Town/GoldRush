@@ -1211,8 +1211,12 @@ export class EnemyPool {
 
   private railcarVisible(enemy: ClaimJumperEnemy): boolean {
     const fogRim = 6;
-    return enemy.isAlive && enemy.eliteKind === 'railcar' && enemy.position.x > Terrain.bounds.minX + fogRim && enemy.position.x < Terrain.bounds.maxX - fogRim
-      && enemy.position.z > Terrain.bounds.minZ + fogRim && enemy.position.z < Terrain.bounds.maxZ - fogRim;
+    if (!enemy.isAlive || enemy.eliteKind !== 'railcar') return false;
+    if (enemy.position.x > Terrain.bounds.minX + fogRim && enemy.position.x < Terrain.bounds.maxX - fogRim
+      && enemy.position.z > Terrain.bounds.minZ + fogRim && enemy.position.z < Terrain.bounds.maxZ - fogRim) {
+      enemy.markRailcarEnteredField();
+    }
+    return enemy.railcarEnteredField;
   }
 
   private syncBanner(enemy: ClaimJumperEnemy, lightFactor: number): void {
