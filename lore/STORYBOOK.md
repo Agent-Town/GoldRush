@@ -14,6 +14,7 @@ Begun 2026-07-11 by the Fable attendant at the owner's order (verbatim): "This h
 - **E4-E5**: the Fever travels — roads and sea carry it faster than wagons ever could; the outside world's letters get stranger, then stop.
 - **E6-E7**: the Calculating House proves teal-warm machines CANNOT catch it (warmth is the vaccine — machines that learned from a person refuse the hunger); the Signal era hears the Fevered towns fall silent, one frequency at a time.
 - **E8-E9**: the escape made literal — orbit, then a clean world the Fever has never touched (the red field turned E1-green: starting over, uninfected).
+- **THE CURE (spanning thread, ruled 2026-07-13)**: the Baron KEEPS the Fever's maker — the first victim, the saga's longest-held prisoner; his surfacing notes give the schoolhouse its cure studies era after era. The cure protects the town and FAILS the world (owner-ruled): the Ark is not victory but triage done with love. Backstory only — dispatches and beats, never missions.
 - **E10**: the Static is the hunger universalized — the thing even the Baron serves without knowing. The heirs at the Ark are the Fever's last victims coming home; one of them winds the stopped watch.
 
 
