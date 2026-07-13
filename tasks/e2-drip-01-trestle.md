@@ -1,5 +1,6 @@
 # e2-drip-01-trestle — THE TRESTLE: E2's second contract (lane-c #2; commit prefix "feat:")
-ROLE: content + tile. WORKDIR: lane-c (worktrees/lane-c). CODEX: model=gpt-5.6-sol effort=high
+ROLE: content + tile. WORKDIR: lane-c (worktrees/lane-c).
+CODEX: model=gpt-5.6-sol effort=high
 ATTENDED-AUTHORED 2026-07-13 — owner: "how do I get to play the other levels of E2? ... I would love to keep pushing forward." E2 currently ships ONE contract (e2-hill-mine).
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work), or the worktree holds uncommitted edits you did not make. If the stop-reason is an undrained sibling, report "LADDER-STALL: waiting on drain of <slice>" (fires re-queue, pre-authorized). Then `npm install --no-audit --no-fund`; `npm run build` green.

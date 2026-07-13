@@ -1,5 +1,6 @@
 # ledger-era-chapters — the Claim Ledger reads like a saga (lane-d; commit prefix "feat:")
-ROLE: UI + content organization. WORKDIR: lane-d (worktrees/lane-d). CODEX: model=gpt-5.6-sol effort=high
+ROLE: UI + content organization. WORKDIR: lane-d (worktrees/lane-d).
+CODEX: model=gpt-5.6-sol effort=high
 ATTENDED-AUTHORED 2026-07-13 — owner: "and in the school encyclopedia according to each epoch?" — entries exist (incl. per-era overview entries era_frontier/era_steamworks/era_voltage) and epoch discovery ships, but the READER is not organized by era.
 
 Pre-flight (LANE-SAFETY, runner-auto-commit aware): standard safe-dupe rules. If the stop-reason is an undrained sibling, report "LADDER-STALL: waiting on drain of <slice>" (fires re-queue, pre-authorized). Then `npm install --no-audit --no-fund`; `npm run build` green.
