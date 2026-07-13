@@ -112,6 +112,8 @@ import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
 import { PressureSystem } from '../systems/PressureSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
+import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
+import { LightField, type LightSource } from '../systems/LightField';
 import { EnemyPool, type EnemyLightSource } from '../entities/pools';
 import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
 import { normalizeQueueProfile } from '../crafting/CraftingQueueContract';
@@ -428,6 +430,14 @@ export class Game {
   private readonly damageVignette = document.createElement('div');
   private readonly activeEpoch = selectActiveEpoch();
   private readonly activeContract = selectActiveContract();
+  private readonly dayNightCycle = createDayNightCycle(this.activeContract);
+  private readonly lightField = new LightField({
+    minLight: Balance.contracts.nightShift.minLight,
+    falloff: Balance.contracts.nightShift.lightFalloff,
+    litThreshold: Balance.contracts.nightShift.renderVisibilityCutoff,
+  });
+  private dayNightSnapshot: DayNightSnapshot | null = null;
+  private dayNightTimeOverride: number | null = null;
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private runSuspendSaveLine = runSuspendPauseLine(this.activeContract.id);
   private manualSaveMessage = '';
@@ -1170,6 +1180,11 @@ export class Game {
         setBeaconWave: (wave: number | null) => {
           this.debugBeaconWaveOverride = wave;
         },
+        setDayNightTime: (seconds: number | null) => {
+          this.dayNightTimeOverride = seconds === null ? null : Math.max(0, Number.isFinite(seconds) ? seconds : 0);
+          return this.dayNightCycle?.sample(this.dayNightTimeOverride ?? this.timeAlive) ?? null;
+        },
+        lightCoverage: (x: number, z: number) => this.lightField.coverageAt(x, z),
         announceForTest: (text: string, kind: 'wave' | 'baron' | 'baron-defeat' = 'wave') => {
           this.uiBridge.announce(text, this.timeAlive, null, 4, kind);
           this.syncUi();
@@ -2976,6 +2991,7 @@ export class Game {
         secureWave: this.secureWaveForRun(),
         waveCadenceMult: this.activeContract.twist.waveCadenceMult ?? 1,
         lightRamp: this.activeContract.twist.lightRamp ?? null,
+        dayNightCycle: this.activeContract.twist.dayNightCycle ?? null,
         baron: this.activeContract.twist.baron ?? null,
         medals: loadMedals(),
       },
@@ -3014,7 +3030,9 @@ export class Game {
         dropElapsed: this.baronStandardPlanted ? this.elapsed - this.baronStandardDropStartedAt : 0,
       },
       baronRocket: this.baronRocketDiagnostics(),
-      lighting: this.lightRig?.diagnostics(),
+      lighting: this.lightRig
+        ? { ...this.lightRig.diagnostics(), dayNight: this.dayNightSnapshot, coverage: this.lightField.diagnostics() }
+        : undefined,
       enemyDimming: this.enemies.dimmingDiagnostics,
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
@@ -3451,6 +3469,7 @@ export class Game {
     const state = this.nightShiftLightingState();
     if (!state.enabled || state.darkness <= 0) {
       this.lightRig?.setNightShift(state);
+      this.lightField.update(state.darkness, []);
       this.buildSystem.setNightLighting(0, []);
       this.enemies.setLightDimming({
         enabled: false,
@@ -3475,6 +3494,15 @@ export class Game {
       diagnostics.hp
         .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
         .map((entry) => entry.position);
+    const lanternPositions = liveLightPositions('lantern_post');
+    const fieldSources: LightSource[] = lanternPositions.map((position, index) => ({
+      id: `lantern:${index}`,
+      kind: 'lantern',
+      x: position.x,
+      z: position.z,
+      radius: Balance.contracts.nightShift.lanternPostLightRadius,
+    }));
+    this.lightField.update(this.dayNightCycle ? state.darkness : 0, this.dayNightCycle ? fieldSources : []);
 
     for (const position of liveLightPositions('sentry_beacon')) {
       sources.push({ x: position.x, z: position.z, radius: Balance.beacon.range * Balance.contracts.nightShift.beaconLightMult, kind: 'watch' });
@@ -3482,7 +3510,7 @@ export class Game {
     for (const position of liveLightPositions('turret')) {
       sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.turretLightRadius, kind: 'watch' });
     }
-    for (const position of liveLightPositions('lantern_post')) {
+    for (const position of lanternPositions) {
       sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.lanternPostLightRadius, kind: 'light' });
     }
 
@@ -3509,7 +3537,7 @@ export class Game {
     if (agentLight) sources.push({ ...agentLight, kind: 'light' });
 
     const nightPools: NightPoolSource[] = [
-      ...liveLightPositions('lantern_post').map((position) => ({
+      ...lanternPositions.map((position) => ({
         x: position.x,
         z: position.z,
         radius: Balance.contracts.nightShift.lanternPostLightRadius,
@@ -3527,16 +3555,40 @@ export class Game {
     this.lightRig?.setNightShift(state, nightPools);
     this.buildSystem.setNightLighting(state.darkness, nightPools);
 
-    this.enemies.setLightDimming({
-      enabled: true,
-      darkness: state.darkness,
-      minLight: Balance.contracts.nightShift.minLight,
-      falloff: Balance.contracts.nightShift.lightFalloff,
-      sources,
-    });
+    this.enemies.setLightDimming(this.isNightShiftContract()
+      ? {
+          enabled: true,
+          darkness: state.darkness,
+          minLight: Balance.contracts.nightShift.minLight,
+          falloff: Balance.contracts.nightShift.lightFalloff,
+          sources,
+        }
+      : { enabled: false, darkness: 0, minLight: 1, falloff: Balance.contracts.nightShift.lightFalloff, sources: [] });
   }
 
   private nightShiftLightingState(): LightRigNightShiftState {
+    if (this.dayNightCycle) {
+      const snapshot = this.dayNightCycle.sample(this.dayNightTimeOverride ?? this.timeAlive);
+      this.dayNightSnapshot = snapshot;
+      const keyframes = this.activeContract.twist.lightRamp?.keyframes;
+      if (!keyframes?.length) return { enabled: true, phase: snapshot.phase, darkness: snapshot.darkness };
+      const first = keyframes[0]!.wave;
+      const span = keyframes.at(-1)!.wave - first;
+      const position = snapshot.phase === 'full'
+        ? first
+        : snapshot.phase === 'dusk'
+          ? first + span * snapshot.phaseProgress
+          : snapshot.phase === 'dark'
+            ? first + span
+            : first + span * (1 + snapshot.phaseProgress);
+      return {
+        enabled: true,
+        phase: snapshot.phase,
+        darkness: snapshot.darkness,
+        palette: lightRampPalette(keyframes, position, true),
+      };
+    }
+    this.dayNightSnapshot = null;
     if (!this.isNightShiftContract()) return { enabled: false, phase: 'full', darkness: 0 };
     const ramp = this.activeContract.twist.lightRamp ?? Balance.contracts.nightShift;
     const diagnostics = this.waveSystem.diagnostics;
@@ -5253,7 +5305,7 @@ export class Game {
   }
 }
 
-type InterpolatedLightRamp = LightRigRampPalette & { phase: ContractLightKeyframe['phase']; darkness: number };
+type InterpolatedLightRamp = LightRigRampPalette & { phase: NightShiftPhase | 'golden'; darkness: number };
 
 const lightRampColors = new Map<string, THREE.Color>();
 const interpolatedLightRamp: InterpolatedLightRamp = {
@@ -5279,15 +5331,30 @@ function lightRampColor(value: string): THREE.Color {
   return color;
 }
 
-function lightRampPalette(keyframes: readonly ContractLightKeyframe[], wave: number): InterpolatedLightRamp {
+function lightRampPalette(keyframes: readonly ContractLightKeyframe[], wave: number, loop = false): InterpolatedLightRamp {
   const first = keyframes[0]!;
   const last = keyframes.at(-1)!;
+  if (loop && wave > last.wave) {
+    const t = THREE.MathUtils.clamp((wave - last.wave) / Math.max(0.001, last.wave - first.wave), 0, 1);
+    interpolateLightRamp(last, first, t, 'dawn');
+    return interpolatedLightRamp;
+  }
   const clampedWave = THREE.MathUtils.clamp(wave, first.wave, last.wave);
   const nextIndex = Math.max(1, keyframes.findIndex((keyframe) => keyframe.wave >= clampedWave));
   const next = keyframes[nextIndex]!;
   const previous = keyframes[nextIndex - 1]!;
   const t = THREE.MathUtils.clamp((clampedWave - previous.wave) / Math.max(0.001, next.wave - previous.wave), 0, 1);
-  interpolatedLightRamp.phase = clampedWave === next.wave ? next.phase : previous.phase;
+  interpolateLightRamp(previous, next, t, clampedWave === next.wave ? next.phase : previous.phase);
+  return interpolatedLightRamp;
+}
+
+function interpolateLightRamp(
+  previous: ContractLightKeyframe,
+  next: ContractLightKeyframe,
+  t: number,
+  phase: NightShiftPhase | ContractLightKeyframe['phase'],
+): void {
+  interpolatedLightRamp.phase = phase;
   interpolatedLightRamp.darkness = THREE.MathUtils.lerp(previous.darkness, next.darkness, t);
   interpolatedLightRamp.background.copy(lightRampColor(previous.background)).lerp(lightRampColor(next.background), t);
   interpolatedLightRamp.fog.copy(lightRampColor(previous.fog)).lerp(lightRampColor(next.fog), t);
@@ -5298,7 +5365,12 @@ function lightRampPalette(keyframes: readonly ContractLightKeyframe[], wave: num
   interpolatedLightRamp.fillIntensity = THREE.MathUtils.lerp(previous.fillIntensity, next.fillIntensity, t);
   interpolatedLightRamp.sunHeight = THREE.MathUtils.lerp(previous.sunHeight, next.sunHeight, t);
   interpolatedLightRamp.spriteTint.copy(lightRampColor(previous.spriteTint)).lerp(lightRampColor(next.spriteTint), t);
-  return interpolatedLightRamp;
+}
+
+function createDayNightCycle(contract: ContractManifest): DayNightCycle | null {
+  const params = new URLSearchParams(window.location.search);
+  const config = contract.twist.dayNightCycle ?? (params.has('debug') && params.has('daynight') ? DEBUG_DAY_NIGHT_CONFIG : null);
+  return config ? new DayNightCycle(config) : null;
 }
 
 type MetaPresenceLine = { name: string; effect: string; recap: string };
