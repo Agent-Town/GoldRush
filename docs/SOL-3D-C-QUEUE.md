@@ -45,3 +45,10 @@ Tip 6929c16e merged: the tavern is full-wrap (10,864 tris, 1024² material, exac
 
 ## WAVE 3.1 POLISH — ACCEPTED + MERGED + DEPLOYED (attended, 2026-07-14)
 Tip 2587c0b8: crest rear gap closed, sign straps added, lived-in asymmetry preserved (10,988 tris, contract clean, tavern suite green at the gate). **THE 3D TOWN SET IS COMPLETE AND POLISHED — all nine buildings + plate + decoration + props at full-wrap standard.** Session 3D-C's ledger closes with distinction; no further waves queued. Next Sol targets (owner's call): terrain program (3D-D's masks-first flow) or E3-era building models when the Canyon Works approaches.
+
+## WAVE 4 — THE ARMORED RAILCAR MODEL (granted 2026-07-14; owner: "It does not really look like a real train... maybe have GPT work on it?")
+The billboard train reads flat in the ¾ camera. Build the REAL one: a 3D armored locomotive GLB textured FROM the owner-loved plate (`assets/raw/plate-e2-boss-component.png` — side elevation + three damage states: wheels/boiler/cabin).
+- TERRITORY: `assets/pilots/railcar-3d/*` (.blend/.glb/renders/build script) + your findings file. NO src (the factory wires it; the presentation seam exists).
+- CONTRACT: ≤12k tris, ONE ≤1024² material baked from the plate (2048 if truly needed), THREE separable component zones (wheels/boiler/cabin) as named sub-meshes so damage states can swap/tint per component, base-center origin, length ≈ 3 rail-gauge units (read the rail tile spacing from a run screenshot; report the size you chose), zero lights/cameras, byte-identical re-export.
+- STYLE: the plate IS the bible — riveted iron, teal portholes, cow-catcher prow; damage states = bent wheels / venting boiler / cracked cabin as swappable named nodes or morphable sub-meshes (document which).
+- Deliver: READY-FOR-GATES + tip + a 4-angle turntable + an on-rail composition render at the REAL run camera angle (~top-down ¾ — check a gameplay screenshot; the side elevation must read as a TRAIN from above).

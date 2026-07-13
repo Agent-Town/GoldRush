@@ -241,3 +241,10 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - SOL 3D-D consecutive-goal wave MERGED (a666d8fe): Dry Gulch themed terrain + Twin Banks honest gate (braided water needs authored masks — the handoff's author-masks-first law) + Night Shift/Baron verdict renders. The MODEL-HANDOFF is the terrain program's constitution.
 
 - **SOL 3D-C wave 3.1 MERGED+DEPLOYED (2026-07-14)** — tavern polish (crest gap, sign straps); 3D-C ledger CLOSED with distinction: the full 3D town set stands complete.
+
+## 2026-07-14 — OWNER MORNING BATCH
+- **RULING: 3D TOWN = DEFAULT** ("Lets use this as the normal version") → town3d-promotion queued lane-b (default-on, ?town3d=off opt-out, LITE painted, lazy+budgeted).
+- **E2 MAPS BUILD-OUT TODAY** → e2-drip-02-pressure-garden (lane-c) + e2-drip-03-incline (lane-d) — masks-first law noted for the future 3D sculpt pass; no new runner lane needed (queue depth serves).
+- **F-e2-coal** (owner: "pressure stays at zero, I dont understand") + **F-hillmine-banks** → fix-e2-fuel-and-banks (lane-d): boiler cold/hot states + coal teaching + sluice-bank placement shimmer.
+- **F-railcar-park** (owner: "stopped at the end and went kind of invisible") → fix-railcar-patrol-visibility (lane-a): patrol law + alive⇒visible law.
+- **SOL 3D-C WAVE 4 granted**: the real 3D railcar from the boss plate (three damage components, factory wires on delivery).
