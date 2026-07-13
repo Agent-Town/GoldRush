@@ -17,6 +17,8 @@ The flat-sim / 3D-render seam still holds, and the map now has an authored compo
 - a weathered farmhouse with porch, chimney, and broken fence;
 - a bison skeleton in a shallow wash.
 
+The owner-approved composition now also includes a restrained support-rubble pass: 36 rocks and eight broken timbers in loose, edge-weighted clusters. The ford and central claim apron remain open so the debris adds scale and lived-in texture without disguising the primary work/combat space.
+
 These landmarks are **owner-verdict render helpers**, not shipped assets. They are generated for the renders and deleted before the `.blend` and `.glb` are saved. The saved deliverable contains exactly one terrain mesh and one material. No collision, movement, damage, pathing, line-of-sight, spawn, or placement behavior was added.
 
 Owner verdict set:
@@ -52,7 +54,7 @@ Owner verdict set:
 
 Repeated final-geometry builds reproduced the GLB and atlas hashes. `.blend` bytes retain Blender session/path metadata. Eevee shadow sampling changed render bytes between builds without changing the authored composition, so render pixel identity is not claimed.
 
-The preview composition itself creates 186 temporary objects, 13 temporary materials, and about 3,892 mesh triangles before curve tessellation. That is explicitly **not** a proposed runtime asset budget; it is the cheap deterministic layout model used to answer whether these landmarks belong on the map.
+The preview composition itself creates 230 temporary objects, 13 temporary materials, and about 4,740 mesh triangles before curve tessellation. That is explicitly **not** a proposed runtime asset budget; it is the cheap deterministic layout model used to answer whether these landmarks and support rubble belong on the map.
 
 The generic recipe re-export passes geometry and budget, but omits custom node extras because it does not pass `export_extras`. The build script is authoritative until an attended promotion deliberately fixes that export seam. Full hashes and probes are in `artifacts/map-rebuild-spike/verification.json` and `assets/pilots/map-rebuild-spike/the-claim-terrain-contract.json`.
 
@@ -61,9 +63,9 @@ The generic recipe re-export passes geometry and budget, but omits custom node e
 The A/B uses the game's 42° vertical FOV, hero start `(0, 0.06, 12)`, camera offset `(0, 26.2, 18.3)`, and the established look target. A fixed `814×560` center crop removes the HUD without changing framing.
 
 - shipped average luminance: `119.67525`
-- composed average luminance: `113.58825`
+- composed average luminance: `113.57696`
 - shipped edge energy: `0.05760`
-- composed edge energy: `0.10496` (`1.82×`)
+- composed edge energy: `0.10535` (`1.83×`)
 
 The slightly darker value comes from the lower daylight angle used to reveal forms and shadows. These metrics locate the visual delta; they are not a pixel-parity gate.
 
@@ -72,6 +74,8 @@ The slightly darker value comes from the lower daylight angle used to reveal for
 An unprimed screenshot reviewer found that the first landmark render's ford looked like a hard rectangular overlay, the skeleton and chimney lost their identity, the shadows were too hard, and the sunset spent too much of its frame on orange sky. Those concrete defects were fixed: verdict water now uses its own procedural render material, the bones are thicker and brighter, the chimney is a capped dark masonry shape, daylight shadows are softer, and the sunset uses a higher camera plus cool fill and a contrasting dusk sky.
 
 The reviewer also called out the overview's rectangular slab read, the straight river, weak small-prop hierarchy, and proxy softness. Those are retained as owner-verdict limitations rather than disguised: straight outer banks are forced by this Claim's water mask, and the landmarks are intentionally massing models awaiting an approval decision. Cactus overlap was retained because a dense thicket, not individually readable scatter, is the requested landmark.
+
+A second unprimed critique focused on the rubble pass. It confirmed the ford and central play corridor remained readable, but found stamped cactus orientation, an intersecting southwest cactus/timber pair, and debris that stopped too abruptly before the outer fields. The final pass varies cactus arm directions, moves the intersecting props clear of the boulder group, and feathers small rock clusters toward the tile edges. The critique also repeated the already documented mine crop and farmhouse proxy-read limitations; those remain promotion decisions rather than scope-expanding edits to this render spike.
 
 The independent repository-review process recursively launched another `codex review` and was terminated rather than allowed to loop. Its completed diagnostics were still actionable: they found a Blender/game yaw mismatch in the farmhouse attachments, a cactus path condition that could never run after the dry-bank filter, and fence rails grounded from the wrong post. The yaw and rail grounding were corrected; the dead path condition was deleted. Because the reviewer never returned a final verdict, the build/parse/recipe/diff checks below remain the formal gates.
 
@@ -97,9 +101,9 @@ The Claim has no authored build-zone subset; every bank remains potentially buil
 
 The GLB is the land/river-bed visual. Water and ford stones in the verdict renders are temporary copies of shipped runtime geometry and are removed before save/export. The procedural verdict water material is not a substitute for the animated, transparent `LivingWaterShader`; it only avoids the terrain-atlas rectangle in a static Blender render. Promotion should keep `src/world/Water.ts` as water/ford owner and overlay it at the established water level; it must not load a second gameplay-water mask.
 
-### F-3D-D-06 — Camera composition is deliberately edge-weighted
+### F-3D-D-06 — Camera composition and rubble are deliberately edge-weighted
 
-The run camera keeps the central claim apron readable and places the mine, farmhouse, and cactus mass at the frame edges. The overview and sunset renders show the whole landmark silhouettes. That composition gives the player an open working area surrounded by place identity, but the owner should decide whether the far mine is too cropped before any production-quality landmark assets are commissioned.
+The run camera keeps the central claim apron readable and places the mine, farmhouse, cactus mass, and low support rubble toward the frame edges. The overview and sunset renders show the whole landmark silhouettes and feathered outer debris. That composition gives the player an open working area surrounded by place identity, but the owner should decide whether the far mine is too cropped before any production-quality landmark assets are commissioned.
 
 ### F-3D-D-07 — The preview landmarks are massing models, not final art
 
@@ -130,7 +134,7 @@ Rope/climb mechanics should remain outside this terrain ladder. They reopen comb
 - triangle/material/texture budget: PASS
 - planar/water/ford/apron/perimeter probes: PASS for the spike
 - landmark runtime behavior: intentionally absent
-- independent screenshot critique: ACTIONED; fixed water/ford, bone/chimney readability, shadow hardness, and sunset framing; retained documented mask/proxy limitations
+- independent screenshot critique: ACTIONED twice; fixed water/ford, bone/chimney readability, shadow hardness, sunset framing, stamped cactus orientation, rubble intersections, and abrupt debris falloff; retained documented mask/proxy limitations
 - `src/` edits: none
 - runtime/build/e2e gates: intentionally deferred to the attended promotion session
 
