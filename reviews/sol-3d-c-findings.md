@@ -1,12 +1,65 @@
-# SOL 3D-C — Town plate pilot findings
+# SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`
 
-Tip: exact Wave 3 SHA is reported in the attended handoff
+Tip: exact Wave 4 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — Wave 3 Tavern full-wrap repair and owner-directed all-angle polish complete; stable runtime interface preserved.**
+Verdict: **READY-FOR-GATES — Wave 4 Armored Railcar model complete; three-component damage interface and stable factory-owned runtime seam preserved.**
+
+## Wave 4 — Armored Railcar model
+
+### Delivered
+
+- One deterministic, production-ready armored boss locomotive built from the owner-approved E2 component plate, with low siege-engine massing rather than a friendly toy-train profile.
+- Exactly three named mesh nodes—`Railcar_Wheels`, `Railcar_Boiler`, and `Railcar_Cabin`—sharing one material and one atlas.
+- One morphable damage state per component: bent lead axle/suspension/drive rod; opened boiler vents/relief valves/band; cracked and caved cabin frame.
+- Four-angle turntable, a component-damage strip, and an on-rail composition using the production 42-degree FOV and camera pitch.
+- No runtime source edits. The presentation seam and game-side mount remain factory-owned.
+
+### Scale decision
+
+`src/world/RailPath.ts` defines a 0.78-unit rail gauge and 0.90-unit sleeper spacing. The pilot is 2.40 units long: 3.0769 gauge widths and 2.6667 sleeper intervals. This holds the queue's approximately-three-gauge law. The evidence mount raises the base-origin model by 0.125 units—the exact top of the runtime rail head—so the wheel treads seat on, rather than intersect, the rails.
+
+### Gate evidence
+
+| Check | Evidence | Result |
+| --- | --- | --- |
+| Geometry budget | parsed production GLB | 10,948 triangles; pass under 12,000 |
+| Component interface | parsed GLB nodes and meshes | exactly 3: wheels, boiler, cabin |
+| Damage interface | parsed GLB morph targets | exactly 1 named target on each component |
+| Baked surface | parsed production GLB | 1 material, 1 embedded 1024 x 1024 PNG |
+| Export hygiene | parsed production GLB | 0 cameras, 0 lights, 0 animations |
+| Scale and origin | parsed production bounds | `2.40 x 1.202 x 1.248279`; grounded and base-centered |
+| Determinism | checked versus recipe re-export | byte-identical SHA-256 `2abe1fceb5bf7f8e9ea3ba4c2dc4a42e28aa7d9e04b2327d9842862ae48d99b9` |
+| Run-camera composition | `railcar-on-rail-run-camera.png` | 42-degree production FOV/pitch; seated on 0.78-gauge rails |
+| All-angle evidence | `railcar-turntable.png` | reference-gated SHIP: low bunker cabin, long boiler, unequal drive wheels, armored ram, roof, rear, both sides |
+| Damage evidence | `railcar-damage-states.png` | bent wheels / venting boiler / cracked cabin, left to right |
+
+### F-3DC-11 — The real GLB closes the flat billboard read
+
+**Severity:** resolved high
+
+**Evidence:** the former component presentation used side-elevation planes, so the train collapsed from the game's top-down three-quarter view. The Wave 4 render shows a long volumetric boiler, low faceted bunker cabin, eight seated wheels with heavier leading pairs, drive rods, suspension, armored smokebox face, and deep reinforced ram at the production camera pitch. Three blind reference comparisons drove a massing correction; the final fresh review found no high-confidence boss-read blocker. The four-angle sheet shows no missing rear, side, or roof treatment.
+
+**Decision:** integrate the GLB at its existing factory-owned presentation seam. Keep the old painted component crops as fallback/reference material; do not delete them in this art-only branch.
+
+### F-3DC-12 — Damage swaps should drive morph weights, not duplicate meshes
+
+**Severity:** integration note
+
+**Evidence:** each component mesh exports one explicit morph target and the damage strip verifies the deformations independently. This preserves the queue's three named component zones without adding hidden fourth-through-sixth damage meshes or another material.
+
+**Decision:** the runtime mount should drive the target weight while the component is still alive, beginning at the existing `<=50% HP` damaged threshold (or proportionally across the remaining live HP), so the deformation is visible before defeat. Tint and steam/spark particles remain renderer-owned. Node names and morph names are documented in the pilot README and contract JSON.
+
+## Wave 4 merge classification
+
+- Branch base: `99d06e91`.
+- Main observed during final gates: `2776ca52`; it advanced after this branch was cut.
+- LANE-TOUCHED: new files under `assets/pilots/railcar-3d/` plus this findings file.
+- MAIN-MOVED-ONLY: unrelated attended-session changes; no Wave 4 pilot path existed at branch cut.
+- Expected integration: path-scoped add of the pilot and findings update; no runtime source or conflict resolution is part of this branch.
 
 ## Wave 3 — Tavern full-wrap repair
 
