@@ -473,7 +473,12 @@ export class TownScene {
     for (const building of townBuildings) {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
-    if (this.propRingEnabled) this.scene.add(createTownPropRing(this.townNight));
+    if (this.propRingEnabled) {
+      const pilot = new URLSearchParams(window.location.search).get('town3dPilot');
+      // The props pilot replaces wagons/trough/pan with GLBs; building their
+      // primitives too double-renders (owner saw the old frame atop Sol's pan).
+      this.scene.add(createTownPropRing(this.townNight, pilot === 'all' || pilot === 'props'));
+    }
     this.createStampMillVignette();
     this.createDynamoHallVignette();
     this.createFirstClaimGuide();
@@ -2362,7 +2367,7 @@ function megaprojectAt(
 type BoxPart = { x: number; y: number; z: number; sx: number; sy: number; sz: number; rotation?: number };
 type CylinderPart = { x: number; y: number; z: number; scale: [number, number, number]; rotation: THREE.Euler };
 
-function createTownPropRing(night: boolean): THREE.Group {
+function createTownPropRing(night: boolean, propsPiloted = false): THREE.Group {
   const group = new THREE.Group();
   group.name = 'TownPropRing';
   const woodParts: BoxPart[] = [];
@@ -2376,6 +2381,7 @@ function createTownPropRing(night: boolean): THREE.Group {
 
   for (const prop of townPropRing.props) {
     const scale = prop.scale ?? 1;
+    if (propsPiloted && (prop.kind === 'covered_wagon' || prop.kind === 'water_trough')) continue;
     if (prop.kind === 'covered_wagon') {
       addBox(woodParts, prop.position.x, 0.32, prop.position.z, 1.6 * scale, 0.48 * scale, 0.86 * scale, prop.rotation);
       addBox(canvasParts, prop.position.x, 0.82, prop.position.z, 1.35 * scale, 0.72 * scale, 0.72 * scale, prop.rotation);
@@ -2435,7 +2441,7 @@ function createTownPropRing(night: boolean): THREE.Group {
     }
   }
 
-  addPanMonumentParts(woodParts, group);
+  addPanMonumentParts(woodParts, group, propsPiloted);
   group.add(
     createBoxInstances('TownPropWoodInstances', woodParts, new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.84, metalness: 0.03 })),
     createBoxInstances('TownPropCanvasInstances', canvasParts, new THREE.MeshStandardMaterial({ color: '#e8d5a8', roughness: 0.88, metalness: 0.01 })),
@@ -2456,14 +2462,16 @@ function localPoint(prop: { position: { x: number; z: number }; rotation: number
   };
 }
 
-function addPanMonumentParts(parts: BoxPart[], group: THREE.Group): void {
+function addPanMonumentParts(parts: BoxPart[], group: THREE.Group, propsPiloted = false): void {
   const { x, z } = townPropRing.panMonument.position;
+  if (!propsPiloted) {
   parts.push({ x, y: 0.11, z: z - 0.68, sx: 1.62, sy: 0.22, sz: 0.16 });
   parts.push({ x, y: 0.11, z: z + 0.68, sx: 1.62, sy: 0.22, sz: 0.16 });
   parts.push({ x: x - 0.68, y: 0.11, z, sx: 0.16, sy: 0.22, sz: 1.18 });
   parts.push({ x: x + 0.68, y: 0.11, z, sx: 0.16, sy: 0.22, sz: 1.18 });
   parts.push({ x: x + 0.92, y: 0.36, z, sx: 0.28, sy: 0.52, sz: 0.28 });
   parts.push({ x: x + 0.92, y: 0.64, z, sx: 0.62, sy: 0.06, sz: 0.08, rotation: -0.2 });
+  }
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(townPropRing.panMonument.radius, townPropRing.panMonument.radius + 0.04, 48),
     new THREE.MeshBasicMaterial({ color: '#fff0bd', transparent: true, opacity: 0.24, depthWrite: false }),
