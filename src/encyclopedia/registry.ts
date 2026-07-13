@@ -14,6 +14,9 @@ const prospectorUrl = new URL('../../assets/processed/char-prospector-portrait.p
 const claimJumperUrl = new URL('../../assets/processed/char-jumper-sheet-front-r0c0.png', import.meta.url).href;
 const banditBaseUrl = new URL('../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png', import.meta.url).href;
 const baronUrl = new URL('../../assets/processed/char-baron-sheet-walk4-b-r0c0.png', import.meta.url).href;
+const railToughUrl = new URL('../../assets/processed/char-railtough-sheet-walk4-a-r0c0.png', import.meta.url).href;
+const steamWreckerUrl = new URL('../../assets/processed/char-steamwrecker-sheet-walk4-a-r0c0.png', import.meta.url).href;
+const coalThiefUrl = new URL('../../assets/processed/char-coalthief-sheet-walk4-a-r0c0.png', import.meta.url).href;
 const sentryBeaconUrl = new URL('../../assets/processed/bld-sentry-beacon.png', import.meta.url).href;
 const palisadeUrl = new URL('../../assets/processed/bld-palisade.png', import.meta.url).href;
 const sluiceUrl = new URL('../../assets/processed/bld-sluice-works.png', import.meta.url).href;
@@ -48,7 +51,7 @@ export type TownActorLedgerEntryId =
   | 'town_assay_clerk'
   | 'town_youngster_a'
   | 'town_youngster_b';
-export type EnemyLedgerEntryId = 'claim_jumper' | 'outlaw' | 'wrecker' | 'baron';
+export type EnemyLedgerEntryId = 'claim_jumper' | 'outlaw' | 'wrecker' | 'baron' | 'rail_tough' | 'steam_wrecker' | 'coal_thief';
 export type EnemyStatsDiscoveryId = `${EnemyLedgerEntryId}_stats`;
 export type BuildableLedgerEntryId =
   | 'building_sentry_beacon'
@@ -109,6 +112,9 @@ export const enemyStatsDiscoveryByEntryId: Record<EnemyLedgerEntryId, EnemyStats
   outlaw: 'outlaw_stats',
   wrecker: 'wrecker_stats',
   baron: 'baron_stats',
+  rail_tough: 'rail_tough_stats',
+  steam_wrecker: 'steam_wrecker_stats',
+  coal_thief: 'coal_thief_stats',
 };
 export const enemyStatsDiscoveryIds = Object.values(enemyStatsDiscoveryByEntryId) as readonly EnemyStatsDiscoveryId[];
 
@@ -174,6 +180,9 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   enemyEntry('outlaw', 'Outlaw Runner', banditBaseUrl, assetSlots.charBanditBase, outlawFactLines),
   enemyEntry('wrecker', 'Wrecker', claimJumperUrl, assetSlots.charClaimJumper, wreckerFactLines),
   enemyEntry('baron', 'The Claim-Jumper Baron', baronUrl, assetSlots.charBaron, baronFactLines),
+  e2EnemyEntry('rail_tough', 'Rail Tough', railToughUrl, assetSlots.charE2RailTough, 'Rail-yard muscle in a riveted coat.', 'Tactics: its armor turns aside part of every bolt.'),
+  e2EnemyEntry('steam_wrecker', 'Steam Wrecker', steamWreckerUrl, assetSlots.charE2SteamWrecker, 'A walking sledge built to make kindling of town works.', 'Tactics: stop it before it reaches a building.'),
+  e2EnemyEntry('coal_thief', 'Coal Thief', coalThiefUrl, assetSlots.charE2CoalThief, 'A quick hand with soot for a calling card.', 'Tactics: catch it before it escapes with the claim purse.'),
   ...buildableDefs.map((def) => {
     const sprite = buildableSpriteById[def.id];
     return buildableEntry(buildableLedgerEntryById[def.id], def.id, sprite.imageUrl, sprite.slot);
@@ -282,6 +291,18 @@ function enemyEntry(
       isDiscoveryStored(enemyStatsDiscoveryByEntryId[id])
         ? measuredLines()
         : ['HP: Not yet measured', 'Contact: Not yet measured', 'Behavior: Not yet measured'],
+  };
+}
+
+function e2EnemyEntry(id: EnemyLedgerEntryId, name: string, imageUrl: string, slot: string, fiction: string, tactics: string): LedgerEntry {
+  return {
+    id,
+    name,
+    category: 'The Opponents',
+    unlockSignal: `enemy:sighted:${id}`,
+    spriteRef: { slot, imageUrl },
+    loreLine: fiction,
+    factLines: () => [fiction, tactics],
   };
 }
 
