@@ -232,3 +232,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - **fix-board-gating-and-profiles** → lane-d 2026-07-13 — owner: Hill Mine open on a fresh account (era gate w/ condition copy) + pending rows read broken-bare (profile-grade dress: sketch plate, teaser, SURVEY PENDING stamp; counter counts playable only).
 
 - **SOL 3D-C WAVE 3 MERGED** (tavern full-wrap repair — the darkside finding closed by its finder) · **SOL 3D-D SPIKE MERGED** (The Claim sculpted-terrain + clutter, render-only; OWNER'S DESK: render verdict → GO authors the visualY pilot slice) · e2-clarity-and-wreckers DRAINED (boiler card, Fevered plates, wrecker separation+threat).
+
+- **fix-board-gating-and-profiles RE-QUEUED 2026-07-14** — first run no-op'd + falsely retired (s466, announced-drain class); pending-dress half shipped via surveys slice; remaining scope = ERA GATE (fresh accounts must not see Hill Mine open) + playable-only counter.
