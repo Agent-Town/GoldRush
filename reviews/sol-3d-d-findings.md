@@ -167,6 +167,14 @@ The first themed revision keeps the approved Claim terrain, river band, ford, ca
 
 `artifacts/map-rebuild-spike/claim-theme-ab.png` is the identical-camera decision image. It shows that the change can separate the Claim without new gameplay topology: the before side reads as abandoned desert, while the revision reads as inhabited river work. The final GLB remains one mesh, one material, 32,768 triangles, and one 2048² texture; all landmarks remain excluded render helpers.
 
+### Sequential loop checkpoint 2 — Dry Gulch
+
+Dry Gulch now has its own render-only terrain build rather than borrowing the Claim surface. The mesh follows the existing descriptor: no river, a basin centered on the fixed `(-18,-18)` spring, the southwest and east dry washes, and a raised mesa rim. The palette is hotter red ochre; oasis green is concentrated around the one spring. The Claim's rejected desert props become purposeful here: ruined extraction, abandoned house, cactus thicket, bison bones, and bleached rubble.
+
+`artifacts/map-rebuild-spike/claim-vs-dry-gulch-theme-ab.png` uses identical framing and now reads as two different places before labels are considered. The real run camera sees the spring only at the far upper edge; `artifacts/map-rebuild-spike/dry-gulch-layout-overview.png` is therefore the necessary topology verdict showing both washes feeding its basin. The headframe was moved away from the pond in the preview so the only water source remains readable without changing its authored coordinates or radius.
+
+The Dry Gulch GLB independently passes the same recipe ceiling: one mesh, one material, 32,768 triangles, one 2048² texture, zero cameras, and zero lights. The pond and all landmarks are render helpers removed before export; runtime water remains the spring circle from the contract.
+
 ## Recommendation
 
 Use this revision to approve the **relief grammar**, not the Claim landmark kit. The next visual comparison should keep the same terrain and camera while replacing the desert landmarks with the living working-claim kit. The desert composition should become the reference for a dedicated Dry Gulch rebuild. Any permanent landmark must still follow editor- or manifest-authored water, fixture, build, and spawn truth before Blender production work begins.
