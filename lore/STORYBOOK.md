@@ -5,6 +5,18 @@ Begun 2026-07-11 by the Fable attendant at the owner's order (verbatim): "This h
 
 **The one sentence the whole book serves:** *the gold rush was never about the gold* — ten eras of asking "what is a claim?" until the answer is "what you hand on."
 
+**The second sentence (owner ruling 2026-07-13 — THE GOLD FEVER, retro-woven through every chapter):** *the world catches the Fever; the town catches the future.* The Baron invented the Gold Fever — a manufactured hunger he spreads ON PURPOSE; the infected become zombie-like, not for brains but for gold, claims, and prospectors. This is the book's conflict engine and the reason the world CHANGES: each era the Fever spreads further through the outside world, and the little town pushes to survive and escape the madness — ascent as flight, until the Ark.
+
+### THE FEVER THREAD (how it reads, chapter by chapter — one line each; chapters elaborate when they land)
+- **E1**: the Fever is a rumor wearing rags — the claim-jumper waves ARE the Fevered, the Baron's unpaid army (his banner arrives before his bill because a bill would admit need). Turned back, never slain: the Fevered shake loose at the map's edge and stumble home.
+- **E2 (owner ruling 2026-07-13: "it also infects machines")**: the strain JUMPS — the Steamworks' horror is a boiler that wants. Steam wreckers and coal thieves are infected machinery; the Armored Railcar is the first great fevered engine. The Gazette's founding scoop, unprintable for fear: where the sickness comes from.
+- **E3**: the Fever learns the grid — saboteurs cut light because the Fevered fear what shows them their own faces. The twins' defection arc gains its true stakes: the Baron funded both sides with fevered crews.
+- **E4-E5**: the Fever travels — roads and sea carry it faster than wagons ever could; the outside world's letters get stranger, then stop.
+- **E6-E7**: the Calculating House proves teal-warm machines CANNOT catch it (warmth is the vaccine — machines that learned from a person refuse the hunger); the Signal era hears the Fevered towns fall silent, one frequency at a time.
+- **E8-E9**: the escape made literal — orbit, then a clean world the Fever has never touched (the red field turned E1-green: starting over, uninfected).
+- **E10**: the Static is the hunger universalized — the thing even the Baron serves without knowing. The heirs at the Ark are the Fever's last victims coming home; one of them winds the stopped watch.
+
+
 ---
 
 ## CHAPTER E1 — THE FRONTIER (the pan states the theme)
@@ -17,7 +29,7 @@ Begun 2026-07-11 by the Fable attendant at the owner's order (verbatim): "This h
 **The Prospector** — arrives in E1 as a claim-office curiosity: a round brass "calculating assistant" nobody trusts. Rung 0: it may only SUGGEST. The player earns its rungs (0 suggest → 1 act-when-asked → 2 act-within-budget → 3 autonomous) and each rung is a story beat where the town argues about it in the tavern. Its E1 secret, planted for E6: a maker's plate on its underside reading only "C.H." — the Calculating House does not exist yet; the Prospector is a PROTOTYPE sent backward in no one's memory but its own logs. (Payoff: E6's Calculating House founding uses its logs as the founding documents.)
 **The Chen family** — the Gazette entire: Wei at the press (E1: hand-copied notices), Lan at type and ledger, Mei selling on the plaza. The Household Law and Family-Business Tradition start here as lived fact.
 **The cast** — tavernkeeper (quest voice, warm), assay clerk (numbers-lover; future banker's rival), elder (dry, kind; dies early E2 — the first loss the town plants a tree for), preacher, storekeeper (his son minds the counter), schoolteacher (her daughter monitors chalk), the youngsters.
-**THE BARON** — see the Pride-Wound canon (lore/story-arc.md). In E1 he is a graduation exam wearing a coat: ×4 scale, structure-rampage, sky-rocket volleys from the Rocket Cart. His defeat line is canon ("Dragged off by his own men, swearing revenge") and his TELL is canon-in-waiting: before every rampage he checks a pocket-watch that no longer runs — it stopped the day he declared the valley spent. Every era he returns, the watch is still stopped. At E10, when his heirs join the Ark, one of them finally winds it. Write that scene when E10's chapter lands; it is the book's last grace note.
+**THE BARON** — see the Pride-Wound canon AND the Gold Fever ruling (lore/story-arc.md): his army is INFECTED, not hired — the E1 waves are the Fevered, his invention and his signature. In E1 he is a graduation exam wearing a coat: ×4 scale, structure-rampage, sky-rocket volleys from the Rocket Cart. His defeat line is canon ("Dragged off by his own men, swearing revenge") and his TELL is canon-in-waiting: before every rampage he checks a pocket-watch that no longer runs — it stopped the day he declared the valley spent. Every era he returns, the watch is still stopped. At E10, when his heirs join the Ark, one of them finally winds it. Write that scene when E10's chapter lands; it is the book's last grace note.
 
 ### THE ARSENAL AND ITS MODIFICATION LINES (E1 roots — every later weapon descends from these four)
 1. **THE PAN** (the through-line; never a weapon, always the point). Mods: none, ever. It appears in every era's arsenal plate untouched, until E10 re-draws it in starlight. The one item the game refuses to upgrade is the one the story is about.

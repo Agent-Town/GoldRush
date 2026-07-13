@@ -36,6 +36,8 @@ SYNTHESIS: the era transformations are not neutral progress — they are the tow
 - PROPOSAL (natural reading of the ruled arc, owner may adjust): the late-saga ascent IS the escape made literal — E8 leaves the ground, E9 breaks a NEW world the Fever has never touched (the red field turned E1-green: starting clean), E10's Ark carries the claim beyond reach. The E10 Static then reads as the final teacher: the hunger that even the Baron serves — and the kinship beat (his heirs at the Ark) is the Fever's last victims coming home.
 - THE WORLD DISPATCH LAW (from the ruling's third sentence): world-state backstory is REVEALED THROUGH PLAYER PROGRESS, never dumped — see specs/world-dispatches/.
 
+**ADDENDUM (OWNER RULING 2026-07-13, verbatim): "it also infects machines"** — the strain jumps to machinery at the Steamworks: E2+ machine enemies ARE fevered engines (steam wreckers, the Railcar, the era factions' hardware). The PROPOSAL that pairs with it (E6 chapter): teal-warm Calculating House machines cannot catch it — warmth as the vaccine; the Prospector's immunity is why the Fevered hunt prospectors.
+
 OPEN (owner, when convenient): does any era earn a CURE beat (the schoolhouse/academy studying the Fever — a warm mid-saga victory), and does the Gazette ever print the truth about where the Fever comes from?
 
 ## THE BARON CADENCE (answers owner Q of 2026-07-09: "But then the Baron will be part of the boss fight in every Epoch?")
