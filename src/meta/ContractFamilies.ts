@@ -508,7 +508,10 @@ export type EpochBundle = EpochMeta & {
   megaproject: EpochMegaprojectTarget;
   transition: EpochTransition;
   successor: string | null;
+  upcoming: EpochUpcomingContract[];
 };
+
+export type EpochUpcomingContract = { id: string; name: string; line: string };
 
 type EpochManifest = Omit<EpochMeta, 'threshold'> & {
   tile?: EpochTileDescriptor;
@@ -521,6 +524,7 @@ type EpochManifest = Omit<EpochMeta, 'threshold'> & {
   megaproject: EpochMegaprojectTarget;
   transition: EpochTransition;
   successor: string | null;
+  upcoming?: EpochUpcomingContract[];
   parts: {
     families?: string;
     caps?: string;
@@ -623,6 +627,7 @@ export function loadEpoch(id: string): EpochBundle {
     megaproject: manifest.megaproject,
     transition: manifest.transition,
     successor: manifest.successor,
+    upcoming: manifest.upcoming ?? [],
   };
 }
 
@@ -656,6 +661,11 @@ export function listContracts(epochId = DEFAULT_EPOCH_ID): ContractManifest[] {
 
 export function listBoardContracts(): ContractManifest[] {
   return orderedManifests.flatMap((manifest) => (manifest.parts.contracts ? loadContracts(manifest).contracts : []));
+}
+
+export function pendingEpochContracts(epoch: EpochBundle, contracts: readonly Pick<ContractManifest, 'id'>[]): EpochUpcomingContract[] {
+  const contractIds = new Set(contracts.map((contract) => contract.id));
+  return epoch.upcoming.filter((entry) => !contractIds.has(entry.id));
 }
 
 export function loadContract(id: string, epochId?: string): ContractManifest {
@@ -963,6 +973,18 @@ function validateEpochManifest(manifest: EpochManifest): void {
   };
 
   whole(manifest.scienceThreshold, 'scienceThreshold must be a positive integer', 1);
+  if (manifest.upcoming !== undefined) {
+    if (!Array.isArray(manifest.upcoming)) fail('upcoming must be an array');
+    const upcomingIds = new Set<string>();
+    for (const [index, upcoming] of manifest.upcoming.entries()) {
+      if (!isRecord(upcoming)) fail(`upcoming[${index}] must be an object`);
+      text(upcoming.id, `upcoming[${index}].id must be non-empty`);
+      text(upcoming.name, `upcoming[${index}].name must be non-empty`);
+      text(upcoming.line, `upcoming[${index}].line must be non-empty`);
+      if (upcomingIds.has(upcoming.id)) fail(`upcoming id is duplicated: ${upcoming.id}`);
+      upcomingIds.add(upcoming.id);
+    }
+  }
   if (!isRecord(manifest.research) || !Array.isArray(manifest.research.branches) || manifest.research.branches.length !== 3) {
     fail('research.branches must contain exactly three branches');
   }
