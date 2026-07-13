@@ -856,6 +856,16 @@
   background: #5b8a8a;
 }
 
+.town-ui__catalog-dot--muted::after {
+  border-color: rgba(46, 27, 14, 0.45);
+  background: rgba(255, 248, 232, 0.3);
+  opacity: 0.58;
+}
+
+.town-ui__catalog-dot--muted[aria-current="page"]::after {
+  background: rgba(91, 138, 138, 0.5);
+}
+
 .town-ui__board-close:hover,
 .town-ui__board-close:focus-visible,
 .town-ui__catalog-arrow:hover,
