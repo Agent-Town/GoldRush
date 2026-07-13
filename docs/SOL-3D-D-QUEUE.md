@@ -41,3 +41,6 @@ Wheel-rut scars and drag marks · stained and salt-crusted earth · sun-bleached
 
 ### Acceptance gate (added to every terrain wave from now on)
 Each verdict board includes a MOOD A/B: the sculpted terrain at the gameplay camera NEXT TO the shipped painted tile of the same map — the 3D must read as the SAME WORLD, harder. A fresh unprimed critique answers one question first: "holiday or fight?" Anything reading holiday returns to the easel.
+
+## LANDMARKS = MOUNTED (owner ruling 2026-07-14: "mounting is ok for me")
+Landmark models ship as SEPARATE GLBs mounted on the terrain (the town-buildings-on-plate pattern), never baked into the ground mesh. Terrain stays stable while landmark packs iterate; each terrain's contract JSON lists its landmark mount points (id, position, rotation, scale) so the factory's mount seam is data-driven. Proxies in current renders stay proxies until a landmark-pack wave is granted.

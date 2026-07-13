@@ -250,3 +250,4 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - **SOL 3D-C WAVE 4 granted**: the real 3D railcar from the boss plate (three damage components, factory wires on delivery).
 
 - **THE GRIT LAW ruled** (owner 2026-07-14): terrain program material language = engraved hardship (bake from the painted tiles/kit plates; the 'holiday read' is the named failure; MOOD A/B joins every terrain gate). Composition of the five-terrain family ACCEPTED; atlas/material pass returns to Sol 3D-D.
+- **LANDMARKS-MOUNTED ruled** (owner): separate GLBs on mount points (contract JSON lists them), never baked — terrain stable, landmark packs iterate independently.
