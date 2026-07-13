@@ -102,8 +102,30 @@ type BossBarState = {
   components?: Array<{ id: string; label: string; hp: number; maxHp: number }>;
 };
 
+type ActiveAnimation = {
+  clip: CharacterSpriteClip;
+  orientation: RotationDirection;
+  active: boolean;
+  speed: number;
+  groundSpeed: number;
+};
+
 function animationSpeed(enemy: ClaimJumperEnemy): number {
-  return Math.hypot(enemy.velocityX, enemy.velocityZ);
+  const groundSpeed = Math.hypot(enemy.velocityX, enemy.velocityZ);
+  const visualScale = enemy.visualScale * (enemy.eliteKind ? 1 : RUN_CAST_SCALE);
+  return groundSpeed * 4 / (Balance.anim.strideUnits * visualScale * Balance.anim.walkFpsPerSpeed);
+}
+
+function regularAnimation(enemy: ClaimJumperEnemy, requestedClip = enemy.animationClip): ActiveAnimation {
+  const groundSpeed = Math.hypot(enemy.velocityX, enemy.velocityZ);
+  const stoppedGait = groundSpeed <= 0.01 && (requestedClip === 'walk' || requestedClip === 'flee');
+  return {
+    clip: stoppedGait ? 'idle' : requestedClip,
+    orientation: enemy.animationOrientation,
+    active: true,
+    speed: animationSpeed(enemy),
+    groundSpeed,
+  };
 }
 
 export class EnemyPool {
@@ -633,11 +655,11 @@ export class EnemyPool {
     const thiefAnimation = this.activeAnimation(true);
     const baronAnimation = this.activeBaronAnimation();
     const updateNormalSprites = () =>
-      this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.active ? normalAnimation.orientation : 'side', false, normalAnimation.speed);
+      this.spriteAnimator.update(delta, normalAnimation.clip, normalAnimation.active ? normalAnimation.orientation : 'side', false, normalAnimation.speed, normalAnimation.groundSpeed);
     const updateThiefSprites = () =>
-      this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.active ? thiefAnimation.orientation : 'side', false, thiefAnimation.speed);
+      this.thiefSpriteAnimator.update(delta, thiefAnimation.clip, thiefAnimation.active ? thiefAnimation.orientation : 'side', false, thiefAnimation.speed, thiefAnimation.groundSpeed);
     const updateBaronSprites = () =>
-      this.baronSpriteAnimator?.update(delta, baronAnimation.clip, baronAnimation.active ? baronAnimation.orientation : 'side', false, baronAnimation.speed);
+      this.baronSpriteAnimator?.update(delta, baronAnimation.clip, baronAnimation.active ? baronAnimation.orientation : 'side', false, baronAnimation.speed, baronAnimation.groundSpeed);
     if (normalAnimation.active || !thiefAnimation.active) {
       updateThiefSprites();
       updateNormalSprites();
@@ -654,7 +676,7 @@ export class EnemyPool {
       if (!animation.active && !presentation.sprites.isLoaded) continue;
       presentation.sprites.ensureLoaded();
       presentation.fades.ensureLoaded();
-      presentation.animator.update(delta, animation.clip, animation.active ? animation.orientation : 'side', false, animation.speed);
+      presentation.animator.update(delta, animation.clip, animation.active ? animation.orientation : 'side', false, animation.speed, animation.groundSpeed);
     }
   }
 
@@ -755,44 +777,51 @@ export class EnemyPool {
     disposeClaimJumperAssets(this.assets);
   }
 
-  private activeAnimation(thieves: boolean): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean; speed: number } {
+  private activeAnimation(thieves: boolean): ActiveAnimation {
     if (thieves) {
       for (const enemy of this.enemies) {
         if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'grab') {
-          return { clip: 'grab', orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
+          return regularAnimation(enemy, 'grab');
         }
       }
       for (const enemy of this.enemies) {
         if (enemy.isAlive && enemy.isThief && enemy.animationClip === 'flee') {
-          return { clip: 'flee', orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
+          return regularAnimation(enemy, 'flee');
         }
       }
     }
     for (const enemy of this.enemies) {
       if (enemy.isAlive && enemy.isThief === thieves && (!this.baronSprites.isLoaded || enemy.eliteKind !== 'baron')) {
-        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
+        return regularAnimation(enemy);
       }
     }
-    return { clip: 'idle', orientation: 's', active: false, speed: 0 };
+    return { clip: 'idle', orientation: 's', active: false, speed: 0, groundSpeed: 0 };
   }
 
-  private activeVariantAnimation(variantId: string): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean; speed: number } {
+  private activeVariantAnimation(variantId: string): ActiveAnimation {
     for (const enemy of this.enemies) {
       if (enemy.isAlive && enemy.variantId === variantId) {
-        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
+        return regularAnimation(enemy);
       }
     }
-    return { clip: 'idle', orientation: 's', active: false, speed: 0 };
+    return { clip: 'idle', orientation: 's', active: false, speed: 0, groundSpeed: 0 };
   }
 
-  private activeBaronAnimation(): { clip: CharacterSpriteClip; orientation: RotationDirection; active: boolean; speed: number } {
+  private activeBaronAnimation(): ActiveAnimation {
     for (const enemy of this.enemies) {
       if (enemy.isAlive && enemy.eliteKind === 'baron') {
         this.ensureBaronPresentation();
-        return { clip: enemy.animationClip, orientation: enemy.animationOrientation, active: true, speed: animationSpeed(enemy) };
+        const groundSpeed = Math.hypot(enemy.velocityX, enemy.velocityZ);
+        return {
+          clip: enemy.animationClip,
+          orientation: enemy.animationOrientation,
+          active: true,
+          speed: groundSpeed,
+          groundSpeed,
+        };
       }
     }
-    return { clip: 'idle', orientation: 's', active: false, speed: 0 };
+    return { clip: 'idle', orientation: 's', active: false, speed: 0, groundSpeed: 0 };
   }
 
   private ensureBaronPresentation(): SpriteAnimator {
