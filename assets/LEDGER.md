@@ -279,4 +279,8 @@ Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGP
 | char preacher / schoolteacher / assay_clerk walk8 a+b | ✓ A winners processed + wired (96 cells + 3 frames.json); B rejected for reversed front/back rows; portrait-post bust stand-ins retired 2026-07-12 |
 | stream overlay pack (starting-soon/brb/ending/frame/live-badge) | ✓ raw drained (5) — OBS-ready per docs/marketing/STREAMING.md |
 
+## 2026-07-13 — E3 research placeholder icons
+
+The Voltage research chart reuses existing processed icons until `icons-e3.png` exists. Future sheet wants: pylon span, looped grid, arc lamp, brown-out ledger, rim conductor, arc caster, quick contacts, arc turret, coil fence, drain mast, copper parts, capacitor crate, tram receipt, exchange pattern, and Canyon dispatch.
+
 45. **art-kit-era-1 / the valley before the steam — THE ROOT PLATE; the kit chain completes E1→E10.** Status: **RAW GENERATED 2026-07-12; ATTENDED-QA'd + DRAINED 2026-07-13; PENDING-CONSUMPTION.** `assets/raw/kit-era-1.png` (1672×941 RGB full-bleed, native `image_gen` edit of kit-era-2 backward to the Placer era; 0 retakes; SHA `5e9b4ce2…`). Attended visual verify (not inherited from the run note): identical S-curve river/mesa/ridge geography vs kit-era-2; tents + hand-panning + wooden sluices + early Stamp Mill timber frame; ZERO rail/train/depot/machine-shop/boiler/pressure/palisade/steam; no readable letters/firearms/gore; warm-dawn sepia engraving held; teal limited to Prospector craft glints. Run note: `assets/raw/codex-art-run-kit-era-1.md`. Reference tier = full-bleed, no `#ff00ff` key → no extraction/wiring (kit-era-N is a `data-art-key` CSS hook; sole live ref kit-era-2).

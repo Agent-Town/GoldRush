@@ -128,6 +128,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
     name: 'Prospector Lessons',
     line: 'A future permanent Prospector policy slot is marked in the ledger.',
   },
+  line_survey: { name: 'Line Survey', line: 'Pylon-span routes are marked for the Canyon Works.' },
+  looped_grid: { name: 'Looped Grid', line: 'A second current path is marked against cut lines.' },
+  lamp_districts: { name: 'Lamp Districts', line: 'Warm-light districts are entered in the night ledger.' },
+  brownout_ledger: { name: 'Brown-Out Ledger', line: 'The town can account for what stays lit and armed.' },
+  rimline_conductors: { name: 'Rimline Conductors', line: 'Long spans are marked to carry current across the gorge.' },
+  arc_caster: { name: 'Arc Caster', line: 'The arc-caster family is marked in the Voltage arsenal.' },
+  quickened_contacts: { name: 'Quickened Contacts', line: 'A faster Voltage cadence is entered in the arsenal ledger.' },
+  arc_turret: { name: 'Arc Turret', line: 'The capacitor-fed turret tier is marked for fabrication.' },
+  coil_fence: { name: 'Coil Fence', line: 'The guarded copper fence tier is marked for the claim.' },
+  drain_mast_science: { name: 'Drain-Mast Science', line: 'The Crawler medal still guards these captured diagrams.' },
+  copper_parts: { name: 'Copper Parts', line: 'Coils, contacts, and insulators enter the parts ledger.' },
+  capacitor_crate: { name: 'Capacitor Crate', line: 'The stored-current crate family is marked for fabrication.' },
+  tram_receipts: { name: 'Tram Receipts', line: 'Powered tram routes gain a place in the haul ledger.' },
+  exchange_patterns: { name: 'Exchange Patterns', line: 'Six patched lines enter the town pattern book.' },
+  canyon_dispatch: { name: 'Canyon Dispatch', line: 'The Canyon Works route book is ready for a future run.' },
 };
 
 export type ResearchChartOptions = {
