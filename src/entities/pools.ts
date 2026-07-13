@@ -32,6 +32,9 @@ const BARON_HP_SEGMENTS = 8;
 const BOSS_HP_WIDTH = 1.9;
 const BOSS_HP_FILL_WIDTH = 1.72;
 const RAILCAR_DAMAGE_THRESHOLD = 0.5;
+const FEVER_GOLD = new THREE.Color('#ffd56a');
+const FEVER_REST_STRENGTH = 0.34;
+const FEVER_SURGE_STRENGTH = 0.7;
 const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
   active: false,
   phase: 0,
@@ -46,6 +49,39 @@ type EnemySpritePresentation = {
   fades: GeneratedSpriteBatch;
   animator: SpriteAnimator;
 };
+
+export type FeverAccentDiagnostics = {
+  active: boolean;
+  kind: 'human' | 'machine' | 'none';
+  strength: number;
+  surged: boolean;
+  channel: 'watch-paint-instanced' | 'none';
+};
+
+export function feverAccentState(
+  enemy: {
+    alive: boolean;
+    eliteKind?: 'baron' | 'railcar' | null;
+    variantId?: string | null;
+    stealState?: string;
+    wreckState?: string;
+    visible?: boolean;
+  },
+  pulse = 0,
+): FeverAccentDiagnostics {
+  if (!enemy.alive || enemy.visible === false || enemy.eliteKind === 'baron' || enemy.eliteKind === 'railcar') {
+    return { active: false, kind: 'none', strength: 0, surged: false, channel: 'none' };
+  }
+  const surged = enemy.stealState === 'grabbing' || enemy.wreckState === 'swinging';
+  const base = surged ? FEVER_SURGE_STRENGTH : FEVER_REST_STRENGTH;
+  return {
+    active: true,
+    kind: enemy.variantId === 'steam_wrecker' ? 'machine' : 'human',
+    strength: round3(base + Math.sin(pulse) * (surged ? 0.08 : 0.04)),
+    surged,
+    channel: 'watch-paint-instanced',
+  };
+}
 
 function createEnemySpritePresentation(variantId: string, slotId: AssetSlotId): EnemySpritePresentation {
   const sprites = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
@@ -146,10 +182,11 @@ export class EnemyPool {
   private readonly watchPaintMaterial = new THREE.MeshBasicMaterial({
     color: '#d7a84c',
     transparent: true,
-    opacity: 0.5,
+    opacity: 0.32,
     depthWrite: false,
     fog: false,
     side: THREE.BackSide,
+    blending: THREE.AdditiveBlending,
   });
   private readonly watchPaintMeshes: THREE.InstancedMesh[] = [];
   private readonly sackMesh: THREE.InstancedMesh = new THREE.InstancedMesh(
@@ -260,7 +297,7 @@ export class EnemyPool {
   private readonly baseMatrix = new THREE.Matrix4();
   private readonly instanceMatrix = new THREE.Matrix4();
   private readonly watchPaintBaseMatrix = new THREE.Matrix4();
-  private readonly watchPaintScaleMatrix = new THREE.Matrix4().makeScale(1.08, 1.08, 1.08);
+  private readonly watchPaintScaleMatrix = new THREE.Matrix4().makeScale(1.04, 1.04, 1.04);
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private readonly syncObject = new THREE.Object3D();
   private readonly warmHitFlashPosition = new THREE.Vector3();
@@ -278,6 +315,7 @@ export class EnemyPool {
   private readonly bannerPoleColor = new THREE.Color('#4b2a17');
   private readonly bannerClothColor = new THREE.Color('#7f2633');
   private readonly dimmedColor = new THREE.Color();
+  private readonly feverAccentColor = new THREE.Color();
   private lightDimming: EnemyLightDimmingConfig = {
     enabled: false,
     darkness: 0,
@@ -296,6 +334,7 @@ export class EnemyPool {
   private enemyFogEnabled = true;
   private nightBasicActive = false;
   private baronSpriteAnimator: SpriteAnimator | null = null;
+  private feverPulse = 0;
 
   constructor(private readonly camera?: THREE.Camera) {
     this.group.name = 'EnemyPool';
@@ -459,6 +498,20 @@ export class EnemyPool {
     return this.isWatchPainted(enemy);
   }
 
+  feverAccentFor(enemy: ClaimJumperEnemy): FeverAccentDiagnostics {
+    return feverAccentState(
+      {
+        alive: enemy.isAlive,
+        eliteKind: enemy.eliteKind,
+        variantId: enemy.variantId,
+        stealState: enemy.stealState,
+        wreckState: enemy.wreckState,
+        visible: this.renderLightFactor(this.lightFactorFor(enemy)) > 0,
+      },
+      this.feverPulse + enemy.id * 0.73,
+    );
+  }
+
   warmHitFlashes(position: THREE.Vector3): Promise<void> {
     if (Balance.combatReadability.enemyFlashSeconds <= 0 || Balance.combatReadability.enemyFlashIntensity <= 0) return Promise.resolve();
     this.warmHitFlashPosition.copy(position);
@@ -580,6 +633,7 @@ export class EnemyPool {
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
   ): void {
+    this.feverPulse += delta * 3.2;
     this.rebuildSpatialHash();
     const heroPositions = Array.isArray(heroPosition) ? heroPosition : [heroPosition];
 
@@ -947,7 +1001,7 @@ export class EnemyPool {
       part.count = Balance.enemy.poolSize;
       part.castShadow = false;
       part.frustumCulled = false;
-      part.renderOrder = RenderLayers.gameplay - 0.01;
+      part.renderOrder = RenderLayers.gameplay + 0.01;
       this.group.add(part);
       for (let index = 0; index < Balance.enemy.poolSize; index += 1) part.setMatrixAt(index, this.hiddenMatrix);
       part.instanceMatrix.needsUpdate = true;
@@ -1169,13 +1223,18 @@ export class EnemyPool {
   }
 
   private syncWatchPaint(enemy: ClaimJumperEnemy, visible: boolean): void {
-    this.watchPaintBaseMatrix.multiplyMatrices(visible ? this.baseMatrix : this.hiddenMatrix, this.watchPaintScaleMatrix);
+    const fever = this.feverAccentFor(enemy);
+    this.watchPaintBaseMatrix.multiplyMatrices(visible || fever.active ? this.baseMatrix : this.hiddenMatrix, this.watchPaintScaleMatrix);
     for (let index = 0; index < this.watchPaintMeshes.length; index += 1) {
       const mesh = this.watchPaintMeshes[index];
       const localMatrix = this.localMatrices[index + 1];
       if (!mesh || !localMatrix) continue;
-      this.instanceMatrix.multiplyMatrices(this.watchPaintBaseMatrix, localMatrix);
+      const feverPartVisible = fever.kind === 'machine' ? index > 0 : index === 1;
+      this.instanceMatrix.multiplyMatrices(visible || (fever.active && feverPartVisible) ? this.watchPaintBaseMatrix : this.hiddenMatrix, localMatrix);
       mesh.setMatrixAt(enemy.id, this.instanceMatrix);
+      this.feverAccentColor.copy(FEVER_GOLD).multiplyScalar(visible ? 1 : fever.strength);
+      mesh.setColorAt(enemy.id, this.feverAccentColor);
+      if (mesh.instanceColor) mesh.instanceColor.needsUpdate = true;
       mesh.instanceMatrix.needsUpdate = true;
     }
   }
@@ -1305,7 +1364,6 @@ export class EnemyPool {
 
   private setProceduralVisible(visible: boolean): void {
     for (const part of this.renderParts) part.visible = visible;
-    for (const part of this.watchPaintMeshes) part.visible = visible;
   }
 
   private syncEnemyFog(): void {
