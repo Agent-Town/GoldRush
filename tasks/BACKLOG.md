@@ -212,3 +212,6 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - **fix-walk-cutout-pockets** → lane-b 2026-07-13 — owner gallery pass: opaque cream wedges in enclosed sprite gaps (hero walk8 + LEDGER #33 caveat class); full audit → bounded pocket clears, raws untouched.
 - **run-cast-scale-up** ✅ SHIPPED `96d49eb4` (s457, recovered dead-s456 re-land) — run-scene cast ×1.5, boss/railcar excluded; render-only; own spec PASS both projects, tsc+build green; adjacent vp-02/e2-enemies reds fingerprint-matched to PRE-EXISTING main (F-2 corrective owed). review `reviews/run-cast-scale-up.md`.
 - **run-gait-stride** → lane-c #2 2026-07-13 (behind run-cast-scale-up, same lane by design) — owner: "their feet move so fast... many steps to get somewhere" — gait law: cycle speed = ground speed / (stride × visualScale); hero+enemies; baron/prospector/town excluded.
+
+- **promote-era-kit-backdrops** → lane-b 2026-07-13 — owner: menus per-epoch; system ships, plates 3-10 unpromoted → promote the full chain (menus era-align through E10 automatically).
+- **ledger-era-chapters** → lane-d 2026-07-13 — owner: encyclopedia per epoch; reader gains era chapters (tab grammar from the research chart), entries epoch-tagged, future eras locked-stub.
