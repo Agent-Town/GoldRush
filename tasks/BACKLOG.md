@@ -188,7 +188,7 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - 3D promotion verdict comes AFTER the ladder completes (see HANDOVER §4-appendix item 6).
 
 - **fix-chapel-cross** → queue/lane-b 2026-07-13 (owner: floating cross → seat it on the steeple; model-only, chapel spec unmodified-green). Owner verdict same message: other 3D houses "great".
-- **F-claim-tone (owner, 2026-07-13): "The Claim office looks much darker than the other buildings."** Gate had measured +4.76% (inside the 5% limit) — the limit is evidently looser than the owner's eye; future slices should target ≤3%. **HOLD: owner is trying a hands-on Blender fix first** (his ask, same message; `scripts/reexport-pilot.sh` written for the loop). If he passes, author fix-claim-office-tone (rebake brighter to match painted neighbors, model-only, spec unmodified-green).
+- **F-claim-tone (owner, 2026-07-13): "The Claim office looks much darker than the other buildings."** Gate had measured +4.76% (inside the 5% limit) — the limit is evidently looser than the owner's eye; future slices should target ≤3%. ~~HOLD~~ CLOSED by Sol wave 6 (owner delegated) (his ask, same message; `scripts/reexport-pilot.sh` written for the loop). If he passes, author fix-claim-office-tone (rebake brighter to match painted neighbors, model-only, spec unmodified-green).
 - **fix-baron-boss-fight** → queue/lane-c 2026-07-13 — owner Baron playtest: F-BAR-1 healthbar never moved (probe-first), F-BAR-2 RULING "the Baron can just carry it himself" (launcher rides him; volley+capture intact), F-BAR-3 boss not threatening (e1-baron twist tuning). PRAISE recorded: "the size is great."
 
 ## 2026-07-13 — owner's FIRST E2 playtest wave (4 masters queued + 1 attended fix)
@@ -270,3 +270,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 ## 2026-07-14 — E3 CONTRACT SLATE + E4 OPENS (owner: "can we start looking at the contracts for E3? ... What about E4?")
 - QUEUED: **cw-03-crawler-boss** (lane-a; storybook Acts 0-3: the flicker, the shrinking shore, the dial, the gift-back — the town KEEPS the wreck; placeholder presentation, Sol model wires later) · **e3-blackout-ridge** (lane-c; stored breath: capacitor STORAGE node + trunk-line defense) · **e3-moth-season** (lane-d; the inverted light puzzle + the decoy tithe) · **e4-01-research-tree** (lane-b#2; creates epoch-4-motor, node table to owner) · **art-e4-batch-01** (art; the drip stays 2 weeks ahead).
 - LADDERED NEXT: **e3-fairground** (the Ferris wheel — generator/watchtower/joy; meatier: new entity; authors after the first three drain) · **cw-02-escort mode** (tram + capacitor crate on canyon works) · E3 townsfolk/aging art batch.
+
+- **SOL 3D-C WAVE 6 MERGED+DEPLOYED** (town audit: chapel truly seated, claim tone fixed 4.37%, wagon/trough rebuilt, 28/28) — F-claim-tone CLOSED · WAVE 7 (epoch variations) thumbs-up given.
