@@ -1,0 +1,61 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-3-voltage/contracts.json",
+    "tileId": "e3-moth-season",
+    "size": 80,
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "west-lit-yard",
+        "bank": "north",
+        "minX": -32,
+        "maxX": -8,
+        "minZ": -24,
+        "maxZ": 24
+      },
+      {
+        "id": "dark-corridor",
+        "bank": "north",
+        "minX": -6,
+        "maxX": 6,
+        "minZ": -34,
+        "maxZ": 34
+      },
+      {
+        "id": "east-tithe-yard",
+        "bank": "north",
+        "minX": 8,
+        "maxX": 32,
+        "minZ": -24,
+        "maxZ": 24
+      }
+    ],
+    "waterSources": [],
+    "lanes": {
+      "spawnEdges": ["north", "south"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": [],
+    "dayNightCycle": {
+      "periodSeconds": 24,
+      "duskRampSeconds": 2,
+      "dawnRampSeconds": 2,
+      "nightDepth": 1,
+      "nightLocked": true
+    },
+    "mothSeason": {
+      "radiusWeight": 1,
+      "decoyWeight": 2,
+      "mothsPerLightPerWave": 1,
+      "nightSpeedOutsideLight": 1.12,
+      "litThreshold": 0.35,
+      "attachDamagePerSecond": 6
+    }
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}
