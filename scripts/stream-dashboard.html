@@ -9,12 +9,16 @@
     * { box-sizing:border-box; }
     body { margin:0; min-height:100vh; overflow:hidden; background:var(--paper); color:var(--ink); font-family:Wellfleet, Georgia, serif; }
     body::before { content:""; position:fixed; inset:0; opacity:.22; pointer-events:none; background:repeating-linear-gradient(0deg, transparent 0 7px, rgba(46,27,14,.08) 8px); }
-    main { position:relative; min-height:100vh; padding:52px 64px; display:grid; grid-template-columns:1.35fr 1fr; grid-template-rows:auto 1fr; gap:34px; }
+    main { position:relative; min-height:100vh; padding:40px 64px; display:grid; grid-template-columns:1.35fr 1fr; grid-template-rows:auto auto 1fr; gap:26px; }
     header { grid-column:1/-1; display:flex; align-items:end; justify-content:space-between; border-bottom:5px double var(--ink); padding-bottom:18px; }
     h1 { margin:0; font-size:58px; line-height:.9; letter-spacing:.08em; text-transform:uppercase; }
     .live { padding:12px 20px; border:3px solid var(--teal); border-radius:999px; color:var(--teal); font-size:24px; letter-spacing:.12em; text-transform:uppercase; }
     section { border:3px solid var(--ink); border-radius:16px; padding:30px; background:rgba(255,228,160,.28); box-shadow:9px 9px 0 rgba(196,136,58,.55); }
-    .merged { grid-row:2/4; }
+    .pipeline { grid-column:1/-1; display:grid; grid-template-columns:repeat(4, 1fr); gap:18px; }
+    .stage { border:3px solid var(--ink); border-radius:12px; padding:15px 20px; background:rgba(255,228,160,.28); }
+    .stage strong { display:block; font-size:44px; color:var(--teal); line-height:1; }
+    .stage span { font-size:17px; letter-spacing:.08em; text-transform:uppercase; }
+    .merged { grid-row:3/5; }
     h2 { margin:0 0 20px; font-size:22px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal); }
     #merge-title { margin:8px 0 20px; font-size:52px; line-height:1.05; }
     #merge-note { margin:0; font-size:30px; line-height:1.35; }
@@ -29,6 +33,12 @@
 <body>
   <main>
     <header><h1>Gold Rush<br>The Factory</h1><div class="live">Agent-tech online</div></header>
+    <div class="pipeline" aria-label="Factory pipeline">
+      <div class="stage"><strong id="built-count">0</strong><span>Built</span></div>
+      <div class="stage"><strong id="awaiting-count">0</strong><span>Awaiting gates</span></div>
+      <div class="stage"><strong id="merged-count">0</strong><span>Merged</span></div>
+      <div class="stage"><strong id="shown-count">0</strong><span>Shown</span></div>
+    </div>
     <section class="merged"><h2>What just merged</h2><div id="merge-title" class="empty">Watching the claim…</div><p id="merge-note">The next green slice takes this board.</p></section>
     <section><div class="count"><strong id="gate-count">0</strong><span>green gates today</span></div><h2>Lanes at work</h2><ul id="lanes"><li class="empty">All lanes quiet</li></ul></section>
     <section><h2>Today’s ship list</h2><ul id="ships"><li class="empty">No ships recorded yet</li></ul></section>
@@ -55,7 +65,10 @@
     };
     async function refresh() {
       try {
-        const html = await fetch(`../logs/dashboard.html?stream=${Date.now()}`, { cache:'no-store' }).then((r) => { if (!r.ok) throw Error(); return r.text(); });
+        const [html, queue] = await Promise.all([
+          fetch(`../logs/dashboard.html?stream=${Date.now()}`, { cache:'no-store' }).then((r) => { if (!r.ok) throw Error(); return r.text(); }),
+          fetch(`../assets/stream/showcase-queue.json?stream=${Date.now()}`, { cache:'no-store' }).then((r) => r.ok ? r.json() : { entries:[] }).catch(() => ({ entries:[] })),
+        ]);
         const doc = new DOMParser().parseFromString(html, 'text/html');
         const merges = lines(textUnder(doc, 'Recently merged into the game'))
           .map((line) => safe(line.split(' — ').slice(1).join(' — ')))
@@ -72,6 +85,11 @@
 
         const done = lines(textUnder(doc, 'What really happened'));
         const shipped = done.filter((line) => /\bMERGED\b/.test(line)).map((line) => safe(line.split('·')[0])).slice(0, 6);
+        const awaiting = lines(textUnder(doc, 'Waiting to merge')).reduce((total, line) => total + Number(line.match(/\[(\d+) commit/)?.[1] || 0), 0);
+        document.getElementById('built-count').textContent = String(done.filter((line) => !/\b(?:FAILED|NO-OP)\b/.test(line)).length);
+        document.getElementById('awaiting-count').textContent = String(awaiting);
+        document.getElementById('merged-count').textContent = String(queue.entries.length);
+        document.getElementById('shown-count').textContent = String(queue.entries.filter((entry) => entry.shown).length);
         document.getElementById('gate-count').textContent = String(shipped.length);
         list('ships', shipped, 'No ships recorded yet');
 

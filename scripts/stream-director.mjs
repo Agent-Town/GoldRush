@@ -2,6 +2,7 @@
 import { createHash, randomUUID } from 'node:crypto';
 import { pathToFileURL } from 'node:url';
 import { resolveSpec, runShowcase } from './stream-showcase.mjs';
+import { consumeNextShowcase, readShowcaseQueue, showcaseQueueStatus } from './stream-showcase-queue.mjs';
 
 const FACTORY = 'FACTORY';
 const AUTOPILOT = 'AUTOPILOT';
@@ -48,6 +49,7 @@ export function connectObs({
           });
           resolve({
             async scenes() { return (await request('GetSceneList')).scenes.map((scene) => scene.sceneName); },
+            async streaming() { return Boolean((await request('GetStreamStatus')).outputActive); },
             switchScene(sceneName) { return request('SetCurrentProgramScene', { sceneName }); },
             close() { socket.close(); },
           });
@@ -75,6 +77,7 @@ export async function directShowcase(slice, {
   try {
     await resolveSpec(slice);
     obs = await connect();
+    if (!await obs.streaming()) return false;
     const scenes = await obs.scenes();
     if (!scenes.includes(FACTORY) || !scenes.includes(AUTOPILOT)) return false;
     switchAttempted = true;
@@ -94,6 +97,7 @@ async function check() {
   let obs;
   try {
     obs = await connectObs();
+    console.log(`stream: ${await obs.streaming() ? 'live' : 'offline'}`);
     const scenes = await obs.scenes();
     console.log('websocket: reachable and authenticated');
     console.log(`scenes: ${scenes.includes(FACTORY) && scenes.includes(AUTOPILOT) ? 'FACTORY + AUTOPILOT ready' : 'missing FACTORY or AUTOPILOT'}`);
@@ -101,6 +105,9 @@ async function check() {
     console.log('websocket: unavailable or unauthenticated');
     console.log('scenes: unknown');
   } finally { obs?.close(); }
+  const queue = await showcaseQueueStatus();
+  const age = queue.depth ? `${Math.floor(queue.oldestAgeMs / 60_000)} min` : 'n/a';
+  console.log(`showcase queue: ${queue.depth} pending; oldest ${age}`);
   if (process.env.STREAM_VIRTUAL_DISPLAY_READY === '1') {
     const positioned = /^-?\d+$/.test(process.env.STREAM_DISPLAY_X || '') && /^-?\d+$/.test(process.env.STREAM_DISPLAY_Y || '');
     console.log(`virtual display: ready (${positioned ? 'window bounds configured' : 'place the headed window there once, then keep that Space active'})`);
@@ -110,22 +117,22 @@ async function check() {
 }
 
 async function main(args) {
-  const showcaseIndex = args.indexOf('--showcase');
   if (args.includes('--check')) return check();
-  if (showcaseIndex < 0 || !args[showcaseIndex + 1]) return;
-  const slice = args[showcaseIndex + 1];
+  if (!args.includes('--showcase')) return;
   if (args.includes('--dry-run')) {
     const calls = [];
-    await directShowcase(slice, {
+    const entry = (await readShowcaseQueue()).entries.find((candidate) => !candidate.shown);
+    if (!entry) return console.log('[dry-run] showcase queue empty');
+    await directShowcase(entry.spec, {
       displayReady:true,
-      connect:async () => ({ scenes:async () => [AUTOPILOT, FACTORY], switchScene:async (scene) => { calls.push(`scene ${scene}`); }, close() {} }),
+      connect:async () => ({ streaming:async () => true, scenes:async () => [AUTOPILOT, FACTORY], switchScene:async (scene) => { calls.push(`scene ${scene}`); }, close() {} }),
       showcase:async (name) => { calls.push(`showcase ${name}`); return 0; },
       sleep:async (ms) => { calls.push(`dwell ${ms}ms`); },
     });
     calls.forEach((call) => console.log(`[dry-run] ${call}`));
     return;
   }
-  await directShowcase(slice);
+  await consumeNextShowcase((entry) => directShowcase(entry.spec));
 }
 
 try { process.loadEnvFile?.('.env.local'); } catch {}
