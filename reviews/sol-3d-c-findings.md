@@ -2,13 +2,108 @@
 
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7 `12f6306e`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`
 
 Tip: exact Wave 7 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — corrected Wave 7a pilots pass the across-the-plaza test while preserving their E1 identity, exact envelope, and base asset.**
+Verdict: **READY-FOR-GATES — Wave 7b completes every verified production Town building, the two existing plaza-prop variants, and the shared-atlas E2 accessory pack. All assets preserve their interfaces and pass deterministic export, placement, tone, and across-the-plaza review.**
 
 ## Wave 7 — E2 epoch style variants
+
+### 7b — whole-Town steamworks pass
+
+Wave 7b edits every verified production building identity forward rather than replacing it. The accepted E1 shell, footprint, maximum envelope, atlas, and material stay intact; large attached steam functions carry the era read. The integrated Town adds era-keyed wagons and troughs plus a small shared-atlas infrastructure vocabulary around the outer plaza while the Pan Monument remains unchanged.
+
+#### Production-building inventory decision
+
+The standing queue says “all nine buildings,” but the audited production inventory contains **eight** building GLBs: the six `TownBuildingId` entries in `src/town/townLayout.ts`, plus the separately mounted Stamp Mill and Dynamo Hall. `TownTavernPilot.ts`, the Wave 6 audit, and the on-disk pilot paths agree on those same eight. There is no ninth E1 building GLB or ninth canonical building slot to edit forward. This wave variants all eight real bases and deliberately does not fabricate a ninth shell.
+
+#### Per-building findings
+
+| Building | E2 identity edit | Locked-camera verdict | Final contract |
+| --- | --- | --- | --- |
+| Tavern / Saloon | required covered porch, hanging oil lamps including one teal, swing doors, service boiler, header, and tall vent | immediate; accepted in 7a | 13,864 tris; 2 anchors; SHA `e72aa936…` |
+| Claim Office | civic boiler, banded relief stack, paired facade gauges, rear dial, and porch ironwork | immediate; accepted in 7a | 5,452 tris; 2 anchors; SHA `715b721d…` |
+| General Store | loading boiler, overhead header, public dial, shutoff, and tall relief stack on the service corner | correctly identified; borderline because the parcel is small at TS-04 | 3,812 tris; 2 anchors; SHA `64e69511…` |
+| Schoolhouse | lesson boiler, public dial, main stack, and paired whistles fed by a visible shared header | immediate after the header removed the first-pass floating-whistle read | 7,176 tris; 3 anchors; SHA `70391129…` |
+| Assay Office | retort boiler, condenser rack, pressure dial, and relief stack | immediate | 5,112 tris; 1 anchor; SHA `9ca6acdc…` |
+| Chapel | meeting-house heating tank, radiator bank, dial, and tall copper flue | correctly identified; borderline at the right frame edge | 5,108 tris; 1 anchor; SHA `ce63f235…` |
+| Stamp Mill | horizontal receiver, piston feed, second relief stack, and a supported full-width teal roof header gantry | correctly identified; borderline because the locked camera crops the mill. Fresh all-angle review confirms risers penetrate the roof and the handwheel has a physical stem | 3,532 tris; 2 anchors; SHA `085fd755…` |
+| Dynamo Hall | side accumulator, load dial and shutoff, header, and twin exhausts | correctly identified; borderline because most of the hall is below the frame, but the twin teal caps remain visible | 4,380 tris; 2 anchors; SHA `9db911e4…` |
+
+All eight variants are one mesh, one primitive, one material, and one embedded 1024 x 1024 image; contain zero cameras, lights, or animations; retain exact E1 bounds; and re-export byte-identically from their sibling `.blend`. The largest TS-04 average-luminance shift is `0.09235 / 150.36212 = 0.0614%`, far below the 5% tonal ceiling.
+
+#### Accessory pack
+
+| Asset | Era edit / role | Contract |
+| --- | --- | --- |
+| Covered wagon E2 | boiler fitting, iron strapping, relief vent | 1,632 tris; exact E1 envelope; 1 anchor; SHA `f212d6a2…` |
+| Water trough E2 | piped feed and valve | 688 tris; exact E1 envelope; SHA `65622eea…` |
+| Coal bin | open timber bunker with visible coal | 340 tris; SHA `89c33164…` |
+| Pipe run | low flanged distribution pipe | 844 tris; 1 anchor; SHA `b5fb5df7…` |
+| Gauge post | public pressure dial | 628 tris; SHA `0e66a6f4…` |
+| Iron lamp post | twin unlit oil lamps; game rig owns light | 796 tris; SHA `74d9b6e6…` |
+| Pressure manifold | three-valve public header | 976 tris; 1 anchor; SHA `cc1c3a47…` |
+
+The five new accessories embed the same byte-identical 1024 x 1024 atlas (`817f26f4…`). `era-props.e2.json` proposes eight placements: one coal bin, two pipe runs, two gauge posts, two lamp posts, and one manifold. Final minimum clearances are `0.9414` from walk routes, `3.8421` from the protected stage, `0.3101` from building pads, `0.4811` from shipped props, and `0.6195` accessory-to-accessory. The pressure manifold moved from the inner ring to `(2, 7.5)` after neutral review found that its first contract-legal position still looked like stage clutter.
+
+#### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Building budgets | 8/8 pass under 15,000 tris |
+| Accessory budgets | 5/5 new accessories pass under 1,000 tris; existing prop variants remain inside their inherited budgets |
+| Materials | one baked material per GLB; buildings 1024; new pack shares one byte-identical 1024 atlas |
+| Export hygiene | 15/15 GLBs have 0 cameras, 0 lights, 0 animations |
+| Determinism | official `scripts/reexport-pilot.sh` reproduced all 15 GLBs byte-identically; the independent verifier agrees |
+| Interfaces | exact E1 bounds for all eight buildings and both replaced props; sequential `steam_anchor_1..N` nodes at every sensible vent |
+| Heritage | Pan Monument base asset is mounted unchanged and has no E2 sibling |
+| Placement | all proposed accessories clear routes, pads, existing props, one another, and the open center stage |
+| App build | `npm run build` pass on the final asset bytes |
+| Across-the-plaza QA | neutral blind review selected E2 correctly for all eight buildings; integrated E2 was immediate. Four were immediate and four remained identifiable but borderline because of parcel size/frame crop |
+
+#### Evidence index
+
+Every committed comparison is **E1 on the left, E2 on the right**.
+
+- Whole Town: [`town-all-wave7b-ab.png`](../artifacts/town-e2-variants/town-all-wave7b-ab.png)
+- Clearance overlay: [`wave7b-clearance-overlay.png`](../artifacts/town-e2-variants/wave7b-clearance-overlay.png)
+- Props: [`accessory-pack-e2.png`](../artifacts/town-e2-variants/accessory-pack-e2.png), [`prop-variants-e1-e2.png`](../artifacts/town-e2-variants/prop-variants-e1-e2.png)
+- Locked-camera building A/Bs: [`general_store`](../artifacts/town-e2-variants/general_store-town-ab.png), [`schoolhouse`](../artifacts/town-e2-variants/schoolhouse-town-ab.png), [`assay_office`](../artifacts/town-e2-variants/assay_office-town-ab.png), [`chapel`](../artifacts/town-e2-variants/chapel-town-ab.png), [`stamp-mill`](../artifacts/town-e2-variants/stamp-mill-town-ab.png), [`dynamo-hall`](../artifacts/town-e2-variants/dynamo-hall-town-ab.png)
+- Four-angle A/Bs: [`general_store`](../artifacts/town-e2-variants/general_store-turntable-ab.png), [`schoolhouse`](../artifacts/town-e2-variants/schoolhouse-turntable-ab.png), [`assay_office`](../artifacts/town-e2-variants/assay_office-turntable-ab.png), [`chapel`](../artifacts/town-e2-variants/chapel-turntable-ab.png), [`stamp-mill`](../artifacts/town-e2-variants/stamp-mill-turntable-ab.png), [`dynamo-hall`](../artifacts/town-e2-variants/dynamo-hall-turntable-ab.png)
+- Machine evidence: [`wave7b-asset-contract.json`](../artifacts/town-e2-variants/wave7b-asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e2-variants/comparison-metrics.json)
+
+### F-3DC-15 — “Nine buildings” has only eight production identities
+
+**Severity:** resolved integration decision
+
+**Evidence:** canonical Town layout exposes six production building identities. Stamp Mill and Dynamo Hall add two separately mounted production pilots. The Wave 6 all-building audit and `TownTavernPilot.ts` enumerate the same eight paths; no ninth base GLB exists.
+
+**Decision:** Wave 7b is complete against the real production inventory. A future ninth building must first land as an E1 identity and canonical slot; an era pass must not invent a variant-only building.
+
+### F-3DC-16 — Cropped parcels need their era read on the roof
+
+**Severity:** resolved visual gate
+
+**Evidence:** the first Stamp Mill pass put its receiver and pipework below the locked-camera crop, and neutral blind review could not distinguish E2. Short roof domes improved the pixel read but looked detached from two angles. The final design uses roof-penetrating risers, a full-width teal pressure header, end caps, and a stem-supported shutoff wheel. A fresh reviewer selected E2 correctly and confirmed the assembly is connected.
+
+**Decision:** retain the final gantry. Runtime steam plumes may strengthen the read, but the static GLB already passes without them.
+
+### F-3DC-17 — Numeric stage clearance is necessary but visual openness still wins
+
+**Severity:** resolved placement gate
+
+**Evidence:** the first pressure-manifold proposal passed the 3.1-unit stage-radius calculation yet sat inside the engraved ring and read as center-stage clutter in neutral review. The final outer-edge position increases stage clearance from `0.4481` to `3.8421` and route clearance from `0.8119` to `0.9414`.
+
+**Decision:** factory ratification should use the final manifest position. Preserve the Pan Monument as the only permanent center-stage object.
+
+### Wave 7b integration boundary
+
+- Add sibling `.e2.blend` and `.e2.glb` files beside every real E1 building; no E1 production asset moves or changes.
+- Add the two existing-prop E2 siblings, five accessory pairs, shared atlas, and `era-props.e2.json` under `assets/pilots/plaza-props-3d/`.
+- No runtime source changed. Era selection, manifest mounting, and live steam plumes remain factory-owned.
+- Branch base: `91ee55b5`; main observed during final gates: `dd308192`. Main advanced only through unrelated factory work during this asset pass.
+- Pan Monument remains permanently excluded from era keying.
 
 ### 7a correction target
 
@@ -54,7 +149,7 @@ Every comparison is **E1 on the left, E2 on the right**.
 
 **Evidence:** the returned pilots proved that contract-correct pipes and gauges can still be functionally invisible. The corrected render uses the actual full TS-04 Town camera, and a neutral reviewer correctly selected Tavern E2 and Claim Office E2 from unlabeled pairs. The reasons given were silhouette-scale additions—the side steam assembly and tall banded stack—not texture or labels. Four-angle review confirms those additions are attached craft rather than replacement shells.
 
-**Decision:** hold Wave 7b until the owner accepts this corrected 7a verdict. If accepted, require the same blind gameplay-camera test building by building; do not reuse one boiler shape everywhere, and do not count future live plumes as the static-model read.
+**Decision:** Wave 7a was accepted. Wave 7b applies the same blind gameplay-camera test building by building, uses identity-specific steam functions, and does not count future live plumes as the static-model read.
 
 ### F-3DC-14 — Steam anchors require the official exporter to preserve named empties
 
@@ -64,14 +159,14 @@ Every comparison is **E1 on the left, E2 on the right**.
 
 **Decision:** use named empty nodes as the factory particle-mount seam. Tavern anchors are at its accepted chimney and new service vent; Claim Office anchors are at its accepted chimney and new relief stack. Particle timing, tint, and plume geometry remain factory-owned.
 
-### Wave 7 integration boundary
+### Wave 7a integration boundary (historical)
 
 - Corrected sibling assets only: `tavern.e2.glb` and `claim-office.e2.glb`, each with its deterministic `.blend`, builder, and named steam anchors.
 - The E1 production GLBs remain byte-for-byte untouched and at their current paths.
 - No runtime source changed. Era switching remains factory-owned and is intentionally not part of this asset verdict branch.
 - Branch base: `12f6306e`; returned pilot tip: `42607059`; main observed during final audit: `e1de526d`. Main advanced through unrelated factory handoff commits with no overlap in the Wave 7 asset, evidence, or findings paths.
 - Path-scoped integration should add the sibling assets, evidence, scripts, and this Wave 7 findings section.
-- Wave 7b and its accessory pack are intentionally untouched pending the corrected pilot verdict. The Pan Monument remains permanently excluded from era-keying.
+- Wave 7b was pending at this checkpoint and is now superseded by the completed 7b section above. The Pan Monument remains permanently excluded from era-keying.
 
 ## Wave 4 — Armored Railcar model
 
