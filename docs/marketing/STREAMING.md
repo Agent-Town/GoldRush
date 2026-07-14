@@ -15,6 +15,11 @@ The autopilot is file playback only. It never captures a screen, desktop, termin
 6. Create a Focus mode for streaming: Do Not Disturb on, notification previews off, and automation that activates it whenever OBS is open.
 7. Run `scripts/stream-sync.sh` and `scripts/stream-watchdog.sh` each factory fire cycle. Health history is appended to `logs/stream-health.log`.
 
+## Parallel-work setup (owner machine, 2026-07-14)
+- AUTOPILOT needs nothing: Media Source file playback inside OBS — no screen interaction; OBS runs minimized while normal work continues.
+- LIVE gameplay while working: the game window goes FULLSCREEN ON A VIRTUAL DISPLAY (DeskPad/BetterDisplay or a dummy-HDMI plug) — browsers throttle occluded/background-Space windows, which freezes a captured stream; a virtual display keeps the canvas rendering while the owner works on the physical screen. LIVE scene window-captures that window only (never-list unchanged).
+- OBS encoder: Apple VT hardware (Settings → Output) — near-zero CPU next to the factory lanes and Blender sessions.
+
 ## Before any attended live scene
 
 - Focus/DND is active; notification banners and previews are off.
