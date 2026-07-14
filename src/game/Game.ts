@@ -114,6 +114,7 @@ import { PressureSystem } from '../systems/PressureSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
+import { MothSwarm } from '../systems/MothSwarm';
 import { EnemyPool, type EnemyLightSource } from '../entities/pools';
 import type { ClaimJumperEnemy, CompassEdge } from '../entities/Enemy';
 import { normalizeQueueProfile } from '../crafting/CraftingQueueContract';
@@ -436,6 +437,12 @@ export class Game {
     falloff: Balance.contracts.nightShift.lightFalloff,
     litThreshold: Balance.contracts.nightShift.renderVisibilityCutoff,
   });
+  private readonly mothSwarm = new MothSwarm(
+    this.activeEpoch.id === 'epoch-3-voltage' || (new URLSearchParams(window.location.search).has('debug') && new URLSearchParams(window.location.search).has('daynight')),
+    this.enemies.capacity,
+    (x, z) => this.lightField.coverageAt(x, z),
+  );
+  private mothLightSources: LightSource[] = [];
   private dayNightSnapshot: DayNightSnapshot | null = null;
   private dayNightTimeOverride: number | null = null;
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
@@ -1198,6 +1205,7 @@ export class Game {
           return this.dayNightCycle?.sample(this.dayNightTimeOverride ?? this.timeAlive) ?? null;
         },
         lightCoverage: (x: number, z: number) => this.lightField.coverageAt(x, z),
+        spawnMoths: (count: number, x: number, z: number) => this.mothSwarm.spawn(this.enemies, count, x, z),
         announceForTest: (text: string, kind: 'wave' | 'baron' | 'baron-defeat' = 'wave') => {
           this.uiBridge.announce(text, this.timeAlive, null, 4, kind);
           this.syncUi();
@@ -1506,6 +1514,7 @@ export class Game {
     this.blastAimReticle.geometry.dispose();
     (this.blastAimReticle.material as THREE.Material).dispose();
     this.goldPickups.dispose();
+    this.mothSwarm.dispose();
     this.enemies.dispose();
     for (const actor of this.actors) actor.dispose();
     disposeGeneratedAssets();
@@ -1647,6 +1656,7 @@ export class Game {
       );
       this.powerGraph?.step(this.simTick);
       this.syncStockpileHoldings();
+      this.mothSwarm.update(simDelta, this.mothLightSources, this.enemies.all);
       this.enemies.update(
         simDelta,
         this.visibleActorPositions(),
@@ -2397,6 +2407,7 @@ export class Game {
     this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
+    this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
   }
 
@@ -3048,6 +3059,7 @@ export class Game {
       lighting: this.lightRig
         ? { ...this.lightRig.diagnostics(), dayNight: this.dayNightSnapshot, coverage: this.lightField.diagnostics() }
         : undefined,
+      mothSwarm: this.mothSwarm.diagnostics(),
       enemyDimming: this.enemies.dimmingDiagnostics,
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
@@ -3485,6 +3497,7 @@ export class Game {
     if (!state.enabled || state.darkness <= 0) {
       this.lightRig?.setNightShift(state);
       this.lightField.update(state.darkness, []);
+      this.mothLightSources = [];
       this.buildSystem.setNightLighting(0, []);
       this.enemies.setLightDimming({
         enabled: false,
@@ -3517,7 +3530,8 @@ export class Game {
       z: position.z,
       radius: Balance.contracts.nightShift.lanternPostLightRadius,
     }));
-    this.lightField.update(this.dayNightCycle ? state.darkness : 0, this.dayNightCycle ? fieldSources : []);
+    this.mothLightSources = fieldSources;
+    this.lightField.update(this.dayNightCycle ? state.darkness : 0, this.dayNightCycle ? this.mothSwarm.dimSources(fieldSources) : []);
 
     for (const position of liveLightPositions('sentry_beacon')) {
       sources.push({ x: position.x, z: position.z, radius: Balance.beacon.range * Balance.contracts.nightShift.beaconLightMult, kind: 'watch' });
@@ -4188,6 +4202,7 @@ export class Game {
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
+    this.mothSwarm.reset();
     this.goldPickups.recycleAll();
     this.waveSystem.reset();
     this.buildMenuOpen = false;

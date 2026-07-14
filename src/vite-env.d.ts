@@ -593,6 +593,14 @@ interface ThreeGameDiagnostics {
     dayNight: import('./systems/DayNightCycle').DayNightSnapshot | null;
     coverage: import('./systems/LightField').LightFieldDiagnostics;
   };
+  mothSwarm: {
+    enabled: boolean;
+    alive: number;
+    attached: number;
+    sourceId: string | null;
+    baseRadius: number;
+    effectiveRadius: number;
+  };
   enemyDimming: {
     enabled: boolean;
     darkness: number;
@@ -1012,6 +1020,7 @@ interface Window {
     setBeaconWave: (wave: number | null) => void;
     setDayNightTime: (seconds: number | null) => import('./systems/DayNightCycle').DayNightSnapshot | null;
     lightCoverage: (x: number, z: number) => number;
+    spawnMoths: (count: number, x: number, z: number) => number;
     announceForTest: (text: string, kind?: 'wave' | 'baron' | 'baron-defeat') => void;
     setWave: (wave: number) => void;
     startWaveForTest: (wave: number) => void;
