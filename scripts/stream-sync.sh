@@ -20,6 +20,11 @@ jq -e '
   )
 ' "$MANIFEST" >/dev/null
 mkdir -p "$LOOP_DIR"
+OVERLAY_DIR=${STREAM_OVERLAY_DIR:-"$HOME/GoldRushStream/overlays"}
+mkdir -p "$OVERLAY_DIR"
+for overlay in "$ROOT"/assets/raw/stream-*.png; do
+  [ -f "$overlay" ] && cp -f "$overlay" "$OVERLAY_DIR/"
+done
 
 declare -a wanted=()
 index=0
