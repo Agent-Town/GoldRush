@@ -233,6 +233,16 @@ export const Balance = {
     generationWatts: 5,
     consumerDrawWatts: { lamp: 3, tram: 4, turret: 6 },
     spanCost: 10,
+    storage: {
+      capacityWh: 0.05,
+      chargeWatts: 18,
+      dischargeWatts: 12,
+      cost: 75,
+      maxCount: 4,
+      hp: 70,
+      overlapRadius: 0.9,
+      placeRadius: 3,
+    },
   },
   e4Fuel: {
     capacity: 24,
@@ -301,6 +311,7 @@ export const Balance = {
       assay_office: 60,
       lantern_post: 35,
       decoy_shed: 120,
+      capacitor_bank: 70,
     },
     hpWaveScale: {
       sentry_beacon: {

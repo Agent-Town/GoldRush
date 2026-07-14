@@ -233,17 +233,25 @@ export type ContractMothSeason = {
 export type ContractPowerNode =
   | { id: string; label: string; kind: 'producer'; x: number; z: number; outputWatts: number }
   | { id: string; label: string; kind: 'relay'; x: number; z: number }
-  | { id: string; label: string; kind: 'consumer'; x: number; z: number; drawWatts: number; priority: number; role: 'gallery' | 'lamp' | 'turret' | 'tram' };
+  | { id: string; label: string; kind: 'consumer'; x: number; z: number; drawWatts: number; priority: number; role: 'gallery' | 'lamp' | 'turret' | 'tram' }
+  | { id: string; label: string; kind: 'storage'; x: number; z: number; capacityWh: number; chargeWatts: number; dischargeWatts: number };
 export type ContractPowerGrid = {
   maxSpanLength: number;
   nodes: ContractPowerNode[];
   wires: Array<{ a: string; b: string }>;
-  connect: { required: number; byWave: number };
+  connect?: { required: number; byWave: number };
 };
 export type ContractPylonSite = {
   id: string;
   nodeId: string;
   wireFrom: string;
+  x: number;
+  z: number;
+  radius: number;
+};
+export type ContractCapacitorSite = {
+  id: string;
+  nodeId: string;
   x: number;
   z: number;
   radius: number;
@@ -428,7 +436,7 @@ export type ContractWaterDescriptor = {
   heroCanWadeDeep?: boolean;
 };
 export type ContractBuildableFixture = {
-  id: 'lantern_post' | 'turret';
+  id: 'lantern_post' | 'turret' | 'sentry_beacon';
   x: number;
   z: number;
   rotationSteps?: number;
@@ -473,6 +481,8 @@ export type ContractManifest = {
     water?: ContractWaterDescriptor;
     prePlacedBuildables?: ContractBuildableFixture[];
     pylonSites?: ContractPylonSite[];
+    capacitorSites?: ContractCapacitorSite[];
+    ridgeGlow?: { x: number; z: number; color: string; intensity: number };
     damChannel?: { minX: number; maxX: number; minZ: number; maxZ: number };
     lanes: {
       spawnEdges: ContractEdge[];
@@ -1110,7 +1120,7 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.waterSources[].kind': ['spring_pond'],
   'tileParams.buildZones[].bank': ['north', 'south'],
   'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur'],
-  'tileParams.prePlacedBuildables[].id': ['lantern_post', 'turret'],
+  'tileParams.prePlacedBuildables[].id': ['lantern_post', 'turret', 'sentry_beacon'],
   'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
   'twist.enemyRoster[].spawnGates[].edge': ['north', 'south', 'east', 'west'],
   'twist.lightRamp.keyframes[].phase': ['full', 'golden', 'dusk', 'dark'],

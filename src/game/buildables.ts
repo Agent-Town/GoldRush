@@ -9,7 +9,8 @@ export type BuildableId =
   | 'turret'
   | 'assay_office'
   | 'lantern_post'
-  | 'decoy_shed';
+  | 'decoy_shed'
+  | 'capacitor_bank';
 export type BuildPlacement = 'bank' | 'river-adjacent' | 'any';
 export type BuildablePowerDef = {
   produces?: number;
@@ -137,6 +138,18 @@ export const buildableDefs: readonly BuildableDef[] = [
     maxCount: Balance.decoyShed.maxCount,
     iconSlot: 'ui.build.icon.decoy_shed',
     rotatable: true,
+  },
+  {
+    id: 'capacitor_bank',
+    displayName: 'Capacitor Bank',
+    blurb: () => `Stores ${Balance.e3Power.storage.capacityWh} Wh and returns up to ${Balance.e3Power.storage.dischargeWatts} W when the trunk is cut.`,
+    costCurve: () => Balance.e3Power.storage.cost,
+    footprint: { w: 1.6, d: 1.3 },
+    hpMax: Balance.wreck.hp.capacitor_bank,
+    placement: 'bank',
+    slotFamily: 'building.capacitor_bank',
+    maxCount: Balance.e3Power.storage.maxCount,
+    iconSlot: 'ui.build.icon.capacitor_bank',
   },
   {
     id: 'assay_office',
