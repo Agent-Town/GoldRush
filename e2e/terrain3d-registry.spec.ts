@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Browser, type Page, type TestInfo } from '@playwright/test';
+import { PNG } from 'pngjs';
 
 const ARTIFACT_DIR = path.resolve('artifacts/terrain3d-registry');
 const ASSET = /(?:the-claim|dry-gulch|twin-banks|night-shift|baron)-(?:terrain|panorama)(?:-[^/?]+)?\.glb/;
@@ -127,6 +128,62 @@ test('all five contracts mount their registered terrain and render-only panorama
     page.off('request', listener);
   }
   await writeFile(path.join(ARTIFACT_DIR, `mount-water-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('rim and horizon probes keep the terrain meeting gradual and every panorama readable', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  const report: Array<Record<string, unknown>> = [];
+  await mkdir(path.resolve('artifacts/fix-terrain3d-seams'), { recursive: true });
+  for (const contract of CONTRACTS) {
+    await boot(page, contract.id, '&terrain3dPilot');
+    const canvas = page.locator('canvas');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-skirt-blend', 'painted-underlay-alpha-rim');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-fog', 'excluded');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-depth', 'screen-horizon-backdrop');
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-hidden-relief'))).toBeGreaterThan(0);
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-panorama-meshes'))).toBeGreaterThan(0);
+    if (contract.id === 'e1-night-shift') {
+      await page.evaluate(() => window.__GR_TEST__!.setWave(10));
+      await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightShift.phase)).toBe('dark');
+    }
+    await page.evaluate(() => {
+      for (const selector of ['.lil-gui', '#hud', '#touch-controls']) document.querySelector<HTMLElement>(selector)?.style.setProperty('display', 'none');
+    });
+    const image = PNG.sync.read(await page.screenshot());
+    const horizonValues: number[] = [];
+    for (let y = Math.round(image.height * 0.03); y < image.height * 0.22; y += Math.max(1, Math.round(image.height * 0.01))) {
+      for (let x = Math.round(image.width * 0.17); x < image.width * 0.83; x += Math.max(1, Math.round(image.width * 0.01))) {
+        const offset = (y * image.width + x) * 4;
+        horizonValues.push((image.data[offset]! + image.data[offset + 1]! + image.data[offset + 2]!) / 3);
+      }
+    }
+    const mean = horizonValues.reduce((sum, value) => sum + value, 0) / horizonValues.length;
+    const horizonStdDev = Math.sqrt(horizonValues.reduce((sum, value) => sum + (value - mean) ** 2, 0) / horizonValues.length);
+    expect(horizonStdDev).toBeGreaterThan(8);
+
+    if (contract.id === 'the-claim') {
+      await page.evaluate(() => window.__GR_TEST__!.teleport(31.5, 0));
+      await page.waitForTimeout(800);
+      const points = await page.evaluate(() => Array.from({ length: 25 }, (_, index) => 29.5 + index / 6)
+        .map((x) => window.__GR_TEST__!.screenPoint(x, -18, window.__GR_TEST__!.terrainVisualY(x, -18))));
+      expect(points.every((point) => point.inView)).toBe(true);
+      const edgeImage = PNG.sync.read(await page.screenshot({ path: path.resolve(`artifacts/fix-terrain3d-seams/after-edge-${testInfo.project.name}.png`) }));
+      const viewport = page.viewportSize()!;
+      const tones = points.map((point) => {
+        const x = Math.max(0, Math.min(edgeImage.width - 1, Math.round(point.x * edgeImage.width / viewport.width)));
+        const y = Math.max(0, Math.min(edgeImage.height - 1, Math.round(point.y * edgeImage.height / viewport.height)));
+        const offset = (y * edgeImage.width + x) * 4;
+        return [edgeImage.data[offset]!, edgeImage.data[offset + 1]!, edgeImage.data[offset + 2]!] as const;
+      });
+      const deltas = tones.slice(1).map((tone, index) => Math.hypot(...tone.map((value, channel) => value - tones[index]![channel])));
+      expect(Math.max(...deltas), JSON.stringify({ points, tones, deltas })).toBeLessThan(50);
+      report.push({ contract: contract.id, horizonStdDev, tones, deltas });
+    } else report.push({ contract: contract.id, horizonStdDev });
+  }
+  await writeFile(path.resolve(`artifacts/fix-terrain3d-seams/probes-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
   expect(errors).toEqual({ console: [], page: [] });
 });
 

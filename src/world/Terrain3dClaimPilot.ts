@@ -33,6 +33,7 @@ type Mount = {
 type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract };
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement; contractId: string; tileId: string; paintedGround?: THREE.Object3D };
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
+type HiddenRelief = { object: THREE.Object3D; visible: boolean };
 
 const entry = (terrainUrl: string, panoramaUrl: string, contractText: string, panoramaContractText: string): Entry => ({
   terrainUrl,
@@ -48,6 +49,7 @@ const REGISTRY: Record<string, Entry> = {
   'e1-baron': entry(new URL('../../assets/pilots/map-rebuild-spike/baron-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/baron-panorama.glb', import.meta.url).href, baronContractText, baronPanoramaContractText),
 };
 const BOUNDS_EPSILON = 0.03;
+const SKIRT_INSET = 2.5;
 
 function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', source: 'painted' | 'glb', metrics?: Metrics, panorama?: THREE.Object3D, panoramaMetrics?: Metrics): void {
   canvas.dataset.terrain3dPilotState = state;
@@ -137,6 +139,144 @@ function bakeHeightGrid(model: THREE.Object3D, metrics: Metrics): (x: number, z:
   };
 }
 
+function preparePanorama(model: THREE.Object3D): void {
+  const materials = new Set<THREE.Material>();
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    mesh.frustumCulled = false;
+    mesh.renderOrder = 0.5;
+    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+  });
+  for (const material of materials) {
+    const fogMaterial = material as THREE.Material & { fog?: boolean };
+    const compile = material.onBeforeCompile.bind(material);
+    fogMaterial.fog = false;
+    material.transparent = true;
+    material.depthWrite = false;
+    material.depthTest = false;
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying float vPanoramaNdcY;')
+        .replace(
+          '#include <project_vertex>',
+          '#include <project_vertex>\nvPanoramaNdcY = mix(0.94, 0.58, uv.y);\ngl_Position = vec4(uv.x * 2.0 - 1.0, vPanoramaNdcY, 0.999999, 1.0);',
+        );
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying float vPanoramaNdcY;')
+        .replace(
+          '#include <color_fragment>',
+          '#include <color_fragment>\ndiffuseColor.a *= smoothstep(0.58, 0.64, vPanoramaNdcY) * (1.0 - smoothstep(0.90, 0.94, vPanoramaNdcY));',
+        );
+    };
+    material.needsUpdate = true;
+  }
+}
+
+function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3): void {
+  const materials = new Set<THREE.Material>();
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh;
+    if (!mesh.isMesh) return;
+    mesh.renderOrder = 0.1;
+    for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+  });
+  const halfX = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
+  const halfZ = Math.max(Math.abs(bounds.min.z), Math.abs(bounds.max.z));
+  for (const material of materials) {
+    const compile = material.onBeforeCompile.bind(material);
+    material.transparent = true;
+    material.depthWrite = false;
+    material.onBeforeCompile = (shader, renderer) => {
+      compile(shader, renderer);
+      shader.vertexShader = shader.vertexShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTerrain3dWorld;')
+        .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTerrain3dWorld = (modelMatrix * vec4(position, 1.0)).xz;');
+      shader.fragmentShader = shader.fragmentShader
+        .replace('#include <common>', '#include <common>\nvarying vec2 vTerrain3dWorld;')
+        .replace(
+          '#include <color_fragment>',
+          `#include <color_fragment>\nfloat terrain3dEdge = max(abs(vTerrain3dWorld.x) / ${halfX.toFixed(3)}, abs(vTerrain3dWorld.y) / ${halfZ.toFixed(3)});\ndiffuseColor.a *= 1.0 - smoothstep(${((halfX - SKIRT_INSET) / halfX).toFixed(4)}, 1.0, terrain3dEdge);`,
+        );
+    };
+    material.needsUpdate = true;
+  }
+}
+
+function hidePaintedRelief(host: Host): HiddenRelief[] {
+  const objects = new Set<THREE.Object3D>();
+  host.scene.traverse((object) => {
+    if (object.userData.terrainRelief === true) objects.add(object);
+  });
+  if (host.paintedGround) objects.add(host.paintedGround);
+  const hidden = [...objects].map((object) => ({ object, visible: object.visible }));
+  for (const { object } of hidden) object.visible = false;
+  return hidden;
+}
+
+function createSkirt(host: Host, heightAt: (x: number, z: number) => number, bounds: THREE.Box3): THREE.Object3D | undefined {
+  if (!host.paintedGround) return undefined;
+  const group = new THREE.Group();
+  const underlay = host.paintedGround.clone();
+  underlay.visible = true;
+  underlay.userData.terrainRelief = false;
+  group.add(underlay);
+  let apron: THREE.Mesh | undefined;
+  host.scene.traverse((object) => {
+    if (!apron && object.userData.terrainVista === true) apron = object as THREE.Mesh;
+  });
+  const source = host.paintedGround as THREE.Mesh;
+  const material = Array.isArray(source.material) ? undefined : source.material as THREE.Material & { color?: THREE.Color; map?: THREE.Texture | null };
+  if (apron?.isMesh && material?.map) {
+    apron.updateMatrixWorld(true);
+    const raycaster = new THREE.Raycaster();
+    const positions: number[] = [];
+    const uvs: number[] = [];
+    const indices: number[] = [];
+    const inner = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x)) - 0.5;
+    const outer = inner + 4;
+    const segments = 24;
+    const edgePoint = (side: number, t: number, half: number): [number, number] => side === 0
+      ? [THREE.MathUtils.lerp(-half, half, t), -half]
+      : side === 1 ? [half, THREE.MathUtils.lerp(-half, half, t)]
+        : side === 2 ? [THREE.MathUtils.lerp(half, -half, t), half]
+          : [-half, THREE.MathUtils.lerp(half, -half, t)];
+    for (let side = 0; side < 4; side += 1) {
+      const base = positions.length / 3;
+      for (let index = 0; index <= segments; index += 1) {
+        const t = index / segments;
+        const [ix, iz] = edgePoint(side, t, inner);
+        const [ox, oz] = edgePoint(side, t, outer);
+        raycaster.set(new THREE.Vector3(ox, 100, oz), new THREE.Vector3(0, -1, 0));
+        const outerY = raycaster.intersectObject(apron, false)[0]?.point.y ?? heightAt(ox, oz);
+        positions.push(ix, -iz, heightAt(ix, iz) + 0.02, ox, -oz, outerY + 0.02);
+        uvs.push((ix - bounds.min.x) / (bounds.max.x - bounds.min.x), (iz - bounds.min.z) / (bounds.max.z - bounds.min.z));
+        uvs.push((ox - bounds.min.x) / (bounds.max.x - bounds.min.x), (oz - bounds.min.z) / (bounds.max.z - bounds.min.z));
+        if (index < segments) {
+          const a = base + index * 2;
+          indices.push(a, a + 3, a + 1, a, a + 2, a + 3);
+        }
+      }
+    }
+    const geometry = new THREE.BufferGeometry();
+    geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
+    geometry.setAttribute('uv', new THREE.Float32BufferAttribute(uvs, 2));
+    geometry.setIndex(indices);
+    geometry.setAttribute('normal', new THREE.Float32BufferAttribute(new Array(positions.length / 3).fill([0, 0, 1]).flat(), 3));
+    const bridgeMaterial = material.clone();
+    bridgeMaterial.onBeforeCompile = material.onBeforeCompile;
+    bridgeMaterial.side = THREE.DoubleSide;
+    const bridge = new THREE.Mesh(geometry, bridgeMaterial);
+    bridge.name = 'Terrain3dApronBlendBridge';
+    bridge.rotation.x = -Math.PI / 2;
+    group.add(bridge);
+  }
+  group.name = 'Terrain3dApronBlendSkirt';
+  group.userData.terrain3dSkirtBlend = true;
+  return group;
+}
+
 export function installTerrain3dClaimPilot(host: Host): () => void {
   const selected = REGISTRY[host.contractId];
   host.canvas.dataset.terrain3dPilotContract = host.contractId;
@@ -151,6 +291,8 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let disposed = false;
   let terrain: THREE.Object3D | undefined;
   let panorama: THREE.Object3D | undefined;
+  let skirt: THREE.Object3D | undefined;
+  let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
   let loadedPanorama: THREE.Object3D | undefined;
   let loadFailed = false;
@@ -192,20 +334,29 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       const heightAt = bakeHeightGrid(nextTerrain, terrainMetrics);
       if (disposed) throw new Error('terrain pilot disposed');
       nextTerrain.name = 'Terrain3dClaimPilot';
+      featherTerrainEdge(nextTerrain, terrainMetrics.bounds);
       const mount = selected.contract.panoramaMount;
       nextPanorama.name = mount.id;
       nextPanorama.position.fromArray(mount.position);
       nextPanorama.rotation.set(...mount.rotation);
       nextPanorama.scale.fromArray(mount.scale);
+      preparePanorama(nextPanorama);
+      const nextSkirt = createSkirt(host, heightAt, terrainMetrics.bounds);
       terrain = nextTerrain;
       panorama = nextPanorama;
+      skirt = nextSkirt;
       loadedTerrain = undefined;
       loadedPanorama = undefined;
       uninstallHeightSource = installVisualHeightSource(heightAt);
       host.scene.add(nextTerrain, nextPanorama);
+      if (nextSkirt) host.scene.add(nextSkirt);
+      hiddenRelief = hidePaintedRelief(host);
       host.canvas.dataset.terrain3dPilotTerrainLoadState = 'mounted';
       host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'mounted';
-      if (host.paintedGround) host.paintedGround.visible = false;
+      host.canvas.dataset.terrain3dPilotHiddenRelief = String(hiddenRelief.length);
+      host.canvas.dataset.terrain3dPilotSkirtBlend = nextSkirt ? 'painted-underlay-alpha-rim' : 'off';
+      host.canvas.dataset.terrain3dPilotPanoramaFog = 'excluded';
+      host.canvas.dataset.terrain3dPilotPanoramaDepth = 'screen-horizon-backdrop';
       publish(host.canvas, 'ready', 'glb', terrainMetrics, nextPanorama, panoramaMetrics);
     } catch {
       disposeObject3D(nextTerrain);
@@ -234,7 +385,15 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
     disposeLoaded();
     uninstallHeightSource?.();
     uninstallHeightSource = undefined;
-    if (host.paintedGround) host.paintedGround.visible = true;
+    for (const { object, visible } of hiddenRelief) object.visible = visible;
+    hiddenRelief = [];
+    if (skirt) {
+      host.scene.remove(skirt);
+      const bridge = skirt.getObjectByName('Terrain3dApronBlendBridge') as THREE.Mesh | undefined;
+      bridge?.geometry.dispose();
+      if (bridge) (bridge.material as THREE.Material).dispose();
+      skirt = undefined;
+    }
     for (const model of [terrain, panorama]) {
       if (!model) continue;
       host.scene.remove(model);
