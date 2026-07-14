@@ -114,6 +114,28 @@ The first attempt failed a fresh visual review. It repeated the 64 m atlas as ob
 
 The acceptance is deliberately narrower than production approval. The shifted edge view still reveals a soil/value transition; the river remains too broad and slab-like; the far geology needs more layers; sunset compresses the value range; and the cactus distribution remains visibly authored. These are promotion findings, not permissions to change simulation. The saved terrain, water mask, ford, movement, collision, placement, spawns, and `Terrain.visualY` ownership are unchanged. The Claim GLB and atlas hashes remain byte-identical to the previous commit.
 
+### F-3D-D-16 — One exterior construction policy now supports five different horizon stories
+
+Owner authorization extended the accepted Claim direction to Dry Gulch, Twin Banks, Night Shift, and the Baron. Evidence: `artifacts/map-rebuild-spike/all-contracts-exterior-ab.png` compares the same shifted edge camera before and after each surround; `all-contracts-exterior-low-verdict.png` compares the resulting horizon compositions; `all-contracts-exterior-edge-crops.png` magnifies the transition instead of hiding it.
+
+The shared implementation is one temporary welded 160 m county surface, shipped painted soil plates, cactus-only tall vegetation, faceted desert geology, contract-honest water continuation, and mounted landmark proxies deleted before save/export. Twin Banks' last tree proxies were removed. Dry Gulch adds an enclosing dry basin, two continuing washes, and a collapsed outer stamp frame with no invented water. Twin Banks adds the broadest floodplain, low opposed shelves, and paired outer-bank winches. Night Shift adds a rock corridor, outer lantern road, and lampworks stack. The Baron adds a fortified far-bank ridge and paired outer watchtowers. They share a county vocabulary without reusing one exterior composition.
+
+The playable assets did not move. Rebuilding the four authoring files left their exported GLB and embedded-atlas hashes unchanged: Dry Gulch `1189f0ca…` / `73f24e3d…`; Twin Banks `d292a5d0…` / `421dda50…`; Night Shift `747eacb0…` / `a4c417ab…`; Baron `accf4035…` / `5b8721e3…`. Their contracts record `exported=false`, radius 160, cactus-only grammar, and a separate horizon signature.
+
+A fresh unprimed review rejects the set as production art even though the owner-approved direction is materially better than the flat plates. It finds slab-like water and ruler-straight edge cuts, repeated small mesa silhouettes, staged bright cacti, underexposed Night Shift geology, and outer works too small to dominate the skyline. That verdict becomes policy: future promotion must repair the seam, water depth and shoreline, far-geology vocabulary, vegetation staging, night value separation, and landmark scale before these surrounds ship. It does not authorize runtime elevation, new water, or baked landmarks.
+
+### F-3D-D-17 — Panoramas are mounted scenery, not enlarged terrain
+
+The amended queue requires one separate background asset per contract. The five terrain contracts now mount `the-claim-panorama.glb`, `dry-gulch-panorama.glb`, `twin-banks-panorama.glb`, `night-shift-panorama.glb`, and `baron-panorama.glb` at county origin with identity rotation and scale. No panorama mesh survives inside a terrain `.blend` or GLB.
+
+Each panorama is one inward-facing unlit ring with 1,536 triangles, one embedded 2048² material, no cameras/lights/animation, and explicit false flags for playfield, masks, spawn edges, and fog gating. Separate machine contracts record the `.blend`, GLB, atlas, mount, source plates, and non-interference statement. The strict gate reopens and byte-identically re-exports every panorama and requires five distinct GLB and atlas hashes.
+
+The atlas path follows both owner laws. It samples the shipped processed Epoch 1 kit plate's engraved sky and far ridge, crops out the town tower and literal tree silhouettes, grades each contract separately, and keeps the distant darkening warm. `artifacts/map-rebuild-spike/all-contracts-panorama-mood-ab.png` compares the painted contract plate, the same low camera before mounting, and the mounted panorama. The first smooth-gradient treatment failed “holiday.” The final fresh unprimed verdict answers “fight” at 96% confidence.
+
+Independent code review found that the first evidence implementation linked the panorama before both low-angle captures and replaced the exported terrain with the temporary county surface in the primary run-camera frames. The builders now keep the panorama hidden for terrain acceptance, render the exported 128-segment terrain first, write a genuine panorama-off frame, and only then reveal the separate ring. `build_verdict_boards.py` regenerates every current board from those fresh sources and auto-selects an installed Pillow runtime. The verifier pins decoded board/input pixels rather than Blender's timestamp-bearing PNG containers, and the edge board magnifies the boundary instead of fitting a full frame.
+
+That mood pass is not production approval. Review still finds a low-ceiling/canopy projection, a hard horizontal join, repeated sky structure across Claim/Dry Gulch/Twin Banks, a far rim that can become too grim, and weak Night Shift ground readability. There are no literal panorama trees, but the dense engraving can suggest foliage at board scale. Production must solve projection and atmospheric integration without weakening the separate-mount contract or changing any gameplay boundary.
+
 ## Contract identity summary
 
 | Contract | Macro identity | Contract focal read |
@@ -148,8 +170,17 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - Five-row same-map mood A/B board and all ten source inputs pinned by content hash: PASS
 - Five-row building-grit before/after board pinned by content hash: PASS
 - The Claim exterior identical-camera A/B pinned by content hash: PASS
-- 160 m render-only county surround; cactus-only tall vegetation; fresh review verdict: ACCEPT as exploration
-- The Claim GLB and atlas unchanged across exterior rebuild: PASS
+- Four-map exterior identical-camera A/B, low-angle verdict, and seam crops pinned with all source images: PASS
+- Five 160 m render-only county surrounds; cactus-only tall vegetation; separate horizon signatures: PASS
+- Saved GLBs and atlases unchanged across the exterior-only rebuilds: PASS
+- Fresh exterior review: owner-approved direction, REJECT as production art; promotion debt recorded in F-3D-D-16
+- Five separate mounted panorama `.blend` / GLB / 2048² atlas / contract sets: PASS
+- 1,536 panorama triangles each against the 4,000 ceiling; one mesh and one material each: PASS
+- Five distinct panorama GLB and atlas hashes; byte-identical semantic/binary re-exports: PASS
+- Panorama playfield, spawn-edge, fog-gate, and water/build/spawn-mask non-interference metadata: PASS
+- Panorama MOOD A/B with all fifteen source frames pinned by content hash: PASS
+- Terrain acceptance frames prove the exported terrain; panorama-off/on frames are builder-generated and visibly distinct: PASS
+- Fresh panorama review first answer: FIGHT at 96%; projection/atmosphere debt recorded in F-3D-D-17
 - `src/` edits: none
 - Runtime loading, placement, disposal, gameplay, and performance: intentionally deferred to an attended promotion
 
@@ -158,6 +189,10 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - `artifacts/map-rebuild-spike/all-contracts-mood-ab.png` — current material-language gate
 - `artifacts/map-rebuild-spike/all-contracts-building-grit-ab.png` — building condition and construction gate
 - `artifacts/map-rebuild-spike/the-claim-exterior-ab.png` — first exterior county direction gate
+- `artifacts/map-rebuild-spike/all-contracts-exterior-ab.png` — four-map identical-camera before/after gate
+- `artifacts/map-rebuild-spike/all-contracts-exterior-low-verdict.png` — four distinct exterior horizon stories
+- `artifacts/map-rebuild-spike/all-contracts-exterior-edge-crops.png` — enlarged seam and water debt review
+- `artifacts/map-rebuild-spike/all-contracts-panorama-mood-ab.png` — painted plate / before / mounted panorama mood gate
 - `artifacts/map-rebuild-spike/owner-run-camera-east-edge.png` — shifted real-camera seam check
 - `artifacts/map-rebuild-spike/owner-county-overview.png` — county composition overview
 - `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png`
