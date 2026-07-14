@@ -47,7 +47,7 @@ fi
 
 # Opus weekly cap hit 2026-07-15 (resets Jul 18 01:00 Asia/Bangkok) — Sonnet fallback
 # keeps the fires alive; revert to opus after the reset (attended note in BACKLOG).
-FIRE_MODEL=${FIRE_MODEL:-claude-sonnet-4-6}
+FIRE_MODEL=${FIRE_MODEL:-claude-opus-4-8}
 echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model $FIRE_MODEL)" >> "$LOG"
 "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" \
   --model "$FIRE_MODEL" \
