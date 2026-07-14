@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gold Rush — The Factory</title>
+  <style>
+    :root { color-scheme: light; --paper:#f5e6c8; --ink:#2e1b0e; --brass:#c4883a; --teal:#5b8a8a; --lantern:#ffe4a0; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; overflow:hidden; background:var(--paper); color:var(--ink); font-family:Wellfleet, Georgia, serif; }
+    body::before { content:""; position:fixed; inset:0; opacity:.22; pointer-events:none; background:repeating-linear-gradient(0deg, transparent 0 7px, rgba(46,27,14,.08) 8px); }
+    main { position:relative; min-height:100vh; padding:52px 64px; display:grid; grid-template-columns:1.35fr 1fr; grid-template-rows:auto 1fr; gap:34px; }
+    header { grid-column:1/-1; display:flex; align-items:end; justify-content:space-between; border-bottom:5px double var(--ink); padding-bottom:18px; }
+    h1 { margin:0; font-size:58px; line-height:.9; letter-spacing:.08em; text-transform:uppercase; }
+    .live { padding:12px 20px; border:3px solid var(--teal); border-radius:999px; color:var(--teal); font-size:24px; letter-spacing:.12em; text-transform:uppercase; }
+    section { border:3px solid var(--ink); border-radius:16px; padding:30px; background:rgba(255,228,160,.28); box-shadow:9px 9px 0 rgba(196,136,58,.55); }
+    .merged { grid-row:2/4; }
+    h2 { margin:0 0 20px; font-size:22px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal); }
+    #merge-title { margin:8px 0 20px; font-size:52px; line-height:1.05; }
+    #merge-note { margin:0; font-size:30px; line-height:1.35; }
+    .count { display:flex; align-items:baseline; gap:14px; margin-bottom:26px; }
+    #gate-count { font-size:76px; line-height:.8; color:var(--teal); }
+    .count span:last-child { font-size:24px; text-transform:uppercase; letter-spacing:.08em; }
+    ul { margin:0; padding-left:1.2em; font-size:25px; line-height:1.5; }
+    .empty { color:rgba(46,27,14,.62); }
+    footer { position:fixed; right:30px; bottom:18px; font-size:15px; opacity:.6; }
+  </style>
+</head>
+<body>
+  <main>
+    <header><h1>Gold Rush<br>The Factory</h1><div class="live">Agent-tech online</div></header>
+    <section class="merged"><h2>What just merged</h2><div id="merge-title" class="empty">Watching the claim…</div><p id="merge-note">The next green slice takes this board.</p></section>
+    <section><div class="count"><strong id="gate-count">0</strong><span>green gates today</span></div><h2>Lanes at work</h2><ul id="lanes"><li class="empty">All lanes quiet</li></ul></section>
+    <section><h2>Today’s ship list</h2><ul id="ships"><li class="empty">No ships recorded yet</li></ul></section>
+  </main>
+  <footer id="stamp">Ledger link standing by</footer>
+  <script>
+    const textUnder = (doc, heading) => {
+      const h = [...doc.querySelectorAll('h2')].find((node) => node.textContent.trim().startsWith(heading));
+      return h?.nextElementSibling?.textContent?.trim() || h?.parentElement?.querySelector('pre')?.textContent?.trim() || '';
+    };
+    const safe = (value) => value
+      .replace(/[`$]/g, '')
+      .replace(/\b(?:[\w.-]+\/)+[\w.@-]+\b/g, 'the game')
+      .replace(/\.md\b/g, '')
+      .replace(/\b[0-9a-f]{7,40}\b/gi, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const lines = (value) => value.split('\n').map(safe).filter(Boolean);
+    const list = (id, values, empty) => {
+      const root = document.getElementById(id);
+      root.replaceChildren(...(values.length ? values : [empty]).map((value) => {
+        const li = document.createElement('li'); li.textContent = value; if (!values.length) li.className = 'empty'; return li;
+      }));
+    };
+    async function refresh() {
+      try {
+        const html = await fetch(`../logs/dashboard.html?stream=${Date.now()}`, { cache:'no-store' }).then((r) => { if (!r.ok) throw Error(); return r.text(); });
+        const doc = new DOMParser().parseFromString(html, 'text/html');
+        const merges = lines(textUnder(doc, 'Recently merged into the game'))
+          .map((line) => safe(line.split(' — ').slice(1).join(' — ')))
+          .filter((line) => line && !line.startsWith('Merge branch'));
+        const latest = merges[0] || '';
+        const body = latest.replace(/^(?:task|runner\([^)]+\)):\s*/i, '');
+        const [subject, ...afterDash] = body.split(/\s+—\s+/);
+        const [label, ...afterColon] = subject.split(/:\s+/);
+        const title = (afterDash.length ? subject : label).replace(/\s+\([^)]*\)\s*$/, '');
+        const note = afterDash.length ? afterDash : afterColon;
+        document.getElementById('merge-title').textContent = title || 'Watching the claim…';
+        document.getElementById('merge-title').className = latest ? '' : 'empty';
+        document.getElementById('merge-note').textContent = note.join(' — ') || (latest ? 'Merged, tested, and riding with the build.' : 'The next green slice takes this board.');
+
+        const done = lines(textUnder(doc, 'What really happened'));
+        const shipped = done.filter((line) => /\bMERGED\b/.test(line)).map((line) => safe(line.split('·')[0])).slice(0, 6);
+        document.getElementById('gate-count').textContent = String(shipped.length);
+        list('ships', shipped, 'No ships recorded yet');
+
+        const working = lines(textUnder(doc, 'Now building')).filter((line) => !line.startsWith('(')).map((line) => {
+          const match = line.match(/^\S+\s+(.+?)\s+\[[^\]]+\]\s+started/); return safe(match?.[1] || line);
+        });
+        list('lanes', working, 'All lanes quiet');
+        document.getElementById('stamp').textContent = `Ledger refreshed ${new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit' })}`;
+      } catch {
+        document.getElementById('stamp').textContent = 'Ledger link waiting — autopilot unaffected';
+      }
+    }
+    refresh();
+    setInterval(refresh, 30_000);
+  </script>
+</body>
+</html>
