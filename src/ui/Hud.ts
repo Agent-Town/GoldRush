@@ -434,8 +434,10 @@ export class Hud {
       'aria-label',
       `Power ledger: ${power.supplyWatts} of ${power.demandWatts} watts, ${power.lit} lit, ${power.brown} brown, ${power.dark} dark`,
     );
-    this.elements.powerPanel.title = 'L lit · B brown · D dark';
-    this.elements.powerText.textContent = `${power.supplyWatts}/${power.demandWatts}W · ${power.lit}L ${power.brown}B ${power.dark}D`;
+    const connect = power.connect ? ` · CONNECT ${power.connect.complete ? 'COMPLETE' : `${power.connect.powered}/${power.connect.required} W${power.connect.byWave}`}` : '';
+    const next = power.nextDark ? ` · next ${power.nextDark}` : '';
+    this.elements.powerPanel.title = `L lit · B brown · D dark${next}`;
+    this.elements.powerText.textContent = `${power.supplyWatts}/${power.demandWatts}W · ${power.lit}L ${power.brown}B ${power.dark}D${connect}${next}`;
   }
 
   private updateAnnouncement(snapshot: UiSnapshot): void {

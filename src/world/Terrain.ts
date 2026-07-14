@@ -74,6 +74,10 @@ const ACTIVE_TILE = activeTileDescriptor();
 export const DEFAULT_CLAIM_SIZE = 64;
 export const CLAIM_SIZE = ACTIVE_CONTRACT.tileParams.size ?? DEFAULT_CLAIM_SIZE;
 export const CLAIM_HALF = CLAIM_SIZE / 2;
+export const CLAIM_WIDTH = ACTIVE_CONTRACT.tileParams.dimensions?.width ?? CLAIM_SIZE;
+export const CLAIM_HEIGHT = ACTIVE_CONTRACT.tileParams.dimensions?.height ?? CLAIM_SIZE;
+export const CLAIM_HALF_X = CLAIM_WIDTH / 2;
+export const CLAIM_HALF_Z = CLAIM_HEIGHT / 2;
 export const RIVER_MIN_Z = -5;
 export const RIVER_MAX_Z = 5;
 export const FORD_MIN_X = -3;
@@ -104,10 +108,10 @@ const DEFAULT_WATER_SPEED: Record<ContractWaterZone, number> = {
 };
 
 export const bounds: TerrainBounds = {
-  minX: -CLAIM_HALF,
-  maxX: CLAIM_HALF,
-  minZ: -CLAIM_HALF,
-  maxZ: CLAIM_HALF,
+  minX: -CLAIM_HALF_X,
+  maxX: CLAIM_HALF_X,
+  minZ: -CLAIM_HALF_Z,
+  maxZ: CLAIM_HALF_Z,
 };
 
 function defaultFordRange(): FordRange {
@@ -626,6 +630,8 @@ function createGroundMesh(): THREE.Mesh {
   if (!meshEnabled) return createBankPlaceholder();
   const mesh = createContinuousGroundMesh({
     size: CLAIM_SIZE,
+    width: CLAIM_WIDTH,
+    height: CLAIM_HEIGHT,
     segments: terrainMeshSegments(),
     material: createBankMaterial(splat),
     heightAt: sampleHeight,
@@ -990,7 +996,7 @@ vec4 terrainLayerSample(vec2 repeatedUv, float scale, vec2 salt) {
 }
 
 function createBankGeometry(): THREE.PlaneGeometry {
-  const geometry = new THREE.PlaneGeometry(CLAIM_SIZE, CLAIM_SIZE, terrainSegments(), terrainSegments());
+  const geometry = new THREE.PlaneGeometry(CLAIM_WIDTH, CLAIM_HEIGHT, terrainSegments(), terrainSegments());
   const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
   for (let index = 0; index < positions.count; index += 1) {
     const x = positions.getX(index);
@@ -1043,7 +1049,7 @@ function createExtendedRiverGeometry(): THREE.BufferGeometry {
     for (const x of axis) {
       const z = vistaRiverCenterZ(x) + across;
       positions.push(x, -z, 0);
-      uvs.push((x + CLAIM_HALF) / CLAIM_SIZE, t);
+      uvs.push((x + CLAIM_HALF_X) / CLAIM_WIDTH, t);
     }
   }
   const width = axis.length;
@@ -1075,7 +1081,7 @@ function addVistaGrid(
   for (const z of zAxis) {
     for (const x of xAxis) {
       positions.push(x, -z, heightAt(x, z));
-      uvs.push((x + CLAIM_HALF) / CLAIM_SIZE, (-z + CLAIM_HALF) / CLAIM_SIZE);
+      uvs.push((x + CLAIM_HALF_X) / CLAIM_WIDTH, (-z + CLAIM_HALF_Z) / CLAIM_HEIGHT);
     }
   }
   const width = xAxis.length;

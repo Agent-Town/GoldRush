@@ -15,6 +15,8 @@ export type ContinuousGroundMeshStats = {
 
 type ContinuousGroundMeshOptions = {
   size: number;
+  width?: number;
+  height?: number;
   segments: number;
   material: THREE.Material;
   heightAt: (x: number, z: number) => number;
@@ -23,26 +25,29 @@ type ContinuousGroundMeshOptions = {
 
 export function createContinuousGroundMesh(options: ContinuousGroundMeshOptions): THREE.Mesh {
   const segments = Math.max(1, Math.floor(options.segments));
-  const half = options.size / 2;
+  const width = options.width ?? options.size;
+  const height = options.height ?? options.size;
+  const halfX = width / 2;
+  const halfZ = height / 2;
   const positions: number[] = [];
   const uvs: number[] = [];
   const indices: number[] = [];
 
   for (let zi = 0; zi <= segments; zi += 1) {
-    const z = THREE.MathUtils.lerp(-half, half, zi / segments);
+    const z = THREE.MathUtils.lerp(-halfZ, halfZ, zi / segments);
     for (let xi = 0; xi <= segments; xi += 1) {
-      const x = THREE.MathUtils.lerp(-half, half, xi / segments);
+      const x = THREE.MathUtils.lerp(-halfX, halfX, xi / segments);
       positions.push(x, -z, options.heightAt(x, z));
-      uvs.push((x + half) / options.size, (-z + half) / options.size);
+      uvs.push((x + halfX) / width, (-z + halfZ) / height);
     }
   }
 
-  const width = segments + 1;
+  const rowStride = segments + 1;
   for (let zi = 0; zi < segments; zi += 1) {
     for (let xi = 0; xi < segments; xi += 1) {
-      const a = zi * width + xi;
+      const a = zi * rowStride + xi;
       const b = a + 1;
-      const c = a + width;
+      const c = a + rowStride;
       const d = c + 1;
       indices.push(a, c, b, b, c, d);
     }
@@ -64,7 +69,7 @@ export function createContinuousGroundMesh(options: ContinuousGroundMeshOptions)
     mode: 'continuous-mesh',
     drawCalls: 1,
     segments,
-    vertexStep: options.size / segments,
+    vertexStep: Math.max(width, height) / segments,
     vertices: positions.length / 3,
     triangles: indices.length / 3,
     heightSource: 'visual',
