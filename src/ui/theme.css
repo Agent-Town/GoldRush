@@ -130,6 +130,9 @@
 .hud-pressure-safe { background: rgba(131, 222, 215, 0.35); }
 .hud-pressure-fill { left: 0; background: #5b8a8a; }
 .hud-panel--pressure[data-state='vent'] .hud-pressure-fill { background: #a0522d; }
+.hud-panel--power[data-state='lit'] { border-color: rgba(196, 136, 58, 0.85); }
+.hud-panel--power[data-state='brown'] { border-color: rgba(160, 82, 45, 0.85); }
+.hud-panel--power[data-state='dark'] { border-color: rgba(46, 38, 66, 0.85); }
 
 .hud-panel--xp {
   right: max(16px, env(safe-area-inset-right));

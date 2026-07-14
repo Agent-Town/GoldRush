@@ -62,6 +62,8 @@ type HudElements = {
   pressureLabel: HTMLElement;
   pressureText: HTMLElement;
   pressureFill: HTMLElement;
+  powerPanel: HTMLElement;
+  powerText: HTMLElement;
   weaponChip: HTMLElement;
   agentChip: HTMLElement;
   agentDetail: HTMLElement;
@@ -148,6 +150,12 @@ export class Hud {
         <span class="hud-pressure-track" aria-hidden="true"><span class="hud-pressure-safe" data-hud-pressure-safe></span><span class="hud-pressure-fill" data-hud-pressure-fill></span></span>
       </section>
 
+      <section class="hud-panel hud-panel--resource hud-panel--power" data-testid="hud-power" aria-label="Power ledger" hidden>
+        <span class="hud-gauge" aria-hidden="true"></span>
+        <span class="hud-label">Grid</span>
+        <strong class="hud-value" data-hud-power></strong>
+      </section>
+
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
@@ -197,6 +205,8 @@ export class Hud {
       pressureLabel: this.get(root, '[data-hud-pressure-label]'),
       pressureText: this.get(root, '[data-hud-pressure]'),
       pressureFill: this.get(root, '[data-hud-pressure-fill]'),
+      powerPanel: this.get(root, '[data-testid="hud-power"]'),
+      powerText: this.get(root, '[data-hud-power]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
       agentChip: this.get(root, '[data-testid="hud-agent"]'),
       agentDetail: this.get(root, '[data-hud-agent-detail]'),
@@ -234,6 +244,7 @@ export class Hud {
     this.elements.hpFill.style.width = `${this.percent(snapshot.hp, snapshot.maxHp)}%`;
     this.elements.goldText.textContent = this.goldText(snapshot);
     this.updatePressure(snapshot);
+    this.updatePower(snapshot);
     this.elements.weaponChip.textContent = snapshot.weapon === 'blast' ? 'Blast Charge' : 'Spark Rig';
     this.elements.weaponChip.dataset.weapon = snapshot.weapon;
     this.elements.agentName.textContent = snapshot.agent?.name ?? 'the Prospector';
@@ -412,6 +423,19 @@ export class Hud {
       safe.style.width = `${this.percent((pressure.safeMax ?? 0) - (pressure.safeMin ?? 0), pressure.cap)}%`;
     }
     this.elements.pressurePanel.dataset.state = pressure.amount > (pressure.safeMax ?? pressure.cap) ? 'vent' : pressure.safeMax === undefined ? 'unassayed' : 'safe';
+  }
+
+  private updatePower(snapshot: UiSnapshot): void {
+    const power = snapshot.power;
+    this.elements.powerPanel.hidden = !power;
+    if (!power) return;
+    this.elements.powerPanel.dataset.state = power.dark > 0 ? 'dark' : power.brown > 0 ? 'brown' : 'lit';
+    this.elements.powerPanel.setAttribute(
+      'aria-label',
+      `Power ledger: ${power.supplyWatts} of ${power.demandWatts} watts, ${power.lit} lit, ${power.brown} brown, ${power.dark} dark`,
+    );
+    this.elements.powerPanel.title = 'L lit · B brown · D dark';
+    this.elements.powerText.textContent = `${power.supplyWatts}/${power.demandWatts}W · ${power.lit}L ${power.brown}B ${power.dark}D`;
   }
 
   private updateAnnouncement(snapshot: UiSnapshot): void {

@@ -3676,6 +3676,7 @@ export class Game {
       this.economy.gold,
       this.economy.bankCap,
       this.activeResourceSnapshots(),
+      this.powerUiSnapshot(),
       this.progression.xpInto,
       this.progression.xpNeed,
       this.progression.level,
@@ -3716,6 +3717,18 @@ export class Game {
           : {}),
       };
     });
+  }
+
+  private powerUiSnapshot(): UiSnapshot['power'] {
+    if (!this.powerGraph) return null;
+    const power = this.powerGraph.snapshot();
+    return {
+      supplyWatts: power.totalSupplyWatts,
+      demandWatts: power.totalDemandWatts,
+      lit: power.components.filter((component) => component.state === 'lit').length,
+      brown: power.components.filter((component) => component.state === 'brown').length,
+      dark: power.components.filter((component) => component.state === 'dark').length,
+    };
   }
 
   private agentUiState(): UiSnapshot['agent'] {

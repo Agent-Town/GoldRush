@@ -207,6 +207,12 @@ export const Balance = {
     ventLoss: 35,
     ventCooldownSeconds: 3,
   },
+  // Placeholder-tunable until the Canyon Works tile owns authored structures.
+  e3Power: {
+    generationWatts: 5,
+    consumerDrawWatts: { lamp: 3, tram: 4, turret: 6 },
+    spanCost: 10,
+  },
   assayOffice: {
     cost: 80,
     maxCount: 1,

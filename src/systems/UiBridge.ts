@@ -24,6 +24,13 @@ export type UiSnapshot = {
     safeMax?: number;
     objective?: string;
   }>;
+  power: null | {
+    supplyWatts: number;
+    demandWatts: number;
+    lit: number;
+    brown: number;
+    dark: number;
+  };
   xp: number;
   xpNeed: number;
   level: number;
@@ -81,6 +88,7 @@ export class UiBridge {
     gold: 0,
     bankCap: Balance.economy.bankCap,
     resources: [],
+    power: null,
     xp: 0,
     xpNeed: Balance.xp.needBase,
     level: 1,
@@ -134,6 +142,7 @@ export class UiBridge {
     gold: number,
     bankCap: number,
     resources: UiSnapshot['resources'],
+    power: UiSnapshot['power'],
     xp: number,
     xpNeed: number,
     level: number,
@@ -154,6 +163,7 @@ export class UiBridge {
     this.snapshot.gold = gold;
     this.snapshot.bankCap = bankCap;
     this.snapshot.resources = resources;
+    this.snapshot.power = power;
     this.snapshot.xp = xp;
     this.snapshot.xpNeed = xpNeed;
     this.snapshot.level = level;
