@@ -1,16 +1,37 @@
 import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { activeEpoch } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
 import { townBuildings, townPlazaSlot, townPropRing } from './townLayout';
 
-const TAVERN_MODEL_URL = new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href;
-const GENERAL_STORE_MODEL_URL = new URL('../../assets/pilots/general-store-3d/general-store.glb', import.meta.url).href;
-const CLAIM_OFFICE_MODEL_URL = new URL('../../assets/pilots/claim-office-3d/claim-office.glb', import.meta.url).href;
-const ASSAY_OFFICE_MODEL_URL = new URL('../../assets/pilots/assay-office-3d/assay-office.glb', import.meta.url).href;
-const CHAPEL_MODEL_URL = new URL('../../assets/pilots/chapel-3d/chapel.glb', import.meta.url).href;
-const SCHOOLHOUSE_MODEL_URL = new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href;
-const STAMP_MILL_MODEL_URL = new URL('../../assets/pilots/stamp-mill-3d/stamp-mill.glb', import.meta.url).href;
-const DYNAMO_HALL_MODEL_URL = new URL('../../assets/pilots/dynamo-hall-3d/dynamo-hall.glb', import.meta.url).href;
+const MODEL_PATHS = {
+  tavern: {
+    base: '../../assets/pilots/tavern-3d/town-v3-tavern.glb',
+    variant: '../../assets/pilots/tavern-3d/tavern.glb',
+  },
+  general_store: { base: '../../assets/pilots/general-store-3d/general-store.glb', variant: '../../assets/pilots/general-store-3d/general-store.glb' },
+  claim_office: { base: '../../assets/pilots/claim-office-3d/claim-office.glb', variant: '../../assets/pilots/claim-office-3d/claim-office.glb' },
+  assay_office: { base: '../../assets/pilots/assay-office-3d/assay-office.glb', variant: '../../assets/pilots/assay-office-3d/assay-office.glb' },
+  chapel: { base: '../../assets/pilots/chapel-3d/chapel.glb', variant: '../../assets/pilots/chapel-3d/chapel.glb' },
+  schoolhouse: { base: '../../assets/pilots/schoolhouse-3d/schoolhouse.glb', variant: '../../assets/pilots/schoolhouse-3d/schoolhouse.glb' },
+  'stamp-mill': { base: '../../assets/pilots/stamp-mill-3d/stamp-mill.glb', variant: '../../assets/pilots/stamp-mill-3d/stamp-mill.glb' },
+  dynamo_hall: { base: '../../assets/pilots/dynamo-hall-3d/dynamo-hall.glb', variant: '../../assets/pilots/dynamo-hall-3d/dynamo-hall.glb' },
+} as const;
+const BASE_MODEL_URLS: Record<string, string> = {
+  [MODEL_PATHS.tavern.base]: new URL('../../assets/pilots/tavern-3d/town-v3-tavern.glb', import.meta.url).href,
+  [MODEL_PATHS.general_store.base]: new URL('../../assets/pilots/general-store-3d/general-store.glb', import.meta.url).href,
+  [MODEL_PATHS.claim_office.base]: new URL('../../assets/pilots/claim-office-3d/claim-office.glb', import.meta.url).href,
+  [MODEL_PATHS.assay_office.base]: new URL('../../assets/pilots/assay-office-3d/assay-office.glb', import.meta.url).href,
+  [MODEL_PATHS.chapel.base]: new URL('../../assets/pilots/chapel-3d/chapel.glb', import.meta.url).href,
+  [MODEL_PATHS.schoolhouse.base]: new URL('../../assets/pilots/schoolhouse-3d/schoolhouse.glb', import.meta.url).href,
+  [MODEL_PATHS['stamp-mill'].base]: new URL('../../assets/pilots/stamp-mill-3d/stamp-mill.glb', import.meta.url).href,
+  [MODEL_PATHS.dynamo_hall.base]: new URL('../../assets/pilots/dynamo-hall-3d/dynamo-hall.glb', import.meta.url).href,
+};
+const BUNDLED_VARIANT_URLS = import.meta.glob('../../assets/pilots/*-3d/*.e*.glb', {
+  eager: true,
+  import: 'default',
+  query: '?url',
+}) as Record<string, string>;
 const TOWN_PLATE_MODEL_URL = new URL('../../assets/pilots/town-plate-3d/town-plate.glb', import.meta.url).href;
 const PROP_MODEL_URLS = {
   covered_wagon: new URL('../../assets/pilots/plaza-props-3d/covered_wagon.glb', import.meta.url).href,
@@ -23,6 +44,101 @@ const BOUNDS_EPSILON = 0.06;
 
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement };
 type PilotState = 'loading' | 'loaded' | 'error' | 'failed';
+type BuildingId = Exclude<keyof typeof MODEL_PATHS, 'dynamo_hall'>;
+type ModelCandidate = { era: number; url: string };
+
+const steamPools = new WeakMap<THREE.Scene, TownSteamPool>();
+
+class TownSteamPool {
+  private readonly anchors = new Map<string, THREE.Object3D[]>();
+  private readonly mesh = new THREE.InstancedMesh(
+    new THREE.SphereGeometry(0.38, 10, 8),
+    new THREE.MeshBasicMaterial({ color: '#fff8e8', transparent: true, opacity: 0.5, depthWrite: false }),
+    64,
+  );
+  private readonly object = new THREE.Object3D();
+  private frame = 0;
+
+  constructor(private readonly scene: THREE.Scene, private readonly canvas: HTMLCanvasElement) {
+    this.mesh.name = 'TownSteamPlumePool';
+    this.mesh.frustumCulled = false;
+    scene.add(this.mesh);
+    this.frame = requestAnimationFrame(this.update);
+  }
+
+  add(owner: string, anchors: THREE.Object3D[]): void {
+    anchors.sort((left, right) => left.name.localeCompare(right.name));
+    this.anchors.set(owner, anchors);
+    this.publish();
+  }
+
+  remove(owner: string): void {
+    this.anchors.delete(owner);
+    this.publish();
+    if (this.anchors.size) return;
+    cancelAnimationFrame(this.frame);
+    this.scene.remove(this.mesh);
+    this.mesh.geometry.dispose();
+    (this.mesh.material as THREE.Material).dispose();
+    steamPools.delete(this.scene);
+  }
+
+  private readonly update = (at: number): void => {
+    const position = new THREE.Vector3();
+    let index = 0;
+    for (const anchor of [...this.anchors.values()].flat()) {
+      anchor.getWorldPosition(position);
+      for (let puff = 0; puff < 2 && index < this.mesh.instanceMatrix.count; puff += 1) {
+        const phase = ((at * 0.00018) + puff * 0.48 + index * 0.13) % 1;
+        this.object.position.set(position.x, position.y + phase * 0.7, position.z);
+        this.object.scale.setScalar(0.42 + phase * 0.34);
+        this.object.updateMatrix();
+        this.mesh.setMatrixAt(index++, this.object.matrix);
+      }
+    }
+    this.mesh.count = index;
+    this.mesh.instanceMatrix.needsUpdate = true;
+    this.frame = requestAnimationFrame(this.update);
+  };
+
+  private publish(): void {
+    const count = [...this.anchors.values()].reduce((sum, anchors) => sum + anchors.length, 0);
+    this.canvas.dataset.town3dSteamAnchors = String(count);
+    this.canvas.dataset.town3dSteamPlumes = String(count * 2);
+  }
+}
+
+function eraCandidates(paths: { base: string; variant: string }): ModelCandidate[] {
+  const activeOrder = activeEpoch().order;
+  return [
+    ...Array.from({ length: Math.max(0, activeOrder - 1) }, (_, index) => activeOrder - index)
+      .flatMap((era) => {
+        const url = variantModelUrl(paths.variant.replace(/\.glb$/, `.e${era}.glb`));
+        return url ? [{ era, url }] : [];
+      }),
+    { era: 1, url: modelUrl(paths.base) },
+  ];
+}
+
+function modelUrl(path: string): string {
+  return BASE_MODEL_URLS[path] ?? new URL(path.replace(/^\.\.\/\.\./, ''), globalThis.location.origin).href;
+}
+
+function variantModelUrl(path: string): string | undefined {
+  const injected = (globalThis as typeof globalThis & { __GR_TOWN_VARIANT_URLS__?: Record<string, string> }).__GR_TOWN_VARIANT_URLS__?.[path];
+  return injected ?? BUNDLED_VARIANT_URLS[path];
+}
+
+function addSteamAnchors(scene: THREE.Scene, canvas: HTMLCanvasElement, owner: string, model: THREE.Object3D, era: number): () => void {
+  if (era < 2) return () => {};
+  const anchors: THREE.Object3D[] = [];
+  model.traverse((node) => { if (/^steam_anchor_\d+$/.test(node.name)) anchors.push(node); });
+  if (!anchors.length) return () => {};
+  const pool = steamPools.get(scene) ?? new TownSteamPool(scene, canvas);
+  steamPools.set(scene, pool);
+  pool.add(owner, anchors);
+  return () => pool.remove(owner);
+}
 
 function publish(
   canvas: HTMLCanvasElement,
@@ -94,20 +210,21 @@ function inspect(model: THREE.Object3D, runtimeEmissive = true): {
 
 function installTownBuildingPilot(
   { scene, canvas }: Host,
-  id: 'tavern' | 'general_store' | 'claim_office' | 'assay_office' | 'chapel' | 'schoolhouse' | 'stamp-mill',
-  modelUrl: string,
+  id: BuildingId,
   modelName: string,
 ): () => void {
   if (canvas.dataset.town3dPilotState === 'disposed') return () => {};
   let disposed = false;
   let model: THREE.Object3D | undefined;
+  let removeSteam = () => {};
   const shell = scene.getObjectByName(id === 'stamp-mill' ? 'TownStampMillSite' : `TownFacadeAssembly:${id}`);
   const building = id === 'stamp-mill' ? { footprint: { w: 6.2, d: 1.65 } } : townBuildings.find((entry) => entry.id === id)!;
   const slot = townPlazaSlot(id);
   publish(canvas, 'loading', 'facade');
 
-  new GLTFLoader().load(
-    modelUrl,
+  const candidates = eraCandidates(MODEL_PATHS[id]);
+  const load = (candidateIndex: number): void => new GLTFLoader().load(
+    candidates[candidateIndex]!.url,
     (gltf) => {
       const loaded = gltf.scene;
       const metrics = inspect(loaded, id !== 'assay_office');
@@ -119,28 +236,42 @@ function installTownBuildingPilot(
         metrics.grounded &&
         metrics.centered &&
         metrics.forbiddenNodes === 0;
-      if (disposed || !valid) {
+      if (disposed) {
         disposeObject3D(loaded);
-        if (!disposed) publish(canvas, 'error', 'facade', metrics);
         return;
       }
+      if (!valid) {
+        disposeObject3D(loaded);
+        if (candidateIndex + 1 < candidates.length) load(candidateIndex + 1);
+        else publish(canvas, 'error', 'facade', metrics);
+        return;
+      }
+      const candidate = candidates[candidateIndex]!;
       loaded.name = modelName;
       loaded.position.set(slot.position.x, 0, slot.position.z);
       loaded.rotation.y = Math.atan2(slot.approach.x - slot.position.x, slot.approach.z - slot.position.z);
+      loaded.updateMatrixWorld(true);
       model = loaded;
       scene.add(model);
+      removeSteam = addSteamAnchors(scene, canvas, id, loaded, candidate.era);
+      canvas.dataset.town3dPilotEra = String(candidate.era);
+      canvas.dataset.town3dPilotModel = candidate.url;
       canvas.dataset.town3dPilotLoadedIds = [...new Set([...(canvas.dataset.town3dPilotLoadedIds ?? '').split(',').filter(Boolean), id])].join(',');
       if (shell) shell.visible = false;
       publish(canvas, 'loaded', 'glb', metrics);
     },
     undefined,
     () => {
-      if (!disposed) publish(canvas, 'error', 'facade');
+      if (disposed) return;
+      if (candidateIndex + 1 < candidates.length) load(candidateIndex + 1);
+      else publish(canvas, 'error', 'facade');
     },
   );
+  load(0);
 
   return () => {
     disposed = true;
+    removeSteam();
     if (shell) shell.visible = true;
     if (!model) return;
     scene.remove(model);
@@ -154,26 +285,44 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
   const { scene, canvas } = host;
   let disposed = false;
   let model: THREE.Object3D | undefined;
+  let removeSteam = () => {};
   publish(canvas, 'loading', 'facade');
-  new GLTFLoader().load(DYNAMO_HALL_MODEL_URL, ({ scene: loaded }) => {
+  const candidates = eraCandidates(MODEL_PATHS.dynamo_hall);
+  const load = (candidateIndex: number): void => new GLTFLoader().load(candidates[candidateIndex]!.url, ({ scene: loaded }) => {
     const metrics = inspect(loaded);
     const valid = metrics.triangles <= MAX_TRIANGLES && metrics.materials <= MAX_MATERIALS &&
       metrics.width <= footprint.w + BOUNDS_EPSILON && metrics.depth <= footprint.d + BOUNDS_EPSILON &&
       metrics.grounded && metrics.centered && metrics.forbiddenNodes === 0;
-    if (disposed || !valid) {
+    if (disposed) {
       disposeObject3D(loaded);
-      if (!disposed) publish(canvas, 'error', 'facade', metrics);
       return;
     }
+    if (!valid) {
+      disposeObject3D(loaded);
+      if (candidateIndex + 1 < candidates.length) load(candidateIndex + 1);
+      else publish(canvas, 'error', 'facade', metrics);
+      return;
+    }
+    const candidate = candidates[candidateIndex]!;
     loaded.name = 'TownDynamoHallPilot';
     loaded.position.set(footprint.x, 0, footprint.z);
+    loaded.updateMatrixWorld(true);
     model = loaded;
     scene.add(loaded);
+    removeSteam = addSteamAnchors(scene, canvas, 'dynamo_hall', loaded, candidate.era);
+    canvas.dataset.town3dPilotEra = String(candidate.era);
+    canvas.dataset.town3dPilotModel = candidate.url;
     group.visible = false;
     publish(canvas, 'loaded', 'glb', metrics);
-  }, undefined, () => { if (!disposed) publish(canvas, 'error', 'facade'); });
+  }, undefined, () => {
+    if (disposed) return;
+    if (candidateIndex + 1 < candidates.length) load(candidateIndex + 1);
+    else publish(canvas, 'error', 'facade');
+  });
+  load(0);
   return () => {
     disposed = true;
+    removeSteam();
     group.visible = true;
     if (!model) return;
     scene.remove(model);
@@ -183,31 +332,31 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
 }
 
 export function installTownTavernPilot(host: Host): () => void {
-  return installTownBuildingPilot(host, 'tavern', TAVERN_MODEL_URL, 'TownTavernPilot');
+  return installTownBuildingPilot(host, 'tavern', 'TownTavernPilot');
 }
 
 export function installTownGeneralStorePilot(host: Host): () => void {
-  return installTownBuildingPilot(host, 'general_store', GENERAL_STORE_MODEL_URL, 'TownGeneralStorePilot');
+  return installTownBuildingPilot(host, 'general_store', 'TownGeneralStorePilot');
 }
 
 export function installTownClaimOfficePilot(host: Host): () => void {
-  return installTownBuildingPilot(host, 'claim_office', CLAIM_OFFICE_MODEL_URL, 'TownClaimOfficePilot');
+  return installTownBuildingPilot(host, 'claim_office', 'TownClaimOfficePilot');
 }
 
 export function installTownAssayOfficePilot(host: Host): () => void {
-  return installTownBuildingPilot(host, 'assay_office', ASSAY_OFFICE_MODEL_URL, 'TownAssayOfficePilot');
+  return installTownBuildingPilot(host, 'assay_office', 'TownAssayOfficePilot');
 }
 
 export function installTownChapelPilot(host: Host): () => void {
-  return installTownBuildingPilot(host, 'chapel', CHAPEL_MODEL_URL, 'TownChapelPilot');
+  return installTownBuildingPilot(host, 'chapel', 'TownChapelPilot');
 }
 
 export function installTownSchoolhousePilot(host: Host): () => void {
-  return installTownBuildingPilot(host, 'schoolhouse', SCHOOLHOUSE_MODEL_URL, 'TownSchoolhousePilot');
+  return installTownBuildingPilot(host, 'schoolhouse', 'TownSchoolhousePilot');
 }
 
 export function installTownStampMillPilot(host: Host): () => void {
-  return installTownBuildingPilot(host, 'stamp-mill', STAMP_MILL_MODEL_URL, 'TownStampMillPilot');
+  return installTownBuildingPilot(host, 'stamp-mill', 'TownStampMillPilot');
 }
 
 export function installTownPlatePilot({ scene, canvas }: Host): () => void {
