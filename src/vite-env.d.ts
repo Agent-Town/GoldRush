@@ -602,6 +602,7 @@ interface ThreeGameDiagnostics {
     sourceId: string | null;
     baseRadius: number;
     effectiveRadius: number;
+    attachCounts: Array<{ sourceId: string; count: number; radius: number; targetWeight: number }>;
   };
   enemyDimming: {
     enabled: boolean;

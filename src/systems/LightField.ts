@@ -4,6 +4,7 @@ export type LightSource = Readonly<{
   x: number;
   z: number;
   radius: number;
+  targetWeight?: number;
 }>;
 
 export type LightFieldDiagnostics = Readonly<{

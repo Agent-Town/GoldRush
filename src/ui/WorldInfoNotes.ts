@@ -9,6 +9,7 @@ export type WorldInfoObjectClass =
   | 'boiler_house'
   | 'turret'
   | 'lantern_post'
+  | 'decoy_shed'
   | 'assay_office'
   | 'claim_stake'
   | 'spring_pond'
@@ -74,6 +75,11 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
     objectClass: 'lantern_post',
     title: 'Lantern Post',
     lines: ['A cheap light post for Night Shift. It keeps danger readable in the dark.'],
+  },
+  {
+    objectClass: 'decoy_shed',
+    title: 'Decoy Shed',
+    lines: ['A lit sacrifice for migration week. Rebuild it when the moth tithe brings it down.'],
   },
   {
     objectClass: 'assay_office',

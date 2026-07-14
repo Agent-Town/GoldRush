@@ -205,6 +205,7 @@ const buildableIds: readonly BuildableId[] = [
   'boiler_house',
   'turret',
   'lantern_post',
+  'decoy_shed',
   'assay_office',
 ];
 const upgradeableBuildableIds = ['palisade', 'sluice', 'turret'] as const;
@@ -245,6 +246,7 @@ export class BuildSystem {
   readonly boilerHouses = new BoilerHousePool();
   private readonly turrets = new TurretPool();
   private readonly lanternPosts = new LanternPostPool();
+  private readonly decoySheds = new LanternPostPool(true);
   private readonly assayOffice = new THREE.Group();
   private readonly ghost = new THREE.Group();
   private readonly beaconGhost = new THREE.Group();
@@ -254,6 +256,7 @@ export class BuildSystem {
   private readonly boilerHouseGhost = new THREE.Group();
   private readonly turretGhost = new THREE.Group();
   private readonly lanternPostGhost = new THREE.Group();
+  private readonly decoyShedGhost = new THREE.Group();
   private readonly assayOfficeGhost = new THREE.Group();
   private readonly assayOfficePosition = new THREE.Vector3();
   private assayOfficeActive = false;
@@ -394,6 +397,7 @@ export class BuildSystem {
       this.boilerHouses.group,
       this.turrets.group,
       this.lanternPosts.group,
+      this.decoySheds.group,
       this.assayOffice,
       this.buildingVisuals,
       this.hpVisuals,
@@ -713,6 +717,7 @@ export class BuildSystem {
     this.beacons.update(at);
     this.turrets.update(at);
     this.lanternPosts.update(at, (index) => !this.wrecked.lantern_post[index]);
+    this.decoySheds.update(at, (index) => !this.wrecked.decoy_shed[index]);
     this.sluices.update(
       delta,
       at,
@@ -844,7 +849,7 @@ export class BuildSystem {
   restoreBuilding(state: BuildingRestoreState): boolean {
     const def = getBuildableDef(state.id);
     if (!def) return false;
-    const capacity = state.id === 'lantern_post' ? this.lanternPosts.capacity : def.maxCount;
+    const capacity = state.id === 'lantern_post' ? this.lanternPosts.capacity : state.id === 'decoy_shed' ? this.decoySheds.capacity : def.maxCount;
     if (!Number.isInteger(state.index) || state.index < 0 || state.index >= capacity) return false;
 
     const previousRotation = this.ghostRotationSteps;
@@ -915,6 +920,7 @@ export class BuildSystem {
     this.sluices.reset();
     this.turrets.reset();
     this.lanternPosts.reset();
+    this.decoySheds.reset();
     for (let i = 0; i < this.stockpiles.capacity; i += 1) this.economy.removeCapSource(stockpileCapSource(i));
     this.stockpiles.reset();
     this.boilerHouses.reset();
@@ -966,6 +972,7 @@ export class BuildSystem {
     this.boilerHouses.dispose();
     this.turrets.dispose();
     this.lanternPosts.dispose();
+    this.decoySheds.dispose();
     this.ghost.traverse((child) => {
       const mesh = child as THREE.Mesh;
       mesh.geometry?.dispose();
@@ -1336,6 +1343,11 @@ export class BuildSystem {
       const pos = this.lanternPosts.allPositions[i];
       if (pos) existing.push(this.placementDescriptor('lantern_post', pos, this.lanternPosts.rotationStepsAt(i)));
     }
+    for (let i = 0; i < this.decoySheds.capacity; i += 1) {
+      if (!this.decoySheds.isActive(i)) continue;
+      const pos = this.decoySheds.allPositions[i];
+      if (pos) existing.push(this.placementDescriptor('decoy_shed', pos, this.decoySheds.rotationStepsAt(i)));
+    }
     if (this.assayOfficeActive) existing.push(this.placementDescriptor('assay_office', this.assayOfficePosition, 0));
     return overlapsExisting(this.placementDescriptor(id, position, this.ghostRotationSteps), existing, this.reservedFootprints.filter((entry) => entry.active));
   }
@@ -1349,11 +1361,13 @@ export class BuildSystem {
     if (id === 'palisade') return Balance.palisade.overlapRadius;
     if (id === 'turret') return Balance.turret.overlapRadius;
     if (id === 'lantern_post') return Balance.lanternPost.overlapRadius;
+    if (id === 'decoy_shed') return Balance.decoyShed.overlapRadius;
     return Balance.beacon.overlapRadius;
   }
 
   private placeRadius(id: BuildableId): number {
     if (id === 'lantern_post') return Balance.lanternPost.placeRadius;
+    if (id === 'decoy_shed') return Balance.decoyShed.placeRadius;
     return id === 'turret' ? Balance.turret.placeRadius : Balance.beacon.placeRadius;
   }
 
@@ -1391,6 +1405,7 @@ export class BuildSystem {
         0,
       );
     }
+    if (id === 'decoy_shed') return this.decoySheds.activeCount;
     if (id === 'assay_office') return this.assayOfficeActive ? 1 : 0;
     return this.beacons.activeCount;
   }
@@ -1402,6 +1417,7 @@ export class BuildSystem {
     if (id === 'boiler_house') return this.boilerHouses.place(position, preferredSlot);
     if (id === 'turret') return this.turrets.place(position, preferredSlot);
     if (id === 'lantern_post') return this.lanternPosts.place(position, this.ghostRotationSteps, preferredSlot);
+    if (id === 'decoy_shed') return this.decoySheds.place(position, this.ghostRotationSteps, preferredSlot);
     if (id === 'assay_office') return this.placeAssayOffice(position, preferredSlot);
     return this.beacons.place(position, preferredSlot);
   }
@@ -1414,6 +1430,7 @@ export class BuildSystem {
     if (id === 'boiler_house') return this.boilerHouses.isActive(index);
     if (id === 'turret') return this.turrets.isActive(index);
     if (id === 'lantern_post') return this.lanternPosts.isActive(index);
+    if (id === 'decoy_shed') return this.decoySheds.isActive(index);
     return this.beacons.isActive(index);
   }
 
@@ -1430,6 +1447,7 @@ export class BuildSystem {
     if (id === 'boiler_house') return this.boilerHouses.deactivate(index);
     if (id === 'turret') return this.turrets.deactivate(index);
     if (id === 'lantern_post') return this.lanternPosts.deactivate(index);
+    if (id === 'decoy_shed') return this.decoySheds.deactivate(index);
     return this.beacons.deactivate(index);
   }
 
@@ -1582,6 +1600,7 @@ export class BuildSystem {
     if (id === 'boiler_house') return this.boilerHouses.allPositions[index];
     if (id === 'turret') return this.turrets.allPositions[index];
     if (id === 'lantern_post') return this.lanternPosts.allPositions[index];
+    if (id === 'decoy_shed') return this.decoySheds.allPositions[index];
     return this.beacons.allPositions[index];
   }
 
@@ -2102,6 +2121,7 @@ export class BuildSystem {
     this.boilerHouseGhost.visible = this.selectedId === 'boiler_house';
     this.turretGhost.visible = this.selectedId === 'turret';
     this.lanternPostGhost.visible = this.selectedId === 'lantern_post';
+    this.decoyShedGhost.visible = this.selectedId === 'decoy_shed';
     this.assayOfficeGhost.visible = this.selectedId === 'assay_office';
   }
 
@@ -2129,6 +2149,7 @@ export class BuildSystem {
     this.createBoilerHouseGhost();
     this.createTurretGhost();
     this.createLanternPostGhost();
+    this.createDecoyShedGhost();
     this.createAssayOfficeGhost();
     this.ghost.add(
       this.beaconGhost,
@@ -2138,6 +2159,7 @@ export class BuildSystem {
       this.boilerHouseGhost,
       this.turretGhost,
       this.lanternPostGhost,
+      this.decoyShedGhost,
       this.assayOfficeGhost,
     );
   }
@@ -2266,6 +2288,16 @@ export class BuildSystem {
     this.lanternPostGhost.add(lantern);
   }
 
+  private createDecoyShedGhost(): void {
+    const body = new THREE.Mesh(new THREE.BoxGeometry(1.55, 0.9, 1.25), this.ghostMaterial);
+    body.position.y = 0.45;
+    const roof = new THREE.Mesh(new THREE.BoxGeometry(1.8, 0.18, 1.5), this.ghostMaterial);
+    roof.position.y = 1;
+    const lamp = new THREE.Mesh(new THREE.BoxGeometry(0.25, 0.3, 0.18), this.ghostMaterial);
+    lamp.position.set(0, 0.62, -0.72);
+    this.decoyShedGhost.add(body, roof, lamp);
+  }
+
   private createAssayOfficeGhost(): void {
     const base = new THREE.Mesh(new THREE.BoxGeometry(1.6, 0.9, 1.1), this.ghostMaterial);
     base.position.y = 0.45;
@@ -2336,6 +2368,8 @@ class LanternPostPool {
   private readonly armGeometry = new THREE.BoxGeometry(0.62, 0.07, 0.07);
   private readonly lanternGeometry = new THREE.BoxGeometry(0.22, 0.28, 0.18);
   private readonly haloGeometry = new THREE.SphereGeometry(0.42, 12, 8);
+  private readonly shedGeometry = new THREE.BoxGeometry(1.55, 0.9, 1.25);
+  private readonly roofGeometry = new THREE.BoxGeometry(1.8, 0.18, 1.5);
   private readonly postMaterial = new THREE.MeshStandardMaterial({
     color: '#6f5732',
     emissive: '#3b2a1a',
@@ -2361,16 +2395,19 @@ class LanternPostPool {
   private readonly armMesh = new THREE.InstancedMesh(this.armGeometry, this.postMaterial, this.capacityLimit);
   private readonly lanternMesh = new THREE.InstancedMesh(this.lanternGeometry, this.lanternMaterial, this.capacityLimit);
   private readonly haloMesh = new THREE.InstancedMesh(this.haloGeometry, this.haloMaterial, this.capacityLimit);
+  private readonly shedMesh = new THREE.InstancedMesh(this.shedGeometry, this.postMaterial, this.capacityLimit);
+  private readonly roofMesh = new THREE.InstancedMesh(this.roofGeometry, this.postMaterial, this.capacityLimit);
   private readonly syncObject = new THREE.Object3D();
   private alive = 0;
 
-  constructor() {
-    this.group.name = 'LanternPostPool';
+  constructor(private readonly shed = false) {
+    this.group.name = shed ? 'DecoyShedPool' : 'LanternPostPool';
     for (const mesh of [this.postMesh, this.armMesh, this.lanternMesh, this.haloMesh]) {
       mesh.frustumCulled = false;
       mesh.castShadow = false;
       this.group.add(mesh);
     }
+    if (shed) this.group.add(this.shedMesh, this.roofMesh);
     this.haloMesh.renderOrder = RenderLayers.groundDecals + 1;
     this.haloMesh.visible = false;
     for (let i = 0; i < this.capacityLimit; i += 1) {
@@ -2459,6 +2496,8 @@ class LanternPostPool {
     this.armGeometry.dispose();
     this.lanternGeometry.dispose();
     this.haloGeometry.dispose();
+    this.shedGeometry.dispose();
+    this.roofGeometry.dispose();
     this.postMaterial.dispose();
     this.lanternMaterial.dispose();
     this.haloMaterial.dispose();
@@ -2472,6 +2511,10 @@ class LanternPostPool {
     const yaw = this.rotationStepsAt(index) * (Math.PI / 2);
     const sideX = Math.cos(yaw);
     const sideZ = -Math.sin(yaw);
+    if (this.shed) {
+      this.syncPart(this.shedMesh, index, position.x, groundY + 0.45, position.z, 1, yaw);
+      this.syncPart(this.roofMesh, index, position.x, groundY + 1, position.z, 1, yaw);
+    }
     this.syncPart(this.postMesh, index, position.x, groundY + 0.66, position.z, 1, 0);
     this.syncPart(this.armMesh, index, position.x + sideX * 0.22, groundY + 1.22, position.z + sideZ * 0.22, 1, yaw + sway);
     if (!lit) {
@@ -2494,6 +2537,10 @@ class LanternPostPool {
     this.postMesh.setMatrixAt(index, hiddenMatrix);
     this.armMesh.setMatrixAt(index, hiddenMatrix);
     this.hideLight(index);
+    if (this.shed) {
+      this.shedMesh.setMatrixAt(index, hiddenMatrix);
+      this.roofMesh.setMatrixAt(index, hiddenMatrix);
+    }
   }
 
   private hideLight(index: number): void {
@@ -2506,6 +2553,10 @@ class LanternPostPool {
     this.armMesh.instanceMatrix.needsUpdate = true;
     this.lanternMesh.instanceMatrix.needsUpdate = true;
     this.haloMesh.instanceMatrix.needsUpdate = true;
+    if (this.shed) {
+      this.shedMesh.instanceMatrix.needsUpdate = true;
+      this.roofMesh.instanceMatrix.needsUpdate = true;
+    }
   }
 }
 
@@ -2635,6 +2686,7 @@ function createStore<T>(make: (id: BuildableId, index: number) => T): BuildingFa
     boiler_house: createFamily('boiler_house', make),
     turret: createFamily('turret', make),
     lantern_post: createFamily('lantern_post', make),
+    decoy_shed: createFamily('decoy_shed', make),
     assay_office: createFamily('assay_office', make),
   };
 }

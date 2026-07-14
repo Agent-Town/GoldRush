@@ -3,6 +3,7 @@ export type DayNightCycleConfig = Readonly<{
   duskRampSeconds: number;
   dawnRampSeconds: number;
   nightDepth: number;
+  nightLocked?: boolean;
 }>;
 
 export type DayNightPhase = 'full' | 'dusk' | 'dark' | 'dawn';
@@ -33,6 +34,18 @@ export class DayNightCycle {
     const { periodSeconds: period, duskRampSeconds: dusk, dawnRampSeconds: dawn, nightDepth } = this.config;
     const cycle = Math.floor(time / period);
     const within = time - cycle * period;
+    if (this.config.nightLocked) {
+      const duskFloor = nightDepth * 0.75;
+      if (within < dusk) {
+        const phaseProgress = within / dusk;
+        return { phase: 'dusk', darkness: duskFloor + (nightDepth - duskFloor) * phaseProgress, phaseProgress, cycleProgress: within / period, cycle, simTime: time };
+      }
+      if (within >= period - dawn) {
+        const phaseProgress = (within - (period - dawn)) / dawn;
+        return { phase: 'dawn', darkness: nightDepth - (nightDepth - duskFloor) * phaseProgress, phaseProgress, cycleProgress: within / period, cycle, simTime: time };
+      }
+      return { phase: 'dark', darkness: nightDepth, phaseProgress: (within - dusk) / (period - dusk - dawn), cycleProgress: within / period, cycle, simTime: time };
+    }
     const hold = (period - dusk - dawn) / 2;
     const duskStart = hold;
     const nightStart = duskStart + dusk;

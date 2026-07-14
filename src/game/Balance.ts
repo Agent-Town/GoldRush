@@ -171,6 +171,13 @@ export const Balance = {
     placeRadius: 6,
     overlapRadius: 0.9,
   },
+  decoyShed: {
+    cost: 20,
+    maxCount: 3,
+    lightRadius: 11,
+    placeRadius: 6,
+    overlapRadius: 1.35,
+  },
   palisade: {
     cost: 10,
     maxCount: 48,
@@ -267,6 +274,7 @@ export const Balance = {
       turret: 50,
       assay_office: 60,
       lantern_post: 35,
+      decoy_shed: 120,
     },
     hpWaveScale: {
       sentry_beacon: {

@@ -12,7 +12,13 @@ type MothState = {
   attached: boolean;
   lastHp: number;
   scatterSeconds: number;
+  attachDamageSeconds: number;
 };
+
+export type MothTargetingConfig = Readonly<{
+  radiusWeight: number;
+  attachDamagePerSecond: number;
+}>;
 
 export class MothSwarm {
   readonly group = new THREE.Group();
@@ -26,7 +32,13 @@ export class MothSwarm {
   private elapsed = 0;
   private sources: readonly LightSource[] = [];
 
-  constructor(private readonly enabled: boolean, capacity: number, private readonly coverageAt: (x: number, z: number) => number) {
+  constructor(
+    private readonly enabled: boolean,
+    capacity: number,
+    private readonly coverageAt: (x: number, z: number) => number,
+    private readonly config: MothTargetingConfig = { radiusWeight: 1, attachDamagePerSecond: 0 },
+    private readonly damageSource: (sourceId: string, amount: number) => void = () => {},
+  ) {
     this.group.name = 'MothSwarmPool';
     this.group.visible = enabled;
     this.mesh = new THREE.InstancedMesh(this.geometry, this.material, capacity * MAX_MOTES_PER_SWARM);
@@ -52,7 +64,7 @@ export class MothSwarm {
         tint: '#e8d8b0',
       });
       if (!enemy) break;
-      this.states.set(enemy.id, { enemy, targetId: null, attached: false, lastHp: enemy.currentHp, scatterSeconds: 0 });
+      this.states.set(enemy.id, { enemy, targetId: null, attached: false, lastHp: enemy.currentHp, scatterSeconds: 0, attachDamageSeconds: 0 });
       spawned += 1;
     }
     return spawned;
@@ -64,11 +76,12 @@ export class MothSwarm {
     this.sources = sources;
     for (const enemy of enemies) {
       if (enemy.isAlive && enemy.variantId === VARIANT && !this.states.has(enemy.id)) {
-        this.states.set(enemy.id, { enemy, targetId: null, attached: false, lastHp: enemy.currentHp, scatterSeconds: 0 });
+        this.states.set(enemy.id, { enemy, targetId: null, attached: false, lastHp: enemy.currentHp, scatterSeconds: 0, attachDamageSeconds: 0 });
       }
     }
     const byId = new Map(sources.map((source) => [source.id, source]));
-    const brightest = [...sources].sort((a, b) => this.coverageAt(b.x, b.z) * b.radius - this.coverageAt(a.x, a.z) * a.radius || a.id.localeCompare(b.id))[0];
+    const targetScore = (source: LightSource) => this.coverageAt(source.x, source.z) * source.radius * this.config.radiusWeight * (source.targetWeight ?? 1);
+    const brightest = [...sources].sort((a, b) => targetScore(b) - targetScore(a) || a.id.localeCompare(b.id))[0];
 
     for (const [id, state] of this.states) {
       const { enemy } = state;
@@ -85,6 +98,7 @@ export class MothSwarm {
         state.attached = false;
         state.targetId = null;
         state.scatterSeconds = 0.8;
+        state.attachDamageSeconds = 0;
       }
       state.lastHp = enemy.currentHp;
       if (state.scatterSeconds > 0) {
@@ -96,6 +110,11 @@ export class MothSwarm {
       state.targetId = target.id;
       state.attached = Math.hypot(enemy.position.x - target.x, enemy.position.z - target.z) <= 0.65;
       enemy.scriptMoveTo(target.x, target.z, state.attached ? 0 : 5.2, { ignoreTerrain: true });
+      state.attachDamageSeconds = state.attached ? state.attachDamageSeconds + delta : 0;
+      while (state.attachDamageSeconds >= 1) {
+        this.damageSource(target.id, this.config.attachDamagePerSecond);
+        state.attachDamageSeconds -= 1;
+      }
     }
     this.syncVisuals();
   }
@@ -113,6 +132,12 @@ export class MothSwarm {
     const attached = alive.filter((state) => state.attached);
     const sourceId = attached[0]?.targetId ?? null;
     const source = this.sources.find((candidate) => candidate.id === sourceId);
+    const attachCounts = this.sources.map((candidate) => ({
+      sourceId: candidate.id,
+      count: attached.filter((state) => state.targetId === candidate.id).length,
+      radius: candidate.radius,
+      targetWeight: candidate.targetWeight ?? 1,
+    }));
     return {
       enabled: this.enabled,
       alive: alive.length,
@@ -120,6 +145,7 @@ export class MothSwarm {
       sourceId,
       baseRadius: source?.radius ?? 0,
       effectiveRadius: source ? this.dimSources([source])[0]!.radius : 0,
+      attachCounts,
     };
   }
 

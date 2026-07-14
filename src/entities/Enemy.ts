@@ -646,6 +646,7 @@ export class ClaimJumperEnemy {
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
+    movementSpeedMultiplier = 1,
   ): boolean {
     if (!this.alive) return false;
 
@@ -669,7 +670,8 @@ export class ClaimJumperEnemy {
       ? this.updateGapFlow(delta, targetPosition, wreckerContext)
       : targetPosition;
     const moveTarget = scriptedRailRoute || escortRailTarget ? gapTarget : this.terrainAwareTarget(this.routedTarget(gapTarget));
-    const speed = this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed;
+    const speed = (this.scripted ? this.scriptedSpeed : this.thiefState === 'fleeing' ? this.speed * Balance.steal.fleeSpeedMult : this.speed)
+      * Math.max(0, movementSpeedMultiplier);
 
     this.heading.set(moveTarget.x - this.group.position.x, 0, moveTarget.z - this.group.position.z);
     const distanceSq = this.heading.lengthSq();

@@ -4,6 +4,7 @@ import frontierFamilies from '../../assets/contracts/epoch-1-frontier/families.j
 import frontierManifest from '../../assets/contracts/epoch-1-frontier/manifest.json' with { type: 'json' };
 import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import steamworksManifest from '../../assets/contracts/epoch-2-steamworks/manifest.json' with { type: 'json' };
+import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import voltageManifest from '../../assets/contracts/epoch-3-voltage/manifest.json' with { type: 'json' };
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 
@@ -214,6 +215,15 @@ export type ContractDayNightCycle = {
   duskRampSeconds: number;
   dawnRampSeconds: number;
   nightDepth: number;
+  nightLocked?: boolean;
+};
+export type ContractMothSeason = {
+  radiusWeight: number;
+  decoyWeight: number;
+  mothsPerLightPerWave: number;
+  nightSpeedOutsideLight: number;
+  litThreshold: number;
+  attachDamagePerSecond: number;
 };
 export type ContractBaronTwist = {
   wave: number;
@@ -451,6 +461,7 @@ export type ContractManifest = {
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
     dayNightCycle?: ContractDayNightCycle;
+    mothSeason?: ContractMothSeason;
     enemyLanternClasses?: readonly ContractEnemyLanternClass[];
     enemyRoster?: readonly ContractEnemyVariant[];
     baron?: ContractBaronTwist;
@@ -571,6 +582,7 @@ const fallbackCapsBundles: Record<string, EpochCapsBundle> = {
 const fallbackContractBundles: Record<string, ContractsBundle> = {
   '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
   '../../assets/contracts/epoch-2-steamworks/contracts.json': steamworksContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-3-voltage/contracts.json': voltageContracts as unknown as ContractsBundle,
 };
 
 const manifests =

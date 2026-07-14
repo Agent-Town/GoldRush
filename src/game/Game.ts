@@ -441,9 +441,18 @@ export class Game {
     litThreshold: Balance.contracts.nightShift.renderVisibilityCutoff,
   });
   private readonly mothSwarm = new MothSwarm(
-    this.activeEpoch.id === 'epoch-3-voltage' || (new URLSearchParams(window.location.search).has('debug') && new URLSearchParams(window.location.search).has('daynight')),
+    this.activeEpoch.id === 'epoch-3-voltage' || this.activeContract.id === 'e3-moth-season' || (new URLSearchParams(window.location.search).has('debug') && new URLSearchParams(window.location.search).has('daynight')),
     this.enemies.capacity,
     (x, z) => this.lightField.coverageAt(x, z),
+    {
+      radiusWeight: this.activeContract.twist.mothSeason?.radiusWeight ?? 1,
+      attachDamagePerSecond: this.activeContract.twist.mothSeason?.attachDamagePerSecond ?? 0,
+    },
+    (sourceId, amount) => {
+      if (!sourceId.startsWith('decoy:')) return;
+      const target = this.buildSystem.buildingTarget('decoy_shed', Number.parseInt(sourceId.slice(6), 10));
+      if (target?.active) this.combat.damageBuilding(target, amount, -1);
+    },
   );
   private mothLightSources: LightSource[] = [];
   private dayNightSnapshot: DayNightSnapshot | null = null;
@@ -564,6 +573,7 @@ export class Game {
     (text, atSim) => this.announceWaveBanner(text, atSim),
     (wave, atSim) => {
       this.events.emit({ type: 'wave_started', at: atSim, wave });
+      this.spawnMothSeasonWave(wave);
       this.advanceMegaprojectOnWave(atSim);
       return !this.secureClaimChoicePending();
     },
@@ -1682,6 +1692,7 @@ export class Game {
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
+        (enemy) => this.mothSeasonSpeedMultiplier(enemy),
       );
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
@@ -3285,7 +3296,21 @@ export class Game {
     const safeWave = Math.max(0, Math.floor(wave));
     this.waveSystem.setWaveForTest(safeWave);
     this.events.emit({ type: 'wave_started', at: this.timeAlive, wave: safeWave });
+    this.spawnMothSeasonWave(safeWave);
     this.publishDiagnostics();
+  }
+
+  private spawnMothSeasonWave(wave: number): void {
+    const config = this.activeContract.twist.mothSeason;
+    if (!config || wave <= 0) return;
+    const count = Math.max(2, Math.floor(Math.max(1, this.mothLightSources.length) * config.mothsPerLightPerWave));
+    this.mothSwarm.spawn(this.enemies, count, this.heroStart.x, this.heroStart.z - 12);
+  }
+
+  private mothSeasonSpeedMultiplier(enemy: ClaimJumperEnemy): number {
+    const config = this.activeContract.twist.mothSeason;
+    if (!config || enemy.variantId === 'moth_swarm') return 1;
+    return this.lightField.coverageAt(enemy.position.x, enemy.position.z) < config.litThreshold ? config.nightSpeedOutsideLight : 1;
   }
 
   private onBaronDefeated(atSim: number, enemyId: number): void {
@@ -3558,18 +3583,27 @@ export class Game {
         radius: Balance.contracts.nightShift.heroLightRadius,
         kind: 'light' as const,
       }));
-    const liveLightPositions = (id: BuildableId): Array<{ x: number; z: number }> =>
+    const liveLightPositions = (id: BuildableId): Array<{ index: number; x: number; z: number }> =>
       diagnostics.hp
         .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
-        .map((entry) => entry.position);
+        .map((entry) => ({ index: entry.index, ...entry.position }));
     const lanternPositions = liveLightPositions('lantern_post');
-    const fieldSources: LightSource[] = lanternPositions.map((position, index) => ({
-      id: `lantern:${index}`,
+    const decoyPositions = liveLightPositions('decoy_shed');
+    const fieldSources: LightSource[] = lanternPositions.map((position) => ({
+      id: `lantern:${position.index}`,
       kind: 'lantern',
       x: position.x,
       z: position.z,
       radius: Balance.contracts.nightShift.lanternPostLightRadius,
     }));
+    fieldSources.push(...decoyPositions.map((position) => ({
+      id: `decoy:${position.index}`,
+      kind: 'powered-lamp' as const,
+      x: position.x,
+      z: position.z,
+      radius: Balance.decoyShed.lightRadius,
+      targetWeight: this.activeContract.twist.mothSeason?.decoyWeight ?? 1,
+    })));
     this.mothLightSources = fieldSources;
     this.lightField.update(this.dayNightCycle ? state.darkness : 0, this.dayNightCycle ? this.mothSwarm.dimSources(fieldSources) : []);
 
@@ -3581,6 +3615,9 @@ export class Game {
     }
     for (const position of lanternPositions) {
       sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.lanternPostLightRadius, kind: 'light' });
+    }
+    for (const position of decoyPositions) {
+      sources.push({ x: position.x, z: position.z, radius: Balance.decoyShed.lightRadius, kind: 'light' });
     }
 
     const enemyLanterns = this.enemies.all
@@ -3610,6 +3647,12 @@ export class Game {
         x: position.x,
         z: position.z,
         radius: Balance.contracts.nightShift.lanternPostLightRadius,
+        kind: 'lantern' as const,
+      })),
+      ...decoyPositions.map((position) => ({
+        x: position.x,
+        z: position.z,
+        radius: Balance.decoyShed.lightRadius,
         kind: 'lantern' as const,
       })),
       ...this.actors.filter((actor) => actor.group.visible).map((actor) => ({
@@ -3684,11 +3727,12 @@ export class Game {
   }
 
   private isNightShiftContract(): boolean {
-    return this.activeContract.id === 'e1-night-shift';
+    return this.activeContract.id === 'e1-night-shift' || this.activeContract.id === 'e3-moth-season';
   }
 
   private isBuildableEnabled(id: BuildableId): boolean {
     if (id === 'lantern_post') return this.isNightShiftContract();
+    if (id === 'decoy_shed') return this.activeContract.id === 'e3-moth-season';
     if (id === 'boiler_house') return this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive();
     return true;
   }

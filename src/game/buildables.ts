@@ -8,7 +8,8 @@ export type BuildableId =
   | 'boiler_house'
   | 'turret'
   | 'assay_office'
-  | 'lantern_post';
+  | 'lantern_post'
+  | 'decoy_shed';
 export type BuildPlacement = 'bank' | 'river-adjacent' | 'any';
 export type BuildablePowerDef = {
   produces?: number;
@@ -123,6 +124,19 @@ export const buildableDefs: readonly BuildableDef[] = [
     slotFamily: 'building.lantern_post',
     maxCount: Balance.lanternPost.maxCount,
     iconSlot: 'ui.build.icon.lantern_post',
+  },
+  {
+    id: 'decoy_shed',
+    displayName: 'Decoy Shed',
+    blurb: 'A cheap lit shed built to take the moth tithe instead of the town.',
+    costCurve: () => Balance.decoyShed.cost,
+    footprint: { w: 1.8, d: 1.5 },
+    hpMax: Balance.wreck.hp.decoy_shed,
+    placement: 'bank',
+    slotFamily: 'building.decoy_shed',
+    maxCount: Balance.decoyShed.maxCount,
+    iconSlot: 'ui.build.icon.decoy_shed',
+    rotatable: true,
   },
   {
     id: 'assay_office',
