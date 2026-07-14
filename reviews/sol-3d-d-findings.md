@@ -180,6 +180,22 @@ The final packaging pass caught a false-positive workflow assumption. `scripts/r
 
 The generic wrapper remains useful as a geometry/material probe only when run on copies. It is not a valid final exporter for these terrain/panorama assets until the factory aligns its options with `specs/town-3d/RECIPE.md` and the render-only metadata contract. This spike cannot edit that shared script under its path grant, so the incompatibility is recorded rather than hidden behind a passing geometry count.
 
+### F-3D-D-24 — The Landmark Source Ladder produces one coherent wave without cloning one map
+
+The seven current terrain contracts expose 36 mount ids. The ruled ladder resolves them as 15 reused bodies, 9 derived bodies, and 12 source-less new builds. Reuse starts from existing boiler house, lantern, palisade, sluice, stockpile, wagon, coal-bin, pipe-run, claim-office, stamp-mill, and railcar geometry. Derivation preserves those silhouettes or follows the exact shipped contract/rail paint. New builds are limited to missing types such as headframes, stakes, cacti, bones, springs, winches, rock shoulders, work roads, banners, and the trestle structure. No external model generation was needed because useful project sources existed above that rung.
+
+Every map has its own pack `.blend`, one shared 1024² grit atlas baked from its epoch kit and matching contract or rail source, and one separate GLB per mount. The GLBs are base-centred, carry map/era/source-tier/render-only metadata, remain at or below 3,000 triangles, and contain no camera, light, animation, collision, mask, placement, or simulation authority. The existing terrain contracts now point each mount's `asset` field at its body; no landmark entered a terrain mesh.
+
+`artifacts/map-rebuild-spike/landmark-pack-asset-contract.json` parses all 36 GLBs and proves one mesh, primitive, material, and embedded atlas per body. It reopens all seven source `.blend` files and requires every isolated export to be both whole-file byte-identical and semantic-identical. `all-landmark-packs-verdict.png` places the shipped source, body lineup, and real-camera mount beside one another; `all-landmark-packs-proxy-ab.png` records the composition proxy to mounted-body transition without implying a terrain or gameplay change.
+
+### F-3D-D-25 — The run camera and terrain contact remain separate landmark gates
+
+The first fresh release review rejected the Baron because its primary seized-headframe silhouette was hidden behind the far-bank fortification and clipped by the gameplay frame. The mount moved to the near-bank approach at `[-13, 0, 13]`, gained a 1.2 scale, and now counterweights the rocket cart. A correction-only review passed that exact blocker at 99% confidence.
+
+A separate contact probe then exposed a structural issue that the board could conceal: a map-wide GLB mounted once at `Terrain.visualY` leaves its distant local pieces on a flat Z plane. Thirteen distributed packs now sample the exported terrain while authoring and move each rigid component as a whole before joining. Their base-centering compensation lives in `terrainConformOffsetY`; the builder subtracts the previous generated offset before recalculating, and repeated full rebuilds produced identical offsets. Night Shift also reads its seven lantern positions directly from the factory `prePlacedBuildables` table, and the verifier requires exact equality. These bodies may eventually replace fixture presentation, but they must never create a second gameplay lantern set.
+
+The final updated board passed fresh visual review at 96% confidence with no blocker: terrain contact reads plausibly, the segmented Night Shift road and fixture lighting remain legible, and Baron's headframe stays fully framed. Non-blocking promotion debt remains at Twin Banks' black shoreline shapes, Night Shift edge clearance and lower-field contrast, Hill Mine's central support contact, and Trestle's fragmented outer approaches. The reviewer's request to prove tree models is deliberately rejected: the binding desert law forbids trees, so cactus-only vegetation is correct.
+
 ## Contract identity summary
 
 | Contract | Macro identity | Contract focal read |
@@ -234,6 +250,14 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - Dedicated contract re-export with extras, whole-file hash equality, and semantic equality for all four E2 GLBs — PASS
 - Generic `scripts/reexport-pilot.sh` metadata preservation — BLOCKED by missing `export_extras=True`; F-3D-D-23 records the factory follow-up
 - Fresh unprimed E2 visual review: distinct maps, FIGHT, no trees, DISTANCE, legible masks, no blocker — PASS
+- Seven landmark pack `.blend` files, seven shared 1024² atlases, and 36 separate mounted GLBs — PASS
+- Landmark Source Ladder provenance: 15 reuse, 9 derive, 12 build-new — PASS
+- Every landmark at or below 3,000 triangles; one mesh/material/embedded atlas; base-centred — PASS
+- Whole-file byte-identical and semantic-identical re-export for all 36 landmark GLBs — PASS
+- Thirteen distributed rigid-piece packs terrain-conformed through the existing mount/`Terrain.visualY` seam; repeated rebuild offsets stable — PASS
+- Night Shift landmark lantern positions exactly equal the seven authored pre-placed fixture records — PASS
+- Final fresh landmark review: plausible terrain contact, legible Night Shift, fully framed Baron headframe, no visual blocker — PASS (96% confidence)
+- Terrain contract mount assets filled; landmark collision, masks, placement, and simulation authority remain absent — PASS
 - `src/` edits: none
 - Runtime loading, placement, disposal, gameplay, and performance: intentionally deferred to an attended promotion
 
@@ -253,6 +277,8 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - `artifacts/map-rebuild-spike/e2-mask-agreement-board.png` — factory build, stake, rail, water, and bank evidence
 - `artifacts/map-rebuild-spike/e2-panorama-mood-ab.png` — E2 before / mounted / center-horizon Panorama v2 gate
 - `artifacts/map-rebuild-spike/e2-panorama-distance-gate.png` — complete-frame E2 distance gate
+- `artifacts/map-rebuild-spike/all-landmark-packs-verdict.png` — shipped source / pack bodies / mounted real-camera landmark gate
+- `artifacts/map-rebuild-spike/all-landmark-packs-proxy-ab.png` — previous composition proxies / separate mounted landmark bodies
 - `artifacts/map-rebuild-spike/owner-run-camera-east-edge.png` — shifted real-camera seam check
 - `artifacts/map-rebuild-spike/owner-county-overview.png` — county composition overview
 - `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png`
