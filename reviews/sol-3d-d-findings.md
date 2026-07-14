@@ -288,3 +288,54 @@ This table is an art-direction test, not a runtime registry. The contract descri
 The E1 mood and building-grit boards remain its current owner gates. The E2 boards above gate the authored half of the new family; Pressure Garden and Incline remain outside the terrain wave until factory masks exist.
 
 READY-FOR-GATES
+
+## Rival Dynamo Crawler wave
+
+### F-3D-D-26 — The shipped Dynamo plate, not the queue shorthand, is the source
+
+The queue calls the input `plate-e3-boss-crawler.png`; the ledger-backed file present in the repository is `assets/raw/plate-e3-boss-dynamo-crawler.png`, SHA-256 `eb52e2b77695536c2216958daae45028f044c6a80757ff4450424f59a3dae086`. The deterministic atlas builder samples that exact plate. No generated substitute, paid still-image model, or external 3D body entered the asset.
+
+The resulting `assets/pilots/crawler-3d/crawler.glb` is base-centred at 3.20 × 1.389 × 2.6775 units. It contains exactly three identity-transform mesh nodes and three primitives, one shared embedded 1024² PNG atlas, 11,980 triangles against the 12,000 ceiling, and no camera, light, or animation. Its final SHA-256 is `a336f7574d42ae6e1d69d13310fd549411c442e93073fec6a64ea0128f4f75f9`.
+
+### F-3D-D-27 — Component damage must be structural before the factory adds tint
+
+The factory seam receives `drain_mast`, `tracks`, and `capacitor_bank`. Each has one default-zero damage morph: `Damage_ToppledDrainMast`, `Damage_ShatteredTracks`, and `Damage_RupturedCapacitorBank`. The mast falls from its armored foot and throws fragments; the near armor skirt tears away to expose and shed the track; the rack breaks outward while jars displace and jagged rupture cores become visible. This remains legible without depending on a future red flash or shader tint.
+
+`renders/crawler-damage-states.png` is the visual gate. `renders/crawler-asset-contract.json` independently parses the GLB, confirms the names/bindings/budget/bounds, and proves whole-file byte identity plus semantic identity after reopening the saved Blender file.
+
+### F-3D-D-28 — Run-camera critique changed the asset, not merely the board
+
+Two fresh blind reviews rejected the early candidates. The first found an underexposed utility cart with weak damage and a stage-set canyon. The second still found a visually light open chassis, flat gorge evidence, and ambiguous track/capacitor failures. The corrections enlarged the armored underframe, added riveted track skirts, retained a visible tread rhythm, increased component separation, bent the river cut, raised continuous canyon rims, and changed the damage morph geometry itself.
+
+The final fresh unprimed review returns `SHIP`. At the production 42° FOV it finds the boss dominant over the heroine, all three components readable, all three damage states unmistakable, and the static drain arc plus gorge channel credible as evidence-only combat pressure. Its non-blocking debt is honest: close-up piping/running gear remain simpler than the painted plate, and the engraved canyon surface is busy around the heroine and lower track.
+
+### F-3D-D-29 — The model stops at the railcar-style presentation boundary
+
+The package provides `.blend`, `.glb`, deterministic builder, renderer, verifier, source/reference A/B, run-camera verdict, turntable, damage sheet, and parsed contract. It does not edit `src/`, boss timing, attacks, collision, movement, masks, targeting, simulation ownership, or disposal. The heroine and drain arc in the gorge shot are temporary evidence objects; neither is saved in the GLB. Factory choreography remains the only runtime owner.
+
+The threejs asset ladder was followed locally. Its API reference was read, then the credential probe returned blank `TRIPO_API_KEY`, `GEMINI_API_KEY`, and `ELEVENLABS_API_KEY`; no provider request, task id, paid credit, or downloaded model exists. The landmark freeze was preserved, and the Pressure Garden/Incline mask heartbeat remains active.
+
+## Crawler gate state
+
+- Source plate and content hash pinned: PASS
+- Exact nodes `drain_mast` / `tracks` / `capacitor_bank`: PASS
+- One named default-zero damage morph per component: PASS
+- 11,980 triangles against 12,000: PASS
+- One material and one embedded 1024² PNG: PASS
+- Base-centred identity-transform export: PASS
+- Zero cameras, lights, animations, or external textures: PASS
+- Generic saved-Blend re-export whole-file hash equality: PASS
+- Dedicated reopen/re-export whole-file and semantic equality: PASS
+- Python compilation and repository production build: PASS
+- Fresh final unprimed visual verdict: SHIP
+- Independent `codex review --uncommitted`: attempted; CLI exited after inventory without a review verdict, so it is not counted as a gate
+- `src/`, choreography, simulation, and landmark edits: none
+
+## Crawler owner-verdict images
+
+- `assets/pilots/crawler-3d/renders/crawler-reference-ab.png` — shipped painted plate / real run-camera A/B
+- `assets/pilots/crawler-3d/renders/crawler-canyon-run-camera.png` — heroine-scale canyon-gorge pressure shot
+- `assets/pilots/crawler-3d/renders/crawler-turntable.png` — intact silhouette and component coverage
+- `assets/pilots/crawler-3d/renders/crawler-damage-states.png` — three factory-facing damage morphs
+
+READY-FOR-GATES
