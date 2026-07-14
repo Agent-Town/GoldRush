@@ -106,6 +106,14 @@ The correction keeps a shared regional construction vocabulary but gives it visi
 
 A second fresh critique still rejected these as production buildings: doors, fasteners, wall framing, lifted patch edges, soot, end grain, and human-scale hardware do not survive the real run camera consistently. That is a useful boundary rather than a terrain blocker. The owner can judge the new condition language now, but shipping buildings still require separate mounted GLBs, authored gameplay footprints, and their own close/render/game-camera gate.
 
+### F-3D-D-15 — The exterior is regional grammar; The Claim keeps its own horizon story
+
+Evidence: `artifacts/map-rebuild-spike/the-claim-exterior-ab.png` compares the same low sunset camera before and after the county pass. The flat brown void becomes a 160 m desert valley with a continuous S-curve river, layered rock shelves, cacti, a tailings shoulder, and a distant extraction silhouette. `owner-run-camera-east-edge.png` uses the real run-camera angle shifted to the east boundary so the playable seam cannot hide outside the frame.
+
+The first attempt failed a fresh visual review. It repeated the 64 m atlas as obvious squares, left a vertical edge seam, kept the river nearly black, and used trapezoidal mesa proxies that read as walls. The correction renders one temporary welded tile-plus-county surface, blends the shipped bank plates at world scale, continues one water ribbon through the whole view, replaces trees with cacti, pushes the horizon to 160 m, and replaces the trapezoids with layered faceted rock shelves. A second fresh review accepted the result as an exploration spike.
+
+The acceptance is deliberately narrower than production approval. The shifted edge view still reveals a soil/value transition; the river remains too broad and slab-like; the far geology needs more layers; sunset compresses the value range; and the cactus distribution remains visibly authored. These are promotion findings, not permissions to change simulation. The saved terrain, water mask, ford, movement, collision, placement, spawns, and `Terrain.visualY` ownership are unchanged. The Claim GLB and atlas hashes remain byte-identical to the previous commit.
+
 ## Contract identity summary
 
 | Contract | Macro identity | Contract focal read |
@@ -139,6 +147,9 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - Saved-mesh probes for Claim river/ford, Dry Gulch basin/washes, Twin Banks two fords/banks, Night Shift shoulders/terraces, and Baron trench/bastions: PASS
 - Five-row same-map mood A/B board and all ten source inputs pinned by content hash: PASS
 - Five-row building-grit before/after board pinned by content hash: PASS
+- The Claim exterior identical-camera A/B pinned by content hash: PASS
+- 160 m render-only county surround; cactus-only tall vegetation; fresh review verdict: ACCEPT as exploration
+- The Claim GLB and atlas unchanged across exterior rebuild: PASS
 - `src/` edits: none
 - Runtime loading, placement, disposal, gameplay, and performance: intentionally deferred to an attended promotion
 
@@ -146,6 +157,9 @@ This table is an art-direction test, not a runtime registry. The contract descri
 
 - `artifacts/map-rebuild-spike/all-contracts-mood-ab.png` — current material-language gate
 - `artifacts/map-rebuild-spike/all-contracts-building-grit-ab.png` — building condition and construction gate
+- `artifacts/map-rebuild-spike/the-claim-exterior-ab.png` — first exterior county direction gate
+- `artifacts/map-rebuild-spike/owner-run-camera-east-edge.png` — shifted real-camera seam check
+- `artifacts/map-rebuild-spike/owner-county-overview.png` — county composition overview
 - `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png`
 - `artifacts/map-rebuild-spike/all-contracts-unique-layout-verdict.png`
 - per-map run-camera, overview, and low-angle renders live in the same artifact folder
