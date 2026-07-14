@@ -6,6 +6,8 @@ import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contr
 import steamworksManifest from '../../assets/contracts/epoch-2-steamworks/manifest.json' with { type: 'json' };
 import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
 import voltageManifest from '../../assets/contracts/epoch-3-voltage/manifest.json' with { type: 'json' };
+import motorContracts from '../../assets/contracts/epoch-4-motor/contracts.json' with { type: 'json' };
+import motorManifest from '../../assets/contracts/epoch-4-motor/manifest.json' with { type: 'json' };
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 
 export type EpochUpgradeDeltas = {
@@ -595,6 +597,7 @@ const fallbackManifests: Record<string, EpochManifest> = {
   '../../assets/contracts/epoch-1-frontier/manifest.json': frontierManifest as EpochManifest,
   '../../assets/contracts/epoch-2-steamworks/manifest.json': steamworksManifest as EpochManifest,
   '../../assets/contracts/epoch-3-voltage/manifest.json': voltageManifest as EpochManifest,
+  '../../assets/contracts/epoch-4-motor/manifest.json': motorManifest as EpochManifest,
 };
 const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
   '../../assets/contracts/epoch-1-frontier/families.json': frontierFamilies as EpochFamiliesBundle,
@@ -606,6 +609,7 @@ const fallbackContractBundles: Record<string, ContractsBundle> = {
   '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
   '../../assets/contracts/epoch-2-steamworks/contracts.json': steamworksContracts as unknown as ContractsBundle,
   '../../assets/contracts/epoch-3-voltage/contracts.json': voltageContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-4-motor/contracts.json': motorContracts as unknown as ContractsBundle,
 };
 
 const manifests =
