@@ -37,10 +37,12 @@ while IFS=$'\t' read -r file duration; do
   printf -v prefix '%03d' "$index"
   output="$LOOP_DIR/$prefix-$stem.mp4"
   wanted+=("${output##*/}")
-  if [ "$ext" = mp4 ]; then
-    [ -e "$output" ] && [ "$output" -nt "$source" ] || cp -f "$source" "$output"
-  elif [ "$ext" = webm ]; then
-    [ -e "$output" ] && [ "$output" -nt "$source" ] || ffmpeg -nostdin -loglevel error -y -i "$source" -c:v libx264 -pix_fmt yuv420p -movflags +faststart -c:a aac "$output"
+  if [ "$ext" = mp4 ] || [ "$ext" = webm ]; then
+    if ! { [ -e "$output" ] && [ "$output" -nt "$source" ]; }; then
+      clipdur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$source")
+      fadeout=$(awk -v d="$clipdur" 'BEGIN { printf "%.2f", (d > 0.5 ? d - 0.25 : 0) }')
+      ffmpeg -nostdin -loglevel error -y -i "$source"         -vf "scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,fps=30,fade=t=in:st=0:d=0.25,fade=t=out:st=$fadeout:d=0.25"         -c:v libx264 -preset veryfast -crf 20 -pix_fmt yuv420p -movflags +faststart -c:a aac -ar 48000 "$output"
+    fi
   else
     duration=${duration:-5}
     [ -e "$output" ] && [ "$output" -nt "$source" ] || ffmpeg -nostdin -loglevel error -y -loop 1 -i "$source" -t "$duration" -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -r 30 -c:v libx264 -pix_fmt yuv420p -movflags +faststart "$output"
