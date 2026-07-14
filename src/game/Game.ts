@@ -1103,7 +1103,7 @@ export class Game {
     });
 
     this.createScene();
-    const terrain3dPilot = new URLSearchParams(window.location.search).has('terrain3dPilot') && activeTileDescriptor().id === 'frontier-river-claim';
+    const terrain3dPilot = new URLSearchParams(window.location.search).has('terrain3dPilot');
     this.canvas.dataset.terrain3dPilotState = terrain3dPilot ? 'loading' : 'off';
     this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
     if (terrain3dPilot) void import('../world/Terrain3dClaimPilot').then(({ installTerrain3dClaimPilot }) => {
@@ -1111,6 +1111,8 @@ export class Game {
       this.terrain3dPilotDispose = installTerrain3dClaimPilot({
         scene: this.scene,
         canvas: this.canvas,
+        contractId: this.activeContract.id,
+        tileId: activeTileDescriptor().id,
         paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
       });
     });
