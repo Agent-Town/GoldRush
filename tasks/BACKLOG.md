@@ -284,3 +284,5 @@ The waterfall holds (E5 plays after E4 ships) — so the push = COMPRESS E4 + po
 - QUEUED: **e4-02-vehicles-fuel** (lane-a) + **e4-03-convoy-weather** (lane-d) — the E4 spine, parallel-safe · **e5-01-research-tree** (lane-b) — the Deepwater chart (THE FLOOD's era; canon keystone) · **art-e4-batch-02** (enemies + Land-Yacht boss composite).
 - E4 remaining after the spine: ORBIT spawns + road-grading (engine part 3) → Dust Flats tile + contracts → Land-Yacht boss → era gate. THEN E5 unlocks its full build (water volumes/boat physics = its own spike, spec'd when E4's spine stands).
 - Honest ETA at today's velocity: E4 spine ~a day, E4 content ~a day+, then E5's engine. "Playing E5" is plausibly THIS WEEK — the tokens are being spent exactly where they compress the path.
+
+- **PANORAMA v2 MERGED+DEPLOYED** — E1 county visually complete behind the flag; OWNER'S DESK: the terrain tour (?terrain3dPilot on all five E1 maps) → promotion verdict; 3D-D proceeds to the E2 family.
