@@ -932,14 +932,14 @@ function isPlayerContractLaunch(id: string): boolean {
 
 function activeDevTileOverride(): EpochTileDescriptor | null {
   const params = readSearchParams();
-  const requestedId = params.has('powergraph') || params.get('power') === 'dev' ? 'gt-test-basin' : params.get('tile');
+  const requestedId = params.has('powergraph') || params.has('tram') || params.get('power') === 'dev' ? 'gt-test-basin' : params.get('tile');
   if (!requestedId || !params.has('debug')) return null;
   const tile = manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((entry) => entry.id === requestedId);
   if (!tile) return null;
   const active: EpochTileDescriptor = { id: tile.id, biome: tile.biome };
   if (tile.render) active.render = tile.render;
   if (tile.elevation) active.elevation = tile.elevation;
-  if (tile.rails && params.get('rails') === 'dev') active.rails = tile.rails;
+  if (tile.rails && (params.has('tram') || params.get('rails') === 'dev')) active.rails = tile.rails;
   return active;
 }
 

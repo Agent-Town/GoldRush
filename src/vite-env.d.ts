@@ -289,6 +289,7 @@ interface ThreeGameDiagnostics {
   };
   megaproject: GrMegaprojectDiagnostics;
   escort: GrEscortDiagnostics;
+  tram: GrTramDiagnostics | null;
   power: GrPowerGraphDiagnostics;
   agent: {
     stub: {
@@ -806,6 +807,7 @@ type GrActiveContractDiagnostics = import('./meta/ContractFamilies').ActiveContr
 type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 type GrEscortDiagnostics = import('./systems/WaveSystem').WaveDiagnostics['escort'];
+type GrTramDiagnostics = import('./entities/TramPath').TramDiagnostics;
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
 type GrMultiplayerBalanceWindow = import('./mp/MultiplayerBalanceHarness').MultiplayerBalanceWindow;
