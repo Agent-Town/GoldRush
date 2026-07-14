@@ -85,3 +85,5 @@ The era transformation covers the WHOLE town surface. 7b delivers, alongside the
 - Steam anchors on props too where sensible (the manifold, the pipe runs).
 
 ## WAVE 7a — ACCEPTED + MERGED (attended, 2026-07-14 evening). Tip 31fc2d50: both variants pass the ACROSS-THE-PLAZA TEST (blind review identified them unlabeled); steam anchors present. **WAVE 7b + THE ACCESSORY PACK: GO** — all nine buildings' E2 faces + era props per the standing contract.
+
+## WAVE 7b — ACCEPTED + MERGED + DEPLOYED (attended, 2026-07-14 night). Tip 3b73b2aa: all eight production buildings' E2 faces (blind-identified), steam anchors, wagon/trough variants, five accessories + the placement manifest. The ninth-building honesty (documented mismatch, no fabrication) is exactly the house standard. **THE ERA TRANSFORMATION IS ART-COMPLETE for E2** — the factory's era-switch loader mounts it all when the Steamworks is active. NEXT (owner's direction pending): E3 faces after the Canyon Works ships, or the landmark packs for 3D-D's county.

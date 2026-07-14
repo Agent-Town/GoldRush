@@ -288,3 +288,5 @@ The waterfall holds (E5 plays after E4 ships) — so the push = COMPRESS E4 + po
 - **PANORAMA v2 MERGED+DEPLOYED** — E1 county visually complete behind the flag; OWNER'S DESK: the terrain tour (?terrain3dPilot on all five E1 maps) → promotion verdict; 3D-D proceeds to the E2 family.
 
 - **fix-terrain3d-seams** → lane-a (owner tour: hard terrain-edge style cliff [±32 bounds vs apron; single-mesh hide bug] + panoramas not reading in-game [fog/mount conviction owed]) · landmarks = EXPECTED-absent (mounted packs = Sol's granted wave; verdict renders were composition proxies).
+
+- **SOL DOUBLE-WAVE MERGED+DEPLOYED**: 7b (E2 town art-complete: 8 faces + anchors + accessories + manifest) + 3D-D E2 pair (hill-mine/trestle terrain+panorama; garden/incline correctly HELD) · **publish-e2-mask-tables** queued lane-d (the pipeline gap: reports≠consumables; future contracts publish mask FILES at drain).
