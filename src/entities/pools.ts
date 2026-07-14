@@ -4,6 +4,7 @@ import { SpriteAnimator, type CharacterSpriteClip, type SpriteMotionSnapshot } f
 import { assetSlots, tagPlaceholder, type AssetSlotId } from '../assets/slots';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
+import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import type { PalisadeBlocker } from './Palisade';
 import {
   ClaimJumperEnemy,
@@ -19,6 +20,7 @@ import {
 import type { RotationDirection } from '../assets/OrientationResolver';
 import { RUN_CAST_SCALE } from './runCastScale';
 import * as Terrain from '../world/Terrain';
+import { disposeObject3D } from '../utils/dispose';
 import railcarBoilerUrl from '../../assets/processed/boss-railcar-boiler.png?url';
 import railcarBoilerDamagedUrl from '../../assets/processed/boss-railcar-boiler-damaged.png?url';
 import railcarCabinUrl from '../../assets/processed/boss-railcar-cabin.png?url';
@@ -32,6 +34,17 @@ const BARON_HP_SEGMENTS = 8;
 const BOSS_HP_WIDTH = 1.9;
 const BOSS_HP_FILL_WIDTH = 1.72;
 const RAILCAR_DAMAGE_THRESHOLD = 0.5;
+const RAILCAR_RAIL_HEAD_Y = 0.125;
+const RAILCAR_3D_HEIGHT = 1.202;
+const RAILCAR_3D_URL = new URL('../../assets/pilots/railcar-3d/railcar.glb', import.meta.url).href;
+const RAILCAR_3D_TRIANGLES = 10_948;
+const RAILCAR_3D_COMPONENTS = {
+  wheels: { mesh: 'Railcar_Wheels', morph: 'Damage_BentWheels', damageColor: '#d95f32', damageGlow: 2.4 },
+  boiler: { mesh: 'Railcar_Boiler', morph: 'Damage_VentingBoiler', damageColor: '#5b8a8a', damageGlow: 0.9 },
+  cabin: { mesh: 'Railcar_Cabin', morph: 'Damage_CrackedCabin', damageColor: '#c4883a', damageGlow: 0.9 },
+} as const;
+type RailcarComponentId = keyof typeof RAILCAR_3D_COMPONENTS;
+type Railcar3dState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
 const FEVER_GOLD = new THREE.Color('#ffd56a');
 const FEVER_REST_STRENGTH = 0.34;
 const FEVER_SURGE_STRENGTH = 0.7;
@@ -179,6 +192,14 @@ export class EnemyPool {
   private readonly renderParts: THREE.InstancedMesh[] = [];
   private readonly railcarParts: Array<{ id: string; healthy: THREE.InstancedMesh; damaged: THREE.InstancedMesh }> = [];
   private readonly railcarLocalMatrices: THREE.Matrix4[] = [];
+  private railcar3dState: Railcar3dState = 'off';
+  private railcar3dLoadSerial = 0;
+  private railcar3dModel?: THREE.Object3D;
+  private railcar3dGroupId: string | null = null;
+  private readonly railcar3dMeshes = new Map<RailcarComponentId, THREE.Mesh>();
+  private readonly railcar3dOffsets = new Map<RailcarComponentId, THREE.Vector3>();
+  private readonly railcar3dDamaged = new Set<RailcarComponentId>();
+  private readonly railcar3dCenter = new THREE.Vector3();
   private readonly watchPaintMaterial = new THREE.MeshBasicMaterial({
     color: '#d7a84c',
     transparent: true,
@@ -339,6 +360,8 @@ export class EnemyPool {
 
   constructor(private readonly camera?: THREE.Camera) {
     this.group.name = 'EnemyPool';
+    this.railcar3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
+    this.publishRailcar3d();
     this.cellSize = Balance.enemy.spatialHashCellSize;
     this.gridMin = Balance.enemy.spatialHashWorldMin;
     this.gridMax = Balance.enemy.spatialHashWorldMax;
@@ -399,8 +422,10 @@ export class EnemyPool {
     return this.renderRotations[enemy.id] ?? enemy.group.rotation.y;
   }
 
-  railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number; wreckerMarker: boolean; markerColor: string } {
+  railcarPresentation(enemy: ClaimJumperEnemy): { mesh: boolean; visible: boolean; railY: number; railRotation: number; textureKey: string; damaged: boolean; damageThreshold: number; wreckerMarker: boolean; markerColor: string; source: 'glb' | 'billboard'; mounted: boolean; morphInfluence: number; bossBarY: number; bossBarScale: number } {
     const damaged = enemy.currentHp / Math.max(1, enemy.maxHp) <= RAILCAR_DAMAGE_THRESHOLD;
+    const component = enemy.bossComponentId as RailcarComponentId | null;
+    const mounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === enemy.bossGroupId;
     return {
       mesh: enemy.eliteKind === 'railcar',
       visible: this.railcarVisible(enemy),
@@ -411,6 +436,11 @@ export class EnemyPool {
       damageThreshold: RAILCAR_DAMAGE_THRESHOLD,
       wreckerMarker: enemy.isAlive && enemy.isWrecker,
       markerColor: '#a0522d',
+      source: mounted ? 'glb' : 'billboard',
+      mounted,
+      morphInfluence: component && (damaged || this.railcar3dDamaged.has(component)) ? 1 : 0,
+      bossBarY: this.bossHpGroup.position.y,
+      bossBarScale: this.bossHpGroup.scale.x,
     };
   }
 
@@ -533,6 +563,7 @@ export class EnemyPool {
           : undefined;
     if (!enemy || enemy.isAlive) return null;
     enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
+    if (enemy.eliteKind === 'railcar') this.ensureRailcar3d();
     this.previousActive[enemy.id] = false;
     this.spawnSerial += 1;
     this.active += 1;
@@ -773,6 +804,7 @@ export class EnemyPool {
 
   recycle(enemy: ClaimJumperEnemy): void {
     if (!enemy.isAlive) return;
+    this.markRailcar3dDestroyed(enemy);
     enemy.recycle();
     this.active = Math.max(0, this.active - 1);
     this.syncEnemyInstance(enemy);
@@ -782,6 +814,7 @@ export class EnemyPool {
   }
 
   recycleAll(): void {
+    if (this.railcar3dState !== 'off' && this.railcar3dState !== 'lite') this.disposeRailcar3d();
     for (const enemy of this.enemies) {
       enemy.recycle();
       this.previousActive[enemy.id] = false;
@@ -794,6 +827,7 @@ export class EnemyPool {
   }
 
   dispose(): void {
+    this.disposeRailcar3d();
     for (const enemy of this.enemies) {
       enemy.dispose();
     }
@@ -1112,6 +1146,7 @@ export class EnemyPool {
   }
 
   private syncRenderInstances(): void {
+    this.updateRailcar3d();
     for (const enemy of this.enemies) {
       this.syncEnemyInstance(enemy);
     }
@@ -1125,9 +1160,14 @@ export class EnemyPool {
       return;
     }
     this.bossHpGroup.visible = true;
-    this.bossHpGroup.position.set(state.x, state.y, state.z);
+    const railcarMounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === state.groupId;
+    this.bossHpGroup.position.set(
+      railcarMounted ? this.railcar3dCenter.x : state.x,
+      railcarMounted ? this.railcar3dModel!.position.y + RAILCAR_3D_HEIGHT + 0.35 : state.y,
+      railcarMounted ? this.railcar3dCenter.z : state.z,
+    );
     if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
-    this.bossHpGroup.scale.setScalar(state.scale);
+    this.bossHpGroup.scale.setScalar(railcarMounted ? 1 : state.scale);
     this.bossHpFill.scale.x = state.ratio;
     this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - state.ratio) * 0.5;
     for (let i = 0; i < this.bossHpSegments.children.length; i += 1) {
@@ -1186,15 +1226,16 @@ export class EnemyPool {
       }
       part.instanceMatrix.needsUpdate = true;
     }
+    const railcar3dMounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === enemy.bossGroupId;
     const carryMarkerVisible = enemy.isAlive && (enemy.carriedAmount > 0 || enemy.isWrecker)
-      && (enemy.eliteKind !== 'railcar' || this.railcarVisible(enemy));
+      && (enemy.eliteKind !== 'railcar' || (this.railcarVisible(enemy) && !railcar3dMounted));
     this.instanceMatrix.multiplyMatrices(carryMarkerVisible ? this.syncObject.matrix : this.hiddenMatrix, this.sackLocalMatrix);
     this.sackMesh.setMatrixAt(enemy.id, this.instanceMatrix);
     this.setInstanceColor(this.sackMesh, enemy.id, enemy.isWrecker ? this.wreckerMarkerColor : this.sackColor, lightFactor);
     this.sackMesh.instanceMatrix.needsUpdate = true;
     this.syncWatchPaint(enemy, watchPainted);
     this.syncBanner(enemy, lightFactor);
-    const railcarBase = this.railcarVisible(enemy) ? this.syncObject.matrix : this.hiddenMatrix;
+    const railcarBase = this.railcarVisible(enemy) && !railcar3dMounted ? this.syncObject.matrix : this.hiddenMatrix;
     for (let index = 0; index < this.railcarParts.length; index += 1) {
       const part = this.railcarParts[index];
       const local = this.railcarLocalMatrices[index];
@@ -1207,6 +1248,147 @@ export class EnemyPool {
       part.healthy.instanceMatrix.needsUpdate = true;
       part.damaged.instanceMatrix.needsUpdate = true;
     }
+  }
+
+  private ensureRailcar3d(): void {
+    if (this.railcar3dState === 'lite' || this.railcar3dState === 'loading' || this.railcar3dState === 'ready') return;
+    const serial = ++this.railcar3dLoadSerial;
+    this.railcar3dState = 'loading';
+    this.publishRailcar3d();
+    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+      if (serial !== this.railcar3dLoadSerial) return;
+      new GLTFLoader().load(RAILCAR_3D_URL, ({ scene }) => {
+        if (serial !== this.railcar3dLoadSerial) {
+          disposeObject3D(scene);
+          return;
+        }
+        const meshes = this.inspectRailcar3d(scene);
+        if (!meshes) {
+          disposeObject3D(scene);
+          this.railcar3dState = 'failed';
+          this.publishRailcar3d();
+          return;
+        }
+        scene.name = 'ArmoredRailcar3d';
+        scene.visible = false;
+        this.railcar3dModel = scene;
+        this.railcar3dMeshes.clear();
+        for (const [id, mesh] of meshes) this.railcar3dMeshes.set(id, mesh);
+        this.group.add(scene);
+        this.railcar3dState = 'ready';
+        this.syncInstances();
+      }, undefined, () => {
+        if (serial !== this.railcar3dLoadSerial) return;
+        this.railcar3dState = 'failed';
+        this.publishRailcar3d();
+      });
+    }, () => {
+      if (serial !== this.railcar3dLoadSerial) return;
+      this.railcar3dState = 'failed';
+      this.publishRailcar3d();
+    });
+  }
+
+  private inspectRailcar3d(model: THREE.Object3D): Map<RailcarComponentId, THREE.Mesh> | null {
+    const meshes = new Map<RailcarComponentId, THREE.Mesh>();
+    const materials = new Set<THREE.Material>();
+    let meshCount = 0;
+    let triangles = 0;
+    model.traverse((node) => {
+      const mesh = node as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      meshCount += 1;
+      triangles += Math.floor((mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position')?.count ?? 0) / 3);
+      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+      for (const [id, contract] of Object.entries(RAILCAR_3D_COMPONENTS) as Array<[RailcarComponentId, (typeof RAILCAR_3D_COMPONENTS)[RailcarComponentId]]>) {
+        if (mesh.name === contract.mesh && mesh.morphTargetDictionary?.[contract.morph] === 0 && mesh.morphTargetInfluences?.length === 1) meshes.set(id, mesh);
+      }
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+    });
+    if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== RAILCAR_3D_TRIANGLES) return null;
+    for (const mesh of meshes.values()) mesh.material = (mesh.material as THREE.MeshStandardMaterial).clone();
+    for (const material of materials) material.dispose();
+    return meshes;
+  }
+
+  private updateRailcar3d(): void {
+    const railcars = this.enemies.filter((enemy) => enemy.isAlive && enemy.eliteKind === 'railcar' && enemy.bossGroupId);
+    if (!this.railcar3dModel || this.railcar3dState !== 'ready' || railcars.length === 0) return;
+    const groupId = railcars[0]!.bossGroupId!;
+    if (this.railcar3dGroupId !== groupId) {
+      this.railcar3dGroupId = groupId;
+      this.railcar3dOffsets.clear();
+      this.railcar3dCenter.set(0, 0, 0);
+      for (const enemy of railcars) this.railcar3dCenter.add(enemy.position);
+      this.railcar3dCenter.multiplyScalar(1 / railcars.length);
+      for (const enemy of railcars) {
+        const id = enemy.bossComponentId as RailcarComponentId | null;
+        if (id && id in RAILCAR_3D_COMPONENTS) this.railcar3dOffsets.set(id, enemy.position.clone().sub(this.railcar3dCenter));
+      }
+      for (const id of Object.keys(RAILCAR_3D_COMPONENTS) as RailcarComponentId[]) {
+        if (!this.railcar3dOffsets.has(id)) this.railcar3dDamaged.add(id);
+      }
+    }
+    for (const enemy of railcars) {
+      const id = enemy.bossComponentId as RailcarComponentId | null;
+      if (id && enemy.currentHp / Math.max(1, enemy.maxHp) <= RAILCAR_DAMAGE_THRESHOLD) this.railcar3dDamaged.add(id);
+    }
+    const anchor = railcars[0]!;
+    const anchorId = anchor.bossComponentId as RailcarComponentId | null;
+    this.railcar3dCenter.copy(anchor.position);
+    const anchorOffset = anchorId ? this.railcar3dOffsets.get(anchorId) : undefined;
+    if (anchorOffset) this.railcar3dCenter.sub(anchorOffset);
+    this.railcar3dModel.position.set(
+      this.railcar3dCenter.x,
+      Terrain.visualY(this.railcar3dCenter.x, this.railcar3dCenter.z, 0) + RAILCAR_RAIL_HEAD_Y,
+      this.railcar3dCenter.z,
+    );
+    this.railcar3dModel.rotation.y = Math.PI / 2 - this.renderRotationOf(anchor);
+    this.railcar3dModel.visible = railcars.some((enemy) => this.railcarVisible(enemy));
+    for (const [id, mesh] of this.railcar3dMeshes) {
+      const damaged = this.railcar3dDamaged.has(id);
+      if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
+      const material = mesh.material as THREE.MeshStandardMaterial;
+      material.emissive.set(damaged ? RAILCAR_3D_COMPONENTS[id].damageColor : '#000000');
+      material.emissiveIntensity = damaged ? RAILCAR_3D_COMPONENTS[id].damageGlow : 0;
+    }
+    this.publishRailcar3d();
+  }
+
+  private markRailcar3dDestroyed(enemy: ClaimJumperEnemy): void {
+    if (enemy.eliteKind !== 'railcar' || !enemy.bossGroupId) return;
+    const id = enemy.bossComponentId as RailcarComponentId | null;
+    if (id) this.railcar3dDamaged.add(id);
+    const groupLives = this.enemies.some((candidate) => candidate !== enemy && candidate.isAlive && candidate.bossGroupId === enemy.bossGroupId);
+    if (groupLives) this.updateRailcar3d();
+    else this.disposeRailcar3d();
+  }
+
+  private disposeRailcar3d(): void {
+    this.railcar3dLoadSerial += 1;
+    if (this.railcar3dModel) {
+      this.group.remove(this.railcar3dModel);
+      disposeObject3D(this.railcar3dModel);
+      this.railcar3dModel = undefined;
+    }
+    this.railcar3dMeshes.clear();
+    this.railcar3dOffsets.clear();
+    this.railcar3dDamaged.clear();
+    this.railcar3dGroupId = null;
+    if (this.railcar3dState !== 'lite') this.railcar3dState = 'disposed';
+    this.publishRailcar3d();
+  }
+
+  private publishRailcar3d(): void {
+    const canvas = document.querySelector('canvas');
+    if (!canvas) return;
+    canvas.dataset.railcar3dState = this.railcar3dState;
+    canvas.dataset.railcar3dSource = this.railcar3dState === 'ready' ? 'glb' : 'billboard';
+    canvas.dataset.railcar3dMounted = String(this.railcar3dState === 'ready' && this.railcar3dGroupId !== null);
+    canvas.dataset.railcar3dDamageStates = JSON.stringify(Object.fromEntries(
+      (Object.keys(RAILCAR_3D_COMPONENTS) as RailcarComponentId[]).map((id) => [id, this.railcar3dDamaged.has(id) ? 'broken' : 'intact']),
+    ));
   }
 
   private railcarVisible(enemy: ClaimJumperEnemy): boolean {
