@@ -1,26 +1,39 @@
 import { createHash } from 'node:crypto';
-import { mkdir, writeFile } from 'node:fs/promises';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Browser, type Page, type TestInfo } from '@playwright/test';
 import { PNG } from 'pngjs';
 
 const ARTIFACT_DIR = path.resolve('artifacts/terrain3d-registry');
-const ASSET = /(?:the-claim|dry-gulch|twin-banks|night-shift|baron)-(?:terrain|panorama)(?:-[^/?]+)?\.glb/;
+const LANDMARK_ARTIFACT_DIR = path.resolve('artifacts/wire-landmark-mounts');
+const ASSET = /map-rebuild-spike\/(?:landmarks\/.*|(?:the-claim|dry-gulch|twin-banks|night-shift|baron|hill-mine|trestle)-(?:terrain|panorama)[^?]*)\.glb/;
+const isAssetRequest = (request: { url(): string; resourceType(): string }) => request.resourceType() === 'fetch' && ASSET.test(request.url());
 type Errors = { console: string[]; page: string[] };
 type Contract = {
   id: string;
   panorama: string;
+  contractFile: string;
   assets: [string, string];
   water: Array<{ x: number; z: number; zone: string; source?: string }>;
 };
 
 const CONTRACTS: Contract[] = [
-  { id: 'the-claim', panorama: 'the-claim-panorama', assets: ['the-claim-panorama.glb', 'the-claim-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford', source: 'river' }, { x: 12, z: 0, zone: 'river', source: 'river' }, { x: 12, z: 5.5, zone: 'shallows', source: 'river' }] },
-  { id: 'e1-dry-gulch', panorama: 'dry-gulch-panorama', assets: ['dry-gulch-panorama.glb', 'dry-gulch-terrain.glb'], water: [{ x: -18, z: -18, zone: 'shallows', source: 'spring_pond' }, { x: 0, z: 0, zone: 'bank' }] },
-  { id: 'e1-twin-banks', panorama: 'twin-banks-panorama', assets: ['twin-banks-panorama.glb', 'twin-banks-terrain.glb'], water: [{ x: -16, z: 0, zone: 'ford', source: 'river' }, { x: 16, z: 0, zone: 'ford', source: 'river' }, { x: 0, z: 0, zone: 'river', source: 'river' }] },
-  { id: 'e1-night-shift', panorama: 'night-shift-panorama', assets: ['night-shift-panorama.glb', 'night-shift-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford', source: 'river' }, { x: 12, z: 0, zone: 'river', source: 'river' }] },
-  { id: 'e1-baron', panorama: 'baron-panorama', assets: ['baron-panorama.glb', 'baron-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford', source: 'river' }, { x: 12, z: 0, zone: 'river', source: 'river' }] },
+  { id: 'the-claim', panorama: 'the-claim-panorama', contractFile: 'the-claim', assets: ['the-claim-panorama.glb', 'the-claim-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford', source: 'river' }, { x: 12, z: 0, zone: 'river', source: 'river' }, { x: 12, z: 5.5, zone: 'shallows', source: 'river' }] },
+  { id: 'e1-dry-gulch', panorama: 'dry-gulch-panorama', contractFile: 'dry-gulch', assets: ['dry-gulch-panorama.glb', 'dry-gulch-terrain.glb'], water: [{ x: -18, z: -18, zone: 'shallows', source: 'spring_pond' }, { x: 0, z: 0, zone: 'bank' }] },
+  { id: 'e1-twin-banks', panorama: 'twin-banks-panorama', contractFile: 'twin-banks', assets: ['twin-banks-panorama.glb', 'twin-banks-terrain.glb'], water: [{ x: -16, z: 0, zone: 'ford', source: 'river' }, { x: 16, z: 0, zone: 'ford', source: 'river' }, { x: 0, z: 0, zone: 'river', source: 'river' }] },
+  { id: 'e1-night-shift', panorama: 'night-shift-panorama', contractFile: 'night-shift', assets: ['night-shift-panorama.glb', 'night-shift-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford', source: 'river' }, { x: 12, z: 0, zone: 'river', source: 'river' }] },
+  { id: 'e1-baron', panorama: 'baron-panorama', contractFile: 'baron', assets: ['baron-panorama.glb', 'baron-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford', source: 'river' }, { x: 12, z: 0, zone: 'river', source: 'river' }] },
+  { id: 'e2-hill-mine', panorama: 'hill-mine-panorama', contractFile: 'hill-mine', assets: ['hill-mine-panorama.glb', 'hill-mine-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford' }, { x: -12, z: 0, zone: 'river' }] },
+  { id: 'e2-trestle', panorama: 'trestle-panorama', contractFile: 'trestle', assets: ['trestle-panorama.glb', 'trestle-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford' }, { x: 12, z: 0, zone: 'river' }] },
 ];
+
+type LandmarkMount = { id: string; asset?: string; position: [number, number, number] };
+
+async function landmarkMounts(contract: Contract): Promise<LandmarkMount[]> {
+  const file = path.resolve(`assets/pilots/map-rebuild-spike/${contract.contractFile}-terrain-contract.json`);
+  const parsed = JSON.parse(await readFile(file, 'utf8')) as { landmarkMounts?: LandmarkMount[] };
+  return (parsed.landmarkMounts ?? []).filter((mount) => mount.asset);
+}
 
 function collectErrors(page: Page): Errors {
   const errors: Errors = { console: [], page: [] };
@@ -55,7 +68,7 @@ async function fingerprint(browser: Browser, contractId: string, pilot: boolean)
   const page = await browser.newPage();
   const errors = collectErrors(page);
   let assetRequests = 0;
-  page.on('request', (request) => { if (ASSET.test(request.url())) assetRequests += 1; });
+  page.on('request', (request) => { if (isAssetRequest(request)) assetRequests += 1; });
   await boot(page, contractId, pilot ? '&terrain3dPilot' : '');
   if (pilot) {
     await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState !== 'loading');
@@ -89,14 +102,16 @@ async function fingerprint(browser: Browser, contractId: string, pilot: boolean)
   return { payload, hash: createHash('sha256').update(JSON.stringify(payload)).digest('hex'), errors, assetRequests };
 }
 
-test('all five contracts mount their registered terrain and render-only panorama with matching water', async ({ page }, testInfo) => {
+test('all seven contracts mount terrain, panorama, and grounded render-only landmarks with matching water', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
   const report = [];
   await mkdir(ARTIFACT_DIR, { recursive: true });
+  await mkdir(LANDMARK_ARTIFACT_DIR, { recursive: true });
   for (const contract of CONTRACTS) {
+    const expectedMounts = await landmarkMounts(contract);
     const requests: string[] = [];
-    const listener = (request: { url(): string }) => { if (ASSET.test(request.url())) requests.push(path.basename(new URL(request.url()).pathname)); };
+    const listener = (request: { url(): string; resourceType(): string }) => { if (isAssetRequest(request)) requests.push(path.basename(new URL(request.url()).pathname)); };
     page.on('request', listener);
     await boot(page, contract.id, '&terrain3dPilot');
     await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState !== 'loading');
@@ -110,7 +125,20 @@ test('all five contracts mount their registered terrain and render-only panorama
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-meshes'))).toBe(1);
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(32_768);
     expect(Number(await canvas.getAttribute('data-terrain3d-pilot-materials'))).toBe(1);
-    expect(requests.sort()).toEqual([...contract.assets].sort());
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmarks'))).toBe(expectedMounts.length);
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmark-skipped'))).toBe(0);
+    expect(requests).toHaveLength(contract.assets.length + new Set(expectedMounts.map((mount) => mount.asset)).size);
+    expect(requests).toEqual(expect.arrayContaining(contract.assets));
+
+    const grounded = await canvas.evaluate((element, mounts) => {
+      const actual = new Map((JSON.parse(element.dataset.terrain3dPilotLandmarkMounts ?? '[]') as Array<{ id: string; x: number; y: number; z: number }>).map((mount) => [mount.id, mount]));
+      return mounts.slice(0, 3).map((mount) => {
+        const placed = actual.get(mount.id)!;
+        const visualY = window.__GR_TEST__!.terrainVisualY(mount.position[0], mount.position[2]);
+        return { id: mount.id, delta: placed.y - mount.position[1] - visualY };
+      });
+    }, expectedMounts);
+    expect(grounded.every(({ delta }) => Math.abs(delta) < 0.001), JSON.stringify(grounded)).toBe(true);
 
     const water = await page.evaluate((probes) => probes.map(({ x, z }) => ({ x, z, ...window.__GR_TEST__!.terrainSample(x, z) })), contract.water);
     for (const [index, expected] of contract.water.entries()) {
@@ -119,11 +147,11 @@ test('all five contracts mount their registered terrain and render-only panorama
     }
     const heights = await page.evaluate(() => [[-15, 14], [24, 25], [-13, -10], [18, 11], [0, 12]].map(([x, z]) => window.__GR_TEST__!.terrainVisualY(x!, z!)));
     expect(Math.max(...heights) - Math.min(...heights)).toBeGreaterThan(0.25);
-    report.push({ contract: contract.id, panorama: contract.panorama, requests, water, heights });
+    report.push({ contract: contract.id, panorama: contract.panorama, requests, landmarks: expectedMounts.length, grounded, water, heights });
 
     if (testInfo.project.name === 'desktop-chrome') {
       await page.evaluate(() => document.querySelector<HTMLElement>('.lil-gui')?.style.setProperty('display', 'none'));
-      await page.screenshot({ path: path.join(ARTIFACT_DIR, `${contract.id}-run-camera.png`) });
+      await page.screenshot({ path: path.join(LANDMARK_ARTIFACT_DIR, `${contract.id}-run-camera.png`) });
     }
     page.off('request', listener);
   }
@@ -191,11 +219,12 @@ test('flag-off and flag-on keep bounds, spawns, fog, masks, and simulation byte-
   test.setTimeout(180_000);
   const report = [];
   for (const contract of CONTRACTS) {
+    const expectedMounts = await landmarkMounts(contract);
     const off = await fingerprint(browser, contract.id, false);
     const on = await fingerprint(browser, contract.id, true);
     expect(on.hash).toBe(off.hash);
     expect(off.assetRequests).toBe(0);
-    expect(on.assetRequests).toBe(2);
+    expect(on.assetRequests).toBe(2 + new Set(expectedMounts.map((mount) => mount.asset)).size);
     expect(off.errors).toEqual({ console: [], page: [] });
     expect(on.errors).toEqual({ console: [], page: [] });
     report.push({ contract: contract.id, off: off.hash, on: on.hash, offAssetRequests: off.assetRequests, onAssetRequests: on.assetRequests, payload: off.payload });
@@ -204,16 +233,17 @@ test('flag-off and flag-on keep bounds, spawns, fog, masks, and simulation byte-
   await writeFile(path.join(ARTIFACT_DIR, `fingerprints-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
 });
 
-test('all five contracts stay painted in LITE and on invalid terrain bytes', async ({ page }) => {
+test('all seven contracts stay painted in LITE and on invalid terrain bytes', async ({ page }) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
   for (const contract of CONTRACTS) {
     let requests = 0;
-    const listener = (request: { url(): string }) => { if (ASSET.test(request.url())) requests += 1; };
+    const listener = (request: { url(): string; resourceType(): string }) => { if (isAssetRequest(request)) requests += 1; };
     page.on('request', listener);
     await boot(page, contract.id, '&terrain3dPilot&tier=lite');
     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'lite');
     await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
+    await expect(page.locator('canvas')).not.toHaveAttribute('data-terrain3d-pilot-landmark-load-state', 'mounted');
     expect(requests).toBe(0);
     page.off('request', listener);
 
@@ -227,12 +257,26 @@ test('all five contracts stay painted in LITE and on invalid terrain bytes', asy
   }
 
   let devTileRequests = 0;
-  page.on('request', (request) => { if (ASSET.test(request.url())) devTileRequests += 1; });
+  page.on('request', (request) => { if (isAssetRequest(request)) devTileRequests += 1; });
   await page.goto('/?debug&tile=gt-test-basin&terrain3dPilot&nowaves&nolevel&nokill&nopause');
   await page.waitForFunction(() => Boolean(window.__GR_TEST__));
   await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
   await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
   expect(devTileRequests).toBe(0);
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('an invalid landmark is skipped with diagnostics while the terrain stays ready', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.route(/active_headframe(?:-[^/?]+)?\.glb/, (route) => route.request().resourceType() === 'fetch'
+    ? route.fulfill({ status: 200, body: 'invalid glb bytes', contentType: 'model/gltf-binary' })
+    : route.continue());
+  await boot(page, 'the-claim', '&terrain3dPilot');
+  const canvas = page.locator('canvas');
+  await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+  await expect(canvas).toHaveAttribute('data-terrain3d-pilot-landmarks', '4');
+  await expect(canvas).toHaveAttribute('data-terrain3d-pilot-landmark-skipped', '1');
+  await expect(canvas).toHaveAttribute('data-terrain3d-pilot-landmark-diagnostics', /active_headframe: asset invalid/);
   expect(errors).toEqual({ console: [], page: [] });
 });
 
@@ -266,6 +310,29 @@ test('disposing while the peer GLB is delayed releases each decoded model immedi
   await releasePanorama!();
   await expect(page.locator('#terrain3d-disposal-harness')).toHaveAttribute('data-terrain3d-pilot-panorama-load-state', 'disposed');
   await page.unroute(panorama);
+
+  const landmarkResult = await page.evaluate(async () => {
+    const THREE = await Function('return import("/@id/three")')() as typeof import('three');
+    const pilot = await Function('return import("/src/world/Terrain3dClaimPilot.ts")')() as typeof import('../src/world/Terrain3dClaimPilot');
+    const scene = new THREE.Scene();
+    const canvas = document.createElement('canvas');
+    canvas.id = 'terrain3d-landmark-disposal-harness';
+    document.body.append(canvas);
+    const dispose = pilot.installTerrain3dClaimPilot({ scene, canvas, contractId: 'the-claim', tileId: 'frontier-river-claim' });
+    await new Promise<void>((resolve, reject) => {
+      const deadline = performance.now() + 20_000;
+      const check = () => {
+        if (canvas.dataset.terrain3dPilotState === 'ready') resolve();
+        else if (performance.now() >= deadline) reject(new Error('landmarks did not mount'));
+        else requestAnimationFrame(check);
+      };
+      check();
+    });
+    const mounted = scene.getObjectByName('Terrain3dLandmarks')?.children.length;
+    dispose();
+    return { mounted, state: canvas.dataset.terrain3dPilotLandmarkLoadState, children: scene.children.length };
+  });
+  expect(landmarkResult).toEqual({ mounted: 5, state: 'disposed', children: 0 });
 });
 
 test('each registered terrain and panorama stays inside the 115% p95 budget', async ({ page }, testInfo: TestInfo) => {
