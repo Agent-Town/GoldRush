@@ -12,9 +12,11 @@ branch: sol/map-rebuild-spike
 
 The reuse shortcut is removed from the final terrain set. The Claim, Dry Gulch, Twin Banks, Night Shift, and the Claim-Jumper Baron now each own a separate Blender file, GLB, painted atlas, contract record, terrain heightfield, owner-verdict composition, and data-driven landmark mounts.
 
+The first Epoch 2 wave now adds the two contracts that actually have factory-authored mask tables: Hill Mine and Trestle. Both ship as terrain/panorama pairs in the spike. Pressure Garden and Incline are held at the mask gate rather than fabricated from manifest prose.
+
 They remain one region by sharing the same painted source plates, stained ochre/rust/river-stone palette family, rough working-water language, sparse acclimated vegetation, illustrated proportions, and camera grammar. They differ at the level that matters to play: macro silhouette, enclosure, water/ford read, spatial rhythm, focal landmark, and story condition.
 
-No `src/` file changed. Simulation, collision, placement, spawns, range, line of sight, and water classification remain planar and code-owned. All landmarks, water surfaces, ford stones, lights, and cameras shown in verdict renders are temporary helpers removed before terrain save/export.
+No `src/` file changed. Simulation, collision, placement, spawns, range, line of sight, and water classification remain code-owned. Epoch 1 remains planar; Epoch 2's existing factory `TileHeight` remains the sole elevation authority. The art mesh never becomes a second simulation surface. All landmarks, water surfaces, ford stones, lights, and cameras shown in verdict renders are temporary helpers removed before terrain save/export.
 
 The durable design and rebuild guidance is in `artifacts/map-rebuild-spike/MODEL-HANDOFF.md`. Exact asset measurements and hashes live in the adjacent terrain contracts and `artifacts/map-rebuild-spike/verification.json`.
 
@@ -146,6 +148,38 @@ The correction was review-driven rather than declared complete after the first r
 
 The strict verifier reopens and byte-identically re-exports all five panorama authoring files, requires five distinct GLBs and atlases, pins both verdict boards and their source renders by decoded-pixel hash, and confirms no `src/` edit. Current panorama GLB hashes begin `e6746aff`, `fc4e1760`, `770e9269`, `315bbd9d`, and `fe1701de`. Terrain GLBs and embedded terrain atlases remain byte-identical; playfield bounds, movement, collision, spawn edges, fog gates, and all water/build/spawn masks remain planar and unchanged. F-3D-D-18 supersedes the visual debt recorded at the end of F-3D-D-17 without changing its separate-mount policy.
 
+### F-3D-D-19 — E2 terrain begins at the factory mask table, not at the manifest promise
+
+The granted E2 family names four contracts, but the current factory source `assets/contracts/epoch-2-steamworks/contracts.json` authors complete coordinate tables for only `e2-hill-mine` and `e2-trestle`. `e2-pressure-garden` and `e2-incline` remain manifest/ladder promises; their factory reports stopped before contract and mask authoring. `artifacts/map-rebuild-spike/e2-mask-availability.json` records a fresh probe of main at `dd308192`.
+
+The spike therefore builds Hill Mine and Trestle and deliberately does not invent the other two. This is a gate, not a reduced ambition: terrain authored before water, build, rail, fixture, spawn, and elevation truth would force gameplay to conform to Blender. The next wave starts by re-probing the factory table and adds Pressure Garden or Incline only after each id exists there.
+
+### F-3D-D-20 — Hill Mine and Trestle share material grammar, not composition
+
+Evidence: `artifacts/map-rebuild-spike/e2-owner-verdict.png`, `e2-mood-ab.png`, and `e2-flat-vs-sculpted-ab.png`. Hill Mine is a north-rising three-tier scar with a central impassable cliff, split upper pads, flooded east-west rail cut, switching mine spurs, and a high mine-mouth mount. Trestle is a low two-bank gorge with one uninterrupted north-south rail spine, one narrow bridge mount, two opposed boiler sites, and a south spur. Their geometry, GLB, and embedded-atlas hashes are all distinct.
+
+Both atlases are baked from shipped bank, river, rail-element, Epoch 2 kit, and available contract paint. They share stained ochre earth, soot iron, tarred timber, murky work water, sparse cacti, engraved shadow cuts, and hard warm light. The terrain export contains none of the shown rails, headframes, boiler remains, rocks, cacti, bridge structure, lights, water, or cameras. Those are mounted-pack composition proxies; the contract JSON carries their mount transforms.
+
+The Mood A/B is intentionally honest about source coverage. Hill Mine uses its shipped painted contract plate. Trestle has no dedicated painted plate, so its row compares the shipped flat Trestle runtime capture against the sculpted real-camera verdict instead of relabeling The Claim fallback as same-map art.
+
+### F-3D-D-21 — E2's water table contains a visual-width conflict; bank legibility wins this spike
+
+Both factory entries declare `water.visualHalfWidth = 10`, while the gameplay classifier still owns deep water at `z=-5..5`, shallows through `+/-6.25`, and bank/sluice placement beyond that line. Rendering a ten-metre half-width surface would visibly submerge coordinates the simulation calls placeable bank, violating the queue's masks-agreement law.
+
+The terrain contracts preserve the complete factory table and name the mismatch. Their verdict water ends at `+/-6.25`, their terrain beds stay below that surface inside the band, and their visible banks begin where placement says bank. This does not edit the factory descriptor or runtime. Promotion needs an owner/factory ruling: either rename/reinterpret `visualHalfWidth`, or align the runtime water mesh with the placement shoreline before loading these GLBs.
+
+### F-3D-D-22 — The E2 pair carries Panorama v2 from its first render
+
+Hill Mine and Trestle each mount a separate 1,920-triangle panorama GLB with one embedded 2048² atlas and identity transform. The Epoch 2 kit supplies the engraved paper and horizon ink; map-specific asymmetric ridge, cloud, and dust profiles keep the scarred high-country mine rim separate from the Trestle's lower river corridor. No panorama enters either terrain `.blend` or changes bounds, water/build/spawn masks, spawn edges, or fog.
+
+`artifacts/map-rebuild-spike/e2-panorama-mood-ab.png` preserves identical before/mounted framing. `e2-panorama-distance-gate.png` retains the full zenith and terrain join. `e2-asset-contract.json` records one mesh/material/texture per asset, budget compliance, exact mask copies, distinct identities, and whole-file byte-identical re-exports for both terrains and both panoramas.
+
+### F-3D-D-23 — The generic re-export wrapper strips required safety extras
+
+The final packaging pass caught a false-positive workflow assumption. `scripts/reexport-pilot.sh` exports without `export_extras=True`; when run in place, it replaced all four valid E2 GLBs with files whose mesh nodes no longer carried `render_only`, simulation ownership, contract identity, mask non-interference, or Panorama v2 metadata. The strict E2 verifier failed immediately on the missing node extras. Rebuilding through the authoritative terrain and panorama builders restored the metadata, and isolated verification again proved exact whole-file byte identity when re-exporting with the contract settings.
+
+The generic wrapper remains useful as a geometry/material probe only when run on copies. It is not a valid final exporter for these terrain/panorama assets until the factory aligns its options with `specs/town-3d/RECIPE.md` and the render-only metadata contract. This spike cannot edit that shared script under its path grant, so the incompatibility is recorded rather than hidden behind a passing geometry count.
+
 ## Contract identity summary
 
 | Contract | Macro identity | Contract focal read |
@@ -192,6 +226,14 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - Five-map center-horizon distance board and all five source renders pinned by content hash: PASS
 - Terrain acceptance frames prove the exported terrain; panorama-off/on frames are builder-generated and visibly distinct: PASS
 - Fresh PANORAMA LAW v2 release review: DISTANCE, FIGHT, no ECHO, no tree-like contamination — PASS
+- E2 factory mask availability: Hill Mine and Trestle authored; Pressure Garden and Incline correctly held — PASS
+- Two E2 terrain `.blend` / GLB / 2048² atlas / contract sets; 32,768 triangles each — PASS
+- Two separate E2 Panorama v2 `.blend` / GLB / 2048² atlas / contract sets; 1,920 triangles each — PASS
+- E2 factory-table equality, mount ownership, water-bank agreement, budgets, and distinct asset hashes — PASS
+- Whole-file byte-identical and semantic-identical re-export for all four E2 GLBs — PASS
+- Dedicated contract re-export with extras, whole-file hash equality, and semantic equality for all four E2 GLBs — PASS
+- Generic `scripts/reexport-pilot.sh` metadata preservation — BLOCKED by missing `export_extras=True`; F-3D-D-23 records the factory follow-up
+- Fresh unprimed E2 visual review: distinct maps, FIGHT, no trees, DISTANCE, legible masks, no blocker — PASS
 - `src/` edits: none
 - Runtime loading, placement, disposal, gameplay, and performance: intentionally deferred to an attended promotion
 
@@ -205,12 +247,18 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - `artifacts/map-rebuild-spike/all-contracts-exterior-edge-crops.png` — enlarged seam and water debt review
 - `artifacts/map-rebuild-spike/all-contracts-panorama-mood-ab.png` — painted plate / before / mounted panorama mood gate
 - `artifacts/map-rebuild-spike/all-contracts-panorama-distance-gate.png` — center-playfield distance / wall / ceiling / echo gate
+- `artifacts/map-rebuild-spike/e2-owner-verdict.png` — E2 run camera / overview / low sunset family verdict
+- `artifacts/map-rebuild-spike/e2-mood-ab.png` — E2 hardship gate using honest per-map shipped sources
+- `artifacts/map-rebuild-spike/e2-flat-vs-sculpted-ab.png` — identical-camera geometry proof
+- `artifacts/map-rebuild-spike/e2-mask-agreement-board.png` — factory build, stake, rail, water, and bank evidence
+- `artifacts/map-rebuild-spike/e2-panorama-mood-ab.png` — E2 before / mounted / center-horizon Panorama v2 gate
+- `artifacts/map-rebuild-spike/e2-panorama-distance-gate.png` — complete-frame E2 distance gate
 - `artifacts/map-rebuild-spike/owner-run-camera-east-edge.png` — shifted real-camera seam check
 - `artifacts/map-rebuild-spike/owner-county-overview.png` — county composition overview
 - `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png`
 - `artifacts/map-rebuild-spike/all-contracts-unique-layout-verdict.png`
 - per-map run-camera, overview, and low-angle renders live in the same artifact folder
 
-The mood and building-grit boards are the current owner gates. The two older boards remain useful for regional cohesion and composition uniqueness.
+The E1 mood and building-grit boards remain its current owner gates. The E2 boards above gate the authored half of the new family; Pressure Garden and Incline remain outside the terrain wave until factory masks exist.
 
 READY-FOR-GATES
