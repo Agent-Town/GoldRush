@@ -68,6 +68,7 @@ import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
+import { DEV_TRAM_CONSUMER, TramPath, devTramPowerGraphDefinition } from '../entities/TramPath';
 import type {
   AgentBuildingRef,
   AgentCollectGoldResult,
@@ -452,6 +453,7 @@ export class Game {
   private powerGraph?: PowerGraphSystem;
   private powerWireView?: PowerWireView;
   private damSurge?: DamSurgeEvent;
+  private tram?: TramPath;
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -1502,6 +1504,7 @@ export class Game {
     this.megaprojectRailPath?.dispose();
     this.powerWireView?.dispose();
     this.damSurge?.dispose();
+    this.tram?.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -1654,6 +1657,10 @@ export class Game {
         ),
       );
       this.powerGraph?.step(this.simTick);
+      if (this.tram && this.powerGraph) {
+        const state = this.powerGraph.snapshot().nodes.find((node) => node.id === this.tram!.consumer.id)?.state ?? 'dark';
+        this.tram.update(simDelta, state);
+      }
       this.syncStockpileHoldings();
       this.enemies.update(
         simDelta,
@@ -2386,10 +2393,22 @@ export class Game {
       this.scene.add(this.megaprojectRailPath.group);
     }
     if (isDevPowerGraphEnabled()) {
-      this.powerGraph = new PowerGraphSystem(devPowerGraphDefinition());
+      this.powerGraph = new PowerGraphSystem(isDevTramEnabled() ? devTramPowerGraphDefinition() : devPowerGraphDefinition());
       this.powerWireView = new PowerWireView();
       this.powerWireView.update(this.powerGraph.snapshot());
       this.scene.add(this.powerWireView.group);
+      if (isDevTramEnabled() && rails[0]) {
+        this.tram = new TramPath(rails[0].points, {
+          speed: 6,
+          loop: true,
+          consumer: DEV_TRAM_CONSUMER,
+          cargo: [
+            { id: 'capacitor-a', family: 'capacitor-crate', occupied: true },
+            { id: 'capacitor-b', family: 'capacitor-crate', occupied: true },
+          ],
+        });
+        this.scene.add(this.tram.group);
+      }
     }
     this.detailScatter = new DetailScatter();
     this.scene.add(this.detailScatter.group);
@@ -3032,6 +3051,7 @@ export class Game {
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
+      tram: this.tram?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,
@@ -4205,6 +4225,7 @@ export class Game {
       this.powerGraph.reset(0);
       this.powerWireView?.invalidate();
     }
+    this.tram?.reset();
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -5702,7 +5723,12 @@ function browserMegaprojectStorage(): MegaprojectStorage | undefined {
 
 function isDevPowerGraphEnabled(): boolean {
   const params = new URLSearchParams(window.location.search);
-  return params.has('debug') && (params.has('powergraph') || params.get('power') === 'dev');
+  return params.has('debug') && (params.has('powergraph') || params.has('tram') || params.get('power') === 'dev');
+}
+
+function isDevTramEnabled(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('debug') && params.has('tram');
 }
 
 function createMegaprojectPlaqueTexture(lines: readonly string[]): THREE.CanvasTexture {
