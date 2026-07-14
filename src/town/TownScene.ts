@@ -2190,10 +2190,12 @@ function contractUnlock(contract: ContractManifest): { unlocked: boolean; condit
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
   }
-  if (unlock === 'secured:e2-hill-mine') {
+  if (unlock.startsWith('secured:')) {
+    const requiredId = unlock.slice('secured:'.length);
+    const required = listBoardContracts().find((entry) => entry.id === requiredId);
     return {
-      unlocked: scores.some((score) => contractIdOf(score) === 'e2-hill-mine' && score.secured === true),
-      condition: 'Secure The Hill Mine first',
+      unlocked: scores.some((score) => contractIdOf(score) === requiredId && score.secured === true),
+      condition: `Secure ${required?.name ?? requiredId} first`,
     };
   }
   if (unlock === STEAMWORKS_EPOCH_ID) {

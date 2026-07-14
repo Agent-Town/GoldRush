@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "epochId": "epoch-3-voltage",
+  "contracts": [
+    {
+      "id": "e3-moth-season",
+      "name": "Moth Season",
+      "tileParams": {
+        "tileId": "e3-moth-season",
+        "biome": "voltage-canyon-night",
+        "size": 80,
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "west-lit-yard", "bank": "north", "minX": -32, "maxX": -8, "minZ": -24, "maxZ": 24 },
+          { "id": "dark-corridor", "bank": "north", "minX": -6, "maxX": 6, "minZ": -34, "maxZ": 34 },
+          { "id": "east-tithe-yard", "bank": "north", "minX": 8, "maxX": 32, "minZ": -24, "maxZ": 24 }
+        ],
+        "waterSources": [],
+        "palette": {
+          "id": "moth-season-ink-blue",
+          "tint": [0.48, 0.55, 0.7],
+          "dampTint": [0.2, 0.25, 0.36],
+          "dampAmount": 0.08,
+          "splat": { "rockAmount": 0.48, "scrubAmount": 0.12, "macroWarmth": 0.32, "antiTile": 0.7 }
+        },
+        "scatter": {
+          "id": "moth-season-corridor",
+          "density": 0.55,
+          "classCounts": { "rocks": 48, "dry_grass": 34, "wagon_ruts": 18, "claim_posts": 6 }
+        },
+        "lanes": { "spawnEdges": ["north", "south"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "dayNightCycle": { "periodSeconds": 24, "duskRampSeconds": 2, "dawnRampSeconds": 2, "nightDepth": 1, "nightLocked": true },
+        "mothSeason": {
+          "radiusWeight": 1,
+          "decoyWeight": 2,
+          "mothsPerLightPerWave": 1,
+          "nightSpeedOutsideLight": 1.12,
+          "litThreshold": 0.35,
+          "attachDamagePerSecond": 6
+        },
+        "enemyRoster": [
+          { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
+          { "id": "moth_swarm", "label": "Fever Moths", "hpScale": 0.3, "speedMult": 1.6, "visualScale": 0.6, "contactDamageScale": 0, "buildingDamageScale": 0, "supportBuildingDamageScale": 0, "tint": "#e8d8b0" },
+          { "id": "night_runner", "label": "Fevered Runner", "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+        ]
+      },
+      "boardRow": {
+        "name": "Moth Season",
+        "ledgerBlurb": "Migration week: every lamp is bait, and one shed pays the nightly tithe.",
+        "tags": ["voltage", "night"],
+        "unlock": "secured:e3-blackout-ridge"
+      },
+      "briefing": {
+        "goals": ["Hold through wave 12 while the decoy shed draws the migration."],
+        "rules": [
+          "Moths choose light by radius; the Decoy Shed counts double and takes 6 damage per attached swarm each second.",
+          "Darkness is a road: non-moths move 12% faster outside light below 35% coverage.",
+          "The cycle stays at night, easing only through two-second dusks."
+        ],
+        "geographyLine": "Two lit yards flank one unlit north-south corridor."
+      }
+    }
+  ]
+}

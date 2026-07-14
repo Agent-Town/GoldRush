@@ -667,6 +667,7 @@ export class EnemyPool {
     blockers: readonly PalisadeBlocker[] = [],
     thiefContext?: ThiefUpdateContext,
     wreckerContext?: WreckerUpdateContext,
+    movementSpeedMultiplier: (enemy: ClaimJumperEnemy) => number = () => 1,
   ): void {
     this.feverPulse += delta * 3.2;
     this.rebuildSpatialHash();
@@ -734,6 +735,7 @@ export class EnemyPool {
         blockers,
         thiefContext,
         wreckerContext,
+        movementSpeedMultiplier(enemy),
       );
       if (contacted && onContact(enemy)) break;
     }

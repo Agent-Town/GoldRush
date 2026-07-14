@@ -13,7 +13,8 @@ class FakeWebSocket {
     if (message.op === 1) queueMicrotask(() => this.emit({ op:2, d:{ negotiatedRpcVersion:1 } }));
     if (message.op === 6) {
       if (message.d.requestType === 'SetCurrentProgramScene') this.switches.push(message.d.requestData.sceneName);
-      const responseData = message.d.requestType === 'GetSceneList' ? { scenes:[{ sceneName:'AUTOPILOT' }, { sceneName:'FACTORY' }] } : {};
+      const responseData = message.d.requestType === 'GetSceneList' ? { scenes:[{ sceneName:'AUTOPILOT' }, { sceneName:'FACTORY' }] }
+        : message.d.requestType === 'GetStreamStatus' ? { outputActive:true } : {};
       queueMicrotask(() => this.emit({ op:7, d:{ requestId:message.d.requestId, requestStatus:{ result:true, code:100 }, responseData } }));
     }
   }
@@ -24,6 +25,7 @@ test('OBS v5 authentication, scene discovery, and switch request use one websock
   const obs = await connectObs({ password:'secret', WebSocketImpl:FakeWebSocket });
   assert.equal(FakeWebSocket.last.sent[0].d.authentication, obsAuthentication('secret', { salt:'salt', challenge:'challenge' }));
   assert.deepEqual(await obs.scenes(), ['AUTOPILOT', 'FACTORY']);
+  assert.equal(await obs.streaming(), true);
   await obs.switchScene('FACTORY');
   assert.deepEqual(FakeWebSocket.last.switches, ['FACTORY']);
   obs.close();
@@ -37,16 +39,23 @@ test('failed preconditions are silent no-ops', async () => {
 
 test('missing spec, websocket, or required scenes never enter FACTORY', async () => {
   let switches = 0;
-  const noScenes = { scenes:async () => ['AUTOPILOT'], switchScene:async () => { switches++; }, close() {} };
+  const noScenes = { streaming:async () => true, scenes:async () => ['AUTOPILOT'], switchScene:async () => { switches++; }, close() {} };
   assert.equal(await directShowcase('not-a-real-slice', { displayReady:true, connect:async () => noScenes }), false);
   assert.equal(await directShowcase('_s106-prospector-boot-probe', { displayReady:true, connect:async () => { throw new Error('offline'); } }), false);
   assert.equal(await directShowcase('_s106-prospector-boot-probe', { displayReady:true, connect:async () => noScenes }), false);
   assert.equal(switches, 0);
 });
 
+test('offline stream leaves FACTORY untouched', async () => {
+  let switches = 0;
+  const obs = { streaming:async () => false, scenes:async () => ['AUTOPILOT', 'FACTORY'], switchScene:async () => { switches++; }, close() {} };
+  assert.equal(await directShowcase('_s106-prospector-boot-probe', { displayReady:true, connect:async () => obs }), false);
+  assert.equal(switches, 0);
+});
+
 test('green showcase switches FACTORY, dwells, and always restores AUTOPILOT', async () => {
   const calls = [];
-  const obs = { scenes:async () => ['AUTOPILOT', 'FACTORY'], switchScene:async (scene) => calls.push(scene), close:() => calls.push('close') };
+  const obs = { streaming:async () => true, scenes:async () => ['AUTOPILOT', 'FACTORY'], switchScene:async (scene) => calls.push(scene), close:() => calls.push('close') };
   const ok = await directShowcase('_s106-prospector-boot-probe', {
     displayReady:true, connect:async () => obs, showcase:async () => { calls.push('showcase'); return 0; }, sleep:async (ms) => calls.push(ms),
   });
@@ -56,7 +65,7 @@ test('green showcase switches FACTORY, dwells, and always restores AUTOPILOT', a
 
 test('red showcase skips dwell and restores AUTOPILOT', async () => {
   const calls = [];
-  const obs = { scenes:async () => ['AUTOPILOT', 'FACTORY'], switchScene:async (scene) => calls.push(scene), close:() => calls.push('close') };
+  const obs = { streaming:async () => true, scenes:async () => ['AUTOPILOT', 'FACTORY'], switchScene:async (scene) => calls.push(scene), close:() => calls.push('close') };
   const ok = await directShowcase('_s106-prospector-boot-probe', {
     displayReady:true, connect:async () => obs, showcase:async () => 1, sleep:async () => calls.push('dwell'),
   });

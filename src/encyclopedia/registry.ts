@@ -61,7 +61,8 @@ export type BuildableLedgerEntryId =
   | 'building_boiler_house'
   | 'building_turret'
   | 'building_assay_office'
-  | 'building_lantern_post';
+  | 'building_lantern_post'
+  | 'building_decoy_shed';
 export type ContractLedgerEntryId =
   | 'the_claim'
   | 'assay_office_records'
@@ -130,6 +131,7 @@ export const buildableLedgerEntryById: Record<BuildableId, BuildableLedgerEntryI
   turret: 'building_turret',
   assay_office: 'building_assay_office',
   lantern_post: 'building_lantern_post',
+  decoy_shed: 'building_decoy_shed',
 };
 
 export const contractLedgerEntryById: Record<string, ContractLedgerEntryId> = {
@@ -149,6 +151,7 @@ const buildableSpriteById: Record<BuildableId, { imageUrl: string; slot: string 
   turret: { imageUrl: turretUrl, slot: assetSlots.bldPortraitTurret },
   assay_office: { imageUrl: claimOfficeUrl, slot: 'building.assay_office' },
   lantern_post: { imageUrl: titleEmblemUrl, slot: 'building.lantern_post' },
+  decoy_shed: { imageUrl: titleEmblemUrl, slot: 'building.decoy_shed' },
 };
 
 export const epochLedgerEntryByIdForEpoch: Readonly<Record<string, EpochLedgerEntryId | undefined>> = epochLedgerEntryById;
