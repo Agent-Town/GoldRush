@@ -74,6 +74,45 @@ test('armored railcar enters on its wheels as rolling stock', async ({ page }, t
   await mkdir(OWNER_ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(OWNER_ARTIFACT_DIR, `${testInfo.project.name}-intact.png`) });
 
+  const beforeEnd = inField.reduce((sum, enemy) => sum + enemy.x, 0) / inField.length;
+  await page.evaluate(() => window.__GR_TEST__?.advanceSim(26));
+  const atEnd = await railcars(page);
+  expect(atEnd).toHaveLength(3);
+  expect(atEnd.every((enemy) => enemy.presentation.visible)).toBe(true);
+  expect(atEnd.reduce((sum, enemy) => sum + enemy.x, 0) / atEnd.length).toBeGreaterThan(beforeEnd + 45);
+  expect(await page.evaluate(() => {
+    const test = window.__GR_TEST__;
+    return !!test && test.restoreSuspend(test.captureSuspend());
+  })).toBe(true);
+  expect((await railcars(page)).every((enemy) => enemy.presentation.visible)).toBe(true);
+
+  await page.evaluate(() => window.__GR_TEST__?.advanceSim(4));
+  const returning = await railcars(page);
+  expect(returning).toHaveLength(3);
+  expect(returning.every((enemy) => enemy.presentation.visible && enemy.vx < 0)).toBe(true);
+  expect(returning.reduce((sum, enemy) => sum + enemy.x, 0) / returning.length)
+    .toBeLessThan(atEnd.reduce((sum, enemy) => sum + enemy.x, 0) / atEnd.length - 3);
+  const bar = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.bossHpBar);
+  expect(bar).toMatchObject({ visible: true, aliveComponents: 3, groupId: 'e2-hill-mine:wave-12:railcar' });
+  await page.evaluate(({ x, z }) => window.__GR_TEST__?.teleport(x, z + 8), {
+    x: returning.reduce((sum, enemy) => sum + enemy.x, 0) / returning.length,
+    z: returning.reduce((sum, enemy) => sum + enemy.z, 0) / returning.length,
+  });
+  await page.waitForTimeout(100);
+  await shot(page, testInfo, 'patrol-return');
+
+  await page.evaluate(() => {
+    window.__GR_TEST__?.setBalance('sparkRig.range', 300);
+    window.__GR_TEST__?.setBalance('sparkRig.fireRate', 8);
+    window.__GR_TEST__?.setBalance('sparkRig.damage', 9999);
+    window.__GR_TEST__?.setBalance('sparkRig.boltSpeed', 120);
+    window.__GR_TEST__?.setUpgradeStacks({});
+    window.__GR_TEST__?.advanceSim(12);
+  });
+  expect(await railcars(page)).toHaveLength(0);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.secured)).toBe(true);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.readability.bossHpBar.visible)).toBe(false);
+
   expect(errors).toEqual([]);
 });
 

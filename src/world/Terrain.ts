@@ -85,6 +85,7 @@ export const VISTA_RADIUS = 90;
 const ELEVATION_TILE = hasElevationTile();
 const TILE_HEIGHTFIELD = ACTIVE_CONTRACT.tileParams.heightfield;
 const AUTHORED_TERRAIN = ACTIVE_CONTRACT.tileParams.authoredTerrain;
+let runtimeVisualHeightSource: ((x: number, z: number) => number) | null = null;
 const TILE_PALETTE = ACTIVE_CONTRACT.tileParams.palette;
 const TILE_WATER = activeWaterDescriptor();
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
@@ -265,6 +266,9 @@ export function isWaterSourceAdjacent(x: number, z: number, pad: number): boolea
 }
 
 export function sampleHeight(x: number, z: number): number {
+  if (runtimeVisualHeightSource) {
+    return runtimeVisualHeightSource(THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX), THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ));
+  }
   const base = ELEVATION_TILE
     ? simHeight(x, z)
     : sampleHeightFamily(THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX), THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ), false);
@@ -272,8 +276,18 @@ export function sampleHeight(x: number, z: number): number {
 }
 
 export function sampleUnclampedHeight(x: number, z: number): number {
+  if (runtimeVisualHeightSource && x >= bounds.minX && x <= bounds.maxX && z >= bounds.minZ && z <= bounds.maxZ) {
+    return runtimeVisualHeightSource(x, z);
+  }
   const base = ELEVATION_TILE ? simHeight(x, z) : sampleHeightFamily(x, z, true);
   return AUTHORED_TERRAIN ? base + authoredTerrainDelta(x, z) : base;
+}
+
+export function installVisualHeightSource(source: (x: number, z: number) => number): () => void {
+  runtimeVisualHeightSource = source;
+  return () => {
+    if (runtimeVisualHeightSource === source) runtimeVisualHeightSource = null;
+  };
 }
 
 function authoredTerrainDelta(x: number, z: number): number {

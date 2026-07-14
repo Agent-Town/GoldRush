@@ -820,6 +820,8 @@ export class Game {
   private lastUpgradeOfferAudioKey = '';
   private disposeRunTelemetry: () => void = () => undefined;
   private run3dPilot?: { update: () => void; dispose: () => void };
+  private terrain3dPilotDispose?: () => void;
+  private terrain3dPilotCancelled = false;
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -1079,6 +1081,17 @@ export class Game {
     });
 
     this.createScene();
+    const terrain3dPilot = new URLSearchParams(window.location.search).has('terrain3dPilot') && activeTileDescriptor().id === 'frontier-river-claim';
+    this.canvas.dataset.terrain3dPilotState = terrain3dPilot ? 'loading' : 'off';
+    this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
+    if (terrain3dPilot) void import('../world/Terrain3dClaimPilot').then(({ installTerrain3dClaimPilot }) => {
+      if (this.terrain3dPilotCancelled) return;
+      this.terrain3dPilotDispose = installTerrain3dClaimPilot({
+        scene: this.scene,
+        canvas: this.canvas,
+        paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
+      });
+    });
     const run3dSelection = new URLSearchParams(window.location.search).get('run3dPilot');
     this.canvas.dataset.run3dPilotState = run3dSelection ? 'loading' : 'off';
     if (run3dSelection) void import('./Run3dPilot').then(({ installRun3dPilot }) => (this.run3dPilot = installRun3dPilot({ scene: this.scene, canvas: this.canvas, diagnostics: () => this.buildSystem.diagnostics })));
@@ -1439,6 +1452,8 @@ export class Game {
     this.damageVignette.remove();
     this.debugTools.dispose();
     this.run3dPilot?.dispose();
+    this.terrain3dPilotCancelled = true;
+    this.terrain3dPilotDispose?.();
     this.buildSystem.dispose();
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
