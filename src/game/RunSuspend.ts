@@ -11,6 +11,7 @@ import { normalizeResearchState, saveResearchRegistryState } from '../meta/Resea
 import type { MegaprojectProjectState } from '../meta/Megaproject';
 import type { HarvestFutureState } from '../systems/HarvestSystem';
 import type { CombatSuspendSnapshot } from '../systems/CombatSystem';
+import type { CrawlerBossSuspendSnapshot } from '../systems/CrawlerBossSystem';
 import { Balance } from './Balance';
 import { buildableDefs, type BuildableId } from './buildables';
 import { effectiveStats } from './StatSheet';
@@ -76,6 +77,7 @@ export type RunSuspendEnvelope = {
   combat: CombatSuspendSnapshot;
   harvest: HarvestSuspend | null;
   baron: BaronSuspend;
+  crawlerBoss: CrawlerBossSuspendSnapshot | null;
   megaproject: MegaprojectSuspend | null;
   runManager: RunManagerSuspendState;
   agent: AgentSuspend | null;
@@ -420,6 +422,7 @@ export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
       ceremony: snapshot.baron.ceremony,
       rocket: snapshot.baron.rocket,
     },
+    crawlerBoss: snapshot.crawlerBoss,
     megaproject: snapshot.megaproject,
     runManager: snapshot.runManager,
     agent: snapshot.agent,
@@ -570,6 +573,7 @@ function captureSnapshot(
         }
       : null,
     baron: captureBaron(game, at),
+    crawlerBoss: game.crawlerBoss?.captureSuspend?.(at) ?? null,
     megaproject: captureMegaproject(game),
     runManager: runManager ?? { secured: false, rush: false, meta: deepClone(meta), payout: null },
     agent: captureAgent(game, at, buildings),
@@ -744,6 +748,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   game.buildSystem?.reset?.();
   game.progression?.reset?.();
   game.agentConsent?.reset?.();
+  game.crawlerBoss?.reset?.();
 
   if (snapshot.harvest === null) game.harvestSystem?.resetFromSeed?.(snapshot.seed);
 
@@ -762,6 +767,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   if (game.goldPickups?.restoreSuspend?.(snapshot.goldPickups) === false) return restoreFailed('gold-pickups');
   game.syncStockpileHoldings?.();
   if (!restoreEnemyPool(game, snapshot.enemies)) return restoreFailed('enemies');
+  game.crawlerBoss?.restoreSuspend?.(deepClone(snapshot.crawlerBoss), snapshot.timeAlive);
   const hero = restoreHero(game, snapshot);
   if (game.combat?.restoreSuspend?.(snapshot.combat) === false) return restoreFailed('combat');
   if (
@@ -1143,6 +1149,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const combat = isV2 ? decodeCombat(value.combat, reasons) : hero && buildings ? emptyCombat(hero.xpTotal, buildings) : null;
   const harvest = isV2 ? decodeHarvest(value.harvest, reasons) : null;
   const baron = isV2 ? decodeBaron(value.baron, reasons) : emptyBaron();
+  const crawlerBoss = isV2 ? decodeCrawlerBoss(value.crawlerBoss, reasons) : null;
   const megaproject = isV2 ? decodeMegaproject(value.megaproject, reasons) : null;
   const runManager = isV2 ? decodeRunManager(value.runManager, reasons) : meta ? { secured: false, rush: false, meta, payout: null } : null;
   const agent = isV2 ? decodeAgent(value.agent, reasons) : null;
@@ -1195,6 +1202,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     combat === null ||
     harvest === undefined ||
     baron === null ||
+    crawlerBoss === undefined ||
     megaproject === undefined ||
     runManager === null
     || agent === undefined || controls === undefined
@@ -1233,6 +1241,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     combat,
     harvest,
     baron,
+    crawlerBoss,
     megaproject,
     runManager: deepClone(runManager),
     agent: deepClone(agent),
@@ -2323,6 +2332,82 @@ function emptyBaron(): BaronSuspend {
   };
 }
 
+function decodeCrawlerBoss(value: unknown, reasons: string[]): CrawlerBossSuspendSnapshot | null | undefined {
+  if (value === undefined || value === null) return null;
+  const record = requiredRecord(value, 'crawlerBoss', reasons);
+  if (!record) return undefined;
+  const act = requiredInteger(record.act, 0, 3, 'crawlerBoss.act', reasons);
+  const flickerEvents = requiredInteger(record.flickerEvents, 0, MAX_COUNT, 'crawlerBoss.flickerEvents', reasons);
+  const flickerRemaining = requiredNumber(record.flickerRemaining, 0, MAX_TIME, 'crawlerBoss.flickerRemaining', reasons);
+  const nextBurstIn = record.nextBurstIn === null
+    ? null
+    : requiredNumber(record.nextBurstIn, 0, MAX_TIME, 'crawlerBoss.nextBurstIn', reasons);
+  const bursts = requiredInteger(record.bursts, 0, MAX_COUNT, 'crawlerBoss.bursts', reasons);
+  const overchargeRemaining = requiredNumber(record.overchargeRemaining, 0, MAX_TIME, 'crawlerBoss.overchargeRemaining', reasons);
+  const wreckPosition = decodeVector3(record.wreckPosition, 'crawlerBoss.wreckPosition', reasons);
+  const nullableStrings = ['drainTarget', 'drainNodeId'] as const;
+  for (const key of nullableStrings) {
+    if (record[key] !== null && (typeof record[key] !== 'string' || record[key].length > 128)) {
+      reasons.push(`crawlerBoss.${key} must be null or a short string`);
+    }
+  }
+  for (const key of ['seenBoss', 'drainActive', 'tracksPinned', 'wreckRemains'] as const) {
+    if (typeof record[key] !== 'boolean') reasons.push(`crawlerBoss.${key} must be boolean`);
+  }
+  const destroyed: CrawlerBossSuspendSnapshot['destroyed'] = [];
+  if (!Array.isArray(record.destroyed) || record.destroyed.length > 3) {
+    reasons.push('crawlerBoss.destroyed must be an array of at most three components');
+  } else {
+    const ids = new Set<string>();
+    for (const [index, value] of record.destroyed.entries()) {
+      const label = `crawlerBoss.destroyed[${index}]`;
+      const entry = requiredRecord(value, label, reasons);
+      if (!entry) continue;
+      if (!isCrawlerComponentId(entry.id)) {
+        reasons.push(`${label}.id is invalid`);
+        continue;
+      }
+      if (ids.has(entry.id)) reasons.push(`${label}.id is duplicated`);
+      ids.add(entry.id);
+      const position = entry.position === null ? null : decodeVector3(entry.position, `${label}.position`, reasons);
+      if (entry.position === null || position) destroyed.push({ id: entry.id, position });
+    }
+  }
+  if (
+    act === null ||
+    flickerEvents === null ||
+    flickerRemaining === null ||
+    (record.nextBurstIn !== null && nextBurstIn === null) ||
+    bursts === null ||
+    overchargeRemaining === null ||
+    !wreckPosition ||
+    typeof record.seenBoss !== 'boolean' ||
+    typeof record.drainActive !== 'boolean' ||
+    typeof record.tracksPinned !== 'boolean' ||
+    typeof record.wreckRemains !== 'boolean' ||
+    (record.drainTarget !== null && typeof record.drainTarget !== 'string') ||
+    (record.drainNodeId !== null && typeof record.drainNodeId !== 'string')
+  ) {
+    return undefined;
+  }
+  return {
+    seenBoss: record.seenBoss,
+    act: act as 0 | 1 | 2 | 3,
+    flickerEvents,
+    flickerRemaining,
+    drainActive: record.drainActive,
+    drainTarget: record.drainTarget,
+    drainNodeId: record.drainNodeId,
+    nextBurstIn,
+    bursts,
+    tracksPinned: record.tracksPinned,
+    overchargeRemaining,
+    wreckRemains: record.wreckRemains,
+    wreckPosition,
+    destroyed,
+  };
+}
+
 function decodeMegaproject(value: unknown, reasons: string[]): MegaprojectSuspend | null | undefined {
   if (value === null) return null;
   const record = requiredRecord(value, 'megaproject', reasons);
@@ -2856,6 +2941,10 @@ function isWaveState(value: unknown): value is WaveSystemSuspend['waveState'] {
 
 function isCompassEdge(value: unknown): value is CompassEdge {
   return value === 'north' || value === 'south' || value === 'east' || value === 'west';
+}
+
+function isCrawlerComponentId(value: unknown): value is CrawlerBossSuspendSnapshot['destroyed'][number]['id'] {
+  return value === 'drain_mast' || value === 'tracks' || value === 'capacitor_bank';
 }
 
 function isThiefState(value: unknown): value is EnemySuspendSnapshot['thiefState'] {

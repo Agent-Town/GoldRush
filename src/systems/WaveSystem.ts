@@ -742,7 +742,8 @@ export class WaveSystem {
     const waveHpScale = Math.pow(Balance.waves.hpScalePerWave, wave);
     const waveSpeedScale = Math.min(Balance.waves.speedScaleCap, Math.pow(Balance.waves.speedScalePerWave, wave));
     const totalHp = Balance.enemy.hp * waveHpScale * baron.hpScale * components.reduce((sum, component) => sum + component.hpScale, 0);
-    const groupId = `${this.contract.id}:wave-${wave}:railcar`;
+    const groupKind = (baron.variantId ?? 'baron_railcar') === 'baron_railcar' ? 'railcar' : 'component-boss';
+    const groupId = `${this.contract.id}:wave-${wave}:${groupKind}`;
     let spawned = 0;
     for (const component of components) {
       const along = component.xOffset ?? spawned * 1.1;
@@ -763,8 +764,8 @@ export class WaveSystem {
         buildingDamageScale: (baron.buildingDamageScale ?? 1) * (component.buildingDamageScale ?? 1),
         supportBuildingDamageScale: (baron.supportBuildingDamageScale ?? baron.buildingDamageScale ?? 1) * (component.supportBuildingDamageScale ?? 1),
         heroPursuitRange: baron.pursuitRange,
-        variantId: 'baron_railcar',
-        variantLabel: 'Armored Railcar',
+        variantId: baron.variantId ?? 'baron_railcar',
+        variantLabel: baron.variantLabel ?? 'Armored Railcar',
         tint: component.tint,
         boltDamageMult: component.boltDamageMult,
         bossGroupId: groupId,

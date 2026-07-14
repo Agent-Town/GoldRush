@@ -231,7 +231,7 @@ export type ContractMothSeason = {
 export type ContractPowerNode =
   | { id: string; label: string; kind: 'producer'; x: number; z: number; outputWatts: number }
   | { id: string; label: string; kind: 'relay'; x: number; z: number }
-  | { id: string; label: string; kind: 'consumer'; x: number; z: number; drawWatts: number; priority: number; role: 'gallery' | 'lamp' | 'turret' | 'tram' };
+  | { id: string; label: string; kind: 'consumer'; x: number; z: number; drawWatts: number; priority: number; role: 'gallery' | 'lamp' | 'turret' | 'tram' | 'crawler-drain' };
 export type ContractPowerGrid = {
   maxSpanLength: number;
   nodes: ContractPowerNode[];
@@ -249,6 +249,8 @@ export type ContractPylonSite = {
 export type ContractBaronTwist = {
   wave: number;
   bossKind?: 'baron' | 'railcar';
+  variantId?: string;
+  variantLabel?: string;
   hpScale: number;
   speedScale: number;
   scale: number;
