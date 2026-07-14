@@ -209,6 +209,12 @@ export type ContractLightKeyframe = {
   sunHeight: number;
   spriteTint: string;
 };
+export type ContractDayNightCycle = {
+  periodSeconds: number;
+  duskRampSeconds: number;
+  dawnRampSeconds: number;
+  nightDepth: number;
+};
 export type ContractBaronTwist = {
   wave: number;
   bossKind?: 'baron' | 'railcar';
@@ -444,6 +450,7 @@ export type ContractManifest = {
     secureWave?: number;
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
+    dayNightCycle?: ContractDayNightCycle;
     enemyLanternClasses?: readonly ContractEnemyLanternClass[];
     enemyRoster?: readonly ContractEnemyVariant[];
     baron?: ContractBaronTwist;
@@ -1322,6 +1329,12 @@ function variableDescriptorArrayShape(
 
 function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
   validateLightRamp(contract.twist.lightRamp, reasons);
+  const cycle = contract.twist.dayNightCycle;
+  if (cycle && (!Number.isFinite(cycle.periodSeconds) || !Number.isFinite(cycle.duskRampSeconds) || !Number.isFinite(cycle.dawnRampSeconds)
+    || !Number.isFinite(cycle.nightDepth) || cycle.periodSeconds <= 0 || cycle.duskRampSeconds <= 0 || cycle.dawnRampSeconds <= 0
+    || cycle.duskRampSeconds + cycle.dawnRampSeconds >= cycle.periodSeconds || cycle.nightDepth < 0 || cycle.nightDepth > 1)) {
+    addDescriptorReason(reasons, reason('day_night_cycle', 'The day/night cycle needs a positive period, shorter positive ramps, and night depth from zero to one.', 'twist.dayNightCycle'));
+  }
   const claimHalf = (contract.tileParams.size ?? CONTRACT_DEFAULT_CLAIM_SIZE) / 2;
   for (const [index, zone] of (contract.tileParams.buildZones ?? []).entries()) {
     const path = `tileParams.buildZones[${index}]`;

@@ -267,6 +267,7 @@ interface ThreeGameDiagnostics {
     secureWave: number;
     waveCadenceMult: number;
     lightRamp: GrContractManifest['twist']['lightRamp'] | null;
+    dayNightCycle: GrContractManifest['twist']['dayNightCycle'] | null;
     baron: GrContractManifest['twist']['baron'] | null;
     medals: import('./game/Medals').MedalState;
   };
@@ -589,6 +590,8 @@ interface ThreeGameDiagnostics {
       phase: 'full' | 'dusk' | 'dark' | 'dawn';
       darkness: number;
     };
+    dayNight: import('./systems/DayNightCycle').DayNightSnapshot | null;
+    coverage: import('./systems/LightField').LightFieldDiagnostics;
   };
   enemyDimming: {
     enabled: boolean;
@@ -1007,6 +1010,8 @@ interface Window {
       repairs: number;
     };
     setBeaconWave: (wave: number | null) => void;
+    setDayNightTime: (seconds: number | null) => import('./systems/DayNightCycle').DayNightSnapshot | null;
+    lightCoverage: (x: number, z: number) => number;
     announceForTest: (text: string, kind?: 'wave' | 'baron' | 'baron-defeat') => void;
     setWave: (wave: number) => void;
     startWaveForTest: (wave: number) => void;

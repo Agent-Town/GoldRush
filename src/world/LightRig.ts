@@ -271,19 +271,6 @@ export class LightRig {
       return;
     }
 
-    if (this.nightShift.phase === 'dawn') {
-      this.background.copy(this.dawnBackground);
-      this.fog.color.copy(this.dawnFog);
-      this.sun.color.copy(this.dawnSun);
-      this.sun.intensity = 2.05;
-      this.fill.color.copy(this.dayFill);
-      this.fill.groundColor.copy(this.dawnGround);
-      this.fill.intensity = 1.2;
-      this.sun.position.y = 18;
-      setWorldSpriteTint('#ffffff');
-      return;
-    }
-
     const palette = this.nightShift.palette;
     if (palette) {
       this.background.copy(palette.background);
@@ -295,6 +282,19 @@ export class LightRig {
       this.fill.groundColor.copy(palette.ground);
       this.fill.intensity = palette.fillIntensity;
       setWorldSpriteTint(palette.spriteTint);
+      return;
+    }
+
+    if (this.nightShift.phase === 'dawn') {
+      this.background.copy(this.dawnBackground);
+      this.fog.color.copy(this.dawnFog);
+      this.sun.color.copy(this.dawnSun);
+      this.sun.intensity = 2.05;
+      this.fill.color.copy(this.dayFill);
+      this.fill.groundColor.copy(this.dawnGround);
+      this.fill.intensity = 1.2;
+      this.sun.position.y = 18;
+      setWorldSpriteTint('#ffffff');
       return;
     }
 
