@@ -73,6 +73,20 @@ export const Balance = {
     stuckWatchdogSeconds: 3,
     stuckWatchdogDisplacement: 0.4,
   },
+  convoy: {
+    spacing: 3,
+    catchupMultiplier: 1.25,
+  },
+  weather: {
+    cycleSeconds: 30,
+    clearSeconds: 6,
+    telegraphSeconds: 4,
+    stormSeconds: 12,
+    stormMovementMultiplier: 0.7,
+    stormVisibilityMultiplier: 0.55,
+    hazeColor: '#c99052',
+    hazeStrength: 0.2,
+  },
   agent: {
     homeX: -1.8,
     homeZ: 10.7,

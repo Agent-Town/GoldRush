@@ -44,6 +44,12 @@ if (initialSearch.has('debug') && initialSearch.has('mpbalance')) {
   );
 }
 
+if (initialSearch.has('debug') && initialSearch.has('e4convoyweather')) {
+  void import('./diagnostics/E4ConvoyWeatherHarness').then(({ installE4ConvoyWeatherHarnessFromSearch }) =>
+    installE4ConvoyWeatherHarnessFromSearch(),
+  );
+}
+
 if (initialSearch.get('bench') === 'fullbase') {
   const defaults = { debug: '', nolevel: '', nopause: '', seed: 'perf-02-fullbase', timescale: '24' };
   let changed = false;
