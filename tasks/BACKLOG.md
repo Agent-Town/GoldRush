@@ -290,3 +290,4 @@ The waterfall holds (E5 plays after E4 ships) — so the push = COMPRESS E4 + po
 - **fix-terrain3d-seams** → lane-a (owner tour: hard terrain-edge style cliff [±32 bounds vs apron; single-mesh hide bug] + panoramas not reading in-game [fog/mount conviction owed]) · landmarks = EXPECTED-absent (mounted packs = Sol's granted wave; verdict renders were composition proxies).
 
 - **SOL DOUBLE-WAVE MERGED+DEPLOYED**: 7b (E2 town art-complete: 8 faces + anchors + accessories + manifest) + 3D-D E2 pair (hill-mine/trestle terrain+panorama; garden/incline correctly HELD) · **publish-e2-mask-tables** queued lane-d (the pipeline gap: reports≠consumables; future contracts publish mask FILES at drain).
+- **THE LANDMARK SOURCE LADDER ruled** (reuse GLB > derive from painted art > build new from era plates; era-stamped per map; ~⅓ of all mount ids already have existing 3D bodies) — 3D-D's landmark wave proceeds under it.
