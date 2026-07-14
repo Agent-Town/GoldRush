@@ -1,5 +1,8 @@
 # Gold Rush autonomous stream
 
+## Platform: X-FIRST (owner ruling 2026-07-14), YouTube later
+X ingest: X Premium account → Media Studio (studio.x.com) → **Producer** → Create broadcast (source: RTMP) → copy the RTMP server URL + stream key → OBS Settings → Stream → Service **Custom**, paste both. IMPORTANT X differences vs YouTube: (1) after OBS starts pushing, you must press **Go Live** in the Producer console (OBS alone doesn't publish); (2) a broadcast is a one-time object — if the connection drops, the broadcast ENDS and a new one (new key) must be created; the watchdog reports but never re-arms by design. THEREFORE: X = attended/event-style sessions and scheduled loop windows, announced as posts; the 24/7 unattended autopilot belongs on YouTube when we add it (indefinite streams, auto-resume). Same scenes, same loop folder, same never-list for both.
+
 The autopilot is file playback only. It never captures a screen, desktop, terminal, editor, browser, or notification. The factory curates `assets/stream/loop-manifest.json`; `scripts/stream-sync.sh` turns that reviewed order into `~/GoldRushStream/loop/`, converts WebM and still cards to VLC-compatible H.264 MP4, caches unchanged outputs, and removes files no longer listed. Live scenes use window capture only and are attended.
 
 ## One-time OBS setup (under 15 minutes)

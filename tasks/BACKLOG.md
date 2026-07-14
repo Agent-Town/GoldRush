@@ -258,3 +258,4 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - QUEUED: e3-04-wire-spans (b) · e3-05-tram (c) · e3-06-moth-swarm (d) · e3-07-dam-surge (b#2) · art-e3-crawler-plate (art; the railcar pipeline repeats: plate → Sol wave-5 model → factory wire).
 - NEXT after spine drains: THE CANYON WORKS assembly master (attended-authored, the tile that consumes all six systems) + E3 contracts/enemies data + T3 megaproject. E4 opens when E3's spine stands (honest answer: not today; possibly tomorrow at today's pace).
 - STREAM: factory-side COMPLETE (sync/watchdog/capture/overlays/manifest doctrine); owner checklist delivered in chat; loop-manifest population = standing factory duty once footage exists.
+- **STREAM: X-FIRST ruled** (owner 2026-07-14) — Producer/RTMP path documented (STREAMING.md); X = event-style sessions (broadcast objects don't survive drops → 24/7 autopilot stays a YouTube-later item); owner checklist delivered.
