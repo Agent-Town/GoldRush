@@ -158,6 +158,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   hauler_bed: { name: 'Hauler Bed', line: 'A clear flatbed is marked to carry crates and rigs.' },
   convoy_receipts: { name: 'Convoy Receipts', line: 'Fuel loads stay tied to haulers and the waiting railhead.' },
   driver_playbook: { name: 'Driver Playbook', line: 'A third helper slot is marked for a bounded road route.' },
+  depth_soundings: { name: 'Depth Soundings', line: 'The drowned shelf gains marks at every working depth.' },
+  brass_air_lines: { name: 'Brass Air Lines', line: 'A counted breath is marked from the pump cart to the bell.' },
+  reef_passages: { name: 'Reef Passages', line: 'Safe skiff gaps are entered around the reef ring.' },
+  dive_bell_rigging: { name: 'Dive-Bell Rigging', line: 'Chain, winch, and return bell are marked for work below.' },
+  trench_glow: { name: 'Trench Glow', line: 'A teal light waits below the last sounding.' },
+  wreck_charts: { name: 'Wreck Charts', line: 'Every drowned era gains a mark in the claim book.' },
+  pearl_grading: { name: 'Pearl Grading', line: 'Luster, weight, and depth gain their own columns.' },
+  era_salvage: { name: 'Era Salvage', line: 'Rail iron, pylon copper, and motor parts return to separate bins.' },
+  sealed_salvage_hold: { name: 'Sealed Salvage Hold', line: 'Recovered pieces gain a dry place above the waterline.' },
+  dredge_queen_components: { name: 'Dredge-Queen Components', line: 'The Dredge-Queen medal still guards her claw, paddle, and hold diagrams.' },
+  hull_vocabulary: { name: 'Hull Vocabulary', line: 'Ribs, seams, keels, and deck anchors enter the builders’ book.' },
+  deck_anchors: { name: 'Deck Anchors', line: 'Each floating workshop gains a numbered place on the boat.' },
+  storm_glass: { name: 'Storm Glass', line: 'The charcoal fronts are marked before they reach the lanterns.' },
+  lighthouse_lens: { name: 'Lighthouse Lens', line: 'The town’s warm-light law reaches the open water.' },
+  harbor_receipts: { name: 'Harbor Receipts', line: 'Cannery loads, drydock work, and anchor changes enter one ledger.' },
 };
 
 export type ResearchChartOptions = {

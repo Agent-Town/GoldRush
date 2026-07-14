@@ -1,0 +1,192 @@
+{
+  "id": "epoch-5-deepwater",
+  "displayName": "Deepwater Claim",
+  "order": 5,
+  "locked": true,
+  "scienceThreshold": 14,
+  "research": {
+    "branches": [
+      {
+        "id": "Diving",
+        "label": "depth & air",
+        "iconKey": "ui.upgrade.icon.prospecting",
+        "nodes": [
+          {
+            "id": "depth_soundings",
+            "name": "Depth Soundings",
+            "description": "Mark the shelf at one, two, four, and eight fathoms before the old road signs vanish.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the Deepwater depth-ladder family.",
+            "effectRef": "deepwater.depth_soundings",
+            "cost": 1
+          },
+          {
+            "id": "brass_air_lines",
+            "name": "Brass Air Lines",
+            "description": "Keep a counted breath running from the pump cart to every bell below.",
+            "iconKey": "ui.e2.pressure",
+            "effect": "Banks the dive air-meter family.",
+            "effectRef": "deepwater.brass_air_lines",
+            "cost": 1,
+            "requires": ["depth_soundings"]
+          },
+          {
+            "id": "reef_passages",
+            "name": "Reef Passages",
+            "description": "Chart the safe gaps where a skiff can pass and a long brass shadow need not.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the reef-gap navigation family.",
+            "effectRef": "deepwater.reef_passages",
+            "cost": 1,
+            "requires": ["depth_soundings"]
+          },
+          {
+            "id": "dive_bell_rigging",
+            "name": "Dive-Bell Rigging",
+            "description": "Set the chain, winch, and return bell for work beneath the drowned claim.",
+            "iconKey": "ui.e2.iron_card",
+            "effect": "Banks the dive-bell entry family.",
+            "effectRef": "deepwater.dive_bell_rigging",
+            "cost": 1,
+            "requires": ["brass_air_lines", "reef_passages"]
+          },
+          {
+            "id": "trench_glow",
+            "name": "Trench Glow",
+            "description": "Record the teal light below the last sounding; the sea has not yielded its name.",
+            "iconKey": "node.gold_seam",
+            "effect": "Banks the Deep Reactor survey family.",
+            "effectRef": "deepwater.trench_glow",
+            "cost": 1,
+            "requires": ["dive_bell_rigging"]
+          }
+        ]
+      },
+      {
+        "id": "Salvage",
+        "label": "wrecks & pearls",
+        "iconKey": "ui.upgrade.icon.gold",
+        "nodes": [
+          {
+            "id": "wreck_charts",
+            "name": "Wreck Charts",
+            "description": "Give every drowned era a mark on the shelf and a page in the claim book.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the five-wreck salvage family.",
+            "effectRef": "deepwater.wreck_charts",
+            "cost": 1
+          },
+          {
+            "id": "pearl_grading",
+            "name": "Pearl Grading",
+            "description": "Sort luster, weight, and depth before the tide-teller changes the subject.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the pearl-extraction family.",
+            "effectRef": "deepwater.pearl_grading",
+            "cost": 1,
+            "requires": ["wreck_charts"]
+          },
+          {
+            "id": "era_salvage",
+            "name": "Era Salvage",
+            "description": "Keep rail iron, pylon copper, and Land-Yacht parts in their proper bins.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the era-crossover salvage family.",
+            "effectRef": "deepwater.era_salvage",
+            "cost": 1,
+            "requires": ["wreck_charts"]
+          },
+          {
+            "id": "sealed_salvage_hold",
+            "name": "Sealed Salvage Hold",
+            "description": "Latch the recovered pieces above the waterline before the next front arrives.",
+            "iconKey": "ui.e2.iron_card",
+            "effect": "Banks the protected wreck-loot family.",
+            "effectRef": "deepwater.sealed_salvage_hold",
+            "cost": 1,
+            "requires": ["pearl_grading", "era_salvage"]
+          },
+          {
+            "id": "dredge_queen_components",
+            "name": "Dredge-Queen Components",
+            "description": "A future Dredge-Queen medal will release the claw, paddle, and hold diagrams.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the Dredge-Queen component science behind the reserved dredgeQueenComponentsCaptured medal flag.",
+            "effectRef": "deepwater.dredge_queen_components",
+            "cost": 1,
+            "requires": ["sealed_salvage_hold"]
+          }
+        ]
+      },
+      {
+        "id": "Harbor Craft",
+        "label": "hulls & weather",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "hull_vocabulary",
+            "name": "Hull Vocabulary",
+            "description": "Name ribs, seams, keels, and deck anchors so the old Garage can build afloat.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the Deepwater hull fabrication family.",
+            "effectRef": "deepwater.hull_vocabulary",
+            "cost": 1
+          },
+          {
+            "id": "deck_anchors",
+            "name": "Deck Anchors",
+            "description": "Fasten every workshop to a numbered place that survives the boat's next move.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the deck-anchor building family.",
+            "effectRef": "deepwater.deck_anchors",
+            "cost": 1,
+            "requires": ["hull_vocabulary"]
+          },
+          {
+            "id": "storm_glass",
+            "name": "Storm Glass",
+            "description": "Read the charcoal wall-cloud before its skiffs reach the lantern line.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the storm-front scheduler family.",
+            "effectRef": "deepwater.storm_glass",
+            "cost": 1,
+            "requires": ["hull_vocabulary"]
+          },
+          {
+            "id": "lighthouse_lens",
+            "name": "Lighthouse Lens",
+            "description": "Carry the warm-light law to sea with brass rings and a teal-and-gold lens.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the lighthouse ambush-radius family.",
+            "effectRef": "deepwater.lighthouse_lens",
+            "cost": 1,
+            "requires": ["deck_anchors", "storm_glass"]
+          },
+          {
+            "id": "harbor_receipts",
+            "name": "Harbor Receipts",
+            "description": "Tie each cannery load, drydock repair, and anchor change to the boat that carried it.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the harbor logistics family.",
+            "effectRef": "deepwater.harbor_receipts",
+            "cost": 1,
+            "requires": ["lighthouse_lens"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "deep-reactor",
+    "surfaceRef": "bld.deep_reactor",
+    "cost": { "gold": 0, "bankedScience": 14 },
+    "raiseActionText": "Raise the Deep Reactor"
+  },
+  "transition": {
+    "ceremonyBeatId": "e6-ceremony-deep-reactor",
+    "kitArtKey": "kit-era-6",
+    "displayName": "The Atomic Homestead"
+  },
+  "successor": null,
+  "parts": { "contracts": "contracts.json" }
+}
