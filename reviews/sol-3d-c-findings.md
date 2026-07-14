@@ -6,60 +6,72 @@ Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91
 
 Tip: exact Wave 7 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — two E2 Town building variants are ready for the owner verdict; both preserve their E1 identity, envelope, and base asset.**
+Verdict: **READY-FOR-GATES — corrected Wave 7a pilots pass the across-the-plaza test while preserving their E1 identity, exact envelope, and base asset.**
 
 ## Wave 7 — E2 epoch style variants
 
-### Pilot selection and visual target
+### 7a correction target
 
-- **Tavern:** the E2 bundle's explicit §A2 transform. The accepted roofline, footprint, facade, and covered porch remain the identity; E2 grows on them as Saloon swing doors and hanging oil lamps, including one restrained teal lamp.
-- **Claim Office:** the canon heritage step toward Town Hall. It remains visibly the accepted Claim Office, gaining a compact public pressure readout and an attached rear-side steam service rather than a new civic shell.
-- **Shared target:** warm painted frontier craft with localized soot-dark iron, brass/ochre, and agent-teal accents. No E5 rope trim or tide boards, no text signage, no emissive material, and no generic steampunk redesign.
+The returned pilot at `42607059` passed asset correctness but failed its purpose: its evidence used a close focus camera and the edits were below silhouette scale at the real TS-04 gameplay camera. This correction starts from the player test instead: with camera, light, plaza, and surrounding buildings held constant, a blind reviewer must identify E2 across the plaza without relying on a turntable, labels, live steam, or texture inspection.
+
+- **Tavern / Saloon:** the bundle's §A2 list is fully present: a more explicit covered porch, two hanging oil lamps with one teal, and half-height swing doors. A large attached kitchen boiler and flanged service vent put the steam-era change on the service side seen by the locked camera. The accepted shell, footprint, roofline, facade, and maximum envelope remain unchanged.
+- **Claim Office / Town Hall lineage:** a civic service boiler, tall banded relief stack, rear pressure dial, paired facade gauges, and porch ironwork make the public steamworks read visible while retaining the accepted flag, frontage, roofline, footprint, and maximum envelope.
+- **Shared target:** warm painted frontier craft with soot-dark iron, brass/ochre, and restrained agent-teal accents. No E5 rope trim or tide boards, readable signage, emissive material, generic redesign, or dependence on the future particle plume.
 
 ### Per-building findings
 
-| Building | E1 identity retained | E2 edit | All-angle finding and correction | Final contract |
+| Building | Returned-pilot finding | 7a correction | Locked-camera / all-angle verdict | Final contract |
 | --- | --- | --- | --- | --- |
-| Tavern / Saloon | exact `town-v3-tavern` shell, roofline, footprint, facade, and covered porch | two half-height swing leaves; two front oil lamps, one teal; one ordinary rear service lamp so the edit reads from the Town camera | the first pass placed the front lamps into the canopy; they were lowered beneath it and rechecked at four angles. Final neutral review found no remaining defect | 12,712 triangles; 1 mesh/primitive/material; embedded 1024 x 1024 atlas; exact E1 envelope `4.229571 x 3.960802 x 3.349`; byte-identical re-export SHA-256 `6664458082b86f632c202d3532cdac68210e14998c37de64d20aa451c803678e` |
-| Claim Office / civic steam pilot | exact Claim Office shell, roofline, flag, frontage, footprint, and silhouette | paired facade pressure gauges; four iron porch caps; chimney-fed rear-side service pipe, flanges, and teal shutoff wheel | neutral review caught a side riser crossing a window, an off-axis wheel, and ambiguous endpoints. The riser moved to the clear rear corner, the wheel was centered, and both ends received joined fittings. Post-fix review accepted the pilot | 4,168 triangles; 1 mesh/primitive/material; embedded 1024 x 1024 atlas; exact E1 envelope `4.26 x 5.02 x 3.12`; byte-identical re-export SHA-256 `eccfe75c24fe5520536c4fea244486c034b3cc9890e3c4d68817a14a00d0881a` |
+| Tavern / Saloon | swing leaves and small lamps were correct but near-invisible from across the plaza; the old render did not exercise the locked camera | expanded the existing awning into a clearly covered red porch with valance/brackets; kept the required lamps and swing doors; added an attached dark boiler, brass header, teal shutoff, and tall flanged vent on the camera-visible service corner | blind neutral reviewer identified the unlabeled E2 image from the side steam assembly, confidently and without squinting. Four angles show the pipework attached; no floating, collision, or missing-side blocker | 13,864 triangles; 1 mesh/primitive/material; embedded 1024 x 1024 atlas; exact E1 envelope `4.229571 x 3.960802 x 3.349`; byte-identical SHA-256 `e72aa936ee8a5a24aa6a6840d7c43f9eb81c4005702585a93050ac3166af09ad`; 2 steam anchors |
+| Claim Office / civic steam pilot | facade gauges and a narrow service pipe did not change the building's gameplay-distance read | retained the civic gauge language and added a camera-visible rear boiler, tall iron relief stack with brass/teal bands and roof collar, feed pipe, and large rear dial | blind neutral reviewer identified the unlabeled E2 image from the banded stack, confidently and without texture detail. The busy stack/eave junction reads as an intentional roof penetration, not a float or bad collision | 5,452 triangles; 1 mesh/primitive/material; embedded 1024 x 1024 atlas; exact E1 envelope `4.26 x 5.02 x 3.12`; byte-identical SHA-256 `715b721d8c3896c82bf8468d6d18fc30d8628c2d2c69720f85b6476f7f86d656`; 2 steam anchors |
 
 ### Gate evidence
 
 | Check | Tavern | Claim Office | Result |
 | --- | --- | --- | --- |
 | E1 base integrity | BLEND `b81ef19a…`; GLB `edec4934…` | BLEND `46a2f73f…`; GLB `b2a23b06…` | both original files untouched |
-| Geometry budget | 12,712 triangles | 4,168 triangles | both pass under 15,000 |
+| Geometry budget | 13,864 triangles | 5,452 triangles | both pass under 15,000 |
 | Baked surface | 1 material, 1 embedded 1024 x 1024 image | 1 material, 1 embedded 1024 x 1024 image | pass |
 | Export hygiene | 0 cameras, 0 lights, 0 animations | 0 cameras, 0 lights, 0 animations | pass |
-| Envelope | exact E1 bounds | exact E1 bounds | footprint and silhouette interface preserved |
+| Envelope | exact E1 bounds | exact E1 bounds | slot, footprint, roofline, and maximum-envelope interfaces preserved |
 | Determinism | exact SHA above | exact SHA above | official recipe export and verifier pass |
-| Locked-camera tone | average luminance `+0.0067` (`+0.0046%`) | average luminance `-0.1054` (`-0.0756%`) | localized changes; far inside the 5% tonal ceiling |
+| Steam-plume interface | `steam_anchor_1`, `steam_anchor_2` | `steam_anchor_1`, `steam_anchor_2` | named empty GLTF nodes survive the official deterministic export |
+| Locked-camera tone | average luminance `-0.0875` (`-0.0582%`) | average luminance `-0.0512` (`-0.0341%`) | localized additions; far inside the 5% tonal ceiling |
 | App build | exact final asset bytes | exact final asset bytes | `npm run build` pass |
-| Visual QA | Town A/B plus four-angle E1/E2 sheet | Town A/B plus four-angle E1/E2 sheet | neutral post-fix verdict: accept both pilots |
+| Across-the-plaza QA | unlabeled E2 identified correctly from the service steam silhouette | unlabeled E2 identified correctly from the tall banded stack | neutral blind verdict: PASS both pilots at gameplay distance |
 
 ### Evidence index
 
 Every comparison is **E1 on the left, E2 on the right**.
 
-- Locked Town camera: [`tavern-town-ab.png`](../artifacts/town-e2-variants/tavern-town-ab.png), [`claim_office-town-ab.png`](../artifacts/town-e2-variants/claim_office-town-ab.png)
+- Locked Town camera: [`town-two-pilot-ab.png`](../artifacts/town-e2-variants/town-two-pilot-ab.png), [`tavern-town-ab.png`](../artifacts/town-e2-variants/tavern-town-ab.png), [`claim_office-town-ab.png`](../artifacts/town-e2-variants/claim_office-town-ab.png)
 - Four-angle comparison: [`tavern-turntable-ab.png`](../artifacts/town-e2-variants/tavern-turntable-ab.png), [`claim_office-turntable-ab.png`](../artifacts/town-e2-variants/claim_office-turntable-ab.png)
 - Machine evidence: [`asset-contract.json`](../artifacts/town-e2-variants/asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e2-variants/comparison-metrics.json)
 
-### F-3DC-13 — The first E2 pilots preserve identity by adding attached craft
+### F-3DC-13 — E2 must read from the plaza before its surface detail matters
 
 **Severity:** resolved design gate
 
-**Evidence:** neither variant changes its production base file, footprint, bounding envelope, roofline, or core facade. The Tavern follows the bundle's explicit Saloon transform while the Claim Office uses the canon Town Hall lineage to test a second, more restrained civic vocabulary. From all four angles the additions read as things fitted to the existing building, not a replacement building sharing its slot.
+**Evidence:** the returned pilots proved that contract-correct pipes and gauges can still be functionally invisible. The corrected render uses the actual full TS-04 Town camera, and a neutral reviewer correctly selected Tavern E2 and Claim Office E2 from unlabeled pairs. The reasons given were silhouette-scale additions—the side steam assembly and tall banded stack—not texture or labels. Four-angle review confirms those additions are attached craft rather than replacement shells.
 
-**Decision:** use these two pilots for the owner verdict before producing further siblings. If accepted, repeat the same attached-edit rule building by building; do not infer that every E2 structure needs identical pipes or gauges.
+**Decision:** hold Wave 7b until the owner accepts this corrected 7a verdict. If accepted, require the same blind gameplay-camera test building by building; do not reuse one boiler shape everywhere, and do not count future live plumes as the static-model read.
+
+### F-3DC-14 — Steam anchors require the official exporter to preserve named empties
+
+**Severity:** resolved interface gate
+
+**Evidence:** Blender's selected-object GLB export does not automatically include empty children when only the mesh is selected. `scripts/reexport-pilot.sh` now adds only empty objects named `steam_anchor_*` to the existing mesh selection. The verifier confirms exactly two sequential anchors in each final GLB and byte-identical `.blend` re-export; blends without era anchors retain the previous mesh-only selection.
+
+**Decision:** use named empty nodes as the factory particle-mount seam. Tavern anchors are at its accepted chimney and new service vent; Claim Office anchors are at its accepted chimney and new relief stack. Particle timing, tint, and plume geometry remain factory-owned.
 
 ### Wave 7 integration boundary
 
-- New sibling assets only: `tavern.e2.glb` and `claim-office.e2.glb`, each with its deterministic `.blend` and builder.
+- Corrected sibling assets only: `tavern.e2.glb` and `claim-office.e2.glb`, each with its deterministic `.blend`, builder, and named steam anchors.
 - The E1 production GLBs remain byte-for-byte untouched and at their current paths.
 - No runtime source changed. Era switching remains factory-owned and is intentionally not part of this asset verdict branch.
-- Branch base: `12f6306e`; main observed during final audit: `af3b7bc6`. Main advanced through unrelated terrain/panorama and handoff commits with no overlap in the Wave 7 asset, evidence, or findings paths.
+- Branch base: `12f6306e`; returned pilot tip: `42607059`; main observed during final audit: `e1de526d`. Main advanced through unrelated factory handoff commits with no overlap in the Wave 7 asset, evidence, or findings paths.
 - Path-scoped integration should add the sibling assets, evidence, scripts, and this Wave 7 findings section.
+- Wave 7b and its accessory pack are intentionally untouched pending the corrected pilot verdict. The Pan Monument remains permanently excluded from era-keying.
 
 ## Wave 4 — Armored Railcar model
 
