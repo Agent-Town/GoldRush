@@ -220,6 +220,18 @@ export const Balance = {
     consumerDrawWatts: { lamp: 3, tram: 4, turret: 6 },
     spanCost: 10,
   },
+  e4Fuel: {
+    capacity: 24,
+    nodePositions: [{ x: -12, z: -8 }, { x: 0, z: -8 }, { x: 12, z: -8 }],
+    harvestRange: 1.35,
+    harvestSeconds: 0.5,
+    tarPerNode: 3,
+    refineSeconds: 0.25,
+    fuelPerTar: 4,
+    vehicleSpeed: 9,
+    burnPerSecond: 3,
+    arriveRadius: 0.05,
+  },
   assayOffice: {
     cost: 80,
     maxCount: 1,
