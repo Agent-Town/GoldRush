@@ -272,3 +272,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - LADDERED NEXT: **e3-fairground** (the Ferris wheel — generator/watchtower/joy; meatier: new entity; authors after the first three drain) · **cw-02-escort mode** (tram + capacitor crate on canyon works) · E3 townsfolk/aging art batch.
 
 - **SOL 3D-C WAVE 6 MERGED+DEPLOYED** (town audit: chapel truly seated, claim tone fixed 4.37%, wagon/trough rebuilt, 28/28) — F-claim-tone CLOSED · WAVE 7 (epoch variations) thumbs-up given.
+
+- **SOL 3D-D GRIT+PANORAMA WAVE MERGED** (five FIGHT-verdict exteriors + panoramas) · **terrain3d-02-registry** queued (all five mount behind the flag — owner tour next) · 3D-D next wave granted: the E2 map family from the factory's authored masks.
