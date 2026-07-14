@@ -25,6 +25,9 @@ export const INTERLEAVE = [
   'finished-game-footage',
   'ceremony-recording',
 ];
+export const BANNED_FILES = new Set([
+  'marketing/raw/gen/the-ten-eras-reel-v1-superseded.mp4',
+]);
 
 const APPROVAL = 'class-delegation-2026-07-12';
 const IDEAL_SLOT_SECONDS = {
@@ -80,6 +83,10 @@ export function discoverPool(root, log = console.error) {
         log(`IGNORED ${file} (not an approved ${pool.className})`);
         continue;
       }
+      if (BANNED_FILES.has(file) || (pool.dir === 'marketing/raw/stream' && /2026-07-10.*\.webm$/.test(name))) {
+        log(`IGNORED ${file} (banned stream content)`);
+        continue;
+      }
       items.push({
         file,
         title: titleFor(file),
@@ -105,55 +112,45 @@ export function rotationPool(items, seed) {
   return byClass;
 }
 
-export function buildProgram(items, seed) {
+export function buildProgram(items, seed, log = console.error) {
   const pools = rotationPool(items, seed);
-  const available = INTERLEAVE.filter((className, index) => pools[className].length && INTERLEAVE.indexOf(className) === index);
-  if (!available.length) throw new Error('No approved stream content found');
+  if (!Object.values(pools).some((pool) => pool.length)) throw new Error('No approved stream content found');
 
   const totals = Object.fromEntries(Object.keys(MIX).map((className) => [className, 0]));
   const counts = Object.fromEntries(Object.keys(MIX).map((className) => [className, 0]));
-  const cursors = Object.fromEntries(Object.keys(MIX).map((className) => [className, 0]));
-  const seen = Object.fromEntries(Object.keys(MIX).map((className) => [className, new Set()]));
   const program = [];
   let patternIndex = 0;
   let total = 0;
 
-  while (total < TARGET_SECONDS) {
+  while (total < TARGET_SECONDS && Object.values(pools).some((pool) => pool.length)) {
+    const activeClasses = new Set(INTERLEAVE.filter((className) => pools[className].length));
     let className;
     for (let attempts = 0; attempts < INTERLEAVE.length; attempts += 1) {
       className = INTERLEAVE[patternIndex++ % INTERLEAVE.length];
       if (!pools[className].length) continue;
-      if (program.at(-1)?.class !== className || available.length === 1) break;
+      if (program.at(-1)?.class !== className || activeClasses.size === 1) break;
       className = undefined;
     }
     if (!className) continue;
 
     const target = IDEAL_SLOT_SECONDS[className] * (counts[className] + 1);
     const choices = pools[className];
-    const unseen = choices.filter((item) => !seen[className].has(item.file));
     let item;
     if (className !== 'era-art-reel') {
-      item = choices[cursors[className]++ % choices.length];
+      item = choices.shift();
     } else {
-      const candidates = unseen.length ? unseen : choices;
       const error = (candidate) => Math.abs(totals[className] + candidate.duration - target);
-      const best = Math.min(...candidates.map(error));
-      const eligible = new Set(candidates.filter((candidate) => error(candidate) <= best + 8));
-      for (let offset = 0; offset < choices.length; offset += 1) {
-        const index = (cursors[className] + offset) % choices.length;
-        if (!eligible.has(choices[index])) continue;
-        item = choices[index];
-        cursors[className] = (index + 1) % choices.length;
-        break;
-      }
+      const best = Math.min(...choices.map(error));
+      const index = choices.findIndex((candidate) => error(candidate) <= best + 8);
+      item = choices.splice(index, 1)[0];
     }
 
     program.push(item);
-    seen[className].add(item.file);
     counts[className] += 1;
     totals[className] += item.duration;
     total += item.duration;
   }
+  if (total < TARGET_SECONDS) log(`SHORT program: ${(TARGET_SECONDS - total).toFixed(1)}s below target; approved unique pool exhausted`);
   return program;
 }
 
