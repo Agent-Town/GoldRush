@@ -836,6 +836,7 @@ type GrSimulationTickSample = {
 };
 
 interface Window {
+  __GR_E4_CONVOY_WEATHER__?: import('./diagnostics/E4ConvoyWeatherHarness').E4ConvoyWeatherHarness;
   __GR_AUDIO_DIAGNOSTICS__?: {
     unlocked: boolean;
     muted: boolean;
