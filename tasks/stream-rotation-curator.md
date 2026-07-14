@@ -1,0 +1,22 @@
+# stream-rotation-curator — the channel gets a program director (lane-d; commit prefix "feat:")
+ROLE: pipeline tooling. WORKDIR: lane-d (worktrees/lane-d). CODEX: model=gpt-5.6-sol effort=medium
+ATTENDED-AUTHORED 2026-07-14 — owner: "the stream will extend over time? Should we not rotate the content itself and make sure there is a good distribution of certain content segments?"
+
+Pre-flight (LANE-SAFETY): standard safe-dupe rules; LADDER-STALL protocol stands. Then npm install; build green.
+
+## READ-FIRST: docs/marketing/STREAMING.md (the delegation boundary — approved classes ONLY, manifest = the reviewable action) · assets/stream/loop-manifest.json (current schema) · scripts/stream-sync.sh (consumes the manifest; numbering = order).
+
+## SCOPE:
+1. `scripts/stream-curate.mjs` (node, no deps beyond ffprobe for durations): reads content POOLS (marketing/raw/gen reels, marketing/raw/stream captures, era cards, ceremony recordings — approved classes only), applies the ROTATION POLICY, rewrites loop-manifest.json deterministically (seeded by date so each day's program differs but reruns agree).
+2. POLICY (constants at top, documented): target loop 35-45 min · mix ≈ 50% gameplay / 25% reels / 15% cards / 10% ceremonies (by duration, cards count as their still-duration) · interleave pattern card→gameplay→reel→gameplay→ceremony (cycled, classes skipped gracefully when pools are thin) · freshness: newest-N per class in rotation + 1-2 dated "classics" resurfacing per curation · never two items of the same class adjacent when avoidable.
+3. Provenance guard: only files matching the approved-class pools enter; anything else in the pools dirs is IGNORED with a log line (never an error). Manifest entries keep the class-delegation approval tag; schema stays sync-compatible.
+4. Fire duty line: append to docs/marketing/STREAMING.md — curate runs before sync each fire cycle (curate → sync → watchdog).
+5. Validation: a --check mode prints the program (order, durations, mix percentages) without writing; a unit-ish node test (node --test) asserts mix bounds + interleave rules + determinism on a fixture pool. npm build unaffected.
+
+## Firewall
+Touch ONLY: scripts/stream-curate.mjs, assets/stream/loop-manifest.json (regenerated), the STREAMING.md duty line, the node test, artifacts/stream-curator/. NO stream-sync.sh changes (it already consumes order), NO OBS/publishing anything, NO content generation.
+
+## Self-check
+node test green · --check output shows a legal program from the CURRENT pools (paste it in the report) · stream-sync.sh runs clean on the regenerated manifest · tsc/build untouched-green.
+If you exit without changes, WRITE WHY first.
+END: READY-FOR-GATES + the day's program listing + mix table.
