@@ -88,6 +88,9 @@ for path in $(find tasks/done -type f -mtime -1 -print 2>/dev/null | sort -r); d
     committed=$(git rev-parse --short "$runner_commit")
     if git merge-base --is-ancestor "$runner_commit" main 2>/dev/null; then
       merged="$committed"
+    elif git log main --format='%h' --fixed-strings --grep="$committed" -1 2>/dev/null | grep -q .; then
+      # grafted drains aren't ancestors, but drain commits cite the lane hash
+      merged="$committed"
     fi
   else
     # main-slot tasks have no runner commit: fall back to a slice-scoped subject on main
