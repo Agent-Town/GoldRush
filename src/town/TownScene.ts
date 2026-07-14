@@ -477,7 +477,9 @@ export class TownScene {
       const pilot = new URLSearchParams(window.location.search).get('town3dPilot');
       // The props pilot replaces wagons/trough/pan with GLBs; building their
       // primitives too double-renders (owner saw the old frame atop Sol's pan).
-      this.scene.add(createTownPropRing(this.townNight, pilot === 'all' || pilot === 'props'));
+      const eraOrder = loadEpoch(activeEpochId()).order;
+      this.canvas.dataset.townEraAccent = String(eraOrder);
+      this.scene.add(createTownPropRing(this.townNight, pilot === 'all' || pilot === 'props', eraOrder));
     }
     this.createStampMillVignette();
     this.createDynamoHallVignette();
@@ -497,6 +499,8 @@ export class TownScene {
     const pilotLite = pilotSearch.get('tier') === 'lite' || this.performanceTier === 'lite';
     this.canvas.dataset.town3dPilotState = pilot !== null ? (pilotLite ? 'lite' : 'loading') : 'off';
     this.canvas.dataset.town3dPilotRenderSource = 'facade';
+    this.canvas.dataset.town3dSteamAnchors = '0';
+    this.canvas.dataset.town3dSteamPlumes = '0';
     this.canvas.dataset.town3dPlateState = pilot === 'plate' || pilot === 'all' ? (pilotLite ? 'lite' : 'loading') : 'off';
     this.canvas.dataset.town3dPlateGround = 'painted';
     if (pilot !== null && !pilotLite) {
@@ -2393,7 +2397,17 @@ function megaprojectAt(
 type BoxPart = { x: number; y: number; z: number; sx: number; sy: number; sz: number; rotation?: number };
 type CylinderPart = { x: number; y: number; z: number; scale: [number, number, number]; rotation: THREE.Euler };
 
-function createTownPropRing(night: boolean, propsPiloted = false): THREE.Group {
+const townEraAccents: Record<number, { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number }> = {
+  1: { lanternGlass: '#fff0bd', lanternNightGlass: '#ffe4a0', lanternOpacity: 0.48 },
+  2: { lanternGlass: '#d9975b', lanternNightGlass: '#f1b56f', lanternOpacity: 0.62 },
+};
+
+function townEraAccent(eraOrder: number): { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number } {
+  const key = Math.max(...Object.keys(townEraAccents).map(Number).filter((order) => order <= eraOrder));
+  return townEraAccents[key] ?? townEraAccents[1]!;
+}
+
+function createTownPropRing(night: boolean, propsPiloted = false, eraOrder = 1): THREE.Group {
   const group = new THREE.Group();
   group.name = 'TownPropRing';
   const woodParts: BoxPart[] = [];
@@ -2473,7 +2487,7 @@ function createTownPropRing(night: boolean, propsPiloted = false): THREE.Group {
     createBoxInstances('TownPropCanvasInstances', canvasParts, new THREE.MeshStandardMaterial({ color: '#e8d5a8', roughness: 0.88, metalness: 0.01 })),
     createCylinderInstances('TownPropWagonWheels', new THREE.CylinderGeometry(1, 1, 1, 16), wheelParts, new THREE.MeshStandardMaterial({ color: '#3b2416', roughness: 0.82 })),
     createCylinderInstances('TownPropCacti', new THREE.CylinderGeometry(1, 1, 1, 10), cactusParts, new THREE.MeshStandardMaterial({ color: '#5b8a72', roughness: 0.9 })),
-    createLanternGlow(lanternPositions, night),
+    createLanternGlow(lanternPositions, night, townEraAccent(eraOrder)),
     createPanBowl(),
   );
   return group;
@@ -2539,11 +2553,15 @@ function createCylinderInstances(name: string, geometry: THREE.BufferGeometry, p
   return mesh;
 }
 
-function createLanternGlow(positions: readonly THREE.Vector3[], night: boolean): THREE.InstancedMesh {
+function createLanternGlow(
+  positions: readonly THREE.Vector3[],
+  night: boolean,
+  accent: { lanternGlass: string; lanternNightGlass: string; lanternOpacity: number },
+): THREE.InstancedMesh {
   const material = new THREE.MeshBasicMaterial({
-    color: night ? '#ffe4a0' : '#fff0bd',
+    color: night ? accent.lanternNightGlass : accent.lanternGlass,
     transparent: true,
-    opacity: night ? 0.86 : 0.48,
+    opacity: night ? 0.86 : accent.lanternOpacity,
     depthWrite: false,
   });
   const mesh = new THREE.InstancedMesh(new THREE.SphereGeometry(0.18, 12, 8), material, Math.max(1, positions.length));
