@@ -1,12 +1,65 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7 `12f6306e`
 
-Tip: exact Wave 4 SHA is reported in the attended handoff
+Tip: exact Wave 7 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — Wave 4 Armored Railcar model complete; three-component damage interface and stable factory-owned runtime seam preserved.**
+Verdict: **READY-FOR-GATES — two E2 Town building variants are ready for the owner verdict; both preserve their E1 identity, envelope, and base asset.**
+
+## Wave 7 — E2 epoch style variants
+
+### Pilot selection and visual target
+
+- **Tavern:** the E2 bundle's explicit §A2 transform. The accepted roofline, footprint, facade, and covered porch remain the identity; E2 grows on them as Saloon swing doors and hanging oil lamps, including one restrained teal lamp.
+- **Claim Office:** the canon heritage step toward Town Hall. It remains visibly the accepted Claim Office, gaining a compact public pressure readout and an attached rear-side steam service rather than a new civic shell.
+- **Shared target:** warm painted frontier craft with localized soot-dark iron, brass/ochre, and agent-teal accents. No E5 rope trim or tide boards, no text signage, no emissive material, and no generic steampunk redesign.
+
+### Per-building findings
+
+| Building | E1 identity retained | E2 edit | All-angle finding and correction | Final contract |
+| --- | --- | --- | --- | --- |
+| Tavern / Saloon | exact `town-v3-tavern` shell, roofline, footprint, facade, and covered porch | two half-height swing leaves; two front oil lamps, one teal; one ordinary rear service lamp so the edit reads from the Town camera | the first pass placed the front lamps into the canopy; they were lowered beneath it and rechecked at four angles. Final neutral review found no remaining defect | 12,712 triangles; 1 mesh/primitive/material; embedded 1024 x 1024 atlas; exact E1 envelope `4.229571 x 3.960802 x 3.349`; byte-identical re-export SHA-256 `6664458082b86f632c202d3532cdac68210e14998c37de64d20aa451c803678e` |
+| Claim Office / civic steam pilot | exact Claim Office shell, roofline, flag, frontage, footprint, and silhouette | paired facade pressure gauges; four iron porch caps; chimney-fed rear-side service pipe, flanges, and teal shutoff wheel | neutral review caught a side riser crossing a window, an off-axis wheel, and ambiguous endpoints. The riser moved to the clear rear corner, the wheel was centered, and both ends received joined fittings. Post-fix review accepted the pilot | 4,168 triangles; 1 mesh/primitive/material; embedded 1024 x 1024 atlas; exact E1 envelope `4.26 x 5.02 x 3.12`; byte-identical re-export SHA-256 `eccfe75c24fe5520536c4fea244486c034b3cc9890e3c4d68817a14a00d0881a` |
+
+### Gate evidence
+
+| Check | Tavern | Claim Office | Result |
+| --- | --- | --- | --- |
+| E1 base integrity | BLEND `b81ef19a…`; GLB `edec4934…` | BLEND `46a2f73f…`; GLB `b2a23b06…` | both original files untouched |
+| Geometry budget | 12,712 triangles | 4,168 triangles | both pass under 15,000 |
+| Baked surface | 1 material, 1 embedded 1024 x 1024 image | 1 material, 1 embedded 1024 x 1024 image | pass |
+| Export hygiene | 0 cameras, 0 lights, 0 animations | 0 cameras, 0 lights, 0 animations | pass |
+| Envelope | exact E1 bounds | exact E1 bounds | footprint and silhouette interface preserved |
+| Determinism | exact SHA above | exact SHA above | official recipe export and verifier pass |
+| Locked-camera tone | average luminance `+0.0067` (`+0.0046%`) | average luminance `-0.1054` (`-0.0756%`) | localized changes; far inside the 5% tonal ceiling |
+| App build | exact final asset bytes | exact final asset bytes | `npm run build` pass |
+| Visual QA | Town A/B plus four-angle E1/E2 sheet | Town A/B plus four-angle E1/E2 sheet | neutral post-fix verdict: accept both pilots |
+
+### Evidence index
+
+Every comparison is **E1 on the left, E2 on the right**.
+
+- Locked Town camera: [`tavern-town-ab.png`](../artifacts/town-e2-variants/tavern-town-ab.png), [`claim_office-town-ab.png`](../artifacts/town-e2-variants/claim_office-town-ab.png)
+- Four-angle comparison: [`tavern-turntable-ab.png`](../artifacts/town-e2-variants/tavern-turntable-ab.png), [`claim_office-turntable-ab.png`](../artifacts/town-e2-variants/claim_office-turntable-ab.png)
+- Machine evidence: [`asset-contract.json`](../artifacts/town-e2-variants/asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e2-variants/comparison-metrics.json)
+
+### F-3DC-13 — The first E2 pilots preserve identity by adding attached craft
+
+**Severity:** resolved design gate
+
+**Evidence:** neither variant changes its production base file, footprint, bounding envelope, roofline, or core facade. The Tavern follows the bundle's explicit Saloon transform while the Claim Office uses the canon Town Hall lineage to test a second, more restrained civic vocabulary. From all four angles the additions read as things fitted to the existing building, not a replacement building sharing its slot.
+
+**Decision:** use these two pilots for the owner verdict before producing further siblings. If accepted, repeat the same attached-edit rule building by building; do not infer that every E2 structure needs identical pipes or gauges.
+
+### Wave 7 integration boundary
+
+- New sibling assets only: `tavern.e2.glb` and `claim-office.e2.glb`, each with its deterministic `.blend` and builder.
+- The E1 production GLBs remain byte-for-byte untouched and at their current paths.
+- No runtime source changed. Era switching remains factory-owned and is intentionally not part of this asset verdict branch.
+- Branch base: `12f6306e`; main observed during final audit: `af3b7bc6`. Main advanced through unrelated terrain/panorama and handoff commits with no overlap in the Wave 7 asset, evidence, or findings paths.
+- Path-scoped integration should add the sibling assets, evidence, scripts, and this Wave 7 findings section.
 
 ## Wave 4 — Armored Railcar model
 
