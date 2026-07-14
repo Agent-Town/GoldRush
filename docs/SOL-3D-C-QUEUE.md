@@ -83,3 +83,5 @@ The era transformation covers the WHOLE town surface. 7b delivers, alongside the
 - **NEW E2-ONLY ACCESSORIES** (small GLBs, ≤1k tris each, one shared 1024² atlas for the pack): coal bins, pipe runs along the ring road, gauge posts, iron lamp posts (unlit geometry — light rig owns light), a small pressure manifold near the plaza edge. PLACEMENT: propose positions in `assets/pilots/plaza-props-3d/era-props.e2.json` (id, glb, position, rotation, scale) — the factory ratifies and mounts from that manifest; walk loops and building pads stay clear (flat-walk law).
 - **THE HERITAGE LAW (canon)**: the PAN MONUMENT NEVER CHANGES, in any era — like the pan itself, it is the through-line the whole saga refuses to upgrade. Let the town transform around it; the contrast IS the story.
 - Steam anchors on props too where sensible (the manifold, the pipe runs).
+
+## WAVE 7a — ACCEPTED + MERGED (attended, 2026-07-14 evening). Tip 31fc2d50: both variants pass the ACROSS-THE-PLAZA TEST (blind review identified them unlabeled); steam anchors present. **WAVE 7b + THE ACCESSORY PACK: GO** — all nine buildings' E2 faces + era props per the standing contract.

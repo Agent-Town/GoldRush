@@ -9,7 +9,7 @@ Owner order: "I also think that this story line will be great for marketing... t
 5. **You bring your agent** — the Prospector as the era-native AI companion (the owner's tweet already leads here; Agent Town tie-in).
 
 ## THE ERA COUNTDOWN (the core series — zero generation cost, assets exist)
-Ten posts, one per era, using the COMPLETE kit-plate chain (kit-era-1..10, shipped) cropped 16:9 + a two-sentence dispatch-voice caption tracing the saga. DRAFT captions below (owner edits/approves each; nothing posts without his word):
+Ten posts, one per era, using the COMPLETE kit-plate chain (kit-era-1..10, shipped) cropped 16:9 + a two-sentence dispatch-voice caption tracing the saga. CAPTIONS **APPROVED BY OWNER 2026-07-14** (verbatim: "I approve the marketing captions"). Posting remains owner-executed; cadence = owner's pick of the three options:
 - **E1 THE FRONTIER**: "One pan, one river, one stubborn claim. The Gazette's first headline still smells of ink and luck."
 - **E2 THE STEAMWORKS**: "The Baron came back with machines — and something worse riding in the boxcars. The town answered with steam of its own."
 - **E3 THE VOLTAGE AGE**: "They strung the gorge with light and bought back the night. Out past the hills, the dark kept spreading anyway."
