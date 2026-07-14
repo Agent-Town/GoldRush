@@ -81,8 +81,19 @@ for path in $(find tasks/done -type f -mtime -1 -print 2>/dev/null | sort -r); d
     [ "$duration" = '~' ] && [ "$le" -gt "$fe" ] && duration="$(( (le - fe + 59) / 60 )) min"
   fi
   failed=$(find tasks/failed -type f -name "*$name*.md" -print -quit 2>/dev/null)
-  merged=$(git log main --format='%h' --fixed-strings --grep="$name" -1 2>/dev/null)
-  committed=$(git log --all --format='%h' --fixed-strings --grep="$name" -1 2>/dev/null)
+  runner_commit=$(git log --all --format='%H' --fixed-strings --grep="runner(" --grep="$name.md" --all-match -1 2>/dev/null)
+  merged=""
+  committed=""
+  if [ -n "$runner_commit" ]; then
+    committed=$(git rev-parse --short "$runner_commit")
+    if git merge-base --is-ancestor "$runner_commit" main 2>/dev/null; then
+      merged="$committed"
+    fi
+  else
+    # main-slot tasks have no runner commit: fall back to a slice-scoped subject on main
+    merged=$(git log main --format='%h' -E --grep="^(feat|fix|art|drain)[:( ].*$name" -1 2>/dev/null)
+    committed=$merged
+  fi
   if [ -n "$failed" ]; then outcome='FAILED';
   elif [ -n "$merged" ]; then outcome="MERGED $merged";
   elif [ -n "$committed" ]; then outcome='done-moved awaiting drain';
@@ -158,7 +169,7 @@ ARCH=$(git branch --list 'archive/*' 2>/dev/null | wc -l | tr -d ' ')
 (+ $ARCH archived salvage branch(es) — superseded by shipped re-lands; reference only, NOT waiting)"
 LANES=$(printf '%s' "$LANES" | esc)
 
-MERGES=$(git log --oneline -14 --format='%h  %cr — %s' | grep -viE 'lock ACTIVE|handoff|bookkeeping|lock CLEARED' | head -8 | cut -c1-120 | esc)
+MERGES=$(git log -40 --format='%h  %cr — %s' | grep -E '— (feat|fix|art|drain)[:( ]' | grep -viE 'task:|queued|backlog|chore:' | head -8 | cut -c1-120 | esc)
 FAILED_TAIL=$(ls -t tasks/failed/ 2>/dev/null | head -3 | esc)
 PENDING=$(ls assets/crafting-queue/pending/ 2>/dev/null | grep -c '\.json$')
 ALERTS=$(grep 'ALERT' logs/health.log 2>/dev/null | tail -5 | cut -c1-130 | esc)
