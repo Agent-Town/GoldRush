@@ -1411,6 +1411,7 @@ export class TownScene {
     const pageIndex = clampBoardPage(this.boardPageIndex, rows.length);
     this.boardPageIndex = pageIndex;
     const contract = rows[pageIndex];
+    const playablePage = rows.slice(0, pageIndex + 1).filter((row) => 'boardRow' in row).length;
     const boardEpochId = activeEpochId();
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
     this.board.innerHTML = `
@@ -1444,12 +1445,12 @@ export class TownScene {
           }>&rsaquo;</button>
         </div>
         <nav class="town-ui__catalog-nav" data-testid="contract-page-nav" aria-label="Contract pages">
-          <span class="town-ui__catalog-count" data-testid="contract-page-count">${Math.min(pageIndex + 1, contracts.length)} / ${contracts.length}</span>
+          <span class="town-ui__catalog-count" data-testid="contract-page-count">${playablePage} / ${contracts.length}</span>
           <div class="town-ui__catalog-dots">
             ${rows
               .map(
                 (row, index) => `
-                  <button class="town-ui__catalog-dot" type="button" data-contract-page="${index}" data-testid="contract-page-dot-${escapeHtml(
+                  <button class="town-ui__catalog-dot ${'boardRow' in row ? '' : 'town-ui__catalog-dot--muted'}" type="button" data-contract-page="${index}" data-contract-playable="${'boardRow' in row ? 'true' : 'false'}" data-testid="contract-page-dot-${escapeHtml(
                     row.id,
                   )}" aria-label="${escapeHtml(`Open ${'boardRow' in row ? row.boardRow.name : row.name}`)}" aria-current="${index === pageIndex ? 'page' : 'false'}"></button>
                 `,
@@ -1538,7 +1539,7 @@ export class TownScene {
           <button class="town-ui__contract-action" type="button" data-contract-launch="${escapeHtml(contract.id)}" data-testid="contract-launch-${escapeHtml(
             contract.id,
           )}" data-contract-mode="${escapeHtml(contract.modes?.[0]?.id ?? '')}" ${firstClaimHint ? 'data-first-claim-launch="true" title="Stake your first claim"' : ''} ${unlock.unlocked ? '' : 'disabled'}>
-            ${escapeHtml(unlock.unlocked ? 'Launch' : unlock.condition)}
+            ${escapeHtml(unlock.unlocked ? 'Launch' : (unlock.action ?? unlock.condition))}
           </button>
         </div>
       </article>
@@ -2159,7 +2160,20 @@ function renderContractArt(contract: ContractManifest): string {
   `;
 }
 
-function contractUnlock(contract: ContractManifest): { unlocked: boolean; condition: string } {
+function contractUnlock(contract: ContractManifest): { unlocked: boolean; condition: string; action?: string } {
+  const epochs = listEpochs().map(({ id }) => loadEpoch(id));
+  const epoch = epochs.find((entry) => entry.contracts.some(({ id }) => id === contract.id));
+  if (epoch && !epochIsActive(epoch.id)) {
+    const predecessor = epochs.find((entry) => entry.successor === epoch.id);
+    const action = `Awaits the ${epoch.displayName} era`;
+    return {
+      unlocked: false,
+      condition: predecessor
+        ? `The ${epoch.displayName} awaits — ${predecessor.megaproject.raiseActionText.replace(/^./, (letter) => letter.toLowerCase())}.`
+        : action,
+      action,
+    };
+  }
   const unlock = contract.boardRow.unlock;
   if (unlock === 'default') return { unlocked: true, condition: '' };
 
@@ -2342,11 +2356,12 @@ function readTownMegaproject(epochId: string, id: string): TownMegaproject {
   if (!manifest) return { manifest: null, project: null, visible: false };
   const storage = browserStorage();
   const project = ensureMegaprojectProject(loadMegaprojectState(storage), manifest);
-  const steps = scienceMeter(loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, epochId)).steps;
+  const active = epochIsActive(epochId);
+  const steps = active ? scienceMeter(loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() }, epochId)).steps : 0;
   return {
     manifest,
     project,
-    visible: epochIsActive(epochId) && (isMegaprojectUnlocked(manifest, steps) || project.stage > 0 || project.funded),
+    visible: active && (isMegaprojectUnlocked(manifest, steps) || project.stage > 0 || project.funded),
   };
 }
 
