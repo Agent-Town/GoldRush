@@ -136,6 +136,16 @@ Independent code review found that the first evidence implementation linked the 
 
 That mood pass is not production approval. Review still finds a low-ceiling/canopy projection, a hard horizontal join, repeated sky structure across Claim/Dry Gulch/Twin Banks, a far rim that can become too grim, and weak Night Shift ground readability. There are no literal panorama trees, but the dense engraving can suggest foliage at board scale. Production must solve projection and atmospheric integration without weakening the separate-mount contract or changing any gameplay boundary.
 
+### F-3D-D-18 — PANORAMA LAW v2 converts the mounted strip into atmospheric distance
+
+The v1 ring closed geometrically but failed as atmosphere. A hard terrain join produced the Painted Wall, vertically stretched engraving produced the Ceiling, and the same mirrored cloud/ridge structure produced the Echo. `artifacts/map-rebuild-spike/all-contracts-panorama-distance-gate.png` now holds one center-playfield horizon look for each contract so those failures cannot hide behind a low sunset composition.
+
+Each replacement panorama remains one mounted GLB at the existing identity transform. Its one 1,920-triangle mesh contains the 190 m sky ring plus a closer sloped ridge occluder; one embedded 2048² atlas serves both. The contracts record and the verifier checks the irregular ridge's actual radius ranges, not only its center radii. Map-specific exposure is baked into the atlas because the exported unlit GLB cannot carry Blender's Background-strength socket. The atlas uses the shipped Epoch 1 kit plate for parchment value and engraved ink, but no longer enlarges the plate's painted cloud mass. Detail concentrates in the horizon band and quiets toward the zenith. A tree-free crop, horizontal ink filtering, asymmetric quadrant cloud edits, contract-specific wind-scoured dust, and independent near/far ridge profiles remove the canopy, vertical combing, and repeated hump failures.
+
+The correction was review-driven rather than declared complete after the first rebuild. An intermediate fresh gate passed distance but blocked release because Claim and Twin Banks still felt scenic, near and far ridges echoed, and fine vertical marks suggested a treeline. The next correction desaturated the romantic double-warm tint, lowered those backgrounds, removed fine vertical ridge variation, and separated every far silhouette from its near occluder. Independent packaging review then found that the distance board cropped the source vertically, Blender's Background strength did not survive glTF export, and the contracts reported center radii rather than the irregular ridge's ranges. The final wave preserves each complete 16:9 frame, bakes exposure into the atlas, verifies actual radius ranges, opens low center-facing passes through Twin Banks and Night Shift, replaces their black ridge belt with an eroded dusty midtone, and drives harsher asymmetric dust through Claim and Baron. A fresh release gate, backed by a neutral second look, passed DISTANCE, FIGHT, ECHO, tree-contamination, and full-frame checks with no remaining panorama blocker.
+
+The strict verifier reopens and byte-identically re-exports all five panorama authoring files, requires five distinct GLBs and atlases, pins both verdict boards and their source renders by decoded-pixel hash, and confirms no `src/` edit. Current panorama GLB hashes begin `e6746aff`, `fc4e1760`, `770e9269`, `315bbd9d`, and `fe1701de`. Terrain GLBs and embedded terrain atlases remain byte-identical; playfield bounds, movement, collision, spawn edges, fog gates, and all water/build/spawn masks remain planar and unchanged. F-3D-D-18 supersedes the visual debt recorded at the end of F-3D-D-17 without changing its separate-mount policy.
+
 ## Contract identity summary
 
 | Contract | Macro identity | Contract focal read |
@@ -175,12 +185,13 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - Saved GLBs and atlases unchanged across the exterior-only rebuilds: PASS
 - Fresh exterior review: owner-approved direction, REJECT as production art; promotion debt recorded in F-3D-D-16
 - Five separate mounted panorama `.blend` / GLB / 2048² atlas / contract sets: PASS
-- 1,536 panorama triangles each against the 4,000 ceiling; one mesh and one material each: PASS
+- 1,920 panorama triangles each against the 4,000 ceiling; one mesh and one material each: PASS
 - Five distinct panorama GLB and atlas hashes; byte-identical semantic/binary re-exports: PASS
 - Panorama playfield, spawn-edge, fog-gate, and water/build/spawn-mask non-interference metadata: PASS
 - Panorama MOOD A/B with all fifteen source frames pinned by content hash: PASS
+- Five-map center-horizon distance board and all five source renders pinned by content hash: PASS
 - Terrain acceptance frames prove the exported terrain; panorama-off/on frames are builder-generated and visibly distinct: PASS
-- Fresh panorama review first answer: FIGHT at 96%; projection/atmosphere debt recorded in F-3D-D-17
+- Fresh PANORAMA LAW v2 release review: DISTANCE, FIGHT, no ECHO, no tree-like contamination — PASS
 - `src/` edits: none
 - Runtime loading, placement, disposal, gameplay, and performance: intentionally deferred to an attended promotion
 
@@ -193,6 +204,7 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - `artifacts/map-rebuild-spike/all-contracts-exterior-low-verdict.png` — four distinct exterior horizon stories
 - `artifacts/map-rebuild-spike/all-contracts-exterior-edge-crops.png` — enlarged seam and water debt review
 - `artifacts/map-rebuild-spike/all-contracts-panorama-mood-ab.png` — painted plate / before / mounted panorama mood gate
+- `artifacts/map-rebuild-spike/all-contracts-panorama-distance-gate.png` — center-playfield distance / wall / ceiling / echo gate
 - `artifacts/map-rebuild-spike/owner-run-camera-east-edge.png` — shifted real-camera seam check
 - `artifacts/map-rebuild-spike/owner-county-overview.png` — county composition overview
 - `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png`
