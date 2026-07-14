@@ -42,6 +42,7 @@ SEGMENT 3 — THE FACTORY (live, event-driven): when a drain MERGES something pl
 
 ### Segment-3 mechanics (the director)
 - **Trigger**: the fires' existing post-drain moment (the same beat that writes the gazette item).
+- **Fire duty**: after a player-visible drain merges AND its gazette item is written, fires MAY run `node scripts/stream-director.mjs --showcase <slice>`; it never blocks the drain and failures are ignored.
 - **The scene**: OBS scene FACTORY = window-capture of (a) the stream-mode dashboard (a branded, big-type view of logs/dashboard.html) and (b) THE SHOWCASE WINDOW — a HEADED browser on the virtual display replaying the merged slice's own e2e spec (or its owner-shot scenario): the AI literally testing the new thing, live and unrehearsed.
 - **The switchboard**: obs-websocket (localhost, authenticated). The director switches AUTOPILOT → FACTORY, runs the showcase, switches back. If OBS is off / websocket unreachable / no virtual display: the director does NOTHING (autopilot never interrupted by a failed stunt).
 - **NEVER-LIST UNCHANGED AND ABSOLUTE**: the factory scene may contain ONLY the dashboard window and the game window. Terminal, editor, code, logs-with-paths, browser chrome: never. The stream-mode dashboard shows slice names, gates, and progress — no file paths, no keys, no command lines.
