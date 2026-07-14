@@ -264,3 +264,5 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 
 - **stream-director** → lane-b 2026-07-14 — owner's three-segment channel: segment-3 THE FACTORY switches in live when a drain merges (obs-websocket scene switch + headed spec replay = 'the AI testing it in realtime' + branded stream-mode dashboard); autopilot-sacred degradation; never-list absolute.
 - **F-curator-1** (2026-07-14): the curator's first program repeated BANNED headless webms ×12 to hit its length target — corrective owed: enforce the headless ban at the pool filter + cap repetition (thin pools = shorter program, never loops of one item). Hand-corrected manifest shipped meanwhile.
+
+- **canyon-works-01 QUEUED** (lane-b) — THE E3 ASSEMBLY: tile + defend/connect modes + all six systems wired (escort + Crawler boss = follow-ups cw-02/cw-03). SOL streams contracted: 3D-C wave 6 consistency audit + wave 7 EPOCH VARIATIONS (`.eN.glb` convention); 3D-D grit pass + PANORAMA LAW (render-only backdrop ring, era-sky, ≤4k tris).

@@ -44,3 +44,6 @@ Each verdict board includes a MOOD A/B: the sculpted terrain at the gameplay cam
 
 ## LANDMARKS = MOUNTED (owner ruling 2026-07-14: "mounting is ok for me")
 Landmark models ship as SEPARATE GLBs mounted on the terrain (the town-buildings-on-plate pattern), never baked into the ground mesh. Terrain stays stable while landmark packs iterate; each terrain's contract JSON lists its landmark mount points (id, position, rotation, scale) so the factory's mount seam is data-driven. Proxies in current renders stay proxies until a landmark-pack wave is granted.
+
+## GRIT PASS (owner-directed, in progress) + THE PANORAMA LAW (2026-07-14)
+Owner: E1 maps evolved grittier (Grit Law pass) + a panorama/background view added to ALL maps. PANORAMA CONTRACT: the backdrop is a RING/BACKPLATE beyond the playfield edge — render-only, engraved-sky style matched to the era's kit plate horizon; it must NOT change playfield bounds, spawn edges, fog-gating, or any mask; budget ≤4k tris + ONE ≤2048² material per panorama (it's scenery, not terrain); delivered as `<map>-panorama.glb` beside each terrain with mount transform in the contract JSON. MOOD A/B gate applies (the panorama should make the maps feel like PLACES IN THE COUNTY — the fevered world's dark horizon may show at the far rim per canon, warm never grim).
