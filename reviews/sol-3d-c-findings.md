@@ -1,12 +1,81 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`
 
-Tip: exact Wave 7 SHA is reported in the attended handoff
+Tip: exact Wave 8 pilot SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — Wave 7b completes every verified production Town building, the two existing plaza-prop variants, and the shared-atlas E2 accessory pack. All assets preserve their interfaces and pass deterministic export, placement, tone, and across-the-plaza review.**
+Verdict: **READY-FOR-GATES — the three-building E3 Voltage pilot passes the ACROSS-THE-PLAZA TEST, all-angle construction review, exact-envelope/material/budget contracts, and byte-identical official re-export. The wide E3 family remains deliberately unstarted pending this verdict.**
+
+## Wave 8 pilot — E3 Voltage building faces
+
+The pilot uses the three Town transforms explicitly named by `e3-voltage-bundle.md` §A2: Tavern / Electric Lounge, Schoolhouse / Academy, and the electrified Stamp Mill. It edits the accepted identities forward, preserves the inherited footprint and maximum envelope, removes inherited steam anchors, and supplies three sequential `arc_anchor_*` nodes per variant for factory-owned flicker effects.
+
+### Per-building findings
+
+| Building | E3 identity edit | Locked-camera / all-angle verdict | Final contract |
+| --- | --- | --- | --- |
+| Tavern / Electric Lounge | thicker porch festoon and warm bulbs, brass terminal arms, mounted teal lightning-circle pictogram, and framed warm side panes | blind reviewer chose E3 correctly at 70% confidence; cue is modest but visible. Four angles pass with mounted sign, attached conductors, and finished sides | 14,828 tris; 3 anchors; SHA `a7cca217d3506389214ee245d29ea14c626f22c53838a7a5cb0a1b87f9c1657f` |
+| Schoolhouse / Academy | supported faceted observatory dome, lightning rod, teal corona toroid, camera-facing ceramic feed stacks, and a mounted brass orrery in the upper window | blind reviewer chose E3 correctly at 98% confidence. Four angles pass after the dome was reduced and seated on a roof saddle with brackets | 8,752 tris; 3 anchors; SHA `8a977ea418b138990e1f7adb6e51eff76f569119b5104c2a20b39073d40bcd10` |
+| Stamp Mill | steam header replaced by a roof-braced iron crossarm, copper bus, three tall ceramic stacks and teal toroid; motor housing, mounted winding face, and conduit make the cleaner-power conversion functional | blind reviewer chose E3 correctly at 88% confidence after the first thin bus failed the semantic test. Four angles pass with visibly supported ends and complete sides | 2,916 tris; 3 anchors; SHA `499fc7ecf4ab991ca276a362c1c79aaa270a9736b1f06e75dc95df8081658d0d` |
+
+All three variants are one mesh, one primitive, one material, and one embedded 1024 x 1024 image; contain zero cameras, lights, animations, or emissive textures; and preserve the exact inherited envelope. Tavern and Schoolhouse grow from their accepted E2 identities. Stamp Mill intentionally grows from E1 because §A2 requires the E2 steam header and stack-plume treatment to be replaced, not retained under electrical dressing.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry budgets | 14,828 / 8,752 / 2,916; all pass under 15,000 tris |
+| Materials and hygiene | 3/3 have one baked 1024 atlas material; 0 cameras, lights, animations, or emissive textures |
+| Interfaces | exact inherited envelopes; `arc_anchor_1`, `arc_anchor_2`, `arc_anchor_3` present and no inherited `steam_anchor_*` nodes |
+| Determinism | official `scripts/reexport-pilot.sh` reproduces all three GLBs byte-identically; independent saved-BLEND verifier agrees |
+| Tonal law | worst full-frame luminance delta is Stamp Mill `0.09712 / 149.99532 = 0.0647%`, far below 5% |
+| Across-the-plaza QA | fresh neutral reviewer selected Tavern B, Schoolhouse A, and Stamp Mill B, matching the hidden key; confidence 70% / 98% / 88% |
+| All-angle QA | corrected final Tavern, Schoolhouse, and Stamp Mill boards all pass; no floating, collision, unfinished-side, scale, or material blocker |
+| App build | `npm run build` passes on the final asset bytes |
+
+### Evidence index
+
+The production comparisons are **E2 on the left, E3 on the right**. Blind pair boards retain their randomized A/B order.
+
+- Whole Town: [`town-three-pilot-verdict-e2-e3-ab.png`](../artifacts/town-e3-pilot/town-three-pilot-verdict-e2-e3-ab.png)
+- Locked-camera building A/Bs: [`tavern`](../artifacts/town-e3-pilot/tavern-town-verdict-e2-e3-ab.png), [`schoolhouse`](../artifacts/town-e3-pilot/schoolhouse-town-verdict-e2-e3-ab.png), [`stamp-mill`](../artifacts/town-e3-pilot/stamp-mill-town-verdict-e2-e3-ab.png)
+- Four-angle A/Bs: [`tavern`](../artifacts/town-e3-pilot/tavern-turntable-final-e2-e3-ab.png), [`schoolhouse`](../artifacts/town-e3-pilot/schoolhouse-turntable-final-e2-e3-ab.png), [`stamp-mill`](../artifacts/town-e3-pilot/stamp-mill-turntable-final-e2-e3-ab.png)
+- Blind gameplay crops: [`tavern`](../artifacts/town-e3-pilot/blind-crops-verdict/tavern-pair.png), [`schoolhouse`](../artifacts/town-e3-pilot/blind-crops-verdict/schoolhouse-pair.png), [`stamp-mill`](../artifacts/town-e3-pilot/blind-crops-verdict/stamp-mill-pair.png)
+- Machine evidence: [`asset-contract.json`](../artifacts/town-e3-pilot/asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e3-pilot/comparison-metrics.json), [`blind-key.json`](../artifacts/town-e3-pilot/blind-key.json)
+
+### F-3DC-18 — E3 must beat inherited steam hardware in a semantic blind test
+
+**Severity:** resolved visual gate
+
+**Evidence:** the first Stamp Mill roof bus was contract-correct but thinner and paler than the inherited green E2 pressure header; a blind reviewer selected E2 as the more advanced face. The final mill uses a double-profile crossarm and bus, three enlarged ceramic stacks, roof braces, and a teal voltage toroid. A fresh blind reviewer then selected the real E3 face at 88% confidence. The Schoolhouse received the same semantic check: a teal corona and camera-facing feed stacks prevent its required dome from reading as merely another bell.
+
+**Decision:** wide E3 work must be evaluated against the preceding E2 face, not against E1 alone. A voltage edit fails when an E2 pipe or boiler still reads as the more advanced silhouette.
+
+### F-3DC-19 — Arc anchors belong in the same narrow exporter seam as steam anchors
+
+**Severity:** resolved interface gate
+
+**Evidence:** the official selected-object exporter previously preserved only `steam_anchor_*` empties. It now selects named empties from either `steam_anchor_*` or `arc_anchor_*`; the shared verifier uses the same narrow rule. All three pilot GLBs contain exactly three sequential arc nodes and no stale steam nodes, while Wave 7 steam assets keep their existing behavior.
+
+**Decision:** preserve only the two ratified particle-mount families. Runtime arc color, timing, intensity, and emitter geometry remain factory-owned.
+
+### F-3DC-20 — Town evidence frames need isolated Blender render state
+
+**Severity:** resolved evidence reliability
+
+**Evidence:** sequential Eevee Town renders intermittently produced black shadow-atlas tiles even though GLB positions, normals, UVs, and all-angle renders were valid. Rendering each locked-camera Town frame in a fresh Blender subprocess eliminated the artifact reproducibly. Final randomized crops are generated by the evidence script and composed into single-file A/B boards so the blind verdict sees the exact saved pixels.
+
+**Decision:** keep per-frame process isolation for this Town evidence harness. This is a render-evidence fix, not model geometry or runtime source.
+
+### Wave 8 pilot integration boundary
+
+- Add only the three `.e3.blend` / `.e3.glb` sibling pairs, their deterministic builder/verifier, and the evidence bundle. E1 and E2 production assets remain untouched.
+- Generalize the existing official exporter and verifier only enough to retain `arc_anchor_*` alongside `steam_anchor_*`; no runtime source changes.
+- Do not start the remaining five real building faces, wagon/trough variants, or `era-props.e3.json` until the attended pilot verdict. The established eight-building inventory finding still applies; no ninth identity is fabricated.
+- The transferred Crawler grant remains closed and untouched.
+- Branch base: `e582f3cc`; main observed during final review: `e3bb874c`. Main advanced through unrelated runner/research work with no overlap in the pilot asset, evidence, exporter, or findings paths.
 
 ## Wave 7 — E2 epoch style variants
 
