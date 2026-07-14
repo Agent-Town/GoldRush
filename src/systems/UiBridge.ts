@@ -30,6 +30,8 @@ export type UiSnapshot = {
     lit: number;
     brown: number;
     dark: number;
+    nextDark: string | null;
+    connect: null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean };
   };
   xp: number;
   xpNeed: number;

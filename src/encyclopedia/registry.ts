@@ -30,6 +30,7 @@ export const epochLedgerEntryById = {
   'epoch-1-frontier': 'era_frontier',
   'epoch-2-steamworks': 'era_steamworks',
   'epoch-3-voltage': 'era_voltage',
+  'epoch-4-motor': 'era_motor',
 } as const;
 
 export const LEDGER_CATEGORIES = [

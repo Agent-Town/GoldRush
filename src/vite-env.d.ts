@@ -293,6 +293,7 @@ interface ThreeGameDiagnostics {
   fuel: import('./systems/FuelSystem').FuelDiagnostics | null;
   vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
   power: GrPowerGraphDiagnostics;
+  canyonWorks: null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean };
   agent: {
     stub: {
       name: string;

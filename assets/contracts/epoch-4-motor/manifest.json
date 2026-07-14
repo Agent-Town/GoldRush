@@ -1,0 +1,192 @@
+{
+  "id": "epoch-4-motor",
+  "displayName": "Motor Frontier",
+  "order": 4,
+  "locked": true,
+  "scienceThreshold": 12,
+  "research": {
+    "branches": [
+      {
+        "id": "Petroleum Arts",
+        "label": "crude & roads",
+        "iconKey": "node.gold_seam",
+        "nodes": [
+          {
+            "id": "derrick_survey",
+            "name": "Derrick Survey",
+            "description": "Stake the twelve pump sites before the flats swallow their markers.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the derrick-claim family.",
+            "effectRef": "motor.derrick_survey",
+            "cost": 1
+          },
+          {
+            "id": "graded_roads",
+            "name": "Graded Roads",
+            "description": "Pack the dust into routes that turn long walks into short drives.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the graded-road family.",
+            "effectRef": "motor.graded_roads",
+            "cost": 1,
+            "requires": ["derrick_survey"]
+          },
+          {
+            "id": "refinery_ratios",
+            "name": "Refinery Ratios",
+            "description": "Keep fuel and tar in separate columns when the twin spigots run.",
+            "iconKey": "ui.e2.pressure",
+            "effect": "Banks the crude-to-fuel-and-tar refining family.",
+            "effectRef": "motor.refinery_ratios",
+            "cost": 1,
+            "requires": ["derrick_survey"]
+          },
+          {
+            "id": "storm_watch",
+            "name": "Storm Watch",
+            "description": "Set brass scopes on the horizon before the dust closes in.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the watchtower visibility tier.",
+            "effectRef": "motor.storm_watch",
+            "cost": 1,
+            "requires": ["graded_roads"]
+          },
+          {
+            "id": "gusher_ledger",
+            "name": "Gusher Ledger",
+            "description": "Mark every capped well, every blowout, and who reached the valve first.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the gusher risk-and-windfall family.",
+            "effectRef": "motor.gusher_ledger",
+            "cost": 1,
+            "requires": ["refinery_ratios", "storm_watch"]
+          }
+        ]
+      },
+      {
+        "id": "Arsenal",
+        "label": "piston & tar",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "piston_slinger",
+            "name": "Piston Slinger",
+            "description": "Carry the Spark Rig lineage forward on a quick brass piston.",
+            "iconKey": "ui.upgrade.icon.volley",
+            "effect": "Banks the piston-slinger arsenal family.",
+            "effectRef": "motor.piston_slinger",
+            "cost": 1
+          },
+          {
+            "id": "tar_sprayer",
+            "name": "Gusher Tar-Sprayer",
+            "description": "Lay a cooling tar slick that slows wheels and boots without flame.",
+            "iconKey": "ui.upgrade.icon.blast",
+            "effect": "Banks the slowing tar-sprayer family.",
+            "effectRef": "motor.tar_sprayer",
+            "cost": 1,
+            "requires": ["piston_slinger"]
+          },
+          {
+            "id": "piston_battery",
+            "name": "Piston Battery",
+            "description": "Seat a rotary piston head on the familiar sentry tripod.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the piston-battery building tier.",
+            "effectRef": "motor.piston_battery",
+            "cost": 1,
+            "requires": ["piston_slinger"]
+          },
+          {
+            "id": "tar_guardrails",
+            "name": "Tar Guardrails",
+            "description": "Keep the old wall footing and give the road edge a slowing moat.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the guardrail-and-tar defense tier.",
+            "effectRef": "motor.tar_guardrails",
+            "cost": 1,
+            "requires": ["tar_sprayer", "piston_battery"]
+          },
+          {
+            "id": "land_yacht_components",
+            "name": "Land-Yacht Components",
+            "description": "A future Land-Yacht medal will release the captured wheelhouse diagrams.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the Land-Yacht component science behind the reserved landYachtComponentsCaptured medal flag.",
+            "effectRef": "motor.land_yacht_components",
+            "cost": 1,
+            "requires": ["tar_guardrails"]
+          }
+        ]
+      },
+      {
+        "id": "Fabrication",
+        "label": "vehicles & logistics",
+        "iconKey": "char.prospector_agent.portrait",
+        "nodes": [
+          {
+            "id": "motor_parts",
+            "name": "Motor Parts",
+            "description": "Assay pistons, gaskets, rubber, and tar as typed invention parts.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the Motor Frontier fabrication vocabulary.",
+            "effectRef": "motor.motor_parts",
+            "cost": 1
+          },
+          {
+            "id": "flivver_chassis",
+            "name": "Flivver Chassis",
+            "description": "Build a light scout frame with an empty cab and a sure dashboard.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the Flivver vehicle family.",
+            "effectRef": "motor.flivver_chassis",
+            "cost": 1,
+            "requires": ["motor_parts"]
+          },
+          {
+            "id": "hauler_bed",
+            "name": "Hauler Bed",
+            "description": "Leave the flatbed clear for a crate, a rig, or whatever the road needs next.",
+            "iconKey": "ui.e2.iron_card",
+            "effect": "Banks the Hauler cargo family.",
+            "effectRef": "motor.hauler_bed",
+            "cost": 1,
+            "requires": ["motor_parts"]
+          },
+          {
+            "id": "convoy_receipts",
+            "name": "Convoy Receipts",
+            "description": "Tie each fuel load to its hauler and its waiting railhead receipt.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the convoy logistics family.",
+            "effectRef": "motor.convoy_receipts",
+            "cost": 1,
+            "requires": ["flivver_chassis", "hauler_bed"]
+          },
+          {
+            "id": "driver_playbook",
+            "name": "Driver Playbook",
+            "description": "Teach the third recruited helper the route, the sidecar, and the limits of the keys.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the permission-bounded driver-agent slot.",
+            "effectRef": "motor.driver_playbook",
+            "cost": 1,
+            "requires": ["convoy_receipts"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "the-boat",
+    "surfaceRef": "bld.the_boat",
+    "cost": { "gold": 0, "bankedScience": 12 },
+    "raiseActionText": "Raise The Boat"
+  },
+  "transition": {
+    "ceremonyBeatId": "e5-ceremony-boat",
+    "kitArtKey": "kit-era-5",
+    "displayName": "The Deepwater Claim"
+  },
+  "successor": null,
+  "parts": { "contracts": "contracts.json" }
+}

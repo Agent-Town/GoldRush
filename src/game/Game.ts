@@ -19,6 +19,7 @@ import {
   type ContractBaronTwist,
   type ContractLightKeyframe,
   type ContractManifest,
+  type ContractPowerGrid,
   type RailPathDescriptor,
 } from '../meta/ContractFamilies';
 import {
@@ -148,7 +149,7 @@ import type { ShooterHandle } from '../systems/CombatSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
-import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, type PowerGraphCommand } from '../systems/PowerGraph';
+import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, powerWireId, type PowerGraphCommand, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
 import { CombatVfx } from '../systems/CombatVfx';
@@ -443,7 +444,7 @@ export class Game {
     litThreshold: Balance.contracts.nightShift.renderVisibilityCutoff,
   });
   private readonly mothSwarm = new MothSwarm(
-    this.activeEpoch.id === 'epoch-3-voltage' || this.activeContract.id === 'e3-moth-season' || (new URLSearchParams(window.location.search).has('debug') && new URLSearchParams(window.location.search).has('daynight')),
+    Boolean(this.activeContract.twist.mothSeason) || (new URLSearchParams(window.location.search).has('debug') && new URLSearchParams(window.location.search).has('daynight')),
     this.enemies.capacity,
     (x, z) => this.lightField.coverageAt(x, z),
     {
@@ -472,6 +473,9 @@ export class Game {
   private powerWireView?: PowerWireView;
   private damSurge?: DamSurgeEvent;
   private tram?: TramPath;
+  private canyonConnectAnnounced = false;
+  private canyonConnectCompletedByDeadline = false;
+  private canyonConnectFailed = false;
   private fuelSystem?: FuelSystem;
   private vehicle?: Vehicle;
   private lightRig?: LightRig;
@@ -885,6 +889,7 @@ export class Game {
         });
         return true;
       },
+      (id, _index, position) => id !== 'turret' || this.powerConsumerAt(position.x, position.z, 'turret'),
     );
     this.pressureSystem = new PressureSystem(
       this.economy,
@@ -1689,7 +1694,9 @@ export class Game {
           (this.progression.snapshot.stacks.auto_pan ?? 0) > 0,
         ),
       );
+      this.syncContractPowerGrid();
       this.powerGraph?.step(this.simTick);
+      this.syncCanyonConnectObjective();
       if (this.tram && this.powerGraph) {
         const state = this.powerGraph.snapshot().nodes.find((node) => node.id === this.tram!.consumer.id)?.state ?? 'dark';
         this.tram.update(simDelta, state);
@@ -2427,16 +2434,25 @@ export class Game {
       this.megaprojectRailPath.group.visible = false;
       this.scene.add(this.megaprojectRailPath.group);
     }
-    if (isDevPowerGraphEnabled()) {
-      this.powerGraph = new PowerGraphSystem(isDevTramEnabled() ? devTramPowerGraphDefinition() : devPowerGraphDefinition());
+    const contractGrid = this.activeContract.twist.powerGrid;
+    if (isDevPowerGraphEnabled() || contractGrid) {
+      this.powerGraph = new PowerGraphSystem(
+        contractGrid ? contractPowerDefinition(contractGrid) : isDevTramEnabled() ? devTramPowerGraphDefinition() : devPowerGraphDefinition(),
+        contractGrid?.maxSpanLength,
+      );
       this.powerWireView = new PowerWireView();
       this.powerWireView.update(this.powerGraph.snapshot());
       this.scene.add(this.powerWireView.group);
-      if (isDevTramEnabled() && rails[0]) {
+      const pylonMarkers = createPylonSiteMarkers(this.activeContract);
+      if (pylonMarkers) this.scene.add(pylonMarkers);
+      const tramConsumer = contractGrid?.nodes.find((node) => node.kind === 'consumer' && node.role === 'tram');
+      if ((isDevTramEnabled() || tramConsumer) && rails[0]) {
         this.tram = new TramPath(rails[0].points, {
           speed: 6,
           loop: true,
-          consumer: DEV_TRAM_CONSUMER,
+          consumer: tramConsumer && tramConsumer.kind === 'consumer'
+            ? { id: tramConsumer.id, labelKey: tramConsumer.label, kind: 'consumer', x: tramConsumer.x, z: tramConsumer.z, online: true, drawWatts: tramConsumer.drawWatts, priority: tramConsumer.priority }
+            : DEV_TRAM_CONSUMER,
           cargo: [
             { id: 'capacitor-a', family: 'capacitor-crate', occupied: true },
             { id: 'capacitor-b', family: 'capacitor-crate', occupied: true },
@@ -2703,13 +2719,11 @@ export class Game {
 
   private placeContractFixtures(): void {
     for (const fixture of this.activeContract.tileParams.prePlacedBuildables ?? []) {
-      if (fixture.id === 'lantern_post') {
-        this.buildSystem.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
-          wrecked: fixture.wrecked,
-          repairCost: fixture.relightCost,
-          preplaced: true,
-        });
-      }
+      this.buildSystem.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
+        wrecked: fixture.wrecked,
+        repairCost: fixture.relightCost,
+        preplaced: true,
+      });
     }
   }
 
@@ -3096,6 +3110,7 @@ export class Game {
       fuel: this.fuelSystem?.diagnostics ?? null,
       vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
+      canyonWorks: this.canyonConnectDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -3218,7 +3233,9 @@ export class Game {
   }
 
   autoSecureWaveForRun(): number {
-    return this.waitsForBaronDefeat() ? Number.MAX_SAFE_INTEGER : this.secureWaveForRun();
+    return this.waitsForBaronDefeat() || (this.activeContract.twist.powerGrid && !this.canyonConnectCompletedByDeadline)
+      ? Number.MAX_SAFE_INTEGER
+      : this.secureWaveForRun();
   }
 
   private runWasSecured(wavesSurvived: number): boolean {
@@ -3323,7 +3340,7 @@ export class Game {
 
   private spawnMothSeasonWave(wave: number): void {
     const config = this.activeContract.twist.mothSeason;
-    if (!config || wave <= 0) return;
+    if (!config || wave <= 0 || this.nightShiftLightingState().darkness < 0.5) return;
     const count = Math.max(2, Math.floor(Math.max(1, this.mothLightSources.length) * config.mothsPerLightPerWave));
     this.mothSwarm.spawn(this.enemies, count, this.heroStart.x, this.heroStart.z - 12);
   }
@@ -3608,7 +3625,7 @@ export class Game {
       diagnostics.hp
         .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
         .map((entry) => ({ index: entry.index, ...entry.position }));
-    const lanternPositions = liveLightPositions('lantern_post');
+    const lanternPositions = liveLightPositions('lantern_post').filter((position) => this.powerConsumerAt(position.x, position.z, 'lamp'));
     const decoyPositions = liveLightPositions('decoy_shed');
     const fieldSources: LightSource[] = lanternPositions.map((position) => ({
       id: `lantern:${position.index}`,
@@ -3700,6 +3717,17 @@ export class Game {
   }
 
   private nightShiftLightingState(): LightRigNightShiftState {
+    const waveSchedule = this.activeContract.twist.dayNightCycle?.waveSchedule;
+    if (waveSchedule) {
+      const wave = this.waveSystem.diagnostics.wave;
+      const span = Math.max(1, waveSchedule.darkWave - waveSchedule.duskWave);
+      const progress = THREE.MathUtils.clamp((wave - waveSchedule.duskWave) / span, 0, 1);
+      const phase = wave < waveSchedule.duskWave ? 'full' : wave < waveSchedule.darkWave ? 'dusk' : 'dark';
+      const darkness = phase === 'full' ? 0 : progress * (this.activeContract.twist.dayNightCycle?.nightDepth ?? 1);
+      this.dayNightSnapshot = { phase, darkness, phaseProgress: progress, cycleProgress: progress, cycle: 0, simTime: this.timeAlive };
+      const keyframes = this.activeContract.twist.lightRamp?.keyframes;
+      return { enabled: true, phase, darkness, ...(keyframes?.length ? { palette: lightRampPalette(keyframes, wave) } : {}) };
+    }
     if (this.dayNightCycle) {
       const snapshot = this.dayNightCycle.sample(this.dayNightTimeOverride ?? this.timeAlive);
       this.dayNightSnapshot = snapshot;
@@ -3748,10 +3776,11 @@ export class Game {
   }
 
   private isNightShiftContract(): boolean {
-    return this.activeContract.id === 'e1-night-shift' || this.activeContract.id === 'e3-moth-season';
+    return Boolean(this.activeContract.twist.lightRamp || this.activeContract.twist.dayNightCycle);
   }
 
   private isBuildableEnabled(id: BuildableId): boolean {
+    if (this.activeContract.twist.powerGrid && (id === 'turret' || id === 'lantern_post')) return false;
     if (id === 'lantern_post') return this.isNightShiftContract();
     if (id === 'decoy_shed') return this.activeContract.id === 'e3-moth-season';
     if (id === 'boiler_house') return this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive();
@@ -3862,7 +3891,69 @@ export class Game {
       lit: power.components.filter((component) => component.state === 'lit').length,
       brown: power.components.filter((component) => component.state === 'brown').length,
       dark: power.components.filter((component) => component.state === 'dark').length,
+      nextDark: power.components.flatMap((component) => component.shedOrder).map((id) => power.nodes.find((node) => node.id === id)).find((node) => node?.state === 'powered')?.labelKey ?? null,
+      connect: this.canyonConnectDiagnostics(),
     };
+  }
+
+  private syncContractPowerGrid(): void {
+    const sites = this.activeContract.tileParams.pylonSites;
+    const graph = this.powerGraph;
+    if (!sites?.length || !graph) return;
+    const buildings = this.buildSystem.diagnostics.hp.filter((entry) => entry.id === 'sentry_beacon');
+    const snapshot = graph.snapshot();
+    for (const site of sites) {
+      const online = buildings.some((entry) => entry.hp > 0 && !entry.wrecked && Math.hypot(entry.position.x - site.x, entry.position.z - site.z) <= site.radius);
+      if (snapshot.nodes.find((node) => node.id === site.nodeId)?.online !== online) {
+        graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
+      }
+      const wireId = powerWireId({ a: site.wireFrom, b: site.nodeId });
+      const state = online ? 'intact' : 'cut';
+      if (snapshot.wires.find((wire) => wire.id === wireId)?.state !== state) {
+        graph.queueCommand({ type: 'set-wire-state', wireId, state });
+      }
+    }
+  }
+
+  private canyonConnectDiagnostics(): null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean } {
+    const grid = this.activeContract.twist.powerGrid;
+    const graph = this.powerGraph;
+    if (!grid || !graph) return null;
+    const galleries = new Set(grid.nodes.filter((node) => node.kind === 'consumer' && node.role === 'gallery').map((node) => node.id));
+    const powered = graph.snapshot().nodes.filter((node) => galleries.has(node.id) && node.state === 'powered').length;
+    return {
+      powered,
+      required: grid.connect.required,
+      byWave: grid.connect.byWave,
+      complete: this.canyonConnectCompletedByDeadline,
+      failed: this.canyonConnectFailed,
+    };
+  }
+
+  private syncCanyonConnectObjective(): void {
+    const grid = this.activeContract.twist.powerGrid;
+    const connect = this.canyonConnectDiagnostics();
+    if (!grid || !connect) return;
+    const wave = this.waveSystem.diagnostics.wave;
+    if (!this.canyonConnectCompletedByDeadline && !this.canyonConnectFailed && wave <= grid.connect.byWave && connect.powered >= connect.required) {
+      this.canyonConnectCompletedByDeadline = true;
+    }
+    if (!this.canyonConnectCompletedByDeadline && wave > grid.connect.byWave) this.canyonConnectFailed = true;
+    if (!this.canyonConnectCompletedByDeadline || this.canyonConnectAnnounced) return;
+    this.canyonConnectAnnounced = true;
+    this.uiBridge.announce('CONNECT COMPLETE - both galleries carry current.', this.timeAlive);
+  }
+
+  private powerConsumerAt(x: number, z: number, role: 'lamp' | 'turret'): boolean {
+    const grid = this.activeContract.twist.powerGrid;
+    const graph = this.powerGraph;
+    if (!grid || !graph) return true;
+    const candidates = grid.nodes.filter((node) => node.kind === 'consumer' && node.role === role);
+    const target = candidates.reduce<(typeof candidates)[number] | null>((best, node) => {
+      if (!best) return node;
+      return Math.hypot(node.x - x, node.z - z) < Math.hypot(best.x - x, best.z - z) ? node : best;
+    }, null);
+    return !target || graph.snapshot().nodes.find((node) => node.id === target.id)?.state === 'powered';
   }
 
   private agentUiState(): UiSnapshot['agent'] {
@@ -4291,7 +4382,7 @@ export class Game {
   }
 
   private queueDevPowerGraphCommand(command: PowerGraphCommand): boolean {
-    return !this.mpClient && isDevPowerGraphEnabled() && this.powerGraph?.queueCommand(command) === true;
+    return !this.mpClient && (isDevPowerGraphEnabled() || (isDebugEnabled() && Boolean(this.activeContract.twist.powerGrid))) && this.powerGraph?.queueCommand(command) === true;
   }
 
   resetRun(): void {
@@ -4304,6 +4395,9 @@ export class Game {
       this.powerGraph.reset(0);
       this.powerWireView?.invalidate();
     }
+    this.canyonConnectAnnounced = false;
+    this.canyonConnectCompletedByDeadline = false;
+    this.canyonConnectFailed = false;
     this.tram?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
@@ -5524,6 +5618,40 @@ function createDayNightCycle(contract: ContractManifest): DayNightCycle | null {
   const params = new URLSearchParams(window.location.search);
   const config = contract.twist.dayNightCycle ?? (params.has('debug') && params.has('daynight') ? DEBUG_DAY_NIGHT_CONFIG : null);
   return config ? new DayNightCycle(config) : null;
+}
+
+function contractPowerDefinition(grid: ContractPowerGrid): PowerGraphDefinition {
+  return {
+    id: 'e3-canyon-works-grid',
+    nodes: grid.nodes.map((node) => node.kind === 'producer'
+      ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: true, outputWatts: node.outputWatts }
+      : node.kind === 'relay'
+        ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: false }
+        : { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: true, drawWatts: node.drawWatts, priority: node.priority }),
+    wires: grid.wires.map((wire) => ({ ...wire, state: 'intact' })),
+  };
+}
+
+function createPylonSiteMarkers(contract: ContractManifest): THREE.Group | null {
+  const sites = contract.tileParams.pylonSites;
+  if (!sites?.length) return null;
+  const group = new THREE.Group();
+  group.name = 'CanyonWorksPylonSites';
+  const ringGeometry = new THREE.RingGeometry(1.8, 2.35, 24);
+  const ringMaterial = new THREE.MeshBasicMaterial({ color: '#5ea6a0', transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: false });
+  const postGeometry = new THREE.CylinderGeometry(0.08, 0.12, 1.1, 6);
+  const postMaterial = new THREE.MeshStandardMaterial({ color: '#b98545', emissive: '#39756f', emissiveIntensity: 0.35, roughness: 0.65 });
+  for (const site of sites) {
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    ring.name = `PylonSite.${site.id}`;
+    ring.rotation.x = -Math.PI / 2;
+    ring.position.set(site.x, Terrain.visualY(site.x, site.z, 0.035), site.z);
+    ring.renderOrder = RenderLayers.groundDecals;
+    const post = new THREE.Mesh(postGeometry, postMaterial);
+    post.position.set(site.x, Terrain.visualY(site.x, site.z, 0.55), site.z);
+    group.add(ring, post);
+  }
+  return group;
 }
 
 type MetaPresenceLine = { name: string; effect: string; recap: string };

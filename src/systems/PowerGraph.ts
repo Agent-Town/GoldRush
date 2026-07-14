@@ -199,7 +199,7 @@ export class PowerGraphSystem {
 
   constructor(
     definition: unknown,
-    maxWireLength = POWER_GRAPH_LIMITS.maxWireLength,
+    maxWireLength: number = POWER_GRAPH_LIMITS.maxWireLength,
     budgetMs = POWER_GRAPH_LIMITS.solveBudgetMs,
   ) {
     const parsed = normalizePowerGraphDefinition(definition, maxWireLength);
@@ -332,7 +332,7 @@ export class PowerGraphSystem {
   }
 }
 
-export function normalizePowerGraphDefinition(value: unknown, maxWireLength = POWER_GRAPH_LIMITS.maxWireLength): PowerGraphValidationResult {
+export function normalizePowerGraphDefinition(value: unknown, maxWireLength: number = POWER_GRAPH_LIMITS.maxWireLength): PowerGraphValidationResult {
   if (!Number.isFinite(maxWireLength) || maxWireLength <= 0) return rejection('limit-value');
   if (!exactRecord(value, ['id', 'nodes', 'wires'])) return rejection('definition-shape');
   if (!shortIdentifier(value.id)) return rejection('definition-id');

@@ -387,6 +387,7 @@ export class BuildSystem {
     private readonly onSound?: (name: BuildSystemSound, position?: THREE.Vector3) => void,
     private readonly isBuildableEnabled: (id: BuildableId) => boolean = () => true,
     private readonly onPlacementRequest?: (position: { x: number; z: number }) => boolean,
+    private readonly isShooterPowered: (id: 'sentry_beacon' | 'turret', index: number, position: THREE.Vector3) => boolean = () => true,
   ) {
     this.group.name = 'BuildSystem';
     this.group.add(
@@ -824,7 +825,7 @@ export class BuildSystem {
 
   placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0, options: FreePlacementOptions = {}): boolean {
     const def = getBuildableDef(id);
-    if (!def || !this.isBuildableEnabled(def.id) || this.countFor(def.id) >= def.maxCount) return false;
+    if (!def || (!options.preplaced && !this.isBuildableEnabled(def.id)) || this.countFor(def.id) >= def.maxCount) return false;
 
     const previousRotation = this.ghostRotationSteps;
     this.ghostRotationSteps = ((Math.round(rotationSteps) % 4) + 4) % 4;
@@ -1807,6 +1808,7 @@ export class BuildSystem {
       id: 'turrets',
       resumeKey: `building:turret:${placed}`,
       getPos: () => this.shooterPos.copy(this.turrets.allPositions[placed] ?? this.ghostPos),
+      enabled: () => this.isShooterPowered('turret', placed, this.turrets.allPositions[placed] ?? this.ghostPos),
       range: Balance.turret.range,
       cooldown: 1 / this.effectiveTurretFireRate(placed),
       damage: this.effectiveTurretDamage(placed),

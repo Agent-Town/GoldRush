@@ -143,6 +143,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   tram_receipts: { name: 'Tram Receipts', line: 'Powered tram routes gain a place in the haul ledger.' },
   exchange_patterns: { name: 'Exchange Patterns', line: 'Six patched lines enter the town pattern book.' },
   canyon_dispatch: { name: 'Canyon Dispatch', line: 'The Canyon Works route book is ready for a future run.' },
+  derrick_survey: { name: 'Derrick Survey', line: 'Twelve pump sites are marked across the Dust Flats.' },
+  graded_roads: { name: 'Graded Roads', line: 'Packed routes are marked to make distance die.' },
+  refinery_ratios: { name: 'Refinery Ratios', line: 'Fuel and tar gain separate columns at the twin spigots.' },
+  storm_watch: { name: 'Storm Watch', line: 'Brass scopes are posted before the dust closes in.' },
+  gusher_ledger: { name: 'Gusher Ledger', line: 'Capped wells and their windfalls enter the claim book.' },
+  piston_slinger: { name: 'Piston Slinger', line: 'A quick brass piston joins the Spark Rig lineage.' },
+  tar_sprayer: { name: 'Gusher Tar-Sprayer', line: 'Cooling tar slicks are marked to slow a charge.' },
+  piston_battery: { name: 'Piston Battery', line: 'A rotary piston head is marked for the sentry tripod.' },
+  tar_guardrails: { name: 'Tar Guardrails', line: 'Guardrails and a slowing tar edge are marked for the claim.' },
+  land_yacht_components: { name: 'Land-Yacht Components', line: 'The Land-Yacht medal still guards these wheelhouse diagrams.' },
+  motor_parts: { name: 'Motor Parts', line: 'Pistons, gaskets, rubber, and tar enter the parts ledger.' },
+  flivver_chassis: { name: 'Flivver Chassis', line: 'The light scout-car family is marked for the Garage.' },
+  hauler_bed: { name: 'Hauler Bed', line: 'A clear flatbed is marked to carry crates and rigs.' },
+  convoy_receipts: { name: 'Convoy Receipts', line: 'Fuel loads stay tied to haulers and the waiting railhead.' },
+  driver_playbook: { name: 'Driver Playbook', line: 'A third helper slot is marked for a bounded road route.' },
 };
 
 export type ResearchChartOptions = {
