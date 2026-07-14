@@ -12,15 +12,16 @@ BLENDER="${BLENDER:-/Applications/Blender.app/Contents/MacOS/Blender}"
 "$BLENDER" --background "$BLEND" --python-expr "
 import bpy, sys
 meshes = [o for o in bpy.data.objects if o.type == 'MESH']
+anchors = sorted((o for o in bpy.data.objects if o.type == 'EMPTY' and o.name.startswith('steam_anchor_')), key=lambda o: o.name)
 mats = {m.name for o in meshes for m in (s.material for s in o.material_slots) if m}
 tris = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in meshes)
 cams = [o for o in bpy.data.objects if o.type == 'CAMERA']
 lights = [o for o in bpy.data.objects if o.type == 'LIGHT']
-print(f'[reexport] meshes={len(meshes)} materials={len(mats)} triangles={tris} cameras={len(cams)} lights={len(lights)}')
+print(f'[reexport] meshes={len(meshes)} materials={len(mats)} triangles={tris} anchors={[o.name for o in anchors]} cameras={len(cams)} lights={len(lights)}')
 if cams or lights:
     print('[reexport] WARNING: cameras/lights present — they are excluded from export, but the RECIPE wants none in the file')
 bpy.ops.object.select_all(action='DESELECT')
-for o in meshes: o.select_set(True)
+for o in [*meshes, *anchors]: o.select_set(True)
 bpy.context.view_layer.objects.active = meshes[0]
 bpy.ops.export_scene.gltf(filepath='$GLB'.removesuffix('.glb'), export_format='GLB', use_selection=True,
     export_apply=True, export_cameras=False, export_lights=False,
