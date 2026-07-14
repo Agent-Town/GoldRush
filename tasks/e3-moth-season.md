@@ -1,0 +1,9 @@
+# e3-moth-season — where do you NOT place light (lane-d; commit prefix "feat:")
+ROLE: content + tile. WORKDIR: lane-d. CODEX: model=gpt-5.6-sol effort=high
+ATTENDED-AUTHORED 2026-07-14 — E3 contract #3, STORYBOOK verbatim: "night-only, migration week. Light attracts everything; every lamp is bait as much as shelter... one lit decoy shed, sacrificed nightly, becomes the town's tithe to the moths."
+Pre-flight (LANE-SAFETY): standard safe-dupe rules; LADDER-STALL protocol stands. Then npm install; build green.
+## READ-FIRST: the storybook spec · e3-06-moth-swarm (the behavior this contract is BUILT ON — spawn scaling vs lit-source count) · day/night config (night-only: the cycle pinned to night with brief dusks) · canyon grammar (LADDER-STALL if undrained).
+## SCOPE: (1) Contract `e3-moth-season`: night-locked cycle config, moth-heavy waves whose TARGETING WEIGHT scales with each source's light radius (the existing coverage registry — brighter = more bait), the DECOY SHED: a cheap lit buildable that concentrates moths onto itself (the tithe — it takes the damage; rebuildable); dark-corridor play: enemies (non-moth) get modest night-speed advantage OUTSIDE light (numbers documented) so darkness is a road, not free safety; (2) unlock after blackout-ridge win; (3) e2e: moth targeting follows brightness ordering, decoy concentrates attach counts, night-lock holds, objective flow; moth + day-night suites unmodified-green; zero console; both projects.
+## Firewall: contract data/tile + decoy buildable + targeting-weight config (moth module's existing seams) + spec + artifacts. NO moth behavior rewrites, NO other systems.
+## Self-check: tsc+build green · new + moth + day-night suites green · a decoy-tithe capture. If you exit without changes, WRITE WHY first.
+END: READY-FOR-GATES + targeting weights + mask table.
