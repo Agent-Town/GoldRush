@@ -69,3 +69,10 @@ Tip 42607059 NOT merged. The A/Bs are near-identical at the town camera — the 
 1. **THE ACROSS-THE-PLAZA TEST (the era-variant gate)**: an era variant must be identifiable AT GAMEPLAY CAMERA DISTANCE by someone who doesn't know which is which. If the owner squints, the player sees nothing. Every variant A/B must pass a blind "which is E2?" check at the town camera before delivery.
 2. **THE BUNDLE TRANSFORM LIST IS REQUIRED CONTENT, not inspiration**: e2-steamworks-bundle §A2 SPECIFIES each building's E2 growth — tavern → saloon face: COVERED PORCH, HANGING OIL LAMPS (one teal), SWING DOORS (footprint/roofline unchanged). Build THOSE. Silhouette-adjacent additions (porches, stacks, awnings, signage rigs) are what read at distance; texture-level touches (soot, trim) are seasoning, never the meal.
 Same contract otherwise (.e2.glb siblings, budgets, envelopes, byte-identical). Re-deliver the same two buildings.
+
+## WAVE 7 SCOPE RAISED — THE ERA TOWN TRANSFORMATION (owner ruling 2026-07-14, verbatim: "I would have expected all the houses using some form of steam and the change to E2 showing in town as well, similar for the other epochs later. The player should now that a new time is starting - also visually.")
+The era variant program is NOT per-building decoration — it is the town announcing the age. Phasing:
+- **7a (the returned revision)**: the two pilot buildings redone to the ACROSS-THE-PLAZA TEST + bundle transform lists. Verdict gate before 7b.
+- **7b (GO WIDE, after 7a passes)**: ALL NINE buildings get their E2 face per the bundle's §A2 transforms — every one visibly steam-touched (stacks, pipework, gauges, tanks — silhouette-level additions).
+- **STEAM ANCHORS (new deliverable, every E2 variant)**: each .e2.glb includes NAMED EMPTY NODES `steam_anchor_1..N` at its stack/vent positions — the FACTORY mounts live steam-plume emitters there (the town breathes; models stay static). Anchor naming is the contract.
+- Later eras repeat the pattern per their bundles (E3: wires/insulators/lamps + arc-flicker anchors; etc.) — one era at a time, always behind the same verdict gate.
