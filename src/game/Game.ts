@@ -69,6 +69,7 @@ import { install as installAgentStub, type AgentStub } from '../agent/AgentStub'
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { DEV_TRAM_CONSUMER, TramPath, devTramPowerGraphDefinition } from '../entities/TramPath';
+import { Vehicle } from '../entities/Vehicle';
 import type {
   AgentBuildingRef,
   AgentCollectGoldResult,
@@ -113,6 +114,7 @@ import { GoldPickupPool } from '../entities/GoldPickup';
 import { ProjectilePool } from '../entities/Projectile';
 import { XpMotePool } from '../entities/XpMote';
 import { PressureSystem } from '../systems/PressureSystem';
+import { FuelSystem } from '../systems/FuelSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
@@ -470,6 +472,8 @@ export class Game {
   private powerWireView?: PowerWireView;
   private damSurge?: DamSurgeEvent;
   private tram?: TramPath;
+  private fuelSystem?: FuelSystem;
+  private vehicle?: Vehicle;
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -1166,6 +1170,10 @@ export class Game {
           return this.manualResumeAtMpTickForTest;
         },
         queuePowerGraphCommand: (command: PowerGraphCommand) => this.queueDevPowerGraphCommand(command),
+        driveVehicle: (x: number, z: number) => {
+          this.vehicle?.driveTo(x, z);
+          return this.vehicle !== undefined;
+        },
         advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => this.advanceSimForTest(seconds, onTick),
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
@@ -1525,6 +1533,8 @@ export class Game {
     this.powerWireView?.dispose();
     this.damSurge?.dispose();
     this.tram?.dispose();
+    this.vehicle?.dispose();
+    this.fuelSystem?.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -1668,6 +1678,8 @@ export class Game {
         this.localActor.group.position,
       );
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
+      this.fuelSystem?.update(simDelta, this.visibleActorPositions());
+      this.vehicle?.update(simDelta);
       this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult);
       this.applyHarvestStats(
         this.pressureArsenalSystem.updateAutoPan(
@@ -2433,6 +2445,11 @@ export class Game {
         this.scene.add(this.tram.group);
       }
     }
+    if (isDevVehiclesEnabled()) {
+      this.fuelSystem = new FuelSystem(isDevVehiclesEnabled);
+      this.vehicle = new Vehicle(this.fuelSystem, { start: { x: -20, z: -8 } });
+      this.scene.add(this.fuelSystem.group, this.vehicle.group);
+    }
     this.detailScatter = new DetailScatter();
     this.scene.add(this.detailScatter.group);
     this.scene.add(this.harvestSystem.group);
@@ -3076,6 +3093,8 @@ export class Game {
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
       tram: this.tram?.diagnostics ?? null,
+      fuel: this.fuelSystem?.diagnostics ?? null,
+      vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       agent: {
         stub: this.agentStub?.state ?? null,
@@ -4286,6 +4305,8 @@ export class Game {
       this.powerWireView?.invalidate();
     }
     this.tram?.reset();
+    this.fuelSystem?.reset();
+    this.vehicle?.reset();
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -5790,6 +5811,11 @@ function isDevPowerGraphEnabled(): boolean {
 function isDevTramEnabled(): boolean {
   const params = new URLSearchParams(window.location.search);
   return params.has('debug') && params.has('tram');
+}
+
+function isDevVehiclesEnabled(): boolean {
+  const params = new URLSearchParams(window.location.search);
+  return params.has('debug') && params.has('vehicles');
 }
 
 function createMegaprojectPlaqueTexture(lines: readonly string[]): THREE.CanvasTexture {

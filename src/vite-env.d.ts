@@ -290,6 +290,8 @@ interface ThreeGameDiagnostics {
   megaproject: GrMegaprojectDiagnostics;
   escort: GrEscortDiagnostics;
   tram: GrTramDiagnostics | null;
+  fuel: import('./systems/FuelSystem').FuelDiagnostics | null;
+  vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
   power: GrPowerGraphDiagnostics;
   agent: {
     stub: {
@@ -956,6 +958,7 @@ interface Window {
     setManualSim: (enabled: boolean) => boolean;
     resumeManualSimAtMpTick: (tick: number) => number;
     queuePowerGraphCommand: (command: import('./systems/PowerGraph').PowerGraphCommand) => boolean;
+    driveVehicle: (x: number, z: number) => boolean;
     advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => void;
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;
