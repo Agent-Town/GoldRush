@@ -94,11 +94,16 @@ export type PowerWireViewDiagnostics = Readonly<{
   renderLayer: number;
   renderSlot: 'gameplay';
   topologyRevision: number;
+  allocationRevision: number;
   rebuildCount: number;
   spans: number;
+  poweredSpans: number;
+  darkSpans: number;
   intactSpans: number;
   cutSpans: number;
   segments: number;
+  poweredSegments: number;
+  darkSegments: number;
   drawCalls: number;
   asset: 'procedural-catenary';
 }>;
@@ -159,11 +164,16 @@ const EMPTY_RENDER_DIAGNOSTICS: PowerWireViewDiagnostics = Object.freeze({
   renderLayer: 0,
   renderSlot: 'gameplay',
   topologyRevision: -1,
+  allocationRevision: -1,
   rebuildCount: 0,
   spans: 0,
+  poweredSpans: 0,
+  darkSpans: 0,
   intactSpans: 0,
   cutSpans: 0,
   segments: 0,
+  poweredSegments: 0,
+  darkSegments: 0,
   drawCalls: 0,
   asset: 'procedural-catenary',
 });
