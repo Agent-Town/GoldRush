@@ -499,6 +499,7 @@ interface ThreeGameDiagnostics {
         : null
       : null;
   };
+  damSurge: import('./systems/DamSurgeEvent').DamSurgeDiagnostics | null;
   vfx: {
     activeFloatTexts: number;
     floatTextPool: number;
@@ -953,6 +954,8 @@ interface Window {
         droppedTicks: number;
       };
     };
+    triggerDamSurge: () => boolean;
+    damSurge: () => import('./systems/DamSurgeEvent').DamSurgeDiagnostics | null;
     resetRun: () => void;
     endRunForTest: () => void;
     toggleWeapon: () => 'rig' | 'blast';

@@ -414,6 +414,11 @@ export class CombatSystem {
     this.damageHero(enemy.contactDamage, enemy.id, this.actorNearestTo(enemy.position));
   };
 
+  damageActor(amount: number, sourceId: number, actor: Hero = this.primaryActor): boolean {
+    if (isCombatDamageDisabled()) return false;
+    return this.damageHero(amount, sourceId, actor);
+  }
+
   launchLob(origin: THREE.Vector3, target: THREE.Vector3, airTime: number, damage: number, radius: number, ownerId: string): boolean {
     const launched = this.blastCharges.activate(origin, target, airTime, damage, radius, ownerId);
     if (!launched) return false;

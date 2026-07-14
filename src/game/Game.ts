@@ -80,6 +80,7 @@ import {
   getStressCount,
   getTimescale,
   isCharmPauseDisabled,
+  isDebugEnabled,
   isLevelUpDisabled,
   isPauseDisabled,
   isPingDisabled,
@@ -137,6 +138,7 @@ import { CameraRig } from '../systems/CameraRig';
 import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type UpgradeCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
+import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, type PowerGraphCommand } from '../systems/PowerGraph';
@@ -438,6 +440,7 @@ export class Game {
   private megaprojectRailPath?: RailPathView;
   private powerGraph?: PowerGraphSystem;
   private powerWireView?: PowerWireView;
+  private damSurge?: DamSurgeEvent;
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -1119,6 +1122,8 @@ export class Game {
         queuePowerGraphCommand: (command: PowerGraphCommand) => this.queueDevPowerGraphCommand(command),
         advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => this.advanceSimForTest(seconds, onTick),
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
+        triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
+        damSurge: () => this.damSurge?.diagnostics() ?? null,
         resetRun: () => this.resetRun(),
         endRunForTest: () => {
           for (const actor of this.actors) if (actor.group.visible) actor.hp = 0;
@@ -1464,6 +1469,7 @@ export class Game {
     this.railPath?.dispose();
     this.megaprojectRailPath?.dispose();
     this.powerWireView?.dispose();
+    this.damSurge?.dispose();
     this.detailScatter?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
@@ -1586,6 +1592,8 @@ export class Game {
       this.updateBlastAim(intents);
       this.updateWetPowderHint(simDelta);
       this.combat.setTime(this.timeAlive);
+      this.damSurge?.update(this.timeAlive);
+      if (this.finishPendingDeath()) return true;
       this.waveSystem.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
@@ -2324,6 +2332,17 @@ export class Game {
 
     this.terrainView = Terrain.createTerrainView();
     this.scene.add(this.terrainView.group);
+    this.damSurge = new DamSurgeEvent(
+      this.actors,
+      Terrain.bounds,
+      Terrain.sample,
+      (actorIndex, amount, sourceId) => {
+        const actor = this.actors[actorIndex];
+        if (actor) this.combat.damageActor(amount, sourceId, actor);
+      },
+    );
+    if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge.trigger(this.timeAlive);
+    this.scene.add(this.damSurge.group);
     const rails = activeTileDescriptor().rails ?? [];
     if (rails.length > 0) {
       this.railPath = new RailPathView(rails);
@@ -3012,6 +3031,7 @@ export class Game {
         dropElapsed: this.baronStandardPlanted ? this.elapsed - this.baronStandardDropStartedAt : 0,
       },
       baronRocket: this.baronRocketDiagnostics(),
+      damSurge: this.damSurge?.diagnostics() ?? null,
       lighting: this.lightRig?.diagnostics(),
       enemyDimming: this.enemies.dimmingDiagnostics,
       vfx: {
@@ -4133,6 +4153,8 @@ export class Game {
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
+    this.damSurge?.reset();
+    if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge?.trigger(this.timeAlive);
     this.lightRig?.resetTransientLights();
     this.activeWeapon = 'rig';
     this.blastAimReticle.visible = false;
