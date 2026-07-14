@@ -76,3 +76,10 @@ The era variant program is NOT per-building decoration — it is the town announ
 - **7b (GO WIDE, after 7a passes)**: ALL NINE buildings get their E2 face per the bundle's §A2 transforms — every one visibly steam-touched (stacks, pipework, gauges, tanks — silhouette-level additions).
 - **STEAM ANCHORS (new deliverable, every E2 variant)**: each .e2.glb includes NAMED EMPTY NODES `steam_anchor_1..N` at its stack/vent positions — the FACTORY mounts live steam-plume emitters there (the town breathes; models stay static). Anchor naming is the contract.
 - Later eras repeat the pattern per their bundles (E3: wires/insulators/lamps + arc-flicker anchors; etc.) — one era at a time, always behind the same verdict gate.
+
+## WAVE 7b EXTENDED — THE ACCESSORY PACK (owner ruling 2026-07-14: "also the town itself should change, not just the buildings? Accessories and so on.")
+The era transformation covers the WHOLE town surface. 7b delivers, alongside the nine building faces:
+- **ERA VARIANTS of existing props** (.e2.glb siblings, same convention): covered wagons gain boiler fittings/iron strapping; the water trough gains a pipe feed; fence sections may iron-cap.
+- **NEW E2-ONLY ACCESSORIES** (small GLBs, ≤1k tris each, one shared 1024² atlas for the pack): coal bins, pipe runs along the ring road, gauge posts, iron lamp posts (unlit geometry — light rig owns light), a small pressure manifold near the plaza edge. PLACEMENT: propose positions in `assets/pilots/plaza-props-3d/era-props.e2.json` (id, glb, position, rotation, scale) — the factory ratifies and mounts from that manifest; walk loops and building pads stay clear (flat-walk law).
+- **THE HERITAGE LAW (canon)**: the PAN MONUMENT NEVER CHANGES, in any era — like the pan itself, it is the through-line the whole saga refuses to upgrade. Let the town transform around it; the contrast IS the story.
+- Steam anchors on props too where sensible (the manifold, the pipe runs).
