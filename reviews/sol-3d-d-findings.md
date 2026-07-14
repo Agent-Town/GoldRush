@@ -94,9 +94,17 @@ This correction matters because the broad water band dominates three run-camera 
 
 ### F-3D-D-13 — The mood gate passed, with measurable remaining landmark debt
 
-`artifacts/map-rebuild-spike/all-contracts-mood-ab.png` is the current acceptance board. A fresh unprimed critic answered “fight” at 78% confidence before the final hatching and working-water correction. The critique's ground and water defects were corrected; its clean prop-material findings belong to the separate mounted-landmark wave.
+`artifacts/map-rebuild-spike/all-contracts-mood-ab.png` is the terrain acceptance board. A fresh unprimed critic answered “fight” at 78% confidence before the final hatching and working-water correction. The critique's ground and water defects were corrected. Its prop warning later became the explicit proxy-weathering pass in F-3D-D-14; complete painted wraps remain separate mounted-landmark work.
 
 The source plates retain higher edge density and usually higher contrast than the run-camera renders; that telemetry is diagnostic, not a pixel-parity score, because the pairs do not share geometry or framing. It correctly exposes that temporary low-poly landmark proxies cannot carry the painted plates' full abrasion language. The terrain verdict therefore passes without promoting proxy props to production art.
+
+### F-3D-D-14 — Building hardship must change construction, not merely color
+
+Evidence: `artifacts/map-rebuild-spike/all-contracts-building-grit-ab.png` compares the previous committed run-camera buildings with the corrected proxy set. The first attempted correction only darkened and mottled the primitives. A fresh unprimed reviewer rejected it because Dry Gulch still looked intact, the Baron damage read as a seam, and repair states disappeared at the gameplay camera.
+
+The correction keeps a shared regional construction vocabulary but gives it visible condition states. The Claim is patched and working; Dry Gulch has a failed roof, shortened chimney, collapsed canopy, and fallen roof panel; Twin Banks and Night Shift use dark foundations, roof seams, bracing, and work debris; the Baron loses wall teeth, carries impact repairs, and once again casts contact shadows. All of this remains verdict-only helper geometry deleted before save/export.
+
+A second fresh critique still rejected these as production buildings: doors, fasteners, wall framing, lifted patch edges, soot, end grain, and human-scale hardware do not survive the real run camera consistently. That is a useful boundary rather than a terrain blocker. The owner can judge the new condition language now, but shipping buildings still require separate mounted GLBs, authored gameplay footprints, and their own close/render/game-camera gate.
 
 ## Contract identity summary
 
@@ -130,16 +138,18 @@ This table is an art-direction test, not a runtime registry. The contract descri
 - Semantic and binary-payload re-export comparison: PASS
 - Saved-mesh probes for Claim river/ford, Dry Gulch basin/washes, Twin Banks two fords/banks, Night Shift shoulders/terraces, and Baron trench/bastions: PASS
 - Five-row same-map mood A/B board and all ten source inputs pinned by content hash: PASS
+- Five-row building-grit before/after board pinned by content hash: PASS
 - `src/` edits: none
 - Runtime loading, placement, disposal, gameplay, and performance: intentionally deferred to an attended promotion
 
 ## Owner verdict images
 
 - `artifacts/map-rebuild-spike/all-contracts-mood-ab.png` — current material-language gate
+- `artifacts/map-rebuild-spike/all-contracts-building-grit-ab.png` — building condition and construction gate
 - `artifacts/map-rebuild-spike/all-contracts-regional-family-verdict.png`
 - `artifacts/map-rebuild-spike/all-contracts-unique-layout-verdict.png`
 - per-map run-camera, overview, and low-angle renders live in the same artifact folder
 
-The mood board is the current owner gate. The two older boards remain useful for regional cohesion and composition uniqueness.
+The mood and building-grit boards are the current owner gates. The two older boards remain useful for regional cohesion and composition uniqueness.
 
 READY-FOR-GATES
