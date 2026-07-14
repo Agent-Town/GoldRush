@@ -51,7 +51,7 @@ export type TownActorLedgerEntryId =
   | 'town_assay_clerk'
   | 'town_youngster_a'
   | 'town_youngster_b';
-export type EnemyLedgerEntryId = 'claim_jumper' | 'outlaw' | 'wrecker' | 'baron' | 'rail_tough' | 'steam_wrecker' | 'coal_thief';
+export type EnemyLedgerEntryId = 'claim_jumper' | 'outlaw' | 'wrecker' | 'baron' | 'rail_tough' | 'steam_wrecker' | 'coal_thief' | 'moth_swarm';
 export type EnemyStatsDiscoveryId = `${EnemyLedgerEntryId}_stats`;
 export type BuildableLedgerEntryId =
   | 'building_sentry_beacon'
@@ -117,6 +117,7 @@ export const enemyStatsDiscoveryByEntryId: Record<EnemyLedgerEntryId, EnemyStats
   rail_tough: 'rail_tough_stats',
   steam_wrecker: 'steam_wrecker_stats',
   coal_thief: 'coal_thief_stats',
+  moth_swarm: 'moth_swarm_stats',
 };
 export const enemyStatsDiscoveryIds = Object.values(enemyStatsDiscoveryByEntryId) as readonly EnemyStatsDiscoveryId[];
 
@@ -187,6 +188,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   e2EnemyEntry('rail_tough', 'Rail Tough', railToughUrl, assetSlots.charE2RailTough, 'Rail-yard muscle in a riveted coat.', 'Tactics: its armor turns aside part of every bolt.'),
   e2EnemyEntry('steam_wrecker', 'Steam Wrecker', steamWreckerUrl, assetSlots.charE2SteamWrecker, 'A walking sledge built to make kindling of town works.', 'Tactics: stop it before it reaches a building.'),
   e2EnemyEntry('coal_thief', 'Coal Thief', coalThiefUrl, assetSlots.charE2CoalThief, 'A quick hand with soot for a calling card.', 'Tactics: catch it before it escapes with the claim purse.'),
+  { id: 'moth_swarm', epochId: 'epoch-3-voltage', name: 'Fever Moths', category: 'The Opponents', unlockSignal: 'enemy:sighted:moth_swarm', spriteRef: { slot: 'char.e3.moth_swarm.placeholder', imageUrl: titleEmblemUrl }, loreLine: 'The Fever reaches nature too: moths hunger for every light the town builds.', factLines: () => ['Dims a light source while attached.', 'Scatters when struck; destroy the swarm to restore the light.'] },
   ...buildableDefs.map((def) => {
     const sprite = buildableSpriteById[def.id];
     return buildableEntry(buildableLedgerEntryById[def.id], def.id, sprite.imageUrl, sprite.slot);

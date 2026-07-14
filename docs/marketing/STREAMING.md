@@ -13,7 +13,7 @@ The autopilot is file playback only. It never captures a screen, desktop, termin
 4. Set AUTOPILOT as the startup scene. Add OBS to macOS Login Items with `--startstreaming`; OBS owns restart-on-login. This repository's watchdog reports only and never restarts OBS or a stream.
 5. Enable obs-websocket on localhost (default port 4455) and authentication. Optionally install/configure `obs-cli` so `scripts/stream-watchdog.sh` can report authenticated stream status; without it the watchdog still reports the OBS process and websocket reachability.
 6. Create a Focus mode for streaming: Do Not Disturb on, notification previews off, and automation that activates it whenever OBS is open.
-7. Run `scripts/stream-sync.sh` and `scripts/stream-watchdog.sh` each factory fire cycle. Health history is appended to `logs/stream-health.log`.
+7. Run `node scripts/stream-curate.mjs`, `scripts/stream-sync.sh`, then `scripts/stream-watchdog.sh` each factory fire cycle. Health history is appended to `logs/stream-health.log`.
 
 ## Parallel-work setup (owner machine, 2026-07-14)
 - AUTOPILOT needs nothing: Media Source file playback inside OBS — no screen interaction; OBS runs minimized while normal work continues.

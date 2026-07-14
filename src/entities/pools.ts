@@ -25,6 +25,7 @@ import railcarCabinUrl from '../../assets/processed/boss-railcar-cabin.png?url';
 import railcarCabinDamagedUrl from '../../assets/processed/boss-railcar-cabin-damaged.png?url';
 import railcarWheelsUrl from '../../assets/processed/boss-railcar-wheels.png?url';
 import railcarWheelsDamagedUrl from '../../assets/processed/boss-railcar-wheels-damaged.png?url';
+import { isMothSwarmEnemy } from '../systems/MothSwarm';
 
 const ENEMY_SPRITE_Y = 0.72;
 const BOSS_HP_MAX_SEGMENTS = 8;
@@ -1154,7 +1155,7 @@ export class EnemyPool {
     this.syncObject.rotation.z = motion.leanRad;
     this.syncObject.scale.setScalar(this.renderScale(enemy));
     this.syncObject.updateMatrix();
-    this.baseMatrix.copy(enemy.isAlive && enemy.eliteKind !== 'railcar' ? this.syncObject.matrix : this.hiddenMatrix);
+    this.baseMatrix.copy(enemy.isAlive && enemy.eliteKind !== 'railcar' && !isMothSwarmEnemy(enemy) ? this.syncObject.matrix : this.hiddenMatrix);
 
     for (let i = 0; i < this.renderParts.length; i += 1) {
       const part = this.renderParts[i];
@@ -1271,7 +1272,7 @@ export class EnemyPool {
     const useProceduralDark = this.fullDarkRenderCutoffActive();
     const baronVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
     const e2Presentation = this.e2SpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
-    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !e2Presentation;
+    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !e2Presentation && !isMothSwarmEnemy(enemy);
     const thiefVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.isThief && !e2Presentation;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
     const showFade = this.active <= 32;
