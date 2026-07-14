@@ -35,10 +35,10 @@ while IFS=$'\t' read -r file duration; do
   if [ "$ext" = mp4 ]; then
     [ -e "$output" ] && [ "$output" -nt "$source" ] || cp -f "$source" "$output"
   elif [ "$ext" = webm ]; then
-    [ -e "$output" ] && [ "$output" -nt "$source" ] || ffmpeg -loglevel error -y -i "$source" -c:v libx264 -pix_fmt yuv420p -movflags +faststart -c:a aac "$output"
+    [ -e "$output" ] && [ "$output" -nt "$source" ] || ffmpeg -nostdin -loglevel error -y -i "$source" -c:v libx264 -pix_fmt yuv420p -movflags +faststart -c:a aac "$output"
   else
     duration=${duration:-5}
-    [ -e "$output" ] && [ "$output" -nt "$source" ] || ffmpeg -loglevel error -y -loop 1 -i "$source" -t "$duration" -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -r 30 -c:v libx264 -pix_fmt yuv420p -movflags +faststart "$output"
+    [ -e "$output" ] && [ "$output" -nt "$source" ] || ffmpeg -nostdin -loglevel error -y -loop 1 -i "$source" -t "$duration" -vf "scale=trunc(iw/2)*2:trunc(ih/2)*2" -r 30 -c:v libx264 -pix_fmt yuv420p -movflags +faststart "$output"
   fi
 done < <(jq -r '.entries[] | [.file, (.duration // "")] | @tsv' "$MANIFEST")
 
