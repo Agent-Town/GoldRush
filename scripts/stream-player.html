@@ -19,7 +19,46 @@
 const players = [document.getElementById('a'), document.getElementById('b')];
 let current = 0;
 let playlist = [];
+let entries = [];
 let index = 0;
+
+// THE MUSIC BED (brand book §3): the sonilo family plays under silent clips
+// (era cards, factory dwell) and ducks to nothing under clips that carry their
+// own audio (gameplay, scored films). No dead air, no fighting soundtracks.
+const bed = document.createElement('audio');
+document.body.appendChild(bed);
+let bedTracks = [];
+let bedIndex = 0;
+const BED_VOLUME = 0.35;
+bed.volume = 0;
+bed.addEventListener('ended', () => {
+  bedIndex = (bedIndex + 1) % Math.max(1, bedTracks.length);
+  if (bedTracks.length) { bed.src = 'music/' + encodeURIComponent(bedTracks[bedIndex]); bed.play().catch(() => {}); }
+});
+function loadMusic() {
+  const xhr = new XMLHttpRequest();
+  xhr.open('GET', 'music/music.json?ts=' + Date.now());
+  xhr.onload = () => {
+    try {
+      const data = JSON.parse(xhr.responseText);
+      if (Array.isArray(data.tracks) && data.tracks.length && bedTracks.length === 0) {
+        bedTracks = data.tracks;
+        bed.src = 'music/' + encodeURIComponent(bedTracks[0]);
+        bed.play().catch(() => {});
+      }
+    } catch (error) { /* no bed is survivable */ }
+  };
+  xhr.send();
+}
+let bedFade = null;
+function setBed(target) {
+  clearInterval(bedFade);
+  bedFade = setInterval(() => {
+    const delta = target - bed.volume;
+    if (Math.abs(delta) < 0.03) { bed.volume = target; clearInterval(bedFade); return; }
+    bed.volume += delta * 0.2;
+  }, 50);
+}
 
 function loadPlaylist() {
   // XHR, not fetch: the fetch API refuses file:// URLs, XHR serves them in
@@ -33,6 +72,7 @@ function loadPlaylist() {
         if (Array.isArray(data.files) && data.files.length > 0) {
           const changed = JSON.stringify(data.files) !== JSON.stringify(playlist);
           playlist = data.files;
+          entries = Array.isArray(data.entries) ? data.entries : [];
           if (changed) index = index % playlist.length;
         }
       } catch (error) { /* keep last known playlist */ }
@@ -47,16 +87,18 @@ function nextSource() {
   if (playlist.length === 0) return null;
   const file = playlist[index % playlist.length];
   index += 1;
-  return 'loop/' + encodeURIComponent(file);
+  const meta = entries.find((entry) => entry.file === file);
+  return { url: 'loop/' + encodeURIComponent(file), hasAudio: meta ? meta.audio === true : true };
 }
 
 async function playNext() {
   await loadPlaylist();
   const source = nextSource();
   if (!source) { setTimeout(playNext, 2000); return; }
+  setBed(source.hasAudio ? 0 : BED_VOLUME);
   const incoming = players[1 - current];
   const outgoing = players[current];
-  incoming.src = source;
+  incoming.src = source.url;
   incoming.muted = true;
   try { await incoming.play(); } catch (error) { setTimeout(playNext, 1000); return; }
   incoming.muted = false;
@@ -66,5 +108,6 @@ async function playNext() {
   incoming.onended = () => playNext();
   incoming.onerror = () => playNext();
 }
+loadMusic();
 loadPlaylist().then(playNext);
 </script>

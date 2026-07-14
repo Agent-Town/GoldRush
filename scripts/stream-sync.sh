@@ -21,12 +21,30 @@ jq -e '
 ' "$MANIFEST" >/dev/null
 mkdir -p "$LOOP_DIR"
 OVERLAY_DIR=${STREAM_OVERLAY_DIR:-"$HOME/GoldRushStream/overlays"}
+MUSIC_DIR=${STREAM_MUSIC_DIR:-"$HOME/GoldRushStream/music"}
+mkdir -p "$MUSIC_DIR"
+# the approved sonilo family is the channel's soundtrack (brand book §3)
+for track in "$ROOT"/marketing/raw/audio/title-theme-full-take1.m4a "$ROOT"/marketing/raw/audio/era-e*-take1.m4a; do
+  [ -f "$track" ] && cp -f "$track" "$MUSIC_DIR/"
+done
+{
+  printf '{ "tracks": ['
+  mfirst=1
+  for track in "$MUSIC_DIR"/*.m4a; do
+    [ -f "$track" ] || continue
+    [ "$mfirst" -eq 1 ] || printf ','
+    printf '"%s"' "${track##*/}"
+    mfirst=0
+  done
+  printf '] }\n'
+} > "$MUSIC_DIR/music.json.next" && mv "$MUSIC_DIR/music.json.next" "$MUSIC_DIR/music.json"
 mkdir -p "$OVERLAY_DIR"
 for overlay in "$ROOT"/assets/raw/stream-*.png; do
   [ -f "$overlay" ] && cp -f "$overlay" "$OVERLAY_DIR/"
 done
 
 declare -a wanted=()
+declare -a wantedaudio=()
 index=0
 while IFS=$'\t' read -r file duration; do
   index=$((index + 1))
@@ -37,6 +55,11 @@ while IFS=$'\t' read -r file duration; do
   printf -v prefix '%03d' "$index"
   output="$LOOP_DIR/$prefix-$stem.mp4"
   wanted+=("${output##*/}")
+  if ffprobe -v error -select_streams a -show_entries stream=codec_type -of csv=p=0 "$source" 2>/dev/null | grep -q audio; then
+    wantedaudio+=("true")
+  else
+    wantedaudio+=("false")
+  fi
   if [ "$ext" = mp4 ] || [ "$ext" = webm ]; then
     if ! { [ -e "$output" ] && [ "$output" -nt "$source" ]; }; then
       clipdur=$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$source")
@@ -57,6 +80,15 @@ done < <(jq -r '.entries[] | [.file, (.duration // "")] | @tsv' "$MANIFEST")
     [ "$first" -eq 1 ] || printf ','
     printf '"%s"' "$expected"
     first=0
+  done
+  printf '], "entries": ['
+  first=1
+  i=0
+  for expected in "${wanted[@]}"; do
+    [ "$first" -eq 1 ] || printf ','
+    printf '{"file":"%s","audio":%s}' "$expected" "${wantedaudio[$i]:-false}"
+    first=0
+    i=$((i + 1))
   done
   printf '] }\n'
 } > "$LOOP_DIR/loop.json.next" && mv "$LOOP_DIR/loop.json.next" "$LOOP_DIR/loop.json"
