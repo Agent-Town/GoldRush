@@ -45,9 +45,12 @@ else
   echo "[fire-runner] $(date +%H:%M:%S) WARN: node not on PATH — build/e2e/art gates will fail" >> "$LOG"
 fi
 
-echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model claude-opus-4-8)" >> "$LOG"
+# Opus weekly cap hit 2026-07-15 (resets Jul 18 01:00 Asia/Bangkok) — Sonnet fallback
+# keeps the fires alive; revert to opus after the reset (attended note in BACKLOG).
+FIRE_MODEL=${FIRE_MODEL:-claude-sonnet-4-6}
+echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model $FIRE_MODEL)" >> "$LOG"
 "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" \
-  --model claude-opus-4-8 \
+  --model "$FIRE_MODEL" \
   >> "$LOG" 2>&1
 RC=$?
 echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC" >> "$LOG"
