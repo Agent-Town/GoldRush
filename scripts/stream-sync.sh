@@ -47,8 +47,22 @@ while IFS=$'\t' read -r file duration; do
   fi
 done < <(jq -r '.entries[] | [.file, (.duration // "")] | @tsv' "$MANIFEST")
 
+# playlist for the browser-source player: ordered file list, atomically swapped
+{
+  printf '{ "generatedAt": "%s", "files": [' "$(date -u +%FT%TZ)"
+  first=1
+  for expected in "${wanted[@]}"; do
+    [ "$first" -eq 1 ] || printf ','
+    printf '"%s"' "$expected"
+    first=0
+  done
+  printf '] }\n'
+} > "$LOOP_DIR/loop.json.next" && mv "$LOOP_DIR/loop.json.next" "$LOOP_DIR/loop.json"
+cp -f "$ROOT/scripts/stream-player.html" "$LOOP_DIR/../player.html"
+
 for output in "$LOOP_DIR"/*; do
   [ -f "$output" ] || continue
+  [ "${output##*/}" = "loop.json" ] && continue
   name=${output##*/}; keep=0
   for expected in "${wanted[@]}"; do [ "$name" = "$expected" ] && keep=1 && break; done
   [ "$keep" -eq 1 ] || rm -f -- "$output"

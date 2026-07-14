@@ -8,7 +8,7 @@ The autopilot is file playback only. It never captures a screen, desktop, termin
 ## One-time OBS setup (under 15 minutes)
 
 1. Run `bash scripts/stream-sync.sh`.
-2. Create scene **AUTOPILOT**. Add a VLC Video Source whose playlist is every MP4 in `~/GoldRushStream/loop/`; enable loop and shuffle. Do not add Display Capture or Screen Capture.
+2. Create scene **AUTOPILOT**. Add a **Browser source** → check **Local file** → pick `~/GoldRushStream/player.html` → size 1920×1080 → enable "Control audio via OBS". The player reads `loop/loop.json`, plays the program in order with crossfades, and RE-READS THE PLAYLIST BETWEEN CLIPS — the factory can reprogram the channel while the stream runs (edit manifest → sync → the player picks it up at the next clip boundary; no re-encode, no OBS touch). Never add Display/Screen Capture. (VLC source works too if libvlc loads on your install, but the player is the canonical path.)
 3. Create scene **LIVE**. Add only explicit Window Capture sources for the game. Never add the terminal, editor, browser, Finder, password manager, or desktop.
 4. Set AUTOPILOT as the startup scene. Add OBS to macOS Login Items with `--startstreaming`; OBS owns restart-on-login. This repository's watchdog reports only and never restarts OBS or a stream.
 5. Enable obs-websocket on localhost (default port 4455) and authentication. Optionally install/configure `obs-cli` so `scripts/stream-watchdog.sh` can report authenticated stream status; without it the watchdog still reports the OBS process and websocket reachability.

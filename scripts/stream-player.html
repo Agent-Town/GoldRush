@@ -1,0 +1,70 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Gold Rush — Autopilot Player</title>
+<style>
+  html, body { margin: 0; width: 100%; height: 100%; background: #000; overflow: hidden; }
+  video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; opacity: 0; transition: opacity 0.35s ease; }
+  video.live { opacity: 1; }
+</style>
+<video id="a" muted autoplay playsinline></video>
+<video id="b" muted autoplay playsinline></video>
+<script>
+// Autopilot playlist player for the OBS Browser source.
+// Reads loop/loop.json (written by scripts/stream-sync.sh), plays entries in
+// order with a crossfade, re-fetches the playlist between clips so the factory
+// can reprogram the channel while it runs. File playback only — by design it
+// cannot show anything that is not in the reviewed loop folder.
+// Audio: OBS Browser source must have "Control audio via OBS" enabled; videos
+// start muted for autoplay law, then unmute once playing.
+const players = [document.getElementById('a'), document.getElementById('b')];
+let current = 0;
+let playlist = [];
+let index = 0;
+
+function loadPlaylist() {
+  // XHR, not fetch: the fetch API refuses file:// URLs, XHR serves them in
+  // local-file contexts (the OBS browser source loads this page as a local file).
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'loop/loop.json?ts=' + Date.now());
+    xhr.onload = () => {
+      try {
+        const data = JSON.parse(xhr.responseText);
+        if (Array.isArray(data.files) && data.files.length > 0) {
+          const changed = JSON.stringify(data.files) !== JSON.stringify(playlist);
+          playlist = data.files;
+          if (changed) index = index % playlist.length;
+        }
+      } catch (error) { /* keep last known playlist */ }
+      resolve();
+    };
+    xhr.onerror = () => resolve();
+    xhr.send();
+  });
+}
+
+function nextSource() {
+  if (playlist.length === 0) return null;
+  const file = playlist[index % playlist.length];
+  index += 1;
+  return 'loop/' + encodeURIComponent(file);
+}
+
+async function playNext() {
+  await loadPlaylist();
+  const source = nextSource();
+  if (!source) { setTimeout(playNext, 2000); return; }
+  const incoming = players[1 - current];
+  const outgoing = players[current];
+  incoming.src = source;
+  incoming.muted = true;
+  try { await incoming.play(); } catch (error) { setTimeout(playNext, 1000); return; }
+  incoming.muted = false;
+  incoming.classList.add('live');
+  outgoing.classList.remove('live');
+  current = 1 - current;
+  incoming.onended = () => playNext();
+  incoming.onerror = () => playNext();
+}
+loadPlaylist().then(playNext);
+</script>
