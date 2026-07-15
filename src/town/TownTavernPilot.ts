@@ -60,6 +60,7 @@ type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement };
 type PilotState = 'loading' | 'loaded' | 'error' | 'failed';
 type BuildingId = Exclude<keyof typeof MODEL_PATHS, 'dynamo_hall'>;
 type ModelCandidate = { era: number; url: string };
+type BuildingOrientation = { width: number; height: number; depth: number; upY: number };
 
 const steamPools = new WeakMap<THREE.Scene, TownSteamPool>();
 
@@ -170,6 +171,23 @@ function publish(
     .join('x');
 }
 
+function publishBuildingOrientation(canvas: HTMLCanvasElement, id: keyof typeof MODEL_PATHS, model: THREE.Object3D, metrics: ReturnType<typeof inspect>): void {
+  const orientations = JSON.parse(canvas.dataset.town3dPilotBuildingOrientations ?? '{}') as Record<string, BuildingOrientation>;
+  orientations[id] = {
+    width: metrics.width,
+    height: metrics.height,
+    depth: metrics.depth,
+    upY: new THREE.Vector3(0, 1, 0).applyQuaternion(model.getWorldQuaternion(new THREE.Quaternion())).y,
+  };
+  canvas.dataset.town3dPilotBuildingOrientations = JSON.stringify(orientations);
+}
+
+function clearBuildingOrientation(canvas: HTMLCanvasElement, id: keyof typeof MODEL_PATHS): void {
+  const orientations = JSON.parse(canvas.dataset.town3dPilotBuildingOrientations ?? '{}') as Record<string, BuildingOrientation>;
+  delete orientations[id];
+  canvas.dataset.town3dPilotBuildingOrientations = JSON.stringify(orientations);
+}
+
 function inspect(model: THREE.Object3D, runtimeEmissive = true): {
   meshes: number;
   triangles: number;
@@ -234,6 +252,7 @@ function installTownBuildingPilot(
   const shell = scene.getObjectByName(id === 'stamp-mill' ? 'TownStampMillSite' : `TownFacadeAssembly:${id}`);
   const building = id === 'stamp-mill' ? { footprint: { w: 6.2, d: 1.65 } } : townBuildings.find((entry) => entry.id === id)!;
   const slot = townPlazaSlot(id);
+  clearBuildingOrientation(canvas, id);
   publish(canvas, 'loading', 'facade');
 
   const candidates = eraCandidates(MODEL_PATHS[id]);
@@ -267,6 +286,7 @@ function installTownBuildingPilot(
       loaded.updateMatrixWorld(true);
       model = loaded;
       scene.add(model);
+      publishBuildingOrientation(canvas, id, loaded, metrics);
       removeSteam = addSteamAnchors(scene, canvas, id, loaded, candidate.era);
       canvas.dataset.town3dPilotEra = String(candidate.era);
       canvas.dataset.town3dPilotModel = candidate.url;
@@ -285,6 +305,7 @@ function installTownBuildingPilot(
 
   return () => {
     disposed = true;
+    clearBuildingOrientation(canvas, id);
     removeSteam();
     if (shell) shell.visible = true;
     if (!model) return;
@@ -300,6 +321,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
   let disposed = false;
   let model: THREE.Object3D | undefined;
   let removeSteam = () => {};
+  clearBuildingOrientation(canvas, 'dynamo_hall');
   publish(canvas, 'loading', 'facade');
   const candidates = eraCandidates(MODEL_PATHS.dynamo_hall);
   const load = (candidateIndex: number): void => new GLTFLoader().load(candidates[candidateIndex]!.url, ({ scene: loaded }) => {
@@ -323,6 +345,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
     loaded.updateMatrixWorld(true);
     model = loaded;
     scene.add(loaded);
+    publishBuildingOrientation(canvas, 'dynamo_hall', loaded, metrics);
     removeSteam = addSteamAnchors(scene, canvas, 'dynamo_hall', loaded, candidate.era);
     canvas.dataset.town3dPilotEra = String(candidate.era);
     canvas.dataset.town3dPilotModel = candidate.url;
@@ -336,6 +359,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
   load(0);
   return () => {
     disposed = true;
+    clearBuildingOrientation(canvas, 'dynamo_hall');
     removeSteam();
     group.visible = true;
     if (!model) return;
