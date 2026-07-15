@@ -234,6 +234,26 @@ export type ContractMothSeason = {
   litThreshold: number;
   attachDamagePerSecond: number;
 };
+export type ContractFairground = {
+  wheel: {
+    nodeId: string;
+    x: number;
+    z: number;
+    outputWatts: number;
+    maxHp: number;
+    spinRate: number;
+    viewRadius: number;
+  };
+  pavilions: Array<{
+    id: string;
+    nodeId: string;
+    x: number;
+    z: number;
+    baseRadius: number;
+    radiusPerNight: number;
+  }>;
+  crowdFlocks: { count: number; escortRadius: number };
+};
 export type ContractPowerNode =
   | { id: string; label: string; kind: 'producer'; x: number; z: number; outputWatts: number }
   | { id: string; label: string; kind: 'relay'; x: number; z: number }
@@ -545,6 +565,7 @@ export type ContractManifest = {
     dayNightCycle?: ContractDayNightCycle;
     weather?: ContractWeather;
     mothSeason?: ContractMothSeason;
+    fairground?: ContractFairground;
     powerGrid?: ContractPowerGrid;
     enemyLanternClasses?: readonly ContractEnemyLanternClass[];
     enemyRoster?: readonly ContractEnemyVariant[];

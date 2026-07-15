@@ -291,6 +291,7 @@ interface ThreeGameDiagnostics {
   megaproject: GrMegaprojectDiagnostics;
   escort: GrEscortDiagnostics;
   tram: GrTramDiagnostics | null;
+  fairground: GrFerrisWheelDiagnostics | null;
   fuel: import('./systems/FuelSystem').FuelDiagnostics | null;
   vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
   power: GrPowerGraphDiagnostics;
@@ -841,6 +842,7 @@ type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 type GrEscortDiagnostics = import('./systems/WaveSystem').WaveDiagnostics['escort'];
 type GrTramDiagnostics = import('./entities/TramPath').TramDiagnostics;
+type GrFerrisWheelDiagnostics = import('./entities/FerrisWheel').FerrisWheelDiagnostics;
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
 type GrMultiplayerBalanceWindow = import('./mp/MultiplayerBalanceHarness').MultiplayerBalanceWindow;
@@ -1053,6 +1055,7 @@ interface Window {
     setBeaconWave: (wave: number | null) => void;
     setDayNightTime: (seconds: number | null) => import('./systems/DayNightCycle').DayNightSnapshot | null;
     lightCoverage: (x: number, z: number) => number;
+    damageFerrisWheel: (amount: number) => boolean;
     spawnMoths: (count: number, x: number, z: number) => number;
     announceForTest: (text: string, kind?: 'wave' | 'baron' | 'baron-defeat') => void;
     setWave: (wave: number) => void;

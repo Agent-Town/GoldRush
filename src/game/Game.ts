@@ -69,6 +69,7 @@ import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
+import { FerrisWheel } from '../entities/FerrisWheel';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { DEV_TRAM_CONSUMER, TramPath, devTramPowerGraphDefinition } from '../entities/TramPath';
 import { Vehicle } from '../entities/Vehicle';
@@ -476,6 +477,7 @@ export class Game {
   private powerWireView?: PowerWireView;
   private damSurge?: DamSurgeEvent;
   private tram?: TramPath;
+  private ferrisWheel?: FerrisWheel;
   private canyonConnectAnnounced = false;
   private canyonConnectCompletedByDeadline = false;
   private canyonConnectFailed = false;
@@ -591,7 +593,7 @@ export class Game {
     areWavesDisabled,
     () => this.activeContract,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
-    () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active),
+    () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
     () => this.liveThiefCount(),
     () => this.territoryRingPresent,
     this.heroStart,
@@ -1293,6 +1295,13 @@ export class Game {
           return this.dayNightCycle?.sample(this.dayNightTimeOverride ?? this.timeAlive) ?? null;
         },
         lightCoverage: (x: number, z: number) => this.lightField.coverageAt(x, z),
+        damageFerrisWheel: (amount: number) => {
+          if (!this.ferrisWheel) return false;
+          this.combat.setTime(this.timeAlive);
+          this.combat.damageBuilding(this.ferrisWheel.target, amount, -1);
+          this.publishDiagnostics();
+          return true;
+        },
         spawnMoths: (count: number, x: number, z: number) => this.mothSwarm.spawn(this.enemies, count, x, z),
         announceForTest: (text: string, kind: 'wave' | 'baron' | 'baron-defeat' = 'wave') => {
           this.uiBridge.announce(text, this.timeAlive, null, 4, kind);
@@ -1596,6 +1605,7 @@ export class Game {
     this.powerWireView?.dispose();
     this.damSurge?.dispose();
     this.tram?.dispose();
+    this.ferrisWheel?.dispose();
     this.vehicle?.dispose();
     this.fuelSystem?.dispose();
     this.detailScatter?.dispose();
@@ -1761,6 +1771,8 @@ export class Game {
         ),
       );
       this.syncContractPowerGrid();
+      this.ferrisWheel?.update(simDelta);
+      this.syncFerrisWheelPower();
       this.powerGraph?.step(this.simTick);
       this.syncCanyonConnectObjective();
       if (this.tram && this.powerGraph) {
@@ -2513,6 +2525,12 @@ export class Game {
       if (pylonMarkers) this.scene.add(pylonMarkers);
       const ridgeGlow = createRidgeGlow(this.activeContract);
       if (ridgeGlow) this.scene.add(ridgeGlow);
+      const fairground = this.activeContract.twist.fairground;
+      if (fairground) {
+        this.ferrisWheel = new FerrisWheel(fairground.wheel);
+        this.goldTargeting.registerBuilding(this.ferrisWheel.target);
+        this.scene.add(this.ferrisWheel.group);
+      }
       const tramConsumer = contractGrid?.nodes.find((node) => node.kind === 'consumer' && node.role === 'tram');
       const escortMode = this.activeEscortMode();
       const tramEscort = escortMode?.vehicle === 'tram' ? escortMode : undefined;
@@ -2971,6 +2989,7 @@ export class Game {
     maxHp: number;
     wrecked: boolean;
   } {
+    if (target === this.ferrisWheel?.target) return this.ferrisWheel.damage(amount);
     const escort = this.waveSystem.resolveEscortDamage(target, amount);
     if (escort) return escort;
     const manifest = this.megaprojectManifest;
@@ -3216,6 +3235,7 @@ export class Game {
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
       tram: this.tram?.diagnostics ?? null,
+      fairground: this.ferrisWheel?.diagnostics ?? null,
       fuel: this.fuelSystem?.diagnostics ?? null,
       vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
@@ -3344,7 +3364,9 @@ export class Game {
   }
 
   autoSecureWaveForRun(): number {
-    return this.waitsForBaronDefeat() || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
+    return this.waitsForBaronDefeat()
+      || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
+      || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -3712,6 +3734,29 @@ export class Game {
     };
   }
 
+  private fairgroundCoverageSources(): LightSource[] {
+    const fairground = this.activeContract.twist.fairground;
+    const graph = this.powerGraph;
+    if (!fairground || !graph) return [];
+    const snapshot = graph.snapshot();
+    const elapsed = this.dayNightTimeOverride ?? this.timeAlive;
+    const night = Math.floor(elapsed / Math.max(1, this.activeContract.twist.dayNightCycle?.periodSeconds ?? 1));
+    const sources: LightSource[] = [];
+    const wheelSource = this.ferrisWheel?.coverageSource;
+    if (wheelSource) sources.push(wheelSource);
+    for (const pavilion of fairground.pavilions) {
+      if (snapshot.nodes.find((node) => node.id === pavilion.nodeId)?.state !== 'powered') continue;
+      sources.push({
+        id: `fairground:${pavilion.id}`,
+        kind: 'powered-lamp',
+        x: pavilion.x,
+        z: pavilion.z,
+        radius: pavilion.baseRadius + pavilion.radiusPerNight * night,
+      });
+    }
+    return sources;
+  }
+
   private syncNightShiftLighting(): void {
     const state = this.nightShiftLightingState();
     if (this.crawlerBoss.overchargeActive) {
@@ -3765,6 +3810,8 @@ export class Game {
       radius: Balance.decoyShed.lightRadius,
       targetWeight: this.activeContract.twist.mothSeason?.decoyWeight ?? 1,
     })));
+    const fairgroundSources = this.fairgroundCoverageSources();
+    fieldSources.push(...fairgroundSources);
     this.mothLightSources = fieldSources;
     this.lightField.update(this.dayNightCycle ? state.darkness : 0, this.dayNightCycle ? this.mothSwarm.dimSources(fieldSources) : []);
 
@@ -3780,6 +3827,7 @@ export class Game {
     for (const position of decoyPositions) {
       sources.push({ x: position.x, z: position.z, radius: Balance.decoyShed.lightRadius, kind: 'light' });
     }
+    for (const source of fairgroundSources) sources.push({ x: source.x, z: source.z, radius: source.radius, kind: 'watch' });
 
     const enemyLanterns = this.enemies.all
       .filter((enemy) => enemy.isAlive && enemy.carriesLantern)
@@ -3816,6 +3864,7 @@ export class Game {
         radius: Balance.decoyShed.lightRadius,
         kind: 'lantern' as const,
       })),
+      ...fairgroundSources.map((source) => ({ x: source.x, z: source.z, radius: source.radius, kind: 'lantern' as const })),
       ...this.actors.filter((actor) => actor.group.visible).map((actor) => ({
         x: actor.renderPosition.x,
         z: actor.renderPosition.z,
@@ -4044,6 +4093,16 @@ export class Game {
       if (snapshot.nodes.find((node) => node.id === site.nodeId)?.online !== online) {
         graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
       }
+    }
+  }
+
+  private syncFerrisWheelPower(): void {
+    const wheel = this.ferrisWheel;
+    const graph = this.powerGraph;
+    if (!wheel || !graph) return;
+    const node = graph.snapshot().nodes.find((entry) => entry.id === wheel.config.nodeId);
+    if (node && node.online !== wheel.diagnostics.spinning) {
+      graph.queueCommand({ type: 'set-node-online', nodeId: node.id, online: wheel.diagnostics.spinning });
     }
   }
 
@@ -4533,6 +4592,7 @@ export class Game {
     this.crawlerBoss.reset();
     this.landYachtBoss.reset();
     this.tram?.reset();
+    this.ferrisWheel?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
     this.applyRunPreset(readDifficultyPreset(), false);
@@ -4546,6 +4606,7 @@ export class Game {
     this.demolishCandidate = null;
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
+    if (this.ferrisWheel) this.goldTargeting.registerBuilding(this.ferrisWheel.target);
     this.pressureSystem.reset();
     this.pressureArsenalSystem.reset();
     this.syncMegaprojectSite();
