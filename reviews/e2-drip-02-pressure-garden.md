@@ -40,3 +40,27 @@ Left staged/untracked, RECOVERABLE, source-of-truth is the lane branch:
 - `A e2e/e2-pressure-garden.spec.ts` (staged; `git reset` + `rm` were all gated for this headless fire)
 - `?? artifacts/e2-pressure-garden/*.png` (untracked gate evidence)
 Next fire/attended: `git reset e2e/e2-pressure-garden.spec.ts && rm e2e/e2-pressure-garden.spec.ts` (or land it per recipe). Main's **committed** tree is clean — only the STATUS lock landed.
+
+---
+## s585 ADDENDUM (2026-07-15T17Z) — F-1 RESOLVED (mechanical, no owner decision) + the AUDIT supersedes this recipe
+
+**Everything above predates `audit-drip-data-path` (commit `abb584e9` on `lane/perf`/lane-d), which ran at 16:13 — AFTER s584's read.** VERIFIED this fire:
+
+### F-1 is NOT a bug and NOT an owner design fork — it is a stale fixture. RESOLVED.
+Traced `src/town/TownScene.ts`: muting and locking are **two independent concepts** s584 conflated:
+- **`data-contract-playable` / muted dot** (`TownScene.ts:1457`) = `'boardRow' in row` — *is this a full board contract or just an `upcoming`/teaser manifest entry?* Purely structural.
+- **`data-contract-locked` / Launch enabled** (`TownScene.ts:1509`, via `contractUnlock()` `:2197-2201`) = the `secured:e2-trestle` scoreboard check.
+
+On main, pressure-garden exists ONLY as a muted teaser (`manifest.json:9`, no boardRow) → one of the 3 muted dots. The full contract (`abb584e9` `contracts.json:475`, `boardRow.unlock="secured:e2-trestle"` at `:616`) **graduates it teaser→real board dot** → muted `3→2` is **CORRECT**. And because `seedProfile(page,'epoch-2-steamworks')` seeds **no scoreboard** (no trestle win), `contractUnlock` returns `unlocked:false` → the graduated dot renders **`data-contract-locked="true"`, Launch disabled**. The unlock gate is fully enforced — on `data-contract-locked`, not on muting. s584's "may be masking an unlock-gate interaction" is DISPROVEN.
+→ **Fix on land: `board-gating-and-profiles.spec.ts:82` `toHaveCount(3)→(2)`, AND add `data-contract-locked="true"` + Launch-disabled assertions for `e2-pressure-garden`** (the real correctness guard). No owner ruling required — design intent was never open (the pressure-garden spec unlocks it only after `seedTrestleWin()`; the authored `unlock:secured:e2-trestle` IS the ruling).
+
+### The audit is the AUTHORITATIVE re-land source — use `abb584e9`, NOT stranded `1e057810`.
+`abb584e9` (its own report: build PASS; incline real-data E2E desktop+mobile 1/1; pressure-garden-into-current-main desktop+mobile 1/1) holds as ONE coherent unit: `contracts.json` with **both** `e2-pressure-garden` (`:475`) + `e2-incline` (`:636`); `mask-tables/{e2-pressure-garden,e2-incline}.json` (the real masks Sol 3D-D polls, never on main before); honest board-launch `e2e/{e2-pressure-garden,e2-incline}.spec.ts`; and `artifacts/audit-drip-data-path/report.md` — the full `?contract=` data-path map (`TownScene.ts:1543`→`main.ts:163-173`→`ContractFamilies.ts:5,582-615,854-861,681-683,885-904`→`Game.ts:438`→`PressureSystem.ts:23-31`). Resolves the "grep-absent" paradox: at `647cd7a4` main genuinely lacked the data; `172143e5`'s subject over-claimed — its tree did NOT contain garden/incline data or mask tables.
+
+**Revised re-land = drain the `lane/perf` stack (`abb584e9`←`4e3e355f`←`094761a2`)**, stale-base, per `/drain`. Lands drip-02 AND drip-03 together, masks included. Intersects F-2 (epoch-2 contract-board fixtures shift as pressure-garden/incline graduate) → land it *with* the F-2 fixture-refresh in one gated pass. Substantial deliberate stale-base drain (Mistake #15 care) — left for a fire/attended with budget, NOT forced.
+
+### ⚠ s584 task-D "reset `lane/perf` @4e3e355f" is now DANGEROUS — DO NOT reset.
+`abb584e9` (sole copy of the audit resolution + mask-tables) sits atop `4e3e355f` on `lane/perf`. A reset destroys it. s584's reset instruction predates the 16:13 audit commit (stale-reset-req-predates-lane-content). The three `lane/perf` commits ARE the drip re-land source, not garbage.
+
+### Working-tree: s585 corrected the residual.
+s585 accidentally committed the pre-staged stranded spec (non-pathspec `git commit` swept the `A e2e/e2-pressure-garden.spec.ts`), then reverted it (`f37f6412`) — that lone spec fails on main (no `e2-pressure-garden` in main's `contracts.json`). Main's committed tree is clean. The stranded 1e057810 spec is parked at `.scratch-s585/e2-pressure-garden.spec.ts.stranded-1e057810` (superseded by `abb584e9`'s honest version anyway).
