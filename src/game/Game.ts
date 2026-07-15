@@ -147,6 +147,7 @@ import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type Upgra
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
@@ -612,6 +613,27 @@ export class Game {
     () => this.powerGraph?.snapshot().nodes ?? [],
     (command) => this.powerGraph?.queueCommand(command) === true,
     (origin, target, damage, radius) => this.combat.launchLob(origin, target, 0.05, damage, radius, 'baron_rocket:-3'),
+  );
+  private readonly landYachtBoss = new LandYachtBossSystem(
+    () => this.enemies.all,
+    () => (this.activeContract.tileParams as typeof this.activeContract.tileParams & {
+      orbitSpawn?: { center: { x: number; z: number }; radius: number; angularSpeed: number };
+    }).orbitSpawn ?? null,
+    (position) => Boolean(this.enemies.spawn(position.clone().add(new THREE.Vector3(1.8, 0, 1.8)), {
+      hpScale: 1,
+      speedScale: 1.1,
+      visualScale: 1,
+      variantId: 'motor_gang',
+      variantLabel: 'Motor Gang Escort',
+      tint: '#a0522d',
+    })),
+    (position, radius) => this.goldTargeting.buildingsInRadius(position, radius).find((target) => target.family === 'turret') ?? null,
+    (target, amount) => {
+      const hp = target.hp;
+      this.combat.damageBuilding(target, amount, -4);
+      return target.hp < hp;
+    },
+    (position, text) => this.vfx.floatText(position, text, '#c4883a'),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -1092,7 +1114,8 @@ export class Game {
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
       const isCrawlerComponent = event.variantId === 'dynamo_crawler';
-      if (!isCrawlerComponent) {
+      const isLandYachtComponent = event.variantId === 'land_yacht';
+      if (!isCrawlerComponent && !isLandYachtComponent) {
         const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
         this.discoverLedgerEnemyEntry(entryId);
         this.revealLedgerEnemyStats(entryId);
@@ -1100,6 +1123,10 @@ export class Game {
       if (isCrawlerComponent) {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.crawlerBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
+      if (isLandYachtComponent) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.landYachtBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
       }
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
@@ -1118,6 +1145,12 @@ export class Game {
       if (!isSilentCrawlerFlicker) this.audio.play('wave-start-horn');
       this.announceBaronBeat(event.wave, event.at);
       this.crawlerBoss.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
+      this.landYachtBoss.onWaveStarted(
+        event.wave,
+        baron?.variantId === 'land_yacht' ? baron.wave : Number.POSITIVE_INFINITY,
+        event.at,
+        this.buildSystem.diagnostics.hp.some((building) => building.id === 'sentry_beacon' && !building.wrecked && building.hp > 0),
+      );
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -1519,6 +1552,7 @@ export class Game {
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
     this.crawlerBoss.dispose();
+    this.landYachtBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1691,7 +1725,11 @@ export class Game {
       if (this.activeContract.twist.baron?.variantId === 'dynamo_crawler' && this.baronBeatenThisRun) {
         this.crawlerBoss.restoreWreck(this.baronStandardPosition);
       }
+      if (this.activeContract.twist.baron?.variantId === 'land_yacht' && this.baronBeatenThisRun) {
+        this.landYachtBoss.restoreWreck(this.baronStandardPosition);
+      }
       this.crawlerBoss.update(this.timeAlive);
+      this.landYachtBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -2520,6 +2558,7 @@ export class Game {
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.scene.add(this.crawlerBoss.group);
+    this.scene.add(this.landYachtBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
   }
@@ -3141,6 +3180,7 @@ export class Game {
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       canyonWorks: this.canyonConnectDiagnostics(),
       crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
+      landYachtBoss: this.activeContract.twist.baron?.variantId === 'land_yacht' ? this.landYachtBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -3395,7 +3435,7 @@ export class Game {
     this.charmPauseActive = false;
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
-    if (baron.variantId === 'dynamo_crawler') this.baronStandardPosition.copy(position);
+    if (baron.variantId === 'dynamo_crawler' || baron.variantId === 'land_yacht') this.baronStandardPosition.copy(position);
     else this.plantBaronStandard(position);
     const burstScale = Math.max(3, enemy?.visualScale ?? 3);
     this.combatVfx.dustPuff(position, burstScale);
@@ -4450,6 +4490,7 @@ export class Game {
     this.canyonConnectCompletedByDeadline = false;
     this.canyonConnectFailed = false;
     this.crawlerBoss.reset();
+    this.landYachtBoss.reset();
     this.tram?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
