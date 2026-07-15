@@ -12,7 +12,7 @@ BLENDER="${BLENDER:-/Applications/Blender.app/Contents/MacOS/Blender}"
 "$BLENDER" --background "$BLEND" --python-expr "
 import bpy, sys
 meshes = [o for o in bpy.data.objects if o.type == 'MESH']
-anchors = sorted((o for o in bpy.data.objects if o.type == 'EMPTY' and o.name.startswith('steam_anchor_')), key=lambda o: o.name)
+anchors = sorted((o for o in bpy.data.objects if o.type == 'EMPTY' and o.name.startswith(('steam_anchor_', 'arc_anchor_'))), key=lambda o: o.name)
 mats = {m.name for o in meshes for m in (s.material for s in o.material_slots) if m}
 tris = sum(sum(len(p.vertices) - 2 for p in o.data.polygons) for o in meshes)
 cams = [o for o in bpy.data.objects if o.type == 'CAMERA']
