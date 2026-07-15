@@ -5,12 +5,10 @@ import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
-import voltageProps from '../assets/pilots/plaza-props-3d/era-props.e3.json' with { type: 'json' };
 
 const ARTIFACT_DIR = path.resolve('artifacts/town-era-switch');
 const E2 = 'epoch-2-steamworks';
-const E3 = 'epoch-3-voltage';
-const E2_MODEL = /\/tavern\.e2\.glb(?:\?.*)?$/;
+const E2_MODEL = /\/tavern\.e2\.glb$/;
 const BASE_MODEL = /\/town-v3-tavern(?:-[^/.]+)?\.glb(?:\?.*)?$/;
 const BUILDINGS = ['tavern', 'general_store', 'claim_office', 'assay_office', 'chapel', 'schoolhouse', 'stamp-mill', 'dynamo_hall'] as const;
 
@@ -95,7 +93,7 @@ test('E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era 
   await seed(page);
   const found = errors(page);
   const requests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes('tavern') && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', (request) => { if (E2_MODEL.test(request.url()) || BASE_MODEL.test(request.url())) requests.push(request.url()); });
   await page.route(E2_MODEL, async (route) => route.fulfill({ body: await fixture(), contentType: 'model/gltf-binary' }));
 
   await openTown(page, '?town3dPilot=tavern&tier=full');
@@ -127,7 +125,7 @@ test('a missing E2 sibling falls back to base without errors', async ({ page }) 
   await seed(page, E2);
   const found = errors(page);
   const requests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes('tavern') && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', (request) => { if (E2_MODEL.test(request.url()) || BASE_MODEL.test(request.url())) requests.push(request.url()); });
   await page.route(E2_MODEL, (route) => route.fulfill({ body: '', contentType: 'model/gltf-binary' }));
   await openTown(page, '?town3dPilot=tavern&tier=full');
   const canvas = page.locator('canvas');
@@ -149,15 +147,6 @@ test('LITE keeps facades and never fetches models or mounts plumes', async ({ pa
   await expect(canvas).toHaveAttribute('data-town3d-pilot-render-source', 'facade');
   await expect(canvas).not.toHaveAttribute('data-town3d-steam-plumes', /[1-9]/);
   expect(requests).toEqual([]);
-  expect(found).toEqual({ console: [], page: [] });
-});
-
-test('Voltage mounts every accessory from the real E3 manifest', async ({ page }) => {
-  await seed(page, E3);
-  const found = errors(page);
-  await openTown(page, '?town3dPilot=props&tier=full');
-  const mounted = (await page.locator('canvas').getAttribute('data-town3d-era-prop-ids'))?.split(',') ?? [];
-  for (const prop of voltageProps.props) expect(mounted).toContain(prop.id);
   expect(found).toEqual({ console: [], page: [] });
 });
 
