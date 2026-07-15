@@ -1,12 +1,111 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`
 
-Tip: exact Wave 8 pilot SHA is reported in the attended handoff
+Tip: exact Wave 8 wide SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the three-building E3 Voltage pilot passes the ACROSS-THE-PLAZA TEST, all-angle construction review, exact-envelope/material/budget contracts, and byte-identical official re-export. The wide E3 family remains deliberately unstarted pending this verdict.**
+Verdict: **READY-FOR-GATES — the complete eight-building E3 family, E3 wagon/trough variants, and the shared-atlas voltage accessory pack pass the locked-camera, construction, export, placement, and live-loading gates. The Tavern rider is strengthened. The Crawler remains excluded.**
+
+## Wave 8 wide — complete E3 Voltage Town
+
+Wave 8 wide completes the five production identities that were not part of the accepted three-building pilot, redelivers the Tavern at the stronger silhouette bar, adds E3 siblings for the covered wagon and water trough, and proposes the ratifiable wire-run / insulator-post / transformer-shed accessory pack. The production inventory remains eight real building GLBs; there is still no ninth E1 shell or canonical ninth Town slot to transform.
+
+### Per-building findings
+
+| Building | E3 identity edit | Locked-camera / all-angle verdict | Final contract |
+| --- | --- | --- | --- |
+| Tavern / Electric Lounge | accepted E3 face plus two supported lamp arms, heavy roofline conductor, and wire drops tied into the existing electrical hardware | blind reviewer selected E3 B at 98%; now immediate at gameplay distance. Four angles show attached conductors and preserve the inherited shell | 14,900 tris; 3 anchors; SHA `1d3d60500c2f…` |
+| General Store | three-insulator public feed moved onto the visible facade roofline, teal conductor, attached service drops, twin loading lamps, and delivery coil | first feed hid behind the false front; corrected reviewer selected E3 A at 97% and passed it at gameplay distance with no support/material defect | 5,056 tris; 3 anchors; SHA `1a13c3f766d3…` |
+| Claim Office | civic crossarm, copper hall drop, twin public lamps, and voltage dial | reviewer selected E3 B at 97%; readable at gameplay distance with only minor intentional roofline crowding | 6,668 tris; 3 anchors; SHA `ce1f6953d4b3…` |
+| Assay Office | electrode rack, copper laboratory drop, work lamp, induction coil, and spark gap | reviewer selected E3 A at 98%; immediate at gameplay distance and physically supported from all four angles | 6,248 tris; 3 anchors; SHA `b9562ddbdabf…` |
+| Chapel | twin lightning masts, teal voltage crowns, inward arc horns, porch lamps, and covenant ring; the cross remains untouched | the first full-width frame read as scaffolding. Final saddles and copper/teal boots visibly ground the flanking masts; correction review passes and confirms the belfry/cross remains clear | 6,748 tris; 3 anchors; SHA `ed2e11c0eecc…` |
+| Schoolhouse / Academy | accepted pilot orrery dome, feed stacks, corona, rod, and upper-window machine | accepted pilot remains byte-for-byte unchanged; prior blind verdict 98% and wide reviewer again selected E3 correctly | 8,752 tris; 3 anchors; SHA `8a977ea418b1…` |
+| Stamp Mill | accepted pilot roof-braced crossarm, bus, ceramic stacks, winding face, motor housing, and conduit | accepted pilot remains byte-for-byte unchanged; its prior attended plaza verdict governs the wide family | 2,916 tris; 3 anchors; SHA `499fc7ecf4ab…` |
+| Dynamo Hall | four-insulator crown bus, high-contrast teal conductor, exiting busbars, roof induction toroid / arc crown, and status lamps | the inherited parcel is heavily cropped at the locked camera; reviewer still selected E3 A at 99% from the visible teal roofline. Four angles confirm all hardware is supported and finished | 6,248 tris; 3 anchors; SHA `027857bebc8d…` |
+
+Every building has one mesh, one primitive, one material, one embedded 1024 x 1024 image, exactly three sequential `arc_anchor_*` nodes, no inherited `steam_anchor_*` nodes, and no cameras, lights, animations, or emissive textures. Each preserves the exact E2 maximum envelope. The tonal gate now measures a localized target-building-and-neighbor crop rather than diluting the result across the full ground plate. The worst result is the Stamp Mill at `1.2915%`, far below the 5% ceiling.
+
+### Prop variants and accessory pack
+
+| Asset | E3 role | Final contract |
+| --- | --- | --- |
+| Covered wagon E3 | retained E2 tank, straps, feed, and vent plus a roof conductor / ceramic terminal | 1,780 tris; exact E2 envelope; 1 anchor; SHA `e7e7b0cd6d85…` |
+| Water trough E3 | retained E2 pipework plus insulated electrical pump/feed treatment | 1,096 tris; exact E2 envelope; 2 anchors; SHA `866920e7f82b…` |
+| Wire run | low supported distribution span | 408 tris; 2 anchors; SHA `6ed2bb9983c0…` |
+| Insulator post | paired public ceramic terminals | 368 tris; 2 anchors; SHA `94231ed03b5a…` |
+| Transformer shed | compact iron-and-timber neighborhood transformer | 588 tris; 3 anchors; SHA `9eb2ddc1aa5d…` |
+
+The three E3-only accessories embed the same byte-identical 1024 x 1024 atlas (`817f26f475b1…`). `era-props.e3.json` proposes five placements: two wire runs, two insulator posts, and one transformer shed. E3 is cumulative: all eight E2 accessory placements remain present. Minimum E3 clearances are `1.1158` from walk routes, `4.0158` from the protected stage, `0.4426` from building pads, `0.7040` from shipped props, `0.6198` from retained E2 accessories, and `1.1926` E3-to-E3. The Pan Monument remains unchanged and excluded from era keying.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry budgets | all eight buildings pass under 15,000 tris; wagon/trough remain inside inherited 1,800 / 1,200 budgets; all accessories are under 600 tris |
+| Materials and hygiene | 13/13 GLBs have one baked material and embedded image: buildings / new accessories use 1024, inherited wagon/trough use their 256 atlas; 0 cameras, lights, animations, or emissive textures |
+| Interfaces | exact inherited envelopes for all eight buildings and both prop variants; sequential `arc_anchor_1..N` nodes throughout; no stale steam anchors |
+| Determinism | official `scripts/reexport-pilot.sh` reproduces all 13 GLBs byte-identically; independent saved-BLEND verifier agrees |
+| Placement | all five E3 records clear routes, pads, shipped props, all eight retained E2 accessories, one another, and the open plaza stage |
+| Tonal law | localized changed-building plus 64 px neighbor-context crops pass 8/8; worst delta is `1.2915%`, far below 5% |
+| Live loading | direct probes mount each newly authored / revised building sibling as era 3 from a real `model/gltf-binary` response with zero console/page errors. Prop variants and accessory manifest remain the factory's ratification/mount boundary |
+| App build | `npm run build` passes on the final asset bytes |
+| Across-the-plaza QA | fresh blind review selected the correct E3 side for every newly authored / revised face; corrected General Store and Chapel rereviews pass. Accepted Schoolhouse / Stamp Mill pilot verdicts remain authoritative |
+
+The legacy `e2e/town-era-switch.spec.ts` full-mode fixture was also attempted. Its broad `/tavern.e2.glb/` route intercepts Vite's `tavern.e2.glb?import&url` JavaScript module request and serves binary GLB bytes, so the dynamic Town module remains in `loading`; LITE passes. This is a pre-existing harness collision outside the asset-wave firewall. A direct equivalent E1 probe loads normally, and the stronger combined E3 probe above validates every delivered GLB through the real runtime seam without route substitution.
+
+### Evidence index
+
+Production comparisons are **E2 on the left, E3 on the right**. Blind boards retain randomized A/B order.
+
+- Whole Town: [`town-wide-verdict-e2-e3-ab.png`](../artifacts/town-e3-wide/town-wide-verdict-e2-e3-ab.png)
+- All eight locked-camera A/Bs: [`all-buildings-town-contact.png`](../artifacts/town-e3-wide/all-buildings-town-contact.png)
+- All eight four-angle A/Bs: [`all-buildings-turntable-contact.png`](../artifacts/town-e3-wide/all-buildings-turntable-contact.png)
+- Blind gameplay crops: [`all-pairs-contact.png`](../artifacts/town-e3-wide/blind-crops/all-pairs-contact.png)
+- Props and placement: [`accessory-pack-e3.png`](../artifacts/town-e3-wide/accessory-pack-e3.png), [`e3-accessory-clearance-overlay.png`](../artifacts/town-e3-wide/e3-accessory-clearance-overlay.png)
+- Machine evidence: [`asset-contract.json`](../artifacts/town-e3-wide/asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e3-wide/comparison-metrics.json), [`blind-key.json`](../artifacts/town-e3-wide/blind-key.json)
+
+### F-3DC-21 — Voltage hardware must occupy the visible roofline
+
+**Severity:** resolved visual gate
+
+**Evidence:** first-pass General Store and Dynamo Hall hardware was contract-correct but sat behind the false front or disappeared against the black roof at the locked camera. Tavern also began this wave above chance but below the owner's 7a bar. The final faces put a teal public feed on the General Store's visible roofline, a high-contrast crown conductor on Dynamo Hall, and a heavy roofline conductor plus supported drops on the Tavern. Neutral reviewers selected the corrected variants at 97%, 99%, and 98% respectively.
+
+**Decision:** for cropped / false-front parcels, a valid electrical system is not enough. At least one attached conductor, crossarm, or coil must occupy pixels the locked gameplay camera can actually see.
+
+### F-3DC-22 — Electrical silhouette still needs readable load paths
+
+**Severity:** resolved construction gate
+
+**Evidence:** the Chapel's first full-width meeting-line frame passed bounds and budget but read as a gallows/scaffold around the belfry. It was replaced with two narrower lightning masts that flank the heritage cross. A second review then found their roof penetrations under-explained, so the final model adds dark saddles, copper boots, and teal boot bands. Correction review passes: the masts are grounded and the belfry/cross silhouette remains clear.
+
+**Decision:** crossarms and wires may be thin, but their poles need visible feet, saddles, collars, or brackets. The voltage era cannot borrow visual ambiguity from unfinished construction.
+
+### F-3DC-23 — The accessory manifest is a placement and factory-handoff interface
+
+**Severity:** resolved integration gate
+
+**Evidence:** five proposed placements clear every protected route, pad, existing prop, peer accessory, and the plaza stage. Vite discovers the two prop siblings and three accessory URL modules in the production build, while the current plaza-prop runtime still mounts its fixed base set; the manifest is therefore a factory handoff, not a claim that these accessories already appear in live play.
+
+**Decision:** factory ratification should use the committed manifest positions and asset paths as written, then add the era-keyed prop/accessory mount separately. The pack owns geometry and mount records; live arc timing, tint, intensity, and manifest consumption remain factory-owned.
+
+### F-3DC-24 — Epoch infrastructure accumulates
+
+**Severity:** resolved persistence gate
+
+**Evidence:** independent review caught that the first E3 manifest reused E2 pipe / gauge / manifold coordinates and that wagon/trough initially branched from their E1 files. The final manifest moves every E3-only accessory to a distinct cleared position and verifies clearance against all eight retained E2 records. The final wagon and trough open the accepted `.e2.blend` siblings, preserve their steam hardware and exact E2 envelopes, then add voltage-era treatment. `build_era_props_e2.py` is unchanged.
+
+**Decision:** an era sibling edits the immediately preceding identity forward. New era infrastructure supplements retained infrastructure unless the bundle explicitly retires it; it never silently erases or occupies the same space.
+
+### Wave 8 wide integration boundary
+
+- Add E3 siblings only. E1 and E2 building/prop production files remain untouched; the accepted Schoolhouse and Stamp Mill E3 pilot files remain byte-for-byte unchanged.
+- Add one shared E3 accessory atlas, three accessory GLBs / BLENDs, and `era-props.e3.json` under `assets/pilots/plaza-props-3d/`.
+- No runtime source or e2e file changed. The existing building loader discovers building siblings; the factory still owns prop-variant and manifest mounting.
+- Production inventory is eight real buildings. No ninth shell is fabricated.
+- The transferred Crawler grant remains closed and untouched.
+- Branch base: `9f6fe2de`; no push or main merge performed.
 
 ## Wave 8 pilot — E3 Voltage building faces
 
