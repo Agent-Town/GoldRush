@@ -1,0 +1,112 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-2-steamworks/contracts.json",
+    "tileId": "e2-incline",
+    "size": 96,
+    "river": true,
+    "ford": true,
+    "fords": [
+      { "id": "lower-line-crossing", "x": -12, "halfWidth": 3 },
+      { "id": "upper-line-crossing", "x": 12, "halfWidth": 3 }
+    ],
+    "buildZones": [
+      { "id": "lower-yard", "bank": "south", "minX": -36, "maxX": 36, "minZ": -30, "maxZ": -7 },
+      { "id": "landing-yard", "bank": "north", "minX": -36, "maxX": 36, "minZ": 7, "maxZ": 18 },
+      { "id": "west-incline-bench", "bank": "north", "minX": -38, "maxX": -4, "minZ": 22, "maxZ": 32 },
+      { "id": "upper-ore-yard", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
+    ],
+    "stakeMarkers": [
+      { "id": "lower-engine-house", "x": -24, "z": -18, "lossCondition": true },
+      { "id": "upper-winch-house", "x": 0, "z": 40, "lossCondition": false }
+    ],
+    "rails": [
+      {
+        "style": "steamworks",
+        "points": [
+          { "x": -12, "z": -46 },
+          { "x": -12, "z": -24 },
+          { "x": -12, "z": -7 },
+          { "x": -12, "z": 7 },
+          { "x": -12, "z": 28 },
+          { "x": -12, "z": 46 }
+        ]
+      },
+      {
+        "style": "mine-spur",
+        "points": [
+          { "x": 12, "z": -46 },
+          { "x": 12, "z": -24 },
+          { "x": 12, "z": -7 },
+          { "x": 12, "z": 7 },
+          { "x": 12, "z": 28 },
+          { "x": 12, "z": 46 }
+        ]
+      }
+    ],
+    "waterSources": [],
+    "harvestAnchors": [
+      { "x": -30, "z": -20 },
+      { "x": 30, "z": -20 },
+      { "x": -30, "z": 26 },
+      { "x": 30, "z": 26 },
+      { "x": -22, "z": 40 },
+      { "x": 22, "z": 40 }
+    ],
+    "elevation": {
+      "cellSize": 2,
+      "slopeMax": 0.35,
+      "waterline": -0.1,
+      "analytic": {
+        "hillMine": 1,
+        "creekHeight": -0.35,
+        "railHeight": 0,
+        "t1Height": 0.7,
+        "t2Height": 2.2,
+        "t3Height": 3.8,
+        "creekBlendStart": -10,
+        "creekBlendEnd": -5,
+        "t1RampStart": 6,
+        "t1RampEnd": 13,
+        "t2RampStart": 19,
+        "t2RampEnd": 28,
+        "t3RampStart": 33,
+        "t3RampEnd": 42
+      }
+    },
+    "heightfield": {
+      "id": "incline-cut-benches",
+      "mode": "visual",
+      "bankRelief": { "amount": 0.38, "width": 9 }
+    },
+    "water": {
+      "id": "incline-base-water-band",
+      "visualHalfWidth": 8,
+      "depths": { "river": 1.15, "ford": 0.3, "shallows": 0.22 },
+      "speedMul": { "river": 0.48, "ford": 0.82, "shallows": 0.74 }
+    },
+    "lanes": {
+      "spawnEdges": ["south", "north", "east", "west"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": [
+      { "edge": "south", "x": 12, "z": -46 },
+      { "edge": "north", "x": 12, "z": 46 },
+      { "edge": "east", "x": 46, "z": 24 },
+      { "edge": "west", "x": -46, "z": 24 }
+    ],
+    "coalSeams": []
+  },
+  "waterAgreement": {
+    "deepBand": { "minZ": -5, "maxZ": 5 },
+    "shallowsEnd": { "minZ": -6.25, "maxZ": 6.25 },
+    "placeableBankStartsBeyondAbsZ": 6.25,
+    "factoryVisualHalfWidth": 8,
+    "sluiceSamples": [
+      { "x": -30, "z": -7 },
+      { "x": 30, "z": -7 },
+      { "x": -30, "z": 7 },
+      { "x": 30, "z": 7 }
+    ]
+  }
+}

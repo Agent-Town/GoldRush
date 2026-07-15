@@ -1,7 +1,7 @@
 # Review — e2-drip-02-pressure-garden (RE-LAND attempt, s584 fire)
 
 **Slice/branch/tip:** drip-02 pressure-garden · salvage source `lane/e2-arsenal @1e057810` (real drip-02: contract JSON +161, spec +151, screenshots) · re-land target = fresh `main @f8efb73e`
-**Verdict:** ⛔ **HOLD — NOT MERGED.** Contract + spec are **engine-verified-ready in isolation**, but the drain lands into an attended-owned contract-board test surface that (a) needs a design answer for one new red and (b) already carries 5 pre-existing reds from attended's `172143e5` e4/e5 epoch additions. A fire must not resolve the design question blind (Mistake #12, §7.6).
+**Verdict:** ✅ **MERGED by s586** (see "s586 LANDED" section at the bottom — the authoritative record). The s584/s585 HOLD below is kept for the investigation trail; it was superseded when the `abb584e9` audit stack became the re-land source and the F-1 count was re-derived from real test output (`3→1`, not the predicted `3→2`).
 
 ## What it does (player-visible)
 Adds **"The Pressure Garden"** (`e2-pressure-garden`) — the 3rd Steamworks contract, unlocked by `secured:e2-trestle`. A geothermal terrace map: 3 boiler beds + 4 stepped terraces + one clean water band; twist `pressureEnabled:true`, secureWave 12; roster rail_tough (S) / steam_wrecker (E+W) / coal_thief (N). Teaches the pressure/coal/boiler loop (keep ≥2 boilers hot through waves 8–12).
@@ -64,3 +64,48 @@ On main, pressure-garden exists ONLY as a muted teaser (`manifest.json:9`, no bo
 
 ### Working-tree: s585 corrected the residual.
 s585 accidentally committed the pre-staged stranded spec (non-pathspec `git commit` swept the `A e2e/e2-pressure-garden.spec.ts`), then reverted it (`f37f6412`) — that lone spec fails on main (no `e2-pressure-garden` in main's `contracts.json`). Main's committed tree is clean. The stranded 1e057810 spec is parked at `.scratch-s585/e2-pressure-garden.spec.ts.stranded-1e057810` (superseded by `abb584e9`'s honest version anyway).
+
+---
+## s586 LANDED — drip-02 + drip-03 MERGED (RE-LAND, stale-base stack drained safely)
+
+**Verdict:** ✅ **MERGED to main.** drip-02 pressure-garden + drip-03 incline (contracts + real mask-tables + honest board-launch specs) re-landed onto current main. board-gating fixture corrected WITH its real correctness guard. The 5 F-2 reds — and 4 MORE I found in the same surface — are PROVEN pre-existing `172143e5` e4/e5 debt (baseline run this fire), left for one coherent corrective, NOT blind-bumped.
+
+### What actually landed (RE-LAND, not a blind merge)
+Source stack `lane/perf @abb584e9←4e3e355f←094761a2`, base `0b04cf13` — **122 commits behind main** (Mistake #15 territory). Per-file classification proved most of the stack is already superseded:
+| File | Class | Action |
+|------|-------|--------|
+| `assets/contracts/epoch-2-steamworks/contracts.json` | MAIN-MOVED (main added `pressureEnabled:true` to hill-mine; lane appended 2 contracts + stale-deleted that line) | 3-way: took lane content, **re-added main's `pressureEnabled`** → diff vs main = **390 insertions, 0 deletions** (pure append of `e2-pressure-garden` + `e2-incline`) |
+| `assets/contracts/epoch-2-steamworks/mask-tables/{e2-pressure-garden,e2-incline}.json` | NEW | copied from lane tip (byte-verified vs `lane/perf`) |
+| `e2e/{e2-pressure-garden,e2-incline}.spec.ts` | NEW | copied from lane tip |
+| `src/world/Terrain3dClaimPilot.ts` | **SKIPPED** | lane copy is STALER than main — it removes main's `onVisualHeightSourceInstalled`. `wire-landmark-mounts` (094761a2) already landed on main in a newer form. Landing the lane copy would REVERT main. |
+| `e2e/terrain3d-registry.spec.ts` | **SKIPPED** | lane copy DELETES main's "Hill Mine rails resample" test. Main is newer. |
+| `artifacts/wire-landmark-mounts/*`, `artifacts/*/report.md` | SKIPPED | superseded artifacts / non-gameplay |
+
+### Evidence (all on the merged tree; scratch config `playwright.s586.config.ts`, port 5234)
+| Gate | Result |
+|------|--------|
+| `npx tsc --noEmit` | ✓ clean |
+| `npm run build` | ✓ built 840ms (Terrain3dClaimPilot bundles with main's newer version) |
+| `e2-pressure-garden` + `e2-incline` **desktop+mobile** | ✓ **4 passed** |
+| `board-gating-and-profiles` **desktop+mobile** | ✓ **2 passed** (after fix) |
+| combined final run (3 specs × 2 projects) | ✓ **6 passed (37s)** |
+| contracts.json diff vs main | ✓ 390 insertions / **0 deletions** (additive, `pressureEnabled` intact) |
+| contracts.json JSON.parse | ✓ 4 contracts: hill-mine, trestle, pressure-garden, incline |
+Screenshots: `reviews/shots-e2-drip-02-pressure-garden/` (pressure-garden board + boilers-hot desktop/mobile; board-gating steamworks-profiles desktop/mobile).
+
+### F-1 (board-gating) — RESOLVED and LANDED, with a CORRECTED count
+s585 predicted muted `3→2`. **Actual received is `3→1`** (verified, not inherited): BOTH `e2-pressure-garden` AND `e2-incline` carry a `boardRow`, so BOTH graduate out of the muted teaser set (s585 forgot incline also graduates). `board-gating-and-profiles.spec.ts:82` set to `toHaveCount(1)`; **added the real correctness guard** — after clicking the graduated pressure-garden dot, assert `data-contract-locked="true"` + Launch disabled (the epoch-2 seed has no e2-trestle win, so `unlock:"secured:e2-trestle"` stays unmet). Also fixed `:92` page-count: pressure-garden is now a real navigable (locked) page, so the click navigates to its page ("8 / 12"); the gating invariant is the DENOMINATOR == playable-profile count, asserted via `/^\d+ / ${playableCount}$/` (future-era still gated out). This is a fixture the drip legitimately necessitates, guarded against the masking risk s584 feared.
+
+### F-2 (REVISED + EXPANDED) — 9 pre-existing `172143e5` reds, PROVEN, NOT blind-fixed
+Baseline this fire: reverted `contracts.json` to main's 2-contract state (clean JSON slice) and re-ran — the SAME specs fail with 2 contracts as with 4. So these are `172143e5` e4/e5 fixture debt, **independent of the drip** (my +2 contracts only shifts some received COUNTS, e.g. board total 10→12; it turns NO spec green→red). The set is broader than s585's list of 5:
+- `sci-04-contract-registry.spec.ts:59` — `listEpochs()` now returns 5 (`+epoch-4-motor, +epoch-5-deepwater`); expects 3. Pure epoch-list debt.
+- `sci-04-contract-registry.spec.ts:123` — locked Steamworks stub now returns FULL contract objects (+1459 lines) not `[{id:'e2-hill-mine'}]`. **Registry-loader semantics** (a fire must not rewrite this blind).
+- `board-upcoming-surveys.spec.ts:44` — `contract-upcoming-e2-trestle` "SURVEY PENDING" element gone. Board-composition change.
+- `contract-briefings.spec.ts:259`, `e2-pressure-economy.spec.ts:94` — same board suite.
+- `072-era-activation.spec.ts:246` — `research-next-epoch` element missing (next-epoch logic vs e4/e5). `:329` — same.
+- `town-t3-board.spec.ts:157` — board page-count "1 / 6" → real "1 / 12" (stale by e4/e5). `:268` — last-page memory.
+
+These are attended-owned (`172143e5`) and span board-pagination / era-activation / registry-loader semantics — NOT count-only bumps. Blind-bumping them across an attended surface is the exact Mistake #13 masking trap. Corrective authored: **`tasks/e2-contract-board-172143e5-fixture-refresh.md`** (FIRE-AUTHORED, attended review welcome). The drip merges over them as documented, baseline-proven known-reds (§6).
+
+### Merge classification summary
+Base `0b04cf13` (122 behind). Additive to main: 2 contracts (contracts.json append) + 2 mask-tables + 2 new specs. Modified on main: `board-gating-and-profiles.spec.ts` (fixture + guard, this fire's authorship). Zero deletions to any main file. No conflict on hot files (Game.ts/CombatSystem/main.ts untouched).

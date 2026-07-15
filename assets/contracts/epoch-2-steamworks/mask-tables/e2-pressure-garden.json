@@ -1,0 +1,94 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-2-steamworks/contracts.json",
+    "coalSeamSource": "src/systems/PressureSystem.ts",
+    "tileId": "e2-pressure-garden",
+    "size": 96,
+    "river": true,
+    "ford": true,
+    "fords": [
+      { "id": "garden-crossing", "x": 0, "halfWidth": 6 }
+    ],
+    "buildZones": [
+      { "id": "boiler-terrace", "bank": "north", "minX": -36, "maxX": 36, "minZ": 7, "maxZ": 16 },
+      { "id": "west-growing-terrace", "bank": "north", "minX": -38, "maxX": -12, "minZ": 20, "maxZ": 29 },
+      { "id": "east-growing-terrace", "bank": "north", "minX": 12, "maxX": 38, "minZ": 20, "maxZ": 29 },
+      { "id": "coal-bed-terrace", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
+    ],
+    "stakeMarkers": [
+      { "id": "west-boiler-bed", "x": -12, "z": 12, "lossCondition": true },
+      { "id": "center-boiler-bed", "x": 0, "z": 12, "lossCondition": false },
+      { "id": "east-boiler-bed", "x": 12, "z": 12, "lossCondition": false }
+    ],
+    "rails": [],
+    "waterSources": [],
+    "harvestAnchors": [
+      { "x": -30, "z": 24 },
+      { "x": -18, "z": 27 },
+      { "x": 18, "z": 27 },
+      { "x": 30, "z": 24 },
+      { "x": -24, "z": 40 },
+      { "x": 24, "z": 40 }
+    ],
+    "elevation": {
+      "cellSize": 2,
+      "slopeMax": 0.35,
+      "waterline": -0.1,
+      "analytic": {
+        "hillMine": 1,
+        "creekHeight": -0.25,
+        "railHeight": 0,
+        "t1Height": 0.8,
+        "t2Height": 1.6,
+        "t3Height": 2.4,
+        "creekBlendStart": -10,
+        "creekBlendEnd": -5,
+        "t1RampStart": 6,
+        "t1RampEnd": 10,
+        "t2RampStart": 17,
+        "t2RampEnd": 22,
+        "t3RampStart": 30,
+        "t3RampEnd": 35
+      }
+    },
+    "heightfield": {
+      "id": "pressure-garden-terraces",
+      "mode": "visual",
+      "bankRelief": { "amount": 0.3, "width": 8 }
+    },
+    "water": {
+      "id": "pressure-garden-water-band",
+      "visualHalfWidth": 8,
+      "depths": { "river": 1.1, "ford": 0.3, "shallows": 0.22 },
+      "speedMul": { "river": 0.5, "ford": 0.82, "shallows": 0.75 }
+    },
+    "lanes": {
+      "spawnEdges": ["south", "east", "west", "north"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": [
+      { "edge": "south", "x": 0, "z": -46 },
+      { "edge": "east", "x": 46, "z": 20 },
+      { "edge": "west", "x": -46, "z": 20 },
+      { "edge": "north", "x": 0, "z": 46 }
+    ],
+    "coalSeams": [
+      { "x": -12, "z": 39 },
+      { "x": -5, "z": 43 },
+      { "x": 3, "z": 39 }
+    ]
+  },
+  "waterAgreement": {
+    "deepBand": { "minZ": -5, "maxZ": 5 },
+    "shallowsEnd": { "minZ": -6.25, "maxZ": 6.25 },
+    "placeableBankStartsBeyondAbsZ": 6.25,
+    "factoryVisualHalfWidth": 8,
+    "sluiceSamples": [
+      { "x": -30, "z": 7 },
+      { "x": -12, "z": 7 },
+      { "x": 12, "z": 7 },
+      { "x": 30, "z": 7 }
+    ]
+  }
+}
