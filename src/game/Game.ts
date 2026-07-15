@@ -146,6 +146,7 @@ import { CameraRig } from '../systems/CameraRig';
 import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type UpgradeCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
+import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
@@ -605,6 +606,12 @@ export class Game {
       this.localActor.group.position,
       ...((this.agentStub?.state.permissionLevel ?? 0) >= 1 ? [this.prospector.position] : []),
     ],
+  );
+  private readonly crawlerBoss = new CrawlerBossSystem(
+    () => this.enemies.all,
+    () => this.powerGraph?.snapshot().nodes ?? [],
+    (command) => this.powerGraph?.queueCommand(command) === true,
+    (origin, target, damage, radius) => this.combat.launchLob(origin, target, 0.05, damage, radius, 'baron_rocket:-3'),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -1084,9 +1091,16 @@ export class Game {
     });
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
-      const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
-      this.discoverLedgerEnemyEntry(entryId);
-      this.revealLedgerEnemyStats(entryId);
+      const isCrawlerComponent = event.variantId === 'dynamo_crawler';
+      if (!isCrawlerComponent) {
+        const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
+        this.discoverLedgerEnemyEntry(entryId);
+        this.revealLedgerEnemyStats(entryId);
+      }
+      if (isCrawlerComponent) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.crawlerBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
       }
@@ -1099,8 +1113,11 @@ export class Game {
       emitStorySignal({ type: 'building-lost' });
     });
     this.events.on('wave_started', (event) => {
-      this.audio.play('wave-start-horn');
+      const baron = this.activeContract.twist.baron;
+      const isSilentCrawlerFlicker = baron?.variantId === 'dynamo_crawler' && event.wave === baron.wave - 2;
+      if (!isSilentCrawlerFlicker) this.audio.play('wave-start-horn');
       this.announceBaronBeat(event.wave, event.at);
+      this.crawlerBoss.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -1497,6 +1514,7 @@ export class Game {
     this.buildSystem.dispose();
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
+    this.crawlerBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1666,6 +1684,10 @@ export class Game {
       this.damSurge?.update(this.timeAlive);
       if (this.finishPendingDeath()) return true;
       this.waveSystem.update(this.timeAlive);
+      if (this.activeContract.twist.baron?.variantId === 'dynamo_crawler' && this.baronBeatenThisRun) {
+        this.crawlerBoss.restoreWreck(this.baronStandardPosition);
+      }
+      this.crawlerBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -1685,7 +1707,7 @@ export class Game {
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
       this.fuelSystem?.update(simDelta, this.visibleActorPositions());
       this.vehicle?.update(simDelta);
-      this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult);
+      this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult * this.crawlerBoss.turretFireRateMult);
       this.applyHarvestStats(
         this.pressureArsenalSystem.updateAutoPan(
           simDelta,
@@ -1786,7 +1808,7 @@ export class Game {
 
   private discoverVisibleLedgerEnemies(): void {
     for (const enemy of this.enemies.all) {
-      if (!enemy.isAlive) continue;
+      if (!enemy.isAlive || enemy.variantId === 'dynamo_crawler') continue;
       const entryId = ledgerEnemyEntryId(enemy);
       this.enemyLedgerKinds.set(enemy.id, entryId);
       this.discoverLedgerEnemyEntry(entryId);
@@ -2493,6 +2515,7 @@ export class Game {
     this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
+    this.scene.add(this.crawlerBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
   }
@@ -3113,6 +3136,7 @@ export class Game {
       vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       canyonWorks: this.canyonConnectDiagnostics(),
+      crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -3266,7 +3290,9 @@ export class Game {
   }
 
   private waitsForBaronDefeat(): boolean {
-    return Boolean(this.activeContract.twist.baron && !this.baronBeatenThisRun);
+    const baron = this.activeContract.twist.baron;
+    if (!baron || this.baronBeatenThisRun) return false;
+    return baron.variantId !== 'dynamo_crawler' || this.waveSystem.diagnostics.wave >= baron.wave;
   }
 
   private announceBaronBeat(wave: number, atSim: number): void {
@@ -3365,7 +3391,8 @@ export class Game {
     this.charmPauseActive = false;
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
-    this.plantBaronStandard(position);
+    if (baron.variantId === 'dynamo_crawler') this.baronStandardPosition.copy(position);
+    else this.plantBaronStandard(position);
     const burstScale = Math.max(3, enemy?.visualScale ?? 3);
     this.combatVfx.dustPuff(position, burstScale);
     this.combatVfx.detonationRing(position, Math.min(7, burstScale * 1.45));
@@ -3401,7 +3428,10 @@ export class Game {
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     this.baronBeatenThisRun = true;
-    const secured = this.runManager?.secureCurrentRun(this.waveSystem.diagnostics.wave) === true;
+    const alreadySecured = this.runManager?.diagnostics.secured === true;
+    const objectiveAllowsSecure = !this.activeContract.twist.powerGrid || this.canyonConnectCompletedByDeadline;
+    const secured = alreadySecured
+      || (objectiveAllowsSecure && this.runManager?.secureCurrentRun(this.waveSystem.diagnostics.wave) === true);
     if (!secured) {
       this.baronBeatenThisRun = false;
       return;
@@ -3599,6 +3629,12 @@ export class Game {
 
   private syncNightShiftLighting(): void {
     const state = this.nightShiftLightingState();
+    if (this.crawlerBoss.overchargeActive) {
+      state.phase = 'full';
+      state.darkness = 0;
+      delete state.palette;
+    }
+    state.lampIntensityMult = this.crawlerBoss.lampIntensityMult;
     if (!state.enabled || state.darkness <= 0) {
       this.lightRig?.setNightShift(state);
       this.lightField.update(state.darkness, []);
@@ -4409,6 +4445,7 @@ export class Game {
     this.canyonConnectAnnounced = false;
     this.canyonConnectCompletedByDeadline = false;
     this.canyonConnectFailed = false;
+    this.crawlerBoss.reset();
     this.tram?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
@@ -5640,7 +5677,7 @@ function contractPowerDefinition(contractId: string, grid: ContractPowerGrid): P
         ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: false }
         : node.kind === 'storage'
           ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: false, capacityWh: node.capacityWh, chargeWatts: node.chargeWatts, dischargeWatts: node.dischargeWatts }
-          : { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: true, drawWatts: node.drawWatts, priority: node.priority }),
+          : { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: node.role !== 'crawler-drain', drawWatts: node.drawWatts, priority: node.priority }),
     wires: grid.wires.map((wire) => ({ ...wire, state: 'intact' })),
   };
 }

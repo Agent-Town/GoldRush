@@ -294,6 +294,23 @@ interface ThreeGameDiagnostics {
   vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
   power: GrPowerGraphDiagnostics;
   canyonWorks: null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean };
+  crawlerBoss: null | {
+    active: boolean;
+    act: 0 | 1 | 2 | 3;
+    flickerEvents: number;
+    flickerActive: boolean;
+    drainActive: boolean;
+    drainWatts: number;
+    drainTarget: string | null;
+    dialVisible: boolean;
+    dialProgress: number;
+    bursts: number;
+    tracksPinned: boolean;
+    overchargeActive: boolean;
+    overchargeRemaining: number;
+    turretFireRateMult: number;
+    wreckRemains: boolean;
+  };
   agent: {
     stub: {
       name: string;
@@ -594,6 +611,7 @@ interface ThreeGameDiagnostics {
       enabled: boolean;
       phase: 'full' | 'dusk' | 'dark' | 'dawn';
       darkness: number;
+      lampIntensityMult?: number;
     };
     dayNight: import('./systems/DayNightCycle').DayNightSnapshot | null;
     coverage: import('./systems/LightField').LightFieldDiagnostics;
@@ -838,6 +856,7 @@ type GrSimulationTickSample = {
 
 interface Window {
   __GR_E4_CONVOY_WEATHER__?: import('./diagnostics/E4ConvoyWeatherHarness').E4ConvoyWeatherHarness;
+  __GR_E4_ORBIT_ROAD__?: import('./diagnostics/E4OrbitRoadHarness').E4OrbitRoadHarness;
   __GR_AUDIO_DIAGNOSTICS__?: {
     unlocked: boolean;
     muted: boolean;
