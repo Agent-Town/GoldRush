@@ -188,6 +188,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   herd_receipts: { name: 'Herd Receipts', line: 'Every shepherd, herd, and pacified helper gains an honest receipt.' },
   appliance_pen: { name: 'Appliance Pen', line: 'Captured helpers gain a numbered corral and useful work after the wave.' },
   defector_catalog: { name: "Defector's Catalog", line: 'Failed promises are crossed out; useful patterns keep their honest names.' },
+  spectrum_survey: { name: 'Spectrum Survey', line: 'Useful bands gain their own marks between the static.' },
+  ridge_relays: { name: 'Ridge Relays', line: 'Each brass tower gains a clear neighbor across the valley.' },
+  dead_zone_charts: { name: 'Dead-Zone Charts', line: 'Every quiet pocket gains a circle in the ridge book.' },
+  signal_refinery: { name: 'Signal Refinery', line: 'Crowded spectrum returns as counted reels of SIGNAL.' },
+  valley_switchboard: { name: 'Valley Switchboard', line: 'Ridges, drones, and desks share one honest board.' },
+  signal_jammer: { name: 'Signal Jammer', line: 'A brief quiet is marked for rogue machines.' },
+  beam_relay_turret: { name: 'Beam-Relay Turret', line: 'A warm strike can follow the visible tower line.' },
+  static_ward: { name: 'Static Ward', line: 'A quiet ring is marked against hares and tapped lines.' },
+  corrupted_replays: { name: 'Corrupted Replays', line: 'Bad tapes stay crossed out where the town can study the wandering step.' },
+  echo_pattern_science: { name: 'Echo Pattern Science', line: 'The Echo medal still guards the mirrored defense-pattern diagrams.' },
+  marked_steps: { name: 'Marked Steps', line: 'Finished jobs gain a town-clock stamp before the tape remembers them.' },
+  patrol_recorder: { name: 'Patrol Recorder', line: 'A bounded walk can enter the punch-tape reel in order.' },
+  playbook_rules: { name: 'Playbook Rules', line: 'Every reel must name a known job and borrow no authority.' },
+  drone_delegation: { name: 'Drone Delegation', line: 'One checked reel gains a place in one coop drone.' },
+  guidance_playbooks: { name: 'Guidance Playbooks', line: 'The town’s proven routes enter the Starship guidance case.' },
 };
 
 export type ResearchChartOptions = {
