@@ -1,0 +1,192 @@
+{
+  "id": "epoch-9-redfields",
+  "displayName": "Red Fields",
+  "order": 9,
+  "locked": true,
+  "scienceThreshold": 22,
+  "research": {
+    "branches": [
+      {
+        "id": "Areology",
+        "label": "ice & canals",
+        "iconKey": "ui.upgrade.icon.prospecting",
+        "nodes": [
+          {
+            "id": "red_fields_survey",
+            "name": "Red Fields Survey",
+            "description": "Set the rust-red dunes, quarry scarp, and dry basin on one page before a blade touches the claim.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the Red Fields authored-base survey family.",
+            "effectRef": "redfields.red_fields_survey",
+            "cost": 1
+          },
+          {
+            "id": "ice_quarry_tables",
+            "name": "Ice-Quarry Tables",
+            "description": "Count buried ice by depth, purity, and the melt-water each cut can honestly promise.",
+            "iconKey": "ui.e2.pressure",
+            "effect": "Banks the quarry-ice and melt-water accounting family.",
+            "effectRef": "redfields.ice_quarry_tables",
+            "cost": 1,
+            "requires": ["red_fields_survey"]
+          },
+          {
+            "id": "basin_contours",
+            "name": "Basin Contours",
+            "description": "Number the cuts, locks, and grades that will turn the dry basin toward a river.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the Dome Basin terrain-and-canal layout family.",
+            "effectRef": "redfields.basin_contours",
+            "cost": 1,
+            "requires": ["red_fields_survey"]
+          },
+          {
+            "id": "canal_stage_ledger",
+            "name": "Canal-Stage Ledger",
+            "description": "Mark C1, C2, and C3 only when the defended gate and its earthwork settle together.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the serialized canal-stage and deterministic flood family.",
+            "effectRef": "redfields.canal_stage_ledger",
+            "cost": 1,
+            "requires": ["ice_quarry_tables", "basin_contours"]
+          },
+          {
+            "id": "water_and_green_record",
+            "name": "Water-and-Green Record",
+            "description": "Keep every wet cell and green shoot on the next page exactly where the last run left it.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the profile-persistent water-and-green tile-state family.",
+            "effectRef": "redfields.water_and_green_record",
+            "cost": 1,
+            "requires": ["canal_stage_ledger"]
+          }
+        ]
+      },
+      {
+        "id": "Arsenal",
+        "label": "storms & earth",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "storm_draw",
+            "name": "Storm-Draw",
+            "description": "Lead a weather front into counted cells and let the old beam capacitors drink from the sky.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the weather-charged beam arsenal family.",
+            "effectRef": "redfields.storm_draw",
+            "cost": 1
+          },
+          {
+            "id": "storm_lance",
+            "name": "Storm-Lance",
+            "description": "Set a charged lens on the familiar watch footing and keep its path clear of every dome.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the Storm-Lance sentry tier.",
+            "effectRef": "redfields.storm_lance",
+            "cost": 1,
+            "requires": ["storm_draw"]
+          },
+          {
+            "id": "storm_fence",
+            "name": "Storm Fence",
+            "description": "Hold a tame crosswind along the claim edge so dust and devils learn one polite boundary.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the Storm Fence field-defense family.",
+            "effectRef": "redfields.storm_fence",
+            "cost": 1,
+            "requires": ["storm_draw"]
+          },
+          {
+            "id": "terraform_cannon",
+            "name": "Terraform Cannon",
+            "description": "Throw one measured hillock where the survey calls for earth, never where the ledger calls it settled.",
+            "iconKey": "ui.upgrade.icon.blast",
+            "effect": "Banks the bounded terrain-throwing arsenal family.",
+            "effectRef": "redfields.terraform_cannon",
+            "cost": 1,
+            "requires": ["storm_lance", "storm_fence"]
+          },
+          {
+            "id": "old_digger_blueprint_science",
+            "name": "Old Digger Blueprint Science",
+            "description": "A future Digger medal will release the boarding route, tape deck, and corrected canal diagrams.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks THE OLD DIGGER blueprint science behind the reserved oldDiggerBlueprintCaptured medal flag.",
+            "effectRef": "redfields.old_digger_blueprint_science",
+            "cost": 1,
+            "requires": ["terraform_cannon"]
+          }
+        ]
+      },
+      {
+        "id": "Fabrication",
+        "label": "domes & ark yards",
+        "iconKey": "ui.upgrade.icon.mend",
+        "nodes": [
+          {
+            "id": "redfield_fittings",
+            "name": "Redfield Fittings",
+            "description": "Grade regolith sleeves, dome ribs, valve brass, and dust seals under one shop standard.",
+            "iconKey": "node.gold_seam",
+            "effect": "Banks the Red Fields fabrication-parts family.",
+            "effectRef": "redfields.redfield_fittings",
+            "cost": 1
+          },
+          {
+            "id": "canal_gateworks",
+            "name": "Canal Gateworks",
+            "description": "Fit each lock, dry wheel, and valve tower to the stage it must outlast.",
+            "iconKey": "ui.e2.iron_card",
+            "effect": "Banks the staged Canal Works fabrication family.",
+            "effectRef": "redfields.canal_gateworks",
+            "cost": 1,
+            "requires": ["redfield_fittings"]
+          },
+          {
+            "id": "weather_spire",
+            "name": "Weather Spire",
+            "description": "Give every shepherded front a vane, a charge path, and a far row waiting for rain.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the weather-control spire family.",
+            "effectRef": "redfields.weather_spire",
+            "cost": 1,
+            "requires": ["redfield_fittings"]
+          },
+          {
+            "id": "seed_vaults",
+            "name": "Seed Vaults",
+            "description": "Keep E1 riverbank green by seed lot, wet reach, and the run that carried it outside.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the persistent green-economy and Seed Vault family.",
+            "effectRef": "redfields.seed_vaults",
+            "cost": 1,
+            "requires": ["canal_gateworks", "weather_spire"]
+          },
+          {
+            "id": "generation_ark_manifest",
+            "name": "Generation Ark Manifest",
+            "description": "Enter every portrait, craft lineage, seed tin, and place at the Long Table before the ramps close.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the final Ark-yards stage and whole-town boarding manifest.",
+            "effectRef": "redfields.generation_ark_manifest",
+            "cost": 1,
+            "requires": ["seed_vaults"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "generation-ark",
+    "surfaceRef": "bld.generation_ark",
+    "cost": { "gold": 0, "bankedScience": 22 },
+    "raiseActionText": "Raise the Generation Ark"
+  },
+  "transition": {
+    "ceremonyBeatId": "e10-ceremony-generation-ark",
+    "kitArtKey": "kit-era-10",
+    "displayName": "The Deep Sky"
+  },
+  "successor": null,
+  "parts": { "contracts": "contracts.json" }
+}

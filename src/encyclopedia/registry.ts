@@ -35,6 +35,7 @@ export const epochLedgerEntryById = {
   'epoch-6-atomic': 'era_atomic',
   'epoch-7-signal': 'era_signal',
   'epoch-8-orbital': 'era_orbital',
+  'epoch-9-redfields': 'era_redfields',
 } as const;
 
 export const LEDGER_CATEGORIES = [

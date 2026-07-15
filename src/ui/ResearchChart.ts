@@ -218,6 +218,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   airlock_receipts: { name: 'Airlock Receipts', line: 'Each crossing stays tied to its suit seal, air count, and gate.' },
   mass_driver_windows: { name: 'Mass-Driver Windows', line: 'Rail-thrown cargo gains a launch mark and an arrival window.' },
   riverward_manifest: { name: 'Riverward Manifest', line: 'Air, seed, tools, and a town promise enter the Colony Seed.' },
+  red_fields_survey: { name: 'Red Fields Survey', line: 'The dunes, quarry scarp, and dry basin enter one claim book.' },
+  ice_quarry_tables: { name: 'Ice-Quarry Tables', line: 'Buried ice gains honest columns for depth, purity, and promised water.' },
+  basin_contours: { name: 'Basin Contours', line: 'The dry basin gains numbered cuts, locks, and grades.' },
+  canal_stage_ledger: { name: 'Canal-Stage Ledger', line: 'C1, C2, and C3 stay tied to their defended gates and settled earthwork.' },
+  water_and_green_record: { name: 'Water-and-Green Record', line: 'Wet ground and green shoots remain on the next page where this one left them.' },
+  storm_draw: { name: 'Storm-Draw', line: 'Weather fronts gain a counted path into the beam capacitors.' },
+  storm_lance: { name: 'Storm-Lance', line: 'A charged lens gains the familiar watch footing.' },
+  storm_fence: { name: 'Storm Fence', line: 'A tame crosswind gains a marked place along the claim edge.' },
+  terraform_cannon: { name: 'Terraform Cannon', line: 'Measured earth can move without disturbing settled ground.' },
+  old_digger_blueprint_science: { name: 'Old Digger Blueprint Science', line: 'The Digger medal still guards its boarding route, tape deck, and corrected canal diagrams.' },
+  redfield_fittings: { name: 'Redfield Fittings', line: 'Dome ribs, valve brass, regolith sleeves, and dust seals enter one shop standard.' },
+  canal_gateworks: { name: 'Canal Gateworks', line: 'Locks, dry wheels, and valve towers gain their numbered stages.' },
+  weather_spire: { name: 'Weather Spire', line: 'Each shepherded front gains a vane, charge path, and waiting row.' },
+  seed_vaults: { name: 'Seed Vaults', line: 'Riverbank green stays tied to its seed lot, wet reach, and carrying run.' },
+  generation_ark_manifest: { name: 'Generation Ark Manifest', line: 'Every portrait, craft lineage, seed tin, and Long Table place enters the boarding book.' },
 };
 
 export type ResearchChartOptions = {
