@@ -311,6 +311,7 @@ interface ThreeGameDiagnostics {
     turretFireRateMult: number;
     wreckRemains: boolean;
   };
+  landYachtBoss: null | import('./systems/LandYachtBossSystem').LandYachtBossDiagnostics;
   agent: {
     stub: {
       name: string;

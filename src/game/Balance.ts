@@ -267,6 +267,13 @@ export const Balance = {
     overchargeSeconds: 10,
     turretFireRateMult: 2,
   },
+  landYacht: {
+    dreadSeconds: 2,
+    lootIntervalSeconds: 2,
+    derrickRadius: 28,
+    craneReach: 6,
+    craneGrabCooldownSeconds: 1.5,
+  },
   e4Fuel: {
     capacity: 24,
     nodePositions: [{ x: -12, z: -8 }, { x: 0, z: -8 }, { x: 12, z: -8 }],
