@@ -56,6 +56,12 @@ if (initialSearch.has('debug') && initialSearch.has('e4orbit')) {
   );
 }
 
+if (initialSearch.has('debug') && initialSearch.has('deepwater')) {
+  void import('./diagnostics/E5DeepwaterHarness').then(({ installE5DeepwaterHarnessFromSearch }) =>
+    installE5DeepwaterHarnessFromSearch(),
+  );
+}
+
 if (initialSearch.get('bench') === 'fullbase') {
   const defaults = { debug: '', nolevel: '', nopause: '', seed: 'perf-02-fullbase', timescale: '24' };
   let changed = false;

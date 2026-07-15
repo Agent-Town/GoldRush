@@ -857,6 +857,7 @@ type GrSimulationTickSample = {
 };
 
 interface Window {
+  __GR_E5_DEEPWATER__?: import('./diagnostics/E5DeepwaterHarness').E5DeepwaterHarness;
   __GR_E4_CONVOY_WEATHER__?: import('./diagnostics/E4ConvoyWeatherHarness').E4ConvoyWeatherHarness;
   __GR_E4_ORBIT_ROAD__?: import('./diagnostics/E4OrbitRoadHarness').E4OrbitRoadHarness;
   __GR_AUDIO_DIAGNOSTICS__?: {

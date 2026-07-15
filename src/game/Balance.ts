@@ -100,6 +100,43 @@ export const Balance = {
     hazeColor: '#c99052',
     hazeStrength: 0.2,
   },
+  e5: {
+    waterTile: {
+      id: 'shelf-reefs-dev',
+      size: 128,
+      regions: [
+        { id: 'open-water', minX: -64, maxX: 64, minZ: -64, maxZ: 64, depth: 0, depthClass: 'surface', travel: ['swim', 'boat'] },
+        { id: 'lagoon-shallows', minX: -42, maxX: 42, minZ: 18, maxZ: 44, depth: -1, depthClass: 'shallows', travel: ['swim', 'boat'] },
+        { id: 'reef-ring', minX: -48, maxX: 48, minZ: -8, maxZ: 8, depth: -2, depthClass: 'reef', travel: ['depth'] },
+        { id: 'reef-gap', minX: -5, maxX: 5, minZ: -8, maxZ: 8, depth: -2, depthClass: 'reef', travel: ['boat', 'depth'] },
+        { id: 'wreck-shelf', minX: -48, maxX: 48, minZ: -42, maxZ: -14, depth: -4, depthClass: 'wreck', travel: ['boat', 'depth'] },
+        { id: 'trench-edge', minX: -64, maxX: 64, minZ: -64, maxZ: -50, depth: -8, depthClass: 'trench', travel: [] },
+      ],
+    },
+    claimBoat: {
+      id: 'claim-boat',
+      initialAnchorId: 'lagoon',
+      anchors: [
+        { id: 'lagoon', x: 0, z: 30 },
+        { id: 'open-water', x: -24, z: 12 },
+      ],
+      pads: [
+        { id: 'bow', x: 0, z: -3 },
+        { id: 'port', x: -3, z: 1 },
+        { id: 'starboard', x: 3, z: 1 },
+      ],
+    },
+    weather: {
+      cycleSeconds: 24,
+      clearSeconds: 5,
+      telegraphSeconds: 3,
+      stormSeconds: 10,
+      stormMovementMultiplier: 0.72,
+      stormVisibilityMultiplier: 0.58,
+      hazeColor: '#335f64',
+      hazeStrength: 0.28,
+    },
+  },
   agent: {
     homeX: -1.8,
     homeZ: 10.7,
