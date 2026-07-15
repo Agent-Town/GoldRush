@@ -51,11 +51,11 @@ test('fires the authored storm and peels a convoy off the ORBIT road', async ({ 
   });
   expect(dust?.tarSeams).toHaveLength(4);
   expect(dust?.orbit.members).toHaveLength(3);
-  expect(dust?.orbit.members.every((member: { id: string; peeled: boolean }) => member.state === 'peeled')).toBe(true);
+  expect(dust?.orbit.members.every((member: { id: string; peeled: boolean }) => (member as any).state === 'peeled')).toBe(true);
   expect((await page.evaluate(() => window.__GR_TEST__!.enemyPositions())).filter((enemy) => enemy.variantId === 'motor_gang')).toHaveLength(3);
 
-  expect(await page.evaluate(() => window.__GR_TEST__!.gradeRoad('camp-to-railhead'))).toBe(true);
-  expect(await page.evaluate(() => window.__GR_TEST__!.gradeRoad('camp-to-railhead'))).toBe(false);
+  expect(await page.evaluate(() => (window.__GR_TEST__ as any).gradeRoad('camp-to-railhead'))).toBe(true);
+  expect(await page.evaluate(() => (window.__GR_TEST__ as any).gradeRoad('camp-to-railhead'))).toBe(false);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.dustFlats?.roads)).toMatchObject({
     segments: 1,
     friendlySpeedMultiplier: 2.5,
