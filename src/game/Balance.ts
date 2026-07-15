@@ -77,6 +77,19 @@ export const Balance = {
     spacing: 3,
     catchupMultiplier: 1.25,
   },
+  e4Orbit: {
+    radius: 24,
+    angularSpeed: Math.PI / 6,
+    lapsBeforePeel: 0.5,
+    peelSpeed: 8,
+    telegraphSeconds: 2,
+  },
+  e4Road: {
+    halfWidth: 1.5,
+    friendlySpeedMultiplier: 2.5,
+    friendlyFuelMultiplier: 0.4,
+    enemyRouteCostMultiplier: 0.25,
+  },
   weather: {
     cycleSeconds: 30,
     clearSeconds: 6,

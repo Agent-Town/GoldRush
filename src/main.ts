@@ -50,6 +50,12 @@ if (initialSearch.has('debug') && initialSearch.has('e4convoyweather')) {
   );
 }
 
+if (initialSearch.has('debug') && initialSearch.has('e4orbit')) {
+  void import('./diagnostics/E4OrbitRoadHarness').then(({ installE4OrbitRoadHarnessFromSearch }) =>
+    installE4OrbitRoadHarnessFromSearch(),
+  );
+}
+
 if (initialSearch.get('bench') === 'fullbase') {
   const defaults = { debug: '', nolevel: '', nopause: '', seed: 'perf-02-fullbase', timescale: '24' };
   let changed = false;
