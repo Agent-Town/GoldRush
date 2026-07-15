@@ -1,0 +1,45 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-4-motor/contracts.json",
+    "tileId": "e4-dust-flats",
+    "size": 160,
+    "dimensions": { "width": 160, "height": 160 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "motor-camp", "bank": "south", "minX": -30, "maxX": 30, "minZ": -26, "maxZ": 24 },
+      { "id": "north-field", "bank": "north", "minX": -62, "maxX": 62, "minZ": 26, "maxZ": 68 },
+      { "id": "southwest-field", "bank": "south", "minX": -68, "maxX": -32, "minZ": -62, "maxZ": -28 },
+      { "id": "southeast-field", "bank": "south", "minX": 32, "maxX": 68, "minZ": -62, "maxZ": -28 }
+    ],
+    "stakeMarkers": [{ "id": "motor-camp", "x": 0, "z": 8, "lossCondition": true }],
+    "harvestAnchors": [
+      { "x": -48, "z": 48 }, { "x": -34, "z": 56 }, { "x": -18, "z": 46 },
+      { "x": 18, "z": 46 }, { "x": 34, "z": 56 }, { "x": 48, "z": 48 },
+      { "x": -56, "z": -44 }, { "x": -44, "z": -56 }, { "x": -34, "z": -38 },
+      { "x": 34, "z": -38 }, { "x": 44, "z": -56 }, { "x": 56, "z": -44 }
+    ],
+    "tarSeams": [
+      { "id": "tar-west", "x": -14, "z": 4, "radius": 3.5 },
+      { "id": "tar-north", "x": 8, "z": 18, "radius": 3 },
+      { "id": "tar-east", "x": 18, "z": -6, "radius": 4 },
+      { "id": "tar-wash", "x": 8, "z": -18, "radius": 3.5 }
+    ],
+    "roadCorridors": [
+      { "id": "camp-to-railhead", "start": { "x": 0, "z": 12 }, "end": { "x": 0, "z": 72 } },
+      { "id": "camp-to-west-field", "start": { "x": -8, "z": 4 }, "end": { "x": -58, "z": -46 } },
+      { "id": "camp-to-east-field", "start": { "x": 8, "z": 4 }, "end": { "x": 58, "z": -46 } },
+      { "id": "west-boss-road", "start": { "x": -78, "z": -12 }, "end": { "x": -18, "z": -4 } }
+    ],
+    "orbitSpawn": {
+      "center": { "x": 0, "z": 0 },
+      "radius": 24,
+      "peelPoints": ["north-cut", "east-cut", "west-cut"]
+    },
+    "weather": { "cycleSeconds": 30, "clearSeconds": 6, "telegraphSeconds": 4, "stormSeconds": 12 },
+    "dryWash": { "x": 30, "z": -38, "length": 88, "width": 10, "angle": -0.55 },
+    "waterSources": [],
+    "lanes": { "spawnEdges": ["north", "east", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}
