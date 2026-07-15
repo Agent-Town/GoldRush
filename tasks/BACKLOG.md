@@ -308,3 +308,4 @@ FIRES: drain per the 45-min SLO (attended is GONE for the night — no coexisten
 - **Downstream blocked**: e2-drip-03-incline (needs pressure-garden drained) + publish-e2-mask-tables (needs both drips) = PIPELINE-DRY until the engine slice lands.
 - **OWNER'S DESK**: `pressure-generalize-engine` engine slice — attended/fire-authorable once designed; the fix is ~3 Game.ts guard replacements + schema field; no gameplay rebalancing, just data-driving what's hardcoded. RECOMMENDATION: author the task this session, fire-queue it. Veto window: one word.
 - **e3-blackout-ridge RE-QUEUED on lane-c** — its STORAGE node extension is IN-SCOPE (task includes implementing the new engine feature); NOT blocked by the pressure issue. Running now.
+- **SOL 3D-C WAVE 8 E3 PILOT MERGED+DEPLOYED** (3 buildings, arc anchors; live era-loading verified) — wide wave GO w/ tavern-strengthen rider.
