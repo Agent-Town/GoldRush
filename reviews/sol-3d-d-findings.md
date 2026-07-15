@@ -288,3 +288,111 @@ This table is an art-direction test, not a runtime registry. The contract descri
 The E1 mood and building-grit boards remain its current owner gates. The E2 boards above gate the authored half of the new family; Pressure Garden and Incline remain outside the terrain wave until factory masks exist.
 
 READY-FOR-GATES
+
+## E3 Canyon Works + Moth Season terrain wave
+
+### F-3D-D-30 — Published masks are the only terrain authority
+
+`assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json` and `e3-moth-season.json` are the authored inputs for this wave. The builders consume those tables without adding gameplay geometry or changing movement, build, spawn, water, fog, or `Terrain.visualY` ownership. Pressure Garden and Incline remain held until their factory-authored E2 tables exist; no placeholder mask was inferred.
+
+### F-3D-D-31 — Canyon's six pylon sites are load-bearing flats
+
+The Canyon terrain shapes its gorge, shoulders, and eroded mesa around the six published pylon disks, then explicitly resolves each disk to a buildable-flat visual height. An independent review caught that the first verifier sampled only vertices: triangle interpolation still leaked up to 0.24 m of slope into a rim disk edge. The corrected builder carries the flat plateau one grid diagonal beyond the authored disk, and the corrected verifier samples 2,176 points on the actual exported triangle surface per site. It now reports zero height deviation at all six full-radius sites, below the 0.02 tolerance. The two published rim disks centred at z=8 overlap the published shallow-water edge by table design; the mask board discloses that authored relationship rather than silently moving either authority.
+
+### F-3D-D-32 — The first night tile needs hardship and combat readability together
+
+Canyon Works uses a dusk rig with deep gorge shadow, restrained blue-violet distance, and localized lantern warmth. The murky working river follows the exact published water mask inside the playfield; its continuation outside the bounds is evidence-only scenery and is absent from the terrain GLB. Iteration removed the early underexposure, straight water seam, slab-like edge, and ambiguous pylon overlays while preserving the intended dangerous night mood.
+
+### F-3D-D-33 — Moth Season is a corridor, not a Canyon recolour
+
+Moth Season has no river. Its identity comes from two exhausted yard rims framing a dark north/south migration corridor, wind-scoured ground, and asymmetric fevered distance. It shares the county's engraved frontier palette and grit vocabulary, but its composition, silhouette, traversal read, panorama, and mask story are distinct from Canyon Works.
+
+### F-3D-D-34 — Panorama v2 needs structural depth, not only a painted cylinder
+
+Each E3 panorama remains a separate mounted GLB. A single 2,496-triangle mesh combines a polar apron whose inner row traces one metre outside the rectangular playfield, an irregular near ridge, a quieter far ridge, and the sky ring; one embedded 2048² atlas and exported `COLOR_0` tint create the horizon-to-zenith density falloff and quadrant asymmetry. This avoids both failure modes found in review: a circular apron inside the tile can cover valid banks, while a circle outside the farthest corner leaves a visible moat. The final terrain/panorama join preserves Canyon's river continuation and hides behind layered distance and haze. The panorama changes no bounds, masks, spawns, fog gates, water, or build semantics.
+
+### F-3D-D-35 — The fresh visual gate changed the deliverable before returning SHIP
+
+Independent reviews rejected earlier candidates for underexposure, river-edge seams, a visible terrain plinth, wall-like panoramas, and unclear pylon evidence. Those were corrected in the builders and re-rendered. The final fresh unprimed verdict is `SHIP`: Canyon reads as a dangerous but playable dusk gorge; Moth Season reads as a separate migration-yard contract; both panoramas answer distance rather than wall or ceiling; no tree-like contamination or holiday mood remains.
+
+### F-3D-D-36 — Preserve upstream contract drift as evidence, not local policy
+
+The published Canyon mask table currently contains one rail entry while the aggregate E3 contract fixture expects two. This wave preserves the published authored mask table exactly and does not edit either factory-owned input. If the mismatch remains on the integrated main tip, `scripts/e3-mask-tables.test.mjs` will correctly stay red as an upstream reconciliation item rather than being hidden inside render-only art.
+
+## E3 gate state
+
+- Two terrain `.blend` / GLB / 2048² atlas / contract sets: PASS
+- Terrain GLBs: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas each: PASS
+- Two separate Panorama v2 `.blend` / GLB / 2048² atlas / contract sets: PASS
+- Panorama GLBs: 2,496 triangles, one mesh, one primitive, one material, one embedded atlas, exported `COLOR_0` each: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for all four GLBs: PASS
+- Canyon water mask and bank agreement: PASS
+- Six Canyon pylon-site buildable flats, maximum sampled deviation 0.00: PASS
+- Moth Season no-river contract and migration-corridor identity: PASS
+- Mood A/B, flat/sculpted A/B, mask agreement, and center-horizon distance gates: PASS
+- Fresh final unprimed visual verdict: SHIP
+- Integrated `npm run build`: PASS
+- `node scripts/e3-mask-tables.test.mjs`: 1/2 PASS; exact-table test remains red only on the factory-owned second Canyon rail described in F-3D-D-36
+- `src/`, simulation, choreography, landmark, and runtime edits: none
+
+## E3 owner-verdict images
+
+- `artifacts/map-rebuild-spike/e3-owner-verdict.png` — real run camera, overview, and low-angle family verdict
+- `artifacts/map-rebuild-spike/e3-mood-ab.png` — shipped painted source / E3 hardship gate
+- `artifacts/map-rebuild-spike/e3-flat-vs-sculpted-ab.png` — identical-camera flat/sculpted geometry proof
+- `artifacts/map-rebuild-spike/e3-mask-agreement-board.png` — published masks, Canyon river banks, and six pylon flats
+- `artifacts/map-rebuild-spike/e3-panorama-mood-ab.png` — panorama off/on and mood evidence
+- `artifacts/map-rebuild-spike/e3-panorama-distance-gate.png` — playfield-center distance gate
+
+READY-FOR-GATES
+
+## Rival Dynamo Crawler wave
+
+### F-3D-D-26 — The shipped Dynamo plate, not the queue shorthand, is the source
+
+The queue calls the input `plate-e3-boss-crawler.png`; the ledger-backed file present in the repository is `assets/raw/plate-e3-boss-dynamo-crawler.png`, SHA-256 `eb52e2b77695536c2216958daae45028f044c6a80757ff4450424f59a3dae086`. The deterministic atlas builder samples that exact plate. No generated substitute, paid still-image model, or external 3D body entered the asset.
+
+The resulting `assets/pilots/crawler-3d/crawler.glb` is base-centred at 3.20 × 1.389 × 2.6775 units. It contains exactly three identity-transform mesh nodes and three primitives, one shared embedded 1024² PNG atlas, 11,980 triangles against the 12,000 ceiling, and no camera, light, or animation. Its final SHA-256 is `a336f7574d42ae6e1d69d13310fd549411c442e93073fec6a64ea0128f4f75f9`.
+
+### F-3D-D-27 — Component damage must be structural before the factory adds tint
+
+The factory seam receives `drain_mast`, `tracks`, and `capacitor_bank`. Each has one default-zero damage morph: `Damage_ToppledDrainMast`, `Damage_ShatteredTracks`, and `Damage_RupturedCapacitorBank`. The mast falls from its armored foot and throws fragments; the near armor skirt tears away to expose and shed the track; the rack breaks outward while jars displace and jagged rupture cores become visible. This remains legible without depending on a future red flash or shader tint.
+
+`renders/crawler-damage-states.png` is the visual gate. `renders/crawler-asset-contract.json` independently parses the GLB, confirms the names/bindings/budget/bounds, and proves whole-file byte identity plus semantic identity after reopening the saved Blender file.
+
+### F-3D-D-28 — Run-camera critique changed the asset, not merely the board
+
+Two fresh blind reviews rejected the early candidates. The first found an underexposed utility cart with weak damage and a stage-set canyon. The second still found a visually light open chassis, flat gorge evidence, and ambiguous track/capacitor failures. The corrections enlarged the armored underframe, added riveted track skirts, retained a visible tread rhythm, increased component separation, bent the river cut, raised continuous canyon rims, and changed the damage morph geometry itself.
+
+The final fresh unprimed review returns `SHIP`. At the production 42° FOV it finds the boss dominant over the heroine, all three components readable, all three damage states unmistakable, and the static drain arc plus gorge channel credible as evidence-only combat pressure. Its non-blocking debt is honest: close-up piping/running gear remain simpler than the painted plate, and the engraved canyon surface is busy around the heroine and lower track.
+
+### F-3D-D-29 — The model stops at the railcar-style presentation boundary
+
+The package provides `.blend`, `.glb`, deterministic builder, renderer, verifier, source/reference A/B, run-camera verdict, turntable, damage sheet, and parsed contract. It does not edit `src/`, boss timing, attacks, collision, movement, masks, targeting, simulation ownership, or disposal. The heroine and drain arc in the gorge shot are temporary evidence objects; neither is saved in the GLB. Factory choreography remains the only runtime owner.
+
+The threejs asset ladder was followed locally. Its API reference was read, then the credential probe returned blank `TRIPO_API_KEY`, `GEMINI_API_KEY`, and `ELEVENLABS_API_KEY`; no provider request, task id, paid credit, or downloaded model exists. The landmark freeze was preserved, and the Pressure Garden/Incline mask heartbeat remains active.
+
+## Crawler gate state
+
+- Source plate and content hash pinned: PASS
+- Exact nodes `drain_mast` / `tracks` / `capacitor_bank`: PASS
+- One named default-zero damage morph per component: PASS
+- 11,980 triangles against 12,000: PASS
+- One material and one embedded 1024² PNG: PASS
+- Base-centred identity-transform export: PASS
+- Zero cameras, lights, animations, or external textures: PASS
+- Generic saved-Blend re-export whole-file hash equality: PASS
+- Dedicated reopen/re-export whole-file and semantic equality: PASS
+- Python compilation and repository production build: PASS
+- Fresh final unprimed visual verdict: SHIP
+- Independent `codex review --uncommitted`: attempted; CLI exited after inventory without a review verdict, so it is not counted as a gate
+- `src/`, choreography, simulation, and landmark edits: none
+
+## Crawler owner-verdict images
+
+- `assets/pilots/crawler-3d/renders/crawler-reference-ab.png` — shipped painted plate / real run-camera A/B
+- `assets/pilots/crawler-3d/renders/crawler-canyon-run-camera.png` — heroine-scale canyon-gorge pressure shot
+- `assets/pilots/crawler-3d/renders/crawler-turntable.png` — intact silhouette and component coverage
+- `assets/pilots/crawler-3d/renders/crawler-damage-states.png` — three factory-facing damage morphs
+
+READY-FOR-GATES
