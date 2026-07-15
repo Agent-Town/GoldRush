@@ -1,0 +1,192 @@
+{
+  "id": "epoch-7-signal",
+  "displayName": "Signal Era",
+  "order": 7,
+  "locked": true,
+  "scienceThreshold": 18,
+  "research": {
+    "branches": [
+      {
+        "id": "Signal Theory",
+        "label": "spectrum & relays",
+        "iconKey": "ui.upgrade.icon.prospecting",
+        "nodes": [
+          {
+            "id": "spectrum_survey",
+            "name": "Spectrum Survey",
+            "description": "Mark the useful bands between the static before the valley tries to speak at once.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the Signal spectrum-survey family.",
+            "effectRef": "signal.spectrum_survey",
+            "cost": 1
+          },
+          {
+            "id": "ridge_relays",
+            "name": "Ridge Relays",
+            "description": "Set each brass tower where one warm glass eye can see the next.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the line-of-sight relay-network family.",
+            "effectRef": "signal.ridge_relays",
+            "cost": 1,
+            "requires": ["spectrum_survey"]
+          },
+          {
+            "id": "dead_zone_charts",
+            "name": "Dead-Zone Charts",
+            "description": "Circle every quiet pocket where the ridge steals the wire's voice.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the dead-zone survey family.",
+            "effectRef": "signal.dead_zone_charts",
+            "cost": 1,
+            "requires": ["spectrum_survey"]
+          },
+          {
+            "id": "signal_refinery",
+            "name": "Signal Refinery",
+            "description": "Sort the valley's crowded spectrum into counted reels the town can spend.",
+            "iconKey": "ui.e2.pressure",
+            "effect": "Banks the SIGNAL refining family.",
+            "effectRef": "signal.signal_refinery",
+            "cost": 1,
+            "requires": ["ridge_relays", "dead_zone_charts"]
+          },
+          {
+            "id": "valley_switchboard",
+            "name": "Valley Switchboard",
+            "description": "Give every ridge, drone, and waiting desk one honest place on the board.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the Relay Valley network-ledger family.",
+            "effectRef": "signal.valley_switchboard",
+            "cost": 1,
+            "requires": ["signal_refinery"]
+          }
+        ]
+      },
+      {
+        "id": "Arsenal",
+        "label": "jammer & echo",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "signal_jammer",
+            "name": "Signal Jammer",
+            "description": "Wind a brief hush around a rogue machine without teaching it a crueler lesson.",
+            "iconKey": "ui.upgrade.icon.blast",
+            "effect": "Banks the Signal Jammer arsenal family.",
+            "effectRef": "signal.signal_jammer",
+            "cost": 1
+          },
+          {
+            "id": "beam_relay_turret",
+            "name": "Beam-Relay Turret",
+            "description": "Pass one warm strike along the visible tower line instead of asking it to cross stone.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the beam-relay sentry tier.",
+            "effectRef": "signal.beam_relay_turret",
+            "cost": 1,
+            "requires": ["signal_jammer"]
+          },
+          {
+            "id": "static_ward",
+            "name": "Static Ward",
+            "description": "Engrave a quiet ring where hares and rustlers cannot muddy the line unseen.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the Static Ward defense family.",
+            "effectRef": "signal.static_ward",
+            "cost": 1,
+            "requires": ["signal_jammer"]
+          },
+          {
+            "id": "corrupted_replays",
+            "name": "Corrupted Replays",
+            "description": "Keep a crossed-out copy of every bad tape so the town can watch where it wandered.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the bounded corrupted-replay family.",
+            "effectRef": "signal.corrupted_replays",
+            "cost": 1,
+            "requires": ["beam_relay_turret", "static_ward"]
+          },
+          {
+            "id": "echo_pattern_science",
+            "name": "Echo Pattern Science",
+            "description": "A future Echo medal will release the mirrored layout and defense-pattern diagrams.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks THE ECHO pattern science behind the reserved echoPatternCaptured medal flag.",
+            "effectRef": "signal.echo_pattern_science",
+            "cost": 1,
+            "requires": ["corrupted_replays"]
+          }
+        ]
+      },
+      {
+        "id": "Fabrication",
+        "label": "playbooks & drones",
+        "iconKey": "ui.upgrade.icon.mend",
+        "nodes": [
+          {
+            "id": "marked_steps",
+            "name": "Marked Steps",
+            "description": "Stamp every finished job with the town clock before the tape remembers it.",
+            "iconKey": "ui.upgrade.icon.firerate",
+            "effect": "Banks the accepted-step recorder family.",
+            "effectRef": "signal.marked_steps",
+            "cost": 1
+          },
+          {
+            "id": "patrol_recorder",
+            "name": "Patrol Recorder",
+            "description": "Walk one bounded route and let the punch tape keep the turns in order.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the teaching-patrol recorder family.",
+            "effectRef": "signal.patrol_recorder",
+            "cost": 1,
+            "requires": ["marked_steps"]
+          },
+          {
+            "id": "playbook_rules",
+            "name": "Playbook Rules",
+            "description": "Check every reel for a known job, a fair length, and no borrowed authority.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the validated playbook-library family.",
+            "effectRef": "signal.playbook_rules",
+            "cost": 1,
+            "requires": ["marked_steps"]
+          },
+          {
+            "id": "drone_delegation",
+            "name": "Drone Delegation",
+            "description": "Hand one checked reel to one coop drone and let it repeat only what it was taught.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the bounded drone-delegation family.",
+            "effectRef": "signal.drone_delegation",
+            "cost": 1,
+            "requires": ["patrol_recorder", "playbook_rules"]
+          },
+          {
+            "id": "guidance_playbooks",
+            "name": "Guidance Playbooks",
+            "description": "Bind the town's proven routes into the final guidance reels for the Starship.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the Starship guidance-playbook family.",
+            "effectRef": "signal.guidance_playbooks",
+            "cost": 1,
+            "requires": ["drone_delegation"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "the-starship",
+    "surfaceRef": "bld.the_starship",
+    "cost": { "gold": 0, "bankedScience": 18 },
+    "raiseActionText": "Raise The Starship"
+  },
+  "transition": {
+    "ceremonyBeatId": "e8-ceremony-starship",
+    "kitArtKey": "kit-era-8",
+    "displayName": "The Orbital Frontier"
+  },
+  "successor": null,
+  "parts": { "contracts": "contracts.json" }
+}

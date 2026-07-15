@@ -145,6 +145,7 @@ interface ThreeGameDiagnostics {
     };
     eligibility: string[];
   };
+  dustFlats?: { storm: string; tarSeams: number; orbit: { members: Array<{ id: string; peeled: boolean; state?: string }> }; orbitMembers: Array<{ id: string; peeled: boolean; state?: string }>; roads: { segments: number } };
   kills: number;
   goldPanned: number;
   deathLedger: {
@@ -290,6 +291,7 @@ interface ThreeGameDiagnostics {
   megaproject: GrMegaprojectDiagnostics;
   escort: GrEscortDiagnostics;
   tram: GrTramDiagnostics | null;
+  fairground: GrFerrisWheelDiagnostics | null;
   fuel: import('./systems/FuelSystem').FuelDiagnostics | null;
   vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
   power: GrPowerGraphDiagnostics;
@@ -311,6 +313,7 @@ interface ThreeGameDiagnostics {
     turretFireRateMult: number;
     wreckRemains: boolean;
   };
+  landYachtBoss: null | import('./systems/LandYachtBossSystem').LandYachtBossDiagnostics;
   agent: {
     stub: {
       name: string;
@@ -839,6 +842,7 @@ type GrTerrainSample = import('./world/Terrain').TerrainSample;
 type GrMegaprojectDiagnostics = import('./meta/Megaproject').MegaprojectDiagnostics;
 type GrEscortDiagnostics = import('./systems/WaveSystem').WaveDiagnostics['escort'];
 type GrTramDiagnostics = import('./entities/TramPath').TramDiagnostics;
+type GrFerrisWheelDiagnostics = import('./entities/FerrisWheel').FerrisWheelDiagnostics;
 type GrPowerGraphDiagnostics = import('./systems/PowerGraph').PowerGraphDiagnostics;
 type GrStatSimWindow = import('./crafting/StatSimHarness').StatSimWindow;
 type GrMultiplayerBalanceWindow = import('./mp/MultiplayerBalanceHarness').MultiplayerBalanceWindow;
@@ -855,6 +859,7 @@ type GrSimulationTickSample = {
 };
 
 interface Window {
+  __GR_E5_DEEPWATER__?: import('./diagnostics/E5DeepwaterHarness').E5DeepwaterHarness;
   __GR_E4_CONVOY_WEATHER__?: import('./diagnostics/E4ConvoyWeatherHarness').E4ConvoyWeatherHarness;
   __GR_E4_ORBIT_ROAD__?: import('./diagnostics/E4OrbitRoadHarness').E4OrbitRoadHarness;
   __GR_AUDIO_DIAGNOSTICS__?: {
@@ -1050,6 +1055,7 @@ interface Window {
     setBeaconWave: (wave: number | null) => void;
     setDayNightTime: (seconds: number | null) => import('./systems/DayNightCycle').DayNightSnapshot | null;
     lightCoverage: (x: number, z: number) => number;
+    damageFerrisWheel: (amount: number) => boolean;
     spawnMoths: (count: number, x: number, z: number) => number;
     announceForTest: (text: string, kind?: 'wave' | 'baron' | 'baron-defeat') => void;
     setWave: (wave: number) => void;

@@ -10,6 +10,16 @@ import motorContracts from '../../assets/contracts/epoch-4-motor/contracts.json'
 import motorManifest from '../../assets/contracts/epoch-4-motor/manifest.json' with { type: 'json' };
 import deepwaterContracts from '../../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
 import deepwaterManifest from '../../assets/contracts/epoch-5-deepwater/manifest.json' with { type: 'json' };
+import atomicContracts from '../../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
+import atomicManifest from '../../assets/contracts/epoch-6-atomic/manifest.json' with { type: 'json' };
+import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
+import signalManifest from '../../assets/contracts/epoch-7-signal/manifest.json' with { type: 'json' };
+import orbitalContracts from '../../assets/contracts/epoch-8-orbital/contracts.json' with { type: 'json' };
+import orbitalManifest from '../../assets/contracts/epoch-8-orbital/manifest.json' with { type: 'json' };
+import redfieldsContracts from '../../assets/contracts/epoch-9-redfields/contracts.json' with { type: 'json' };
+import redfieldsManifest from '../../assets/contracts/epoch-9-redfields/manifest.json' with { type: 'json' };
+import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
+import deepskyManifest from '../../assets/contracts/epoch-10-deepsky/manifest.json' with { type: 'json' };
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 
 export type EpochUpgradeDeltas = {
@@ -230,6 +240,26 @@ export type ContractMothSeason = {
   litThreshold: number;
   attachDamagePerSecond: number;
 };
+export type ContractFairground = {
+  wheel: {
+    nodeId: string;
+    x: number;
+    z: number;
+    outputWatts: number;
+    maxHp: number;
+    spinRate: number;
+    viewRadius: number;
+  };
+  pavilions: Array<{
+    id: string;
+    nodeId: string;
+    x: number;
+    z: number;
+    baseRadius: number;
+    radiusPerNight: number;
+  }>;
+  crowdFlocks: { count: number; escortRadius: number };
+};
 export type ContractPowerNode =
   | { id: string; label: string; kind: 'producer'; x: number; z: number; outputWatts: number }
   | { id: string; label: string; kind: 'relay'; x: number; z: number }
@@ -363,6 +393,39 @@ export type ContractHarvestAnchor = {
   x: number;
   z: number;
 };
+export type ContractTarSeam = ContractHarvestAnchor & {
+  id: string;
+  radius: number;
+};
+export type ContractRoadCorridor = {
+  id: string;
+  start: ContractHarvestAnchor;
+  end: ContractHarvestAnchor;
+};
+export type ContractDryWash = ContractHarvestAnchor & {
+  length: number;
+  width: number;
+  angle: number;
+};
+export type ContractOrbitSpawn = {
+  center: ContractHarvestAnchor;
+  radius: number;
+  angularSpeed: number;
+  lapsBeforePeel: number;
+  peelSpeed: number;
+  telegraphSeconds: number;
+  peelPoints: Array<{ id: string; angle: number }>;
+};
+export type ContractWeather = {
+  cycleSeconds: number;
+  clearSeconds: number;
+  telegraphSeconds: number;
+  stormSeconds: number;
+  stormMovementMultiplier: number;
+  stormVisibilityMultiplier: number;
+  hazeColor: string;
+  hazeStrength: number;
+};
 export type ContractHeightfieldDescriptor = {
   id: string;
   mode: 'visual';
@@ -454,6 +517,8 @@ export type ContractEscortMode = {
   id: 'escort';
   label: string;
   objective: string;
+  vehicle?: 'ore-cart' | 'tram';
+  reverseRoute?: boolean;
   cartsRequired: number;
   payout: number;
   railRouteIndex: number;
@@ -474,6 +539,10 @@ export type ContractManifest = {
     rails?: RailPathDescriptor[];
     waterSources: ContractWaterSource[];
     harvestAnchors?: ContractHarvestAnchor[];
+    tarSeams?: ContractTarSeam[];
+    roadCorridors?: ContractRoadCorridor[];
+    orbitSpawn?: ContractOrbitSpawn;
+    dryWash?: ContractDryWash;
     render?: TileRenderDescriptor;
     elevation?: TileElevationDescriptor;
     heightfield?: ContractHeightfieldDescriptor;
@@ -494,12 +563,15 @@ export type ContractManifest = {
   };
   twist: {
     sluicesNeedWaterSource?: boolean;
+    pressureEnabled?: boolean;
     seamYieldMult?: number;
     secureWave?: number;
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
     dayNightCycle?: ContractDayNightCycle;
+    weather?: ContractWeather;
     mothSeason?: ContractMothSeason;
+    fairground?: ContractFairground;
     powerGrid?: ContractPowerGrid;
     enemyLanternClasses?: readonly ContractEnemyLanternClass[];
     enemyRoster?: readonly ContractEnemyVariant[];
@@ -613,6 +685,11 @@ const fallbackManifests: Record<string, EpochManifest> = {
   '../../assets/contracts/epoch-3-voltage/manifest.json': voltageManifest as EpochManifest,
   '../../assets/contracts/epoch-4-motor/manifest.json': motorManifest as EpochManifest,
   '../../assets/contracts/epoch-5-deepwater/manifest.json': deepwaterManifest as EpochManifest,
+  '../../assets/contracts/epoch-6-atomic/manifest.json': atomicManifest as EpochManifest,
+  '../../assets/contracts/epoch-7-signal/manifest.json': signalManifest as EpochManifest,
+  '../../assets/contracts/epoch-8-orbital/manifest.json': orbitalManifest as EpochManifest,
+  '../../assets/contracts/epoch-9-redfields/manifest.json': redfieldsManifest as EpochManifest,
+  '../../assets/contracts/epoch-10-deepsky/manifest.json': deepskyManifest as EpochManifest,
 };
 const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
   '../../assets/contracts/epoch-1-frontier/families.json': frontierFamilies as EpochFamiliesBundle,
@@ -626,6 +703,11 @@ const fallbackContractBundles: Record<string, ContractsBundle> = {
   '../../assets/contracts/epoch-3-voltage/contracts.json': voltageContracts as unknown as ContractsBundle,
   '../../assets/contracts/epoch-4-motor/contracts.json': motorContracts as unknown as ContractsBundle,
   '../../assets/contracts/epoch-5-deepwater/contracts.json': deepwaterContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-6-atomic/contracts.json': atomicContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-7-signal/contracts.json': signalContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-8-orbital/contracts.json': orbitalContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-9-redfields/contracts.json': redfieldsContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-10-deepsky/contracts.json': deepskyContracts as unknown as ContractsBundle,
 };
 
 const manifests =
@@ -1384,6 +1466,25 @@ function variableDescriptorArrayShape(
 
 function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
   validateLightRamp(contract.twist.lightRamp, reasons);
+  const orbit = contract.tileParams.orbitSpawn;
+  if (orbit && (
+    ![orbit.center.x, orbit.center.z, orbit.radius, orbit.angularSpeed, orbit.lapsBeforePeel, orbit.peelSpeed, orbit.telegraphSeconds].every(Number.isFinite)
+    || orbit.radius <= 0 || orbit.angularSpeed <= 0 || orbit.lapsBeforePeel < 0 || orbit.peelSpeed <= 0 || orbit.telegraphSeconds < 0
+    || orbit.peelPoints.length === 0 || orbit.peelPoints.some((point) => !point.id || !Number.isFinite(point.angle))
+  )) {
+    addDescriptorReason(reasons, reason('orbit_spawn', 'The ORBIT road needs positive motion, a non-negative telegraph, and named peel points.', 'tileParams.orbitSpawn'));
+  }
+  const weather = contract.twist.weather;
+  if (weather && (
+    ![weather.cycleSeconds, weather.clearSeconds, weather.telegraphSeconds, weather.stormSeconds, weather.stormMovementMultiplier, weather.stormVisibilityMultiplier, weather.hazeStrength].every(Number.isFinite)
+    || weather.cycleSeconds <= 0 || weather.clearSeconds < 0 || weather.telegraphSeconds <= 0 || weather.stormSeconds <= 0
+    || weather.clearSeconds + weather.telegraphSeconds + weather.stormSeconds >= weather.cycleSeconds
+    || weather.stormMovementMultiplier <= 0 || weather.stormMovementMultiplier > 1
+    || weather.stormVisibilityMultiplier <= 0 || weather.stormVisibilityMultiplier > 1
+    || weather.hazeStrength < 0 || weather.hazeStrength > 1
+  )) {
+    addDescriptorReason(reasons, reason('weather_cycle', 'Weather needs a positive cycle, shorter phases, and movement, visibility, and haze modifiers from zero to one.', 'twist.weather'));
+  }
   const cycle = contract.twist.dayNightCycle;
   if (cycle && (!Number.isFinite(cycle.periodSeconds) || !Number.isFinite(cycle.duskRampSeconds) || !Number.isFinite(cycle.dawnRampSeconds)
     || !Number.isFinite(cycle.nightDepth) || cycle.periodSeconds <= 0 || cycle.duskRampSeconds <= 0 || cycle.dawnRampSeconds <= 0

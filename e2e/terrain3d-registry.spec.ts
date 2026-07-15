@@ -159,6 +159,25 @@ test('all seven contracts mount terrain, panorama, and grounded render-only land
   expect(errors).toEqual({ console: [], page: [] });
 });
 
+test('Hill Mine rails resample onto the mounted terrain surface', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await boot(page, 'e2-hill-mine', '&terrain3dPilot');
+  await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+
+  const samples = await page.evaluate(() => (window.__THREE_GAME_DIAGNOSTICS__?.terrain.rails.samples ?? [])
+    .filter((sample) => sample.z >= 12)
+    .slice(0, 5)
+    .map((sample) => ({ ...sample, expectedY: window.__GR_TEST__!.terrainVisualY(sample.x, sample.z, 0.08) })));
+  expect(samples).toHaveLength(5);
+  for (const sample of samples) expect(sample.y).toBeCloseTo(sample.expectedY, 3);
+  expect(Math.max(...samples.map((sample) => sample.y)) - Math.min(...samples.map((sample) => sample.y))).toBeGreaterThan(1);
+
+  await mkdir(path.resolve('artifacts/fix-hillmine-rail-render'), { recursive: true });
+  await page.screenshot({ path: path.resolve(`artifacts/fix-hillmine-rail-render/${testInfo.project.name}-after.png`) });
+  await writeFile(path.resolve(`artifacts/fix-hillmine-rail-render/${testInfo.project.name}-rail-heights.json`), `${JSON.stringify(samples, null, 2)}\n`);
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
 test('rim and horizon probes keep the terrain meeting gradual and every panorama readable', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);

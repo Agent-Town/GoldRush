@@ -79,10 +79,19 @@ test('the board gates future-era contracts and counts only playable profiles', a
   const playableDots = page.locator('[data-contract-playable="true"]');
   const mutedDots = page.locator('[data-contract-playable="false"]');
   const playableCount = await playableDots.count();
-  await expect(mutedDots).toHaveCount(3);
+  // drip-02/03 (s586): e2-pressure-garden AND e2-incline both graduated from muted
+  // teasers to real board dots (each carries a boardRow), so the muted set drops 3→1.
+  await expect(mutedDots).toHaveCount(1);
   await expect(mutedDots.first()).toHaveClass(/town-ui__catalog-dot--muted/);
   await page.getByTestId('contract-page-dot-e2-pressure-garden').click();
-  await expect(page.getByTestId('contract-page-count')).toHaveText(`${playableCount} / ${playableCount}`);
+  // The graduated dot must still be LOCKED: this epoch-2 seed has no e2-trestle win,
+  // so pressure-garden's unlock:"secured:e2-trestle" gate stays unmet (the real guard —
+  // graduation to a board dot is independent of the scoreboard unlock).
+  await expect(page.getByTestId('contract-card-e2-pressure-garden')).toHaveAttribute('data-contract-locked', 'true');
+  await expect(page.getByTestId('contract-launch-e2-pressure-garden')).toBeDisabled();
+  // pressure-garden is now a real (locked) board page, so clicking its dot navigates to it;
+  // the gating invariant is the DENOMINATOR — total pages == playable-profile count (future-era gated out).
+  await expect(page.getByTestId('contract-page-count')).toHaveText(new RegExp(`^\\d+ / ${playableCount}$`));
   await shot(page, testInfo, 'steamworks-profiles');
 
   expect(errors).toEqual([]);

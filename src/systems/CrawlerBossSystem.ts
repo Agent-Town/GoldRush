@@ -1,12 +1,23 @@
 import * as THREE from 'three';
 import type { ClaimJumperEnemy } from '../entities/Enemy';
 import { Balance } from '../game/Balance';
+import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
 import type { PowerGraphCommand, PowerNodeSnapshot } from './PowerGraph';
 
 const CRAWLER_VARIANT = 'dynamo_crawler';
 const COMPONENT_IDS = ['drain_mast', 'tracks', 'capacitor_bank'] as const;
 type CrawlerComponentId = typeof COMPONENT_IDS[number];
+const CRAWLER_3D_URL = new URL('../../assets/pilots/crawler-3d/crawler.glb', import.meta.url).href;
+const CRAWLER_3D_TRIANGLES = 11_980;
+const CRAWLER_DAMAGE_THRESHOLD = 0.5;
+const CRAWLER_3D_COMPONENTS = {
+  drain_mast: { mesh: 'drain_mast', morph: 'Damage_ToppledDrainMast', damageColor: '#62d7cd' },
+  tracks: { mesh: 'tracks', morph: 'Damage_ShatteredTracks', damageColor: '#d29a48' },
+  capacitor_bank: { mesh: 'capacitor_bank', morph: 'Damage_RupturedCapacitorBank', damageColor: '#f2a43b' },
+} as const;
+type Crawler3dState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
 
 export type CrawlerBossDiagnostics = {
   active: boolean;
@@ -67,6 +78,13 @@ export class CrawlerBossSystem {
   private lastAt = 0;
   private readonly destroyed = new Set<CrawlerComponentId>();
   private readonly destroyedPositions = new Map<CrawlerComponentId, THREE.Vector3>();
+  private crawler3dState: Crawler3dState;
+  private crawler3dLoadSerial = 0;
+  private crawler3dModel?: THREE.Object3D;
+  private crawler3dGroupId: string | null = null;
+  private readonly crawler3dMeshes = new Map<CrawlerComponentId, THREE.Mesh>();
+  private readonly crawler3dOffsets = new Map<CrawlerComponentId, THREE.Vector3>();
+  private readonly crawler3dCenter = new THREE.Vector3();
 
   constructor(
     private readonly enemies: () => readonly ClaimJumperEnemy[],
@@ -74,6 +92,7 @@ export class CrawlerBossSystem {
     private readonly queuePower: (command: PowerGraphCommand) => boolean,
     private readonly launchBurst: (origin: THREE.Vector3, target: THREE.Vector3, damage: number, radius: number) => boolean,
   ) {
+    this.crawler3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'RivalDynamoCrawler.Placeholder';
     const mast = new THREE.Group();
     mast.add(box(2.2, 0.6, 1.8, '#3f706e', 0, 0.3, 0), cylinder(0.38, 3.8, '#62d7cd', 0, 2.2, 0), box(2.7, 0.22, 0.28, '#d29a48', 0, 3.5, 0));
@@ -102,6 +121,7 @@ export class CrawlerBossSystem {
     this.dial.add(dialRing, this.dialPointer);
     this.group.add(this.beam, this.dial, this.wreck);
     this.hideTransientPresentation();
+    this.publishCrawler3d();
   }
 
   onWaveStarted(wave: number, bossWave: number, at: number): void {
@@ -116,11 +136,13 @@ export class CrawlerBossSystem {
     this.destroyed.add(componentId);
     this.destroyedPositions.set(componentId, position.clone());
     this.advanceActs(at);
+    if (this.destroyed.size === COMPONENT_IDS.length) this.disposeCrawler3d('disposed');
   }
 
   update(at: number): void {
     this.lastAt = at;
     const components = this.liveComponents();
+    if (components.size > 0) this.ensureCrawler3d();
     if (!this.seenBoss && components.size > 0) {
       this.seenBoss = true;
       this.act = 1;
@@ -133,6 +155,7 @@ export class CrawlerBossSystem {
     this.advanceActs(at);
     if (this.act === 2 && components.has('capacitor_bank')) this.updateBurst(at, components.get('capacitor_bank')!);
     this.syncPresentation(components, at);
+    if (components.size === 0 && (this.crawler3dState === 'loading' || this.crawler3dState === 'ready')) this.disposeCrawler3d('disposed');
   }
 
   get lampIntensityMult(): number {
@@ -235,6 +258,7 @@ export class CrawlerBossSystem {
 
   reset(): void {
     if (this.drainNodeId) this.queuePower({ type: 'set-node-online', nodeId: this.drainNodeId, online: false });
+    this.disposeCrawler3d(performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off');
     this.seenBoss = false;
     this.act = 0;
     this.flickerEvents = 0;
@@ -254,6 +278,7 @@ export class CrawlerBossSystem {
   }
 
   dispose(): void {
+    this.disposeCrawler3d('disposed');
     this.group.traverse((child) => {
       if (!(child instanceof THREE.Mesh || child instanceof THREE.Line)) return;
       child.geometry.dispose();
@@ -317,9 +342,11 @@ export class CrawlerBossSystem {
   }
 
   private syncPresentation(components: ReadonlyMap<CrawlerComponentId, ClaimJumperEnemy>, at: number): void {
+    this.updateCrawler3d(components);
+    const modelMounted = this.crawler3dState === 'ready' && this.crawler3dGroupId !== null;
     for (const [id, mesh] of this.componentMeshes) {
       const enemy = components.get(id);
-      mesh.visible = Boolean(enemy);
+      mesh.visible = Boolean(enemy) && !modelMounted;
       if (!enemy) continue;
       mesh.position.copy(enemy.position);
       mesh.position.y = Terrain.visualY(enemy.position.x, enemy.position.z, 0);
@@ -344,6 +371,134 @@ export class CrawlerBossSystem {
       this.dial.scale.setScalar(0.75 + progress * 0.5);
       this.dialPointer.rotation.y = -Math.PI * 0.75 + progress * Math.PI * 1.5;
     }
+    this.publishCrawler3d(components);
+  }
+
+  private ensureCrawler3d(): void {
+    if (this.crawler3dState === 'lite' || this.crawler3dState === 'loading' || this.crawler3dState === 'ready' || this.crawler3dState === 'failed') return;
+    const serial = ++this.crawler3dLoadSerial;
+    this.crawler3dState = 'loading';
+    this.publishCrawler3d();
+    void import('three/examples/jsm/loaders/GLTFLoader.js').then(({ GLTFLoader }) => {
+      if (serial !== this.crawler3dLoadSerial) return;
+      new GLTFLoader().load(CRAWLER_3D_URL, ({ scene }) => {
+        if (serial !== this.crawler3dLoadSerial) {
+          disposeObject3D(scene);
+          return;
+        }
+        const meshes = this.inspectCrawler3d(scene);
+        if (!meshes) {
+          disposeObject3D(scene);
+          this.crawler3dState = 'failed';
+          this.publishCrawler3d();
+          return;
+        }
+        scene.name = 'RivalDynamoCrawler3d';
+        scene.visible = false;
+        this.crawler3dModel = scene;
+        this.crawler3dMeshes.clear();
+        for (const [id, mesh] of meshes) this.crawler3dMeshes.set(id, mesh);
+        this.group.add(scene);
+        this.crawler3dState = 'ready';
+        this.publishCrawler3d();
+      }, undefined, () => {
+        if (serial !== this.crawler3dLoadSerial) return;
+        this.crawler3dState = 'failed';
+        this.publishCrawler3d();
+      });
+    }, () => {
+      if (serial !== this.crawler3dLoadSerial) return;
+      this.crawler3dState = 'failed';
+      this.publishCrawler3d();
+    });
+  }
+
+  private inspectCrawler3d(model: THREE.Object3D): Map<CrawlerComponentId, THREE.Mesh> | null {
+    const meshes = new Map<CrawlerComponentId, THREE.Mesh>();
+    const materials = new Set<THREE.Material>();
+    let meshCount = 0;
+    let triangles = 0;
+    model.traverse((node) => {
+      const mesh = node as THREE.Mesh;
+      if (!mesh.isMesh) return;
+      meshCount += 1;
+      triangles += Math.floor((mesh.geometry.index?.count ?? mesh.geometry.getAttribute('position')?.count ?? 0) / 3);
+      for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+      for (const id of COMPONENT_IDS) {
+        const contract = CRAWLER_3D_COMPONENTS[id];
+        if (mesh.name === contract.mesh && mesh.morphTargetDictionary?.[contract.morph] === 0 && mesh.morphTargetInfluences?.length === 1) meshes.set(id, mesh);
+      }
+      mesh.castShadow = true;
+      mesh.receiveShadow = true;
+    });
+    if (meshCount !== 3 || meshes.size !== 3 || materials.size !== 1 || triangles !== CRAWLER_3D_TRIANGLES) return null;
+    for (const mesh of meshes.values()) {
+      const material = (mesh.material as THREE.MeshStandardMaterial).clone();
+      material.emissiveMap = material.map;
+      mesh.material = material;
+    }
+    for (const material of materials) material.dispose();
+    return meshes;
+  }
+
+  private updateCrawler3d(components: ReadonlyMap<CrawlerComponentId, ClaimJumperEnemy>): void {
+    if (!this.crawler3dModel || this.crawler3dState !== 'ready' || components.size === 0) return;
+    const anchor = components.values().next().value as ClaimJumperEnemy | undefined;
+    if (!anchor?.bossGroupId) return;
+    if (this.crawler3dGroupId !== anchor.bossGroupId) {
+      this.crawler3dGroupId = anchor.bossGroupId;
+      this.crawler3dOffsets.clear();
+      this.crawler3dCenter.set(0, 0, 0);
+      for (const enemy of components.values()) this.crawler3dCenter.add(enemy.position);
+      this.crawler3dCenter.multiplyScalar(1 / components.size);
+      for (const [id, enemy] of components) this.crawler3dOffsets.set(id, enemy.position.clone().sub(this.crawler3dCenter));
+    }
+    const anchorId = anchor.bossComponentId as CrawlerComponentId;
+    this.crawler3dCenter.copy(anchor.position);
+    const anchorOffset = this.crawler3dOffsets.get(anchorId);
+    if (anchorOffset) this.crawler3dCenter.sub(anchorOffset);
+    this.crawler3dModel.position.set(
+      this.crawler3dCenter.x,
+      Terrain.visualY(this.crawler3dCenter.x, this.crawler3dCenter.z, 0),
+      this.crawler3dCenter.z,
+    );
+    this.crawler3dModel.rotation.y = Math.PI / 2 - anchor.group.rotation.y;
+    this.crawler3dModel.visible = true;
+    for (const [id, mesh] of this.crawler3dMeshes) {
+      const enemy = components.get(id);
+      const damaged = this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= CRAWLER_DAMAGE_THRESHOLD);
+      if (mesh.morphTargetInfluences) mesh.morphTargetInfluences[0] = damaged ? 1 : 0;
+      const material = mesh.material as THREE.MeshStandardMaterial;
+      material.emissive.set(damaged ? CRAWLER_3D_COMPONENTS[id].damageColor : '#fff8e8');
+      material.emissiveIntensity = damaged ? 3 : 2;
+    }
+  }
+
+  private disposeCrawler3d(nextState: Crawler3dState): void {
+    this.crawler3dLoadSerial += 1;
+    if (this.crawler3dModel) {
+      this.group.remove(this.crawler3dModel);
+      disposeObject3D(this.crawler3dModel);
+      this.crawler3dModel = undefined;
+    }
+    this.crawler3dMeshes.clear();
+    this.crawler3dOffsets.clear();
+    this.crawler3dGroupId = null;
+    this.crawler3dState = nextState;
+    this.publishCrawler3d();
+  }
+
+  private publishCrawler3d(components: ReadonlyMap<CrawlerComponentId, ClaimJumperEnemy> = this.liveComponents()): void {
+    const canvas = document.querySelector('canvas');
+    if (!canvas) return;
+    canvas.dataset.crawler3dState = this.crawler3dState;
+    canvas.dataset.crawler3dSource = this.crawler3dState === 'ready' ? 'glb' : 'placeholder';
+    canvas.dataset.crawler3dMounted = String(this.crawler3dState === 'ready' && this.crawler3dGroupId !== null);
+    canvas.dataset.crawler3dDamageStates = JSON.stringify(Object.fromEntries(COMPONENT_IDS.map((id) => {
+      const enemy = components.get(id);
+      const damaged = this.destroyed.has(id) || Boolean(enemy && enemy.currentHp / Math.max(1, enemy.maxHp) <= CRAWLER_DAMAGE_THRESHOLD);
+      return [id, damaged ? 'broken' : 'intact'];
+    })));
   }
 
   private placeBeamSegment(mesh: THREE.Mesh, start: THREE.Vector3, end: THREE.Vector3): void {

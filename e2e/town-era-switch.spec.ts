@@ -4,16 +4,18 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
 
 const ARTIFACT_DIR = path.resolve('artifacts/town-era-switch');
 const E2 = 'epoch-2-steamworks';
-const E2_MODEL = /\/tavern\.e2\.glb(?:\?.*)?$/;
+const E2_MODEL = /\/tavern\.e2\.glb$/;
 const BASE_MODEL = /\/town-v3-tavern(?:-[^/.]+)?\.glb(?:\?.*)?$/;
+const BUILDINGS = ['tavern', 'general_store', 'claim_office', 'assay_office', 'chapel', 'schoolhouse', 'stamp-mill', 'dynamo_hall'] as const;
 
 type Errors = { console: string[]; page: string[] };
 
 async function seed(page: Page, epochId?: string): Promise<void> {
-  await page.addInitScript(({ profileKey, townKey, metaKey, guideKey, epochKey, epoch }) => {
+  await page.addInitScript(({ profileKey, townKey, metaKey, guideKey, epochKey, megaprojectKey, epoch }) => {
     Object.defineProperty(window, '__GR_TOWN_VARIANT_URLS__', {
       configurable: true,
       value: { '../../assets/pilots/tavern-3d/tavern.e2.glb': '/assets/pilots/tavern-3d/tavern.e2.glb' },
@@ -29,8 +31,12 @@ async function seed(page: Page, epochId?: string): Promise<void> {
     };
     localStorage.setItem(profileKey, JSON.stringify(state));
     localStorage.setItem(townKey, 'Quartz Hill');
-    localStorage.setItem(metaKey, JSON.stringify({ version: 1, tracks: { territory: 3, science: 0, hero: 0, agent: 0 } }));
+    localStorage.setItem(metaKey, JSON.stringify({ version: 1, tracks: { territory: 3, science: 14, hero: 0, agent: 0 } }));
     localStorage.setItem(guideKey, '1');
+    localStorage.setItem(megaprojectKey, JSON.stringify({ version: 1, projects: {
+      'stamp-mill': { stage: 3, funded: false, ticksRemaining: 0, hp: 150, delayTicks: 0, defenseWave: 0 },
+      'dynamo-hall': { stage: 3, funded: false, ticksRemaining: 0, hp: 210, delayTicks: 0, defenseWave: 0 },
+    } }));
     if (epoch) localStorage.setItem(epochKey, epoch);
   }, {
     profileKey: PROFILE_KEY,
@@ -38,6 +44,7 @@ async function seed(page: Page, epochId?: string): Promise<void> {
     metaKey: profileDataKey('robin', META_PROGRESS_KEY),
     guideKey: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
     epochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY),
+    megaprojectKey: profileDataKey('robin', MEGAPROJECT_STATE_KEY),
     epoch: epochId,
   });
 }
@@ -86,7 +93,7 @@ test('E1 mounts base only; E2 mounts its variant, shared anchor plumes, and era 
   await seed(page);
   const found = errors(page);
   const requests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes('tavern') && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', (request) => { if (E2_MODEL.test(request.url()) || BASE_MODEL.test(request.url())) requests.push(request.url()); });
   await page.route(E2_MODEL, async (route) => route.fulfill({ body: await fixture(), contentType: 'model/gltf-binary' }));
 
   await openTown(page, '?town3dPilot=tavern&tier=full');
@@ -118,7 +125,7 @@ test('a missing E2 sibling falls back to base without errors', async ({ page }) 
   await seed(page, E2);
   const found = errors(page);
   const requests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes('tavern') && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', (request) => { if (E2_MODEL.test(request.url()) || BASE_MODEL.test(request.url())) requests.push(request.url()); });
   await page.route(E2_MODEL, (route) => route.fulfill({ body: '', contentType: 'model/gltf-binary' }));
   await openTown(page, '?town3dPilot=tavern&tier=full');
   const canvas = page.locator('canvas');
@@ -142,3 +149,20 @@ test('LITE keeps facades and never fetches models or mounts plumes', async ({ pa
   expect(requests).toEqual([]);
   expect(found).toEqual({ console: [], page: [] });
 });
+
+for (const [label, epoch] of [['E1', undefined], ['E2', E2], ['E3', 'epoch-3-voltage']] as const) {
+  test(`${label} keeps every mounted building upright`, async ({ page }) => {
+    await seed(page, epoch);
+    const found = errors(page);
+    await openTown(page, '?town3dPilot=all&tier=full');
+    await page.waitForFunction((count) => Object.keys(JSON.parse(document.querySelector('canvas')?.dataset.town3dPilotBuildingOrientations ?? '{}')).length === count, BUILDINGS.length);
+    const orientations = JSON.parse((await page.locator('canvas').getAttribute('data-town3d-pilot-building-orientations'))!) as Record<typeof BUILDINGS[number], { width: number; height: number; depth: number; upY: number }>;
+    expect(Object.keys(orientations).sort()).toEqual([...BUILDINGS].sort());
+    for (const building of BUILDINGS) {
+      expect(orientations[building].upY, building).toBeCloseTo(1, 5);
+      // Accepted facades can be wider than tall; height > depth detects a model lying on its back.
+      expect(orientations[building].height, building).toBeGreaterThan(orientations[building].depth);
+    }
+    expect(found).toEqual({ console: [], page: [] });
+  });
+}

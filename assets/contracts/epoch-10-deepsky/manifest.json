@@ -1,0 +1,192 @@
+{
+  "id": "epoch-10-deepsky",
+  "displayName": "Deep Sky",
+  "order": 10,
+  "locked": true,
+  "scienceThreshold": 24,
+  "research": {
+    "branches": [
+      {
+        "id": "Cosmography",
+        "label": "starlight & worlds",
+        "iconKey": "ui.upgrade.icon.prospecting",
+        "nodes": [
+          {
+            "id": "starlight_soundings",
+            "name": "Starlight Soundings",
+            "description": "Mark the bright currents, quiet reaches, and safe sweep arcs before the Pan leaves its shrine.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the starlight-current survey family.",
+            "effectRef": "deepsky.starlight_soundings",
+            "cost": 1
+          },
+          {
+            "id": "world_family_atlas",
+            "name": "World-Family Atlas",
+            "description": "Give ember worlds, glass steppes, and sea moons separate grammars without losing the town's old hand.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the authored world-family and biome-grammar family.",
+            "effectRef": "deepsky.world_family_atlas",
+            "cost": 1,
+            "requires": ["starlight_soundings"]
+          },
+          {
+            "id": "seed_charters",
+            "name": "Seed Charters",
+            "description": "Enter each world's seed, connected routes, and honest landmarks before the Ark opens its bridge.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the deterministic world-seed and validation-contract family.",
+            "effectRef": "deepsky.seed_charters",
+            "cost": 1,
+            "requires": ["starlight_soundings"]
+          },
+          {
+            "id": "ember_shore_atlas",
+            "name": "Ember Shore Atlas",
+            "description": "Keep the last warm vent, the cooled titan, and every safe approach on one preserve page.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the first visited-world and preserve-contract family.",
+            "effectRef": "deepsky.ember_shore_atlas",
+            "cost": 1,
+            "requires": ["world_family_atlas", "seed_charters"]
+          },
+          {
+            "id": "starlight_pan_science",
+            "name": "Starlight Pan Science",
+            "description": "Keep the first Pan's old sweep and teach it to gather nebula-light into counted charges.",
+            "iconKey": "ui.upgrade.icon.panning",
+            "effect": "Banks the Starlight Pan charge-and-sweep arsenal family.",
+            "effectRef": "deepsky.starlight_pan_science",
+            "cost": 1,
+            "requires": ["ember_shore_atlas"]
+          }
+        ]
+      },
+      {
+        "id": "Static Science",
+        "label": "wards & re-inking",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "static_soundings",
+            "name": "Static Soundings",
+            "description": "Measure where color thins, instruments fall quiet, and old machines begin to forget their work.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the Static desaturation-and-mix survey family.",
+            "effectRef": "deepsky.static_soundings",
+            "cost": 1
+          },
+          {
+            "id": "deep_sky_static_ward",
+            "name": "Static Ward",
+            "description": "Set a brass-and-teal boundary where portraits, tools, and warm light keep their ink.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the Static Ward defense family.",
+            "effectRef": "deepsky.deep_sky_static_ward",
+            "cost": 1,
+            "requires": ["static_soundings"]
+          },
+          {
+            "id": "era_memory_gates",
+            "name": "Era-Memory Gates",
+            "description": "Mark which old rigs the Quiet forgets first and which newest science can carry them home.",
+            "iconKey": "ui.upgrade.icon.firerate",
+            "effect": "Banks the radius-bound era-weapon gating family.",
+            "effectRef": "deepsky.era_memory_gates",
+            "cost": 1,
+            "requires": ["static_soundings"]
+          },
+          {
+            "id": "re_ink_relays",
+            "name": "Re-Ink Relays",
+            "description": "Return hue deck by deck and instrument by instrument until the whole Ark can answer again.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the staged re-ink and mix-restoration family.",
+            "effectRef": "deepsky.re_ink_relays",
+            "cost": 1,
+            "requires": ["deep_sky_static_ward", "era_memory_gates"]
+          },
+          {
+            "id": "quiet_core_science",
+            "name": "Quiet-Core Science",
+            "description": "A future Quiet medal will release the storm-heart rings, forgotten-weapon tables, and re-ink score.",
+            "iconKey": "ui.e2.pressure",
+            "effect": "Banks THE QUIET core science behind the reserved quietCoreCaptured medal flag.",
+            "effectRef": "deepsky.quiet_core_science",
+            "cost": 1,
+            "requires": ["re_ink_relays"]
+          }
+        ]
+      },
+      {
+        "id": "Preservation",
+        "label": "ark & charters",
+        "iconKey": "char.prospector_agent.portrait",
+        "nodes": [
+          {
+            "id": "long_table_archive",
+            "name": "Long Table Archive",
+            "description": "Enter every family, empty chair, carried recipe, and remembered claim before the next world is chosen.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the whole-saga Long Table archive family.",
+            "effectRef": "deepsky.long_table_archive",
+            "cost": 1
+          },
+          {
+            "id": "portrait_wall",
+            "name": "Portrait Wall",
+            "description": "Compose ten generations from profile deeds and honors, never from a borrowed likeness.",
+            "iconKey": "ui.upgrade.icon.gold",
+            "effect": "Banks the profile-history portrait-wall compositor family.",
+            "effectRef": "deepsky.portrait_wall",
+            "cost": 1,
+            "requires": ["long_table_archive"]
+          },
+          {
+            "id": "preserve_seals",
+            "name": "Preserve Seals",
+            "description": "Turn the old claim stamp toward warm vents, living worlds, and stories that must outlast the squall.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the preserve-contract seal and stewardship-verb family.",
+            "effectRef": "deepsky.preserve_seals",
+            "cost": 1,
+            "requires": ["long_table_archive"]
+          },
+          {
+            "id": "world_charters",
+            "name": "World Charters",
+            "description": "Bind a seed, a fair budget, a playable route, and a promise to keep before the Press takes the page.",
+            "iconKey": "ui.e2.iron_card",
+            "effect": "Banks the validated world-charter and family-sharing contract.",
+            "effectRef": "deepsky.world_charters",
+            "cost": 1,
+            "requires": ["portrait_wall", "preserve_seals"]
+          },
+          {
+            "id": "charter_press",
+            "name": "The Charter Press",
+            "description": "Set the child-height lever beneath every era's proven verbs and hand the machine that builds worlds to the children.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the final Charter Press workshop behind all three Deep Sky capstones.",
+            "effectRef": "deepsky.charter_press",
+            "cost": 1,
+            "requires": ["world_charters", "starlight_pan_science", "quiet_core_science"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "charter-press",
+    "surfaceRef": "bld.charter_press",
+    "cost": { "gold": 0, "bankedScience": 24 },
+    "raiseActionText": "Open the Charter Press"
+  },
+  "transition": {
+    "ceremonyBeatId": "credits-ceremony-charter-press",
+    "kitArtKey": "kit-era-10",
+    "displayName": "The Charter Press"
+  },
+  "successor": null,
+  "parts": { "contracts": "contracts.json" }
+}

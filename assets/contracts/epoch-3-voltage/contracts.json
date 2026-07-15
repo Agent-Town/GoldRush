@@ -247,7 +247,7 @@
             { "id": "pylon-east-rim", "label": "East Rim Pylon", "kind": "relay", "x": 28, "z": 8 },
             { "id": "gallery-west", "label": "West Gallery", "kind": "consumer", "role": "gallery", "x": -28, "z": 28, "drawWatts": 6, "priority": 10 },
             { "id": "gallery-east", "label": "East Gallery", "kind": "consumer", "role": "gallery", "x": 28, "z": 28, "drawWatts": 6, "priority": 10 },
-            { "id": "tram-motor", "label": "Works Tram", "kind": "consumer", "role": "tram", "x": 0, "z": -32, "drawWatts": 4, "priority": 15 },
+            { "id": "tram-motor", "label": "Works Tram", "kind": "consumer", "role": "tram", "x": -28, "z": 8, "drawWatts": 4, "priority": 15 },
             { "id": "turret-west", "label": "West Arc Turret", "kind": "consumer", "role": "turret", "x": -18, "z": 22, "drawWatts": 4, "priority": 20 },
             { "id": "turret-east", "label": "East Arc Turret", "kind": "consumer", "role": "turret", "x": 18, "z": 22, "drawWatts": 4, "priority": 20 },
             { "id": "lamp-west", "label": "West Gallery Lamps", "kind": "consumer", "role": "lamp", "x": -32, "z": 32, "drawWatts": 2, "priority": 30 },
@@ -264,7 +264,7 @@
             { "a": "sub-hall", "b": "pylon-east-base" }, { "a": "pylon-east-base", "b": "pylon-east-switch" }, { "a": "pylon-east-switch", "b": "pylon-east-rim" },
             { "a": "pylon-west-rim", "b": "gallery-west" }, { "a": "gallery-west", "b": "turret-west" }, { "a": "gallery-west", "b": "lamp-west" },
             { "a": "pylon-east-rim", "b": "gallery-east" }, { "a": "gallery-east", "b": "turret-east" }, { "a": "gallery-east", "b": "lamp-east" },
-            { "a": "sub-hall", "b": "tram-motor" },
+            { "a": "pylon-west-rim", "b": "tram-motor" },
             { "a": "pylon-west-base", "b": "crawler-drain-west-base" },
             { "a": "pylon-west-switch", "b": "crawler-drain-west-switch" },
             { "a": "pylon-west-rim", "b": "crawler-drain-west-rim" },
@@ -312,11 +312,80 @@
           { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
         ]
       },
+      "modes": [
+        {
+          "id": "escort",
+          "label": "Capacitor Run",
+          "objective": "Carry 1 capacitor crate up the west switchback.",
+          "vehicle": "tram",
+          "reverseRoute": true,
+          "cartsRequired": 1,
+          "payout": 60,
+          "railRouteIndex": 1
+        }
+      ],
       "boardRow": { "name": "The Canyon Works", "ledgerBlurb": "String the gorge with current; the Fever comes to every light we raise.", "tags": ["voltage", "network", "night"], "unlock": "default" },
       "briefing": {
         "goals": ["DEFEND the Dynamo Sub-Hall through wave 12.", "CONNECT both cliff galleries by wave 6."],
         "rules": ["Sentry Beacons raised on marked PYLON SITES carry current up the switchbacks.", "Every gallery, lamp, turret, and tram draws watts; the ledger sheds higher-priority numbers first.", "Fevered saboteurs are drawn to the grid and cut a span when they wreck a pylon."],
         "geographyLine": "A 96 by 112 gorge: sub-hall south, one dam channel, split switchbacks, and paired galleries above."
+      }
+    },
+    {
+      "id": "e3-fairground",
+      "name": "The Fairground",
+      "tileParams": {
+        "tileId": "e3-fairground",
+        "biome": "voltage-canyon-fairground",
+        "size": 88,
+        "dimensions": { "width": 88, "height": 88 },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "south-midway", "bank": "south", "minX": -36, "maxX": 36, "minZ": -38, "maxZ": -12 },
+          { "id": "west-pavilion", "bank": "north", "minX": -38, "maxX": -10, "minZ": -8, "maxZ": 30 },
+          { "id": "east-pavilion", "bank": "north", "minX": 10, "maxX": 38, "minZ": -8, "maxZ": 30 }
+        ],
+        "stakeMarkers": [{ "id": "fair-gate", "x": 0, "z": -30, "lossCondition": true }],
+        "waterSources": [],
+        "heightfield": { "id": "fairground-bowl", "mode": "visual" },
+        "palette": { "id": "fairground-lamp-gold", "tint": [0.68, 0.58, 0.48], "dampAmount": 0.04, "splat": { "rockAmount": 0.24, "scrubAmount": 0.16, "macroWarmth": 0.72, "antiTile": 0.68 } },
+        "scatter": { "id": "fairground-midway", "density": 0.34, "classCounts": { "rocks": 20, "dry_grass": 24, "wagon_ruts": 24, "claim_posts": 12 } },
+        "lanes": { "spawnEdges": ["west", "east", "north"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "dayNightCycle": { "periodSeconds": 24, "duskRampSeconds": 3, "dawnRampSeconds": 3, "nightDepth": 0.9 },
+        "fairground": {
+          "wheel": { "nodeId": "ferris-wheel", "x": 0, "z": 8, "outputWatts": 24, "maxHp": 240, "spinRate": 0.35, "viewRadius": 18 },
+          "pavilions": [
+            { "id": "copper-pavilion", "nodeId": "copper-pavilion-lights", "x": -20, "z": 10, "baseRadius": 8, "radiusPerNight": 3 },
+            { "id": "silver-pavilion", "nodeId": "silver-pavilion-lights", "x": 20, "z": 10, "baseRadius": 8, "radiusPerNight": 3 }
+          ],
+          "crowdFlocks": { "count": 3, "escortRadius": 7 }
+        },
+        "powerGrid": {
+          "maxSpanLength": 24,
+          "nodes": [
+            { "id": "ferris-wheel", "label": "Fair Wheel Dynamo", "kind": "producer", "x": 0, "z": 8, "outputWatts": 24 },
+            { "id": "copper-pavilion-lights", "label": "Copper Pavilion Lamps", "kind": "consumer", "role": "lamp", "x": -20, "z": 10, "drawWatts": 6, "priority": 20 },
+            { "id": "silver-pavilion-lights", "label": "Silver Pavilion Lamps", "kind": "consumer", "role": "lamp", "x": 20, "z": 10, "drawWatts": 6, "priority": 20 }
+          ],
+          "wires": [
+            { "a": "ferris-wheel", "b": "copper-pavilion-lights" },
+            { "a": "ferris-wheel", "b": "silver-pavilion-lights" }
+          ]
+        },
+        "enemyRoster": [
+          { "id": "fevered_saboteur", "label": "Midway Saboteur", "waveMin": 1, "hpScale": 1.05, "speedMult": 1.1, "visualScale": 0.95, "tint": "#735c48", "wrecker": true, "buildingDamageScale": 1.2, "spawnEdges": ["west", "east"] },
+          { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+        ]
+      },
+      "boardRow": { "name": "The Fairground", "ledgerBlurb": "Keep the wheel turning while the rival pavilions brighten the midway.", "tags": ["voltage", "defend", "escort"], "unlock": "secured:e3-moth-season" },
+      "briefing": {
+        "goals": ["DEFEND the Fair Wheel through wave 12.", "Keep three festival flocks inside the escort ring as they cross the midway."],
+        "rules": ["The wheel makes 24 W only while it spins; any damage stops the dynamo.", "The wheel cabins lift the watch radius to 18 units.", "Copper and Silver pavilion lamps widen by 3 units each night."],
+        "geographyLine": "An 88 by 88 fairground bowl: wheel north of the gate, rival pavilions west and east, open midway south."
       }
     }
   ]

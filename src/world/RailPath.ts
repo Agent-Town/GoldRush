@@ -44,14 +44,22 @@ const UNIT_Z = new THREE.Vector3(0, 0, 1);
 
 export class RailPathView {
   readonly group = new THREE.Group();
-  private readonly diagnosticsState: RailPathDiagnostics;
+  private readonly paths: readonly RailPathDescriptor[];
+  private diagnosticsState = emptyRailPathDiagnostics();
 
   constructor(paths: readonly RailPathDescriptor[] = []) {
+    this.paths = paths;
     this.group.name = 'RailPath';
+    this.resampleTerrain();
+  }
+
+  resampleTerrain(): void {
+    disposeRailPath(this.group);
+    this.group.clear();
     const railSegments: RailSegment[] = [];
     const ties: Tie[] = [];
     const samples: RailPathDiagnostics['samples'] = [];
-    for (const path of paths) {
+    for (const path of this.paths) {
       for (let index = 1; index < path.points.length; index += 1) {
         addPathSegment(path.points[index - 1]!, path.points[index]!, railSegments, ties, samples);
       }
@@ -62,9 +70,9 @@ export class RailPathView {
 
     this.diagnosticsState = {
       active: railSegments.length > 0,
-      paths: paths.length,
-      points: paths.reduce((total, path) => total + path.points.length, 0),
-      style: paths.find((path) => path.style)?.style ?? null,
+      paths: this.paths.length,
+      points: this.paths.reduce((total, path) => total + path.points.length, 0),
+      style: this.paths.find((path) => path.style)?.style ?? null,
       renderLayer: RenderLayers.groundDecals,
       renderSlot: 'groundDecals',
       railInstances: railSegments.length,
@@ -83,7 +91,7 @@ export class RailPathView {
   }
 
   dispose(): void {
-    disposeObject3D(this.group);
+    disposeRailPath(this.group);
   }
 }
 
@@ -101,6 +109,13 @@ export function emptyRailPathDiagnostics(): RailPathDiagnostics {
     asset: 'procedural-placeholder',
     samples: [],
   };
+}
+
+function disposeRailPath(group: THREE.Group): void {
+  group.traverse((object) => {
+    if ((object as THREE.InstancedMesh).isInstancedMesh) (object as THREE.InstancedMesh).dispose();
+  });
+  disposeObject3D(group);
 }
 
 function addPathSegment(

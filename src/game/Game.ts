@@ -17,6 +17,7 @@ import {
   listEpochs,
   loadEpoch,
   type ContractBaronTwist,
+  type ContractEscortMode,
   type ContractLightKeyframe,
   type ContractManifest,
   type ContractPowerGrid,
@@ -68,6 +69,7 @@ import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
 import { ProspectorEmbodiment, type ProspectorPoint } from '../agent/Embodiment';
+import { FerrisWheel } from '../entities/FerrisWheel';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
 import { DEV_TRAM_CONSUMER, TramPath, devTramPowerGraphDefinition } from '../entities/TramPath';
 import { Vehicle } from '../entities/Vehicle';
@@ -147,6 +149,7 @@ import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type Upgra
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
@@ -474,6 +477,7 @@ export class Game {
   private powerWireView?: PowerWireView;
   private damSurge?: DamSurgeEvent;
   private tram?: TramPath;
+  private ferrisWheel?: FerrisWheel;
   private canyonConnectAnnounced = false;
   private canyonConnectCompletedByDeadline = false;
   private canyonConnectFailed = false;
@@ -589,7 +593,7 @@ export class Game {
     areWavesDisabled,
     () => this.activeContract,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
-    () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active),
+    () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
     () => this.liveThiefCount(),
     () => this.territoryRingPresent,
     this.heroStart,
@@ -612,6 +616,27 @@ export class Game {
     () => this.powerGraph?.snapshot().nodes ?? [],
     (command) => this.powerGraph?.queueCommand(command) === true,
     (origin, target, damage, radius) => this.combat.launchLob(origin, target, 0.05, damage, radius, 'baron_rocket:-3'),
+  );
+  private readonly landYachtBoss = new LandYachtBossSystem(
+    () => this.enemies.all,
+    () => (this.activeContract.tileParams as typeof this.activeContract.tileParams & {
+      orbitSpawn?: { center: { x: number; z: number }; radius: number; angularSpeed: number };
+    }).orbitSpawn ?? null,
+    (position) => Boolean(this.enemies.spawn(position.clone().add(new THREE.Vector3(1.8, 0, 1.8)), {
+      hpScale: 1,
+      speedScale: 1.1,
+      visualScale: 1,
+      variantId: 'motor_gang',
+      variantLabel: 'Motor Gang Escort',
+      tint: '#a0522d',
+    })),
+    (position, radius) => this.goldTargeting.buildingsInRadius(position, radius).find((target) => target.family === 'turret') ?? null,
+    (target, amount) => {
+      const hp = target.hp;
+      this.combat.damageBuilding(target, amount, -4);
+      return target.hp < hp;
+    },
+    (position, text) => this.vfx.floatText(position, text, '#c4883a'),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -804,7 +829,8 @@ export class Game {
     onThiefFled: (enemy: ClaimJumperEnemy) => this.onThiefFled(enemy),
   };
   private readonly wreckerContext = {
-    nearestBuilding: (from: THREE.Vector3) => this.waveSystem.preferredEscortTarget(from) ?? this.goldTargeting.nearestBuilding(from),
+    nearestBuilding: (from: THREE.Vector3) =>
+      this.waveSystem.preferredEscortTarget(from) ?? this.preferredTramEscortSpanTarget() ?? this.goldTargeting.nearestBuilding(from),
     hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number) => this.combat.handleBuildingHit(enemy, target, amount),
     palisadeRoute: (from: THREE.Vector3, to: THREE.Vector3, clearance: number) => this.buildSystem.palisadeRoute(from, to, clearance),
   };
@@ -901,7 +927,7 @@ export class Game {
     this.pressureSystem = new PressureSystem(
       this.economy,
       this.buildSystem.boilerHouses,
-      () => this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive(),
+      () => this.activeContract.twist.pressureEnabled === true && !this.multiplayerActive(),
       (index) => this.buildSystem.buildingTarget('boiler_house', index)?.active === true,
       (id) => hasResearchNode(this.researchState, id),
       (position, text, color) => this.vfx.floatText(position, text, color),
@@ -1092,7 +1118,8 @@ export class Game {
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
       const isCrawlerComponent = event.variantId === 'dynamo_crawler';
-      if (!isCrawlerComponent) {
+      const isLandYachtComponent = event.variantId === 'land_yacht';
+      if (!isCrawlerComponent && !isLandYachtComponent) {
         const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
         this.discoverLedgerEnemyEntry(entryId);
         this.revealLedgerEnemyStats(entryId);
@@ -1100,6 +1127,10 @@ export class Game {
       if (isCrawlerComponent) {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.crawlerBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
+      if (isLandYachtComponent) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.landYachtBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
       }
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
@@ -1118,6 +1149,12 @@ export class Game {
       if (!isSilentCrawlerFlicker) this.audio.play('wave-start-horn');
       this.announceBaronBeat(event.wave, event.at);
       this.crawlerBoss.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
+      this.landYachtBoss.onWaveStarted(
+        event.wave,
+        baron?.variantId === 'land_yacht' ? baron.wave : Number.POSITIVE_INFINITY,
+        event.at,
+        this.buildSystem.diagnostics.hp.some((building) => building.id === 'sentry_beacon' && !building.wrecked && building.hp > 0),
+      );
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -1140,6 +1177,10 @@ export class Game {
         contractId: this.activeContract.id,
         tileId: activeTileDescriptor().id,
         paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
+        onVisualHeightSourceInstalled: () => {
+          this.railPath?.resampleTerrain();
+          this.megaprojectRailPath?.resampleTerrain();
+        },
       });
     });
     const run3dSelection = new URLSearchParams(window.location.search).get('run3dPilot');
@@ -1254,6 +1295,13 @@ export class Game {
           return this.dayNightCycle?.sample(this.dayNightTimeOverride ?? this.timeAlive) ?? null;
         },
         lightCoverage: (x: number, z: number) => this.lightField.coverageAt(x, z),
+        damageFerrisWheel: (amount: number) => {
+          if (!this.ferrisWheel) return false;
+          this.combat.setTime(this.timeAlive);
+          this.combat.damageBuilding(this.ferrisWheel.target, amount, -1);
+          this.publishDiagnostics();
+          return true;
+        },
         spawnMoths: (count: number, x: number, z: number) => this.mothSwarm.spawn(this.enemies, count, x, z),
         announceForTest: (text: string, kind: 'wave' | 'baron' | 'baron-defeat' = 'wave') => {
           this.uiBridge.announce(text, this.timeAlive, null, 4, kind);
@@ -1515,6 +1563,7 @@ export class Game {
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
     this.crawlerBoss.dispose();
+    this.landYachtBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1556,6 +1605,7 @@ export class Game {
     this.powerWireView?.dispose();
     this.damSurge?.dispose();
     this.tram?.dispose();
+    this.ferrisWheel?.dispose();
     this.vehicle?.dispose();
     this.fuelSystem?.dispose();
     this.detailScatter?.dispose();
@@ -1687,7 +1737,11 @@ export class Game {
       if (this.activeContract.twist.baron?.variantId === 'dynamo_crawler' && this.baronBeatenThisRun) {
         this.crawlerBoss.restoreWreck(this.baronStandardPosition);
       }
+      if (this.activeContract.twist.baron?.variantId === 'land_yacht' && this.baronBeatenThisRun) {
+        this.landYachtBoss.restoreWreck(this.baronStandardPosition);
+      }
       this.crawlerBoss.update(this.timeAlive);
+      this.landYachtBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -1717,6 +1771,8 @@ export class Game {
         ),
       );
       this.syncContractPowerGrid();
+      this.ferrisWheel?.update(simDelta);
+      this.syncFerrisWheelPower();
       this.powerGraph?.step(this.simTick);
       this.syncCanyonConnectObjective();
       if (this.tram && this.powerGraph) {
@@ -2469,18 +2525,41 @@ export class Game {
       if (pylonMarkers) this.scene.add(pylonMarkers);
       const ridgeGlow = createRidgeGlow(this.activeContract);
       if (ridgeGlow) this.scene.add(ridgeGlow);
+      const fairground = this.activeContract.twist.fairground;
+      if (fairground) {
+        this.ferrisWheel = new FerrisWheel(fairground.wheel);
+        this.goldTargeting.registerBuilding(this.ferrisWheel.target);
+        this.scene.add(this.ferrisWheel.group);
+      }
       const tramConsumer = contractGrid?.nodes.find((node) => node.kind === 'consumer' && node.role === 'tram');
-      if ((isDevTramEnabled() || tramConsumer) && rails[0]) {
-        this.tram = new TramPath(rails[0].points, {
+      const escortMode = this.activeEscortMode();
+      const tramEscort = escortMode?.vehicle === 'tram' ? escortMode : undefined;
+      const tramRoute = rails[tramEscort?.railRouteIndex ?? 0];
+      if ((isDevTramEnabled() || tramConsumer) && tramRoute) {
+        const points = tramEscort?.reverseRoute ? [...tramRoute.points].reverse() : tramRoute.points;
+        this.tram = new TramPath(points, {
           speed: 6,
-          loop: true,
+          loop: !tramEscort,
           consumer: tramConsumer && tramConsumer.kind === 'consumer'
             ? { id: tramConsumer.id, labelKey: tramConsumer.label, kind: 'consumer', x: tramConsumer.x, z: tramConsumer.z, online: true, drawWatts: tramConsumer.drawWatts, priority: tramConsumer.priority }
             : DEV_TRAM_CONSUMER,
-          cargo: [
-            { id: 'capacitor-a', family: 'capacitor-crate', occupied: true },
-            { id: 'capacitor-b', family: 'capacitor-crate', occupied: true },
-          ],
+          cargo: tramEscort
+            ? [{ id: 'capacitor-crate', family: 'capacitor-crate', occupied: true }]
+            : [
+                { id: 'capacitor-a', family: 'capacitor-crate', occupied: true },
+                { id: 'capacitor-b', family: 'capacitor-crate', occupied: true },
+              ],
+          delivery: tramEscort
+            ? {
+                required: tramEscort.cartsRequired,
+                payout: tramEscort.payout,
+                onComplete: (payout, position) => {
+                  this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'gold_granted', source: 'escort', amount: payout });
+                  this.vfx.floatText(position, `+${payout}`, '#c4883a');
+                  this.announceWaveBanner(`CAPACITOR CRATE DELIVERED - +${payout} gold at the rim.`, this.timeAlive);
+                },
+              }
+            : undefined,
         });
         this.scene.add(this.tram.group);
       }
@@ -2516,8 +2595,31 @@ export class Game {
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
     this.scene.add(this.crawlerBoss.group);
+    this.scene.add(this.landYachtBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
+  }
+
+  private activeEscortMode(): ContractEscortMode | undefined {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') !== 'escort' || params.get('mp') === 'dev') return undefined;
+    return this.activeContract.modes?.find((mode) => mode.id === 'escort');
+  }
+
+  private preferredTramEscortSpanTarget(): BuildingTarget | null {
+    const tram = this.tram;
+    if (this.activeEscortMode()?.vehicle !== 'tram' || !tram || tram.diagnostics.state === 'arrived') return null;
+    const grid = this.activeContract.twist.powerGrid;
+    const feed = grid?.wires.find((wire) => wire.a === tram.consumer.id || wire.b === tram.consumer.id);
+    const feederId = feed?.a === tram.consumer.id ? feed.b : feed?.a;
+    const site = this.activeContract.tileParams.pylonSites?.find((entry) => entry.nodeId === feederId);
+    if (!site) return null;
+    const beacon = this.buildSystem.diagnostics.hp.find(
+      (entry) => entry.id === 'sentry_beacon' && !entry.wrecked && Math.hypot(entry.position.x - site.x, entry.position.z - site.z) <= site.radius,
+    );
+    if (!beacon) return null;
+    const target = this.buildSystem.buildingTarget('sentry_beacon', beacon.index);
+    return target?.active && target.hp > 0 ? target : null;
   }
 
   private dressScene(): void {
@@ -2887,6 +2989,7 @@ export class Game {
     maxHp: number;
     wrecked: boolean;
   } {
+    if (target === this.ferrisWheel?.target) return this.ferrisWheel.damage(amount);
     const escort = this.waveSystem.resolveEscortDamage(target, amount);
     if (escort) return escort;
     const manifest = this.megaprojectManifest;
@@ -3132,11 +3235,13 @@ export class Game {
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
       tram: this.tram?.diagnostics ?? null,
+      fairground: this.ferrisWheel?.diagnostics ?? null,
       fuel: this.fuelSystem?.diagnostics ?? null,
       vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       canyonWorks: this.canyonConnectDiagnostics(),
       crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
+      landYachtBoss: this.activeContract.twist.baron?.variantId === 'land_yacht' ? this.landYachtBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -3259,7 +3364,9 @@ export class Game {
   }
 
   autoSecureWaveForRun(): number {
-    return this.waitsForBaronDefeat() || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
+    return this.waitsForBaronDefeat()
+      || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
+      || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -3391,7 +3498,7 @@ export class Game {
     this.charmPauseActive = false;
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
-    if (baron.variantId === 'dynamo_crawler') this.baronStandardPosition.copy(position);
+    if (baron.variantId === 'dynamo_crawler' || baron.variantId === 'land_yacht') this.baronStandardPosition.copy(position);
     else this.plantBaronStandard(position);
     const burstScale = Math.max(3, enemy?.visualScale ?? 3);
     this.combatVfx.dustPuff(position, burstScale);
@@ -3627,6 +3734,29 @@ export class Game {
     };
   }
 
+  private fairgroundCoverageSources(): LightSource[] {
+    const fairground = this.activeContract.twist.fairground;
+    const graph = this.powerGraph;
+    if (!fairground || !graph) return [];
+    const snapshot = graph.snapshot();
+    const elapsed = this.dayNightTimeOverride ?? this.timeAlive;
+    const night = Math.floor(elapsed / Math.max(1, this.activeContract.twist.dayNightCycle?.periodSeconds ?? 1));
+    const sources: LightSource[] = [];
+    const wheelSource = this.ferrisWheel?.coverageSource;
+    if (wheelSource) sources.push(wheelSource);
+    for (const pavilion of fairground.pavilions) {
+      if (snapshot.nodes.find((node) => node.id === pavilion.nodeId)?.state !== 'powered') continue;
+      sources.push({
+        id: `fairground:${pavilion.id}`,
+        kind: 'powered-lamp',
+        x: pavilion.x,
+        z: pavilion.z,
+        radius: pavilion.baseRadius + pavilion.radiusPerNight * night,
+      });
+    }
+    return sources;
+  }
+
   private syncNightShiftLighting(): void {
     const state = this.nightShiftLightingState();
     if (this.crawlerBoss.overchargeActive) {
@@ -3680,6 +3810,8 @@ export class Game {
       radius: Balance.decoyShed.lightRadius,
       targetWeight: this.activeContract.twist.mothSeason?.decoyWeight ?? 1,
     })));
+    const fairgroundSources = this.fairgroundCoverageSources();
+    fieldSources.push(...fairgroundSources);
     this.mothLightSources = fieldSources;
     this.lightField.update(this.dayNightCycle ? state.darkness : 0, this.dayNightCycle ? this.mothSwarm.dimSources(fieldSources) : []);
 
@@ -3695,6 +3827,7 @@ export class Game {
     for (const position of decoyPositions) {
       sources.push({ x: position.x, z: position.z, radius: Balance.decoyShed.lightRadius, kind: 'light' });
     }
+    for (const source of fairgroundSources) sources.push({ x: source.x, z: source.z, radius: source.radius, kind: 'watch' });
 
     const enemyLanterns = this.enemies.all
       .filter((enemy) => enemy.isAlive && enemy.carriesLantern)
@@ -3731,6 +3864,7 @@ export class Game {
         radius: Balance.decoyShed.lightRadius,
         kind: 'lantern' as const,
       })),
+      ...fairgroundSources.map((source) => ({ x: source.x, z: source.z, radius: source.radius, kind: 'lantern' as const })),
       ...this.actors.filter((actor) => actor.group.visible).map((actor) => ({
         x: actor.renderPosition.x,
         z: actor.renderPosition.z,
@@ -3822,7 +3956,7 @@ export class Game {
     if (id === 'lantern_post') return this.isNightShiftContract();
     if (id === 'decoy_shed') return this.activeContract.id === 'e3-moth-season';
     if (id === 'capacitor_bank') return this.activeContract.id === 'e3-blackout-ridge';
-    if (id === 'boiler_house') return this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive();
+    if (id === 'boiler_house') return this.activeContract.twist.pressureEnabled === true && !this.multiplayerActive();
     return true;
   }
 
@@ -3915,7 +4049,7 @@ export class Game {
         ...(resource.id === 'pressure' && hasResearchNode(this.researchState, 'pressure_assay')
           ? { safeMin: Balance.boilerHouse.safeMin, safeMax: Balance.boilerHouse.safeMax }
           : {}),
-        ...(resource.id === 'pressure' && this.activeContract.id === 'e2-hill-mine'
+        ...(resource.id === 'pressure' && this.activeContract.twist.pressureEnabled === true
           ? { objective: `PRESSURIZE ${objective.complete ? 'COMPLETE' : objective.failed ? 'FAILED' : `${objective.hotBoilers}/2 · W8–12`}` }
           : {}),
       };
@@ -3959,6 +4093,16 @@ export class Game {
       if (snapshot.nodes.find((node) => node.id === site.nodeId)?.online !== online) {
         graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
       }
+    }
+  }
+
+  private syncFerrisWheelPower(): void {
+    const wheel = this.ferrisWheel;
+    const graph = this.powerGraph;
+    if (!wheel || !graph) return;
+    const node = graph.snapshot().nodes.find((entry) => entry.id === wheel.config.nodeId);
+    if (node && node.online !== wheel.diagnostics.spinning) {
+      graph.queueCommand({ type: 'set-node-online', nodeId: node.id, online: wheel.diagnostics.spinning });
     }
   }
 
@@ -4446,7 +4590,9 @@ export class Game {
     this.canyonConnectCompletedByDeadline = false;
     this.canyonConnectFailed = false;
     this.crawlerBoss.reset();
+    this.landYachtBoss.reset();
     this.tram?.reset();
+    this.ferrisWheel?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
     this.applyRunPreset(readDifficultyPreset(), false);
@@ -4460,6 +4606,7 @@ export class Game {
     this.demolishCandidate = null;
     this.demolishSuppressedKey = null;
     this.buildSystem.reset();
+    if (this.ferrisWheel) this.goldTargeting.registerBuilding(this.ferrisWheel.target);
     this.pressureSystem.reset();
     this.pressureArsenalSystem.reset();
     this.syncMegaprojectSite();

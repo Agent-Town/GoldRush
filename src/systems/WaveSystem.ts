@@ -150,8 +150,8 @@ export class WaveSystem {
     this.nextWaveAt = this.waveInterval();
     this.nextPlanWaveAt = this.nextWaveAt;
     const mode = this.escortMode;
-    const route = mode ? this.contract.tileParams.rails?.[mode.railRouteIndex] : undefined;
-    this.escortCart = mode && route?.points.length
+    const route = mode?.vehicle !== 'tram' ? this.contract.tileParams.rails?.[mode?.railRouteIndex ?? -1] : undefined;
+    this.escortCart = mode?.vehicle !== 'tram' && route?.points.length
       ? new OreCart(
           route.points,
           Balance.contracts.escortCart.speed,

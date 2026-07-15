@@ -1,0 +1,192 @@
+{
+  "id": "epoch-8-orbital",
+  "displayName": "Orbital Frontier",
+  "order": 8,
+  "locked": true,
+  "scienceThreshold": 20,
+  "research": {
+    "branches": [
+      {
+        "id": "Astrogation",
+        "label": "gravity & atmosphere",
+        "iconKey": "ui.upgrade.icon.prospecting",
+        "nodes": [
+          {
+            "id": "mare_survey",
+            "name": "Mare Survey",
+            "description": "Mark the crater rims, glass fields, and landing scars before the warm-grey dust hides the route.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the Orbital mare-atlas family.",
+            "effectRef": "orbital.mare_survey",
+            "cost": 1
+          },
+          {
+            "id": "gravity_tables",
+            "name": "Gravity Tables",
+            "description": "Write each claim's pull beside the arcs, strides, and loose cargo it changes.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the per-tile gravity-parameter family.",
+            "effectRef": "orbital.gravity_tables",
+            "cost": 1,
+            "requires": ["mare_survey"]
+          },
+          {
+            "id": "atmosphere_dials",
+            "name": "Atmosphere Dials",
+            "description": "Give every dome, suit, and airless yard one counted breath the town can read.",
+            "iconKey": "ui.e2.pressure",
+            "effect": "Banks the per-tile atmosphere-parameter and suit-air family.",
+            "effectRef": "orbital.atmosphere_dials",
+            "cost": 1,
+            "requires": ["mare_survey"]
+          },
+          {
+            "id": "lunar_day_ledger",
+            "name": "Lunar-Day Ledger",
+            "description": "Count fourteen light watches and fourteen dark ones before the batteries promise too much.",
+            "iconKey": "ui.upgrade.icon.firerate",
+            "effect": "Banks the lunar day-and-brown-out ledger family.",
+            "effectRef": "orbital.lunar_day_ledger",
+            "cost": 1,
+            "requires": ["gravity_tables", "atmosphere_dials"]
+          },
+          {
+            "id": "lava_tube_charts",
+            "name": "Lava-Tube Charts",
+            "description": "Prove one seeded route through the dark before a suit crew carries the claim below.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the connected lunar-tube interior family.",
+            "effectRef": "orbital.lava_tube_charts",
+            "cost": 1,
+            "requires": ["lunar_day_ledger"]
+          }
+        ]
+      },
+      {
+        "id": "Arsenal",
+        "label": "lenses & seals",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "vacuum_lenses",
+            "name": "Vacuum Lenses",
+            "description": "Carry a warm strike through empty air where no report or concussion can follow.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the vacuum-light arsenal family.",
+            "effectRef": "orbital.vacuum_lenses",
+            "cost": 1
+          },
+          {
+            "id": "lens_turret",
+            "name": "Lens Turret",
+            "description": "Set a tracking silver lens on the old beam-relay footing without moving the tripod.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the lens-turret sentry tier.",
+            "effectRef": "orbital.lens_turret",
+            "cost": 1,
+            "requires": ["vacuum_lenses"]
+          },
+          {
+            "id": "breach_seals",
+            "name": "Breach Seals",
+            "description": "Carry numbered patches for the wall that has become the town's breath.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the dome breach-and-seal defense family.",
+            "effectRef": "orbital.breach_seals",
+            "cost": 1,
+            "requires": ["vacuum_lenses"]
+          },
+          {
+            "id": "magnet_grapple",
+            "name": "Magnet Grapple",
+            "description": "Yank two loose machines into one silent collision and let low gravity finish the joke.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the Magnet Grapple arsenal family.",
+            "effectRef": "orbital.magnet_grapple",
+            "cost": 1,
+            "requires": ["lens_turret", "breach_seals"]
+          },
+          {
+            "id": "claw_component_science",
+            "name": "Claw Component Science",
+            "description": "A future Claw medal will release the crown, winch, and anchor-foot diagrams.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the Salvage King's Claw science behind the reserved salvageKingsClawComponentsCaptured medal flag.",
+            "effectRef": "orbital.claw_component_science",
+            "cost": 1,
+            "requires": ["magnet_grapple"]
+          }
+        ]
+      },
+      {
+        "id": "Fabrication",
+        "label": "regolith & cargo",
+        "iconKey": "ui.upgrade.icon.mend",
+        "nodes": [
+          {
+            "id": "regolith_assay",
+            "name": "Regolith Assay",
+            "description": "Grade warm-grey dust, crater glass, and He-3 flecks with the old pan-house rules.",
+            "iconKey": "node.gold_seam",
+            "effect": "Banks the regolith-and-He-3 assay family.",
+            "effectRef": "orbital.regolith_assay",
+            "cost": 1
+          },
+          {
+            "id": "dome_panels",
+            "name": "Dome Panels",
+            "description": "Fit timber-brass ribs and clear cells so every crack has a named place to mend.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the staged dome-panel fabrication family.",
+            "effectRef": "orbital.dome_panels",
+            "cost": 1,
+            "requires": ["regolith_assay"]
+          },
+          {
+            "id": "airlock_receipts",
+            "name": "Airlock Receipts",
+            "description": "Tie every crossing to a suit seal, an air count, and the gate that let it through.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the airlock crossing-ledger family.",
+            "effectRef": "orbital.airlock_receipts",
+            "cost": 1,
+            "requires": ["regolith_assay"]
+          },
+          {
+            "id": "mass_driver_windows",
+            "name": "Mass-Driver Windows",
+            "description": "Give each rail-thrown cargo load a launch mark and an honest arrival window.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the mass-driver cargo-window family.",
+            "effectRef": "orbital.mass_driver_windows",
+            "cost": 1,
+            "requires": ["dome_panels", "airlock_receipts"]
+          },
+          {
+            "id": "riverward_manifest",
+            "name": "Riverward Manifest",
+            "description": "Pack air, seed, tools, and the town's promise for the red field beyond the Moon.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the Colony Seed manifest family for the Riverward.",
+            "effectRef": "orbital.riverward_manifest",
+            "cost": 1,
+            "requires": ["mass_driver_windows"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "colony-seed",
+    "surfaceRef": "bld.colony_seed",
+    "cost": { "gold": 0, "bankedScience": 20 },
+    "raiseActionText": "Raise the Colony Seed"
+  },
+  "transition": {
+    "ceremonyBeatId": "e9-ceremony-colony-seed",
+    "kitArtKey": "kit-era-9",
+    "displayName": "The Red Fields"
+  },
+  "successor": null,
+  "parts": { "contracts": "contracts.json" }
+}

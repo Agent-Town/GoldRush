@@ -304,6 +304,26 @@ The Motor Frontier research chart reuses existing processed icons until `icons-e
 
 The Deepwater research chart reuses existing processed icons until `icons-e5.png` is processed. Future cells want: depth sounding, brass air line, reef passage, dive bell, trench glow, wreck chart, pearl grading, era salvage, sealed hold, Dredge-Queen components, hull vocabulary, deck anchor, storm glass, lighthouse lens, and harbor receipt.
 
+## 2026-07-15 — E6 research placeholder icons
+
+The Atomic Homestead research chart reuses existing processed icons until `icons-e6.png` is processed. Future cells want: starstone assay, half-life dial, Isotope Kitchen, decay clockwork, Calculating House ledger, Sunline beam, Half-Life Caltrops, Sunline mount, Glow Fence, Homemaker components, atomic parts, copper lasso, herd receipt, Appliance Pen, and defector's catalog.
+
+## 2026-07-15 — E7 research placeholder icons
+
+The Signal Era research chart reuses existing processed icons until `icons-e7.png` is processed. Future cells want: spectrum survey, ridge relay, dead-zone chart, Signal Refinery, valley switchboard, signal jammer, beam-relay turret, Static Ward, corrupted replay, Echo pattern science, marked step, patrol recorder, playbook rules, drone delegation, and guidance playbooks.
+
+## 2026-07-15 — E8 research placeholder icons
+
+The Orbital Frontier research chart reuses existing processed icons until `icons-e8.png` is processed. Future cells want: mare survey, gravity tables, atmosphere dial, lunar-day ledger, lava-tube chart, vacuum lens, lens turret, breach seal, Magnet Grapple, Claw component science, regolith assay, dome panel, airlock receipt, mass-driver window, and Riverward manifest.
+
+## 2026-07-15 — E9 research placeholder icons
+
+The Red Fields research chart reuses existing processed icons until `icons-e9.png` is processed. Future cells want: Red Fields survey, ice-quarry tables, basin contours, canal-stage ledger, water-and-green record, Storm-Draw, Storm-Lance, Storm Fence, Terraform Cannon, Old Digger blueprint science, Redfield fittings, canal gateworks, weather spire, seed vaults, and Generation Ark manifest.
+
+## 2026-07-15 — E10 research placeholder icons
+
+The Deep Sky research chart reuses existing processed icons until `icons-e10.png` is processed. Future cells want: starlight soundings, world-family atlas, seed charter, Ember Shore atlas, Starlight Pan science, Static soundings, Static Ward, era-memory gate, re-ink relay, Quiet-core science, Long Table archive, portrait wall, preserve seal, world charter, and Charter Press.
+
 45. **art-kit-era-1 / the valley before the steam — THE ROOT PLATE; the kit chain completes E1→E10.** Status: **RAW GENERATED 2026-07-12; ATTENDED-QA'd + DRAINED 2026-07-13; PENDING-CONSUMPTION.** `assets/raw/kit-era-1.png` (1672×941 RGB full-bleed, native `image_gen` edit of kit-era-2 backward to the Placer era; 0 retakes; SHA `5e9b4ce2…`). Attended visual verify (not inherited from the run note): identical S-curve river/mesa/ridge geography vs kit-era-2; tents + hand-panning + wooden sluices + early Stamp Mill timber frame; ZERO rail/train/depot/machine-shop/boiler/pressure/palisade/steam; no readable letters/firearms/gore; warm-dawn sepia engraving held; teal limited to Prospector craft glints. Run note: `assets/raw/codex-art-run-kit-era-1.md`. Reference tier = full-bleed, no `#ff00ff` key → no extraction/wiring (kit-era-N is a `data-art-key` CSS hook; sole live ref kit-era-2).
 
 46. **railcar-reference-art / E2 armored railcar component presentation.** Status: **PROCESSED + WIRED 2026-07-13.** Source `assets/raw/plate-e2-boss-component.png` yielded `assets/processed/boss-railcar-intact.png` plus healthy/damaged wheels, boiler, and cabin crops. Method: bounded source crops followed by the established isolated rembg/U²-Net alpha matte with alpha matting (foreground 230, background 15, erode 6); no raw edit and no paid generation. Edge QA: all seven outputs are sRGBA; parchment is fully transparent around silhouettes while smoke, steam, fine cow-catcher rails, wheel spokes, teal lamps, and engraved outlines survive. Runtime uses rail-frame vertical planes, never camera billboards; each component swaps at HP ratio ≤0.5. Owner in-run evidence: `artifacts/railcar-reference-art/`.

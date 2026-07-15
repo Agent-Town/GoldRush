@@ -22,6 +22,7 @@ export type TramDiagnostics = Readonly<{
   consumerId: string;
   drawWatts: number;
   cargo: readonly TramCargoSlot[];
+  delivery: null | Readonly<{ complete: boolean; delivered: number; required: number; payout: number }>;
 }>;
 
 type TramOptions = Readonly<{
@@ -29,6 +30,7 @@ type TramOptions = Readonly<{
   loop?: boolean;
   consumer: Extract<PowerNodeInput, { kind: 'consumer' }>;
   cargo?: readonly TramCargoSlot[];
+  delivery?: Readonly<{ required: number; payout: number; onComplete: (payout: number, position: THREE.Vector3) => void }>;
 }>;
 
 export const DEV_TRAM_POWER = Object.freeze({
@@ -105,16 +107,24 @@ export class TramPath {
       consumerId: this.consumer.id,
       drawWatts: this.consumer.drawWatts,
       cargo: this.cargo.map((slot) => ({ ...slot })),
+      delivery: this.options.delivery
+        ? {
+            complete: this.state === 'arrived' && this.occupiedCargo >= this.options.delivery.required,
+            delivered: this.state === 'arrived' ? this.occupiedCargo : 0,
+            required: this.options.delivery.required,
+            payout: this.options.delivery.payout,
+          }
+        : null,
     };
   }
 
   update(delta: number, powerState: PowerNodeState): void {
     this.powered = powerState === 'powered';
+    if (this.state === 'arrived') return;
     if (!this.powered || this.path.length < 2) {
       this.state = 'unpowered';
       return;
     }
-    if (this.state === 'arrived') return;
     this.state = 'moving';
     let remaining = Math.max(0, delta * this.options.speed);
     while (remaining > 0) {
@@ -123,6 +133,9 @@ export class TramPath {
         this.trips += 1;
         if (!this.options.loop) {
           this.state = 'arrived';
+          if (this.options.delivery && this.occupiedCargo >= this.options.delivery.required) {
+            this.options.delivery.onComplete(this.options.delivery.payout, this.group.position.clone());
+          }
           return;
         }
         this.direction = this.direction === 1 ? -1 : 1;
@@ -209,5 +222,9 @@ export class TramPath {
 
   private syncY(): void {
     this.group.position.y = visualY(this.group.position.x, this.group.position.z, 0.1);
+  }
+
+  private get occupiedCargo(): number {
+    return this.cargo.filter((slot) => slot.occupied).length;
   }
 }

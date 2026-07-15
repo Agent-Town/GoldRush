@@ -37,7 +37,14 @@ type Mount = {
 };
 type LandmarkMount = Omit<Mount, 'renderOnly'> & { asset?: string };
 type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract };
-type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement; contractId: string; tileId: string; paintedGround?: THREE.Object3D };
+type Host = {
+  scene: THREE.Scene;
+  canvas: HTMLCanvasElement;
+  contractId: string;
+  tileId: string;
+  paintedGround?: THREE.Object3D;
+  onVisualHeightSourceInstalled?: () => void;
+};
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
 type HiddenRelief = { object: THREE.Object3D; visible: boolean };
 
@@ -361,6 +368,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       loadedTerrain = undefined;
       loadedPanorama = undefined;
       uninstallHeightSource = installVisualHeightSource(heightAt);
+      host.onVisualHeightSourceInstalled?.();
       host.scene.add(nextTerrain, nextPanorama);
       if (nextSkirt) host.scene.add(nextSkirt);
       hiddenRelief = hidePaintedRelief(host);
