@@ -31,6 +31,7 @@ export const epochLedgerEntryById = {
   'epoch-2-steamworks': 'era_steamworks',
   'epoch-3-voltage': 'era_voltage',
   'epoch-4-motor': 'era_motor',
+  'epoch-5-deepwater': 'era_deepwater',
 } as const;
 
 export const LEDGER_CATEGORIES = [
@@ -63,7 +64,8 @@ export type BuildableLedgerEntryId =
   | 'building_turret'
   | 'building_assay_office'
   | 'building_lantern_post'
-  | 'building_decoy_shed';
+  | 'building_decoy_shed'
+  | 'building_capacitor_bank';
 export type ContractLedgerEntryId =
   | 'the_claim'
   | 'assay_office_records'
@@ -133,6 +135,7 @@ export const buildableLedgerEntryById: Record<BuildableId, BuildableLedgerEntryI
   assay_office: 'building_assay_office',
   lantern_post: 'building_lantern_post',
   decoy_shed: 'building_decoy_shed',
+  capacitor_bank: 'building_capacitor_bank',
 };
 
 export const contractLedgerEntryById: Record<string, ContractLedgerEntryId> = {
@@ -153,6 +156,7 @@ const buildableSpriteById: Record<BuildableId, { imageUrl: string; slot: string 
   assay_office: { imageUrl: claimOfficeUrl, slot: 'building.assay_office' },
   lantern_post: { imageUrl: titleEmblemUrl, slot: 'building.lantern_post' },
   decoy_shed: { imageUrl: titleEmblemUrl, slot: 'building.decoy_shed' },
+  capacitor_bank: { imageUrl: titleEmblemUrl, slot: 'building.capacitor_bank' },
 };
 
 export const epochLedgerEntryByIdForEpoch: Readonly<Record<string, EpochLedgerEntryId | undefined>> = epochLedgerEntryById;

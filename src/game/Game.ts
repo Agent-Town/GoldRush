@@ -146,6 +146,7 @@ import { CameraRig } from '../systems/CameraRig';
 import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type UpgradeCandidate } from '../systems/BuildSystem';
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
+import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { HarvestSystem } from '../systems/HarvestSystem';
@@ -605,6 +606,12 @@ export class Game {
       this.localActor.group.position,
       ...((this.agentStub?.state.permissionLevel ?? 0) >= 1 ? [this.prospector.position] : []),
     ],
+  );
+  private readonly crawlerBoss = new CrawlerBossSystem(
+    () => this.enemies.all,
+    () => this.powerGraph?.snapshot().nodes ?? [],
+    (command) => this.powerGraph?.queueCommand(command) === true,
+    (origin, target, damage, radius) => this.combat.launchLob(origin, target, 0.05, damage, radius, 'baron_rocket:-3'),
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -1084,9 +1091,16 @@ export class Game {
     });
     this.events.on('enemy_killed', (event) => {
       this.kills += 1;
-      const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
-      this.discoverLedgerEnemyEntry(entryId);
-      this.revealLedgerEnemyStats(entryId);
+      const isCrawlerComponent = event.variantId === 'dynamo_crawler';
+      if (!isCrawlerComponent) {
+        const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
+        this.discoverLedgerEnemyEntry(entryId);
+        this.revealLedgerEnemyStats(entryId);
+      }
+      if (isCrawlerComponent) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.crawlerBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
       }
@@ -1099,8 +1113,11 @@ export class Game {
       emitStorySignal({ type: 'building-lost' });
     });
     this.events.on('wave_started', (event) => {
-      this.audio.play('wave-start-horn');
+      const baron = this.activeContract.twist.baron;
+      const isSilentCrawlerFlicker = baron?.variantId === 'dynamo_crawler' && event.wave === baron.wave - 2;
+      if (!isSilentCrawlerFlicker) this.audio.play('wave-start-horn');
       this.announceBaronBeat(event.wave, event.at);
+      this.crawlerBoss.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -1497,6 +1514,7 @@ export class Game {
     this.buildSystem.dispose();
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
+    this.crawlerBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1666,6 +1684,10 @@ export class Game {
       this.damSurge?.update(this.timeAlive);
       if (this.finishPendingDeath()) return true;
       this.waveSystem.update(this.timeAlive);
+      if (this.activeContract.twist.baron?.variantId === 'dynamo_crawler' && this.baronBeatenThisRun) {
+        this.crawlerBoss.restoreWreck(this.baronStandardPosition);
+      }
+      this.crawlerBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -1685,7 +1707,7 @@ export class Game {
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
       this.fuelSystem?.update(simDelta, this.visibleActorPositions());
       this.vehicle?.update(simDelta);
-      this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult);
+      this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult * this.crawlerBoss.turretFireRateMult);
       this.applyHarvestStats(
         this.pressureArsenalSystem.updateAutoPan(
           simDelta,
@@ -1786,7 +1808,7 @@ export class Game {
 
   private discoverVisibleLedgerEnemies(): void {
     for (const enemy of this.enemies.all) {
-      if (!enemy.isAlive) continue;
+      if (!enemy.isAlive || enemy.variantId === 'dynamo_crawler') continue;
       const entryId = ledgerEnemyEntryId(enemy);
       this.enemyLedgerKinds.set(enemy.id, entryId);
       this.discoverLedgerEnemyEntry(entryId);
@@ -2437,14 +2459,16 @@ export class Game {
     const contractGrid = this.activeContract.twist.powerGrid;
     if (isDevPowerGraphEnabled() || contractGrid) {
       this.powerGraph = new PowerGraphSystem(
-        contractGrid ? contractPowerDefinition(contractGrid) : isDevTramEnabled() ? devTramPowerGraphDefinition() : devPowerGraphDefinition(),
+        contractGrid ? contractPowerDefinition(this.activeContract.id, contractGrid) : isDevTramEnabled() ? devTramPowerGraphDefinition() : devPowerGraphDefinition(),
         contractGrid?.maxSpanLength,
       );
       this.powerWireView = new PowerWireView();
       this.powerWireView.update(this.powerGraph.snapshot());
       this.scene.add(this.powerWireView.group);
-      const pylonMarkers = createPylonSiteMarkers(this.activeContract);
+    const pylonMarkers = createPylonSiteMarkers(this.activeContract);
       if (pylonMarkers) this.scene.add(pylonMarkers);
+      const ridgeGlow = createRidgeGlow(this.activeContract);
+      if (ridgeGlow) this.scene.add(ridgeGlow);
       const tramConsumer = contractGrid?.nodes.find((node) => node.kind === 'consumer' && node.role === 'tram');
       if ((isDevTramEnabled() || tramConsumer) && rails[0]) {
         this.tram = new TramPath(rails[0].points, {
@@ -2491,6 +2515,7 @@ export class Game {
     this.scene.add(this.prospector.group);
     this.scene.add(this.vfx.group);
     this.scene.add(this.enemies.group);
+    this.scene.add(this.crawlerBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
   }
@@ -3111,6 +3136,7 @@ export class Game {
       vehicle: this.vehicle?.diagnostics ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       canyonWorks: this.canyonConnectDiagnostics(),
+      crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -3233,7 +3259,7 @@ export class Game {
   }
 
   autoSecureWaveForRun(): number {
-    return this.waitsForBaronDefeat() || (this.activeContract.twist.powerGrid && !this.canyonConnectCompletedByDeadline)
+    return this.waitsForBaronDefeat() || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
       ? Number.MAX_SAFE_INTEGER
       : this.secureWaveForRun();
   }
@@ -3264,7 +3290,9 @@ export class Game {
   }
 
   private waitsForBaronDefeat(): boolean {
-    return Boolean(this.activeContract.twist.baron && !this.baronBeatenThisRun);
+    const baron = this.activeContract.twist.baron;
+    if (!baron || this.baronBeatenThisRun) return false;
+    return baron.variantId !== 'dynamo_crawler' || this.waveSystem.diagnostics.wave >= baron.wave;
   }
 
   private announceBaronBeat(wave: number, atSim: number): void {
@@ -3363,7 +3391,8 @@ export class Game {
     this.charmPauseActive = false;
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
-    this.plantBaronStandard(position);
+    if (baron.variantId === 'dynamo_crawler') this.baronStandardPosition.copy(position);
+    else this.plantBaronStandard(position);
     const burstScale = Math.max(3, enemy?.visualScale ?? 3);
     this.combatVfx.dustPuff(position, burstScale);
     this.combatVfx.detonationRing(position, Math.min(7, burstScale * 1.45));
@@ -3399,7 +3428,10 @@ export class Game {
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     this.baronBeatenThisRun = true;
-    const secured = this.runManager?.secureCurrentRun(this.waveSystem.diagnostics.wave) === true;
+    const alreadySecured = this.runManager?.diagnostics.secured === true;
+    const objectiveAllowsSecure = !this.activeContract.twist.powerGrid || this.canyonConnectCompletedByDeadline;
+    const secured = alreadySecured
+      || (objectiveAllowsSecure && this.runManager?.secureCurrentRun(this.waveSystem.diagnostics.wave) === true);
     if (!secured) {
       this.baronBeatenThisRun = false;
       return;
@@ -3597,6 +3629,12 @@ export class Game {
 
   private syncNightShiftLighting(): void {
     const state = this.nightShiftLightingState();
+    if (this.crawlerBoss.overchargeActive) {
+      state.phase = 'full';
+      state.darkness = 0;
+      delete state.palette;
+    }
+    state.lampIntensityMult = this.crawlerBoss.lampIntensityMult;
     if (!state.enabled || state.darkness <= 0) {
       this.lightRig?.setNightShift(state);
       this.lightField.update(state.darkness, []);
@@ -3783,6 +3821,7 @@ export class Game {
     if (this.activeContract.twist.powerGrid && (id === 'turret' || id === 'lantern_post')) return false;
     if (id === 'lantern_post') return this.isNightShiftContract();
     if (id === 'decoy_shed') return this.activeContract.id === 'e3-moth-season';
+    if (id === 'capacitor_bank') return this.activeContract.id === 'e3-blackout-ridge';
     if (id === 'boiler_house') return this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive();
     return true;
   }
@@ -3797,6 +3836,7 @@ export class Game {
       ...diagnostics.boilerHousePositions,
       ...diagnostics.turretPositions,
       ...diagnostics.lanternPostPositions,
+      ...diagnostics.capacitorBankPositions,
       ...diagnostics.assayOfficePositions,
       ...diagnostics.reservedFootprints,
     ].map((position) => ({ x: position.x, z: position.z, radius: Balance.world.detailBuildingClearRadius }));
@@ -3913,12 +3953,19 @@ export class Game {
         graph.queueCommand({ type: 'set-wire-state', wireId, state });
       }
     }
+    const capacitorBuildings = this.buildSystem.diagnostics.hp.filter((entry) => entry.id === 'capacitor_bank');
+    for (const site of this.activeContract.tileParams.capacitorSites ?? []) {
+      const online = capacitorBuildings.some((entry) => entry.hp > 0 && !entry.wrecked && Math.hypot(entry.position.x - site.x, entry.position.z - site.z) <= site.radius);
+      if (snapshot.nodes.find((node) => node.id === site.nodeId)?.online !== online) {
+        graph.queueCommand({ type: 'set-node-online', nodeId: site.nodeId, online });
+      }
+    }
   }
 
   private canyonConnectDiagnostics(): null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean } {
     const grid = this.activeContract.twist.powerGrid;
     const graph = this.powerGraph;
-    if (!grid || !graph) return null;
+    if (!grid?.connect || !graph) return null;
     const galleries = new Set(grid.nodes.filter((node) => node.kind === 'consumer' && node.role === 'gallery').map((node) => node.id));
     const powered = graph.snapshot().nodes.filter((node) => galleries.has(node.id) && node.state === 'powered').length;
     return {
@@ -3933,7 +3980,7 @@ export class Game {
   private syncCanyonConnectObjective(): void {
     const grid = this.activeContract.twist.powerGrid;
     const connect = this.canyonConnectDiagnostics();
-    if (!grid || !connect) return;
+    if (!grid?.connect || !connect) return;
     const wave = this.waveSystem.diagnostics.wave;
     if (!this.canyonConnectCompletedByDeadline && !this.canyonConnectFailed && wave <= grid.connect.byWave && connect.powered >= connect.required) {
       this.canyonConnectCompletedByDeadline = true;
@@ -4398,6 +4445,7 @@ export class Game {
     this.canyonConnectAnnounced = false;
     this.canyonConnectCompletedByDeadline = false;
     this.canyonConnectFailed = false;
+    this.crawlerBoss.reset();
     this.tram?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
@@ -5620,14 +5668,16 @@ function createDayNightCycle(contract: ContractManifest): DayNightCycle | null {
   return config ? new DayNightCycle(config) : null;
 }
 
-function contractPowerDefinition(grid: ContractPowerGrid): PowerGraphDefinition {
+function contractPowerDefinition(contractId: string, grid: ContractPowerGrid): PowerGraphDefinition {
   return {
-    id: 'e3-canyon-works-grid',
+    id: `${contractId}-grid`,
     nodes: grid.nodes.map((node) => node.kind === 'producer'
       ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: true, outputWatts: node.outputWatts }
       : node.kind === 'relay'
         ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: false }
-        : { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: true, drawWatts: node.drawWatts, priority: node.priority }),
+        : node.kind === 'storage'
+          ? { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: false, capacityWh: node.capacityWh, chargeWatts: node.chargeWatts, dischargeWatts: node.dischargeWatts }
+          : { id: node.id, labelKey: node.label, kind: node.kind, x: node.x, z: node.z, online: node.role !== 'crawler-drain', drawWatts: node.drawWatts, priority: node.priority }),
     wires: grid.wires.map((wire) => ({ ...wire, state: 'intact' })),
   };
 }
@@ -5636,7 +5686,7 @@ function createPylonSiteMarkers(contract: ContractManifest): THREE.Group | null 
   const sites = contract.tileParams.pylonSites;
   if (!sites?.length) return null;
   const group = new THREE.Group();
-  group.name = 'CanyonWorksPylonSites';
+  group.name = 'PowerPylonSites';
   const ringGeometry = new THREE.RingGeometry(1.8, 2.35, 24);
   const ringMaterial = new THREE.MeshBasicMaterial({ color: '#5ea6a0', transparent: true, opacity: 0.8, side: THREE.DoubleSide, depthWrite: false });
   const postGeometry = new THREE.CylinderGeometry(0.08, 0.12, 1.1, 6);
@@ -5651,6 +5701,21 @@ function createPylonSiteMarkers(contract: ContractManifest): THREE.Group | null 
     post.position.set(site.x, Terrain.visualY(site.x, site.z, 0.55), site.z);
     group.add(ring, post);
   }
+  return group;
+}
+
+function createRidgeGlow(contract: ContractManifest): THREE.Group | null {
+  const glow = contract.tileParams.ridgeGlow;
+  if (!glow) return null;
+  const group = new THREE.Group();
+  group.name = 'BlackoutRidgeOffMapGlow';
+  const material = new THREE.MeshBasicMaterial({ color: glow.color, transparent: true, opacity: 0.32, depthWrite: false });
+  const halo = new THREE.Mesh(new THREE.SphereGeometry(4.5, 18, 12), material);
+  halo.position.set(glow.x, Terrain.visualY(glow.x, glow.z, 4), glow.z);
+  halo.renderOrder = RenderLayers.worldUi - 1;
+  const light = new THREE.PointLight(glow.color, glow.intensity, 26, 2);
+  light.position.copy(halo.position);
+  group.add(halo, light);
   return group;
 }
 

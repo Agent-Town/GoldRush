@@ -4,12 +4,16 @@ import baronContractText from '../../assets/pilots/map-rebuild-spike/baron-terra
 import baronPanoramaContractText from '../../assets/pilots/map-rebuild-spike/baron-panorama-contract.json?raw';
 import dryGulchContractText from '../../assets/pilots/map-rebuild-spike/dry-gulch-terrain-contract.json?raw';
 import dryGulchPanoramaContractText from '../../assets/pilots/map-rebuild-spike/dry-gulch-panorama-contract.json?raw';
+import hillMineContractText from '../../assets/pilots/map-rebuild-spike/hill-mine-terrain-contract.json?raw';
+import hillMinePanoramaContractText from '../../assets/pilots/map-rebuild-spike/hill-mine-panorama-contract.json?raw';
 import nightShiftContractText from '../../assets/pilots/map-rebuild-spike/night-shift-terrain-contract.json?raw';
 import nightShiftPanoramaContractText from '../../assets/pilots/map-rebuild-spike/night-shift-panorama-contract.json?raw';
 import claimContractText from '../../assets/pilots/map-rebuild-spike/the-claim-terrain-contract.json?raw';
 import claimPanoramaContractText from '../../assets/pilots/map-rebuild-spike/the-claim-panorama-contract.json?raw';
 import twinBanksContractText from '../../assets/pilots/map-rebuild-spike/twin-banks-terrain-contract.json?raw';
 import twinBanksPanoramaContractText from '../../assets/pilots/map-rebuild-spike/twin-banks-panorama-contract.json?raw';
+import trestleContractText from '../../assets/pilots/map-rebuild-spike/trestle-terrain-contract.json?raw';
+import trestlePanoramaContractText from '../../assets/pilots/map-rebuild-spike/trestle-panorama-contract.json?raw';
 import { disposeObject3D } from '../utils/dispose';
 import { installVisualHeightSource } from './Terrain';
 
@@ -21,6 +25,7 @@ type Contract = {
   materialCount: number;
   boundsMeters: { min: [number, number, number]; max: [number, number, number] };
   panoramaMount: Mount;
+  landmarkMounts?: LandmarkMount[];
 };
 type PanoramaContract = Pick<Contract, 'vertices' | 'triangles' | 'meshCount' | 'materialCount'> & { renderOnly: boolean };
 type Mount = {
@@ -30,6 +35,7 @@ type Mount = {
   scale: [number, number, number];
   renderOnly: boolean;
 };
+type LandmarkMount = Omit<Mount, 'renderOnly'> & { asset?: string };
 type Entry = { terrainUrl: string; panoramaUrl: string; contract: Contract; panoramaContract: PanoramaContract };
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement; contractId: string; tileId: string; paintedGround?: THREE.Object3D };
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
@@ -47,7 +53,10 @@ const REGISTRY: Record<string, Entry> = {
   'e1-twin-banks': entry(new URL('../../assets/pilots/map-rebuild-spike/twin-banks-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/twin-banks-panorama.glb', import.meta.url).href, twinBanksContractText, twinBanksPanoramaContractText),
   'e1-night-shift': entry(new URL('../../assets/pilots/map-rebuild-spike/night-shift-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/night-shift-panorama.glb', import.meta.url).href, nightShiftContractText, nightShiftPanoramaContractText),
   'e1-baron': entry(new URL('../../assets/pilots/map-rebuild-spike/baron-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/baron-panorama.glb', import.meta.url).href, baronContractText, baronPanoramaContractText),
+  'e2-hill-mine': entry(new URL('../../assets/pilots/map-rebuild-spike/hill-mine-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/hill-mine-panorama.glb', import.meta.url).href, hillMineContractText, hillMinePanoramaContractText),
+  'e2-trestle': entry(new URL('../../assets/pilots/map-rebuild-spike/trestle-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/trestle-panorama.glb', import.meta.url).href, trestleContractText, trestlePanoramaContractText),
 };
+const LANDMARK_ASSETS = import.meta.glob('../../assets/pilots/map-rebuild-spike/landmarks/**/*.glb', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
 const BOUNDS_EPSILON = 0.03;
 const SKIRT_INSET = 2.5;
 
@@ -281,16 +290,19 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   const selected = REGISTRY[host.contractId];
   host.canvas.dataset.terrain3dPilotContract = host.contractId;
   if (new URLSearchParams(window.location.search).get('tier') === 'lite') {
+    host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'lite';
     publish(host.canvas, 'lite', 'painted');
     return () => undefined;
   }
   if (!selected || selected.contract.tileId !== host.tileId) {
+    host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'off';
     publish(host.canvas, 'failed', 'painted');
     return () => undefined;
   }
   let disposed = false;
   let terrain: THREE.Object3D | undefined;
   let panorama: THREE.Object3D | undefined;
+  let landmarks: THREE.Group | undefined;
   let skirt: THREE.Object3D | undefined;
   let hiddenRelief: HiddenRelief[] = [];
   let loadedTerrain: THREE.Object3D | undefined;
@@ -299,6 +311,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   let uninstallHeightSource: (() => void) | undefined;
   host.canvas.dataset.terrain3dPilotTerrainLoadState = 'pending';
   host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'pending';
+  host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'pending';
   publish(host.canvas, 'loading', 'painted');
   const loader = new GLTFLoader();
   const disposeLoaded = () => {
@@ -357,7 +370,64 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       host.canvas.dataset.terrain3dPilotSkirtBlend = nextSkirt ? 'painted-underlay-alpha-rim' : 'off';
       host.canvas.dataset.terrain3dPilotPanoramaFog = 'excluded';
       host.canvas.dataset.terrain3dPilotPanoramaDepth = 'screen-horizon-backdrop';
-      publish(host.canvas, 'ready', 'glb', terrainMetrics, nextPanorama, panoramaMetrics);
+      const mounts = (selected.contract.landmarkMounts ?? []).filter((mount) => mount.asset);
+      host.canvas.dataset.terrain3dPilotLandmarkExpected = String(mounts.length);
+      const assets = new Map<string, Promise<THREE.Object3D | undefined>>();
+      const diagnostics: string[] = [];
+      const nextLandmarks = new THREE.Group();
+      nextLandmarks.name = 'Terrain3dLandmarks';
+      nextLandmarks.userData.renderOnly = true;
+      const loadMount = async (mount: LandmarkMount) => {
+        try {
+          const key = `../../assets/pilots/map-rebuild-spike/${mount.asset}`;
+          const resolveUrl = LANDMARK_ASSETS[key];
+          if (!resolveUrl) {
+            diagnostics.push(`${mount.id}: asset unavailable`);
+            return;
+          }
+          let asset = assets.get(key);
+          if (!asset) {
+            asset = resolveUrl().then((url) => loader.loadAsync(url).then((gltf) => gltf.scene, () => undefined), () => undefined);
+            assets.set(key, asset);
+          }
+          const source = await asset;
+          if (!source) {
+            diagnostics.push(`${mount.id}: asset invalid`);
+            return;
+          }
+          const model = [...nextLandmarks.children].some((child) => child.userData.landmarkAsset === key) ? source.clone() : source;
+          model.name = mount.id;
+          model.userData.landmarkAsset = key;
+          model.userData.renderOnly = true;
+          model.position.set(mount.position[0], heightAt(mount.position[0], mount.position[2]) + mount.position[1], mount.position[2]);
+          model.rotation.set(...mount.rotation);
+          model.scale.fromArray(mount.scale);
+          inspect(model, false);
+          nextLandmarks.add(model);
+        } catch {
+          diagnostics.push(`${mount.id}: asset invalid`);
+        }
+      };
+      void Promise.all(mounts.map(loadMount)).then(() => {
+        if (disposed) {
+          disposeObject3D(nextLandmarks);
+          host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
+          return;
+        }
+        landmarks = nextLandmarks;
+        host.scene.add(nextLandmarks);
+        host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'mounted';
+        host.canvas.dataset.terrain3dPilotLandmarks = String(nextLandmarks.children.length);
+        host.canvas.dataset.terrain3dPilotLandmarkSkipped = String(diagnostics.length);
+        host.canvas.dataset.terrain3dPilotLandmarkDiagnostics = diagnostics.join('; ');
+        host.canvas.dataset.terrain3dPilotLandmarkMounts = JSON.stringify(nextLandmarks.children.map((model) => ({
+          id: model.name,
+          x: model.position.x,
+          y: model.position.y,
+          z: model.position.z,
+        })));
+        publish(host.canvas, 'ready', 'glb', terrainMetrics, nextPanorama, panoramaMetrics);
+      });
     } catch {
       disposeObject3D(nextTerrain);
       disposeObject3D(nextPanorama);
@@ -394,12 +464,14 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       if (bridge) (bridge.material as THREE.Material).dispose();
       skirt = undefined;
     }
-    for (const model of [terrain, panorama]) {
+    for (const model of [terrain, panorama, landmarks]) {
       if (!model) continue;
       host.scene.remove(model);
       disposeObject3D(model);
     }
     terrain = undefined;
     panorama = undefined;
+    landmarks = undefined;
+    host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
   };
 }

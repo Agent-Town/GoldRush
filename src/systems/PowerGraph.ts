@@ -1,7 +1,10 @@
-export type PowerNodeKind = 'producer' | 'relay' | 'consumer';
+export type PowerNodeKind = 'producer' | 'relay' | 'consumer' | 'storage';
 export type PowerNodeState = 'powered' | 'browned-out' | 'dark';
 export type PowerComponentState = 'lit' | 'brown' | 'dark';
 export type PowerWireState = 'intact' | 'cut';
+
+// Keep the standalone Node budget harness dependency-free while matching Loop.ts.
+const POWER_GRAPH_STEP_SECONDS = 1 / 30;
 
 type PowerNodeBase = {
   id: string;
@@ -14,7 +17,8 @@ type PowerNodeBase = {
 export type PowerNodeInput =
   | (PowerNodeBase & { kind: 'producer'; outputWatts: number })
   | (PowerNodeBase & { kind: 'relay' })
-  | (PowerNodeBase & { kind: 'consumer'; drawWatts: number; priority: number });
+  | (PowerNodeBase & { kind: 'consumer'; drawWatts: number; priority: number })
+  | (PowerNodeBase & { kind: 'storage'; capacityWh: number; chargeWatts: number; dischargeWatts: number });
 
 export type PowerWireInput = {
   a: string;
@@ -55,6 +59,10 @@ export type PowerNodeSnapshot = Readonly<{
   allocatedWatts: number;
   allocationRatio: number;
   componentId: string;
+  storedWh?: number;
+  capacityWh?: number;
+  chargeWatts?: number;
+  dischargeWatts?: number;
 }>;
 
 export type PowerWireSnapshot = Readonly<{
@@ -70,8 +78,11 @@ export type PowerComponentSnapshot = Readonly<{
   id: string;
   nodeIds: readonly string[];
   supplyWatts: number;
+  generationWatts?: number;
+  storageDischargeWatts?: number;
   demandWatts: number;
   unusedWatts: number;
+  storedWh?: number;
   state: PowerComponentState;
   shedOrder: readonly string[];
 }>;
@@ -156,6 +167,7 @@ export const POWER_GRAPH_LIMITS = Object.freeze({
 
 type SolveResult = Omit<PowerGridSnapshot, 'tick' | 'topologyRevision' | 'allocationRevision'> & {
   states: ReadonlyMap<string, PowerNodeState>;
+  storage: ReadonlyMap<string, number>;
   events: readonly PowerGraphEvent[];
 };
 
@@ -185,6 +197,7 @@ export class PowerGraphSystem {
   private definition: PowerGraphDefinition;
   private pendingDefinition: PowerGraphDefinition | null = null;
   private states = new Map<string, PowerNodeState>();
+  private storage = new Map<string, number>();
   private events: PowerGraphEvent[] = [];
   private currentSnapshot!: PowerGridSnapshot;
   private topologyRevision = 0;
@@ -226,6 +239,12 @@ export class PowerGraphSystem {
     const started = nowMs();
     const safeTick = cleanTick(tick);
     if (!this.pendingDefinition) {
+      if (this.definition.nodes.some((node) => node.kind === 'storage')) {
+        this.allocationRevision += 1;
+        this.solve(safeTick, POWER_GRAPH_STEP_SECONDS);
+        this.recordStep(started);
+        return true;
+      }
       this.publishTick(safeTick);
       this.recordStep(started);
       return false;
@@ -243,7 +262,7 @@ export class PowerGraphSystem {
     if (!topologiesEqual(previous, next)) this.topologyRevision += 1;
     this.allocationRevision += 1;
     this.definition = next;
-    this.solve(safeTick);
+    this.solve(safeTick, POWER_GRAPH_STEP_SECONDS);
     this.recordStep(started);
     return true;
   }
@@ -253,6 +272,7 @@ export class PowerGraphSystem {
     this.definition = this.initialDefinition;
     this.pendingDefinition = null;
     this.states = new Map();
+    this.storage = new Map();
     this.events = [];
     this.topologyRevision = 0;
     this.allocationRevision = 0;
@@ -263,7 +283,7 @@ export class PowerGraphSystem {
     this.lastStepMs = 0;
     this.maxStepMs = 0;
     this.overBudgetCount = 0;
-    this.solve(cleanTick(tick));
+    this.solve(cleanTick(tick), 0);
     this.recordStep(started);
   }
 
@@ -297,14 +317,15 @@ export class PowerGraphSystem {
     };
   }
 
-  private solve(tick: number): void {
+  private solve(tick: number, elapsedSeconds: number): void {
     const started = nowMs();
-    const result = solveDefinition(this.definition, this.states, this.maxWireLength, tick, this.eventSeq);
+    const result = solveDefinition(this.definition, this.states, this.storage, elapsedSeconds, this.maxWireLength, tick, this.eventSeq);
     this.lastSolveMs = nowMs() - started;
     this.maxSolveMs = Math.max(this.maxSolveMs, this.lastSolveMs);
     this.solveCount += 1;
     this.eventSeq += result.events.length;
     this.states = new Map(result.states);
+    this.storage = new Map(result.storage);
     if (result.events.length > 0) this.events = [...this.events, ...result.events].slice(-64);
     this.currentSnapshot = freezeSnapshot({
       id: result.id,
@@ -457,6 +478,8 @@ export function emptyPowerGraphDiagnostics(): PowerGraphDiagnostics {
 function solveDefinition(
   definition: PowerGraphDefinition,
   previousStates: ReadonlyMap<string, PowerNodeState>,
+  previousStorage: ReadonlyMap<string, number>,
+  elapsedSeconds: number,
   maxWireLength: number,
   tick: number,
   eventSeqStart: number,
@@ -493,8 +516,11 @@ function solveDefinition(
       id,
       nodeIds: Object.freeze(nodeIds),
       supplyWatts,
+      generationWatts: supplyWatts,
+      storageDischargeWatts: 0,
       demandWatts,
       unusedWatts: 0,
+      storedWh: 0,
       state: componentState(supplyWatts, demandWatts),
       shedOrder: Object.freeze(
         nodeIds
@@ -509,9 +535,30 @@ function solveDefinition(
   const stateByNode = new Map<string, PowerNodeState>();
   const allocationByNode = new Map<string, number>();
   const ratioByNode = new Map<string, number>();
+  const chargeByNode = new Map(previousStorage);
+  const storageChargeWatts = new Map<string, number>();
+  const storageDischargeWatts = new Map<string, number>();
   const solvedComponents: PowerComponentSnapshot[] = [];
   for (const component of components) {
-    let remaining = component.supplyWatts;
+    const generationWatts = component.generationWatts ?? component.supplyWatts;
+    const stores = component.nodeIds
+      .map((id) => nodeById.get(id)!)
+      .filter((node): node is Extract<PowerNodeInput, { kind: 'storage' }> => node.kind === 'storage');
+    for (const node of stores) chargeByNode.set(node.id, Math.min(node.capacityWh, previousStorage.get(node.id) ?? 0));
+    let discharge = 0;
+    let shortfall = Math.max(0, component.demandWatts - generationWatts);
+    if (elapsedSeconds > 0) {
+      for (const node of stores) {
+        const charge = chargeByNode.get(node.id) ?? 0;
+        const watts = Math.min(node.dischargeWatts, shortfall, charge * 3600 / elapsedSeconds);
+        if (watts <= 0) continue;
+        chargeByNode.set(node.id, Math.max(0, charge - watts * elapsedSeconds / 3600));
+        storageDischargeWatts.set(node.id, watts);
+        discharge += watts;
+        shortfall -= watts;
+      }
+    }
+    let remaining = generationWatts + discharge;
     const consumers = component.nodeIds
       .map((id) => nodeById.get(id)!)
       .filter((node): node is Extract<PowerNodeInput, { kind: 'consumer' }> => node.kind === 'consumer')
@@ -520,7 +567,7 @@ function solveDefinition(
     for (const nodeId of component.nodeIds) {
       const node = nodeById.get(nodeId)!;
       if (node.kind === 'consumer') continue;
-      const powered = component.supplyWatts > 0;
+      const powered = generationWatts + discharge > 0;
       stateByNode.set(node.id, powered ? 'powered' : 'dark');
       allocationByNode.set(node.id, 0);
       ratioByNode.set(node.id, powered ? 1 : 0);
@@ -533,7 +580,26 @@ function solveDefinition(
       ratioByNode.set(node.id, ratio);
       stateByNode.set(node.id, ratio === 1 ? 'powered' : ratio > 0 ? 'browned-out' : 'dark');
     }
-    solvedComponents.push(Object.freeze({ ...component, unusedWatts: remaining }));
+    if (elapsedSeconds > 0 && remaining > 0) {
+      for (const node of stores) {
+        const charge = chargeByNode.get(node.id) ?? 0;
+        const watts = Math.min(node.chargeWatts, remaining, (node.capacityWh - charge) * 3600 / elapsedSeconds);
+        if (watts <= 0) continue;
+        chargeByNode.set(node.id, Math.min(node.capacityWh, charge + watts * elapsedSeconds / 3600));
+        storageChargeWatts.set(node.id, watts);
+        remaining -= watts;
+      }
+    }
+    const supplyWatts = generationWatts + discharge;
+    const storedWh = sum(stores, (node) => chargeByNode.get(node.id) ?? 0);
+    solvedComponents.push(Object.freeze({
+      ...component,
+      supplyWatts,
+      storageDischargeWatts: discharge,
+      storedWh: round6(storedWh),
+      unusedWatts: remaining,
+      state: componentState(supplyWatts, component.demandWatts),
+    }));
   }
 
   const nodes = definition.nodes.map((node): PowerNodeSnapshot => {
@@ -554,6 +620,10 @@ function solveDefinition(
       allocatedWatts: online ? allocationByNode.get(node.id) ?? 0 : 0,
       allocationRatio: online ? ratioByNode.get(node.id) ?? 0 : 0,
       componentId,
+      storedWh: node.kind === 'storage' ? round6(chargeByNode.get(node.id) ?? previousStorage.get(node.id) ?? 0) : 0,
+      capacityWh: node.kind === 'storage' ? node.capacityWh : 0,
+      chargeWatts: node.kind === 'storage' ? round3(storageChargeWatts.get(node.id) ?? 0) : 0,
+      dischargeWatts: node.kind === 'storage' ? round3(storageDischargeWatts.get(node.id) ?? 0) : 0,
     });
   });
   const states = new Map(nodes.map((node) => [node.id, node.state]));
@@ -564,7 +634,7 @@ function solveDefinition(
       events.push(Object.freeze({ seq: eventSeqStart + events.length + 1, tick, nodeId: node.id, from, to: node.state }));
     }
   }
-  const totalSupplyWatts = sum(nodes, (node) => (node.online ? node.outputWatts : 0));
+  const totalSupplyWatts = sum(solvedComponents, (component) => component.supplyWatts);
   const totalDemandWatts = sum(nodes, (node) => (node.online ? node.demandWatts : 0));
   const signature = powerSignature(definition.id, nodes, wires, solvedComponents);
   return {
@@ -576,6 +646,7 @@ function solveDefinition(
     components: solvedComponents,
     signature,
     states,
+    storage: chargeByNode,
     events,
   };
 }
@@ -596,6 +667,12 @@ function normalizeNode(value: unknown): PowerNodeInput | null {
   if (value.kind === 'consumer') {
     return exactRecord(value, ['drawWatts', 'id', 'kind', 'labelKey', 'online', 'priority', 'x', 'z']) && whole(value.drawWatts, 1, POWER_GRAPH_LIMITS.maxNodeWatts) && whole(value.priority, 0, 255)
       ? { ...base, kind: 'consumer', drawWatts: value.drawWatts, priority: value.priority }
+      : null;
+  }
+  if (value.kind === 'storage') {
+    return exactRecord(value, ['capacityWh', 'chargeWatts', 'dischargeWatts', 'id', 'kind', 'labelKey', 'online', 'x', 'z'])
+      && positive(value.capacityWh) && positive(value.chargeWatts) && positive(value.dischargeWatts)
+      ? { ...base, kind: 'storage', capacityWh: value.capacityWh, chargeWatts: value.chargeWatts, dischargeWatts: value.dischargeWatts }
       : null;
   }
   return null;
@@ -687,6 +764,7 @@ function powerSignature(
     write(node.id); write(node.labelKey); write(node.kind); write(node.x); write(node.z); write(node.online);
     write(node.outputWatts); write(node.demandWatts); write(node.priority); write(node.state);
     write(node.allocatedWatts); write(node.allocationRatio); write(node.componentId);
+    write(node.storedWh ?? 0); write(node.capacityWh ?? 0); write(node.chargeWatts ?? 0); write(node.dischargeWatts ?? 0);
   }
   for (const wire of wires) {
     write(wire.id); write(wire.a); write(wire.b); write(wire.state); write(wire.length); write(wire.maxLength);
@@ -695,6 +773,7 @@ function powerSignature(
     write(component.id);
     for (const nodeId of component.nodeIds) write(nodeId);
     write(component.supplyWatts); write(component.demandWatts); write(component.unusedWatts);
+    write(component.generationWatts ?? component.supplyWatts); write(component.storageDischargeWatts ?? 0); write(component.storedWh ?? 0);
   }
   return `${tokens}:${(hashA >>> 0).toString(16).padStart(8, '0')}${(hashB >>> 0).toString(16).padStart(8, '0')}`;
 }
@@ -735,6 +814,7 @@ function definitionsEqual(left: PowerGraphDefinition, right: PowerGraphDefinitio
       if (a.id !== b.id || a.kind !== b.kind || a.labelKey !== b.labelKey || a.x !== b.x || a.z !== b.z || a.online !== b.online) return false;
       if (a.kind === 'producer' && (b.kind !== 'producer' || a.outputWatts !== b.outputWatts)) return false;
       if (a.kind === 'consumer' && (b.kind !== 'consumer' || a.drawWatts !== b.drawWatts || a.priority !== b.priority)) return false;
+      if (a.kind === 'storage' && (b.kind !== 'storage' || a.capacityWh !== b.capacityWh || a.chargeWatts !== b.chargeWatts || a.dischargeWatts !== b.dischargeWatts)) return false;
     }
   }
   if (left.wires !== right.wires) {
@@ -802,6 +882,10 @@ function finite(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value);
 }
 
+function positive(value: unknown): value is number {
+  return finite(value) && value > 0 && value <= POWER_GRAPH_LIMITS.maxNodeWatts;
+}
+
 function whole(value: unknown, min: number, max = Number.MAX_SAFE_INTEGER): value is number {
   return typeof value === 'number' && Number.isSafeInteger(value) && value >= min && value <= max;
 }
@@ -833,4 +917,8 @@ function nowMs(): number {
 
 function round3(value: number): number {
   return Math.round(value * 1_000) / 1_000;
+}
+
+function round6(value: number): number {
+  return Math.round(value * 1_000_000) / 1_000_000;
 }

@@ -21,6 +21,7 @@ export type LightRigNightShiftState = {
   enabled: boolean;
   phase: NightShiftPhase;
   darkness: number;
+  lampIntensityMult?: number;
   palette?: LightRigRampPalette;
   spriteTint?: string;
 };
@@ -174,6 +175,7 @@ export class LightRig {
       enabled: state.enabled,
       phase: state.phase,
       darkness: THREE.MathUtils.clamp(state.darkness, 0, 1),
+      lampIntensityMult: THREE.MathUtils.clamp(state.lampIntensityMult ?? 1, 0, 1),
       ...(state.palette ? { palette: state.palette } : {}),
     };
     this.syncNightPools(sources);
@@ -222,6 +224,7 @@ export class LightRig {
         enabled: this.nightShift.enabled,
         phase: this.nightShift.phase,
         darkness: this.nightShift.darkness,
+        lampIntensityMult: this.nightShift.lampIntensityMult ?? 1,
         ...(this.nightShift.palette ? { spriteTint: `#${this.nightShift.palette.spriteTint.getHexString()}` } : {}),
       },
       nightPools: this.nightPoolLights.filter((light) => light.visible).length,
@@ -321,7 +324,8 @@ export class LightRig {
       light.userData.kind = source.kind;
       const warm = source.kind === 'lantern' || source.kind === 'enemy-lantern';
       light.color.set(warm ? '#ffd28a' : '#8fded3');
-      light.intensity = this.nightPoolIntensity(source.kind) * darkness;
+      const flicker = source.kind === 'lantern' ? this.nightShift.lampIntensityMult ?? 1 : 1;
+      light.intensity = this.nightPoolIntensity(source.kind) * darkness * flicker;
       light.distance = source.radius;
       light.position.set(source.x, Terrain.visualY(source.x, source.z, source.height ?? 1.45), source.z);
       if (source.kind !== 'enemy-lantern') continue;

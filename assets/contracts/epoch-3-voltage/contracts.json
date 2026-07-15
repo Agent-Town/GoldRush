@@ -3,6 +3,84 @@
   "epochId": "epoch-3-voltage",
   "contracts": [
     {
+      "id": "e3-blackout-ridge",
+      "name": "Blackout Ridge",
+      "tileParams": {
+        "tileId": "e3-blackout-ridge",
+        "biome": "voltage-blackout-ridge",
+        "size": 96,
+        "dimensions": { "width": 80, "height": 96 },
+        "render": { "terrainMesh": "required" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "trunk-yard", "bank": "south", "minX": -32, "maxX": 8, "minZ": -38, "maxZ": -8 },
+          { "id": "breath-yard", "bank": "north", "minX": -8, "maxX": 24, "minZ": -6, "maxZ": 18 },
+          { "id": "ridge-line", "bank": "north", "minX": 8, "maxX": 34, "minZ": 20, "maxZ": 40 }
+        ],
+        "stakeMarkers": [{ "id": "ridge-switch-house", "x": 24, "z": 30, "lossCondition": true }],
+        "pylonSites": [
+          { "id": "trunk-west", "nodeId": "trunk-west", "wireFrom": "off-map-current", "x": -30, "z": -30, "radius": 2.5 },
+          { "id": "trunk-middle", "nodeId": "trunk-middle", "wireFrom": "trunk-west", "x": -18, "z": -18, "radius": 2.5 },
+          { "id": "trunk-ridge", "nodeId": "trunk-ridge", "wireFrom": "trunk-middle", "x": -6, "z": -6, "radius": 2.5 }
+        ],
+        "capacitorSites": [
+          { "id": "breath-bank-west", "nodeId": "capacitor-west", "x": 6, "z": 4, "radius": 2.5 },
+          { "id": "breath-bank-east", "nodeId": "capacitor-east", "x": 16, "z": 4, "radius": 2.5 }
+        ],
+        "prePlacedBuildables": [
+          { "id": "sentry_beacon", "x": -30, "z": -30 },
+          { "id": "sentry_beacon", "x": -18, "z": -18 },
+          { "id": "sentry_beacon", "x": -6, "z": -6 },
+          { "id": "lantern_post", "x": 12, "z": 20 },
+          { "id": "lantern_post", "x": 24, "z": 30 }
+        ],
+        "ridgeGlow": { "x": -38, "z": -44, "color": "#79c8bd", "intensity": 1.35 },
+        "waterSources": [],
+        "harvestAnchors": [{ "x": 8, "z": 30 }, { "x": 18, "z": 34 }, { "x": 30, "z": 26 }],
+        "heightfield": { "id": "blackout-ridge-shelf", "mode": "visual" },
+        "palette": { "id": "blackout-ridge-blue-brass", "tint": [0.48, 0.52, 0.58], "dampTint": [0.16, 0.24, 0.3], "dampAmount": 0.06, "splat": { "rockAmount": 0.82, "scrubAmount": 0.1, "macroWarmth": 0.32, "antiTile": 0.76 } },
+        "scatter": { "id": "blackout-ridge-scree", "density": 0.62, "classCounts": { "rocks": 82, "dry_grass": 20, "wagon_ruts": 12, "claim_posts": 8 } },
+        "lanes": { "spawnEdges": ["west", "east", "north"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "dayNightCycle": { "periodSeconds": 24, "duskRampSeconds": 2, "dawnRampSeconds": 2, "nightDepth": 0.86, "nightLocked": true },
+        "powerGrid": {
+          "maxSpanLength": 30,
+          "nodes": [
+            { "id": "off-map-current", "label": "Current Beyond the Ridge", "kind": "producer", "x": -38, "z": -40, "outputWatts": 36 },
+            { "id": "trunk-west", "label": "West Trunk Frame", "kind": "relay", "x": -30, "z": -30 },
+            { "id": "trunk-middle", "label": "Middle Trunk Frame", "kind": "relay", "x": -18, "z": -18 },
+            { "id": "trunk-ridge", "label": "Ridge Trunk Frame", "kind": "relay", "x": -6, "z": -6 },
+            { "id": "capacitor-west", "label": "West Capacitor Bank", "kind": "storage", "x": 6, "z": 4, "capacityWh": 0.05, "chargeWatts": 18, "dischargeWatts": 12 },
+            { "id": "capacitor-east", "label": "East Capacitor Bank", "kind": "storage", "x": 16, "z": 4, "capacityWh": 0.05, "chargeWatts": 18, "dischargeWatts": 12 },
+            { "id": "lamp-yard", "label": "Breath Yard Lamps", "kind": "consumer", "role": "lamp", "x": 12, "z": 20, "drawWatts": 6, "priority": 10 },
+            { "id": "lamp-ridge", "label": "Ridge Switch Lamps", "kind": "consumer", "role": "lamp", "x": 24, "z": 30, "drawWatts": 6, "priority": 10 }
+          ],
+          "wires": [
+            { "a": "off-map-current", "b": "trunk-west" },
+            { "a": "trunk-west", "b": "trunk-middle" },
+            { "a": "trunk-middle", "b": "trunk-ridge" },
+            { "a": "trunk-ridge", "b": "capacitor-west" },
+            { "a": "capacitor-west", "b": "capacitor-east" },
+            { "a": "capacitor-west", "b": "lamp-yard" },
+            { "a": "capacitor-east", "b": "lamp-ridge" }
+          ]
+        },
+        "enemyRoster": [
+          { "id": "fevered_saboteur", "label": "Trunk Saboteur", "waveMin": 1, "hpScale": 1.1, "speedMult": 1.12, "visualScale": 0.95, "tint": "#6f806c", "wrecker": true, "buildingDamageScale": 1.35, "spawnEdges": ["west", "east"], "spawnGates": [{ "edge": "west", "x": -39, "z": -18 }, { "edge": "east", "x": 39, "z": -18 }] },
+          { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
+        ]
+      },
+      "boardRow": { "name": "Blackout Ridge", "ledgerBlurb": "The current comes from beyond the ridge. Bank a breath before the Fever cuts the trunk.", "tags": ["voltage", "storage", "night"], "unlock": "secured:e3-canyon-works" },
+      "briefing": {
+        "goals": ["Build capacitor banks, then hold the Ridge Switch House through wave 12."],
+        "rules": ["The off-map trunk brings 36 W; each bank stores 0.05 Wh from surplus current.", "A charged bank returns up to 12 W while a cut separates the ridge from its unseen source.", "Trunk Saboteurs attack the three pre-authored frames; repair a frame to restore current and recharge."],
+        "geographyLine": "An 80 by 96 ridge: the trunk enters from the southwest glow and climbs to the switch house in the northeast."
+      }
+    },
+    {
       "id": "e3-moth-season",
       "name": "Moth Season",
       "tileParams": {
@@ -93,7 +171,10 @@
           { "id": "pylon-east-rim", "nodeId": "pylon-east-rim", "wireFrom": "pylon-east-switch", "x": 28, "z": 8, "radius": 2.5 }
         ],
         "damChannel": { "minX": -48, "maxX": 48, "minZ": -6.25, "maxZ": 6.25 },
-        "rails": [{ "style": "steamworks", "points": [{ "x": -42, "z": -30 }, { "x": -18, "z": -34 }, { "x": 18, "z": -34 }, { "x": 42, "z": -30 }, { "x": 18, "z": -34 }, { "x": -18, "z": -34 }] }],
+        "rails": [
+          { "style": "steamworks", "points": [{ "x": -42, "z": -30 }, { "x": -18, "z": -34 }, { "x": 18, "z": -34 }, { "x": 42, "z": -30 }, { "x": 18, "z": -34 }, { "x": -18, "z": -34 }] },
+          { "style": "steamworks", "points": [{ "x": -46, "z": 44 }, { "x": -36, "z": 32 }, { "x": -28, "z": 8 }, { "x": -24, "z": -20 }, { "x": -12, "z": -36 }] }
+        ],
         "waterSources": [],
         "harvestAnchors": [{ "x": -34, "z": 30 }, { "x": -22, "z": 34 }, { "x": 22, "z": 34 }, { "x": 34, "z": 30 }],
         "prePlacedBuildables": [
@@ -170,16 +251,61 @@
             { "id": "turret-west", "label": "West Arc Turret", "kind": "consumer", "role": "turret", "x": -18, "z": 22, "drawWatts": 4, "priority": 20 },
             { "id": "turret-east", "label": "East Arc Turret", "kind": "consumer", "role": "turret", "x": 18, "z": 22, "drawWatts": 4, "priority": 20 },
             { "id": "lamp-west", "label": "West Gallery Lamps", "kind": "consumer", "role": "lamp", "x": -32, "z": 32, "drawWatts": 2, "priority": 30 },
-            { "id": "lamp-east", "label": "East Gallery Lamps", "kind": "consumer", "role": "lamp", "x": 32, "z": 32, "drawWatts": 2, "priority": 30 }
+            { "id": "lamp-east", "label": "East Gallery Lamps", "kind": "consumer", "role": "lamp", "x": 32, "z": 32, "drawWatts": 2, "priority": 30 },
+            { "id": "crawler-drain-west-base", "label": "Crawler Drain at West Base", "kind": "consumer", "role": "crawler-drain", "x": -12, "z": -36, "drawWatts": 18, "priority": 0 },
+            { "id": "crawler-drain-west-switch", "label": "Crawler Drain at West Switchback", "kind": "consumer", "role": "crawler-drain", "x": -24, "z": -20, "drawWatts": 18, "priority": 0 },
+            { "id": "crawler-drain-west-rim", "label": "Crawler Drain at West Rim", "kind": "consumer", "role": "crawler-drain", "x": -28, "z": 8, "drawWatts": 18, "priority": 0 },
+            { "id": "crawler-drain-east-base", "label": "Crawler Drain at East Base", "kind": "consumer", "role": "crawler-drain", "x": 12, "z": -36, "drawWatts": 18, "priority": 0 },
+            { "id": "crawler-drain-east-switch", "label": "Crawler Drain at East Switchback", "kind": "consumer", "role": "crawler-drain", "x": 24, "z": -20, "drawWatts": 18, "priority": 0 },
+            { "id": "crawler-drain-east-rim", "label": "Crawler Drain at East Rim", "kind": "consumer", "role": "crawler-drain", "x": 28, "z": 8, "drawWatts": 18, "priority": 0 }
           ],
           "wires": [
             { "a": "sub-hall", "b": "pylon-west-base" }, { "a": "pylon-west-base", "b": "pylon-west-switch" }, { "a": "pylon-west-switch", "b": "pylon-west-rim" },
             { "a": "sub-hall", "b": "pylon-east-base" }, { "a": "pylon-east-base", "b": "pylon-east-switch" }, { "a": "pylon-east-switch", "b": "pylon-east-rim" },
             { "a": "pylon-west-rim", "b": "gallery-west" }, { "a": "gallery-west", "b": "turret-west" }, { "a": "gallery-west", "b": "lamp-west" },
             { "a": "pylon-east-rim", "b": "gallery-east" }, { "a": "gallery-east", "b": "turret-east" }, { "a": "gallery-east", "b": "lamp-east" },
-            { "a": "sub-hall", "b": "tram-motor" }
+            { "a": "sub-hall", "b": "tram-motor" },
+            { "a": "pylon-west-base", "b": "crawler-drain-west-base" },
+            { "a": "pylon-west-switch", "b": "crawler-drain-west-switch" },
+            { "a": "pylon-west-rim", "b": "crawler-drain-west-rim" },
+            { "a": "pylon-east-base", "b": "crawler-drain-east-base" },
+            { "a": "pylon-east-switch", "b": "crawler-drain-east-switch" },
+            { "a": "pylon-east-rim", "b": "crawler-drain-east-rim" }
           ],
           "connect": { "required": 2, "byWave": 6 }
+        },
+        "baron": {
+          "wave": 14,
+          "bossKind": "railcar",
+          "variantId": "dynamo_crawler",
+          "variantLabel": "Rival Dynamo Crawler",
+          "hpScale": 1,
+          "speedScale": 0.65,
+          "scale": 1.2,
+          "contactDamageScale": 1.2,
+          "buildingDamageScale": 1.1,
+          "supportBuildingDamageScale": 1.1,
+          "pursuitRange": 0,
+          "escortCount": 0,
+          "tauntWaves": [],
+          "taunt": "Every lamp dims for one heartbeat.",
+          "arrivalTitle": "THE RIVAL DYNAMO CRAWLER",
+          "defeatTitle": "THE CURRENT COMES HOME",
+          "defeatLine": "Every stolen watt returns.",
+          "ledgerLabel": "Rival Dynamo Crawler",
+          "secureCallout": "THE TOWN KEEPS THE WRECK",
+          "awardMedal": false,
+          "defeatBeat": "The Crawler winds down where it stands, and the town keeps it.",
+          "medalBlurb": "Broke the Drain-Mast and brought the stolen current home.",
+          "sciencePayoutMult": 1,
+          "railRouteIndex": 1,
+          "railSpeed": 1.8,
+          "componentDegradeSpeedMult": 1,
+          "components": [
+            { "id": "drain_mast", "label": "DRAIN-MAST", "hpScale": 2, "xOffset": 0, "zOffset": 0, "tint": "#5b8a8a" },
+            { "id": "tracks", "label": "TRACKS", "hpScale": 3, "xOffset": 4, "zOffset": 0, "tint": "#8b7d3c" },
+            { "id": "capacitor_bank", "label": "CAPACITOR BANK", "hpScale": 2.5, "xOffset": 8, "zOffset": 0, "tint": "#c4883a" }
+          ]
         },
         "enemyRoster": [
           { "id": "fevered_saboteur", "label": "Fevered Saboteur", "waveMin": 4, "hpScale": 1.1, "speedMult": 1.12, "visualScale": 0.95, "tint": "#6f806c", "wrecker": true, "buildingDamageScale": 1.25, "spawnEdges": ["west", "east"], "spawnGates": [{ "edge": "west", "x": -46, "z": 38 }, { "edge": "east", "x": 46, "z": 38 }] },

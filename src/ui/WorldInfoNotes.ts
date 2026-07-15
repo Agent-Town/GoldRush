@@ -10,6 +10,7 @@ export type WorldInfoObjectClass =
   | 'turret'
   | 'lantern_post'
   | 'decoy_shed'
+  | 'capacitor_bank'
   | 'assay_office'
   | 'claim_stake'
   | 'spring_pond'
@@ -117,6 +118,11 @@ export const WORLD_INFO_NOTES: readonly WorldInfoNote[] = [
     title: 'Stamp Mill Site',
     lines: ['The Steamworks door. Fund stages, hold waves, and the mill rises.'],
     actionHint: 'The site signboard carries the dedicated mill readout.',
+  },
+  {
+    objectClass: 'capacitor_bank',
+    title: 'Capacitor Bank',
+    lines: ['Stores surplus current, then keeps the lights breathing through a cut trunk.'],
   },
   {
     objectClass: 'prospector',

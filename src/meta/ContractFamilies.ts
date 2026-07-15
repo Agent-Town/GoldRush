@@ -8,6 +8,8 @@ import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.j
 import voltageManifest from '../../assets/contracts/epoch-3-voltage/manifest.json' with { type: 'json' };
 import motorContracts from '../../assets/contracts/epoch-4-motor/contracts.json' with { type: 'json' };
 import motorManifest from '../../assets/contracts/epoch-4-motor/manifest.json' with { type: 'json' };
+import deepwaterContracts from '../../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
+import deepwaterManifest from '../../assets/contracts/epoch-5-deepwater/manifest.json' with { type: 'json' };
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 
 export type EpochUpgradeDeltas = {
@@ -231,12 +233,13 @@ export type ContractMothSeason = {
 export type ContractPowerNode =
   | { id: string; label: string; kind: 'producer'; x: number; z: number; outputWatts: number }
   | { id: string; label: string; kind: 'relay'; x: number; z: number }
-  | { id: string; label: string; kind: 'consumer'; x: number; z: number; drawWatts: number; priority: number; role: 'gallery' | 'lamp' | 'turret' | 'tram' };
+  | { id: string; label: string; kind: 'consumer'; x: number; z: number; drawWatts: number; priority: number; role: 'gallery' | 'lamp' | 'turret' | 'tram' | 'crawler-drain' }
+  | { id: string; label: string; kind: 'storage'; x: number; z: number; capacityWh: number; chargeWatts: number; dischargeWatts: number };
 export type ContractPowerGrid = {
   maxSpanLength: number;
   nodes: ContractPowerNode[];
   wires: Array<{ a: string; b: string }>;
-  connect: { required: number; byWave: number };
+  connect?: { required: number; byWave: number };
 };
 export type ContractPylonSite = {
   id: string;
@@ -246,9 +249,18 @@ export type ContractPylonSite = {
   z: number;
   radius: number;
 };
+export type ContractCapacitorSite = {
+  id: string;
+  nodeId: string;
+  x: number;
+  z: number;
+  radius: number;
+};
 export type ContractBaronTwist = {
   wave: number;
   bossKind?: 'baron' | 'railcar';
+  variantId?: string;
+  variantLabel?: string;
   hpScale: number;
   speedScale: number;
   scale: number;
@@ -426,7 +438,7 @@ export type ContractWaterDescriptor = {
   heroCanWadeDeep?: boolean;
 };
 export type ContractBuildableFixture = {
-  id: 'lantern_post' | 'turret';
+  id: 'lantern_post' | 'turret' | 'sentry_beacon';
   x: number;
   z: number;
   rotationSteps?: number;
@@ -471,6 +483,8 @@ export type ContractManifest = {
     water?: ContractWaterDescriptor;
     prePlacedBuildables?: ContractBuildableFixture[];
     pylonSites?: ContractPylonSite[];
+    capacitorSites?: ContractCapacitorSite[];
+    ridgeGlow?: { x: number; z: number; color: string; intensity: number };
     damChannel?: { minX: number; maxX: number; minZ: number; maxZ: number };
     lanes: {
       spawnEdges: ContractEdge[];
@@ -598,6 +612,7 @@ const fallbackManifests: Record<string, EpochManifest> = {
   '../../assets/contracts/epoch-2-steamworks/manifest.json': steamworksManifest as EpochManifest,
   '../../assets/contracts/epoch-3-voltage/manifest.json': voltageManifest as EpochManifest,
   '../../assets/contracts/epoch-4-motor/manifest.json': motorManifest as EpochManifest,
+  '../../assets/contracts/epoch-5-deepwater/manifest.json': deepwaterManifest as EpochManifest,
 };
 const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
   '../../assets/contracts/epoch-1-frontier/families.json': frontierFamilies as EpochFamiliesBundle,
@@ -610,6 +625,7 @@ const fallbackContractBundles: Record<string, ContractsBundle> = {
   '../../assets/contracts/epoch-2-steamworks/contracts.json': steamworksContracts as unknown as ContractsBundle,
   '../../assets/contracts/epoch-3-voltage/contracts.json': voltageContracts as unknown as ContractsBundle,
   '../../assets/contracts/epoch-4-motor/contracts.json': motorContracts as unknown as ContractsBundle,
+  '../../assets/contracts/epoch-5-deepwater/contracts.json': deepwaterContracts as unknown as ContractsBundle,
 };
 
 const manifests =
@@ -1106,7 +1122,7 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.waterSources[].kind': ['spring_pond'],
   'tileParams.buildZones[].bank': ['north', 'south'],
   'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur'],
-  'tileParams.prePlacedBuildables[].id': ['lantern_post', 'turret'],
+  'tileParams.prePlacedBuildables[].id': ['lantern_post', 'turret', 'sentry_beacon'],
   'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
   'twist.enemyRoster[].spawnGates[].edge': ['north', 'south', 'east', 'west'],
   'twist.lightRamp.keyframes[].phase': ['full', 'golden', 'dusk', 'dark'],

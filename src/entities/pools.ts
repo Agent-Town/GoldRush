@@ -564,7 +564,7 @@ export class EnemyPool {
           : undefined;
     if (!enemy || enemy.isAlive) return null;
     enemy.spawn(position, { ...params, formationSeed: this.spawnSerial });
-    if (enemy.eliteKind === 'railcar') this.ensureRailcar3d();
+    if (enemy.eliteKind === 'railcar' && enemy.variantId === 'baron_railcar') this.ensureRailcar3d();
     this.previousActive[enemy.id] = false;
     this.spawnSerial += 1;
     this.active += 1;
@@ -1316,7 +1316,7 @@ export class EnemyPool {
   }
 
   private updateRailcar3d(): void {
-    const railcars = this.enemies.filter((enemy) => enemy.isAlive && enemy.eliteKind === 'railcar' && enemy.bossGroupId);
+    const railcars = this.enemies.filter((enemy) => enemy.isAlive && enemy.eliteKind === 'railcar' && enemy.variantId === 'baron_railcar' && enemy.bossGroupId);
     if (!this.railcar3dModel || this.railcar3dState !== 'ready' || railcars.length === 0) return;
     const groupId = railcars[0]!.bossGroupId!;
     if (this.railcar3dGroupId !== groupId) {
@@ -1360,7 +1360,7 @@ export class EnemyPool {
   }
 
   private markRailcar3dDestroyed(enemy: ClaimJumperEnemy): void {
-    if (enemy.eliteKind !== 'railcar' || !enemy.bossGroupId) return;
+    if (enemy.eliteKind !== 'railcar' || enemy.variantId !== 'baron_railcar' || !enemy.bossGroupId) return;
     const id = enemy.bossComponentId as RailcarComponentId | null;
     if (id) this.railcar3dDamaged.add(id);
     const groupLives = this.enemies.some((candidate) => candidate !== enemy && candidate.isAlive && candidate.bossGroupId === enemy.bossGroupId);
@@ -1396,7 +1396,7 @@ export class EnemyPool {
 
   private railcarVisible(enemy: ClaimJumperEnemy): boolean {
     const fogRim = 6;
-    if (!enemy.isAlive || enemy.eliteKind !== 'railcar') return false;
+    if (!enemy.isAlive || enemy.eliteKind !== 'railcar' || enemy.variantId !== 'baron_railcar') return false;
     if (enemy.position.x > Terrain.bounds.minX + fogRim && enemy.position.x < Terrain.bounds.maxX - fogRim
       && enemy.position.z > Terrain.bounds.minZ + fogRim && enemy.position.z < Terrain.bounds.maxZ - fogRim) {
       enemy.markRailcarEnteredField();
