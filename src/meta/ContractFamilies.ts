@@ -494,6 +494,7 @@ export type ContractManifest = {
   };
   twist: {
     sluicesNeedWaterSource?: boolean;
+    pressureEnabled?: boolean;
     seamYieldMult?: number;
     secureWave?: number;
     waveCadenceMult?: number;

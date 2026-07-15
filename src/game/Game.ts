@@ -901,7 +901,7 @@ export class Game {
     this.pressureSystem = new PressureSystem(
       this.economy,
       this.buildSystem.boilerHouses,
-      () => this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive(),
+      () => this.activeContract.twist.pressureEnabled === true && !this.multiplayerActive(),
       (index) => this.buildSystem.buildingTarget('boiler_house', index)?.active === true,
       (id) => hasResearchNode(this.researchState, id),
       (position, text, color) => this.vfx.floatText(position, text, color),
@@ -3822,7 +3822,7 @@ export class Game {
     if (id === 'lantern_post') return this.isNightShiftContract();
     if (id === 'decoy_shed') return this.activeContract.id === 'e3-moth-season';
     if (id === 'capacitor_bank') return this.activeContract.id === 'e3-blackout-ridge';
-    if (id === 'boiler_house') return this.activeContract.id === 'e2-hill-mine' && !this.multiplayerActive();
+    if (id === 'boiler_house') return this.activeContract.twist.pressureEnabled === true && !this.multiplayerActive();
     return true;
   }
 
@@ -3915,7 +3915,7 @@ export class Game {
         ...(resource.id === 'pressure' && hasResearchNode(this.researchState, 'pressure_assay')
           ? { safeMin: Balance.boilerHouse.safeMin, safeMax: Balance.boilerHouse.safeMax }
           : {}),
-        ...(resource.id === 'pressure' && this.activeContract.id === 'e2-hill-mine'
+        ...(resource.id === 'pressure' && this.activeContract.twist.pressureEnabled === true
           ? { objective: `PRESSURIZE ${objective.complete ? 'COMPLETE' : objective.failed ? 'FAILED' : `${objective.hotBoilers}/2 · W8–12`}` }
           : {}),
       };
