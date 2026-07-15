@@ -233,6 +233,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   weather_spire: { name: 'Weather Spire', line: 'Each shepherded front gains a vane, charge path, and waiting row.' },
   seed_vaults: { name: 'Seed Vaults', line: 'Riverbank green stays tied to its seed lot, wet reach, and carrying run.' },
   generation_ark_manifest: { name: 'Generation Ark Manifest', line: 'Every portrait, craft lineage, seed tin, and Long Table place enters the boarding book.' },
+  starlight_soundings: { name: 'Starlight Soundings', line: 'Bright currents, quiet reaches, and safe Pan arcs enter the sky book.' },
+  world_family_atlas: { name: 'World-Family Atlas', line: 'Ember worlds, glass steppes, and sea moons keep separate authored grammars.' },
+  seed_charters: { name: 'Seed Charters', line: 'Each world seed stays tied to connected routes and honest landmarks.' },
+  ember_shore_atlas: { name: 'Ember Shore Atlas', line: 'The last warm vent, cooled titan, and safe approaches enter one preserve page.' },
+  starlight_pan_science: { name: 'Starlight Pan Science', line: 'The first Pan’s old sweep is marked to gather nebula-light into counted charges.' },
+  static_soundings: { name: 'Static Soundings', line: 'Thinning color, quiet instruments, and forgetting machines gain measured rings.' },
+  deep_sky_static_ward: { name: 'Static Ward', line: 'Portraits, tools, and warm light gain a brass-and-teal boundary against the blank.' },
+  era_memory_gates: { name: 'Era-Memory Gates', line: 'Each old rig gains an honest mark for where the Quiet forgets it.' },
+  re_ink_relays: { name: 'Re-Ink Relays', line: 'Hue and music gain a counted route back through every Ark deck.' },
+  quiet_core_science: { name: 'Quiet-Core Science', line: 'The Quiet medal still guards its storm-heart rings, weapon tables, and re-ink score.' },
+  long_table_archive: { name: 'Long Table Archive', line: 'Every family, empty chair, carried recipe, and remembered claim enters the Ark book.' },
+  portrait_wall: { name: 'Portrait Wall', line: 'Ten generations gain portraits composed from their own recorded deeds.' },
+  preserve_seals: { name: 'Preserve Seals', line: 'Warm vents, living worlds, and stories gain the old claim stamp turned toward keeping.' },
+  world_charters: { name: 'World Charters', line: 'Each seed, fair budget, playable route, and promise to keep enters one page.' },
+  charter_press: { name: 'The Charter Press', line: 'Every era’s proven verbs reach the child-height lever that opens the world-builder.' },
 };
 
 export type ResearchChartOptions = {
