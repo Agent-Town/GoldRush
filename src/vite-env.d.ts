@@ -145,7 +145,7 @@ interface ThreeGameDiagnostics {
     };
     eligibility: string[];
   };
-  dustFlats?: { storm: string; tarSeams: number; orbit: { members: Array<{ id: string; peeled: boolean }> }; orbitMembers: Array<{ id: string; peeled: boolean }>; roads: { segments: number } };
+  dustFlats?: { storm: string; tarSeams: number; orbit: { members: Array<{ id: string; peeled: boolean; state?: string }> }; orbitMembers: Array<{ id: string; peeled: boolean; state?: string }>; roads: { segments: number } };
   kills: number;
   goldPanned: number;
   deathLedger: {
