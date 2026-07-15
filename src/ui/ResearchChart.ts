@@ -173,6 +173,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   storm_glass: { name: 'Storm Glass', line: 'The charcoal fronts are marked before they reach the lanterns.' },
   lighthouse_lens: { name: 'Lighthouse Lens', line: 'The town’s warm-light law reaches the open water.' },
   harbor_receipts: { name: 'Harbor Receipts', line: 'Cannery loads, drydock work, and anchor changes enter one ledger.' },
+  starstone_assay: { name: 'Starstone Assay', line: 'Warmth, weight, and working half-life gain their own columns.' },
+  half_life_dials: { name: 'Half-Life Dials', line: 'Every fading field gains a teal face the town can read.' },
+  isotope_kitchen: { name: 'Isotope Kitchen', line: 'Measured samples gain lead glass, tong arms, and a place at the counter.' },
+  decay_clockwork: { name: 'Decay Clockwork', line: 'Buffs, puddles, and tired machines enter one honest town clock.' },
+  calculating_house_ledgers: { name: 'Calculating House Ledgers', line: 'The old plate and open ledgers mark a house where helpers are kept as citizens.' },
+  sunline_beam: { name: 'Sunline Beam', line: 'Warm light gains a brass path through the Atomic arsenal.' },
+  half_life_caltrops: { name: 'Half-Life Caltrops', line: 'Fading starstone pips are marked to slow a charge, then go dark.' },
+  sunline_mount: { name: 'Sunline Mount', line: 'A parabolic mirror is marked for the familiar sentry tripod.' },
+  glow_fence: { name: 'Glow Fence', line: 'Measured starstone pips gain a place in the old guardrail.' },
+  homemaker_components: { name: 'Homemaker-9000 Components', line: 'The Homemaker medal still guards its vacuum arm, toast rack, and chrome core.' },
+  atomic_parts: { name: 'Atomic Parts', line: 'Enamel housings, dial glass, tong joints, and sockets enter the parts ledger.' },
+  copper_lasso: { name: 'Copper Lasso', line: 'A gentle conducting loop is marked for appliances that wind down.' },
+  herd_receipts: { name: 'Herd Receipts', line: 'Every shepherd, herd, and pacified helper gains an honest receipt.' },
+  appliance_pen: { name: 'Appliance Pen', line: 'Captured helpers gain a numbered corral and useful work after the wave.' },
+  defector_catalog: { name: "Defector's Catalog", line: 'Failed promises are crossed out; useful patterns keep their honest names.' },
 };
 
 export type ResearchChartOptions = {

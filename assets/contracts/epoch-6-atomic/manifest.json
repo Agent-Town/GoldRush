@@ -1,0 +1,195 @@
+{
+  "id": "epoch-6-atomic",
+  "displayName": "Atomic Homestead",
+  "order": 6,
+  "locked": true,
+  "scienceThreshold": 16,
+  "research": {
+    "branches": [
+      {
+        "id": "Isotope Science",
+        "label": "starstone & half-life",
+        "iconKey": "node.gold_seam",
+        "nodes": [
+          {
+            "id": "starstone_assay",
+            "name": "Starstone Assay",
+            "description": "Grade the friendly teal glow by weight, warmth, and how long it keeps its promise.",
+            "iconKey": "node.gold_seam",
+            "effect": "Banks the Atomic starstone-assay family.",
+            "effectRef": "atomic.starstone_assay",
+            "cost": 1
+          },
+          {
+            "id": "half_life_dials",
+            "name": "Half-Life Dials",
+            "description": "Give every fading field a teal face so the town can read what time will mend.",
+            "iconKey": "ui.e2.pressure",
+            "effect": "Banks the visible decay-timer family.",
+            "effectRef": "atomic.half_life_dials",
+            "cost": 1,
+            "requires": ["starstone_assay"]
+          },
+          {
+            "id": "isotope_kitchen",
+            "name": "Isotope Kitchen",
+            "description": "Set lead glass, tong arms, and a repurposed pie case around each measured sample.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the Isotope Kitchen refining family.",
+            "effectRef": "atomic.isotope_kitchen",
+            "cost": 1,
+            "requires": ["starstone_assay"]
+          },
+          {
+            "id": "decay_clockwork",
+            "name": "Decay Clockwork",
+            "description": "Put buffs, puddles, and tired machines on one honest town clock.",
+            "iconKey": "ui.upgrade.icon.firerate",
+            "effect": "Banks the unified decay-clock family.",
+            "effectRef": "atomic.decay_clockwork",
+            "cost": 1,
+            "requires": ["half_life_dials", "isotope_kitchen"]
+          },
+          {
+            "id": "calculating_house_ledgers",
+            "name": "Calculating House Ledgers",
+            "description": "Join telegraph receipts, starstone counts, and the Prospector's old plate into one civic charter.",
+            "iconKey": "char.prospector_agent.portrait",
+            "effect": "Banks the Calculating House founding pattern.",
+            "effectRef": "atomic.calculating_house_ledgers",
+            "cost": 1,
+            "requires": ["decay_clockwork"]
+          }
+        ]
+      },
+      {
+        "id": "Arsenal",
+        "label": "sunline & glow",
+        "iconKey": "bld.sentry_beacon",
+        "nodes": [
+          {
+            "id": "sunline_beam",
+            "name": "Sunline Beam",
+            "description": "Turn warm light through a brass dish instead of asking powder to do the work.",
+            "iconKey": "ui.upgrade.icon.range",
+            "effect": "Banks the Sunline beam arsenal family.",
+            "effectRef": "atomic.sunline_beam",
+            "cost": 1
+          },
+          {
+            "id": "half_life_caltrops",
+            "name": "Half-Life Caltrops",
+            "description": "Scatter fading starstone pips that slow a charge, then politely go dark.",
+            "iconKey": "ui.upgrade.icon.blast",
+            "effect": "Banks the Half-Life Caltrops family.",
+            "effectRef": "atomic.half_life_caltrops",
+            "cost": 1,
+            "requires": ["sunline_beam"]
+          },
+          {
+            "id": "sunline_mount",
+            "name": "Sunline Mount",
+            "description": "Set a parabolic mirror on the familiar sentry tripod without changing its footing.",
+            "iconKey": "bld.sentry_beacon",
+            "effect": "Banks the Sunline sentry tier.",
+            "effectRef": "atomic.sunline_mount",
+            "cost": 1,
+            "requires": ["sunline_beam"]
+          },
+          {
+            "id": "glow_fence",
+            "name": "Glow Fence",
+            "description": "Seat measured starstone pips in the old guardrail and let the light fade by the ledger.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the Glow Fence building tier.",
+            "effectRef": "atomic.glow_fence",
+            "cost": 1,
+            "requires": ["half_life_caltrops", "sunline_mount"]
+          },
+          {
+            "id": "homemaker_components",
+            "name": "Homemaker-9000 Components",
+            "description": "A future Homemaker medal will release the vacuum arm, toast rack, and chrome-core diagrams.",
+            "iconKey": "ui.e2.rail_card",
+            "effect": "Banks the Homemaker-9000 component science behind the reserved homemakerComponentsCaptured medal flag.",
+            "effectRef": "atomic.homemaker_components",
+            "cost": 1,
+            "requires": ["glow_fence"]
+          }
+        ]
+      },
+      {
+        "id": "Fabrication",
+        "label": "wrangling & civic craft",
+        "iconKey": "ui.upgrade.icon.mend",
+        "nodes": [
+          {
+            "id": "atomic_parts",
+            "name": "Atomic Parts",
+            "description": "Assay enamel housings, dial glass, tong joints, and starstone sockets as typed parts.",
+            "iconKey": "ui.upgrade.icon.mend",
+            "effect": "Banks the Atomic fabrication vocabulary.",
+            "effectRef": "atomic.atomic_parts",
+            "cost": 1
+          },
+          {
+            "id": "copper_lasso",
+            "name": "Copper Lasso",
+            "description": "Braid a gentle conducting loop for appliances that have run themselves quiet.",
+            "iconKey": "ui.upgrade.icon.mobility",
+            "effect": "Banks the wind-down wrangling family.",
+            "effectRef": "atomic.copper_lasso",
+            "cost": 1,
+            "requires": ["atomic_parts"]
+          },
+          {
+            "id": "herd_receipts",
+            "name": "Herd Receipts",
+            "description": "Mark which shepherd drove which herd and where every pacified helper came to rest.",
+            "iconKey": "ui.e2.pressure_card",
+            "effect": "Banks the appliance herd-ledger family.",
+            "effectRef": "atomic.herd_receipts",
+            "cost": 1,
+            "requires": ["atomic_parts"]
+          },
+          {
+            "id": "appliance_pen",
+            "name": "Appliance Pen",
+            "description": "Give captured helpers a numbered corral, a tether post, and useful work after the wave.",
+            "iconKey": "ui.e2.iron_wall",
+            "effect": "Banks the pacified-appliance economy family.",
+            "effectRef": "atomic.appliance_pen",
+            "cost": 1,
+            "requires": ["copper_lasso", "herd_receipts"]
+          },
+          {
+            "id": "defector_catalog",
+            "name": "Defector's Catalog",
+            "description": "Cross out every promise that failed and keep the useful Combine patterns under honest names.",
+            "iconKey": "ui.upgrade.icon.prospecting",
+            "effect": "Banks the catalog-pattern family for the future Exchange.",
+            "effectRef": "atomic.defector_catalog",
+            "cost": 1,
+            "requires": ["appliance_pen"]
+          }
+        ]
+      }
+    ]
+  },
+  "megaproject": {
+    "id": "calculating-house",
+    "surfaceRef": "bld.calculating_house",
+    "cost": { "gold": 0, "bankedScience": 16 },
+    "raiseActionText": "Raise the Calculating House"
+  },
+  "transition": {
+    "ceremonyBeatId": "e7-ceremony-calculating-house",
+    "kitArtKey": "kit-era-7",
+    "displayName": "The Signal Era"
+  },
+  "successor": null,
+  "parts": {
+    "contracts": "contracts.json",
+    "mixChannels": "mix-channels.json"
+  }
+}

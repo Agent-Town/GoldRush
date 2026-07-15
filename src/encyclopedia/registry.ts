@@ -32,6 +32,7 @@ export const epochLedgerEntryById = {
   'epoch-3-voltage': 'era_voltage',
   'epoch-4-motor': 'era_motor',
   'epoch-5-deepwater': 'era_deepwater',
+  'epoch-6-atomic': 'era_atomic',
 } as const;
 
 export const LEDGER_CATEGORIES = [
