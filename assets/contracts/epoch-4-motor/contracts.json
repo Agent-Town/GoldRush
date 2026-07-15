@@ -1,5 +1,103 @@
 {
   "version": 1,
   "epochId": "epoch-4-motor",
-  "contracts": []
+  "contracts": [
+    {
+      "id": "e4-dust-flats",
+      "name": "The Dust Flats",
+      "tileParams": {
+        "tileId": "e4-dust-flats",
+        "biome": "motor-dust-flats",
+        "size": 160,
+        "dimensions": { "width": 160, "height": 160 },
+        "render": { "terrainMesh": "preferred" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "motor-camp", "bank": "south", "minX": -30, "maxX": 30, "minZ": -26, "maxZ": 24 },
+          { "id": "north-field", "bank": "north", "minX": -62, "maxX": 62, "minZ": 26, "maxZ": 68 },
+          { "id": "southwest-field", "bank": "south", "minX": -68, "maxX": -32, "minZ": -62, "maxZ": -28 },
+          { "id": "southeast-field", "bank": "south", "minX": 32, "maxX": 68, "minZ": -62, "maxZ": -28 }
+        ],
+        "stakeMarkers": [{ "id": "motor-camp", "x": 0, "z": 8, "lossCondition": true }],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -48, "z": 48 }, { "x": -34, "z": 56 }, { "x": -18, "z": 46 },
+          { "x": 18, "z": 46 }, { "x": 34, "z": 56 }, { "x": 48, "z": 48 },
+          { "x": -56, "z": -44 }, { "x": -44, "z": -56 }, { "x": -34, "z": -38 },
+          { "x": 34, "z": -38 }, { "x": 44, "z": -56 }, { "x": 56, "z": -44 }
+        ],
+        "tarSeams": [
+          { "id": "tar-west", "x": -14, "z": 4, "radius": 3.5 },
+          { "id": "tar-north", "x": 8, "z": 18, "radius": 3 },
+          { "id": "tar-east", "x": 18, "z": -6, "radius": 4 },
+          { "id": "tar-wash", "x": 8, "z": -18, "radius": 3.5 }
+        ],
+        "roadCorridors": [
+          { "id": "camp-to-railhead", "start": { "x": 0, "z": 12 }, "end": { "x": 0, "z": 72 } },
+          { "id": "camp-to-west-field", "start": { "x": -8, "z": 4 }, "end": { "x": -58, "z": -46 } },
+          { "id": "camp-to-east-field", "start": { "x": 8, "z": 4 }, "end": { "x": 58, "z": -46 } },
+          { "id": "west-boss-road", "start": { "x": -78, "z": -12 }, "end": { "x": -18, "z": -4 } }
+        ],
+        "orbitSpawn": {
+          "center": { "x": 0, "z": 0 },
+          "radius": 24,
+          "angularSpeed": 0.5235987756,
+          "lapsBeforePeel": 0.25,
+          "peelSpeed": 10,
+          "telegraphSeconds": 2,
+          "peelPoints": [
+            { "id": "north-cut", "angle": 1.5707963268 },
+            { "id": "east-cut", "angle": 0 },
+            { "id": "west-cut", "angle": 3.1415926536 }
+          ]
+        },
+        "dryWash": { "x": 30, "z": -38, "length": 88, "width": 10, "angle": -0.55 },
+        "palette": {
+          "id": "dust-flats-ochre-haze",
+          "tint": [0.78, 0.64, 0.44],
+          "dampTint": [0.25, 0.2, 0.16],
+          "dampAmount": 0.08,
+          "splat": { "rockAmount": 0.22, "scrubAmount": 0.08, "macroWarmth": 0.72, "antiTile": 0.8 }
+        },
+        "scatter": {
+          "id": "dust-flats-sparse-scrub",
+          "density": 0.28,
+          "classCounts": { "rocks": 48, "dry_grass": 24, "wagon_ruts": 32, "claim_posts": 16, "cactus": 12 }
+        },
+        "lanes": { "spawnEdges": ["north", "east", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "weather": {
+          "cycleSeconds": 30,
+          "clearSeconds": 6,
+          "telegraphSeconds": 4,
+          "stormSeconds": 12,
+          "stormMovementMultiplier": 0.7,
+          "stormVisibilityMultiplier": 0.55,
+          "hazeColor": "#c99052",
+          "hazeStrength": 0.2
+        },
+        "enemyRoster": [
+          { "id": "motor_gang", "label": "Motor Gang", "waveMin": 1, "hpScale": 1, "speedMult": 1.18, "visualScale": 0.95, "tint": "#a65f38" }
+        ]
+      },
+      "boardRow": {
+        "name": "The Dust Flats",
+        "ledgerBlurb": "Drive the long field, grade the roads, and watch the horizon where the gangs circle.",
+        "tags": ["motor", "convoy", "storm"],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": ["Hold the Motor Camp through wave 12.", "Keep the field routes open while the storm crosses."],
+        "rules": [
+          "Motor gangs circle the ORBIT road before peeling toward the camp.",
+          "Grade surveyed corridors to send the hauler farther on less fuel.",
+          "Storms cut sight and road speed; the gangs steer by engine sound."
+        ],
+        "geographyLine": "A 160 by 160 drive-scale flat: twelve derrick claims, four tar seams, one dry wash, and the horizon road."
+      }
+    }
+  ]
 }

@@ -181,6 +181,7 @@ import {
   type NightShiftPhase,
 } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
+import { createDustFlatsTile } from '../world/DustFlatsTile';
 import { readTownName } from '../town/TownNaming';
 import { installRunTelemetry } from '../telemetry/runBeacon';
 import { GameState } from './GameState';
@@ -438,6 +439,7 @@ export class Game {
   private readonly damageVignette = document.createElement('div');
   private readonly activeEpoch = selectActiveEpoch();
   private readonly activeContract = selectActiveContract();
+  private readonly dustFlats = createDustFlatsTile(this.activeContract);
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
   private readonly lightField = new LightField({
     minLight: Balance.contracts.nightShift.minLight,
@@ -479,6 +481,7 @@ export class Game {
   private canyonConnectFailed = false;
   private fuelSystem?: FuelSystem;
   private vehicle?: Vehicle;
+  private readonly dustFlatsConvoy = new Map<string, ClaimJumperEnemy>();
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
@@ -1113,6 +1116,7 @@ export class Game {
       emitStorySignal({ type: 'building-lost' });
     });
     this.events.on('wave_started', (event) => {
+      this.spawnDustFlatsConvoy(event.wave, event.at);
       const baron = this.activeContract.twist.baron;
       const isSilentCrawlerFlicker = baron?.variantId === 'dynamo_crawler' && event.wave === baron.wave - 2;
       if (!isSilentCrawlerFlicker) this.audio.play('wave-start-horn');
@@ -1200,6 +1204,11 @@ export class Game {
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
         damSurge: () => this.damSurge?.diagnostics() ?? null,
+        gradeRoad: (id: string) => {
+          const graded = this.gradeDustFlatsRoad(id);
+          this.publishDiagnostics();
+          return graded;
+        },
         resetRun: () => this.resetRun(),
         endRunForTest: () => {
           for (const actor of this.actors) if (actor.group.visible) actor.hp = 0;
@@ -1559,6 +1568,7 @@ export class Game {
     this.vehicle?.dispose();
     this.fuelSystem?.dispose();
     this.detailScatter?.dispose();
+    this.dustFlats?.dispose();
     this.lightRig?.dispose();
     this.harvestSystem.dispose();
     this.combat.dispose();
@@ -1706,7 +1716,7 @@ export class Game {
       );
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
       this.fuelSystem?.update(simDelta, this.visibleActorPositions());
-      this.vehicle?.update(simDelta);
+      this.vehicle?.update(simDelta, this.dustFlats?.roadMovementAt(this.vehicle.group.position, this.timeAlive));
       this.buildSystem.applyTurretPressureFireRateMult(this.pressureArsenalSystem.turretFireRateMult * this.crawlerBoss.turretFireRateMult);
       this.applyHarvestStats(
         this.pressureArsenalSystem.updateAutoPan(
@@ -1725,6 +1735,7 @@ export class Game {
       }
       this.syncStockpileHoldings();
       this.mothSwarm.update(simDelta, this.mothLightSources, this.enemies.all);
+      this.syncDustFlatsConvoy();
       this.enemies.update(
         simDelta,
         this.visibleActorPositions(),
@@ -1735,7 +1746,7 @@ export class Game {
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
-        (enemy) => this.mothSeasonSpeedMultiplier(enemy),
+        (enemy) => this.mothSeasonSpeedMultiplier(enemy) * (this.dustFlats?.enemyMovementMultiplier(this.timeAlive) ?? 1),
       );
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
@@ -1857,6 +1868,7 @@ export class Game {
     this.lightRig?.setStressFallback(visualStress);
     this.syncNightShiftLighting();
     this.lightRig?.update(this.timeAlive);
+    this.dustFlats?.applyWeather(this.scene, this.timeAlive);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
     this.syncUpgradeOverlay();
     this.syncUi();
@@ -2446,6 +2458,7 @@ export class Game {
     );
     if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge.trigger(this.timeAlive);
     this.scene.add(this.damSurge.group);
+    if (this.dustFlats) this.scene.add(this.dustFlats.group);
     const rails = activeTileDescriptor().rails ?? [];
     if (rails.length > 0) {
       this.railPath = new RailPathView(rails);
@@ -2485,9 +2498,10 @@ export class Game {
         this.scene.add(this.tram.group);
       }
     }
-    if (isDevVehiclesEnabled()) {
-      this.fuelSystem = new FuelSystem(isDevVehiclesEnabled);
-      this.vehicle = new Vehicle(this.fuelSystem, { start: { x: -20, z: -8 } });
+    if (isDevVehiclesEnabled() || this.dustFlats) {
+      this.fuelSystem = new FuelSystem(() => isDevVehiclesEnabled() || this.dustFlats !== null);
+      const start = this.activeContract.tileParams.roadCorridors?.[0]?.start ?? { x: -20, z: -8 };
+      this.vehicle = new Vehicle(this.fuelSystem, { start });
       this.scene.add(this.fuelSystem.group, this.vehicle.group);
     }
     this.detailScatter = new DetailScatter();
@@ -3134,6 +3148,7 @@ export class Game {
       tram: this.tram?.diagnostics ?? null,
       fuel: this.fuelSystem?.diagnostics ?? null,
       vehicle: this.vehicle?.diagnostics ?? null,
+      dustFlats: this.dustFlats?.diagnostics(this.timeAlive) ?? null,
       power: this.powerGraph?.diagnostics(this.powerWireView?.diagnostics()) ?? emptyPowerGraphDiagnostics(),
       canyonWorks: this.canyonConnectDiagnostics(),
       crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
@@ -3377,6 +3392,53 @@ export class Game {
     const config = this.activeContract.twist.mothSeason;
     if (!config || enemy.variantId === 'moth_swarm') return 1;
     return this.lightField.coverageAt(enemy.position.x, enemy.position.z) < config.litThreshold ? config.nightSpeedOutsideLight : 1;
+  }
+
+  private spawnDustFlatsConvoy(wave: number, at: number): void {
+    const members = this.dustFlats?.spawnWave(wave, at) ?? [];
+    if (isSpawnDisabled()) return;
+    const variant = this.activeContract.twist.enemyRoster?.find((entry) => entry.id === 'motor_gang');
+    for (const member of members) {
+      const enemy = this.enemies.spawn(new THREE.Vector3(member.x, Balance.enemy.groundY, member.z), {
+        hpScale: variant?.hpScale,
+        speedScale: variant?.speedMult,
+        visualScale: variant?.visualScale,
+        tint: variant?.tint,
+        variantId: variant?.id,
+        variantLabel: variant?.label,
+      });
+      if (!enemy) continue;
+      enemy.scriptMoveTo(member.x, member.z, this.dustFlats!.orbitSpeed(member), { ignoreTerrain: true });
+      this.dustFlatsConvoy.set(member.id, enemy);
+    }
+  }
+
+  private syncDustFlatsConvoy(): void {
+    if (!this.dustFlats || this.dustFlatsConvoy.size === 0) return;
+    const members = new Map(this.dustFlats.orbitSnapshot(this.timeAlive).members.map((member) => [member.id, member]));
+    for (const [id, enemy] of this.dustFlatsConvoy) {
+      const member = members.get(id);
+      if (!member || !enemy.isAlive) {
+        this.dustFlatsConvoy.delete(id);
+        continue;
+      }
+      enemy.scriptMoveTo(member.x, member.z, this.dustFlats.orbitSpeed(member), { ignoreTerrain: true });
+    }
+  }
+
+  private gradeDustFlatsRoad(id: string): boolean {
+    if (!this.dustFlats?.gradeRoad(id)) return false;
+    const end = this.dustFlats.roadEnd(id);
+    if (end) this.vehicle?.driveTo(end.x, end.z);
+    return true;
+  }
+
+  private gradeDustFlatsRoadAt(position: THREE.Vector3): boolean {
+    const id = this.dustFlats?.gradeRoadAt(position);
+    if (!id) return false;
+    const end = this.dustFlats!.roadEnd(id);
+    if (end) this.vehicle?.driveTo(end.x, end.z);
+    return true;
   }
 
   private onBaronDefeated(atSim: number, enemyId: number): void {
@@ -4449,6 +4511,8 @@ export class Game {
     this.tram?.reset();
     this.fuelSystem?.reset();
     this.vehicle?.reset();
+    this.dustFlats?.reset();
+    this.dustFlatsConvoy.clear();
     this.applyRunPreset(readDifficultyPreset(), false);
     this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'run_reset' });
     this.enemies.recycleAll();
@@ -5173,6 +5237,7 @@ export class Game {
       if (this.buildSystem.confirm(this.timeAlive)) discoverLedgerBuildable(id);
       return;
     }
+    if (this.gradeDustFlatsRoadAt(this.actionActor.group.position)) return;
     if (this.buildSystem.assayOfficeInRange(this.actionActor.group.position)) {
       this.audio.play('ledger-open');
       this.openAssayBench?.();

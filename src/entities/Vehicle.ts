@@ -45,7 +45,7 @@ export class Vehicle {
     this.state = 'moving';
   }
 
-  update(delta: number): void {
+  update(delta: number, movement = { speedMultiplier: 1, fuelMultiplier: 1 }): void {
     if (!this.target) {
       if (this.state !== 'arrived') this.state = 'idle';
       return;
@@ -57,14 +57,17 @@ export class Vehicle {
       this.arrive();
       return;
     }
-    const requestedSeconds = Math.min(Math.max(0, delta), distance / Balance.e4Fuel.vehicleSpeed);
-    const requestedFuel = requestedSeconds * Balance.e4Fuel.burnPerSecond;
+    const speedMultiplier = Math.max(0, movement.speedMultiplier);
+    const fuelMultiplier = Math.max(0.001, movement.fuelMultiplier);
+    const speed = Balance.e4Fuel.vehicleSpeed * speedMultiplier;
+    const requestedSeconds = Math.min(Math.max(0, delta), speed > 0 ? distance / speed : 0);
+    const requestedFuel = requestedSeconds * Balance.e4Fuel.burnPerSecond * fuelMultiplier;
     const suppliedFuel = this.fuel.draw(requestedFuel);
     if (suppliedFuel <= 0) {
       this.state = 'dry';
       return;
     }
-    const step = Math.min(distance, (suppliedFuel / Balance.e4Fuel.burnPerSecond) * Balance.e4Fuel.vehicleSpeed);
+    const step = Math.min(distance, (suppliedFuel / (Balance.e4Fuel.burnPerSecond * fuelMultiplier)) * speed);
     const previousX = this.group.position.x;
     const previousZ = this.group.position.z;
     this.group.position.x += (dx / distance) * step;

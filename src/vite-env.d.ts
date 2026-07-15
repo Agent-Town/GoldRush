@@ -292,6 +292,7 @@ interface ThreeGameDiagnostics {
   tram: GrTramDiagnostics | null;
   fuel: import('./systems/FuelSystem').FuelDiagnostics | null;
   vehicle: import('./entities/Vehicle').VehicleDiagnostics | null;
+  dustFlats: import('./world/DustFlatsTile').DustFlatsDiagnostics | null;
   power: GrPowerGraphDiagnostics;
   canyonWorks: null | { powered: number; required: number; byWave: number; complete: boolean; failed: boolean };
   crawlerBoss: null | {
@@ -996,6 +997,7 @@ interface Window {
     };
     triggerDamSurge: () => boolean;
     damSurge: () => import('./systems/DamSurgeEvent').DamSurgeDiagnostics | null;
+    gradeRoad: (id: string) => boolean;
     resetRun: () => void;
     endRunForTest: () => void;
     toggleWeapon: () => 'rig' | 'blast';

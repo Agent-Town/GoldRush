@@ -363,6 +363,39 @@ export type ContractHarvestAnchor = {
   x: number;
   z: number;
 };
+export type ContractTarSeam = ContractHarvestAnchor & {
+  id: string;
+  radius: number;
+};
+export type ContractRoadCorridor = {
+  id: string;
+  start: ContractHarvestAnchor;
+  end: ContractHarvestAnchor;
+};
+export type ContractDryWash = ContractHarvestAnchor & {
+  length: number;
+  width: number;
+  angle: number;
+};
+export type ContractOrbitSpawn = {
+  center: ContractHarvestAnchor;
+  radius: number;
+  angularSpeed: number;
+  lapsBeforePeel: number;
+  peelSpeed: number;
+  telegraphSeconds: number;
+  peelPoints: Array<{ id: string; angle: number }>;
+};
+export type ContractWeather = {
+  cycleSeconds: number;
+  clearSeconds: number;
+  telegraphSeconds: number;
+  stormSeconds: number;
+  stormMovementMultiplier: number;
+  stormVisibilityMultiplier: number;
+  hazeColor: string;
+  hazeStrength: number;
+};
 export type ContractHeightfieldDescriptor = {
   id: string;
   mode: 'visual';
@@ -474,6 +507,10 @@ export type ContractManifest = {
     rails?: RailPathDescriptor[];
     waterSources: ContractWaterSource[];
     harvestAnchors?: ContractHarvestAnchor[];
+    tarSeams?: ContractTarSeam[];
+    roadCorridors?: ContractRoadCorridor[];
+    orbitSpawn?: ContractOrbitSpawn;
+    dryWash?: ContractDryWash;
     render?: TileRenderDescriptor;
     elevation?: TileElevationDescriptor;
     heightfield?: ContractHeightfieldDescriptor;
@@ -499,6 +536,7 @@ export type ContractManifest = {
     waveCadenceMult?: number;
     lightRamp?: ContractLightRamp;
     dayNightCycle?: ContractDayNightCycle;
+    weather?: ContractWeather;
     mothSeason?: ContractMothSeason;
     powerGrid?: ContractPowerGrid;
     enemyLanternClasses?: readonly ContractEnemyLanternClass[];
@@ -1384,6 +1422,25 @@ function variableDescriptorArrayShape(
 
 function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
   validateLightRamp(contract.twist.lightRamp, reasons);
+  const orbit = contract.tileParams.orbitSpawn;
+  if (orbit && (
+    ![orbit.center.x, orbit.center.z, orbit.radius, orbit.angularSpeed, orbit.lapsBeforePeel, orbit.peelSpeed, orbit.telegraphSeconds].every(Number.isFinite)
+    || orbit.radius <= 0 || orbit.angularSpeed <= 0 || orbit.lapsBeforePeel < 0 || orbit.peelSpeed <= 0 || orbit.telegraphSeconds < 0
+    || orbit.peelPoints.length === 0 || orbit.peelPoints.some((point) => !point.id || !Number.isFinite(point.angle))
+  )) {
+    addDescriptorReason(reasons, reason('orbit_spawn', 'The ORBIT road needs positive motion, a non-negative telegraph, and named peel points.', 'tileParams.orbitSpawn'));
+  }
+  const weather = contract.twist.weather;
+  if (weather && (
+    ![weather.cycleSeconds, weather.clearSeconds, weather.telegraphSeconds, weather.stormSeconds, weather.stormMovementMultiplier, weather.stormVisibilityMultiplier, weather.hazeStrength].every(Number.isFinite)
+    || weather.cycleSeconds <= 0 || weather.clearSeconds < 0 || weather.telegraphSeconds <= 0 || weather.stormSeconds <= 0
+    || weather.clearSeconds + weather.telegraphSeconds + weather.stormSeconds >= weather.cycleSeconds
+    || weather.stormMovementMultiplier <= 0 || weather.stormMovementMultiplier > 1
+    || weather.stormVisibilityMultiplier <= 0 || weather.stormVisibilityMultiplier > 1
+    || weather.hazeStrength < 0 || weather.hazeStrength > 1
+  )) {
+    addDescriptorReason(reasons, reason('weather_cycle', 'Weather needs a positive cycle, shorter phases, and movement, visibility, and haze modifiers from zero to one.', 'twist.weather'));
+  }
   const cycle = contract.twist.dayNightCycle;
   if (cycle && (!Number.isFinite(cycle.periodSeconds) || !Number.isFinite(cycle.duskRampSeconds) || !Number.isFinite(cycle.dawnRampSeconds)
     || !Number.isFinite(cycle.nightDepth) || cycle.periodSeconds <= 0 || cycle.duskRampSeconds <= 0 || cycle.dawnRampSeconds <= 0
