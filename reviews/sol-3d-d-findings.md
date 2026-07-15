@@ -331,6 +331,8 @@ The published Canyon mask table currently contains one rail entry while the aggr
 - Moth Season no-river contract and migration-corridor identity: PASS
 - Mood A/B, flat/sculpted A/B, mask agreement, and center-horizon distance gates: PASS
 - Fresh final unprimed visual verdict: SHIP
+- Integrated `npm run build`: PASS
+- `node scripts/e3-mask-tables.test.mjs`: 1/2 PASS; exact-table test remains red only on the factory-owned second Canyon rail described in F-3D-D-36
 - `src/`, simulation, choreography, landmark, and runtime edits: none
 
 ## E3 owner-verdict images
