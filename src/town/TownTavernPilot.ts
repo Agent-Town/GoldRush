@@ -32,6 +32,20 @@ const BUNDLED_VARIANT_URLS = import.meta.glob('../../assets/pilots/*-3d/*.e*.glb
   import: 'default',
   query: '?url',
 }) as Record<string, string>;
+type EraPropManifest = {
+  epoch: number;
+  props: Array<{
+    id: string;
+    glb: string;
+    position: { x: number; z: number };
+    rotation: number;
+    scale: number;
+  }>;
+};
+const ERA_PROP_MANIFESTS = import.meta.glob('../../assets/pilots/plaza-props-3d/era-props.e*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, EraPropManifest>;
 const TOWN_PLATE_MODEL_URL = new URL('../../assets/pilots/town-plate-3d/town-plate.glb', import.meta.url).href;
 const PROP_MODEL_URLS = {
   covered_wagon: new URL('../../assets/pilots/plaza-props-3d/covered_wagon.glb', import.meta.url).href,
@@ -407,24 +421,65 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
   let disposed = false;
   const mounted: THREE.Object3D[] = [];
   const descriptors = townPropRing.props.filter((prop) => prop.kind === 'covered_wagon' || prop.kind === 'water_trough');
+  const activeEra = activeEpoch().order;
+  const manifests = Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) => index + 2)
+    .map((era) => ERA_PROP_MANIFESTS[`../../assets/pilots/plaza-props-3d/era-props.e${era}.json`])
+    .filter((manifest): manifest is EraPropManifest => !!manifest);
+  const eraProps = manifests.flatMap((manifest) => manifest.props);
+  const accessoryPaths = [...new Set(eraProps.map((prop) => `../../assets/pilots/plaza-props-3d/${prop.glb}`))];
 
-  void Promise.all(Object.entries(PROP_MODEL_URLS).map(async ([kind, url]) => {
-    const source = (await new GLTFLoader().loadAsync(url)).scene;
-    const metrics = inspect(source);
-    if (metrics.triangles > 4_000 || metrics.materials > 1 || metrics.forbiddenNodes > 0) throw new Error(`Invalid plaza prop: ${kind}`);
-    return { kind, source, metrics };
-  })).then((loaded) => {
-    const metrics = loaded.map((entry) => entry.metrics);
-    for (const { kind, source } of loaded) {
-    const placements = kind === 'pan_monument' ? [townPropRing.panMonument] : descriptors.filter((prop) => prop.kind === kind);
-    for (const placement of placements) {
-      const model = source.clone(true);
-      model.name = `TownPlazaPropsPilot:${placement.id}`;
-      model.position.set(placement.position.x, 0, placement.position.z);
-      model.rotation.y = 'rotation' in placement ? placement.rotation : 0;
-      model.scale.setScalar('scale' in placement ? (placement.scale ?? 1) : 1);
-      mounted.push(model);
+  const loadValid = async (kind: string, urls: readonly string[]): Promise<{ source: THREE.Object3D; metrics: ReturnType<typeof inspect> }> => {
+    for (const url of urls) {
+      try {
+        const source = (await new GLTFLoader().loadAsync(url)).scene;
+        const metrics = inspect(source);
+        if (metrics.triangles <= 4_000 && metrics.materials <= 1 && metrics.forbiddenNodes === 0) return { source, metrics };
+        disposeObject3D(source);
+      } catch {
+        // Try the next older era; a missing sibling is an expected fallback.
+      }
     }
+    throw new Error(`Invalid plaza prop: ${kind}`);
+  };
+
+  void Promise.all([
+    Promise.all(Object.entries(PROP_MODEL_URLS).map(async ([kind, baseUrl]) => ({
+      kind,
+      ...await loadValid(kind, kind === 'pan_monument'
+        ? [baseUrl]
+        : [
+            ...Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) => activeEra - index)
+              .map((era) => BUNDLED_VARIANT_URLS[`../../assets/pilots/plaza-props-3d/${kind}.e${era}.glb`])
+              .filter((url): url is string => !!url),
+            baseUrl,
+          ]),
+    }))),
+    Promise.all(accessoryPaths.map(async (path) => ({ path, ...await loadValid(path, [BUNDLED_VARIANT_URLS[path]!]) }))),
+  ]).then(([baseProps, accessories]) => {
+    const metrics: Array<{ metrics: ReturnType<typeof inspect>; count: number }> = [];
+    for (const { kind, source, metrics: modelMetrics } of baseProps) {
+      const placements = kind === 'pan_monument' ? [townPropRing.panMonument] : descriptors.filter((prop) => prop.kind === kind);
+      for (const placement of placements) {
+        const model = source.clone(true);
+        model.name = `TownPlazaPropsPilot:${placement.id}`;
+        model.position.set(placement.position.x, 0, placement.position.z);
+        model.rotation.y = 'rotation' in placement ? placement.rotation : 0;
+        model.scale.setScalar('scale' in placement ? (placement.scale ?? 1) : 1);
+        mounted.push(model);
+      }
+      metrics.push({ metrics: modelMetrics, count: placements.length });
+    }
+    for (const { path, source, metrics: modelMetrics } of accessories) {
+      const placements = eraProps.filter((prop) => path.endsWith(`/${prop.glb}`));
+      for (const placement of placements) {
+        const model = source.clone(true);
+        model.name = `TownEraProp:${placement.id}`;
+        model.position.set(placement.position.x, 0, placement.position.z);
+        model.rotation.y = placement.rotation;
+        model.scale.setScalar(placement.scale);
+        mounted.push(model);
+      }
+      metrics.push({ metrics: modelMetrics, count: placements.length });
     }
     if (disposed) {
       mounted.forEach(disposeObject3D);
@@ -432,10 +487,11 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
     }
     scene.add(...mounted);
     canvas.dataset.town3dPilotInstances = String(mounted.length);
+    canvas.dataset.town3dEraPropIds = eraProps.map((prop) => prop.id).join(',');
     publish(canvas, 'loaded', 'glb', {
       meshes: mounted.length,
-      triangles: metrics.reduce((sum, metric, index) => sum + metric.triangles * (index === 0 ? 3 : 1), 0),
-      materials: 3,
+      triangles: metrics.reduce((sum, entry) => sum + entry.metrics.triangles * entry.count, 0),
+      materials: metrics.length,
     });
   }).catch(() => {
     mounted.forEach(disposeObject3D);

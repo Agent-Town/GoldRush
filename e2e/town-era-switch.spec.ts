@@ -4,9 +4,11 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import voltageProps from '../assets/pilots/plaza-props-3d/era-props.e3.json' with { type: 'json' };
 
 const ARTIFACT_DIR = path.resolve('artifacts/town-era-switch');
 const E2 = 'epoch-2-steamworks';
+const E3 = 'epoch-3-voltage';
 const E2_MODEL = /\/tavern\.e2\.glb(?:\?.*)?$/;
 const BASE_MODEL = /\/town-v3-tavern(?:-[^/.]+)?\.glb(?:\?.*)?$/;
 
@@ -140,5 +142,14 @@ test('LITE keeps facades and never fetches models or mounts plumes', async ({ pa
   await expect(canvas).toHaveAttribute('data-town3d-pilot-render-source', 'facade');
   await expect(canvas).not.toHaveAttribute('data-town3d-steam-plumes', /[1-9]/);
   expect(requests).toEqual([]);
+  expect(found).toEqual({ console: [], page: [] });
+});
+
+test('Voltage mounts every accessory from the real E3 manifest', async ({ page }) => {
+  await seed(page, E3);
+  const found = errors(page);
+  await openTown(page, '?town3dPilot=props&tier=full');
+  const mounted = (await page.locator('canvas').getAttribute('data-town3d-era-prop-ids'))?.split(',') ?? [];
+  for (const prop of voltageProps.props) expect(mounted).toContain(prop.id);
   expect(found).toEqual({ console: [], page: [] });
 });
