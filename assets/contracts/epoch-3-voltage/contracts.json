@@ -247,7 +247,7 @@
             { "id": "pylon-east-rim", "label": "East Rim Pylon", "kind": "relay", "x": 28, "z": 8 },
             { "id": "gallery-west", "label": "West Gallery", "kind": "consumer", "role": "gallery", "x": -28, "z": 28, "drawWatts": 6, "priority": 10 },
             { "id": "gallery-east", "label": "East Gallery", "kind": "consumer", "role": "gallery", "x": 28, "z": 28, "drawWatts": 6, "priority": 10 },
-            { "id": "tram-motor", "label": "Works Tram", "kind": "consumer", "role": "tram", "x": 0, "z": -32, "drawWatts": 4, "priority": 15 },
+            { "id": "tram-motor", "label": "Works Tram", "kind": "consumer", "role": "tram", "x": -28, "z": 8, "drawWatts": 4, "priority": 15 },
             { "id": "turret-west", "label": "West Arc Turret", "kind": "consumer", "role": "turret", "x": -18, "z": 22, "drawWatts": 4, "priority": 20 },
             { "id": "turret-east", "label": "East Arc Turret", "kind": "consumer", "role": "turret", "x": 18, "z": 22, "drawWatts": 4, "priority": 20 },
             { "id": "lamp-west", "label": "West Gallery Lamps", "kind": "consumer", "role": "lamp", "x": -32, "z": 32, "drawWatts": 2, "priority": 30 },
@@ -264,7 +264,7 @@
             { "a": "sub-hall", "b": "pylon-east-base" }, { "a": "pylon-east-base", "b": "pylon-east-switch" }, { "a": "pylon-east-switch", "b": "pylon-east-rim" },
             { "a": "pylon-west-rim", "b": "gallery-west" }, { "a": "gallery-west", "b": "turret-west" }, { "a": "gallery-west", "b": "lamp-west" },
             { "a": "pylon-east-rim", "b": "gallery-east" }, { "a": "gallery-east", "b": "turret-east" }, { "a": "gallery-east", "b": "lamp-east" },
-            { "a": "sub-hall", "b": "tram-motor" },
+            { "a": "pylon-west-rim", "b": "tram-motor" },
             { "a": "pylon-west-base", "b": "crawler-drain-west-base" },
             { "a": "pylon-west-switch", "b": "crawler-drain-west-switch" },
             { "a": "pylon-west-rim", "b": "crawler-drain-west-rim" },
@@ -312,6 +312,18 @@
           { "id": "night_runner", "label": "Fevered Runner", "waveMin": 1, "hpScale": 0.9, "speedMult": 1.05, "visualScale": 0.95, "tint": "#6d624d" }
         ]
       },
+      "modes": [
+        {
+          "id": "escort",
+          "label": "Capacitor Run",
+          "objective": "Carry 1 capacitor crate up the west switchback.",
+          "vehicle": "tram",
+          "reverseRoute": true,
+          "cartsRequired": 1,
+          "payout": 60,
+          "railRouteIndex": 1
+        }
+      ],
       "boardRow": { "name": "The Canyon Works", "ledgerBlurb": "String the gorge with current; the Fever comes to every light we raise.", "tags": ["voltage", "network", "night"], "unlock": "default" },
       "briefing": {
         "goals": ["DEFEND the Dynamo Sub-Hall through wave 12.", "CONNECT both cliff galleries by wave 6."],

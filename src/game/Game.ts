@@ -17,6 +17,7 @@ import {
   listEpochs,
   loadEpoch,
   type ContractBaronTwist,
+  type ContractEscortMode,
   type ContractLightKeyframe,
   type ContractManifest,
   type ContractPowerGrid,
@@ -826,7 +827,8 @@ export class Game {
     onThiefFled: (enemy: ClaimJumperEnemy) => this.onThiefFled(enemy),
   };
   private readonly wreckerContext = {
-    nearestBuilding: (from: THREE.Vector3) => this.waveSystem.preferredEscortTarget(from) ?? this.goldTargeting.nearestBuilding(from),
+    nearestBuilding: (from: THREE.Vector3) =>
+      this.waveSystem.preferredEscortTarget(from) ?? this.preferredTramEscortSpanTarget() ?? this.goldTargeting.nearestBuilding(from),
     hitBuilding: (enemy: ClaimJumperEnemy, target: BuildingTarget, amount?: number) => this.combat.handleBuildingHit(enemy, target, amount),
     palisadeRoute: (from: THREE.Vector3, to: THREE.Vector3, clearance: number) => this.buildSystem.palisadeRoute(from, to, clearance),
   };
@@ -2512,17 +2514,34 @@ export class Game {
       const ridgeGlow = createRidgeGlow(this.activeContract);
       if (ridgeGlow) this.scene.add(ridgeGlow);
       const tramConsumer = contractGrid?.nodes.find((node) => node.kind === 'consumer' && node.role === 'tram');
-      if ((isDevTramEnabled() || tramConsumer) && rails[0]) {
-        this.tram = new TramPath(rails[0].points, {
+      const escortMode = this.activeEscortMode();
+      const tramEscort = escortMode?.vehicle === 'tram' ? escortMode : undefined;
+      const tramRoute = rails[tramEscort?.railRouteIndex ?? 0];
+      if ((isDevTramEnabled() || tramConsumer) && tramRoute) {
+        const points = tramEscort?.reverseRoute ? [...tramRoute.points].reverse() : tramRoute.points;
+        this.tram = new TramPath(points, {
           speed: 6,
-          loop: true,
+          loop: !tramEscort,
           consumer: tramConsumer && tramConsumer.kind === 'consumer'
             ? { id: tramConsumer.id, labelKey: tramConsumer.label, kind: 'consumer', x: tramConsumer.x, z: tramConsumer.z, online: true, drawWatts: tramConsumer.drawWatts, priority: tramConsumer.priority }
             : DEV_TRAM_CONSUMER,
-          cargo: [
-            { id: 'capacitor-a', family: 'capacitor-crate', occupied: true },
-            { id: 'capacitor-b', family: 'capacitor-crate', occupied: true },
-          ],
+          cargo: tramEscort
+            ? [{ id: 'capacitor-crate', family: 'capacitor-crate', occupied: true }]
+            : [
+                { id: 'capacitor-a', family: 'capacitor-crate', occupied: true },
+                { id: 'capacitor-b', family: 'capacitor-crate', occupied: true },
+              ],
+          delivery: tramEscort
+            ? {
+                required: tramEscort.cartsRequired,
+                payout: tramEscort.payout,
+                onComplete: (payout, position) => {
+                  this.economy.apply({ id: crypto.randomUUID(), at: this.timeAlive, type: 'gold_granted', source: 'escort', amount: payout });
+                  this.vfx.floatText(position, `+${payout}`, '#c4883a');
+                  this.announceWaveBanner(`CAPACITOR CRATE DELIVERED - +${payout} gold at the rim.`, this.timeAlive);
+                },
+              }
+            : undefined,
         });
         this.scene.add(this.tram.group);
       }
@@ -2561,6 +2580,28 @@ export class Game {
     this.scene.add(this.landYachtBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
+  }
+
+  private activeEscortMode(): ContractEscortMode | undefined {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('mode') !== 'escort' || params.get('mp') === 'dev') return undefined;
+    return this.activeContract.modes?.find((mode) => mode.id === 'escort');
+  }
+
+  private preferredTramEscortSpanTarget(): BuildingTarget | null {
+    const tram = this.tram;
+    if (this.activeEscortMode()?.vehicle !== 'tram' || !tram || tram.diagnostics.state === 'arrived') return null;
+    const grid = this.activeContract.twist.powerGrid;
+    const feed = grid?.wires.find((wire) => wire.a === tram.consumer.id || wire.b === tram.consumer.id);
+    const feederId = feed?.a === tram.consumer.id ? feed.b : feed?.a;
+    const site = this.activeContract.tileParams.pylonSites?.find((entry) => entry.nodeId === feederId);
+    if (!site) return null;
+    const beacon = this.buildSystem.diagnostics.hp.find(
+      (entry) => entry.id === 'sentry_beacon' && !entry.wrecked && Math.hypot(entry.position.x - site.x, entry.position.z - site.z) <= site.radius,
+    );
+    if (!beacon) return null;
+    const target = this.buildSystem.buildingTarget('sentry_beacon', beacon.index);
+    return target?.active && target.hp > 0 ? target : null;
   }
 
   private dressScene(): void {

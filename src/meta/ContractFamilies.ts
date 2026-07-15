@@ -487,6 +487,8 @@ export type ContractEscortMode = {
   id: 'escort';
   label: string;
   objective: string;
+  vehicle?: 'ore-cart' | 'tram';
+  reverseRoute?: boolean;
   cartsRequired: number;
   payout: number;
   railRouteIndex: number;
