@@ -1140,6 +1140,10 @@ export class Game {
         contractId: this.activeContract.id,
         tileId: activeTileDescriptor().id,
         paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
+        onVisualHeightSourceInstalled: () => {
+          this.railPath?.resampleTerrain();
+          this.megaprojectRailPath?.resampleTerrain();
+        },
       });
     });
     const run3dSelection = new URLSearchParams(window.location.search).get('run3dPilot');

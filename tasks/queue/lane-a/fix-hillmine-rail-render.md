@@ -1,4 +1,0 @@
-# fix-hillmine-rail-render — rails lie on the ground, always (lane-a; commit prefix "fix:") P0
-CODEX: model=gpt-5.6-sol effort=high
-ATTENDED-AUTHORED 2026-07-15 — OWNER LIVE SCREENSHOTS (hill-mine): rail segments render VERTICAL/billboarded over terraces + stones overlap the rail bed oddly + "perspective problem that was fixed already" is back on this tile. PROBE the rail render path on hill-mine (terraced visualY tile) vs flat tiles — likely the rail quads don't follow terrain height (drawn flat at y=0 while the terraces rise, reading as floating/vertical). Fix: rails sample visualY along their length (the world-anchored law, Mistake #6); stones/props draw-order under the railbed. e2e: rail-y tracks terrain at 5 samples on hill-mine, flat tiles unchanged. Firewall: rail render path + spec + artifacts.
-END: READY-FOR-GATES + before/after on the owner's angle.
