@@ -687,6 +687,39 @@ body {
   text-transform: uppercase;
 }
 
+.research-impact {
+  display: grid;
+  gap: 7px;
+  border-top: 1px solid rgba(46, 27, 14, 0.24);
+  border-bottom: 1px solid rgba(46, 27, 14, 0.24);
+  padding: 9px 0;
+}
+
+.research-impact__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.research-impact__badge {
+  width: max-content;
+  border: 1px solid var(--research-teal, #5b8a8a);
+  border-radius: 999px;
+  padding: 4px 8px;
+  color: #fff8e8;
+  background: var(--research-teal, #5b8a8a);
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: 0.04em;
+}
+
+.research-impact__badge--banked {
+  border-color: var(--research-ochre, #c4883a);
+  color: #2e1b0e;
+  background: var(--research-ochre, #c4883a);
+}
+
 .research-chart__selection ol {
   margin: 0;
   padding-left: 18px;

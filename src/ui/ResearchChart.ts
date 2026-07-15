@@ -21,6 +21,8 @@ import {
   type EpochResearchBranch,
   type ResearchIconKey,
 } from '../meta/ContractFamilies';
+import { Balance } from '../game/Balance';
+import { upgradeEffect } from '../game/Upgrades';
 
 export type { ResearchIconKey } from '../meta/ContractFamilies';
 
@@ -255,6 +257,88 @@ export type ResearchChartOptions = {
   eras?: readonly ResearchState[];
 };
 
+export type ResearchImpact = {
+  line: string;
+  scope: 'THIS RUN' | 'EVERY RUN' | 'THE TOWN';
+  banked: boolean;
+};
+
+export function deriveResearchImpact(node: ResearchNode): ResearchImpact {
+  if (node.effectRef.startsWith('continued.')) return { line: node.effect, scope: 'EVERY RUN', banked: false };
+
+  const direct = directResearchImpact(node.id);
+  if (direct) return direct;
+
+  const family = loadEpoch('epoch-1-frontier').families.find((entry) => entry.unlockNodeId === node.id);
+  const card = family?.cards[0];
+  if (card) {
+    const timing = card.minWave ? ` after wave ${card.minWave - 1}` : '';
+    return {
+      line: `Adds ${card.name} to run offers${timing}: ${upgradeEffect(card)}.`,
+      scope: 'EVERY RUN',
+      banked: false,
+    };
+  }
+
+  const effect = node.effect.trim().replace(/[.!?]+$/, '');
+  const namedBank = effect.toLowerCase().indexOf(' banks ');
+  const banked = /^Banks\b/i.test(effect) ? effect : namedBank >= 0 ? `Banks ${effect.slice(namedBank + 7)}` : `Banks this outcome: ${effect}`;
+  return { line: `${banked} — arrival not scheduled.`, scope: 'THE TOWN', banked: true };
+}
+
+function directResearchImpact(id: string): ResearchImpact | undefined {
+  const everyRun = (line: string): ResearchImpact => ({ line, scope: 'EVERY RUN', banked: false });
+  const town = (line: string): ResearchImpact => ({ line, scope: 'THE TOWN', banked: false });
+  const frontier = loadEpoch('epoch-1-frontier');
+  const tier2 = frontier.contractTiers.find((tier) => tier.tier === 2);
+  const tier3 = frontier.contractTiers.find((tier) => tier.tier === 3);
+  const arsenal = Balance.steamworksArsenal;
+  if (id === 'assay_grading') {
+    return everyRun(
+      `Prospecting cards add +${Balance.research.assayGradingStockpileCapBonus} stockpile cap per stack and +${Balance.research.assayGradingProspectingOfferWeightBonus} offer weight.`,
+    );
+  }
+  if (id === 'sky_rocket_battery') {
+    return everyRun(
+      `Unlocks the Steamworks Sky-Rocket Battery after the Baron medal: ${arsenal.skyRocket.volley} rockets, ${arsenal.skyRocket.damage} damage each, ${arsenal.skyRocket.radius}m burst radius.`,
+    );
+  }
+  if (id === 'second_order_slot') return town(`Pending Assay orders rise from 1 to ${Balance.research.secondOrderSlots}.`);
+  if (id === 'refined_assay' && tier2) {
+    return town(
+      `Assay orders reach tier ${tier2.tier}: ${tier2.rarityBudgets.common}/${tier2.rarityBudgets.uncommon}/${tier2.rarityBudgets.rare} stat budgets.`,
+    );
+  }
+  if (id === 'pattern_library' && tier3) {
+    return town(`Assay orders reach tier ${tier3.tier}; up to ${tier3.craftedOfferCap} crafted cards can appear in each run offer.`);
+  }
+  if (id === 'pressure_assay') {
+    return everyRun(`Steamworks gauges show the ${Balance.boilerHouse.safeMin}–${Balance.boilerHouse.safeMax} safe pressure band.`);
+  }
+  if (id === 'coal_survey') return everyRun(`Marks coal seams; each feeds ${Balance.boilerHouse.coalPerSeam} coal to Steamworks boilers.`);
+  if (id === 'boiler_lance') {
+    return everyRun(
+      `Unlocks the Boiler Lance: ${arsenal.boilerLance.damage} damage at ${arsenal.boilerLance.fireRate} bursts/s across ${arsenal.boilerLance.range}m.`,
+    );
+  }
+  if (id === 'pressure_mortar') {
+    return everyRun(
+      `Unlocks the Pressure Mortar: ${arsenal.pressureMortar.damage} damage in a ${arsenal.pressureMortar.radius}m burst every ${arsenal.pressureMortar.cooldown}s.`,
+    );
+  }
+  if (id === 'boiler_battery') {
+    return everyRun(
+      `Working/high pressure makes sentries ${Math.round((arsenal.boilerBatteryBands.working - 1) * 100)}%/${Math.round((arsenal.boilerBatteryBands.high - 1) * 100)}% faster.`,
+    );
+  }
+  if (id === 'steam_parts') {
+    return everyRun(
+      `Adds Auto-Pan to run offers: ${Math.round(Math.abs(arsenal.autoPan.panTickMult) * 100)}% faster panning for ${arsenal.autoPan.pressurePerSecond} pressure/s.`,
+    );
+  }
+  return undefined;
+}
+
 export function renderResearchChart(state: ResearchState, selectedId?: string, options: ResearchChartOptions = {}): string {
   const epochId = state.epochId ?? activeEpochId();
   const epoch = loadEpoch(epochId);
@@ -435,11 +519,18 @@ function renderSelection(
   const distance = researchDistance(state, selected.id);
   const path = researchPathIds(selected.id, state.epochId ?? activeEpochId());
   const pinned = state.pinnedTarget === selected.id;
+  const impact = deriveResearchImpact(selected);
   return `
     <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="${pinned ? 'true' : 'false'}">
       <p class="research-chart__selection-kicker">Survey Route</p>
       <h3>${escapeHtml(selected.name)}</h3>
-      <p>${escapeHtml(selected.description)}</p>
+      <div class="research-impact" data-testid="research-chart-impact" data-impact-banked="${impact.banked}">
+        <p data-testid="research-chart-impact-line"><strong>Impact:</strong> ${escapeHtml(impact.line)}</p>
+        <span class="research-impact__badges">
+          <b class="research-impact__badge" data-testid="research-chart-scope">${impact.scope}</b>
+          ${impact.banked ? '<b class="research-impact__badge research-impact__badge--banked" data-testid="research-chart-banked">BANKED</b>' : ''}
+        </span>
+      </div>
       <strong data-testid="research-chart-distance">${distance === 0 ? 'already marked' : `${distance} ${distance === 1 ? 'pick' : 'picks'} away`}</strong>
       <ol>
         ${path

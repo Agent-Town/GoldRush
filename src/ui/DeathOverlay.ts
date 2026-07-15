@@ -1,6 +1,6 @@
 import type { ResearchNode } from '../meta/ResearchTree';
 import { upgradeDefById } from '../game/Upgrades';
-import { RESEARCH_ICON_REGISTRY, researchIconKeyForNode, researchRevealForNode } from './ResearchChart';
+import { RESEARCH_ICON_REGISTRY, deriveResearchImpact, researchIconKeyForNode, researchRevealForNode } from './ResearchChart';
 
 export type DeathLedger = {
   timeAlive: number;
@@ -240,7 +240,7 @@ export class DeathOverlay {
     const proposals = research.proposals.slice(0, 2);
     const done = research.roundsRemaining <= 0 || proposals.length === 0;
     const receipt = this.lastPicked
-      ? `<p data-testid="research-receipt">The Elder logs it: ${this.escape(this.lastPicked.effect)}</p>${this.renderResearchReveal(
+      ? `<p data-testid="research-receipt">The Elder logs it: ${this.escape(deriveResearchImpact(this.lastPicked).line)}</p>${this.renderResearchReveal(
           this.lastPicked,
         )}`
       : '';
@@ -261,26 +261,30 @@ export class DeathOverlay {
         ${receipt}
         <div class="research-ledger__cards">
           ${proposals
-            .map(
-              (node, index) => `
+            .map((node, index) => {
+              const impact = deriveResearchImpact(node);
+              return `
                 <button class="research-card" type="button" data-testid="research-card-${index}" data-research-id="${this.escape(
                   node.id,
-                )}">
+                )}" data-impact-banked="${impact.banked}">
                   <span class="research-card__key">${index + 1}</span>
                   <span class="research-card__branch" data-testid="research-branch-${index}">Advances ${this.escape(
                     this.researchBranchLabel(node.branch),
                   )}</span>
                   <strong>${this.escape(node.name)}</strong>
-                  <span>${this.escape(node.description)}</span>
-                  <span data-testid="research-effect-${index}">Effect: ${this.escape(node.effect)}</span>
+                  <span data-testid="research-effect-${index}">Effect: ${this.escape(impact.line)}</span>
+                  <span class="research-impact__badges">
+                    <b class="research-impact__badge" data-testid="research-scope-${index}">${impact.scope}</b>
+                    ${impact.banked ? `<b class="research-impact__badge research-impact__badge--banked" data-testid="research-banked-${index}">BANKED</b>` : ''}
+                  </span>
                   ${
                     research.pinnedPath?.includes(node.id)
                       ? `<span class="research-card__pin-hint" data-testid="research-pin-hint-${index}">on your surveyed route</span>`
                       : ''
                   }
                 </button>
-              `,
-            )
+              `;
+            })
             .join('')}
         </div>
         <p class="research-ledger__skip">Skip banks nothing.</p>
