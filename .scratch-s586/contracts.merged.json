@@ -1,0 +1,866 @@
+{
+  "version": 1,
+  "epochId": "epoch-2-steamworks",
+  "contracts": [
+    {
+      "id": "e2-hill-mine",
+      "name": "The Hill Mine",
+      "tileParams": {
+        "tileId": "e2-hill-mine",
+        "biome": "steamworks-hill-mine",
+        "size": 96,
+        "render": { "terrainMesh": "required" },
+        "river": true,
+        "ford": true,
+        "fords": [{ "id": "trestle", "x": 0, "halfWidth": 4 }],
+        "buildZones": [
+          { "id": "base-t1", "bank": "north", "minX": -30, "maxX": 30, "minZ": 8, "maxZ": 16 },
+          { "id": "t2-west", "bank": "north", "minX": -38, "maxX": -20, "minZ": 21, "maxZ": 29 },
+          { "id": "t2-east", "bank": "north", "minX": 20, "maxX": 38, "minZ": 21, "maxZ": 29 },
+          { "id": "t3-west", "bank": "north", "minX": -36, "maxX": -22, "minZ": 37, "maxZ": 44 },
+          { "id": "t3-east", "bank": "north", "minX": 22, "maxX": 36, "minZ": 37, "maxZ": 44 }
+        ],
+        "stakeMarkers": [{ "id": "boiler-house-site", "x": 0, "z": 12, "lossCondition": true }],
+        "rails": [
+          {
+            "style": "steamworks",
+            "points": [
+              { "x": -46, "z": -2 },
+              { "x": -24, "z": -1 },
+              { "x": 0, "z": 0 },
+              { "x": 24, "z": -1 },
+              { "x": 46, "z": -2 }
+            ]
+          },
+          {
+            "style": "mine-spur",
+            "points": [
+              { "x": -34, "z": 12 },
+              { "x": -22, "z": 16 },
+              { "x": -10, "z": 24 },
+              { "x": 10, "z": 24 },
+              { "x": 24, "z": 34 }
+            ]
+          },
+          {
+            "style": "mine-spur",
+            "points": [
+              { "x": 30, "z": 38 },
+              { "x": 12, "z": 42 },
+              { "x": -6, "z": 41 }
+            ]
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -30, "z": 25 },
+          { "x": -10, "z": 29 },
+          { "x": 18, "z": 25 },
+          { "x": -25, "z": 39 },
+          { "x": 26, "z": 39 }
+        ],
+        "elevation": {
+          "cellSize": 2,
+          "slopeMax": 0.35,
+          "waterline": -0.1,
+          "analytic": {
+            "hillMine": 1,
+            "creekHeight": -0.5,
+            "railHeight": 0,
+            "t1Height": 1.5,
+            "t2Height": 3,
+            "t3Height": 4.5,
+            "creekBlendStart": -12,
+            "creekBlendEnd": -5,
+            "t1RampStart": 5,
+            "t1RampEnd": 14,
+            "t2RampStart": 18,
+            "t2RampEnd": 26,
+            "t3RampStart": 32,
+            "t3RampEnd": 40,
+            "cliffMinX": -16,
+            "cliffMaxX": 16,
+            "cliffMinZ": 18,
+            "cliffMaxZ": 23,
+            "cliffAmp": 2.2,
+            "cliffFeather": 1,
+            "mineMouthX": -6,
+            "mineMouthZ": 41,
+            "mineMouthRadius": 5,
+            "mineMouthCrown": 0.22
+          }
+        },
+        "heightfield": {
+          "id": "hill-mine-terraces",
+          "mode": "visual"
+        },
+        "palette": {
+          "id": "hill-mine-scree-road",
+          "tint": [0.86, 0.82, 0.74],
+          "dampTint": [0.35, 0.43, 0.42],
+          "dampAmount": 0.36,
+          "splat": {
+            "rockAmount": 0.84,
+            "dampBand": 2.4,
+            "scrubAmount": 0.1,
+            "macroWarmth": 0.78,
+            "antiTile": 0.72
+          }
+        },
+        "scatter": {
+          "id": "hill-mine-scree-ruts",
+          "density": 0.82,
+          "classCounts": {
+            "rocks": 94,
+            "dry_grass": 38,
+            "wagon_ruts": 28,
+            "claim_posts": 10
+          }
+        },
+        "water": {
+          "id": "hill-mine-flooded-gallery",
+          "visualHalfWidth": 10,
+          "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.25, "springPond": 0.2 },
+          "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72, "springPond": 0.8 }
+        },
+        "lanes": {
+          "spawnEdges": ["west", "east", "north"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "pressureEnabled": true,
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "rail_tough",
+            "label": "Rail Tough",
+            "waveMin": 1,
+            "hpScale": 1.35,
+            "speedMult": 1.12,
+            "visualScale": 1.16,
+            "tint": "#46576b",
+            "boltDamageMult": 0.65,
+            "spawnEdges": ["west", "east"],
+            "spawnGates": [
+              { "edge": "west", "x": -46, "z": 6.25 },
+              { "edge": "east", "x": 46, "z": 6.25 }
+            ]
+          },
+          {
+            "id": "steam_wrecker",
+            "label": "Steam Wrecker",
+            "waveMin": 1,
+            "hpScale": 1.65,
+            "speedMult": 0.74,
+            "visualScale": 1.28,
+            "tint": "#8b7d3c",
+            "wrecker": true,
+            "buildingDamageScale": 2.5,
+            "spawnEdges": ["north"],
+            "spawnGates": [{ "edge": "north", "x": 0, "z": 46 }]
+          },
+          {
+            "id": "coal_thief",
+            "label": "Coal Thief",
+            "waveMin": 1,
+            "hpScale": 0.72,
+            "speedMult": 1.35,
+            "visualScale": 0.88,
+            "tint": "#3e332b",
+            "thief": true,
+            "contactDamageScale": 0.65,
+            "spawnEdges": ["east"],
+            "spawnGates": [{ "edge": "east", "x": 46, "z": 24 }]
+          }
+        ],
+        "baron": {
+          "wave": 12,
+          "bossKind": "railcar",
+          "hpScale": 30,
+          "speedScale": 0.68,
+          "scale": 3.2,
+          "contactDamageScale": 2.5,
+          "buildingDamageScale": 7,
+          "supportBuildingDamageScale": 5,
+          "pursuitRange": 0,
+          "escortCount": 6,
+          "tauntWaves": [4, 8],
+          "taunt": "The Baron's railcar is on the spur. Keep the cut open.",
+          "arrivalTitle": "THE ARMORED RAILCAR",
+          "tauntTitle": "The Rail Spurs",
+          "defeatTitle": "THE RAILCAR IS DISABLED",
+          "defeatLine": "The Railcar is DEFEATED.",
+          "ledgerLabel": "THE ARMORED RAILCAR",
+          "secureCallout": "+Steamworks graduation",
+          "awardMedal": false,
+          "defeatBeat": "Boiler cold, wheels locked, the town can graduate into steam.",
+          "medalBlurb": "Railcar disabled.",
+          "sciencePayoutMult": 3,
+          "railRouteIndex": 0,
+          "railSpeed": 1.9,
+          "componentDegradeSpeedMult": 0.82,
+          "components": [
+            {
+              "id": "wheels",
+              "label": "Wheel Trucks",
+              "hpScale": 0.9,
+              "visualScale": 0.9,
+              "xOffset": 0,
+              "zOffset": -0.55,
+              "tint": "#2f2a22",
+              "boltDamageMult": 0.8
+            },
+            {
+              "id": "boiler",
+              "label": "Boiler",
+              "hpScale": 1.25,
+              "visualScale": 1.08,
+              "xOffset": 1.15,
+              "zOffset": 0,
+              "tint": "#8b7d3c",
+              "boltDamageMult": 0.7,
+              "buildingDamageScale": 1.15
+            },
+            {
+              "id": "cabin",
+              "label": "Cabin",
+              "hpScale": 0.85,
+              "visualScale": 0.96,
+              "xOffset": 2.3,
+              "zOffset": 0.55,
+              "tint": "#46576b",
+              "boltDamageMult": 0.85
+            }
+          ]
+        }
+      },
+      "modes": [
+        {
+          "id": "escort",
+          "label": "Railhead Escort",
+          "objective": "See 1 ore cart safely across the rail cut.",
+          "cartsRequired": 1,
+          "payout": 40,
+          "railRouteIndex": 0
+        }
+      ],
+      "boardRow": {
+        "name": "The Hill Mine",
+        "ledgerBlurb": "Terraced steamworks ground: hold the mine mouth, the rail cut, and the flooded gallery.",
+        "tags": ["steamworks"],
+        "unlock": "epoch-2-steamworks"
+      },
+      "briefing": {
+        "goals": [
+          "Hold the Boiler House pad and keep the rail cut open.",
+          "Railhead Escort: see the ore cart safely across for a town payout."
+        ],
+        "rules": [
+          "T2 and T3 pads out-range the valley, but cliff faces block bolts.",
+          "Claim-jumpers must climb the switchbacks; cliff bands are impassable.",
+          "The flooded gallery is deep except at the trestle and wet edge."
+        ],
+        "geographyLine": "A terraced hillside mine above a flooded rail cut."
+      }
+    },
+    {
+      "id": "e2-trestle",
+      "name": "The Trestle",
+      "tileParams": {
+        "tileId": "e2-trestle",
+        "biome": "steamworks-trestle-gorge",
+        "size": 96,
+        "render": { "terrainMesh": "required" },
+        "river": true,
+        "ford": true,
+        "fords": [{ "id": "trestle", "x": 0, "halfWidth": 3 }],
+        "buildZones": [
+          { "id": "south-approach", "bank": "south", "minX": -30, "maxX": 30, "minZ": -30, "maxZ": -7 },
+          { "id": "north-approach", "bank": "north", "minX": -30, "maxX": 30, "minZ": 7, "maxZ": 30 }
+        ],
+        "stakeMarkers": [
+          { "id": "south-boiler-site", "x": 12, "z": -12, "lossCondition": true },
+          { "id": "north-boiler-site", "x": -12, "z": 12, "lossCondition": false }
+        ],
+        "rails": [
+          {
+            "style": "steamworks",
+            "points": [
+              { "x": 0, "z": -46 },
+              { "x": 0, "z": -22 },
+              { "x": 0, "z": -7 },
+              { "x": 0, "z": 7 },
+              { "x": 0, "z": 22 },
+              { "x": 0, "z": 46 }
+            ]
+          },
+          {
+            "style": "mine-spur",
+            "points": [
+              { "x": -30, "z": -18 },
+              { "x": -14, "z": -18 },
+              { "x": 0, "z": -22 },
+              { "x": 18, "z": -26 }
+            ]
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -24, "z": -20 },
+          { "x": 24, "z": -20 },
+          { "x": -24, "z": 20 },
+          { "x": 24, "z": 20 }
+        ],
+        "elevation": {
+          "cellSize": 2,
+          "slopeMax": 0.35,
+          "waterline": -0.1,
+          "analytic": {
+            "bowlDepth": 0.7,
+            "bowlRadius": 12,
+            "bowlCenterX": 0,
+            "bowlCenterZ": 0,
+            "ridgeAmp": 0.8,
+            "ridgeWidth": 18,
+            "ridgeLength": 42,
+            "ridgeX": 28,
+            "ridgeZ": 0
+          }
+        },
+        "heightfield": {
+          "id": "trestle-gorge-banks",
+          "mode": "visual",
+          "bankRelief": { "amount": 0.45, "width": 9 }
+        },
+        "palette": {
+          "id": "trestle-rust-river",
+          "tint": [0.78, 0.72, 0.61],
+          "dampTint": [0.31, 0.42, 0.42],
+          "dampAmount": 0.42,
+          "splat": {
+            "rockAmount": 0.72,
+            "dampBand": 3,
+            "scrubAmount": 0.14,
+            "macroWarmth": 0.7,
+            "antiTile": 0.72
+          }
+        },
+        "scatter": {
+          "id": "trestle-gorge-scrub",
+          "density": 0.7,
+          "classCounts": {
+            "rocks": 76,
+            "dry_grass": 34,
+            "wagon_ruts": 18,
+            "claim_posts": 8,
+            "reeds": 24
+          },
+          "nearWaterBias": 0.35
+        },
+        "water": {
+          "id": "trestle-gorge-river",
+          "visualHalfWidth": 10,
+          "depths": { "river": 1.25, "ford": 0.3, "shallows": 0.25 },
+          "speedMul": { "river": 0.45, "ford": 0.8, "shallows": 0.72 }
+        },
+        "lanes": {
+          "spawnEdges": ["south", "north", "east", "west"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "rail_tough",
+            "label": "Rail Tough",
+            "waveMin": 1,
+            "hpScale": 1.35,
+            "speedMult": 1.12,
+            "visualScale": 1.16,
+            "tint": "#46576b",
+            "boltDamageMult": 0.65,
+            "spawnEdges": ["south", "north"]
+          },
+          {
+            "id": "steam_wrecker",
+            "label": "Steam Wrecker",
+            "waveMin": 1,
+            "hpScale": 1.65,
+            "speedMult": 0.74,
+            "visualScale": 1.28,
+            "tint": "#8b7d3c",
+            "wrecker": true,
+            "buildingDamageScale": 2.5,
+            "spawnEdges": ["east", "west"]
+          },
+          {
+            "id": "coal_thief",
+            "label": "Coal Thief",
+            "waveMin": 1,
+            "hpScale": 0.72,
+            "speedMult": 1.35,
+            "visualScale": 0.88,
+            "tint": "#3e332b",
+            "thief": true,
+            "contactDamageScale": 0.65,
+            "spawnEdges": ["north"]
+          }
+        ],
+        "baron": {
+          "wave": 12,
+          "bossKind": "railcar",
+          "hpScale": 30,
+          "speedScale": 0.68,
+          "scale": 3.2,
+          "contactDamageScale": 2.5,
+          "buildingDamageScale": 7,
+          "supportBuildingDamageScale": 5,
+          "pursuitRange": 0,
+          "escortCount": 6,
+          "tauntWaves": [4, 8],
+          "taunt": "The Baron's railcar is bearing down on the trestle.",
+          "arrivalTitle": "THE TRESTLE RAILCAR",
+          "tauntTitle": "Hold the Crossing",
+          "defeatTitle": "THE TRESTLE HOLDS",
+          "defeatLine": "The Railcar is DEFEATED.",
+          "ledgerLabel": "THE TRESTLE RAILCAR",
+          "secureCallout": "+Trestle line held",
+          "awardMedal": false,
+          "defeatBeat": "The last ore cart clears the gorge under its own steam.",
+          "medalBlurb": "Trestle railcar disabled.",
+          "sciencePayoutMult": 3,
+          "railRouteIndex": 0,
+          "railSpeed": 1.9,
+          "componentDegradeSpeedMult": 0.82,
+          "components": [
+            { "id": "wheels", "label": "Wheel Trucks", "hpScale": 0.9, "visualScale": 0.9, "xOffset": 0, "zOffset": -0.55, "tint": "#2f2a22", "boltDamageMult": 0.8 },
+            { "id": "boiler", "label": "Boiler", "hpScale": 1.25, "visualScale": 1.08, "xOffset": 1.15, "zOffset": 0, "tint": "#8b7d3c", "boltDamageMult": 0.7, "buildingDamageScale": 1.15 },
+            { "id": "cabin", "label": "Cabin", "hpScale": 0.85, "visualScale": 0.96, "xOffset": 2.3, "zOffset": 0.55, "tint": "#46576b", "boltDamageMult": 0.85 }
+          ]
+        }
+      },
+      "modes": [
+        {
+          "id": "escort",
+          "label": "Trestle Crossing",
+          "objective": "See 1 ore cart safely across the trestle.",
+          "cartsRequired": 1,
+          "payout": 45,
+          "railRouteIndex": 0
+        }
+      ],
+      "boardRow": {
+        "name": "The Trestle",
+        "ledgerBlurb": "A rail crossing over the gorge: hold both approaches while the ore carts run.",
+        "tags": ["steamworks"],
+        "unlock": "secured:e2-hill-mine"
+      },
+      "briefing": {
+        "goals": [
+          "Hold the north and south boiler sites through wave 12.",
+          "Trestle Crossing: see the ore cart safely over the gorge."
+        ],
+        "rules": [
+          "The trestle is the only easy crossing over deep water.",
+          "Rail Toughs and Steam Wreckers press both approaches.",
+          "The south bank beside the base remains open for sluice work."
+        ],
+        "geographyLine": "One long rail line crosses a deep river gorge between defended approaches."
+      }
+    },
+    {
+      "id": "e2-pressure-garden",
+      "name": "The Pressure Garden",
+      "tileParams": {
+        "tileId": "e2-pressure-garden",
+        "biome": "steamworks-pressure-garden",
+        "size": 96,
+        "render": { "terrainMesh": "required" },
+        "river": true,
+        "ford": true,
+        "fords": [{ "id": "garden-crossing", "x": 0, "halfWidth": 6 }],
+        "buildZones": [
+          { "id": "boiler-terrace", "bank": "north", "minX": -36, "maxX": 36, "minZ": 7, "maxZ": 16 },
+          { "id": "west-growing-terrace", "bank": "north", "minX": -38, "maxX": -12, "minZ": 20, "maxZ": 29 },
+          { "id": "east-growing-terrace", "bank": "north", "minX": 12, "maxX": 38, "minZ": 20, "maxZ": 29 },
+          { "id": "coal-bed-terrace", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
+        ],
+        "stakeMarkers": [
+          { "id": "west-boiler-bed", "x": -12, "z": 12, "lossCondition": true },
+          { "id": "center-boiler-bed", "x": 0, "z": 12, "lossCondition": false },
+          { "id": "east-boiler-bed", "x": 12, "z": 12, "lossCondition": false }
+        ],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -30, "z": 24 },
+          { "x": -18, "z": 27 },
+          { "x": 18, "z": 27 },
+          { "x": 30, "z": 24 },
+          { "x": -24, "z": 40 },
+          { "x": 24, "z": 40 }
+        ],
+        "elevation": {
+          "cellSize": 2,
+          "slopeMax": 0.35,
+          "waterline": -0.1,
+          "analytic": {
+            "hillMine": 1,
+            "creekHeight": -0.25,
+            "railHeight": 0,
+            "t1Height": 0.8,
+            "t2Height": 1.6,
+            "t3Height": 2.4,
+            "creekBlendStart": -10,
+            "creekBlendEnd": -5,
+            "t1RampStart": 6,
+            "t1RampEnd": 10,
+            "t2RampStart": 17,
+            "t2RampEnd": 22,
+            "t3RampStart": 30,
+            "t3RampEnd": 35
+          }
+        },
+        "heightfield": {
+          "id": "pressure-garden-terraces",
+          "mode": "visual",
+          "bankRelief": { "amount": 0.3, "width": 8 }
+        },
+        "palette": {
+          "id": "pressure-garden-coal-beds",
+          "tint": [0.66, 0.61, 0.5],
+          "dampTint": [0.25, 0.34, 0.33],
+          "dampAmount": 0.38,
+          "splat": {
+            "rockAmount": 0.86,
+            "dampBand": 2.8,
+            "scrubAmount": 0.08,
+            "macroWarmth": 0.58,
+            "antiTile": 0.76
+          }
+        },
+        "scatter": {
+          "id": "pressure-garden-coal-clusters",
+          "density": 0.76,
+          "classCounts": {
+            "rocks": 88,
+            "dry_grass": 24,
+            "wagon_ruts": 12,
+            "claim_posts": 12,
+            "reeds": 30
+          },
+          "nearWaterBias": 0.42
+        },
+        "water": {
+          "id": "pressure-garden-water-band",
+          "visualHalfWidth": 8,
+          "depths": { "river": 1.1, "ford": 0.3, "shallows": 0.22 },
+          "speedMul": { "river": 0.5, "ford": 0.82, "shallows": 0.75 }
+        },
+        "lanes": {
+          "spawnEdges": ["south", "east", "west", "north"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "pressureEnabled": true,
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "rail_tough",
+            "label": "Rail Tough",
+            "waveMin": 1,
+            "hpScale": 1.25,
+            "speedMult": 1.08,
+            "visualScale": 1.16,
+            "tint": "#46576b",
+            "boltDamageMult": 0.65,
+            "spawnEdges": ["south"],
+            "spawnGates": [{ "edge": "south", "x": 0, "z": -46 }]
+          },
+          {
+            "id": "steam_wrecker",
+            "label": "Steam Wrecker",
+            "waveMin": 1,
+            "hpScale": 1.5,
+            "speedMult": 0.76,
+            "visualScale": 1.28,
+            "tint": "#8b7d3c",
+            "wrecker": true,
+            "buildingDamageScale": 2.5,
+            "spawnEdges": ["east", "west"],
+            "spawnGates": [
+              { "edge": "east", "x": 46, "z": 20 },
+              { "edge": "west", "x": -46, "z": 20 }
+            ]
+          },
+          {
+            "id": "coal_thief",
+            "label": "Coal Thief",
+            "waveMin": 1,
+            "hpScale": 0.72,
+            "speedMult": 1.35,
+            "visualScale": 0.88,
+            "tint": "#3e332b",
+            "thief": true,
+            "contactDamageScale": 0.65,
+            "spawnEdges": ["north"],
+            "spawnGates": [{ "edge": "north", "x": 0, "z": 46 }]
+          }
+        ]
+      },
+      "boardRow": {
+        "name": "The Pressure Garden",
+        "ledgerBlurb": "A geothermal terrace garden where coal tends the boilers and pressure is the crop.",
+        "tags": ["steamworks"],
+        "unlock": "secured:e2-trestle"
+      },
+      "briefing": {
+        "goals": [
+          "Pressure assay challenge: keep at least 2 boilers hot through waves 8–12.",
+          "Defend the three boiler beds until the garden is secured."
+        ],
+        "rules": [
+          "The coal seams cluster on the highest terrace above the boiler beds.",
+          "The single water band has a broad north bank for legal sluice work.",
+          "Steam Wreckers attack from both growing terraces while Coal Thieves descend from the seam bed."
+        ],
+        "geographyLine": "Four stepped growing terraces rise north of one clean water band."
+      }
+    },
+    {
+      "id": "e2-incline",
+      "name": "The Incline",
+      "tileParams": {
+        "tileId": "e2-incline",
+        "biome": "steamworks-funicular-incline",
+        "size": 96,
+        "render": { "terrainMesh": "required" },
+        "river": true,
+        "ford": true,
+        "fords": [
+          { "id": "lower-line-crossing", "x": -12, "halfWidth": 3 },
+          { "id": "upper-line-crossing", "x": 12, "halfWidth": 3 }
+        ],
+        "buildZones": [
+          { "id": "lower-yard", "bank": "south", "minX": -36, "maxX": 36, "minZ": -30, "maxZ": -7 },
+          { "id": "landing-yard", "bank": "north", "minX": -36, "maxX": 36, "minZ": 7, "maxZ": 18 },
+          { "id": "west-incline-bench", "bank": "north", "minX": -38, "maxX": -4, "minZ": 22, "maxZ": 32 },
+          { "id": "upper-ore-yard", "bank": "north", "minX": -28, "maxX": 28, "minZ": 36, "maxZ": 44 }
+        ],
+        "stakeMarkers": [
+          { "id": "lower-engine-house", "x": -24, "z": -18, "lossCondition": true },
+          { "id": "upper-winch-house", "x": 0, "z": 40, "lossCondition": false }
+        ],
+        "rails": [
+          {
+            "style": "steamworks",
+            "points": [
+              { "x": -12, "z": -46 },
+              { "x": -12, "z": -24 },
+              { "x": -12, "z": -7 },
+              { "x": -12, "z": 7 },
+              { "x": -12, "z": 28 },
+              { "x": -12, "z": 46 }
+            ]
+          },
+          {
+            "style": "mine-spur",
+            "points": [
+              { "x": 12, "z": -46 },
+              { "x": 12, "z": -24 },
+              { "x": 12, "z": -7 },
+              { "x": 12, "z": 7 },
+              { "x": 12, "z": 28 },
+              { "x": 12, "z": 46 }
+            ]
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [
+          { "x": -30, "z": -20 },
+          { "x": 30, "z": -20 },
+          { "x": -30, "z": 26 },
+          { "x": 30, "z": 26 },
+          { "x": -22, "z": 40 },
+          { "x": 22, "z": 40 }
+        ],
+        "elevation": {
+          "cellSize": 2,
+          "slopeMax": 0.35,
+          "waterline": -0.1,
+          "analytic": {
+            "hillMine": 1,
+            "creekHeight": -0.35,
+            "railHeight": 0,
+            "t1Height": 0.7,
+            "t2Height": 2.2,
+            "t3Height": 3.8,
+            "creekBlendStart": -10,
+            "creekBlendEnd": -5,
+            "t1RampStart": 6,
+            "t1RampEnd": 13,
+            "t2RampStart": 19,
+            "t2RampEnd": 28,
+            "t3RampStart": 33,
+            "t3RampEnd": 42
+          }
+        },
+        "heightfield": {
+          "id": "incline-cut-benches",
+          "mode": "visual",
+          "bankRelief": { "amount": 0.38, "width": 9 }
+        },
+        "palette": {
+          "id": "incline-rust-cut",
+          "tint": [0.72, 0.66, 0.55],
+          "dampTint": [0.29, 0.38, 0.36],
+          "dampAmount": 0.34,
+          "splat": {
+            "rockAmount": 0.8,
+            "dampBand": 2.6,
+            "scrubAmount": 0.1,
+            "macroWarmth": 0.66,
+            "antiTile": 0.74
+          }
+        },
+        "scatter": {
+          "id": "incline-cut-scree",
+          "density": 0.7,
+          "classCounts": {
+            "rocks": 84,
+            "dry_grass": 28,
+            "wagon_ruts": 18,
+            "claim_posts": 10,
+            "reeds": 22
+          },
+          "nearWaterBias": 0.3
+        },
+        "water": {
+          "id": "incline-base-water-band",
+          "visualHalfWidth": 8,
+          "depths": { "river": 1.15, "ford": 0.3, "shallows": 0.22 },
+          "speedMul": { "river": 0.48, "ford": 0.82, "shallows": 0.74 }
+        },
+        "lanes": {
+          "spawnEdges": ["south", "north", "east", "west"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {
+        "secureWave": 12,
+        "enemyRoster": [
+          {
+            "id": "rail_tough",
+            "label": "Rail Tough",
+            "waveMin": 1,
+            "hpScale": 1.35,
+            "speedMult": 1.12,
+            "visualScale": 1.16,
+            "tint": "#46576b",
+            "boltDamageMult": 0.65,
+            "spawnEdges": ["south", "north"],
+            "spawnGates": [
+              { "edge": "south", "x": 12, "z": -46 },
+              { "edge": "north", "x": 12, "z": 46 }
+            ]
+          },
+          {
+            "id": "steam_wrecker",
+            "label": "Steam Wrecker",
+            "waveMin": 1,
+            "hpScale": 1.65,
+            "speedMult": 0.74,
+            "visualScale": 1.28,
+            "tint": "#8b7d3c",
+            "wrecker": true,
+            "buildingDamageScale": 2.5,
+            "spawnEdges": ["east", "west"],
+            "spawnGates": [
+              { "edge": "east", "x": 46, "z": 24 },
+              { "edge": "west", "x": -46, "z": 24 }
+            ]
+          },
+          {
+            "id": "coal_thief",
+            "label": "Coal Thief",
+            "waveMin": 1,
+            "hpScale": 0.72,
+            "speedMult": 1.35,
+            "visualScale": 0.88,
+            "tint": "#3e332b",
+            "thief": true,
+            "contactDamageScale": 0.65,
+            "spawnEdges": ["north"]
+          }
+        ],
+        "baron": {
+          "wave": 12,
+          "bossKind": "railcar",
+          "hpScale": 30,
+          "speedScale": 0.68,
+          "scale": 3.2,
+          "contactDamageScale": 2.5,
+          "buildingDamageScale": 7,
+          "supportBuildingDamageScale": 5,
+          "pursuitRange": 0,
+          "escortCount": 6,
+          "tauntWaves": [4, 8],
+          "taunt": "The Baron's railcar has taken the lower line.",
+          "arrivalTitle": "THE INCLINE RAILCAR",
+          "tauntTitle": "Hold Both Haul Lines",
+          "defeatTitle": "THE INCLINE HOLDS",
+          "defeatLine": "The Railcar is DEFEATED.",
+          "ledgerLabel": "THE INCLINE RAILCAR",
+          "secureCallout": "+Incline haul secured",
+          "awardMedal": false,
+          "defeatBeat": "The upper cart crests while the lower railcar cools in the cut.",
+          "medalBlurb": "Incline railcar disabled.",
+          "sciencePayoutMult": 3,
+          "railRouteIndex": 0,
+          "railSpeed": 1.9,
+          "componentDegradeSpeedMult": 0.82,
+          "components": [
+            { "id": "wheels", "label": "Wheel Trucks", "hpScale": 0.9, "visualScale": 0.9, "xOffset": 0, "zOffset": -0.55, "tint": "#2f2a22", "boltDamageMult": 0.8 },
+            { "id": "boiler", "label": "Boiler", "hpScale": 1.25, "visualScale": 1.08, "xOffset": 1.15, "zOffset": 0, "tint": "#8b7d3c", "boltDamageMult": 0.7, "buildingDamageScale": 1.15 },
+            { "id": "cabin", "label": "Cabin", "hpScale": 0.85, "visualScale": 0.96, "xOffset": 2.3, "zOffset": 0.55, "tint": "#46576b", "boltDamageMult": 0.85 }
+          ]
+        }
+      },
+      "modes": [
+        {
+          "id": "escort",
+          "label": "Incline Haul",
+          "objective": "See 1 ore cart safely up the upper funicular line.",
+          "cartsRequired": 1,
+          "payout": 50,
+          "railRouteIndex": 1
+        }
+      ],
+      "boardRow": {
+        "name": "The Incline",
+        "ledgerBlurb": "Twin funicular lines climb the cut: escort the upper haul while defending the lower engine house.",
+        "tags": ["steamworks"],
+        "unlock": "secured:e2-pressure-garden"
+      },
+      "briefing": {
+        "goals": [
+          "Incline Haul: see an ore cart safely up the upper line.",
+          "Defend the lower engine house and stop the Baron's railcar on the lower line."
+        ],
+        "rules": [
+          "Two funicular routes cross the water band and climb separate benches.",
+          "The lower rail carries the wave-12 railcar; the upper rail carries the escorted ore cart.",
+          "The broad banks beside both crossings remain open for sluice work."
+        ],
+        "geographyLine": "Twin haul lines climb from one wet lower yard to the ore benches above."
+      }
+    }
+  ]
+}
