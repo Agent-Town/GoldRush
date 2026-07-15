@@ -203,6 +203,21 @@ export const RESEARCH_UNLOCK_REVEALS: Record<string, { name: string; line: strin
   playbook_rules: { name: 'Playbook Rules', line: 'Every reel must name a known job and borrow no authority.' },
   drone_delegation: { name: 'Drone Delegation', line: 'One checked reel gains a place in one coop drone.' },
   guidance_playbooks: { name: 'Guidance Playbooks', line: 'The town’s proven routes enter the Starship guidance case.' },
+  mare_survey: { name: 'Mare Survey', line: 'Crater rims, glass fields, and landing scars enter the Moon claim book.' },
+  gravity_tables: { name: 'Gravity Tables', line: 'Each claim gains an honest measure for arcs, strides, and loose cargo.' },
+  atmosphere_dials: { name: 'Atmosphere Dials', line: 'Domes, suits, and airless yards gain one counted breath.' },
+  lunar_day_ledger: { name: 'Lunar-Day Ledger', line: 'Fourteen light watches and fourteen dark ones enter the battery book.' },
+  lava_tube_charts: { name: 'Lava-Tube Charts', line: 'One connected route is marked through the lunar dark.' },
+  vacuum_lenses: { name: 'Vacuum Lenses', line: 'Warm light is marked to carry where no report can follow.' },
+  lens_turret: { name: 'Lens Turret', line: 'A tracking silver lens gains the old beam-relay footing.' },
+  breach_seals: { name: 'Breach Seals', line: 'Numbered patches are marked for the wall that keeps the town’s breath.' },
+  magnet_grapple: { name: 'Magnet Grapple', line: 'Loose machines gain one marked path into each other.' },
+  claw_component_science: { name: 'Claw Component Science', line: 'The Claw medal still guards its crown, winch, and anchor-foot diagrams.' },
+  regolith_assay: { name: 'Regolith Assay', line: 'Moon dust, crater glass, and He-3 flecks gain their assay columns.' },
+  dome_panels: { name: 'Dome Panels', line: 'Clear cells and timber-brass ribs gain named places to mend.' },
+  airlock_receipts: { name: 'Airlock Receipts', line: 'Each crossing stays tied to its suit seal, air count, and gate.' },
+  mass_driver_windows: { name: 'Mass-Driver Windows', line: 'Rail-thrown cargo gains a launch mark and an arrival window.' },
+  riverward_manifest: { name: 'Riverward Manifest', line: 'Air, seed, tools, and a town promise enter the Colony Seed.' },
 };
 
 export type ResearchChartOptions = {
