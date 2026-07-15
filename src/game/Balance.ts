@@ -267,16 +267,6 @@ export const Balance = {
     overchargeSeconds: 10,
     turretFireRateMult: 2,
   },
-  crawler: {
-    flickerSeconds: 0.5,
-    drainWatts: 18,
-    burstIntervalSeconds: 4,
-    burstDialSeconds: 1,
-    burstDamage: 18,
-    burstRadius: 5,
-    overchargeSeconds: 10,
-    turretFireRateMult: 2,
-  },
   e4Fuel: {
     capacity: 24,
     nodePositions: [{ x: -12, z: -8 }, { x: 0, z: -8 }, { x: 12, z: -8 }],
