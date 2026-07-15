@@ -455,6 +455,10 @@ body {
   text-align: right;
 }
 
+.research-impact__legacy-copy {
+  display: none;
+}
+
 .research-chart__body {
   grid-template-columns: minmax(0, 1fr) minmax(230px, 280px);
   align-items: start;
@@ -712,12 +716,6 @@ body {
   font-weight: 900;
   line-height: 1;
   letter-spacing: 0.04em;
-}
-
-.research-impact__badge--banked {
-  border-color: var(--research-ochre, #c4883a);
-  color: #2e1b0e;
-  background: var(--research-ochre, #c4883a);
 }
 
 .research-chart__selection ol {
