@@ -1,5 +1,41 @@
 # SOL 3D-C — 3D pilot findings
 
+## Dredge-Queen production model v2
+
+Branch: `sol/dredge-queen-3d-v2`
+
+Base: `5b3cd16f2dbe170fabb70a65362e6d4938e68153`
+
+Tip: exact Dredge-Queen v2 SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the Dredge-Queen now reads as the landed plate's armored corsair boss at the run camera: the crane-claw, twin paddlewheels, command house, loot hold, and oxblood sail own the silhouette while the four runtime damage components remain exact and independently targetable.**
+
+The prior deterministic component/morph machinery was salvaged from `sol/dredge-queen-3d@39240067`, then rebuilt on current main from the landed intact and damage plates. The first candidate was mechanically correct but read as a small work barge beside the source. V2 keeps the 11,832-triangle topology and strengthens the plate hierarchy through proportion, placement, paint, and value—not extra helper meshes.
+
+| Finding | V2 correction | Evidence |
+| --- | --- | --- |
+| The crane and grab did not dominate the bow | taller, wider tower; larger pulley, gearbox, boom, and claw fingers | reference A/B + four-angle turntable |
+| Paddlewheels read as ordinary propulsion rather than targetable boss armor | pushed farther outboard; larger rims, blades, hubs, and armor | port/starboard damage panels |
+| Central mass was too low and toy-like | taller armored hull, larger command house/dome, heavier aft hold | run-camera and reference A/B |
+| Sail and paint were too quiet at gameplay distance | larger oxblood main/secondary sails, taller rig, brighter plate-derived albedo | intact and Act-3 A/Bs |
+
+### Contract and damage bindings
+
+| Component mesh | Required morph | Default | Damage read |
+| --- | --- | --- | --- |
+| `claw` | `Damage_SlackClaw` | `0` | boom sags and grab drops |
+| `paddle_port` | `Damage_BrokenPortPaddle` | `0` | port wheel bends and sheds paddles |
+| `paddle_starboard` | `Damage_BrokenStarboardPaddle` | `0` | starboard wheel bends and sheds paddles |
+| `hold` | `Damage_CrackedLootHold` | `0` | hold armor collapses, cargo spills, sail is struck |
+
+- GLB: 11,832 / 12,000 triangles; four nodes, four meshes, four primitives; one non-emissive material and one embedded 1024 x 1024 PNG; zero cameras, lights, or animations.
+- Bounds: 8.000000 long x 4.983127 wide x 5.333330 high; base `Y = 0`; center `X/Z = 0`.
+- GLB SHA-256: `0121d7e9891c52c8a329f5a3f4a2004c3f368a101bc1daa4cc98ba9ffa0c53a9`.
+- Saved-BLEND re-export is byte-identical and all semantic keys match.
+- All-four Act-3 state changes 9.4405% of pixels above 16/255; intact and damaged average luminance differ by 1.1026.
+- Independent Codex review found no builder, shape-key, verifier, or evidence-generation defect. Its one P2 finding was stale README dimensions/telemetry; those values are corrected in this wave.
+- `npm run build` passes. No runtime, simulation, source, map, or boss-behavior file is changed; the factory retains ownership of the presentation mount.
+
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-plate` (Mesa Town plate)
 
 Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Mesa Town plate `8d974f11`
