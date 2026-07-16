@@ -289,6 +289,59 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E2 Pressure Garden + Incline terrain wave
+
+### F-3D-D-37 — The published final-pair tables close the E2 family without inference
+
+`assets/contracts/epoch-2-steamworks/mask-tables/e2-pressure-garden.json` and `e2-incline.json` are now the coordinate authority for the final pair. Their `maskTruth` and `waterAgreement` objects are copied byte-for-meaning into the adjacent terrain contracts and compared for exact JSON equality by the verifier. No position came from the earlier concept discussion, another E2 map, or a visual guess. Movement, collision, spawns, placement, water classification, and `Terrain.visualY` remain factory-owned.
+
+### F-3D-D-38 — Pressure Garden is an exhausted production climb, not a greener Hill Mine
+
+Pressure Garden follows the authored 0.8 / 1.6 / 2.4 m stepped terraces. Three boiler beds occupy the first north-bank band, paired hard-grown crop terraces occupy the next, and the published coal seams stain the upper working bed. Sparse cactus and rubble keep the desert law. The growing strips are deliberately narrow, dark, and desaturated: one hard-won industrial exception inside barren ground, never a lush holiday garden.
+
+### F-3D-D-39 — Incline is organized by two continuous haul lines and their two authored fords
+
+Incline follows the stronger 0.7 / 2.2 / 3.8 m climb while keeping both rail corridors calm enough to read as working routes. The twin lines remain continuous through the two published crossings at x=-12 and x=12, then connect the lower engine yard, landing yard, west bench, and upper ore yard. The final evidence-water material removes a blown-out specular disk without entering the terrain GLB; the visible shoreline still ends at the published shallows boundary.
+
+### F-3D-D-40 — Panorama evidence needs a far plane beyond the panorama radius
+
+The new panoramas remain separate mounted 2,112-triangle GLBs with one embedded 2048² atlas each. A first low-sunset render showed a smooth purple dome that looked like a painted landmark. It was not panorama geometry: the off-centre evidence camera's 240 m far plane clipped the far side of the 190 m ring and exposed the world background. Raising only the evidence camera's clip end to 420 m removes the hole. The corrected ridge silhouettes are rougher and lower, the sky-to-horizon density still quiets toward the zenith, and the panorama assets keep zero gameplay authority.
+
+### F-3D-D-41 — The final blind gate returns SHIP with honest promotion notes
+
+A fresh unprimed review of the full mood, owner, distance, and mask boards plus tight crops returns `SHIP`. It finds Pressure Garden and Incline genuinely distinct but regional, harsh rather than recreational, panoramically open, and mask-legible. Non-blocking notes are retained: thin teal evidence lines can lose contrast, Incline rails darken over water, and Pressure Garden's narrow green strips need their surrounding boiler/coal context to read as crops. The purple semicircles visible in the older Hill Mine/Trestle low-sunset rows are previously accepted evidence debt and are absent from the corrected final pair.
+
+Fixed-framing telemetry is descriptive rather than a score. Pressure Garden changes 11.80% of pixels by more than 16 luminance levels and raises mean edge energy 4.68%; Incline changes 10.57% and raises it 5.53%. The heatmap locates the authored terrace and cut changes while the owner board, masks, and blind critique remain the actual acceptance gates.
+
+## E2 final-family gate state
+
+- Published mask tables for all four E2 maps: PASS
+- Pressure Garden and Incline terrain `.blend` / GLB / 2048² atlas / contract sets: PASS
+- New terrain GLBs: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas each: PASS
+- Pressure Garden and Incline Panorama v2 `.blend` / GLB / 2048² atlas / contract sets: PASS
+- New panorama GLBs: 2,112 triangles, one mesh, one primitive, one material, one embedded atlas each: PASS
+- Exact authored mask/water agreement and defining geometry probes: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export across all eight E2 GLBs: PASS
+- Mood A/B, identical-camera geometry, run/overview/sunset, mask agreement, and full-frame panorama distance boards: PASS
+- Fixed-framing flat/sculpted visual telemetry: PASS
+- Fresh final unprimed visual verdict: SHIP
+- Integrated `npm run build`: PASS
+- Independent `codex review --uncommitted`: attempted; the reviewer recursively launched another `codex review` instead of returning a verdict, so it was interrupted and is not counted as a gate
+- Landmark freeze preserved; no new or changed landmark bodies
+- `src/`, simulation, masks, runtime registry, and main edits: none
+
+## E2 final-pair owner-verdict images
+
+- `artifacts/map-rebuild-spike/e2-owner-verdict.png` — four-map real-camera, overview, and low-sunset comparison
+- `artifacts/map-rebuild-spike/e2-mood-ab.png` — same-map shipped source / hardship gate
+- `artifacts/map-rebuild-spike/e2-flat-vs-sculpted-ab.png` — fixed-camera geometry proof
+- `artifacts/map-rebuild-spike/e2-mask-agreement-board.png` — published zones, stakes, rails, water, banks, and coal seams
+- `artifacts/map-rebuild-spike/e2-panorama-mood-ab.png` — panorama off/on mood evidence
+- `artifacts/map-rebuild-spike/e2-panorama-distance-gate.png` — playfield-center distance gate
+- `artifacts/map-rebuild-spike/e2-final-flat-sculpted-telemetry.png` — objective change-location telemetry
+
+READY-FOR-GATES
+
 ## E3 Canyon Works + Moth Season terrain wave
 
 ### F-3D-D-30 — Published masks are the only terrain authority
