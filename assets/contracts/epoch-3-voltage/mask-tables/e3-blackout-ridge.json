@@ -1,0 +1,62 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-3-voltage/contracts.json",
+    "tileId": "e3-blackout-ridge",
+    "size": 96,
+    "dimensions": { "width": 80, "height": 96 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "trunk-yard", "bank": "south", "minX": -32, "maxX": 8, "minZ": -38, "maxZ": -8 },
+      { "id": "breath-yard", "bank": "north", "minX": -8, "maxX": 24, "minZ": -6, "maxZ": 18 },
+      { "id": "ridge-line", "bank": "north", "minX": 8, "maxX": 34, "minZ": 20, "maxZ": 40 }
+    ],
+    "stakeMarkers": [
+      { "id": "ridge-switch-house", "x": 24, "z": 30, "lossCondition": true }
+    ],
+    "pylonSites": [
+      { "id": "trunk-west", "nodeId": "trunk-west", "wireFrom": "off-map-current", "x": -30, "z": -30, "radius": 2.5 },
+      { "id": "trunk-middle", "nodeId": "trunk-middle", "wireFrom": "trunk-west", "x": -18, "z": -18, "radius": 2.5 },
+      { "id": "trunk-ridge", "nodeId": "trunk-ridge", "wireFrom": "trunk-middle", "x": -6, "z": -6, "radius": 2.5 }
+    ],
+    "capacitorSites": [
+      { "id": "breath-bank-west", "nodeId": "capacitor-west", "x": 6, "z": 4, "radius": 2.5 },
+      { "id": "breath-bank-east", "nodeId": "capacitor-east", "x": 16, "z": 4, "radius": 2.5 }
+    ],
+    "prePlacedBuildables": [
+      { "id": "sentry_beacon", "x": -30, "z": -30 },
+      { "id": "sentry_beacon", "x": -18, "z": -18 },
+      { "id": "sentry_beacon", "x": -6, "z": -6 },
+      { "id": "lantern_post", "x": 12, "z": 20 },
+      { "id": "lantern_post", "x": 24, "z": 30 }
+    ],
+    "ridgeGlow": { "x": -38, "z": -44, "color": "#79c8bd", "intensity": 1.35 },
+    "waterSources": [],
+    "harvestAnchors": [
+      { "x": 8, "z": 30 },
+      { "x": 18, "z": 34 },
+      { "x": 30, "z": 26 }
+    ],
+    "heightfield": { "id": "blackout-ridge-shelf", "mode": "visual" },
+    "lanes": {
+      "spawnEdges": ["west", "east", "north"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": [
+      { "edge": "west", "x": -39, "z": -18 },
+      { "edge": "east", "x": 39, "z": -18 }
+    ],
+    "dayNightCycle": {
+      "periodSeconds": 24,
+      "duskRampSeconds": 2,
+      "dawnRampSeconds": 2,
+      "nightDepth": 0.86,
+      "nightLocked": true
+    }
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}
