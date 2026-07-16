@@ -403,3 +403,8 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 - **✅ MERGED — E5 submerged harbor town (77502243):** 8 .e5 building faces, flood-reset dressing, ballast-shoe seating (owner physics), Pan Monument unchanged, one-town law ✓. Gated: tsc+build+era-switch 12/12 on merged tree.
 - QUEUED lane-c ×2: **flood-reset-era-props** (the runtime half of THE FLOOD BREAK — 3D-C's recorded factory gate; TownTavernPilot.ts:531 chain-break) then **wire-fairground-terrain**. Goals leaves added.
 - 3D-D: HOLD (slate complete — awaits owner verdicts). 3D-C next: F-3DC-04 road-wear (small) → Dredge-Queen model (after plate).
+
+## 2026-07-17 — THE E6 LADDER OPENS (owner: "What about E6 - E10? What is stopping us from that?")
+- BLOCKER MAP delivered (chat + this line): NOTHING structural — designs banked (bundles, storybook, charts e6-e10 SHIPPED). The chain: E4 era-gate (attended ceremony, next domino) → E5 ship (Dredge Queen building) → E6+ = factory throughput. Long-poles to start early: E7 playbooks (determinism audit; PlaybookLab spike exists) · E9 persistence substrate (attended spec owed, GT-01 care) · E10 Charter Press (editor spikes banked on sol/ed-* branches).
+- QUEUED lane-a: **e6-decay-framework** — the unified tick scheduler (bundle §C: "E7's replay determinism depends on its cleanliness"), INERT until E6 arms (e5-03 precedent), determinism A/B gate. Master `tasks/lane-a-e6-decay-framework.md`.
+- LADDERED NEXT (author after framework merges): e6-glow-mesa contract+tile slice (consumes the scheduler: decay puddles, night veins) · e6 mask table · wrangle/capture verb slice · art batches 022-024 per bundle §A batching. OWED (attended, 2026-07-17): E7 determinism-audit spec + E9 persistence-substrate spec.
