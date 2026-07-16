@@ -13,6 +13,7 @@ import * as Terrain from '../world/Terrain';
 import type { SoundSystem } from '../audio/SoundSystem';
 import { TargetingSystem, type BuildingTarget } from './TargetingSystem';
 import type { CombatVfx } from './CombatVfx';
+import { FreedWalkerVfx } from './FreedWalkerVfx';
 
 export type ProjectileKind = 'bolt' | 'lob';
 
@@ -143,6 +144,7 @@ export class CombatSystem {
   private hasLastBlastDetonation = false;
   private buildingDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
   private buildingTargetsResolver: ((position: THREE.Vector3, radius: number) => BuildingTarget[]) | null = null;
+  private readonly freedWalkers: FreedWalkerVfx;
 
   constructor(
     private readonly events: EventBus,
@@ -157,7 +159,9 @@ export class CombatSystem {
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
     private readonly onEnemyKilled?: (position: THREE.Vector3) => void,
     private readonly onShot?: (at: number, origin: THREE.Vector3, target: THREE.Vector3) => void,
-  ) {}
+  ) {
+    this.freedWalkers = new FreedWalkerVfx(vfx);
+  }
 
   private get primaryActor(): Hero {
     return this.actors[0];
@@ -492,6 +496,7 @@ export class CombatSystem {
     this.blastCharges.recycleAll();
     this.motes.recycleAll();
     this.vfx.reset();
+    this.freedWalkers.reset();
     this.blastDetonationCount = 0;
     this.hasLastBlastDetonation = false;
     this.boltHits = 0;
@@ -517,6 +522,7 @@ export class CombatSystem {
     this.projectiles.dispose();
     this.blastCharges.dispose();
     this.motes.dispose();
+    this.freedWalkers.dispose();
     this.vfx.dispose();
   }
 
@@ -794,6 +800,7 @@ export class CombatSystem {
       this.bankXp(enemy.position, xp, 'overflow');
     }
     this.vfx.dustPuff(enemy.position);
+    this.freedWalkers.spawn(enemy);
     this.audio.playKill();
     this.onEnemyKilled?.(enemy.position);
     this.events.emit({

@@ -29,6 +29,7 @@ export type PerformanceTierConfig = {
   combatVfxPuffs: number;
   combatVfxTicks: number;
   combatVfxRings: number;
+  freedWalkerCap: number;
   enemyBarCap: number;
 };
 
@@ -67,6 +68,7 @@ export const PERFORMANCE_TIER_CONFIGS: Record<PerformanceTier, PerformanceTierCo
     combatVfxPuffs: 32,
     combatVfxTicks: 48,
     combatVfxRings: 8,
+    freedWalkerCap: 10,
     enemyBarCap: 60,
   },
   balanced: {
@@ -92,6 +94,7 @@ export const PERFORMANCE_TIER_CONFIGS: Record<PerformanceTier, PerformanceTierCo
     combatVfxPuffs: 24,
     combatVfxTicks: 32,
     combatVfxRings: 6,
+    freedWalkerCap: 10,
     enemyBarCap: 36,
   },
   lite: {
@@ -117,6 +120,7 @@ export const PERFORMANCE_TIER_CONFIGS: Record<PerformanceTier, PerformanceTierCo
     combatVfxPuffs: 16,
     combatVfxTicks: 20,
     combatVfxRings: 4,
+    freedWalkerCap: 6,
     enemyBarCap: 16,
   },
 };
