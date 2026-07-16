@@ -3,10 +3,19 @@
 # Deterministic, read-only, no AI. Run by com.goldrush.dashboard.plist every 60s.
 # v2: queue-entry times + ages, in-flight elapsed, done durations (owner ask 2026-07-06).
 set -u
-ROOT="/Users/robin/Claude/Projects/Gold Rush"
+ROOT="${GOLD_RUSH_ROOT:-/Users/robin/Claude/Projects/Gold Rush}"
 cd "$ROOT" || exit 1
-OUT="logs/dashboard.html"
-mkdir -p logs
+OUT="${GOLD_RUSH_DASHBOARD_OUT:-logs/dashboard.html}"
+GOAL_TREE_TMP="${GOLD_RUSH_GOAL_TREE_TMP:-logs/.goal-tree.html}"
+HEALTH_LOG="${GOLD_RUSH_HEALTH_LOG:-logs/health.log}"
+NODE_BIN="${GOLD_RUSH_NODE_BIN:-}"
+if [ -z "$NODE_BIN" ]; then
+  for candidate in "$(command -v node 2>/dev/null || true)" /opt/homebrew/bin/node /usr/local/bin/node; do
+    if [ -n "$candidate" ] && [ -x "$candidate" ]; then NODE_BIN="$candidate"; break; fi
+  done
+fi
+[ -x "${NODE_BIN:-}" ] || { echo "[dashboard] node not found" >&2; exit 1; }
+mkdir -p logs "$(dirname "$OUT")" "$(dirname "$GOAL_TREE_TMP")" "$(dirname "$HEALTH_LOG")"
 
 esc() { sed 's/&/\&amp;/g; s/</\&lt;/g; s/>/\&gt;/g'; }
 NOW_EPOCH=$(date +%s)
@@ -108,7 +117,8 @@ done
 DONE_TAIL=$(printf '%s' "$DONE_TAIL" | esc)
 
 # --- Waiting to start: paused items + gated BACKLOG ladder, with tracked block-age ---
-SEEN="logs/.blocked-seen"
+SEEN="${GOLD_RUSH_BLOCKED_SEEN:-logs/.blocked-seen}"
+mkdir -p "$(dirname "$SEEN")"
 touch "$SEEN"
 BLOCKED=""
 for f in tasks/queue-paused/*.md; do
@@ -175,9 +185,72 @@ LANES=$(printf '%s' "$LANES" | esc)
 MERGES=$(git log -40 --format='%h  %cr — %s' | grep -E '— (feat|fix|art|drain)[:( ]' | grep -viE 'task:|queued|backlog|chore:' | head -8 | cut -c1-120 | esc)
 FAILED_TAIL=$(ls -t tasks/failed/ 2>/dev/null | head -3 | esc)
 PENDING=$(ls assets/crafting-queue/pending/ 2>/dev/null | grep -c '\.json$')
-ALERTS=$(grep 'ALERT' logs/health.log 2>/dev/null | tail -5 | cut -c1-130 | esc)
+ALERTS=$(grep 'ALERT' "$HEALTH_LOG" 2>/dev/null | tail -5 | cut -c1-130 | esc)
 [ -z "$ALERTS" ] && ALERTS="(no alerts)"
 FIRELOG=$(tail -3 "logs/fire-$(date +%Y%m%d).log" 2>/dev/null | cut -c1-130 | esc)
+
+# --- Goal tree: repo-authored plan + filesystem/git-derived leaf status ---
+"$NODE_BIN" <<'NODE' > "$GOAL_TREE_TMP" || exit 1
+import fs from 'node:fs';
+import { spawnSync } from 'node:child_process';
+import path from 'node:path';
+
+const data = JSON.parse(fs.readFileSync('tasks/goals.json', 'utf8'));
+const escapeHtml = (value) => String(value).replace(/[&<>"']/g, (char) => ({
+  '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;',
+})[char]);
+const filesUnder = (dir) => fs.existsSync(dir)
+  ? fs.readdirSync(dir, { recursive: true, withFileTypes: true })
+      .filter((entry) => entry.isFile())
+      .map((entry) => path.basename(entry.name))
+  : [];
+const doneFiles = filesUnder('tasks/done');
+const runningFiles = filesUnder('tasks/running');
+const queuedFiles = filesUnder('tasks/queue');
+const matches = (files, taskFile) => files.some((file) => file === taskFile || file.endsWith(`-${taskFile}`));
+const ancestry = new Map();
+const isMerged = (hash) => {
+  if (!hash) return false;
+  if (!ancestry.has(hash)) {
+    ancestry.set(hash, spawnSync('git', ['merge-base', '--is-ancestor', hash, 'main']).status === 0);
+  }
+  return ancestry.get(hash);
+};
+const resolvedStatus = (task) => {
+  if (task.status === 'verified-by-owner') return task.status;
+  const hasDoneReceipt = !task.taskFile || matches(doneFiles, task.taskFile);
+  if (task.mergeHash && hasDoneReceipt && isMerged(task.mergeHash)) return 'merged';
+  if (task.taskFile && matches(runningFiles, task.taskFile)) return 'building';
+  if (task.taskFile && matches(queuedFiles, task.taskFile)) return 'queued';
+  return task.status === 'merged' ? 'planned' : task.status;
+};
+const done = (status) => status === 'merged' || status === 'verified-by-owner';
+const label = (status) => ({
+  planned: 'planned', queued: 'queued', building: 'building', merged: 'merged',
+  'verified-by-owner': 'owner verified',
+})[status];
+
+let html = '';
+data.goals.forEach((goal, goalIndex) => {
+  const allTasks = goal.subgoals.flatMap((subgoal) => subgoal.tasks);
+  const goalDone = allTasks.filter((task) => done(resolvedStatus(task))).length;
+  html += `<details class="goal"${goalIndex === 0 ? ' open' : ''}><summary><span>${escapeHtml(goal.title)}</span><strong>${goalDone}/${allTasks.length}</strong></summary>`;
+  for (const subgoal of goal.subgoals) {
+    const statuses = subgoal.tasks.map(resolvedStatus);
+    const completed = statuses.filter(done).length;
+    html += `<details class="subgoal"><summary><span>${escapeHtml(subgoal.title)}</span><span class="progress-copy">${completed}/${subgoal.tasks.length}</span><progress aria-label="${escapeHtml(subgoal.title)} progress" max="${subgoal.tasks.length}" value="${completed}"></progress></summary><ul>`;
+    subgoal.tasks.forEach((task, index) => {
+      const status = statuses[index];
+      const hash = task.mergeHash && isMerged(task.mergeHash) ? `<code title="ancestry verified on main">${escapeHtml(task.mergeHash.slice(0, 8))}</code>` : '';
+      html += `<li data-task-id="${escapeHtml(task.id)}" data-status="${status}"><span>${escapeHtml(task.title)}</span><span class="leaf-meta"><span class="status status-${status}">${label(status)}</span>${hash}</span></li>`;
+    });
+    html += '</ul></details>';
+  }
+  html += '</details>';
+});
+process.stdout.write(html);
+NODE
+GOAL_TREE=$(<"$GOAL_TREE_TMP")
 
 cat > "$OUT" <<HTML
 <!DOCTYPE html>
@@ -196,10 +269,38 @@ cat > "$OUT" <<HTML
   .row { display:flex; gap:14px; flex-wrap:wrap; }
   .row .card { flex:1; min-width:300px; }
   .ok { color:#1a6b4a; font-weight:bold; } .bad { color:#a03020; font-weight:bold; } .dim { color:#6b5b46; }
+  .goal-tree { padding:0; overflow:hidden; }
+  details summary { cursor:pointer; }
+  .goal > summary { display:flex; justify-content:space-between; gap:16px; padding:12px 14px; background:#e8d5a8; font-size:17px; }
+  .goal + .goal { border-top:1px solid #c9b892; }
+  .goal > summary strong { color:#5b8a8a; font-size:14px; }
+  .subgoal { margin:8px 14px; border-left:3px solid #8b7d3c; padding-left:10px; }
+  .subgoal > summary { display:grid; grid-template-columns:minmax(180px,1fr) auto minmax(120px,220px); align-items:center; gap:10px; padding:5px 0; }
+  .progress-copy { color:#6b5b46; font-size:12px; }
+  progress { width:100%; height:10px; accent-color:#5b8a8a; }
+  .subgoal ul { list-style:none; margin:4px 0 10px; padding:0; }
+  .subgoal li { display:flex; justify-content:space-between; gap:12px; padding:5px 8px; border-top:1px dotted #d8c8a5; font-size:13px; }
+  .leaf-meta { display:flex; align-items:center; gap:8px; flex-shrink:0; }
+  .leaf-meta code { color:#6b5b46; font-size:11px; }
+  .status { min-width:78px; text-align:center; border:1px solid #c9b892; border-radius:3px; padding:1px 5px; font:11px 'SF Mono',Menlo,monospace; }
+  .status-merged, .status-verified-by-owner { color:#1a6b4a; border-color:#5b8a8a; background:#edf5ed; }
+  .status-building { color:#7b5317; border-color:#c4883a; background:#fff1c9; }
+  .status-queued { color:#315d66; border-color:#5b8a8a; background:#e6f2f2; }
+  .status-planned { color:#6b5b46; background:#f5ead3; }
+  @media (max-width:650px) {
+    body { margin:12px; }
+    .subgoal > summary { grid-template-columns:1fr auto; }
+    .subgoal progress { grid-column:1 / -1; }
+    .subgoal li { align-items:flex-start; flex-direction:column; }
+    .leaf-meta { width:100%; justify-content:space-between; }
+  }
 </style>
 </head>
 <body>
 <h1>⛏ Gold Rush — Factory Ledger <small>refreshed $TODAY $NOW · auto-reloads every 30s</small></h1>
+
+<h2>The goal tree</h2>
+<div class="card goal-tree" data-goal-tree>$GOAL_TREE</div>
 
 <h2>What really happened (last 24h)</h2>
 <div class="card"><pre>$DONE_TAIL</pre></div>
@@ -241,9 +342,9 @@ pending crafting orders: $PENDING</pre></div>
 <h2>Fire log (tail)</h2>
 <div class="card"><pre class="dim">$FIRELOG</pre></div>
 
-<p class="dim" style="margin-top:18px;font-size:12px">Read-only ledger view. Sources: git, tasks/, logs/. Generated by scripts/dashboard-gen.sh — no AI, no writes.</p>
+<p class="dim" style="margin-top:18px;font-size:12px">Read-only ledger view. Sources: git, tasks/goals.json, tasks/, logs/. Generated by scripts/dashboard-gen.sh — no AI, no writes.</p>
 </body>
 </html>
 HTML
 
-echo "[dashboard] $(date '+%F %T') regenerated" >> logs/health.log
+echo "[dashboard] $(date '+%F %T') regenerated" >> "$HEALTH_LOG"
