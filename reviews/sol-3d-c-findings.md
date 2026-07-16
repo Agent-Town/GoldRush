@@ -1,12 +1,73 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`
 
-Tip: exact Wave 8 wide SHA is reported in the attended handoff
+Tip: exact Wave 9 pilot SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the complete eight-building E3 family, E3 wagon/trough variants, and the shared-atlas voltage accessory pack pass the locked-camera, construction, export, placement, and live-loading gates. The Tavern rider is strengthened. The Crawler remains excluded.**
+Verdict: **READY-FOR-GATES — the two-building E4 verdict pilot passes the locked-camera, all-angle, construction, tonal, envelope, material, triangle, anchor, and byte-identical export gates. Wide production, wagon/trough variants, and `era-props.e4.json` deliberately wait for attended acceptance.**
+
+## Wave 9 pilot — E4 Motor building faces
+
+The pilot uses the only two Town identities explicitly transformed by `e4-motor-bundle.md` §A2: Tavern / Motor Inn and Schoolhouse / Polytechnic. Both edit the immediately preceding E3 identity forward, retain the inherited electrical and steam-age hardware, preserve the exact E3 envelope, and replace arc nodes with sequential `exhaust_anchor_*` nodes for factory-owned light dust puffs. No black-smoke geometry or emitter is authored.
+
+### Per-building findings
+
+| Building | What was required / first-pass finding | Final E4 identity edit | Locked-camera and all-angle verdict | Final contract |
+| --- | --- | --- | --- | --- |
+| Tavern / Motor Inn | §A2 requires a drive-through porte-cochère, parked vehicle silhouette, and retained E3 festoon. The first correct model put its motor growth on the turntable-facing side, where the locked Town camera could barely see it; its first camera-facing correction then read as an oversized perimeter gantry, and its first compact correction left square-wheel “teeth” on the rear view | compact camera-facing porte-cochère with dark attached canopy and road fascia, two grounded brass outer posts, brass/rubber runabout relief silhouette, retained E3 festoon and roof conductor | randomized crop A exposes the Motor face; four angles show a complete inherited shell, attached canopy, grounded posts, clean rear quarters, and finished motor pictogram | 14,984 / 15,000 tris; 1 material; 3 anchors; SHA `c922b0d54146…` |
+| Schoolhouse / Polytechnic | §A2 requires a drafting-hall wing with wide windows and a roof wind gauge. The first wing faced away from gameplay, and the first gauge mast had an ambiguous roof load path | visible-side drafting wing with wide teal/mullioned window bank, attached service exhaust and rubber/brass drive trim, roof-braced compact wind gauge, retained E3 orrery / conductor infrastructure | randomized crop B reads through both the wide window bank and roof gauge; four angles show the wing wrap, mast braces, service vent, and finished rear | 10,524 / 15,000 tris; 1 material; 2 anchors; SHA `f014a4e3107c…` |
+
+Both variants have one mesh, one primitive, one material, and one embedded 1024 x 1024 atlas; zero cameras, lights, animations, or emissive textures; and exact E3 bounds. The Tavern localized luminance delta is `-0.9027%`; the Polytechnic is `-0.3684%`, both far below the 5% ceiling.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry budgets | Tavern 14,984 and Schoolhouse 10,524; both pass the 15,000-triangle ceiling |
+| Materials and hygiene | 2/2 use one embedded 1024 atlas material; 0 cameras, lights, animations, or emissive textures |
+| Interfaces | exact inherited E3 envelopes; Tavern has `exhaust_anchor_1..3`, Polytechnic `exhaust_anchor_1..2`; no stale steam or arc anchors |
+| Dust style | anchor-only factory seam; model metadata records “light dust puff; never black smoke”; no smoke geometry, particles, lights, or animation |
+| Determinism | independent saved-BLEND verification and the canonical `scripts/reexport-pilot.sh` reproduce both GLBs byte-identically |
+| Tonal law | localized changed-building plus 64 px neighbor-context crops pass 2/2; worst absolute delta `0.9027%` |
+| Across-the-plaza QA | fresh unprimed reviewers select Tavern A at high confidence and Polytechnic B at 98% confidence without the answer key |
+| All-angle QA | final E3/E4 four-angle boards show complete wraps, retained prior-era infrastructure, and physically attached new systems; fresh final verdict is SHIP / SHIP |
+
+### Evidence index
+
+Production comparisons are **E3 on the left, E4 on the right**. Blind boards retain randomized A/B order.
+
+- Whole Town: [`town-two-pilot-verdict-e3-e4-ab.png`](../artifacts/town-e4-pilot/town-two-pilot-verdict-e3-e4-ab.png)
+- Locked-camera A/Bs: [`tavern`](../artifacts/town-e4-pilot/tavern-town-verdict-e3-e4-ab.png), [`schoolhouse`](../artifacts/town-e4-pilot/schoolhouse-town-verdict-e3-e4-ab.png)
+- Four-angle A/Bs: [`tavern`](../artifacts/town-e4-pilot/tavern-turntable-e3-e4-ab.png), [`schoolhouse`](../artifacts/town-e4-pilot/schoolhouse-turntable-e3-e4-ab.png)
+- Blind gameplay crops: [`tavern`](../artifacts/town-e4-pilot/blind-crops/tavern-pair.png), [`schoolhouse`](../artifacts/town-e4-pilot/blind-crops/schoolhouse-pair.png)
+- Machine evidence: [`asset-contract.json`](../artifacts/town-e4-pilot/asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e4-pilot/comparison-metrics.json), [`blind-key.json`](../artifacts/town-e4-pilot/blind-key.json)
+
+### F-3DC-25 — Motor growth must face the locked Town camera
+
+**Severity:** resolved visual gate
+
+**Evidence:** the first Tavern porte-cochère and Schoolhouse drafting wing were strong in front turntables but nearly absent in the gameplay crop because those local sides face away after their canonical slot rotations. The final edit moves the required functions onto each slot's plaza/camera-visible side without changing the canonical transform or inherited envelope. The randomized final crops now expose `5.82%` and `7.15%` changed pixels respectively inside their building-focused bounds.
+
+**Decision:** choose era-growth faces after composing the canonical slot rotation at the locked camera. A correct local-front edit still fails when the player sees only its roof or rear.
+
+### F-3DC-26 — Exhaust anchors belong in the official exporter seam
+
+**Severity:** resolved interface gate
+
+**Evidence:** the official exporter initially selected only `steam_anchor_*` and `arc_anchor_*`; its first Wave 9 run stripped the new contracted empties and changed both GLB hashes. The selector now recognizes `exhaust_anchor_*` through the same narrow path. Final official runs report all five nodes and reproduce `c922b0d5…` / `f014a4e3…` byte-identically.
+
+**Decision:** preserve the three ratified particle-mount families and nothing broader. The factory still owns plume geometry, color, intensity, timing, and the light-dust-only runtime behavior.
+
+### Wave 9 pilot integration boundary
+
+- Add only Tavern and Schoolhouse `.e4.blend` / `.e4.glb` siblings, their deterministic builder/verifier, evidence, and the narrow exporter-prefix extension.
+- E1, E2, and E3 production siblings remain untouched. Every E4 pilot opens the accepted E3 `.blend` and asserts both accepted source hashes before authoring.
+- Do not start the other six real buildings, wagon/trough variants, filling shed, fuel racks, road markers, or `era-props.e4.json` until the attended pilot verdict.
+- No runtime source, layout, spec, backlog, status, or e2e file changed. The existing era loader owns building discovery; the factory owns dust emitters and later accessory ratification/mounting.
+- Production inventory remains eight real buildings. No ninth identity is fabricated.
+- Branch base: `56b1efc3`; no push or main merge performed.
 
 ## Wave 8 wide — complete E3 Voltage Town
 
