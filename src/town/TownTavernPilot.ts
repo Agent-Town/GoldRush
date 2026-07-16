@@ -55,27 +55,44 @@ const PROP_MODEL_URLS = {
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;
+const MAX_ANCHOR_PARTICLES = 128;
 
 type Host = { scene: THREE.Scene; canvas: HTMLCanvasElement };
 type PilotState = 'loading' | 'loaded' | 'error' | 'failed';
 type BuildingId = Exclude<keyof typeof MODEL_PATHS, 'dynamo_hall'>;
 type ModelCandidate = { era: number; url: string };
 type BuildingOrientation = { width: number; height: number; depth: number; upY: number };
+type AnchorEmitterKind = 'steam' | 'arc' | 'dust';
+type AnchorEmitter = {
+  era: number;
+  prefix: string;
+  kind: AnchorEmitterKind;
+  instancesPerAnchor: number;
+  meshName: string;
+  anchorDataset: string;
+  particleDataset: string;
+};
 
-const steamPools = new WeakMap<THREE.Scene, TownSteamPool>();
+const ANCHOR_EMITTERS: readonly AnchorEmitter[] = [
+  { era: 2, prefix: 'steam_anchor_', kind: 'steam', instancesPerAnchor: 2, meshName: 'TownSteamPlumePool', anchorDataset: 'town3dSteamAnchors', particleDataset: 'town3dSteamPlumes' },
+  { era: 3, prefix: 'arc_anchor_', kind: 'arc', instancesPerAnchor: 2, meshName: 'TownArcFlickerPool', anchorDataset: 'town3dArcAnchors', particleDataset: 'town3dArcFlickers' },
+  { era: 4, prefix: 'exhaust_anchor_', kind: 'dust', instancesPerAnchor: 2, meshName: 'TownDustPuffPool', anchorDataset: 'town3dExhaustAnchors', particleDataset: 'town3dDustPuffs' },
+];
+const emitterPools = new WeakMap<THREE.Scene, Map<AnchorEmitterKind, TownAnchorEmitterPool>>();
 
-class TownSteamPool {
+class TownAnchorEmitterPool {
   private readonly anchors = new Map<string, THREE.Object3D[]>();
-  private readonly mesh = new THREE.InstancedMesh(
-    new THREE.SphereGeometry(0.38, 10, 8),
-    new THREE.MeshBasicMaterial({ color: '#fff8e8', transparent: true, opacity: 0.5, depthWrite: false }),
-    64,
-  );
+  private readonly mesh: THREE.InstancedMesh;
   private readonly object = new THREE.Object3D();
   private frame = 0;
 
-  constructor(private readonly scene: THREE.Scene, private readonly canvas: HTMLCanvasElement) {
-    this.mesh.name = 'TownSteamPlumePool';
+  constructor(
+    private readonly scene: THREE.Scene,
+    private readonly canvas: HTMLCanvasElement,
+    private readonly emitter: AnchorEmitter,
+  ) {
+    this.mesh = createAnchorEmitterMesh(emitter.kind);
+    this.mesh.name = emitter.meshName;
     this.mesh.frustumCulled = false;
     scene.add(this.mesh);
     this.frame = requestAnimationFrame(this.update);
@@ -95,7 +112,10 @@ class TownSteamPool {
     this.scene.remove(this.mesh);
     this.mesh.geometry.dispose();
     (this.mesh.material as THREE.Material).dispose();
-    steamPools.delete(this.scene);
+  }
+
+  get empty(): boolean {
+    return this.anchors.size === 0;
   }
 
   private readonly update = (at: number): void => {
@@ -103,10 +123,8 @@ class TownSteamPool {
     let index = 0;
     for (const anchor of [...this.anchors.values()].flat()) {
       anchor.getWorldPosition(position);
-      for (let puff = 0; puff < 2 && index < this.mesh.instanceMatrix.count; puff += 1) {
-        const phase = ((at * 0.00018) + puff * 0.48 + index * 0.13) % 1;
-        this.object.position.set(position.x, position.y + phase * 0.7, position.z);
-        this.object.scale.setScalar(0.42 + phase * 0.34);
+      for (let particle = 0; particle < this.emitter.instancesPerAnchor && index < this.mesh.instanceMatrix.count; particle += 1) {
+        syncAnchorEmitter(this.object, this.emitter.kind, position, at, particle, index);
         this.object.updateMatrix();
         this.mesh.setMatrixAt(index++, this.object.matrix);
       }
@@ -118,9 +136,53 @@ class TownSteamPool {
 
   private publish(): void {
     const count = [...this.anchors.values()].reduce((sum, anchors) => sum + anchors.length, 0);
-    this.canvas.dataset.town3dSteamAnchors = String(count);
-    this.canvas.dataset.town3dSteamPlumes = String(count * 2);
+    this.canvas.dataset[this.emitter.anchorDataset] = String(count);
+    this.canvas.dataset[this.emitter.particleDataset] = String(count * this.emitter.instancesPerAnchor);
   }
+}
+
+function createAnchorEmitterMesh(kind: AnchorEmitterKind): THREE.InstancedMesh {
+  const geometry = kind === 'arc'
+    ? new THREE.BoxGeometry(0.08, 0.34, 0.035)
+    : kind === 'dust'
+      ? new THREE.CircleGeometry(0.42, 18)
+      : new THREE.SphereGeometry(0.38, 10, 8);
+  const material = new THREE.MeshBasicMaterial({
+    color: kind === 'arc' ? '#83ded7' : kind === 'dust' ? '#c4883a' : '#fff8e8',
+    transparent: true,
+    opacity: kind === 'arc' ? 0.9 : kind === 'dust' ? 0.34 : 0.5,
+    depthWrite: false,
+  });
+  return new THREE.InstancedMesh(geometry, material, MAX_ANCHOR_PARTICLES);
+}
+
+function syncAnchorEmitter(
+  object: THREE.Object3D,
+  kind: AnchorEmitterKind,
+  position: THREE.Vector3,
+  at: number,
+  particle: number,
+  index: number,
+): void {
+  object.rotation.set(0, 0, 0);
+  if (kind === 'steam') {
+    const phase = ((at * 0.00018) + particle * 0.48 + index * 0.13) % 1;
+    object.position.set(position.x, position.y + phase * 0.7, position.z);
+    object.scale.setScalar(0.42 + phase * 0.34);
+    return;
+  }
+  if (kind === 'arc') {
+    const phase = ((at * 0.012) + particle * 0.43 + index * 0.19) % 1;
+    object.position.set(position.x + (particle ? 0.06 : -0.06), position.y + 0.05 + phase * 0.18, position.z);
+    object.rotation.z = phase * Math.PI;
+    object.scale.setScalar(0.45 + (Math.sin(at * 0.03 + index * 2.7) + 1) * 0.28);
+    return;
+  }
+  const phase = ((at * 0.0003) + particle * 0.48 + index * 0.17) % 1;
+  const angle = index * 2.4;
+  object.position.set(position.x + Math.cos(angle) * phase * 0.32, position.y + phase * 0.18, position.z + Math.sin(angle) * phase * 0.32);
+  object.rotation.set(-Math.PI / 2, 0, phase * Math.PI);
+  object.scale.setScalar(0.38 + phase * 0.45);
 }
 
 function eraCandidates(paths: { base: string; variant: string }): ModelCandidate[] {
@@ -144,15 +206,33 @@ function variantModelUrl(path: string): string | undefined {
   return injected ?? BUNDLED_VARIANT_URLS[path];
 }
 
-function addSteamAnchors(scene: THREE.Scene, canvas: HTMLCanvasElement, owner: string, model: THREE.Object3D, era: number): () => void {
-  if (era < 2) return () => {};
+function addAnchorEmitters(scene: THREE.Scene, canvas: HTMLCanvasElement, owner: string, model: THREE.Object3D, era?: number): () => void {
+  for (const candidate of ANCHOR_EMITTERS) {
+    canvas.dataset[candidate.anchorDataset] ??= '0';
+    canvas.dataset[candidate.particleDataset] ??= '0';
+  }
+  const candidates = era === undefined ? ANCHOR_EMITTERS : ANCHOR_EMITTERS.filter((candidate) => candidate.era === era);
+  let emitter: AnchorEmitter | undefined;
   const anchors: THREE.Object3D[] = [];
-  model.traverse((node) => { if (/^steam_anchor_\d+$/.test(node.name)) anchors.push(node); });
-  if (!anchors.length) return () => {};
-  const pool = steamPools.get(scene) ?? new TownSteamPool(scene, canvas);
-  steamPools.set(scene, pool);
+  model.traverse((node) => {
+    const match = candidates.find((candidate) => node.name.startsWith(candidate.prefix));
+    if (!match || (emitter && emitter !== match)) return;
+    emitter = match;
+    anchors.push(node);
+  });
+  if (!emitter || !anchors.length) return () => {};
+  const matchedEmitter = emitter;
+  const pools = emitterPools.get(scene) ?? new Map<AnchorEmitterKind, TownAnchorEmitterPool>();
+  const pool = pools.get(matchedEmitter.kind) ?? new TownAnchorEmitterPool(scene, canvas, matchedEmitter);
+  pools.set(matchedEmitter.kind, pool);
+  emitterPools.set(scene, pools);
   pool.add(owner, anchors);
-  return () => pool.remove(owner);
+  return () => {
+    pool.remove(owner);
+    if (!pool.empty) return;
+    pools.delete(matchedEmitter.kind);
+    if (!pools.size) emitterPools.delete(scene);
+  };
 }
 
 function publish(
@@ -248,7 +328,7 @@ function installTownBuildingPilot(
   if (canvas.dataset.town3dPilotState === 'disposed') return () => {};
   let disposed = false;
   let model: THREE.Object3D | undefined;
-  let removeSteam = () => {};
+  let removeEmitters = () => {};
   const shell = scene.getObjectByName(id === 'stamp-mill' ? 'TownStampMillSite' : `TownFacadeAssembly:${id}`);
   const building = id === 'stamp-mill' ? { footprint: { w: 6.2, d: 1.65 } } : townBuildings.find((entry) => entry.id === id)!;
   const slot = townPlazaSlot(id);
@@ -287,7 +367,7 @@ function installTownBuildingPilot(
       model = loaded;
       scene.add(model);
       publishBuildingOrientation(canvas, id, loaded, metrics);
-      removeSteam = addSteamAnchors(scene, canvas, id, loaded, candidate.era);
+      removeEmitters = addAnchorEmitters(scene, canvas, id, loaded, candidate.era);
       canvas.dataset.town3dPilotEra = String(candidate.era);
       canvas.dataset.town3dPilotModel = candidate.url;
       canvas.dataset.town3dPilotLoadedIds = [...new Set([...(canvas.dataset.town3dPilotLoadedIds ?? '').split(',').filter(Boolean), id])].join(',');
@@ -306,7 +386,7 @@ function installTownBuildingPilot(
   return () => {
     disposed = true;
     clearBuildingOrientation(canvas, id);
-    removeSteam();
+    removeEmitters();
     if (shell) shell.visible = true;
     if (!model) return;
     scene.remove(model);
@@ -320,7 +400,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
   const { scene, canvas } = host;
   let disposed = false;
   let model: THREE.Object3D | undefined;
-  let removeSteam = () => {};
+  let removeEmitters = () => {};
   clearBuildingOrientation(canvas, 'dynamo_hall');
   publish(canvas, 'loading', 'facade');
   const candidates = eraCandidates(MODEL_PATHS.dynamo_hall);
@@ -346,7 +426,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
     model = loaded;
     scene.add(loaded);
     publishBuildingOrientation(canvas, 'dynamo_hall', loaded, metrics);
-    removeSteam = addSteamAnchors(scene, canvas, 'dynamo_hall', loaded, candidate.era);
+    removeEmitters = addAnchorEmitters(scene, canvas, 'dynamo_hall', loaded, candidate.era);
     canvas.dataset.town3dPilotEra = String(candidate.era);
     canvas.dataset.town3dPilotModel = candidate.url;
     group.visible = false;
@@ -360,7 +440,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
   return () => {
     disposed = true;
     clearBuildingOrientation(canvas, 'dynamo_hall');
-    removeSteam();
+    removeEmitters();
     group.visible = true;
     if (!model) return;
     scene.remove(model);
@@ -444,6 +524,7 @@ export function installTownPlatePilot({ scene, canvas }: Host): () => void {
 export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void {
   let disposed = false;
   const mounted: THREE.Object3D[] = [];
+  const removeEmitters: Array<() => void> = [];
   const descriptors = townPropRing.props.filter((prop) => prop.kind === 'covered_wagon' || prop.kind === 'water_trough');
   const activeEra = activeEpoch().order;
   const manifests = Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) => index + 2)
@@ -510,6 +591,7 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
       return;
     }
     scene.add(...mounted);
+    for (const model of mounted) removeEmitters.push(addAnchorEmitters(scene, canvas, model.name, model));
     canvas.dataset.town3dPilotInstances = String(mounted.length);
     canvas.dataset.town3dEraPropIds = eraProps.map((prop) => prop.id).join(',');
     publish(canvas, 'loaded', 'glb', {
@@ -525,6 +607,7 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
 
   return () => {
     disposed = true;
+    removeEmitters.forEach((remove) => remove());
     for (const model of mounted) {
       scene.remove(model);
       disposeObject3D(model);
