@@ -17,6 +17,7 @@ export const SAVE_SLOTS_KEY = 'gr.saveSlots.v1';
 export const TOWN_NAME_KEY = 'gr.town.name.v1';
 export const MEDALS_KEY = 'gr.medals.v1';
 export const FIRST_CLAIM_DONE_KEY = 'gr.firstClaim.done.v1';
+export const DREDGE_QUEEN_WRECK_KEY = 'gr.e5W6Wreck.v1';
 export const DEFAULT_PROFILE_NAME = 'Robin';
 export const DEFAULT_DIFFICULTY_PRESET: DifficultyPresetId = 'trail';
 
@@ -28,6 +29,7 @@ export const PROFILE_DATA_KEYS = new Set([
   TOWN_NAME_KEY,
   MEDALS_KEY,
   FIRST_CLAIM_DONE_KEY,
+  DREDGE_QUEEN_WRECK_KEY,
   LEGACY_SCOREBOARD_KEY,
   SCOREBOARD_KEY,
   RESEARCH_STATE_KEY,

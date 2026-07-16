@@ -149,6 +149,7 @@ import { BuildSystem, type DemolishCandidate, type ReservedFootprint, type Upgra
 import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
+import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
@@ -641,6 +642,16 @@ export class Game {
     },
     (position, text) => this.vfx.floatText(position, text, '#c4883a'),
   );
+  private readonly dredgeQueenBoss = new DredgeQueenBossSystem(
+    () => this.enemies.all,
+    (position, params) => this.enemies.spawn(position, params),
+    (enemy) => this.enemies.recycle(enemy),
+    () => this.deepwaterClaim?.snapshot().wrecks ?? [],
+    () => this.primaryActor.group.position,
+    (amount, sourceId) => this.combat.damageActor(amount, sourceId),
+    (position, amount) => this.goldPickups.spawn(position, amount) >= 0,
+    this.activeContract.id === 'e5-deepwater-claim',
+  );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
     (frame) => this.present(frame),
@@ -1123,7 +1134,8 @@ export class Game {
       this.kills += 1;
       const isCrawlerComponent = event.variantId === 'dynamo_crawler';
       const isLandYachtComponent = event.variantId === 'land_yacht';
-      if (!isCrawlerComponent && !isLandYachtComponent) {
+      const isDredgeQueenComponent = event.variantId === 'dredge_queen';
+      if (!isCrawlerComponent && !isLandYachtComponent && !isDredgeQueenComponent) {
         const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
         this.discoverLedgerEnemyEntry(entryId);
         this.revealLedgerEnemyStats(entryId);
@@ -1135,6 +1147,10 @@ export class Game {
       if (isLandYachtComponent) {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.landYachtBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
+      if (isDredgeQueenComponent) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.dredgeQueenBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
       }
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
@@ -1579,6 +1595,7 @@ export class Game {
     this.pressureArsenalSystem.dispose();
     this.crawlerBoss.dispose();
     this.landYachtBoss.dispose();
+    this.dredgeQueenBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1758,6 +1775,7 @@ export class Game {
       }
       this.crawlerBoss.update(this.timeAlive);
       this.landYachtBoss.update(this.timeAlive);
+      this.dredgeQueenBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -2613,6 +2631,7 @@ export class Game {
     this.scene.add(this.enemies.group);
     this.scene.add(this.crawlerBoss.group);
     this.scene.add(this.landYachtBoss.group);
+    this.scene.add(this.dredgeQueenBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
   }
@@ -3248,7 +3267,9 @@ export class Game {
         baron: this.activeContract.twist.baron ?? null,
         medals: loadMedals(),
       },
-      deepwaterClaim: this.deepwaterClaim?.snapshot() ?? null,
+      deepwaterClaim: this.deepwaterClaim
+        ? Object.assign(this.deepwaterClaim.snapshot(), { dredgeQueenBoss: this.dredgeQueenBoss.diagnostics() })
+        : null,
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
@@ -3417,6 +3438,7 @@ export class Game {
   private waitsForBaronDefeat(): boolean {
     const baron = this.activeContract.twist.baron;
     if (!baron || this.baronBeatenThisRun) return false;
+    if (baron.variantId === 'dredge_queen') return !this.dredgeQueenBoss.diagnostics().persistentWreck;
     return baron.variantId !== 'dynamo_crawler' || this.waveSystem.diagnostics.wave >= baron.wave;
   }
 
@@ -3504,21 +3526,33 @@ export class Game {
     const pending = snapshot.corsairWaves.slice(this.deepwaterCorsairWavesSpawned);
     this.deepwaterCorsairWavesSpawned = snapshot.corsairWaves.length;
     if (isSpawnDisabled()) return;
-    for (const wave of pending) this.spawnDeepwaterCorsairs(wave);
+    const baron = this.activeContract.twist.baron;
+    for (const wave of pending) {
+      const bossEscort = this.dredgeQueenBoss.onStormWave(
+        wave,
+        baron?.variantId === 'dredge_queen' ? baron.wave : Number.POSITIVE_INFINITY,
+      );
+      this.events.emit({ type: 'wave_started', at: wave.scheduledAt, wave: wave.wave });
+      this.spawnDeepwaterCorsairs(wave, bossEscort);
+    }
   }
 
-  private spawnDeepwaterCorsairs(wave: CorsairSkiffWave): void {
+  private spawnDeepwaterCorsairs(wave: CorsairSkiffWave, bossEscort = false): void {
     const roster = this.activeContract.twist.enemyRoster?.find((entry) => entry.id === 'corsair_skiff');
-    for (const skiff of wave.enemies) {
-      const enemy = this.enemies.spawn(new THREE.Vector3(skiff.x, Balance.enemy.groundY, skiff.z), {
-        hpScale: roster?.hpScale,
-        speedScale: roster?.speedMult,
-        visualScale: roster?.visualScale,
-        tint: roster?.tint,
-        variantId: roster?.id,
-        variantLabel: roster?.label,
-      });
-      enemy?.scriptMoveTo(wave.toX - 2, skiff.z, enemy.moveSpeed, { ignoreTerrain: true });
+    const multiplier = bossEscort ? this.dredgeQueenBoss.escortMultiplier : 1;
+    for (let copy = 0; copy < multiplier; copy += 1) {
+      for (const skiff of wave.enemies) {
+        const z = skiff.z + copy * 1.2;
+        const enemy = this.enemies.spawn(new THREE.Vector3(skiff.x, Balance.enemy.groundY, z), {
+          hpScale: roster?.hpScale,
+          speedScale: roster?.speedMult,
+          visualScale: roster?.visualScale,
+          tint: roster?.tint,
+          variantId: roster?.id,
+          variantLabel: bossEscort ? 'Dredge-Queen Escort' : roster?.label,
+        });
+        enemy?.scriptMoveTo(wave.toX - 2, z, enemy.moveSpeed, { ignoreTerrain: true });
+      }
     }
   }
 
@@ -3550,7 +3584,7 @@ export class Game {
     this.charmPauseActive = false;
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
-    if (baron.variantId === 'dynamo_crawler' || baron.variantId === 'land_yacht') this.baronStandardPosition.copy(position);
+    if (baron.variantId === 'dynamo_crawler' || baron.variantId === 'land_yacht' || baron.variantId === 'dredge_queen') this.baronStandardPosition.copy(position);
     else this.plantBaronStandard(position);
     const burstScale = Math.max(3, enemy?.visualScale ?? 3);
     this.combatVfx.dustPuff(position, burstScale);
@@ -3587,11 +3621,13 @@ export class Game {
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     this.baronBeatenThisRun = true;
+    const runWave = this.deepwaterClaim?.snapshot().corsairWaves.length ?? this.waveSystem.diagnostics.wave;
     const alreadySecured = this.runManager?.diagnostics.secured === true;
     const objectiveAllowsSecure = !this.activeContract.twist.powerGrid || this.canyonConnectCompletedByDeadline;
+    const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
     const secured = alreadySecured
-      || (objectiveAllowsSecure && this.runManager?.secureCurrentRun(this.waveSystem.diagnostics.wave) === true);
-    if (!secured) {
+      || (objectiveAllowsSecure && !defeatRecordedBeforeSecureWave && this.runManager?.secureCurrentRun(runWave) === true);
+    if (!secured && !defeatRecordedBeforeSecureWave) {
       this.baronBeatenThisRun = false;
       return;
     }
@@ -4643,6 +4679,7 @@ export class Game {
     this.canyonConnectFailed = false;
     this.crawlerBoss.reset();
     this.landYachtBoss.reset();
+    this.dredgeQueenBoss.reset();
     this.tram?.reset();
     this.ferrisWheel?.reset();
     this.fuelSystem?.reset();
