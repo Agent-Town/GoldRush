@@ -1,12 +1,89 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e6-wide` (Wave 12 wide)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 12 wide `1a58335f`
 
-Tip: exact Wave 10 SHA is reported in the attended handoff
+Tip: exact Wave 12 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the complete E5 family is a fresh, working underwater harbor whose heavy buildings rest on the seabed; the asset wave is gate-clean, with one explicit factory integration requirement: honor `floodReset` before mounting the E5 accessory manifest.**
+Verdict: **READY-FOR-GATES — the E6 wide complement completes the Atomic Homestead's civic silhouette on the Glow Mesa; all six production GLBs are deterministic, grounded, budget-clean, and reviewed from every side against fresh references rendered from current main.**
+
+## Wave 12 wide — complete E6 Mesa civic set
+
+This wave completes the unbuilt half of E6 §A1 and §A2: Appliance Pen, Decay Clock, Catalog Warehouse, Sunline Mount, Glow Fence, and Isotope Institute. The accepted Atomic Diner / Reactor Dome / Isotope Kitchen pilot and the Mesa plate are evidence-only dependencies; their bytes are not duplicated here. Every working reference was rerendered from tracked files at full base `1a58335f65645b8491e50763e10a32d12d8696f1`. The pre-merge plaza-wheel screenshot is historical evidence only and was not used as an input.
+
+### Per-asset findings
+
+| Asset | All-angle finding | Final E6 correction / identity | Final contract |
+| --- | --- | --- | --- |
+| Appliance Pen | first massing did not communicate a functional civic yard | open enamel corral, pictogram gate, tether tower, copper lead, feeding trough, and two visibly pacified appliances | 4,766 tris; 4.50 x 3.30 footprint; SHA `be11b90d1cf9…` |
+| Decay Clock | front-only storytelling would disappear from side approaches | four-sided civic tower with large teal dial faces, amber decay wedges, chrome crown, side supports, and a grounded stair | 6,000 tris; 3.32 x 2.72 footprint; SHA `2b87660a3c7…` |
+| Catalog Warehouse | initial rear was too blank, and the first evidence orientation put it toward the plaza | complete rear loading doors, frame, starburst seal, braces, roof vents, and a rotated premium placement that presents the working loading face | 5,670 tris; 5.587 x 3.743 footprint; SHA `f72109125d3c…` |
+| Sunline Mount | a recolored inherited globe did not satisfy the A2 transform | the upper globe is replaced by a genuine concave parabolic dish with struts and teal focus bead, inside the exact inherited envelope | 1,346 tris; exact 1.35 x 1.35 inherited footprint; SHA `44d17919c60e…` |
+| Glow Fence | first starstone pips read on only one approach face | retained timber rails gain inset teal pips on both faces, preserving the exact inherited silhouette and footprint | 1,012 tris; exact 0.46 x 3.00 inherited footprint; SHA `686e72c52051…` |
+| Isotope Institute | the dome/dial read, but the dial first appeared to float off the tower | Navigation School shell and public face persist; supported chrome dome, half-life dial, brackets, teal observation band, and atomic finial create the E6 skyline | 7,392 tris; exact 3.96 x 3.375 inherited footprint; SHA `f3de54fb0737…` |
+
+The full E6 evidence composition also includes the accepted pilot trio by exact remote hashes: Atomic Diner `68ec4ed82ec2…`, Reactor Dome `64c81b9b6e62…`, and Isotope Kitchen `9664b671eb91…`. The Mesa evidence plate is fixed to SHA `067c8c652134…`. No gray massing proxy survives in the candidate frame.
+
+### E6 cadence and inheritance
+
+| Fixture | Verdict | Reason / inherited signature |
+| --- | --- | --- |
+| Appliance Pen | NEW, E6 ephemeron | atomic appliances require a cheerful civic wrangling yard unique to this era |
+| Decay Clock | NEW | the visible four-face timer makes E6's decay mechanic legible as town infrastructure |
+| Catalog Warehouse | NEW | the abandoned mail-order depot explains where the feral appliances enter the era |
+| Sunline Mount | REPLACE + PERSIST | active signal globe becomes the named parabolic mirror; the exact turret footprint, lower rings, and tower body persist |
+| Glow Fence | UPGRADE + PERSIST | starstone pips plausibly touch the guardrail; timber, rail rhythm, footprint, and silhouette carry unchanged |
+| Isotope Institute | REPLACE + PERSIST | sextant-era tower cap becomes the supported dome/dial; Navigation School shell, footprint, and civic public face persist |
+| Pan Monument | PERSIST | unchanged independent heritage asset; it is neither rebuilt into an E6 fixture nor included in these GLBs |
+| Pre-flood / harbor-only fixtures | GONE, named site break | E6 starts a fresh dry chain on the Mesa, so the old square and drowned-harbor-only objects do not silently migrate to this site |
+
+E6 defines no live emitter-anchor family, so no speculative anchor nodes were invented. These assets use one mesh, one primitive, one non-emissive baked material, and one embedded atlas each; they contain zero lights, cameras, animations, or helpers.
+
+### Placement proposal and ownership boundary
+
+| Mesa role | Evidence placement |
+| --- | --- |
+| Atomic Diner | Tavern-sized base site |
+| Isotope Kitchen | General Store-sized base site |
+| Isotope Institute | Schoolhouse-sized base site |
+| Decay Clock | Claim Office-sized base site |
+| Appliance Pen | Assay Office-sized base site |
+| Reactor Dome | premium mesa-top site |
+| Catalog Warehouse | opposing premium northern site, loading face inward |
+
+Sunline Mount and Glow Fence are shown as compact context transforms; the factory owns their final runtime mounts. No `src/`, layout, spec, status, backlog, or test file changes ride this asset wave.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry / materials | all six assets under 15,000 tris; one mesh, primitive, material, and embedded atlas each |
+| Grounding / footprint | all six terminate at canonical `y = 0`; new buildings fit their proposed sites; all three transforms preserve inherited XZ footprints |
+| Transform inheritance | source BLEND/GLB hashes and source bounds asserted for Sunline Mount, Glow Fence, and Isotope Institute |
+| Export hygiene | zero cameras, lights, animations, emissive textures, or invented anchors |
+| Determinism | canonical `scripts/reexport-pilot.sh` and the dedicated verifier reproduce all six GLBs byte-identically |
+| Across-the-plaza | `diffRatio16 = 9.3706%`; candidate edge energy is `1.3513x` baseline; average luminance delta is `-1.1861` |
+| All-angle review | six four-angle turntables plus three transform identity A/Bs reviewed; rear/side attachment and wrap corrections applied before final export |
+| Fresh-reference law | E1, E4 boulevard + motor caravan, and submerged E5 references rerendered from base `1a58335f6564`; no prior PNG used as guidance |
+| App regression | `npm run build` passes on the final production bytes |
+| Independent review | not run because this session explicitly forbids sub-agent delegation; local full-frame, crop, identity A/B, and all-angle review completed |
+
+### Evidence index
+
+- Current-file reference board: [`town-e1-e4-e5-current.png`](../artifacts/town-e6-wide/current-references/1a58335f6564-main/town-e1-e4-e5-current.png)
+- Locked ensemble A/B: [`mesa-e6-wide-across-plaza-ab.png`](../artifacts/town-e6-wide/mesa-e6-wide-across-plaza-ab.png)
+- Feature crop: [`mesa-e6-wide-key-feature-crop.png`](../artifacts/town-e6-wide/mesa-e6-wide-key-feature-crop.png)
+- Six four-angle audits: [`turntables/`](../artifacts/town-e6-wide/turntables/)
+- Transform identity A/Bs: [`identity/`](../artifacts/town-e6-wide/identity/)
+- Machine contracts: [`asset-contract.json`](../artifacts/town-e6-wide/asset-contract.json), [`visual-evidence-contract.json`](../artifacts/town-e6-wide/visual-evidence-contract.json)
+
+### Wave 12 integration boundary
+
+- Add six production `.blend` / `.glb` pairs, the deterministic builder/renderer/verifier, fresh reference boards, visual evidence, and this findings entry.
+- The accepted E6 pilot trio and Mesa plate remain exact evidence-only dependencies; attended integration may land the branches independently without file collision.
+- Existing E1-E5 assets, the Pan Monument, runtime source, layout, specs, status, backlog, and e2e files remain untouched.
+- Branch base: full `origin/main` SHA `1a58335f65645b8491e50763e10a32d12d8696f1`.
 
 ## Wave 10 — E5 Deepwater Harbor Rebuild
 
