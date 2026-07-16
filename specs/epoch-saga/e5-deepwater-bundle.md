@@ -46,3 +46,9 @@
 
 ## §C — engine prereqs (saga ladder E5 rows)
 Water volumes + boat physics (GT-05) · deck-anchor building system (base-on-vehicle!) · dive state + air meter · storm scheduler v2 (fronts carry waves) · long-body spline enemy (leviathan) · competing-boss loot timer. Reuse ledger: E3 light-radius → lighthouse beam; E4 vehicle tech → skiffs/boat; W1-02 water shader → the whole stage.
+
+## OWNER RULING — DREDGE-QUEEN ACT STRUCTURE (2026-07-16, verbatim, ratifying the storybook choreography with one correction)
+"The inconsistency in the boss fight is how the paddles broke, that is not explained. So that should be part of Act 1 - stop her from clawing up history (which potentially the players don't really care about) - but at the same time destroy the paddles to reach Act 2. Otherwise - this is great. Especially that she becomes another map."
+BINDING on the fight's design (bundle wins conflicts; the storybook's third printing carries the same staging):
+- **Act 1 is TWO-FRONT**: (a) the claw-interrupt race = the STORY pressure (optional, rewarded — the emotional layer for players who care about the history being dredged); (b) the PADDLES = the required player objective whose destruction GATES Act 2. Never open Act 2 on an unexplained broken-paddles state.
+- Acts 0, 2, 3 ratified as choreographed (dread flag-on-storm-front · anchored stand + fight-from-beneath · hold cracks, sea's tax, crew rows off warm, W6 wreck persists as a future dive site — the owner singled out the wreck-becomes-map beat as the keeper).
