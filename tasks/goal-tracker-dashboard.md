@@ -1,0 +1,8 @@
+# goal-tracker-dashboard — the goal tree (lane-b; "feat:")
+Pre-flight (LANE-SAFETY): standard safe-dupe; LADDER-STALL; GROUND-TRUTH. CODEX on own line below.
+CODEX: model=gpt-5.6-sol effort=high
+ATTENDED-AUTHORED 2026-07-16 — OWNER (verbatim): "the big goals at the top and then the different subgoals under it... you can then add the tasks we add and do under these subtrees keeping the graph/network updated. Then we can have better tracking and not miss anything?"
+## READ-FIRST: scripts/dashboard-gen.sh (extend, don't fork; ancestry-verified MERGED detection is the truth source) · tasks/BACKLOG.md ladders (the seed content) · tasks/done + tasks/*.md naming.
+## SCOPE: (1) `tasks/goals.json` — the tree: goal → subgoals → leaf tasks ({id, title, taskFile?, mergeHash?, status: planned|queued|building|merged|verified-by-owner}); SEED IT from current truth: goals = The Ten Eras (E1-E10 subgoals w/ engine/contracts/boss/art/town/maps leaves), The 3D World, The Stream, Marketing, Factory Infra — populate done leaves with their real merge hashes (git log evidence, not memory). (2) dashboard-gen renders the tree as a collapsible outline w/ per-subgoal progress bars (done/total) + auto-status: leaf w/ taskFile in done/ + ancestry-merged ⇒ merged (never hand-status what git can prove). (3) THE REGISTRATION LAW appended to fire.md duties + BACKLOG header: every authored master adds its leaf to goals.json IN THE SAME COMMIT; every drain flips status. (4) node --test: schema valid, statuses match git truth for 10 sampled leaves.
+## Firewall: goals.json + dashboard-gen section + the law lines + test + artifacts. NO task-file changes.
+END: READY-FOR-GATES + the seeded tree summary (counts per goal).
