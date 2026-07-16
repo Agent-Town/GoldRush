@@ -6,7 +6,7 @@ import { PNG } from 'pngjs';
 
 const ARTIFACT_DIR = path.resolve('artifacts/terrain3d-registry');
 const LANDMARK_ARTIFACT_DIR = path.resolve('artifacts/wire-landmark-mounts');
-const ASSET = /map-rebuild-spike\/(?:landmarks\/.*|(?:the-claim|dry-gulch|twin-banks|night-shift|baron|hill-mine|trestle)-(?:terrain|panorama)[^?]*)\.glb/;
+const ASSET = /map-rebuild-spike\/(?:landmarks\/.*|(?:the-claim|dry-gulch|twin-banks|night-shift|baron|hill-mine|trestle|blackout-ridge|dust-flats)-(?:terrain|panorama)[^?]*)\.glb/;
 const isAssetRequest = (request: { url(): string; resourceType(): string }) => request.resourceType() === 'fetch' && ASSET.test(request.url());
 type Errors = { console: string[]; page: string[] };
 type Contract = {
@@ -15,6 +15,7 @@ type Contract = {
   contractFile: string;
   assets: [string, string];
   water: Array<{ x: number; z: number; zone: string; source?: string }>;
+  heightProbes?: Array<[number, number]>;
 };
 
 const CONTRACTS: Contract[] = [
@@ -25,6 +26,8 @@ const CONTRACTS: Contract[] = [
   { id: 'e1-baron', panorama: 'baron-panorama', contractFile: 'baron', assets: ['baron-panorama.glb', 'baron-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford', source: 'river' }, { x: 12, z: 0, zone: 'river', source: 'river' }] },
   { id: 'e2-hill-mine', panorama: 'hill-mine-panorama', contractFile: 'hill-mine', assets: ['hill-mine-panorama.glb', 'hill-mine-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford' }, { x: -12, z: 0, zone: 'river' }] },
   { id: 'e2-trestle', panorama: 'trestle-panorama', contractFile: 'trestle', assets: ['trestle-panorama.glb', 'trestle-terrain.glb'], water: [{ x: 0, z: 0, zone: 'ford' }, { x: 12, z: 0, zone: 'river' }] },
+  { id: 'e3-blackout-ridge', panorama: 'blackout-ridge-panorama', contractFile: 'blackout-ridge', assets: ['blackout-ridge-panorama.glb', 'blackout-ridge-terrain.glb'], water: [] },
+  { id: 'e4-dust-flats', panorama: 'dust-flats-panorama', contractFile: 'dust-flats', assets: ['dust-flats-panorama.glb', 'dust-flats-terrain.glb'], water: [], heightProbes: [[24, -36], [60, -72], [0, -12], [72, 24], [-72, 24]] },
 ];
 
 type LandmarkMount = { id: string; asset?: string; position: [number, number, number] };
@@ -102,7 +105,7 @@ async function fingerprint(browser: Browser, contractId: string, pilot: boolean)
   return { payload, hash: createHash('sha256').update(JSON.stringify(payload)).digest('hex'), errors, assetRequests };
 }
 
-test('all seven contracts mount terrain, panorama, and grounded render-only landmarks with matching water', async ({ page }, testInfo) => {
+test('all nine contracts mount terrain, panorama, and grounded render-only landmarks with matching water', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
   const report = [];
@@ -145,7 +148,7 @@ test('all seven contracts mount terrain, panorama, and grounded render-only land
       expect(water[index]?.zone).toBe(expected.zone);
       if (expected.source) expect(water[index]?.waterSource).toBe(expected.source);
     }
-    const heights = await page.evaluate(() => [[-15, 14], [24, 25], [-13, -10], [18, 11], [0, 12]].map(([x, z]) => window.__GR_TEST__!.terrainVisualY(x!, z!)));
+    const heights = await page.evaluate((probes) => probes.map(([x, z]) => window.__GR_TEST__!.terrainVisualY(x, z)), contract.heightProbes ?? [[-15, 14], [24, 25], [-13, -10], [18, 11], [0, 12]]);
     expect(Math.max(...heights) - Math.min(...heights)).toBeGreaterThan(0.25);
     report.push({ contract: contract.id, panorama: contract.panorama, requests, landmarks: expectedMounts.length, grounded, water, heights });
 
@@ -252,7 +255,7 @@ test('flag-off and flag-on keep bounds, spawns, fog, masks, and simulation byte-
   await writeFile(path.join(ARTIFACT_DIR, `fingerprints-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
 });
 
-test('all seven contracts stay painted in LITE and on invalid terrain bytes', async ({ page }) => {
+test('all nine contracts stay painted in LITE and on invalid terrain bytes', async ({ page }) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
   for (const contract of CONTRACTS) {
