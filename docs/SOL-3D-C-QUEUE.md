@@ -111,3 +111,10 @@ Accretion runs in TWO CHAINS, broken at the flood:
 - **E5 = THE REBUILD**: the water reaches the town; the .e5 faces are NOT a layer on .e4 — they are a fresh build in harbor vocabulary (Harbor House, rope trim, tide boards per the bundle's A2). Pre-flood relics are GONE except NAMED SURVIVORS (heritage list, owner-extendable): the PAN MONUMENT (carried to high ground — the one thing the town would save). The drowned relics live on as the sea-floor wrecks in E5's runs (already canon: the wreck museum).
 - **CHAIN 2 (E5→E8)**: accretion resumes fresh on the harbor base (E6 atomic fittings become E7's relics, etc.) — until departure; E9/E10 are their own worlds.
 Cold-anchor rule unchanged within each chain.
+
+## THE UPGRADE CADENCE (owner ruling 2026-07-16: "If you look at streetlamps, then they would update in certain epochs in others they won't.")
+Not every fixture transforms every era — each recurring fixture has its OWN upgrade timeline, gated by one believability question: **does THIS era's new technology plausibly touch THIS fixture?**
+- Lamps: oil (E1) → arc-electric when the grid arrives (E3) → unchanged through E4 (motors don't re-light a street) → harbor lanterns post-flood (E5) → touched again only when an era's tech says so.
+- Roads: dirt ruts until MOTORS pave them (E4) — voltage never touched them.
+- Fences/wells/hitching posts: near-invariant — steam, volts, and motors don't re-fit a fence (hitching posts DO fade as motors arrive: relic verdict at E4).
+MECHANIC: every era-variant wave delivers a per-fixture CADENCE ROW (upgraded / carried-unchanged / relic'd, one line of tech justification each). Carried-unchanged is a first-class verdict — an unchanged fixture is a believability FEATURE, not missing work. The bundles' A2 notes win conflicts.
