@@ -231,6 +231,12 @@
        "status": "merged",
        "mergeHash": "55ee01d63e24fdd9efa9195a75a8366ff3fd5ca9",
        "taskFile": "lane-b-e5-boss-dredge-queen.md"
+      },
+      {
+       "id": "art-dq-plates",
+       "title": "Dredge-Queen plates (art-batch-025; gates the 3D-C model)",
+       "status": "queued",
+       "taskFile": "art-batch-025-e5-boss-plate.md"
       }
      ]
     },
@@ -274,6 +280,12 @@
        "title": "Decay-timer framework (E6 grammar + E7 determinism foundation, inert)",
        "status": "queued",
        "taskFile": "lane-a-e6-decay-framework.md"
+      },
+      {
+       "id": "e6-glow-mesa-contract",
+       "title": "E6 Glow Mesa contract + mask table (data-only, inert; feeds 3D-D)",
+       "status": "queued",
+       "taskFile": "lane-b-e6-glow-mesa-contract.md"
       }
      ]
     },
@@ -886,6 +898,20 @@
        "status": "planned"
       }
      ]
+    }
+   ],
+   "tasks": [
+    {
+     "id": "charter-press-spec",
+     "title": "Charter Press spec (DRAFT \u2014 7 laws, CP-00..05, risks named)",
+     "status": "merged",
+     "doc": "specs/charter-press/README.md"
+    },
+    {
+     "id": "cp00-spike-harvest",
+     "title": "CP-00 editor spike harvest (ed-02..05 \u2192 main, ?editor-gated)",
+     "status": "queued",
+     "taskFile": "lane-a-cp00-editor-spike-harvest.md"
     }
    ]
   },
