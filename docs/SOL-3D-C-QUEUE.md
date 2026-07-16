@@ -97,3 +97,10 @@ The era transformation covers the WHOLE town surface. 7b delivers, alongside the
 ## WAVE 9 E4 PILOT — ACCEPTED + MERGED + DEPLOYED (2026-07-16). Motor Inn + Polytechnic (SHIP/SHIP, dust-only anchors, <1% tonal). **WIDE WAVE GO**: remaining buildings + wagon/trough + era-props.e4 per the standing contract.
 
 ## THE ACCRETION LAW (formalized 2026-07-16 from the session's own wave-9 catch): an era variant INHERITS every prior era's additions — .e4 carries the E3 voltage terminal AND the E2 fittings, exactly as the kit plates accrete — unless the bundle's transform notes EXPLICITLY retire a feature (retirements are named, never silent). The town is a palimpsest, not a costume change. Gate addition for all era-variant waves: a per-building inheritance check (prior-era signature features present in the next era's GLB).
+
+## ACCRETION LAW v2 (owner refinement 2026-07-16, verbatim: "some technologies replace others and thus the replaced technology becomes obsolete and will not be used anymore" — but layered eras "look quite unique and interesting"): every prior-era feature gets ONE of THREE verdicts in the bundle transform notes, per feature:
+1. **PERSIST** — still in use, unchanged (the well, structural timber; the Pan Monument by heritage law).
+2. **REPLACE** — the new tech visibly supersedes it; the old fixture is REMOVED or converted, and the retirement is NAMED in the notes (the steam heating line comes out when the electric line goes in).
+3. **RELIC** (the default for era-tech fixtures) — obsolete but LEFT IN PLACE, visibly disused: the cold soot-stained stack, the capped pressure pipe, the old boiler as a planter. The town shows its history in silhouette without pretending old tech still runs.
+**THE COLD-ANCHOR RULE (factory-side)**: only the ACTIVE era's native anchors emit — in E3 the arc lamps flicker while the inherited steam stack stands COLD (its anchors dormant). One era breathes at a time; the rest is memory. (E4: dust puffs live, arc + steam quiet.)
+The wagon verdict under v2: the E3 voltage terminal on the E4 wagon = RELIC (kept, disused read) — the session's correction stands.
