@@ -8,9 +8,38 @@ import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
 
 const ARTIFACT_DIR = path.resolve('artifacts/town-era-switch');
 const E2 = 'epoch-2-steamworks';
+const E4 = 'epoch-4-motor';
+const E5 = 'epoch-5-deepwater';
 const E2_MODEL = /\/tavern\.e2\.glb$/;
 const BASE_MODEL = /\/town-v3-tavern(?:-[^/.]+)?\.glb(?:\?.*)?$/;
 const BUILDINGS = ['tavern', 'general_store', 'claim_office', 'assay_office', 'chapel', 'schoolhouse', 'stamp-mill', 'dynamo_hall'] as const;
+const PRE_FLOOD_PROP_IDS = [
+  'e2-coal-bin-store',
+  'e2-pipe-run-west',
+  'e2-pipe-run-east',
+  'e2-gauge-post-west',
+  'e2-gauge-post-east',
+  'e2-iron-lamp-west',
+  'e2-iron-lamp-east',
+  'e2-pressure-manifold-plaza-edge',
+  'e3-wire-run-west',
+  'e3-wire-run-east',
+  'e3-insulator-post-west',
+  'e3-insulator-post-east',
+  'e3-transformer-shed-plaza-edge',
+  'e4-fuel-rack-west',
+  'e4-road-marker-southeast',
+  'e4-road-marker-east',
+  'e4-filling-shed-southwest',
+  'e4-motor-roadway',
+] as const;
+const E5_PROP_IDS = [
+  'e5-harbor-lantern-west',
+  'e5-harbor-lantern-east',
+  'e5-net-frame-southeast',
+  'e5-tide-board-southwest',
+  'e5-rope-buoy-rack-south',
+] as const;
 
 type Errors = { console: string[]; page: string[] };
 
@@ -166,3 +195,21 @@ for (const [label, epoch] of [['E1', undefined], ['E2', E2], ['E3', 'epoch-3-vol
     expect(found).toEqual({ console: [], page: [] });
   });
 }
+
+test('E5 flood reset starts a fresh era-prop chain', async ({ page }, info) => {
+  await seed(page, E4);
+  const found = errors(page);
+  await openTown(page, '?town3dPilot=props&tier=full');
+  const canvas = page.locator('canvas');
+  expect((await canvas.getAttribute('data-town3d-era-prop-ids'))?.split(',')).toEqual(PRE_FLOOD_PROP_IDS);
+
+  await page.evaluate(({ key, epoch }) => localStorage.setItem(key, epoch), { key: profileDataKey('robin', ACTIVE_EPOCH_KEY), epoch: E5 });
+  await openTown(page, '?town3dPilot=props&tier=full');
+  expect((await canvas.getAttribute('data-town3d-era-prop-ids'))?.split(',')).toEqual(E5_PROP_IDS);
+  if (info.project.name === 'desktop-chrome') {
+    const dir = path.resolve('reviews/shots-flood-reset');
+    await mkdir(dir, { recursive: true });
+    await canvas.screenshot({ path: path.join(dir, 'e5-town-no-chain1-props.png') });
+  }
+  expect(found).toEqual({ console: [], page: [] });
+});
