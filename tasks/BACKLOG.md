@@ -370,3 +370,7 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 ## 2026-07-16 late — 3D-C E3 WAGON LIGHTS MERGED (attended drain); E5 HARBOR REBUILD RELEASED
 - **✅ MERGED — sol/town-e3-wagon-lights (9db13239):** warm filament festoons both canopy sides, 1,796/1,800 tris, one material, envelope + voltage terminal + arc_anchor_1 preserved, byte-identical re-export (SHA documented in findings). Zero src; only the E3 wagon trio + evidence + findings. Gated attended: tsc + build + town-era-switch 12/12 on merged tree. Wave was cut FROM the Accretion Law v3 commit — the law pipeline works same-day.
 - 3D-C RELEASED to grant #2: **THE E5 HARBOR REBUILD** (chain-2 town faces, flood-break law). Both Sols now building E5 in parallel.
+
+## 2026-07-16 late — FAIRGROUND MASK SHIPPED (cb6331bc): 15/15 CONTRACTS MASKED
+- **✅ SHIPPED — publish-e3-fairground-mask-table (cb6331bc, on main):** 98-line table, schema-compatible with siblings (core keys exact; additive per-map truth: fixtureZones/palette/scatter — same pattern as mothSeason's extra), node test green, attended content-verified. **The full E1–E5 slate is now masked; 3D-D's fairground sculpt is UNBLOCKED (pre-grant self-activates).**
+- ⚠ FLAG (runner audit thread, non-blocking): the runner(lane-d) commit reached main ancestry WITHOUT a drain commit — content verified fine, but this is the s106 runner-merges-to-main pattern again; fold into Robin's standing runner audit.
