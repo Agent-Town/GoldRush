@@ -725,6 +725,61 @@
      ]
     }
    ]
+  },
+  {
+   "id": "charter-press",
+   "title": "The Charter Press (level editor \u2192 the capstone product)",
+   "subgoals": [
+    {
+     "id": "cp-design",
+     "title": "Design & spec (Fable-class, pre-19th)",
+     "tasks": [
+      {
+       "id": "cp-spec",
+       "title": "Charter Press spec (canon: kids' builder, beta E2-3, capstone E10)",
+       "status": "planned"
+      }
+     ]
+    },
+    {
+     "id": "cp-build",
+     "title": "Feature build (lane-executable, post-spec)",
+     "tasks": [
+      {
+       "id": "cp-editor-core",
+       "title": "Editor core (tiles/masks/contract authoring)",
+       "status": "planned"
+      },
+      {
+       "id": "cp-share",
+       "title": "Share/play loop",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "foundry",
+   "title": "The Foundry (extract the factory+engine as a reusable product)",
+   "subgoals": [
+    {
+     "id": "foundry-extract",
+     "title": "Extraction (laws, processes, templates, pipelines \u2014 domain-agnostic kit)",
+     "tasks": [
+      {
+       "id": "foundry-book",
+       "title": "THE FOUNDRY BOOK: constitution, gate patterns, mistake catalog, era-bundle template, masks-first pipeline, Sol protocols, canon-wiki method",
+       "status": "planned"
+      },
+      {
+       "id": "foundry-seed",
+       "title": "Second-game seed test (apply the kit to a fresh theme, one evening)",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
   }
  ]
 }
