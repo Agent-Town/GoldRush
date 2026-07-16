@@ -346,7 +346,7 @@ READY-FOR-GATES
 
 ### F-3D-D-30 — Published masks are the only terrain authority
 
-`assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json` and `e3-moth-season.json` are the authored inputs for this wave. The builders consume those tables without adding gameplay geometry or changing movement, build, spawn, water, fog, or `Terrain.visualY` ownership. Pressure Garden and Incline remain held until their factory-authored E2 tables exist; no placeholder mask was inferred.
+`assets/contracts/epoch-3-voltage/mask-tables/e3-canyon-works.json` and `e3-moth-season.json` are the authored inputs for this wave. The builders consume those tables without adding gameplay geometry or changing movement, build, spawn, water, fog, or `Terrain.visualY` ownership. Pressure Garden and Incline were still held when this E3 wave shipped; their later authored-table delivery and completed terrain/panorama pair are recorded above in F-3D-D-37 through F-3D-D-41. No placeholder mask was inferred in either wave.
 
 ### F-3D-D-31 — Canyon's six pylon sites are load-bearing flats
 
@@ -423,7 +423,7 @@ The final fresh unprimed review returns `SHIP`. At the production 42° FOV it fi
 
 The package provides `.blend`, `.glb`, deterministic builder, renderer, verifier, source/reference A/B, run-camera verdict, turntable, damage sheet, and parsed contract. It does not edit `src/`, boss timing, attacks, collision, movement, masks, targeting, simulation ownership, or disposal. The heroine and drain arc in the gorge shot are temporary evidence objects; neither is saved in the GLB. Factory choreography remains the only runtime owner.
 
-The threejs asset ladder was followed locally. Its API reference was read, then the credential probe returned blank `TRIPO_API_KEY`, `GEMINI_API_KEY`, and `ELEVENLABS_API_KEY`; no provider request, task id, paid credit, or downloaded model exists. The landmark freeze was preserved, and the Pressure Garden/Incline mask heartbeat remains active.
+The threejs asset ladder was followed locally. Its API reference was read, then the credential probe returned blank `TRIPO_API_KEY`, `GEMINI_API_KEY`, and `ELEVENLABS_API_KEY`; no provider request, task id, paid credit, or downloaded model exists. The landmark freeze was preserved. The Pressure Garden/Incline mask heartbeat was still active at this checkpoint; it was retired after the final E2 pair shipped and its remote branch tip was verified.
 
 ## Crawler gate state
 
