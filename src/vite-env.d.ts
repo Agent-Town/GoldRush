@@ -85,6 +85,7 @@ interface ThreeGameDiagnostics {
   heroIframes: boolean;
   enemiesAlive: number;
   enemyPoolSize: number;
+  freedWalkers?: import('./systems/FreedWalkerVfx').FreedWalkerDiagnostics;
   boltsAlive: number;
   arsenal: {
     active: 'rig' | 'blast';
