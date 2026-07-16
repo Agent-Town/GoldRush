@@ -1,12 +1,66 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e7-pilot` (Wave 13 pilot)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 13 pilot `88ea5d9b`
 
-Tip: exact Wave 10 SHA is reported in the attended handoff
+Tip: exact Wave 13 pilot SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the complete E5 family is a fresh, working underwater harbor whose heavy buildings rest on the seabed; the asset wave is gate-clean, with one explicit factory integration requirement: honor `floodReset` before mounting the E5 accessory manifest.**
+Verdict: **READY-FOR-GATES — the E7 Signal Mesa pilot is a gameplay-distance transformation: the Relay Tower and Exchange establish the new broadcast skyline, while the Net Cafe preserves every E6 Atomic Diner polygon and grows a clearly legible signal crown inside its exact inherited footprint.**
+
+## Wave 13 pilot — E7 Signal Mesa
+
+The E7 pilot deliberately tests three different parts of the Signal-era grammar: a new long-range utility landmark, a new public exchange, and one exact E6 identity edit. All three are modeled from the shipped E7 plates and §A transform notes. The Relay Tower and Exchange propose new E7 sites; the Net Cafe is the accepted Atomic Diner moving forward, not a replacement shell.
+
+### Per-asset findings and corrections
+
+| Asset | First all-angle / gameplay finding | Final correction | Final contract |
+| --- | --- | --- | --- |
+| Relay Tower | the first rear wall read as an unfinished dark plane, and the dish lacked enough internal structure to read as equipment | added rear cable hatches, dials, jack pips, and drops; rebuilt the concave dish read with a teal rim and eight radial ribs while keeping the grounded radio hall and tapered lattice silhouette | 9,174 tris; 1 material; 1024 atlas; 7.4294 x 4.8700 footprint; SHA `d04851188103…` |
+| Exchange | the signal identity read from the plaza, but the service rear was visually quiet | added live jack pips and retained functional switchboard bays on every side; the final silhouette combines seven public jack bays, social booths, jukebox, tube skyline, punch-tape reels, loops, teal dome, and signal mast | 10,466 tris; 1 material; 1024 atlas; 6.0595 x 5.1050 footprint; SHA `122460f1d0a6…` |
+| Atomic Diner -> Net Cafe | the first relay crown was too subtle at gameplay distance, and an early terminal placement exceeded the inherited footprint by 0.0875 units | moved all additions inside the exact E6 envelope, then enlarged the roof relay dish, mast, and arcs without adding triangles; three booth terminals and tape readers remain visibly connected to the preserved diner / jukebox identity | 14,704 tris; 1 material; 1024 atlas; exact 5.130185 x 3.3925 E6 footprint; SHA `950253635d46…` |
+
+### Accretion and cadence verdicts
+
+| Fixture | Verdict | Reason |
+| --- | --- | --- |
+| Relay Tower | NEW E7 | the Signal era needs a long-range public landmark; grounded radio hall, lattice pylon, dish, and signal cells establish that utility at plaza distance |
+| Exchange | NEW E7 | public switching, tube traffic, punch tape, and social booths provide the Signal-era civic market rather than repainting an earlier shop |
+| Atomic Diner / jukebox | PERSIST | the complete accepted E6 mesh remains in place; polygon-signature comparison finds 0 missing source polygons |
+| Atomic Diner service layer | UPGRADE | booth terminals, tape readers, and the roof relay crown convert the existing diner into the required Net Cafe without moving its walls or footprint |
+| Other E6 atomic fixtures | CARRIED UNCHANGED IN PILOT | no silent retirement is implied; the E7 wide wave must give every remaining fixture a named PERSIST / REPLACE / RELIC cadence verdict |
+| Pan Monument | PERSIST | heritage law remains unchanged; this pilot neither edits nor era-keys it |
+
+The E7 bundle and queue define no emitter-anchor family, so the pilot invents none. Each GLB contains exactly one mesh node and no helpers, lights, cameras, animations, or emission. Proposed compositions for verdict evidence are Exchange at `[-7.55, 9.40]` and Relay Tower at `[7.55, 9.15]`; the Net Cafe inherits the Tavern / Atomic Diner mount. Runtime placement and new-site ratification remain factory-owned.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Fresh reference base | all boards rerendered from `origin/main@88ea5d9bca59dca64f35766b466cc2755751dcbb`; the supplied old plaza-wheel screenshot was excluded |
+| Geometry / materials | 9,174 / 10,466 / 14,704 tris against 15,000 each; one mesh, primitive, non-emissive material, and embedded 1024 atlas per GLB |
+| Grounding / footprint | all three assets have minimum Y = 0; new sites fit their proposed maxima; Net Cafe matches the E6 XZ envelope exactly |
+| Accretion proof | all 7,391 E6 source polygon signatures survive in the Net Cafe; 0 missing; source and candidate footprint values are identical |
+| Export determinism | saved-BLEND re-export reproduces all three production GLBs byte-identically |
+| Across-the-plaza read | `diffRatio16 = 7.7278%`; edge-energy ratio `1.1580`; average luminance delta `-3.1896%`, inside the 5% tonal law |
+| All-angle audit | dedicated four-angle boards show finished fronts, sides, backs, roof attachments, load paths, and no clipped/cropped structures |
+| App build | `npm run build` passes on the final production bytes |
+| Evidence independence | no delegated visual agent was used because this session's explicit no-delegation rule binds; machine telemetry plus direct all-angle inspection are recorded instead |
+
+### Evidence index
+
+- Current-main reference board: [`town-e1-e4-e5-current.png`](../artifacts/town-e7-pilot/current-references/88ea5d9bca59-main/town-e1-e4-e5-current.png)
+- Locked Mesa A/B: [`mesa-e7-pilot-across-plaza-ab.png`](../artifacts/town-e7-pilot/mesa-e7-pilot-across-plaza-ab.png), key-feature crop [`mesa-e7-pilot-key-feature-crop.png`](../artifacts/town-e7-pilot/mesa-e7-pilot-key-feature-crop.png)
+- Four-angle audits: [`relay-tower-e7.png`](../artifacts/town-e7-pilot/turntables/relay-tower-e7.png), [`exchange-e7.png`](../artifacts/town-e7-pilot/turntables/exchange-e7.png), [`net-cafe-e7.png`](../artifacts/town-e7-pilot/turntables/net-cafe-e7.png)
+- Exact identity A/B: [`net-cafe-identity-e6-e7-ab.png`](../artifacts/town-e7-pilot/identity/net-cafe-identity-e6-e7-ab.png)
+- Machine contracts: [`asset-contract.json`](../artifacts/town-e7-pilot/asset-contract.json), [`visual-evidence-contract.json`](../artifacts/town-e7-pilot/visual-evidence-contract.json)
+
+### Wave 13 pilot integration boundary
+
+- Add production Relay Tower and Exchange BLEND/GLB pairs; add only the Tavern's `.e7` sibling for the Net Cafe transform; add deterministic build/render/verification scripts, fresh evidence, and this findings entry.
+- Do not change the inherited E6 production bytes, any E1-E5 siblings, runtime source, layout, manifests, specs, status, backlog, or tests.
+- The new Relay Tower and Exchange mount transforms are proposals in evidence, not runtime edits. The factory ratifies and mounts new sites after the pilot verdict.
+- Wave 12 E6 assets are read-only evidence dependencies from the published `sol/mesa-town-e6-wide` / `sol/mesa-town-e6-pilot` tips; this branch is based cleanly on `origin/main@88ea5d9bca59dca64f35766b466cc2755751dcbb`.
 
 ## Wave 10 — E5 Deepwater Harbor Rebuild
 
