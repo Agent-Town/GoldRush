@@ -145,6 +145,7 @@ interface ThreeGameDiagnostics {
     };
     eligibility: string[];
   };
+  deepwaterClaim: ReturnType<import('./world/DeepwaterClaimTile').DeepwaterClaimTile['snapshot']> | null;
   dustFlats?: { storm: string; tarSeams: number; orbit: { members: Array<{ id: string; peeled: boolean; state?: string }> }; orbitMembers: Array<{ id: string; peeled: boolean; state?: string }>; roads: { segments: number } };
   kills: number;
   goldPanned: number;
@@ -1079,6 +1080,8 @@ interface Window {
     setBuildMode: (on: boolean) => void;
     selectBuildable: (id: string) => boolean;
     rotateBuildGhost: () => boolean;
+    placeBoatBuilding: (padId: string, buildingId: string) => boolean;
+    reanchorClaimBoat: (anchorId: string) => boolean;
     placeFree: (id: GrBuildableId, x: number, z: number, rotationSteps?: number) => boolean;
     confirmBuild: () => boolean;
     testAudio: (name: string) => void;
