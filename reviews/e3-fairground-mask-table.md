@@ -1,7 +1,7 @@
 # Review — e3-fairground mask table (publish the last unmasked map)
 
 **Slice:** publish-e3-fairground-mask-table (lane-d, data extraction)
-**Branch/tip:** lane/perf @ `cb6331bc` (runner auto-commit) → merged to main `82495a1cf61b9c4de961a5aaa1405c696a85629c`
+**Branch/tip:** lane/perf @ `cb6331bc` (runner auto-commit) → merged to main `fc04c21b8354bc139494f231917cf37cf8be3f82`
 **Base:** `84b1c15f` (clean; only my s658 STATUS lock `540f7b71` moved main since)
 **Drained:** s658 fire, 2026-07-16
 **Verdict:** ✅ SHIPPED — clean merge, gates green, slice test 6/6.
@@ -29,5 +29,5 @@ Publishes `assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json` — 
 
 ## Findings
 - **F-1 (non-blocking, PRE-EXISTING on main — NOT this slice):** `scripts/goal-tracker.test.mjs:17-18` hardcodes an expected top-level category list of 5 titles, but `tasks/goals.json` carries **11** categories as of `84b1c15f` (attended expanded the goal tree in `0778b6f1`/`84b1c15f` — added Art / Laws / Story / Multiplayer / Charter Press / Foundry). Proven pre-existing: `git show 84b1c15f:tasks/goals.json` → 11 categories, so the test was already red on main *before* this drain. This slice neither caused nor worsened it (no top-level category touched; my `world-e3-fairground-mask` leaf carries a valid 40-char `mergeHash`, and it is not in the test's hash-sample set at :56-60). **Fix owed (attended or a fire, <10 lines):** update the expected-titles array at `goal-tracker.test.mjs:18` from the 5-title list to the current 11. Flagged on OWNER'S DESK / next-fire.
-- **F-2 (informational):** GOAL REGISTRATION LAW satisfied — `tasks/goals.json` leaf `world-e3-fairground-mask` flipped `queued → merged` with full hash `82495a1cf61b9c4de961a5aaa1405c696a85629c` in the drain commit.
+- **F-2 (informational):** GOAL REGISTRATION LAW satisfied — `tasks/goals.json` leaf `world-e3-fairground-mask` flipped `queued → merged` with full hash `fc04c21b8354bc139494f231917cf37cf8be3f82` in the drain commit.
 - **GZ filter:** no player-visible change (mask data feeds the sculpt pipeline, application unwired) → **no gazette item.**
