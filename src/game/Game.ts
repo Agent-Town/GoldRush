@@ -153,6 +153,7 @@ import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
+import { DecayScheduler } from '../systems/DecaySystem';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, powerWireId, type PowerGraphCommand, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
@@ -261,6 +262,7 @@ export class Game {
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
   private readonly events = new EventBus();
+  private readonly decay = new DecayScheduler(this.events);
   private readonly input: InputController;
   private readonly actors = [new Hero(RUN_CAST_SCALE)];
   private mpClient?: LockstepClient;
@@ -1258,6 +1260,7 @@ export class Game {
           return this.vehicle !== undefined;
         },
         advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => this.advanceSimForTest(seconds, onTick),
+        decay: this.decay,
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
         damSurge: () => this.damSurge?.diagnostics() ?? null,
@@ -1757,6 +1760,7 @@ export class Game {
       this.activeTickElapsed += delta;
       const simDelta = delta * this.simTimeScale;
       this.timeAlive += simDelta;
+      this.decay.tick();
       this.syncDeepwaterClaim();
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
@@ -3233,6 +3237,7 @@ export class Game {
         replay: economyReplay,
         summary: economySummary,
       },
+      decay: this.decay.diagnostics(),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
@@ -4671,6 +4676,7 @@ export class Game {
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;
     this.simTick = 0;
+    this.decay.reset();
     this.deathPending = false;
     if (this.powerGraph) {
       this.powerGraph.reset(0);

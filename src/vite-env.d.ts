@@ -226,6 +226,7 @@ interface ThreeGameDiagnostics {
       repairs: number;
     };
   };
+  decay: ReturnType<import('./systems/DecaySystem').DecayScheduler['diagnostics']>;
   run: {
     secured: boolean;
     rush: boolean;
@@ -990,6 +991,7 @@ interface Window {
     queuePowerGraphCommand: (command: import('./systems/PowerGraph').PowerGraphCommand) => boolean;
     driveVehicle: (x: number, z: number) => boolean;
     advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => void;
+    decay: import('./systems/DecaySystem').DecayScheduler;
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;
       simTicks: number;
