@@ -18,6 +18,9 @@ Attended session runs the deploy on his return; this list is the play script. Fe
 - Open the schoolhouse chart, hover 3-4 nodes: does every node answer "what happens if I pick this" — live numbers, scope badge (THIS RUN / EVERY RUN / THE TOWN), "Unlocks:" language?
 **Q3. ERA ANCHORS + COLD-ANCHOR (one era breathes at a time):**
 - In town at E3: arc lamps live, steam stack COLD. E4: dust puffs live, arc+steam quiet. Across the plaza: does the active era announce itself without reading signs?
+**Q3b. THE E4 MOTOR TOWN (3D-C wide wave, merged tonight — your wagon→caravan directive delivered):**
+- At E4: the covered wagon is now a compact motor caravan (wedge bonnet, dust exhaust, headlamp) with its E3 electrical terminal COLD as the inherited relic — does the evolution read as playful, "fun and light", not grim-industrial?
+- The southern boulevard with wheel ruts, filling shed on the rear skyline, horse trough as median relic — across the plaza, does E4 announce MOTOR without every building shouting? (The Chapel staying quiet is correct by cadence law.)
 
 ## PART 2 — THE THREE STANDING VERDICTS (the tour, flags where noted)
 **Q4. BLACKOUT RIDGE + DUST FLATS in 3D** (`?contract=e3-blackout-ridge&terrain3dPilot`, then e4-dust-flats):
