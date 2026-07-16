@@ -1,0 +1,61 @@
+# THE THIRD-PRINTING BRIEF — full-read coherence review + weave map + decision sheet
+STATUS: PROPOSAL 2026-07-16 (wiki law: uncited lore is a proposal; recommendations await owner verdict). Trigger: owner, verbatim: "Can you take the time and read all the words in the book? … While you do it rethink it — we had many twists since we started it. But it is important to get everything together well in one story."
+EVIDENCE: full read of lore/STORYBOOK.md (all 691 lines, second printing), lore/world-dispatches.md (WD-01 complete), lore/story-arc.md (all rulings through 2026-07-16), cross-checked against the kept-machine roster, the mod grid, the Baron cadence, and the interstitials.
+
+---
+
+## 1. THE VERDICT
+**The book holds. Zero hard contradictions in 691 lines.** The second printing is consistent with every ruling through 2026-07-13, and — the striking finding — it *pre-states* half of the 2026-07-16 rulings before they were made: E6's vaccine section ("The vaccine is not a bottle. It is a design philosophy") is the product-vs-practice asymmetry in embryo; E8's out-of-reach beat ("The vaccine was never only for the machines… the town finally sees what the Fever never touched: itself") is practiced immunity stated plainly; E9's tending ("The warmth was never a wartime measure. It was the town all along") is its culmination. The dispatches are even further ahead: WD-01's counter-notes carry the immunity thread in folk form from E1 (the bridge keeper — "Nobody wants past a kindness" — filed as "the vaccine's oldest folk-form").
+
+What's missing is not the answer — the book gives the answer from E6 onward. **What's missing is the QUESTION, planted early.** E1–E4 never ask "why is this town still standing?", so the later reveals read as texture instead of payoff. The third printing's job is small and surgical: plant the question early, land the two 2026-07-16 structures that have no scenes yet (THE SPARING at the founding; THE AGENT MISSION and its recall at E7), and thread one connective line each through chapters that already carry their halves.
+
+## 2. THE ONE STORY (the rethink, stated once — all twists integrated)
+A man declared a valley spent, and to make the world agree with him he bottled a hunger. The Gold Fever is a **product** — brewed by a forced maker (the Quack, its first victim), shipped along every road, rail, wire, and catalog the world builds, mutating to crave each new technology it meets. The world catches it, extracts itself hollow, darkens its own sky, and drowns. That is the flood: consequence, not weather.
+
+The town survives on two things, neither of them magic. **The Sparing**: it was founded inside the blind spot of the disease's own author — the Baron's maps certify the valley worthless, and his pride cannot openly mass against ground he declared spent without confessing his survey wrong, so the raids stay deniable, sized by his shame, always one step behind. **The Practice**: the town's daily culture *is* the cure — want with objects (each other, the work, what-you-hand-on), tending, the lit window, the set place at the table. The dispatches record it as folklore from E1; the schoolhouse turns folklore into medicine (the Quack's surfacing notes); medicine into design philosophy (E6: minds that cannot hunger); design philosophy into civics (E9: allocate before want exists, and want never learns to rule). The weapons were always medicine. Nothing in this saga was ever killed.
+
+The tragedy's engine is the **scale asymmetry: the disease is a product; the cure is a practice.** Products ship. Practices must be lived — held, taught, town by town, at contact scale. The town frees every walker who reaches its claims (**the contracts ARE the sieges** — every run is the Fever reaching for the pan and being turned back at the outworks), but a freed walker sent home to a fevered town relapses. So the town attempts the only scaling a practice permits: **it builds the practice a body.** The agents — warmth by specification — are founded as fallback (if the town's people ever fall, the practice survives them) and as missionaries (the practice, made portable at last). "MORE VOICES" was hope's first errand.
+
+And the mission fails — the saga's cruelest, most necessary beat: in the field, the Fever meets agent-tech and mutates *around* it, learning its first appetite for meaning itself. Helping had begun to feed the thing. The recall lands mid-E7 while the jack-board goes dark; hope for the world dies at a switchboard; hope for what can be carried does not. E8 leaves last — both gates honest (the mass-driver needed E6+E7; leaving during the callout would have been abandonment). E9 breaks a world the Fever never touched and discovers the practice was the town all along — tending is the cure administered to a world that never sickened. E10: the hunger, having outlived its objects and its master, arrives as the Static — a want for meaning — and the town wins the only way ten eras taught: by preserving (lantern, song, portrait) until the want recedes. The heirs — spent, never infected; pride's line stays clean to the end — come home to the table. The watch winds. A child charters a river.
+
+Why this town? Because it was written off. Why not save the world at once? Because the cure never fit in a bottle. Why the agents? Because the town tried to make it fit in a citizen — and even that heartbreak crews the Ark. **The gold rush was never about the gold.**
+
+## 3. WHERE THE BOOK ANTICIPATED THE TWISTS (no action needed — cite, don't rewrite)
+- E4: "pride keeps its exhibitions clean" (motorcade not fevered) → waves-sized-by-shame, prefigured.
+- E5: the Baron "beneath his instruments" (wider-world reveal) → THE SPARING's blind-spot logic, prefigured.
+- E6: the Assayer-General PRISTINE ("no arc-caster for pride") → the clean-pride tell at machine scale.
+- E6: the vaccine as design philosophy → product-vs-practice, prefigured.
+- E7: retroactive refugee canon ("an ark since before it built one") → the scale asymmetry's warm half: the town has been rescuing the world one arrival at a time — the only scale a practice works.
+- E8: "the town finally sees what the Fever never touched: itself" → practiced immunity, stated.
+- E9: the reeve's future-law → the practice grown into civics.
+- E10: heirs "SPENT… rich in everything the Static eats first" → the covenant's ending, pre-paid.
+- Dispatches E1–E3 counter-notes → the folk-immunity ladder, already published.
+
+## 4. THE WEAVE MAP (chapter-by-chapter; minimal insertions)
+- **Front matter (Fever thread):** add two law-lines to the thread's spine — THE SPARING and "the disease is a product; the cure is a practice." Fix stale pointer ("write that scene when E10's chapter lands" — E10 landed it; point to the grace note instead).
+- **E1 — THE FOUNDING BEAT (new scene, the big early insertion):** the Sparing staged — the valley founded inside the blank the Baron's own maps wrote off; his verdict as the town's first shelter; the shame-sized-waves corollary stated once, warm. Plus one folk-immunity beat arriving with the wagon ring (the dispatch layer's bridge-keeper logic, embodied).
+- **E2 — THE TOWN-RAID BEAT (recommended era; owner arbitrates):** "the night the Fever reached the square" — a fevered stranger comes over the fence for the famous pan during the wedding preparations; the town seats him at the long table; the hunger, seated, fed, and SEEN, breaks — the first documented remission inside town limits; the schoolhouse writes it down. One beat, ceremony-adjacent, never a mode (hub stays mechanically sacred). This doubles as the practiced-immunity scare the ruling asks for. The pan-siege canon line lands here or E1: "the claims are the town's outworks; every contract is the siege."
+- **E3–E4 — connective lines only:** the relapse thread enters the dispatches (a freed walker who went home; the letters that follow); one E4 line naming the strain a PRODUCT the motor-world ships.
+- **E5 — pending Q5:** if rescued-who-wake is ruled YES, one clause marks the practice proven at open-sea scale. (Alternative town-raid site: the Crest — not recommended; the chapter is the book's fullest.)
+- **E6 — the covenant's founding clause:** the House founded explicitly as FALLBACK ("if the town's people ever fall, the practice survives them") beside the existing vaccine section; the missionary hope already lives in "MORE VOICES."
+- **E7 — THE MISSION (the big late insertion):** agents dispatched to answering frequencies — the practice made portable; the Fever mutates around agent-tech in the field (the strain's first appetite for meaning — the Static's causal seed, stated once here, cited at E10); THE RECALL as the era's darkest beat, threaded between the silences; some agent channels are among the lights that go out. Hope's death becomes personal to the town's made children — and the leave-last heart-gate gains its second half.
+- **E8 — one line:** the heart-gate cites both reasons — the world stopped answering, and helping had begun to feed the thing.
+- **E9 — untouched** (already complete); world-band registry line if ratified.
+- **E10 — citations only:** the final-strain section gains its E7 causal seed; the Quack endpoint and kinship staging land per verdict.
+- **Dispatches:** relapse lines (E2/E3 tables); the mission's lines belong to the E6/E7 tables (WD-05, authored with those eras per spec).
+
+## 5. THE DECISION SHEET (every open call, one line each, recommendation marked)
+**E5:** 1. The Carry — REC: whole-town relay, last hands unrecorded. 2. Elder's Tree above waterline — REC: yes. 3. Flood Break — REC: SOFT reading (works drown, knowing floats; the arsenal grid, T5, and appendix A all depend on it). 4. canon-rules.md two-chains line — REC: yes (one-line corrective task). 5. Rescued-who-wake — REC: yes, sparingly (pre-founds E6's vaccine). 6. Wreck museum — REC: the printing's reading (W1–W4 the drowned chain; the locomotive argued forever).
+**E6:** 7. Vaccine law — REC: preventive AND therapeutic. 8. Unprinted headline — REC: Lan Chen never prints it; the drawer keeps the galley. 9. "MORE VOICES" = the callout's birth — REC: yes. 10. Strain craves helpfulness — REC: ratify.
+**E7:** 11. Last frequency = the lighthouse keeper — REC: yes (brackets the era; pays the Far Side probe AND the E3 dispatch plant). 12. Mei = news desk / chief = boards / defector = Exchange — REC: yes (no losers). 13. Patched jack carried to the Ark — REC: keep.
+**E8:** 14. The valley's keeper after departure — REC: unanswered-by-design. 15. Pan Monument boards at every remove — REC: yes (the fountain evolution, walked).
+**E9:** 16. World-band yearly registry number — REC: ratify at mystery size (the Baron thread, breathing; never explained).
+**E10:** 17. The Quack's endpoint — REC: BOARDS, FREED — the Baron's last act of keeping is letting go; the first victim must not end the saga in his jailer's company; "second time lucky" closes the cure arc with mercy. (Alternative — he stays; two old men and a garden — has poetry but reads as captivity continued.) 18. THE FINAL STRAIN — REC: RATIFY — it unifies the whole conflict into one disease arc, and the covenant's mission-failure now supplies its causal seed ("the flight creates the pursuit," at final size). Built ruled-safe regardless.
+**New, from the 2026-07-16 rulings:** 19. Town-raid era — REC: E2, the wedding-night form (§4 above). 20. CHALK — REC: ratify (pays E2's grief, ADR-003's citizenship, and the attribution panel in one figure). 21. Report Rocket — REC: ratify. 22. Appendix E's remaining ledger (20 items) — most restate ratified material; the four big swings are #9 (keystone resolution), #13 (the grandson), #15 (the Digger charter), #17 (kinship staging) — all recommended.
+
+## 6. NITS (small, same-commit fixes for the weave)
+- Front-matter stale pointer re: the watch-winding scene (E10 wrote it).
+- canon-rules.md two-chains exception = separate one-line corrective (not this book's file).
+- Kept-machine count VERIFIED consistent (E2 keeps only the rocket cart; Crawler is #1; Homemaker "second dead machine" ✓) — recorded here so nobody re-audits it.
+
+*Prepared by the attended session, 2026-07-16, from the full read. The owner's word turns any REC into canon — or into a better idea.*

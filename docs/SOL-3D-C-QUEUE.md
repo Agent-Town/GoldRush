@@ -95,3 +95,28 @@ The era transformation covers the WHOLE town surface. 7b delivers, alongside the
 ## WAVE 9 — E4 MOTOR FACES (granted 2026-07-16; the Motor era is PLAYABLE — dust-flats + Land-Yacht shipped). All buildings + wagon/trough get `.e4.glb` siblings per e4-motor-bundle §A2 (garages, fuel drums, road-sign rigs, rubber-and-brass motor trim); anchors: `exhaust_anchor_*` (the factory mounts LIGHT DUST-PUFF emitters — NEVER black smoke, the E4 style anchor law) + era-props.e4.json (fuel racks, road markers, a small filling shed). Plaza test + all standing laws. 2-3 buildings for verdict, then wide.
 
 ## WAVE 9 E4 PILOT — ACCEPTED + MERGED + DEPLOYED (2026-07-16). Motor Inn + Polytechnic (SHIP/SHIP, dust-only anchors, <1% tonal). **WIDE WAVE GO**: remaining buildings + wagon/trough + era-props.e4 per the standing contract.
+
+## THE ACCRETION LAW (formalized 2026-07-16 from the session's own wave-9 catch): an era variant INHERITS every prior era's additions — .e4 carries the E3 voltage terminal AND the E2 fittings, exactly as the kit plates accrete — unless the bundle's transform notes EXPLICITLY retire a feature (retirements are named, never silent). The town is a palimpsest, not a costume change. Gate addition for all era-variant waves: a per-building inheritance check (prior-era signature features present in the next era's GLB).
+
+## ACCRETION LAW v2 (owner refinement 2026-07-16, verbatim: "some technologies replace others and thus the replaced technology becomes obsolete and will not be used anymore" — but layered eras "look quite unique and interesting"): every prior-era feature gets ONE of THREE verdicts in the bundle transform notes, per feature:
+1. **PERSIST** — still in use, unchanged (the well, structural timber; the Pan Monument by heritage law).
+2. **REPLACE** — the new tech visibly supersedes it; the old fixture is REMOVED or converted, and the retirement is NAMED in the notes (the steam heating line comes out when the electric line goes in).
+3. **RELIC** (the default for era-tech fixtures) — obsolete but LEFT IN PLACE, visibly disused: the cold soot-stained stack, the capped pressure pipe, the old boiler as a planter. The town shows its history in silhouette without pretending old tech still runs.
+**THE COLD-ANCHOR RULE (factory-side)**: only the ACTIVE era's native anchors emit — in E3 the arc lamps flicker while the inherited steam stack stands COLD (its anchors dormant). One era breathes at a time; the rest is memory. (E4: dust puffs live, arc + steam quiet.)
+The wagon verdict under v2: the E3 voltage terminal on the E4 wagon = RELIC (kept, disused read) — the session's correction stands.
+
+## THE FLOOD BREAK (owner ruling 2026-07-16, verbatim: "we have a kind of hard reset in epoch 5 anyways when the city is under water - when it gets rebuilt, the old technologies are gone.")
+Accretion runs in TWO CHAINS, broken at the flood:
+- **CHAIN 1 (E1→E4)**: relics accumulate per Accretion Law v2 — by E4 the town wears four eras.
+- **E5 = THE REBUILD**: the water reaches the town; the .e5 faces are NOT a layer on .e4 — they are a fresh build in harbor vocabulary (Harbor House, rope trim, tide boards per the bundle's A2). Pre-flood relics are GONE except NAMED SURVIVORS (heritage list, owner-extendable): the PAN MONUMENT (carried to high ground — the one thing the town would save). The drowned relics live on as the sea-floor wrecks in E5's runs (already canon: the wreck museum).
+- **CHAIN 2 (E5→E8)**: accretion resumes fresh on the harbor base (E6 atomic fittings become E7's relics, etc.) — until departure; E9/E10 are their own worlds.
+Cold-anchor rule unchanged within each chain.
+
+## THE UPGRADE CADENCE (owner ruling 2026-07-16: "If you look at streetlamps, then they would update in certain epochs in others they won't.")
+Not every fixture transforms every era — each recurring fixture has its OWN upgrade timeline, gated by one believability question: **does THIS era's new technology plausibly touch THIS fixture?**
+- Lamps: oil (E1) → arc-electric when the grid arrives (E3) → unchanged through E4 (motors don't re-light a street) → harbor lanterns post-flood (E5) → touched again only when an era's tech says so.
+- Roads: dirt ruts until MOTORS pave them (E4) — voltage never touched them.
+- Fences/wells/hitching posts: near-invariant — steam, volts, and motors don't re-fit a fence (hitching posts DO fade as motors arrive: relic verdict at E4).
+MECHANIC: every era-variant wave delivers a per-fixture CADENCE ROW (upgraded / carried-unchanged / relic'd, one line of tech justification each). Carried-unchanged is a first-class verdict — an unchanged fixture is a believability FEATURE, not missing work. The bundles' A2 notes win conflicts.
+
+## PLAZA TEST × CADENCE RECONCILIATION (2026-07-16): the ACROSS-THE-PLAZA test applies to the TOWN ENSEMBLE per era — the square as a whole must announce the age unmistakably. Per-building change follows the CADENCE: era-defining buildings carry the announcement (garage-heavy Motor Inn, the Polytechnic); honestly-untouched fixtures stay quiet (a chapel barely notices motors — one oil stain and a parking rail may be its whole E4 story). A lightly-touched building with a justified cadence row is CORRECT, not under-delivered.

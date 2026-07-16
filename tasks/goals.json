@@ -1,204 +1,785 @@
 {
-  "version": 1,
-  "goals": [
+ "version": 1,
+ "goals": [
+  {
+   "id": "ten-eras",
+   "title": "The Ten Eras",
+   "subgoals": [
     {
-      "id": "ten-eras",
-      "title": "The Ten Eras",
-      "subgoals": [
-        {
-          "id": "e1-frontier",
-          "title": "E1 — Frontier",
-          "tasks": [
-            { "id": "e1-engine", "title": "Engine — Megaproject transition site", "taskFile": "045-megaproject-site-mechanic.md", "mergeHash": "7af56d62392e5f9976075039d0b0a8d88eca7ca9", "status": "merged" },
-            { "id": "e1-contracts", "title": "Contracts — Dry Gulch roster", "taskFile": "lane-d-e1c-dry-gulch.md", "mergeHash": "22af8fd9a3320145496dfbe8859f256b75e7972b", "status": "merged" },
-            { "id": "e1-boss", "title": "Boss — Epic Baron", "taskFile": "lane-b-054-baron-epic.md", "mergeHash": "0bb7c071460fbb82ff6105733328b982729d2ccc", "status": "merged" },
-            { "id": "e1-art", "title": "Art — E1 contract plates", "taskFile": "art-batch-011-e1-contracts.md", "mergeHash": "3c749607d0e6e5668ee3232e62e875b8af9fac50", "status": "merged" },
-            { "id": "e1-town", "title": "Town — Walkable square", "taskFile": "lane-b-town-t1-square.md", "mergeHash": "7eb62f41757f7034d46db26958e21eb2553ec2d6", "status": "merged" },
-            { "id": "e1-maps", "title": "Maps — Natural Claim terrain", "taskFile": "lane-c-w1-07-natural-claim.md", "mergeHash": "e84997d689e214bf66f1c32e95442e0b924c62a4", "status": "merged" }
-          ]
-        },
-        {
-          "id": "e2-steamworks",
-          "title": "E2 — Steamworks",
-          "tasks": [
-            { "id": "e2-engine", "title": "Engine — Rail entity", "taskFile": "lane-d-e2-rail-entity.md", "mergeHash": "08b336fadb9faa0cc5d0e779814ff5321b042197", "status": "merged" },
-            { "id": "e2-contracts", "title": "Contracts — Pressure economy", "taskFile": "lane-a-e2-pressure-economy.md", "mergeHash": "a21821ada94448b6fe1a66047c1dfc46c502f92f", "status": "merged" },
-            { "id": "e2-boss", "title": "Boss — Armored Railcar", "mergeHash": "07abf555ebab333b595d6c193bc40b5d9773a0f8", "status": "merged" },
-            { "id": "e2-art", "title": "Art — Steamworks production set", "mergeHash": "8f02e5f823e1032760bf90833f53066167e71c87", "status": "merged" },
-            { "id": "e2-town", "title": "Town — Stamp Mill site", "taskFile": "lane-d-e2-stamp-mill-manifest.md", "mergeHash": "08b336fadb9faa0cc5d0e779814ff5321b042197", "status": "merged" },
-            { "id": "e2-maps", "title": "Maps — Hill Mine", "taskFile": "lane-d-e2-hill-mine-tile.md", "mergeHash": "fcfdcd76304b69d85ab8c09e84cc140c1ca4e738", "status": "merged" }
-          ]
-        },
-        {
-          "id": "e3-voltage",
-          "title": "E3 — Voltage",
-          "tasks": [
-            { "id": "e3-engine", "title": "Engine — Power graph", "taskFile": "lane-a-e3-power-graph-core.md", "mergeHash": "c15e25084b3e97281ab399f1492f2796a5d5e2cf", "status": "merged" },
-            { "id": "e3-contracts", "title": "Contracts — Briefing system", "taskFile": "lane-c-contract-briefings.md", "mergeHash": "c15e25084b3e97281ab399f1492f2796a5d5e2cf", "status": "merged" },
-            { "id": "e3-boss", "title": "Boss — Rival Dynamo Crawler", "mergeHash": "8b7723f5fd787d5e11f6dcddda32489e79f23bf3", "status": "merged" },
-            { "id": "e3-art", "title": "Art — Voltage production set", "mergeHash": "9887268fcc1d4b63f1cce3ae2e26eb2485187ce8", "status": "merged" },
-            { "id": "e3-town", "title": "Town — Voltage facades", "mergeHash": "b6270d0e932ca621bdf0e9ac8c3644823102d372", "status": "merged" },
-            { "id": "e3-maps", "title": "Maps — Canyon Works", "mergeHash": "dafe9b633fb17f78dab209f14a585b4c0da6a23f", "status": "merged" }
-          ]
-        },
-        {
-          "id": "e4-motor",
-          "title": "E4 — Motor",
-          "tasks": [
-            { "id": "e4-engine", "title": "Engine — Motor research chart", "mergeHash": "f981833cd5c441f1c4f1b759a6aeef1ff288c455", "status": "merged" },
-            { "id": "e4-contracts", "title": "Contracts — Dust Flats", "mergeHash": "371779934959b47b339c39dea6d87ae96091a4b8", "status": "merged" },
-            { "id": "e4-boss", "title": "Boss — Land-Yacht", "mergeHash": "371779934959b47b339c39dea6d87ae96091a4b8", "status": "merged" },
-            { "id": "e4-art", "title": "Art — Motor era production set", "mergeHash": "6b7f1acecbb44889f2dfb056545d4b904357c823", "status": "merged" },
-            { "id": "e4-town", "title": "Town — Motor facade pilot", "mergeHash": "6fa1e60ef6b522472633b200745869f27f663b94", "status": "verified-by-owner" },
-            { "id": "e4-maps", "title": "Maps — Dust Flats terrain", "mergeHash": "371779934959b47b339c39dea6d87ae96091a4b8", "status": "merged" }
-          ]
-        },
-        {
-          "id": "e5-deepwater",
-          "title": "E5 — Deepwater",
-          "tasks": [
-            { "id": "e5-engine", "title": "Engine — Deepwater research chart", "mergeHash": "a3f682cdd223ef093ff60018c97faafaea23b3a6", "status": "merged" },
-            { "id": "e5-contracts", "title": "Contracts — Water spike", "mergeHash": "32d72c6927d2c9d30505a986679c37e448702b07", "status": "merged" },
-            { "id": "e5-boss", "title": "Boss — Dredge Queen", "status": "planned" },
-            { "id": "e5-art", "title": "Art — Deepwater production set", "taskFile": "art-e5-batch-01.md", "mergeHash": "20e27ff65ec2ea98afa0e7813c83902351b1eaab", "status": "merged" },
-            { "id": "e5-town", "title": "Town — Deepwater facades", "status": "planned" },
-            { "id": "e5-maps", "title": "Maps — The Claim-Boat", "taskFile": "e5-03-deepwater-tile.md", "mergeHash": "bb3b60b12b898853ad9f9ffe8b875b1b177ee929", "status": "merged" }
-          ]
-        },
-        {
-          "id": "e6-atomic",
-          "title": "E6 — Atomic Homestead",
-          "tasks": [
-            { "id": "e6-engine", "title": "Engine — Atomic research chart", "mergeHash": "22c8750a929484d03204abeeeb31bdbdc1e03d50", "status": "merged" },
-            { "id": "e6-contracts", "title": "Contracts — Atomic Homestead slate", "status": "planned" },
-            { "id": "e6-boss", "title": "Boss — Atomic Homestead boss", "status": "planned" },
-            { "id": "e6-art", "title": "Art — Atomic production set", "status": "planned" },
-            { "id": "e6-town", "title": "Town — Atomic facades", "status": "planned" },
-            { "id": "e6-maps", "title": "Maps — Atomic Homestead terrain", "status": "planned" }
-          ]
-        },
-        {
-          "id": "e7-signal",
-          "title": "E7 — Signal",
-          "tasks": [
-            { "id": "e7-engine", "title": "Engine — Signal research chart", "mergeHash": "dff73e12a4b742153487de9d46614e22fb0b8a6f", "status": "merged" },
-            { "id": "e7-contracts", "title": "Contracts — Signal slate", "status": "planned" },
-            { "id": "e7-boss", "title": "Boss — The Echo", "status": "planned" },
-            { "id": "e7-art", "title": "Art — Signal production set", "status": "planned" },
-            { "id": "e7-town", "title": "Town — Signal facades", "status": "planned" },
-            { "id": "e7-maps", "title": "Maps — Signal terrain", "status": "planned" }
-          ]
-        },
-        {
-          "id": "e8-orbital",
-          "title": "E8 — Orbital Frontier",
-          "tasks": [
-            { "id": "e8-engine", "title": "Engine — Orbital research chart", "mergeHash": "4fa13e3cb0c37203cfb16ef42a4fd4ab06641de4", "status": "merged" },
-            { "id": "e8-contracts", "title": "Contracts — Orbital slate", "status": "planned" },
-            { "id": "e8-boss", "title": "Boss — Orbital boss", "status": "planned" },
-            { "id": "e8-art", "title": "Art — Orbital production set", "status": "planned" },
-            { "id": "e8-town", "title": "Town — Orbital facades", "status": "planned" },
-            { "id": "e8-maps", "title": "Maps — Orbital terrain", "status": "planned" }
-          ]
-        },
-        {
-          "id": "e9-red-fields",
-          "title": "E9 — Red Fields",
-          "tasks": [
-            { "id": "e9-engine", "title": "Engine — Red Fields research chart", "mergeHash": "78693ea9b9fa8b8af6504339e5fabc8aa8a2da17", "status": "merged" },
-            { "id": "e9-contracts", "title": "Contracts — Red Fields slate", "status": "planned" },
-            { "id": "e9-boss", "title": "Boss — Red Fields boss", "status": "planned" },
-            { "id": "e9-art", "title": "Art — Red Fields production set", "status": "planned" },
-            { "id": "e9-town", "title": "Town — Red Fields facades", "status": "planned" },
-            { "id": "e9-maps", "title": "Maps — Red Fields terrain", "status": "planned" }
-          ]
-        },
-        {
-          "id": "e10-deep-sky",
-          "title": "E10 — Deep Sky",
-          "tasks": [
-            { "id": "e10-engine", "title": "Engine — Deep Sky research chart", "mergeHash": "b41c190c060a845be75a759b899324aabe5898b8", "status": "merged" },
-            { "id": "e10-contracts", "title": "Contracts — Deep Sky slate", "status": "planned" },
-            { "id": "e10-boss", "title": "Boss — The Quiet", "status": "planned" },
-            { "id": "e10-art", "title": "Art — Deep Sky production set", "status": "planned" },
-            { "id": "e10-town", "title": "Town — Ark settlement", "status": "planned" },
-            { "id": "e10-maps", "title": "Maps — Ark worlds", "status": "planned" }
-          ]
-        }
-      ]
+     "id": "e1-frontier",
+     "title": "E1 \u2014 Frontier",
+     "tasks": [
+      {
+       "id": "e1-engine",
+       "title": "Engine \u2014 Megaproject transition site",
+       "taskFile": "045-megaproject-site-mechanic.md",
+       "mergeHash": "7af56d62392e5f9976075039d0b0a8d88eca7ca9",
+       "status": "merged"
+      },
+      {
+       "id": "e1-contracts",
+       "title": "Contracts \u2014 Dry Gulch roster",
+       "taskFile": "lane-d-e1c-dry-gulch.md",
+       "mergeHash": "22af8fd9a3320145496dfbe8859f256b75e7972b",
+       "status": "merged"
+      },
+      {
+       "id": "e1-boss",
+       "title": "Boss \u2014 Epic Baron",
+       "taskFile": "lane-b-054-baron-epic.md",
+       "mergeHash": "0bb7c071460fbb82ff6105733328b982729d2ccc",
+       "status": "merged"
+      },
+      {
+       "id": "e1-art",
+       "title": "Art \u2014 E1 contract plates",
+       "taskFile": "art-batch-011-e1-contracts.md",
+       "mergeHash": "3c749607d0e6e5668ee3232e62e875b8af9fac50",
+       "status": "merged"
+      },
+      {
+       "id": "e1-town",
+       "title": "Town \u2014 Walkable square",
+       "taskFile": "lane-b-town-t1-square.md",
+       "mergeHash": "7eb62f41757f7034d46db26958e21eb2553ec2d6",
+       "status": "merged"
+      },
+      {
+       "id": "e1-maps",
+       "title": "Maps \u2014 Natural Claim terrain",
+       "taskFile": "lane-c-w1-07-natural-claim.md",
+       "mergeHash": "e84997d689e214bf66f1c32e95442e0b924c62a4",
+       "status": "merged"
+      }
+     ]
     },
     {
-      "id": "world-3d",
-      "title": "The 3D World",
-      "subgoals": [
-        {
-          "id": "world-terrain",
-          "title": "Continuous terrain",
-          "tasks": [
-            { "id": "world-ground-mesh", "title": "Continuous ground mesh", "taskFile": "lane-c-tr-01-continuous-ground.md", "mergeHash": "8aca6950b40959f7f82c56718faec7049ce2e4dc", "status": "merged" },
-            { "id": "world-contract-sculpts", "title": "Contract landform families", "status": "building" },
-            { "id": "world-mask-tables", "title": "Published gameplay mask tables", "taskFile": "chore-rail-mask-reconcile.md", "mergeHash": "de9cbcc2f12f5e3a42630b6b8a8f263352a33503", "status": "merged" }
-          ]
-        },
-        {
-          "id": "world-buildings",
-          "title": "Buildings and landmarks",
-          "tasks": [
-            { "id": "world-town-buildings", "title": "Town building GLBs", "status": "merged", "mergeHash": "6fa1e60ef6b522472633b200745869f27f663b94" },
-            { "id": "world-era-anchors", "title": "Era anchor emitters", "taskFile": "wire-era-anchor-emitters.md", "mergeHash": "561281a3ecd28ec14e6cff4364af502a632fcb32", "status": "merged" },
-            { "id": "world-crawler", "title": "Crawler 3D runtime wiring", "mergeHash": "3e2641fd9bfcb45978adb455f2a611d74bc65666", "status": "merged" }
-          ]
-        }
-      ]
+     "id": "e2-steamworks",
+     "title": "E2 \u2014 Steamworks",
+     "tasks": [
+      {
+       "id": "e2-engine",
+       "title": "Engine \u2014 Rail entity",
+       "taskFile": "lane-d-e2-rail-entity.md",
+       "mergeHash": "08b336fadb9faa0cc5d0e779814ff5321b042197",
+       "status": "merged"
+      },
+      {
+       "id": "e2-contracts",
+       "title": "Contracts \u2014 Pressure economy",
+       "taskFile": "lane-a-e2-pressure-economy.md",
+       "mergeHash": "a21821ada94448b6fe1a66047c1dfc46c502f92f",
+       "status": "merged"
+      },
+      {
+       "id": "e2-boss",
+       "title": "Boss \u2014 Armored Railcar",
+       "mergeHash": "07abf555ebab333b595d6c193bc40b5d9773a0f8",
+       "status": "merged"
+      },
+      {
+       "id": "e2-art",
+       "title": "Art \u2014 Steamworks production set",
+       "mergeHash": "8f02e5f823e1032760bf90833f53066167e71c87",
+       "status": "merged"
+      },
+      {
+       "id": "e2-town",
+       "title": "Town \u2014 Stamp Mill site",
+       "taskFile": "lane-d-e2-stamp-mill-manifest.md",
+       "mergeHash": "08b336fadb9faa0cc5d0e779814ff5321b042197",
+       "status": "merged"
+      },
+      {
+       "id": "e2-maps",
+       "title": "Maps \u2014 Hill Mine",
+       "taskFile": "lane-d-e2-hill-mine-tile.md",
+       "mergeHash": "fcfdcd76304b69d85ab8c09e84cc140c1ca4e738",
+       "status": "merged"
+      }
+     ]
     },
     {
-      "id": "stream",
-      "title": "The Stream",
-      "subgoals": [
-        {
-          "id": "stream-program",
-          "title": "Autopilot program",
-          "tasks": [
-            { "id": "stream-capture", "title": "Capture rig", "taskFile": "mkt-01-footage-rig.md", "mergeHash": "80d26e20a9dce46c9baab422dcf352ae0a95ec3c", "status": "merged" },
-            { "id": "stream-runner", "title": "Seeded stream runner", "mergeHash": "0e0c2a1943fc1b11a09ceaa4dec8e3783d9bd8ec", "status": "merged" },
-            { "id": "stream-director", "title": "Three-segment director", "mergeHash": "60e834e63e232b81dff3b4fd1f9820d47e855ad0", "status": "merged" },
-            { "id": "stream-curator", "title": "Rotation curator", "mergeHash": "7e5870a5902b2c88d10af8296388aff951bae10b", "status": "merged" },
-            { "id": "stream-live", "title": "Owner starts the YouTube loop", "status": "planned" }
-          ]
-        }
-      ]
+     "id": "e3-voltage",
+     "title": "E3 \u2014 Voltage",
+     "tasks": [
+      {
+       "id": "e3-engine",
+       "title": "Engine \u2014 Power graph",
+       "taskFile": "lane-a-e3-power-graph-core.md",
+       "mergeHash": "c15e25084b3e97281ab399f1492f2796a5d5e2cf",
+       "status": "merged"
+      },
+      {
+       "id": "e3-contracts",
+       "title": "Contracts \u2014 Briefing system",
+       "taskFile": "lane-c-contract-briefings.md",
+       "mergeHash": "c15e25084b3e97281ab399f1492f2796a5d5e2cf",
+       "status": "merged"
+      },
+      {
+       "id": "e3-boss",
+       "title": "Boss \u2014 Rival Dynamo Crawler",
+       "mergeHash": "8b7723f5fd787d5e11f6dcddda32489e79f23bf3",
+       "status": "merged"
+      },
+      {
+       "id": "e3-art",
+       "title": "Art \u2014 Voltage production set",
+       "mergeHash": "9887268fcc1d4b63f1cce3ae2e26eb2485187ce8",
+       "status": "merged"
+      },
+      {
+       "id": "e3-town",
+       "title": "Town \u2014 Voltage facades",
+       "mergeHash": "b6270d0e932ca621bdf0e9ac8c3644823102d372",
+       "status": "merged"
+      },
+      {
+       "id": "e3-maps",
+       "title": "Maps \u2014 Canyon Works",
+       "mergeHash": "dafe9b633fb17f78dab209f14a585b4c0da6a23f",
+       "status": "merged"
+      }
+     ]
     },
     {
-      "id": "marketing",
-      "title": "Marketing",
-      "subgoals": [
-        {
-          "id": "marketing-launch",
-          "title": "Launch surfaces",
-          "tasks": [
-            { "id": "marketing-key-art", "title": "Campaign key art", "taskFile": "art-batch-012-mkt-keyart.md", "mergeHash": "7af56d62392e5f9976075039d0b0a8d88eca7ca9", "status": "merged" },
-            { "id": "marketing-landing", "title": "Agent Town landing page", "taskFile": "mkt-02-agenttown-landing.md", "mergeHash": "89dd8cf039374a4407fd394965ea4c584097d6ad", "status": "merged" },
-            { "id": "marketing-feature-reel", "title": "Feature reel pilot", "mergeHash": "a865e540477025eb759cfa714492551d972807eb", "status": "merged" },
-            { "id": "marketing-owner-approval", "title": "Owner caption approval", "status": "planned" }
-          ]
-        }
-      ]
+     "id": "e4-motor",
+     "title": "E4 \u2014 Motor",
+     "tasks": [
+      {
+       "id": "e4-engine",
+       "title": "Engine \u2014 Motor research chart",
+       "mergeHash": "f981833cd5c441f1c4f1b759a6aeef1ff288c455",
+       "status": "merged"
+      },
+      {
+       "id": "e4-contracts",
+       "title": "Contracts \u2014 Dust Flats",
+       "mergeHash": "371779934959b47b339c39dea6d87ae96091a4b8",
+       "status": "merged"
+      },
+      {
+       "id": "e4-boss",
+       "title": "Boss \u2014 Land-Yacht",
+       "mergeHash": "371779934959b47b339c39dea6d87ae96091a4b8",
+       "status": "merged"
+      },
+      {
+       "id": "e4-art",
+       "title": "Art \u2014 Motor era production set",
+       "mergeHash": "6b7f1acecbb44889f2dfb056545d4b904357c823",
+       "status": "merged"
+      },
+      {
+       "id": "e4-town",
+       "title": "Town \u2014 Motor facade pilot",
+       "mergeHash": "6fa1e60ef6b522472633b200745869f27f663b94",
+       "status": "verified-by-owner"
+      },
+      {
+       "id": "e4-maps",
+       "title": "Maps \u2014 Dust Flats terrain",
+       "mergeHash": "371779934959b47b339c39dea6d87ae96091a4b8",
+       "status": "merged"
+      }
+     ]
     },
     {
-      "id": "factory-infra",
-      "title": "Factory Infra",
-      "subgoals": [
-        {
-          "id": "factory-truth",
-          "title": "Truth and continuity",
-          "tasks": [
-            { "id": "factory-goal-tree", "title": "Goal tracker dashboard", "taskFile": "goal-tracker-dashboard.md", "mergeHash": "3f31671cde088089e1f8e7a20e502ca6bfad7533", "status": "merged" },
-            { "id": "factory-run-suspend", "title": "Resumable run state", "taskFile": "lane-a-run-suspend.md", "mergeHash": "4f693a170196da0fe087c229ab997852d29cc78e", "status": "merged" },
-            { "id": "factory-accounts", "title": "Accounts worker foundation", "taskFile": "lane-d-ac-01-accounts-worker.md", "mergeHash": "8709a809383944d55795c65178823d7be5197420", "status": "merged" },
-            { "id": "factory-download", "title": "Download diet", "taskFile": "052-download-diet.md", "mergeHash": "9e95b80acf423172b8989a26248742f802152eee", "status": "merged" }
-          ]
-        }
-      ]
+     "id": "e5-deepwater",
+     "title": "E5 \u2014 Deepwater",
+     "tasks": [
+      {
+       "id": "e5-engine",
+       "title": "Engine \u2014 Deepwater research chart",
+       "mergeHash": "a3f682cdd223ef093ff60018c97faafaea23b3a6",
+       "status": "merged"
+      },
+      {
+       "id": "e5-contracts",
+       "title": "Contracts \u2014 Water spike",
+       "mergeHash": "32d72c6927d2c9d30505a986679c37e448702b07",
+       "status": "merged"
+      },
+      {
+       "id": "e5-boss",
+       "title": "Boss \u2014 Dredge Queen",
+       "status": "planned"
+      },
+      {
+       "id": "e5-art",
+       "title": "Art \u2014 Deepwater production set",
+       "taskFile": "art-e5-batch-01.md",
+       "mergeHash": "20e27ff65ec2ea98afa0e7813c83902351b1eaab",
+       "status": "merged"
+      },
+      {
+       "id": "e5-town",
+       "title": "Town \u2014 Deepwater facades",
+       "status": "planned"
+      },
+      {
+       "id": "e5-maps",
+       "title": "Maps \u2014 The Claim-Boat",
+       "taskFile": "e5-03-deepwater-tile.md",
+       "mergeHash": "bb3b60b12b898853ad9f9ffe8b875b1b177ee929",
+       "status": "merged"
+      }
+     ]
+    },
+    {
+     "id": "e6-atomic",
+     "title": "E6 \u2014 Atomic Homestead",
+     "tasks": [
+      {
+       "id": "e6-engine",
+       "title": "Engine \u2014 Atomic research chart",
+       "mergeHash": "22c8750a929484d03204abeeeb31bdbdc1e03d50",
+       "status": "merged"
+      },
+      {
+       "id": "e6-contracts",
+       "title": "Contracts \u2014 Atomic Homestead slate",
+       "status": "planned"
+      },
+      {
+       "id": "e6-boss",
+       "title": "Boss \u2014 Atomic Homestead boss",
+       "status": "planned"
+      },
+      {
+       "id": "e6-art",
+       "title": "Art \u2014 Atomic production set",
+       "status": "planned"
+      },
+      {
+       "id": "e6-town",
+       "title": "Town \u2014 Atomic facades",
+       "status": "planned"
+      },
+      {
+       "id": "e6-maps",
+       "title": "Maps \u2014 Atomic Homestead terrain",
+       "status": "planned"
+      }
+     ]
+    },
+    {
+     "id": "e7-signal",
+     "title": "E7 \u2014 Signal",
+     "tasks": [
+      {
+       "id": "e7-engine",
+       "title": "Engine \u2014 Signal research chart",
+       "mergeHash": "dff73e12a4b742153487de9d46614e22fb0b8a6f",
+       "status": "merged"
+      },
+      {
+       "id": "e7-contracts",
+       "title": "Contracts \u2014 Signal slate",
+       "status": "planned"
+      },
+      {
+       "id": "e7-boss",
+       "title": "Boss \u2014 The Echo",
+       "status": "planned"
+      },
+      {
+       "id": "e7-art",
+       "title": "Art \u2014 Signal production set",
+       "status": "planned"
+      },
+      {
+       "id": "e7-town",
+       "title": "Town \u2014 Signal facades",
+       "status": "planned"
+      },
+      {
+       "id": "e7-maps",
+       "title": "Maps \u2014 Signal terrain",
+       "status": "planned"
+      }
+     ]
+    },
+    {
+     "id": "e8-orbital",
+     "title": "E8 \u2014 Orbital Frontier",
+     "tasks": [
+      {
+       "id": "e8-engine",
+       "title": "Engine \u2014 Orbital research chart",
+       "mergeHash": "4fa13e3cb0c37203cfb16ef42a4fd4ab06641de4",
+       "status": "merged"
+      },
+      {
+       "id": "e8-contracts",
+       "title": "Contracts \u2014 Orbital slate",
+       "status": "planned"
+      },
+      {
+       "id": "e8-boss",
+       "title": "Boss \u2014 Orbital boss",
+       "status": "planned"
+      },
+      {
+       "id": "e8-art",
+       "title": "Art \u2014 Orbital production set",
+       "status": "planned"
+      },
+      {
+       "id": "e8-town",
+       "title": "Town \u2014 Orbital facades",
+       "status": "planned"
+      },
+      {
+       "id": "e8-maps",
+       "title": "Maps \u2014 Orbital terrain",
+       "status": "planned"
+      }
+     ]
+    },
+    {
+     "id": "e9-red-fields",
+     "title": "E9 \u2014 Red Fields",
+     "tasks": [
+      {
+       "id": "e9-engine",
+       "title": "Engine \u2014 Red Fields research chart",
+       "mergeHash": "78693ea9b9fa8b8af6504339e5fabc8aa8a2da17",
+       "status": "merged"
+      },
+      {
+       "id": "e9-contracts",
+       "title": "Contracts \u2014 Red Fields slate",
+       "status": "planned"
+      },
+      {
+       "id": "e9-boss",
+       "title": "Boss \u2014 Red Fields boss",
+       "status": "planned"
+      },
+      {
+       "id": "e9-art",
+       "title": "Art \u2014 Red Fields production set",
+       "status": "planned"
+      },
+      {
+       "id": "e9-town",
+       "title": "Town \u2014 Red Fields facades",
+       "status": "planned"
+      },
+      {
+       "id": "e9-maps",
+       "title": "Maps \u2014 Red Fields terrain",
+       "status": "planned"
+      }
+     ]
+    },
+    {
+     "id": "e10-deep-sky",
+     "title": "E10 \u2014 Deep Sky",
+     "tasks": [
+      {
+       "id": "e10-engine",
+       "title": "Engine \u2014 Deep Sky research chart",
+       "mergeHash": "b41c190c060a845be75a759b899324aabe5898b8",
+       "status": "merged"
+      },
+      {
+       "id": "e10-contracts",
+       "title": "Contracts \u2014 Deep Sky slate",
+       "status": "planned"
+      },
+      {
+       "id": "e10-boss",
+       "title": "Boss \u2014 The Quiet",
+       "status": "planned"
+      },
+      {
+       "id": "e10-art",
+       "title": "Art \u2014 Deep Sky production set",
+       "status": "planned"
+      },
+      {
+       "id": "e10-town",
+       "title": "Town \u2014 Ark settlement",
+       "status": "planned"
+      },
+      {
+       "id": "e10-maps",
+       "title": "Maps \u2014 Ark worlds",
+       "status": "planned"
+      }
+     ]
     }
-  ]
+   ]
+  },
+  {
+   "id": "world-3d",
+   "title": "The 3D World",
+   "subgoals": [
+    {
+     "id": "world-terrain",
+     "title": "Continuous terrain",
+     "tasks": [
+      {
+       "id": "world-ground-mesh",
+       "title": "Continuous ground mesh",
+       "taskFile": "lane-c-tr-01-continuous-ground.md",
+       "mergeHash": "8aca6950b40959f7f82c56718faec7049ce2e4dc",
+       "status": "merged"
+      },
+      {
+       "id": "world-contract-sculpts",
+       "title": "Contract landform families",
+       "status": "building"
+      },
+      {
+       "id": "world-mask-tables",
+       "title": "Published gameplay mask tables",
+       "taskFile": "chore-rail-mask-reconcile.md",
+       "mergeHash": "de9cbcc2f12f5e3a42630b6b8a8f263352a33503",
+       "status": "merged"
+      }
+     ]
+    },
+    {
+     "id": "world-buildings",
+     "title": "Buildings and landmarks",
+     "tasks": [
+      {
+       "id": "world-town-buildings",
+       "title": "Town building GLBs",
+       "status": "merged",
+       "mergeHash": "6fa1e60ef6b522472633b200745869f27f663b94"
+      },
+      {
+       "id": "world-era-anchors",
+       "title": "Era anchor emitters",
+       "taskFile": "wire-era-anchor-emitters.md",
+       "mergeHash": "561281a3ecd28ec14e6cff4364af502a632fcb32",
+       "status": "merged"
+      },
+      {
+       "id": "world-cold-anchor",
+       "title": "Cold-anchor rule (one era breathes at a time)",
+       "taskFile": "cold-anchor-rule.md",
+       "mergeHash": "21e6ee2b94f432fc18c3885fc8ac4c54c9cc5fb0",
+       "status": "merged"
+      },
+      {
+       "id": "world-crawler",
+       "title": "Crawler 3D runtime wiring",
+       "mergeHash": "3e2641fd9bfcb45978adb455f2a611d74bc65666",
+       "status": "merged"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "stream",
+   "title": "The Stream",
+   "subgoals": [
+    {
+     "id": "stream-program",
+     "title": "Autopilot program",
+     "tasks": [
+      {
+       "id": "stream-capture",
+       "title": "Capture rig",
+       "taskFile": "mkt-01-footage-rig.md",
+       "mergeHash": "80d26e20a9dce46c9baab422dcf352ae0a95ec3c",
+       "status": "merged"
+      },
+      {
+       "id": "stream-runner",
+       "title": "Seeded stream runner",
+       "mergeHash": "0e0c2a1943fc1b11a09ceaa4dec8e3783d9bd8ec",
+       "status": "merged"
+      },
+      {
+       "id": "stream-director",
+       "title": "Three-segment director",
+       "mergeHash": "60e834e63e232b81dff3b4fd1f9820d47e855ad0",
+       "status": "merged"
+      },
+      {
+       "id": "stream-curator",
+       "title": "Rotation curator",
+       "mergeHash": "7e5870a5902b2c88d10af8296388aff951bae10b",
+       "status": "merged"
+      },
+      {
+       "id": "stream-live",
+       "title": "Owner starts the YouTube loop",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "marketing",
+   "title": "Marketing",
+   "subgoals": [
+    {
+     "id": "marketing-launch",
+     "title": "Launch surfaces",
+     "tasks": [
+      {
+       "id": "marketing-key-art",
+       "title": "Campaign key art",
+       "taskFile": "art-batch-012-mkt-keyart.md",
+       "mergeHash": "7af56d62392e5f9976075039d0b0a8d88eca7ca9",
+       "status": "merged"
+      },
+      {
+       "id": "marketing-landing",
+       "title": "Agent Town landing page",
+       "taskFile": "mkt-02-agenttown-landing.md",
+       "mergeHash": "89dd8cf039374a4407fd394965ea4c584097d6ad",
+       "status": "merged"
+      },
+      {
+       "id": "marketing-feature-reel",
+       "title": "Feature reel pilot",
+       "mergeHash": "a865e540477025eb759cfa714492551d972807eb",
+       "status": "merged"
+      },
+      {
+       "id": "marketing-owner-approval",
+       "title": "Owner caption approval",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "factory-infra",
+   "title": "Factory Infra",
+   "subgoals": [
+    {
+     "id": "factory-truth",
+     "title": "Truth and continuity",
+     "tasks": [
+      {
+       "id": "factory-goal-tree",
+       "title": "Goal tracker dashboard",
+       "taskFile": "goal-tracker-dashboard.md",
+       "mergeHash": "3f31671cde088089e1f8e7a20e502ca6bfad7533",
+       "status": "merged"
+      },
+      {
+       "id": "factory-run-suspend",
+       "title": "Resumable run state",
+       "taskFile": "lane-a-run-suspend.md",
+       "mergeHash": "4f693a170196da0fe087c229ab997852d29cc78e",
+       "status": "merged"
+      },
+      {
+       "id": "factory-accounts",
+       "title": "Accounts worker foundation",
+       "taskFile": "lane-d-ac-01-accounts-worker.md",
+       "mergeHash": "8709a809383944d55795c65178823d7be5197420",
+       "status": "merged"
+      },
+      {
+       "id": "factory-download",
+       "title": "Download diet",
+       "taskFile": "052-download-diet.md",
+       "mergeHash": "9e95b80acf423172b8989a26248742f802152eee",
+       "status": "merged"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "art-brand",
+   "title": "Art Style & Brand (interface, backgrounds, laws of the look)",
+   "subgoals": [
+    {
+     "id": "art-brand-core",
+     "title": "The visual system",
+     "tasks": [
+      {
+       "id": "style-anchor",
+       "title": "Frontier Ledger style anchor (brief \u00a74/\u00a79)",
+       "status": "verified-by-owner"
+      },
+      {
+       "id": "brand-book",
+       "title": "BRAND-BOOK.md ratified",
+       "status": "verified-by-owner",
+       "doc": "docs/marketing/BRAND-BOOK.md"
+      },
+      {
+       "id": "era-backdrops",
+       "title": "Era backdrops on menus/surfaces (kits 1-10 promoted)",
+       "status": "merged"
+      },
+      {
+       "id": "grit-law",
+       "title": "The Grit Law + Panorama v2 (terrain mood)",
+       "status": "verified-by-owner"
+      },
+      {
+       "id": "ui-era-dressing",
+       "title": "UI era dressing + impact-law voice",
+       "status": "merged"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "laws",
+   "title": "Laws & Framework (the constitution)",
+   "subgoals": [
+    {
+     "id": "laws-core",
+     "title": "Factory + design law",
+     "tasks": [
+      {
+       "id": "operating-manual",
+       "title": "CLAUDE.md operating manual + mistake catalog",
+       "status": "verified-by-owner",
+       "doc": "CLAUDE.md"
+      },
+      {
+       "id": "gate-authorship",
+       "title": "Gate-authorship + ground-truth laws",
+       "status": "verified-by-owner"
+      },
+      {
+       "id": "accretion-v2",
+       "title": "Accretion v2 + Flood Break + Upgrade Cadence",
+       "status": "verified-by-owner",
+       "doc": "docs/SOL-3D-C-QUEUE.md"
+      },
+      {
+       "id": "planar-law",
+       "title": "Planar-sim law + MODEL-HANDOFF doctrine",
+       "status": "verified-by-owner"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "story",
+   "title": "Story & Canon (storybook, arc, the Fever)",
+   "subgoals": [
+    {
+     "id": "story-canon",
+     "title": "Canon shipped",
+     "tasks": [
+      {
+       "id": "storybook-e1-e3",
+       "title": "STORYBOOK chapters E1-E3 + Fever thread",
+       "status": "verified-by-owner",
+       "doc": "lore/STORYBOOK.md"
+      },
+      {
+       "id": "fever-mythology",
+       "title": "Gold Fever mythology (Quack, mutation, cure-arms, flood, callout)",
+       "status": "verified-by-owner",
+       "doc": "lore/story-arc.md"
+      },
+      {
+       "id": "dispatches-spec",
+       "title": "World-dispatches spec (vehicles pending owner nod)",
+       "status": "planned",
+       "doc": "specs/world-dispatches/README.md"
+      },
+      {
+       "id": "storybook-e4-e10",
+       "title": "STORYBOOK chapters E4-E10 (unwritten)",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "multiplayer",
+   "title": "Multiplayer",
+   "subgoals": [
+    {
+     "id": "mp-core",
+     "title": "Foundations \u2192 co-op",
+     "tasks": [
+      {
+       "id": "mp-chain",
+       "title": "Snapshot v2 + lockstep actions (36/36)",
+       "status": "merged",
+       "mergeHash": "747832a0"
+      },
+      {
+       "id": "coop-milestone",
+       "title": "Co-op milestone kickoff (owner-scheduled, post-E2)",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "charter-press",
+   "title": "The Charter Press (level editor \u2192 the capstone product)",
+   "subgoals": [
+    {
+     "id": "cp-design",
+     "title": "Design & spec (Fable-class, pre-19th)",
+     "tasks": [
+      {
+       "id": "cp-spec",
+       "title": "Charter Press spec (canon: kids' builder, beta E2-3, capstone E10)",
+       "status": "planned"
+      }
+     ]
+    },
+    {
+     "id": "cp-build",
+     "title": "Feature build (lane-executable, post-spec)",
+     "tasks": [
+      {
+       "id": "cp-editor-core",
+       "title": "Editor core (tiles/masks/contract authoring)",
+       "status": "planned"
+      },
+      {
+       "id": "cp-share",
+       "title": "Share/play loop",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "foundry",
+   "title": "The Foundry (extract the factory+engine as a reusable product)",
+   "subgoals": [
+    {
+     "id": "foundry-extract",
+     "title": "Extraction (laws, processes, templates, pipelines \u2014 domain-agnostic kit)",
+     "tasks": [
+      {
+       "id": "foundry-book",
+       "title": "THE FOUNDRY BOOK: constitution, gate patterns, mistake catalog, era-bundle template, masks-first pipeline, Sol protocols, canon-wiki method",
+       "status": "planned"
+      },
+      {
+       "id": "foundry-seed",
+       "title": "Second-game seed test (apply the kit to a fresh theme, one evening)",
+       "status": "planned"
+      }
+     ]
+    }
+   ]
+  }
+ ]
 }
