@@ -3,6 +3,8 @@
 Owner directive (Robin, 2026-07-06): **4–5 lanes working constantly.** Fires refill from this ladder per fire.md §2E — and when a ladder runs dry, an idle fire AUTHORS the next master itself from the spec slice + evidence chain (FIRE-AUTHORED header, one per fire). Only three things escalate to the attended session: a missing spec, a design fork, or a canon question (PIPELINE-DRY flag). Robin authors nothing and verdicts everything.
 **Completeness law (owner ask, 2026-07-06 evening): every known work item lives HERE — queued, gated, owner-owed, or explicitly retired to Stale. If work is discovered anywhere (review finding, fire flag, playtest, spec slice), it gets a ladder line in the same commit.** The dashboard renders this file; an item missing here is invisible, and invisible = forgotten (Demo Day taught us).
 
+**GOAL REGISTRATION LAW (owner ask, 2026-07-16): every authored master adds its leaf to `tasks/goals.json` in the same commit; every drain updates that leaf's status and merge hash.** A task is not fully authored or drained until both the backlog and goal tree tell the same truth.
+
 **Stale-check law**: a master written >2 days ago gets a 60-second reality check against current main before queueing (the m4-02 "6→40 refresh" lesson) — refresh it or flag it, never blind-queue.
 
 ## main (serial slot; balance/fix/feature tune — THROTTLE: ≤1 queued while drain pile ≥3)
