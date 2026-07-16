@@ -26,6 +26,10 @@ function assertBoundsAndWater(mask, waterAgreement) {
     inBounds(mask, zone.minX, zone.minZ);
     inBounds(mask, zone.maxX, zone.maxZ);
   }
+  for (const zone of mask.fixtureZones ?? []) {
+    inBounds(mask, zone.minX, zone.minZ);
+    inBounds(mask, zone.maxX, zone.maxZ);
+  }
   for (const point of [
     ...(mask.stakeMarkers ?? []), ...(mask.pylonSites ?? []), ...(mask.capacitorSites ?? []),
     ...(mask.harvestAnchors ?? []), ...(mask.prePlacedBuildables ?? []), ...(mask.spawnGates ?? []),
@@ -68,13 +72,19 @@ test('published E3 mask tables exactly track authored contract data', async () =
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'pylonSites',
       'capacitorSites', 'prePlacedBuildables', 'ridgeGlow', 'waterSources', 'harvestAnchors', 'heightfield', 'lanes',
     ],
+    'e3-fairground': [
+      'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers',
+      'waterSources', 'heightfield', 'palette', 'scatter', 'lanes',
+    ],
   };
 
   for (const [id, directKeys] of Object.entries(keys)) {
     const authored = contract(id);
     const published = await table(id);
     assert.deepEqual(Object.keys(published), ['maskTruth', 'waterAgreement']);
-    assert.equal(published.maskTruth.source, 'assets/contracts/epoch-3-voltage/contracts.json');
+    assert.equal(published.maskTruth.source, id === 'e3-fairground'
+      ? 'assets/contracts/epoch-3-voltage/contracts.json; src/entities/FerrisWheel.ts:43-44'
+      : 'assets/contracts/epoch-3-voltage/contracts.json');
     for (const key of directKeys) assert.deepEqual(published.maskTruth[key], authored.tileParams[key], `${id}.${key}`);
     assert.deepEqual(published.maskTruth.spawnGates, authored.twist.enemyRoster.flatMap((enemy) => enemy.spawnGates ?? []));
   }
@@ -85,6 +95,11 @@ test('published E3 mask tables exactly track authored contract data', async () =
   assert.deepEqual(mothMask.mothSeason, moth.twist.mothSeason);
   const blackout = contract('e3-blackout-ridge');
   assert.deepEqual((await table(blackout.id)).maskTruth.dayNightCycle, blackout.twist.dayNightCycle);
+  const fairground = contract('e3-fairground');
+  const fairgroundMask = (await table(fairground.id)).maskTruth;
+  assert.deepEqual(fairgroundMask.dayNightCycle, fairground.twist.dayNightCycle);
+  assert.deepEqual(fairgroundMask.fixtureZones, [{ id: 'ferris-wheel', minX: -4.1, maxX: 4.1, minZ: 6.2, maxZ: 9.8 }]);
+  assert.match(fairgroundMask.source, /src\/entities\/FerrisWheel\.ts:43-44/);
 });
 
 test('published Moth Season mask stays inside bounds and agrees with authored water', async () => {
@@ -92,7 +107,7 @@ test('published Moth Season mask stays inside bounds and agrees with authored wa
   assertBoundsAndWater(maskTruth, waterAgreement);
 });
 
-for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e4-dust-flats']) {
+for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e3-fairground', 'e4-dust-flats']) {
   test(`${id} mask stays inside bounds and agrees with authored water`, async () => {
     const { maskTruth, waterAgreement } = await table(id);
     assertBoundsAndWater(maskTruth, waterAgreement);

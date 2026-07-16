@@ -1,0 +1,98 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-3-voltage/contracts.json; src/entities/FerrisWheel.ts:43-44",
+    "tileId": "e3-fairground",
+    "size": 88,
+    "dimensions": {
+      "width": 88,
+      "height": 88
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "south-midway",
+        "bank": "south",
+        "minX": -36,
+        "maxX": 36,
+        "minZ": -38,
+        "maxZ": -12
+      },
+      {
+        "id": "west-pavilion",
+        "bank": "north",
+        "minX": -38,
+        "maxX": -10,
+        "minZ": -8,
+        "maxZ": 30
+      },
+      {
+        "id": "east-pavilion",
+        "bank": "north",
+        "minX": 10,
+        "maxX": 38,
+        "minZ": -8,
+        "maxZ": 30
+      }
+    ],
+    "fixtureZones": [
+      {
+        "id": "ferris-wheel",
+        "minX": -4.1,
+        "maxX": 4.1,
+        "minZ": 6.2,
+        "maxZ": 9.8
+      }
+    ],
+    "stakeMarkers": [
+      {
+        "id": "fair-gate",
+        "x": 0,
+        "z": -30,
+        "lossCondition": true
+      }
+    ],
+    "waterSources": [],
+    "heightfield": {
+      "id": "fairground-bowl",
+      "mode": "visual"
+    },
+    "palette": {
+      "id": "fairground-lamp-gold",
+      "tint": [0.68, 0.58, 0.48],
+      "dampAmount": 0.04,
+      "splat": {
+        "rockAmount": 0.24,
+        "scrubAmount": 0.16,
+        "macroWarmth": 0.72,
+        "antiTile": 0.68
+      }
+    },
+    "scatter": {
+      "id": "fairground-midway",
+      "density": 0.34,
+      "classCounts": {
+        "rocks": 20,
+        "dry_grass": 24,
+        "wagon_ruts": 24,
+        "claim_posts": 12
+      }
+    },
+    "lanes": {
+      "spawnEdges": ["west", "east", "north"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": [],
+    "dayNightCycle": {
+      "periodSeconds": 24,
+      "duskRampSeconds": 3,
+      "dawnRampSeconds": 3,
+      "nightDepth": 0.9
+    }
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}
