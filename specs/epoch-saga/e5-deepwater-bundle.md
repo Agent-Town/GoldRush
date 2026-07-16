@@ -52,3 +52,9 @@ Water volumes + boat physics (GT-05) · deck-anchor building system (base-on-veh
 BINDING on the fight's design (bundle wins conflicts; the storybook's third printing carries the same staging):
 - **Act 1 is TWO-FRONT**: (a) the claw-interrupt race = the STORY pressure (optional, rewarded — the emotional layer for players who care about the history being dredged); (b) the PADDLES = the required player objective whose destruction GATES Act 2. Never open Act 2 on an unexplained broken-paddles state.
 - Acts 0, 2, 3 ratified as choreographed (dread flag-on-storm-front · anchored stand + fight-from-beneath · hold cracks, sea's tax, crew rows off warm, W6 wreck persists as a future dive site — the owner singled out the wreck-becomes-map beat as the keeper).
+
+## OWNER RULING — THE ONE-TOWN LAW (2026-07-16, verbatim): "it says there will be all the different towns from the past under water. But in reality there is just one town, it changed over time but it is only one. So there should not be 5 towns under water, only one."
+BINDING on every E5 surface (seabed art, wreck sites, chapter prose, dispatches):
+- The town is SINGULAR and ACCRETED (the Accretion Law's palimpsest). The flood drowned it ONCE, in its E4 final state — so the seabed holds exactly ONE drowned settlement: the accreted town, its E4-era bodies wearing all four eras of their history. (The shipped deepwater terrain already complies: F-3D-D-48 mounts four E4 bodies "so they read as one flooded settlement.")
+- Everything else underwater is WORKS and OBJECTS, never settlements: the drowned CLAIMS across the county (derrick tops, dam crest, rail cut — work sites), and the wrecks W1–W5 (a supply barge, a locomotive, era-stamped VEHICLES/ITEMS; W5 the mystery hull). "Museum of drowned eras" means era-stamped objects on one county's floor — never era-separated towns.
+- Never stage "the E1 town," "the E2 town," etc. as distinct underwater ruins, anywhere.
