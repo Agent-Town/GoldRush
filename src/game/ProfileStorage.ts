@@ -217,6 +217,10 @@ export function profileDataKey(profileId: string, logicalKey: string): string {
   return `${PROFILE_KEY}.${profileId}.${logicalKey}`;
 }
 
+export function tileStateKey(profileId: string, contractId: string): string {
+  return profileDataKey(profileId, `tilestate.${contractId}`);
+}
+
 export function bindProfileSession(profileId: string): void {
   sessionProfileId = profileId;
 }

@@ -15,6 +15,9 @@ export const Balance = {
   actors: {
     enabled: false,
   },
+  persistence: {
+    tileStateMaxBytes: 32 * 1024,
+  },
   enemy: {
     poolSize: 96,
     hp: 25.2,
