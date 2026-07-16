@@ -289,6 +289,47 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## Blackout Ridge + Dust Flats wave
+
+### F-3D-D-42 — Published masks remain the only gameplay truth
+
+Both terrain contracts copy their published E3/E4 mask tables exactly. Blackout Ridge resolves all three pylon and two capacitor disks to exported triangle-surface flats; Dust Flats preserves its four build zones, r=24 orbit, four road corridors, four tar seams, and dry wash. No simulation, movement, spawn, collision, fog, or landmark file changed.
+
+### F-3D-D-43 — Blackout Ridge needs a geometric climb before night grading
+
+The night tile now combines a rising diagonal shelf, broken ledge, physical trunk trench and shoulders, sparse rubble, cool raking light, and localized failing-copper warmth. The pylon/capacitor flats override the render relief only inside their load-bearing disks.
+
+### F-3D-D-44 — Dust Flats is organized by motor wear, not a painted circle
+
+The E4 tile uses a physically crowned and rutted orbit road, paired wheel ruts on all authored corridors, uneven shoulders, tar depressions, a dry wash, and edge drifts. Sub-metre orbit wobble breaks compass-perfect repetition while retaining the authored r=24 gameplay read.
+
+### F-3D-D-45 — Panorama evidence exposed a transition limit
+
+The Panorama v2 rings remain separate render-only assets with exact-boundary ground skirts, asymmetric ridges, haze, and quiet zeniths. Blind review passed both panoramas as distance rather than wall or ceiling, but rejected an earlier smooth collar/tabletop join. The delivered correction removes the one-metre void, adds irregular skirt relief, and confines boundary-matched paint to a narrow band. The attended owner gate should still judge the residual overview transition; no gameplay authority was moved to hide it.
+
+## Blackout Ridge + Dust Flats gate state
+
+- Terrain GLBs: 32,768 triangles, one mesh/primitive/material and one embedded 2048² atlas each: PASS
+- Panorama GLBs: 3,072 Blackout / 2,688 Dust triangles, one mesh/primitive/material and one embedded 2048² atlas each: PASS
+- Whole-file byte-identical re-export for all four GLBs: PASS
+- Blackout load-bearing pylon/capacitor triangle-surface flats: PASS
+- Exact published mask copies and empty landmark mounts under the freeze: PASS
+- Mood A/B, identical-camera geometry, owner, mask, and Panorama v2 boards: PASS
+- Panorama distance verdict: PASS
+- Residual terrain/panorama overview transition: OWNER VERDICT
+- `src/`, simulation, runtime, and landmark edits: none
+
+## Blackout Ridge + Dust Flats owner-verdict images
+
+- `artifacts/map-rebuild-spike/blackout-dust-owner-verdict.png`
+- `artifacts/map-rebuild-spike/blackout-dust-mood-ab.png`
+- `artifacts/map-rebuild-spike/blackout-dust-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/blackout-dust-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/blackout-dust-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/blackout-dust-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## E2 Pressure Garden + Incline terrain wave
 
 ### F-3D-D-37 — The published final-pair tables close the E2 family without inference
