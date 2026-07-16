@@ -11,6 +11,8 @@ type TimelineEntry = {
   goldPickups: number;
   xpMotes: number;
   wave: number;
+  kills: number;
+  gold: number;
   economyLog: number;
 };
 
@@ -24,6 +26,7 @@ type DeterminismReport = {
   stepSeconds: number;
   simSeconds: number;
   ticks: number;
+  simHash: string;
   economyHash: string;
   futureStateHash: string;
   economy: ReturnType<NonNullable<Window['__GR_TEST__']>['summarizeLog']>;
@@ -60,11 +63,15 @@ async function runDeterminismHarness(): Promise<DeterminismReport> {
 
   const test = window.__GR_TEST__!;
   const seed = getDebugSeed() ?? 'gold-rush';
+  const params = new URLSearchParams(window.location.search);
+  params.set('nolevel', '');
+  window.history.replaceState(null, '', `${window.location.pathname}?${params}${window.location.hash}`);
   test.setManualSim(true);
   await waitFrames(2);
   test.resetRun();
   test.setManualSim(true);
   test.setBalance('enemy.contactDamage', 0);
+  test.setBalance('waves.aliveCap', 12);
   await waitFrames(1);
   moveToHarvestNode();
 
@@ -73,6 +80,7 @@ async function runDeterminismHarness(): Promise<DeterminismReport> {
 
   const economyLog = test.economyLog();
   const economy = test.summarizeLog(economyLog);
+  const simHash = hashText(stableStringify(entityTimeline));
   const economyHash = hashText(stableStringify({ economy, logLength: economyLog.length }));
   const futureStateHash = hashText(stableStringify(runSuspendFutureState(test.captureSuspend())));
   return {
@@ -85,6 +93,7 @@ async function runDeterminismHarness(): Promise<DeterminismReport> {
     stepSeconds: STEP_SECONDS,
     simSeconds: SIM_SECONDS,
     ticks: entityTimeline.length,
+    simHash,
     economyHash,
     futureStateHash,
     economy,
@@ -107,6 +116,7 @@ function failedReport(error: unknown): DeterminismReport {
     stepSeconds: STEP_SECONDS,
     simSeconds: SIM_SECONDS,
     ticks: 0,
+    simHash: 'fnv1a32:00000000',
     economyHash: 'fnv1a32:00000000',
     futureStateHash: 'fnv1a32:00000000',
     economy: emptyEconomySummary(),

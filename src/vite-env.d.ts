@@ -857,6 +857,8 @@ type GrSimulationTickSample = {
   goldPickups: number;
   xpMotes: number;
   wave: number;
+  kills: number;
+  gold: number;
   economyLog: number;
 };
 

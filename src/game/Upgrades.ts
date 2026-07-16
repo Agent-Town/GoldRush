@@ -312,7 +312,7 @@ function loadCraftedUpgradeDefs(): UpgradeDef[] {
         })
       : {};
   const byId = new Map<string, UpgradeDef>();
-  for (const value of Object.values(files)) {
+  for (const value of Object.keys(files).sort().map((path) => files[path])) {
     const entry = parseApprovedQueueEntry(value);
     const card = entry?.item.family ? craftedItemCard(entry) : null;
     if (card) byId.set(card.id, card);
