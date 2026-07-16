@@ -289,6 +289,33 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## Hill Mine + Trestle landmark bar-unification wave
+
+### F-3D-D-58 — Painted-wrap quality is a body-and-material contract, not an atlas swap
+
+Fresh references were regenerated from `origin/main@8d974f11` before any replacement. The neutral boards at `artifacts/map-rebuild-spike/landmark-bar-unification/hill-mine-blind-ab.png` and `trestle-blind-ab.png` preserve the same terrain, real run camera, mount ids, mount transforms, and asset paths on both sides. The withheld side key is recorded separately. Blind review chose the candidate for both maps at 97–98% confidence and answered “fight.”
+
+The winning difference is structural. Hill Mine replaces its flat headframe icon with a four-legged ruined frame, mine mouth, pulley, rope, tailings, fallen timber, and repair sign; its boiler house becomes an articulated shed/drum/stack/valve/pipe worksite; its flooded gallery gains a pump, tram rails, sleepers, sump, portal, and broken supports; and its switchback and tailings packs gain visible route and dumping logic. Trestle gains repeated bridge bents, X-bracing, deck beams, repair plates, fallen members, distinct north/south boiler and approach damage, tar scars, rubble, drums, a broken gate, and an ore-working mine spur. These silhouettes remain readable at the gameplay camera instead of relying on close inspection.
+
+Each map still owns one shared 1024² atlas, now baked only from its shipped Epoch 2 kit plus Hill Mine contract paint or the shipped Trestle rail paint. Stronger engraved ink, sun-bleached values, scratches, stains, soot, rust, and repair battens bring the material language up to the ratified E1 pack without copying an E1 composition. The source ladder remains 6 reuse, 4 derive, and 1 build-new across the 11 bodies.
+
+The file replacement changes no terrain contract, mount id, position, rotation, scale, asset path, runtime registry, mask, or simulation owner. Expanded distributed approach kits clamp only newly lower sub-pieces to their shipped terrain-conform compensation, so the body remains grounded without moving its base-centred mount. Every GLB is a separate base-centred render-only body with one mesh, primitive, material, and embedded pack atlas; triangle counts range from 380 to 1,812 under the 3,000 ceiling. Reopening both pack `.blend` files and re-exporting all 11 bodies produced whole-file byte-identical and semantic-identical GLBs. Machine evidence lives in `artifacts/map-rebuild-spike/landmark-bar-unification/asset-contract.json`.
+
+## Landmark bar-unification gate state
+
+- Fresh-reference law, base SHA on both boards: PASS
+- Blind candidate/current gate: candidate wins both maps, 97–98% confidence
+- “Fight,” not “holiday”: PASS
+- Same 11 mount ids, transforms, asset paths, and terrain contracts: PASS
+- One shared 1024² painted atlas per map: PASS
+- 11 separate GLBs, 380–1,812 triangles each against 3,000: PASS
+- One mesh / primitive / material / embedded atlas per body: PASS
+- Base-centred, render-only, no simulation authority: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export ×11: PASS
+- `src/`, masks, terrain, panorama, registry, collision, movement, placement, spawns, and water edits: none
+
+READY-FOR-GATES
+
 ## E3 Fairground terrain wave
 
 ### F-3D-D-51 — The published Fairground table stays the only gameplay authority
