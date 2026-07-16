@@ -1,3 +1,5 @@
+import type { DecayEvent } from '../systems/DecaySystem';
+
 export type RunSummary = {
   wavesSurvived: number;
   goldPanned: number;
@@ -11,6 +13,7 @@ export type RunSummary = {
 export type RunEndReason = 'death' | 'secured' | 'rush';
 
 export type GameEvent =
+  | DecayEvent
   | {
       type: 'hero_damaged';
       at: number;

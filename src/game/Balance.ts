@@ -137,6 +137,9 @@ export const Balance = {
       hazeStrength: 0.28,
     },
   },
+  decay: {
+    clockAuraFactor: 0.9,
+  },
   agent: {
     homeX: -1.8,
     homeZ: 10.7,
