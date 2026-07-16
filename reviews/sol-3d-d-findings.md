@@ -289,6 +289,58 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E5 Deepwater Claim terrain + panorama wave
+
+### F-3D-D-46 — The Flood Break starts with the shipped harbor paint
+
+Deepwater Claim begins the second visual chain. Its one 2048² terrain atlas is baked from `assets/raw/ter-shelf-atlas.png`, `assets/processed/kit-era-5.png`, the shipped wreck plate, and the Claim-Boat plate. The result deliberately leaves the E1–E4 ochre county behind: blue-green parchment depth, tar shadow, rope-and-timber warmth, salt-dark working beds, and one stubborn warm boat light. No native or paid image generator, external model service, or photoreal texture entered the asset.
+
+### F-3D-D-47 — Bathymetry can agree with the water table without owning water
+
+The terrain mesh contains only the submerged floor: lagoon bars, a broken reef ring, the exact ten-metre reef-gap cut, the five-anchor wreck shelf, and the sealed trench edge. It exports no sea surface, swell, shoreline classifier, boat deck, collision, spawn logic, travel class, or placement authority. Those remain runtime-owned. The final terrain contract embeds the published `e5-deepwater-claim.json` mask truth unchanged, and the corrected mask board registers both halves to the same north-up 128 m grid rather than comparing unrelated texture crops.
+
+### F-3D-D-48 — E4 town bodies become a drowned settlement through mounts, not baking
+
+The owner-authorized drowned-town treatment reuses four landed E4 bodies: Claim Office, Chapel, General Store, and Stamp Mill. Their contract records asset path, position, rotation, and scale. Mount Y is a local burial offset added to `Terrain.visualY` at each X/Z, not an absolute seabed height, so runtime cannot apply bathymetry twice. Owner review also caught the first verdict scale spanning the water column like floating houses. The final terrain gives every ruin a local drowned foundation hollow; near-authored `0.78..1.02` scale bodies then use only `-0.30..-0.22 m` of silt bite. The strict mesh probe resolves their four seabed contacts at `-5.9848`, `-5.9737`, `-5.7411`, and `-5.8856 m`. They remain fully submerged but visibly rest on the floor because they are buildings, not buoyant props. In verdict renders they are tipped, grouped along the working shelf, and joined by loose verdict-only timbers so they read as one flooded settlement. No E4 mesh or material was modified, and all four bodies are removed before the terrain `.blend` save and GLB export. The terrain remains stable if the mounts are disabled, swapped, or moved by the attended wiring pass.
+
+### F-3D-D-49 — Open-sea Panorama v2 needs a submerged apron and real distance cues
+
+A county-style ridge ring becomes a wall at sea. Deepwater instead uses a true 190 m cylinder sunk to -160 m, a scenery-only submerged apron that traces the exact square terrain boundary before falling to the far radius, four unequal weather cells, and four tiny wreck-mast silhouettes. The ring is a separate 2,704-triangle GLB with one embedded 2048² atlas. The quiet zenith stays nearly plain, the storm cells break the repeated strip, and the mast cues suggest scale without confirming a coast. The apron and sky ring change no playfield bounds, masks, spawns, fog gates, or water sampling.
+
+### F-3D-D-50 — Visual criticism changed the assets and the evidence contract
+
+Blind review rejected successive candidates for a rectangular terrain slab, wall-like panorama bands, barely visible upright town cards, an empty non-working claim, long ungrounded salvage cables, and a mask board that could not be audited point-to-point. The final builders remove the slab with the boundary-matched scenery apron, group and tip the E4 bodies into a readable ruin field, replace tile-spanning cables with short local salvage lines, add a tapered evidence-only Claim-Boat and channel markers, break the sky with asymmetric storm cells, and generate a coordinate-registered mask schematic. Runtime stand-ins are explicitly excluded from the exported terrain and are not promoted as production models.
+
+The final scoped recheck returns `SHIP`: exact mask registration, independently legible bathymetry, a coherent drowned-town band, and open-sea distance with unequal weather cells and mystery-scale mast cues. Its only non-blocking note is that the far masts are deliberately subtle enough to resemble pale cross marks at crop scale.
+
+## E5 gate state
+
+- Terrain `.blend` / GLB / 2048² atlas / contract: PASS
+- Terrain GLB: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Separate Panorama v2 `.blend` / GLB / 2048² atlas / contract: PASS
+- Panorama GLB: 2,704 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Exact lagoon, reef, ten-metre gap, wreck shelf/anchors, trench, Claim-Boat build zone, and west-spawn mask agreement: PASS
+- Runtime-owned sea surface, swell, travel classes, spawns, collision, movement, and build semantics: unchanged
+- Four existing E4 town GLBs recorded as separate reuse-only `Terrain.visualY` mounts; all four floor probes are below `-5.7 m`, with only `0.22..0.30 m` of silt bite: PASS
+- Mood A/B, identical-camera flat/sculpted A/B, registered mask agreement, owner run/overview/low board, and center-horizon distance gate: PASS
+- Integrated `npm run build`: PASS
+- Python compilation and `git diff --check`: PASS
+- Fresh final scoped visual verdict: SHIP
+- `src/`, simulation, choreography, registry, and runtime edits: none
+
+## E5 owner-verdict images
+
+- `artifacts/map-rebuild-spike/deepwater-owner-verdict.png` — real run camera, whole-tile overview, and low storm-lull angle
+- `artifacts/map-rebuild-spike/deepwater-mood-ab.png` — shipped shelf paint / working-harbor hardship gate
+- `artifacts/map-rebuild-spike/deepwater-flat-vs-sculpted-ab.png` — identical-camera bathymetry proof
+- `artifacts/map-rebuild-spike/deepwater-mask-agreement-board.png` — exact north-up 128 m table/overlay registration
+- `artifacts/map-rebuild-spike/deepwater-ruin-contact-gate.png` — identical-camera seabed contact / final submerged state
+- `artifacts/map-rebuild-spike/deepwater-panorama-mood-ab.png` — separate panorama off/on evidence
+- `artifacts/map-rebuild-spike/deepwater-panorama-distance-gate.png` — playfield-center open-sea distance gate
+
+READY-FOR-GATES
+
 ## Blackout Ridge + Dust Flats wave
 
 ### F-3D-D-42 — Published masks remain the only gameplay truth
