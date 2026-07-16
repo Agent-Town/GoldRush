@@ -1,12 +1,152 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`
 
-Tip: exact Wave 9 pilot SHA is reported in the attended handoff
+Tip: exact Wave 9 wide SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the two-building E4 verdict pilot passes the locked-camera, all-angle, construction, tonal, envelope, material, triangle, anchor, and byte-identical export gates. Wide production, wagon/trough variants, and `era-props.e4.json` deliberately wait for attended acceptance.**
+Verdict: **READY-FOR-GATES — the complete eight-building E4 family, playful motor-caravan / trough siblings, and ratifiable Motor accessory pack pass Accretion Law v2, Upgrade Cadence, ensemble plaza, all-angle, construction, tonal, flat-walk, envelope, material, triangle, anchor, placement, build, and byte-identical export gates.**
+
+## Wave 9 wide — complete E4 Motor Town
+
+Wave 9 wide retains the two accepted era-defining pilots byte-for-byte and applies the Motor age to the other fixtures only where the technology plausibly touches them. Industrial and civic-service buildings upgrade; the Chapel stays quiet; the trough becomes a cold relic. E4-native smoke interfaces are named `exhaust_anchor_*` empties for factory-owned **light dust puffs only**. Quiet/relic fixtures carry no E4 exhaust anchor, and no black smoke, emissive geometry, particles, lights, or animation are authored.
+
+### Per-building findings
+
+| Building | First locked-camera finding | Final E4 identity edit | E3 inheritance check | Final contract |
+| --- | --- | --- | --- | --- |
+| Tavern / Motor Inn | accepted pilot | compact porte-cochère and parked runabout relief, with inherited E3 hardware | 14,900 / 14,900 triangle signatures retained | 14,984 tris; 3 anchors; SHA `c922b0d54146…` |
+| Schoolhouse / Polytechnic | accepted pilot | visible drafting wing, wide windows, drive trim, and roof wind gauge | 8,752 / 8,752 retained | 10,524 tris; 2 anchors; SHA `f014a4e3107c…` |
+| General Store / Motor Supply | facade read immediately; independent all-angle review found the first garage doors too flat | service canopy, paneled double garage doors with handles, public road-wheel sign, fuel drum, and service exhaust | 5,056 / 5,056 retained | 6,132 tris; 2 anchors; SHA `f8c63f3377e5…` |
+| Claim Office / Road Office | facade read immediately; first route boards needed a stronger physical attachment | permit canopy, twin wheel-pictogram route boards with a diagonal brace, registry wheel, brass supports, and dust exhaust | 6,668 / 6,668 retained | 7,688 tris; 2 anchors; SHA `072bbaafe501…` |
+| Assay Office / Fuel Laboratory | facade tanks passed the turntable but were hidden at gameplay distance; the first roof tank crowded the chimney | retained test hood and twin tanks plus a shorter plaza-visible riveted roof motor-test tank grounded in two saddles | 6,248 / 6,248 retained | 7,600 tris; 2 anchors; SHA `5b3c81c76100…` |
+| Chapel | first draft incorrectly forced a roadside shelter, service motor, and roof route rig onto a fixture motors barely touch | quiet low parking rail and old oil stain only; inherited cross, chapel identity, and prior-era hardware remain dominant | 6,748 / 6,748 retained | 6,876 tris; 0 E4 anchors; SHA `813faa9edc14…` |
+| Stamp Mill / Engine Works | facade flywheel and lean-to were below the gameplay camera's parcel edge; first roof tank appeared unsupported | retained lean-to / service motor plus a roof flywheel and a lower banded motor tank seated in two saddles | 2,916 / 2,916 retained | 4,596 tris; 2 anchors; SHA `880a81705140…` |
+| Dynamo Hall / Motor Works | first filling pumps sat fully on the cropped outward facade; first roof board blended into the black roof | retained pumps and voltage crown plus a warm ridge route bar, teal crest, and paired roof fins within the existing envelope | 6,248 / 6,248 retained | 7,636 tris; 3 anchors; SHA `b04126109117…` |
+
+The ensemble blind pair makes the Motor side unmistakable through the Motor Inn, Polytechnic, Motor Supply, Engine Works, Road Office, Fuel Laboratory, Motor Works, and the new skyline road/fuel infrastructure; its `diffRatio16` is `2.7419%`. The Chapel is intentionally unchanged at the gameplay camera and reads only in its all-angle audit. Every building has one mesh, one primitive, one material, one embedded 1024 x 1024 atlas, zero cameras/lights/animations/emissive textures, and the exact accepted E3 envelope. The worst absolute localized luminance delta is Dynamo Hall at `1.2226%`, well inside the 5% law.
+
+### Wagon, trough, and Motor accessory pack
+
+| Asset | Motor edit / role | Final contract |
+| --- | --- | --- |
+| Covered wagon E4 | retains all 1,780 E3 triangle signatures—including the E2 fittings and soot-cold E3 roof terminal—then uses its remaining 20 triangles for a wedge engine bonnet, attached upright dust exhaust, framed warm cab window, and small unlit side headlamp, turning the inherited wagon into a playful compact motor caravan | 1,800 / 1,800 tris; exact E3 envelope; 1 anchor; SHA `10a1383c3b57…` |
+| Water trough E4 | retains all 1,096 E3 triangle signatures; the old electric pump is soot-dark, visibly capped/boarded, and carries no active E4 seam | 1,148 / 1,200 tris; exact E3 envelope; 0 E4 anchors; SHA `9899ed7ce1cf…` |
+| Fuel rack | three banded drums in a grounded working rack | 432 tris; 1 anchor; SHA `3f3184f0e262…` |
+| Road marker | tall camera-facing pictogram direction arms, rubber road wheel, and dust beacon | 280 tris; 1 anchor; SHA `2962e6bcc91a…` |
+| Filling shed | camera-facing compact fuel tank, twin pumps, amber canopy, roof wheel sign, tethered wheel crest, and three dust interfaces | 484 tris; 3 anchors; SHA `0abc3137860e…` |
+| Motor roadway | two shallow compacted entrance lanes with paired wheel ruts around the inherited horse trough, conforming to the relieved Town plate while remaining 0.7699 clear of the actor route | 48 tris; 0 anchors; SHA `301c1f65f53c…` |
+
+The four accessory types embed the same byte-identical 1024 x 1024 atlas. `era-props.e4.json` proposes five records—one fuel rack, two road markers, one filling shed, and the paired-lane roadway—while retaining all 13 E2/E3 accessory records. The larger road marker and filling shed sit on the rear skyline so their silhouettes remain distinct from building roofs. For freestanding props the tightest route clearance is `3.9000`, building-pad clearance `0.3401`, shipped-prop clearance `0.4067`, inherited-accessory clearance `0.9548`, and E4 pairwise clearance `11.0821`. Every roadway vertex follows the Town plate at `0.018–0.020` above its local surface, remains `0.7699` from the canonical actor route, and stays outside the protected plaza stage at `7.0298` minimum radius.
+
+### Upgrade cadence
+
+| Fixture | Cadence | Accretion verdict | Why E4 touches it this much |
+| --- | --- | --- | --- |
+| Motor Inn | upgraded | PERSIST E3 festoon; RELIC older steam fittings; REPLACE arc anchors with exhaust anchors | Motor travel directly creates the drive-through inn. |
+| Polytechnic | upgraded | PERSIST E3 orrery/grid hardware; RELIC steam fittings; REPLACE arc anchors with exhaust anchors | Vehicle engineering grows its drafting wing and wind gauge. |
+| General Store | upgraded | PERSIST shop/electric service; RELIC steam fittings; REPLACE arc anchors | The store becomes the public Motor Supply and service point. |
+| Claim Office | upgraded | PERSIST civic shell/grid feed; RELIC steam fittings; REPLACE arc anchors | Motor roads create permits, route boards, and registration. |
+| Assay Office | upgraded | PERSIST electrical laboratory gear; RELIC steam apparatus; REPLACE arc anchors | Fuel quality and oil samples give the lab a direct E4 job. |
+| Chapel | upgraded | PERSIST chapel/cross/prior wiring; RELIC cold steam hardware; REPLACE active arc seam with none | Motors add only a parking rail and oil stain; worship gets no exhaust fixture. |
+| Stamp Mill | upgraded | PERSIST electric drive; RELIC steam plant; REPLACE arc anchors | Industrial motors directly alter its drive and service yard. |
+| Dynamo Hall | upgraded | PERSIST E3 grid crown; RELIC steam header; REPLACE arc anchors | The grid now supplies motors and supports the Motor Works. |
+| Covered wagon | upgraded | PERSIST shell; RELIC E2 fittings/E3 terminal; REPLACE arc anchor | A warm side engine and upright dust exhaust make the wagon a playful compact motor caravan. |
+| Water trough | relic'd | PERSIST trough; RELIC capped E2/E3 feed/pump; REPLACE active arc seam with none | Horse infrastructure fades instead of becoming a motor appliance. |
+| Street lamps | carried-unchanged | PERSIST E3 lighting | Motors do not relight a street. |
+| Town roads | upgraded | PERSIST canonical flat walk geometry; NEW E4 paired compacted entrance lanes | Motors plausibly harden the wagon approaches that Voltage left as dirt ruts. |
+| E3 grid accessories | carried-unchanged | PERSIST wires, insulators, transformer; arc effects cold in E4 | The grid still serves the town without announcing the era. |
+| E2 steam accessories | relic'd | RELIC coal bin, pipe, gauge, manifold; steam effects cold | Motor infrastructure supersedes the public steam-era role without erasure. |
+| Hitching posts | relic'd | RELIC posts remain | The posts outlive the horse traffic they served. |
+| Fences, well, notice board, planters | carried-unchanged | PERSIST unchanged | Motors give no believable reason to rebuild civic furniture. |
+| Fuel racks, road markers, filling shed | upgraded | NEW E4 infrastructure | Fuel and marked routes carry the ensemble's Motor announcement. |
+| Pan Monument | carried-unchanged | PERSIST by Heritage Law | The Town changes around its permanent through-line. |
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry / materials | 8/8 buildings under 15,000 tris; wagon/trough under 1,800 / 1,200; accessories under 500; one mesh, primitive, material, and embedded atlas throughout |
+| Accretion Law v2 | all 8 buildings plus wagon/trough preserve 100% of E3 triangle signatures; each signature fixture receives PERSIST / REPLACE / RELIC treatment in the cadence table |
+| Interfaces / cold anchors | exact E3 envelopes; sequential `exhaust_anchor_1..N` only where E4 machinery is active; Chapel/trough correctly have none; no stale steam or arc anchors |
+| Dust style | light-dust-only anchor seam; no authored smoke, particles, lights, animation, or emissive texture |
+| Determinism | independent verifier and canonical `scripts/reexport-pilot.sh` reproduce all 14 GLBs byte-identically |
+| Placement / flat walk | four freestanding E4 records clear routes, pads, shipped props, the 13 retained E2/E3 records, one another, and the open stage; the roadway conforms 0.018–0.020 above the relieved plate and stays 0.7699 from the unchanged flat actor route |
+| Tonal law | localized building-and-neighbor crops pass 8/8; worst absolute delta `1.2226%` |
+| Ensemble plaza QA | blind whole-Town pair identifies the Motor side through the loud buildings, skyline road/fuel infrastructure, and paired entrance lanes (`diffRatio16` `2.7419%`); the quiet Chapel is not required to announce the era |
+| All-angle QA | eight E3/E4 boards show complete inherited wraps; the Chapel's parking rail/oil stain and trough's capped relic are deliberately quiet and physically attached |
+| App build | `npm run build` passes on the final production bytes |
+| Era-loader regression | `e2e/town-era-switch.spec.ts` passes 12/12 across desktop and mobile |
+| E4 runtime smoke | normal Motor Town boot loads all 18 E2–E4 manifest records, including `e4-motor-roadway`, as 23 instances with zero console/page errors |
+
+### Evidence index
+
+Production comparisons are **E3 on the left, E4 on the right**. Blind boards retain randomized A/B order.
+
+- Whole Town: [`town-wide-verdict-e3-e4-ab.png`](../artifacts/town-e4-wide/town-wide-verdict-e3-e4-ab.png), blind ensemble [`town-ensemble-blind-pair.png`](../artifacts/town-e4-wide/town-ensemble-blind-pair.png)
+- All eight locked-camera A/Bs: [`all-buildings-town-contact.png`](../artifacts/town-e4-wide/all-buildings-town-contact.png)
+- All eight four-angle A/Bs: [`all-buildings-turntable-contact.png`](../artifacts/town-e4-wide/all-buildings-turntable-contact.png)
+- All eight blind gameplay crops: [`all-building-blind-pairs.png`](../artifacts/town-e4-wide/all-building-blind-pairs.png)
+- Props and placement: [`accessory-pack-e4.png`](../artifacts/town-e4-wide/accessory-pack-e4.png), [`wagon-accretion-e3-e4-ab.png`](../artifacts/town-e4-wide/wagon-accretion-e3-e4-ab.png), [`e4-accessory-clearance-overlay.png`](../artifacts/town-e4-wide/e4-accessory-clearance-overlay.png)
+- Four-angle A/Bs: [`tavern`](../artifacts/town-e4-wide/tavern-turntable-e3-e4-ab.png), [`general store`](../artifacts/town-e4-wide/general_store-turntable-e3-e4-ab.png), [`claim office`](../artifacts/town-e4-wide/claim_office-turntable-e3-e4-ab.png), [`assay office`](../artifacts/town-e4-wide/assay_office-turntable-e3-e4-ab.png), [`chapel`](../artifacts/town-e4-wide/chapel-turntable-e3-e4-ab.png), [`schoolhouse`](../artifacts/town-e4-wide/schoolhouse-turntable-e3-e4-ab.png), [`stamp mill`](../artifacts/town-e4-wide/stamp-mill-turntable-e3-e4-ab.png), [`dynamo hall`](../artifacts/town-e4-wide/dynamo-hall-turntable-e3-e4-ab.png)
+- Machine evidence: [`asset-contract.json`](../artifacts/town-e4-wide/asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e4-wide/comparison-metrics.json), [`blind-key.json`](../artifacts/town-e4-wide/blind-key.json)
+
+### F-3DC-27 — Era-defining roofs may carry the read; quiet fixtures must stay quiet
+
+**Severity:** resolved visual gate
+
+**Evidence:** Assay, Stamp Mill, and Dynamo Hall passed their front turntables but initially hid their real Motor functions below the gameplay crop, so their plausible industrial hardware continues onto visible roofs. The first Chapel draft copied that tactic and became a roadside complex with a route-board crown—legible, but false to cadence. The corrected Chapel returns to a low parking rail and oil stain and is allowed to be pixel-quiet at the locked camera because the ensemble already reads Motor unmistakably.
+
+**Decision:** use the roof only when the fixture's real E4 function warrants it. The ensemble camera decides whether the Town announces the era; it does not force every parcel to grow a sign.
+
+### F-3DC-28 — A visible silhouette cue still needs construction logic and identity
+
+**Severity:** resolved visual gate
+
+**Evidence:** an independent all-angle critique correctly rejected several first-final details as technically visible but visually generic or unsupported: flat garage slabs, a floating route sign, oversized roof tanks without saddles, and the filling shed's detached wheel crest. The final industrial/civic pass adds door paneling and handles, sign braces and wheel pictograms, tank saddles, and a physical crest tether. The separate cadence pass then removes the Chapel's unsupported roadside complex entirely.
+
+**Decision:** the across-the-plaza test is necessary but not sufficient. Large-era cues must also explain how they attach and must preserve the building's public identity; do not pass a variant merely because an unlabelled high-contrast primitive changes enough pixels.
+
+### F-3DC-29 — Clearance evidence must look clear, not merely calculate clear
+
+**Severity:** resolved placement gate
+
+**Evidence:** early legal placements still read crowded: the large road marker and filling shed overlapped roof silhouettes, while a central compacted ring read as a wagon wheel. The final manifest moves those two landmarks to the rear skyline and replaces the ring with two shallow approach lanes around the inherited trough. A final independent code review then found that the first lane mesh was globally flat and sank below the relieved plate at 18 gate vertices. The corrected builder derives every lane vertex from the canonical Town plate height: local clearance is `0.018–0.020`, actor-route separation `0.7699`, and minimum stage radius `7.0298`. Freestanding clearances remain route `3.9000`, pad `0.3401`, shipped prop `0.4067`, retained accessory `0.9548`, pairwise `11.0821`. A fresh post-fix visual review confirms the strips are flush and continuous with no burial, floating, clipping, or z-fighting and returns SHIP.
+
+**Decision:** treat the clearance overlay and the composed plate height as gates alongside manifest distances. A legal world-space placement can still look blocked or be buried by relief; prefer generous gaps and conform ground decals to the production plate.
+
+### F-3DC-30 — Accretion uses PERSIST / REPLACE / RELIC, never silent deletion
+
+**Severity:** resolved inheritance gate
+
+**Evidence:** independent review caught that the first budget-fitting E4 wagon silently deleted its inherited E3 voltage terminal while adding Motor hardware. The corrected wagon keeps all 1,780 E3 triangle signatures, treats the E2 fittings and soot-cold E3 terminal as RELICS, spends its remaining 20 triangles on a warm side engine plus upright dust exhaust, and explicitly REPLACES the arc seam with the exhaust seam. The same geometric subset test passes for all eight buildings and both prop descendants. The trough now demonstrates the other cadence outcome: its structure PERSISTS, the electric pump becomes a visibly capped/boarded RELIC, and no E4 exhaust seam is invented.
+
+**Decision:** every inherited signature gets a named PERSIST / REPLACE / RELIC verdict. RELIC is the default for superseded era-tech; anchor replacement is explicit and does not authorize deleting its physical history.
+
+### F-3DC-31 — Upgrade cadence is a believability gate, not a completeness discount
+
+**Severity:** resolved cadence gate
+
+**Evidence:** the first wide draft optimized for eight individually blind-readable Motor faces. That made the Chapel and water trough technically impressive but fictionally overbuilt. The v2 pass removes 836 Chapel triangles, turns the Chapel into a parking rail/oil stain with zero E4 anchors, and leaves the trough's pump boarded/cold. The blind ensemble instead selects the Motor side through the Motor Inn, Polytechnic, service buildings, the playful motor caravan, separated skyline infrastructure, and compacted entrance lanes around the trough relic.
+
+**Decision:** ask whether Motor technology plausibly touches each fixture. Upgraded, carried-unchanged, and relic'd are equally valid outcomes; only the Town ensemble owes the era announcement.
+
+### F-3DC-32 — Era growth should feel playful, not merely archaeological
+
+**Severity:** resolved E4 direction; scoped E3 follow-up
+
+**Evidence:** the first inheritance-correct wagon only carried a spare wheel, which met the letter of E4 but did not tell the lighthearted progression story the owner wants. The final E4 uses the same 20-triangle allowance for a wedge bonnet, attached upright exhaust, framed warm cab window, and small unlit side headlamp, so the wagon reads as an early caravan without becoming a modern vehicle or emitting black smoke. Its earlier voltage terminal remains visibly cold rather than disappearing. A first fresh final reviewer caught the cab window reading as a black void and the road lanes fading into the ground; the correction warms and shrinks the window, tightens the bonnet/exhaust/headlamp cluster, and deepens the two lane values without restoring the rejected plaza-wheel motif. A second fresh blind reviewer identified the Motor side at high confidence and returned SHIP with no production defect.
+
+**Decision:** let each era add a charming, immediately understandable function when technology plausibly touches the fixture. A future scoped E3 wagon correction should add small electric lamps when electricity arrives; this E4 delivery records that target but does not silently rewrite the already accepted E3 asset.
+
+### Wave 9 wide integration boundary
+
+- Add the six new `.e4.blend` / `.e4.glb` building siblings, E4 wagon/trough siblings, E4 accessory GLBs / atlas / manifest, deterministic builders/verifier, and evidence. Accepted Tavern and Schoolhouse E4 bytes remain unchanged.
+- E1, E2, and E3 production siblings remain untouched. The Pan Monument remains heritage content and is excluded from era keying.
+- No runtime source, layout, spec, backlog, status, e2e, or exporter file changed. The existing era loader owns sibling discovery; the factory owns dust emitters and accessory manifest ratification/mounting.
+- Production inventory remains eight real buildings. No ninth identity is fabricated.
+- Branch base: `7e01c14f`; publication is session-branch-only for attended gates, never `main`.
 
 ## Wave 9 pilot — E4 Motor building faces
 
