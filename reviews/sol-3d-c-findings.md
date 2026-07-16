@@ -1,5 +1,35 @@
 # SOL 3D-C — 3D pilot findings
 
+## E8 Dome Commons plate
+
+Branch: `sol/dome-commons-e8-plate-v2`
+
+Base: `2736e176d69226d40603889ee3e1aa07db623784`
+
+Tip: exact Dome Commons plate SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the E8 town now has a fresh under-glass site: a readable brass/silver air wall, sealed orbital floor, canonical flat pads and cast routes, and the Pan Monument's first walkable reclaimed-water ring.**
+
+The stale initialized E8 artifact board from `5e97e170` was parked and never reused. The working board was rerendered from tracked files after fetching the fully merged Mesa arc; it contains the current E4 motor boulevard, E5 submerged square, complete E6 Atomic Mesa, and complete E7 Signal Mesa at base `2736e176…`.
+
+| Plate question | Final E8 answer | Evidence |
+| --- | --- | --- |
+| How does “air is the wall” read at gameplay distance? | depth-safe screen-door panels carried by twelve brass meridians, two latitude seals, a heavy equator gasket, twelve silver/teal pressure posts, and a reinforced airlock throat | source A/B + four-angle turntable |
+| How does the Moon stay warm rather than sterile? | warm-grey stippled regolith, brass structure, teal pressure accents, the Pan's thin bright water ring, and the gardener's single flush square of green | Town-camera render |
+| What survives the site break? | canonical pad/route coordinates and the separately mounted Pan Monument; no Mesa cliff, E7 relay hardware, or drowned-town geometry | layout contract + E7/E8 A/B |
+| Who owns Earth? | the sky rig; Earth is evidence-only and is not baked into the plate GLB | visual evidence contract |
+
+### Production and flat-walk gate
+
+- One node / mesh / primitive, one double-sided non-emissive depth-writing `MASK` material, one embedded 2048 x 2048 atlas, zero cameras/lights/animations. The pane centers remain open through a macro screen-door pattern; Three's loader reports `transparent=false`, `depthWrite=true`, `alphaTest=0.5`.
+- 13,108 / 20,000 triangles; GLB SHA-256 `053bf554ed369ef35a532c1b5847d14469d4f661e27867678a3dc56f88fbe081`.
+- Bounds: 49.680908 x 49.599998 ground span, 14.0 overall height; object transform and ground-plane origin remain canonical.
+- Realized cast-route maximum `0.0343864`; plaza maximum `0.0322139`; ceiling `0.05`.
+- Canonical pad maximum `0.0071542`; orbital-pad maximum `0.0265086`; every pad remains clear.
+- Saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- `npm run build` passes. No source, runtime, sim, queue, spec, town-layout, building, Pan, or sky asset is changed.
+- Independent Codex review found and closed two P2s before commit: shared `BLEND` depth sorting was replaced by the one-material depth-writing screen door, and all production/reference inputs are now hash-pinned to the reviewed base.
+
 Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-plate` (Mesa Town plate)
 
 Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Mesa Town plate `8d974f11`
