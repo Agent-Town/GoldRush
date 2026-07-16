@@ -1,12 +1,60 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-plate` (Mesa Town plate)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Mesa Town plate `8d974f11`
 
-Tip: exact Wave 10 SHA is reported in the attended handoff
+Tip: exact Mesa Town plate SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the complete E5 family is a fresh, working underwater harbor whose heavy buildings rest on the seabed; the asset wave is gate-clean, with one explicit factory integration requirement: honor `floodReset` before mounting the E5 accessory manifest.**
+Verdict: **READY-FOR-GATES — the Mesa Town plate is a deterministic fresh E6-E7 site with canonical flat cast routes, eight inherited ground-zero pads, an irregular mesa/cliff/scree landform, and two explicitly proposed upper sites reached by legal-grade switchbacks.**
+
+## Mesa Town plate — E6-E7 fresh site
+
+Fresh references were rendered from base `8d974f11911187136469fbd017c9598e5b2faf28` before modeling. The board shows the current E4 southern boulevard and motor caravan and the E5 submerged square; no plaza-wheel-era artifact board was used. The Mesa is a dry-site rebuild sourced from `ter-mesa-seamless.png` and the E6 bundle: ochre caprock, a rear shelf, dry wash, restrained teal starstone seams, broken cliff edge, and scree apron. It contains no drowned-square mesh, water surface, pre-flood street hardware, buildings, props, or people.
+
+### Layout and cadence
+
+| Surface | Verdict | Result |
+| --- | --- | --- |
+| Seven `townLayout.ts` slots + Dynamo Hall site | CARRY COORDINATES, REBUILD SITE | exact positions/footprints remain at ground zero; realized maximum pad displacement is `0.017547` |
+| Ring road, all radial cast paths, open plaza | CARRY COORDINATES | 1,061 realized route samples and 749 plaza samples stay within `0.012002`, against the `0.05` ceiling |
+| Drowned-square terrain and E2-E5 street hardware | GONE | fresh Mesa geometry and paint; no water, harbor dressing, road boulevard mesh, buildings, props, or old era anchors in the GLB |
+| Pan Monument | PERSIST | heritage asset remains separately mounted at canonical center; its bytes are not duplicated or changed |
+| Reactor Dome upper pad | PROPOSED NEW | 6.2-unit circular pad at `(7.0, -16.7)`, target `1.18`; realized deviation `0.011357` |
+| Catalog Warehouse upper pad | PROPOSED NEW | 5.6 x 3.8 pad at `(-7.4, -16.6)`, target `1.18`; realized deviation `0.012769` |
+| Mesa herd ramps | PROPOSED NEW | switchback grades peak at `0.170295` and `0.149167`, both below the `0.20` contract ceiling |
+
+The two premium pads are surfaced for the attended plate verdict before E6 building production. They are written as candidates in the layout contract and are not claimed as a runtime mount. E1 buildings in evidence are scale/footprint proxies only.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry / material | 17,280 / 20,000 tris; one mesh, one primitive, one material, one embedded 2048 x 2048 atlas |
+| Export hygiene | zero cameras, lights, animations, external textures, helper meshes, buildings, props, or water surfaces |
+| Material law | painted wrap from shipped Mesa art; metallic `0`, roughness `0.92`, no emissive texture or factor |
+| Flat-walk law | route and plaza max absolute height `0.012002`; worst inherited pad `0.017547`; all below `0.05` |
+| Proposed upper sites | both pad deviations below `0.013`; both ramp grades below `0.18` |
+| Determinism | saved-BLEND re-export is byte-identical at SHA-256 `067c8c652134…` |
+| Fresh-reference law | every working board records base `8d974f11911187136469fbd017c9598e5b2faf28`; current tracked GLBs/manifests are its only inputs |
+
+### Evidence index
+
+- Fresh current-file E1/E4/E5 board: [`town-e1-e4-e5-current.png`](../artifacts/mesa-town-3d/current-references/8d974f119111-main/town-e1-e4-e5-current.png), with [`reference-contract.json`](../artifacts/mesa-town-3d/current-references/8d974f119111-main/reference-contract.json)
+- Current square / Mesa same-camera A/B: [`mesa-town-current-vs-pilot-ab.png`](../assets/pilots/mesa-town-3d/renders/mesa-town-current-vs-pilot-ab.png)
+- Four-angle landform review: [`mesa-town-turntable.png`](../assets/pilots/mesa-town-3d/renders/mesa-town-turntable.png)
+- Flat routes, inherited pads, proposed upper sites, and ramps: [`mesa-town-flat-walk-overlay.png`](../assets/pilots/mesa-town-3d/renders/mesa-town-flat-walk-overlay.png)
+- Machine evidence: [`mesa-town-asset-contract.json`](../artifacts/mesa-town-3d/mesa-town-asset-contract.json), [`mesa-town-layout-contract.json`](../artifacts/mesa-town-3d/mesa-town-layout-contract.json)
+
+### Visual correction record
+
+The first all-angle pass read as a vertical tabletop rim and painted its starstone seams like neon wires. The final plate adds a broken multi-stage cliff foot and scree apron, warms and varies the strata, narrows/darkens the teal geology, and exposes the rear shelf without touching protected routes. The first geometric audit then caught `0.17` edge interpolation on both proposed pads and over-steep direct ramps; widened pad collars and outer switchbacks close those failures under measured gates.
+
+### Integration boundary
+
+- Production candidate: `assets/pilots/mesa-town-3d/mesa-town-plate.glb`.
+- The attended factory owns the future Town-site selection/mount and must ratify or revise the two candidate upper sites before their E6 buildings are authored.
+- No runtime, sim, current Town plate, E1-E5 models, Pan Monument, manifests, specs, ledgers, status, backlog, or e2e files change in this wave.
 
 ## Wave 10 — E5 Deepwater Harbor Rebuild
 
