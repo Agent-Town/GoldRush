@@ -34,6 +34,7 @@ const BUNDLED_VARIANT_URLS = import.meta.glob('../../assets/pilots/*-3d/*.e*.glb
 }) as Record<string, string>;
 type EraPropManifest = {
   epoch: number;
+  floodReset?: boolean;
   props: Array<{
     id: string;
     glb: string;
@@ -530,7 +531,8 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
   const manifests = Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) => index + 2)
     .map((era) => ERA_PROP_MANIFESTS[`../../assets/pilots/plaza-props-3d/era-props.e${era}.json`])
     .filter((manifest): manifest is EraPropManifest => !!manifest);
-  const eraProps = manifests.flatMap((manifest) => manifest.props);
+  const eraProps = manifests.slice(Math.max(0, manifests.map((manifest) => manifest.floodReset).lastIndexOf(true)))
+    .flatMap((manifest) => manifest.props);
   const accessoryPaths = [...new Set(eraProps.map((prop) => `../../assets/pilots/plaza-props-3d/${prop.glb}`))];
 
   const loadValid = async (kind: string, urls: readonly string[]): Promise<{ source: THREE.Object3D; metrics: ReturnType<typeof inspect> }> => {
