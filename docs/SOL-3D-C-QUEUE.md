@@ -118,3 +118,5 @@ Not every fixture transforms every era — each recurring fixture has its OWN up
 - Roads: dirt ruts until MOTORS pave them (E4) — voltage never touched them.
 - Fences/wells/hitching posts: near-invariant — steam, volts, and motors don't re-fit a fence (hitching posts DO fade as motors arrive: relic verdict at E4).
 MECHANIC: every era-variant wave delivers a per-fixture CADENCE ROW (upgraded / carried-unchanged / relic'd, one line of tech justification each). Carried-unchanged is a first-class verdict — an unchanged fixture is a believability FEATURE, not missing work. The bundles' A2 notes win conflicts.
+
+## PLAZA TEST × CADENCE RECONCILIATION (2026-07-16): the ACROSS-THE-PLAZA test applies to the TOWN ENSEMBLE per era — the square as a whole must announce the age unmistakably. Per-building change follows the CADENCE: era-defining buildings carry the announcement (garage-heavy Motor Inn, the Polytechnic); honestly-untouched fixtures stay quiet (a chapel barely notices motors — one oil stain and a parking rail may be its whole E4 story). A lightly-touched building with a justified cadence row is CORRECT, not under-delivered.
