@@ -362,3 +362,7 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 
 ## 2026-07-16 — EVENING PLAN SET (owner: "thorough deploy with a Q&A list and then I play and play until I fall asleep")
 - Playtest script + deploy checklist banked: `docs/PLAYTEST-2026-07-16-evening.md`. Attended runs the deploy on owner return (deploy.sh attended-gated; player-visible debt listed in the doc §0). FIRES: drain the in-flight trio as they done-move (freed-walkers → wire-blackout-dust chains lane-c; e3-fairground-mask lane-d) — clean-main window matters tonight; drains outrank everything.
+
+## 2026-07-16 evening — 3D-C E4 WIDE MERGED (attended drain) + next grants
+- **✅ MERGED — sol/town-e4-wide (bd212478):** E4 motor wide wave — caravan conversion (wedge bonnet/exhaust/headlamp, E3 terminal cold relic), southern boulevard w/ wheel ruts (plaza-wheel motif broken), filling shed + markers to rear skyline, trough median relic, per-fixture cadence rows. Territory clean (7 building pilots + plaza-props + artifacts + findings; ZERO src). Gated attended: tsc + build + town-era-switch 12/12 both projects on merged tree. F-3DC-04 (road-wear texture follow-up) + F-3DC-05 (wagon lighting, Town-wave-owned) accepted non-blocking.
+- GRANTED 3D-C next (docs/SOL-3D-C-QUEUE.md): (1) E3 wagon lights (scoped small) → (2) **THE E5 HARBOR REBUILD** — chain-2 town faces, flood-break law, parallel with 3D-D's E5 deepwater sculpt. Both Sol sessions now converge on E5 (owner: "I would love to play E5").
