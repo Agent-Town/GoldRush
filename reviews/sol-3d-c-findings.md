@@ -1,12 +1,119 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`
 
-Tip: exact E3 wagon-lights SHA is reported in the attended handoff
+Tip: exact Wave 10 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the scoped E3 wagon face now carries playful warm filament festoons while preserving its accepted envelope, material, voltage terminal, arc interface, and all other E3 production faces.**
+Verdict: **READY-FOR-GATES — the complete E5 family is a fresh, working underwater harbor whose heavy buildings rest on the seabed; the asset wave is gate-clean, with one explicit factory integration requirement: honor `floodReset` before mounting the E5 accessory manifest.**
+
+## Wave 10 — E5 Deepwater Harbor Rebuild
+
+The Flood Break is a real reset, not another accretion layer. Each E5 building starts from its clean E1 identity shell, removes all E2–E4 machinery and emitter anchors, then rebuilds the identity in tarred timber, rope trim, tide boards, drydock hardware, and teal harbor signals. The new town is underwater: every heavy building terminates on four compact tarred ballast shoes at canonical `y = 0`, while props use stone feet or weighted cradles. Nothing floats and no model GLB contains a duplicate water surface.
+
+### Per-building findings
+
+| Building | Fresh E5 identity | Seabed / all-angle result | Final contract |
+| --- | --- | --- | --- |
+| Tavern / Harbor House | lantern gable, rope trim, tide chart, working lantern, hawser coil | four compact ballast shoes; full rear and both sides; no inherited porch/motor/voltage hardware | 11,776 tris; SHA `02a6d71fa97e…` |
+| General Store / Bonded Chandlery | customs seal, loading gantry, hoist, tide board, wet hawser | grounded corner shoes; gantry and hoist have visible load paths | 3,452 tris; SHA `c4d0d3f89679…` |
+| Claim Office / Harbor Office | storm-signal mast, registry board, tide staff, harbor lantern | grounded corner shoes; mast/braces attach to the retained civic shell | 2,788 tris; SHA `8f192c4efb46…` |
+| Assay Office / Salvage Assay | sorting canopy, salvage hoist, sieve, pearl gauge, wet line | grounded corner shoes; canopy/hoist remain clear from the shell at all four angles | 4,344 tris; SHA `140de2941ff5…` |
+| Chapel / Mariners Chapel | storm stays, rope rails, rescue ring, tide memorial, storm lantern | grounded corner shoes; stays terminate in explicit tower/roof brackets after first review | 3,956 tris; SHA `0e6bb2fc5c8b…` |
+| Schoolhouse / Navigation School | lookout deck, chart board, rope rails, required sextant finial | grounded corner shoes; finial and rails attach cleanly and preserve the school silhouette | 6,040 tris; SHA `941076bc0b4f…` |
+| Stamp Mill / Drydock Works | timber gantry, hull cradle, capstan, hoist | grounded corner shoes; working drydock silhouette reads on front and rear quarters | 2,004 tris; SHA `2c33e260a9a0…` |
+| Dynamo Hall / Harbor Works | crane, winch, cargo rail, harbor crest | grounded corner shoes; black inherited roof is fully wrapped and the crane is physically braced | 3,344 tris; SHA `e711f0d7b398…` |
+
+Production inventory remains eight real mounted buildings: seven canonical `townLayout.ts` slots plus the accepted Dynamo Hall additive site. No ninth identity is fabricated. Every building has one mesh, one primitive, one non-emissive material, one embedded 1024 x 1024 atlas, zero cameras/lights/animations, the exact E1 footprint and envelope, and 100% of the E1 identity triangle signatures. All pre-flood `steam_anchor_*`, `arc_anchor_*`, and `exhaust_anchor_*` nodes are absent by design.
+
+### Wagon, trough, and E5 accessory pack
+
+| Asset | Flood-Break role | Final contract |
+| --- | --- | --- |
+| Covered wagon E5 | wagon is gone; a waterlogged arrival dinghy rests in a weighted seabed cradle with folded mast, patched sail, hawser, and buoy | 728 / 1,800 tris; 1 material; SHA `01cf627b01a8…` |
+| Water trough E5 | horse trough is gone; a sealed freshwater cistern sits on a broad ground foot with rope bands and teal tap | 504 / 1,200 tris; 1 material; SHA `a1250d16334f…` |
+| Harbor lantern | twin unlit lanterns on a tarred post and stone foot | 828 / 1,000 tris; SHA `5b76eba0234a…` |
+| Drying-net frame | patched working net, cork floats, and a low seabed ballast foot | 672 / 1,000 tris; SHA `96d5ec95020f…` |
+| Tide board | pictogram-only water marks and rescue ring on a stone-footed post | 336 / 1,000 tris; SHA `c3a803a3c696…` |
+| Rope-buoy rack | two rope coils and buoys on a broad grounded rack | 816 / 1,000 tris; SHA `7729ea99e47a…` |
+
+The six prop GLBs embed byte-identical copies of the shared 1024 x 1024 E5 atlas. `era-props.e5.json` proposes five generously separated placements and declares `"floodReset": true`; its minimum route, stage, pad, existing-prop, and pairwise clearances are `4.4020`, `7.3020`, `0.8421`, `0.9087`, and `6.9675` units respectively. The open plaza stage remains empty. The unchanged Pan Monument is the sole named heritage survivor; its BLEND/GLB SHA-256 remain `c361cf31…` / `e86e7cda…`. Landmark freeze is honored.
+
+### Flood-break cadence
+
+| Fixture | Verdict | Reason |
+| --- | --- | --- |
+| Eight buildings | GONE -> REPLACE | public identities return as fresh harbor structures; no pre-flood technology survives in their geometry |
+| Covered wagons | GONE -> REPLACE | arrivals now use a weighted, waterlogged dinghy rather than a floating wagon costume |
+| Water trough | GONE -> REPLACE | freshwater is protected in a sealed cistern after the catastrophe |
+| E2–E4 street hardware | GONE | steam, voltage, and motor accessories are drowned or cannibalized; the E5 manifest hard-resets them |
+| Harbor accessories | NEW | lanterns, net frame, tide board, and rope/buoy rack define the working underwater harbor |
+| Seabed foundations | NEW -> PERSIST | compact ballast shoes make the weight and ground contact explicit without turning buildings into tabletop tokens |
+| Pan Monument | PERSIST | unchanged heritage asset; its E5 high-ground/reclaimed-ring transform remains factory-owned |
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry / materials | 8/8 buildings under 15,000 tris; wagon/trough under 1,800 / 1,200; accessories under 1,000; one mesh, primitive, material, and embedded atlas throughout |
+| Flood Break | all eight variants use their E1 identity shell; E2–E4 geometry and all three old anchor families are absent |
+| Grounding / envelope | every building and prop reaches canonical `y = 0`; buildings preserve exact E1 bounds and origins |
+| Export hygiene | zero cameras, lights, animations, emissive textures, or authored water surfaces |
+| Determinism | saved-BLEND re-export reproduces all 14 production GLBs byte-identically |
+| Placement / flat walk | five E5 manifest records clear routes, pads, shipped props, one another, and the plaza stage; overlay reviewed |
+| Production-light ensemble | E4 and E5 compared under the identical shipped Town light rig; `diffRatio16 = 5.8045%`, average luminance delta `+1.1275` |
+| Underwater story read | separate underwater camera and overview read as a submerged town resting on the seabed; fresh unprimed visual QA returns SHIP |
+| App regression | `npm run build` passes; `e2e/town-era-switch.spec.ts` passes 12/12 across desktop and mobile |
+| Independent review | repository review's evidence-lighting issue corrected; confirmed manifest-accumulation seam recorded as F-3DC-34 |
+
+### Evidence index
+
+- Same-light whole Town: [`town-wide-verdict-e4-e5-ab.png`](../artifacts/town-e5-harbor/town-wide-verdict-e4-e5-ab.png), blind pair [`town-ensemble-blind-pair.png`](../artifacts/town-e5-harbor/town-ensemble-blind-pair.png)
+- Underwater intent: [`town-e5-harbor-underwater.png`](../artifacts/town-e5-harbor/e5/town-e5-harbor-underwater.png), expanded seabed view [`town-e5-seabed-overview.png`](../artifacts/town-e5-harbor/town-e5-seabed-overview.png)
+- Eight locked-camera A/Bs: `*-town-verdict-e4-e5-ab.png` under [`artifacts/town-e5-harbor`](../artifacts/town-e5-harbor/)
+- Eight four-angle A/Bs: `*-turntable-e4-e5-ab.png` plus [`all-buildings-e5-turntable-contact.png`](../artifacts/town-e5-harbor/all-buildings-e5-turntable-contact.png)
+- Props / placement: [`accessory-pack-and-pan-survivor-e5.png`](../artifacts/town-e5-harbor/accessory-pack-and-pan-survivor-e5.png), [`e5-accessory-clearance-overlay.png`](../artifacts/town-e5-harbor/e5-accessory-clearance-overlay.png)
+- Machine evidence: [`asset-contract.json`](../artifacts/town-e5-harbor/asset-contract.json), [`comparison-metrics.json`](../artifacts/town-e5-harbor/comparison-metrics.json), [`blind-key.json`](../artifacts/town-e5-harbor/blind-key.json)
+
+### F-3DC-34 — E5 must reset the accessory timeline at the runtime mount
+
+**Severity:** high, factory integration gate
+
+**Evidence:** independent code review confirmed `TownTavernPilot.ts:530-533` currently concatenates every manifest from E2 through the active era. At E5 that would mount all 18 pre-flood records plus these five replacements; four E5 placements intentionally reuse E4 coordinates, so the old and new hardware would overlap deterministically. The new manifest declares `floodReset: true` and contains only E5 records, but the current runtime does not yet consume that flag.
+
+**Factory requirement:** when the active manifest declares `floodReset`, begin accessory selection at that era rather than E2. Do not move the E5 props to hide the bug: the Flood Break requires removal, not coexistence. Add an E5 era-switch assertion that only the five E5 IDs mount before qualifying this asset wave in-game.
+
+### F-3DC-35 — Geometry verdicts must not borrow unshipped atmosphere
+
+**Severity:** resolved evidence gate; runtime art-direction follow-up
+
+**Evidence:** first whole-Town evidence compared warm production E4 against a cool evidence-only E5 rig, producing a meaningless `97.07%` changed-pixel ratio. Independent review caught that production `TownScene.dressScene` does not yet vary lighting by era. The final primary A/B now holds lighting identical and still changes `5.8045%` of pixels above threshold 16; underwater lighting is isolated in a clearly named story view.
+
+**Decision:** qualify the models under shipped lighting. The factory/3D-D environment seam may later add E5 water, fog, and caustic atmosphere, but model approval cannot depend on that unlanded work.
+
+### F-3DC-36 — The current Town plate is not the final E5 seabed
+
+**Severity:** medium, adjacent terrain ownership
+
+**Evidence:** final unprimed visual QA returned SHIP for every E5 model and separately identified square texture patches, hard rear plate cutouts, and the soft inherited plaza-wheel marking. These are unchanged Wave 1 Town-land issues, not defects in the new building or prop GLBs. The evidence-only continuation plane now sits below the complete plate and no longer cuts holes through its relief.
+
+**Request:** coordinate a proper E5 Town-land/seabed variant with 3D-D under the shared palette family. Preserve the canonical pad and walk-law geometry; replace the visibly finite dry-era plate treatment rather than adding corrective geometry to each building.
+
+### F-3DC-37 — Underwater weight needs contact, not perimeter plinths
+
+**Severity:** resolved visual gate
+
+**Evidence:** the first grounding pass wrapped each house in a full dark perimeter rail, which made the town read as tabletop tokens. The final pass replaces those rails with four compact tarred shoes at `y = 0`; the Chapel additionally gains explicit stay brackets, and the net frame/dinghy gain dedicated ballast feet. Fresh review finds all buildings, accessories, and roof fixtures physically attached and returns SHIP.
+
+**Decision:** show the buildings' weight through sparse load-bearing contact points and shadows. Do not lift, float, or place the heavy settlement on buoyant platforms.
+
+### Wave 10 integration boundary
+
+- Add eight `.e5.blend` / `.e5.glb` building siblings, E5 dinghy/cistern siblings, four accessory GLBs, the shared atlas/manifest, deterministic builders/verifier, evidence, and this findings entry.
+- E1–E4 production siblings, all landmark GLBs, the Pan Monument bytes, runtime source, layout, specs, status, backlog, and e2e files remain untouched.
+- The existing sibling loader discovers `.e5.glb` files automatically. The attended factory must implement F-3DC-34's narrow `floodReset` mount behavior before live qualification.
+- Branch base: `54067137`; origin/main observed at `6b871ba8` after the branch was cut. Main moved in unrelated factory/terrain ledgers; no Wave 10 asset path was changed.
 
 ## Scoped E3 follow-up — wagon filament lights
 
