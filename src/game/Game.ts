@@ -184,6 +184,7 @@ import {
   type NightShiftPhase,
 } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
+import { createDeepwaterClaimTile, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
 import { readTownName } from '../town/TownNaming';
 import { installRunTelemetry } from '../telemetry/runBeacon';
 import { GameState } from './GameState';
@@ -441,6 +442,8 @@ export class Game {
   private readonly damageVignette = document.createElement('div');
   private readonly activeEpoch = selectActiveEpoch();
   private readonly activeContract = selectActiveContract();
+  private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
+  private deepwaterCorsairWavesSpawned = 0;
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
   private readonly lightField = new LightField({
     minLight: Balance.contracts.nightShift.minLight,
@@ -590,7 +593,7 @@ export class Game {
       this.advanceMegaprojectOnWave(atSim);
       return !this.secureClaimChoicePending();
     },
-    areWavesDisabled,
+    () => areWavesDisabled() || this.deepwaterClaim !== null,
     () => this.activeContract,
     () => !isStealDisabled() && this.hasBuiltStockpile(),
     () => !isWreckDisabled() && (this.buildSystem.hasAnyBuildable || this.megaprojectTarget.active || this.ferrisWheel?.target.active === true),
@@ -912,6 +915,7 @@ export class Game {
       (sound) => this.audio.play(sound),
       (id) => this.isBuildableEnabled(id),
       (position) => {
+        if (this.deepwaterClaim) return true;
         if (!this.mpClient) return false;
         const build = this.buildSystem.diagnostics;
         this.mpQueuedActions.push({
@@ -1330,15 +1334,25 @@ export class Game {
         setBuildMode: (on: boolean) => this.buildSystem.setBuildMode(on),
         selectBuildable: (id: string) => this.selectBuildable(id),
         rotateBuildGhost: () => this.buildSystem.rotateGhost(),
+        placeBoatBuilding: (padId: string, buildingId: string) => {
+          const placed = this.deepwaterClaim?.placeBoatBuilding(padId, buildingId) ?? false;
+          this.publishDiagnostics();
+          return placed;
+        },
+        reanchorClaimBoat: (anchorId: string) => {
+          const moved = this.deepwaterClaim?.reanchor(anchorId) ?? false;
+          this.publishDiagnostics();
+          return moved;
+        },
         placeFree: (id: BuildableId, x: number, z: number, rotationSteps = 0) => {
-          const placed = this.buildSystem.placeFree(id, { x, z }, rotationSteps);
+          const placed = !this.deepwaterClaim && this.buildSystem.placeFree(id, { x, z }, rotationSteps);
           if (placed) discoverLedgerBuildable(id);
           this.publishDiagnostics();
           return placed;
         },
         confirmBuild: () => {
           const id = this.buildSystem.diagnostics.selectedBuildable;
-          const placed = this.buildSystem.confirm(this.timeAlive);
+          const placed = !this.deepwaterClaim && this.buildSystem.confirm(this.timeAlive);
           if (placed) discoverLedgerBuildable(id);
           this.publishDiagnostics();
           return placed;
@@ -1422,6 +1436,7 @@ export class Game {
           ),
         goldPickups: () => this.goldPickups.snapshot(),
         placeBeacon: () => {
+          if (this.deepwaterClaim) return false;
           this.buildSystem.selectBuildable('sentry_beacon', true);
           return this.buildSystem.confirm(this.timeAlive);
         },
@@ -1725,6 +1740,7 @@ export class Game {
       this.activeTickElapsed += delta;
       const simDelta = delta * this.simTimeScale;
       this.timeAlive += simDelta;
+      this.syncDeepwaterClaim();
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
       this.syncHeroVisualHeight();
@@ -1793,6 +1809,7 @@ export class Game {
         isWreckDisabled() ? undefined : this.wreckerContext,
         (enemy) => this.mothSeasonSpeedMultiplier(enemy),
       );
+      this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
       this.harvestSnapshot = this.harvestSystem.update(
@@ -1947,7 +1964,7 @@ export class Game {
 
   /** Returns true when the action schedules a run transition and later actions from this tick must be ignored. */
   private applyMultiplayerAction(action: LockstepAction): boolean {
-    if (action.type === 'place_build') {
+    if (action.type === 'place_build' && !this.deepwaterClaim) {
       if (this.buildSystem.confirmPlacement(this.timeAlive, action)) discoverLedgerBuildable(action.id as BuildableId);
     }
     if (action.type === 'weapon_toggle') this.toggleWeapon();
@@ -3231,6 +3248,7 @@ export class Game {
         baron: this.activeContract.twist.baron ?? null,
         medals: loadMedals(),
       },
+      deepwaterClaim: this.deepwaterClaim?.snapshot() ?? null,
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
@@ -3478,6 +3496,40 @@ export class Game {
     if (!config || wave <= 0 || this.nightShiftLightingState().darkness < 0.5) return;
     const count = Math.max(2, Math.floor(Math.max(1, this.mothLightSources.length) * config.mothsPerLightPerWave));
     this.mothSwarm.spawn(this.enemies, count, this.heroStart.x, this.heroStart.z - 12);
+  }
+
+  private syncDeepwaterClaim(): void {
+    const snapshot = this.deepwaterClaim?.advance(this.timeAlive);
+    if (!snapshot) return;
+    const pending = snapshot.corsairWaves.slice(this.deepwaterCorsairWavesSpawned);
+    this.deepwaterCorsairWavesSpawned = snapshot.corsairWaves.length;
+    if (isSpawnDisabled()) return;
+    for (const wave of pending) this.spawnDeepwaterCorsairs(wave);
+  }
+
+  private spawnDeepwaterCorsairs(wave: CorsairSkiffWave): void {
+    const roster = this.activeContract.twist.enemyRoster?.find((entry) => entry.id === 'corsair_skiff');
+    for (const skiff of wave.enemies) {
+      const enemy = this.enemies.spawn(new THREE.Vector3(skiff.x, Balance.enemy.groundY, skiff.z), {
+        hpScale: roster?.hpScale,
+        speedScale: roster?.speedMult,
+        visualScale: roster?.visualScale,
+        tint: roster?.tint,
+        variantId: roster?.id,
+        variantLabel: roster?.label,
+      });
+      enemy?.scriptMoveTo(wave.toX - 2, skiff.z, enemy.moveSpeed, { ignoreTerrain: true });
+    }
+  }
+
+  private recycleDeepwaterCorsairsAtExit(): void {
+    const lastWave = this.deepwaterClaim?.snapshot().corsairWaves.at(-1);
+    if (!lastWave) return;
+    for (const enemy of this.enemies.all) {
+      if (enemy.isAlive && enemy.variantId === 'corsair_skiff' && enemy.position.x >= lastWave.toX - 2) {
+        this.enemies.recycle(enemy);
+      }
+    }
   }
 
   private mothSeasonSpeedMultiplier(enemy: ClaimJumperEnemy): number {
@@ -4601,6 +4653,8 @@ export class Game {
     this.mothSwarm.reset();
     this.goldPickups.recycleAll();
     this.waveSystem.reset();
+    this.deepwaterClaim?.reset();
+    this.deepwaterCorsairWavesSpawned = 0;
     this.buildMenuOpen = false;
     this.upgradeCandidate = null;
     this.demolishCandidate = null;
@@ -5315,6 +5369,7 @@ export class Game {
 
   private confirmAction(): void {
     if (this.buildSystem.isBuildMode) {
+      if (this.deepwaterClaim) return;
       const id = this.buildSystem.diagnostics.selectedBuildable;
       this.updateActionActorPosition();
       if (this.buildSystem.confirm(this.timeAlive)) discoverLedgerBuildable(id);

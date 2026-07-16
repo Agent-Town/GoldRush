@@ -1,0 +1,90 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-5-deepwater/contracts.json",
+    "tileId": "e5-deepwater-claim",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "buildZones": [
+      { "id": "claim-boat-deck-mask", "bank": "north", "minX": -5, "maxX": 5, "minZ": 26, "maxZ": 34 }
+    ],
+    "stakeMarkers": [{ "id": "claim-boat", "x": 0, "z": 30, "lossCondition": true }],
+    "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
+    "harvestAnchors": [
+      { "x": -36, "z": -24 },
+      { "x": -18, "z": -30 },
+      { "x": 0, "z": -22 },
+      { "x": 20, "z": -34 },
+      { "x": 36, "z": -20 }
+    ],
+    "water": {
+      "id": "deepwater-surface-placeholder",
+      "depths": { "springPond": 0.2 },
+      "speedMul": { "springPond": 1 }
+    },
+    "deepwater": {
+      "waterTile": {
+        "id": "e5-deepwater-claim",
+        "size": 128,
+        "regions": [
+          { "id": "open-water", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": 64, "depth": 0, "depthClass": "surface", "travel": ["swim", "boat"] },
+          { "id": "lagoon-shallows", "minX": -42, "maxX": 42, "minZ": 18, "maxZ": 44, "depth": -1, "depthClass": "shallows", "travel": ["swim", "boat"] },
+          { "id": "reef-ring", "minX": -48, "maxX": 48, "minZ": -8, "maxZ": 8, "depth": -2, "depthClass": "reef", "travel": ["depth"] },
+          { "id": "reef-gap", "minX": -5, "maxX": 5, "minZ": -8, "maxZ": 8, "depth": -2, "depthClass": "reef", "travel": ["boat", "depth"] },
+          { "id": "wreck-shelf", "minX": -48, "maxX": 48, "minZ": -42, "maxZ": -14, "depth": -4, "depthClass": "wreck", "travel": ["boat", "depth"] },
+          { "id": "trench-edge", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": -50, "depth": -8, "depthClass": "trench", "travel": [] }
+        ]
+      },
+      "claimBoat": {
+        "id": "claim-boat",
+        "initialAnchorId": "lagoon",
+        "anchors": [
+          { "id": "lagoon", "x": 0, "z": 30 },
+          { "id": "open-water", "x": -24, "z": 12 }
+        ],
+        "pads": [
+          { "id": "bow", "x": 0, "z": -3 },
+          { "id": "port", "x": -3, "z": 1 },
+          { "id": "starboard", "x": 3, "z": 1 }
+        ]
+      },
+      "stormTrack": { "regionId": "open-water", "westX": -64, "eastX": 64 },
+      "corsairWaveSize": 3,
+      "wrecks": [
+        { "id": "w1-supply-barge", "era": "E1", "x": -36, "z": -24, "depthClass": "wreck" },
+        { "id": "w2-locomotive", "era": "E2", "x": -18, "z": -30, "depthClass": "wreck" },
+        { "id": "w3-pylon-barge", "era": "E3", "x": 0, "z": -22, "depthClass": "wreck" },
+        { "id": "w4-land-yacht-sister", "era": "E4", "x": 20, "z": -34, "depthClass": "wreck" },
+        { "id": "w5-mystery-hull", "era": "mystery", "x": 36, "z": -20, "depthClass": "wreck" }
+      ]
+    },
+    "weather": {
+      "cycleSeconds": 24,
+      "clearSeconds": 5,
+      "telegraphSeconds": 3,
+      "stormSeconds": 10,
+      "stormMovementMultiplier": 0.72,
+      "stormVisibilityMultiplier": 0.58,
+      "hazeColor": "#335f64",
+      "hazeStrength": 0.28
+    },
+    "enemyRoster": [
+      {
+        "id": "corsair_skiff",
+        "label": "Corsair Skiff",
+        "waveMin": 1,
+        "hpScale": 1,
+        "speedMult": 1,
+        "visualScale": 1.25,
+        "tint": "#8f4f32",
+        "spawnEdges": ["west"],
+        "spawnGates": [{ "edge": "west", "x": -62, "z": 0 }],
+        "unitClass": "vehicle",
+        "vehicleChassis": "e4-hauler",
+        "travelClass": "boat",
+        "waterRegions": ["open-water", "lagoon-shallows", "reef-gap", "wreck-shelf"],
+        "art": "placeholder"
+      }
+    ],
+    "lanes": { "spawnEdges": ["west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+  }
+}
