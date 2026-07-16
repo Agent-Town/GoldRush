@@ -18,7 +18,7 @@ export type TerrainGizmoRef =
   | { kind: 'pond'; index: number }
   | { kind: 'spawnGate'; rosterIndex: number; gateIndex: number }
   | { kind: 'fixture'; index: number };
-export type TerrainGizmoHandle = 'move' | 'zone-nw' | 'zone-ne' | 'zone-se' | 'zone-sw' | 'pond-radius';
+export type TerrainGizmoHandle = 'move' | 'zone-nw' | 'zone-ne' | 'zone-se' | 'zone-sw' | 'pond-radius' | 'fixture-rotate';
 export type TerrainGizmoHit = { ref: TerrainGizmoRef; handle: TerrainGizmoHandle };
 export type TerrainGizmoAction = {
   ref: TerrainGizmoRef;
@@ -137,7 +137,13 @@ export function applyTerrainGizmo(
 
   const before = source.tileParams.prePlacedBuildables?.[action.ref.index];
   const next = draft.tileParams.prePlacedBuildables?.[action.ref.index];
-  if (!before || !next || action.handle !== 'move') return unchangedGizmo();
+  if (!before || !next) return unchangedGizmo();
+  if (action.handle === 'fixture-rotate') {
+    if (!fixtureCanRotate(before)) return unchangedGizmo();
+    next.rotationSteps = normalizedRotationSteps((before.rotationSteps ?? 0) + 1);
+    return changedFields(before, next) ? { changed: true, message: 'Fixture turned a quarter-step on the descriptor.' } : unchangedGizmo();
+  }
+  if (action.handle !== 'move') return unchangedGizmo();
   if (Math.abs(dx) > 1e-9) next.x = Math.round(clamp(before.x + dx, -half, half));
   if (Math.abs(dz) > 1e-9) next.z = Math.round(clamp(before.z + dz, -half, half));
   return changedFields(before, next) ? { changed: true, message: 'Fixture moved on the descriptor.' } : unchangedGizmo();
@@ -173,6 +179,11 @@ export function hitTerrainGizmo(
     const handleOffset = pond ? Math.max(pond.radius, hitRadius * 1.25) : 0;
     if (pond && pointDistance(point, { x: pond.x + handleOffset, z: pond.z }) <= hitRadius) {
       return { ref: selected, handle: 'pond-radius' };
+    }
+  } else if (selected?.kind === 'fixture') {
+    const fixture = contract.tileParams.prePlacedBuildables?.[selected.index];
+    if (fixture && fixtureCanRotate(fixture) && pointDistance(point, fixtureRotateHandle(fixture, hitRadius, claimSize(contract) / 2)) <= hitRadius) {
+      return { ref: selected, handle: 'fixture-rotate' };
     }
   }
 
@@ -345,7 +356,7 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
       }
       selected = hit.ref;
       gizmo = { hit, from: cursor, draft: structuredClone(options.contract), result: unchangedGizmo() };
-      status.textContent = `${gizmoLabel(hit.ref)} selected. Drag to ${hit.handle === 'move' ? 'move it' : 'resize it'}.`;
+      status.textContent = `${gizmoLabel(hit.ref)} selected. ${gizmoInstruction(hit.handle)}`;
     } else {
       points = [cursor];
       activeBrush = brushSettings();
@@ -727,8 +738,14 @@ function drawGizmoLayer(
     context.fillRect(x - 6, y - 6, 12, 12);
     context.strokeRect(x - 6, y - 6, 12, 12);
     context.beginPath();
-    context.moveTo(x, y - 9);
-    context.lineTo(x, y + 9);
+    if (fixtureCanRotate(fixture)) {
+      const yaw = normalizedRotationSteps(fixture.rotationSteps ?? 0) * (Math.PI / 2);
+      context.moveTo(x, y);
+      context.lineTo(x + Math.cos(yaw) * 10, y + Math.sin(yaw) * 10);
+    } else {
+      context.moveTo(x, y - 9);
+      context.lineTo(x, y + 9);
+    }
     context.stroke();
   }
 
@@ -770,6 +787,25 @@ function drawGizmoLayer(
       context.lineTo(handleX, handleY);
       context.stroke();
       drawGizmoHandle(context, handleX, handleY);
+    }
+  } else if (selected?.kind === 'fixture') {
+    const fixture = contract.tileParams.prePlacedBuildables?.[selected.index];
+    if (fixture && fixtureCanRotate(fixture)) {
+      const handle = fixtureRotateHandle(fixture, hitRadius, claimSize(contract) / 2);
+      const fixtureX = toX(fixture.x);
+      const fixtureY = toY(fixture.z);
+      const handleX = toX(handle.x);
+      const handleY = toY(handle.z);
+      context.beginPath();
+      context.strokeStyle = '#a0522d';
+      context.lineWidth = 2;
+      context.moveTo(fixtureX, fixtureY);
+      context.lineTo(handleX, handleY);
+      context.stroke();
+      drawGizmoHandle(context, handleX, handleY);
+      context.fillStyle = '#a0522d';
+      context.font = 'bold 12px Georgia';
+      context.fillText('↻', handleX - 5, handleY + 4);
     }
   }
   context.restore();
@@ -910,6 +946,19 @@ function pointDistance(left: TerrainBrushPoint, right: TerrainBrushPoint): numbe
   return Math.hypot(left.x - right.x, left.z - right.z);
 }
 
+function fixtureRotateHandle(fixture: TerrainBrushPoint, hitRadius: number, claimHalf: number): TerrainBrushPoint {
+  const offset = hitRadius * 2.25;
+  return { x: fixture.x + (fixture.x + offset <= claimHalf ? offset : -offset), z: fixture.z };
+}
+
+function fixtureCanRotate(fixture: { id: string; rotationSteps?: number }): boolean {
+  return fixture.id === 'lantern_post' && Number.isFinite(fixture.rotationSteps);
+}
+
+function normalizedRotationSteps(value: number): number {
+  return ((Math.round(value) % 4) + 4) % 4;
+}
+
 function sameGizmoRef(left: TerrainGizmoRef | null, right: TerrainGizmoRef): boolean {
   if (!left || left.kind !== right.kind) return false;
   if (left.kind === 'spawnGate' && right.kind === 'spawnGate') {
@@ -923,6 +972,12 @@ function gizmoLabel(ref: TerrainGizmoRef): string {
   if (ref.kind === 'pond') return 'Spring pond';
   if (ref.kind === 'spawnGate') return 'Spawn gate';
   return 'Fixture';
+}
+
+function gizmoInstruction(handle: TerrainGizmoHandle): string {
+  if (handle === 'move') return 'Drag to move it.';
+  if (handle === 'fixture-rotate') return 'Tap to turn it a quarter-step.';
+  return 'Drag to resize it.';
 }
 
 function clamp(value: number, min: number, max: number): number {
