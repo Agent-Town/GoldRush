@@ -1,12 +1,42 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/town-road-wear-v2` (F-3DC-04)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; F-3DC-04 `dc46019a`
 
-Tip: exact Wave 10 SHA is reported in the attended handoff
+Tip: exact F-3DC-04 SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the complete E5 family is a fresh, working underwater harbor whose heavy buildings rest on the seabed; the asset wave is gate-clean, with one explicit factory integration requirement: honor `floodReset` before mounting the E5 accessory manifest.**
+Verdict: **READY-FOR-GATES — F-3DC-04 replaces the regular inherited road drawing with varied, selectively faded wear while preserving every canonical centerline, mesh byte payload, flat-walk value, E4 boulevard, and motor caravan.**
+
+## F-3DC-04 — current-state road-wear pass
+
+The pass was restarted from current `origin/main` after rejecting the old Wave-2 PNG as a design reference. Fresh references were rendered from base `dc46019af763ff13d5e9ea8fc99d91cbe689e332` directly from the tracked E1, E4, and E5 GLBs and manifests. The E4 frame includes the shipped southern twin-lane boulevard and motor caravans; the E5 frame is the submerged square on the seabed. No prior PNG is an input to the reference generator.
+
+Only the Town plate's embedded 2048-square atlas changes. The inherited ring gains modest width variation; secondary approaches receive distinct strengths and surface breakup; selected spokes fade; and three traffic points receive localized wagon scuffing. The E4 boulevard GLB (`301c1f65f53c…`) and E4 motor-caravan GLB (`10a1383c3b57…`) are byte-untouched.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Texture-only proof | exported mesh attributes + canonicalized topology are byte-identical to `dc46019a`; only the embedded PNG hash changes |
+| Canon routes | `centerlinesIdentical = true`; ring and all eight radial coordinate arrays are exact |
+| Flat-walk law | unchanged layout contract: route max `0.037230`, plaza max `0.037210`; saved-mesh raycast recheck: route `0.037101`, plaza `0.034182`, every pad under `0.000136` |
+| Asset contract | 17,596 tris; one mesh / primitive / material / embedded 2048 PNG; zero cameras, lights, animations, or anchors |
+| Determinism | saved BLEND re-export is byte-identical at SHA-256 `6ff3b7d04adc…` |
+| Fresh E4 visual delta | 5.1086% of pixels differ above 2/255 and 1.4767% above 8/255; boulevard/caravan composition is unchanged |
+| App regression | `npm run build` passes; `town-era-switch.spec.ts` passes 14/14 across desktop and mobile |
+
+### Evidence index
+
+- Fresh current-state contract and E1/E4/E5 renders: [`dc46019af763-main`](../artifacts/town-plate-3d/current-references/dc46019af763-main/reference-contract.json)
+- Fresh E4 before/after and focus A/B: [`road-wear-e4-before-after.png`](../artifacts/town-plate-3d/current-references/dc46019af763-road-wear-after/road-wear-e4-before-after.png), [`road-wear-e4-focus-before-after.png`](../artifacts/town-plate-3d/current-references/dc46019af763-road-wear-after/road-wear-e4-focus-before-after.png)
+- Geometry / centerline proof: [`road-wear-contract.json`](../artifacts/town-plate-3d/road-wear-contract.json)
+
+### Integration boundary
+
+- Replaces `town-plate.blend` and `town-plate.glb` at their existing production paths; no mount or runtime path changes.
+- Adds the fresh-reference renderer and texture-only verifier; updates only this findings ledger and Town-plate evidence.
+- All building variants, era prop GLBs/manifests, Pan Monument bytes, layout source, sim paths, specs, and runtime source remain untouched.
 
 ## Wave 10 — E5 Deepwater Harbor Rebuild
 
