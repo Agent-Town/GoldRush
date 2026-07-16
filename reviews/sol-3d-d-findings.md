@@ -289,6 +289,58 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E3 Fairground terrain wave
+
+### F-3D-D-51 — The published Fairground table stays the only gameplay authority
+
+`assets/contracts/epoch-3-voltage/mask-tables/e3-fairground.json` is consumed without edits and copied exactly into the terrain contract. The three build zones, west/east/north spawn edges, fair-gate stake, no-water agreement, and exact Ferris rectangle remain planar simulation truth. The terrain and panorama are render-only and `Terrain.visualY` remains the height seam. Main now records the landmark freeze as lifted; this terrain/panorama pair deliberately authors no landmark body or mount, so `landmarkMounts` stays empty without promoting a verdict proxy.
+
+### F-3D-D-52 — A fairground must survive removal of its verdict proxies
+
+Early candidates depended on the temporary wheel and pavilion silhouettes. Repeated fresh critiques correctly rejected that: after removing those proxies, the ground read as a generic dark clearing. The delivered terrain now carries the operating plan itself through a high-contrast packed-earth T/cross midway, broken oval service loop, two raised and stained pavilion work terraces, a double wheel-foundation scar, two iron sill marks, four guy-anchor stains, and a worn bowl/rim. These are ground construction and material history, not baked landmark bodies.
+
+### F-3D-D-53 — Strong relief must not become black night holes
+
+The terrain-only A/B exposed narrow physical ruts and deep circulation cuts as matte-black wedges under the dusk rig. The correction keeps wagon ruts, service circulation, and the exact foundation legible in the atlas while reserving geometry for broad pavilion terraces, the shallow wheel berm, asymmetric inner knuckles, and the broken perimeter rise. This produces meaningful sculpted relief at player distance without manufacturing impassable-looking trenches that the planar simulation does not own.
+
+### F-3D-D-54 — The exact Ferris footprint is a triangle-surface gate
+
+The builder resolves the fixture rectangle last, with one terrain-cell diagonal of guard before the exact authored bounds. The verifier then samples 2,145 points across the exported triangle surface, not only vertices. Maximum deviation is `0.000000 m` against the `0.02 m` limit, so the render height visibly agrees with the load-bearing placement rectangle.
+
+### F-3D-D-55 — Fairground Panorama v2 needs open county, not an arena bowl
+
+The separate panorama retains one near ridge, an independent far ridge, haze, asymmetric weather, and a quiet zenith, but lowers and breaks the near Fairground ridge. Its rectangular boundary skirt samples the actual terrain edge, then continues near-level county ground rather than sinking into a bright concentric moat. The final center-horizon view answers `distance`; no playfield, mask, spawn, fog, or collision authority moves into the panorama.
+
+### F-3D-D-56 — Fresh criticism moved the deliverable before returning ACCEPT
+
+Independent unprimed gates rejected earlier candidates for proxy-dependent identity, subtle relief, black rut wedges, a hard slab join, and an arena-like horizon. The builders, atlases, and evidence were revised rather than reframed. The final fresh unprimed gate returns `ACCEPT` with no release blockers: the ground independently reads as an exhausted working-fair site, the panorama reads distance, the published masks remain legible, and the mood answers fight rather than holiday. Because no shipped same-map Fairground painting exists, the Mood A/B honestly labels the shipped E3 kit plate as the palette/mood source instead of claiming a same-map comparison.
+
+## E3 Fairground gate state
+
+- Fairground terrain `.blend` / GLB / 2048² atlas / contract: PASS
+- Terrain GLB: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Separate Fairground Panorama v2 `.blend` / GLB / 2048² atlas / contract: PASS
+- Panorama GLB: 3,072 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Whole-file byte-identical and semantic-identical re-export for both GLBs: PASS
+- Exact published mask/water agreement: PASS
+- Ferris fixture exported triangle-surface flatness, 2,145 samples / 0.000000 m deviation: PASS
+- Mood A/B, identical-camera flat/sculpted A/B, owner board, mask agreement, and center-horizon distance gate: PASS
+- Fresh final unprimed visual verdict: ACCEPT
+- Independent `codex review --uncommitted`: attempted; the CLI exited after startup inventory without a review verdict, so it is not counted as a gate
+- Landmark freeze is lifted; this pair authors no landmark body or mount, and the wheel/pavilion verdict proxies remain absent from both GLBs
+- `src/`, simulation, masks, choreography, registry, and runtime edits: none
+
+## E3 Fairground owner-verdict images
+
+- `artifacts/map-rebuild-spike/fairground-owner-verdict.png`
+- `artifacts/map-rebuild-spike/fairground-mood-ab.png`
+- `artifacts/map-rebuild-spike/fairground-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/fairground-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/fairground-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/fairground-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## E5 Deepwater Claim terrain + panorama wave
 
 ### F-3D-D-46 — The Flood Break starts with the shipped harbor paint
