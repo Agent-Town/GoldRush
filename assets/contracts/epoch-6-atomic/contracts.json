@@ -1,5 +1,138 @@
 {
   "version": 1,
   "epochId": "epoch-6-atomic",
-  "contracts": []
+  "contracts": [
+    {
+      "id": "e6-glow-mesa",
+      "name": "The Glow Mesa",
+      "tileParams": {
+        "tileId": "e6-glow-mesa",
+        "biome": "atomic-glow-mesa",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "base-flat",
+            "bank": "south",
+            "minX": -52,
+            "maxX": 52,
+            "minZ": -54,
+            "maxZ": -10
+          },
+          {
+            "id": "decay-clock-site",
+            "bank": "south",
+            "minX": -46,
+            "maxX": -34,
+            "minZ": -48,
+            "maxZ": -38
+          },
+          {
+            "id": "warehouse-approach",
+            "bank": "north",
+            "minX": -50,
+            "maxX": -18,
+            "minZ": 40,
+            "maxZ": 54
+          },
+          {
+            "id": "calculating-house-site",
+            "bank": "north",
+            "minX": -16,
+            "maxX": -4,
+            "minZ": 12,
+            "maxZ": 22
+          },
+          {
+            "id": "reactor-dome-site",
+            "bank": "north",
+            "minX": 4,
+            "maxX": 16,
+            "minZ": 12,
+            "maxZ": 22
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "isotope-kitchen",
+            "x": 0,
+            "z": -32,
+            "lossCondition": true
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [
+          {
+            "x": -24,
+            "z": 18
+          },
+          {
+            "x": -14,
+            "z": 34
+          },
+          {
+            "x": 4,
+            "z": 38
+          },
+          {
+            "x": 24,
+            "z": 30
+          },
+          {
+            "x": 26,
+            "z": 10
+          },
+          {
+            "x": 4,
+            "z": 2
+          }
+        ],
+        "heightfield": {
+          "id": "glow-mesa-two-level",
+          "mode": "visual"
+        },
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {},
+      "boardRow": {
+        "name": "The Glow Mesa",
+        "ledgerBlurb": "Hold the kitchen, run the night veins, and wrangle the Combine's tired machines before the dials close.",
+        "tags": [
+          "atomic",
+          "decay",
+          "wrangle"
+        ],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": [
+          "Defend the Isotope Kitchen.",
+          "Harvest the six-vein starstone ring after dark.",
+          "Wrangle appliances after they wind down."
+        ],
+        "rules": [
+          "Decay-puddle windows open and close on visible timers.",
+          "Lawn Shepherds drive appliance herds up the legal-grade scarp paths.",
+          "Feral appliances wind down when kited long enough and may then be captured alive."
+        ],
+        "geographyLine": "A two-level mesa: warehouse origin, legal-grade herd paths, a six-vein caprock ring, and a base flat broken by timed decay fields."
+      }
+    }
+  ]
 }
