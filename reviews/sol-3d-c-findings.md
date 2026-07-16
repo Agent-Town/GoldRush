@@ -1,12 +1,67 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e6-pilot` (Wave 11 E6 pilot)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 11 E6 pilot `8d974f11`
 
-Tip: exact Wave 10 SHA is reported in the attended handoff
+Tip: exact Wave 11 E6 pilot SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the complete E5 family is a fresh, working underwater harbor whose heavy buildings rest on the seabed; the asset wave is gate-clean, with one explicit factory integration requirement: honor `floodReset` before mounting the E5 accessory manifest.**
+Verdict: **READY-FOR-GATES — the first three E6 Mesa buildings pass production and across-the-plaza gates: the Atomic Diner is an unmistakable Tavern identity transform, the Reactor Dome owns the premium circular site, and the Isotope Kitchen is complete on all four sides.**
+
+## Wave 11 pilot — E6 Atomic Mesa buildings
+
+This verdict pilot is the first building batch on the ratified E6–E7 Mesa site. It does not accrete drowned E5 harbor geometry. The Atomic Diner edits the Tavern's social identity forward from the clean two-storey false-front shell; Reactor Dome and Isotope Kitchen are new §A1 identities. The Pan Monument remains an independently mounted heritage survivor and is only shown as context.
+
+Fresh reference boards were rerendered from tracked files on `origin/main@8d974f11911187136469fbd017c9598e5b2faf28`. They show the current E4 southern boulevard and motor caravan and the current E5 submerged square; no prior PNG was used as an input. The gameplay evidence uses the exact accepted Mesa plate GLB from `sol/mesa-town-plate@60242186e7bd7e72050146d06533d56922e2fc4e` (SHA `067c8c652134…`) without duplicating those bytes into this branch.
+
+### Per-building findings
+
+| Building | What the first pass got wrong | Final correction and identity read | Final contract |
+| --- | --- | --- | --- |
+| Tavern → Atomic Diner | inherited shell was initially too dark; hanging sign only read from the public face; rolled fascia exceeded the pad by 0.137 units | brighter chrome/pastel repaint; double-sided letter-free starburst sign; two-storey false-front and social porch retained; rounded chrome counter band, teal pips, roof vent, and rear condenser added; fascia pulled inside the canonical `5.2 x 3.4` pad | 13,904 / 15,000 tris; 1 embedded 1024 atlas; SHA `68ec4ed82ec2…` |
+| Reactor Dome | observation panes were rotated radially and read as detached fins | panes turned tangential into one continuous teal ring; alternating enamel pressure panels, twelve load ribs, grounded terrace, four pressure ports, radial service plant, and antenna crown read from every angle; no visible door, per §A1 | 11,420 / 15,000 tris; `6.0 x 6.0` inside the `6.2` premium circle; SHA `64c81b9b6e62…` |
+| Isotope Kitchen | open front and unframed colored panes looked like an unfinished shelter; rear service face was too plain; display trim exceeded the provisional General Store pad | grounded counter/glazing frame, integrated sample case, framed side panes, front/rear vault ribs and medallions, hanging warm hoods, paired tong arms, framed rear sample windows, and service header; exact `4.75 x 3.30` footprint | 10,258 / 15,000 tris; 1 embedded 1024 atlas; SHA `9664b671eb91…` |
+
+All three use one mesh, one primitive, one non-emissive material, one embedded 1024 x 1024 atlas, zero anchors/cameras/lights/animations, and a base-center origin grounded at GLB `Y = 0`. No E6 emitter-anchor family is invented because the E6 bundle defines none. The Atomic Diner preserves the untouched E1 Tavern source hashes (`b81ef19a2466…` BLEND / `edec4934d6d…` GLB).
+
+### E6 cadence and inheritance verdict
+
+| Fixture | Verdict | Reason |
+| --- | --- | --- |
+| Tavern identity | REBUILD / PERSIST | the public-house role, two-storey mass, false-front crest, porch rhythm, and projecting sign persist; flood-era rope/tide/drydock geometry does not travel to the fresh dry site |
+| Atomic technology | NEW | chrome counter wrap, enamel pips, starburst pictograms, vent/condenser, and teal/amber accents announce the Atomic Homestead across the plaza |
+| Reactor Dome | NEW | new E6 civic-machine identity on its ratified premium circular site; no false prior-era inheritance |
+| Isotope Kitchen | NEW | new E6 refinery identity; lab-diner humor is expressed through hoods, tong arms, sample case, and warm/teal glass |
+| Pan Monument | PERSIST | unchanged independent heritage asset at the open center; not duplicated into a building GLB |
+| Undelivered E6 identities | CARRIED AS MASSING ONLY | Appliance Pen, Decay Clock, Catalog Warehouse, and remaining A2 transforms wait for attended pilot verdict before the wide batch |
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry / materials | 13,904 / 11,420 / 10,258 triangles; one mesh, primitive, material, and embedded 1024 atlas each |
+| Footprint | Diner `5.130185 x 3.3925` inside `5.2 x 3.4`; Dome `6.0 x 6.0` inside `6.2`; Kitchen `4.75 x 3.30` inside `4.8 x 3.3` |
+| Export hygiene | zero helpers, anchors, cameras, lights, animations, emissive textures, or readable letters |
+| Determinism | all three saved-BLEND exports reproduce the production GLBs byte-identically after the repository's canonical `reexport-pilot.sh` |
+| Fresh references | E1/E4/E5 boards rerendered from base `8d974f11911187136469fbd017c9598e5b2faf28`; E4 visibly includes the current boulevard/caravan; E5 is the current submerged square |
+| Across-the-plaza movement | same-camera massing/E6 comparison: `diffRatio16 = 4.0231%`; edge-energy ratio `1.2072`; visual judgment confirms three distinct silhouettes |
+| All-angle QA | Diner's sign reads on both faces; Dome panes form a ring rather than fins; Kitchen front, sides, roof, and rear carry attached authored structure |
+| Independent review limitation | local full-frame/crop/turntable review completed; no sub-agent review claimed because this session explicitly forbids delegation |
+
+### Evidence index
+
+- Current-file reference: [`town-e1-e4-e5-current.png`](../artifacts/town-e6-pilot/current-references/8d974f119111-main/town-e1-e4-e5-current.png)
+- Gameplay verdict: [`mesa-e6-pilot-across-plaza-ab.png`](../artifacts/town-e6-pilot/mesa-e6-pilot-across-plaza-ab.png) and [`mesa-e6-pilot-key-feature-crop.png`](../artifacts/town-e6-pilot/mesa-e6-pilot-key-feature-crop.png)
+- Diner identity: [`atomic-diner-identity-ab.png`](../artifacts/town-e6-pilot/atomic-diner-identity-ab.png)
+- Four angles: [`atomic-diner-e6.png`](../artifacts/town-e6-pilot/turntables/atomic-diner-e6.png), [`reactor-dome-e6.png`](../artifacts/town-e6-pilot/turntables/reactor-dome-e6.png), [`isotope-kitchen-e6.png`](../artifacts/town-e6-pilot/turntables/isotope-kitchen-e6.png)
+- Machine evidence: [`asset-contract.json`](../artifacts/town-e6-pilot/asset-contract.json), [`visual-evidence-contract.json`](../artifacts/town-e6-pilot/visual-evidence-contract.json)
+
+### Wave 11 pilot integration boundary
+
+- Add `tavern.e6.blend/.glb`, new Reactor Dome and Isotope Kitchen production directories, deterministic builder/verifier/render scripts, evidence, and this findings entry.
+- Do not mount the E6 buildings yet unless the attended verdict also ratifies the provisional Kitchen-to-General-Store slot mapping; the Dome site and Diner identity slot already come from accepted coordinates.
+- Mesa plate bytes remain owned by `sol/mesa-town-plate`; this wave references that exact GLB for evidence only.
+- Runtime source, layouts, specs, queue, status, prior era files, Pan Monument, and landmark files remain untouched.
 
 ## Wave 10 — E5 Deepwater Harbor Rebuild
 
