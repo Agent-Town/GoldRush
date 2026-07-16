@@ -359,3 +359,6 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 - GRANTED 3D-D (docs/SOL-3D-D-QUEUE.md §NEXT WAVE): **e5-deepwater-claim terrain+panorama** — CHAIN 2's first map; new laws: flood-break PALETTE (harbor vocabulary, not ochre county), water stays code-owned (F-3D-D-04 at sea), anti-resort grit clause, open-sea panorama v2. Fairground sculpt PRE-GRANTED behind its mask table.
 - QUEUED lane-d: **publish-e3-fairground-mask-table** (schema-exact vs e3 siblings; unblocks the last map → 15/15). Master `tasks/lane-d-e3-fairground-mask-table.md`; goals leaf `world-terrain/world-e3-fairground-mask`. GATE: node test + key-schema identical + build untouched-green.
 - **e3-fairground mask table PUBLISHED → 15/15 contracts masked; 3D-D fairground sculpt UNBLOCKED** (pre-granted, `docs/SOL-3D-D-QUEUE.md`).
+
+## 2026-07-16 — EVENING PLAN SET (owner: "thorough deploy with a Q&A list and then I play and play until I fall asleep")
+- Playtest script + deploy checklist banked: `docs/PLAYTEST-2026-07-16-evening.md`. Attended runs the deploy on owner return (deploy.sh attended-gated; player-visible debt listed in the doc §0). FIRES: drain the in-flight trio as they done-move (freed-walkers → wire-blackout-dust chains lane-c; e3-fairground-mask lane-d) — clean-main window matters tonight; drains outrank everything.
