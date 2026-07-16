@@ -94,8 +94,8 @@ test('Voltage arcs and Motor dust mount at their era anchors within the shared b
   await openTown(page, '?town3dPilot=all&tier=full');
   await expect(canvas).toHaveAttribute('data-town3d-exhaust-anchors', '5');
   await expect(canvas).toHaveAttribute('data-town3d-dust-puffs', '10');
-  await expect(canvas).toHaveAttribute('data-town3d-arc-anchors', '34');
-  await expect(canvas).toHaveAttribute('data-town3d-arc-flickers', '68');
+  await expect(canvas).toHaveAttribute('data-town3d-arc-anchors', '0');
+  await expect(canvas).toHaveAttribute('data-town3d-arc-flickers', '0');
   const e4P95 = await p95(page);
   expect(e4P95).toBeLessThanOrEqual(e3P95 * 1.15);
 

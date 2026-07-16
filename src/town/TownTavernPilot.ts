@@ -206,12 +206,12 @@ function variantModelUrl(path: string): string | undefined {
   return injected ?? BUNDLED_VARIANT_URLS[path];
 }
 
-function addAnchorEmitters(scene: THREE.Scene, canvas: HTMLCanvasElement, owner: string, model: THREE.Object3D, era?: number): () => void {
+function addAnchorEmitters(scene: THREE.Scene, canvas: HTMLCanvasElement, owner: string, model: THREE.Object3D, activeEra: number): () => void {
   for (const candidate of ANCHOR_EMITTERS) {
     canvas.dataset[candidate.anchorDataset] ??= '0';
     canvas.dataset[candidate.particleDataset] ??= '0';
   }
-  const candidates = era === undefined ? ANCHOR_EMITTERS : ANCHOR_EMITTERS.filter((candidate) => candidate.era === era);
+  const candidates = ANCHOR_EMITTERS.filter((candidate) => candidate.era === activeEra);
   let emitter: AnchorEmitter | undefined;
   const anchors: THREE.Object3D[] = [];
   model.traverse((node) => {
@@ -367,7 +367,7 @@ function installTownBuildingPilot(
       model = loaded;
       scene.add(model);
       publishBuildingOrientation(canvas, id, loaded, metrics);
-      removeEmitters = addAnchorEmitters(scene, canvas, id, loaded, candidate.era);
+      removeEmitters = addAnchorEmitters(scene, canvas, id, loaded, activeEpoch().order);
       canvas.dataset.town3dPilotEra = String(candidate.era);
       canvas.dataset.town3dPilotModel = candidate.url;
       canvas.dataset.town3dPilotLoadedIds = [...new Set([...(canvas.dataset.town3dPilotLoadedIds ?? '').split(',').filter(Boolean), id])].join(',');
@@ -426,7 +426,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
     model = loaded;
     scene.add(loaded);
     publishBuildingOrientation(canvas, 'dynamo_hall', loaded, metrics);
-    removeEmitters = addAnchorEmitters(scene, canvas, 'dynamo_hall', loaded, candidate.era);
+    removeEmitters = addAnchorEmitters(scene, canvas, 'dynamo_hall', loaded, activeEpoch().order);
     canvas.dataset.town3dPilotEra = String(candidate.era);
     canvas.dataset.town3dPilotModel = candidate.url;
     group.visible = false;
@@ -591,7 +591,7 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
       return;
     }
     scene.add(...mounted);
-    for (const model of mounted) removeEmitters.push(addAnchorEmitters(scene, canvas, model.name, model));
+    for (const model of mounted) removeEmitters.push(addAnchorEmitters(scene, canvas, model.name, model, activeEra));
     canvas.dataset.town3dPilotInstances = String(mounted.length);
     canvas.dataset.town3dEraPropIds = eraProps.map((prop) => prop.id).join(',');
     publish(canvas, 'loaded', 'glb', {
