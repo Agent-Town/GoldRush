@@ -119,6 +119,79 @@ Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91
 Tip: exact Wave 13 pilot SHA is reported in the attended handoff
 
 Verdict: **READY-FOR-GATES — the E7 Signal Mesa pilot is a gameplay-distance transformation: the Relay Tower and Exchange establish the new broadcast skyline, while the Net Cafe preserves every E6 Atomic Diner polygon and grows a clearly legible signal crown inside its exact inherited footprint.**
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up), `sol/town-e5-harbor-rebuild` (Wave 10), `sol/mesa-town-e7-pilot` (Wave 13 pilot), `sol/mesa-town-e7-wide` (Wave 14 wide)
+
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`; Wave 10 `54067137`; Wave 13 pilot `88ea5d9b`; Wave 14 wide `3fe1e493`
+
+Tip: exact Wave 14 wide SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the complete E7 Mesa is an unmistakable working signal town: the three pilot assets and six wide assets form a coherent broadcast skyline, every named E6 transform preserves all source geometry and its exact footprint, and the honest carried-unchanged fixtures remain legible beneath the new layer.**
+
+## Wave 14 wide — complete E7 Signal Mesa
+
+The wide wave completes §A with three new civic identities and three strict E6 transforms. The Playbook Library, Drone Coop, and Signal Refinery make the era socially and mechanically specific; the Sunline Mount, Isotope Institute, and Catalog Warehouse accrete into the Beam Relay, Signal Works, and Tape Post without losing a single inherited polygon. Together with the accepted Relay Tower, Exchange, and Net Cafe pilot, the Mesa now announces the Signal age across the full gameplay camera.
+
+### Per-asset findings and corrections
+
+| Asset | First all-angle / gate finding | Final correction | Final contract |
+| --- | --- | --- | --- |
+| Playbook Library | the first walnut shell sat too dark against its pastel E6 neighbors | warmed only the walnut, roof, and service-dark atlas regions; kept the drawer-wall facade, paired punched reels, reader clock, tube flanks, signal crown, and finished rear archive | 7,190 tris; 1024 atlas; 6.10 x 4.97 footprint; SHA `9d615139cf7e…` |
+| Drone Coop | the direct GLB looked plausible, but canonical saved-BLEND export revealed five perch arms as separate, unexported meshes—leaving the drones visually unsupported | joined every perch arm into the single production mesh, rerendered all angles, and retained twelve nesting cells, five parked companion drones, keeper hut, dome, rear batteries, and flock-signal crown | 6,986 tris; 1024 atlas; 4.4119 x 4.48 footprint; SHA `3d0faa78725d…` |
+| Signal Refinery | first whole-town evidence clipped the southern building and its dark shell pushed the ensemble beyond the 5% tonal ceiling | recentered the locked expanded-site camera without moving models, warmed the atlas, and retained three caged spectrum columns, five public dials, tuning rings, outgoing bands, side ports, and finished condenser rear | 5,882 tris; 1024 atlas; 6.18 x 5.0218 footprint; SHA `695811ee9793…` |
+| Sunline Mount -> Beam Relay | the first broadcast arcs expanded the accepted 1.35 x 1.35 footprint to 1.7811 units | shortened only the outgoing arcs; the complete E6 mount stays intact while paired cells, nested routing rings, teal eye, and relay arcs grow vertically inside the exact envelope | 1,998 tris; inherited 512 atlas; exact 1.35 x 1.35 footprint; SHA `be598eba8489…` |
+| Isotope Institute -> Signal Works | transform read from the plaza and passed all four sides on the first geometry audit | retained the whole institute, then added an attached tube bank, relay dish, and research-broadcast crown inside the exact footprint | 8,244 tris; 1024 atlas; exact 3.96 x 3.375 footprint; SHA `c7d5446cd7a3…` |
+| Catalog Warehouse -> Tape Post | transform read immediately; rear still showed the complete inherited depot rather than a replacement shell | retained the full parcel depot and added a reader bridge, paired tape reels and loop, courier tube, and dispatch signal without growing the footprint | 6,390 tris; 1024 atlas; exact 5.58677 x 3.7425 footprint; SHA `d7b38acbd153…` |
+
+### Accretion and cadence verdicts
+
+| Fixture | Verdict | Reason |
+| --- | --- | --- |
+| Playbook Library | NEW E7 | public punch-tape storage and demonstration programs are the era's civic crown jewel |
+| Drone Coop | NEW E7 | the E6 companion plausibly multiplies into a cheerful dovecote-like civic flock |
+| Signal Refinery | NEW E7 | spectrum becomes a usable town resource; its columns and tuning crown carry the era mechanically |
+| Atomic Diner / jukebox | PERSIST | accepted pilot retains the complete E6 diner and jukebox |
+| Atomic Diner service layer | UPGRADE | accepted pilot's booth terminals, tape readers, and relay crown make the Net Cafe |
+| Sunline Mount | PERSIST + UPGRADE | all 685 E6 source polygons remain; signal cells and routing rings give the mount a new LOS relay job |
+| Isotope Institute | PERSIST + UPGRADE | all 3,994 E6 source polygons remain; its calculations now feed the Signal Works |
+| Catalog Warehouse / parcel office | PERSIST + UPGRADE | all 3,080 E6 source polygons remain; the clerk lineage advances into the Tape Post |
+| Reactor Dome | CARRIED UNCHANGED | signal technology does not plausibly rebuild containment |
+| Isotope Kitchen | CARRIED UNCHANGED | the kitchen remains useful beside the new Signal Refinery |
+| Decay Clock | CARRIED UNCHANGED | public atomic timing still matters and receives no named E7 replacement |
+| Appliance Pen | CARRIED UNCHANGED | captured appliances remain a warm civic utility |
+| Glow Fence | CARRIED UNCHANGED | the E7 bundle names no fence transform; honest unchanged infrastructure is correct |
+| Relay Tower / Exchange | NEW E7 | accepted pilot sites remain the long-range and public-switching landmarks |
+| Pan Monument | PERSIST | unchanged heritage asset; no era key, replacement, or disappearance |
+
+No fixture is silently retired, and no E7 emitter-anchor family is defined in the bundle or queue, so none is invented. Every production GLB contains exactly one mesh node, one primitive, one non-emissive material, one embedded atlas at or below 1024², and zero helpers, lights, cameras, or animations.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Fresh reference base | E1, E4 boulevard + motor caravan, E5 submerged square, and combined board rerendered after fetch from `origin/main@3fe1e493fb11b6685f1ffc76b65dd81ebff8dd6b`; only `STATUS.md` differed from the prior model base |
+| Geometry / materials | 7,190 / 6,986 / 5,882 / 1,998 / 8,244 / 6,390 tris against 15,000 each; one mesh, primitive, material, and embedded atlas per asset |
+| Grounding / footprint | all six minimum Y values are 0; new sites fit proposed maxima; all three transforms match their E6 XZ footprint exactly |
+| Accretion proof | Beam Relay 685/685, Signal Works 3,994/3,994, Tape Post 3,080/3,080 source polygon signatures retained; 0 missing across all three |
+| Export determinism | canonical saved-BLEND re-export reproduces all six production GLBs byte-identically |
+| Across-the-plaza ensemble | `diffRatio16 = 12.9018%`; edge-energy ratio `1.1134`; average luminance delta `-4.8534%`, inside the 5% tonal law |
+| All-angle audit | six four-angle boards plus three exact E6/E7 identity A/Bs show complete sides, backs, roof attachments, grounded bases, and drone support arms |
+| App build | `npm run build` passes on the final production bytes |
+| Evidence independence | no delegated visual agent was used because this session's explicit no-delegation rule binds; machine telemetry plus direct all-angle inspection are recorded instead |
+
+### Evidence index
+
+- Fresh current-main board: [`town-e1-e4-e5-current.png`](../artifacts/town-e7-wide/current-references/3fe1e493fb11-main/town-e1-e4-e5-current.png)
+- Locked ensemble: [`mesa-e7-wide-across-plaza-ab.png`](../artifacts/town-e7-wide/mesa-e7-wide-across-plaza-ab.png), feature crop [`mesa-e7-wide-key-feature-crop.png`](../artifacts/town-e7-wide/mesa-e7-wide-key-feature-crop.png)
+- Six four-angle audits: [`playbook-library-e7.png`](../artifacts/town-e7-wide/turntables/playbook-library-e7.png), [`drone-coop-e7.png`](../artifacts/town-e7-wide/turntables/drone-coop-e7.png), [`signal-refinery-e7.png`](../artifacts/town-e7-wide/turntables/signal-refinery-e7.png), [`beam-relay-e7.png`](../artifacts/town-e7-wide/turntables/beam-relay-e7.png), [`signal-works-e7.png`](../artifacts/town-e7-wide/turntables/signal-works-e7.png), [`tape-post-e7.png`](../artifacts/town-e7-wide/turntables/tape-post-e7.png)
+- Exact inheritance A/Bs: [`beam-relay-identity-e6-e7-ab.png`](../artifacts/town-e7-wide/identity/beam-relay-identity-e6-e7-ab.png), [`signal-works-identity-e6-e7-ab.png`](../artifacts/town-e7-wide/identity/signal-works-identity-e6-e7-ab.png), [`tape-post-identity-e6-e7-ab.png`](../artifacts/town-e7-wide/identity/tape-post-identity-e6-e7-ab.png)
+- Machine contracts: [`asset-contract.json`](../artifacts/town-e7-wide/asset-contract.json), [`visual-evidence-contract.json`](../artifacts/town-e7-wide/visual-evidence-contract.json)
+
+### Wave 14 integration boundary
+
+- Add three new E7 building pairs plus the Sunline Mount, Schoolhouse, and Catalog Warehouse `.e7` siblings; add deterministic build/render/verifier scripts, fresh evidence, the complete cadence table, and this cumulative pilot+wide findings entry.
+- Use Wave 12 E6 and Wave 13 pilot bytes only as read-only dependencies. Do not alter those branches' assets, any E1-E5 siblings, runtime source, layout, manifests, specs, status, backlog, or tests.
+- New-site evidence proposes Playbook Library `[-14.2, -6.4, 0.12]`, Drone Coop `[14.2, -6.0, -0.10]`, and Signal Refinery `[0.0, 16.2, π]`; accepted pilot sites remain unchanged. Runtime mount ratification stays factory-owned.
+- Branch base: `origin/main@3fe1e493fb11b6685f1ffc76b65dd81ebff8dd6b`; dependency tips are Wave 12 `bcc9764b…` and Wave 13 pilot `3947af49…`.
 
 ## Wave 13 pilot — E7 Signal Mesa
 
