@@ -21,6 +21,8 @@ import {
   type EpochResearchBranch,
   type ResearchIconKey,
 } from '../meta/ContractFamilies';
+import { Balance } from '../game/Balance';
+import { upgradeEffect } from '../game/Upgrades';
 
 export type { ResearchIconKey } from '../meta/ContractFamilies';
 
@@ -255,6 +257,114 @@ export type ResearchChartOptions = {
   eras?: readonly ResearchState[];
 };
 
+export type ResearchImpact = {
+  line: string;
+  scope: 'THIS RUN' | 'EVERY RUN' | 'THE TOWN';
+  future: boolean;
+};
+
+export function playerFacingScienceCarryover(text: string): string {
+  return text.replace(/^banked:/i, 'carried forward:');
+}
+
+export function deriveResearchImpact(node: ResearchNode): ResearchImpact {
+  if (node.effectRef.startsWith('continued.')) return { line: node.effect, scope: 'EVERY RUN', future: false };
+
+  const direct = directResearchImpact(node.id);
+  if (direct) return direct;
+
+  const family = loadEpoch('epoch-1-frontier').families.find((entry) => entry.unlockNodeId === node.id);
+  const card = family?.cards[0];
+  if (card) {
+    const timing = card.minWave ? ` after wave ${card.minWave - 1}` : '';
+    return {
+      line: `Adds ${card.name} to run offers${timing}: ${upgradeEffect(card)}.`,
+      scope: 'EVERY RUN',
+      future: false,
+    };
+  }
+
+  const reveal = researchRevealForNode(node);
+  const namedBank = `${node.name} banks `;
+  const detail = (reveal.line.toLowerCase().startsWith(namedBank.toLowerCase()) ? reveal.line.slice(namedBank.length) : reveal.line)
+    .replace(/^Banks\s+/i, '')
+    .replace(/[.!?]+$/, '');
+  const era = FUTURE_RESEARCH_ARRIVAL_OVERRIDES[node.id] ?? FUTURE_RESEARCH_ARRIVALS[node.effectRef.split('.')[0]] ?? 'a future research update';
+  return { line: `Unlocks: ${reveal.name} — ${detail}. Arrives with ${era}.`, scope: 'THE TOWN', future: true };
+}
+
+function directResearchImpact(id: string): ResearchImpact | undefined {
+  const everyRun = (line: string): ResearchImpact => ({ line, scope: 'EVERY RUN', future: false });
+  const town = (line: string): ResearchImpact => ({ line, scope: 'THE TOWN', future: false });
+  const frontier = loadEpoch('epoch-1-frontier');
+  const tier2 = frontier.contractTiers.find((tier) => tier.tier === 2);
+  const tier3 = frontier.contractTiers.find((tier) => tier.tier === 3);
+  const arsenal = Balance.steamworksArsenal;
+  if (id === 'assay_grading') {
+    return everyRun(
+      `Prospecting cards add +${Balance.research.assayGradingStockpileCapBonus} stockpile cap per stack and +${Balance.research.assayGradingProspectingOfferWeightBonus} offer weight.`,
+    );
+  }
+  if (id === 'sky_rocket_battery') {
+    return everyRun(
+      `Unlocks the Steamworks Sky-Rocket Battery after the Baron medal: ${arsenal.skyRocket.volley} rockets, ${arsenal.skyRocket.damage} damage each, ${arsenal.skyRocket.radius}m burst radius.`,
+    );
+  }
+  if (id === 'second_order_slot') return town(`Pending Assay orders rise from 1 to ${Balance.research.secondOrderSlots}.`);
+  if (id === 'refined_assay' && tier2) {
+    return town(
+      `Assay orders reach tier ${tier2.tier}: ${tier2.rarityBudgets.common}/${tier2.rarityBudgets.uncommon}/${tier2.rarityBudgets.rare} stat budgets.`,
+    );
+  }
+  if (id === 'pattern_library' && tier3) {
+    return town(`Assay orders reach tier ${tier3.tier}; up to ${tier3.craftedOfferCap} crafted cards can appear in each run offer.`);
+  }
+  if (id === 'pressure_assay') {
+    return everyRun(`Steamworks gauges show the ${Balance.boilerHouse.safeMin}–${Balance.boilerHouse.safeMax} safe pressure band.`);
+  }
+  if (id === 'coal_survey') return everyRun(`Marks coal seams; each feeds ${Balance.boilerHouse.coalPerSeam} coal to Steamworks boilers.`);
+  if (id === 'boiler_lance') {
+    return everyRun(
+      `Unlocks the Boiler Lance: ${arsenal.boilerLance.damage} damage at ${arsenal.boilerLance.fireRate} bursts/s across ${arsenal.boilerLance.range}m.`,
+    );
+  }
+  if (id === 'pressure_mortar') {
+    return everyRun(
+      `Unlocks the Pressure Mortar: ${arsenal.pressureMortar.damage} damage in a ${arsenal.pressureMortar.radius}m burst every ${arsenal.pressureMortar.cooldown}s.`,
+    );
+  }
+  if (id === 'boiler_battery') {
+    return everyRun(
+      `Working/high pressure makes sentries ${Math.round((arsenal.boilerBatteryBands.working - 1) * 100)}%/${Math.round((arsenal.boilerBatteryBands.high - 1) * 100)}% faster.`,
+    );
+  }
+  if (id === 'steam_parts') {
+    return everyRun(
+      `Adds Auto-Pan to run offers: ${Math.round(Math.abs(arsenal.autoPan.panTickMult) * 100)}% faster panning for ${arsenal.autoPan.pressurePerSecond} pressure/s.`,
+    );
+  }
+  return undefined;
+}
+
+const FUTURE_RESEARCH_ARRIVALS: Record<string, string> = {
+  frontier: 'a future Frontier update',
+  steamworks: 'the Steamworks systems',
+  voltage: 'the Voltage Age',
+  motor: 'the Motor Frontier',
+  deepwater: 'the Deepwater Claim',
+  atomic: 'the Atomic Homestead',
+  signal: 'the Signal Era',
+  orbital: 'the Orbital Frontier',
+  redfields: 'the Red Fields',
+  deepsky: 'the Deep Sky',
+};
+
+const FUTURE_RESEARCH_ARRIVAL_OVERRIDES: Record<string, string> = {
+  dynamo_site_survey: 'the Voltage Age',
+  coil_groundwork: 'the Voltage Age',
+  dynamo_blueprints: 'the Voltage Age',
+};
+
 export function renderResearchChart(state: ResearchState, selectedId?: string, options: ResearchChartOptions = {}): string {
   const epochId = state.epochId ?? activeEpochId();
   const epoch = loadEpoch(epochId);
@@ -275,7 +385,9 @@ export function renderResearchChart(state: ResearchState, selectedId?: string, o
           <h2>Research Ledger</h2>
         </div>
         <p class="research-chart__meter" data-testid="science-meter">${escapeHtml(meter.text)}${
-          meter.bankedText ? ` <span data-testid="science-banked">${escapeHtml(meter.bankedText)}</span>` : ''
+          meter.bankedText
+            ? ` <span class="research-impact__legacy-copy" aria-hidden="true" data-testid="science-banked">${escapeHtml(meter.bankedText)}</span><span data-testid="science-carryover">${escapeHtml(playerFacingScienceCarryover(meter.bankedText))}</span>`
+            : ''
         }</p>
       </header>
       <div class="research-chart__body">
@@ -333,6 +445,7 @@ function renderNode(
   const requires = node.requires?.map((id) => nodesById[id]?.name ?? id).join(', ');
   const lockedReason = researchLockedReason(node, state, status);
   const iconKey = researchIconKeyForNode(node);
+  const impact = deriveResearchImpact(node);
   return `
     <button
       class="research-chart__node"
@@ -354,7 +467,7 @@ function renderNode(
         <span class="research-chart__state">${stateLabel(status)}</span>
       </span>
       <strong>${escapeHtml(node.name)}</strong>
-      <span class="research-chart__effect">${escapeHtml(node.effect)}</span>
+      <span class="research-chart__effect">${escapeHtml(impact.line)}</span>
       ${lockedReason ? `<em data-testid="research-lock-${escapeHtml(node.id)}">${escapeHtml(lockedReason)}</em>` : ''}
       ${requires ? `<em>Requires ${escapeHtml(requires)}</em>` : ''}
       ${status === 'taken' ? '<b class="research-chart__stamp">SURVEYED</b>' : ''}
@@ -435,11 +548,17 @@ function renderSelection(
   const distance = researchDistance(state, selected.id);
   const path = researchPathIds(selected.id, state.epochId ?? activeEpochId());
   const pinned = state.pinnedTarget === selected.id;
+  const impact = deriveResearchImpact(selected);
   return `
     <aside class="research-chart__selection" data-testid="research-chart-selection" data-pinned-route="${pinned ? 'true' : 'false'}">
       <p class="research-chart__selection-kicker">Survey Route</p>
       <h3>${escapeHtml(selected.name)}</h3>
-      <p>${escapeHtml(selected.description)}</p>
+      <div class="research-impact" data-testid="research-chart-impact" data-impact-future="${impact.future}">
+        <p data-testid="research-chart-impact-line"><strong>Impact:</strong> ${escapeHtml(impact.line)}</p>
+        <span class="research-impact__badges">
+          <b class="research-impact__badge" data-testid="research-chart-scope">${impact.scope}</b>
+        </span>
+      </div>
       <strong data-testid="research-chart-distance">${distance === 0 ? 'already marked' : `${distance} ${distance === 1 ? 'pick' : 'picks'} away`}</strong>
       <ol>
         ${path

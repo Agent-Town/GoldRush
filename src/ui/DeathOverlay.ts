@@ -1,6 +1,12 @@
 import type { ResearchNode } from '../meta/ResearchTree';
 import { upgradeDefById } from '../game/Upgrades';
-import { RESEARCH_ICON_REGISTRY, researchIconKeyForNode, researchRevealForNode } from './ResearchChart';
+import {
+  RESEARCH_ICON_REGISTRY,
+  deriveResearchImpact,
+  playerFacingScienceCarryover,
+  researchIconKeyForNode,
+  researchRevealForNode,
+} from './ResearchChart';
 
 export type DeathLedger = {
   timeAlive: number;
@@ -215,7 +221,9 @@ export class DeathOverlay {
     const meter = this.options.research?.science;
     if (!meter) return '';
     return `<p class="death-overlay__science" data-testid="science-meter">${this.escape(meter.text)}${
-      meter.bankedText ? ` <span data-testid="science-banked">${this.escape(meter.bankedText)}</span>` : ''
+      meter.bankedText
+        ? ` <span class="research-impact__legacy-copy" aria-hidden="true" data-testid="science-banked">${this.escape(meter.bankedText)}</span><span data-testid="science-carryover">${this.escape(playerFacingScienceCarryover(meter.bankedText))}</span>`
+        : ''
     }</p>`;
   }
 
@@ -240,7 +248,7 @@ export class DeathOverlay {
     const proposals = research.proposals.slice(0, 2);
     const done = research.roundsRemaining <= 0 || proposals.length === 0;
     const receipt = this.lastPicked
-      ? `<p data-testid="research-receipt">The Elder logs it: ${this.escape(this.lastPicked.effect)}</p>${this.renderResearchReveal(
+      ? `<p data-testid="research-receipt">The Elder logs it: ${this.escape(deriveResearchImpact(this.lastPicked).line)}</p>${this.renderResearchReveal(
           this.lastPicked,
         )}`
       : '';
@@ -248,7 +256,7 @@ export class DeathOverlay {
       return `
         <section class="research-ledger" data-testid="research-overlay" aria-label="Research proposal">
           <p class="research-ledger__eyebrow">Schoolhouse Notes</p>
-          <h2>Science Banked</h2>
+          <h2>Science Recorded</h2>
           ${receipt || '<p>The Elder folds the note into the town ledger.</p>'}
         </section>
       `;
@@ -261,29 +269,32 @@ export class DeathOverlay {
         ${receipt}
         <div class="research-ledger__cards">
           ${proposals
-            .map(
-              (node, index) => `
+            .map((node, index) => {
+              const impact = deriveResearchImpact(node);
+              return `
                 <button class="research-card" type="button" data-testid="research-card-${index}" data-research-id="${this.escape(
                   node.id,
-                )}">
+                )}" data-impact-future="${impact.future}">
                   <span class="research-card__key">${index + 1}</span>
                   <span class="research-card__branch" data-testid="research-branch-${index}">Advances ${this.escape(
                     this.researchBranchLabel(node.branch),
                   )}</span>
                   <strong>${this.escape(node.name)}</strong>
-                  <span>${this.escape(node.description)}</span>
-                  <span data-testid="research-effect-${index}">Effect: ${this.escape(node.effect)}</span>
+                  <span data-testid="research-effect-${index}">Effect: ${this.escape(impact.line)}</span>
+                  <span class="research-impact__badges">
+                    <b class="research-impact__badge" data-testid="research-scope-${index}">${impact.scope}</b>
+                  </span>
                   ${
                     research.pinnedPath?.includes(node.id)
                       ? `<span class="research-card__pin-hint" data-testid="research-pin-hint-${index}">on your surveyed route</span>`
                       : ''
                   }
                 </button>
-              `,
-            )
+              `;
+            })
             .join('')}
         </div>
-        <p class="research-ledger__skip">Skip banks nothing.</p>
+        <p class="research-ledger__skip">Skip chooses neither proposal.</p>
       </section>
     `;
   }
@@ -292,6 +303,7 @@ export class DeathOverlay {
     const iconKey = researchIconKeyForNode(node);
     const icon = RESEARCH_ICON_REGISTRY[iconKey];
     const reveal = researchRevealForNode(node);
+    const impact = deriveResearchImpact(node);
     return `
       <article class="research-unlock-reveal" data-testid="research-unlock-reveal" data-research-icon-key="${this.escape(iconKey)}">
         <span class="research-unlock-reveal__icon" data-testid="research-unlock-icon" aria-label="${this.escape(
@@ -300,7 +312,7 @@ export class DeathOverlay {
         <span class="research-unlock-reveal__copy">
           <span class="research-unlock-reveal__kicker">Surveyed unlock</span>
           <strong data-testid="research-unlock-name">${this.escape(reveal.name)}</strong>
-          <span data-testid="research-unlock-line">${this.escape(reveal.line)}</span>
+          <span data-testid="research-unlock-line">${this.escape(impact.future ? impact.line : reveal.line)}</span>
         </span>
       </article>
     `;
