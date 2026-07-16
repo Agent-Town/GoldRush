@@ -1,12 +1,50 @@
 # SOL 3D-C — 3D pilot findings
 
-Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide)
+Branches: `sol/town-plate` (Wave 1), `sol/town-cozy-pack` (Wave 2), `sol/tavern-full-wrap` (Wave 3), `sol/railcar-3d` (Wave 4), `sol/town-e2-variants` (Wave 7), `sol/town-e3-pilot` (Wave 8 pilot), `sol/town-e3-wide` (Wave 8 wide), `sol/town-e4-pilot` (Wave 9 pilot), `sol/town-e4-wide` (Wave 9 wide), `sol/town-e3-wagon-lights` (scoped E3 follow-up)
 
-Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`
+Bases: Wave 1 `bacb5717`; Wave 2 `e21dc4aa`; Wave 3 `1281a8f1`; Wave 4 `99d06e91`; Wave 7a `12f6306e`; Wave 7b `91ee55b5`; Wave 8 pilot `e582f3cc`; Wave 8 wide `9f6fe2de`; Wave 9 pilot `56b1efc3`; Wave 9 wide `7e01c14f`; E3 wagon lights `9812edb2`
 
-Tip: exact Wave 9 wide SHA is reported in the attended handoff
+Tip: exact E3 wagon-lights SHA is reported in the attended handoff
 
-Verdict: **READY-FOR-GATES — the complete eight-building E4 family, playful motor-caravan / trough siblings, and ratifiable Motor accessory pack pass Accretion Law v2, Upgrade Cadence, ensemble plaza, all-angle, construction, tonal, flat-walk, envelope, material, triangle, anchor, placement, build, and byte-identical export gates.**
+Verdict: **READY-FOR-GATES — the scoped E3 wagon face now carries playful warm filament festoons while preserving its accepted envelope, material, voltage terminal, arc interface, and all other E3 production faces.**
+
+## Scoped E3 follow-up — wagon filament lights
+
+The accepted E3 covered wagon gains a small, era-native festoon on both canopy sides: a shallow copper cord, three suspended warm filament dots per side, short hangers, and clamps at the end and center ribs. The bulbs are unlit painted geometry because the shared RECIPE assigns illumination to the game light rig; no emissive texture, authored light, or animation was introduced.
+
+The old roof terminal remains present with the same voltage-era role and `arc_anchor_1` remains untouched. Its hidden round-section tessellation was simplified to fund the visible festoon inside the unchanged 1,800-triangle prop budget; there is no accretion verdict change. No other E3 building, prop, manifest, runtime source, or prior/later era file changed.
+
+### Gate evidence
+
+| Check | Result |
+| --- | --- |
+| Geometry / material | 1,796 / 1,800 tris; one mesh, one primitive, one material, one embedded 256 x 256 atlas |
+| Interface / inheritance | exact accepted E2 envelope; E3 roof terminal retained; `arc_anchor_1` retained at its accepted transform |
+| Export hygiene | zero cameras, lights, animations, or emissive textures |
+| Determinism | canonical `scripts/reexport-pilot.sh` reproduces SHA-256 `1e396fe52f746f33ca7dac701b76ccc40ce6e23bba7a534cfcdfa39261103517` byte-identically |
+| Era-loader regression | `e2e/town-era-switch.spec.ts` passes 12/12 across desktop and mobile |
+| App build | `npm run build` passes on the final production bytes |
+| Visual QA | fresh unprimed review returns SHIP; no clipping, detached bulbs, missing geometry, or scale artifact |
+
+### Evidence index
+
+- Four-angle E3 before/after: [`wagon-e3-lights-turntable-ab.png`](../artifacts/town-e3-wagon-lights/wagon-e3-lights-turntable-ab.png)
+- Locked E3 Town camera: [`wagon-e3-lights-town-camera.png`](../artifacts/town-e3-wagon-lights/wagon-e3-lights-town-camera.png)
+
+### F-3DC-33 — Tiny era props still need attachment logic
+
+**Severity:** resolved visual gate
+
+**Evidence:** the first light pass used flat dark cards that read as cable clips, with unsupported endpoints and no clear sockets. The final pass replaces them with warm octahedral bulbs, short hangers, a smoothed high cord, and rib clamps on both sides. A second placement pass raises the run clear of the wagon-bed stakes. Fresh final review returns SHIP and finds no clipping or detached bulbs; only minor equipment-side overlap remains at the locked camera.
+
+**Decision:** repeated color dots alone do not communicate a functional fixture. Even at this scale, give the feature a cord, socket/hanger, and visible load path into the inherited shell.
+
+### Scoped E3 integration boundary
+
+- Replace only `covered_wagon.e3.blend` / `covered_wagon.e3.glb` and its deterministic builder; add the two review images and this findings entry.
+- All other E1-E4 assets, era manifests, runtime source, tests, specs, status, and the Pan Monument remain untouched.
+- E5 Harbor Rebuild is intentionally not started until this ordered wave receives its attended verdict.
+- Branch base: `9812edb2`; publication is session-branch-only for attended gates, never `main`.
 
 ## Wave 9 wide — complete E4 Motor Town
 
