@@ -581,7 +581,7 @@ export class BuildSystem {
     );
     const pathLength = (point: { x: number; z: number }) =>
       Math.hypot(point.x - from.x, point.z - from.z) + Math.hypot(to.x - point.x, to.z - point.z);
-    const chosen = candidates.sort((a, b) => pathLength(a) - pathLength(b))[0];
+    const chosen = candidates.sort((a, b) => pathLength(a) - pathLength(b) || a.target.id.localeCompare(b.target.id) || a.x - b.x || a.z - b.z)[0];
     const waypoint = chosen
       ? { x: chosen.x, z: chosen.z }
       : alongX

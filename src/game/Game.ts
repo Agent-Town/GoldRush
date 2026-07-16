@@ -4627,6 +4627,8 @@ export class Game {
           goldPickups: this.goldPickups.activeCount,
           xpMotes: this.xpMotes.activeCount,
           wave: this.waveSystem.diagnostics.wave,
+          kills: this.kills,
+          gold: this.economy.gold,
           economyLog: this.economy.log.length,
         });
         pendingPresentationSteps += 1;
