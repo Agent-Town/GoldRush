@@ -438,8 +438,8 @@
       },
       {
        "id": "world-contract-sculpts",
-       "title": "Contract landform families",
-       "status": "building"
+       "title": "Contract landform families \u2014 THE 15/15 SLATE COMPLETE",
+       "status": "merged"
       },
       {
        "id": "world-mask-tables",
@@ -478,6 +478,18 @@
        "title": "Wire E5 Deepwater Claim into terrain3d registry (drowned town mounts ride free)",
        "status": "merged",
        "taskFile": "lane-c-wire-e5-deepwater-terrain.md"
+      },
+      {
+       "id": "world-fairground-sculpt",
+       "title": "E3 Fairground terrain/panorama (the 15th map \u2014 3D-D)",
+       "status": "merged",
+       "mergeHash": "MERGE-e9078679"
+      },
+      {
+       "id": "world-wire-fairground",
+       "title": "Wire E3 Fairground into terrain3d registry",
+       "status": "queued",
+       "taskFile": "lane-c-wire-fairground-terrain.md"
       }
      ]
     },
@@ -522,6 +534,18 @@
        "title": "E3 wagon filament lights (playful evolution, scoped \u2014 3D-C)",
        "status": "merged",
        "mergeHash": "MERGE-9db13239"
+      },
+      {
+       "id": "world-e5-harbor-town",
+       "title": "E5 submerged harbor town (flood-reset, ballast shoes \u2014 3D-C)",
+       "status": "merged",
+       "mergeHash": "MERGE-77502243"
+      },
+      {
+       "id": "world-flood-reset",
+       "title": "floodReset runtime (era-props chain break at E5)",
+       "status": "queued",
+       "taskFile": "lane-c-flood-reset-era-props.md"
       }
      ]
     }

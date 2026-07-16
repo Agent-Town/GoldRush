@@ -397,3 +397,9 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 ## 2026-07-16 night — TWO POST-PRINTING OWNER WORDS
 - **F-1 RULED (verbatim: "Baron's clean pristine iron")**: the Armored Railcar is NOT fevered — pride's own machine, honest damage, paid crew. Landed: STORYBOOK front matter + E2 flagship section (tavern keeps arguing as folk memory) + callback ledger + chapter status + story-arc.md §THE RAILCAR EXCEPTION (pattern ruled at both scales: E2 Railcar ↔ E6 Assayer-General).
 - **REMISSION BEAT HELD (verbatim: "not sure about the remission beat")**: THE NIGHT THE FEVER REACHED THE SQUARE downgraded from era-pending to HELD/NOT-CANON everywhere (section marker names the tension: as staged, the grip breaks with NO break — strains the ratified canon line; alternatives noted inline: cut, or restage break-THEN-hold). Nothing cites it while held.
+
+## 2026-07-16 late night — THE 15/15 SLATE + THE SUBMERGED HARBOR (double Sol drain)
+- **✅ MERGED — fairground (e9078679): THE MAP SLATE IS COMPLETE — 15/15 playable contracts sculpted.** Ferris surface zero-deviation ×2,145; masks 6/6. Wiring queued (lane-c-wire-fairground-terrain).
+- **✅ MERGED — E5 submerged harbor town (77502243):** 8 .e5 building faces, flood-reset dressing, ballast-shoe seating (owner physics), Pan Monument unchanged, one-town law ✓. Gated: tsc+build+era-switch 12/12 on merged tree.
+- QUEUED lane-c ×2: **flood-reset-era-props** (the runtime half of THE FLOOD BREAK — 3D-C's recorded factory gate; TownTavernPilot.ts:531 chain-break) then **wire-fairground-terrain**. Goals leaves added.
+- 3D-D: HOLD (slate complete — awaits owner verdicts). 3D-C next: F-3DC-04 road-wear (small) → Dredge-Queen model (after plate).
