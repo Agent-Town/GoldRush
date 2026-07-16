@@ -313,6 +313,32 @@ The file replacement changes no terrain contract, mount id, position, rotation, 
 - Base-centred, render-only, no simulation authority: PASS
 - Whole-file byte-identical and semantic-identical reopen/re-export ×11: PASS
 - `src/`, masks, terrain, panorama, registry, collision, movement, placement, spawns, and water edits: none
+## Overview-transition improvement wave — NO-CHANGE verdict
+
+### F-3D-D-57 — A shared apron fix must beat the shipped join, not merely remove one artifact mathematically
+
+Two shared replacements were rendered against the 15 shipped terrain/panorama pairs. Exact terrain-perimeter height sampling raised the panorama ridge into a dark run-camera wall without removing the overview slab. A planar packed-atlas projection removed the old radial UV projection, but replaced it with brighter mirrored ground carpets and a stronger square-tile read. The blind boards selected the shipped/current join on all 12 materially changed pairs; Fairground, Dust Flats, and Deepwater Claim were visual ties. Candidate wins: zero.
+
+The telemetry is diagnostic, not the verdict: the candidate raised average full-frame luminance by 2.7104 levels across the family and by as much as 8.7781 on Trestle. The visible failure, not the number, ruled: repeated pale ground panels advertised the panorama mesh more strongly than the residual shipped collar.
+
+Per the granted no-change contract, every shipped terrain, panorama, atlas, contract, and render was restored byte-for-byte. The wave delivers only durable neutral A/B boards, the concealed/revealed side key, metrics, and verdict. Simulation, masks, mounts, materials, budgets, and runtime wiring remain untouched.
+
+## Overview-transition gate state
+
+- Blind A/B target fixed before reveal: distance; no square slab, collar, radial streaks, or bright carpet: PASS
+- Fifteen shipped pairs represented across five neutral boards: PASS
+- Current wins 12, ties 3, candidate wins 0: NO-CHANGE
+- All tracked production assets restored; repository diff contains no terrain/panorama binary replacement: PASS
+- Production `npm run build`, JSON parse, 3840×2160 board dimensions, and diff whitespace: PASS
+- Independent `codex review --uncommitted`: attempted; CLI exited after inventory without a verdict, so it is not counted as a gate
+- `src/`, simulation, masks, mounts, registry, and runtime edits: none
+
+## Overview-transition evidence
+
+- `artifacts/map-rebuild-spike/overview-transition/overview-transition-blind-ab-1.png` through `-5.png`
+- `artifacts/map-rebuild-spike/overview-transition/overview-transition-blind-key.json`
+- `artifacts/map-rebuild-spike/overview-transition/overview-transition-ab-metrics.json`
+- `artifacts/map-rebuild-spike/overview-transition/overview-transition-blind-verdict.json`
 
 READY-FOR-GATES
 
