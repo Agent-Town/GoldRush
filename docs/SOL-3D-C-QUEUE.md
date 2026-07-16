@@ -104,3 +104,10 @@ The era transformation covers the WHOLE town surface. 7b delivers, alongside the
 3. **RELIC** (the default for era-tech fixtures) — obsolete but LEFT IN PLACE, visibly disused: the cold soot-stained stack, the capped pressure pipe, the old boiler as a planter. The town shows its history in silhouette without pretending old tech still runs.
 **THE COLD-ANCHOR RULE (factory-side)**: only the ACTIVE era's native anchors emit — in E3 the arc lamps flicker while the inherited steam stack stands COLD (its anchors dormant). One era breathes at a time; the rest is memory. (E4: dust puffs live, arc + steam quiet.)
 The wagon verdict under v2: the E3 voltage terminal on the E4 wagon = RELIC (kept, disused read) — the session's correction stands.
+
+## THE FLOOD BREAK (owner ruling 2026-07-16, verbatim: "we have a kind of hard reset in epoch 5 anyways when the city is under water - when it gets rebuilt, the old technologies are gone.")
+Accretion runs in TWO CHAINS, broken at the flood:
+- **CHAIN 1 (E1→E4)**: relics accumulate per Accretion Law v2 — by E4 the town wears four eras.
+- **E5 = THE REBUILD**: the water reaches the town; the .e5 faces are NOT a layer on .e4 — they are a fresh build in harbor vocabulary (Harbor House, rope trim, tide boards per the bundle's A2). Pre-flood relics are GONE except NAMED SURVIVORS (heritage list, owner-extendable): the PAN MONUMENT (carried to high ground — the one thing the town would save). The drowned relics live on as the sea-floor wrecks in E5's runs (already canon: the wreck museum).
+- **CHAIN 2 (E5→E8)**: accretion resumes fresh on the harbor base (E6 atomic fittings become E7's relics, etc.) — until departure; E9/E10 are their own worlds.
+Cold-anchor rule unchanged within each chain.
