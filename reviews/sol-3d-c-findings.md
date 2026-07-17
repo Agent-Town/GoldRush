@@ -1,5 +1,45 @@
 # SOL 3D-C — 3D pilot findings
 
+## E10 Ark functional prop pass
+
+Branch: `sol/e10-ark-era-props`
+
+Base: `d7e429d16e24b88e4e65114752b3b12a96280e3b`
+
+Tip: exact E10 prop-pack SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the accepted Ark deck gains the three missing civic functions (Bridge School, Charter Press, and a survivor preserve rack), while idle/cruise/ward engine-glow siblings are banked for the runtime state selector. The open stage, pads, radial paths, Long Table Hall, Pan Shrine, portraits, portals, and existing lineage inlays remain untouched.**
+
+The fresh-reference board was rendered directly from tracked E1/E4/E5/E6/E7/E8/E9/E10 and Long Table files on the full base SHA above. The A/B changes 13,350 of 1,024,000 pixels (`1.30371%`), a deliberately local functional fill rather than a replacement of the accepted Ark composition.
+
+| Asset | Function / progression read | Contract |
+| --- | --- | --- |
+| Bridge School | orbital globe, three child-height stools, public lesson counter, and teal lesson seals | 640 tris; SHA `4e9eda614d4e…` |
+| Charter Press | twin tape reels, paper bed, public output strip, and a child-height teal lever | 636 tris; SHA `085a27b10a79…` |
+| Preserve rack | carried green, ring trophies, and a working three-shelf survivor archive | 436 tris; SHA `b7c0e62ac225…` |
+| Engine glow — idle | three compact cold teal cores | 576 tris; SHA `97efeeaff2c0…` |
+| Engine glow — cruise | three extended bright teal cores | 648 tris; SHA `039e3dfaf9b5…` |
+| Engine glow — ward | three extended amber cores under a visible protective rail | 708 tris; SHA `da00e584ed23…` |
+
+### Cadence and ownership
+
+| Fixture | E10 verdict | Reason |
+| --- | --- | --- |
+| Bridge School | NEW | supplies the bundle's missing public learning room on the Ark deck |
+| Charter Press | NEW | supplies the bundle's missing child-operated civic press |
+| Preserve rack | PERSISTENCE | carries green and small trophies forward without rebuilding prior-era streets |
+| Engine glow | PROGRESSION | idle/cruise/ward are sibling states, banked because the ordinary prop manifest has no engine-state selector |
+| Basin Rim accessories | GONE | `floodReset:true`; the Ark is a fresh site, not a dry copy of E9 |
+| Pan Shrine, portraits, Long Table | CARRIED UNCHANGED | they remain owned by their accepted production assets and are not duplicated here |
+
+### Production gate
+
+- Six saved BLEND/GLB pairs; every GLB has one node, one mesh, one primitive, one material, one embedded shared 1024 x 1024 atlas, and zero cameras, lights, or animations.
+- All assets are below the 1,000-triangle prop ceiling. Every saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- Static placements clear the nearest canonical route by at least `6.5815`, the nearest building pad by `1.7230`, the open plaza by `9.7590`, and the deck edge by `5.1200` units.
+- The manifest mounts only the three civic props. The three engine states are explicitly recorded under `progressionVariants.engineGlow` and never appear together on the deck.
+- The four-angle audit shows finished backs and grounded bases; the locked-camera A/B and clearance overlay prove the additions do not obstruct the stage, paths, pads, portals, or inherited deck dressing.
+
 ## E9 Basin Rim plate
 
 Branch: `sol/basin-rim-e9-plate`
