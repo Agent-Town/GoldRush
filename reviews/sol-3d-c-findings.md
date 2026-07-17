@@ -179,6 +179,39 @@ The fresh-reference board was rendered directly from tracked E1/E4/E5/E6/E7/E8/E
 - Static placements clear the nearest canonical route by at least `6.5815`, the nearest building pad by `1.7230`, the open plaza by `9.7590`, and the deck edge by `5.1200` units.
 - The manifest mounts only the three civic props. The three engine states are explicitly recorded under `progressionVariants.engineGlow` and never appear together on the deck.
 - The four-angle audit shows finished backs and grounded bases; the locked-camera A/B and clearance overlay prove the additions do not obstruct the stage, paths, pads, portals, or inherited deck dressing.
+## Ark-deck ten-era dressing arc
+
+Branch: `sol/ark-deck-era-dressing`
+
+Base: `d46554ffde058afca2eb7966e48ac5629300ff98`
+
+Tip: exact Ark-deck dressing SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the accepted Ark color fields now carry ten tactile memory stations, so walking the perimeter is walking the saga: each era owns a playful working object instead of only a swatch. The production dressing is a separate origin-aligned mount; the accepted 19,676-triangle Ark plate and Long Table Hall remain byte-for-byte untouched.**
+
+Fresh E1/E4/E5/E6/E7/E8/E9/E10/Long Table references were rendered directly from the current GLBs at the full base SHA above. The E8 and E9 frames include their accepted populations, E4 shows the motor boulevard, and E5 remains the submerged square. No old evidence PNG is a source. The locked-camera A/B changes 12,958 of 1,024,000 pixels (`1.26543%`): enough to make the outer walk inhabited without competing with the plaza stage or ship silhouette.
+
+| Era | Memory station | Why it belongs on the Ark |
+| --- | --- | --- |
+| E1 | sluice cradle + bucket | the first working grammar, without duplicating the heritage Pan |
+| E2 | cold boiler + gear | steam survives as a visibly quiet memory object |
+| E3 | insulator fork + wire drop | voltage reads in silhouette and stays unlit geometry |
+| E4 | tires + fuel drum + pictogram road marker | the playful motor age, with no readable signage |
+| E5 | tide board + rope coil + bollard | the working harbor remains patched and practical |
+| E6 | friendly appliance pen | a cheerful two-toast machine, not a grim atomic relic |
+| E7 | relay mast + tape reels | delegation and recorded routes become a deck keepsake |
+| E8 | helmet + survey dish | the sealed lunar era reads without adding another building |
+| E9 | canal gate + living green bed | persistence is visible as working water plus returned green |
+| E10 | ten-era bead ribbon + charter seal | the whole history resolves into one child-readable civic symbol |
+
+### Production gate
+
+- One saved BLEND and one GLB; one node, mesh, primitive, material, and embedded shared 1024 x 1024 atlas; 5,584 / 8,000 triangles; zero lights, cameras, animations, or helper nodes.
+- GLB SHA-256 `4d904626030a875e1247b14325237139e19ae85af4019c75a3f6a4854f9310a4`; saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- The atlas is painted from all ten shipped `kit-era-N.png` sources; source and current production hashes are pinned in the build/reference contracts.
+- All stations clear canonical routes by at least `3.740089`, building pads by `2.280872`, the open plaza by `14.391022`, and the deck edge by `2.75` units.
+- Non-cardinal stations leave at least `0.15` around their inherited medallions and `0.98` around their lineage beacons. E1 and E6 move laterally beside the north/south portals, leaving a verified `1.77`-unit half-corridor on each airlock axis.
+- Ten close-up renders prove the individual reads; the four-angle site audit proves finished backs and outward faces; the top-down overlay proves the stage, paths, pads, medallions, beacons, benches, and portals remain usable.
 
 ## E9 Basin Rim plate
 
