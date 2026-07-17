@@ -10,9 +10,12 @@ export const DREDGE_QUEEN_WRECK_ENTRY_ID = 'dredge-queen-wreck';
 export const GREEN_WAYPOINT_ENTRY_ID = 'green-waypoint';
 /** Render entry: the Old Digger's kept-machine flag (E9 §BOSS — reprogrammed, gentle, forever). */
 export const OLD_DIGGER_GENTLE_ENTRY_ID = 'old-digger-gentle';
+/** Render entry: the Salvage Claw kept so thoroughly it becomes Low Orbit's yard. */
+export const SALVAGE_CLAW_CARCASS_ENTRY_ID = 'salvage-claw-carcass';
 
 export type DredgeQueenWreckPayload = { x: number; z: number };
 export type OldDiggerGentlePayload = { x: number; z: number };
+export type SalvageClawCarcassPayload = { x: number; z: number };
 export type GreenWaypointPayload = { x: number; z: number; r: number };
 
 export type TileStateEntry = {
@@ -143,6 +146,13 @@ export function parseDredgeQueenWreckPayload(payload: unknown): DredgeQueenWreck
 }
 
 export function parseOldDiggerGentlePayload(payload: unknown): OldDiggerGentlePayload | null {
+  if (!isRecord(payload)) return null;
+  const { x, z } = payload;
+  if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;
+  return { x, z };
+}
+
+export function parseSalvageClawCarcassPayload(payload: unknown): SalvageClawCarcassPayload | null {
   if (!isRecord(payload)) return null;
   const { x, z } = payload;
   if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;

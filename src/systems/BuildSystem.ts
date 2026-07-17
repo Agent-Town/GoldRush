@@ -299,6 +299,7 @@ export class BuildSystem {
   private readonly shooterByInstance = createShooterStore();
   private readonly shooterHandles: ShooterHandle[] = [];
   private readonly filteredBlockers: PalisadeBlocker[] = [];
+  private readonly suspendedBuildings = new Set<string>();
   private readonly reservedFootprints: ReservedFootprint[] = [];
   private megaprojectDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
   private readonly buildingVisualGeometry = new THREE.BoxGeometry(1, 1, 1);
@@ -488,7 +489,7 @@ export class BuildSystem {
   get palisadeBlockers(): readonly PalisadeBlocker[] {
     this.filteredBlockers.length = 0;
     for (let i = 0; i < this.palisades.activeBlockers.length; i += 1) {
-      if (this.wrecked.palisade[i]) continue;
+      if (this.wrecked.palisade[i] || this.suspendedBuildings.has(`palisade:${i}`)) continue;
       const blocker = this.palisades.activeBlockers[i];
       if (blocker) this.filteredBlockers.push(blocker);
     }
@@ -901,6 +902,7 @@ export class BuildSystem {
   }
 
   reset(): void {
+    this.suspendedBuildings.clear();
     for (const id of buildableIds) {
       for (let i = 0; i < this.unregisterShooters[id].length; i += 1) this.unregisterShooter(id, i);
       for (let i = 0; i < this.hp[id].length; i += 1) {
@@ -1116,7 +1118,8 @@ export class BuildSystem {
     index: number,
     at: number,
     position: THREE.Vector3 = this.heroPosition,
-    radius = Balance.demolish.interactRadius,
+    radius: number = Balance.demolish.interactRadius,
+    refundOverride?: number,
   ): boolean {
     if (!isBuildableId(id) || !this.isSlotActive(id, index)) return false;
     const buildingPosition = this.positionFor(id, index);
@@ -1126,7 +1129,7 @@ export class BuildSystem {
     if (dx * dx + dz * dz > radius * radius) return false;
 
     const buildCost = this.buildCosts[id][index] ?? 0;
-    const refund = this.demolishRefund(id, index);
+    const refund = refundOverride ?? this.demolishRefund(id, index);
     const result = this.economy.apply({
       id: crypto.randomUUID(),
       at,
@@ -1151,6 +1154,14 @@ export class BuildSystem {
     this.onSound?.('demolish', buildingPosition);
     this.visualDirty = true;
     return true;
+  }
+
+  setBuildingSuspended(target: BuildingTarget, suspended: boolean): void {
+    if (!isBuildableId(target.family)) return;
+    const key = `${target.family}:${target.index}`;
+    if (suspended) this.suspendedBuildings.add(key);
+    else this.suspendedBuildings.delete(key);
+    target.active = !suspended && this.isSlotActive(target.family, target.index) && !this.wrecked[target.family][target.index];
   }
 
   repairBuilding(
@@ -1808,6 +1819,7 @@ export class BuildSystem {
     const handle: ShooterHandle = {
       id: 'beacons',
       resumeKey: `building:sentry_beacon:${placed}`,
+      enabled: () => !this.suspendedBuildings.has(`sentry_beacon:${placed}`),
       getPos: () => this.shooterPos.copy(this.beacons.allPositions[placed] ?? this.ghostPos),
       range: Balance.beacon.range,
       cooldown: 1 / (Balance.beacon.fireRate * this.beaconFireRateMult),
@@ -1831,7 +1843,8 @@ export class BuildSystem {
       id: 'turrets',
       resumeKey: `building:turret:${placed}`,
       getPos: () => this.shooterPos.copy(this.turrets.allPositions[placed] ?? this.ghostPos),
-      enabled: () => this.isShooterPowered('turret', placed, this.turrets.allPositions[placed] ?? this.ghostPos),
+      enabled: () => !this.suspendedBuildings.has(`turret:${placed}`)
+        && this.isShooterPowered('turret', placed, this.turrets.allPositions[placed] ?? this.ghostPos),
       range: Balance.turret.range,
       cooldown: 1 / this.effectiveTurretFireRate(placed),
       damage: this.effectiveTurretDamage(placed),
