@@ -10,13 +10,16 @@ import {
   activeTileDescriptor,
   activeWaterDescriptor,
   activeContract,
+  type ContractAuthoredTerrainLayer,
   type ContractGravelBar,
+  type ContractManifest,
   type ContractWaterZone,
   type ContractStakeMarker,
   type ContractWaterSource,
 } from '../meta/ContractFamilies';
 import { hasElevationTile, isTraversable as isSimTraversable, simHeight } from '../sim/TileHeight';
 import { normalizeSeed } from '../core/Rng';
+import { disposeObject3D } from '../utils/dispose';
 import { createContinuousGroundMesh, type ContinuousGroundMeshStats } from './ContinuousGroundMesh';
 import { createClaimProps } from './props';
 import {
@@ -87,10 +90,12 @@ export const WATER_Y = 0.025;
 export const VISTA_RADIUS = 90;
 
 const ELEVATION_TILE = hasElevationTile();
-const TILE_HEIGHTFIELD = ACTIVE_CONTRACT.tileParams.heightfield;
 const AUTHORED_TERRAIN = ACTIVE_CONTRACT.tileParams.authoredTerrain;
+let editorPreviewActive = false;
+let editorPreviewTerrain: ContractAuthoredTerrainLayer | undefined;
+let editorPreviewContract: ContractManifest | null = null;
+let refreshEditorPreview: ((contract: ContractManifest) => void) | null = null;
 let runtimeVisualHeightSource: ((x: number, z: number) => number) | null = null;
-const TILE_PALETTE = ACTIVE_CONTRACT.tileParams.palette;
 const TILE_WATER = activeWaterDescriptor();
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
 const FORD_RANGES = resolveFordRanges();
@@ -276,7 +281,7 @@ export function sampleHeight(x: number, z: number): number {
   const base = ELEVATION_TILE
     ? simHeight(x, z)
     : sampleHeightFamily(THREE.MathUtils.clamp(x, bounds.minX, bounds.maxX), THREE.MathUtils.clamp(z, bounds.minZ, bounds.maxZ), false);
-  return AUTHORED_TERRAIN ? base + authoredTerrainDelta(x, z) : base;
+  return currentAuthoredTerrain() ? base + authoredTerrainDelta(x, z) : base;
 }
 
 export function sampleUnclampedHeight(x: number, z: number): number {
@@ -284,7 +289,14 @@ export function sampleUnclampedHeight(x: number, z: number): number {
     return runtimeVisualHeightSource(x, z);
   }
   const base = ELEVATION_TILE ? simHeight(x, z) : sampleHeightFamily(x, z, true);
-  return AUTHORED_TERRAIN ? base + authoredTerrainDelta(x, z) : base;
+  return currentAuthoredTerrain() ? base + authoredTerrainDelta(x, z) : base;
+}
+
+export function previewEditorContract(contract: ContractManifest): void {
+  editorPreviewActive = true;
+  editorPreviewContract = contract;
+  editorPreviewTerrain = contract.tileParams.authoredTerrain;
+  refreshEditorPreview?.(contract);
 }
 
 export function installVisualHeightSource(source: (x: number, z: number) => number): () => void {
@@ -295,19 +307,28 @@ export function installVisualHeightSource(source: (x: number, z: number) => numb
 }
 
 function authoredTerrainDelta(x: number, z: number): number {
-  if (!AUTHORED_TERRAIN) return 0;
-  const gridX = (x - AUTHORED_TERRAIN.originX) / AUTHORED_TERRAIN.cellSize;
-  const gridZ = (z - AUTHORED_TERRAIN.originZ) / AUTHORED_TERRAIN.cellSize;
-  if (gridX < 0 || gridZ < 0 || gridX > AUTHORED_TERRAIN.columns - 1 || gridZ > AUTHORED_TERRAIN.rows - 1) return 0;
+  const layer = currentAuthoredTerrain();
+  if (!layer) return 0;
+  const gridX = (x - layer.originX) / layer.cellSize;
+  const gridZ = (z - layer.originZ) / layer.cellSize;
+  if (gridX < 0 || gridZ < 0 || gridX > layer.columns - 1 || gridZ > layer.rows - 1) return 0;
 
   const x0 = Math.floor(gridX);
   const z0 = Math.floor(gridZ);
-  const x1 = Math.min(x0 + 1, AUTHORED_TERRAIN.columns - 1);
-  const z1 = Math.min(z0 + 1, AUTHORED_TERRAIN.rows - 1);
-  const at = (column: number, row: number) => AUTHORED_TERRAIN.heightDeltas[row * AUTHORED_TERRAIN.columns + column]!;
+  const x1 = Math.min(x0 + 1, layer.columns - 1);
+  const z1 = Math.min(z0 + 1, layer.rows - 1);
+  const at = (column: number, row: number) => layer.heightDeltas[row * layer.columns + column]!;
   const north = THREE.MathUtils.lerp(at(x0, z0), at(x1, z0), gridX - x0);
   const south = THREE.MathUtils.lerp(at(x0, z1), at(x1, z1), gridX - x0);
   return THREE.MathUtils.lerp(north, south, gridZ - z0);
+}
+
+function currentAuthoredTerrain(): ContractAuthoredTerrainLayer | undefined {
+  return editorPreviewActive ? editorPreviewTerrain : AUTHORED_TERRAIN;
+}
+
+function currentContract(): ContractManifest {
+  return editorPreviewContract ?? ACTIVE_CONTRACT;
 }
 
 export function routingLaneDistance(x: number, z: number): number {
@@ -344,7 +365,7 @@ function sampleHeightFamily(x: number, z: number, vistaRise: boolean): number {
     legacyMaxHeight,
   );
   const maxHeight = vistaRise && absZ > CLAIM_HALF ? 1.46 : 1.18;
-  const minHeight = TILE_HEIGHTFIELD ? -0.52 : -0.38;
+  const minHeight = currentContract().tileParams.heightfield ? -0.52 : -0.38;
   return THREE.MathUtils.clamp(baseHeight + features.heightOffset + contractHeightfieldOffset(x, z), minHeight, maxHeight);
 }
 
@@ -590,7 +611,8 @@ export function createTerrainView(): TerrainView {
   const bank = createGroundMesh();
   const vistaBank = createVistaBankMesh(bank.material as THREE.MeshStandardMaterial);
   const props = createClaimProps();
-  const springPonds = createSpringPonds();
+  const springPonds = createSpringPonds(SPRING_PONDS);
+  let renderedSpringPonds = SPRING_PONDS.length;
   for (const prop of props.children) prop.position.y = visualY(prop.position.x, prop.position.z, 0, 0.7);
   group.add(vistaBank, bank);
 
@@ -611,6 +633,14 @@ export function createTerrainView(): TerrainView {
   }
 
   group.add(springPonds, props);
+  refreshEditorPreview = (contract) => {
+    refreshGroundGeometry(bank);
+    disposeObject3D(springPonds);
+    springPonds.clear();
+    const nextPonds = createSpringPonds(contract.tileParams.waterSources);
+    for (const pond of [...nextPonds.children]) springPonds.add(pond);
+    renderedSpringPonds = contract.tileParams.waterSources.length;
+  };
 
   return {
     group,
@@ -619,9 +649,21 @@ export function createTerrainView(): TerrainView {
       if (river) updateWaterMaterial(river, delta);
       for (const ford of fords) updateWaterMaterial(ford, delta);
     },
-    diagnostics: () => (river ? waterDiagnostics(river, fords, fordStones, gravelBars) : dryWaterDiagnostics(SPRING_PONDS.length)),
+    diagnostics: () => (river ? waterDiagnostics(river, fords, fordStones, gravelBars) : dryWaterDiagnostics(renderedSpringPonds)),
     groundDiagnostics: () => groundDiagnostics(bank),
   };
+}
+
+function refreshGroundGeometry(mesh: THREE.Mesh): void {
+  const geometry = mesh.geometry;
+  const positions = geometry.getAttribute('position') as THREE.BufferAttribute;
+  for (let index = 0; index < positions.count; index += 1) {
+    positions.setZ(index, sampleHeight(positions.getX(index), -positions.getY(index)));
+  }
+  positions.needsUpdate = true;
+  applyTerrainNormals(geometry, sampleUnclampedHeight);
+  geometry.computeBoundingBox();
+  geometry.computeBoundingSphere();
 }
 
 function createGroundMesh(): THREE.Mesh {
@@ -669,10 +711,10 @@ function createGravelBar(bar: ContractGravelBar): THREE.Mesh {
   return mesh;
 }
 
-function createSpringPonds(): THREE.Group {
+function createSpringPonds(sources: readonly ContractWaterSource[]): THREE.Group {
   const group = new THREE.Group();
   group.name = 'SpringPonds';
-  for (const source of SPRING_PONDS) group.add(createSpringPond(source));
+  for (const source of sources) group.add(createSpringPond(source));
   return group;
 }
 
@@ -689,7 +731,7 @@ function createSpringPond(source: ContractWaterSource): THREE.Group {
   const water = new THREE.Mesh(new THREE.CircleGeometry(source.radius, 48), waterMaterial);
   water.name = 'SpringPondPlaceholder';
   water.rotation.x = -Math.PI / 2;
-  water.position.set(source.x, visualY(source.x, source.z, WATER_Y + 0.02, source.radius), source.z);
+  water.position.set(source.x, pondSurfaceY(source), source.z);
   water.renderOrder = RenderLayers.groundDecals;
   group.add(water);
 
@@ -719,6 +761,16 @@ function createSpringPond(source: ContractWaterSource): THREE.Group {
     });
   }
   return group;
+}
+
+function pondSurfaceY(source: ContractWaterSource): number {
+  let height = sampleHeight(source.x, source.z);
+  for (let index = 0; index < 8; index += 1) {
+    const angle = (index / 8) * Math.PI * 2;
+    const radius = source.radius * 0.72;
+    height = Math.max(height, sampleHeight(source.x + Math.cos(angle) * radius, source.z + Math.sin(angle) * radius));
+  }
+  return height + WATER_Y + 0.035;
 }
 
 function createPondReeds(source: ContractWaterSource): THREE.InstancedMesh {
@@ -765,7 +817,6 @@ function createBankMaterial(splat = false): THREE.MeshStandardMaterial {
   const material = bankMaterial.clone();
   const splatParams = terrainSplatParams();
   const liteAntiTile = performanceTierDiagnostics().tier === 'lite';
-  const antiTileDisabled = typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('terrainSeamless') === '0';
   const uniforms: TerrainShaderUniforms = {
     repeat: { value: BANK_TILE_REPEATS },
     variantCount: { value: 1 },
@@ -778,10 +829,10 @@ function createBankMaterial(splat = false): THREE.MeshStandardMaterial {
     dampBand: { value: splatParams.dampBand },
     scrubAmount: { value: splatParams.scrubAmount },
     macroWarmth: { value: splatParams.macroWarmth },
-    antiTile: { value: antiTileDisabled ? 0 : splatParams.antiTile },
-    paletteTint: { value: paletteVector(TILE_PALETTE?.tint, [1, 1, 1]) },
-    dampTint: { value: paletteVector(TILE_PALETTE?.dampTint, [0.4, 0.37, 0.29]) },
-    dampAmount: { value: TILE_PALETTE?.dampAmount ?? 0.28 },
+    antiTile: { value: terrainAntiTileDisabled() ? 0 : splatParams.antiTile },
+    paletteTint: { value: paletteVector(currentContract().tileParams.palette?.tint, [1, 1, 1]) },
+    dampTint: { value: paletteVector(currentContract().tileParams.palette?.dampTint, [0.4, 0.37, 0.29]) },
+    dampAmount: { value: currentContract().tileParams.palette?.dampAmount ?? 0.28 },
   };
   material.map = createBankTexture();
   configureBankAtlas(material.map);
@@ -1240,17 +1291,18 @@ function terrainFeatures(x: number, z: number): TerrainFeatureSample {
 }
 
 function contractHeightfieldOffset(x: number, z: number): number {
-  if (!TILE_HEIGHTFIELD || TILE_HEIGHTFIELD.mode !== 'visual') return 0;
+  const heightfield = currentContract().tileParams.heightfield;
+  if (!heightfield || heightfield.mode !== 'visual') return 0;
 
   let offset = 0;
-  const basin = TILE_HEIGHTFIELD.springBasin;
+  const basin = heightfield.springBasin;
   if (basin) offset -= ovalMask(x, z, basin.x, basin.z, basin.radius, basin.radius * 0.78) * basin.depth;
 
-  for (const wash of TILE_HEIGHTFIELD.washChannels ?? []) {
+  for (const wash of heightfield.washChannels ?? []) {
     offset -= washChannelMask(x, z, wash.x, wash.z, wash.length, wash.width, wash.angle) * wash.depth;
   }
 
-  const bankRelief = TILE_HEIGHTFIELD.bankRelief;
+  const bankRelief = heightfield.bankRelief;
   if (bankRelief) {
     const bankDistance = Math.max(0, Math.abs(z) - RIVER_MAX_Z);
     const nearBank = smoothstep(0.25, 2.4, bankDistance) * (1 - smoothstep(3.2, bankRelief.width, bankDistance));
@@ -1392,17 +1444,33 @@ function visualWaterWidth(): number {
 
 function syncBankMaterial(mesh: THREE.Mesh): void {
   const uniforms = (mesh.material as THREE.MeshStandardMaterial).userData.terrainUniforms as TerrainShaderUniforms | undefined;
-  if (uniforms) uniforms.featureMix.value = Balance.terrain.featureMix;
+  if (!uniforms) return;
+  const params = terrainSplatParams();
+  const tilePalette = currentContract().tileParams.palette;
+  uniforms.featureMix.value = Balance.terrain.featureMix;
+  uniforms.rockAmount.value = params.rockAmount;
+  uniforms.dampBand.value = params.dampBand;
+  uniforms.scrubAmount.value = params.scrubAmount;
+  uniforms.macroWarmth.value = params.macroWarmth;
+  uniforms.antiTile.value = terrainAntiTileDisabled() ? 0 : params.antiTile;
+  uniforms.paletteTint.value.copy(paletteVector(tilePalette?.tint, [1, 1, 1]));
+  uniforms.dampTint.value.copy(paletteVector(tilePalette?.dampTint, [0.4, 0.37, 0.29]));
+  uniforms.dampAmount.value = tilePalette?.dampAmount ?? 0.28;
+}
+
+function terrainAntiTileDisabled(): boolean {
+  return typeof window !== 'undefined' && new URLSearchParams(window.location.search).get('terrainSeamless') === '0';
 }
 
 function terrainSplatParams(): TerrainSplatParams {
-  const declared = TILE_PALETTE?.splat ?? {};
+  const tileParams = currentContract().tileParams;
+  const declared = tileParams.palette?.splat ?? {};
   const riverDampBand = (TILE_WATER?.visualHalfWidth ?? (RIVER_MAX_Z - RIVER_MIN_Z) / 2 + SHALLOWS_WIDTH) + 0.9;
-  const defaultRock = TILE_HEIGHTFIELD?.washChannels ? 0.62 : TILE_HEIGHTFIELD?.bankRelief ? 0.28 : 0.22;
-  const defaultScrub = ACTIVE_CONTRACT.tileParams.scatter?.nearWaterBias ? 0.42 : ACTIVE_CONTRACT.tileParams.river ? 0.2 : 0.14;
+  const defaultRock = tileParams.heightfield?.washChannels ? 0.62 : tileParams.heightfield?.bankRelief ? 0.28 : 0.22;
+  const defaultScrub = tileParams.scatter?.nearWaterBias ? 0.42 : tileParams.river ? 0.2 : 0.14;
   return {
     rockAmount: clamp01(declared.rockAmount ?? defaultRock),
-    dampBand: Math.max(0.5, declared.dampBand ?? (ACTIVE_CONTRACT.tileParams.river ? riverDampBand : SPRING_PONDS.length ? 2.8 : 1.4)),
+    dampBand: Math.max(0.5, declared.dampBand ?? (tileParams.river ? riverDampBand : tileParams.waterSources.length ? 2.8 : 1.4)),
     scrubAmount: clamp01(declared.scrubAmount ?? defaultScrub),
     macroWarmth: Math.max(0, Math.min(1.5, declared.macroWarmth ?? 1)),
     antiTile: clamp01(declared.antiTile ?? 0.58),

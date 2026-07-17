@@ -13,6 +13,7 @@ import {
   type ContractManifest,
 } from '../meta/ContractFamilies';
 import { createPressPanel } from '../charter/PressPanel';
+import { previewEditorContract } from '../world/Terrain';
 import { createPlacementEditorPanel } from './PlacementEditor';
 import { createTerrainBrushPanel } from './TerrainBrush';
 import './descriptor-inspector.css';
@@ -41,8 +42,12 @@ type ContractDescriptorRejection = Extract<ContractDescriptorParseResult, { ok: 
 export function installDescriptorInspector(root: HTMLElement): void {
   const contract = structuredClone(activeContract());
   const template = loadContract(contract.id);
-  const currentBytes = contractDescriptorJson(contract);
-  const history = readEditorHistory(template, currentBytes);
+  let currentBytes = contractDescriptorJson(contract);
+  let baselineBytes = currentBytes;
+  let history = emptyEditorHistory(currentBytes);
+  let pressNameDraft = contract.name;
+  let pressNameBaseline = contract.name;
+  writeEditorHistory(template.id, history);
   const shell = document.createElement('aside');
   shell.className = 'descriptor-inspector';
   shell.dataset.testid = 'descriptor-inspector';
@@ -52,6 +57,7 @@ export function installDescriptorInspector(root: HTMLElement): void {
       <h1>Contract Inspector</h1>
       <strong data-testid="editor-contract-name"></strong>
       <span>Waves are paused while this page is open.</span>
+      <p class="descriptor-inspector__dirty" data-testid="editor-dirty" hidden><strong>Un-stamped draft</strong> Stamp to keep — un-stamped edits are lost on reload.</p>
     </header>
     <div class="descriptor-inspector__fields" data-testid="editor-fields"></div>
     <section class="descriptor-inspector__transfer">
@@ -72,9 +78,12 @@ export function installDescriptorInspector(root: HTMLElement): void {
   const rejection = shell.querySelector<HTMLElement>('[data-testid="editor-rejection"]')!;
   const textarea = shell.querySelector<HTMLTextAreaElement>('[data-testid="editor-import-text"]')!;
   const fields = shell.querySelector<HTMLElement>('[data-testid="editor-fields"]')!;
+  const dirty = shell.querySelector<HTMLElement>('[data-testid="editor-dirty"]')!;
   const validator = createContractValidator();
-  fields.append(validator.element);
-  validator.render({ ok: true, contract });
+  const updateDirty = () => {
+    dirty.hidden = currentBytes === baselineBytes && pressNameDraft === pressNameBaseline;
+  };
+  let renderPanels = () => {};
   const showAccepted = (message: string) => {
     rejection.hidden = true;
     validator.render({ ok: true, contract });
@@ -86,14 +95,30 @@ export function installDescriptorInspector(root: HTMLElement): void {
     validator.render(result);
     status.textContent = 'The open contract was left untouched.';
   };
+  const syncHistoryButtons = () => {
+    shell.querySelector<HTMLButtonElement>('[data-testid="terrain-brush-undo"]')?.toggleAttribute('disabled', history.past.length === 0);
+    shell.querySelector<HTMLButtonElement>('[data-testid="terrain-brush-redo"]')?.toggleAttribute('disabled', history.future.length === 0);
+  };
   const commit = (text: string, nextHistory: EditorHistory, message: string): boolean => {
-    const staged = stageDescriptorWithHistory(text, template, nextHistory);
-    if (staged.ok) {
-      showAccepted(message);
-      return true;
+    const parsed = parseContractDescriptor(text, template);
+    if (!parsed.ok) {
+      showRejection(parsed);
+      return false;
     }
-    showRejection(staged);
-    return false;
+    if (nextHistory.head !== documentFingerprint(text)) {
+      showRejection(editorRejection('document_history', 'This contract page no longer matches its history mark.'));
+      return false;
+    }
+    syncContract(contract, parsed.contract);
+    currentBytes = contractDescriptorJson(contract);
+    history = nextHistory;
+    writeEditorHistory(template.id, history);
+    stageReloadBaseline(baselineBytes, template);
+    previewEditorContract(contract);
+    renderPanels();
+    updateDirty();
+    showAccepted(message);
+    return true;
   };
   const apply = (next: ContractManifest, message = 'Applying the descriptor…'): boolean => {
     const nextBytes = contractDescriptorJson(next);
@@ -126,20 +151,47 @@ export function installDescriptorInspector(root: HTMLElement): void {
     });
     commit(target, nextHistory, 'Restoring the next descriptor mark…');
   };
-  fields.append(createTerrainBrushPanel({
-    contract,
-    canUndo: history.past.length > 0,
-    canRedo: history.future.length > 0,
-    onCommit: (next, message) => apply(next, message),
-    onUndo: undo,
-    onRedo: redo,
-  }));
-  fields.append(createPlacementEditorPanel({
-    contract,
-    onCommit: (next, message) => apply(next, message),
-  }));
-  fields.append(createPressPanel({ contract, template }));
-  renderSections(fields, contract, () => apply(contract));
+  renderPanels = () => {
+    fields.replaceChildren(validator.element);
+    validator.render({ ok: true, contract });
+    fields.append(createTerrainBrushPanel({
+      contract,
+      canUndo: history.past.length > 0,
+      canRedo: history.future.length > 0,
+      onCommit: (next, message) => apply(next, message),
+      onUndo: undo,
+      onRedo: redo,
+    }));
+    fields.append(createPlacementEditorPanel({
+      contract,
+      onCommit: (next, message) => apply(next, message),
+    }));
+    fields.append(createPressPanel({
+      contract,
+      template,
+      nameDraft: pressNameDraft,
+      onNameDraftChanged: (name) => {
+        pressNameDraft = name;
+        updateDirty();
+      },
+      onStamped: (stamped) => {
+        syncContract(contract, stamped);
+        currentBytes = contractDescriptorJson(contract);
+        baselineBytes = currentBytes;
+        pressNameDraft = contract.name;
+        pressNameBaseline = contract.name;
+        history = emptyEditorHistory(currentBytes);
+        writeEditorHistory(template.id, history);
+        stageReloadBaseline(baselineBytes, template);
+        previewEditorContract(contract);
+        syncHistoryButtons();
+        updateDirty();
+      },
+    }));
+    renderSections(fields, contract, () => apply(contract));
+    syncHistoryButtons();
+  };
+  renderPanels();
   const importText = (text: string) => {
     const parsed = parseContractDescriptor(text, template);
     if (!parsed.ok) {
@@ -303,7 +355,7 @@ function renderValue(root: HTMLElement, value: unknown, path: string, apply: () 
 function control(owner: JsonRecord, key: string, path: string, value: unknown, apply: () => boolean, name = label(key)): HTMLElement {
   const row = document.createElement('label');
   row.className = 'descriptor-inspector__control';
-  row.append(Object.assign(document.createElement('span'), { textContent: name }));
+  row.append(controlLabel(name, path));
   const choices = ENUMS[path];
   if (choices) {
     const select = document.createElement('select');
@@ -372,7 +424,7 @@ function control(owner: JsonRecord, key: string, path: string, value: unknown, a
 function colorControl(value: number[], path: string, apply: () => boolean): HTMLElement {
   const row = document.createElement('label');
   row.className = 'descriptor-inspector__control';
-  row.append(Object.assign(document.createElement('span'), { textContent: label(path.split('.').at(-1) ?? 'color') }));
+  row.append(controlLabel(label(path.split('.').at(-1) ?? 'color'), path));
   const input = document.createElement('input');
   input.type = 'color';
   input.value = rgbToHex(value);
@@ -390,6 +442,21 @@ function colorControl(value: number[], path: string, apply: () => boolean): HTML
   return row;
 }
 
+function controlLabel(name: string, path: string): HTMLElement {
+  const text = document.createElement('span');
+  text.textContent = name;
+  if (
+    !path.startsWith('tileParams.heightfield.') &&
+    !path.startsWith('tileParams.palette.') &&
+    !path.startsWith('tileParams.waterSources[]')
+  ) {
+    const tag = document.createElement('small');
+    tag.textContent = 'renders at launch';
+    text.append(tag);
+  }
+  return text;
+}
+
 function numberInput(type: 'range' | 'number', value: number, range: ReturnType<typeof contractNumberRange>, path: string): HTMLInputElement {
   const input = document.createElement('input');
   input.type = type;
@@ -401,68 +468,24 @@ function numberInput(type: 'range' | 'number', value: number, range: ReturnType<
   return input;
 }
 
-function stageDescriptorWithHistory(
-  text: string,
-  template: ContractManifest,
-  history: EditorHistory,
-): ContractDescriptorParseResult {
-  const parsed = parseContractDescriptor(text, template);
-  if (!parsed.ok) return parsed;
-  if (history.head !== documentFingerprint(text)) {
-    return editorRejection('document_history', 'This contract page no longer matches its history mark.');
-  }
-  const key = editorHistoryKey(template.id);
-  let previous: string | null;
-  try {
-    previous = sessionStorage.getItem(key);
-    sessionStorage.setItem(key, JSON.stringify(history));
-  } catch {
-    return editorRejection('document_storage', 'The ledger could not hold this contract page for the next scene.');
-  }
+function stageReloadBaseline(text: string, template: ContractManifest): void {
   const staged = stageContractEditorDocument(text, template);
-  if (!staged.ok) {
-    try {
-      if (previous === null) sessionStorage.removeItem(key);
-      else sessionStorage.setItem(key, previous);
-    } catch {}
-    return staged;
-  }
   const url = new URL(location.href);
   url.searchParams.set('editor', '');
   url.searchParams.set('contract', template.id);
-  url.searchParams.set(CONTRACT_EDITOR_PARAM, CONTRACT_EDITOR_SESSION_REF);
-  location.replace(url);
-  return parsed;
+  if (staged.ok) url.searchParams.set(CONTRACT_EDITOR_PARAM, CONTRACT_EDITOR_SESSION_REF);
+  else url.searchParams.delete(CONTRACT_EDITOR_PARAM);
+  history.replaceState(null, '', url);
+}
+
+function writeEditorHistory(contractId: string, history: EditorHistory): void {
+  try {
+    sessionStorage.setItem(`${EDITOR_HISTORY_KEY}:${contractId}`, JSON.stringify(history));
+  } catch {}
 }
 
 function editorRejection(code: string, message: string): ContractDescriptorRejection {
   return { ok: false, message: CONTRACT_EDITOR_REJECTION_LINE, reasons: [{ code, message }] };
-}
-
-function readEditorHistory(template: ContractManifest, currentBytes: string): EditorHistory {
-  try {
-    const raw = sessionStorage.getItem(editorHistoryKey(template.id));
-    if (!raw || raw.length > EDITOR_HISTORY_MAX_CHARS) return emptyEditorHistory(currentBytes);
-    const value: unknown = JSON.parse(raw);
-    if (
-      !isRecord(value) ||
-      Object.keys(value).length !== 4 ||
-      value.version !== 1 ||
-      typeof value.head !== 'string' ||
-      value.head !== documentFingerprint(currentBytes) ||
-      !Array.isArray(value.past) ||
-      !Array.isArray(value.future)
-    ) {
-      return emptyEditorHistory(currentBytes);
-    }
-    const snapshots = [...value.past, ...value.future];
-    if (snapshots.some((snapshot) => typeof snapshot !== 'string' || !parseContractDescriptor(snapshot, template).ok)) {
-      return emptyEditorHistory(currentBytes);
-    }
-    return boundEditorHistory({ version: 1, head: value.head, past: [...value.past] as string[], future: [...value.future] as string[] });
-  } catch {
-    return emptyEditorHistory(currentBytes);
-  }
 }
 
 function boundEditorHistory(history: EditorHistory): EditorHistory {
@@ -481,8 +504,28 @@ function emptyEditorHistory(currentBytes: string): EditorHistory {
   return { version: 1, head: documentFingerprint(currentBytes), past: [], future: [] };
 }
 
-function editorHistoryKey(contractId: string): string {
-  return `${EDITOR_HISTORY_KEY}:${contractId}`;
+function syncContract(target: ContractManifest, source: ContractManifest): void {
+  syncRecord(target as unknown as JsonRecord, source as unknown as JsonRecord);
+}
+
+function syncRecord(target: JsonRecord, source: JsonRecord): void {
+  for (const key of Object.keys(target)) if (!Object.hasOwn(source, key)) delete target[key];
+  for (const [key, value] of Object.entries(source)) {
+    const current = target[key];
+    if (Array.isArray(current) && Array.isArray(value)) syncArray(current, value);
+    else if (isRecord(current) && isRecord(value)) syncRecord(current, value);
+    else target[key] = structuredClone(value);
+  }
+}
+
+function syncArray(target: unknown[], source: unknown[]): void {
+  target.length = source.length;
+  source.forEach((value, index) => {
+    const current = target[index];
+    if (Array.isArray(current) && Array.isArray(value)) syncArray(current, value);
+    else if (isRecord(current) && isRecord(value)) syncRecord(current, value);
+    else target[index] = structuredClone(value);
+  });
 }
 
 function documentFingerprint(text: string): string {

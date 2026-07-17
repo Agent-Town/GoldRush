@@ -53,14 +53,14 @@ const GIZMO_HIT_RADIUS_CSS = 22;
 const MIN_ZONE_EXTENT = 0.1;
 const BRUSH_STATE_KEY = 'gr.editor.brush.v1';
 const TERRAIN_TOOLS: readonly TerrainBrushTool[] = ['raise', 'lower', 'smooth'];
-const TOOLS: ReadonlyArray<{ id: SurveyTool; label: string }> = [
+const TOOLS: ReadonlyArray<{ id: SurveyTool; label: string; tag?: string }> = [
   { id: 'raise', label: 'Raise' },
   { id: 'lower', label: 'Lower' },
   { id: 'smooth', label: 'Smooth' },
-  { id: 'zone', label: 'Build zone' },
+  { id: 'zone', label: 'Build zone', tag: 'renders at launch' },
   { id: 'water', label: 'Spring pond' },
-  { id: 'lane', label: 'Spawn edge' },
-  { id: 'select', label: 'Select & move' },
+  { id: 'lane', label: 'Spawn edge', tag: 'renders at launch' },
+  { id: 'select', label: 'Select & move', tag: 'some render at launch' },
 ];
 
 export function applyTerrainBrush(contract: ContractManifest, action: TerrainBrushAction): TerrainBrushResult {
@@ -231,7 +231,7 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
       </div>
     </div>
     <div class="terrain-brush__tools" role="toolbar" aria-label="Survey tool">
-      ${TOOLS.map(({ id, label }, index) => `<button type="button" data-tool="${id}" data-testid="terrain-brush-mode-${id}" aria-pressed="${index === 0}">${label}</button>`).join('')}
+      ${TOOLS.map(({ id, label, tag }, index) => `<button type="button" data-tool="${id}" data-label="${label}" data-testid="terrain-brush-mode-${id}" aria-pressed="${index === 0}"><span>${label}</span>${tag ? `<small>${tag}</small>` : ''}</button>`).join('')}
     </div>
     <div class="terrain-brush__settings">
       <label data-size-row>Brush size <input type="range" min="1" max="8" step="1" value="3" data-testid="terrain-brush-size"><output>3 cells</output></label>
@@ -285,6 +285,7 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
     const result = applyTerrainBrush(next, { ...settings, points: actionPoints });
     status.textContent = result.message;
     if (result.changed && !options.onCommit(next, result.message)) status.textContent = 'The descriptor rejected that mark.';
+    else if (result.changed) draw();
   };
   const updateCursor = (point: TerrainBrushPoint) => {
     cursor = point;
@@ -320,7 +321,7 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
       panel.querySelectorAll<HTMLButtonElement>('[data-tool]').forEach((entry) => entry.setAttribute('aria-pressed', String(entry === button)));
       selected = null;
       updateToolRows();
-      status.textContent = `${button.textContent} selected.`;
+      status.textContent = `${button.dataset.label} selected.`;
       persist();
       draw();
     });
@@ -395,6 +396,8 @@ export function createTerrainBrushPanel(options: TerrainBrushPanelOptions): HTML
         status.textContent = `${gizmoLabel(completed.hit.ref)} selected.`;
       } else if (!options.onCommit(completed.draft, completed.result.message)) {
         status.textContent = 'The descriptor rejected that gizmo move.';
+      } else {
+        draw();
       }
       return;
     }

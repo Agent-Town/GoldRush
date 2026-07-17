@@ -18,13 +18,16 @@ type PressPanelOptions = {
   contract: ContractManifest;
   template: ContractManifest;
   clock?: CharterClock;
+  nameDraft?: string;
+  onNameDraftChanged?: (name: string) => void;
+  onStamped?: (contract: ContractManifest) => void;
 };
 
 // The Press panel lives behind ?editor only (charter-press law 6): it stamps
 // the inspector's live contract into a profile-scoped shelf and launches a
 // stamped charter as a real run through the ordinary contract-launch path.
 // The wall clock here is persistence metadata, never sim input.
-export function createPressPanel({ contract, template, clock }: PressPanelOptions): HTMLElement {
+export function createPressPanel({ contract, template, clock, nameDraft, onNameDraftChanged, onStamped }: PressPanelOptions): HTMLElement {
   const stampClock: CharterClock = clock ?? (() => new Date().toISOString());
   const panel = document.createElement('section');
   panel.className = 'charter-press-panel';
@@ -81,7 +84,8 @@ export function createPressPanel({ contract, template, clock }: PressPanelOption
   const author = activeProfileName();
   panel.querySelector<HTMLElement>('[data-testid="press-author"]')!.textContent = `Pressed by ${author}`;
   const nameInput = panel.querySelector<HTMLInputElement>('[data-testid="press-charter-name"]')!;
-  nameInput.value = contract.name;
+  nameInput.value = nameDraft ?? contract.name;
+  nameInput.addEventListener('input', () => onNameDraftChanged?.(nameInput.value));
   const status = panel.querySelector<HTMLElement>('[data-testid="press-status"]')!;
   const reasonList = panel.querySelector<HTMLUListElement>('[data-testid="press-reasons"]')!;
   const shelfList = panel.querySelector<HTMLUListElement>('[data-testid="press-shelf"]')!;
@@ -175,6 +179,7 @@ export function createPressPanel({ contract, template, clock }: PressPanelOption
     }
     showReasons([]);
     status.textContent = `Stamped to the shelf (${shelved.count} held).`;
+    onStamped?.(result.contract);
     renderShelf();
   });
 
