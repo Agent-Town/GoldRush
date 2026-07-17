@@ -599,6 +599,7 @@ export function intentsFromLockstepInput(input: LockstepInput | null | undefined
     mute: false,
     debugSpawn: false,
     debugXp: false,
+    debugPlant: false,
   };
 }
 

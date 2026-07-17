@@ -4,6 +4,14 @@ import type { ContractManifest } from '../meta/ContractFamilies';
 
 export const TILE_STATE_SCHEMA_VERSION = 1;
 
+/** Render entry: the Dredge-Queen's hulk mount (W6, migrated onto the substrate at TP-01). */
+export const DREDGE_QUEEN_WRECK_ENTRY_ID = 'dredge-queen-wreck';
+/** Sim entry: one permanent planted-green waypoint (TP-02, the Seed Run's mechanic in miniature). */
+export const GREEN_WAYPOINT_ENTRY_ID = 'green-waypoint';
+
+export type DredgeQueenWreckPayload = { x: number; z: number };
+export type GreenWaypointPayload = { x: number; z: number; r: number };
+
 export type TileStateEntry = {
   kind: 'sim' | 'render';
   id: string;
@@ -94,14 +102,38 @@ export class TileStateStore {
 /**
  * Loader contract: call once during tile construction, before tick 0. Sim entries
  * may only transform tile parameters here; render entries may only describe mounts.
- * TP-00 is intentionally inert, so the original parameters pass through unchanged.
+ * Unknown kinds and ids pass through untouched (forward compat); the input object
+ * is never mutated — a changed birth returns a fresh tileParams.
+ *
+ * TP-02 implements exactly one sim kind: the green waypoint adds a no-spawn zone
+ * at its disc. Everything else still passes through unchanged.
  */
 export function applyAtBirth(
   entries: readonly TileStateEntry[],
   tileParams: ContractManifest['tileParams'],
 ): ContractManifest['tileParams'] {
-  void entries;
-  return tileParams;
+  const zones = entries
+    .filter((entry) => entry.kind === 'sim' && entry.id === GREEN_WAYPOINT_ENTRY_ID)
+    .map((entry) => parseGreenWaypointPayload(entry.payload))
+    .filter((payload): payload is GreenWaypointPayload => payload !== null)
+    .map((payload) => ({ x: payload.x, z: payload.z, radius: payload.r }));
+  if (zones.length === 0) return tileParams;
+  return { ...tileParams, noSpawnZones: [...(tileParams.noSpawnZones ?? []), ...zones] };
+}
+
+export function parseGreenWaypointPayload(payload: unknown): GreenWaypointPayload | null {
+  if (!isRecord(payload)) return null;
+  const { x, z, r } = payload;
+  if (typeof x !== 'number' || typeof z !== 'number' || typeof r !== 'number') return null;
+  if (!Number.isFinite(x) || !Number.isFinite(z) || !Number.isFinite(r) || r <= 0) return null;
+  return { x, z, r };
+}
+
+export function parseDredgeQueenWreckPayload(payload: unknown): DredgeQueenWreckPayload | null {
+  if (!isRecord(payload)) return null;
+  const { x, z } = payload;
+  if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;
+  return { x, z };
 }
 
 function parseSnapshot(raw: string | null): TileStateSnapshot {

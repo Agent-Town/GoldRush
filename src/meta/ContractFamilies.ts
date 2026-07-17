@@ -555,6 +555,8 @@ export type ContractManifest = {
     capacitorSites?: ContractCapacitorSite[];
     ridgeGlow?: { x: number; z: number; color: string; intensity: number };
     damChannel?: { minX: number; maxX: number; minZ: number; maxZ: number };
+    /** Birth-loader output only (tile-persistence sim entries) — never authored in contract JSON. */
+    noSpawnZones?: Array<{ x: number; z: number; radius: number }>;
     lanes: {
       spawnEdges: ContractEdge[];
       territoryRingBiasWaves: number;

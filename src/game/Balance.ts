@@ -17,6 +17,7 @@ export const Balance = {
   },
   persistence: {
     tileStateMaxBytes: 32 * 1024,
+    greenWaypointRadius: 3,
   },
   enemy: {
     poolSize: 96,

@@ -147,6 +147,14 @@ interface ThreeGameDiagnostics {
     eligibility: string[];
   };
   deepwaterClaim: ReturnType<import('./world/DeepwaterClaimTile').DeepwaterClaimTile['snapshot']> | null;
+  tilePersistence: {
+    contractId: string;
+    entries: number;
+    greenWaypoint: { x: number; z: number; r: number } | null;
+    greenWaypointStaged: boolean;
+    swatchColor: string;
+    noSpawnZones: Array<{ x: number; z: number; radius: number }>;
+  };
   dustFlats?: { storm: string; tarSeams: number; orbit: { members: Array<{ id: string; peeled: boolean; state?: string }> }; orbitMembers: Array<{ id: string; peeled: boolean; state?: string }>; roads: { segments: number } };
   kills: number;
   goldPanned: number;

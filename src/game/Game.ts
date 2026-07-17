@@ -207,6 +207,19 @@ import {
   type RunSuspendWrite,
 } from './RunSuspend';
 import { defaultSaveSlotName, formatBudgetWarning, saveManualSlot, saveSlotsBudget } from './SaveSlots';
+import { DREDGE_QUEEN_WRECK_KEY } from './ProfileStorage';
+import {
+  applyAtBirth,
+  DREDGE_QUEEN_WRECK_ENTRY_ID,
+  GREEN_WAYPOINT_ENTRY_ID,
+  parseDredgeQueenWreckPayload,
+  parseGreenWaypointPayload,
+  TILE_STATE_SCHEMA_VERSION,
+  TileStateStore,
+  type DredgeQueenWreckPayload,
+  type GreenWaypointPayload,
+} from './TileStateStore';
+import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
 
 // Replay Law: Frontier upgrades remain available after later epochs activate.
 const replayEpoch = loadEpoch(DEFAULT_EPOCH_ID);
@@ -233,6 +246,19 @@ const BARON_DEFEAT_TITLE = 'THE BARON IS DEFEATED';
 const BARON_KILL_STOP_SECONDS = 2.2;
 const BARON_DEFEAT_CARD_SECONDS = 4;
 const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
+const GREEN_WAYPOINT_CONTRACT_ID = 'e1-dry-gulch';
+
+// The tile factory is the sole birth-loader reader (Loader Contract): sim
+// entries transform tileParams here, before any system builds on them.
+function bornContract(store: TileStateStore): ContractManifest {
+  const contract = selectActiveContract();
+  try {
+    const tileParams = applyAtBirth(store.readSnapshot(contract.id).entries, contract.tileParams);
+    return tileParams === contract.tileParams ? contract : { ...contract, tileParams };
+  } catch {
+    return contract;
+  }
+}
 const MULTIPLAYER_SPAWN_RADIUS = 1.2;
 const MULTIPLAYER_TINTS = ['#5b8a8a', '#c4883a', '#8fbc8f', '#a78bfa'] as const;
 type MultiplayerActorMeta = {
@@ -444,7 +470,10 @@ export class Game {
   private readonly upgradeOverlay: UpgradeOverlay;
   private readonly damageVignette = document.createElement('div');
   private readonly activeEpoch = selectActiveEpoch();
-  private readonly activeContract = selectActiveContract();
+  // Tile persistence speaks once, at birth: the profile-scoped snapshot is read
+  // here, before any system builds, and never again mid-run (Loader Contract).
+  private readonly tileStateStore = new TileStateStore(localStorage);
+  private readonly activeContract = bornContract(this.tileStateStore);
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
   private deepwaterCorsairWavesSpawned = 0;
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
@@ -653,6 +682,10 @@ export class Game {
     (amount, sourceId) => this.combat.damageActor(amount, sourceId),
     (position, amount) => this.goldPickups.spawn(position, amount) >= 0,
     this.activeContract.id === 'e5-deepwater-claim',
+    {
+      readAtBirth: () => this.readWreckAtBirth(),
+      writeAtCeremony: (wreck) => this.writeWreckAtCeremony(wreck),
+    },
   );
   private readonly loop = new Loop(
     (delta) => this.update(delta),
@@ -865,6 +898,9 @@ export class Game {
   private lastMuteIntent = false;
   private lastDebugSpawnIntent = false;
   private lastDebugXpIntent = false;
+  private lastDebugPlantIntent = false;
+  private greenWaypointMounted: GreenWaypointPayload | null = null;
+  private greenWaypointStagedThisRun = false;
   private playerPauseActive = false;
   private uiSnapshot?: UiSnapshot;
   private wetPowderHintCooldown = 0;
@@ -1074,6 +1110,10 @@ export class Game {
       });
       this.syncMultiplayerLedgerRiders();
     });
+    // Write-at-end law: staged tile-state entries land when the run ends, whatever ended it.
+    this.events.on('run_ended', () => {
+      this.tileStateStore.commitAtRunEnd();
+    });
     this.events.on('run_ended', (event) => {
       discoverLedgerEntry('assay_office_records');
       if (event.reason !== 'secured') return;
@@ -1188,6 +1228,7 @@ export class Game {
     });
 
     this.createScene();
+    this.mountTileStateRenderEntries();
     const terrain3dPilot = new URLSearchParams(window.location.search).has('terrain3dPilot');
     this.canvas.dataset.terrain3dPilotState = terrain3dPilot ? 'loading' : 'off';
     this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
@@ -1740,6 +1781,14 @@ export class Game {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
       this.progression.debugGrant(50);
     }
+    if (
+      intents.debugPlant &&
+      !this.lastDebugPlantIntent &&
+      new URLSearchParams(window.location.search).has('debug') &&
+      !this.secureClaimChoicePending()
+    ) {
+      this.plantGreenWaypoint();
+    }
     if (intents.confirm && !this.lastConfirmIntent && !upgradedThisFrame) this.confirmAction();
     this.lastPauseIntent = intents.pause;
     this.lastRestartIntent = intents.restart;
@@ -1752,6 +1801,7 @@ export class Game {
     this.lastMuteIntent = sampledIntents.mute;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
+    this.lastDebugPlantIntent = intents.debugPlant;
     this.damageFlashRemaining = Math.max(0, this.damageFlashRemaining - delta);
     this.updateCharmPause(delta);
 
@@ -2447,6 +2497,7 @@ export class Game {
     this.lastMuteIntent = intents.mute;
     this.lastDebugSpawnIntent = intents.debugSpawn;
     this.lastDebugXpIntent = intents.debugXp;
+    this.lastDebugPlantIntent = intents.debugPlant;
   }
 
   private deathRunStats(summary: EconomySummary): DeathRunStatsSnapshot {
@@ -3275,6 +3326,14 @@ export class Game {
       deepwaterClaim: this.deepwaterClaim
         ? Object.assign(this.deepwaterClaim.snapshot(), { dredgeQueenBoss: this.dredgeQueenBoss.diagnostics() })
         : null,
+      tilePersistence: {
+        contractId: this.activeContract.id,
+        entries: this.tileStateStore.readSnapshot(this.activeContract.id).entries.length,
+        greenWaypoint: this.greenWaypointMounted,
+        greenWaypointStaged: this.greenWaypointStagedThisRun,
+        swatchColor: E1_RIVERBANK_GREEN,
+        noSpawnZones: this.activeContract.tileParams.noSpawnZones ?? [],
+      },
       research: this.researchDiagnostics(),
       megaproject: this.megaprojectDiagnostics(),
       escort: this.waveSystem.escortDiagnostics,
@@ -4928,9 +4987,98 @@ export class Game {
     return segments;
   }
 
+  /**
+   * TP-01 read-at-birth with migrate-with-compat: the substrate entry wins; the
+   * pre-substrate flag is read once as a fallback and staged as a converted
+   * entry, committed only at a lawful write moment. The legacy key itself is
+   * never erased (nothing loved is erased).
+   */
+  private readWreckAtBirth(): DredgeQueenWreckPayload | null {
+    const entry = this.tileStateStore
+      .readSnapshot(this.activeContract.id)
+      .entries.find((candidate) => candidate.kind === 'render' && candidate.id === DREDGE_QUEEN_WRECK_ENTRY_ID);
+    const stored = entry ? parseDredgeQueenWreckPayload(entry.payload) : null;
+    if (stored) return stored;
+    const legacy = this.readLegacyWreckFlag();
+    if (legacy) this.stageWreckEntry(legacy);
+    return legacy;
+  }
+
+  private readLegacyWreckFlag(): DredgeQueenWreckPayload | null {
+    try {
+      const saved = JSON.parse(localStorage.getItem(DREDGE_QUEEN_WRECK_KEY) ?? 'null') as
+        | { e5W6Wreck?: unknown; x?: unknown; z?: unknown }
+        | null;
+      if (!saved || saved.e5W6Wreck !== true || typeof saved.x !== 'number' || typeof saved.z !== 'number') return null;
+      if (!Number.isFinite(saved.x) || !Number.isFinite(saved.z)) return null;
+      return { x: saved.x, z: saved.z };
+    } catch {
+      return null;
+    }
+  }
+
+  private stageWreckEntry(wreck: DredgeQueenWreckPayload): void {
+    this.tileStateStore.stageWrite(this.activeContract.id, {
+      kind: 'render',
+      id: DREDGE_QUEEN_WRECK_ENTRY_ID,
+      payload: { x: wreck.x, z: wreck.z },
+      schemaVersion: TILE_STATE_SCHEMA_VERSION,
+    });
+  }
+
+  private writeWreckAtCeremony(wreck: DredgeQueenWreckPayload): void {
+    this.stageWreckEntry(wreck);
+    // The crew-quits ceremony is a named write moment (tile-persistence Q3): the
+    // hulk must survive an immediate reload without waiting for the run to end.
+    this.tileStateStore.commitAtRunEnd();
+  }
+
+  /**
+   * TP-02 plant action (?debug-gated, one map, once): stages the sim entry at the
+   * hero's feet; it lands at run end and takes effect at the NEXT tile birth —
+   * persistence never reaches into the live sim.
+   */
+  private plantGreenWaypoint(): void {
+    if (this.activeContract.id !== GREEN_WAYPOINT_CONTRACT_ID) return;
+    const alreadyHeld =
+      this.greenWaypointStagedThisRun ||
+      this.tileStateStore
+        .readSnapshot(this.activeContract.id)
+        .entries.some((entry) => entry.kind === 'sim' && entry.id === GREEN_WAYPOINT_ENTRY_ID);
+    const position = this.localActor.group.position;
+    if (alreadyHeld) {
+      this.vfx.floatText(position, 'The green already holds here', E1_RIVERBANK_GREEN);
+      return;
+    }
+    this.tileStateStore.stageWrite(this.activeContract.id, {
+      kind: 'sim',
+      id: GREEN_WAYPOINT_ENTRY_ID,
+      payload: {
+        x: Math.round(position.x * 100) / 100,
+        z: Math.round(position.z * 100) / 100,
+        r: Balance.persistence.greenWaypointRadius,
+      },
+      schemaVersion: TILE_STATE_SCHEMA_VERSION,
+    });
+    this.greenWaypointStagedThisRun = true;
+    this.vfx.floatText(position, 'The green takes root — it will hold', E1_RIVERBANK_GREEN);
+  }
+
+  /** Render mounts for persisted entries, once at birth (Loader Contract). */
+  private mountTileStateRenderEntries(): void {
+    for (const entry of this.tileStateStore.readSnapshot(this.activeContract.id).entries) {
+      if (entry.kind !== 'sim' || entry.id !== GREEN_WAYPOINT_ENTRY_ID) continue;
+      const payload = parseGreenWaypointPayload(entry.payload);
+      if (!payload || this.greenWaypointMounted) continue;
+      this.greenWaypointMounted = payload;
+      this.scene.add(createGreenWaypointSwatch(payload));
+    }
+  }
+
   private endRun(): void {
     this.deathPending = false;
     if (this.state.current === 'dead') return;
+    this.tileStateStore.commitAtRunEnd();
     this.playerPauseActive = false;
     this.state.transition('dead');
     const economySummary = summarizeLog(this.economy.log);
