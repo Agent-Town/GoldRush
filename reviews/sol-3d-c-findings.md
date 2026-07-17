@@ -1,5 +1,46 @@
 # SOL 3D-C — 3D pilot findings
 
+## Campaign landmark pack 01 — E5 Regatta body handoff
+
+Branch: `sol/campaign-landmarks-e5-regatta`
+
+Base: `ce7c3843611286e5158f50cc2f7949e88100621e`
+
+Verdict: **READY-FOR-GATES — eight mount-agnostic Regatta landmark bodies are production-complete; 3D-D can backfill these exact IDs without any terrain-contract rewrite from this branch.**
+
+### Mount ID list
+
+1. `start-line-rig`
+2. `finish-line-rig`
+3. `northwest-buoy-line-anchor`
+4. `midcourse-buoy-line-anchor`
+5. `northeast-buoy-line-anchor`
+6. `spectator-raft-port`
+7. `spectator-raft-starboard`
+8. `judges-tower`
+
+### Source ladder and composition
+
+- Seven bodies reuse shipped E5 harbor geometry: the hauled dinghy, harbor lantern, and rope-buoy rack. The judge's tower derives the lighthouse/Claim Boat working-harbor vocabulary. No proxy body was promoted as production art.
+- The pack is deliberately four functional families: paired start/finish rigs, three course anchors, paired spectator rafts, and one judge's tower. Family repetition is course language; teal/brass signals and working attachments distinguish roles without inventing eight unrelated silhouettes.
+- Proposed placements are evidence-only while the MOUNT INTERLOCK is pending. `regatta-terrain-contract.json` remains unchanged with zero mounts and no `landmarkPack` field.
+
+### Production gate
+
+| Check | Result |
+| --- | --- |
+| Bodies | 8 separate GLBs; one mesh/primitive/material/image each |
+| Triangle budget | 1,156–2,028 triangles per body; all below 3,000 |
+| Shared atlas | one embedded 1024 x 1024 E5 atlas shared byte-for-byte by all eight GLBs |
+| Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
+| Determinism | 8/8 saved-BLEND re-exports byte-identical and semantic-identical |
+| Source tiers | reuse 7, derive 1, build-new 0 |
+| Fresh-reference law | all boards record `origin/main@ce7c38436112…` |
+| Repo gates | `npx tsc --noEmit` and `npm run build` green |
+| Visual QA | revised labeled four-angle and run-camera evidence pass; no visible holes, tearing, floating parts, broken joins, or unfinished wrap |
+
+The first evidence pass was too dark and its camera-orbit layout occluded the repeated families. Before delivery, the verdict water/lighting was matched back toward the Regatta sculpt board, edge placements were pulled into frame, and the inspection became a true per-body rotation with stable family order and named angles.
+
 ## F-3DC-05 — pale-wagon Town lighting fix
 
 Branch: `sol/pale-wagon-lighting-fix`
