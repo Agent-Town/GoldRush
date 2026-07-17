@@ -4,15 +4,15 @@ Pipeline per map: CONTRACT → MASK → SCULPT (3D-D) → WIRE → **OWNER TEST*
 
 | era | map | contract | sculpt | wired | OWNER VERDICT |
 |---|---|---|---|---|---|
-| E2 | ? | — | — | — | — |
-| E2 | ? | — | — | — | — |
-| E2 | ? | — | — | — | — |
-| E3 | ? | — | — | — | — |
-| E3 | ? | — | — | — | — |
-| E3 | ? | — | — | — | — |
-| E4 | ? | — | — | — | — |
-| E4 | ? | — | — | — | — |
-| E4 | ? | — | — | — | — |
+| E2 | The Trestle | ✓ | — | — | — |
+| E2 | The Pressure Garden | ✓ | — | — | — |
+| E2 | The Incline | ✓ | — | — | — |
+| E3 | Blackout Ridge | ✓ | — | — | — |
+| E3 | The Fairground | ✓ | — | — | — |
+| E3 | Moth Season | ✓ | — | — | — |
+| E4 | The Long Road | ✓ | — | — | — |
+| E4 | Gusher County | ✓ | — | — | — |
+| E4 | The Boneyard | ✓ | — | — | — |
 | E5 | The Flotilla | — | — | — | — |
 | E5 | Stillwater | — | — | — | — |
 | E5 | (third per chapter) | — | — | — | — |
@@ -32,4 +32,4 @@ Pipeline per map: CONTRACT → MASK → SCULPT (3D-D) → WIRE → **OWNER TEST*
 | E10 | The Last Claim | — | — | — | — |
 | E10 | The River | — | — | — | — |
 
-Names for E2–E4 fill in when their era-batch tasks extract them from the storybook chapters (authored by fires per the ladder). SPECIAL CASES flagged at contract time: Low Orbit (zero-G engine slice), Echo Canyon (broadcast-mirror ↔ playbook slices), The Eclipse (event cycle), Seed Run/Old Canal (persistence consumers — substrate SHIPPED), The Last Claim (Ark-deck class — rides the Ark-dressing arc, not a terrain sculpt), The River (E1-claim variant — likely NO new sculpt; the Charter Press authors it at CP-05).
+E2–E4 names extracted from the storybook chapters and their contracts+masks landed 2026-07-18 (campaign/e2-e4-extras). SPECIAL CASES flagged at contract time: The Long Road (moving-claim consumer — Hauler-only basing, convoy advance, rest-stop anchorage), Gusher County (wild-derrick eruption/cap-to-claim/blowout-wave consumer), The Boneyard (salvage-race consumer + sleeper wake trigger), Low Orbit (zero-G engine slice), Echo Canyon (broadcast-mirror ↔ playbook slices), The Eclipse (event cycle), Seed Run/Old Canal (persistence consumers — substrate SHIPPED), The Last Claim (Ark-deck class — rides the Ark-dressing arc, not a terrain sculpt), The River (E1-claim variant — likely NO new sculpt; the Charter Press authors it at CP-05).

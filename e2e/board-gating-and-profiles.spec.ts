@@ -96,6 +96,13 @@ test('the board gates future-era contracts and counts only playable profiles', a
     await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
     await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
   }
+  // campaign/e2-e4-extras: the E4 extras carry boardRows but their era is locked,
+  // so on a fresh frontier profile they must sit inert like the E5 extras above.
+  for (const id of ['e4-long-road', 'e4-gusher-county', 'e4-boneyard']) {
+    await page.getByTestId(`contract-page-dot-${id}`).click();
+    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
+    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
+  }
   await page.getByTestId('contract-page-dot-e2-hill-mine').click();
   await expect(page.getByTestId('contract-card-e2-hill-mine')).toHaveAttribute('data-contract-locked', 'true');
   await expect(page.getByTestId('contract-lock-e2-hill-mine')).toHaveText('The Steamworks awaits — raise the Stamp Mill.');
@@ -121,6 +128,15 @@ test('the board gates future-era contracts and counts only playable profiles', a
   // graduation to a board dot is independent of the scoreboard unlock).
   await expect(page.getByTestId('contract-card-e2-pressure-garden')).toHaveAttribute('data-contract-locked', 'true');
   await expect(page.getByTestId('contract-launch-e2-pressure-garden')).toBeDisabled();
+  // campaign/e2-e4-extras: every live-era extra stays lock-gated behind its
+  // secured:<predecessor> chain (trestle←hill-mine, incline←pressure-garden), and the
+  // E3 extras stay era-locked — none may offer a launch path on this epoch-2 seed.
+  for (const id of ['e2-trestle', 'e2-incline', 'e3-blackout-ridge', 'e3-moth-season', 'e3-fairground']) {
+    await page.getByTestId(`contract-page-dot-${id}`).click();
+    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
+    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
+  }
+  await page.getByTestId('contract-page-dot-e2-pressure-garden').click();
   // pressure-garden is now a real (locked) board page, so clicking its dot navigates to it;
   // the gating invariant is the DENOMINATOR — total pages == playable-profile count (future-era gated out).
   await expect(page.getByTestId('contract-page-count')).toHaveText(new RegExp(`^\\d+ / ${playableCount}$`));
