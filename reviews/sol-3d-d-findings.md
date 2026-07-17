@@ -289,6 +289,56 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E7 Relay Valley terrain wave
+
+### F-3D-D-65 — Relay Valley is a line-of-sight placement puzzle, not four decorative towers
+
+`assets/contracts/epoch-7-signal/mask-tables/e7-relay-valley.json` is the only coordinate authority. The two published h5 ridge bands carry four guarded 10 × 10 m relay pads in two visible pairs. Existing `relay-tower.glb` bodies and thin teal LOS spans appear only in the verdict scene, are removed before save/export, and create no runtime mount or placement authority. The central ridge dead gap remains visibly unbridged. Movement, collision, combat, spawns, fog gating, and `Terrain.visualY` remain planar and factory-owned.
+
+### F-3D-D-66 — Exact ridge masks need eroded shoulders outside their authority
+
+The first sculpt held each entire ridge rectangle at h5 but exposed its edge as a hard slab. The corrected height function still resolves the published ridge rectangles and all four relay pads exactly, while a wider broken-shale shoulder lives outside those rectangles and carries the descent into the h0 teaching valley. Independent triangle-surface sampling covers 2,145 points per pad and reports 0.00 m maximum deviation for B1 through B4.
+
+### F-3D-D-67 — Dead zones belong in the terrain read without becoming gameplay fog
+
+The ridge gap, west fog pocket, and east fog pocket are shallow, low-frequency render basins with quiet teal-gray hatch in the painted atlas. The teaching patrol loop is a worn punch-tape trace. These marks make the authored pressure map readable from above but never instantiate volumetric fog, blockers, AI paths, damage, or build restrictions. The mask board independently labels 4 build pads, 2 h5 ridges, 3 dead zones, and 1 patrol loop from the published table.
+
+### F-3D-D-68 — The E7 kit's pale bands become a cyclorama unless the panorama is rebuilt vertically
+
+The first Panorama v2 attempt wrapped the kit's broad pale values into a gray ceiling. A second candidate still left a continuous luminous far-ridge belt; a fresh blind gate correctly returned `NO-SHIP` because it read as a bowl wall. The final atlas uses a quiet walnut-to-teal vertical dusk gradient, four small asymmetric weather marks, no painted duplicate ridge profile, and darker independently broken physical ridge silhouettes. The corrected fresh gate returns `SHIP` and explicitly answers `DISTANCE`, never wall or ceiling.
+
+### F-3D-D-69 — Signal warmth must remain a hardship accent
+
+The shipped E7 kit supplies walnut, honey-glass, and agent-teal vocabulary. Relay Valley uses those accents only at the four working sites and two exhausted valley lamps; engraved shale, cable trenches, soot, rubble, and dead-zone hatch own the larger image. The final blind gate answers `FIGHT`, not holiday, while the towers and LOS links remain readable at the run camera.
+
+## E7 Relay Valley gate state
+
+- Terrain `.blend` / GLB / 2048² atlas / contract: PASS
+- Terrain GLB: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Separate Panorama v2 `.blend` / GLB / 2048² atlas / contract: PASS
+- Panorama GLB: 3,084 triangles against 4,000, one mesh, one primitive, one material, one embedded atlas: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for terrain and panorama GLBs: PASS
+- Four relay build-pad triangle surfaces, 2,145 independent samples each, maximum deviation 0.00 m: PASS
+- Exact published build/ridge/fog/patrol masks and no water: PASS
+- Panorama non-interference and empty landmark mounts: PASS
+- Mood A/B, identical-camera geometry, owner, mask, and Panorama v2 distance boards: PASS
+- First blind panorama verdict: NO-SHIP; pale cyclorama band corrected
+- Fresh final unprimed visual verdict: SHIP; fight / ridge chains / distance / mask counts all pass
+- Independent `codex review --uncommitted`: attempted; CLI exited after repository inventory without a review verdict, so it is not counted as a gate
+- Integrated `npm run build`: PASS
+- `src/`, simulation, runtime registry, masks, and landmark edits: none
+
+## E7 Relay Valley owner-verdict images
+
+- `artifacts/map-rebuild-spike/relay-valley-owner-verdict.png`
+- `artifacts/map-rebuild-spike/relay-valley-mood-ab.png`
+- `artifacts/map-rebuild-spike/relay-valley-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/relay-valley-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/relay-valley-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/relay-valley-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## E6 Glow Mesa terrain wave
 
 ### F-3D-D-59 — The published E6 table is the only planar authority
