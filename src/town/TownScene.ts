@@ -548,7 +548,7 @@ export class TownScene {
       this.townNight ? 0.62 : 1.15,
     );
     fill.name = 'TownFill';
-    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 2.2);
+    const sun = new THREE.DirectionalLight(this.townNight ? '#bfa3ff' : '#ffd28a', this.townNight ? 0.82 : 1.85);
     sun.name = 'TownSun';
     sun.position.set(-22, 18, -18);
     sun.castShadow = true;

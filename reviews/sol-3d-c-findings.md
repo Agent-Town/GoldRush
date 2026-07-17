@@ -1,5 +1,26 @@
 # SOL 3D-C — 3D pilot findings
 
+## F-3DC-05 — pale-wagon Town lighting fix
+
+Branch: `sol/pale-wagon-lighting-fix`
+
+Base: `4180433c298ff1a7105c9875f68121a5837a359d`
+
+Verdict: **READY-FOR-GATES — the pale canvas now retains visible rib and timber contrast at the gameplay camera through a single Town-lighting correction; no wagon, building, plate, atlas, era state, or night light changed.**
+
+The target was a warm parchment canvas with readable structure, not a dark wagon. The smallest owning-surface fix lowers only the daytime `TownSun` intensity from `2.2` to `1.85`; the `0.82` night value and `TownFill` remain unchanged. Fresh E1 and E4 runtime captures carry the exact `origin/main@4180433c…` base SHA.
+
+| Check | Result |
+| --- | --- |
+| E1 full-frame luminance | `155.582 → 151.988` (`-3.594`) |
+| E1 wagon crop luminance | `139.778 → 135.868` (`-3.910`), fixed `90×70` crop at `(535,205)` |
+| Static visual read | canvas stays warm; cover ribs, timber bed, and neighboring roofs recover value separation |
+| E4 ensemble | motor-era town remains warm and readable; no cadence/accretion geometry changed |
+| Scope | one source-line change plus fresh runtime A/B evidence |
+| Gates | `npm run build` green; town-era-switch + fresh-scene-render-state `16/16` desktop/mobile; zero capture errors |
+
+At this boundary, `origin/main` contains only the older `plate-e8-boss-salvage-kings-claw.png` and `plate-e9-boss-old-digger.png` references. The art-batch-026 production/damage-state plates named by the active grant are absent, so both boss bodies remain correctly gated.
+
 ## E9 Basin Rim plate
 
 Branch: `sol/basin-rim-e9-plate`
