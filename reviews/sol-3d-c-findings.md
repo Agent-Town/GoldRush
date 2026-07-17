@@ -1,5 +1,31 @@
 # SOL 3D-C — 3D pilot findings
 
+## Homemaker-9000 production model
+
+Branch: `sol/homemaker-9000-3d`
+
+Base: `f50cc240618ddc23b88efee1f27d4cf2035a04ab`
+
+Tip: exact Homemaker-9000 SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the E6 boss is a warm, funny, house-sized appliance whose exact `VAC / RACK / CORE` components carry independent damage states and whose combined Act-3 state builds one debris chair, sits, and powers down.**
+
+Fresh town references were rendered directly from tracked GLBs at the full base SHA above. The board shows the current E4 southern boulevard and motor caravan, the E5 submerged square, the complete E6/E7 Mesa towns, and the accepted empty E8 Dome Commons; no prior PNG is a working input. The boss's intact/final gameplay board uses the current playable 128 x 128 Glow Mesa terrain, the canonical Isotope Kitchen stake probe `(0, -32, h=1)`, and the exact Three.js production camera mapped into Blender Z-up coordinates.
+
+| Runtime component | Morph | Read at gameplay distance |
+| --- | --- | --- |
+| `vac` | `Damage_DroppedVac` | hose slumps, floor head drops, and casing shards settle |
+| `rack` | `Damage_SpentRack` | seven-toast roof rack detaches and lands spent beside the machine |
+| `core` | `Damage_ChairPose` | body sits back, feet extend, debris chair opens from its hidden basis bundle, and a dark shutter closes the amber core |
+
+- Plate source: `assets/raw/plate-e6-boss-homemaker-9000.png`, SHA-256 `7d308cb43e4d0c6a869363b89e28f4e63c1db5df4205b8b2b8c682d36c88b7ec`.
+- GLB: 7,644 / 12,000 triangles; three exact nodes, meshes, and primitives; one non-emissive material and one embedded 1024 x 1024 PNG; zero cameras, lights, animations, or helper nodes.
+- Bounds: 7.2 long x 2.991214 deep x 6.514197 high; ground `Y = 0`; base center `X/Z = 0`.
+- GLB SHA-256: `3dc03cfafaab0645dc44350843ade2ede19e5ddf4f1a55519afbabeebc649ba9`.
+- Chair geometry expands from a 0.023816-unit hidden basis span to 3.969292 units. Every final morph remains above the floor; the combined Act-3 image changes 10.2731% of pixels above 16/255.
+- Saved-BLEND re-export is byte-identical and every parsed semantic key matches. `npm run build` passes.
+- Independent Codex review found three evidence defects and all are closed: the Three.js camera is now mapped to Blender Z-up, the playable Glow Mesa terrain replaces the town-plate stand-in, and intact/final chair states are shown at identical gameplay distance.
+
 ## Dredge-Queen production model v2
 
 Branch: `sol/dredge-queen-3d-v2`
