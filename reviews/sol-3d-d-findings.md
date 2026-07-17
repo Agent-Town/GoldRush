@@ -289,6 +289,56 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E8 The Mare Claim terrain wave
+
+### F-3D-D-70 — The palette note is a material contract, not a colour suggestion
+
+The E8 bundle's locked palette governs this wave literally: silver-and-teal over parchment, warm-grey stippled engraving rather than cold photoreal regolith, a soft blue-green Earth cameo, brass and glass dome language, and vacuum silence expressed as negative space. The terrain atlas derives local engraved ink from `assets/processed/kit-era-8.png` and `assets/raw/plate-e8-bld-set.png`, but does not wrap either illustration across the ground. An early verdict still exposed repeated source-like circles and stamped dots; the final atlas confines plate-derived high-pass ink to unequal patches and uses broken cross-hatching for the governing surface grain.
+
+### F-3D-D-71 — The authored mask creates the composition and remains the authority
+
+`assets/contracts/epoch-8-orbital/mask-tables/e8-mare-claim.json` is copied exactly into the adjacent terrain contract. Its four rectangular h6 bands form the crater rim; its h0 mare remains quiet; the named lava-tube rectangle contains the sole negative-height collapse; and all seven build rectangles are independently sampled on the exported triangle surface. Each returns 2,145 samples with 0.00 m maximum deviation. The revised tube uses a long throat and raised back crescent inside the published rectangle so it reads as an entrance rather than another round impact. Movement, collision, spawns, gravity, atmosphere, build rules, water classification, and `Terrain.visualY` remain code-owned and unchanged.
+
+### F-3D-D-72 — Landmark context can prove scale without breaking the freeze
+
+The verdict scene reuses the existing Dome Commons plate only as a temporary render helper and adds temporary launch and mass-driver cues. Review rejected the first thin line as insufficient evidence, so the final mass driver uses two rails, repeated sleepers, and structural feet while staying absent from the saved terrain blend and GLB. No landmark body, mount id, registry entry, or runtime placement was authored or changed. The terrain/panorama pair therefore preserves the standing landmark freeze.
+
+### F-3D-D-73 — Vacuum Panorama v2 needs physical silhouettes and directional comfort
+
+The panorama is a separate render-only GLB with a terrain-matched rectangular apron, independent near and far lunar ridge profiles, and a mostly empty vacuum ring. No atmospheric haze or clouds fill the negative space. Two blind reviews rejected the first horizon because the exact foreground rim and smooth distant bands collapsed into one wall read. The final evidence camera shows the authored rim as a nearby crater corner while sharper, non-parallel ridge silhouettes remain visible beyond it. Earth appears once on the Mare-facing side and nowhere in the opposite Far Side view; the panorama contract records that directional rule explicitly.
+
+### F-3D-D-74 — Countable visual evidence must be as exact as the JSON
+
+The first mask board technically contained every label but merged the tube/debris legend and collided `R1/B1` and `B7/Q1`. The final board gives tube and debris separate rows, relocates all rim labels, and separates the rail label from its overlapping build footing. A fresh unprimed review of the corrected mood, owner, panorama-distance, Earth-side, and mask boards returns `SHIP`. The earlier `NO-SHIP` verdicts are retained as the reason the atlas, tube, rail, horizon, and board changed rather than being explained away.
+
+## E8 Mare Claim gate state
+
+- Terrain `.blend` / GLB / one embedded 2048² atlas / adjacent contract: PASS
+- Terrain GLB: 32,768 triangles, one mesh, one primitive, one material: PASS
+- Separate Panorama v2 `.blend` / GLB / one embedded 2048² atlas / adjacent contract: PASS
+- Panorama GLB: 3,072 triangles, one mesh, one primitive, one material: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Exact published mask copy; four h6 rim bands; h0 mare; named lava-tube collapse: PASS
+- Seven build rectangles, 2,145 exported-surface samples each, maximum deviation 0.00 m: PASS
+- Earth-side rule and opposite Far Side absence: PASS
+- Mood A/B, identical-camera geometry, owner, mask, Panorama v2 distance, and Earth-side boards: PASS
+- Fresh final unprimed visual verdict: SHIP
+- Independent `codex review --uncommitted`: attempted; the reviewer recursively launched another `codex review` instead of returning a verdict, so both were terminated and this is not counted as a gate
+- Landmark freeze preserved; no landmark assets or mounts authored
+- `src/`, simulation, masks, runtime registry, and main edits: none
+
+## E8 Mare Claim owner-verdict images
+
+- `artifacts/map-rebuild-spike/mare-claim-owner-verdict.png`
+- `artifacts/map-rebuild-spike/mare-claim-mood-ab.png`
+- `artifacts/map-rebuild-spike/mare-claim-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/mare-claim-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/mare-claim-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/mare-claim-panorama-distance-gate.png`
+- `artifacts/map-rebuild-spike/mare-claim-earth-side-gate.png`
+
+READY-FOR-GATES
+
 ## E7 Relay Valley terrain wave
 
 ### F-3D-D-65 — Relay Valley is a line-of-sight placement puzzle, not four decorative towers
