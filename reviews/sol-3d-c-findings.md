@@ -70,6 +70,30 @@ Verdict: **READY-FOR-GATES — the E9 Old Digger now has a real unequal-bucket-w
 - The crossed-pickaxes crest is unchanged between states: redemption corrects the work, not the machine's history.
 - Saved-BLEND re-export is byte-identical and every parsed semantic key matches. GLB SHA-256 `4152727d1866d203a80a735a83525c26c263aef663261e146a616d727ab940df`.
 - Fresh plate A/B, turntable, isolated-redemption, and Basin Rim production-camera boards are rendered from base `32715b4d2f54…`; no older artifact render is an input.
+## E8 Dome Commons orbital accessory pass
+
+Branch: `sol/e8-orbital-era-props`
+
+Base: `00200c722be8ec618a156b775f2f35f035bc5158`
+
+Tip: exact E8 accessory SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — Dome Commons now has the E8 bundle's complete working perimeter: a landed tripod, a surveyed crater-glass rim, and one pictogram-only flag line carrying all eight era crests, while the Pan stage, actor routes, and every civic/work pad remain open.**
+
+| Bundle requirement | Production answer | Contract |
+| --- | --- | --- |
+| Crater rim set | glassy teal impact lens, irregular boulder lip, scorched collar, and paired brass/teal survey stakes | 484 triangles; 2.70 x 2.31 footprint; SHA `9a6648363a35…` |
+| Lander legs | three splayed silver struts, regolith shoes, teal knee collars, brass crown, and capped service drop | 648 triangles; 2.69 x 2.33 footprint; SHA `46e858c249c6…` |
+| Town-journey flag line | eight distinct, colored, geometry-built crests—pan / stack / bolt / wheel / tide / atom / relay / Earth—with zero letters | 996 triangles; 4.76 span; SHA `b793ff8938a8…` |
+
+### Site reset and placement gate
+
+- `era-props.e8.json` declares `floodReset: true`: E5 harbor dressing does not silently survive the E8 site break.
+- All three assets share the same 1024 x 1024 atlas bytes, with one double-sided, non-emissive material per GLB; zero cameras, lights, animations, helpers, or invented anchors.
+- Every saved-BLEND re-export is byte-identical and every parsed semantic key matches. The largest asset remains four triangles below the 1,000-triangle accessory ceiling.
+- Numeric envelopes are conservative: route clearances `7.71 / 10.58 / 9.63`, pad clearances `2.62 / 5.37 / 3.94`, plaza clearances `10.92 / 13.89 / 13.32`, and dome-edge margins `2.87 / 1.96 / 2.54` units for flags / crater / legs respectively.
+- The source plate, population, Pan mount, layout, and runtime loader are unchanged. The manifest is the only mount interface; all evidence lights, camera, Earth cameo, audit floor, and clearance curves remain render-only.
+- Fresh E1-E7 working references and the E8 baseline were rendered directly from current GLBs on the full base SHA above. The visual audit includes the locked before/after, four site angles, a top-down route/pad envelope proof, and a close pack render.
 
 ## E9 Basin Rim plate
 
