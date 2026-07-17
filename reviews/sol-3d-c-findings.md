@@ -1,5 +1,43 @@
 # SOL 3D-C — 3D pilot findings
 
+## Great landmark backlog 01 — E6 Glow Mesa body handoff
+
+Branch: `sol/campaign-landmarks-e6-glow-mesa`
+
+Base: `9e324ce111d27550fddf63ce1401b4262a1b30e3`
+
+Verdict: **READY-FOR-GATES — five mount-agnostic Glow Mesa bodies are production-complete. The exact IDs below are ready for 3D-D's mount interlock; the merged terrain contract remains untouched.**
+
+### Mount ID list
+
+1. `mesa-starstone-derrick`
+2. `six-vein-control-pylon`
+3. `isotope-cooling-rack`
+4. `west-herd-glow-gate`
+5. `east-herd-glow-gate`
+
+### Source ladder and composition
+
+- The two herd gates reuse the shipped E6 glow-fence body. The derrick, control pylon, and cooling rack derive from the shipped E6 kit, reactor-dome plate, isotope-kitchen plate, and inherited pipe vocabulary. No proxy mesh or new art source was promoted.
+- The five-body composition is intentionally peripheral: paired open herd gates articulate the legal scarp entries, the cooling rack and six-vein pylon make the lower service edge readable, and the tall derrick terminates the warehouse side. The six-vein center, five build rectangles, and two fixture rectangles remain open.
+- Proposed placements exist only in verdict evidence. `glow-mesa-terrain-contract.json` remains byte-for-byte unchanged with `landmarkMounts: []`; 3D-D owns final transforms and asset-field backfill.
+
+### Production gate
+
+| Check | Result |
+| --- | --- |
+| Bodies | 5 separate GLBs; one mesh/primitive/material/image each |
+| Triangle budget | 600–2,424 triangles per body; all below 3,000 |
+| Shared atlas | one embedded 1024 x 1024 painted E6 atlas shared byte-for-byte by all five GLBs |
+| Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
+| Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
+| Source tiers | reuse 2, derive 3, build-new 0 |
+| Fresh-reference law | verdict board records `origin/main@9e324ce111d2…` |
+| Repo gates | `npm run build` and `npx tsc --noEmit` green |
+| Visual QA | final fresh-eyes verdict ACCEPT; gameplay-camera silhouettes and four-angle wraps pass |
+
+Independent critique rejected the first pass because dark slab gates, hard black plinths, and a weakly lit pylon collapsed at gameplay distance. The production revision split each gate into an open passage with rear bracing, changed every foundation to a grounded stone/earth read, attached the rack/pylon details, raised body-value contrast, and corrected the evidence fill to the actual positive-Y run camera. The deliberately open vein ring was retained.
+
 ## Campaign landmark pack 01 — E5 Regatta body handoff
 
 Branch: `sol/campaign-landmarks-e5-regatta`
