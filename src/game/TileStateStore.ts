@@ -1,5 +1,5 @@
 import { Balance } from './Balance';
-import { activeProfile, tileStateKey, type ProfileStorage } from './ProfileStorage';
+import { activeProfile, notifyProfileDataChanged, tileStateKey, type ProfileStorage } from './ProfileStorage';
 import type { ContractManifest } from '../meta/ContractFamilies';
 
 export const TILE_STATE_SCHEMA_VERSION = 1;
@@ -57,6 +57,7 @@ export class TileStateStore {
 
   commitAtRunEnd(): boolean {
     let committedAll = true;
+    let wrote = false;
     for (const [contractId, stagedEntries] of this.staged) {
       const current = this.readSnapshot(contractId);
       const entries = [...current.entries];
@@ -94,7 +95,9 @@ export class TileStateStore {
       }
       this.snapshots.set(contractId, snapshot);
       this.staged.delete(contractId);
+      wrote = true;
     }
+    if (wrote) notifyProfileDataChanged('tilestate');
     return committedAll;
   }
 }

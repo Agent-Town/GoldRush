@@ -19,6 +19,7 @@ export const TOWN_NAME_KEY = 'gr.town.name.v1';
 export const MEDALS_KEY = 'gr.medals.v1';
 export const FIRST_CLAIM_DONE_KEY = 'gr.firstClaim.done.v1';
 export const DREDGE_QUEEN_WRECK_KEY = 'gr.e5W6Wreck.v1';
+const TILE_STATE_DATA_KEY_PREFIX = 'tilestate.';
 export const DEFAULT_PROFILE_NAME = 'Robin';
 export const DEFAULT_DIFFICULTY_PRESET: DifficultyPresetId = 'trail';
 
@@ -221,6 +222,32 @@ export function profileDataKey(profileId: string, logicalKey: string): string {
 
 export function tileStateKey(profileId: string, contractId: string): string {
   return profileDataKey(profileId, `tilestate.${contractId}`);
+}
+
+export function profileDataKeys(
+  storage: ProfileStorage,
+  profileId: string,
+  candidates: Iterable<string> = [],
+): Set<string> {
+  const keys = new Set(PROFILE_DATA_KEYS);
+  for (const key of candidates) if (isTileStateDataKey(key)) keys.add(key);
+  if (!isEnumerableStorage(storage)) return keys;
+
+  const prefix = `${PROFILE_KEY}.${profileId}.`;
+  try {
+    for (let index = 0; index < storage.length; index += 1) {
+      const key = storage.key(index);
+      if (key?.startsWith(prefix)) {
+        const logicalKey = key.slice(prefix.length);
+        if (isTileStateDataKey(logicalKey)) keys.add(logicalKey);
+      }
+    }
+  } catch {}
+  return keys;
+}
+
+export function isTileStateDataKey(key: string): boolean {
+  return key.startsWith(TILE_STATE_DATA_KEY_PREFIX) && key.length > TILE_STATE_DATA_KEY_PREFIX.length;
 }
 
 export function bindProfileSession(profileId: string): void {
@@ -443,12 +470,17 @@ function isNativeStorage(storage: unknown): storage is Storage {
   return typeof Storage !== 'undefined' && storage instanceof Storage;
 }
 
-function notifyProfileDataChanged(key: string): void {
+export function notifyProfileDataChanged(key: string): void {
   try {
     globalThis.window?.dispatchEvent(new CustomEvent('gr:profile-data-changed', { detail: { key } }));
   } catch {
     // Storage still wrote; sync is best-effort.
   }
+}
+
+function isEnumerableStorage(storage: ProfileStorage): storage is ProfileStorage & Pick<Storage, 'key' | 'length'> {
+  const candidate = storage as Partial<Pick<Storage, 'key' | 'length'>>;
+  return typeof candidate.key === 'function' && typeof candidate.length === 'number';
 }
 
 function isRecord(value: unknown): value is Record<string, unknown> {
