@@ -1,0 +1,36 @@
+.charter-press-panel__modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 7px 0;
+}
+
+.charter-press-panel__modes button[aria-pressed='true'],
+.charter-lever__choice[aria-pressed='true'] {
+  color: #fff8e8 !important;
+  background: #5b8a8a !important;
+}
+
+.charter-press-panel__face[hidden] { display: none; }
+.charter-press-panel__full > [data-testid='press-stamp'] { width: 100%; color: #fff8e8 !important; background: #7a5a2e !important; }
+
+.charter-lever { display: grid; gap: 12px; }
+.charter-lever__intro { margin: 0; color: #5b3a1f; font-size: 12px; line-height: 1.4; }
+.charter-lever fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.charter-lever legend { margin-bottom: 6px; color: #5b3a1f; font-size: 13px; font-weight: 900; }
+.charter-lever__choices { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 6px; }
+.charter-lever__lands { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.charter-lever__choice { min-width: 0; min-height: 48px; padding: 6px !important; color: #5b3a1f; background: rgba(245, 230, 200, 0.88) !important; }
+.charter-lever__choice span { display: block; font-size: 12px; line-height: 1.15; }
+.charter-lever__choice small { display: block; margin-top: 4px; font-size: 10px; font-weight: 600; line-height: 1.25; }
+.charter-lever__land { text-align: left; }
+.charter-lever__land img { display: block; width: 100%; aspect-ratio: 16 / 9; margin-bottom: 6px; border-radius: 3px; object-fit: cover; }
+.charter-lever__press { min-height: 72px !important; color: #fff8e8 !important; background: #7a5a2e !important; font-size: 18px; letter-spacing: 0.04em; }
+.charter-lever__status { min-height: 16px; margin: -5px 0 0; color: #365c4d; font-size: 11px; font-weight: 900; text-align: center; }
+
+@media (max-width: 520px) {
+  .charter-lever__choices { grid-template-columns: 1fr; }
+  .charter-lever__lands { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .charter-lever__choice { min-height: 52px; }
+  .charter-lever__press { min-height: 76px !important; }
+}
