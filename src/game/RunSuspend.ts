@@ -12,6 +12,7 @@ import type { MegaprojectProjectState } from '../meta/Megaproject';
 import type { HarvestFutureState } from '../systems/HarvestSystem';
 import type { CombatSuspendSnapshot } from '../systems/CombatSystem';
 import type { CrawlerBossSuspendSnapshot } from '../systems/CrawlerBossSystem';
+import type { WrangleSuspendSnapshot } from '../systems/WrangleSystem';
 import { Balance } from './Balance';
 import { buildableDefs, type BuildableId } from './buildables';
 import { effectiveStats } from './StatSheet';
@@ -78,6 +79,7 @@ export type RunSuspendEnvelope = {
   harvest: HarvestSuspend | null;
   baron: BaronSuspend;
   crawlerBoss: CrawlerBossSuspendSnapshot | null;
+  wrangle?: WrangleSuspendSnapshot | null;
   megaproject: MegaprojectSuspend | null;
   runManager: RunManagerSuspendState;
   agent: AgentSuspend | null;
@@ -423,6 +425,7 @@ export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
       rocket: snapshot.baron.rocket,
     },
     crawlerBoss: snapshot.crawlerBoss,
+    wrangle: snapshot.wrangle ?? null,
     megaproject: snapshot.megaproject,
     runManager: snapshot.runManager,
     agent: snapshot.agent,
@@ -574,6 +577,7 @@ function captureSnapshot(
       : null,
     baron: captureBaron(game, at),
     crawlerBoss: game.crawlerBoss?.captureSuspend?.(at) ?? null,
+    wrangle: game.wrangle?.captureSuspend?.() ?? null,
     megaproject: captureMegaproject(game),
     runManager: runManager ?? { secured: false, rush: false, meta: deepClone(meta), payout: null },
     agent: captureAgent(game, at, buildings),
@@ -767,6 +771,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   if (game.goldPickups?.restoreSuspend?.(snapshot.goldPickups) === false) return restoreFailed('gold-pickups');
   game.syncStockpileHoldings?.();
   if (!restoreEnemyPool(game, snapshot.enemies)) return restoreFailed('enemies');
+  if (game.wrangle?.restoreSuspend?.(deepClone(snapshot.wrangle ?? null)) === false) return restoreFailed('wrangle');
   game.crawlerBoss?.restoreSuspend?.(deepClone(snapshot.crawlerBoss), snapshot.timeAlive);
   const hero = restoreHero(game, snapshot);
   if (game.combat?.restoreSuspend?.(snapshot.combat) === false) return restoreFailed('combat');
@@ -1150,6 +1155,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const harvest = isV2 ? decodeHarvest(value.harvest, reasons) : null;
   const baron = isV2 ? decodeBaron(value.baron, reasons) : emptyBaron();
   const crawlerBoss = isV2 ? decodeCrawlerBoss(value.crawlerBoss, reasons) : null;
+  const wrangle = isV2 ? decodeWrangle(value.wrangle, reasons) : null;
   const megaproject = isV2 ? decodeMegaproject(value.megaproject, reasons) : null;
   const runManager = isV2 ? decodeRunManager(value.runManager, reasons) : meta ? { secured: false, rush: false, meta, payout: null } : null;
   const agent = isV2 ? decodeAgent(value.agent, reasons) : null;
@@ -1203,6 +1209,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     harvest === undefined ||
     baron === null ||
     crawlerBoss === undefined ||
+    wrangle === undefined ||
     megaproject === undefined ||
     runManager === null
     || agent === undefined || controls === undefined
@@ -1242,6 +1249,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     harvest,
     baron,
     crawlerBoss,
+    wrangle: deepClone(wrangle),
     megaproject,
     runManager: deepClone(runManager),
     agent: deepClone(agent),
@@ -2330,6 +2338,42 @@ function emptyBaron(): BaronSuspend {
     standard: { planted: false, position: { x: 0, z: 0 }, dropElapsed: 0 },
     rocket: { nextVolleyIn: 0, telegraphElapsed: null, volleys: 0, targetKind: null, target: { x: 0, y: 0, z: 0 } },
   };
+}
+
+function decodeWrangle(value: unknown, reasons: string[]): WrangleSuspendSnapshot | null | undefined {
+  if (value === undefined || value === null) return null;
+  const reasonCount = reasons.length;
+  const record = requiredRecord(value, 'wrangle', reasons);
+  if (!record) return undefined;
+  const incomeElapsed = requiredNumber(record.incomeElapsed, 0, Balance.wrangle.penTickSeconds, 'wrangle.incomeElapsed', reasons);
+  const incomeGranted = requiredNumber(record.incomeGranted, 0, MAX_ECONOMY_AMOUNT, 'wrangle.incomeGranted', reasons);
+  const grantSerial = requiredInteger(record.grantSerial, 0, MAX_COUNT, 'wrangle.grantSerial', reasons);
+  const active: WrangleSuspendSnapshot['active'] = [];
+  const enemyIds = new Set<number>();
+  if (!Array.isArray(record.active) || record.active.length > MAX_ENEMIES) {
+    reasons.push(`wrangle.active must be an array of at most ${MAX_ENEMIES} entries`);
+  } else {
+    for (const [index, value] of record.active.entries()) {
+      const label = `wrangle.active[${index}]`;
+      const entry = requiredRecord(value, label, reasons);
+      if (!entry) continue;
+      const enemyId = requiredInteger(entry.enemyId, 0, MAX_ENEMIES - 1, `${label}.enemyId`, reasons);
+      const variantId = requiredString(entry.variantId, `${label}.variantId`, reasons, 64);
+      const state = entry.state === 'winding-down' || entry.state === 'exhausted' ? entry.state : null;
+      if (!state) reasons.push(`${label}.state is invalid`);
+      const remainingTicks = requiredInteger(entry.remainingTicks, 0, MAX_COUNT, `${label}.remainingTicks`, reasons);
+      const resets = requiredInteger(entry.resets, 0, MAX_COUNT, `${label}.resets`, reasons);
+      if (enemyId !== null && enemyIds.has(enemyId)) reasons.push(`${label}.enemyId is duplicated`);
+      if (enemyId !== null) enemyIds.add(enemyId);
+      if (state === 'winding-down' && remainingTicks === 0) reasons.push(`${label}.remainingTicks must be positive while winding down`);
+      if (state === 'exhausted' && remainingTicks !== 0) reasons.push(`${label}.remainingTicks must be zero when exhausted`);
+      if (enemyId !== null && variantId !== null && state && remainingTicks !== null && resets !== null) {
+        active.push({ enemyId, variantId, state, remainingTicks, resets });
+      }
+    }
+  }
+  if (reasons.length !== reasonCount || incomeElapsed === null || incomeGranted === null || grantSerial === null) return undefined;
+  return { incomeElapsed, incomeGranted, grantSerial, active };
 }
 
 function decodeCrawlerBoss(value: unknown, reasons: string[]): CrawlerBossSuspendSnapshot | null | undefined {

@@ -144,6 +144,13 @@ export const Balance = {
   decay: {
     clockAuraFactor: 0.9,
   },
+  wrangle: {
+    windDownSeconds: 8,
+    exhaustedSpeedMultiplier: 0.2,
+    captureRadius: 2.2,
+    penTickSeconds: 15,
+    penGoldPerMachine: 1,
+  },
   agent: {
     homeX: -1.8,
     homeZ: 10.7,

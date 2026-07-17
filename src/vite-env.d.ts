@@ -235,6 +235,7 @@ interface ThreeGameDiagnostics {
     };
   };
   decay: ReturnType<import('./systems/DecaySystem').DecayScheduler['diagnostics']>;
+  wrangle: ReturnType<import('./systems/WrangleSystem').WrangleSystem['diagnostics']>;
   run: {
     secured: boolean;
     rush: boolean;
@@ -1001,6 +1002,10 @@ interface Window {
     driveVehicle: (x: number, z: number) => boolean;
     advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => void;
     decay: import('./systems/DecaySystem').DecayScheduler;
+    wrangle: {
+      capture: () => boolean;
+      diagnostics: () => ReturnType<import('./systems/WrangleSystem').WrangleSystem['diagnostics']>;
+    };
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;
       simTicks: number;
@@ -1115,6 +1120,7 @@ interface Window {
       eliteKind?: 'baron' | 'railcar';
       variantId?: string;
       variantLabel?: string;
+      wrangleState?: import('./systems/WrangleSystem').WrangleState;
       boltDamageMult: number;
       bossGroupId?: string;
       bossGroupSize: number;

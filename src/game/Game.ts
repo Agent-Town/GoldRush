@@ -178,6 +178,7 @@ import { HarvestSystem } from '../systems/HarvestSystem';
 import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, powerWireId, type PowerGraphCommand, type PowerGraphDefinition } from '../systems/PowerGraph';
 import { UiBridge, type UiSnapshot } from '../systems/UiBridge';
 import { WaveSystem, type SpawnPackOptions } from '../systems/WaveSystem';
+import { WrangleSystem } from '../systems/WrangleSystem';
 import { CombatVfx } from '../systems/CombatVfx';
 import { Vfx } from '../systems/Vfx';
 import { TargetingSystem, type BuildingTarget, type GoldHolding } from '../systems/TargetingSystem';
@@ -419,6 +420,8 @@ export class Game {
       const actor = this.nearestActorTo(origin);
       if (this.activeWeapon === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
     },
+    (enemy, amount, died) => this.wrangle.onDamage(enemy, amount, died),
+    (enemy) => !this.wrangle.isHarmless(enemy),
   );
   private readonly prospector = new ProspectorEmbodiment((position, text, color) => this.vfx.floatText(position, text, color));
   private readonly buildSystem: BuildSystem;
@@ -504,6 +507,19 @@ export class Game {
   // here, before any system builds, and never again mid-run (Loader Contract).
   private readonly tileStateStore = new TileStateStore(localStorage);
   private readonly activeContract = bornContract(this.tileStateStore);
+  private readonly wrangle = new WrangleSystem(
+    this.activeEpoch.id === 'epoch-6-atomic',
+    this.activeContract.id,
+    this.decay,
+    this.enemies,
+    this.economy,
+    this.tileStateStore,
+    (position) => this.vfx.floatText(position, 'EXHAUSTED — WRANGLE', '#83ded7'),
+    (enemy, penTotal) => {
+      this.combat.presentFreedEnemy(enemy);
+      this.vfx.floatText(enemy.position, `CAUGHT — PEN ${penTotal}`, '#83ded7');
+    },
+  );
   private readonly deepwaterClaim = createDeepwaterClaimTile(this.activeContract);
   private deepwaterCorsairWavesSpawned = 0;
   private readonly dayNightCycle = createDayNightCycle(this.activeContract);
@@ -1359,6 +1375,10 @@ export class Game {
         },
         advanceSim: (seconds: number, onTick?: (sample: GrSimulationTickSample) => void) => this.advanceSimForTest(seconds, onTick),
         decay: this.decay,
+        wrangle: {
+          capture: () => this.wrangle.tryCapture(this.actionActor.group.position),
+          diagnostics: () => this.wrangle.diagnostics(),
+        },
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
         damSurge: () => this.damSurge?.diagnostics() ?? null,
@@ -1498,6 +1518,7 @@ export class Game {
                 eliteKind: enemy.eliteKind ?? undefined,
                 variantId: enemy.variantId ?? undefined,
                 variantLabel: enemy.variantLabel ?? undefined,
+                wrangleState: this.wrangle.stateOf(enemy) ?? undefined,
                 boltDamageMult: enemy.boltDamageMult,
                 bossGroupId: enemy.bossGroupId ?? undefined,
                 bossGroupSize: enemy.bossGroupSize,
@@ -1898,6 +1919,7 @@ export class Game {
       this.damSurge?.update(this.timeAlive);
       if (this.finishPendingDeath()) return true;
       this.waveSystem.update(this.timeAlive);
+      this.wrangle.update(simDelta, this.timeAlive);
       if (this.activeContract.twist.baron?.variantId === 'dynamo_crawler' && this.baronBeatenThisRun) {
         this.crawlerBoss.restoreWreck(this.baronStandardPosition);
       }
@@ -1951,13 +1973,13 @@ export class Game {
         simDelta,
         this.visibleActorPositions(),
         (enemy) => {
-          this.combat.handleEnemyContact(enemy);
+          if (!this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
-        (enemy) => this.mothSeasonSpeedMultiplier(enemy),
+        (enemy) => this.mothSeasonSpeedMultiplier(enemy) * this.wrangle.movementMultiplier(enemy),
       );
       this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
@@ -3585,6 +3607,7 @@ export class Game {
         summary: economySummary,
       },
       decay: this.decay.diagnostics(),
+      wrangle: this.wrangle.diagnostics(),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
@@ -5035,6 +5058,7 @@ export class Game {
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;
     this.simTick = 0;
+    this.wrangle.reset();
     this.decay.reset();
     this.deathPending = false;
     if (this.powerGraph) {
@@ -5972,6 +5996,7 @@ export class Game {
       this.openAssayBench?.();
       return;
     }
+    if (this.wrangle.tryCapture(this.actionActor.group.position)) return;
     if (this.oldDiggerBoss.tryInteract(this.actionActor.group.position, this.timeAlive)) return;
     if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
     this.confirmDemolish();
