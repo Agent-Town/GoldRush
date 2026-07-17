@@ -289,6 +289,64 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## Campaign boundary reconciliation — 2026-07-18
+
+### F-3D-D-116 — Every published unique campaign mask now has a sculpt delivery; the ledger's sculpt column is stale
+
+The post-E4 boundary sweep re-read `docs/SOL-3D-D-QUEUE.md` and `docs/MAP-CAMPAIGN-LEDGER.md` from fresh `origin/main` at `78b6f2ce984d3dd6ac4df69292cad0d5a5abd3b8`, then compared every published campaign mask's `maskTruth.tileId` with accepted assets on main and the pushed era branches. The remaining apparent gaps are authored reuse or non-terrain contracts: E5 Flotilla/Stillwater reuse Deepwater Claim; E6 Picnic reuses Glow Mesa; E7 Dead Band/Relay Rush reuse Relay Valley; E8 Far Side/Eclipse reuse Mare Claim; E10 River reuses the frontier river claim; E10 Last Claim is the Ark-plaza class. The unique deliveries are Regatta; Showroom and Half-Life Hollow; Echo Canyon; Low Orbit; Seed Run, Devil's Alley, and Old Canal; Archive World; and this E4 Long Road/Gusher County/Boneyard wave. E2/E3 campaign names already point at accepted unique sculpts on main.
+
+The sweep also found that the remote `sol/e7-extra-map-campaign` ref had been repointed to unrelated goal-tree bookkeeping after the sculpt delivery. The intact Echo Canyon commit `233b139a9f3deb9eb766761face197c529d86c28` was therefore republished non-destructively as `sol/e7-extra-map-campaign-restored`; no force-push or foreign-history rewrite was used. Regatta's eight-mount debt is carried by the E6 delivery branch. There is no additional unique published mask to sculpt at this boundary.
+
+READY-FOR-GATES
+
+## E4 Long Road + Gusher County + Boneyard campaign wave
+
+### F-3D-D-111 — The E2/E3 campaign names were already real sculpts; E4 was the first unbuilt family
+
+The campaign sweep first compared every published E2/E3 mask id with the accepted terrain/panorama pairs already on main. Trestle, Pressure Garden, Incline, Blackout Ridge, Fairground, and Moth Season already own unique assets, so rebuilding them would create duplicate visual authorities. This wave begins at the first genuinely absent masks: `e4-long-road`, `e4-gusher-county`, and `e4-boneyard`. Dust Flats remains the accepted E4 anchor rather than a fourth duplicate.
+
+### F-3D-D-112 — The Long Road needs a panorama radius beyond its 400 m playfield
+
+The normal 190 m county ring would physically enter a tile whose half-length is 200 m. The Long Road panorama therefore uses a 260 m sky ring and an irregular ridge foot beginning at 220 m, while its ground skirt starts exactly outside the authored 200 × 48 m half-extents. This is render-only scenery: the 400 × 96 m playfield, north/south spawn gates, convoy route, rest stops, collision, and movement remain unchanged.
+
+### F-3D-D-113 — Three motor-era contracts require three different organizing landforms
+
+The Long Road is a single extreme linear grade with paired wheel ruts, alternating station shelves, and an eastern railhead cut. Gusher County is a tar-scarred lease basin with three shoulder systems, eight wild-well scars, and a battered central camp. The Boneyard is a quiet salvage valley with paired machine terraces, forked approaches, rust pockets, and a deliberately undisturbed sleeper hollow. They share the E4 kit's sun-cracked ochre, tar-black wear, wheel scars, oxidized iron, sparse cactus, and engraved haze without sharing a terrain mesh, silhouette, or spatial rhythm.
+
+### F-3D-D-114 — Landmark identity remains a mounted interlock, never baked ground
+
+The three terrain contracts provide 5, 10, and 12 landmark mount records respectively. Every record contains `id`, `position`, `rotation`, and `scale`, with an intentionally empty asset path for the factory to resolve. The way stations, wild-well derricks, salvage hulks, sleeper, wagon, rocks, overlays, lights, and cameras visible in verdict renders are preview helpers and are absent from all terrain and panorama GLBs.
+
+### F-3D-D-115 — Fresh critique exposed two false joins before the Panorama v2 gate passed
+
+All three panoramas are separate one-material rings with terrain-derived lower atlas bands, irregular near ridges, quiet zeniths, and asymmetric motor haze. A fresh unprimed screenshot critique caught an inverted terrain-band write that painted the zenith edge, plus an open-cylinder sightline on Long Road's unusually wide ring. The corrected build writes only into the skirt/ridge UV range, raises Long Road's cylinder proportionally, samples each terrain's actual boundary height, and grades the apron tint away from the edge instead of applying it on the first row. The playfield-centre views now answer distance rather than wall or ceiling. The real high run cameras still disclose the broad render-only county apron instead of cropping it away; simulation and terrain ownership remain untouched.
+
+## E4 extra-family gate state
+
+- Three terrain `.blend` / GLB / 2048² atlas / contract sets: PASS
+- Terrain GLBs: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas each: PASS
+- Three separate Panorama v2 `.blend` / GLB / 2048² atlas / contract sets: PASS
+- Panorama GLBs: 2,688 Long Road / 3,072 Gusher County / 3,072 Boneyard triangles: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for all six GLBs: PASS
+- Ten build rectangles independently sampled at 2,145 exported-surface points each, maximum deviation 0.000 m: PASS
+- Exact published mask/water copies and 27 empty landmark mounts: PASS
+- Mood A/B, identical-camera geometry, owner, mask, and Panorama v2 boards: PASS
+- Panorama centre-horizon distance verdict: PASS
+- Residual high-angle county-ground apron: OWNER VERDICT
+- Independent `codex review --uncommitted`: attempted; the reviewer audited the contracts and panorama joins, then recursively launched another `codex review` instead of returning a verdict, so the recursion was terminated and is not counted as a gate
+- `src/`, simulation, masks, runtime registry, and gameplay edits: none
+
+## E4 extra-family owner-verdict images
+
+- `artifacts/map-rebuild-spike/e4-extra-owner-verdict.png`
+- `artifacts/map-rebuild-spike/e4-extra-mood-ab.png`
+- `artifacts/map-rebuild-spike/e4-extra-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/e4-extra-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/e4-extra-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/e4-extra-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## 27-map campaign — E5 extra-map wave
 
 ### F-3D-D-85 — The campaign identity gate yields one E5 sculpt, not three recolours
