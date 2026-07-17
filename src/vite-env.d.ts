@@ -325,6 +325,7 @@ interface ThreeGameDiagnostics {
     wreckRemains: boolean;
   };
   landYachtBoss: null | import('./systems/LandYachtBossSystem').LandYachtBossDiagnostics;
+  oldDiggerBoss: null | import('./systems/OldDiggerBossSystem').OldDiggerBossDiagnostics;
   agent: {
     stub: {
       name: string;
@@ -1212,6 +1213,10 @@ interface Window {
       remove: (name: string) => boolean;
     };
     placeBeacon: () => boolean;
+    oldDigger: {
+      interact: () => boolean;
+      dismount: () => void;
+    };
     projectileVisuals: () => Array<{
       ownerId: string;
       targetId: number;

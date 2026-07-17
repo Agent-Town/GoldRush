@@ -387,7 +387,8 @@ export type RailPathPoint = {
 };
 export type RailPathDescriptor = {
   points: RailPathPoint[];
-  style?: 'placeholder' | 'steamworks' | 'mine-spur';
+  // 'mass-driver' (E8) and 'feeder-canal' (E9) shipped in ratified bundles before the schema learned them.
+  style?: 'placeholder' | 'steamworks' | 'mine-spur' | 'mass-driver' | 'feeder-canal';
 };
 export type ContractHarvestAnchor = {
   x: number;
@@ -1249,7 +1250,7 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.heightfield.mode': ['visual'],
   'tileParams.waterSources[].kind': ['spring_pond'],
   'tileParams.buildZones[].bank': ['north', 'south'],
-  'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur'],
+  'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur', 'mass-driver', 'feeder-canal'],
   'tileParams.prePlacedBuildables[].id': ['lantern_post', 'turret', 'sentry_beacon'],
   'tileParams.lanes.spawnEdges[]': ['north', 'south', 'east', 'west'],
   'twist.enemyRoster[].spawnGates[].edge': ['north', 'south', 'east', 'west'],
