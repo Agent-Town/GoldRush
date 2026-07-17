@@ -84,6 +84,54 @@ STATUS: DRAFT CONTENT 2026-07-16, authored by the scribe per `specs/world-dispat
 
 ---
 
+## ERA 4 — THE MOTOR FRONTIER (the strain takes the roads — the wanting learns to travel)
+
+### Mei delivers (bark pool — the Gazette rides a Flivver route now; Mei grown into the masthead's voice, still faster than her own rumors)
+| # | Unlock milestone | Line |
+|---|---|---|
+| M4-1 | era activation (Refinery live, the flats open) | "FLATS EDITION, hot off a moving press! The Refinery cracked its first crude at midnight and the first Flivver was born from crates at noon — the whole town midwifed an ENGINE, folks. The flats say too-big-to-walk. Watch us." |
+| M4-2 | first gusher capped | "The wildcatter hit spray and the founding generation got a crude bath — the photo's on the tavern wall and in tomorrow's pull! Prosperity, folks: it stains." |
+| M4-3 | first convoy to the railhead | "Our fuel rode OUR road to the old rail spur today — the Baron's line hauling the town's makings at last. Ma printed the waybill just to watch the ink dry. Some jokes only bookkeeping can tell!" |
+| M4-4 | THE RE-SURVEY lost (the Baron's race) | "HE RACED US AND THE FLATS VOTED! The motorcade cut the corners and the corners cut back — and the new map keeps HIS name in the surveyor's box, folks. 'You surveyed it. We just proved it.' Read the box. Buy the map!" |
+| M4-5 | the Land-Yacht turned back | "SHE'S BEACHED AND FREED! Crew walked off with their ship's bell, whistling, home-bent — and one of them said her sister went looking for the sea. The Gazette doesn't know what that means either. Extra!" |
+| M4-6 | science ceiling (sci-12) | "Quiet one. The dust chart got a second page this season — Ma had to re-rule the axes to make it fit. And the polytechnic's rain ledger nobody asked for? It's started answering. Our river's fine. I still check." |
+
+### The World Outside — ledger page, Era 4 (fragments)
+1. *The wanting learns to travel.* Where the old strains walked, this one RIDES: motor gangs hook machines whole off their pads, rustlers siphon crude they cannot burn and never sell, and none of them can say why they want it, because the wanting is all it leaves room for. The doctors' circulars add one line to the old diagnosis: the freed of this strain walk home along the same roads that carried them out. The roads forgive both directions. — cited: E4, the mutation's craving (engines and fuel); cure-arms at speed.
+2. *It ships.* This paper tracked a sickness that traveled on foot, then on rails, and now prints the plain arithmetic of the new roads: whatever carries goods carries the wanting, at the speed of goods. A thing that comes in a bottle travels by every road that sells bottles. The Gazette knows more than this sentence carries, and prints the freight tables instead. It will keep. — cited: E4, the product's public face; the drawer holds the rest.
+3. *The letters get stranger.* Crop letters that stopped mentioning crops now stop mentioning weather; a cousin's steady hand goes hurried; whole pages arrive about the price of shovels. The wash floods more years than it used to and the old-timers pretend it always did. The rain ledger nobody asked for has begun to be asked about. — cited: E4, the thread worsening on schedule; E5 loading, page by page.
+4. *A wagon among the dead machines.* In the valley where machines go to lie down, a medicine-show wagon sits under dust with paint too cheerful for its company — and drawers full of notes in a looping showman's hand: dosages, regrets, one recipe corrected forty ways. The schoolhouse copies every page into the cure studies. The Gazette declines to print where the drawers came from, or how the notes of a man nobody has seen since the first sickness came to rest in a graveyard the roads only just reached. The engraving shows the cheerful paint. The caption stands behind the dust. — cited: E4, the Quack's trace, Occult Law.
+5. *Counter-note.* At the Three-Mile way-station on the north road, the family that keeps the pumps tops off every tank that rolls in, hungry-eyed or clear, and has lost nothing to the wanting but fuel. "They want what they want," their letter says — the bridge keeper's very words, a county over and a generation on. The recipe travels. The Gazette prints the pump schedule. — cited: E4, the warm counter-note; the practice was never only ours.
+
+### Ceremony postscript — T4, the Boat (E4→E5)
+*The Boat crests the last dune and the sea takes its keel like a promise kept. Far up the drowning rivers the dark leans closer to look, the way it always does — and reaches for a taste of the sea, and the sea, which carries everything, declines to carry the wanting.*
+
+---
+
+## ERA 5 — THE DEEPWATER CLAIM (THE FLOOD — the letters stop; the sea carries everything but the wanting)
+
+### Mei delivers (bark pool — the Harbor House porch; the press crossed on the Boat, books before both; Mei's bell survives, salt-greened)
+| # | Unlock milestone | Line |
+|---|---|---|
+| M5-1 | era activation (the rebuild on the new shore) | "HARBOR EDITION, first pressing above the new waterline! The press crossed dry — books before both, Ma's rule — and the long table went up before its own roof did. The Gazette resumes, folks. The Gazette never stopped." |
+| M5-2 | first dive (the bell to wreck W1) | "The bell went down to the old supply barge today and came up quiet. It's all still THERE — gear your grandfolks packed, holding the light under green glass. Nobody looted it full. Nobody will. Some pages you don't sell. Today's other ones, penny!" |
+| M5-3 | first storm-front ridden at anchor | "First big blow came W-to-E and the claim rode it out AT ANCHOR. The tide-teller called the front within a hand's width — swell, birds, kelp, says she. 'Weather's just news that hasn't landed,' says Ma. Both papers were right!" |
+| M5-4 | wreck W2 charted (the locomotive) | "There is a LOCOMOTIVE on our sea floor, folks. Ours, off the drowned spur, says half the tavern; the world's, says the other half, off a coast the maps stopped being right about. The flood explained everything else. It's keeping this one. Pick a side — penny either way!" |
+| M5-5 | the Dredge-Queen turned back (wreck W6 born) | "SHE'S STRUCK HER FLAG! The Queen dredged our yesterdays by the ton and the sea took the whole hold back — it's raining our own history onto the reef, and we get to go DOWN and fetch it, which the town almost calls fair. And under her corsair paint? Crossed pickaxes. The Gazette merely notes it." |
+| M5-6 | science ceiling (sci-14) | "Quiet one. The whole fleet winches tomorrow — one line, flattest calm of the year — and whatever's down that trench glows warm, says the dive crew, like a lamp with nobody to light it. The tide-teller's apprentice already volunteered. I check the water every morning now. It answers different than the river did. It answers." |
+
+### The World Outside — ledger page, Era 5 (fragments)
+1. *The strain has no roads here.* The last circulars before the water described the motor hunger at full gallop — and then the lowlands went under, and no fevered hull has ever made harbor, and the walkers do not swim. The sea carries timber, bottles, boats that aren't ours, and every kind of grief. It does not carry the wanting. What arrives from the drowned counties instead is quiet. — cited: E5; the mutation finds no purchase on water.
+2. *One sky, both hands.* The letters that still float in describe drowned lowlands and dust-dark plains from the SAME counties — a sky that swings from too much water to none without passing through weather on the way. The almanac trade has quietly ceased everywhere but here. Ours holds because the tide-teller reads, and the ledger says so plainly: the sky did not break in a season. It was spent, year by year, by hungers that never once looked up. — cited: E5, the consequence arrived; consequence, not surprise.
+3. *The mail becomes bottles.* Monthly, then twice, then once — and the last letters were strange the way the first dust was strange, and then there were no letters. Now: corked bottles, salt-stained, particular, from towns that no longer keep addresses. The Harbor House shelves them behind the bar, opened beside not-yet-opened, and rushes nobody. Grief keeps. So does the shelf. — cited: E5, the letters stop.
+4. *One bottle, never displayed.* In a looping showman's hand: notes on the sickness written from INSIDE somebody's keeping — margins that answer questions nobody free would know to ask, the recipe corrected once more, an apology addressed to no one, or to everyone. The Gazette cannot confirm the hand. The Gazette has never once been able to confirm the hand, and prints that sentence with something close to respect. The shelf keeps the bottle behind the opened ones, where the light is. — cited: E5, the Quack's trace, Occult Law (a catastrophe not even pride could invoice, floating a prisoner's page free).
+5. *Counter-note.* The lighthouse still turns. Every coast letter said so while there were letters; the bottles say so now; a skiff that made harbor last month said it plainest: you can lose your town, your address, and the shape of the coast, and still steer by somebody who stayed. Nobody has ever gotten a reply from the keeper. The light is the reply. — cited: E5, the warm counter-note, second era on watch (see E3 — the sentence the town planted; the flood could not put it out).
+
+### Ceremony postscript — T5, the Deep Reactor (E5→E6)
+*What surfaces glows teal — warm, patient, asking nothing — and the barge carries it home over the town's own drowned yesterdays. Out on the half-returned mudflats, the dark leans closer to the glow, finds nothing in it to want with, and turns away still hungry — and acquires a taste for helping.*
+
+---
+
 ## WIRING NOTES (for WD-02..04; no engine work in this file)
 - Mei's pool: milestones above map to existing progress events (contract completions, board teasers, boss defeats, science ceilings, era activations, megaproject raises) — WD-02 binds them by id; where an exact event id differs, the NEAREST EARLIER milestone wins (reveal late, never early).
 - Ledger pages: WD-03 reserves one "The World Outside, Era N" entry per era chapter of the Claim Ledger (era-chapters slice), locked until the era is REACHED; the fragments above fill it in order, re-readable.
