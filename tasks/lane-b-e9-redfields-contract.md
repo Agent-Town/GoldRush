@@ -1,0 +1,31 @@
+# Task lane-b-e9-redfields-contract: the E9 signature tile as DATA — contract + mask table (feeds 3D-D) — **FIRE-AUTHORED (attended review welcome)**
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b.
+CODEX: model=gpt-5.6-sol effort=high
+READ FIRST: AGENTS.md; specs/epoch-saga/e9-redfields-bundle.md §B (THE DOME BASIN — the persistent signature tile: N ice quarry at h=4 scarp; central BASIN at h=-2; rim domes; weather spire; seed rows; Ark yards that grow all era; a feeder canal route with stage-gates C1→C2→C3; dust-devil wander hazards; the basin IS the E1 claim's topology rotated — say nothing in-game; extract, NEVER invent); assets/contracts/epoch-8-orbital/contracts.json + mask-tables/e8-mare-claim.json (your DIRECT precedent — the e8 slice shipped this EXACT pattern, drain s692; mirror its schema key-for-key); assets/contracts/epoch-7-signal/mask-tables/e7-relay-valley.json + epoch-6-atomic/mask-tables/e6-glow-mesa.json (the additive-per-map-keys precedent); assets/contracts/epoch-9-redfields/manifest.json (locked era, `locked:true` — your contract ships INERT).
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits, and lane/m4 is currently a FALSE-AHEAD dupe of e8-mare-claim (its content is already on main via drain s692 `d91767fb`). For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+GROUND-TRUTH pre-flight: epoch-9-redfields/contracts.json must list ZERO contracts and mask-tables/ must not exist for e9-redfields (or e9-dome-basin). If present, STOP and report SHIPPED.
+
+## Why (the 3D-D feeding pipeline — its E9 gate is the only thing between it and the next Red-Fields sculpt; the E6 slice proved this pattern end-to-end, E7 repeated it clean, E8 repeated it again at drain s692. "E9+ contract slices follow the same pattern per drain" — BACKLOG 2026-07-17. Owner directive: "Take your time but do them perfect.")
+
+## Scope
+1. Contract entry `e9-dome-basin` in epoch-9-redfields/contracts.json (schema-exact vs e8-mare-claim / e7-relay-valley): tileParams per §B —
+   - **ice quarry** as a named elevation BAND (h=4 scarp on the north edge) — LOS is gameplay: the mask carries quarry-scarp/basin classification for the sculptor; sim elevation stays code-owned per the planar law #6;
+   - **basin** as the central h=-2 depression zone (the era's persistent-tile floor — the shape deliberately echoes E1's claim topology; carry it as data, say nothing in copy);
+   - **build zones**: rim dome pads, weather-spire footing, seed rows footing, and the **Ark yards** megaproject site (as build zones; the Ark "grows all era" is a FUTURE staged-art concern — carry only its footprint here);
+   - **feeder canal route** with the three stage-gates C1→C2→C3 as a named lane/rail (mirror e8's `rails` / `lanes.patrolRoutes` shape — carry the canal PATH + the three stage-gate marker points as data; the canal is DRY at baseline, water arrives via a FUTURE persistent-flood slice, so `river:false`, `ford:false`, no water sources here);
+   - **seed rows** as harvest anchors or a named zone (the green/seed economy — per the e8 regolith-anchors precedent);
+   - **spawn edges** + the era's **dust-devil** wander hazard as a named lane (mirror e8's debris-arc lane shape; the devils are the era's "storm" — carry ONE representative telegraphed wander path as data; do NOT author pickup/drop physics — that is a FUTURE sim slice).
+   - `heightfield.mode:"visual"`. Report-don't-invent: §B gives NO gravity/atmosphere numbers for the Red Fields (unlike E8) — do NOT invent them; OMIT gravity/atmosphere unless §B states values. For any numeric extent the §B diagram implies but does not state, choose consistent with e8's coordinate conventions (128×128, the same bank/zone idioms) and LIST every such choice in the END summary.
+2. Mask table epoch-9-redfields/mask-tables/e9-dome-basin.json — core keys exact vs the authored contract; additive per-map keys for the quarry scarp band / basin depression / canal route + stage-gates / dust-devil lane (the e6/e7/e8 additive precedent). Extend the node test's bounds-walk to cover every new zone/point array you add.
+3. Node test extension in scripts/e3-mask-tables.test.mjs (bounds + no-water truth): register e9 in the era resolver (`id.startsWith('e9-') ? 'epoch-9-redfields'`) + the contract set (`...e9Contracts`) + the exact-track key list + source pointer (`specs/epoch-saga/e9-redfields-bundle.md §B`) + the bounds+no-water suite; add explicit `assert.deepEqual` checks for the new quarry-scarp / basin / canal-stage / devil-lane keys (mirror e8's rimBands/mareFlat/lavaTubeMouth/debrisArcLanes assertions). PLUS one additive board-gating inertness assertion in e2e/board-gating-and-profiles.spec.ts: `contract-card-e9-dome-basin` has count 0 in a plain (epoch-1) boot (locked era, absent from board).
+
+## Firewall
+Touch ONLY: the two data files (contracts.json + the new mask-table), the node test, and one board-gating assertion. NO tile/sim code, NO manifest edits, NO epoch-10 files, NO persistence/tile-mutation wiring (that is the owner-gated TP ladder — carry the canal/basin as INERT data only), NO staged-flood/fluid code, NO reprogram-boss or weather-minigame code, NO src/ beyond the spec.
+
+## Self-check
+tsc + build green · `node --test scripts/e3-mask-tables.test.mjs` green (all prior + new e9 cases) · board-gating-and-profiles green desktop+mobile · adjacent task-025-bandits-dont-swim unmodified-green · zero console errors plain boot.
+No-op guard: if you exit without changes, WRITE WHY first.
+END: READY-FOR-GATES + tileParams/zone summary (ice-quarry-scarp / basin / rim-domes / weather-spire / seed-rows / ark-yards / canal-route + C1→C2→C3 stage-gates / dust-devil lane) + every report-don't-invent choice (esp. any coordinate extents and the gravity/atmosphere omission) — this report is 3D-D's E9 sculpt-grant evidence.
