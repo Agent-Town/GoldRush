@@ -453,3 +453,7 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 ## 2026-07-17 — THE TERRAIN LADDER COMPLETE: E9 + E10 MERGED — all 19 run tiles sculpted, E1→E10
 - **✅ MERGED — e9-dome-basin (5a921846, one-mesh-staged-water as ruled) + e10-ember-shore (2f5797d0).** Merge-repair note: the e10 union tooling mishandled a 5-file conflict (4 build scripts + findings committed with markers, caught pre-push); repaired via latest-wave-wins on the session's own .py tooling + proper findings union; py-compile + tsc + build green; merge amended local-only. LESSON: union-resolution is for append-only logs ONLY; code conflicts take the newer wave's side; always iterate the FULL conflicted-file list.
 - QUEUED lane-c: **wire-e8-e9-e10-terrain** (the registry's completion — every saga run tile visitable). 3D-D: HOLD, ladder complete.
+
+## 2026-07-17 — THE 27-MAP CAMPAIGN GREENLIT (owner verbatim in docs/MAP-CAMPAIGN-LEDGER.md)
+- Blanket owner gate on Appendix E item 19: ALL 27 extra maps build. Pipeline: era-batch contract+mask tasks (E5→lane-b, E6→lane-d, E7→lane-a QUEUED; **fires author E8/E9/E10 then E2/E3/E4 batches on drain** — same master pattern, one era per task) → 3D-D standing sculpt grant (batch waves, priority E5→E10→E2-E4) → wire batches per era → owner tests per docs/MAP-CAMPAIGN-LEDGER.md.
+- Special cases flagged in the ledger doc (Low Orbit zero-G, Last Claim = Ark-class, The River = Press-authored variant, etc.).
