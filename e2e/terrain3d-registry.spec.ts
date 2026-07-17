@@ -6,7 +6,7 @@ import { PNG } from 'pngjs';
 
 const ARTIFACT_DIR = path.resolve('artifacts/terrain3d-registry');
 const LANDMARK_ARTIFACT_DIR = path.resolve('artifacts/wire-landmark-mounts');
-const ASSET = /map-rebuild-spike\/(?:landmarks\/.*|(?:the-claim|dry-gulch|twin-banks|night-shift|baron|hill-mine|trestle|blackout-ridge|fairground|dust-flats|deepwater-claim)-(?:terrain|panorama)[^?]*)\.glb/;
+const ASSET = /map-rebuild-spike\/(?:landmarks\/.*|(?:the-claim|dry-gulch|twin-banks|night-shift|baron|hill-mine|trestle|blackout-ridge|fairground|dust-flats|deepwater-claim|mare-claim|dome-basin|ember-shore)-(?:terrain|panorama)[^?]*)\.glb/;
 const isAssetRequest = (request: { url(): string; resourceType(): string }) => request.resourceType() === 'fetch' && ASSET.test(request.url());
 type Errors = { console: string[]; page: string[] };
 type Contract = {
@@ -30,6 +30,9 @@ const CONTRACTS: Contract[] = [
   { id: 'e3-fairground', panorama: 'fairground-panorama', contractFile: 'fairground', assets: ['fairground-panorama.glb', 'fairground-terrain.glb'], water: [] },
   { id: 'e4-dust-flats', panorama: 'dust-flats-panorama', contractFile: 'dust-flats', assets: ['dust-flats-panorama.glb', 'dust-flats-terrain.glb'], water: [], heightProbes: [[24, -36], [60, -72], [0, -12], [72, 24], [-72, 24]] },
   { id: 'e5-deepwater-claim', panorama: 'deepwater-claim-panorama', contractFile: 'deepwater-claim', assets: ['deepwater-claim-panorama.glb', 'deepwater-claim-terrain.glb'], water: [{ x: 0, z: 0, zone: 'shallows', source: 'spring_pond' }] },
+  { id: 'e8-mare-claim', panorama: 'mare-claim-panorama', contractFile: 'mare-claim', assets: ['mare-claim-panorama.glb', 'mare-claim-terrain.glb'], water: [] },
+  { id: 'e9-dome-basin', panorama: 'dome-basin-panorama', contractFile: 'dome-basin', assets: ['dome-basin-panorama.glb', 'dome-basin-terrain.glb'], water: [] },
+  { id: 'e10-ember-shore', panorama: 'ember-shore-panorama', contractFile: 'ember-shore', assets: ['ember-shore-panorama.glb', 'ember-shore-terrain.glb'], water: [] },
 ];
 
 type LandmarkMount = { id: string; asset?: string; position: [number, number, number] };
@@ -107,7 +110,7 @@ async function fingerprint(browser: Browser, contractId: string, pilot: boolean)
   return { payload, hash: createHash('sha256').update(JSON.stringify(payload)).digest('hex'), errors, assetRequests };
 }
 
-test('all eleven contracts mount terrain, panorama, and grounded render-only landmarks with matching water', async ({ page }, testInfo) => {
+test('all fourteen contracts mount terrain, panorama, and grounded render-only landmarks with matching water', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
   const report = [];
@@ -257,7 +260,7 @@ test('flag-off and flag-on keep bounds, spawns, fog, masks, and simulation byte-
   await writeFile(path.join(ARTIFACT_DIR, `fingerprints-${testInfo.project.name}.json`), `${JSON.stringify(report, null, 2)}\n`);
 });
 
-test('all eleven contracts stay painted in LITE and on invalid terrain bytes', async ({ page }) => {
+test('all fourteen contracts stay painted in LITE and on invalid terrain bytes', async ({ page }) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
   for (const contract of CONTRACTS) {
