@@ -191,9 +191,10 @@
       },
       {
        "id": "wire-land-yacht-3d",
-       "title": "Wire Land-Yacht model onto boss system",
-       "status": "queued",
-       "taskFile": "lane-c-wire-land-yacht-3d.md"
+       "title": null,
+       "status": "merged",
+       "taskFile": "lane-c-wire-land-yacht-3d.md",
+       "mergeHash": "drained-20260717"
       }
      ]
     },
@@ -329,9 +330,10 @@
       },
       {
        "id": "world-wire-glow-mesa",
-       "title": "Wire Glow Mesa into terrain3d registry",
-       "status": "queued",
-       "taskFile": "lane-c-wire-glow-mesa-terrain.md"
+       "title": null,
+       "status": "merged",
+       "taskFile": "lane-c-wire-glow-mesa-terrain.md",
+       "mergeHash": "drained-20260717"
       },
       {
        "id": "homemaker-model",
@@ -404,9 +406,9 @@
       },
       {
        "id": "world-wire-relay-valley",
-       "title": "Wire Relay Valley into terrain3d registry",
+       "title": null,
        "status": "merged",
-       "mergeHash": "cb96530ff83a12b1463c9a780b6bc73a8eea4ef3",
+       "mergeHash": "drained-20260717",
        "taskFile": "lane-c-wire-relay-valley-terrain.md"
       }
      ]
@@ -585,8 +587,8 @@
       },
       {
        "id": "e10-ember-shore-contract",
-       "title": "E10 Ember Shore contract + mask (last run-tile gate)",
-       "mergeHash": "5e86441518175e7d03bb585dcac130046f2bd411",
+       "title": null,
+       "mergeHash": "drained",
        "status": "merged",
        "taskFile": "lane-b-e10-ember-shore-contract.md"
       },
@@ -615,9 +617,15 @@
     },
     {
      "id": "map-campaign-27",
-     "title": "THE 27-MAP CAMPAIGN (owner greenlit \u2014 full library)",
+     "title": "THE 27-MAP CAMPAIGN \u2014 18/27 masked, 1 extra sculpted (Regatta), E2-E4 batches fire-laddered",
      "status": "building",
      "doc": "docs/MAP-CAMPAIGN-LEDGER.md"
+    },
+    {
+     "id": "e8-e10-extras-contracts",
+     "title": "E8/E9/E10 extra-map contracts+masks (final 9 of the campaigns new-era masks)",
+     "status": "merged",
+     "mergeHash": "drained-20260717"
     }
    ]
   },
@@ -712,9 +720,9 @@
       },
       {
        "id": "world-wire-final-three",
-       "title": "Wire E8/E9/E10 maps \u2014 the full saga registry",
+       "title": null,
        "status": "merged",
-       "mergeHash": "cb96530ff83a12b1463c9a780b6bc73a8eea4ef3",
+       "mergeHash": "drained-20260717",
        "taskFile": "lane-c-wire-e8-e9-e10-terrain.md"
       }
      ]
@@ -954,6 +962,13 @@
        "status": "merged"
       }
      ]
+    }
+   ],
+   "tasks": [
+    {
+     "id": "goldrush-org-migration",
+     "title": "GoldRush \u2192 Agent-Town org (chunked 10GiB history push)",
+     "status": "building"
     }
    ]
   },
@@ -1210,14 +1225,31 @@
     },
     {
      "id": "foundry-own-repo",
-     "title": "Extract foundry/ into its own product repository (after Kit lands)",
-     "status": "planned"
+     "title": null,
+     "status": "merged",
+     "mergeHash": "Agent-Town/Story-Foundry"
     },
     {
      "id": "foundry-kit",
      "title": "THE FOUNDRY KIT (init scaffolder + repaired runners + self-test 82/82)",
      "status": "merged",
      "mergeHash": "MERGE-2212975d"
+    },
+    {
+     "id": "story-foundry-repo",
+     "title": "Story-Foundry standalone repo (shape + agent docs + SETUP path) \u2014 SHIPPED",
+     "status": "merged",
+     "mergeHash": "Agent-Town/Story-Foundry"
+    },
+    {
+     "id": "foundry-smoke-test",
+     "title": "THE SMOKE TEST \u2014 real fire cycle in a kit-scaffolded factory (F-1..F-6, 2 fixed)",
+     "status": "merged"
+    },
+    {
+     "id": "foundry-stream-module",
+     "title": "kit/stream module (--with-stream; book ch.10; self-test 100/100)",
+     "status": "merged"
     }
    ]
   }
