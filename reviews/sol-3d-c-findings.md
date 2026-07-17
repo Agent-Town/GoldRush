@@ -1,5 +1,37 @@
 # SOL 3D-C — 3D pilot findings
 
+## E9 Basin Rim plate
+
+Branch: `sol/basin-rim-e9-plate`
+
+Base: `c272d3a8ba9c36ee2550c7bb55c3fb05edab087e`
+
+Tip: exact Basin Rim SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — E9 now has a fresh red-world site with canonical town paths, ten production-flat pads, relief confined to unused ground, an ice-quarry scarp, a cut canal, and the first short E1-green return.**
+
+The working reference board was freshly rendered from tracked files on `c272d3a8…`. It shows the merged E4 southern boulevard and motor caravan, E5 submerged square, E6/E7 Mesa states, and E8 Dome Commons. No old artifact render was used as a source.
+
+| Surface | E9 verdict | Result |
+| --- | --- | --- |
+| Seven `townLayout.ts` slots + Dynamo Hall | CARRY COORDINATES, REBUILD SITE | exact centers and footprints; realized maximum pad displacement `0.00000048` |
+| Ring road, radial paths, open plaza | CARRY COORDINATES | realized maximum `0.007001`, below the `0.05` ceiling |
+| E8 Dome shell and orbital floor | GONE | Basin Rim is a fresh site with no inherited dome geometry |
+| Ice Quarry head | PROPOSED NEW | flat 5.6 x 3.8 pad at `(-7.4, -16.6)` |
+| Ark scaffold yard | PROPOSED NEW | flat 6.2-unit circular pad at `(7.0, -16.7)` |
+| Pan Monument | PERSIST | separately mounted heritage GLB, dry at center until runtime canal-water progression arrives |
+| E1 green | PERSIST PALETTE | first short canal seam uses the ratified `#50674c`; later spread remains tile-persistence-owned |
+
+### Production gate
+
+- One node / mesh / primitive; 12,656 / 20,000 triangles; one double-sided, opaque, depth-writing, non-emissive material with one embedded 2048 x 2048 atlas.
+- GLB SHA-256 `89f23f703d96c5f519c820a7efca16c00ff5cb985923e9113cb1b480de81212e`; saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- Zero cameras, lights, or animations; base-centered at the town origin.
+- All canonical and new pads ray-cast to within `0.00000048` of flat; routes/plaza peak at `0.007001`.
+- The embedded atlas contains 6,679 literal `#50674c` pixels in the mapped canal core; the verifier extracts the shipped PNG and enforces the callback.
+- Independent review caught that the first feathered candidate only approached the swatch; the exact mapped core and extraction gate close that evidence defect.
+- Relief is reserved for the outer lowered basin, quarry scarp, canal cut, and eroded rim. The production GLB contains no buildings, people, props, Pan geometry, or evidence rig.
+
 ## Dredge-Queen production model v2
 
 Branch: `sol/dredge-queen-3d-v2`
