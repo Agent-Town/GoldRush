@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import type { ClaimJumperEnemy, EnemySpawnParams } from '../entities/Enemy';
 import { Balance } from '../game/Balance';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
-import { DREDGE_QUEEN_WRECK_KEY } from '../game/ProfileStorage';
+import type { DredgeQueenWreckPayload } from '../game/TileStateStore';
 import type { StormWaveEvent } from './StormWaveScheduler';
 import { disposeObject3D } from '../utils/dispose';
 
@@ -26,7 +26,11 @@ const DREDGE_QUEEN_3D_COMPONENTS = {
 type DredgeQueen3dState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
 type WreckSite = Readonly<{ x: number; z: number }>;
 
-type PersistentWreck = Readonly<{ e5W6Wreck: true; x: number; z: number }>;
+/** TP-01: wreck persistence lives on TileStateStore; the boss system only reads at birth and writes at its ceremony. */
+export type DredgeQueenWreckPersistence = Readonly<{
+  readAtBirth: () => DredgeQueenWreckPayload | null;
+  writeAtCeremony: (wreck: DredgeQueenWreckPayload) => void;
+}>;
 
 export type DredgeQueenBossDiagnostics = {
   active: boolean;
@@ -118,6 +122,7 @@ export class DredgeQueenBossSystem {
     private readonly damageHero: (amount: number, sourceId: number) => boolean,
     private readonly spawnPickup: (position: THREE.Vector3, amount: number) => boolean,
     private readonly enabled: boolean,
+    private readonly persistence: DredgeQueenWreckPersistence,
   ) {
     this.dredgeQueen3dState = performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off';
     this.group.name = 'DredgeQueen.Placeholder';
@@ -640,24 +645,17 @@ export class DredgeQueenBossSystem {
   }
 
   private persistWreck(): void {
-    try {
-      localStorage.setItem(DREDGE_QUEEN_WRECK_KEY, JSON.stringify({ e5W6Wreck: true, x: this.anchor.x, z: this.anchor.z } satisfies PersistentWreck));
-    } catch {
-      // Profile storage is optional; the current run still keeps the hulk.
-    }
+    // Storage failures stay non-fatal inside the store; the current run keeps the hulk either way.
+    this.persistence.writeAtCeremony({ x: this.anchor.x, z: this.anchor.z });
   }
 
   private restorePersistentWreck(): void {
-    try {
-      const saved = JSON.parse(localStorage.getItem(DREDGE_QUEEN_WRECK_KEY) ?? 'null') as Partial<PersistentWreck> | null;
-      if (!saved || saved.e5W6Wreck !== true || !Number.isFinite(saved.x) || !Number.isFinite(saved.z)) return;
-      this.anchor.set(saved.x!, 0, saved.z!);
-      this.persistentWreck = true;
-      this.hulkPresent = true;
-      this.act = 3;
-    } catch {
-      // Corrupt optional profile scenery is ignored.
-    }
+    const saved = this.persistence.readAtBirth();
+    if (!saved) return;
+    this.anchor.set(saved.x, 0, saved.z);
+    this.persistentWreck = true;
+    this.hulkPresent = true;
+    this.act = 3;
   }
 }
 

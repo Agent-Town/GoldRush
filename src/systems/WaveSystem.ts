@@ -512,6 +512,7 @@ export class WaveSystem {
   ): boolean {
     if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
     this.keepSpawnOutOfDeepWater(params.edge);
+    this.keepSpawnOutOfNoSpawnZones();
 
     const speedScale = Math.min(
       Balance.waves.speedScaleCap,
@@ -545,6 +546,26 @@ export class WaveSystem {
     if (!enemy) return false;
     this.waveSpawnedTotal += 1;
     return true;
+  }
+
+  private keepSpawnOutOfNoSpawnZones(): void {
+    const zones = this.contract.tileParams.noSpawnZones;
+    if (!zones || zones.length === 0) return;
+    for (const zone of zones) {
+      const dx = this.spawnPosition.x - zone.x;
+      const dz = this.spawnPosition.z - zone.z;
+      const distance = Math.hypot(dx, dz);
+      if (distance >= zone.radius) continue;
+      // Deterministic radial push to the rim: persistence-born zones must not consume rng.
+      const rim = zone.radius + 0.05;
+      if (distance > 1e-6) {
+        this.spawnPosition.x = zone.x + (dx / distance) * rim;
+        this.spawnPosition.z = zone.z + (dz / distance) * rim;
+      } else {
+        this.spawnPosition.x = zone.x + rim;
+        this.spawnPosition.z = zone.z;
+      }
+    }
   }
 
   private keepSpawnOutOfDeepWater(edge?: CompassEdge): void {

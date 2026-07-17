@@ -15,6 +15,7 @@ export const HERO_INPUT_BINDINGS = {
   mute: ['KeyM'],
   debugSpawn: ['KeyT'],
   debugXp: ['KeyX'],
+  debugPlant: ['KeyG'],
 } as const;
 
 export function heroLedgerControlLines(): string[] {
@@ -47,6 +48,7 @@ export type Intents = {
   mute: boolean;
   debugSpawn: boolean;
   debugXp: boolean;
+  debugPlant: boolean;
 };
 
 export class InputController {
@@ -63,6 +65,7 @@ export class InputController {
   private previousWeaponToggle = false;
   private previousMute = false;
   private previousDebugXp = false;
+  private previousDebugPlant = false;
   private readonly intents: Intents = {
     move: new THREE.Vector2(),
     confirm: false,
@@ -77,6 +80,7 @@ export class InputController {
     mute: false,
     debugSpawn: false,
     debugXp: false,
+    debugPlant: false,
   };
   private readonly pointerState: PointerState = {
     active: false,
@@ -239,6 +243,9 @@ export class InputController {
     const debugXpHeld = anyDown(HERO_INPUT_BINDINGS.debugXp);
     this.intents.debugXp = debugXpHeld && !this.previousDebugXp;
     this.previousDebugXp = this.keys.has('KeyX');
+    const debugPlantHeld = anyDown(HERO_INPUT_BINDINGS.debugPlant);
+    this.intents.debugPlant = debugPlantHeld && !this.previousDebugPlant;
+    this.previousDebugPlant = this.keys.has('KeyG');
     this.tapped.clear();
     return this.intents;
   }
