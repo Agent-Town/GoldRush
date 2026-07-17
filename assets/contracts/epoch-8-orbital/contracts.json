@@ -201,6 +201,530 @@
         ],
         "geographyLine": "A height-six crater rim rings a height-zero mare with dome pads, regolith fields, a lava-tube mouth, launch pad, and eastbound mass-driver rail."
       }
+    },
+    {
+      "id": "e8-far-side",
+      "name": "The Far Side",
+      "description": "Mare Claim terrain variant. Engine dependency: map-wide signal suppression, suit-only atmosphere, and one-time crashed-probe playback consumers are not yet implemented. Teaching intent: remove Earth, drones, and playbooks so the town's first hello becomes the reward for crossing the loneliest map in the saga.",
+      "tileParams": {
+        "tileId": "e8-mare-claim",
+        "biome": "orbital-far-side",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "far-side-landing-yard",
+            "bank": "south",
+            "minX": -24,
+            "maxX": 24,
+            "minZ": -48,
+            "maxZ": -30
+          },
+          {
+            "id": "listening-probe-recovery",
+            "bank": "north",
+            "minX": -14,
+            "maxX": 14,
+            "minZ": 38,
+            "maxZ": 52
+          }
+        ],
+        "stakeMarkers": [],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "mare-claim-rim-ring",
+          "mode": "visual"
+        },
+        "gravity": {
+          "feelG": 0.6,
+          "lobArcDistanceMultiplier": 2.4,
+          "movement": "floaty"
+        },
+        "atmosphere": {
+          "airIsWall": false,
+          "outsideDomes": "suit-only"
+        },
+        "objectiveMetadata": {
+          "description": "Cross the comms shadow in a suit and recover the unmarked probe that kept the town's first wrong-number hello.",
+          "teachingIntent": "Homesickness by subtraction: the missing Earth, drones, and playbooks make the recovered voice matter."
+        },
+        "probeRecoveryZones": [
+          {
+            "id": "listening-probe-crater",
+            "description": "A half-buried, unmarked old-world probe waits at the far end of the crossing.",
+            "minX": -14,
+            "maxX": 14,
+            "minZ": 38,
+            "maxZ": 52
+          }
+        ],
+        "signalNullZones": [
+          {
+            "id": "far-side-comms-shadow",
+            "description": "No playbooks or drones operate anywhere in the Far Side comms shadow.",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "suitOnlyZones": [
+          {
+            "id": "far-side-vacuum",
+            "description": "The whole crossing is suit-only.",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": []
+        }
+      },
+      "twist": {
+        "signalSuppression": {
+          "description": "The Far Side comms shadow disables drones and playbooks for the whole run.",
+          "drones": false,
+          "playbooks": false
+        },
+        "probePlayback": {
+          "description": "The recovered probe plays the valley-to-lighthouse wrong-number call once at the map's end.",
+          "trigger": "probe-recovered"
+        }
+      },
+      "boardRow": {
+        "name": "The Far Side",
+        "ledgerBlurb": "Cross the comms shadow without Earth, drones, or playbooks; bring home the voice the sky kept.",
+        "tags": [
+          "orbital",
+          "comms-shadow",
+          "suit-only"
+        ],
+        "unlock": "secured:e8-mare-claim"
+      },
+      "briefing": {
+        "goals": [
+          "Cross the Far Side in a suit without drones or playbooks.",
+          "Recover the half-buried listening probe at the far crater."
+        ],
+        "rules": [
+          "Earth is absent from the sky.",
+          "The comms shadow disables drones and playbooks.",
+          "The whole crossing is suit-only."
+        ],
+        "geographyLine": "The Mare Claim rim-and-flat terrain under a map-wide comms shadow, with a landing yard at one end and the listening-probe crater at the other."
+      }
+    },
+    {
+      "id": "e8-low-orbit",
+      "name": "Low Orbit",
+      "description": "Distinct non-ground scaffold tile. Engine dependency: zero-G movement, returning orbital projectiles, debris-terrain, and handhold-route consumers are not yet implemented. Teaching intent: momentum is commitment; every push and every missed lob remains a future problem.",
+      "tileParams": {
+        "tileId": "e8-low-orbit",
+        "biome": "orbital-low-orbit-yard",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "claw-carcass-yard",
+            "bank": "north",
+            "minX": -18,
+            "maxX": 18,
+            "minZ": -14,
+            "maxZ": 14
+          },
+          {
+            "id": "west-scaffold-deck",
+            "bank": "north",
+            "minX": -48,
+            "maxX": -26,
+            "minZ": -10,
+            "maxZ": 10
+          },
+          {
+            "id": "east-scaffold-deck",
+            "bank": "north",
+            "minX": 26,
+            "maxX": 48,
+            "minZ": -10,
+            "maxZ": 10
+          }
+        ],
+        "stakeMarkers": [],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "salvage-claw-orbital-yard",
+          "mode": "visual"
+        },
+        "gravity": {
+          "feelG": 0,
+          "lobArcDistanceMultiplier": 0,
+          "movement": "free-fall",
+          "projectileBehavior": "orbital-return"
+        },
+        "atmosphere": {
+          "airIsWall": false,
+          "outsideDomes": "suit-only"
+        },
+        "objectiveMetadata": {
+          "description": "Cross the rebuilt Claw scaffold by handholds while returning misses and drifting debris keep every commitment in play.",
+          "teachingIntent": "Momentum is commitment."
+        },
+        "orbitalScaffoldZones": [
+          {
+            "id": "west-scaffold-deck",
+            "minX": -48,
+            "maxX": -26,
+            "minZ": -10,
+            "maxZ": 10
+          },
+          {
+            "id": "claw-carcass-yard",
+            "minX": -18,
+            "maxX": 18,
+            "minZ": -14,
+            "maxZ": 14
+          },
+          {
+            "id": "east-scaffold-deck",
+            "minX": 26,
+            "maxX": 48,
+            "minZ": -10,
+            "maxZ": 10
+          }
+        ],
+        "debrisFields": [
+          {
+            "id": "north-debris-field",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": 24,
+            "maxZ": 54
+          },
+          {
+            "id": "south-debris-field",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": -24
+          }
+        ],
+        "handholdRoutes": [
+          {
+            "id": "claw-yard-handhold-spine",
+            "points": [
+              {
+                "x": -48,
+                "z": 0
+              },
+              {
+                "x": -18,
+                "z": 0
+              },
+              {
+                "x": 0,
+                "z": -12
+              },
+              {
+                "x": 18,
+                "z": 0
+              },
+              {
+                "x": 48,
+                "z": 0
+              }
+            ]
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": []
+        }
+      },
+      "twist": {
+        "zeroGravity": {
+          "description": "The station scaffold is in free fall; missed lobs remain in orbit and return.",
+          "projectiles": "orbital-return",
+          "roads": "handholds"
+        }
+      },
+      "boardRow": {
+        "name": "Low Orbit",
+        "ledgerBlurb": "Work the Salvage King's rebuilt Claw in free fall, where handholds are roads and every miss comes back.",
+        "tags": [
+          "orbital",
+          "zero-g",
+          "scaffold"
+        ],
+        "unlock": "secured:e8-far-side"
+      },
+      "briefing": {
+        "goals": [
+          "Cross the salvaged Claw scaffold by its handhold spine.",
+          "Commit each push and lob knowing it stays in orbit."
+        ],
+        "rules": [
+          "Gravity is approximately zero.",
+          "Missed lobs travel on and return as future problems.",
+          "Debris is terrain and handholds are roads."
+        ],
+        "geographyLine": "The Salvage King's Claw rebuilt as a three-deck orbital yard, with a handhold spine between two drifting debris fields."
+      }
+    },
+    {
+      "id": "e8-eclipse",
+      "name": "The Eclipse",
+      "description": "Mare Claim terrain variant. Engine dependency: a one-shot event-driven eclipse cycle, mid-run solar shutdown, brown-out ledger, and dark-wave consumers are not yet implemented. Teaching intent: reserves are love letters to your future self.",
+      "tileParams": {
+        "tileId": "e8-mare-claim",
+        "biome": "orbital-eclipse",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "rim-premium-pad-west",
+            "bank": "north",
+            "minX": -50,
+            "maxX": -38,
+            "minZ": 42,
+            "maxZ": 52
+          },
+          {
+            "id": "rim-premium-pad-east",
+            "bank": "north",
+            "minX": 38,
+            "maxX": 50,
+            "minZ": 42,
+            "maxZ": 52
+          },
+          {
+            "id": "dome-cluster-pad-west",
+            "bank": "north",
+            "minX": -24,
+            "maxX": -12,
+            "minZ": -6,
+            "maxZ": 6
+          },
+          {
+            "id": "dome-cluster-pad-center",
+            "bank": "north",
+            "minX": -6,
+            "maxX": 6,
+            "minZ": -6,
+            "maxZ": 6
+          },
+          {
+            "id": "dome-cluster-pad-east",
+            "bank": "north",
+            "minX": 12,
+            "maxX": 24,
+            "minZ": -6,
+            "maxZ": 6
+          },
+          {
+            "id": "launch-pad",
+            "bank": "south",
+            "minX": -40,
+            "maxX": -20,
+            "minZ": -40,
+            "maxZ": -22
+          },
+          {
+            "id": "mass-driver-rail-footing",
+            "bank": "south",
+            "minX": -8,
+            "maxX": 54,
+            "minZ": -40,
+            "maxZ": -28
+          }
+        ],
+        "stakeMarkers": [],
+        "rails": [
+          {
+            "style": "mass-driver",
+            "points": [
+              {
+                "x": -4,
+                "z": -34
+              },
+              {
+                "x": 16,
+                "z": -34
+              },
+              {
+                "x": 36,
+                "z": -34
+              },
+              {
+                "x": 54,
+                "z": -34
+              }
+            ]
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [
+          {
+            "x": -34,
+            "z": 12
+          },
+          {
+            "x": -22,
+            "z": 26
+          },
+          {
+            "x": -8,
+            "z": 20
+          },
+          {
+            "x": 16,
+            "z": 22
+          },
+          {
+            "x": 30,
+            "z": 30
+          },
+          {
+            "x": 34,
+            "z": 12
+          }
+        ],
+        "heightfield": {
+          "id": "mare-claim-rim-ring",
+          "mode": "visual"
+        },
+        "gravity": {
+          "feelG": 0.6,
+          "lobArcDistanceMultiplier": 2.4,
+          "movement": "floaty"
+        },
+        "atmosphere": {
+          "airIsWall": true,
+          "outsideDomes": "suit-timer"
+        },
+        "objectiveMetadata": {
+          "description": "Keep the Mare Claim alive when an early lunar eclipse kills the solar economy in the middle of the run.",
+          "teachingIntent": "Reserves are love letters to your future self."
+        },
+        "eclipseShadowZones": [
+          {
+            "id": "compressed-lunar-eclipse",
+            "description": "The eclipse shadow crosses the whole claim and ends solar production mid-run.",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": [
+            {
+              "id": "debris-arc-rim",
+              "points": [
+                {
+                  "x": -50,
+                  "z": 46
+                },
+                {
+                  "x": -26,
+                  "z": 54
+                },
+                {
+                  "x": 0,
+                  "z": 48
+                },
+                {
+                  "x": 26,
+                  "z": 54
+                },
+                {
+                  "x": 50,
+                  "z": 46
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "twist": {
+        "eclipseEvent": {
+          "description": "A compressed lunar eclipse arrives mid-run, early and unannounced the first time, shutting down solar production and opening dark waves.",
+          "trigger": "mid-run",
+          "firstRunWarning": false,
+          "solarEconomy": "offline",
+          "waveSet": "dark"
+        }
+      },
+      "boardRow": {
+        "name": "The Eclipse",
+        "ledgerBlurb": "Bank the long light before the shadow arrives early and asks what you saved for the dark.",
+        "tags": [
+          "orbital",
+          "eclipse",
+          "reserves"
+        ],
+        "unlock": "secured:e8-low-orbit"
+      },
+      "briefing": {
+        "goals": [
+          "Bank enough power and supplies before the eclipse kills the solar economy.",
+          "Ration through the brown-out ledger and the dark's own waves."
+        ],
+        "rules": [
+          "The lunar eclipse arrives mid-run, weeks early.",
+          "Its first arrival is unannounced.",
+          "Solar production stays down through the dark waves."
+        ],
+        "geographyLine": "The Mare Claim rim, dome cluster, regolith fields, launch pad, and mass-driver rail under one map-wide eclipse shadow."
+      }
     }
   ]
 }

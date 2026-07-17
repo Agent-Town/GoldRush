@@ -1,0 +1,59 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-8-orbital/contracts.json; lore/STORYBOOK.md E8 contracts",
+    "tileId": "e8-mare-claim",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "far-side-landing-yard", "bank": "south", "minX": -24, "maxX": 24, "minZ": -48, "maxZ": -30 },
+      { "id": "listening-probe-recovery", "bank": "north", "minX": -14, "maxX": 14, "minZ": 38, "maxZ": 52 }
+    ],
+    "stakeMarkers": [],
+    "rails": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": { "id": "mare-claim-rim-ring", "mode": "visual" },
+    "gravity": { "feelG": 0.6, "lobArcDistanceMultiplier": 2.4, "movement": "floaty" },
+    "atmosphere": { "airIsWall": false, "outsideDomes": "suit-only" },
+    "probeRecoveryZones": [
+      {
+        "id": "listening-probe-crater",
+        "description": "A half-buried, unmarked old-world probe waits at the far end of the crossing.",
+        "minX": -14,
+        "maxX": 14,
+        "minZ": 38,
+        "maxZ": 52
+      }
+    ],
+    "signalNullZones": [
+      {
+        "id": "far-side-comms-shadow",
+        "description": "No playbooks or drones operate anywhere in the Far Side comms shadow.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -54,
+        "maxZ": 54
+      }
+    ],
+    "suitOnlyZones": [
+      {
+        "id": "far-side-vacuum",
+        "description": "The whole crossing is suit-only.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -54,
+        "maxZ": 54
+      }
+    ],
+    "lanes": {
+      "spawnEdges": ["north", "west", "east"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": []
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}

@@ -50,6 +50,8 @@ function assertBoundsAndWater(mask, waterAgreement) {
     ...(mask.countdownGround ?? []), ...(mask.picnicBlankets ?? []),
     ...(mask.echoCanyonBands ?? []), ...(mask.broadcastMirrorZones ?? []), ...(mask.signalNullZones ?? []),
     ...(mask.interferenceFrontZones ?? []),
+    ...(mask.probeRecoveryZones ?? []), ...(mask.suitOnlyZones ?? []),
+    ...(mask.orbitalScaffoldZones ?? []), ...(mask.debrisFields ?? []), ...(mask.eclipseShadowZones ?? []),
   ]) {
     inBounds(mask, zone.minX, zone.minZ);
     inBounds(mask, zone.maxX, zone.maxZ);
@@ -68,6 +70,7 @@ function assertBoundsAndWater(mask, waterAgreement) {
     ...(mask.raceCourse?.beacons ?? []), ...(mask.stillwater?.noiseSources ?? []), ...(mask.flotilla?.hulls ?? []),
     ...(mask.catalogGoods ?? []), ...(mask.extractionRoute ?? []),
     ...(mask.civilianSites ?? []), ...(mask.sandwichSites ?? []),
+    ...(mask.handholdRoutes ?? []).flatMap((route) => route.points),
   ]) inBounds(mask, point.x, point.z, point.radius ?? 0);
 
   if (mask.orbitSpawn) inBounds(mask, mask.orbitSpawn.center.x, mask.orbitSpawn.center.z, mask.orbitSpawn.radius);
@@ -156,6 +159,20 @@ test('published mask tables exactly track authored contract data', async () => {
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'rails',
       'waterSources', 'harvestAnchors', 'heightfield', 'gravity', 'atmosphere', 'lanes',
     ],
+    'e8-far-side': [
+      'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'rails',
+      'waterSources', 'harvestAnchors', 'heightfield', 'gravity', 'atmosphere',
+      'probeRecoveryZones', 'signalNullZones', 'suitOnlyZones', 'lanes',
+    ],
+    'e8-low-orbit': [
+      'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'rails',
+      'waterSources', 'harvestAnchors', 'heightfield', 'gravity', 'atmosphere',
+      'orbitalScaffoldZones', 'debrisFields', 'handholdRoutes', 'lanes',
+    ],
+    'e8-eclipse': [
+      'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'rails',
+      'waterSources', 'harvestAnchors', 'heightfield', 'gravity', 'atmosphere', 'eclipseShadowZones', 'lanes',
+    ],
     'e9-dome-basin': [
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'rails',
       'waterSources', 'harvestAnchors', 'heightfield', 'lanes',
@@ -182,8 +199,10 @@ test('published mask tables exactly track authored contract data', async () => {
           ? id === 'e7-relay-valley'
             ? 'assets/contracts/epoch-7-signal/contracts.json; specs/epoch-saga/e7-signal-bundle.md §B'
             : 'assets/contracts/epoch-7-signal/contracts.json; lore/STORYBOOK.md E7 contracts'
-          : id === 'e8-mare-claim'
-            ? 'assets/contracts/epoch-8-orbital/contracts.json; specs/epoch-saga/e8-orbital-bundle.md §B'
+          : id.startsWith('e8-')
+            ? id === 'e8-mare-claim'
+              ? 'assets/contracts/epoch-8-orbital/contracts.json; specs/epoch-saga/e8-orbital-bundle.md §B'
+              : 'assets/contracts/epoch-8-orbital/contracts.json; lore/STORYBOOK.md E8 contracts'
             : id === 'e9-dome-basin'
               ? 'assets/contracts/epoch-9-redfields/contracts.json; specs/epoch-saga/e9-redfields-bundle.md §B'
               : id === 'e10-ember-shore'
@@ -284,6 +303,25 @@ test('published mask tables exactly track authored contract data', async () => {
     { id: 'lava-tube-mouth', minX: -38, maxX: -24, minZ: 18, maxZ: 32 });
   assert.deepEqual(mareClaimMask.debrisArcLanes, mareClaim.tileParams.lanes.patrolRoutes);
 
+  const farSide = contract('e8-far-side');
+  const farSideMask = (await table(farSide.id)).maskTruth;
+  assert.equal(farSide.tileParams.tileId, mareClaim.tileParams.tileId);
+  assert.deepEqual(farSideMask.probeRecoveryZones, farSide.tileParams.probeRecoveryZones);
+  assert.deepEqual(farSideMask.signalNullZones, farSide.tileParams.signalNullZones);
+  assert.deepEqual(farSideMask.suitOnlyZones, farSide.tileParams.suitOnlyZones);
+
+  const lowOrbit = contract('e8-low-orbit');
+  const lowOrbitMask = (await table(lowOrbit.id)).maskTruth;
+  assert.equal(lowOrbit.tileParams.tileId, 'e8-low-orbit');
+  assert.deepEqual(lowOrbitMask.orbitalScaffoldZones, lowOrbit.tileParams.orbitalScaffoldZones);
+  assert.deepEqual(lowOrbitMask.debrisFields, lowOrbit.tileParams.debrisFields);
+  assert.deepEqual(lowOrbitMask.handholdRoutes, lowOrbit.tileParams.handholdRoutes);
+
+  const eclipse = contract('e8-eclipse');
+  const eclipseMask = (await table(eclipse.id)).maskTruth;
+  assert.equal(eclipse.tileParams.tileId, mareClaim.tileParams.tileId);
+  assert.deepEqual(eclipseMask.eclipseShadowZones, eclipse.tileParams.eclipseShadowZones);
+
   const domeBasin = contract('e9-dome-basin');
   const domeBasinMask = (await table(domeBasin.id)).maskTruth;
   assert.deepEqual(domeBasinMask.quarryScarpBands, [
@@ -335,7 +373,7 @@ test('published Moth Season mask stays inside bounds and agrees with authored wa
   assertBoundsAndWater(maskTruth, waterAgreement);
 });
 
-for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e3-fairground', 'e4-dust-flats', 'e5-regatta', 'e5-stillwater', 'e5-flotilla', 'e6-glow-mesa', 'e6-showroom', 'e6-half-life-hollow', 'e6-picnic', 'e7-relay-valley', 'e7-echo-canyon', 'e7-dead-band', 'e7-relay-rush', 'e8-mare-claim', 'e9-dome-basin', 'e10-ember-shore']) {
+for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e3-fairground', 'e4-dust-flats', 'e5-regatta', 'e5-stillwater', 'e5-flotilla', 'e6-glow-mesa', 'e6-showroom', 'e6-half-life-hollow', 'e6-picnic', 'e7-relay-valley', 'e7-echo-canyon', 'e7-dead-band', 'e7-relay-rush', 'e8-mare-claim', 'e8-far-side', 'e8-low-orbit', 'e8-eclipse', 'e9-dome-basin', 'e10-ember-shore']) {
   test(`${id} mask stays inside bounds and agrees with authored water`, async () => {
     const { maskTruth, waterAgreement } = await table(id);
     assertBoundsAndWater(maskTruth, waterAgreement);
