@@ -235,8 +235,9 @@
       {
        "id": "art-dq-plates",
        "title": "Dredge-Queen plates (art-batch-025; gates the 3D-C model)",
-       "status": "queued",
-       "taskFile": "art-batch-025-e5-boss-plate.md"
+       "status": "merged",
+       "taskFile": "art-batch-025-e5-boss-plate.md",
+       "mergeHash": "fd4e044c"
       },
       {
        "id": "wire-dq-3d",
@@ -244,6 +245,12 @@
        "mergeHash": "68236fb85de27a709097990a0f7d2b248976ef7f",
        "status": "merged",
        "taskFile": "lane-c-wire-dredge-queen-3d.md"
+      },
+      {
+       "id": "dq-model-3d",
+       "title": "Dredge-Queen 3D model (4 damage components \u2014 3D-C)",
+       "status": "merged",
+       "mergeHash": "MERGE-66670d30"
       }
      ]
     },
@@ -285,14 +292,16 @@
       {
        "id": "e6-decay-framework",
        "title": "Decay-timer framework (E6 grammar + E7 determinism foundation, inert)",
-       "status": "queued",
-       "taskFile": "lane-a-e6-decay-framework.md"
+       "status": "merged",
+       "taskFile": "lane-a-e6-decay-framework.md",
+       "mergeHash": "f2344f11"
       },
       {
        "id": "e6-glow-mesa-contract",
        "title": "E6 Glow Mesa contract + mask table (data-only, inert; feeds 3D-D)",
-       "status": "queued",
-       "taskFile": "lane-b-e6-glow-mesa-contract.md"
+       "status": "merged",
+       "taskFile": "lane-b-e6-glow-mesa-contract.md",
+       "mergeHash": "592d58ed"
       },
       {
        "id": "world-glow-mesa-sculpt",
@@ -346,8 +355,9 @@
       {
        "id": "e7-determinism-audit",
        "title": "PB-00 determinism audit (playbook substrate proof)",
-       "status": "queued",
-       "taskFile": "lane-d-e7-determinism-audit.md"
+       "status": "merged",
+       "taskFile": "lane-d-e7-determinism-audit.md",
+       "mergeHash": "a3523848"
       },
       {
        "id": "playbook-core-spec",
@@ -557,8 +567,20 @@
        "id": "world-wire-fairground",
        "title": "Wire E3 Fairground into terrain3d registry",
        "status": "merged",
-       "mergeHash": "9f2149a572dafdf33270084888ecf22f76e8c76b",
+       "mergeHash": "65ce1cd4",
        "taskFile": "lane-c-wire-fairground-terrain.md"
+      },
+      {
+       "id": "world-landmark-bar",
+       "title": "Landmark bar unification hill-mine+trestle (3D-D, blind 97-98%)",
+       "status": "merged",
+       "mergeHash": "MERGE-1d0b9609"
+      },
+      {
+       "id": "world-overview-verdict",
+       "title": "Overview-transition wave A (no-change verdict, boards banked)",
+       "status": "merged",
+       "mergeHash": "MERGE-f8d069b7"
       }
      ]
     },
@@ -614,8 +636,26 @@
        "id": "world-flood-reset",
        "title": "floodReset runtime (era-props chain break at E5)",
        "status": "merged",
-       "mergeHash": "0a4bb6c2c6718d3bf70f887d4636c4271658124c",
+       "mergeHash": "0a4bb6c2",
        "taskFile": "lane-c-flood-reset-era-props.md"
+      },
+      {
+       "id": "world-mesa-town-arc",
+       "title": "THE MESA TOWN arc (plate + E6 + E7 wides \u2014 3D-C, 5 waves)",
+       "status": "merged",
+       "mergeHash": "MERGE-e7e7641b"
+      },
+      {
+       "id": "world-dome-commons-plate",
+       "title": "E8 Dome Commons plate (screen-door dome \u2014 3D-C)",
+       "status": "merged",
+       "mergeHash": "MERGE-e97e60dc"
+      },
+      {
+       "id": "world-e4-road-wear",
+       "title": "E4 road-wear texture pass (F-3DC-04 closed)",
+       "status": "merged",
+       "mergeHash": "MERGE-road-wear-v2"
       }
      ]
     }
