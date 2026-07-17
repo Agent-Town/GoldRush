@@ -508,3 +508,10 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 - **✅ MERGED — boss/old-digger (9e1fe8a2):** OldDiggerBossSystem acts 0-3 complete incl. THE SWAP (playbook tape → the turn → joins the fleet, persists gentle via TileStateStore). Wall took its spec → QUEUED lane-d: **e9-digger-spec** (the no-kill assertion + full gates; system stays 'building' until specced).
 - **✅ MERGED — campaign/e2-e4-extras: THE CAMPAIGN IS 27/27 MASKED** (E4's extras named: Long Road, Gusher County, the Boneyard). Mask tests 30/30 attended-verified; board-gating additive.
 - **STANDING ORDER: no alt-subscription launches until the owner re-opens it.** All future background work runs on the primary (Scribe-pattern) or the lanes.
+
+## 2026-07-18 — NIGHT HANDOFF (owner: "reconcile... Drain, author, load the lanes. Talk to you tomorrow.")
+- RECONCILED + DRAINED: 3D-C's overnight backlog packs ×2 MERGED (Glow Mesa + Relay Valley landmarks — the backlog rolls without prompting); press lanes = safe dupes (fires drained cp04 + visibility; specs on main); e9-digger-spec RUNNING lane-d.
+- **LANES LOADED ×3:** lane-a **Homemaker-9000** (the chair ending) · lane-b **Salvage Claw** (descends in acts, the carcass becomes the yard) · lane-c **the wrangle verb** (win by patience; the pen persists via the store; the therapeutic vaccine RULED canon plays it). All inert until their eras arm; DQ/Digger precedents cited. With these, EVERY boss system in the saga is built or building (Echo needs none; the Quiet is E10's own class).
+- FOURTH PRINTING: Scribe weaving on the primary (the twenty rulings; #7's publishing arc) — lands overnight; fires do NOT touch lore/STORYBOOK.md while it runs.
+- OWED TOMORROW (attended): deploy (Press fixes cp04+visibility + everything since da73c90b — then the owner's Press retry + phone test) · the E4 era-gate ceremony + the playtest (the two owner dominos) · 3D-D's next prompt (E6-unique sculpts + the mounts debt: regatta 8 ids + the two new pack id-lists) · Sol relays as the owner wakes the sessions.
+- ALT SUBSCRIPTION: STOPPED (standing order).
