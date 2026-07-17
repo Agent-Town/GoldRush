@@ -10,7 +10,7 @@ import { FIRST_CLAIM_DONE_KEY } from './game/ProfileStorage';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
-import { DEFAULT_CONTRACT_ID, stagePlayerContractLaunch } from './meta/ContractFamilies';
+import { DEFAULT_CONTRACT_ID, readCharterLaunch, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { installClaimLedgerRequestHandler } from './encyclopedia/events';
 import { installEpochLedgerDiscovery } from './encyclopedia/state';
@@ -194,7 +194,23 @@ function markFirstClaimDone(): void {
 }
 
 function runReturnCallback(result: RunReturnResult): void {
+  if (returnRunToCharterPress(result)) return;
   returnToTownBoard(result);
+}
+
+// A run the Charter Press launched returns to the Press, not the town board.
+// The staged charter-launch entry exists only after a Press launch, so every
+// other run keeps its ordinary return path untouched.
+function returnRunToCharterPress(result: RunReturnResult): boolean {
+  const launch = readCharterLaunch();
+  const search = new URLSearchParams(window.location.search);
+  if (!launch || search.has('editor') || search.get('contract') !== launch.templateId) return false;
+  const next = new URLSearchParams();
+  next.set('editor', '');
+  next.set('contract', launch.templateId);
+  next.set('press', `return-${result}`);
+  window.location.href = `${window.location.pathname}?${next.toString()}`;
+  return true;
 }
 
 function returnToTownBoard(result: RunReturnResult): void {

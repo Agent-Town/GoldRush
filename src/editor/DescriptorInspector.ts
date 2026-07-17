@@ -12,6 +12,7 @@ import {
   type ContractDescriptorParseResult,
   type ContractManifest,
 } from '../meta/ContractFamilies';
+import { createPressPanel } from '../charter/PressPanel';
 import { createPlacementEditorPanel } from './PlacementEditor';
 import { createTerrainBrushPanel } from './TerrainBrush';
 import './descriptor-inspector.css';
@@ -137,6 +138,7 @@ export function installDescriptorInspector(root: HTMLElement): void {
     contract,
     onCommit: (next, message) => apply(next, message),
   }));
+  fields.append(createPressPanel({ contract, template }));
   renderSections(fields, contract, () => apply(contract));
   const importText = (text: string) => {
     const parsed = parseContractDescriptor(text, template);
