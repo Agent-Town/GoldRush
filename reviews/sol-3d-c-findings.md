@@ -1,5 +1,43 @@
 # SOL 3D-C — 3D pilot findings
 
+## Great landmark backlog 02 — E7 Relay Valley body handoff
+
+Branch: `sol/campaign-landmarks-e7-relay-valley`
+
+Base: `545f8c499095f68cd2c105d0bc298d3303df4262`
+
+Verdict: **READY-FOR-GATES — five mount-agnostic Relay Valley landmark bodies are production-complete; the four gameplay relay pads, teaching patrol rectangle, three fog pockets, and north dead gap remain untouched.**
+
+### Mount ID list
+
+1. `west-ridge-dish-cluster`
+2. `east-ridge-dish-cluster`
+3. `dead-gap-charting-station`
+4. `valley-cable-drum-yard`
+5. `drone-recovery-beacon`
+
+### Source ladder and composition
+
+- The paired ridge clusters and chart station derive the shipped E7 signal plates: walnut frames, honey glass, agent teal, punch tape, and concentric signal arcs. They are smaller ridge furniture, not duplicates of the four gameplay relay towers.
+- The cable yard reuses the shipped stockpile body and adds functional signal drums; the recovery beacon reuses the shipped sentry-beacon vocabulary and adds a four-arm landing/recovery apron.
+- Proposed placements are evidence-only while the MOUNT INTERLOCK is pending. Both dish clusters sit outside the four exact build rectangles; the chart station stays south of the dead gap; the cable yard and recovery beacon remain outside the teaching patrol rectangle and named fog pockets.
+
+### Production gate
+
+| Check | Result |
+| --- | --- |
+| Bodies | 5 separate GLBs; one mesh/primitive/material/image each |
+| Triangle budget | 660–1,812 triangles per body; all below 3,000 |
+| Shared atlas | one embedded 1024 x 1024 E7 atlas shared byte-for-byte by all five GLBs |
+| Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
+| Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
+| Source tiers | reuse 2, derive 3, build-new 0 |
+| Fresh-reference law | all boards record `origin/main@545f8c499095…` |
+| Repo gates | `npx tsc --noEmit` and `npm run build` green |
+| Visual QA | brightened run-camera evidence keeps ridge relief and all five silhouettes legible; four-angle inspection shows complete wrap and grounding |
+
+The initial evidence rig let the blue-hour terrain collapse toward black. The production assets did not change; the verdict-only front rake and exposure were corrected so the sculpt, dead gap, and peripheral placement can be judged honestly.
+
 ## Campaign landmark pack 01 — E5 Regatta body handoff
 
 Branch: `sol/campaign-landmarks-e5-regatta`
