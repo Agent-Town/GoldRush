@@ -1,5 +1,43 @@
 # SOL 3D-C — 3D pilot findings
 
+## E9 Basin Rim population
+
+Branch: `sol/basin-rim-e9-population`
+
+Base: `b9df7e2127dadc1ea74859026459e32a2405af34`
+
+Plate dependency: `sol/basin-rim-e9-plate@440bb19e4058eded9be82b1faf4292e73808cb0a`
+
+Tip: exact E9 population SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — five grounded, full-wrap production assets turn the Basin Rim plate into a water-working settlement: law, green, ice, weather, and canal transport each own a distinct silhouette while the red field and Pan stage stay open.**
+
+| Asset | E9 function/read | Contract |
+| --- | --- | --- |
+| Water-ledger office | public water counter, pictogram slate, paired teal meters, and a roofline balance make the canal reeve's reborn E1 job readable without letters | 1,224 tris; 4.18 x 3.15017 inside Claim Office 4.4 x 3.2; SHA `b48a558d6156…` |
+| Greenkeeper | seed vault, irrigation tank, two working beds, and small seedlings use exact E1 green `#50674c` as the generational callback | 1,208 tris; 5.0 x 3.34 inside Tavern 5.2 x 3.4; SHA `096098412380…` |
+| Ice-quarry head | full-span gantry, winch house, hanging ice block, ice piles, and signal ring carry the quarry skyline | 968 tris; 5.38 x 3.58 inside the 5.6 x 3.8 quarry pad; SHA `cadd77d7873e…` |
+| Weather-warden spire | three storm braces, lens, field nodes, lance, weather globe, vane, and lightning crown make the era's control-of-fronts technology the ensemble landmark | 1,340 tris; 3.78 x 3.078 inside Chapel 4.2 x 3.2; SHA `65554c98d3af…` |
+| Canal packet-boat | shallow hull, cabin dome, portholes, parcels, awning, bow lamp, and twin paddles make the first ordinary canal traffic playful and legible | 1,140 tris; 4.93 x 1.98 inside its 5.2 x 2.0 water mount; SHA `0ed40957e094…` |
+
+### Site-break and cadence verdicts
+
+| Fixture | Verdict | Reason |
+| --- | --- | --- |
+| Five E9 identities | NEW | each belongs to the persistent water-and-green economy of the Red Fields |
+| Basin Rim plate | DEPENDENCY, UNCHANGED | this branch mounts pushed plate tip `440bb19e…` for evidence only and duplicates none of its production bytes |
+| Pan Monument | PERSIST, UNCHANGED | independent heritage GLB stays at the open canonical stage |
+| E1 green | PERSIST AS LIVING CALLBACK | the greenkeeper's beds use exact `#50674c`; later field spread remains tile-persistence-owned |
+| E8 Dome and earlier sites | GONE, NAMED SITE BREAK | E9 is a fresh red-world settlement, not an accretion layer on the Moon |
+
+- Every asset is one node / mesh / primitive with one double-sided non-emissive material and one embedded 1024 x 1024 atlas; zero cameras, lights, animations, helpers, or invented emitter anchors.
+- Every root is base-centered and grounded at GLB `Y = 0`; all four building envelopes have positive canonical clearance. The boat has 0.02 width clearance in its explicit canal-water envelope and sits at the canal surface in evidence.
+- Every saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- The 20-view audit proves finished backs/sides and no floating, detached, or open geometry. The four-angle ensemble keeps the plaza and Ark yard open while the quarry/spire announce E9 across the basin.
+- Fresh E1-E8 references were rerendered from current main GLBs at the full base SHA above. No historical board was used as model guidance; the not-yet-merged E9 plate is identified separately by tip and GLB hash.
+- Independent Codex review caught Blender's default `.blend1` backup and an exact-green region that had been over-modulated by engraving tone. The builder now disables backup creation and locks 105,975 atlas pixels to literal `#50674c`; the verifier and evidence were regenerated.
+- `npm run build` passes. No `src/`, runtime, simulation, queue, spec, status, layout, plate, Pan, or prior-era asset changes ride this wave.
+
 ## Dredge-Queen production model v2
 
 Branch: `sol/dredge-queen-3d-v2`
