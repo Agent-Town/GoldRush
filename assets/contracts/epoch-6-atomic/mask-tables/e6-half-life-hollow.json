@@ -1,0 +1,145 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-6-atomic/contracts.json; lore/STORYBOOK.md — E6 \"New maps, specified for whoever builds them\"",
+    "tileId": "e6-half-life-hollow",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "south-launch-shelf",
+        "bank": "south",
+        "minX": -38,
+        "maxX": 38,
+        "minZ": -54,
+        "maxZ": -40
+      },
+      {
+        "id": "west-countdown-ground",
+        "bank": "south",
+        "minX": -42,
+        "maxX": -8,
+        "minZ": -22,
+        "maxZ": -6
+      },
+      {
+        "id": "east-countdown-ground",
+        "bank": "north",
+        "minX": 8,
+        "maxX": 42,
+        "minZ": 10,
+        "maxZ": 26
+      },
+      {
+        "id": "north-extraction-shelf",
+        "bank": "north",
+        "minX": -28,
+        "maxX": 28,
+        "minZ": 40,
+        "maxZ": 54
+      }
+    ],
+    "glowBridges": [
+      {
+        "id": "south-glow-bridge",
+        "minX": -8,
+        "maxX": 8,
+        "minZ": -40,
+        "maxZ": -22
+      },
+      {
+        "id": "north-glow-bridge",
+        "minX": -8,
+        "maxX": 8,
+        "minZ": 26,
+        "maxZ": 40
+      }
+    ],
+    "causeways": [
+      {
+        "id": "center-dial-causeway",
+        "minX": -8,
+        "maxX": 8,
+        "minZ": -6,
+        "maxZ": 10
+      }
+    ],
+    "countdownGround": [
+      {
+        "id": "west-countdown-ground",
+        "minX": -42,
+        "maxX": -8,
+        "minZ": -22,
+        "maxZ": -6
+      },
+      {
+        "id": "east-countdown-ground",
+        "minX": 8,
+        "maxX": 42,
+        "minZ": 10,
+        "maxZ": 26
+      }
+    ],
+    "stakeMarkers": [
+      {
+        "id": "hollow-extraction",
+        "x": 0,
+        "z": 48,
+        "lossCondition": false
+      }
+    ],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": {
+      "id": "half-life-hollow-expiry-course",
+      "mode": "visual"
+    },
+    "extractionRoute": [
+      {
+        "x": 0,
+        "z": -48
+      },
+      {
+        "x": 0,
+        "z": -30
+      },
+      {
+        "x": -24,
+        "z": -14
+      },
+      {
+        "x": 0,
+        "z": 2
+      },
+      {
+        "x": 24,
+        "z": 18
+      },
+      {
+        "x": 0,
+        "z": 34
+      },
+      {
+        "x": 0,
+        "z": 48
+      }
+    ],
+    "lanes": {
+      "spawnEdges": [
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}

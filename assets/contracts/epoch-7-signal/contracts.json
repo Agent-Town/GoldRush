@@ -120,6 +120,354 @@
         ],
         "geographyLine": "Two exposed relay ridges stand at height five above a thick valley floor, split by a dead gap and line-of-sight fog pockets."
       }
+    },
+    {
+      "id": "e7-echo-canyon",
+      "name": "Echo Canyon",
+      "description": "Engine dependency: broadcast-mirror playbook consumer not yet implemented. Teaching intent: vary your own patterns because every recorded habit returns as a corrupted copy on the next wave.",
+      "tileParams": {
+        "tileId": "e7-echo-canyon",
+        "biome": "signal-echo-canyon",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "canyon-floor-yard",
+            "bank": "south",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": -42,
+            "maxZ": 10
+          },
+          {
+            "id": "west-echo-shelf",
+            "bank": "north",
+            "minX": -52,
+            "maxX": -34,
+            "minZ": -14,
+            "maxZ": 32
+          },
+          {
+            "id": "east-echo-shelf",
+            "bank": "north",
+            "minX": 34,
+            "maxX": 52,
+            "minZ": -14,
+            "maxZ": 32
+          }
+        ],
+        "stakeMarkers": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "echo-canyon-walls",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Use a playbook, then counter the corrupted copy fielded on the next wave.",
+          "teachingIntent": "Vary your own patterns; your habits have a shadow."
+        },
+        "echoCanyonBands": [
+          {
+            "id": "west-canyon-wall-h5",
+            "height": 5,
+            "minX": -54,
+            "maxX": -32,
+            "minZ": -54,
+            "maxZ": 54
+          },
+          {
+            "id": "echo-floor-h0",
+            "height": 0,
+            "minX": -32,
+            "maxX": 32,
+            "minZ": -54,
+            "maxZ": 54
+          },
+          {
+            "id": "east-canyon-wall-h5",
+            "height": 5,
+            "minX": 32,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "broadcastMirrorZones": [
+          {
+            "id": "echo-canyon-broadcast-field",
+            "description": "Everything recorded in this field is mirrored as a corrupted enemy playbook on the next wave.",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "south"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": []
+        }
+      },
+      "twist": {
+        "broadcastMirror": {
+          "description": "Each playbook used this run returns as a corrupted enemy copy on the next wave.",
+          "delay": "next-wave"
+        }
+      },
+      "boardRow": {
+        "name": "Echo Canyon",
+        "ledgerBlurb": "Every lesson carries across the canyon and comes marching back one wave later.",
+        "tags": [
+          "signal",
+          "playbook",
+          "mirror"
+        ],
+        "unlock": "secured:e7-relay-valley"
+      },
+      "briefing": {
+        "goals": [
+          "Use a playbook, then survive its corrupted copy on the next wave.",
+          "Break your recorded pattern before the copies learn the canyon."
+        ],
+        "rules": [
+          "Every playbook used this run is broadcast-mirrored to the enemy next wave.",
+          "Repeated habits escalate the self-play pressure.",
+          "Different patterns deny the copies a complete answer."
+        ],
+        "geographyLine": "A long canyon floor between two high echo shelves, with enemy lanes entering from both ends."
+      }
+    },
+    {
+      "id": "e7-dead-band",
+      "name": "The Dead Band",
+      "description": "Relay Valley terrain variant. Engine dependency: contract-level signal-suppression consumer not yet implemented. Teaching intent: feel what agents contribute by losing drones, playbooks, and relay chains for one run.",
+      "tileParams": {
+        "tileId": "e7-relay-valley",
+        "biome": "signal-dead-band",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "dead-band-yard",
+            "bank": "south",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": -42,
+            "maxZ": 12
+          },
+          {
+            "id": "west-old-tool-ground",
+            "bank": "north",
+            "minX": -50,
+            "maxX": -20,
+            "minZ": 26,
+            "maxZ": 48
+          },
+          {
+            "id": "east-old-tool-ground",
+            "bank": "north",
+            "minX": 20,
+            "maxX": 50,
+            "minZ": 26,
+            "maxZ": 48
+          }
+        ],
+        "stakeMarkers": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "relay-valley-ridgelines",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Secure the valley using hands, boots, and the four oldest tools without signal systems.",
+          "teachingIntent": "Nostalgia by subtraction: missing the drones is the lesson."
+        },
+        "signalNullZones": [
+          {
+            "id": "dead-band-iron-shadow",
+            "description": "Signal does not propagate anywhere inside the iron-ore shadow.",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": []
+        }
+      },
+      "twist": {
+        "signalSuppression": {
+          "description": "No drones, no playbooks, and no relay chains operate in the Dead Band.",
+          "drones": false,
+          "playbooks": false,
+          "relayChains": false
+        }
+      },
+      "boardRow": {
+        "name": "The Dead Band",
+        "ledgerBlurb": "Signal dies in the iron valley; carry the oldest tools in by hand and walk them home.",
+        "tags": [
+          "signal",
+          "manual",
+          "dead-zone"
+        ],
+        "unlock": "secured:e7-echo-canyon"
+      },
+      "briefing": {
+        "goals": [
+          "Secure the valley with hands, boots, and the four oldest tools.",
+          "Hold without drones, playbooks, or relay chains."
+        ],
+        "rules": [
+          "The iron body blocks signal across the whole valley.",
+          "Drones, playbooks, and relay chains do not operate here.",
+          "The far end contains no hidden reward."
+        ],
+        "geographyLine": "The Relay Valley ground under one complete iron-ore signal shadow, with genuinely nothing buried at its far end."
+      }
+    },
+    {
+      "id": "e7-relay-rush",
+      "name": "Relay Rush",
+      "description": "Relay Valley terrain variant. Engine dependency: event-driven interference-front cycle and signal-muting consumer not yet implemented. Teaching intent: expand under deadline and triage at speed.",
+      "tileParams": {
+        "tileId": "e7-relay-valley",
+        "biome": "signal-relay-rush",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "relay-site-r1",
+            "bank": "north",
+            "minX": -50,
+            "maxX": -40,
+            "minZ": 36,
+            "maxZ": 46
+          },
+          {
+            "id": "relay-site-r2",
+            "bank": "north",
+            "minX": -30,
+            "maxX": -20,
+            "minZ": 36,
+            "maxZ": 46
+          },
+          {
+            "id": "relay-site-r3",
+            "bank": "north",
+            "minX": 20,
+            "maxX": 30,
+            "minZ": 36,
+            "maxZ": 46
+          },
+          {
+            "id": "relay-site-r4",
+            "bank": "north",
+            "minX": 40,
+            "maxX": 50,
+            "minZ": 36,
+            "maxZ": 46
+          }
+        ],
+        "stakeMarkers": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "relay-valley-ridgelines",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Light N relays before the interference front arrives.",
+          "teachingIntent": "Expansion under deadline; triage at speed."
+        },
+        "interferenceFrontZones": [
+          {
+            "id": "scheduled-static-corridor",
+            "description": "A wall of static crosses this corridor on a schedule and mutes everything it swallows.",
+            "minX": -54,
+            "maxX": 54,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": []
+        }
+      },
+      "twist": {
+        "interferenceFront": {
+          "description": "An event-driven wall of static crosses the map on a schedule and mutes everything it swallows.",
+          "relayTarget": "N",
+          "visual": "creeping-desaturation"
+        }
+      },
+      "boardRow": {
+        "name": "Relay Rush",
+        "ledgerBlurb": "Light the ridge chain before a wall of un-inked static crosses the valley.",
+        "tags": [
+          "signal",
+          "relay",
+          "timed"
+        ],
+        "unlock": "secured:e7-dead-band"
+      },
+      "briefing": {
+        "goals": [
+          "Light N relays before the interference front arrives.",
+          "Choose which links to save when the front overtakes the valley."
+        ],
+        "rules": [
+          "The interference front crosses the map on a schedule.",
+          "Everything swallowed by the front is muted.",
+          "The front appears as creeping desaturation, like un-inked paper spreading."
+        ],
+        "geographyLine": "The Relay Valley ridge chain inside one map-wide corridor for the scheduled interference front."
+      }
     }
   ]
 }

@@ -1,0 +1,37 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-7-signal/contracts.json; lore/STORYBOOK.md E7 contracts",
+    "tileId": "e7-relay-valley",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "dead-band-yard", "bank": "south", "minX": -30, "maxX": 30, "minZ": -42, "maxZ": 12 },
+      { "id": "west-old-tool-ground", "bank": "north", "minX": -50, "maxX": -20, "minZ": 26, "maxZ": 48 },
+      { "id": "east-old-tool-ground", "bank": "north", "minX": 20, "maxX": 50, "minZ": 26, "maxZ": 48 }
+    ],
+    "stakeMarkers": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": { "id": "relay-valley-ridgelines", "mode": "visual" },
+    "signalNullZones": [
+      {
+        "id": "dead-band-iron-shadow",
+        "description": "Signal does not propagate anywhere inside the iron-ore shadow.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -54,
+        "maxZ": 54
+      }
+    ],
+    "lanes": {
+      "spawnEdges": ["north", "west", "east"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": []
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}

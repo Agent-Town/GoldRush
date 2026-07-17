@@ -1,0 +1,42 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-7-signal/contracts.json; lore/STORYBOOK.md E7 contracts",
+    "tileId": "e7-echo-canyon",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "canyon-floor-yard", "bank": "south", "minX": -30, "maxX": 30, "minZ": -42, "maxZ": 10 },
+      { "id": "west-echo-shelf", "bank": "north", "minX": -52, "maxX": -34, "minZ": -14, "maxZ": 32 },
+      { "id": "east-echo-shelf", "bank": "north", "minX": 34, "maxX": 52, "minZ": -14, "maxZ": 32 }
+    ],
+    "stakeMarkers": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": { "id": "echo-canyon-walls", "mode": "visual" },
+    "echoCanyonBands": [
+      { "id": "west-canyon-wall-h5", "height": 5, "minX": -54, "maxX": -32, "minZ": -54, "maxZ": 54 },
+      { "id": "echo-floor-h0", "height": 0, "minX": -32, "maxX": 32, "minZ": -54, "maxZ": 54 },
+      { "id": "east-canyon-wall-h5", "height": 5, "minX": 32, "maxX": 54, "minZ": -54, "maxZ": 54 }
+    ],
+    "broadcastMirrorZones": [
+      {
+        "id": "echo-canyon-broadcast-field",
+        "description": "Everything recorded in this field is mirrored as a corrupted enemy playbook on the next wave.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -54,
+        "maxZ": 54
+      }
+    ],
+    "lanes": {
+      "spawnEdges": ["north", "south"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": []
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}

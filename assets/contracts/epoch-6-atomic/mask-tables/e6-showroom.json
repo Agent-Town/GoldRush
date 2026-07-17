@@ -1,0 +1,153 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-6-atomic/contracts.json; lore/STORYBOOK.md — E6 \"New maps, specified for whoever builds them\"",
+    "tileId": "e6-showroom",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "south-showroom-approach",
+        "bank": "south",
+        "minX": -44,
+        "maxX": 44,
+        "minZ": -54,
+        "maxZ": -28
+      },
+      {
+        "id": "model-home-village",
+        "bank": "north",
+        "minX": -50,
+        "maxX": 50,
+        "minZ": -24,
+        "maxZ": 32
+      },
+      {
+        "id": "catalog-goods-yard",
+        "bank": "north",
+        "minX": -28,
+        "maxX": 28,
+        "minZ": 36,
+        "maxZ": 54
+      }
+    ],
+    "showroomHouses": [
+      {
+        "id": "west-display-home",
+        "cascade": "catalog-product-family",
+        "minX": -46,
+        "maxX": -28,
+        "minZ": -18,
+        "maxZ": 0
+      },
+      {
+        "id": "northwest-display-home",
+        "cascade": "catalog-product-family",
+        "minX": -28,
+        "maxX": -10,
+        "minZ": 10,
+        "maxZ": 28
+      },
+      {
+        "id": "north-display-home",
+        "cascade": "catalog-product-family",
+        "minX": -9,
+        "maxX": 9,
+        "minZ": -18,
+        "maxZ": 0
+      },
+      {
+        "id": "northeast-display-home",
+        "cascade": "catalog-product-family",
+        "minX": 10,
+        "maxX": 28,
+        "minZ": 10,
+        "maxZ": 28
+      },
+      {
+        "id": "east-display-home",
+        "cascade": "catalog-product-family",
+        "minX": 28,
+        "maxX": 46,
+        "minZ": -18,
+        "maxZ": 0
+      }
+    ],
+    "stakeMarkers": [],
+    "waterSources": [],
+    "harvestAnchors": [
+      {
+        "x": -38,
+        "z": -8
+      },
+      {
+        "x": -18,
+        "z": 18
+      },
+      {
+        "x": 0,
+        "z": -4
+      },
+      {
+        "x": 18,
+        "z": 18
+      },
+      {
+        "x": 38,
+        "z": -8
+      },
+      {
+        "x": 0,
+        "z": 46
+      }
+    ],
+    "catalogGoods": [
+      {
+        "x": -38,
+        "z": -8
+      },
+      {
+        "x": -18,
+        "z": 18
+      },
+      {
+        "x": 0,
+        "z": -4
+      },
+      {
+        "x": 18,
+        "z": 18
+      },
+      {
+        "x": 38,
+        "z": -8
+      },
+      {
+        "x": 0,
+        "z": 46
+      }
+    ],
+    "heightfield": {
+      "id": "showroom-village-grade",
+      "mode": "visual"
+    },
+    "lanes": {
+      "spawnEdges": [
+        "north",
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}

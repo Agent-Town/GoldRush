@@ -1,0 +1,89 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-5-deepwater/contracts.json; lore/STORYBOOK.md:281-284",
+    "tileId": "e5-regatta",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "buildZones": [
+      { "id": "claim-boat-deck-mask", "bank": "north", "minX": -54, "maxX": -44, "minZ": -5, "maxZ": 5 }
+    ],
+    "stakeMarkers": [{ "id": "claim-boat", "x": -49, "z": 0, "lossCondition": true }],
+    "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
+    "harvestAnchors": [],
+    "water": {
+      "id": "deepwater-surface-placeholder",
+      "depths": { "springPond": 0.2 },
+      "speedMul": { "springPond": 1 }
+    },
+    "deepwater": {
+      "waterTile": {
+        "id": "e5-regatta",
+        "size": 128,
+        "regions": [
+          { "id": "open-water", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": 64, "depth": 0, "depthClass": "surface", "travel": ["swim", "boat"] },
+          { "id": "storm-front-fast-water", "minX": -64, "maxX": 64, "minZ": 34, "maxZ": 54, "depth": 0, "depthClass": "surface", "travel": ["boat"] }
+        ]
+      },
+      "claimBoat": {
+        "id": "claim-boat",
+        "initialAnchorId": "start-line",
+        "anchors": [
+          { "id": "start-line", "x": -49, "z": 0 },
+          { "id": "finish-line", "x": 49, "z": 0 }
+        ],
+        "pads": [
+          { "id": "bow", "x": 0, "z": -3 },
+          { "id": "port", "x": -3, "z": 1 },
+          { "id": "starboard", "x": 3, "z": 1 }
+        ]
+      },
+      "stormTrack": { "regionId": "storm-front-fast-water", "westX": -64, "eastX": 64 },
+      "corsairWaveSize": 3,
+      "wrecks": []
+    },
+    "raceCourse": {
+      "fastWaterZone": { "id": "storm-front-fast-water", "minX": -54, "maxX": 54, "minZ": 34, "maxZ": 54 },
+      "beacons": [
+        { "id": "start-beacon", "x": -49, "z": 0, "radius": 3 },
+        { "id": "northwest-checkpoint", "x": -28, "z": 38, "radius": 3 },
+        { "id": "midcourse-checkpoint", "x": 0, "z": 18, "radius": 3 },
+        { "id": "northeast-checkpoint", "x": 28, "z": 38, "radius": 3 },
+        { "id": "finish-beacon", "x": 49, "z": 0, "radius": 3 }
+      ]
+    },
+    "weather": {
+      "cycleSeconds": 24,
+      "clearSeconds": 5,
+      "telegraphSeconds": 3,
+      "stormSeconds": 10,
+      "stormMovementMultiplier": 0.72,
+      "stormVisibilityMultiplier": 0.58,
+      "hazeColor": "#335f64",
+      "hazeStrength": 0.28
+    },
+    "enemyRoster": [
+      {
+        "id": "corsair_racer",
+        "label": "Corsair Racer",
+        "waveMin": 1,
+        "hpScale": 1,
+        "speedMult": 1.15,
+        "visualScale": 1.2,
+        "tint": "#8f4f32",
+        "spawnEdges": ["west"],
+        "spawnGates": [{ "edge": "west", "x": -62, "z": 0 }],
+        "unitClass": "vehicle",
+        "vehicleChassis": "e4-hauler",
+        "travelClass": "boat",
+        "waterRegions": ["open-water", "storm-front-fast-water"],
+        "art": "placeholder"
+      }
+    ],
+    "lanes": { "spawnEdges": ["west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 },
+    "spawnGates": [{ "edge": "west", "x": -62, "z": 0 }]
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }]
+  }
+}
