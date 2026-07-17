@@ -102,6 +102,25 @@ The first geometry pass inherited the Dredge-Queen helper's storm-dark boss pale
 | Launch Works | the rocket alone read as a toy instead of civic infrastructure | circular pressure seal, rocket with fins/window, four-storey gantry, cross-bracing, umbilical, control cupola | 1,548 tris; 5.44 diameter inside 6.20 orbital circle; SHA `5682cf65044f…` |
 | He-3 Assay | the sample tower initially pushed beyond the inherited Assay Office width | glass-roofed lab, three public sample windows, tower/vial, assay counter, paired He-3 pans; width normalized without silhouette loss | 1,468 tris; 4.503 x 3.065 inside 4.60 x 3.40; SHA `bd9bf0d3fe9f…` |
 | Mass-Driver Dispatch | a long tube needed an inhabited dispatch identity | coil-wrapped driver and dark bore, rail/tie bed, cargo sled, complete dispatch house/cupola, working signal mast | 1,624 tris; 5.45 x 3.28 inside 5.60 x 3.80 orbital rectangle; SHA `43ce73f10ad7…` |
+## E9 Basin Rim population
+
+Branch: `sol/basin-rim-e9-population`
+
+Base: `b9df7e2127dadc1ea74859026459e32a2405af34`
+
+Plate dependency: `sol/basin-rim-e9-plate@440bb19e4058eded9be82b1faf4292e73808cb0a`
+
+Tip: exact E9 population SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — five grounded, full-wrap production assets turn the Basin Rim plate into a water-working settlement: law, green, ice, weather, and canal transport each own a distinct silhouette while the red field and Pan stage stay open.**
+
+| Asset | E9 function/read | Contract |
+| --- | --- | --- |
+| Water-ledger office | public water counter, pictogram slate, paired teal meters, and a roofline balance make the canal reeve's reborn E1 job readable without letters | 1,224 tris; 4.18 x 3.15017 inside Claim Office 4.4 x 3.2; SHA `b48a558d6156…` |
+| Greenkeeper | seed vault, irrigation tank, two working beds, and small seedlings use exact E1 green `#50674c` as the generational callback | 1,208 tris; 5.0 x 3.34 inside Tavern 5.2 x 3.4; SHA `096098412380…` |
+| Ice-quarry head | full-span gantry, winch house, hanging ice block, ice piles, and signal ring carry the quarry skyline | 968 tris; 5.38 x 3.58 inside the 5.6 x 3.8 quarry pad; SHA `cadd77d7873e…` |
+| Weather-warden spire | three storm braces, lens, field nodes, lance, weather globe, vane, and lightning crown make the era's control-of-fronts technology the ensemble landmark | 1,340 tris; 3.78 x 3.078 inside Chapel 4.2 x 3.2; SHA `65554c98d3af…` |
+| Canal packet-boat | shallow hull, cabin dome, portholes, parcels, awning, bow lamp, and twin paddles make the first ordinary canal traffic playful and legible | 1,140 tris; 4.93 x 1.98 inside its 5.2 x 2.0 water mount; SHA `0ed40957e094…` |
 
 ### Site-break and cadence verdicts
 
@@ -119,6 +138,19 @@ The first geometry pass inherited the Dredge-Queen helper's storm-dark boss pale
 - The full 20-view audit proves finished backs/sides and no floating, detached, or open geometry. The four-angle ensemble mounts the five assets on the accepted plate without changing the open Pan stage.
 - Fresh E1-E7 references were rerendered from current GLBs at the full base SHA above; the E4 board contains the motor boulevard/caravan and the E5 board contains the submerged square. No prior PNG was used as model guidance.
 - `npm run build` and independent Codex review are recorded at the final boundary. No `src/`, runtime, simulation, queue, spec, status, layout, plate, Pan, or prior-era asset changes ride this wave.
+| Five E9 identities | NEW | each belongs to the persistent water-and-green economy of the Red Fields |
+| Basin Rim plate | DEPENDENCY, UNCHANGED | this branch mounts pushed plate tip `440bb19e…` for evidence only and duplicates none of its production bytes |
+| Pan Monument | PERSIST, UNCHANGED | independent heritage GLB stays at the open canonical stage |
+| E1 green | PERSIST AS LIVING CALLBACK | the greenkeeper's beds use exact `#50674c`; later field spread remains tile-persistence-owned |
+| E8 Dome and earlier sites | GONE, NAMED SITE BREAK | E9 is a fresh red-world settlement, not an accretion layer on the Moon |
+
+- Every asset is one node / mesh / primitive with one double-sided non-emissive material and one embedded 1024 x 1024 atlas; zero cameras, lights, animations, helpers, or invented emitter anchors.
+- Every root is base-centered and grounded at GLB `Y = 0`; all four building envelopes have positive canonical clearance. The boat has 0.02 width clearance in its explicit canal-water envelope and sits at the canal surface in evidence.
+- Every saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- The 20-view audit proves finished backs/sides and no floating, detached, or open geometry. The four-angle ensemble keeps the plaza and Ark yard open while the quarry/spire announce E9 across the basin.
+- Fresh E1-E8 references were rerendered from current main GLBs at the full base SHA above. No historical board was used as model guidance; the not-yet-merged E9 plate is identified separately by tip and GLB hash.
+- Independent Codex review caught Blender's default `.blend1` backup and an exact-green region that had been over-modulated by engraving tone. The builder now disables backup creation and locks 105,975 atlas pixels to literal `#50674c`; the verifier and evidence were regenerated.
+- `npm run build` passes. No `src/`, runtime, simulation, queue, spec, status, layout, plate, Pan, or prior-era asset changes ride this wave.
 
 ## Dredge-Queen production model v2
 
