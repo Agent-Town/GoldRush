@@ -289,6 +289,49 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E9 campaign-extra terrain wave
+
+### F-3D-D-103 — Three published tables produce three different Redfields pressures
+
+Seed Run, Devil's Alley, and Old Canal each receive a unique 128 m render mesh rather than a recolour or landmark shuffle. Seed Run climbs through three scarce literal-E1-green waypoint bays; Devil's Alley is divided by four hard dune walls into three authored wind corridors; Old Canal is cut by a crooked inherited dry canal and broken spoil shoulders. All three keep the E9 rust-red engraved family, black working cuts, and scarce warm field signals.
+
+### F-3D-D-104 — Fifteen authored build rectangles are triangle-surface flat
+
+The exported GLBs were reopened and independently sampled at 2,145 interpolated triangle-surface points per build rectangle. All fifteen zones report zero deviation against the 0.001 m threshold. The published mask tables remain the sole authority for movement, collision, placement, spawn edges, persistence, dust-devil motion, future water, and event state.
+
+### F-3D-D-105 — Panorama v2 remains a separate county shell
+
+Each map carries a separate 3,072-triangle panorama with an exact 64×64 m inner skirt boundary, irregular near/far ridge layers, asymmetric weather edits, a horizon-density gradient, and a quiet parchment zenith. The owner board preserves the full frame so the terrain join and zenith remain visible; the mounted result answers distance rather than wall or ceiling and owns no gameplay boundary or mask.
+
+### F-3D-D-106 — Mount records reserve composition without baking landmarks
+
+Each terrain contract contains five id/position/rotation/scale mount records with empty asset fields. Evidence-only route lines, dust columns, rubble, mount proxies, overlays, and lights are removed before saving and exporting; the saved Blends contain exactly one terrain or panorama mesh and no cameras or lights.
+
+## E9 campaign-extra gate state
+
+- Three terrain `.blend` / GLB / 2048² atlas / contract sets: PASS
+- Terrain GLBs: 32,768 triangles, one mesh/primitive/material and one embedded atlas each: PASS
+- Three separate Panorama v2 `.blend` / GLB / 2048² atlas / contract sets: PASS
+- Panorama GLBs: 3,072 triangles, one mesh/primitive/material and one embedded atlas each: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for all six GLBs: PASS
+- Exact published masks and fifteen triangle-surface build flats: PASS
+- Five empty-asset landmark mounts per terrain; no baked landmark bodies: PASS
+- Mood A/B, identical-camera geometry, owner, mask, and full-frame Panorama v2 boards: PASS
+- Integrated `npm run build`, Python compilation, and `git diff --check`: PASS
+- Independent `codex review --uncommitted`: attempted; the reviewer exhausted its pass on repository inventory and then the selected model hit capacity before returning a verdict, so it is not counted as a gate
+- `src/`, simulation, runtime registry, factory masks, and main edits: none
+
+## E9 campaign-extra owner-verdict images
+
+- `artifacts/map-rebuild-spike/e9-extra-owner-verdict.png`
+- `artifacts/map-rebuild-spike/e9-extra-mood-ab.png`
+- `artifacts/map-rebuild-spike/e9-extra-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/e9-extra-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/e9-extra-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/e9-extra-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## 27-map campaign — E5 extra-map wave
 
 ### F-3D-D-85 — The campaign identity gate yields one E5 sculpt, not three recolours
