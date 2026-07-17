@@ -468,3 +468,9 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 
 ## 2026-07-17 — THE FOUNDRY SHIPPED (alt-subscription Fable, ONE leg): foundry/ 00-09 MERGED (043fe1aa)
 - The factory-as-product book: constitution (8 laws + forging incidents) · the cast (5 roles, trust architecture) · the loops (claims-vs-facts, drain physics) · **the mistake catalog (16 paid-for failures in 5 transferable families — the moat)** · gate system · canon pipeline · parallel sessions · adopt-guide · starter templates ×6. Territory foundry/-only, gated, merged. The Press shift (press/cp01-03) still running on the alt subscription.
+
+## 2026-07-17 evening — HOUSE CLEANED FOR OWNER ABSENCE + THE E5 GATE OPENS
+- Hung lane-c codex (9h on a 15-min wire task, 13 fire flags) KILLED attended; wire queue flows again. E5-extras drained attended (flotilla + REGATTA + stillwater — the chapter's third is a race course!); e6/e7-extras confirmed fire-drained; mask-test union repaired → **20/20 green, all 9 campaign masks verified**. lane/perf+lane/m3 = stale dupes (runner resets on pickup).
+- **DEPLOYED https://5a89a9b5.gold-rush-3in.pages.dev** — carries the MOBILE OVERLAY FIX + all of today (both Sol capstones, freed walkers, flood break, the wired maps).
+- **THE FOUNDRY → OWN REPO (owner direction, "later"):** planned extraction once the Kit lands — subtree-split foundry/ into a standalone product repo. Goals leaf planned.
+- Away-state: 3D-D gate OPEN (9 extra-map masks on main — return prompt banked in chat); 3D-C tripwire armed (first campaign sculpt merge); alt shifts running (Press + Kit); fires + lanes autonomous.
