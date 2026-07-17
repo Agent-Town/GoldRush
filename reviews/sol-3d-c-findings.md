@@ -180,6 +180,37 @@ The working target was established from `kit-the-ark.png`, `kit-era-10.png`, the
 - `npm run build` passes. No runtime, town layout, building, Pan, spec, queue, or source file changes.
 - Independent visual review first returned REVISE on the sparse color-wheel pass. The final revision narrowed the lineage ring, added human-scale furnishings, strengthened warm/teal readability, and grew the Long Table anchor into a tall gantry silhouette; the follow-up verdict is **SHIP**.
 - Comparison telemetry versus current-main E8 is explicitly distance-only (`0.646446`): E10 correctly moves to deep ink and a fresh Ark topology rather than matching the Dome Commons.
+## E10 Long Table Hall interior
+
+Branch: `sol/ark-long-table-hall-e10`
+
+Base: `101c0d97e9527b26cc5c94fdafab5b4f77aa33c0`
+
+Dependency: pushed Ark plaza wave `e8128c260a3ee62ef836ec33e92b1d8459cecce1` (not merged into this base; no file copied)
+
+Tip: exact Long Table Hall SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the Ark's final room is a warm working mess hall built around the long table, ten profile-owned generation portraits, the original handled E1 pan, and the Elder's Tree in its tin.**
+
+Fresh references were rerendered from the current files on `origin/main@101c0d97…`; the board carries the actual E4 motor boulevard, E5 submerged square, E6 Atomic Mesa, E7 Signal Mesa, and E8 Dome Commons plate. The unmerged E8/E9 population and Ark waves are declared rather than presented as main state.
+
+| Hall identity | Production answer | Evidence |
+| --- | --- | --- |
+| Long Table | twelve chairs, ten place settings, shared bowls/food, mugs, three table lanterns, folded chart | source/production A/B + hero camera |
+| Portrait wall | ten blank baked fields plus `portrait_anchor_01..10`; evidence-only pairs/family groups prove the compositor seam without hard-coded likenesses | portrait close-up + identity audit |
+| Pan Shrine | concave pan, bright riffles, raised brass collar, continuous projecting handle and timber grip inside a small warm case | shrine source/production A/B |
+| Elder's Tree | branched living canopy in a patched, ribbed tin | identity audit close-up |
+| Working-ship grit | ribs, portholes, exposed service runs, consoles, hanging feed/lamps, tool board, cable coils, crates, seams, and repair plates | hero + left/right room renders |
+
+### Production gate
+
+- 16,308 / 20,000 triangles; one mesh and primitive; one material and one embedded 2048 x 2048 atlas; zero cameras/lights/animations.
+- Twelve named nodes accompany the mesh: ten portrait anchors plus `pan_shrine_anchor` and `elder_tree_anchor`.
+- Bounds: 18.0 wide x 22.0 deep x 8.339897 high; base-center origin; open south portal faces the pushed Ark plaza.
+- Five circulation aisles: 510 saved-BLEND ray-cast samples, maximum relief `0.0420001` below the `0.05` ceiling.
+- GLB SHA-256 `ab40e265cac4ba9d7a71dc25b0e781bd992bd5fd0d3808f4853fc3a7188c0ee9`; saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- Neutral visual review: initial REVISE closed three findings (detached-looking pan handle, cloned portrait proxies, museum-clean room); revised verdict **SHIP** and boards reviewable.
+- No source, runtime, sim, queue, spec, town-layout, building, or Ark-plaza file is changed.
 
 ## Dredge-Queen production model v2
 
