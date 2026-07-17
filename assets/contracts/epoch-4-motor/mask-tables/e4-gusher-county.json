@@ -1,0 +1,62 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-4-motor/contracts.json; lore/STORYBOOK.md — E4 \"New maps, specified for whoever builds them\"",
+    "tileId": "e4-gusher-county",
+    "size": 160,
+    "dimensions": { "width": 160, "height": 160 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "county-camp", "bank": "south", "minX": -24, "maxX": 24, "minZ": -24, "maxZ": 16 },
+      { "id": "west-lease", "bank": "south", "minX": -70, "maxX": -30, "minZ": -60, "maxZ": -20 },
+      { "id": "east-lease", "bank": "south", "minX": 32, "maxX": 70, "minZ": -60, "maxZ": -20 },
+      { "id": "north-lease", "bank": "north", "minX": -60, "maxX": 60, "minZ": 28, "maxZ": 64 }
+    ],
+    "stakeMarkers": [{ "id": "county-camp", "x": 0, "z": -4, "lossCondition": true }],
+    "waterSources": [],
+    "harvestAnchors": [
+      { "x": -56, "z": -36 }, { "x": -40, "z": -48 }, { "x": 40, "z": -44 }, { "x": 56, "z": -32 },
+      { "x": -44, "z": 44 }, { "x": -16, "z": 52 }, { "x": 20, "z": 48 }, { "x": 48, "z": 40 }
+    ],
+    "tarSeams": [
+      { "id": "tar-camp-edge", "x": -18, "z": -18, "radius": 3 },
+      { "id": "tar-west-lease", "x": -48, "z": -28, "radius": 3.5 },
+      { "id": "tar-east-lease", "x": 46, "z": -50, "radius": 3.5 },
+      { "id": "tar-north-lease", "x": 2, "z": 42, "radius": 4 },
+      { "id": "tar-northeast", "x": 34, "z": 54, "radius": 3 }
+    ],
+    "roadCorridors": [
+      { "id": "camp-to-west-lease", "start": { "x": -12, "z": -8 }, "end": { "x": -50, "z": -40 } },
+      { "id": "camp-to-east-lease", "start": { "x": 12, "z": -8 }, "end": { "x": 48, "z": -38 } },
+      { "id": "camp-to-north-lease", "start": { "x": 0, "z": 8 }, "end": { "x": 0, "z": 46 } }
+    ],
+    "wildDerricks": [
+      { "id": "derrick-01", "x": -56, "z": -36, "radius": 3, "eruptionCycleSeconds": 36, "eruptionOffsetSeconds": 0 },
+      { "id": "derrick-02", "x": -40, "z": -48, "radius": 3, "eruptionCycleSeconds": 44, "eruptionOffsetSeconds": 9 },
+      { "id": "derrick-03", "x": 40, "z": -44, "radius": 3, "eruptionCycleSeconds": 40, "eruptionOffsetSeconds": 17 },
+      { "id": "derrick-04", "x": 56, "z": -32, "radius": 3, "eruptionCycleSeconds": 52, "eruptionOffsetSeconds": 4 },
+      { "id": "derrick-05", "x": -44, "z": 44, "radius": 3, "eruptionCycleSeconds": 38, "eruptionOffsetSeconds": 22 },
+      { "id": "derrick-06", "x": -16, "z": 52, "radius": 3, "eruptionCycleSeconds": 48, "eruptionOffsetSeconds": 13 },
+      { "id": "derrick-07", "x": 20, "z": 48, "radius": 3, "eruptionCycleSeconds": 42, "eruptionOffsetSeconds": 29 },
+      { "id": "derrick-08", "x": 48, "z": 40, "radius": 3, "eruptionCycleSeconds": 56, "eruptionOffsetSeconds": 7 }
+    ],
+    "outhouseGeyser": { "id": "outhouse-geyser", "x": 14, "z": -10, "radius": 1.5, "oncePerRun": true },
+    "weather": {
+      "cycleSeconds": 30,
+      "clearSeconds": 6,
+      "telegraphSeconds": 4,
+      "stormSeconds": 12,
+      "stormMovementMultiplier": 0.7,
+      "stormVisibilityMultiplier": 0.55,
+      "hazeColor": "#c99052",
+      "hazeStrength": 0.2
+    },
+    "enemyRoster": [
+      { "id": "motor_gang", "label": "Motor Gang", "waveMin": 1, "hpScale": 1, "speedMult": 1.18, "visualScale": 0.95, "tint": "#a65f38" },
+      { "id": "tar_sprite", "label": "Tar Sprite", "waveMin": 1, "hpScale": 0.4, "speedMult": 1.4, "visualScale": 0.6, "tint": "#3a3026", "contactDamageScale": 0.4, "buildingDamageScale": 0.5 }
+    ],
+    "lanes": { "spawnEdges": ["north", "east", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 },
+    "spawnGates": []
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}

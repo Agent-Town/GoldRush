@@ -1,0 +1,74 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-4-motor/contracts.json; lore/STORYBOOK.md — E4 \"New maps, specified for whoever builds them\"",
+    "tileId": "e4-boneyard",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "gate-camp", "bank": "south", "minX": -22, "maxX": 22, "minZ": -56, "maxZ": -34 },
+      { "id": "west-rows", "bank": "north", "minX": -56, "maxX": -12, "minZ": -20, "maxZ": 24 },
+      { "id": "east-rows", "bank": "north", "minX": 12, "maxX": 56, "minZ": -20, "maxZ": 24 }
+    ],
+    "stakeMarkers": [{ "id": "gate-camp", "x": 0, "z": -44, "lossCondition": true }],
+    "waterSources": [],
+    "harvestAnchors": [
+      { "x": -48, "z": -12 }, { "x": -36, "z": 4 }, { "x": -24, "z": 18 }, { "x": -18, "z": -8 },
+      { "x": 18, "z": -8 }, { "x": 24, "z": 18 }, { "x": 36, "z": 4 }, { "x": 48, "z": -12 },
+      { "x": -8, "z": 34 }, { "x": 8, "z": 34 }
+    ],
+    "roadCorridors": [
+      { "id": "gate-to-west-rows", "start": { "x": -8, "z": -38 }, "end": { "x": -34, "z": -4 } },
+      { "id": "gate-to-east-rows", "start": { "x": 8, "z": -38 }, "end": { "x": 34, "z": -4 } }
+    ],
+    "salvageHulks": [
+      { "id": "flivver-row-west-a", "kind": "flivver", "x": -48, "z": -12 },
+      { "id": "flivver-row-west-b", "kind": "flivver", "x": -36, "z": 4 },
+      { "id": "flivver-row-west-c", "kind": "flivver", "x": -24, "z": 18 },
+      { "id": "spent-boiler-west", "kind": "boiler", "x": -18, "z": -8 },
+      { "id": "spent-boiler-east", "kind": "boiler", "x": 18, "z": -8 },
+      { "id": "flivver-row-east-a", "kind": "flivver", "x": 24, "z": 18 },
+      { "id": "flivver-row-east-b", "kind": "flivver", "x": 36, "z": 4 },
+      { "id": "flivver-row-east-c", "kind": "flivver", "x": 48, "z": -12 },
+      { "id": "hauler-bed-north-a", "kind": "hauler", "x": -8, "z": 34 },
+      { "id": "hauler-bed-north-b", "kind": "hauler", "x": 8, "z": 34 }
+    ],
+    "sleeper": { "id": "half-buried-sleeper", "x": 34, "z": 36, "radius": 6, "wakes": "only-if-disturbed" },
+    "unmarkedWagon": { "id": "unmarked-wagon", "x": -38, "z": 30 },
+    "weather": {
+      "cycleSeconds": 40,
+      "clearSeconds": 10,
+      "telegraphSeconds": 4,
+      "stormSeconds": 12,
+      "stormMovementMultiplier": 0.75,
+      "stormVisibilityMultiplier": 0.6,
+      "hazeColor": "#b9895a",
+      "hazeStrength": 0.16
+    },
+    "enemyRoster": [
+      {
+        "id": "pipeline_rustler",
+        "label": "Pipeline Rustler",
+        "waveMin": 1,
+        "hpScale": 0.9,
+        "speedMult": 1.25,
+        "visualScale": 0.9,
+        "tint": "#5c4a35",
+        "thief": true,
+        "contactDamageScale": 0.6,
+        "spawnEdges": ["west", "east"],
+        "spawnGates": [
+          { "edge": "west", "x": -62, "z": 8 },
+          { "edge": "east", "x": 62, "z": 8 }
+        ]
+      }
+    ],
+    "lanes": { "spawnEdges": ["west", "east"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 },
+    "spawnGates": [
+      { "edge": "west", "x": -62, "z": 8 },
+      { "edge": "east", "x": 62, "z": 8 }
+    ]
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}
