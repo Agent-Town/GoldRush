@@ -289,6 +289,54 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E10 Ember Shore terrain wave
+
+### F-3D-D-80 — The published preserve table is the only terrain authority
+
+`assets/contracts/epoch-10-deepsky/mask-tables/e10-ember-shore.json` is copied exactly into the adjacent terrain contract. The pair adds no water, spawn, movement, collision, placement, combat, or Static-state authority. The terrain is one dry render mesh; the panorama remains a separately mounted render-only mesh. The Ark is not inferred into this wave because no Ark terrain mask or contract gate exists.
+
+### F-3D-D-81 — The three cooling bands must be negative landform, not painted lava
+
+The first candidate failed its own render: a broad titan-shelf `maximum` unintentionally clamped every negative rift height to zero outside that shelf. The resulting bands looked like road markings. The corrected sculpt limits that operation to the titan shelf, exports down to approximately -2.17 m, and gives each authored band a cooled floor, broken crust lips, and sparse longitudinal residual-heat fractures. Independent exported-triangle sampling measures all 65 cross-sections per band as visibly recessed, with mean shoulder-to-floor depressions of 2.69 m west, 2.05 m center, and 2.48 m east.
+
+### F-3D-D-82 — Both preserve sites are triangle-safe flats
+
+The last-warm-vent and cooled-titan machine rectangles carry a one-grid-diagonal constant-height guard before triangulation. The verifier samples 2,145 points on the actual exported triangle surface per build rectangle and reports 0.00 m deviation for both. It separately samples the coincident vent fixture rectangle at the same density and reports 0.00 m. The loss-condition stake stays at the published `(3, -10)` position, and the north/west/east spawn-edge list is unchanged.
+
+### F-3D-D-83 — Deep Sky emptiness is engraved, not tiled
+
+The first panorama candidate produced a regular star grid and therefore a ceiling. The final atlas replaces it with deterministic sparse irregular stipple, four asymmetric parchment-gold nebula edits, a quiet deep-ink zenith, low independent cooled shelves, and a basalt skirt matched to the terrain boundary. The mood board crops the first-world third of `plate-e10-worlds.png`; the other two world families do not enter the Ember palette comparison. The panorama has no Earth and no gameplay authority.
+
+### F-3D-D-84 — Titan and vent bodies are verdict cues, not hidden landmark work
+
+The cooled titan machine and last-warm-vent fixture visible in renders are procedural preview-only scale cues. They are deleted before the `.blend` and GLB are saved, declared in `verdictPreviewOnly`, and accompanied by empty landmark mounts. Their purpose is to prove that the two authored flats can carry the factory's future bodies without quietly claiming landmark, collision, or placement ownership.
+
+## E10 Ember Shore gate state
+
+- Published mask table copied exactly: PASS
+- Terrain `.blend` / GLB / embedded 2048² atlas / contract: PASS
+- Terrain: one mesh, one primitive, one material, 32,768 triangles: PASS
+- Separate Panorama v2 `.blend` / GLB / embedded 2048² atlas / contract: PASS
+- Panorama: one mesh, one primitive, one material, 3,072 triangles: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Two build rectangles plus vent fixture, 2,145 exported-surface samples each, 0.00 m deviation: PASS
+- Three cooling bands, 65 exported cross-sections each, every sample visibly recessed: PASS
+- Mood A/B, identical-camera geometry, owner, mask, and Panorama v2 boards: PASS
+- Integrated `npm run build`: PASS
+- Independent `codex review --uncommitted`: PASS — no actionable regression; it reproduced the Blender verifier, artifact hashes, diff check, and production build
+- `src/`, simulation, runtime, mask, landmark, and Static-state edits: none
+
+## E10 Ember Shore owner-verdict images
+
+- `artifacts/map-rebuild-spike/ember-shore-owner-verdict.png`
+- `artifacts/map-rebuild-spike/ember-shore-mood-ab.png`
+- `artifacts/map-rebuild-spike/ember-shore-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/ember-shore-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/ember-shore-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/ember-shore-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## E8 The Mare Claim terrain wave
 
 ### F-3D-D-70 — The palette note is a material contract, not a colour suggestion
