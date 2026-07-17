@@ -289,6 +289,54 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## 27-map campaign — E7 extra-map wave
+
+### F-3D-D-93 — The identity gate yields one new E7 sculpt and two lawful variants
+
+The published factory contracts and mask tables agree on identity. `e7-echo-canyon` owns `tileId: e7-echo-canyon`, so it receives a new terrain/panorama pair. `e7-dead-band` and `e7-relay-rush` both explicitly reuse `tileId: e7-relay-valley`; producing duplicate terrain for either would contradict the campaign's variant rule. Their contract-specific fog, rush timing, patrol, and enemy state remain code-owned above the accepted Relay Valley tile.
+
+### F-3D-D-94 — Echo Canyon is a north/south combat axis, not Relay Valley rearranged
+
+The published `echoCanyonBands` are the composition: one long h0 broadcast floor between opposed h5 shelves, open at both enemy lanes. Three authored build rectangles remain exact flats. The atlas uses the E7 kit and relay plate for walnut loam, engraved shale, punch-tape scars, agent teal, and honey work light, but the concentric broadcast scars and opposed shelf silhouette distinguish the contract from Relay Valley's transverse LOS chain.
+
+### F-3D-D-95 — Exact shelf masks need a readable render-only mouth transition
+
+The first center-horizon proof showed a black strip at each canyon mouth. Isolating the panorama proved the defect existed with the panorama hidden: the exact h5 shelves were dropping too sharply in the final render-only edge cells and their north/south faces pointed away from the dusk key. The final sculpt begins its visual descent only outside the authored z=+/-54 bands and gives the painted atlas a restrained 0.22 self-fill so the cliff retains engraved detail. No height, build, spawn, collision, mirror, or movement authority moved; all three bands still surface-sample at h0/h5 and all build rectangles remain at 0.00 m deviation.
+
+### F-3D-D-96 — Panorama distance requires the Echo-specific silhouette to actually export
+
+The separate Panorama v2 pair uses a terrain-matched apron, independent near/far mouth profiles, a quiet teal-grey zenith, unequal broadcast clouds, and three tiny outward-facing signal marks. Independent `codex review --uncommitted` found that the Echo mast tuple existed but was unreachable behind a Relay-Valley-only condition. The condition now admits both E7 profiles while selecting different tuples; Echo's rebuilt 3,084-triangle GLB contains its distinct asymmetry and remains below the 4,000-triangle limit. The playfield-center board now answers distance, never painted wall or ceiling.
+
+### F-3D-D-97 — Empty mounts preserve the landmark interlock without baking gameplay
+
+Five canonical mount records ship beside the terrain: south broadcast gate, west/east echo arrays, mirror observation post, and north return gate. Their asset fields remain empty. Mount-aligned gates, arrays, and console are verdict-only scale cues and are removed before `.blend` save and GLB export. Broadcast mirroring, enemy waves, placement, and every runtime body remain factory-owned.
+
+## E7 extra-map gate state
+
+- Fresh reference base: `9e324ce111d27550fddf63ce1401b4262a1b30e3`
+- Echo Canyon terrain: one mesh, one primitive, one material, one embedded 2048² atlas, 32,768 triangles: PASS
+- Echo Canyon Panorama v2: separate one-mesh GLB, one material, one embedded 2048² atlas, 3,084 triangles: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Three exact h0/h5 bands independently sampled on the exported triangle surface: PASS
+- Three build rectangles independently sampled at <=0.02 m deviation: PASS
+- Five canonical empty-asset mounts and verdict-only proxy removal: PASS
+- Dead Band and Relay Rush valid Relay Valley tile reuse: PASS
+- Mood A/B, identical-camera geometry, owner verdict, mask agreement, and center-horizon distance gates: PASS
+- `npm run build`, Python compilation, and `git diff --check`: PASS
+- Independent `codex review --uncommitted`: found the unreachable Echo panorama mast branch; fixed and reverified; no further product finding returned
+- `src/`, simulation, masks, gameplay, runtime registry, and landmark bodies: unchanged
+
+## E7 extra-map owner-verdict images
+
+- `artifacts/map-rebuild-spike/e7-extra-owner-verdict.png`
+- `artifacts/map-rebuild-spike/e7-extra-mood-ab.png`
+- `artifacts/map-rebuild-spike/e7-extra-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/e7-extra-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/e7-extra-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/e7-extra-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## 27-map campaign — E5 extra-map wave
 
 ### F-3D-D-85 — The campaign identity gate yields one E5 sculpt, not three recolours
