@@ -432,3 +432,4 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 ## 2026-07-17 — DQ MODEL + DOME COMMONS MERGED; wiring queued
 - **✅ MERGED — sol/dredge-queen-3d-v2 (66670d30):** four independent damage components, 11,832/12,000 tris, one material. **✅ MERGED — sol/dome-commons-e8-plate-v2 (e97e60dc):** 13,108 tris, depth-writing screen-door dome (transparent-floor sorting solved), walk relief 0.0344 ≤ law, fresh-reference SHA recorded. Gates: tsc+build green.
 - QUEUED lane-c: **wire-dredge-queen-3d** (crawler precedent — model onto boss presentation, render-only, additive spec probe). Goals leaf added.
+- **✅ MERGED — sol/town-road-wear-v2** (F-3DC-04 closed; texture-only). **3D-C LADDER EXTENDED** (queue doc): basin rim → BOSS FLEET (Land-Yacht model READY NOW, plates banked; Homemaker banks ahead) → E8/E9 building populations → THE ARK + Long Table hall → F-3DC-05 interleave.
