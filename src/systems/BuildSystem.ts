@@ -1116,7 +1116,8 @@ export class BuildSystem {
     index: number,
     at: number,
     position: THREE.Vector3 = this.heroPosition,
-    radius = Balance.demolish.interactRadius,
+    radius: number = Balance.demolish.interactRadius,
+    refundDrop?: (position: THREE.Vector3, amount: number) => boolean,
   ): boolean {
     if (!isBuildableId(id) || !this.isSlotActive(id, index)) return false;
     const buildingPosition = this.positionFor(id, index);
@@ -1127,15 +1128,28 @@ export class BuildSystem {
 
     const buildCost = this.buildCosts[id][index] ?? 0;
     const refund = this.demolishRefund(id, index);
+    const dropRefund = refund > 0 && refundDrop !== undefined;
     const result = this.economy.apply({
       id: crypto.randomUUID(),
       at,
       type: 'gold_granted',
       source: 'demolish',
-      amount: refund,
+      amount: dropRefund ? 0 : refund,
       buildCost,
     });
     if (!result.ok) return false;
+    const dropped = dropRefund && refundDrop(buildingPosition, refund);
+    if (dropRefund && !dropped) {
+      const fallback = this.economy.apply({
+        id: crypto.randomUUID(),
+        at,
+        type: 'gold_granted',
+        source: 'demolish',
+        amount: refund,
+        buildCost: 0,
+      });
+      if (!fallback.ok) return false;
+    }
 
     this.teardownBuilding(id, index);
     this.clearBuildingState(id, index);
@@ -1147,9 +1161,23 @@ export class BuildSystem {
       this.repairRing.visible = false;
       this.repairRing.geometry.setDrawRange(0, 0);
     }
-    if (refund > 0) this.onFloatText?.(buildingPosition, `+${refund}`, '#c4883a');
+    if (refund > 0 && !dropped) this.onFloatText?.(buildingPosition, `+${refund}`, '#c4883a');
     this.onSound?.('demolish', buildingPosition);
     this.visualDirty = true;
+    return true;
+  }
+
+  collectDemolishRefund(position: THREE.Vector3, amount: number, at: number): boolean {
+    if (!this.economy.canReceiveIncome(amount)) return false;
+    const result = this.economy.apply({
+      id: crypto.randomUUID(),
+      at,
+      type: 'gold_granted',
+      source: 'demolish_pickup',
+      amount,
+    });
+    if (!result.ok) return false;
+    this.onFloatText?.(position, `+${amount}`, '#c4883a');
     return true;
   }
 

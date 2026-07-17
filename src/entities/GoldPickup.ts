@@ -7,11 +7,13 @@ import { RUN_CAST_SCALE } from './runCastScale';
 export type GoldPickupSnapshot = {
   active: boolean;
   amount: number;
+  source?: 'demolish';
   position: { x: number; z: number };
 };
 export type GoldPickupSuspendSnapshot = {
   slot: number;
   amount: number;
+  source: GoldPickupSource;
   age: number;
   blockedCooldown: number;
   position: { x: number; y: number; z: number };
@@ -19,8 +21,10 @@ export type GoldPickupSuspendSnapshot = {
 export type GoldPickupCollectResult = {
   index: number;
   amount: number;
+  source: GoldPickupSource;
   position: { x: number; z: number };
 };
+export type GoldPickupSource = 'reclaimed' | 'demolish';
 
 const pickupY = 0.42 * RUN_CAST_SCALE;
 const collectRadiusSq = (Balance.hero.radius + 0.35) * (Balance.hero.radius + 0.35);
@@ -33,6 +37,7 @@ export class GoldPickupPool {
   private readonly previousActive: boolean[] = [];
   private readonly previousPositions: THREE.Vector3[] = [];
   private readonly amounts: number[] = [];
+  private readonly sources: GoldPickupSource[] = [];
   private readonly age: number[] = [];
   private readonly previousAge: number[] = [];
   private readonly blockedCooldown: number[] = [];
@@ -48,6 +53,7 @@ export class GoldPickupPool {
   private readonly syncObject = new THREE.Object3D();
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private readonly holdings: GoldHolding[] = [];
+  private demolishCollector?: (position: THREE.Vector3, amount: number) => boolean;
   private alive = 0;
   private total = 0;
 
@@ -64,6 +70,7 @@ export class GoldPickupPool {
       this.previousActive.push(false);
       this.previousPositions.push(new THREE.Vector3());
       this.amounts.push(0);
+      this.sources.push('reclaimed');
       this.age.push(0);
       this.previousAge.push(0);
       this.blockedCooldown.push(0);
@@ -92,7 +99,11 @@ export class GoldPickupPool {
     return this.holdings;
   }
 
-  spawn(position: THREE.Vector3, amount: number): number {
+  setDemolishCollector(collector: (position: THREE.Vector3, amount: number) => boolean): void {
+    this.demolishCollector = collector;
+  }
+
+  spawn(position: THREE.Vector3, amount: number, source: GoldPickupSource = 'reclaimed'): number {
     if (amount <= 0) return -1;
     for (let i = 0; i < this.active.length; i += 1) {
       if (this.active[i]) continue;
@@ -100,6 +111,7 @@ export class GoldPickupPool {
       this.previousActive[i] = false;
       this.positions[i]?.set(position.x, Terrain.visualY(position.x, position.z, pickupY), position.z);
       this.amounts[i] = amount;
+      this.sources[i] = source;
       this.age[i] = 0;
       this.blockedCooldown[i] = 0;
       this.alive += 1;
@@ -109,7 +121,7 @@ export class GoldPickupPool {
       this.mesh.instanceMatrix.needsUpdate = true;
       return i;
     }
-    return this.mergeNearest(position, amount);
+    return this.mergeNearest(position, amount, source);
   }
 
   take(index: number): number {
@@ -126,30 +138,40 @@ export class GoldPickupPool {
   collectNear(
     collectorPosition: THREE.Vector3,
     radius: number,
-    canCollect: (amount: number) => boolean,
-    onCollect: (position: THREE.Vector3, amount: number) => void,
+    canCollect: (amount: number, source: GoldPickupSource) => boolean,
+    onCollect: (position: THREE.Vector3, amount: number, source: GoldPickupSource) => void,
     onBlocked: (position: THREE.Vector3) => void,
   ): GoldPickupCollectResult | false {
     const index = this.nearestActiveIndex(collectorPosition, radius);
     if (index < 0) return false;
     const position = this.positions[index];
     const amount = this.amounts[index] ?? 0;
+    const source = this.sources[index] ?? 'reclaimed';
     if (!position || amount <= 0) return false;
-    if (!canCollect(amount)) {
+    if (source === 'demolish' && this.demolishCollector) {
+      if (!this.demolishCollector(position, amount)) {
+        onBlocked(position);
+        return false;
+      }
+      const collectedAt = { x: position.x, z: position.z };
+      this.deactivate(index);
+      return { index, amount, source, position: collectedAt };
+    }
+    if (!canCollect(amount, source)) {
       onBlocked(position);
       return false;
     }
     const collectedAt = { x: position.x, z: position.z };
-    onCollect(position, amount);
+    onCollect(position, amount, source);
     this.deactivate(index);
-    return { index, amount, position: collectedAt };
+    return { index, amount, source, position: collectedAt };
   }
 
   update(
     delta: number,
     heroPosition: THREE.Vector3 | readonly THREE.Vector3[],
-    canCollect: (amount: number) => boolean,
-    onCollect: (position: THREE.Vector3, amount: number) => void,
+    canCollect: (amount: number, source: GoldPickupSource) => boolean,
+    onCollect: (position: THREE.Vector3, amount: number, source: GoldPickupSource) => void,
     onBlocked: (position: THREE.Vector3) => void,
   ): void {
     const collectors = Array.isArray(heroPosition) ? heroPosition : [heroPosition];
@@ -163,8 +185,21 @@ export class GoldPickupPool {
       this.blockedCooldown[i] = Math.max(0, (this.blockedCooldown[i] ?? 0) - delta);
       if (isCollectedByAny(collectors, position)) {
         const amount = this.amounts[i] ?? 0;
-        if (canCollect(amount)) {
-          onCollect(position, amount);
+        const source = this.sources[i] ?? 'reclaimed';
+        if (source === 'demolish' && this.demolishCollector) {
+          if (this.demolishCollector(position, amount)) {
+            this.deactivate(i);
+            dirty = true;
+            continue;
+          }
+          if ((this.blockedCooldown[i] ?? 0) <= 0) {
+            onBlocked(position);
+            this.blockedCooldown[i] = 0.8;
+          }
+          continue;
+        }
+        if (canCollect(amount, source)) {
+          onCollect(position, amount, source);
           this.deactivate(i);
           dirty = true;
           continue;
@@ -217,6 +252,7 @@ export class GoldPickupPool {
       this.active[i] = false;
       this.previousActive[i] = false;
       this.amounts[i] = 0;
+      this.sources[i] = 'reclaimed';
       this.age[i] = 0;
       this.blockedCooldown[i] = 0;
       this.syncHolding(i);
@@ -228,11 +264,15 @@ export class GoldPickupPool {
   }
 
   snapshot(): GoldPickupSnapshot[] {
-    return this.positions.map((position, index) => ({
-      active: this.active[index] === true,
-      amount: this.amounts[index] ?? 0,
-      position: { x: position.x, z: position.z },
-    }));
+    return this.positions.map((position, index) => {
+      const source = this.sources[index] ?? 'reclaimed';
+      return {
+        active: this.active[index] === true,
+        amount: this.amounts[index] ?? 0,
+        ...(source === 'demolish' ? { source } : {}),
+        position: { x: position.x, z: position.z },
+      };
+    });
   }
 
   captureSuspend(): GoldPickupSuspendSnapshot[] {
@@ -244,6 +284,7 @@ export class GoldPickupPool {
       snapshots.push({
         slot,
         amount: this.amounts[slot] ?? 0,
+        source: this.sources[slot] ?? 'reclaimed',
         age: this.age[slot] ?? 0,
         blockedCooldown: this.blockedCooldown[slot] ?? 0,
         position: { x: position.x, y: position.y, z: position.z },
@@ -269,6 +310,7 @@ export class GoldPickupPool {
       position.set(snapshot.position.x, snapshot.position.y, snapshot.position.z);
       this.previousPositions[slot]?.copy(position);
       this.amounts[slot] = snapshot.amount;
+      this.sources[slot] = snapshot.source;
       this.age[slot] = snapshot.age;
       this.previousAge[slot] = snapshot.age;
       this.blockedCooldown[slot] = snapshot.blockedCooldown;
@@ -286,11 +328,12 @@ export class GoldPickupPool {
     this.material.dispose();
   }
 
-  private mergeNearest(position: THREE.Vector3, amount: number): number {
+  private mergeNearest(position: THREE.Vector3, amount: number, source: GoldPickupSource): number {
     let best = -1;
     let bestDistanceSq = Number.POSITIVE_INFINITY;
     for (let i = 0; i < this.active.length; i += 1) {
       if (!this.active[i]) continue;
+      if (this.sources[i] !== source) continue;
       const pickupPosition = this.positions[i];
       if (!pickupPosition) continue;
       const dx = pickupPosition.x - position.x;
@@ -331,6 +374,7 @@ export class GoldPickupPool {
     this.total = Math.max(0, this.total - (this.amounts[index] ?? 0));
     this.active[index] = false;
     this.amounts[index] = 0;
+    this.sources[index] = 'reclaimed';
     this.age[index] = 0;
     this.blockedCooldown[index] = 0;
     this.alive = Math.max(0, this.alive - 1);
@@ -355,6 +399,7 @@ export class GoldPickupPool {
     if (!holding) return;
     holding.active = this.active[index] === true;
     holding.amount = this.amounts[index] ?? 0;
+    holding.pickupSource = this.sources[index] ?? 'reclaimed';
   }
 
   private hide(index: number): void {

@@ -10,9 +10,12 @@ export const DREDGE_QUEEN_WRECK_ENTRY_ID = 'dredge-queen-wreck';
 export const GREEN_WAYPOINT_ENTRY_ID = 'green-waypoint';
 /** Render entry: the Old Digger's kept-machine flag (E9 §BOSS — reprogrammed, gentle, forever). */
 export const OLD_DIGGER_GENTLE_ENTRY_ID = 'old-digger-gentle';
+/** Render entry: the Homemaker-9000's kept chair after the E6 ceremony. */
+export const HOMEMAKER_KEPT_ENTRY_ID = 'homemaker-9000-kept';
 
 export type DredgeQueenWreckPayload = { x: number; z: number };
 export type OldDiggerGentlePayload = { x: number; z: number };
+export type HomemakerKeptPayload = { x: number; z: number };
 export type GreenWaypointPayload = { x: number; z: number; r: number };
 
 export type TileStateEntry = {
@@ -143,6 +146,13 @@ export function parseDredgeQueenWreckPayload(payload: unknown): DredgeQueenWreck
 }
 
 export function parseOldDiggerGentlePayload(payload: unknown): OldDiggerGentlePayload | null {
+  if (!isRecord(payload)) return null;
+  const { x, z } = payload;
+  if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;
+  return { x, z };
+}
+
+export function parseHomemakerKeptPayload(payload: unknown): HomemakerKeptPayload | null {
   if (!isRecord(payload)) return null;
   const { x, z } = payload;
   if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;
