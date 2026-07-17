@@ -289,6 +289,16 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## Campaign boundary reconciliation — 2026-07-18
+
+### F-3D-D-116 — Every published unique campaign mask now has a sculpt delivery; the ledger's sculpt column is stale
+
+The post-E4 boundary sweep re-read `docs/SOL-3D-D-QUEUE.md` and `docs/MAP-CAMPAIGN-LEDGER.md` from fresh `origin/main` at `78b6f2ce984d3dd6ac4df69292cad0d5a5abd3b8`, then compared every published campaign mask's `maskTruth.tileId` with accepted assets on main and the pushed era branches. The remaining apparent gaps are authored reuse or non-terrain contracts: E5 Flotilla/Stillwater reuse Deepwater Claim; E6 Picnic reuses Glow Mesa; E7 Dead Band/Relay Rush reuse Relay Valley; E8 Far Side/Eclipse reuse Mare Claim; E10 River reuses the frontier river claim; E10 Last Claim is the Ark-plaza class. The unique deliveries are Regatta; Showroom and Half-Life Hollow; Echo Canyon; Low Orbit; Seed Run, Devil's Alley, and Old Canal; Archive World; and this E4 Long Road/Gusher County/Boneyard wave. E2/E3 campaign names already point at accepted unique sculpts on main.
+
+The sweep also found that the remote `sol/e7-extra-map-campaign` ref had been repointed to unrelated goal-tree bookkeeping after the sculpt delivery. The intact Echo Canyon commit `233b139a9f3deb9eb766761face197c529d86c28` was therefore republished non-destructively as `sol/e7-extra-map-campaign-restored`; no force-push or foreign-history rewrite was used. Regatta's eight-mount debt is carried by the E6 delivery branch. There is no additional unique published mask to sculpt at this boundary.
+
+READY-FOR-GATES
+
 ## E4 Long Road + Gusher County + Boneyard campaign wave
 
 ### F-3D-D-111 — The E2/E3 campaign names were already real sculpts; E4 was the first unbuilt family
