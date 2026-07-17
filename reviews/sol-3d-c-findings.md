@@ -1,5 +1,42 @@
 # SOL 3D-C — 3D pilot findings
 
+## E8 Dome Commons population
+
+Branch: `sol/dome-commons-e8-population`
+
+Base: `a9be388a3fe95a3228c638ed4afaf8a6ec6a7f5a`
+
+Tip: exact E8 Dome population SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — five grounded, full-wrap production buildings now make the accepted Dome Commons a functioning settlement: food, suits, launch, assay, and freight each have an unmistakable working silhouette in the E8 silver/teal/suit-brass vocabulary.**
+
+The first geometry pass inherited the Dredge-Queen helper's storm-dark boss palette and failed the E8 value law. It was rejected before evidence. The final pack uses a purpose-built oxidized-silver, teal-glass, warm-brass atlas treatment derived from `plate-e8-bld-set.png`; no black boss iron survives. A canonical footprint audit also caught and corrected three small overhangs before final export.
+
+| Building | All-angle / function finding | Final E8 answer | Contract |
+| --- | --- | --- | --- |
+| Orbital Canteen | a plain pressure box would not communicate the bundle's intimate Earth view | large teal Earth-window bubble and brass seal, actual window seat, public canopy/counter, four front panes, pressure posts, finished engraved rear | 1,024 tris; 4.90 x 3.2784 inside Tavern 5.20 x 3.40; SHA `2a0b89e3d80d…` |
+| Suit Fitter | threshold and external pods first exceeded the General Store parcel depth | axis-normalized rotunda with helmet roof/seal, two suit pods and helmets, service hoses, radial ribs, grounded threshold | 1,492 tris; 3.77593 x 3.222 inside 4.80 x 3.30; SHA `3e52b4b2f97b…` |
+| Launch Works | the rocket alone read as a toy instead of civic infrastructure | circular pressure seal, rocket with fins/window, four-storey gantry, cross-bracing, umbilical, control cupola | 1,548 tris; 5.44 diameter inside 6.20 orbital circle; SHA `5682cf65044f…` |
+| He-3 Assay | the sample tower initially pushed beyond the inherited Assay Office width | glass-roofed lab, three public sample windows, tower/vial, assay counter, paired He-3 pans; width normalized without silhouette loss | 1,468 tris; 4.503 x 3.065 inside 4.60 x 3.40; SHA `bd9bf0d3fe9f…` |
+| Mass-Driver Dispatch | a long tube needed an inhabited dispatch identity | coil-wrapped driver and dark bore, rail/tie bed, cargo sled, complete dispatch house/cupola, working signal mast | 1,624 tris; 5.45 x 3.28 inside 5.60 x 3.80 orbital rectangle; SHA `43ce73f10ad7…` |
+
+### Site-break and cadence verdicts
+
+| Fixture | Verdict | Reason |
+| --- | --- | --- |
+| Five E8 civic identities | NEW | the orbital canteen, suit fitter, launch works, He-3 assay, and mass-driver dispatch are native to sealed life under glass |
+| Dome Commons plate | PERSIST, UNCHANGED | the accepted air wall, reclaimed-water ring, pads, and flat cast routes are mounted as context only; its bytes are untouched |
+| Pan Monument | PERSIST, UNCHANGED | independent heritage GLB remains at canonical center and is not duplicated into any building |
+| Mesa, harbor, and pre-flood town fixtures | GONE, NAMED SITE BREAK | E8 is a fresh orbital site; no E1-E7 ground or building geometry silently migrates under the dome |
+| Earth | SKY-RIG OWNED | Earth is evidence-only in these boards and is absent from every production GLB |
+
+- Every asset is one node / mesh / primitive with one double-sided non-emissive material and one embedded 1024 x 1024 atlas; zero cameras, lights, animations, helpers, or emitter anchors. The E8 bundle defines no building emitter-anchor family, so none was invented.
+- All five production roots are base-centered and grounded at GLB `Y = 0`. Every assigned parcel has positive X/Z clearance.
+- Every saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- The full 20-view audit proves finished backs/sides and no floating, detached, or open geometry. The four-angle ensemble mounts the five assets on the accepted plate without changing the open Pan stage.
+- Fresh E1-E7 references were rerendered from current GLBs at the full base SHA above; the E4 board contains the motor boulevard/caravan and the E5 board contains the submerged square. No prior PNG was used as model guidance.
+- `npm run build` and independent Codex review are recorded at the final boundary. No `src/`, runtime, simulation, queue, spec, status, layout, plate, Pan, or prior-era asset changes ride this wave.
+
 ## Dredge-Queen production model v2
 
 Branch: `sol/dredge-queen-3d-v2`
