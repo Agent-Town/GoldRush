@@ -1,0 +1,67 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-4-motor/contracts.json; lore/STORYBOOK.md — E4 \"New maps, specified for whoever builds them\"",
+    "tileId": "e4-long-road",
+    "size": 400,
+    "dimensions": { "width": 400, "height": 96 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "west-way-station", "bank": "south", "minX": -148, "maxX": -124, "minZ": -22, "maxZ": -6 },
+      { "id": "middle-way-station", "bank": "north", "minX": -12, "maxX": 12, "minZ": 6, "maxZ": 22 },
+      { "id": "east-way-station", "bank": "south", "minX": 124, "maxX": 148, "minZ": -22, "maxZ": -6 }
+    ],
+    "stakeMarkers": [{ "id": "convoy-lead-hauler", "x": -180, "z": 0, "lossCondition": true }],
+    "waterSources": [],
+    "harvestAnchors": [
+      { "x": -150, "z": 14 }, { "x": -90, "z": -14 }, { "x": -30, "z": 14 },
+      { "x": 30, "z": -14 }, { "x": 90, "z": 14 }, { "x": 150, "z": -14 }
+    ],
+    "roadCorridors": [
+      { "id": "the-long-road", "start": { "x": -190, "z": 0 }, "end": { "x": 190, "z": 0 } },
+      { "id": "west-way-station-spur", "start": { "x": -136, "z": 0 }, "end": { "x": -136, "z": -14 } },
+      { "id": "middle-way-station-spur", "start": { "x": 0, "z": 0 }, "end": { "x": 0, "z": 14 } },
+      { "id": "east-way-station-spur", "start": { "x": 136, "z": 0 }, "end": { "x": 136, "z": -14 } }
+    ],
+    "convoyRoute": [
+      { "x": -180, "z": 0 }, { "x": -136, "z": 0 }, { "x": 0, "z": 0 }, { "x": 136, "z": 0 }, { "x": 190, "z": 0 }
+    ],
+    "restStops": [
+      { "id": "west-way-station", "minX": -148, "maxX": -124, "minZ": -22, "maxZ": -6, "anchorageSeconds": 45 },
+      { "id": "middle-way-station", "minX": -12, "maxX": 12, "minZ": 6, "maxZ": 22, "anchorageSeconds": 45 },
+      { "id": "east-way-station", "minX": 124, "maxX": 148, "minZ": -22, "maxZ": -6, "anchorageSeconds": 45 }
+    ],
+    "weather": {
+      "cycleSeconds": 30,
+      "clearSeconds": 6,
+      "telegraphSeconds": 4,
+      "stormSeconds": 12,
+      "stormMovementMultiplier": 0.7,
+      "stormVisibilityMultiplier": 0.55,
+      "hazeColor": "#c99052",
+      "hazeStrength": 0.2
+    },
+    "enemyRoster": [
+      {
+        "id": "motor_gang",
+        "label": "Motor Gang",
+        "waveMin": 1,
+        "hpScale": 1,
+        "speedMult": 1.18,
+        "visualScale": 0.95,
+        "tint": "#a65f38",
+        "spawnEdges": ["north", "south"],
+        "spawnGates": [
+          { "edge": "north", "x": 0, "z": 46 },
+          { "edge": "south", "x": 0, "z": -46 }
+        ]
+      }
+    ],
+    "lanes": { "spawnEdges": ["north", "south", "west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 },
+    "spawnGates": [
+      { "edge": "north", "x": 0, "z": 46 },
+      { "edge": "south", "x": 0, "z": -46 }
+    ]
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}
