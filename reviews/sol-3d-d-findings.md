@@ -382,6 +382,53 @@ The terrain GLB contains no sea surface, Claim Boat, beacon body, course trace, 
 - `artifacts/map-rebuild-spike/regatta-mask-agreement-board.png` — published Claim Boat deck, five beacons, fast-water zone, and west spawn
 - `artifacts/map-rebuild-spike/regatta-panorama-distance-gate.png` — playfield-center distance gate
 
+## E6 extra-map campaign wave
+
+### F-3D-D-88 — The campaign identity gate creates two sculpts and one deliberate reuse
+
+The fresh reference base for this wave is `5e40ae6d123a3865353c91d8d82f95cac34e0e7b`. `e6-showroom` and `e6-half-life-hollow` publish unique `tileId` values, so each receives its own terrain/panorama pair. `e6-picnic` instead publishes `tileParams.tileId: e6-glow-mesa`, and its authored mask table repeats that tile id. Under the 27-map campaign law it therefore remains a contract variant on the ratified Glow Mesa landform; manufacturing another mesh would be duplication, not uniqueness.
+
+### F-3D-D-89 — Showroom and Hollow need different permanent-earth stories
+
+The Showroom is a three-grade exhibition settlement: a low scuffed approach, a broad flat model-home village, a raised catalog yard, and eroded desert shoulders. Its five homes and six catalog goods are verdict proxies only and are removed before export. Half-Life Hollow is a deep asymmetric basin with four independently flat abutment shelves and three empty crossing sockets. The two glow bridges, center causeway, countdown state, route recalculation, and extraction remain code-owned; the bright verdict panels make that later choreography readable without baking it into the ground.
+
+### F-3D-D-90 — Reuse the painted language, never another map's ink composition
+
+The first atlas draft sampled Glow Mesa's full painted tile and accidentally carried its ring, arrows, and dark border into the new maps as false terrain marks. The corrected deterministic atlas builder samples only inset neutral desert quarters from the shipped Glow Mesa atlas, interleaves them at unequal scales, and mixes the E6 kit plate for chrome/pastel and teal/amber cues. The result keeps the ratified engraved grit and stained-earth vocabulary while removing another contract's compositional signals. Showroom reads as abandoned polished effort inside hard country; Hollow reads as exhausted atomic ground rather than cheerful radiation.
+
+### F-3D-D-91 — Triangle sampling proves the planar contract survives the sculpt
+
+The dedicated verifier reopens all four source `.blend` files, exports only their single mesh, and proves whole-file byte identity plus semantic identity against the shipped GLBs. Each terrain is one 32,768-triangle mesh with one primitive, one material, and one embedded 2048 atlas. Each separate Panorama v2 ring is one 2,688-triangle mesh with one material and one embedded 2048 atlas. Every Showroom and Hollow build rectangle is sampled across 2,145 interpolated triangle-surface points and stays within 0.02 m deviation. Hollow's three runtime-crossing centers remain below -2.20 m in the permanent earth. No landmark body, simulation, water, movement, collision, spawn, timer, or `src/` change exists.
+
+### F-3D-D-92 — The campaign mount interlock is now part of the sculpt handoff
+
+The interlock landed on `origin/main` while this wave was rendering, so the two unique E6 contracts now publish five canonical mount records each with empty asset fields. Showroom ids: `showroom-entrance-arch`, `west-starburst-billboard`, `east-starburst-billboard`, `abandoned-catalog-office`, `catalog-sorting-gantry`. Half-Life Hollow ids: `south-countdown-gate`, `west-hollow-warning-pylon`, `east-hollow-warning-pylon`, `expired-appliance-convoy`, `north-extraction-gantry`. These are placement records only; the landmark bodies remain 3D-C-owned and independently mounted. Regatta's separately owed E5 backfill uses 3D-C's proposed eight-id list in `regatta-terrain-contract.json`.
+
+## E6 extra-map gate state
+
+- Unique Showroom terrain + Panorama v2 pair: PASS
+- Unique Half-Life Hollow terrain + Panorama v2 pair: PASS
+- Picnic `e6-glow-mesa` tile reuse, independently checked against contract and mask table: PASS
+- Terrain GLBs: 32,768 triangles, one mesh/primitive/material/embedded 2048 atlas each: PASS
+- Panorama GLBs: 2,688 triangles, one mesh/primitive/material/embedded 2048 atlas each: PASS
+- Byte-identical and semantic-identical saved-Blend re-export for all four GLBs: PASS
+- All seven published build rectangles triangle-sampled buildable-flat: PASS
+- Hollow crossing sockets remain empty permanent earth; runtime panels absent from export: PASS
+- Mood A/B, identical-camera geometry A/B, Panorama v2 distance, and mask-agreement boards: PASS
+- Five canonical empty-asset landmark mounts per unique E6 sculpt; Regatta eight-id backfill: PASS
+- Landmark bodies remain separate; planar simulation and `Terrain.visualY` authority: unchanged
+- Independent unprimed review caught the mid-wave mount-interlock drift and a false near/far panorama claim; both are corrected. Its follow-up verifier and production build passed; the review runner's attempted recursive self-review was terminated rather than allowed to loop.
+- `src/` edits: none
+
+## E6 extra-map owner-verdict images
+
+- `artifacts/map-rebuild-spike/e6-extra-owner-verdict.png` — two-map run camera, overview, and low-dusk verdict
+- `artifacts/map-rebuild-spike/e6-extra-mood-ab.png` — ratified E6 painted-tile language / hardship gate
+- `artifacts/map-rebuild-spike/e6-extra-flat-vs-sculpted-ab.png` — identical-camera permanent geometry proof
+- `artifacts/map-rebuild-spike/e6-extra-mask-agreement-board.png` — exact flat grades, shelves, runtime homes, and crossing sockets
+- `artifacts/map-rebuild-spike/e6-extra-panorama-mood-ab.png` — panorama off/on and center-horizon reads
+- `artifacts/map-rebuild-spike/e6-extra-panorama-distance-gate.png` — playfield-center distance gate
+
 READY-FOR-GATES
 
 ## E9 The Dome Basin terrain wave
