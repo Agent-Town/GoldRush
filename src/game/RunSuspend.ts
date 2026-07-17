@@ -13,6 +13,10 @@ import type { HarvestFutureState } from '../systems/HarvestSystem';
 import type { CombatSuspendSnapshot } from '../systems/CombatSystem';
 import type { CrawlerBossSuspendSnapshot } from '../systems/CrawlerBossSystem';
 import type { WrangleSuspendSnapshot } from '../systems/WrangleSystem';
+import {
+  decodeHomemakerBossSuspend,
+  type HomemakerBossSuspendSnapshot,
+} from '../systems/HomemakerBossSystem';
 import { Balance } from './Balance';
 import { buildableDefs, type BuildableId } from './buildables';
 import { effectiveStats } from './StatSheet';
@@ -80,6 +84,7 @@ export type RunSuspendEnvelope = {
   baron: BaronSuspend;
   crawlerBoss: CrawlerBossSuspendSnapshot | null;
   wrangle?: WrangleSuspendSnapshot | null;
+  homemakerBoss: HomemakerBossSuspendSnapshot | null;
   megaproject: MegaprojectSuspend | null;
   runManager: RunManagerSuspendState;
   agent: AgentSuspend | null;
@@ -426,6 +431,7 @@ export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
     },
     crawlerBoss: snapshot.crawlerBoss,
     wrangle: snapshot.wrangle ?? null,
+    homemakerBoss: snapshot.homemakerBoss,
     megaproject: snapshot.megaproject,
     runManager: snapshot.runManager,
     agent: snapshot.agent,
@@ -578,6 +584,7 @@ function captureSnapshot(
     baron: captureBaron(game, at),
     crawlerBoss: game.crawlerBoss?.captureSuspend?.(at) ?? null,
     wrangle: game.wrangle?.captureSuspend?.() ?? null,
+    homemakerBoss: game.homemakerBoss?.captureSuspend?.(at) ?? null,
     megaproject: captureMegaproject(game),
     runManager: runManager ?? { secured: false, rush: false, meta: deepClone(meta), payout: null },
     agent: captureAgent(game, at, buildings),
@@ -753,6 +760,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   game.progression?.reset?.();
   game.agentConsent?.reset?.();
   game.crawlerBoss?.reset?.();
+  game.homemakerBoss?.reset?.();
 
   if (snapshot.harvest === null) game.harvestSystem?.resetFromSeed?.(snapshot.seed);
 
@@ -773,6 +781,9 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   if (!restoreEnemyPool(game, snapshot.enemies)) return restoreFailed('enemies');
   if (game.wrangle?.restoreSuspend?.(deepClone(snapshot.wrangle ?? null)) === false) return restoreFailed('wrangle');
   game.crawlerBoss?.restoreSuspend?.(deepClone(snapshot.crawlerBoss), snapshot.timeAlive);
+  if (game.homemakerBoss?.restoreSuspend?.(deepClone(snapshot.homemakerBoss), snapshot.timeAlive) === false) {
+    return restoreFailed('homemaker-boss');
+  }
   const hero = restoreHero(game, snapshot);
   if (game.combat?.restoreSuspend?.(snapshot.combat) === false) return restoreFailed('combat');
   if (
@@ -1156,6 +1167,8 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const baron = isV2 ? decodeBaron(value.baron, reasons) : emptyBaron();
   const crawlerBoss = isV2 ? decodeCrawlerBoss(value.crawlerBoss, reasons) : null;
   const wrangle = isV2 ? decodeWrangle(value.wrangle, reasons) : null;
+  const homemakerBoss = isV2 ? decodeHomemakerBossSuspend(value.homemakerBoss) : null;
+  if (homemakerBoss === false) reasons.push('homemakerBoss is invalid');
   const megaproject = isV2 ? decodeMegaproject(value.megaproject, reasons) : null;
   const runManager = isV2 ? decodeRunManager(value.runManager, reasons) : meta ? { secured: false, rush: false, meta, payout: null } : null;
   const agent = isV2 ? decodeAgent(value.agent, reasons) : null;
@@ -1210,6 +1223,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     baron === null ||
     crawlerBoss === undefined ||
     wrangle === undefined ||
+    homemakerBoss === false ||
     megaproject === undefined ||
     runManager === null
     || agent === undefined || controls === undefined
@@ -1250,6 +1264,7 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
     baron,
     crawlerBoss,
     wrangle: deepClone(wrangle),
+    homemakerBoss,
     megaproject,
     runManager: deepClone(runManager),
     agent: deepClone(agent),
@@ -1326,7 +1341,9 @@ function decodeEconomyEvent(value: unknown): EconomyEvent | null {
       return value.amount === 0 ? { id, at, type: value.type, amount: 0 } : null;
     case 'gold_granted':
       if (amount === null) return null;
-      if (value.source === 'upgrade_assay' || value.source === 'debug' || value.source === 'escort') return { id, at, type: value.type, source: value.source, amount };
+      if (value.source === 'upgrade_assay' || value.source === 'debug' || value.source === 'escort' || value.source === 'demolish_pickup') {
+        return { id, at, type: value.type, source: value.source, amount };
+      }
       if (value.source === 'demolish') {
         const buildCost = numberInRange(value.buildCost, 0, MAX_ECONOMY_AMOUNT);
         return compactEvent({ id, at, type: value.type, source: value.source, amount, buildCost: buildCost ?? undefined }) as EconomyEvent;
@@ -1923,13 +1940,19 @@ function decodeGoldPickups(value: unknown, reasons: string[]): GoldPickupSuspend
     if (!record) continue;
     const slot = requiredInteger(record.slot, 0, Balance.steal.pickupCap - 1, `${label}.slot`, reasons);
     const amount = requiredNumber(record.amount, 0, MAX_ECONOMY_AMOUNT, `${label}.amount`, reasons);
+    const source = record.source === undefined || record.source === 'reclaimed'
+      ? 'reclaimed'
+      : record.source === 'demolish'
+      ? 'demolish'
+      : null;
+    if (!source) reasons.push(`${label}.source is invalid`);
     const age = requiredNumber(record.age, 0, MAX_TIME, `${label}.age`, reasons);
     const blockedCooldown = requiredNumber(record.blockedCooldown, 0, MAX_TIME, `${label}.blockedCooldown`, reasons);
     const position = decodeVector3(record.position, `${label}.position`, reasons);
-    if (slot === null || amount === null || age === null || blockedCooldown === null || !position) continue;
+    if (slot === null || amount === null || !source || age === null || blockedCooldown === null || !position) continue;
     if (slots.has(slot)) reasons.push(`${label}.slot is duplicated`);
     slots.add(slot);
-    output.push({ slot, amount, age, blockedCooldown, position });
+    output.push({ slot, amount, source, age, blockedCooldown, position });
   }
   return output;
 }

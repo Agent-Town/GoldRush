@@ -124,6 +124,7 @@ export class WaveSystem {
   private waveState: WaveDiagnostics['waveState'] = 'quiet';
   private lastPulseAt = Number.NEGATIVE_INFINITY;
   private baronSpawned = false;
+  private baronSuppressed = false;
   private readonly escortCart: OreCart | null;
   private escortArrived = 0;
   private escortLost = false;
@@ -286,7 +287,7 @@ export class WaveSystem {
     this.currentAtSim = 0;
     this.waveState = 'quiet';
     this.lastPulseAt = Number.NEGATIVE_INFINITY;
-    this.baronSpawned = false;
+    this.baronSpawned = this.baronSuppressed;
     this.escortArrived = 0;
     this.escortLost = false;
     this.escortSettled = false;
@@ -321,7 +322,12 @@ export class WaveSystem {
     this.nextPlanWaveAt = this.nextWaveAt;
     this.nextPlanWave = this.wave + 1;
     this.lastPulseAt = this.currentAtSim;
-    this.baronSpawned = this.wave >= (this.contract.twist.baron?.wave ?? Number.POSITIVE_INFINITY);
+    this.baronSpawned = this.baronSuppressed || this.wave >= (this.contract.twist.baron?.wave ?? Number.POSITIVE_INFINITY);
+  }
+
+  suppressBaronForRun(): void {
+    this.baronSuppressed = true;
+    this.baronSpawned = true;
   }
 
   spawnDebugPack(
@@ -762,7 +768,13 @@ export class WaveSystem {
     const sideZ = alongX;
     const waveHpScale = Math.pow(Balance.waves.hpScalePerWave, wave);
     const waveSpeedScale = Math.min(Balance.waves.speedScaleCap, Math.pow(Balance.waves.speedScalePerWave, wave));
-    const totalHp = Balance.enemy.hp * waveHpScale * baron.hpScale * components.reduce((sum, component) => sum + component.hpScale, 0);
+    const componentHp = (component: (typeof components)[number]) => {
+      const exact = baron.variantId === 'homemaker_9000'
+        ? Balance.homemaker.componentHp[component.id as keyof typeof Balance.homemaker.componentHp]
+        : undefined;
+      return exact ?? Balance.enemy.hp * waveHpScale * baron.hpScale * component.hpScale;
+    };
+    const totalHp = components.reduce((sum, component) => sum + componentHp(component), 0);
     const groupKind = (baron.variantId ?? 'baron_railcar') === 'baron_railcar' ? 'railcar' : 'component-boss';
     const groupId = `${this.contract.id}:wave-${wave}:${groupKind}`;
     let spawned = 0;
@@ -776,7 +788,7 @@ export class WaveSystem {
       );
       const enemy = this.enemies.spawn(this.spawnPosition, {
         eliteKind: baron.bossKind ?? 'railcar',
-        hpScale: waveHpScale * baron.hpScale * component.hpScale,
+        hpScale: componentHp(component) / Balance.enemy.hp,
         speedScale: waveSpeedScale * (baron.railSpeed ?? baron.speedScale),
         visualScale: (component.visualScale ?? 1) * baron.scale,
         wrecker: true,

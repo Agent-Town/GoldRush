@@ -109,7 +109,39 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": {},
+      "twist": {
+        "secureWave": 12,
+        "baron": {
+          "wave": 8,
+          "bossKind": "railcar",
+          "variantId": "homemaker_9000",
+          "variantLabel": "The Homemaker-9000",
+          "hpScale": 1,
+          "speedScale": 1,
+          "scale": 1.5,
+          "contactDamageScale": 0,
+          "buildingDamageScale": 0,
+          "supportBuildingDamageScale": 0,
+          "pursuitRange": 0,
+          "escortCount": 0,
+          "tauntWaves": [],
+          "taunt": "Your stockpile is alphabetized incorrectly.",
+          "arrivalTitle": "THE HOMEMAKER-9000",
+          "defeatTitle": "DONE",
+          "defeatLine": "The machine makes one chair and sits.",
+          "ledgerLabel": "The Homemaker-9000",
+          "secureCallout": "THE CHORE IS DONE",
+          "awardMedal": false,
+          "defeatBeat": "A DONE pictogram glows over one chair. The Homemaker powers down on warm ground, and the town keeps it.",
+          "medalBlurb": "Broke the VAC and CORE without ever becoming its target.",
+          "sciencePayoutMult": 1,
+          "componentDegradeSpeedMult": 1,
+          "components": [
+            { "id": "vac", "label": "VAC", "hpScale": 1, "xOffset": -2.2, "zOffset": 0, "tint": "#83ded7" },
+            { "id": "rack", "label": "RACK", "hpScale": 1, "xOffset": 2.2, "zOffset": 0, "tint": "#c4883a" }
+          ]
+        }
+      },
       "boardRow": {
         "name": "The Glow Mesa",
         "ledgerBlurb": "Hold the kitchen, run the night veins, and wrangle the Combine's tired machines before the dials close.",

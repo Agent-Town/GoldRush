@@ -12,6 +12,7 @@ export type GoldHolding = {
   active: boolean;
   amount: number;
   pickupIndex?: number;
+  pickupSource?: 'reclaimed' | 'demolish';
 };
 
 export type BuildingTarget = {
@@ -101,6 +102,7 @@ export class TargetingSystem<T extends Damageable = Damageable> {
     for (let i = 0; i < this.goldHoldings.length; i += 1) {
       const holding = this.goldHoldings[i];
       if (!holding?.active || holding.amount <= 0) continue;
+      if (holding.kind === 'pickup' && holding.pickupSource === 'demolish') continue;
       const distanceSq = this.distanceSqXZ(from, holding.position);
       if (holding.kind === 'stockpile') {
         if (distanceSq < bestStockpileDistanceSq) {

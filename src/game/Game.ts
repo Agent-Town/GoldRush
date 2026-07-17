@@ -169,6 +169,7 @@ import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
+import { createHomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { OldDiggerBossSystem, type OldDiggerTape, type SurveyPoint } from '../systems/OldDiggerBossSystem';
 import { SalvageClawBossSystem } from '../systems/SalvageClawBossSystem';
 import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
@@ -767,6 +768,20 @@ export class Game {
       writeAtCeremony: (payload) => this.writeSalvageClawCarcassAtCeremony(payload),
     },
   );
+  private readonly homemakerBoss = createHomemakerBossSystem({
+    enemies: this.enemies,
+    buildSystem: () => this.buildSystem,
+    targeting: this.goldTargeting,
+    combat: this.combat,
+    goldPickups: this.goldPickups,
+    announce: (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
+    syncStockpileHoldings: () => this.syncStockpileHoldings(),
+    tileStateStore: this.tileStateStore,
+    contractId: this.activeContract.id,
+    enabled: this.activeContract.twist.baron?.variantId === 'homemaker_9000',
+    now: () => this.timeAlive,
+    suppressBossSpawn: () => this.waveSystem.suppressBaronForRun(),
+  });
   private readonly oldDiggerBoss = new OldDiggerBossSystem(
     () => this.enemies.all,
     (position, params) => this.enemies.spawn(position, params),
@@ -1278,9 +1293,10 @@ export class Game {
       const isCrawlerComponent = event.variantId === 'dynamo_crawler';
       const isLandYachtComponent = event.variantId === 'land_yacht';
       const isDredgeQueenComponent = event.variantId === 'dredge_queen';
+      const isHomemakerComponent = event.variantId === 'homemaker_9000';
       const isOldDiggerHull = event.variantId === 'old_digger';
       const isSalvageClawComponent = event.variantId === 'salvage_claw';
-      if (!isCrawlerComponent && !isLandYachtComponent && !isDredgeQueenComponent && !isOldDiggerHull && !isSalvageClawComponent) {
+      if (!isCrawlerComponent && !isLandYachtComponent && !isDredgeQueenComponent && !isHomemakerComponent && !isOldDiggerHull && !isSalvageClawComponent) {
         const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
         this.discoverLedgerEnemyEntry(entryId);
         this.revealLedgerEnemyStats(entryId);
@@ -1297,6 +1313,10 @@ export class Game {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.dredgeQueenBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
       }
+      if (isHomemakerComponent) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.homemakerBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
       if (isOldDiggerHull) {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.oldDiggerBoss.onHullKilled(enemy?.position ?? this.primaryActor.group.position, event.at);
@@ -1305,7 +1325,10 @@ export class Game {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.salvageClawBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
       }
-      if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
+      if (
+        event.eliteKind === 'baron'
+        || (event.eliteKind === 'railcar' && event.bossRemaining === 0 && (!isHomemakerComponent || event.bossComponentId === 'core'))
+      ) {
         this.onBaronDefeated(event.at, event.enemyId);
       }
     });
@@ -1320,13 +1343,17 @@ export class Game {
       const baron = this.activeContract.twist.baron;
       const isSilentCrawlerFlicker = baron?.variantId === 'dynamo_crawler' && event.wave === baron.wave - 2;
       if (!isSilentCrawlerFlicker) this.audio.play('wave-start-horn');
-      this.announceBaronBeat(event.wave, event.at);
+      if (!this.homemakerBoss.diagnostics().persistentKept) this.announceBaronBeat(event.wave, event.at);
       this.crawlerBoss.onWaveStarted(event.wave, baron?.variantId === 'dynamo_crawler' ? baron.wave : Number.POSITIVE_INFINITY, event.at);
       this.landYachtBoss.onWaveStarted(
         event.wave,
         baron?.variantId === 'land_yacht' ? baron.wave : Number.POSITIVE_INFINITY,
         event.at,
         this.buildSystem.diagnostics.hp.some((building) => building.id === 'sentry_beacon' && !building.wrecked && building.hp > 0),
+      );
+      this.homemakerBoss.onWaveStarted(
+        event.wave,
+        baron?.variantId === 'homemaker_9000' ? baron.wave : Number.POSITIVE_INFINITY,
       );
       this.oldDiggerBoss.onWaveStarted(event.wave);
       this.salvageClawBoss.onWaveStarted(event.wave, event.at);
@@ -1776,6 +1803,7 @@ export class Game {
     this.landYachtBoss.dispose();
     this.dredgeQueenBoss.dispose();
     this.salvageClawBoss.dispose();
+    this.homemakerBoss.dispose();
     this.oldDiggerBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
@@ -1971,6 +1999,7 @@ export class Game {
       this.landYachtBoss.update(this.timeAlive);
       this.dredgeQueenBoss.update(this.timeAlive);
       this.salvageClawBoss.update(this.timeAlive);
+      this.homemakerBoss.update(this.timeAlive);
       this.oldDiggerBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
@@ -3047,6 +3076,7 @@ export class Game {
     this.scene.add(this.landYachtBoss.group);
     this.scene.add(this.dredgeQueenBoss.group);
     this.scene.add(this.salvageClawBoss.group);
+    this.scene.add(this.homemakerBoss.group);
     this.scene.add(this.oldDiggerBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
@@ -3708,6 +3738,7 @@ export class Game {
       crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
       landYachtBoss: this.activeContract.twist.baron?.variantId === 'land_yacht' ? this.landYachtBoss.diagnostics() : null,
       salvageClawBoss: this.activeContract.id === 'e8-mare-claim' ? this.salvageClawBoss.diagnostics() : null,
+      homemakerBoss: this.activeContract.twist.baron?.variantId === 'homemaker_9000' ? this.homemakerBoss.diagnostics() : null,
       oldDiggerBoss: this.activeContract.id === 'e9-dome-basin' ? this.oldDiggerBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
@@ -3867,6 +3898,7 @@ export class Game {
     const baron = this.activeContract.twist.baron;
     if (!baron || this.baronBeatenThisRun) return false;
     if (baron.variantId === 'dredge_queen') return !this.dredgeQueenBoss.diagnostics().persistentWreck;
+    if (baron.variantId === 'homemaker_9000') return !this.homemakerBoss.diagnostics().persistentKept;
     return baron.variantId !== 'dynamo_crawler' || this.waveSystem.diagnostics.wave >= baron.wave;
   }
 
@@ -4012,7 +4044,7 @@ export class Game {
     this.charmPauseActive = false;
     this.charmPauseRemaining = 0;
     this.charmPauseCooldown = 0;
-    if (baron.variantId === 'dynamo_crawler' || baron.variantId === 'land_yacht' || baron.variantId === 'dredge_queen') this.baronStandardPosition.copy(position);
+    if (['dynamo_crawler', 'land_yacht', 'dredge_queen', 'homemaker_9000'].includes(baron.variantId ?? '')) this.baronStandardPosition.copy(position);
     else this.plantBaronStandard(position);
     const burstScale = Math.max(3, enemy?.visualScale ?? 3);
     this.combatVfx.dustPuff(position, burstScale);
@@ -4751,7 +4783,7 @@ export class Game {
       (position) => this.blockedGoldPickup(position),
     );
     if (!collected) return false;
-    const gold = this.reclaimAmount(collected.amount);
+    const gold = collected.source === 'demolish' ? collected.amount : this.reclaimAmount(collected.amount);
     return {
       gold,
       pickups: 1,
@@ -5116,6 +5148,7 @@ export class Game {
     this.landYachtBoss.reset();
     this.dredgeQueenBoss.reset();
     this.salvageClawBoss.reset();
+    this.homemakerBoss.reset();
     this.oldDiggerBoss.reset();
     this.tram?.reset();
     this.ferrisWheel?.reset();

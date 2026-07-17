@@ -327,6 +327,7 @@ interface ThreeGameDiagnostics {
   };
   landYachtBoss: null | import('./systems/LandYachtBossSystem').LandYachtBossDiagnostics;
   salvageClawBoss: null | import('./systems/SalvageClawBossSystem').SalvageClawBossDiagnostics;
+  homemakerBoss: null | import('./systems/HomemakerBossSystem').HomemakerBossDiagnostics;
   oldDiggerBoss: null | import('./systems/OldDiggerBossSystem').OldDiggerBossDiagnostics;
   agent: {
     stub: {
@@ -1160,7 +1161,7 @@ interface Window {
     spawnGoldPickup: (x: number, z: number, amount: number) => boolean;
     spawnXpMote: (x: number, z: number, value: number) => boolean;
     launchBlastAt: (x: number, z: number, airTime?: number) => boolean;
-    goldPickups: () => Array<{ active: boolean; amount: number; position: { x: number; z: number } }>;
+    goldPickups: () => Array<{ active: boolean; amount: number; source?: 'demolish'; position: { x: number; z: number } }>;
     playbook: {
       startRecording: (options?: { script?: unknown; probeEvery?: number }) => { ok: boolean; reason?: string };
       stopRecording: (name?: string) => {
