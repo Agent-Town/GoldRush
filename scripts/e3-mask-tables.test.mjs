@@ -8,14 +8,15 @@ const e6Contracts = JSON.parse(await readFile('assets/contracts/epoch-6-atomic/c
 const e7Contracts = JSON.parse(await readFile('assets/contracts/epoch-7-signal/contracts.json', 'utf8')).contracts;
 const e8Contracts = JSON.parse(await readFile('assets/contracts/epoch-8-orbital/contracts.json', 'utf8')).contracts;
 const e9Contracts = JSON.parse(await readFile('assets/contracts/epoch-9-redfields/contracts.json', 'utf8')).contracts;
+const e10Contracts = JSON.parse(await readFile('assets/contracts/epoch-10-deepsky/contracts.json', 'utf8')).contracts;
 
 async function table(id) {
-  const era = id.startsWith('e9-') ? 'epoch-9-redfields' : id.startsWith('e8-') ? 'epoch-8-orbital' : id.startsWith('e7-') ? 'epoch-7-signal' : id.startsWith('e6-') ? 'epoch-6-atomic' : id.startsWith('e4-') ? 'epoch-4-motor' : 'epoch-3-voltage';
+  const era = id.startsWith('e10-') ? 'epoch-10-deepsky' : id.startsWith('e9-') ? 'epoch-9-redfields' : id.startsWith('e8-') ? 'epoch-8-orbital' : id.startsWith('e7-') ? 'epoch-7-signal' : id.startsWith('e6-') ? 'epoch-6-atomic' : id.startsWith('e4-') ? 'epoch-4-motor' : 'epoch-3-voltage';
   return JSON.parse(await readFile(`assets/contracts/${era}/mask-tables/${id}.json`, 'utf8'));
 }
 
 function contract(id) {
-  return [...e3Contracts, ...e4Contracts, ...e6Contracts, ...e7Contracts, ...e8Contracts, ...e9Contracts].find((entry) => entry.id === id);
+  return [...e3Contracts, ...e4Contracts, ...e6Contracts, ...e7Contracts, ...e8Contracts, ...e9Contracts, ...e10Contracts].find((entry) => entry.id === id);
 }
 
 function inBounds(mask, x, z, radius = 0) {
@@ -40,6 +41,7 @@ function assertBoundsAndWater(mask, waterAgreement) {
     ...(mask.rimBands ?? []), ...(mask.mareFlat ? [mask.mareFlat] : []),
     ...(mask.lavaTubeMouth ? [mask.lavaTubeMouth] : []),
     ...(mask.quarryScarpBands ?? []), ...(mask.basinDepression ? [mask.basinDepression] : []),
+    ...(mask.lavaVeinBands ?? []),
   ]) {
     inBounds(mask, zone.minX, zone.minZ);
     inBounds(mask, zone.maxX, zone.maxZ);
@@ -110,6 +112,10 @@ test('published mask tables exactly track authored contract data', async () => {
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'rails',
       'waterSources', 'harvestAnchors', 'heightfield', 'lanes',
     ],
+    'e10-ember-shore': [
+      'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers', 'rails',
+      'waterSources', 'harvestAnchors', 'heightfield', 'lanes',
+    ],
   };
 
   for (const [id, directKeys] of Object.entries(keys)) {
@@ -126,10 +132,12 @@ test('published mask tables exactly track authored contract data', async () => {
             ? 'assets/contracts/epoch-8-orbital/contracts.json; specs/epoch-saga/e8-orbital-bundle.md §B'
             : id === 'e9-dome-basin'
               ? 'assets/contracts/epoch-9-redfields/contracts.json; specs/epoch-saga/e9-redfields-bundle.md §B'
+              : id === 'e10-ember-shore'
+                ? 'assets/contracts/epoch-10-deepsky/contracts.json; specs/epoch-saga/e10-deepsky-bundle.md §B2'
               : 'assets/contracts/epoch-3-voltage/contracts.json';
     assert.equal(published.maskTruth.source, source);
     for (const key of directKeys) assert.deepEqual(published.maskTruth[key], authored.tileParams[key], `${id}.${key}`);
-    const authoredSpawnGates = id === 'e6-glow-mesa' || id === 'e7-relay-valley' || id === 'e8-mare-claim' || id === 'e9-dome-basin'
+    const authoredSpawnGates = id === 'e6-glow-mesa' || id === 'e7-relay-valley' || id === 'e8-mare-claim' || id === 'e9-dome-basin' || id === 'e10-ember-shore'
       ? []
       : authored.twist.enemyRoster.flatMap((enemy) => enemy.spawnGates ?? []);
     assert.deepEqual(published.maskTruth.spawnGates, authoredSpawnGates);
@@ -193,6 +201,18 @@ test('published mask tables exactly track authored contract data', async () => {
     .map(({ id, x, z }) => ({ id, x, z })));
   assert.deepEqual(domeBasinMask.dustDevilLanes, domeBasin.tileParams.lanes.patrolRoutes);
 
+  const emberShore = contract('e10-ember-shore');
+  const emberShoreMask = (await table(emberShore.id)).maskTruth;
+  assert.deepEqual(emberShoreMask.lavaVeinBands, [
+    { id: 'cooling-lava-vein-west', minX: -52, maxX: -40, minZ: -52, maxZ: 40 },
+    { id: 'cooling-lava-vein-center', minX: -18, maxX: -8, minZ: -54, maxZ: 10 },
+    { id: 'cooling-lava-vein-east', minX: 44, maxX: 54, minZ: -12, maxZ: 54 },
+  ]);
+  assert.deepEqual(emberShoreMask.fixtureZones, emberShore.tileParams.buildZones
+    .filter((zone) => zone.id === 'last-warm-vent-site')
+    .map(({ id, minX, maxX, minZ, maxZ }) => ({ id, minX, maxX, minZ, maxZ })));
+  assert.deepEqual(emberShore.tileParams.harvestAnchors, []);
+
   const moth = contract('e3-moth-season');
   const mothMask = (await table(moth.id)).maskTruth;
   assert.deepEqual(mothMask.dayNightCycle, moth.twist.dayNightCycle);
@@ -211,7 +231,7 @@ test('published Moth Season mask stays inside bounds and agrees with authored wa
   assertBoundsAndWater(maskTruth, waterAgreement);
 });
 
-for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e3-fairground', 'e4-dust-flats', 'e6-glow-mesa', 'e7-relay-valley', 'e8-mare-claim', 'e9-dome-basin']) {
+for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e3-fairground', 'e4-dust-flats', 'e6-glow-mesa', 'e7-relay-valley', 'e8-mare-claim', 'e9-dome-basin', 'e10-ember-shore']) {
   test(`${id} mask stays inside bounds and agrees with authored water`, async () => {
     const { maskTruth, waterAgreement } = await table(id);
     assertBoundsAndWater(maskTruth, waterAgreement);

@@ -1,5 +1,90 @@
 {
   "version": 1,
   "epochId": "epoch-10-deepsky",
-  "contracts": []
+  "contracts": [
+    {
+      "id": "e10-ember-shore",
+      "name": "The Ember Shore",
+      "tileParams": {
+        "tileId": "e10-ember-shore",
+        "biome": "deepsky-ember-shore",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "last-warm-vent-site",
+            "bank": "south",
+            "minX": -2,
+            "maxX": 8,
+            "minZ": -16,
+            "maxZ": -4
+          },
+          {
+            "id": "cooled-titan-machine-mount",
+            "bank": "north",
+            "minX": 14,
+            "maxX": 38,
+            "minZ": 22,
+            "maxZ": 46
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "last-warm-vent",
+            "x": 3,
+            "z": -10,
+            "lossCondition": true
+          }
+        ],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "ember-shore-cooling-veins",
+          "mode": "visual"
+        },
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {},
+      "boardRow": {
+        "name": "The Ember Shore",
+        "ledgerBlurb": "Keep the last warm vent alight through the Static squall beneath the cooled titan.",
+        "tags": [
+          "deepsky",
+          "ember-world",
+          "preserve"
+        ],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": [
+          "Keep the last warm vent alight through the Static squall.",
+          "Hold the safe approaches around the cooled titan machine.",
+          "Preserve the Ember Shore; take nothing from it."
+        ],
+        "rules": [
+          "Cooling lava veins mark the shore's hazard bands.",
+          "The cooled titan machine is older than the Combine; the contract offers no answer for it.",
+          "The Ember Shore has no river, ford, or water source."
+        ],
+        "geographyLine": "Cooling lava-vein bands divide the dry shore between the last warm vent and a cooled titan machine older than the Combine."
+      }
+    }
+  ]
 }

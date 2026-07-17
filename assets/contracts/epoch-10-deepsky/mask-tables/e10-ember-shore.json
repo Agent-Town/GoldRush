@@ -1,0 +1,92 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-10-deepsky/contracts.json; specs/epoch-saga/e10-deepsky-bundle.md §B2",
+    "tileId": "e10-ember-shore",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "last-warm-vent-site",
+        "bank": "south",
+        "minX": -2,
+        "maxX": 8,
+        "minZ": -16,
+        "maxZ": -4
+      },
+      {
+        "id": "cooled-titan-machine-mount",
+        "bank": "north",
+        "minX": 14,
+        "maxX": 38,
+        "minZ": 22,
+        "maxZ": 46
+      }
+    ],
+    "stakeMarkers": [
+      {
+        "id": "last-warm-vent",
+        "x": 3,
+        "z": -10,
+        "lossCondition": true
+      }
+    ],
+    "rails": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": {
+      "id": "ember-shore-cooling-veins",
+      "mode": "visual"
+    },
+    "lavaVeinBands": [
+      {
+        "id": "cooling-lava-vein-west",
+        "minX": -52,
+        "maxX": -40,
+        "minZ": -52,
+        "maxZ": 40
+      },
+      {
+        "id": "cooling-lava-vein-center",
+        "minX": -18,
+        "maxX": -8,
+        "minZ": -54,
+        "maxZ": 10
+      },
+      {
+        "id": "cooling-lava-vein-east",
+        "minX": 44,
+        "maxX": 54,
+        "minZ": -12,
+        "maxZ": 54
+      }
+    ],
+    "fixtureZones": [
+      {
+        "id": "last-warm-vent-site",
+        "minX": -2,
+        "maxX": 8,
+        "minZ": -16,
+        "maxZ": -4
+      }
+    ],
+    "lanes": {
+      "spawnEdges": [
+        "north",
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}
