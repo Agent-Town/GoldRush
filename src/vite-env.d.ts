@@ -1213,6 +1213,10 @@ interface Window {
       remove: (name: string) => boolean;
     };
     placeBeacon: () => boolean;
+    oldDigger: {
+      interact: () => boolean;
+      dismount: () => void;
+    };
     projectileVisuals: () => Array<{
       ownerId: string;
       targetId: number;

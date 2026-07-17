@@ -7,6 +7,9 @@ import { disposeObject3D } from '../utils/dispose';
 
 const VARIANT = 'old_digger';
 const HULL_ID = 'hull';
+const DRONE_VARIANT = 'maintenance_drone';
+const DRONE_LABEL = 'Maintenance Drone';
+const HAZARD_SOURCE_ID = -7;
 const OLD_DIGGER_3D_URL = new URL('../../assets/pilots/old-digger-3d/old-digger.glb', import.meta.url).href;
 const OLD_DIGGER_3D_TRIANGLES = 7_192;
 // E9 §BOSS state law (asset contract): working machine → intact gentle reprogramming.
@@ -45,6 +48,13 @@ export type OldDiggerBossDiagnostics = {
   damageMarks: number;
   killAttemptsAbsorbed: number;
   playerDamageEvents: number;
+  boarded: boolean;
+  deckProgress: number;
+  atTapeDeck: boolean;
+  hazardTicks: number;
+  dronesAboard: number;
+  dronesSpawned: number;
+  dismounts: number;
   gentle: boolean;
   persistentGentle: boolean;
 };
@@ -77,6 +87,13 @@ export class OldDiggerBossSystem {
   private damageMarks = 0;
   private killAttemptsAbsorbed = 0;
   private playerDamageEvents = 0;
+  private boarded = false;
+  private deckProgress = 0;
+  private nextHazardAt = Number.POSITIVE_INFINITY;
+  private hazardTicks = 0;
+  private dronesSpawned = 0;
+  private nextDroneRespawnAt = Number.POSITIVE_INFINITY;
+  private dismounts = 0;
   private gentle = false;
   private persistentGentle = false;
   private readonly restPosition = new THREE.Vector3();
@@ -90,6 +107,9 @@ export class OldDiggerBossSystem {
     private readonly enemies: () => readonly ClaimJumperEnemy[],
     private readonly spawnEnemy: (position: THREE.Vector3, params: EnemySpawnParams) => ClaimJumperEnemy | null | undefined,
     private readonly recycleEnemy: (enemy: ClaimJumperEnemy) => void,
+    private readonly damageHero: (amount: number, sourceId: number) => boolean,
+    /** Boarding slaves the rider to the machine and lands the dismount; the sim stays planar (rendering-only height law). */
+    private readonly moveHero: (x: number, z: number) => void,
     /** Unmaking routes through the build system's own demolition path (law: no ad-hoc removal). Returns structures unmade. */
     private readonly unmakeStructuresNear: (position: { x: number; z: number }, radius: number, at: number) => number,
     private readonly announce: (text: string, title: string) => void,
@@ -122,11 +142,95 @@ export class OldDiggerBossSystem {
   }
 
   update(at: number): void {
+    const delta = Math.max(0, at - this.lastAt);
     this.lastAt = at;
     if (!this.enabled || this.persistentGentle || !this.started) return this.syncPresentation();
     this.enforceNoKillLaw();
     if (this.act === 1) this.updateRenovation(at);
+    if (this.boarded) this.updateBoarding(at, delta);
     this.syncPresentation();
+  }
+
+  /**
+   * The player-facing verb seam (confirm intent, plain boot — no debug gate):
+   * near the working machine it boards; aboard below the deck it dismounts
+   * safely. The tape deck itself is Act 3's interaction.
+   */
+  tryInteract(position: THREE.Vector3, at: number): boolean {
+    if (!this.enabled || !this.started || this.gentle) return false;
+    if (this.boarded) {
+      this.dismount();
+      return true;
+    }
+    return this.tryBoard(position, at);
+  }
+
+  private tryBoard(position: THREE.Vector3, at: number): boolean {
+    const hull = this.hull();
+    if (!hull || this.act !== 1) return false;
+    if (Math.hypot(hull.position.x - position.x, hull.position.z - position.z) > Balance.oldDigger.boardRadius) return false;
+    this.boarded = true;
+    this.deckProgress = 0;
+    this.nextHazardAt = at + Balance.oldDigger.hazardIntervalSeconds;
+    this.nextDroneRespawnAt = at + Balance.oldDigger.droneRespawnSeconds;
+    for (let index = 0; index < Balance.oldDigger.droneCount; index += 1) this.spawnDrone(index);
+    this.announce('Board it while it works. The tape deck waits at its heart.', 'THE BOARDING');
+    return true;
+  }
+
+  /** Dismount is safe by law (Act 2 gate): the rider lands beside the machine, no fall, no damage. */
+  dismount(): void {
+    if (!this.boarded) return;
+    this.boarded = false;
+    this.deckProgress = 0;
+    this.nextHazardAt = Number.POSITIVE_INFINITY;
+    this.nextDroneRespawnAt = Number.POSITIVE_INFINITY;
+    this.dismounts += 1;
+    const hull = this.hull();
+    if (hull) this.moveHero(hull.position.x + Balance.oldDigger.boardRadius * 0.75, hull.position.z + 1.5);
+  }
+
+  private updateBoarding(at: number, delta: number): void {
+    const hull = this.hull();
+    if (!hull) {
+      this.boarded = false;
+      return;
+    }
+    // The rider rides: slaved to the live machine while it keeps executing the survey.
+    this.moveHero(hull.position.x, hull.position.z);
+    this.deckProgress = Math.min(1, this.deckProgress + delta / Balance.oldDigger.deckClimbSeconds);
+    if (at >= this.nextHazardAt) {
+      this.nextHazardAt = at + Balance.oldDigger.hazardIntervalSeconds;
+      this.hazardTicks += 1;
+      // Moving gantries, swinging buckets: the platforming hazard, not an attack.
+      this.damageHero(Balance.oldDigger.hazardDamage, hull.id ?? HAZARD_SOURCE_ID);
+    }
+    if (this.liveDrones().length < Balance.oldDigger.droneCount && at >= this.nextDroneRespawnAt) {
+      this.nextDroneRespawnAt = at + Balance.oldDigger.droneRespawnSeconds;
+      this.spawnDrone(this.dronesSpawned);
+    }
+  }
+
+  private spawnDrone(seed: number): void {
+    const hull = this.hull();
+    if (!hull) return;
+    const angle = seed * 2.4 + 0.7;
+    const spawned = this.spawnEnemy(
+      new THREE.Vector3(hull.position.x + Math.cos(angle) * 2.2, 0, hull.position.z + Math.sin(angle) * 2.2),
+      {
+        hpScale: Balance.oldDigger.droneHpScale,
+        speedScale: 1.1,
+        visualScale: 0.9,
+        variantId: DRONE_VARIANT,
+        variantLabel: DRONE_LABEL,
+        tint: '#9aa7ad',
+      },
+    );
+    if (spawned) this.dronesSpawned += 1;
+  }
+
+  private liveDrones(): ClaimJumperEnemy[] {
+    return this.enemies().filter((enemy) => enemy.isAlive && enemy.variantId === DRONE_VARIANT);
   }
 
   diagnostics(): OldDiggerBossDiagnostics {
@@ -147,6 +251,13 @@ export class OldDiggerBossSystem {
       damageMarks: round2(this.damageMarks),
       killAttemptsAbsorbed: this.killAttemptsAbsorbed,
       playerDamageEvents: this.playerDamageEvents,
+      boarded: this.boarded,
+      deckProgress: round2(this.deckProgress),
+      atTapeDeck: this.boarded && this.deckProgress >= 1,
+      hazardTicks: this.hazardTicks,
+      dronesAboard: this.liveDrones().length,
+      dronesSpawned: this.dronesSpawned,
+      dismounts: this.dismounts,
       gentle: this.gentle,
       persistentGentle: this.persistentGentle,
     };
@@ -156,6 +267,14 @@ export class OldDiggerBossSystem {
     this.disposeOldDigger3d(performanceTierDiagnostics().tier === 'lite' ? 'lite' : 'off');
     const hull = this.hull();
     if (hull) this.recycleEnemy(hull);
+    for (const drone of this.liveDrones()) this.recycleEnemy(drone);
+    this.boarded = false;
+    this.deckProgress = 0;
+    this.nextHazardAt = Number.POSITIVE_INFINITY;
+    this.hazardTicks = 0;
+    this.dronesSpawned = 0;
+    this.nextDroneRespawnAt = Number.POSITIVE_INFINITY;
+    this.dismounts = 0;
     this.act = 0;
     this.started = false;
     this.surveyIndex = 0;

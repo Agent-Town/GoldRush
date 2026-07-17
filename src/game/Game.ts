@@ -710,6 +710,13 @@ export class Game {
     () => this.enemies.all,
     (position, params) => this.enemies.spawn(position, params),
     (enemy) => this.enemies.recycle(enemy),
+    (amount, sourceId) => this.combat.damageActor(amount, sourceId),
+    (x, z) => {
+      this.primaryActor.group.position.set(x, this.primaryActor.group.position.y, z);
+      this.syncHeroVisualHeight();
+      this.primaryActor.velocity.set(0, 0, 0);
+      this.primaryActor.snapRenderState();
+    },
     (position, radius, at) => this.unmakeStructuresNear(position, radius, at),
     (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
     this.oldDiggerSurveyPath(),
@@ -1549,6 +1556,11 @@ export class Game {
           if (this.deepwaterClaim) return false;
           this.buildSystem.selectBuildable('sentry_beacon', true);
           return this.buildSystem.confirm(this.timeAlive);
+        },
+        oldDigger: {
+          // The exact player path (confirm intent), exposed for deterministic manual-sim drives.
+          interact: () => this.oldDiggerBoss.tryInteract(this.actionActor.group.position, this.timeAlive),
+          dismount: () => this.oldDiggerBoss.dismount(),
         },
         projectileVisuals: () => this.combat.projectileVisuals,
         state: () => ({
@@ -5892,6 +5904,7 @@ export class Game {
       this.openAssayBench?.();
       return;
     }
+    if (this.oldDiggerBoss.tryInteract(this.actionActor.group.position, this.timeAlive)) return;
     if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
     this.confirmDemolish();
   }
