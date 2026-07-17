@@ -289,6 +289,43 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## 27-map campaign — E5 extra-map wave
+
+### F-3D-D-85 — The campaign identity gate yields one E5 sculpt, not three recolours
+
+The published factory contracts distinguish map identity from contract identity. `e5-regatta` owns the unique `tileId: e5-regatta`, so it receives a new terrain/panorama pair. `e5-flotilla` and `e5-stillwater` both explicitly reuse `tileId: e5-deepwater-claim`; under the campaign's variant rule and the One-Town Law, new sculpts for those contracts would be contract drift rather than variety. They therefore retain the accepted Deepwater Claim landform and panorama while the factory varies fleet/state/gameplay above the planar tile.
+
+### F-3D-D-86 — Regatta's difference is submerged course geography
+
+Regatta is a 128 × 128 metre open-sea race tile, not another drowned-town shelf. Its render terrain builds a bent five-beacon bathymetric course: five foundation rises carry the published checkpoint centres, a deep storm-front scarp follows the published fast-water rectangle, and irregular troughs keep the rest of the seabed rough. Independent probes record the start and mid-course rises at -2.3773 m and -2.1988 m, the fast-water shelf at -5.58 m, and ordinary open water at -3.3899 m. The geometry A/B hides water on both sides so the sculpt is reviewable; the owner boards restore the honest temporary water proxy.
+
+### F-3D-D-87 — Water and race semantics remain code-owned
+
+The terrain GLB contains no sea surface, Claim Boat, beacon body, course trace, speed state, spawn, collision, movement, or checkpoint authority. Those are verdict-only helpers removed before export. The separate panorama supplies an irregular open-sea distance ring with unequal weather banks and a quiet zenith; it changes no mask or playfield edge. The published runtime deck, west spawn, five beacon circles, and fast-water zone are reproduced only on the mask board.
+
+## E5 extra-map gate state
+
+- Fresh reference base: `0faabaa29fc0ea92a1614a782f2258f8e698a89a`
+- Regatta terrain: one mesh, one primitive, one material, one embedded 2048² atlas, 32,768 triangles: PASS
+- Regatta Panorama v2: separate one-mesh GLB, one material, one embedded 2048² atlas, 2,704 triangles: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Exact published mask table and four independent bathymetry probes: PASS
+- Mood A/B, water-hidden geometry A/B, owner verdict, mask agreement, and center-horizon distance gates: PASS
+- Flotilla and Stillwater valid Deepwater Claim tile reuse: PASS
+- `npm run build`: PASS
+- Independent `codex review --uncommitted`: reran the Blender verifier green and emitted no product finding before recursively launching another review; the recursion was terminated and is not counted as a separate verdict
+- `src/`, simulation, water, gameplay, landmark, and factory-contract edits: none
+
+## E5 extra-map owner-verdict images
+
+- `artifacts/map-rebuild-spike/regatta-owner-verdict.png` — real run camera, whole-course overview, and low storm-lull read
+- `artifacts/map-rebuild-spike/regatta-mood-ab.png` — shipped E5 shelf paint / Regatta working-sea mood gate
+- `artifacts/map-rebuild-spike/regatta-flat-vs-sculpted-ab.png` — water-hidden identical-camera bathymetry proof
+- `artifacts/map-rebuild-spike/regatta-mask-agreement-board.png` — published Claim Boat deck, five beacons, fast-water zone, and west spawn
+- `artifacts/map-rebuild-spike/regatta-panorama-distance-gate.png` — playfield-center distance gate
+
+READY-FOR-GATES
+
 ## E9 The Dome Basin terrain wave
 
 ### F-3D-D-75 — One dry C3-complete mesh keeps persistence code-owned
