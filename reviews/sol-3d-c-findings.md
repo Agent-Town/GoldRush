@@ -1,5 +1,35 @@
 # SOL 3D-C — 3D pilot findings
 
+## E10 Ark Plaza plate
+
+Branch: `sol/ark-plaza-e10-plate`
+
+Base: `d944dc7ebd690141d52f363d38aa6dc1a83f4343`
+
+Tip: exact Ark Plaza SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the final town site is a walkable Generation Ark deck: the unchanged Pan Monument reaches its last fountain in ship-light, ten era lineages ring the plaza, and the Long Table bulkhead/gantry makes the Ark unmistakable from the gameplay camera.**
+
+The working target was established from `kit-the-ark.png`, `kit-era-10.png`, the Pan Shrine and Long Table plates, the E10 bundle, and Storybook Carry law—not from an old render. Fresh E1/E4/E5/E6/E7/E8 reference states were regenerated from current tracked files at the full base above; each board carries that SHA.
+
+| Visual question | Final answer | Evidence |
+| --- | --- | --- |
+| How does “walking the ship is walking the saga” read without a board-game floor? | ten narrow, subdued lineage inlays live at the rim; pictogram medallions name each era while one engraved timber/brass deck remains dominant | gameplay render + four-angle audit |
+| How does the plaza read as part of the colossal Ark? | a tall inhabited Long Table bulkhead with teal dome, warm portholes, twin towers, mast gantry, cables, and open arch terminates the north axis; hull ribs and observation pods complete the turntable silhouette | Ark source A/B + four-angle audit |
+| How does the Carry finish? | the existing Pan Monument remains a separate unchanged mount; this GLB supplies its recessed water/ship-light fountain at center | gameplay render + flat-walk overlay |
+| How does the site stay warm and functional? | benches, service consoles, portholes, patched deck plates, rails, valves, service runs, and restrained teal/gold ship-light | gameplay render |
+| What stays evidence-only? | Pan mount, deep-ink starfield, lights, camera, and route/pad overlays | visual evidence JSON |
+
+### Production gate
+
+- 19,676 / 20,000 triangles; one node, one mesh, one primitive; one material with one embedded 2048 x 2048 atlas; zero cameras/lights/animations.
+- Bounds: 49.26 x 47.60 deck span, 11.20 overall height; base-center origin and deck floor remain at GLB `Y=0`.
+- Realized inherited route maximum `0.0419939`, below the `0.05` flat-walk ceiling across the established `-0.45 / 0 / +0.45m` actor corridor. The separately mounted Pan Monument keeps its inherited `0.92`-radius non-floor footprint.
+- GLB SHA-256 `bc4195258c27cd38035eac1c90d495808a2548f63a5bb68b44cfcb0eabf7b720`; saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- `npm run build` passes. No runtime, town layout, building, Pan, spec, queue, or source file changes.
+- Independent visual review first returned REVISE on the sparse color-wheel pass. The final revision narrowed the lineage ring, added human-scale furnishings, strengthened warm/teal readability, and grew the Long Table anchor into a tall gantry silhouette; the follow-up verdict is **SHIP**.
+- Comparison telemetry versus current-main E8 is explicitly distance-only (`0.646446`): E10 correctly moves to deep ink and a fresh Ark topology rather than matching the Dome Commons.
+
 ## Dredge-Queen production model v2
 
 Branch: `sol/dredge-queen-3d-v2`
