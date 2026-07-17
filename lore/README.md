@@ -8,10 +8,13 @@ Created 2026-07-09 by owner order: "a story wiki where we keep all this informat
 4. **THE FUTURE LIVES HERE TOO**: planned arcs (marked PLANNED, with their era) so agents write TOWARD the saga, never against it. Spoiler-grade facts are still facts.
 5. **Supersede, never silently edit**: canon changes strike-through the old line with the new ruling's date.
 
-## STRUCTURE
-- `characters.md` — every named soul: identity, canon facts, era-by-era arc, relationships, voice, art anchors (codex plates).
-- `institutions.md` — Claim Office, Assay Office, the Schoolhouse, the Tavern, the Calculating House (E6 — ADR-003), the Charter Press.
-- `places.md` — the valley, the town (per-profile naming law), the tiles/contracts, era geographies.
-- `eras.md` — E1→E10 one-page truths, pointing at specs/epoch-saga bundles for depth.
-- `canon-rules.md` — the guardrails digest (ADR-001 no-firearms, warm-never-gory, §9 naming, the hero/Prospector distinction).
+## STRUCTURE (reconciled 2026-07-18 — the wiki as it exists; precedence: bundles > story-arc rulings > STORYBOOK staging > the rest)
+- `story-arc.md` — THE RULINGS LEDGER: every owner ruling on the saga, verbatim + dated, incl. §THE TWENTY RULINGS (2026-07-18). Supreme for canon FACTS.
+- `STORYBOOK.md` — THE BOOK (fourth printing 2026-07-18): chapters E1–E10, interstitials T1–T10, appendices A–E. Supreme for STAGING; bundles (specs/epoch-saga/) win conflicts.
+- `characters.md` — every named soul: identity, canon facts, era arcs, quotes, art anchors.
+- `canon-rules.md` — the guardrails digest: persistence + two-chains exception, one-town law, warmth definition, cure-arms lexicon, ADR-001, household/family-business laws.
+- `world-dispatches.md` — the dispatch content tables E1–E10 (Mei's barks · World Outside ledger pages · ceremony postscripts): the single source for dispatch text; WD-02..04 wire FROM it.
+- `agent-town-heritage.md` — the five Agent Town buildings and their Gold Rush ancestors (fountain = the Pan Monument, ruling #16).
+- `third-printing-brief.md` — HISTORICAL: the 2026-07-16 full-read review + decision sheet, cleared 2026-07-18 by the twenty rulings.
+- PLANNED, not yet populated (promised at creation; fire-authorable per POPULATION below): `institutions.md` · `places.md` · `eras.md` — until then, institution/place facts live in characters.md + STORYBOOK chapters, and era depth lives in STORYBOOK.md + specs/epoch-saga bundles.
 POPULATION: fire-authorable task mines specs/, docs/playtests/, ADRs, and the beat tables into pages (cited). Seed = characters.md (today's canon), created alongside this file.
