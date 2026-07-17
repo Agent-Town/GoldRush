@@ -1,0 +1,45 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-10-deepsky/contracts.json; lore/STORYBOOK.md:597-600",
+    "tileId": "ark-plaza-e10",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "stern-to-bow-run", "bank": "north", "minX": -20, "maxX": 20, "minZ": -54, "maxZ": 54 }
+    ],
+    "stakeMarkers": [
+      { "id": "last-lantern", "x": -10, "z": 50, "lossCondition": true },
+      { "id": "pan-theme-song", "x": 0, "z": 50, "lossCondition": true },
+      { "id": "last-portrait", "x": 10, "z": 50, "lossCondition": true }
+    ],
+    "rails": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": { "id": "ark-plaza-e10", "mode": "visual" },
+    "eraDeckZones": [
+      { "id": "e1-memory-deck", "era": 1, "minX": -20, "maxX": 20, "minZ": -54, "maxZ": -44 },
+      { "id": "e2-memory-deck", "era": 2, "minX": -20, "maxX": 20, "minZ": -44, "maxZ": -34 },
+      { "id": "e3-memory-deck", "era": 3, "minX": -20, "maxX": 20, "minZ": -34, "maxZ": -24 },
+      { "id": "e4-memory-deck", "era": 4, "minX": -20, "maxX": 20, "minZ": -24, "maxZ": -14 },
+      { "id": "e5-memory-deck", "era": 5, "minX": -20, "maxX": 20, "minZ": -14, "maxZ": -4 },
+      { "id": "e6-memory-deck", "era": 6, "minX": -20, "maxX": 20, "minZ": -4, "maxZ": 6 },
+      { "id": "e7-memory-deck", "era": 7, "minX": -20, "maxX": 20, "minZ": 6, "maxZ": 16 },
+      { "id": "e8-memory-deck", "era": 8, "minX": -20, "maxX": 20, "minZ": 16, "maxZ": 26 },
+      { "id": "e9-memory-deck", "era": 9, "minX": -20, "maxX": 20, "minZ": 26, "maxZ": 36 },
+      { "id": "e10-memory-deck", "era": 10, "minX": -20, "maxX": 20, "minZ": 36, "maxZ": 46 }
+    ],
+    "preserveSites": [
+      { "id": "last-lantern", "kind": "light", "x": -10, "z": 50, "radius": 3 },
+      { "id": "pan-theme-song", "kind": "song", "x": 0, "z": 50, "radius": 3 },
+      { "id": "last-portrait", "kind": "memory", "x": 10, "z": 50, "radius": 3 }
+    ],
+    "lanes": { "spawnEdges": ["south", "west", "east"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}
