@@ -289,6 +289,57 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E6 Glow Mesa terrain wave
+
+### F-3D-D-59 — The published E6 table is the only planar authority
+
+`assets/contracts/epoch-6-atomic/mask-tables/e6-glow-mesa.json` is copied into the terrain contract as the exact authored source. The render mesh preserves all five build rectangles and both civic fixture rectangles as triangle-surface flats; independent exported-mesh sampling reports 0.00 m maximum deviation for every zone. The terrain and separate panorama remain render-only. Movement, collision, spawns, build authority, water classification, and the existing `Terrain.visualY` seam are unchanged.
+
+### F-3D-D-60 — Glow Mesa needs a true h1/h5 landform, not a raised decorative pad
+
+The final sculpt has a broad h5 caprock mesa above the h1 south base, a separate h5 warehouse approach, and three eroded herd routes that explain how the playable plane crosses the visual relief. Review corrected the warehouse approach from an early h1 interpretation and added a calm shoulder around the authored flat. The caprock edge was sharpened after the first pass read as a shallow trench; clutter is now excluded from steep faces so the scarp remains geological rather than a rubble shelf.
+
+### F-3D-D-61 — Atomic-homestead grit is contamination under pressure, not a holiday glow ring
+
+The 2048 atlas is rebuilt from the shipped E6 kit plate and the established terrain paint banks. Warm engraved earth, fading decay hatches, deep shadow pockets, sparse rubble, and six dangerous teal starstone anchors carry the era language. A first circular glow treatment read ceremonial; the final builder breaks it into irregular leaking veins, reduces the emission wash, removes the toy-like dome preview, and keeps amber Combine infrastructure subordinate to the landform. Preview bodies remain evidence-only and are absent from both exported GLBs and mount contracts.
+
+### F-3D-D-62 — The E6 panorama needs one climate contrast and no paper-haze ribbon
+
+The separate 2,496-triangle Panorama v2 GLB uses one broken low ridge, a dry rectangular-to-radial ground skirt, a quiet zenith, asymmetric low weather, a narrow inland-water glint in one quadrant, and dust-dark plains opposite. Review exposed a pale paper haze following a hidden ridge profile closely enough to read as a painted ribbon. The final pass reduces it to a low dust-coloured trace and aims the center-horizon evidence through the authored inland cut. The verdict is layered distance, not wall, ceiling, moat, or repeated strip.
+
+### F-3D-D-63 — Mask evidence must be independently countable
+
+The final mask board adds a coordinate-derived schematic beside the render and labels every published family: B1-B5 build zones, F1-F2 fixtures, D1-D2 decay fields, H1-H3 herd paths, and A1-A6 starstone anchors. This replaced an earlier board that asserted counts without making the source coordinates independently auditable. The board also states the h1/h5 relationship, 0.00 m exported-surface deviation, no-water rule, empty mounts, and planar simulation boundary.
+
+### F-3D-D-64 — The visual gate must change the terrain, not manufacture combat
+
+Fresh screenshot-only reviews rejected the warm, rounded candidates as a tabletop holiday diorama even though their mask proof passed. The final correction makes the caprock and scarp explicitly faceted, adds harder engraved strata and deep fracture pockets, cools and hardens the dusk rig, strengthens the broken timber barricade silhouettes, localizes the starstone light, and lowers the panorama ridges. Short-lived smoke and bolt helpers were removed because they read as UI arrows and figurines; the terrain has to communicate pressure without fabricated gameplay. The final unprimed verdict is `SHIP`: FIGHT 7.5/10, DISTANCE 8/10, MASK LEGIBILITY 9.5/10, with no visible blocker and no actor requirement.
+
+## E6 gate state
+
+- Glow Mesa terrain `.blend` / GLB / 2048² atlas / contract set: PASS
+- Terrain GLB: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Separate Panorama v2 `.blend` / GLB / 2048² atlas / contract set: PASS
+- Panorama GLB: 2,496 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Five build zones and two civic fixtures independently sampled from the exported triangle surface, maximum deviation 0.00 m: PASS
+- Mood A/B, identical-camera geometry, owner, mask-agreement, and Panorama v2 distance boards: PASS
+- Fresh final unprimed visual verdict: SHIP
+- Integrated `npm run build`, Python compilation, and `git diff --check`: PASS
+- Independent `codex review --uncommitted`: attempted; the reviewer recursively launched another review instead of returning a verdict, so it was interrupted and is not counted as a gate
+- `src/`, simulation, runtime registry, masks, and landmark mounts: unchanged
+
+## E6 owner-verdict images
+
+- `artifacts/map-rebuild-spike/glow-mesa-owner-verdict.png` — real run camera, overview, and low dusk
+- `artifacts/map-rebuild-spike/glow-mesa-mood-ab.png` — shipped painted source / E6 hardship gate
+- `artifacts/map-rebuild-spike/glow-mesa-flat-vs-sculpted-ab.png` — identical-camera flat/sculpted geometry proof
+- `artifacts/map-rebuild-spike/glow-mesa-mask-agreement-board.png` — coordinate-derived authored-zone proof
+- `artifacts/map-rebuild-spike/glow-mesa-panorama-mood-ab.png` — panorama off/on mood evidence
+- `artifacts/map-rebuild-spike/glow-mesa-panorama-distance-gate.png` — inland-cut center-horizon distance gate
+
+READY-FOR-GATES
+
 ## Hill Mine + Trestle landmark bar-unification wave
 
 ### F-3D-D-58 — Painted-wrap quality is a body-and-material contract, not an atlas swap
