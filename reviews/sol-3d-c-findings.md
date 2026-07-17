@@ -31,6 +31,33 @@ The working reference board was freshly rendered from tracked files on `c272d3a8
 - The embedded atlas contains 6,679 literal `#50674c` pixels in the mapped canal core; the verifier extracts the shipped PNG and enforces the callback.
 - Independent review caught that the first feathered candidate only approached the swatch; the exact mapped core and extraction gate close that evidence defect.
 - Relief is reserved for the outer lowered basin, quarry scarp, canal cut, and eroded rim. The production GLB contains no buildings, people, props, Pan geometry, or evidence rig.
+## Land-Yacht production boss model
+
+Branch: `sol/land-yacht-3d`
+
+Base: `de21f043a8c3b4c69950afbca0c7a612c6826e88`
+
+Tip: exact Land-Yacht SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the E4 boss now has a real six-wheel iron landship body whose dominant grab crane, teal-glazed wheelhouse, low armored prow, and beached wreck state match the current plates and the live three-zone system.**
+
+| Live component ID | Production mesh | Damage morph | Read |
+| --- | --- | --- | --- |
+| `wheels` | `wheels` | `Damage_BeachedWheels` | all six physical wheels are one live zone; fore/rear wheels buckle outward, the prow drops, armor tears, and bands shed |
+| `crane` | `crane` | `Damage_SlackCrane` | boom folds toward the foredeck, cables and grab sag, pulley fragments fall |
+| `wheelhouse` | `wheelhouse` | `Damage_CrackedWheelhouse` | glazed drum and crown rack sideways, breach and glass fragments open the command face |
+
+### Production gate
+
+- 10,632 / 12,000 triangles; exactly three nodes/meshes/primitives with identity transforms and one morph target each.
+- One shared, double-sided, non-emissive material with one embedded 1024 x 1024 PNG; zero cameras, lights, or animations.
+- Base-center origin; 9.4 long x 4.732414 wide x 6.76943 high. GLB SHA-256 `902191310b8cf604a1196902696ff14de78811f81bb30dd4bb5a3011f5ce7a01`.
+- Saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- Same-camera full wreck changes 8.4477% of pixels above 16/255 while retaining the Land-Yacht silhouette.
+- Current intact/damage plates and `LandYachtBossSystem.ts` are hash-recorded at base `de21f043…`; the reference boards are fresh direct renders and contain no older render input.
+- Gameplay evidence now uses the exact production 42-degree camera, `(0, 26.2, 18.3)` offset, and `-3.35` down-screen target shift.
+- Independent review found and closed two defects before commit: all three damage rotations now derive pivots from normalized production geometry, and the prior presentation-only diagonal camera was replaced with the production rig.
+- Dust, terrain, lights, camera, and context belong only to evidence. No source, live boss system, balance, contract, or map file is changed.
 
 ## Dredge-Queen production model v2
 
