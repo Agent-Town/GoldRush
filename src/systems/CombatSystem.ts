@@ -159,6 +159,8 @@ export class CombatSystem {
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
     private readonly onEnemyKilled?: (position: THREE.Vector3) => void,
     private readonly onShot?: (at: number, origin: THREE.Vector3, target: THREE.Vector3) => void,
+    private readonly onEnemyDamaged?: (enemy: ClaimJumperEnemy, amount: number, died: boolean) => void,
+    private readonly canDamageEnemy: (enemy: ClaimJumperEnemy) => boolean = () => true,
   ) {
     this.freedWalkers = new FreedWalkerVfx(vfx);
   }
@@ -423,6 +425,11 @@ export class CombatSystem {
     return this.damageHero(amount, sourceId, actor);
   }
 
+  presentFreedEnemy(enemy: ClaimJumperEnemy): void {
+    this.vfx.dustPuff(enemy.position);
+    this.freedWalkers.spawn(enemy);
+  }
+
   launchLob(origin: THREE.Vector3, target: THREE.Vector3, airTime: number, damage: number, radius: number, ownerId: string): boolean {
     const launched = this.blastCharges.activate(origin, target, airTime, damage, radius, ownerId);
     if (!launched) return false;
@@ -539,7 +546,13 @@ export class CombatSystem {
         continue;
       }
       const origin = handle.getPos();
-      const target = state.targeting.findNearest(origin, handle.range, this.enemies.all, handle.canTarget, handle.effectiveRange);
+      const target = state.targeting.findNearest(
+        origin,
+        handle.range,
+        this.enemies.all,
+        (enemy) => this.canDamageEnemy(enemy) && (handle.canTarget?.(enemy) ?? true),
+        handle.effectiveRange,
+      );
       if (!target) {
         state.timer = Math.max(0, state.timer);
         continue;
@@ -678,7 +691,7 @@ export class CombatSystem {
       let closestSq = Number.POSITIVE_INFINITY;
       for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
         const enemy = this.enemies.all[enemyIndex];
-        if (!enemy?.isAlive) continue;
+        if (!enemy?.isAlive || !this.canDamageEnemy(enemy)) continue;
         const dx = enemy.position.x - position.x;
         const dz = enemy.position.z - position.z;
         const distanceSq = dx * dx + dz * dz;
@@ -690,6 +703,7 @@ export class CombatSystem {
       if (closest) {
         this.recordDamage(ownerId, Math.min(closest.currentHp, damage));
         const died = closest.takeDamage(damage);
+        this.onEnemyDamaged?.(closest, damage, died);
         this.vfx.hit(closest.position);
         if (died) this.killEnemy(closest, this.currentAt, ownerId);
       }
@@ -698,13 +712,14 @@ export class CombatSystem {
 
     for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
       const enemy = this.enemies.all[enemyIndex];
-      if (!enemy?.isAlive) continue;
+      if (!enemy?.isAlive || !this.canDamageEnemy(enemy)) continue;
       const dx = enemy.position.x - position.x;
       const dz = enemy.position.z - position.z;
       const hitRadius = radius + enemy.hitRadius;
       if (dx * dx + dz * dz > hitRadius * hitRadius) continue;
       this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
       const died = enemy.takeDamage(damage);
+      this.onEnemyDamaged?.(enemy, damage, died);
       this.vfx.hit(enemy.position);
       if (died) this.killEnemy(enemy, this.currentAt, ownerId);
     }
@@ -720,7 +735,7 @@ export class CombatSystem {
 
       for (let enemyIndex = 0; enemyIndex < this.enemies.all.length; enemyIndex += 1) {
         const enemy = this.enemies.all[enemyIndex];
-        if (!enemy?.isAlive) continue;
+        if (!enemy?.isAlive || !this.canDamageEnemy(enemy)) continue;
         const dx = enemy.position.x - boltPosition.x;
         const dz = enemy.position.z - boltPosition.z;
         const hitRadius = Balance.sparkRig.boltRadius + enemy.hitRadius;
@@ -735,6 +750,7 @@ export class CombatSystem {
         this.recordBoltHit(shooterKey, targetId, enemy.id);
         this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
         const died = enemy.takeDamage(damage);
+        this.onEnemyDamaged?.(enemy, damage, died);
         this.vfx.hit(enemy.position);
         this.audio.playHit();
         if (died) this.killEnemy(enemy, at, ownerId);
