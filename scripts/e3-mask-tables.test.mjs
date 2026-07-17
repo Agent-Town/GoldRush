@@ -4,6 +4,7 @@ import test from 'node:test';
 
 const e3Contracts = JSON.parse(await readFile('assets/contracts/epoch-3-voltage/contracts.json', 'utf8')).contracts;
 const e4Contracts = JSON.parse(await readFile('assets/contracts/epoch-4-motor/contracts.json', 'utf8')).contracts;
+const e5Contracts = JSON.parse(await readFile('assets/contracts/epoch-5-deepwater/contracts.json', 'utf8')).contracts;
 const e6Contracts = JSON.parse(await readFile('assets/contracts/epoch-6-atomic/contracts.json', 'utf8')).contracts;
 const e7Contracts = JSON.parse(await readFile('assets/contracts/epoch-7-signal/contracts.json', 'utf8')).contracts;
 const e8Contracts = JSON.parse(await readFile('assets/contracts/epoch-8-orbital/contracts.json', 'utf8')).contracts;
@@ -11,12 +12,12 @@ const e9Contracts = JSON.parse(await readFile('assets/contracts/epoch-9-redfield
 const e10Contracts = JSON.parse(await readFile('assets/contracts/epoch-10-deepsky/contracts.json', 'utf8')).contracts;
 
 async function table(id) {
-  const era = id.startsWith('e10-') ? 'epoch-10-deepsky' : id.startsWith('e9-') ? 'epoch-9-redfields' : id.startsWith('e8-') ? 'epoch-8-orbital' : id.startsWith('e7-') ? 'epoch-7-signal' : id.startsWith('e6-') ? 'epoch-6-atomic' : id.startsWith('e4-') ? 'epoch-4-motor' : 'epoch-3-voltage';
+  const era = id.startsWith('e10-') ? 'epoch-10-deepsky' : id.startsWith('e9-') ? 'epoch-9-redfields' : id.startsWith('e8-') ? 'epoch-8-orbital' : id.startsWith('e7-') ? 'epoch-7-signal' : id.startsWith('e6-') ? 'epoch-6-atomic' : id.startsWith('e5-') ? 'epoch-5-deepwater' : id.startsWith('e4-') ? 'epoch-4-motor' : 'epoch-3-voltage';
   return JSON.parse(await readFile(`assets/contracts/${era}/mask-tables/${id}.json`, 'utf8'));
 }
 
 function contract(id) {
-  return [...e3Contracts, ...e4Contracts, ...e6Contracts, ...e7Contracts, ...e8Contracts, ...e9Contracts, ...e10Contracts].find((entry) => entry.id === id);
+  return [...e3Contracts, ...e4Contracts, ...e5Contracts, ...e6Contracts, ...e7Contracts, ...e8Contracts, ...e9Contracts, ...e10Contracts].find((entry) => entry.id === id);
 }
 
 function inBounds(mask, x, z, radius = 0) {
@@ -42,6 +43,9 @@ function assertBoundsAndWater(mask, waterAgreement) {
     ...(mask.lavaTubeMouth ? [mask.lavaTubeMouth] : []),
     ...(mask.quarryScarpBands ?? []), ...(mask.basinDepression ? [mask.basinDepression] : []),
     ...(mask.lavaVeinBands ?? []),
+    ...(mask.deepwater?.waterTile.regions ?? []), ...(mask.raceCourse?.fastWaterZone ? [mask.raceCourse.fastWaterZone] : []),
+    ...(mask.stillwater?.fogZone ? [mask.stillwater.fogZone] : []), ...(mask.stillwater?.quietZones ?? []),
+    ...(mask.flotilla?.formationZone ? [mask.flotilla.formationZone] : []),
   ]) {
     inBounds(mask, zone.minX, zone.minZ);
     inBounds(mask, zone.maxX, zone.maxZ);
@@ -56,6 +60,8 @@ function assertBoundsAndWater(mask, waterAgreement) {
     ...(mask.canalRoute?.points ?? []), ...(mask.canalStageGates ?? []),
     ...(mask.dustDevilLanes ?? []).flatMap((route) => route.points),
     ...(mask.ridgeGlow ? [mask.ridgeGlow] : []),
+    ...(mask.waterSources ?? []), ...(mask.deepwater?.claimBoat.anchors ?? []), ...(mask.deepwater?.wrecks ?? []),
+    ...(mask.raceCourse?.beacons ?? []), ...(mask.stillwater?.noiseSources ?? []), ...(mask.flotilla?.hulls ?? []),
   ]) inBounds(mask, point.x, point.z, point.radius ?? 0);
 
   if (mask.orbitSpawn) inBounds(mask, mask.orbitSpawn.center.x, mask.orbitSpawn.center.z, mask.orbitSpawn.radius);
@@ -96,6 +102,18 @@ test('published mask tables exactly track authored contract data', async () => {
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers',
       'waterSources', 'heightfield', 'palette', 'scatter', 'lanes',
     ],
+    'e5-regatta': [
+      'tileId', 'size', 'dimensions', 'buildZones', 'stakeMarkers', 'waterSources',
+      'harvestAnchors', 'water', 'deepwater', 'raceCourse', 'lanes',
+    ],
+    'e5-stillwater': [
+      'tileId', 'size', 'dimensions', 'buildZones', 'stakeMarkers', 'waterSources',
+      'harvestAnchors', 'water', 'deepwater', 'stillwater', 'lanes',
+    ],
+    'e5-flotilla': [
+      'tileId', 'size', 'dimensions', 'buildZones', 'stakeMarkers', 'waterSources',
+      'harvestAnchors', 'water', 'deepwater', 'flotilla', 'lanes',
+    ],
     'e6-glow-mesa': [
       'tileId', 'size', 'dimensions', 'river', 'ford', 'buildZones', 'stakeMarkers',
       'waterSources', 'harvestAnchors', 'heightfield', 'lanes',
@@ -124,6 +142,8 @@ test('published mask tables exactly track authored contract data', async () => {
     assert.deepEqual(Object.keys(published), ['maskTruth', 'waterAgreement']);
     const source = id === 'e3-fairground'
       ? 'assets/contracts/epoch-3-voltage/contracts.json; src/entities/FerrisWheel.ts:43-44'
+      : id.startsWith('e5-')
+        ? 'assets/contracts/epoch-5-deepwater/contracts.json; lore/STORYBOOK.md:281-284'
       : id === 'e6-glow-mesa'
         ? 'assets/contracts/epoch-6-atomic/contracts.json; specs/epoch-saga/e6-atomic-bundle.md §B'
         : id === 'e7-relay-valley'
@@ -213,6 +233,15 @@ test('published mask tables exactly track authored contract data', async () => {
     .map(({ id, minX, maxX, minZ, maxZ }) => ({ id, minX, maxX, minZ, maxZ })));
   assert.deepEqual(emberShore.tileParams.harvestAnchors, []);
 
+  for (const id of ['e5-regatta', 'e5-stillwater', 'e5-flotilla']) {
+    const authored = contract(id);
+    const mask = (await table(id)).maskTruth;
+    assert.deepEqual(mask.weather, authored.twist.weather, `${id}.weather`);
+    assert.deepEqual(mask.enemyRoster, authored.twist.enemyRoster, `${id}.enemyRoster`);
+  }
+  assert.equal(contract('e5-stillwater').tileParams.tileId, 'e5-deepwater-claim');
+  assert.equal(contract('e5-flotilla').tileParams.tileId, 'e5-deepwater-claim');
+
   const moth = contract('e3-moth-season');
   const mothMask = (await table(moth.id)).maskTruth;
   assert.deepEqual(mothMask.dayNightCycle, moth.twist.dayNightCycle);
@@ -231,7 +260,7 @@ test('published Moth Season mask stays inside bounds and agrees with authored wa
   assertBoundsAndWater(maskTruth, waterAgreement);
 });
 
-for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e3-fairground', 'e4-dust-flats', 'e6-glow-mesa', 'e7-relay-valley', 'e8-mare-claim', 'e9-dome-basin', 'e10-ember-shore']) {
+for (const id of ['e3-canyon-works', 'e3-blackout-ridge', 'e3-fairground', 'e4-dust-flats', 'e5-regatta', 'e5-stillwater', 'e5-flotilla', 'e6-glow-mesa', 'e7-relay-valley', 'e8-mare-claim', 'e9-dome-basin', 'e10-ember-shore']) {
   test(`${id} mask stays inside bounds and agrees with authored water`, async () => {
     const { maskTruth, waterAgreement } = await table(id);
     assertBoundsAndWater(maskTruth, waterAgreement);

@@ -146,6 +146,391 @@
         ],
         "geographyLine": "A 128 by 128 water claim: lagoon anchorage, reef ring, five drowned-era wrecks, and the sealed trench edge."
       }
+    },
+    {
+      "id": "e5-regatta",
+      "name": "The Regatta",
+      "tileParams": {
+        "tileId": "e5-regatta",
+        "biome": "deepwater-storm-regatta",
+        "size": 128,
+        "dimensions": { "width": 128, "height": 128 },
+        "render": { "terrainMesh": "off" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "claim-boat-deck-mask", "bank": "north", "minX": -54, "maxX": -44, "minZ": -5, "maxZ": 5 }
+        ],
+        "stakeMarkers": [{ "id": "claim-boat", "x": -49, "z": 0, "lossCondition": true }],
+        "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
+        "harvestAnchors": [],
+        "water": {
+          "id": "deepwater-surface-placeholder",
+          "depths": { "springPond": 0.2 },
+          "speedMul": { "springPond": 1 }
+        },
+        "description": "A storm-race between beacons while the Claim-Boat remains under attack; the fastest water runs nearest the front. Engine dependency: checkpoint racing and competing-racer loot still need a consumer.",
+        "objectives": [
+          { "id": "finish-beacon-course", "description": "Sail the full beacon course before the corsair racers loot its checkpoints." },
+          { "id": "defend-claim-boat", "description": "Keep the Claim-Boat intact while racing." }
+        ],
+        "teachingIntent": {
+          "description": "Teaches storm-reading as a skill the player can feel improving by rewarding daring lines near the weather front."
+        },
+        "engineDependencies": [
+          { "id": "regatta-race-consumer", "status": "missing", "description": "Needs a checkpoint race and competing-racer loot consumer; storm scheduling and Claim-Boat movement already exist." }
+        ],
+        "deepwater": {
+          "waterTile": {
+            "id": "e5-regatta",
+            "size": 128,
+            "regions": [
+              { "id": "open-water", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": 64, "depth": 0, "depthClass": "surface", "travel": ["swim", "boat"] },
+              { "id": "storm-front-fast-water", "minX": -64, "maxX": 64, "minZ": 34, "maxZ": 54, "depth": 0, "depthClass": "surface", "travel": ["boat"] }
+            ]
+          },
+          "claimBoat": {
+            "id": "claim-boat",
+            "initialAnchorId": "start-line",
+            "anchors": [
+              { "id": "start-line", "x": -49, "z": 0 },
+              { "id": "finish-line", "x": 49, "z": 0 }
+            ],
+            "pads": [
+              { "id": "bow", "x": 0, "z": -3 },
+              { "id": "port", "x": -3, "z": 1 },
+              { "id": "starboard", "x": 3, "z": 1 }
+            ]
+          },
+          "stormTrack": { "regionId": "storm-front-fast-water", "westX": -64, "eastX": 64 },
+          "corsairWaveSize": 3,
+          "wrecks": []
+        },
+        "raceCourse": {
+          "fastWaterZone": { "id": "storm-front-fast-water", "minX": -54, "maxX": 54, "minZ": 34, "maxZ": 54 },
+          "beacons": [
+            { "id": "start-beacon", "x": -49, "z": 0, "radius": 3 },
+            { "id": "northwest-checkpoint", "x": -28, "z": 38, "radius": 3 },
+            { "id": "midcourse-checkpoint", "x": 0, "z": 18, "radius": 3 },
+            { "id": "northeast-checkpoint", "x": 28, "z": 38, "radius": 3 },
+            { "id": "finish-beacon", "x": 49, "z": 0, "radius": 3 }
+          ]
+        },
+        "lanes": { "spawnEdges": ["west"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "weather": {
+          "cycleSeconds": 24,
+          "clearSeconds": 5,
+          "telegraphSeconds": 3,
+          "stormSeconds": 10,
+          "stormMovementMultiplier": 0.72,
+          "stormVisibilityMultiplier": 0.58,
+          "hazeColor": "#335f64",
+          "hazeStrength": 0.28
+        },
+        "enemyRoster": [
+          {
+            "id": "corsair_racer",
+            "label": "Corsair Racer",
+            "waveMin": 1,
+            "hpScale": 1,
+            "speedMult": 1.15,
+            "visualScale": 1.2,
+            "tint": "#8f4f32",
+            "spawnEdges": ["west"],
+            "spawnGates": [{ "edge": "west", "x": -62, "z": 0 }],
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "waterRegions": ["open-water", "storm-front-fast-water"],
+            "art": "placeholder"
+          }
+        ]
+      },
+      "boardRow": {
+        "name": "The Regatta",
+        "ledgerBlurb": "Race the beacon course beside the storm front without surrendering the Claim-Boat or its checkpoints.",
+        "tags": ["deepwater", "race", "storm-reading"],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": ["Finish the beacon course before the corsair racers.", "Defend the Claim-Boat throughout the race."],
+        "rules": [
+          "Corsair racers loot any checkpoint they reach first.",
+          "The fastest water lies nearest the storm front.",
+          "The tide-teller waits at the finish and is unimpressed by every time."
+        ],
+        "geographyLine": "An open-water beacon course bends north toward the fast storm-front water before returning to the finish."
+      }
+    },
+    {
+      "id": "e5-stillwater",
+      "name": "Stillwater",
+      "tileParams": {
+        "tileId": "e5-deepwater-claim",
+        "biome": "deepwater-stillwater",
+        "size": 128,
+        "dimensions": { "width": 128, "height": 128 },
+        "render": { "terrainMesh": "off" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "claim-boat-deck-mask", "bank": "north", "minX": -5, "maxX": 5, "minZ": 26, "maxZ": 34 }
+        ],
+        "stakeMarkers": [{ "id": "claim-boat", "x": 0, "z": 30, "lossCondition": true }],
+        "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
+        "harvestAnchors": [
+          { "x": -36, "z": -24 },
+          { "x": -18, "z": -30 },
+          { "x": 0, "z": -22 },
+          { "x": 20, "z": -34 },
+          { "x": 36, "z": -20 }
+        ],
+        "water": {
+          "id": "deepwater-surface-placeholder",
+          "depths": { "springPond": 0.2 },
+          "speedMul": { "springPond": 1 }
+        },
+        "description": "A fog-bound, stormless variant of the Shelf Reefs where the leviathan hunts every loud machine. Engine dependency: permanent fog, storm suppression, and noise-driven hunting still need a consumer.",
+        "objectives": [
+          { "id": "quiet-run", "description": "Pan by hand, drift on sail trim, and fight only when the fog shivers." },
+          { "id": "survive-leviathan", "description": "Keep the Claim-Boat quiet enough that the leviathan cannot hold its trail." }
+        ],
+        "teachingIntent": {
+          "description": "Teaches subtraction as mastery and establishes quiet as a place before the Quiet becomes a threat in E10."
+        },
+        "engineDependencies": [
+          { "id": "noise-hunt-consumer", "status": "missing", "description": "Needs permanent fog and storm suppression plus noise emission and leviathan attraction for pumps, engines, and harpoon reloads." }
+        ],
+        "deepwater": {
+          "waterTile": {
+            "id": "e5-deepwater-claim",
+            "size": 128,
+            "regions": [
+              { "id": "open-water", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": 64, "depth": 0, "depthClass": "surface", "travel": ["swim", "boat"] },
+              { "id": "lagoon-shallows", "minX": -42, "maxX": 42, "minZ": 18, "maxZ": 44, "depth": -1, "depthClass": "shallows", "travel": ["swim", "boat"] },
+              { "id": "reef-ring", "minX": -48, "maxX": 48, "minZ": -8, "maxZ": 8, "depth": -2, "depthClass": "reef", "travel": ["depth"] },
+              { "id": "reef-gap", "minX": -5, "maxX": 5, "minZ": -8, "maxZ": 8, "depth": -2, "depthClass": "reef", "travel": ["boat", "depth"] },
+              { "id": "wreck-shelf", "minX": -48, "maxX": 48, "minZ": -42, "maxZ": -14, "depth": -4, "depthClass": "wreck", "travel": ["boat", "depth"] },
+              { "id": "trench-edge", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": -50, "depth": -8, "depthClass": "trench", "travel": [] }
+            ]
+          },
+          "claimBoat": {
+            "id": "claim-boat",
+            "initialAnchorId": "lagoon",
+            "anchors": [
+              { "id": "lagoon", "x": 0, "z": 30 },
+              { "id": "open-water", "x": -24, "z": 12 }
+            ],
+            "pads": [
+              { "id": "bow", "x": 0, "z": -3 },
+              { "id": "port", "x": -3, "z": 1 },
+              { "id": "starboard", "x": 3, "z": 1 }
+            ]
+          },
+          "stormTrack": { "regionId": "open-water", "westX": -64, "eastX": 64 },
+          "corsairWaveSize": 0,
+          "wrecks": [
+            { "id": "w1-supply-barge", "era": "E1", "x": -36, "z": -24, "depthClass": "wreck" },
+            { "id": "w2-locomotive", "era": "E2", "x": -18, "z": -30, "depthClass": "wreck" },
+            { "id": "w3-pylon-barge", "era": "E3", "x": 0, "z": -22, "depthClass": "wreck" },
+            { "id": "w4-land-yacht-sister", "era": "E4", "x": 20, "z": -34, "depthClass": "wreck" },
+            { "id": "w5-mystery-hull", "era": "mystery", "x": 36, "z": -20, "depthClass": "wreck" }
+          ]
+        },
+        "stillwater": {
+          "fogZone": { "id": "stillwater-fog", "minX": -60, "maxX": 60, "minZ": -60, "maxZ": 60 },
+          "quietZones": [
+            { "id": "hand-pan-drift", "minX": -42, "maxX": -18, "minZ": 8, "maxZ": 24 },
+            { "id": "sail-trim-drift", "minX": 18, "maxX": 42, "minZ": 8, "maxZ": 24 }
+          ],
+          "noiseSources": [
+            { "id": "air-pump", "x": -3, "z": 29, "radius": 18 },
+            { "id": "engine", "x": 3, "z": 29, "radius": 24 },
+            { "id": "harpoon-reload", "x": 0, "z": 26, "radius": 14 }
+          ]
+        },
+        "lanes": { "spawnEdges": ["north", "south"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "weather": {
+          "cycleSeconds": 3600,
+          "clearSeconds": 3599,
+          "telegraphSeconds": 0.25,
+          "stormSeconds": 0.25,
+          "stormMovementMultiplier": 1,
+          "stormVisibilityMultiplier": 1,
+          "hazeColor": "#6f8f8a",
+          "hazeStrength": 0
+        },
+        "enemyRoster": [
+          {
+            "id": "machine_leviathan",
+            "label": "Machine Leviathan",
+            "waveMin": 1,
+            "hpScale": 1,
+            "speedMult": 1,
+            "visualScale": 1.5,
+            "tint": "#8b7d3c",
+            "spawnEdges": ["north", "south"],
+            "spawnGates": [
+              { "edge": "north", "x": 0, "z": 62 },
+              { "edge": "south", "x": 0, "z": -62 }
+            ],
+            "unitClass": "vehicle",
+            "travelClass": "depth",
+            "waterRegions": ["open-water", "lagoon-shallows", "reef-ring", "reef-gap", "wreck-shelf"],
+            "art": "placeholder"
+          }
+        ]
+      },
+      "boardRow": {
+        "name": "Stillwater",
+        "ledgerBlurb": "Cross the glass sea by hand and sail trim while every loud machine gives the leviathan a trail.",
+        "tags": ["deepwater", "fog", "quiet"],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": ["Complete the quiet run without drawing the leviathan onto the Claim-Boat.", "Use hand panning and sail trim instead of loud machinery."],
+        "rules": [
+          "Stillwater has fog and no storms.",
+          "Pumps, engines, and harpoon reloads make noise the leviathan can hunt.",
+          "Fight only when the fog itself shivers."
+        ],
+        "geographyLine": "The Shelf Reefs lie under glass-still water and unbroken fog; this contract reuses the Deepwater Claim tile."
+      }
+    },
+    {
+      "id": "e5-flotilla",
+      "name": "The Flotilla",
+      "tileParams": {
+        "tileId": "e5-deepwater-claim",
+        "biome": "deepwater-flotilla",
+        "size": 128,
+        "dimensions": { "width": 128, "height": 128 },
+        "render": { "terrainMesh": "off" },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          { "id": "kitchen-scow-deck", "bank": "north", "minX": -31, "maxX": -21, "minZ": 17, "maxZ": 25 },
+          { "id": "turret-raft-deck", "bank": "north", "minX": -5, "maxX": 5, "minZ": 23, "maxZ": 31 },
+          { "id": "still-room-barge-deck", "bank": "north", "minX": 21, "maxX": 31, "minZ": 17, "maxZ": 25 }
+        ],
+        "stakeMarkers": [
+          { "id": "kitchen-scow", "x": -26, "z": 21, "lossCondition": false },
+          { "id": "turret-raft", "x": 0, "z": 27, "lossCondition": false },
+          { "id": "still-room-barge", "x": 26, "z": 21, "lossCondition": false }
+        ],
+        "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
+        "harvestAnchors": [],
+        "water": {
+          "id": "deepwater-surface-placeholder",
+          "depths": { "springPond": 0.2 },
+          "speedMul": { "springPond": 1 }
+        },
+        "description": "A fleet variant of the Shelf Reefs: the base is disaggregated into district hulls and formation is the wall. Engine dependency: distributed hull ownership, straggler targeting, nonfatal loss, and formation reshaping still need a consumer.",
+        "objectives": [
+          { "id": "hold-formation", "description": "Keep the district hulls close enough to cover one another while waves target stragglers." },
+          { "id": "reshape-after-loss", "description": "If a hull is lost, close the gap and continue instead of ending the run." }
+        ],
+        "teachingIntent": {
+          "description": "Teaches redundancy and convoy empathy; in co-op, each rider owns one hull."
+        },
+        "engineDependencies": [
+          { "id": "distributed-base-consumer", "status": "missing", "description": "Needs multi-hull base ownership, straggler targeting, nonfatal hull loss, formation reshaping, and one-hull-per-rider co-op assignment." }
+        ],
+        "deepwater": {
+          "waterTile": {
+            "id": "e5-deepwater-claim",
+            "size": 128,
+            "regions": [
+              { "id": "open-water", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": 64, "depth": 0, "depthClass": "surface", "travel": ["swim", "boat"] },
+              { "id": "lagoon-shallows", "minX": -42, "maxX": 42, "minZ": 18, "maxZ": 44, "depth": -1, "depthClass": "shallows", "travel": ["swim", "boat"] },
+              { "id": "reef-ring", "minX": -48, "maxX": 48, "minZ": -8, "maxZ": 8, "depth": -2, "depthClass": "reef", "travel": ["depth"] },
+              { "id": "reef-gap", "minX": -5, "maxX": 5, "minZ": -8, "maxZ": 8, "depth": -2, "depthClass": "reef", "travel": ["boat", "depth"] },
+              { "id": "wreck-shelf", "minX": -48, "maxX": 48, "minZ": -42, "maxZ": -14, "depth": -4, "depthClass": "wreck", "travel": ["boat", "depth"] },
+              { "id": "trench-edge", "minX": -64, "maxX": 64, "minZ": -64, "maxZ": -50, "depth": -8, "depthClass": "trench", "travel": [] }
+            ]
+          },
+          "claimBoat": {
+            "id": "flotilla-formation",
+            "initialAnchorId": "lagoon",
+            "anchors": [
+              { "id": "lagoon", "x": 0, "z": 24 },
+              { "id": "open-water", "x": -24, "z": 12 }
+            ],
+            "pads": [
+              { "id": "kitchen-scow", "x": -26, "z": -3 },
+              { "id": "turret-raft", "x": 0, "z": 3 },
+              { "id": "still-room-barge", "x": 26, "z": -3 }
+            ]
+          },
+          "stormTrack": { "regionId": "open-water", "westX": -64, "eastX": 64 },
+          "corsairWaveSize": 3,
+          "wrecks": []
+        },
+        "flotilla": {
+          "formationZone": { "id": "district-hull-formation", "minX": -38, "maxX": 38, "minZ": 10, "maxZ": 38 },
+          "hulls": [
+            { "id": "kitchen-scow", "district": "kitchen", "x": -26, "z": 21, "radius": 5 },
+            { "id": "turret-raft", "district": "turret", "x": 0, "z": 27, "radius": 5 },
+            { "id": "still-room-barge", "district": "still-room", "x": 26, "z": 21, "radius": 5 }
+          ]
+        },
+        "lanes": { "spawnEdges": ["west", "east"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 }
+      },
+      "twist": {
+        "secureWave": 12,
+        "weather": {
+          "cycleSeconds": 24,
+          "clearSeconds": 5,
+          "telegraphSeconds": 3,
+          "stormSeconds": 10,
+          "stormMovementMultiplier": 0.72,
+          "stormVisibilityMultiplier": 0.58,
+          "hazeColor": "#335f64",
+          "hazeStrength": 0.28
+        },
+        "enemyRoster": [
+          {
+            "id": "corsair_skiff",
+            "label": "Corsair Skiff",
+            "waveMin": 1,
+            "hpScale": 1,
+            "speedMult": 1,
+            "visualScale": 1.25,
+            "tint": "#8f4f32",
+            "spawnEdges": ["west", "east"],
+            "spawnGates": [
+              { "edge": "west", "x": -62, "z": 21 },
+              { "edge": "east", "x": 62, "z": 21 }
+            ],
+            "unitClass": "vehicle",
+            "vehicleChassis": "e4-hauler",
+            "travelClass": "boat",
+            "waterRegions": ["open-water", "lagoon-shallows", "reef-gap", "wreck-shelf"],
+            "art": "placeholder"
+          }
+        ]
+      },
+      "boardRow": {
+        "name": "The Flotilla",
+        "ledgerBlurb": "Keep the kitchen scow, turret raft, and still-room barge in formation; close ranks when a district falls.",
+        "tags": ["deepwater", "fleet", "co-op"],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": ["Keep the district hulls in formation through wave 12.", "Reshape the fleet around any lost hull and continue."],
+        "rules": [
+          "The kitchen scow, turret raft, and still-room barge each carry one district.",
+          "Waves target stragglers; formation is the wall.",
+          "Losing one hull is an amputation, not game over."
+        ],
+        "geographyLine": "Three district hulls share the Shelf Reefs water tile in a broad defensive formation."
+      }
     }
   ]
 }

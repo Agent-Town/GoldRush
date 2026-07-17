@@ -64,6 +64,12 @@ test('the board gates future-era contracts and counts only playable profiles', a
   await seedProfile(page);
   await openBoard(page);
   expect(await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeEpochId)).toBe('epoch-1-frontier');
+  for (const id of ['e5-regatta', 'e5-stillwater', 'e5-flotilla']) {
+    await page.getByTestId(`contract-page-dot-${id}`).click();
+    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
+    await expect(page.getByTestId(`contract-lock-${id}`)).toBeVisible();
+    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
+  }
   await expect(page.getByTestId('contract-card-e6-glow-mesa')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e7-relay-valley')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e8-mare-claim')).toHaveCount(0);
