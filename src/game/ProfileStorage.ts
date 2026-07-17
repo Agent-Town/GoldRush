@@ -7,6 +7,7 @@ import { STORY_TALES_STORAGE_KEY } from '../story/settings';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../encyclopedia/storage';
 import { PERFORMANCE_TIER_STORAGE_KEY } from './PerformanceTier';
 import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY, listEpochs } from '../meta/ContractFamilies';
+import { PLAYBOOKS_KEY } from '../playbook/PlaybookStore';
 
 export const PROFILE_KEY = 'gr.profile.v2';
 export const LEGACY_SCOREBOARD_KEY = 'gr.scores.v1';
@@ -42,6 +43,7 @@ export const PROFILE_DATA_KEYS = new Set([
   LEDGER_DISCOVERED_STORAGE_KEY,
   ACTIVE_EPOCH_KEY,
   EPOCH_CEREMONY_KEY,
+  PLAYBOOKS_KEY,
   ...listEpochs().map((epoch) => researchStateKey(epoch.id)),
 ]);
 const LATE_PROFILE_DATA_KEYS = [

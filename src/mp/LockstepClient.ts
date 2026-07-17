@@ -484,20 +484,45 @@ export class LockstepClient {
   }
 
   private captureLocalActions(sample: LockstepSample): void {
-    const edge = (key: keyof typeof ZERO_SAMPLE): boolean => sample[key] === true && this.previousSample[key] !== true;
-    // InputController already emits these as one-sample pulses. Edge-detecting
-    // them a second time drops legitimate consecutive samples (the rapid-Q
-    // race that parked the snapshot gate).
-    if (sample.weaponToggle) this.pendingActions.push({ type: 'weapon_toggle' });
-    if (edge('restart')) this.pendingActions.push({ type: 'restart' });
-    if (edge('pause')) this.pendingActions.push({ type: 'set_pause', paused: sample.pauseTarget ?? true });
-    if (edge('debugSpawn')) this.pendingActions.push({ type: 'debug_spawn' });
-    if (sample.debugXp) this.pendingActions.push({ type: 'debug_xp' });
-    for (const action of sample.queuedActions) {
-      const normalized = normalizeAction(action);
-      if (normalized) this.pendingActions.push(normalized);
-    }
-    this.previousSample = {
+    const { actions, next } = lockstepActionsFromSample(sample, this.previousSample);
+    this.pendingActions.push(...actions);
+    this.previousSample = next;
+  }
+
+}
+
+export type LockstepSampleEdgeState = SampleActionState;
+
+export function zeroLockstepSampleEdgeState(): LockstepSampleEdgeState {
+  return { ...ZERO_SAMPLE };
+}
+
+/**
+ * Converts one sampled tick into the semantic action list, edge-detected
+ * against the previous sample. Shared by the multiplayer client and the
+ * playbook recorder so both surfaces speak the identical intent vocabulary.
+ */
+export function lockstepActionsFromSample(
+  sample: LockstepSample,
+  previous: LockstepSampleEdgeState,
+): { actions: LockstepAction[]; next: LockstepSampleEdgeState } {
+  const edge = (key: keyof typeof ZERO_SAMPLE): boolean => sample[key] === true && previous[key] !== true;
+  // InputController already emits these as one-sample pulses. Edge-detecting
+  // them a second time drops legitimate consecutive samples (the rapid-Q
+  // race that parked the snapshot gate).
+  const actions: LockstepAction[] = [];
+  if (sample.weaponToggle) actions.push({ type: 'weapon_toggle' });
+  if (edge('restart')) actions.push({ type: 'restart' });
+  if (edge('pause')) actions.push({ type: 'set_pause', paused: sample.pauseTarget ?? true });
+  if (edge('debugSpawn')) actions.push({ type: 'debug_spawn' });
+  if (sample.debugXp) actions.push({ type: 'debug_xp' });
+  for (const action of sample.queuedActions) {
+    const normalized = normalizeAction(action);
+    if (normalized) actions.push(normalized);
+  }
+  return {
+    actions,
+    next: {
       confirm: sample.confirm,
       upgrade: sample.upgrade,
       rotateBuild: sample.rotateBuild,
@@ -509,9 +534,13 @@ export class LockstepClient {
       pause: sample.pause,
       debugSpawn: sample.debugSpawn,
       debugXp: sample.debugXp,
-    };
-  }
+    },
+  };
+}
 
+/** Public wrapper over the wire-level action validator (used by playbook tape validation). */
+export function normalizeLockstepAction(value: unknown): LockstepAction | null {
+  return normalizeAction(value);
 }
 
 type EncodedLockstepSnapshot = {
