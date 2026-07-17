@@ -94,6 +94,52 @@ Verdict: **READY-FOR-GATES — Dome Commons now has the E8 bundle's complete wor
 - Numeric envelopes are conservative: route clearances `7.71 / 10.58 / 9.63`, pad clearances `2.62 / 5.37 / 3.94`, plaza clearances `10.92 / 13.89 / 13.32`, and dome-edge margins `2.87 / 1.96 / 2.54` units for flags / crater / legs respectively.
 - The source plate, population, Pan mount, layout, and runtime loader are unchanged. The manifest is the only mount interface; all evidence lights, camera, Earth cameo, audit floor, and clearance curves remain render-only.
 - Fresh E1-E7 working references and the E8 baseline were rendered directly from current GLBs on the full base SHA above. The visual audit includes the locked before/after, four site angles, a top-down route/pad envelope proof, and a close pack render.
+## E9 Redfields era-prop pass
+
+Branch: `sol/e9-redfields-era-props`
+
+Base: `51319bf7ebceaaad9df4fdc4da0dcf96033b91e1`
+
+Tip: exact E9 prop-pack SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the Basin Rim gains the bundle's complete dry/wet/flowing canal vocabulary, two ice hauls, three survey cairns, and three visibly growing Ark scaffold states, while the live manifest mounts only grounded static work and the current stage-1 frame.**
+
+The fresh working board was rendered directly from current tracked GLBs on the full base SHA above. It shows the merged E4 motor boulevard/caravan, E5 submerged square, E6/E7 Mesa towns, and E8 Dome Commons. No historical PNG was used as model guidance.
+
+| Production sibling | E9 read | Contract |
+| --- | --- | --- |
+| `canal-segment-dry.e9` | engraved dry channel and cracked bed | 96 tris; walk-flat top `0.036`; SHA `f2eed930dbad…` |
+| `canal-segment-wet.e9` | four dark teal seep patches advance the same channel | 84 tris; walk-flat top `0.036`; SHA `f620766598ca…` |
+| `canal-segment-flowing.e9` | full teal reach, ripple marks, and literal E1-green bank seams | 132 tris; walk-flat top `0.046`; SHA `35153a362e56…` |
+| `ice-blocks.e9` | cut pale blocks, teal ice seams, drag mat, rope, and hook | 408 tris; SHA `f705096b7ba8…` |
+| `survey-cairn.e9` | regolith cairn, water-target sight, and small E1-green claim tile | 236 tris; SHA `e0530bb9062d…` |
+| `ark-scaffold-stage-1.e9` | grounded keel bed and first four-post frame | 324 tris; SHA `87a8bd2d8f2d…` |
+| `ark-scaffold-stage-2.e9` | taller braced frame, hull ribs, and teal blueprint table | 460 tris; SHA `d2804691e8e7…` |
+| `ark-scaffold-stage-3.e9` | full-height prow mast, water crest, patched hull sheet, and gangway | 624 tris; SHA `3e559ac3879a…` |
+
+### Cadence and state boundary
+
+| Fixture | E9 verdict | Reason |
+| --- | --- | --- |
+| Canal reach | PROGRESSION EPHEMERA | dry, wet, and flowing are mutually exclusive tile states; all three ship as banked siblings and are not silently layered together |
+| Ice blocks | UPGRADED / ACTIVE | two visible haul piles make quarry work ordinary and readable at the basin camera |
+| Survey cairns | ACTIVE | three pictogram-only water sights mark the working rim without entering paths or pads |
+| Ark scaffold | PROGRESSION EPHEMERA | stage 1 mounts now; stages 2/3 ship banked for the megaproject's visible growth |
+| E8 orbital accessories | GONE, NAMED SITE BREAK | `floodReset:true` starts the Basin Rim's fresh prop chain |
+| Pan Monument | PERSIST, UNCHANGED | independent heritage GLB remains at the open center and is not duplicated into this pack |
+
+The first placement draft put canal tiles directly into the ordinary era-prop manifest. Audit rejected it before delivery: the loader mounts accessories at world `y=0`, while the outer canal crosses raised/lowered Basin Rim terrain, and the manifest has no progression-state key. Shipping all three there would create buried/floating geometry and show dry/wet/flowing simultaneously. The final manifest records both progression families, mounts only the grounded static set plus Ark stage 1, and leaves the state siblings ready for the tile-persistence seam.
+
+### Production gate
+
+- Eight independent base-centered GLBs, each one node / mesh / primitive, one double-sided non-emissive material, zero cameras/lights/animations, and 84–624 triangles against the 1,000-triangle accessory ceiling.
+- All eight embed the same 1024 x 1024 atlas (SHA `c78664fc8037…`); it contains 41,468 literal `#50674c` pixels. The flowing canal maps its green seams into that locked cell.
+- Every saved-BLEND re-export is byte-identical and every parsed semantic key matches.
+- The walkable canal-state tops are `0.036 / 0.036 / 0.046`, below the `0.05` flat-walk ceiling.
+- Static placement evidence: route clearance at least `9.967962`; ordinary pad clearance at least `0.362979`; plaza clearance at least `12.878505`; the scaled stage-1 scaffold retains `1.406` radial margin inside the Ark-yard pad.
+- The final same-camera accessory pass changes 5,486 pixels (`0.535742%`): a peripheral working-rim pass, not an era-building silhouette swap. The separate pack board proves every banked progression state at useful review scale.
+- `npm run build` passes; `e2e/town-era-switch.spec.ts` passes 14/14 across desktop and mobile. Test-generated screenshots/perf files were restored after the gate.
+- No `src/`, runtime, simulation, queue, spec, status, town plate, population building, Pan, or prior-era asset changes ride this wave.
 
 ## E9 Basin Rim plate
 
