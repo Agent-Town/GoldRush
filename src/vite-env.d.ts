@@ -325,6 +325,7 @@ interface ThreeGameDiagnostics {
     wreckRemains: boolean;
   };
   landYachtBoss: null | import('./systems/LandYachtBossSystem').LandYachtBossDiagnostics;
+  oldDiggerBoss: null | import('./systems/OldDiggerBossSystem').OldDiggerBossDiagnostics;
   agent: {
     stub: {
       name: string;

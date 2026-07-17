@@ -8,8 +8,11 @@ export const TILE_STATE_SCHEMA_VERSION = 1;
 export const DREDGE_QUEEN_WRECK_ENTRY_ID = 'dredge-queen-wreck';
 /** Sim entry: one permanent planted-green waypoint (TP-02, the Seed Run's mechanic in miniature). */
 export const GREEN_WAYPOINT_ENTRY_ID = 'green-waypoint';
+/** Render entry: the Old Digger's kept-machine flag (E9 §BOSS — reprogrammed, gentle, forever). */
+export const OLD_DIGGER_GENTLE_ENTRY_ID = 'old-digger-gentle';
 
 export type DredgeQueenWreckPayload = { x: number; z: number };
+export type OldDiggerGentlePayload = { x: number; z: number };
 export type GreenWaypointPayload = { x: number; z: number; r: number };
 
 export type TileStateEntry = {
@@ -133,6 +136,13 @@ export function parseGreenWaypointPayload(payload: unknown): GreenWaypointPayloa
 }
 
 export function parseDredgeQueenWreckPayload(payload: unknown): DredgeQueenWreckPayload | null {
+  if (!isRecord(payload)) return null;
+  const { x, z } = payload;
+  if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;
+  return { x, z };
+}
+
+export function parseOldDiggerGentlePayload(payload: unknown): OldDiggerGentlePayload | null {
   if (!isRecord(payload)) return null;
   const { x, z } = payload;
   if (typeof x !== 'number' || typeof z !== 'number' || !Number.isFinite(x) || !Number.isFinite(z)) return null;

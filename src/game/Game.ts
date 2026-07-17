@@ -158,6 +158,7 @@ import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
+import { OldDiggerBossSystem, type SurveyPoint } from '../systems/OldDiggerBossSystem';
 import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
@@ -220,12 +221,15 @@ import {
   applyAtBirth,
   DREDGE_QUEEN_WRECK_ENTRY_ID,
   GREEN_WAYPOINT_ENTRY_ID,
+  OLD_DIGGER_GENTLE_ENTRY_ID,
   parseDredgeQueenWreckPayload,
   parseGreenWaypointPayload,
+  parseOldDiggerGentlePayload,
   TILE_STATE_SCHEMA_VERSION,
   TileStateStore,
   type DredgeQueenWreckPayload,
   type GreenWaypointPayload,
+  type OldDiggerGentlePayload,
 } from './TileStateStore';
 import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
 
@@ -700,6 +704,19 @@ export class Game {
     {
       readAtBirth: () => this.readWreckAtBirth(),
       writeAtCeremony: (wreck) => this.writeWreckAtCeremony(wreck),
+    },
+  );
+  private readonly oldDiggerBoss = new OldDiggerBossSystem(
+    () => this.enemies.all,
+    (position, params) => this.enemies.spawn(position, params),
+    (enemy) => this.enemies.recycle(enemy),
+    (position, radius, at) => this.unmakeStructuresNear(position, radius, at),
+    (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
+    this.oldDiggerSurveyPath(),
+    this.activeContract.id === 'e9-dome-basin',
+    {
+      readAtBirth: () => this.readOldDiggerGentleAtBirth(),
+      writeAtCeremony: (payload) => this.writeOldDiggerGentleAtCeremony(payload),
     },
   );
   private readonly loop = new Loop(
@@ -1192,7 +1209,8 @@ export class Game {
       const isCrawlerComponent = event.variantId === 'dynamo_crawler';
       const isLandYachtComponent = event.variantId === 'land_yacht';
       const isDredgeQueenComponent = event.variantId === 'dredge_queen';
-      if (!isCrawlerComponent && !isLandYachtComponent && !isDredgeQueenComponent) {
+      const isOldDiggerHull = event.variantId === 'old_digger';
+      if (!isCrawlerComponent && !isLandYachtComponent && !isDredgeQueenComponent && !isOldDiggerHull) {
         const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
         this.discoverLedgerEnemyEntry(entryId);
         this.revealLedgerEnemyStats(entryId);
@@ -1208,6 +1226,10 @@ export class Game {
       if (isDredgeQueenComponent) {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.dredgeQueenBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
+      if (isOldDiggerHull) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.oldDiggerBoss.onHullKilled(enemy?.position ?? this.primaryActor.group.position, event.at);
       }
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
@@ -1232,6 +1254,7 @@ export class Game {
         event.at,
         this.buildSystem.diagnostics.hp.some((building) => building.id === 'sentry_beacon' && !building.wrecked && building.hp > 0),
       );
+      this.oldDiggerBoss.onWaveStarted(event.wave);
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -1667,6 +1690,7 @@ export class Game {
     this.crawlerBoss.dispose();
     this.landYachtBoss.dispose();
     this.dredgeQueenBoss.dispose();
+    this.oldDiggerBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
     this.megaprojectBarrelGeometry.dispose();
@@ -1859,6 +1883,7 @@ export class Game {
       this.crawlerBoss.update(this.timeAlive);
       this.landYachtBoss.update(this.timeAlive);
       this.dredgeQueenBoss.update(this.timeAlive);
+      this.oldDiggerBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -2933,6 +2958,7 @@ export class Game {
     this.scene.add(this.crawlerBoss.group);
     this.scene.add(this.landYachtBoss.group);
     this.scene.add(this.dredgeQueenBoss.group);
+    this.scene.add(this.oldDiggerBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
   }
@@ -3591,6 +3617,7 @@ export class Game {
       canyonWorks: this.canyonConnectDiagnostics(),
       crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
       landYachtBoss: this.activeContract.twist.baron?.variantId === 'land_yacht' ? this.landYachtBoss.diagnostics() : null,
+      oldDiggerBoss: this.activeContract.id === 'e9-dome-basin' ? this.oldDiggerBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
         embodiment: this.prospector.snapshot,
@@ -4996,6 +5023,7 @@ export class Game {
     this.crawlerBoss.reset();
     this.landYachtBoss.reset();
     this.dredgeQueenBoss.reset();
+    this.oldDiggerBoss.reset();
     this.tram?.reset();
     this.ferrisWheel?.reset();
     this.fuelSystem?.reset();
@@ -5279,6 +5307,48 @@ export class Game {
     this.stageWreckEntry(wreck);
     // The crew-quits ceremony is a named write moment (tile-persistence Q3): the
     // hulk must survive an immediate reload without waiting for the run to end.
+    this.tileStateStore.commitAtRunEnd();
+  }
+
+  /** The century-old survey re-digs the feeder canal's line — the contract's own rail is the old blueprint. */
+  private oldDiggerSurveyPath(): readonly SurveyPoint[] {
+    const rail = this.activeContract.tileParams.rails?.find((candidate) => candidate.style === 'feeder-canal');
+    return rail?.points.map((point) => ({ x: point.x, z: point.z })) ?? [];
+  }
+
+  /**
+   * The Old Digger's unmaking (E9 §BOSS Act 1): polite deconstruction, never
+   * damage — every structure on its path is removed through the build system's
+   * own demolition, so the Economy (sole gold writer) returns the salvage to
+   * the player exactly as a hand demolition would.
+   */
+  private unmakeStructuresNear(position: { x: number; z: number }, radius: number, at: number): number {
+    const center = new THREE.Vector3(position.x, 0, position.z);
+    let unmade = 0;
+    for (const target of this.goldTargeting.buildingsInRadius(center, radius)) {
+      if (!isBuildableId(target.id)) continue;
+      if (this.buildSystem.demolish(target.id, target.index, at, target.position)) unmade += 1;
+    }
+    if (unmade > 0) this.syncStockpileHoldings();
+    return unmade;
+  }
+
+  private readOldDiggerGentleAtBirth(): OldDiggerGentlePayload | null {
+    const entry = this.tileStateStore
+      .readSnapshot(this.activeContract.id)
+      .entries.find((candidate) => candidate.kind === 'render' && candidate.id === OLD_DIGGER_GENTLE_ENTRY_ID);
+    return entry ? parseOldDiggerGentlePayload(entry.payload) : null;
+  }
+
+  private writeOldDiggerGentleAtCeremony(payload: OldDiggerGentlePayload): void {
+    this.tileStateStore.stageWrite(this.activeContract.id, {
+      kind: 'render',
+      id: OLD_DIGGER_GENTLE_ENTRY_ID,
+      payload: { x: payload.x, z: payload.z },
+      schemaVersion: TILE_STATE_SCHEMA_VERSION,
+    });
+    // The swap is a named write moment (W6 precedent): the kept machine must
+    // survive an immediate reload without waiting for the run to end.
     this.tileStateStore.commitAtRunEnd();
   }
 

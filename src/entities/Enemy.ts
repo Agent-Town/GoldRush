@@ -279,6 +279,16 @@ export class ClaimJumperEnemy {
     return this.maxHpValue;
   }
 
+  /**
+   * Boss-law restore (Old Digger, E9 §BOSS): CombatSystem stays the sole damage
+   * resolver; a boss SYSTEM may only raise hp back toward a floor it enforces
+   * after resolution. Monotone by construction — this can never deal damage.
+   */
+  restoreBossHull(hp: number): void {
+    if (!this.alive) return;
+    this.hp = Math.min(this.maxHpValue, Math.max(this.hp, hp));
+  }
+
   get moveSpeed(): number {
     return this.speed;
   }
