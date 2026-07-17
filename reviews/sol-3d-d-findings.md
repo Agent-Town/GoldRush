@@ -476,6 +476,46 @@ Each terrain contract contains five id/position/rotation/scale mount records wit
 - `artifacts/map-rebuild-spike/e9-extra-mask-agreement-board.png`
 - `artifacts/map-rebuild-spike/e9-extra-panorama-mood-ab.png`
 - `artifacts/map-rebuild-spike/e9-extra-panorama-distance-gate.png`
+## E10 campaign-extra Archive World wave
+
+### F-3D-D-107 — The campaign grant requires one sculpt and two deliberate reuses
+
+The published E10 factory contracts make the boundary explicit. `e10-archive-world` owns a unique `e10-archive-world` tile and requests a preferred terrain mesh, so it receives a terrain/panorama pair. `e10-last-claim` is an `ark-plaza-e10` deck variant and `e10-river` is a `frontier-river-claim` dawn variant; both set `render.terrainMesh` to `off`. Creating terrain for either reuse would contradict the factory contract rather than improve the campaign. The verifier records both no-sculpt decisions.
+
+### F-3D-D-108 — The library composition follows the authored restoration masks
+
+Archive World is organized around four exact restoration terraces: the south entry, opposed west/east stack wings, and the north warning shelf. A narrow central missing-sentence cut distinguishes the map without becoming collision or an inaccessible firing perch. Every build rectangle is carried one terrain-cell diagonal beyond its authored edge, then independently sampled on the exported triangle surface at 2,145 points. All four report zero height deviation. Three light holds stay on those buildable flats; the deeper Static, re-ink, lore-unlock, and spawn systems remain code-owned.
+
+### F-3D-D-109 — Un-inked means aged absence, not clean white or horror
+
+The atlas is baked from the E10 Ark kit, worlds plate, and shipped terrain paint. Surviving stack ink, dragged page scars, deep shelf shadow, and aged parchment absence create a prior civilization erased mid-sentence. Warm re-ink light is scarce and localized. Five empty-asset mount records reserve the entry gate, two stack ruins, warning shelf ruin, and `ours-unless` marker; larger archive bodies in verdict images are review-only proxies and are absent from the terrain blend/GLB.
+
+### F-3D-D-110 — Archive World's panorama needed its own Deep Sky correction
+
+The generic E10 kit crop first produced a black wall; the brighter worlds plate then produced a parchment ceiling. The final Panorama v2 atlas keeps a dark ground-matched skirt, irregular near/far archive silhouettes, a low parchment-gold memory band, four asymmetric veils, and sparse seeded star stipple that quiets toward a deep-ink zenith. The panorama remains a separate mounted GLB and changes no playfield, spawn, fog, water, or build mask.
+
+## E10 Archive World gate state
+
+- Archive World terrain `.blend` / GLB / 2048² atlas / contract: PASS
+- Terrain GLB: 32,768 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Separate Panorama v2 `.blend` / GLB / 2048² atlas / contract: PASS
+- Panorama GLB: 3,072 triangles, one mesh, one primitive, one material, one embedded atlas: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Four build-zone flats: 2,145 exported triangle-surface samples each, maximum deviation 0.00 m: PASS
+- Five empty-asset landmark mount records; no baked landmark bodies: PASS
+- Last Claim and River factory `terrainMesh=off` reuse decisions: PASS
+- Mood A/B, flat/sculpted A/B, mask agreement, and center-horizon distance boards: PASS
+- Integrated `npm run build`: PASS
+- `src/`, masks, contracts, simulation, choreography, and runtime edits: none
+
+## E10 Archive World owner-verdict images
+
+- `artifacts/map-rebuild-spike/e10-archive-owner-verdict.png` — run camera, overview, and low field angle
+- `artifacts/map-rebuild-spike/e10-archive-mood-ab.png` — E10 kit ancestry / hardship gate
+- `artifacts/map-rebuild-spike/e10-archive-flat-vs-sculpted-ab.png` — identical-camera geometry proof
+- `artifacts/map-rebuild-spike/e10-archive-mask-agreement-board.png` — published restoration flats and warning shelf
+- `artifacts/map-rebuild-spike/e10-archive-panorama-mood-ab.png` — panorama before/mounted/horizon evidence
+- `artifacts/map-rebuild-spike/e10-archive-panorama-distance-gate.png` — playfield-center distance gate
 
 READY-FOR-GATES
 
