@@ -213,7 +213,7 @@
   place-items: center;
   padding: max(18px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   background: rgba(46, 27, 14, 0.42);
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .town-ui__era-backdrop {
@@ -247,6 +247,7 @@
   border-radius: 8px;
   color: #2e1b0e;
   background: rgba(245, 230, 200, 0.97);
+  pointer-events: auto;
   box-shadow:
     inset 0 0 0 1px rgba(255, 248, 232, 0.68),
     0 7px 0 rgba(46, 27, 14, 0.68),
@@ -897,7 +898,7 @@
   place-items: center;
   padding: max(18px, env(safe-area-inset-top)) max(14px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(14px, env(safe-area-inset-left));
   background: rgba(46, 27, 14, 0.28);
-  pointer-events: auto;
+  pointer-events: none;
 }
 
 .town-ui__name-card[hidden] {
