@@ -1145,6 +1145,64 @@ interface Window {
     spawnXpMote: (x: number, z: number, value: number) => boolean;
     launchBlastAt: (x: number, z: number, airTime?: number) => boolean;
     goldPickups: () => Array<{ active: boolean; amount: number; position: { x: number; z: number } }>;
+    playbook: {
+      startRecording: (options?: { script?: unknown; probeEvery?: number }) => { ok: boolean; reason?: string };
+      stopRecording: (name?: string) => {
+        ok: boolean;
+        reason?: string;
+        name?: string;
+        hash?: string;
+        text?: string;
+        entries?: number;
+        durationTicks?: number;
+        truncated?: { reason: string; atTick: number } | null;
+        saved?: boolean;
+        saveReason?: string | null;
+      };
+      startReplay: (options?: { name?: string; text?: string; hidePlayer?: boolean; probeEvery?: number }) => {
+        ok: boolean;
+        reason?: string;
+      };
+      stopReplay: () => { ok: boolean };
+      status: () => {
+        recording: {
+          mode: 'record';
+          finished: boolean;
+          scripted: boolean;
+          ticks: number;
+          entries: number;
+          truncated: { reason: string; atTick: number } | null;
+          skippedActions: Array<{ t: number; type: string }>;
+        } | null;
+        replay: {
+          mode: 'replay';
+          name: string;
+          hash: string;
+          tick: number;
+          durationTicks: number;
+          complete: boolean;
+          stopped: boolean;
+          appliedActions: number;
+          skippedActions: Array<{ t: number; type: string }>;
+        } | null;
+      };
+      outcome: () => {
+        probes: Array<{ t: number; x: number; z: number }>;
+        kills: number;
+        gold: number;
+        wave: number;
+        economy: ReturnType<NonNullable<Window['__GR_TEST__']>['summarizeLog']>;
+      };
+      list: () => Array<{
+        name: string;
+        hash: string;
+        durationTicks: number;
+        entries: number;
+        truncated: { reason: string; atTick: number } | null;
+      }>;
+      getText: (name: string) => string | null;
+      remove: (name: string) => boolean;
+    };
     placeBeacon: () => boolean;
     projectileVisuals: () => Array<{
       ownerId: string;
