@@ -82,6 +82,11 @@ test('the board gates future-era contracts and counts only playable profiles', a
   await expect(page.getByTestId('contract-card-e7-relay-rush')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e8-mare-claim')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e9-dome-basin')).toHaveCount(0);
+  for (const id of ['e9-seed-run', 'e9-devils-alley', 'e9-old-canal']) {
+    await page.getByTestId(`contract-page-dot-${id}`).click();
+    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
+    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
+  }
   await expect(page.getByTestId('contract-card-e10-ember-shore')).toHaveCount(0);
   await page.getByTestId('contract-page-dot-e2-hill-mine').click();
   await expect(page.getByTestId('contract-card-e2-hill-mine')).toHaveAttribute('data-contract-locked', 'true');

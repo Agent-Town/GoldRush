@@ -1,0 +1,184 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-9-redfields/contracts.json; lore/STORYBOOK.md E9 contracts",
+    "tileId": "e9-devils-alley",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "south-anchor-yard",
+        "bank": "south",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": -54,
+        "maxZ": -42
+      },
+      {
+        "id": "west-anchor-bay",
+        "bank": "south",
+        "minX": -50,
+        "maxX": -30,
+        "minZ": -18,
+        "maxZ": -2
+      },
+      {
+        "id": "center-anchor-bay",
+        "bank": "north",
+        "minX": -10,
+        "maxX": 10,
+        "minZ": -8,
+        "maxZ": 8
+      },
+      {
+        "id": "east-anchor-bay",
+        "bank": "north",
+        "minX": 30,
+        "maxX": 50,
+        "minZ": 2,
+        "maxZ": 18
+      },
+      {
+        "id": "north-anchor-yard",
+        "bank": "north",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": 42,
+        "maxZ": 54
+      }
+    ],
+    "anchorSites": [
+      {
+        "id": "west-anchor-bay",
+        "minX": -50,
+        "maxX": -30,
+        "minZ": -18,
+        "maxZ": -2
+      },
+      {
+        "id": "center-anchor-bay",
+        "minX": -10,
+        "maxX": 10,
+        "minZ": -8,
+        "maxZ": 8
+      },
+      {
+        "id": "east-anchor-bay",
+        "minX": 30,
+        "maxX": 50,
+        "minZ": 2,
+        "maxZ": 18
+      }
+    ],
+    "dustDevilCorridors": [
+      {
+        "id": "south-devil-sweep",
+        "description": "First scheduled pickup-and-relocation sweep.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -34,
+        "maxZ": -18
+      },
+      {
+        "id": "center-devil-sweep",
+        "description": "Second scheduled pickup-and-relocation sweep.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -8,
+        "maxZ": 8
+      },
+      {
+        "id": "north-devil-sweep",
+        "description": "Third scheduled pickup-and-relocation sweep.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": 18,
+        "maxZ": 34
+      }
+    ],
+    "stakeMarkers": [
+      {
+        "id": "anchor-west",
+        "x": -40,
+        "z": -10,
+        "lossCondition": false
+      },
+      {
+        "id": "anchor-center",
+        "x": 0,
+        "z": 0,
+        "lossCondition": false
+      },
+      {
+        "id": "anchor-east",
+        "x": 40,
+        "z": 10,
+        "lossCondition": false
+      }
+    ],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": {
+      "id": "devils-alley-corridor",
+      "mode": "visual"
+    },
+    "lanes": {
+      "spawnEdges": [
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": [
+        {
+          "id": "south-devil-sweep",
+          "points": [
+            {
+              "x": -52,
+              "z": -26
+            },
+            {
+              "x": 52,
+              "z": -26
+            }
+          ]
+        },
+        {
+          "id": "center-devil-sweep",
+          "points": [
+            {
+              "x": 52,
+              "z": 0
+            },
+            {
+              "x": -52,
+              "z": 0
+            }
+          ]
+        },
+        {
+          "id": "north-devil-sweep",
+          "points": [
+            {
+              "x": -52,
+              "z": 26
+            },
+            {
+              "x": 52,
+              "z": 26
+            }
+          ]
+        }
+      ]
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}
