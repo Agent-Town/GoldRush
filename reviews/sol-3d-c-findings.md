@@ -20,6 +20,31 @@ The target was a warm parchment canvas with readable structure, not a dark wagon
 | Gates | `npm run build` green; town-era-switch + fresh-scene-render-state `16/16` desktop/mobile; zero capture errors |
 
 At this boundary, `origin/main` contains only the older `plate-e8-boss-salvage-kings-claw.png` and `plate-e9-boss-old-digger.png` references. The art-batch-026 production/damage-state plates named by the active grant are absent, so both boss bodies remain correctly gated.
+## Salvage King's Claw production boss model
+
+Branch: `sol/salvage-claw-3d`
+
+Base: `32715b4d2f54a84bffd8d42925a3c0c0c531cb07`
+
+Tip: exact Salvage Claw SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the E8 Claw now has a real descending city-crown body whose paired winch, four cable-hung anchor claws, and gothic crown remain separable through a dignified landed future-yard state.**
+
+| Boss zone | Production mesh | Landing morph | Read |
+| --- | --- | --- | --- |
+| Winch | `winch` | `Landing_SprungWinch` | paired rope drums rack in opposite directions and loose parts spring clear without wreck-horror |
+| Anchor feet | `anchor_feet` | `Landing_SettledAnchorFeet` | four heavy gearboxes spread and settle their three-prong claws while the high rigging remains attached |
+| Crown | `crown` | `Landing_DarkCrown` | teal glass retracts behind dark shutters, the gothic crown settles, and two rope ladders lower from the belly |
+
+### Production gate
+
+- Modeled only after the art-batch-026 production and landing plates landed; both source SHA-256 values are recorded in the asset contract.
+- 10,164 / 12,000 triangles; exactly three nodes, meshes, and primitives with identity transforms and one landing morph each.
+- One shared, double-sided, non-emissive material with one embedded 1024 x 1024 PNG; zero cameras, lights, animations, helper nodes, or people.
+- Base-center origin; 11.4 x 11.4 footprint and 10.031203 height. The intentionally boss-scale body remains readable at the E8 production camera.
+- Saved-BLEND re-export is byte-identical and every parsed semantic key matches. GLB SHA-256 `b01495d72e1d2f2152f6299e7392707561d18004d2871937a0551e9c76cb0575`.
+- The fresh-reference, turntable, isolated-state, and Mare Claim run-camera boards are rendered from base `32715b4d2f54…`; no older artifact render is a source.
+- The first visual pass read too much like a warm toy saucer. Before delivery, the body grew to boss scale, the atlas returned to the plate's cold silver-teal values, the crown gained a tall gothic gable/rib silhouette, and the anchor feet became heavier curved claws.
 
 ## E9 Basin Rim plate
 
