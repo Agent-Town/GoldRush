@@ -67,6 +67,7 @@ test('the board gates future-era contracts and counts only playable profiles', a
   await expect(page.getByTestId('contract-card-e6-glow-mesa')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e7-relay-valley')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e8-mare-claim')).toHaveCount(0);
+  await expect(page.getByTestId('contract-card-e9-dome-basin')).toHaveCount(0);
   await page.getByTestId('contract-page-dot-e2-hill-mine').click();
   await expect(page.getByTestId('contract-card-e2-hill-mine')).toHaveAttribute('data-contract-locked', 'true');
   await expect(page.getByTestId('contract-lock-e2-hill-mine')).toHaveText('The Steamworks awaits — raise the Stamp Mill.');
