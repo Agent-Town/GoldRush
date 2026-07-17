@@ -389,6 +389,53 @@ Five canonical mount records ship beside the terrain: south broadcast gate, west
 - `artifacts/map-rebuild-spike/e7-extra-mask-agreement-board.png`
 - `artifacts/map-rebuild-spike/e7-extra-panorama-mood-ab.png`
 - `artifacts/map-rebuild-spike/e7-extra-panorama-distance-gate.png`
+## 27-map campaign — E8 extra-map wave
+
+### F-3D-D-98 — The E8 identity gate yields one sculpt, not three lunar recolours
+
+The published campaign tables make the distinction explicit. `e8-low-orbit` owns `tileId: e8-low-orbit` and therefore receives a new terrain/panorama pair. `e8-far-side` and `e8-eclipse` both reuse `tileId: e8-mare-claim`; their contract-specific sky/state/gameplay differences remain factory-owned above the already accepted Mare Claim render terrain. Inventing new ground meshes for those two variants would contradict the authored identity table.
+
+The independent reuse audit found one factory-side mismatch that the identity check alone would have hidden. Eclipse's seven reused build rectangles remain flat on the accepted Mare Claim mesh, but Far Side's `far-side-landing-yard` and `listening-probe-recovery` rectangles each cross Mare Claim's `0 m` / `6 m` crater-rim transition. The campaign law still forbids a new variant sculpt, so this wave records the incompatibility rather than silently cutting the accepted shared terrain: Far Side needs its authored rectangles moved/split or its placement contract explicitly taught the rim height before it can claim render-mask agreement.
+
+### F-3D-D-99 — Low Orbit must read as structure and negative space, not lunar ground
+
+Low Orbit uses one render heightfield because that is the engine's existing visual seam, but it is composed as three separated scaffold decks joined by the published five-point handhold spine. The two published debris rectangles become broken wreck fields, while everything outside decks, spine, and debris is painted vacuum-black and lowered more than five metres beneath the build surfaces. Independent exported-mesh probes record the west, centre, and east decks at `0.72`, `0.24`, and `1.08` metres, versus `-5.4972` and `-5.3996` metres at the north/south void probes.
+
+The accepted Salvage Claw GLB appears only as a verdict-scale cue over the centre yard. It, the deck rails, rubble bodies, mask lines, lights, and cameras are removed before both deliverable exports. The terrain therefore stays one mesh and one material rather than baking a runtime prop, collision body, or placement promise into the visual landform.
+
+### F-3D-D-100 — Exact scaffold flats need exported-triangle sampling
+
+All three authored build rectangles carry a one-cell-diagonal constant-height guard beyond their published bounds. The verifier reopens the saved Blend, byte-reexports it, and samples 2,145 barycentric points across the actual exported triangle surface of each rectangle. All three report `0.0 m` maximum deviation. The published west/east spawn edges, zero-G movement, orbital-return projectile rule, debris semantics, handhold interaction, placement, collision, and combat remain planar/code-owned.
+
+### F-3D-D-101 — Orbital Panorama v2 is drawn emptiness with one comfort image
+
+The panorama is a separate 2,688-triangle backplate with one embedded 2048² atlas. A submerged scenery apron carries the terrain value into an irregular wreck rim; the vacuum then quiets to near-black at the zenith. Four unequal debris edits break repetition, and one restrained blue-green Earth cameo supplies the bundle's comfort image without filling the negative space. The panorama changes no bounds, spawn edges, fog gate, build mask, or water mask.
+
+### F-3D-D-102 — Campaign mounts remain composition records, not baked landmarks
+
+The terrain contract includes five era-stamped empty-asset landmark mount records for the west frame, claw-yard rig, east frame, north debris catcher, and south return beacon. No landmark body is bundled into the terrain or panorama. This satisfies the campaign interlock while leaving landmark source selection and runtime mounting to the separately governed landmark lane.
+
+## E8 extra-map gate state
+
+- Fresh reference base: `545f8c499095f68cd2c105d0bc298d3303df4262`
+- Low Orbit terrain: one mesh, one primitive, one material, one embedded 2048² atlas, 32,768 triangles: PASS
+- Low Orbit Panorama v2: separate one-mesh GLB, one material, one embedded 2048² atlas, 2,688 triangles: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Three published build rectangles sampled on exported triangles at 2,145 points each, maximum deviation `0.0 m`: PASS
+- Exact published mask table plus five empty-asset mount records: PASS
+- Far Side and Eclipse authored Mare Claim tile identity reuse: PASS
+- Eclipse shared-terrain build-zone agreement: PASS; Far Side shared-terrain build-zone agreement: FACTORY CORRECTION REQUIRED (both rectangles span 0–6 m)
+- Mood A/B, flat/sculpted A/B, owner verdict, mask agreement, and center-horizon distance gates: PASS
+- Independent uncommitted review: found the Far Side shared-surface mismatch above and prompted the exact 42° runtime-camera correction; both were verified and recorded. The review process then recursively invoked itself through the repo skill and was terminated after its useful checks rather than treated as a clean no-findings verdict.
+- `src/`, simulation, zero-G gameplay, collision, placement, spawn, projectile, and factory-contract edits: none
+
+## E8 extra-map owner-verdict images
+
+- `artifacts/map-rebuild-spike/e8-extra-owner-verdict.png` — real run camera, whole-tile composition, and low-vacuum read
+- `artifacts/map-rebuild-spike/e8-extra-mood-ab.png` — approved E8 kit plate / working orbital-yard mood gate
+- `artifacts/map-rebuild-spike/e8-extra-flat-vs-sculpted-ab.png` — identical-camera scaffold height proof
+- `artifacts/map-rebuild-spike/e8-extra-mask-agreement-board.png` — three scaffold rectangles, two debris fields, and handhold spine
+- `artifacts/map-rebuild-spike/e8-extra-panorama-distance-gate.png` — playfield-center distance gate
 
 READY-FOR-GATES
 
