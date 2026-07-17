@@ -111,6 +111,14 @@ import {
   type MultiplayerPlayer,
 } from '../mp/LockstepClient';
 import { consumeStagedRideConfig, currentMultiplayerSetup } from '../mp/RideTogether';
+import { MAX_PLAYBOOK_TICKS, parsePlaybookText, validateEntries, type PlaybookEntry } from '../playbook/PlaybookFormat';
+import { getPlaybookText, listPlaybooks, removePlaybook, savePlaybookText } from '../playbook/PlaybookStore';
+import {
+  PlaybookRecorderSession,
+  PlaybookReplaySession,
+  RECORD_SKIP_ACTIONS,
+  type PlaybookProbe,
+} from '../playbook/PlaybookSession';
 import { Hero } from '../entities/Hero';
 import { BlastChargePool } from '../entities/BlastCharge';
 import { GoldPickupPool } from '../entities/GoldPickup';
@@ -284,6 +292,13 @@ export class Game {
   private mpPauseBeforeResync: { paused: boolean; playerPauseActive: boolean } | null = null;
   private mpCard?: HTMLElement;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
+  // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
+  // solo session to the lockstep intent seam; the replay session drives a
+  // second actor through the identical seam. Null in plain boots.
+  private playbookRecorder: PlaybookRecorderSession | null = null;
+  private playbookReplay: PlaybookReplaySession | null = null;
+  private playbookReplaySlot = 0;
+  private playbookPlayerHidden = false;
   private readonly mpHeroChips = new Map<string, HTMLElement>();
   private readonly heroShooterUnsubscribes: Array<() => void> = [];
   private readonly actionActorPosition = new THREE.Vector3();
@@ -1454,6 +1469,18 @@ export class Game {
             'hero_blast',
           ),
         goldPickups: () => this.goldPickups.snapshot(),
+        playbook: {
+          startRecording: (options?: { script?: unknown }) => this.startPlaybookRecording(options ?? {}),
+          stopRecording: (name?: string) => this.stopPlaybookRecording(name ?? 'untitled'),
+          startReplay: (options?: { name?: string; text?: string; hidePlayer?: boolean }) =>
+            this.startPlaybookReplay(options ?? {}),
+          stopReplay: () => this.stopPlaybookReplay(),
+          status: () => this.playbookStatus(),
+          outcome: () => this.playbookOutcome(),
+          list: () => listPlaybooks(localStorage),
+          getText: (name: string) => getPlaybookText(localStorage, name),
+          remove: (name: string) => removePlaybook(localStorage, name),
+        },
         placeBeacon: () => {
           if (this.deepwaterClaim) return false;
           this.buildSystem.selectBuildable('sentry_beacon', true);
@@ -1668,7 +1695,8 @@ export class Game {
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
     const sampledIntents = this.input.readIntents();
-    const cancelConsumed = this.mpClient ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
+    const cancelConsumed =
+      this.mpClient || this.playbookLiveRecording() ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
     const lockstepSample = this.mpClient
       ? lockstepInputFromIntents(sampledIntents, {
           pauseTarget: sampledIntents.pause ? !this.state.isPaused : null,
@@ -1680,7 +1708,7 @@ export class Game {
     if (this.mpClient && !lockstepTick) {
       if (!this.releaseFailedMultiplayer()) return false;
     }
-    const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : sampledIntents;
+    const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : this.consumePlaybookTick(sampledIntents, cancelConsumed);
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
     if (
       lockstepTick &&
@@ -1696,7 +1724,7 @@ export class Game {
     this.updateBuildingContextCandidates();
     if (sampledIntents.mute && !this.lastMuteIntent) this.toggleAudioMute();
     this.lastMuteIntent = sampledIntents.mute;
-    if (lockstepTick) this.applyMultiplayerActions();
+    if (lockstepTick || this.mpActionsThisTick.length > 0) this.applyMultiplayerActions();
     if (this.baronCeremony) {
       if (this.fixedTickElapsed - this.baronCeremony.startedTickElapsed >= BARON_KILL_STOP_SECONDS) {
         this.finishBaronCeremony();
@@ -1764,6 +1792,7 @@ export class Game {
       this.syncDeepwaterClaim();
       if (this.activeWeapon === 'blast') this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
+      this.syncPlaybookAnchor();
       this.syncHeroVisualHeight();
       this.updateBlastAim(intents);
       this.updateWetPowderHint(simDelta);
@@ -1927,13 +1956,21 @@ export class Game {
       this.primaryActor.update(simDelta, fallbackIntents, { bounds: Terrain.bounds, sample: Terrain.sample }, this.harvestSnapshot.channeling);
       return;
     }
+    // During a playbook replay the performing actor sits in a non-zero slot, so
+    // the pan-channel slowdown must follow the actor that actually channels
+    // (per-actor channel state) — the mpActionSlot proxy stays untouched for
+    // multiplayer to avoid any lockstep behavior change.
+    const playbookReplayActive = !this.mpClient && this.playbookReplay?.active === true;
     for (let slot = 0; slot < this.actors.length; slot += 1) {
       const actor = this.actors[slot];
       if (!actor?.group.visible) continue;
+      const channeling = playbookReplayActive
+        ? this.harvestSnapshot.channels.some((channel) => channel.actorId === String(slot) && channel.channeling)
+        : this.harvestSnapshot.channeling && slot === this.mpActionSlot;
       actor.update(simDelta, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), {
         bounds: Terrain.bounds,
         sample: Terrain.sample,
-      }, this.harvestSnapshot.channeling && slot === this.mpActionSlot);
+      }, channeling);
     }
   }
 
@@ -2071,6 +2108,215 @@ export class Game {
       actions.push({ type: 'context_action', action: 'demolish', target: this.demolishCandidate });
     }
     return actions;
+  }
+
+  private playbookLiveRecording(): boolean {
+    return !this.mpClient && this.playbookRecorder !== null && !this.playbookRecorder.finished && !this.playbookRecorder.scripted;
+  }
+
+  /**
+   * The playbook intent seam (PB-01/PB-02). While recording, the solo session
+   * is pinned to the same lockstep representation multiplayer uses: the sampled
+   * intents become {mx,my}+semantic actions, the tape stores exactly that, and
+   * the sim consumes exactly that (movement via zeroed-button intents, actions
+   * via the multiplayer apply path) — record-what-ran by construction. While
+   * replaying, the tape drives a second actor through the identical path.
+   */
+  private consumePlaybookTick(sampledIntents: Intents, cancelConsumed: boolean): Intents {
+    if (this.mpClient) return sampledIntents;
+    // Tape time is UPDATE-TICK time, frozen only by the manual-sim test gate
+    // (a harness artifact whose frame count is wall-clock — recording it would
+    // break byte-stability). World-driven stops (the charm hit-stop on kills)
+    // MUST stay on the tape: they expire inside updateCharmPause later in this
+    // same update, after which the sim integrates the tick — and they re-occur
+    // at the same tape tick during replay because the kills that cause them do.
+    if (this.manualSimForTest && !this.manualAdvanceForTest) return sampledIntents;
+    const recorder = this.playbookRecorder;
+    if (recorder && !recorder.finished) {
+      const scripted = recorder.nextScriptSample();
+      const sample =
+        scripted ??
+        lockstepInputFromIntents(sampledIntents, {
+          pauseTarget: sampledIntents.pause ? !this.state.isPaused : null,
+          queuedActions: this.multiplayerSampleActions(sampledIntents),
+        });
+      if (!scripted && cancelConsumed) sample.pause = false;
+      const input = recorder.recordTick(sample, this.localActor.group.position);
+      if (!input) return sampledIntents;
+      const applied: LockstepAction[] = [];
+      for (const action of input.actions) {
+        if (RECORD_SKIP_ACTIONS.has(action.type)) recorder.recordSkippedAction(action.type);
+        else applied.push(action);
+      }
+      if (applied.length > 0) this.mpActionsThisTick = applied.map((action) => ({ slot: 0, action }));
+      return intentsFromLockstepInput(input);
+    }
+    const replay = this.playbookReplay;
+    if (replay?.active) {
+      const slot = this.playbookReplaySlot;
+      const actor = this.actors[slot];
+      const input = slot > 0 && actor ? replay.step(actor.group.position) : null;
+      if (input) {
+        this.mpActorIntents = this.actors.map((_, index) =>
+          index === slot ? intentsFromLockstepInput(input) : index === 0 ? sampledIntents : intentsFromLockstepInput(null),
+        );
+        if (input.actions.length > 0) this.mpActionsThisTick = input.actions.map((action) => ({ slot, action }));
+      }
+    }
+    return sampledIntents;
+  }
+
+  private startPlaybookRecording(options: { script?: unknown; probeEvery?: number }): { ok: boolean; reason?: string } {
+    if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
+    if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
+    if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
+    let script: PlaybookEntry[] | null = null;
+    if (options.script !== undefined) {
+      // Scripts are demonstrations, not tapes: bounded by the tick horizon
+      // only. The recorder enforces the law-6 intent bound on the tape itself.
+      const validated = validateEntries(options.script, MAX_PLAYBOOK_TICKS, MAX_PLAYBOOK_TICKS);
+      if (!validated.ok) return { ok: false, reason: `script-${validated.reason}` };
+      script = validated.entries;
+    }
+    this.playbookReplay = null;
+    this.playbookRecorder = new PlaybookRecorderSession(
+      {
+        contractId: this.activeContract.id,
+        seed: getDebugSeed() ?? 'gold-rush',
+        difficultyPreset: this.difficultyPreset,
+        start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
+      },
+      script,
+      normalizeProbeEvery(options.probeEvery),
+    );
+    return { ok: true };
+  }
+
+  private stopPlaybookRecording(name: string) {
+    const recorder = this.playbookRecorder;
+    if (!recorder) return { ok: false, reason: 'no-recording' };
+    const finished = recorder.finish(name);
+    const saved = savePlaybookText(localStorage, finished.playbook.name, finished.text);
+    return {
+      ok: true,
+      name: finished.playbook.name,
+      hash: finished.hash,
+      text: finished.text,
+      entries: finished.playbook.entries.length,
+      durationTicks: finished.playbook.durationTicks,
+      truncated: finished.playbook.truncated,
+      saved: saved.ok,
+      saveReason: saved.ok ? null : saved.reason,
+    };
+  }
+
+  private startPlaybookReplay(options: {
+    name?: string;
+    text?: string;
+    hidePlayer?: boolean;
+    probeEvery?: number;
+  }): { ok: boolean; reason?: string } {
+    if (this.mpClient) return { ok: false, reason: 'multiplayer-active' };
+    if (this.playbookRecorder && !this.playbookRecorder.finished) return { ok: false, reason: 'recording-active' };
+    if (this.playbookReplay?.active) return { ok: false, reason: 'replay-active' };
+    const text = options.text ?? (options.name ? getPlaybookText(localStorage, options.name) : null);
+    if (!text) return { ok: false, reason: 'not-found' };
+    const parsed = parsePlaybookText(text);
+    if (!parsed.ok) return { ok: false, reason: parsed.reason };
+    const playbook = parsed.playbook;
+    // The determinism contract holds on the same tile+seed only (spec law 2).
+    if (playbook.contractId !== this.activeContract.id) return { ok: false, reason: 'contract-mismatch' };
+    if (playbook.seed !== (getDebugSeed() ?? 'gold-rush')) return { ok: false, reason: 'seed-mismatch' };
+    if (playbook.difficultyPreset !== this.difficultyPreset) return { ok: false, reason: 'difficulty-mismatch' };
+    const actor = this.ensurePlaybookReplayActor();
+    const slot = this.actors.indexOf(actor);
+    if (slot < 1) return { ok: false, reason: 'actor-slot-unavailable' };
+    actor.group.visible = true;
+    const y = Terrain.visualY(playbook.start.x, playbook.start.z, this.heroStart.y);
+    actor.resetRun(new THREE.Vector3(playbook.start.x, y, playbook.start.z));
+    actor.snapRenderState();
+    if (options.hidePlayer) {
+      this.playbookPlayerHidden = true;
+      this.primaryActor.group.visible = false;
+    }
+    this.playbookRecorder = null;
+    this.playbookReplay = new PlaybookReplaySession(playbook, normalizeProbeEvery(options.probeEvery));
+    this.playbookReplaySlot = slot;
+    return { ok: true };
+  }
+
+  private ensurePlaybookReplayActor(): Hero {
+    if (this.actors.length < 2) {
+      const actor = new Hero(RUN_CAST_SCALE);
+      actor.group.name = 'PlaybookReplayHero';
+      this.actors.push(actor);
+      this.registerHeroShooters(actor);
+      this.scene.add(actor.group);
+      this.applyStats(this.progression.stats, null);
+    }
+    return this.actors[1];
+  }
+
+  /**
+   * PB-02 finding (F-PB-01): several world systems anchor to actor slot 0 by
+   * construction — WaveSystem takes primaryActor.group.position as its live
+   * spawn anchor, and the Prospector follows it too. When the parity harness
+   * hides the player, the hidden slot-0 body is slaved to the replay actor so
+   * the world sees the same anchor trajectory the recording session saw.
+   * Without this, wave spawn geometry diverges and event parity is impossible.
+   */
+  private syncPlaybookAnchor(): void {
+    if (!this.playbookPlayerHidden || this.playbookReplay?.active !== true) return;
+    const actor = this.actors[this.playbookReplaySlot];
+    if (actor && actor !== this.primaryActor) this.primaryActor.group.position.copy(actor.group.position);
+  }
+
+  private stopPlaybookReplay(): { ok: boolean } {
+    const replay = this.playbookReplay;
+    if (!replay) return { ok: false };
+    replay.stop();
+    const actor = this.actors[this.playbookReplaySlot];
+    if (this.playbookReplaySlot > 0 && actor) actor.group.visible = false;
+    if (this.playbookPlayerHidden) {
+      this.primaryActor.group.visible = true;
+      this.playbookPlayerHidden = false;
+    }
+    this.playbookReplaySlot = 0;
+    return { ok: true };
+  }
+
+  private abortPlaybookSessions(): void {
+    if (this.playbookRecorder && !this.playbookRecorder.finished) this.playbookRecorder.truncate('run-ended');
+    if (this.playbookReplay) this.stopPlaybookReplay();
+    this.playbookRecorder = null;
+    this.playbookReplay = null;
+  }
+
+  private playbookStatus() {
+    return {
+      recording: this.playbookRecorder ? this.playbookRecorder.status() : null,
+      replay: this.playbookReplay ? this.playbookReplay.status() : null,
+    };
+  }
+
+  /**
+   * Normalized semantic outcome for the event-parity proof — quantized probe
+   * positions plus economy/combat counters, per the determinism audit's
+   * boundary (no UUIDs, no wall-clock, no raw log bytes).
+   */
+  private playbookOutcome() {
+    const probes: PlaybookProbe[] = this.playbookReplay
+      ? [...this.playbookReplay.probeSamples]
+      : this.playbookRecorder
+        ? [...this.playbookRecorder.probeSamples]
+        : [];
+    return {
+      probes,
+      kills: this.kills,
+      gold: this.economy.gold,
+      wave: this.waveSystem.diagnostics.wave,
+      economy: summarizeLog(this.economy.log),
+    };
   }
 
   private applyLocalMultiplayerPresentation(intents: Intents): boolean {
@@ -4672,6 +4918,9 @@ export class Game {
   }
 
   resetRun(): void {
+    // A fresh run must never inherit a live tape (playbook sessions are
+    // per-run; the recorder would otherwise capture across a world reset).
+    this.abortPlaybookSessions();
     const deferMetaRecap =
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;
@@ -6081,6 +6330,10 @@ function buildingInfoClass(id: BuildableId): WorldInfoObjectClass {
 
 function edgeFromPosition(position: THREE.Vector3): CompassEdge {
   return Math.abs(position.x) > Math.abs(position.z) ? (position.x >= 0 ? 'east' : 'west') : position.z >= 0 ? 'north' : 'south';
+}
+
+function normalizeProbeEvery(value: number | undefined): number {
+  return Number.isInteger(value) && (value as number) >= 1 ? (value as number) : 30;
 }
 
 function contractHeroStart(contract: ContractManifest): THREE.Vector3 {
