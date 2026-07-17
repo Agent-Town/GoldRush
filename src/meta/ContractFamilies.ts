@@ -671,6 +671,7 @@ export const CONTRACT_EDITOR_SESSION_REF = 'session';
 export const CONTRACT_EDITOR_DOCUMENT_KEY = 'gr.editor.contract.v1';
 export const CONTRACT_EDITOR_REJECTION_LINE = 'This page of the ledger is water-damaged. The contract stayed as it was.';
 const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
+export const CHARTER_LAUNCH_KEY = 'gr.charter.launch.v1';
 const CONTRACT_EDITOR_MAX_DOCUMENT_CHARS = 512 * 1_024;
 const AUTHORED_TERRAIN_MAX_DIMENSION = 41;
 const AUTHORED_TERRAIN_MAX_CELLS = AUTHORED_TERRAIN_MAX_DIMENSION * AUTHORED_TERRAIN_MAX_DIMENSION;
@@ -1004,6 +1005,41 @@ export function stagePlayerContractLaunch(id: string): void {
   activeSelectionSearch = '';
   try {
     globalThis.sessionStorage?.setItem(PLAYER_CONTRACT_LAUNCH_KEY, id);
+    globalThis.sessionStorage?.removeItem(CHARTER_LAUNCH_KEY);
+  } catch {}
+}
+
+// The Charter Press launch seam: a stamped charter rides the ordinary player
+// contract-launch path, carrying its compiled document beside the launch key.
+// Every ordinary stagePlayerContractLaunch clears it, so only a Press launch
+// can ever put a charter under a run; a plain boot finds nothing here.
+export function stageCharterLaunch(templateId: string, document: string): boolean {
+  stagePlayerContractLaunch(templateId);
+  try {
+    globalThis.sessionStorage?.setItem(CHARTER_LAUNCH_KEY, JSON.stringify({ templateId, document }));
+    return globalThis.sessionStorage?.getItem(CHARTER_LAUNCH_KEY) !== null;
+  } catch {
+    return false;
+  }
+}
+
+export function readCharterLaunch(): { templateId: string; document: string } | null {
+  try {
+    const raw = globalThis.sessionStorage?.getItem(CHARTER_LAUNCH_KEY);
+    if (!raw) return null;
+    const value: unknown = JSON.parse(raw);
+    if (!isRecord(value) || typeof value.templateId !== 'string' || typeof value.document !== 'string') return null;
+    return { templateId: value.templateId, document: value.document };
+  } catch {
+    return null;
+  }
+}
+
+export function clearCharterLaunch(): void {
+  activeSelection = null;
+  activeSelectionSearch = '';
+  try {
+    globalThis.sessionStorage?.removeItem(CHARTER_LAUNCH_KEY);
   } catch {}
 }
 
@@ -1026,6 +1062,14 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
     const candidates = debug || launched ? listBoardContracts() : contracts;
     contract = candidates.find((entry) => entry.id === requestedId) ?? fallback;
     if (contract.id !== requestedId) fallbackReason = 'unknown-contract';
+  }
+
+  if (launched && requestedId && contract.id === requestedId) {
+    const charterLaunch = readCharterLaunch();
+    if (charterLaunch && charterLaunch.templateId === requestedId) {
+      const pressed = parseContractDescriptor(charterLaunch.document, contract);
+      if (pressed.ok) contract = pressed.contract;
+    }
   }
 
   if (params.has('editor')) {

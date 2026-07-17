@@ -219,6 +219,25 @@
 .placement-editor__checks label { display: flex; min-height: 40px; align-items: center; justify-content: center; gap: 4px; border: 1px solid rgba(139, 125, 60, 0.62); border-radius: 4px; color: #5b3a1f; background: rgba(245, 230, 200, 0.75); font-size: 10px; font-weight: 900; }
 .placement-editor__empty { padding: 7px; border: 1px dashed rgba(139, 125, 60, 0.55); border-radius: 4px; }
 
+.charter-press-panel { margin-top: 10px; padding: 9px 0 0; border-top: 3px double #8b7d3c; }
+.charter-press-panel__heading { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.charter-press-panel__heading p { margin: 0; color: #6f5732; font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+.charter-press-panel__heading h2 { margin: 0 0 6px; color: #5b3a1f; font-size: 15px; }
+.charter-press-panel__heading span { color: rgba(46, 27, 14, 0.68); font-size: 10px; }
+.charter-press-panel__return { margin: 6px 0; padding: 7px 9px; border: 1px solid #5b8a8a; border-radius: 4px; color: #2e4d4d; background: rgba(91, 138, 138, 0.16); font-size: 11px; font-weight: 900; }
+.charter-press-panel__control { display: grid; gap: 3px; margin: 6px 0; color: #5b3a1f; font-size: 10px; font-weight: 900; }
+.charter-press-panel__control > input { min-height: 34px; }
+.charter-press-panel__author { margin: 2px 0 7px; color: rgba(46, 27, 14, 0.68); font-size: 10px; }
+.charter-press-panel > button { width: 100%; color: #fff8e8 !important; background: #7a5a2e !important; }
+.charter-press-panel__status { min-height: 16px; margin: 7px 0 0; color: #5b3a1f; font-size: 11px; }
+.charter-press-panel__reasons { margin: 6px 0 0; padding: 7px 9px 7px 24px; border: 2px solid #a0522d; border-radius: 4px; color: #7a2e18; background: rgba(160, 82, 45, 0.1); font-size: 11px; font-weight: 900; }
+.charter-press-panel__shelf { margin-top: 9px; }
+.charter-press-panel__shelf h3 { margin: 0 0 5px; color: #5b3a1f; font-size: 14px; }
+.charter-press-panel__shelf ul { display: grid; gap: 5px; margin: 0; padding: 0; list-style: none; }
+.charter-press-panel__shelf li { display: flex; align-items: center; justify-content: space-between; gap: 7px; padding: 6px 8px; border: 1px solid rgba(139, 125, 60, 0.62); border-radius: 4px; background: rgba(245, 230, 200, 0.75); font-size: 11px; }
+.charter-press-panel__shelf li button { min-height: 30px; }
+.charter-press-panel__empty { border-style: dashed !important; color: rgba(46, 27, 14, 0.68); }
+
 .descriptor-inspector__transfer { padding: 11px 12px 12px; border-top: 3px double #8b7d3c; background: rgba(232, 213, 168, 0.66); }
 .descriptor-inspector__transfer h2 { margin: 0 0 8px; font-size: 15px; }
 .descriptor-inspector__actions { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; }
