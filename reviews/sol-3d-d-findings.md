@@ -289,6 +289,53 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## E9 The Dome Basin terrain wave
+
+### F-3D-D-75 — One dry C3-complete mesh keeps persistence code-owned
+
+`assets/contracts/epoch-9-redfields/mask-tables/e9-dome-basin.json` is the sole terrain authority. The terrain is one dry mesh shared by C0 through C3: the complete feeder-canal earthworks are already sculpted, while stage water, channel activation, green spread, persistence, movement, collision, placement, and `Terrain.visualY` remain code-owned. No water surface or water source exists in either GLB.
+
+### F-3D-D-76 — The basin is an industrial excavation, not a decorative lake
+
+The authored h-2 depression is the dominant landform, joined by the northern h4 quarry scarp and the descending six-point feeder canal. Rust-red plate-derived engraving, stained soil, hard shadow pockets, spoil, shattered stone, and literal E1 riverbank green only at four landing anchors keep the scene desperate and worked. Existing E9 bodies appear only as temporary verdict helpers; they are removed before save/export and no landmark mount or runtime asset is authored.
+
+### F-3D-D-77 — Overlapping masks require an explicit precedence proof
+
+An independent review correctly rejected the first verifier's single-point h4/h-2 checks. Dense exported-triangle sampling then exposed a 3.4 cm spoil-tail leak into the quarry; the sculpt now clips spoil out of the scarp. The final verifier samples 6,463 quarry points and 7,792 basin points with 0.00 m deviation outside named overlap footprints. The only exceptions are authored landform/placement precedence: the dry canal cuts the scarp; dry C2/C3 gate berms rise inside the basin; and a triangle-safe flat guard wins where `seed-rows-footing` shares the basin's x=18 edge. All five build rectangles independently return 2,145 samples with 0.00 m deviation.
+
+### F-3D-D-78 — Panorama v2 makes the redfields feel distant, not enclosed
+
+The separate panorama uses an irregular terrain-matched skirt, independent near/far rust ridges, a quiet zenith, and unequal hatched dust columns. The corrected center-horizon view keeps a broken low silhouette and haze gap behind the playfield instead of a mirrored painted wall or an engraved ceiling. The panorama remains render-only, mounted separately, and changes no bounds or masks.
+
+### F-3D-D-79 — The E9 evidence names the persistence and overlap laws visibly
+
+The owner, mood, identical-camera, panorama, and mask boards compare the sculpt against the fresh E9 kit base. The mask board now states the overlap law instead of claiming blanket h4/h-2 agreement, and the adjacent JSON records the same precedence text. The final run camera reads as rust-red labor under late light, never resort; staged water remains visibly absent.
+
+## E9 Dome Basin gate state
+
+- Terrain `.blend` / GLB / one embedded 2048² atlas / adjacent contract: PASS
+- Terrain GLB: 32,768 triangles, one mesh, one primitive, one material: PASS
+- Separate Panorama v2 `.blend` / GLB / one embedded 2048² atlas / adjacent contract: PASS
+- Panorama GLB: 3,072 triangles, one mesh, one primitive, one material: PASS
+- Whole-file byte-identical and semantic-identical reopen/re-export for both GLBs: PASS
+- Exact published mask copy and one-mesh staged-water contract: PASS
+- Five build rectangles, 2,145 exported-surface samples each, maximum deviation 0.00 m: PASS
+- Quarry/basin exhaustive agreement outside documented overlap footprints: PASS
+- Mood A/B, identical-camera geometry, owner, mask, and Panorama v2 distance boards: PASS
+- Independent `codex review --uncommitted`: caught the verifier coverage gap; its recursive follow-on did not return a final verdict and is not counted as a gate
+- `src/`, simulation, water, masks, runtime registry, and landmark edits: none
+
+## E9 Dome Basin owner-verdict images
+
+- `artifacts/map-rebuild-spike/dome-basin-owner-verdict.png`
+- `artifacts/map-rebuild-spike/dome-basin-mood-ab.png`
+- `artifacts/map-rebuild-spike/dome-basin-flat-vs-sculpted-ab.png`
+- `artifacts/map-rebuild-spike/dome-basin-mask-agreement-board.png`
+- `artifacts/map-rebuild-spike/dome-basin-panorama-mood-ab.png`
+- `artifacts/map-rebuild-spike/dome-basin-panorama-distance-gate.png`
+
+READY-FOR-GATES
+
 ## E8 The Mare Claim terrain wave
 
 ### F-3D-D-70 — The palette note is a material contract, not a colour suggestion
