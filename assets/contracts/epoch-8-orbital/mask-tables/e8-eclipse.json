@@ -1,0 +1,72 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-8-orbital/contracts.json; lore/STORYBOOK.md E8 contracts",
+    "tileId": "e8-mare-claim",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "rim-premium-pad-west", "bank": "north", "minX": -50, "maxX": -38, "minZ": 42, "maxZ": 52 },
+      { "id": "rim-premium-pad-east", "bank": "north", "minX": 38, "maxX": 50, "minZ": 42, "maxZ": 52 },
+      { "id": "dome-cluster-pad-west", "bank": "north", "minX": -24, "maxX": -12, "minZ": -6, "maxZ": 6 },
+      { "id": "dome-cluster-pad-center", "bank": "north", "minX": -6, "maxX": 6, "minZ": -6, "maxZ": 6 },
+      { "id": "dome-cluster-pad-east", "bank": "north", "minX": 12, "maxX": 24, "minZ": -6, "maxZ": 6 },
+      { "id": "launch-pad", "bank": "south", "minX": -40, "maxX": -20, "minZ": -40, "maxZ": -22 },
+      { "id": "mass-driver-rail-footing", "bank": "south", "minX": -8, "maxX": 54, "minZ": -40, "maxZ": -28 }
+    ],
+    "stakeMarkers": [],
+    "rails": [
+      {
+        "style": "mass-driver",
+        "points": [
+          { "x": -4, "z": -34 },
+          { "x": 16, "z": -34 },
+          { "x": 36, "z": -34 },
+          { "x": 54, "z": -34 }
+        ]
+      }
+    ],
+    "waterSources": [],
+    "harvestAnchors": [
+      { "x": -34, "z": 12 },
+      { "x": -22, "z": 26 },
+      { "x": -8, "z": 20 },
+      { "x": 16, "z": 22 },
+      { "x": 30, "z": 30 },
+      { "x": 34, "z": 12 }
+    ],
+    "heightfield": { "id": "mare-claim-rim-ring", "mode": "visual" },
+    "gravity": { "feelG": 0.6, "lobArcDistanceMultiplier": 2.4, "movement": "floaty" },
+    "atmosphere": { "airIsWall": true, "outsideDomes": "suit-timer" },
+    "eclipseShadowZones": [
+      {
+        "id": "compressed-lunar-eclipse",
+        "description": "The eclipse shadow crosses the whole claim and ends solar production mid-run.",
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -54,
+        "maxZ": 54
+      }
+    ],
+    "lanes": {
+      "spawnEdges": ["north", "west", "east"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": [
+        {
+          "id": "debris-arc-rim",
+          "points": [
+            { "x": -50, "z": 46 },
+            { "x": -26, "z": 54 },
+            { "x": 0, "z": 48 },
+            { "x": 26, "z": 54 },
+            { "x": 50, "z": 46 }
+          ]
+        }
+      ]
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}

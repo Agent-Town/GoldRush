@@ -1,0 +1,56 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-8-orbital/contracts.json; lore/STORYBOOK.md E8 contracts",
+    "tileId": "e8-low-orbit",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "claw-carcass-yard", "bank": "north", "minX": -18, "maxX": 18, "minZ": -14, "maxZ": 14 },
+      { "id": "west-scaffold-deck", "bank": "north", "minX": -48, "maxX": -26, "minZ": -10, "maxZ": 10 },
+      { "id": "east-scaffold-deck", "bank": "north", "minX": 26, "maxX": 48, "minZ": -10, "maxZ": 10 }
+    ],
+    "stakeMarkers": [],
+    "rails": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": { "id": "salvage-claw-orbital-yard", "mode": "visual" },
+    "gravity": {
+      "feelG": 0,
+      "lobArcDistanceMultiplier": 0,
+      "movement": "free-fall",
+      "projectileBehavior": "orbital-return"
+    },
+    "atmosphere": { "airIsWall": false, "outsideDomes": "suit-only" },
+    "orbitalScaffoldZones": [
+      { "id": "west-scaffold-deck", "minX": -48, "maxX": -26, "minZ": -10, "maxZ": 10 },
+      { "id": "claw-carcass-yard", "minX": -18, "maxX": 18, "minZ": -14, "maxZ": 14 },
+      { "id": "east-scaffold-deck", "minX": 26, "maxX": 48, "minZ": -10, "maxZ": 10 }
+    ],
+    "debrisFields": [
+      { "id": "north-debris-field", "minX": -54, "maxX": 54, "minZ": 24, "maxZ": 54 },
+      { "id": "south-debris-field", "minX": -54, "maxX": 54, "minZ": -54, "maxZ": -24 }
+    ],
+    "handholdRoutes": [
+      {
+        "id": "claw-yard-handhold-spine",
+        "points": [
+          { "x": -48, "z": 0 },
+          { "x": -18, "z": 0 },
+          { "x": 0, "z": -12 },
+          { "x": 18, "z": 0 },
+          { "x": 48, "z": 0 }
+        ]
+      }
+    ],
+    "lanes": {
+      "spawnEdges": ["west", "east"],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": []
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": { "river": false, "waterSources": [] }
+}

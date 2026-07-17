@@ -81,6 +81,9 @@ test('the board gates future-era contracts and counts only playable profiles', a
   await expect(page.getByTestId('contract-card-e7-dead-band')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e7-relay-rush')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e8-mare-claim')).toHaveCount(0);
+  await expect(page.getByTestId('contract-card-e8-far-side')).toHaveCount(0);
+  await expect(page.getByTestId('contract-card-e8-low-orbit')).toHaveCount(0);
+  await expect(page.getByTestId('contract-card-e8-eclipse')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e9-dome-basin')).toHaveCount(0);
   await expect(page.getByTestId('contract-card-e10-ember-shore')).toHaveCount(0);
   for (const id of ['e10-archive-world', 'e10-last-claim', 'e10-river']) {
