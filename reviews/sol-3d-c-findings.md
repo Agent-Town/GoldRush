@@ -1,5 +1,31 @@
 # SOL 3D-C — 3D pilot findings
 
+## Old Digger production boss model
+
+Branch: `sol/old-digger-3d`
+
+Base: `32715b4d2f54a84bffd8d42925a3c0c0c531cb07`
+
+Tip: exact Old Digger SHA is reported in the attended handoff
+
+Verdict: **READY-FOR-GATES — the E9 Old Digger now has a real unequal-bucket-wheel terraformer body whose only terminal state is intact, useful, and gently reprogrammed.**
+
+| Functional zone | Production mesh | Redemption morph | Read |
+| --- | --- | --- | --- |
+| Bucket wheels | `bucket_wheels` | `Redemption_GentleBuckets` | the great port wheel and smaller starboard wheel align for the corrected canal and reveal restrained teal service caps |
+| Gantry | `gantry` | `Redemption_SafeGantry` | the long working truss, tower, and cables persist while safety rails rise and two boarding steps lower |
+| Tape-deck heart | `tape_deck` | `Redemption_TealTapeDeck` | the amber working panel retracts and the teal tape face takes over; crawler base, stacks, and crest remain intact |
+
+### Production gate
+
+- Modeled only after the art-batch-026 working/gentle pair landed; both source SHA-256 values are recorded in the asset contract.
+- 7,192 / 12,000 triangles; exactly three nodes, meshes, and primitives with identity transforms and one `Redemption_*` morph each. The verifier rejects any `Damage_*` name.
+- One shared, double-sided, non-emissive material with one embedded 1024 x 1024 PNG; zero cameras, lights, animations, helper nodes, or people.
+- Base-center origin; 12.4 long x 3.16317 deep x 6.603573 high. The unequal wheels, open gantry, lifting tower, crawler base, and tape heart preserve the plate silhouette.
+- The crossed-pickaxes crest is unchanged between states: redemption corrects the work, not the machine's history.
+- Saved-BLEND re-export is byte-identical and every parsed semantic key matches. GLB SHA-256 `4152727d1866d203a80a735a83525c26c263aef663261e146a616d727ab940df`.
+- Fresh plate A/B, turntable, isolated-redemption, and Basin Rim production-camera boards are rendered from base `32715b4d2f54…`; no older artifact render is an input.
+
 ## E9 Basin Rim plate
 
 Branch: `sol/basin-rim-e9-plate`
