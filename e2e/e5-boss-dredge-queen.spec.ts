@@ -6,6 +6,7 @@ import { DREDGE_QUEEN_WRECK_KEY } from '../src/game/ProfileStorage';
 
 const QUERY = '/?debug&epoch=epoch-5-deepwater&contract=e5-deepwater-claim&nolevel&nopause&seed=dredge-queen';
 const SHOT_DIR = path.resolve('reviews/shots-e5-boss-dredge-queen');
+const WIRE_SHOT_DIR = path.resolve('reviews/shots-wire-dq-3d');
 const BOSS_STORM_AT = 8;
 
 test.setTimeout(90_000);
@@ -91,6 +92,12 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: path.join(SHOT_DIR, `${prefix}${name}.png`) });
 }
 
+async function wireShot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+  if (testInfo.project.name !== 'desktop-chrome') return;
+  await mkdir(WIRE_SHOT_DIR, { recursive: true });
+  await page.screenshot({ path: path.join(WIRE_SHOT_DIR, `${name}.png`) });
+}
+
 async function dismissBriefing(page: Page): Promise<void> {
   const dismiss = page.getByTestId('contract-briefing-dismiss');
   if (await dismiss.isVisible()) await dismiss.evaluate((button: HTMLButtonElement) => button.click());
@@ -131,6 +138,9 @@ test('rides the storm, gates Act 2 on both paddles, spills the hold, and persist
   const anchor = (await dredge(page)).anchor;
   await page.evaluate(({ x, z }) => window.__GR_TEST__!.teleport(x, z + 9), anchor);
   await shot(page, testInfo, 'act1-two-front');
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-state', 'ready', { timeout: 15_000 });
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-mounted', 'true');
+  await wireShot(page, testInfo, 'act1-model');
 
   await damagePart(page, 'paddle_port', true);
   expect(await dredge(page)).toMatchObject({ act: 1, livePaddles: 1, act2Locked: true });
@@ -138,6 +148,7 @@ test('rides the storm, gates Act 2 on both paddles, spills the hold, and persist
 
   await damagePart(page, 'paddle_starboard', true);
   await expect.poll(() => dredge(page)).toMatchObject({ act: 2, livePaddles: 0, act2Locked: false, escortMultiplier: 2 });
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-damage-states', /"paddle_port":"broken".*"paddle_starboard":"broken"/);
   expect((await parts(page)).map((enemy) => enemy.bossComponentId)).toEqual(['hold']);
   expect((await dredge(page)).escortSkiffs).toBeGreaterThanOrEqual(6);
 
@@ -148,6 +159,9 @@ test('rides the storm, gates Act 2 on both paddles, spills the hold, and persist
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.run.secured)).toBe(false);
   await skipCeremony(page);
   await shot(page, testInfo, 'act3-spill');
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-presentation', 'hulk');
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-damage-states', /"hold":"broken"/);
+  await wireShot(page, testInfo, 'act3-hulk');
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(12));
   await expect.poll(() => dredge(page)).toMatchObject({ escortsExiting: false, escortsExited: 6, hulkPresent: true });
 
@@ -155,6 +169,9 @@ test('rides the storm, gates Act 2 on both paddles, spills the hold, and persist
   await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e5-deepwater-claim');
   await dismissBriefing(page);
   await expect.poll(() => dredge(page)).toMatchObject({ active: false, act: 3, hulkPresent: true, persistentWreck: true });
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-state', 'ready', { timeout: 15_000 });
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-presentation', 'hulk');
+  await expect(page.locator('canvas')).toHaveAttribute('data-dredge-queen3d-damage-states', /"claw":"broken".*"hold":"broken"/);
   const secondRunAnchor = (await dredge(page)).anchor;
   expect(secondRunAnchor).toEqual(anchor);
   await page.evaluate(({ x, z }) => window.__GR_TEST__!.teleport(x, z + 9), secondRunAnchor);
