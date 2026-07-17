@@ -457,3 +457,7 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 ## 2026-07-17 — THE 27-MAP CAMPAIGN GREENLIT (owner verbatim in docs/MAP-CAMPAIGN-LEDGER.md)
 - Blanket owner gate on Appendix E item 19: ALL 27 extra maps build. Pipeline: era-batch contract+mask tasks (E5→lane-b, E6→lane-d, E7→lane-a QUEUED; **fires author E8/E9/E10 then E2/E3/E4 batches on drain** — same master pattern, one era per task) → 3D-D standing sculpt grant (batch waves, priority E5→E10→E2-E4) → wire batches per era → owner tests per docs/MAP-CAMPAIGN-LEDGER.md.
 - Special cases flagged in the ledger doc (Low Orbit zero-G, Last Claim = Ark-class, The River = Press-authored variant, etc.).
+
+## 2026-07-17 — 3D-C CAPSTONE ×7 MERGED: THE TOWN SIDE OF THE SAGA IS COMPLETE
+- **✅ MERGED ×7:** pale-wagon lighting (F-3DC-05 closed, granted src touch, era-switch 14/14) · Salvage Claw model · Old Digger model + REDEMPTION state · E8/E9/E10 era props · **Ark-deck era dressing (ten tactile memory stations)**. Every boss body exists; every era's town exists. 3D-C's next arc: THE CAMPAIGN LANDMARK PACKS (standing grant, queue doc).
+- **LADDERED (fire-authorable, DQ master = template, all models BANKED, arenas SCULPTED):** the three remaining boss SYSTEMS — E6 Homemaker-9000 (VAC/RACK/CORE, tidy-targeting, chair ending) · E8 Salvage Claw (descend-in-stages, dread-is-paperwork) · E9 Old Digger (no kill path — board-and-reprogram, playbook verb). Inert until eras arm; storybook choreographies are ratified law; spec-boot pattern per DQ precedent.
