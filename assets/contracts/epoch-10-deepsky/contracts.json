@@ -85,6 +85,473 @@
         ],
         "geographyLine": "Cooling lava-vein bands divide the dry shore between the last warm vent and a cooled titan machine older than the Combine."
       }
+    },
+    {
+      "id": "e10-archive-world",
+      "name": "The Archive World",
+      "description": "Engine dependency: procgen worlds v3, re-ink light-hold squalls, and persistent lore-unlock consumers are not yet implemented. Teaching intent: show what losing to the Static means by restoring a prior civilization one wing at a time.",
+      "tileParams": {
+        "tileId": "e10-archive-world",
+        "biome": "deepsky-archive-world",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "archive-entry",
+            "bank": "south",
+            "minX": -42,
+            "maxX": 42,
+            "minZ": -54,
+            "maxZ": -38
+          },
+          {
+            "id": "west-stacks-wing",
+            "bank": "north",
+            "minX": -50,
+            "maxX": -6,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "east-stacks-wing",
+            "bank": "north",
+            "minX": 6,
+            "maxX": 50,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "warning-shelf-wing",
+            "bank": "north",
+            "minX": -26,
+            "maxX": 26,
+            "minZ": 26,
+            "maxZ": 54
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "west-wing-light",
+            "x": -28,
+            "z": -6,
+            "lossCondition": false
+          },
+          {
+            "id": "east-wing-light",
+            "x": 28,
+            "z": -6,
+            "lossCondition": false
+          },
+          {
+            "id": "warning-shelf-light",
+            "x": 0,
+            "z": 40,
+            "lossCondition": false
+          }
+        ],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "archive-world-uninked-ruins",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Hold light through Static squalls to re-ink one archive wing at a time; every rescued page unlocks real lore.",
+          "teachingIntent": "Show what losing would mean, never say it."
+        },
+        "archiveWingZones": [
+          {
+            "id": "west-stacks-wing",
+            "order": 1,
+            "minX": -50,
+            "maxX": -6,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "east-stacks-wing",
+            "order": 2,
+            "minX": 6,
+            "maxX": 50,
+            "minZ": -30,
+            "maxZ": 18
+          },
+          {
+            "id": "warning-shelf-wing",
+            "order": 3,
+            "minX": -26,
+            "maxX": 26,
+            "minZ": 26,
+            "maxZ": 54
+          }
+        ],
+        "emptyShelfZone": {
+          "id": "ours-unless-shelf",
+          "description": "An empty deep-stack shelf bears the pictogram meaning ours, unless.",
+          "minX": -8,
+          "maxX": 8,
+          "minZ": 42,
+          "maxZ": 50
+        },
+        "lightHoldSites": [
+          {
+            "id": "west-wing-light",
+            "x": -28,
+            "z": -6,
+            "radius": 4
+          },
+          {
+            "id": "east-wing-light",
+            "x": 28,
+            "z": -6,
+            "radius": 4
+          },
+          {
+            "id": "warning-shelf-light",
+            "x": 0,
+            "z": 40,
+            "radius": 4
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {},
+      "boardRow": {
+        "name": "The Archive World",
+        "ledgerBlurb": "Hold the light through each squall and re-ink a lost library one real page at a time.",
+        "tags": [
+          "deepsky",
+          "archive",
+          "preserve"
+        ],
+        "unlock": "secured:e10-ember-shore"
+      },
+      "briefing": {
+        "goals": [
+          "Re-ink each archive wing by holding its light through the Static squall.",
+          "Rescue the pages that unlock the archive's real lore.",
+          "Reach the empty shelf marked ours, unless."
+        ],
+        "rules": [
+          "The ruins were un-inked mid-sentence by the Static.",
+          "Only one wing is restored at a time.",
+          "Every rescued page is a lore unlock, not extraction loot."
+        ],
+        "geographyLine": "Two ruined stack wings lead from the archive entry to a deep warning shelf left empty for us, unless."
+      }
+    },
+    {
+      "id": "e10-last-claim",
+      "name": "The Last Claim",
+      "description": "Ark-deck variant: reuses the existing ark-plaza-e10 deck class and its ten lineage stations; no new terrain sculpt. Engine dependency: ordered deck-loss progression, Quiet desaturation and mix-duck rings, era-weapon gating, and the three-preserves finale are not yet implemented. Teaching intent: everything, one final time, in order.",
+      "tileParams": {
+        "tileId": "ark-plaza-e10",
+        "biome": "deepsky-ark-deck",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "off"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "stern-to-bow-run",
+            "bank": "north",
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -54,
+            "maxZ": 54
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "last-lantern",
+            "x": -10,
+            "z": 50,
+            "lossCondition": true
+          },
+          {
+            "id": "pan-theme-song",
+            "x": 0,
+            "z": 50,
+            "lossCondition": true
+          },
+          {
+            "id": "last-portrait",
+            "x": 10,
+            "z": 50,
+            "lossCondition": true
+          }
+        ],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "ark-plaza-e10",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Cross ten era-decks from stern to bow while the Static consumes the ship behind you, then out-live the Quiet by preserving one light, one song, and one portrait.",
+          "teachingIntent": "Everything, one final time, in order."
+        },
+        "eraDeckZones": [
+          {
+            "id": "e1-memory-deck",
+            "era": 1,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -54,
+            "maxZ": -44
+          },
+          {
+            "id": "e2-memory-deck",
+            "era": 2,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -44,
+            "maxZ": -34
+          },
+          {
+            "id": "e3-memory-deck",
+            "era": 3,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -34,
+            "maxZ": -24
+          },
+          {
+            "id": "e4-memory-deck",
+            "era": 4,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -24,
+            "maxZ": -14
+          },
+          {
+            "id": "e5-memory-deck",
+            "era": 5,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -14,
+            "maxZ": -4
+          },
+          {
+            "id": "e6-memory-deck",
+            "era": 6,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": -4,
+            "maxZ": 6
+          },
+          {
+            "id": "e7-memory-deck",
+            "era": 7,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 6,
+            "maxZ": 16
+          },
+          {
+            "id": "e8-memory-deck",
+            "era": 8,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 16,
+            "maxZ": 26
+          },
+          {
+            "id": "e9-memory-deck",
+            "era": 9,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 26,
+            "maxZ": 36
+          },
+          {
+            "id": "e10-memory-deck",
+            "era": 10,
+            "minX": -20,
+            "maxX": 20,
+            "minZ": 36,
+            "maxZ": 46
+          }
+        ],
+        "preserveSites": [
+          {
+            "id": "last-lantern",
+            "kind": "light",
+            "x": -10,
+            "z": 50,
+            "radius": 3
+          },
+          {
+            "id": "pan-theme-song",
+            "kind": "song",
+            "x": 0,
+            "z": 50,
+            "radius": 3
+          },
+          {
+            "id": "last-portrait",
+            "kind": "memory",
+            "x": 10,
+            "z": 50,
+            "radius": 3
+          }
+        ],
+        "lanes": {
+          "spawnEdges": [
+            "south",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {},
+      "boardRow": {
+        "name": "The Last Claim",
+        "ledgerBlurb": "Cross every era-deck once more as the storm eats the Ark behind you, then keep three small things alive.",
+        "tags": [
+          "deepsky",
+          "ark",
+          "finale"
+        ],
+        "unlock": "secured:e10-archive-world"
+      },
+      "briefing": {
+        "goals": [
+          "Cross all ten era-decks from stern to bow.",
+          "Give every era's arsenal one last shift before its deck is lost.",
+          "Keep one lantern lit, one song playing, and one portrait untouched."
+        ],
+        "rules": [
+          "The Static consumes each cleared deck behind you.",
+          "The Quiet forgets weapons oldest-first.",
+          "The Quiet is not damaged; the three preserves make it recede."
+        ],
+        "geographyLine": "The Ark itself is the finale: ten lineage decks in a stern-to-bow run ending at three preserves."
+      }
+    },
+    {
+      "id": "e10-river",
+      "name": "The River",
+      "description": "The Claim terrain variant: reuses frontier-river-claim at dawn with no new sculpt. Engine dependency: Charter Press CP-05, post-credits run staging, and credits-name gold-fleck surfacing are not yet implemented. Teaching intent: return to the first verb with no enemies, no waves, and one pan.",
+      "tileParams": {
+        "tileId": "frontier-river-claim",
+        "biome": "river-claim",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "off"
+        },
+        "river": true,
+        "ford": true,
+        "fords": [
+          {
+            "id": "center-ford",
+            "x": 0,
+            "halfWidth": 3
+          }
+        ],
+        "buildZones": [],
+        "stakeMarkers": [],
+        "rails": [],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "frontier-river-claim",
+          "mode": "visual"
+        },
+        "water": {
+          "id": "frontier-river-depth",
+          "visualHalfWidth": 6.25,
+          "depths": {
+            "river": 1.25,
+            "ford": 0.35,
+            "shallows": 0.2,
+            "springPond": 0.2
+          },
+          "speedMul": {
+            "river": 0.55,
+            "ford": 0.85,
+            "shallows": 0.8,
+            "springPond": 0.8
+          },
+          "heroCanWadeDeep": true
+        },
+        "objectiveMetadata": {
+          "description": "Pan the dawn river while the credits names surface as gold flecks, then let the river keep going.",
+          "teachingIntent": "The first verb is enough."
+        },
+        "riverBand": {
+          "id": "credits-river",
+          "minX": -64,
+          "maxX": 64,
+          "minZ": -5,
+          "maxZ": 5
+        },
+        "creditsRiverZone": {
+          "id": "credits-gold-flecks",
+          "description": "Credits names surface here as gold flecks, one by one.",
+          "minX": -54,
+          "maxX": 54,
+          "minZ": -5,
+          "maxZ": 5
+        },
+        "lanes": {
+          "spawnEdges": [],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": {},
+      "boardRow": {
+        "name": "The River",
+        "ledgerBlurb": "At dawn, with no enemies and no waves, pan the first river while every name rises in gold.",
+        "tags": [
+          "deepsky",
+          "river",
+          "post-credits"
+        ],
+        "unlock": "secured:e10-last-claim"
+      },
+      "briefing": {
+        "goals": [
+          "Pan the river."
+        ],
+        "rules": [
+          "There are no enemies and no waves.",
+          "Credits names surface as gold flecks, one by one.",
+          "When the last name settles, the river keeps going."
+        ],
+        "geographyLine": "The first claim returns at dawn: one river, one center ford, and one pan."
+      }
     }
   ]
 }

@@ -1,0 +1,49 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-10-deepsky/contracts.json; lore/STORYBOOK.md:597-600",
+    "tileId": "e10-archive-world",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      { "id": "archive-entry", "bank": "south", "minX": -42, "maxX": 42, "minZ": -54, "maxZ": -38 },
+      { "id": "west-stacks-wing", "bank": "north", "minX": -50, "maxX": -6, "minZ": -30, "maxZ": 18 },
+      { "id": "east-stacks-wing", "bank": "north", "minX": 6, "maxX": 50, "minZ": -30, "maxZ": 18 },
+      { "id": "warning-shelf-wing", "bank": "north", "minX": -26, "maxX": 26, "minZ": 26, "maxZ": 54 }
+    ],
+    "stakeMarkers": [
+      { "id": "west-wing-light", "x": -28, "z": -6, "lossCondition": false },
+      { "id": "east-wing-light", "x": 28, "z": -6, "lossCondition": false },
+      { "id": "warning-shelf-light", "x": 0, "z": 40, "lossCondition": false }
+    ],
+    "rails": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": { "id": "archive-world-uninked-ruins", "mode": "visual" },
+    "archiveWingZones": [
+      { "id": "west-stacks-wing", "order": 1, "minX": -50, "maxX": -6, "minZ": -30, "maxZ": 18 },
+      { "id": "east-stacks-wing", "order": 2, "minX": 6, "maxX": 50, "minZ": -30, "maxZ": 18 },
+      { "id": "warning-shelf-wing", "order": 3, "minX": -26, "maxX": 26, "minZ": 26, "maxZ": 54 }
+    ],
+    "emptyShelfZone": {
+      "id": "ours-unless-shelf",
+      "description": "An empty deep-stack shelf bears the pictogram meaning ours, unless.",
+      "minX": -8,
+      "maxX": 8,
+      "minZ": 42,
+      "maxZ": 50
+    },
+    "lightHoldSites": [
+      { "id": "west-wing-light", "x": -28, "z": -6, "radius": 4 },
+      { "id": "east-wing-light", "x": 28, "z": -6, "radius": 4 },
+      { "id": "warning-shelf-light", "x": 0, "z": 40, "radius": 4 }
+    ],
+    "lanes": { "spawnEdges": ["north", "west", "east"], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}

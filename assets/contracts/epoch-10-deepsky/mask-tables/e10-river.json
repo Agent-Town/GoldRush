@@ -1,0 +1,50 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-10-deepsky/contracts.json; lore/STORYBOOK.md:597-600",
+    "tileId": "frontier-river-claim",
+    "size": 128,
+    "dimensions": { "width": 128, "height": 128 },
+    "river": true,
+    "ford": true,
+    "fords": [
+      { "id": "center-ford", "x": 0, "halfWidth": 3 }
+    ],
+    "buildZones": [],
+    "stakeMarkers": [],
+    "rails": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": { "id": "frontier-river-claim", "mode": "visual" },
+    "water": {
+      "id": "frontier-river-depth",
+      "visualHalfWidth": 6.25,
+      "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.2, "springPond": 0.2 },
+      "speedMul": { "river": 0.55, "ford": 0.85, "shallows": 0.8, "springPond": 0.8 },
+      "heroCanWadeDeep": true
+    },
+    "riverBand": { "id": "credits-river", "minX": -64, "maxX": 64, "minZ": -5, "maxZ": 5 },
+    "creditsRiverZone": {
+      "id": "credits-gold-flecks",
+      "description": "Credits names surface here as gold flecks, one by one.",
+      "minX": -54,
+      "maxX": 54,
+      "minZ": -5,
+      "maxZ": 5
+    },
+    "lanes": { "spawnEdges": [], "territoryRingBiasWaves": 0, "territoryRingLaneBias": 0 },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": true,
+    "ford": true,
+    "riverBand": { "id": "credits-river", "minX": -64, "maxX": 64, "minZ": -5, "maxZ": 5 },
+    "waterSources": [],
+    "water": {
+      "id": "frontier-river-depth",
+      "visualHalfWidth": 6.25,
+      "depths": { "river": 1.25, "ford": 0.35, "shallows": 0.2, "springPond": 0.2 },
+      "speedMul": { "river": 0.55, "ford": 0.85, "shallows": 0.8, "springPond": 0.8 },
+      "heroCanWadeDeep": true
+    }
+  }
+}
