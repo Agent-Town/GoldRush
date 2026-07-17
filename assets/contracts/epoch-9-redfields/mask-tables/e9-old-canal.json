@@ -1,0 +1,155 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-9-redfields/contracts.json; lore/STORYBOOK.md E9 contracts",
+    "tileId": "e9-old-canal",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "south-survey-yard",
+        "bank": "south",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": -54,
+        "maxZ": -42
+      },
+      {
+        "id": "old-canal-segment-a",
+        "bank": "south",
+        "minX": -42,
+        "maxX": -18,
+        "minZ": -32,
+        "maxZ": -14
+      },
+      {
+        "id": "old-canal-segment-b",
+        "bank": "north",
+        "minX": -10,
+        "maxX": 14,
+        "minZ": -8,
+        "maxZ": 8
+      },
+      {
+        "id": "old-canal-segment-c",
+        "bank": "north",
+        "minX": 20,
+        "maxX": 44,
+        "minZ": 14,
+        "maxZ": 32
+      },
+      {
+        "id": "north-outflow-yard",
+        "bank": "north",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": 42,
+        "maxZ": 54
+      }
+    ],
+    "canalDecisionZones": [
+      {
+        "id": "old-canal-segment-a",
+        "choice": "redig-or-demolish",
+        "minX": -42,
+        "maxX": -18,
+        "minZ": -32,
+        "maxZ": -14
+      },
+      {
+        "id": "old-canal-segment-b",
+        "choice": "redig-or-demolish",
+        "minX": -10,
+        "maxX": 14,
+        "minZ": -8,
+        "maxZ": 8
+      },
+      {
+        "id": "old-canal-segment-c",
+        "choice": "redig-or-demolish",
+        "minX": 20,
+        "maxX": 44,
+        "minZ": 14,
+        "maxZ": 32
+      }
+    ],
+    "stakeMarkers": [
+      {
+        "id": "decide-segment-a",
+        "x": -30,
+        "z": -23,
+        "lossCondition": false
+      },
+      {
+        "id": "decide-segment-b",
+        "x": 2,
+        "z": 0,
+        "lossCondition": false
+      },
+      {
+        "id": "decide-segment-c",
+        "x": 32,
+        "z": 23,
+        "lossCondition": false
+      }
+    ],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": {
+      "id": "old-canal-wrong-survey",
+      "mode": "visual"
+    },
+    "inheritedCanalRoute": {
+      "style": "old-digger-canal",
+      "points": [
+        {
+          "x": -46,
+          "z": -38
+        },
+        {
+          "x": -30,
+          "z": -23
+        },
+        {
+          "x": -12,
+          "z": -26
+        },
+        {
+          "x": 2,
+          "z": 0
+        },
+        {
+          "x": 26,
+          "z": 6
+        },
+        {
+          "x": 32,
+          "z": 23
+        },
+        {
+          "x": 12,
+          "z": 48
+        }
+      ]
+    },
+    "lanes": {
+      "spawnEdges": [
+        "north",
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": []
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}

@@ -1,0 +1,140 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-9-redfields/contracts.json; lore/STORYBOOK.md E9 contracts",
+    "tileId": "e9-seed-run",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "south-caravan-yard",
+        "bank": "south",
+        "minX": -36,
+        "maxX": 36,
+        "minZ": -54,
+        "maxZ": -42
+      },
+      {
+        "id": "west-green-waypoint",
+        "bank": "south",
+        "minX": -44,
+        "maxX": -24,
+        "minZ": -30,
+        "maxZ": -12
+      },
+      {
+        "id": "center-green-waypoint",
+        "bank": "north",
+        "minX": -10,
+        "maxX": 10,
+        "minZ": -6,
+        "maxZ": 12
+      },
+      {
+        "id": "east-green-waypoint",
+        "bank": "north",
+        "minX": 24,
+        "maxX": 44,
+        "minZ": 18,
+        "maxZ": 36
+      },
+      {
+        "id": "north-basin-approach",
+        "bank": "north",
+        "minX": -30,
+        "maxX": 30,
+        "minZ": 42,
+        "maxZ": 54
+      }
+    ],
+    "permanentGreenWaypointZones": [
+      {
+        "id": "west-green-waypoint",
+        "minX": -44,
+        "maxX": -24,
+        "minZ": -30,
+        "maxZ": -12
+      },
+      {
+        "id": "center-green-waypoint",
+        "minX": -10,
+        "maxX": 10,
+        "minZ": -6,
+        "maxZ": 12
+      },
+      {
+        "id": "east-green-waypoint",
+        "minX": 24,
+        "maxX": 44,
+        "minZ": 18,
+        "maxZ": 36
+      }
+    ],
+    "stakeMarkers": [
+      {
+        "id": "plant-west-waypoint",
+        "x": -34,
+        "z": -21,
+        "lossCondition": false
+      },
+      {
+        "id": "plant-center-waypoint",
+        "x": 0,
+        "z": 3,
+        "lossCondition": false
+      },
+      {
+        "id": "plant-east-waypoint",
+        "x": 34,
+        "z": 27,
+        "lossCondition": false
+      }
+    ],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": {
+      "id": "seed-run-dead-fields",
+      "mode": "visual"
+    },
+    "caravanRoute": [
+      {
+        "x": 0,
+        "z": -48
+      },
+      {
+        "x": -34,
+        "z": -21
+      },
+      {
+        "x": 0,
+        "z": 3
+      },
+      {
+        "x": 34,
+        "z": 27
+      },
+      {
+        "x": 0,
+        "z": 48
+      }
+    ],
+    "lanes": {
+      "spawnEdges": [
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": []
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}

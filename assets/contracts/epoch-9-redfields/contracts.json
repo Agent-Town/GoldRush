@@ -199,6 +199,428 @@
         ],
         "geographyLine": "A height-four ice-quarry scarp feeds a dry canal through three stage gates into a height-minus-two basin ringed by domes, rows, the weather spire, and Ark yards."
       }
+    },
+    {
+      "id": "e9-seed-run",
+      "name": "The Seed Run",
+      "description": "Engine dependency: profile-persistent planted-waypoint consumer not yet implemented. Teaching intent: spend escort strength now to create permanent shelter for future runs.",
+      "tileParams": {
+        "tileId": "e9-seed-run",
+        "biome": "redfields-seed-route",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "south-caravan-yard",
+            "bank": "south",
+            "minX": -36,
+            "maxX": 36,
+            "minZ": -54,
+            "maxZ": -42
+          },
+          {
+            "id": "west-green-waypoint",
+            "bank": "south",
+            "minX": -44,
+            "maxX": -24,
+            "minZ": -30,
+            "maxZ": -12
+          },
+          {
+            "id": "center-green-waypoint",
+            "bank": "north",
+            "minX": -10,
+            "maxX": 10,
+            "minZ": -6,
+            "maxZ": 12
+          },
+          {
+            "id": "east-green-waypoint",
+            "bank": "north",
+            "minX": 24,
+            "maxX": 44,
+            "minZ": 18,
+            "maxZ": 36
+          },
+          {
+            "id": "north-basin-approach",
+            "bank": "north",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": 42,
+            "maxZ": 54
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "plant-west-waypoint",
+            "x": -34,
+            "z": -21,
+            "lossCondition": false
+          },
+          {
+            "id": "plant-center-waypoint",
+            "x": 0,
+            "z": 3,
+            "lossCondition": false
+          },
+          {
+            "id": "plant-east-waypoint",
+            "x": 34,
+            "z": 27,
+            "lossCondition": false
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "seed-run-dead-fields",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Escort the seed-vault caravan to the basin and choose which vaults to plant along the route.",
+          "teachingIntent": "Investment across runs: present generosity becomes future shelter."
+        },
+        "lanes": {
+          "spawnEdges": [
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": []
+        }
+      },
+      "twist": {
+        "persistentPlanting": {
+          "description": "Each seed vault planted en route becomes a permanent green waypoint for future runs on this map."
+        }
+      },
+      "boardRow": {
+        "name": "The Seed Run",
+        "ledgerBlurb": "Carry the seed vaults across the dead fields; every one planted becomes shelter for the next caravan.",
+        "tags": [
+          "redfields",
+          "escort",
+          "persistence"
+        ],
+        "unlock": "secured:e9-dome-basin"
+      },
+      "briefing": {
+        "goals": [
+          "Escort the seed-vault caravan from the south yard to the basin approach.",
+          "Choose which vaults to plant at the three waypoint sites."
+        ],
+        "rules": [
+          "Planting a vault spends escort strength for the current run.",
+          "Each planted vault becomes a permanent green waypoint for future runs on this map.",
+          "Past generosity should create shelter for future caravans."
+        ],
+        "geographyLine": "A winding south-to-north caravan route crosses three planting grounds before reaching the basin approach."
+      }
+    },
+    {
+      "id": "e9-devils-alley",
+      "name": "Devil's Alley",
+      "description": "Engine dependency: scheduled moving-column pickup-and-relocation consumer not yet implemented. Teaching intent: anchor what matters and adapt when the wind replans the rest.",
+      "tileParams": {
+        "tileId": "e9-devils-alley",
+        "biome": "redfields-dust-devil-corridor",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "south-anchor-yard",
+            "bank": "south",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": -54,
+            "maxZ": -42
+          },
+          {
+            "id": "west-anchor-bay",
+            "bank": "south",
+            "minX": -50,
+            "maxX": -30,
+            "minZ": -18,
+            "maxZ": -2
+          },
+          {
+            "id": "center-anchor-bay",
+            "bank": "north",
+            "minX": -10,
+            "maxX": 10,
+            "minZ": -8,
+            "maxZ": 8
+          },
+          {
+            "id": "east-anchor-bay",
+            "bank": "north",
+            "minX": 30,
+            "maxX": 50,
+            "minZ": 2,
+            "maxZ": 18
+          },
+          {
+            "id": "north-anchor-yard",
+            "bank": "north",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": 42,
+            "maxZ": 54
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "anchor-west",
+            "x": -40,
+            "z": -10,
+            "lossCondition": false
+          },
+          {
+            "id": "anchor-center",
+            "x": 0,
+            "z": 0,
+            "lossCondition": false
+          },
+          {
+            "id": "anchor-east",
+            "x": 40,
+            "z": 10,
+            "lossCondition": false
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "devils-alley-corridor",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Hold the alley while scheduled dust devils pick up and relocate unanchored buildings.",
+          "teachingIntent": "Attachment versus adaptation, with relocation played for laughs."
+        },
+        "lanes": {
+          "spawnEdges": [
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": [
+            {
+              "id": "south-devil-sweep",
+              "points": [
+                {
+                  "x": -52,
+                  "z": -26
+                },
+                {
+                  "x": 52,
+                  "z": -26
+                }
+              ]
+            },
+            {
+              "id": "center-devil-sweep",
+              "points": [
+                {
+                  "x": 52,
+                  "z": 0
+                },
+                {
+                  "x": -52,
+                  "z": 0
+                }
+              ]
+            },
+            {
+              "id": "north-devil-sweep",
+              "points": [
+                {
+                  "x": -52,
+                  "z": 26
+                },
+                {
+                  "x": 52,
+                  "z": 26
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "twist": {
+        "scheduledRelocation": {
+          "description": "Dust devils cross on schedules and relocate unanchored buildings instead of destroying them."
+        }
+      },
+      "boardRow": {
+        "name": "Devil's Alley",
+        "ledgerBlurb": "Anchor what matters before the scheduled devils carry the rest of the plan somewhere funnier.",
+        "tags": [
+          "redfields",
+          "dust-devil",
+          "adaptation"
+        ],
+        "unlock": "secured:e9-seed-run"
+      },
+      "briefing": {
+        "goals": [
+          "Hold the alley through all three scheduled dust-devil sweeps.",
+          "Anchor the buildings that must not move."
+        ],
+        "rules": [
+          "Dust devils relocate unanchored buildings instead of destroying them.",
+          "Anchored bays preserve deliberate parts of the defense.",
+          "A relocated turret keeps firing while airborne."
+        ],
+        "geographyLine": "Three broad crosswind corridors cut an alley between south and north anchor yards, with protected bays set west, center, and east."
+      }
+    },
+    {
+      "id": "e9-old-canal",
+      "name": "The Old Canal",
+      "description": "Engine dependency: profile-persistent segment-choice and derived water-flow consumers not yet implemented. Teaching intent: edit inherited work segment by segment instead of erasing it wholesale.",
+      "tileParams": {
+        "tileId": "e9-old-canal",
+        "biome": "redfields-old-digger-canal",
+        "size": 128,
+        "dimensions": {
+          "width": 128,
+          "height": 128
+        },
+        "render": {
+          "terrainMesh": "preferred"
+        },
+        "river": false,
+        "ford": false,
+        "buildZones": [
+          {
+            "id": "south-survey-yard",
+            "bank": "south",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": -54,
+            "maxZ": -42
+          },
+          {
+            "id": "old-canal-segment-a",
+            "bank": "south",
+            "minX": -42,
+            "maxX": -18,
+            "minZ": -32,
+            "maxZ": -14
+          },
+          {
+            "id": "old-canal-segment-b",
+            "bank": "north",
+            "minX": -10,
+            "maxX": 14,
+            "minZ": -8,
+            "maxZ": 8
+          },
+          {
+            "id": "old-canal-segment-c",
+            "bank": "north",
+            "minX": 20,
+            "maxX": 44,
+            "minZ": 14,
+            "maxZ": 32
+          },
+          {
+            "id": "north-outflow-yard",
+            "bank": "north",
+            "minX": -30,
+            "maxX": 30,
+            "minZ": 42,
+            "maxZ": 54
+          }
+        ],
+        "stakeMarkers": [
+          {
+            "id": "decide-segment-a",
+            "x": -30,
+            "z": -23,
+            "lossCondition": false
+          },
+          {
+            "id": "decide-segment-b",
+            "x": 2,
+            "z": 0,
+            "lossCondition": false
+          },
+          {
+            "id": "decide-segment-c",
+            "x": 32,
+            "z": 23,
+            "lossCondition": false
+          }
+        ],
+        "waterSources": [],
+        "harvestAnchors": [],
+        "heightfield": {
+          "id": "old-canal-wrong-survey",
+          "mode": "visual"
+        },
+        "objectiveMetadata": {
+          "description": "Choose whether to re-dig or demolish each inherited canal segment, changing its eventual flow forever.",
+          "teachingIntent": "Inheritance is edited, not erased."
+        },
+        "lanes": {
+          "spawnEdges": [
+            "north",
+            "west",
+            "east"
+          ],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0,
+          "patrolRoutes": []
+        }
+      },
+      "twist": {
+        "persistentCanalChoices": {
+          "description": "Each canal segment permanently remembers re-dig or demolish, and the final water route follows the combined choices."
+        }
+      },
+      "boardRow": {
+        "name": "The Old Canal",
+        "ledgerBlurb": "The Digger's canal is wrong, but almost right; decide what to re-cut and what to remove forever.",
+        "tags": [
+          "redfields",
+          "canal",
+          "inheritance"
+        ],
+        "unlock": "secured:e9-devils-alley"
+      },
+      "briefing": {
+        "goals": [
+          "Survey each inherited canal segment.",
+          "Choose re-dig for a slow correction or demolish for a fast removal."
+        ],
+        "rules": [
+          "Every segment choice persists for future runs on this map.",
+          "Re-dig is slow and correct; demolish is fast and lost.",
+          "Water will follow the sum of the remembered choices."
+        ],
+        "geographyLine": "A crooked old Digger canal crosses three decision grounds between a south survey yard and the northern outflow."
+      }
     }
   ]
 }
