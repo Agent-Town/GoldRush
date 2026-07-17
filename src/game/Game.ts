@@ -111,7 +111,18 @@ import {
   type MultiplayerPlayer,
 } from '../mp/LockstepClient';
 import { consumeStagedRideConfig, currentMultiplayerSetup } from '../mp/RideTogether';
-import { MAX_PLAYBOOK_TICKS, parsePlaybookText, validateEntries, type PlaybookEntry } from '../playbook/PlaybookFormat';
+import {
+  MAX_PLAYBOOK_INTENTS,
+  MAX_PLAYBOOK_TICKS,
+  parsePlaybookText,
+  PLAYBOOK_STEP_SECONDS,
+  PLAYBOOK_VERSION,
+  playbookHash,
+  quantizePlaybookCoordinate,
+  validateEntries,
+  type PlaybookEntry,
+  type PlaybookRecording,
+} from '../playbook/PlaybookFormat';
 import { getPlaybookText, listPlaybooks, removePlaybook, savePlaybookText } from '../playbook/PlaybookStore';
 import {
   PlaybookRecorderSession,
@@ -158,7 +169,7 @@ import { CombatSystem } from '../systems/CombatSystem';
 import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
-import { OldDiggerBossSystem, type SurveyPoint } from '../systems/OldDiggerBossSystem';
+import { OldDiggerBossSystem, type OldDiggerTape, type SurveyPoint } from '../systems/OldDiggerBossSystem';
 import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
@@ -719,6 +730,7 @@ export class Game {
     },
     (position, radius, at) => this.unmakeStructuresNear(position, radius, at),
     (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
+    () => this.resolveOldDiggerTape(),
     this.oldDiggerSurveyPath(),
     this.activeContract.id === 'e9-dome-basin',
     {
@@ -5343,6 +5355,62 @@ export class Game {
     }
     if (unmade > 0) this.syncStockpileHoldings();
     return unmade;
+  }
+
+  /**
+   * THE SWAP's recording seam (E9 §BOSS Act 3): if a recording exists on the
+   * profile shelf it IS the tape — one made on this contract first, else any.
+   * With none, a survey of the base as built is synthesized through the real
+   * PB-01 tape format. The fight never blocks on a prior recording.
+   */
+  private resolveOldDiggerTape(): OldDiggerTape {
+    let anyRecording: OldDiggerTape | null = null;
+    for (const entry of listPlaybooks(localStorage)) {
+      const text = getPlaybookText(localStorage, entry.name);
+      if (!text) continue;
+      const parsed = parsePlaybookText(text);
+      if (!parsed.ok) continue;
+      const tape: OldDiggerTape = { source: 'recording', name: entry.name, hash: entry.hash };
+      if (parsed.playbook.contractId === this.activeContract.id) return tape;
+      anyRecording ??= tape;
+    }
+    return anyRecording ?? this.synthesizeBaseSurveyTape();
+  }
+
+  private synthesizeBaseSurveyTape(): OldDiggerTape {
+    const origin = new THREE.Vector3(0, 0, 0);
+    const buildings = this.goldTargeting
+      .buildingsInRadius(origin, 1_000)
+      .filter((target) => isBuildableId(target.id))
+      .slice(0, Math.min(MAX_PLAYBOOK_INTENTS, MAX_PLAYBOOK_TICKS - 1));
+    const entries: PlaybookEntry[] = buildings.map((target, index) => ({
+      t: index,
+      mx: 0,
+      my: 0,
+      a: [{
+        type: 'place_build',
+        id: target.id,
+        position: {
+          x: quantizePlaybookCoordinate(target.position.x),
+          z: quantizePlaybookCoordinate(target.position.z),
+        },
+        rotationSteps: 0,
+      }],
+    }));
+    const hero = this.primaryActor.group.position;
+    const survey: PlaybookRecording = {
+      version: PLAYBOOK_VERSION,
+      name: 'survey-of-the-base-as-built',
+      contractId: this.activeContract.id,
+      seed: getDebugSeed() ?? 'gold-rush',
+      difficultyPreset: this.difficultyPreset,
+      stepSeconds: PLAYBOOK_STEP_SECONDS,
+      start: { x: quantizePlaybookCoordinate(hero.x), z: quantizePlaybookCoordinate(hero.z) },
+      durationTicks: entries.length + 1,
+      entries,
+      truncated: null,
+    };
+    return { source: 'survey', name: survey.name, hash: playbookHash(survey) };
   }
 
   private readOldDiggerGentleAtBirth(): OldDiggerGentlePayload | null {

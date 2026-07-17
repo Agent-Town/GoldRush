@@ -26,6 +26,15 @@ const WAYPOINT_EPSILON = 0.8;
 
 export type SurveyPoint = Readonly<{ x: number; z: number }>;
 
+/**
+ * THE SWAP consumes a playbook recording (PB-01 tape law): the player's own
+ * recorded work, resolved from the profile shelf — or, when none exists, a
+ * synthesized survey of the base as built. The fight never blocks on a tape.
+ */
+export type OldDiggerTape = Readonly<{ source: 'recording' | 'survey'; name: string; hash: string }>;
+
+export type OldDiggerSwapPhase = 'none' | 'reading' | 'redig' | 'done';
+
 /** The gentle flag lives on TileStateStore (W6/TP-01 precedent): read at birth, written once at the swap ceremony. */
 export type OldDiggerGentlePersistence = Readonly<{
   readAtBirth: () => OldDiggerGentlePayload | null;
@@ -55,6 +64,11 @@ export type OldDiggerBossDiagnostics = {
   dronesAboard: number;
   dronesSpawned: number;
   dismounts: number;
+  swapPhase: OldDiggerSwapPhase;
+  redigging: boolean;
+  tape: OldDiggerTape | null;
+  archivedTape: OldDiggerTape | null;
+  joinedFleet: boolean;
   gentle: boolean;
   persistentGentle: boolean;
 };
@@ -94,6 +108,11 @@ export class OldDiggerBossSystem {
   private dronesSpawned = 0;
   private nextDroneRespawnAt = Number.POSITIVE_INFINITY;
   private dismounts = 0;
+  private swapPhase: OldDiggerSwapPhase = 'none';
+  private swapReadEndsAt = Number.POSITIVE_INFINITY;
+  private redigTarget: SurveyPoint | null = null;
+  private tape: OldDiggerTape | null = null;
+  private archivedTape: OldDiggerTape | null = null;
   private gentle = false;
   private persistentGentle = false;
   private readonly restPosition = new THREE.Vector3();
@@ -113,6 +132,7 @@ export class OldDiggerBossSystem {
     /** Unmaking routes through the build system's own demolition path (law: no ad-hoc removal). Returns structures unmade. */
     private readonly unmakeStructuresNear: (position: { x: number; z: number }, radius: number, at: number) => number,
     private readonly announce: (text: string, title: string) => void,
+    private readonly resolveTape: () => OldDiggerTape,
     private readonly surveyPath: readonly SurveyPoint[],
     private readonly enabled: boolean,
     private readonly persistence: OldDiggerGentlePersistence,
@@ -146,8 +166,9 @@ export class OldDiggerBossSystem {
     this.lastAt = at;
     if (!this.enabled || this.persistentGentle || !this.started) return this.syncPresentation();
     this.enforceNoKillLaw();
-    if (this.act === 1) this.updateRenovation(at);
-    if (this.boarded) this.updateBoarding(at, delta);
+    if (this.act === 1 && this.swapPhase === 'none') this.updateRenovation(at);
+    if (this.boarded && this.swapPhase === 'none') this.updateBoarding(at, delta);
+    if (this.swapPhase === 'reading' || this.swapPhase === 'redig') this.updateSwap(at);
     this.syncPresentation();
   }
 
@@ -157,12 +178,62 @@ export class OldDiggerBossSystem {
    * safely. The tape deck itself is Act 3's interaction.
    */
   tryInteract(position: THREE.Vector3, at: number): boolean {
-    if (!this.enabled || !this.started || this.gentle) return false;
+    if (!this.enabled || !this.started || this.gentle || this.swapPhase !== 'none') return false;
     if (this.boarded) {
+      if (this.deckProgress >= 1) {
+        this.beginSwap(at);
+        return true;
+      }
       this.dismount();
       return true;
     }
     return this.tryBoard(position, at);
+  }
+
+  /** Act 3, THE SWAP: your own recorded work becomes the new tape. It pauses. Reads. */
+  private beginSwap(at: number): void {
+    this.tape = this.resolveTape();
+    this.swapPhase = 'reading';
+    this.act = 2;
+    this.swapReadEndsAt = at + Balance.oldDigger.readSeconds;
+    this.nextUnmakeAt = Number.POSITIVE_INFINITY;
+    this.dismount();
+    const hull = this.hull();
+    if (hull) hull.scriptMoveTo(hull.position.x, hull.position.z, 0, { ignoreTerrain: true });
+    this.announce('It pauses. It reads.', 'THE SWAP');
+  }
+
+  private updateSwap(at: number): void {
+    const hull = this.hull();
+    if (!hull) return;
+    if (this.swapPhase === 'reading' && at >= this.swapReadEndsAt) {
+      this.swapPhase = 'redig';
+      // The whole saga holds its breath — and then it TURNS: its last correction, re-dug RIGHT.
+      this.redigTarget = this.lastLeg?.from ?? this.surveyPath[0] ?? { x: hull.position.x, z: hull.position.z };
+      hull.scriptMoveTo(this.redigTarget.x, this.redigTarget.z, Balance.oldDigger.reDigSpeed, { ignoreTerrain: true });
+    }
+    if (this.swapPhase === 'redig' && this.redigTarget
+      && Math.hypot(hull.position.x - this.redigTarget.x, hull.position.z - this.redigTarget.z) <= WAYPOINT_EPSILON) {
+      this.finishSwap(hull);
+    }
+  }
+
+  /**
+   * It joins the fleet (kept machine #5 — this one kept WORKING): hostility off
+   * both ways (the hull leaves the enemy roster so the town stops shooting it),
+   * the gentle model persists via TileStateStore, and the old tape goes to the
+   * archive — annotated, never erased.
+   */
+  private finishSwap(hull: ClaimJumperEnemy): void {
+    this.swapPhase = 'done';
+    this.act = 3;
+    this.gentle = true;
+    this.restPosition.set(hull.position.x, 0, hull.position.z);
+    this.recycleEnemy(hull);
+    for (const drone of this.liveDrones()) this.recycleEnemy(drone);
+    this.archivedTape = this.tape;
+    this.persistence.writeAtCeremony({ x: this.restPosition.x, z: this.restPosition.z });
+    this.announce('The old tape goes to the archive. It re-digs to the reeve’s charts now, gently, forever.', 'IT JOINS THE FLEET');
   }
 
   private tryBoard(position: THREE.Vector3, at: number): boolean {
@@ -258,6 +329,11 @@ export class OldDiggerBossSystem {
       dronesAboard: this.liveDrones().length,
       dronesSpawned: this.dronesSpawned,
       dismounts: this.dismounts,
+      swapPhase: this.swapPhase,
+      redigging: this.swapPhase === 'redig',
+      tape: this.tape,
+      archivedTape: this.archivedTape,
+      joinedFleet: this.gentle,
       gentle: this.gentle,
       persistentGentle: this.persistentGentle,
     };
@@ -275,6 +351,11 @@ export class OldDiggerBossSystem {
     this.dronesSpawned = 0;
     this.nextDroneRespawnAt = Number.POSITIVE_INFINITY;
     this.dismounts = 0;
+    this.swapPhase = 'none';
+    this.swapReadEndsAt = Number.POSITIVE_INFINITY;
+    this.redigTarget = null;
+    this.tape = null;
+    this.archivedTape = null;
     this.act = 0;
     this.started = false;
     this.surveyIndex = 0;
