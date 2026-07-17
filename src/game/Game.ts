@@ -170,6 +170,7 @@ import type { ShooterHandle } from '../systems/CombatSystem';
 import { CrawlerBossSystem } from '../systems/CrawlerBossSystem';
 import { DredgeQueenBossSystem } from '../systems/DredgeQueenBossSystem';
 import { OldDiggerBossSystem, type OldDiggerTape, type SurveyPoint } from '../systems/OldDiggerBossSystem';
+import { SalvageClawBossSystem } from '../systems/SalvageClawBossSystem';
 import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
@@ -233,14 +234,17 @@ import {
   DREDGE_QUEEN_WRECK_ENTRY_ID,
   GREEN_WAYPOINT_ENTRY_ID,
   OLD_DIGGER_GENTLE_ENTRY_ID,
+  SALVAGE_CLAW_CARCASS_ENTRY_ID,
   parseDredgeQueenWreckPayload,
   parseGreenWaypointPayload,
   parseOldDiggerGentlePayload,
+  parseSalvageClawCarcassPayload,
   TILE_STATE_SCHEMA_VERSION,
   TileStateStore,
   type DredgeQueenWreckPayload,
   type GreenWaypointPayload,
   type OldDiggerGentlePayload,
+  type SalvageClawCarcassPayload,
 } from './TileStateStore';
 import { createGreenWaypointSwatch, E1_RIVERBANK_GREEN } from '../world/GreenWaypoint';
 
@@ -715,6 +719,36 @@ export class Game {
     {
       readAtBirth: () => this.readWreckAtBirth(),
       writeAtCeremony: (wreck) => this.writeWreckAtCeremony(wreck),
+    },
+  );
+  private readonly salvageClawBoss = new SalvageClawBossSystem(
+    () => this.enemies.all,
+    (position, params) => this.enemies.spawn(position, params),
+    (enemy) => this.enemies.recycle(enemy),
+    () => {
+      const index = this.goldPickups.snapshot().findIndex((pickup) => pickup.active);
+      if (index < 0) return null;
+      const pickup = this.goldPickups.snapshot()[index]!;
+      const amount = this.goldPickups.take(index);
+      return amount > 0 ? { position: new THREE.Vector3(pickup.position.x, 0, pickup.position.z), amount } : null;
+    },
+    () => this.goldTargeting.buildingsInRadius(this.heroStart, 1_000).find((target) => isBuildableId(target.family)) ?? null,
+    (target, suspended) => this.buildSystem.setBuildingSuspended(target, suspended),
+    (target, amount) => {
+      const before = target.hp;
+      this.combat.damageBuilding(target, amount, -8);
+      return target.active && target.hp > 0 && target.hp < before ? target.hp : null;
+    },
+    (target, at) => {
+      if (!isBuildableId(target.family) || !this.buildSystem.demolish(target.family, target.index, at, target.position, 0, 0)) return false;
+      this.syncStockpileHoldings();
+      return true;
+    },
+    (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
+    this.activeContract.id === 'e8-mare-claim',
+    {
+      readAtBirth: () => this.readSalvageClawCarcassAtBirth(),
+      writeAtCeremony: (payload) => this.writeSalvageClawCarcassAtCeremony(payload),
     },
   );
   private readonly oldDiggerBoss = new OldDiggerBossSystem(
@@ -1229,7 +1263,8 @@ export class Game {
       const isLandYachtComponent = event.variantId === 'land_yacht';
       const isDredgeQueenComponent = event.variantId === 'dredge_queen';
       const isOldDiggerHull = event.variantId === 'old_digger';
-      if (!isCrawlerComponent && !isLandYachtComponent && !isDredgeQueenComponent && !isOldDiggerHull) {
+      const isSalvageClawComponent = event.variantId === 'salvage_claw';
+      if (!isCrawlerComponent && !isLandYachtComponent && !isDredgeQueenComponent && !isOldDiggerHull && !isSalvageClawComponent) {
         const entryId = this.enemyLedgerKinds.get(event.enemyId) ?? ledgerEnemyEntryId(event);
         this.discoverLedgerEnemyEntry(entryId);
         this.revealLedgerEnemyStats(entryId);
@@ -1249,6 +1284,10 @@ export class Game {
       if (isOldDiggerHull) {
         const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
         this.oldDiggerBoss.onHullKilled(enemy?.position ?? this.primaryActor.group.position, event.at);
+      }
+      if (isSalvageClawComponent) {
+        const enemy = this.enemies.all.find((entry) => entry.id === event.enemyId);
+        this.salvageClawBoss.onComponentKilled(event.bossComponentId, enemy?.position ?? this.primaryActor.group.position, event.at);
       }
       if (event.eliteKind === 'baron' || (event.eliteKind === 'railcar' && event.bossRemaining === 0)) {
         this.onBaronDefeated(event.at, event.enemyId);
@@ -1274,6 +1313,7 @@ export class Game {
         this.buildSystem.diagnostics.hp.some((building) => building.id === 'sentry_beacon' && !building.wrecked && building.hp > 0),
       );
       this.oldDiggerBoss.onWaveStarted(event.wave);
+      this.salvageClawBoss.onWaveStarted(event.wave, event.at);
     });
 
     this.debugTools = new DebugTools(this.tuning, () => {
@@ -1714,6 +1754,7 @@ export class Game {
     this.crawlerBoss.dispose();
     this.landYachtBoss.dispose();
     this.dredgeQueenBoss.dispose();
+    this.salvageClawBoss.dispose();
     this.oldDiggerBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
@@ -1907,6 +1948,7 @@ export class Game {
       this.crawlerBoss.update(this.timeAlive);
       this.landYachtBoss.update(this.timeAlive);
       this.dredgeQueenBoss.update(this.timeAlive);
+      this.salvageClawBoss.update(this.timeAlive);
       this.oldDiggerBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
@@ -2982,6 +3024,7 @@ export class Game {
     this.scene.add(this.crawlerBoss.group);
     this.scene.add(this.landYachtBoss.group);
     this.scene.add(this.dredgeQueenBoss.group);
+    this.scene.add(this.salvageClawBoss.group);
     this.scene.add(this.oldDiggerBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
@@ -3641,6 +3684,7 @@ export class Game {
       canyonWorks: this.canyonConnectDiagnostics(),
       crawlerBoss: this.activeContract.twist.baron?.variantId === 'dynamo_crawler' ? this.crawlerBoss.diagnostics() : null,
       landYachtBoss: this.activeContract.twist.baron?.variantId === 'land_yacht' ? this.landYachtBoss.diagnostics() : null,
+      salvageClawBoss: this.activeContract.id === 'e8-mare-claim' ? this.salvageClawBoss.diagnostics() : null,
       oldDiggerBoss: this.activeContract.id === 'e9-dome-basin' ? this.oldDiggerBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
@@ -5047,6 +5091,7 @@ export class Game {
     this.crawlerBoss.reset();
     this.landYachtBoss.reset();
     this.dredgeQueenBoss.reset();
+    this.salvageClawBoss.reset();
     this.oldDiggerBoss.reset();
     this.tram?.reset();
     this.ferrisWheel?.reset();
@@ -5429,6 +5474,23 @@ export class Game {
     });
     // The swap is a named write moment (W6 precedent): the kept machine must
     // survive an immediate reload without waiting for the run to end.
+    this.tileStateStore.commitAtRunEnd();
+  }
+
+  private readSalvageClawCarcassAtBirth(): SalvageClawCarcassPayload | null {
+    const entry = this.tileStateStore
+      .readSnapshot(this.activeContract.id)
+      .entries.find((candidate) => candidate.kind === 'render' && candidate.id === SALVAGE_CLAW_CARCASS_ENTRY_ID);
+    return entry ? parseSalvageClawCarcassPayload(entry.payload) : null;
+  }
+
+  private writeSalvageClawCarcassAtCeremony(payload: SalvageClawCarcassPayload): void {
+    this.tileStateStore.stageWrite(this.activeContract.id, {
+      kind: 'render',
+      id: SALVAGE_CLAW_CARCASS_ENTRY_ID,
+      payload: { x: payload.x, z: payload.z },
+      schemaVersion: TILE_STATE_SCHEMA_VERSION,
+    });
     this.tileStateStore.commitAtRunEnd();
   }
 
