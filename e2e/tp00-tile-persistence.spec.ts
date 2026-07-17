@@ -227,3 +227,93 @@ test('plain boot writes no tile-state keys', async ({ page }) => {
   expect(tileKeys).toEqual([]);
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
+
+test('profile export wipe import preserves tile state byte-identically', async ({ page }) => {
+  const errors = await openDebug(page);
+  const result = await page.evaluate(async ({ contractId, maxBytes }) => {
+    const tileState = (await Function('return import("/src/game/TileStateStore.ts")')()) as typeof import('../src/game/TileStateStore');
+    const profiles = (await Function('return import("/src/game/ProfileStorage.ts")')()) as typeof import('../src/game/ProfileStorage');
+    const transfer = (await Function('return import("/src/game/ProfileTransfer.ts")')()) as typeof import('../src/game/ProfileTransfer');
+    profiles.bindProfileSession('profile-a');
+    const key = profiles.tileStateKey('profile-a', contractId);
+    const seeded = JSON.stringify({
+      schemaVersion: 7,
+      futureEnvelope: { opaque: 'keep-this-exactly' },
+      entries: [
+        {
+          kind: 'sim',
+          id: 'future-canal',
+          payload: { stage: 2 },
+          schemaVersion: 4,
+          futureEntry: ['unknown', 17],
+        },
+      ],
+    });
+    localStorage.setItem(key, seeded);
+    const store = new tileState.TileStateStore(localStorage);
+    const snapshot = store.readSnapshot(contractId);
+    store.stageWrite(contractId, snapshot.entries[0]!);
+    const committed = store.commitAtRunEnd();
+    const before = localStorage.getItem(key);
+    const packed = transfer.packActiveProfile(localStorage);
+
+    localStorage.removeItem(key);
+    const imported = transfer.unpackProfile(localStorage, packed.envelope);
+    if (!imported.ok) return { committed, before, exported: null, after: null, deletedByRestore: false };
+    const importedKey = profiles.tileStateKey(imported.profile.id, contractId);
+    const after = localStorage.getItem(importedKey);
+    const rejectedOversize = transfer.restoreProfileBundle(localStorage, {
+      ...packed.envelope,
+      profile: { ...packed.envelope.profile, id: imported.profile.id },
+      data: {
+        [`tilestate.${contractId}`]: JSON.stringify({
+          schemaVersion: 1,
+          entries: [{ kind: 'sim', id: 'oversized', payload: { data: 'x'.repeat(maxBytes) }, schemaVersion: 1 }],
+        }),
+      },
+    });
+    const oversizeLeftPriorUntouched = !rejectedOversize.ok && localStorage.getItem(importedKey) === after;
+    const restored = transfer.restoreProfileBundle(localStorage, {
+      ...packed.envelope,
+      profile: { ...packed.envelope.profile, id: imported.profile.id },
+      data: {},
+    });
+    return {
+      committed,
+      before,
+      exported: packed.envelope.data[`tilestate.${contractId}`],
+      after,
+      oversizeLeftPriorUntouched,
+      deletedByRestore: restored.ok && localStorage.getItem(importedKey) === null,
+    };
+  }, { contractId: CONTRACT_ID, maxBytes: Balance.persistence.tileStateMaxBytes });
+
+  expect(result.committed).toBe(true);
+  expect(result.exported).toBe(result.before);
+  expect(result.after).toBe(result.before);
+  expect(result.oversizeLeftPriorUntouched).toBe(true);
+  expect(result.deletedByRestore).toBe(true);
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+test('a tile-state commit emits one profile-data change event', async ({ page }) => {
+  const errors = await openDebug(page);
+  const result = await page.evaluate(async (contractId) => {
+    const tileState = (await Function('return import("/src/game/TileStateStore.ts")')()) as typeof import('../src/game/TileStateStore');
+    const profiles = (await Function('return import("/src/game/ProfileStorage.ts")')()) as typeof import('../src/game/ProfileStorage');
+    profiles.bindProfileSession('profile-a');
+    const eventKeys: string[] = [];
+    window.addEventListener('gr:profile-data-changed', (event) => {
+      eventKeys.push((event as CustomEvent<{ key: string }>).detail.key);
+    });
+    const store = new tileState.TileStateStore(localStorage);
+    store.stageWrite(contractId, { kind: 'sim', id: 'canal', payload: { stage: 1 }, schemaVersion: 1 });
+    store.stageWrite(`${contractId}-sibling`, { kind: 'render', id: 'marker', payload: { mounted: true }, schemaVersion: 1 });
+    const committed = store.commitAtRunEnd();
+    const emptyCommit = store.commitAtRunEnd();
+    return { committed, emptyCommit, eventKeys };
+  }, CONTRACT_ID);
+
+  expect(result).toEqual({ committed: true, emptyCommit: true, eventKeys: ['tilestate'] });
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});

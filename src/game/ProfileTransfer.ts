@@ -1,13 +1,15 @@
 import { META_PROGRESS_KEY } from './MetaProgress';
+import { Balance } from './Balance';
 import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
 import {
-  PROFILE_DATA_KEYS,
   PROFILE_KEY,
   RUN_SUSPEND_KEY,
   activeProfile,
   importProfileRecord,
+  isTileStateDataKey,
   loadProfileState,
   profileDataKey,
+  profileDataKeys,
   saveProfileState,
   type ProfileRecord,
   type ProfileStorage,
@@ -46,9 +48,9 @@ export type ProfileTransferResult =
 export function packActiveProfile(storage: ProfileStorage): { envelope: ProfileTransferEnvelope; filename: string } {
   const profile = activeProfile(storage);
   const data: Record<string, unknown> = {};
-  for (const key of PROFILE_DATA_KEYS) {
+  for (const key of profileDataKeys(storage, profile.id)) {
     const raw = storage.getItem(profileDataKey(profile.id, key));
-    if (raw !== null) data[key] = decodeDatum(raw);
+    if (raw !== null) data[key] = isTileStateDataKey(key) ? raw : decodeDatum(raw);
   }
   let envelope: ProfileTransferEnvelope = {
     kind: TRANSFER_KIND,
@@ -113,7 +115,7 @@ export function unpackProfile(storage: ProfileStorage, envelope: ProfileTransfer
   if (envelope.version !== TRANSFER_VERSION) return { ok: false, message: 'That ledger does not match this trail.' };
   const profile = importProfileRecord(storage, envelope.profile);
   if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
-  for (const key of PROFILE_DATA_KEYS) {
+  for (const key of profileDataKeys(storage, profile.id, Object.keys(envelope.data))) {
     if (!(key in envelope.data)) continue;
     const datum = normalizeImportDatum(key, envelope.data[key]);
     if (datum === null) continue;
@@ -133,19 +135,20 @@ export function restoreProfileBundle(storage: ProfileStorage, envelope: ProfileT
   const profile = normalizeCloudProfile(envelope.profile);
   if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
 
-  const staged = stageRestoreData(storage, profile.id, envelope);
+  const keys = profileDataKeys(storage, profile.id, Object.keys(envelope.data));
+  const staged = stageRestoreData(storage, profile.id, envelope, keys);
   if (!staged.ok) return staged;
 
   const stateRaw = safeGet(storage, PROFILE_KEY);
   const prior = new Map<string, string | null>();
-  for (const key of PROFILE_DATA_KEYS) {
+  for (const key of keys) {
     const dataKey = profileDataKey(profile.id, key);
     prior.set(dataKey, safeGet(storage, dataKey));
   }
 
   const touched: string[] = [];
   try {
-    for (const key of PROFILE_DATA_KEYS) {
+    for (const key of keys) {
       const dataKey = profileDataKey(profile.id, key);
       const tempKey = staged.keys.get(key);
       if (tempKey) storage.setItem(dataKey, storage.getItem(tempKey) ?? '');
@@ -171,10 +174,11 @@ function stageRestoreData(
   storage: ProfileStorage,
   profileId: string,
   envelope: ProfileTransferEnvelope,
+  profileKeys: Iterable<string>,
 ): { ok: true; keys: Map<string, string> } | ProfileTransferFailure {
   const keys = new Map<string, string>();
   const token = `${Date.now()}-${Math.random().toString(36).slice(2)}`;
-  for (const key of PROFILE_DATA_KEYS) {
+  for (const key of profileKeys) {
     if (!(key in envelope.data)) continue;
     const datum = normalizeDatum(storage, profileId, key, envelope.data[key]);
     if (datum === null && requiresValidatedDatum(key)) {
@@ -255,19 +259,29 @@ function encodeDatum(value: unknown): string {
 }
 
 function normalizeDatum(storage: ProfileStorage, profileId: string, key: string, value: unknown): unknown | null {
+  if (isTileStateDataKey(key)) return normalizeTileStateDatum(value);
   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
   if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(safeGet(storage, profileDataKey(profileId, SAVE_SLOTS_KEY)), value);
   return value;
 }
 
 function normalizeImportDatum(key: string, value: unknown): unknown | null {
+  if (isTileStateDataKey(key)) return normalizeTileStateDatum(value);
   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
   if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(null, value);
   return value;
 }
 
 function requiresValidatedDatum(key: string): boolean {
-  return key === RUN_SUSPEND_KEY || key === SAVE_SLOTS_KEY;
+  return key === RUN_SUSPEND_KEY || key === SAVE_SLOTS_KEY || isTileStateDataKey(key);
+}
+
+function normalizeTileStateDatum(value: unknown): unknown | null {
+  try {
+    return byteSize(encodeDatum(value)) <= Balance.persistence.tileStateMaxBytes ? value : null;
+  } catch {
+    return null;
+  }
 }
 
 function safeGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
