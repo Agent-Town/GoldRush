@@ -1,0 +1,144 @@
+{
+  "maskTruth": {
+    "source": "assets/contracts/epoch-7-signal/contracts.json; specs/epoch-saga/e7-signal-bundle.md §B",
+    "tileId": "e7-relay-valley",
+    "size": 128,
+    "dimensions": {
+      "width": 128,
+      "height": 128
+    },
+    "river": false,
+    "ford": false,
+    "buildZones": [
+      {
+        "id": "relay-site-r1",
+        "bank": "north",
+        "minX": -50,
+        "maxX": -40,
+        "minZ": 36,
+        "maxZ": 46
+      },
+      {
+        "id": "relay-site-r2",
+        "bank": "north",
+        "minX": -30,
+        "maxX": -20,
+        "minZ": 36,
+        "maxZ": 46
+      },
+      {
+        "id": "relay-site-r3",
+        "bank": "north",
+        "minX": 20,
+        "maxX": 30,
+        "minZ": 36,
+        "maxZ": 46
+      },
+      {
+        "id": "relay-site-r4",
+        "bank": "north",
+        "minX": 40,
+        "maxX": 50,
+        "minZ": 36,
+        "maxZ": 46
+      }
+    ],
+    "stakeMarkers": [],
+    "waterSources": [],
+    "harvestAnchors": [],
+    "heightfield": {
+      "id": "relay-valley-ridgelines",
+      "mode": "visual"
+    },
+    "ridgeBands": [
+      {
+        "id": "ridge-west-h5",
+        "height": 5,
+        "minX": -54,
+        "maxX": -8,
+        "minZ": 24,
+        "maxZ": 54
+      },
+      {
+        "id": "ridge-east-h5",
+        "height": 5,
+        "minX": 8,
+        "maxX": 54,
+        "minZ": 24,
+        "maxZ": 54
+      },
+      {
+        "id": "valley-floor-h0",
+        "height": 0,
+        "minX": -54,
+        "maxX": 54,
+        "minZ": -54,
+        "maxZ": 18
+      }
+    ],
+    "fogPockets": [
+      {
+        "id": "ridge-dead-gap",
+        "minX": -8,
+        "maxX": 8,
+        "minZ": 24,
+        "maxZ": 54
+      },
+      {
+        "id": "west-fog-pocket",
+        "minX": -42,
+        "maxX": -18,
+        "minZ": -4,
+        "maxZ": 18
+      },
+      {
+        "id": "east-fog-pocket",
+        "minX": 18,
+        "maxX": 42,
+        "minZ": -12,
+        "maxZ": 12
+      }
+    ],
+    "lanes": {
+      "spawnEdges": [
+        "north",
+        "west",
+        "east"
+      ],
+      "territoryRingBiasWaves": 0,
+      "territoryRingLaneBias": 0,
+      "patrolRoutes": [
+        {
+          "id": "teaching-patrol",
+          "points": [
+            {
+              "x": -24,
+              "z": -20
+            },
+            {
+              "x": 24,
+              "z": -20
+            },
+            {
+              "x": 24,
+              "z": 8
+            },
+            {
+              "x": -24,
+              "z": 8
+            },
+            {
+              "x": -24,
+              "z": -20
+            }
+          ]
+        }
+      ]
+    },
+    "spawnGates": []
+  },
+  "waterAgreement": {
+    "river": false,
+    "waterSources": []
+  }
+}
