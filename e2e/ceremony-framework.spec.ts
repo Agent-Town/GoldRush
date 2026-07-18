@@ -199,6 +199,8 @@ test('T3 THE REFINERY: the manifest purchase debits its exact cost and the valve
   expect(done?.armedEpochId).toBe(E4);
   expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E4);
   expect(errors).toEqual({ console: [], page: [] });
+});
+
 test('generated ceremony and boss audio resolves through the manifest', async ({ page }) => {
   await page.goto('/');
   const names = [
