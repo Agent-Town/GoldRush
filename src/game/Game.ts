@@ -136,6 +136,7 @@ import {
   RECORD_SKIP_ACTIONS,
   type PlaybookProbe,
 } from '../playbook/PlaybookSession';
+import { PlaybookSurface } from '../playbook/PlaybookSurface';
 import { Hero } from '../entities/Hero';
 import { BlastChargePool } from '../entities/BlastCharge';
 import { GoldPickupPool } from '../entities/GoldPickup';
@@ -362,7 +363,9 @@ export class Game {
   private playbookRecorder: PlaybookRecorderSession | null = null;
   private playbookReplay: PlaybookReplaySession | null = null;
   private playbookReplaySlot = 0;
+  private playbookReplayRequiresConsent = false;
   private playbookPlayerHidden = false;
+  private playbookSurface?: PlaybookSurface;
   private readonly mpHeroChips = new Map<string, HTMLElement>();
   private readonly heroShooterUnsubscribes: Array<() => void> = [];
   private readonly actionActorPosition = new THREE.Vector3();
@@ -1268,6 +1271,17 @@ export class Game {
     const confirmButton = this.getElement('#confirm-button');
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
+    if (this.activeEpoch.order >= 7) {
+      this.playbookSurface = new PlaybookSurface(this.getElement('#hud'), {
+        capacity: Balance.e7Playbook.shelfCapacity,
+        list: () => listPlaybooks(localStorage),
+        status: () => this.playbookStatus(),
+        startRecording: () => this.startPlaybookRecording({}),
+        stopRecording: (name) => this.stopPlaybookRecording(name),
+        startReplay: (name) => this.startNamedPlaybookReplay(name),
+        stopReplay: () => this.stopPlaybookReplay(),
+      });
+    }
     this.promptStack.className = 'prompt-stack';
     this.promptStack.dataset.testid = 'prompt-stack';
     this.getElement('#hud').append(this.promptStack);
@@ -1925,6 +1939,7 @@ export class Game {
     window.removeEventListener('keydown', this.skipBaronCeremony);
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     this.input.dispose();
+    this.playbookSurface?.dispose();
     this.hud.dispose();
     this.assayOfficePrompt.dispose();
     this.buildingContextPrompt.dispose();
@@ -2476,15 +2491,16 @@ export class Game {
    */
   private consumePlaybookTick(sampledIntents: Intents, cancelConsumed: boolean): Intents {
     if (this.mpClient) return sampledIntents;
-    // Tape time is UPDATE-TICK time, frozen only by the manual-sim test gate
-    // (a harness artifact whose frame count is wall-clock — recording it would
-    // break byte-stability). World-driven stops (the charm hit-stop on kills)
-    // MUST stay on the tape: they expire inside updateCharmPause later in this
-    // same update, after which the sim integrates the tick — and they re-occur
-    // at the same tape tick during replay because the kills that cause them do.
+    // Tape time follows active simulation time. The manual-sim harness, player
+    // pauses, and level-up choices freeze it; world-driven charm hit-stop stays
+    // recorded because the sim remains active and deterministically recreates it.
     if (this.manualSimForTest && !this.manualAdvanceForTest) return sampledIntents;
     const recorder = this.playbookRecorder;
     if (recorder && !recorder.finished) {
+      // Player pauses and level-up choices are not agent work. Let the local
+      // input path handle their transition, then freeze tape time until the
+      // simulation is active again.
+      if (!recorder.scripted && (!this.state.simActive || sampledIntents.pause)) return sampledIntents;
       const scripted = recorder.nextScriptSample();
       const sample =
         scripted ??
@@ -2505,6 +2521,11 @@ export class Game {
     }
     const replay = this.playbookReplay;
     if (replay?.active) {
+      if (this.playbookReplayRequiresConsent && !this.playbookConsentGranted()) {
+        this.stopPlaybookReplay();
+        return sampledIntents;
+      }
+      if (!this.state.simActive || sampledIntents.pause) return sampledIntents;
       const slot = this.playbookReplaySlot;
       const actor = this.actors[slot];
       const input = slot > 0 && actor ? replay.step(actor.group.position) : null;
@@ -2548,7 +2569,11 @@ export class Game {
     const recorder = this.playbookRecorder;
     if (!recorder) return { ok: false, reason: 'no-recording' };
     const finished = recorder.finish(name);
-    const saved = savePlaybookText(localStorage, finished.playbook.name, finished.text);
+    const shelf = listPlaybooks(localStorage);
+    const shelfFull = shelf.length >= Balance.e7Playbook.shelfCapacity && !shelf.some((tape) => tape.name === finished.playbook.name);
+    const saved = shelfFull
+      ? { ok: false as const, reason: 'shelf-full' }
+      : savePlaybookText(localStorage, finished.playbook.name, finished.text);
     return {
       ok: true,
       name: finished.playbook.name,
@@ -2594,7 +2619,22 @@ export class Game {
     this.playbookRecorder = null;
     this.playbookReplay = new PlaybookReplaySession(playbook, normalizeProbeEvery(options.probeEvery));
     this.playbookReplaySlot = slot;
+    this.playbookReplayRequiresConsent = false;
     return { ok: true };
+  }
+
+  private startNamedPlaybookReplay(name: string): { ok: boolean; reason?: string } {
+    const required = Balance.e7Playbook.requiredPermissionLevel;
+    if (!this.playbookConsentGranted()) return { ok: false, reason: `permission-level-${required}-required` };
+    const result = this.startPlaybookReplay({ name });
+    if (result.ok) this.playbookReplayRequiresConsent = true;
+    return result;
+  }
+
+  private playbookConsentGranted(): boolean {
+    const level = this.agentStub?.state.permissionLevel ?? 0;
+    const rung = this.agentConsent.snapshot(level).rungs[Balance.e7Playbook.requiredPermissionLevel];
+    return rung.earned && rung.granted;
   }
 
   private ensurePlaybookReplayActor(): Hero {
@@ -2634,6 +2674,7 @@ export class Game {
       this.playbookPlayerHidden = false;
     }
     this.playbookReplaySlot = 0;
+    this.playbookReplayRequiresConsent = false;
     return { ok: true };
   }
 
@@ -2642,6 +2683,7 @@ export class Game {
     if (this.playbookReplay) this.stopPlaybookReplay();
     this.playbookRecorder = null;
     this.playbookReplay = null;
+    this.playbookReplayRequiresConsent = false;
   }
 
   private playbookStatus() {
@@ -4811,6 +4853,7 @@ export class Game {
       this.agentUiState(),
     );
     this.hud.update(this.uiSnapshot, this.pauseMetaSnapshot(), this.playerPauseActive && this.state.isPaused);
+    this.playbookSurface?.update();
   }
 
   private activeResourceSnapshots(): UiSnapshot['resources'] {
