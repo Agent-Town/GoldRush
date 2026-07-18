@@ -9,14 +9,18 @@ export type SoundName =
   | 'chirp-refuse'
   | 'defeat-sting'
   | 'demolish'
+  | 'dredge-queen-arrival-horn'
+  | 'e5-deepwater-ambience-loop'
   | 'epoch-door-sting'
   | 'era-e1-frontier-loop'
   | 'era-e2-steamworks-loop'
   | 'era-e3-voltage-loop'
   | 'gold-chime'
+  | 'homemaker-done-chime'
   | 'invalid'
   | 'ledger-open'
   | 'menu-tap'
+  | 'old-digger-tape-swap'
   | 'palisade-collapse'
   | 'palisade-crack'
   | 'palisade-hit'
@@ -28,6 +32,12 @@ export type SoundName =
   | 'spark-bolt-fire'
   | 'spark-bolt-hit'
   | 'stockpile-deposit'
+  | 't4-engines-loop'
+  | 't4-first-wave'
+  | 't4-wind'
+  | 't5-deep-hum-loop'
+  | 't5-surfacing'
+  | 't5-winch-rhythm'
   | 'tier-up'
   | 'title-theme'
   | 'turret-fire'
@@ -60,14 +70,18 @@ export const soundManifest = {
   'chirp-refuse': { file: 'chirp-refuse.mp3', volume: 0.3, group: 'voice' },
   'defeat-sting': { file: 'defeat-sting.mp3', volume: 0.42, group: 'ui' },
   demolish: { file: 'demolish.mp3', volume: 0.42, group: 'ui' },
+  'dredge-queen-arrival-horn': { file: 'dredge-queen-arrival-horn.mp3', volume: 0.44, group: 'sfx' },
+  'e5-deepwater-ambience-loop': { file: 'e5-deepwater-ambience-loop.mp3', volume: 0.2, group: 'ambience', loop: true },
   'epoch-door-sting': { file: 'epoch-door-sting.mp3', volume: 0.46, group: 'ui' },
   'era-e1-frontier-loop': { file: 'era-e1-frontier-loop.mp3', volume: 0.42, group: 'music', loop: true },
   'era-e2-steamworks-loop': { file: 'era-e2-steamworks-loop.mp3', volume: 0.42, group: 'music', loop: true },
   'era-e3-voltage-loop': { file: 'era-e3-voltage-loop.mp3', volume: 0.42, group: 'music', loop: true },
   'gold-chime': { file: 'gold-chime.mp3', volume: 0.3, group: 'sfx' },
+  'homemaker-done-chime': { file: 'homemaker-done-chime.mp3', volume: 0.34, group: 'sfx' },
   invalid: { file: 'invalid.mp3', volume: 0.34, group: 'ui' },
   'ledger-open': { file: 'ledger-open.mp3', volume: 0.36, group: 'ui' },
   'menu-tap': { file: 'menu-tap.mp3', volume: 0.3, group: 'ui' },
+  'old-digger-tape-swap': { file: 'old-digger-tape-swap.mp3', volume: 0.34, group: 'sfx' },
   'palisade-collapse': { file: 'palisade-collapse.mp3', volume: 0.5, group: 'sfx' },
   'palisade-crack': { file: 'palisade-crack.mp3', volume: 0.44, group: 'sfx' },
   'palisade-hit': { file: 'palisade-hit.mp3', volume: 0.38, group: 'sfx' },
@@ -79,6 +93,12 @@ export const soundManifest = {
   'spark-bolt-fire': { file: 'spark-bolt-fire.mp3', volume: 0.13, group: 'sfx', minIntervalMs: 80, pitchVariance: 0.05 },
   'spark-bolt-hit': { file: 'spark-bolt-hit.mp3', volume: 0.24, group: 'sfx', minIntervalMs: 50, pitchVariance: 0.04 },
   'stockpile-deposit': { file: 'stockpile-deposit.mp3', volume: 0.34, group: 'sfx' },
+  't4-engines-loop': { file: 't4-engines-loop.mp3', volume: 0.28, group: 'ambience', loop: true },
+  't4-first-wave': { file: 't4-first-wave.mp3', volume: 0.34, group: 'ambience' },
+  't4-wind': { file: 't4-wind.mp3', volume: 0.22, group: 'ambience' },
+  't5-deep-hum-loop': { file: 't5-deep-hum-loop.mp3', volume: 0.24, group: 'ambience', loop: true },
+  't5-surfacing': { file: 't5-surfacing.mp3', volume: 0.3, group: 'ambience' },
+  't5-winch-rhythm': { file: 't5-winch-rhythm.mp3', volume: 0.3, group: 'sfx' },
   'tier-up': { file: 'tier-up.mp3', volume: 0.38, group: 'ui' },
   'title-theme': { file: 'title-theme.mp3', volume: 0.48, group: 'music', loop: true },
   'turret-fire': { file: 'turret-fire.mp3', volume: 0.24, group: 'sfx', minIntervalMs: 70, pitchVariance: 0.04 },
