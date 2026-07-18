@@ -506,6 +506,7 @@ export class Game {
   private readonly simTimeScale = getTimescale();
   private manualSimForTest = false;
   private manualAdvanceForTest = false;
+  private manualLockstepPausedForTest = false;
   private manualResumeAtMpTickForTest: number | null = null;
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
@@ -1507,11 +1508,13 @@ export class Game {
         upgradeBuilding: (family: BuildableId, index: number) => this.upgradeBuilding(family, index),
         setManualSim: (enabled: boolean) => {
           this.manualSimForTest = enabled;
+          this.manualLockstepPausedForTest = enabled;
           if (!enabled) this.manualResumeAtMpTickForTest = null;
           return this.manualSimForTest;
         },
         resumeManualSimAtMpTick: (tick: number) => {
           this.manualSimForTest = true;
+          this.manualLockstepPausedForTest = false;
           this.manualResumeAtMpTickForTest = Math.max(0, Math.floor(tick));
           return this.manualResumeAtMpTickForTest;
         },
@@ -1967,6 +1970,7 @@ export class Game {
     this.mpActorIntents = null;
     this.mpActionsThisTick = [];
     const sampledIntents = this.input.readIntents();
+    if (this.mpClient && this.manualLockstepPausedForTest) return false;
     const cancelConsumed =
       this.mpClient || this.playbookLiveRecording() ? this.applyLocalMultiplayerPresentation(sampledIntents) : false;
     const lockstepSample = this.mpClient
