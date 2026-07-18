@@ -1,19 +1,39 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
-import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
-import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
-import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY } from '../src/meta/ContractFamilies';
-import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
-import { researchStateKey } from '../src/meta/ResearchTree';
-import { ceremonyKeptImageKey } from '../src/ceremony/scripts';
 
 const ARTIFACT_DIR = path.resolve('artifacts/ceremony-framework');
+const T3_SHOT = path.resolve('reviews/shots-t3/valve-and-rim.png');
+const META_PROGRESS_KEY = 'gr.meta.v1';
+const PROFILE_KEY = 'gr.profile.v2';
+const TOWN_NAME_KEY = 'gr.town.name.v1';
+const FIRST_CLAIM_DONE_KEY = 'gr.firstClaim.done.v1';
+const MEGAPROJECT_STATE_KEY = 'gr.megaprojects.v1';
+const ACTIVE_EPOCH_KEY = 'gr.activeEpoch.v1';
+const EPOCH_CEREMONY_KEY = 'gr.epochCeremony.v1';
+const E3 = 'epoch-3-voltage';
 const E4 = 'epoch-4-motor';
 const E5 = 'epoch-5-deepwater';
 const E6 = 'epoch-6-atomic';
 
 type Errors = { console: string[]; page: string[] };
+type ProfileState = {
+  version: 2;
+  activeId: string;
+  profiles: Array<{ id: string; name: string; createdAt: number; updatedAt: number; difficultyPreset: 'trail'; hintsSeen: string[] }>;
+};
+
+function profileDataKey(profileId: string, logicalKey: string): string {
+  return `${PROFILE_KEY}.${profileId}.${logicalKey}`;
+}
+
+function researchStateKey(epochId: string): string {
+  return `gr.research.${epochId}.v1`;
+}
+
+function ceremonyKeptImageKey(ceremonyId: string): string {
+  return `gr.ceremony.keptImage.v1.${ceremonyId}`;
+}
 
 function watchErrors(page: Page): Errors {
   const found: Errors = { console: [], page: [] };
@@ -127,9 +147,57 @@ test('plain boot: the framework sits inert — legacy doors, no overlay, no writ
   await expect(page.getByTestId('ceremony-layer')).toBeHidden();
   const diagnostics = await ceremonyDiagnostics(page);
   expect(diagnostics).toMatchObject({ doorState: 'legacy', open: false, armCount: 0, armableId: null });
-  expect(diagnostics?.registered).toEqual(['t4-the-boat', 't5-the-deep-reactor']);
+  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor']);
   const ceremonyKeys = await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('gr.ceremony.')));
   expect(ceremonyKeys).toEqual([]);
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('T3 THE REFINERY: the manifest purchase debits its exact cost and the valve hand alone arms E4', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  const errors = watchErrors(page);
+  await seed(page, { epochId: E3, scienceSteps: 10 });
+  await openSchoolhouse(page);
+
+  const buildDoor = page.getByTestId('epoch-megaproject-door');
+  await expect(buildDoor).toHaveAttribute('data-megaproject-id', 'refinery');
+  await expect(buildDoor).toHaveAttribute('data-door-state', 'ready');
+  await page.getByTestId('raise-epoch-megaproject').click();
+
+  const receipt = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null')?.projects?.refinery, MEGAPROJECT_STATE_KEY);
+  expect(receipt).toEqual({ complete: true, debited: { gold: 0, bankedScience: 10 } });
+  const research = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null'), researchStateKey(E3));
+  expect(research.steps).toBe(10);
+
+  const door = page.getByTestId('ceremony-epoch-door');
+  await expect(door).toHaveAttribute('data-door-state', 'ceremony-ready');
+  await expect(door).toHaveAttribute('data-ceremony-id', 't3-the-refinery');
+  await page.getByTestId('begin-ceremony').click();
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 5_000 }).toBe('open-valve');
+
+  await page.waitForTimeout(2_000);
+  expect((await ceremonyDiagnostics(page))?.phase).toBe('open-valve');
+  expect((await ceremonyDiagnostics(page))?.hand?.holdMs).toBe(0);
+  expect((await ceremonyDiagnostics(page))?.armCount).toBe(0);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E3);
+
+  const hand = page.getByTestId('ceremony-hand-input');
+  await hand.dispatchEvent('pointerdown');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 8_000 }).not.toBe('open-valve');
+  expect((await ceremonyDiagnostics(page))?.hand?.holdMs).toBeGreaterThanOrEqual(1_400);
+  await hand.dispatchEvent('pointerup');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 15_000 }).toBe('rim');
+  if (info.project.name === 'desktop-chrome') {
+    await mkdir(path.dirname(T3_SHOT), { recursive: true });
+    await page.screenshot({ path: T3_SHOT });
+  }
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 10_000 }).toBe('done');
+  const done = await ceremonyDiagnostics(page);
+  expect(done?.beats).toEqual(expect.arrayContaining(['t3-valve-squeal', 't3-liquid-rhythm', 't3-first-cough', 't3-the-refinery:kept-image']));
+  expect(done?.keptImage).toMatchObject({ captured: true, stored: true });
+  expect(done?.armCount).toBe(1);
+  expect(done?.armedEpochId).toBe(E4);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E4);
   expect(errors).toEqual({ console: [], page: [] });
 });
 

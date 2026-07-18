@@ -25,11 +25,13 @@ import {
   DEFAULT_CONTRACT_ID,
   DEFAULT_EPOCH_ID,
   epochIsActive,
+  epochMegaprojectComplete,
   listBoardContracts,
   loadContract,
   listEpochs,
   loadEpoch,
   pendingEpochContracts,
+  raiseActiveEpochMegaproject,
   type ContractManifest,
   type EpochUpcomingContract,
 } from '../meta/ContractFamilies';
@@ -962,6 +964,10 @@ export class TownScene {
       this.raiseStampMill();
       return;
     }
+    if (target?.closest('[data-raise-epoch-megaproject]')) {
+      this.raiseEpochMegaproject();
+      return;
+    }
     if (target?.closest('[data-begin-ceremony]')) {
       this.ceremonies.begin();
       this.publishDiagnostics();
@@ -1294,7 +1300,9 @@ export class TownScene {
   }
 
   private renderEpochActivationAction(surface: 'schoolhouse' | 'site' = 'schoolhouse'): string {
-    // Framework-staged eras (T4+) render the ceremony door; null = not ours.
+    const megaprojectDoor = this.renderEpochMegaprojectDoor(surface);
+    if (megaprojectDoor !== null) return megaprojectDoor;
+    // Framework-staged eras (T3+) render the ceremony door; null = not ours.
     const ceremonyDoor = this.ceremonies.renderDoor();
     if (ceremonyDoor !== null) return surface === 'schoolhouse' ? ceremonyDoor : '';
     if (activeEpochId() === STEAMWORKS_EPOCH_ID) return this.renderDynamoActivationAction(surface);
@@ -1334,6 +1342,23 @@ export class TownScene {
         <h3>The Stamp Mill is ready.</h3>
         <p>Frontier science banked · ${pledgedGold} gold pledged across three defended stages.</p>
         <button type="button" data-raise-stamp-mill data-testid="raise-stamp-mill">Raise the Stamp Mill</button>
+      </section>
+    `;
+  }
+
+  private renderEpochMegaprojectDoor(surface: 'schoolhouse' | 'site'): string | null {
+    const epoch = loadEpoch(activeEpochId());
+    if (epoch.order < 3 || epochMegaprojectComplete(epoch)) return null;
+    if (surface === 'site') return '';
+    const meter = scienceMeter(activeProfileResearchState());
+    const cost = epoch.megaproject.cost;
+    const affordable = meter.steps >= cost.bankedScience && cost.gold === 0;
+    return `
+      <section class="town-ui__epoch-door" data-testid="epoch-megaproject-door" data-megaproject-id="${epoch.megaproject.id}" data-door-state="${affordable ? 'ready' : 'needs-resources'}">
+        <p class="town-ui__board-eyebrow">The town's next works</p>
+        <h3>${epoch.megaproject.raiseActionText}</h3>
+        <p>${cost.bankedScience} banked science${cost.gold ? ` · ${cost.gold} gold` : ''}</p>
+        ${affordable ? `<button type="button" data-raise-epoch-megaproject data-testid="raise-epoch-megaproject">${epoch.megaproject.raiseActionText}</button>` : ''}
       </section>
     `;
   }
@@ -1385,6 +1410,14 @@ export class TownScene {
     if (!scienceMeter(activeProfileResearchState()).complete || !activateEpoch(VOLTAGE_EPOCH_ID)) return;
     this.renderSchoolhouse();
     emitStorySignal({ type: 'epoch-activated', epochId: VOLTAGE_EPOCH_ID, displayName: 'The Voltage Age' });
+    this.syncPrompt();
+    this.publishDiagnostics();
+  }
+
+  private raiseEpochMegaproject(): void {
+    const meter = scienceMeter(activeProfileResearchState());
+    if (!raiseActiveEpochMegaproject({ gold: 0, bankedScience: meter.steps })) return;
+    this.renderSchoolhouse();
     this.syncPrompt();
     this.publishDiagnostics();
   }

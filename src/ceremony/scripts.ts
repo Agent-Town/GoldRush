@@ -93,6 +93,34 @@ export type CeremonyScript = {
   keptImage: { caption: string };
 };
 
+export const T3_THE_REFINERY: CeremonyScript = {
+  id: 't3-the-refinery',
+  interstitial: 'T3',
+  epochId: 'epoch-3-voltage',
+  title: 'The Refinery',
+  doorLine: 'The crack-tower valve is waiting. The whole town has come to see what runs.',
+  hand: { kind: 'hold', durationMs: 1_400, label: 'Hold to open the crack-tower valve' },
+  phases: [
+    { id: 'night-refinery', kind: 'beat', durationMs: 1_200, direction: 'Built at night, lit like the Voltage Age taught.' },
+    { id: 'open-valve', kind: 'hand', direction: 'Open the crack-tower valve.' },
+    { id: 'valve-release', kind: 'beat', durationMs: 650, direction: 'Release. The valve seats; the twin spigots answer.' },
+    { id: 'twin-spigots', kind: 'beat', durationMs: 1_300, direction: 'Gold fuel and black tar find their liquid rhythm.' },
+    { id: 'first-engine', kind: 'beat', durationMs: 1_500, direction: 'An engine coughs. Twice. Then catches.' },
+    { id: 'dawn-tram', kind: 'beat', durationMs: 1_300, direction: 'At dawn, the whole town rides the tram to the rim.' },
+    { id: 'rim', kind: 'beat', durationMs: 1_400, direction: 'The flats shimmer south to the horizon. Too big to walk.' },
+    { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: 'The town on the rim, backs to camera.' },
+    { id: 'arm', kind: 'arm', direction: 'The Motor Frontier opens.' },
+  ],
+  sound: [
+    { beat: 't3-valve-squeal', phase: 'open-valve', atMs: 0, sound: 'tier-up' },
+    { beat: 't3-liquid-rhythm', phase: 'twin-spigots', atMs: 0, sound: 'sluice-water-loop' },
+    { beat: 't3-liquid-falls-silent', phase: 'first-engine', atMs: 0, sound: null, silence: true },
+    { beat: 't3-first-cough', phase: 'first-engine', atMs: 0, sound: 'prospector-hover-loop' },
+    { beat: 't3-engine-catches', phase: 'dawn-tram', atMs: 0, sound: null, silence: true },
+  ],
+  keptImage: { caption: 'The town on the rim, backs to camera.' },
+};
+
 // ─── T4 · E4→E5 — THE BOAT ───────────────────────────────────────────────────
 // STORYBOOK (verbatim): "Trigger: sci-12 + hull complete. THE HAND: the player
 // drives the lead Flivver of the overland haul (a short, absurd, sacred convoy
@@ -194,7 +222,7 @@ export const T5_THE_DEEP_REACTOR: CeremonyScript = {
 /** The registry: every framework-staged ceremony, keyed by the era it closes.
  * T1 (stamp mill click) and T2 (dynamo crank) predate the framework and stay
  * on their own doors — wrap, don't rewrite; migration is a named follow-up. */
-export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T4_THE_BOAT, T5_THE_DEEP_REACTOR];
+export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR];
 
 export function ceremonyScriptForEpoch(epochId: string): CeremonyScript | null {
   return CEREMONY_SCRIPTS.find((script) => script.epochId === epochId) ?? null;
