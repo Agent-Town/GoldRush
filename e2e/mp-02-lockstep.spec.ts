@@ -318,6 +318,9 @@ test('two clients promote both roster slots to real local-camera heroes and shar
     expect(bobCamera.inView).toBe(true);
     expect(bobCamera.distance).toBeLessThan(260);
 
+    await shotMp03(alice, testInfo, 'alice-two-heroes');
+    await shotMp03(bob, testInfo, 'bob-two-heroes');
+
     await bob.keyboard.press('KeyQ');
     await expect
       .poll(async () => {
@@ -375,9 +378,6 @@ test('two clients promote both roster slots to real local-camera heroes and shar
     expect(bobState.tick).toBeGreaterThanOrEqual(240);
     expect(aliceState.hashes.length).toBeGreaterThanOrEqual(6);
     expect(aliceState.hashes).toEqual(bobState.hashes);
-
-    await shotMp03(alice, testInfo, 'alice-two-heroes');
-    await shotMp03(bob, testInfo, 'bob-two-heroes');
 
     await Promise.all([alice.evaluate(() => window.__GR_TEST__?.endRunForTest()), bob.evaluate(() => window.__GR_TEST__?.endRunForTest())]);
     await expect(alice.getByTestId('mp-run-riders')).toContainText('Alice of Dawn Claim');
@@ -444,6 +444,13 @@ test('both riders place buildings and pick upgrades with equal hashes for 300 ti
     await bob.getByTestId('upgrade-card-0').click();
     await expect.poll(() => totalUpgradeStacks(alice)).toBe(2);
     await expect.poll(() => totalUpgradeStacks(bob)).toBe(2);
+
+    await Promise.all([waitForTick(alice, 181), waitForTick(bob, 181)]);
+    const [aliceMpBeforeBuild, bobMpBeforeBuild] = await Promise.all([
+      mpState(alice),
+      mpState(bob),
+    ]);
+    expect([aliceMpBeforeBuild.desyncs, bobMpBeforeBuild.desyncs]).toEqual([0, 0]);
 
     const bobPresentationBeforeRemoteBuild = await bob.evaluate(() => ({
       mode: window.__THREE_GAME_DIAGNOSTICS__!.build.mode,
