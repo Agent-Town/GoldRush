@@ -514,7 +514,7 @@ test('town Ride Together card creates a claim word and joins two named riders', 
   const bobErrors = collectErrors(bob);
   try {
     await openTownBoard(alice, ALICE);
-    await expect(alice.getByTestId('ride-together-card')).toBeVisible();
+    await ensureRideOpen(alice);
     await shotMp04(alice, testInfo, 'card');
     await alice.getByTestId('ride-open-claim').click();
     await expect(alice.getByTestId('ride-code-word')).not.toHaveText('No claim open', { timeout: 15_000 });
@@ -524,6 +524,7 @@ test('town Ride Together card creates a claim word and joins two named riders', 
     await alice.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
 
     await openTownBoard(bob, BOB);
+    await ensureRideOpen(bob);
     await bob.getByTestId('ride-join-input').fill(phrase);
     await shotMp04(bob, testInfo, 'join');
     await bob.getByTestId('ride-join-submit').click();
@@ -556,6 +557,7 @@ test('town Ride Together invalid word stays friendly at 390px', async ({ page },
   await page.setViewportSize({ width: 390, height: 740 });
   const errors = collectErrors(page);
   await openTownBoard(page, ALICE);
+  await ensureRideOpen(page);
   await page.getByTestId('ride-join-input').fill('QUIET-CLAIM');
   await page.getByTestId('ride-join-submit').click();
   await expect(page.getByTestId('ride-status')).toContainText("That claim's gone quiet.");
@@ -564,6 +566,13 @@ test('town Ride Together invalid word stays friendly at 390px', async ({ page },
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
+
+async function ensureRideOpen(page: Page): Promise<void> {
+  const card = page.getByTestId('ride-together-card');
+  await expect(card).toBeVisible();
+  if ((await card.getAttribute('open')) === null) await page.getByTestId('ride-together-toggle').click();
+  await expect(page.getByTestId('ride-together-controls')).toBeVisible();
+}
 
 async function openPair(browser: Browser, code: string, bobExtra = '', query = MP_QUERY): Promise<{
   alice: Page;
