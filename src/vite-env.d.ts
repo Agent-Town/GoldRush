@@ -472,6 +472,7 @@ interface ThreeGameDiagnostics {
   };
   pressure: import('./systems/PressureSystem').PressureDiagnostics;
   pressureArsenal: import('./systems/PressureArsenalSystem').PressureArsenalDiagnostics;
+  deepwaterArsenal: import('./entities/DeepwaterArsenal').DeepwaterArsenalDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
