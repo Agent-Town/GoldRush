@@ -1,5 +1,43 @@
 # SOL 3D-C — 3D pilot findings
 
+## Great landmark backlog 03 — E8 Mare Claim body handoff
+
+Branch: `sol/campaign-landmarks-e8-mare-claim`
+
+Base: `2c4080816553bbcb4b7ef74430686598a2d1176e`
+
+Verdict: **READY-FOR-GATES — five mount-agnostic Mare Claim landmark bodies are production-complete; seven build zones, the lava-tube mouth, mass-driver footing, six harvest anchors, and north debris arc remain untouched.**
+
+### Mount ID list
+
+1. `earthrise-listening-array`
+2. `lava-tube-survey-gantry`
+3. `regolith-core-yard`
+4. `west-rim-debris-catcher`
+5. `east-rim-debris-catcher`
+
+### Source ladder and composition
+
+- The listening array and tube gantry derive the exact E8 building plate's dish/ring/lattice vocabulary without duplicating the buildable solar-lens array or airlock gate.
+- The core yard reuses the shipped crater-rim set as a worked sample apron; the paired debris catchers reuse the shipped lander-leg base and grow open radial catcher baskets rather than becoming another building family.
+- Proposed placements are evidence-only while the MOUNT INTERLOCK is pending. The clearance board draws every protected mask feature from the current terrain contract and circles all five proposed body envelopes.
+
+### Production gate
+
+| Check | Result |
+| --- | --- |
+| Bodies | 5 separate GLBs; one mesh/primitive/material/image each |
+| Triangle budget | 840–2,092 triangles per body; all below 3,000 |
+| Shared atlas | one embedded 1024 x 1024 E8 atlas shared byte-for-byte by all five GLBs |
+| Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
+| Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
+| Source tiers | reuse 3, derive 2, build-new 0 |
+| Fresh-reference law | all boards record `origin/main@2c4080816553…` |
+| Repo gates | `npx tsc --noEmit` and `npm run build` green |
+| Visual QA | silver-teal/brass silhouettes remain distinct at the real Mare camera; the four-angle board proves complete backs, supports, working attachments, and ground contact |
+
+The evidence rig stays a verdict-only vacuum rake. No light, camera, mask, terrain, panorama, gameplay object, or canonical mount is exported or rewritten by this pack.
+
 ## Campaign landmark pack 01 — E5 Regatta body handoff
 
 Branch: `sol/campaign-landmarks-e5-regatta`
