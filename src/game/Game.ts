@@ -5350,8 +5350,8 @@ export class Game {
     const center = new THREE.Vector3(position.x, 0, position.z);
     let unmade = 0;
     for (const target of this.goldTargeting.buildingsInRadius(center, radius)) {
-      if (!isBuildableId(target.id)) continue;
-      if (this.buildSystem.demolish(target.id, target.index, at, target.position)) unmade += 1;
+      if (!isBuildableId(target.family)) continue;
+      if (this.buildSystem.demolish(target.family, target.index, at, target.position)) unmade += 1;
     }
     if (unmade > 0) this.syncStockpileHoldings();
     return unmade;

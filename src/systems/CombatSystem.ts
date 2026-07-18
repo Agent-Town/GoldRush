@@ -433,6 +433,7 @@ export class CombatSystem {
   }
 
   private damageHero(amount: number, sourceId: number, actor: Hero = this.primaryActor): boolean {
+    if (amount <= 0) return false;
     const result = actor.takeDamage(amount);
     if (!result.applied) return false;
 
