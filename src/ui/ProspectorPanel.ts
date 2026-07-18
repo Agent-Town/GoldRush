@@ -81,7 +81,7 @@ export class ProspectorPanel {
               agent?.policySlotBonus ?? 0,
             )}</p>
           </div>
-          <button class="prospector-panel__close" type="button" data-prospector-close aria-label="Close Prospector ledger">X</button>
+          <button class="prospector-panel__close" type="button" data-prospector-close aria-label="Close Prospector ledger">Back</button>
         </header>
         <div class="prospector-panel__section" data-testid="prospector-ladder">
           <h3>Trust ladder</h3>
@@ -161,7 +161,7 @@ export class ProspectorPanel {
     const label = AGENT_PERMISSION_LABELS[level];
     return `
       <div class="prospector-check prospector-check--locked" data-testid="prospector-ability-${ability.id}" data-allowed="false">
-        <span class="prospector-lock" aria-hidden="true">&#128274;</span>
+        <span class="prospector-lock" aria-hidden="true">Locked</span>
         <span>${ability.label}<br /><small>needs ${label} (rung ${level})</small></span>
       </div>
     `;

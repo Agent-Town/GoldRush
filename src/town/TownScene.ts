@@ -45,6 +45,7 @@ import {
 } from '../meta/Megaproject';
 import { RESEARCH_STATE_KEY, browserResearchStorage, loadResearchState, reconcileActiveEpoch, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
 import { CeremonySystem, type CeremonyDiagnostics } from '../ceremony/CeremonySystem';
+import { closeClaimHerald, openClaimHerald } from '../news/heraldReader';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
@@ -317,6 +318,7 @@ export class TownScene {
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
   private assayBench?: ReturnType<typeof installAssayBench>;
+  private heraldOpen = false;
   private promptKey = '';
   private townName = readTownName();
   private nameMode: TownNameMode = 'founding';
@@ -372,6 +374,7 @@ export class TownScene {
     this.disposed = true;
     this.loop.stop();
     this.input.dispose();
+    if (this.heraldOpen) closeClaimHerald();
     for (const state of this.hiddenButtons) state.element.hidden = state.hidden;
     window.clearTimeout(this.nameBeatTimer);
     window.clearTimeout(this.dynamoCrankTimer);
@@ -384,6 +387,7 @@ export class TownScene {
     this.prompt.removeEventListener('pointerleave', this.onDynamoCrankStop);
     this.prompt.removeEventListener('keydown', this.onDynamoCrankKeyDown);
     this.prompt.removeEventListener('keyup', this.onDynamoCrankKeyUp);
+    this.barkCard.removeEventListener('click', this.onBarkClick);
     this.board.removeEventListener('click', this.onBoardClick);
     this.board.removeEventListener('keydown', this.onBoardKeyDown);
     this.board.removeEventListener('pointerdown', this.onBoardPointerDown);
@@ -421,6 +425,12 @@ export class TownScene {
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
     this.ceremonies.update(delta);
+    if (this.heraldOpen) {
+      for (const actor of this.townActors) actor.update(delta, this.elapsed);
+      this.lastExitIntent = rawExitIntent;
+      this.publishDiagnostics();
+      return;
+    }
     if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen()) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
       if (rawExitIntent && !this.lastExitIntent) {
@@ -448,6 +458,7 @@ export class TownScene {
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.updateFirstClaimGuide();
     this.syncPrompt();
+    if (intents.confirm) this.activateTownAction(this.activePrompt?.id);
     this.syncBark();
     this.publishDiagnostics();
   }
@@ -797,6 +808,7 @@ export class TownScene {
     this.prompt.addEventListener('pointerleave', this.onDynamoCrankStop);
     this.prompt.addEventListener('keydown', this.onDynamoCrankKeyDown);
     this.prompt.addEventListener('keyup', this.onDynamoCrankKeyUp);
+    this.barkCard.addEventListener('click', this.onBarkClick);
     this.board.addEventListener('click', this.onBoardClick);
     this.board.addEventListener('keydown', this.onBoardKeyDown);
     this.board.addEventListener('pointerdown', this.onBoardPointerDown);
@@ -827,11 +839,35 @@ export class TownScene {
   private readonly onPromptClick = (event: Event) => {
     const target = event.target as HTMLElement | null;
     if (target?.closest('[data-raise-stamp-mill]')) this.raiseStampMill();
-    if (target?.closest('[data-town-board]')) this.openBoard();
-    if (target?.closest('[data-town-rename]')) this.openNameCard('rename');
-    if (target?.closest('[data-town-schoolhouse]')) this.openSchoolhouse();
-    if (target?.closest('[data-town-assay]')) this.openAssayBench();
+    else if (target?.closest('[data-town-board]')) this.activateTownAction('tavern');
+    else if (target?.closest('[data-town-rename]')) this.activateTownAction('claim_office');
+    else if (target?.closest('[data-town-schoolhouse]')) this.activateTownAction('schoolhouse');
+    else if (target?.closest('[data-town-assay]')) this.activateTownAction('assay_office');
   };
+
+  private readonly onBarkClick = (event: Event) => {
+    if (!(event.target as HTMLElement | null)?.closest('[data-town-herald]')) return;
+    openClaimHerald(this.onHeraldClose);
+    this.heraldOpen = true;
+    this.ui.inert = true;
+    this.ui.setAttribute('aria-hidden', 'true');
+  };
+
+  private readonly onHeraldClose = () => {
+    this.heraldOpen = false;
+    this.lastExitIntent = true;
+    this.ui.inert = false;
+    this.ui.removeAttribute('aria-hidden');
+    if (this.ui.isConnected) this.barkCard.querySelector<HTMLButtonElement>('[data-town-herald]')?.focus({ preventScroll: true });
+  };
+
+  private activateTownAction(buildingId: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | undefined): void {
+    if (!buildingId || this.nameCardOpen || this.heraldOpen || this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) return;
+    if (buildingId === 'tavern') this.openBoard();
+    else if (buildingId === 'claim_office' && this.townName) this.openNameCard('rename');
+    else if (buildingId === 'schoolhouse') this.openSchoolhouse();
+    else if (buildingId === 'assay_office') this.openAssayBench();
+  }
 
   private readonly onDynamoCrankStart = (event: Event) => {
     const button = (event.target as HTMLElement | null)?.closest<HTMLButtonElement>('[data-crank-dynamo]');
@@ -1027,6 +1063,7 @@ export class TownScene {
     this.nameInput.value = mode === 'rename' ? (this.townName ?? '') : '';
     this.nameMessage.textContent = '';
     this.nameBeat.hidden = true;
+    this.nameInput.focus({ preventScroll: true });
   }
 
   private closeNameCard(): void {
@@ -1197,6 +1234,7 @@ export class TownScene {
         <strong data-testid="town-bark-speaker">${escapeHtml(nearest.definition.name)}</strong>
         <span>${escapeHtml(nearest.definition.post)}</span>
         <p data-testid="town-bark-text">${escapeHtml(text)}</p>
+        ${nearest.definition.id === 'newsie' ? '<button class="town-ui__bark-action" type="button" data-town-herald data-testid="town-open-herald">Read</button>' : ''}
       </div>
     `;
     const portrait = this.barkCard.querySelector<HTMLImageElement>('.town-ui__bark-portrait');

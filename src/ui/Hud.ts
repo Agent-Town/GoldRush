@@ -185,10 +185,10 @@ export class Hud {
         <div data-hud-build></div>
       </section>
 
-      <section class="hud-panel hud-panel--meta" data-testid="pause-meta-panel" aria-label="Claim memory" hidden></section>
+      <section class="hud-panel hud-panel--meta" data-testid="pause-meta-panel" aria-label="Claim paused" hidden></section>
 
-      <button class="hud-pause" type="button" data-testid="hud-pause" data-hud-pause>
-        P - catch your breath
+      <button class="hud-pause" type="button" data-testid="hud-pause" data-hud-pause aria-keyshortcuts="P Escape">
+        <span class="hud-pause__key" aria-hidden="true">P - </span>catch your breath
       </button>
     `;
 
@@ -262,7 +262,10 @@ export class Hud {
     this.updateAnnouncement(snapshot);
     this.elements.root.dataset.runState = snapshot.state;
     this.elements.root.dataset.paused = String(snapshot.paused);
-    this.elements.pauseHint.textContent = snapshot.paused ? 'P - back to the claim' : 'P - catch your breath';
+    this.elements.pauseHint.innerHTML = `<span class="hud-pause__key" aria-hidden="true">P - </span>${
+      snapshot.paused ? 'back to the claim' : 'catch your breath'
+    }`;
+    this.elements.pauseHint.setAttribute('aria-label', snapshot.paused ? 'Back to the claim' : 'Pause the claim');
     this.updatePauseMeta(showPauseMeta, meta);
     this.buildButton.update(snapshot);
 
@@ -518,6 +521,7 @@ export class Hud {
 
     this.elements.pauseMeta.innerHTML = `
       <p class="hud-meta__eyebrow">Claim Memory</p>
+      <h2 class="hud-meta__pause-title">Claim Paused</h2>
       <button class="hud-meta__chip" type="button" data-testid="pause-open-ledger">Claim Ledger</button>
       <button class="hud-meta__chip" type="button" data-testid="pause-back-to-town">Back to Town - the claim keeps your place</button>
       <p class="hud-meta__line" data-testid="pause-meta-save">${this.escape(meta.save)}</p>

@@ -143,20 +143,30 @@ function showStartMenu(): void {
         openTown();
       },
       onOpenLedger: () => openClaimLedger(),
-      onProfile: () => {
-        startMenu?.dispose();
-        startMenu = undefined;
-        startWithProfiles({
-          showTitle: true,
-          onBack: () => {
-            profiles?.dispose();
-            profiles = undefined;
-            showStartMenu();
-          },
-        });
-      },
+      onProfile: () => openProfilesFromStartMenu(),
     });
   });
+}
+
+function openProfilesFromStartMenu(): void {
+  const menuRoot = document.querySelector<HTMLElement>('[data-testid="start-menu"]');
+  menuRoot?.setAttribute('inert', '');
+  menuRoot?.setAttribute('aria-hidden', 'true');
+  let closedDuringInstall = false;
+  const close = () => {
+    closedDuringInstall = true;
+    profiles?.dispose();
+    profiles = undefined;
+    startMenu?.refresh();
+    menuRoot?.removeAttribute('inert');
+    menuRoot?.removeAttribute('aria-hidden');
+    menuRoot?.querySelector<HTMLButtonElement>('[data-testid="start-menu-profile"]')?.focus({ preventScroll: true });
+  };
+  profiles?.dispose();
+  profiles = undefined;
+  const nextProfiles = installProfiles(close, { showTitle: true, onBack: close });
+  if (closedDuringInstall) nextProfiles.dispose();
+  else profiles = nextProfiles;
 }
 
 function continueSavedRun(): void {

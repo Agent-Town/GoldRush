@@ -21,7 +21,7 @@ export const HERO_INPUT_BINDINGS = {
 export function heroLedgerControlLines(): string[] {
   return [
     `Move: ${labelKeys([...HERO_INPUT_BINDINGS.moveUp, ...HERO_INPUT_BINDINGS.moveLeft, ...HERO_INPUT_BINDINGS.moveDown, ...HERO_INPUT_BINDINGS.moveRight])} or touch stick`,
-    'Primary: Spark Rig auto-fires nearest threat',
+    'The Spark Rig watches the nearest threat.',
     `Ability: ${labelKeys(HERO_INPUT_BINDINGS.weaponToggle)} toggles Spark Rig / Blast Charge`,
   ];
 }

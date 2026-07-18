@@ -249,6 +249,42 @@ body {
   font-weight: 900;
 }
 
+.gr-start-menu__settings-header {
+  position: sticky;
+  top: -12px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: -12px -12px 10px;
+  padding: 12px;
+  border-bottom: 1px solid rgba(46, 27, 14, 0.24);
+  background: rgba(245, 230, 200, 0.98);
+}
+
+.gr-start-menu__settings-header h2 {
+  margin: 0;
+}
+
+.gr-start-menu__settings input[type="checkbox"] {
+  grid-column: 2;
+  width: 26px;
+  height: 26px;
+  margin: 0;
+}
+
+.gr-start-menu__settings select {
+  min-width: 9rem;
+  min-height: 44px;
+  border: 1px solid rgba(46, 27, 14, 0.45);
+  border-radius: 6px;
+  padding: 0 8px;
+  color: #2e1b0e;
+  background: #fff8e8;
+  font: inherit;
+}
+
 .gr-start-menu__settings input {
   grid-column: 1 / -1;
   width: 100%;
@@ -280,6 +316,12 @@ body {
 .gr-start-menu--load-open .gr-start-menu__column {
   width: min(760px, calc(100vw - 48px));
   align-content: center;
+}
+
+.gr-start-menu--settings-open .gr-start-menu__column {
+  height: 100%;
+  align-content: start;
+  overflow: auto;
 }
 
 .gr-start-menu--research-open .gr-start-menu__nav {
@@ -1040,7 +1082,7 @@ body {
 
 .prospector-panel__header {
   display: grid;
-  grid-template-columns: 64px minmax(0, 1fr) 44px;
+  grid-template-columns: 64px minmax(0, 1fr) 58px;
   gap: 12px;
   align-items: center;
 }
@@ -1095,11 +1137,12 @@ body {
 }
 
 .prospector-panel__close {
-  width: 44px;
+  min-width: 58px;
   border: 2px solid #8b7d3c;
   border-radius: 7px;
   color: #2e1b0e;
   background: #ffe4a0;
+  padding: 0 8px;
   font: inherit;
   font-weight: 900;
   cursor: pointer;
@@ -1193,11 +1236,15 @@ body {
 }
 
 .prospector-check--locked {
+  grid-template-columns: auto minmax(0, 1fr);
   cursor: default;
 }
 
 .prospector-lock {
-  width: 20px;
+  width: auto;
+  font-size: 0.62rem;
+  font-weight: 900;
+  text-transform: uppercase;
   text-align: center;
 }
 
@@ -1386,6 +1433,15 @@ body {
 }
 
 #hud[data-paused="true"] .prompt-stack {
+  display: none;
+}
+
+#hud[data-paused="true"] .hud-panel--weapon,
+#hud[data-paused="true"] .hud-panel--xp,
+#hud[data-paused="true"] .hud-panel--build,
+body:has(#hud[data-paused="true"]) #touch-controls,
+body:has(.gr-start-menu) #touch-controls,
+body:has(.gr-profile-title) #touch-controls {
   display: none;
 }
 
