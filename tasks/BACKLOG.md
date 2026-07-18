@@ -558,3 +558,8 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 ## 2026-07-18 — SOL RELAY: sweep verified SIX-map-complete + BETA pack 1 drained
 - **3D-D MOUNTS SWEEP = ALL SIX PACKS** (regatta 8 + five ×5; verify_mounts_sweep.py green ON MAIN; interlocks resolved-3d-d; proposedIds debt cleared). Earlier "wave 1 of 3" note was a misread of the branch name — corrected in SOL-3D-D-QUEUE. **Mounts debt now: Pressure Garden only.**
 - **✅ BETA PACK 1: Pressure Garden E3** (5 bodies, geometry-reuse, <3k tris) merged 02738198, PY-CLEAN/TSC-0/build green. Known inherited finding (atlas-hash drift in 5 older packs) documented in reviews/sol-findings-lm-beta-pressure-garden.md — laddered, non-blocking.
+
+## 2026-07-18 — ALPHA'S SIX-PACK MORNING (continuous wave outran its announcements)
+- **✅ MERGED ×6 ALPHA landmark packs** (one every ~9 min, found pushed-unannounced during the relay): Showroom E6 (6ab16c63) · Half-Life Hollow (8c4cf9f0) · Echo Canyon (6e724b6a) · Low Orbit (1fb30246) · Seed Run (abc8a8e4) · Devil's Alley (2ea79272). Wave-order merges, scripts latest-wave-wins, findings unioned, zero markers, PY-CLEAN, TSC-0, build green. Refs deleted post-merge.
+- **Landmark pack total: 13 merged** (regatta, glow-mesa, relay-valley, mare-claim, dome-basin, ember-shore, pressure-garden + today's six). **3D-D mounts debt: 7 packs** (ledgered in SOL-3D-D-QUEUE).
+- NOTE: verify_landmark_packs.py is Blender-side (bpy) — engine gates + authoring-session Blender evidence are the drain gate; not runnable in plain python3.
