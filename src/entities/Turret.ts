@@ -6,6 +6,7 @@ import { createBuildingSign, disposeBuildingSign } from './BuildingSign';
 
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const tierColors = [new THREE.Color('#8b7d3c'), new THREE.Color('#c4883a'), new THREE.Color('#5b8a8a')];
+export const TURRET_SILHOUETTE_HEIGHT = 1.1;
 
 export class TurretPool {
   readonly group = new THREE.Group();
@@ -23,7 +24,7 @@ export class TurretPool {
       new THREE.Vector2(0.13, 0.54),
       new THREE.Vector2(0.32, 0.76),
       new THREE.Vector2(0.34, 1.02),
-      new THREE.Vector2(0.18, 1.1),
+      new THREE.Vector2(0.18, TURRET_SILHOUETTE_HEIGHT),
     ],
     10,
   );

@@ -201,6 +201,13 @@ export const Balance = {
     autoPan: { panTickMult: -0.25, pressurePerSecond: 2 },
     boilerBatteryBands: { low: 1, working: 1.2, high: 1.45 },
   },
+  e5Arsenal: {
+    harpoonBallista: { damage: 8, range: 14, cooldown: 1.4, boltSpeed: 22, silhouetteHeight: 1.1 },
+    depthChargeMunition: { id: 'depth_charge', capacity: 12, damage: 12, radius: 2.8, airTime: 0.65 },
+    depthChargeRack: { range: 12, cooldown: 2.8 },
+    depthChargeLobber: { range: 9, cooldown: 2.2 },
+    treatmentEventHistory: 64,
+  },
   xp: {
     perKill: 4,
     moteMagnetRadius: 2,
