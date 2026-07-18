@@ -3,6 +3,7 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import type { BuildDiagnostics } from '../systems/BuildSystem';
 import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
+import { performanceTierDiagnostics } from './PerformanceTier';
 
 const registry = {
   assay_office: { url: new URL('../../assets/pilots/run3d/assay-bench.glb', import.meta.url).href, fallback: 'AssayOfficeTimberShell', groundPad: 1 },
@@ -33,8 +34,8 @@ function fallback(host: Host, id: Buildable3dId): THREE.Object3D | undefined {
 
 export function installRun3dPilot(host: Host): Run3dPilot {
   const params = new URLSearchParams(window.location.search);
-  const selection = params.get('run3dPilot');
-  if (params.get('tier') === 'lite') {
+  const selection = params.get('run3dPilot') ?? 'all';
+  if (performanceTierDiagnostics().tier === 'lite') {
     publish(host.canvas, 'lite');
     return { update: () => undefined, dispose: () => publish(host.canvas, 'lite') };
   }

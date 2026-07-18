@@ -64,6 +64,7 @@ import seedRunContractText from '../../assets/pilots/map-rebuild-spike/seed-run-
 import seedRunPanoramaContractText from '../../assets/pilots/map-rebuild-spike/seed-run-panorama-contract.json?raw';
 import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json?raw';
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
+import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { disposeObject3D } from '../utils/dispose';
 import { installVisualHeightSource } from './Terrain';
 
@@ -382,7 +383,7 @@ function createSkirt(host: Host, heightAt: (x: number, z: number) => number, bou
 export function installTerrain3dClaimPilot(host: Host): () => void {
   const selected = REGISTRY[host.contractId];
   host.canvas.dataset.terrain3dPilotContract = host.contractId;
-  if (new URLSearchParams(window.location.search).get('tier') === 'lite') {
+  if (performanceTierDiagnostics().tier === 'lite') {
     host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'lite';
     publish(host.canvas, 'lite', 'painted');
     return () => undefined;

@@ -40,7 +40,7 @@ async function p95(page: Page, frames = 120): Promise<number> {
 async function simFingerprint(browser: Browser, pilot: boolean): Promise<{ hash: string; payload: unknown; errors: Errors }> {
   const page = await browser.newPage();
   const errors = collectErrors(page);
-  await boot(page, pilot ? '&terrain3dPilot' : '');
+  await boot(page, pilot ? '' : '&terrain2d');
   if (pilot) await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState === 'ready');
   const payload = await page.evaluate(() => {
     const test = window.__GR_TEST__!;
@@ -61,11 +61,11 @@ async function simFingerprint(browser: Browser, pilot: boolean): Promise<{ hash:
   return { payload, hash: createHash('sha256').update(JSON.stringify(payload)).digest('hex'), errors };
 }
 
-test('flag-off is byte-lazy and keeps the painted Claim', async ({ page }) => {
+test('terrain2d is byte-lazy and keeps the painted Claim', async ({ page }) => {
   const errors = collectErrors(page);
   let requests = 0;
   page.on('request', (request) => { if (MODEL.test(request.url())) requests += 1; });
-  await boot(page);
+  await boot(page, '&terrain2d');
   const canvas = page.locator('canvas');
   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'off');
   await expect(canvas).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
@@ -157,7 +157,7 @@ test('LITE and invalid bytes retain the painted fallback', async ({ page }) => {
   expect(requests).toBe(0);
 
   await page.route(MODEL, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes', contentType: 'model/gltf-binary' }));
-  await boot(page, '&terrain3dPilot');
+  await boot(page, '&terrain3dPilot&tier=full');
   await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-state', 'failed');
   await expect(page.locator('canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
   expect(errors).toEqual({ console: [], page: [] });
