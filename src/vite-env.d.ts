@@ -473,6 +473,7 @@ interface ThreeGameDiagnostics {
   pressure: import('./systems/PressureSystem').PressureDiagnostics;
   pressureArsenal: import('./systems/PressureArsenalSystem').PressureArsenalDiagnostics;
   e6Arsenal: import('./systems/E6ArsenalSystem').E6ArsenalDiagnostics;
+  e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
@@ -1012,6 +1013,10 @@ interface Window {
     e6Arsenal: {
       deployCaltrops: () => boolean;
       diagnostics: () => import('./systems/E6ArsenalSystem').E6ArsenalDiagnostics;
+    };
+    e9Arsenal: {
+      deployFence: () => boolean;
+      diagnostics: () => import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
     };
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;
