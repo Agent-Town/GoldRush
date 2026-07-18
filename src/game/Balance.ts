@@ -370,6 +370,10 @@ export const Balance = {
     signalJammer: { damage: 8, range: 9, fireRate: 1.25, boltSpeed: 14, deployOffsetX: 1.5, deployOffsetZ: 0.8, bodyRadius: 0.32, bodyHeight: 0.58 },
     reportRocket: { damage: 36, radius: 2.8, range: 14, cooldown: 3.5, airTime: 0.9, volley: 1 },
   },
+  e7Playbook: {
+    shelfCapacity: 24,
+    requiredPermissionLevel: 2,
+  },
   e8Arsenal: {
     sunlineBeam: { damage: 9, range: 11, fireRate: 3, boltSpeed: 24 },
     kineticLobber: { damage: 28, radius: 2.4, range: 15, cooldown: 3.4, airTime: 1.68 },

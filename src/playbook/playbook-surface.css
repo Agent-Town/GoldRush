@@ -1,0 +1,107 @@
+.playbook-surface {
+  position: absolute;
+  inset: 0;
+  z-index: 36;
+  pointer-events: none;
+  font-family: Georgia, 'Times New Roman', serif;
+}
+
+.playbook-surface button,
+.playbook-surface input,
+.playbook-surface__panel { pointer-events: auto; }
+
+.playbook-surface__toggle {
+  position: absolute;
+  top: 5.2rem;
+  right: 1rem;
+  padding: .55rem .8rem;
+  border: 1px solid #d8a45a;
+  border-radius: .35rem;
+  color: #f5e6c8;
+  background: rgba(61, 38, 25, .94);
+  box-shadow: 0 .25rem 1rem rgba(27, 17, 12, .38);
+  font: 700 .82rem Georgia, 'Times New Roman', serif;
+}
+
+.playbook-surface__toggle span { color: #e45a47; margin-right: .35rem; }
+
+.playbook-surface__panel {
+  position: absolute;
+  top: 8.3rem;
+  right: 1rem;
+  width: min(23rem, calc(100vw - 2rem));
+  max-height: min(32rem, calc(100vh - 9.3rem));
+  overflow: auto;
+  padding: 1rem;
+  border: 2px solid #c4883a;
+  border-radius: .45rem;
+  color: #3d2619;
+  background: #f2dfba;
+  box-shadow: 0 .7rem 2.2rem rgba(27, 17, 12, .48);
+}
+
+.playbook-surface__heading,
+.playbook-surface__recorder > div,
+.playbook-surface__shelf li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: .65rem;
+}
+
+.playbook-surface__heading small {
+  color: #2f7f78;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.playbook-surface h2 { margin: .15rem 0 0; font-size: 1.35rem; }
+.playbook-surface p { margin: .65rem 0; line-height: 1.35; }
+.playbook-surface label { display: block; margin-bottom: .3rem; font-size: .78rem; font-weight: 700; }
+
+.playbook-surface__heading button,
+.playbook-surface__recorder button,
+.playbook-surface__shelf button {
+  min-height: 2.35rem;
+  border: 1px solid #765033;
+  border-radius: .3rem;
+  color: #fff4d8;
+  background: #5b3a25;
+  font: 700 .78rem Georgia, 'Times New Roman', serif;
+}
+
+.playbook-surface__heading button { min-width: 2.35rem; font-size: 1.2rem; }
+.playbook-surface__recorder button,
+.playbook-surface__shelf button { padding: .45rem .7rem; }
+.playbook-surface button:disabled { opacity: .45; }
+
+.playbook-surface input {
+  min-width: 0;
+  flex: 1;
+  padding: .55rem;
+  border: 1px solid #8a6847;
+  border-radius: .25rem;
+  color: #3d2619;
+  background: #fff8e8;
+  font: inherit;
+}
+
+.playbook-surface__message { min-height: 1.2rem; color: #2f7f78; font-weight: 700; }
+.playbook-surface__shelf { display: grid; gap: .4rem; margin: .5rem 0 0; padding: 0; list-style: none; }
+.playbook-surface__shelf li { padding: .55rem; border-top: 1px solid rgba(118, 80, 51, .35); }
+.playbook-surface__shelf li span { display: grid; gap: .18rem; }
+.playbook-surface__shelf small { color: #765033; }
+.playbook-surface__empty { color: #765033; font-style: italic; }
+
+@media (max-width: 600px) {
+  .playbook-surface__toggle { top: 4.35rem; right: .5rem; }
+  .playbook-surface__panel {
+    top: auto;
+    right: .5rem;
+    bottom: 5rem;
+    width: calc(100vw - 1rem);
+    max-height: 58vh;
+    box-sizing: border-box;
+  }
+}
