@@ -12,7 +12,7 @@ import {
   type LedgerEntryId,
   type LedgerEpochId,
 } from './registry';
-import { readLedgerDiscovered } from './state';
+import { backfillReachedWorldOutsideEntries, readLedgerDiscovered } from './state';
 
 export const LEDGER_FACT_LINE_CAP = 4;
 
@@ -28,6 +28,7 @@ let currentEntryId: LedgerEntryId | undefined;
 let currentEpochId: LedgerEpochId = 'epoch-1-frontier';
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
+  backfillReachedWorldOutsideEntries();
   closeClaimLedger(false);
   const root = document.createElement('section');
   currentRoot = root;
