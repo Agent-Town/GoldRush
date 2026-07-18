@@ -15,16 +15,19 @@ export const CHARTER_AUTHOR_MAX_CHARS = 96;
 export const CHARTER_LINEAGE_MAX_STEPS = 24;
 
 export type CharterSeedPolicy = { mode: 'inherit' } | { mode: 'fixed'; seed: string };
+export type CharterRunPolicy = { waves: 'none' };
 export type CharterProvenance = {
   author: string;
   createdAt: string;
   lineage: readonly string[];
+  note?: string;
 };
 export type CharterEnvelope = {
   version: typeof CHARTER_VERSION;
   provenance: CharterProvenance;
   seedPolicy: CharterSeedPolicy;
   paletteId: string;
+  runPolicy?: CharterRunPolicy;
 };
 export type Charter = {
   envelope: CharterEnvelope;
@@ -113,8 +116,11 @@ export function validateCharterEnvelope(value: unknown): ContractDescriptorReaso
     return [envelopeReason('envelope_shape', 'The charter envelope has the wrong shape.', 'envelope')];
   }
   const keys = ['version', 'provenance', 'seedPolicy', 'paletteId'];
-  if (Object.keys(value).length !== keys.length || keys.some((key) => !Object.hasOwn(value, key))) {
-    return [envelopeReason('envelope_shape', 'The charter envelope carries version, provenance, seed policy, and palette — nothing else.', 'envelope')];
+  if (
+    keys.some((key) => !Object.hasOwn(value, key)) ||
+    Object.keys(value).some((key) => ![...keys, 'runPolicy'].includes(key))
+  ) {
+    return [envelopeReason('envelope_shape', 'The charter envelope carries version, provenance, seed policy, palette, and at most one run policy.', 'envelope')];
   }
   if (value.version !== CHARTER_VERSION) {
     reasons.push(envelopeReason('envelope_version', 'This press only understands version-one charters.', 'envelope.version'));
@@ -123,8 +129,12 @@ export function validateCharterEnvelope(value: unknown): ContractDescriptorReaso
   if (!isRecord(provenance) || Array.isArray(provenance)) {
     reasons.push(envelopeReason('envelope_provenance', 'The provenance block has the wrong shape.', 'envelope.provenance'));
   } else {
-    if (Object.keys(provenance).length !== 3 || ['author', 'createdAt', 'lineage'].some((key) => !Object.hasOwn(provenance, key))) {
-      reasons.push(envelopeReason('envelope_provenance', 'Provenance carries an author, a date, and a lineage — nothing else.', 'envelope.provenance'));
+    const provenanceKeys = Object.keys(provenance);
+    if (
+      ['author', 'createdAt', 'lineage'].some((key) => !Object.hasOwn(provenance, key)) ||
+      provenanceKeys.some((key) => !['author', 'createdAt', 'lineage', 'note'].includes(key))
+    ) {
+      reasons.push(envelopeReason('envelope_provenance', 'Provenance carries an author, a date, a lineage, and at most one note.', 'envelope.provenance'));
     }
     if (typeof provenance.author !== 'string' || provenance.author.trim().length === 0 || provenance.author.length > CHARTER_AUTHOR_MAX_CHARS) {
       reasons.push(envelopeReason('envelope_author', 'Every charter needs a named author.', 'envelope.provenance.author'));
@@ -139,6 +149,9 @@ export function validateCharterEnvelope(value: unknown): ContractDescriptorReaso
       provenance.lineage.some((entry) => typeof entry !== 'string' || entry.trim().length === 0)
     ) {
       reasons.push(envelopeReason('envelope_lineage', 'Every charter names the line of contracts it descends from.', 'envelope.provenance.lineage'));
+    }
+    if (Object.hasOwn(provenance, 'note') && (typeof provenance.note !== 'string' || provenance.note.trim().length === 0 || provenance.note.length > 1_024)) {
+      reasons.push(envelopeReason('envelope_note', 'A provenance note must be a short, legible line.', 'envelope.provenance.note'));
     }
   }
   const seedPolicy = value.seedPolicy;
@@ -158,6 +171,12 @@ export function validateCharterEnvelope(value: unknown): ContractDescriptorReaso
   }
   if (typeof value.paletteId !== 'string' || value.paletteId.trim().length === 0) {
     reasons.push(envelopeReason('envelope_palette', 'Every charter names its palette.', 'envelope.paletteId'));
+  }
+  if (
+    value.runPolicy !== undefined &&
+    (!isRecord(value.runPolicy) || Object.keys(value.runPolicy).length !== 1 || value.runPolicy.waves !== 'none')
+  ) {
+    reasons.push(envelopeReason('envelope_run_policy', 'A quiet charter may only close its incoming trails.', 'envelope.runPolicy'));
   }
   return reasons;
 }

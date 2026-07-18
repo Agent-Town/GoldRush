@@ -158,6 +158,7 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
     const next = new URLSearchParams();
     next.set('contract', rootId);
     if (charter.envelope.seedPolicy.mode === 'fixed') next.set('seed', charter.envelope.seedPolicy.seed);
+    if (charter.envelope.runPolicy?.waves === 'none') next.set('nowaves', '');
     const launch = () => {
       location.href = `${location.pathname}?${next.toString()}`;
     };
