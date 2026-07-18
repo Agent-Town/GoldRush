@@ -261,6 +261,11 @@ export const Balance = {
       postHeight: 0.9,
     },
     terraformCannon: { damage: 56, radius: 3.4, range: 13, cooldown: 2.6, airTime: 0.9, arcHeight: 1.8, clodRadius: 0.3 },
+  e7Arsenal: {
+    playbookSparkRig: { damage: 12, range: 10, fireRate: 2, boltSpeed: 18, volley: 1 },
+    beamRelay: { damage: 26, range: 18, fireRate: 0.8, boltSpeed: 22, silhouetteHeight: 1.1, ringInner: 0.24, ringOuter: 0.34 },
+    signalJammer: { damage: 8, range: 9, fireRate: 1.25, boltSpeed: 14, deployOffsetX: 1.5, deployOffsetZ: 0.8, bodyRadius: 0.32, bodyHeight: 0.58 },
+    reportRocket: { damage: 36, radius: 2.8, range: 14, cooldown: 3.5, airTime: 0.9, volley: 1 },
   },
   xp: {
     perKill: 4,

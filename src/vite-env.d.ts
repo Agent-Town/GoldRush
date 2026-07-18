@@ -475,6 +475,7 @@ interface ThreeGameDiagnostics {
   deepwaterArsenal: import('./entities/DeepwaterArsenal').DeepwaterArsenalDiagnostics;
   e6Arsenal: import('./systems/E6ArsenalSystem').E6ArsenalDiagnostics;
   e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
+  e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
