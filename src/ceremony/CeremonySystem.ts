@@ -11,7 +11,14 @@ import {
 import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
 import { ConvoyBehavior, type ConvoyPathEntity } from '../systems/ConvoyBehavior';
-import { CEREMONY_KEPT_IMAGE_EVENT, ceremonyKeptImageKey, ceremonyScriptForEpoch, type CeremonyPhase, type CeremonyScript } from './scripts';
+import {
+  CEREMONY_KEPT_IMAGE_EVENT,
+  CEREMONY_SCRIPTS,
+  ceremonyKeptImageKey,
+  ceremonyScriptForEpoch,
+  type CeremonyPhase,
+  type CeremonyScript,
+} from './scripts';
 import { drawCeremonyStage, type StageHandState } from './stages';
 
 export { CEREMONY_KEPT_IMAGE_EVENT, ceremonyKeptImageKey };
@@ -211,7 +218,7 @@ export class CeremonySystem {
     const doorState = script ? this.doorState(script) : 'legacy';
     const phase = ceremony ? ceremony.script.phases[ceremony.phaseIndex] ?? null : null;
     return {
-      registered: ['t4-the-boat', 't5-the-deep-reactor'],
+      registered: CEREMONY_SCRIPTS.map((entry) => entry.id),
       doorState: script ? doorState : 'legacy',
       armableId: script && doorState === 'ceremony-ready' ? script.id : null,
       open: !!ceremony,
