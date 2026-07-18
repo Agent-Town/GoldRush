@@ -16,7 +16,13 @@ test('goal tree schema is valid', () => {
   assert.equal(goals.version, 1);
   assert.deepEqual(goals.goals.map((goal) => goal.title), [
     'The Ten Eras', 'The 3D World', 'The Stream', 'Marketing', 'Factory Infra',
-  ]);
+    'Art Style & Brand (interface, backgrounds, laws of the look)',
+    'Laws & Framework (the constitution)',
+    'Story & Canon (storybook, arc, the Fever)',
+    'Multiplayer',
+    'The Charter Press (level editor → the capstone product)',
+    'The Foundry (extract the factory+engine as a reusable product)',
+  ]); // expanded per owner order 2026-07-16 (+charter-press/foundry same week)
   assert.equal(goals.goals[0].subgoals.length, 10);
   assert.equal(new Set(leaves.map((leaf) => leaf.id)).size, leaves.length);
 
