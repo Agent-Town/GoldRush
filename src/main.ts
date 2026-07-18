@@ -16,6 +16,7 @@ import { installClaimLedgerRequestHandler } from './encyclopedia/events';
 import { installEpochLedgerDiscovery } from './encyclopedia/state';
 import type { LedgerEntryId } from './encyclopedia/registry';
 import { installBuildFreshness } from './app/BuildFreshness';
+import { seedDebugEraFromSearch } from './meta/DebugEraSeed';
 
 type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
 type Game = import('./game/Game').Game;
@@ -94,6 +95,7 @@ afterFirstFrame(() => {
 });
 
 async function startGame(): Promise<void> {
+  seedDebugEraFromSearch(gameCanvas);
   const currentSearch = new URLSearchParams(window.location.search);
   const { Game } = await import('./game/Game');
   applyStoredDifficultyPreset();
