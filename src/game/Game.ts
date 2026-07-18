@@ -142,6 +142,7 @@ import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
 import { E6ArsenalSystem } from '../systems/E6ArsenalSystem';
 import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
+import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -440,6 +441,7 @@ export class Game {
   private readonly e6ArsenalSystem: E6ArsenalSystem;
   private readonly e9ArsenalSystem: E9ArsenalSystem;
   private readonly e7ArsenalSystem: E7ArsenalSystem;
+  private readonly e8ArsenalSystem: E8ArsenalSystem;
   private readonly progression: Progression;
   private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
   private activeWeapon: 'rig' | 'blast' = 'rig';
@@ -1180,6 +1182,17 @@ export class Game {
       () => this.activeEpoch.order >= 7 && !this.multiplayerActive(),
     );
     this.scene.add(this.e7ArsenalSystem.view.group);
+    this.e8ArsenalSystem = new E8ArsenalSystem(
+      this.combat,
+      this.enemies,
+      () => this.primaryActor.group.position,
+      (id) => hasResearchNode(this.researchState, id),
+      () => ['epoch-8-orbital', 'epoch-9-redfields', 'epoch-10-deepsky'].includes(this.activeEpoch.id),
+      () =>
+        ['epoch-8-orbital', 'epoch-9-redfields', 'epoch-10-deepsky'].includes(this.activeEpoch.id) &&
+        !this.multiplayerActive() &&
+        this.heroWeaponsEnabledFor(this.primaryActor),
+    );
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
       state: this.state,
@@ -1878,6 +1891,7 @@ export class Game {
     this.e6ArsenalSystem.dispose();
     this.e9ArsenalSystem.dispose();
     this.e7ArsenalSystem.dispose();
+    this.e8ArsenalSystem.dispose();
     this.crawlerBoss.dispose();
     this.landYachtBoss.dispose();
     this.dredgeQueenBoss.dispose();
@@ -2085,6 +2099,7 @@ export class Game {
         this.finishMultiplayerTick();
         return true;
       }
+      this.buildSystem.applyE8Arsenal(this.e8ArsenalSystem.lensTurretEnabled, this.e8ArsenalSystem.breachSealsEnabled);
       this.buildSystem.update(
         simDelta,
         this.timeAlive,
@@ -3778,6 +3793,7 @@ export class Game {
       e6Arsenal: this.e6ArsenalSystem.diagnostics,
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
+      e8Arsenal: this.e8ArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -5266,6 +5282,7 @@ export class Game {
     this.pressureSystem.reset();
     this.pressureArsenalSystem.reset();
     this.deepwaterArsenal.reset();
+    this.e8ArsenalSystem.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);

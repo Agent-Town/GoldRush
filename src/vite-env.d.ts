@@ -459,6 +459,8 @@ interface ThreeGameDiagnostics {
     shooterRegistrations: number;
     turretPulses: number;
     activeTurretPulses: number;
+    breachSeals: number;
+    lensTurrets: number;
     tierUpgrades: number;
     repairs: number;
     repairGold: number;
@@ -476,6 +478,7 @@ interface ThreeGameDiagnostics {
   e6Arsenal: import('./systems/E6ArsenalSystem').E6ArsenalDiagnostics;
   e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
+  e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
