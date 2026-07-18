@@ -17,6 +17,8 @@ import {
 } from './registry';
 import type { BuildableId } from '../game/buildables';
 import type { TownActorId } from '../town/townsfolk';
+import { epochIsActive } from '../meta/ContractFamilies';
+import { worldOutsideLedgerEntryByEpoch } from './worldOutside';
 
 const validEntryIds = new Set<LedgerEntryId>(ledgerEntries.map((entry) => entry.id));
 const validDiscoveryIds = new Set<LedgerDiscoveryId>([...validEntryIds, ...enemyStatsDiscoveryIds]);
@@ -71,12 +73,26 @@ export function installEpochLedgerDiscovery(): () => void {
   if (epochDiscoveryInstalled) return () => undefined;
   epochDiscoveryInstalled = true;
   const unsubscribe = onStorySignal((signal) => {
-    if (signal.type === 'epoch-activated') discoverLedgerEpoch(signal.epochId);
+    if (signal.type === 'first-victory') discoverWorldOutside('epoch-1-frontier');
+    if (signal.type === 'epoch-activated') {
+      discoverLedgerEpoch(signal.epochId);
+      discoverWorldOutside(signal.epochId);
+    }
   });
   return () => {
     epochDiscoveryInstalled = false;
     unsubscribe();
   };
+}
+
+function discoverWorldOutside(epochId: string): boolean {
+  const entryId = worldOutsideLedgerEntryByEpoch[epochId as keyof typeof worldOutsideLedgerEntryByEpoch];
+  return entryId && epochIsActive(epochId) ? discoverLedgerEntry(entryId) : false;
+}
+
+export function backfillReachedWorldOutsideEntries(): void {
+  if (!epochIsActive('epoch-2-steamworks')) return;
+  for (const epochId of Object.keys(worldOutsideLedgerEntryByEpoch)) discoverWorldOutside(epochId);
 }
 
 export function discoverLedgerTownActor(id: TownActorId): boolean {

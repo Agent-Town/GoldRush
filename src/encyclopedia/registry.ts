@@ -8,6 +8,7 @@ import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta
 import { DEFAULT_CONTRACT_ID, epochIsActive, listContracts, listEpochs, loadContract, loadEpoch } from '../meta/ContractFamilies';
 import { TOWN_ACTORS, townActorBark, type TownActorDefinition, type TownActorId } from '../town/townsfolk';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from './storage';
+import { worldOutsideLedgerEntries, type WorldOutsideLedgerEntryId } from './worldOutside';
 
 const heroUrl = new URL('../../assets/processed/char-hero-sheet-front-r0c0.png', import.meta.url).href;
 const prospectorUrl = new URL('../../assets/processed/char-prospector-portrait.png', import.meta.url).href;
@@ -87,7 +88,8 @@ export type LedgerEntryId =
   | EnemyLedgerEntryId
   | BuildableLedgerEntryId
   | ContractLedgerEntryId
-  | EpochLedgerEntryId;
+  | EpochLedgerEntryId
+  | WorldOutsideLedgerEntryId;
 export type LedgerDiscoveryId = LedgerEntryId | EnemyStatsDiscoveryId;
 
 export type LedgerEntry = {
@@ -239,6 +241,7 @@ export const ledgerEntries: readonly LedgerEntry[] = [
     .filter((contract) => contract.id !== DEFAULT_CONTRACT_ID)
     .map((contract) => contractEntry(contract.id)),
   ...listEpochs().map((epoch) => epochEntry(epoch.id)),
+  ...worldOutsideLedgerEntries,
 ] as const;
 
 export const ledgerEntryById: Record<LedgerEntryId, LedgerEntry> = Object.fromEntries(
