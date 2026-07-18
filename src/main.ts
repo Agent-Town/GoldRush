@@ -1,8 +1,6 @@
 import './styles.css';
 import './ui/theme.css';
 import { markStartupFrameReady, prefetchNonCriticalGeneratedTextures } from './assets/generated';
-import { prefetchNonCriticalSpriteRuntimes } from './assets/SpriteAnimator';
-import { installFullBaseBenchmark } from './diagnostics/fullBaseBenchmark';
 import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
 import type { RunReturnResult } from './game/Game';
@@ -259,7 +257,9 @@ if ([...initialSearch.keys()].every((key) => MENU_SAFE_PARAMS.has(key))) {
   startWithProfiles();
 }
 
-installFullBaseBenchmark();
+if (initialSearch.get('bench') === 'fullbase') {
+  void import('./diagnostics/fullBaseBenchmark').then(({ installFullBaseBenchmark }) => installFullBaseBenchmark());
+}
 
 function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult; initialBoardContractId?: string } = {}): void {
   markStartupFrameReady();
@@ -317,7 +317,7 @@ function releaseStartupAssetGateOnFirstGameFrame(): void {
 
 function prefetchNonCriticalStartupAssets(): void {
   void prefetchNonCriticalGeneratedTextures();
-  void prefetchNonCriticalSpriteRuntimes();
+  void import('./assets/SpriteAnimator').then(({ prefetchNonCriticalSpriteRuntimes }) => prefetchNonCriticalSpriteRuntimes());
 }
 
 if (import.meta.hot) {
