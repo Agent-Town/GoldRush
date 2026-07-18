@@ -20,6 +20,30 @@ No `src/` file changed. Simulation, collision, placement, spawns, range, line of
 
 The durable design and rebuild guidance is in `artifacts/map-rebuild-spike/MODEL-HANDOFF.md`. Exact asset measurements and hashes live in the adjacent terrain contracts and `artifacts/map-rebuild-spike/verification.json`.
 
+## Sweep 3 mounts — blackout through boneyard
+
+Six merged packs are now resolved in their terrain contracts and mirrored back into their pack contracts: Blackout Ridge, Canyon Works, Moth Season, Fairground, Dust Flats, and Boneyard.
+
+Gusher County and Long Road remain placeholders only. Their terrain contracts still have empty asset fields, but no matching `landmarks/gusher-county/` or `landmarks/long-road/` pack contract exists on `origin/main`, so there is nothing safe to mount yet.
+
+Evidence:
+
+- `artifacts/map-rebuild-spike/blackout-ridge-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/canyon-works-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/moth-season-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/fairground-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/dust-flats-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/boneyard-mounts-sweep-verdict.png`
+- `python3 assets/pilots/map-rebuild-spike/verify_mounts_sweep.py` → 27 maps / 150 records
+
+### F-3D-D-130 — Sweep 3 resolves only landed pack bodies
+
+The five pending BETA maps had pack bodies but no canonical terrain mounts. The sweep adds asset-backed records and sets `mountInterlock: resolved-3d-d`. Boneyard already had body-backed terrain mounts, so the correct action there was only to resolve the pack-side interlock and regenerate the verdict board.
+
+### F-3D-D-131 — Gusher County and Long Road are not mount debt yet
+
+Both contracts still contain empty asset fields, but their pack directories are absent on main. Filling those paths before 3D-C/ALPHA lands bodies would fabricate assets and break the mounted-landmark contract.
+
 ## Incline mount sweep + current blocked debt
 
 Incline's merged landmark pack is now resolved in the terrain contract. `assets/pilots/map-rebuild-spike/incline-terrain-contract.json` carries five canonical mounted body records with asset paths, and `assets/pilots/map-rebuild-spike/landmarks/incline/incline-landmark-pack-contract.json` now records the same mounts with `mountInterlock: resolved-3d-d`.
