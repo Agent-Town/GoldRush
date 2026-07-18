@@ -1,0 +1,37 @@
+import { expect, test, type Page } from '@playwright/test';
+
+const NEW = [
+  { id: 'e7-relay-valley', panorama: 'relay-valley-panorama' },
+  { id: 'e8-mare-claim', panorama: 'mare-claim-panorama' },
+  { id: 'e9-dome-basin', panorama: 'dome-basin-panorama' },
+  { id: 'e10-ember-shore', panorama: 'ember-shore-panorama' },
+];
+
+async function boot(page: Page, id: string): Promise<void> {
+  await page.goto(`/?debug&contract=${id}&nowaves&nolevel&nokill&nopause&seed=wire-check-${id}&terrain3dPilot`);
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  const begin = page.getByRole('button', { name: 'Begin' });
+  if (await begin.isVisible()) await begin.click();
+}
+
+for (const c of NEW) {
+  test(`new terrain mounts: ${c.id}`, async ({ page }) => {
+    test.setTimeout(60_000);
+    const consoleErr: string[] = [];
+    page.on('console', (m) => { if (m.type() === 'error') consoleErr.push(m.text()); });
+    page.on('pageerror', (e) => consoleErr.push(e.message));
+    await boot(page, c.id);
+    await page.waitForFunction(() => document.querySelector('canvas')?.dataset.terrain3dPilotState !== 'loading');
+    const canvas = page.locator('canvas');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-contract', c.id);
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-render-source', 'glb');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-height-source', 'baked-grid');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama', c.panorama);
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-meshes'))).toBe(1);
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-triangles'))).toBe(32_768);
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmarks'))).toBe(0);
+    expect(Number(await canvas.getAttribute('data-terrain3d-pilot-landmark-skipped'))).toBe(0);
+    expect(consoleErr, consoleErr.join('\n')).toEqual([]);
+  });
+}
