@@ -289,6 +289,58 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## Mounts sweep — Regatta, Glow Mesa, Relay Valley, Mare Claim, Dome Basin, Ember Shore
+
+### F-3D-D-117 — Merged landmark packs now resolve through terrain contracts
+
+The mounts sweep backfills the published mount-agnostic packs into their terrain contracts without changing terrain meshes, panoramas, masks, gameplay bounds, collision, movement, spawns, water, or placement. The first sweep resolved Regatta, Glow Mesa, and Relay Valley. A fresh-main boundary during review added Mare Claim, Dome Basin, and Ember Shore, so the branch was rebased and extended before delivery rather than shipping stale debt.
+
+`regatta-terrain-contract.json` keeps its existing eight canonical offsets and fills only the asset fields. `glow-mesa-terrain-contract.json`, `relay-valley-terrain-contract.json`, `mare-claim-terrain-contract.json`, `dome-basin-terrain-contract.json`, and `ember-shore-terrain-contract.json` each receive five resolved pack mounts. Each terrain contract now has `landmarkPack`, `landmarkMountSpace`, and `landmarkMounts` with asset paths to the pack GLBs. Each corresponding pack contract now carries the same mount array and `mountInterlock: resolved-3d-d`; the old `proposedIds` debt marker is removed. The sweep script is `assets/pilots/map-rebuild-spike/apply_mounts_sweep.py`.
+
+### F-3D-D-118 — Atomic and signal mounts avoid load-bearing masks
+
+Glow Mesa's first pack proposal placed service hardware on the story side of the mesa, but two natural positions would have landed inside authored build rectangles. The canonical sweep moves the mesa derrick, cooling rack, and herd gates to edge positions outside the build/fixture rectangles while preserving the same read: peripheral atomic extraction hardware, open six-vein center, open build rectangles, and open fixture rectangles.
+
+Relay Valley's five mounts stay outside the four relay build pads, all named fog pockets, and the teaching patrol rectangle. The dish clusters remain peripheral signal furniture, not duplicate relay-tower sites; the dead-gap chart station sits south of the dead gap; the cable yard and recovery beacon stay on the lower valley edges.
+
+### F-3D-D-119 — Lunar, basin, and ember mounts follow each map's authored burden
+
+Mare Claim's five mounts avoid premium pads, dome pads, launch and mass-driver build areas, and the lava-tube mouth while keeping the listening array, gantry, regolith yard, and debris catchers on the crater-rim story. Dome Basin's five mounts avoid build zones while reinforcing the canal gate, ice quarry, seed-weather rig, ark scaffold, and dust-mast read. Ember Shore uses the pack's authored preview transforms for the vent altar, titan shelf, west vein, bridge school, and preserve rack; those are fixture presentation sites rather than new blocker geometry, so they are recorded but not treated as a clearance rewrite.
+
+### F-3D-D-120 — Verdict boards are evidence boards, not new asset renders
+
+Blender is not on PATH in this session, and the merged landmark packs already include run-camera, overview, and lineup renders. The mounts sweep therefore reuses those current pack renders for owner boards instead of rebuilding GLBs or terrain. A fresh unprimed visual critique caught board-only weaknesses: dark/letterboxed run-camera panels, small edge mounts, and mixed clearance evidence in the Relay crop. The board generator now trims dead render borders and lifts shadow detail in the review PNGs only; no asset, GLB, mask, or contract transform changes were made for that presentation correction.
+
+## Mounts sweep gate state
+
+- Regatta mount records: 8/8, all asset fields filled: PASS
+- Glow Mesa mount records: 5/5, all asset fields filled: PASS
+- Relay Valley mount records: 5/5, all asset fields filled: PASS
+- Mare Claim mount records: 5/5, all asset fields filled: PASS
+- Dome Basin mount records: 5/5, all asset fields filled: PASS
+- Ember Shore mount records: 5/5, all asset fields filled: PASS
+- Pack contracts match terrain `landmarkMounts`: PASS
+- Pack interlocks changed from pending to resolved: PASS
+- Glow Mesa build/fixture rectangle clearance: PASS
+- Relay Valley build/fog rectangle clearance: PASS
+- Mare Claim build/lava-tube rectangle clearance: PASS
+- Dome Basin build rectangle clearance: PASS
+- Verdict boards generated per map: PASS
+- Fresh unprimed board critique completed; board-only shadow/border correction applied: PASS
+- `python3 assets/pilots/map-rebuild-spike/verify_mounts_sweep.py`: PASS
+- Terrain GLBs, panorama GLBs, masks, simulation, and `src/`: unchanged
+
+## Mounts sweep owner-verdict images
+
+- `artifacts/map-rebuild-spike/regatta-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/glow-mesa-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/relay-valley-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/mare-claim-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/dome-basin-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/ember-shore-mounts-sweep-verdict.png`
+
+READY-FOR-GATES
+
 ## Campaign boundary reconciliation — 2026-07-18
 
 ### F-3D-D-116 — Every published unique campaign mask now has a sculpt delivery; the ledger's sculpt column is stale
