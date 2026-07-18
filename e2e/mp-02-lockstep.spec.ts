@@ -327,7 +327,7 @@ test('two clients promote both roster slots to real local-camera heroes and shar
         const [aliceView, bobView] = await Promise.all([gameDiagnostics(alice), gameDiagnostics(bob)]);
         return { alice: aliceView.arsenal.active, bob: bobView.arsenal.active };
       }, { timeout: 5_000 })
-      .toEqual({ alice: 'blast', bob: 'blast' });
+      .toEqual({ alice: 'rig', bob: 'blast' });
     await bob.keyboard.press('KeyQ');
     await expect
       .poll(async () => {
@@ -336,12 +336,13 @@ test('two clients promote both roster slots to real local-camera heroes and shar
       }, { timeout: 5_000 })
       .toEqual({ alice: 'rig', bob: 'rig' });
 
+    const movementStartTick = Math.max((await mpState(alice)).tick, (await mpState(bob)).tick);
     let movedPair: [ActorDiagnostic[], ActorDiagnostic[]] | null = null;
     await alice.keyboard.down('KeyW');
     try {
-      await waitForTick(alice, 240);
-      await waitForTick(bob, 240);
-      movedPair = await syncedHashedActorDiagnostics(alice, bob, 240);
+      await waitForTick(alice, movementStartTick + 75);
+      await waitForTick(bob, movementStartTick + 75);
+      movedPair = await syncedHashedActorDiagnostics(alice, bob, movementStartTick + 75);
     } finally {
       await alice.keyboard.up('KeyW');
     }
@@ -374,8 +375,8 @@ test('two clients promote both roster slots to real local-camera heroes and shar
     const aliceState = await mpState(alice);
     const bobState = await mpState(bob);
     await writeReport(testInfo, 'mp-03-second-hero', { alice: aliceIndependent, bob: bobIndependent, mp: { alice: aliceState, bob: bobState } }, MP03_ARTIFACT_DIR);
-    expect(aliceState.tick).toBeGreaterThanOrEqual(240);
-    expect(bobState.tick).toBeGreaterThanOrEqual(240);
+    expect(aliceState.tick).toBeGreaterThanOrEqual(movementStartTick + 75);
+    expect(bobState.tick).toBeGreaterThanOrEqual(movementStartTick + 75);
     expect(aliceState.hashes.length).toBeGreaterThanOrEqual(6);
     expect(aliceState.hashes).toEqual(bobState.hashes);
 
@@ -858,6 +859,7 @@ async function syncedHashedActorDiagnostics(
               position: { x: number; z: number };
               velocity: { x: number; z: number };
               visible: boolean;
+              weapon: 'rig' | 'blast';
             }>;
           }).actors
         : undefined;
@@ -872,6 +874,7 @@ async function syncedHashedActorDiagnostics(
           actors.push({
             ...live,
             hp: saved.hp,
+            weapon: saved.weapon,
             position: { ...live.position, x: saved.position.x, z: saved.position.z },
             speed: Math.hypot(saved.velocity.x, saved.velocity.z),
             visible: saved.visible,
@@ -1037,7 +1040,9 @@ async function scoresFor(page: Page, profileId: string): Promise<ScoreRecord[]> 
 function assertSameRosterSlots(left: ActorDiagnostic[], right: ActorDiagnostic[], positionTolerance = 0.06): void {
   const visibleLeft = left.filter((actor) => actor.visible).sort((a, b) => a.slot - b.slot);
   const visibleRight = right.filter((actor) => actor.visible).sort((a, b) => a.slot - b.slot);
-  expect(visibleLeft.map((actor) => [actor.slot, actor.name, actor.town])).toEqual(visibleRight.map((actor) => [actor.slot, actor.name, actor.town]));
+  expect(visibleLeft.map((actor) => [actor.slot, actor.name, actor.town, actor.weapon])).toEqual(
+    visibleRight.map((actor) => [actor.slot, actor.name, actor.town, actor.weapon]),
+  );
   for (const actor of visibleLeft) {
     const peer = visibleRight.find((candidate) => candidate.slot === actor.slot);
     expect(peer).toBeTruthy();

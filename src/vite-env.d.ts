@@ -197,6 +197,7 @@ interface ThreeGameDiagnostics {
     local: boolean;
     hp: number;
     maxHp: number;
+    weapon: 'rig' | 'blast';
     position: { x: number; y: number; z: number };
     speed: number;
     visible: boolean;
@@ -1046,6 +1047,7 @@ interface Window {
     resetRun: () => void;
     endRunForTest: () => void;
     toggleWeapon: () => 'rig' | 'blast';
+    setLocalWeaponForTest: (weapon: 'rig' | 'blast') => 'rig' | 'blast';
     setBlastAim: (x: number, z: number) => { x: number; z: number };
     setDifficultyPreset: (preset: string) => 'greenhorn' | 'trail' | 'vein-hunter';
     warmVfx: () => Promise<void>;
