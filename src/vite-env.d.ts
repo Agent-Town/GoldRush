@@ -236,6 +236,7 @@ interface ThreeGameDiagnostics {
     };
   };
   decay: ReturnType<import('./systems/DecaySystem').DecayScheduler['diagnostics']>;
+  e6Tiles: import('./systems/E6TileConsumerSystem').E6TileConsumerDiagnostics;
   wrangle: ReturnType<import('./systems/WrangleSystem').WrangleSystem['diagnostics']>;
   run: {
     secured: boolean;
@@ -1021,6 +1022,9 @@ interface Window {
     e6Arsenal: {
       deployCaltrops: () => boolean;
       diagnostics: () => import('./systems/E6ArsenalSystem').E6ArsenalDiagnostics;
+    };
+    e6Tiles: {
+      diagnostics: () => import('./systems/E6TileConsumerSystem').E6TileConsumerDiagnostics;
     };
     e9Arsenal: {
       deployFence: () => boolean;

@@ -163,6 +163,32 @@ export const Balance = {
   decay: {
     clockAuraFactor: 0.9,
   },
+  e6Tiles: {
+    puddles: {
+      unsafeSeconds: 8,
+      safeSeconds: 6,
+      staggerSeconds: 4,
+      stages: 3,
+      height: 0.04,
+      activeColor: '#83ded7',
+      safeColor: '#4f756e',
+      activeOpacity: 0.55,
+      safeOpacity: 0.16,
+      emissiveIntensity: 0.5,
+    },
+    night: { daySeconds: 8, nightSeconds: 12 },
+    veins: {
+      harvestRange: 1.5,
+      harvestSeconds: 0.75,
+      goldPerVein: 4,
+      radius: 0.34,
+      visualHeight: 0.34,
+      dormantColor: '#507975',
+      activeColor: '#83ded7',
+      dormantEmissiveIntensity: 0.08,
+      activeEmissiveIntensity: 0.85,
+    },
+  },
   wrangle: {
     windDownSeconds: 8,
     exhaustedSpeedMultiplier: 0.2,

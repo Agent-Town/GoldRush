@@ -146,6 +146,7 @@ import { PressureSystem } from '../systems/PressureSystem';
 import { FuelSystem } from '../systems/FuelSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
 import { E6ArsenalSystem } from '../systems/E6ArsenalSystem';
+import { E6TileConsumerSystem } from '../systems/E6TileConsumerSystem';
 import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
 import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
@@ -535,8 +536,18 @@ export class Game {
   // here, before any system builds, and never again mid-run (Loader Contract).
   private readonly tileStateStore = new TileStateStore(localStorage);
   private readonly activeContract = bornContract(this.tileStateStore);
+  private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
+  private readonly e6TileConsumers = new E6TileConsumerSystem(
+    this.contractEpoch?.id === 'epoch-6-atomic' && this.activeContract.id === 'e6-glow-mesa',
+    this.activeContract.id,
+    this.decay,
+    this.economy,
+    this.tileStateStore,
+    this.activeContract.tileParams,
+    (position, amount) => this.vfx.floatText(position, `STARSTONE +${amount}`, '#83ded7'),
+  );
   private readonly wrangle = new WrangleSystem(
-    this.activeEpoch.id === 'epoch-6-atomic',
+    this.contractEpoch?.id === 'epoch-6-atomic',
     this.activeContract.id,
     this.decay,
     this.enemies,
@@ -573,7 +584,6 @@ export class Game {
   private mothLightSources: LightSource[] = [];
   private dayNightSnapshot: DayNightSnapshot | null = null;
   private dayNightTimeOverride: number | null = null;
-  private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private runSuspendSaveLine = runSuspendPauseLine(this.activeContract.id);
   private manualSaveMessage = '';
   private readonly heroStart = contractHeroStart(this.activeContract);
@@ -1503,6 +1513,7 @@ export class Game {
           this.railPath?.resampleTerrain();
           this.megaprojectRailPath?.resampleTerrain();
           this.e9CanalSystem.resampleTerrain();
+          this.e6TileConsumers.resampleTerrain();
         },
       });
     });
@@ -1570,6 +1581,9 @@ export class Game {
         e6Arsenal: {
           deployCaltrops: () => this.e6ArsenalSystem.deployCaltrops(),
           diagnostics: () => this.e6ArsenalSystem.diagnostics,
+        },
+        e6Tiles: {
+          diagnostics: () => this.e6TileConsumers.diagnostics,
         },
         e9Arsenal: {
           deployFence: () => this.e9ArsenalSystem.deployFence(),
@@ -1942,6 +1956,7 @@ export class Game {
     this.pressureArsenalSystem.dispose();
     this.deepwaterArsenal.dispose();
     this.e6ArsenalSystem.dispose();
+    this.e6TileConsumers.dispose();
     this.e9ArsenalSystem.dispose();
     this.e9CanalSystem.dispose();
     this.e7ArsenalSystem.dispose();
@@ -2125,10 +2140,12 @@ export class Game {
       this.activeTickElapsed += delta;
       const simDelta = delta * this.simTimeScale;
       this.timeAlive += simDelta;
+      this.e6TileConsumers.setEnabled(this.mpClient === undefined);
       this.decay.tick();
       this.syncDeepwaterClaim();
       if (this.actors.some((actor) => actor.group.visible && this.weaponForActor(actor) === 'blast')) this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
+      this.e6TileConsumers.update(simDelta, this.timeAlive, this.visibleHarvestTargets());
       this.syncPlaybookAnchor();
       this.syncHeroVisualHeight();
       this.deepwaterArsenal.update(this.timeAlive);
@@ -2201,7 +2218,7 @@ export class Game {
           if (!this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
-        this.buildSystem.palisadeBlockers,
+        [...this.buildSystem.palisadeBlockers, ...this.e6TileConsumers.blockers],
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
         (enemy) =>
@@ -2304,8 +2321,9 @@ export class Game {
   }
 
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
+    const terrain = { bounds: Terrain.bounds, sample: (x: number, z: number) => this.actorTerrainSample(x, z) };
     if (!this.mpActorIntents) {
-      this.primaryActor.update(simDelta, fallbackIntents, { bounds: Terrain.bounds, sample: Terrain.sample }, this.harvestSnapshot.channeling);
+      this.primaryActor.update(simDelta, fallbackIntents, terrain, this.harvestSnapshot.channeling);
       return;
     }
     // During a playbook replay the performing actor sits in a non-zero slot, so
@@ -2319,11 +2337,13 @@ export class Game {
       const channeling = playbookReplayActive
         ? this.harvestSnapshot.channels.some((channel) => channel.actorId === String(slot) && channel.channeling)
         : this.harvestSnapshot.channeling && slot === this.mpActionSlot;
-      actor.update(simDelta, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), {
-        bounds: Terrain.bounds,
-        sample: Terrain.sample,
-      }, channeling);
+      actor.update(simDelta, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), terrain, channeling);
     }
+  }
+
+  private actorTerrainSample(x: number, z: number): Terrain.TerrainSample {
+    const sample = Terrain.sample(x, z);
+    return this.e6TileConsumers.isWalkable(x, z) ? sample : { ...sample, walkable: false };
   }
 
   private updatePresentation(delta: number): void {
@@ -3274,6 +3294,7 @@ export class Game {
     this.scene.add(this.pressureSystem.group);
     this.scene.add(this.deepwaterArsenal.group);
     this.scene.add(this.e6ArsenalSystem.group);
+    this.scene.add(this.e6TileConsumers.group);
     this.scene.add(this.e9ArsenalSystem.group);
     this.scene.add(this.e9CanalSystem.group);
     this.createMegaprojectVisuals();
@@ -3905,6 +3926,7 @@ export class Game {
         summary: economySummary,
       },
       decay: this.decay.diagnostics(),
+      e6Tiles: this.e6TileConsumers.diagnostics,
       wrangle: this.wrangle.diagnostics(),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
@@ -5367,6 +5389,7 @@ export class Game {
     this.simTick = 0;
     this.wrangle.reset();
     this.decay.reset();
+    this.e6TileConsumers.reset();
     this.deathPending = false;
     if (this.powerGraph) {
       this.powerGraph.reset(0);
