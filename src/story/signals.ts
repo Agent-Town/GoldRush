@@ -6,7 +6,7 @@ export type StorySignal =
   | { type: 'wave-complete'; wave: number }
   | { type: 'first-victory' }
   | { type: 'science-threshold'; threshold: number }
-  | { type: 'science-complete' }
+  | { type: 'science-complete'; postscriptOnly?: boolean; afterStory?: () => void }
   | { type: 'stamp-site-found' }
   | { type: 'run-return-town'; result: 'secured' | 'overrun' }
   | { type: 'contract-unlocked'; contractId: string; contractName: string; ledgerBlurb: string }
@@ -21,7 +21,7 @@ export type BossStorySignal =
 
 export type LedgerStorySignal = { type: 'ledger-page'; entryId: string; entryName: string };
 
-export type EpochStorySignal = { type: 'epoch-activated'; epochId: string; displayName: string };
+export type EpochStorySignal = { type: 'epoch-activated'; epochId: string; displayName: string; postscriptOnly?: boolean };
 
 export type RuntimeStorySignal = StorySignal | BossStorySignal | LedgerStorySignal | EpochStorySignal;
 

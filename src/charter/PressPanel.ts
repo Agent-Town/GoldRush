@@ -3,6 +3,7 @@ import { activeProfileName } from '../game/ProfileStorage';
 import { charterLineageRootId, importContract, type Charter, type CharterClock } from './CharterSchema';
 import { stampCharter } from './CharterStamp';
 import { addCharterToShelf, readCharterShelf } from './CharterShelf';
+import { emitStorySignal, installStoryRuntime } from '../story';
 import {
   createLeverCharter,
   LEVER_LANDS,
@@ -151,13 +152,22 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
     reasonList.hidden = reasons.length === 0;
   };
 
-  const launchStampedCharter = (charter: Charter, document: string): boolean => {
+  const launchStampedCharter = (charter: Charter, document: string, postscript = false): boolean => {
     const rootId = charterLineageRootId(charter);
     if (!stageCharterLaunch(rootId, document)) return false;
     const next = new URLSearchParams();
     next.set('contract', rootId);
     if (charter.envelope.seedPolicy.mode === 'fixed') next.set('seed', charter.envelope.seedPolicy.seed);
-    location.href = `${location.pathname}?${next.toString()}`;
+    const launch = () => {
+      location.href = `${location.pathname}?${next.toString()}`;
+    };
+    if (postscript) {
+      panel.closest<HTMLElement>('[data-testid="descriptor-inspector"]')?.remove();
+      installStoryRuntime();
+      emitStorySignal({ type: 'science-complete', postscriptOnly: true, afterStory: launch });
+    } else {
+      launch();
+    }
     return true;
   };
 
@@ -231,7 +241,7 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
       return;
     }
     leverStatus.textContent = 'Stamped! Opening your world…';
-    if (!launchStampedCharter(charter, result.document)) leverStatus.textContent = 'The world is ready, but the launch ledger needs a grown-up.';
+    if (!launchStampedCharter(charter, result.document, true)) leverStatus.textContent = 'The world is ready, but the launch ledger needs a grown-up.';
   });
 
   renderShelf();

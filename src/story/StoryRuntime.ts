@@ -32,6 +32,7 @@ export class StoryRuntime {
   private readonly unsubscribeSignal: () => void;
   private readonly unsubscribeSettings: () => void;
   private readonly audio = new SoundSystem();
+  private readonly postscriptBeats = import('./ceremonyPostscripts').then((module) => module.CEREMONY_POSTSCRIPT_BEATS);
   private queue: QueueItem[] = [];
   private active: QueueItem | null = null;
   private dismissTimer = 0;
@@ -45,7 +46,7 @@ export class StoryRuntime {
     this.root.className = 'story-beat-layer';
     this.root.dataset.testid = 'story-beat-layer';
     parent.append(this.root);
-    this.unsubscribeSignal = onStorySignal((signal) => this.receive(signal));
+    this.unsubscribeSignal = onStorySignal((signal) => void this.receive(signal));
     this.unsubscribeSettings = subscribeStorySettings(() => {
       if (!readStoryTalesEnabled()) this.clearQueue();
     });
@@ -64,10 +65,14 @@ export class StoryRuntime {
     if (installed === this) installed = null;
   }
 
-  private receive(signal: RuntimeStorySignal): void {
-    if (!readStoryTalesEnabled()) return;
+  private async receive(signal: RuntimeStorySignal): Promise<void> {
+    if (!readStoryTalesEnabled()) {
+      finishStorySignal(signal);
+      return;
+    }
     const items: QueueItem[] = [];
-    for (const beat of STORY_RUNTIME_BEATS) {
+    for (const beat of [...STORY_RUNTIME_BEATS, ...(await this.postscriptBeats)]) {
+      if ('postscriptOnly' in signal && signal.postscriptOnly && !beat.id.startsWith('wd04-postscript-')) continue;
       if (beat.trigger !== signal.type || (beat.when && !beat.when(signal))) continue;
       const key = beat.seenKey?.(signal) ?? beat.id;
       const aliases = beat.seenKeyAliases?.map((seenKey) => seenKey(signal)) ?? [];
@@ -77,7 +82,11 @@ export class StoryRuntime {
       if (beat.oncePerProfile) markStoryBeatSeen(key);
       items.push({ beat, key, lines, signal });
     }
-    if (items.length === 0) return;
+    items.sort((left, right) => ceremonyOrder(left.beat) - ceremonyOrder(right.beat));
+    if (items.length === 0) {
+      finishStorySignal(signal);
+      return;
+    }
     if (signal.type === 'run-return-town' || signal.type === 'epoch-activated') {
       const interrupted = this.interruptActiveBeat();
       this.queue.unshift(...items, ...(interrupted ? [interrupted] : []));
@@ -125,7 +134,7 @@ export class StoryRuntime {
       document.addEventListener('pointerdown', this.onDocumentPointerDown, { capture: true, once: true });
     }
     window.clearTimeout(this.dismissTimer);
-    this.dismissTimer = window.setTimeout(() => this.dismiss(), CARD_MS);
+    this.dismissTimer = window.setTimeout(() => this.dismiss(), item.beat.durationMs ?? CARD_MS);
     window.requestAnimationFrame(() => {
       this.root.querySelector('[data-testid="story-beat-card"]')?.classList.add('story-beat-card--visible');
     });
@@ -187,9 +196,11 @@ export class StoryRuntime {
     const ceremony = this.active.beat.presentation === 'epoch-ceremony';
     window.clearTimeout(this.dismissTimer);
     document.removeEventListener('pointerdown', this.onDocumentPointerDown, { capture: true });
+    const signal = this.active.signal;
     this.root.innerHTML = '';
     this.root.classList.remove('story-beat-layer--ceremony');
     this.active = null;
+    finishStorySignal(signal);
     this.lastDismissedAt = ceremony ? 0 : Date.now();
     this.schedule();
   }
@@ -284,6 +295,14 @@ function escapeHtml(value: string): string {
     if (char === '"') return '&quot;';
     return '&#39;';
   });
+}
+
+function ceremonyOrder(beat: RuntimeStoryBeat): number {
+  return beat.id.startsWith('wd04-postscript-') ? 1 : beat.presentation === 'epoch-ceremony' ? 0 : 2;
+}
+
+function finishStorySignal(signal: RuntimeStorySignal): void {
+  if (signal.type === 'science-complete') signal.afterStory?.();
 }
 
 function outgoingEraKey(artKey: string): string {
