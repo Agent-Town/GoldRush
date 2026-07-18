@@ -136,6 +136,41 @@ Verdict: **READY-FOR-GATES — five mount-agnostic Ember Shore landmark bodies a
 | Repo gate | `npm run build` green |
 | Visual QA | final fresh-eyes verdict ACCEPT; five-body identity/readability pass and west marker clears the lava-band rectangle |
 
+## Great landmark backlog 03 — E8 Mare Claim body handoff
+
+Branch: `sol/lm-alpha-mare-claim`
+
+Base: `eeb1c11c72ebd75a5286fd5c6e01feb8fcfa42fb`
+
+Verdict: **READY-FOR-GATES — five mount-agnostic Mare Claim landmark bodies are production-complete for 3D-C-ALPHA. No BETA maps or E2-E5 campaign packs are touched.**
+
+### Mount ID list
+
+1. `earthrise-listening-array`
+2. `lava-tube-survey-gantry`
+3. `regolith-core-yard`
+4. `west-rim-debris-catcher`
+5. `east-rim-debris-catcher`
+
+### Source ladder and composition
+
+- The core yard and two debris catchers reuse shipped E8 crater/lander vocabulary; the listening array and lava-tube gantry derive from the E8 building kit and plate family.
+- Proposed placements are evidence-only while 3D-D's mount interlock is pending. The build zones, lava-tube mouth, harvest anchors, and debris arc stay visible in the clearance board.
+- This branch supersedes the earlier pre-split Mare branch name by replaying the work onto current `origin/main` under the required `sol/lm-alpha-<map>` prefix.
+
+### Production gate
+
+| Check | Result |
+| --- | --- |
+| Bodies | 5 separate GLBs; one mesh/primitive/material/image each |
+| Triangle budget | 600–1,164 triangles per body; all below 3,000 |
+| Shared atlas | one embedded 1024 x 1024 E8 atlas shared byte-for-byte by all five GLBs |
+| Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
+| Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
+| Source tiers | reuse 3, derive 2, build-new 0 |
+| Fresh-reference law | all boards record `origin/main@eeb1c11c72eb…` |
+| Repo gate | `npm run build` green |
+
 ## Campaign landmark pack 01 — E5 Regatta body handoff
 
 Branch: `sol/campaign-landmarks-e5-regatta`
