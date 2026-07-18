@@ -334,6 +334,10 @@ export const Balance = {
       opacity: 0.78,
     },
   },
+  e10Finale: {
+    reinkSeconds: 2.4,
+    offerDelaySeconds: 0.5,
+  },
   e7Arsenal: {
     playbookSparkRig: { damage: 12, range: 10, fireRate: 2, boltSpeed: 18, volley: 1 },
     beamRelay: { damage: 26, range: 18, fireRate: 0.8, boltSpeed: 22, silhouetteHeight: 1.1, ringInner: 0.24, ringOuter: 0.34 },
