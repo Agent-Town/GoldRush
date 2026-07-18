@@ -106,6 +106,8 @@ export type BuildDiagnostics = {
   shooterRegistrations: number;
   turretPulses: number;
   activeTurretPulses: number;
+  breachSeals: number;
+  lensTurrets: number;
   tierUpgrades: number;
   repairs: number;
   repairGold: number;
@@ -365,6 +367,8 @@ export class BuildSystem {
   private beaconFireRateMult = 1;
   private turretDamageMult = 1;
   private turretPressureFireRateMult = 1;
+  private e8LensTurret = false;
+  private e8BreachSeals = false;
   private pointerReady = false;
   private pointerClientX = 0;
   private pointerClientY = 0;
@@ -466,14 +470,16 @@ export class BuildSystem {
     return buildableDefs.filter((def) => this.isBuildableEnabled(def.id)).map((def) => {
       const count = this.countFor(def.id);
       const cost = def.costCurve(count);
+      const breachSeal = def.id === 'palisade' && this.e8BreachSeals;
+      const maxCount = this.maxCountFor(def);
       return {
         id: def.id,
-        displayName: def.displayName,
-        blurb: buildableBlurb(def),
+        displayName: breachSeal ? 'Breach-Patch Seal' : def.displayName,
+        blurb: breachSeal ? 'A numbered instant wall: the wall you carry.' : buildableBlurb(def),
         cost,
         count,
-        maxCount: def.maxCount,
-        canAfford: this.economy.gold >= cost && count < def.maxCount,
+        maxCount,
+        canAfford: this.economy.gold >= cost && count < maxCount,
         selected: def.id === this.selectedId,
         iconSlot: def.iconSlot,
         portraitSlug: def.portraitSlug,
@@ -610,7 +616,7 @@ export class BuildSystem {
 
   get canAffordNext(): boolean {
     const def = this.selectedDef();
-    return this.economy.gold >= this.nextCost && this.countFor(def.id) < def.maxCount;
+    return this.economy.gold >= this.nextCost && this.countFor(def.id) < this.maxCountFor(def);
   }
 
   get diagnostics(): BuildDiagnostics {
@@ -667,6 +673,8 @@ export class BuildSystem {
       shooterRegistrations: this.shooterHandles.length,
       turretPulses: this.turrets.pulseCount,
       activeTurretPulses: this.turrets.activePulseCount,
+      breachSeals: this.e8BreachSeals ? this.palisades.activeCount : 0,
+      lensTurrets: this.e8LensTurret ? this.turrets.activeCount : 0,
       tierUpgrades: this.tierUpgrades,
       repairs: this.repairs,
       repairGold: this.repairGold,
@@ -835,7 +843,7 @@ export class BuildSystem {
 
   placeFree(id: BuildableId, position: { x: number; z: number }, rotationSteps = 0, options: FreePlacementOptions = {}): boolean {
     const def = getBuildableDef(id);
-    if (!def || (!options.preplaced && !this.isBuildableEnabled(def.id)) || this.countFor(def.id) >= def.maxCount) return false;
+    if (!def || (!options.preplaced && !this.isBuildableEnabled(def.id)) || this.countFor(def.id) >= this.maxCountFor(def)) return false;
 
     const previousRotation = this.ghostRotationSteps;
     this.ghostRotationSteps = ((Math.round(rotationSteps) % 4) + 4) % 4;
@@ -972,6 +980,18 @@ export class BuildSystem {
     if (next === this.turretPressureFireRateMult) return;
     this.turretPressureFireRateMult = next;
     for (let index = 0; index < this.turrets.capacity; index += 1) this.refreshShooterStats('turret', index);
+  }
+
+  applyE8Arsenal(lensTurret: boolean, breachSeals: boolean): void {
+    if (this.e8LensTurret !== lensTurret) {
+      this.e8LensTurret = lensTurret;
+      this.turrets.setLensMode(lensTurret);
+      for (let index = 0; index < this.turrets.capacity; index += 1) this.refreshShooterStats('turret', index);
+    }
+    if (this.e8BreachSeals !== breachSeals) {
+      this.e8BreachSeals = breachSeals;
+      for (let index = 0; index < this.palisades.capacity; index += 1) this.palisades.setSeal(index, breachSeals);
+    }
   }
 
   dispose(): void {
@@ -1338,7 +1358,7 @@ export class BuildSystem {
 
   private computeValid(origin: THREE.Vector3 = this.heroPosition): boolean {
     const def = this.selectedDef();
-    if (this.countFor(def.id) >= def.maxCount) return false;
+    if (this.countFor(def.id) >= this.maxCountFor(def)) return false;
     if (this.economy.gold < def.costCurve(this.countFor(def.id))) return false;
     if (!this.matchesPlacement(def, this.ghostPos)) return false;
     const dx = this.ghostPos.x - origin.x;
@@ -1423,6 +1443,7 @@ export class BuildSystem {
   }
 
   private placeRadius(id: BuildableId): number {
+    if (id === 'palisade' && this.e8BreachSeals) return Balance.e8Arsenal.breachSeal.placeRadius;
     if (id === 'lantern_post') return Balance.lanternPost.placeRadius;
     if (id === 'decoy_shed') return Balance.decoyShed.placeRadius;
     if (id === 'capacitor_bank') return Balance.e3Power.storage.placeRadius;
@@ -1470,7 +1491,11 @@ export class BuildSystem {
   }
 
   private place(id: BuildableId, position: THREE.Vector3, preferredSlot?: number): number {
-    if (id === 'palisade') return this.palisades.place(position, this.ghostRotationSteps, preferredSlot);
+    if (id === 'palisade') {
+      const placed = this.palisades.place(position, this.ghostRotationSteps, preferredSlot);
+      if (placed >= 0) this.palisades.setSeal(placed, this.e8BreachSeals);
+      return placed;
+    }
     if (id === 'sluice') return this.sluices.place(position, preferredSlot);
     if (id === 'stockpile') return this.stockpiles.place(position, preferredSlot);
     if (id === 'boiler_house') return this.boilerHouses.place(position, preferredSlot);
@@ -1812,11 +1837,13 @@ export class BuildSystem {
   }
 
   private effectiveTurretDamage(index: number): number {
-    return this.effectiveStat('turret', index, Balance.turret.damage, 'damageMult') * this.turretDamageMult;
+    const lensMult = this.e8LensTurret ? Balance.e8Arsenal.lensTurret.damageMult : 1;
+    return this.effectiveStat('turret', index, Balance.turret.damage, 'damageMult') * this.turretDamageMult * lensMult;
   }
 
   private effectiveTurretFireRate(index: number): number {
-    return this.effectiveStat('turret', index, Balance.turret.fireRate, 'fireRateMult') * this.turretPressureFireRateMult;
+    const lensMult = this.e8LensTurret ? Balance.e8Arsenal.lensTurret.fireRateMult : 1;
+    return this.effectiveStat('turret', index, Balance.turret.fireRate, 'fireRateMult') * this.turretPressureFireRateMult * lensMult;
   }
 
   private syncTierVisual(id: BuildableId, index: number): void {
@@ -1868,7 +1895,7 @@ export class BuildSystem {
 
   private registerTurretShooter(placed: number): void {
     const handle: ShooterHandle = {
-      id: 'turrets',
+      id: this.e8LensTurret ? 'lens_turrets' : 'turrets',
       resumeKey: `building:turret:${placed}`,
       getPos: () => this.shooterPos.copy(this.turrets.allPositions[placed] ?? this.ghostPos),
       enabled: () => !this.suspendedBuildings.has(`turret:${placed}`)
@@ -1916,9 +1943,16 @@ export class BuildSystem {
       return;
     }
     if (id === 'turret') {
+      handle.id = this.e8LensTurret ? 'lens_turrets' : 'turrets';
       handle.cooldown = 1 / this.effectiveTurretFireRate(index);
       handle.damage = this.effectiveTurretDamage(index);
     }
+  }
+
+  private maxCountFor(def: BuildableDef): number {
+    return def.id === 'palisade' && this.e8BreachSeals
+      ? Math.min(def.maxCount, Balance.e8Arsenal.breachSeal.maxActive)
+      : def.maxCount;
   }
 
   private registerShooter(id: BuildableId, index: number, handle: ShooterHandle): void {

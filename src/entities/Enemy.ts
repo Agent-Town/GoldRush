@@ -450,6 +450,11 @@ export class ClaimJumperEnemy {
     return this.flashCount;
   }
 
+  stagger(seconds: number): void {
+    if (!this.alive) return;
+    this.activationDelay = Math.max(this.activationDelay, Math.max(0, seconds));
+  }
+
   setAnimationClip(clip: CharacterSpriteClip): void {
     this.spriteClip = clip;
   }

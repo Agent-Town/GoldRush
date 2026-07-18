@@ -459,6 +459,8 @@ interface ThreeGameDiagnostics {
     shooterRegistrations: number;
     turretPulses: number;
     activeTurretPulses: number;
+    breachSeals: number;
+    lensTurrets: number;
     tierUpgrades: number;
     repairs: number;
     repairGold: number;
@@ -472,6 +474,7 @@ interface ThreeGameDiagnostics {
   };
   pressure: import('./systems/PressureSystem').PressureDiagnostics;
   pressureArsenal: import('./systems/PressureArsenalSystem').PressureArsenalDiagnostics;
+  e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;

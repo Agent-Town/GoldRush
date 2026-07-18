@@ -201,6 +201,13 @@ export const Balance = {
     autoPan: { panTickMult: -0.25, pressurePerSecond: 2 },
     boilerBatteryBands: { low: 1, working: 1.2, high: 1.45 },
   },
+  e8Arsenal: {
+    sunlineBeam: { damage: 9, range: 11, fireRate: 3, boltSpeed: 24 },
+    kineticLobber: { damage: 28, radius: 2.4, range: 15, cooldown: 3.4, airTime: 1.68 },
+    magnetGrapple: { range: 12, cooldown: 2.8, boltSpeed: 24, pullDistance: 2.2, collisionRadius: 1.1, staggerSeconds: 0.35 },
+    breachSeal: { maxActive: 4, placeRadius: 6 },
+    lensTurret: { damageMult: 1.2, fireRateMult: 1.15, silhouetteHeight: 1.1 },
+  },
   xp: {
     perKill: 4,
     moteMagnetRadius: 2,

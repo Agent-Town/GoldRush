@@ -51,6 +51,7 @@ export class TurretPool {
   private alive = 0;
   private pulses = 0;
   private activePulses = 0;
+  private lensMode = false;
 
   constructor() {
     this.group.name = 'TurretPool';
@@ -96,6 +97,13 @@ export class TurretPool {
 
   get activePulseCount(): number {
     return this.activePulses;
+  }
+
+  setLensMode(enabled: boolean): void {
+    if (this.lensMode === enabled) return;
+    this.lensMode = enabled;
+    this.material.emissive.set(enabled ? '#83ded7' : '#5b8a8a');
+    this.baseMaterial.color.set(enabled ? '#9aa7a4' : '#6b4a2f');
   }
 
   isActive(index: number): boolean {
@@ -178,12 +186,14 @@ export class TurretPool {
     disposeBuildingSign(this.signs);
   }
 
-  diagnostics(): { active: number; signs: number; meshes: string[]; lit: boolean } {
+  diagnostics(): { active: number; signs: number; meshes: string[]; lit: boolean; variant: 'signal' | 'lens'; silhouetteHeight: number } {
     return {
       active: this.alive,
       signs: this.alive,
       meshes: [this.baseMesh.name, this.legMesh.name, this.mesh.name, this.signs.name],
       lit: true,
+      variant: this.lensMode ? 'lens' : 'signal',
+      silhouetteHeight: Balance.e8Arsenal.lensTurret.silhouetteHeight,
     };
   }
 
