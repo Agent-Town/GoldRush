@@ -506,7 +506,8 @@ export class TownScene {
       if (!this.visibleBuildings.includes(building)) this.scene.add(createSurveyPlot(building));
     }
     if (this.propRingEnabled) {
-      const pilot = new URLSearchParams(window.location.search).get('town3dPilot');
+      const propSearch = new URLSearchParams(window.location.search);
+      const pilot = propSearch.get('town3dPilot') ?? (propSearch.has('terrain2d') ? null : 'all');
       // The props pilot replaces wagons/trough/pan with GLBs; building their
       // primitives too double-renders (owner saw the old frame atop Sol's pan).
       const eraOrder = loadEpoch(activeEpochId()).order;
@@ -527,7 +528,9 @@ export class TownScene {
     this.scene.add(this.hero.group);
 
     const pilotSearch = new URLSearchParams(window.location.search);
-    const pilot = pilotSearch.get('town3dPilot');
+    // THE 3D PROMOTION (owner 2026-07-18) reaches the town too: default 'all';
+    // `terrain2d` opts the whole 2D world back on; lite tier falls back as before.
+    const pilot = pilotSearch.get('town3dPilot') ?? (pilotSearch.has('terrain2d') ? null : 'all');
     const pilotLite = pilotSearch.get('tier') === 'lite' || this.performanceTier === 'lite';
     this.canvas.dataset.town3dPilotState = pilot !== null ? (pilotLite ? 'lite' : 'loading') : 'off';
     this.canvas.dataset.town3dPilotRenderSource = 'facade';

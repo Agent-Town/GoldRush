@@ -17,7 +17,7 @@ async function openTown(page: Page, search = '') {
     localStorage.setItem(meta, JSON.stringify({ version: 1, tracks: { territory: 3, science: 0, hero: 0, agent: 0 } }));
     localStorage.setItem(guide, '1');
   }, { profile: PROFILE_KEY, town: profileDataKey('robin', TOWN_NAME_KEY), meta: profileDataKey('robin', META_PROGRESS_KEY), guide: profileDataKey('robin', FIRST_CLAIM_DONE_KEY) });
-  await page.goto('/');
+  await page.goto('/?terrain2d');
   await page.getByTestId('start-menu-enter-town').waitFor();
   if (search) await page.evaluate((value) => history.replaceState(null, '', `/${value}`), search);
   await page.getByTestId('start-menu-enter-town').click();

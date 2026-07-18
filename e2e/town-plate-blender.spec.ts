@@ -21,7 +21,7 @@ async function seedTown(page: Page): Promise<void> {
     meta: profileDataKey('robin', META_PROGRESS_KEY),
     guide: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
   });
-  await page.goto('/');
+  await page.goto('/?terrain2d');
 }
 
 async function openTown(page: Page, search = ''): Promise<void> {

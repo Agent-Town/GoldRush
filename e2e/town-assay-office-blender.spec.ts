@@ -71,7 +71,7 @@ function collectErrors(page: Page): ErrorBucket {
 
 async function openTown(page: Page, search = ''): Promise<void> {
   if (await page.evaluate(() => Boolean(window.__GR_TOWN_DIAGNOSTICS__)).catch(() => false)) await page.getByTestId('town-exit').click();
-  else await page.goto('/');
+  else await page.goto('/?terrain2d');
   await page.getByTestId('start-menu-enter-town').waitFor();
   if (search) await page.evaluate((value) => history.replaceState(null, '', `/${value}`), search);
   await page.getByTestId('start-menu-enter-town').click();
