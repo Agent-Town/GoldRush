@@ -3,6 +3,17 @@ import { activeProfileName } from '../game/ProfileStorage';
 import { charterLineageRootId, importContract, type Charter, type CharterClock } from './CharterSchema';
 import { stampCharter } from './CharterStamp';
 import { addCharterToShelf, readCharterShelf } from './CharterShelf';
+import {
+  CHARTER_FILE_SUFFIX,
+  CHARTER_SHARE_MAX_CHARS,
+  charterCode,
+  charterFileName,
+  exportCharterText,
+  importCharterCode,
+  importCharterText,
+  repressCharter,
+  type CharterShareResult,
+} from './CharterShare';
 import { emitStorySignal, installStoryRuntime } from '../story';
 import {
   createLeverCharter,
@@ -56,6 +67,20 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
         <h3>The shelf</h3>
         <ul data-testid="press-shelf"></ul>
       </section>
+      <section class="charter-press-panel__share">
+        <h3>Send or receive a charter</h3>
+        <label class="charter-press-panel__drop" data-testid="press-import-drop">
+          <span>Drop a <strong>${CHARTER_FILE_SUFFIX}</strong> here, or choose one</span>
+          <input type="file" accept="${CHARTER_FILE_SUFFIX},application/json" data-testid="press-import-file">
+        </label>
+        <label class="charter-press-panel__control">
+          <span>Paste a charter code</span>
+          <textarea maxlength="${Math.ceil(CHARTER_SHARE_MAX_CHARS * 4 / 3) + 4}" data-testid="press-import-code"></textarea>
+        </label>
+        <button type="button" data-testid="press-import-code-submit">Read this code</button>
+        <p class="charter-press-panel__status" role="status" data-testid="press-share-status">The post is ready.</p>
+        <ul class="charter-press-panel__reasons" data-testid="press-share-reasons" hidden></ul>
+      </section>
     </div>
     <div class="charter-press-panel__face charter-lever" data-testid="press-lever-mode" hidden>
       <p class="charter-lever__intro">Pick what feels right. You can change any choice until you pull the lever.</p>
@@ -90,6 +115,8 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
   const status = panel.querySelector<HTMLElement>('[data-testid="press-status"]')!;
   const reasonList = panel.querySelector<HTMLUListElement>('[data-testid="press-reasons"]')!;
   const shelfList = panel.querySelector<HTMLUListElement>('[data-testid="press-shelf"]')!;
+  const shareStatus = panel.querySelector<HTMLElement>('[data-testid="press-share-status"]')!;
+  const shareReasons = panel.querySelector<HTMLUListElement>('[data-testid="press-share-reasons"]')!;
   const fullMode = panel.querySelector<HTMLElement>('[data-testid="press-full-mode"]')!;
   const leverMode = panel.querySelector<HTMLElement>('[data-testid="press-lever-mode"]')!;
   const title = panel.querySelector<HTMLElement>('[data-testid="press-title"]')!;
@@ -115,6 +142,36 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
     clearCharterLaunch();
   }
 
+  const renderReasons = (target: HTMLUListElement, reasons: readonly { code: string; message: string }[]) => {
+    target.replaceChildren(
+      ...reasons.map((reason) => {
+        const item = document.createElement('li');
+        item.dataset.reasonCode = reason.code;
+        item.textContent = reason.message;
+        return item;
+      }),
+    );
+    target.hidden = reasons.length === 0;
+  };
+
+  const showShareResult = (result: CharterShareResult): Charter | null => {
+    if (!result.ok) {
+      renderReasons(shareReasons, result.reasons);
+      shareStatus.textContent = 'The Assayer refused this charter. Nothing was added to the shelf.';
+      return null;
+    }
+    const shelved = addCharterToShelf(localStorage, result.charter);
+    if (!shelved.ok) {
+      renderReasons(shareReasons, []);
+      shareStatus.textContent = shelved.message;
+      return null;
+    }
+    renderReasons(shareReasons, []);
+    shareStatus.textContent = `Charter received with its first author and lineage intact (${shelved.count} held).`;
+    renderShelf();
+    return result.charter;
+  };
+
   const renderShelf = () => {
     shelfList.replaceChildren();
     const entries = readCharterShelf(localStorage);
@@ -129,28 +186,96 @@ export function createPressPanel({ contract, template, clock, nameDraft, onNameD
       const row = document.createElement('li');
       row.dataset.testid = 'press-shelf-row';
       const label = document.createElement('span');
-      label.textContent = `${entry.charter.contract.name} — ${entry.charter.envelope.provenance.author}, ${entry.charter.envelope.provenance.createdAt.slice(0, 10)}`;
+      label.textContent = `${entry.charter.contract.name} — first pressed by ${entry.charter.envelope.provenance.author}, ${entry.charter.envelope.provenance.createdAt.slice(0, 10)}`;
+      const actions = document.createElement('span');
+      actions.className = 'charter-press-panel__shelf-actions';
       const launch = document.createElement('button');
       launch.type = 'button';
       launch.dataset.testid = `press-launch-${index}`;
       launch.textContent = 'Launch';
       launch.addEventListener('click', () => launchCharter(entry.charter));
-      row.append(label, launch);
+      const exportFile = document.createElement('button');
+      exportFile.type = 'button';
+      exportFile.dataset.testid = `press-export-file-${index}`;
+      exportFile.textContent = 'Export file';
+      exportFile.addEventListener('click', () => {
+        const shared = exportCharterText(entry.charter);
+        if (!shared.ok) return void showShareResult(shared);
+        const url = URL.createObjectURL(new Blob([shared.text], { type: 'application/json' }));
+        const anchor = document.createElement('a');
+        anchor.href = url;
+        anchor.download = charterFileName(entry.charter);
+        anchor.click();
+        setTimeout(() => URL.revokeObjectURL(url));
+        shareStatus.textContent = `${anchor.download} is ready to travel.`;
+      });
+      const copyCode = document.createElement('button');
+      copyCode.type = 'button';
+      copyCode.dataset.testid = `press-copy-code-${index}`;
+      copyCode.textContent = 'Copy code';
+      copyCode.addEventListener('click', async () => {
+        const shared = charterCode(entry.charter);
+        if (!shared.ok || !shared.code) return void showShareResult(shared);
+        try {
+          await navigator.clipboard.writeText(shared.code);
+          shareStatus.textContent = 'Charter code copied.';
+        } catch {
+          shareStatus.textContent = 'The code is ready, but the clipboard would not take it.';
+        }
+      });
+      const repress = document.createElement('button');
+      repress.type = 'button';
+      repress.dataset.testid = `press-repress-${index}`;
+      repress.textContent = 'Re-press';
+      repress.addEventListener('click', () => {
+        const next = repressCharter(entry.charter, author, stampClock);
+        const shared = exportCharterText(next);
+        if (!showShareResult(shared)) return;
+        shareStatus.textContent = `Re-pressed with ${author} added to the lineage; ${entry.charter.envelope.provenance.author} remains the first author.`;
+      });
+      actions.append(launch, exportFile, copyCode, repress);
+      row.append(label, actions);
       shelfList.append(row);
     });
   };
 
   const showReasons = (reasons: readonly { code: string; message: string; path?: string }[]) => {
-    reasonList.replaceChildren(
-      ...reasons.map((reason) => {
-        const item = document.createElement('li');
-        item.dataset.reasonCode = reason.code;
-        item.textContent = reason.message;
-        return item;
-      }),
-    );
-    reasonList.hidden = reasons.length === 0;
+    renderReasons(reasonList, reasons);
   };
+
+  const importFile = async (file: File) => {
+    if (!file.name.endsWith(CHARTER_FILE_SUFFIX)) {
+      showShareResult({ ok: false, reasons: [{ code: 'charter_file_name', message: `Choose a ${CHARTER_FILE_SUFFIX} file.` }] });
+      return;
+    }
+    if (file.size > CHARTER_SHARE_MAX_CHARS) {
+      showShareResult({ ok: false, reasons: [{ code: 'charter_too_large', message: 'This charter is too large for the Press to read.' }] });
+      return;
+    }
+    try {
+      showShareResult(importCharterText(await file.text()));
+    } catch {
+      showShareResult({ ok: false, reasons: [{ code: 'charter_file_unreadable', message: 'The charter file could not be read.' }] });
+    }
+  };
+
+  const fileInput = panel.querySelector<HTMLInputElement>('[data-testid="press-import-file"]')!;
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files?.[0];
+    if (file) void importFile(file);
+    fileInput.value = '';
+  });
+  const drop = panel.querySelector<HTMLElement>('[data-testid="press-import-drop"]')!;
+  drop.addEventListener('dragover', (event) => event.preventDefault());
+  drop.addEventListener('drop', (event) => {
+    event.preventDefault();
+    const file = event.dataTransfer?.files[0];
+    if (file) void importFile(file);
+  });
+  panel.querySelector<HTMLButtonElement>('[data-testid="press-import-code-submit"]')!.addEventListener('click', () => {
+    const code = panel.querySelector<HTMLTextAreaElement>('[data-testid="press-import-code"]')!.value;
+    showShareResult(importCharterCode(code));
+  });
 
   const launchStampedCharter = (charter: Charter, document: string, postscript = false): boolean => {
     const rootId = charterLineageRootId(charter);
