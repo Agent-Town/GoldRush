@@ -46,9 +46,7 @@ const RAILCAR_3D_COMPONENTS = {
 } as const;
 type RailcarComponentId = keyof typeof RAILCAR_3D_COMPONENTS;
 type Railcar3dState = 'off' | 'loading' | 'ready' | 'lite' | 'failed' | 'disposed';
-const FEVER_GOLD = new THREE.Color('#ffd56a');
-const FEVER_REST_STRENGTH = 0.34;
-const FEVER_SURGE_STRENGTH = 0.7;
+const FEVER_GOLD = new THREE.Color(Balance.legibility.feveredColor);
 const IDLE_SPRITE_MOTION: SpriteMotionSnapshot = {
   active: false,
   phase: 0,
@@ -87,11 +85,11 @@ export function feverAccentState(
     return { active: false, kind: 'none', strength: 0, surged: false, channel: 'none' };
   }
   const surged = enemy.stealState === 'grabbing' || enemy.wreckState === 'swinging';
-  const base = surged ? FEVER_SURGE_STRENGTH : FEVER_REST_STRENGTH;
+  const base = surged ? Balance.legibility.feveredSurgeStrength : Balance.legibility.feveredRestStrength;
   return {
     active: true,
     kind: enemy.variantId === 'steam_wrecker' ? 'machine' : 'human',
-    strength: round3(base + Math.sin(pulse) * (surged ? 0.08 : 0.04)),
+    strength: round3(base + Math.sin(pulse) * Balance.legibility.feveredPulseStrength),
     surged,
     channel: 'watch-paint-instanced',
   };
@@ -202,9 +200,9 @@ export class EnemyPool {
   private readonly railcar3dDamaged = new Set<RailcarComponentId>();
   private readonly railcar3dCenter = new THREE.Vector3();
   private readonly watchPaintMaterial = new THREE.MeshBasicMaterial({
-    color: '#d7a84c',
+    color: '#ffffff',
     transparent: true,
-    opacity: 0.32,
+    opacity: Balance.legibility.feveredOverlayOpacity,
     depthWrite: false,
     fog: false,
     side: THREE.BackSide,
@@ -319,7 +317,11 @@ export class EnemyPool {
   private readonly baseMatrix = new THREE.Matrix4();
   private readonly instanceMatrix = new THREE.Matrix4();
   private readonly watchPaintBaseMatrix = new THREE.Matrix4();
-  private readonly watchPaintScaleMatrix = new THREE.Matrix4().makeScale(1.04, 1.04, 1.04);
+  private readonly watchPaintScaleMatrix = new THREE.Matrix4().makeScale(
+    Balance.legibility.feveredOverlayScale,
+    Balance.legibility.feveredOverlayScale,
+    Balance.legibility.feveredOverlayScale,
+  );
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private readonly syncObject = new THREE.Object3D();
   private readonly warmHitFlashPosition = new THREE.Vector3();
@@ -669,7 +671,7 @@ export class EnemyPool {
     wreckerContext?: WreckerUpdateContext,
     movementSpeedMultiplier: (enemy: ClaimJumperEnemy) => number = () => 1,
   ): void {
-    this.feverPulse += delta * 3.2;
+    this.feverPulse += delta * Balance.legibility.feveredPulseSpeed;
     this.rebuildSpatialHash();
     const heroPositions = Array.isArray(heroPosition) ? heroPosition : [heroPosition];
 

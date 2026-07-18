@@ -28,6 +28,19 @@ export type FreedWalkerDiagnostics = {
   spawned: number;
   active: number;
   capSkips: number;
+  entities: Array<{
+    slot: number;
+    active: boolean;
+    readState: 'freed' | 'none';
+    behavior: FreedWalkerBehavior;
+    silhouette: 'hands-up' | 'powered-down' | 'none';
+    contactDamage: 0;
+    age: number;
+    x: number;
+    z: number;
+    target: { x: number; z: number; kind: 'edge' | 'none' };
+    avoidedPlayer: boolean;
+  }>;
 };
 
 type VisualFamily = 'base' | 'thief' | 'rail_tough' | 'steam_wrecker' | 'coal_thief';
@@ -38,7 +51,6 @@ type FamilyPresentation = {
 };
 
 const MAX_CAPACITY = 10;
-const STAND_SECONDS = 0.5;
 const MACHINE_LIFETIME = 2.2;
 const MOTH_MOTES = 3;
 const RUN_DUST_PUFFS = 2;
@@ -53,7 +65,12 @@ const FAMILY_DEFINITIONS: ReadonlyArray<{ key: VisualFamily; slot: AssetSlotId }
 
 export class FreedWalkerVfx {
   readonly group = new THREE.Group();
-  readonly diagnostics: FreedWalkerDiagnostics = { spawned: 0, active: 0, capSkips: 0 };
+  readonly diagnostics: FreedWalkerDiagnostics = {
+    spawned: 0,
+    active: 0,
+    capSkips: 0,
+    entities: Array.from({ length: MAX_CAPACITY }, (_, slot) => inactiveDiagnostics(slot)),
+  };
 
   private readonly cap = freedWalkerCap();
   private readonly active = Array<boolean>(MAX_CAPACITY).fill(false);
@@ -64,6 +81,9 @@ export class FreedWalkerVfx {
   private readonly directionX = new Float32Array(MAX_CAPACITY);
   private readonly directionZ = new Float32Array(MAX_CAPACITY);
   private readonly edgeDistance = new Float32Array(MAX_CAPACITY);
+  private readonly targetX = new Float32Array(MAX_CAPACITY);
+  private readonly targetZ = new Float32Array(MAX_CAPACITY);
+  private readonly avoidedPlayers = Array<boolean>(MAX_CAPACITY).fill(false);
   private readonly speeds = new Float32Array(MAX_CAPACITY);
   private readonly scales = new Float32Array(MAX_CAPACITY);
   private readonly opacities = new Float32Array(MAX_CAPACITY);
@@ -91,11 +111,18 @@ export class FreedWalkerVfx {
   private readonly shutdownSmokeMaterial = new THREE.MeshBasicMaterial({ color: '#493f34', transparent: true, opacity: 0.52, depthWrite: false });
   private readonly shutdownSmokeMesh = new THREE.InstancedMesh(this.shutdownSmokeGeometry, this.shutdownSmokeMaterial, MAX_CAPACITY * SHUTDOWN_SMOKE_PUFFS);
   private readonly shutdownSmokeObject = new THREE.Object3D();
+  private readonly freedAccentGeometry = new THREE.BoxGeometry(0.12, 0.62, 0.08);
+  private readonly freedAccentMaterial = new THREE.MeshBasicMaterial({ color: Balance.legibility.freedAccentColor });
+  private readonly freedAccentMesh = new THREE.InstancedMesh(this.freedAccentGeometry, this.freedAccentMaterial, MAX_CAPACITY * 2);
+  private readonly freedAccentObject = new THREE.Object3D();
   private readonly hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
   private readonly originalVfxUpdate: CombatVfx['update'];
   private diagnosticsValue: ThreeGameDiagnostics | undefined;
 
-  constructor(private readonly vfx: CombatVfx) {
+  constructor(
+    private readonly vfx: CombatVfx,
+    private readonly playerPositions: () => readonly THREE.Vector3[] = () => [],
+  ) {
     this.group.name = 'FreedWalkerVfx';
     this.families = FAMILY_DEFINITIONS.map(({ key, slot }) => {
       const sprites = new GeneratedSpriteBatch(slot, MAX_CAPACITY, {
@@ -105,6 +132,7 @@ export class FreedWalkerVfx {
         renderOrder: RenderLayers.gameplay,
         lazy: true,
       });
+      sprites.material.color.set(Balance.legibility.freedTint);
       const animator = new SpriteAnimator(slot, sprites.material);
       for (let index = 0; index < MAX_CAPACITY; index += 1) {
         const sprite = sprites.group.children[index] as THREE.Sprite | undefined;
@@ -131,6 +159,10 @@ export class FreedWalkerVfx {
     this.shutdownSmokeMesh.renderOrder = RenderLayers.gameplay;
     this.shutdownSmokeMesh.visible = false;
     this.group.add(this.shutdownSmokeMesh);
+    this.freedAccentMesh.frustumCulled = false;
+    this.freedAccentMesh.renderOrder = RenderLayers.gameplay + 0.02;
+    this.freedAccentMesh.visible = false;
+    this.group.add(this.freedAccentMesh);
     this.vfx.group.add(this.group);
     this.originalVfxUpdate = this.vfx.update.bind(this.vfx);
     this.vfx.update = this.updateWithCombatVfx;
@@ -152,15 +184,18 @@ export class FreedWalkerVfx {
 
     const behavior = behaviorFor(enemy.variantId);
     const family = visualFamilyFor(enemy);
-    const direction = nearestEdgeDirection(enemy.position.x, enemy.position.z);
+    const route = escapeRoute(enemy.position.x, enemy.position.z, this.playerPositions());
     const speed = Math.max(0.1, enemy.moveSpeed * 1.65);
     this.active[slot] = true;
     this.ages[slot] = 0;
     this.startX[slot] = enemy.position.x;
     this.startZ[slot] = enemy.position.z;
-    this.directionX[slot] = direction.x;
-    this.directionZ[slot] = direction.z;
-    this.edgeDistance[slot] = direction.distance;
+    this.directionX[slot] = route.directionX;
+    this.directionZ[slot] = route.directionZ;
+    this.edgeDistance[slot] = route.distance;
+    this.targetX[slot] = route.targetX;
+    this.targetZ[slot] = route.targetZ;
+    this.avoidedPlayers[slot] = route.avoidedPlayer;
     this.speeds[slot] = speed;
     this.scales[slot] = enemy.visualScale * RUN_CAST_SCALE;
     this.opacities[slot] = 1;
@@ -170,12 +205,13 @@ export class FreedWalkerVfx {
     this.familyIndex[slot] = this.moths[slot] ? -1 : this.families.findIndex(({ key }) => key === family);
     this.lifetimes[slot] = behavior === 'slump'
       ? MACHINE_LIFETIME
-      : Math.min(4, Math.max(1.6, STAND_SECONDS + direction.distance / speed + 0.3));
+      : Math.min(4, Math.max(1.6, Balance.legibility.freedRunDelaySeconds + route.distance / speed + 0.3));
     const presentation = this.families[this.familyIndex[slot] ?? -1];
     presentation?.sprites.ensureLoaded();
     this.diagnostics.spawned += 1;
     this.diagnostics.active += 1;
     this.syncSlot(slot);
+    this.syncFreedAccents();
     return true;
   }
 
@@ -187,6 +223,7 @@ export class FreedWalkerVfx {
     this.syncMoths();
     this.syncRunDust();
     this.syncShutdownSmoke();
+    this.syncFreedAccents();
     this.publishDiagnostics();
   }
 
@@ -204,6 +241,8 @@ export class FreedWalkerVfx {
     this.runDustMaterial.dispose();
     this.shutdownSmokeGeometry.dispose();
     this.shutdownSmokeMaterial.dispose();
+    this.freedAccentGeometry.dispose();
+    this.freedAccentMaterial.dispose();
   }
 
   private readonly updateWithCombatVfx = (delta: number): void => {
@@ -222,6 +261,7 @@ export class FreedWalkerVfx {
     this.syncMoths();
     this.syncRunDust();
     this.syncShutdownSmoke();
+    this.syncFreedAccents();
   }
 
   private syncSlot(slot: number): void {
@@ -232,11 +272,14 @@ export class FreedWalkerVfx {
     let z = this.startZ[slot] ?? 0;
     let slump = 0;
     let runStride = 0;
-    if (behavior === 'run' && age > STAND_SECONDS) {
-      const travel = Math.min((this.edgeDistance[slot] ?? 0) + 1.5, (age - STAND_SECONDS) * (this.speeds[slot] ?? 0));
+    if (behavior === 'run' && age > Balance.legibility.freedRunDelaySeconds) {
+      const travel = Math.min(
+        (this.edgeDistance[slot] ?? 0) + 1.5,
+        (age - Balance.legibility.freedRunDelaySeconds) * (this.speeds[slot] ?? 0),
+      );
       x += (this.directionX[slot] ?? 0) * travel;
       z += (this.directionZ[slot] ?? 0) * travel;
-      runStride = Math.sin((age - STAND_SECONDS) * 16 + slot * 1.7);
+      runStride = Math.sin((age - Balance.legibility.freedRunDelaySeconds) * 16 + slot * 1.7);
     } else if (behavior === 'slump') {
       const seize = Math.min(1, age / 0.48);
       x += Math.sin(age * 46) * 0.07 * (1 - seize);
@@ -249,6 +292,17 @@ export class FreedWalkerVfx {
     this.rotations[slot] = behavior === 'slump' ? slump * 0.92 : runStride * 0.18;
     const runBob = behavior === 'run' ? Math.abs(runStride) * 0.12 : 0;
     this.position.set(x, Terrain.visualY(x, z, runBob - 0.28 * slump), z);
+    Object.assign(this.diagnostics.entities[slot]!, {
+      active: true,
+      readState: 'freed',
+      behavior,
+      silhouette: behavior === 'run' ? 'hands-up' : 'powered-down',
+      age,
+      x,
+      z,
+      target: { x: this.targetX[slot] ?? 0, z: this.targetZ[slot] ?? 0, kind: 'edge' },
+      avoidedPlayer: this.avoidedPlayers[slot] === true,
+    });
     const family = this.families[this.familyIndex[slot] ?? -1];
     if (!family) return;
     if (behavior === 'slump') family.sprites.material.rotation = this.rotations[slot] ?? 0;
@@ -277,7 +331,7 @@ export class FreedWalkerVfx {
       const cadence = speed * 4 / (Balance.anim.strideUnits * Math.max(0.1, scale) * Balance.anim.walkFpsPerSpeed);
       this.families[familyIndex]?.animator.update(
         delta,
-        this.behaviors[slot] === 'slump' ? 'idle' : this.ages[slot] < STAND_SECONDS ? 'idle' : 'walk',
+        this.behaviors[slot] === 'slump' ? 'idle' : this.ages[slot] < Balance.legibility.freedRunDelaySeconds ? 'idle' : 'walk',
         direction,
         false,
         cadence,
@@ -295,8 +349,11 @@ export class FreedWalkerVfx {
       const age = this.ages[slot] ?? 0;
       let x = this.startX[slot] ?? 0;
       let z = this.startZ[slot] ?? 0;
-      if (age > STAND_SECONDS) {
-        const travel = Math.min((this.edgeDistance[slot] ?? 0) + 1.5, (age - STAND_SECONDS) * (this.speeds[slot] ?? 0));
+      if (age > Balance.legibility.freedRunDelaySeconds) {
+        const travel = Math.min(
+          (this.edgeDistance[slot] ?? 0) + 1.5,
+          (age - Balance.legibility.freedRunDelaySeconds) * (this.speeds[slot] ?? 0),
+        );
         x += (this.directionX[slot] ?? 0) * travel;
         z += (this.directionZ[slot] ?? 0) * travel;
       }
@@ -322,8 +379,11 @@ export class FreedWalkerVfx {
     let instance = 0;
     for (let slot = 0; slot < MAX_CAPACITY; slot += 1) {
       const age = this.ages[slot] ?? 0;
-      if (!this.active[slot] || this.behaviors[slot] !== 'run' || age <= STAND_SECONDS) continue;
-      const travel = Math.min((this.edgeDistance[slot] ?? 0) + 1.5, (age - STAND_SECONDS) * (this.speeds[slot] ?? 0));
+      if (!this.active[slot] || this.behaviors[slot] !== 'run' || age <= Balance.legibility.freedRunDelaySeconds) continue;
+      const travel = Math.min(
+        (this.edgeDistance[slot] ?? 0) + 1.5,
+        (age - Balance.legibility.freedRunDelaySeconds) * (this.speeds[slot] ?? 0),
+      );
       const x = (this.startX[slot] ?? 0) + (this.directionX[slot] ?? 0) * travel;
       const z = (this.startZ[slot] ?? 0) + (this.directionZ[slot] ?? 0) * travel;
       for (let puff = 0; puff < RUN_DUST_PUFFS; puff += 1) {
@@ -371,16 +431,43 @@ export class FreedWalkerVfx {
     this.shutdownSmokeMesh.instanceMatrix.needsUpdate = true;
   }
 
+  private syncFreedAccents(): void {
+    let instance = 0;
+    for (let slot = 0; slot < MAX_CAPACITY; slot += 1) {
+      const diagnostic = this.diagnostics.entities[slot];
+      if (!diagnostic?.active || diagnostic.behavior !== 'run' || this.moths[slot]) continue;
+      const sideX = -(this.directionZ[slot] ?? 0);
+      const sideZ = this.directionX[slot] ?? 0;
+      for (const side of [-1, 1]) {
+        this.freedAccentObject.position.set(
+          diagnostic.x + sideX * side * 0.28,
+          Terrain.visualY(diagnostic.x, diagnostic.z, 1.22),
+          diagnostic.z + sideZ * side * 0.28,
+        );
+        this.freedAccentObject.rotation.set(0, Math.atan2(this.directionX[slot] ?? 0, this.directionZ[slot] ?? 1), side * -0.72);
+        this.freedAccentObject.scale.setScalar(this.scales[slot] ?? 1);
+        this.freedAccentObject.updateMatrix();
+        this.freedAccentMesh.setMatrixAt(instance++, this.freedAccentObject.matrix);
+      }
+    }
+    const visibleCount = instance;
+    for (; instance < this.freedAccentMesh.count; instance += 1) this.freedAccentMesh.setMatrixAt(instance, this.hiddenMatrix);
+    this.freedAccentMesh.visible = visibleCount > 0;
+    this.freedAccentMesh.instanceMatrix.needsUpdate = true;
+  }
+
   private recycle(slot: number): void {
     if (this.active[slot]) this.diagnostics.active = Math.max(0, this.diagnostics.active - 1);
     this.active[slot] = false;
     this.moths[slot] = false;
+    this.avoidedPlayers[slot] = false;
     const family = this.families[this.familyIndex[slot] ?? -1];
     family?.sprites.hide(slot);
     family?.sprites.setTintScalar(slot, 1);
     this.familyIndex[slot] = -1;
     this.opacities[slot] = 1;
     this.rotations[slot] = 0;
+    Object.assign(this.diagnostics.entities[slot]!, inactiveDiagnostics(slot));
   }
 
   private installDiagnosticsSurface(): void {
@@ -419,16 +506,67 @@ function visualFamilyFor(enemy: ClaimJumperEnemy): VisualFamily {
   return enemy.isThief ? 'thief' : 'base';
 }
 
-function nearestEdgeDirection(x: number, z: number): { x: number; z: number; distance: number } {
+function escapeRoute(
+  x: number,
+  z: number,
+  players: readonly THREE.Vector3[],
+): { directionX: number; directionZ: number; distance: number; targetX: number; targetZ: number; avoidedPlayer: boolean } {
   const west = Math.max(0, x - Terrain.bounds.minX);
   const east = Math.max(0, Terrain.bounds.maxX - x);
   const south = Math.max(0, z - Terrain.bounds.minZ);
   const north = Math.max(0, Terrain.bounds.maxZ - z);
   const distance = Math.min(west, east, south, north);
-  if (distance === west) return { x: -1, z: 0, distance };
-  if (distance === east) return { x: 1, z: 0, distance };
-  if (distance === south) return { x: 0, z: -1, distance };
-  return { x: 0, z: 1, distance };
+  const verticalEdge = distance === west || distance === east;
+  let targetX = distance === west ? Terrain.bounds.minX : distance === east ? Terrain.bounds.maxX : x;
+  let targetZ = distance === south ? Terrain.bounds.minZ : distance === north ? Terrain.bounds.maxZ : z;
+  let avoidedPlayer = false;
+  for (const player of players) {
+    if (distanceSqToSegment(player.x, player.z, x, z, targetX, targetZ) > Balance.legibility.freedAvoidRadius ** 2) continue;
+    if (verticalEdge) {
+      const side = z >= player.z ? 1 : -1;
+      targetZ = THREE.MathUtils.clamp(z + side * Balance.legibility.freedAvoidBias, Terrain.bounds.minZ, Terrain.bounds.maxZ);
+    } else {
+      const side = x >= player.x ? 1 : -1;
+      targetX = THREE.MathUtils.clamp(x + side * Balance.legibility.freedAvoidBias, Terrain.bounds.minX, Terrain.bounds.maxX);
+    }
+    avoidedPlayer = true;
+    break;
+  }
+  const dx = targetX - x;
+  const dz = targetZ - z;
+  const routeDistance = Math.hypot(dx, dz);
+  return {
+    directionX: routeDistance > 0 ? dx / routeDistance : 0,
+    directionZ: routeDistance > 0 ? dz / routeDistance : 0,
+    distance: routeDistance,
+    targetX,
+    targetZ,
+    avoidedPlayer,
+  };
+}
+
+function distanceSqToSegment(px: number, pz: number, ax: number, az: number, bx: number, bz: number): number {
+  const dx = bx - ax;
+  const dz = bz - az;
+  const lengthSq = dx * dx + dz * dz;
+  const t = lengthSq > 0 ? THREE.MathUtils.clamp(((px - ax) * dx + (pz - az) * dz) / lengthSq, 0, 1) : 0;
+  return (px - (ax + dx * t)) ** 2 + (pz - (az + dz * t)) ** 2;
+}
+
+function inactiveDiagnostics(slot: number): FreedWalkerDiagnostics['entities'][number] {
+  return {
+    slot,
+    active: false,
+    readState: 'none',
+    behavior: 'run',
+    silhouette: 'none',
+    contactDamage: 0,
+    age: 0,
+    x: 0,
+    z: 0,
+    target: { x: 0, z: 0, kind: 'none' },
+    avoidedPlayer: false,
+  };
 }
 
 function directionFor(x: number, z: number): (typeof rotationDirections)[number] {
