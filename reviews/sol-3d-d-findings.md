@@ -289,6 +289,48 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## Final five reuse verdicts + Old Canal / Archive World mounts
+
+### F-3D-D-124 — The final five are reuse verdicts, not missing sculpts
+
+The final-five mask tables all name existing `tileId` values: Picnic uses `e6-glow-mesa`, Dead Band and Relay Rush use `e7-relay-valley`, and Far Side plus Eclipse use `e8-mare-claim`. Per the Flotilla/Stillwater precedent, this wave does not create duplicate terrain GLBs, duplicate panoramas, atlases, or sculpt boards. It publishes five small reuse-verdict terrain contracts that point at the accepted base sculpt, copy the authored mask table, and record why a new sculpt would be drift.
+
+The Far Side remains the known factory nuance from F-3D-D-98: the shared Mare Claim sculpt is still the correct terrain authority, but its two variant build rectangles cross the accepted rim transition. This wave records reuse and mount ids; it does not mutate Mare Claim's mesh to hide a placement contract issue.
+
+### F-3D-D-125 — Final-five mount ids unblock ALPHA without inventing pack bodies
+
+Each final-five reuse contract carries five `landmarkMounts` with empty `asset` fields. ALPHA can now build the last packs against stable ids and positions, while the terrain contract remains the only mount authority. Picnic gets picnic/staging sites on Glow Mesa. Dead Band gets silence/null markers on Relay Valley. Relay Rush gets five rush relay frames on the Relay Valley relay row. Far Side gets landing, probe, comms-shadow, suit-cache, and horizon listening posts on Mare Claim. Eclipse gets shadow, rim-solar, launch-shadow, and mass-driver eclipse markers on Mare Claim.
+
+### F-3D-D-126 — Old Canal and Archive World only needed interlock resolution
+
+Old Canal and Archive World already shipped terrain-side mount records and pack-side transforms with body assets. This boundary sets both pack contracts to `mountInterlock: resolved-3d-d` and generates the same mounts-sweep verdict boards. No GLB body, terrain mesh, panorama, mask, or runtime file changes.
+
+## Final-five / mounts closeout gate state
+
+- Old Canal mount records: 5/5, pack interlock resolved: PASS
+- Archive World mount records: 5/5, pack interlock resolved: PASS
+- Picnic reuse verdict + empty-asset mounts: 5/5: PASS
+- Dead Band reuse verdict + empty-asset mounts: 5/5: PASS
+- Relay Rush reuse verdict + empty-asset mounts: 5/5: PASS
+- Far Side reuse verdict + empty-asset mounts: 5/5: PASS
+- Eclipse reuse verdict + empty-asset mounts: 5/5: PASS
+- Total verifier coverage: 20 maps / 103 mount records: PASS
+- New terrain GLBs / panorama GLBs / atlases: none
+- `python3 assets/pilots/map-rebuild-spike/verify_mounts_sweep.py`: PASS
+- `src/`, simulation, movement, collision, placement, masks, and runtime registry: unchanged
+
+## Final-five / mounts closeout owner-verdict images
+
+- `artifacts/map-rebuild-spike/old-canal-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/archive-world-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/picnic-reuse-verdict.png`
+- `artifacts/map-rebuild-spike/dead-band-reuse-verdict.png`
+- `artifacts/map-rebuild-spike/relay-rush-reuse-verdict.png`
+- `artifacts/map-rebuild-spike/far-side-reuse-verdict.png`
+- `artifacts/map-rebuild-spike/eclipse-reuse-verdict.png`
+
+READY-FOR-GATES
+
 ## Mounts sweep — Pressure Garden + ALPHA six-pack boundary
 
 ### F-3D-D-121 — The second sweep resolves seven new pack debts without touching art geometry
