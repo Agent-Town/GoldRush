@@ -1129,6 +1129,7 @@ export class Game {
       () => this.heroWeaponsEnabledFor(this.primaryActor),
       () => this.activeWeapon === 'blast',
       () => this.heroInDeepwaterDiveZone(this.primaryActor),
+    );
     this.e6ArsenalSystem = new E6ArsenalSystem(
       this.combat,
       this.events,

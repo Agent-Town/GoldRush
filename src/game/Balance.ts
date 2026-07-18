@@ -207,6 +207,7 @@ export const Balance = {
     depthChargeRack: { range: 12, cooldown: 2.8 },
     depthChargeLobber: { range: 9, cooldown: 2.2 },
     treatmentEventHistory: 64,
+  },
   e6Arsenal: {
     sunlineBeam: { damage: 16, range: 13, cooldown: 0.7, boltSpeed: 32, visualSeconds: 0.16 },
     sunlineMount: { damage: 24, range: 18, cooldown: 1.15, boltSpeed: 36, silhouetteHeight: 1.1, mirrorRadius: 0.22 },
