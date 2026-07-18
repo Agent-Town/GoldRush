@@ -289,6 +289,53 @@ The E1 mood and building-grit boards remain its current owner gates. The E2 boar
 
 READY-FOR-GATES
 
+## Mounts sweep — Pressure Garden + ALPHA six-pack boundary
+
+### F-3D-D-121 — The second sweep resolves seven new pack debts without touching art geometry
+
+The queue's post-6165bc15 debt list is fully consumed: Pressure Garden plus Showroom, Half-Life Hollow, Echo Canyon, Low Orbit, Seed Run, and Devil's Alley. No terrain mesh, panorama, GLB body, mask table, gameplay bound, collision, movement, spawn, water, placement, gravity, mirror, wind, or route file changed. The sweep only writes the runtime mount seam: terrain `landmarkMounts`, terrain `landmarkPack`, pack `mounts`, pack `mountInterlock: resolved-3d-d`, and removal of Pressure Garden's old `proposedIds`.
+
+Pressure Garden was the only map with no canonical mount coordinates on main. Its five records sit in service gaps around the authored terraces: manifold below the boiler shelf, pipe headers outside the west/east growing terraces, coal winch outside the coal bed, and pump station at the working water band. The six ALPHA packs already carried their 3D-C-authored transforms; the sweep preserves those transforms and resolves the interlock rather than inventing alternate placements.
+
+### F-3D-D-122 — Some landmarks intentionally occupy authored story sites
+
+The verifier only applies clearance checks where the contract claims clear side-placement. Pressure Garden avoids all build rectangles. Showroom stays outside the five model-home rectangles. The earlier six-map clearance checks remain intact. Echo Canyon arrays, Low Orbit scaffold/claw bodies, Seed Run vaults, and Devil's Alley wind anchors are intentional story/site landmarks on their authored pads or route points; treating them as clearance failures would erase the pack's purpose and move gameplay truth into this sweep.
+
+### F-3D-D-123 — The board generator now uses mounted-image evidence when proposed-image evidence is absent
+
+The first sweep's board builder only knew the BETA-style `*-landmarks-proposed*.png` names. The ALPHA packs publish `*-landmarks-mounted*.png`, so the script now falls back to mounted evidence before composing the same run-camera, overview, pack-lineup, and mount-record board. The branch adds seven new `*-mounts-sweep-verdict.png` boards and leaves the previously accepted six boards unchanged.
+
+## Mounts sweep v2 gate state
+
+- Previous six-map sweep still verified: 33/33 records: PASS
+- Pressure Garden records: 5/5, all asset fields filled: PASS
+- Showroom records: 5/5, all asset fields filled: PASS
+- Half-Life Hollow records: 5/5, all asset fields filled: PASS
+- Echo Canyon records: 5/5, all asset fields filled: PASS
+- Low Orbit records: 5/5, all asset fields filled: PASS
+- Seed Run records: 5/5, all asset fields filled: PASS
+- Devil's Alley records: 5/5, all asset fields filled: PASS
+- Total mounted sweep coverage in verifier: 68/68 records: PASS
+- Pack contracts match terrain `landmarkMounts`: PASS
+- Pack interlocks resolved for all seven new debts: PASS
+- Pressure Garden build rectangle clearance: PASS
+- Showroom model-home rectangle clearance: PASS
+- Seven new verdict boards generated: PASS
+- `python3 assets/pilots/map-rebuild-spike/verify_mounts_sweep.py`: PASS
+- Terrain GLBs, panorama GLBs, landmark GLBs, masks, simulation, and `src/`: unchanged
+
+## Mounts sweep v2 owner-verdict images
+
+- `artifacts/map-rebuild-spike/pressure-garden-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/showroom-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/half-life-hollow-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/echo-canyon-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/low-orbit-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/seed-run-mounts-sweep-verdict.png`
+- `artifacts/map-rebuild-spike/devils-alley-mounts-sweep-verdict.png`
+
+READY-FOR-GATES
+
 ## Mounts sweep — Regatta, Glow Mesa, Relay Valley, Mare Claim, Dome Basin, Ember Shore
 
 ### F-3D-D-117 — Merged landmark packs now resolve through terrain contracts
