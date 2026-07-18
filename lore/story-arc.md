@@ -87,7 +87,7 @@ RECOMMENDATION: **no — and that's what keeps him big.** Every epoch already fi
 ## RATIFICATION QUESTIONS (owner)
 1. ~~The Baron's return motive~~ → DIRECTION SET 2026-07-09 (pride-wound, owner ruling above); ratify the v2 wording or adjust.
 2. ~~The E10 kinship beat (the Baron's heirs join at the Ark) — yes / no / soften?~~ → ANSWERED 2026-07-18 (ruling #20: CANON, ratified exactly as staged — the heirs board, the Baron stays, the watch runs). (Pride makes it land: the Static can't be beaten by taking; his line finally joins what it could never own.)
-3. Cadence — recommendation above (headline every second era + finale, crest-cameos between); ratify or set your own rhythm.
+3. ~~Cadence~~ — **RATIFIED (owner 2026-07-18: "ratify")**: headline E1, E2, then every second era (E4, E6, E8-by-proxy) + the E10 finale; crest-cameos between. Appendix D is canon.
 
 **THE FLOOD BREAK (owner 2026-07-16, verbatim): "we have a kind of hard reset in epoch 5 anyways when the city is under water - when it gets rebuilt, the old technologies are gone."** — the town's accretion breaks at the flood: E1-E4 layers drown (persisting as the E5 sea-floor wreck museum); the E5 harbor town is a rebuild; accretion resumes E5→E8. The Pan Monument is carried to high ground — the one thing the town saves (heritage law made into a story beat: someone carried it). **[Refined 2026-07-18 by the twenty rulings: #3 the break is SOFT — WORKS drown, KNOWING floats (the arsenal lineage holds; canon-rules.md §TWO-CHAINS EXCEPTION); #1 THE CARRY = whole-town relay, last hands unrecorded (staged STORYBOOK E5).]**
 
