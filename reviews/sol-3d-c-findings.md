@@ -100,6 +100,42 @@ The initial evidence rig let the blue-hour terrain collapse toward black. The pr
 
 The evidence rig stays a verdict-only vacuum rake. No light, camera, mask, terrain, panorama, gameplay object, or canonical mount is exported or rewritten by this pack.
 
+## Great landmark backlog 05 — E10 Ember Shore body handoff
+
+Branch: `sol/campaign-landmarks-e10-ember-shore`
+
+Base: `60da054aceb48ce28cc20d507ccdc029b80ccc60`
+
+Verdict: **READY-FOR-GATES — five mount-agnostic Ember Shore landmark bodies are production-complete; the vent site, titan machine pad, and three lava-vein bands remain source-truth in the sculpt contract.**
+
+### Mount ID list
+
+1. `last-warm-vent-altar`
+2. `cooled-titan-shelf`
+3. `west-vein-cooling-marker`
+4. `center-vein-bridge-school`
+5. `shore-preserve-rack`
+
+### Source ladder and composition
+
+- Four bodies reuse shipped E10 plaza vocabulary (`engine-glow-ward`, `engine-glow-idle`, `bridge-school`, `preserve-rack`) and the west vein marker derives from the E10 worlds/kit art. No proxy mesh was promoted.
+- The body set is intentionally preserve-contract infrastructure: an altar for the last warm vent, an archaeological titan shelf on the machine pad, a cooling marker beside the west vein, a small bridge-school lesson body near the center vein, and a shore rack for sealed samples/contracts.
+- Proposed placements are evidence-only while the MOUNT INTERLOCK is pending. The allowed exceptions are explicit: `last-warm-vent-altar` occupies the last-warm-vent site and `cooled-titan-shelf` occupies the cooled-titan machine mount. The remaining three bodies clear the lava bands and build pads after the independent review catch.
+
+### Production gate
+
+| Check | Result |
+| --- | --- |
+| Bodies | 5 separate GLBs; one mesh/primitive/material/image each |
+| Triangle budget | 308–1,116 triangles per body; all below 3,000 |
+| Shared atlas | one embedded 1024 x 1024 E10 atlas shared byte-for-byte by all five GLBs |
+| Origins | every body base-centered; zero cameras, lights, animations, people, or simulation authority |
+| Determinism | 5/5 saved-BLEND re-exports byte-identical and semantic-identical |
+| Source tiers | reuse 4, derive 1, build-new 0 |
+| Fresh-reference law | all boards record `origin/main@60da054aceb4…` |
+| Repo gate | `npm run build` green |
+| Visual QA | final fresh-eyes verdict ACCEPT; five-body identity/readability pass and west marker clears the lava-band rectangle |
+
 ## Campaign landmark pack 01 — E5 Regatta body handoff
 
 Branch: `sol/campaign-landmarks-e5-regatta`
