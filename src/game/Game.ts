@@ -141,6 +141,7 @@ import { FuelSystem } from '../systems/FuelSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
 import { E6ArsenalSystem } from '../systems/E6ArsenalSystem';
 import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
+import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
@@ -440,6 +441,7 @@ export class Game {
   private readonly deepwaterArsenal: DeepwaterArsenal;
   private readonly e6ArsenalSystem: E6ArsenalSystem;
   private readonly e9ArsenalSystem: E9ArsenalSystem;
+  private readonly e9CanalSystem: E9CanalSystem;
   private readonly e7ArsenalSystem: E7ArsenalSystem;
   private readonly e8ArsenalSystem: E8ArsenalSystem;
   private readonly progression: Progression;
@@ -1173,6 +1175,17 @@ export class Game {
       (id) => hasResearchNode(this.researchState, id),
       (position, text) => this.vfx.floatText(position, text, '#83ded7'),
     );
+    this.e9CanalSystem = new E9CanalSystem(
+      this.economy,
+      this.tileStateStore,
+      this.activeContract.tileParams,
+      () => this.enemies.all,
+      () =>
+        this.activeEpoch.id === 'epoch-9-redfields' &&
+        this.activeContract.id === 'e9-dome-basin' &&
+        !this.multiplayerActive(),
+      (position, amount, label) => this.vfx.floatText(position, `${label} +${amount}`, '#83ded7'),
+    );
     this.e7ArsenalSystem = new E7ArsenalSystem(
       this.combat,
       this.events,
@@ -1463,6 +1476,7 @@ export class Game {
         onVisualHeightSourceInstalled: () => {
           this.railPath?.resampleTerrain();
           this.megaprojectRailPath?.resampleTerrain();
+          this.e9CanalSystem.resampleTerrain();
         },
       });
     });
@@ -1533,6 +1547,9 @@ export class Game {
         e9Arsenal: {
           deployFence: () => this.e9ArsenalSystem.deployFence(),
           diagnostics: () => this.e9ArsenalSystem.diagnostics,
+        },
+        e9Canal: {
+          diagnostics: () => this.e9CanalSystem.diagnostics,
         },
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
@@ -1890,6 +1907,7 @@ export class Game {
     this.deepwaterArsenal.dispose();
     this.e6ArsenalSystem.dispose();
     this.e9ArsenalSystem.dispose();
+    this.e9CanalSystem.dispose();
     this.e7ArsenalSystem.dispose();
     this.e8ArsenalSystem.dispose();
     this.crawlerBoss.dispose();
@@ -2154,6 +2172,7 @@ export class Game {
           this.e6ArsenalSystem.movementMultiplier(enemy) *
           this.e9ArsenalSystem.movementMultiplier(enemy),
       );
+      if (this.e9CanalSystem.update(simDelta, this.timeAlive, this.visibleHarvestTargets())) this.syncHeroVisualHeight();
       this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
       this.discoverVisibleLedgerEnemies();
@@ -3158,6 +3177,7 @@ export class Game {
     this.scene.add(this.deepwaterArsenal.group);
     this.scene.add(this.e6ArsenalSystem.group);
     this.scene.add(this.e9ArsenalSystem.group);
+    this.scene.add(this.e9CanalSystem.group);
     this.createMegaprojectVisuals();
     this.scene.add(this.megaprojectGroup);
     this.createBaronStandardVisual();
@@ -3792,6 +3812,7 @@ export class Game {
       deepwaterArsenal: this.deepwaterArsenal.diagnostics,
       e6Arsenal: this.e6ArsenalSystem.diagnostics,
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
+      e9Canal: this.e9CanalSystem.diagnostics,
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
@@ -5290,6 +5311,7 @@ export class Game {
     this.combat.reset();
     this.e6ArsenalSystem.reset();
     this.e9ArsenalSystem.reset();
+    this.e9CanalSystem.reset();
     this.e7ArsenalSystem.reset();
     this.damSurge?.reset();
     if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge?.trigger(this.timeAlive);
