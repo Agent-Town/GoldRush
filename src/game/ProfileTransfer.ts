@@ -114,7 +114,7 @@ export function unpackPreview(text: string): ProfileTransferFailure | ProfileTra
 export function unpackProfile(storage: ProfileStorage, envelope: ProfileTransferEnvelope): ProfileTransferResult {
   if (envelope.version !== TRANSFER_VERSION) return { ok: false, message: 'That ledger does not match this trail.' };
   const profile = importProfileRecord(storage, envelope.profile);
-  if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
+  if (!profile) return { ok: false, message: 'That ledger has no claim-holder name.' };
   for (const key of profileDataKeys(storage, profile.id, Object.keys(envelope.data))) {
     if (!(key in envelope.data)) continue;
     const datum = normalizeImportDatum(key, envelope.data[key]);
@@ -133,7 +133,7 @@ export function restoreProfileBundle(storage: ProfileStorage, envelope: ProfileT
     return { ok: false, message: 'That ledger does not match this trail.' };
   }
   const profile = normalizeCloudProfile(envelope.profile);
-  if (!profile) return { ok: false, message: 'That ledger has no prospector name.' };
+  if (!profile) return { ok: false, message: 'That ledger has no claim-holder name.' };
 
   const keys = profileDataKeys(storage, profile.id, Object.keys(envelope.data));
   const staged = stageRestoreData(storage, profile.id, envelope, keys);

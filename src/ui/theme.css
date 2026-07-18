@@ -473,6 +473,11 @@
   outline-offset: 2px;
 }
 
+.hud-meta__pause-title {
+  margin: -2px 0 2px;
+  font: 900 1.2rem/1.05 Wellfleet, Georgia, serif;
+}
+
 .hud-panel--meta {
   top: calc(max(16px, env(safe-area-inset-top)) + 64px);
   right: max(16px, env(safe-area-inset-right));
@@ -511,7 +516,7 @@
 }
 
 .hud-meta__save summary {
-  min-height: 34px;
+  min-height: 44px;
   color: var(--at-wood-950);
   font-weight: 900;
   cursor: pointer;
@@ -535,7 +540,7 @@
 }
 
 .hud-meta__chip {
-  min-height: 36px;
+  min-height: 44px;
   border: 1px solid rgba(46, 27, 14, 0.55);
   border-radius: 6px;
   color: var(--at-cream-50);
@@ -606,6 +611,9 @@
 }
 
 .hud-meta__audio input[type="checkbox"] {
+  width: 24px;
+  height: 24px;
+  margin: 0;
   accent-color: var(--at-teal-600);
 }
 
@@ -1061,7 +1069,7 @@
 }
 
 .gr-profile-title {
-  z-index: 12;
+  z-index: 50;
 }
 
 .gr-profile-title__panel {
@@ -1596,6 +1604,21 @@
     min-height: 44px;
     font-size: 0.78rem;
     line-height: 1.05;
+  }
+
+  .hud-pause__key {
+    display: none;
+  }
+
+  #hud[data-paused="true"] .hud-panel--meta {
+    top: calc(max(12px, env(safe-area-inset-top)) + 112px);
+    bottom: calc(max(16px, env(safe-area-inset-bottom)) + 64px);
+  }
+
+  #hud[data-paused="true"] .hud-pause {
+    right: max(12px, env(safe-area-inset-right));
+    bottom: max(12px, env(safe-area-inset-bottom));
+    width: calc(100vw - max(12px, env(safe-area-inset-left)) - max(12px, env(safe-area-inset-right)));
   }
 
   .contract-briefing {

@@ -33,6 +33,7 @@ export class ProfileManager {
   private importEnvelope?: ProfileTransferEnvelope;
   private message = '';
   private burnConfirm = false;
+  private focusSelectedAfterRender = true;
   private unsubscribeAccountSync: () => void = () => undefined;
 
   constructor(
@@ -76,6 +77,7 @@ export class ProfileManager {
   }
 
   dispose(): void {
+    this.root?.removeEventListener('keydown', this.onKeyDown);
     this.root?.remove();
     this.unsubscribeAccountSync();
     if (globalThis.window?.__GR_PROFILE__) globalThis.window.__GR_PROFILE__ = undefined;
@@ -86,7 +88,9 @@ export class ProfileManager {
     if (!setActiveProfile(this.storage, profileId)) return false;
     this.state = ensureProfileState(this.storage);
     this.selectedId = this.state.activeId;
+    bindProfileSession(this.selectedId);
     accountSync.queuePush();
+    this.focusSelectedAfterRender = true;
     this.render();
     return true;
   }
@@ -98,7 +102,9 @@ export class ProfileManager {
     this.state = ensureProfileState(this.storage);
     installProfileStorageScope(this.storage);
     this.selectedId = profile.id;
+    bindProfileSession(this.selectedId);
     accountSync.queuePush();
+    this.focusSelectedAfterRender = true;
     this.render();
     return profile;
   }
@@ -123,19 +129,25 @@ export class ProfileManager {
       this.root = document.createElement('section');
       this.root.className = 'death-overlay death-overlay--visible gr-profile-title';
       this.root.dataset.testid = 'profile-title';
+      this.root.setAttribute('role', 'dialog');
+      this.root.setAttribute('aria-modal', 'true');
       this.root.setAttribute('aria-label', 'Choose profile');
+      this.root.addEventListener('keydown', this.onKeyDown);
       parent.append(this.root);
     }
+    const activeElement = document.activeElement instanceof HTMLElement && this.root.contains(document.activeElement) ? document.activeElement : undefined;
+    const activeProfileId = activeElement?.dataset.profileId;
+    const activeTestId = activeElement?.dataset.testid;
 
     if (!this.state) {
       this.root.innerHTML = `
         <div class="death-overlay__panel gr-profile-title__panel">
           <p class="death-overlay__eyebrow">Claim Ledger</p>
           <h1>Who's prospecting?</h1>
-          <p class="death-overlay__flavor">Name the ledger before the first claim.</p>
+          <p class="death-overlay__flavor">Name the claim-holder before the first claim.</p>
           ${this.message ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.message)}</p>` : ''}
           <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
-            <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Prospector name" />
+            <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Claim-holder name" />
             <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
           </form>
           ${this.renderAccountCard()}
@@ -143,7 +155,10 @@ export class ProfileManager {
       `;
       this.bindCreateForm();
       this.bindAccountControls();
-      this.root.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]')?.focus({ preventScroll: true });
+      this.focusSelectedAfterRender = false;
+      if (!this.restoreFocus(activeProfileId, activeTestId)) {
+        this.root.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]')?.focus();
+      }
       return;
     }
 
@@ -153,7 +168,9 @@ export class ProfileManager {
       <div class="death-overlay__panel gr-profile-title__panel">
         <p class="death-overlay__eyebrow">Claim Ledger</p>
         <h1>Profiles</h1>
-        <p class="death-overlay__flavor">Saves live in this browser. Pack the ledger to keep or move them.</p>
+        <p class="death-overlay__flavor">${this.options.onBack
+          ? 'Select a ledger to make it active. Changes apply immediately. Saves live in this browser. Pack the ledger to keep or move them.'
+          : 'Saves live in this browser. Pack the ledger to keep or move them.'}</p>
         ${this.message ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.message)}</p>` : ''}
         <ol class="gr-profile-list" data-testid="profile-list">
           ${this.state.profiles.map((profile) => renderProfileRow(profile, profile.id === selected.id)).join('')}
@@ -175,8 +192,9 @@ export class ProfileManager {
           <p>${escapeHtml(this.message)}</p>
           <button class="death-overlay__button" type="button" data-testid="profile-import-apply">Bring them in</button>
         </div>` : ''}
-        <button class="death-overlay__button" type="button" data-testid="profile-start">Enter claim as ${escapeHtml(selected.name)}</button>
-        ${this.options.onBack ? '<button class="death-overlay__button gr-profile-back" type="button" data-testid="profile-back">Back to the menu</button>' : ''}
+        ${this.options.onBack
+          ? `<button class="death-overlay__button gr-profile-back" type="button" data-testid="profile-back">Done — ${escapeHtml(selected.name)} selected</button>`
+          : `<button class="death-overlay__button" type="button" data-testid="profile-start">Enter claim as ${escapeHtml(selected.name)}</button>`}
       </div>
     `;
 
@@ -193,7 +211,26 @@ export class ProfileManager {
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-start"]')?.addEventListener('click', () => this.startProfile());
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-back"]')?.addEventListener('click', () => this.options.onBack?.());
     this.bindAccountControls();
+    if (this.focusSelectedAfterRender) {
+      this.focusSelectedAfterRender = false;
+      this.root.querySelector<HTMLButtonElement>('[data-profile-id][aria-pressed="true"], [data-testid="profile-start"]')?.focus();
+    } else this.restoreFocus(activeProfileId, activeTestId);
   }
+
+  private restoreFocus(profileId?: string, testId?: string): boolean {
+    const target = profileId
+      ? [...this.root?.querySelectorAll<HTMLElement>('[data-profile-id]') ?? []].find((element) => element.dataset.profileId === profileId)
+      : [...this.root?.querySelectorAll<HTMLElement>('[data-testid]') ?? []].find((element) => element.dataset.testid === testId);
+    target?.focus();
+    return !!target;
+  }
+
+  private readonly onKeyDown = (event: KeyboardEvent) => {
+    if (event.key !== 'Escape' || !this.options.onBack) return;
+    event.preventDefault();
+    event.stopPropagation();
+    this.options.onBack();
+  };
 
   private renderAccountCard(): string {
     const account = accountSync.snapshot();
@@ -266,6 +303,7 @@ export class ProfileManager {
     if (!saved) return;
     this.state = saved;
     this.selectedId = saved.activeId;
+    bindProfileSession(this.selectedId);
     installProfileStorageScope(this.storage);
   }
 
@@ -358,6 +396,8 @@ export class ProfileManager {
     }
     this.state = ensureProfileState(this.storage);
     this.selectedId = result.profile.id;
+    bindProfileSession(this.selectedId);
+    this.focusSelectedAfterRender = true;
     this.message = `${result.profile.name} joined the ledger.`;
     accountSync.queuePush();
     this.render();

@@ -2,11 +2,13 @@ import './heraldReader.css';
 import { readHeraldItems, type HeraldItem } from './herald';
 
 let currentRoot: HTMLElement | null = null;
+let currentOnClose: (() => void) | undefined;
 
-export function openClaimHerald(): void {
+export function openClaimHerald(onClose?: () => void): void {
   closeClaimHerald();
   const root = document.createElement('section');
   currentRoot = root;
+  currentOnClose = onClose;
   root.className = 'claim-herald';
   root.dataset.testid = 'claim-herald';
   root.setAttribute('role', 'dialog');
@@ -19,13 +21,16 @@ export function openClaimHerald(): void {
   root.querySelector<HTMLButtonElement>('[data-herald-close]')?.focus({ preventScroll: true });
 }
 
-function closeClaimHerald(): void {
+export function closeClaimHerald(): void {
   const root = currentRoot;
   if (!root) return;
+  const onClose = currentOnClose;
   currentRoot = null;
+  currentOnClose = undefined;
   root.removeEventListener('click', onHeraldClick);
   root.removeEventListener('keydown', onHeraldKeyDown);
   root.remove();
+  onClose?.();
 }
 
 function renderHerald(items: readonly HeraldItem[]): string {
@@ -70,6 +75,7 @@ function onHeraldClick(event: MouseEvent): void {
 }
 
 function onHeraldKeyDown(event: KeyboardEvent): void {
+  event.stopPropagation();
   if (event.key !== 'Escape') return;
   event.preventDefault();
   closeClaimHerald();

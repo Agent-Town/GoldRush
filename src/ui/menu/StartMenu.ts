@@ -64,6 +64,7 @@ export class StartMenu {
   private loadMessage = '';
   private backdropUrl: string | undefined;
   private backdropRequest: Promise<string> | undefined;
+  private backdropEpochId = '';
   private disposeAccountSync: () => void = () => undefined;
 
   constructor(parent: HTMLElement, private readonly options: StartMenuOptions) {
@@ -81,6 +82,12 @@ export class StartMenu {
     this.loadBackdrop();
     this.audio.setLoop('title-theme', true);
     this.firstAction()?.focus({ preventScroll: true });
+  }
+
+  refresh(): void {
+    if (activeEpochId() !== this.backdropEpochId) this.backdropUrl = undefined;
+    this.render();
+    this.loadBackdrop();
   }
 
   dispose(): void {
@@ -106,7 +113,7 @@ export class StartMenu {
     const suspendRejection = readRunSuspendRejection();
     const account = accountSync.snapshot();
     const backdropStyle = this.backdropUrl ? ` style="background-image:url('${this.backdropUrl}')"` : '';
-    this.root.className = `gr-start-menu${this.loadOpen ? ' gr-start-menu--load-open' : ''}`;
+    this.root.className = `gr-start-menu${this.loadOpen ? ' gr-start-menu--load-open' : ''}${this.settingsOpen ? ' gr-start-menu--settings-open' : ''}`;
     this.root.innerHTML = `
       <div class="gr-start-menu__backdrop" data-asset-slot="ui-menu-backdrop" data-asset-state="${this.backdropUrl ? 'ready' : 'placeholder'}"${backdropStyle}></div>
       <div class="gr-start-menu__column">
@@ -141,7 +148,11 @@ export class StartMenu {
         <section class="gr-start-menu__load" data-testid="load-claim-screen" aria-label="Load a claim" ${this.loadOpen ? '' : 'hidden'}>
           ${this.renderLoadClaims(slots.manual)}
         </section>
-        <section class="gr-start-menu__settings" data-testid="start-menu-settings-panel" ${this.settingsOpen ? '' : 'hidden'}>
+        <section class="gr-start-menu__settings" data-testid="start-menu-settings-panel" aria-label="Settings" ${this.settingsOpen ? '' : 'hidden'}>
+          <header class="gr-start-menu__settings-header">
+            <h2>Settings</h2>
+            <button class="gr-start-menu__small-button" type="button" data-menu-action="settings" data-testid="start-menu-settings-close">Back</button>
+          </header>
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
           ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
           ${renderPerformanceTierControl(PERFORMANCE_TIER_ID)}
@@ -165,10 +176,10 @@ export class StartMenu {
       <section class="gr-start-menu__first-profile" data-testid="profile-title" aria-label="Create profile">
         <p class="death-overlay__eyebrow">Claim Ledger</p>
         <h2>Who's prospecting?</h2>
-        <p>Name the ledger before the first claim.</p>
+        <p>Name the claim-holder before the first claim.</p>
         ${this.profileMessage ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.profileMessage)}</p>` : ''}
         <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
-          <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Prospector name" />
+          <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Claim-holder name" />
           <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
         </form>
       </section>
@@ -177,10 +188,14 @@ export class StartMenu {
 
   private loadBackdrop(): void {
     const epochId = activeEpochId();
+    if (epochId !== this.backdropEpochId) {
+      this.backdropEpochId = epochId;
+      this.backdropUrl = undefined;
+      this.backdropRequest = loadEraBackdrop(epochId).then((url) => url ?? '');
+    }
     this.root.querySelector<HTMLElement>('.gr-start-menu__backdrop')?.setAttribute('data-era-backdrop', eraBackdropRef(epochId));
-    this.backdropRequest ??= loadEraBackdrop(epochId).then((url) => url ?? '');
-    void this.backdropRequest.then((url) => {
-      if (!url) return;
+    void this.backdropRequest?.then((url) => {
+      if (!url || this.backdropEpochId !== epochId) return;
       this.backdropUrl = url;
       document.documentElement.style.setProperty('--gr-era-backdrop', `url("${url}")`);
       const backdrop = this.root.querySelector<HTMLElement>('.gr-start-menu__backdrop');
@@ -266,7 +281,9 @@ export class StartMenu {
     this.settingsOpen = !this.settingsOpen;
     if (this.settingsOpen) this.loadOpen = false;
     this.render();
-    this.root.querySelector<HTMLElement>('[data-testid="start-menu-settings"]')?.focus({ preventScroll: true });
+    this.root
+      .querySelector<HTMLElement>(this.settingsOpen ? '[data-testid="start-menu-settings-close"]' : '[data-testid="start-menu-settings"]')
+      ?.focus();
   }
 
   private focusAction(delta: number): void {
@@ -289,7 +306,9 @@ export class StartMenu {
     this.loadOpen = !this.loadOpen;
     if (this.loadOpen) this.settingsOpen = false;
     this.render();
-    this.root.querySelector<HTMLElement>('[data-testid="load-claim-screen"]')?.focus({ preventScroll: true });
+    this.root
+      .querySelector<HTMLElement>(this.loadOpen ? '.gr-start-menu__load [data-menu-action="load"]' : '[data-testid="start-menu-load-claim"]')
+      ?.focus();
   }
 
   private renderLoadClaims(slots: SaveSlot[]): string {
