@@ -1,0 +1,121 @@
+/* The ceremony stage — the interstitials' playable overlay. Placeholder
+ * dressing: warm parchment frame over a primitive-staged canvas. */
+
+.ceremony-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(24, 18, 12, 0.82);
+}
+
+.ceremony-layer[hidden] {
+  display: none;
+}
+
+.ceremony-frame {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(760px, 94vw);
+  max-height: 94vh;
+  padding: 16px 18px;
+  border-radius: 12px;
+  border: 1px solid rgba(214, 178, 110, 0.55);
+  background: linear-gradient(165deg, #2c231a, #201810);
+  color: #efe3c8;
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.5);
+}
+
+.ceremony-header {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ceremony-eyebrow {
+  margin: 0;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #c9a86a;
+}
+
+.ceremony-frame h2 {
+  margin: 0;
+  font-size: clamp(18px, 3.4vw, 26px);
+}
+
+.ceremony-stage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: 8px;
+  background: #241d16;
+  touch-action: none;
+  cursor: pointer;
+}
+
+.ceremony-direction {
+  margin: 0;
+  min-height: 2.4em;
+  font-size: clamp(13px, 2.6vw, 16px);
+  line-height: 1.35;
+  color: #e8d9b8;
+}
+
+.ceremony-hand {
+  display: flex;
+  justify-content: center;
+}
+
+.ceremony-hand-input {
+  padding: 12px 26px;
+  font-size: clamp(14px, 2.8vw, 17px);
+  font-weight: 600;
+  color: #241a10;
+  background: linear-gradient(180deg, #e8c780, #cf9f4e);
+  border: 1px solid #8a6a34;
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ceremony-hand-input:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.ceremony-hand-input[data-hand-live='true']:active {
+  transform: translateY(1px);
+}
+
+.ceremony-leave {
+  align-self: flex-end;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #d8c8a4;
+  background: transparent;
+  border: 1px solid rgba(214, 178, 110, 0.4);
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.ceremony-layer[data-phase='done'] .ceremony-leave {
+  align-self: center;
+  font-size: 15px;
+  padding: 10px 22px;
+  color: #241a10;
+  background: linear-gradient(180deg, #e8c780, #cf9f4e);
+  border-color: #8a6a34;
+}
+
+@media (max-width: 480px) {
+  .ceremony-frame {
+    padding: 12px;
+    gap: 8px;
+  }
+}
