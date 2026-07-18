@@ -1711,6 +1711,46 @@ Every comparison is **E1 on the left, E2 on the right**.
 - MAIN-MOVED-ONLY: unrelated attended-session changes; no Wave 4 pilot path existed at branch cut.
 - Expected integration: path-scoped add of the pilot and findings update; no runtime source or conflict resolution is part of this branch.
 
+## Great landmark backlog 04 — E9 Dome Basin body handoff
+
+**Branch:** `sol/campaign-landmarks-e9-dome-basin`  
+**Base:** `60da054aceb48ce28cc20d507ccdc029b80ccc60`  
+**Verdict:** READY-FOR-GATES
+
+### ID list for 3D-D mounts
+
+1. `canal-gate-works`
+2. `ice-quarry-hoist`
+3. `seed-row-weather-station`
+4. `ark-yard-scaffold`
+5. `dust-devil-warning-mast`
+
+### Source ladder and placement judgment
+
+The pack follows the Regatta-pattern mount-agnostic contract: bodies are production GLBs now, while `mountInterlock` remains `pending-3d-d` until 3D-D backfills composed mount records. Dome Basin's read is dry canal recovery rather than decorative ruins, so the body set prioritizes worksite infrastructure: a canal gate assembly, ice-quarry hoist, seed-row/weather station, Ark-yard scaffold, and dust-devil warning mast.
+
+Four bodies reuse or recombine shipped E9 kit pieces (`canal-segment-dry.e9`, `ice-blocks.e9`, `survey-cairn.e9`, `ark-scaffold-stage-2.e9`); the dust warning mast derives from the E9 dust-devil plate family. The proposed positions deliberately sit outside marked build pads and mostly on rim/edge work zones so the later mount pass can preserve the basin's playable routes.
+
+### Gate evidence
+
+| Check | Evidence | Result |
+| --- | --- | --- |
+| Production bodies | `assets/pilots/map-rebuild-spike/landmarks/dome-basin/*.glb` | 5 separate render-only GLBs |
+| Source tiers | `artifacts/map-rebuild-spike/dome-basin-landmarks/asset-contract.json` | reuse 4, derive 1, build-new 0 |
+| Geometry budget | scoped verifier | 452-644 triangles per body; pass under 3,000 |
+| Material budget | scoped verifier | one shared atlas, one embedded material/image per GLB; pass under 2048 |
+| Export hygiene | scoped verifier | 0 cameras, 0 lights, 0 animations |
+| Determinism | scoped verifier | every source `.blend` re-export byte-identical and semantic-identical |
+| Mount interface | pack contract | base-centered origins; `mountInterlock: pending-3d-d`; proposed IDs recorded |
+| Visual evidence | `artifacts/map-rebuild-spike/dome-basin-landmarks-verdict.png` | run-camera, pack lineup, clearance overlay, and four-angle body check generated |
+| App build | `npm run build` | pass; built in 3.16 s |
+| Independent visual QA | unprimed board review after readability fix | ACCEPT; all five bodies visible/separable at run camera |
+
+### Notes for integration
+
+- The all-map landmark verifier is intentionally not the boundary gate for this branch because older already-merged E1 atlas hashes have drifted in the aggregate sweep; the scoped Dome Basin verifier is the relevant gate and passed after composing the scoped board set.
+- The clearance overlay is proposal evidence only until 3D-D authors mount records. 3D-D should use the ID list above and can adjust exact transforms while preserving the intent: canal works on the dry-canal control seam, ice hoist by the upper basin/quarry edge, seed/weather gear by the seed rows, Ark scaffold near the yard approach, and dust mast near the patrol route.
+
 ## Wave 3 — Tavern full-wrap repair
 
 ### Delivered
