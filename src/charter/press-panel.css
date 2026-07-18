@@ -13,6 +13,12 @@
 
 .charter-press-panel__face[hidden] { display: none; }
 .charter-press-panel__full > [data-testid='press-stamp'] { width: 100%; color: #fff8e8 !important; background: #7a5a2e !important; }
+.charter-press-panel__shelf-actions { display: flex; flex-wrap: wrap; gap: 4px; }
+.charter-press-panel__share { display: grid; gap: 7px; margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(91, 58, 31, 0.28); }
+.charter-press-panel__share h3 { margin: 0; }
+.charter-press-panel__drop { display: grid; place-items: center; min-height: 54px; padding: 8px; border: 1px dashed #8b7d3c; color: #5b3a1f; background: rgba(245, 230, 200, 0.55); text-align: center; cursor: pointer; }
+.charter-press-panel__drop input { width: 100%; margin-top: 6px; }
+.charter-press-panel__share textarea { min-height: 58px; resize: vertical; }
 
 .charter-lever { display: grid; gap: 12px; }
 .charter-lever__intro { margin: 0; color: #5b3a1f; font-size: 12px; line-height: 1.4; }
