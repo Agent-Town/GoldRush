@@ -1,0 +1,60 @@
+{
+  "envelope": {
+    "version": 1,
+    "provenance": {
+      "author": "The Charter Press",
+      "createdAt": "2026-07-18T00:00:00.000Z",
+      "lineage": [
+        "the-claim"
+      ],
+      "note": "E1's first claim, re-inked in dawn light: no enemies, no waves, one pan."
+    },
+    "seedPolicy": {
+      "mode": "inherit"
+    },
+    "paletteId": "epoch-1-frontier",
+    "runPolicy": {
+      "waves": "none"
+    }
+  },
+  "contract": {
+    "id": "the-claim",
+    "name": "The River",
+    "tileParams": {
+      "tileId": "frontier-river-claim",
+      "biome": "river-claim",
+      "river": true,
+      "ford": true,
+      "waterSources": [],
+      "lanes": {
+        "spawnEdges": [
+          "north",
+          "south",
+          "east",
+          "west"
+        ],
+        "territoryRingBiasWaves": 0,
+        "territoryRingLaneBias": 0
+      }
+    },
+    "twist": {},
+    "boardRow": {
+      "name": "The River",
+      "ledgerBlurb": "The first claim, re-inked in dawn light.",
+      "tags": [
+        "river"
+      ],
+      "unlock": "post-credits"
+    },
+    "briefing": {
+      "goals": [
+        "Pan the dawn river."
+      ],
+      "rules": [
+        "There are no enemies and no waves.",
+        "Names surface as gold flecks; when the last settles, the river keeps going."
+      ],
+      "geographyLine": "The first claim returns in dawn light: one river, one ford, and one pan."
+    }
+  }
+}
