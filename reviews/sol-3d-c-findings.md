@@ -2007,3 +2007,13 @@ The pilot intentionally contains no runtime mount. The permanent painted ground 
 - LANE-TOUCHED: the production Tavern `.blend`/GLB, new Tavern-local builder/verifier/render evidence, and this findings file.
 - MAIN-MOVED-ONLY: `TownScene.ts` changed to suppress duplicate primitive props when the independent props pilot mounts. The Tavern production path, Tavern loader/spec, and Town recipe are unchanged; the queue only records accepted Wave 3. The final 6/6 Tavern gate and build passed with GLB SHA `edec4934…` on `fd38b44f`.
 - Expected integration: path-scoped replacement/add under `assets/pilots/tavern-3d/` plus this findings file; no runtime source or conflict resolution is required.
+
+## Atlas-hash reconciliation — 2026-07-18
+
+### F-3DC-38 — The E1 landmark file swap left deeper authoring metadata stale
+
+**Severity:** medium, newly unmasked follow-up
+
+**Evidence:** the five accepted E1 atlases (`the-claim`, `dry-gulch`, `twin-banks`, `night-shift`, `baron`) and all 25 GLB-embedded textures agree byte-for-byte. Their pack contracts and aggregate evidence retained the pre-swap atlas hashes; this wave corrects those ten records. The full verifier now advances past the atlas assertion and stops on missing node extras in the replacement GLBs. Commit `d8603c90` replaced the 25 GLBs, five atlases, and added per-asset `.blend` files without updating the old pack contracts, so their GLB hashes and triangle records also describe the retired bodies.
+
+**Decision:** do not weaken the verifier or regenerate accepted owner-selected models inside the atlas-only repair. A separate metadata migration should make the per-asset source blends authoritative (or consolidate them without visual changes), restore required node extras, and refresh the remaining GLB/triangle records under an attended visual-preservation gate.
