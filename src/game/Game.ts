@@ -301,6 +301,7 @@ function bornContract(store: TileStateStore): ContractManifest {
 }
 const MULTIPLAYER_SPAWN_RADIUS = 1.2;
 const MULTIPLAYER_TINTS = ['#5b8a8a', '#c4883a', '#8fbc8f', '#a78bfa'] as const;
+type HeroWeapon = 'rig' | 'blast';
 type MultiplayerActorMeta = {
   playerId: string;
   slot: number;
@@ -314,6 +315,8 @@ type MultiplayerActorSnapshot = {
   position: { x: number; y: number; z: number };
   velocity: { x: number; y: number; z: number };
   visible: boolean;
+  /** Absent only on snapshots captured before per-rider arsenals shipped. */
+  weapon?: HeroWeapon;
 };
 type MultiplayerRunSuspendSnapshot = RunSuspendEnvelope & {
   mpActors?: MultiplayerActorSnapshot[];
@@ -351,6 +354,7 @@ export class Game {
   private mpCard?: HTMLElement;
   private mpHoldCardVisible = false;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
+  private readonly actorWeapons = new Map<Hero, HeroWeapon>();
   // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
   // solo session to the lockstep intent seam; the replay session drives a
   // second actor through the identical seam. Null in plain boots.
@@ -435,7 +439,7 @@ export class Game {
     (at, origin, target) => {
       this.lightRig?.triggerMuzzleFlash(at, origin, target);
       const actor = this.nearestActorTo(origin);
-      if (this.activeWeapon === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
+      if (this.weaponForActor(actor) === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
     },
     (enemy, amount, died) => this.wrangle.onDamage(enemy, amount, died),
     (enemy) => !this.wrangle.isHarmless(enemy),
@@ -451,7 +455,6 @@ export class Game {
   private readonly e8ArsenalSystem: E8ArsenalSystem;
   private readonly progression: Progression;
   private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
-  private activeWeapon: 'rig' | 'blast' = 'rig';
   private blastDamageMult = 1;
   private blastRadiusMult = 1;
   private blastCooldownMult = 1;
@@ -481,7 +484,7 @@ export class Game {
   private readonly heroShooter: ShooterHandle = {
     resumeKey: 'hero:0:rig',
     id: 'hero',
-    enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabledFor(this.primaryActor),
+    enabled: () => this.weaponForActor(this.primaryActor) === 'rig' && this.heroWeaponsEnabledFor(this.primaryActor),
     getPos: () => this.primaryActor.group.position,
     range: Balance.sparkRig.range,
     cooldown: 1 / Balance.sparkRig.fireRate,
@@ -497,7 +500,7 @@ export class Game {
     resumeKey: 'hero:0:blast',
     id: 'hero_blast',
     kind: 'lob',
-    enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabledFor(this.primaryActor),
+    enabled: () => this.weaponForActor(this.primaryActor) === 'blast' && this.heroWeaponsEnabledFor(this.primaryActor),
     getPos: () => this.primaryActor.group.position,
     range: Balance.blast.range,
     cooldown: Balance.blast.cooldown,
@@ -936,7 +939,7 @@ export class Game {
       resumeKey: `hero:${slot}:rig`,
       get id() { return isPlaybookRig() ? 'e7_playbook_spark_rig' : 'hero'; },
       enabled: () =>
-        this.activeWeapon === 'rig' &&
+        this.weaponForActor(actor) === 'rig' &&
         this.heroWeaponsEnabledFor(actor) &&
         (slot === 0 || Boolean(this.mpClient) || this.activeEpoch.order >= 7),
       getPos: () => actor.group.position,
@@ -967,7 +970,7 @@ export class Game {
       resumeKey: `hero:${slot}:blast`,
       id: 'hero_blast',
       kind: 'lob',
-      enabled: () => this.activeWeapon === 'blast' && this.heroWeaponsEnabledFor(actor),
+      enabled: () => this.weaponForActor(actor) === 'blast' && this.heroWeaponsEnabledFor(actor),
       getPos: () => actor.group.position,
       range: Balance.blast.range,
       cooldown: Balance.blast.cooldown,
@@ -1566,6 +1569,10 @@ export class Game {
           this.endRun();
         },
         toggleWeapon: () => this.toggleWeapon(),
+        setLocalWeaponForTest: (weapon: HeroWeapon) => {
+          this.setWeaponForActor(this.localActor, weapon);
+          return this.weaponForActor(this.localActor);
+        },
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
         setDifficultyPreset: (preset: string) => this.setDifficultyPreset(preset),
         warmVfx: () =>
@@ -2096,7 +2103,7 @@ export class Game {
       this.timeAlive += simDelta;
       this.decay.tick();
       this.syncDeepwaterClaim();
-      if (this.activeWeapon === 'blast') this.blastTime += simDelta;
+      if (this.actors.some((actor) => actor.group.visible && this.weaponForActor(actor) === 'blast')) this.blastTime += simDelta;
       this.updateActors(simDelta, intents);
       this.syncPlaybookAnchor();
       this.syncHeroVisualHeight();
@@ -2346,7 +2353,7 @@ export class Game {
     if (action.type === 'place_build' && !this.deepwaterClaim) {
       if (this.buildSystem.confirmPlacement(this.timeAlive, action)) discoverLedgerBuildable(action.id as BuildableId);
     }
-    if (action.type === 'weapon_toggle') this.toggleWeapon();
+    if (action.type === 'weapon_toggle') this.toggleWeapon(this.actionActor);
     if (action.type === 'restart' && this.state.current === 'dead') {
       this.deferMultiplayerTransition(() => this.resetRun());
       return true;
@@ -2704,6 +2711,7 @@ export class Game {
           z: actor.velocity.z,
         },
         visible: actor.group.visible,
+        weapon: this.weaponForActor(actor),
       }));
     }
     return snapshot;
@@ -2725,16 +2733,15 @@ export class Game {
   private restoreMultiplayerInitialState(snapshot: unknown): boolean {
     const normalized = normalizeRunSuspendDatum(snapshot);
     if (!normalized || normalized.contractId !== this.activeContract.id) return false;
-    if (!restoreRunSuspendSnapshot(this, normalized, { persistProfile: false })) return false;
     const roster = this.mpClient?.state().roster ?? [];
     if (roster.length < 2) return false;
+    const mpActors = multiplayerActorsForRestore(snapshot, normalized, roster.length);
+    if (!mpActors) return false;
+    if (!restoreRunSuspendSnapshot(this, normalized, { persistProfile: false })) return false;
     this.mpActorMeta.clear();
     this.syncMultiplayerActors();
-    this.applyStats(this.progression.stats, null);
-    this.syncHeroVisualHeight();
-    for (const actor of this.actors) actor.snapRenderState();
+    if (!this.restoreMultiplayerActorSnapshots(mpActors)) return false;
     this.updateActionActorPosition();
-    this.cameraRig.snapTo(this.localActor.group.position);
     return true;
   }
 
@@ -2757,6 +2764,8 @@ export class Game {
       actor.restoreIframes(saved.iframeRemaining);
       actor.velocity.set(saved.velocity.x, saved.velocity.y, saved.velocity.z);
       actor.group.visible = saved.visible;
+      // Old snapshots had one shared weapon in counters; preserve that meaning.
+      this.setWeaponForActor(actor, saved.weapon ?? this.activeWeapon);
     }
     this.syncHeroVisualHeight();
     for (const actor of this.actors) actor.snapRenderState();
@@ -2869,7 +2878,10 @@ export class Game {
       this.primaryActor.setIdentityTint(null);
       for (let slot = 1; slot < this.actors.length; slot += 1) {
         const actor = this.actors[slot];
-        if (actor) actor.group.visible = false;
+        if (actor) {
+          actor.group.visible = false;
+          this.actorWeapons.delete(actor);
+        }
       }
       this.mpActorMeta.clear();
       this.removeAllMultiplayerChips();
@@ -2895,6 +2907,7 @@ export class Game {
       const player = roster[slot];
       if (!player) {
         actor.group.visible = false;
+        this.actorWeapons.delete(actor);
         continue;
       }
       actor.group.visible = true;
@@ -2903,6 +2916,7 @@ export class Game {
       this.mpActorMeta.set(actor, { playerId: player.playerId, slot, name: player.name, town: player.town, local });
       actor.setIdentityTint(local ? null : multiplayerTint(slot));
       if (!previous || previous.playerId !== player.playerId || previous.slot !== slot) {
+        this.setWeaponForActor(actor, 'rig');
         actor.resetRun(this.multiplayerSpawnPosition(slot, roster.length));
       }
     }
@@ -3840,6 +3854,7 @@ export class Game {
           local: meta?.local ?? actor === localActor,
           hp: actor.hp,
           maxHp: actor.maxHp,
+          weapon: this.weaponForActor(actor),
           position: {
             x: actor.group.position.x,
             y: actor.group.position.y,
@@ -4762,7 +4777,7 @@ export class Game {
       Balance.beacon.maxCount,
       this.buildSystem.nextCost,
       this.buildSystem.canAffordNext,
-      this.activeWeapon,
+      this.weaponForActor(this.localActor),
       this.agentUiState(),
     );
     this.hud.update(this.uiSnapshot, this.pauseMetaSnapshot(), this.playerPauseActive && this.state.isPaused);
@@ -5369,6 +5384,7 @@ export class Game {
     this.damSurge?.reset();
     if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge?.trigger(this.timeAlive);
     this.lightRig?.resetTransientLights();
+    this.actorWeapons.clear();
     this.activeWeapon = 'rig';
     this.blastAimReticle.visible = false;
     this.canvas.classList.remove('aim-reticle--disarmed');
@@ -5871,11 +5887,29 @@ export class Game {
     this.enemies.recycle(enemy);
   }
 
-  private toggleWeapon(): 'rig' | 'blast' {
-    this.activeWeapon = this.activeWeapon === 'rig' ? 'blast' : 'rig';
-    if (this.activeWeapon !== 'blast') this.blastAimReticle.visible = false;
+  private weaponForActor(actor: Hero): HeroWeapon {
+    return this.actorWeapons.get(actor) ?? 'rig';
+  }
+
+  private setWeaponForActor(actor: Hero, weapon: HeroWeapon): void {
+    this.actorWeapons.set(actor, weapon);
+  }
+
+  /** RunSuspend's legacy single-hero field is actor zero's weapon. */
+  private get activeWeapon(): HeroWeapon {
+    return this.weaponForActor(this.primaryActor);
+  }
+
+  private set activeWeapon(weapon: HeroWeapon) {
+    this.setWeaponForActor(this.primaryActor, weapon);
+  }
+
+  private toggleWeapon(actor = this.localActor): HeroWeapon {
+    const weapon = this.weaponForActor(actor) === 'rig' ? 'blast' : 'rig';
+    this.setWeaponForActor(actor, weapon);
+    if (actor === this.localActor && weapon !== 'blast') this.blastAimReticle.visible = false;
     this.weaponToggleCount += 1;
-    return this.activeWeapon;
+    return weapon;
   }
 
   private readonly onBlastAimPointerMove = (event: PointerEvent): void => {
@@ -5913,7 +5947,7 @@ export class Game {
     const aimMode = Balance.blast.aimMode as BlastAimMode;
     const disarmed = this.heroWeaponsDisarmed();
     this.canvas.classList.toggle('aim-reticle--disarmed', disarmed);
-    if (this.activeWeapon !== 'blast' || aimMode === 'auto' || this.multiplayerActive() || disarmed) {
+    if (this.weaponForActor(this.localActor) !== 'blast' || aimMode === 'auto' || this.multiplayerActive() || disarmed) {
       this.blastAimReticle.visible = false;
       return;
     }
@@ -5948,7 +5982,7 @@ export class Game {
     const inDeepWater = Terrain.sample(actor.group.position.x, actor.group.position.z).waterClass === 'deep'
       || this.heroInDeepwaterDiveZone(actor);
     if (!inDeepWater) return false;
-    return this.activeEpoch.id !== 'epoch-5-deepwater' || this.activeWeapon !== 'rig';
+    return this.activeEpoch.id !== 'epoch-5-deepwater' || this.weaponForActor(actor) !== 'rig';
   }
 
   private heroInDeepwaterDiveZone(actor: Hero): boolean {
@@ -6007,7 +6041,7 @@ export class Game {
   } {
     const detonation = this.combat.lastBlastDetonation;
     return {
-      active: this.activeWeapon,
+      active: this.weaponForActor(this.localActor),
       blastsAlive: this.combat.blastsAlive,
       detonations: this.combat.detonations,
       blastKills: this.combat.killsByOwner.hero_blast ?? 0,
@@ -7020,6 +7054,8 @@ function multiplayerActorsForRestore(
   const mpActors = (value as { mpActors?: unknown }).mpActors;
   if (mpActors === undefined) return null;
   if (!Array.isArray(mpActors) || mpActors.length !== rosterSize || !mpActors.every(isMultiplayerActorSnapshot)) return null;
+  const weaponsPresent = mpActors.filter((actor) => Object.hasOwn(actor, 'weapon')).length;
+  if (weaponsPresent !== 0 && weaponsPresent !== mpActors.length) return null;
   if (mpActors.some((actor) => !actor.visible || actor.hp < 0 || actor.hp > base.hero.maxHp)) return null;
 
   const primary = mpActors[0];
@@ -7027,6 +7063,7 @@ function multiplayerActorsForRestore(
     !primary ||
     primary.hp !== base.hero.hp ||
     primary.iframeRemaining !== base.hero.iframeRemaining ||
+    (primary.weapon !== undefined && primary.weapon !== base.counters.weapon) ||
     !sameFiniteVector3(primary.position, base.hero.position) ||
     !sameFiniteVector3(primary.velocity, base.hero.velocity)
   ) {
@@ -7038,6 +7075,7 @@ function multiplayerActorsForRestore(
 function isMultiplayerActorSnapshot(value: unknown): value is MultiplayerActorSnapshot {
   if (!value || typeof value !== 'object') return false;
   const snapshot = value as MultiplayerActorSnapshot;
+  const hasWeapon = Object.hasOwn(snapshot, 'weapon');
   return (
     isFiniteVector3(snapshot.position) &&
     isFiniteVector3(snapshot.velocity) &&
@@ -7046,6 +7084,7 @@ function isMultiplayerActorSnapshot(value: unknown): value is MultiplayerActorSn
     typeof snapshot.iframeRemaining === 'number' &&
     Number.isFinite(snapshot.iframeRemaining) &&
     snapshot.iframeRemaining >= 0 &&
+    (!hasWeapon || snapshot.weapon === 'rig' || snapshot.weapon === 'blast') &&
     typeof snapshot.visible === 'boolean'
   );
 }
