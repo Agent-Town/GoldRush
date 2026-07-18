@@ -704,9 +704,9 @@ export class ClaimJumperEnemy {
         } else {
           let laneZ = moveTarget.z + lateralOffset;
           const currentSide = riverSide(this.group.position.z);
-          if (Balance.pathing.riverBlocksEnemies && currentSide === 'north') {
+          if (Balance.pathing.riverBlocksEnemies && !Terrain.waterMask() && currentSide === 'north') {
             laneZ = Math.max(laneZ, Terrain.RIVER_MAX_Z + FORMATION_GAP_CLEARANCE);
-          } else if (Balance.pathing.riverBlocksEnemies && currentSide === 'south') {
+          } else if (Balance.pathing.riverBlocksEnemies && !Terrain.waterMask() && currentSide === 'south') {
             laneZ = Math.min(laneZ, Terrain.RIVER_MIN_Z - FORMATION_GAP_CLEARANCE);
           }
           spreadBiasZ = THREE.MathUtils.clamp((laneZ - this.group.position.z) / spread, -1, 1) * FORMATION_STEER;
@@ -1113,7 +1113,7 @@ export class ClaimJumperEnemy {
   }
 
   private routedTarget(target: THREE.Vector3): THREE.Vector3 {
-    if (!Balance.pathing.riverBlocksEnemies) return target;
+    if (!Balance.pathing.riverBlocksEnemies || Terrain.waterMask()) return target;
 
     const current = this.group.position;
     const currentSample = Terrain.sample(current.x, current.z);
@@ -1153,6 +1153,7 @@ export class ClaimJumperEnemy {
 
   private move(delta: number, blockers: readonly PalisadeBlocker[], speed: number, moveTarget: THREE.Vector3): void {
     const elevation = hasElevationTile();
+    const authoredWaterMask = Terrain.waterMask() !== undefined;
     if (!elevation) {
       const maxDistance = speed * delta;
       const steps = blockers.length > 0 || Balance.pathing.riverBlocksEnemies ? Math.max(1, Math.min(8, Math.ceil(maxDistance / 0.25))) : 1;
@@ -1162,7 +1163,8 @@ export class ClaimJumperEnemy {
         const stepDistance = speed * waterSpeed * stepDelta;
         this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
         for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
-        this.resolveRiver(stepDistance);
+        if (authoredWaterMask) this.resolveTerrain(moveTarget);
+        else this.resolveRiver(stepDistance);
         this.group.position.copy(this.nextPosition);
       }
       return;
@@ -1177,7 +1179,7 @@ export class ClaimJumperEnemy {
         speed * waterSpeed * terrainSpeedMultiplier(this.group.position.x, this.group.position.z, this.velocity.x, this.velocity.z) * stepDelta;
       this.nextPosition.copy(this.group.position).addScaledVector(this.velocity, stepDistance);
       for (const blocker of blockers) this.resolveBlocker(blocker, stepDistance);
-      this.resolveRiver(stepDistance);
+      if (!authoredWaterMask) this.resolveRiver(stepDistance);
       this.resolveTerrain(moveTarget);
       this.group.position.copy(this.nextPosition);
     }

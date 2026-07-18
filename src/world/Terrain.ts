@@ -13,6 +13,8 @@ import {
   type ContractAuthoredTerrainLayer,
   type ContractGravelBar,
   type ContractManifest,
+  type ContractWaterMask,
+  type ContractWaterMaskRegion,
   type ContractWaterZone,
   type ContractStakeMarker,
   type ContractWaterSource,
@@ -97,6 +99,7 @@ let editorPreviewContract: ContractManifest | null = null;
 let refreshEditorPreview: ((contract: ContractManifest) => void) | null = null;
 let runtimeVisualHeightSource: ((x: number, z: number) => number) | null = null;
 const TILE_WATER = activeWaterDescriptor();
+const WATER_MASK = ACTIVE_TILE.waterMask?.regions.length ? ACTIVE_TILE.waterMask : undefined;
 const SPRING_PONDS = ACTIVE_CONTRACT.tileParams.waterSources.filter((source) => source.kind === 'spring_pond');
 const FORD_RANGES = resolveFordRanges();
 const DEFAULT_WATER_DEPTH: Record<ContractWaterZone, number> = {
@@ -166,6 +169,11 @@ export function sample(x: number, z: number): TerrainSample {
   const spring = springPondAt(x, z);
   if (spring) return waterSample('shallows', 'springPond', 'spring_pond');
 
+  if (WATER_MASK) {
+    const region = WATER_MASK.regions.find((candidate) => distanceToWaterMaskRegion(x, z, candidate) <= 0);
+    return region ? waterSample(region.zone, region.zone, 'river') : { walkable: true, speedMul: 1, zone: 'bank' };
+  }
+
   if (!ACTIVE_CONTRACT.tileParams.river) return { walkable: true, speedMul: 1, zone: 'bank' };
 
   const inFord = fordAt(x, z) !== null;
@@ -232,6 +240,10 @@ export function waterSources(): readonly ContractWaterSource[] {
   return SPRING_PONDS;
 }
 
+export function waterMask(): ContractWaterMask | undefined {
+  return WATER_MASK;
+}
+
 export function fordRanges(): readonly FordRange[] {
   return FORD_RANGES;
 }
@@ -258,13 +270,14 @@ export function lossStakeMarker(): ContractStakeMarker | null {
 }
 
 export function hasRiverWater(): boolean {
-  return ACTIVE_CONTRACT.tileParams.river;
+  return WATER_MASK !== undefined || ACTIVE_CONTRACT.tileParams.river;
 }
 
 export function isWaterSourceAdjacent(x: number, z: number, pad: number): boolean {
   const terrain = sample(x, z);
   if (terrain.zone !== 'bank' && terrain.zone !== 'shallows') return false;
-  if (ACTIVE_CONTRACT.tileParams.river) {
+  if (WATER_MASK && WATER_MASK.regions.some((region) => distanceToWaterMaskRegion(x, z, region) <= pad)) return true;
+  if (!WATER_MASK && ACTIVE_CONTRACT.tileParams.river) {
     const river = riverGeometry();
     if (x >= river.minX && x <= river.maxX) {
       const distance = z < river.minZ ? river.minZ - z : z > river.maxZ ? z - river.maxZ : 0;
@@ -272,6 +285,26 @@ export function isWaterSourceAdjacent(x: number, z: number, pad: number): boolea
     }
   }
   return SPRING_PONDS.some((source) => distanceToSpringEdge(x, z, source) <= pad);
+}
+
+function distanceToWaterMaskRegion(x: number, z: number, region: ContractWaterMaskRegion): number {
+  if (region.kind === 'rect') {
+    return Math.hypot(Math.max(region.minX - x, 0, x - region.maxX), Math.max(region.minZ - z, 0, z - region.maxZ));
+  }
+
+  let distance = Number.POSITIVE_INFINITY;
+  for (let index = 1; index < region.points.length; index += 1) {
+    const start = region.points[index - 1]!;
+    const end = region.points[index]!;
+    const dx = end.x - start.x;
+    const dz = end.z - start.z;
+    const lengthSq = dx * dx + dz * dz;
+    const t = lengthSq <= Balance.waterMask.segmentEpsilon
+      ? 0
+      : THREE.MathUtils.clamp(((x - start.x) * dx + (z - start.z) * dz) / lengthSq, 0, 1);
+    distance = Math.min(distance, Math.hypot(x - (start.x + dx * t), z - (start.z + dz * t)));
+  }
+  return distance - region.halfWidth;
 }
 
 export function sampleHeight(x: number, z: number): number {
