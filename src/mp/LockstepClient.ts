@@ -82,6 +82,11 @@ export type MultiplayerState = {
   desyncs: number;
   resyncs: number;
   lastResyncTick: number | null;
+  reconnecting: boolean;
+  reconnects: number;
+  lastReconnectTick: number | null;
+  lastReconnectReplayTicks: number | null;
+  heldPlayerIds: string[];
   paused: boolean;
   error: string | null;
   setup: MultiplayerSetup | null;
@@ -96,14 +101,21 @@ export type LockstepClientOptions = {
   inputDelayTicks?: number;
   hashEveryTicks?: number;
   desyncAtTick?: number | null;
+  reconnectToken?: string | null;
   setup?: MultiplayerSetup;
   onDesync?: (tick: number) => void;
   onSnapshot?: (snapshot: unknown, tick: number) => boolean;
+  captureReconnectInitialState?: () => unknown;
+  onReconnectFromInitialState?: (snapshot: unknown) => boolean;
+  onReconnectToken?: (token: string | null) => void;
 };
 
-const VERSION = 2;
+const VERSION = 3;
 const DEFAULT_DELAY_TICKS = 3;
 const DEFAULT_HASH_EVERY_TICKS = 30;
+const DEFAULT_RECONNECT_GRACE_MS = 60_000;
+const RECONNECT_RETRY_MS = 10_000;
+const HEARTBEAT_EVERY_MS = 15_000;
 const MAX_HASH_HISTORY = 128;
 const MAX_ACTIONS_PER_TICK = 24;
 const SNAPSHOT_RAW_LIMIT_BYTES = 180 * 1024;
@@ -151,56 +163,120 @@ export class LockstepClient {
   private desyncs = 0;
   private resyncs = 0;
   private lastResyncTick: number | null = null;
+  private hashFloorTick: number | null = null;
+  private reconnecting = false;
+  private reconnects = 0;
+  private lastReconnectTick: number | null = null;
+  private lastReconnectReplayTicks: number | null = null;
+  private reconnectToken: string | null;
+  private reconnectGraceMs = DEFAULT_RECONNECT_GRACE_MS;
+  private reconnectDeadline = 0;
+  private reconnectTimer: ReturnType<typeof setTimeout> | null = null;
+  private lastHeartbeatAt = performance.now();
+  private connecting = false;
+  private disposed = false;
+  private terminal = false;
+  private readonly heldPlayerIds = new Set<string>();
   private paused = false;
   private error: string | null = null;
   private pendingDesyncTick: number | null = null;
   private snapshotSendQueue: Promise<void> = Promise.resolve();
+  private snapshotSendEpoch = 0;
+  private socketGeneration = 0;
   private desyncAtTick: number | null;
   private readonly inputDelayTicks: number;
   private readonly hashEveryTicks: number;
   private readonly pendingActions: LockstepAction[] = [];
   private previousSample = { ...ZERO_SAMPLE };
+  private reconnectInitialState: unknown;
+  private hasReconnectInitialState = false;
+  private reconnectSoloAfterReplay = false;
+  private reconnectCurrentRoster: MultiplayerPlayer[] = [];
 
   constructor(private readonly options: LockstepClientOptions) {
     this.code = options.code ?? '';
     this.inputDelayTicks = options.inputDelayTicks ?? DEFAULT_DELAY_TICKS;
     this.hashEveryTicks = options.hashEveryTicks ?? DEFAULT_HASH_EVERY_TICKS;
     this.desyncAtTick = options.desyncAtTick ?? null;
+    this.reconnectToken = normalizeReconnectToken(options.reconnectToken);
+    if (this.reconnectToken) {
+      this.reconnecting = true;
+      this.paused = true;
+      this.reconnectDeadline = Date.now() + this.reconnectGraceMs;
+    }
   }
 
   async connect(): Promise<void> {
+    this.disposed = false;
+    await this.openSocket();
+  }
+
+  private async openSocket(): Promise<void> {
+    if (this.disposed || this.terminal || this.connecting) return;
+    this.connecting = true;
+    let handshakeSent = false;
     try {
       if (!this.code) this.code = await this.createRoom();
       const socket = new WebSocket(`${this.options.relayBase.replace(/^http/, 'ws')}/api/multiplayer/connect?code=${this.code}`);
       this.socket = socket;
-      socket.addEventListener('message', (event) => this.handle(JSON.parse(String(event.data)) as WireMessage));
+      this.socketGeneration += 1;
+      this.snapshotSendQueue = Promise.resolve();
+      socket.addEventListener('message', (event) => {
+        if (this.socket !== socket) return;
+        this.handle(JSON.parse(String(event.data)) as WireMessage, socket);
+      });
       socket.addEventListener('close', () => {
-        if (this.connected) this.error = this.error ?? 'websocket_closed';
+        if (this.socket !== socket) return;
+        this.socket = null;
         this.connected = false;
+        if (this.disposed || this.terminal) return;
+        if (this.reconnectToken) this.beginReconnect();
+        else this.error = this.error ?? 'websocket_closed';
       });
       socket.addEventListener('error', () => {
-        this.error = 'websocket_error';
+        if (this.socket !== socket) return;
+        if (!this.reconnecting) this.error = 'websocket_error';
       });
       await new Promise<void>((resolve, reject) => {
         socket.addEventListener('open', () => resolve(), { once: true });
         socket.addEventListener('error', () => reject(new Error('websocket_error')), { once: true });
       });
-      this.send({ v: VERSION, type: 'join', code: this.code, player: this.options.player, setup: this.options.setup });
+      this.send(this.reconnectToken
+        ? { v: VERSION, type: 'rejoin', code: this.code, reconnectToken: this.reconnectToken }
+        : { v: VERSION, type: 'join', code: this.code, player: this.options.player, setup: this.options.setup });
+      handshakeSent = true;
     } catch (error) {
-      this.error = error instanceof Error ? error.message : String(error);
+      if (this.reconnectToken) this.beginReconnect();
+      else this.error = error instanceof Error ? error.message : String(error);
+    } finally {
+      this.connecting = false;
+      if (!handshakeSent && this.reconnecting && !this.connected) this.scheduleReconnect();
     }
   }
 
   dispose(): void {
+    this.disposed = true;
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
+    this.reconnectTimer = null;
     this.socket?.close();
     this.socket = null;
     this.connected = false;
   }
 
   pump(localInput: LockstepSample): LockstepTick | null {
+    const now = performance.now();
+    if (this.connected && now - this.lastHeartbeatAt >= HEARTBEAT_EVERY_MS) {
+      this.send({ v: VERSION, type: 'ping' });
+      this.lastHeartbeatAt = now;
+    }
     this.captureLocalActions(localInput);
-    if (!this.connected || this.paused || this.roster.length < 2) return null;
-    while (this.nextInputTick <= this.nextSimTick + this.inputDelayTicks) {
+    if (!this.connected || this.paused) return null;
+    if (this.reconnectSoloAfterReplay && !this.bundles.has(this.nextSimTick)) {
+      this.roster = this.reconnectCurrentRoster;
+      return null;
+    }
+    if (this.roster.length < 2 && !this.reconnectSoloAfterReplay) return null;
+    while (!this.reconnectSoloAfterReplay && this.nextInputTick <= this.nextSimTick + this.inputDelayTicks) {
       const input: LockstepInput = {
         mx: roundAxis(localInput.mx),
         my: roundAxis(localInput.my),
@@ -220,11 +296,14 @@ export class LockstepClient {
     this.sendTimes.delete(tick);
     this.nextSimTick = tick + 1;
     this.roster = bundle.roster;
+    for (const playerId of this.heldPlayerIds) {
+      if (!this.roster.some((player) => player.playerId === playerId)) this.heldPlayerIds.delete(playerId);
+    }
     return bundle;
   }
 
   shouldExchangeHash(tick: number): boolean {
-    return tick > 0 && tick % this.hashEveryTicks === 0;
+    return tick >= 0 && tick % this.hashEveryTicks === 0;
   }
 
   afterSimTick(tick: number, hash: string, snapshot: unknown | null): void {
@@ -233,15 +312,26 @@ export class LockstepClient {
     if (snapshot && this.playerId === this.roster[0]?.playerId) {
       const prepared = prepareLockstepSnapshotTransport(snapshot);
       if (prepared instanceof Promise) {
-        this.snapshotSendQueue = this.snapshotSendQueue
-          .then(async () => {
-            const wireSnapshot = await prepared;
-            if (!this.connected) return;
-            this.rememberAuthoritySnapshot(tick, wireSnapshot);
-            this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot: wireSnapshot });
-            this.recordHash(tick, sentHash);
-          })
-          .catch(() => this.failSession('snapshot_encode_failed'));
+        const sourceSocket = this.socket;
+        const sourceGeneration = this.socketGeneration;
+        const sourceEpoch = this.snapshotSendEpoch;
+        const encoded = prepared.then(
+          (wireSnapshot) => ({ ok: true as const, wireSnapshot }),
+          () => ({ ok: false as const }),
+        );
+        this.snapshotSendQueue = this.snapshotSendQueue.then(async () => {
+          if (sourceEpoch !== this.snapshotSendEpoch) return;
+          const result = await encoded;
+          if (sourceEpoch !== this.snapshotSendEpoch || !this.connected || !this.isCurrentSocket(sourceSocket, sourceGeneration)) return;
+          if (!result.ok) return this.failSession('snapshot_encode_failed');
+          this.rememberAuthoritySnapshot(tick, result.wireSnapshot);
+          this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot: result.wireSnapshot });
+          this.recordHash(tick, sentHash);
+        }).catch(() => {
+          if (sourceEpoch === this.snapshotSendEpoch && this.isCurrentSocket(sourceSocket, sourceGeneration)) {
+            this.failSession('snapshot_encode_failed');
+          }
+        });
         return;
       }
       this.rememberAuthoritySnapshot(tick, prepared);
@@ -274,6 +364,11 @@ export class LockstepClient {
       desyncs: this.desyncs,
       resyncs: this.resyncs,
       lastResyncTick: this.lastResyncTick,
+      reconnecting: this.reconnecting,
+      reconnects: this.reconnects,
+      lastReconnectTick: this.lastReconnectTick,
+      lastReconnectReplayTicks: this.lastReconnectReplayTicks,
+      heldPlayerIds: [...this.heldPlayerIds],
       paused: this.paused,
       error: this.error,
       setup: this.setup ? structuredClone(this.setup) : null,
@@ -282,6 +377,10 @@ export class LockstepClient {
 
   injectDesyncAt(tick: number): void {
     this.desyncAtTick = Math.max(0, Math.floor(tick));
+  }
+
+  dropConnectionForTest(): void {
+    this.socket?.close(4000, 'test_drop');
   }
 
   private async createRoom(): Promise<string> {
@@ -295,13 +394,35 @@ export class LockstepClient {
     return body.code;
   }
 
-  private handle(message: WireMessage): void {
+  private handle(message: WireMessage, sourceSocket?: WebSocket): void {
     if (message.type === 'joined') {
+      const reconnectToken = normalizeReconnectToken(message.reconnectToken);
+      if (!reconnectToken) return this.failSession('reconnect_token_missing');
       this.connected = true;
       this.playerId = typeof message.playerId === 'string' ? message.playerId : null;
       this.roster = normalizeRoster(message.roster);
       this.setup = normalizeSetup(message.setup) ?? normalizeSetup(this.options.setup);
+      this.reconnectToken = reconnectToken;
+      this.reconnectGraceMs = normalizeGraceMs(message.reconnectGraceMs);
+      if (this.roster.length >= 2) this.rememberReconnectInitialState(true);
+      this.options.onReconnectToken?.(reconnectToken);
       this.startedAt = performance.now();
+      return;
+    }
+    if (message.type === 'rejoined') {
+      this.reconnecting = true;
+      this.paused = true;
+      void this.restoreReconnect(message, sourceSocket);
+      return;
+    }
+    if (message.type === 'player-held') {
+      const playerId = cleanToken(message.playerId, 32);
+      if (playerId) this.heldPlayerIds.add(playerId);
+      return;
+    }
+    if (message.type === 'player-returned') {
+      const playerId = cleanToken(message.playerId, 32);
+      if (playerId) this.heldPlayerIds.delete(playerId);
       return;
     }
     if (message.type === 'roster') {
@@ -309,7 +430,10 @@ export class LockstepClient {
       const effectiveTick = normalizeTick(message.effectiveTick);
       // Once tick 0 starts, only the roster embedded in an authoritative tick
       // bundle may change simulation membership.
-      if (effectiveTick === null || effectiveTick === 0) this.roster = roster;
+      if (effectiveTick === null || effectiveTick === 0) {
+        this.roster = roster;
+        if (this.connected && roster.length >= 2) this.rememberReconnectInitialState(true);
+      }
       return;
     }
     if (message.type === 'tick-inputs') {
@@ -322,7 +446,7 @@ export class LockstepClient {
     if (message.type === 'hash') {
       const tick = normalizeTick(message.tick);
       if (tick === null || typeof message.hash !== 'string') return;
-      if (this.lastResyncTick !== null && tick <= this.lastResyncTick) return;
+      if (this.hashFloorTick !== null && tick <= this.hashFloorTick) return;
       const from = typeof message.from === 'string' ? message.from : 'remote';
       const peers = this.remoteHashes.get(tick) ?? new Map<string, string>();
       peers.set(from, message.hash);
@@ -333,7 +457,7 @@ export class LockstepClient {
     if (message.type === 'snapshot') {
       const tick = normalizeTick(message.tick);
       const from = typeof message.from === 'string' ? message.from : null;
-      if (tick !== null) void this.restoreSnapshot(message.snapshot, tick, from);
+      if (tick !== null) void this.restoreSnapshot(message.snapshot, tick, from, sourceSocket);
       return;
     }
     if (message.type === 'snapshot-available') {
@@ -354,13 +478,162 @@ export class LockstepClient {
       this.failSession('snapshot_missing');
       return;
     }
-    if (message.type === 'error') this.error = typeof message.error === 'string' ? message.error : 'relay_error';
+    if (message.type === 'error') {
+      const error = typeof message.error === 'string' ? message.error : 'relay_error';
+      if ((error === 'reconnect_snapshot_unavailable' || error === 'reconnect_replay_incomplete') && this.reconnectToken) {
+        this.socket?.close(4002, error);
+        this.beginReconnect();
+      } else if (this.reconnecting || this.reconnectToken) this.failSession(error);
+      else this.error = error;
+    }
+  }
+
+  private async restoreReconnect(message: WireMessage, sourceSocket?: WebSocket): Promise<void> {
+    const playerId = cleanToken(message.playerId, 32);
+    const reconnectToken = normalizeReconnectToken(message.reconnectToken);
+    const nextTick = normalizeTick(message.nextTick);
+    const currentRoster = normalizeRoster(message.roster);
+    const setup = normalizeSetup(message.setup) ?? normalizeSetup(this.options.setup);
+    const replay = normalizeReplay(message.replay);
+    if (!playerId || !reconnectToken || nextTick === null || currentRoster.length < 1 ||
+      !currentRoster.some((player) => player.playerId === playerId) || !setup || !replay) {
+      this.failSession('reconnect_bootstrap_invalid');
+      return;
+    }
+
+    this.playerId = playerId;
+    this.roster = currentRoster;
+    this.setup = setup;
+    this.reconnectGraceMs = normalizeGraceMs(message.reconnectGraceMs);
+    let resumeTick = 0;
+    let snapshotTick: number | null = null;
+    let snapshotTransport: unknown;
+    let restoreFromInitialState = false;
+    let restoreRoster = currentRoster;
+    if (isRecord(message.authoritySnapshot)) {
+      const from = cleanToken(message.authoritySnapshot.from, 32);
+      snapshotTick = normalizeTick(message.authoritySnapshot.tick);
+      const snapshotRoster = normalizeRoster(message.authoritySnapshot.roster);
+      if (snapshotTick === null || snapshotTick >= nextTick || snapshotRoster.length < 2 || from !== snapshotRoster[0]?.playerId) {
+        this.failSession('reconnect_snapshot_invalid');
+        return;
+      }
+      snapshotTransport = message.authoritySnapshot.snapshot;
+      resumeTick = snapshotTick + 1;
+      restoreRoster = snapshotRoster;
+    } else if (message.authoritySnapshot !== null) {
+      this.failSession('reconnect_snapshot_invalid');
+      return;
+    } else {
+      restoreFromInitialState = nextTick > 0;
+      restoreRoster = replay[0]?.roster ?? currentRoster;
+    }
+
+    let previousRoster = restoreRoster;
+    const invalidReplay = replay.some((bundle, index) => {
+      if (bundle.tick !== resumeTick + index || !isOrderedRosterSubset(bundle.roster, previousRoster)) return true;
+      previousRoster = bundle.roster;
+      return false;
+    });
+    if (replay.length !== nextTick - resumeTick || invalidReplay || !isOrderedRosterSubset(currentRoster, previousRoster)) {
+      this.failSession('reconnect_replay_incomplete');
+      return;
+    }
+
+    this.connected = true;
+    this.roster = restoreRoster;
+    if (restoreFromInitialState && !this.rememberReconnectInitialState()) {
+      this.failSession('reconnect_initial_state_missing');
+      return;
+    }
+    if (snapshotTick !== null) {
+      let decoded: unknown;
+      try {
+        decoded = await decodeLockstepSnapshotTransport(snapshotTransport);
+      } catch {
+        if (sourceSocket && this.socket !== sourceSocket) return;
+        this.failSession('snapshot_decode_failed');
+        return;
+      }
+      if (sourceSocket && this.socket !== sourceSocket) return;
+      if (!this.options.onSnapshot?.(decoded, snapshotTick)) {
+        this.failSession('snapshot_restore_failed');
+        return;
+      }
+    } else if (restoreFromInitialState && !this.options.onReconnectFromInitialState?.(this.reconnectInitialState)) {
+      this.failSession('reconnect_initial_state_restore_failed');
+      return;
+    }
+
+    this.bundles.clear();
+    this.consumedBundles.clear();
+    this.sendTimes.clear();
+    this.localHashes.clear();
+    this.remoteHashes.clear();
+    this.authoritySnapshots.clear();
+    this.hashLog.splice(0);
+    this.pendingDesyncTick = null;
+    for (const bundle of replay) this.bundles.set(bundle.tick, bundle);
+    this.nextSimTick = resumeTick;
+    this.nextInputTick = nextTick;
+    this.reconnectSoloAfterReplay = currentRoster.length < 2 && nextTick > 0;
+    this.reconnectCurrentRoster = currentRoster;
+    this.reconnectToken = reconnectToken;
+    this.options.onReconnectToken?.(reconnectToken);
+    this.reconnecting = false;
+    this.reconnectDeadline = 0;
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
+    this.reconnectTimer = null;
+    this.heldPlayerIds.delete(playerId);
+    this.paused = false;
+    this.error = null;
+    this.reconnects += 1;
+    this.lastReconnectTick = snapshotTick;
+    this.lastReconnectReplayTicks = replay.length;
+    this.hashFloorTick = snapshotTick;
+    this.startedAt = performance.now() - this.nextSimTick * this.stepSeconds * 1000;
+  }
+
+  private rememberReconnectInitialState(replace = false): boolean {
+    if (this.hasReconnectInitialState && !replace) return true;
+    try {
+      const state = this.options.captureReconnectInitialState?.();
+      if (state === undefined) return false;
+      this.reconnectInitialState = structuredClone(state);
+      this.hasReconnectInitialState = true;
+      return true;
+    } catch {
+      return false;
+    }
+  }
+
+  private beginReconnect(): void {
+    if (!this.reconnectToken || this.disposed || this.terminal) return;
+    if (!this.reconnecting) {
+      this.reconnecting = true;
+      this.paused = true;
+      this.error = null;
+      this.reconnectDeadline = Date.now() + this.reconnectGraceMs;
+      if (this.playerId) this.heldPlayerIds.add(this.playerId);
+    }
+    this.scheduleReconnect();
+  }
+
+  private scheduleReconnect(): void {
+    if (this.reconnectTimer || this.connecting || this.disposed || this.terminal) return;
+    if (Date.now() >= this.reconnectDeadline) return this.failSession('reconnect_expired');
+    this.reconnectTimer = setTimeout(() => {
+      this.reconnectTimer = null;
+      if (Date.now() >= this.reconnectDeadline) return this.failSession('reconnect_expired');
+      void this.openSocket();
+    }, RECONNECT_RETRY_MS);
   }
 
   private desync(tick: number): void {
     if (this.paused) return;
     this.paused = true;
     this.pendingDesyncTick = tick;
+    this.snapshotSendEpoch += 1;
     this.desyncs += 1;
     this.options.onDesync?.(tick);
     if (this.playerId === this.roster[0]?.playerId) this.republishAuthoritySnapshot(tick);
@@ -375,7 +648,7 @@ export class LockstepClient {
     if ([...remotes.values()].some((remote) => remote !== local)) this.desync(tick);
   }
 
-  private async restoreSnapshot(snapshot: unknown, tick: number, from: string | null): Promise<void> {
+  private async restoreSnapshot(snapshot: unknown, tick: number, from: string | null, sourceSocket?: WebSocket): Promise<void> {
     if (this.lastResyncTick !== null && tick <= this.lastResyncTick) {
       if (this.paused) this.failSession('snapshot_stale');
       return;
@@ -402,9 +675,11 @@ export class LockstepClient {
     try {
       decoded = await decodeLockstepSnapshotTransport(snapshot);
     } catch {
+      if (sourceSocket && this.socket !== sourceSocket) return;
       this.failSession('snapshot_decode_failed');
       return;
     }
+    if (sourceSocket && this.socket !== sourceSocket) return;
     if (!this.options.onSnapshot?.(decoded, tick)) {
       this.failSession('snapshot_restore_failed');
       return;
@@ -428,6 +703,7 @@ export class LockstepClient {
     this.nextSimTick = resumeTick;
     this.nextInputTick = Math.max(this.nextInputTick, resumeTick);
     this.lastResyncTick = tick;
+    this.hashFloorTick = tick;
     this.pendingDesyncTick = null;
     this.paused = false;
     this.resyncs += 1;
@@ -447,15 +723,22 @@ export class LockstepClient {
       this.failSession('snapshot_authority_missing');
       return;
     }
+    const sourceSocket = this.socket;
+    const sourceGeneration = this.socketGeneration;
     this.snapshotSendQueue = this.snapshotSendQueue
-      .then(() => {
-        if (!this.connected || !this.paused || this.pendingDesyncTick !== tick) return;
+      .then(async () => {
+        if (!this.connected || !this.paused || this.pendingDesyncTick !== tick ||
+          sourceSocket?.readyState !== WebSocket.OPEN || !this.isCurrentSocket(sourceSocket, sourceGeneration)) return;
         this.send({ v: VERSION, type: 'snapshot-push', tick, snapshot });
-        // WebSocket message order makes the exact-tick republish visible to the
-        // relay before this request; peers request after snapshot-available.
-        this.send({ v: VERSION, type: 'snapshot-request', tick });
+        await this.restoreSnapshot(snapshot, tick, this.playerId, sourceSocket ?? undefined);
       })
-      .catch(() => this.failSession('snapshot_republish_failed'));
+      .catch(() => {
+        if (this.isCurrentSocket(sourceSocket, sourceGeneration)) this.failSession('snapshot_republish_failed');
+      });
+  }
+
+  private isCurrentSocket(socket: WebSocket | null, generation: number): boolean {
+    return this.socket === socket && this.socketGeneration === generation;
   }
 
   private pruneConsumedBundles(latestTick: number): void {
@@ -472,10 +755,18 @@ export class LockstepClient {
   }
 
   private failSession(error: string): void {
+    this.terminal = true;
     this.error = error;
     this.paused = false;
     this.pendingDesyncTick = null;
+    this.reconnecting = false;
+    this.reconnectDeadline = 0;
+    if (this.reconnectTimer) clearTimeout(this.reconnectTimer);
+    this.reconnectTimer = null;
     this.connected = false;
+    this.reconnectToken = null;
+    this.heldPlayerIds.clear();
+    this.options.onReconnectToken?.(null);
     this.socket?.close(4001, error.slice(0, 120));
   }
 
@@ -655,6 +946,20 @@ function normalizeRoster(value: unknown): MultiplayerPlayer[] {
     : [];
 }
 
+function isOrderedRosterSubset(next: readonly MultiplayerPlayer[], previous: readonly MultiplayerPlayer[]): boolean {
+  let previousIndex = 0;
+  for (const player of next) {
+    let match: MultiplayerPlayer | undefined;
+    while (previousIndex < previous.length && !match) {
+      const candidate = previous[previousIndex];
+      previousIndex += 1;
+      if (candidate?.playerId === player.playerId) match = candidate;
+    }
+    if (!match || match.name !== player.name || match.town !== player.town) return false;
+  }
+  return true;
+}
+
 function normalizeInputs(value: unknown): LockstepTick['inputs'] {
   return Array.isArray(value)
     ? value
@@ -665,6 +970,21 @@ function normalizeInputs(value: unknown): LockstepTick['inputs'] {
         }))
         .filter((entry) => entry.playerId)
     : [];
+}
+
+function normalizeReplay(value: unknown): LockstepTick[] | null {
+  if (!Array.isArray(value) || value.length > 128) return null;
+  const replay: LockstepTick[] = [];
+  for (const entry of value) {
+    if (!isRecord(entry) || entry.type !== 'tick-inputs') return null;
+    const tick = normalizeTick(entry.tick);
+    const roster = normalizeRoster(entry.roster);
+    const inputs = normalizeInputs(entry.inputs);
+    if (tick === null || roster.length < 1 || inputs.length !== roster.length ||
+      inputs.some((input, index) => input.playerId !== roster[index]?.playerId)) return null;
+    replay.push({ tick, roster, inputs });
+  }
+  return replay;
 }
 
 function normalizeInput(value: unknown): LockstepInput {
@@ -764,6 +1084,18 @@ function cleanToken(value: unknown, maxLength: number): string | null {
 
 function normalizeTick(value: unknown): number | null {
   return typeof value === 'number' && Number.isInteger(value) && value >= 0 ? value : null;
+}
+
+function normalizeReconnectToken(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const token = value.toUpperCase();
+  return /^[A-F0-9]{32}$/.test(token) ? token : null;
+}
+
+function normalizeGraceMs(value: unknown): number {
+  return typeof value === 'number' && Number.isFinite(value)
+    ? Math.max(1_000, Math.min(120_000, Math.floor(value)))
+    : DEFAULT_RECONNECT_GRACE_MS;
 }
 
 function roundAxis(value: unknown): number {

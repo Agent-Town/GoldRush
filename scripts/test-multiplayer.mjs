@@ -7,6 +7,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const ORIGIN = 'http://localhost:5188';
 const SCRIPT_NAME = 'gold-rush-mp-room';
+const VERSION = 3;
 const ARTIFACT_DIR = path.join(ROOT, 'artifacts/multiplayer-relay');
 const STATE_ROOT = path.join(ROOT, 'test-results/multiplayer-relay-state');
 const SETUP = {
@@ -80,8 +81,8 @@ async function checkRelayFlow() {
     const aliceTicks = collectTicks(alice, 200);
     const bobTicks = collectTicks(bob, 200);
     for (let tick = 0; tick < 200; tick += 1) {
-      alice.send({ v: 2, type: 'input', tick, input: { dx: 1, seq: tick } });
-      bob.send({ v: 2, type: 'input', tick, input: { dx: -1, seq: tick } });
+      alice.send({ v: VERSION, type: 'input', tick, input: { dx: 1, seq: tick } });
+      bob.send({ v: VERSION, type: 'input', tick, input: { dx: -1, seq: tick } });
     }
     const [aliceInputs, bobInputs] = await Promise.all([aliceTicks, bobTicks]);
     assertEqual(JSON.stringify(aliceInputs), JSON.stringify(bobInputs), 'both clients receive identical tick batches');
@@ -90,25 +91,35 @@ async function checkRelayFlow() {
       assertEqual(aliceInputs[tick].inputs.length, 2, `tick ${tick} includes both players`);
     }
 
-    alice.send({ v: 2, type: 'hash', tick: 200, hash: 'fnv1a32:alice' });
+    alice.send({ v: VERSION, type: 'hash', tick: 200, hash: 'fnv1a32:alice' });
     const hashAtBob = await bob.take('hash', (msg) => msg.from === alice.playerId && msg.hash === 'fnv1a32:alice');
     assertEqual(hashAtBob.tick, 200, 'hash reaches peer');
-    bob.send({ v: 2, type: 'hash', tick: 200, hash: 'fnv1a32:bob' });
+    bob.send({ v: VERSION, type: 'hash', tick: 200, hash: 'fnv1a32:bob' });
     await alice.take('hash', (msg) => msg.from === bob.playerId && msg.hash === 'fnv1a32:bob');
     assert(true, 'hash round-trip succeeds');
 
     const snapshot = { kind: 'run-suspend', v: 1, wave: 6, gold: 123 };
-    alice.send({ v: 2, type: 'snapshot-push', tick: 200, snapshot });
-    await bob.take('snapshot-available', (msg) => msg.from === alice.playerId && msg.tick === 200);
-    bob.send({ v: 2, type: 'snapshot-request' });
-    const pulled = await bob.take('snapshot', (msg) => msg.tick === 200);
+    alice.send({ v: VERSION, type: 'snapshot-push', tick: 199, snapshot });
+    await bob.take('snapshot-available', (msg) => msg.from === alice.playerId && msg.tick === 199);
+    bob.send({ v: VERSION, type: 'snapshot-request' });
+    const pulled = await bob.take('snapshot', (msg) => msg.tick === 199);
     assertEqual(JSON.stringify(pulled.snapshot), JSON.stringify(snapshot), 'active peer pulls latest snapshot');
 
+    bob.send({ v: VERSION, type: 'input', tick: 200, input: { seq: 'stale' } });
+    bob.send({ v: VERSION, type: 'ping' });
+    await bob.take('pong');
     bob.close();
-    await alice.take('roster', (msg) => msg.players.length === 1);
+    await alice.take('player-held', (msg) => msg.playerId === bob.playerId);
+    const returnedBob = await rejoinClient(relay.url, code, bob.reconnectToken);
+    assertEqual(returnedBob.playerId, bob.playerId, 'rejoin keeps the held player id');
+    alice.send({ v: VERSION, type: 'input', tick: 200, input: { seq: 'alice-fresh' } });
+    returnedBob.send({ v: VERSION, type: 'input', tick: 200, input: { seq: 'bob-fresh' } });
+    const resumed = await alice.take('tick-inputs', (msg) => msg.tick === 200);
+    assertEqual(resumed.inputs.find((entry) => entry.playerId === bob.playerId)?.input?.seq, 'bob-fresh', 'fresh rejoin input owns the resumed tick');
     const rejected = await rejectedJoin(relay.url, code, 'Bob', 'River Bend');
     assertEqual(rejected.error, 'ride_started', 'late rejoin is rejected before roster mutation');
 
+    returnedBob.close();
     alice.close();
   } finally {
     await relay.stop();
@@ -319,20 +330,35 @@ async function get(baseUrl, route, origin = ORIGIN, extraHeaders = {}) {
 }
 
 async function connectClient(baseUrl, code, name, town) {
-  const url = `${baseUrl.replace(/^http/, 'ws')}/api/multiplayer/connect?code=${code}`;
-  const socket = new WebSocket(url);
+  const client = await openClientSocket(baseUrl, code);
+  client.send({ v: VERSION, type: 'join', code, player: { name, town }, setup: SETUP });
+  const joined = await client.take('joined');
+  client.playerId = joined.playerId;
+  client.reconnectToken = joined.reconnectToken;
+  return client;
+}
+
+async function rejoinClient(baseUrl, code, reconnectToken) {
+  const client = await openClientSocket(baseUrl, code);
+  client.send({ v: VERSION, type: 'rejoin', code, reconnectToken });
+  const rejoined = await client.take('rejoined');
+  client.playerId = rejoined.playerId;
+  client.reconnectToken = rejoined.reconnectToken;
+  return client;
+}
+
+async function openClientSocket(baseUrl, code) {
+  const socket = new WebSocket(`${baseUrl.replace(/^http/, 'ws')}/api/multiplayer/connect?code=${code}`);
   const queue = [];
   const waiters = [];
   socket.addEventListener('message', (event) => {
     const message = JSON.parse(event.data);
-    const waiterIndex = waiters.findIndex((waiter) => waiter.matches(message));
-    if (waiterIndex >= 0) {
-      const [waiter] = waiters.splice(waiterIndex, 1);
+    const index = waiters.findIndex((waiter) => waiter.matches(message));
+    if (index >= 0) {
+      const [waiter] = waiters.splice(index, 1);
       clearTimeout(waiter.timer);
       waiter.resolve(message);
-    } else {
-      queue.push(message);
-    }
+    } else queue.push(message);
   });
   socket.addEventListener('error', () => {
     for (const waiter of waiters.splice(0)) waiter.reject(new Error('websocket error'));
@@ -341,13 +367,11 @@ async function connectClient(baseUrl, code, name, town) {
     socket.addEventListener('open', resolve, { once: true });
     socket.addEventListener('error', reject, { once: true });
   });
-
-  const client = {
+  return {
     socket,
     playerId: '',
-    send(value) {
-      socket.send(JSON.stringify(value));
-    },
+    reconnectToken: '',
+    send: (value) => socket.send(JSON.stringify(value)),
     take(type, predicate = () => true, timeoutMs = 5_000) {
       const index = queue.findIndex((message) => message.type === type && predicate(message));
       if (index >= 0) return Promise.resolve(queue.splice(index, 1)[0]);
@@ -365,14 +389,8 @@ async function connectClient(baseUrl, code, name, town) {
         waiters.push(waiter);
       });
     },
-    close() {
-      socket.close();
-    },
+    close: () => socket.close(),
   };
-  client.send({ v: 2, type: 'join', code, player: { name, town }, setup: SETUP });
-  const joined = await client.take('joined');
-  client.playerId = joined.playerId;
-  return client;
 }
 
 async function rejectedJoin(baseUrl, code, name, town, setup = SETUP) {
@@ -382,7 +400,7 @@ async function rejectedJoin(baseUrl, code, name, town, setup = SETUP) {
     socket.addEventListener('open', resolve, { once: true });
     socket.addEventListener('error', reject, { once: true });
   });
-  socket.send(JSON.stringify({ v: 2, type: 'join', code, player: { name, town }, setup }));
+  socket.send(JSON.stringify({ v: VERSION, type: 'join', code, player: { name, town }, setup }));
   return new Promise((resolve, reject) => {
     const timer = setTimeout(() => reject(new Error('timed out waiting for rejected join')), 5_000);
     socket.addEventListener('message', (event) => {
