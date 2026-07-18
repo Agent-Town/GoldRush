@@ -28,6 +28,7 @@ The wiki is the source of truth for content facts. Its laws: read-before-write f
 
 ## 6. THE MEDIA PIPELINE (authority: specs/marketing/README.md — stages 2.5–2.8)
 One content spine, many windows; **the owner approves EVERY publication, always** (outbox → his word → fan-out). **The REAL-CHANGE FILTER**: only player-visible changes get reels/news. **Tiers**: Feature Reels (30–60s showcase per notable merge) · the GAZETTE (≤3 items/week + weekly roundup; also feeds the in-game Herald) · the TICKER (3 daily micro-digests for the token-community audience — **HARD LAW: never mentions the token, price, trading, or value expectations; no hype adjectives; the merge hash is the excitement**) · the FACTORY CHANNEL (SC-01+: the AI plays seeded QA runs on stream, ledger overlay, red tests stream too — honesty absolute). Era-chain films + teasers are the trailer stock. Posting hands: the owner (X), later the OpenClaw Courier (own token, zero game credentials).
+- **Canonical X identity (owner, 2026-07-13):** `@Agent_Town` — `https://x.com/Agent_Town`. The underscore is mandatory; use this exact display spelling in every public asset and automation. This supersedes earlier no-underscore handle references without changing the separate `$AGENTTOWN` token symbol.
 - **Revenue canon (owner-ruled)**: tip/patronage economy — play free forever; money buys identity/style/patronage, NEVER power; no gold→token flow ever; legal-counsel hard gate before any money code.
 
 ## 7. WHERE AN ENGINE AGENT TOUCHES THIS

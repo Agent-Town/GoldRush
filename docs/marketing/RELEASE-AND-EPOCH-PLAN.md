@@ -44,7 +44,7 @@ Owner directive (2026-07-12, verbatim): *"It is very important to make this mark
 
 | Channel | State (verified 2026-07-12) | What it carries |
 |---|---|---|
-| **X @agenttown** | Revived; 3 approved posts pending owner's hand (`marketing/outbox/2026-07-10-0{1,2,3}-*.md` — post 1 pins) | The outward voice: era reveals, transform films, weekly "this week on the claim", ship-day posts. Image-led always. |
+| **X @Agent_Town** | Revived; 3 approved posts pending owner's hand (`marketing/outbox/2026-07-10-0{1,2,3}-*.md` — post 1 pins) | The outward voice: era reveals, transform films, weekly "this week on the claim", ship-day posts. Image-led always. |
 | **agenttown.app** | DNS mid-flip (MASTERPLAN: "funnel") | The door: play link, the ten-era promise in one scroll (reel embed + era cards), later the public Herald. |
 | **The Claim Herald public page** | SHIPPED (gz-02 — "the town's paper now has a public edition anyone can read from afar") | The in-world mirror of the outward story: every real merge becomes frontier news in the 063 voice. Marketing that is also canon. |
 | **In-game Gazette/ticker** | Live (TK-01 digests; `marketing/outbox/gazette-queue.md`, ≤3 items/week to owner) | Players inside hear the same story the world outside hears — one truth, two dialects. |
