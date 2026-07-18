@@ -431,7 +431,7 @@ export class Game {
       this.deathPending = true;
     },
     (position, value) => this.vfx.floatText(position, `+${value}`, '#83ded7'),
-    (position) => this.onEnemyKilled(position),
+    (position, freedOrdinal) => this.onEnemyKilled(position, freedOrdinal),
     (at, origin, target) => {
       this.lightRig?.triggerMuzzleFlash(at, origin, target);
       const actor = this.nearestActorTo(origin);
@@ -1679,6 +1679,7 @@ export class Game {
             .map((enemy) => {
               const sim = terrainSimSample(enemy.position.x, enemy.position.z);
               const terrainSample = Terrain.sample(enemy.position.x, enemy.position.z);
+              const feverAccent = this.enemies.feverAccentFor(enemy);
               return {
                 x: enemy.position.x,
                 y: enemy.position.y,
@@ -1718,6 +1719,10 @@ export class Game {
                 zone: terrainSample.zone,
                 light: Number(this.enemies.lightFactorFor(enemy).toFixed(3)),
                 watchPainted: this.enemies.watchPaintedFor(enemy),
+                readState: feverAccent.active ? 'fevered' : 'unfevered',
+                fevered: feverAccent.active,
+                freed: false,
+                feverAccent,
                 terrain: {
                   grounded: Math.abs(enemy.position.y - Terrain.visualY(enemy.position.x, enemy.position.z, Balance.enemy.groundY)) < 0.01,
                   slope: sim.slope,
@@ -3096,8 +3101,11 @@ export class Game {
     this.recordProfileSample();
   }
 
-  private onEnemyKilled(position: THREE.Vector3): void {
+  private onEnemyKilled(position: THREE.Vector3, freedOrdinal: number): void {
     this.dropCarrierGold(position);
+    if (freedOrdinal > 0 && freedOrdinal <= Balance.legibility.freedFloatLimit) {
+      this.vfx.floatText(position, 'FREED', Balance.legibility.freedFloatColor);
+    }
     if (isCharmPauseDisabled() || this.state.current !== 'playing' || this.state.isPaused) return;
     this.cameraRig.impulse(position, Balance.charm.camImpulse);
     if (this.charmPauseCooldown > 0 || Balance.charm.hitPauseMs <= 0) return;

@@ -157,12 +157,15 @@ export class CombatSystem {
     private readonly audio: SoundSystem,
     private readonly onHeroDied: () => void,
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
-    private readonly onEnemyKilled?: (position: THREE.Vector3) => void,
+    private readonly onEnemyKilled?: (position: THREE.Vector3, freedOrdinal: number) => void,
     private readonly onShot?: (at: number, origin: THREE.Vector3, target: THREE.Vector3) => void,
     private readonly onEnemyDamaged?: (enemy: ClaimJumperEnemy, amount: number, died: boolean) => void,
     private readonly canDamageEnemy: (enemy: ClaimJumperEnemy) => boolean = () => true,
   ) {
-    this.freedWalkers = new FreedWalkerVfx(vfx);
+    this.freedWalkers = new FreedWalkerVfx(
+      vfx,
+      () => this.actors.filter((actor) => actor.group.visible).map((actor) => actor.group.position),
+    );
   }
 
   private get primaryActor(): Hero {
@@ -817,9 +820,9 @@ export class CombatSystem {
       this.bankXp(enemy.position, xp, 'overflow');
     }
     this.vfx.dustPuff(enemy.position);
-    this.freedWalkers.spawn(enemy);
+    const freed = this.freedWalkers.spawn(enemy);
     this.audio.playKill();
-    this.onEnemyKilled?.(enemy.position);
+    this.onEnemyKilled?.(enemy.position, freed ? this.freedWalkers.diagnostics.spawned : 0);
     this.events.emit({
       type: 'enemy_killed',
       at,

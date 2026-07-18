@@ -1161,6 +1161,10 @@ interface Window {
       zone?: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
       light?: number;
       watchPainted?: boolean;
+      readState: 'fevered' | 'unfevered';
+      fevered: boolean;
+      freed: false;
+      feverAccent: import('./entities/pools').FeverAccentDiagnostics;
       terrain?: {
         grounded: boolean;
         slope: { dx: number; dz: number };
