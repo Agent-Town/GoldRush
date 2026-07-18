@@ -30,5 +30,5 @@ Touches: src/editor/** (grows), a new charter module (envelope+compiler), the co
 ## Ratification questions (owner, batched — none block CP-00/01)
 Q1. Palette v1 = E1 only (recommended)?
 Q2. When does any layer go player-facing (recommend: L2 stays ?editor until after E5 ships; L3 decision belongs to the E10 push — the story's unveiling)?
-Q3. Charter sharing/export (recommend: park to the co-op milestone; provenance envelope is already shaped for it)?
+Q3. Charter sharing/export — **ANSWERED (owner 2026-07-18, verbatim: "I think we don't have to park charter sharing/Q3 or park the co-op. We are fully in the process of finishing things up. So lets also work on that.") → CP-06 THE POST authored + queued (export file + paste-code import, full validator gate on import, lineage honesty; no server ever).**
 Q4. Does the Press live as meta-menu tool, in-fiction hall, or both (recommend: meta now, the hall joins at E10 — same machine, two doors)?
