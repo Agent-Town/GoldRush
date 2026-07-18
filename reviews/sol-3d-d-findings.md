@@ -20,6 +20,32 @@ No `src/` file changed. Simulation, collision, placement, spawns, range, line of
 
 The durable design and rebuild guidance is in `artifacts/map-rebuild-spike/MODEL-HANDOFF.md`. Exact asset measurements and hashes live in the adjacent terrain contracts and `artifacts/map-rebuild-spike/verification.json`.
 
+## Incline mount sweep + current blocked debt
+
+Incline's merged landmark pack is now resolved in the terrain contract. `assets/pilots/map-rebuild-spike/incline-terrain-contract.json` carries five canonical mounted body records with asset paths, and `assets/pilots/map-rebuild-spike/landmarks/incline/incline-landmark-pack-contract.json` now records the same mounts with `mountInterlock: resolved-3d-d`.
+
+The five ALPHA variants remain ready but not body-mounted: Picnic, Dead Band, Relay Rush, Far Side, and Eclipse already have reuse verdict terrain contracts with empty asset fields. Their pack directories are not present on main yet, so there are no merged bodies to attach in this wave.
+
+Twin Banks true braid remains blocked. No water-mask engine capability or new Twin Banks braid contract landed in this pull, so this wave does not touch the accepted Twin Banks terrain.
+
+Evidence:
+
+- `artifacts/map-rebuild-spike/incline-mounts-sweep-verdict.png`
+- `python3 assets/pilots/map-rebuild-spike/verify_mounts_sweep.py` → 21 maps / 108 records
+- `npm run build` → green
+
+### F-3D-D-127 — Incline uses the existing pack layout as the canonical mount record
+
+The Incline pack already shipped with proposed placement, clearance overlay, and five body GLBs: `lower-yard-engine-crane`, `west-line-brake-tower`, `east-line-brake-tower`, `upper-ore-cable-house`, and `ford-service-pump`. The sweep promotes that layout into canonical terrain mounts instead of inventing a second composition.
+
+### F-3D-D-128 — Final-five ALPHA variants are not mounted until bodies land
+
+The final-five terrain contracts are present and still correctly reserve empty-asset mount ids for ALPHA. Because no matching `landmarks/<map>/` pack contracts exist on main for those five, changing their records now would only fabricate assets.
+
+### F-3D-D-129 — Twin Banks braid remains a gate, not a mounts task
+
+The accepted Twin Banks render still carries the known broad-water compromise. The true braid requires the factory water-mask engine slice; no such gate opened in this wave, so the terrain remains unchanged.
+
 ## Findings
 
 ### F-3D-D-01 — Regional cohesion belongs to the grammar, not to duplicated land
