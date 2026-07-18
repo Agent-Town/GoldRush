@@ -24,56 +24,57 @@ Written 2026-07-18 (owner: "I really have to start testing. How can we optimize 
 Recommended order: **A today** (highest information), then B/C split across days, D+E whenever convenient.
 
 ## SESSION A LINKS
-- T3 ceremony: play an E3 run to the science ceiling, raise the Refinery at the schoolhouse, HOLD the valve. `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-canyon-works`
-- E5 new arsenal (harpoon ballista, depth charges): `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-deepwater-claim`
-- E6 arsenal + Homemaker + wrangle: `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-glow-mesa`
-- E9 Old Digger (board it while it works; swap the tape): `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-dome-basin`
+- T3 ceremony: play an E3 run to the science ceiling, raise the Refinery at the schoolhouse, HOLD the valve. `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-canyon-works&debug`
+- E5 new arsenal (harpoon ballista, depth charges): `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-deepwater-claim&debug`
+- E6 arsenal + Homemaker + wrangle: `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-glow-mesa&debug`
+- E9 Old Digger (board it while it works; swap the tape): `https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-dome-basin&debug`
+**WHY `&debug` on every door (F-TOUR-1, found by the owner's first click):** the direct-boot param is debug-gated BY DESIGN — without it the game safely falls back to the Claim rather than bypass progression. For the tour that gate is exactly what we override. A plain visit to the deploy root gives the honest progression boot.
 Tip: add `&preset=greenhorn` if you want to judge content not challenge; add `&debug` for the test tools (gold, teleport) when you just want to REACH something.
 
 ## THE FULL MAP TABLE (tour sessions B+C — click straight in)
 | Era | Map | Door |
 |---|---|---|
-| E1 | The Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=the-claim |
-| E1 | The Dry Gulch | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-dry-gulch |
-| E1 | Night Shift | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-night-shift |
-| E1 | Twin Banks | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-twin-banks |
-| E1 | The Claim-Jumper Baron | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-baron |
-| E2 | The Hill Mine | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-hill-mine |
-| E2 | The Trestle | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-trestle |
-| E2 | The Pressure Garden | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-pressure-garden |
-| E2 | The Incline | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-incline |
-| E3 | Blackout Ridge | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-blackout-ridge |
-| E3 | Moth Season | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-moth-season |
-| E3 | The Canyon Works | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-canyon-works |
-| E3 | The Fairground | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-fairground |
-| E4 | The Dust Flats | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-dust-flats |
-| E4 | The Long Road | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-long-road |
-| E4 | Gusher County | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-gusher-county |
-| E4 | The Boneyard | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-boneyard |
-| E5 | The Deepwater Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-deepwater-claim |
-| E5 | The Regatta | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-regatta |
-| E5 | Stillwater | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-stillwater |
-| E5 | The Flotilla | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-flotilla |
-| E6 | The Glow Mesa | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-glow-mesa |
-| E6 | The Showroom | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-showroom |
-| E6 | Half-Life Hollow | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-half-life-hollow |
-| E6 | The Picnic | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-picnic |
-| E7 | The Relay Valley | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-relay-valley |
-| E7 | Echo Canyon | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-echo-canyon |
-| E7 | The Dead Band | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-dead-band |
-| E7 | Relay Rush | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-relay-rush |
-| E8 | The Mare Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-mare-claim |
-| E8 | The Far Side | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-far-side |
-| E8 | Low Orbit | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-low-orbit |
-| E8 | The Eclipse | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-eclipse |
-| E9 | The Dome Basin | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-dome-basin |
-| E9 | The Seed Run | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-seed-run |
-| E9 | Devil's Alley | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-devils-alley |
-| E9 | The Old Canal | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-old-canal |
-| E10 | The Ember Shore | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-ember-shore |
-| E10 | The Archive World | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-archive-world |
-| E10 | The Last Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-last-claim |
-| E10 | The River | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-river |
+| E1 | The Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=the-claim&debug |
+| E1 | The Dry Gulch | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-dry-gulch&debug |
+| E1 | Night Shift | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-night-shift&debug |
+| E1 | Twin Banks | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-twin-banks&debug |
+| E1 | The Claim-Jumper Baron | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e1-baron&debug |
+| E2 | The Hill Mine | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-hill-mine&debug |
+| E2 | The Trestle | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-trestle&debug |
+| E2 | The Pressure Garden | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-pressure-garden&debug |
+| E2 | The Incline | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e2-incline&debug |
+| E3 | Blackout Ridge | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-blackout-ridge&debug |
+| E3 | Moth Season | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-moth-season&debug |
+| E3 | The Canyon Works | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-canyon-works&debug |
+| E3 | The Fairground | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e3-fairground&debug |
+| E4 | The Dust Flats | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-dust-flats&debug |
+| E4 | The Long Road | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-long-road&debug |
+| E4 | Gusher County | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-gusher-county&debug |
+| E4 | The Boneyard | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e4-boneyard&debug |
+| E5 | The Deepwater Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-deepwater-claim&debug |
+| E5 | The Regatta | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-regatta&debug |
+| E5 | Stillwater | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-stillwater&debug |
+| E5 | The Flotilla | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e5-flotilla&debug |
+| E6 | The Glow Mesa | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-glow-mesa&debug |
+| E6 | The Showroom | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-showroom&debug |
+| E6 | Half-Life Hollow | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-half-life-hollow&debug |
+| E6 | The Picnic | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e6-picnic&debug |
+| E7 | The Relay Valley | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-relay-valley&debug |
+| E7 | Echo Canyon | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-echo-canyon&debug |
+| E7 | The Dead Band | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-dead-band&debug |
+| E7 | Relay Rush | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e7-relay-rush&debug |
+| E8 | The Mare Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-mare-claim&debug |
+| E8 | The Far Side | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-far-side&debug |
+| E8 | Low Orbit | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-low-orbit&debug |
+| E8 | The Eclipse | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e8-eclipse&debug |
+| E9 | The Dome Basin | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-dome-basin&debug |
+| E9 | The Seed Run | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-seed-run&debug |
+| E9 | Devil's Alley | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-devils-alley&debug |
+| E9 | The Old Canal | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e9-old-canal&debug |
+| E10 | The Ember Shore | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-ember-shore&debug |
+| E10 | The Archive World | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-archive-world&debug |
+| E10 | The Last Claim | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-last-claim&debug |
+| E10 | The River | https://d2f9c11e.gold-rush-3in.pages.dev/?contract=e10-river&debug |
 
 ## VERDICT SINK
 Paste raw lines to the attended session (me) any time — even mid-session. I run intake same-day: finding → task → lane → re-deploy. Your only deliverable is impressions.
