@@ -164,7 +164,14 @@ export class OldDiggerBossSystem {
   update(at: number): void {
     const delta = Math.max(0, at - this.lastAt);
     this.lastAt = at;
-    if (!this.enabled || this.persistentGentle || !this.started) return this.syncPresentation();
+    if (!this.enabled) return this.syncPresentation();
+    if (this.persistentGentle) {
+      const hull = this.hull();
+      if (hull) this.recycleEnemy(hull);
+      for (const drone of this.liveDrones()) this.recycleEnemy(drone);
+      return this.syncPresentation();
+    }
+    if (!this.started) return this.syncPresentation();
     this.enforceNoKillLaw();
     if (this.act === 1 && this.swapPhase === 'none') this.updateRenovation(at);
     if (this.boarded && this.swapPhase === 'none') this.updateBoarding(at, delta);
