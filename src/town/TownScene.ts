@@ -42,6 +42,7 @@ import {
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
 import { RESEARCH_STATE_KEY, browserResearchStorage, loadResearchState, reconcileActiveEpoch, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
+import { CeremonySystem, type CeremonyDiagnostics } from '../ceremony/CeremonySystem';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
@@ -195,6 +196,7 @@ export type TownDiagnostics = {
     visibleStages: string[];
     surveyVisible: boolean;
   };
+  ceremony: CeremonyDiagnostics;
   propRing: {
     enabled: boolean;
     night: boolean;
@@ -256,6 +258,19 @@ export class TownScene {
   private readonly visibleActors = visibleTownActors(this.visibleBuildings);
   private readonly stampMill = readTownStampMill(this.metaProgress);
   private town3dPilotDispose?: () => void;
+  /** The interstitials T4+ stage here; T1/T2 keep their own doors (wrap law). */
+  private readonly ceremonies = new CeremonySystem({
+    onBegin: () => this.closeSchoolhouse(),
+    onArmed: () => {
+      this.renderSchoolhouse();
+      this.syncPrompt();
+      this.publishDiagnostics();
+    },
+    onClosed: () => {
+      this.syncPrompt();
+      this.publishDiagnostics();
+    },
+  });
   private readonly dynamoHall = readTownMegaproject(STEAMWORKS_EPOCH_ID, DYNAMO_HALL_ID);
   private readonly dynamoHallGroup = new THREE.Group();
   private readonly dynamoHallStageVisuals: THREE.Object3D[] = [];
@@ -382,6 +397,7 @@ export class TownScene {
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.infoNote?.dispose();
     this.assayBench?.dispose();
+    this.ceremonies.dispose();
     for (const actor of this.townActors) actor.dispose();
     clearProcessedCharacterTextureCache();
     this.ui.remove();
@@ -401,10 +417,12 @@ export class TownScene {
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
-    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) {
+    this.ceremonies.update(delta);
+    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen()) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
       if (rawExitIntent && !this.lastExitIntent) {
-        if (this.boardOpen) this.closeBoard();
+        if (this.ceremonies.modalOpen()) this.ceremonies.requestLeave();
+        else if (this.boardOpen) this.closeBoard();
         else if (this.schoolhouseOpen) this.closeSchoolhouse();
         else this.closeAssayBench();
       }
@@ -943,6 +961,11 @@ export class TownScene {
       this.raiseStampMill();
       return;
     }
+    if (target?.closest('[data-begin-ceremony]')) {
+      this.ceremonies.begin();
+      this.publishDiagnostics();
+      return;
+    }
     const eraButton = target?.closest<HTMLElement>('[data-research-era]');
     if (eraButton?.dataset.researchEra) {
       this.selectResearchEra(eraButton.dataset.researchEra);
@@ -1020,7 +1043,7 @@ export class TownScene {
   }
 
   private syncPrompt(): void {
-    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) {
+    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen()) {
       this.prompt.hidden = true;
       this.infoNote?.update(null);
       return;
@@ -1269,6 +1292,9 @@ export class TownScene {
   }
 
   private renderEpochActivationAction(surface: 'schoolhouse' | 'site' = 'schoolhouse'): string {
+    // Framework-staged eras (T4+) render the ceremony door; null = not ours.
+    const ceremonyDoor = this.ceremonies.renderDoor();
+    if (ceremonyDoor !== null) return surface === 'schoolhouse' ? ceremonyDoor : '';
     if (activeEpochId() === STEAMWORKS_EPOCH_ID) return this.renderDynamoActivationAction(surface);
     const { manifest, project } = this.stampMill;
     if (!manifest || !project || epochIsActive(STEAMWORKS_EPOCH_ID)) return '';
@@ -1757,6 +1783,7 @@ export class TownScene {
       }),
       stampMill: this.stampMillDiagnostics(),
       dynamoHall: this.dynamoHallDiagnostics(),
+      ceremony: this.ceremonies.diagnostics(),
       propRing: this.propRingDiagnostics(),
       ambientDust: {
         enabled: !!this.ambientDust,
