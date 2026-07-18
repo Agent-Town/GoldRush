@@ -554,3 +554,7 @@ DRAINED FROM THE BANK: **e4-06-landyacht-boss** (`LandYachtBossSystem`) + **e4-0
 ## 2026-07-18 — MORNING PILE DRAINED (3 salvaged lane commits) + requeues
 - **✅ WD-02 Mei dispatch BARKS** merged (worldDispatches.ts + TownScene seam + spec) · **✅ WD-03 World Outside LEDGER pages** merged (encyclopedia + spec) · **✅ OLD DIGGER spec+system completion** merged (e2e/e9-boss-old-digger.spec.ts — THE SWAP proven with AND without a prior recording, gentle persists; commit had been swept under wd04's label by the runner's lane-root add). Gates: tsc-0, build green, **20/20 specs both projects** (90e88973).
 - **RE-QUEUED**: wd04-postscripts (its two attempts were the safety STOPS protecting the digger commit — now clear) · audio-batch-01 (BLOCKED root cause: `.env.local` absent in worktrees/lane-a — untracked files don't propagate to worktrees; key copied in, unblocked). T3 REFINERY (the E4 unlock) still running on lane-c.
+
+## 2026-07-18 — SOL RELAY: sweep verified SIX-map-complete + BETA pack 1 drained
+- **3D-D MOUNTS SWEEP = ALL SIX PACKS** (regatta 8 + five ×5; verify_mounts_sweep.py green ON MAIN; interlocks resolved-3d-d; proposedIds debt cleared). Earlier "wave 1 of 3" note was a misread of the branch name — corrected in SOL-3D-D-QUEUE. **Mounts debt now: Pressure Garden only.**
+- **✅ BETA PACK 1: Pressure Garden E3** (5 bodies, geometry-reuse, <3k tris) merged 02738198, PY-CLEAN/TSC-0/build green. Known inherited finding (atlas-hash drift in 5 older packs) documented in reviews/sol-findings-lm-beta-pressure-garden.md — laddered, non-blocking.
