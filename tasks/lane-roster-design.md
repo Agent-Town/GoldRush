@@ -14,7 +14,7 @@ Eras E6-E10 field E1 outlaws today. Each era's chapter already wrote its antagon
 1. Every entry CITED to its chapter (uncited = proposal, mark it). The Fevered-vs-clean law per era holds: E6-E8 strains crave per the mutation law; E9 is THE CLEAN WORLD (nothing craves — weather and faithful machines only); E10 is the Static's forms.
 2. Per era: which existing behavior archetype each enemy reuses (the wiring task builds NO new AI unless the sheet flags ONE signature behavior per era, max).
 3. End with THE ART BATCH PLAN: sheet-slot list per era (filenames per house convention) sized for the art slot's one-batch-in-flight law, and THE WIRING PLAN (spawn-table entries per contract family).
-4. OWNER-QC GATE stated at top: the owner quality-checks (a) this sheet, then (b) each art batch in-game. Nothing wires before (a).
+4. NO-BLOCKER LAW stated at top (owner 2026-07-18, verbatim: "you can wire things in game, I just correct them later. I am already blocking so much work - lets not add more to that."): the pipeline runs design -> art -> wiring WITHOUT waiting for owner review at any stage; the owner corrects post-hoc. Every choice must therefore be cleanly reversible (roster entries data-driven, art in slots, spawn tables per contract) so a one-line correction can swap any of it.
 ## Firewall: the ONE spec file only. NO code, NO art generation, NO Balance edits.
 Self-check: every entry cited · lexicon law grep (no kill/slay/gun words) · tables render clean.
 No-op guard: exit-without-changes = WRITE WHY first.
