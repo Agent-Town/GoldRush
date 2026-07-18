@@ -66,9 +66,8 @@ export type CeremonyPhase =
   /** The arming call through the existing seam, exactly once. */
   | { id: string; kind: 'arm'; direction: string };
 
-/** SOUND — named beats. `sound` is today's placeholder SoundName (absent files
- * are silent no-ops); `beat` is the script's own name, emitted as an event so
- * the audio pipeline can dress the real cue later. */
+/** SOUND — named beats. `sound` resolves through the audio manifest; `beat` is
+ * the script's own name, emitted as an event for diagnostics. */
 export type CeremonySoundBeat = {
   beat: string;
   phase: string;
@@ -162,10 +161,10 @@ export const T4_THE_BOAT: CeremonyScript = {
     { id: 'arm', kind: 'arm', direction: 'The Deepwater Claim opens.' },
   ],
   sound: [
-    { beat: 't4-engines', phase: 'muster', atMs: 0, sound: 'prospector-hover-loop' },
-    { beat: 't4-wind', phase: 'crest', atMs: 0, sound: 'wind-gust' },
+    { beat: 't4-engines', phase: 'muster', atMs: 0, sound: 't4-engines-loop' },
+    { beat: 't4-wind', phase: 'crest', atMs: 0, sound: 't4-wind' },
     { beat: 't4-nothing', phase: 'the-sea', atMs: 0, sound: null, silence: true },
-    { beat: 't4-first-wave', phase: 'first-wave', atMs: 200, sound: 'river-ambience-loop' },
+    { beat: 't4-first-wave', phase: 'first-wave', atMs: 200, sound: 't4-first-wave' },
   ],
   keptImage: { caption: "The hull's shadow falling off the dune onto wet sand." },
 };
@@ -209,12 +208,12 @@ export const T5_THE_DEEP_REACTOR: CeremonyScript = {
     { id: 'arm', kind: 'arm', direction: 'The Atomic Homestead opens.' },
   ],
   sound: [
-    { beat: 't5-rope-and-water', phase: 'the-raise', atMs: 0, sound: 'sluice-water-loop' },
-    { beat: 't5-the-hum', phase: 'surfacing', atMs: 200, sound: 'epoch-door-sting' },
-    { beat: 't5-era-layer-flats', phase: 'homecoming-pass', atMs: 400, sound: 'gold-chime' },
-    { beat: 't5-era-layer-canyon', phase: 'homecoming-pass', atMs: 1_400, sound: 'gold-chime' },
-    { beat: 't5-era-layer-hill', phase: 'homecoming-pass', atMs: 2_400, sound: 'gold-chime' },
-    { beat: 't5-era-layer-river-bend', phase: 'homecoming-pass', atMs: 3_400, sound: 'gold-chime' },
+    { beat: 't5-rope-and-water', phase: 'the-raise', atMs: 0, sound: 't5-winch-rhythm' },
+    { beat: 't5-the-hum', phase: 'surfacing', atMs: 200, sound: 't5-deep-hum-loop' },
+    { beat: 't5-era-layer-flats', phase: 'homecoming-pass', atMs: 400, sound: 't5-surfacing' },
+    { beat: 't5-era-layer-canyon', phase: 'homecoming-pass', atMs: 1_400, sound: 't5-surfacing' },
+    { beat: 't5-era-layer-hill', phase: 'homecoming-pass', atMs: 2_400, sound: 't5-surfacing' },
+    { beat: 't5-era-layer-river-bend', phase: 'homecoming-pass', atMs: 3_400, sound: 't5-surfacing' },
   ],
   keptImage: { caption: "The reactor's glow laid across the drowned claims at dusk." },
 };

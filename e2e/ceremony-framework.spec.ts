@@ -199,6 +199,31 @@ test('T3 THE REFINERY: the manifest purchase debits its exact cost and the valve
   expect(done?.armedEpochId).toBe(E4);
   expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E4);
   expect(errors).toEqual({ console: [], page: [] });
+test('generated ceremony and boss audio resolves through the manifest', async ({ page }) => {
+  await page.goto('/');
+  const names = [
+    't4-first-wave',
+    't4-engines-loop',
+    't4-wind',
+    't5-winch-rhythm',
+    't5-deep-hum-loop',
+    't5-surfacing',
+    'dredge-queen-arrival-horn',
+    'homemaker-done-chime',
+    'old-digger-tape-swap',
+    'e5-deepwater-ambience-loop',
+  ] as const;
+
+  const resolved = await page.evaluate(async (soundNames) => {
+    const audio = (await Function('return import("/src/audio/manifest.ts")')()) as typeof import('../src/audio/manifest');
+    return Promise.all(soundNames.map(async (name) => {
+      const load = audio.soundUrlLoader(name);
+      const url = await load?.();
+      return { name, file: audio.soundManifest[name].file, ok: url ? (await fetch(url)).ok : false };
+    }));
+  }, names);
+
+  expect(resolved).toEqual(names.map((name) => ({ name, file: `${name}.mp3`, ok: true })));
 });
 
 test('T4 THE BOAT: the ceiling arms the door, the HAND gates the crest, the era arms exactly once through the seam', async ({ page }, info) => {

@@ -8,8 +8,8 @@ const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const API_BASE = 'https://api.elevenlabs.io/v1';
 const OUTPUT_FORMAT = 'mp3_44100_128';
 const MODEL_ID = 'eleven_text_to_sound_v2';
-const SPEND_CAP = 4000;
-const MIN_REMAINING = 5500;
+const SPEND_CAP = 6000;
+const MIN_REMAINING = 3000;
 const API_PAUSE_MS = 2200;
 const RAW_DIR = path.join(ROOT, 'assets/audio/raw');
 const LEDGER = path.join(ROOT, 'assets/audio/LEDGER.md');
@@ -57,7 +57,20 @@ const sounds = [
   ['save-tick', 0.5, false, 'tiny save tick, very short pencil scratch on paper, light UI confirmation, no beep/voice/music, -14 LUFS', 'tiny pencil scratch'],
   ['slot-save-confirm', 1.0, false, 'short slot save confirm, ledger book closing with soft leather and paper puff, warm UI confirm, no voice/music, -14 LUFS', 'ledger book close'],
   ['sign-in-chime', 1.2, false, 'short sign-in chime, two gentle post-code teal notes with paper-soft tail, no voice/music bed, -14 LUFS', 'two-note post-code chime'],
+  ['t4-first-wave', 1.6, false, 'one small ocean wave reaching wet sand after silence, clear water break then short foam retreat, warm and close, no storm/music/voice, -14 LUFS', 'first ocean wave on wet sand'],
+  ['t4-engines-loop', 3.2, true, 'seamless small convoy engine loop, warm brass pistons, soft steam and leather belt rhythm, handmade motor-age machinery, no horn/music/voice, -18 LUFS', 'warm brass convoy engines'],
+  ['t4-wind', 1.4, false, 'short dune-crest wind falling into near silence, dry sand and one soft canvas flap, warm small frontier scene, no whistle/music/voice, -18 LUFS', 'dune wind falling quiet'],
+  ['t5-winch-rhythm', 1.8, false, 'short flotilla winch rhythm cue, three spaced wooden ratchet ticks with wet rope tension and small water drips, warm handmade machinery, no music/voice, -14 LUFS', 'wet rope and winch ticks'],
+  ['t5-deep-hum-loop', 3.2, true, 'seamless deep reactor hum loop, low old brass dynamo and patient steam vibration heard through water, warm and small, no alarm/music/voice, -18 LUFS', 'old warm underwater machine hum'],
+  ['t5-surfacing', 1.5, false, 'short surfacing cue, wet brass housing rises as water sheets away, soft teal glass resonance, patient not triumphant, no music/voice, -14 LUFS', 'wet brass surfacing wash'],
+  ['dredge-queen-arrival-horn', 2.4, false, 'short Dredge-Queen arrival horn, low weathered brass ship horn over one hull creak and dark water, imposing not horror, no orchestra/drums/voice, -14 LUFS', 'weathered brass ship arrival horn'],
+  ['homemaker-done-chime', 1.2, false, 'short Homemaker DONE chime, small warm brass kitchen timer bell with one tidy latch click, gentle completion not victory, no music/voice, -14 LUFS', 'warm tidy done chime'],
+  ['old-digger-tape-swap', 0.8, false, 'short Old Digger tape-swap click, dry mechanical reel eject, paper tape slide and firm brass latch, readable close foley, no music/voice, -14 LUFS', 'paper tape swap and brass latch'],
+  ['e5-deepwater-ambience-loop', 6.0, true, 'seamless Deepwater harbor ambience loop, small surf against timber pilings, distant steam winch, hull rope creak and calm open water, warm lived-in frontier harbor, no storm/music/voice, -18 LUFS', 'warm small deepwater harbor'],
 ].map(([name, seconds, loop, prompt, readsAs]) => ({ name, seconds, loop, prompt, readsAs }));
+
+const only = process.argv.find((arg) => arg.startsWith('--only='))?.slice('--only='.length);
+const batchSounds = sounds.slice(sounds.findIndex((sound) => sound.name === 't4-first-wave'));
 
 function cleanCell(value) {
   return String(value).replace(/\s+/g, ' ').replaceAll('|', '/').trim();
@@ -96,7 +109,14 @@ async function ledger(row) {
 
 async function generatedNames() {
   const text = await readFile(LEDGER, 'utf8').catch(() => '');
-  return new Set([...text.matchAll(/^\| ([^|]+) \| .* \| generated;/gm)].map((match) => match[1].trim()));
+  return new Set([...text.matchAll(/^\| ([^|]+) \| .* \| (?:kept; )?generated;/gm)].map((match) => match[1].trim()));
+}
+
+async function batchStartRemaining(fallback) {
+  const text = await readFile(LEDGER, 'utf8').catch(() => '');
+  const row = text.split('\n').find((line) => line.startsWith('| batch-start | remaining credits before lane-a-audio-batch-01 |'));
+  const remaining = Number(row?.split('|').at(-2)?.trim());
+  return Number.isFinite(remaining) ? remaining : fallback;
 }
 
 async function exists(file) {
@@ -198,16 +218,22 @@ async function main() {
   }
   let current = start;
   const done = await generatedNames();
-  await ledger({ name: 'batch-start', prompt: 'remaining credits before audio-batch-002', seconds: 0, cost: 0, takes: 0, status: 'queried before batch', remaining: current.remaining });
+  const batchStart = await batchStartRemaining(current.remaining);
+  let spent = Math.max(
+    batchStart - current.remaining,
+    batchSounds.filter((sound) => done.has(sound.name)).reduce((sum, sound) => sum + sound.prompt.length, 0),
+  );
+  await ledger({ name: 'batch-start', prompt: 'remaining credits before lane-a-audio-batch-01', seconds: 0, cost: 0, takes: 0, status: 'queried before batch', remaining: current.remaining });
 
   for (const sound of sounds) {
+    if (only && sound.name !== only) continue;
     if (done.has(sound.name) && await exists(path.join(RAW_DIR, `${sound.name}.mp3`))) {
       console.log(`${sound.name}: skipped existing`);
       continue;
     }
 
-    const spent = start.remaining - current.remaining;
-    if (spent >= SPEND_CAP || current.remaining < MIN_REMAINING) {
+    const projectedSpent = spent + sound.prompt.length;
+    if (projectedSpent > SPEND_CAP || batchStart - projectedSpent < MIN_REMAINING) {
       await ledger({ name: 'batch-stop', prompt: `stopped before ${sound.name}`, seconds: 0, cost: 0, takes: 0, status: `STOP cap=${SPEND_CAP} spent=${spent} minRemaining=${MIN_REMAINING}`, remaining: current.remaining });
       console.log(`STOP spent=${spent} remaining=${current.remaining}`);
       return;
@@ -216,10 +242,12 @@ async function main() {
     const before = current.remaining;
     let out;
     try {
+      spent = projectedSpent;
       await sleep(API_PAUSE_MS);
       out = await generate(key, sound);
       await sleep(API_PAUSE_MS);
       current = await credits(key);
+      spent = Math.max(spent, batchStart - current.remaining);
       await ledger({ name: sound.name, prompt: sound.prompt, seconds: sound.seconds, cost: before - current.remaining, takes: 1, status: qaStatus(sound, out), remaining: current.remaining });
       console.log(`${sound.name}: generated, cost=${before - current.remaining}, remaining=${current.remaining}`);
     } catch (err) {
@@ -231,7 +259,7 @@ async function main() {
     }
   }
 
-  console.log(`DONE spent=${start.remaining - current.remaining} remaining=${current.remaining}`);
+  console.log(`DONE spent<=${spent} remaining=${current.remaining}`);
 }
 
 main().catch((err) => {
