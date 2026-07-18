@@ -603,6 +603,10 @@ export class BuildSystem {
     return this.activeRuins;
   }
 
+  turretPosition(index: number): THREE.Vector3 | null {
+    return this.turrets.isActive(index) ? (this.turrets.allPositions[index] ?? null) : null;
+  }
+
   get nextCost(): number {
     const def = this.selectedDef();
     return def.costCurve(this.countFor(def.id));

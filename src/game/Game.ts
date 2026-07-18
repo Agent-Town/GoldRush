@@ -138,6 +138,7 @@ import { XpMotePool } from '../entities/XpMote';
 import { PressureSystem } from '../systems/PressureSystem';
 import { FuelSystem } from '../systems/FuelSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
+import { E6ArsenalSystem } from '../systems/E6ArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -432,6 +433,7 @@ export class Game {
   private readonly buildSystem: BuildSystem;
   private readonly pressureSystem: PressureSystem;
   private readonly pressureArsenalSystem: PressureArsenalSystem;
+  private readonly e6ArsenalSystem: E6ArsenalSystem;
   private readonly progression: Progression;
   private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
   private activeWeapon: 'rig' | 'blast' = 'rig';
@@ -1113,6 +1115,20 @@ export class Game {
         !this.multiplayerActive() &&
         this.heroWeaponsEnabledFor(this.primaryActor),
     );
+    this.e6ArsenalSystem = new E6ArsenalSystem(
+      this.combat,
+      this.events,
+      this.decay,
+      this.enemies,
+      () => this.primaryActor.group.position,
+      (index) => this.buildSystem.turretPosition(index),
+      () =>
+        this.activeEpoch.order >= 6 &&
+        !this.multiplayerActive() &&
+        this.heroWeaponsEnabledFor(this.primaryActor),
+      (id) => hasResearchNode(this.researchState, id),
+      (position, text) => this.vfx.floatText(position, text, '#83ded7'),
+    );
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
       state: this.state,
@@ -1445,6 +1461,10 @@ export class Game {
         wrangle: {
           capture: () => this.wrangle.tryCapture(this.actionActor.group.position),
           diagnostics: () => this.wrangle.diagnostics(),
+        },
+        e6Arsenal: {
+          deployCaltrops: () => this.e6ArsenalSystem.deployCaltrops(),
+          diagnostics: () => this.e6ArsenalSystem.diagnostics,
         },
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
@@ -1799,6 +1819,7 @@ export class Game {
     this.buildSystem.dispose();
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
+    this.e6ArsenalSystem.dispose();
     this.crawlerBoss.dispose();
     this.landYachtBoss.dispose();
     this.dredgeQueenBoss.dispose();
@@ -2017,6 +2038,7 @@ export class Game {
         (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
         this.localActor.group.position,
       );
+      this.e6ArsenalSystem.update(simDelta, this.timeAlive);
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
       this.fuelSystem?.update(simDelta, this.visibleActorPositions());
       this.vehicle?.update(simDelta);
@@ -2050,7 +2072,10 @@ export class Game {
         this.buildSystem.palisadeBlockers,
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
-        (enemy) => this.mothSeasonSpeedMultiplier(enemy) * this.wrangle.movementMultiplier(enemy),
+        (enemy) =>
+          this.mothSeasonSpeedMultiplier(enemy) *
+          this.wrangle.movementMultiplier(enemy) *
+          this.e6ArsenalSystem.movementMultiplier(enemy),
       );
       this.recycleDeepwaterCorsairsAtExit();
       if (this.finishPendingDeath()) return true;
@@ -3052,6 +3077,7 @@ export class Game {
     this.scene.add(this.harvestSystem.group);
     this.scene.add(this.buildSystem.group);
     this.scene.add(this.pressureSystem.group);
+    this.scene.add(this.e6ArsenalSystem.group);
     this.createMegaprojectVisuals();
     this.scene.add(this.megaprojectGroup);
     this.createBaronStandardVisual();
@@ -3683,6 +3709,7 @@ export class Game {
       wrangle: this.wrangle.diagnostics(),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
+      e6Arsenal: this.e6ArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -5175,6 +5202,7 @@ export class Game {
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
+    this.e6ArsenalSystem.reset();
     this.damSurge?.reset();
     if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge?.trigger(this.timeAlive);
     this.lightRig?.resetTransientLights();

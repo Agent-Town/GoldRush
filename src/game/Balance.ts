@@ -201,6 +201,23 @@ export const Balance = {
     autoPan: { panTickMult: -0.25, pressurePerSecond: 2 },
     boilerBatteryBands: { low: 1, working: 1.2, high: 1.45 },
   },
+  e6Arsenal: {
+    sunlineBeam: { damage: 16, range: 13, cooldown: 0.7, boltSpeed: 32, visualSeconds: 0.16 },
+    sunlineMount: { damage: 24, range: 18, cooldown: 1.15, boltSpeed: 36, silhouetteHeight: 1.1, mirrorRadius: 0.22 },
+    halfLifeCaltrops: {
+      pool: 3,
+      radius: 2.8,
+      slowMultiplier: 0.42,
+      durationTicks: 240,
+      cooldown: 6,
+      triggerRange: 7,
+      overlapRadius: 2.2,
+      dialHeight: 0.12,
+      dialRadius: 0.42,
+      spikes: 8,
+    },
+    tongsThrown: { damage: 48, radius: 3, range: 12, cooldown: 3.4, airTime: 0.72, arcHeight: 1.45, tongsLength: 0.72 },
+  },
   xp: {
     perKill: 4,
     moteMagnetRadius: 2,
