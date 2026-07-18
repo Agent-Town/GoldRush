@@ -70,6 +70,7 @@ import {
 } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
+import { takeMeiWorldDispatch } from './worldDispatches';
 
 const contractArtUrls = {
   theClaimPlate: new URL('../../assets/raw/plate-contract-the-claim.png', import.meta.url).href,
@@ -1158,7 +1159,8 @@ export class TownScene {
 
     const count = this.actorBarkVisits.get(nearest.definition.id) ?? 0;
     this.actorBarkVisits.set(nearest.definition.id, count + 1);
-    const text = townActorBark(nearest.definition, this.townName, count);
+    const dispatch = nearest.definition.id === 'newsie' && !this.storyBeatVisible() ? takeMeiWorldDispatch() : undefined;
+    const text = dispatch?.line ?? townActorBark(nearest.definition, this.townName, count);
     discoverLedgerTownActor(nearest.definition.id);
     this.showBark(nearest, text);
   }
