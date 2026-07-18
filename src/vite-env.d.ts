@@ -329,6 +329,7 @@ interface ThreeGameDiagnostics {
   landYachtBoss: null | import('./systems/LandYachtBossSystem').LandYachtBossDiagnostics;
   salvageClawBoss: null | import('./systems/SalvageClawBossSystem').SalvageClawBossDiagnostics;
   homemakerBoss: null | import('./systems/HomemakerBossSystem').HomemakerBossDiagnostics;
+  echoBoss: null | import('./systems/EchoBossSystem').EchoBossDiagnostics;
   oldDiggerBoss: null | import('./systems/OldDiggerBossSystem').OldDiggerBossDiagnostics;
   agent: {
     stub: {

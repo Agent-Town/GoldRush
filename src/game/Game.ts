@@ -185,6 +185,11 @@ import { createHomemakerBossSystem } from '../systems/HomemakerBossSystem';
 import { OldDiggerBossSystem, type OldDiggerTape, type SurveyPoint } from '../systems/OldDiggerBossSystem';
 import { SalvageClawBossSystem } from '../systems/SalvageClawBossSystem';
 import { LandYachtBossSystem } from '../systems/LandYachtBossSystem';
+import {
+  ECHO_JAR_ENTRY_ID,
+  EchoBossSystem,
+  type EchoActionSample,
+} from '../systems/EchoBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { DecayScheduler } from '../systems/DecaySystem';
@@ -535,6 +540,8 @@ export class Game {
   // here, before any system builds, and never again mid-run (Loader Contract).
   private readonly tileStateStore = new TileStateStore(localStorage);
   private readonly activeContract = bornContract(this.tileStateStore);
+  private readonly echoBossEnabled = this.activeContract.id === 'e7-relay-valley'
+    || (isDebugEnabled() && new URLSearchParams(window.location.search).has('e7boss'));
   private readonly wrangle = new WrangleSystem(
     this.activeEpoch.id === 'epoch-6-atomic',
     this.activeContract.id,
@@ -805,6 +812,26 @@ export class Game {
     now: () => this.timeAlive,
     suppressBossSpawn: () => this.waveSystem.suppressBaronForRun(),
   });
+  private readonly echoBoss = new EchoBossSystem(
+    () => this.buildSystem.diagnostics.hp
+      .filter((building) => !building.wrecked && building.hp > 0)
+      .map((building) => ({ id: building.id, x: building.position.x, z: building.position.z })),
+    () => this.echoPlaybooks(),
+    (amount, sourceId) => this.combat.damageActor(amount, sourceId),
+    (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
+    (x, z, base) => Terrain.visualY(x, z, base),
+    this.echoBossEnabled,
+    {
+      readAtBirth: () => this.tileStateStore.readSnapshot(this.activeContract.id).entries
+        .some((entry) => entry.kind === 'render' && entry.id === ECHO_JAR_ENTRY_ID && entry.payload === true),
+      writeAtCeremony: () => {
+        this.tileStateStore.stageWrite(this.activeContract.id, {
+          kind: 'render', id: ECHO_JAR_ENTRY_ID, payload: true, schemaVersion: TILE_STATE_SCHEMA_VERSION,
+        });
+        return this.tileStateStore.commitAtRunEnd();
+      },
+    },
+  );
   private readonly oldDiggerBoss = new OldDiggerBossSystem(
     () => this.enemies.all,
     (position, params) => this.enemies.spawn(position, params),
@@ -1473,6 +1500,7 @@ export class Game {
         baron?.variantId === 'homemaker_9000' ? baron.wave : Number.POSITIVE_INFINITY,
       );
       this.oldDiggerBoss.onWaveStarted(event.wave);
+      this.echoBoss.onWaveStarted(event.wave, event.at);
       this.salvageClawBoss.onWaveStarted(event.wave, event.at);
     });
 
@@ -1951,6 +1979,7 @@ export class Game {
     this.dredgeQueenBoss.dispose();
     this.salvageClawBoss.dispose();
     this.homemakerBoss.dispose();
+    this.echoBoss.dispose();
     this.oldDiggerBoss.dispose();
     this.megaprojectGroup.clear();
     this.megaprojectGeometry.dispose();
@@ -2037,6 +2066,7 @@ export class Game {
       if (!this.releaseFailedMultiplayer()) return false;
     }
     const intents = lockstepTick ? this.consumeMultiplayerTick(lockstepTick) : this.consumePlaybookTick(sampledIntents, cancelConsumed);
+    const echoSample = this.echoActionSample(intents);
     if (lockstepTick) delta = this.mpClient!.stepSeconds / Math.max(0.001, this.simTimeScale);
     if (
       lockstepTick &&
@@ -2125,6 +2155,7 @@ export class Game {
       this.activeTickElapsed += delta;
       const simDelta = delta * this.simTimeScale;
       this.timeAlive += simDelta;
+      this.echoBoss.observe(echoSample, this.timeAlive);
       this.decay.tick();
       this.syncDeepwaterClaim();
       if (this.actors.some((actor) => actor.group.visible && this.weaponForActor(actor) === 'blast')) this.blastTime += simDelta;
@@ -2150,6 +2181,7 @@ export class Game {
       this.dredgeQueenBoss.update(this.timeAlive);
       this.salvageClawBoss.update(this.timeAlive);
       this.homemakerBoss.update(this.timeAlive);
+      this.echoBoss.update(this.timeAlive);
       this.oldDiggerBoss.update(this.timeAlive);
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
@@ -2464,6 +2496,26 @@ export class Game {
 
   private playbookLiveRecording(): boolean {
     return !this.mpClient && this.playbookRecorder !== null && !this.playbookRecorder.finished && !this.playbookRecorder.scripted;
+  }
+
+  private echoActionSample(intents: Intents): EchoActionSample {
+    const actions: string[] = [];
+    if (intents.weaponToggle) actions.push('weapon_toggle');
+    if (intents.upgrade && this.upgradeCandidate) actions.push('context_action:upgrade');
+    if (intents.confirm && this.buildSystem.isBuildMode) actions.push('place_build');
+    else if (intents.confirm && this.demolishCandidate) actions.push('context_action:demolish');
+    return { mx: intents.move.x, my: intents.move.y, actions };
+  }
+
+  private echoPlaybooks(): PlaybookRecording[] {
+    const recordings: PlaybookRecording[] = [];
+    for (const entry of listPlaybooks(localStorage)) {
+      const text = getPlaybookText(localStorage, entry.name);
+      if (!text) continue;
+      const parsed = parsePlaybookText(text);
+      if (parsed.ok && parsed.playbook.contractId === this.activeContract.id) recordings.push(parsed.playbook);
+    }
+    return recordings;
   }
 
   /**
@@ -3301,6 +3353,7 @@ export class Game {
     this.scene.add(this.dredgeQueenBoss.group);
     this.scene.add(this.salvageClawBoss.group);
     this.scene.add(this.homemakerBoss.group);
+    this.scene.add(this.echoBoss.group);
     this.scene.add(this.oldDiggerBoss.group);
     this.scene.add(this.mothSwarm.group);
     this.scene.add(this.primaryActor.group);
@@ -3970,6 +4023,7 @@ export class Game {
       landYachtBoss: this.activeContract.twist.baron?.variantId === 'land_yacht' ? this.landYachtBoss.diagnostics() : null,
       salvageClawBoss: this.activeContract.id === 'e8-mare-claim' ? this.salvageClawBoss.diagnostics() : null,
       homemakerBoss: this.activeContract.twist.baron?.variantId === 'homemaker_9000' ? this.homemakerBoss.diagnostics() : null,
+      echoBoss: this.echoBossEnabled ? this.echoBoss.diagnostics() : null,
       oldDiggerBoss: this.activeContract.id === 'e9-dome-basin' ? this.oldDiggerBoss.diagnostics() : null,
       agent: {
         stub: this.agentStub?.state ?? null,
@@ -5380,6 +5434,7 @@ export class Game {
     this.dredgeQueenBoss.reset();
     this.salvageClawBoss.reset();
     this.homemakerBoss.reset();
+    this.echoBoss.reset();
     this.oldDiggerBoss.reset();
     this.tram?.reset();
     this.ferrisWheel?.reset();
