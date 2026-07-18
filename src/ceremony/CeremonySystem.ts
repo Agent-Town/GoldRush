@@ -656,6 +656,8 @@ export class CeremonySystem {
     const window = this.rhythmWindow(ceremony);
     const hand: StageHandState = {
       held: ceremony.held,
+      holdFraction:
+        ceremony.script.hand.kind === 'hold' ? Math.min(1, ceremony.holdMs / ceremony.script.hand.durationMs) : 0,
       convoyPositions: ceremony.convoyMembers.map((member) => member.position),
       routeFraction: this.convoyFraction(ceremony),
       goodPulls: ceremony.goodPulls,

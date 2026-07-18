@@ -6,6 +6,8 @@ import type { CeremonyScript } from './scripts';
 
 export type StageHandState = {
   held: boolean;
+  /** hold: accumulated input progress, 0..1. */
+  holdFraction: number;
   /** drive: convoy marker positions in route space, leader first. */
   convoyPositions: readonly { x: number; z: number }[];
   /** drive: leader's fraction along the route, 0..1. */
@@ -32,6 +34,7 @@ export type StageState = {
 type StagePainter = (ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState) => void;
 
 const painters: Record<string, StagePainter> = {
+  't3-the-refinery': drawT3,
   't4-the-boat': drawT4,
   't5-the-deep-reactor': drawT5,
 };
@@ -74,6 +77,123 @@ function drawGenericStage(ctx: CanvasRenderingContext2D, w: number, h: number, s
   for (let index = 0; index < 5; index += 1) {
     ctx.beginPath();
     ctx.arc(w * (0.3 + index * 0.1), h * 0.7 + jitter(index) * 4, 5, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+// ─── T3 — THE REFINERY: valve, twin spigots, dawn rim ──────────────────────
+function drawT3(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+  const dawn = state.phaseId === 'done' ? 1 : phaseReached(state, 'dawn-tram') ? (state.phaseId === 'dawn-tram' ? phaseProgress(state) : 1) : 0;
+  const rim = state.phaseId === 'done' || phaseReached(state, 'rim');
+  const valve = state.phaseId === 'open-valve' ? state.hand.holdFraction : phaseReached(state, 'valve-release') ? 1 : 0;
+  const horizon = h * 0.42;
+  const sky = ctx.createLinearGradient(0, 0, 0, h);
+  sky.addColorStop(0, '#101b2c');
+  sky.addColorStop(0.5, '#263451');
+  sky.addColorStop(1, '#5c4631');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, w, h);
+  if (dawn > 0) {
+    const dawnSky = ctx.createLinearGradient(0, 0, 0, h);
+    dawnSky.addColorStop(0, '#e5a66f');
+    dawnSky.addColorStop(0.5, '#f3d6a1');
+    dawnSky.addColorStop(1, '#5c4631');
+    ctx.globalAlpha = dawn;
+    ctx.fillStyle = dawnSky;
+    ctx.fillRect(0, 0, w, h);
+    ctx.globalAlpha = 1;
+  }
+
+  if (!rim) {
+    ctx.fillStyle = '#191b1d';
+    ctx.fillRect(w * 0.25, h * 0.32, w * 0.5, h * 0.45);
+    for (const x of [0.39, 0.61]) {
+      ctx.fillStyle = '#2d3134';
+      ctx.fillRect(w * x - w * 0.055, h * 0.16, w * 0.11, h * 0.48);
+      ctx.strokeStyle = '#d6a84c';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(w * x, h * 0.25, w * 0.032, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+    ctx.strokeStyle = '#4c9c9a';
+    ctx.lineWidth = Math.max(2, w * 0.008);
+    ctx.beginPath();
+    ctx.moveTo(w * 0.39, h * 0.45);
+    ctx.lineTo(w * 0.5, h * 0.5);
+    ctx.lineTo(w * 0.61, h * 0.45);
+    ctx.stroke();
+    ctx.save();
+    ctx.translate(w * 0.5, h * 0.51);
+    ctx.rotate(valve * Math.PI * 0.75);
+    ctx.strokeStyle = '#d6a84c';
+    ctx.lineWidth = 5;
+    ctx.beginPath();
+    ctx.arc(0, 0, w * 0.045, 0, Math.PI * 2);
+    ctx.moveTo(-w * 0.045, 0);
+    ctx.lineTo(w * 0.045, 0);
+    ctx.moveTo(0, -w * 0.045);
+    ctx.lineTo(0, w * 0.045);
+    ctx.stroke();
+    ctx.restore();
+    if (phaseReached(state, 'twin-spigots')) {
+      for (const stream of [{ x: 0.42, color: '#d89c32' }, { x: 0.58, color: '#17191a' }]) {
+        ctx.fillStyle = stream.color;
+        ctx.fillRect(w * stream.x - 5, h * 0.62, 10, h * 0.22);
+      }
+    }
+    if (state.phaseId === 'dawn-tram') {
+      const tramX = w * (0.18 + dawn * 0.64);
+      ctx.strokeStyle = '#8c7048';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(w * 0.08, h * 0.79);
+      ctx.lineTo(w * 0.92, h * 0.79);
+      ctx.stroke();
+      ctx.fillStyle = '#3f7d7b';
+      ctx.fillRect(tramX - w * 0.09, h * 0.67, w * 0.18, h * 0.1);
+      ctx.fillStyle = '#e8c780';
+      for (let rider = 0; rider < 6; rider += 1) ctx.fillRect(tramX - w * 0.07 + rider * w * 0.026, h * 0.69, w * 0.014, h * 0.04);
+    }
+    drawEldersTree(ctx, w, h);
+    return;
+  }
+
+  ctx.fillStyle = '#b8854d';
+  ctx.beginPath();
+  ctx.moveTo(0, horizon);
+  ctx.lineTo(w, horizon + h * 0.04);
+  ctx.lineTo(w, h);
+  ctx.lineTo(0, h);
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(244, 218, 166, 0.7)';
+  for (let band = 0; band < 5; band += 1) {
+    ctx.beginPath();
+    ctx.moveTo(0, horizon + band * h * 0.07);
+    ctx.lineTo(w, horizon + h * 0.03 + band * h * 0.08);
+    ctx.stroke();
+  }
+  for (let index = 0; index < 11; index += 1) {
+    const x = w * (0.2 + index * 0.06);
+    const y = h * 0.7 + jitter(index, 3) * 5;
+    ctx.fillStyle = index % 3 === 0 ? '#3f6f70' : '#4a3828';
+    ctx.beginPath();
+    ctx.arc(x, y - 13, 5, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(x - 5, y - 8, 10, 24);
+  }
+  drawEldersTree(ctx, w, h);
+}
+
+function drawEldersTree(ctx: CanvasRenderingContext2D, w: number, h: number): void {
+  const x = w * 0.1;
+  const ground = h * 0.72;
+  ctx.fillStyle = '#4a3424';
+  ctx.fillRect(x - w * 0.009, ground - h * 0.25, w * 0.018, h * 0.25);
+  ctx.fillStyle = '#315b4c';
+  for (const [dx, dy, radius] of [[0, -0.25, 0.07], [-0.045, -0.2, 0.05], [0.045, -0.2, 0.05]] as const) {
+    ctx.beginPath();
+    ctx.arc(x + w * dx, ground + h * dy, w * radius, 0, Math.PI * 2);
     ctx.fill();
   }
 }

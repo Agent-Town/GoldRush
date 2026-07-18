@@ -141,6 +141,8 @@ export type EpochMegaprojectTarget = {
   raiseActionText: string;
 };
 
+export type EpochMegaprojectResources = EpochMegaprojectTarget['cost'];
+
 export type EpochTransition = {
   ceremonyBeatId: string;
   kitArtKey: string;
@@ -942,6 +944,31 @@ export function epochMegaprojectComplete(epoch: EpochBundle): boolean {
   if (project.complete === true) return true;
   const legacy = epoch.megaprojects.find((entry) => entry.id === epoch.megaproject.id);
   return !!legacy && typeof project.stage === 'number' && project.stage >= legacy.stages.length;
+}
+
+/** E3+ megaprojects are one-shot manifest purchases. Research steps remain the
+ * ceiling proof; this receipt records the exact resources pledged. */
+export function raiseActiveEpochMegaproject(resources: EpochMegaprojectResources): EpochMegaprojectResources | null {
+  const epoch = activeEpoch();
+  const cost = epoch.megaproject.cost;
+  const available = {
+    gold: Math.max(0, Math.floor(resources.gold)),
+    bankedScience: Math.max(0, Math.floor(resources.bankedScience)),
+  };
+  if (epoch.order < 3 || epochMegaprojectComplete(epoch) || available.gold < cost.gold || available.bankedScience < cost.bankedScience) {
+    return null;
+  }
+  try {
+    const saved = globalThis.localStorage?.getItem(MEGAPROJECT_STATE_KEY);
+    const raw: unknown = saved ? JSON.parse(saved) : null;
+    const projects = isRecord(raw) && isRecord(raw.projects) ? { ...raw.projects } : {};
+    projects[epoch.megaproject.id] = { complete: true, debited: { ...cost } };
+    globalThis.localStorage?.setItem(MEGAPROJECT_STATE_KEY, JSON.stringify({ version: 1, projects }));
+    if (!epochMegaprojectComplete(epoch)) return null;
+  } catch {
+    return null;
+  }
+  return { gold: available.gold - cost.gold, bankedScience: available.bankedScience - cost.bankedScience };
 }
 
 export function activeContract(): ContractManifest {
