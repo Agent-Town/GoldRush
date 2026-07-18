@@ -32,6 +32,38 @@ import domeBasinContractText from '../../assets/pilots/map-rebuild-spike/dome-ba
 import domeBasinPanoramaContractText from '../../assets/pilots/map-rebuild-spike/dome-basin-panorama-contract.json?raw';
 import emberShoreContractText from '../../assets/pilots/map-rebuild-spike/ember-shore-terrain-contract.json?raw';
 import emberShorePanoramaContractText from '../../assets/pilots/map-rebuild-spike/ember-shore-panorama-contract.json?raw';
+import archiveWorldContractText from '../../assets/pilots/map-rebuild-spike/archive-world-terrain-contract.json?raw';
+import archiveWorldPanoramaContractText from '../../assets/pilots/map-rebuild-spike/archive-world-panorama-contract.json?raw';
+import boneyardContractText from '../../assets/pilots/map-rebuild-spike/boneyard-terrain-contract.json?raw';
+import boneyardPanoramaContractText from '../../assets/pilots/map-rebuild-spike/boneyard-panorama-contract.json?raw';
+import canyonWorksContractText from '../../assets/pilots/map-rebuild-spike/canyon-works-terrain-contract.json?raw';
+import canyonWorksPanoramaContractText from '../../assets/pilots/map-rebuild-spike/canyon-works-panorama-contract.json?raw';
+import devilsAlleyContractText from '../../assets/pilots/map-rebuild-spike/devils-alley-terrain-contract.json?raw';
+import devilsAlleyPanoramaContractText from '../../assets/pilots/map-rebuild-spike/devils-alley-panorama-contract.json?raw';
+import echoCanyonContractText from '../../assets/pilots/map-rebuild-spike/echo-canyon-terrain-contract.json?raw';
+import echoCanyonPanoramaContractText from '../../assets/pilots/map-rebuild-spike/echo-canyon-panorama-contract.json?raw';
+import gusherCountyContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-terrain-contract.json?raw';
+import gusherCountyPanoramaContractText from '../../assets/pilots/map-rebuild-spike/gusher-county-panorama-contract.json?raw';
+import halfLifeHollowContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain-contract.json?raw';
+import halfLifeHollowPanoramaContractText from '../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama-contract.json?raw';
+import inclineContractText from '../../assets/pilots/map-rebuild-spike/incline-terrain-contract.json?raw';
+import inclinePanoramaContractText from '../../assets/pilots/map-rebuild-spike/incline-panorama-contract.json?raw';
+import longRoadContractText from '../../assets/pilots/map-rebuild-spike/long-road-terrain-contract.json?raw';
+import longRoadPanoramaContractText from '../../assets/pilots/map-rebuild-spike/long-road-panorama-contract.json?raw';
+import lowOrbitContractText from '../../assets/pilots/map-rebuild-spike/low-orbit-terrain-contract.json?raw';
+import lowOrbitPanoramaContractText from '../../assets/pilots/map-rebuild-spike/low-orbit-panorama-contract.json?raw';
+import mothSeasonContractText from '../../assets/pilots/map-rebuild-spike/moth-season-terrain-contract.json?raw';
+import mothSeasonPanoramaContractText from '../../assets/pilots/map-rebuild-spike/moth-season-panorama-contract.json?raw';
+import oldCanalContractText from '../../assets/pilots/map-rebuild-spike/old-canal-terrain-contract.json?raw';
+import oldCanalPanoramaContractText from '../../assets/pilots/map-rebuild-spike/old-canal-panorama-contract.json?raw';
+import pressureGardenContractText from '../../assets/pilots/map-rebuild-spike/pressure-garden-terrain-contract.json?raw';
+import pressureGardenPanoramaContractText from '../../assets/pilots/map-rebuild-spike/pressure-garden-panorama-contract.json?raw';
+import regattaContractText from '../../assets/pilots/map-rebuild-spike/regatta-terrain-contract.json?raw';
+import regattaPanoramaContractText from '../../assets/pilots/map-rebuild-spike/regatta-panorama-contract.json?raw';
+import seedRunContractText from '../../assets/pilots/map-rebuild-spike/seed-run-terrain-contract.json?raw';
+import seedRunPanoramaContractText from '../../assets/pilots/map-rebuild-spike/seed-run-panorama-contract.json?raw';
+import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json?raw';
+import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { disposeObject3D } from '../utils/dispose';
 import { installVisualHeightSource } from './Terrain';
 
@@ -89,6 +121,33 @@ const REGISTRY: Record<string, Entry> = {
   'e8-mare-claim': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
   'e9-dome-basin': entry(new URL('../../assets/pilots/map-rebuild-spike/dome-basin-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/dome-basin-panorama.glb', import.meta.url).href, domeBasinContractText, domeBasinPanoramaContractText),
   'e10-ember-shore': entry(new URL('../../assets/pilots/map-rebuild-spike/ember-shore-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/ember-shore-panorama.glb', import.meta.url).href, emberShoreContractText, emberShorePanoramaContractText),
+  'e2-pressure-garden': entry(new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/pressure-garden-panorama.glb', import.meta.url).href, pressureGardenContractText, pressureGardenPanoramaContractText),
+  'e2-incline': entry(new URL('../../assets/pilots/map-rebuild-spike/incline-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/incline-panorama.glb', import.meta.url).href, inclineContractText, inclinePanoramaContractText),
+  'e3-canyon-works': entry(new URL('../../assets/pilots/map-rebuild-spike/canyon-works-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/canyon-works-panorama.glb', import.meta.url).href, canyonWorksContractText, canyonWorksPanoramaContractText),
+  'e3-moth-season': entry(new URL('../../assets/pilots/map-rebuild-spike/moth-season-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/moth-season-panorama.glb', import.meta.url).href, mothSeasonContractText, mothSeasonPanoramaContractText),
+  'e4-long-road': entry(new URL('../../assets/pilots/map-rebuild-spike/long-road-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/long-road-panorama.glb', import.meta.url).href, longRoadContractText, longRoadPanoramaContractText),
+  'e4-gusher-county': entry(new URL('../../assets/pilots/map-rebuild-spike/gusher-county-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/gusher-county-panorama.glb', import.meta.url).href, gusherCountyContractText, gusherCountyPanoramaContractText),
+  'e4-boneyard': entry(new URL('../../assets/pilots/map-rebuild-spike/boneyard-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/boneyard-panorama.glb', import.meta.url).href, boneyardContractText, boneyardPanoramaContractText),
+  'e5-regatta': entry(new URL('../../assets/pilots/map-rebuild-spike/regatta-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/regatta-panorama.glb', import.meta.url).href, regattaContractText, regattaPanoramaContractText),
+  // Deepwater Claim aliases: these campaign variants intentionally reuse its terrain and panorama.
+  'e5-stillwater': entry(new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-panorama.glb', import.meta.url).href, deepwaterClaimContractText, deepwaterClaimPanoramaContractText),
+  'e5-flotilla': entry(new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/deepwater-claim-panorama.glb', import.meta.url).href, deepwaterClaimContractText, deepwaterClaimPanoramaContractText),
+  'e6-showroom': entry(new URL('../../assets/pilots/map-rebuild-spike/showroom-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/showroom-panorama.glb', import.meta.url).href, showroomContractText, showroomPanoramaContractText),
+  'e6-half-life-hollow': entry(new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/half-life-hollow-panorama.glb', import.meta.url).href, halfLifeHollowContractText, halfLifeHollowPanoramaContractText),
+  // Glow Mesa alias: The Picnic keeps the caprock sculpt and changes campaign rules only.
+  'e6-picnic': entry(new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/glow-mesa-panorama.glb', import.meta.url).href, glowMesaContractText, glowMesaPanoramaContractText),
+  'e7-echo-canyon': entry(new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/echo-canyon-panorama.glb', import.meta.url).href, echoCanyonContractText, echoCanyonPanoramaContractText),
+  // Relay Valley aliases: both signal variants reuse its terrain and panorama.
+  'e7-dead-band': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
+  'e7-relay-rush': entry(new URL('../../assets/pilots/map-rebuild-spike/relay-valley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/relay-valley-panorama.glb', import.meta.url).href, relayValleyContractText, relayValleyPanoramaContractText),
+  // Mare Claim aliases: Far Side and Eclipse change campaign rules without changing the sculpt.
+  'e8-far-side': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
+  'e8-low-orbit': entry(new URL('../../assets/pilots/map-rebuild-spike/low-orbit-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/low-orbit-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(lowOrbitContractText), boundsMeters: { min: [-64, -64, -5.869689], max: [64, 64, 1.08] } }), lowOrbitPanoramaContractText),
+  'e8-eclipse': entry(new URL('../../assets/pilots/map-rebuild-spike/mare-claim-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/mare-claim-panorama.glb', import.meta.url).href, mareClaimContractText, mareClaimPanoramaContractText),
+  'e9-seed-run': entry(new URL('../../assets/pilots/map-rebuild-spike/seed-run-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/seed-run-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(seedRunContractText), boundsMeters: { min: [-64, -64, -0.14], max: [64, 64, 3.715142] } }), seedRunPanoramaContractText),
+  'e9-devils-alley': entry(new URL('../../assets/pilots/map-rebuild-spike/devils-alley-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/devils-alley-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(devilsAlleyContractText), boundsMeters: { min: [-64, -64, -0.14], max: [64, 64, 4.567115] } }), devilsAlleyPanoramaContractText),
+  'e9-old-canal': entry(new URL('../../assets/pilots/map-rebuild-spike/old-canal-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/old-canal-panorama.glb', import.meta.url).href, JSON.stringify({ ...JSON.parse(oldCanalContractText), boundsMeters: { min: [-64, -64, -1.42], max: [64, 64, 2.906317] } }), oldCanalPanoramaContractText),
+  'e10-archive-world': entry(new URL('../../assets/pilots/map-rebuild-spike/archive-world-terrain.glb', import.meta.url).href, new URL('../../assets/pilots/map-rebuild-spike/archive-world-panorama.glb', import.meta.url).href, archiveWorldContractText, archiveWorldPanoramaContractText),
 };
 const LANDMARK_ASSETS = import.meta.glob('../../assets/pilots/map-rebuild-spike/landmarks/**/*.glb', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
 const BOUNDS_EPSILON = 0.03;
