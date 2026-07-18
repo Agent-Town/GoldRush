@@ -6,7 +6,7 @@ import { PNG } from 'pngjs';
 
 const ARTIFACT_DIR = path.resolve('artifacts/terrain3d-registry');
 const LANDMARK_ARTIFACT_DIR = path.resolve('artifacts/wire-landmark-mounts');
-const ASSET = /map-rebuild-spike\/(?:landmarks\/.*|(?:the-claim|dry-gulch|twin-banks|night-shift|baron|hill-mine|trestle|blackout-ridge|fairground|dust-flats|deepwater-claim|glow-mesa|relay-valley|mare-claim|dome-basin|ember-shore)-(?:terrain|panorama)[^?]*)\.glb/;
+const ASSET = /map-rebuild-spike\/(?:landmarks\/.*|[^/]+-(?:terrain|panorama)[^?]*)\.glb/;
 const isAssetRequest = (request: { url(): string; resourceType(): string }) => request.resourceType() === 'fetch' && ASSET.test(request.url());
 type Errors = { console: string[]; page: string[] };
 type Contract = {
@@ -37,6 +37,32 @@ const CONTRACTS: Contract[] = [
   { id: 'e10-ember-shore', panorama: 'ember-shore-panorama', contractFile: 'ember-shore', assets: ['ember-shore-panorama.glb', 'ember-shore-terrain.glb'], water: [] },
 ];
 
+const CAMPAIGN_EXTRAS: Contract[] = [
+  { id: 'e2-pressure-garden', panorama: 'pressure-garden-panorama', contractFile: 'pressure-garden', assets: ['pressure-garden-panorama.glb', 'pressure-garden-terrain.glb'], water: [] },
+  { id: 'e2-incline', panorama: 'incline-panorama', contractFile: 'incline', assets: ['incline-panorama.glb', 'incline-terrain.glb'], water: [] },
+  { id: 'e3-canyon-works', panorama: 'canyon-works-panorama', contractFile: 'canyon-works', assets: ['canyon-works-panorama.glb', 'canyon-works-terrain.glb'], water: [] },
+  { id: 'e3-moth-season', panorama: 'moth-season-panorama', contractFile: 'moth-season', assets: ['moth-season-panorama.glb', 'moth-season-terrain.glb'], water: [] },
+  { id: 'e4-long-road', panorama: 'long-road-panorama', contractFile: 'long-road', assets: ['long-road-panorama.glb', 'long-road-terrain.glb'], water: [] },
+  { id: 'e4-gusher-county', panorama: 'gusher-county-panorama', contractFile: 'gusher-county', assets: ['gusher-county-panorama.glb', 'gusher-county-terrain.glb'], water: [] },
+  { id: 'e4-boneyard', panorama: 'boneyard-panorama', contractFile: 'boneyard', assets: ['boneyard-panorama.glb', 'boneyard-terrain.glb'], water: [] },
+  { id: 'e5-regatta', panorama: 'regatta-panorama', contractFile: 'regatta', assets: ['regatta-panorama.glb', 'regatta-terrain.glb'], water: [] },
+  { id: 'e5-stillwater', panorama: 'deepwater-claim-panorama', contractFile: 'deepwater-claim', assets: ['deepwater-claim-panorama.glb', 'deepwater-claim-terrain.glb'], water: [] },
+  { id: 'e5-flotilla', panorama: 'deepwater-claim-panorama', contractFile: 'deepwater-claim', assets: ['deepwater-claim-panorama.glb', 'deepwater-claim-terrain.glb'], water: [] },
+  { id: 'e6-showroom', panorama: 'showroom-panorama', contractFile: 'showroom', assets: ['showroom-panorama.glb', 'showroom-terrain.glb'], water: [] },
+  { id: 'e6-half-life-hollow', panorama: 'half-life-hollow-panorama', contractFile: 'half-life-hollow', assets: ['half-life-hollow-panorama.glb', 'half-life-hollow-terrain.glb'], water: [] },
+  { id: 'e6-picnic', panorama: 'glow-mesa-panorama', contractFile: 'glow-mesa', assets: ['glow-mesa-panorama.glb', 'glow-mesa-terrain.glb'], water: [] },
+  { id: 'e7-echo-canyon', panorama: 'echo-canyon-panorama', contractFile: 'echo-canyon', assets: ['echo-canyon-panorama.glb', 'echo-canyon-terrain.glb'], water: [] },
+  { id: 'e7-dead-band', panorama: 'relay-valley-panorama', contractFile: 'relay-valley', assets: ['relay-valley-panorama.glb', 'relay-valley-terrain.glb'], water: [] },
+  { id: 'e7-relay-rush', panorama: 'relay-valley-panorama', contractFile: 'relay-valley', assets: ['relay-valley-panorama.glb', 'relay-valley-terrain.glb'], water: [] },
+  { id: 'e8-far-side', panorama: 'mare-claim-panorama', contractFile: 'mare-claim', assets: ['mare-claim-panorama.glb', 'mare-claim-terrain.glb'], water: [] },
+  { id: 'e8-low-orbit', panorama: 'low-orbit-panorama', contractFile: 'low-orbit', assets: ['low-orbit-panorama.glb', 'low-orbit-terrain.glb'], water: [] },
+  { id: 'e8-eclipse', panorama: 'mare-claim-panorama', contractFile: 'mare-claim', assets: ['mare-claim-panorama.glb', 'mare-claim-terrain.glb'], water: [] },
+  { id: 'e9-seed-run', panorama: 'seed-run-panorama', contractFile: 'seed-run', assets: ['seed-run-panorama.glb', 'seed-run-terrain.glb'], water: [] },
+  { id: 'e9-devils-alley', panorama: 'devils-alley-panorama', contractFile: 'devils-alley', assets: ['devils-alley-panorama.glb', 'devils-alley-terrain.glb'], water: [] },
+  { id: 'e9-old-canal', panorama: 'old-canal-panorama', contractFile: 'old-canal', assets: ['old-canal-panorama.glb', 'old-canal-terrain.glb'], water: [] },
+  { id: 'e10-archive-world', panorama: 'archive-world-panorama', contractFile: 'archive-world', assets: ['archive-world-panorama.glb', 'archive-world-terrain.glb'], water: [] },
+];
+
 type LandmarkMount = { id: string; asset?: string; position: [number, number, number] };
 
 async function landmarkMounts(contract: Contract): Promise<LandmarkMount[]> {
@@ -58,6 +84,60 @@ async function boot(page: Page, contractId: string, extra = ''): Promise<void> {
   await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   if (await begin.isVisible()) await begin.click();
 }
+
+test('all campaign extras resolve their registered terrain and panorama assets', async ({ page }) => {
+  test.setTimeout(180_000);
+  const errors = collectErrors(page);
+  await boot(page, 'the-claim');
+  for (const contract of CAMPAIGN_EXTRAS) {
+    const terrainContract = JSON.parse(await readFile(path.resolve(`assets/pilots/map-rebuild-spike/${contract.contractFile}-terrain-contract.json`), 'utf8')) as { tileId: string };
+    const dataset = await page.evaluate(async ({ contractId, tileId }) => {
+      const THREE = await Function('return import("/@id/three")')() as typeof import('three');
+      const pilot = await Function('return import("/src/world/Terrain3dClaimPilot.ts")')() as typeof import('../src/world/Terrain3dClaimPilot');
+      const scene = new THREE.Scene();
+      const canvas = document.createElement('canvas');
+      const dispose = pilot.installTerrain3dClaimPilot({ scene, canvas, contractId, tileId });
+      await new Promise<void>((resolve, reject) => {
+        const deadline = performance.now() + 20_000;
+        const check = () => {
+          if (canvas.dataset.terrain3dPilotState !== 'loading') resolve();
+          else if (performance.now() >= deadline) reject(new Error(`${contractId}: ${JSON.stringify(canvas.dataset)}`));
+          else requestAnimationFrame(check);
+        };
+        check();
+      });
+      const result = { ...canvas.dataset };
+      dispose();
+      return result;
+    }, { contractId: contract.id, tileId: terrainContract.tileId });
+    expect(dataset, contract.id).toMatchObject({
+      terrain3dPilotContract: contract.id,
+      terrain3dPilotState: 'ready',
+      terrain3dPilotRenderSource: 'glb',
+      terrain3dPilotTerrainLoadState: 'mounted',
+      terrain3dPilotPanoramaLoadState: 'mounted',
+    });
+  }
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('four campaign era bands mount with zero console errors', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome');
+  const errors = collectErrors(page);
+  await mkdir(path.resolve('reviews/shots-wire-campaign'), { recursive: true });
+  for (const contractId of ['e4-long-road', 'e6-showroom', 'e8-eclipse', 'e9-dome-basin']) {
+    await boot(page, contractId, '&terrain3dPilot');
+    const canvas = page.locator('canvas');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-state', 'ready');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-terrain-load-state', 'mounted');
+    await expect(canvas).toHaveAttribute('data-terrain3d-pilot-panorama-load-state', 'mounted');
+    await page.evaluate(() => {
+      for (const selector of ['.lil-gui', '#hud', '#touch-controls']) document.querySelector<HTMLElement>(selector)?.style.setProperty('display', 'none');
+    });
+    await page.screenshot({ path: path.resolve(`reviews/shots-wire-campaign/${contractId}.png`) });
+  }
+  expect(errors).toEqual({ console: [], page: [] });
+});
 
 async function p95(page: Page, frames = 120): Promise<number> {
   return page.evaluate(async (count) => {
