@@ -45,6 +45,19 @@ export type ProfileTransferResult =
   | { ok: true; profile: ProfileRecord }
   | ProfileTransferFailure;
 
+export class CloudProfileTooLargeError extends Error {
+  readonly code = 'payload_too_large' as const;
+
+  constructor(
+    readonly dominantKey: string | null,
+    readonly sizeBytes: number,
+    readonly limitBytes: number,
+  ) {
+    super(cloudProfileTooLargeMessage(dominantKey));
+    this.name = 'CloudProfileTooLargeError';
+  }
+}
+
 export function packActiveProfile(storage: ProfileStorage): { envelope: ProfileTransferEnvelope; filename: string } {
   const profile = activeProfile(storage);
   const data: Record<string, unknown> = {};
@@ -70,16 +83,22 @@ export async function packActiveProfileForCloud(
   storage: ProfileStorage,
 ): Promise<{ envelope: ProfileTransferEnvelope; filename: string }> {
   const packed = packActiveProfile(storage);
-  if (byteSize(JSON.stringify(packed.envelope)) <= TRANSFER_SOFT_LIMIT_BYTES) return packed;
-  const compressed = await gzipTextBase64(JSON.stringify(packed.envelope.data));
-  return {
-    ...packed,
-    envelope: {
-      ...packed.envelope,
-      version: CLOUD_TRANSFER_VERSION,
-      data: { [CLOUD_DATA_CODEC_KEY]: compressed },
-    },
-  };
+  const cloudPacked =
+    byteSize(JSON.stringify(packed.envelope)) <= TRANSFER_SOFT_LIMIT_BYTES
+      ? packed
+      : {
+          ...packed,
+          envelope: {
+            ...packed.envelope,
+            version: CLOUD_TRANSFER_VERSION,
+            data: { [CLOUD_DATA_CODEC_KEY]: await gzipTextBase64(JSON.stringify(packed.envelope.data)) },
+          } satisfies ProfileTransferEnvelope,
+        };
+  const sizeBytes = byteSize(JSON.stringify(cloudPacked.envelope));
+  if (sizeBytes > TRANSFER_SOFT_LIMIT_BYTES) {
+    throw new CloudProfileTooLargeError(dominantDataKey(packed.envelope.data), sizeBytes, TRANSFER_SOFT_LIMIT_BYTES);
+  }
+  return cloudPacked;
 }
 
 export async function expandCloudProfileTransfer(
@@ -354,6 +373,25 @@ function slug(value: string): string {
 
 function dateStamp(): string {
   return new Date().toISOString().slice(0, 10);
+}
+
+function dominantDataKey(data: Record<string, unknown>): string | null {
+  let dominant: { key: string; bytes: number } | null = null;
+  for (const [key, value] of Object.entries(data)) {
+    const bytes = byteSize(JSON.stringify(value) ?? '');
+    if (!dominant || bytes > dominant.bytes) dominant = { key, bytes };
+  }
+  return dominant?.key ?? null;
+}
+
+function cloudProfileTooLargeMessage(dominantKey: string | null): string {
+  if (dominantKey === RUN_SUSPEND_KEY) {
+    return "Your current run's save is too large to back up; finish the claim or start fresh, then try again.";
+  }
+  if (dominantKey === SAVE_SLOTS_KEY) {
+    return 'Your manual claims are too large to back up; delete an older claim, then try again.';
+  }
+  return 'That ledger is too large to back up; trim its largest saved item, then try again.';
 }
 
 function byteSize(value: string): number {

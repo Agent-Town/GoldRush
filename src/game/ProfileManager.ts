@@ -13,6 +13,7 @@ import {
   type ProfileStorage,
   type ProfileState,
 } from './ProfileStorage';
+import { normalizeDifficultyPreset, saveDifficultyPreset } from './Balance';
 import { accountSync } from './AccountSync';
 import { packActiveProfile, unpackPreview, unpackProfile, type ProfileTransferEnvelope } from './ProfileTransfer';
 import { SAVE_SLOT_TRANSFER_MANUAL_LIMIT, readSaveSlots } from './SaveSlots';
@@ -86,6 +87,7 @@ export class ProfileManager {
     if (!setActiveProfile(this.storage, profileId)) return false;
     this.state = ensureProfileState(this.storage);
     this.selectedId = this.state.activeId;
+    bindProfileSession(this.selectedId);
     accountSync.queuePush();
     this.render();
     return true;
@@ -98,6 +100,7 @@ export class ProfileManager {
     this.state = ensureProfileState(this.storage);
     installProfileStorageScope(this.storage);
     this.selectedId = profile.id;
+    bindProfileSession(this.selectedId);
     accountSync.queuePush();
     this.render();
     return profile;
@@ -158,6 +161,16 @@ export class ProfileManager {
         <ol class="gr-profile-list" data-testid="profile-list">
           ${this.state.profiles.map((profile) => renderProfileRow(profile, profile.id === selected.id)).join('')}
         </ol>
+        <div class="gr-profile-transfer">
+          <label class="gr-profile-file">
+            <span>Difficulty for ${escapeHtml(selected.name)}</span>
+            <select data-testid="profile-difficulty" aria-label="Difficulty for ${escapeHtml(selected.name)}">
+              ${renderDifficultyOption('greenhorn', 'Greenhorn', selected.difficultyPreset)}
+              ${renderDifficultyOption('trail', 'Trail', selected.difficultyPreset)}
+              ${renderDifficultyOption('vein-hunter', 'Vein Hunter', selected.difficultyPreset)}
+            </select>
+          </label>
+        </div>
         <form class="gr-profile-create" data-testid="profile-create-form">
           <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="New ledger name" />
           <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Create</button>
@@ -183,6 +196,9 @@ export class ProfileManager {
     this.root.querySelectorAll<HTMLButtonElement>('[data-profile-id]').forEach((button) => {
       button.addEventListener('click', () => this.selectProfile(button.dataset.profileId ?? ''));
     });
+    this.root.querySelector<HTMLSelectElement>('[data-testid="profile-difficulty"]')?.addEventListener('change', (event) => {
+      this.setDifficultyPreset((event.currentTarget as HTMLSelectElement).value);
+    });
     this.bindCreateForm();
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-export"]')?.addEventListener('click', () => this.exportProfile());
     this.root.querySelector<HTMLInputElement>('[data-testid="profile-import-file"]')?.addEventListener('change', (event) => {
@@ -193,6 +209,14 @@ export class ProfileManager {
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-start"]')?.addEventListener('click', () => this.startProfile());
     this.root.querySelector<HTMLButtonElement>('[data-testid="profile-back"]')?.addEventListener('click', () => this.options.onBack?.());
     this.bindAccountControls();
+  }
+
+  private setDifficultyPreset(value: string): void {
+    if (this.started || !this.storage || !this.state) return;
+    saveDifficultyPreset(normalizeDifficultyPreset(value), this.storage);
+    this.state = ensureProfileState(this.storage);
+    accountSync.queuePush();
+    this.render();
   }
 
   private renderAccountCard(): string {
@@ -222,10 +246,27 @@ export class ProfileManager {
       `;
     }
 
+    const localIds = new Set(this.state?.profiles.map((profile) => profile.id) ?? []);
+    const missingCloudProfiles = account.cloudProfiles.filter((profile) => !localIds.has(profile.profileId));
+    const cloudPicker = missingCloudProfiles.length
+      ? `<div class="gr-account-compare" data-testid="cloud-profile-picker">
+          <p>Cloud ledgers not yet on this device:</p>
+          <div class="gr-account-actions">
+            ${missingCloudProfiles
+              .map(
+                (profile) =>
+                  `<button class="death-overlay__button" type="button" data-testid="cloud-profile-option" data-cloud-profile-id="${escapeHtml(profile.profileId)}"${disabled}>${escapeHtml(profile.profileName)} <small>${escapeHtml(profile.savedAt.slice(0, 10))}</small></button>`,
+              )
+              .join('')}
+          </div>
+        </div>`
+      : '';
+
     return `
       <section class="gr-account-card" data-testid="account-card">
         <p class="gr-account-chip" data-testid="account-status-chip">${escapeHtml(account.label)}</p>
         <p class="gr-account-note" data-testid="account-message">${escapeHtml(account.message)}</p>
+        ${cloudPicker}
         ${account.compare ? `<div class="gr-account-compare" data-testid="account-compare-card">
           <p>${escapeHtml(account.compare.line)}</p>
           <button class="death-overlay__button" type="button" data-testid="account-use-cloud"${disabled}>Use cloud</button>
@@ -299,6 +340,9 @@ export class ProfileManager {
     this.root?.querySelector<HTMLButtonElement>('[data-testid="account-use-cloud"]')?.addEventListener('click', () => {
       void accountSync.useCloud();
     });
+    this.root?.querySelectorAll<HTMLButtonElement>('[data-cloud-profile-id]').forEach((button) => {
+      button.addEventListener('click', () => void accountSync.selectCloudProfile(button.dataset.cloudProfileId ?? ''));
+    });
     this.root?.querySelector<HTMLButtonElement>('[data-testid="account-keep-local"]')?.addEventListener('click', () => {
       void accountSync.keepLocal();
     });
@@ -358,6 +402,7 @@ export class ProfileManager {
     }
     this.state = ensureProfileState(this.storage);
     this.selectedId = result.profile.id;
+    bindProfileSession(this.selectedId);
     this.message = `${result.profile.name} joined the ledger.`;
     accountSync.queuePush();
     this.render();
@@ -390,6 +435,10 @@ function renderProfileRow(profile: ProfileRecord, selected: boolean): string {
       </button>
     </li>
   `;
+}
+
+function renderDifficultyOption(value: ProfileRecord['difficultyPreset'], label: string, selected: ProfileRecord['difficultyPreset']): string {
+  return `<option value="${value}"${value === selected ? ' selected' : ''}>${label}</option>`;
 }
 
 function shouldShowProfileTitle(options: InstallOptions): boolean {

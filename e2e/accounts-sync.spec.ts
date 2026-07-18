@@ -56,12 +56,95 @@ test('compare card can use cloud over local', async ({ page }, testInfo) => {
   assertNoErrors(errors);
 });
 
-test('fresh signed-in device discovers cloud profiles by name', async ({ page }, testInfo) => {
-  const email = emailFor(testInfo, 'new-device');
+test('late cloud profile index response cannot cross an account switch', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one async account-isolation proof is enough');
+  await page.goto('/?profiles');
+  const visibleProfiles = await page.evaluate(async () => {
+    const { accountSync } = await import('../src/game/AccountSync');
+    type FakeSession = {
+      email: string;
+      token: string;
+      accountId: string;
+      expiresAt: string;
+      profileId?: string;
+    };
+    type FakeSummary = { profileId: string; profileName: string; savedAt: string };
+    const sync = accountSync as unknown as {
+      session: FakeSession | null;
+      cloudProfiles: FakeSummary[];
+      request: (...args: unknown[]) => Promise<unknown>;
+      refreshCloudProfiles: () => Promise<void>;
+    };
+    const originalSession = sync.session;
+    const originalProfiles = [...sync.cloudProfiles];
+    const originalRequest = sync.request;
+    const hadOwnRequest = Object.prototype.hasOwnProperty.call(sync, 'request');
+    let releaseOldResponse!: () => void;
+    const oldResponse = new Promise<Record<string, unknown>>((resolve) => {
+      releaseOldResponse = () => resolve({
+        ok: true,
+        profiles: [{ profileId: 'old', profileName: 'Old Family', savedAt: '2026-07-10T00:00:00.000Z' }],
+      });
+    });
+
+    try {
+      sync.session = {
+        email: 'old@example.com',
+        token: 'old-token',
+        accountId: 'old-account',
+        expiresAt: '2099-01-01T00:00:00.000Z',
+      };
+      sync.cloudProfiles = [];
+      sync.request = () => oldResponse;
+      const pending = sync.refreshCloudProfiles();
+      sync.session = {
+        email: 'new@example.com',
+        token: 'new-token',
+        accountId: 'new-account',
+        expiresAt: '2099-01-01T00:00:00.000Z',
+      };
+      sync.cloudProfiles = [{ profileId: 'new', profileName: 'New Family', savedAt: '2026-07-11T00:00:00.000Z' }];
+      releaseOldResponse();
+      await pending;
+      return structuredClone(sync.cloudProfiles);
+    } finally {
+      sync.session = originalSession;
+      sync.cloudProfiles = originalProfiles;
+      if (hadOwnRequest) sync.request = originalRequest;
+      else delete (sync as unknown as Record<string, unknown>).request;
+    }
+  });
+
+  expect(visibleProfiles).toEqual([
+    { profileId: 'new', profileName: 'New Family', savedAt: '2026-07-11T00:00:00.000Z' },
+  ]);
+});
+
+test('fresh signed-in device restores two indexed cloud profiles', async ({ page }, testInfo) => {
+  const email = emailFor(testInfo, 'profile-index');
   await seedProfile(page, { town: 'Family Trail', science: 9 });
   const errors = collectErrors(page);
   await page.goto('/?profiles');
   await signIn(page, email);
+  await expect(page.getByTestId('account-status-chip')).toContainText('ledger backed up');
+  const robinSavedAt = await page.evaluate((accountKey) => JSON.parse(localStorage.getItem(accountKey) ?? '{}').lastSavedAt as string, ACCOUNT_KEY);
+  expect(robinSavedAt).toMatch(/^\d{4}-\d{2}-\d{2}T/);
+  await page.waitForTimeout(10);
+
+  await page.getByTestId('profile-name-input').fill('Scout');
+  await page.getByTestId('profile-create').click();
+  await expect(page.getByTestId('profile-row').filter({ hasText: 'Scout' })).toBeVisible();
+  await writeActiveProfileDatum(page, TOWN_NAME_KEY, 'Scout Ridge');
+  await writeActiveProfileDatum(page, META_PROGRESS_KEY, { version: 1, tracks: { territory: 2, science: 5, hero: 0, agent: 0 } });
+  const scoutPushed = page.waitForResponse((response) => {
+    const request = response.request();
+    return request.url().includes('/api/save/push') && (request.postData() ?? '').includes('Scout Ridge');
+  });
+  await page.getByTestId('account-sync-now').click();
+  const scoutResponse = await scoutPushed;
+  expect(scoutResponse.status()).toBe(200);
+  const scoutSavedAt = ((await scoutResponse.json()) as { savedAt: string }).savedAt;
+  expect(scoutSavedAt).not.toBe(robinSavedAt);
   await page.getByTestId('account-sign-out').click();
 
   await page.evaluate(() => {
@@ -70,11 +153,55 @@ test('fresh signed-in device discovers cloud profiles by name', async ({ page },
   });
   await page.goto('/?profiles');
   await signIn(page, email);
+  await expect(page.getByTestId('cloud-profile-option')).toHaveCount(2);
+
+  await page.getByTestId('cloud-profile-option').filter({ hasText: 'Robin' }).click();
   await expect(page.getByTestId('account-compare-card')).toContainText('Family Trail');
-  await expect(page.getByTestId('account-compare-card')).toContainText('Robin');
   await page.getByTestId('account-use-cloud').click();
+  await expect(page.getByTestId('profile-row').filter({ hasText: 'Robin' })).toBeVisible();
+  await expect(page.getByTestId('cloud-profile-option')).toHaveCount(1);
+
+  let keepLocalPushes = 0;
+  await page.route(`${ACCOUNTS_URL}/api/save/push`, async (route) => {
+    keepLocalPushes += 1;
+    await route.continue();
+  });
+  await page.getByTestId('cloud-profile-option').filter({ hasText: 'Scout' }).click();
+  await expect(page.getByTestId('account-compare-card')).toContainText('Scout Ridge');
+  await page.getByTestId('account-keep-local').click();
+  await expect(page.getByTestId('account-compare-card')).toHaveCount(0);
+  await expect(page.getByTestId('account-message')).toContainText('Cloud ledger left untouched');
+  await expect(page.getByTestId('profile-row').filter({ hasText: 'Scout' })).toHaveCount(0);
+  await expect(page.getByTestId('cloud-profile-option')).toHaveCount(1);
+  await page.waitForTimeout(100);
+  expect(keepLocalPushes).toBe(0);
+
+  await page.getByTestId('cloud-profile-option').filter({ hasText: 'Scout' }).click();
+  await page.getByTestId('account-use-cloud').click();
+  await expect(page.getByTestId('profile-row')).toHaveCount(2);
+  await expect(page.getByTestId('profile-row').filter({ hasText: 'Scout' })).toBeVisible();
   await expect(readProfileDatum(page, TOWN_NAME_KEY)).resolves.toBe('Family Trail');
-  await expect(readScience(page)).resolves.toBe(9);
+  await expect(readProfileDatumFor(page, 'scout', TOWN_NAME_KEY)).resolves.toBe('Scout Ridge');
+
+  await page.getByTestId('profile-row').filter({ hasText: 'Robin' }).click();
+  const robinRepushed = page.waitForResponse((response) => {
+    if (!response.request().url().includes('/api/save/push')) return false;
+    return (response.request().postDataJSON() as { profileId?: string }).profileId === 'robin';
+  });
+  await page.getByTestId('account-sync-now').click();
+  const robinRepushResponse = await robinRepushed;
+  expect(robinRepushResponse.status()).toBe(200);
+  expect((robinRepushResponse.request().postDataJSON() as { baseSavedAt?: string }).baseSavedAt).toBe(robinSavedAt);
+
+  await page.getByTestId('profile-row').filter({ hasText: 'Scout' }).click();
+  const scoutRepushed = page.waitForResponse((response) => {
+    if (!response.request().url().includes('/api/save/push')) return false;
+    return (response.request().postDataJSON() as { profileId?: string }).profileId === 'scout';
+  });
+  await page.getByTestId('account-sync-now').click();
+  const scoutRepushResponse = await scoutRepushed;
+  expect(scoutRepushResponse.status()).toBe(200);
+  expect((scoutRepushResponse.request().postDataJSON() as { baseSavedAt?: string }).baseSavedAt).toBe(scoutSavedAt);
   assertNoErrors(errors);
 });
 
@@ -128,6 +255,53 @@ test('pagehide flushes a queued cloud push before debounce expires', async ({ pa
   assertNoErrors(errors);
 });
 
+test('pagehide keeps an oversized cloud envelope local and carries its error across reload', async ({ page }, testInfo) => {
+  const email = emailFor(testInfo, 'oversized-local');
+  await seedProfile(page, { town: 'Heavy Ledger', science: 3 });
+  const errors = collectErrors(page);
+  await page.goto('/?profiles');
+  await signIn(page, email);
+
+  let pushRequests = 0;
+  await page.route(`${ACCOUNTS_URL}/api/save/push`, async (route) => {
+    pushRequests += 1;
+    await route.continue();
+  });
+  await page.evaluate(
+    ({ profileKey, runKey }) => {
+      const storageKey = `${profileKey}.robin.${runKey}`;
+      const snapshot = JSON.parse(localStorage.getItem(storageKey) ?? '{}');
+      const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+      let noiseState = 0x51_07_2026;
+      const noise = (length: number): string => {
+        let value = '';
+        for (let index = 0; index < length; index += 1) {
+          noiseState = (Math.imul(noiseState, 1_664_525) + 1_013_904_223) >>> 0;
+          value += alphabet[(noiseState >>> 26) & 63];
+        }
+        return value;
+      };
+      snapshot.economy.log = Array.from({ length: 5_000 }, (_, index) => ({
+        id: `${index}-${noise(92)}`,
+        at: index,
+        type: 'gold_spent',
+        sink: `repair_${noise(96)}`,
+        amount: 0,
+      }));
+      localStorage.setItem(storageKey, JSON.stringify(snapshot));
+    },
+    { profileKey: PROFILE_KEY, runKey: RUN_SUSPEND_KEY },
+  );
+  await page.evaluate(() => window.dispatchEvent(new Event('pagehide')));
+
+  await expect(page.getByTestId('account-message')).toContainText("current run's save is too large to back up");
+  expect(pushRequests).toBe(0);
+  await page.reload();
+  await expect(page.getByTestId('account-status-chip')).toContainText('ledger backup needs attention');
+  await expect(page.getByTestId('account-message')).toContainText("current run's save is too large to back up");
+  assertNoErrors(errors);
+});
+
 test('stale device opens compare instead of overwriting newer cloud save', async ({ page }, testInfo) => {
   const email = emailFor(testInfo, 'stale-device');
   await seedProfile(page, { town: 'Morning Claim', science: 2 });
@@ -174,6 +348,11 @@ test('stale device opens compare instead of overwriting newer cloud save', async
   await expect(page.getByTestId('account-compare-card')).toContainText('Cloud has Evening Cloud at science 9');
   await expect(readProfileDatum(page, TOWN_NAME_KEY)).resolves.toBe('Morning Claim');
   await expect(readScience(page)).resolves.toBe(2);
+
+  await page.reload();
+  await page.getByTestId('account-sync-now').click();
+  await expect(page.getByTestId('account-compare-card')).toContainText('Cloud has Evening Cloud at science 9');
+  await expect(readProfileDatum(page, TOWN_NAME_KEY)).resolves.toBe('Morning Claim');
   assertNoErrors(errors);
 });
 
@@ -259,8 +438,22 @@ async function writeProfileDatum(page: Page, key: string, value: unknown): Promi
   );
 }
 
+async function writeActiveProfileDatum(page: Page, key: string, value: unknown): Promise<void> {
+  await page.evaluate(
+    ({ key, value }) => localStorage.setItem(key, typeof value === 'string' ? value : JSON.stringify(value)),
+    { key, value },
+  );
+}
+
 async function readProfileDatum(page: Page, key: string): Promise<string | null> {
   return page.evaluate(({ profileKey, key }) => localStorage.getItem(`${profileKey}.robin.${key}`), { profileKey: PROFILE_KEY, key });
+}
+
+async function readProfileDatumFor(page: Page, profileId: string, key: string): Promise<string | null> {
+  return page.evaluate(
+    ({ profileKey, profileId, key }) => localStorage.getItem(`${profileKey}.${profileId}.${key}`),
+    { profileKey: PROFILE_KEY, profileId, key },
+  );
 }
 
 async function readScience(page: Page): Promise<number> {

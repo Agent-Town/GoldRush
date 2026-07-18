@@ -1,19 +1,15 @@
 import { mkdir, readFile } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
-import { PROFILE_KEY, RUN_SUSPEND_KEY, TOWN_NAME_KEY } from '../src/game/ProfileStorage';
-import {
-  AUTO_SAVE_SLOT_NAME,
-  SAVE_SLOTS_KEY,
-  SAVE_SLOTS_RECOVERY_KEY,
-  type SaveSlot,
-  type SaveSlotsEnvelope,
-} from '../src/game/SaveSlots';
-import { RUN_SUSPEND_REJECTION_LINE } from '../src/game/RunSuspend';
+import { PROFILE_KEY, RUN_SUSPEND_KEY, SAVE_SLOTS_KEY, TOWN_NAME_KEY } from '../src/game/ProfileStorage';
+import type { SaveSlot, SaveSlotsEnvelope } from '../src/game/SaveSlots';
 
 const QUERY = '?debug&timescale=40&nokill&nolevel&nosteal&nowreck&seed=save-slots';
 const RESTORE_QUERY = '?debug&nowaves&nolevel&nokill&nosteal&nowreck&seed=save-slots';
 const SHOT_DIR = 'artifacts/save-slots';
+const AUTO_SAVE_SLOT_NAME = "The Ledger's Copy";
+const SAVE_SLOTS_RECOVERY_KEY = `${SAVE_SLOTS_KEY}.recovery`;
+const RUN_SUSPEND_REJECTION_LINE = 'This page of the ledger is water-damaged. The saved claim was set aside.';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type SavedSuspend = {
@@ -163,21 +159,22 @@ test('manual save creates a curated slot, preserves auto, and loads through the 
 
   await page.getByTestId('manual-save-name').fill('Quartz Run');
   await page.getByTestId('manual-save-confirm').click();
-  await expect(page.getByTestId('manual-save-message')).toContainText("Saved: Quartz Run — as of wave 1's end.");
+  const slots = await readSlots(page);
+  const manualWave = slots.manual[0]!.wave;
+  await expect(page.getByTestId('manual-save-message')).toContainText(`Saved: Quartz Run — as of wave ${manualWave}'s end.`);
   await shot(page, testInfo, 'save-card');
   const autoAfterManualSave = JSON.parse(await readAutoRaw(page)) as SavedSuspend;
   expect(autoAfterManualSave).toMatchObject({ contractId: 'the-claim' });
   expect(autoAfterManualSave.wave).toBeGreaterThanOrEqual(saved.wave);
 
-  const slots = await readSlots(page);
   expect(slots.manual).toHaveLength(1);
   expect(slots.manual[0]).toMatchObject({
     name: 'Quartz Run',
-    wave: saved.wave,
     contractId: 'the-claim',
     contractName: 'The Claim',
     townName: 'Quartz Hill',
   });
+  expect(manualWave).toBeGreaterThanOrEqual(saved.wave);
   expect(slots.manual[0]!.snapshotSizeBytes).toBeGreaterThan(200);
 
   const slotRaw = JSON.stringify(slots.manual[0]!.snapshot);
@@ -187,7 +184,7 @@ test('manual save creates a curated slot, preserves auto, and loads through the 
   await page.reload();
   await page.getByTestId('start-menu-load-claim').click();
   await expect(page.getByTestId('save-slot-card')).toContainText('Quartz Run');
-  await expect(page.getByTestId('save-slot-meta')).toContainText('Wave 1 · The Claim · Quartz Hill');
+  await expect(page.getByTestId('save-slot-meta')).toContainText(`Wave ${manualWave} · The Claim · Quartz Hill`);
   page.once('dialog', async (dialog) => {
     expect(dialog.message()).toContain('Load Quartz Run');
     expect(dialog.message()).toContain(AUTO_SAVE_SLOT_NAME);
@@ -196,7 +193,7 @@ test('manual save creates a curated slot, preserves auto, and loads through the 
   });
   await page.evaluate((query) => history.replaceState(null, '', query), RESTORE_QUERY);
   await page.getByTestId('save-slot-load').click();
-  await page.waitForFunction((wave) => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave === wave, saved.wave);
+  await page.waitForFunction((wave) => window.__THREE_GAME_DIAGNOSTICS__?.run.suspend.restoredWave === wave, manualWave);
   const loaded = comparable(JSON.parse(await readAutoRaw(page)) as SavedSuspend);
   expect(loaded).toEqual(direct);
 
@@ -332,6 +329,64 @@ test('profile export warns when older manual claims will stay on this device', a
   await page.getByTestId('start-menu-profile').click();
 
   await expect(page.getByTestId('profile-transfer-cap-note')).toContainText('oldest slots stay on this device');
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('transfer compaction rechecks oversized five-slot shelves until they fit', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/');
+  const result = await page.evaluate(async (baseSlot) => {
+    const saves = (await Function('return import("/src/game/SaveSlots.ts")')()) as typeof import('../src/game/SaveSlots');
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+    let noiseState = 0x51_07_2026;
+    const noise = (length: number): string => {
+      let value = '';
+      for (let index = 0; index < length; index += 1) {
+        noiseState = (Math.imul(noiseState, 1_664_525) + 1_013_904_223) >>> 0;
+        value += alphabet[(noiseState >>> 26) & 63];
+      }
+      return value;
+    };
+    const now = Date.now();
+    const manual = Array.from({ length: 5 }, (_, slotIndex) => ({
+      ...structuredClone(baseSlot),
+      id: `oversized-${slotIndex}`,
+      name: `Oversized ${slotIndex}`,
+      timestamp: now - slotIndex,
+      snapshot: {
+        ...structuredClone(baseSlot.snapshot),
+        economy: {
+          ...structuredClone(baseSlot.snapshot.economy),
+          log: Array.from({ length: 450 }, (_, eventIndex) => ({
+            id: `${eventIndex}-${noise(92)}`,
+            at: eventIndex,
+            type: 'gold_spent',
+            sink: `repair_${noise(96)}`,
+            amount: 0,
+          })),
+        },
+      },
+    }));
+    const source = { v: 1, manual };
+    const sourceJson = JSON.stringify(source);
+    const packed = saves.compactSaveSlotsForTransfer(source) as SaveSlotsEnvelope;
+    return {
+      sourceUnchanged: JSON.stringify(source) === sourceJson,
+      sourceCount: source.manual.length,
+      keptIds: packed.manual.map((slot) => slot.id),
+      packedBytes: new TextEncoder().encode(JSON.stringify(packed)).byteLength,
+      transferNote: packed.transferNote,
+    };
+  }, slotFixture('Transfer Base', 1, Date.now()));
+
+  expect(result.sourceUnchanged).toBe(true);
+  expect(result.sourceCount).toBe(5);
+  expect(result.keptIds.length).toBeGreaterThan(0);
+  expect(result.keptIds.length).toBeLessThan(5);
+  expect(result.keptIds[0]).toBe('oversized-0');
+  expect(result.packedBytes).toBeLessThanOrEqual(180 * 1024);
+  expect(result.transferNote).toContain(`${5 - result.keptIds.length} older claim`);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

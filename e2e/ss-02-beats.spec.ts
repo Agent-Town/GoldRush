@@ -38,7 +38,7 @@ const EXPECTED_BEATS = [
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type ExpectedCard = {
-  id: (typeof EXPECTED_BEATS)[number];
+  id: (typeof EXPECTED_BEATS)[number] | `ledger-page:${string}`;
   speaker: keyof typeof STORY_SPEAKERS;
   portrait: string;
   text: string;
@@ -103,6 +103,13 @@ async function emit(page: Page, signal: RuntimeStorySignal): Promise<void> {
     clock.__SS02_NOW__ = (clock.__SS02_NOW__ ?? Date.now()) + 4_000;
     window.__GR_STORY__?.emit(nextSignal);
   }, signal);
+}
+
+async function storyHints(page: Page): Promise<string[]> {
+  return page.evaluate((profileKey) => {
+    const state = JSON.parse(localStorage.getItem(profileKey) ?? '{}') as Partial<ProfileState>;
+    return state.profiles?.find((profile) => profile.id === state.activeId)?.hintsSeen ?? [];
+  }, PROFILE_KEY);
 }
 
 async function expectBeat(page: Page, expected: ExpectedCard, testInfo: TestInfo): Promise<void> {
@@ -190,6 +197,39 @@ test('SS-02 table is 23 registered, attributed, two-line E1 beats', () => {
   }
 });
 
+test('once beats are marked only when displayed and queued beats survive reload', async ({ page }) => {
+  await installFastStoryClock(page);
+  await seedProfile(page);
+  const errors = collectErrors(page);
+  const threshold = { type: 'science-threshold', threshold: 4 } as const;
+
+  await emit(page, threshold);
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute(
+    'data-beat-id',
+    'science-first-pick',
+    { timeout: 8_000 },
+  );
+  await expect.poll(() => storyHints(page)).toEqual(['story:science-first-pick']);
+  await expect.poll(() => page.evaluate(() => window.__GR_STORY__?.pending())).toEqual(['science-mastery', 'baron-shadow']);
+
+  await emit(page, threshold);
+  await expect.poll(() => page.evaluate(() => window.__GR_STORY__?.pending())).toEqual(['science-mastery', 'baron-shadow']);
+  expect(await storyHints(page)).toEqual(['story:science-first-pick']);
+
+  await page.reload();
+  await page.waitForFunction(() => window.__GR_STORY__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await emit(page, threshold);
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute(
+    'data-beat-id',
+    'science-mastery',
+    { timeout: 8_000 },
+  );
+  await expect.poll(() => storyHints(page)).toEqual(['story:science-first-pick', 'story:science-mastery']);
+  await expect.poll(() => page.evaluate(() => window.__GR_STORY__?.pending())).toEqual(['baron-shadow']);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('full E1 thread fires each authored arc once with portraits', async ({ page }, testInfo) => {
   test.setTimeout(120_000);
   await installFastStoryClock(page);
@@ -233,7 +273,19 @@ test('full E1 thread fires each authored arc once with portraits', async ({ page
     portrait: 'townsfolk-assay-clerk',
     text: 'Broken timber is a debit',
   }, testInfo);
-  await emitAndExpect(page, { type: 'first-victory' }, {
+  await emit(page, { type: 'first-victory' });
+  await expect.poll(() => page.evaluate(() => window.__GR_STORY__?.pending())).toContain('first-victory');
+  await expectBeat(page, {
+    id: 'ledger-page:world_outside_1',
+    speaker: 'clerk',
+    portrait: 'townsfolk-assay-clerk',
+    text: 'The ledger gains a page',
+  }, testInfo);
+  await page.evaluate(() => {
+    const clock = window as unknown as { __SS02_NOW__?: number };
+    clock.__SS02_NOW__ = (clock.__SS02_NOW__ ?? Date.now()) + 4_000;
+  });
+  await expectBeat(page, {
     id: 'first-victory',
     speaker: 'elder',
     portrait: 'townsfolk-elder',
