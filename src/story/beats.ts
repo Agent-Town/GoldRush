@@ -14,6 +14,7 @@ export type StoryBeatFor<TSignal extends { type: string }> = {
   seenKey?: (signal: TSignal) => string;
   seenKeyAliases?: readonly ((signal: TSignal) => string)[];
   presentation?: 'card' | 'epoch-ceremony';
+  durationMs?: number;
   artKey?: string;
   ceremonyStep?: 'mill' | 'valley' | 'title';
 };

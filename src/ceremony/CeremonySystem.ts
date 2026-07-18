@@ -599,6 +599,7 @@ export class CeremonySystem {
   }
 
   private close(): void {
+    const successorId = this.active?.armed ? loadEpoch(this.active.script.epochId).successor : null;
     this.stopStartedLoops();
     this.overlayCleanup();
     this.active = null;
@@ -612,6 +613,9 @@ export class CeremonySystem {
     this.directionElement = null;
     this.handButton = null;
     this.callbacks.onClosed();
+    if (successorId) {
+      emitStorySignal({ type: 'epoch-activated', epochId: successorId, displayName: loadEpoch(successorId).displayName, postscriptOnly: true });
+    }
   }
 
   private handInputDown(): void {
