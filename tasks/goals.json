@@ -900,6 +900,18 @@
        "title": "Wire the overnight sweep \u2014 full campaign registry",
        "status": "queued",
        "taskFile": "lane-c-wire-campaign-extras.md"
+      },
+      {
+       "id": "world-mounts-sweep-1",
+       "title": "3D-D mounts sweep wave 1 (regatta, glow-mesa, relay-valley)",
+       "status": "merged",
+       "mergeHash": "6165bc15a2888e3eeb64bcf59c72504b7cd3d71c"
+      },
+      {
+       "id": "world-mare-claim-bodies",
+       "title": "Mare Claim E8 landmark bodies (ALPHA)",
+       "status": "merged",
+       "mergeHash": "186c53b8f77e6df6bfb9f8840fb6744e8e231379"
       }
      ]
     },
@@ -1119,6 +1131,12 @@
        "id": "marketing-owner-approval",
        "title": "Owner caption approval",
        "status": "verified-by-owner"
+      },
+      {
+       "id": "marketing-ad-assets",
+       "title": "Rendered ad assets drained (gameplay reel, title-theme film, X cut)",
+       "status": "merged",
+       "mergeHash": "1ad9007c1eede9861d37869ddbc1683f2fce65e3"
       }
      ]
     }
@@ -1177,8 +1195,9 @@
     },
     {
      "id": "branch-housekeeping",
-     "title": "Spike-branch archive sweep (mp-*, e3-power-*, clobbered e7 ref \u2014 owner nod)",
-     "status": "planned"
+     "title": "Branch triage complete \u2014 55\u219213 refs, 43 deleted (tagged), 5 parked, 3 harvest masters",
+     "status": "merged",
+     "mergeHash": "30e61072d66bdbfac3bebe91e661c4bc1af4f294"
     }
    ]
   },
@@ -1447,7 +1466,7 @@
      "id": "cp04-lever",
      "title": "CP-04 the child-height lever (3 choices + the press; 45-combination proof)",
      "status": "merged",
-     "mergeHash": "f929d9bf2e6495bbe4cd1b334e61cecf9a502bd4",
+     "mergeHash": "6e8d24445f48a92c8f359bb7547b7b83168e1bfd",
      "taskFile": "lane-d-cp04-child-height-lever.md"
     },
     {
