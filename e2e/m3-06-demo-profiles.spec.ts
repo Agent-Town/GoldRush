@@ -75,32 +75,26 @@ test('legacy single-profile scores migrate into Robin with difficulty and hints 
 test('difficulty preset key follows the active profile', async ({ page }) => {
   await resetStorage(page);
   const errors = collectErrors(page);
-  await page.goto('/?debug&profiles&nowaves&nolevel&seed=profiles-difficulty');
+  await page.goto('/?profiles&nowaves&nolevel&seed=profiles-difficulty');
   await createProfile(page, 'Alice');
   await createProfile(page, 'Bob');
 
   await page.getByTestId('profile-row').filter({ hasText: 'Alice' }).click();
-  await page.getByTestId('profile-start').click();
-  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
-  expect(await page.evaluate((key) => window.__GR_TEST__?.setDifficultyPreset('greenhorn') && localStorage.getItem(key), DIFFICULTY_PRESET_STORAGE_KEY)).toBe(
-    'greenhorn',
-  );
+  await expect(page.getByTestId('profile-difficulty').locator('option')).toHaveText(['Greenhorn', 'Trail', 'Vein Hunter']);
+  await page.getByTestId('profile-difficulty').selectOption('greenhorn');
+  expect(await readProfileDifficulties(page)).toEqual({ alice: 'greenhorn', bob: 'trail' });
 
-  await page.reload();
   await page.getByTestId('profile-row').filter({ hasText: 'Bob' }).click();
-  await page.getByTestId('profile-start').click();
-  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
-  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.difficultyPreset)).toBe('trail');
-  expect(await page.evaluate((key) => window.__GR_TEST__?.setDifficultyPreset('vein-hunter') && localStorage.getItem(key), DIFFICULTY_PRESET_STORAGE_KEY)).toBe(
-    'vein-hunter',
-  );
+  await expect(page.getByTestId('profile-difficulty')).toHaveValue('trail');
+  await page.getByTestId('profile-difficulty').selectOption('vein-hunter');
+  expect(await readProfileDifficulties(page)).toEqual({ alice: 'greenhorn', bob: 'vein-hunter' });
 
-  await page.reload();
   await page.getByTestId('profile-row').filter({ hasText: 'Alice' }).click();
+  await expect(page.getByTestId('profile-difficulty')).toHaveValue('greenhorn');
   await page.getByTestId('profile-start').click();
-  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.difficultyPreset)).toBe('greenhorn');
-  expect(await page.evaluate(() => window.__GR_TEST__?.state().balance.xpPerKill)).toBe(4);
+  expect(await page.evaluate((key) => localStorage.getItem(key), DIFFICULTY_PRESET_STORAGE_KEY)).toBe('greenhorn');
 
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
@@ -257,6 +251,11 @@ async function forceDeath(page: Page): Promise<void> {
 async function readJson<T>(page: Page, key: string): Promise<T> {
   const raw = await page.evaluate((storageKey) => localStorage.getItem(storageKey), key);
   return JSON.parse(raw ?? 'null') as T;
+}
+
+async function readProfileDifficulties(page: Page): Promise<Record<string, string>> {
+  const state = await readJson<ProfileState>(page, PROFILE_KEY);
+  return Object.fromEntries(state.profiles.map((profile) => [profile.id, profile.difficultyPreset]));
 }
 
 async function setSharedActive(page: Page, profileId: string): Promise<void> {

@@ -76,10 +76,9 @@ export class StoryRuntime {
       if (beat.trigger !== signal.type || (beat.when && !beat.when(signal))) continue;
       const key = beat.seenKey?.(signal) ?? beat.id;
       const aliases = beat.seenKeyAliases?.map((seenKey) => seenKey(signal)) ?? [];
-      if (beat.oncePerProfile && [key, ...aliases].some((seenKey) => hasStoryBeatSeen(seenKey))) continue;
+      if (beat.oncePerProfile && this.onceBeatAlreadyHandled([key, ...aliases], items)) continue;
       const lines = this.linesFor(beat, signal);
       if (lines.length === 0) continue;
-      if (beat.oncePerProfile) markStoryBeatSeen(key);
       items.push({ beat, key, lines, signal });
     }
     items.sort((left, right) => ceremonyOrder(left.beat) - ceremonyOrder(right.beat));
@@ -99,6 +98,16 @@ export class StoryRuntime {
   private linesFor(beat: RuntimeStoryBeat, signal: RuntimeStorySignal): readonly string[] {
     const lines = typeof beat.lines === 'function' ? beat.lines(signal) : beat.lines;
     return lines.map((line) => line.trim()).filter(Boolean).slice(0, 2);
+  }
+
+  private onceBeatAlreadyHandled(keys: readonly string[], batch: readonly QueueItem[]): boolean {
+    return keys.some(
+      (key) =>
+        hasStoryBeatSeen(key) ||
+        this.active?.key === key ||
+        this.queue.some((item) => item.key === key) ||
+        batch.some((item) => item.key === key),
+    );
   }
 
   private schedule(): void {
@@ -122,6 +131,7 @@ export class StoryRuntime {
     const ceremony = item.beat.presentation === 'epoch-ceremony';
     this.root.classList.toggle('story-beat-layer--ceremony', ceremony);
     this.render(item);
+    if (item.beat.oncePerProfile) markStoryBeatSeen(item.key);
     this.setupPointer(item.beat.pointer);
     if (ceremony) {
       this.setupCeremonyControls();

@@ -199,14 +199,26 @@ export function formatBudgetWarning(budget: SaveSlotBudget): string | null {
 export function compactSaveSlotsForTransfer(value: unknown): unknown {
   const envelope = normalizeEnvelope(value);
   if (!envelope) return value;
-  if (byteSize(JSON.stringify(envelope)) <= SAVE_SLOT_TRANSFER_LIMIT_BYTES || envelope.manual.length <= SAVE_SLOT_TRANSFER_MANUAL_LIMIT) {
-    return envelope;
+  if (byteSize(JSON.stringify(envelope)) <= SAVE_SLOT_TRANSFER_LIMIT_BYTES) return envelope;
+
+  const manual = sortSlots(envelope.manual).slice(0, SAVE_SLOT_TRANSFER_MANUAL_LIMIT);
+  let packed = transferEnvelope(manual, envelope.manual.length);
+  while (packed.manual.length && byteSize(JSON.stringify(packed)) > SAVE_SLOT_TRANSFER_LIMIT_BYTES) {
+    packed = transferEnvelope(packed.manual.slice(0, -1), envelope.manual.length);
   }
+  return packed;
+}
+
+function transferEnvelope(manual: SaveSlot[], originalCount: number): SaveSlotsEnvelope {
+  const kept = manual.length;
   return {
     v: 1,
-    manual: sortSlots(envelope.manual).slice(0, SAVE_SLOT_TRANSFER_MANUAL_LIMIT),
-    transferNote: 'Packed the 5 most recent manual claims to keep the ledger bundle small; older claims stay on this device.',
-  } satisfies SaveSlotsEnvelope;
+    manual,
+    transferNote:
+      kept === 0
+        ? 'Manual claims were too large for this ledger bundle; all stay on this device.'
+        : `Packed the ${kept} most recent manual claim${kept === 1 ? '' : 's'} to keep the ledger bundle small; ${originalCount - kept} older claim${originalCount - kept === 1 ? '' : 's'} stay on this device.`,
+  };
 }
 
 export function mergeSaveSlotsForRestore(existingRaw: string | null, incoming: unknown): SaveSlotsEnvelope | null {

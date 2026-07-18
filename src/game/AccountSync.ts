@@ -1,6 +1,7 @@
 import { META_PROGRESS_KEY } from './MetaProgress';
-import { activeProfile, loadProfileState, type ProfileStorage } from './ProfileStorage';
+import { activeProfile, bindProfileSession, loadProfileState, type ProfileStorage } from './ProfileStorage';
 import {
+  CloudProfileTooLargeError,
   expandCloudProfileTransfer,
   packActiveProfile,
   packActiveProfileForCloud,
@@ -16,6 +17,8 @@ type Session = {
   expiresAt: string;
   profileId?: string;
   lastSavedAt?: string;
+  savedAtByProfile?: Record<string, string>;
+  syncError?: string;
 };
 
 type CompareChoice = {
@@ -25,6 +28,8 @@ type CompareChoice = {
   envelope: ProfileTransferEnvelope;
 };
 
+export type CloudProfileSummary = { profileId: string; profileName: string; savedAt: string };
+
 export type AccountSyncSnapshot = {
   signedIn: boolean;
   email: string;
@@ -32,6 +37,7 @@ export type AccountSyncSnapshot = {
   message: string;
   pendingEmail: string;
   devCode: string;
+  cloudProfiles: CloudProfileSummary[];
   compare?: CompareChoice;
   busy: boolean;
   deleted: boolean;
@@ -42,10 +48,7 @@ type RequestCodeResponse = { ok: true; code?: string; dev?: true };
 type VerifyResponse = { ok: true; token: string; accountId: string; expiresAt: string };
 type SavePullResponse = { ok: true; profileId: string; savedAt: string; envelope: unknown };
 type SavePushResponse = { ok: true; savedAt: string };
-type SaveVersionSummary = { version: number | null; savedAt: string };
-type SaveVersionsResponse = { ok: true; versions: SaveVersionSummary[] };
-type SaveProfileSummary = { profileId: string; profileName: string; savedAt: string };
-type SaveProfilesResponse = { ok: true; profiles: SaveProfileSummary[] };
+type SaveProfilesResponse = { ok: true; profiles: CloudProfileSummary[] };
 
 const SESSION_KEY = 'gr.account.v1';
 const CHANGE_EVENT = 'gr:profile-data-changed';
@@ -72,6 +75,7 @@ class AccountSync {
   private message = '';
   private pendingEmail = '';
   private devCode = '';
+  private cloudProfiles: CloudProfileSummary[] = [];
   private compare?: CompareChoice;
   private deleted = false;
   private syncTimer = 0;
@@ -82,10 +86,14 @@ class AccountSync {
     this.installed = true;
     this.storage = browserStorage();
     this.session = this.readSession();
+    this.message = typeof this.session?.syncError === 'string' ? this.session.syncError : '';
     globalThis.window?.addEventListener(CHANGE_EVENT, this.onProfileDataChanged);
     globalThis.window?.addEventListener('pagehide', this.onPageHide);
     globalThis.document?.addEventListener('visibilitychange', this.onVisibilityChange);
-    if (this.session && !loadProfileState(this.storage!)) void this.pullStoredProfile();
+    if (this.session) {
+      if (loadProfileState(this.storage!)) void this.refreshCloudProfiles();
+      else void this.pullStoredProfile();
+    }
     return this;
   }
 
@@ -106,6 +114,7 @@ class AccountSync {
       message: this.message || label,
       pendingEmail: this.pendingEmail,
       devCode: this.devCode,
+      cloudProfiles: [...this.cloudProfiles],
       compare: this.compare,
       busy: this.busy,
       deleted: this.deleted,
@@ -148,6 +157,7 @@ class AccountSync {
 
   signOut(): void {
     this.session = null;
+    this.cloudProfiles = [];
     this.compare = undefined;
     this.message = '';
     this.deleted = false;
@@ -173,22 +183,38 @@ class AccountSync {
     }
     if (!this.session || !this.storage || !loadProfileState(this.storage)) return;
     if (this.compare && !options.force) return this.setMessage('Choose cloud or local ledger before backing up.');
+    const session = this.session;
     await this.run(async () => {
-      const { envelope } = await packActiveProfileForCloud(this.storage!);
+      let envelope: ProfileTransferEnvelope;
+      try {
+        ({ envelope } = await packActiveProfileForCloud(this.storage!));
+      } catch (err) {
+        if (!this.isCurrentSession(session)) return;
+        if (err instanceof CloudProfileTooLargeError) {
+          this.session = { ...this.session!, syncError: err.message };
+          this.writeSession();
+        }
+        throw err;
+      }
+      if (!this.isCurrentSession(session)) return;
       let response: SavePushResponse;
       try {
+        const profileCursor =
+          session.savedAtByProfile?.[envelope.profile.id] ??
+          (session.profileId === envelope.profile.id ? (session.lastSavedAt ?? null) : null);
         response = await this.request<SavePushResponse>(
           '/api/save/push',
           {
             profileId: envelope.profile.id,
             envelope: toServerEnvelope(envelope),
-            baseSavedAt: options.force ? undefined : (this.session!.lastSavedAt ?? null),
+            baseSavedAt: options.force ? undefined : profileCursor,
             acknowledgeConflict: options.force === true,
           },
-          this.session!.token,
+          session.token,
           { keepalive: options.keepalive },
         );
       } catch (err) {
+        if (!this.isCurrentSession(session)) return;
         if (err instanceof ApiError && err.code === 'stale_save') {
           if (options.keepalive) {
             this.message = 'Cloud has a newer ledger. Reopen to choose before backing up.';
@@ -200,7 +226,9 @@ class AccountSync {
         }
         throw err;
       }
-      this.session = { ...this.session!, profileId: envelope.profile.id, lastSavedAt: response.savedAt };
+      if (!this.isCurrentSession(session)) return;
+      this.session = withProfileCursor(this.session!, envelope.profile.id, response.savedAt, { syncError: undefined });
+      this.rememberCloudProfile({ profileId: envelope.profile.id, profileName: envelope.profile.name, savedAt: response.savedAt });
       this.compare = undefined;
       this.message = `ledger backed up ${checkMark()} ${timeAgo(response.savedAt)}`;
       this.writeSession();
@@ -214,15 +242,41 @@ class AccountSync {
       this.suppressChangeUntil = Date.now() + 1500;
       const restored = restoreProfileBundle(this.storage!, this.compare!.envelope);
       if (!restored.ok) throw new Error(restored.message);
-      this.session = { ...this.session!, profileId: this.compare!.profileId, lastSavedAt: this.compare!.savedAt };
+      bindProfileSession(restored.profile.id);
+      this.session = withProfileCursor(this.session!, this.compare!.profileId, this.compare!.savedAt, { syncError: undefined });
       this.message = `cloud ledger restored ${checkMark()}`;
       this.compare = undefined;
       this.writeSession();
     });
   }
 
+  async selectCloudProfile(profileId: string): Promise<void> {
+    this.install();
+    const summary = this.cloudProfiles.find((profile) => profile.profileId === profileId);
+    if (!this.session || !summary) return;
+    const session = this.session;
+    await this.run(async () => {
+      const cloud = await this.pull(summary.profileId, session);
+      if (!this.isCurrentSession(session)) return;
+      if (!cloud) throw new Error('That cloud ledger is no longer available.');
+      this.compare = {
+        profileId: summary.profileId,
+        savedAt: cloud.savedAt,
+        envelope: cloud.envelope,
+        line: cloudLine(cloud.envelope, cloud.savedAt),
+      };
+      this.message = `${summary.profileName}'s cloud ledger is ready. Choose how to open it.`;
+    });
+  }
+
   async keepLocal(): Promise<void> {
+    const compareProfileId = this.compare?.profileId;
     this.compare = undefined;
+    if (!compareProfileId || this.currentProfileId() !== compareProfileId) {
+      this.message = 'Cloud ledger left untouched.';
+      this.emit();
+      return;
+    }
     await this.pushNow({ force: true });
   }
 
@@ -232,6 +286,7 @@ class AccountSync {
     await this.run(async () => {
       await this.request<{ ok: true }>('/api/delete-account', {}, this.session!.token);
       this.session = null;
+      this.cloudProfiles = [];
       this.compare = undefined;
       this.deleted = true;
       this.message = 'Cloud ledger burned. This browser keeps its local ledger.';
@@ -253,29 +308,29 @@ class AccountSync {
   }
 
   private async pullAfterSignIn(): Promise<void> {
-    const profileId = this.currentProfileId() ?? this.session?.profileId;
+    const session = this.session;
+    if (!session) return;
+    const cloudProfiles = await this.listProfiles(session);
+    if (!cloudProfiles) return;
+    this.cloudProfiles = cloudProfiles;
+    const profileId = this.currentProfileId() ?? session.profileId;
     if (!profileId) {
-      const [profile] = await this.listProfiles();
-      if (!profile) return this.setMessage('Signed in. Create a ledger, then it can back up.');
-      const cloud = await this.pull(profile.profileId);
-      if (!cloud) return this.setMessage('Signed in. Create a ledger, then it can back up.');
-      this.session = { ...this.session!, profileId: profile.profileId, lastSavedAt: cloud.savedAt };
-      this.compare = { profileId: profile.profileId, savedAt: cloud.savedAt, envelope: cloud.envelope, line: cloudLine(cloud.envelope, cloud.savedAt) };
-      this.message = 'Cloud ledger found. Choose how to open it.';
-      this.writeSession();
+      this.message = this.cloudProfilePrompt();
       return;
     }
+    if (!this.isCurrentSession(session)) return;
     this.session = { ...this.session!, profileId };
     this.writeSession();
-    if (!(await this.hasCloudSave(profileId))) {
+    if (!cloudProfiles.some((profile) => profile.profileId === profileId)) {
       await this.pushNow();
       return;
     }
-    const cloud = await this.pull(profileId);
+    const cloud = await this.pull(profileId, session);
+    if (!this.isCurrentSession(session)) return;
     if (!cloud) return;
     const local = this.localEnvelope();
     if (local && sameLedgerContent(local, cloud.envelope)) {
-      this.session = { ...this.session!, lastSavedAt: cloud.savedAt };
+      this.session = withProfileCursor(this.session!, profileId, cloud.savedAt, { syncError: undefined });
       this.message = `ledger backed up ${checkMark()} ${timeAgo(cloud.savedAt)}`;
       this.writeSession();
       return;
@@ -290,30 +345,51 @@ class AccountSync {
   }
 
   private async pullStoredProfile(): Promise<void> {
+    const session = this.session;
+    if (!session || !this.storage) return;
     try {
-      if (!this.session?.profileId || !this.storage) return;
-      if (!(await this.hasCloudSave(this.session.profileId).catch(() => false))) return;
-      const cloud = await this.pull(this.session.profileId).catch(() => null);
-      if (!cloud) return;
+      const cloudProfiles = await this.listProfiles(session);
+      if (!cloudProfiles) return;
+      this.cloudProfiles = cloudProfiles;
+      if (!session.profileId) {
+        this.message = this.cloudProfilePrompt();
+        this.emit();
+        return;
+      }
+      if (!cloudProfiles.some((profile) => profile.profileId === session.profileId)) {
+        this.message = this.cloudProfilePrompt();
+        this.emit();
+        return;
+      }
+      const cloud = await this.pull(session.profileId, session).catch(() => null);
+      if (!this.isCurrentSession(session)) return;
+      if (!cloud) {
+        this.message = this.cloudProfilePrompt();
+        this.emit();
+        return;
+      }
       const local = this.localEnvelope();
       if (local) {
+        const same = sameLedgerContent(local, cloud.envelope);
         this.compare = {
-          profileId: this.session.profileId,
+          profileId: session.profileId,
           savedAt: cloud.savedAt,
           envelope: cloud.envelope,
           line: cloudLine(cloud.envelope, cloud.savedAt),
         };
-        this.message = sameLedgerContent(local, cloud.envelope)
+        this.message = same
           ? `ledger backed up ${checkMark()} ${timeAgo(cloud.savedAt)}`
           : 'Cloud ledger found. Choose how to open it.';
-        this.session = { ...this.session, lastSavedAt: cloud.savedAt };
+        this.session = same
+          ? withProfileCursor(session, session.profileId, cloud.savedAt, { syncError: undefined })
+          : session;
         this.writeSession();
         this.emit();
         return;
       }
       if (loadProfileState(this.storage)) {
         this.compare = {
-          profileId: this.session.profileId,
+          profileId: session.profileId,
           savedAt: cloud.savedAt,
           envelope: cloud.envelope,
           line: cloudLine(cloud.envelope, cloud.savedAt),
@@ -325,7 +401,8 @@ class AccountSync {
       this.suppressChangeUntil = Date.now() + 1500;
       const restored = restoreProfileBundle(this.storage, cloud.envelope);
       if (restored.ok) {
-        this.session = { ...this.session, lastSavedAt: cloud.savedAt };
+        bindProfileSession(restored.profile.id);
+        this.session = withProfileCursor(session, session.profileId, cloud.savedAt, { syncError: undefined });
         this.writeSession();
         this.message = `cloud ledger restored ${checkMark()}`;
         this.emit();
@@ -334,55 +411,86 @@ class AccountSync {
         this.emit();
       }
     } catch {
+      if (!this.isCurrentSession(session)) return;
       this.message = "the wire's down - your ledger stays safe here.";
       this.emit();
     }
   }
 
   private async openCloudCompare(profileId: string, message: string): Promise<void> {
-    const cloud = await this.pull(profileId);
+    const session = this.session;
+    if (!session) return;
+    const cloud = await this.pull(profileId, session);
+    if (!this.isCurrentSession(session)) return;
     if (!cloud) {
       this.message = message;
       return;
     }
     const local = this.localEnvelope();
     if (local && sameLedgerContent(local, cloud.envelope)) {
-      this.session = { ...this.session!, profileId, lastSavedAt: cloud.savedAt };
+      this.session = withProfileCursor(this.session!, profileId, cloud.savedAt, { syncError: undefined });
       this.compare = undefined;
       this.message = `ledger backed up ${checkMark()} ${timeAgo(cloud.savedAt)}`;
       this.writeSession();
       return;
     }
     this.compare = { profileId, savedAt: cloud.savedAt, envelope: cloud.envelope, line: cloudLine(cloud.envelope, cloud.savedAt) };
-    this.session = { ...this.session!, profileId, lastSavedAt: cloud.savedAt };
     this.message = message;
     this.writeSession();
   }
 
-  private async pull(profileId: string): Promise<{ savedAt: string; envelope: ProfileTransferEnvelope } | null> {
+  private async pull(profileId: string, session: Session): Promise<{ savedAt: string; envelope: ProfileTransferEnvelope } | null> {
     try {
-      const response = await this.request<SavePullResponse>('/api/save/pull', { profileId }, this.session?.token);
+      const response = await this.request<SavePullResponse>('/api/save/pull', { profileId }, session.token);
+      if (!this.isCurrentSession(session)) return null;
       const envelope = await fromServerEnvelope(response.envelope);
-      return envelope ? { savedAt: response.savedAt, envelope } : null;
+      if (!this.isCurrentSession(session)) return null;
+      if (!envelope) return null;
+      this.rememberCloudProfile({ profileId, profileName: envelope.profile.name, savedAt: response.savedAt });
+      return { savedAt: response.savedAt, envelope };
     } catch (err) {
+      if (!this.isCurrentSession(session)) return null;
       if (err instanceof ApiError && err.status === 404) return null;
       throw err;
     }
   }
 
-  private async hasCloudSave(profileId: string): Promise<boolean> {
-    const response = await this.request<SaveVersionsResponse>('/api/save/versions', { profileId }, this.session?.token);
-    const current = response.versions.find((version) => version.version === null);
-    if (current && this.session) {
-      this.session = { ...this.session, lastSavedAt: current.savedAt };
-      this.writeSession();
+  private async refreshCloudProfiles(): Promise<void> {
+    try {
+      const session = this.session;
+      if (!session) return;
+      const cloudProfiles = await this.listProfiles(session);
+      if (!cloudProfiles) return;
+      this.cloudProfiles = cloudProfiles;
+      this.emit();
+    } catch {
+      // The signed-in ledger stays usable; the picker can retry after the next sign-in or reload.
     }
-    return response.versions.length > 0;
   }
 
-  private async listProfiles(): Promise<SaveProfileSummary[]> {
-    const response = await this.request<SaveProfilesResponse>('/api/save/profiles', {}, this.session?.token);
-    return response.profiles.filter(isSaveProfileSummary);
+  private cloudProfilePrompt(): string {
+    return this.cloudProfiles.length
+      ? 'Cloud ledgers found. Choose one to restore on this device.'
+      : 'Signed in. Create a ledger, then it can back up.';
+  }
+
+  private rememberCloudProfile(profile: CloudProfileSummary): void {
+    this.cloudProfiles = [profile, ...this.cloudProfiles.filter((entry) => entry.profileId !== profile.profileId)];
+  }
+
+  private isCurrentSession(session: Pick<Session, 'token' | 'accountId'>): boolean {
+    return this.session?.token === session.token && this.session.accountId === session.accountId;
+  }
+
+  private async listProfiles(session: Session): Promise<CloudProfileSummary[] | null> {
+    try {
+      const response = await this.request<SaveProfilesResponse>('/api/save/profiles', {}, session.token);
+      if (!this.isCurrentSession(session)) return null;
+      return response.profiles.filter(isSaveProfileSummary);
+    } catch (err) {
+      if (!this.isCurrentSession(session)) return null;
+      throw err;
+    }
   }
 
   private localEnvelope(): ProfileTransferEnvelope | null {
@@ -445,6 +553,7 @@ class AccountSync {
     if (!this.session) return this.deleted ? 'cloud ledger burned' : 'ledger local only';
     if (this.compare) return 'choose cloud or local ledger';
     if (this.busy) return 'checking the ledger wire...';
+    if (this.session.syncError) return 'ledger backup needs attention';
     if (this.message.startsWith('the wire')) return this.message;
     const savedAt = this.session.lastSavedAt;
     return savedAt ? `ledger backed up ${checkMark()} ${timeAgo(savedAt)}` : 'ledger ready to back up';
@@ -489,6 +598,21 @@ class AccountSync {
 
 export const accountSync = new AccountSync();
 
+function withProfileCursor(
+  session: Session,
+  profileId: string,
+  savedAt: string,
+  updates: Pick<Partial<Session>, 'syncError'> = {},
+): Session {
+  return {
+    ...session,
+    ...updates,
+    profileId,
+    lastSavedAt: savedAt,
+    savedAtByProfile: { ...session.savedAtByProfile, [profileId]: savedAt },
+  };
+}
+
 function toServerEnvelope(envelope: ProfileTransferEnvelope): Record<string, unknown> {
   return { ...envelope, kind: 'gold-rush-ledger-bundle' };
 }
@@ -529,7 +653,8 @@ function scienceLevel(value: unknown): number {
 
 function friendlyError(err: unknown): string {
   if (err instanceof ApiError && err.code === 'sign_in_not_enabled') return 'sign-in is not enabled yet; your ledger stays safe here.';
-  if (err instanceof ApiError && err.code === 'payload_too_large') return 'That ledger is too large to back up; oldest manual claims stay on this device.';
+  if (err instanceof CloudProfileTooLargeError) return err.message;
+  if (err instanceof ApiError && err.code === 'payload_too_large') return 'That ledger is too large to back up; finish the current claim or remove an older manual claim, then try again.';
   if (err instanceof Error && err.message) return err.message;
   return "the wire's down - your ledger stays safe here.";
 }
@@ -566,7 +691,7 @@ function byteLength(value: string): number {
   return new TextEncoder().encode(value).byteLength;
 }
 
-function isSaveProfileSummary(value: unknown): value is SaveProfileSummary {
+function isSaveProfileSummary(value: unknown): value is CloudProfileSummary {
   return (
     isRecord(value) &&
     typeof value.profileId === 'string' &&
