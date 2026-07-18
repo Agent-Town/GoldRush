@@ -110,7 +110,13 @@ import {
   type LockstepTick,
   type MultiplayerPlayer,
 } from '../mp/LockstepClient';
-import { consumeStagedRideConfig, currentMultiplayerSetup } from '../mp/RideTogether';
+import {
+  clearReconnectRideConfig,
+  consumeStagedRideConfig,
+  currentMultiplayerSetup,
+  readReconnectRideConfig,
+  rememberReconnectRideConfig,
+} from '../mp/RideTogether';
 import {
   MAX_PLAYBOOK_INTENTS,
   MAX_PLAYBOOK_TICKS,
@@ -343,6 +349,7 @@ export class Game {
   private lastMultiplayerHashState: { tick: number; state: unknown } | null = null;
   private mpPauseBeforeResync: { paused: boolean; playerPauseActive: boolean } | null = null;
   private mpCard?: HTMLElement;
+  private mpHoldCardVisible = false;
   private readonly mpActorMeta = new Map<Hero, MultiplayerActorMeta>();
   // Playbook engine (PB-01/PB-02, ?debug-only surface): the recorder pins the
   // solo session to the lockstep intent seam; the replay session drives a
@@ -879,10 +886,22 @@ export class Game {
     const state = this.mpClient?.state();
     if (!state) return false;
     if (state.roster.length >= 2) this.mpHadParty = true;
+    if (state.reconnecting || state.heldPlayerIds.length > 0) {
+      this.mpHoldCardVisible = true;
+      const heldName = state.roster.find((player) => state.heldPlayerIds.includes(player.playerId))?.name;
+      this.showMultiplayerCard(
+        'Holding the trail',
+        state.reconnecting
+          ? 'Finding your place on the claim again. The ride is paused for up to 60 seconds.'
+          : `${heldName ?? 'The other rider'} has 60 seconds to return. The claim is holding their place.`,
+      );
+      return false;
+    }
     const failedBeforeRide = !state.connected && !!state.error;
-    const droppedParty = this.mpHadParty && state.connected && state.roster.length < 2;
+    const droppedParty = (this.mpHadParty || (state.reconnects > 0 && state.tick > 0)) && state.connected && state.roster.length < 2;
     const closedParty = this.mpHadParty && !state.connected;
     if (!failedBeforeRide && !droppedParty && !closedParty) return false;
+    clearReconnectRideConfig();
     this.mpClient?.dispose();
     this.mpClient = undefined;
     this.mpHadParty = false;
@@ -892,6 +911,7 @@ export class Game {
       this.mpPauseBeforeResync = null;
     }
     this.syncMultiplayerActors();
+    this.mpHoldCardVisible = false;
     this.showMultiplayerCard(
       'Riding solo',
       failedBeforeRide ? "That claim's gone quiet. Starting this ride solo." : 'The other rider dropped. The next wave carries on solo.',
@@ -1981,6 +2001,7 @@ export class Game {
       : null;
     if (lockstepSample && cancelConsumed) lockstepSample.pause = false;
     const lockstepTick = this.mpClient && lockstepSample ? this.mpClient.pump(lockstepSample) : null;
+    this.finishMultiplayerHoldIfRecovered();
     if (this.mpClient && !lockstepTick) {
       if (!this.releaseFailedMultiplayer()) return false;
     }
@@ -2701,6 +2722,22 @@ export class Game {
     return this.restoreMultiplayerActorSnapshots(mpActors);
   }
 
+  private restoreMultiplayerInitialState(snapshot: unknown): boolean {
+    const normalized = normalizeRunSuspendDatum(snapshot);
+    if (!normalized || normalized.contractId !== this.activeContract.id) return false;
+    if (!restoreRunSuspendSnapshot(this, normalized, { persistProfile: false })) return false;
+    const roster = this.mpClient?.state().roster ?? [];
+    if (roster.length < 2) return false;
+    this.mpActorMeta.clear();
+    this.syncMultiplayerActors();
+    this.applyStats(this.progression.stats, null);
+    this.syncHeroVisualHeight();
+    for (const actor of this.actors) actor.snapRenderState();
+    this.updateActionActorPosition();
+    this.cameraRig.snapTo(this.localActor.group.position);
+    return true;
+  }
+
   private restoreMultiplayerActorSnapshots(mpActors: readonly MultiplayerActorSnapshot[] | null): boolean {
     if (!mpActors?.length) return true;
     this.syncMultiplayerActors();
@@ -2741,23 +2778,46 @@ export class Game {
   }
 
   private installMultiplayerDev(): void {
-    const config = multiplayerConfigFromSearch() ?? consumeStagedRideConfig();
+    const config = readReconnectRideConfig() ?? multiplayerConfigFromSearch() ?? consumeStagedRideConfig();
     if (!config) return;
+    const clientConfig = { ...config, setup: currentMultiplayerSetup(this.activeContract.id) };
     this.mpClient = new LockstepClient({
-      ...config,
-      setup: currentMultiplayerSetup(this.activeContract.id),
+      ...clientConfig,
+      onReconnectToken: (token) => {
+        if (token) rememberReconnectRideConfig({ ...clientConfig, code: this.mpClient?.state().code ?? clientConfig.code }, token);
+        else clearReconnectRideConfig();
+      },
       onDesync: (tick) => {
         this.mpPauseBeforeResync ??= { paused: this.state.isPaused, playerPauseActive: this.playerPauseActive };
         this.state.setPaused(true);
         this.playerPauseActive = false;
         this.showMultiplayerCard('The wire crossed', `Tick ${tick} disagreed. Restoring the latest trail ledger.`);
       },
+      captureReconnectInitialState: () => {
+        this.syncMultiplayerActors();
+        return this.captureMultiplayerRunSuspendSnapshot();
+      },
+      onReconnectFromInitialState: (snapshot) => {
+        const restored = this.restoreMultiplayerInitialState(snapshot);
+        if (restored) {
+          this.mpPauseBeforeResync = null;
+          this.simTick = 0;
+          this.mpHoldCardVisible = false;
+          this.showMultiplayerCard('Back on the trail', 'Your opening ledger replayed. Riding together again.');
+        }
+        return restored;
+      },
       onSnapshot: (snapshot, tick) => {
+        const reconnecting = this.mpClient?.state().reconnecting === true;
         const restored = this.restoreMultiplayerRunSuspendSnapshot(snapshot);
         if (restored) {
           this.mpPauseBeforeResync = null;
           this.simTick = tick + 1;
-          this.showMultiplayerCard('The wire crossed', 'Trail ledger restored. Riding together again.');
+          this.mpHoldCardVisible = false;
+          this.showMultiplayerCard(
+            reconnecting ? 'Back on the trail' : 'The wire crossed',
+            reconnecting ? 'Your ledger caught up. Riding together again.' : 'Trail ledger restored. Riding together again.',
+          );
         }
         return restored;
       },
@@ -2765,8 +2825,19 @@ export class Game {
     window.__GR_MP__ = {
       state: () => this.mpClient?.state() ?? null,
       injectDesyncAt: (tick: number) => this.mpClient?.injectDesyncAt(tick),
+      dropConnectionForTest: () => {
+        if (new URLSearchParams(window.location.search).has('debug')) this.mpClient?.dropConnectionForTest();
+      },
     };
     void this.mpClient.connect();
+  }
+
+  private finishMultiplayerHoldIfRecovered(): void {
+    if (!this.mpHoldCardVisible) return;
+    const state = this.mpClient?.state();
+    if (!state?.connected || state.reconnecting || state.heldPlayerIds.length > 0 || state.roster.length < 2) return;
+    this.mpHoldCardVisible = false;
+    this.showMultiplayerCard('Back on the trail', 'Both riders are back. The claim is moving again.');
   }
 
   private showMultiplayerCard(title: string, message: string): void {
@@ -5441,6 +5512,7 @@ export class Game {
 
   private returnToTown(result: RunReturnResult): void {
     if (!this.onReturnToMenu) throw new Error('Return to Town requested without a return callback.');
+    clearReconnectRideConfig();
     this.onReturnToMenu(result);
   }
 

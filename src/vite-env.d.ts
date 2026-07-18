@@ -912,6 +912,7 @@ interface Window {
   __GR_MP__?: {
     state: () => GrMultiplayerState | null;
     injectDesyncAt: (tick: number) => void;
+    dropConnectionForTest: () => void;
   };
   __GR_TELEMETRY__?: {
     recordRunEndedForTest: (event: GrRunEndedEvent) => void;

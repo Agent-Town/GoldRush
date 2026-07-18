@@ -33,7 +33,10 @@ type Player = {
   town: string;
   joinedAt: number;
   lastSeen: number;
-  socket: WebSocket;
+  socket: WebSocket | null;
+  reconnectToken: string;
+  reconnectDeadline: number | null;
+  reconnectTimer: ReturnType<typeof setTimeout> | null;
   rateWindowStartedAt: number;
   rateCount: number;
 };
@@ -41,6 +44,7 @@ type Player = {
 type Snapshot = {
   from: string;
   tick: number;
+  roster: JsonRecord[];
   byteLength: number;
   createdAt: string;
   snapshot: unknown;
@@ -54,9 +58,20 @@ type RoomSetup = {
   research: JsonRecord;
 };
 
-const PROTOCOL_VERSION = 2;
+type ReplayBundle = {
+  v: number;
+  type: 'tick-inputs';
+  tick: number;
+  roster: JsonRecord[];
+  inputs: Array<{ playerId: string; input: unknown }>;
+};
+
+const PROTOCOL_VERSION = 3;
 const MAX_PLAYERS = 4;
 const ROOM_CODE_BYTES = 12;
+const RECONNECT_TOKEN_BYTES = 16;
+const RECONNECT_GRACE_MS = 60_000;
+const MAX_REPLAY_BUNDLES = 128;
 const EMPTY_TTL_MS = 120_000;
 const IDLE_TIMEOUT_MS = 60_000;
 const RATE_WINDOW_MS = 10_000;
@@ -64,6 +79,8 @@ const RATE_LIMIT_MESSAGES = 600;
 const SMALL_JSON_BYTES = 8 * 1024;
 const MAX_MESSAGE_BYTES = 220 * 1024;
 const MAX_SNAPSHOT_BYTES = 200 * 1024;
+const MAX_INPUT_BYTES = 4 * 1024;
+const MAX_REJOIN_BOOTSTRAP_BYTES = 512 * 1024;
 const MAX_FUTURE_TICKS = 512;
 const ROOM_UNAVAILABLE_MESSAGE = "riding together isn't saddled yet";
 const RATE_LIMIT_MESSAGE = 'The wire is busy. Try again later.';
@@ -139,6 +156,7 @@ export class MultiplayerRoom {
   private code: string | null = null;
   private readonly players = new Map<string, Player>();
   private readonly inputTicks = new Map<number, Map<string, unknown>>();
+  private readonly replayBundles = new Map<number, ReplayBundle>();
   private latestSnapshot: Snapshot | null = null;
   private setup: RoomSetup | null = null;
   private nextFlushTick = 0;
@@ -203,10 +221,10 @@ export class MultiplayerRoom {
     server.addEventListener('message', (event) => {
       try {
         if (!playerId) {
-          playerId = this.join(server, event.data);
+          playerId = this.handshake(server, event.data);
           clearHandshakeTimer();
         }
-        if (playerId) this.handle(playerId, event.data);
+        if (playerId && this.players.get(playerId)?.socket === server) this.handle(playerId, event.data);
       } catch (err) {
         clearHandshakeTimer();
         send(server, {
@@ -214,16 +232,17 @@ export class MultiplayerRoom {
           type: 'error',
           error: err instanceof Error ? err.message : 'bad_message',
         });
+        if (playerId) this.leave(playerId);
         server.close(1008, 'bad message');
       }
     });
     server.addEventListener('close', () => {
       clearHandshakeTimer();
-      if (playerId) this.leave(playerId);
+      if (playerId) this.hold(playerId, server);
     });
     server.addEventListener('error', () => {
       clearHandshakeTimer();
-      if (playerId) this.leave(playerId);
+      if (playerId) this.hold(playerId, server);
     });
     return new Response(null, { status: 101, webSocket: client });
   }
@@ -241,9 +260,14 @@ export class MultiplayerRoom {
     });
   }
 
-  private join(socket: WebSocket, raw: unknown): string | null {
+  private handshake(socket: WebSocket, raw: unknown): string | null {
     const message = parseSocketMessage(raw);
+    if (message.type === 'rejoin') return this.rejoin(socket, message);
     if (message.type !== 'join') throw new Error('join_required');
+    return this.join(socket, message);
+  }
+
+  private join(socket: WebSocket, message: JsonRecord): string {
     const code = normalizeRoomCode(message.code);
     if (!code || code !== this.code) throw new Error('bad_room_code');
     if (this.players.size >= MAX_PLAYERS) throw new Error('room_full');
@@ -264,9 +288,13 @@ export class MultiplayerRoom {
       joinedAt: Date.now(),
       lastSeen: Date.now(),
       socket,
+      reconnectToken: randomReconnectToken(),
+      reconnectDeadline: null,
+      reconnectTimer: null,
       rateWindowStartedAt: Date.now(),
       rateCount: 0,
     });
+    const joined = this.players.get(id)!;
     this.cancelEmptyTimer();
     send(socket, {
       v: PROTOCOL_VERSION,
@@ -276,10 +304,69 @@ export class MultiplayerRoom {
       maxPlayers: MAX_PLAYERS,
       roster: this.roster(),
       setup: this.setup,
+      reconnectToken: joined.reconnectToken,
+      reconnectGraceMs: RECONNECT_GRACE_MS,
     });
     this.broadcastRoster();
-    this.armIdleTimer(id);
+    this.armIdleTimer(id, socket);
     return id;
+  }
+
+  private rejoin(socket: WebSocket, message: JsonRecord): string {
+    const code = normalizeRoomCode(message.code);
+    const reconnectToken = normalizeReconnectToken(message.reconnectToken);
+    if (!code || code !== this.code) throw new Error('bad_room_code');
+    if (!reconnectToken) throw new Error('reconnect_required');
+    const player = [...this.players.values()].find((candidate) => candidate.reconnectToken === reconnectToken);
+    if (!player) throw new Error('reconnect_rejected');
+    if (player.reconnectDeadline !== null && player.reconnectDeadline <= Date.now()) {
+      this.leave(player.id);
+      throw new Error('reconnect_expired');
+    }
+
+    const response = {
+      v: PROTOCOL_VERSION,
+      type: 'rejoined',
+      code: this.code,
+      playerId: player.id,
+      maxPlayers: MAX_PLAYERS,
+      roster: this.roster(),
+      setup: this.setup,
+      reconnectToken: player.reconnectToken,
+      reconnectGraceMs: RECONNECT_GRACE_MS,
+      nextTick: this.nextFlushTick,
+      ...this.rejoinBootstrap(),
+    };
+    if (utf8Length(JSON.stringify(response)) > MAX_REJOIN_BOOTSTRAP_BYTES) throw new Error('reconnect_bootstrap_too_large');
+    this.clearPendingInputs(player.id);
+    const previousSocket = player.socket;
+    if (player.reconnectTimer) clearTimeout(player.reconnectTimer);
+    player.reconnectTimer = null;
+    player.reconnectDeadline = null;
+    player.socket = socket;
+    player.lastSeen = Date.now();
+    player.rateWindowStartedAt = Date.now();
+    player.rateCount = 0;
+    if (previousSocket && previousSocket !== socket) previousSocket.close(4000, 'reconnected');
+    send(socket, response);
+    this.broadcast({ v: PROTOCOL_VERSION, type: 'player-returned', playerId: player.id }, player.id);
+    this.armIdleTimer(player.id, socket);
+    return player.id;
+  }
+
+  private rejoinBootstrap(): { authoritySnapshot: Snapshot | null; replay: ReplayBundle[] } {
+    if (this.nextFlushTick === 0) return { authoritySnapshot: null, replay: [] };
+    const snapshot = this.latestSnapshot;
+    if (snapshot && (snapshot.from !== snapshot.roster[0]?.playerId || snapshot.tick >= this.nextFlushTick)) {
+      throw new Error('reconnect_snapshot_unavailable');
+    }
+    const replay: ReplayBundle[] = [];
+    for (let tick = snapshot ? snapshot.tick + 1 : 0; tick < this.nextFlushTick; tick += 1) {
+      const bundle = this.replayBundles.get(tick);
+      if (!bundle) throw new Error('reconnect_replay_incomplete');
+      replay.push(bundle);
+    }
+    return { authoritySnapshot: snapshot, replay };
   }
 
   private handle(playerId: string, raw: unknown): void {
@@ -288,24 +375,26 @@ export class MultiplayerRoom {
     player.lastSeen = Date.now();
     this.checkRate(player);
     const message = parseSocketMessage(raw);
-    if (message.type === 'join') return;
+    if (message.type === 'join' || message.type === 'rejoin') return;
     if (message.type === 'input') return this.handleInput(playerId, message);
     if (message.type === 'hash') return this.forward(playerId, 'hash', message);
     if (message.type === 'snapshot-push') return this.handleSnapshot(playerId, message);
     if (message.type === 'snapshot-request') return this.sendSnapshot(player);
-    if (message.type === 'ping') return send(player.socket, { v: PROTOCOL_VERSION, type: 'pong', now: Date.now() });
+    if (message.type === 'ping' && player.socket) return send(player.socket, { v: PROTOCOL_VERSION, type: 'pong', now: Date.now() });
     throw new Error('unknown_message');
   }
 
   private handleInput(playerId: string, message: JsonRecord): void {
     const tick = normalizeTick(message.tick);
     if (tick === null || tick < this.nextFlushTick || tick > this.nextFlushTick + MAX_FUTURE_TICKS) throw new Error('bad_tick');
+    const input = message.input ?? null;
+    if (utf8Length(JSON.stringify(input)) > MAX_INPUT_BYTES) throw new Error('input_too_large');
     let inputs = this.inputTicks.get(tick);
     if (!inputs) {
       inputs = new Map();
       this.inputTicks.set(tick, inputs);
     }
-    inputs.set(playerId, message.input ?? null);
+    inputs.set(playerId, input);
     this.flushInputs();
   }
 
@@ -314,13 +403,20 @@ export class MultiplayerRoom {
       const inputs = this.inputTicks.get(this.nextFlushTick);
       const roster = [...this.players.values()].sort((a, b) => a.joinedAt - b.joinedAt);
       if (!inputs || !roster.every((player) => inputs.has(player.id))) break;
-      this.broadcast({
+      const bundle: ReplayBundle = {
         v: PROTOCOL_VERSION,
         type: 'tick-inputs',
         tick: this.nextFlushTick,
         roster: this.roster(),
         inputs: roster.map((player) => ({ playerId: player.id, input: inputs?.get(player.id) ?? null })),
-      });
+      };
+      this.replayBundles.set(bundle.tick, bundle);
+      while (this.replayBundles.size > MAX_REPLAY_BUNDLES) {
+        const oldest = this.replayBundles.keys().next().value as number | undefined;
+        if (oldest === undefined) break;
+        this.replayBundles.delete(oldest);
+      }
+      this.broadcast(bundle);
       this.inputTicks.delete(this.nextFlushTick);
       this.nextFlushTick += 1;
     }
@@ -345,25 +441,70 @@ export class MultiplayerRoom {
     const snapshot = message.snapshot ?? null;
     const byteLength = utf8Length(JSON.stringify(snapshot));
     if (byteLength > MAX_SNAPSHOT_BYTES) throw new Error('snapshot_too_large');
-    this.latestSnapshot = { from, tick, byteLength, createdAt: new Date().toISOString(), snapshot };
+    if (from !== this.roster()[0]?.playerId) throw new Error('snapshot_authority_required');
+    if (tick >= this.nextFlushTick) throw new Error('snapshot_future_tick');
+    if (this.latestSnapshot && tick < this.latestSnapshot.tick) return;
+    if (this.latestSnapshot?.tick === tick) {
+      this.broadcast({ v: PROTOCOL_VERSION, type: 'snapshot-available', from, tick, byteLength }, from);
+      return;
+    }
+    const roster = this.replayBundles.get(tick)?.roster;
+    if (!roster) throw new Error('snapshot_roster_unavailable');
+    this.latestSnapshot = { from, tick, roster, byteLength, createdAt: new Date().toISOString(), snapshot };
+    for (const replayTick of this.replayBundles.keys()) if (replayTick <= tick) this.replayBundles.delete(replayTick);
     this.broadcast({ v: PROTOCOL_VERSION, type: 'snapshot-available', from, tick, byteLength }, from);
   }
 
   private sendSnapshot(player: Player): void {
+    if (!player.socket) return;
     send(player.socket, this.latestSnapshot
       ? { v: PROTOCOL_VERSION, type: 'snapshot', ...this.latestSnapshot }
       : { v: PROTOCOL_VERSION, type: 'snapshot-missing' });
   }
 
+  private hold(playerId: string, socket: WebSocket): void {
+    const player = this.players.get(playerId);
+    if (!player || player.socket !== socket) return;
+    player.socket = null;
+    if (player.reconnectDeadline !== null) return;
+    this.clearPendingInputs(playerId);
+    player.reconnectDeadline = Date.now() + RECONNECT_GRACE_MS;
+    player.reconnectTimer = setTimeout(() => this.expireHeldPlayer(playerId), RECONNECT_GRACE_MS + 25);
+    this.broadcast({
+      v: PROTOCOL_VERSION,
+      type: 'player-held',
+      playerId,
+      reconnectDeadline: player.reconnectDeadline,
+    });
+  }
+
+  private expireHeldPlayer(playerId: string): void {
+    const player = this.players.get(playerId);
+    if (!player || player.socket || player.reconnectDeadline === null) return;
+    const remaining = player.reconnectDeadline - Date.now();
+    if (remaining > 0) {
+      player.reconnectTimer = setTimeout(() => this.expireHeldPlayer(playerId), remaining + 25);
+      return;
+    }
+    this.leave(playerId);
+  }
+
   private leave(playerId: string): void {
-    if (!this.players.delete(playerId)) return;
+    const player = this.players.get(playerId);
+    if (!player) return;
+    if (player.reconnectTimer) clearTimeout(player.reconnectTimer);
+    this.players.delete(playerId);
+    this.clearPendingInputs(playerId);
+    this.broadcastRoster();
+    this.flushInputs();
+    if (this.players.size === 0) this.armEmptyTimer();
+  }
+
+  private clearPendingInputs(playerId: string): void {
     for (const [tick, inputs] of this.inputTicks) {
       inputs.delete(playerId);
       if (tick < this.nextFlushTick || inputs.size === 0) this.inputTicks.delete(tick);
     }
-    this.broadcastRoster();
-    this.flushInputs();
-    if (this.players.size === 0) this.armEmptyTimer();
   }
 
   private checkRate(player: Player): void {
@@ -376,15 +517,15 @@ export class MultiplayerRoom {
     if (player.rateCount > RATE_LIMIT_MESSAGES) throw new Error('rate_limited');
   }
 
-  private armIdleTimer(playerId: string): void {
+  private armIdleTimer(playerId: string, socket: WebSocket): void {
     setTimeout(() => {
       const player = this.players.get(playerId);
-      if (!player) return;
+      if (!player || player.socket !== socket) return;
       if (Date.now() - player.lastSeen >= IDLE_TIMEOUT_MS) {
-        player.socket.close(1001, 'timeout');
-        this.leave(playerId);
+        socket.close(1001, 'timeout');
+        this.hold(playerId, socket);
       } else {
-        this.armIdleTimer(playerId);
+        this.armIdleTimer(playerId, socket);
       }
     }, IDLE_TIMEOUT_MS + 250);
   }
@@ -396,6 +537,7 @@ export class MultiplayerRoom {
       if (this.players.size > 0 || Date.now() - this.emptySince < EMPTY_TTL_MS) return;
       this.code = null;
       this.inputTicks.clear();
+      this.replayBundles.clear();
       this.latestSnapshot = null;
       this.setup = null;
       this.nextFlushTick = 0;
@@ -427,7 +569,7 @@ export class MultiplayerRoom {
 
   private broadcast(value: JsonRecord, except?: string): void {
     for (const player of this.players.values()) {
-      if (player.id !== except) send(player.socket, value);
+      if (player.id !== except && player.socket) send(player.socket, value);
     }
   }
 }
@@ -569,12 +711,26 @@ function normalizeRoomCode(value: unknown): string | null {
   return /^[A-F0-9]{24}$/.test(code) ? code : null;
 }
 
+function normalizeReconnectToken(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const token = value.toUpperCase();
+  return /^[A-F0-9]{32}$/.test(token) ? token : null;
+}
+
 function normalizeTick(value: unknown): number | null {
   return Number.isInteger(value) && value >= 0 && value <= 10_000_000 ? value : null;
 }
 
 function randomRoomCode(): string {
-  const values = crypto.getRandomValues(new Uint8Array(ROOM_CODE_BYTES));
+  return randomHex(ROOM_CODE_BYTES);
+}
+
+function randomReconnectToken(): string {
+  return randomHex(RECONNECT_TOKEN_BYTES);
+}
+
+function randomHex(byteLength: number): string {
+  const values = crypto.getRandomValues(new Uint8Array(byteLength));
   return [...values].map((value) => value.toString(16).padStart(2, '0')).join('').toUpperCase();
 }
 

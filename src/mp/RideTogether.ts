@@ -12,6 +12,7 @@ export type RideTogetherConfig = Pick<LockstepClientOptions, 'relayBase' | 'code
 };
 
 const STAGED_RIDE_KEY = 'gr.mp.ride.v1';
+const RECONNECT_RIDE_KEY = 'gr.mp.reconnect.v1';
 const CODE_WORDS_KEY = 'gr.mp.codeWords.v1';
 const RELAY_BASE_KEY = 'gr.mp.relayBase.v1';
 
@@ -82,6 +83,7 @@ export async function createRideRoom(
 
 export function stageRideConfig(config: RideTogetherConfig): void {
   try {
+    sessionStorage.removeItem(RECONNECT_RIDE_KEY);
     sessionStorage.setItem(STAGED_RIDE_KEY, JSON.stringify(config));
   } catch {
     // Optional storage; dev URL multiplayer still works without this town seam.
@@ -93,17 +95,36 @@ export function consumeStagedRideConfig(): LockstepClientOptions | null {
     const raw = sessionStorage.getItem(STAGED_RIDE_KEY);
     if (!raw) return null;
     sessionStorage.removeItem(STAGED_RIDE_KEY);
-    const parsed = JSON.parse(raw) as Partial<RideTogetherConfig>;
-    const code = normalizeRoomCode(parsed.code);
-    const relayBase = typeof parsed.relayBase === 'string' ? parsed.relayBase.replace(/\/$/, '') : '';
-    const player = parsed.player;
-    if (!code || !relayBase || !player || typeof player.name !== 'string' || typeof player.town !== 'string') return null;
-    const setup = normalizeStagedSetup(parsed.setup);
-    if (!setup) return null;
-    return { relayBase, code, player: { name: player.name, town: player.town }, setup };
+    return normalizeStoredRide(JSON.parse(raw));
   } catch {
     return null;
   }
+}
+
+export function rememberReconnectRideConfig(config: LockstepClientOptions, reconnectToken: string): void {
+  const normalized = normalizeStoredRide({ ...config, reconnectToken });
+  if (!normalized?.reconnectToken) return;
+  try {
+    sessionStorage.setItem(RECONNECT_RIDE_KEY, JSON.stringify(normalized));
+  } catch {}
+}
+
+export function readReconnectRideConfig(): LockstepClientOptions | null {
+  try {
+    const raw = sessionStorage.getItem(RECONNECT_RIDE_KEY);
+    if (!raw) return null;
+    const config = normalizeStoredRide(JSON.parse(raw));
+    if (!config?.reconnectToken) sessionStorage.removeItem(RECONNECT_RIDE_KEY);
+    return config?.reconnectToken ? config : null;
+  } catch {
+    return null;
+  }
+}
+
+export function clearReconnectRideConfig(): void {
+  try {
+    sessionStorage.removeItem(RECONNECT_RIDE_KEY);
+  } catch {}
 }
 
 export function resolveJoinPhrase(value: string): string | null {
@@ -222,6 +243,30 @@ function normalizeStagedSetup(value: unknown): MultiplayerSetup | null {
     meta: setup.meta,
     research: setup.research,
   };
+}
+
+function normalizeStoredRide(value: unknown): LockstepClientOptions | null {
+  if (!value || typeof value !== 'object' || Array.isArray(value)) return null;
+  const parsed = value as Partial<LockstepClientOptions>;
+  const code = normalizeRoomCode(parsed.code);
+  const relayBase = typeof parsed.relayBase === 'string' ? parsed.relayBase.replace(/\/$/, '') : '';
+  const player = parsed.player;
+  const setup = normalizeStagedSetup(parsed.setup);
+  if (!code || !relayBase || !player || typeof player.name !== 'string' || typeof player.town !== 'string' || !setup) return null;
+  const reconnectToken = normalizeReconnectToken(parsed.reconnectToken);
+  return {
+    relayBase,
+    code,
+    player: { name: player.name, town: player.town },
+    setup,
+    ...(reconnectToken ? { reconnectToken } : {}),
+  };
+}
+
+function normalizeReconnectToken(value: unknown): string | null {
+  if (typeof value !== 'string') return null;
+  const token = value.toUpperCase();
+  return /^[A-F0-9]{32}$/.test(token) ? token : null;
 }
 
 function stableStringify(value: unknown): string {
