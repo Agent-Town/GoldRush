@@ -15,6 +15,7 @@ import {
   activeTileDescriptor,
   DEFAULT_EPOCH_ID,
   listEpochs,
+  loadContract,
   loadEpoch,
   type ContractBaronTwist,
   type ContractEscortMode,
@@ -149,6 +150,7 @@ import { E6ArsenalSystem } from '../systems/E6ArsenalSystem';
 import { E6TileConsumerSystem } from '../systems/E6TileConsumerSystem';
 import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
 import { E9CanalSystem } from '../systems/E9CanalSystem';
+import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
@@ -454,6 +456,7 @@ export class Game {
   private readonly e6ArsenalSystem: E6ArsenalSystem;
   private readonly e9ArsenalSystem: E9ArsenalSystem;
   private readonly e9CanalSystem: E9CanalSystem;
+  private readonly e10FinaleSystem: E10FinaleSystem;
   private readonly e7ArsenalSystem: E7ArsenalSystem;
   private readonly e8ArsenalSystem: E8ArsenalSystem;
   private readonly progression: Progression;
@@ -1387,6 +1390,11 @@ export class Game {
         weaponToggles: this.weaponToggleCount,
         blastTime: this.blastTime,
       };
+      if (this.e10FinaleSystem.enabled) {
+        this.state.setPaused(true);
+        this.beginE10FinaleClose();
+        return;
+      }
       const agentAutonomyDelta = this.agentAutonomyDelta(true);
       window.setTimeout(() => {
         this.state.setPaused(true);
@@ -1495,6 +1503,15 @@ export class Game {
     });
 
     this.createScene();
+    const finaleStageDebug = isDebugEnabled() && new URLSearchParams(window.location.search).has('e10finale');
+    const finaleContract = finaleStageDebug ? loadContract('e10-last-claim', 'epoch-10-deepsky') : this.activeContract;
+    const finaleTile = finaleContract.tileParams as typeof finaleContract.tileParams & { eraDeckZones?: unknown[] };
+    this.e10FinaleSystem = new E10FinaleSystem(this.scene, this.canvas, {
+      enabled: (finaleStageDebug || this.activeContract.id === 'e10-last-claim') && finaleTile.tileId === 'ark-plaza-e10',
+      sceneClass: finaleTile.biome,
+      tileId: finaleTile.tileId,
+      deckCount: finaleTile.eraDeckZones?.length ?? 0,
+    });
     this.mountTileStateRenderEntries();
     const renderParams = new URLSearchParams(window.location.search);
     // The editor must preview its live descriptor rather than a baked terrain GLB.
@@ -1591,6 +1608,10 @@ export class Game {
         },
         e9Canal: {
           diagnostics: () => this.e9CanalSystem.diagnostics,
+        },
+        e10Finale: {
+          close: () => this.beginE10FinaleClose(),
+          diagnostics: () => this.e10FinaleSystem.diagnostics(),
         },
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
@@ -1959,6 +1980,7 @@ export class Game {
     this.e6TileConsumers.dispose();
     this.e9ArsenalSystem.dispose();
     this.e9CanalSystem.dispose();
+    this.e10FinaleSystem.dispose();
     this.e7ArsenalSystem.dispose();
     this.e8ArsenalSystem.dispose();
     this.crawlerBoss.dispose();
@@ -3934,6 +3956,7 @@ export class Game {
       e6Arsenal: this.e6ArsenalSystem.diagnostics,
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e9Canal: this.e9CanalSystem.diagnostics,
+      e10Finale: this.e10FinaleSystem.diagnostics(),
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
@@ -5294,6 +5317,13 @@ export class Game {
   private secureClaimChoicePending(): boolean {
     const run = this.runManager?.diagnostics;
     return run?.secured === true && run.rush !== true;
+  }
+
+  private beginE10FinaleClose(): boolean {
+    return this.e10FinaleSystem.closeFinale(() => {
+      this.runStartMetaRecapPending = false;
+      this.returnToTown('secured');
+    });
   }
 
   private handleUpgradeIntent(intent: UpgradeIntent): void {
