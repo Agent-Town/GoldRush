@@ -41,13 +41,13 @@ async function p95(page: Page, frames = 180): Promise<number> {
   }, frames);
 }
 
-test('flag-off keeps the Boiler House sprite shell and requests no GLB', async ({ page }, testInfo) => {
+test('LITE keeps the Boiler House sprite shell and requests no GLB', async ({ page }, testInfo) => {
   const bucket = errors(page);
   let requests = 0;
-  page.on('request', (request) => { if (/boiler-house[^/]*\.glb/.test(request.url())) requests += 1; });
-  await boot(page, '');
+  page.on('request', (request) => { if (/run3d\/boiler-house\.glb/.test(request.url())) requests += 1; });
+  await boot(page, '&tier=lite');
   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('boiler_house', 0, 12))).resolves.toBe(true);
-  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('off');
+  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('lite');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.boiler_house.active)).toBe(1);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-boiler-house-sprite.png`) });
@@ -58,7 +58,7 @@ test('flag-off keeps the Boiler House sprite shell and requests no GLB', async (
 test('all loads once, mirrors Boiler Houses, and unmounts on demolish', async ({ page }, testInfo) => {
   const bucket = errors(page);
   let requests = 0;
-  page.on('request', (request) => { if (/boiler-house[^/]*\.glb/.test(request.url())) requests += 1; });
+  page.on('request', (request) => { if (/run3d\/boiler-house\.glb/.test(request.url())) requests += 1; });
   await boot(page, '&run3dPilot=all');
   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.run3dPilotState === 'ready');
   await placeBoilerHouses(page);
@@ -76,14 +76,14 @@ test('all loads once, mirrors Boiler Houses, and unmounts on demolish', async ({
 test('lite and invalid bytes retain the Boiler House sprite fallback', async ({ page }) => {
   const bucket = errors(page);
   let requests = 0;
-  page.on('request', (request) => { if (/boiler-house[^/]*\.glb/.test(request.url())) requests += 1; });
+  page.on('request', (request) => { if (/run3d\/boiler-house\.glb/.test(request.url())) requests += 1; });
   await boot(page, '&run3dPilot=boiler_house&tier=lite');
   await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('lite');
   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('boiler_house', 0, 12))).resolves.toBe(true);
   expect(requests).toBe(0);
 
-  await page.route(/boiler-house[^/]*\.glb/, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes' }));
-  await boot(page, '&run3dPilot=boiler_house');
+  await page.route(/run3d\/boiler-house\.glb/, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes' }));
+  await boot(page, '&run3dPilot=boiler_house&tier=full');
   await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('failed');
   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('boiler_house', 0, 12))).resolves.toBe(true);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.boiler_house.active)).toBe(1);
@@ -92,7 +92,7 @@ test('lite and invalid bytes retain the Boiler House sprite fallback', async ({ 
 
 test('maximum legal Boiler Houses stay within the 115% frame budget', async ({ page }, testInfo) => {
   let modelRoute: Route | undefined;
-  await page.route(/boiler-house[^/]*\.glb/, (route) => { modelRoute = route; });
+  await page.route(/run3d\/boiler-house\.glb/, (route) => { modelRoute = route; });
   await boot(page, '&run3dPilot=boiler_house');
   await expect.poll(() => modelRoute).toBeTruthy();
   await placeBoilerHouses(page);

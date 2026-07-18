@@ -39,13 +39,13 @@ async function p95(page: Page, frames = 180): Promise<number> {
   }, frames);
 }
 
-test('flag-off keeps the assay-bench sprite shell and requests no GLB', async ({ page }, testInfo) => {
+test('LITE keeps the assay-bench sprite shell and requests no GLB', async ({ page }, testInfo) => {
   const bucket = errors(page);
   let requests = 0;
   page.on('request', (request) => { if (/assay-bench[^/]*\.glb/.test(request.url())) requests += 1; });
-  await boot(page, '');
+  await boot(page, '&tier=lite');
   await placeAssayBench(page);
-  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('off');
+  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('lite');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.assay_office.active)).toBe(1);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-assay-bench-sprite.png`) });
@@ -85,7 +85,7 @@ test('lite and invalid bytes retain the assay-bench sprite fallback', async ({ p
   expect(requests).toBe(0);
 
   await page.route(/assay-bench[^/]*\.glb/, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes' }));
-  await boot(page, '&run3dPilot=assay_office');
+  await boot(page, '&run3dPilot=assay_office&tier=full');
   await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('failed');
   await placeAssayBench(page);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.assay_office.active)).toBe(1);

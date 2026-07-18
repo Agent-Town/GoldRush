@@ -39,13 +39,13 @@ async function p95(page: Page, frames = 180): Promise<number> {
   }, frames);
 }
 
-test('flag-off keeps the sprite shell and requests no turret GLB', async ({ page }, testInfo) => {
+test('LITE keeps the sprite shell and requests no turret GLB', async ({ page }, testInfo) => {
   const bucket = errors(page);
   let requests = 0;
   page.on('request', (request) => { if (/turret[^/]*\.glb/.test(request.url())) requests += 1; });
-  await boot(page, '');
+  await boot(page, '&tier=lite');
   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 8))).resolves.toBe(true);
-  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('off');
+  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('lite');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.turret.active)).toBe(1);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-turret-sprite.png`) });
@@ -81,7 +81,7 @@ test('lite and invalid bytes retain sprite fallback', async ({ page }) => {
   expect(requests).toBe(0);
 
   await page.route(/turret[^/]*\.glb/, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes' }));
-  await boot(page, '&run3dPilot=turret');
+  await boot(page, '&run3dPilot=turret&tier=full');
   await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('failed');
   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 8))).resolves.toBe(true);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.turret.active)).toBe(1);

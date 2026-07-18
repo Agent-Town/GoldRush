@@ -140,11 +140,11 @@ test('session document changes visual height across reload while the sim fingerp
   expect(await page.evaluate(() => window.__GR_TEST__?.activeContract().tileParams.authoredTerrain)).toBeUndefined();
   expect(await page.getByTestId('descriptor-inspector').count()).toBe(0);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.height.probes)).toEqual({
-    heroStart: 0.1037994959281516,
-    river: -0.13640923580690872,
-    ford: -0.15538053712954125,
-    nearBank: -0.18,
-    farBank: 0.3169621691339781,
+    heroStart: 0.3108261525630951,
+    river: -0.3954502046108246,
+    ford: -0.09651920944452286,
+    nearBank: 0.4356691837310791,
+    farBank: 0.9647302031517029,
   });
 
   const report = {

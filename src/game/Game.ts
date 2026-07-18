@@ -1470,7 +1470,9 @@ export class Game {
 
     this.createScene();
     this.mountTileStateRenderEntries();
-    const terrain3dPilot = new URLSearchParams(window.location.search).has('terrain3dPilot');
+    const renderParams = new URLSearchParams(window.location.search);
+    // The editor must preview its live descriptor rather than a baked terrain GLB.
+    const terrain3dPilot = !renderParams.has('terrain2d') && !renderParams.has('editor');
     this.canvas.dataset.terrain3dPilotState = terrain3dPilot ? 'loading' : 'off';
     this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
     if (terrain3dPilot) void import('../world/Terrain3dClaimPilot').then(({ installTerrain3dClaimPilot }) => {
@@ -1487,9 +1489,8 @@ export class Game {
         },
       });
     });
-    const run3dSelection = new URLSearchParams(window.location.search).get('run3dPilot');
-    this.canvas.dataset.run3dPilotState = run3dSelection ? 'loading' : 'off';
-    if (run3dSelection) void import('./Run3dPilot').then(({ installRun3dPilot }) => (this.run3dPilot = installRun3dPilot({ scene: this.scene, canvas: this.canvas, diagnostics: () => this.buildSystem.diagnostics })));
+    this.canvas.dataset.run3dPilotState = 'loading';
+    void import('./Run3dPilot').then(({ installRun3dPilot }) => (this.run3dPilot = installRun3dPilot({ scene: this.scene, canvas: this.canvas, diagnostics: () => this.buildSystem.diagnostics })));
     this.registerGoldHoldings();
     this.syncMegaprojectSite();
     this.placeContractFixtures();

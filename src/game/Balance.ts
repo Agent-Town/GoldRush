@@ -77,6 +77,9 @@ export const Balance = {
     stuckWatchdogSeconds: 3,
     stuckWatchdogDisplacement: 0.4,
   },
+  waterMask: {
+    segmentEpsilon: 0.000001,
+  },
   convoy: {
     spacing: 3,
     catchupMultiplier: 1.25,

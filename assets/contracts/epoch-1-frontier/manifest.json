@@ -219,6 +219,68 @@
   },
   "devTiles": [
     {
+      "id": "gt-water-mask-braid",
+      "biome": "dev-water-mask-braid",
+      "waterMask": {
+        "id": "twin-banks-true-braid-dev",
+        "regions": [
+          {
+            "id": "west-ford",
+            "kind": "rect",
+            "zone": "ford",
+            "minX": -19,
+            "maxX": -13,
+            "minZ": -5.5,
+            "maxZ": 5.5
+          },
+          {
+            "id": "east-ford",
+            "kind": "rect",
+            "zone": "ford",
+            "minX": 13,
+            "maxX": 19,
+            "minZ": -5.5,
+            "maxZ": 5.5
+          },
+          {
+            "id": "west-source-box",
+            "kind": "rect",
+            "zone": "river",
+            "minX": -30,
+            "maxX": -26,
+            "minZ": -2,
+            "maxZ": 2
+          },
+          {
+            "id": "north-channel",
+            "kind": "polyline_band",
+            "zone": "river",
+            "halfWidth": 1.5,
+            "points": [
+              { "x": -28, "z": 0 },
+              { "x": -14, "z": 4 },
+              { "x": 0, "z": 2 },
+              { "x": 14, "z": 4 },
+              { "x": 28, "z": 0 }
+            ]
+          },
+          {
+            "id": "south-channel",
+            "kind": "polyline_band",
+            "zone": "river",
+            "halfWidth": 1.5,
+            "points": [
+              { "x": -28, "z": 0 },
+              { "x": -14, "z": -4 },
+              { "x": 0, "z": -2 },
+              { "x": 14, "z": -4 },
+              { "x": 28, "z": 0 }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "id": "gt-flat-water",
       "biome": "dev-flat-water",
       "water": {

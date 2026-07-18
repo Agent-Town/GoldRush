@@ -50,13 +50,13 @@ async function p95(page: Page, frames = 180): Promise<number> {
   }, frames);
 }
 
-test('flag-off keeps lantern sprites and requests no GLB', async ({ page }, testInfo) => {
+test('LITE keeps lantern sprites and requests no GLB', async ({ page }, testInfo) => {
   const bucket = errors(page);
   let requests = 0;
   page.on('request', (request) => { if (/lantern-post[^/]*\.glb/.test(request.url())) requests += 1; });
-  await boot(page, '');
+  await boot(page, '&tier=lite');
   await makeDenseLanternField(page);
-  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('off');
+  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('lite');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts)).toBe(15);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-lantern-post-sprite.png`) });
@@ -91,7 +91,7 @@ test('lite and invalid bytes retain lantern sprite fallback', async ({ page }) =
   await makeDenseLanternField(page);
   expect(requests).toBe(0);
   await page.route(/lantern-post[^/]*\.glb/, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes' }));
-  await boot(page, '&run3dPilot=lantern_post');
+  await boot(page, '&run3dPilot=lantern_post&tier=full');
   await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('failed');
   await makeDenseLanternField(page);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.lanternPosts)).toBe(15);

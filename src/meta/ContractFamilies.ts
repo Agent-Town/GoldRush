@@ -206,6 +206,27 @@ export type ContractWaterSource = {
   z: number;
   radius: number;
 };
+export type ContractWaterMaskRegion =
+  | {
+      id: string;
+      kind: 'rect';
+      zone: 'river' | 'ford' | 'shallows';
+      minX: number;
+      maxX: number;
+      minZ: number;
+      maxZ: number;
+    }
+  | {
+      id: string;
+      kind: 'polyline_band';
+      zone: 'river' | 'ford' | 'shallows';
+      halfWidth: number;
+      points: Array<{ x: number; z: number }>;
+    };
+export type ContractWaterMask = {
+  id: string;
+  regions: ContractWaterMaskRegion[];
+};
 export type ContractLightRamp = {
   duskWave: number;
   darkWave: number;
@@ -541,6 +562,7 @@ export type ContractManifest = {
     stakeMarkers?: ContractStakeMarker[];
     rails?: RailPathDescriptor[];
     waterSources: ContractWaterSource[];
+    waterMask?: ContractWaterMask;
     harvestAnchors?: ContractHarvestAnchor[];
     tarSeams?: ContractTarSeam[];
     roadCorridors?: ContractRoadCorridor[];
@@ -622,6 +644,7 @@ export type EpochTileDescriptor = {
   render?: TileRenderDescriptor;
   elevation?: TileElevationDescriptor;
   water?: ContractWaterDescriptor;
+  waterMask?: ContractWaterMask;
   rails?: RailPathDescriptor[];
 };
 
@@ -791,6 +814,7 @@ export function activeTileDescriptor(): EpochTileDescriptor {
   };
   if (contract.tileParams.render) tile.render = contract.tileParams.render;
   if (contract.tileParams.elevation) tile.elevation = contract.tileParams.elevation;
+  if (contract.tileParams.waterMask) tile.waterMask = contract.tileParams.waterMask;
   if (contract.tileParams.rails) tile.rails = contract.tileParams.rails;
   if (!tile) throw new Error('Missing active tile descriptor: epoch-1-frontier');
   return tile;
@@ -1150,6 +1174,7 @@ function activeDevTileOverride(): EpochTileDescriptor | null {
   const active: EpochTileDescriptor = { id: tile.id, biome: tile.biome };
   if (tile.render) active.render = tile.render;
   if (tile.elevation) active.elevation = tile.elevation;
+  if (tile.waterMask) active.waterMask = tile.waterMask;
   if (tile.rails && (params.has('tram') || params.get('rails') === 'dev')) active.rails = tile.rails;
   return active;
 }
@@ -1276,6 +1301,8 @@ const DESCRIPTOR_ENUMS: Record<string, readonly string[]> = {
   'tileParams.render.terrainMesh': ['required', 'preferred', 'off'],
   'tileParams.heightfield.mode': ['visual'],
   'tileParams.waterSources[].kind': ['spring_pond'],
+  'tileParams.waterMask.regions[].kind': ['rect', 'polyline_band'],
+  'tileParams.waterMask.regions[].zone': ['river', 'ford', 'shallows'],
   'tileParams.buildZones[].bank': ['north', 'south'],
   'tileParams.rails[].style': ['placeholder', 'steamworks', 'mine-spur', 'mass-driver', 'feeder-canal'],
   'tileParams.prePlacedBuildables[].id': ['lantern_post', 'turret', 'sentry_beacon'],
@@ -1540,6 +1567,7 @@ function variableDescriptorArrayShape(
 
 function validateContractMap(contract: ContractManifest, reasons: ContractDescriptorReason[]): void {
   validateLightRamp(contract.twist.lightRamp, reasons);
+  validateWaterMask(contract.tileParams.waterMask, reasons);
   const orbit = contract.tileParams.orbitSpawn;
   if (orbit && (
     ![orbit.center.x, orbit.center.z, orbit.radius, orbit.angularSpeed, orbit.lapsBeforePeel, orbit.peelSpeed, orbit.telegraphSeconds].every(Number.isFinite)
@@ -1599,6 +1627,40 @@ function validateContractMap(contract: ContractManifest, reasons: ContractDescri
       reason('fixture_outside_claim', 'This fixture stands beyond the claim stakes.', `tileParams.prePlacedBuildables[${index}]`),
     );
   }
+}
+
+function validateWaterMask(mask: ContractWaterMask | undefined, reasons: ContractDescriptorReason[]): void {
+  if (!mask) return;
+  const path = 'tileParams.waterMask';
+  if (!shortText(mask.id) || mask.regions.length === 0) {
+    addDescriptorReason(reasons, reason('water_mask_shape', 'A water mask needs an ID and at least one surveyed region.', path));
+  }
+  const ids = new Set<string>();
+  mask.regions.forEach((region, index) => {
+    const regionPath = `${path}.regions[${index}]`;
+    if (!shortText(region.id) || ids.has(region.id)) {
+      addDescriptorReason(reasons, reason('water_mask_region_id', 'Each water region needs a different short ID.', `${regionPath}.id`));
+    }
+    ids.add(region.id);
+    if (!['river', 'ford', 'shallows'].includes(region.zone)) {
+      addDescriptorReason(reasons, reason('water_mask_zone', 'Choose river, ford, or shallows for this water region.', `${regionPath}.zone`));
+    }
+    if (region.kind === 'rect') {
+      if (![region.minX, region.maxX, region.minZ, region.maxZ].every(Number.isFinite)
+        || region.minX >= region.maxX || region.minZ >= region.maxZ) {
+        addDescriptorReason(reasons, reason('water_mask_rect', 'A rectangular water region needs positive width and depth.', regionPath));
+      }
+      return;
+    }
+    if (region.kind !== 'polyline_band' || !Number.isFinite(region.halfWidth) || region.halfWidth <= 0
+      || region.points.length < 2 || region.points.some((point) => !Number.isFinite(point.x) || !Number.isFinite(point.z))
+      || !region.points.some((point, pointIndex) => pointIndex > 0 && Math.hypot(
+        point.x - region.points[pointIndex - 1]!.x,
+        point.z - region.points[pointIndex - 1]!.z,
+      ) > 0)) {
+      addDescriptorReason(reasons, reason('water_mask_polyline', 'A water band needs positive width and at least two different surveyed points.', regionPath));
+    }
+  });
 }
 
 function validateLightRamp(ramp: ContractLightRamp | undefined, reasons: ContractDescriptorReason[]): void {

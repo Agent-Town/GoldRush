@@ -41,13 +41,13 @@ async function p95(page: Page, frames = 180): Promise<number> {
   }, frames);
 }
 
-test('flag-off keeps the stockpile sprite shell and requests no GLB', async ({ page }, testInfo) => {
+test('LITE keeps the stockpile sprite shell and requests no GLB', async ({ page }, testInfo) => {
   const bucket = errors(page);
   let requests = 0;
   page.on('request', (request) => { if (/stockpile[^/]*\.glb/.test(request.url())) requests += 1; });
-  await boot(page, '');
+  await boot(page, '&tier=lite');
   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('stockpile', 0, 7))).resolves.toBe(true);
-  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('off');
+  await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('lite');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.stockpile.active)).toBe(1);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-stockpile-sprite.png`) });
@@ -83,7 +83,7 @@ test('lite and invalid bytes retain the stockpile sprite fallback', async ({ pag
   expect(requests).toBe(0);
 
   await page.route(/stockpile[^/]*\.glb/, (route) => route.fulfill({ status: 200, body: 'invalid glb bytes' }));
-  await boot(page, '&run3dPilot=stockpile');
+  await boot(page, '&run3dPilot=stockpile&tier=full');
   await expect.poll(() => page.evaluate(() => document.querySelector('canvas')?.dataset.run3dPilotState)).toBe('failed');
   await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('stockpile', 0, 7))).resolves.toBe(true);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.shells.stockpile.active)).toBe(1);
