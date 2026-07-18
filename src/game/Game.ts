@@ -138,6 +138,7 @@ import { XpMotePool } from '../entities/XpMote';
 import { PressureSystem } from '../systems/PressureSystem';
 import { FuelSystem } from '../systems/FuelSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
+import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -432,6 +433,7 @@ export class Game {
   private readonly buildSystem: BuildSystem;
   private readonly pressureSystem: PressureSystem;
   private readonly pressureArsenalSystem: PressureArsenalSystem;
+  private readonly e7ArsenalSystem: E7ArsenalSystem;
   private readonly progression: Progression;
   private difficultyPreset: DifficultyPresetId = readDifficultyPreset();
   private activeWeapon: 'rig' | 'blast' = 'rig';
@@ -900,20 +902,32 @@ export class Game {
 
   private createHeroShooter(actor: Hero): ShooterHandle {
     const slot = Math.max(0, this.actors.indexOf(actor));
+    const isPlaybookRig = () => !this.mpClient && slot > 0;
     const handle: ShooterHandle = {
       resumeKey: `hero:${slot}:rig`,
-      id: 'hero',
-      enabled: () => this.activeWeapon === 'rig' && this.heroWeaponsEnabledFor(actor),
+      get id() { return isPlaybookRig() ? 'e7_playbook_spark_rig' : 'hero'; },
+      enabled: () =>
+        this.activeWeapon === 'rig' &&
+        this.heroWeaponsEnabledFor(actor) &&
+        (slot === 0 || Boolean(this.mpClient) || this.activeEpoch.order >= 7),
       getPos: () => actor.group.position,
-      range: Balance.sparkRig.range,
-      cooldown: 1 / Balance.sparkRig.fireRate,
-      damage: Balance.sparkRig.damage,
-      canTarget: hasElevationTile() ? (target) => terrainLineOfSight(actor.group.position, target.position) : undefined,
+      range: slot > 0 ? Balance.e7Arsenal.playbookSparkRig.range : Balance.sparkRig.range,
+      cooldown: 1 / (slot > 0 ? Balance.e7Arsenal.playbookSparkRig.fireRate : Balance.sparkRig.fireRate),
+      damage: slot > 0 ? Balance.e7Arsenal.playbookSparkRig.damage : Balance.sparkRig.damage,
+      getDamage: slot > 0
+        ? () => isPlaybookRig() ? Balance.e7Arsenal.playbookSparkRig.damage * this.progression.stats.damageMult : handle.damage
+        : undefined,
+      canTarget: (target) =>
+        (!isPlaybookRig() || (!target.eliteKind && !target.bossGroupId)) &&
+        (!hasElevationTile() || terrainLineOfSight(actor.group.position, target.position)),
       effectiveRange: hasElevationTile()
         ? () => highGroundRange(handle.range, actor.group.position.x, actor.group.position.z)
         : undefined,
-      projSpeed: Balance.sparkRig.boltSpeed,
-      volley: Balance.sparkRig.volley,
+      onVolleyFired: () => {
+        if (isPlaybookRig()) this.e7ArsenalSystem.recordPlaybookFire();
+      },
+      projSpeed: slot > 0 ? Balance.e7Arsenal.playbookSparkRig.boltSpeed : Balance.sparkRig.boltSpeed,
+      volley: slot > 0 ? Balance.e7Arsenal.playbookSparkRig.volley : Balance.sparkRig.volley,
     };
     return handle;
   }
@@ -1113,6 +1127,15 @@ export class Game {
         !this.multiplayerActive() &&
         this.heroWeaponsEnabledFor(this.primaryActor),
     );
+    this.e7ArsenalSystem = new E7ArsenalSystem(
+      this.combat,
+      this.events,
+      () => this.primaryActor.group.position,
+      () => this.playbookReplay?.active ? this.actors[this.playbookReplaySlot]?.group.position ?? null : null,
+      () => this.buildSystem.diagnostics.turretPositions,
+      () => this.activeEpoch.order >= 7 && !this.multiplayerActive(),
+    );
+    this.scene.add(this.e7ArsenalSystem.view.group);
     this.buildSystem.setMegaprojectDamageResolver((target, amount) => this.resolveMegaprojectDamage(target, amount));
     this.progression = new Progression({
       state: this.state,
@@ -1799,6 +1822,7 @@ export class Game {
     this.buildSystem.dispose();
     this.pressureSystem.dispose();
     this.pressureArsenalSystem.dispose();
+    this.e7ArsenalSystem.dispose();
     this.crawlerBoss.dispose();
     this.landYachtBoss.dispose();
     this.dredgeQueenBoss.dispose();
@@ -2029,6 +2053,7 @@ export class Game {
           (this.progression.snapshot.stacks.auto_pan ?? 0) > 0,
         ),
       );
+      this.e7ArsenalSystem.update(this.timeAlive);
       this.syncContractPowerGrid();
       this.ferrisWheel?.update(simDelta);
       this.syncFerrisWheelPower();
@@ -3683,6 +3708,7 @@ export class Game {
       wrangle: this.wrangle.diagnostics(),
       pressure: this.pressureSystem.diagnostics,
       pressureArsenal: this.pressureArsenalSystem.diagnostics,
+      e7Arsenal: this.e7ArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -5175,6 +5201,7 @@ export class Game {
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
     this.harvestSystem.reset();
     this.combat.reset();
+    this.e7ArsenalSystem.reset();
     this.damSurge?.reset();
     if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge?.trigger(this.timeAlive);
     this.lightRig?.resetTransientLights();
@@ -6156,11 +6183,12 @@ export class Game {
 
   private applyStats(stats: EffectiveStats, pickedId: UpgradeId | null): void {
     for (const shooter of this.heroShooters) {
-      shooter.cooldown = 1 / (Balance.sparkRig.fireRate * stats.fireRateMult);
-      shooter.damage = Balance.sparkRig.damage * stats.damageMult;
-      shooter.range = Balance.sparkRig.range * stats.rangeMult;
-      shooter.projSpeed = Balance.sparkRig.boltSpeed * stats.boltSpeedMult;
-      shooter.volley = Balance.sparkRig.volley + stats.volleyBonus;
+      const rig = !this.mpClient && shooter.resumeKey !== 'hero:0:rig' ? Balance.e7Arsenal.playbookSparkRig : Balance.sparkRig;
+      shooter.cooldown = 1 / (rig.fireRate * stats.fireRateMult);
+      shooter.damage = rig.damage * stats.damageMult;
+      shooter.range = rig.range * stats.rangeMult;
+      shooter.projSpeed = rig.boltSpeed * stats.boltSpeedMult;
+      shooter.volley = rig.volley + stats.volleyBonus;
     }
     this.blastDamageMult = stats.blastDamageMult;
     this.blastRadiusMult = stats.blastRadiusMult;
