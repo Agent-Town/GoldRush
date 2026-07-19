@@ -21,6 +21,7 @@ import redfieldsManifest from '../../assets/contracts/epoch-9-redfields/manifest
 import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
 import deepskyManifest from '../../assets/contracts/epoch-10-deepsky/manifest.json' with { type: 'json' };
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
+import { e7SignalExitBeatReady } from '../systems/E7SignalSystem';
 
 export type EpochUpgradeDeltas = {
   fireRateMult?: number;
@@ -943,7 +944,9 @@ export function epochIsActive(id: string): boolean {
 
 export function activateEpoch(id: string): boolean {
   const active = loadEpoch(activeEpochId());
-  if (active.successor !== id || !epochMegaprojectComplete(active)) return false;
+  const successor = active.id === 'epoch-7-signal' ? 'epoch-8-orbital' : active.successor;
+  if (successor !== id || !epochMegaprojectComplete(active)) return false;
+  if (active.id === 'epoch-7-signal' && id === 'epoch-8-orbital' && !e7SignalExitBeatReady()) return false;
   loadEpoch(id);
   try {
     globalThis.localStorage?.setItem(EPOCH_CEREMONY_KEY, id);

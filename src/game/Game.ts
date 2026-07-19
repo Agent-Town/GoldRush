@@ -153,6 +153,7 @@ import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
 import { E9CanalSystem } from '../systems/E9CanalSystem';
 import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
+import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
@@ -473,6 +474,7 @@ export class Game {
   private readonly e9CanalSystem: E9CanalSystem;
   private readonly e10FinaleSystem: E10FinaleSystem;
   private readonly e10StaticBoss: E10StaticBossSystem;
+  private readonly e7SignalSystem: E7SignalSystem;
   private readonly e7ArsenalSystem: E7ArsenalSystem;
   private readonly e8ArsenalSystem: E8ArsenalSystem;
   private readonly progression: Progression;
@@ -1273,6 +1275,19 @@ export class Game {
         !this.multiplayerActive(),
       (position, amount, label) => this.vfx.floatText(position, `${label} +${amount}`, '#83ded7'),
     );
+    this.e7SignalSystem = new E7SignalSystem(
+      () => this.activeEpoch.id === 'epoch-7-signal' && !this.multiplayerActive(),
+      () => {
+        const build = this.buildSystem.diagnostics;
+        return [
+          ...build.beaconPositions.map((position, index) => ({ id: `beacon-${index}`, ...position })),
+          ...build.turretPositions.map((position, index) => ({ id: `turret-${index}`, ...position })),
+        ];
+      },
+      terrainLineOfSight,
+      localStorage,
+      (fragment) => this.uiBridge.announce(fragment, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE'),
+    );
     this.e7ArsenalSystem = new E7ArsenalSystem(
       this.combat,
       this.events,
@@ -1280,6 +1295,8 @@ export class Game {
       () => this.playbookReplay?.active ? this.actors[this.playbookReplaySlot]?.group.position ?? null : null,
       () => this.buildSystem.diagnostics.turretPositions,
       () => this.activeEpoch.order >= 7 && !this.multiplayerActive(),
+      (id) => this.e7SignalSystem.diagnostics.enabled ? this.e7SignalSystem.relayLinked(id) : undefined,
+      () => this.e7SignalSystem.diagnostics.enabled ? this.e7SignalSystem.diagnostics.links.length : undefined,
     );
     this.scene.add(this.e7ArsenalSystem.view.group);
     this.e8ArsenalSystem = new E8ArsenalSystem(
@@ -1331,6 +1348,7 @@ export class Game {
     const confirmButton = this.getElement('#confirm-button');
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
+    this.e7SignalSystem.mount(this.getElement('#hud'));
     if (this.activeEpoch.order >= 7) {
       this.playbookSurface = new PlaybookSurface(this.getElement('#hud'), {
         capacity: Balance.e7Playbook.shelfCapacity,
@@ -1402,6 +1420,7 @@ export class Game {
         contractId: this.activeContract.id,
       });
       const returnResult: RunReturnResult = this.runWasSecured(event.wavesSurvived) ? 'secured' : 'overrun';
+      if (returnResult === 'secured') this.e7SignalSystem.recordContractWin(this.activeContract.id);
       const onDone = () => this.returnToTown(returnResult);
       const onSecondary = () => this.resetRun();
       this.setMultiplayerDeathActions(onDone, onSecondary);
@@ -1424,6 +1443,7 @@ export class Game {
     this.events.on('run_ended', (event) => {
       discoverLedgerEntry('assay_office_records');
       if (event.reason !== 'secured') return;
+      this.e7SignalSystem.recordContractWin(this.activeContract.id);
       emitStorySignal({ type: 'first-victory' });
       this.audio.play('victory-sting');
       this.audio.play('ledger-open', 0.75);
@@ -1672,6 +1692,12 @@ export class Game {
         },
         e6Tiles: {
           diagnostics: () => this.e6TileConsumers.diagnostics,
+        },
+        e7Signal: {
+          milestone: (milestone: E7SignalMilestone) => this.e7SignalSystem.recordMilestone(milestone),
+          graphFor: (nodes: Array<{ id: string; x: number; z: number }>) => this.e7SignalSystem.graphFor(nodes),
+          droneCanOperate: (x: number, z: number) => this.e7SignalSystem.droneCanOperate({ x, z }),
+          diagnostics: () => this.e7SignalSystem.diagnostics,
         },
         e9Arsenal: {
           deployFence: () => this.e9ArsenalSystem.deployFence(),
@@ -2041,6 +2067,7 @@ export class Game {
     document.removeEventListener('visibilitychange', this.onPerformanceVisibilityChange);
     this.input.dispose();
     this.playbookSurface?.dispose();
+    this.e7SignalSystem.dispose();
     this.hud.dispose();
     this.assayOfficePrompt.dispose();
     this.buildingContextPrompt.dispose();
@@ -2308,6 +2335,7 @@ export class Game {
           (this.progression.snapshot.stacks.auto_pan ?? 0) > 0,
         ),
       );
+      this.e7SignalSystem.update();
       this.e7ArsenalSystem.update(this.timeAlive);
       this.syncContractPowerGrid();
       this.ferrisWheel?.update(simDelta);
@@ -2665,6 +2693,10 @@ export class Game {
       if (!this.state.simActive || sampledIntents.pause) return sampledIntents;
       const slot = this.playbookReplaySlot;
       const actor = this.actors[slot];
+      if (slot > 0 && actor && !this.e7SignalSystem.droneCanOperate(actor.group.position)) {
+        this.mpActorIntents = this.actors.map((_, index) => index === 0 ? sampledIntents : intentsFromLockstepInput(null));
+        return sampledIntents;
+      }
       const input = slot > 0 && actor ? replay.step(actor.group.position) : null;
       if (input) {
         this.mpActorIntents = this.actors.map((_, index) =>
@@ -2711,6 +2743,7 @@ export class Game {
     const saved = shelfFull
       ? { ok: false as const, reason: 'shelf-full' }
       : savePlaybookText(localStorage, finished.playbook.name, finished.text);
+    if (saved.ok) this.e7SignalSystem.recordMilestone('first-playbook-recorded');
     return {
       ok: true,
       name: finished.playbook.name,
@@ -2812,6 +2845,7 @@ export class Game {
     }
     this.playbookReplaySlot = 0;
     this.playbookReplayRequiresConsent = false;
+    this.e7SignalSystem.clearDroneDrop();
     return { ok: true };
   }
 
@@ -4097,6 +4131,7 @@ export class Game {
       e9Canal: this.e9CanalSystem.diagnostics,
       e10Finale: this.e10FinaleSystem.diagnostics(),
       e10Static: this.e10StaticBoss.diagnostics(),
+      e7Signal: this.e7SignalSystem.diagnostics,
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
