@@ -29,7 +29,7 @@ const BOARD_CONTRACTS = [
   { id: 'e1-baron', flavor: 'An oxblood banner marks the outfit that keeps buying trouble.', artKey: 'contract-baron' },
   {
     id: 'e2-hill-mine',
-    flavor: 'Terraced steamworks ground: hold the mine mouth, the rail cut, and the flooded gallery.',
+    flavor: 'Terraced steamworks ground above a rail cut and flooded gallery.',
     artKey: 'contract-hill-mine',
   },
 ] as const;
@@ -189,7 +189,7 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
     await seedStorage(page, entry.seed);
     await openBoard(page);
     await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
-    await expect(page.getByTestId('contract-page-count')).toHaveText('1 / 6');
+    await expect(page.getByTestId('contract-page-count')).toHaveText('1 / 41');
     await expect(page.getByTestId('contract-card-the-claim')).toHaveAttribute('data-contract-locked', 'false');
     await assertFlavorOnce(page, 'the-claim', BOARD_CONTRACTS[0].flavor);
     for (const [id, locked] of Object.entries(entry.locked)) {
@@ -271,11 +271,11 @@ test('contract catalog navigation remembers the last page', async ({ page }, tes
   await openBoard(page);
   await page.getByTestId('contract-page-next').click();
   await expect(page.getByTestId('contract-card-e1-dry-gulch')).toBeVisible();
-  await expect(page.getByTestId('contract-page-count')).toHaveText('2 / 6');
+  await expect(page.getByTestId('contract-page-count')).toHaveText('2 / 41');
   await page.keyboard.press('ArrowRight');
   await expect(page.getByTestId('contract-card-e1-night-shift')).toBeVisible();
   await goToContractPage(page, 'e1-baron');
-  await expect(page.getByTestId('contract-page-count')).toHaveText('5 / 6');
+  await expect(page.getByTestId('contract-page-count')).toHaveText('5 / 41');
   await page.getByTestId('contract-board-close').click();
   await expect(page.getByTestId('contract-board')).toBeHidden();
   await page.getByTestId('town-open-board').click();

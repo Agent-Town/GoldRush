@@ -1,4 +1,4 @@
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile, readdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Locator, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
@@ -30,13 +30,13 @@ const CONTRACTS: readonly Briefing[] = [
     name: 'The Claim',
     geographyLine: 'The classic river claim.',
     goals: ['Pan. Build. Hold the claim.'],
-    rules: ['Secure the claim at wave 20, then stay for the rush.', 'Protect the stake; overrun ends the run.'],
+    rules: ['The river splits the claim around one center ford.', 'Pressure comes from all four edges.'],
   },
   {
     id: 'e1-dry-gulch',
     name: 'The Dry Gulch',
     geographyLine: 'Mesa country; dry washes fall toward one sunken spring.',
-    goals: ['Secure the claim at wave 20, then stay for the rush.'],
+    goals: ['Work the dry washes around the lone spring.'],
     rules: [
       'Sluices work only beside the spring.',
       'The river is gone; enemies can press from every edge.',
@@ -58,29 +58,32 @@ const CONTRACTS: readonly Briefing[] = [
     id: 'e1-twin-banks',
     name: 'Twin Banks',
     geographyLine: 'A braided river claim with twin fords, gravel bars, and damp reeds.',
-    goals: ['Secure the south claim, then decide how far north to build.'],
+    goals: ['Build on either bank and watch both fords.'],
     rules: [
       'Both banks can hold buildings.',
       'Two fords carry pressure across the river.',
-      'The north marker is expansion; the south stake is the loss point.',
+      'The south stake marks your starting ground; the north marker stands across the braid.',
     ],
   },
   {
     id: 'e1-baron',
     name: 'The Claim-Jumper Baron',
     geographyLine: 'A brass-bannered bully compresses the waves and waits at the twentieth horn.',
-    goals: ['The Baron rides at wave 20. End him.'],
+    goals: ['The Baron rides at wave 20. Break his Rocket Cart.'],
     rules: [
       'His outfit rides hot: waves come 15% faster.',
       'Taunts warn you before his banner appears.',
-      'Kill the Baron for the medal and double science.',
+      'Turn back the Baron for the medal and double science.',
     ],
   },
   {
     id: 'e2-hill-mine',
     name: 'The Hill Mine',
     geographyLine: 'A terraced hillside mine above a flooded rail cut.',
-    goals: ['Hold the Boiler House pad and keep the rail cut open.'],
+    goals: [
+      'Build across the terraces and keep watch on the rail cut.',
+      'Railhead Escort: see the ore cart safely across for a town payout.',
+    ],
     rules: [
       'T2 and T3 pads out-range the valley, but cliff faces block bolts.',
       'Claim-jumpers must climb the switchbacks; cliff bands are impassable.',
@@ -90,6 +93,33 @@ const CONTRACTS: readonly Briefing[] = [
 ];
 const UNLOCKED_BOARD_CONTRACTS = new Set(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
 const DISTINCT_BOARD_GEOGRAPHY = new Set(['e1-baron']);
+
+type ContractCopy = {
+  id: string;
+  boardRow: { ledgerBlurb: string };
+  briefing: Omit<Briefing, 'id' | 'name'>;
+  twist: Record<string, unknown>;
+};
+
+async function allContractCopy(): Promise<ContractCopy[]> {
+  const root = path.resolve('assets/contracts');
+  const epochs = await readdir(root, { withFileTypes: true });
+  const bundles = await Promise.all(epochs
+    .filter((entry) => entry.isDirectory())
+    .map(async (entry) => JSON.parse(await readFile(path.join(root, entry.name, 'contracts.json'), 'utf8')) as { contracts: ContractCopy[] }));
+  return bundles.flatMap((bundle) => bundle.contracts);
+}
+
+function authoredWaveFor(line: string, twist: Record<string, unknown>): number | undefined {
+  const authored = twist as {
+    secureWave?: number;
+    baron?: { wave?: number };
+    powerGrid?: { connect?: { byWave?: number } };
+  };
+  if (/rides at wave|wave-\d+ railcar/i.test(line)) return authored.baron?.wave;
+  if (/by wave/i.test(line)) return authored.powerGrid?.connect?.byWave;
+  return authored.secureWave;
+}
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -255,6 +285,21 @@ function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 }
+
+test('all 41 card briefings use in-world copy and only cite authored wave numbers', async () => {
+  const contracts = await allContractCopy();
+  expect(contracts).toHaveLength(41);
+  for (const contract of contracts) {
+    const lines = [contract.boardRow.ledgerBlurb, contract.briefing.geographyLine, ...contract.briefing.goals, ...contract.briefing.rules];
+    expect(lines, contract.id).not.toContain('');
+    expect(lines.join(' '), contract.id).not.toMatch(/engine dependency|not yet implemented|survey status|consumer/i);
+    for (const line of [...contract.briefing.goals, ...contract.briefing.rules]) {
+      for (const match of line.matchAll(/\bwave(?:s)?[- ]?(\d+)\b/gi)) {
+        expect(authoredWaveFor(line, contract.twist), `${contract.id}: ${line}`).toBe(Number(match[1]));
+      }
+    }
+  }
+});
 
 test('every current contract launch shows manifest briefing goals and rules', async ({ page }, testInfo) => {
   const errors = collectErrors(page);

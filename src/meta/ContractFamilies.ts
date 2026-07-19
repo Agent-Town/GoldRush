@@ -1833,7 +1833,7 @@ function defaultContractFor(manifest: EpochManifest): ContractManifest {
     },
     briefing: {
       goals: ['Pan. Build. Hold the claim.'],
-      rules: ['Secure the claim at wave 20, then stay for the rush.', 'Protect the stake; overrun ends the run.'],
+      rules: ['The river splits the claim around one center ford.', 'Pressure comes from all four edges.'],
       geographyLine: 'The classic river claim.',
     },
   };
