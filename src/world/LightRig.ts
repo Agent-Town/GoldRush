@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import { setWorldSpriteTint } from '../assets/generated';
+import type { LightSource } from '../systems/LightField';
 import * as Terrain from './Terrain';
 
 export type ShadowsQuality = 'soft' | 'blob';
@@ -24,14 +25,6 @@ export type LightRigNightShiftState = {
   lampIntensityMult?: number;
   palette?: LightRigRampPalette;
   spriteTint?: string;
-};
-
-export type NightPoolSource = {
-  x: number;
-  z: number;
-  radius: number;
-  height?: number;
-  kind: 'hero' | 'lantern' | 'enemy-lantern' | 'prospector';
 };
 
 export type LightRigDiagnostics = {
@@ -57,6 +50,7 @@ export type LightRigDiagnostics = {
   nightPoolCap: number;
   nightPoolSources: number;
   enemyLanterns: number;
+  enemyLanternCones: number;
   prospectorLights: number;
   muzzleFlashes: number;
   muzzleFlashCount: number;
@@ -99,6 +93,16 @@ export class LightRig {
   private readonly lanternBulbGeometry = new THREE.SphereGeometry(0.09, 8, 6);
   private readonly lanternBulbMaterial = new THREE.MeshBasicMaterial({ color: '#ffd28a' });
   private readonly lanternBulbs = new THREE.InstancedMesh(this.lanternBulbGeometry, this.lanternBulbMaterial, 32);
+  private readonly lanternConeGeometry = new THREE.ConeGeometry(1, 1, 12, 1, true);
+  private readonly lanternConeMaterial = new THREE.MeshBasicMaterial({
+    color: '#ffd28a',
+    transparent: true,
+    opacity: Balance.contracts.nightShift.enemyLanternConeOpacity,
+    depthWrite: false,
+    side: THREE.DoubleSide,
+    blending: THREE.AdditiveBlending,
+  });
+  private readonly lanternCones = new THREE.InstancedMesh(this.lanternConeGeometry, this.lanternConeMaterial, 32);
   private readonly lightMatrix = new THREE.Object3D();
   private readonly muzzleFlashes: MuzzleFlash[] = Array.from({ length: 6 }, () => {
     const light = new THREE.SpotLight('#fff0b0', 0, 7, Math.PI / 7, 0.7, 2);
@@ -132,7 +136,11 @@ export class LightRig {
     this.lanternBulbs.name = 'EnemyHandLanternBulbs';
     this.lanternBulbs.frustumCulled = false;
     this.lanternBulbs.count = 0;
-    this.group.add(this.lanternBulbs);
+    this.lanternCones.name = 'EnemyHandLanternCones';
+    this.lanternCones.frustumCulled = false;
+    this.lanternCones.count = 0;
+    this.lanternCones.renderOrder = RenderLayers.gameplayFade;
+    this.group.add(this.lanternBulbs, this.lanternCones);
     for (const light of this.nightPoolLights) {
       light.castShadow = false;
       light.decay = 2;
@@ -178,7 +186,7 @@ export class LightRig {
     this.nightLightLimit = limit === null ? null : Math.max(0, Math.floor(limit));
   }
 
-  setNightShift(state: LightRigNightShiftState, sources: readonly NightPoolSource[] = []): void {
+  setNightShift(state: LightRigNightShiftState, sources: readonly LightSource[] = []): void {
     this.nightShift = {
       enabled: state.enabled,
       phase: state.phase,
@@ -239,6 +247,7 @@ export class LightRig {
       nightPoolCap: this.nightLightCap(),
       nightPoolSources: this.nightPoolSources,
       enemyLanterns: this.lanternBulbs.count,
+      enemyLanternCones: this.lanternCones.count,
       prospectorLights: this.nightPoolLights.filter((light) => light.visible && light.userData.kind === 'prospector').length,
       muzzleFlashes: this.muzzleFlashes.filter((flash) => flash.light.intensity > 0).length,
       muzzleFlashCount: this.firedMuzzleFlashes,
@@ -255,6 +264,8 @@ export class LightRig {
     this.fill.dispose();
     this.lanternBulbGeometry.dispose();
     this.lanternBulbMaterial.dispose();
+    this.lanternConeGeometry.dispose();
+    this.lanternConeMaterial.dispose();
     for (const flash of this.muzzleFlashes) flash.light.dispose();
     this.blobShadows.dispose();
     this.post.dispose();
@@ -323,25 +334,35 @@ export class LightRig {
     setWorldSpriteTint(this.fill.color);
   }
 
-  private syncNightPools(sources: readonly NightPoolSource[]): void {
+  private syncNightPools(sources: readonly LightSource[]): void {
     const darkness = this.nightShift.enabled ? this.nightShift.darkness : 0;
     this.nightPoolSources = sources.length;
-    const lightCount = Math.min(sources.length, this.nightLightCap());
-    const hero = sources.find((source) => source.kind === 'hero');
-    const priority = (source: NightPoolSource) => source.kind === 'hero' ? 0 : source.kind === 'prospector' ? 1 : 2;
-    const selectedSources = !hero || sources.length <= lightCount
-      ? sources
-      : [...sources].sort((a, b) => {
+    const renderSources = sources.filter((source) => source.kind !== 'watch');
+    const lightCount = Math.min(renderSources.length, this.nightLightCap());
+    const hero = renderSources.find((source) => source.kind === 'hero');
+    const priority = (source: LightSource) => source.kind === 'hero' ? 0 : source.kind === 'prospector' ? 1 : 2;
+    const selectedSources = !hero || renderSources.length <= lightCount
+      ? renderSources
+      : [...renderSources].sort((a, b) => {
           return priority(a) - priority(b) ||
             ((a.x - hero.x) ** 2 + (a.z - hero.z) ** 2) - ((b.x - hero.x) ** 2 + (b.z - hero.z) ** 2);
         }).slice(0, lightCount);
     let lanternCount = 0;
-    for (const source of sources) {
+    for (const source of renderSources) {
       if (source.kind !== 'enemy-lantern' || lanternCount >= this.lanternBulbs.instanceMatrix.count) continue;
       this.lightMatrix.position.set(source.x, Terrain.visualY(source.x, source.z, source.height ?? 0.82), source.z);
       this.lightMatrix.scale.setScalar(1);
       this.lightMatrix.updateMatrix();
       this.lanternBulbs.setMatrixAt(lanternCount, this.lightMatrix.matrix);
+      const coneHeight = Balance.contracts.nightShift.enemyLanternConeHeight;
+      this.lightMatrix.position.set(source.x, Terrain.visualY(source.x, source.z, coneHeight * 0.5), source.z);
+      this.lightMatrix.scale.set(
+        Balance.contracts.nightShift.enemyLanternConeRadius,
+        coneHeight,
+        Balance.contracts.nightShift.enemyLanternConeRadius,
+      );
+      this.lightMatrix.updateMatrix();
+      this.lanternCones.setMatrixAt(lanternCount, this.lightMatrix.matrix);
       lanternCount += 1;
     }
     for (let index = 0; index < this.nightPoolLights.length; index += 1) {
@@ -350,7 +371,7 @@ export class LightRig {
       light.visible = darkness > 0 && index < lightCount && source !== undefined;
       if (!light.visible || !source) continue;
       light.userData.kind = source.kind;
-      const warm = source.kind === 'lantern' || source.kind === 'enemy-lantern';
+      const warm = source.kind === 'lantern' || source.kind === 'powered-lamp' || source.kind === 'enemy-lantern';
       light.color.set(warm ? '#ffd28a' : '#8fded3');
       const flicker = source.kind === 'lantern' ? this.nightShift.lampIntensityMult ?? 1 : 1;
       light.intensity = this.nightPoolIntensity(source.kind) * darkness * flicker;
@@ -359,6 +380,9 @@ export class LightRig {
     }
     this.lanternBulbs.count = darkness > 0 ? lanternCount : 0;
     this.lanternBulbs.instanceMatrix.needsUpdate = true;
+    this.lanternConeMaterial.opacity = Balance.contracts.nightShift.enemyLanternConeOpacity * darkness;
+    this.lanternCones.count = darkness > 0 ? lanternCount : 0;
+    this.lanternCones.instanceMatrix.needsUpdate = true;
   }
 
   private nightLightCap(): number {
@@ -369,8 +393,8 @@ export class LightRig {
     );
   }
 
-  private nightPoolIntensity(kind: NightPoolSource['kind']): number {
-    if (kind === 'lantern') return Balance.contracts.nightShift.lanternRenderIntensity;
+  private nightPoolIntensity(kind: LightSource['kind']): number {
+    if (kind === 'lantern' || kind === 'powered-lamp') return Balance.contracts.nightShift.lanternRenderIntensity;
     if (kind === 'enemy-lantern') return Balance.contracts.nightShift.enemyLanternIntensity;
     if (kind === 'prospector') return Balance.contracts.nightShift.agentLightIntensity;
     return Balance.contracts.nightShift.heroRenderIntensity;

@@ -1454,33 +1454,46 @@ export class EnemyPool {
 
   private syncEnemySprite(enemy: ClaimJumperEnemy): void {
     const lightFactor = this.renderLightFactor(this.lightFactorFor(enemy));
+    const fullDark = this.fullDarkRenderCutoffActive();
+    const spriteLightFactor = fullDark && lightFactor > 0 ? Balance.contracts.nightShift.nightSpriteLightBoost : lightFactor;
+    const spriteTint = fullDark && lightFactor > 0 ? Balance.contracts.nightShift.nightSpriteTint : undefined;
+    const nightScale = fullDark ? Balance.contracts.nightShift.nightSpriteScale : 1;
+    const renderScale = this.renderScale(enemy) * nightScale;
     const litVisible = lightFactor > 0;
-    const useProceduralDark = this.fullDarkRenderCutoffActive();
-    const baronVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
+    const baronVisible = enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
     const e2Presentation = this.e2SpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
-    const normalVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !e2Presentation && !isMothSwarmEnemy(enemy);
-    const thiefVisible = !useProceduralDark && enemy.isAlive && litVisible && enemy.isThief && !e2Presentation;
+    const normalVisible = enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !e2Presentation && !isMothSwarmEnemy(enemy);
+    const thiefVisible = enemy.isAlive && litVisible && enemy.isThief && !e2Presentation;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
-    const showFade = this.active <= 32;
+    const showFade = this.active <= 32 && !fullDark;
     const normalMotion = this.spriteAnimator.motion;
     const thiefMotion = this.thiefSpriteAnimator.motion;
     const baronMotion = this.baronSpriteAnimator?.motion ?? IDLE_SPRITE_MOTION;
     const baronOverlayActive = this.baronSpriteAnimator?.overlayActive === true;
-    this.generatedSprites.setTintScalar(enemy.id, lightFactor);
-    this.generatedSpriteFades.setTintScalar(enemy.id, lightFactor);
-    this.thiefSprites.setTintScalar(enemy.id, lightFactor);
-    this.thiefSpriteFades.setTintScalar(enemy.id, lightFactor);
-    this.baronSprites.setTintScalar(enemy.id, lightFactor);
-    this.baronSpriteFades.setTintScalar(enemy.id, lightFactor);
-    this.baronBannerSprites.setTintScalar(enemy.id, lightFactor);
+    this.generatedSprites.setTintScalar(enemy.id, spriteLightFactor);
+    this.generatedSprites.setTintColor(enemy.id, spriteTint);
+    this.generatedSpriteFades.setTintScalar(enemy.id, spriteLightFactor);
+    this.generatedSpriteFades.setTintColor(enemy.id, spriteTint);
+    this.thiefSprites.setTintScalar(enemy.id, spriteLightFactor);
+    this.thiefSprites.setTintColor(enemy.id, spriteTint);
+    this.thiefSpriteFades.setTintScalar(enemy.id, spriteLightFactor);
+    this.thiefSpriteFades.setTintColor(enemy.id, spriteTint);
+    this.baronSprites.setTintScalar(enemy.id, spriteLightFactor);
+    this.baronSprites.setTintColor(enemy.id, spriteTint);
+    this.baronSpriteFades.setTintScalar(enemy.id, spriteLightFactor);
+    this.baronSpriteFades.setTintColor(enemy.id, spriteTint);
+    this.baronBannerSprites.setTintScalar(enemy.id, spriteLightFactor);
+    this.baronBannerSprites.setTintColor(enemy.id, spriteTint);
     for (const presentation of this.e2SpritePresentations) {
-      const visible = presentation === e2Presentation && !useProceduralDark && enemy.isAlive && litVisible;
-      presentation.sprites.setTintScalar(enemy.id, lightFactor);
-      presentation.fades.setTintScalar(enemy.id, lightFactor);
+      const visible = presentation === e2Presentation && enemy.isAlive && litVisible;
+      presentation.sprites.setTintScalar(enemy.id, spriteLightFactor);
+      presentation.sprites.setTintColor(enemy.id, spriteTint);
+      presentation.fades.setTintScalar(enemy.id, spriteLightFactor);
+      presentation.fades.setTintColor(enemy.id, spriteTint);
       presentation.sprites.set(enemy.id, enemy.group.position, visible);
       presentation.fades.set(enemy.id, enemy.group.position, visible && showFade && presentation.animator.overlayActive);
-      this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, this.renderScale(enemy));
-      this.applySpriteBob(presentation.fades.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, this.renderScale(enemy));
+      this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, renderScale);
+      this.applySpriteBob(presentation.fades.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, renderScale);
     }
     this.generatedSprites.set(enemy.id, enemy.group.position, normalVisible);
     this.generatedSpriteFades.set(enemy.id, enemy.group.position, showFade && normalVisible && this.spriteAnimator.overlayActive);
@@ -1491,15 +1504,14 @@ export class EnemyPool {
     this.baronBannerSprites.set(
       enemy.id,
       enemy.group.position,
-      !useProceduralDark && enemy.isAlive && litVisible && enemy.hasBanner && this.baronBannerSprites.isLoaded,
+      enemy.isAlive && litVisible && enemy.hasBanner && this.baronBannerSprites.isLoaded,
     );
-    const renderScale = this.renderScale(enemy);
     this.applySpriteBob(this.generatedSprites.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, renderScale);
     this.applySpriteBob(this.generatedSpriteFades.group.children[enemy.id], enemy.position.y, normalMotion.bobOffset, renderScale);
     this.applySpriteBob(this.thiefSprites.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, renderScale);
     this.applySpriteBob(this.thiefSpriteFades.group.children[enemy.id], enemy.position.y, thiefMotion.bobOffset, renderScale);
-    this.applySpriteBob(this.baronSprites.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale);
-    this.applySpriteBob(this.baronSpriteFades.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale);
+    this.applySpriteBob(this.baronSprites.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale * nightScale);
+    this.applySpriteBob(this.baronSpriteFades.group.children[enemy.id], enemy.position.y, baronMotion.bobOffset, enemy.visualScale * nightScale);
     this.applyBannerSprite(enemy, this.baronBannerSprites.group.children[enemy.id], baronMotion.bobOffset);
   }
 
@@ -1565,7 +1577,7 @@ export class EnemyPool {
   private syncEnemyFog(): void {
     const fullDark = this.fullDarkRenderCutoffActive();
     const enabled = !fullDark;
-    const proceduralVisible = fullDark || !this.generatedSprites.isLoaded;
+    const proceduralVisible = !this.generatedSprites.isLoaded;
     this.syncNightBasicMaterials(fullDark);
     if (this.enemyFogEnabled === enabled) {
       this.setProceduralVisible(proceduralVisible);

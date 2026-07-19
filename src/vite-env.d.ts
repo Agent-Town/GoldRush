@@ -640,6 +640,7 @@ interface ThreeGameDiagnostics {
     nightPoolCap: number;
     nightPoolSources: number;
     enemyLanterns: number;
+    enemyLanternCones: number;
     prospectorLights: number;
     muzzleFlashes: number;
     muzzleFlashCount: number;
@@ -1196,6 +1197,7 @@ interface Window {
       edge?: 'north' | 'south' | 'east' | 'west' | null;
       zone?: 'bank' | 'shallows' | 'river' | 'ford' | 'out';
       light?: number;
+      nightSpeedMultiplier: number;
       watchPainted?: boolean;
       readState: 'fevered' | 'unfevered';
       fevered: boolean;
