@@ -299,7 +299,7 @@ export class HarvestSystem {
   }
 
   private activateInitialNodes(): void {
-    const activeCount = this.rng.int(Balance.goldSeam.activeMin, Balance.goldSeam.activeMax + 1);
+    const activeCount = Math.min(this.nodes.length, this.rng.int(Balance.goldSeam.activeMin, Balance.goldSeam.activeMax + 1));
     const anchorIndexes = this.shuffledAnchorIndexes();
     for (let index = 0; index < activeCount; index += 1) {
       this.placeNode(this.nodes[index], anchorIndexes[index]);
