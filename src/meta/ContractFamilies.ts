@@ -622,7 +622,7 @@ export type ContractsBundle = {
 export type ActiveContractDiagnostics = {
   activeId: string;
   requestedId: string | null;
-  fallbackReason: 'debug-disabled' | 'unknown-contract' | null;
+  fallbackReason: 'debug-disabled' | 'unknown-contract' | 'unavailable-contract' | null;
   warningSuppressed: boolean;
 };
 
@@ -1114,8 +1114,21 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
     fallbackReason = 'debug-disabled';
   } else if (requestedId) {
     const candidates = debug || launched ? listBoardContracts() : contracts;
-    contract = candidates.find((entry) => entry.id === requestedId) ?? fallback;
-    if (contract.id !== requestedId) fallbackReason = 'unknown-contract';
+    const requested = candidates.find((entry) => entry.id === requestedId);
+    if (!requested) {
+      fallbackReason = 'unknown-contract';
+    } else if (requested.tileParams.harvestAnchors?.length === 0) {
+      fallbackReason = 'unavailable-contract';
+      contract = {
+        ...fallback,
+        briefing: {
+          ...fallback.briefing,
+          geographyLine: `${requested.name} is not ready for a direct claim; The Claim opened instead.`,
+        },
+      };
+    } else {
+      contract = requested;
+    }
   }
 
   if (launched && requestedId && contract.id === requestedId) {

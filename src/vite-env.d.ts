@@ -269,7 +269,7 @@ interface ThreeGameDiagnostics {
   contract: {
     activeId: string;
     requestedId: string | null;
-    fallbackReason: 'debug-disabled' | 'unknown-contract' | null;
+    fallbackReason: 'debug-disabled' | 'unknown-contract' | 'unavailable-contract' | null;
     warningSuppressed: boolean;
     epochId: string;
     epochResources: GrContractEpochBundle['resources'];
