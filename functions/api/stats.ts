@@ -57,10 +57,10 @@ export async function onRequest(context: StatsContext): Promise<Response> {
   if (context.request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
   if (context.request.method !== 'GET') return error(cors, 405, 'method_not_allowed', 'GET only');
   const publicCors = { ...cors, 'Cache-Control': PUBLIC_CACHE };
-  if (!context.env.TELEMETRY) return json(publicCors, emptyPayload(), 200);
+  if (!(context.env.TELEMETRY ?? context.env.ACCOUNTS)) return json(publicCors, emptyPayload(), 200);
 
   try {
-    const stats = await loadStats(context.env.TELEMETRY);
+    const stats = await loadStats((context.env.TELEMETRY ?? context.env.ACCOUNTS));
     if (stats.runs.allTime <= 0) return json(publicCors, emptyPayload(), 200);
     return json(publicCors, { ok: true, empty: false, stats });
   } catch {

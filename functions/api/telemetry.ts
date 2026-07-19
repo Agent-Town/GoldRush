@@ -65,11 +65,11 @@ export async function onRequest(context: TelemetryContext): Promise<Response> {
     if (!hasOnlyAllowedPayloadKeys(body)) return error(cors, 400, 'bad_payload', 'Telemetry payload not accepted.');
     const payload = validatePayload(body);
     if (!payload) return error(cors, 400, 'bad_payload', 'Telemetry payload not accepted.');
-    if (!context.env.TELEMETRY) return json(cors, { ok: true, stored: false });
-    const ipAllowed = await bumpCounter(context.env.TELEMETRY, `telemetry:ratelimit:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP);
+    if (!(context.env.TELEMETRY ?? context.env.ACCOUNTS)) return json(cors, { ok: true, stored: false });
+    const ipAllowed = await bumpCounter((context.env.TELEMETRY ?? context.env.ACCOUNTS), `telemetry:ratelimit:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP);
     if (!ipAllowed) return error(cors, 429, 'rate_limited', 'The wire is busy. Try again later.');
 
-    const duplicate = await storeAggregate(context.env.TELEMETRY, payload);
+    const duplicate = await storeAggregate((context.env.TELEMETRY ?? context.env.ACCOUNTS), payload);
     return json(cors, { ok: true, stored: true, duplicate });
   } catch (err) {
     if (err instanceof HttpError) return error(cors, err.status, err.code, err.message);
