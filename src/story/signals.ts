@@ -16,7 +16,7 @@ export type StorySignal =
   | { type: 'xp-collected' };
 
 export type BossStorySignal =
-  | { type: 'boss-arrival'; contractId: string; contractName: string }
+  | { type: 'boss-arrival'; contractId: string; contractName: string; edge?: 'north' | 'south' | 'east' | 'west' }
   | { type: 'boss-defeat'; contractId: string; contractName: string };
 
 export type LedgerStorySignal = { type: 'ledger-page'; entryId: string; entryName: string };

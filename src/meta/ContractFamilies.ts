@@ -312,6 +312,7 @@ export type ContractCapacitorSite = {
 };
 export type ContractBaronTwist = {
   wave: number;
+  spawnEdge?: ContractEdge;
   bossKind?: 'baron' | 'railcar';
   variantId?: string;
   variantLabel?: string;
@@ -577,6 +578,7 @@ export type ContractManifest = {
     scatter?: ContractScatterDescriptor;
     water?: ContractWaterDescriptor;
     prePlacedBuildables?: ContractBuildableFixture[];
+    prebuiltPalisades?: boolean;
     pylonSites?: ContractPylonSite[];
     capacitorSites?: ContractCapacitorSite[];
     ridgeGlow?: { x: number; z: number; color: string; intensity: number };
