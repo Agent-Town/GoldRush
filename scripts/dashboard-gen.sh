@@ -116,6 +116,35 @@ done
 [ -z "$DONE_TAIL" ] && DONE_TAIL="(no task runs finished in the last 24 hours)"
 DONE_TAIL=$(printf '%s' "$DONE_TAIL" | esc)
 
+
+# --- All-time task statistics (owner-requested 2026-07-19: token + duration fun stats) ---
+STATS_TABLE=""
+TOT_RUNS=0; TOT_TOK=0; TOT_MIN=0
+STATS_TMP=$(mktemp)
+for f in tasks/runs/*.log; do
+  [ -e "$f" ] || continue
+  base=$(basename "$f" .md.log); base=${base%.log}
+  ts=$(echo "$base" | grep -oE '^[0-9]{8}-[0-9]{6}') || true
+  start_epoch=""
+  [ -n "$ts" ] && start_epoch=$(date -j -f "%Y%m%d-%H%M%S" "$ts" +%s 2>/dev/null || true)
+  end_epoch=$(stat -f %m "$f" 2>/dev/null || echo "")
+  mins=""
+  if [ -n "$start_epoch" ] && [ -n "$end_epoch" ] && [ "$end_epoch" -ge "$start_epoch" ]; then
+    mins=$(( (end_epoch - start_epoch) / 60 ))
+  fi
+  tok=$(grep -A1 "tokens used" "$f" 2>/dev/null | tail -1 | tr -d ', ' | grep -E '^[0-9]+$' || echo "")
+  name=$(echo "$base" | sed 's/^[0-9]\{8\}-[0-9]\{6\}-//' | cut -c1-46)
+  TOT_RUNS=$((TOT_RUNS+1))
+  [ -n "$tok" ] && TOT_TOK=$((TOT_TOK+tok))
+  [ -n "$mins" ] && TOT_MIN=$((TOT_MIN+mins))
+  printf '%s|%s|%s\n' "${tok:-0}" "${mins:-0}" "$name" >> "$STATS_TMP"
+done
+TOP_TOK=$(sort -t'|' -k1 -rn "$STATS_TMP" | head -8 | awk -F'|' '{printf "  %-48s %10'"'"'d tok  %5d min\n", $3, $1, $2}')
+TOP_MIN=$(sort -t'|' -k2 -rn "$STATS_TMP" | head -8 | awk -F'|' '{printf "  %-48s %10'"'"'d tok  %5d min\n", $3, $1, $2}')
+rm -f "$STATS_TMP"
+STATS_TABLE=$(printf 'ALL-TIME: %d task runs · %d hours %d min of implementer time · %'"'"'d tokens consumed (codex-reported)\n\nTHE HUNGRIEST (tokens):\n%s\n\nTHE LONGEST (wall clock):\n%s' "$TOT_RUNS" $((TOT_MIN/60)) $((TOT_MIN%60)) "$TOT_TOK" "$TOP_TOK" "$TOP_MIN")
+STATS_TABLE=$(printf '%s' "$STATS_TABLE" | esc)
+
 # --- Waiting to start: paused items + gated BACKLOG ladder, with tracked block-age ---
 SEEN="${GOLD_RUSH_BLOCKED_SEEN:-logs/.blocked-seen}"
 mkdir -p "$(dirname "$SEEN")"
@@ -325,6 +354,8 @@ pending crafting orders: $PENDING</pre></div>
 <h2>Queues — what's waiting, since when</h2>
 <div class="card"><pre>$QUEUES</pre></div>
 
+<h2>All-time task statistics</h2>
+<pre>$STATS_TABLE</pre>
 <h2>Waiting to start — blockers &amp; tracked block time</h2>
 <div class="card"><pre>$BLOCKED</pre></div>
 
