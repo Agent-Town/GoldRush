@@ -145,6 +145,20 @@ rm -f "$STATS_TMP"
 STATS_TABLE=$(printf 'ALL-TIME: %d task runs · %d hours %d min of implementer time · %'"'"'d tokens consumed (codex-reported)\n\nTHE HUNGRIEST (tokens):\n%s\n\nTHE LONGEST (wall clock):\n%s' "$TOT_RUNS" $((TOT_MIN/60)) $((TOT_MIN%60)) "$TOT_TOK" "$TOP_TOK" "$TOP_MIN")
 STATS_TABLE=$(printf '%s' "$STATS_TABLE" | esc)
 
+FACTORY_BLOCK=$(node -e '
+try { const a=require("./logs/factory-usage.json"); const M=n=>(n/1e6).toFixed(1)+"M";
+console.log(`THE WHOLE FACTORY (census ${a.stamped}):`);
+console.log(`  attended (Fable):        ${String(a.attended.files).padStart(5)} sessions   fresh-in ${M(a.attended.in).padStart(9)}   out ${M(a.attended.out)}`);
+console.log(`  fires (headless):        ${String(a.fires.files).padStart(5)} sessions*  fresh-in ${M(a.fires.in).padStart(9)}   out ${M(a.fires.out)}   *older fires undercounted`);
+console.log(`  codex (Sol+runner):      ${String(a.codexGR.files).padStart(5)} sessions   fresh-in ${M(a.codexGR.in).padStart(9)}   out ${M(a.codexGR.out)}   (+${(a.codexGR.cached/1e9).toFixed(1)}B cached reads)`);
+const ti=a.attended.in+a.fires.in+a.codexGR.in, to=a.attended.out+a.fires.out+a.codexGR.out;
+console.log(`  TOTAL:                   fresh-in ${M(ti)} · out ${M(to)} — refresh: node scripts/factory-usage-census.mjs`);
+} catch(e) { console.log("(factory census not yet run: node scripts/factory-usage-census.mjs)"); }' 2>/dev/null)
+STATS_TABLE="$STATS_TABLE
+
+$(printf '%s' "$FACTORY_BLOCK" | esc)"
+
+
 # --- Waiting to start: paused items + gated BACKLOG ladder, with tracked block-age ---
 SEEN="${GOLD_RUSH_BLOCKED_SEEN:-logs/.blocked-seen}"
 mkdir -p "$(dirname "$SEEN")"
