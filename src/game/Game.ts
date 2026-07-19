@@ -933,7 +933,7 @@ export class Game {
   private releaseFailedMultiplayer(): boolean {
     const state = this.mpClient?.state();
     if (!state) return false;
-    if (state.roster.length >= 2) this.mpHadParty = true;
+    if (state.started) this.mpHadParty = true;
     if (state.reconnecting || state.heldPlayerIds.length > 0) {
       this.mpHoldCardVisible = true;
       const heldName = state.roster.find((player) => state.heldPlayerIds.includes(player.playerId))?.name;
@@ -3005,9 +3005,10 @@ export class Game {
   private finishMultiplayerHoldIfRecovered(): void {
     if (!this.mpHoldCardVisible) return;
     const state = this.mpClient?.state();
-    if (!state?.connected || state.reconnecting || state.heldPlayerIds.length > 0 || state.roster.length < 2) return;
+    const requiredRiders = state?.started ? 2 : state?.partySize ?? 2;
+    if (!state?.connected || state.reconnecting || state.heldPlayerIds.length > 0 || state.roster.length < requiredRiders) return;
     this.mpHoldCardVisible = false;
-    this.showMultiplayerCard('Back on the trail', 'Both riders are back. The claim is moving again.');
+    this.showMultiplayerCard('Back on the trail', 'The party is back. The claim is moving again.');
   }
 
   private showMultiplayerCard(title: string, message: string): void {

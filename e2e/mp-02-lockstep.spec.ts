@@ -3,6 +3,7 @@ import { mkdir, rm, writeFile } from 'node:fs/promises';
 import net from 'node:net';
 import path from 'node:path';
 import { expect, test, type Browser, type Page, type TestInfo } from '@playwright/test';
+import { PNG } from 'pngjs';
 import type { ScoreRecord } from '../src/game/Scoreboard';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
@@ -14,16 +15,20 @@ type ActorDiagnostic = ThreeGameDiagnostics['actors'][number];
 type MpPlayerSeed = { id: string; name: string; town: string };
 
 const ROOT = process.cwd();
-const SCRIPT_NAME = 'gold-rush-mp-room';
-const STATE_ROOT = path.join(ROOT, 'test-results/mp-02-relay-state');
+const SCRIPT_NAME = `gold-rush-mp-room-${process.pid}`;
+const STATE_ROOT = path.join(ROOT, `test-results/mp-02-relay-state-${process.pid}`);
 const ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-02');
 const MP03_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-03');
 const MP04_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-04');
+const MP_QUAD_ARTIFACT_DIR = path.join(ROOT, 'artifacts/mp-quad');
 const MP_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&nokill&seed=mp-02-lockstep';
 const MP_CONVERGENCE_QUERY = 'debug&mp=dev&nowaves&nolevel&nopause&nosteal&nowreck&seed=mp-02-convergence';
 const MP_ACTION_QUERY = 'debug&mp=dev&nowaves&nosteal&nowreck&nokill&seed=mp-05-actions';
 const ALICE: MpPlayerSeed = { id: 'alice', name: 'Alice', town: 'Dawn Claim' };
 const BOB: MpPlayerSeed = { id: 'bob', name: 'Bob', town: 'River Bend' };
+const CAROL: MpPlayerSeed = { id: 'carol', name: 'Carol', town: 'Copper Mesa' };
+const DANA: MpPlayerSeed = { id: 'dana', name: 'Dana', town: 'Willow Ford' };
+const QUAD_PLAYERS = [ALICE, BOB, CAROL, DANA] as const;
 let relay: RelayEnv;
 
 test.describe.configure({ mode: 'serial' });
@@ -504,6 +509,123 @@ test('both riders place buildings and pick upgrades with equal hashes for 300 ti
   }
 });
 
+test('@slow four riders move and act with identical hashes and shared credit', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one four-browser proof is enough');
+  test.setTimeout(180_000);
+  const run = await openQuad(browser, await createRoom(), MP_QUERY);
+  try {
+    await Promise.all(run.pages.flatMap((page) => [waitRoster(page, 4), waitForActors(page, 4)]));
+    const initial = await gameDiagnostics(run.pages[0]);
+    expect(initial.actors.filter((actor) => actor.visible).map(({ name }) => name).sort()).toEqual(QUAD_PLAYERS.map(({ name }) => name).sort());
+    for (let index = 0; index < run.pages.length; index += 1) {
+      const diagnostics = await gameDiagnostics(run.pages[index]);
+      assertSameRosterSlots(initial.actors, diagnostics.actors);
+      assertLocalHero(diagnostics, QUAD_PLAYERS[index]!.name);
+      await expect(run.pages[index].getByTestId('mp-rider-chip')).toHaveCount(3);
+    }
+    await Promise.all(run.pages.map((page) => waitForTick(page, 90, 60_000)));
+    const startupStates = await Promise.all(run.pages.map(mpState));
+    const startupHashTicks = commonHashTicks(startupStates, 0);
+    expect(startupHashTicks.length).toBeGreaterThanOrEqual(3);
+    expect(startupHashTicks.at(-1)).toBeGreaterThanOrEqual(60);
+    for (const tick of startupHashTicks) {
+      const hash = hashAt(startupStates[0], tick);
+      for (const state of startupStates.slice(1)) expect(hashAt(state, tick)).toBe(hash);
+    }
+    for (const state of startupStates) expect(state).toMatchObject({ started: true, partySize: 4, desyncs: 0, resyncs: 0, error: null });
+
+    await seedQuadSharedCredit(run.pages, 25);
+    await run.pages[2].keyboard.press('KeyQ');
+    await expect.poll(async () => Promise.all(run.pages.map(async (page) =>
+      Object.fromEntries((await gameDiagnostics(page)).actors.filter((actor) => actor.visible).map((actor) => [actor.name, actor.weapon])),
+    ))).toEqual(Array(4).fill({ Alice: 'rig', Bob: 'rig', Carol: 'blast', Dana: 'rig' }));
+
+    const beforeMove = Object.fromEntries(initial.actors.filter((actor) => actor.visible).map((actor) => [actor.name, actor.position]));
+    const moveStart = Math.max(...(await Promise.all(run.pages.map(mpState))).map(({ tick }) => tick));
+    await Promise.all([
+      run.pages[0].keyboard.down('KeyW'),
+      run.pages[1].keyboard.down('KeyD'),
+      run.pages[2].keyboard.down('KeyS'),
+      run.pages[3].keyboard.down('KeyA'),
+    ]);
+    try {
+      await run.pages[0].waitForTimeout(400);
+    } finally {
+      await Promise.all([
+        run.pages[0].keyboard.up('KeyW'),
+        run.pages[1].keyboard.up('KeyD'),
+        run.pages[2].keyboard.up('KeyS'),
+        run.pages[3].keyboard.up('KeyA'),
+      ]);
+    }
+    await Promise.all(run.pages.map((page) => waitForTick(page, moveStart + 240, 90_000)));
+
+    const states = await Promise.all(run.pages.map(mpState));
+    const games = await Promise.all(run.pages.map(gameDiagnostics));
+    const hashedActorPairs = await Promise.all(run.pages.slice(1).map((page) =>
+      syncedHashedActorDiagnostics(run.pages[0], page, moveStart + 60),
+    ));
+    const sharedTicks = commonHashTicks(states, moveStart);
+    expect(sharedTicks.length).toBeGreaterThanOrEqual(7);
+    expect(sharedTicks.at(-1)).toBeGreaterThanOrEqual(moveStart + 200);
+    for (let index = 1; index < 4; index += 1) {
+      for (const tick of sharedTicks) expect(hashAt(states[index], tick)).toBe(hashAt(states[0], tick));
+      assertSameRosterSlots(hashedActorPairs[index - 1]![0], hashedActorPairs[index - 1]![1]);
+      expect(games[index].economy.state).toEqual(games[0].economy.state);
+      expect(games[index].progression.stacks).toEqual(games[0].progression.stacks);
+    }
+    for (const actor of hashedActorPairs[0]![0]) {
+      expect(distance2d(actor.position, beforeMove[actor.name]!), `${actor.name} moved`).toBeGreaterThan(0.1);
+    }
+    for (const state of states) expect(state).toMatchObject({ paused: false, desyncs: 0, resyncs: 0, error: null });
+    await shotQuadGrid(run.pages, testInfo, 'four-riders');
+
+    await Promise.all(run.pages.map((page) => page.evaluate(() => window.__GR_TEST__?.endRunForTest())));
+    for (const page of run.pages) {
+      for (const player of QUAD_PLAYERS) await expect(page.getByTestId('mp-run-riders')).toContainText(`${player.name} of ${player.town}`);
+    }
+    const scores = await Promise.all(run.pages.map((page, index) => scoresFor(page, QUAD_PLAYERS[index]!.id)));
+    expect(scores[0][0]?.gold).toBe(25);
+    expect(scores.map((score) => sharedScoreShape(score[0]))).toEqual(Array(4).fill(sharedScoreShape(scores[0][0])));
+    expect(run.errors).toEqual(Array(4).fill({ consoleErrors: [], pageErrors: [] }));
+  } finally {
+    await run.close();
+  }
+});
+
+test('@slow one of four riders desyncs and all four converge again', async ({ browser }, testInfo) => {
+  test.skip(testInfo.project.name !== 'desktop-chrome', 'one four-browser recovery proof is enough');
+  test.setTimeout(180_000);
+  const run = await openQuad(browser, await createRoom(), MP_QUERY, ['', '', '', '&mpDesyncAt=60']);
+  try {
+    await Promise.all(run.pages.flatMap((page) => [waitRoster(page, 4), waitForActors(page, 4)]));
+    await Promise.all(run.pages.map((page) => page.waitForFunction(() => {
+      const state = window.__GR_MP__?.state();
+      return state && state.tick >= 140 && state.desyncs >= 1 && state.resyncs >= 1 && !state.paused;
+    }, undefined, { timeout: 60_000 })));
+
+    const recovered = await Promise.all(run.pages.map(mpState));
+    const recoveredAt = Math.max(...recovered.map(({ lastResyncTick }) => lastResyncTick ?? 0));
+    await Promise.all(run.pages.map((page) => waitForTick(page, recoveredAt + 120, 90_000)));
+    const states = await Promise.all(run.pages.map(mpState));
+    const sharedTicks = commonHashTicks(states, recoveredAt + 30);
+    expect(sharedTicks.length).toBeGreaterThanOrEqual(3);
+    expect(sharedTicks.at(-1)).toBeGreaterThanOrEqual(recoveredAt + 90);
+    for (const tick of sharedTicks) {
+      const hash = hashAt(states[0], tick);
+      for (const state of states.slice(1)) expect(hashAt(state, tick)).toBe(hash);
+    }
+    for (const state of states) {
+      expect(state).toMatchObject({ started: true, partySize: 4, paused: false, error: null });
+      expect(state.desyncs).toBeGreaterThanOrEqual(1);
+      expect(state.resyncs).toBeGreaterThanOrEqual(1);
+    }
+    expect(run.errors).toEqual(Array(4).fill({ consoleErrors: [], pageErrors: [] }));
+  } finally {
+    await run.close();
+  }
+});
+
 test('town Ride Together card creates a claim word and joins two named riders', async ({ browser }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one two-tab town flow proof is enough');
   test.setTimeout(70_000);
@@ -604,11 +726,65 @@ async function openPair(browser: Browser, code: string, bobExtra = '', query = M
   };
 }
 
+async function openQuad(
+  browser: Browser,
+  code: string,
+  query = MP_QUERY,
+  extras: readonly string[] = [],
+): Promise<{
+  pages: [Page, Page, Page, Page];
+  errors: [ErrorBucket, ErrorBucket, ErrorBucket, ErrorBucket];
+  close: () => Promise<void>;
+}> {
+  const contexts = await Promise.all(QUAD_PLAYERS.map(() => browser.newContext({ viewport: { width: 640, height: 400 } })));
+  const pages = await Promise.all(contexts.map((context) => context.newPage())) as [Page, Page, Page, Page];
+  const errors = pages.map(collectErrors) as [ErrorBucket, ErrorBucket, ErrorBucket, ErrorBucket];
+  for (let index = 0; index < pages.length; index += 1) {
+    if (index === 3) {
+      await Promise.all(pages.slice(0, 3).map((page) => waitRoster(page, 3)));
+      const waiting = await Promise.all(pages.slice(0, 3).map(mpState));
+      for (const state of waiting) expect(state).toMatchObject({ tick: 0, started: false, partySize: 4, error: null });
+    }
+    await openClient(pages[index], code, QUAD_PLAYERS[index]!, extras[index] ?? '', `${query}&mpParty=4`);
+  }
+  return { pages, errors, close: async () => Promise.all(contexts.map((context) => context.close())).then(() => undefined) };
+}
+
+async function seedQuadSharedCredit(pages: readonly Page[], amount: number): Promise<void> {
+  await Promise.all(pages.map((page) => page.evaluate(() => window.__GR_TEST__!.setManualSim(true))));
+  const snapshot = await pages[0]!.evaluate((gold) => {
+    const saved = window.__GR_TEST__!.captureSuspend();
+    saved.economy.gold += gold;
+    saved.economy.resources!.gold!.amount += gold;
+    saved.economy.log.push({
+      id: '00000000-0000-4000-8000-000000000004',
+      at: saved.timeAlive,
+      type: 'gold_panned',
+      nodeId: 'four-rider-proof',
+      amount: gold,
+    });
+    saved.economy.summary.panned += gold;
+    return saved;
+  }, amount);
+  const restored = await Promise.all(pages.map((page) => page.evaluate(async (saved) => {
+    const ok = window.__GR_TEST__!.restoreSuspend(saved);
+    const suspend = (await import('../src/game/RunSuspend')) as typeof import('../src/game/RunSuspend');
+    return { ok, failure: suspend.runSuspendRestoreFailure() };
+  }, snapshot)));
+  expect(restored).toEqual(Array(4).fill({ ok: true, failure: null }));
+  const resumeAt = Math.max(...(await Promise.all(pages.map(mpState))).map(({ tick }) => tick)) + 15;
+  await Promise.all(pages.map((page) => page.evaluate((tick) => window.__GR_TEST__!.resumeManualSimAtMpTick(tick), resumeAt)));
+  await Promise.all(pages.map((page) => waitForTick(page, resumeAt + 1, 60_000)));
+}
+
 async function openClient(page: Page, code: string, player: MpPlayerSeed, extra = '', query = MP_QUERY): Promise<void> {
   await seedProfile(page, player);
   const fullQuery = `${query}&mpRelay=${encodeURIComponent(relay.url)}&mpCode=${code}&mpName=${encodeURIComponent(player.name)}&mpTown=${encodeURIComponent(player.town)}${extra}`;
   await page.goto(`/?${fullQuery}`);
-  await page.waitForFunction(() => window.__GR_MP__?.state()?.connected === true, undefined, { timeout: 15_000 });
+  await expect.poll(() => page.evaluate(() => {
+    const state = window.__GR_MP__?.state();
+    return { connected: state?.connected ?? false, error: state?.error ?? null };
+  }), { message: `${player.name} joins the ride`, timeout: 30_000 }).toEqual({ connected: true, error: null });
 }
 
 async function seedProfile(page: Page, player: MpPlayerSeed): Promise<void> {
@@ -666,19 +842,19 @@ async function hold(page: Page, key: string, ms: number): Promise<void> {
   await page.keyboard.up(key);
 }
 
-async function waitRoster(page: Page): Promise<void> {
-  await page.waitForFunction(() => (window.__GR_MP__?.state()?.roster.length ?? 0) === 2, undefined, { timeout: 10_000 });
+async function waitRoster(page: Page, count = 2): Promise<void> {
+  await page.waitForFunction((expected) => (window.__GR_MP__?.state()?.roster.length ?? 0) === expected, count, { timeout: 15_000 });
 }
 
-async function waitForTick(page: Page, tick: number): Promise<void> {
-  await page.waitForFunction((target) => (window.__GR_MP__?.state()?.tick ?? 0) >= target, tick, { timeout: 30_000 });
+async function waitForTick(page: Page, tick: number, timeout = 30_000): Promise<void> {
+  await page.waitForFunction((target) => (window.__GR_MP__?.state()?.tick ?? 0) >= target, tick, { timeout });
 }
 
-async function waitForActors(page: Page): Promise<void> {
-  await page.waitForFunction(() => {
+async function waitForActors(page: Page, count = 2): Promise<void> {
+  await page.waitForFunction((expected) => {
     const actors = window.__THREE_GAME_DIAGNOSTICS__?.actors?.filter((actor) => actor.visible) ?? [];
-    return actors.length === 2 && actors.some((actor) => actor.local) && actors.some((actor) => !actor.local);
-  }, undefined, { timeout: 15_000 });
+    return actors.length === expected && actors.some((actor) => actor.local) && actors.filter((actor) => !actor.local).length === expected - 1;
+  }, count, { timeout: 20_000 });
 }
 
 async function seedConvergenceScenario(source: Page, peer: Page): Promise<number> {
@@ -951,6 +1127,12 @@ function hashAt(state: MpState, tick: number): string | undefined {
   return state.hashes.find((entry) => entry.tick === tick)?.hash;
 }
 
+function commonHashTicks(states: readonly MpState[], minTick: number): number[] {
+  return states[0]?.hashes
+    .map(({ tick }) => tick)
+    .filter((tick) => tick >= minTick && states.every((state) => hashAt(state, tick) !== undefined)) ?? [];
+}
+
 function renderHeightPaths(value: unknown, path = '$', output: string[] = []): string[] {
   if (Array.isArray(value)) {
     value.forEach((entry, index) => renderHeightPaths(entry, `${path}[${index}]`, output));
@@ -1020,6 +1202,18 @@ async function shotMp04(page: Page, testInfo: TestInfo, name: string): Promise<v
   await mkdir(MP04_ARTIFACT_DIR, { recursive: true });
   const file = path.join(MP04_ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`);
   await page.screenshot({ path: file, fullPage: true });
+  await testInfo.attach(name, { path: file, contentType: 'image/png' });
+}
+
+async function shotQuadGrid(pages: readonly Page[], testInfo: TestInfo, name: string): Promise<void> {
+  await mkdir(MP_QUAD_ARTIFACT_DIR, { recursive: true });
+  const shots = await Promise.all(pages.map(async (page) => PNG.sync.read(await page.screenshot())));
+  const cellWidth = Math.max(...shots.map(({ width }) => width));
+  const cellHeight = Math.max(...shots.map(({ height }) => height));
+  const grid = new PNG({ width: cellWidth * 2, height: cellHeight * 2 });
+  shots.forEach((shot, index) => PNG.bitblt(shot, grid, 0, 0, shot.width, shot.height, (index % 2) * cellWidth, Math.floor(index / 2) * cellHeight));
+  const file = path.join(MP_QUAD_ARTIFACT_DIR, `${testInfo.project.name}-${name}-grid.png`);
+  await writeFile(file, PNG.sync.write(grid));
   await testInfo.attach(name, { path: file, contentType: 'image/png' });
 }
 
