@@ -75,21 +75,23 @@ import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 import { takeMeiWorldDispatch } from './worldDispatches';
 
-const contractArtUrls = {
-  theClaimPlate: new URL('../../assets/raw/plate-contract-the-claim.png', import.meta.url).href,
-  dryGulchPlate: new URL('../../assets/raw/plate-contract-dry-gulch.png', import.meta.url).href,
-  nightShiftPlate: new URL('../../assets/raw/plate-contract-night-shift.png', import.meta.url).href,
-  twinBanksPlate: new URL('../../assets/raw/plate-contract-twin-banks.png', import.meta.url).href,
-  baronPlate: new URL('../../assets/raw/plate-contract-baron.png', import.meta.url).href,
-  hillMinePlate: new URL('../../assets/raw/plate-contract-hill-mine.png', import.meta.url).href,
-} as const;
-const contractArtRegistry: Record<string, { key: string; imageUrl?: string; insetUrl?: string }> = {
-  [DEFAULT_CONTRACT_ID]: { key: 'contract-the-claim', imageUrl: contractArtUrls.theClaimPlate },
-  'e1-dry-gulch': { key: 'contract-dry-gulch', imageUrl: contractArtUrls.dryGulchPlate },
-  'e1-night-shift': { key: 'contract-night-shift', imageUrl: contractArtUrls.nightShiftPlate },
-  'e1-twin-banks': { key: 'contract-twin-banks', imageUrl: contractArtUrls.twinBanksPlate },
-  'e1-baron': { key: 'contract-baron', imageUrl: contractArtUrls.baronPlate },
-  'e2-hill-mine': { key: 'contract-hill-mine', imageUrl: contractArtUrls.hillMinePlate },
+const contractPlateUrls = import.meta.glob<string>('../../assets/raw/plate-contract-*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const boardCardUrls = import.meta.glob<string>('../../assets/processed/board-cards/*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const contractArtRegistry: Record<string, { key: string; insetUrl?: string }> = {
+  [DEFAULT_CONTRACT_ID]: { key: 'contract-the-claim' },
+  'e1-dry-gulch': { key: 'contract-dry-gulch' },
+  'e1-night-shift': { key: 'contract-night-shift' },
+  'e1-twin-banks': { key: 'contract-twin-banks' },
+  'e1-baron': { key: 'contract-baron' },
+  'e2-hill-mine': { key: 'contract-hill-mine' },
 };
 const townFacadeUrls: Partial<Record<TownBuildingId, { key: string; url: string }>> = {
   tavern: { key: 'bld-tavern', url: new URL('../../assets/processed/bld-tavern.png', import.meta.url).href },
@@ -2255,7 +2257,13 @@ function boardPageIndexForContract(id: string | undefined): number {
 
 function renderContractArt(contract: ContractManifest): string {
   const art = contractArtRegistry[contract.id] ?? contractArtRegistry[DEFAULT_CONTRACT_ID];
-  const image = art?.imageUrl ? `<img class="town-ui__contract-art-image" src="${escapeHtml(art.imageUrl)}" alt="" />` : '';
+  const legacyPlateId = contract.id.replace(/^e\d+-/, '');
+  const imageUrl =
+    contractPlateUrls[`../../assets/raw/plate-contract-${contract.id}.png`] ??
+    contractPlateUrls[`../../assets/raw/plate-contract-${legacyPlateId}.png`] ??
+    boardCardUrls[`../../assets/processed/board-cards/${contract.id}.png`] ??
+    contractPlateUrls['../../assets/raw/plate-contract-the-claim.png'];
+  const image = imageUrl ? `<img class="town-ui__contract-art-image" src="${escapeHtml(imageUrl)}" alt="" />` : '';
   const inset = art?.insetUrl ? `<img class="town-ui__contract-art-inset" src="${escapeHtml(art.insetUrl)}" alt="" />` : '';
   return `
     <figure class="town-ui__contract-art town-ui__contract-art--${escapeHtml(art?.key ?? 'river-tile')}" data-contract-art-key="${escapeHtml(
