@@ -482,6 +482,7 @@ interface ThreeGameDiagnostics {
   e9Arsenal: import('./systems/E9ArsenalSystem').E9ArsenalDiagnostics;
   e9Canal: import('./systems/E9CanalSystem').E9CanalDiagnostics;
   e10Finale: import('./systems/E10FinaleSystem').E10FinaleDiagnostics;
+  e10Static: import('./systems/E10StaticBossSystem').E10StaticBossDiagnostics;
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   harvest: {
@@ -1038,6 +1039,10 @@ interface Window {
     e10Finale: {
       close: () => boolean;
       diagnostics: () => import('./systems/E10FinaleSystem').E10FinaleDiagnostics;
+    };
+    e10Static: {
+      interact: () => boolean;
+      diagnostics: () => import('./systems/E10StaticBossSystem').E10StaticBossDiagnostics;
     };
     driveRenderSchedule: (seconds: number, renderFps: number) => {
       renderFrames: number;

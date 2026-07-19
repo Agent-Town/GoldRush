@@ -194,6 +194,7 @@ import {
   EchoBossSystem,
   type EchoActionSample,
 } from '../systems/EchoBossSystem';
+import { E10StaticBossSystem, type E10PreserveSite } from '../systems/E10StaticBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
 import { DecayScheduler } from '../systems/DecaySystem';
@@ -465,6 +466,7 @@ export class Game {
   private readonly e9ArsenalSystem: E9ArsenalSystem;
   private readonly e9CanalSystem: E9CanalSystem;
   private readonly e10FinaleSystem: E10FinaleSystem;
+  private readonly e10StaticBoss: E10StaticBossSystem;
   private readonly e7ArsenalSystem: E7ArsenalSystem;
   private readonly e8ArsenalSystem: E8ArsenalSystem;
   private readonly progression: Progression;
@@ -1545,15 +1547,29 @@ export class Game {
     });
 
     this.createScene();
-    const finaleStageDebug = isDebugEnabled() && new URLSearchParams(window.location.search).has('e10finale');
-    const finaleContract = finaleStageDebug ? loadContract('e10-last-claim', 'epoch-10-deepsky') : this.activeContract;
-    const finaleTile = finaleContract.tileParams as typeof finaleContract.tileParams & { eraDeckZones?: unknown[] };
+    const e10Params = new URLSearchParams(window.location.search);
+    const finaleStageDebug = isDebugEnabled() && e10Params.has('e10finale');
+    const staticStageDebug = isDebugEnabled() && e10Params.has('e10static');
+    const finaleContract = finaleStageDebug || staticStageDebug ? loadContract('e10-last-claim', 'epoch-10-deepsky') : this.activeContract;
+    const finaleTile = finaleContract.tileParams as typeof finaleContract.tileParams & {
+      eraDeckZones?: unknown[];
+      preserveSites?: E10PreserveSite[];
+    };
     this.e10FinaleSystem = new E10FinaleSystem(this.scene, this.canvas, {
-      enabled: (finaleStageDebug || this.activeContract.id === 'e10-last-claim') && finaleTile.tileId === 'ark-plaza-e10',
+      enabled: (finaleStageDebug || staticStageDebug || this.activeContract.id === 'e10-last-claim') && finaleTile.tileId === 'ark-plaza-e10',
       sceneClass: finaleTile.biome,
       tileId: finaleTile.tileId,
       deckCount: finaleTile.eraDeckZones?.length ?? 0,
     });
+    this.e10StaticBoss = new E10StaticBossSystem(
+      this.scene,
+      this.canvas,
+      finaleTile.preserveSites ?? [],
+      (staticStageDebug || this.activeContract.id === 'e10-last-claim') && finaleTile.tileId === 'ark-plaza-e10',
+      (x, z, base) => Terrain.visualY(x, z, base),
+      (text, title) => this.uiBridge.announce(text, this.timeAlive, null, 6, 'wave', title),
+      () => this.runManager?.secureCurrentRun(this.secureWaveForRun()),
+    );
     this.mountTileStateRenderEntries();
     const renderParams = new URLSearchParams(window.location.search);
     // The editor must preview its live descriptor rather than a baked terrain GLB.
@@ -1654,6 +1670,10 @@ export class Game {
         e10Finale: {
           close: () => this.beginE10FinaleClose(),
           diagnostics: () => this.e10FinaleSystem.diagnostics(),
+        },
+        e10Static: {
+          interact: () => this.e10StaticBoss.tryPreserve(this.actionActor.group.position, this.timeAlive),
+          diagnostics: () => this.e10StaticBoss.diagnostics(),
         },
         driveRenderSchedule: (seconds: number, renderFps: number) => this.driveRenderScheduleForTest(seconds, renderFps),
         triggerDamSurge: () => this.damSurge?.trigger(this.timeAlive) ?? false,
@@ -2024,6 +2044,7 @@ export class Game {
     this.e9ArsenalSystem.dispose();
     this.e9CanalSystem.dispose();
     this.e10FinaleSystem.dispose();
+    this.e10StaticBoss.dispose();
     this.e7ArsenalSystem.dispose();
     this.e8ArsenalSystem.dispose();
     this.crawlerBoss.dispose();
@@ -2237,6 +2258,7 @@ export class Game {
       this.homemakerBoss.update(this.timeAlive);
       this.echoBoss.update(this.timeAlive);
       this.oldDiggerBoss.update(this.timeAlive);
+      this.e10StaticBoss.update(simDelta, this.timeAlive, this.visibleActorPositions());
       if (this.secureClaimChoicePending()) {
         this.finishMultiplayerTick();
         return true;
@@ -3199,7 +3221,7 @@ export class Game {
     for (const loop of ['era-e1-frontier-loop', 'era-e2-steamworks-loop', 'era-e3-voltage-loop'] as const) {
       // Music rides through pause overlays (level-up choices pause on most kills —
       // stopping the voice restarted the track every time; owner, Baron run 2026-07-13).
-      this.audio.setLoop(loop, inRun && loop === musicLoop);
+      this.audio.setLoop(loop, inRun && loop === musicLoop, this.e10StaticBoss.musicGain);
     }
     if (!active) {
       this.audio.setLoop('river-ambience-loop', false);
@@ -4052,6 +4074,7 @@ export class Game {
       e9Arsenal: this.e9ArsenalSystem.diagnostics,
       e9Canal: this.e9CanalSystem.diagnostics,
       e10Finale: this.e10FinaleSystem.diagnostics(),
+      e10Static: this.e10StaticBoss.diagnostics(),
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
@@ -4234,6 +4257,7 @@ export class Game {
   }
 
   autoSecureWaveForRun(): number {
+    if (this.e10StaticBoss.diagnostics().enabled && !this.e10StaticBoss.receded) return Number.MAX_SAFE_INTEGER;
     return this.waitsForBaronDefeat()
       || (this.activeContract.twist.powerGrid?.connect && !this.canyonConnectCompletedByDeadline)
       || (this.activeContract.twist.fairground && this.ferrisWheel?.diagnostics.spinning === false)
@@ -5562,6 +5586,7 @@ export class Game {
     this.e6ArsenalSystem.reset();
     this.e9ArsenalSystem.reset();
     this.e9CanalSystem.reset();
+    this.e10StaticBoss.reset();
     this.e7ArsenalSystem.reset();
     this.damSurge?.reset();
     if (isDebugEnabled() && new URLSearchParams(window.location.search).has('damsurge')) this.damSurge?.trigger(this.timeAlive);
@@ -6509,6 +6534,7 @@ export class Game {
       return;
     }
     if (this.wrangle.tryCapture(this.actionActor.group.position)) return;
+    if (this.e10StaticBoss.tryPreserve(this.actionActor.group.position, this.timeAlive)) return;
     if (this.oldDiggerBoss.tryInteract(this.actionActor.group.position, this.timeAlive)) return;
     if (this.fundMegaprojectStage(this.actionActor.group.position)) return;
     this.confirmDemolish();
