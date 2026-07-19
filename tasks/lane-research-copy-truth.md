@@ -1,0 +1,7 @@
+# Task lane-research-copy-truth: research nodes promise only what exists, in-world voice (LADDER, commit prefix "fix:")
+You are Codex (lane per queue). CODEX: model=gpt-5.6-sol effort=medium
+READ FIRST: the research tree data (RESEARCH_NODES / era research content) · MQ-7 in docs/MAP-QUALITY-REGISTER.md · canon voice rules (no meta-speak ever: no "update", "patch", "version" inside the world).
+Pre-flight: standard safe-dupe; npm i; tsc+build green.
+## Why (owner, shot 221: a node reading "Arrives with a future Frontier update." — verbatim owner: "I don't quite understand that. Does that mean another epoch?" — placeholder meta-copy leaked to the player and confused the OWNER; players have no chance)
+## Scope: 1. AUDIT every research node: implemented effect? If NOT → either HIDE the node until its feature exists, or (where the tree shape needs the visible rung) reword in-world truthfully ("the Assay Office has not certified this technique yet") with NO purchase. Report the full node table (id → implemented/hidden/reworded). 2. Meta-speak grep across player-facing strings (update/patch/version/DLC) → in-world voice. 3. Spec: no visible node's copy contains meta-speak; no purchasable node lacks an implemented effect (drive via the seeded research harness).
+## Firewall: node data/copy + visibility gating only; NO effect implementations. END: READY-FOR-GATES + the node table.
