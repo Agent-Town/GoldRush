@@ -1,3 +1,5 @@
+// SAVE-COMPAT LAW: gr.profile.v2 storage keys are append-or-migrate only; old ledger imports must keep loading.
+// Imports add a profile and never destroy another profile's data. Add compatibility fixtures; never replace ancestors.
 import { META_PROGRESS_KEY } from './MetaProgress';
 import { Balance } from './Balance';
 import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
