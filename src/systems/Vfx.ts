@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
 import { Balance } from '../game/Balance';
 import { bindWorldSpriteTint } from '../assets/generated';
+import { visualAnchorY } from '../world/Terrain';
 
 type FloatingText = {
   sprite: THREE.Sprite;
@@ -23,6 +24,7 @@ export class Vfx {
 
   private readonly pool: FloatingText[] = [];
   private cursor = 0;
+  private lastFloat: { text: string; x: number; z: number; y: number; terrainY: number } | null = null;
 
   constructor() {
     this.group.name = 'Vfx';
@@ -54,7 +56,7 @@ export class Vfx {
     }
   }
 
-  floatText(position: THREE.Vector3, text: string, colorHex: string | number): void {
+  floatText(position: THREE.Vector3, text: string, colorHex: string | number, terrainLift?: number): void {
     const item = this.pool[this.cursor];
     this.cursor = (this.cursor + 1) % this.pool.length;
 
@@ -64,8 +66,10 @@ export class Vfx {
     item.elapsed = 0;
     item.duration = FLOAT_DURATION;
     item.active = true;
-    item.start.copy(position);
-    item.start.y += 1.7;
+    const terrainY = visualAnchorY(position, 0);
+    const lift = terrainLift ?? position.y - terrainY + 1.7;
+    item.start.set(position.x, visualAnchorY(position, lift), position.z);
+    this.lastFloat = { text, x: position.x, z: position.z, y: item.start.y, terrainY };
     item.sprite.position.copy(item.start);
     item.sprite.visible = true;
   }
@@ -76,6 +80,10 @@ export class Vfx {
 
   get capacity(): number {
     return this.pool.length;
+  }
+
+  get lastFloatText(): typeof this.lastFloat {
+    return this.lastFloat;
   }
 
   /**

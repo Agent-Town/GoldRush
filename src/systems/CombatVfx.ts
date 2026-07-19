@@ -105,7 +105,7 @@ export class CombatVfx {
       this.puffActive[i] = true;
       this.puffAge[i] = 0;
       this.puffScale[i] = Math.max(1, scale);
-      this.puffPos[i]?.set(position.x, Terrain.visualY(position.x, position.z, 0.08), position.z);
+      this.puffPos[i]?.set(position.x, Terrain.visualAnchorY(position, 0.08), position.z);
       this.syncPuff(i);
       this.puffs.instanceMatrix.needsUpdate = true;
       return;
@@ -118,7 +118,7 @@ export class CombatVfx {
       this.ringActive[i] = true;
       this.ringAge[i] = 0;
       this.ringRadius[i] = radius;
-      this.ringPos[i]?.set(position.x, Terrain.visualY(position.x, position.z, 0.1), position.z);
+      this.ringPos[i]?.set(position.x, Terrain.visualAnchorY(position, 0.1), position.z);
       this.ringAlive += 1;
       this.rings.visible = true;
       this.syncRing(i);
@@ -211,7 +211,7 @@ export class CombatVfx {
       this.tickActive[i] = true;
       this.tickAge[i] = 0;
       this.tickScale[i] = Math.max(1, scale);
-      this.tickPos[i]?.set(position.x, Terrain.visualY(position.x, position.z, 0.95), position.z);
+      this.tickPos[i]?.set(position.x, Terrain.visualAnchorY(position, 0.95), position.z);
       this.syncTick(i);
       this.ticks.instanceMatrix.needsUpdate = true;
       return;

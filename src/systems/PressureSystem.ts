@@ -175,7 +175,7 @@ export class PressureSystem {
       if (seam.progress < 1) continue;
       seam.harvested = true;
       this.coal += Balance.boilerHouse.coalPerSeam;
-      this.onFloatText(new THREE.Vector3(seam.x, Terrain.visualY(seam.x, seam.z, 0.5), seam.z), `+${Balance.boilerHouse.coalPerSeam} coal`, '#c4883a');
+      this.onFloatText(new THREE.Vector3(seam.x, Terrain.visualAnchorY(seam, 0.5), seam.z), `+${Balance.boilerHouse.coalPerSeam} coal`, '#c4883a');
     }
   }
 
@@ -209,14 +209,14 @@ export class PressureSystem {
     for (let index = 0; index < this.seams.length; index += 1) {
       const seam = this.seams[index]!;
       if (this.enabled() && !seam.harvested) {
-        this.object.position.set(seam.x, Terrain.visualY(seam.x, seam.z, 0.32), seam.z);
+        this.object.position.set(seam.x, Terrain.visualAnchorY(seam, 0.32), seam.z);
         this.object.rotation.set(0, index * 0.7, 0);
         this.object.scale.setScalar(1);
         this.object.updateMatrix();
         this.seamMeshes.setMatrixAt(index, this.object.matrix);
       } else this.seamMeshes.setMatrixAt(index, hidden);
       if (marked && !seam.harvested) {
-        this.object.position.set(seam.x, Terrain.visualY(seam.x, seam.z, 0.05), seam.z);
+        this.object.position.set(seam.x, Terrain.visualAnchorY(seam, 0.05), seam.z);
         this.object.rotation.set(-Math.PI / 2, 0, 0);
         this.object.scale.setScalar(1);
         this.object.updateMatrix();

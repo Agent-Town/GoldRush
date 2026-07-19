@@ -5,7 +5,7 @@ import { RenderLayers } from '../core/RenderLayers';
 import { GoldNode, GoldNodeVisualBatch, type GoldNodeFutureState, type GoldNodeSnapshot } from '../entities/GoldNode';
 import { Balance } from '../game/Balance';
 import type { Economy } from '../game/Economy';
-import { visualY, type Vec2 } from '../world/Terrain';
+import { visualAnchorY, type Vec2 } from '../world/Terrain';
 
 export type HarvestSnapshot = {
   activeNodes: GoldNodeSnapshot[];
@@ -384,7 +384,7 @@ export class HarvestSystem {
     this.progressGroup.visible = ringNode !== null && progress > 0;
     if (!ringNode) return;
 
-    this.progressGroup.position.set(ringNode.group.position.x, visualY(ringNode.group.position.x, ringNode.group.position.z, 0.08), ringNode.group.position.z);
+    this.progressGroup.position.set(ringNode.group.position.x, visualAnchorY(ringNode.group.position, 0.08), ringNode.group.position.z);
     const wobble = Math.sin(at * 8.5 + ringNode.currentAnchorIndex) * 0.06;
     this.progressGroup.rotation.y = at * 0.8;
     this.progressGroup.scale.setScalar(1 + wobble);

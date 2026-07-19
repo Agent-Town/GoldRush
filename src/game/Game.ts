@@ -2378,7 +2378,7 @@ export class Game {
       this.lastHarvestChanneling = this.harvestSnapshot.channeling;
       if (this.harvestSnapshot.lastGoldGain > 0) {
         if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
-        this.vfx.floatText(this.lastHarvestGoldPosition(), `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a');
+        this.vfx.floatText(this.lastHarvestGoldPosition(), `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a', 1.7);
       }
       this.updateBaronRocketVolley();
       this.combat.update(simDelta, this.timeAlive);
@@ -4233,6 +4233,7 @@ export class Game {
       vfx: {
         activeFloatTexts: this.vfx.activeFloatTexts,
         floatTextPool: this.vfx.capacity,
+        lastFloatText: this.vfx.lastFloatText,
         combat: this.combatVfx.diagnostics(),
       },
       performance: performanceTierDiagnostics(),
@@ -6291,7 +6292,11 @@ export class Game {
       this.leadBlastAim(intents);
     }
 
-    this.blastAimReticle.position.set(this.blastAimPoint.x, 0.09, this.blastAimPoint.z);
+    this.blastAimReticle.position.set(
+      this.blastAimPoint.x,
+      Terrain.visualAnchorY(this.blastAimPoint, 0.09),
+      this.blastAimPoint.z,
+    );
     this.blastAimReticle.visible = true;
   }
 

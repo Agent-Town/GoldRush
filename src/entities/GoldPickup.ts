@@ -109,7 +109,7 @@ export class GoldPickupPool {
       if (this.active[i]) continue;
       this.active[i] = true;
       this.previousActive[i] = false;
-      this.positions[i]?.set(position.x, Terrain.visualY(position.x, position.z, pickupY), position.z);
+      this.positions[i]?.set(position.x, Terrain.visualAnchorY(position, pickupY), position.z);
       this.amounts[i] = amount;
       this.sources[i] = source;
       this.age[i] = 0;
@@ -210,7 +210,7 @@ export class GoldPickupPool {
         }
       }
 
-      position.y = Terrain.visualY(position.x, position.z, pickupY + Math.sin((this.age[i] ?? 0) * 4.5) * 0.06);
+      position.y = Terrain.visualAnchorY(position, pickupY + Math.sin((this.age[i] ?? 0) * 4.5) * 0.06);
       dirty = true;
     }
     if (dirty) this.mesh.instanceMatrix.needsUpdate = true;

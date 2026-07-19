@@ -561,6 +561,7 @@ interface ThreeGameDiagnostics {
   vfx: {
     activeFloatTexts: number;
     floatTextPool: number;
+    lastFloatText: { text: string; x: number; z: number; y: number; terrainY: number } | null;
     combat: {
       puffs: { active: number; capacity: number };
       ticks: { active: number; capacity: number };

@@ -34,6 +34,11 @@ const BOSS_HP_MAX_SEGMENTS = 8;
 const BARON_HP_SEGMENTS = 8;
 const BOSS_HP_WIDTH = 1.9;
 const BOSS_HP_FILL_WIDTH = 1.72;
+const BOSS_HP_STYLE = {
+  health: { remaining: '#6bb36b', depleted: '#a0522d' },
+  resistance: { remaining: '#7f2633', depleted: '#24150d' },
+  edge: '#f5e6c8',
+} as const;
 const RAILCAR_DAMAGE_THRESHOLD = 0.5;
 const RAILCAR_RAIL_HEAD_Y = 0.125;
 const RAILCAR_3D_HEIGHT = 1.202;
@@ -147,6 +152,7 @@ type BossBarState = {
   groupId: string | null;
   aliveComponents: number;
   destroyedComponents: number;
+  semantic: 'health' | 'resistance';
   components?: Array<{ id: string; label: string; hp: number; maxHp: number }>;
 };
 
@@ -242,12 +248,13 @@ export class EnemyPool {
   private readonly bossHpBackGeometry = new THREE.BoxGeometry(BOSS_HP_WIDTH, 0.16, 0.05);
   private readonly bossHpFillGeometry = new THREE.BoxGeometry(BOSS_HP_FILL_WIDTH, 0.08, 0.06);
   private readonly bossHpSegmentGeometry = new THREE.BoxGeometry(0.018, 0.18, 0.07);
-  private readonly bossHpBackMaterial = new THREE.MeshBasicMaterial({ color: '#24150d', transparent: true, opacity: 0.72, depthTest: false });
-  private readonly bossHpFillMaterial = new THREE.MeshBasicMaterial({ color: '#7f2633', depthTest: false });
-  private readonly bossHpSegmentMaterial = new THREE.MeshBasicMaterial({ color: '#f5e6c8', transparent: true, opacity: 0.85, depthTest: false });
+  private readonly bossHpBackMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.health.depleted, depthTest: false, toneMapped: false, fog: false });
+  private readonly bossHpFillMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.health.remaining, depthTest: false, toneMapped: false, fog: false });
+  private readonly bossHpSegmentMaterial = new THREE.MeshBasicMaterial({ color: BOSS_HP_STYLE.edge, transparent: true, opacity: 0.85, depthTest: false, toneMapped: false, fog: false });
   private readonly bossHpBack = new THREE.Mesh(this.bossHpBackGeometry, this.bossHpBackMaterial);
   private readonly bossHpFill = new THREE.Mesh(this.bossHpFillGeometry, this.bossHpFillMaterial);
   private readonly bossHpSegments = new THREE.Group();
+  private bossHpCanvas?: HTMLCanvasElement | null;
   private readonly generatedSprites = new GeneratedSpriteBatch(assetSlots.charBanditBase, Balance.enemy.poolSize, {
     name: 'GeneratedClaimJumperSprites',
     y: ENEMY_SPRITE_Y,
@@ -987,6 +994,7 @@ export class EnemyPool {
         groupId: grouped.bossGroupId,
         aliveComponents: members,
         destroyedComponents: Math.max(0, segments - members),
+        semantic: grouped.variantId === 'old_digger' ? 'resistance' : 'health',
         components,
       };
     }
@@ -1003,6 +1011,7 @@ export class EnemyPool {
       groupId: null,
       aliveComponents: 1,
       destroyedComponents: 0,
+      semantic: 'health',
       components: includeComponents ? [{ id: 'baron', label: 'Baron', hp: round2(baron.currentHp), maxHp: round2(baron.maxHp) }] : undefined,
     };
   }
@@ -1162,9 +1171,13 @@ export class EnemyPool {
     const state = this.bossBarState();
     if (!state) {
       this.bossHpGroup.visible = false;
+      this.publishBossHpBar(null);
       return;
     }
     this.bossHpGroup.visible = true;
+    const style = BOSS_HP_STYLE[state.semantic];
+    this.bossHpBackMaterial.color.set(style.depleted);
+    this.bossHpFillMaterial.color.set(style.remaining);
     const railcarMounted = this.railcar3dState === 'ready' && this.railcar3dGroupId === state.groupId;
     this.bossHpGroup.position.set(
       railcarMounted ? this.railcar3dCenter.x : state.x,
@@ -1181,6 +1194,18 @@ export class EnemyPool {
       segment.visible = i < state.segments - 1 && state.ratio > (i + 1) / state.segments;
       segment.position.x = -BOSS_HP_FILL_WIDTH / 2 + (BOSS_HP_FILL_WIDTH * (i + 1)) / state.segments;
     }
+    this.publishBossHpBar(state);
+  }
+
+  private publishBossHpBar(state: BossBarState | null): void {
+    const canvas = this.bossHpCanvas ??= document.querySelector<HTMLCanvasElement>('#game-canvas');
+    if (!canvas) return;
+    canvas.dataset.bossBarVisible = String(state !== null);
+    canvas.dataset.bossBarSemantic = state?.semantic ?? 'none';
+    canvas.dataset.bossBarRemaining = round3(state?.ratio ?? 0).toString();
+    canvas.dataset.bossBarDepleted = round3(1 - (state?.ratio ?? 1)).toString();
+    canvas.dataset.bossBarRemainingColor = `#${this.bossHpFillMaterial.color.getHexString()}`;
+    canvas.dataset.bossBarDepletedColor = `#${this.bossHpBackMaterial.color.getHexString()}`;
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {

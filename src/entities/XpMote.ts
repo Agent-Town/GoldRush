@@ -73,7 +73,7 @@ export class XpMotePool {
       this.values[i] = value;
       this.age[i] = 0;
       this.alive += 1;
-      motePosition.set(position.x, Terrain.visualY(position.x, position.z, 0.52 * RUN_CAST_SCALE), position.z);
+      motePosition.set(position.x, Terrain.visualAnchorY(position, 0.52 * RUN_CAST_SCALE), position.z);
       this.sync(i);
       this.mesh.instanceMatrix.needsUpdate = true;
       return true;
@@ -113,7 +113,7 @@ export class XpMotePool {
         position.x += (dx / distance) * speed * delta;
         position.z += (dz / distance) * speed * delta;
       }
-      position.y = Terrain.visualY(position.x, position.z, 0.52 * RUN_CAST_SCALE + Math.sin((this.age[i] ?? 0) * 8) * 0.07);
+      position.y = Terrain.visualAnchorY(position, 0.52 * RUN_CAST_SCALE + Math.sin((this.age[i] ?? 0) * 8) * 0.07);
     }
     this.mesh.instanceMatrix.needsUpdate = true;
     return gained;

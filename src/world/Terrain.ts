@@ -429,6 +429,10 @@ export function visualY(x: number, z: number, base = 0, padRadius = 0): number {
   return samplePaddedHeight(x, z, padRadius) + base;
 }
 
+export function visualAnchorY(position: Vec2, lift: number): number {
+  return visualY(position.x, position.z, lift);
+}
+
 export function heightDiagnostics(): {
   min: number;
   max: number;
