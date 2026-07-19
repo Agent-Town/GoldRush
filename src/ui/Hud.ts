@@ -64,6 +64,8 @@ type HudElements = {
   pressureFill: HTMLElement;
   powerPanel: HTMLElement;
   powerText: HTMLElement;
+  weaponPanel: HTMLElement;
+  weaponReason: HTMLElement;
   weaponChip: HTMLElement;
   agentChip: HTMLElement;
   agentDetail: HTMLElement;
@@ -159,6 +161,7 @@ export class Hud {
       <section class="hud-panel hud-panel--weapon" data-testid="hud-weapon" aria-label="Active weapon">
         <span class="hud-label">Weapon</span>
         <strong class="hud-value" data-hud-weapon>Spark Rig</strong>
+        <span class="hud-weapon-reason" data-testid="hud-weapon-reason" hidden>Hands full of river.</span>
         <button class="hud-agent-chip" type="button" data-testid="hud-agent" aria-label="Prospector permission chip" aria-expanded="false">
           <img class="hud-agent-chip__portrait" alt="" data-hud-agent-portrait />
           <span class="hud-agent-chip__main">
@@ -207,6 +210,8 @@ export class Hud {
       pressureFill: this.get(root, '[data-hud-pressure-fill]'),
       powerPanel: this.get(root, '[data-testid="hud-power"]'),
       powerText: this.get(root, '[data-hud-power]'),
+      weaponPanel: this.get(root, '[data-testid="hud-weapon"]'),
+      weaponReason: this.get(root, '[data-testid="hud-weapon-reason"]'),
       weaponChip: this.get(root, '[data-hud-weapon]'),
       agentChip: this.get(root, '[data-testid="hud-agent"]'),
       agentDetail: this.get(root, '[data-hud-agent-detail]'),
@@ -297,6 +302,12 @@ export class Hud {
     this.elements.contractBriefing.hidden = true;
     this.elements.metaRecap.classList.remove('hud-meta-recap--visible');
     this.elements.metaRecap.hidden = true;
+  }
+
+  setWeaponDisarmReason(reason: string | null): void {
+    this.elements.weaponPanel.classList.toggle('hud-panel--disarmed', reason !== null);
+    this.elements.weaponReason.hidden = reason === null;
+    if (reason) this.elements.weaponReason.textContent = reason;
   }
 
   showContractBriefing(briefing: ContractBriefingSnapshot): void {

@@ -944,6 +944,18 @@ body {
   min-width: 10ch;
 }
 
+.hud-panel--weapon.hud-panel--disarmed > .hud-label,
+.hud-panel--weapon.hud-panel--disarmed > .hud-value {
+  opacity: 0.42;
+}
+
+.hud-weapon-reason {
+  grid-column: 1 / -1;
+  color: #7a4028;
+  font-size: 0.72rem;
+  font-style: italic;
+}
+
 .hud-agent-chip {
   grid-column: 1 / -1;
   display: grid;

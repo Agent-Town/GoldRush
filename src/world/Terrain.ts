@@ -255,6 +255,24 @@ export function waterMask(): ContractWaterMask | undefined {
   return WATER_MASK;
 }
 
+export function isCrossingStructure(x: number, z: number): boolean {
+  if ((TILE_WATER?.gravelBars ?? []).some((bar) => gravelBarContains(bar, x, z))) return true;
+  if (WATER_MASK) {
+    return WATER_MASK.regions.some((region) => region.zone === 'ford' && distanceToWaterMaskRegion(x, z, region) <= 0);
+  }
+  return ACTIVE_CONTRACT.tileParams.ford === true && fordAt(x, z) !== null;
+}
+
+function gravelBarContains(bar: ContractGravelBar, x: number, z: number): boolean {
+  const dx = x - bar.x;
+  const dz = z - bar.z;
+  const cos = Math.cos(bar.rotation);
+  const sin = Math.sin(bar.rotation);
+  const localX = dx * cos + dz * sin;
+  const localZ = -dx * sin + dz * cos;
+  return (localX / (bar.length * 0.5)) ** 2 + (localZ / (bar.width * 0.5)) ** 2 <= 1;
+}
+
 export function fordRanges(): readonly FordRange[] {
   return FORD_RANGES;
 }
