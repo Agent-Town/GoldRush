@@ -70,6 +70,8 @@ for (const f of existsSync(codexDir) ? walk(codexDir) : []) {
 }
 writeFileSync(CACHE, JSON.stringify(cache));
 writeFileSync(OUT, JSON.stringify(agg, null, 1));
+const histRow = JSON.stringify({ t: agg.stamped, att_in: agg.attended.in, att_out: agg.attended.out, fire_in: agg.fires.in, fire_out: agg.fires.out, cdx_in: agg.codexGR.in, cdx_out: agg.codexGR.out, cdx_cached: agg.codexGR.cached || 0 });
+try { const prev = existsSync('logs/usage-history.jsonl') ? readFileSync('logs/usage-history.jsonl','utf8').trim().split('\n').pop() : ''; if (!prev || JSON.parse(prev).cdx_out !== agg.codexGR.out || JSON.parse(prev).att_out !== agg.attended.out) writeFileSync('logs/usage-history.jsonl', (existsSync('logs/usage-history.jsonl') ? readFileSync('logs/usage-history.jsonl','utf8') : '') + histRow + '\n'); } catch { writeFileSync('logs/usage-history.jsonl', histRow + '\n'); }
 const M = (n) => (n / 1e6).toFixed(1) + 'M';
 console.log(`CENSUS ${agg.stamped}`);
 console.log(`attended (Fable/Claude): ${agg.attended.files} sessions · in ${M(agg.attended.in)} · out ${M(agg.attended.out)}`);

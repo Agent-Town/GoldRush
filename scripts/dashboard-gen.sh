@@ -140,19 +140,30 @@ for f in tasks/runs/*.log; do
   printf '%s|%s|%s\n' "${tok:-0}" "${mins:-0}" "$name" >> "$STATS_TMP"
 done
 TOP_TOK=$(sort -t'|' -k1 -rn "$STATS_TMP" | head -8 | awk -F'|' '{printf "  %-48s %10'"'"'d tok  %5d min\n", $3, $1, $2}')
-TOP_MIN=$(sort -t'|' -k2 -rn "$STATS_TMP" | head -8 | awk -F'|' '{printf "  %-48s %10'"'"'d tok  %5d min\n", $3, $1, $2}')
+TOP_MIN=$(sort -t'|' -k2 -rn "$STATS_TMP" | head -8 | awk -F'|' '{tag=($1==0)?"  (zombie/no-op — not a real run)":""; printf "  %-48s %10'"'"'d tok  %5d min%s\n", $3, $1, $2, tag}')
 rm -f "$STATS_TMP"
 STATS_TABLE=$(printf 'ALL-TIME: %d task runs · %d hours %d min of implementer time · %'"'"'d tokens consumed (codex-reported)\n\nTHE HUNGRIEST (tokens):\n%s\n\nTHE LONGEST (wall clock):\n%s' "$TOT_RUNS" $((TOT_MIN/60)) $((TOT_MIN%60)) "$TOT_TOK" "$TOP_TOK" "$TOP_MIN")
 STATS_TABLE=$(printf '%s' "$STATS_TABLE" | esc)
 
+# auto-refresh the census in the background when stale (>6h); render the last stamp meanwhile
+if [ -e logs/factory-usage.json ]; then
+  age_min=$(( ( $(date +%s) - $(stat -f %m logs/factory-usage.json) ) / 60 ))
+  if [ "$age_min" -gt 360 ] && ! pgrep -f factory-usage-census >/dev/null 2>&1; then
+    nohup node scripts/factory-usage-census.mjs >> logs/.census-refresh.log 2>&1 &
+  fi
+fi
 FACTORY_BLOCK=$(node -e '
 try { const a=require("./logs/factory-usage.json"); const M=n=>(n/1e6).toFixed(1)+"M";
 console.log(`THE WHOLE FACTORY (census ${a.stamped}):`);
 console.log(`  attended (Fable):        ${String(a.attended.files).padStart(5)} sessions   fresh-in ${M(a.attended.in).padStart(9)}   out ${M(a.attended.out)}`);
 console.log(`  fires (headless):        ${String(a.fires.files).padStart(5)} sessions*  fresh-in ${M(a.fires.in).padStart(9)}   out ${M(a.fires.out)}   *older fires undercounted`);
 console.log(`  codex (Sol+runner):      ${String(a.codexGR.files).padStart(5)} sessions   fresh-in ${M(a.codexGR.in).padStart(9)}   out ${M(a.codexGR.out)}   (+${(a.codexGR.cached/1e9).toFixed(1)}B cached reads)`);
+const age=Math.round((Date.now()-new Date(a.stamped).getTime())/36e5);
 const ti=a.attended.in+a.fires.in+a.codexGR.in, to=a.attended.out+a.fires.out+a.codexGR.out;
-console.log(`  TOTAL:                   fresh-in ${M(ti)} · out ${M(to)} — refresh: node scripts/factory-usage-census.mjs`);
+console.log(`  TOTAL:                   fresh-in ${M(ti)} · out ${M(to)}   (census age ${age}h — auto-refreshes >6h)`);
+try { const h=require("fs").readFileSync("logs/usage-history.jsonl","utf8").trim().split("\n").slice(-5).map(l=>JSON.parse(l));
+if (h.length>1) { console.log("  THE BURN (last stamps, out-tokens):");
+for (const r of h) console.log(`    ${r.t}  attended ${M(r.att_out)} · fires ${M(r.fire_out)} · codex ${M(r.cdx_out)}`); } } catch {}
 } catch(e) { console.log("(factory census not yet run: node scripts/factory-usage-census.mjs)"); }' 2>/dev/null)
 STATS_TABLE="$STATS_TABLE
 
