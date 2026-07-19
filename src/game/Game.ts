@@ -235,7 +235,13 @@ import { createDeepwaterClaimTile, type CorsairSkiffWave } from '../world/Deepwa
 import { readTownName } from '../town/TownNaming';
 import { installRunTelemetry } from '../telemetry/runBeacon';
 import { GameState } from './GameState';
-import { performanceTierDiagnostics } from './PerformanceTier';
+import {
+  applyStoredPerformanceTier,
+  performanceTierDiagnostics,
+  readRuntimePerformanceVerdict,
+  saveRuntimePerformanceVerdict,
+  type RuntimePerformanceVerdict,
+} from './PerformanceTier';
 import { Progression } from './Progression';
 import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgradeEffect, upgradeFamilyId } from './Upgrades';
 import { clearScores, loadScores, recordScore } from './Scoreboard';
@@ -1074,6 +1080,15 @@ export class Game {
   private frameMsLast = 0;
   private frameMsAvg = 0;
   private frameMsP95 = 0;
+  private runtimePerformanceVerdict: RuntimePerformanceVerdict = readRuntimePerformanceVerdict(this.activeContract.id);
+  private readonly runtimeAutoTierEnabled = !isDebugEnabled() || new URLSearchParams(window.location.search).has('autotier');
+  private renderCollapseSeconds = 0;
+  private autoTierToastShown = false;
+  private skipNextVisibleFrameSample = false;
+  private readonly onPerformanceVisibilityChange = () => {
+    this.resetFrameWindow();
+    this.skipNextVisibleFrameSample = true;
+  };
   private profileElapsed = 0;
   private debugBeaconWaveOverride: number | null = null;
   private stolenTotal = 0;
@@ -1162,6 +1177,7 @@ export class Game {
     this.blastAimReticle.renderOrder = RenderLayers.groundDecals;
     this.blastAimReticle.visible = false;
     this.canvas.addEventListener('pointermove', this.onBlastAimPointerMove);
+    document.addEventListener('visibilitychange', this.onPerformanceVisibilityChange);
     this.updateActionActorPosition();
     this.buildSystem = new BuildSystem(
       canvas,
@@ -1575,7 +1591,7 @@ export class Game {
     this.mountTileStateRenderEntries();
     const renderParams = new URLSearchParams(window.location.search);
     // The editor must preview its live descriptor rather than a baked terrain GLB.
-    const terrain3dPilot = !renderParams.has('terrain2d') && !renderParams.has('editor');
+    const terrain3dPilot = this.runtimePerformanceVerdict < 3 && !renderParams.has('terrain2d') && !renderParams.has('editor');
     this.canvas.dataset.terrain3dPilotState = terrain3dPilot ? 'loading' : 'off';
     this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
     if (terrain3dPilot) void import('../world/Terrain3dClaimPilot').then(({ installTerrain3dClaimPilot }) => {
@@ -1586,12 +1602,7 @@ export class Game {
         contractId: this.activeContract.id,
         tileId: activeTileDescriptor().id,
         paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
-        onVisualHeightSourceInstalled: () => {
-          this.railPath?.resampleTerrain();
-          this.megaprojectRailPath?.resampleTerrain();
-          this.e9CanalSystem.resampleTerrain();
-          this.e6TileConsumers.resampleTerrain();
-        },
+        onVisualHeightSourceInstalled: () => this.resampleVisualHeights(),
       });
     });
     this.canvas.dataset.run3dPilotState = 'loading';
@@ -2027,6 +2038,7 @@ export class Game {
     window.removeEventListener('pointerdown', this.skipBaronCeremony);
     window.removeEventListener('keydown', this.skipBaronCeremony);
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
+    document.removeEventListener('visibilitychange', this.onPerformanceVisibilityChange);
     this.input.dispose();
     this.playbookSurface?.dispose();
     this.hud.dispose();
@@ -2455,7 +2467,10 @@ export class Game {
     this.detailScatter?.syncBuildingClearings(this.detailClearings());
     this.cameraRig.update(delta, this.localActor.renderPosition, this.localActor.velocity);
     this.syncMultiplayerNameChips();
-    this.lightRig?.setStressFallback(visualStress);
+    this.lightRig?.setStressFallback(visualStress || this.runtimePerformanceVerdict >= 1);
+    this.lightRig?.setNightLightLimit(
+      this.runtimePerformanceVerdict >= 2 ? Balance.render.night.degradedDynamicLights : null,
+    );
     this.syncNightShiftLighting();
     this.lightRig?.update(this.timeAlive);
     this.damageVignette.style.opacity = (this.damageFlashRemaining / Balance.hero.iframes).toFixed(3);
@@ -4243,7 +4258,13 @@ export class Game {
 
   private recordFrameMs(frameMs: number): void {
     this.frameMsLast = frameMs;
-    if (this.frameMsSamples.length < 180) {
+    if (document.visibilityState !== 'visible' || this.skipNextVisibleFrameSample) {
+      if (document.visibilityState === 'visible') this.skipNextVisibleFrameSample = false;
+      this.resetFrameWindow();
+      return;
+    }
+    const windowFrames = Math.max(12, Math.floor(Balance.render.night.windowFrames));
+    if (this.frameMsSamples.length < windowFrames) {
       this.frameMsSamples.push(frameMs);
     } else {
       this.frameMsSamples[this.frameMsCursor] = frameMs;
@@ -4257,6 +4278,65 @@ export class Game {
     const sorted = [...this.frameMsSamples].sort((a, b) => a - b);
     const p95Index = Math.min(sorted.length - 1, Math.floor(sorted.length * 0.95));
     this.frameMsP95 = sorted[p95Index] ?? 0;
+    this.updateRuntimePerformanceVerdict(frameMs);
+  }
+
+  private updateRuntimePerformanceVerdict(frameMs: number): void {
+    if (
+      this.runtimePerformanceVerdict >= 3 ||
+      !this.runtimeAutoTierEnabled ||
+      document.visibilityState !== 'visible' ||
+      this.state.current !== 'playing'
+    ) return;
+    const collapsed = this.frameMsP95 > Balance.render.night.frameBudgetMs * Balance.render.night.collapseRatio;
+    this.renderCollapseSeconds = collapsed
+      ? this.renderCollapseSeconds + Math.min(frameMs, 1000) / 1000
+      : 0;
+    if (this.renderCollapseSeconds < Balance.render.night.collapseSeconds) return;
+    this.renderCollapseSeconds = 0;
+    this.runtimePerformanceVerdict = saveRuntimePerformanceVerdict(
+      this.activeContract.id,
+      (this.runtimePerformanceVerdict + 1) as RuntimePerformanceVerdict,
+    );
+    this.resetFrameWindow();
+    if (!this.autoTierToastShown) {
+      this.autoTierToastShown = true;
+      this.uiBridge.announce('Dimming the lanterns for smoothness.', this.timeAlive, null, 4);
+    }
+    if (this.runtimePerformanceVerdict >= 3) this.fallbackToLiteRendering();
+  }
+
+  private fallbackToLiteRendering(): void {
+    const diagnostics = applyStoredPerformanceTier(this.activeContract.id);
+    this.tuning.maxDpr = diagnostics.config.maxDpr;
+    resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
+    this.run3dPilot?.dispose();
+    this.run3dPilot = undefined;
+    this.fallbackToPaintedTerrain();
+  }
+
+  private fallbackToPaintedTerrain(): void {
+    this.terrain3dPilotCancelled = true;
+    this.terrain3dPilotDispose?.();
+    this.terrain3dPilotDispose = undefined;
+    this.resampleVisualHeights();
+    this.canvas.dataset.terrain3dPilotState = 'lite';
+    this.canvas.dataset.terrain3dPilotRenderSource = 'painted';
+  }
+
+  private resampleVisualHeights(): void {
+    this.railPath?.resampleTerrain();
+    this.megaprojectRailPath?.resampleTerrain();
+    this.e9CanalSystem.resampleTerrain();
+    this.e6TileConsumers.resampleTerrain();
+  }
+
+  private resetFrameWindow(): void {
+    this.frameMsSamples.length = 0;
+    this.frameMsCursor = 0;
+    this.frameMsAvg = 0;
+    this.frameMsP95 = 0;
+    this.renderCollapseSeconds = 0;
   }
 
   secureWaveForRun(): number {
@@ -4803,6 +4883,13 @@ export class Game {
     if (agentLight) sources.push({ ...agentLight, kind: 'light' });
 
     const nightPools: NightPoolSource[] = [
+      ...this.actors.filter((actor) => actor.group.visible).map((actor) => ({
+        x: actor.renderPosition.x,
+        z: actor.renderPosition.z,
+        radius: Balance.contracts.nightShift.heroLightRadius,
+        kind: 'hero' as const,
+      })),
+      ...(agentLight ? [{ ...agentLight, height: 1.15, kind: 'prospector' as const }] : []),
       ...lanternPositions.map((position) => ({
         x: position.x,
         z: position.z,
@@ -4816,13 +4903,6 @@ export class Game {
         kind: 'lantern' as const,
       })),
       ...fairgroundSources.map((source) => ({ x: source.x, z: source.z, radius: source.radius, kind: 'lantern' as const })),
-      ...this.actors.filter((actor) => actor.group.visible).map((actor) => ({
-        x: actor.renderPosition.x,
-        z: actor.renderPosition.z,
-        radius: Balance.contracts.nightShift.heroLightRadius,
-        kind: 'hero' as const,
-      })),
-      ...(agentLight ? [{ ...agentLight, height: 1.15, kind: 'prospector' as const }] : []),
       ...enemyLanterns.map((lantern) => ({ ...lantern, height: 0.82, kind: 'enemy-lantern' as const })),
     ];
     this.lightRig?.setNightShift(state, nightPools);
