@@ -64,11 +64,16 @@ import {
 import {
   earnedTownBuildings,
   townBuildings,
+  TOWN_LEGACY_PAN_NAME,
+  townEraPropFootprints,
+  townEraPropsForOrder,
   townPlazaLayout,
   townPlazaSlot,
+  townPropFootprints,
   townPropRing,
   type TownBuilding,
   type TownBuildingId,
+  type TownPropFootprint,
   type TownPropKind,
 } from './townLayout';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
@@ -105,7 +110,7 @@ const townFacadeLoader = new THREE.TextureLoader();
 const townFacadeTextures = new Map<string, Promise<THREE.Texture | null>>();
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
-const HERO_START = new THREE.Vector3(0, 0.06, 0);
+const HERO_START = new THREE.Vector3(0, 0.06, 2);
 const TAVERN_DOOR = new THREE.Vector3(townPlazaSlot('tavern').approach.x, 0.08, townPlazaSlot('tavern').approach.z);
 const FIRST_CLAIM_GREETING = "The valley's open. The tavern keeps the contracts. Go stake your first claim.";
 const FIRST_CLAIM_PENDING = 'pending';
@@ -208,7 +213,7 @@ export type TownDiagnostics = {
     night: boolean;
     drawCallBudget: number;
     counts: Record<TownPropKind, number>;
-    panMonument: { visible: boolean; x: number; z: number; waterState: 'dry' };
+    panMonument: { visible: boolean; x: number; z: number; waterState: 'dry'; legacyPrimitive: boolean };
     ponyExpressPlot: { visible: boolean; x: number; z: number; pictogram: 'rider-horn' };
     lanterns: number;
   };
@@ -304,6 +309,7 @@ export class TownScene {
   private readonly propRingEnabled = !new URLSearchParams(window.location.search).has('noTownProps');
   private readonly townNight = new URLSearchParams(window.location.search).has('townNight');
   private readonly performanceTier = performanceTierDiagnostics().tier;
+  private readonly eraOrder = loadEpoch(activeEpochId()).order;
   private readonly ambientDust = createAmbientDust(this.performanceTier, this.townNight);
   private readonly ambientDustObject = new THREE.Object3D();
   private readonly townActors: TownActorRuntime[] = [];
@@ -477,6 +483,7 @@ export class TownScene {
     return {
       walkable:
         !shellAt(this.visibleBuildings, x, z) &&
+        !townPropAt(this.propRingEnabled, this.canvas.dataset.town3dPlazaPropsState === 'loaded', this.eraOrder, x, z) &&
         !megaprojectAt(this.stampMill, STAMP_MILL_TOWN_SITE, x, z) &&
         !megaprojectAt(this.dynamoHall, this.dynamoHall.manifest?.siteFootprint, x, z),
       speedMul: 1,
@@ -510,11 +517,11 @@ export class TownScene {
     if (this.propRingEnabled) {
       const propSearch = new URLSearchParams(window.location.search);
       const pilot = propSearch.get('town3dPilot') ?? (propSearch.has('terrain2d') ? null : 'all');
+      const propsPiloted = (pilot === 'all' || pilot === 'props') && propSearch.get('tier') !== 'lite' && this.performanceTier !== 'lite';
       // The props pilot replaces wagons/trough/pan with GLBs; building their
       // primitives too double-renders (owner saw the old frame atop Sol's pan).
-      const eraOrder = loadEpoch(activeEpochId()).order;
-      this.canvas.dataset.townEraAccent = String(eraOrder);
-      this.scene.add(createTownPropRing(this.townNight, pilot === 'all' || pilot === 'props', eraOrder));
+      this.canvas.dataset.townEraAccent = String(this.eraOrder);
+      this.scene.add(createTownPropRing(this.townNight, propsPiloted, this.eraOrder));
     }
     this.createStampMillVignette();
     this.createDynamoHallVignette();
@@ -1943,6 +1950,7 @@ export class TownScene {
         x: townPropRing.panMonument.position.x,
         z: townPropRing.panMonument.position.z,
         waterState: 'dry',
+        legacyPrimitive: this.scene.getObjectByName(TOWN_LEGACY_PAN_NAME)?.visible ?? false,
       },
       ponyExpressPlot: {
         visible: this.propRingEnabled && !!pony,
@@ -2491,6 +2499,36 @@ function shellAt(buildings: readonly TownBuilding[], x: number, z: number): bool
   });
 }
 
+function townPropAt(enabled: boolean, eraPropsMounted: boolean, eraOrder: number, x: number, z: number): boolean {
+  if (!enabled) return false;
+  const pad = Balance.hero.radius + 0.08;
+  if (footprintAt(townPropRing.panMonument.position, 0, 1, townPropRing.panMonument.footprint, x, z, pad)) return true;
+  if (townPropRing.props.some((prop) => footprintAt(prop.position, prop.rotation, prop.scale ?? 1, townPropFootprints[prop.kind], x, z, pad))) return true;
+  return eraPropsMounted && townEraPropsForOrder(eraOrder).some((prop) => {
+    const footprint = townEraPropFootprints[prop.glb];
+    return footprint ? footprintAt(prop.position, prop.rotation, prop.scale, footprint, x, z, pad) : false;
+  });
+}
+
+function footprintAt(
+  position: { x: number; z: number },
+  rotation: number,
+  scale: number,
+  footprint: TownPropFootprint,
+  x: number,
+  z: number,
+  pad: number,
+): boolean {
+  const dx = x - position.x;
+  const dz = z - position.z;
+  if (footprint.kind === 'radius') return Math.hypot(dx, dz) <= footprint.radius * scale + pad;
+  const cos = Math.cos(rotation);
+  const sin = Math.sin(rotation);
+  const localX = dx * cos - dz * sin;
+  const localZ = dx * sin + dz * cos;
+  return Math.abs(localX) <= footprint.w * scale / 2 + pad && Math.abs(localZ) <= footprint.d * scale / 2 + pad;
+}
+
 function megaprojectAt(
   megaproject: TownMegaproject,
   site: MegaprojectManifest['siteFootprint'] | undefined,
@@ -2592,14 +2630,13 @@ function createTownPropRing(night: boolean, propsPiloted = false, eraOrder = 1):
     }
   }
 
-  addPanMonumentParts(woodParts, group, propsPiloted);
   group.add(
     createBoxInstances('TownPropWoodInstances', woodParts, new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.84, metalness: 0.03 })),
     createBoxInstances('TownPropCanvasInstances', canvasParts, new THREE.MeshStandardMaterial({ color: '#e8d5a8', roughness: 0.88, metalness: 0.01 })),
     createCylinderInstances('TownPropWagonWheels', new THREE.CylinderGeometry(1, 1, 1, 16), wheelParts, new THREE.MeshStandardMaterial({ color: '#3b2416', roughness: 0.82 })),
     createCylinderInstances('TownPropCacti', new THREE.CylinderGeometry(1, 1, 1, 10), cactusParts, new THREE.MeshStandardMaterial({ color: '#5b8a72', roughness: 0.9 })),
     createLanternGlow(lanternPositions, night, townEraAccent(eraOrder)),
-    createPanBowl(),
+    createPanMonumentLegacy(),
   );
   return group;
 }
@@ -2613,16 +2650,17 @@ function localPoint(prop: { position: { x: number; z: number }; rotation: number
   };
 }
 
-function addPanMonumentParts(parts: BoxPart[], group: THREE.Group, propsPiloted = false): void {
+function createPanMonumentLegacy(): THREE.Group {
+  const group = new THREE.Group();
+  group.name = TOWN_LEGACY_PAN_NAME;
+  const parts: BoxPart[] = [];
   const { x, z } = townPropRing.panMonument.position;
-  if (!propsPiloted) {
   parts.push({ x, y: 0.11, z: z - 0.68, sx: 1.62, sy: 0.22, sz: 0.16 });
   parts.push({ x, y: 0.11, z: z + 0.68, sx: 1.62, sy: 0.22, sz: 0.16 });
   parts.push({ x: x - 0.68, y: 0.11, z, sx: 0.16, sy: 0.22, sz: 1.18 });
   parts.push({ x: x + 0.68, y: 0.11, z, sx: 0.16, sy: 0.22, sz: 1.18 });
   parts.push({ x: x + 0.92, y: 0.36, z, sx: 0.28, sy: 0.52, sz: 0.28 });
   parts.push({ x: x + 0.92, y: 0.64, z, sx: 0.62, sy: 0.06, sz: 0.08, rotation: -0.2 });
-  }
   const ring = new THREE.Mesh(
     new THREE.RingGeometry(townPropRing.panMonument.radius, townPropRing.panMonument.radius + 0.04, 48),
     new THREE.MeshBasicMaterial({ color: '#fff0bd', transparent: true, opacity: 0.24, depthWrite: false }),
@@ -2631,7 +2669,12 @@ function addPanMonumentParts(parts: BoxPart[], group: THREE.Group, propsPiloted 
   ring.position.set(x, 0.035, z);
   ring.rotation.x = -Math.PI / 2;
   ring.renderOrder = RenderLayers.groundDecals;
-  group.add(ring);
+  group.add(
+    createBoxInstances('TownPropPanWoodInstances', parts, new THREE.MeshStandardMaterial({ color: '#7a5132', roughness: 0.84, metalness: 0.03 })),
+    createPanBowl(),
+    ring,
+  );
+  return group;
 }
 
 function createBoxInstances(name: string, parts: readonly BoxPart[], material: THREE.Material): THREE.InstancedMesh {

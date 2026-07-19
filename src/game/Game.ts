@@ -2309,7 +2309,7 @@ export class Game {
           if (!this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
-        [...this.buildSystem.palisadeBlockers, ...this.e6TileConsumers.blockers],
+        [...this.buildSystem.palisadeBlockers, ...this.e6TileConsumers.blockers, ...Terrain.landmarkBlockers()],
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
         (enemy) =>

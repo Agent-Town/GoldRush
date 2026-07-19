@@ -2,7 +2,7 @@ import * as THREE from 'three';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import { activeEpoch } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
-import { townBuildings, townPlazaSlot, townPropRing } from './townLayout';
+import { TOWN_LEGACY_PAN_NAME, townBuildings, townEraPropsForOrder, townPlazaSlot, townPropRing } from './townLayout';
 
 const MODEL_PATHS = {
   tavern: {
@@ -32,21 +32,6 @@ const BUNDLED_VARIANT_URLS = import.meta.glob('../../assets/pilots/*-3d/*.e*.glb
   import: 'default',
   query: '?url',
 }) as Record<string, string>;
-type EraPropManifest = {
-  epoch: number;
-  floodReset?: boolean;
-  props: Array<{
-    id: string;
-    glb: string;
-    position: { x: number; z: number };
-    rotation: number;
-    scale: number;
-  }>;
-};
-const ERA_PROP_MANIFESTS = import.meta.glob('../../assets/pilots/plaza-props-3d/era-props.e*.json', {
-  eager: true,
-  import: 'default',
-}) as Record<string, EraPropManifest>;
 const TOWN_PLATE_MODEL_URL = new URL('../../assets/pilots/town-plate-3d/town-plate.glb', import.meta.url).href;
 const PROP_MODEL_URLS = {
   covered_wagon: new URL('../../assets/pilots/plaza-props-3d/covered_wagon.glb', import.meta.url).href,
@@ -528,12 +513,10 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
   const removeEmitters: Array<() => void> = [];
   const descriptors = townPropRing.props.filter((prop) => prop.kind === 'covered_wagon' || prop.kind === 'water_trough');
   const activeEra = activeEpoch().order;
-  const manifests = Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) => index + 2)
-    .map((era) => ERA_PROP_MANIFESTS[`../../assets/pilots/plaza-props-3d/era-props.e${era}.json`])
-    .filter((manifest): manifest is EraPropManifest => !!manifest);
-  const eraProps = manifests.slice(Math.max(0, manifests.map((manifest) => manifest.floodReset).lastIndexOf(true)))
-    .flatMap((manifest) => manifest.props);
+  const eraProps = townEraPropsForOrder(activeEra);
   const accessoryPaths = [...new Set(eraProps.map((prop) => `../../assets/pilots/plaza-props-3d/${prop.glb}`))];
+  const legacyPan = scene.getObjectByName(TOWN_LEGACY_PAN_NAME);
+  canvas.dataset.town3dPlazaPropsState = 'loading';
 
   const loadValid = async (kind: string, urls: readonly string[]): Promise<{ source: THREE.Object3D; metrics: ReturnType<typeof inspect> }> => {
     for (const url of urls) {
@@ -593,8 +576,11 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
       return;
     }
     scene.add(...mounted);
+    if (legacyPan) legacyPan.visible = false;
     for (const model of mounted) removeEmitters.push(addAnchorEmitters(scene, canvas, model.name, model, activeEra));
     canvas.dataset.town3dPilotInstances = String(mounted.length);
+    canvas.dataset.town3dPanMonumentInstances = String(baseProps.some(({ kind }) => kind === 'pan_monument') ? 1 : 0);
+    canvas.dataset.town3dPlazaPropsState = 'loaded';
     canvas.dataset.town3dEraPropIds = eraProps.map((prop) => prop.id).join(',');
     publish(canvas, 'loaded', 'glb', {
       meshes: mounted.length,
@@ -604,7 +590,12 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
   }).catch(() => {
     mounted.forEach(disposeObject3D);
     mounted.length = 0;
-    if (!disposed) publish(canvas, 'error', 'facade');
+    if (!disposed) {
+      if (legacyPan) legacyPan.visible = true;
+      canvas.dataset.town3dPanMonumentInstances = '0';
+      canvas.dataset.town3dPlazaPropsState = 'error';
+      publish(canvas, 'error', 'facade');
+    }
   });
 
   return () => {
@@ -615,5 +606,8 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
       disposeObject3D(model);
     }
     mounted.length = 0;
+    if (legacyPan) legacyPan.visible = true;
+    canvas.dataset.town3dPanMonumentInstances = '0';
+    canvas.dataset.town3dPlazaPropsState = 'disposed';
   };
 }
