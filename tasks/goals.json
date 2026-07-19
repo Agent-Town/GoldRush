@@ -566,7 +566,7 @@
       {
        "id": "e8-physics",
        "title": "E8 physics \u2014 soft gravity, domes/breach seals, suit timers",
-       "status": "planned"
+       "status": "queued"
       },
       {
        "id": "e8-arsenal",
@@ -707,7 +707,7 @@
       {
        "id": "e10-boss",
        "title": "Boss \u2014 The Quiet",
-       "status": "planned"
+       "status": "queued"
       },
       {
        "id": "e10-art",
@@ -789,6 +789,32 @@
       {
        "id": "roster-wiring-e6-e10",
        "title": "Spawn-table wiring per era (auto-follows art \u2014 owner corrects post-hoc)",
+       "status": "planned"
+      }
+     ]
+    },
+    {
+     "id": "board-book",
+     "title": "The Contract Board becomes THE BOOK",
+     "tasks": [
+      {
+       "id": "board-card-images",
+       "title": "Map-true interim cards for all 41 (three-tier resolution)",
+       "status": "queued"
+      },
+      {
+       "id": "board-era-chapters",
+       "title": "Era chapters + secrets kept (owner directive)",
+       "status": "planned"
+      },
+      {
+       "id": "plates-027",
+       "title": "Engraved plates E2-E3 (art 027)",
+       "status": "queued"
+      },
+      {
+       "id": "plates-028-031",
+       "title": "Engraved plates E4-E10 (art 028-031, one-in-flight)",
        "status": "planned"
       }
      ]
@@ -1256,6 +1282,32 @@
        "mergeHash": "3b2e3784c5b55e626aae5a4566cb17716f40b395"
       }
      ]
+    },
+    {
+     "id": "playtest-fixes",
+     "title": "Owner playtest correctives (3D Claim, 07-18 night)",
+     "tasks": [
+      {
+       "id": "fix-run3d-interaction",
+       "title": "P0 \u2014 planar picking + previews on terrain (sluices at water)",
+       "status": "queued"
+      },
+      {
+       "id": "fix-panorama-horizon",
+       "title": "One field to the horizon (band + legacy surround + edge)",
+       "status": "queued"
+      },
+      {
+       "id": "fix-freed-water",
+       "title": "Freed walkers never wade the river",
+       "status": "queued"
+      },
+      {
+       "id": "fix-landmark-collision",
+       "title": "Landmark solidity by data footprints",
+       "status": "queued"
+      }
+     ]
     }
    ],
    "tasks": [
@@ -1264,6 +1316,12 @@
      "title": "THE 3D PROMOTION \u2014 sculpted world default-on (owner sight-verdict 2026-07-18)",
      "status": "merged",
      "mergeHash": "6beab28948f00800e2e04bc60ac261a998ac555c"
+    },
+    {
+     "id": "craftbooks",
+     "title": "Sol craftbooks \u00d73 (dormancy with honor) + claim-revision law adopted",
+     "status": "merged",
+     "mergeHash": "97e3d42594599513107523a7b989912cee6e2d25"
     }
    ]
   },
@@ -1410,6 +1468,12 @@
      "title": "Branch triage complete \u2014 55\u219213 refs, 43 deleted (tagged), 5 parked, 3 harvest masters",
      "status": "merged",
      "mergeHash": "30e61072d66bdbfac3bebe91e661c4bc1af4f294"
+    },
+    {
+     "id": "ghost-line-audit",
+     "title": "Blocker board audit \u2014 21 ghost lines retired, board reads true",
+     "status": "merged",
+     "mergeHash": "0989f2c929ae68f9a3a2da24060a2837c3e03f28"
     }
    ]
   },
@@ -1721,6 +1785,17 @@
      "status": "merged",
      "mergeHash": "a1253934f600a69c697308ae9e9c8b30935878b2",
      "taskFile": "lane-c-press-edit-visibility.md"
+    },
+    {
+     "id": "press-smoke",
+     "title": "Live-deploy player-path smoke GREEN (lever charter runs in production)",
+     "status": "merged",
+     "mergeHash": "ebdfce6e6fd4eb3f4d5b1b108f07af9613bb7f25"
+    },
+    {
+     "id": "e10-river-boot-guard",
+     "title": "F-SMOKE-1: stub door declines readably",
+     "status": "planned"
     }
    ]
   },
@@ -1783,6 +1858,12 @@
      "title": "kit/stream module (--with-stream; book ch.10; self-test 100/100)",
      "status": "merged",
      "mergeHash": "77f6c4b62cf6133465e9ec8c4639c1fe27ff0d86"
+    },
+    {
+     "id": "foundry-cold-smoke",
+     "title": "Cold-clone stranger-agent smoke: 0 broken steps; 3 doc gaps fixed upstream (361a8aa)",
+     "status": "merged",
+     "mergeHash": "ef4f6660fe9706d6d6b24cbd2953a59c60288eef"
     }
    ]
   }
