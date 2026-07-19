@@ -1129,6 +1129,7 @@ export class Game {
   private playerPauseActive = false;
   private uiSnapshot?: UiSnapshot;
   private wetPowderHintCooldown = 0;
+  private weaponsWereDisarmed = false;
   private deathLedger: DeathLedger = {
     timeAlive: 0,
     kills: 0,
@@ -2285,7 +2286,7 @@ export class Game {
       this.syncHeroVisualHeight();
       this.deepwaterArsenal.update(this.timeAlive);
       this.updateBlastAim(intents);
-      this.updateWetPowderHint(simDelta);
+      this.updateDisarmReadability(simDelta);
       this.combat.setTime(this.timeAlive);
       this.damSurge?.update(this.timeAlive);
       if (this.finishPendingDeath()) return true;
@@ -5103,6 +5104,9 @@ export class Game {
       this.agentUiState(),
     );
     this.hud.update(this.uiSnapshot, this.pauseMetaSnapshot(), this.playerPauseActive && this.state.isPaused);
+    this.hud.setWeaponDisarmReason(
+      this.heroWeaponsDisarmed() ? (this.deepwaterClaim ? 'Hands full of sea.' : 'Hands full of river.') : null,
+    );
     this.playbookSurface?.update();
   }
 
@@ -5725,6 +5729,7 @@ export class Game {
     this.weaponToggleCount = 0;
     this.blastTime = 0;
     this.wetPowderHintCooldown = 0;
+    this.weaponsWereDisarmed = false;
     this.progression.reset();
     this.agentConsent.reset();
     const roster = (this.mpClient?.state().roster ?? []).slice(0, 4);
@@ -6300,11 +6305,15 @@ export class Game {
     this.blastAimReticle.visible = true;
   }
 
-  private updateWetPowderHint(delta: number): void {
+  private updateDisarmReadability(delta: number): void {
     this.wetPowderHintCooldown = Math.max(0, this.wetPowderHintCooldown - delta);
-    if (!this.heroWeaponsDisarmed() || this.enemies.activeCount <= 0 || this.wetPowderHintCooldown > 0) return;
-    this.uiBridge.announce('Wet powder.', this.timeAlive, null, 1.4);
-    this.wetPowderHintCooldown = 1.4;
+    const disarmed = this.heroWeaponsDisarmed();
+    if (this.weaponsWereDisarmed && !disarmed) this.vfx.floatText(this.localActor.group.position, 'Armed again', '#83ded7');
+    this.weaponsWereDisarmed = disarmed;
+    if (disarmed && this.enemies.activeCount > 0 && this.wetPowderHintCooldown <= 0) {
+      this.uiBridge.announce('Wet powder.', this.timeAlive, null, 1.4);
+      this.wetPowderHintCooldown = 1.4;
+    }
   }
 
   private heroWeaponsDisarmed(): boolean {
@@ -6317,8 +6326,9 @@ export class Game {
 
   private heroWeaponsDisarmedFor(actor: Hero): boolean {
     if (!Balance.pathing.deepWaterDisarmsHero) return false;
-    const inDeepWater = Terrain.sample(actor.group.position.x, actor.group.position.z).waterClass === 'deep'
-      || this.heroInDeepwaterDiveZone(actor);
+    const inDeepWater = !Terrain.isCrossingStructure(actor.group.position.x, actor.group.position.z)
+      && (Terrain.sample(actor.group.position.x, actor.group.position.z).waterClass === 'deep'
+        || this.heroInDeepwaterDiveZone(actor));
     if (!inDeepWater) return false;
     return this.activeEpoch.id !== 'epoch-5-deepwater' || this.weaponForActor(actor) !== 'rig';
   }
