@@ -3,7 +3,7 @@
 - **Slice:** lane-crossing-armed — crossings keep you armed; wading disarms, readably
 - **Branch/tip:** lane/m3 @ `475f8597` "runner(lane-a): lane-crossing-armed.md"
 - **Base:** `a63713ae` (s747 lock)
-- **Drained by:** s748 fire → main merge `3e5fd3d1` (parents `3f17c322` main, `475f8597` lane)
+- **Drained by:** s748 fire → main merge `6c3bffcb` (parents `3f17c322` main, `475f8597` lane)
 
 ## Verdict
 **MERGE — clean 3-way (ort auto-merge, disjoint hunks).** Slice spec green desktop+mobile; regression check on the same-fire pause-goal drain still green post-merge.
