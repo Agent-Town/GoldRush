@@ -386,6 +386,8 @@ interface ThreeGameDiagnostics {
     ghostValid: boolean;
     ghostLight: number;
     ghostPos: { x: number; z: number };
+    ghostY: number;
+    ghostVisible: boolean;
     ghostRotationSteps: number;
     ghostFootprint: { w: number; d: number };
     selectedBuildable: GrBuildableId;

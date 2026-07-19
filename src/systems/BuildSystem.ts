@@ -47,6 +47,8 @@ export type BuildDiagnostics = {
   ghostValid: boolean;
   ghostLight: number;
   ghostPos: { x: number; z: number };
+  ghostY: number;
+  ghostVisible: boolean;
   ghostRotationSteps: number;
   ghostFootprint: { w: number; d: number };
   beacons: number;
@@ -633,6 +635,8 @@ export class BuildSystem {
       ghostValid: this.valid,
       ghostLight: this.ghostLight,
       ghostPos: { x: this.ghostPos.x, z: this.ghostPos.z },
+      ghostY: this.ghost.position.y,
+      ghostVisible: this.ghost.visible,
       ghostRotationSteps: this.ghostRotationSteps,
       ghostFootprint: footprint,
       beacons: this.beaconCount,
@@ -1333,8 +1337,11 @@ export class BuildSystem {
     this.pointerClientY = event.clientY;
   };
 
-  private readonly onCanvasClick = (): void => {
+  private readonly onCanvasClick = (event: MouseEvent): void => {
     if (!this.mode) return;
+    this.pointerReady = true;
+    this.pointerClientX = event.clientX;
+    this.pointerClientY = event.clientY;
     const position = this.placementPoint();
     if (this.onPlacementRequest?.(position)) return;
     this.confirm(this.currentAt, position);
@@ -2269,6 +2276,7 @@ export class BuildSystem {
       this.capacitorBankGhost,
       this.assayOfficeGhost,
     );
+    this.ghost.traverse((part) => { part.renderOrder = RenderLayers.gameplay; });
   }
 
   private placeAssayOffice(position: THREE.Vector3, preferredSlot?: number): number {
