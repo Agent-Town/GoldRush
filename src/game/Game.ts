@@ -227,7 +227,6 @@ import {
   LightRig,
   type LightRigNightShiftState,
   type LightRigRampPalette,
-  type NightPoolSource,
   type NightShiftPhase,
 } from '../world/LightRig';
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
@@ -1602,6 +1601,7 @@ export class Game {
         contractId: this.activeContract.id,
         tileId: activeTileDescriptor().id,
         paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
+        nightLighting: () => this.lightField.snapshot(),
         onVisualHeightSourceInstalled: () => this.resampleVisualHeights(),
       });
     });
@@ -1853,6 +1853,7 @@ export class Game {
                 edge: enemy.ownEdge,
                 zone: terrainSample.zone,
                 light: Number(this.enemies.lightFactorFor(enemy).toFixed(3)),
+                nightSpeedMultiplier: this.nightSpeedMultiplier(enemy),
                 watchPainted: this.enemies.watchPaintedFor(enemy),
                 readState: feverAccent.active ? 'fevered' : 'unfevered',
                 fevered: feverAccent.active,
@@ -2331,7 +2332,7 @@ export class Game {
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
         (enemy) =>
-          this.mothSeasonSpeedMultiplier(enemy) *
+          this.nightSpeedMultiplier(enemy) *
           this.wrangle.movementMultiplier(enemy) *
           this.e6ArsenalSystem.movementMultiplier(enemy) *
           this.e9ArsenalSystem.movementMultiplier(enemy),
@@ -4509,10 +4510,14 @@ export class Game {
     }
   }
 
-  private mothSeasonSpeedMultiplier(enemy: ClaimJumperEnemy): number {
+  private nightSpeedMultiplier(enemy: ClaimJumperEnemy): number {
     const config = this.activeContract.twist.mothSeason;
-    if (!config || enemy.variantId === 'moth_swarm') return 1;
-    return this.lightField.coverageAt(enemy.position.x, enemy.position.z) < config.litThreshold ? config.nightSpeedOutsideLight : 1;
+    if (enemy.variantId === 'moth_swarm') return 1;
+    if (!config && (!this.isNightShiftContract() || !enemy.isWrecker)) return 1;
+    const multiplier = config?.nightSpeedOutsideLight
+      ?? Balance.contracts.nightShift.nightSpeedOutsideLight;
+    const threshold = config?.litThreshold ?? Balance.contracts.nightShift.renderVisibilityCutoff;
+    return this.lightField.coverageAt(enemy.position.x, enemy.position.z) < threshold ? multiplier : 1;
   }
 
   private onBaronDefeated(atSim: number, enemyId: number): void {
@@ -4801,6 +4806,8 @@ export class Game {
       this.lightField.update(state.darkness, []);
       this.mothLightSources = [];
       this.buildSystem.setNightLighting(0, []);
+      this.canvas.dataset.nightPoolSurfaceSources = '0';
+      this.canvas.dataset.nightPoolSurfaceMaxRadius = '0';
       this.enemies.setLightDimming({
         enabled: false,
         darkness: 0,
@@ -4812,101 +4819,97 @@ export class Game {
     }
 
     const diagnostics = this.buildSystem.diagnostics;
-    const sources: EnemyLightSource[] = this.actors
-      .filter((actor) => actor.group.visible)
-      .map((actor) => ({
-        x: actor.group.position.x,
-        z: actor.group.position.z,
-        radius: Balance.contracts.nightShift.heroLightRadius,
-        kind: 'light' as const,
-      }));
     const liveLightPositions = (id: BuildableId): Array<{ index: number; x: number; z: number }> =>
       diagnostics.hp
         .filter((entry) => entry.id === id && entry.hp > 0 && !entry.wrecked)
         .map((entry) => ({ index: entry.index, ...entry.position }));
     const lanternPositions = liveLightPositions('lantern_post').filter((position) => this.powerConsumerAt(position.x, position.z, 'lamp'));
     const decoyPositions = liveLightPositions('decoy_shed');
-    const fieldSources: LightSource[] = lanternPositions.map((position) => ({
-      id: `lantern:${position.index}`,
-      kind: 'lantern',
-      x: position.x,
-      z: position.z,
-      radius: Balance.contracts.nightShift.lanternPostLightRadius,
-    }));
-    fieldSources.push(...decoyPositions.map((position) => ({
-      id: `decoy:${position.index}`,
-      kind: 'powered-lamp' as const,
-      x: position.x,
-      z: position.z,
-      radius: Balance.decoyShed.lightRadius,
-      targetWeight: this.activeContract.twist.mothSeason?.decoyWeight ?? 1,
-    })));
     const fairgroundSources = this.fairgroundCoverageSources();
-    fieldSources.push(...fairgroundSources);
-    this.mothLightSources = fieldSources;
-    this.lightField.update(this.dayNightCycle ? state.darkness : 0, this.dayNightCycle ? this.mothSwarm.dimSources(fieldSources) : []);
-
-    for (const position of liveLightPositions('sentry_beacon')) {
-      sources.push({ x: position.x, z: position.z, radius: Balance.beacon.range * Balance.contracts.nightShift.beaconLightMult, kind: 'watch' });
-    }
-    for (const position of liveLightPositions('turret')) {
-      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.turretLightRadius, kind: 'watch' });
-    }
-    for (const position of lanternPositions) {
-      sources.push({ x: position.x, z: position.z, radius: Balance.contracts.nightShift.lanternPostLightRadius, kind: 'light' });
-    }
-    for (const position of decoyPositions) {
-      sources.push({ x: position.x, z: position.z, radius: Balance.decoyShed.lightRadius, kind: 'light' });
-    }
-    for (const source of fairgroundSources) sources.push({ x: source.x, z: source.z, radius: source.radius, kind: 'watch' });
-
     const enemyLanterns = this.enemies.all
       .filter((enemy) => enemy.isAlive && enemy.carriesLantern)
       .map((enemy) => {
         const position = this.enemies.renderPositionOf(enemy);
-        const swing = this.timeAlive * 3.4 + enemy.id * 1.7;
+        const yaw = this.enemies.renderRotationOf(enemy);
+        const swing = Math.sin(this.timeAlive * 3.4 + enemy.id * 1.7) * Balance.contracts.nightShift.enemyLanternSwing;
+        const offset = Balance.contracts.nightShift.enemyLanternHandOffset + swing;
         return {
-          x: position.x + Math.sin(swing) * 0.18,
-          z: position.z + Math.cos(swing) * 0.18,
+          id: `enemy:${enemy.id}`,
+          kind: 'enemy-lantern' as const,
+          x: position.x + Math.cos(yaw) * offset,
+          z: position.z + Math.sin(yaw) * offset,
           radius: Balance.contracts.nightShift.enemyLanternRadius,
+          height: Balance.contracts.nightShift.enemyLanternConeHeight,
         };
       });
-    for (const lantern of enemyLanterns) sources.push({ ...lantern, kind: 'light' });
-
     const agentLight = this.prospectorCan('light_duty') && this.prospector.group.visible
       ? {
+          id: 'prospector',
+          kind: 'prospector' as const,
           x: this.localActor.renderPosition.x + Math.sin(this.localActor.group.rotation.y) * 2.2,
           z: this.localActor.renderPosition.z - Math.cos(this.localActor.group.rotation.y) * 2.2,
           radius: Balance.contracts.nightShift.agentLightRadius,
+          height: 1.15,
         }
       : null;
-    if (agentLight) sources.push({ ...agentLight, kind: 'light' });
 
-    const nightPools: NightPoolSource[] = [
-      ...this.actors.filter((actor) => actor.group.visible).map((actor) => ({
+    const sources: LightSource[] = [
+      ...this.actors.filter((actor) => actor.group.visible).map((actor, index) => ({
+        id: `hero:${index}`,
         x: actor.renderPosition.x,
         z: actor.renderPosition.z,
         radius: Balance.contracts.nightShift.heroLightRadius,
         kind: 'hero' as const,
       })),
-      ...(agentLight ? [{ ...agentLight, height: 1.15, kind: 'prospector' as const }] : []),
+      ...(agentLight ? [agentLight] : []),
       ...lanternPositions.map((position) => ({
+        id: `lantern:${position.index}`,
         x: position.x,
         z: position.z,
         radius: Balance.contracts.nightShift.lanternPostLightRadius,
         kind: 'lantern' as const,
       })),
       ...decoyPositions.map((position) => ({
+        id: `decoy:${position.index}`,
         x: position.x,
         z: position.z,
         radius: Balance.decoyShed.lightRadius,
-        kind: 'lantern' as const,
+        kind: 'powered-lamp' as const,
+        targetWeight: this.activeContract.twist.mothSeason?.decoyWeight ?? 1,
       })),
-      ...fairgroundSources.map((source) => ({ x: source.x, z: source.z, radius: source.radius, kind: 'lantern' as const })),
-      ...enemyLanterns.map((lantern) => ({ ...lantern, height: 0.82, kind: 'enemy-lantern' as const })),
+      ...fairgroundSources,
+      ...liveLightPositions('sentry_beacon').map((position) => ({
+        id: `beacon:${position.index}`,
+        kind: 'watch' as const,
+        x: position.x,
+        z: position.z,
+        radius: Balance.beacon.range * Balance.contracts.nightShift.beaconLightMult,
+      })),
+      ...liveLightPositions('turret').map((position) => ({
+        id: `turret:${position.index}`,
+        kind: 'watch' as const,
+        x: position.x,
+        z: position.z,
+        radius: Balance.contracts.nightShift.turretLightRadius,
+      })),
+      ...enemyLanterns,
     ];
-    this.lightRig?.setNightShift(state, nightPools);
-    this.buildSystem.setNightLighting(state.darkness, nightPools);
+    this.mothLightSources = sources.filter((source) => source.kind === 'lantern' || source.kind === 'powered-lamp');
+    const dimmedMothSources = new Map(this.mothSwarm.dimSources(this.mothLightSources).map((source) => [source.id, source]));
+    const effectiveSources = sources.map((source) => dimmedMothSources.get(source.id) ?? source);
+    const physicalSources = effectiveSources.filter((source) => source.kind !== 'watch');
+    this.lightField.update(state.darkness, physicalSources);
+    this.lightRig?.setNightShift(state, physicalSources);
+    this.buildSystem.setNightLighting(state.darkness, physicalSources);
+    this.canvas.dataset.nightPoolSurfaceSources = String(physicalSources.length);
+    this.canvas.dataset.nightPoolSurfaceMaxRadius = String(Math.max(0, ...physicalSources.map((source) => source.radius)));
+
+    const enemySources: EnemyLightSource[] = effectiveSources.map((source) => ({
+      x: source.x,
+      z: source.z,
+      radius: source.radius,
+      kind: source.kind === 'watch' ? 'watch' : 'light',
+    }));
 
     this.enemies.setLightDimming(this.isNightShiftContract()
       ? {
@@ -4914,7 +4917,7 @@ export class Game {
           darkness: state.darkness,
           minLight: Balance.contracts.nightShift.minLight,
           falloff: Balance.contracts.nightShift.lightFalloff,
-          sources,
+          sources: enemySources,
         }
       : { enabled: false, darkness: 0, minLight: 1, falloff: Balance.contracts.nightShift.lightFalloff, sources: [] });
   }

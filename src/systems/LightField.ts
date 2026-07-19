@@ -1,10 +1,16 @@
 export type LightSource = Readonly<{
   id: string;
-  kind: 'lantern' | 'powered-lamp';
+  kind: 'hero' | 'prospector' | 'lantern' | 'powered-lamp' | 'watch' | 'enemy-lantern';
   x: number;
   z: number;
   radius: number;
+  height?: number;
   targetWeight?: number;
+}>;
+
+export type LightFieldSnapshot = Readonly<{
+  darkness: number;
+  sources: readonly LightSource[];
 }>;
 
 export type LightFieldDiagnostics = Readonly<{
@@ -39,6 +45,7 @@ export class LightField {
 
     let sourceLight = this.config.minLight;
     for (const source of this.sources) {
+      if (source.kind === 'enemy-lantern') continue;
       const distance = Math.hypot(x - source.x, z - source.z);
       const falloffT = clamp01((distance - Math.max(0, source.radius)) / this.config.falloff);
       const contribution = this.config.minLight + (1 - this.config.minLight) * (1 - falloffT) ** 3;
@@ -48,15 +55,20 @@ export class LightField {
   }
 
   diagnostics(): LightFieldDiagnostics {
+    const infrastructure = this.sources.filter((source) => source.kind === 'lantern' || source.kind === 'powered-lamp');
     return {
       darkness: this.darkness,
       minLight: this.config.minLight,
       falloff: this.config.falloff,
       litThreshold: this.config.litThreshold,
-      sources: this.sources.length,
-      lanterns: this.sources.filter((source) => source.kind === 'lantern').length,
-      poweredLamps: this.sources.filter((source) => source.kind === 'powered-lamp').length,
+      sources: infrastructure.length,
+      lanterns: infrastructure.filter((source) => source.kind === 'lantern').length,
+      poweredLamps: infrastructure.filter((source) => source.kind === 'powered-lamp').length,
     };
+  }
+
+  snapshot(): LightFieldSnapshot {
+    return { darkness: this.darkness, sources: this.sources };
   }
 }
 

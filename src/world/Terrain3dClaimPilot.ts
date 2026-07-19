@@ -65,6 +65,8 @@ import seedRunPanoramaContractText from '../../assets/pilots/map-rebuild-spike/s
 import showroomContractText from '../../assets/pilots/map-rebuild-spike/showroom-terrain-contract.json?raw';
 import showroomPanoramaContractText from '../../assets/pilots/map-rebuild-spike/showroom-panorama-contract.json?raw';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
+import { Balance } from '../game/Balance';
+import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
 import { installVisualHeightSource } from './Terrain';
 
@@ -94,6 +96,7 @@ type Host = {
   contractId: string;
   tileId: string;
   paintedGround?: THREE.Object3D;
+  nightLighting?: () => LightFieldSnapshot;
   onVisualHeightSourceInstalled?: () => void;
 };
 type Metrics = { meshes: number; triangles: number; materials: number; vertices: number; bounds: THREE.Box3 };
@@ -153,6 +156,7 @@ const REGISTRY: Record<string, Entry> = {
 const LANDMARK_ASSETS = import.meta.glob('../../assets/pilots/map-rebuild-spike/landmarks/**/*.glb', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
 const BOUNDS_EPSILON = 0.03;
 const SKIRT_INSET = 2.5;
+const NIGHT_POOL_SHADER_CAP = 32;
 
 function publish(canvas: HTMLCanvasElement, state: 'loading' | 'ready' | 'lite' | 'failed', source: 'painted' | 'glb', metrics?: Metrics, panorama?: THREE.Object3D, panoramaMetrics?: Metrics): void {
   canvas.dataset.terrain3dPilotState = state;
@@ -277,7 +281,7 @@ function preparePanorama(model: THREE.Object3D): void {
   }
 }
 
-function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3): void {
+function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
   const materials = new Set<THREE.Material>();
   model.traverse((node) => {
     const mesh = node as THREE.Mesh;
@@ -287,17 +291,52 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3): void {
   });
   const halfX = Math.max(Math.abs(bounds.min.x), Math.abs(bounds.max.x));
   const halfZ = Math.max(Math.abs(bounds.min.z), Math.abs(bounds.max.z));
+  const poolSources = Array.from({ length: NIGHT_POOL_SHADER_CAP }, () => new THREE.Vector4());
+  const poolCount = { value: 0 };
+  const poolDarkness = { value: 0 };
+  const poolIntensity = { value: Balance.contracts.nightShift.terrainPoolIntensity };
+  const poolFalloff = { value: Balance.contracts.nightShift.lightFalloff };
+  let lastUpdatedFrame = -1;
+  const updateNightPools = (renderer: THREE.WebGLRenderer) => {
+    if (renderer.info.render.frame === lastUpdatedFrame) return;
+    lastUpdatedFrame = renderer.info.render.frame;
+    const snapshot = host.nightLighting?.();
+    poolDarkness.value = snapshot?.darkness ?? 0;
+    const sources = snapshot?.sources
+      .filter((source) => source.kind !== 'watch')
+      .sort((a, b) => nightPoolPriority(a) - nightPoolPriority(b) || a.id.localeCompare(b.id))
+      .slice(0, NIGHT_POOL_SHADER_CAP) ?? [];
+    poolCount.value = sources.length;
+    for (let index = 0; index < NIGHT_POOL_SHADER_CAP; index += 1) {
+      const source = sources[index];
+      poolSources[index]!.set(source?.x ?? 0, source?.z ?? 0, source?.radius ?? 0, isWarmPool(source) ? 1 : 0);
+    }
+    host.canvas.dataset.terrain3dPilotNightPoolSources = String(sources.length);
+  };
   for (const material of materials) {
+    if (!(material as THREE.MeshStandardMaterial).isMeshStandardMaterial) continue;
     const compile = material.onBeforeCompile.bind(material);
     material.transparent = true;
     material.depthWrite = false;
     material.onBeforeCompile = (shader, renderer) => {
       compile(shader, renderer);
+      shader.uniforms.uTerrain3dNightPoolCount = poolCount;
+      shader.uniforms.uTerrain3dNightPoolDarkness = poolDarkness;
+      shader.uniforms.uTerrain3dNightPoolIntensity = poolIntensity;
+      shader.uniforms.uTerrain3dNightPoolFalloff = poolFalloff;
+      shader.uniforms.uTerrain3dNightPools = { value: poolSources };
       shader.vertexShader = shader.vertexShader
         .replace('#include <common>', '#include <common>\nvarying vec2 vTerrain3dWorld;')
         .replace('#include <begin_vertex>', '#include <begin_vertex>\nvTerrain3dWorld = (modelMatrix * vec4(position, 1.0)).xz;');
       shader.fragmentShader = shader.fragmentShader
-        .replace('#include <common>', '#include <common>\nvarying vec2 vTerrain3dWorld;')
+        .replace(
+          '#include <common>',
+          `#include <common>\nvarying vec2 vTerrain3dWorld;\nuniform float uTerrain3dNightPoolCount;\nuniform float uTerrain3dNightPoolDarkness;\nuniform float uTerrain3dNightPoolIntensity;\nuniform float uTerrain3dNightPoolFalloff;\nuniform vec4 uTerrain3dNightPools[${NIGHT_POOL_SHADER_CAP}];`,
+        )
+        .replace(
+          '#include <emissivemap_fragment>',
+          `#include <emissivemap_fragment>\nvec3 terrain3dPoolLight = vec3(0.0);\nfor (int terrain3dPoolIndex = 0; terrain3dPoolIndex < ${NIGHT_POOL_SHADER_CAP}; terrain3dPoolIndex++) {\n  if (float(terrain3dPoolIndex) >= uTerrain3dNightPoolCount) break;\n  vec4 terrain3dPool = uTerrain3dNightPools[terrain3dPoolIndex];\n  float terrain3dPoolFalloffT = clamp((distance(vTerrain3dWorld, terrain3dPool.xy) - terrain3dPool.z) / uTerrain3dNightPoolFalloff, 0.0, 1.0);\n  float terrain3dPoolFalloff = pow(1.0 - terrain3dPoolFalloffT, 3.0);\n  vec3 terrain3dPoolTint = mix(vec3(0.10, 0.54, 0.60), vec3(1.00, 0.48, 0.16), step(0.5, terrain3dPool.w));\n  terrain3dPoolLight = max(terrain3dPoolLight, terrain3dPoolTint * terrain3dPoolFalloff);\n}\ntotalEmissiveRadiance += terrain3dPoolLight * uTerrain3dNightPoolDarkness * uTerrain3dNightPoolIntensity;`,
+        )
         .replace(
           '#include <color_fragment>',
           `#include <color_fragment>\nfloat terrain3dEdge = max(abs(vTerrain3dWorld.x) / ${halfX.toFixed(3)}, abs(vTerrain3dWorld.y) / ${halfZ.toFixed(3)});\ndiffuseColor.a *= 1.0 - smoothstep(${((halfX - SKIRT_INSET) / halfX).toFixed(4)}, 1.0, terrain3dEdge);`,
@@ -305,6 +344,23 @@ function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3): void {
     };
     material.needsUpdate = true;
   }
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh;
+    if (mesh.isMesh) mesh.onBeforeRender = updateNightPools;
+  });
+  host.canvas.dataset.terrain3dPilotNightPools = 'world-shader';
+  host.canvas.dataset.terrain3dPilotNightPoolSources = '0';
+}
+
+function nightPoolPriority(source: LightSource): number {
+  if (source.kind === 'hero') return 0;
+  if (source.kind === 'prospector') return 1;
+  if (source.kind === 'lantern' || source.kind === 'powered-lamp') return 2;
+  return 3;
+}
+
+function isWarmPool(source: LightSource | undefined): boolean {
+  return source?.kind !== 'hero' && source?.kind !== 'prospector';
 }
 
 function hidePaintedRelief(host: Host): HiddenRelief[] {
@@ -441,7 +497,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       const heightAt = bakeHeightGrid(nextTerrain, terrainMetrics);
       if (disposed) throw new Error('terrain pilot disposed');
       nextTerrain.name = 'Terrain3dClaimPilot';
-      featherTerrainEdge(nextTerrain, terrainMetrics.bounds);
+      featherTerrainEdge(nextTerrain, terrainMetrics.bounds, host);
       const mount = selected.contract.panoramaMount;
       nextPanorama.name = mount.id;
       nextPanorama.position.fromArray(mount.position);

@@ -96,7 +96,11 @@ export function setWorldSpriteTint(color: THREE.ColorRepresentation): void {
   worldSpriteTint.set(color);
 }
 
-export function bindWorldSpriteTint(sprite: THREE.Sprite, scalar: () => number = () => 1): void {
+export function bindWorldSpriteTint(
+  sprite: THREE.Sprite,
+  scalar: () => number = () => 1,
+  tint: () => THREE.Color | undefined = () => undefined,
+): void {
   if (sprite.userData.worldSpriteTintBound === true) return;
   sprite.userData.worldSpriteTintBound = true;
   const beforeRender = sprite.onBeforeRender;
@@ -108,7 +112,7 @@ export function bindWorldSpriteTint(sprite: THREE.Sprite, scalar: () => number =
       applied: material.color.clone(),
     };
     if (!material.color.equals(state.applied)) state.base.copy(material.color);
-    material.color.copy(state.base).multiply(worldSpriteTint).multiplyScalar(scalar());
+    material.color.copy(state.base).multiply(tint() ?? worldSpriteTint).multiplyScalar(scalar());
     state.applied.copy(material.color);
     spriteTintState.set(material, state);
   };
@@ -295,6 +299,7 @@ export class GeneratedSpriteBatch {
   private readonly sprites: THREE.Sprite[] = [];
   private readonly requestedVisible: boolean[] = [];
   private readonly tintScalars: number[] = [];
+  private readonly tintColors: Array<THREE.Color | undefined> = [];
   private loaded = false;
   private loadStarted = false;
   private renderedContribution = 0;
@@ -315,13 +320,14 @@ export class GeneratedSpriteBatch {
     this.group.name = options.name;
     for (let i = 0; i < capacity; i += 1) {
       const sprite = new THREE.Sprite(this.material);
-      bindWorldSpriteTint(sprite, () => this.tintScalars[i] ?? 1);
+      bindWorldSpriteTint(sprite, () => this.tintScalars[i] ?? 1, () => this.tintColors[i]);
       sprite.visible = false;
       sprite.scale.set(options.scale[0], options.scale[1], 1);
       sprite.renderOrder = options.renderOrder ?? RenderLayers.gameplay;
       this.sprites.push(sprite);
       this.requestedVisible.push(false);
       this.tintScalars.push(1);
+      this.tintColors.push(undefined);
       this.group.add(sprite);
     }
 
@@ -363,6 +369,12 @@ export class GeneratedSpriteBatch {
   setTintScalar(index: number, scalar: number): void {
     if (index < 0 || index >= this.tintScalars.length) return;
     this.tintScalars[index] = THREE.MathUtils.clamp(scalar, 0, 12);
+  }
+
+  setTintColor(index: number, color: THREE.ColorRepresentation | undefined): void {
+    if (index < 0 || index >= this.tintColors.length) return;
+    if (color === undefined) this.tintColors[index] = undefined;
+    else (this.tintColors[index] ??= new THREE.Color()).set(color);
   }
 
   dispose(): void {
