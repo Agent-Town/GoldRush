@@ -275,7 +275,7 @@ function preparePanorama(model: THREE.Object3D): void {
   }
 }
 
-function hidePaintedGround(host: Host): HiddenRelief[] {
+function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
 function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
   const materials = new Set<THREE.Material>();
   model.traverse((node) => {
