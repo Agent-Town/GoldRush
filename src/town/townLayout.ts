@@ -20,6 +20,75 @@ export type TownPropKind =
   | 'lantern_post'
   | 'pony_express_plot';
 
+export type TownPropFootprint =
+  | { kind: 'rect'; w: number; d: number }
+  | { kind: 'radius'; radius: number };
+
+export const TOWN_LEGACY_PAN_NAME = 'TownProp:PanMonument:Legacy';
+
+export const townPropFootprints: Record<TownPropKind, TownPropFootprint> = {
+  covered_wagon: { kind: 'rect', w: 1.28, d: 0.66 },
+  fence: { kind: 'rect', w: 2.1, d: 0.1 },
+  cactus: { kind: 'radius', radius: 0.18 },
+  water_trough: { kind: 'rect', w: 1.28, d: 0.42 },
+  lantern_post: { kind: 'radius', radius: 0.08 },
+  pony_express_plot: { kind: 'rect', w: 2.7, d: 1.7 },
+};
+
+type TownEraPropManifest = {
+  epoch: number;
+  floodReset?: boolean;
+  props: TownEraPropDescriptor[];
+};
+
+export type TownEraPropDescriptor = {
+  id: string;
+  glb: string;
+  position: { x: number; z: number };
+  rotation: number;
+  scale: number;
+};
+
+const townEraPropManifests = import.meta.glob('../../assets/pilots/plaza-props-3d/era-props.e*.json', {
+  eager: true,
+  import: 'default',
+}) as Record<string, TownEraPropManifest>;
+
+export const townEraPropFootprints: Record<string, TownPropFootprint | undefined> = {
+  'ark-scaffold-stage-1.e9.glb': { kind: 'rect', w: 2.8, d: 2 },
+  'bridge-school.e10.glb': { kind: 'rect', w: 3, d: 2 },
+  'charter-press.e10.glb': { kind: 'rect', w: 2, d: 1.5 },
+  'coal-bin.e2.glb': { kind: 'rect', w: 2, d: 1.2 },
+  'crater-rim-set.e8.glb': { kind: 'rect', w: 2, d: 1 },
+  'filling-shed.e4.glb': { kind: 'rect', w: 3, d: 2 },
+  'fuel-rack.e4.glb': { kind: 'rect', w: 2, d: 1 },
+  'gauge-post.e2.glb': { kind: 'radius', radius: 0.2 },
+  'harbor-lantern.e5.glb': { kind: 'radius', radius: 0.14 },
+  'ice-blocks.e9.glb': { kind: 'rect', w: 2, d: 1.5 },
+  'insulator-post.e3.glb': { kind: 'radius', radius: 0.2 },
+  'iron-lamp-post.e2.glb': { kind: 'radius', radius: 0.14 },
+  'journey-flag-line.e8.glb': { kind: 'rect', w: 2.5, d: 0.2 },
+  'lander-legs.e8.glb': { kind: 'rect', w: 2.2, d: 1.6 },
+  'net-frame.e5.glb': { kind: 'rect', w: 2, d: 0.4 },
+  'pipe-run.e2.glb': { kind: 'rect', w: 3, d: 0.3 },
+  'preserve-rack.e10.glb': { kind: 'rect', w: 2, d: 0.8 },
+  'pressure-manifold.e2.glb': { kind: 'rect', w: 1.5, d: 0.8 },
+  'road-marker.e4.glb': { kind: 'radius', radius: 0.2 },
+  'rope-buoy-rack.e5.glb': { kind: 'rect', w: 1.8, d: 0.8 },
+  'survey-cairn.e9.glb': { kind: 'radius', radius: 0.3 },
+  'tide-board.e5.glb': { kind: 'rect', w: 1.6, d: 0.4 },
+  'transformer-shed.e3.glb': { kind: 'rect', w: 2.5, d: 1.8 },
+  'wire-run.e3.glb': { kind: 'rect', w: 3, d: 0.3 },
+};
+
+export function townEraPropsForOrder(activeEra: number): readonly TownEraPropDescriptor[] {
+  const manifests = Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) => index + 2)
+    .map((era) => townEraPropManifests[`../../assets/pilots/plaza-props-3d/era-props.e${era}.json`])
+    .filter((manifest): manifest is TownEraPropManifest => !!manifest);
+  return manifests.slice(Math.max(0, manifests.map((manifest) => manifest.floodReset).lastIndexOf(true)))
+    .flatMap((manifest) => manifest.props);
+}
+
 export type TownPropDescriptor = {
   id: string;
   kind: TownPropKind;
@@ -102,6 +171,7 @@ export const townPropRing = {
     id: 'pan_monument',
     position: townPlazaLayout.center,
     radius: 0.82,
+    footprint: { kind: 'radius', radius: 0.68 } satisfies TownPropFootprint,
   },
   props: [
     { id: 'wagon-gate-west', kind: 'covered_wagon', position: { x: -3.35, z: 12.25 }, rotation: -0.42, scale: 1.05 },

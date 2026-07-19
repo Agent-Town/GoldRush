@@ -23,6 +23,7 @@ import { hasElevationTile, isTraversable as isSimTraversable, simHeight } from '
 import { normalizeSeed } from '../core/Rng';
 import { disposeObject3D } from '../utils/dispose';
 import { createContinuousGroundMesh, type ContinuousGroundMeshStats } from './ContinuousGroundMesh';
+import { blockerContains, landmarkBlockersFor, type LandmarkBlocker } from './LandmarkCollision';
 import { createClaimProps } from './props';
 import {
   createFordStones,
@@ -75,6 +76,7 @@ export type FordRange = {
 };
 
 const ACTIVE_CONTRACT = activeContract();
+const LANDMARK_BLOCKERS = landmarkBlockersFor(ACTIVE_CONTRACT.id);
 const ACTIVE_TILE = activeTileDescriptor();
 export const DEFAULT_CLAIM_SIZE = 64;
 export const CLAIM_SIZE = ACTIVE_CONTRACT.tileParams.size ?? DEFAULT_CLAIM_SIZE;
@@ -165,29 +167,37 @@ export function sample(x: number, z: number): TerrainSample {
     return { walkable: false, speedMul: 0, zone: 'out' };
   }
   if (ELEVATION_TILE && !isSimTraversable(x, z)) return { walkable: false, speedMul: 0, zone: 'out' };
+  const landmarkBlocked = LANDMARK_BLOCKERS.some((blocker) => blockerContains(blocker, x, z, Balance.hero.radius + 0.08));
+  const withLandmarkCollision = (terrain: TerrainSample): TerrainSample => landmarkBlocked
+    ? { ...terrain, walkable: false, speedMul: 0 }
+    : terrain;
 
   const spring = springPondAt(x, z);
-  if (spring) return waterSample('shallows', 'springPond', 'spring_pond');
+  if (spring) return withLandmarkCollision(waterSample('shallows', 'springPond', 'spring_pond'));
 
   if (WATER_MASK) {
     const region = WATER_MASK.regions.find((candidate) => distanceToWaterMaskRegion(x, z, candidate) <= 0);
-    return region ? waterSample(region.zone, region.zone, 'river') : { walkable: true, speedMul: 1, zone: 'bank' };
+    return withLandmarkCollision(region ? waterSample(region.zone, region.zone, 'river') : { walkable: true, speedMul: 1, zone: 'bank' });
   }
 
-  if (!ACTIVE_CONTRACT.tileParams.river) return { walkable: true, speedMul: 1, zone: 'bank' };
+  if (!ACTIVE_CONTRACT.tileParams.river) return withLandmarkCollision({ walkable: true, speedMul: 1, zone: 'bank' });
 
   const inFord = fordAt(x, z) !== null;
-  if (ACTIVE_CONTRACT.tileParams.ford && inFord) return waterSample('ford', 'ford', 'river');
+  if (ACTIVE_CONTRACT.tileParams.ford && inFord) return withLandmarkCollision(waterSample('ford', 'ford', 'river'));
 
   const inRiver = z >= RIVER_MIN_Z && z <= RIVER_MAX_Z;
-  if (inRiver) return waterSample('river', 'river', 'river');
+  if (inRiver) return withLandmarkCollision(waterSample('river', 'river', 'river'));
 
   const inShallows =
     (z > RIVER_MAX_Z && z <= RIVER_MAX_Z + SHALLOWS_WIDTH) ||
     (z < RIVER_MIN_Z && z >= RIVER_MIN_Z - SHALLOWS_WIDTH);
-  if (inShallows) return waterSample('shallows', 'shallows', 'river');
+  if (inShallows) return withLandmarkCollision(waterSample('shallows', 'shallows', 'river'));
 
-  return { walkable: true, speedMul: 1, zone: 'bank' };
+  return withLandmarkCollision({ walkable: true, speedMul: 1, zone: 'bank' });
+}
+
+export function landmarkBlockers(): readonly LandmarkBlocker[] {
+  return LANDMARK_BLOCKERS;
 }
 
 export function waterDepth(zone: ContractWaterZone): number {
@@ -222,7 +232,8 @@ export function spawnEdges(): Vec2[] {
 }
 
 export function isBuildable(x: number, z: number): boolean {
-  if (sample(x, z).zone !== 'bank') return false;
+  const terrain = sample(x, z);
+  if (!terrain.walkable || terrain.zone !== 'bank') return false;
   const zones = ACTIVE_CONTRACT.tileParams.buildZones ?? [];
   return zones.length === 0 || zones.some((zone) => x >= zone.minX && x <= zone.maxX && z >= zone.minZ && z <= zone.maxZ);
 }
