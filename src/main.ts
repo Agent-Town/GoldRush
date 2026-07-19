@@ -88,6 +88,8 @@ const uninstallBuildFreshness = installBuildFreshness(app, () => !game && !profi
 const uninstallClaimLedgerRequest = installClaimLedgerRequestHandler((entryId) => openClaimLedger(entryId));
 installEpochLedgerDiscovery();
 
+const RUN_ROUTE_PARAMS = ['contract', 'seed', 'mode', 'press'] as const;
+
 afterFirstFrame(() => {
   void import('./story').then(({ installStoryRuntime }) => installStoryRuntime(app));
 });
@@ -235,6 +237,7 @@ function returnToTownBoard(result: RunReturnResult): void {
   profiles = undefined;
   startMenu?.dispose();
   startMenu = undefined;
+  replaceRunRoute('town');
   openTown({ openBoard: true, returnResult: result, initialBoardContractId: returnedContractId });
 }
 
@@ -247,13 +250,29 @@ function returnToStartMenu(): void {
   assayBench = undefined;
   profiles?.dispose();
   profiles = undefined;
+  replaceRunRoute('menu');
   showStartMenu();
+}
+
+function replaceRunRoute(scene: 'town' | 'menu'): void {
+  const search = new URLSearchParams(window.location.search);
+  for (const key of RUN_ROUTE_PARAMS) search.delete(key);
+  const query = search.toString();
+  history.replaceState(
+    { goldRushScene: scene },
+    '',
+    `${window.location.pathname}${query ? `?${query}` : ''}${window.location.hash}`,
+  );
 }
 
 // Visual pilot flags are menu-safe: they configure the town/run scenes but must
 // not hijack the boot into a contract launch (owner hit /?town3dPilot=all → The Claim).
 const MENU_SAFE_PARAMS = new Set(['town3dPilot', 'run3dPilot', 'tier']);
-if ([...initialSearch.keys()].every((key) => MENU_SAFE_PARAMS.has(key))) {
+if (history.state?.goldRushScene === 'town') {
+  openTown();
+} else if (history.state?.goldRushScene === 'menu') {
+  showStartMenu();
+} else if ([...initialSearch.keys()].every((key) => MENU_SAFE_PARAMS.has(key))) {
   showStartMenu();
 } else {
   startWithProfiles();

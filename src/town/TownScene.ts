@@ -286,6 +286,8 @@ export class TownScene {
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
   private readonly stampMillConstructionProps: THREE.Object3D[] = [];
   private disposed = false;
+  private resizeFrame = 0;
+  private readonly syncViewport = () => resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
   private dynamoCrankTimer = 0;
   private readonly firstClaimGuideGroup = new THREE.Group();
   private readonly firstClaimTrailDots: THREE.Mesh[] = [];
@@ -369,11 +371,15 @@ export class TownScene {
   }
 
   start(): void {
+    window.addEventListener('resize', this.syncViewport);
+    this.resizeFrame = requestAnimationFrame(this.syncViewport);
     this.loop.start();
   }
 
   dispose(): void {
     this.disposed = true;
+    window.removeEventListener('resize', this.syncViewport);
+    cancelAnimationFrame(this.resizeFrame);
     this.loop.stop();
     this.input.dispose();
     if (this.heraldOpen) closeClaimHerald();
