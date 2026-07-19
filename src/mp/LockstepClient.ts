@@ -71,6 +71,8 @@ export type LockstepTick = {
 export type MultiplayerState = {
   active: boolean;
   connected: boolean;
+  partySize: number;
+  started: boolean;
   code: string;
   playerId: string | null;
   roster: MultiplayerPlayer[];
@@ -100,6 +102,7 @@ export type LockstepClientOptions = {
   player: { name: string; town: string };
   inputDelayTicks?: number;
   hashEveryTicks?: number;
+  partySize?: number;
   desyncAtTick?: number | null;
   reconnectToken?: string | null;
   setup?: MultiplayerSetup;
@@ -276,6 +279,7 @@ export class LockstepClient {
       return null;
     }
     if (this.roster.length < 2 && !this.reconnectSoloAfterReplay) return null;
+    if (this.nextSimTick === 0 && this.roster.length < (this.options.partySize ?? 2)) return null;
     while (!this.reconnectSoloAfterReplay && this.nextInputTick <= this.nextSimTick + this.inputDelayTicks) {
       const input: LockstepInput = {
         mx: roundAxis(localInput.mx),
@@ -353,6 +357,8 @@ export class LockstepClient {
     return {
       active: true,
       connected: this.connected,
+      partySize: this.options.partySize ?? 2,
+      started: this.nextSimTick > 0,
       code: this.code,
       playerId: this.playerId,
       roster: [...this.roster],
@@ -404,7 +410,7 @@ export class LockstepClient {
       this.setup = normalizeSetup(message.setup) ?? normalizeSetup(this.options.setup);
       this.reconnectToken = reconnectToken;
       this.reconnectGraceMs = normalizeGraceMs(message.reconnectGraceMs);
-      if (this.roster.length >= 2) this.rememberReconnectInitialState(true);
+      if (this.roster.length >= (this.options.partySize ?? 2)) this.rememberReconnectInitialState(true);
       this.options.onReconnectToken?.(reconnectToken);
       this.startedAt = performance.now();
       return;
@@ -432,7 +438,7 @@ export class LockstepClient {
       // bundle may change simulation membership.
       if (effectiveTick === null || effectiveTick === 0) {
         this.roster = roster;
-        if (this.connected && roster.length >= 2) this.rememberReconnectInitialState(true);
+        if (this.connected && roster.length >= (this.options.partySize ?? 2)) this.rememberReconnectInitialState(true);
       }
       return;
     }
@@ -866,6 +872,7 @@ function isEncodedLockstepSnapshot(value: unknown): value is EncodedLockstepSnap
 export function multiplayerConfigFromSearch(search = window.location.search): LockstepClientOptions | null {
   const params = new URLSearchParams(search);
   if (params.get('mp') !== 'dev') return null;
+  const partySize = Number(params.get('mpParty'));
   return {
     relayBase: (params.get('mpRelay') ?? window.location.origin).replace(/\/$/, ''),
     code: params.get('mpCode'),
@@ -873,6 +880,7 @@ export function multiplayerConfigFromSearch(search = window.location.search): Lo
       name: params.get('mpName') ?? 'Rider',
       town: params.get('mpTown') ?? 'Home Claim',
     },
+    partySize: Number.isInteger(partySize) && partySize >= 2 && partySize <= 4 ? partySize : 2,
     desyncAtTick: params.has('mpDesyncAt') ? Number(params.get('mpDesyncAt')) : null,
   };
 }

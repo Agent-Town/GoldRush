@@ -254,11 +254,13 @@ function normalizeStoredRide(value: unknown): LockstepClientOptions | null {
   const setup = normalizeStagedSetup(parsed.setup);
   if (!code || !relayBase || !player || typeof player.name !== 'string' || typeof player.town !== 'string' || !setup) return null;
   const reconnectToken = normalizeReconnectToken(parsed.reconnectToken);
+  const partySize = Number.isInteger(parsed.partySize) && parsed.partySize! >= 2 && parsed.partySize! <= 4 ? parsed.partySize : undefined;
   return {
     relayBase,
     code,
     player: { name: player.name, town: player.town },
     setup,
+    ...(partySize ? { partySize } : {}),
     ...(reconnectToken ? { reconnectToken } : {}),
   };
 }
