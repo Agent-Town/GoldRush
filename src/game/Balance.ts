@@ -397,6 +397,11 @@ export const Balance = {
     shelfCapacity: 24,
     requiredPermissionLevel: 2,
   },
+  e7Signal: {
+    linkRange: 28,
+    coverageRadius: 30,
+    midpointJackCount: 3,
+  },
   e7Boss: {
     arriveWave: 12,
     dreadWaves: 1,

@@ -59,6 +59,8 @@ export class E7ArsenalSystem {
     private readonly playbookActorPosition: () => THREE.Vector3 | null,
     private readonly turretPositions: () => readonly { x: number; z: number }[],
     private readonly enabled: () => boolean,
+    private readonly signalRelayLinked?: (id: string) => boolean | undefined,
+    private readonly signalRelayCount?: () => number | undefined,
   ) {
     for (let index = 0; index < Balance.turret.maxCount; index += 1) this.registerRelay(index);
     this.registerShooter('signalJammer', {
@@ -118,7 +120,7 @@ export class E7ArsenalSystem {
       enabled: active,
       items: active ? ITEMS : [],
       fires: { ...this.fires },
-      relayLinks: relayLinks(turrets),
+      relayLinks: this.signalRelayCount?.() ?? relayLinks(turrets),
       activeRelayTurrets: turrets.length,
       jammerDeployed: active && this.jammerDeployed,
       playbookSlaved: active && this.playbookActorPosition() !== null,
@@ -147,7 +149,7 @@ export class E7ArsenalSystem {
     this.registerShooter('beamRelay', {
       resumeKey: `e7:beam-relay:${index}`,
       id: 'e7_beam_relay',
-      enabled: () => this.enabled() && relayTarget(this.activeTurrets, index) !== null,
+      enabled: () => this.enabled() && (this.signalRelayLinked?.(`turret-${index}`) ?? relayTarget(this.activeTurrets, index) !== null),
       getPos: () => {
         const source = this.activeTurrets[index];
         return source ? position.set(source.x, 0, source.z) : position;

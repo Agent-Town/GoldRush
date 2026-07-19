@@ -485,6 +485,7 @@ interface ThreeGameDiagnostics {
   e9Canal: import('./systems/E9CanalSystem').E9CanalDiagnostics;
   e10Finale: import('./systems/E10FinaleSystem').E10FinaleDiagnostics;
   e10Static: import('./systems/E10StaticBossSystem').E10StaticBossDiagnostics;
+  e7Signal: import('./systems/E7SignalSystem').E7SignalDiagnostics;
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
   harvest: {
@@ -1033,6 +1034,15 @@ interface Window {
     };
     e6Tiles: {
       diagnostics: () => import('./systems/E6TileConsumerSystem').E6TileConsumerDiagnostics;
+    };
+    e7Signal: {
+      milestone: (milestone: import('./systems/E7SignalSystem').E7SignalMilestone) => boolean;
+      graphFor: (nodes: import('./systems/E7SignalSystem').E7RelayNode[]) => Pick<
+        import('./systems/E7SignalSystem').E7SignalDiagnostics,
+        'graphHash' | 'nodes' | 'links'
+      >;
+      droneCanOperate: (x: number, z: number) => boolean;
+      diagnostics: () => import('./systems/E7SignalSystem').E7SignalDiagnostics;
     };
     e9Arsenal: {
       deployFence: () => boolean;
