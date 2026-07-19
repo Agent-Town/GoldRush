@@ -719,6 +719,7 @@ export class WaveSystem {
     const baron = this.contract.twist.baron;
     if (!baron || this.baronSpawned || wave !== baron.wave) return;
     this.baronSpawned = true;
+    edge = baron.spawnEdge ?? edge;
     const escorts = Math.max(0, Math.floor(baron.escortCount));
     const groupCount = escorts + 1;
     for (let index = 0; index < escorts; index += 1) {

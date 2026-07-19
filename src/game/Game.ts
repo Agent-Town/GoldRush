@@ -1069,7 +1069,7 @@ export class Game {
   private readonly baronRocketLastTarget = new THREE.Vector3();
   private baronRocketLastOwnerId = '';
   private baronAnnouncementTimer = 0;
-  private pendingBaronBanner: { text: string; atSim: number; title: string } | null = null;
+  private pendingBaronBanner: { text: string; atSim: number; title: string; edge: CompassEdge | null } | null = null;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
   private charmPauseCooldown = 0;
@@ -4425,8 +4425,9 @@ export class Game {
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     if (wave === baron.wave) {
-      emitStorySignal({ type: 'boss-arrival', contractId: this.activeContract.id, contractName: this.activeContract.name });
-      this.queueBaronBanner(baron.taunt, atSim, bossArrivalTitle(baron));
+      const edge = baron.spawnEdge ?? null;
+      emitStorySignal({ type: 'boss-arrival', contractId: this.activeContract.id, contractName: this.activeContract.name, edge: edge ?? undefined });
+      this.queueBaronBanner(baron.taunt, atSim, bossArrivalTitle(baron), edge);
       return;
     }
     if (!baron.tauntWaves.includes(wave)) return;
@@ -4438,9 +4439,9 @@ export class Game {
     this.uiBridge.announce(text, atSim);
   }
 
-  private queueBaronBanner(text: string, atSim: number, title: string): void {
+  private queueBaronBanner(text: string, atSim: number, title: string, edge: CompassEdge | null = null): void {
     window.clearTimeout(this.baronAnnouncementTimer);
-    const banner = { text, atSim, title };
+    const banner = { text, atSim, title, edge };
     const show = () => {
       this.showBaronBanner(banner);
     };
@@ -4452,10 +4453,10 @@ export class Game {
     show();
   }
 
-  private showBaronBanner(banner: { text: string; atSim: number; title: string }): void {
+  private showBaronBanner(banner: { text: string; atSim: number; title: string; edge: CompassEdge | null }): void {
     this.baronAnnouncementTimer = 0;
     if (this.pendingBaronBanner === banner) this.pendingBaronBanner = null;
-    this.uiBridge.announce(banner.text, banner.atSim, null, 3.8, 'baron', banner.title);
+    this.uiBridge.announce(banner.text, banner.atSim, banner.edge, 3.8, 'baron', banner.title);
     this.syncUi();
     this.publishDiagnostics();
   }
@@ -5891,7 +5892,7 @@ export class Game {
 
   applyMetaProgress(meta: MetaProgress, options: { placeDefenses?: boolean } = {}): void {
     this.appliedMetaProgress = cloneMetaProgress(meta);
-    if (options.placeDefenses === false) return;
+    if (options.placeDefenses === false || this.activeContract.tileParams.prebuiltPalisades === false) return;
     this.territoryRingPresent = false;
     if (meta.tracks.territory < Balance.meta.territoryTier1) return;
     let placed = 0;
