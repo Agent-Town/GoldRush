@@ -74,6 +74,7 @@
             "iconKey": "ui.upgrade.icon.range",
             "effect": "Banks the Sunline beam arsenal family.",
             "effectRef": "atomic.sunline_beam",
+            "live": true,
             "cost": 1
           },
           {
@@ -83,6 +84,7 @@
             "iconKey": "ui.upgrade.icon.blast",
             "effect": "Banks the Half-Life Caltrops family.",
             "effectRef": "atomic.half_life_caltrops",
+            "live": true,
             "cost": 1,
             "requires": ["sunline_beam"]
           },
@@ -93,6 +95,7 @@
             "iconKey": "bld.sentry_beacon",
             "effect": "Banks the Sunline sentry tier.",
             "effectRef": "atomic.sunline_mount",
+            "live": true,
             "cost": 1,
             "requires": ["sunline_beam"]
           },

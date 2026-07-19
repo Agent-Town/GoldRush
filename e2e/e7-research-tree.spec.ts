@@ -17,7 +17,7 @@ const EPOCHS = [
 const SCHOOLHOUSE = { x: -8.2, z: 5.4 };
 const SHOT_DIR = 'artifacts/e7-research-tree';
 
-test('the active Signal Era chart renders its frontier and keeps picks pinnable', async ({ page }, testInfo) => {
+test('the active Signal Era chart renders its uncertified bank without purchasable picks', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const errors: string[] = [];
   page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
@@ -33,12 +33,11 @@ test('the active Signal Era chart renders its frontier and keeps picks pinnable'
   await expect(page.getByTestId('research-era-row').locator('[data-research-era]')).toHaveCount(7);
   await expect(page.getByTestId('research-era-epoch-7-signal')).toHaveText('The Signal Era — active');
 
-  const frontier = page.locator('[data-research-node][data-research-state="available"]').first();
-  await frontier.click();
-  const id = await frontier.getAttribute('data-research-node');
-  await expect(page.getByTestId('research-chart-selection')).toBeVisible();
-  await page.getByTestId('research-chart-pin').click();
-  await expect(page.locator(`[data-research-node="${id}"]`)).toHaveAttribute('data-pinned-target', 'true');
+  await expect(page.locator('[data-research-state="available"]')).toHaveCount(0);
+  await expect(page.locator('[data-research-state="locked"]')).toHaveCount(15);
+  await page.locator('[data-research-node]').first().click();
+  await expect(page.getByTestId('research-chart-impact-line')).toContainText('The Assay Office has not certified this technique yet.');
+  await expect(page.getByTestId('research-chart-pin')).toHaveCount(0);
   await shot(page, testInfo, 'chart');
   expect(errors).toEqual([]);
 });

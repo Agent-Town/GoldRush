@@ -476,7 +476,7 @@ export class BuildSystem {
       const maxCount = this.maxCountFor(def);
       return {
         id: def.id,
-        displayName: breachSeal ? 'Breach-Patch Seal' : def.displayName,
+        displayName: breachSeal ? 'Breach Seal' : def.displayName,
         blurb: breachSeal ? 'A numbered instant wall: the wall you carry.' : buildableBlurb(def),
         cost,
         count,

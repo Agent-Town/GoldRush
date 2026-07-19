@@ -211,7 +211,8 @@ export function normalizeResearchState(state: ResearchState): ResearchState {
 
 export function availablePicks(state: ResearchState): ResearchNode[] {
   const frontier = frontierNodes(state);
-  if (frontier.length > 0) return seededShuffle(frontier, proposalSeed(state)).slice(0, 2);
+  if (frontier.length > 1) return seededShuffle(frontier, proposalSeed(state)).slice(0, 2);
+  if (frontier.length === 1) return [frontier[0]!, continuedStudyPicks(state)[0]!];
   return continuedStudyPicks(state);
 }
 
@@ -528,6 +529,7 @@ function continuedStudyPicks(state: ResearchState): ResearchNode[] {
 }
 
 function nodeAvailable(state: ResearchState, node: ResearchNode, taken: Set<string>): boolean {
+  if (!node.live) return false;
   if (node.id === SKY_ROCKET_BATTERY_NODE_ID && !state.unlocks?.rocketCartCaptured) return false;
   return (node.requires ?? []).every((id) => taken.has(id));
 }

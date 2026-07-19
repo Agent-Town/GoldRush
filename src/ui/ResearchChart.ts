@@ -269,6 +269,9 @@ export function playerFacingScienceCarryover(text: string): string {
 
 export function deriveResearchImpact(node: ResearchNode): ResearchImpact {
   if (node.effectRef.startsWith('continued.')) return { line: node.effect, scope: 'EVERY RUN', future: false };
+  if (!node.live) {
+    return { line: 'The Assay Office has not certified this technique yet.', scope: 'THE TOWN', future: true };
+  }
 
   const direct = directResearchImpact(node.id);
   if (direct) return direct;
@@ -284,13 +287,7 @@ export function deriveResearchImpact(node: ResearchNode): ResearchImpact {
     };
   }
 
-  const reveal = researchRevealForNode(node);
-  const namedBank = `${node.name} banks `;
-  const detail = (reveal.line.toLowerCase().startsWith(namedBank.toLowerCase()) ? reveal.line.slice(namedBank.length) : reveal.line)
-    .replace(/^Banks\s+/i, '')
-    .replace(/[.!?]+$/, '');
-  const era = FUTURE_RESEARCH_ARRIVAL_OVERRIDES[node.id] ?? FUTURE_RESEARCH_ARRIVALS[node.effectRef.split('.')[0]] ?? 'a future research update';
-  return { line: `Unlocks: ${reveal.name} — ${detail}. Arrives with ${era}.`, scope: 'THE TOWN', future: true };
+  return { line: node.effect, scope: 'EVERY RUN', future: false };
 }
 
 function directResearchImpact(id: string): ResearchImpact | undefined {
@@ -343,27 +340,44 @@ function directResearchImpact(id: string): ResearchImpact | undefined {
       `Adds Auto-Pan to run offers: ${Math.round(Math.abs(arsenal.autoPan.panTickMult) * 100)}% faster panning for ${arsenal.autoPan.pressurePerSecond} pressure/s.`,
     );
   }
+  const atomic = Balance.e6Arsenal;
+  if (id === 'sunline_beam') {
+    return everyRun(`Unlocks the Sunline Beam: ${atomic.sunlineBeam.damage} damage across ${atomic.sunlineBeam.range}m every ${atomic.sunlineBeam.cooldown}s.`);
+  }
+  if (id === 'half_life_caltrops') {
+    return everyRun(`Unlocks ${atomic.halfLifeCaltrops.pool} Half-Life Caltrop fields: ${atomic.halfLifeCaltrops.radius}m radius at ${Math.round(atomic.halfLifeCaltrops.slowMultiplier * 100)}% speed.`);
+  }
+  if (id === 'sunline_mount') {
+    return everyRun(`Unlocks the Sunline Mount: ${atomic.sunlineMount.damage} damage across ${atomic.sunlineMount.range}m every ${atomic.sunlineMount.cooldown}s.`);
+  }
+  const orbital = Balance.e8Arsenal;
+  if (id === 'vacuum_lenses') {
+    return everyRun(`Unlocks the Vacuum Lens beam and lobber: ${orbital.sunlineBeam.damage} beam damage and ${orbital.kineticLobber.damage} burst damage.`);
+  }
+  if (id === 'lens_turret') {
+    return everyRun(`Lens Turrets deal ${Math.round((orbital.lensTurret.damageMult - 1) * 100)}% more damage and fire ${Math.round((orbital.lensTurret.fireRateMult - 1) * 100)}% faster.`);
+  }
+  if (id === 'breach_seals') {
+    return everyRun(`Unlocks up to ${orbital.breachSeal.maxActive} Breach Seals with a ${orbital.breachSeal.placeRadius}m placement reach.`);
+  }
+  if (id === 'magnet_grapple') {
+    return everyRun(`Unlocks the Magnet Grapple: pulls two machines ${orbital.magnetGrapple.pullDistance}m together across ${orbital.magnetGrapple.range}m.`);
+  }
+  const redfields = Balance.e9Arsenal;
+  if (id === 'storm_draw') {
+    return everyRun(`Unlocks Storm-Draw: ${redfields.stormDraw.damage} damage across ${redfields.stormDraw.range}m every ${redfields.stormDraw.cooldown}s.`);
+  }
+  if (id === 'storm_lance') {
+    return everyRun(`Unlocks the Storm-Lance: ${redfields.stormLance.damage} damage across ${redfields.stormLance.range}m every ${redfields.stormLance.cooldown}s.`);
+  }
+  if (id === 'storm_fence') {
+    return everyRun(`Unlocks ${redfields.stormFence.pool} Storm Fences: ${redfields.stormFence.radius}m radius at ${Math.round(redfields.stormFence.slowMultiplier * 100)}% speed.`);
+  }
+  if (id === 'terraform_cannon') {
+    return everyRun(`Unlocks the Terraform Cannon: ${redfields.terraformCannon.damage} damage in a ${redfields.terraformCannon.radius}m burst every ${redfields.terraformCannon.cooldown}s.`);
+  }
   return undefined;
 }
-
-const FUTURE_RESEARCH_ARRIVALS: Record<string, string> = {
-  frontier: 'a future Frontier update',
-  steamworks: 'the Steamworks systems',
-  voltage: 'the Voltage Age',
-  motor: 'the Motor Frontier',
-  deepwater: 'the Deepwater Claim',
-  atomic: 'the Atomic Homestead',
-  signal: 'the Signal Era',
-  orbital: 'the Orbital Frontier',
-  redfields: 'the Red Fields',
-  deepsky: 'the Deep Sky',
-};
-
-const FUTURE_RESEARCH_ARRIVAL_OVERRIDES: Record<string, string> = {
-  dynamo_site_survey: 'the Voltage Age',
-  coil_groundwork: 'the Voltage Age',
-  dynamo_blueprints: 'the Voltage Age',
-};
 
 export function renderResearchChart(state: ResearchState, selectedId?: string, options: ResearchChartOptions = {}): string {
   const epochId = state.epochId ?? activeEpochId();
@@ -559,15 +573,15 @@ function renderSelection(
           <b class="research-impact__badge" data-testid="research-chart-scope">${impact.scope}</b>
         </span>
       </div>
-      <strong data-testid="research-chart-distance">${distance === 0 ? 'already marked' : `${distance} ${distance === 1 ? 'pick' : 'picks'} away`}</strong>
-      <ol>
+      <strong data-testid="research-chart-distance">${!selected.live ? 'not certified' : distance === 0 ? 'already marked' : `${distance} ${distance === 1 ? 'pick' : 'picks'} away`}</strong>
+      ${selected.live ? `<ol>
         ${path
           .map((id) => `<li data-path-id="${escapeHtml(id)}">${escapeHtml(nodesById[id]?.name ?? id)}</li>`)
           .join('')}
       </ol>
       <button class="gr-start-menu__small-button" type="button" data-research-pin="${pinned ? '' : escapeHtml(selected.id)}" data-testid="research-chart-pin">
         ${pinned ? 'Clear pin' : 'Pin route'}
-      </button>
+      </button>` : pinned ? `<button class="gr-start-menu__small-button" type="button" data-research-pin="" data-testid="research-chart-pin">Clear pin</button>` : ''}
     </aside>
   `;
 }
@@ -600,10 +614,12 @@ function renderContinuedStudy(state: ResearchState): string {
 
 function nodeStatus(node: ResearchNode, state: ResearchState, frontier: Set<string>): 'taken' | 'available' | 'locked' {
   if (state.taken.includes(node.id)) return 'taken';
+  if (!node.live) return 'locked';
   return frontier.has(node.id) ? 'available' : 'locked';
 }
 
 function researchLockedReason(node: ResearchNode, state: ResearchState, status: 'taken' | 'available' | 'locked'): string {
+  if (!node.live) return '';
   if (status !== 'locked' || node.id !== SKY_ROCKET_BATTERY_NODE_ID || state.unlocks?.rocketCartCaptured) return '';
   return 'The Baron still holds this science.';
 }

@@ -6,7 +6,7 @@ export type AgentVoiceKind = 'pan' | 'repair' | 'chase' | 'place' | 'gather' | '
 
 export const AGENT_BARKS: Record<AgentVoiceKind, readonly string[]> = {
   pan: ['pan...', 'sift...', 'shine', 'banked'],
-  repair: ['shore...', 'patch...', 'mend...', 'braced'],
+  repair: ['shore...', 'brace...', 'mend...', 'braced'],
   chase: ['tracks', 'runner', 'pouch', 'mark'],
   place: ['stake...', 'timber', 'set'],
   gather: ['motes', 'sweep', 'spark'],

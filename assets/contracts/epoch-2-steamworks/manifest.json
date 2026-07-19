@@ -54,7 +54,8 @@
             "effect": "Coal survey marks become available on Steamworks tiles.",
             "effectRef": "steamworks.coal_survey",
             "cost": 1,
-            "requires": ["pressure_assay"]
+            "requires": ["pressure_assay"],
+            "live": true
           },
           {
             "id": "pressure_ledger",
@@ -112,7 +113,8 @@
             "effect": "Banks the boiler-fed battery building tier.",
             "effectRef": "steamworks.boiler_battery",
             "cost": 1,
-            "requires": ["boiler_lance"]
+            "requires": ["boiler_lance"],
+            "live": true
           },
           {
             "id": "iron_wall",
@@ -199,8 +201,7 @@
             "effect": "Banks the first recruited-agent slot at the Depot.",
             "effectRef": "steamworks.recruited_agent_slot",
             "cost": 1,
-            "requires": ["depot_logistics"],
-            "live": true
+            "requires": ["depot_logistics"]
           },
           {
             "id": "dynamo_blueprints",
