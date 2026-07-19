@@ -253,7 +253,7 @@
       "twist": {},
       "boardRow": {
         "name": "The Showroom",
-        "ledgerBlurb": "Choose which furnished model home wakes next, then recover the catalog goods before the whole village stirs.",
+        "ledgerBlurb": "An empty model-home village stands between the showroom approach and catalog yard.",
         "tags": [
           "atomic",
           "sequencing",
@@ -263,14 +263,14 @@
       },
       "briefing": {
         "goals": [
-          "Choose the next model home to open.",
-          "Recover the catalog goods from the empty village."
+          "Cross the model-home village from the showroom approach to the catalog yard.",
+          "Work the six harvest grounds among the display houses."
         ],
         "rules": [
-          "Every furnished house is a mimic nest with appliances asleep in their display positions.",
-          "Waking one house cascades to every appliance in the same product family.",
-          "Choose which cost to wake before taking its loot; stealth is an economy decision.",
-          "Survey status: this page opens for play only after the village can honor the chosen family waking order."
+          "Model homes surround the central village road.",
+          "Three build grounds divide the approach, village, and catalog yard.",
+          "Waves enter from the north, west, and east.",
+          "The display houses stand quiet; no household wakes another."
         ],
         "geographyLine": "A pristine, empty model-home village surrounds a catalog-goods yard and one broad showroom approach."
       }
@@ -351,7 +351,7 @@
       "twist": {},
       "boardRow": {
         "name": "Half-Life Hollow",
-        "ledgerBlurb": "Build fast, cross the dialed ground, and extract before the hollow's warm bridges fade.",
+        "ledgerBlurb": "Two glow bridges and one central causeway cross the hollow between four shelves.",
         "tags": [
           "atomic",
           "decay",
@@ -361,15 +361,15 @@
       },
       "briefing": {
         "goals": [
-          "Cross the expiring hollow and reach the north extraction shelf."
+          "Cross the hollow from the south launch shelf to the north extraction shelf."
         ],
         "rules": [
-          "Glow bridges expire, causeways run on visible dials, and even safe ground carries a countdown.",
-          "Build fast, cross fast, and extract faster.",
-          "Every route teaches commitment because every expiry is honest and visible.",
-          "Survey status: this page opens for play only after terrain and causeways can expire and every lost route can be recalculated."
+          "Two glow bridges flank one central causeway.",
+          "West and east shelves divide the middle crossing.",
+          "Waves enter from both sides of the hollow.",
+          "The north extraction stake stands beyond the causeway."
         ],
-        "geographyLine": "A south-to-north hollow of two glow bridges, one central causeway, and two temporary shelves of countdown-safe ground."
+        "geographyLine": "A south-to-north hollow of two glow bridges, one central causeway, and two middle shelves."
       }
     },
     {
@@ -445,7 +445,7 @@
       "twist": {},
       "boardRow": {
         "name": "The Picnic",
-        "ledgerBlurb": "The town eats on the Glow Mesa meadow while you keep feral appliances away from lunch and the afternoon.",
+        "ledgerBlurb": "Three sandwich stakes stand on the Glow Mesa's caprock meadow.",
         "tags": [
           "atomic",
           "defend",
@@ -455,15 +455,15 @@
       },
       "briefing": {
         "goals": [
-          "Nobody's sandwich gets vacuumed."
+          "Hold the caprock meadow against waves from three sides."
         ],
         "rules": [
-          "The cast stays fixed on its blankets while feral appliances come in from the mesa edges.",
-          "There are zero structures to defend — only lunch, and the afternoon.",
-          "Protect an afternoon instead of a product or structure.",
-          "Survey status: this page opens for play only after its fixed picnic cast and sandwich-loss terms can be honored."
+          "Glow Mesa ground returns beneath the caprock meadow.",
+          "Three sandwich stakes mark the meadow.",
+          "Waves enter from the north, west, and east.",
+          "The base staging ground lies south of the meadow."
         ],
-        "geographyLine": "A Glow Mesa terrain variant reusing e6-glow-mesa, with the annual picnic fixed on its caprock meadow."
+        "geographyLine": "A Glow Mesa terrain variant with a base staging ground below one caprock meadow."
       }
     }
   ]

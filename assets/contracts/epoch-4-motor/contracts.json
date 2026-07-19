@@ -117,16 +117,16 @@
       },
       "boardRow": {
         "name": "The Dust Flats",
-        "ledgerBlurb": "Drive the long field, grade the roads, and watch the horizon where the gangs circle.",
+        "ledgerBlurb": "A wide motor field ringed by road, derricks, tar seams, and one dry wash.",
         "tags": ["motor", "convoy", "storm"],
         "unlock": "default"
       },
       "briefing": {
-        "goals": ["Hold the Motor Camp through wave 12.", "Keep the field routes open while the storm crosses."],
+        "goals": ["Build from the Motor Camp into four surveyed fields.", "Watch all four horizons across the dry wash."],
         "rules": [
-          "Motor gangs circle the ORBIT road before peeling toward the camp.",
-          "Grade surveyed corridors to send the hauler farther on less fuel.",
-          "Storms cut sight and road speed; the gangs steer by engine sound."
+          "The ORBIT road circles the outer field.",
+          "Twelve derrick claims stand beyond the Motor Camp.",
+          "Four tar seams flank one angled dry wash."
         ],
         "geographyLine": "A 160 by 160 drive-scale flat: twelve derrick claims, four tar seams, one dry wash, and the horizon road."
       }
@@ -223,16 +223,16 @@
       },
       "boardRow": {
         "name": "The Long Road",
-        "ledgerBlurb": "The map is a road: the convoy is the base is the town, and every way-station goodbye is practice.",
+        "ledgerBlurb": "One long graded road passes three old way-stations on its way east.",
         "tags": ["motor", "convoy", "mobile-base"],
         "unlock": "secured:e4-dust-flats"
       },
       "briefing": {
-        "goals": ["Bring the whole convoy through to the far railhead.", "Never lose the lead Hauler; the town rides with it."],
+        "goals": ["Follow the long west-east road between three old way-stations.", "Build around the station grounds and watch every verge."],
         "rules": [
-          "There are no fixed build pads; workshops ride Haulers or anchor briefly at way-stations.",
-          "Motor gangs run the verges and cut at the convoy's flanks.",
-          "Each way-station left behind stays behind."
+          "The graded road runs four hundred units from west to east.",
+          "Three surveyed station grounds divide the route.",
+          "Waves enter from the north, south, and west."
         ],
         "geographyLine": "A four-hundred-unit graded road runs west to east past three old way-stations."
       }
@@ -327,16 +327,16 @@
       },
       "boardRow": {
         "name": "Gusher County",
-        "ledgerBlurb": "Cap the wild wells one by one; every claim answers with a blowout.",
+        "ledgerBlurb": "Eight wild derricks stand across three leases around the County Camp.",
         "tags": ["motor", "economy", "risk"],
         "unlock": "secured:e4-long-road"
       },
       "briefing": {
-        "goals": ["Hold the County Camp through wave 12.", "Cap and claim the wild derricks well by well."],
+        "goals": ["Build from the County Camp across the three leases.", "Watch all four edges around the eight derricks."],
         "rules": [
-          "Wild derricks erupt on their own schedules until capped.",
-          "Capping a well claims it — and triggers a blowout wave.",
-          "Tar sprites rise wherever crude pools."
+          "Eight derricks mark the county's harvest grounds.",
+          "Tar seams and surveyed roads divide the leases.",
+          "One outhouse geyser marks the eastern field."
         ],
         "geographyLine": "A 160 by 160 derrick county: eight wild gushers on three leases around one camp."
       }
@@ -440,16 +440,16 @@
       },
       "boardRow": {
         "name": "The Boneyard",
-        "ledgerBlurb": "Strip the dead machines faster than the rustlers do — and let what sleeps in the dirt keep sleeping.",
+        "ledgerBlurb": "Dead Flivvers and spent boilers fill two quiet rows beyond the Gate Camp.",
         "tags": ["motor", "salvage", "mystery"],
         "unlock": "secured:e4-gusher-county"
       },
       "briefing": {
-        "goals": ["Hold the Gate Camp through wave 12.", "Strip more of the yard than the pipeline rustlers do."],
+        "goals": ["Build from the Gate Camp into the dead-machine rows.", "Watch both valley ends while crossing the yard."],
         "rules": [
-          "Every dead machine is salvage; work the rows under pressure.",
-          "Pipeline rustlers strip the same yard and steal what you drop.",
-          "Nothing in the Boneyard attacks unless it is woken."
+          "Dead Flivvers and spent boilers fill the west and east rows.",
+          "Ten harvest grounds lie among the old machines.",
+          "Waves enter from the west and east."
         ],
         "geographyLine": "A 128 by 128 valley of dead Flivvers and spent boilers in quiet rows."
       }

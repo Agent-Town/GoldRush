@@ -99,7 +99,7 @@
       "twist": {},
       "boardRow": {
         "name": "The Relay Valley",
-        "ledgerBlurb": "Set the ridge chain, chart the quiet pockets, and defend a drone walking the patrol you recorded.",
+        "ledgerBlurb": "Set the ridge chain, chart the quiet pockets, and keep recorded patrols inside its reach.",
         "tags": [
           "signal",
           "relay",
@@ -111,12 +111,12 @@
         "goals": [
           "Link the four ridge relays by line of sight.",
           "Record one patrol and hand it to a drone.",
-          "Defend the drone while it walks your route."
+          "Keep the replay inside linked relay coverage."
         ],
         "rules": [
           "Relays connect only when they can see one another.",
-          "Drones drop in dead zones, where data-rustlers ambush.",
-          "Corrupted-playbook waves replay your recording glitched."
+          "Recorded patrols stop when they enter a dead zone.",
+          "Four relay sites span the two exposed ridges."
         ],
         "geographyLine": "Two exposed relay ridges stand at height five above a thick valley floor, split by a dead gap and line-of-sight fog pockets."
       }
@@ -229,7 +229,7 @@
       },
       "boardRow": {
         "name": "Echo Canyon",
-        "ledgerBlurb": "Every lesson carries across the canyon and comes marching back one wave later.",
+        "ledgerBlurb": "A long canyon floor runs between two high echo shelves.",
         "tags": [
           "signal",
           "playbook",
@@ -239,13 +239,13 @@
       },
       "briefing": {
         "goals": [
-          "Use a playbook, then survive its corrupted copy on the next wave.",
-          "Break your recorded pattern before the copies learn the canyon."
+          "Build along the canyon floor and both echo shelves.",
+          "Watch the two open ends of the canyon."
         ],
         "rules": [
-          "Every playbook used this run is broadcast-mirrored to the enemy next wave.",
-          "Repeated habits escalate the self-play pressure.",
-          "Different patterns deny the copies a complete answer."
+          "The canyon floor lies between west and east shelf grounds.",
+          "Waves enter from the north and south.",
+          "Both shelves stand above the central floor."
         ],
         "geographyLine": "A long canyon floor between two high echo shelves, with enemy lanes entering from both ends."
       }
@@ -335,7 +335,7 @@
       },
       "boardRow": {
         "name": "The Dead Band",
-        "ledgerBlurb": "Signal dies in the iron valley; carry the oldest tools in by hand and walk them home.",
+        "ledgerBlurb": "An iron valley holds one central yard between two old-tool grounds.",
         "tags": [
           "signal",
           "manual",
@@ -345,15 +345,15 @@
       },
       "briefing": {
         "goals": [
-          "Secure the valley with hands, boots, and the four oldest tools.",
-          "Hold without drones, playbooks, or relay chains."
+          "Build across the central yard and both old-tool grounds.",
+          "Watch the three open approaches to the valley."
         ],
         "rules": [
-          "The iron body blocks signal across the whole valley.",
-          "Drones, playbooks, and relay chains do not operate here.",
-          "The far end contains no hidden reward."
+          "The Dead Band reuses Relay Valley ground.",
+          "Three surveyed build grounds cross the iron valley.",
+          "Waves enter from the north, west, and east."
         ],
-        "geographyLine": "The Relay Valley ground under one complete iron-ore signal shadow, with genuinely nothing buried at its far end."
+        "geographyLine": "Relay Valley ground with one central iron yard between west and east old-tool grounds."
       }
     },
     {
@@ -448,7 +448,7 @@
       },
       "boardRow": {
         "name": "Relay Rush",
-        "ledgerBlurb": "Light the ridge chain before a wall of un-inked static crosses the valley.",
+        "ledgerBlurb": "Four relay sites stand along the familiar ridge chain.",
         "tags": [
           "signal",
           "relay",
@@ -458,15 +458,15 @@
       },
       "briefing": {
         "goals": [
-          "Light N relays before the interference front arrives.",
-          "Choose which links to save when the front overtakes the valley."
+          "Build across the four relay sites on the ridge chain.",
+          "Watch the north, west, and east approaches."
         ],
         "rules": [
-          "The interference front crosses the map on a schedule.",
-          "Everything swallowed by the front is muted.",
-          "The front appears as creeping desaturation, like un-inked paper spreading."
+          "Relay Rush reuses Relay Valley ground.",
+          "Four surveyed sites mark the ridge chain.",
+          "Waves enter from the north, west, and east."
         ],
-        "geographyLine": "The Relay Valley ridge chain inside one map-wide corridor for the scheduled interference front."
+        "geographyLine": "The Relay Valley ridge chain with four surveyed relay grounds along its map-wide corridor."
       }
     }
   ]
