@@ -74,6 +74,7 @@
             "iconKey": "ui.upgrade.icon.range",
             "effect": "Banks the vacuum-light arsenal family.",
             "effectRef": "orbital.vacuum_lenses",
+            "live": true,
             "cost": 1
           },
           {
@@ -83,16 +84,18 @@
             "iconKey": "bld.sentry_beacon",
             "effect": "Banks the lens-turret sentry tier.",
             "effectRef": "orbital.lens_turret",
+            "live": true,
             "cost": 1,
             "requires": ["vacuum_lenses"]
           },
           {
             "id": "breach_seals",
             "name": "Breach Seals",
-            "description": "Carry numbered patches for the wall that has become the town's breath.",
+            "description": "Carry numbered seals for the wall that has become the town's breath.",
             "iconKey": "ui.e2.iron_wall",
             "effect": "Banks the dome breach-and-seal defense family.",
             "effectRef": "orbital.breach_seals",
+            "live": true,
             "cost": 1,
             "requires": ["vacuum_lenses"]
           },
@@ -103,6 +106,7 @@
             "iconKey": "ui.upgrade.icon.mobility",
             "effect": "Banks the Magnet Grapple arsenal family.",
             "effectRef": "orbital.magnet_grapple",
+            "live": true,
             "cost": 1,
             "requires": ["lens_turret", "breach_seals"]
           },

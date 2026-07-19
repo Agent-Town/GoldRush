@@ -6,7 +6,16 @@ import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src
 import { RESEARCH_NODE_ICON_KEYS, researchIconKeyForNode, researchRevealForNode } from '../src/ui/ResearchChart';
 
 const SHOT_DIR = 'artifacts/060';
-const SEEDED_TAKEN = ['assay_grading', 'mother_lode_survey', 'chain_spark_primer'];
+const SEEDED_TAKEN = ['assay_grading', 'chain_spark_primer'];
+const PACT_ROUTE_TAKEN = [
+  'assay_grading',
+  'chain_spark_primer',
+  'beacon_cadence',
+  'second_order_slot',
+  'refined_assay',
+  'pattern_library',
+  'agent_schooling',
+];
 const SCHOOLHOUSE = { x: -8.2, z: 5.4 };
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
@@ -142,8 +151,8 @@ test('survey chart renders node states, traces locked requirements, and persists
   );
   expect(repeatedEffects).toEqual([]);
   await expect(page.getByTestId('research-chart-node-assay_grading')).toHaveAttribute('data-research-state', 'taken');
-  await expect(page.getByTestId('research-chart-node-sluice_accounting')).toHaveAttribute('data-research-state', 'available');
-  await expect(page.getByTestId('research-chart-node-claim_map_table')).toHaveAttribute('data-research-state', 'locked');
+  await expect(page.getByTestId('research-chart-node-pact_ledger')).toHaveAttribute('data-research-state', 'available');
+  await expect(page.getByTestId('research-chart-node-mother_lode_survey')).toHaveAttribute('data-research-state', 'locked');
   await expect(page.getByTestId('research-chart-node-assay_grading')).toContainText('SURVEYED');
   const visualStates = await page.evaluate(() => {
     const styles = (id: string) => {
@@ -154,8 +163,8 @@ test('survey chart renders node states, traces locked requirements, and persists
     };
     return {
       taken: styles('assay_grading'),
-      available: styles('sluice_accounting'),
-      locked: styles('claim_map_table'),
+      available: styles('pact_ledger'),
+      locked: styles('mother_lode_survey'),
     };
   });
   expect(visualStates.taken?.borderColor).not.toBe(visualStates.available?.borderColor);
@@ -164,14 +173,14 @@ test('survey chart renders node states, traces locked requirements, and persists
   await expect(page.getByTestId('research-next-epoch')).toContainText('awaits the town');
   await shot(page, testInfo, 'chart-overview');
 
-  await page.getByTestId('research-chart-node-claim_map_table').click();
-  await expect(page.getByTestId('research-chart-distance')).toHaveText('2 picks away');
-  await expect(page.getByTestId('research-chart-node-sluice_accounting')).toHaveAttribute('data-selected-path', 'true');
+  await page.getByTestId('research-chart-node-pact_ledger').click();
+  await expect(page.getByTestId('research-chart-distance')).toHaveText('1 pick away');
+  await expect(page.getByTestId('research-chart-node-assay_grading')).toHaveAttribute('data-selected-path', 'true');
   await page.getByTestId('research-chart-pin').click();
   await expect(page.getByTestId('research-chart-pin-mark')).toBeVisible();
   await expect(
     page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '{}').pinnedTarget, profileDataKey('robin', RESEARCH_STATE_KEY)),
-  ).resolves.toBe('claim_map_table');
+  ).resolves.toBe('pact_ledger');
   await shot(page, testInfo, 'pinned-path-highlight');
 
   await page.reload();
@@ -184,15 +193,16 @@ test('survey chart renders node states, traces locked requirements, and persists
 });
 
 test('pinned path marks post-run proposals without auto-picking', async ({ page }, testInfo) => {
-  await seedResearch(page, SEEDED_TAKEN, { pinnedTarget: 'claim_map_table', proposalSalt: 0 });
+  await seedResearch(page, PACT_ROUTE_TAKEN, { pinnedTarget: 'pact_ledger', proposalSalt: 0 });
   const errors = collectErrors(page);
   await page.goto('/?debug&nowaves&nolevel&seed=research-chart-pin');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
 
   await killFast(page);
   await expect(page.getByTestId('death-overlay')).toBeVisible();
+  await expect(page.locator('[data-research-id]')).toHaveCount(2);
   await expect(page.locator('[data-testid^="research-pin-hint-"]').first()).toHaveText('on your surveyed route');
-  await expect(page.locator('[data-research-id="sluice_accounting"]')).toBeVisible();
+  await expect(page.locator('[data-research-id="pact_ledger"]')).toBeVisible();
   const pick = page.locator('[data-research-id]').first();
   const pickedId = await pick.getAttribute('data-research-id');
   expect(pickedId).toBeTruthy();
@@ -213,6 +223,23 @@ test('fresh profile chart has no false marks', async ({ page }) => {
   await openChart(page);
   await expect(page.locator('[data-research-state="taken"]')).toHaveCount(0);
   await expect(page.getByTestId('research-chart-pin-mark')).toHaveCount(0);
+  assertNoErrors(errors);
+});
+
+test('legacy retired research stays surveyed and its stale pin can be cleared', async ({ page }) => {
+  const retired = 'mother_lode_survey';
+  await seedResearch(page, [retired], { pinnedTarget: retired });
+  const errors = collectErrors(page);
+  await openChart(page);
+
+  await expect(page.getByTestId(`research-chart-node-${retired}`)).toHaveAttribute('data-research-state', 'taken');
+  await expect(page.getByTestId(`research-chart-node-${retired}`)).toContainText('SURVEYED');
+  await page.getByTestId(`research-chart-node-${retired}`).click();
+  await expect(page.getByTestId('research-chart-distance')).toHaveText('not certified');
+  await page.getByTestId('research-chart-pin').click();
+  await expect(
+    page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '{}').pinnedTarget, profileDataKey('robin', RESEARCH_STATE_KEY)),
+  ).resolves.toBeNull();
   assertNoErrors(errors);
 });
 

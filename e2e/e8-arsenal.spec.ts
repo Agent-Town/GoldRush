@@ -75,7 +75,7 @@ test('the storybook grid stays absent before E8 and exposes light-only tools at 
   });
   expect(turretPlaced).toBe(true);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build)).toMatchObject({ breachSeals: 4, lensTurrets: 1 });
-  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.ui?.buildables.find((item) => item.id === 'palisade')?.displayName)).toBe('Breach-Patch Seal');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.ui?.buildables.find((item) => item.id === 'palisade')?.displayName)).toBe('Breach Seal');
   expect(errors).toEqual([]);
 });
 

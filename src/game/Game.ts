@@ -3894,7 +3894,7 @@ export class Game {
     this.persistMegaprojectState();
     this.syncMegaprojectSite();
     if (result.type === 'delayed') {
-      this.uiBridge.announce(`${manifest.name} crews patch the works.`, atSim, null, 3.8);
+      this.uiBridge.announce(`${manifest.name} crews shore up the works.`, atSim, null, 3.8);
     } else if (result.type === 'waiting') {
       this.uiBridge.announce(`${manifest.name} crews hold the site.`, atSim, null, 3.8);
     } else if (result.type === 'stage_complete' && result.complete) {

@@ -74,6 +74,7 @@
             "iconKey": "ui.upgrade.icon.range",
             "effect": "Banks the weather-charged beam arsenal family.",
             "effectRef": "redfields.storm_draw",
+            "live": true,
             "cost": 1
           },
           {
@@ -83,6 +84,7 @@
             "iconKey": "bld.sentry_beacon",
             "effect": "Banks the Storm-Lance sentry tier.",
             "effectRef": "redfields.storm_lance",
+            "live": true,
             "cost": 1,
             "requires": ["storm_draw"]
           },
@@ -93,6 +95,7 @@
             "iconKey": "ui.e2.iron_wall",
             "effect": "Banks the Storm Fence field-defense family.",
             "effectRef": "redfields.storm_fence",
+            "live": true,
             "cost": 1,
             "requires": ["storm_draw"]
           },
@@ -103,6 +106,7 @@
             "iconKey": "ui.upgrade.icon.blast",
             "effect": "Banks the bounded terrain-throwing arsenal family.",
             "effectRef": "redfields.terraform_cannon",
+            "live": true,
             "cost": 1,
             "requires": ["storm_lance", "storm_fence"]
           },

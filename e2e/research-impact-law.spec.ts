@@ -10,28 +10,72 @@ const SCHOOLHOUSE = { x: -8.2, z: 5.4 };
 const SHOT_DIR = 'artifacts/research-impact-law';
 const SCOPES = ['THIS RUN', 'EVERY RUN', 'THE TOWN'];
 const RETIRED_RESEARCH_WORDS = /\b(?:banks?|banked|staked)\b/i;
+const META_SPEAK = /\b(?:update|patch|version|dlc)\b/i;
+const IMPLEMENTED_NODE_IDS = [
+  'agent_schooling',
+  'assay_grading',
+  'beacon_cadence',
+  'boiler_battery',
+  'boiler_lance',
+  'breach_seals',
+  'chain_spark_primer',
+  'coal_survey',
+  'half_life_caltrops',
+  'lens_turret',
+  'magnet_grapple',
+  'pact_ledger',
+  'pattern_library',
+  'pressure_assay',
+  'pressure_mortar',
+  'refined_assay',
+  'second_order_slot',
+  'sky_rocket_battery',
+  'steam_parts',
+  'storm_draw',
+  'storm_fence',
+  'storm_lance',
+  'sunline_beam',
+  'sunline_mount',
+  'terraform_cannon',
+  'vacuum_lenses',
+];
 
-test('every era research node states a scoped impact from engine truth', () => {
+test('only implemented nodes are purchasable and every visible node speaks in-world truth', () => {
+  const purchasable: string[] = [];
   for (const epoch of listEpochs()) {
     for (const node of researchNodes(epoch.id)) {
       const impact = deriveResearchImpact(node);
       expect(impact.line.trim(), `${epoch.id}/${node.id}`).not.toBe('');
       expect(SCOPES, `${epoch.id}/${node.id}`).toContain(impact.scope);
-      if (impact.future) {
-        expect(impact.line, `${epoch.id}/${node.id}`).toMatch(/^Unlocks: .+ — .+ Arrives with .+\.$/);
-      } else expect(impact.line, `${epoch.id}/${node.id}`).toMatch(/\d/);
+      expect([node.name, node.description, impact.line].join(' '), `${epoch.id}/${node.id}`).not.toMatch(META_SPEAK);
+      if (node.live) {
+        purchasable.push(node.id);
+        expect(impact.future, `${epoch.id}/${node.id}`).toBe(false);
+        expect(impact.line, `${epoch.id}/${node.id}`).toMatch(/\d/);
+      } else {
+        expect(impact).toEqual({
+          line: 'The Assay Office has not certified this technique yet.',
+          scope: 'THE TOWN',
+          future: true,
+        });
+      }
       expect(impact.line, `${epoch.id}/${node.id}`).not.toMatch(RETIRED_RESEARCH_WORDS);
     }
   }
+  expect(purchasable.sort()).toEqual(IMPLEMENTED_NODE_IDS);
 
   expect(deriveResearchImpact(researchNodeById.chain_spark_primer)).toMatchObject({ scope: 'EVERY RUN', future: false });
   expect(deriveResearchImpact(researchNodeById.chain_spark_primer).line).toContain('12%');
   expect(deriveResearchImpact(researchNodeById.assay_grading).line).toContain('+35');
   expect(deriveResearchImpact(researchNodeById.second_order_slot)).toMatchObject({ scope: 'THE TOWN', future: false });
   expect(deriveResearchImpact(researchNodeById.pressure_assay).line).toContain('25–80');
+  expect(deriveResearchImpact(researchNodeById.coal_survey).future).toBe(false);
   expect(deriveResearchImpact(researchNodeById.boiler_lance).line).toContain('5 damage');
+  expect(deriveResearchImpact(researchNodeById.boiler_battery).future).toBe(false);
   expect(deriveResearchImpact(researchNodeById.recruited_agent_slot)).toMatchObject({ scope: 'THE TOWN', future: true });
-  expect(deriveResearchImpact(researchNodeById.coil_groundwork).line).toContain('Arrives with the Voltage Age.');
+  expect(deriveResearchImpact(researchNodeById.coil_groundwork).line).toBe(
+    'The Assay Office has not certified this technique yet.',
+  );
   expect(playerFacingScienceCarryover('banked: +2 toward the Steamworks')).toBe('carried forward: +2 toward the Steamworks');
   expect(playerFacingScienceCarryover('banked: +2 toward the Steamworks')).not.toMatch(RETIRED_RESEARCH_WORDS);
 });
@@ -51,15 +95,20 @@ test('Schoolhouse selection and Elder proposals show the same impact law', async
   await expect(page.getByTestId('research-chart-scope')).toHaveText('EVERY RUN');
 
   await page.getByTestId('research-chart-node-mother_lode_survey').click();
-  await expect(page.getByTestId('research-chart-impact-line')).toContainText('Unlocks: Mother Lode Survey');
-  await expect(page.getByTestId('research-chart-impact-line')).toContainText('Long claims start building toward better seam returns.');
-  await expect(page.getByTestId('research-chart-impact-line')).toContainText('Arrives with a future Frontier update.');
+  await expect(page.getByTestId('research-chart-node-mother_lode_survey')).toHaveAttribute('data-research-state', 'locked');
+  await expect(page.getByTestId('research-chart-impact-line')).toContainText(
+    'The Assay Office has not certified this technique yet.',
+  );
   await expect(page.getByTestId('research-chart-scope')).toHaveText('THE TOWN');
+  await expect(page.getByTestId('research-chart-distance')).toHaveText('not certified');
+  await expect(page.getByTestId('research-chart-pin')).toHaveCount(0);
+  await expect(page.getByTestId('research-chart')).not.toContainText(META_SPEAK);
   await expect(page.getByTestId('research-chart')).not.toContainText(RETIRED_RESEARCH_WORDS);
   await shot(page, testInfo, 'schoolhouse-unlock-impact');
 
   await page.goto('/?debug&timescale=8&nowaves&nolevel&seed=research-impact-law');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await expect(page.evaluate(() => window.__GR_TEST__!.takeResearchNode('mother_lode_survey'))).resolves.toBe(false);
   await page.evaluate(() => {
     window.__GR_TEST__?.setBalance('enemy.contactDamage', 999);
     window.__GR_TEST__?.teleport(0, 12);
@@ -70,6 +119,7 @@ test('Schoolhouse selection and Elder proposals show the same impact law', async
   for (const index of [0, 1]) {
     const card = page.getByTestId(`research-card-${index}`);
     const id = await card.getAttribute('data-research-id');
+    expect(researchNodeById[id!].live).toBe(true);
     const impact = deriveResearchImpact(researchNodeById[id!]);
     await expect(page.getByTestId(`research-effect-${index}`)).toHaveText(`Effect: ${impact.line}`);
     await expect(page.getByTestId(`research-scope-${index}`)).toHaveText(impact.scope);

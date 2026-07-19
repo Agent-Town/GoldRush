@@ -59,7 +59,7 @@
             "effect": "Unlocks Rich Seam Pact: +18 gold per seam and 10% slower panning.",
             "effectRef": "frontier.pact_ledger",
             "cost": 1,
-            "requires": ["claim_map_table"],
+            "requires": ["assay_grading"],
             "live": true
           }
         ]
@@ -118,7 +118,7 @@
             "effect": "Unlocks the Sky-Rocket Battery branch: 3 arcing festival rockets, burst radius, and ember upgrades.",
             "effectRef": "frontier.sky_rocket_battery",
             "cost": 1,
-            "requires": ["powder_math"],
+            "requires": ["beacon_cadence"],
             "live": true
           },
           {

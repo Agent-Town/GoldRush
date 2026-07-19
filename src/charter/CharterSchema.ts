@@ -120,10 +120,10 @@ export function validateCharterEnvelope(value: unknown): ContractDescriptorReaso
     keys.some((key) => !Object.hasOwn(value, key)) ||
     Object.keys(value).some((key) => ![...keys, 'runPolicy'].includes(key))
   ) {
-    return [envelopeReason('envelope_shape', 'The charter envelope carries version, provenance, seed policy, palette, and at most one run policy.', 'envelope')];
+    return [envelopeReason('envelope_shape', 'The charter envelope carries its seal, provenance, seed policy, palette, and at most one run policy.', 'envelope')];
   }
   if (value.version !== CHARTER_VERSION) {
-    reasons.push(envelopeReason('envelope_version', 'This press only understands version-one charters.', 'envelope.version'));
+    reasons.push(envelopeReason('envelope_version', 'This press cannot read that charter seal.', 'envelope.version'));
   }
   const provenance = value.provenance;
   if (!isRecord(provenance) || Array.isArray(provenance)) {
