@@ -833,6 +833,14 @@ export const Balance = {
   render: {
     exposure: 0.75,
     maxDpr: 2,
+    night: {
+      maxDynamicLights: 8,
+      degradedDynamicLights: 4,
+      frameBudgetMs: 16.7,
+      collapseRatio: 2,
+      collapseSeconds: 3,
+      windowFrames: 180,
+    },
     floatTextPool: 12,
     combatVfxPuffs: 32,
     combatVfxTicks: 48,

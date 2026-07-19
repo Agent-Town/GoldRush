@@ -54,6 +54,8 @@ export type LightRigDiagnostics = {
   };
   nightShift: LightRigNightShiftState;
   nightPools: number;
+  nightPoolCap: number;
+  nightPoolSources: number;
   enemyLanterns: number;
   prospectorLights: number;
   muzzleFlashes: number;
@@ -107,6 +109,8 @@ export class LightRig {
   private firedMuzzleFlashes = 0;
   private currentShadowMapSize = -1;
   private stressFallback = false;
+  private nightPoolSources = 0;
+  private nightLightLimit: number | null = null;
   private nightShift: LightRigNightShiftState = { enabled: false, phase: 'full', darkness: 0 };
 
   constructor(private readonly scene: THREE.Scene, private readonly renderer: THREE.WebGLRenderer) {
@@ -170,6 +174,10 @@ export class LightRig {
     this.stressFallback = active;
   }
 
+  setNightLightLimit(limit: number | null): void {
+    this.nightLightLimit = limit === null ? null : Math.max(0, Math.floor(limit));
+  }
+
   setNightShift(state: LightRigNightShiftState, sources: readonly NightPoolSource[] = []): void {
     this.nightShift = {
       enabled: state.enabled,
@@ -228,6 +236,8 @@ export class LightRig {
         ...(this.nightShift.palette ? { spriteTint: `#${this.nightShift.palette.spriteTint.getHexString()}` } : {}),
       },
       nightPools: this.nightPoolLights.filter((light) => light.visible).length,
+      nightPoolCap: this.nightLightCap(),
+      nightPoolSources: this.nightPoolSources,
       enemyLanterns: this.lanternBulbs.count,
       prospectorLights: this.nightPoolLights.filter((light) => light.visible && light.userData.kind === 'prospector').length,
       muzzleFlashes: this.muzzleFlashes.filter((flash) => flash.light.intensity > 0).length,
@@ -315,11 +325,29 @@ export class LightRig {
 
   private syncNightPools(sources: readonly NightPoolSource[]): void {
     const darkness = this.nightShift.enabled ? this.nightShift.darkness : 0;
+    this.nightPoolSources = sources.length;
+    const lightCount = Math.min(sources.length, this.nightLightCap());
+    const hero = sources.find((source) => source.kind === 'hero');
+    const priority = (source: NightPoolSource) => source.kind === 'hero' ? 0 : source.kind === 'prospector' ? 1 : 2;
+    const selectedSources = !hero || sources.length <= lightCount
+      ? sources
+      : [...sources].sort((a, b) => {
+          return priority(a) - priority(b) ||
+            ((a.x - hero.x) ** 2 + (a.z - hero.z) ** 2) - ((b.x - hero.x) ** 2 + (b.z - hero.z) ** 2);
+        }).slice(0, lightCount);
     let lanternCount = 0;
+    for (const source of sources) {
+      if (source.kind !== 'enemy-lantern' || lanternCount >= this.lanternBulbs.instanceMatrix.count) continue;
+      this.lightMatrix.position.set(source.x, Terrain.visualY(source.x, source.z, source.height ?? 0.82), source.z);
+      this.lightMatrix.scale.setScalar(1);
+      this.lightMatrix.updateMatrix();
+      this.lanternBulbs.setMatrixAt(lanternCount, this.lightMatrix.matrix);
+      lanternCount += 1;
+    }
     for (let index = 0; index < this.nightPoolLights.length; index += 1) {
       const light = this.nightPoolLights[index]!;
-      const source = sources[index];
-      light.visible = darkness > 0 && source !== undefined;
+      const source = selectedSources[index];
+      light.visible = darkness > 0 && index < lightCount && source !== undefined;
       if (!light.visible || !source) continue;
       light.userData.kind = source.kind;
       const warm = source.kind === 'lantern' || source.kind === 'enemy-lantern';
@@ -328,15 +356,17 @@ export class LightRig {
       light.intensity = this.nightPoolIntensity(source.kind) * darkness * flicker;
       light.distance = source.radius;
       light.position.set(source.x, Terrain.visualY(source.x, source.z, source.height ?? 1.45), source.z);
-      if (source.kind !== 'enemy-lantern') continue;
-      this.lightMatrix.position.copy(light.position);
-      this.lightMatrix.scale.setScalar(1);
-      this.lightMatrix.updateMatrix();
-      this.lanternBulbs.setMatrixAt(lanternCount, this.lightMatrix.matrix);
-      lanternCount += 1;
     }
     this.lanternBulbs.count = darkness > 0 ? lanternCount : 0;
     this.lanternBulbs.instanceMatrix.needsUpdate = true;
+  }
+
+  private nightLightCap(): number {
+    return THREE.MathUtils.clamp(
+      this.nightLightLimit ?? Math.floor(Balance.render.night.maxDynamicLights),
+      0,
+      this.nightPoolLights.length,
+    );
   }
 
   private nightPoolIntensity(kind: NightPoolSource['kind']): number {

@@ -8,7 +8,7 @@ import { FIRST_CLAIM_DONE_KEY } from './game/ProfileStorage';
 import { applyStoredPerformanceTier } from './game/PerformanceTier';
 import { install as installProfiles } from './game/ProfileManager';
 import { readRunSuspend } from './game/RunSuspend';
-import { DEFAULT_CONTRACT_ID, readCharterLaunch, stagePlayerContractLaunch } from './meta/ContractFamilies';
+import { activeContract, DEFAULT_CONTRACT_ID, readCharterLaunch, stagePlayerContractLaunch } from './meta/ContractFamilies';
 import { applyUpgradeBudgetsFromBalance } from './game/Upgrades';
 import { installClaimLedgerRequestHandler } from './encyclopedia/events';
 import { installEpochLedgerDiscovery } from './encyclopedia/state';
@@ -97,7 +97,7 @@ async function startGame(): Promise<void> {
   const currentSearch = new URLSearchParams(window.location.search);
   const { Game } = await import('./game/Game');
   applyStoredDifficultyPreset();
-  applyStoredPerformanceTier();
+  applyStoredPerformanceTier(activeContract().id);
   applyUpgradeBudgetsFromBalance();
   game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback);
   game.start();
@@ -126,6 +126,7 @@ function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; 
 }
 
 function showStartMenu(): void {
+  applyStoredPerformanceTier(null);
   startMenu?.dispose();
   void import('./ui/menu/StartMenu').then(({ install }) => {
     if (game || town || profiles) return;
@@ -264,6 +265,7 @@ if (initialSearch.get('bench') === 'fullbase') {
 }
 
 function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult; initialBoardContractId?: string } = {}): void {
+  applyStoredPerformanceTier(null);
   markStartupFrameReady();
   void import('./town/TownScene').then(({ TownScene }) => {
     if (game || profiles) return;

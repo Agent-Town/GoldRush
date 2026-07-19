@@ -574,6 +574,7 @@ interface ThreeGameDiagnostics {
     gpuRenderer: string;
     deviceMemory: number | null;
     userAgent: string;
+    runtimeVerdict: 0 | 1 | 2 | 3;
     config: {
       maxDpr: number;
       shadowsQuality: 'soft' | 'blob';
@@ -635,6 +636,8 @@ interface ThreeGameDiagnostics {
     shadowMapTargetSize: number;
     blobShadows: number;
     nightPools: number;
+    nightPoolCap: number;
+    nightPoolSources: number;
     enemyLanterns: number;
     prospectorLights: number;
     muzzleFlashes: number;

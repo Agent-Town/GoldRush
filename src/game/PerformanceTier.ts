@@ -1,10 +1,12 @@
 import { Balance } from './Balance';
 
 export const PERFORMANCE_TIER_STORAGE_KEY = 'gr.performance.tier.v1';
+export const RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY = 'gr.performance.verdicts.v1';
 
 export const PERFORMANCE_TIERS = ['full', 'balanced', 'lite'] as const;
 export type PerformanceTier = (typeof PERFORMANCE_TIERS)[number];
 export type PerformanceTierOverride = PerformanceTier | 'auto';
+export type RuntimePerformanceVerdict = 0 | 1 | 2 | 3;
 
 export type PerformanceTierConfig = {
   maxDpr: number;
@@ -42,6 +44,7 @@ export type PerformanceTierDiagnostics = {
   deviceMemory: number | null;
   userAgent: string;
   config: PerformanceTierConfig;
+  runtimeVerdict: RuntimePerformanceVerdict;
 };
 
 export const PERFORMANCE_TIER_CONFIGS: Record<PerformanceTier, PerformanceTierConfig> = {
@@ -128,19 +131,26 @@ export const PERFORMANCE_TIER_CONFIGS: Record<PerformanceTier, PerformanceTierCo
 const listeners = new Set<() => void>();
 let lastDiagnostics: PerformanceTierDiagnostics | null = null;
 
-export function applyStoredPerformanceTier(): PerformanceTierDiagnostics {
+export function applyStoredPerformanceTier(contractId: string | null = currentContractId()): PerformanceTierDiagnostics {
   const override = readPerformanceTierOverride();
   const detected = detectPerformanceTier();
-  const tier = override === 'auto' ? detected.tier : override;
+  const runtimeVerdict = readRuntimePerformanceVerdict(contractId);
+  const selectedTier = override === 'auto' ? detected.tier : override;
+  const tier = runtimeVerdict >= 3 ? 'lite' : selectedTier;
+  const baseConfig = PERFORMANCE_TIER_CONFIGS[tier];
+  const config = runtimeVerdict >= 1
+    ? { ...baseConfig, shadowsQuality: 'blob' as const, shadowMapSize: 0 }
+    : baseConfig;
   const diagnostics: PerformanceTierDiagnostics = {
     tier,
     override,
     source: override === 'auto' ? 'auto' : 'override',
-    reason: override === 'auto' ? detected.reason : 'settings override',
+    reason: `${override === 'auto' ? detected.reason : 'settings override'}${runtimeVerdict ? `; runtime fallback ${runtimeVerdict}` : ''}`,
     gpuRenderer: detected.gpuRenderer,
     deviceMemory: detected.deviceMemory,
     userAgent: detected.userAgent,
-    config: PERFORMANCE_TIER_CONFIGS[tier],
+    config,
+    runtimeVerdict,
   };
   applyPerformanceTierConfig(diagnostics.config);
   lastDiagnostics = diagnostics;
@@ -170,6 +180,29 @@ export function savePerformanceTierOverride(value: PerformanceTierOverride): Per
   } catch {}
   notify();
   return value;
+}
+
+export function readRuntimePerformanceVerdict(contractId: string | null = currentContractId()): RuntimePerformanceVerdict {
+  if (!contractId) return 0;
+  try {
+    const stored = JSON.parse(globalThis.localStorage?.getItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY) ?? '{}') as Record<string, unknown>;
+    const value = Number(stored[contractId]);
+    return value === 1 || value === 2 || value === 3 ? value : 0;
+  } catch {
+    return 0;
+  }
+}
+
+export function saveRuntimePerformanceVerdict(contractId: string, verdict: RuntimePerformanceVerdict): RuntimePerformanceVerdict {
+  const current = readRuntimePerformanceVerdict(contractId);
+  const next = Math.max(current, verdict) as RuntimePerformanceVerdict;
+  if (next === current) return current;
+  try {
+    const stored = JSON.parse(globalThis.localStorage?.getItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY) ?? '{}') as Record<string, unknown>;
+    globalThis.localStorage?.setItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY, JSON.stringify({ ...stored, [contractId]: next }));
+  } catch {}
+  if (lastDiagnostics) lastDiagnostics.runtimeVerdict = next;
+  return next;
 }
 
 export function renderPerformanceTierControl(id: string): string {
@@ -205,7 +238,7 @@ export function bindPerformanceTierControl(root: ParentNode, id: string): () => 
   };
 }
 
-function detectPerformanceTier(): Omit<PerformanceTierDiagnostics, 'override' | 'source' | 'config'> {
+function detectPerformanceTier(): Omit<PerformanceTierDiagnostics, 'override' | 'source' | 'config' | 'runtimeVerdict'> {
   const userAgent = getUserAgent();
   const deviceMemory = getDeviceMemory();
   const gpuRenderer = readGpuRenderer();
@@ -307,6 +340,10 @@ function getSearch(): string {
   } catch {
     return '';
   }
+}
+
+function currentContractId(): string | null {
+  return new URLSearchParams(getSearch()).get('contract');
 }
 
 function getUserAgent(): string {

@@ -5,7 +5,7 @@ import { MEGAPROJECT_STATE_KEY } from '../meta/Megaproject';
 import { AUDIO_MUTED_STORAGE_KEY, AUDIO_VOLUME_STORAGE_KEY, MUSIC_VOLUME_STORAGE_KEY } from '../audio/settings';
 import { STORY_TALES_STORAGE_KEY } from '../story/settings';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../encyclopedia/storage';
-import { PERFORMANCE_TIER_STORAGE_KEY } from './PerformanceTier';
+import { PERFORMANCE_TIER_STORAGE_KEY, RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY } from './PerformanceTier';
 import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY, listEpochs } from '../meta/ContractFamilies';
 import { PLAYBOOKS_KEY } from '../playbook/PlaybookStore';
 
@@ -47,6 +47,7 @@ export const PROFILE_DATA_KEYS = new Set([
   PLAYBOOKS_KEY,
   ...listEpochs().map((epoch) => researchStateKey(epoch.id)),
 ]);
+const DEVICE_PROFILE_DATA_KEYS = new Set([RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY]);
 const LATE_PROFILE_DATA_KEYS = [
   AUDIO_VOLUME_STORAGE_KEY,
   AUDIO_MUTED_STORAGE_KEY,
@@ -287,7 +288,7 @@ export function installProfileStorageScope(storage: Storage): void {
 }
 
 function scopedDataKey(storage: Storage, key: string): string {
-  if (!PROFILE_DATA_KEYS.has(key)) return key;
+  if (!PROFILE_DATA_KEYS.has(key) && !DEVICE_PROFILE_DATA_KEYS.has(key)) return key;
   const state = loadProfileState(storage);
   if (!state) return key;
   return profileDataKey(selectedProfileId(state), key);
