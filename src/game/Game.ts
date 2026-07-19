@@ -1146,6 +1146,8 @@ export class Game {
   private run3dPilot?: { update: () => void; dispose: () => void };
   private terrain3dPilotDispose?: () => void;
   private terrain3dPilotCancelled = false;
+  private resizeFrame = 0;
+  private readonly syncViewport = () => resizeRenderer(this.renderer, this.camera, this.tuning.maxDpr);
 
   constructor(
     private readonly canvas: HTMLCanvasElement,
@@ -1979,6 +1981,8 @@ export class Game {
   }
 
   start(): void {
+    window.addEventListener('resize', this.syncViewport);
+    this.resizeFrame = requestAnimationFrame(this.syncViewport);
     this.loop.start();
   }
 
@@ -2011,6 +2015,8 @@ export class Game {
   }
 
   dispose(): void {
+    window.removeEventListener('resize', this.syncViewport);
+    cancelAnimationFrame(this.resizeFrame);
     this.runManager?.dispose();
     this.unsubscribeAgentReceipts?.();
     this.agentStub?.dispose();

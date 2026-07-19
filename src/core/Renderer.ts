@@ -8,7 +8,7 @@ type ResizeState = {
   bufferHeight: number;
 };
 
-const resizeState = new WeakMap<HTMLCanvasElement, ResizeState>();
+const resizeState = new WeakMap<THREE.WebGLRenderer, ResizeState>();
 
 export function createRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
   const renderer = new THREE.WebGLRenderer({
@@ -37,7 +37,8 @@ export function resizeRenderer(
   const dpr = Math.min(window.devicePixelRatio || 1, maxDpr);
   const bufferWidth = Math.floor(width * dpr);
   const bufferHeight = Math.floor(height * dpr);
-  const previous = resizeState.get(canvas);
+  const cssAspect = width / height;
+  const previous = resizeState.get(renderer);
   if (
     previous &&
     previous.clientWidth === width &&
@@ -56,7 +57,7 @@ export function resizeRenderer(
     previous.clientWidth !== width ||
     previous.clientHeight !== height ||
     previous.dpr !== dpr;
-  resizeState.set(canvas, {
+  resizeState.set(renderer, {
     clientWidth: width,
     clientHeight: height,
     dpr,
@@ -67,9 +68,12 @@ export function resizeRenderer(
   if (needsResize) {
     renderer.setPixelRatio(dpr);
     renderer.setSize(width, height, false);
-    camera.aspect = width / height;
+    camera.aspect = cssAspect;
     camera.updateProjectionMatrix();
   }
+
+  canvas.dataset.cameraAspect = String(camera.aspect);
+  canvas.dataset.cssAspect = String(cssAspect);
 
   return needsResize;
 }
