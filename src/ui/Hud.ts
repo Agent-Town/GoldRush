@@ -36,6 +36,7 @@ export type ContractBriefingSnapshot = ContractBriefing & {
 
 export type PauseMetaSnapshot = {
   save: string;
+  goalProgress: string | null;
   manualSave: {
     canSave: boolean;
     defaultName: string;
@@ -533,6 +534,7 @@ export class Hud {
         <strong data-testid="pause-contract-name">${this.escape(meta.contract.name)}</strong>
         <span data-testid="pause-contract-geography">${this.escape(meta.contract.geographyLine)}</span>
         <p class="hud-meta__label">Goals</p>
+        ${meta.goalProgress ? this.renderBriefingLines([meta.goalProgress], 'pause-contract-goal-progress') : ''}
         ${this.renderBriefingLines(meta.contract.goals, 'pause-contract-goals')}
         <p class="hud-meta__label">Rules</p>
         ${this.renderBriefingLines(meta.contract.rules, 'pause-contract-rules')}

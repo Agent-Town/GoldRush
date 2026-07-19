@@ -6924,8 +6924,12 @@ export class Game {
 
   private pauseMetaSnapshot(): PauseMetaSnapshot {
     const meter = scienceMeter(this.researchState);
+    const secureWave = this.secureWaveForRun();
     return {
       save: this.runSuspendSaveLine,
+      goalProgress: secureWave > 0 && this.autoSecureWaveForRun() === secureWave
+        ? `Secure the claim at wave ${secureWave} — wave ${Math.min(this.waveSystem.diagnostics.wave, secureWave)}/${secureWave}`
+        : null,
       manualSave: this.manualSaveSnapshot(),
       contract: this.contractBriefingSnapshot(),
       science: `Science: ${meter.steps}/${meter.threshold} steps; banked +${meter.overflow}`,
