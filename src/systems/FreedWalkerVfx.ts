@@ -50,6 +50,17 @@ type FamilyPresentation = {
   animator: SpriteAnimator;
 };
 
+type EscapeRoute = {
+  directionX: number;
+  directionZ: number;
+  distance: number;
+  firstLegDistance: number;
+  targetX: number;
+  targetZ: number;
+  waypoint?: { x: number; z: number };
+  avoidedPlayer: boolean;
+};
+
 const MAX_CAPACITY = 10;
 const MACHINE_LIFETIME = 2.2;
 const MOTH_MOTES = 3;
@@ -81,6 +92,9 @@ export class FreedWalkerVfx {
   private readonly directionX = new Float32Array(MAX_CAPACITY);
   private readonly directionZ = new Float32Array(MAX_CAPACITY);
   private readonly edgeDistance = new Float32Array(MAX_CAPACITY);
+  private readonly firstLegDistance = new Float32Array(MAX_CAPACITY);
+  private readonly waypointX = new Float32Array(MAX_CAPACITY).fill(Number.NaN);
+  private readonly waypointZ = new Float32Array(MAX_CAPACITY).fill(Number.NaN);
   private readonly targetX = new Float32Array(MAX_CAPACITY);
   private readonly targetZ = new Float32Array(MAX_CAPACITY);
   private readonly avoidedPlayers = Array<boolean>(MAX_CAPACITY).fill(false);
@@ -193,6 +207,9 @@ export class FreedWalkerVfx {
     this.directionX[slot] = route.directionX;
     this.directionZ[slot] = route.directionZ;
     this.edgeDistance[slot] = route.distance;
+    this.firstLegDistance[slot] = route.firstLegDistance;
+    this.waypointX[slot] = route.waypoint?.x ?? Number.NaN;
+    this.waypointZ[slot] = route.waypoint?.z ?? Number.NaN;
     this.targetX[slot] = route.targetX;
     this.targetZ[slot] = route.targetZ;
     this.avoidedPlayers[slot] = route.avoidedPlayer;
@@ -277,8 +294,9 @@ export class FreedWalkerVfx {
         (this.edgeDistance[slot] ?? 0) + 1.5,
         (age - Balance.legibility.freedRunDelaySeconds) * (this.speeds[slot] ?? 0),
       );
-      x += (this.directionX[slot] ?? 0) * travel;
-      z += (this.directionZ[slot] ?? 0) * travel;
+      this.setRoutePosition(slot, travel);
+      x = this.position.x;
+      z = this.position.z;
       runStride = Math.sin((age - Balance.legibility.freedRunDelaySeconds) * 16 + slot * 1.7);
     } else if (behavior === 'slump') {
       const seize = Math.min(1, age / 0.48);
@@ -315,6 +333,26 @@ export class FreedWalkerVfx {
     sprite.scale.set(1.55 * scale * (1 + slump * 0.18 + stride * 0.08), 1.55 * scale * (1 - slump * 0.38 - stride * 0.05), 1);
   }
 
+  private setRoutePosition(slot: number, travel: number): void {
+    const startX = this.startX[slot] ?? 0;
+    const startZ = this.startZ[slot] ?? 0;
+    const waypointX = this.waypointX[slot] ?? Number.NaN;
+    const waypointZ = this.waypointZ[slot] ?? Number.NaN;
+    const firstLegDistance = this.firstLegDistance[slot] ?? 0;
+    const onSecondLeg = Number.isFinite(waypointX) && Number.isFinite(waypointZ) && travel > firstLegDistance;
+    const fromX = onSecondLeg ? waypointX : startX;
+    const fromZ = onSecondLeg ? waypointZ : startZ;
+    const toX = onSecondLeg ? this.targetX[slot] ?? 0 : Number.isFinite(waypointX) ? waypointX : this.targetX[slot] ?? 0;
+    const toZ = onSecondLeg ? this.targetZ[slot] ?? 0 : Number.isFinite(waypointZ) ? waypointZ : this.targetZ[slot] ?? 0;
+    const distance = Math.hypot(toX - fromX, toZ - fromZ);
+    const directionX = distance > 0 ? (toX - fromX) / distance : 0;
+    const directionZ = distance > 0 ? (toZ - fromZ) / distance : 0;
+    const legTravel = onSecondLeg ? travel - firstLegDistance : travel;
+    this.directionX[slot] = directionX;
+    this.directionZ[slot] = directionZ;
+    this.position.set(fromX + directionX * legTravel, 0, fromZ + directionZ * legTravel);
+  }
+
   private updateAnimations(delta: number): void {
     for (let familyIndex = 0; familyIndex < this.families.length; familyIndex += 1) {
       let slot = -1;
@@ -347,16 +385,8 @@ export class FreedWalkerVfx {
       if (!this.active[slot] || !this.moths[slot]) continue;
       visible = true;
       const age = this.ages[slot] ?? 0;
-      let x = this.startX[slot] ?? 0;
-      let z = this.startZ[slot] ?? 0;
-      if (age > Balance.legibility.freedRunDelaySeconds) {
-        const travel = Math.min(
-          (this.edgeDistance[slot] ?? 0) + 1.5,
-          (age - Balance.legibility.freedRunDelaySeconds) * (this.speeds[slot] ?? 0),
-        );
-        x += (this.directionX[slot] ?? 0) * travel;
-        z += (this.directionZ[slot] ?? 0) * travel;
-      }
+      const x = this.diagnostics.entities[slot]?.x ?? this.startX[slot] ?? 0;
+      const z = this.diagnostics.entities[slot]?.z ?? this.startZ[slot] ?? 0;
       for (let mote = 0; mote < MOTH_MOTES; mote += 1) {
         const phase = age * (7 + mote) + slot * 1.7 + mote * 2.1;
         this.mothObject.position.set(
@@ -380,12 +410,8 @@ export class FreedWalkerVfx {
     for (let slot = 0; slot < MAX_CAPACITY; slot += 1) {
       const age = this.ages[slot] ?? 0;
       if (!this.active[slot] || this.behaviors[slot] !== 'run' || age <= Balance.legibility.freedRunDelaySeconds) continue;
-      const travel = Math.min(
-        (this.edgeDistance[slot] ?? 0) + 1.5,
-        (age - Balance.legibility.freedRunDelaySeconds) * (this.speeds[slot] ?? 0),
-      );
-      const x = (this.startX[slot] ?? 0) + (this.directionX[slot] ?? 0) * travel;
-      const z = (this.startZ[slot] ?? 0) + (this.directionZ[slot] ?? 0) * travel;
+      const x = this.diagnostics.entities[slot]?.x ?? this.startX[slot] ?? 0;
+      const z = this.diagnostics.entities[slot]?.z ?? this.startZ[slot] ?? 0;
       for (let puff = 0; puff < RUN_DUST_PUFFS; puff += 1) {
         const trail = 0.45 + puff * 0.55;
         const pulse = 0.9 + Math.abs(Math.sin(age * 13 + slot * 1.7 + puff * 2.3)) * 0.5;
@@ -510,15 +536,35 @@ function escapeRoute(
   x: number,
   z: number,
   players: readonly THREE.Vector3[],
-): { directionX: number; directionZ: number; distance: number; targetX: number; targetZ: number; avoidedPlayer: boolean } {
-  const west = Math.max(0, x - Terrain.bounds.minX);
-  const east = Math.max(0, Terrain.bounds.maxX - x);
-  const south = Math.max(0, z - Terrain.bounds.minZ);
-  const north = Math.max(0, Terrain.bounds.maxZ - z);
-  const distance = Math.min(west, east, south, north);
-  const verticalEdge = distance === west || distance === east;
-  let targetX = distance === west ? Terrain.bounds.minX : distance === east ? Terrain.bounds.maxX : x;
-  let targetZ = distance === south ? Terrain.bounds.minZ : distance === north ? Terrain.bounds.maxZ : z;
+): EscapeRoute {
+  const edges = [
+    { targetX: Terrain.bounds.minX, targetZ: z, distance: Math.max(0, x - Terrain.bounds.minX), vertical: true },
+    { targetX: Terrain.bounds.maxX, targetZ: z, distance: Math.max(0, Terrain.bounds.maxX - x), vertical: true },
+    { targetX: x, targetZ: Terrain.bounds.minZ, distance: Math.max(0, z - Terrain.bounds.minZ), vertical: false },
+    { targetX: x, targetZ: Terrain.bounds.maxZ, distance: Math.max(0, Terrain.bounds.maxZ - z), vertical: false },
+  ].sort((left, right) => left.distance - right.distance);
+
+  for (const edge of edges) {
+    const target = avoidPlayers(x, z, edge.targetX, edge.targetZ, edge.vertical, players);
+    const route = landRoute(x, z, target.x, target.z);
+    if (route) return { ...route, avoidedPlayer: target.avoidedPlayer };
+  }
+
+  const edge = edges[0]!;
+  const target = avoidPlayers(x, z, edge.targetX, edge.targetZ, edge.vertical, players);
+  return routeVia(x, z, target.x, target.z, undefined, target.avoidedPlayer);
+}
+
+function avoidPlayers(
+  x: number,
+  z: number,
+  initialTargetX: number,
+  initialTargetZ: number,
+  verticalEdge: boolean,
+  players: readonly THREE.Vector3[],
+): { x: number; z: number; avoidedPlayer: boolean } {
+  let targetX = initialTargetX;
+  let targetZ = initialTargetZ;
   let avoidedPlayer = false;
   for (const player of players) {
     if (distanceSqToSegment(player.x, player.z, x, z, targetX, targetZ) > Balance.legibility.freedAvoidRadius ** 2) continue;
@@ -532,15 +578,50 @@ function escapeRoute(
     avoidedPlayer = true;
     break;
   }
-  const dx = targetX - x;
-  const dz = targetZ - z;
-  const routeDistance = Math.hypot(dx, dz);
+  return { x: targetX, z: targetZ, avoidedPlayer };
+}
+
+function landRoute(x: number, z: number, targetX: number, targetZ: number): Omit<EscapeRoute, 'avoidedPlayer'> | null {
+  if (landSegment(x, z, targetX, targetZ)) return routeVia(x, z, targetX, targetZ);
+  for (const waypoint of [{ x: targetX, z }, { x, z: targetZ }]) {
+    if (
+      (waypoint.x !== x || waypoint.z !== z)
+      && (waypoint.x !== targetX || waypoint.z !== targetZ)
+      && landSegment(x, z, waypoint.x, waypoint.z)
+      && landSegment(waypoint.x, waypoint.z, targetX, targetZ)
+    ) return routeVia(x, z, targetX, targetZ, waypoint);
+  }
+  return null;
+}
+
+function landSegment(ax: number, az: number, bx: number, bz: number): boolean {
+  const steps = Math.max(1, Math.ceil(Math.hypot(bx - ax, bz - az) / 0.25));
+  for (let step = 0; step <= steps; step += 1) {
+    const t = step / steps;
+    if (Terrain.sample(THREE.MathUtils.lerp(ax, bx, t), THREE.MathUtils.lerp(az, bz, t)).zone !== 'bank') return false;
+  }
+  return true;
+}
+
+function routeVia(
+  x: number,
+  z: number,
+  targetX: number,
+  targetZ: number,
+  waypoint?: { x: number; z: number },
+  avoidedPlayer = false,
+): EscapeRoute {
+  const firstTarget = waypoint ?? { x: targetX, z: targetZ };
+  const firstLegDistance = Math.hypot(firstTarget.x - x, firstTarget.z - z);
+  const distance = firstLegDistance + (waypoint ? Math.hypot(targetX - waypoint.x, targetZ - waypoint.z) : 0);
   return {
-    directionX: routeDistance > 0 ? dx / routeDistance : 0,
-    directionZ: routeDistance > 0 ? dz / routeDistance : 0,
-    distance: routeDistance,
+    directionX: firstLegDistance > 0 ? (firstTarget.x - x) / firstLegDistance : 0,
+    directionZ: firstLegDistance > 0 ? (firstTarget.z - z) / firstLegDistance : 0,
+    distance,
+    firstLegDistance,
     targetX,
     targetZ,
+    waypoint,
     avoidedPlayer,
   };
 }
