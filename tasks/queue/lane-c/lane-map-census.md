@@ -1,5 +1,5 @@
 # Task lane-map-census: THE CENSUS HARNESS — every class proven on every map (LADDER → queue lane-b after panorama, commit prefix "feat:")
-You are Codex, implementer for Gold Rush (worktrees/lane-b).
+You are Codex, implementer for Gold Rush (worktrees/lane-c).
 CODEX: model=gpt-5.6-sol effort=high
 READ FIRST: docs/MAP-QUALITY-REGISTER.md (the law this enforces) · e2e/run3d-interaction.spec.ts + terrain3d-default.spec.ts (check grammars to generalize) · the 41 contract ids (assets/contracts/*/contracts.json).
 Pre-flight: standard safe-dupe; npm i; tsc+build green.

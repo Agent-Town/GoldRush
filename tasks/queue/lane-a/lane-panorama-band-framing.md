@@ -1,6 +1,6 @@
 # Task lane-panorama-band-framing: panorama band framing (LANE-B, commit prefix "fix:")
 
-You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-b.
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-a.
 CODEX: model=gpt-5.6-sol effort=high
 READ FIRST: AGENTS.md · reviews/playtest-2026-07-18-night.md (the owner's finding this task exists for — his words are the acceptance test) · src/world/Terrain3dClaimPilot.ts (panorama ring/plate mount + skirt/edge fade) · the run + town cameras (Game camera, TownScene camera) · the PANORAMA LAW (SOL-3D-D-QUEUE: backdrop beyond the playfield edge, render-only)
 
