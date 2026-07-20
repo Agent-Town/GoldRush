@@ -2270,7 +2270,8 @@ function boardPageIndexForContract(id: string | undefined): number {
 }
 
 function renderContractArt(contract: ContractManifest): string {
-  const art = contractArtRegistry[contract.id] ?? contractArtRegistry[DEFAULT_CONTRACT_ID];
+  // THE ADOPTION (owner 2026-07-20): all 41 cards render through ONE path at one
+  // size — the per-card registry framing (insets, key backgrounds) is retired.
   const legacyPlateId = contract.id.replace(/^e\d+-/, '');
   const plateUrl =
     contractPlateUrls[`../../assets/raw/plate-contract-${contract.id}.png`] ??
@@ -2281,13 +2282,9 @@ function renderContractArt(contract: ContractManifest): string {
   // plate lands — the board must read as ONE book (owner ruling 2026-07-20).
   const interimClass = !plateUrl && interimUrl ? ' town-ui__contract-art-image--interim' : '';
   const image = imageUrl ? `<img class="town-ui__contract-art-image${interimClass}" src="${escapeHtml(imageUrl)}" alt="" />` : '';
-  const inset = art?.insetUrl ? `<img class="town-ui__contract-art-inset" src="${escapeHtml(art.insetUrl)}" alt="" />` : '';
   return `
-    <figure class="town-ui__contract-art town-ui__contract-art--${escapeHtml(art?.key ?? 'river-tile')}" data-contract-art-key="${escapeHtml(
-      art?.key ?? 'river-tile',
-    )}" data-testid="contract-art-${escapeHtml(contract.id)}" aria-hidden="true">
+    <figure class="town-ui__contract-art town-ui__contract-art--plate" data-contract-art-key="plate" data-testid="contract-art-${escapeHtml(contract.id)}" aria-hidden="true">
       ${image}
-      ${inset}
     </figure>
   `;
 }
