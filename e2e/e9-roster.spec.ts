@@ -149,8 +149,8 @@ test('E9 placeholders preserve siege/thief flags and cure-arms exits', async ({ 
   expect(result.spawned.find((enemy) => enemy.variantId === 'feral_terraformer')).toMatchObject({ scale: 1.8, wrecker: true, wreckState: 'seekBuilding' });
   expect(result.spawned.find((enemy) => enemy.variantId === 'claim_jump_prospect_drone')).toMatchObject({ scale: 0.45, thief: true, state: 'seekHolding' });
   expect(result.bindings).toEqual([
-    expect.objectContaining({ sheet: 'char-e9-feral_terraformer-sheet-walk8.png', placeholder: true }),
-    expect.objectContaining({ sheet: 'char-e9-claim_jump_prospect_drone-sheet-walk8.png', placeholder: true }),
+    expect.objectContaining({ sheet: 'char-e9-feral_terraformer-sheet-walk8.png', placeholder: false }),
+    expect.objectContaining({ sheet: 'char-e9-claim_jump_prospect_drone-sheet-walk8.png', placeholder: false }),
   ]);
 
   mkdirSync(SHOT_DIR, { recursive: true });
