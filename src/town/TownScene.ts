@@ -89,14 +89,6 @@ const boardCardUrls = import.meta.glob<string>('../../assets/processed/board-car
   query: '?url',
   import: 'default',
 });
-const contractArtRegistry: Record<string, { key: string; insetUrl?: string }> = {
-  [DEFAULT_CONTRACT_ID]: { key: 'contract-the-claim' },
-  'e1-dry-gulch': { key: 'contract-dry-gulch' },
-  'e1-night-shift': { key: 'contract-night-shift' },
-  'e1-twin-banks': { key: 'contract-twin-banks' },
-  'e1-baron': { key: 'contract-baron' },
-  'e2-hill-mine': { key: 'contract-hill-mine' },
-};
 const townFacadeUrls: Partial<Record<TownBuildingId, { key: string; url: string }>> = {
   tavern: { key: 'bld-tavern', url: new URL('../../assets/processed/bld-tavern.png', import.meta.url).href },
   claim_office: { key: 'bld-claim-office', url: new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href },
