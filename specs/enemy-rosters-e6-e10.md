@@ -1,4 +1,4 @@
-# ENEMY ROSTERS E6-E10 — design sheets from the book
+# ENEMY ROSTERS E5-E10 — design sheets from the book
 
 ## NO-BLOCKER LAW
 
@@ -8,14 +8,35 @@ The pipeline runs **design -> art -> wiring without waiting for owner review at 
 
 ## Reading laws
 
-- Source order: `lore/STORYBOOK.md` E6-E10 supplies the fiction; the design-locked epoch bundles settle roster conflicts; current `Enemy.ts`, `WaveSystem.ts`, and `OrbitSpawner.ts` supply the reusable movement grammar.
-- **Mutation-law read:** E6 wants helpfulness; E7 wants voices and recorded patterns; E8 is the law's negative proof, beyond the Fever's reach, where appetite is ordinary, signed, and billable; E9 is the clean world; E10 is the Fever's final mutation, a want for meaning itself.
+- Source order: `lore/STORYBOOK.md` E5-E10 supplies the fiction; the design-locked epoch bundles settle roster conflicts; current `Enemy.ts`, `WaveSystem.ts`, and `OrbitSpawner.ts` supply the reusable movement grammar.
+- **Mutation-law read:** E5 drowns the roads the Fever used, leaving Fevered machinery below and ordinary paid corsairs above; E6 wants helpfulness; E7 wants voices and recorded patterns; E8 is the law's negative proof, beyond the Fever's reach, where appetite is ordinary, signed, and billable; E9 is the clean world; E10 is the Fever's final mutation, a want for meaning itself.
 - **E9 law, verbatim:** **"nothing on this world WANTS. Things merely work, or weather"** (`STORYBOOK.md:535`). No E9 face or rivet carries the gold-dust tell.
 - Cure-arms copy uses only **freed**, **turned back**, **powers down**, and **disperses**. E8-E9 company crews and weather are not Fevered; the same outcomes describe their warm, non-gory exit presentation without changing that fact.
 - Reused movement names are literal: **chase** = current hero-target + formation steering; **lane** = current edge/scripted-route movement; **orbit** = current orbit-then-peel route; **siege** = current building-target route. Existing thief state may layer onto lane or orbit.
 - Roster wiring adds no general AI. Each era may own one shared signature behavior family, identified below; all other movement stays on the four existing archetypes.
 - Art law: Frontier Ledger linework, era palette, no letters, no watermarks, warm and never gory. Animated source cells normalize into the existing 244-332 px enemy subject band; runtime scale establishes the stated world-height ratio against `char.claim_jumper`.
 - **PROPOSAL** means chapter-uncited. It remains data-driven and replaceable even when a design-locked bundle or existing plate already supplies it.
+
+## E5 — The Deepwater Claim
+
+**Roster law:** the flood drowns E4's roads and engines, so the era's Fevered are mostly an absence; the machinery still caught below can remain in the grip, while the corsairs are paid, un-shiny professionals. E5 adds no signature AI family: boat and swim lanes are water-constrained uses of the existing movement archetypes, while the Dredge-Queen keeps her already specified component-boss path.
+
+| id | name (mutation-law voice) | class (machine/nature/company/static) | cure-arms outcome (freed walks home / powers down / disperses) | behavior in one sentence (sim-grammar: chase/lane/orbit/siege — reuse existing movement archetypes, name which) | visual brief for the art batch (era vocabulary, height band vs existing sprites, NO letters, warm-never-gory) | chapter citation (line/quote) |
+|---|---|---|---|---|---|---|
+| `corsair_skiff` | **Corsair Skiff — wants the paid salvage before you reach it** | company | turned back; its crew rows home in good order | Reuse **lane** on the authored W->E storm-front boat lane, then the current scripted route toward the Claim-Boat; reefs constrain the route through existing water-region data. | Hull and sail read at 1.6x claim-jumper height; patched lateen sail, tar-black cloth with one rust-orange patch, boarding gaffs and two painted-in crew, blue-green engraved wake; no gold tell, letters or gore; warm, illustrated. | `STORYBOOK.md:262,282,287,290` — "professionals, paid, un-shiny"; "corsair racers"; "ride weather"; "rows away in good order." |
+| `machine_leviathan` | **Machine-Leviathan — wants the loudest hull stilled** **[PROPOSAL: appetite phrasing]** | machine | powers down mid-grasp; its old Combine plates are freed of the grip | Reuse **orbit** for the head's swim route around the Claim-Boat, peeling inward on the existing orbit path; trailing spline segments are presentation, not another movement controller. | Each segment fits the 0.9x claim-jumper height band, assembling into a long low silhouette; barnacled brass plates, one amber eye-lens, teal instrument seams and a restrained gold tell at seized rivets; no letters; warm, never gory. | `STORYBOOK.md:269,274,283` — "machine-leviathan's barnacles"; "seized Combine relics powering down mid-grasp"; "hunts by NOISE." Appetite wording is **PROPOSAL**. |
+| `reef_snapper` | **Reef Snapper — wants its quiet reef back** **[PROPOSAL: chapter-uncited]** | nature | turned back; it releases the diver or hull and settles into the reef | Reuse **chase** in the authored swim region toward the current diver/boat target; the open-close snap is animation and contact payload, not a new controller. | Closed shell at 0.55x claim-jumper height, open read at no more than 0.8x; oversized blue-green shellfish, brass-and-teal dive-light reflections, friendly engraved curves and generous negative space; no gold tell or letters; warm, never gory. | **PROPOSAL — no E5 chapter citation.** Design-locked source: `e5-deepwater-bundle.md:19,42`; existing plate: `plate-e5-enemy-reef-snapper.png`. |
+| `dredge_queen` | **The Dredge-Queen — wants your drowned history sold by the ton** | company | turned back; the crew rows home and the hulk settles as wreck W6 | Reuse **siege** through the existing Dredge-Queen component path: PADDLES hold the W5 boat lane, CLAW works the wreck target, and HOLD ends the anchored stand. | Boss silhouette at 3.5x claim-jumper height; corsair flag-barge with readable CLAW/PADDLES/HOLD, tar-black and rust-orange sail, brass salvage works, teal lamps and blue-green wake; no gold tell or letters; warm, never gory. | `STORYBOOK.md:286-290` — "the first COMPETING boss"; "It is your history — the drowned chain, sold by the ton"; "Wreck W6, permanent." |
+
+**Archetype audit:** chase 1 · lane 1 · orbit 1 · siege 1 · signature families 0.
+
+### Batch R-E5 — Deepwater roster
+
+- `char.e5.corsair_skiff` <- `enm-corsair-skiff-sheet-a.png`, `enm-corsair-skiff-sheet-b.png` (wake4 A/B; reference `plate-e5-enemy-corsair-skiff.png`).
+- `char.e5.machine_leviathan` <- `enm-leviathan-sheet.png` (head, three segment cells and tail for spline composition; reference `plate-e5-enemy-leviathan.png`).
+- `char.e5.reef_snapper` <- `enm-reef-snapper-sheet.png` (4x2 snap phases and closed/open states; reference `plate-e5-enemy-reef-snapper.png`).
+- `boss.e5.dredge_queen` <- **new runtime cutouts** `boss-dredge-queen-cutout.png`, `boss-dredge-queen-damage-cutout.png` (CLAW/PADDLES/HOLD aligned; condition on `plate-e5-boss-dredge-queen.png` and the existing full-bleed `boss-dredge-queen*.png` pair).
+- Batch size: **4 slots / 6 files**. The existing boss plates remain conditioning scenes; the cutouts take the normal transparency, thumbnail, ledger and attended-QA gates.
 
 ## E6 — The Atomic Homestead
 
@@ -84,7 +105,7 @@ The pipeline runs **design -> art -> wiring without waiting for owner review at 
 
 ## THE ART BATCH PLAN
 
-Run these as five sequential roster batches, **one batch in flight at a time**. Reuse the accepted saga-library plates as conditioning references; do not regenerate reference plates. Each accepted file maps to one slot, so a post-hoc replacement changes only that slot's files and ledger row.
+After R-E5 closes, run these five remaining roster batches sequentially, **one batch in flight at a time**. Reuse the accepted saga-library plates as conditioning references; do not regenerate reference plates. Each accepted file maps to one slot, so a post-hoc replacement changes only that slot's files and ledger row.
 
 ### Batch R-E6 — Atomic roster
 
@@ -131,6 +152,13 @@ Run these as five sequential roster batches, **one batch in flight at a time**. 
 
 Add **mobile** identities as per-contract `twist.enemyRoster` entries and use existing `baron`/boss hooks for boss rows. Add debris rain, dust devils, and Static squalls through a separate contract-owned hazard descriptor/scheduler that reuses lane geometry but never calls `WaveSystem`'s `ClaimJumperEnemy` roster path; this is a data/schedule seam, not another target-selection AI. Keep all HP, speed, share, and cadence numbers out of this design slice and under the later balance pass. The list below is the complete reversible contract routing.
 
+### E5 contract family
+
+- `e5-deepwater-claim`: `corsair_skiff` (storm-carried boat lane), `machine_leviathan` (orbit/swim), `reef_snapper` (chase/swim); route the finale through the existing `dredge_queen` boss hook.
+- `e5-regatta`: `corsair_skiff`, then `reef_snapper`; racing changes authored boat lanes, not roster code.
+- `e5-stillwater`: `machine_leviathan`, then `reef_snapper`; noise changes target priority, not movement grammar.
+- `e5-flotilla`: `corsair_skiff`, `machine_leviathan`; each hull is an existing target, not a new enemy identity.
+
 ### E6 contract family
 
 - `e6-glow-mesa`: `feral_toaster` (chase), `lawn_shepherd` (lane/herd), `glowjack` (lane/thief); existing wave-8 `homemaker_9000` boss remains.
@@ -168,16 +196,17 @@ Add **mobile** identities as per-contract `twist.enemyRoster` entries and use ex
 
 ## SELF-CHECK
 
-- Five era tables present; each has exactly 4 entries and the required 7 columns.
-- All chapter-backed entries carry line-and-quote citations; the two chapter gaps are visibly marked **PROPOSAL** and cite their design-locked bundle/plate sources.
-- E6-E7 cravings, E8 beyond-reach contrast, E9 clean-world law, and E10 meaning appetite are explicit.
+- Six era tables present; each has exactly 4 entries and the required 7 columns.
+- All chapter-backed entries carry line-and-quote citations; every chapter gap or uncited appetite phrase is visibly marked **PROPOSAL** and cites its design-locked bundle/plate source where one exists.
+- E5's drowned-road break, E6-E7 cravings, E8 beyond-reach contrast, E9 clean-world law, and E10 meaning appetite are explicit.
 - One signature behavior family per era, maximum; all other movement names an existing chase/lane/orbit/siege archetype.
 - Art queues are sequential, filenames follow current `enm-*-sheet[-a/-b].png` and `boss-*.png` conventions, and every identity owns one reversible slot.
 - Lexicon check is clean for prohibited cure-arms terms; visual law is no letters, warm, never gory.
-- No code, generated art, balance value, existing spec, review, or orchestrator ledger changed.
+- No code, generated art, balance value, other spec, review, or orchestrator ledger changed.
 
 ## READY-FOR-GATES
 
+- **E5:** the roads drown; paid corsairs ride the storms while old machinery remains caught below.
 - **E6:** helpful appliances move in; the pen turns patience into a roster rule.
 - **E7:** the hunger steals voices and habits; one replay substrate scales from automata to the Echo.
 - **E8:** no Fever crossed the black; paperwork, glare, debris and repossession provide the pressure.
