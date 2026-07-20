@@ -221,6 +221,12 @@ export const Balance = {
       sun_glare_shambler: { hpScale: 1.3, speedMult: 0.72, visualScale: 0.8, contactDamageScale: 0.9, tint: '#caa25a' },
     },
   },
+  e9Roster: {
+    variants: {
+      feral_terraformer: { hpScale: 1.7, speedMult: 0.6, visualScale: 1.8, contactDamageScale: 1, buildingDamageScale: 1.4, tint: '#b06a3a', wrecker: true },
+      claim_jump_prospect_drone: { hpScale: 0.7, speedMult: 1.1, visualScale: 0.45, contactDamageScale: 0.7, tint: '#9a8b57', thief: true },
+    },
+  },
   wrangle: {
     windDownSeconds: 8,
     exhaustedSpeedMultiplier: 0.2,

@@ -15,6 +15,8 @@ export const assetSlots = {
   charE7DataRustler: 'char.e7.data_rustler',
   charE8ScrapCorsair: 'char.e8.scrap_corsair',
   charE8SunGlareShambler: 'char.e8.sun_glare_shambler',
+  charE9FeralTerraformer: 'char.e9.feral_terraformer',
+  charE9ClaimJumpProspectDrone: 'char.e9.claim_jump_prospect_drone',
   charBaron: 'char.baron',
   charProspectorAgent: 'char.prospector_agent',
   charTownTavernkeeper: 'char.town.tavernkeeper',

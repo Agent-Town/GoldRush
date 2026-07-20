@@ -176,7 +176,12 @@
           ]
         }
       },
-      "twist": {},
+      "twist": {
+        "enemyRoster": [
+          { "id": "feral_terraformer", "label": "Faithful Terraformer" },
+          { "id": "claim_jump_prospect_drone", "label": "Claim-Jump Prospect Drone" }
+        ]
+      },
       "boardRow": {
         "name": "The Dome Basin",
         "ledgerBlurb": "Cut the feeder canal, hold its three gates, and raise a town around the dry basin.",
@@ -301,6 +306,10 @@
         }
       },
       "twist": {
+        "enemyRoster": [
+          { "id": "claim_jump_prospect_drone", "label": "Claim-Jump Prospect Drone" },
+          { "id": "feral_terraformer", "label": "Faithful Terraformer" }
+        ],
         "persistentPlanting": {
           "description": "Each seed vault planted en route becomes a permanent green waypoint for future runs on this map."
         }
@@ -468,6 +477,9 @@
         }
       },
       "twist": {
+        "enemyRoster": [
+          { "id": "claim_jump_prospect_drone", "label": "Claim-Jump Prospect Drone" }
+        ],
         "scheduledRelocation": {
           "description": "Dust devils cross on schedules and relocate unanchored buildings instead of destroying them."
         }
@@ -596,6 +608,10 @@
         }
       },
       "twist": {
+        "enemyRoster": [
+          { "id": "feral_terraformer", "label": "Faithful Terraformer" },
+          { "id": "claim_jump_prospect_drone", "label": "Claim-Jump Prospect Drone" }
+        ],
         "persistentCanalChoices": {
           "description": "Each canal segment permanently remembers re-dig or demolish, and the final water route follows the combined choices."
         }

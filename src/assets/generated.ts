@@ -17,6 +17,8 @@ const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
   [assetSlots.charE7DataRustler]: new URL('../../assets/processed/char-e7-data_rustler-sheet-walk8-r0c0.png', import.meta.url).href,
   [assetSlots.charE8ScrapCorsair]: new URL('../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png', import.meta.url).href,
   [assetSlots.charE8SunGlareShambler]: new URL('../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png', import.meta.url).href,
+  [assetSlots.charE9FeralTerraformer]: new URL('../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png', import.meta.url).href,
+  [assetSlots.charE9ClaimJumpProspectDrone]: new URL('../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png', import.meta.url).href,
   [assetSlots.nodeGoldSeam]: new URL('../../assets/processed/node-gold-seam.png', import.meta.url).href,
   [assetSlots.terrainBank]: new URL('../../assets/processed/terrain-bank-tile.png', import.meta.url).href,
   [assetSlots.terrainRiver]: new URL('../../assets/processed/terrain-river-tile.png', import.meta.url).href,
