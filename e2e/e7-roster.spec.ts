@@ -133,8 +133,8 @@ test('E7 placeholders preserve roster stats, thief state, and cure-only death ou
   expect(result.spawned.find((enemy) => enemy.variantId === 'rogue_automaton')).toMatchObject({ scale: 1, thief: false });
   expect(result.spawned.find((enemy) => enemy.variantId === 'data_rustler')).toMatchObject({ scale: 1, thief: true, state: 'seekHolding' });
   expect(result.bindings).toEqual([
-    expect.objectContaining({ sheet: 'char-e7-rogue_automaton-sheet-walk8.png', placeholder: true }),
-    expect.objectContaining({ sheet: 'char-e7-data_rustler-sheet-walk8.png', placeholder: true }),
+    expect.objectContaining({ sheet: 'char-e7-rogue_automaton-sheet-walk8.png', placeholder: false }),
+    expect.objectContaining({ sheet: 'char-e7-data_rustler-sheet-walk8.png', placeholder: false }),
   ]);
 
   mkdirSync(SHOT_DIR, { recursive: true });
