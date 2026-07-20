@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import characterContractText from '../../assets/layer-contracts/characters.v2.json?raw';
 import { Balance } from '../game/Balance';
+import { activeEpoch } from '../meta/ContractFamilies';
 import { afterStartupFrame, bindWorldSpriteTint, heroPoseFrameFiles, isCriticalStartupAssetSlot, loadGeneratedTexture } from './generated';
 import {
   coarseOrientationForDirection,
@@ -62,6 +63,8 @@ type WalkSheetSource = {
 type WalkSheetDirectionSource = OrientationSource & {
   row?: number;
 };
+
+type HeroAge = 'young' | 'midlife' | 'silver' | 'elder';
 
 type FrameSource = {
   files?: string[];
@@ -166,7 +169,7 @@ const processedTextureUrlsByFile = new Map(
 );
 const textureLoader = new THREE.TextureLoader();
 const processedTextureCache = new Map<string, Promise<THREE.Texture | null>>();
-const runtimeCache = new Map<AssetSlotId, Promise<RuntimeSlot | null>>();
+const runtimeCache = new Map<string, Promise<RuntimeSlot | null>>();
 const testClipAtlasCache = new Map<string, Promise<RuntimeClip>>();
 const animationDiagnostics: Partial<Record<AssetSlotId, SpriteAnimationSnapshot>> = {};
 const testClips = new Map<AssetSlotId, { frames: string[]; fps: number }>();
@@ -175,6 +178,18 @@ let spriteStatsFrame = -1;
 let activeAnimators = 0;
 let textureSwapsPerFrame = 0;
 const nonCriticalSpriteRuntimeSlots: readonly AssetSlotId[] = [assetSlots.charProspectorAgent, assetSlots.charBaron];
+const heroAgeByEpochOrder = new Map<number, HeroAge>([
+  [1, 'young'],
+  [2, 'young'],
+  [3, 'young'],
+  [4, 'midlife'],
+  [5, 'midlife'],
+  [6, 'midlife'],
+  [7, 'midlife'],
+  [8, 'silver'],
+  [9, 'silver'],
+  [10, 'elder'],
+]);
 
 export function beginSpriteStatsFrame(frame: number): void {
   if (spriteStatsFrame === frame) return;
@@ -730,10 +745,11 @@ function mirroredRuntimeFrame(frame: RuntimeFrame): RuntimeFrame {
 }
 
 function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
-  const cached = runtimeCache.get(slotId);
+  const cacheKey = slotId === assetSlots.charHero ? `${slotId}:${activeHeroAge()}` : slotId;
+  const cached = runtimeCache.get(cacheKey);
   if (cached) return cached;
   const promise = createRuntimeSlot(slotId);
-  runtimeCache.set(slotId, promise);
+  runtimeCache.set(cacheKey, promise);
   return promise;
 }
 
@@ -783,7 +799,7 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
     rotationMirrors.set(targetDirection, sourceDirection);
   }
 
-  const walkSheet = selectWalkSheet(slot);
+  const walkSheet = await resolveWalkSheet(slotId, slot);
   if (walkSheet) {
     const walkSources = expandWalkSheetSources(walkSheet);
     for (const [name, source] of walkSources) {
@@ -828,6 +844,50 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
     orientations.set('side', { clips: new Map([['idle', fallbackClip], ['walk', fallbackClip]]) });
   }
   return orientations.size > 0 ? { orientations, rotationDirections, rotationMirrors, diagnosticMirrors } : null;
+}
+
+async function resolveWalkSheet(slotId: AssetSlotId, slot: ContractSlot | undefined): Promise<WalkSheetSource | null> {
+  const young = selectWalkSheet(slot);
+  if (slotId !== assetSlots.charHero) return young;
+
+  const age = activeHeroAge();
+  const params = new URLSearchParams(globalThis.location?.search ?? '');
+  const aged = age === 'young' || (params.has('debug') && params.has('noheroageart')) ? null : agedHeroWalkSheet(slot?.walk4, age);
+  const resolvedAge = aged && walkSheetHasProcessedCells(aged) && (await walkSheetLoads(aged)) ? age : 'young';
+  document.querySelector<HTMLCanvasElement>('#game-canvas')?.setAttribute('data-hero-sheet', resolvedAge);
+  return resolvedAge === age && aged ? aged : young;
+}
+
+function activeHeroAge(): HeroAge {
+  return heroAgeByEpochOrder.get(activeEpoch().order) ?? 'young';
+}
+
+function agedHeroWalkSheet(young: ContractSlot['walk4'], age: Exclude<HeroAge, 'young'>): WalkSheetSource | null {
+  if (!young || young.status === 'RUNTIME-DORMANT' || young.enabled === false) return null;
+  return {
+    ...young,
+    directions: Object.fromEntries(
+      Object.entries(young.directions ?? {}).map(([direction, source]) => [
+        direction,
+        {
+          ...source,
+          frames: source.frames?.files
+            ? {
+                ...source.frames,
+                files: source.frames.files.map((file) =>
+                  file.replace(/char-hero-sheet-walk4-([ab])(?:-f)?(?=-r\d+c\d+\.png$)/, `char-hero-${age}-sheet-walk4-$1`),
+                ),
+              }
+            : source.frames,
+        },
+      ]),
+    ),
+  };
+}
+
+async function walkSheetLoads(sheet: WalkSheetSource): Promise<boolean> {
+  const files = [...new Set([...expandWalkSheetSources(sheet).values()].flatMap((source) => resolveFrameFiles(source.frames)))];
+  return (await Promise.all(files.map(loadProcessedTexture))).every((texture) => texture !== null);
 }
 
 async function addHeroPoseClips(orientations: Map<string, RuntimeOrientation>): Promise<void> {
