@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
+    "census": "playwright test e2e/map-census.spec.ts --project=desktop-chrome --workers=1",
     "test:accounts": "node scripts/test-accounts.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
     "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
