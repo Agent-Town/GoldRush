@@ -3,6 +3,7 @@ import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
 
 const ARTIFACT_DIR = path.resolve('artifacts/board-full-picture');
 
@@ -96,7 +97,8 @@ async function seedStorage(page: Page, seed: SeedState = {}): Promise<void> {
   await page.reload();
 }
 
-async function openBoard(page: Page): Promise<void> {
+async function openBoard(page: Page, debug = false): Promise<void> {
+  if (debug) await page.evaluate(() => history.replaceState(null, '', '/?debug'));
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
   await hold(page, 'KeyA', 850);
@@ -118,7 +120,9 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
 }
 
 async function goToContractPage(page: Page, id: string): Promise<void> {
-  await page.getByTestId(`contract-page-dot-${id}`).click();
+  const chapter = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === id));
+  if (!chapter) throw new Error(`Missing chapter for ${id}`);
+  await page.getByTestId(`contract-chapter-tab-${chapter.id}`).click();
   await expect(page.getByTestId(`contract-card-${id}`)).toBeVisible();
 }
 
@@ -187,9 +191,9 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
 
   for (const entry of cases) {
     await seedStorage(page, entry.seed);
-    await openBoard(page);
-    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
-    await expect(page.getByTestId('contract-page-count')).toHaveText('1 / 41');
+    await openBoard(page, true);
+    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+    await expect(page.getByTestId('contract-chapter-count')).toHaveText('1 / 10');
     await expect(page.getByTestId('contract-card-the-claim')).toHaveAttribute('data-contract-locked', 'false');
     await assertFlavorOnce(page, 'the-claim', BOARD_CONTRACTS[0].flavor);
     for (const [id, locked] of Object.entries(entry.locked)) {
@@ -265,22 +269,22 @@ test('post-run overrun returns straight to the town board and records a contract
   assertNoErrors(errors);
 });
 
-test('contract catalog navigation remembers the last page', async ({ page }, testInfo) => {
+test('contract catalog navigation remembers the last chapter', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await seedStorage(page, { science: 6, scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] });
-  await openBoard(page);
+  await openBoard(page, true);
   await page.getByTestId('contract-page-next').click();
-  await expect(page.getByTestId('contract-card-e1-dry-gulch')).toBeVisible();
-  await expect(page.getByTestId('contract-page-count')).toHaveText('2 / 41');
+  await expect(page.getByTestId('contract-card-e2-hill-mine')).toBeVisible();
+  await expect(page.getByTestId('contract-chapter-count')).toHaveText('2 / 10');
   await page.keyboard.press('ArrowRight');
-  await expect(page.getByTestId('contract-card-e1-night-shift')).toBeVisible();
-  await goToContractPage(page, 'e1-baron');
-  await expect(page.getByTestId('contract-page-count')).toHaveText('5 / 41');
+  await expect(page.getByTestId('contract-chapter-epoch-3-voltage')).toBeVisible();
+  await page.getByTestId('contract-chapter-tab-epoch-5-deepwater').click();
+  await expect(page.getByTestId('contract-chapter-count')).toHaveText('5 / 10');
   await page.getByTestId('contract-board-close').click();
   await expect(page.getByTestId('contract-board')).toBeHidden();
   await page.getByTestId('town-open-board').click();
-  await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
-  await shot(page, testInfo, 'baron-page');
+  await expect(page.getByTestId('contract-chapter-epoch-5-deepwater')).toBeVisible();
+  await shot(page, testInfo, 'deepwater-chapter');
   assertNoErrors(errors);
 });
 
@@ -304,9 +308,11 @@ test('contract board shows the full contract picture and remembers the Ride Toge
     'contract-best-e1-dry-gulch',
     'contract-launch-e1-dry-gulch',
   ]) {
-    await expect(page.getByTestId(testId)).toBeInViewport();
+    const item = page.getByTestId(testId);
+    await item.scrollIntoViewIfNeeded();
+    await expect(item).toBeInViewport();
   }
-  expect(await page.getByTestId('contract-card-list').evaluate((node) => node.scrollTop)).toBe(0);
+  expect(await page.getByTestId('contract-card-list').evaluate((node) => node.scrollTop)).toBeGreaterThan(0);
   await shot(page, testInfo, 'collapsed');
 
   await page.getByTestId('ride-together-toggle').click();
@@ -325,8 +331,8 @@ test('contract board swipes and keeps tap targets usable at 390px', async ({ pag
   const errors = collectErrors(page);
   await page.setViewportSize({ width: 390, height: 844 });
   await seedStorage(page, { science: 6, scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] });
-  await openBoard(page);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
+  await openBoard(page, true);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
   const box = await page.getByTestId('contract-card-list').boundingBox();
   expect(box).not.toBeNull();
   if (box) {
@@ -335,13 +341,13 @@ test('contract board swipes and keeps tap targets usable at 390px', async ({ pag
     await list.dispatchEvent('pointerdown', { pointerType: 'touch', button: 0, clientX: box.x + box.width - 28, clientY: y });
     await list.dispatchEvent('pointerup', { pointerType: 'touch', button: 0, clientX: box.x + 28, clientY: y });
   }
-  await expect(page.getByTestId('contract-card-e1-dry-gulch')).toBeVisible();
+  await expect(page.getByTestId('contract-card-e2-hill-mine')).toBeVisible();
   await goToContractPage(page, 'e1-night-shift');
   const buttonBox = await page.getByTestId('contract-launch-e1-night-shift').boundingBox();
   expect(buttonBox?.height ?? 0).toBeGreaterThanOrEqual(44);
-  const dotBox = await page.getByTestId('contract-page-dot-e1-night-shift').boundingBox();
-  expect(dotBox?.width ?? 0).toBeGreaterThanOrEqual(44);
-  expect(dotBox?.height ?? 0).toBeGreaterThanOrEqual(44);
+  const tabBox = await page.getByTestId('contract-chapter-tab-epoch-1-frontier').boundingBox();
+  expect(tabBox?.width ?? 0).toBeGreaterThanOrEqual(44);
+  expect(tabBox?.height ?? 0).toBeGreaterThanOrEqual(44);
   await shot(page, testInfo, 'mobile-390-board');
   assertNoErrors(errors);
 });

@@ -275,8 +275,9 @@ test('the completed Stamp Mill activates E2 once, stages the ceremony, and makes
     }, FRONTIER),
   ).toBe(false);
 
-  await page.locator('[data-story-ceremony-continue]').click();
+  await page.locator('[data-story-ceremony-skip]').click();
   await expect(page.locator('.story-beat-card--ceremony')).toHaveCount(0); // ceremony gone; OTHER queued beats (e.g. ledger-page discoveries) are legitimate on the merged tree
+  await page.getByTestId('research-era-epoch-2-steamworks').click();
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-id', 'epoch-3-voltage');
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-state', 'locked');
   await expect(page.getByTestId('research-next-epoch')).toContainText('Voltage Age');
@@ -287,15 +288,15 @@ test('the completed Stamp Mill activates E2 once, stages the ceremony, and makes
     const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
     return {
       activeEpoch: registry.activeEpochId(),
-      ids: registry.listBoardContracts().map((contract) => contract.id),
+      ids: registry.loadEpoch('epoch-2-steamworks').contracts.map((contract) => contract.id),
       hillRoster: registry.loadContract('e2-hill-mine').twist.enemyRoster?.map((enemy) => enemy.id),
     };
   });
   expect(board.activeEpoch).toBe(STEAMWORKS);
-  expect(board.ids).toEqual([...E1_CONTRACTS, 'e2-hill-mine']);
+  expect(board.ids).toEqual(['e2-hill-mine', 'e2-trestle', 'e2-pressure-garden', 'e2-incline']);
   expect(board.hillRoster).toEqual(['rail_tough', 'steam_wrecker', 'coal_thief']);
 
-  await page.getByTestId('contract-page-dot-e2-hill-mine').click();
+  await page.getByTestId('contract-chapter-tab-epoch-2-steamworks').click();
   await expect(page.getByTestId('contract-card-e2-hill-mine')).toHaveAttribute('data-contract-locked', 'false');
   await expect(page.getByTestId('contract-launch-e2-hill-mine')).toHaveText('Launch');
   await page.getByTestId('contract-launch-e2-hill-mine').click();
@@ -335,6 +336,7 @@ test('the E2 ceremony can be skipped without undoing activation', async ({ page 
   await page.locator('[data-story-ceremony-skip]').click();
   await expect(page.locator('.story-beat-card--ceremony')).toHaveCount(0); // ceremony gone; OTHER queued beats (e.g. ledger-page discoveries) are legitimate on the merged tree
   expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(STEAMWORKS);
+  await page.getByTestId('research-era-epoch-2-steamworks').click();
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-id', 'epoch-3-voltage');
   await expect(page.getByTestId('research-next-epoch')).toHaveAttribute('data-epoch-state', 'locked');
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });

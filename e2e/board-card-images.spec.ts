@@ -1,7 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
 
 const CLAIM_ID = 'the-claim';
+const EPOCHS = listEpochs().map(({ id }) => loadEpoch(id));
 
 test('all contract chapters use their own board-card URL', async ({ page }) => {
   const errors: string[] = [];
@@ -17,22 +19,20 @@ test('all contract chapters use their own board-card URL', async ({ page }) => {
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
 
-  const dots = page.getByTestId('contract-page-nav').locator('[data-contract-playable="true"]');
-  await expect(dots).toHaveCount(41);
-  await page.getByTestId(`contract-page-dot-${CLAIM_ID}`).click();
+  await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(EPOCHS.length);
+  expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(41);
   const claimUrl = await cardImageUrl(page, CLAIM_ID);
 
-  for (const dot of await dots.all()) {
-    const testId = await dot.getAttribute('data-testid');
-    const contractId = testId?.replace('contract-page-dot-', '');
-    if (!contractId) throw new Error('Contract page dot is missing its test id.');
-    await dot.click();
-    const imageUrl = await cardImageUrl(page, contractId);
-    if (contractId === CLAIM_ID) expect(imageUrl).toBe(claimUrl);
-    else expect(imageUrl, contractId).not.toBe(claimUrl);
+  for (const epoch of EPOCHS) {
+    await page.getByTestId(`contract-chapter-tab-${epoch.id}`).click();
+    for (const contract of epoch.contracts) {
+      const imageUrl = await cardImageUrl(page, contract.id);
+      if (contract.id === CLAIM_ID) expect(imageUrl).toBe(claimUrl);
+      else expect(imageUrl, contract.id).not.toBe(claimUrl);
+    }
   }
 
-  await page.getByTestId('contract-page-dot-e2-trestle').click();
+  await page.getByTestId('contract-chapter-tab-epoch-2-steamworks').click();
   await expect(page.getByTestId('contract-art-e2-trestle').locator('img')).toHaveAttribute('src', /e2-trestle/);
   expect(errors).toEqual([]);
 });

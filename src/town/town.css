@@ -409,6 +409,47 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.town-ui__book-chapter {
+  align-self: start;
+  min-width: 0;
+  border: 2px solid rgba(46, 27, 14, 0.82);
+  border-top: 6px solid var(--town-era-accent, #ffe4a0);
+  border-radius: 8px;
+  background: rgba(245, 230, 200, 0.88);
+  overflow: hidden;
+}
+
+.town-ui__chapter-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border-bottom: 2px solid rgba(46, 27, 14, 0.42);
+  background: color-mix(in srgb, var(--town-era-accent, #ffe4a0) 28%, #fff8e8);
+}
+
+.town-ui__chapter-header h3,
+.town-ui__chapter-header p {
+  margin: 0;
+}
+
+.town-ui__chapter-header h3 {
+  font-size: 1.4rem;
+  line-height: 1.05;
+}
+
+.town-ui__chapter-header > span {
+  font-size: 0.82rem;
+  font-weight: 900;
+}
+
+.town-ui__chapter-contracts {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+}
+
 .town-ui__catalog-arrow {
   width: 50px;
   min-height: 72px;
@@ -726,10 +767,12 @@
 
 .town-ui__catalog-nav {
   display: flex;
+  min-width: 0;
   align-items: center;
   justify-content: center;
   gap: 14px;
   padding: 0 16px 14px;
+  overflow: hidden;
 }
 
 .town-ui__ride-card {
@@ -829,6 +872,42 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 4px;
+}
+
+.town-ui__chapter-tabs {
+  display: flex;
+  flex: 1 1 0;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  padding: 4px;
+  scrollbar-width: thin;
+}
+
+.town-ui__chapter-tab {
+  flex: 0 0 auto;
+  min-height: 44px;
+  border: 2px solid rgba(46, 27, 14, 0.72);
+  border-radius: 7px;
+  padding: 7px 10px;
+  color: #2e1b0e;
+  background: rgba(255, 248, 232, 0.68);
+  font: 900 0.78rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+}
+
+.town-ui__chapter-tab[aria-current="page"] {
+  color: #fff8e8;
+  background: #5b8a8a;
+}
+
+.town-ui__chapter-tab:hover,
+.town-ui__chapter-tab:focus-visible {
+  outline: 3px solid rgba(91, 138, 138, 0.72);
+  outline-offset: 2px;
 }
 
 .town-ui__catalog-dot {
@@ -1045,6 +1124,23 @@
     align-items: center;
     gap: 8px;
     padding: 8px;
+  }
+
+  .town-ui__chapter-header {
+    padding: 8px 10px;
+  }
+
+  .town-ui__chapter-header h3 {
+    font-size: 1.22rem;
+  }
+
+  .town-ui__chapter-contracts {
+    padding: 8px;
+  }
+
+  .town-ui__chapter-tabs {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
   }
 
   .town-ui__catalog-arrow {

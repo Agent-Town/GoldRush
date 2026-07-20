@@ -30,10 +30,8 @@ import {
   loadContract,
   listEpochs,
   loadEpoch,
-  pendingEpochContracts,
   raiseActiveEpochMegaproject,
   type ContractManifest,
-  type EpochUpcomingContract,
 } from '../meta/ContractFamilies';
 import {
   ensureMegaprojectProject,
@@ -1518,22 +1516,18 @@ export class TownScene {
   }
 
   private renderBoard(): void {
-    const contracts = listBoardContracts();
     const activeEpoch = loadEpoch(activeEpochId());
-    const rows: Array<ContractManifest | EpochUpcomingContract | { id: string; name: string; line: string; successor: true }> = [
-      ...contracts,
-      ...pendingEpochContracts(activeEpoch, contracts),
-      ...(activeEpoch.upcoming.length > 0 && activeEpoch.successor
-        ? [{ id: activeEpoch.successor, name: loadEpoch(activeEpoch.successor).displayName, line: 'Awaits the town beyond the Dynamo.', successor: true as const }]
-        : []),
-    ];
-    for (const contract of contracts) discoverLedgerContract(contract.id);
+    const debug = new URLSearchParams(window.location.search).has('debug');
+    const chapters = listEpochs()
+      .filter((epoch) => debug || epoch.order <= activeEpoch.order)
+      .map((epoch) => loadEpoch(epoch.id));
     const scores = loadScores();
-    const pageIndex = clampBoardPage(this.boardPageIndex, rows.length);
+    const pageIndex = clampBoardPage(this.boardPageIndex, chapters.length);
     this.boardPageIndex = pageIndex;
-    const contract = rows[pageIndex];
-    const playablePage = rows.slice(0, pageIndex + 1).filter((row) => 'boardRow' in row).length;
-    const boardEpochId = activeEpochId();
+    const chapter = chapters[pageIndex];
+    for (const contract of chapter?.contracts ?? []) discoverLedgerContract(contract.id);
+    const boardEpochId = chapter?.id ?? activeEpoch.id;
+    const accent = townEraAccent(chapter?.order ?? activeEpoch.order);
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
     this.board.innerHTML = `
       <div class="town-ui__board-backdrop town-ui__era-backdrop" data-era-backdrop="${eraBackdropRef(boardEpochId)}" aria-hidden="true"></div>
@@ -1546,34 +1540,45 @@ export class TownScene {
           }
           <div>
             <p class="town-ui__board-eyebrow">Tavern Ledger</p>
-            <h2>Contract Board</h2>
+            <h2 data-testid="contract-board-title">The Book</h2>
           </div>
           <button class="town-ui__board-close" type="button" data-contract-close data-testid="contract-board-close">Back</button>
         </header>
         <div class="town-ui__contracts" data-testid="contract-card-list" data-contract-page-index="${pageIndex}">
-          <button class="town-ui__catalog-arrow town-ui__catalog-arrow--prev" type="button" data-contract-page-step="-1" data-testid="contract-page-prev" aria-label="Previous contract" ${
+          <button class="town-ui__catalog-arrow town-ui__catalog-arrow--prev" type="button" data-contract-page-step="-1" data-testid="contract-page-prev" aria-label="Previous chapter" ${
             pageIndex === 0 ? 'disabled' : ''
           }>&lsaquo;</button>
           ${
-            contract
-              ? 'boardRow' in contract
-                ? this.renderContractCard(contract, scores, pageIndex, rows.length)
-                : this.renderUpcomingContractCard(contract, pageIndex, rows.length)
+            chapter
+              ? `<section class="town-ui__book-chapter" tabindex="-1" data-testid="contract-chapter-${escapeHtml(chapter.id)}" data-contract-chapter="${escapeHtml(
+                  chapter.id,
+                )}" style="--town-era-accent:${escapeHtml(accent.lanternNightGlass)}">
+                  <header class="town-ui__chapter-header">
+                    <div>
+                      <p class="town-ui__board-eyebrow">Chapter ${chapter.order}</p>
+                      <h3>${escapeHtml(chapter.displayName)}</h3>
+                    </div>
+                    <span>${chapter.contracts.length} contract${chapter.contracts.length === 1 ? '' : 's'}</span>
+                  </header>
+                  <div class="town-ui__chapter-contracts">
+                    ${chapter.contracts.map((contract, index) => this.renderContractCard(contract, scores, index, chapter.contracts.length)).join('')}
+                  </div>
+                </section>`
               : ''
           }
-          <button class="town-ui__catalog-arrow town-ui__catalog-arrow--next" type="button" data-contract-page-step="1" data-testid="contract-page-next" aria-label="Next contract" ${
-            pageIndex >= rows.length - 1 ? 'disabled' : ''
+          <button class="town-ui__catalog-arrow town-ui__catalog-arrow--next" type="button" data-contract-page-step="1" data-testid="contract-page-next" aria-label="Next chapter" ${
+            pageIndex >= chapters.length - 1 ? 'disabled' : ''
           }>&rsaquo;</button>
         </div>
-        <nav class="town-ui__catalog-nav" data-testid="contract-page-nav" aria-label="Contract pages">
-          <span class="town-ui__catalog-count" data-testid="contract-page-count">${playablePage} / ${contracts.length}</span>
-          <div class="town-ui__catalog-dots">
-            ${rows
+        <nav class="town-ui__catalog-nav" data-testid="contract-chapter-nav" aria-label="Book chapters">
+          <span class="town-ui__catalog-count" data-testid="contract-chapter-count">${pageIndex + 1} / ${chapters.length}</span>
+          <div class="town-ui__chapter-tabs">
+            ${chapters
               .map(
-                (row, index) => `
-                  <button class="town-ui__catalog-dot ${'boardRow' in row ? '' : 'town-ui__catalog-dot--muted'}" type="button" data-contract-page="${index}" data-contract-playable="${'boardRow' in row ? 'true' : 'false'}" data-testid="contract-page-dot-${escapeHtml(
-                    row.id,
-                  )}" aria-label="${escapeHtml(`Open ${'boardRow' in row ? row.boardRow.name : row.name}`)}" aria-current="${index === pageIndex ? 'page' : 'false'}"></button>
+                (entry, index) => `
+                  <button class="town-ui__chapter-tab" type="button" data-contract-page="${index}" data-testid="contract-chapter-tab-${escapeHtml(
+                    entry.id,
+                  )}" aria-current="${index === pageIndex ? 'page' : 'false'}">${entry.order}. ${escapeHtml(entry.displayName)}</button>
                 `,
               )
               .join('')}
@@ -1588,28 +1593,8 @@ export class TownScene {
   private selectBoardPage(index: number): void {
     this.boardPageIndex = index;
     this.renderBoard();
-    this.board.querySelector<HTMLElement>('.town-ui__contract')?.focus({ preventScroll: true });
-  }
-
-  private renderUpcomingContractCard(
-    entry: EpochUpcomingContract | { id: string; name: string; line: string; successor: true },
-    pageIndex: number,
-    pageCount: number,
-  ): string {
-    const successor = 'successor' in entry;
-    return `
-      <article class="town-ui__contract town-ui__contract--locked" tabindex="-1" data-testid="${successor ? 'contract-next-epoch' : `contract-upcoming-${escapeHtml(entry.id)}`}" data-contract-id="${escapeHtml(entry.id)}" data-contract-locked="true" aria-label="${escapeHtml(`${entry.name}, page ${pageIndex + 1} of ${pageCount}`)}">
-        <div class="town-ui__contract-copy">
-          <div class="town-ui__contract-topline">
-            <span class="town-ui__contract-tag">${successor ? 'Next epoch' : 'Upcoming contract'}</span>
-            <span class="town-ui__contract-state">${successor ? 'Awaits the town' : 'Survey pending'}</span>
-          </div>
-          <h3>${escapeHtml(entry.name)}</h3>
-          <p class="town-ui__contract-flavor">${escapeHtml(entry.line)}</p>
-          <p class="town-ui__contract-lock">${successor ? 'The Voltage Age waits behind the Dynamo.' : 'SURVEY PENDING'}</p>
-        </div>
-      </article>
-    `;
+    this.board.querySelector<HTMLElement>('.town-ui__chapter-tab[aria-current="page"]')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+    this.board.querySelector<HTMLElement>('.town-ui__book-chapter')?.focus({ preventScroll: true });
   }
 
   private renderContractCard(contract: ContractManifest, scores: readonly ScoreRecord[], pageIndex: number, pageCount: number): string {
@@ -2265,7 +2250,7 @@ function clampBoardPage(index: number, count: number): number {
 
 function boardPageIndexForContract(id: string | undefined): number {
   if (!id) return 0;
-  const index = listBoardContracts().findIndex((contract) => contract.id === id);
+  const index = listEpochs().findIndex((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === id));
   return index >= 0 ? index : 0;
 }
 
