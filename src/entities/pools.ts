@@ -116,6 +116,22 @@ export function e8EnemySpriteBinding(variantId: string) {
   return { ...binding, placeholder };
 }
 
+const processedE9SpriteCells = import.meta.glob('../../assets/processed/char-e9-*-sheet-walk8-r*c*.png');
+const e9SpriteBindings = {
+  feral_terraformer: { slot: assetSlots.charE9FeralTerraformer, sheet: 'char-e9-feral_terraformer-sheet-walk8.png' },
+  claim_jump_prospect_drone: { slot: assetSlots.charE9ClaimJumpProspectDrone, sheet: 'char-e9-claim_jump_prospect_drone-sheet-walk8.png' },
+} as const;
+
+export function e9EnemySpriteBinding(variantId: string) {
+  const binding = e9SpriteBindings[variantId as keyof typeof e9SpriteBindings];
+  if (!binding) return null;
+  const base = binding.sheet.replace(/\.png$/, '');
+  const placeholder = [0, 1].some((row) => [0, 1, 2, 3].some(
+    (col) => !processedE9SpriteCells[`../../assets/processed/${base}-r${row}c${col}.png`],
+  ));
+  return { ...binding, placeholder };
+}
+
 export type FeverAccentDiagnostics = {
   active: boolean;
   kind: 'human' | 'machine' | 'none';
@@ -352,6 +368,8 @@ export class EnemyPool {
       createEnemySpritePresentation(variantId, binding.slot, e7EnemySpriteBinding(variantId)?.placeholder === true)),
     ...Object.entries(e8SpriteBindings).map(([variantId, binding]) =>
       createEnemySpritePresentation(variantId, binding.slot, e8EnemySpriteBinding(variantId)?.placeholder === true)),
+    ...Object.entries(e9SpriteBindings).map(([variantId, binding]) =>
+      createEnemySpritePresentation(variantId, binding.slot, e9EnemySpriteBinding(variantId)?.placeholder === true)),
   ];
   private readonly baronSprites = new GeneratedSpriteBatch(assetSlots.charBaron, Balance.enemy.poolSize, {
     name: 'GeneratedBaronSprites',
