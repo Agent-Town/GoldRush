@@ -229,12 +229,11 @@ export const ledgerEntries: readonly LedgerEntry[] = [
   {
     id: 'assay_office_records',
     epochId: 'epoch-1-frontier',
-    name: 'The Assay Office — Records',
+    name: 'Assay Office — Records',
     category: 'The Claim',
     unlockSignal: 'run:completed:first',
     spriteRef: { slot: 'assay-office.records', imageUrl: claimOfficeUrl },
     loreLine: 'The Assay Office keeps public tallies after the first claim returns.',
-    hiddenUntilDiscovered: true,
     factLines: () => ['the office opens with the first assay.'],
   },
   ...listContracts()

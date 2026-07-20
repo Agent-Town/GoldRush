@@ -105,7 +105,7 @@ async function expectNoInternalStrings(page: Page): Promise<void> {
   for (const word of FORBIDDEN_LEDGER_WORDS) expect(text).not.toContain(word);
 }
 
-test('Assay Office records are hidden until the first completed run, then show mocked tallies', async ({ page }, testInfo) => {
+test('Assay Office records are locked until the first completed run, then show mocked tallies', async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   await seedProfile(page);
   const errors = collectErrors(page);
@@ -117,7 +117,7 @@ test('Assay Office records are hidden until the first completed run, then show m
   });
 
   await openMenuLedger(page);
-  await expect(page.getByTestId('claim-ledger-card-assay_office_records')).toHaveCount(0);
+  await expect(page.getByTestId('claim-ledger-card-assay_office_records')).toHaveAttribute('data-ledger-discovered', 'false');
 
   await page.goto('/?debug&nowaves&nolevel&seed=tl-03b-first-assay');
   await waitForGame(page);
@@ -128,11 +128,11 @@ test('Assay Office records are hidden until the first completed run, then show m
   const card = page.getByTestId('claim-ledger-card-assay_office_records');
   await expect(card).toBeVisible();
   await expect(card).toHaveAttribute('data-ledger-discovered', 'true');
-  await expect(card).toContainText('The Assay Office — Records');
+  await expect(card).toContainText('Assay Office — Records');
   await expect(card).toContainText('Claims assayed this week: 14');
   await expect(card).toContainText('Claims assayed all told: 42');
   await expect(card).toContainText('Deepest holdout: wave 37');
-  await expect(card).toContainText('Busiest trail: Steady Hands (30 assays)');
+  await expect(card).toContainText('Busiest trail: E1 Dry Gulch (30 assays)');
   await expectNoInternalStrings(page);
   await page.waitForTimeout(500);
   expect(hits).toBe(1);

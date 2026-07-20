@@ -144,6 +144,21 @@
   line-height: 1.3;
 }
 
+.claim-ledger-card[data-ledger-entry='assay_office_records'] {
+  grid-column: 1 / -1;
+}
+
+.claim-ledger-card[data-ledger-entry='assay_office_records'] .claim-ledger-card__facts {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  padding-left: 0;
+}
+
+.claim-ledger-card[data-ledger-entry='assay_office_records'] .claim-ledger-card__facts ul {
+  margin: 6px 0 0;
+  padding-left: 18px;
+}
+
 .claim-ledger-card__lore,
 .claim-ledger-card__quote,
 .claim-ledger-card__locked-copy {
@@ -192,5 +207,9 @@
   .claim-ledger-card__portrait {
     width: 68px;
     height: 88px;
+  }
+
+  .claim-ledger-card[data-ledger-entry='assay_office_records'] .claim-ledger-card__facts {
+    grid-template-columns: 1fr;
   }
 }
