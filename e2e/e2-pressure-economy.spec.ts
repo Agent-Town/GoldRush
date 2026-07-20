@@ -92,7 +92,7 @@ test('epoch-1 boot hides pressure chip and leaves gold flow unchanged', async ({
 });
 
 test('debug Steamworks epoch override shows pressure chip and exchange rows', async ({ page }, testInfo) => {
-  const errors = await openDebugGame(page, '?debug&epoch=epoch-2-steamworks&nowaves&nolevel&seed=e2-pressure-e2');
+  const errors = await openDebugGame(page, '?debug&era=2&contract=e2-hill-mine&nowaves&nolevel&seed=e2-pressure-e2');
 
   await expect(page.getByTestId('hud-pressure')).toBeVisible();
   await expect(page.getByTestId('hud-pressure')).toContainText('Pressure');
