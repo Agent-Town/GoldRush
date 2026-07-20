@@ -155,6 +155,7 @@ import { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { E7ArsenalSystem } from '../systems/E7ArsenalSystem';
 import { E7SignalSystem, type E7SignalMilestone } from '../systems/E7SignalSystem';
 import { E8ArsenalSystem } from '../systems/E8ArsenalSystem';
+import { E8PhysicsSystem } from '../systems/E8PhysicsSystem';
 import { DayNightCycle, DEBUG_DAY_NIGHT_CONFIG, type DayNightSnapshot } from '../systems/DayNightCycle';
 import { LightField, type LightSource } from '../systems/LightField';
 import { MothSwarm } from '../systems/MothSwarm';
@@ -563,6 +564,7 @@ export class Game {
   // here, before any system builds, and never again mid-run (Loader Contract).
   private readonly tileStateStore = new TileStateStore(localStorage);
   private readonly activeContract = bornContract(this.tileStateStore);
+  private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
   private readonly e6TileConsumers = new E6TileConsumerSystem(
     this.contractEpoch?.id === 'epoch-6-atomic' && this.activeContract.id === 'e6-glow-mesa',
@@ -1305,8 +1307,11 @@ export class Game {
       () => this.e7SignalSystem.diagnostics.enabled ? this.e7SignalSystem.diagnostics.links.length : undefined,
     );
     this.scene.add(this.e7ArsenalSystem.view.group);
+    const e8PhysicsCombat = {
+      registerShooter: (handle: ShooterHandle) => this.combat.registerShooter(this.e8PhysicsSystem.adaptShooter(handle)),
+    } as unknown as CombatSystem;
     this.e8ArsenalSystem = new E8ArsenalSystem(
-      this.combat,
+      e8PhysicsCombat,
       this.enemies,
       () => this.primaryActor.group.position,
       (id) => hasResearchNode(this.researchState, id),
@@ -1646,6 +1651,7 @@ export class Game {
           this.localActor.group.position.set(x, this.localActor.group.position.y, z);
           this.syncHeroVisualHeight();
           this.localActor.velocity.set(0, 0, 0);
+          this.e8PhysicsSystem.reset(this.mpLocalSlot);
           this.localActor.snapRenderState();
         },
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
@@ -1677,6 +1683,23 @@ export class Game {
           this.manualLockstepPausedForTest = enabled;
           if (!enabled) this.manualResumeAtMpTickForTest = null;
           return this.manualSimForTest;
+        },
+        e8PhysicsProfile: (contractId: string) => new E8PhysicsSystem(loadContract(contractId)).diagnostics,
+        e8PhysicsProbe: (contractId: string) => {
+          const physics = new E8PhysicsSystem(loadContract(contractId));
+          const input = new THREE.Vector2(1, 0);
+          const released = new THREE.Vector2();
+          let thrustDistance = 0;
+          let driftDistance = 0;
+          for (let tick = 0; tick < 15; tick += 1) thrustDistance += physics.filterMovement(0, input, FIXED_SIM_STEP_SECONDS).x * FIXED_SIM_STEP_SECONDS;
+          for (let tick = 0; tick < 15; tick += 1) driftDistance += physics.filterMovement(0, released, FIXED_SIM_STEP_SECONDS).x * FIXED_SIM_STEP_SECONDS;
+          return {
+            profile: physics.diagnostics,
+            thrustDistance,
+            driftDistance,
+            lobAirTime: physics.scaleLobAirTime(1),
+            knockback: physics.scaleKnockback(2),
+          };
         },
         resumeManualSimAtMpTick: (tick: number) => {
           this.manualSimForTest = true;
@@ -1921,7 +1944,7 @@ export class Game {
           this.combat.launchLob(
             this.primaryActor.group.position,
             new THREE.Vector3(x, Balance.enemy.groundY, z),
-            airTime,
+            this.e8PhysicsSystem.scaleLobAirTime(airTime),
             this.currentBlastDamage(),
             this.blastShooter.aoe?.radius ?? Balance.blast.radius,
             'hero_blast',
@@ -2470,6 +2493,7 @@ export class Game {
   }
 
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
+    this.syncE8LobPhysics();
     const terrain = {
       bounds: Terrain.bounds,
       sample: (x: number, z: number) => this.actorTerrainSample(x, z),
@@ -2481,7 +2505,12 @@ export class Game {
       ),
     };
     if (!this.mpActorIntents) {
-      this.primaryActor.update(simDelta, fallbackIntents, terrain, this.harvestSnapshot.channeling);
+      this.primaryActor.update(
+        simDelta,
+        this.e8PhysicsIntents(0, this.primaryActor, fallbackIntents, simDelta),
+        terrain,
+        this.harvestSnapshot.channeling,
+      );
       return;
     }
     // During a playbook replay the performing actor sits in a non-zero slot, so
@@ -2495,7 +2524,24 @@ export class Game {
       const channeling = playbookReplayActive
         ? this.harvestSnapshot.channels.some((channel) => channel.actorId === String(slot) && channel.channeling)
         : this.harvestSnapshot.channeling && slot === this.mpActionSlot;
-      actor.update(simDelta, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), terrain, channeling);
+      actor.update(
+        simDelta,
+        this.e8PhysicsIntents(slot, actor, this.mpActorIntents[slot] ?? intentsFromLockstepInput(null), simDelta),
+        terrain,
+        channeling,
+      );
+    }
+  }
+
+  private e8PhysicsIntents(slot: number, actor: Hero, intents: Intents, fixedDelta: number): Intents {
+    const move = this.e8PhysicsSystem.filterMovement(slot, intents.move, fixedDelta, actor.velocity);
+    return move === intents.move ? intents : { ...intents, move };
+  }
+
+  private syncE8LobPhysics(): void {
+    for (const shooter of this.blastShooters) {
+      shooter.range = Balance.blast.range * this.e8PhysicsSystem.lobArcDistanceMultiplier;
+      if (shooter.aoe) shooter.aoe.airTime = this.e8PhysicsSystem.scaleLobAirTime(Balance.blast.airTime);
     }
   }
 
@@ -4178,6 +4224,7 @@ export class Game {
       e7Signal: this.e7SignalSystem.diagnostics,
       e7Arsenal: this.e7ArsenalSystem.diagnostics,
       e8Arsenal: this.e8ArsenalSystem.diagnostics,
+      e8Physics: this.e8PhysicsSystem.diagnostics,
       run: this.runManager?.diagnostics ?? {
         secured: false,
         rush: false,
@@ -5758,6 +5805,7 @@ export class Game {
     this.pressureArsenalSystem.reset();
     this.deepwaterArsenal.reset();
     this.e8ArsenalSystem.reset();
+    this.e8PhysicsSystem.reset();
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     if (this.runManager) this.applyMetaProgress(this.runManager.metaProgress);
@@ -6398,7 +6446,7 @@ export class Game {
     const dx = Math.abs(intents.move.x) > 0.01 ? intents.move.x : this.localActor.velocity.x;
     const dz = Math.abs(intents.move.y) > 0.01 ? intents.move.y : this.localActor.velocity.z;
     const len = Math.hypot(dx, dz);
-    const range = Balance.blast.range * 0.72;
+    const range = Balance.blast.range * this.e8PhysicsSystem.lobArcDistanceMultiplier * 0.72;
     if (len > 0.01) {
       this.blastAimRaw.set(origin.x + (dx / len) * range, 0.08, origin.z + (dz / len) * range);
     } else {
@@ -6415,7 +6463,7 @@ export class Game {
       out.set(origin.x, 0.08, origin.z);
       return out;
     }
-    const distance = Math.min(len, Balance.blast.range);
+    const distance = Math.min(len, Balance.blast.range * this.e8PhysicsSystem.lobArcDistanceMultiplier);
     out.set(origin.x + (dx / len) * distance, 0.08, origin.z + (dz / len) * distance);
     return out;
   }

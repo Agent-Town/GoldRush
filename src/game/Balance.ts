@@ -462,6 +462,14 @@ export const Balance = {
     breachSeal: { maxActive: 4, placeRadius: 6 },
     lensTurret: { damageMult: 1.2, fireRateMult: 1.15, silhouetteHeight: 1.1 },
   },
+  e8Physics: {
+    floatyThrustResponsePerSecond: 4,
+    floatyDriftResponsePerSecond: 1.4,
+    freeFallThrustResponsePerSecond: 1.6,
+    freeFallDriftResponsePerSecond: 0.08,
+    zeroGravityLobArcDistanceMultiplier: 4.8,
+    knockbackScalePerLostG: 0.75,
+  },
   xp: {
     perKill: 4,
     moteMagnetRadius: 2,
