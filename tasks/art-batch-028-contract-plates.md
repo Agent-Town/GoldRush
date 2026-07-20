@@ -15,7 +15,7 @@ READ FIRST: assets/raw/plate-contract-the-claim.png + the other 5 plates (THE ST
 - plate-contract-e5-stillwater.png — e5-stillwater
 - plate-contract-e5-flotilla.png — e5-flotilla
 
-Style-anchor sentence verbatim in every prompt: "Engraved sepia contract plate in the Gold Rush house style: warm frontier illustration, fine etched linework on parchment, full-bleed, no letters, no gore, no firearms."
+Style anchor verbatim in every prompt: "Gold Rush hand-tinted engraving, the E1 plate law: warm sepia-gold etched linework with muted watercolor washes — teal-green water, golden-hour warm light, sage-dark pines, one small teal accent (ribbon/flag/glow) — full-bleed, no letters, no gore." THE VARIETY LAW (owner 2026-07-20: E1 plates each have their own composition; batches must NOT be uniform): per plate, choose a DIFFERENT camera distance/height (intimate ground-level, mid vista, high overlook — mix across the batch), its own light moment within the warm range, and its own signature-object placement — each plate is its own painting of ITS map's story moment, never a template. Condition every prompt on assets/raw/plate-contract-the-claim.png + one other E1 plate AS THE STYLE MASTERS.
 Per plate: the MAP's signature read (its landmark silhouettes + terrain character per the renders — a person who toured the map should recognize it).
 Self-QA per plate (measured): full-bleed (no borders) · zero letters/numbers · palette within the 6 anchors' range · signature landmark present · 2:3-ish card aspect matching the anchors.
 LEDGER entry + run file per house law. NO extraction/processing (full-bleed art). One batch in flight — do not start batch 029.
