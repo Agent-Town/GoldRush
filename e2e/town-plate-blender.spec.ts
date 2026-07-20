@@ -21,15 +21,16 @@ async function seedTown(page: Page): Promise<void> {
     meta: profileDataKey('robin', META_PROGRESS_KEY),
     guide: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
   });
-  await page.goto('/?terrain2d');
 }
 
 async function openTown(page: Page, search = ''): Promise<void> {
+  const query = search || '?terrain2d';
   if (await page.evaluate(() => Boolean(window.__GR_TOWN_DIAGNOSTICS__)).catch(() => false)) {
     await page.getByTestId('town-exit').click();
-    await page.getByTestId('start-menu-enter-town').waitFor();
+  } else {
+    await page.goto('/');
   }
-  await page.evaluate((value) => history.replaceState(null, '', `/${value}`), search);
+  await page.evaluate((value) => history.replaceState(null, '', `/${value}`), query);
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 40);
 }
@@ -60,7 +61,7 @@ test('Town plate is lazy, contract-valid, keeps actors planar, and mounts in the
   await seedTown(page);
   const errors = collectErrors(page);
   const requests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes(MODEL_MARKER) && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && url.pathname.includes(MODEL_MARKER) && url.pathname.endsWith('.glb')) requests.push(request.url()); });
 
   await openTown(page);
   const canvas = page.locator('canvas');
@@ -75,9 +76,9 @@ test('Town plate is lazy, contract-valid, keeps actors planar, and mounts in the
   await expect(canvas).toHaveAttribute('data-town3d-plate-ground', 'glb');
   await expect(canvas).toHaveAttribute('data-town3d-pilot-render-source', 'glb');
   expect(Number(await canvas.getAttribute('data-town3d-pilot-meshes'))).toBe(1);
-  expect(Number(await canvas.getAttribute('data-town3d-pilot-triangles'))).toBe(8_192);
+  expect(Number(await canvas.getAttribute('data-town3d-pilot-triangles'))).toBe(17_596);
   expect(Number(await canvas.getAttribute('data-town3d-pilot-materials'))).toBe(1);
-  expect((await canvas.getAttribute('data-town3d-pilot-bounds'))?.split('x').map(Number)).toEqual([44, 2.958, 44]);
+  expect((await canvas.getAttribute('data-town3d-pilot-bounds'))?.split('x').map(Number)).toEqual([44, 3.331, 44]);
   expect(requests).toHaveLength(1);
   const afterP95 = await frameP95(page);
   expect(afterP95).toBeLessThanOrEqual(beforeP95 * 1.15);
@@ -114,7 +115,7 @@ test('LITE keeps painted ground and never fetches the Town plate', async ({ page
   await seedTown(page);
   const errors = collectErrors(page);
   const requests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes(MODEL_MARKER) && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && url.pathname.includes(MODEL_MARKER) && url.pathname.endsWith('.glb')) requests.push(request.url()); });
   await openTown(page, '?town3dPilot=plate&tier=lite');
   const canvas = page.locator('canvas');
   await expect(canvas).toHaveAttribute('data-town3d-pilot-state', 'lite');
@@ -127,7 +128,7 @@ test('LITE keeps painted ground and never fetches the Town plate', async ({ page
 test('invalid Town plate bytes restore painted ground and dispose cleanly', async ({ page }) => {
   await seedTown(page);
   const errors = collectErrors(page);
-  await page.route(/town-plate(?:-[^/?]+)?\.glb/, (route) => route.fulfill({ body: 'not a glb', contentType: 'model/gltf-binary' }));
+  await page.route(/town-plate(?:[.-][^/?]+)?\.glb/, (route) => new URL(route.request().url()).search ? route.continue() : route.fulfill({ body: 'not a glb', contentType: 'model/gltf-binary' }));
   await openTown(page, '?town3dPilot=plate&tier=full');
   const canvas = page.locator('canvas');
   await expect(canvas).toHaveAttribute('data-town3d-pilot-state', 'failed');

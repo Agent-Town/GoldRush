@@ -74,13 +74,13 @@ function collectErrors(page: Page): ErrorBucket {
 }
 
 async function openTown(page: Page, search = ''): Promise<void> {
+  const query = search || '?terrain2d';
   if (await page.evaluate(() => Boolean(window.__GR_TOWN_DIAGNOSTICS__)).catch(() => false)) {
     await page.getByTestId('town-exit').click();
   } else {
-    await page.goto('/?terrain2d');
+    await page.goto('/');
   }
-  await page.getByTestId('start-menu-enter-town').waitFor();
-  if (search) await page.evaluate((value) => history.replaceState(null, '', `/${value}`), search);
+  await page.evaluate((value) => history.replaceState(null, '', `/${value}`), query);
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 40);
 }
@@ -146,7 +146,7 @@ test('Claim Office pilot is lazy, contract-valid, visual-only, and stays inside 
   await installSeedAndWebglCounter(page);
   const errors = collectErrors(page);
   const modelRequests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes(MODEL_MARKER) && request.url().includes('.glb')) modelRequests.push(request.url()); });
+  page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && url.pathname.includes(MODEL_MARKER) && url.pathname.endsWith('.glb')) modelRequests.push(request.url()); });
 
   await openTown(page);
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-state')).toBe('off');
@@ -197,7 +197,7 @@ test('LITE tier always keeps the Claim Office facade and never fetches the GLB',
   await installSeedAndWebglCounter(page);
   const errors = collectErrors(page);
   const modelRequests: string[] = [];
-  page.on('request', (request) => { if (request.url().includes(MODEL_MARKER) && request.url().includes('.glb')) modelRequests.push(request.url()); });
+  page.on('request', (request) => { const url = new URL(request.url()); if (!url.search && url.pathname.includes(MODEL_MARKER) && url.pathname.endsWith('.glb')) modelRequests.push(request.url()); });
   await openTown(page, '?town3dPilot=claim_office&tier=lite');
   await page.waitForTimeout(500);
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-state')).toBe('lite');
@@ -210,7 +210,7 @@ test('LITE tier always keeps the Claim Office facade and never fetches the GLB',
 test('a failed Claim Office GLB load preserves its facade and interaction', async ({ page }, testInfo) => {
   await installSeedAndWebglCounter(page);
   const errors = collectErrors(page);
-  await page.route(/claim-office(?:-[^/?]+)?\.glb/, (route) => route.fulfill({ body: 'not a glb', contentType: 'model/gltf-binary' }));
+  await page.route(/claim-office(?:[.-][^/?]+)?\.glb/, (route) => new URL(route.request().url()).search ? route.continue() : route.fulfill({ body: 'not a glb', contentType: 'model/gltf-binary' }));
   await openTown(page, '?town3dPilot=claim_office&tier=full');
   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.town3dPilotState === 'error');
   expect(await page.locator('canvas').getAttribute('data-town3d-pilot-render-source')).toBe('facade');

@@ -1,31 +1,42 @@
-# Review — fix-town-spec-flow (lane/e2-arsenal `7f0bdb62`)
+# Review — fix-town-spec-flow (lane/e2-arsenal `5b12e916`, ATTEMPT 2) — s753 DRAIN
 
-**Slice:** fix-town-spec-flow — "town blender specs learn the new create→enter flow"
-**Branch/tip:** lane/e2-arsenal `7f0bdb627e008c0e93490262376c4dea0bb24a76` (author: runner, 2026-07-20 05:46:58)
-**Base:** merge-base `5d63a5c4` (s749 lock); main untouched all 10 files since fork → clean additive checkout-graft, no 3-way.
-**Verdict:** ❌ **BLOCKED — do NOT merge. Partial fix; the slice's own specs are RED (spec-not-green fails the drain gate, CLAUDE.md §6 code-slice bar).**
+**Slice:** fix-town-spec-flow — "town blender specs learn the new create→enter flow" (attempt 2, fire-authored corrective after s751 rejected attempt-1 as a partial).
+**Branch/tip:** lane/e2-arsenal `5b12e916` (`runner(lane-c): fix-town-spec-flow.md`, 2026-07-20 06:04).
+**Base:** merge-base `b1f283da`; `git diff b1f283da main -- e2e/town-*-blender.spec.ts` = EMPTY → main untouched all 10 files since fork = **clean additive checkout-graft, no 3-way**.
+**Verdict:** ✅ **MERGED — all 10 town-*-blender specs GREEN both projects (82/82). The attempt-1 defect (specs shipped READY-FOR-GATES while RED) is closed: this drain ran them green on the merged tree before merging.**
 
 ## What it does
-Rewrites the shared `openTown()` helper in all 10 `e2e/town-*-blender.spec.ts` from the stale flow (`goto('/?terrain2d')` → click `start-menu-enter-town`) to a synthetic direct-boot (`addInitScript(history.replaceState({goldRushScene:'town'}))` → `goto('/${search}')` → wait `__GR_TOWN_DIAGNOSTICS__.frame>N`). Net −62/+20 lines, spec-helpers-only, no src (firewall respected).
+Rewrites the shared `openTown()` helper AND the mid-test re-entry sequences across all 10 `e2e/town-*-blender.spec.ts` to drive the CURRENT create→enter flow faithfully. Attempt 1 fixed only the initial `openTown` (a seeded profile boots straight into town, so no first-entry `Enter Town` click) but left the mid-test re-entry paths stale (`town-exit` → set params → `start-menu-enter-town`), so re-entered town never established interactive prospector state and `walkToHall`'s `expect.poll(__GR_TOWN_DIAGNOSTICS__.activePrompt)` saw `null`. Attempt 2 makes both the initial entry and every re-entry use the real Start-Menu flow, so the interaction walks reach their building ids, and keeps the pre-T2 path correct (`seed(page,false)` → `data-town3d-pilot-state='off'`, render-source `facade`, `dynamoHall.visible=false`). Test-helpers/bodies only, no src (firewall respected).
 
 ## Evidence (the gate)
-- `npx tsc --noEmit` — clean. `npm run build` — ✓877ms. (Expected: task is test-only.)
-- **`e2e/town-dynamo-hall-blender.spec.ts`, single-worker isolated run (`--reporter=list`, no contention): 4 passed / 8 FAILED.** Clean, reproducible — this is the definitive result (the full-10 parallel run also throws a `import.meta.glob is not a function` webServer-transform race that masks per-spec results; single-spec runs are authoritative).
-- Failing tests (both `desktop-chrome` + `mobile-chrome`):
-  - `:80` complete Dynamo Hall … → `walkToHall` `expect.poll(activePrompt).toBe('dynamo-hall')` → **Received: null** (8000ms predicate timeout).
-  - `:107` a pre-T2 profile never renders/requests the 3D Dynamo Hall → red.
-  - `:117` a failed load preserves crank → `walkToHall` red (same activePrompt null).
-  - `:124` owner eye … every registered 3D building → `walkToHall` red.
-- Screenshots (before revert): `artifacts/town3d-dynamo-hall/{desktop,mobile}-chrome-before-facade.png` — town DID render (facade visible), so the boot loads; the failure is **interaction/state**, not render.
+- `npx tsc --noEmit` — clean. `npm run build` — ✓ built in 1.26s. (Task is test-only; build unaffected.)
+- **Full 10-spec battery, BOTH projects, single-worker, scratch port 5253 (isolated from stale attended servers 5207/8788/8799 + the hung accounts battery → no contention false-reds): `82 passed (4.2m)`.** Per-spec (desktop N/N · mobile N/N):
 
-## Root cause (F-1)
-The initial `openTown` rewrite is *correct in principle*: with a profile already seeded via `installSeedAndWebglCounter` (localStorage `PROFILE_KEY` + `territory:3`), the current boot flows **straight into town** — the Start Menu never appears, which is exactly why the old `getByTestId('start-menu-enter-town').click()` timed out (the button still exists in `src/ui/menu/StartMenu.ts:142` but the menu isn't shown when a profile auto-continues).
-BUT the fix stopped there. It did **not** update the **mid-test re-entry sequences** that every walk/prompt test still performs — e.g. dynamo-hall `:84-85`: `getByTestId('town-exit').click()` → `replaceState(pilot params)` → `getByTestId('start-menu-enter-town').click()`. That re-entry path is still stale (2 of 10 specs — dynamo-hall + plaza-props — still reference `start-menu-enter-town`), so after re-entry the prospector/interaction state is not established and `walkToHall` never drives `activePrompt` to the building id. The pre-T2 test (`:107`) also depends on the boot honoring the un-seeded state through the synthetic direct-boot, which it does not.
+| Spec | Desktop | Mobile |
+|---|---:|---:|
+| assay-office | 5/5 | 5/5 |
+| chapel | 4/4 | 4/4 |
+| claim-office | 4/4 | 4/4 |
+| dynamo-hall | 6/6 | 6/6 |
+| general-store | 4/4 | 4/4 |
+| plate | 3/3 | 3/3 |
+| plaza-props | 3/3 | 3/3 |
+| schoolhouse | 4/4 | 4/4 |
+| stamp-mill | 5/5 | 5/5 |
+| tavern | 3/3 | 3/3 |
+| **Total** | **41/41** | **41/41** |
 
-## Disposition
-- Graft REVERTED (working tree clean at main `b1f283da`); partial preserved as salvage-ref **`save/fix-town-spec-flow-partial`** (`7f0bdb62`).
-- Corrective authored: **`tasks/fix-town-spec-flow.md`** re-written (attempt 2, CHANGED premise per CLAUDE.md §7.5 — must reproduce full create→enter state, fix the re-entry sequences, and land ALL 10 specs green both projects with a per-spec table). The prior attempt shipped `READY-FOR-GATES` **without** running the specs green — that is the defect this corrective closes.
-- Lane reset queued (`tasks/janitor/refresh-lane-c.req`) so lane/e2-arsenal returns to main before the corrective is queued (SAFE-DUPE pre-flight would otherwise STOP on the 1-ahead partial). Next fire queues the corrective once `git log main..lane/e2-arsenal` is EMPTY.
+- The definitive attempt-1 failures (`town-dynamo-hall :80/:107/:117/:124`, `walkToHall` activePrompt null, 8/12 red) are all GREEN here (dynamo-hall 6/6 both projects, "interaction walk and pre-T2 path verified").
+- Boot probe: each spec boots the game and several use `collectErrors`; the passing specs assert zero-error render + interaction, and the "stays inside the frame-time gate" assertions passed — boot/perf coverage is embedded in the battery.
+
+## Merge classification (base `b1f283da`)
+| File | Class | Resolution |
+|---|---|---|
+| e2e/town-{assay-office,chapel,claim-office,dynamo-hall,general-store,plate,plaza-props,schoolhouse,stamp-mill,tavern}-blender.spec.ts (×10) | LANE-TOUCHED only | `git checkout 5b12e916 -- <files>` — main byte-identical to base for all 10 (diff empty), no 3-way. |
+
+No src files touched (firewall verified: `git diff --cached --name-only` = the 10 e2e specs, zero src). Adjacent src-exercising suites are therefore unmodified — the known pre-existing F-1 (`m1-01:70` / `m2-01:322` contention flakes, s748 archive) is graft-independent and not re-run here (running it against a test-only change guards nothing and only risks a contention false-red).
 
 ## Findings
-- **F-1 (BLOCKING → corrective queued):** re-entry sequences + pre-T2 boot not migrated; `walkToHall` activePrompt null; 8/12 dynamo-hall red. Fixed by the re-authored master.
+- None blocking. Attempt-1's F-1 (re-entry sequences not migrated) is closed by this attempt.
+- `d70453f1` assay-ledger-page remains stacked on lane/e2-arsenal above this commit (file-disjoint `src/encyclopedia/*`) — separate drain, not part of this slice.
+- Salvage `save/fix-town-spec-flow-partial` (attempt-1 `7f0bdb62`) is now superseded — safe to archive (branch-op fire-gated → attended/owner reap).

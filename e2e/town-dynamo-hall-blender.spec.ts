@@ -38,7 +38,7 @@ async function seed(page: Page, complete = true): Promise<void> {
     }
   }, { completeProject: complete, steamworks: STEAMWORKS, keys: {
     profile: PROFILE_KEY, town: profileDataKey('robin', TOWN_NAME_KEY), guide: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
-    meta: profileDataKey('robin', META_PROGRESS_KEY), activeEpoch: ACTIVE_EPOCH_KEY, megaproject: profileDataKey('robin', MEGAPROJECT_STATE_KEY),
+    meta: profileDataKey('robin', META_PROGRESS_KEY), activeEpoch: profileDataKey('robin', ACTIVE_EPOCH_KEY), megaproject: profileDataKey('robin', MEGAPROJECT_STATE_KEY),
   } });
 }
 
@@ -50,8 +50,13 @@ function errors(page: Page): Errors {
 }
 
 async function openTown(page: Page, search = ''): Promise<void> {
-  await page.goto('/?terrain2d');
-  if (search) await page.evaluate(value => history.replaceState(null, '', `/${value}`), search);
+  const query = search || '?terrain2d';
+  if (await page.evaluate(() => Boolean(window.__GR_TOWN_DIAGNOSTICS__)).catch(() => false)) {
+    await page.getByTestId('town-exit').click();
+  } else {
+    await page.goto('/');
+  }
+  await page.evaluate(value => history.replaceState(null, '', `/${value}`), query);
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 50);
 }
@@ -72,18 +77,28 @@ async function shot(page: Page, info: TestInfo, name: string): Promise<void> {
 }
 
 async function walkToHall(page: Page): Promise<void> {
-  for (const [key, milliseconds] of [['KeyS', 1100], ['KeyD', 1600]] as const) {
-    await page.keyboard.down(key); await page.waitForTimeout(milliseconds); await page.keyboard.up(key);
+  for (const target of [{ x: 6, z: 7 }, { x: 9, z: 7 }]) {
+    for (let step = 0; step < 64; step += 1) {
+      const diagnostics = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!);
+      if (diagnostics.activePrompt === 'dynamo-hall') return;
+      const keys: string[] = [];
+      if (Math.abs(target.x - diagnostics.player.x) > 0.5) keys.push(target.x > diagnostics.player.x ? 'KeyD' : 'KeyA');
+      if (Math.abs(target.z - diagnostics.player.z) > 0.5) keys.push(target.z > diagnostics.player.z ? 'KeyS' : 'KeyW');
+      if (keys.length === 0) break;
+      for (const key of keys) await page.keyboard.down(key);
+      await page.waitForTimeout(140);
+      for (const key of keys.reverse()) await page.keyboard.up(key);
+    }
   }
-  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8000 }).toBe('dynamo-hall');
+  const diagnostics = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!);
+  expect(diagnostics.activePrompt, `player stopped at ${JSON.stringify(diagnostics.player)}`).toBe('dynamo-hall');
 }
 
 test('complete Dynamo Hall loads one bounded painted mesh without changing its interaction', async ({ page }, info) => {
   test.setTimeout(60_000); await seed(page); const found = errors(page); const requests: string[] = [];
-  page.on('request', request => { if (request.url().includes('dynamo-hall') && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', request => { const url = new URL(request.url()); if (url.pathname.includes('dynamo-hall') && url.pathname.endsWith('.glb') && !url.search) requests.push(request.url()); });
   await openTown(page); const before = await sample(page); await shot(page, info, 'before-facade');
-  await page.getByTestId('town-exit').click(); await page.evaluate(() => history.replaceState(null, '', '/?town3dPilot=dynamo_hall&tier=full'));
-  await page.getByTestId('start-menu-enter-town').click();
+  await openTown(page, '?town3dPilot=dynamo_hall&tier=full');
   await page.waitForFunction(() => document.querySelector('canvas')?.dataset.town3dPilotState === 'loaded');
   const canvas = page.locator('canvas');
   await expect(canvas).toHaveAttribute('data-town3d-pilot-render-source', 'glb');
@@ -100,14 +115,14 @@ test('complete Dynamo Hall loads one bounded painted mesh without changing its i
 
 test('LITE never requests the Dynamo Hall GLB', async ({ page }, info) => {
   await seed(page); const found = errors(page); const requests: string[] = [];
-  page.on('request', request => { if (request.url().includes('dynamo-hall') && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', request => { const url = new URL(request.url()); if (url.pathname.includes('dynamo-hall') && url.pathname.endsWith('.glb') && !url.search) requests.push(request.url()); });
   await openTown(page, '?town3dPilot=dynamo_hall&tier=lite'); await shot(page, info, 'lite-facade'); expect(requests).toEqual([]);
   expect(found).toEqual({ console: [], page: [] });
 });
 
 test('a pre-T2 profile never renders or requests the 3D Dynamo Hall', async ({ page }) => {
   await seed(page, false); const found = errors(page); const requests: string[] = [];
-  page.on('request', request => { if (request.url().includes('dynamo-hall') && request.url().includes('.glb')) requests.push(request.url()); });
+  page.on('request', request => { const url = new URL(request.url()); if (url.pathname.includes('dynamo-hall') && url.pathname.endsWith('.glb') && !url.search) requests.push(request.url()); });
   await openTown(page, '?town3dPilot=dynamo_hall&tier=full'); await page.waitForTimeout(500);
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-state', 'off');
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-render-source', 'facade');
@@ -116,7 +131,7 @@ test('a pre-T2 profile never renders or requests the 3D Dynamo Hall', async ({ p
 });
 
 test('a failed Dynamo Hall load preserves the complete-stage visual and crank', async ({ page }, info) => {
-  await seed(page); const found = errors(page); await page.route(/dynamo-hall(?:-[^/?]+)?\.glb/, route => route.fulfill({ body: 'not a glb', contentType: 'model/gltf-binary' }));
+  await seed(page); const found = errors(page); await page.route(/dynamo-hall(?:[.-][^/?]+)?\.glb/, route => new URL(route.request().url()).search ? route.continue() : route.fulfill({ body: 'not a glb', contentType: 'model/gltf-binary' }));
   await openTown(page, '?town3dPilot=dynamo_hall&tier=full'); await page.waitForFunction(() => document.querySelector('canvas')?.dataset.town3dPilotState === 'error');
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-render-source', 'facade'); await shot(page, info, 'load-failure-facade');
   await walkToHall(page); await expect(page.getByTestId('crank-dynamo')).toBeVisible(); expect(found).toEqual({ console: [], page: [] });
@@ -130,7 +145,7 @@ test('owner eye shows the complete Dynamo Hall with every registered 3D building
 
 test('exiting during lazy pilot load stays disposed', async ({ page }) => {
   await seed(page); const found = errors(page);
-  await page.route(/dynamo-hall(?:-[^/?]+)?\.glb/, async route => { await new Promise(resolve => setTimeout(resolve, 1500)); await route.continue(); });
+  await page.route(/dynamo-hall(?:[.-][^/?]+)?\.glb/, async route => { if (!new URL(route.request().url()).search) await new Promise(resolve => setTimeout(resolve, 1500)); await route.continue(); });
   await openTown(page, '?town3dPilot=dynamo_hall&tier=full'); await page.getByTestId('town-exit').click(); await page.waitForTimeout(800);
   await expect(page.locator('canvas')).toHaveAttribute('data-town3d-pilot-state', 'disposed'); expect(found).toEqual({ console: [], page: [] });
 });
