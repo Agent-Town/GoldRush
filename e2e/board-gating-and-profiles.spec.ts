@@ -57,89 +57,57 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: true });
 }
 
-test('the board gates future-era contracts and counts only playable profiles', async ({ page }, testInfo) => {
+test('the board hides future epochs and keeps reached-era contract gates', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const errors = watchErrors(page);
 
   await seedProfile(page);
   await openBoard(page);
   expect(await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeEpochId)).toBe('epoch-1-frontier');
-  for (const id of ['e5-regatta', 'e5-stillwater', 'e5-flotilla']) {
-    await page.getByTestId(`contract-page-dot-${id}`).click();
-    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
-    await expect(page.getByTestId(`contract-lock-${id}`)).toBeVisible();
-    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
+  await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(1);
+  await expect(page.getByTestId('contract-chapter-count')).toHaveText('1 / 1');
+  await expect(page.getByTestId('contract-chapter-epoch-1-frontier').locator('[data-contract-id]')).toHaveCount(5);
+  for (const epochId of [
+    'epoch-2-steamworks',
+    'epoch-3-voltage',
+    'epoch-4-motor',
+    'epoch-5-deepwater',
+    'epoch-6-atomic',
+    'epoch-7-signal',
+    'epoch-8-orbital',
+    'epoch-9-redfields',
+    'epoch-10-deepsky',
+  ]) {
+    await expect(page.getByTestId(`contract-chapter-tab-${epochId}`)).toHaveCount(0);
   }
-  await expect(page.getByTestId('contract-card-e6-glow-mesa')).toHaveCount(0);
-  for (const id of ['e6-showroom', 'e6-half-life-hollow', 'e6-picnic']) {
-    await page.getByTestId(`contract-page-dot-${id}`).click();
-    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
-    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
+  for (const id of [
+    'e2-hill-mine',
+    'e4-long-road',
+    'e5-regatta',
+    'e6-showroom',
+    'e7-relay-valley',
+    'e8-mare-claim',
+    'e9-seed-run',
+    'e10-archive-world',
+  ]) {
+    await expect(page.getByTestId(`contract-card-${id}`)).toHaveCount(0);
   }
-  await expect(page.getByTestId('contract-card-e7-relay-valley')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e7-echo-canyon')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e7-dead-band')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e7-relay-rush')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e8-mare-claim')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e8-far-side')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e8-low-orbit')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e8-eclipse')).toHaveCount(0);
-  await expect(page.getByTestId('contract-card-e9-dome-basin')).toHaveCount(0);
-  for (const id of ['e9-seed-run', 'e9-devils-alley', 'e9-old-canal']) {
-    await page.getByTestId(`contract-page-dot-${id}`).click();
-    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
-    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
-  }
-  await expect(page.getByTestId('contract-card-e10-ember-shore')).toHaveCount(0);
-  for (const id of ['e10-archive-world', 'e10-last-claim', 'e10-river']) {
-    await page.getByTestId(`contract-page-dot-${id}`).click();
-    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
-    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
-  }
-  // campaign/e2-e4-extras: the E4 extras carry boardRows but their era is locked,
-  // so on a fresh frontier profile they must sit inert like the E5 extras above.
-  for (const id of ['e4-long-road', 'e4-gusher-county', 'e4-boneyard']) {
-    await page.getByTestId(`contract-page-dot-${id}`).click();
-    await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
-    await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
-  }
-  await page.getByTestId('contract-page-dot-e2-hill-mine').click();
-  await expect(page.getByTestId('contract-card-e2-hill-mine')).toHaveAttribute('data-contract-locked', 'true');
-  await expect(page.getByTestId('contract-lock-e2-hill-mine')).toHaveText('The Steamworks awaits — raise the Stamp Mill.');
-  await expect(page.getByTestId('contract-launch-e2-hill-mine')).toBeDisabled();
-  await shot(page, testInfo, 'fresh-locked-hill-mine');
+  await shot(page, testInfo, 'fresh-secrets-kept');
 
   await seedProfile(page, 'epoch-2-steamworks');
   await openBoard(page);
-  await page.getByTestId('contract-page-dot-e2-hill-mine').click();
+  await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(2);
+  await page.getByTestId('contract-chapter-tab-epoch-2-steamworks').click();
   await expect(page.getByTestId('contract-card-e2-hill-mine')).toHaveAttribute('data-contract-locked', 'false');
   await expect(page.getByTestId('contract-launch-e2-hill-mine')).toBeEnabled();
-
-  const playableDots = page.locator('[data-contract-playable="true"]');
-  const mutedDots = page.locator('[data-contract-playable="false"]');
-  const playableCount = await playableDots.count();
-  // drip-02/03 (s586): e2-pressure-garden AND e2-incline both graduated from muted
-  // teasers to real board dots (each carries a boardRow), so the muted set drops 3→1.
-  await expect(mutedDots).toHaveCount(1);
-  await expect(mutedDots.first()).toHaveClass(/town-ui__catalog-dot--muted/);
-  await page.getByTestId('contract-page-dot-e2-pressure-garden').click();
-  // The graduated dot must still be LOCKED: this epoch-2 seed has no e2-trestle win,
-  // so pressure-garden's unlock:"secured:e2-trestle" gate stays unmet (the real guard —
-  // graduation to a board dot is independent of the scoreboard unlock).
-  await expect(page.getByTestId('contract-card-e2-pressure-garden')).toHaveAttribute('data-contract-locked', 'true');
-  await expect(page.getByTestId('contract-launch-e2-pressure-garden')).toBeDisabled();
-  // campaign/e2-e4-extras: every live-era extra stays lock-gated behind its
-  // secured:<predecessor> chain (trestle←hill-mine, incline←pressure-garden), and the
-  // E3 extras stay era-locked — none may offer a launch path on this epoch-2 seed.
-  for (const id of ['e2-trestle', 'e2-incline', 'e3-blackout-ridge', 'e3-moth-season', 'e3-fairground']) {
-    await page.getByTestId(`contract-page-dot-${id}`).click();
+  for (const id of ['e2-trestle', 'e2-pressure-garden', 'e2-incline']) {
     await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', 'true');
     await expect(page.getByTestId(`contract-launch-${id}`)).toBeDisabled();
   }
-  await page.getByTestId('contract-page-dot-e2-pressure-garden').click();
-  // pressure-garden is now a real (locked) board page, so clicking its dot navigates to it;
-  // the gating invariant is the DENOMINATOR — total pages == playable-profile count (future-era gated out).
-  await expect(page.getByTestId('contract-page-count')).toHaveText(new RegExp(`^\\d+ / ${playableCount}$`));
+  for (const id of ['e3-blackout-ridge', 'e3-moth-season', 'e3-fairground']) {
+    await expect(page.getByTestId(`contract-card-${id}`)).toHaveCount(0);
+  }
+  await expect(page.getByTestId('contract-chapter-count')).toHaveText('2 / 2');
   await shot(page, testInfo, 'steamworks-profiles');
 
   expect(errors).toEqual([]);

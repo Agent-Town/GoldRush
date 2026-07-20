@@ -58,7 +58,8 @@ test('soft navigation repeatedly matches fresh Night Shift and town render dress
   const hardTown = await townDress(page);
 
   for (let pass = 1; pass <= 3; pass += 1) {
-    await page.getByTestId('contract-page-dot-e1-night-shift').click();
+    await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
+    await expect(page.getByTestId('contract-card-e1-night-shift')).toBeVisible();
     await page.getByTestId('contract-launch-e1-night-shift').click();
     await waitForRun(page);
     expect(await runDress(page)).toEqual(hardRun);

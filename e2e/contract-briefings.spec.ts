@@ -193,9 +193,10 @@ async function openContract(page: Page, contractId: string, seed: string): Promi
   return errors;
 }
 
-async function openBoard(page: Page): Promise<void> {
+async function openBoard(page: Page, debug = false): Promise<void> {
   await seedProfile(page, [{ waves: 20, secured: true, contractId: 'the-claim' }]);
   await page.goto('/');
+  if (debug) await page.evaluate(() => history.replaceState(null, '', '/?debug'));
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
   await hold(page, 'KeyA', 850);
@@ -240,7 +241,7 @@ async function assertPauseContract(page: Page, expected: Briefing): Promise<void
 }
 
 async function assertBoardBriefing(page: Page, expected: Briefing): Promise<void> {
-  await page.getByTestId(`contract-page-dot-${expected.id}`).click();
+  await page.getByTestId(`contract-chapter-tab-${expected.id.startsWith('e2-') ? 'epoch-2-steamworks' : 'epoch-1-frontier'}`).click();
   const unlocked = UNLOCKED_BOARD_CONTRACTS.has(expected.id);
   await expect(page.getByTestId(`contract-card-${expected.id}`)).toHaveAttribute('data-contract-locked', unlocked ? 'false' : 'true');
   const board = page.getByTestId(`contract-board-briefing-${expected.id}`);
@@ -354,10 +355,10 @@ test('plain no-debug board launch still briefs The Claim', async ({ page }) => {
 
 test('board cards show the same briefing data', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
-  await openBoard(page);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
+  await openBoard(page, true);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
   for (const contract of CONTRACTS) await assertBoardBriefing(page, contract);
-  await page.getByTestId('contract-page-dot-the-claim').click();
+  await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
   await shot(page, testInfo, 'board-briefings');
   assertNoErrors(errors);
 });

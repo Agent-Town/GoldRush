@@ -1,7 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
-import { ACTIVE_EPOCH_KEY, loadEpoch, pendingEpochContracts } from '../src/meta/ContractFamilies';
+import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 const ARTIFACT_DIR = path.resolve('artifacts/board-upcoming');
@@ -27,7 +27,7 @@ async function openSteamworksBoard(page: Page): Promise<void> {
     );
     localStorage.setItem(townNameKey, 'Quartz Hill');
     localStorage.setItem(activeEpochKey, 'epoch-2-steamworks');
-  }, { activeEpochKey: ACTIVE_EPOCH_KEY, profileKey: PROFILE_KEY, townNameKey: profileDataKey('robin', TOWN_NAME_KEY) });
+  }, { activeEpochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY), profileKey: PROFILE_KEY, townNameKey: profileDataKey('robin', TOWN_NAME_KEY) });
   await page.reload();
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
@@ -41,27 +41,22 @@ async function openSteamworksBoard(page: Page): Promise<void> {
   await page.getByTestId('town-open-board').click();
 }
 
-test('Steamworks board keeps pending surveys and Voltage visible without launch paths', async ({ page }, testInfo) => {
+test('Steamworks board keeps pending surveys and Voltage secrets out of the DOM', async ({ page }, testInfo) => {
   const errors = watchErrors(page);
   await openSteamworksBoard(page);
 
-  await page.getByTestId('contract-page-dot-e2-hill-mine').click();
+  await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(2);
+  await page.getByTestId('contract-chapter-tab-epoch-2-steamworks').click();
   await expect(page.getByTestId('contract-launch-e2-hill-mine')).toBeEnabled();
+  const markup = await page.getByTestId('contract-board').innerHTML();
   for (const id of ['e2-trestle', 'e2-pressure-garden', 'e2-incline']) {
-    await page.getByTestId(`contract-page-dot-${id}`).click();
-    await expect(page.getByTestId(`contract-upcoming-${id}`)).toContainText('SURVEY PENDING');
-    await expect(page.getByTestId(`contract-upcoming-${id}`).locator('[data-contract-launch]')).toHaveCount(0);
+    await expect(page.getByTestId(`contract-card-${id}`)).toBeVisible();
   }
-  await page.getByTestId('contract-page-dot-epoch-3-voltage').click();
-  await expect(page.getByTestId('contract-next-epoch')).toContainText('Voltage Age');
+  expect(markup).not.toContain('epoch-3-voltage');
+  expect(markup).not.toContain('Voltage Age');
+  await expect(page.locator('[data-testid^="contract-upcoming-"]')).toHaveCount(0);
+  await expect(page.getByTestId('contract-next-epoch')).toHaveCount(0);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-board.png`), fullPage: true });
   expect(errors).toEqual([]);
-});
-
-test('a shipped contract supersedes its matching pending survey', () => {
-  const epoch = loadEpoch('epoch-2-steamworks');
-  expect(pendingEpochContracts(epoch, [...epoch.contracts, { id: 'e2-trestle' }])).not.toContainEqual(
-    expect.objectContaining({ id: 'e2-trestle' }),
-  );
 });
