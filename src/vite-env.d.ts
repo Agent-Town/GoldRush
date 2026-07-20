@@ -488,6 +488,7 @@ interface ThreeGameDiagnostics {
   e7Signal: import('./systems/E7SignalSystem').E7SignalDiagnostics;
   e7Arsenal: import('./systems/E7ArsenalSystem').E7ArsenalDiagnostics;
   e8Arsenal: import('./systems/E8ArsenalSystem').E8ArsenalDiagnostics;
+  e8Physics: import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
   harvest: {
     activeNodes: Array<{
       id: string;
@@ -1021,6 +1022,14 @@ interface Window {
     demolish: (family: GrBuildableId, index: number) => boolean;
     upgradeBuilding: (family: GrBuildableId, index: number) => boolean;
     setManualSim: (enabled: boolean) => boolean;
+    e8PhysicsProfile: (contractId: string) => import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
+    e8PhysicsProbe: (contractId: string) => {
+      profile: import('./systems/E8PhysicsSystem').E8PhysicsDiagnostics;
+      thrustDistance: number;
+      driftDistance: number;
+      lobAirTime: number;
+      knockback: number;
+    };
     resumeManualSimAtMpTick: (tick: number) => number;
     queuePowerGraphCommand: (command: import('./systems/PowerGraph').PowerGraphCommand) => boolean;
     driveVehicle: (x: number, z: number) => boolean;
