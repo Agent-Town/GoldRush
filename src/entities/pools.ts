@@ -84,6 +84,22 @@ export function e6EnemySpriteBinding(variantId: string) {
   return { ...binding, placeholder };
 }
 
+const processedE7SpriteCells = import.meta.glob('../../assets/processed/char-e7-*-sheet-walk8-r*c*.png');
+const e7SpriteBindings = {
+  rogue_automaton: { slot: assetSlots.charE7RogueAutomaton, sheet: 'char-e7-rogue_automaton-sheet-walk8.png' },
+  data_rustler: { slot: assetSlots.charE7DataRustler, sheet: 'char-e7-data_rustler-sheet-walk8.png' },
+} as const;
+
+export function e7EnemySpriteBinding(variantId: string) {
+  const binding = e7SpriteBindings[variantId as keyof typeof e7SpriteBindings];
+  if (!binding) return null;
+  const base = binding.sheet.replace(/\.png$/, '');
+  const placeholder = [0, 1].some((row) => [0, 1, 2, 3].some(
+    (col) => !processedE7SpriteCells[`../../assets/processed/${base}-r${row}c${col}.png`],
+  ));
+  return { ...binding, placeholder };
+}
+
 export type FeverAccentDiagnostics = {
   active: boolean;
   kind: 'human' | 'machine' | 'none';
@@ -316,6 +332,8 @@ export class EnemyPool {
     createEnemySpritePresentation('coal_thief', assetSlots.charE2CoalThief),
     ...Object.entries(E6_ENEMY_SPRITE_BINDINGS).map(([variantId, binding]) =>
       createEnemySpritePresentation(variantId, binding.slot, e6EnemySpriteBinding(variantId)?.placeholder === true)),
+    ...Object.entries(e7SpriteBindings).map(([variantId, binding]) =>
+      createEnemySpritePresentation(variantId, binding.slot, e7EnemySpriteBinding(variantId)?.placeholder === true)),
   ];
   private readonly baronSprites = new GeneratedSpriteBatch(assetSlots.charBaron, Balance.enemy.poolSize, {
     name: 'GeneratedBaronSprites',

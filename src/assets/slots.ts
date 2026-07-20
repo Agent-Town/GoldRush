@@ -11,6 +11,8 @@ export const assetSlots = {
   charE6FeralToaster: 'char.e6.feral_toaster',
   charE6LawnShepherd: 'char.e6.lawn_shepherd',
   charE6Glowjack: 'char.e6.glowjack',
+  charE7RogueAutomaton: 'char.e7.rogue_automaton',
+  charE7DataRustler: 'char.e7.data_rustler',
   charBaron: 'char.baron',
   charProspectorAgent: 'char.prospector_agent',
   charTownTavernkeeper: 'char.town.tavernkeeper',

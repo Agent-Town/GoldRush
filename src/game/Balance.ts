@@ -209,6 +209,12 @@ export const Balance = {
     },
     herdDrive: { radius: 8, strength: 0.45 },
   },
+  e7Roster: {
+    variants: {
+      rogue_automaton: { hpScale: 1.2, speedMult: 0.9, visualScale: 1, contactDamageScale: 1, tint: '#5b8a8a' },
+      data_rustler: { hpScale: 1, speedMult: 1.1, visualScale: 1, contactDamageScale: 0.8, tint: '#c4883a', thief: true },
+    },
+  },
   wrangle: {
     windDownSeconds: 8,
     exhaustedSpeedMultiplier: 0.2,
