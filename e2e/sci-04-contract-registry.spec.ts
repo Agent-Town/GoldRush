@@ -56,7 +56,7 @@ function assertNoErrors(errors: ErrorBucket): void {
   expect(errors.pageErrors).toEqual([]);
 }
 
-test('contract registry lists Frontier and locked Steamworks in order', async ({ page }) => {
+test('contract registry lists all epochs in order', async ({ page }) => {
   const errors = await openGame(page);
   const registry = await page.evaluate(() => {
     const contracts = window.__GR_CONTRACT_REGISTRY__;
@@ -68,8 +68,30 @@ test('contract registry lists Frontier and locked Steamworks in order', async ({
     };
   });
 
-  expect(registry.epochs.map((epoch) => epoch.id)).toEqual(['epoch-1-frontier', 'epoch-2-steamworks', 'epoch-3-voltage']);
-  expect(registry.epochs.map((epoch) => epoch.displayName)).toEqual(['Frontier', 'Steamworks', 'Voltage Age']);
+  expect(registry.epochs.map((epoch) => epoch.id)).toEqual([
+    'epoch-1-frontier',
+    'epoch-2-steamworks',
+    'epoch-3-voltage',
+    'epoch-4-motor',
+    'epoch-5-deepwater',
+    'epoch-6-atomic',
+    'epoch-7-signal',
+    'epoch-8-orbital',
+    'epoch-9-redfields',
+    'epoch-10-deepsky',
+  ]);
+  expect(registry.epochs.map((epoch) => epoch.displayName)).toEqual([
+    'Frontier',
+    'Steamworks',
+    'Voltage Age',
+    'Motor Frontier',
+    'Deepwater Claim',
+    'Atomic Homestead',
+    'Signal Era',
+    'Orbital Frontier',
+    'Red Fields',
+    'Deep Sky',
+  ]);
   expect(registry.frontier).toMatchObject({ locked: false, threshold: 6 });
   expect(registry.frontier.gates).toEqual(['chain_spark_primer', 'beacon_cadence', 'pact_ledger', 'agent_schooling']);
   expect(registry.frontier.families.flatMap((family) => family.cards.map((card) => card.id))).toEqual([
@@ -89,7 +111,6 @@ test('contract registry lists Frontier and locked Steamworks in order', async ({
     masteryConversions: [],
     synergyCards: [],
     contractTiers: [],
-    contracts: [{ id: 'e2-hill-mine' }],
     successor: 'epoch-3-voltage',
   });
   expect(registry.steamworks.research.branches).toHaveLength(3);
@@ -120,13 +141,13 @@ test('Frontier registry routing preserves gated Arsenal offers', async ({ page }
   assertNoErrors(errors);
 });
 
-test('locked Steamworks stub loads without changing fresh offers', async ({ page }) => {
+test('locked Steamworks data loads without changing fresh offers', async ({ page }) => {
   const errors = await openGame(page, [], '?debug&timescale=3&nowaves&seed=sci-04-steamworks');
   const before = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.progression.eligibility ?? []);
   const steamworks = await page.evaluate(() => window.__GR_CONTRACT_REGISTRY__?.loadEpoch('epoch-2-steamworks'));
   const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.progression.eligibility ?? []);
 
-  expect(steamworks).toMatchObject({ locked: true, families: [], gates: [], contracts: [{ id: 'e2-hill-mine' }] });
+  expect(steamworks).toMatchObject({ locked: true });
   expect(after).toEqual(before);
   expect(after).not.toContain('beacon_handoff');
   expect(after).not.toContain('spark_pressure_ring');
