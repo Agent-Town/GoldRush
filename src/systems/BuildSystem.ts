@@ -93,6 +93,15 @@ export type BuildDiagnostics = {
     position: { x: number; z: number };
   }>;
   ruins: number;
+  ruinDetails: Array<{
+    id: BuildableId;
+    index: number;
+    terrainMaxY: number;
+    baseY: number;
+    topY: number;
+    markerVisible: boolean;
+    markerY: number;
+  }>;
   hpBars: number;
   hpBarsVisible: boolean;
   hpBarDetails: Array<{
@@ -307,6 +316,7 @@ export class BuildSystem {
   private readonly reservedFootprints: ReservedFootprint[] = [];
   private megaprojectDamageResolver: ((target: BuildingTarget, amount: number) => BuildingDamageResult) | null = null;
   private readonly buildingVisualGeometry = new THREE.BoxGeometry(1, 1, 1);
+  private readonly rubbleGeometry = new THREE.CylinderGeometry(0.325, 0.5, 1, 6);
   private readonly buildingVisualMaterial = new THREE.MeshStandardMaterial({
     color: '#fff8e8',
     roughness: 0.86,
@@ -324,7 +334,7 @@ export class BuildSystem {
     depthWrite: false,
   });
   private readonly buildingVisuals = new THREE.InstancedMesh(
-    this.buildingVisualGeometry,
+    this.rubbleGeometry,
     this.buildingVisualMaterial,
     totalBuildableCapacity(),
   );
@@ -672,6 +682,7 @@ export class BuildSystem {
       nextCost: this.nextCost,
       hp: this.hpDiagnostics(),
       ruins: this.activeRuins,
+      ruinDetails: this.rubbleDiagnostics(),
       hpBars: this.activeHpBars,
       hpBarsVisible: this.activeHpBars > 0,
       hpBarDetails: this.hpBarDiagnostics(),
@@ -1025,6 +1036,7 @@ export class BuildSystem {
     });
     this.ghostMaterial.dispose();
     this.buildingVisualGeometry.dispose();
+    this.rubbleGeometry.dispose();
     this.buildingVisualMaterial.dispose();
     this.hpVisualMaterial.dispose();
     this.repairRing.geometry.dispose();
@@ -1285,7 +1297,7 @@ export class BuildSystem {
     this.activeRepairBlocked = false;
     this.repairProgress[id][index] = safeProgress;
     this.repairRing.visible = safeProgress > 0;
-    this.repairRing.position.set(position.x, this.visualYFor(id, position, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0, 0.1), position.z);
+    this.repairRing.position.set(position.x, this.repairMarkerYFor(id, index, position), position.z);
     this.repairRing.rotation.y = at * 0.8;
     this.repairRing.scale.setScalar(1 + Math.sin(at * 8.5 + index) * 0.04);
     (this.repairRing.material as THREE.MeshBasicMaterial).color.copy(repairColor);
@@ -2031,7 +2043,7 @@ export class BuildSystem {
     if (!position) return;
 
     this.repairRing.visible = true;
-    this.repairRing.position.set(position.x, this.visualYFor(bestId, position, bestId === 'palisade' ? this.palisades.rotationStepsAt(bestIndex) : 0, 0.1), position.z);
+    this.repairRing.position.set(position.x, this.repairMarkerYFor(bestId, bestIndex, position), position.z);
     this.repairRing.rotation.y = at * 0.8;
     this.repairRing.scale.setScalar(1 + Math.sin(at * 8.5 + bestIndex) * 0.04);
 
@@ -2149,13 +2161,58 @@ export class BuildSystem {
   }
 
   private syncRubble(slot: number, id: BuildableId, index: number, position: THREE.Vector3): void {
-    const footprint = this.footprint(getBuildableDef(id), id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0);
-    this.visualObject.position.set(position.x, this.visualYFor(id, position, id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0, 0.08), position.z);
-    this.visualObject.rotation.set(0, id === 'palisade' ? this.palisades.rotationStepsAt(index) * (Math.PI / 2) : 0, 0);
-    this.visualObject.scale.set(Math.max(0.5, footprint.w * 0.72), 0.14, Math.max(0.5, footprint.d * 0.72));
+    const rotationSteps = id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0;
+    const footprint = this.footprint(getBuildableDef(id), rotationSteps);
+    const terrainMaxY = this.terrainMaxForFootprint(id, position, rotationSteps);
+    this.visualObject.position.set(position.x, terrainMaxY + Balance.wreck.rubble.lift + Balance.wreck.rubble.height * 0.5, position.z);
+    this.visualObject.rotation.set(0, rotationSteps * (Math.PI / 2), 0);
+    this.visualObject.scale.set(
+      Math.max(0.5, footprint.w * Balance.wreck.rubble.footprintScale),
+      Balance.wreck.rubble.height,
+      Math.max(0.5, footprint.d * Balance.wreck.rubble.footprintScale),
+    );
     this.visualObject.updateMatrix();
     this.buildingVisuals.setMatrixAt(slot, this.visualObject.matrix);
     this.buildingVisuals.setColorAt(slot, rubbleColor);
+  }
+
+  private terrainMaxForFootprint(id: BuildableId, position: THREE.Vector3, rotationSteps: number): number {
+    const half = this.footprintHalfExtents(id, rotationSteps);
+    let max = Number.NEGATIVE_INFINITY;
+    for (const x of [position.x - half.x, position.x, position.x + half.x]) {
+      for (const z of [position.z - half.z, position.z, position.z + half.z]) max = Math.max(max, Terrain.visualY(x, z));
+    }
+    return max;
+  }
+
+  private repairMarkerYFor(id: BuildableId, index: number, position: THREE.Vector3): number {
+    const rotationSteps = id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0;
+    if (!this.wrecked[id][index]) return this.visualYFor(id, position, rotationSteps, 0.1);
+    return this.terrainMaxForFootprint(id, position, rotationSteps) + Balance.wreck.rubble.lift + Balance.wreck.rubble.height + Balance.wreck.rubble.markerLift;
+  }
+
+  private rubbleDiagnostics(): BuildDiagnostics['ruinDetails'] {
+    const details: BuildDiagnostics['ruinDetails'] = [];
+    for (const id of buildableIds) {
+      for (let index = 0; index < this.wrecked[id].length; index += 1) {
+        if (!this.wrecked[id][index]) continue;
+        const position = this.positionFor(id, index);
+        if (!position) continue;
+        const rotationSteps = id === 'palisade' ? this.palisades.rotationStepsAt(index) : 0;
+        const terrainMaxY = this.terrainMaxForFootprint(id, position, rotationSteps);
+        const baseY = terrainMaxY + Balance.wreck.rubble.lift;
+        details.push({
+          id,
+          index,
+          terrainMaxY,
+          baseY,
+          topY: baseY + Balance.wreck.rubble.height,
+          markerVisible: this.activeRepairId === id && this.activeRepairIndex === index && this.repairRing.visible,
+          markerY: this.repairMarkerYFor(id, index, position),
+        });
+      }
+    }
+    return details;
   }
 
   private hideAllBuildingVisuals(): void {

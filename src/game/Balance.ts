@@ -764,6 +764,12 @@ export const Balance = {
     repairSeconds: 1.2,
     repairCostFrac: 0.3,
     repairRadius: 1.4,
+    rubble: {
+      footprintScale: 0.82,
+      height: 0.44,
+      lift: 0.06,
+      markerLift: 0.06,
+    },
   },
   economy: {
     logCapacity: 2048,
