@@ -215,6 +215,12 @@ export const Balance = {
       data_rustler: { hpScale: 1, speedMult: 1.1, visualScale: 1, contactDamageScale: 0.8, tint: '#c4883a', thief: true },
     },
   },
+  e8Roster: {
+    variants: {
+      scrap_corsair: { hpScale: 1.1, speedMult: 1, visualScale: 1.1, contactDamageScale: 1, tint: '#7fa0a8' },
+      sun_glare_shambler: { hpScale: 1.3, speedMult: 0.72, visualScale: 0.8, contactDamageScale: 0.9, tint: '#caa25a' },
+    },
+  },
   wrangle: {
     windDownSeconds: 8,
     exhaustedSpeedMultiplier: 0.2,

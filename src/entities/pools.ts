@@ -100,6 +100,22 @@ export function e7EnemySpriteBinding(variantId: string) {
   return { ...binding, placeholder };
 }
 
+const processedE8SpriteCells = import.meta.glob('../../assets/processed/char-e8-*-sheet-walk8-r*c*.png');
+const e8SpriteBindings = {
+  scrap_corsair: { slot: assetSlots.charE8ScrapCorsair, sheet: 'char-e8-scrap_corsair-sheet-walk8.png' },
+  sun_glare_shambler: { slot: assetSlots.charE8SunGlareShambler, sheet: 'char-e8-sun_glare_shambler-sheet-walk8.png' },
+} as const;
+
+export function e8EnemySpriteBinding(variantId: string) {
+  const binding = e8SpriteBindings[variantId as keyof typeof e8SpriteBindings];
+  if (!binding) return null;
+  const base = binding.sheet.replace(/\.png$/, '');
+  const placeholder = [0, 1].some((row) => [0, 1, 2, 3].some(
+    (col) => !processedE8SpriteCells[`../../assets/processed/${base}-r${row}c${col}.png`],
+  ));
+  return { ...binding, placeholder };
+}
+
 export type FeverAccentDiagnostics = {
   active: boolean;
   kind: 'human' | 'machine' | 'none';
@@ -334,6 +350,8 @@ export class EnemyPool {
       createEnemySpritePresentation(variantId, binding.slot, e6EnemySpriteBinding(variantId)?.placeholder === true)),
     ...Object.entries(e7SpriteBindings).map(([variantId, binding]) =>
       createEnemySpritePresentation(variantId, binding.slot, e7EnemySpriteBinding(variantId)?.placeholder === true)),
+    ...Object.entries(e8SpriteBindings).map(([variantId, binding]) =>
+      createEnemySpritePresentation(variantId, binding.slot, e8EnemySpriteBinding(variantId)?.placeholder === true)),
   ];
   private readonly baronSprites = new GeneratedSpriteBatch(assetSlots.charBaron, Balance.enemy.poolSize, {
     name: 'GeneratedBaronSprites',

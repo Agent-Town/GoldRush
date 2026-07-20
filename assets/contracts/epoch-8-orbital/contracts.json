@@ -177,7 +177,12 @@
           ]
         }
       },
-      "twist": {},
+      "twist": {
+        "enemyRoster": [
+          { "id": "scrap_corsair", "label": "Scrap Corsair" },
+          { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" }
+        ]
+      },
       "boardRow": {
         "name": "The Mare Claim",
         "ledgerBlurb": "A high crater rim rings dome pads, regolith fields, and an eastbound mass-driver.",
@@ -300,6 +305,9 @@
         }
       },
       "twist": {
+        "enemyRoster": [
+          { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" }
+        ],
         "signalSuppression": {
           "description": "The Far Side comms shadow disables drones and playbooks for the whole run.",
           "drones": false,
@@ -475,6 +483,9 @@
         }
       },
       "twist": {
+        "enemyRoster": [
+          { "id": "scrap_corsair", "label": "Scrap Corsair" }
+        ],
         "zeroGravity": {
           "description": "The station scaffold is in free fall; missed lobs remain in orbit and return.",
           "projectiles": "orbital-return",
@@ -695,6 +706,10 @@
         }
       },
       "twist": {
+        "enemyRoster": [
+          { "id": "sun_glare_shambler", "label": "Sun-Glare Shambler" },
+          { "id": "scrap_corsair", "label": "Scrap Corsair" }
+        ],
         "eclipseEvent": {
           "description": "A compressed lunar eclipse arrives mid-run, early and unannounced the first time, shutting down solar production and opening dark waves.",
           "trigger": "mid-run",
