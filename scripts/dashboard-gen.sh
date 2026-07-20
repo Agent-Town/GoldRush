@@ -165,9 +165,7 @@ try { const h=require("fs").readFileSync("logs/usage-history.jsonl","utf8").trim
 if (h.length>1) { console.log("  THE BURN (last stamps, out-tokens):");
 for (const r of h) console.log(`    ${r.t}  attended ${M(r.att_out)} · fires ${M(r.fire_out)} · codex ${M(r.cdx_out)}`); } } catch {}
 } catch(e) { console.log("(factory census not yet run: node scripts/factory-usage-census.mjs)"); }' 2>/dev/null)
-STATS_TABLE="$STATS_TABLE
-
-$(printf '%s' "$FACTORY_BLOCK" | esc)"
+FACTORY_HTML=$(printf '%s' "$FACTORY_BLOCK" | esc)
 
 
 # --- Waiting to start: paused items + gated BACKLOG ladder, with tracked block-age ---
@@ -381,6 +379,8 @@ pending crafting orders: $PENDING</pre></div>
 
 <h2>All-time task statistics</h2>
 <pre>$STATS_TABLE</pre>
+<h2>The whole factory — every arm's lifetime tokens</h2>
+<div class="card"><pre>$FACTORY_HTML</pre></div>
 <h2>Waiting to start — blockers &amp; tracked block time</h2>
 <div class="card"><pre>$BLOCKED</pre></div>
 
