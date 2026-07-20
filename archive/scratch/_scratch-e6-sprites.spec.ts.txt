@@ -1,0 +1,45 @@
+import { expect, test, type Page } from '@playwright/test';
+import { profileDataKey } from '../src/game/ProfileStorage';
+import { researchStateKey } from '../src/meta/ResearchTree';
+
+const E6_COMBAT = '/?debug&epoch=epoch-6-atomic&contract=e6-glow-mesa&nolevel&nopause&nosteal&nowreck&nowaves';
+const ROSTER = ['feral_toaster', 'lawn_shepherd', 'glowjack'];
+
+async function open(page: Page, seed: string) {
+  const errors = { console: [] as string[], page: [] as string[] };
+  page.on('console', (m) => m.type() === 'error' && errors.console.push(m.text()));
+  page.on('pageerror', (e) => errors.page.push(e.message));
+  await page.addInitScript((key) => localStorage.setItem(key, JSON.stringify({
+    version: 1, steps: 3, taken: ['sunline_beam', 'half_life_caltrops', 'sunline_mount'], proposalSalt: 0, pinnedTarget: null,
+  })), profileDataKey('robin', researchStateKey('epoch-6-atomic')));
+  await page.goto(`${E6_COMBAT}&seed=${seed}`);
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  const dismiss = page.getByTestId('contract-briefing-dismiss');
+  if (await dismiss.isVisible()) await dismiss.evaluate((b: HTMLButtonElement) => b.click());
+  await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
+  return errors;
+}
+
+test('E6 roster renders real extracted sprites (placeholder flipped false)', async ({ page }, testInfo) => {
+  const errors = await open(page, 'e6-sprite-shot');
+  const bindings = await page.evaluate(async (roster) => {
+    const harness = window.__GR_TEST__!;
+    harness.spawnPack(1, 5, { variantId: 'feral_toaster', variantLabel: 'Feral Toaster', hpScale: 50, speedScale: 0.02 });
+    harness.spawnPack(1, 5, { variantId: 'lawn_shepherd', variantLabel: 'Lawn Shepherd', hpScale: 50, speedScale: 0.02 });
+    harness.spawnPack(1, 5, { variantId: 'glowjack', variantLabel: 'Glowjack', hpScale: 50, speedScale: 0.02 });
+    harness.advanceSim(0.8);
+    harness.advanceSim(0.8);
+    const { e6EnemySpriteBinding } = (await import(/* @vite-ignore */ '/src/entities/pools.ts')) as typeof import('../src/entities/pools');
+    return roster.map((id) => e6EnemySpriteBinding(id));
+  }, ROSTER);
+  await page.waitForTimeout(400);
+  await page.screenshot({ path: testInfo.outputPath(`e6-sprites-${testInfo.project.name}.png`), fullPage: false });
+  // eslint-disable-next-line no-console
+  console.log('BINDINGS', testInfo.project.name, JSON.stringify(bindings));
+  expect(bindings).toEqual([
+    expect.objectContaining({ sheet: 'char-e6-feral_toaster-sheet-walk8.png', placeholder: false }),
+    expect.objectContaining({ sheet: 'char-e6-lawn_shepherd-sheet-walk8.png', placeholder: false }),
+    expect.objectContaining({ sheet: 'char-e6-glowjack-sheet-walk8.png', placeholder: false }),
+  ]);
+  expect(errors).toEqual({ console: [], page: [] });
+});
