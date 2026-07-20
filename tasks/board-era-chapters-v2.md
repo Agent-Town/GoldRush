@@ -1,0 +1,25 @@
+# Task board-era-chapters-v2: THE BOOK — era chapters, WITH the dependent board specs migrated (commit prefix "feat:")
+# FIRE-AUTHORED (s755, attended review welcome) — corrective re-land of lane-board-era-chapters (rejected s755: right code, stranded spec suite)
+
+You are Codex, implementer for Gold Rush (worktree per your lane).
+CODEX: model=gpt-5.6-sol effort=high
+READ FIRST: AGENTS.md · `reviews/lane-board-era-chapters.md` (the rejection + full merge classification — READ IT FIRST, it tells you exactly what is done and what is missing) · `src/town/TownScene.ts` (the Contract Board render) · `src/meta/ContractFamilies.ts` (contracts grouped by epoch; activeEpoch order = reached-frontier truth) · the era accent system (in-file `townEraAccent`) · the reference commit **`git show 1cf4b57b`** (the board redesign — its TownScene.ts / town.css / e2e/board-era-chapters.spec.ts changes are CORRECT and gate-green on their own; reproduce them) · the 7 dependent board specs listed below (you MUST migrate these — that omission is why v1 was rejected).
+
+Pre-flight (LANE-SAFETY, safe-dupe): confirm your lane worktree is clean and NOT ahead of main (`git -C <worktree> log main..HEAD` EMPTY) — if it holds unmerged commits, STOP and report (do not reset over undrained work). Then reset to main, `npm install`, confirm tsc+build green BEFORE editing.
+
+## Why (OWNER DIRECTIVE 2026-07-18, verbatim: "I think we have to reorganise them into eras - each epoch getss kind of their own chapter and in it there are the contracts for this epoch. And epochs that the user did not yet reach are not spilling their secrets, they stay hidden.")
+41 flat contracts overwhelm and spoil. v1 landed the redesign faithfully (own spec 6/6 both projects) but shipped READY-FOR-GATES **without migrating the specs that drive the board** — 7 adjacent suites (14 reds ×2 projects) still assert the OLD surface (`contract-page-dot-*`, `contract-page-count` "N / 41", `contract-upcoming-*`, `contract-next-epoch`, `contract-page-nav`, `<h2>Contract Board</h2>`). This corrective ships the redesign AND the migration together, so the board suite is green.
+
+## Scope
+1. **BOARD REDESIGN** — reproduce the reference commit `1cf4b57b` exactly (its board render/nav/css/own-spec are correct): chapters group contracts by epoch (era header + `townEraAccent` accent), navigation by per-chapter **tabs** (`contract-chapter-tab-<epochId>`, count `contract-chapter-count` "pageIndex+1 / chapters.length", nav `contract-chapter-nav`), title **"The Book"** (`contract-board-title`), `renderUpcomingContractCard` deleted.
+2. **SECRETS KEPT** — epochs beyond the profile's reached frontier render NOTHING (absent from the DOM: no name, count, or silhouette). Frontier chapter = last visible. `?debug` shows all. (Read the reached frontier through the existing activeEpoch/reconcile seam — NO new writers.)
+3. **MIGRATE THE DEPENDENT SPECS** (this is the new, load-bearing work) — update each to the chapter surface, preserving each test's ORIGINAL intent (do NOT weaken assertions to force green; navigate via chapter tabs + the contract cards rendered inside a chapter):
+   - `e2e/town-t3-board.spec.ts` (6 tests: "1 / 41"/"2 / 41"/"5 / 41" counts → chapter counts; `contract-page-dot-*` → open the chapter then the contract card; 390px tap-targets on the tabs)
+   - `e2e/board-upcoming-surveys.spec.ts` — its premise (pending surveys + next-epoch preview VISIBLE) is REVERSED by "secrets kept"; **rewrite it to assert the secrecy law** (beyond-frontier epochs absent from the DOM) or retire it with a one-line note pointing at `board-era-chapters.spec.ts`. Owner ruling governs — do not resurrect the preview cards.
+   - `e2e/board-gating-and-profiles.spec.ts`, `e2e/board-card-images.spec.ts`, `e2e/contract-briefings.spec.ts`, `e2e/fresh-scene-render-state.spec.ts`, `e2e/072-era-activation.spec.ts` — replace `contract-page-dot-*` / `contract-page-nav` / `contract-page-count` navigation with chapter-tab + in-chapter-card navigation; keep every original assertion's meaning.
+4. **THE FRONTIER TRUTH** unchanged: reached = highest activated epoch via the existing pointer.
+
+## Firewall: TOUCH-ONLY `src/town/TownScene.ts` + `src/town/town.css` + `e2e/board-era-chapters.spec.ts` + the 7 dependent board specs named in Scope 3. NO contract data changes, NO launch-path changes, NO epoch-arming logic, NO other src files, NO other specs.
+## Self-check (ALL must be green BEFORE you write READY-FOR-GATES — v1 died skipping this): tsc + build · `board-era-chapters.spec.ts` · `town-t3-board.spec.ts` · `board-upcoming-surveys.spec.ts` · `board-gating-and-profiles.spec.ts` · `board-card-images.spec.ts` · `contract-briefings.spec.ts` · `fresh-scene-render-state.spec.ts` · `072-era-activation.spec.ts` · a tavern boot · **all of the above BOTH projects (desktop-chrome + mobile-chrome)** · zero console. Paste a per-spec pass table in your report.
+No-op guard: exit-without-changes = WRITE WHY first.
+END: READY-FOR-GATES + the per-spec pass table + a screenshot of the E1-only fresh-profile board and the all-chapters `?debug` board.
