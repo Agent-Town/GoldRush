@@ -181,18 +181,17 @@ test('wave 20 Baron spawns as epic-scale boss with anchored bar and one camera i
   });
   await setWave(page, 19);
   const spawned = await waitForBaron(page);
-  // b85eb38e: current Baron repair tuning.
-  const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 240;
+  const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 160;
   const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.75;
 
   expect(spawned.maxHp).toBeCloseTo(expectedHp, 4);
   expect(spawned.hp).toBeCloseTo(expectedHp, 4);
   expect(spawned.speed).toBeCloseTo(expectedSpeed, 3);
   expect(spawned.scale).toBe(4);
-  expect(spawned.contactDamage).toBeCloseTo(Balance.enemy.contactDamage * 5, 4);
-  expect(spawned.buildingDamage).toBeCloseTo(Balance.wreck.damage * 16, 4);
-  expect(spawned.supportBuildingDamage).toBeCloseTo(Balance.wreck.damage * 12, 4);
-  expect(spawned.heroPursuitRange).toBe(18);
+  expect(spawned.contactDamage).toBeCloseTo(Balance.enemy.contactDamage * 4.25, 4);
+  expect(spawned.buildingDamage).toBeCloseTo(Balance.wreck.damage * 12, 4);
+  expect(spawned.supportBuildingDamage).toBeCloseTo(Balance.wreck.damage * 8, 4);
+  expect(spawned.heroPursuitRange).toBe(45);
   expect(spawned.hitRadius).toBeCloseTo(Balance.enemy.touchRadius * 4, 4);
   expect(spawned.hasBanner).toBe(true);
   expect(spawned.wrecker).toBe(true);
@@ -308,8 +307,7 @@ test('stationary unplated hero dies within three Baron contacts, while base-spee
   const firstGap = Math.hypot(first.x, first.z - 12);
   const laterGap = Math.hypot(later.x - prev.x, later.z - prev.z);
   expect(maxStep).toBeLessThanOrEqual(Balance.hero.speed * 0.5 + 0.001);
-  // 057 makes kiting costly with rockets; 054 only promises that base speed opens the gap.
-  expect(laterGap).toBeGreaterThan(firstGap);
+  expect(laterGap).toBeGreaterThan(firstGap + 4);
   await shot(page, testInfo, 'baron-kite-gap');
   assertNoErrors(errors);
   assertNoErrors(kiteErrors);

@@ -86,8 +86,7 @@ async function openBoard(page: Page): Promise<void> {
 }
 
 async function openBaronBoardPage(page: Page): Promise<void> {
-  // 330ba7bb: The Book exposes contracts through era chapters, not per-contract page dots.
-  await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
+  await page.getByTestId('contract-page-dot-e1-baron').click();
   await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
 }
 

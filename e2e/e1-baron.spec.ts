@@ -4,13 +4,12 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 import { BARON_MEDAL_BLURB } from '../src/game/Medals';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
-import { MEDALS_KEY, PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { MEDALS_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { RESEARCH_STATE_KEY } from '../src/meta/ResearchTree';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type SeedState = {
   science?: number;
-  securedContracts?: readonly string[];
   medal?: boolean;
   activeId?: 'robin' | 'casey';
   medalProfileId?: 'robin' | 'casey';
@@ -87,14 +86,6 @@ async function seedStorage(page: Page, seed: SeedState = {}): Promise<void> {
           JSON.stringify({ version: 1, tracks: { territory: 0, science: seedState.science ?? 0, hero: 0, agent: 0 } }),
         );
         localStorage.setItem(profileKeys.research, JSON.stringify({ version: 1, taken: [], proposalSalt: 0, pinnedTarget: null }));
-        if (seedState.securedContracts) {
-          localStorage.setItem(
-            profileKeys.scores,
-            JSON.stringify(seedState.securedContracts.map((contractId, index) => ({
-              waves: 20, kills: 0, gold: 0, timeAlive: 60, at: index + 1, secured: true, contractId, profileName: profile.name,
-            }))),
-          );
-        }
       }
       if (seedState.medal) {
         localStorage.setItem(keys[seedState.medalProfileId ?? seedState.activeId ?? 'robin'].medal, JSON.stringify({ version: 1, baronBeaten: true }));
@@ -107,14 +98,12 @@ async function seedStorage(page: Page, seed: SeedState = {}): Promise<void> {
           town: profileDataKey('robin', TOWN_NAME_KEY),
           meta: profileDataKey('robin', META_PROGRESS_KEY),
           research: profileDataKey('robin', RESEARCH_STATE_KEY),
-          scores: profileDataKey('robin', SCOREBOARD_KEY),
           medal: profileDataKey('robin', MEDALS_KEY),
         },
         casey: {
           town: profileDataKey('casey', TOWN_NAME_KEY),
           meta: profileDataKey('casey', META_PROGRESS_KEY),
           research: profileDataKey('casey', RESEARCH_STATE_KEY),
-          scores: profileDataKey('casey', SCOREBOARD_KEY),
           medal: profileDataKey('casey', MEDALS_KEY),
         },
       },
@@ -140,8 +129,7 @@ async function openBoard(page: Page): Promise<void> {
 }
 
 async function openBaronBoardPage(page: Page): Promise<void> {
-  // 330ba7bb: The Book exposes contracts through era chapters, not per-contract page dots.
-  await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
+  await page.getByTestId('contract-page-dot-e1-baron').click();
   await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
 }
 
@@ -340,35 +328,33 @@ test('default contract does not preload Baron art', async ({ page }) => {
   expectClean(errors);
 });
 
-test('contract board locks Baron until science-complete plus two secured claims and shows the profile medal', async ({ page }, testInfo) => {
+test('contract board locks Baron until science-complete and shows the profile medal', async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const errors = collectErrors(page);
 
   await seedStorage(page);
   await openBoard(page);
-  // 330ba7bb: the Frontier chapter renders all five E1 cards together.
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(1);
   await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'true');
   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveCount(0);
-  await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText('Complete Frontier science and secure two different claims');
+  await expect(page.getByTestId('contract-launch-e1-baron')).toHaveText('Complete Frontier science first');
 
-  // c505e3f9: Baron graduation requires completed science and two distinct secured claims.
-  await seedStorage(page, { science: 6, securedContracts: ['the-claim', 'e1-dry-gulch'] });
+  await seedStorage(page, { science: 6 });
   await openBoard(page);
   await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'false');
   await expect(page.getByTestId('contract-stakes-e1-baron')).toHaveText(BARON_STAKES);
   await expect(page.getByTestId('contract-medal-e1-baron')).toHaveCount(0);
 
-  await seedStorage(page, { science: 6, securedContracts: ['the-claim', 'e1-dry-gulch'], medal: true });
+  await seedStorage(page, { science: 6, medal: true });
   await openBoard(page);
   await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-medal-e1-baron')).toHaveText(`Baron beaten. ${BARON_MEDAL_BLURB}`);
   await frameForShot(page, 'contract-card-e1-baron');
   await shot(page, testInfo, 'medal-card');
 
-  await seedStorage(page, { science: 6, securedContracts: ['the-claim', 'e1-dry-gulch'], medal: true, activeId: 'casey', medalProfileId: 'robin' });
+  await seedStorage(page, { science: 6, medal: true, activeId: 'casey', medalProfileId: 'robin' });
   await openBoard(page);
   await openBaronBoardPage(page);
   await expect(page.getByTestId('contract-card-e1-baron')).toHaveAttribute('data-contract-locked', 'false');
@@ -380,7 +366,7 @@ test('board launch uses the live Baron contract for cadence and wave 20 spawn', 
   test.setTimeout(60_000);
   const errors = collectErrors(page);
 
-  await seedStorage(page, { science: 6, securedContracts: ['the-claim', 'e1-dry-gulch'] });
+  await seedStorage(page, { science: 6 });
   await page.evaluate(() => history.replaceState(null, '', '/?debug'));
   await openBoard(page);
   await openBaronBoardPage(page);
@@ -411,20 +397,19 @@ test('Baron manifest loads and taunts fire at waves 5, 12, and 18', async ({ pag
   expect(contract.diagnostics?.waveCadenceMult).toBe(1.15);
   expect(contract.registry).toMatchObject({
     tileParams: { tileId: 'frontier-river-claim', river: true, ford: true },
-    boardRow: { unlock: 'science-complete+2-secured' },
+    boardRow: { unlock: 'science-complete' },
     twist: {
       secureWave: 20,
       waveCadenceMult: 1.15,
       baron: {
         wave: 20,
-        // b85eb38e: current Baron repair tuning.
-        hpScale: 240,
+        hpScale: 160,
         speedScale: 0.75,
         scale: 4,
-        contactDamageScale: 5,
-        buildingDamageScale: 16,
-        supportBuildingDamageScale: 12,
-        pursuitRange: 18,
+        contactDamageScale: 4.25,
+        buildingDamageScale: 12,
+        supportBuildingDamageScale: 8,
+        pursuitRange: 45,
         taunt: BARON_TAUNT,
         defeatBeat: BARON_DEFEAT,
       },
@@ -484,16 +469,15 @@ test('wave 20 spawns the Baron with elite stats, banner, escorts, and stable see
   expect(baron.edge).toBeTruthy();
   await expectBaronBanner(page, BARON_ARRIVAL_TITLE, undefined, baron.edge ?? null);
   await expectBaronArtLoaded(page);
-  // b85eb38e: current Baron repair tuning.
-  const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 240;
+  const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 160;
   const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.75;
   expect(baron.maxHp).toBeCloseTo(expectedHp, 4);
   expect(baron.hp).toBeCloseTo(expectedHp, 4);
   expect(baron.speed).toBeCloseTo(expectedSpeed, 3);
-  expect(baron.contactDamage).toBeCloseTo(Balance.enemy.contactDamage * 5, 4);
-  expect(baron.buildingDamage).toBeCloseTo(Balance.wreck.damage * 16, 4);
-  expect(baron.supportBuildingDamage).toBeCloseTo(Balance.wreck.damage * 12, 4);
-  expect(baron.heroPursuitRange).toBe(18);
+  expect(baron.contactDamage).toBeCloseTo(Balance.enemy.contactDamage * 4.25, 4);
+  expect(baron.buildingDamage).toBeCloseTo(Balance.wreck.damage * 12, 4);
+  expect(baron.supportBuildingDamage).toBeCloseTo(Balance.wreck.damage * 8, 4);
+  expect(baron.heroPursuitRange).toBe(45);
   expect(baron.scale).toBe(4);
   expect(baron.hasBanner).toBe(true);
   expect(baron.wrecker).toBe(true);
@@ -647,8 +631,10 @@ test('Baron art fallback keeps the placeholder path green when generated art fai
         page.evaluate(() => ({
           baronAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['char.baron'],
           bannerAsset: window.__THREE_GAME_DIAGNOSTICS__?.assets['prop.baron_banner'],
+          claimSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.claim_jumper'] ?? 0,
           baronSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.baron'] ?? 0,
           bannerSprites: window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['prop.baron_banner'] ?? 0,
+          claimSpritesReady: (window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.claim_jumper'] ?? 0) >= 1,
         })),
       { timeout: 10_000 },
     )
@@ -657,6 +643,7 @@ test('Baron art fallback keeps the placeholder path green when generated art fai
       bannerAsset: 'error',
       baronSprites: 0,
       bannerSprites: 0,
+      claimSpritesReady: true,
     });
   await expect(page.getByTestId('claim-secured')).toHaveCount(0);
   expectClean(errors);
