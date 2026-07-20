@@ -661,7 +661,9 @@ export class WaveSystem {
   private optionsForVariant(variant: ContractEnemyVariant): SpawnPackOptions {
     const balanced = this.contract.id.startsWith('e6-')
       ? e6RosterVariant(variant.id)
-      : this.contract.id.startsWith('e7-') ? e7RosterVariant(variant.id) : undefined;
+      : this.contract.id.startsWith('e7-')
+        ? e7RosterVariant(variant.id)
+        : this.contract.id.startsWith('e8-') ? e8RosterVariant(variant.id) : undefined;
     return {
       thief: variant.thief ?? balanced?.thief,
       wrecker: (variant.wrecker ?? balanced?.wrecker) || (this.escortCart?.target.active === true && variant.id === 'rail_tough'),
@@ -916,6 +918,10 @@ function e6RosterVariant(id: string): Partial<ContractEnemyVariant> | undefined 
 
 function e7RosterVariant(id: string): Partial<ContractEnemyVariant> | undefined {
   return (Balance.e7Roster.variants as Record<string, Partial<ContractEnemyVariant>>)[id];
+}
+
+function e8RosterVariant(id: string): Partial<ContractEnemyVariant> | undefined {
+  return (Balance.e8Roster.variants as Record<string, Partial<ContractEnemyVariant>>)[id];
 }
 
 function edgeFromPoint(point: RailPathPoint): CompassEdge {

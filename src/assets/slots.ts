@@ -13,6 +13,8 @@ export const assetSlots = {
   charE6Glowjack: 'char.e6.glowjack',
   charE7RogueAutomaton: 'char.e7.rogue_automaton',
   charE7DataRustler: 'char.e7.data_rustler',
+  charE8ScrapCorsair: 'char.e8.scrap_corsair',
+  charE8SunGlareShambler: 'char.e8.sun_glare_shambler',
   charBaron: 'char.baron',
   charProspectorAgent: 'char.prospector_agent',
   charTownTavernkeeper: 'char.town.tavernkeeper',
