@@ -184,6 +184,7 @@ lane-a-m5-01 (contract.v1 shipped via 033-era work), lane-b-m5-02 (incumbent ben
 - FUTURE (owner-gated): **town3d-promotion** — 3D default-on once the set completes (lazy loading + bytes budget + owner verdict). **run3d riders** (fire-authorable after 07 lands): rail elements, gold nodes, megaproject site stages.
 
 ## OWNER'S DESK (2026-07-13 refresh)
+- **🎬 THE HEROINE'S FOUR AGES — LIVE (drained s777, 2026-07-21).** Your Clock Law beat ("ok, lets go — looking forward to it") is in the game: young→midlife→silver→elder, wired to eras 1/4/8/10, same-person confirmed + canon-correct, `hero-ages` spec 10/10 both projects. **Your lineup strip is at `reviews/shots-hero-ages/four-ages-lineup.png`** (the master's owed deliverable). Landed under the ratified-spec veto window — say the word and any age sheet gets swapped/regenerated (young-fallback makes it a one-file change). One glance owed: F-1 — young walks 8-directional (walk8) but the aged sheets are 4-directional (walk4); fine for now, but tell me if you want aged walk8 too.
 - ~~MORNING DEPLOY~~ CLEARED: attended deployed through the fresh-boot/trio/mu-03/store/kit merges 2026-07-13 ~01:45. Overnight ladder merges will re-owe one (fires flag DEPLOY OWED).
 - E2 era-gate replay verification (BUILD-PLAN ⑨) — still yours.
 - Marketing §5 approval table — still yours.
