@@ -22,6 +22,7 @@ export const FREED_WALKER_BEHAVIORS = {
   moth_swarm: 'run',
   motor_gang: 'run',
   corsair_skiff: 'slump',
+  glowjack: 'run',
 } as const satisfies Record<string, FreedWalkerBehavior>;
 
 export type FreedWalkerDiagnostics = {

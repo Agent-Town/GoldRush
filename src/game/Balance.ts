@@ -189,6 +189,26 @@ export const Balance = {
       activeEmissiveIntensity: 0.85,
     },
   },
+  e6Roster: {
+    mixes: {
+      standard: [
+        { waveMin: 1, ids: ['feral_toaster'] },
+        { waveMin: 2, ids: ['feral_toaster', 'lawn_shepherd'] },
+        { waveMin: 4, ids: ['feral_toaster', 'lawn_shepherd', 'glowjack'] },
+      ],
+      halfLifeHollow: [
+        { waveMin: 1, ids: ['feral_toaster'] },
+        { waveMin: 2, ids: ['feral_toaster', 'glowjack'] },
+        { waveMin: 4, ids: ['feral_toaster', 'glowjack', 'lawn_shepherd'] },
+      ],
+    },
+    variants: {
+      feral_toaster: { hpScale: 0.75, speedMult: 1.18, visualScale: 0.45, contactDamageScale: 0.75, tint: '#d98d45' },
+      lawn_shepherd: { hpScale: 1.35, speedMult: 0.86, visualScale: 0.65, contactDamageScale: 0.85, tint: '#63b7a5' },
+      glowjack: { hpScale: 0.95, speedMult: 1.08, visualScale: 1, contactDamageScale: 0.8, tint: '#8ebf96', thief: true },
+    },
+    herdDrive: { radius: 8, strength: 0.45 },
+  },
   wrangle: {
     windDownSeconds: 8,
     exhaustedSpeedMultiplier: 0.2,

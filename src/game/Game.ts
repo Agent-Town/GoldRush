@@ -147,7 +147,7 @@ import { DeepwaterArsenal } from '../entities/DeepwaterArsenal';
 import { PressureSystem } from '../systems/PressureSystem';
 import { FuelSystem } from '../systems/FuelSystem';
 import { PressureArsenalSystem } from '../systems/PressureArsenalSystem';
-import { E6ArsenalSystem } from '../systems/E6ArsenalSystem';
+import { E6ArsenalSystem, e6CureArmForOwner } from '../systems/E6ArsenalSystem';
 import { E6TileConsumerSystem } from '../systems/E6TileConsumerSystem';
 import { E9ArsenalSystem } from '../systems/E9ArsenalSystem';
 import { E9CanalSystem } from '../systems/E9CanalSystem';
@@ -460,7 +460,13 @@ export class Game {
       const actor = this.nearestActorTo(origin);
       if (this.weaponForActor(actor) === 'rig' && actor.group.position.distanceToSquared(origin) < 0.0001) actor.playAttackPose(target);
     },
-    (enemy, amount, died) => this.wrangle.onDamage(enemy, amount, died),
+    (enemy, amount, died, ownerId) => {
+      if (died && e6CureArmForOwner(ownerId) && this.wrangle.powerDown(enemy)) {
+        this.e6ArsenalSystem.recordPowerDown(enemy, ownerId);
+        return false;
+      }
+      this.wrangle.onDamage(enemy, amount, died);
+    },
     (enemy) => !this.wrangle.isHarmless(enemy),
   );
   private readonly prospector = new ProspectorEmbodiment((position, text, color) => this.vfx.floatText(position, text, color));

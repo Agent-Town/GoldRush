@@ -635,8 +635,15 @@ export class WaveSystem {
   private enemyRosterFor(wave: number, edge: CompassEdge): readonly ContractEnemyVariant[] {
     const roster = this.contract.twist.enemyRoster ?? [];
     if (roster.length === 0) return [];
-    const edgeRoster = roster.filter((entry) => wave >= (entry.waveMin ?? 1) && (!entry.spawnEdges || entry.spawnEdges.includes(edge)));
-    return edgeRoster.length > 0 ? edgeRoster : roster.filter((entry) => wave >= (entry.waveMin ?? 1));
+    const mixes = this.contract.id === 'e6-half-life-hollow'
+      ? Balance.e6Roster.mixes.halfLifeHollow
+      : Balance.e6Roster.mixes.standard;
+    const mix = this.contract.id.startsWith('e6-')
+      ? [...mixes].reverse().find((entry) => wave >= entry.waveMin)
+      : undefined;
+    const eligible = roster.filter((entry) => wave >= (entry.waveMin ?? 1) && (!mix || (mix.ids as readonly string[]).includes(entry.id)));
+    const edgeRoster = eligible.filter((entry) => !entry.spawnEdges || entry.spawnEdges.includes(edge));
+    return edgeRoster.length > 0 ? edgeRoster : eligible;
   }
 
   private variantFor(roster: readonly ContractEnemyVariant[], wave: number, edge: CompassEdge, index: number): ContractEnemyVariant {
@@ -651,20 +658,21 @@ export class WaveSystem {
   }
 
   private optionsForVariant(variant: ContractEnemyVariant): SpawnPackOptions {
+    const balanced = this.contract.id.startsWith('e6-') ? e6RosterVariant(variant.id) : undefined;
     return {
-      thief: variant.thief,
-      wrecker: variant.wrecker || (this.escortCart?.target.active === true && variant.id === 'rail_tough'),
+      thief: variant.thief ?? balanced?.thief,
+      wrecker: (variant.wrecker ?? balanced?.wrecker) || (this.escortCart?.target.active === true && variant.id === 'rail_tough'),
       variantId: variant.id,
       variantLabel: variant.label,
-      hpScale: variant.hpScale,
-      speedMult: variant.speedMult,
-      visualScale: variant.visualScale,
-      tint: variant.tint,
-      boltDamageMult: variant.boltDamageMult,
-      contactDamageScale: variant.contactDamageScale,
-      buildingDamageScale: variant.buildingDamageScale,
-      supportBuildingDamageScale: variant.supportBuildingDamageScale,
-      heroPursuitRange: variant.heroPursuitRange,
+      hpScale: variant.hpScale ?? balanced?.hpScale,
+      speedMult: variant.speedMult ?? balanced?.speedMult,
+      visualScale: variant.visualScale ?? balanced?.visualScale,
+      tint: variant.tint ?? balanced?.tint,
+      boltDamageMult: variant.boltDamageMult ?? balanced?.boltDamageMult,
+      contactDamageScale: variant.contactDamageScale ?? balanced?.contactDamageScale,
+      buildingDamageScale: variant.buildingDamageScale ?? balanced?.buildingDamageScale,
+      supportBuildingDamageScale: variant.supportBuildingDamageScale ?? balanced?.supportBuildingDamageScale,
+      heroPursuitRange: variant.heroPursuitRange ?? balanced?.heroPursuitRange,
       spawnGates: variant.spawnGates,
     };
   }
@@ -897,6 +905,10 @@ export class WaveSystem {
   private clampSpawn(value: number): number {
     return THREE.MathUtils.clamp(value, -Terrain.CLAIM_HALF, Terrain.CLAIM_HALF);
   }
+}
+
+function e6RosterVariant(id: string): Partial<ContractEnemyVariant> | undefined {
+  return (Balance.e6Roster.variants as Record<string, Partial<ContractEnemyVariant>>)[id];
 }
 
 function edgeFromPoint(point: RailPathPoint): CompassEdge {

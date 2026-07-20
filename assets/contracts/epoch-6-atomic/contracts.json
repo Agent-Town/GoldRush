@@ -111,6 +111,11 @@
       },
       "twist": {
         "secureWave": 12,
+        "enemyRoster": [
+          { "id": "feral_toaster", "label": "Feral Toaster" },
+          { "id": "lawn_shepherd", "label": "Lawn-Shepherd" },
+          { "id": "glowjack", "label": "Glowjack" }
+        ],
         "baron": {
           "wave": 8,
           "bossKind": "railcar",
@@ -250,7 +255,12 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": {},
+      "twist": {
+        "enemyRoster": [
+          { "id": "feral_toaster", "label": "Feral Toaster" },
+          { "id": "lawn_shepherd", "label": "Lawn-Shepherd" }
+        ]
+      },
       "boardRow": {
         "name": "The Showroom",
         "ledgerBlurb": "An empty model-home village stands between the showroom approach and catalog yard.",
@@ -348,7 +358,13 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": {},
+      "twist": {
+        "enemyRoster": [
+          { "id": "feral_toaster", "label": "Feral Toaster" },
+          { "id": "glowjack", "label": "Glowjack" },
+          { "id": "lawn_shepherd", "label": "Lawn-Shepherd" }
+        ]
+      },
       "boardRow": {
         "name": "Half-Life Hollow",
         "ledgerBlurb": "Two glow bridges and one central causeway cross the hollow between four shelves.",
@@ -442,7 +458,12 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": {},
+      "twist": {
+        "enemyRoster": [
+          { "id": "feral_toaster", "label": "Feral Toaster" },
+          { "id": "lawn_shepherd", "label": "Lawn-Shepherd" }
+        ]
+      },
       "boardRow": {
         "name": "The Picnic",
         "ledgerBlurb": "Three sandwich stakes stand on the Glow Mesa's caprock meadow.",

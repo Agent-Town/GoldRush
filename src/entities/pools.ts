@@ -65,7 +65,25 @@ type EnemySpritePresentation = {
   sprites: GeneratedSpriteBatch;
   fades: GeneratedSpriteBatch;
   animator: SpriteAnimator;
+  tintFromVariant: boolean;
 };
+
+const processedE6SpriteCells = import.meta.glob('../../assets/processed/char-e6-*-sheet-walk8-r*c*.png');
+const E6_ENEMY_SPRITE_BINDINGS = {
+  feral_toaster: { slot: assetSlots.charE6FeralToaster, sheet: 'char-e6-feral_toaster-sheet-walk8.png' },
+  lawn_shepherd: { slot: assetSlots.charE6LawnShepherd, sheet: 'char-e6-lawn_shepherd-sheet-walk8.png' },
+  glowjack: { slot: assetSlots.charE6Glowjack, sheet: 'char-e6-glowjack-sheet-walk8.png' },
+} as const;
+
+export function e6EnemySpriteBinding(variantId: string) {
+  const binding = E6_ENEMY_SPRITE_BINDINGS[variantId as keyof typeof E6_ENEMY_SPRITE_BINDINGS];
+  if (!binding) return null;
+  const base = binding.sheet.replace(/\.png$/, '');
+  const placeholder = [0, 1].some((row) => [0, 1, 2, 3].some(
+    (col) => !processedE6SpriteCells[`../../assets/processed/${base}-r${row}c${col}.png`],
+  ));
+  return { ...binding, placeholder };
+}
 
 export type FeverAccentDiagnostics = {
   active: boolean;
@@ -100,14 +118,14 @@ export function feverAccentState(
   };
 }
 
-function createEnemySpritePresentation(variantId: string, slotId: AssetSlotId): EnemySpritePresentation {
+function createEnemySpritePresentation(variantId: string, slotId: AssetSlotId, tintFromVariant = false): EnemySpritePresentation {
   const sprites = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
     name: `${variantId}Sprites`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplay, lazy: true,
   });
   const fades = new GeneratedSpriteBatch(slotId, Balance.enemy.poolSize, {
     name: `${variantId}SpriteFades`, y: ENEMY_SPRITE_Y, scale: [1.28, 1.55], renderOrder: RenderLayers.gameplayFade, lazy: true,
   });
-  return { variantId, sprites, fades, animator: new SpriteAnimator(slotId, sprites.material, undefined, fades.material) };
+  return { variantId, sprites, fades, animator: new SpriteAnimator(slotId, sprites.material, undefined, fades.material), tintFromVariant };
 }
 
 export type EnemyLightSource = { x: number; z: number; radius: number; kind?: 'light' | 'watch' };
@@ -292,10 +310,12 @@ export class EnemyPool {
     undefined,
     this.thiefSpriteFades.material,
   );
-  private readonly e2SpritePresentations = [
+  private readonly variantSpritePresentations = [
     createEnemySpritePresentation('rail_tough', assetSlots.charE2RailTough),
     createEnemySpritePresentation('steam_wrecker', assetSlots.charE2SteamWrecker),
     createEnemySpritePresentation('coal_thief', assetSlots.charE2CoalThief),
+    ...Object.entries(E6_ENEMY_SPRITE_BINDINGS).map(([variantId, binding]) =>
+      createEnemySpritePresentation(variantId, binding.slot, e6EnemySpriteBinding(variantId)?.placeholder === true)),
   ];
   private readonly baronSprites = new GeneratedSpriteBatch(assetSlots.charBaron, Balance.enemy.poolSize, {
     name: 'GeneratedBaronSprites',
@@ -348,6 +368,7 @@ export class EnemyPool {
   private readonly bannerClothColor = new THREE.Color('#7f2633');
   private readonly dimmedColor = new THREE.Color();
   private readonly feverAccentColor = new THREE.Color();
+  private readonly herdBias = new THREE.Vector2();
   private lightDimming: EnemyLightDimmingConfig = {
     enabled: false,
     darkness: 0,
@@ -387,7 +408,7 @@ export class EnemyPool {
       this.generatedSpriteFades.group,
       this.thiefSprites.group,
       this.thiefSpriteFades.group,
-      ...this.e2SpritePresentations.flatMap(({ sprites, fades }) => [sprites.group, fades.group]),
+      ...this.variantSpritePresentations.flatMap(({ sprites, fades }) => [sprites.group, fades.group]),
       this.baronSprites.group,
       this.baronSpriteFades.group,
       this.baronBannerSprites.group,
@@ -727,6 +748,9 @@ export class EnemyPool {
           }
         }
       }
+      const herdBias = this.herdDriveBias(enemy);
+      formationSeparationX += herdBias.x;
+      formationSeparationZ += herdBias.y;
       const formationSeparationSq = formationSeparationX * formationSeparationX + formationSeparationZ * formationSeparationZ;
       if (formationSeparationSq > 1) {
         const scale = 1 / Math.sqrt(formationSeparationSq);
@@ -768,9 +792,9 @@ export class EnemyPool {
       updateThiefSprites();
     }
     if (baronAnimation.active || this.baronSpriteAnimator) updateBaronSprites();
-    for (const presentation of this.e2SpritePresentations) {
+    for (const presentation of this.variantSpritePresentations) {
       const animation = this.activeVariantAnimation(presentation.variantId);
-      // Mirror the baron lazy-load pattern: leave the E2 sheets/animator untouched until
+      // Mirror the baron lazy-load pattern: leave variant sheets/animators untouched until
       // this variant is actually on the field, so non-E2 contracts upload no E2 textures
       // (was a persistent +1 renderer-texture regression in vp-02:382 at wire time).
       if (!animation.active && !presentation.sprites.isLoaded) continue;
@@ -778,6 +802,29 @@ export class EnemyPool {
       presentation.fades.ensureLoaded();
       presentation.animator.update(delta, animation.clip, animation.active ? animation.orientation : 'side', false, animation.speed, animation.groundSpeed);
     }
+  }
+
+  private herdDriveBias(enemy: ClaimJumperEnemy): THREE.Vector2 {
+    this.herdBias.set(0, 0);
+    if (enemy.variantId !== 'feral_toaster') return this.herdBias;
+    const radius = Balance.e6Roster.herdDrive.radius;
+    let closestSq = radius * radius;
+    let shepherd: ClaimJumperEnemy | undefined;
+    // ponytail: pool is capped at 96; move this into the spatial hash if that ceiling grows.
+    for (const candidate of this.enemies) {
+      if (!candidate.isAlive || candidate.variantId !== 'lawn_shepherd') continue;
+      const dx = candidate.position.x - enemy.position.x;
+      const dz = candidate.position.z - enemy.position.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq <= 0.0001 || distanceSq >= closestSq) continue;
+      shepherd = candidate;
+      closestSq = distanceSq;
+    }
+    if (!shepherd) return this.herdBias;
+    return this.herdBias
+      .set(shepherd.position.x - enemy.position.x, shepherd.position.z - enemy.position.z)
+      .normalize()
+      .multiplyScalar(Balance.e6Roster.herdDrive.strength);
   }
 
   captureRenderState(): void {
@@ -849,7 +896,7 @@ export class EnemyPool {
     this.thiefSprites.dispose();
     this.thiefSpriteFades.dispose();
     this.thiefSpriteAnimator.dispose();
-    for (const { sprites, fades, animator } of this.e2SpritePresentations) {
+    for (const { sprites, fades, animator } of this.variantSpritePresentations) {
       sprites.dispose();
       fades.dispose();
       animator.dispose();
@@ -1470,7 +1517,7 @@ export class EnemyPool {
     this.thiefSpriteFades.material.rotation = thiefMotion.leanRad;
     this.baronSprites.material.rotation = baronMotion.leanRad;
     this.baronSpriteFades.material.rotation = baronMotion.leanRad;
-    for (const { sprites, fades, animator } of this.e2SpritePresentations) {
+    for (const { sprites, fades, animator } of this.variantSpritePresentations) {
       sprites.material.rotation = animator.motion.leanRad;
       fades.material.rotation = animator.motion.leanRad;
     }
@@ -1486,9 +1533,9 @@ export class EnemyPool {
     const renderScale = this.renderScale(enemy) * nightScale;
     const litVisible = lightFactor > 0;
     const baronVisible = enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
-    const e2Presentation = this.e2SpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
-    const normalVisible = enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !e2Presentation && !isMothSwarmEnemy(enemy);
-    const thiefVisible = enemy.isAlive && litVisible && enemy.isThief && !e2Presentation;
+    const variantPresentation = this.variantSpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
+    const normalVisible = enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !variantPresentation && !isMothSwarmEnemy(enemy);
+    const thiefVisible = enemy.isAlive && litVisible && enemy.isThief && !variantPresentation;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
     const showFade = this.active <= 32 && !fullDark;
     const normalMotion = this.spriteAnimator.motion;
@@ -1509,12 +1556,12 @@ export class EnemyPool {
     this.baronSpriteFades.setTintColor(enemy.id, spriteTint);
     this.baronBannerSprites.setTintScalar(enemy.id, spriteLightFactor);
     this.baronBannerSprites.setTintColor(enemy.id, spriteTint);
-    for (const presentation of this.e2SpritePresentations) {
-      const visible = presentation === e2Presentation && enemy.isAlive && litVisible;
+    for (const presentation of this.variantSpritePresentations) {
+      const visible = presentation === variantPresentation && enemy.isAlive && litVisible;
       presentation.sprites.setTintScalar(enemy.id, spriteLightFactor);
-      presentation.sprites.setTintColor(enemy.id, spriteTint);
+      presentation.sprites.setTintColor(enemy.id, spriteTint ?? (presentation.tintFromVariant ? enemy.variantTintColor ?? undefined : undefined));
       presentation.fades.setTintScalar(enemy.id, spriteLightFactor);
-      presentation.fades.setTintColor(enemy.id, spriteTint);
+      presentation.fades.setTintColor(enemy.id, spriteTint ?? (presentation.tintFromVariant ? enemy.variantTintColor ?? undefined : undefined));
       presentation.sprites.set(enemy.id, enemy.group.position, visible);
       presentation.fades.set(enemy.id, enemy.group.position, visible && showFade && presentation.animator.overlayActive);
       this.applySpriteBob(presentation.sprites.group.children[enemy.id], enemy.position.y, presentation.animator.motion.bobOffset, renderScale);
@@ -1617,7 +1664,7 @@ export class EnemyPool {
       this.baronSprites.material,
       this.baronSpriteFades.material,
       this.baronBannerSprites.material,
-      ...this.e2SpritePresentations.flatMap(({ sprites, fades }) => [sprites.material, fades.material]),
+      ...this.variantSpritePresentations.flatMap(({ sprites, fades }) => [sprites.material, fades.material]),
     ]) {
       setMaterialFog(material, enabled);
     }

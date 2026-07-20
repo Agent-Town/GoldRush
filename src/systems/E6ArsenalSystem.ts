@@ -33,6 +33,13 @@ const OWNER_IDS = {
   tongsThrown: 'e6_tongs_thrown',
 } as const;
 
+export function e6CureArmForOwner(ownerId: string): Exclude<E6ArsenalItem, 'halfLifeCaltrops'> | null {
+  for (const [weapon, id] of Object.entries(OWNER_IDS) as Array<[Exclude<E6ArsenalItem, 'halfLifeCaltrops'>, string]>) {
+    if (id === ownerId) return weapon;
+  }
+  return null;
+}
+
 export class E6ArsenalSystem {
   readonly group: THREE.Group;
 
@@ -115,6 +122,13 @@ export class E6ArsenalSystem {
     for (const unregister of this.unregisterShooters) unregister();
     this.unsubscribeKill();
     this.presentation.dispose();
+  }
+
+  recordPowerDown(enemy: ClaimJumperEnemy, ownerId: string): boolean {
+    const weapon = e6CureArmForOwner(ownerId);
+    if (!weapon || !this.enabled()) return false;
+    this.addOutcome(enemy, weapon, 'fevered_machine_powered_down');
+    return true;
   }
 
   private registerShooters(): void {
@@ -201,10 +215,17 @@ export class E6ArsenalSystem {
       : feveredMachine(variantId)
         ? 'fevered_machine_powered_down'
         : 'freed_turned_back';
-    const outcome: CureArmOutcome = { type, weapon, enemyId: event.enemyId, variantId, lethal: false };
-    this.outcomes.push(outcome);
     const enemy = this.enemies.all[event.enemyId];
-    if (enemy) this.onOutcome?.(enemy.position, type === 'freed_turned_back' ? 'FREED — TURNED BACK' : type === 'fevered_machine_powered_down' ? 'POWERED DOWN' : 'PRISTINE IRON');
+    if (enemy) this.addOutcome(enemy, weapon, type);
+  }
+
+  private addOutcome(
+    enemy: ClaimJumperEnemy,
+    weapon: Exclude<E6ArsenalItem, 'halfLifeCaltrops'>,
+    type: CureArmOutcome['type'],
+  ): void {
+    this.outcomes.push({ type, weapon, enemyId: enemy.id, variantId: enemy.variantId, lethal: false });
+    this.onOutcome?.(enemy.position, type === 'freed_turned_back' ? 'FREED — TURNED BACK' : type === 'fevered_machine_powered_down' ? 'POWERED DOWN' : 'PRISTINE IRON');
   }
 
   private changedKillOwner(): Exclude<E6ArsenalItem, 'halfLifeCaltrops'> | null {

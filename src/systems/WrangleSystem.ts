@@ -102,6 +102,16 @@ export class WrangleSystem {
     if (next) enemy.setAnimationClip('walk');
   }
 
+  powerDown(enemy: ClaimJumperEnemy): boolean {
+    if (!this.enabled || !this.isMachine(enemy)) return false;
+    const current = this.active.get(enemy.id);
+    if (current?.handle) this.decay.cancel(current.handle);
+    enemy.restoreBossHull(1);
+    this.register(enemy, current?.resets ?? 0, 1, 'exhausted');
+    this.onExhausted(enemy.position);
+    return true;
+  }
+
   isHarmless(enemy: ClaimJumperEnemy): boolean {
     return this.active.get(enemy.id)?.state === 'exhausted';
   }

@@ -159,7 +159,7 @@ export class CombatSystem {
     private readonly onXpCollect?: (position: THREE.Vector3, value: number) => void,
     private readonly onEnemyKilled?: (position: THREE.Vector3, freedOrdinal: number) => void,
     private readonly onShot?: (at: number, origin: THREE.Vector3, target: THREE.Vector3) => void,
-    private readonly onEnemyDamaged?: (enemy: ClaimJumperEnemy, amount: number, died: boolean) => void,
+    private readonly onEnemyDamaged?: (enemy: ClaimJumperEnemy, amount: number, died: boolean, ownerId: string) => boolean | void,
     private readonly canDamageEnemy: (enemy: ClaimJumperEnemy) => boolean = () => true,
   ) {
     this.freedWalkers = new FreedWalkerVfx(
@@ -707,9 +707,9 @@ export class CombatSystem {
       if (closest) {
         this.recordDamage(ownerId, Math.min(closest.currentHp, damage));
         const died = closest.takeDamage(damage);
-        this.onEnemyDamaged?.(closest, damage, died);
+        const resolved = this.onEnemyDamaged?.(closest, damage, died, ownerId);
         this.vfx.hit(closest.position);
-        if (died) this.killEnemy(closest, this.currentAt, ownerId);
+        if (died && resolved !== false) this.killEnemy(closest, this.currentAt, ownerId);
       }
       return false;
     }
@@ -723,9 +723,9 @@ export class CombatSystem {
       if (dx * dx + dz * dz > hitRadius * hitRadius) continue;
       this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
       const died = enemy.takeDamage(damage);
-      this.onEnemyDamaged?.(enemy, damage, died);
+      const resolved = this.onEnemyDamaged?.(enemy, damage, died, ownerId);
       this.vfx.hit(enemy.position);
-      if (died) this.killEnemy(enemy, this.currentAt, ownerId);
+      if (died && resolved !== false) this.killEnemy(enemy, this.currentAt, ownerId);
     }
     return false;
   };
@@ -754,10 +754,10 @@ export class CombatSystem {
         this.recordBoltHit(shooterKey, targetId, enemy.id);
         this.recordDamage(ownerId, Math.min(enemy.currentHp, damage));
         const died = enemy.takeDamage(damage);
-        this.onEnemyDamaged?.(enemy, damage, died);
+        const resolved = this.onEnemyDamaged?.(enemy, damage, died, ownerId);
         this.vfx.hit(enemy.position);
         this.audio.playHit();
-        if (died) this.killEnemy(enemy, at, ownerId);
+        if (died && resolved !== false) this.killEnemy(enemy, at, ownerId);
         break;
       }
     }
