@@ -20,3 +20,6 @@ ADR-001: frontier-tech, NO firearms ever (brass/steam/spark/rockets-as-fireworks
 EVERY MINOR IN THE CAST BELONGS TO A HOUSEHOLD — a named parent/guardian in the roster with a livelihood. No unaccompanied children, ever (frontier reality + family-game warmth). Applies to all eras: new child characters land WITH their family or an explicit guardian, same commit. Singles are fine for adults; children are not alone.
 
 ## THE FAMILY-BUSINESS TRADITION (owner-ruled 2026-07-10): a household works ONE trade, together — children learn the family trade. New families land with their business named. (Pairs with the Household Law above.)
+
+## THE CLOCK LAW (ratified 2026-07-20)
+Time in the valley is TOLD, not counted: no year printed, no birthday stated, no arithmetic performable on a face. Townsfolk age ~12–15 years per era and jobs pass down family lines (the Chen masthead law; the clerk line's uniforms; face-chains and apprentice chains). The hero ages on the story's clock — young E1, mid-life E4, silver E8, guiding a child's hands E10 — slower than the town, never explained; the tavern's wrong theories are canon and grow by one per era.
