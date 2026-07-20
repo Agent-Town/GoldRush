@@ -1,0 +1,42 @@
+# Task lane-roster-wiring-e7-01: E7 enemies enter the game — scaffold slice, placeholder-first (LANE-D, commit prefix "feat:")
+
+CODEX: model=gpt-5.6-sol effort=high
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-d.
+READ FIRST: AGENTS.md · `specs/enemy-rosters-e6-e10.md` §E7 (THE DESIGN: rogue_automaton, data_rustler, static_hare, the_echo — this slice wires ONLY the first two) + its "E7 contract family" routing block (lines ~169-174) · **the EXACT template: `git show 74a10b8c` — the shipped E6 roster wiring (`lane-roster-wiring-e6.md`). Every file this task touches, that commit already did for E6. MIRROR it for e7, id-for-id.** · PLACEHOLDER-FIRST LAW (CLAUDE.md §4.3: gameplay never waits on art — bind with the existing bandit sheet + era-accent tint per id, exactly as 74a10b8c did for E6; the real `char-e7-*` sheets bind by NAME later with zero code change).
+
+**FIRE-AUTHORED (attended review welcome).** Decomposed per CLAUDE.md §7.5 to remove the exact partial-rejection risk s762 flagged: this is the DATA-SHAPED scaffold only. Three things are DEFERRED to their own masters and must NOT be touched here — see Firewall.
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+## Why (owner NO-BLOCKER LAW, `specs/enemy-rosters-e6-e10.md:5`, verbatim 2026-07-18: "you can wire things in game, I just correct them later. I am already blocking so much work - lets not add more to that.")
+E7 contracts (`e7-relay-valley`, `e7-echo-canyon`, `e7-dead-band`, `e7-relay-rush`) exist on main but field NO era roster — `assets/contracts/epoch-7-signal/contracts.json` twists have no `enemyRoster` (verified 2026-07-20). E7 is exactly where E6 sat before `74a10b8c`. The design sheet is COMPLETE; art is downstream (Batch R-E7). Wiring goes NOW, placeholder-first — and pins the `char-e7-*-sheet-walk8` filename convention so the later art batch has a target (unpinned convention is what forced E6's art recovery pass).
+
+## Scope (mirror 74a10b8c; wire rogue_automaton + data_rustler ONLY)
+1. **Slots** (`src/assets/slots.ts`): add `charE7RogueAutomaton: 'char.e7.rogue_automaton'` and `charE7DataRustler: 'char.e7.data_rustler'` (mirror the E6 `charE6*` block).
+2. **Generated bindings** (`src/assets/generated.ts`): point both new slots at the placeholder `../../assets/processed/char-bandit-base-sheet-walk8-r0c0.png` (exactly as 74a10b8c did for the E6 slots — the swap to real art is one path change later).
+3. **Layer contract** (`assets/layer-contracts/characters.v2.json`): add a slot entry per new id mirroring the E6 entries — `fallback` = bandit walk8 sheet; `frames.files` = the eight real sheet cells named `char-e7-rogue_automaton-sheet-walk8-r{0,1}c{0,1,2,3}.png` (and `char-e7-data_rustler-...`); `clips.walk` = frames [0..7] fps 8. **This PINS the R-E7 sheet-filename convention.**
+4. **Pool sprite binding** (`src/entities/pools.ts`): mirror the E6 binding block — add `processedE7SpriteCells = import.meta.glob('../../assets/processed/char-e7-*-sheet-walk8-r*c*.png')`, an `e7SpriteBindings` map (`rogue_automaton`/`data_rustler` → slot + sheet), and an `e7EnemySpriteBinding(variantId)` fn returning `{slot, sheet, placeholder}` (placeholder = true while no processed cells match). Extend the pool binding-resolution + `createEnemySpritePresentation(...)` call site to cover e7 ids. **DRAW-CALL LAW (memory `new-enemy-sprite-batch-needs-lazy-true`, regression vp-02:382): every new enemy GeneratedSpriteBatch MUST carry `lazy: true` + the active-guard pattern exactly as E6/baron do — an always-instantiated batch adds a renderer texture and regresses the draw-call budget. Verify the batch is lazy.**
+5. **Balance** (`src/game/Balance.ts`): add an `e7Roster.variants` block (mirror `e6Roster.variants` SHAPE, not values) — `rogue_automaton`: `visualScale` 1.0 (1.0x claim-jumper adult band per spec) + hp/speed scaled to E7 wave math; `data_rustler`: `visualScale` 1.0 + `thief: true` (lane+thief, the pure-reuse glowjack/coal_thief pattern) + stats. Placeholder `tint` per id (era-accent: rogue_automaton broken-teal signal, data_rustler copper/rail-scrip amber). **No `mixes` block** — the base `enemyRosterFor` waveMin filter is sufficient for a 2-enemy roster; do not add e7 mix scheduling.
+6. **Contracts** (`assets/contracts/epoch-7-signal/contracts.json`): add `twist.enemyRoster` rows (shape `{ "id", "label" }`, mirror the E6 rows) per the spec's E7 contract family, RESTRICTED to the two wired ids:
+   - `e7-relay-valley`: `rogue_automaton`, `data_rustler`
+   - `e7-echo-canyon`: `rogue_automaton`, `data_rustler` (the_echo boss route DEFERRED)
+   - `e7-dead-band`: `data_rustler` only (spec omits rogue_automaton here — playbooks unavailable)
+   - `e7-relay-rush`: `data_rustler`, then `rogue_automaton`
+   (static_hare appears in the spec rows for these contracts — OMIT it everywhere this slice; it is deferred.)
+7. **WaveSystem** (`src/systems/WaveSystem.ts`): mirror ONLY the E6 stat-fallback seam — extend `optionsForVariant` so `e7-` contracts read `e7RosterVariant(variant.id)` for their `?? balanced?.X` fallbacks, and add the `e7RosterVariant(id)` helper (mirror `e6RosterVariant`). **Do NOT alter `enemyRosterFor`'s e6 mix branch** — e7 rosters flow through the base (no-mix) path unchanged; confirm this by reading the function.
+8. **Spec** (`e2e/e7-roster.spec.ts`, NEW — mirror `e2e/e6-roster.spec.ts`): an E7 contract's waves field `rogue_automaton`/`data_rustler` (NOT e1 outlaws); the placeholder binding resolves (assert `e7EnemySpriteBinding('rogue_automaton').placeholder === true` until art lands); data_rustler exercises thief-state; cure-arms/death path fires without console error; era-gated (E1 maps unchanged). Zero console/page errors, desktop + 390px mobile.
+
+## Firewall
+Touch ONLY: `src/assets/slots.ts`, `src/assets/generated.ts`, `assets/layer-contracts/characters.v2.json`, `src/entities/pools.ts`, `src/game/Balance.ts` (new `e7Roster` block only), `assets/contracts/epoch-7-signal/contracts.json` (add `twist.enemyRoster` only — do not restructure existing twists), `src/systems/WaveSystem.ts` (the `e7-` stat-fallback branch + `e7RosterVariant` helper ONLY), `e2e/e7-roster.spec.ts` (new).
+NO changes to — and STOP-and-report if the task seems to need them:
+- **The `corrupted replay` enemy mechanic (sample+misorder route beats).** DEFERRED. rogue_automaton rides PLAIN existing lane movement here; do NOT implement beat-misordering or touch `src/playbook`. A later master (E7-02) adds it as a one-seam correction.
+- **`static_hare`** (the 0.35x flock). DEFERRED — no slot, no roster row, no Balance entry this slice.
+- **`the_echo` boss.** DEFERRED to `lane-e7-boss.md` — no boss hook, no `twist.baron`/boss route added.
+- The E6 roster wiring (`e6Roster`, the `e6-` branches, `E6ArsenalSystem`) — leave byte-intact.
+- CombatSystem damage resolution (sole damage resolver — REUSE), sim semantics, existing e2e assertions, other tasks' fresh work. Archetype REUSE only (lane, thief-state) — no new AI.
+
+## Self-check (evidence, not vibes)
+`npx tsc --noEmit` + `npm run build` green. `e2e/e7-roster.spec.ts` green desktop + mobile-390. **`e2e/e6-roster.spec.ts` unmodified-green both projects** (proves E6 roster not regressed). One adjacent wave/spawn suite (e.g. `e2e/e2-arsenal.spec.ts` or the boot/draw-call probe) green both projects — and assert the **draw-call budget is NOT regressed** by the two new sprite batches (lazy:true held). Zero console/page errors in a plain boot of an E7 map. Screenshot the two enemies spawning in an E7 contract (placeholder-tinted) to `artifacts/lane-roster-wiring-e7-01/`.
+If you find yourself about to exit without changes, WRITE WHY into your report first — a silent no-op wastes a queue slot and a gate.
+End: READY-FOR-GATES + the e7Roster stat/tint table + confirm which files are placeholder-tinted + confirm corrupted-replay/static_hare/the_echo were left DEFERRED (untouched).
