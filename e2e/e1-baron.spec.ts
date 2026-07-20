@@ -466,7 +466,8 @@ test('wave 20 spawns the Baron with elite stats, banner, escorts, and stable see
   await tuneFastBaronWave(page, { 'waves.waveInterval': 3.6 });
   await setWave(page, 19);
   const baron = await waitForBaron(page);
-  await expectBaronBanner(page, BARON_ARRIVAL_TITLE, undefined, 'north');
+  expect(baron.edge).toBeTruthy();
+  await expectBaronBanner(page, BARON_ARRIVAL_TITLE, undefined, baron.edge ?? null);
   await expectBaronArtLoaded(page);
   const expectedHp = Balance.enemy.hp * Math.pow(Balance.waves.hpScalePerWave, 20) * 160;
   const expectedSpeed = Balance.enemy.speed * Balance.waves.speedScaleCap * 0.75;

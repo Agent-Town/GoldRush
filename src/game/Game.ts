@@ -66,6 +66,7 @@ import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry
 import { RunManager } from './RunManager';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
+import { baronArrivalEdge } from './BaronFort';
 import { AgentConsentStore, type AgentAbility } from '../agent/AgentConsent';
 import type { AgentPermissionLevel } from '../agent/PermissionLadder';
 import { install as installAgentStub, type AgentStub } from '../agent/AgentStub';
@@ -4522,7 +4523,7 @@ export class Game {
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     if (wave === baron.wave) {
-      const edge = baron.spawnEdge ?? null;
+      const edge = baronArrivalEdge(this.activeContract) ?? null;
       emitStorySignal({ type: 'boss-arrival', contractId: this.activeContract.id, contractName: this.activeContract.name, edge: edge ?? undefined });
       this.queueBaronBanner(baron.taunt, atSim, bossArrivalTitle(baron), edge);
       return;

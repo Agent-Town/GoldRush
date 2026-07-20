@@ -1,8 +1,15 @@
 import { expect, test, type Page } from '@playwright/test';
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { PROFILE_KEY, profileDataKey } from '../src/game/ProfileStorage';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+
+const terrainContract = JSON.parse(readFileSync(path.resolve('assets/pilots/map-rebuild-spike/baron-terrain-contract.json'), 'utf8')) as {
+  landmarkMounts: Array<{ id: string; position: [number, number, number] }>;
+};
+const BARON_FORT = terrainContract.landmarkMounts.find(({ id }) => id === 'fortified_far_bank')!.position;
 
 function collectErrors(page: Page): ErrorBucket {
   const errors: ErrorBucket = { consoleErrors: [], pageErrors: [] };
@@ -40,9 +47,9 @@ test('Baron boot has no palisade tax and spends no repair gold', async ({ page }
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-test('Baron and his arrival card come from the north', async ({ page }) => {
+test('Baron body, motorcade, and arrival card derive their side from the fort', async ({ page }) => {
   const errors = await openBaron(page);
-  expect(await page.evaluate(() => window.__GR_TEST__!.activeContract().twist.baron?.spawnEdge)).toBe('north');
+  expect(await page.evaluate(() => window.__GR_TEST__!.activeContract().twist.baron?.spawnEdge)).toBeUndefined();
   expect(await page.evaluate(() => window.__GR_TEST__!.setManualSim(true))).toBe(true);
   await page.evaluate(() => window.__GR_TEST__!.clearEnemies());
   for (const [key, value] of Object.entries({
@@ -58,8 +65,9 @@ test('Baron and his arrival card come from the north', async ({ page }) => {
   }
   await page.evaluate(() => window.__GR_TEST__!.setWave(19));
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(1));
-  await expect.poll(() => page.evaluate(() => window.__GR_TEST__!.enemyPositions().find((enemy) => enemy.eliteKind === 'baron')?.edge), { timeout: 10_000 }).toBe('north');
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcementEdge), { timeout: 10_000 }).toBe('north');
+  await expect.poll(() => page.evaluate(() => window.__GR_TEST__!.enemyPositions().find((enemy) => enemy.eliteKind === 'baron')?.edge), { timeout: 10_000 }).toBeTruthy();
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcementEdge), { timeout: 10_000 }).toBeTruthy();
+  const announcementEdge = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.announcementEdge);
   const motorcade = await page.evaluate(() => {
     const enemies = window.__GR_TEST__!.enemyPositions();
     const baron = enemies.find((enemy) => enemy.eliteKind === 'baron')!;
@@ -67,6 +75,6 @@ test('Baron and his arrival card come from the north', async ({ page }) => {
     return enemies.filter((enemy) => enemy.id >= baron.id - escortCount && enemy.id <= baron.id);
   });
   expect(motorcade).toHaveLength(9);
-  expect(motorcade.every((enemy) => enemy.edge === 'north' && enemy.z > 0)).toBe(true);
+  expect(motorcade.every((enemy) => enemy.edge === announcementEdge && enemy.x * BARON_FORT[0] + enemy.z * BARON_FORT[2] > 0)).toBe(true);
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
