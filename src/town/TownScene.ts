@@ -2272,12 +2272,15 @@ function boardPageIndexForContract(id: string | undefined): number {
 function renderContractArt(contract: ContractManifest): string {
   const art = contractArtRegistry[contract.id] ?? contractArtRegistry[DEFAULT_CONTRACT_ID];
   const legacyPlateId = contract.id.replace(/^e\d+-/, '');
-  const imageUrl =
+  const plateUrl =
     contractPlateUrls[`../../assets/raw/plate-contract-${contract.id}.png`] ??
-    contractPlateUrls[`../../assets/raw/plate-contract-${legacyPlateId}.png`] ??
-    boardCardUrls[`../../assets/processed/board-cards/${contract.id}.png`] ??
-    contractPlateUrls['../../assets/raw/plate-contract-the-claim.png'];
-  const image = imageUrl ? `<img class="town-ui__contract-art-image" src="${escapeHtml(imageUrl)}" alt="" />` : '';
+    contractPlateUrls[`../../assets/raw/plate-contract-${legacyPlateId}.png`];
+  const interimUrl = boardCardUrls[`../../assets/processed/board-cards/${contract.id}.png`];
+  const imageUrl = plateUrl ?? interimUrl ?? contractPlateUrls['../../assets/raw/plate-contract-the-claim.png'];
+  // Interim map renders (tier 2) wear the parchment treatment until their engraved
+  // plate lands — the board must read as ONE book (owner ruling 2026-07-20).
+  const interimClass = !plateUrl && interimUrl ? ' town-ui__contract-art-image--interim' : '';
+  const image = imageUrl ? `<img class="town-ui__contract-art-image${interimClass}" src="${escapeHtml(imageUrl)}" alt="" />` : '';
   const inset = art?.insetUrl ? `<img class="town-ui__contract-art-inset" src="${escapeHtml(art.insetUrl)}" alt="" />` : '';
   return `
     <figure class="town-ui__contract-art town-ui__contract-art--${escapeHtml(art?.key ?? 'river-tile')}" data-contract-art-key="${escapeHtml(
