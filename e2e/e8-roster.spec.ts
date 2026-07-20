@@ -139,8 +139,8 @@ test('E8 placeholders preserve roster stats and cure-arms exits', async ({ page 
   expect(result.spawned.find((enemy) => enemy.variantId === 'scrap_corsair')).toMatchObject({ scale: 1.1, thief: false });
   expect(result.spawned.find((enemy) => enemy.variantId === 'sun_glare_shambler')).toMatchObject({ scale: 0.8, thief: false });
   expect(result.bindings).toEqual([
-    expect.objectContaining({ sheet: 'char-e8-scrap_corsair-sheet-walk8.png', placeholder: true }),
-    expect.objectContaining({ sheet: 'char-e8-sun_glare_shambler-sheet-walk8.png', placeholder: true }),
+    expect.objectContaining({ sheet: 'char-e8-scrap_corsair-sheet-walk8.png', placeholder: false }),
+    expect.objectContaining({ sheet: 'char-e8-sun_glare_shambler-sheet-walk8.png', placeholder: false }),
   ]);
 
   mkdirSync(SHOT_DIR, { recursive: true });
