@@ -24,6 +24,8 @@ test('boss damage leaves green life over red loss', async ({ page }, testInfo) =
 
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-visible', 'true');
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-semantic', 'health');
+  await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-component', 'shared');
+  await expect(page.locator('#game-canvas')).toHaveAttribute('data-boss-bar-anchor', 'object');
   const bar = await page.locator('#game-canvas').evaluate((canvas: HTMLCanvasElement) => ({
     remaining: Number(canvas.dataset.bossBarRemaining),
     depleted: Number(canvas.dataset.bossBarDepleted),
@@ -38,6 +40,7 @@ test('boss damage leaves green life over red loss', async ({ page }, testInfo) =
   expect(bar.remaining).toBeLessThan(1);
   expect(bar.depleted).toBeCloseTo(1 - bar.remaining, 3);
 
+  await page.waitForTimeout(2_000);
   await mkdir(SHOT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(SHOT_DIR, `${testInfo.project.name}-mid-fight.png`) });
   expect(errors).toEqual([]);

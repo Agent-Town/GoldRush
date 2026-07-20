@@ -31,7 +31,6 @@ import { isMothSwarmEnemy } from '../systems/MothSwarm';
 
 const ENEMY_SPRITE_Y = 0.72;
 const BOSS_HP_MAX_SEGMENTS = 8;
-const BARON_HP_SEGMENTS = 8;
 const BOSS_HP_WIDTH = 1.9;
 const BOSS_HP_FILL_WIDTH = 1.72;
 const BOSS_HP_STYLE = {
@@ -165,6 +164,7 @@ type BossBarState = {
   y: number;
   z: number;
   scale: number;
+  yaw: number | null;
   ratio: number;
   segments: number;
   groupId: string | null;
@@ -1036,6 +1036,7 @@ export class EnemyPool {
         y: y + 0.95,
         z: z / members,
         scale: Math.max(1, scale),
+        yaw: null,
         ratio: THREE.MathUtils.clamp(hp / Math.max(1, totalHp), 0, 1),
         segments,
         groupId: grouped.bossGroupId,
@@ -1050,11 +1051,12 @@ export class EnemyPool {
     if (!baron) return null;
     return {
       x: baron.position.x,
-      y: baron.position.y + 1.75 * baron.visualScale,
+      y: baron.position.y + 2.45 * baron.visualScale,
       z: baron.position.z,
       scale: Math.max(1, baron.visualScale * 0.88),
+      yaw: baron.group.rotation.y,
       ratio: THREE.MathUtils.clamp(baron.currentHp / Math.max(1, baron.maxHp), 0, 1),
-      segments: BARON_HP_SEGMENTS,
+      segments: BOSS_HP_MAX_SEGMENTS,
       groupId: null,
       aliveComponents: 1,
       destroyedComponents: 0,
@@ -1231,7 +1233,8 @@ export class EnemyPool {
       railcarMounted ? this.railcar3dModel!.position.y + RAILCAR_3D_HEIGHT + 0.35 : state.y,
       railcarMounted ? this.railcar3dCenter.z : state.z,
     );
-    if (this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
+    if (state.yaw === null && this.camera) this.bossHpGroup.quaternion.copy(this.camera.quaternion);
+    else this.bossHpGroup.rotation.set(0, state.yaw ?? 0, 0);
     this.bossHpGroup.scale.setScalar(railcarMounted ? 1 : state.scale);
     this.bossHpFill.scale.x = state.ratio;
     this.bossHpFill.position.x = -BOSS_HP_FILL_WIDTH * (1 - state.ratio) * 0.5;
@@ -1253,6 +1256,8 @@ export class EnemyPool {
     canvas.dataset.bossBarDepleted = round3(1 - (state?.ratio ?? 1)).toString();
     canvas.dataset.bossBarRemainingColor = `#${this.bossHpFillMaterial.color.getHexString()}`;
     canvas.dataset.bossBarDepletedColor = `#${this.bossHpBackMaterial.color.getHexString()}`;
+    canvas.dataset.bossBarComponent = 'shared';
+    canvas.dataset.bossBarAnchor = state ? (state.yaw === null ? 'camera' : 'object') : 'none';
   }
 
   private syncEnemyInstance(enemy: ClaimJumperEnemy): void {
