@@ -323,8 +323,8 @@
       },
       {
        "id": "e6-art",
-       "title": "Art \u2014 Atomic production set",
-       "status": "planned"
+       "title": "Art \u2014 Atomic production set (audit batch 1/5 DRAINED: 7 atoms; batches 2+ per era-art-audit plan)",
+       "status": "building"
       },
       {
        "id": "e6-town",
@@ -814,7 +814,7 @@
       },
       {
        "id": "board-era-chapters",
-       "title": "Era chapters + secrets kept (owner directive) — v1 rejected s755 (stranded dependent board specs); v2 migrated all 7 + drained s757",
+       "title": "Era chapters + secrets kept (owner directive) \u2014 v1 rejected s755 (stranded dependent board specs); v2 migrated all 7 + drained s757",
        "status": "merged",
        "mergeHash": "330ba7bb8575ffa580361254ede1eccfb210ba68"
       },
@@ -826,8 +826,9 @@
       },
       {
        "id": "plates-028-031",
-       "title": "Engraved plates E4-E10 (art 028-031, one-in-flight)",
-       "status": "planned"
+       "title": "THE FULL BOOK \u2014 all 41 engraved plates + E1 adoption + one render path",
+       "status": "merged",
+       "mergeHash": "0276cd653814061af41d0ca6457698df393c1ee7"
       }
      ]
     }
@@ -1328,6 +1329,42 @@
        "id": "map-quality-register",
        "title": "THE MAP QUALITY REGISTER \u2014 class law + census referee (owner-ordered)",
        "status": "queued"
+      },
+      {
+       "id": "fix-never-trap",
+       "title": "THE NEVER-TRAP LAW \u2014 depenetration everywhere (stuck\u00d72 repro)",
+       "status": "merged",
+       "mergeHash": "34773897b90d0d400107c6e2504212fb52e4c542"
+      },
+      {
+       "id": "fix-landmark-brightness",
+       "title": "Night-wrap leak scoped \u2014 landmarks lit, perf chain healed, tier speaks+recovers",
+       "status": "merged",
+       "mergeHash": "34773897b90d0d400107c6e2504212fb52e4c542"
+      },
+      {
+       "id": "fix-wreck-visibility",
+       "title": "Wreck rubble readable on slopes + repair markers",
+       "status": "merged",
+       "mergeHash": "039af30d3cc3cc3f125bbaa218124c9c66436cc3"
+      },
+      {
+       "id": "fix-baron-truths",
+       "title": "Baron spawns from the fort side + shared bar",
+       "status": "merged",
+       "mergeHash": "c1d68e70ff1e6471e33bdb91334ef7a6b1f6d696"
+      },
+      {
+       "id": "fix-scene-swap-camera",
+       "title": "Camera-truth law at swaps + URL hygiene",
+       "status": "merged",
+       "mergeHash": "bec1b128dfd8c1b98d8db54009036aacb533e86f"
+      },
+      {
+       "id": "fix-night-mode-truth",
+       "title": "Night truth: light on mesh, assault restored, silhouettes",
+       "status": "merged",
+       "mergeHash": "a23b3b05a1ba2e7ca8356af3f8006ec35691c237"
       }
      ]
     }
@@ -1505,8 +1542,9 @@
     },
     {
      "id": "assay-ledger-page",
-     "title": "TL-03 Window 2 \u2014 the Assay Office page IN the Claim Ledger (county aggregates + your own page)",
-     "status": "queued"
+     "title": "Assay Office \u2014 Records page in the Claim Ledger \u2705 (county + your claim)",
+     "status": "merged",
+     "mergeHash": "00b93d659b7de5efe073e7b572adc7425a9fa4ae"
     }
    ]
   },
