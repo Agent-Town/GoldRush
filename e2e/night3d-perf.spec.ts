@@ -133,16 +133,19 @@ test('Night Shift keeps its lantern read and auto-tiers one sticky step at a tim
   await expect(page.getByText('Dimming the lanterns for smoothness.')).toBeVisible();
   await page.evaluate(() => window.__GR_TEST__!.setBalance('render.night.collapseSeconds', 1.5));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(2);
+  await expect(page.getByText('Trimming the night lights for smoothness.')).toBeVisible();
   await page.evaluate(() => window.__GR_TEST__!.setBalance('render.night.collapseSeconds', 9999));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.nightPoolCap)).toBe(4);
   await page.evaluate(() => window.__GR_TEST__!.setBalance('render.night.collapseSeconds', 1.5));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(3);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.tier)).toBe('lite');
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.lighting?.postEnabled)).toBe(false);
+  await expect(page.getByText('Switching to the painted map for smoothness.')).toBeVisible();
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'painted');
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-run3d-pilot-state', 'lite');
 
-  expect(await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? '{}')['e1-night-shift'], RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY)).toBe(3);
+  expect(await page.evaluate((key) => JSON.parse(sessionStorage.getItem(key) ?? '{}')['e1-night-shift'], RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY)).toBe(3);
+  expect(await page.evaluate((key) => localStorage.getItem(key), RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY)).toBeNull();
   await page.goto('/?debug&autotier&contract=e1-night-shift&nowaves&nolevel&nopause&nokill&seed=night3d-sticky&tier=full');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(3);
@@ -161,17 +164,13 @@ test('Night Shift keeps its lantern read and auto-tiers one sticky step at a tim
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(0);
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'glb');
 
-  expect(await page.evaluate(async (key) => {
-    const storage = await Function('return import("/src/game/ProfileStorage.ts")')() as typeof import('../src/game/ProfileStorage');
-    if (storage.PROFILE_DATA_KEYS.has(key)) return false;
-    const profile = storage.createProfile(localStorage, 'Night Perf Other');
-    if (!profile) return false;
-    storage.bindProfileSession(profile.id);
-    return true;
-  }, RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY)).toBe(true);
-  await page.goto('/?debug&contract=e1-night-shift&nowaves&nolevel&nopause&nokill&seed=night3d-profile-scope&tier=full');
-  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
-  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(0);
-  await expect(page.locator('#game-canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'glb');
+  const freshBoot = await page.context().newPage();
+  freshBoot.on('console', (message) => { if (message.type() === 'error') errors.console.push(message.text()); });
+  freshBoot.on('pageerror', (error) => errors.page.push(error.message));
+  await freshBoot.goto('/?debug&contract=e1-night-shift&nowaves&nolevel&nopause&nokill&seed=night3d-next-session&tier=full');
+  await freshBoot.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  expect(await freshBoot.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.performance.runtimeVerdict)).toBe(0);
+  await expect(freshBoot.locator('#game-canvas')).toHaveAttribute('data-terrain3d-pilot-render-source', 'glb');
+  await freshBoot.close();
   expect(errors).toEqual({ console: [], page: [] });
 });

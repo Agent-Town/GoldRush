@@ -8,6 +8,7 @@ import { hasElevationTile, resolveTerrainMove, terrainDetourWaypoint, terrainSpe
 import type { PalisadeRoute } from '../systems/BuildSystem';
 import type { BuildingTarget, GoldHolding } from '../systems/TargetingSystem';
 import * as Terrain from '../world/Terrain';
+import { depenetrateFromBlockers } from '../world/LandmarkCollision';
 import type { PalisadeBlocker } from './Palisade';
 
 export type CompassEdge = 'north' | 'south' | 'east' | 'west';
@@ -1350,15 +1351,7 @@ export class ClaimJumperEnemy {
       this.nextPosition.z = maxZ + outsideNudge;
       this.nextPosition.x += this.blockerSlideDirection('x') * stepDistance * Balance.palisade.slideBias;
     } else {
-      const pushWest = Math.abs(this.nextPosition.x - minX);
-      const pushEast = Math.abs(maxX - this.nextPosition.x);
-      const pushSouth = Math.abs(this.nextPosition.z - minZ);
-      const pushNorth = Math.abs(maxZ - this.nextPosition.z);
-      const push = Math.min(pushWest, pushEast, pushSouth, pushNorth);
-      if (push === pushWest) this.nextPosition.x = minX;
-      else if (push === pushEast) this.nextPosition.x = maxX;
-      else if (push === pushSouth) this.nextPosition.z = minZ;
-      else this.nextPosition.z = maxZ;
+      depenetrateFromBlockers(this.nextPosition, [blocker], pad, stepDistance);
     }
   }
 

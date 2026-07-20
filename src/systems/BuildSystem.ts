@@ -625,6 +625,10 @@ export class BuildSystem {
     return this.economy.gold >= this.nextCost && this.countFor(def.id) < this.maxCountFor(def);
   }
 
+  get repairCount(): number {
+    return this.repairs;
+  }
+
   get diagnostics(): BuildDiagnostics {
     const footprint = this.footprint(this.selectedDef(), this.ghostRotationSteps);
     const sluicesActive = this.sluices.activeCount > 0;

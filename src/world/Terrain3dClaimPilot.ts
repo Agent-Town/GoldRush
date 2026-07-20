@@ -96,6 +96,7 @@ type Host = {
   contractId: string;
   tileId: string;
   paintedGround?: THREE.Object3D;
+  nightMode?: boolean;
   nightLighting?: () => LightFieldSnapshot;
   onVisualHeightSourceInstalled?: () => void;
 };
@@ -532,7 +533,11 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       const heightAt = bakeHeightGrid(nextTerrain, terrainMetrics);
       if (disposed) throw new Error('terrain pilot disposed');
       nextTerrain.name = 'Terrain3dClaimPilot';
-      featherTerrainEdge(nextTerrain, terrainMetrics.bounds, host);
+      if (host.nightMode) featherTerrainEdge(nextTerrain, terrainMetrics.bounds, host);
+      else {
+        host.canvas.dataset.terrain3dPilotNightPools = 'off';
+        host.canvas.dataset.terrain3dPilotNightPoolSources = '0';
+      }
       const mount = selected.contract.panoramaMount;
       nextPanorama.name = mount.id;
       nextPanorama.position.fromArray(mount.position);
@@ -619,6 +624,19 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           y: model.position.y,
           z: model.position.z,
         })));
+        host.canvas.dataset.terrain3dPilotLandmarkMaterials = JSON.stringify(nextLandmarks.children.map((model) => {
+          const materials = new Set<THREE.Material>();
+          model.traverse((node) => {
+            const mesh = node as THREE.Mesh;
+            if (mesh.isMesh) for (const material of Array.isArray(mesh.material) ? mesh.material : [mesh.material]) materials.add(material);
+          });
+          return {
+            id: model.name,
+            total: materials.size,
+            transparent: [...materials].filter((material) => material.transparent).length,
+            depthWriteDisabled: [...materials].filter((material) => !material.depthWrite).length,
+          };
+        }));
         publish(host.canvas, 'ready', 'glb', terrainMetrics, nextPanorama, panoramaMetrics);
       });
     } catch {

@@ -222,6 +222,7 @@ import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
+import { blockerContains, depenetrateFromBlockers } from '../world/LandmarkCollision';
 import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { PowerWireView } from '../world/PowerWireView';
 import {
@@ -1090,7 +1091,6 @@ export class Game {
   private runtimePerformanceVerdict: RuntimePerformanceVerdict = readRuntimePerformanceVerdict(this.activeContract.id);
   private readonly runtimeAutoTierEnabled = !isDebugEnabled() || new URLSearchParams(window.location.search).has('autotier');
   private renderCollapseSeconds = 0;
-  private autoTierToastShown = false;
   private skipNextVisibleFrameSample = false;
   private readonly onPerformanceVisibilityChange = () => {
     this.resetFrameWindow();
@@ -1628,6 +1628,7 @@ export class Game {
         contractId: this.activeContract.id,
         tileId: activeTileDescriptor().id,
         paintedGround: this.terrainView?.group.children.find((child) => child.userData.terrainRelief === true),
+        nightMode: this.isNightShiftContract(),
         nightLighting: () => this.lightField.snapshot(),
         onVisualHeightSourceInstalled: () => this.resampleVisualHeights(),
       });
@@ -1654,6 +1655,7 @@ export class Game {
         wreck: (family: BuildableId, index: number) => this.wreckHarnessBuilding(family, index),
         repair: (family: BuildableId, index: number) => {
           const repaired = this.buildSystem.repairBuilding(family, index, this.timeAlive, this.localActor.group.position);
+          if (repaired) this.depenetrateRepairOverlap();
           this.publishDiagnostics();
           return repaired;
         },
@@ -2317,6 +2319,7 @@ export class Game {
         return true;
       }
       this.buildSystem.applyE8Arsenal(this.e8ArsenalSystem.lensTurretEnabled, this.e8ArsenalSystem.breachSealsEnabled);
+      const repairsBefore = this.buildSystem.repairCount;
       this.buildSystem.update(
         simDelta,
         this.timeAlive,
@@ -2329,6 +2332,7 @@ export class Game {
         (position) => this.vfx.floatText(position, 'Vault full!', '#a0522d'),
         this.localActor.group.position,
       );
+      if (this.buildSystem.repairCount > repairsBefore) this.depenetrateRepairOverlap();
       this.e6ArsenalSystem.update(simDelta, this.timeAlive);
       this.e9ArsenalSystem.update(simDelta, this.timeAlive);
       this.pressureSystem.update(simDelta, this.timeAlive, this.visibleActorPositions(), this.waveSystem.diagnostics.wave);
@@ -2466,7 +2470,16 @@ export class Game {
   }
 
   private updateActors(simDelta: number, fallbackIntents: Intents): void {
-    const terrain = { bounds: Terrain.bounds, sample: (x: number, z: number) => this.actorTerrainSample(x, z) };
+    const terrain = {
+      bounds: Terrain.bounds,
+      sample: (x: number, z: number) => this.actorTerrainSample(x, z),
+      depenetrate: (point: { x: number; z: number }, maxDistance: number) => depenetrateFromBlockers(
+        point,
+        [...this.buildSystem.palisadeBlockers, ...this.e6TileConsumers.blockers, ...Terrain.landmarkBlockers()],
+        Balance.hero.radius + 0.08,
+        maxDistance,
+      ),
+    };
     if (!this.mpActorIntents) {
       this.primaryActor.update(simDelta, fallbackIntents, terrain, this.harvestSnapshot.channeling);
       return;
@@ -2488,7 +2501,30 @@ export class Game {
 
   private actorTerrainSample(x: number, z: number): Terrain.TerrainSample {
     const sample = Terrain.sample(x, z);
-    return this.e6TileConsumers.isWalkable(x, z) ? sample : { ...sample, walkable: false };
+    const buildingBlocked = this.buildSystem.palisadeBlockers.some((blocker) =>
+      blockerContains(blocker, x, z, Balance.hero.radius + 0.08),
+    );
+    return this.e6TileConsumers.isWalkable(x, z) && !buildingBlocked ? sample : { ...sample, walkable: false };
+  }
+
+  private depenetrateRepairOverlap(): void {
+    const blockers = this.buildSystem.palisadeBlockers;
+    for (const actor of this.actors) {
+      if (actor.group.visible) depenetrateFromBlockers(actor.group.position, blockers, Balance.hero.radius + 0.08, Number.POSITIVE_INFINITY);
+    }
+    if (this.prospector.group.visible) {
+      depenetrateFromBlockers(this.prospector.position, blockers, Balance.hero.radius + 0.08, Number.POSITIVE_INFINITY);
+    }
+    for (const enemy of this.enemies.all) {
+      if (enemy.isAlive) {
+        depenetrateFromBlockers(
+          enemy.position,
+          blockers,
+          Balance.palisade.avoidancePad + enemy.hitRadius - Balance.enemy.touchRadius,
+          Number.POSITIVE_INFINITY,
+        );
+      }
+    }
   }
 
   private updatePresentation(delta: number): void {
@@ -4326,6 +4362,10 @@ export class Game {
   }
 
   private updateRuntimePerformanceVerdict(frameMs: number): void {
+    if (this.canvas.dataset.terrain3dPilotState === 'loading' || this.canvas.dataset.run3dPilotState === 'loading') {
+      this.resetFrameWindow();
+      return;
+    }
     if (
       this.runtimePerformanceVerdict >= 3 ||
       !this.runtimeAutoTierEnabled ||
@@ -4343,10 +4383,12 @@ export class Game {
       (this.runtimePerformanceVerdict + 1) as RuntimePerformanceVerdict,
     );
     this.resetFrameWindow();
-    if (!this.autoTierToastShown) {
-      this.autoTierToastShown = true;
-      this.uiBridge.announce('Dimming the lanterns for smoothness.', this.timeAlive, null, 4);
-    }
+    this.uiBridge.announce([
+      '',
+      'Dimming the lanterns for smoothness.',
+      'Trimming the night lights for smoothness.',
+      'Switching to the painted map for smoothness.',
+    ][this.runtimePerformanceVerdict]!, this.timeAlive, null, 4);
     if (this.runtimePerformanceVerdict >= 3) this.fallbackToLiteRendering();
   }
 
@@ -5382,6 +5424,7 @@ export class Game {
     const start = pointFromVector(this.prospector.position);
     const result = this.buildSystem.repairBuilding(id, index, this.timeAlive, this.prospector.position);
     if (!result) return false;
+    this.depenetrateRepairOverlap();
     this.syncStockpileHoldings();
     this.publishDiagnostics();
     return {

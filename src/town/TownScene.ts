@@ -12,6 +12,7 @@ import { Loop } from '../core/Loop';
 import { createRenderer, resizeRenderer } from '../core/Renderer';
 import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
+import { depenetrateToWalkable } from '../world/LandmarkCollision';
 import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
@@ -133,6 +134,7 @@ export type TownDiagnostics = {
   frame: number;
   elapsed: number;
   player: { x: number; z: number };
+  teleport: (x: number, z: number) => void;
   activePrompt: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | null;
   activeBark: { actorId: TownActorId; speaker: string; text: string } | null;
   townName: string | null;
@@ -467,7 +469,15 @@ export class TownScene {
     }
     this.lastExitIntent = rawExitIntent;
 
-    this.hero.update(delta, intents, { bounds: TOWN_BOUNDS, sample: this.sampleTown });
+    this.hero.update(delta, intents, {
+      bounds: TOWN_BOUNDS,
+      sample: this.sampleTown,
+      depenetrate: (point, maxDistance) => depenetrateToWalkable(
+        point,
+        (x, z) => this.sampleTown(x, z).walkable,
+        maxDistance,
+      ),
+    });
     for (const actor of this.townActors) actor.update(delta, this.elapsed);
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
     this.updateFirstClaimGuide();
@@ -1806,6 +1816,11 @@ export class TownScene {
         x: round2(this.hero.group.position.x),
         z: round2(this.hero.group.position.z),
       },
+      teleport: (x, z) => {
+        this.hero.group.position.set(x, this.hero.group.position.y, z);
+        this.hero.velocity.set(0, 0, 0);
+        this.hero.snapRenderState();
+      },
       activePrompt: this.activePrompt?.id ?? null,
       activeBark: this.activeBark,
       townName: this.townName,
@@ -2502,8 +2517,9 @@ function readTownMegaproject(epochId: string, id: string): TownMegaproject {
 function shellAt(buildings: readonly TownBuilding[], x: number, z: number): boolean {
   const pad = Balance.hero.radius + 0.08;
   return buildings.some((building) => {
-    const halfX = building.footprint.w / 2 + pad;
-    const halfZ = building.footprint.d / 2 + pad;
+    const footprint = building.collisionFootprint ?? building.footprint;
+    const halfX = footprint.w / 2 + pad;
+    const halfZ = footprint.d / 2 + pad;
     return Math.abs(x - building.position.x) <= halfX && Math.abs(z - building.position.z) <= halfZ;
   });
 }

@@ -185,7 +185,7 @@ export function savePerformanceTierOverride(value: PerformanceTierOverride): Per
 export function readRuntimePerformanceVerdict(contractId: string | null = currentContractId()): RuntimePerformanceVerdict {
   if (!contractId) return 0;
   try {
-    const stored = JSON.parse(globalThis.localStorage?.getItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY) ?? '{}') as Record<string, unknown>;
+    const stored = JSON.parse(globalThis.sessionStorage?.getItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY) ?? '{}') as Record<string, unknown>;
     const value = Number(stored[contractId]);
     return value === 1 || value === 2 || value === 3 ? value : 0;
   } catch {
@@ -198,8 +198,8 @@ export function saveRuntimePerformanceVerdict(contractId: string, verdict: Runti
   const next = Math.max(current, verdict) as RuntimePerformanceVerdict;
   if (next === current) return current;
   try {
-    const stored = JSON.parse(globalThis.localStorage?.getItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY) ?? '{}') as Record<string, unknown>;
-    globalThis.localStorage?.setItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY, JSON.stringify({ ...stored, [contractId]: next }));
+    const stored = JSON.parse(globalThis.sessionStorage?.getItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY) ?? '{}') as Record<string, unknown>;
+    globalThis.sessionStorage?.setItem(RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY, JSON.stringify({ ...stored, [contractId]: next }));
   } catch {}
   if (lastDiagnostics) lastDiagnostics.runtimeVerdict = next;
   return next;

@@ -118,12 +118,22 @@ export class Hero {
     this.snapRenderState();
   }
 
-  update(dt: number, intents: Intents, terrain: { bounds: TerrainBounds; sample: TerrainSampler }, panning = false): void {
+  update(
+    dt: number,
+    intents: Intents,
+    terrain: {
+      bounds: TerrainBounds;
+      sample: TerrainSampler;
+      depenetrate?: (point: { x: number; z: number }, maxDistance: number) => boolean;
+    },
+    panning = false,
+  ): void {
     this.iframeRemaining = Math.max(0, this.iframeRemaining - dt);
     this.attackPoseRemaining = Math.max(0, this.attackPoseRemaining - dt);
 
     const moveX = finiteOrZero(intents.move.x);
     const moveY = finiteOrZero(intents.move.y);
+    terrain.depenetrate?.(this.group.position, Balance.hero.speed * this.moveSpeedMult * dt);
     const currentSample = terrain.sample(this.group.position.x, this.group.position.z);
     const slopeSpeed = terrainSpeedMultiplier(this.group.position.x, this.group.position.z, moveX, moveY);
     this.targetVelocity

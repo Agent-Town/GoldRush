@@ -5,6 +5,7 @@ export type TownBuilding = {
   name: string;
   position: { x: number; z: number };
   footprint: { w: number; d: number };
+  collisionFootprint?: { w: number; d: number };
   color: string;
   roof: string;
   accent: string;
@@ -242,6 +243,7 @@ export const townBuildings: readonly TownBuilding[] = [
     name: 'General Store',
     position: townPlazaSlot('general_store').position,
     footprint: { w: 4.8, d: 3.3 },
+    collisionFootprint: { w: 4.65, d: 3.2 },
     color: '#d9a45f',
     roof: '#5f4930',
     accent: '#5b8a8a',
