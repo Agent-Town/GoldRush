@@ -1,0 +1,23 @@
+# CODEX-WALL — weekly quota exhausted (declared s809, 2026-07-21T18:16Z)
+
+## Evidence (measured, not inferred)
+- Codex rate-limit primary `used_percent: 94.0` (weekly, window_minutes 10080), `credits.has_credits: false`, `balance: "0"`, `plan_type: pro`.
+- Weekly window resets: **Sun Jul 26 16:57 +07** (~5 days out).
+- TWO back-to-back walls at the ceiling, both turn-interrupt signature (`last_agent_message: null`, huge mostly-cached token totals):
+  - lane-b `safari-swap` — rc1 17:24 run (~25M tok) → `tasks/failed/rc1-20260721-172411-lane-safari-swap.md` (FIRST interrupt).
+  - lane-a `locked-win` (owner-P1, THE LOCKED-WIN LAW) — rc1 17:47→18:17 run (22.8M tok, pushed weekly 93→94%) → `tasks/failed/rc1-20260721-174747-lane-locked-win.md` (FIRST interrupt).
+- Source rollouts: `~/.codex/sessions/2026/07/21/rollout-2026-07-21T17-47-47-*.jsonl` (locked-win), `...T17-24-12-*.jsonl` (safari).
+
+## What this means
+The weekly Codex quota is spent. Any NEW `codex exec` dispatch (re-queue or refill) will wall again immediately, burning nothing but the reset budget and producing rc1s. Both walls are the CEILING, not task defects — the partial fixes each left uncommitted src in their worktree are legitimate work-in-progress, not failures.
+
+## Fire rules while this flag exists (per fire.md §2.0)
+- NO refills (§2E suspended). NO re-queues of the wall-class failures (safari-swap, locked-win) — these do NOT consume the §2C first-wall allowance; leave both masters in `tasks/failed/` untouched.
+- Drains / gates / merges / assayer / bookkeeping / authoring CONTINUE (all Claude-side, unaffected by the codex wall). If a done-move or lane-ahead ever appears, drain it normally.
+- ONCE PER FIRE probe: `codex exec "reply exactly: OK"` (short timeout). On success → the window reset or the owner topped up:
+  1. delete this flag,
+  2. re-queue the wall-class masters ONCE each (these re-queues do NOT count toward the twice-then-escalate rule): `cp tasks/failed/rc1-20260721-174747-lane-locked-win.md tasks/queue/lane-a/lane-locked-win.md` (owner-P1, FIRST) and `cp tasks/failed/rc1-20260721-172411-lane-safari-swap.md tasks/queue/lane-b/lane-safari-swap.md` — SERIALIZE (owner-P1 locked-win first; only queue safari once lane-a frees, to avoid re-walling both if quota is thin post-reset),
+  3. resume refills, note CODEX-RESUMED in the handoff.
+
+## Owner action (unblocks immediately, else waits for reset ~Jul 26)
+Add Codex credits / raise the weekly cap. Until then the owner-P1 LOCKED-WIN LAW (first external tester's ruling) cannot land.
