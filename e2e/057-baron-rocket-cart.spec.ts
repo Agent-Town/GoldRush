@@ -3,7 +3,7 @@ import { mkdir, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
-import { MEDALS_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { MEDALS_KEY, PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import {
   frontierNodes,
   loadResearchState,
@@ -34,10 +34,10 @@ function isDevServerTransportError(text: string): boolean {
   return text.includes("WebSocket connection to 'ws://127.0.0.1:5188/") || text === 'Failed to load resource: net::ERR_CONNECTION_REFUSED';
 }
 
-async function seedProfile(page: Page, science = 6, taken: readonly string[] = []): Promise<void> {
+async function seedProfile(page: Page, science = 6, taken: readonly string[] = [], securedContracts: readonly string[] = []): Promise<void> {
   await page.goto('/');
   await page.evaluate(
-    ({ profileKey, keys, scienceSteps, takenNodes }) => {
+    ({ profileKey, keys, scienceSteps, takenNodes, secured }) => {
       localStorage.clear();
       sessionStorage.clear();
       const profiles: ProfileState['profiles'] = [
@@ -48,6 +48,14 @@ async function seedProfile(page: Page, science = 6, taken: readonly string[] = [
       localStorage.setItem(keys.town, 'Quartz Hill');
       localStorage.setItem(keys.meta, JSON.stringify({ version: 1, tracks: { territory: 0, science: scienceSteps, hero: 0, agent: 0 } }));
       localStorage.setItem(keys.research, JSON.stringify({ version: 1, taken: takenNodes, proposalSalt: 0, pinnedTarget: null }));
+      if (secured.length) {
+        localStorage.setItem(
+          keys.scores,
+          JSON.stringify(secured.map((contractId, index) => ({
+            waves: 20, kills: 0, gold: 0, timeAlive: 60, at: index + 1, secured: true, contractId, profileName: 'Robin',
+          }))),
+        );
+      }
     },
     {
       profileKey: PROFILE_KEY,
@@ -55,9 +63,11 @@ async function seedProfile(page: Page, science = 6, taken: readonly string[] = [
         town: profileDataKey('robin', TOWN_NAME_KEY),
         meta: profileDataKey('robin', META_PROGRESS_KEY),
         research: profileDataKey('robin', RESEARCH_STATE_KEY),
+        scores: profileDataKey('robin', SCOREBOARD_KEY),
       },
       scienceSteps: science,
       takenNodes: taken,
+      secured: securedContracts,
     },
   );
 }
@@ -86,7 +96,8 @@ async function openBoard(page: Page): Promise<void> {
 }
 
 async function openBaronBoardPage(page: Page): Promise<void> {
-  await page.getByTestId('contract-page-dot-e1-baron').click();
+  // 330ba7bb: The Book exposes contracts through era chapters, not per-contract page dots.
+  await page.getByTestId('contract-chapter-tab-epoch-1-frontier').click();
   await expect(page.getByTestId('contract-card-e1-baron')).toBeVisible();
 }
 
@@ -346,7 +357,7 @@ test('melee range suppresses the Baron rocket volley', async ({ page }) => {
 });
 
 test('defeating the Baron captures the cart, shows the medal line, and unlocks captured research', async ({ page }, testInfo) => {
-  await seedProfile(page, ROCKET_PREREQS.length, ROCKET_PREREQS);
+  await seedProfile(page, ROCKET_PREREQS.length, ROCKET_PREREQS, ['the-claim', 'e1-dry-gulch']);
   const errors = await openGame(page, '057-capture', '&nopause');
   await expect(page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.research.taken ?? [])).resolves.not.toContain(
     SKY_ROCKET_BATTERY_NODE_ID,

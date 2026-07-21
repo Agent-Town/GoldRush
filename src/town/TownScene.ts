@@ -1604,9 +1604,10 @@ export class TownScene {
     const best = bestContractScore(contract.id, scores);
     const tags = contract.boardRow.tags.length > 0 ? contract.boardRow.tags : ['trail'];
     const medal = contract.id === 'e1-baron' && hasBaronMedal();
+    const showDetails = unlock.unlocked || medal;
     const firstClaimHint = this.firstClaimGuideActive && contract.id === DEFAULT_CONTRACT_ID && unlock.unlocked;
     const baronStakes =
-      contract.id === 'e1-baron' && unlock.unlocked
+      contract.id === 'e1-baron' && showDetails
         ? `<p class="town-ui__contract-stakes" data-testid="contract-stakes-e1-baron">The Baron's outfit rides at 20 — cadence runs hot (+15%).</p>`
         : '';
     return `
@@ -1626,7 +1627,7 @@ export class TownScene {
             contract.boardRow.ledgerBlurb,
           )}</p>
           ${
-            unlock.unlocked
+            showDetails
               ? `
                 ${renderContractBriefing(contract)}
                 ${baronStakes}
@@ -2310,6 +2311,13 @@ function contractUnlock(contract: ContractManifest): { unlocked: boolean; condit
   }
   if (unlock === 'science-complete') {
     return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
+  }
+  if (unlock === 'science-complete+2-secured') {
+    const securedContracts = new Set(scores.filter((score) => score.secured === true).map((score) => contractIdOf(score)));
+    return {
+      unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete && securedContracts.size >= 2,
+      condition: "Secure two claims; bank the science — then he'll come out",
+    };
   }
   if (unlock.startsWith('secured:')) {
     const requiredId = unlock.slice('secured:'.length);
