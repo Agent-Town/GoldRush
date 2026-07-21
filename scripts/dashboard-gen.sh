@@ -146,13 +146,15 @@ STATS_TABLE=$(printf 'ALL-TIME: %d task runs · %d hours %d min of implementer t
 STATS_TABLE=$(printf '%s' "$STATS_TABLE" | esc)
 
 # auto-refresh the census in the background when stale (>6h); render the last stamp meanwhile
+NODE_BIN="$(command -v node || true)"
+[ -z "$NODE_BIN" ] && for c in /Users/robin/.nvm/versions/node/*/bin/node /opt/homebrew/bin/node /usr/local/bin/node; do [ -x "$c" ] && NODE_BIN="$c" && break; done
 if [ -e logs/factory-usage.json ]; then
   age_min=$(( ( $(date +%s) - $(stat -f %m logs/factory-usage.json) ) / 60 ))
   if [ "$age_min" -gt 360 ] && ! pgrep -f factory-usage-census >/dev/null 2>&1; then
-    nohup node scripts/factory-usage-census.mjs >> logs/.census-refresh.log 2>&1 &
+    nohup "$NODE_BIN" scripts/factory-usage-census.mjs >> logs/.census-refresh.log 2>&1 &
   fi
 fi
-FACTORY_BLOCK=$(node -e '
+FACTORY_BLOCK=$("$NODE_BIN" -e '
 try { const a=require("./logs/factory-usage.json"); const M=n=>(n/1e6).toFixed(1)+"M";
 console.log(`THE WHOLE FACTORY (census ${a.stamped}):`);
 console.log(`  attended (Fable):        ${String(a.attended.files).padStart(5)} sessions   fresh-in ${M(a.attended.in).padStart(9)}   out ${M(a.attended.out)}`);
