@@ -224,7 +224,7 @@ import { UpgradeOverlay, type UpgradeIntent } from '../ui/UpgradeOverlay';
 import { hasElevationTile, highGroundRange, simHeightDiagnostics, terrainLineOfSight, terrainSimSample, terrainSpeedMultiplier } from '../sim/TileHeight';
 import * as Terrain from '../world/Terrain';
 import type { TerrainView } from '../world/Terrain';
-import { blockerContains, depenetrateFromBlockers } from '../world/LandmarkCollision';
+import { depenetrateFromBlockers } from '../world/LandmarkCollision';
 import { emptyRailPathDiagnostics, RailPathView } from '../world/RailPath';
 import { PowerWireView } from '../world/PowerWireView';
 import {
@@ -2391,7 +2391,7 @@ export class Game {
           if (!this.wrangle.isHarmless(enemy)) this.combat.handleEnemyContact(enemy);
           return this.deathPending;
         },
-        [...this.buildSystem.palisadeBlockers, ...this.e6TileConsumers.blockers, ...Terrain.landmarkBlockers()],
+        [...this.buildSystem.palisadeBlockers, ...this.heroBlockers()],
         isStealDisabled() ? undefined : this.thiefContext,
         isWreckDisabled() ? undefined : this.wreckerContext,
         (enemy) =>
@@ -2500,7 +2500,7 @@ export class Game {
       sample: (x: number, z: number) => this.actorTerrainSample(x, z),
       depenetrate: (point: { x: number; z: number }, maxDistance: number) => depenetrateFromBlockers(
         point,
-        [...this.buildSystem.palisadeBlockers, ...this.e6TileConsumers.blockers, ...Terrain.landmarkBlockers()],
+        this.heroBlockers(),
         Balance.hero.radius + 0.08,
         maxDistance,
       ),
@@ -2548,10 +2548,11 @@ export class Game {
 
   private actorTerrainSample(x: number, z: number): Terrain.TerrainSample {
     const sample = Terrain.sample(x, z);
-    const buildingBlocked = this.buildSystem.palisadeBlockers.some((blocker) =>
-      blockerContains(blocker, x, z, Balance.hero.radius + 0.08),
-    );
-    return this.e6TileConsumers.isWalkable(x, z) && !buildingBlocked ? sample : { ...sample, walkable: false };
+    return this.e6TileConsumers.isWalkable(x, z) ? sample : { ...sample, walkable: false };
+  }
+
+  private heroBlockers() {
+    return [...this.e6TileConsumers.blockers, ...Terrain.landmarkBlockers()];
   }
 
   private depenetrateRepairOverlap(): void {
