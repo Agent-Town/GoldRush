@@ -16,5 +16,7 @@ Owner-ordered 2026-07-19 ("we should be tracking these bugs/improvements... thes
 
 | MQ-10 | Night mode under 3D: light pools dark on mesh, night pressure collapsed (no wall assault, snipeable), enemy light-cone silhouettes read as unintended anatomy | One light-truth source on the mesh + assault-gating root cause + recomposed night read | lane-night-mode-truth (queued d, after night3d-perf) | IN FLIGHT | light-pool-on-mesh probe + walls-receive-assault assertion, night maps |
 
+| MQ-11 | Browser parity: Safari swap-teardown aborts (stale run HUD in town + walk-through buildings; Chrome unaffected) | Exception-safe scene swaps + permanent webkit spot-gate | lane-safari-swap (queued b) | IN FLIGHT | webkit spot-set: swap spec + never-trap town + plain boot |
+
 ## THE CENSUS HARNESS (the referee)
 `e2e/map-census.spec.ts` (task: lane-map-census) boots ALL 41 doors headlessly and asserts the CLOSED classes' checks per map, emitting one artifact table (map × class → PASS/FAIL). A class flips CLOSED only when its column is green across the census. New classes append here first, then get a census column.
