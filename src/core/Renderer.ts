@@ -10,6 +10,20 @@ type ResizeState = {
 
 const resizeState = new WeakMap<THREE.WebGLRenderer, ResizeState>();
 const rendererContexts = new WeakMap<HTMLCanvasElement, WebGL2RenderingContext>();
+const nextFrameCaptures = new WeakMap<HTMLCanvasElement, Array<(canvas: HTMLCanvasElement) => void>>();
+
+export function captureNextRenderedFrame(canvas: HTMLCanvasElement, capture: (canvas: HTMLCanvasElement) => void): void {
+  const pending = nextFrameCaptures.get(canvas) ?? [];
+  pending.push(capture);
+  nextFrameCaptures.set(canvas, pending);
+}
+
+export function flushRenderedFrameCaptures(canvas: HTMLCanvasElement): void {
+  const pending = nextFrameCaptures.get(canvas);
+  if (!pending?.length) return;
+  nextFrameCaptures.delete(canvas);
+  for (const capture of pending) capture(canvas);
+}
 
 export function createRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
   const context = rendererContexts.get(canvas);
