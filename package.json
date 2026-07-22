@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "tsc && vite build",
+    "build:release": "tsc && vite build && node scripts/assert-release-build.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
     "census": "playwright test e2e/map-census.spec.ts --project=desktop-chrome --workers=1",
@@ -14,6 +15,7 @@
     "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
     "verify:visual": "playwright test e2e/visual.spec.ts",
     "test:preview": "playwright test --config playwright.preview.config.ts",
+    "test:release": "playwright test --config playwright.release.config.ts",
     "inspect:canvas": "node scripts/inspect-threejs-canvas.mjs"
   },
   "dependencies": {

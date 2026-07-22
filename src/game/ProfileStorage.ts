@@ -235,7 +235,7 @@ export function profileDataKeys(
   candidates: Iterable<string> = [],
 ): Set<string> {
   const keys = new Set(PROFILE_DATA_KEYS);
-  for (const key of candidates) if (isTileStateDataKey(key)) keys.add(key);
+  for (const key of candidates) if (isTileStateDataKey(key) || isResearchStateDataKey(key)) keys.add(key);
   if (!isEnumerableStorage(storage)) return keys;
 
   const prefix = `${PROFILE_KEY}.${profileId}.`;
@@ -244,7 +244,7 @@ export function profileDataKeys(
       const key = storage.key(index);
       if (key?.startsWith(prefix)) {
         const logicalKey = key.slice(prefix.length);
-        if (isTileStateDataKey(logicalKey)) keys.add(logicalKey);
+        if (isTileStateDataKey(logicalKey) || isResearchStateDataKey(logicalKey)) keys.add(logicalKey);
       }
     }
   } catch {}
@@ -253,6 +253,10 @@ export function profileDataKeys(
 
 export function isTileStateDataKey(key: string): boolean {
   return key.startsWith(TILE_STATE_DATA_KEY_PREFIX) && key.length > TILE_STATE_DATA_KEY_PREFIX.length;
+}
+
+function isResearchStateDataKey(key: string): boolean {
+  return /^gr\.research\.epoch-[a-z0-9-]+\.v1$/.test(key);
 }
 
 export function bindProfileSession(profileId: string): void {
