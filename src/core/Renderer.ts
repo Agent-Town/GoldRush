@@ -9,14 +9,21 @@ type ResizeState = {
 };
 
 const resizeState = new WeakMap<THREE.WebGLRenderer, ResizeState>();
+const rendererContexts = new WeakMap<HTMLCanvasElement, WebGL2RenderingContext>();
 
 export function createRenderer(canvas: HTMLCanvasElement): THREE.WebGLRenderer {
+  const context = rendererContexts.get(canvas);
+  if (context && !context.isContextLost()) {
+    context.pixelStorei(context.UNPACK_FLIP_Y_WEBGL, false);
+    context.pixelStorei(context.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+  }
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
     alpha: false,
     powerPreference: 'high-performance',
   });
+  rendererContexts.set(canvas, renderer.getContext() as WebGL2RenderingContext);
   renderer.outputColorSpace = THREE.SRGBColorSpace;
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   renderer.toneMappingExposure = 1.05;
