@@ -23,6 +23,12 @@ Written 2026-07-18 (owner: "I really have to start testing. How can we optimize 
 
 Recommended order: **A today** (highest information), then B/C split across days, D+E whenever convenient.
 
+## Summon the Second Rider
+1. In town, open **Ride Together** and choose **Open the Claim**.
+2. Copy the claim word. For one companion, start then run the command; for two/three, first run named copies with `--party 3`/`--party 4`, then start.
+3. `node scripts/second-rider.mjs CLAIM-WORD --name "The Second Rider"`
+4. The Second Rider appears in your roster and rides automatically.
+
 ## SESSION A LINKS
 - T3 ceremony: play an E3 run to the science ceiling, raise the Refinery at the schoolhouse, HOLD the valve. `https://gold-rush-3in.pages.dev/?contract=e3-canyon-works&debug&terrain3dPilot&run3dPilot=all`
 - E5 new arsenal (harpoon ballista, depth charges): `https://gold-rush-3in.pages.dev/?contract=e5-deepwater-claim&debug&terrain3dPilot&run3dPilot=all`
