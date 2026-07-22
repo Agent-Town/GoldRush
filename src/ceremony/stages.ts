@@ -37,6 +37,7 @@ const painters: Record<string, StagePainter> = {
   't3-the-refinery': drawT3,
   't4-the-boat': drawT4,
   't5-the-deep-reactor': drawT5,
+  't6-the-calculating-house': drawT6,
 };
 
 export function drawCeremonyStage(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
@@ -402,4 +403,105 @@ function drawT5(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
       ctx.stroke();
     }
   }
+}
+
+// ─── T6 — THE CALCULATING HOUSE: plate, listening dial, crowd ────────
+function drawT6(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+  const done = state.phaseId === 'done';
+  const mounted = done || phaseReached(state, 'teal-dial');
+  const plateProgress = state.phaseId === 'mount-plate' ? state.hand.holdFraction : mounted ? 1 : 0;
+  const dialLive = done || phaseReached(state, 'teal-dial');
+  const listening = done || phaseReached(state, 'house-listens');
+  const printed = done || phaseReached(state, 'more-voices');
+  const ground = h * 0.72;
+
+  const sky = ctx.createLinearGradient(0, 0, 0, ground);
+  sky.addColorStop(0, '#15222a');
+  sky.addColorStop(1, '#654d39');
+  ctx.fillStyle = sky;
+  ctx.fillRect(0, 0, w, ground);
+  ctx.fillStyle = '#493827';
+  ctx.fillRect(0, ground, w, h - ground);
+
+  // The House: new timber around an old brass-and-teal listening machine.
+  ctx.fillStyle = '#6b5037';
+  ctx.fillRect(w * 0.29, h * 0.27, w * 0.46, h * 0.45);
+  ctx.fillStyle = '#31251d';
+  ctx.beginPath();
+  ctx.moveTo(w * 0.25, h * 0.29);
+  ctx.lineTo(w * 0.52, h * 0.11);
+  ctx.lineTo(w * 0.79, h * 0.29);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillStyle = '#2e2118';
+  ctx.fillRect(w * 0.43, h * 0.43, w * 0.18, h * 0.29);
+
+  // The dial wakes in the Prospector's boot rhythm, throwing teal on the town.
+  const pulse = dialLive ? 0.72 + Math.sin(state.elapsedMs / 125) * 0.16 : 0.18;
+  const dialX = w * 0.68;
+  const dialY = h * 0.43;
+  if (dialLive) {
+    const glow = ctx.createRadialGradient(dialX, dialY, 2, dialX, dialY, w * 0.28);
+    glow.addColorStop(0, `rgba(83, 215, 205, ${pulse})`);
+    glow.addColorStop(1, 'rgba(83, 215, 205, 0)');
+    ctx.fillStyle = glow;
+    ctx.fillRect(w * 0.35, h * 0.2, w * 0.65, h * 0.8);
+  }
+  ctx.fillStyle = '#b68845';
+  ctx.beginPath();
+  ctx.arc(dialX, dialY, w * 0.035, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.fillStyle = dialLive ? '#58d7cd' : '#315c59';
+  ctx.beginPath();
+  ctx.arc(dialX, dialY, w * 0.022, 0, Math.PI * 2);
+  ctx.fill();
+
+  // Faint voices converge on the roof when the House listens.
+  if (listening) {
+    ctx.strokeStyle = 'rgba(92, 210, 201, 0.7)';
+    ctx.lineWidth = Math.max(2, w * 0.003);
+    for (let ring = 0; ring < 3; ring += 1) {
+      ctx.beginPath();
+      ctx.arc(w * 0.52, h * 0.15, w * (0.08 + ring * 0.045), Math.PI * 1.12, Math.PI * 1.88);
+      ctx.stroke();
+    }
+  }
+
+  // The House's answer feeds from a narrow printer beside the dial.
+  if (printed) {
+    ctx.fillStyle = '#d9c9a4';
+    ctx.fillRect(w * 0.62, h * 0.52, w * 0.17, h * 0.1);
+    ctx.fillStyle = '#2d514f';
+    ctx.font = `bold ${Math.round(h * 0.035)}px system-ui, sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText('MORE VOICES', w * 0.705, h * 0.58);
+  }
+
+  // The town watches; the brass firstborn stands closest to the mounted plate.
+  for (let index = 0; index < 10; index += 1) {
+    const x = w * (0.26 + index * 0.065);
+    const y = ground + h * 0.1 + jitter(index, 6) * 4;
+    ctx.fillStyle = index === 5 ? '#b8833f' : index % 3 === 0 ? '#3f7471' : '#4b392b';
+    ctx.beginPath();
+    ctx.arc(x, y - h * 0.045, w * 0.011, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillRect(x - w * 0.01, y - h * 0.03, w * 0.02, h * 0.075);
+    if (index === 5) {
+      ctx.fillStyle = '#57d7cd';
+      ctx.fillRect(x - w * 0.004, y - h * 0.014, w * 0.008, h * 0.016);
+    }
+  }
+
+  // The held plate travels from the player's hand to the single screw above
+  // the door; the kept-image phase captures it in its final place.
+  const plateX = w * (0.78 - plateProgress * 0.26);
+  const plateY = h * (0.77 - plateProgress * 0.41);
+  ctx.fillStyle = '#d1a252';
+  ctx.fillRect(plateX - w * 0.045, plateY - h * 0.018, w * 0.09, h * 0.036);
+  ctx.fillStyle = '#342719';
+  ctx.beginPath();
+  ctx.arc(plateX, plateY, Math.max(2, w * 0.004), 0, Math.PI * 2);
+  ctx.fill();
+
+  drawEldersTree(ctx, w, h);
 }

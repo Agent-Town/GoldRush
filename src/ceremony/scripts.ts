@@ -218,10 +218,39 @@ export const T5_THE_DEEP_REACTOR: CeremonyScript = {
   keptImage: { caption: "The reactor's glow laid across the drowned claims at dusk." },
 };
 
+// ─── T6 · E6→E7 — THE CALCULATING HOUSE ───────────────────────────────────
+// STORYBOOK: the player's held placement mounts the Prospector's little plate
+// above the door; the dial answers in its boot rhythm, the House listens, and
+// one telegraph click becomes a chord before it prints MORE VOICES.
+export const T6_THE_CALCULATING_HOUSE: CeremonyScript = {
+  id: 't6-the-calculating-house',
+  interstitial: 'T6',
+  epochId: 'epoch-6-atomic',
+  title: 'The Calculating House',
+  doorLine: "The Prospector's little plate is ready for its place above the door.",
+  hand: { kind: 'hold', durationMs: 1_600, label: 'Hold to mount the plate' },
+  phases: [
+    { id: 'house-gathers', kind: 'beat', durationMs: 1_200, direction: 'The town gathers at the new House.' },
+    { id: 'mount-plate', kind: 'hand', direction: "Mount the Prospector's little plate above the door." },
+    { id: 'teal-dial', kind: 'beat', durationMs: 1_400, direction: "The teal dial blinks the Prospector's own boot rhythm." },
+    { id: 'house-listens', kind: 'beat', durationMs: 1_800, direction: "The House listens to the world's faint voices." },
+    { id: 'more-voices', kind: 'beat', durationMs: 1_400, direction: 'The paper answers: MORE VOICES.' },
+    { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: "The plate above the door, the dial's light on the crowd — the Prospector front row." },
+    { id: 'arm', kind: 'arm', direction: 'The Signal Era opens.' },
+  ],
+  sound: [
+    { beat: 't6-boot-rhythm', phase: 'teal-dial', atMs: 0, sound: 'prospector-hover-loop' },
+    { beat: 't6-telegraph-click', phase: 'house-listens', atMs: 0, sound: 'old-digger-tape-swap' },
+    { beat: 't6-click-chord', phase: 'house-listens', atMs: 900, sound: 'tier-up' },
+    { beat: 't6-more-voices', phase: 'more-voices', atMs: 0, sound: null, silence: true },
+  ],
+  keptImage: { caption: "The plate above the door, the dial's light on the crowd — the Prospector front row." },
+};
+
 /** The registry: every framework-staged ceremony, keyed by the era it closes.
  * T1 (stamp mill click) and T2 (dynamo crank) predate the framework and stay
  * on their own doors — wrap, don't rewrite; migration is a named follow-up. */
-export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR];
+export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR, T6_THE_CALCULATING_HOUSE];
 
 export function ceremonyScriptForEpoch(epochId: string): CeremonyScript | null {
   return CEREMONY_SCRIPTS.find((script) => script.epochId === epochId) ?? null;

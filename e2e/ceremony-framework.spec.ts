@@ -15,6 +15,7 @@ const E3 = 'epoch-3-voltage';
 const E4 = 'epoch-4-motor';
 const E5 = 'epoch-5-deepwater';
 const E6 = 'epoch-6-atomic';
+const E7 = 'epoch-7-signal';
 
 type Errors = { console: string[]; page: string[] };
 type ProfileState = {
@@ -147,7 +148,7 @@ test('plain boot: the framework sits inert — legacy doors, no overlay, no writ
   await expect(page.getByTestId('ceremony-layer')).toBeHidden();
   const diagnostics = await ceremonyDiagnostics(page);
   expect(diagnostics).toMatchObject({ doorState: 'legacy', open: false, armCount: 0, armableId: null });
-  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor']);
+  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor', 't6-the-calculating-house']);
   const ceremonyKeys = await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('gr.ceremony.')));
   expect(ceremonyKeys).toEqual([]);
   expect(errors).toEqual({ console: [], page: [] });
@@ -355,6 +356,85 @@ test('T5 THE DEEP REACTOR: the rhythm gates the raise, the pass keeps the hand i
 
   await page.getByTestId('ceremony-return').click();
   await expect(layer).toBeHidden();
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('T6 THE CALCULATING HOUSE: mounting the plate arms E7 exactly once and the era survives reload', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  const errors = watchErrors(page);
+  await seed(page, { epochId: E6, scienceSteps: 16, completeMegaproject: 'calculating-house' });
+  await openSchoolhouse(page);
+
+  const door = page.getByTestId('ceremony-epoch-door');
+  await expect(door).toHaveAttribute('data-door-state', 'ceremony-ready');
+  await expect(door).toHaveAttribute('data-ceremony-id', 't6-the-calculating-house');
+  await shot(page, info, 't6-door-ready');
+
+  await page.getByTestId('begin-ceremony').click();
+  const layer = page.getByTestId('ceremony-layer');
+  await expect(layer).toBeVisible();
+  await expect(layer).toHaveAttribute('data-ceremony-id', 't6-the-calculating-house');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 5_000 }).toBe('mount-plate');
+
+  // PLAYED, NOT WATCHED: the House waits for the player's deliberate hand.
+  await page.waitForTimeout(2_500);
+  const idle = await ceremonyDiagnostics(page);
+  expect(idle?.phase).toBe('mount-plate');
+  expect(idle?.hand?.holdMs).toBe(0);
+  expect(idle?.armCount).toBe(0);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E6);
+  await shot(page, info, 't6-hand-waits');
+
+  const hand = page.getByTestId('ceremony-hand-input');
+  await hand.dispatchEvent('pointerdown');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 8_000 }).not.toBe('mount-plate');
+  await hand.dispatchEvent('pointerup');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 15_000 }).toBe('done');
+  await shot(page, info, 't6-done');
+
+  const done = await ceremonyDiagnostics(page);
+  expect(done?.beats).toEqual(
+    expect.arrayContaining(['t6-boot-rhythm', 't6-telegraph-click', 't6-click-chord', 't6-more-voices', 't6-the-calculating-house:kept-image']),
+  );
+  expect(done?.keptImage).toMatchObject({ captured: true, stored: true });
+  expect(done?.armCount).toBe(1);
+  expect(done?.armedEpochId).toBe(E7);
+  expect(done?.armFailure).toBeNull();
+
+  const keptImage = await page.evaluate(
+    (key) => JSON.parse(localStorage.getItem(key) ?? 'null'),
+    ceremonyKeptImageKey('t6-the-calculating-house'),
+  );
+  expect(keptImage).toMatchObject({
+    version: 1,
+    ceremonyId: 't6-the-calculating-house',
+    epochId: E6,
+    successorId: E7,
+    caption: "The plate above the door, the dial's light on the crowd — the Prospector front row.",
+    stored: true,
+  });
+  expect(keptImage.dataUrl).toMatch(/^data:image\/png/);
+
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E7);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E7);
+  expect(
+    await page.evaluate(async (epoch) => {
+      const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      return registry.activateEpoch(epoch);
+    }, E7),
+  ).toBe(false);
+
+  await page.getByTestId('ceremony-return').click();
+  await expect(layer).toBeHidden();
+  await page.reload();
+  expect(
+    await page.evaluate(async () => {
+      const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      return registry.activeEpochId();
+    }),
+  ).toBe(E7);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E7);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E7);
   expect(errors).toEqual({ console: [], page: [] });
 });
 
