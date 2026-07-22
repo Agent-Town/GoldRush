@@ -67,6 +67,7 @@ export type ProfileRecord = {
   updatedAt: number;
   difficultyPreset: DifficultyPresetId;
   hintsSeen: string[];
+  trailGuide?: true;
 };
 
 export type ProfileState = {
@@ -144,14 +145,14 @@ export function activeProfileName(storage?: ProfileStorage): string {
   }
 }
 
-export function createProfile(storage: ProfileStorage, name: string): ProfileRecord | null {
+export function createProfile(storage: ProfileStorage, name: string, difficultyPreset?: DifficultyPresetId): ProfileRecord | null {
   const cleanName = cleanProfileName(name);
   if (!cleanName) return null;
   const state = loadProfileState(storage);
 
   if (!state) {
     const now = Date.now();
-    const profile = freshProfile(cleanName, now, uniqueProfileId(cleanName, []), readLegacyDifficulty(storage));
+    const profile = freshProfile(cleanName, now, uniqueProfileId(cleanName, []), difficultyPreset ?? readLegacyDifficulty(storage), true);
     const next: ProfileState = { version: 2, activeId: profile.id, profiles: [profile] };
     saveProfileState(storage, next);
     migrateLegacyData(storage, profile.id);
@@ -168,7 +169,7 @@ export function createProfile(storage: ProfileStorage, name: string): ProfileRec
   }
 
   const now = Date.now();
-  const profile = freshProfile(cleanName, now, uniqueProfileId(cleanName, state.profiles));
+  const profile = freshProfile(cleanName, now, uniqueProfileId(cleanName, state.profiles), difficultyPreset, true);
   state.profiles.push(profile);
   state.activeId = profile.id;
   saveProfileState(storage, state);
@@ -187,6 +188,7 @@ export function importProfileRecord(storage: ProfileStorage, source: ProfileReco
     cleanTime(source.createdAt) || now,
     uniqueProfileId(name, state.profiles),
     normalizeDifficultyPreset(source.difficultyPreset),
+    source.trailGuide === true,
   );
   profile.updatedAt = now;
   profile.hintsSeen = cleanHintsSeen(source.hintsSeen);
@@ -392,6 +394,7 @@ function migrateProfile(raw: unknown, seen: Set<string>): ProfileRecord | null {
         typeof raw.difficultyPreset === 'string' ? raw.difficultyPreset : DEFAULT_DIFFICULTY_PRESET,
     ),
     hintsSeen: cleanHintsSeen(raw.hintsSeen),
+    ...(raw.trailGuide === true ? { trailGuide: true as const } : {}),
   };
 }
 
@@ -400,8 +403,9 @@ function freshProfile(
   now: number,
   id: string,
   difficultyPreset: DifficultyPresetId = DEFAULT_DIFFICULTY_PRESET,
+  trailGuide = false,
 ): ProfileRecord {
-  return { id, name, createdAt: now, updatedAt: now, difficultyPreset, hintsSeen: [] };
+  return { id, name, createdAt: now, updatedAt: now, difficultyPreset, hintsSeen: [], ...(trailGuide ? { trailGuide: true } : {}) };
 }
 
 function uniqueProfileId(name: string, existing: readonly { id: string }[]): string {

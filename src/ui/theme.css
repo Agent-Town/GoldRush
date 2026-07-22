@@ -1178,6 +1178,37 @@
   font: inherit;
 }
 
+.gr-profile-greenhorn {
+  grid-column: 1 / -1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  margin: 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(181, 125, 54, 0.45);
+}
+
+.gr-profile-greenhorn legend {
+  font-weight: 800;
+}
+
+.gr-profile-greenhorn input {
+  min-height: auto;
+  margin-right: 4px;
+}
+
+.hud-agent-chip[data-guide="true"] {
+  max-width: min(48ch, calc(100vw - 32px));
+}
+
+.hud-agent-feed[data-guide="true"] {
+  grid-column: 1 / -1;
+  max-width: none;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
 .gr-profile-create__button {
   min-width: 0;
 }
