@@ -183,8 +183,8 @@ test('Assay Office pilot is lazy, contract-valid, visual-only, and stays inside 
   await walkToAssayOffice(page);
   await expect(page.getByTestId('town-approach-prompt')).toContainText('Assay Office');
   await page.getByTestId('town-open-assay').click();
-  await expect(page.getByTestId('assay-bench')).toBeVisible();
-  await page.getByTestId('assay-close').click();
+  await expect(page.getByTestId('complaint-desk')).toBeVisible();
+  await page.getByTestId('complaint-close').click();
   await page.getByTestId('town-exit').click();
   await expect(canvas).toHaveAttribute('data-town3d-pilot-state', 'disposed');
   assertNoErrors(errors);
@@ -215,7 +215,7 @@ test('a failed Assay Office GLB load preserves its facade and interaction', asyn
   await walkToAssayOffice(page);
   await expect(page.getByTestId('town-approach-prompt')).toContainText('Assay Office');
   await page.getByTestId('town-open-assay').click();
-  await expect(page.getByTestId('assay-bench')).toBeVisible();
+  await expect(page.getByTestId('complaint-desk')).toBeVisible();
   assertNoErrors(errors);
 });
 
