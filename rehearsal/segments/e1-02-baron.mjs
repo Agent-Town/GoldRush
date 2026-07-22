@@ -8,6 +8,8 @@ await gameReady(page);
 await poll(() => page.evaluate(() => !!window.__GR_TEST__), { label: 'seam' });
 console.log('contract:', await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract?.activeId));
 await page.getByTestId('contract-briefing-dismiss').click().catch(() => {});
+// GRINDING SHORTCUT (cited): a player reaches the boss fully leveled — max the arsenal.
+await page.evaluate(() => { window.__GR_TEST__.maxUpgrades?.(); });
 
 // Grinding shortcut: skip the 19 approach waves; the Baron rides at 20.
 await page.evaluate(() => window.__GR_TEST__.setWave(19));

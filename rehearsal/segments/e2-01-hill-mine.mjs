@@ -10,6 +10,8 @@ await poll(() => page.evaluate(() => !!window.__GR_TEST__), { label: 'seam' });
 console.log('contract:', await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract?.activeId));
 await page.getByTestId('contract-briefing-dismiss').click().catch(() => {});
 await shot(page, 'e2-01-hill-mine-boot');
+// GRINDING SHORTCUT (cited): a player reaches the boss fully leveled — max the arsenal.
+await page.evaluate(() => { window.__GR_TEST__.maxUpgrades?.(); });
 
 // pressure diagnostics before the fight
 console.log('pressure:', JSON.stringify(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure ?? null)).slice(0, 300));

@@ -47,6 +47,13 @@ import { openSegment, shot, hold, poll, townReady, gameReady, walkToPrompt, open
     meta.tracks.science = Math.max(meta.tracks.science, 6);
     localStorage.setItem(key, JSON.stringify(meta));
   });
+  // The Baron was fought in e1-02; ensure the medal T1 gates on is present
+  // (CITED shortcut: seed only if the fight didn't persist it to this profile).
+  await page.evaluate(() => {
+    const key = 'gr.profile.v2.rehearsal.gr.medals.v1';
+    const cur = JSON.parse(localStorage.getItem(key) ?? 'null');
+    if (!cur?.baronBeaten) localStorage.setItem(key, JSON.stringify({ version: 1, baronBeaten: true, rocketCartCaptured: true }));
+  });
   await page.reload();
   await poll(() => page.getByTestId('start-menu-enter-town').isVisible(), { label: 'start menu 2' });
   await page.getByTestId('start-menu-enter-town').click();

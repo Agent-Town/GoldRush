@@ -22,6 +22,7 @@ export async function openSegment(name, { url = '/' } = {}) {
     recordVideo: { dir: VIDEO_TMP, size: { width: 1280, height: 720 } },
   });
   const page = context.pages()[0] ?? (await context.newPage());
+  page.on('dialog', (d) => d.accept().catch(() => {})); // never let a native confirm() stall a run
   const errors = { console: [], page: [] };
   page.on('console', (m) => {
     const t = m.text();
