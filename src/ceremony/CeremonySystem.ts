@@ -20,7 +20,7 @@ import {
   type CeremonyPhase,
   type CeremonyScript,
 } from './scripts';
-import { drawCeremonyStage, type StageHandState } from './stages';
+import { ceremonyStageBackdropUrl, drawCeremonyStage, type StageHandState } from './stages';
 
 export { CEREMONY_KEPT_IMAGE_EVENT, ceremonyKeptImageKey };
 
@@ -112,6 +112,7 @@ export class CeremonySystem {
   private active: ActiveCeremony | null = null;
   private stageCanvas: HTMLCanvasElement | null = null;
   private stageContext: CanvasRenderingContext2D | null = null;
+  private stageBackdrop: HTMLImageElement | null = null;
   private directionElement: HTMLElement | null = null;
   private handButton: HTMLButtonElement | null = null;
   private handTextInput: HTMLInputElement | null = null;
@@ -542,11 +543,11 @@ export class CeremonySystem {
     const handControl = script.hand.kind === 'typed-entry'
       ? `<form data-ceremony-entry>
           <input type="text" value="${escapeHtml(script.hand.expected)}" aria-label="${escapeHtml(script.hand.label)}" data-testid="ceremony-name-input" autocomplete="off" spellcheck="false">
-          <button type="submit" class="ceremony-hand-input" data-ceremony-hand data-testid="ceremony-hand-input">${escapeHtml(script.hand.label)}</button>
+          <button type="submit" class="ceremony-hand-input death-overlay__button" data-ceremony-hand data-testid="ceremony-hand-input">${escapeHtml(script.hand.label)}</button>
         </form>`
-      : `<button type="button" class="ceremony-hand-input" data-ceremony-hand data-testid="ceremony-hand-input">${escapeHtml(script.hand.label)}</button>`;
+      : `<button type="button" class="ceremony-hand-input death-overlay__button" data-ceremony-hand data-testid="ceremony-hand-input">${escapeHtml(script.hand.label)}</button>`;
     this.root.innerHTML = `
-      <div class="ceremony-frame" role="dialog" aria-modal="true" aria-label="${escapeHtml(script.title)}">
+      <div class="ceremony-frame town-ui__board-shell" role="dialog" aria-modal="true" aria-label="${escapeHtml(script.title)}">
         <header class="ceremony-header">
           <p class="ceremony-eyebrow">${escapeHtml(script.interstitial)} · the era's turn</p>
           <h2>${escapeHtml(script.title)}</h2>
@@ -556,11 +557,18 @@ export class CeremonySystem {
         <div class="ceremony-hand">
           ${handControl}
         </div>
-        <button type="button" class="ceremony-leave" data-ceremony-leave data-testid="ceremony-leave">Step back</button>
+        <button type="button" class="ceremony-leave death-overlay__button death-overlay__button--secondary" data-ceremony-leave data-testid="ceremony-leave">Step back</button>
       </div>
     `;
     this.stageCanvas = this.root.querySelector('canvas');
     this.stageContext = this.stageCanvas?.getContext('2d') ?? null;
+    const backdropUrl = ceremonyStageBackdropUrl(script.id);
+    this.stageBackdrop = backdropUrl ? new Image() : null;
+    if (this.stageCanvas) {
+      this.stageCanvas.dataset.stageSrc = backdropUrl ?? '';
+      this.stageCanvas.dataset.assetState = backdropUrl ? 'loading' : 'fallback';
+    }
+    if (this.stageBackdrop && backdropUrl) this.stageBackdrop.src = backdropUrl;
     this.directionElement = this.root.querySelector('[data-testid="ceremony-direction"]');
     this.handButton = this.root.querySelector('[data-ceremony-hand]');
     this.handTextInput = this.root.querySelector('[data-testid="ceremony-name-input"]');
@@ -643,6 +651,7 @@ export class CeremonySystem {
     delete this.root.dataset.phaseKind;
     this.stageCanvas = null;
     this.stageContext = null;
+    this.stageBackdrop = null;
     this.directionElement = null;
     this.handButton = null;
     this.handTextInput = null;
@@ -717,6 +726,8 @@ export class CeremonySystem {
       passPulls: ceremony.passPulls,
       lastPullAgoMs: ceremony.lastPullAtMs >= 0 ? ceremony.elapsedMs - ceremony.lastPullAtMs : Number.MAX_SAFE_INTEGER,
     };
+    const backdrop = this.stageBackdrop?.complete && this.stageBackdrop.naturalWidth > 0 ? this.stageBackdrop : null;
+    canvas.dataset.assetState = backdrop ? 'ready' : this.stageBackdrop ? 'loading' : 'fallback';
     drawCeremonyStage(ctx, canvas.width, canvas.height, {
       script: ceremony.script,
       phaseId: phase.id,
@@ -724,7 +735,7 @@ export class CeremonySystem {
       phaseDurationMs: phase.kind === 'beat' ? phase.durationMs : 0,
       elapsedMs: ceremony.elapsedMs,
       hand,
-    });
+    }, backdrop);
   }
 }
 
