@@ -258,7 +258,11 @@ export class Hud {
     this.elements.agentLabel.textContent = snapshot.agent?.permissionLabel ?? 'suggest-only';
     this.elements.agentChip.dataset.level = String(snapshot.agent?.permissionLevel ?? 0);
     this.elements.agentDetail.textContent = agentAbilityDetail(snapshot.agent?.permissionLevel ?? 0);
-    this.elements.agentFeed.textContent = snapshot.agent?.receiptFeed[0] ?? '';
+    const agentFeed = snapshot.agent?.receiptFeed[0] ?? '';
+    const trailGuide = agentFeed.startsWith('Guide: ');
+    this.elements.agentChip.dataset.guide = String(trailGuide);
+    this.elements.agentFeed.dataset.guide = String(trailGuide);
+    this.elements.agentFeed.textContent = trailGuide ? agentFeed.slice('Guide: '.length) : agentFeed;
     this.prospectorPanel.update(snapshot);
     this.elements.xpText.textContent = `${snapshot.xp} / ${snapshot.xpNeed} XP`;
     this.elements.xpFill.style.width = `${this.percent(snapshot.xp, snapshot.xpNeed)}%`;

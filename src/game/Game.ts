@@ -61,6 +61,7 @@ import {
   type MegaprojectStorage,
 } from '../meta/Megaproject';
 import { emitStorySignal } from '../story/signals';
+import { takeTrailGuideBark, type TrailGuideTrigger } from '../story/trailGuide';
 import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revealLedgerEnemyStats } from '../encyclopedia/state';
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
 import { RunManager } from './RunManager';
@@ -734,7 +735,10 @@ export class Game {
     this.enemies,
     this.primaryActor.group.position,
     createRng(`${getDebugSeed() ?? 'gold-rush'}:waves`),
-    (text, atSim) => this.announceWaveBanner(text, atSim),
+    (text, atSim, wave) => {
+      if (wave === 1) this.speakTrailGuide('first-wave');
+      this.announceWaveBanner(text, atSim);
+    },
     (wave, atSim) => {
       this.events.emit({ type: 'wave_started', at: atSim, wave });
       this.spawnMothSeasonWave(wave);
@@ -1080,6 +1084,7 @@ export class Game {
   private baronRocketLastOwnerId = '';
   private baronAnnouncementTimer = 0;
   private pendingBaronBanner: { text: string; atSim: number; title: string; edge: CompassEdge | null } | null = null;
+  private trailGuideLine: string | null = null;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
   private charmPauseCooldown = 0;
@@ -1404,6 +1409,7 @@ export class Game {
     this.registerHeroShooters(this.primaryActor, this.heroShooter, this.blastShooter);
     this.events.on('hero_damaged', () => {
       this.damageFlashRemaining = Balance.hero.iframes;
+      this.speakTrailGuide('first-hurt');
     });
     this.events.on('run_secured', (event) => {
       this.securedScoreAt = event.resultAt;
@@ -2040,6 +2046,7 @@ export class Game {
     window.addEventListener('resize', this.syncViewport);
     this.resizeFrame = requestAnimationFrame(this.syncViewport);
     this.loop.start();
+    this.speakTrailGuide('first-run');
   }
 
   openClaimLedger(entryId?: LedgerEntryId): void {
@@ -2082,6 +2089,8 @@ export class Game {
     window.clearTimeout(this.baronAnnouncementTimer);
     window.removeEventListener('pointerdown', this.skipBaronCeremony);
     window.removeEventListener('keydown', this.skipBaronCeremony);
+    window.removeEventListener('pointerdown', this.dismissTrailGuide);
+    window.removeEventListener('keydown', this.dismissTrailGuide);
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     document.removeEventListener('visibilitychange', this.onPerformanceVisibilityChange);
     this.input.dispose();
@@ -2394,9 +2403,13 @@ export class Game {
         this.timeAlive,
         this.visibleHarvestTargets(),
       );
-      if (this.harvestSnapshot.channeling && !this.lastHarvestChanneling) this.audio.play('pan-swish');
+      if (this.harvestSnapshot.channeling && !this.lastHarvestChanneling) {
+        this.audio.play('pan-swish');
+        this.speakTrailGuide('first-nugget');
+      }
       this.lastHarvestChanneling = this.harvestSnapshot.channeling;
       if (this.harvestSnapshot.lastGoldGain > 0) {
+        this.speakTrailGuide('first-gold');
         if (this.hasBuiltStockpile()) this.audio.play('stockpile-deposit', 0.8);
         this.vfx.floatText(this.lastHarvestGoldPosition(), `+${this.harvestSnapshot.lastGoldGain}`, '#c4883a', 1.7);
       }
@@ -4484,6 +4497,8 @@ export class Game {
   }
 
   secureBarkForRun(): string | undefined {
+    const guide = takeTrailGuideBark('first-secured');
+    if (guide) return guide.line;
     const baron = this.activeContract.twist.baron;
     return baron && this.baronBeatenThisRun ? `${bossDefeatLine(baron)} ${baron.defeatBeat}` : undefined;
   }
@@ -4523,6 +4538,25 @@ export class Game {
     if (this.pendingBaronBanner?.title === bossArrivalTitle(this.activeContract.twist.baron) || this.baronArrivalBannerVisible()) return;
     this.uiBridge.announce(text, atSim);
   }
+
+  private speakTrailGuide(trigger: TrailGuideTrigger): void {
+    const bark = takeTrailGuideBark(trigger);
+    if (!bark) return;
+    this.trailGuideLine = bark.line;
+    window.removeEventListener('pointerdown', this.dismissTrailGuide);
+    window.removeEventListener('keydown', this.dismissTrailGuide);
+    window.addEventListener('pointerdown', this.dismissTrailGuide, { once: true });
+    window.addEventListener('keydown', this.dismissTrailGuide, { once: true });
+    this.syncUi();
+  }
+
+  private readonly dismissTrailGuide = (): void => {
+    if (!this.trailGuideLine) return;
+    this.trailGuideLine = null;
+    window.removeEventListener('pointerdown', this.dismissTrailGuide);
+    window.removeEventListener('keydown', this.dismissTrailGuide);
+    this.syncUi();
+  };
 
   private queueBaronBanner(text: string, atSim: number, title: string, edge: CompassEdge | null = null): void {
     window.clearTimeout(this.baronAnnouncementTimer);
@@ -5309,8 +5343,9 @@ export class Game {
   private agentUiState(): UiSnapshot['agent'] {
     const state = this.agentStub?.state ?? null;
     if (!state) return null;
-    const receiptFeed =
-      this.agentPolicySlotBonus > 0
+    const receiptFeed = this.trailGuideLine
+      ? [`Guide: ${this.trailGuideLine}`, ...state.receiptFeed].slice(0, 8)
+      : this.agentPolicySlotBonus > 0
         ? [`Schooling: +${this.agentPolicySlotBonus} policy slot`, ...state.receiptFeed].slice(0, 8)
         : state.receiptFeed;
     return {
@@ -7186,6 +7221,7 @@ export class Game {
     const offerKey = offer.map((def) => def.id).join('|');
     if (offerKey !== this.lastUpgradeOfferAudioKey) {
       this.audio.play('tier-up');
+      this.speakTrailGuide('first-level');
       this.lastUpgradeOfferAudioKey = offerKey;
     }
     const stacks = this.progression.snapshot.stacks;

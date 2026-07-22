@@ -135,7 +135,7 @@ export class WaveSystem {
     private readonly enemies: EnemyPool,
     private readonly heroPosition: THREE.Vector3,
     private readonly rng: Rng,
-    private readonly announce: (text: string, atSim: number) => void,
+    private readonly announce: (text: string, atSim: number, wave?: number) => void,
     private readonly onWaveStarted: (wave: number, atSim: number) => boolean | void,
     private readonly scheduledDisabled: () => boolean,
     private readonly liveContract: () => ContractManifest = activeContract,
@@ -417,7 +417,7 @@ export class WaveSystem {
         this.pulse = pulse.pulse;
         this.edge = edge;
         this.budget = pulse.budget;
-        this.announce(this.waveCopy(edge), telegraphAt);
+        this.announce(this.waveCopy(edge), telegraphAt, pulse.wave);
         if (this.isWreckerPulse(pulse.counts[i] ?? 0, pulse.wave, pulse.pulse)) {
           this.announce(this.wreckerCopy(edge), telegraphAt);
         }

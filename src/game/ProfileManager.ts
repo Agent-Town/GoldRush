@@ -96,9 +96,9 @@ export class ProfileManager {
     return true;
   }
 
-  createProfile(name: string): ProfileRecord | null {
+  createProfile(name: string, difficultyPreset?: ProfileRecord['difficultyPreset']): ProfileRecord | null {
     if (this.started || !this.storage) return null;
-    const profile = createProfile(this.storage, name);
+    const profile = createProfile(this.storage, name, difficultyPreset);
     if (!profile) return null;
     this.state = ensureProfileState(this.storage);
     installProfileStorageScope(this.storage);
@@ -149,6 +149,11 @@ export class ProfileManager {
           ${this.message ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.message)}</p>` : ''}
           <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
             <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Claim-holder name" />
+            <fieldset class="gr-profile-greenhorn" data-testid="greenhorn-question">
+              <legend>First time prospecting?</legend>
+              <label><input type="radio" name="greenhornOffer" value="yes" /> Yes - ease me onto the trail</label>
+              <label><input type="radio" name="greenhornOffer" value="no" checked /> No - give me the regular trail</label>
+            </fieldset>
             <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
           </form>
           ${this.renderAccountCard()}
@@ -350,7 +355,8 @@ export class ProfileManager {
     this.root?.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
       event.preventDefault();
       const input = this.root?.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]');
-      const profile = this.createProfile(input?.value ?? '');
+      const preset = this.root?.querySelector<HTMLInputElement>('[name="greenhornOffer"]:checked')?.value === 'yes' ? 'greenhorn' : 'trail';
+      const profile = this.createProfile(input?.value ?? '', preset);
       if (profile && input) input.value = '';
       else {
         this.message = 'Use a ledger name the family can read.';

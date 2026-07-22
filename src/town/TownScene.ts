@@ -78,6 +78,7 @@ import {
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 import { takeMeiWorldDispatch } from './worldDispatches';
+import { takeTrailGuideBark } from '../story/trailGuide';
 
 const contractPlateUrls = import.meta.glob<string>('../../assets/raw/plate-contract-*.png', {
   eager: true,
@@ -339,6 +340,13 @@ export class TownScene {
   private firstClaimPulseRing?: THREE.Mesh;
   private firstClaimGreetingVisible = false;
   private firstClaimGreetingDismissed = false;
+  private returnGuideLine: string | null = null;
+  private readonly dismissReturnGuide = () => {
+    document.removeEventListener('pointerdown', this.dismissReturnGuide, { capture: true });
+    document.removeEventListener('keydown', this.dismissReturnGuide, { capture: true });
+    this.returnGuideLine = null;
+    this.hideBark();
+  };
   private ridePhrase: string | null = null;
   private rideStatus = '';
   private rideBusy = false;
@@ -386,6 +394,8 @@ export class TownScene {
     window.clearTimeout(this.dynamoCrankTimer);
     window.removeEventListener('keydown', this.onFirstClaimInput, true);
     window.removeEventListener('pointerdown', this.onFirstClaimInput, true);
+    document.removeEventListener('pointerdown', this.dismissReturnGuide, { capture: true });
+    document.removeEventListener('keydown', this.dismissReturnGuide, { capture: true });
     this.prompt.removeEventListener('click', this.onPromptClick);
     this.prompt.removeEventListener('pointerdown', this.onDynamoCrankStart);
     this.prompt.removeEventListener('pointerup', this.onDynamoCrankStop);
@@ -537,6 +547,13 @@ export class TownScene {
       const runtime = new TownActorRuntime(townActorPlazaPlacement(actor));
       this.townActors.push(runtime);
       this.scene.add(runtime.group);
+    }
+    if (this.options.returnResult) {
+      this.returnGuideLine = takeTrailGuideBark('first-return')?.line ?? null;
+      if (this.returnGuideLine) {
+        document.addEventListener('pointerdown', this.dismissReturnGuide, { capture: true, once: true });
+        document.addEventListener('keydown', this.dismissReturnGuide, { capture: true, once: true });
+      }
     }
 
     if (this.ambientDust) this.scene.add(this.ambientDust);
@@ -1181,6 +1198,13 @@ export class TownScene {
   }
 
   private syncBark(): void {
+    if (this.returnGuideLine) {
+      const guide = this.townActors.find((actor) => actor.definition.id === 'tavernkeeper');
+      if (guide && (this.activeBarkActor !== guide || this.activeBark?.text !== this.returnGuideLine)) {
+        this.showBark(guide, this.returnGuideLine);
+      }
+      return;
+    }
     if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.nameCardOpen) {
       this.hideBark();
       return;
