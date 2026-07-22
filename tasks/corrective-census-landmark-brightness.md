@@ -1,0 +1,3 @@
+# Corrective — census landmark brightness
+
+The live landmark-brightness census class remains REAL on `e1-twin-banks`, `e1-baron`, `e2-pressure-garden`, `e2-incline`, and `e3-moth-season`: after restoring the probe camera/sim state, each has rendered its first contract-mounted landmark below the daylight median-luminance floor (`>0.06`) while material opacity/depth flags remain correct. Trace the shared landmark-lighting/material mechanism first, preserve night-mode truth and asset colors, and close only when all named maps pass the unchanged census threshold in desktop and the Pressure Garden mobile spot with zero console/page errors; this is the brightness census class, which currently has no MQ number in `docs/MAP-QUALITY-REGISTER.md`.
