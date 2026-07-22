@@ -5,6 +5,7 @@
     {
       "id": "e10-ember-shore",
       "name": "The Ember Shore",
+      "description": "Board-launch-only until its preserve-contract Static squall consumer lands.",
       "tileParams": {
         "tileId": "e10-ember-shore",
         "biome": "deepsky-ember-shore",
@@ -89,7 +90,7 @@
     {
       "id": "e10-archive-world",
       "name": "The Archive World",
-      "description": "Engine dependency: procgen worlds v3, re-ink light-hold squalls, and persistent lore-unlock consumers are not yet implemented. Teaching intent: show what losing to the Static means by restoring a prior civilization one wing at a time.",
+      "description": "Board-launch-only until procgen worlds v3, re-ink light-hold squalls, and persistent lore-unlock consumers land. Teaching intent: show what losing to the Static means by restoring a prior civilization one wing at a time.",
       "tileParams": {
         "tileId": "e10-archive-world",
         "biome": "deepsky-archive-world",
@@ -306,7 +307,12 @@
         ],
         "rails": [],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -12, "z": -36 },
+          { "x": 12, "z": -12 },
+          { "x": -12, "z": 12 },
+          { "x": 12, "z": 36 }
+        ],
         "heightfield": {
           "id": "ark-plaza-e10",
           "mode": "visual"
@@ -458,7 +464,7 @@
     {
       "id": "e10-river",
       "name": "The River",
-      "description": "The Claim terrain variant: reuses frontier-river-claim at dawn with no new sculpt. Engine dependency: Charter Press CP-05, post-credits run staging, and credits-name gold-fleck surfacing are not yet implemented. Teaching intent: return to the first verb with no enemies, no waves, and one pan.",
+      "description": "Post-credits-only through the Charter Press river lever. Reuses frontier-river-claim at dawn with no new sculpt; return to the first verb with no enemies, no waves, and one pan.",
       "tileParams": {
         "tileId": "frontier-river-claim",
         "biome": "river-claim",
