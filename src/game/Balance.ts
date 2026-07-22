@@ -4,6 +4,8 @@ const WAVE_SPAWN_EDGES = ['north', 'south', 'east', 'west'] as const;
 const TERRITORY_RING_SIDES = [-1, 1] as const;
 
 export const Balance = {
+  releaseFrontier: 'epoch-1-frontier' as string | false | undefined,
+  releaseFrontierHorizonLine: 'The era turns when the wider world sends word.',
   hero: {
     maxHp: 100,
     speed: 6.0,

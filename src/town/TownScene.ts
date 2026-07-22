@@ -1388,6 +1388,19 @@ export class TownScene {
         </section>
       `;
     }
+    const releaseFrontier = Balance.releaseFrontier;
+    if (releaseFrontier && activeEpochId() === releaseFrontier && !new URLSearchParams(window.location.search).has('debug')) {
+      if (surface === 'site') {
+        return `<span data-testid="release-frontier-horizon">${escapeHtml(Balance.releaseFrontierHorizonLine)}</span>`;
+      }
+      return `
+        <section class="town-ui__epoch-door" data-testid="stamp-mill-epoch-door" data-door-state="horizon" data-release-frontier="${escapeHtml(releaseFrontier)}">
+          <p class="town-ui__board-eyebrow">The horizon</p>
+          <h3>The Stamp Mill stands ready.</h3>
+          <p data-testid="release-frontier-horizon">${escapeHtml(Balance.releaseFrontierHorizonLine)}</p>
+        </section>
+      `;
+    }
     if (surface === 'site') {
       return `<span>The Stamp Mill is ready.</span><button class="town-ui__prompt-button" type="button" data-raise-stamp-mill data-testid="raise-stamp-mill-site">Raise the Stamp Mill</button>`;
     }
