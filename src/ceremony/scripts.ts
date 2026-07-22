@@ -218,10 +218,45 @@ export const T5_THE_DEEP_REACTOR: CeremonyScript = {
   keptImage: { caption: "The reactor's glow laid across the drowned claims at dusk." },
 };
 
+// ─── T7 · E7→E8 — THE STARSHIP ───────────────────────────────────────────
+export const T7_THE_STARSHIP: CeremonyScript = {
+  id: 't7-the-starship',
+  interstitial: 'T7',
+  epochId: 'epoch-7-signal',
+  title: 'The Starship',
+  doorLine: 'The last jack is patched. Every relay tower is waiting on the switchboard chief.',
+  hand: {
+    kind: 'timed-release',
+    chargeMs: 900,
+    windowMs: 700,
+    label: 'Hold, then release the final umbilical',
+  },
+  phases: [
+    { id: 'pad-quiet', kind: 'beat', durationMs: 900, direction: 'The Starship stands on the pad. The river holds the last of the light.' },
+    { id: 'made-crew-boards', kind: 'beat', durationMs: 1_400, direction: 'The crew of made agents boards — the Prospector at a porthole, Chalk beside it.' },
+    { id: 'release-umbilical', kind: 'hand', direction: 'Throw the final umbilical release.' },
+    { id: 'relay-towers', kind: 'beat', durationMs: 800, direction: 'Every relay tower carries the count.' },
+    { id: 'countdown', kind: 'beat', durationMs: 2_200, direction: 'The switchboard chief counts the ground to the sky: five, four, three, two…' },
+    { id: 'engines-on-one', kind: 'beat', durationMs: 1_400, direction: 'ONE. Engines lit. The whole valley looks up.' },
+    { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: 'Brass firstborn at the porthole, the river below getting smaller.' },
+    { id: 'arm', kind: 'arm', direction: 'The Orbital Frontier opens.' },
+  ],
+  sound: [
+    { beat: 't7-pad-silence', phase: 'pad-quiet', atMs: 0, sound: null, silence: true },
+    { beat: 't7-umbilical-release', phase: 'release-umbilical', atMs: 0, sound: 'build-place' },
+    { beat: 't7-chief-five', phase: 'countdown', atMs: 0, sound: 'chirp-acknowledge' },
+    { beat: 't7-chief-four', phase: 'countdown', atMs: 500, sound: 'chirp-acknowledge' },
+    { beat: 't7-chief-three', phase: 'countdown', atMs: 1_000, sound: 'chirp-acknowledge' },
+    { beat: 't7-chief-two', phase: 'countdown', atMs: 1_500, sound: 'chirp-acknowledge' },
+    { beat: 't7-engines-on-one', phase: 'engines-on-one', atMs: 0, sound: 't4-engines-loop' },
+  ],
+  keptImage: { caption: 'Brass firstborn at the porthole, the river below getting smaller.' },
+};
+
 /** The registry: every framework-staged ceremony, keyed by the era it closes.
  * T1 (stamp mill click) and T2 (dynamo crank) predate the framework and stay
  * on their own doors — wrap, don't rewrite; migration is a named follow-up. */
-export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR];
+export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR, T7_THE_STARSHIP];
 
 export function ceremonyScriptForEpoch(epochId: string): CeremonyScript | null {
   return CEREMONY_SCRIPTS.find((script) => script.epochId === epochId) ?? null;

@@ -15,6 +15,17 @@ const E3 = 'epoch-3-voltage';
 const E4 = 'epoch-4-motor';
 const E5 = 'epoch-5-deepwater';
 const E6 = 'epoch-6-atomic';
+const E7 = 'epoch-7-signal';
+const E8 = 'epoch-8-orbital';
+const E7_SIGNAL_STATE_KEY = 'gr.e7Signal.v1';
+const E7_EXIT_MILESTONES = [
+  'first-relay-linked',
+  'first-playbook-recorded',
+  'contract:e7-relay-valley',
+  'contract:e7-echo-canyon',
+  'contract:e7-dead-band',
+  'contract:e7-relay-rush',
+] as const;
 
 type Errors = { console: string[]; page: string[] };
 type ProfileState = {
@@ -50,11 +61,11 @@ function watchErrors(page: Page): Errors {
  */
 async function seed(
   page: Page,
-  options: { epochId?: string; scienceSteps?: number; completeMegaproject?: string } = {},
+  options: { epochId?: string; scienceSteps?: number; completeMegaproject?: string; e7ExitReady?: boolean } = {},
 ): Promise<void> {
   await page.goto('/');
   await page.evaluate(
-    ({ keys, epochId, scienceSteps, completeMegaproject }) => {
+    ({ keys, epochId, scienceSteps, completeMegaproject, e7ExitReady, e7ExitMilestones }) => {
       localStorage.clear();
       sessionStorage.clear();
       const profile: ProfileState = {
@@ -76,11 +87,14 @@ async function seed(
       if (completeMegaproject) {
         localStorage.setItem(keys.megaproject, JSON.stringify({ version: 1, projects: { [completeMegaproject]: { complete: true } } }));
       }
+      if (e7ExitReady) localStorage.setItem(keys.e7Signal, JSON.stringify({ version: 1, milestones: e7ExitMilestones }));
     },
     {
       epochId: options.epochId,
       scienceSteps: options.scienceSteps,
       completeMegaproject: options.completeMegaproject,
+      e7ExitReady: options.e7ExitReady,
+      e7ExitMilestones: E7_EXIT_MILESTONES,
       keys: {
         profile: PROFILE_KEY,
         town: profileDataKey('robin', TOWN_NAME_KEY),
@@ -89,6 +103,7 @@ async function seed(
         activeEpoch: ACTIVE_EPOCH_KEY,
         research: options.epochId ? profileDataKey('robin', researchStateKey(options.epochId)) : 'unused',
         megaproject: profileDataKey('robin', MEGAPROJECT_STATE_KEY),
+        e7Signal: profileDataKey('robin', E7_SIGNAL_STATE_KEY),
       },
     },
   );
@@ -105,7 +120,7 @@ async function openSchoolhouse(page: Page): Promise<void> {
   await page.waitForTimeout(500);
   await page.keyboard.up('KeyS');
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('schoolhouse');
-  await page.getByTestId('town-open-schoolhouse').click();
+  await page.getByTestId('town-open-schoolhouse').dispatchEvent('click');
 }
 
 function ceremonyDiagnostics(page: Page) {
@@ -147,7 +162,7 @@ test('plain boot: the framework sits inert — legacy doors, no overlay, no writ
   await expect(page.getByTestId('ceremony-layer')).toBeHidden();
   const diagnostics = await ceremonyDiagnostics(page);
   expect(diagnostics).toMatchObject({ doorState: 'legacy', open: false, armCount: 0, armableId: null });
-  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor']);
+  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor', 't7-the-starship']);
   const ceremonyKeys = await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('gr.ceremony.')));
   expect(ceremonyKeys).toEqual([]);
   expect(errors).toEqual({ console: [], page: [] });
@@ -355,6 +370,103 @@ test('T5 THE DEEP REACTOR: the rhythm gates the raise, the pass keeps the hand i
 
   await page.getByTestId('ceremony-return').click();
   await expect(layer).toBeHidden();
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('T7 THE STARSHIP: the door waits for the Signal exit beat', async ({ page }) => {
+  const errors = watchErrors(page);
+  await seed(page, { epochId: E7, scienceSteps: 18, completeMegaproject: 'the-starship' });
+  await openSchoolhouse(page);
+
+  const door = page.getByTestId('ceremony-epoch-door');
+  await expect(door).toHaveAttribute('data-ceremony-id', 't7-the-starship');
+  await expect(door).toHaveAttribute('data-door-state', 'needs-exit-beat');
+  await expect(door).toContainText('last frequency goes dark');
+  await expect(page.getByTestId('begin-ceremony')).toHaveCount(0);
+  expect(await ceremonyDiagnostics(page)).toMatchObject({ doorState: 'needs-exit-beat', armableId: null, armCount: 0 });
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('T7 THE STARSHIP: the umbilical hand alone arms E8 exactly once and the kept era survives reload', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  const errors = watchErrors(page);
+  await seed(page, { epochId: E7, scienceSteps: 18, completeMegaproject: 'the-starship', e7ExitReady: true });
+  await openSchoolhouse(page);
+
+  const door = page.getByTestId('ceremony-epoch-door');
+  await expect(door).toHaveAttribute('data-door-state', 'ceremony-ready');
+  await expect(door).toHaveAttribute('data-ceremony-id', 't7-the-starship');
+  await shot(page, info, 't7-door-ready');
+
+  await page.getByTestId('begin-ceremony').click();
+  const layer = page.getByTestId('ceremony-layer');
+  await expect(layer).toBeVisible();
+  await expect(layer).toHaveAttribute('data-ceremony-id', 't7-the-starship');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 8_000 }).toBe('release-umbilical');
+
+  // PLAYED, NOT WATCHED: the ship cannot count down until the player releases it.
+  await page.waitForTimeout(2_000);
+  const idle = await ceremonyDiagnostics(page);
+  expect(idle?.phase).toBe('release-umbilical');
+  expect(idle?.hand?.holdMs).toBe(0);
+  expect(idle?.armCount).toBe(0);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E7);
+
+  const hand = page.getByTestId('ceremony-hand-input');
+  await hand.dispatchEvent('pointerdown');
+  await page.waitForTimeout(1_700);
+  await hand.dispatchEvent('pointerup');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.hand?.holdMs).toBe(0);
+  expect((await ceremonyDiagnostics(page))?.phase).toBe('release-umbilical');
+
+  await hand.dispatchEvent('pointerdown');
+  await page.waitForTimeout(1_100);
+  expect((await ceremonyDiagnostics(page))?.phase).toBe('release-umbilical');
+  expect((await ceremonyDiagnostics(page))?.hand?.holdMs).toBeGreaterThanOrEqual(900);
+  await hand.dispatchEvent('pointerup');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 8_000 }).toBe('countdown');
+  await shot(page, info, 't7-countdown');
+
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 15_000 }).toBe('done');
+  const done = await ceremonyDiagnostics(page);
+  expect(done?.beats).toEqual(
+    expect.arrayContaining([
+      't7-pad-silence',
+      't7-umbilical-release',
+      't7-chief-five',
+      't7-chief-two',
+      't7-engines-on-one',
+      't7-the-starship:kept-image',
+    ]),
+  );
+  expect(done?.keptImage).toMatchObject({ captured: true, stored: true });
+  expect(done?.armCount).toBe(1);
+  expect(done?.armedEpochId).toBe(E8);
+  expect(done?.armFailure).toBeNull();
+
+  const keptImage = await page.evaluate(
+    (key) => JSON.parse(localStorage.getItem(key) ?? 'null'),
+    ceremonyKeptImageKey('t7-the-starship'),
+  );
+  expect(keptImage).toMatchObject({ version: 1, ceremonyId: 't7-the-starship', epochId: E7, successorId: E8, stored: true });
+  expect(keptImage.dataUrl).toMatch(/^data:image\/png/);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E8);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E8);
+  expect(
+    await page.evaluate(async (epoch) => {
+      const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      return registry.activateEpoch(epoch);
+    }, E8),
+  ).toBe(false);
+
+  await page.getByTestId('ceremony-return').click();
+  await expect(layer).toBeHidden();
+  await page.reload();
+  await expect.poll(async () => page.evaluate(async () => {
+    const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+    return registry.activeEpochId();
+  })).toBe(E8);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E8);
   expect(errors).toEqual({ console: [], page: [] });
 });
 
