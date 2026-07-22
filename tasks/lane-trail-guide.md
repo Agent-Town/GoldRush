@@ -1,0 +1,7 @@
+# Task lane-trail-guide: RF-02 — the Trail Guide (LANE-C after census, commit prefix "feat:")
+You are Codex (worktree per queue lane). CODEX: model=gpt-5.6-sol effort=high
+READ FIRST: specs/release-e1/README.md RF-02 · src/town/worldDispatches.ts + the bark engine (WD-02: milestone-mapped pools, dupe-guards — THE GRAMMAR) · the Prospector suggest surface · the first-run/profile-fresh truth · the difficulty preset surface (greenhorn offer) · lore voice (era-1, warm, never lecture).
+Pre-flight: standard safe-dupe; npm i; tsc+build green.
+## Scope: 1. THE TRAIL GUIDE TRACK: 8-12 first-run teaching barks (data, WD grammar): first-boot-in-run (move+pan), first nugget (sluice), first gold banked (build), first wave telegraph (walls/turret), first hurt (catch your breath), first level-up (choices), first win-secured (the rush explained), first return-to-town (the board) — each fires ONCE per profile, era-1 voice, dismiss-on-any-input, NEVER blocks play. 2. First-boot greenhorn offer: one house-UI question at profile creation ("First time prospecting?") → sets preset; asked once. 3. Spec e2e/trail-guide.spec.ts: fresh profile sees the first three beats in order, each exactly once (reload-proof); veteran profile sees none; greenhorn question once; both projects, zero console.
+## Firewall: bark data + trigger seams + the one question + spec. NO tutorial overlays/modals, NO gameplay changes.
+END: READY-FOR-GATES + the full bark script for owner review (copy is tunable data).

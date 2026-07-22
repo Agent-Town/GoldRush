@@ -23,7 +23,7 @@ test('goal tree schema is valid', () => {
     'The Charter Press (level editor → the capstone product)',
     'The Foundry (extract the factory+engine as a reusable product)',
   ]); // expanded per owner order 2026-07-16 (+charter-press/foundry same week)
-  assert.equal(goals.goals[0].subgoals.length, 13); // +era-rosters +board-book +era-doors (F-REH-01, 2026-07-22)
+  assert.equal(goals.goals[0].subgoals.length, 14); // +era-doors +release-e1 (ratified 2026-07-22)
   assert.equal(new Set(leaves.map((leaf) => leaf.id)).size, leaves.length);
 
   for (const goal of goals.goals) {

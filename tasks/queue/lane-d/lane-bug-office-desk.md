@@ -1,0 +1,8 @@
+# Task lane-bug-office-desk: RF-03b — THE COMPLAINTS DESK in the Assay Office (LANE-D, commit prefix "feat:")
+You are Codex (worktrees/lane-d). CODEX: model=gpt-5.6-sol effort=xhigh
+**SEQUENCED: RF-03a (bug-office-api) must be MERGED (probe functions/api/bug-report.ts exists; else STOP).**
+READ FIRST: specs/release-e1/README.md RF-03/RF-04 · the assay bench door/UI (the crafting order surface being temporarily replaced) · the house UI tokens (parchment/brass — the ceremony house-dress precedent) · canvas screenshot capture (toDataURL off the game canvas, downscale to ≤1024w jpeg) · the diagnostics seams (contract/wave/tier/position).
+Pre-flight: standard safe-dupe; npm i; tsc+build green.
+## Scope: 1. The assay building's door opens THE COMPLAINTS DESK (testing-era law; crafting retreats behind ?debug — signposted in-world at the debug door). 2. The desk (house UI): the clerk takes it — description field, optional prospector name, the MOMENT auto-attached (screenshot captured ON ENTRY of the desk = the scene they came from, shown as a thumbnail, retake button), diagnostics shown honestly ("the clerk notes: Twin Banks, wave 12"). Submit → POST → the claim ticket shown ("Complaint filed. Ticket <id>. The county thanks you." + THE BOUNTY line, copy from data). Offline/decline states in-world. 3. Spec e2e/bug-office-desk.spec.ts: desk opens from the assay door · screenshot thumbnail present · submit round-trips against the local rig (mock/function) · ticket + bounty line render · crafting absent without ?debug, present with · both projects, zero console.
+## Firewall: the desk UI + door swap + capture + spec. NO crafting logic changes (it hides, unhurt), NO api changes.
+END: READY-FOR-GATES + desk screenshots (empty + filed states).

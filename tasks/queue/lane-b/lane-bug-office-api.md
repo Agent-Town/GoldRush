@@ -1,0 +1,7 @@
+# Task lane-bug-office-api: RF-03a — the complaints ledger backend (LANE-B, commit prefix "feat:")
+You are Codex (worktrees/lane-b). CODEX: model=gpt-5.6-sol effort=high
+READ FIRST: specs/release-e1/README.md RF-03 · functions/api/telemetry.ts + stats.ts (THE PATTERN: KV via TELEMETRY??ACCOUNTS, rate-limit by ip-hash, CORS, honest empty states) · KV value limits (cap the screenshot JPEG ~180KB base64).
+Pre-flight: standard safe-dupe; npm i; tsc (functions) + build green.
+## Scope: 1. POST /api/bug-report: {description ≤2000, prospectorName? ≤24, screenshot? (base64 jpeg, size-capped server-side), diagnostics {contractId, wave, position, tier, version}} → KV key bug:<timestamp>-<rand>; returns {id} (the reporter's claim ticket). Rate-limit per ip (the telemetry pattern); reject oversize/malformed with in-world reasons. 2. GET /api/bugs?token=<env.BUG_OFFICE_TOKEN>: paged list (no screenshots) + GET /api/bugs/<id>?token= (full, screenshot included); no token → 404-shaped decline. 3. scripts/fetch-bugs.mjs for the attended session (lists new reports, saves screenshots to a local dir). 4. Spec e2e/bug-office-api.spec.ts (wrangler rig per the accounts pattern): round-trip with screenshot · size-cap reject · rate-limit · tokenless read declined; both projects where applicable.
+## Firewall: the new function + script + spec. NO telemetry/stats changes, NO client (RF-03b owns the desk).
+END: READY-FOR-GATES + the id format + curl examples.
