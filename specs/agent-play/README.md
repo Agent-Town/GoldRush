@@ -12,6 +12,15 @@ STATUS: DRAFT 2026-07-22 · **REHEARSAL-GATED (owner, same day: "we don't have t
 3. **Ledger honesty**: agent riders are named and marked in rosters/results; the county book never confuses hands.
 4. Privacy/safety: BYO-agent protocol is local-first (the user's agent, the user's machine, the user's claim word); publishing anything is owner-gated law.
 
+
+## THE TWO CLOCKS (the architecture law — owner diagnosis 2026-07-22, verbatim: "I think it is hard to actually see the screen and act upon it in realtime - also because of the inference time. That is why I also chose the skill.md approach - then the backend can send a different view of the game/experience to the agent which is more LLM compatible.")
+v1's stand-and-die was STRUCTURAL: an inference clock cannot play a reflex game. The rider therefore splits:
+- **THE REFLEX CLOCK (code, real-time)**: a competence loop living IN the harness/backend — movement, kiting, aiming assist, threat avoidance, build placement execution. Runs every tick. No LLM in this loop, ever.
+- **THE COMMAND CLOCK (LLM, inference-time)**: the agent reads THE VIEW — a state summary the game composes for it (positions, threats, economy, objectives, affordances; text-first, screenshot optional) — and issues INTENTS on its own schedule ("hold the ford, build sluices north, bank at wave 8"). Seconds of latency are fine because the reflex clock holds the line between commands.
+- **THE VIEW** is skill.md's payload: the game translating itself into LLM-compatible state — his original design, now the load-bearing component.
+- **The in-game proof already ships**: the Prospector IS this architecture — a code priority-loop (chase/repair/collect/pan) commanded through the suggest-ladder. The rider is the Prospector's pattern, externalized.
+- AP-01 v2 (the honest-play gate's implementation) adopts the split client-side: reflex loop in the harness script, LLM as commander. AP-03's rider-API serves THE VIEW + intent surface for API-only agents. Same clocks, two transports.
+
 ## The slices
 - **AP-01 — HARDEN THE HARNESS (in flight)**: the Saga Rehearsal is the forge. **v1 verdict (owner footage review 2026-07-22, verbatim: "the agent seems to have infinite gold, teleports on the map, and in most videos does not move and just stands there and dies. But ok, it is a start."): TRAVERSAL PROVEN, PLAY UNPROVEN — the auto-firing rig masqueraded standing as fighting. AP-01 is DONE only when THE HONEST-PLAY GATE passes: one era (the Claim + the Baron), zero debug assists (no gold grants, no teleports), **on the default TRAIL difficulty** (v1 also played greenhorn — owner: "it plays in easy mode, so each opponent is one hit"), continuous movement under pressure, the claim SECURED at wave 10 and the Baron BEATEN — on film.** The v2 control loop (objective-driven movement: kite, build, engage) is AP-01's remaining work.
 - **AP-02 — THE SECOND RIDER (queued, lane-b)**: co-op companion by claim word; the proof of together-play.
