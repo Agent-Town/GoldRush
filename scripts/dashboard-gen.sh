@@ -61,58 +61,43 @@ done
 QUEUES=$(printf '%s' "$QUEUES" | esc)
 
 # --- Done: real start/finish, model, and outcome for the last 24h ---
-DONE_TAIL=""
-for path in $(find tasks/done -type f -mtime -1 -print 2>/dev/null | sort -r); do
-  f=$(basename "$path")
-  stamp=$(echo "$f" | cut -c1-15); taskfile=$(echo "$f" | cut -c17-); name=${taskfile%.md}
-  mt=$(stat -f %m "$path" 2>/dev/null || echo 0)
-  if echo "$stamp" | grep -qE '^[0-9]{8}-[0-9]{6}$'; then
-    se=$(stamp_to_epoch "$stamp"); start_hm="$(echo "$stamp" | cut -c10-11):$(echo "$stamp" | cut -c12-13)"
-  else
-    # janitor receipts etc. carry no timestamp prefix — show mtime, keep the full name
-    se=0; name=${f%.md}; name=${name%.req}; start_hm=$(date -r "$mt" +%H:%M 2>/dev/null || echo '~')
-  fi
-  model=$(grep -m1 '^CODEX:' "$path" 2>/dev/null | sed -E 's/^CODEX: *model=([^ ]+) *effort=([^ ]+).*/\1@\2/')
-  [ -z "$model" ] && model='gpt-5.6-sol@medium·default'
-  duration='~'
-  if [ "$se" -gt 0 ] && [ "$mt" -gt "$se" ]; then
-    seconds=$((mt - se))
-    duration="$(( (seconds + 59) / 60 )) min"
-  fi
-  runlog=$(find tasks/runs -name "$stamp-*-$taskfile.log" -print 2>/dev/null | head -1)
-  if { [ "$duration" = '~' ] || [ "$duration" = '0 min' ]; } && [ -n "$runlog" ]; then
-    log_mt=$(stat -f %m "$runlog" 2>/dev/null || echo 0)
-    [ "$log_mt" -gt "$se" ] && duration="$(( (log_mt - se + 59) / 60 )) min"
-    first=$(grep -m1 -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}[ T][0-9]{2}:[0-9]{2}:[0-9]{2}' "$runlog" 2>/dev/null | tr 'T' ' ')
-    last=$(grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2}[ T][0-9]{2}:[0-9]{2}:[0-9]{2}' "$runlog" 2>/dev/null | tail -1 | tr 'T' ' ')
-    fe=$(date -j -f '%Y-%m-%d %H:%M:%S' "$first" +%s 2>/dev/null || echo 0)
-    le=$(date -j -f '%Y-%m-%d %H:%M:%S' "$last" +%s 2>/dev/null || echo 0)
-    [ "$duration" = '~' ] && [ "$le" -gt "$fe" ] && duration="$(( (le - fe + 59) / 60 )) min"
-  fi
-  failed=$(find tasks/failed -type f -name "*$name*.md" -print -quit 2>/dev/null)
-  runner_commit=$(git log --all --format='%H' --fixed-strings --grep="runner(" --grep="$name.md" --all-match -1 2>/dev/null)
-  merged=""
-  committed=""
-  if [ -n "$runner_commit" ]; then
-    committed=$(git rev-parse --short "$runner_commit")
-    if git merge-base --is-ancestor "$runner_commit" main 2>/dev/null; then
-      merged="$committed"
-    elif git log main --format='%h' --fixed-strings --grep="$committed" -1 2>/dev/null | grep -q .; then
-      # grafted drains aren't ancestors, but drain commits cite the lane hash
-      merged="$committed"
-    fi
-  else
-    # main-slot tasks have no runner commit: fall back to a slice-scoped subject on main
-    merged=$(git log main --format='%h' -E --grep="^(feat|fix|art|drain)[:( ].*$name" -1 2>/dev/null)
-    committed=$merged
-  fi
-  if [ -n "$failed" ]; then outcome='FAILED';
-  elif [ -n "$merged" ]; then outcome="MERGED $merged";
-  elif [ -n "$committed" ]; then outcome='done-moved awaiting drain';
-  else outcome='NO-OP'; fi
-  DONE_TAIL="$DONE_TAIL$(printf '%-42s · started %s · %7s · %-31s · %s' "$name" "$start_hm" "$duration" "$model" "$outcome")
-"
-done
+DONE_TAIL=$(python3 - <<'PYDONE'
+import os, glob, re, subprocess, time
+rows=[]
+now=time.time()
+def sh(*a):
+    try: return subprocess.check_output(list(a), text=True, stderr=subprocess.DEVNULL).strip()
+    except: return ''
+for path in sorted(glob.glob('tasks/runs/*.log'), key=os.path.getmtime, reverse=True):
+    mt=os.path.getmtime(path)
+    if now-mt>86400: continue
+    f=os.path.basename(path)
+    m=re.match(r'(\d{8}-\d{6})-(lane-[a-z]+|art|main)-(.+)\.md\.log$', f)
+    if not m: continue
+    stamp,lane,name=m.groups()
+    try: se=time.mktime(time.strptime(stamp,'%Y%m%d-%H%M%S'))
+    except: se=mt
+    dur=int((mt-se)/60)
+    taskfile=name+'.md'
+    outcome='done-moved'
+    hit=sh('git','log','origin/main','--format=%h','-1','--fixed-strings','--grep',taskfile)
+    if not hit:
+        human=name.replace('lane-','').replace('-',' ')
+        hit=sh('git','log','origin/main','--format=%h','-1','-E','--grep',r'^(feat|fix|art|drain|release)[:(].*'+re.escape(human))
+    shipped=glob.glob(f'tasks/failed/shipped-*-{name}-SHIPPED-*')
+    rc=os.path.exists(f'tasks/failed/rc1-{stamp}-{taskfile}')
+    tail=''
+    try: tail=open(path,errors='ignore').read()[-600:]
+    except: pass
+    if hit: outcome=f'MERGED {hit}'
+    elif shipped: outcome='MERGED '+shipped[0].rsplit('-',1)[-1][:8]
+    elif rc: outcome='FAILED (rc marker)'
+    elif 'STOP' in tail or 'no changes' in tail.lower() or 'nothing to commit' in tail.lower(): outcome='STOP/NO-OP (guard)'
+    elif os.path.exists(f'tasks/running/{stamp[:15]}') or glob.glob(f'tasks/running/*{taskfile}'): outcome='RUNNING'
+    rows.append(f"{name[:42]:42} · {lane:6} · started {stamp[9:11]}:{stamp[11:13]} · {dur:4d} min · {outcome}")
+print('\n'.join(rows) if rows else '(no task runs in the last 24 hours)')
+PYDONE
+)
 [ -z "$DONE_TAIL" ] && DONE_TAIL="(no task runs finished in the last 24 hours)"
 DONE_TAIL=$(printf '%s' "$DONE_TAIL" | esc)
 
