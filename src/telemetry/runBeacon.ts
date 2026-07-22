@@ -4,6 +4,7 @@ import {
   buildRunTelemetryPayload,
   readTelemetryOptIn,
   type RunEndedEvent,
+  type RunSecuredEvent,
   type RunTelemetryPayload,
 } from './payload';
 
@@ -14,34 +15,38 @@ type RunTelemetryHost = {
 };
 
 export function installRunTelemetry(host: RunTelemetryHost): () => void {
-  const sentRunIds = new Set<number>();
+  const sentEvents = new Set<string>();
   let lastPayload: RunTelemetryPayload | null = null;
 
-  const record = (event: RunEndedEvent) => {
-    if (sentRunIds.has(event.runId)) return;
-    sentRunIds.add(event.runId);
+  const record = (event: RunEndedEvent | RunSecuredEvent, stage: RunTelemetryPayload['stage']) => {
+    const key = `${event.runId}:${stage}`;
+    if (sentEvents.has(key)) return;
+    sentEvents.add(key);
     if (!readTelemetryOptIn()) return;
     if (!shouldPostTelemetry()) return;
 
     const payload = buildRunTelemetryPayload(event, {
       contract: host.contract(),
       upgradeStacks: host.upgradeStacks(),
-    });
+    }, stage);
     lastPayload = payload;
     void postRunTelemetry(payload);
   };
 
-  const disposeEvent = host.events.on('run_ended', record);
+  const recordEnded = (event: RunEndedEvent) => record(event, 'end');
+  const disposeSecure = host.events.on('run_secured', (event) => record(event, 'secure'));
+  const disposeEnded = host.events.on('run_ended', recordEnded);
   if (new URLSearchParams(globalThis.location?.search ?? '').has('debug')) {
     globalThis.window.__GR_TELEMETRY__ = {
-      recordRunEndedForTest: record,
+      recordRunEndedForTest: recordEnded,
       lastPayload: () => lastPayload,
     };
   }
 
   return () => {
-    disposeEvent();
-    if (globalThis.window.__GR_TELEMETRY__?.recordRunEndedForTest === record) {
+    disposeSecure();
+    disposeEnded();
+    if (globalThis.window.__GR_TELEMETRY__?.recordRunEndedForTest === recordEnded) {
       globalThis.window.__GR_TELEMETRY__ = undefined;
     }
   };

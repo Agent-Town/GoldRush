@@ -2,6 +2,8 @@ import type { DecayEvent } from '../systems/DecaySystem';
 
 export type RunSummary = {
   wavesSurvived: number;
+  secureWaveReached?: number;
+  deepestWave?: number;
   goldPanned: number;
   goldPannedByProspector: number;
   goldStolen: number;
@@ -71,6 +73,14 @@ export type GameEvent =
       type: 'run_started';
       at: number;
       runId: number;
+    }
+  | {
+      type: 'run_secured';
+      at: number;
+      runId: number;
+      secureWave: number;
+      resultAt: number;
+      summary: RunSummary;
     }
   | {
       type: 'run_ended';

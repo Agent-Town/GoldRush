@@ -270,6 +270,11 @@ export class RunSuspendController {
     return this.write(snapshot);
   }
 
+  captureCurrent(wave: number, at: number): RunSuspendWrite | null {
+    if (wave <= 0) return null;
+    return this.write(captureSnapshot(this.game, this.meta(), Math.floor(wave), at, 'wave-boundary'));
+  }
+
   clear(): void {
     try {
       this.storage?.removeItem(RUN_SUSPEND_KEY);
@@ -392,6 +397,7 @@ export function normalizeRunSuspendDatum(value: unknown): RunSuspendEnvelope | n
 }
 
 export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
+  const { resultAt: _localResultAt, ...runManager } = snapshot.runManager;
   return {
     v: snapshot.v,
     wave: snapshot.wave,
@@ -433,7 +439,7 @@ export function runSuspendFutureState(snapshot: RunSuspendEnvelope): unknown {
     wrangle: snapshot.wrangle ?? null,
     homemakerBoss: snapshot.homemakerBoss,
     megaproject: snapshot.megaproject,
-    runManager: snapshot.runManager,
+    runManager,
     agent: snapshot.agent,
     controls: snapshot.controls,
     counters: snapshot.counters,
@@ -586,7 +592,14 @@ function captureSnapshot(
     wrangle: game.wrangle?.captureSuspend?.() ?? null,
     homemakerBoss: game.homemakerBoss?.captureSuspend?.(at) ?? null,
     megaproject: captureMegaproject(game),
-    runManager: runManager ?? { secured: false, rush: false, meta: deepClone(meta), payout: null },
+    runManager: runManager ?? {
+      secured: false,
+      rush: false,
+      securedAtWave: 0,
+      resultAt: null,
+      meta: deepClone(meta),
+      payout: null,
+    },
     agent: captureAgent(game, at, buildings),
     controls: captureControls(game),
     counters: {
@@ -1170,7 +1183,11 @@ function decodeRunSuspendEnvelope(value: unknown): RunSuspendDecodeResult {
   const homemakerBoss = isV2 ? decodeHomemakerBossSuspend(value.homemakerBoss) : null;
   if (homemakerBoss === false) reasons.push('homemakerBoss is invalid');
   const megaproject = isV2 ? decodeMegaproject(value.megaproject, reasons) : null;
-  const runManager = isV2 ? decodeRunManager(value.runManager, reasons) : meta ? { secured: false, rush: false, meta, payout: null } : null;
+  const runManager = isV2
+    ? decodeRunManager(value.runManager, reasons)
+    : meta
+      ? { secured: false, rush: false, securedAtWave: 0, resultAt: null, meta, payout: null }
+      : null;
   const agent = isV2 ? decodeAgent(value.agent, reasons) : null;
   const controls = isV2 ? decodeControls(value.controls, reasons) : null;
   if (isV2 && rng && (!rng.waves || !rng.upgrades)) reasons.push('v2 wave and upgrade RNG counters are required');
@@ -2665,10 +2682,17 @@ function decodeRunManager(value: unknown, reasons: string[]): RunManagerSuspendS
   if (record.rush === true && record.secured !== true) reasons.push('runManager.rush requires secured');
   const meta = decodeMetaProgress(record.meta, reasons);
   const payout = decodeMetaPayout(record.payout, reasons);
+  const securedAtWave = record.securedAtWave === undefined
+    ? 0
+    : requiredNumber(record.securedAtWave, 0, MAX_COUNT, 'runManager.securedAtWave', reasons);
+  const resultAt = record.resultAt === undefined || record.resultAt === null
+    ? null
+    : requiredNumber(record.resultAt, 0, MAX_TIMESTAMP, 'runManager.resultAt', reasons);
   if (record.secured === true && payout === null) reasons.push('runManager.secured requires payout');
   if (record.secured === false && payout !== null) reasons.push('runManager.payout requires secured');
   return typeof record.secured === 'boolean' && typeof record.rush === 'boolean' && meta && payout !== undefined
-    ? { secured: record.secured, rush: record.rush, meta, payout }
+    && securedAtWave !== null && resultAt !== undefined
+    ? { secured: record.secured, rush: record.rush, securedAtWave, resultAt, meta, payout }
     : null;
 }
 

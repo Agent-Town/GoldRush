@@ -66,20 +66,17 @@ async function setBalance(page: Page, path: string, value: number): Promise<void
   );
 }
 
-async function fastWave20(page: Page): Promise<void> {
+async function secureClaim(page: Page): Promise<number> {
   await setBalance(page, 'enemy.contactDamage', 0);
-  await setBalance(page, 'waves.waveInterval', 0.35);
-  await setBalance(page, 'waves.trickleInterval', 9999);
-  await setBalance(page, 'waves.pulseBase', 1);
-  await setBalance(page, 'waves.pulsePerWave', 0);
-  await setBalance(page, 'waves.pulsesPerWave', 1);
-  await setBalance(page, 'waves.edgesPerPulse', 1);
   await page.evaluate(() => window.__GR_TEST__?.resetRun());
+  const secureWave = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.secureWave ?? 0);
+  await page.evaluate((wave) => window.__GR_TEST__?.startWaveForTest(wave), secureWave);
+  return secureWave;
 }
 
 test('real victory pays meta, opens Claim Office, and tier one changes the next claim', async ({ page }) => {
-  const errors = await openGame(page, '?debug&timescale=100&nolevel&seed=task-027-victory');
-  await fastWave20(page);
+  const errors = await openGame(page, '?debug&nolevel&seed=task-027-victory');
+  const secureWave = await secureClaim(page);
 
   await expect(page.getByTestId('claim-office')).toBeVisible({ timeout: 12_000 });
   await expect(page.getByTestId('claim-payout-territory')).toContainText('+1');
@@ -112,7 +109,7 @@ test('real victory pays meta, opens Claim Office, and tier one changes the next 
   }
 
   const scores = await readJson<Array<{ secured?: boolean; waves?: number }>>(page, SCORE_STORAGE_KEY, '[]');
-  expect(scores.some((row: { secured?: boolean; waves?: number }) => row.secured === true && row.waves === Balance.run.secureWave)).toBe(
+  expect(scores.some((row: { secured?: boolean; waves?: number }) => row.secured === true && row.waves === secureWave)).toBe(
     true,
   );
 

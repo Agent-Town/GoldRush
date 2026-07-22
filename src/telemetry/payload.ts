@@ -9,10 +9,15 @@ export const DEVICE_CLASSES = ['desktop', 'mobile', 'tablet'] as const;
 export type RunTelemetryTier = (typeof TELEMETRY_TIERS)[number];
 export type RunTelemetryDeviceClass = (typeof DEVICE_CLASSES)[number];
 export type RunEndedEvent = Extract<GameEvent, { type: 'run_ended' }>;
+export type RunSecuredEvent = Extract<GameEvent, { type: 'run_secured' }>;
+export type RunTelemetryEvent = RunEndedEvent | RunSecuredEvent;
 
 export type RunTelemetryPayload = {
   contract: string;
+  stage: 'secure' | 'end';
   waves: number;
+  secureWave: number;
+  deepestWave: number;
   duration: number;
   upgradesTaken: number;
   tier: RunTelemetryTier;
@@ -71,13 +76,17 @@ export function bindTelemetrySettingsControl(root: ParentNode, id: string): () =
 }
 
 export function buildRunTelemetryPayload(
-  event: RunEndedEvent,
+  event: RunTelemetryEvent,
   context: { contract: string; upgradeStacks: Record<string, number> },
+  stage: RunTelemetryPayload['stage'] = 'end',
 ): RunTelemetryPayload {
   const diagnostics = globalThis.window?.__THREE_GAME_DIAGNOSTICS__;
   return {
     contract: context.contract,
+    stage,
     waves: nonNegativeInt(event.summary.wavesSurvived),
+    secureWave: nonNegativeInt(event.summary.secureWaveReached),
+    deepestWave: nonNegativeInt(event.summary.deepestWave ?? event.summary.wavesSurvived),
     duration: nonNegativeInt(event.at * 1000),
     upgradesTaken: sumStacks(context.upgradeStacks),
     tier: normalizeTier(diagnostics?.performance.tier),

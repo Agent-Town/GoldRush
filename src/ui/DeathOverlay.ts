@@ -28,6 +28,8 @@ export type BestClaimRow = {
   baseValue?: number;
   weaponSplit?: { spark: number; blast: number };
   secured?: boolean;
+  secureWave?: number;
+  deepestWave?: number;
   profileName?: string;
   contractId?: string;
   legacy?: boolean;
@@ -66,7 +68,7 @@ export type DeathResearchState = {
 };
 
 export type DeathOverlayOptions = {
-  outcome?: 'death' | 'secured';
+  outcome?: 'death' | 'secured' | 'rush';
   actionLabel?: string;
   secondaryActionLabel?: string;
   runStats?: DeathRunStatsSnapshot;
@@ -125,16 +127,18 @@ export class DeathOverlay {
   }
 
   private render(ledger: DeathLedger, scores: readonly BestClaimRow[], currentAt: number): string {
-    const secured = this.options.outcome === 'secured';
+    const secured = this.options.outcome === 'secured' || this.options.outcome === 'rush';
     const runStats = this.runStats();
-    const flavor = secured
-      ? 'The assay is sealed. The town kept thinking.'
-      : 'The claim was overrun. The gold remembers.';
+    const flavor = this.options.outcome === 'rush'
+      ? 'The claim held. The Rush took the rest — your win stays in the ledger.'
+      : secured
+        ? 'The assay is sealed. The town kept thinking.'
+        : 'The claim was overrun. The gold remembers.';
     return `
       <div class="death-overlay__panel">
         <p class="death-overlay__eyebrow">${secured ? 'Claim Secured' : 'The claim went quiet.'}</p>
         <h1>Run Ledger</h1>
-        <p class="death-overlay__flavor">${flavor}</p>
+        <p class="death-overlay__flavor" data-testid="run-outcome-copy">${flavor}</p>
         <dl class="death-overlay__ledger">
           <div>
             <dt>Time Held</dt>
@@ -324,11 +328,15 @@ export class DeathOverlay {
     return scores
       .map((score) => {
         const current = score.at === currentAt;
+        const deepestWave = score.deepestWave ?? score.waves;
+        const waveSummary = score.secured && score.secureWave !== undefined
+          ? `secured wave ${score.secureWave} · deepest wave ${deepestWave}`
+          : `wave ${deepestWave}`;
         return `
           <li class="death-overlay__score ${current ? 'death-overlay__score--current' : ''}" data-testid="best-claim-row"${
             current ? ' data-current-run="true"' : ''
           }>
-            <span class="death-overlay__score-summary">wave ${score.waves} · ${this.formatBase(score.baseValue)}</span>
+            <span class="death-overlay__score-summary">${waveSummary} · ${this.formatBase(score.baseValue)}</span>
             <strong class="death-overlay__score-stamp">${score.secured ? 'SECURED' : 'OVERRUN'}</strong>
             <span class="death-overlay__score-detail">${this.escape(score.profileName ?? 'Robin')} · ${
               score.waves
