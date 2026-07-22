@@ -191,10 +191,7 @@ function launchContract(contractId: string): void {
   const nextSearch = new URLSearchParams(window.location.search);
   nextSearch.set('contract', contractId);
   history.pushState(null, '', `${window.location.pathname}?${nextSearch.toString()}${window.location.hash}`);
-  startMenu?.dispose();
-  startMenu = undefined;
-  town?.dispose();
-  town = undefined;
+  teardownActiveScene();
   startWithProfiles({ skipTitle: true });
 }
 
@@ -228,31 +225,45 @@ function returnRunToCharterPress(result: RunReturnResult): boolean {
 
 function returnToTownBoard(result: RunReturnResult): void {
   const returnedContractId = new URLSearchParams(window.location.search).get('contract') || DEFAULT_CONTRACT_ID;
-  town?.dispose();
-  town = undefined;
-  game?.dispose();
-  game = undefined;
-  assayBench?.dispose();
-  assayBench = undefined;
-  profiles?.dispose();
-  profiles = undefined;
-  startMenu?.dispose();
-  startMenu = undefined;
+  teardownActiveScene();
   replaceRunRoute('town');
   openTown({ openBoard: true, returnResult: result, initialBoardContractId: returnedContractId });
 }
 
 function returnToStartMenu(): void {
-  town?.dispose();
-  town = undefined;
-  game?.dispose();
-  game = undefined;
-  assayBench?.dispose();
-  assayBench = undefined;
-  profiles?.dispose();
-  profiles = undefined;
+  teardownActiveScene();
   replaceRunRoute('menu');
   showStartMenu();
+}
+
+function teardownActiveScene(): void {
+  const parts = [
+    ['town', town],
+    ['game', game],
+    ['assay bench', assayBench],
+    ['profiles', profiles],
+    ['start menu', startMenu],
+  ] as const;
+  town = undefined;
+  game = undefined;
+  assayBench = undefined;
+  profiles = undefined;
+  startMenu = undefined;
+  for (const [name, part] of parts) {
+    try {
+      part?.dispose();
+    } catch (error) {
+      console.error(`[scene-swap] ${name} disposal failed; continuing.`, error);
+    }
+  }
+  const hud = document.querySelector<HTMLElement>('#hud');
+  hud?.replaceChildren();
+  if (hud) {
+    hud.classList.remove('hud--announcement-visible', 'hud--pressure-visible');
+    delete hud.dataset.announcementKind;
+    delete hud.dataset.paused;
+    delete hud.dataset.runState;
+  }
 }
 
 function replaceRunRoute(scene: 'town' | 'menu'): void {
