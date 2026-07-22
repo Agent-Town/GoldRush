@@ -9,7 +9,7 @@ import { CameraRig } from '../systems/CameraRig';
 import { Hero } from '../entities/Hero';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
-import { createRenderer, resizeRenderer } from '../core/Renderer';
+import { createRenderer, flushRenderedFrameCaptures, resizeRenderer } from '../core/Renderer';
 import { RenderLayers } from '../core/RenderLayers';
 import { palette } from '../assets/palette';
 import { depenetrateToWalkable } from '../world/LandmarkCollision';
@@ -480,6 +480,7 @@ export class TownScene {
   private render(): void {
     this.renderer.info.reset();
     this.renderer.render(this.scene, this.camera);
+    flushRenderedFrameCaptures(this.canvas);
   }
 
   private readonly sampleTown = (x: number, z: number) => {
@@ -1169,9 +1170,10 @@ export class TownScene {
         <button class="town-ui__prompt-button" type="button" data-town-schoolhouse data-testid="town-open-schoolhouse">Chart</button>
       `;
     } else if (nearest.id === 'assay_office') {
+      const debug = new URLSearchParams(window.location.search).has('debug');
       this.prompt.innerHTML = `
-        <span>${nearest.name} ... order status</span>
-        <button class="town-ui__prompt-button" type="button" data-town-assay data-testid="town-open-assay">Orders</button>
+        <span>${nearest.name} ... ${debug ? 'debug crafting door' : 'the clerk takes complaints'}</span>
+        <button class="town-ui__prompt-button" type="button" data-town-assay data-testid="town-open-assay">${debug ? 'Crafting' : 'Complaints Desk'}</button>
       `;
     } else {
       this.prompt.textContent = `${nearest.name} ... opens soon`;
@@ -1519,7 +1521,7 @@ export class TownScene {
   }
 
   private closeAssayBench(): void {
-    this.assayBenchRoot()?.querySelector<HTMLButtonElement>('[data-testid="assay-close"]')?.click();
+    this.assayBenchRoot()?.querySelector<HTMLButtonElement>('[data-testid="assay-close"], [data-testid="complaint-close"]')?.click();
     this.syncPrompt();
     this.publishDiagnostics();
   }
@@ -1996,7 +1998,7 @@ export class TownScene {
   }
 
   private assayBenchRoot(): HTMLElement | null {
-    return document.querySelector<HTMLElement>('[data-testid="assay-bench"]');
+    return document.querySelector<HTMLElement>('[data-assay-office-surface]');
   }
 
   private assayBenchOpen(): boolean {

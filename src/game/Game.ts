@@ -99,7 +99,7 @@ import {
 } from '../core/DebugParams';
 import { InputController, type Intents } from '../core/InputController';
 import { FIXED_SIM_STEP_SECONDS, Loop, MAX_FIXED_STEPS_PER_FRAME, type LoopFrame } from '../core/Loop';
-import { createRenderer, resizeRenderer } from '../core/Renderer';
+import { createRenderer, flushRenderedFrameCaptures, resizeRenderer } from '../core/Renderer';
 import { RenderLayers, renderLayerOf } from '../core/RenderLayers';
 import { createRng } from '../core/Rng';
 import {
@@ -3423,6 +3423,7 @@ export class Game {
     this.renderer.info.reset();
     this.renderer.render(this.scene, this.camera);
     this.lightRig?.renderPost(this.renderer);
+    flushRenderedFrameCaptures(this.canvas);
     this.recordProfileSample();
   }
 
@@ -5536,7 +5537,7 @@ export class Game {
   }
 
   private syncBuildingContextPrompt(): void {
-    const benchOpen = document.querySelector('[data-testid="assay-bench"]:not([hidden])') !== null;
+    const benchOpen = document.querySelector('[data-assay-office-surface]:not([hidden])') !== null;
     const assayInRange = this.buildSystem.assayOfficeInRange(this.localActor.group.position);
     const canInteract = this.state.current === 'playing' && !this.state.isPaused && !benchOpen;
     const fund = canInteract && !this.buildMenuOpen && !this.buildSystem.isBuildMode ? this.megaprojectFundCandidate(this.localActor.group.position) : null;

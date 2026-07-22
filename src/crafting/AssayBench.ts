@@ -9,6 +9,7 @@ import {
 } from './CraftingQueue';
 import { normalizeQueueProfile, type CraftedItemDef } from './CraftingQueueContract';
 import { browserResearchStorage, contractTierForResearch, loadResearchState } from '../meta/ResearchTree';
+import { ComplaintDeskPanel } from '../ui/ComplaintDesk';
 
 export class AssayBench {
   private readonly accepted = new Map<string, CraftedItemDef>();
@@ -60,6 +61,7 @@ export class AssayBenchPanel {
 
     this.root.className = 'assay-bench';
     this.root.dataset.testid = 'assay-bench';
+    this.root.dataset.assayOfficeSurface = '';
     this.root.setAttribute('aria-label', 'Assay Bench');
     this.root.hidden = options.initiallyOpen === false;
     this.root.setAttribute('aria-hidden', String(this.root.hidden));
@@ -277,8 +279,10 @@ export class AssayBenchPanel {
 export function install(
   parent: HTMLElement,
   options: { profile?: string; initiallyOpen?: boolean } = {},
-): AssayBenchPanel | undefined {
-  return new AssayBenchPanel(parent, options);
+): AssayBenchPanel | ComplaintDeskPanel {
+  return new URLSearchParams(window.location.search).has('debug')
+    ? new AssayBenchPanel(parent, options)
+    : new ComplaintDeskPanel(parent);
 }
 
 function queueTimestamp(): Date {

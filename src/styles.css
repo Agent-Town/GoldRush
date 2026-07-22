@@ -2018,6 +2018,197 @@ body:has(.gr-profile-title) #touch-controls {
   }
 }
 
+.complaint-desk {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: grid;
+  width: min(780px, calc(100vw - 28px));
+  max-height: min(760px, calc(100vh - 28px));
+  margin: auto;
+  overflow: auto;
+  border: 2px solid var(--at-wood-950);
+  border-radius: 8px;
+  color: var(--at-wood-950);
+  background:
+    linear-gradient(135deg, rgba(255, 248, 232, 0.96), rgba(245, 230, 200, 0.96)),
+    var(--at-sand-100);
+  box-shadow:
+    inset 0 0 0 2px rgba(139, 125, 60, 0.38),
+    0 7px 0 rgba(46, 27, 14, 0.68),
+    0 22px 48px rgba(46, 27, 14, 0.48);
+  font: 14px/1.4 Wellfleet, Georgia, serif;
+}
+
+.complaint-desk[hidden] {
+  display: none;
+}
+
+.complaint-desk::before,
+.complaint-desk::after {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  content: "";
+  background: var(--at-brass-700);
+  box-shadow: inset 0 1px 0 rgba(255, 248, 232, 0.52);
+}
+
+.complaint-desk::before { top: 7px; left: 7px; }
+.complaint-desk::after { right: 7px; bottom: 7px; }
+
+.complaint-desk__header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px 13px;
+  border-bottom: 2px solid rgba(46, 27, 14, 0.58);
+  background: rgba(255, 248, 232, 0.58);
+}
+
+.complaint-desk__header h2,
+.complaint-desk__header p,
+.complaint-desk__moment p,
+.complaint-desk__status {
+  margin: 0;
+}
+
+.complaint-desk__header h2 {
+  font-size: clamp(1.35rem, 4vw, 2rem);
+  line-height: 1.05;
+}
+
+.complaint-desk__eyebrow {
+  color: var(--at-teal-600);
+  font-size: 0.76rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.complaint-desk__close {
+  min-width: 44px;
+  min-height: 44px;
+  border: 2px solid var(--at-wood-950);
+  border-radius: 8px;
+  color: var(--at-wood-950);
+  background: var(--at-sand-200);
+  font: 900 1rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+}
+
+.complaint-desk__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);
+  gap: 12px;
+  padding: 16px 18px 20px;
+}
+
+.complaint-desk label {
+  display: grid;
+  gap: 5px;
+  font-weight: 800;
+}
+
+.complaint-desk__description {
+  grid-row: span 2;
+}
+
+.complaint-desk textarea,
+.complaint-desk input {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(46, 27, 14, 0.5);
+  border-radius: 6px;
+  padding: 9px 10px;
+  color: inherit;
+  background: var(--at-cream-50);
+  font: inherit;
+}
+
+.complaint-desk textarea {
+  min-height: 150px;
+  resize: vertical;
+}
+
+.complaint-desk__moment {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(180px, 0.55fr) minmax(0, 1fr);
+  gap: 12px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid rgba(46, 27, 14, 0.35);
+  border-radius: 7px;
+  background: rgba(255, 248, 232, 0.7);
+}
+
+.complaint-desk__moment img {
+  display: block;
+  width: 100%;
+  max-height: 220px;
+  border: 2px solid var(--at-wood-950);
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.complaint-desk__moment button {
+  margin-top: 8px;
+}
+
+.complaint-desk__diagnostics,
+.complaint-desk__bounty {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 9px 10px;
+  border-left: 4px solid var(--at-teal-600);
+  background: rgba(91, 138, 138, 0.12);
+}
+
+.complaint-desk__bounty {
+  border-color: var(--at-ochre-500);
+  background: rgba(196, 136, 58, 0.14);
+  font-weight: 900;
+}
+
+.complaint-desk__actions {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.complaint-desk__status {
+  min-width: 0;
+  font-weight: 800;
+}
+
+.complaint-desk[data-state="filed"] .complaint-desk__status { color: #315f61; }
+.complaint-desk[data-state="offline"] .complaint-desk__status,
+.complaint-desk[data-state="declined"] .complaint-desk__status { color: #7f2633; }
+
+@media (max-width: 620px) {
+  .complaint-desk {
+    width: calc(100vw - 20px);
+    max-height: calc(100vh - 20px);
+  }
+
+  .complaint-desk__body,
+  .complaint-desk__moment {
+    grid-template-columns: 1fr;
+  }
+
+  .complaint-desk__description {
+    grid-row: auto;
+  }
+
+  .complaint-desk__actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+}
+
 /* lane-c: build-tile portraits */
 .hud-build-tile__icon {
   display: none;
