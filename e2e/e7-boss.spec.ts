@@ -1,20 +1,17 @@
 import { expect, test, type Page } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
-import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 
-// Relay Valley still has zero harvest anchors and cannot boot until the adjacent
-// E7 signal-systems slice lands. The explicit debug seam exercises the same
-// production system on the stable Claim without broadening its live contract.
 const QUERY = '/?debug&e7boss&epoch=epoch-7-signal&contract=the-claim&nowaves&nolevel&nopause&seed=e7-echo-boss';
+const PLAIN_QUERY = '/?contract=e7-relay-valley&nowaves&nolevel&nopause&seed=e7-relay-valley';
+const LIVE_QUERY = '/?debug&contract=e7-relay-valley&nowaves&nolevel&nopause&seed=e7-echo-live';
 
 test.setTimeout(60_000);
-test.beforeEach(async ({ page }) => page.addInitScript(({ epochKey }) => {
+test.beforeEach(async ({ page }) => page.addInitScript(() => {
   if (!sessionStorage.getItem('e7-boss-test')) {
     localStorage.clear();
     sessionStorage.setItem('e7-boss-test', '1');
   }
-  localStorage.setItem(epochKey, 'epoch-7-signal');
-}, { epochKey: ACTIVE_EPOCH_KEY }));
+}));
 
 async function open(page: Page, bossEnabled = true): Promise<string[]> {
   const errors: string[] = [];
@@ -48,6 +45,35 @@ async function strike(page: Page, key: 'KeyW' | 'KeyA' | 'KeyS' | 'KeyD'): Promi
   await page.evaluate(() => window.__GR_TEST__!.advanceSim(0.05));
   await page.keyboard.up(key);
 }
+
+test('Relay Valley boots directly and THE ECHO arrives without the e7boss flag', async ({ page }, testInfo) => {
+  const errors: string[] = [];
+  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
+  page.on('pageerror', (error) => errors.push(error.message));
+  await page.goto(PLAIN_QUERY);
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e7-relay-valley');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.epochId)).toBe('epoch-7-signal');
+  await expect(page.getByTestId('contract-briefing-name')).toHaveText('The Relay Valley');
+  await page.screenshot({ path: testInfo.outputPath('relay-valley-plain-boot.png') });
+  expect(await page.evaluate(async () => {
+    const registry = await Function('return import("/src/meta/ContractFamilies.ts")')() as typeof import('../src/meta/ContractFamilies');
+    registry.stagePlayerContractLaunch('e7-relay-valley');
+    return sessionStorage.getItem('gr.contract.launch.v1');
+  })).toBe('e7-relay-valley');
+  await page.reload();
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e7-relay-valley');
+
+  await page.goto(LIVE_QUERY);
+  await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e7-relay-valley');
+  await page.getByTestId('contract-briefing-dismiss').click();
+  await page.evaluate((wave) => {
+    window.__GR_TEST__!.setManualSim(true);
+    window.__GR_TEST__!.startWaveForTest(wave);
+  }, Balance.e7Boss.arriveWave - Balance.e7Boss.dreadWaves);
+  expect(await echo(page)).toMatchObject({ active: true, act: 0, killPath: false });
+  await page.screenshot({ path: testInfo.outputPath('relay-valley-echo-arrival.png') });
+  expect(errors).toEqual([]);
+});
 
 test('mirrors the live base, grades novelty, and keeps the Echo in a jar without a kill', async ({ page }) => {
   const errors = await open(page);

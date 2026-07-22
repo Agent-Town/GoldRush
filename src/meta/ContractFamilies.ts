@@ -703,6 +703,10 @@ export const CONTRACT_EDITOR_DOCUMENT_KEY = 'gr.editor.contract.v1';
 export const CONTRACT_EDITOR_REJECTION_LINE = 'This page of the ledger is water-damaged. The contract stayed as it was.';
 const PLAYER_CONTRACT_LAUNCH_KEY = 'gr.contract.launch.v1';
 export const CHARTER_LAUNCH_KEY = 'gr.charter.launch.v1';
+const LIVE_SAGA_FLAGSHIPS: Readonly<Record<string, string>> = {
+  'e7-relay-valley': 'epoch-7-signal',
+  'e10-last-claim': 'epoch-10-deepsky',
+};
 const CONTRACT_EDITOR_MAX_DOCUMENT_CHARS = 512 * 1_024;
 const AUTHORED_TERRAIN_MAX_DIMENSION = 41;
 const AUTHORED_TERRAIN_MAX_CELLS = AUTHORED_TERRAIN_MAX_DIMENSION * AUTHORED_TERRAIN_MAX_DIMENSION;
@@ -931,6 +935,8 @@ export function activeEpochId(): string {
   const requestedId = params.get('epoch');
   const debug = params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase';
   if (requestedId && debug && manifestsById.has(requestedId)) return requestedId;
+  const flagshipEpochId = LIVE_SAGA_FLAGSHIPS[params.get('contract') ?? ''];
+  if (flagshipEpochId) return flagshipEpochId;
   try {
     const persisted = globalThis.localStorage?.getItem(ACTIVE_EPOCH_KEY);
     if (persisted && manifestsById.has(persisted)) return persisted;
@@ -1112,13 +1118,14 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
   const requestedId = params.get('contract');
   const debug = params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase';
   const launched = requestedId ? isPlayerContractLaunch(requestedId) : false;
+  const liveSagaFlagship = requestedId !== null && requestedId in LIVE_SAGA_FLAGSHIPS;
   let contract = fallback;
   let fallbackReason: ActiveContractDiagnostics['fallbackReason'] = null;
 
-  if (requestedId && !debug && !launched) {
+  if (requestedId && !debug && !launched && !liveSagaFlagship) {
     fallbackReason = 'debug-disabled';
   } else if (requestedId) {
-    const candidates = debug || launched ? listBoardContracts() : contracts;
+    const candidates = debug || launched || liveSagaFlagship ? listBoardContracts() : contracts;
     const requested = candidates.find((entry) => entry.id === requestedId);
     if (!requested) {
       fallbackReason = 'unknown-contract';

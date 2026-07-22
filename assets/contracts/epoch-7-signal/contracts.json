@@ -54,7 +54,12 @@
         ],
         "stakeMarkers": [],
         "waterSources": [],
-        "harvestAnchors": [],
+        "harvestAnchors": [
+          { "x": -36, "z": -20 },
+          { "x": -12, "z": 18 },
+          { "x": 12, "z": 18 },
+          { "x": 36, "z": -20 }
+        ],
         "heightfield": {
           "id": "relay-valley-ridgelines",
           "mode": "visual"
@@ -129,7 +134,7 @@
     {
       "id": "e7-echo-canyon",
       "name": "Echo Canyon",
-      "description": "Engine dependency: broadcast-mirror playbook consumer not yet implemented. Teaching intent: vary your own patterns because every recorded habit returns as a corrupted copy on the next wave.",
+      "description": "Board-launch-only until its broadcast-mirror playbook consumer lands. Teaching intent: vary your own patterns because every recorded habit returns as a corrupted copy on the next wave.",
       "tileParams": {
         "tileId": "e7-echo-canyon",
         "biome": "signal-echo-canyon",
@@ -262,7 +267,7 @@
     {
       "id": "e7-dead-band",
       "name": "The Dead Band",
-      "description": "Relay Valley terrain variant. Engine dependency: contract-level signal-suppression consumer not yet implemented. Teaching intent: feel what agents contribute by losing drones, playbooks, and relay chains for one run.",
+      "description": "Board-launch-only until its contract-level signal-suppression consumer lands. Teaching intent: feel what agents contribute by losing drones, playbooks, and relay chains for one run.",
       "tileParams": {
         "tileId": "e7-relay-valley",
         "biome": "signal-dead-band",
@@ -371,7 +376,7 @@
     {
       "id": "e7-relay-rush",
       "name": "Relay Rush",
-      "description": "Relay Valley terrain variant. Engine dependency: event-driven interference-front cycle and signal-muting consumer not yet implemented. Teaching intent: expand under deadline and triage at speed.",
+      "description": "Board-launch-only until its event-driven interference-front cycle and signal-muting consumer land. Teaching intent: expand under deadline and triage at speed.",
       "tileParams": {
         "tileId": "e7-relay-valley",
         "biome": "signal-relay-rush",

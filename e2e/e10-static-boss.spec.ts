@@ -1,6 +1,8 @@
 import { expect, test, type Page } from '@playwright/test';
 
 const QUERY = '/?debug&e10static&epoch=epoch-10-deepsky&contract=the-claim&nowaves&nolevel&nokill&nopause&terrain2d&seed=e10-static';
+const PLAIN_QUERY = '/?contract=e10-last-claim&nowaves&nolevel&nokill&nopause&terrain2d&seed=e10-last-claim';
+const LIVE_QUERY = '/?debug&contract=e10-last-claim&nowaves&nolevel&nokill&nopause&terrain2d&seed=e10-static-live';
 
 function collectErrors(page: Page): string[] {
   const errors: string[] = [];
@@ -31,6 +33,40 @@ async function open(page: Page): Promise<string[]> {
 async function diagnostics(page: Page) {
   return page.evaluate(() => window.__GR_TEST__!.e10Static.diagnostics());
 }
+
+test('The Last Claim boots directly and the Static arrives without the e10static flag', async ({ page }, testInfo) => {
+  test.setTimeout(120_000);
+  const errors = collectErrors(page);
+  await page.goto(PLAIN_QUERY);
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e10-last-claim');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.epochId)).toBe('epoch-10-deepsky');
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.e10Finale.ark.loadState === 'ready');
+  await expect(page.getByTestId('contract-briefing-name')).toHaveText('The Last Claim');
+  await page.screenshot({ path: testInfo.outputPath('last-claim-plain-boot.png') });
+  expect(await page.evaluate(async () => {
+    const registry = await Function('return import("/src/meta/ContractFamilies.ts")')() as typeof import('../src/meta/ContractFamilies');
+    registry.stagePlayerContractLaunch('e10-last-claim');
+    return sessionStorage.getItem('gr.contract.launch.v1');
+  })).toBe('e10-last-claim');
+  await page.reload();
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e10-last-claim');
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.e10Finale.ark.loadState === 'ready');
+
+  await page.goto(LIVE_QUERY);
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__) && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'e10-last-claim');
+  await page.getByTestId('contract-briefing-dismiss').click();
+  await page.evaluate(() => {
+    const test = window.__GR_TEST__!;
+    test.setManualSim(true);
+    test.setBalance('e10Static.arrivalZ', 20);
+    test.setBalance('e10Static.approachSeconds', 0.01);
+    test.teleport(0, 20);
+    test.advanceSim(0.05);
+  });
+  expect(await diagnostics(page)).toMatchObject({ enabled: true, active: true, arrivalCount: 1, appetite: 'meaning' });
+  await page.screenshot({ path: testInfo.outputPath('last-claim-static-arrival.png') });
+  expect(errors).toEqual([]);
+});
 
 test('the Static pressures meaning, three preserves make the Quiet recede, and nothing is killed', async ({ page }) => {
   test.setTimeout(120_000);
@@ -117,7 +153,7 @@ test('the Static stays unarmed without the E10 contract or explicit debug seam',
 test('recession hands the secured claim to the existing T10 re-inking finale', async ({ page }) => {
   test.setTimeout(120_000);
   const errors = collectErrors(page);
-  await page.goto(QUERY.replace('&nopause', ''));
+  await page.goto(LIVE_QUERY.replace('&nopause', ''));
   await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const briefing = page.getByTestId('contract-briefing-dismiss');
   if (await briefing.isVisible().catch(() => false)) await briefing.click();
