@@ -139,9 +139,9 @@ async function cleanupPostedPath(page: Page): Promise<void> {
   if (path) await rm(resolve(process.cwd(), path), { force: true });
 }
 
-test('normal play shows the Assay Office prompt and opens the bench without debug', async ({ page }, testInfo: TestInfo) => {
+test('debug play builds the Assay Office and posts an order at the bench', async ({ page }, testInfo: TestInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'normal play keyboard path is covered on desktop; mobile touch has its own test');
-  const errors = await openGame(page, '?timescale=4&nowaves&nolevel&nokill&seed=task037-normal');
+  const errors = await openGame(page, '?debug&timescale=4&nowaves&nolevel&nokill&seed=task037-normal');
   await expect(page.getByTestId('assay-bench')).toBeHidden();
   await expect(page.getByTestId('assay-office-prompt')).toBeHidden();
 
