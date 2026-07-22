@@ -1,0 +1,3 @@
+# Corrective — Glow Mesa 3D census path
+
+`e6-glow-mesa` has one REAL load/performance cluster owned by MQ-2 and MQ-4: both GLBs load and match their published mesh counts, but `Terrain3dClaimPilot` ends in `state=failed` with the painted fallback, which also leaves no mounted landmark/panorama census target and pushes the full probe path beyond 10 seconds. Find the post-load install failure, fix the shared mechanism without weakening contract validation or the performance budget, and close only when Glow Mesa reports `renderSource=glb`, mounted panorama/landmarks, passing MQ-2/brightness probes, `<=10s`, and zero console/page errors.
