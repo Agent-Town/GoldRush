@@ -112,6 +112,14 @@ async function seedProfile(page: Page, ready: boolean, baronBeaten = true): Prom
     },
   );
   await page.reload();
+  await disableReleaseFrontier(page);
+}
+
+async function disableReleaseFrontier(page: Page): Promise<void> {
+  await page.evaluate(async () => {
+    const { Balance } = (await Function('return import("/src/game/Balance.ts")')()) as typeof import('../src/game/Balance');
+    (Balance as { releaseFrontier: string | false | undefined }).releaseFrontier = false;
+  });
 }
 
 async function hold(page: Page, key: string, ms: number): Promise<void> {
@@ -364,6 +372,7 @@ test('the Stamp Mill site raises E2 once and removes the action after activation
     { key: profileDataKey('robin', META_PROGRESS_KEY), threshold: STEAMWORKS_THRESHOLD },
   );
   await page.reload();
+  await disableReleaseFrontier(page);
   await approachStampMill(page);
   const action = page.getByTestId('raise-stamp-mill-site');
   await expect(action).toHaveText('Raise the Stamp Mill');
