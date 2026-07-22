@@ -10,6 +10,7 @@ import {
 } from '../meta/ContractFamilies';
 import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
+import { e7SignalExitBeatReady } from '../systems/E7SignalSystem';
 import { ConvoyBehavior, type ConvoyPathEntity } from '../systems/ConvoyBehavior';
 import {
   CEREMONY_KEPT_IMAGE_EVENT,
@@ -42,7 +43,7 @@ export type CeremonyKeptImageDetail = {
 
 export type CeremonyDiagnostics = {
   registered: string[];
-  doorState: 'legacy' | 'hidden' | 'needs-science' | 'ceremony-ready';
+  doorState: 'legacy' | 'hidden' | 'needs-science' | 'needs-exit-beat' | 'ceremony-ready';
   armableId: string | null;
   open: boolean;
   ceremonyId: string | null;
@@ -163,6 +164,15 @@ export class CeremonySystem {
         </section>
       `;
     }
+    if (state === 'needs-exit-beat') {
+      return `
+        <section class="town-ui__epoch-door" data-testid="ceremony-epoch-door" data-ceremony-id="${script.id}" data-door-state="needs-exit-beat">
+          <p class="town-ui__board-eyebrow">The town's next ledger</p>
+          <h3>${escapeHtml(script.title)} waits on the last signal.</h3>
+          <p>The switchboard chief keeps the patched jack lit until the last frequency goes dark.</p>
+        </section>
+      `;
+    }
     return `
       <section class="town-ui__epoch-door" data-testid="ceremony-epoch-door" data-ceremony-id="${script.id}" data-door-state="ceremony-ready">
         <p class="town-ui__board-eyebrow">The town's next ledger</p>
@@ -260,11 +270,13 @@ export class CeremonySystem {
 
   // ─── Arming state (derived, never persisted) ───────────────────────────────
 
-  private doorState(script: CeremonyScript): 'hidden' | 'needs-science' | 'ceremony-ready' {
+  private doorState(script: CeremonyScript): 'hidden' | 'needs-science' | 'needs-exit-beat' | 'ceremony-ready' {
     const epoch = loadEpoch(script.epochId);
     if (!epoch.successor || epochIsActive(epoch.successor)) return 'hidden';
     if (!epochMegaprojectComplete(epoch)) return 'hidden';
-    return this.meter(script.epochId).complete ? 'ceremony-ready' : 'needs-science';
+    if (!this.meter(script.epochId).complete) return 'needs-science';
+    if (script.epochId === 'epoch-7-signal' && !e7SignalExitBeatReady()) return 'needs-exit-beat';
+    return 'ceremony-ready';
   }
 
   private meter(epochId: string) {
@@ -629,6 +641,10 @@ export class CeremonySystem {
     const ceremony = this.active;
     if (!ceremony) return;
     ceremony.held = false;
+    const hand = ceremony.script.hand;
+    if (hand.kind === 'timed-release' && (ceremony.holdMs < hand.chargeMs || ceremony.holdMs > hand.chargeMs + hand.windowMs)) {
+      ceremony.holdMs = 0;
+    }
   }
 
   private syncHandButton(phase: CeremonyPhase): void {
