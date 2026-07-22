@@ -317,10 +317,54 @@ export const T8_THE_COLONY_SEED: CeremonyScript = {
   keptImage: { caption: 'The red dot above the dome cluster; below it, everyone already working.' },
 };
 
+// ─── T9 · E9→E10 — THE GENERATION ARK ─────────────────────────
+// STORYBOOK: the player's held walk carries the Elder's Tree seed-tin through
+// the whole boarding line and up the ramp. The town boards entire; the heirs'
+// fleet crests the horizon; the ramps close on the green world.
+export const T9_THE_GENERATION_ARK: CeremonyScript = {
+  id: 't9-the-generation-ark',
+  interstitial: 'T9',
+  epochId: 'epoch-9-redfields',
+  title: 'The Generation Ark',
+  doorLine: "The whole town is in the boarding line. The Elder's Tree seed-tin waits for your hand.",
+  hand: {
+    kind: 'drive',
+    route: [
+      { x: -12, z: 4 },
+      { x: -7, z: 3 },
+      { x: -2, z: 1.5 },
+      { x: 3, z: 0 },
+      { x: 8, z: -2 },
+      { x: 12, z: -4 },
+    ],
+    followers: 0,
+    spacing: 1,
+    speed: 8,
+    crestAt: 0.92,
+    label: "Hold to carry the Elder's Tree seed-tin",
+  },
+  phases: [
+    { id: 'boarding-line', kind: 'beat', durationMs: 1_200, direction: 'Every surviving portrait waits in the boarding line — aged, named, touchable.' },
+    { id: 'carry-tree-seed', kind: 'hand', direction: "Carry the Elder's Tree seed-tin through the line and up the ramp." },
+    { id: 'town-boards-entire', kind: 'beat', durationMs: 1_200, direction: 'The town boards entire: every generation, the Long Table, the seed in its greenkeeper tin.' },
+    { id: 'heirs-fleet', kind: 'beat', durationMs: 1_400, direction: "The heirs' fleet crests the horizon, crossed pickaxes on every sail. They have come asking." },
+    { id: 'departure-horn', kind: 'beat', durationMs: 1_000, direction: "The departure horn sounds the Railcar's old whistle note — leaving-music now." },
+    { id: 'ramps-close', kind: 'beat', durationMs: 1_400, direction: 'The ramps close on a green world. Under the horn, the canals keep running.' },
+    { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: 'From the ramp: the basin green, the Digger working, one old man waving with a stopped watch.' },
+    { id: 'arm', kind: 'arm', direction: 'The Deep Sky opens.' },
+  ],
+  sound: [
+    { beat: 't9-canals-running', phase: 'boarding-line', atMs: 0, sound: 'sluice-water-loop' },
+    { beat: 't9-departure-horn', phase: 'departure-horn', atMs: 0, sound: 'wave-start-horn' },
+    { beat: 't9-ramps-close', phase: 'ramps-close', atMs: 0, sound: 'build-place' },
+  ],
+  keptImage: { caption: 'From the ramp: the basin green, the Digger working, one old man waving with a stopped watch in his other hand.' },
+};
+
 /** The registry: every framework-staged ceremony, keyed by the era it closes.
  * T1 (stamp mill click) and T2 (dynamo crank) predate the framework and stay
  * on their own doors — wrap, don't rewrite; migration is a named follow-up. */
-export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR, T6_THE_CALCULATING_HOUSE, T7_THE_STARSHIP, T8_THE_COLONY_SEED];
+export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR, T6_THE_CALCULATING_HOUSE, T7_THE_STARSHIP, T8_THE_COLONY_SEED, T9_THE_GENERATION_ARK];
 
 export function ceremonyScriptForEpoch(epochId: string): CeremonyScript | null {
   return CEREMONY_SCRIPTS.find((script) => script.epochId === epochId) ?? null;

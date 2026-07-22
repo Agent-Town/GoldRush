@@ -19,6 +19,7 @@ const E6 = 'epoch-6-atomic';
 const E7 = 'epoch-7-signal';
 const E8 = 'epoch-8-orbital';
 const E9 = 'epoch-9-redfields';
+const E10 = 'epoch-10-deepsky';
 const E7_SIGNAL_STATE_KEY = 'gr.e7Signal.v1';
 const E7_EXIT_MILESTONES = [
   'first-relay-linked',
@@ -170,7 +171,7 @@ test('plain boot: the framework sits inert — legacy doors, no overlay, no writ
   await expect(page.getByTestId('ceremony-layer')).toBeHidden();
   const diagnostics = await ceremonyDiagnostics(page);
   expect(diagnostics).toMatchObject({ doorState: 'legacy', open: false, armCount: 0, armableId: null });
-  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor', 't6-the-calculating-house', 't7-the-starship', 't8-the-colony-seed']);
+  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor', 't6-the-calculating-house', 't7-the-starship', 't8-the-colony-seed', 't9-the-generation-ark']);
   const ceremonyKeys = await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('gr.ceremony.')));
   expect(ceremonyKeys).toEqual([]);
   expect(errors).toEqual({ console: [], page: [] });
@@ -695,6 +696,86 @@ test('T8 THE COLONY SEED: the Riverward naming hand alone arms E9 and survives r
       return { active: registry.activeEpochId(), unlocked: registry.epochIsActive(epoch) };
     }, E9),
   ).toEqual({ active: E9, unlocked: true });
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('T9 THE GENERATION ARK: carrying the tree seed alone arms E10 and survives reload', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  const errors = watchErrors(page);
+  await seed(page, { epochId: E9, scienceSteps: 22, completeMegaproject: 'generation-ark' });
+  await openSchoolhouse(page);
+
+  const door = page.getByTestId('ceremony-epoch-door');
+  await expect(door).toHaveAttribute('data-door-state', 'ceremony-ready');
+  await expect(door).toHaveAttribute('data-ceremony-id', 't9-the-generation-ark');
+  await shot(page, info, 't9-door-ready');
+
+  await page.getByTestId('begin-ceremony').click();
+  const layer = page.getByTestId('ceremony-layer');
+  await expect(layer).toBeVisible();
+  await expect(layer).toHaveAttribute('data-ceremony-id', 't9-the-generation-ark');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 5_000 }).toBe('carry-tree-seed');
+
+  // PLAYED, NOT WATCHED: the seed-tin and era stay put until the player walks.
+  await page.waitForTimeout(2_500);
+  const idle = await ceremonyDiagnostics(page);
+  expect(idle?.phase).toBe('carry-tree-seed');
+  expect(idle?.convoy?.fraction ?? 1).toBeLessThan(0.01);
+  expect(idle?.armCount).toBe(0);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E9);
+  await shot(page, info, 't9-hand-waits');
+
+  const hand = page.getByTestId('ceremony-hand-input');
+  await hand.dispatchEvent('pointerdown');
+  await expect
+    .poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 20_000, message: 'the tree seed never reached the Ark' })
+    .not.toBe('carry-tree-seed');
+  await hand.dispatchEvent('pointerup');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 20_000 }).toBe('done');
+  await shot(page, info, 't9-done');
+
+  const done = await ceremonyDiagnostics(page);
+  expect(done?.beats).toEqual(
+    expect.arrayContaining(['t9-canals-running', 't9-departure-horn', 't9-ramps-close', 't9-the-generation-ark:kept-image']),
+  );
+  expect(done?.keptImage).toMatchObject({ captured: true, stored: true });
+  expect(done?.armCount).toBe(1);
+  expect(done?.armedEpochId).toBe(E10);
+  expect(done?.armFailure).toBeNull();
+
+  const keptImage = await page.evaluate(
+    (key) => JSON.parse(localStorage.getItem(key) ?? 'null'),
+    ceremonyKeptImageKey('t9-the-generation-ark'),
+  );
+  expect(keptImage).toMatchObject({
+    version: 1,
+    ceremonyId: 't9-the-generation-ark',
+    epochId: E9,
+    successorId: E10,
+    caption: 'From the ramp: the basin green, the Digger working, one old man waving with a stopped watch in his other hand.',
+    stored: true,
+  });
+  expect(keptImage.dataUrl).toMatch(/^data:image\/png/);
+
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E10);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E10);
+  expect(
+    await page.evaluate(async (epoch) => {
+      const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      return registry.activateEpoch(epoch);
+    }, E10),
+  ).toBe(false);
+
+  await page.reload();
+  await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E10);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E10);
+  expect(
+    await page.evaluate(async (epoch) => {
+      const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      return { active: registry.activeEpochId(), unlocked: registry.epochIsActive(epoch) };
+    }, E10),
+  ).toEqual({ active: E10, unlocked: true });
   expect(errors).toEqual({ console: [], page: [] });
 });
 
