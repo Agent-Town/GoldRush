@@ -1824,7 +1824,7 @@ function defaultContractFor(manifest: EpochManifest): ContractManifest {
         territoryRingLaneBias: 0.75,
       },
     },
-    twist: {},
+    twist: { secureWave: 10 },
     boardRow: {
       name: 'The Claim',
       ledgerBlurb: 'The classic river claim.',
@@ -1832,8 +1832,11 @@ function defaultContractFor(manifest: EpochManifest): ContractManifest {
       unlock: 'default',
     },
     briefing: {
-      goals: ['Pan. Build. Hold the claim.'],
-      rules: ['The river splits the claim around one center ford.', 'Pressure comes from all four edges.'],
+      goals: ['Hold the claim through wave 10.'],
+      rules: [
+        'The river splits the claim around one center ford.',
+        'Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck.',
+      ],
       geographyLine: 'The classic river claim.',
     },
   };

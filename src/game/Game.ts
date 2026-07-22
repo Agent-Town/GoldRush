@@ -1149,6 +1149,7 @@ export class Game {
     weaponToggles: 0,
     blastTime: 0,
   };
+  private securedScoreAt: number | null = null;
 
   private runManager?: RunManager;
   private agentStub?: AgentStub;
@@ -1404,12 +1405,18 @@ export class Game {
     this.events.on('hero_damaged', () => {
       this.damageFlashRemaining = Balance.hero.iframes;
     });
+    this.events.on('run_secured', (event) => {
+      this.securedScoreAt = event.resultAt;
+      this.recordRunScore(event.summary.deepestWave ?? event.summary.wavesSurvived, event.at, true, event.secureWave);
+      this.e7SignalSystem.recordContractWin(this.activeContract.id);
+      emitStorySignal({ type: 'first-victory' });
+      if (!this.baronBeatenThisRun) this.audio.play('victory-sting');
+    });
     this.events.on('hero_died', (event) => {
       this.audio.play('defeat-sting');
       this.audio.play('ledger-open', 0.75);
-      const scoreAt = Date.now();
-      const economySummary = summarizeLog(this.economy.log);
-      const runStats = this.deathRunStats(economySummary);
+      const secured = this.runWasSecured(event.wavesSurvived);
+      const { scoreAt, runStats, scores } = this.recordRunScore(event.wavesSurvived, event.timeAlive, secured);
       this.deathLedger = {
         timeAlive: event.timeAlive,
         kills: event.kills,
@@ -1420,19 +1427,7 @@ export class Game {
         weaponToggles: event.weaponToggles,
         blastTime: event.blastTime,
       };
-      const scores = recordScore({
-        waves: event.wavesSurvived,
-        kills: event.kills,
-        gold: event.goldPanned,
-        timeAlive: event.timeAlive,
-        at: scoreAt,
-        secured: this.runWasSecured(event.wavesSurvived),
-        baseValue: Math.round(economySummary.baseValue),
-        weaponSplit: this.weaponSplit(runStats),
-        contractId: this.activeContract.id,
-      });
-      const returnResult: RunReturnResult = this.runWasSecured(event.wavesSurvived) ? 'secured' : 'overrun';
-      if (returnResult === 'secured') this.e7SignalSystem.recordContractWin(this.activeContract.id);
+      const returnResult: RunReturnResult = secured ? 'secured' : 'overrun';
       const onDone = () => this.returnToTown(returnResult);
       const onSecondary = () => this.resetRun();
       this.setMultiplayerDeathActions(onDone, onSecondary);
@@ -1440,6 +1435,7 @@ export class Game {
         ...this.researchOverlayOptions(1),
         actionLabel: 'Return to Town',
         secondaryActionLabel: 'Try Again',
+        outcome: secured ? 'rush' : 'death',
         runStats,
         agentAutonomyDelta: this.agentAutonomyDelta(returnResult === 'secured'),
         townName: readTownName(),
@@ -1455,24 +1451,13 @@ export class Game {
     this.events.on('run_ended', (event) => {
       discoverLedgerEntry('assay_office_records');
       if (event.reason !== 'secured') return;
-      this.e7SignalSystem.recordContractWin(this.activeContract.id);
-      emitStorySignal({ type: 'first-victory' });
-      this.audio.play('victory-sting');
       this.audio.play('ledger-open', 0.75);
-      const scoreAt = Date.now();
-      const economySummary = summarizeLog(this.economy.log);
-      const runStats = this.deathRunStats(economySummary);
-      const scores = recordScore({
-        waves: event.summary.wavesSurvived,
-        kills: this.kills,
-        gold: event.summary.goldPanned,
-        timeAlive: event.at,
-        at: scoreAt,
-        secured: true,
-        baseValue: Math.round(economySummary.baseValue),
-        weaponSplit: this.weaponSplit(runStats),
-        contractId: this.activeContract.id,
-      });
+      const { scoreAt, economySummary, runStats, scores } = this.recordRunScore(
+        event.summary.deepestWave ?? event.summary.wavesSurvived,
+        event.at,
+        true,
+        event.summary.secureWaveReached,
+      );
       const ledger: DeathLedger = {
         timeAlive: event.at,
         kills: this.kills,
@@ -5336,6 +5321,28 @@ export class Game {
     };
   }
 
+  private recordRunScore(waves: number, timeAlive: number, secured: boolean, secureWave?: number) {
+    const scoreAt = secured
+      ? (this.securedScoreAt ??= this.runManager?.diagnostics.securedResultAt ?? Date.now())
+      : Date.now();
+    const economySummary = summarizeLog(this.economy.log);
+    const runStats = this.deathRunStats(economySummary);
+    const scores = recordScore({
+      waves,
+      kills: this.kills,
+      gold: economySummary.panned,
+      timeAlive,
+      at: scoreAt,
+      secured,
+      secureWave: secured ? (secureWave ?? this.secureWaveForRun()) : undefined,
+      deepestWave: waves,
+      baseValue: Math.round(economySummary.baseValue),
+      weaponSplit: this.weaponSplit(runStats),
+      contractId: this.activeContract.id,
+    });
+    return { scoreAt, economySummary, runStats, scores };
+  }
+
   private agentAutonomyDelta(securedThisRun: boolean): { before: number; after: number } | undefined {
     const run = this.runManager?.diagnostics;
     const moved = run?.victoryPayout?.agent ?? 0;
@@ -5859,6 +5866,7 @@ export class Game {
     this.lastHarvestChanneling = false;
     this.lastUpgradeOfferAudioKey = '';
     this.kills = 0;
+    this.securedScoreAt = null;
     this.baronBeatenThisRun = false;
     this.baronCeremony = null;
     this.baronStandardPlanted = false;
@@ -6002,7 +6010,14 @@ export class Game {
     if (meta.tracks.territory < Balance.meta.territoryTier1) return;
     let placed = 0;
     for (const segment of this.territoryRingSegments()) {
-      if (this.buildSystem.placeFree('palisade', segment, segment.rotationSteps)) placed += 1;
+      const candidates = [
+        segment,
+        { ...segment, z: segment.z - 1 },
+        { ...segment, z: segment.z + 1 },
+        { ...segment, x: segment.x - 1 },
+        { ...segment, x: segment.x + 1 },
+      ];
+      if (candidates.some((candidate) => this.buildSystem.placeFree('palisade', candidate, segment.rotationSteps))) placed += 1;
     }
     this.territoryRingPresent = placed > 0;
   }

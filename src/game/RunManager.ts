@@ -44,6 +44,8 @@ type InstallOptions = {
 export type RunManagerSuspendState = {
   secured: boolean;
   rush: boolean;
+  securedAtWave: number;
+  resultAt: number | null;
   meta: MetaProgress;
   payout: MetaPayout | null;
 };
@@ -57,6 +59,8 @@ export class RunManager {
   private securedRunId = 0;
   private stayedForRushRunId = 0;
   private endedRunId = 0;
+  private securedAtWave = 0;
+  private securedResultAt: number | null = null;
   private lastRunEndedReason: RunEndReason | null = null;
   private meta: MetaProgress = freshMetaProgress();
   private storage?: MetaProgressStorage;
@@ -64,6 +68,7 @@ export class RunManager {
   private lastPayout: MetaPayout | null = null;
   private debugReadout?: HTMLElement;
   private secureOverlay?: HTMLElement;
+  private securedChip?: HTMLElement;
   private runSuspend?: RunSuspendController;
   private pendingSuspendState: RunManagerSuspendState | null = null;
 
@@ -101,6 +106,7 @@ export class RunManager {
     this.restoreResetRun?.();
     this.runSuspend?.dispose();
     this.hideSecureOverlay();
+    this.hideSecuredChip();
     this.debugReadout?.remove();
     this.host = undefined;
   }
@@ -114,6 +120,8 @@ export class RunManager {
     return {
       secured,
       rush: this.stayedForRushRunId === this.runId,
+      securedAtWave: secured ? this.securedAtWave : 0,
+      resultAt: secured ? this.securedResultAt : null,
       meta: cloneMeta(this.meta),
       payout: secured && this.lastPayout ? { ...this.lastPayout } : null,
     };
@@ -139,6 +147,8 @@ export class RunManager {
     this.hideSecureOverlay();
     if (this.securedRunId === this.runId && this.stayedForRushRunId !== this.runId) {
       this.renderSecureOverlay(this.host?.wave() ?? Balance.run.secureWave);
+    } else if (this.stayedForRushRunId === this.runId) {
+      this.renderSecuredChip();
     }
   }
 
@@ -146,6 +156,10 @@ export class RunManager {
     this.securedRunId = state.secured ? this.runId : 0;
     this.stayedForRushRunId = state.rush ? this.runId : 0;
     this.paidRunId = state.secured ? this.runId : 0;
+    this.securedAtWave = state.secured
+      ? state.securedAtWave || Math.min(this.host?.wave() ?? 0, this.host?.secureWave?.() ?? this.host?.wave() ?? 0)
+      : 0;
+    this.securedResultAt = state.secured ? state.resultAt : null;
     this.lastPayout = state.payout ? { ...state.payout } : null;
     this.endedRunId = 0;
     this.lastRunEndedReason = null;
@@ -159,6 +173,8 @@ export class RunManager {
     lastRunEndedReason: RunEndReason | null;
     meta: MetaProgress;
     victoryPayout: MetaPayout | null;
+    secureWaveReached: number | null;
+    securedResultAt: number | null;
     suspend: RunSuspendDiagnostics;
   } {
     return {
@@ -167,6 +183,8 @@ export class RunManager {
       lastRunEndedReason: this.lastRunEndedReason,
       meta: this.meta,
       victoryPayout: this.lastPayout,
+      secureWaveReached: this.securedRunId === this.runId ? this.securedAtWave : null,
+      securedResultAt: this.securedRunId === this.runId ? this.securedResultAt : null,
       suspend: this.runSuspend?.diagnostics() ?? {
         hasSuspend: false,
         restored: false,
@@ -199,13 +217,19 @@ export class RunManager {
     if (!this.host || this.securedRunId !== this.runId) return false;
     this.stayedForRushRunId = this.runId;
     this.hideSecureOverlay();
+    this.renderSecuredChip();
     this.host.setPaused?.(false);
+    const write = this.runSuspend?.captureCurrent(this.host.wave() ?? this.securedAtWave, this.host.at() ?? 0);
+    if (write) this.host.onSuspendWrite?.(write);
     return true;
   }
 
   private startRun(at: number): void {
     if (!this.host) return;
     this.runId += 1;
+    this.securedAtWave = 0;
+    this.securedResultAt = null;
+    this.hideSecuredChip();
     this.host.events.emit({ type: 'run_started', at, runId: this.runId });
     if (this.pendingSuspendState) {
       this.applySuspendRunState(this.pendingSuspendState);
@@ -220,8 +244,14 @@ export class RunManager {
     this.endedRunId = this.runId;
     this.lastRunEndedReason = reason;
     this.hideSecureOverlay();
+    this.hideSecuredChip();
     this.runSuspend?.clear();
-    const summary = summarizeRun(this.host.economy.log, Math.max(this.host.wave() ?? fallbackWave, fallbackWave));
+    const deepestWave = Math.max(this.host.wave() ?? fallbackWave, fallbackWave);
+    const summary = summarizeRun(this.host.economy.log, deepestWave);
+    if (this.securedRunId === this.runId) {
+      summary.secureWaveReached = this.securedAtWave;
+      summary.deepestWave = deepestWave;
+    }
     if (reason === 'secured') this.awardSecuredClaim();
     this.host.events.emit({
       type: 'run_ended',
@@ -242,11 +272,30 @@ export class RunManager {
   private secureRun(wave: number): void {
     if (!this.host) return;
     this.securedRunId = this.runId;
+    this.securedAtWave = Math.max(0, Math.min(wave, this.host.secureWave?.() ?? wave));
+    this.securedResultAt = Date.now();
     this.awardSecuredClaim();
+    this.host.events.emit({
+      type: 'run_secured',
+      at: this.host.at() ?? 0,
+      runId: this.runId,
+      secureWave: this.securedAtWave,
+      resultAt: this.securedResultAt,
+      summary: {
+        ...summarizeRun(this.host.economy.log, wave),
+        secureWaveReached: this.securedAtWave,
+        deepestWave: wave,
+      },
+    });
     if (isPauseDisabled()) {
       this.stayedForRushRunId = this.runId;
+      this.renderSecuredChip();
+      const write = this.runSuspend?.captureCurrent(wave, this.host.at() ?? 0);
+      if (write) this.host.onSuspendWrite?.(write);
       return;
     }
+    const write = this.runSuspend?.captureCurrent(wave, this.host.at() ?? 0);
+    if (write) this.host.onSuspendWrite?.(write);
     this.host.setPaused?.(true);
     this.renderSecureOverlay(wave);
   }
@@ -258,6 +307,7 @@ export class RunManager {
     const original = target.resetRun;
     target.resetRun = () => {
       this.hideSecureOverlay();
+      this.hideSecuredChip();
       original.call(this.game);
       this.startRun(0);
     };
@@ -304,7 +354,7 @@ export class RunManager {
       <div class="death-overlay__panel">
         <p class="death-overlay__eyebrow">Secure Claim</p>
         <h1>Claim Secured</h1>
-        <p class="death-overlay__flavor">The assay is sealed. The Claim Office has your payout ready.</p>
+        <p class="death-overlay__flavor">The win is banked. Ride home with the claim, or stay for the Rush and press your luck.</p>
         <dl class="death-overlay__ledger">
           <div><dt>Waves Held</dt><dd>${summary.wavesSurvived}</dd></div>
           <div><dt>Gold Panned</dt><dd>${renderActorSplit(summary.goldPanned, summary.goldPannedByProspector, 'summary-gold-panned-split')}</dd></div>
@@ -366,6 +416,24 @@ export class RunManager {
   private hideSecureOverlay(): void {
     this.secureOverlay?.remove();
     this.secureOverlay = undefined;
+  }
+
+  private renderSecuredChip(): void {
+    const parent = globalThis.document?.querySelector<HTMLElement>('#hud');
+    if (!parent) return;
+    this.hideSecuredChip();
+    const chip = document.createElement('div');
+    chip.className = 'hud-claim-secured';
+    chip.dataset.testid = 'claim-secured-chip';
+    chip.setAttribute('role', 'status');
+    chip.innerHTML = '<strong>CLAIM SECURED &#10003;</strong><span>The win is banked.</span>';
+    parent.append(chip);
+    this.securedChip = chip;
+  }
+
+  private hideSecuredChip(): void {
+    this.securedChip?.remove();
+    this.securedChip = undefined;
   }
 }
 

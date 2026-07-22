@@ -1,5 +1,4 @@
 import { expect, test, type Page } from '@playwright/test';
-import { Balance } from '../src/game/Balance';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type WallProbe = {
@@ -32,7 +31,7 @@ async function setBalance(page: Page, path: string, value: number): Promise<void
   );
 }
 
-async function fastWave20(page: Page): Promise<void> {
+async function fastToSecure(page: Page): Promise<void> {
   await setBalance(page, 'enemy.contactDamage', 0);
   await setBalance(page, 'waves.waveInterval', 0.35);
   await setBalance(page, 'waves.trickleInterval', 9999);
@@ -59,14 +58,15 @@ async function placePalisade(page: Page, x: number, z: number, rotated = false):
   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
 }
 
-test('live wave 20 shows Claim Secured, Stay for the Rush resumes, and later death ends as rush', async ({ page }) => {
+test('live secure wave shows Claim Secured, Stay for the Rush resumes, and later death ends as rush', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=100&nolevel&seed=task-023-victory');
-  await fastWave20(page);
+  await fastToSecure(page);
 
   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
   await expect(page.locator('[data-testid="claim-secured"] h1')).toHaveText('Claim Secured');
   await expect(page.getByTestId('stay-for-rush')).toContainText('Stay for the Rush');
-  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave)).toBe(Balance.run.secureWave);
+  const secureWave = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.secureWave ?? 0);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave)).toBe(secureWave);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused)).toBe(true);
   await page.keyboard.press('KeyP');
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? false)).toBe(true);
@@ -75,7 +75,7 @@ test('live wave 20 shows Claim Secured, Stay for the Rush resumes, and later dea
   await expect(page.getByTestId('claim-secured')).toBeHidden();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? true)).toBe(false);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0), { timeout: 8_000 }).toBeGreaterThan(
-    Balance.run.secureWave,
+    secureWave,
   );
 
   await setBalance(page, 'enemy.contactDamage', 999);
@@ -93,7 +93,7 @@ test('legacy meta profile still reaches the live Claim Secured ceremony', async 
     localStorage.setItem('gr.meta.v1', JSON.stringify({ territory: 2, science: 1, hero: 0, agent: 0 }));
   });
   const errors = await openGame(page, '?debug&timescale=20&nolevel&seed=task-023-legacy');
-  await fastWave20(page);
+  await fastToSecure(page);
 
   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
   await expect(page.locator('[data-testid="claim-secured"] h1')).toHaveText('Claim Secured');
@@ -103,7 +103,7 @@ test('legacy meta profile still reaches the live Claim Secured ceremony', async 
 
 test('Bank Claim opens the secured ledger and secondary New Claim resets fresh', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=100&nolevel&seed=task-023-bank');
-  await fastWave20(page);
+  await fastToSecure(page);
 
   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
   await setBalance(page, 'waves.waveInterval', 999);
@@ -124,7 +124,7 @@ test('Bank Claim opens the secured ledger and secondary New Claim resets fresh',
 
 test('Claim Secured cannot be bypassed by a pending level-up', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=100&nokill&seed=task-023-secure-levelup');
-  await fastWave20(page);
+  await fastToSecure(page);
 
   await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
   const securedAt = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0);
@@ -142,7 +142,7 @@ test('Claim Secured cannot be bypassed by a pending level-up', async ({ page }) 
 
 test('Claim Secured blocks gameplay input behind the modal', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=100&nolevel&seed=task-023-secure-input');
-  await fastWave20(page);
+  await fastToSecure(page);
   await grantGold(page, 40);
   await teleport(page, 0, 11);
   await page.evaluate(() => window.__GR_TEST__?.selectBuildable('palisade'));

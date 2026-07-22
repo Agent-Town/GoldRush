@@ -23,7 +23,10 @@ type JsonRecord = Record<string, unknown>;
 
 type TelemetryPayload = {
   contract: string;
+  stage: 'secure' | 'end' | 'legacy';
   waves: number;
+  secureWave: number;
+  deepestWave: number;
   duration: number;
   upgradesTaken: number;
   tier: 'FULL' | 'BALANCED' | 'LITE';
@@ -41,7 +44,10 @@ const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://age
 const IDENTIFIER_KEYS = new Set(['email', 'profile', 'profileid', 'profilename', 'wallet', 'ip', 'name', 'userid', 'user_id']);
 const ALLOWED_PAYLOAD_KEYS = new Set([
   'contract',
+  'stage',
   'waves',
+  'secureWave',
+  'deepestWave',
   'duration',
   'upgradesTaken',
   'tier',
@@ -85,17 +91,27 @@ async function storeAggregate(kv: KVNamespaceLike, payload: TelemetryPayload): P
   if (await kv.get(dedupKey)) return true;
 
   await kv.put(dedupKey, '1', { expirationTtl: DEDUP_TTL_SECONDS });
+  const recordsRun = payload.stage === 'legacy' || payload.stage === 'secure' || payload.secureWave === 0;
+  const recordsEnd = payload.stage !== 'secure';
   await Promise.all([
-    bump(kv, 'telemetry:runs:total'),
-    bump(kv, `telemetry:runs:day:${day}`),
-    bump(kv, `telemetry:contract:${contractBucket(payload.contract)}`),
-    bump(kv, `telemetry:tier:${payload.tier}`),
-    bump(kv, `telemetry:device:${payload.deviceClass}`),
-    bump(kv, `telemetry:frameP95:${frameBucket(payload.frameP95)}`),
-    bump(kv, `telemetry:device:${payload.deviceClass}:frameP95:${frameBucket(payload.frameP95)}`),
-    bump(kv, `telemetry:duration:${durationBucket(payload.duration)}`),
-    bump(kv, `telemetry:waves:${waveBucket(payload.waves)}`),
-    maxValue(kv, 'telemetry:waves:max', payload.waves),
+    ...(recordsRun ? [
+      bump(kv, 'telemetry:runs:total'),
+      bump(kv, `telemetry:runs:day:${day}`),
+      bump(kv, `telemetry:contract:${contractBucket(payload.contract)}`),
+      bump(kv, `telemetry:tier:${payload.tier}`),
+      bump(kv, `telemetry:device:${payload.deviceClass}`),
+      bump(kv, `telemetry:frameP95:${frameBucket(payload.frameP95)}`),
+      bump(kv, `telemetry:device:${payload.deviceClass}:frameP95:${frameBucket(payload.frameP95)}`),
+    ] : []),
+    ...(recordsEnd ? [
+      bump(kv, `telemetry:duration:${durationBucket(payload.duration)}`),
+      bump(kv, `telemetry:waves:${waveBucket(payload.waves)}`),
+      maxValue(kv, 'telemetry:waves:max', payload.waves),
+      bump(kv, `telemetry:continuation:${payload.secureWave > 0 && payload.deepestWave > payload.secureWave ? 'continued' : payload.secureWave > 0 ? 'left' : 'unsecured'}`),
+    ] : []),
+    ...(payload.secureWave > 0 && payload.stage !== 'end'
+      ? [bump(kv, `telemetry:secured-at:${waveBucket(payload.secureWave)}`)]
+      : []),
   ]);
   await kv.put('telemetry:updatedAt', new Date().toISOString());
   return false;
@@ -120,9 +136,13 @@ async function maxValue(kv: KVNamespaceLike, key: string, value: number): Promis
 }
 
 function validatePayload(value: JsonRecord): TelemetryPayload | null {
+  const waves = integerInRange(value.waves, 0, 10000);
   const payload = {
     contract: typeof value.contract === 'string' && /^[a-z0-9][a-z0-9-]{0,80}$/.test(value.contract) ? value.contract : '',
-    waves: integerInRange(value.waves, 0, 10000),
+    stage: value.stage === undefined ? 'legacy' : value.stage === 'secure' || value.stage === 'end' ? value.stage : null,
+    waves,
+    secureWave: value.secureWave === undefined ? 0 : integerInRange(value.secureWave, 0, 10000),
+    deepestWave: value.deepestWave === undefined ? waves : integerInRange(value.deepestWave, 0, 10000),
     duration: integerInRange(value.duration, 0, 24 * 60 * 60 * 1000),
     upgradesTaken: integerInRange(value.upgradesTaken, 0, 1000),
     tier: value.tier === 'FULL' || value.tier === 'BALANCED' || value.tier === 'LITE' ? value.tier : null,
@@ -131,8 +151,9 @@ function validatePayload(value: JsonRecord): TelemetryPayload | null {
     buildHash: typeof value.buildHash === 'string' && /^(dev|[a-f0-9]{7,16})$/i.test(value.buildHash) ? value.buildHash : '',
     nonce: typeof value.nonce === 'string' && /^[a-f0-9]{32}$/.test(value.nonce) ? value.nonce : '',
   };
-  if (!payload.contract || payload.waves === null || payload.duration === null || payload.upgradesTaken === null) return null;
+  if (!payload.contract || !payload.stage || payload.waves === null || payload.duration === null || payload.upgradesTaken === null) return null;
   if (!payload.tier || payload.frameP95 === null || !payload.deviceClass || !payload.buildHash || !payload.nonce) return null;
+  if (payload.secureWave === null || payload.deepestWave === null || payload.deepestWave < payload.secureWave) return null;
   return payload as TelemetryPayload;
 }
 
@@ -179,7 +200,10 @@ async function digestPayload(payload: TelemetryPayload): Promise<string> {
   const text = [
     payload.nonce,
     payload.contract,
+    payload.stage,
     payload.waves,
+    payload.secureWave,
+    payload.deepestWave,
     payload.duration,
     payload.upgradesTaken,
     payload.tier,

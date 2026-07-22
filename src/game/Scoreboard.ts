@@ -14,6 +14,8 @@ export type ScoreRecord = {
   baseValue?: number;
   weaponSplit?: WeaponSplit;
   secured?: boolean;
+  secureWave?: number;
+  deepestWave?: number;
   profileName?: string;
   contractId?: string;
   legacy?: boolean;
@@ -48,7 +50,7 @@ export function loadScores(): ScoreRecord[] {
 
 export function recordScore(record: ScoreRecord): ScoreRecord[] {
   try {
-    const scores = trimScores([...loadScores(), withRunStats(record)]);
+    const scores = trimScores([...loadScores().filter((score) => score.at !== record.at), withRunStats(record)]);
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(scores));
     return scores;
   } catch {
@@ -142,6 +144,8 @@ function isScoreRecord(value: unknown): value is ScoreRecord {
     (candidate.baseValue === undefined || isFiniteNumber(candidate.baseValue)) &&
     (candidate.weaponSplit === undefined || isWeaponSplit(candidate.weaponSplit)) &&
     (candidate.secured === undefined || typeof candidate.secured === 'boolean') &&
+    (candidate.secureWave === undefined || isFiniteNumber(candidate.secureWave)) &&
+    (candidate.deepestWave === undefined || isFiniteNumber(candidate.deepestWave)) &&
     (candidate.profileName === undefined || typeof candidate.profileName === 'string') &&
     (candidate.contractId === undefined || typeof candidate.contractId === 'string') &&
     (candidate.legacy === undefined || typeof candidate.legacy === 'boolean')

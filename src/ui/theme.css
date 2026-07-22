@@ -282,6 +282,42 @@
   opacity: 1;
 }
 
+.hud-claim-secured {
+  position: absolute;
+  top: calc(max(16px, env(safe-area-inset-top)) + 132px);
+  right: max(16px, env(safe-area-inset-right));
+  z-index: 4;
+  display: grid;
+  gap: 1px;
+  width: 190px;
+  padding: 7px 10px;
+  border: 2px solid var(--at-brass-700);
+  border-radius: 999px;
+  color: var(--at-cream-50);
+  background: rgba(46, 78, 63, 0.94);
+  box-shadow: 0 4px 0 rgba(46, 27, 14, 0.72), 0 10px 24px rgba(46, 27, 14, 0.22);
+  font-size: 0.72rem;
+  line-height: 1.05;
+  text-align: center;
+}
+
+.hud-claim-secured strong {
+  color: var(--at-sun-200);
+  letter-spacing: 0.06em;
+}
+
+.hud-claim-secured span {
+  font-size: 0.64rem;
+}
+
+@media (max-width: 760px) {
+  .hud-claim-secured {
+    top: calc(max(12px, env(safe-area-inset-top)) + 154px);
+    right: max(12px, env(safe-area-inset-right));
+    width: 162px;
+  }
+}
+
 .contract-briefing {
   position: absolute;
   top: calc(max(16px, env(safe-area-inset-top)) + 56px);
