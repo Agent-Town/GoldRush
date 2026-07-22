@@ -1,7 +1,0 @@
-# Task lane-release-frontier: RF-01 — the book ends at the frontier, for now (LANE-A, commit prefix "feat:")
-You are Codex (worktrees/lane-a). CODEX: model=gpt-5.6-sol effort=high
-READ FIRST: specs/release-e1/README.md RF-01 · the board era-chapters frontier truth (activeEpoch/reached logic) · the T1 stamp-mill door (TownScene renderStampMillActivation) · canon voice (NO meta-speak).
-Pre-flight: standard safe-dupe; npm i; tsc+build green.
-## Scope: 1. `releaseFrontier` config datum (default 'epoch-1-frontier'; absent/off = full game). 2. At the frontier: chapters beyond stay absent (existing law), the T1 door renders THE HORIZON BEAT — in-world copy (the mill stands ready; the era turns when the wider world sends word — final line owner-tunable data) instead of the arming action. 3. Debug + &era doors bypass the frontier (testing unaffected — assert). 4. Spec e2e/release-frontier.spec.ts: frontier on → T1 door shows horizon, no arming, E2 absent from DOM; frontier off → T1 arms as today; &era=5&debug still works; both projects, zero console.
-## Firewall: the flag + door render + copy + spec. NO era logic changes, NO chapter changes.
-END: READY-FOR-GATES + the horizon copy as shipped.
