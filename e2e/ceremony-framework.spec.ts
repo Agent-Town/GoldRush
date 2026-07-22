@@ -3,7 +3,8 @@ import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 
 const ARTIFACT_DIR = path.resolve('artifacts/ceremony-framework');
-const T3_SHOT = path.resolve('reviews/shots-t3/valve-and-rim.png');
+const T3_AFTER_SHOT = path.resolve('reviews/shots-ceremony-stage/one-hand-after.png');
+const T3_CONTRACT_SHOT = path.resolve('reviews/shots-ceremony-stage/one-hand-contract-card.png');
 const META_PROGRESS_KEY = 'gr.meta.v1';
 const PROFILE_KEY = 'gr.profile.v2';
 const TOWN_NAME_KEY = 'gr.town.name.v1';
@@ -175,6 +176,46 @@ test('plain boot: the framework sits inert — legacy doors, no overlay, no writ
   expect(errors).toEqual({ console: [], page: [] });
 });
 
+test('stage plates bind by tier filename and an absent plate keeps the primitive fallback', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/');
+  const probe = await page.evaluate(async () => {
+    const stages = (await Function('return import("/src/ceremony/stages.ts")')()) as typeof import('../src/ceremony/stages');
+    const canvas = document.createElement('canvas');
+    canvas.width = 32;
+    canvas.height = 18;
+    const ctx = canvas.getContext('2d')!;
+    stages.drawCeremonyStage(ctx, canvas.width, canvas.height, {
+      script: { id: 't99-unpainted', title: 'Fallback', phases: [{ id: 'wait', direction: 'Wait here.' }] },
+      phaseId: 'wait',
+      phaseElapsedMs: 0,
+      phaseDurationMs: 0,
+      elapsedMs: 0,
+      hand: {
+        held: false,
+        holdFraction: 0,
+        convoyPositions: [],
+        routeFraction: 0,
+        goodPulls: 0,
+        pullsRequired: 0,
+        windowOpen: false,
+        windowFraction: 0,
+        passPulls: 0,
+        lastPullAgoMs: 0,
+      },
+    } as never);
+    return {
+      t3: stages.ceremonyStageBackdropUrl('t3-the-refinery'),
+      missing: stages.ceremonyStageBackdropUrl('t99-unpainted'),
+      fallbackAlpha: ctx.getImageData(0, 0, 1, 1).data[3],
+    };
+  });
+  expect(probe.t3).toMatch(/ceremony-stage-t3.*\.png/);
+  expect(probe.missing).toBeNull();
+  expect(probe.fallbackAlpha).toBe(255);
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
 test('T3 THE REFINERY: the manifest purchase debits its exact cost and the valve hand alone arms E4', async ({ page }, info) => {
   test.setTimeout(120_000);
   const errors = watchErrors(page);
@@ -184,6 +225,10 @@ test('T3 THE REFINERY: the manifest purchase debits its exact cost and the valve
   const buildDoor = page.getByTestId('epoch-megaproject-door');
   await expect(buildDoor).toHaveAttribute('data-megaproject-id', 'refinery');
   await expect(buildDoor).toHaveAttribute('data-door-state', 'ready');
+  if (info.project.name === 'desktop-chrome') {
+    await mkdir(path.dirname(T3_CONTRACT_SHOT), { recursive: true });
+    await page.screenshot({ path: T3_CONTRACT_SHOT });
+  }
   await page.getByTestId('raise-epoch-megaproject').click();
 
   const receipt = await page.evaluate((key) => JSON.parse(localStorage.getItem(key) ?? 'null')?.projects?.refinery, MEGAPROJECT_STATE_KEY);
@@ -195,7 +240,18 @@ test('T3 THE REFINERY: the manifest purchase debits its exact cost and the valve
   await expect(door).toHaveAttribute('data-door-state', 'ceremony-ready');
   await expect(door).toHaveAttribute('data-ceremony-id', 't3-the-refinery');
   await page.getByTestId('begin-ceremony').click();
+  const frame = page.locator('.ceremony-frame');
+  await expect(frame).toHaveClass(/town-ui__board-shell/);
+  await expect(page.getByTestId('ceremony-hand-input')).toHaveClass(/death-overlay__button/);
+  await expect(page.getByTestId('ceremony-leave')).toHaveClass(/death-overlay__button--secondary/);
+  const stage = page.getByTestId('ceremony-stage');
+  await expect(stage).toHaveAttribute('data-stage-src', /ceremony-stage-t3.*\.png/);
+  await expect(stage).toHaveAttribute('data-asset-state', 'ready');
   await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 5_000 }).toBe('open-valve');
+  if (info.project.name === 'desktop-chrome') {
+    await mkdir(path.dirname(T3_AFTER_SHOT), { recursive: true });
+    await page.screenshot({ path: T3_AFTER_SHOT });
+  }
 
   await page.waitForTimeout(2_000);
   expect((await ceremonyDiagnostics(page))?.phase).toBe('open-valve');
@@ -209,10 +265,6 @@ test('T3 THE REFINERY: the manifest purchase debits its exact cost and the valve
   expect((await ceremonyDiagnostics(page))?.hand?.holdMs).toBeGreaterThanOrEqual(1_400);
   await hand.dispatchEvent('pointerup');
   await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 15_000 }).toBe('rim');
-  if (info.project.name === 'desktop-chrome') {
-    await mkdir(path.dirname(T3_SHOT), { recursive: true });
-    await page.screenshot({ path: T3_SHOT });
-  }
   await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 10_000 }).toBe('done');
   const done = await ceremonyDiagnostics(page);
   expect(done?.beats).toEqual(expect.arrayContaining(['t3-valve-squeal', 't3-liquid-rhythm', 't3-first-cough', 't3-the-refinery:kept-image']));

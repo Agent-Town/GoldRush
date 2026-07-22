@@ -31,7 +31,13 @@ export type StageState = {
   hand: StageHandState;
 };
 
-type StagePainter = (ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState) => void;
+type StagePainter = (ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState, dressed: boolean) => void;
+
+const stageBackdropUrls = import.meta.glob<string>('../../assets/raw/ceremony-stage-t*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
 
 const painters: Record<string, StagePainter> = {
   't3-the-refinery': drawT3,
@@ -40,9 +46,31 @@ const painters: Record<string, StagePainter> = {
   't6-the-calculating-house': drawT6,
 };
 
-export function drawCeremonyStage(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+export function ceremonyStageBackdropUrl(scriptId: string): string | null {
+  const tier = /^t(\d+)-/.exec(scriptId)?.[1];
+  if (!tier) return null;
+  return Object.entries(stageBackdropUrls).find(([path]) => path.endsWith(`/ceremony-stage-t${tier}.png`))?.[1] ?? null;
+}
+
+export function drawCeremonyStage(
+  ctx: CanvasRenderingContext2D,
+  w: number,
+  h: number,
+  state: StageState,
+  backdrop: HTMLImageElement | null = null,
+): void {
   ctx.clearRect(0, 0, w, h);
-  (painters[state.script.id] ?? drawGenericStage)(ctx, w, h, state);
+  if (backdrop) drawCover(ctx, backdrop, w, h);
+  (painters[state.script.id] ?? drawGenericStage)(ctx, w, h, state, !!backdrop);
+}
+
+function drawCover(ctx: CanvasRenderingContext2D, image: HTMLImageElement, w: number, h: number): void {
+  const sourceWidth = image.naturalWidth;
+  const sourceHeight = image.naturalHeight;
+  const scale = Math.max(w / sourceWidth, h / sourceHeight);
+  const sw = w / scale;
+  const sh = h / scale;
+  ctx.drawImage(image, (sourceWidth - sw) / 2, (sourceHeight - sh) / 2, sw, sh, 0, 0, w, h);
 }
 
 /** Deterministic per-index jitter in [-1, 1). */
@@ -67,7 +95,8 @@ function phaseProgress(state: StageState): number {
 
 /** Fallback staging for scripts without a dressed painter yet: the direction
  * line over a marker row — the framework stays playable before its art. */
-function drawGenericStage(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+function drawGenericStage(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState, dressed: boolean): void {
+  if (dressed) return;
   ctx.fillStyle = '#241d16';
   ctx.fillRect(0, 0, w, h);
   ctx.fillStyle = '#e8d9b8';
@@ -83,47 +112,51 @@ function drawGenericStage(ctx: CanvasRenderingContext2D, w: number, h: number, s
 }
 
 // ─── T3 — THE REFINERY: valve, twin spigots, dawn rim ──────────────────────
-function drawT3(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+function drawT3(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState, dressed: boolean): void {
   const dawn = state.phaseId === 'done' ? 1 : phaseReached(state, 'dawn-tram') ? (state.phaseId === 'dawn-tram' ? phaseProgress(state) : 1) : 0;
   const rim = state.phaseId === 'done' || phaseReached(state, 'rim');
   const valve = state.phaseId === 'open-valve' ? state.hand.holdFraction : phaseReached(state, 'valve-release') ? 1 : 0;
   const horizon = h * 0.42;
-  const sky = ctx.createLinearGradient(0, 0, 0, h);
-  sky.addColorStop(0, '#101b2c');
-  sky.addColorStop(0.5, '#263451');
-  sky.addColorStop(1, '#5c4631');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, w, h);
-  if (dawn > 0) {
-    const dawnSky = ctx.createLinearGradient(0, 0, 0, h);
-    dawnSky.addColorStop(0, '#e5a66f');
-    dawnSky.addColorStop(0.5, '#f3d6a1');
-    dawnSky.addColorStop(1, '#5c4631');
-    ctx.globalAlpha = dawn;
-    ctx.fillStyle = dawnSky;
+  if (!dressed) {
+    const sky = ctx.createLinearGradient(0, 0, 0, h);
+    sky.addColorStop(0, '#101b2c');
+    sky.addColorStop(0.5, '#263451');
+    sky.addColorStop(1, '#5c4631');
+    ctx.fillStyle = sky;
     ctx.fillRect(0, 0, w, h);
-    ctx.globalAlpha = 1;
+    if (dawn > 0) {
+      const dawnSky = ctx.createLinearGradient(0, 0, 0, h);
+      dawnSky.addColorStop(0, '#e5a66f');
+      dawnSky.addColorStop(0.5, '#f3d6a1');
+      dawnSky.addColorStop(1, '#5c4631');
+      ctx.globalAlpha = dawn;
+      ctx.fillStyle = dawnSky;
+      ctx.fillRect(0, 0, w, h);
+      ctx.globalAlpha = 1;
+    }
   }
 
   if (!rim) {
-    ctx.fillStyle = '#191b1d';
-    ctx.fillRect(w * 0.25, h * 0.32, w * 0.5, h * 0.45);
-    for (const x of [0.39, 0.61]) {
-      ctx.fillStyle = '#2d3134';
-      ctx.fillRect(w * x - w * 0.055, h * 0.16, w * 0.11, h * 0.48);
-      ctx.strokeStyle = '#d6a84c';
-      ctx.lineWidth = 3;
+    if (!dressed) {
+      ctx.fillStyle = '#191b1d';
+      ctx.fillRect(w * 0.25, h * 0.32, w * 0.5, h * 0.45);
+      for (const x of [0.39, 0.61]) {
+        ctx.fillStyle = '#2d3134';
+        ctx.fillRect(w * x - w * 0.055, h * 0.16, w * 0.11, h * 0.48);
+        ctx.strokeStyle = '#d6a84c';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.arc(w * x, h * 0.25, w * 0.032, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = '#4c9c9a';
+      ctx.lineWidth = Math.max(2, w * 0.008);
       ctx.beginPath();
-      ctx.arc(w * x, h * 0.25, w * 0.032, 0, Math.PI * 2);
+      ctx.moveTo(w * 0.39, h * 0.45);
+      ctx.lineTo(w * 0.5, h * 0.5);
+      ctx.lineTo(w * 0.61, h * 0.45);
       ctx.stroke();
     }
-    ctx.strokeStyle = '#4c9c9a';
-    ctx.lineWidth = Math.max(2, w * 0.008);
-    ctx.beginPath();
-    ctx.moveTo(w * 0.39, h * 0.45);
-    ctx.lineTo(w * 0.5, h * 0.5);
-    ctx.lineTo(w * 0.61, h * 0.45);
-    ctx.stroke();
     ctx.save();
     ctx.translate(w * 0.5, h * 0.51);
     ctx.rotate(valve * Math.PI * 0.75);
@@ -156,9 +189,11 @@ function drawT3(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
       ctx.fillStyle = '#e8c780';
       for (let rider = 0; rider < 6; rider += 1) ctx.fillRect(tramX - w * 0.07 + rider * w * 0.026, h * 0.69, w * 0.014, h * 0.04);
     }
-    drawEldersTree(ctx, w, h);
+    if (!dressed) drawEldersTree(ctx, w, h);
     return;
   }
+
+  if (dressed) return;
 
   ctx.fillStyle = '#b8854d';
   ctx.beginPath();
@@ -200,16 +235,18 @@ function drawEldersTree(ctx: CanvasRenderingContext2D, w: number, h: number): vo
 }
 
 // ─── T4 — THE BOAT: dune road, convoy, THE SEA ──────────────────────────────
-function drawT4(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+function drawT4(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState, dressed: boolean): void {
   const seaReveal = phaseReached(state, 'the-sea') ? 1 : phaseReached(state, 'crest') ? phaseProgress(state) : 0;
   const horizon = h * 0.42;
 
   // Sky, warming toward the reveal.
-  const sky = ctx.createLinearGradient(0, 0, 0, horizon);
-  sky.addColorStop(0, seaReveal > 0 ? '#f4e2c0' : '#eed9ae');
-  sky.addColorStop(1, '#f7ead0');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, w, horizon);
+  if (!dressed) {
+    const sky = ctx.createLinearGradient(0, 0, 0, horizon);
+    sky.addColorStop(0, seaReveal > 0 ? '#f4e2c0' : '#eed9ae');
+    sky.addColorStop(1, '#f7ead0');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, horizon);
+  }
 
   // THE SEA — a band sweeping in from the east as the hull crests.
   if (seaReveal > 0) {
@@ -233,7 +270,7 @@ function drawT4(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
   }
 
   // Dune ridges — layered deterministic sines.
-  for (let layer = 0; layer < 3; layer += 1) {
+  for (let layer = 0; !dressed && layer < 3; layer += 1) {
     ctx.fillStyle = ['#d9b97f', '#cfa96a', '#c19a58'][layer]!;
     ctx.beginPath();
     ctx.moveTo(0, h);
@@ -299,25 +336,27 @@ function drawT4(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
 }
 
 // ─── T5 — THE DEEP REACTOR: the raise, the glow, the homecoming pass ────────
-function drawT5(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+function drawT5(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState, dressed: boolean): void {
   const surfacing = phaseReached(state, 'surfacing') ? (state.phaseId === 'surfacing' ? phaseProgress(state) : 1) : 0;
   const passing = state.phaseId === 'homecoming-pass' ? phaseProgress(state) : phaseReached(state, 'homecoming-pass') ? 1 : 0;
   const raise = state.hand.pullsRequired > 0 ? Math.min(1, state.hand.goodPulls / state.hand.pullsRequired) : 0;
   const waterline = h * 0.38;
 
   // Dusk sky over the year's flattest calm.
-  const sky = ctx.createLinearGradient(0, 0, 0, waterline);
-  sky.addColorStop(0, '#3d3a55');
-  sky.addColorStop(1, '#8a6a63');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, w, waterline);
+  if (!dressed) {
+    const sky = ctx.createLinearGradient(0, 0, 0, waterline);
+    sky.addColorStop(0, '#3d3a55');
+    sky.addColorStop(1, '#8a6a63');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, waterline);
 
-  // The inland water, lit from above as the reactor rises.
-  const water = ctx.createLinearGradient(0, waterline, 0, h);
-  water.addColorStop(0, '#2e4f58');
-  water.addColorStop(1, '#1c333c');
-  ctx.fillStyle = water;
-  ctx.fillRect(0, waterline, w, h - waterline);
+    // The inland water, lit from above as the reactor rises.
+    const water = ctx.createLinearGradient(0, waterline, 0, h);
+    water.addColorStop(0, '#2e4f58');
+    water.addColorStop(1, '#1c333c');
+    ctx.fillStyle = water;
+    ctx.fillRect(0, waterline, w, h - waterline);
+  }
 
   // The homecoming pass: every prior claim in green glass beneath the keel —
   // flats, canyon, hill, river bend — sliding under as the barge crosses.
@@ -328,7 +367,7 @@ function drawT5(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
     { name: 'river bend', color: '#54806e' },
   ];
   const panX = passing * w * 0.5;
-  for (let index = 0; index < claims.length; index += 1) {
+  for (let index = 0; !dressed && index < claims.length; index += 1) {
     const tileX = w * 0.12 + index * w * 0.24 - panX + w * 0.2;
     const tileY = waterline + h * 0.24;
     ctx.fillStyle = claims[index]!.color;
@@ -406,7 +445,7 @@ function drawT5(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
 }
 
 // ─── T6 — THE CALCULATING HOUSE: plate, listening dial, crowd ────────
-function drawT6(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState): void {
+function drawT6(ctx: CanvasRenderingContext2D, w: number, h: number, state: StageState, dressed: boolean): void {
   const done = state.phaseId === 'done';
   const mounted = done || phaseReached(state, 'teal-dial');
   const plateProgress = state.phaseId === 'mount-plate' ? state.hand.holdFraction : mounted ? 1 : 0;
@@ -415,26 +454,28 @@ function drawT6(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
   const printed = done || phaseReached(state, 'more-voices');
   const ground = h * 0.72;
 
-  const sky = ctx.createLinearGradient(0, 0, 0, ground);
-  sky.addColorStop(0, '#15222a');
-  sky.addColorStop(1, '#654d39');
-  ctx.fillStyle = sky;
-  ctx.fillRect(0, 0, w, ground);
-  ctx.fillStyle = '#493827';
-  ctx.fillRect(0, ground, w, h - ground);
+  if (!dressed) {
+    const sky = ctx.createLinearGradient(0, 0, 0, ground);
+    sky.addColorStop(0, '#15222a');
+    sky.addColorStop(1, '#654d39');
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, w, ground);
+    ctx.fillStyle = '#493827';
+    ctx.fillRect(0, ground, w, h - ground);
 
-  // The House: new timber around an old brass-and-teal listening machine.
-  ctx.fillStyle = '#6b5037';
-  ctx.fillRect(w * 0.29, h * 0.27, w * 0.46, h * 0.45);
-  ctx.fillStyle = '#31251d';
-  ctx.beginPath();
-  ctx.moveTo(w * 0.25, h * 0.29);
-  ctx.lineTo(w * 0.52, h * 0.11);
-  ctx.lineTo(w * 0.79, h * 0.29);
-  ctx.closePath();
-  ctx.fill();
-  ctx.fillStyle = '#2e2118';
-  ctx.fillRect(w * 0.43, h * 0.43, w * 0.18, h * 0.29);
+    // The House: new timber around an old brass-and-teal listening machine.
+    ctx.fillStyle = '#6b5037';
+    ctx.fillRect(w * 0.29, h * 0.27, w * 0.46, h * 0.45);
+    ctx.fillStyle = '#31251d';
+    ctx.beginPath();
+    ctx.moveTo(w * 0.25, h * 0.29);
+    ctx.lineTo(w * 0.52, h * 0.11);
+    ctx.lineTo(w * 0.79, h * 0.29);
+    ctx.closePath();
+    ctx.fill();
+    ctx.fillStyle = '#2e2118';
+    ctx.fillRect(w * 0.43, h * 0.43, w * 0.18, h * 0.29);
+  }
 
   // The dial wakes in the Prospector's boot rhythm, throwing teal on the town.
   const pulse = dialLive ? 0.72 + Math.sin(state.elapsedMs / 125) * 0.16 : 0.18;
@@ -478,7 +519,7 @@ function drawT6(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
   }
 
   // The town watches; the brass firstborn stands closest to the mounted plate.
-  for (let index = 0; index < 10; index += 1) {
+  for (let index = 0; !dressed && index < 10; index += 1) {
     const x = w * (0.26 + index * 0.065);
     const y = ground + h * 0.1 + jitter(index, 6) * 4;
     ctx.fillStyle = index === 5 ? '#b8833f' : index % 3 === 0 ? '#3f7471' : '#4b392b';
@@ -503,5 +544,5 @@ function drawT6(ctx: CanvasRenderingContext2D, w: number, h: number, state: Stag
   ctx.arc(plateX, plateY, Math.max(2, w * 0.004), 0, Math.PI * 2);
   ctx.fill();
 
-  drawEldersTree(ctx, w, h);
+  if (!dressed) drawEldersTree(ctx, w, h);
 }
