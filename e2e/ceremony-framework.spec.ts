@@ -15,6 +15,8 @@ const E3 = 'epoch-3-voltage';
 const E4 = 'epoch-4-motor';
 const E5 = 'epoch-5-deepwater';
 const E6 = 'epoch-6-atomic';
+const E8 = 'epoch-8-orbital';
+const E9 = 'epoch-9-redfields';
 
 type Errors = { console: string[]; page: string[] };
 type ProfileState = {
@@ -105,7 +107,13 @@ async function openSchoolhouse(page: Page): Promise<void> {
   await page.waitForTimeout(500);
   await page.keyboard.up('KeyS');
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('schoolhouse');
-  await page.getByTestId('town-open-schoolhouse').click();
+  const opener = page.getByTestId('town-open-schoolhouse');
+  await expect(opener).toBeVisible();
+  await expect(opener).toBeEnabled();
+  const box = await opener.boundingBox();
+  if (!box) throw new Error('schoolhouse opener has no clickable bounds');
+  await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
+  await expect(page.getByTestId('schoolhouse-view')).toBeVisible();
 }
 
 function ceremonyDiagnostics(page: Page) {
@@ -147,7 +155,7 @@ test('plain boot: the framework sits inert — legacy doors, no overlay, no writ
   await expect(page.getByTestId('ceremony-layer')).toBeHidden();
   const diagnostics = await ceremonyDiagnostics(page);
   expect(diagnostics).toMatchObject({ doorState: 'legacy', open: false, armCount: 0, armableId: null });
-  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor']);
+  expect(diagnostics?.registered).toEqual(['t3-the-refinery', 't4-the-boat', 't5-the-deep-reactor', 't8-the-colony-seed']);
   const ceremonyKeys = await page.evaluate(() => Object.keys(localStorage).filter((key) => key.startsWith('gr.ceremony.')));
   expect(ceremonyKeys).toEqual([]);
   expect(errors).toEqual({ console: [], page: [] });
@@ -355,6 +363,96 @@ test('T5 THE DEEP REACTOR: the rhythm gates the raise, the pass keeps the hand i
 
   await page.getByTestId('ceremony-return').click();
   await expect(layer).toBeHidden();
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('T8 THE COLONY SEED: the Riverward naming hand alone arms E9 and survives reload', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  const errors = watchErrors(page);
+  await seed(page, { epochId: E8, scienceSteps: 20, completeMegaproject: 'colony-seed' });
+  await openSchoolhouse(page);
+
+  const door = page.getByTestId('ceremony-epoch-door');
+  await expect(door).toHaveAttribute('data-door-state', 'ceremony-ready');
+  await expect(door).toHaveAttribute('data-ceremony-id', 't8-the-colony-seed');
+  await shot(page, info, 't8-door-ready');
+
+  await page.getByTestId('begin-ceremony').click();
+  const layer = page.getByTestId('ceremony-layer');
+  await expect(layer).toBeVisible();
+  await expect(layer).toHaveAttribute('data-ceremony-id', 't8-the-colony-seed');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 5_000 }).toBe('name-the-seed');
+
+  // PLAYED, NOT WATCHED: time and a wrong name cannot move the Seed or arm E9.
+  const name = page.getByTestId('ceremony-name-input');
+  await expect(name).toHaveValue('THE RIVERWARD');
+  await page.waitForTimeout(2_500);
+  expect((await ceremonyDiagnostics(page))?.phase).toBe('name-the-seed');
+  expect((await ceremonyDiagnostics(page))?.armCount).toBe(0);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E8);
+  await name.fill('THE DUSTWARD');
+  await page.getByTestId('ceremony-hand-input').click();
+  await page.waitForTimeout(500);
+  expect((await ceremonyDiagnostics(page))?.phase).toBe('name-the-seed');
+  expect((await ceremonyDiagnostics(page))?.armCount).toBe(0);
+  await shot(page, info, 't8-hand-waits');
+
+  await name.fill('THE RIVERWARD');
+  await name.press('Tab');
+  await expect(page.getByTestId('ceremony-hand-input')).toBeFocused();
+  await page.keyboard.press('Enter');
+  await expect.poll(async () => (await ceremonyDiagnostics(page))?.phase, { timeout: 20_000 }).toBe('done');
+  await expect(name).toBeHidden();
+  await shot(page, info, 't8-done');
+
+  const done = await ceremonyDiagnostics(page);
+  expect(done?.beats).toEqual(
+    expect.arrayContaining([
+      't8-suit-breath',
+      't8-radio-silence',
+      't8-flare-code-whistle',
+      't8-long-burn',
+      't8-the-colony-seed:kept-image',
+    ]),
+  );
+  expect(done?.keptImage).toMatchObject({ captured: true, stored: true });
+  expect(done?.armCount).toBe(1);
+  expect(done?.armedEpochId).toBe(E9);
+  expect(done?.armFailure).toBeNull();
+
+  const keptImage = await page.evaluate(
+    (key) => JSON.parse(localStorage.getItem(key) ?? 'null'),
+    ceremonyKeptImageKey('t8-the-colony-seed'),
+  );
+  expect(keptImage).toMatchObject({
+    version: 1,
+    ceremonyId: 't8-the-colony-seed',
+    epochId: E8,
+    successorId: E9,
+    caption: 'The red dot above the dome cluster; below it, everyone already working.',
+    stored: true,
+  });
+  expect(keptImage.dataUrl).toMatch(/^data:image\/png/);
+
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E9);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E9);
+  expect(
+    await page.evaluate(async (epoch) => {
+      const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      return registry.activateEpoch(epoch);
+    }, E9),
+  ).toBe(false);
+
+  await page.reload();
+  await expect(page.getByTestId('start-menu-enter-town')).toBeVisible();
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E9);
+  expect(await page.evaluate((key) => localStorage.getItem(key), EPOCH_CEREMONY_KEY)).toBe(E9);
+  expect(
+    await page.evaluate(async (epoch) => {
+      const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
+      return { active: registry.activeEpochId(), unlocked: registry.epochIsActive(epoch) };
+    }, E9),
+  ).toEqual({ active: E9, unlocked: true });
   expect(errors).toEqual({ console: [], page: [] });
 });
 

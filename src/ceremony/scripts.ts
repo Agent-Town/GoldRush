@@ -218,10 +218,45 @@ export const T5_THE_DEEP_REACTOR: CeremonyScript = {
   keptImage: { caption: "The reactor's glow laid across the drowned claims at dusk." },
 };
 
+// ─── T8 · E8→E9 — THE COLONY SEED ───────────────────────────────────
+// STORYBOOK: "THE HAND: the player enters the name — the vote is staged, but
+// the typing is theirs: THE RIVERWARD. STAGE: no countdown; radio silence; a
+// long burn toward the red dot; the town watches it not-visibly-move, then
+// goes back to work. SOUND: the quietest transition — suit-breath, one
+// flare-code whistle from a far dome, the burn like a struck match held.
+// KEPT IMAGE: the red dot above the dome cluster; below it, everyone already
+// working."
+export const T8_THE_COLONY_SEED: CeremonyScript = {
+  id: 't8-the-colony-seed',
+  interstitial: 'T8',
+  epochId: 'epoch-8-orbital',
+  title: 'The Colony Seed',
+  doorLine: 'The Seed stands finished in the yard the Claw became. The naming vote waits for your hand.',
+  hand: { kind: 'typed-entry', expected: 'THE RIVERWARD', label: 'Name the Colony Seed' },
+  phases: [
+    { id: 'the-vote', kind: 'beat', durationMs: 1_000, direction: "The moon-born child's entry waits in the naming vote." },
+    { id: 'name-the-seed', kind: 'hand', direction: 'Enter the promise this hull will carry: THE RIVERWARD.' },
+    { id: 'no-countdown', kind: 'beat', durationMs: 800, direction: 'No countdown this time. Some departures whisper.' },
+    { id: 'radio-silence', kind: 'beat', durationMs: 1_000, direction: 'Radio silence. One flare-code whistle answers from a far dome.' },
+    { id: 'long-burn', kind: 'beat', durationMs: 1_600, direction: 'The burn holds like a struck match, aimed at the red dot.' },
+    { id: 'not-visibly-moving', kind: 'beat', durationMs: 1_200, direction: 'The whole town watches the red dot not-visibly-move.' },
+    { id: 'back-to-work', kind: 'beat', durationMs: 1_200, direction: 'Then everyone goes back to work under the promise.' },
+    { id: 'kept-image', kind: 'kept-image', delayMs: 350, direction: 'The red dot above the dome cluster; below it, everyone already working.' },
+    { id: 'arm', kind: 'arm', direction: 'The Red Fields open.' },
+  ],
+  sound: [
+    { beat: 't8-suit-breath', phase: 'the-vote', atMs: 0, sound: 'prospector-hover-loop' },
+    { beat: 't8-radio-silence', phase: 'radio-silence', atMs: 0, sound: null, silence: true },
+    { beat: 't8-flare-code-whistle', phase: 'radio-silence', atMs: 400, sound: 'chirp-acknowledge' },
+    { beat: 't8-long-burn', phase: 'long-burn', atMs: 0, sound: 'spark-bolt-fire' },
+  ],
+  keptImage: { caption: 'The red dot above the dome cluster; below it, everyone already working.' },
+};
+
 /** The registry: every framework-staged ceremony, keyed by the era it closes.
  * T1 (stamp mill click) and T2 (dynamo crank) predate the framework and stay
  * on their own doors — wrap, don't rewrite; migration is a named follow-up. */
-export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR];
+export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR, T8_THE_COLONY_SEED];
 
 export function ceremonyScriptForEpoch(epochId: string): CeremonyScript | null {
   return CEREMONY_SCRIPTS.find((script) => script.epochId === epochId) ?? null;

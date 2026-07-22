@@ -113,6 +113,7 @@ export class CeremonySystem {
   private stageContext: CanvasRenderingContext2D | null = null;
   private directionElement: HTMLElement | null = null;
   private handButton: HTMLButtonElement | null = null;
+  private handTextInput: HTMLInputElement | null = null;
   private beats: string[] = [];
   private armCount = 0;
   private armedEpochId: string | null = null;
@@ -327,7 +328,8 @@ export class CeremonySystem {
         ? `${successor.displayName} is open. The ledger keeps this page.`
         : 'The ceremony is done.';
     }
-    if (this.handButton) this.handButton.hidden = true;
+    const hand = this.root.querySelector<HTMLElement>('.ceremony-hand');
+    if (hand) hand.style.display = 'none';
     const leave = this.root.querySelector<HTMLButtonElement>('[data-ceremony-leave]');
     if (leave) {
       leave.textContent = 'Return to the town';
@@ -525,6 +527,12 @@ export class CeremonySystem {
   private openOverlay(script: CeremonyScript): void {
     this.root.hidden = false;
     this.root.dataset.ceremonyId = script.id;
+    const handControl = script.hand.kind === 'typed-entry'
+      ? `<form data-ceremony-entry>
+          <input type="text" value="${escapeHtml(script.hand.expected)}" aria-label="${escapeHtml(script.hand.label)}" data-testid="ceremony-name-input" autocomplete="off" spellcheck="false">
+          <button type="submit" class="ceremony-hand-input" data-ceremony-hand data-testid="ceremony-hand-input">${escapeHtml(script.hand.label)}</button>
+        </form>`
+      : `<button type="button" class="ceremony-hand-input" data-ceremony-hand data-testid="ceremony-hand-input">${escapeHtml(script.hand.label)}</button>`;
     this.root.innerHTML = `
       <div class="ceremony-frame" role="dialog" aria-modal="true" aria-label="${escapeHtml(script.title)}">
         <header class="ceremony-header">
@@ -534,9 +542,7 @@ export class CeremonySystem {
         <canvas class="ceremony-stage" data-testid="ceremony-stage"></canvas>
         <p class="ceremony-direction" data-testid="ceremony-direction"></p>
         <div class="ceremony-hand">
-          <button type="button" class="ceremony-hand-input" data-ceremony-hand data-testid="ceremony-hand-input">${escapeHtml(
-            script.hand.label,
-          )}</button>
+          ${handControl}
         </div>
         <button type="button" class="ceremony-leave" data-ceremony-leave data-testid="ceremony-leave">Step back</button>
       </div>
@@ -545,6 +551,7 @@ export class CeremonySystem {
     this.stageContext = this.stageCanvas?.getContext('2d') ?? null;
     this.directionElement = this.root.querySelector('[data-testid="ceremony-direction"]');
     this.handButton = this.root.querySelector('[data-ceremony-hand]');
+    this.handTextInput = this.root.querySelector('[data-testid="ceremony-name-input"]');
     this.sizeStage();
 
     const handDown = (event: Event) => {
@@ -553,12 +560,23 @@ export class CeremonySystem {
     };
     const handUp = () => this.handInputUp();
     const onLeave = () => this.requestLeave();
+    const nameInput = this.handTextInput;
+    const entryForm = this.root.querySelector<HTMLFormElement>('[data-ceremony-entry]');
+    const onEntrySubmit = (event: SubmitEvent) => {
+      event.preventDefault();
+      const ceremony = this.active;
+      const phase = ceremony?.script.phases[ceremony.phaseIndex];
+      if (!ceremony || ceremony.done || ceremony.script.hand.kind !== 'typed-entry' || phase?.kind !== 'hand') return;
+      ceremony.typedValue = nameInput?.value ?? '';
+      ceremony.typedSubmitted = true;
+    };
     const onKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape') {
         event.preventDefault();
         this.requestLeave();
         return;
       }
+      if (entryForm?.contains(event.target as Node | null)) return;
       if (event.repeat) return;
       if (event.key === ' ' || event.key === 'Enter' || event.code === 'KeyW' || event.key === 'ArrowUp') {
         event.preventDefault();
@@ -566,6 +584,7 @@ export class CeremonySystem {
       }
     };
     const onKeyUp = (event: KeyboardEvent) => {
+      if (entryForm?.contains(event.target as Node | null)) return;
       if (event.key === ' ' || event.key === 'Enter' || event.code === 'KeyW' || event.key === 'ArrowUp') this.handInputUp();
     };
 
@@ -579,6 +598,7 @@ export class CeremonySystem {
       stage?.addEventListener(type, handUp);
     }
     button?.addEventListener('pointerleave', handUp);
+    entryForm?.addEventListener('submit', onEntrySubmit);
     leave?.addEventListener('click', onLeave);
     this.root.addEventListener('keydown', onKeyDown);
     this.root.addEventListener('keyup', onKeyUp);
@@ -590,6 +610,7 @@ export class CeremonySystem {
         stage?.removeEventListener(type, handUp);
       }
       button?.removeEventListener('pointerleave', handUp);
+      entryForm?.removeEventListener('submit', onEntrySubmit);
       leave?.removeEventListener('click', onLeave);
       this.root.removeEventListener('keydown', onKeyDown);
       this.root.removeEventListener('keyup', onKeyUp);
@@ -612,6 +633,7 @@ export class CeremonySystem {
     this.stageContext = null;
     this.directionElement = null;
     this.handButton = null;
+    this.handTextInput = null;
     this.callbacks.onClosed();
     if (successorId) {
       emitStorySignal({ type: 'epoch-activated', epochId: successorId, displayName: loadEpoch(successorId).displayName, postscriptOnly: true });
@@ -636,6 +658,13 @@ export class CeremonySystem {
     const handLive = phase.kind === 'hand' || (phase.kind === 'beat' && !!phase.rhythmContinues);
     this.handButton.disabled = !handLive;
     this.handButton.dataset.handLive = handLive ? 'true' : 'false';
+    if (this.handTextInput) {
+      this.handTextInput.disabled = !handLive;
+      if (handLive) {
+        this.handTextInput.focus({ preventScroll: true });
+        this.handTextInput.select();
+      }
+    }
   }
 
   private sizeStage(): void {
@@ -656,7 +685,8 @@ export class CeremonySystem {
     const canvas = this.stageCanvas;
     if (!ctx || !canvas) return;
     this.sizeStage();
-    const phase = ceremony.script.phases[Math.min(ceremony.phaseIndex, ceremony.script.phases.length - 1)]!;
+    const activePhase = ceremony.script.phases[Math.min(ceremony.phaseIndex, ceremony.script.phases.length - 1)]!;
+    const phase = ceremony.done ? ceremony.script.phases.find((entry) => entry.kind === 'kept-image') ?? activePhase : activePhase;
     const window = this.rhythmWindow(ceremony);
     const hand: StageHandState = {
       held: ceremony.held,
@@ -673,7 +703,7 @@ export class CeremonySystem {
     };
     drawCeremonyStage(ctx, canvas.width, canvas.height, {
       script: ceremony.script,
-      phaseId: ceremony.done ? 'done' : phase.id,
+      phaseId: phase.id,
       phaseElapsedMs: ceremony.phaseElapsedMs,
       phaseDurationMs: phase.kind === 'beat' ? phase.durationMs : 0,
       elapsedMs: ceremony.elapsedMs,
