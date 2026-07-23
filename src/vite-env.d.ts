@@ -80,6 +80,7 @@ interface ThreeGameDiagnostics {
       receiptFeed: readonly string[];
     } | null;
   };
+  camera: import('./systems/CameraZoomController').CameraZoomDiagnostics;
   hp: number;
   maxHp: number;
   heroIframes: boolean;

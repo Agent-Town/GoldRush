@@ -898,6 +898,17 @@ export const Balance = {
     lag: 0.15,
     lookAhead: 1.35,
     downScreenLookOffset: 3.35,
+    zoom: {
+      minDistanceScale: 0.7,
+      maxDistanceScale: 1.6,
+      wheelSensitivity: 0.001,
+      smoothing: 12,
+      doubleTapMs: 300,
+      doubleTapRadius: 28,
+    },
+  },
+  town: {
+    scale: 1.5,
   },
   render: {
     exposure: 0.75,

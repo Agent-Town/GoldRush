@@ -6,6 +6,7 @@ import { SpriteAnimator } from '../assets/SpriteAnimator';
 import { clearProcessedCharacterTextureCache, loadGeneratedTexture, loadProcessedCharacterTexture } from '../assets/generated';
 import { tagPlaceholder } from '../assets/slots';
 import { CameraRig } from '../systems/CameraRig';
+import { CameraZoomController, type CameraZoomDiagnostics } from '../systems/CameraZoomController';
 import { Hero } from '../entities/Hero';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
@@ -220,6 +221,7 @@ export type TownDiagnostics = {
   };
   renderer: { calls: number; geometries: number; textures: number };
   canvas: { width: number; height: number; dpr: number };
+  camera: CameraZoomDiagnostics & { heroRenderedHeight: number };
 };
 
 type TownSceneOptions = {
@@ -246,7 +248,9 @@ export class TownScene {
   private readonly renderer: THREE.WebGLRenderer;
   private readonly scene = new THREE.Scene();
   private readonly camera = new THREE.PerspectiveCamera(Balance.camera.fov, 1, 0.1, 100);
-  private readonly cameraRig = new CameraRig(this.camera);
+  private readonly cameraRig = new CameraRig(this.camera, Balance.town.scale);
+  private readonly cameraZoom: CameraZoomController;
+  private readonly heroCameraProbe = new THREE.Vector3();
   private readonly hero = new Hero();
   private readonly input: InputController;
   private readonly loop = new Loop((delta) => this.update(delta), () => this.render());
@@ -361,6 +365,7 @@ export class TownScene {
     this.selectedResearchEpochId = activeEpochId();
     this.boardPageIndex = boardPageIndexForContract(options.initialBoardContractId);
     this.renderer = createRenderer(canvas);
+    this.cameraZoom = new CameraZoomController(canvas, 'town', this.cameraRig);
     this.renderer.toneMappingExposure = 1.02;
     this.input = new InputController(this.getElement('#touch-stick'), this.getElement('#touch-knob'), this.getElement('#confirm-button'));
     this.hiddenButtons = this.hideTownActionButtons();
@@ -388,6 +393,7 @@ export class TownScene {
     cancelAnimationFrame(this.resizeFrame);
     this.loop.stop();
     this.input.dispose();
+    this.cameraZoom.dispose();
     if (this.heraldOpen) closeClaimHerald();
     for (const state of this.hiddenButtons) state.element.hidden = state.hidden;
     window.clearTimeout(this.nameBeatTimer);
@@ -437,6 +443,7 @@ export class TownScene {
     this.frame += 1;
     this.elapsed += delta;
     this.updateAmbientDust();
+    this.cameraZoom.update(delta);
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
@@ -444,6 +451,7 @@ export class TownScene {
     if (this.heraldOpen) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
       this.lastExitIntent = rawExitIntent;
+      this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
       this.publishDiagnostics();
       return;
     }
@@ -459,6 +467,7 @@ export class TownScene {
       this.updateFirstClaimGuide();
       this.syncPrompt();
       this.syncBark();
+      this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
       this.publishDiagnostics();
       return;
     }
@@ -1931,7 +1940,23 @@ export class TownScene {
         height: this.canvas.height,
         dpr,
       },
+      camera: {
+        ...this.cameraZoom.diagnostics(),
+        heroRenderedHeight: this.heroRenderedHeight(),
+      },
     };
+  }
+
+  private heroRenderedHeight(): number {
+    this.camera.updateMatrixWorld();
+    this.heroCameraProbe
+      .copy(this.hero.group.position)
+      .applyMatrix4(this.camera.matrixWorldInverse);
+    const depth = Math.abs(this.heroCameraProbe.z);
+    return depth > 0
+      ? TOWN_CAST_METROLOGY.worldUnitsPerHero * this.canvas.clientHeight /
+          (2 * Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2) * depth)
+      : 0;
   }
 
   private stampMillDiagnostics(): TownDiagnostics['stampMill'] {
