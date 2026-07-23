@@ -9,6 +9,8 @@ READ FIRST: assets/raw/plate-contract-the-claim.png + plate-contract-e2-trestle.
 ## THE LAWS: full-bleed 1672×941 · NO LETTERS ANYWHERE (speech = small PICTOGRAM bubbles only — pan, gear, book, heart, lantern icons) · warm never gory · the engraved-parchment house voice with golden-light + starstone-teal accents.
 Style anchor verbatim in every prompt: "Gold Rush hand-tinted engraved cartoon panel: warm sepia-gold etched linework with muted watercolor washes, frontier illustration, pictogram speech bubbles with no letters, full-bleed, no text, no gore."
 
+## CONDITION ON THE REAL ART (owner: "use ingame assets or some graphics that we created"): every panel's prompt conditions on 2-3 SHIPPED assets so the cartoons visibly belong to the game — panel 1+9: plate-contract-the-claim.png · panel 3+7: the era plates (trestle, regatta, glow-mesa, dome-basin, ember-shore) · panel 4: assets/raw/ceremony-stage-t6.png (the REAL Calculating House stage) · panel 5: char-e6-feral_toaster-sheet + the bandit sheets (the freed crowd on-model) · panel 6: a board-chapters screenshot (reviews/) · panel 8: the char-hero-*(midlife/silver/elder) sheets (the heroine's real ages). Fable's body conditions on the shipped Prospector sprite ALWAYS.
+
 ## The nine panels — filenames EXACT (assets/raw/interview-cartoon-0N.png):
 1. **The sit-down**: Robin and Fable shake hand-to-pan across the tavern long table, seventeen candle stubs burned down between them, ledger stacks high.
 2. **The factory**: split scene — a row of five-minute lanterns self-lighting in sequence (the fires), four mine-cart lanes racing below, Robin pointing at a big board, Fable stamping ledger pages.
