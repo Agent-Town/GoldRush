@@ -201,6 +201,7 @@ import {
 import { E10StaticBossSystem, type E10PreserveSite } from '../systems/E10StaticBossSystem';
 import { DamSurgeEvent } from '../systems/DamSurgeEvent';
 import { DebugTools, setBalance, type DebugTuning } from '../systems/DebugTools';
+import { CameraZoomController } from '../systems/CameraZoomController';
 import { DecayScheduler } from '../systems/DecaySystem';
 import { HarvestSystem } from '../systems/HarvestSystem';
 import { PowerGraphSystem, devPowerGraphDefinition, emptyPowerGraphDiagnostics, powerWireId, type PowerGraphCommand, type PowerGraphDefinition } from '../systems/PowerGraph';
@@ -638,6 +639,7 @@ export class Game {
   private lightRig?: LightRig;
   private detailScatter?: DetailScatter;
   private readonly cameraRig = new CameraRig(this.camera);
+  private readonly cameraZoom: CameraZoomController;
   private readonly megaprojectManifest: MegaprojectManifest | null = activeMegaprojectManifest(this.activeEpoch);
   private readonly megaprojectStorage: MegaprojectStorage | undefined = browserMegaprojectStorage();
   private megaprojectState: MegaprojectState = loadMegaprojectState(this.megaprojectStorage);
@@ -1188,6 +1190,7 @@ export class Game {
   ) {
     this.assertActorMode();
     this.renderer = createRenderer(canvas);
+    this.cameraZoom = new CameraZoomController(canvas, 'run', this.cameraRig);
     this.renderer.toneMappingExposure = this.tuning.exposure;
     this.blastAimReticle.name = 'BlastAimReticle';
     this.blastAimReticle.rotation.x = -Math.PI / 2;
@@ -2094,6 +2097,7 @@ export class Game {
     this.canvas.removeEventListener('pointermove', this.onBlastAimPointerMove);
     document.removeEventListener('visibilitychange', this.onPerformanceVisibilityChange);
     this.input.dispose();
+    this.cameraZoom.dispose();
     this.playbookSurface?.dispose();
     this.e7SignalSystem.dispose();
     this.hud.dispose();
@@ -2583,6 +2587,7 @@ export class Game {
       this.enemies.activeCount >= Balance.world.detailStressEnemyThreshold ||
       this.waveSystem.diagnostics.wave >= Balance.world.detailStressWaveThreshold;
     this.detailScatter?.syncBuildingClearings(this.detailClearings());
+    this.cameraZoom.update(delta);
     this.cameraRig.update(delta, this.localActor.renderPosition, this.localActor.velocity);
     this.syncMultiplayerNameChips();
     this.lightRig?.setStressFallback(visualStress || this.runtimePerformanceVerdict >= 1);
@@ -4142,6 +4147,7 @@ export class Game {
       renderLayers: RenderLayers,
       renderLayerOf,
       ui: this.uiSnapshot,
+      camera: this.cameraZoom.diagnostics(),
       hp: localActor.hp,
       maxHp: localActor.maxHp,
       heroIframes: localActor.hasIframes,

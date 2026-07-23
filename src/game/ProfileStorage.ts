@@ -11,6 +11,7 @@ import { PLAYBOOKS_KEY } from '../playbook/PlaybookStore';
 import { E7_SIGNAL_STATE_KEY } from '../systems/E7SignalSystem';
 
 export const PROFILE_KEY = 'gr.profile.v2';
+export const CAMERA_ZOOM_STORAGE_KEY = 'gr.camera.zoom.v1';
 export const LEGACY_SCOREBOARD_KEY = 'gr.scores.v1';
 export const SCOREBOARD_KEY = 'gr.scores.v2';
 export const RUN_SUSPEND_KEY = 'gr.run.v1';
@@ -47,6 +48,7 @@ export const PROFILE_DATA_KEYS = new Set([
   EPOCH_CEREMONY_KEY,
   PLAYBOOKS_KEY,
   E7_SIGNAL_STATE_KEY,
+  CAMERA_ZOOM_STORAGE_KEY,
   ...listEpochs().map((epoch) => researchStateKey(epoch.id)),
 ]);
 const DEVICE_PROFILE_DATA_KEYS = new Set([RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY]);
@@ -57,6 +59,7 @@ const LATE_PROFILE_DATA_KEYS = [
   STORY_TALES_STORAGE_KEY,
   ACTIVE_EPOCH_KEY,
   EPOCH_CEREMONY_KEY,
+  CAMERA_ZOOM_STORAGE_KEY,
 ] as const;
 const DEVICE_LOCAL_MIGRATION_KEYS = [PERFORMANCE_TIER_STORAGE_KEY] as const;
 

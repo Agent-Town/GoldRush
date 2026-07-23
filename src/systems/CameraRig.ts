@@ -6,15 +6,32 @@ export class CameraRig {
   private readonly lookTarget = new THREE.Vector3();
   private readonly lookAhead = new THREE.Vector3();
   private readonly impulseOffset = new THREE.Vector3();
+  private readonly trackedTarget = new THREE.Vector3();
+  private distanceScale = 1;
   private impulseRemaining = 0;
 
-  constructor(private readonly camera: THREE.PerspectiveCamera) {
+  constructor(
+    private readonly camera: THREE.PerspectiveCamera,
+    private readonly sceneScale = 1,
+  ) {
     this.camera.fov = Balance.camera.fov;
     this.camera.updateProjectionMatrix();
   }
 
+  setDistanceScale(scale: number): void {
+    this.distanceScale = scale;
+  }
+
+  diagnostics(): { baseDistance: number; actualDistance: number } {
+    return {
+      baseDistance: Balance.camera.offset.length() / this.sceneScale,
+      actualDistance: this.camera.position.distanceTo(this.trackedTarget),
+    };
+  }
+
   snapTo(target: THREE.Vector3): void {
-    this.desiredPosition.copy(target).add(Balance.camera.offset);
+    this.trackedTarget.copy(target);
+    this.setDesiredPosition(target);
     this.camera.position.copy(this.desiredPosition);
     this.impulseOffset.set(0, 0, 0);
     this.impulseRemaining = 0;
@@ -36,7 +53,8 @@ export class CameraRig {
   }
 
   update(delta: number, target: THREE.Vector3, velocity: THREE.Vector3): void {
-    this.desiredPosition.copy(target).add(Balance.camera.offset);
+    this.trackedTarget.copy(target);
+    this.setDesiredPosition(target);
     const factor = 1 - Math.exp(-delta / Balance.camera.lag);
     this.camera.position.lerp(this.desiredPosition, factor);
     if (this.impulseRemaining > 0) {
@@ -53,5 +71,12 @@ export class CameraRig {
       .set(target.x, target.y + 0.45, target.z - Balance.camera.downScreenLookOffset)
       .add(this.lookAhead);
     this.camera.lookAt(this.lookTarget);
+  }
+
+  private setDesiredPosition(target: THREE.Vector3): void {
+    this.desiredPosition
+      .copy(Balance.camera.offset)
+      .multiplyScalar(this.distanceScale / this.sceneScale)
+      .add(target);
   }
 }
