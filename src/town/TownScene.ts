@@ -7,6 +7,7 @@ import { clearProcessedCharacterTextureCache, loadGeneratedTexture, loadProcesse
 import { tagPlaceholder } from '../assets/slots';
 import { CameraRig } from '../systems/CameraRig';
 import { CameraZoomController, type CameraZoomDiagnostics } from '../systems/CameraZoomController';
+import type { E10FinaleSystem } from '../systems/E10FinaleSystem';
 import { Hero } from '../entities/Hero';
 import { InputController } from '../core/InputController';
 import { Loop } from '../core/Loop';
@@ -43,7 +44,7 @@ import {
   type MegaprojectManifest,
   type MegaprojectProjectState,
 } from '../meta/Megaproject';
-import { RESEARCH_STATE_KEY, browserResearchStorage, loadResearchState, reconcileActiveEpoch, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
+import { RESEARCH_STATE_KEY, browserResearchStorage, hasResearchNode, loadResearchState, reconcileActiveEpoch, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
 import { CeremonySystem, type CeremonyDiagnostics } from '../ceremony/CeremonySystem';
 import { closeClaimHerald, openClaimHerald } from '../news/heraldReader';
 import { emitStorySignal } from '../story';
@@ -113,6 +114,10 @@ const STAMP_MILL_ID = 'stamp-mill';
 const STEAMWORKS_EPOCH_ID = 'epoch-2-steamworks';
 const DYNAMO_HALL_ID = 'dynamo-hall';
 const VOLTAGE_EPOCH_ID = 'epoch-3-voltage';
+const DEEP_SKY_EPOCH_ID = 'epoch-10-deepsky';
+const LAST_CLAIM_ID = 'e10-last-claim';
+const CHARTER_PRESS_ID = 'charter-press';
+const CHARTER_PRESS_TOWN_PROP = townEraPropsForOrder(10).find((prop) => prop.glb === 'charter-press.e10.glb');
 const DYNAMO_CRANK_MS = 1_200;
 const STAMP_MILL_TOWN_SITE = { ...townPlazaSlot('stamp-mill').position, w: 6.2, d: 1.65 };
 const STAMP_MILL_COMPLETE_LINE = 'awaits the whistle';
@@ -128,7 +133,7 @@ export type TownDiagnostics = {
   elapsed: number;
   player: { x: number; z: number };
   teleport: (x: number, z: number) => void;
-  activePrompt: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | null;
+  activePrompt: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | typeof CHARTER_PRESS_ID | null;
   activeBark: { actorId: TownActorId; speaker: string; text: string } | null;
   townName: string | null;
   namingPrompt: boolean;
@@ -288,6 +293,7 @@ export class TownScene {
   private readonly stampMillStageVisuals: THREE.Object3D[] = [];
   private readonly stampMillSurveyVisuals: THREE.Object3D[] = [];
   private readonly stampMillConstructionProps: THREE.Object3D[] = [];
+  private e10Finale?: E10FinaleSystem;
   private disposed = false;
   private resizeFrame = 0;
   private readonly syncViewport = () => resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
@@ -322,7 +328,7 @@ export class TownScene {
   private nameBeat?: HTMLElement;
   private frame = 0;
   private elapsed = 0;
-  private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | null = null;
+  private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | null = null;
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
   private assayBench?: ReturnType<typeof installAssayBench>;
@@ -428,6 +434,7 @@ export class TownScene {
     this.infoNote?.dispose();
     this.assayBench?.dispose();
     this.ceremonies.dispose();
+    this.e10Finale?.dispose();
     for (const actor of this.townActors) actor.dispose();
     clearProcessedCharacterTextureCache();
     this.ui.remove();
@@ -456,7 +463,7 @@ export class TownScene {
       this.publishDiagnostics();
       return;
     }
-    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen()) {
+    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
       if (rawExitIntent && !this.lastExitIntent) {
         if (this.ceremonies.modalOpen()) this.ceremonies.requestLeave();
@@ -884,7 +891,8 @@ export class TownScene {
 
   private readonly onPromptClick = (event: Event) => {
     const target = event.target as HTMLElement | null;
-    if (target?.closest('[data-raise-stamp-mill]')) this.raiseStampMill();
+    if (target?.closest('[data-open-charter-press]')) this.openCharterPress();
+    else if (target?.closest('[data-raise-stamp-mill]')) this.raiseStampMill();
     else if (target?.closest('[data-town-board]')) this.activateTownAction('tavern');
     else if (target?.closest('[data-town-rename]')) this.activateTownAction('claim_office');
     else if (target?.closest('[data-town-schoolhouse]')) this.activateTownAction('schoolhouse');
@@ -907,12 +915,13 @@ export class TownScene {
     if (this.ui.isConnected) this.barkCard.querySelector<HTMLButtonElement>('[data-town-herald]')?.focus({ preventScroll: true });
   };
 
-  private activateTownAction(buildingId: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | undefined): void {
-    if (!buildingId || this.nameCardOpen || this.heraldOpen || this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen()) return;
+  private activateTownAction(buildingId: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | typeof CHARTER_PRESS_ID | undefined): void {
+    if (!buildingId || this.nameCardOpen || this.heraldOpen || this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.e10Finale) return;
     if (buildingId === 'tavern') this.openBoard();
     else if (buildingId === 'claim_office' && this.townName) this.openNameCard('rename');
     else if (buildingId === 'schoolhouse') this.openSchoolhouse();
     else if (buildingId === 'assay_office') this.openAssayBench();
+    else if (buildingId === CHARTER_PRESS_ID) this.openCharterPress();
   }
 
   private readonly onDynamoCrankStart = (event: Event) => {
@@ -1055,6 +1064,10 @@ export class TownScene {
       this.publishDiagnostics();
       return;
     }
+    if (target?.closest('[data-open-charter-press]')) {
+      this.openCharterPress();
+      return;
+    }
     const eraButton = target?.closest<HTMLElement>('[data-research-era]');
     if (eraButton?.dataset.researchEra) {
       this.selectResearchEra(eraButton.dataset.researchEra);
@@ -1133,13 +1146,13 @@ export class TownScene {
   }
 
   private syncPrompt(): void {
-    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen()) {
+    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
       this.prompt.hidden = true;
       this.infoNote?.update(null);
       return;
     }
     const position = this.hero.group.position;
-    let nearest: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | null = null;
+    let nearest: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | null = null;
     let nearestDistanceSq = APPROACH_RADIUS * APPROACH_RADIUS;
     for (const building of this.visibleBuildings) {
       const dx = position.x - building.position.x;
@@ -1164,6 +1177,16 @@ export class TownScene {
       const distanceSq = dx * dx + dz * dz;
       if (distanceSq < nearestDistanceSq) nearest = { id: DYNAMO_HALL_ID, name: 'Dynamo Hall' };
     }
+    if (
+      activeEpochId() === DEEP_SKY_EPOCH_ID &&
+      CHARTER_PRESS_TOWN_PROP &&
+      this.canvas.dataset.town3dEraPropIds?.split(',').includes(CHARTER_PRESS_TOWN_PROP.id)
+    ) {
+      const dx = position.x - CHARTER_PRESS_TOWN_PROP.position.x;
+      const dz = position.z - CHARTER_PRESS_TOWN_PROP.position.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq < nearestDistanceSq) nearest = { id: CHARTER_PRESS_ID, name: 'Charter Press' };
+    }
     this.activePrompt = nearest;
     this.prompt.hidden = nearest === null;
     if (!nearest) {
@@ -1172,12 +1195,12 @@ export class TownScene {
       this.infoNote?.update(null);
       return;
     }
-    const infoClass = nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID ? null : townInfoClass(nearest.id);
+    const infoClass = nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID || nearest.id === CHARTER_PRESS_ID ? null : townInfoClass(nearest.id);
     this.infoNote?.update(infoClass ? { objectClass: infoClass } : null);
     const promptKey = `${nearest.id}:${this.townName ?? ''}:${activeEpochId()}:${scienceMeter(activeProfileResearchState()).complete}`;
     if (promptKey === this.promptKey) return;
     this.promptKey = promptKey;
-    if (nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID) {
+    if (nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID || nearest.id === CHARTER_PRESS_ID) {
       const action = this.renderEpochActivationAction('site');
       this.prompt.hidden = !action;
       this.prompt.innerHTML = action;
@@ -1392,6 +1415,8 @@ export class TownScene {
   }
 
   private renderEpochActivationAction(surface: 'schoolhouse' | 'site' = 'schoolhouse'): string {
+    const charterPressDoor = this.renderCharterPressDoor(surface);
+    if (charterPressDoor !== null) return charterPressDoor;
     const megaprojectDoor = this.renderEpochMegaprojectDoor(surface);
     if (megaprojectDoor !== null) return megaprojectDoor;
     // Framework-staged eras (T3+) render the ceremony door; null = not ours.
@@ -1449,6 +1474,73 @@ export class TownScene {
         <button type="button" data-raise-stamp-mill data-testid="raise-stamp-mill">Raise the Stamp Mill</button>
       </section>
     `;
+  }
+
+  private renderCharterPressDoor(surface: 'schoolhouse' | 'site'): string | null {
+    if (activeEpochId() !== DEEP_SKY_EPOCH_ID) return null;
+    const gate = charterPressGate();
+    const meter = gate.meter;
+    if (!meter.complete) {
+      if (surface === 'site') return `<span>The Charter Press waits on ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'}.</span>`;
+      return `
+        <section class="town-ui__epoch-door" data-testid="t10-charter-press-door" data-door-state="needs-science">
+          <p class="town-ui__board-eyebrow">The saga's last room</p>
+          <h3>The Charter Press stands ready.</h3>
+          <p>The chart wants ${meter.remaining} more science${meter.remaining === 1 ? '' : 's'} before the child-height lever opens.</p>
+        </section>
+      `;
+    }
+    if (!gate.researchReady) {
+      if (surface === 'site') return `<span>The final Cosmography entry is still unwritten.</span>`;
+      return `
+        <section class="town-ui__epoch-door" data-testid="t10-charter-press-door" data-door-state="needs-research">
+          <p class="town-ui__board-eyebrow">The saga's last room</p>
+          <h3>The Charter Press waits.</h3>
+          <p>Take Cosmography's final Charter Press entry before the child-height lever opens.</p>
+        </section>
+      `;
+    }
+    if (surface === 'site') {
+      return `<span>The Charter Press is ready.</span><button class="town-ui__prompt-button" type="button" data-open-charter-press data-testid="open-charter-press-site">Enter the Charter Press</button>`;
+    }
+    return `
+      <section class="town-ui__epoch-door" data-testid="t10-charter-press-door" data-door-state="ceremony-ready">
+        <p class="town-ui__board-eyebrow">The saga's last room</p>
+        <h3>The Charter Press stands ready.</h3>
+        <p>Four hands, one lever. The child has chosen a river.</p>
+        <button type="button" data-open-charter-press data-testid="open-charter-press">Enter the Charter Press</button>
+      </section>
+    `;
+  }
+
+  private openCharterPress(): void {
+    if (__GR_RELEASE_E1__) return;
+    const gate = charterPressGate();
+    if (this.e10Finale || activeEpochId() !== DEEP_SKY_EPOCH_ID || !gate.meter.complete || !gate.researchReady) return;
+    this.closeSchoolhouse();
+    void import('../systems/E10FinaleSystem').then(({ E10FinaleSystem }) => {
+      if (this.disposed || this.e10Finale) return;
+      const tile = loadContract(LAST_CLAIM_ID, DEEP_SKY_EPOCH_ID).tileParams as ContractManifest['tileParams'] & {
+        eraDeckZones?: unknown[];
+      };
+      const finale = new E10FinaleSystem(this.scene, this.canvas, {
+        enabled: tile.tileId === 'ark-plaza-e10',
+        sceneClass: tile.biome,
+        tileId: tile.tileId,
+        deckCount: tile.eraDeckZones?.length ?? 0,
+      });
+      this.e10Finale = finale;
+      this.ui.inert = true;
+      this.ui.setAttribute('aria-hidden', 'true');
+      finale.closeFinale(() => {
+        finale.dispose();
+        if (this.e10Finale === finale) this.e10Finale = undefined;
+        this.ui.inert = false;
+        this.ui.removeAttribute('aria-hidden');
+        this.syncPrompt();
+        this.publishDiagnostics();
+      });
+    });
   }
 
   private renderEpochMegaprojectDoor(surface: 'schoolhouse' | 'site'): string | null {
@@ -2419,6 +2511,14 @@ function activeProfileResearchStates(): ResearchState[] {
 function activeProfileResearchState() {
   const storage = browserResearchStorage();
   return loadResearchState(storage, storage, { rocketCartCaptured: hasRocketCartCaptured() });
+}
+
+function charterPressGate() {
+  const research = activeProfileResearchState();
+  return {
+    meter: scienceMeter(research),
+    researchReady: hasResearchNode(research, 'charter_press'),
+  };
 }
 
 function shouldStartFirstClaimGuide(townName: string | null, meta: MetaProgress): boolean {
