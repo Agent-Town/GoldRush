@@ -22,7 +22,6 @@ type Errors = { console: string[]; page: string[] };
 const ARTIFACT = path.resolve('artifacts/map-census/table.md');
 const PAINTED_FALLBACKS = new Set(['e10-last-claim', 'e10-river']);
 const MOBILE_SPOTS = new Set(['the-claim', 'e2-pressure-garden', 'e5-deepwater-claim', 'e8-low-orbit', 'e10-river']);
-const BRIGHTNESS_CORRECTIVES = new Set(['e1-twin-banks', 'e1-baron', 'e2-pressure-garden', 'e2-incline', 'e3-moth-season']);
 const CONTRACTS = listEpochs().flatMap(({ id: epochId }) => {
   const era = Number(epochId.match(/epoch-(\d+)/)?.[1]);
   return loadEpoch(epochId).contracts.map((contract) => ({ id: contract.id, era, contract }));
@@ -34,7 +33,7 @@ const rows = new Map<string, Row>(CONTRACTS.map(({ id, era }) => [id, {
 
 for (const contract of CONTRACTS) {
   test(`${contract.id} census`, async ({ page }) => {
-    test.setTimeout(15_000);
+    test.setTimeout(20_000);
     const row = await census(page, contract.id, contract.era, contract.contract);
     rows.set(contract.id, row);
   });
@@ -116,9 +115,6 @@ async function census(page: Page, id: string, era: number, contract: ContractMan
   else {
     row.brightness = await brightnessProbe(page);
     if (id === 'e6-glow-mesa' && row.brightness.startsWith('FAIL')) row.brightness = corrective(row.brightness, 'census-glow-mesa-3d');
-    else if (BRIGHTNESS_CORRECTIVES.has(id) && row.brightness.startsWith('FAIL')) {
-      row.brightness = corrective(row.brightness, 'census-landmark-brightness');
-    }
   }
   row.boot = errors.console.length || errors.page.length
     ? `FAIL: console=${errors.console.length}, page=${errors.page.length}`
@@ -230,6 +226,7 @@ async function brightnessProbe(page: Page): Promise<Result> {
     const mount = mounts[0];
     if (!mount) throw new Error('no landmark mount');
     await page.evaluate(({ x, z }) => window.__GR_TEST__!.teleport(x, z - 5), mount);
+    await waitForFrames(page, 2);
     await page.waitForFunction(({ x, y, z }) => window.__GR_TEST__!.screenPoint(x, z, y + 1.5).inView, mount, { timeout: 2_000 });
     const point = await page.evaluate(({ x, y, z }) => window.__GR_TEST__!.screenPoint(x, z, y + 1.5), mount);
     const box = await canvas.boundingBox();

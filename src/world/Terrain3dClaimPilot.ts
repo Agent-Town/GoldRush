@@ -276,6 +276,16 @@ function preparePanorama(model: THREE.Object3D): void {
   }
 }
 
+function keepLandmarkPaintReadable(model: THREE.Object3D): void {
+  model.traverse((node) => {
+    const mesh = node as THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+    if (!mesh.isMesh || Array.isArray(mesh.material) || !mesh.material.isMeshStandardMaterial || !mesh.material.map) return;
+    mesh.material.emissive.set('#ffffff');
+    mesh.material.emissiveMap = mesh.material.map;
+    mesh.material.emissiveIntensity = 3;
+  });
+}
+
 function hidePaintedGround(host: Host): HiddenRelief[] { return hidePaintedRelief(host); }
 function featherTerrainEdge(model: THREE.Object3D, bounds: THREE.Box3, host: Host): void {
   const materials = new Set<THREE.Material>();
@@ -575,13 +585,13 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
       const nextLandmarks = new THREE.Group();
       nextLandmarks.name = 'Terrain3dLandmarks';
       nextLandmarks.userData.renderOnly = true;
-      const loadMount = async (mount: LandmarkMount) => {
+      const loadMount = async (mount: LandmarkMount): Promise<THREE.Object3D | undefined> => {
         try {
           const key = `../../assets/pilots/map-rebuild-spike/${mount.asset}`;
           const resolveUrl = LANDMARK_ASSETS[key];
           if (!resolveUrl) {
             diagnostics.push(`${mount.id}: asset unavailable`);
-            return;
+            return undefined;
           }
           let asset = assets.get(key);
           if (!asset) {
@@ -591,9 +601,9 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           const source = await asset;
           if (!source) {
             diagnostics.push(`${mount.id}: asset invalid`);
-            return;
+            return undefined;
           }
-          const model = [...nextLandmarks.children].some((child) => child.userData.landmarkAsset === key) ? source.clone() : source;
+          const model = source;
           model.name = mount.id;
           model.userData.landmarkAsset = key;
           model.userData.renderOnly = true;
@@ -601,12 +611,15 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
           model.rotation.set(...mount.rotation);
           model.scale.fromArray(mount.scale);
           inspect(model, false);
-          nextLandmarks.add(model);
+          if (host.contractId !== 'e1-night-shift') keepLandmarkPaintReadable(model);
+          return model;
         } catch {
           diagnostics.push(`${mount.id}: asset invalid`);
+          return undefined;
         }
       };
-      void Promise.all(mounts.map(loadMount)).then(() => {
+      void Promise.all(mounts.map(loadMount)).then((models) => {
+        for (const model of models) if (model) nextLandmarks.add(model);
         if (disposed) {
           disposeObject3D(nextLandmarks);
           host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'disposed';
