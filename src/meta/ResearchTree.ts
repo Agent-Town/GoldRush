@@ -337,11 +337,12 @@ export function savedStampMillBuildStarted(): boolean {
 export function reconcileActiveEpoch(storage: MetaProgressStorage | undefined = browserResearchStorage()): void {
   if (!storage) return;
   try {
-    let latest = loadEpoch(activeEpochId());
+    const persisted = storage.getItem(ACTIVE_EPOCH_KEY);
+    let latest = listEpochs().some((epoch) => epoch.id === persisted) ? loadEpoch(persisted!) : loadEpoch(DEFAULT_EPOCH_ID);
     for (const epoch of listEpochs()) {
       if (epoch.order > latest.order && storage.getItem(researchStateKey(epoch.id)) !== null) latest = loadEpoch(epoch.id);
     }
-    if (latest.id !== activeEpochId()) storage.setItem(ACTIVE_EPOCH_KEY, latest.id);
+    if (latest.id !== persisted) storage.setItem(ACTIVE_EPOCH_KEY, latest.id);
   } catch {}
 }
 

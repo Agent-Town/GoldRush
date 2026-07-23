@@ -17,7 +17,7 @@ import { depenetrateToWalkable } from '../world/LandmarkCollision';
 import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
-import { META_PROGRESS_KEY, loadMetaProgress, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
+import { META_PROGRESS_KEY, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
 import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
@@ -80,6 +80,7 @@ import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 import { takeMeiWorldDispatch } from './worldDispatches';
 import { takeTrailGuideBark } from '../story/trailGuide';
+import { contractUnlockStatus as contractUnlock } from '../meta/ContractUnlock';
 
 const contractPlateUrls = import.meta.glob<string>('../../assets/raw/plate-contract-*.png', {
   eager: true,
@@ -1196,7 +1197,7 @@ export class TownScene {
         <button class="town-ui__prompt-button" type="button" data-town-schoolhouse data-testid="town-open-schoolhouse">Chart</button>
       `;
     } else if (nearest.id === 'assay_office') {
-      const debug = new URLSearchParams(window.location.search).has('debug');
+      const debug = !__GR_RELEASE_E1__ && new URLSearchParams(window.location.search).has('debug');
       this.prompt.innerHTML = `
         <span>${nearest.name} ... ${debug ? 'debug crafting door' : 'the clerk takes complaints'}</span>
         <button class="town-ui__prompt-button" type="button" data-town-assay data-testid="town-open-assay">${debug ? 'Crafting' : 'Complaints Desk'}</button>
@@ -1424,7 +1425,7 @@ export class TownScene {
       `;
     }
     const releaseFrontier = Balance.releaseFrontier;
-    if (releaseFrontier && activeEpochId() === releaseFrontier && !new URLSearchParams(window.location.search).has('debug')) {
+    if (releaseFrontier && activeEpochId() === releaseFrontier && (__GR_RELEASE_E1__ || !new URLSearchParams(window.location.search).has('debug'))) {
       if (surface === 'site') {
         return `<span data-testid="release-frontier-horizon">${escapeHtml(Balance.releaseFrontierHorizonLine)}</span>`;
       }
@@ -1567,7 +1568,7 @@ export class TownScene {
 
   private renderBoard(): void {
     const activeEpoch = loadEpoch(activeEpochId());
-    const debug = new URLSearchParams(window.location.search).has('debug');
+    const debug = !__GR_RELEASE_E1__ && new URLSearchParams(window.location.search).has('debug');
     const chapters = listEpochs()
       .filter((epoch) => debug || epoch.order <= activeEpoch.order)
       .map((epoch) => loadEpoch(epoch.id));
@@ -2344,63 +2345,6 @@ function renderContractArt(contract: ContractManifest): string {
       ${image}
     </figure>
   `;
-}
-
-function contractUnlock(contract: ContractManifest): { unlocked: boolean; condition: string; action?: string } {
-  const epochs = listEpochs().map(({ id }) => loadEpoch(id));
-  const epoch = epochs.find((entry) => entry.contracts.some(({ id }) => id === contract.id));
-  if (epoch && !epochIsActive(epoch.id)) {
-    const predecessor = epochs.find((entry) => entry.successor === epoch.id);
-    const action = `Awaits the ${epoch.displayName} era`;
-    return {
-      unlocked: false,
-      condition: predecessor
-        ? `The ${epoch.displayName} awaits — ${predecessor.megaproject.raiseActionText.replace(/^./, (letter) => letter.toLowerCase())}.`
-        : action,
-      action,
-    };
-  }
-  const unlock = contract.boardRow.unlock;
-  if (unlock === 'default') return { unlocked: true, condition: '' };
-
-  const scores = loadScores();
-  if (unlock === 'wave10OnClaim') {
-    return {
-      unlocked: scores.some((score) => contractIdOf(score) === DEFAULT_CONTRACT_ID && score.waves >= 10),
-      condition: 'Reach wave 10 on The Claim',
-    };
-  }
-  if (unlock === 'firstSecuredClaim') {
-    return { unlocked: scores.some((score) => score.secured === true), condition: 'Secure a claim first' };
-  }
-  if (unlock === 'science-complete') {
-    return { unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete, condition: 'Complete Frontier science first' };
-  }
-  if (unlock === 'science-complete+2-secured') {
-    const securedContracts = new Set(scores.filter((score) => score.secured === true).map((score) => contractIdOf(score)));
-    return {
-      unlocked: scienceMeter(loadResearchState(browserResearchStorage())).complete && securedContracts.size >= 2,
-      condition: "Secure two claims; bank the science — then he'll come out",
-    };
-  }
-  if (unlock.startsWith('secured:')) {
-    const requiredId = unlock.slice('secured:'.length);
-    const required = listBoardContracts().find((entry) => entry.id === requiredId);
-    return {
-      unlocked: scores.some((score) => contractIdOf(score) === requiredId && score.secured === true),
-      condition: `Secure ${required?.name ?? requiredId} first`,
-    };
-  }
-  if (unlock === STEAMWORKS_EPOCH_ID) {
-    return { unlocked: epochIsActive(STEAMWORKS_EPOCH_ID), condition: 'Awaits the Steamworks era' };
-  }
-  if (unlock.startsWith('science')) {
-    const required = Number.parseInt(unlock.match(/\d+/)?.[0] ?? '0', 10);
-    const storage = browserStorage();
-    const science = storage ? loadMetaProgress(storage).tracks.science : 0;
-    return { unlocked: science >= required, condition: `Bank ${required} science first` };
-  }
-  return { unlocked: false, condition: 'Progress farther first' };
 }
 
 function bestContractScore(id: string, scores: readonly ScoreRecord[]): ScoreRecord | null {

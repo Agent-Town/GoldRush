@@ -14,7 +14,7 @@ export type CeremonyPostscript = {
 
 const epochs = listEpochs();
 const frameworkCeremonies = new Set(CEREMONY_SCRIPTS.map((script) => script.epochId));
-const rows = [...dispatchSource.matchAll(/^### Ceremony postscript — T(\d+),[^\n]*\n\*([^\n]+)\*$/gm)];
+const rows = [...dispatchSource.matchAll(/^### Ceremony postscript — T(\d+),[^\n]*\n\*([^\n]+)\*$/gm)].slice(0, epochs.length);
 
 export const CEREMONY_POSTSCRIPTS: readonly CeremonyPostscript[] = rows.map((match) => {
   const era = Number(match[1]);

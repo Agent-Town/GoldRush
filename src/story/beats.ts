@@ -3,6 +3,8 @@ import type { StorySpeakerId } from './speakers';
 import { hasStoryBeatSeen } from './seenState';
 import { hasRocketCartCaptured } from '../game/Medals';
 
+const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
+
 export type StoryBeatFor<TSignal extends { type: string }> = {
   id: string;
   trigger: TSignal['type'];
@@ -404,4 +406,6 @@ export const E2_STORY_BEATS: readonly RuntimeStoryBeat[] = [
   },
 ];
 
-export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];
+export const STORY_RUNTIME_BEATS: readonly RuntimeStoryBeat[] = RELEASE_E1
+  ? [...STORY_BEATS, ...LEDGER_STORY_BEATS]
+  : [...STORY_BEATS, ...E2_STORY_BEATS, ...LEDGER_STORY_BEATS];

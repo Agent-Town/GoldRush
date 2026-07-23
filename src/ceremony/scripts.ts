@@ -1,6 +1,8 @@
 import type { SoundName } from '../audio/manifest';
 import type { ConvoyPoint } from '../systems/ConvoyBehavior';
 
+const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
+
 // ─── THE CEREMONY SCRIPT FORMAT ──────────────────────────────────────────────
 // lore/STORYBOOK.md §THE INTERSTITIALS is RATIFIED LAW: "ceremonies are PLAYED,
 // not watched — every one gives the player's hand something to do; cutscene-only
@@ -364,7 +366,9 @@ export const T9_THE_GENERATION_ARK: CeremonyScript = {
 /** The registry: every framework-staged ceremony, keyed by the era it closes.
  * T1 (stamp mill click) and T2 (dynamo crank) predate the framework and stay
  * on their own doors — wrap, don't rewrite; migration is a named follow-up. */
-export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR, T6_THE_CALCULATING_HOUSE, T7_THE_STARSHIP, T8_THE_COLONY_SEED, T9_THE_GENERATION_ARK];
+export const CEREMONY_SCRIPTS: readonly CeremonyScript[] = RELEASE_E1
+  ? []
+  : [T3_THE_REFINERY, T4_THE_BOAT, T5_THE_DEEP_REACTOR, T6_THE_CALCULATING_HOUSE, T7_THE_STARSHIP, T8_THE_COLONY_SEED, T9_THE_GENERATION_ARK];
 
 export function ceremonyScriptForEpoch(epochId: string): CeremonyScript | null {
   return CEREMONY_SCRIPTS.find((script) => script.epochId === epochId) ?? null;

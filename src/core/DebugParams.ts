@@ -28,7 +28,10 @@ const DEFAULT_PARAMS: DebugParams = {
   profile: false,
 };
 
+const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
+
 export function readDebugParams(search = getSearch()): DebugParams {
+  if (RELEASE_E1) return DEFAULT_PARAMS;
   const params = new URLSearchParams(search);
   const fullbaseBench = params.get('bench') === 'fullbase';
   const editor = params.has('editor');
@@ -52,7 +55,7 @@ export function readDebugParams(search = getSearch()): DebugParams {
 export const DEBUG_PARAMS = readDebugParams();
 
 export function isDebugEnabled(): boolean {
-  return DEBUG_PARAMS.debug;
+  return !RELEASE_E1 && DEBUG_PARAMS.debug;
 }
 
 export function getDebugSeed(): string | null {

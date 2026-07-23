@@ -23,6 +23,8 @@ import deepskyManifest from '../../assets/contracts/epoch-10-deepsky/manifest.js
 import { MEGAPROJECT_STATE_KEY, type MegaprojectManifest } from './Megaproject';
 import { e7SignalExitBeatReady } from '../systems/E7SignalSystem';
 
+const RELEASE_E1 = typeof __GR_RELEASE_E1__ !== 'undefined' && __GR_RELEASE_E1__;
+
 export type EpochUpgradeDeltas = {
   fireRateMult?: number;
   damageMult?: number;
@@ -715,7 +717,9 @@ const AUTHORED_TERRAIN_MAX_ORIGIN = 512;
 
 // Future locked-stub example:
 // tile: { id: 'steamworks-forge-yard', biome: 'steamworks', elevation: { grid: { columns: 33, rows: 33 }, cellSize: 2, heightsRef: 'tiles/forge-yard.hf32', slopeMax: 0.7, waterline: -0.1 } }
-const fallbackManifests: Record<string, EpochManifest> = {
+const fallbackManifests: Record<string, EpochManifest> = RELEASE_E1 ? {
+  '../../assets/contracts/epoch-1-frontier/manifest.json': frontierManifest as EpochManifest,
+} : {
   '../../assets/contracts/epoch-1-frontier/manifest.json': frontierManifest as EpochManifest,
   '../../assets/contracts/epoch-2-steamworks/manifest.json': steamworksManifest as EpochManifest,
   '../../assets/contracts/epoch-3-voltage/manifest.json': voltageManifest as EpochManifest,
@@ -733,7 +737,9 @@ const fallbackFamilyBundles: Record<string, EpochFamiliesBundle> = {
 const fallbackCapsBundles: Record<string, EpochCapsBundle> = {
   '../../assets/contracts/epoch-1-frontier/caps.json': frontierCaps as EpochCapsBundle,
 };
-const fallbackContractBundles: Record<string, ContractsBundle> = {
+const fallbackContractBundles: Record<string, ContractsBundle> = RELEASE_E1 ? {
+  '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
+} : {
   '../../assets/contracts/epoch-1-frontier/contracts.json': frontierContracts as ContractsBundle,
   '../../assets/contracts/epoch-2-steamworks/contracts.json': steamworksContracts as unknown as ContractsBundle,
   '../../assets/contracts/epoch-3-voltage/contracts.json': voltageContracts as unknown as ContractsBundle,
@@ -933,10 +939,10 @@ export function activeEpoch(): EpochBundle {
 export function activeEpochId(): string {
   const params = readSearchParams();
   const requestedId = params.get('epoch');
-  const debug = params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase';
+  const debug = !RELEASE_E1 && (params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase');
   if (requestedId && debug && manifestsById.has(requestedId)) return requestedId;
   const flagshipEpochId = LIVE_SAGA_FLAGSHIPS[params.get('contract') ?? ''];
-  if (flagshipEpochId) return flagshipEpochId;
+  if (!RELEASE_E1 && flagshipEpochId) return flagshipEpochId;
   try {
     const persisted = globalThis.localStorage?.getItem(ACTIVE_EPOCH_KEY);
     if (persisted && manifestsById.has(persisted)) return persisted;
@@ -1074,6 +1080,23 @@ export function stagePlayerContractLaunch(id: string): void {
   } catch {}
 }
 
+export function stagedPlayerContractLaunch(): string | null {
+  try {
+    return globalThis.sessionStorage?.getItem(PLAYER_CONTRACT_LAUNCH_KEY) ?? null;
+  } catch {
+    return null;
+  }
+}
+
+export function clearPlayerContractLaunch(): void {
+  activeSelection = null;
+  activeSelectionSearch = '';
+  try {
+    globalThis.sessionStorage?.removeItem(PLAYER_CONTRACT_LAUNCH_KEY);
+    globalThis.sessionStorage?.removeItem(CHARTER_LAUNCH_KEY);
+  } catch {}
+}
+
 // The Charter Press launch seam: a stamped charter rides the ordinary player
 // contract-launch path, carrying its compiled document beside the launch key.
 // Every ordinary stagePlayerContractLaunch clears it, so only a Press launch
@@ -1116,9 +1139,9 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
   const fallback = contracts.find((contract) => contract.id === DEFAULT_CONTRACT_ID) ?? defaultContractFor(manifestsById.get(DEFAULT_EPOCH_ID)!);
   const params = new URLSearchParams(search);
   const requestedId = params.get('contract');
-  const debug = params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase';
+  const debug = !RELEASE_E1 && (params.has('debug') || params.has('editor') || params.get('bench') === 'fullbase');
   const launched = requestedId ? isPlayerContractLaunch(requestedId) : false;
-  const liveSagaFlagship = requestedId !== null && requestedId in LIVE_SAGA_FLAGSHIPS;
+  const liveSagaFlagship = !RELEASE_E1 && requestedId !== null && requestedId in LIVE_SAGA_FLAGSHIPS;
   let contract = fallback;
   let fallbackReason: ActiveContractDiagnostics['fallbackReason'] = null;
 
@@ -1151,7 +1174,7 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
     }
   }
 
-  if (params.has('editor')) {
+  if (!RELEASE_E1 && params.has('editor')) {
     const legacyText = params.get(CONTRACT_EDITOR_PARAM);
     if (legacyText === CONTRACT_EDITOR_SESSION_REF) {
       const staged = readContractEditorDocument(contract);
@@ -1193,7 +1216,7 @@ function isPlayerContractLaunch(id: string): boolean {
 function activeDevTileOverride(): EpochTileDescriptor | null {
   const params = readSearchParams();
   const requestedId = params.has('powergraph') || params.has('tram') || params.get('power') === 'dev' ? 'gt-test-basin' : params.get('tile');
-  if (!requestedId || !params.has('debug')) return null;
+  if (RELEASE_E1 || !requestedId || !params.has('debug')) return null;
   const tile = manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((entry) => entry.id === requestedId);
   if (!tile) return null;
   const active: EpochTileDescriptor = { id: tile.id, biome: tile.biome };
@@ -1207,7 +1230,7 @@ function activeDevTileOverride(): EpochTileDescriptor | null {
 function activeDevTileWaterOverride(): ContractWaterDescriptor | undefined {
   const params = readSearchParams();
   const requestedId = params.get('tile');
-  if (!requestedId || !params.has('debug')) return undefined;
+  if (RELEASE_E1 || !requestedId || !params.has('debug')) return undefined;
   return manifestsById.get(DEFAULT_EPOCH_ID)?.devTiles?.find((entry) => entry.id === requestedId)?.water;
 }
 

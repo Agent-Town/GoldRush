@@ -15,6 +15,8 @@ import { installEpochLedgerDiscovery } from './encyclopedia/state';
 import type { LedgerEntryId } from './encyclopedia/registry';
 import { installBuildFreshness } from './app/BuildFreshness';
 import { seedDebugEraFromSearch } from './meta/DebugEraSeed';
+import { reverifyStagedContractLaunch } from './meta/ContractUnlock';
+import { reconcileActiveEpoch } from './meta/ResearchTree';
 
 type AssayBench = ReturnType<(typeof import('./crafting/AssayBench'))['install']>;
 type Game = import('./game/Game').Game;
@@ -28,40 +30,51 @@ if (!canvas) {
 }
 const gameCanvas = canvas;
 
+if (__GR_RELEASE_E1__) {
+  const url = new URL(window.location.href);
+  const blocked = ['debug', 'editor', 'bench', 'era'];
+  let changed = false;
+  for (const key of blocked) {
+    changed = url.searchParams.has(key) || changed;
+    url.searchParams.delete(key);
+  }
+  if (changed) history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+}
+
 const initialSearch = new URLSearchParams(window.location.search);
-if (initialSearch.has('debug') && initialSearch.has('simitem')) {
+if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('simitem')) {
   void import('./crafting/StatSimHarness').then(({ installStatSimHarnessFromSearch }) => installStatSimHarnessFromSearch());
 }
 
-if (initialSearch.has('debug') && initialSearch.has('determinism')) {
+if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('determinism')) {
   void import('./diagnostics/DeterminismHarness').then(({ installDeterminismHarnessFromSearch }) => installDeterminismHarnessFromSearch());
 }
 
-if (initialSearch.has('debug') && initialSearch.has('mpbalance')) {
+if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('mpbalance')) {
   void import('./mp/MultiplayerBalanceHarness').then(({ installMultiplayerBalanceHarnessFromSearch }) =>
     installMultiplayerBalanceHarnessFromSearch(),
   );
 }
 
-if (initialSearch.has('debug') && initialSearch.has('e4convoyweather')) {
+if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('e4convoyweather')) {
   void import('./diagnostics/E4ConvoyWeatherHarness').then(({ installE4ConvoyWeatherHarnessFromSearch }) =>
     installE4ConvoyWeatherHarnessFromSearch(),
   );
 }
 
-if (initialSearch.has('debug') && initialSearch.has('e4orbit')) {
+if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('e4orbit')) {
   void import('./diagnostics/E4OrbitRoadHarness').then(({ installE4OrbitRoadHarnessFromSearch }) =>
     installE4OrbitRoadHarnessFromSearch(),
   );
 }
 
-if (initialSearch.has('debug') && initialSearch.has('deepwater')) {
+if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('deepwater')) {
   void import('./diagnostics/E5DeepwaterHarness').then(({ installE5DeepwaterHarnessFromSearch }) =>
     installE5DeepwaterHarnessFromSearch(),
   );
 }
 
-if (initialSearch.get('bench') === 'fullbase') {
+if (!__GR_RELEASE_E1__ && initialSearch.get('bench') === 'fullbase') {
   const defaults = { debug: '', nolevel: '', nopause: '', seed: 'perf-02-fullbase', timescale: '24' };
   let changed = false;
   for (const [key, value] of Object.entries(defaults)) {
@@ -75,7 +88,7 @@ if (initialSearch.get('bench') === 'fullbase') {
 }
 
 const app = document.querySelector<HTMLElement>('#app') ?? document.body;
-if (initialSearch.has('debug') && initialSearch.has('playbook')) {
+if (!__GR_RELEASE_E1__ && initialSearch.has('debug') && initialSearch.has('playbook')) {
   void import('./spikes/playbook/PlaybookLab').then(({ installPlaybookLab }) => installPlaybookLab(app));
 }
 accountSync.install();
@@ -95,6 +108,8 @@ afterFirstFrame(() => {
 });
 
 async function startGame(): Promise<void> {
+  if (__GR_RELEASE_E1__) reconcileActiveEpoch();
+  reverifyStagedContractLaunch();
   seedDebugEraFromSearch(gameCanvas);
   const currentSearch = new URLSearchParams(window.location.search);
   const { Game } = await import('./game/Game');
@@ -103,7 +118,7 @@ async function startGame(): Promise<void> {
   applyUpgradeBudgetsFromBalance();
   game = new Game(gameCanvas, () => assayBench?.focus(), runReturnCallback);
   game.start();
-  if (currentSearch.has('editor')) {
+  if (!__GR_RELEASE_E1__ && currentSearch.has('editor')) {
     void import('./editor/DescriptorInspector').then(({ installDescriptorInspector }) => installDescriptorInspector(app));
   }
   releaseStartupAssetGateOnFirstGameFrame();
@@ -290,7 +305,7 @@ if (history.state?.goldRushScene === 'town') {
   startWithProfiles();
 }
 
-if (initialSearch.get('bench') === 'fullbase') {
+if (!__GR_RELEASE_E1__ && initialSearch.get('bench') === 'fullbase') {
   void import('./diagnostics/fullBaseBenchmark').then(({ installFullBaseBenchmark }) => installFullBaseBenchmark());
 }
 

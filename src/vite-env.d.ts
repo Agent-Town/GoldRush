@@ -1,5 +1,7 @@
 /// <reference types="vite/client" />
 
+declare const __GR_RELEASE_E1__: boolean;
+
 declare const __APP_BUILD__: string;
 
 type GrBuildableId = any;

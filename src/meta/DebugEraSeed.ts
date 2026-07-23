@@ -3,6 +3,7 @@ import { MEGAPROJECT_STATE_KEY } from './Megaproject';
 import { loadResearchState, reconcileActiveEpoch, researchNodes, saveResearchState } from './ResearchTree';
 
 export function seedDebugEraFromSearch(canvas: HTMLCanvasElement, search = window.location.search): number | null {
+  if (__GR_RELEASE_E1__) return null;
   const params = new URLSearchParams(search);
   const era = Number(params.get('era'));
   if (!params.has('debug') || !Number.isInteger(era) || era < 1 || era > 10) return null;

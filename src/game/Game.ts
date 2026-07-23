@@ -602,7 +602,7 @@ export class Game {
     litThreshold: Balance.contracts.nightShift.renderVisibilityCutoff,
   });
   private readonly mothSwarm = new MothSwarm(
-    Boolean(this.activeContract.twist.mothSeason) || (new URLSearchParams(window.location.search).has('debug') && new URLSearchParams(window.location.search).has('daynight')),
+    Boolean(this.activeContract.twist.mothSeason) || (isDebugEnabled() && new URLSearchParams(window.location.search).has('daynight')),
     this.enemies.capacity,
     (x, z) => this.lightField.coverageAt(x, z),
     {
@@ -1639,7 +1639,7 @@ export class Game {
     this.syncMegaprojectSite();
     this.placeContractFixtures();
     this.dressScene();
-    if (new URLSearchParams(window.location.search).has('debug')) {
+    if (!__GR_RELEASE_E1__ && new URLSearchParams(window.location.search).has('debug')) {
       // Test/debug harness: parking-free positioning for interaction e2e.
       window.__GR_TEST__ = {
         teleport: (x: number, z: number) => {
@@ -2270,7 +2270,7 @@ export class Game {
     if (
       intents.debugXp &&
       !this.lastDebugXpIntent &&
-      new URLSearchParams(window.location.search).has('debug') &&
+      isDebugEnabled() &&
       !this.secureClaimChoicePending()
     ) {
       // Debug XP enters Progression's cumulative counter directly so motes and tests share one threshold path.
@@ -2279,7 +2279,7 @@ export class Game {
     if (
       intents.debugPlant &&
       !this.lastDebugPlantIntent &&
-      new URLSearchParams(window.location.search).has('debug') &&
+      isDebugEnabled() &&
       !this.secureClaimChoicePending()
     ) {
       this.plantGreenWaypoint();
@@ -2644,7 +2644,7 @@ export class Game {
     if (action.type === 'debug_spawn') this.spawnDebugPack();
     if (
       action.type === 'debug_xp' &&
-      new URLSearchParams(window.location.search).has('debug') &&
+      isDebugEnabled() &&
       !this.secureClaimChoicePending()
     ) {
       this.progression.debugGrant(50);
@@ -3113,7 +3113,7 @@ export class Game {
       run: multiplayerRunSuspendFutureState(snapshot),
       actors: snapshot.mpActors ?? null,
     });
-    if (new URLSearchParams(window.location.search).has('debug')) {
+    if (isDebugEnabled()) {
       this.lastMultiplayerHashState = { tick, state };
     }
     return stableHash(state);
@@ -3168,7 +3168,7 @@ export class Game {
       state: () => this.mpClient?.state() ?? null,
       injectDesyncAt: (tick: number) => this.mpClient?.injectDesyncAt(tick),
       dropConnectionForTest: () => {
-        if (new URLSearchParams(window.location.search).has('debug')) this.mpClient?.dropConnectionForTest();
+        if (isDebugEnabled()) this.mpClient?.dropConnectionForTest();
       },
     };
     void this.mpClient.connect();
@@ -7325,7 +7325,7 @@ function interpolateLightRamp(
 
 function createDayNightCycle(contract: ContractManifest): DayNightCycle | null {
   const params = new URLSearchParams(window.location.search);
-  const config = contract.twist.dayNightCycle ?? (params.has('debug') && params.has('daynight') ? DEBUG_DAY_NIGHT_CONFIG : null);
+  const config = contract.twist.dayNightCycle ?? (isDebugEnabled() && params.has('daynight') ? DEBUG_DAY_NIGHT_CONFIG : null);
   return config ? new DayNightCycle(config) : null;
 }
 
@@ -7668,17 +7668,17 @@ function browserMegaprojectStorage(): MegaprojectStorage | undefined {
 
 function isDevPowerGraphEnabled(): boolean {
   const params = new URLSearchParams(window.location.search);
-  return params.has('debug') && (params.has('powergraph') || params.has('tram') || params.get('power') === 'dev');
+  return isDebugEnabled() && (params.has('powergraph') || params.has('tram') || params.get('power') === 'dev');
 }
 
 function isDevTramEnabled(): boolean {
   const params = new URLSearchParams(window.location.search);
-  return params.has('debug') && params.has('tram');
+  return isDebugEnabled() && params.has('tram');
 }
 
 function isDevVehiclesEnabled(): boolean {
   const params = new URLSearchParams(window.location.search);
-  return params.has('debug') && params.has('vehicles');
+  return isDebugEnabled() && params.has('vehicles');
 }
 
 function createMegaprojectPlaqueTexture(lines: readonly string[]): THREE.CanvasTexture {
