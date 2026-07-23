@@ -116,12 +116,7 @@ async function seed(
 async function openSchoolhouse(page: Page): Promise<void> {
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
-  await page.keyboard.down('KeyA');
-  await page.waitForTimeout(900);
-  await page.keyboard.up('KeyA');
-  await page.keyboard.down('KeyS');
-  await page.waitForTimeout(500);
-  await page.keyboard.up('KeyS');
+  await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.teleport(-6.6, 2.4));
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('schoolhouse');
   const opener = page.getByTestId('town-open-schoolhouse');
   await expect(opener).toBeVisible();
@@ -776,6 +771,88 @@ test('T9 THE GENERATION ARK: carrying the tree seed alone arms E10 and survives 
       return { active: registry.activeEpochId(), unlocked: registry.epochIsActive(epoch) };
     }, E10),
   ).toEqual({ active: E10, unlocked: true });
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('T10 THE CHARTER PRESS: the E10 science ceiling opens the existing River finale and idle opens nothing', async ({ page }, info) => {
+  test.setTimeout(120_000);
+  const errors = watchErrors(page);
+  await seed(page, { epochId: E10, scienceSteps: 23 });
+  await openSchoolhouse(page);
+
+  const door = page.getByTestId('t10-charter-press-door');
+  await expect(door).toHaveAttribute('data-door-state', 'needs-science');
+  await expect(door).toContainText('1 more science');
+  await expect(page.getByTestId('open-charter-press')).toHaveCount(0);
+  await page.waitForTimeout(1_000);
+  await expect(page.getByTestId('e10-finale-layer')).toHaveCount(0);
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E10);
+
+  await page.evaluate(
+    ({ key }) => {
+      const state = JSON.parse(localStorage.getItem(key) ?? '{}');
+      localStorage.setItem(key, JSON.stringify({ ...state, steps: 24 }));
+    },
+    { key: profileDataKey('robin', researchStateKey(E10)) },
+  );
+  await page.reload();
+  await openSchoolhouse(page);
+  await expect(door).toHaveAttribute('data-door-state', 'needs-research');
+  await expect(page.getByTestId('open-charter-press')).toHaveCount(0);
+
+  await page.evaluate(
+    ({ key }) => {
+      const state = JSON.parse(localStorage.getItem(key) ?? '{}');
+      localStorage.setItem(key, JSON.stringify({ ...state, taken: ['charter_press'] }));
+    },
+    { key: profileDataKey('robin', researchStateKey(E10)) },
+  );
+  await page.reload();
+  await openSchoolhouse(page);
+  await expect(door).toHaveAttribute('data-door-state', 'ceremony-ready');
+  await expect(page.getByTestId('epoch-megaproject-door')).toHaveCount(0);
+  await shot(page, info, 't10-door-ready');
+
+  await page.getByTestId('schoolhouse-close').click();
+  await page.getByTestId('town-exit').click();
+  await page.evaluate(() => history.replaceState(null, '', '/?terrain2d'));
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.teleport(13.6, 5.3));
+  await expect(page.getByTestId('open-charter-press-site')).toHaveCount(0);
+
+  await page.getByTestId('town-exit').click();
+  await page.evaluate(() => history.replaceState(null, '', '/'));
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.waitForFunction(() => document.querySelector('canvas')?.dataset.town3dEraPropIds?.split(',').includes('e10-charter-press-northeast'), null, {
+    timeout: 30_000,
+  });
+  await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.teleport(13.6, 5.3));
+  await expect(page.getByTestId('open-charter-press-site')).toBeVisible();
+  await page.evaluate(async () => {
+    const { Balance } = (await Function('return import("/src/game/Balance.ts")')()) as typeof import('../src/game/Balance');
+    const finale = Balance.e10Finale as { reinkSeconds: number; offerDelaySeconds: number };
+    finale.reinkSeconds = 0.05;
+    finale.offerDelaySeconds = 0;
+  });
+  const playerBeforeFinale = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.player);
+  await page.getByTestId('open-charter-press-site').click();
+  await expect(page.getByTestId('e10-finale-layer')).toContainText('THE RE-INKING');
+  await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+  await page.keyboard.down('KeyA');
+  await page.waitForTimeout(300);
+  await page.keyboard.up('KeyA');
+  expect(await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.player)).toEqual(playerBeforeFinale);
+  await page.keyboard.press('Escape');
+  await expect(page.getByTestId('e10-river-lever')).toBeVisible();
+  await shot(page, info, 't10-four-hands-one-lever');
+  expect(await page.evaluate((key) => localStorage.getItem(key), ACTIVE_EPOCH_KEY)).toBe(E10);
+
+  await page.getByTestId('e10-river-lever').click();
+  await page.waitForURL((url) => url.searchParams.get('contract') === 'the-claim' && url.searchParams.has('nowaves'));
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await expect(page.getByTestId('contract-briefing-name')).toHaveText('The River');
   expect(errors).toEqual({ console: [], page: [] });
 });
 
