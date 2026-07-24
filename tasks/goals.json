@@ -927,13 +927,14 @@
       },
       {
        "id": "rf-05-fixed-version",
-       "title": "RF-05 The fixed version @ agenttown.app (tag + owner-gated deploy)",
+       "title": "RF-05 The fixed version @ agenttown.app \u2014 preview iterating (blessing round 3 pending the P0); tag+wiring = owner",
        "status": "planned"
       },
       {
        "id": "rf-05b-physical-frontier",
        "title": "RF-05b THE PHYSICAL FRONTIER build \u2014 RUNNING (lane-b): E2+ excluded, debug stripped, imports clamp, boot re-check",
-       "status": "building"
+       "status": "merged",
+       "mergeHash": "5fc2c645ae6d9bcc1e4f6ca561e5ac3220b1763c"
       },
       {
        "id": "rf-05c-town-boot",
@@ -941,6 +942,23 @@
        "status": "merged",
        "mergeHash": "7ecaf8a906e1a070753865c4462881a437cbcb2e",
        "taskFile": "lane-release-town-fix.md"
+      },
+      {
+       "id": "rf-05c-town-fix",
+       "title": "RF-05c release town boots (dispatch counts data-derived)",
+       "status": "merged",
+       "mergeHash": "34eaedfd876492833a6ebec0390e431e60eeab09"
+      },
+      {
+       "id": "rf-05d-fixes-2",
+       "title": "RF-05d white townsfolk + dry spring (P0, RUNNING attempt 2)",
+       "status": "building"
+      },
+      {
+       "id": "rf-06-town-scale",
+       "title": "Town scale 1.5x + THE SPYGLASS zoom (owner-veto open on the number)",
+       "status": "merged",
+       "mergeHash": "0197046c829b5f5324e59dd230d8ca547387d95f"
       }
      ]
     }
