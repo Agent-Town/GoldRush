@@ -17,10 +17,12 @@ import {
 
 export default defineConfig(() => {
   const releaseE1 = process.env.GR_RELEASE === 'e1';
+  const buildVariant = process.env.GR_BUILD_VARIANT ?? (releaseE1 ? 'e1-preview' : 'dev');
   return {
   base: './',
   define: {
     __APP_BUILD__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA?.slice(0, 8) ?? 'dev'),
+    __APP_BUILD_VARIANT__: JSON.stringify(buildVariant),
     __GR_RELEASE_E1__: JSON.stringify(releaseE1),
   },
   plugins: [releaseE1ContentPlugin(releaseE1), craftingQueuePlugin()],

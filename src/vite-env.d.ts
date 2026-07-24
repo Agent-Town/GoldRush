@@ -4,6 +4,8 @@ declare const __GR_RELEASE_E1__: boolean;
 
 declare const __APP_BUILD__: string;
 
+declare const __APP_BUILD_VARIANT__: string;
+
 type GrBuildableId = any;
 type GrStorySignal = import('./story').RuntimeStorySignal;
 type GrRunEndedEvent = Extract<import('./core/EventBus').GameEvent, { type: 'run_ended' }>;

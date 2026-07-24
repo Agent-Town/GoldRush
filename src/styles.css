@@ -2018,15 +2018,20 @@ body:has(.gr-profile-title) #touch-controls {
   }
 }
 
-.complaint-desk {
+.complaint-desk.town-ui__board-shell {
   position: fixed;
   inset: 0;
   z-index: 30;
   display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
   width: min(780px, calc(100vw - 28px));
+  height: min(760px, calc(100vh - 28px));
+  height: min(760px, calc(100dvh - 28px));
   max-height: min(760px, calc(100vh - 28px));
+  min-height: 0;
+  box-sizing: border-box;
   margin: auto;
-  overflow: auto;
+  overflow: hidden;
   border: 2px solid var(--at-wood-950);
   border-radius: 8px;
   color: var(--at-wood-950);
@@ -2100,9 +2105,18 @@ body:has(.gr-profile-title) #touch-controls {
 
 .complaint-desk__body {
   display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 0;
+}
+
+.complaint-desk__fields {
+  display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(220px, 0.72fr);
+  align-content: start;
   gap: 12px;
-  padding: 16px 18px 20px;
+  min-height: 0;
+  padding: 16px 18px;
+  overflow-y: auto;
 }
 
 .complaint-desk label {
@@ -2144,6 +2158,11 @@ body:has(.gr-profile-title) #touch-controls {
   background: rgba(255, 248, 232, 0.7);
 }
 
+.complaint-desk__moment--dragging {
+  outline: 3px dashed var(--at-teal-600);
+  outline-offset: -4px;
+}
+
 .complaint-desk__moment img {
   display: block;
   width: 100%;
@@ -2153,8 +2172,30 @@ body:has(.gr-profile-title) #touch-controls {
   object-fit: cover;
 }
 
-.complaint-desk__moment button {
+.complaint-desk__evidence-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
   margin-top: 8px;
+}
+
+.complaint-desk label.complaint-desk__upload {
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.complaint-desk__upload input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  clip-path: inset(50%);
+}
+
+.complaint-desk__upload-hint {
+  margin-top: 8px !important;
+  font-size: 0.78rem;
 }
 
 .complaint-desk__diagnostics,
@@ -2173,10 +2214,16 @@ body:has(.gr-profile-title) #touch-controls {
 }
 
 .complaint-desk__actions {
-  grid-column: 1 / -1;
+  position: sticky;
+  bottom: 0;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 12px 18px 14px;
+  border-top: 2px solid rgba(46, 27, 14, 0.58);
+  background: var(--at-sand-100);
+  box-shadow: 0 -8px 16px rgba(46, 27, 14, 0.12);
 }
 
 .complaint-desk__status {
@@ -2189,12 +2236,15 @@ body:has(.gr-profile-title) #touch-controls {
 .complaint-desk[data-state="declined"] .complaint-desk__status { color: #7f2633; }
 
 @media (max-width: 620px) {
-  .complaint-desk {
-    width: calc(100vw - 20px);
-    max-height: calc(100vh - 20px);
+  .complaint-desk.town-ui__board-shell {
+    inset: max(10px, env(safe-area-inset-top)) max(10px, env(safe-area-inset-right)) max(10px, env(safe-area-inset-bottom)) max(10px, env(safe-area-inset-left));
+    width: auto;
+    height: auto;
+    max-height: none;
+    margin: 0;
   }
 
-  .complaint-desk__body,
+  .complaint-desk__fields,
   .complaint-desk__moment {
     grid-template-columns: 1fr;
   }
