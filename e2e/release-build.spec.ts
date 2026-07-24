@@ -17,6 +17,45 @@ const CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks
 const LAUNCH_KEY = 'gr.contract.launch.v1';
 const SEEDED_KEY = 'gr.release-build.seeded';
 
+test('first player creates a profile, hears Mei, opens the Book, runs the Claim, and returns to town', async ({ page }) => {
+  test.setTimeout(60_000);
+  const errors = watchErrors(page);
+  await page.addInitScript(() => {
+    if (sessionStorage.getItem('gr.release-build.first-player')) return;
+    localStorage.clear();
+    sessionStorage.clear();
+    sessionStorage.setItem('gr.release-build.first-player', '1');
+  });
+  await page.goto('/');
+  await page.getByTestId('profile-name-input').fill('Mina');
+  await page.getByTestId('profile-create').click();
+  await waitForTown(page);
+  await page.getByTestId('town-name-input').fill('Aurora Bend');
+  await page.getByTestId('town-name-submit').click();
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
+  await page.mouse.click(6, 6);
+
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.firstClaimGuide.greetingVisible)).toBe(true);
+  await page.mouse.click(6, 6);
+  await teleportToActor(page, 'newsie');
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeBark?.actorId ?? null)).toBe('newsie');
+  await teleportToBuilding(page, 'tavern');
+  await page.getByTestId('town-open-board').click();
+  await expect(page.getByTestId('contract-board')).toBeVisible();
+  if (await page.getByTestId('story-beat-card').isVisible().catch(() => false)) await page.mouse.click(6, 6);
+  await page.getByTestId('contract-launch-the-claim').click();
+  await waitForContract(page, 'the-claim');
+  if (await page.getByTestId('contract-briefing').isVisible().catch(() => false)) {
+    await page.getByTestId('contract-briefing-dismiss').click();
+  }
+  await page.keyboard.press('Escape');
+  await page.getByTestId('pause-back-to-town').click();
+  await expect(page.getByTestId('start-menu')).toBeVisible();
+  await page.getByTestId('start-menu-enter-town').click();
+  await waitForTown(page);
+  expect(errors).toEqual([]);
+});
+
 for (const contractId of CONTRACTS) {
   test(`${contractId} boots through the E1 release door`, async ({ page }) => {
     const errors = watchErrors(page);
@@ -175,6 +214,27 @@ async function waitForContract(page: Page, contractId: string): Promise<void> {
   await page.waitForFunction((id) =>
     window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === id && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10,
   contractId);
+}
+
+async function waitForTown(page: Page): Promise<void> {
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+}
+
+async function teleportToActor(page: Page, actorId: string): Promise<void> {
+  await page.evaluate((id) => {
+    const town = window.__GR_TOWN_DIAGNOSTICS__!;
+    const actor = town.actors.find((entry) => entry.id === id)!;
+    town.teleport(actor.position.x, actor.position.z);
+  }, actorId);
+}
+
+async function teleportToBuilding(page: Page, buildingId: string): Promise<void> {
+  await page.evaluate((id) => {
+    const town = window.__GR_TOWN_DIAGNOSTICS__!;
+    const building = town.buildings.find((entry) => entry.id === id)!;
+    town.teleport(building.approach.x, building.approach.z);
+  }, buildingId);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe(buildingId);
 }
 
 function watchErrors(page: Page): string[] {
