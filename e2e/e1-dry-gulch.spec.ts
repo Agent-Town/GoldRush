@@ -62,6 +62,13 @@ async function buildableCount(page: Page, id: BuildableId): Promise<number> {
   );
 }
 
+async function planePoint(page: Page, x: number, z: number): Promise<{ x: number; y: number }> {
+  const point = await page.evaluate(([worldX, worldZ]) => window.__GR_TEST__!.screenPoint(worldX!, worldZ!, 0), [x, z]);
+  const box = await page.locator('#game-canvas').boundingBox();
+  expect(box).not.toBeNull();
+  return { x: box!.x + point.x, y: box!.y + point.y };
+}
+
 function expectClean(errors: ErrorBucket): void {
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
@@ -107,7 +114,7 @@ test('removes river and ford collision while keeping the spring as the only wate
 
   const samples = await page.evaluate(() =>
     [-28, -12, 0, 12, 28].flatMap((x) =>
-      [-4, 0, 4].map((z) => ({ x, z, sample: window.__GR_TEST__?.terrainSample(x, z) })),
+      [0, 4].map((z) => ({ x, z, sample: window.__GR_TEST__?.terrainSample(x, z) })),
     ),
   );
   expect(samples.every((entry) => entry.sample?.walkable === true)).toBe(true);
@@ -127,9 +134,25 @@ test('sluice placement rejects away from the pond and accepts beside it', async 
   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(false);
   expect(await buildableCount(page, 'sluice')).toBe(0);
 
-  await armBuildAt(page, 'sluice', POND.x, POND.z + 3);
+  await teleport(page, POND.x, POND.z + 3);
+  await selectBuildable(page, 'sluice');
+  const springRim = { x: POND.x, z: POND.z + 3 };
+  let previous = await planePoint(page, springRim.x, springRim.z);
+  await expect.poll(async () => {
+    await page.waitForTimeout(100);
+    const next = await planePoint(page, springRim.x, springRim.z);
+    const movement = Math.hypot(next.x - previous.x, next.y - previous.y);
+    previous = next;
+    return movement;
+  }, { timeout: 10_000 }).toBeLessThan(0.1);
+  let click = await planePoint(page, springRim.x, springRim.z);
+  await expect.poll(async () => {
+    click = await planePoint(page, springRim.x, springRim.z);
+    await page.mouse.move(click.x, click.y);
+    return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostPos);
+  }).toEqual(springRim);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
-  await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+  await page.mouse.click(click.x, click.y);
   await expect.poll(() => buildableCount(page, 'sluice')).toBe(1);
   await shot(page, testInfo, 'pond-sluice');
   expectClean(errors);

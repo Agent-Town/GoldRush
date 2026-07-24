@@ -194,6 +194,8 @@ function continueSavedRun(): void {
     const nextSearch = new URLSearchParams(window.location.search);
     nextSearch.set('contract', suspend.contractId);
     history.pushState(null, '', `${window.location.pathname}?${nextSearch.toString()}${window.location.hash}`);
+    window.location.reload();
+    return;
   }
   startMenu?.dispose();
   startMenu = undefined;
@@ -206,8 +208,7 @@ function launchContract(contractId: string): void {
   const nextSearch = new URLSearchParams(window.location.search);
   nextSearch.set('contract', contractId);
   history.pushState(null, '', `${window.location.pathname}?${nextSearch.toString()}${window.location.hash}`);
-  teardownActiveScene();
-  startWithProfiles({ skipTitle: true });
+  window.location.reload();
 }
 
 function markFirstClaimDone(): void {
