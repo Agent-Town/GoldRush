@@ -78,8 +78,9 @@ export const MEI_WORLD_DISPATCHES: readonly MeiWorldDispatch[] = dispatchRows.ma
   };
 });
 
-if (MEI_WORLD_DISPATCHES.length !== 60) {
-  throw new Error(`Expected 60 Mei world dispatches, found ${MEI_WORLD_DISPATCHES.length}.`);
+const expectedDispatches = listEpochs().length * 6;
+if (MEI_WORLD_DISPATCHES.length !== expectedDispatches) {
+  throw new Error(`Expected ${expectedDispatches} Mei world dispatches, found ${MEI_WORLD_DISPATCHES.length}.`);
 }
 
 export function takeMeiWorldDispatch(storage: Storage | undefined = browserStorage()): MeiWorldDispatch | undefined {

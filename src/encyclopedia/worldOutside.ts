@@ -1,4 +1,6 @@
-export const worldOutsideLedgerEntryByEpoch = {
+import { listEpochs } from '../meta/ContractFamilies';
+
+const allWorldOutsideLedgerEntryByEpoch = {
   'epoch-1-frontier': 'world_outside_1',
   'epoch-2-steamworks': 'world_outside_2',
   'epoch-3-voltage': 'world_outside_3',
@@ -11,7 +13,12 @@ export const worldOutsideLedgerEntryByEpoch = {
   'epoch-10-deepsky': 'world_outside_10',
 } as const;
 
-export type WorldOutsideLedgerEntryId = (typeof worldOutsideLedgerEntryByEpoch)[keyof typeof worldOutsideLedgerEntryByEpoch];
+export type WorldOutsideLedgerEntryId = (typeof allWorldOutsideLedgerEntryByEpoch)[keyof typeof allWorldOutsideLedgerEntryByEpoch];
+
+const releasedEpochIds = new Set(listEpochs().map((epoch) => epoch.id));
+export const worldOutsideLedgerEntryByEpoch = Object.fromEntries(
+  Object.entries(allWorldOutsideLedgerEntryByEpoch).filter(([epochId]) => releasedEpochIds.has(epochId)),
+) as Partial<typeof allWorldOutsideLedgerEntryByEpoch>;
 
 // Generated from the approved ledger-page rows; citations and authoring annotations are omitted.
 const fragmentsByEra: Record<number, string[]> = {
@@ -89,18 +96,19 @@ const fragmentsByEra: Record<number, string[]> = {
 const pageUrl = new URL('../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 
 export const worldOutsideLedgerEntries = (Object.entries(worldOutsideLedgerEntryByEpoch) as Array<
-  [keyof typeof worldOutsideLedgerEntryByEpoch, WorldOutsideLedgerEntryId]
->).map(([epochId, id], index) => {
-  const fragments = fragmentsByEra[index + 1];
-  if (fragments?.length !== 5) throw new Error(`World Outside Era ${index + 1} must contain five fragments`);
+  [keyof typeof allWorldOutsideLedgerEntryByEpoch, WorldOutsideLedgerEntryId]
+>).map(([epochId, id]) => {
+  const era = listEpochs().find((epoch) => epoch.id === epochId)!.order;
+  const fragments = fragmentsByEra[era];
+  if (fragments?.length !== 5) throw new Error(`World Outside Era ${era} must contain five fragments`);
   return {
     id,
     epochId,
-    name: `The World Outside, Era ${index + 1}`,
+    name: `The World Outside, Era ${era}`,
     category: 'The Eras',
-    unlockSignal: index === 0 ? 'first-victory' : `epoch-activated:${epochId}`,
+    unlockSignal: era === 1 ? 'first-victory' : `epoch-activated:${epochId}`,
     hiddenUntilDiscovered: true,
-    spriteRef: { slot: `world-outside.era-${index + 1}`, imageUrl: pageUrl },
+    spriteRef: { slot: `world-outside.era-${era}`, imageUrl: pageUrl },
     factLines: () => fragments.slice(0, 4),
     loreLine: fragments[4],
   } as const;

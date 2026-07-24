@@ -2591,6 +2591,7 @@ function readTownStampMill(meta: MetaProgress): TownMegaproject {
 }
 
 function readTownMegaproject(epochId: string, id: string): TownMegaproject {
+  if (!listEpochs().some((epoch) => epoch.id === epochId)) return { manifest: null, project: null, visible: false };
   const manifest = loadEpoch(epochId).megaprojects.find((entry) => entry.id === id) ?? null;
   if (!manifest) return { manifest: null, project: null, visible: false };
   const storage = browserStorage();

@@ -75,7 +75,7 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
       if (source === '../../lore/world-dispatches.md?raw') return virtualWorldDispatch;
       return null;
     },
-    load(id) {
+    async load(id) {
       if (id === virtualCeremonyScripts) return `
         export const CEREMONY_SCRIPTS = [];
         export const CEREMONY_KEPT_IMAGE_EVENT = 'gr-ceremony-kept-image';
@@ -86,9 +86,12 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
         export const ceremonyStageBackdropUrl = () => null;
         export const drawCeremonyStage = () => undefined;
       `;
-      if (id === virtualWorldDispatch) return `export default ${JSON.stringify(
-        "### Ceremony postscript — T1, the Stamp Mill (E1→E2)\n*The first stamp's iron drop carries down the valley, past the bend, out over the flats.*\n",
-      )};`;
+      if (id === virtualWorldDispatch) {
+        const source = await readFile(resolve(process.cwd(), 'lore/world-dispatches.md'), 'utf8');
+        const frontier = source.match(/^## ERA 1\b[\s\S]*?(?=^## ERA 2\b)/m)?.[0];
+        if (!frontier) throw new Error('Missing Era 1 world dispatches.');
+        return `export default ${JSON.stringify(frontier)};`;
+      }
       return null;
     },
     transform(code, id) {
