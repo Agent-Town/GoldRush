@@ -17,8 +17,8 @@ const CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks
 const LAUNCH_KEY = 'gr.contract.launch.v1';
 const SEEDED_KEY = 'gr.release-build.seeded';
 
-test('first player creates a profile, hears Mei, opens the Book, runs the Claim, and returns to town', async ({ page }) => {
-  test.setTimeout(60_000);
+test('first player reaches textured town actors and places a Dry Gulch spring sluice', async ({ page }, testInfo) => {
+  test.setTimeout(150_000);
   const errors = watchErrors(page);
   await page.addInitScript(() => {
     if (sessionStorage.getItem('gr.release-build.first-player')) return;
@@ -34,6 +34,10 @@ test('first player creates a profile, hears Mei, opens the Book, runs the Claim,
   await page.getByTestId('town-name-submit').click();
   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
   await page.mouse.click(6, 6);
+  await expect.poll(() => page.evaluate(() => {
+    const actors = window.__GR_TOWN_DIAGNOSTICS__?.actors.filter((actor) => actor.visible && actor.presentation === 'full_body') ?? [];
+    return actors.length > 0 && actors.every((actor) => actor.loaded);
+  }), { timeout: 15_000 }).toBe(true);
 
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.firstClaimGuide.greetingVisible)).toBe(true);
   await page.mouse.click(6, 6);
@@ -53,6 +57,39 @@ test('first player creates a profile, hears Mei, opens the Book, runs the Claim,
   await expect(page.getByTestId('start-menu')).toBeVisible();
   await page.getByTestId('start-menu-enter-town').click();
   await waitForTown(page);
+
+  await page.evaluate(({ profileKey, scoreKey }) => {
+    const profile = JSON.parse(localStorage.getItem(profileKey) ?? '{}') as ProfileState;
+    localStorage.setItem(`${profileKey}.${profile.activeId}.${scoreKey}`, JSON.stringify([
+      { waves: 20, kills: 0, gold: 0, timeAlive: 60, at: 1, secured: true, contractId: 'the-claim', profileName: 'Mina' },
+    ]));
+  }, { profileKey: PROFILE_KEY, scoreKey: SCOREBOARD_KEY });
+  await teleportToBuilding(page, 'tavern');
+  await page.getByTestId('town-open-board').click();
+  page.once('dialog', (dialog) => dialog.accept());
+  await page.getByTestId('contract-launch-e1-dry-gulch').dispatchEvent('click');
+  await waitForContract(page, 'e1-dry-gulch');
+  if (await page.getByTestId('contract-briefing').isVisible().catch(() => false)) {
+    await page.getByTestId('contract-briefing-dismiss').click();
+  }
+  await harvestSluiceBudget(page);
+  if (await page.getByTestId('upgrade-overlay').isVisible()) {
+    await page.getByTestId('upgrade-card-0').click();
+    await expect(page.getByTestId('upgrade-overlay')).toBeHidden();
+  }
+  await moveHeroTo(page, -9, -12);
+  await moveHeroTo(page, -17.8, -12);
+  const mobile = testInfo.project.name === 'mobile-chrome';
+  await moveHeroTo(page, -17.8, mobile ? -13.1 : -15.2);
+  await page.getByTestId('hud-build').click();
+  await page.getByTestId('hud-build-tile-sluice').click();
+  const canvas = page.locator('#game-canvas');
+  await canvas.dispatchEvent('pointerdown', { clientX: 1, clientY: 1, pointerType: 'mouse', button: 0 });
+  await expect(page.getByTestId('hud-build-menu')).toBeHidden();
+  const springRim = await aimBuildGhost(page, { x: -18, z: -15 });
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid)).toBe(true);
+  await canvas.dispatchEvent('click', { clientX: springRim.x, clientY: springRim.y });
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.sluices)).toBe(1);
   expect(errors).toEqual([]);
 });
 
@@ -235,6 +272,75 @@ async function teleportToBuilding(page: Page, buildingId: string): Promise<void>
     town.teleport(building.approach.x, building.approach.z);
   }, buildingId);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe(buildingId);
+}
+
+async function harvestSluiceBudget(page: Page): Promise<void> {
+  await moveHeroTo(page, -4.5, 12);
+  await moveHeroTo(page, -4.5, -6.4);
+  await moveHeroTo(page, -2.5, -6.4);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling)).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(30);
+  await moveHeroTo(page, -4.5, -6.4);
+  await moveHeroTo(page, -4.5, 6.7);
+  await moveHeroTo(page, -9, 6.7);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling), { timeout: 10_000 }).toBe(true);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(40);
+}
+
+async function moveHeroTo(page: Page, x: number, z: number): Promise<void> {
+  const position = () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.heroPos);
+  const pressUntil = async (key: string, done: (position: { x: number; z: number }) => boolean): Promise<void> => {
+    await page.keyboard.down(key);
+    const started = Date.now();
+    try {
+      while (!done(await position())) {
+        if (Date.now() - started > 15_000) throw new Error(`Hero blocked while moving ${key}`);
+        await page.waitForTimeout(25);
+      }
+    } finally {
+      await page.keyboard.up(key);
+    }
+  };
+  let current = await position();
+  if (current.x > x + 0.12) await pressUntil('KeyA', (value) => value.x <= x + 0.12);
+  current = await position();
+  if (current.x < x - 0.12) await pressUntil('KeyD', (value) => value.x >= x - 0.12);
+  current = await position();
+  if (current.z > z + 0.12) await pressUntil('KeyW', (value) => value.z <= z + 0.12);
+  current = await position();
+  if (current.z < z - 0.12) await pressUntil('KeyS', (value) => value.z >= z - 0.12);
+}
+
+async function aimBuildGhost(page: Page, target: { x: number; z: number }): Promise<{ x: number; y: number }> {
+  const box = await page.locator('#game-canvas').boundingBox();
+  expect(box).not.toBeNull();
+  let x = box!.x + box!.width / 2;
+  let y = box!.y + box!.height / 2;
+  const sample = async (clientX: number, clientY: number) => {
+    await page.mouse.move(clientX, clientY);
+    await page.waitForTimeout(80);
+    return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.build.ghostPos);
+  };
+  for (let attempt = 0; attempt < 5; attempt += 1) {
+    const origin = await sample(x, y);
+    const across = await sample(x + 40, y);
+    const down = await sample(x, y + 40);
+    const j00 = (across.x - origin.x) / 40;
+    const j10 = (across.z - origin.z) / 40;
+    const j01 = (down.x - origin.x) / 40;
+    const j11 = (down.z - origin.z) / 40;
+    const determinant = j00 * j11 - j01 * j10;
+    if (Math.abs(determinant) < 0.00001) break;
+    const dx = target.x - origin.x;
+    const dz = target.z - origin.z;
+    x += Math.max(-180, Math.min(180, (dx * j11 - dz * j01) / determinant));
+    y += Math.max(-180, Math.min(180, (dz * j00 - dx * j10) / determinant));
+    x = Math.max(box!.x + 2, Math.min(box!.x + box!.width - 2, x));
+    y = Math.max(box!.y + 2, Math.min(box!.y + box!.height - 2, y));
+  }
+  await sample(x, y);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostPos)).toEqual(target);
+  return { x, y };
 }
 
 function watchErrors(page: Page): string[] {

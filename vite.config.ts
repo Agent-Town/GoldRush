@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import type { Plugin } from 'vite';
+import { readFileSync, readdirSync } from 'node:fs';
 import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import type { IncomingMessage } from 'node:http';
 import { resolve, sep } from 'node:path';
@@ -45,6 +46,7 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
   const virtualCeremonyScripts = '\0gold-rush-release-e1-ceremony-scripts';
   const virtualCeremonyStages = '\0gold-rush-release-e1-ceremony-stages';
   const virtualWorldDispatch = '\0gold-rush-release-e1-world-dispatch';
+  const frontierCharacterImports = enabled ? releaseE1CharacterImports() : [];
   const replacements = new Map([
     ['../../assets/contracts/*/manifest.json', '../../assets/contracts/epoch-1-frontier/manifest.json'],
     ['../../assets/contracts/*/families.json', '../../assets/contracts/epoch-1-frontier/families.json'],
@@ -136,7 +138,7 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
       ]) transformed = transformed.replaceAll(laterModel, '../../assets/pilots/run3d/palisade.glb');
       transformed = transformed.replaceAll(
         "'../../assets/processed/char-*.png'",
-        "['../../assets/processed/char-hero-sheet-*.png', '../../assets/processed/char-jumper-sheet-*.png', '../../assets/processed/char-bandit-*.png', '../../assets/processed/char-baron-sheet-*.png', '../../assets/processed/char-prospector-*.png', '../../assets/processed/char-assay-clerk-*.png', '../../assets/processed/char-preacher-*.png', '../../assets/processed/char-schoolteacher-*.png']",
+        JSON.stringify(frontierCharacterImports),
       );
       transformed = transformed.replaceAll(
         "'../../assets/audio/raw/*.mp3'",
@@ -161,6 +163,41 @@ function releaseE1ContentPlugin(enabled: boolean): Plugin {
       return transformed === code ? null : { code: transformed, map: null };
     },
   };
+}
+
+function releaseE1CharacterImports(): string[] {
+  const processedRoot = resolve(process.cwd(), 'assets/processed');
+  const characterContract = JSON.parse(
+    readFileSync(resolve(process.cwd(), 'assets/layer-contracts/characters.v2.json'), 'utf8'),
+  ) as { slots: Array<{ slot: string; [key: string]: unknown }> };
+  const townSheets = JSON.parse(
+    readFileSync(resolve(process.cwd(), 'src/town/town-actor-sheets.json'), 'utf8'),
+  ) as Record<string, string>;
+  const runtimeFrames = JSON.parse(
+    readFileSync(resolve(process.cwd(), 'src/assets/character-runtime-frames.json'), 'utf8'),
+  ) as unknown;
+  const references = new Set<string>(Object.values(townSheets).map((sheet) => `${sheet}.png`));
+  const collectPngReferences = (value: unknown): void => {
+    if (typeof value === 'string' && value.startsWith('char-') && value.endsWith('.png')) references.add(value);
+    else if (Array.isArray(value)) value.forEach(collectPngReferences);
+    else if (value && typeof value === 'object') Object.values(value).forEach(collectPngReferences);
+  };
+  characterContract.slots
+    .filter(({ slot }) => !/^char\.e(?:[2-9]|10)\./.test(slot))
+    .forEach(collectPngReferences);
+  collectPngReferences(runtimeFrames);
+
+  const contractedFiles = readdirSync(processedRoot).filter((file) =>
+    [...references].some((reference) =>
+      file === reference || file.startsWith(`${reference.slice(0, -4)}-r`) && /^.+-r\d+c\d+\.png$/.test(file),
+    ),
+  );
+  for (const sheet of Object.values(townSheets)) {
+    if (!contractedFiles.some((file) => file.startsWith(`${sheet}-r`))) {
+      throw new Error(`Frontier town actor sheet has no processed frames: ${sheet}`);
+    }
+  }
+  return contractedFiles.sort().map((file) => `../../assets/processed/${file}`);
 }
 
 function craftingQueuePlugin(): Plugin {

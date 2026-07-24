@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { RenderLayers } from '../core/RenderLayers';
 import { assetSlots, type AssetSlotId } from './slots';
+import characterRuntimeFrames from './character-runtime-frames.json' with { type: 'json' };
 
 const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
   [assetSlots.charHero]: new URL('../../assets/processed/hero-homesteader-f.png', import.meta.url).href,
@@ -24,17 +25,7 @@ const generatedAssetUrls: Partial<Record<AssetSlotId, string>> = {
   [assetSlots.terrainRiver]: new URL('../../assets/processed/terrain-river-tile.png', import.meta.url).href,
 };
 
-export const heroPoseFrameFiles = {
-  pan: {
-    s: Array.from({ length: 8 }, (_, col) => `char-hero-sheet-work8-r0c${col}.png`),
-    w: Array.from({ length: 8 }, (_, col) => `char-hero-sheet-work8-r1c${col}.png`),
-    e: [0, 1, 2, 4, 5, 6].map((col) => `char-hero-sheet-work8-r2c${col}.png`),
-    n: [0, 1, 2, 3, 4, 5, 7].map((col) => `char-hero-sheet-work8-r3c${col}.png`),
-  },
-  attack: {
-    e: [0, 2, 3, 4, 6, 7].map((col) => `char-hero-sheet-attack8-r2c${col}.png`),
-  },
-} as const;
+export const heroPoseFrameFiles = characterRuntimeFrames.heroPoseFrameFiles;
 const generatedAssetUrlLoaders: Partial<Record<AssetSlotId, () => Promise<string>>> = {
   [assetSlots.charBaron]: () => import('../../assets/processed/char-baron-sheet-walk8-r0c0.png?url').then((module) => module.default),
   [assetSlots.charTownTavernkeeper]: () => import('../../assets/processed/townsfolk-tavernkeeper.png?url').then((module) => module.default),
