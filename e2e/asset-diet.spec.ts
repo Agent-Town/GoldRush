@@ -1,6 +1,5 @@
 // Measures the built, dieted production bundle; Vite's dev server serves undieted originals.
-// Run: npm run build && npm run preview -- --port 5188
-// Then, in another shell: GR_CAPTURE_EXTERNAL_SERVER=1 npx playwright test e2e/asset-diet.spec.ts --workers=1
+// Run: npm run test:asset-diet
 
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -10,7 +9,7 @@ import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type 
 
 const ARTIFACT_DIR = path.resolve('artifacts/asset-diet');
 const MAPS = [{ id: 'the-claim', era: 1 }, { id: 'e1-dry-gulch', era: 1 }] as const;
-const BUILT_BUNDLE_ONLY = 'asset diet measures the BUILT bundle; run: npm run build && npm run preview -- --port 5188, then GR_CAPTURE_EXTERNAL_SERVER=1 npx playwright test e2e/asset-diet.spec.ts --workers=1';
+const BUILT_BUNDLE_ONLY = 'asset diet measures the BUILT bundle; run: npm run test:asset-diet';
 
 if (process.env.GR_CAPTURE_EXTERNAL_SERVER !== '1') console.warn(`[asset-diet] SKIPPED: ${BUILT_BUNDLE_ONLY}`);
 test.skip(process.env.GR_CAPTURE_EXTERNAL_SERVER !== '1', BUILT_BUNDLE_ONLY);
