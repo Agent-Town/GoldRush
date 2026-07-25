@@ -151,31 +151,44 @@ DONE_TAIL=$(printf '%s' "$DONE_TAIL" | esc)
 
 
 # --- All-time task statistics (owner-requested 2026-07-19: token + duration fun stats) ---
+# s1031 (F-1028-2): this block used to iterate tasks/runs/*.log — the very files lane-runner-v3.sh:117
+# prunes with "-mtime +3 -delete". The figure labelled ALL-TIME was therefore really "the last ~3 days
+# of logs that happened to survive pruning", and it would SHRINK over time. logs/task-stats.jsonl is the
+# durable, TRACKED ledger (upserted once per run since dc6c8196); it exists precisely to outlive that
+# prune, and it is what ALL-TIME has to mean. Same fields, same arithmetic — only the SOURCE moved.
+# A missing ledger says so loudly rather than quietly reporting a smaller number (F-1028-1's lesson:
+# a silently degraded figure is indistinguishable from a real one).
 STATS_TABLE=""
 TOT_RUNS=0; TOT_TOK=0; TOT_MIN=0
 STATS_TMP=$(mktemp)
-for f in tasks/runs/*.log; do
-  [ -e "$f" ] || continue
-  base=$(basename "$f" .md.log); base=${base%.log}
-  ts=$(echo "$base" | grep -oE '^[0-9]{8}-[0-9]{6}') || true
-  start_epoch=""
-  [ -n "$ts" ] && start_epoch=$(date -j -f "%Y%m%d-%H%M%S" "$ts" +%s 2>/dev/null || true)
-  end_epoch=$(stat -f %m "$f" 2>/dev/null || echo "")
-  mins=""
-  if [ -n "$start_epoch" ] && [ -n "$end_epoch" ] && [ "$end_epoch" -ge "$start_epoch" ]; then
-    mins=$(( (end_epoch - start_epoch) / 60 ))
-  fi
-  tok=$(grep -A1 "tokens used" "$f" 2>/dev/null | tail -1 | tr -d ', ' | grep -E '^[0-9]+$' || echo "")
-  name=$(echo "$base" | sed 's/^[0-9]\{8\}-[0-9]\{6\}-//' | cut -c1-46)
-  TOT_RUNS=$((TOT_RUNS+1))
-  [ -n "$tok" ] && TOT_TOK=$((TOT_TOK+tok))
-  [ -n "$mins" ] && TOT_MIN=$((TOT_MIN+mins))
-  printf '%s|%s|%s\n' "${tok:-0}" "${mins:-0}" "$name" >> "$STATS_TMP"
-done
+python3 - <<'PYSTATS' > "$STATS_TMP"
+import json
+try:
+    lines = open('logs/task-stats.jsonl', errors='ignore').read().splitlines()
+except OSError:
+    lines = []
+for line in lines:
+    line = line.strip()
+    if not line:
+        continue
+    try:
+        r = json.loads(line)
+    except Exception:
+        continue
+    name = '{}-{}'.format(r.get('lane', '?'), r.get('task', '?'))[:46]
+    print('{}|{}|{}'.format(int(r.get('tokens') or 0), int(r.get('minutes') or 0), name))
+PYSTATS
+TOT_RUNS=$(awk 'END{print NR+0}' "$STATS_TMP")
+TOT_TOK=$(awk -F'|' '{s+=$1} END{print s+0}' "$STATS_TMP")
+TOT_MIN=$(awk -F'|' '{s+=$2} END{print s+0}' "$STATS_TMP")
 TOP_TOK=$(sort -t'|' -k1 -rn "$STATS_TMP" | head -8 | awk -F'|' '{printf "  %-48s %10'"'"'d tok  %5d min\n", $3, $1, $2}')
 TOP_MIN=$(sort -t'|' -k2 -rn "$STATS_TMP" | head -8 | awk -F'|' '{tag=($1==0)?"  (zombie/no-op — not a real run)":""; printf "  %-48s %10'"'"'d tok  %5d min%s\n", $3, $1, $2, tag}')
 rm -f "$STATS_TMP"
-STATS_TABLE=$(printf 'ALL-TIME: %d task runs · %d hours %d min of implementer time · %'"'"'d tokens consumed (codex-reported)\n\nTHE HUNGRIEST (tokens):\n%s\n\nTHE LONGEST (wall clock):\n%s' "$TOT_RUNS" $((TOT_MIN/60)) $((TOT_MIN%60)) "$TOT_TOK" "$TOP_TOK" "$TOP_MIN")
+if [ "$TOT_RUNS" -eq 0 ]; then
+  STATS_TABLE='ALL-TIME: UNAVAILABLE — logs/task-stats.jsonl (the durable run ledger) is missing or empty. This is a missing source, not a zero.'
+else
+  STATS_TABLE=$(printf 'ALL-TIME: %d task runs · %d hours %d min of implementer time · %'"'"'d tokens consumed (codex-reported; source: logs/task-stats.jsonl, the durable ledger — outlives the 3-day log prune)\n\nTHE HUNGRIEST (tokens):\n%s\n\nTHE LONGEST (wall clock):\n%s' "$TOT_RUNS" $((TOT_MIN/60)) $((TOT_MIN%60)) "$TOT_TOK" "$TOP_TOK" "$TOP_MIN")
+fi
 STATS_TABLE=$(printf '%s' "$STATS_TABLE" | esc)
 
 # auto-refresh the census in the background when stale (>6h); render the last stamp meanwhile
