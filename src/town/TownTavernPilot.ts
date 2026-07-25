@@ -38,6 +38,23 @@ const PROP_MODEL_URLS = {
   water_trough: new URL('../../assets/pilots/plaza-props-3d/water_trough.glb', import.meta.url).href,
   pan_monument: new URL('../../assets/pilots/plaza-props-3d/pan_monument.glb', import.meta.url).href,
 } as const;
+
+export function townPrefetchUrls(): string[] {
+  const activeEra = activeEpoch().order;
+  const eraProps = townEraPropsForOrder(activeEra)
+    .map(({ glb }) => BUNDLED_VARIANT_URLS[`../../assets/pilots/plaza-props-3d/${glb}`])
+    .filter((url): url is string => !!url);
+  const models = Object.entries(MODEL_PATHS)
+    .filter(([id]) => id !== 'stamp-mill' && id !== 'dynamo_hall')
+    .map(([, paths]) => eraCandidates(paths)[0]!.url);
+  const props = Object.entries(PROP_MODEL_URLS).map(([kind, base]) =>
+    Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) =>
+      BUNDLED_VARIANT_URLS[`../../assets/pilots/plaza-props-3d/${kind}.e${activeEra - index}.glb`],
+    ).find((url) => !!url) ?? base,
+  );
+  return [...new Set([TOWN_PLATE_MODEL_URL, ...models, ...props, ...eraProps])];
+}
+
 const MAX_TRIANGLES = 15_000;
 const MAX_MATERIALS = 1;
 const BOUNDS_EPSILON = 0.06;

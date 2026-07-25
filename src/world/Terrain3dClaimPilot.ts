@@ -157,6 +157,19 @@ const REGISTRY: Record<string, Entry> = {
   }),
 };
 const LANDMARK_ASSETS = import.meta.glob('../../assets/pilots/map-rebuild-spike/landmarks/**/*.glb', { query: '?url', import: 'default' }) as Record<string, () => Promise<string>>;
+
+export async function contractPrefetchUrls(contractId: string): Promise<string[]> {
+  const selected = REGISTRY[contractId];
+  if (!selected) return [];
+  const landmarks = await Promise.all(
+    (selected.contract.landmarkMounts ?? [])
+      .flatMap(({ asset }) => asset ? [LANDMARK_ASSETS[`../../assets/pilots/map-rebuild-spike/${asset}`]] : [])
+      .filter((resolveUrl): resolveUrl is () => Promise<string> => !!resolveUrl)
+      .map((resolveUrl) => resolveUrl().catch(() => '')),
+  );
+  return [...new Set([selected.terrainUrl, selected.panoramaUrl, ...landmarks.filter(Boolean)])];
+}
+
 const BOUNDS_EPSILON = 0.03;
 const CONTINUATION_SAMPLE_DEPTH = 8;
 const LEGACY_GROUND_SLOTS = new Set(['terrain.bank', 'terrain.river', 'terrain.ford']);

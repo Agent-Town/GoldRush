@@ -49,7 +49,9 @@ export function createAssetLoadingCue(): HTMLElement {
 export function syncAssetLoadingCue(canvas: HTMLCanvasElement, cue: HTMLElement): void {
   const ready = Number(canvas.dataset.assetLoadingReady ?? 0);
   const total = Number(canvas.dataset.assetLoadingTotal ?? 0);
-  const visible = canvas.dataset.assetLoadingState === 'loading' && total > ready;
+  const townAlreadyWarm =
+    canvas.dataset.assetLoadingLabel === 'the town' && canvas.dataset.assetPrefetchTownState === 'ready';
+  const visible = !townAlreadyWarm && canvas.dataset.assetLoadingState === 'loading' && total > ready;
   cue.hidden = !visible;
   if (!visible) return;
   const text = `${canvas.dataset.assetLoadingLabel ?? 'the claim'} is raising… ${ready}/${total}`;

@@ -1,5 +1,6 @@
 import './styles.css';
 import './ui/theme.css';
+import { createAdvanceStream } from './assets/AdvanceStream';
 import { markStartupFrameReady, prefetchNonCriticalGeneratedTextures } from './assets/generated';
 import { accountSync } from './game/AccountSync';
 import { applyStoredDifficultyPreset } from './game/Balance';
@@ -29,6 +30,7 @@ if (!canvas) {
   throw new Error('Missing #game-canvas element.');
 }
 const gameCanvas = canvas;
+const advanceStream = createAdvanceStream(gameCanvas);
 
 if (__GR_RELEASE_E1__) {
   const url = new URL(window.location.href);
@@ -111,6 +113,7 @@ async function startGame(): Promise<void> {
   if (__GR_RELEASE_E1__) reconcileActiveEpoch();
   reverifyStagedContractLaunch();
   seedDebugEraFromSearch(gameCanvas);
+  advanceStream.enter({ kind: 'run', contractId: activeContract().id });
   const currentSearch = new URLSearchParams(window.location.search);
   const { Game } = await import('./game/Game');
   applyStoredDifficultyPreset();
@@ -134,6 +137,7 @@ async function startGame(): Promise<void> {
 }
 
 function startWithProfiles(options: { showTitle?: boolean; skipTitle?: boolean; onBack?: () => void } = {}): void {
+  advanceStream.pause();
   profiles?.dispose();
   profiles = installProfiles(() => startGame(), {
     showTitle: options.showTitle,
@@ -163,10 +167,12 @@ function showStartMenu(): void {
       onOpenLedger: () => openClaimLedger(),
       onProfile: () => openProfilesFromStartMenu(),
     });
+    advanceStream.enter({ kind: 'menu' });
   });
 }
 
 function openProfilesFromStartMenu(): void {
+  advanceStream.pause();
   const menuRoot = document.querySelector<HTMLElement>('[data-testid="start-menu"]');
   menuRoot?.setAttribute('inert', '');
   menuRoot?.setAttribute('aria-hidden', 'true');
@@ -178,6 +184,7 @@ function openProfilesFromStartMenu(): void {
     startMenu?.refresh();
     menuRoot?.removeAttribute('inert');
     menuRoot?.removeAttribute('aria-hidden');
+    advanceStream.enter({ kind: 'menu' });
     menuRoot?.querySelector<HTMLButtonElement>('[data-testid="start-menu-profile"]')?.focus({ preventScroll: true });
   };
   profiles?.dispose();
@@ -188,6 +195,7 @@ function openProfilesFromStartMenu(): void {
 }
 
 function continueSavedRun(): void {
+  advanceStream.pause();
   const suspend = readRunSuspend();
   if (suspend?.contractId) {
     stagePlayerContractLaunch(suspend.contractId);
@@ -203,6 +211,7 @@ function continueSavedRun(): void {
 }
 
 function launchContract(contractId: string): void {
+  advanceStream.pause();
   markFirstClaimDone();
   stagePlayerContractLaunch(contractId);
   const nextSearch = new URLSearchParams(window.location.search);
@@ -253,6 +262,7 @@ function returnToStartMenu(): void {
 }
 
 function teardownActiveScene(): void {
+  advanceStream.pause();
   const parts = [
     ['town', town],
     ['game', game],
@@ -313,6 +323,7 @@ if (!__GR_RELEASE_E1__ && initialSearch.get('bench') === 'fullbase') {
 function openTown(options: { openBoard?: boolean; returnResult?: RunReturnResult; initialBoardContractId?: string } = {}): void {
   applyStoredPerformanceTier(null);
   markStartupFrameReady();
+  advanceStream.enter({ kind: 'town' });
   void import('./town/TownScene').then(({ TownScene }) => {
     if (game || profiles) return;
     town?.dispose();
@@ -374,6 +385,7 @@ if (import.meta.hot) {
   import.meta.hot.dispose(() => {
     uninstallClaimLedgerRequest();
     uninstallBuildFreshness();
+    advanceStream.dispose();
     startMenu?.dispose();
     profiles?.dispose();
     assayBench?.dispose();
