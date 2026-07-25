@@ -995,9 +995,17 @@
     {
      "id": "m1-m2-resource-guards",
      "title": "THE TWO RED GUARDS ON MAIN \u2014 m1-01:70 geometry leak (77\u219287 across a double restart) + m2-01:322 draw-call ceiling; pre-existing, proven by three-point bisect (F-1026-5)",
-     "status": "running",
+     "mergeHash": "d93b1505bf87bfb3c439a6a9d11ff0a295a6dc7f",
+     "status": "merged",
      "taskFile": "lane-m1-m2-resource-guards.md",
-     "note": "s1027: attempt 1 (10:58) was an HONEST NO-OP \u2014 a paraphrased pre-flight bricked it before it began (F-1027-1), zero diff, reason written. Master's pre-flight replaced with the verbatim SAFE-DUPE template + the proof that lane/m3's tip 6be3964c is a merged dupe of 0dfa1d3f; re-queued 04:34Z, runner picked it up within 2 min. This is effectively attempt 1 of the real task."
+     "note": "s1029 DRAINED. M1 CLOSED at the source: the 77\u219287 was never a leak \u2014 it was ASYNC UPLOAD measured too early (2 rails replacing old geometries = net +8, plus freedAccent/runDust = +2). warmVfx now awaits terrain mount + warms the combat pools before the baseline is read; m1-01 8/8 both projects with the expected numbers UNTOUCHED (only src/game/Game.ts changed, so that is provable). M2 diagnose-only, the master's authorized outcome \u2014 and verified by me, not taken on report: m2-01:322 never reaches its draw-call assert at all, it times out at the placeSelected helper (spec:84) on ghostValid=false because the fixture's (-6,16) sits inside the working-camp footprint. Real numbers at valid terrain are 184 desktop / 131 mobile vs the 200 ceiling \u2014 the ceiling HOLDS, the fixture is wrong. Corrective lane-m2-01-fixture-coordinate.md queued (F-1029-2). Review reviews/m1-m2-resource-guards.md."
+    },
+    {
+     "id": "m2-01-fixture-coordinate",
+     "title": "F-1029-2: m2-01:322 has never tested its 200-call ceiling — the fixture's first palisade (-6,16) sits in the working-camp collision footprint, so ghostValid never goes true and the assertion is unreachable",
+     "status": "queued",
+     "taskFile": "lane-m2-01-fixture-coordinate.md",
+     "note": "s1029 FIRE-AUTHORED from the s1029 drain's own verification (placeSelected timeout at spec:84, not the draw-call assert). Codex measured 184 desktop / 131 mobile at valid terrain z=20 vs the 200 ceiling — the ceiling holds, the fixture is wrong. Master forbids editing the ceiling and requires the honest per-project number."
     },
     {
      "id": "mobile-overlay-input",

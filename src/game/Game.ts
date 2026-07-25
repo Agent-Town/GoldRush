@@ -1761,9 +1761,11 @@ export class Game {
         setBlastAim: (x: number, z: number) => this.setBlastAimForTest(x, z),
         setDifficultyPreset: (preset: string) => this.setDifficultyPreset(preset),
         warmVfx: () =>
-          Promise.all([this.vfx.warm(this.localActor.group.position), this.enemies.warmHitFlashes(this.localActor.group.position)]).then(
-            () => undefined,
-          ),
+          this.waitForTerrainWarmup().then(() => Promise.all([
+            this.vfx.warm(this.localActor.group.position),
+            this.enemies.warmHitFlashes(this.localActor.group.position),
+            this.warmCombatPools(),
+          ])).then(() => undefined),
         clearScores: () => clearScores(),
         setBalance: (path: string, value: number | boolean | string) => setBalance(path, value),
         grantGold: (n: number) => {
@@ -4482,6 +4484,48 @@ export class Game {
     this.frameMsAvg = 0;
     this.frameMsP95 = 0;
     this.renderCollapseSeconds = 0;
+  }
+
+  private waitForTerrainWarmup(): Promise<void> {
+    return new Promise((resolve) => {
+      const check = () => {
+        if (this.canvas.dataset.terrain3dPilotState === 'loading') {
+          requestAnimationFrame(check);
+          return;
+        }
+        requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+      };
+      check();
+    });
+  }
+
+  private warmCombatPools(): Promise<void> {
+    const position = this.localActor.group.position.clone();
+    const enemy = this.enemies.spawn(position, { activationDelay: 1 });
+    const freedBefore = window.__THREE_GAME_DIAGNOSTICS__?.freedWalkers?.spawned ?? 0;
+    if (enemy) this.combat.presentFreedEnemy(enemy);
+    const freedSpawned = (window.__THREE_GAME_DIAGNOSTICS__?.freedWalkers?.spawned ?? freedBefore) > freedBefore;
+    this.xpMotes.spawn(position.setX(position.x + 10), 0);
+    return new Promise((resolve) => {
+      const finish = () => {
+        const freedReady = !freedSpawned || window.__THREE_GAME_DIAGNOSTICS__?.freedWalkers?.entities.some(
+          (entry) => entry.active && entry.age > Balance.legibility.freedRunDelaySeconds,
+        ) === true;
+        if (
+          generatedAssetStatuses()[assetSlots.charBanditBase] === 'pending'
+          || !freedReady
+        ) {
+          requestAnimationFrame(finish);
+          return;
+        }
+        requestAnimationFrame(() => {
+          if (enemy) this.enemies.recycle(enemy);
+          this.combat.reset();
+          requestAnimationFrame(() => resolve());
+        });
+      };
+      requestAnimationFrame(finish);
+    });
   }
 
   secureWaveForRun(): number {
