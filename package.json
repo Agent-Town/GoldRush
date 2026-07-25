@@ -14,6 +14,8 @@
     "test:accounts": "node scripts/test-accounts.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
     "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
+    "test:deploy-contract": "bash scripts/test-deploy-contract.sh",
+    "test:deploy-site-contract": "bash scripts/test-deploy-site-contract.sh",
     "verify:visual": "playwright test e2e/visual.spec.ts",
     "test:preview": "playwright test --config playwright.preview.config.ts",
     "test:release": "playwright test --config playwright.release.config.ts",
