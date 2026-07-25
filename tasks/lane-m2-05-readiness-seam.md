@@ -1,7 +1,17 @@
 # lane-m2-05-readiness-seam — sample the renderer when it is settled, not mid-race
 
-**FIRE-AUTHORED s1032 (attended review welcome).**
+**FIRE-AUTHORED s1032, REFRESHED s1033 (attended review welcome).**
 **Role:** Codex runner, lane-c. **Workdir:** `worktrees/lane-c` (branch `lane/e2-arsenal`).
+
+> **ATTEMPT 2, WITH A CHANGED PREMISE (CLAUDE.md §7.5 — an identical retry would be forbidden).**
+> Attempt 1 (`tasks/runs/20260725-140651-lane-c-*.log`) **stopped before any edit and was RIGHT to**:
+> it measured desktop-isolated failing on **geometry `94→95`**, while scope-1's table predicted
+> **calls `89→92`** for that shape, and the master told it to stop on a mismatch. **The fault was the
+> table, not the run** — s1032 transposed the desktop isolated and in-suite shapes (`89` is the
+> *in-suite* baseline). s1033 re-verified against `reviews/m2-01-fixture-coordinate.md:106-117` and
+> corrected it below. **Attempt 1's measurement actually CONFIRMS this master's premise** — geometry
+> `+1` isolated on clean main is exactly race (1). Nothing in WHY, SCOPE 2-5 or the FIREWALL changed.
+> The scope-1 stop clause is now keyed to the root-cause **class**, not to exact repeat counts.
 
 ## READ FIRST (paths, in this order)
 - `reviews/m2-05-wreck-repair-drift.md` — the s1032 drain that produced this task's entire premise.
@@ -30,8 +40,9 @@ There are two races, and the guard samples both of them mid-flight:
    seconds (`Vfx.ts:20`), plus `ProspectorSpriteFade`. The `after` snapshot is taken the instant the
    third repair resolves — **while they are still up**.
 
-**The asymmetry that proves it, at file:line:** `baseline` is sampled after
-`await waitForSim(page, 0.5)` (`:328`), but `after` (`:343`) has **no settle wait at all**. The test
+**The asymmetry that proves it, at file:line:** `baseline` (`:330`) is sampled after
+`await waitForSim(page, 0.5)` (**`:329`** — s1032 cited `:328`, off by one; s1033 re-probed it), but
+`after` (`:343`) has **no settle wait at all**. The test
 compares a partly-settled frame against a completely unsettled one and calls the difference a leak.
 
 **The engine already knows this is wrong.** `Game.ts:4426` refuses to score runtime performance
@@ -44,11 +55,29 @@ gate). The fix is not in `src/`.
 
 ## SCOPE (numbered, each testable)
 1. **Reproduce on clean main first, before any edit.** Both projects, **isolated AND in-suite**, at
-   `--workers=1 --repeat-each=3`. Report the pass/fail count for each of the four shapes. Expect
-   roughly: desktop isolated calls `89→92` ~2/3, mobile isolated calls `65→68/70/69` ~3/3, desktop
-   full-file geometry `94→95` ~1/3, mobile full-file calls ~2/3. **If your numbers disagree with
-   that table, say so plainly and stop to report** — a changed failure signature means the premise
-   moved and this master is stale.
+   `--workers=1 --repeat-each=3`. Report the pass/fail count for each of the four shapes.
+
+   **The measured record (s1033 CORRECTED this table — the s1032 edition had the two desktop shapes
+   transposed, which tripped its own stop clause and cost a lane cycle; see F-1033-1).** Sources:
+   `reviews/m2-01-fixture-coordinate.md:106-117` (s1030's instrumented re-run, the durable record)
+   and the s1033 clean-main run in `tasks/runs/20260725-140651-lane-c-*.log`:
+
+   | Shape | Fails at | Reading | Repeatability |
+   |---|---|---|---|
+   | **desktop isolated** | **:348** `geometries` `toBe` | baseline **94** → **95** (**+1**) | s1030 2/2; s1033 **2/3** |
+   | **desktop in-suite** | **:349** `calls` ≤ base+2 | baseline **89** → **93** | s1030, order-dependent |
+   | **mobile isolated** | **:349** `calls` ≤ base+2 | expected **≤69**, received **70** (**+3**) | s1030 1/2, 1/3 — intermittent |
+   | **mobile in-suite** | — | **UNMEASURED** — no fire has recorded this shape | report what you find |
+
+   Note the baseline itself moves with test order (**94 isolated vs 89 in-suite**), which is *why*
+   which line trips changes between shapes. That is expected, not a new defect.
+
+   **STOP-and-report ONLY if the root-cause CLASS has moved**, i.e. any of: (a) desktop isolated
+   fails at neither `:348` nor `:349`; (b) the geometry drift is anything other than **+1**; (c) the
+   guard reproduces on **neither** project across all shapes (nothing left to fix — say so and stop);
+   or (d) a failure appears that neither of the two races in WHY can explain. **Differing repeat
+   counts, and which of the two lines trips in a given shape, are KNOWN wobble on this guard — record
+   them and PROCEED.** Do not stop over a 2/3-vs-2/2.
 2. **Fix the baseline snapshot: wait for Run3d to reach a terminal state.** Terminal states written
    by `Run3dPilot.ts:25` are **`ready`**, **`lite`** and **`failed`**; `loading` is the only
    non-terminal one. Use the existing pattern from `run3d-turret.spec.ts:61`
@@ -94,18 +123,24 @@ commit's content is NOT on main (undrained work — resetting would DESTROY it),
 uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green
 before touching anything.
 
-**Pre-proved for you (s1032, so you need not spend budget on it):** `lane/e2-arsenal`'s tip
-`c07f749a` is a **single file, `reviews/shots-m2-05-drift/repaired-beacon-three-cycles.png`, 0
-insertions 0 deletions of code** (`git show c07f749a --stat`) — the diagnostic run's screenshot,
-which **s1032 merged to main in this same fire**. Zero lane-unique code. It is therefore a
-**SAFE DUPE** — confirm, then proceed.
+**Pre-proved for you (s1033 re-verified this from scratch — the s1032 edition described a tip that
+attempt 1 has since replaced):** attempt 1 already refreshed the lane, so `lane/e2-arsenal` now sits
+at **`d9eb4253`** with **zero commits ahead of main** (`git log main..lane/e2-arsenal` = empty) and
+its tip is a **strict ancestor of main** (`git merge-base --is-ancestor` = true). There is no
+undrained lane work to destroy and nothing to classify — the pre-flight is trivially safe. Proceed.
+*(Honest limit: the lane worktree's uncommitted-dirt state was NOT independently probed this fire —
+`git --git-dir/--work-tree` is permission-gated for fires. Attempt 1's own post-run `git status`
+printed "nothing to commit, working tree clean", and the `git clean -fd` above covers any residue
+regardless — but treat anything you find there as a finding worth reporting, not as expected.)*
 
 ## No-op guard
-If you find yourself about to exit without changes, WRITE WHY into your report first. Note that the
-**previous** run of this slice was a legitimate diagnostic no-op — but it earned that by producing
-the file:line diagnosis this master is built on. A second no-op that merely re-reports the same
-diagnosis is NOT acceptable: the diagnosis is already banked, and the measurement fix is now the
-deliverable.
+If you find yourself about to exit without changes, WRITE WHY into your report first. **Two prior
+runs on this guard were lawful no-ops and both earned it** — the s1032 diagnostic run produced the
+file:line diagnosis this master is built on, and attempt 1 of this master stopped on a stop clause
+that was genuinely (if wrongly) armed. **Neither excuse is available now:** the diagnosis is banked,
+the table is corrected, and the stop clause no longer fires on numeric wobble. A third no-op is only
+acceptable under a scope-1 (a)-(d) class change — anything else means the measurement fix, which is
+the deliverable, was not attempted.
 
 ## Self-check (evidence, not vibes)
 `npx tsc --noEmit` + `npm run build` green.
