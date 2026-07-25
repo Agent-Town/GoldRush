@@ -1,5 +1,4 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
 import baronContractText from '../../assets/pilots/map-rebuild-spike/baron-terrain-contract.json?raw';
 import baronPanoramaContractText from '../../assets/pilots/map-rebuild-spike/baron-panorama-contract.json?raw';
 import dryGulchContractText from '../../assets/pilots/map-rebuild-spike/dry-gulch-terrain-contract.json?raw';
@@ -68,6 +67,7 @@ import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { Balance } from '../game/Balance';
 import type { LightFieldSnapshot, LightSource } from '../systems/LightField';
 import { disposeObject3D } from '../utils/dispose';
+import { trackedGltfLoader } from '../assets/AssetLoading';
 import { installVisualHeightSource } from './Terrain';
 
 type Contract = {
@@ -511,7 +511,7 @@ export function installTerrain3dClaimPilot(host: Host): () => void {
   host.canvas.dataset.terrain3dPilotPanoramaLoadState = 'pending';
   host.canvas.dataset.terrain3dPilotLandmarkLoadState = 'pending';
   publish(host.canvas, 'loading', 'painted');
-  const loader = new GLTFLoader();
+  const loader = trackedGltfLoader(host.canvas, 'the claim');
   const disposeLoaded = () => {
     if (loadedTerrain) {
       disposeObject3D(loadedTerrain);

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { trackedGltfLoader } from '../assets/AssetLoading';
 import { activeEpoch } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
 import { TOWN_LEGACY_PAN_NAME, townBuildings, townEraPropsForOrder, townPlazaSlot, townPropRing } from './townLayout';
@@ -322,7 +322,7 @@ function installTownBuildingPilot(
   publish(canvas, 'loading', 'facade');
 
   const candidates = eraCandidates(MODEL_PATHS[id]);
-  const load = (candidateIndex: number): void => new GLTFLoader().load(
+  const load = (candidateIndex: number): void => trackedGltfLoader(canvas, 'the town').load(
     candidates[candidateIndex]!.url,
     (gltf) => {
       const loaded = gltf.scene;
@@ -390,7 +390,7 @@ export function installTownDynamoHallPilot(host: Host, group: THREE.Group, footp
   clearBuildingOrientation(canvas, 'dynamo_hall');
   publish(canvas, 'loading', 'facade');
   const candidates = eraCandidates(MODEL_PATHS.dynamo_hall);
-  const load = (candidateIndex: number): void => new GLTFLoader().load(candidates[candidateIndex]!.url, ({ scene: loaded }) => {
+  const load = (candidateIndex: number): void => trackedGltfLoader(canvas, 'the town').load(candidates[candidateIndex]!.url, ({ scene: loaded }) => {
     const metrics = inspect(loaded);
     const valid = metrics.triangles <= MAX_TRIANGLES && metrics.materials <= MAX_MATERIALS &&
       metrics.width <= footprint.w + BOUNDS_EPSILON && metrics.depth <= footprint.d + BOUNDS_EPSILON &&
@@ -474,7 +474,7 @@ export function installTownPlatePilot({ scene, canvas }: Host): () => void {
   };
   setState('loading', 'painted');
 
-  new GLTFLoader().load(TOWN_PLATE_MODEL_URL, ({ scene: loaded }) => {
+  trackedGltfLoader(canvas, 'the town').load(TOWN_PLATE_MODEL_URL, ({ scene: loaded }) => {
     const metrics = inspect(loaded, false);
     const valid = metrics.triangles <= 20_000 && metrics.materials === 1 && metrics.forbiddenNodes === 0;
     if (disposed || !valid) {
@@ -521,7 +521,7 @@ export function installTownPlazaPropsPilot({ scene, canvas }: Host): () => void 
   const loadValid = async (kind: string, urls: readonly string[]): Promise<{ source: THREE.Object3D; metrics: ReturnType<typeof inspect> }> => {
     for (const url of urls) {
       try {
-        const source = (await new GLTFLoader().loadAsync(url)).scene;
+        const source = (await trackedGltfLoader(canvas, 'the town').loadAsync(url)).scene;
         const metrics = inspect(source);
         if (metrics.triangles <= 4_000 && metrics.materials <= 1 && metrics.forbiddenNodes === 0) return { source, metrics };
         disposeObject3D(source);

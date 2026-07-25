@@ -219,6 +219,7 @@ import {
   type DeathRunStatsSnapshot,
 } from '../ui/DeathOverlay';
 import { Hud, type ContractBriefingSnapshot, type PauseMetaSnapshot, type UiIntent } from '../ui/Hud';
+import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { AssayOfficePrompt } from '../ui/AssayOfficePrompt';
 import { BuildingContextPrompt, type MegaprojectFundCandidate } from '../ui/BuildingContextPrompt';
 import { WorldInfoNotePrompt, type WorldInfoNoteTarget, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
@@ -555,6 +556,7 @@ export class Game {
   private harvestSnapshot = this.harvestSystem.snapshot;
   private readonly uiBridge = new UiBridge();
   private readonly hud: Hud;
+  private readonly assetLoadingCue = createAssetLoadingCue();
   private readonly promptStack = document.createElement('div');
   private readonly assayOfficePrompt: AssayOfficePrompt;
   private readonly buildingContextPrompt: BuildingContextPrompt;
@@ -1188,6 +1190,7 @@ export class Game {
     private readonly openAssayBench?: () => void,
     private readonly onReturnToMenu?: (result: RunReturnResult) => void,
   ) {
+    resetAssetLoading(canvas, 'the claim');
     this.assertActorMode();
     this.renderer = createRenderer(canvas);
     this.cameraZoom = new CameraZoomController(canvas, 'run', this.cameraRig);
@@ -1369,6 +1372,7 @@ export class Game {
     const confirmButton = this.getElement('#confirm-button');
     this.input = new InputController(stick, knob, confirmButton);
     this.hud = new Hud(this.getElement('#hud'), (intent) => this.handleUiIntent(intent));
+    this.getElement('#hud').append(this.assetLoadingCue);
     this.e7SignalSystem.mount(this.getElement('#hud'));
     if (this.activeEpoch.order >= 7) {
       this.playbookSurface = new PlaybookSurface(this.getElement('#hud'), {
@@ -2578,6 +2582,7 @@ export class Game {
   }
 
   private updatePresentation(delta: number): void {
+    syncAssetLoadingCue(this.canvas, this.assetLoadingCue);
     this.syncAudioLoops();
     this.vfx.update(delta);
     this.combatVfx.update(delta);

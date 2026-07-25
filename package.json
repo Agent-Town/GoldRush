@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host 127.0.0.1",
-    "build": "tsc && vite build",
-    "build:release": "tsc && vite build && node scripts/assert-release-build.mjs",
+    "build": "tsc && vite build && node scripts/asset-diet.mjs",
+    "build:release": "tsc && vite build && node scripts/asset-diet.mjs && node scripts/assert-release-build.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
+    "test:asset-diet": "playwright test --config playwright.preview.config.ts e2e/asset-diet.spec.ts",
     "census": "playwright test e2e/map-census.spec.ts --project=desktop-chrome --workers=1",
     "test:accounts": "node scripts/test-accounts.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
@@ -23,11 +24,16 @@
     "three": "^0.184.0"
   },
   "devDependencies": {
+    "@gltf-transform/core": "^4.4.1",
+    "@gltf-transform/extensions": "^4.4.1",
+    "@gltf-transform/functions": "^4.4.1",
     "@playwright/test": "^1.61.0",
     "@types/node": "^25.9.0",
     "@types/pngjs": "^6.0.5",
     "@types/three": "^0.184.1",
+    "meshoptimizer": "^1.2.0",
     "pngjs": "^7.0.0",
+    "sharp": "^0.34.5",
     "typescript": "^6.0.3",
     "vite": "^8.0.13"
   }

@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import type { Plugin } from 'vite';
+import { createHash } from 'node:crypto';
 import { readFileSync, readdirSync } from 'node:fs';
 import { access, mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import type { IncomingMessage } from 'node:http';
@@ -19,6 +20,11 @@ import {
 export default defineConfig(() => {
   const releaseE1 = process.env.GR_RELEASE === 'e1';
   const buildVariant = process.env.GR_BUILD_VARIANT ?? (releaseE1 ? 'e1-preview' : 'dev');
+  const assetDietFingerprint = createHash('sha256')
+    .update(readFileSync(resolve(process.cwd(), 'scripts/asset-diet.mjs')))
+    .update(readFileSync(resolve(process.cwd(), 'package-lock.json')))
+    .digest('hex')
+    .slice(0, 8);
   return {
   base: './',
   define: {
@@ -40,6 +46,13 @@ export default defineConfig(() => {
   build: {
     sourcemap: false,
     chunkSizeWarningLimit: 900,
+    rollupOptions: {
+      output: {
+        entryFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}.js`,
+        chunkFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}.js`,
+        assetFileNames: `assets/[name]-[hash]-diet-${assetDietFingerprint}[extname]`,
+      },
+    },
   },
   };
 });

@@ -4,6 +4,7 @@ import * as THREE from 'three';
 import { OrientationResolver, type RotationDirection } from '../assets/OrientationResolver';
 import { SpriteAnimator } from '../assets/SpriteAnimator';
 import { clearProcessedCharacterTextureCache, loadGeneratedTexture, loadProcessedCharacterTexture } from '../assets/generated';
+import { createAssetLoadingCue, resetAssetLoading, syncAssetLoadingCue } from '../assets/AssetLoading';
 import { tagPlaceholder } from '../assets/slots';
 import { CameraRig } from '../systems/CameraRig';
 import { CameraZoomController, type CameraZoomDiagnostics } from '../systems/CameraZoomController';
@@ -262,6 +263,7 @@ export class TownScene {
   private readonly loop = new Loop((delta) => this.update(delta), () => this.render());
   private readonly ui = document.createElement('section');
   private readonly prompt = document.createElement('div');
+  private readonly assetLoadingCue = createAssetLoadingCue();
   private infoNote?: WorldInfoNotePrompt;
   private readonly nameCard = document.createElement('form');
   private readonly board = document.createElement('section');
@@ -368,6 +370,7 @@ export class TownScene {
     private readonly onExit: () => void,
     private readonly options: TownSceneOptions = {},
   ) {
+    resetAssetLoading(canvas, 'the town');
     reconcileActiveEpoch();
     this.selectedResearchEpochId = activeEpochId();
     this.boardPageIndex = boardPageIndexForContract(options.initialBoardContractId);
@@ -448,6 +451,7 @@ export class TownScene {
   }
 
   private update(delta: number): void {
+    syncAssetLoadingCue(this.canvas, this.assetLoadingCue);
     this.frame += 1;
     this.elapsed += delta;
     this.updateAmbientDust();
@@ -853,6 +857,7 @@ export class TownScene {
     if (promptStack) this.infoNote = new WorldInfoNotePrompt(promptStack);
     promptStack?.append(this.barkCard);
     this.ui.append(this.nameCard);
+    this.ui.append(this.assetLoadingCue);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
     this.prompt.addEventListener('click', this.onPromptClick);
     this.prompt.addEventListener('pointerdown', this.onDynamoCrankStart);

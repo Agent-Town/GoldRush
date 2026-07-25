@@ -29,6 +29,32 @@
   display: none !important;
 }
 
+.asset-loading-cue {
+  position: absolute;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  left: max(14px, env(safe-area-inset-left));
+  z-index: 3;
+  margin: 0;
+  border-left: 2px solid rgba(139, 125, 60, 0.8);
+  padding: 5px 8px;
+  color: rgba(46, 27, 14, 0.82);
+  background: rgba(245, 230, 200, 0.8);
+  box-shadow: 0 2px 0 rgba(46, 27, 14, 0.2);
+  font: 700 0.72rem/1.1 Wellfleet, Georgia, serif;
+  letter-spacing: 0.02em;
+  pointer-events: none;
+}
+
+.asset-loading-cue[hidden] {
+  display: none;
+}
+
+@media (pointer: coarse), (max-width: 760px) {
+  .asset-loading-cue {
+    bottom: calc(max(14px, env(safe-area-inset-bottom)) + 240px);
+  }
+}
+
 .hud-panel,
 .hud__wave,
 .hud-meta-recap,

@@ -1,5 +1,5 @@
 import * as THREE from 'three';
-import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import { trackedGltfLoader } from '../assets/AssetLoading';
 import type { BuildDiagnostics } from '../systems/BuildSystem';
 import { disposeObject3D } from '../utils/dispose';
 import * as Terrain from '../world/Terrain';
@@ -54,6 +54,7 @@ export function installRun3dPilot(host: Host): Run3dPilot {
   const euler = new THREE.Euler();
   const color = new THREE.Color();
   let disposed = false;
+  const loader = trackedGltfLoader(host.canvas, 'the claim');
   publish(host.canvas, 'loading');
   host.scene.add(group);
 
@@ -61,7 +62,7 @@ export function installRun3dPilot(host: Host): Run3dPilot {
     ids.map(
       (id) =>
         new Promise<void>((resolve, reject) => {
-          new GLTFLoader().load(
+          loader.load(
             registry[id].url,
             ({ scene }) => {
               if (disposed) {
