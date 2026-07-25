@@ -17,5 +17,7 @@ Pre-flight (LANE-SAFETY): standard safe-dupe; npm i; tsc+build green + release b
 6. THE PREFETCH IS POLITE: respect navigator.connection saveData (skip bulk prefetch when set, keep tier ①) · a dataset seam exposes progress (prefetched/total) · the town's raise-cue (scope 2) consumes it — on a warm cache the town raises instantly and the cue never shows.
 7. Spec additions: menu idle → tier-① requests observed (playwright network capture) · a scene launch mid-prefetch cancels pending fetches (no bandwidth contention: assert the run's own asset requests are not queued behind prefetch) · saveData=true skips bulk · zero console.
 
+8. THE CASCADE NEVER STOPS (owner sharpening, verbatim: "when in town is downloaded, the first contract is the next thing the player will need... Then loading the contract feels seamless and fast. But we can already prepare the next one and so on."): every scene idle continues the stream ONE STEP AHEAD of the player — in town: the LIKELY next contract first (the board frontier: next unbeaten in chapter order, or last-suspended), then its successor; in a run: the town (the guaranteed return) then the next contract onward. One priority function, consulted everywhere.
+
 ## Firewall: build pipeline + the cue + THE PREFETCHER (one module, menu-mounted) + specs. NO source-art changes, NO gameplay, NO asset removals.
 END: READY-FOR-GATES + the before/after size table + throttled-boot screenshots.
