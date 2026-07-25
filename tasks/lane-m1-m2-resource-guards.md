@@ -4,12 +4,26 @@
 You are Codex, implementer for Gold Rush (worktrees/lane-a).
 CODEX: model=gpt-5.6-sol effort=high
 
-## PRE-FLIGHT (SAFE-DUPE — do this before anything else)
-1. `git -C worktrees/lane-a status --short` and `git log --oneline -1`.
-2. Confirm the lane branch holds nothing unmerged: `git log main..HEAD --oneline` must be EMPTY.
-   **If it is NOT empty, STOP and report** — a predecessor's undrained work is sitting there and
-   resetting would destroy it (the Reset Massacre, CLAUDE.md §5.2). Do not reset over content.
-3. Only when that is empty: sync onto current main and begin.
+## PRE-FLIGHT (SAFE-DUPE — copied VERBATIM from `.claude/skills/author-task/SKILL.md` §3, LANE slots)
+> Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B <lane-branch> main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+**s1027 correction — READ THIS, it is why you are running a second time.** The first attempt at this
+task (2026-07-25 10:58, log `logs/runs-archive/20260725-105857-lane-a-lane-m1-m2-resource-guards.md.log`)
+STOPPED at pre-flight and changed nothing. It was **not Codex's fault and not a real blocker**: the
+s1026 master paraphrased the template above into "`git log main..HEAD` must be EMPTY, else STOP",
+which on this repo is a permanent brick — lanes land by SQUASH merge, so a lane branch is
+*expected* to read ahead forever after its work merges. Your predecessor obeyed that wording
+correctly and stopped. The template above is the real law (F-1027-1).
+
+**Already verified for you by s1027 — do not spend budget re-deriving it, but do sanity-check it:**
+`lane-a` sits on branch `lane/m3`, 1 ahead of main at `6be3964c "perf: diet build assets..."`.
+That commit is the ASSET DIET, which was squash-merged to main as `0dfa1d3f` on 2026-07-25. Proof:
+its file list and `0dfa1d3f`'s file list are **identical (22 files)**, `scripts/asset-diet.mjs` and
+`src/assets/AssetLoading.ts` are both present on main, and `git diff 6be3964c 0dfa1d3f` shows
+**zero lane-unique lines** on the asset-diet surfaces (only main-side newer content from work that
+merged before the squash, plus regenerated screenshot binaries). **`6be3964c` is therefore a
+textbook SAFE DUPE.** Per the template: `git checkout -B lane/m3 main && git clean -fd`, then
+PROCEED into the task below. (`node_modules/` is gitignored, so `clean -fd` will not remove it.)
 
 ## READ FIRST
 - `reviews/deepwater-wave-counter.md` §Findings **F-1026-5** — the measurements below are from there.
