@@ -10,9 +10,12 @@
  * Prints five buckets, classified by CONTENT HASH (not by name or by size):
  *   UNTRACKED — name absent from main, bytes in NO object database  (loss risk: TOTAL)
  *   EXPOSED   — name on main but THESE bytes in no object database  (loss risk: TOTAL)
- *   SALVAGED  — name absent from main, but the blob IS in git       (parked, safe)
+ *   SALVAGED  — name absent from main, but the blob IS in git       (parked)
  *   DIVERGED  — differs from main, but the blob IS in git           (adjudication material)
  *   SHIPPED   — byte-identical to main's blob                       (no exposure)
+ *
+ * ...and then asks the question those five cannot answer, across all of them:
+ *   LOCAL-ONLY — the blob is in git HERE, but on no origin ref      (dies with this disk)
  *
  * UNTRACKED/EXPOSED mean "in no object database", NOT "absent from main": art
  * parked on a save/* branch awaiting an owner verdict is preserved, and counting
@@ -29,9 +32,26 @@
  * also load-bearing for the old SAME-SIZE bucket ("assumed shipped") — that
  * assumption is gone too: SHIPPED now means the hashes match.
  *
+ * F-1055-1 (s1055): "the blob IS in git" was being read as "safe", but `cat-file
+ * -e` only ever asked THIS disk's object database — and this script's whole
+ * question is what happens when this disk is gone. Measured at the time of the
+ * fix: the 14 DIVERGED plates s1054 had just salvaged (36.54 MB) were reachable
+ * from exactly one ref, a local `save/*` branch whose push had timed out, and the
+ * audit printed `AT RISK ... 0 files, 0 KB` over them. Same shape as F-1054-1 one
+ * layer out: the headline was narrower than the question above it. So every
+ * in-git blob is now also checked against the objects reachable from the
+ * remote-tracking refs, and anything held only here is reported as LOCAL-ONLY.
+ * That bucket is deliberately kept SEPARATE from AT RISK: at-risk bytes are
+ * unrecoverable, local-only bytes are one `git push` from safe, and collapsing
+ * the two would hide which of the two acts is owed.
+ *
  * Usage: node scripts/art-staging-audit.mjs [--json] [--strict]
- *   --strict  exit 1 when anything is in no object database (default: always 0,
- *             so a fire's routine audit can never block a drain)
+ *   --strict  exit 1 when anything dies with this disk — AT RISK or LOCAL-ONLY
+ *             (default: always 0, so a fire's routine audit can never block a drain)
+ *
+ * CAVEAT worth knowing before trusting a green LOCAL-ONLY: remote-tracking refs
+ * are a local mirror of origin, refreshed by fetch/push. Run `git fetch` first if
+ * another writer may have pushed the blobs you are asking about.
  */
 import { execFileSync } from 'node:child_process';
 import { readdirSync, statSync } from 'node:fs';
@@ -73,17 +93,30 @@ const inGit = (sha) => {
   }
 };
 
+// every object reachable from a remote-tracking ref — i.e. every object that
+// survives this disk. One traversal (~150 ms, ~42k objects on this repo), not one
+// query per file. The 40-char prefix of each line is the object name.
+const offsite = new Set();
+for (const line of git('rev-list', '--objects', '--remotes').split('\n')) {
+  const sha = line.slice(0, 40);
+  if (sha) offsite.add(sha);
+}
+
 const untracked = [];
 const exposed = [];
 const salvaged = [];
 const diverged = [];
 const shipped = [];
+const localOnly = [];
 for (const name of readdirSync(STAGING)) {
   if (name.startsWith('.')) continue;
   const path = join(STAGING, name);
   const size = statSync(path).size;
   const sha = hashOf(path);
   const main = tracked.get(name);
+  // Asked of every bucket, including SHIPPED: main itself can be ahead of
+  // origin/main, and then even "shipped" bytes are still only on this disk.
+  if (inGit(sha) && !offsite.has(sha)) localOnly.push({ name, size });
   if (main && main.sha === sha) {
     shipped.push({ name, size });
     continue;
@@ -109,8 +142,11 @@ if (process.argv.includes('--json')) {
       {
         atRiskFiles: atRisk.length,
         atRiskBytes: total(atRisk),
+        localOnlyFiles: localOnly.length,
+        localOnlyBytes: total(localOnly),
         untracked,
         exposed,
+        localOnly,
         salvaged,
         diverged,
         shipped: shipped.length,
@@ -138,7 +174,11 @@ if (process.argv.includes('--json')) {
     console.log(`    ${r.name}  staging ${kb(r.size)} vs main ${kb(r.mainSize)}`);
   }
   console.log(
-    `\nSALVAGED (not on main, but the bytes ARE in git — parked, safe): ${salvaged.length} files`,
+    `\nLOCAL-ONLY (in git HERE, but on no origin ref — one push from safe): ${localOnly.length} files, ${kb(total(localOnly))}`,
+  );
+  for (const r of localOnly.sort(byName)) console.log(`    ${r.name}  ${kb(r.size)}`);
+  console.log(
+    `\nSALVAGED (not on main, but the bytes ARE in git — parked): ${salvaged.length} files`,
   );
   for (const r of salvaged.sort(byName)) console.log(`  ${r.name}  ${kb(r.size)}`);
   console.log(
@@ -151,4 +191,4 @@ if (process.argv.includes('--json')) {
 }
 
 // Default exit is always 0: a routine audit must never block a fire's drain.
-if (process.argv.includes('--strict') && atRisk.length > 0) process.exit(1);
+if (process.argv.includes('--strict') && atRisk.length + localOnly.length > 0) process.exit(1);
