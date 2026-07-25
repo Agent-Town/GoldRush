@@ -74,6 +74,9 @@ while true; do
   # JANITOR (s9af): fires may not delete on the mount (session-scoped permission prompts);
   # they RENAME git debris instead. This Mac-side sweep is the only deleter.
   find "$ROOT/.git" -maxdepth 2 \( -name '*.stale*' -o -name 'tmp_obj_*' \) -type f -delete 2>/dev/null
-  find "$ROOT/tasks/runs" -name '*.log' -mtime +3 -delete 2>/dev/null
+  # s1033 / F-1028-3: retention-window prune REMOVED per CLAUDE.md §4.10b (THE RETENTION LAW).
+  # It was: find "$ROOT/tasks/runs" -name '*.log' -mtime +3 -delete 2>/dev/null
+  # Removed in v3 in the same fire; removed here too so restarting v2 cannot silently
+  # resurrect the defect. DO NOT RESTORE. See the v3 comment for the measured casualty.
   sleep 20
 done

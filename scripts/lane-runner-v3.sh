@@ -114,6 +114,16 @@ while true; do
     mv "$req" "$ROOT/tasks/done/janitor-$(date +%s)-$(basename "$req")" 2>/dev/null
   done
   find "$ROOT/.git" -maxdepth 2 \( -name '*.stale*' -o -name 'tmp_obj_*' \) -type f -delete 2>/dev/null
-  find "$ROOT/tasks/runs" -name '*.log' -mtime +3 -delete 2>/dev/null
+  # s1033 / F-1028-3: the retention-window prune that stood here is REMOVED, permanently.
+  # It was: find "$ROOT/tasks/runs" -name '*.log' -mtime +3 -delete 2>/dev/null
+  # CLAUDE.md §4.10b (THE RETENTION LAW, owner 2026-07-25): "We have to stop the pruning, our
+  # history is our strength." This line was not hypothetical harm — s1031 measured a named
+  # casualty: the run 20260721-110240-lane-a-lane-town-variants-e8 (886,731 tokens, 29 min),
+  # still present in logs/task-stats.jsonl and already deleted from tasks/runs/, which had
+  # silently vanished from the owner's ALL-TIME dashboard figures.
+  # DO NOT RESTORE IT. Disk pressure is F-1027-2 on the owner's desk ("tails" or "gzip" —
+  # compaction of TRACKED files is lawful; deletion of untracked history is not).
+  # NOTE: line 116's .git/*.stale* sweep is deliberately LEFT ALONE — that is git's own scratch,
+  # not factory history.
   sleep 15
 done

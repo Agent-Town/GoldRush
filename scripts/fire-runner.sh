@@ -83,6 +83,11 @@ if [ "$RC" != "0" ] && tail -4 "$LOG" | grep -qi "weekly limit"; then
   echo "[fire-runner] $(date +%H:%M:%S) ALT FIRE END rc=$RC" >> "$LOG"
 fi
 
-# keep 14 days of logs
-find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null
+# s1033 / F-1028-3: the 14-day fire-log prune REMOVED per CLAUDE.md §4.10b (THE RETENTION LAW,
+# owner 2026-07-25: "We have to stop the pruning, our history is our strength").
+# It was: find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null
+# This is the third and last of the three prunes §4.10b names as owed removal (lane-runner
+# v2:77, v3:117, and this one) — all three removed in the s1033 fire.
+# Fire logs are the factory's own memory of what each fire decided: exactly the untracked
+# history the law protects. DO NOT RESTORE. Disk pressure is F-1027-2, on the owner's desk.
 exit 0
