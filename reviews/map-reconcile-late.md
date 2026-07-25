@@ -2,7 +2,7 @@
 title: THE MAP RECONCILIATION (late half) — twenty maps held against their promised art
 date: 2026-07-26
 branch: sculpt/map-fix-late
-status: DELIVERED — 20/20 judged, 4 sculpts fixed in place, 7 maps recovered
+status: DELIVERED — 20/20 judged, 5 fixes applied, 7 maps recovered, 18/18 sculpted maps mount
 scope: e6/e7/e8/e9/e10 — twenty maps
 ---
 
@@ -83,6 +83,14 @@ Boards: `reconcile-late/shots-before-reweld/` vs `reconcile-late/shots/`.
 `e6-glow-mesa` goes from a featureless orange plane to scarp relief, a mounted
 ore-shrine landmark and its own panorama ring.
 
+**Proven for all eighteen**, including the twelve a player cannot reach, by mounting
+each terrain through the real `installTerrain3dClaimPilot()` and bypassing the
+contract door — the technique `e2e/terrain3d-registry.spec.ts:95` uses
+(`reconcile-late/pilot-probe.mjs`, output `pilot-probe.json`):
+
+> **18 / 18 sculpted late maps: `state=ready`, `renderSource=glb`, each mounting its
+> OWN panorama.** Before this session, seven of them rendered an empty painted plane.
+
 **This is the fresh-eye arc's F-OP5-13 with its real consequence attached.** That
 review measured glow-mesa's 59 032 vertices and read it as "pure carriage cost…
 not urgent". The number was right. What it cost was the whole map: the sculpt that
@@ -93,6 +101,37 @@ a plain boot?"*
 A full scan of the spike (all 37 terrains + 27 panoramas, 64 assets) now returns
 **zero invalid**. These four were the only ones, including in the other two
 shifts' territories.
+
+### F-MRL-9 — `e8-low-orbit` carried a second, independent defect that the first fix uncovered · **FIXED**
+
+With the terrain fix in, `e8-low-orbit` *still* fell back to painted — and the
+runtime finally said why, because the first failure had been masking it:
+
+```
+terrain3dPilotFailure = "terrain:true;panorama:false"
+```
+
+`validTerrain` now passes (the reweld worked). `validPanorama` does not.
+`low-orbit-panorama-contract.json` was **missing the `vertices` field entirely**,
+and `validPanorama()` requires `metrics.vertices === contract.vertices` —
+`1544 === undefined` is false, so the panorama was rejected and `installLoaded`
+threw into the same silent painted fallback.
+
+Scanned all 27 panorama contracts in the spike: **low-orbit is the only one missing
+a required field.** Every sibling carries it.
+
+**Fixed**: added the measured value (1 544 unique positions), in the field position
+its siblings use. This completes an incomplete record rather than redefining a
+promise — the value is a measurement of the shipped asset, not a design choice, and
+`e2e/terrain3d-registry.spec.ts:88` already asserts this map should mount
+`ready`/`glb`. Had I taken "the sculpt conforms to the contract" to forbid it, the
+map could never have rendered, because the contract did not describe the asset at
+all.
+
+Worth naming as a pattern: **a silent fallback hides every defect after the first.**
+Both of low-orbit's failures produced the identical player-visible symptom and zero
+console output. The only reason the second was ever found is that fixing the first
+changed one word in a diagnostic string.
 
 ### F-MRL-3 — The latent trap: two different meanings of "vertex count", fifteen lines apart · **BIGGER-THAN-ME**
 
@@ -224,7 +263,7 @@ filed for its owner.
 | 8 | e7-relay-rush | **ALIAS-ACCEPTABLE** *(recovered)* | Plate's three lit platforms served by the same. |
 | 9 | e8-mare-claim | **TRUE on sculpt / FAILING on era-truth in game** | Grey regolith, crater rim and dome pad are right in the asset; the live map is warm brown with grass — F-MRL-4. |
 | 10 | e8-far-side | **ALIAS-ACCEPTABLE** | Crater rim + lander ground reads correctly on mare-claim. |
-| 11 | e8-low-orbit | **WATCH** *(recovered)* | Plate: ring stations among asteroids. Delivered: three platforms over a −4.9 m void — a defensible read, unverifiable live (door refused). |
+| 11 | e8-low-orbit | **WATCH** *(recovered, two defects)* | Plate: ring stations among asteroids. Delivered: three platforms over a −4.9 m void — a defensible read. Needed both F-MRL-1 and F-MRL-9 before it would render at all. |
 | 12 | e8-eclipse | **ALIAS-ACCEPTABLE / era-truth flag** | Same sculpt as mare-claim; the promised eclipse light is not there — F-MRL-4. |
 | 13 | e9-dome-basin | **ACCEPTABLE, one filed defect** | F-MRL-7. Basin is real and 2.4 m deep; its plan is a rectangle, the plate's is a canal. |
 | 14 | e9-seed-run | **ACCEPTABLE** | Three pale pads joined by roads; travel pressure present, pads themselves blank. |
@@ -261,6 +300,50 @@ This arc had three. That ratio is the argument for never trusting the first swee
    same false finding the fresh-eye arc recorded against dome-basin (F-MRL-7).
 3. **Unique vs raw vertex counts.** Described in F-MRL-3: the first version of the
    measuring tool called five healthy E1 panoramas broken.
+
+## Gates
+
+| gate | result |
+| --- | --- |
+| `tsc` | clean |
+| `vite build` | green, 1.16 s |
+| `asset-diet` | pass — 235 terrain/landmark GLBs 592 MB → 92.8 MB |
+| full-spike asset scan | **64/64 valid** (37 terrains + 27 panoramas) |
+| `pilot-probe.mjs` | **18/18 sculpted late maps `ready`/`glb`, each with its own panorama** |
+| `verify_e6/e7/e8_extra_terrains.py` | reached their `landmarkMounts` assertions — see below |
+| `e2e/terrain3d-*`, `panorama-framing`, `terrain-seamless` | 7 red → **6 red**, `:88` recovered — see below |
+
+**The sculpt verifiers.** All three stop at
+`assert contract["landmarkMounts"] == builder.LANDMARK_MOUNTS[key]`. Everything
+*before* that line passed, which is the part that matters here: `sha256(glb) ==
+contract.files.glb.sha256`, `sha256(blend) == contract.files.blend.sha256`, and
+`assert semantic_identical and byte_identical` — the verifier re-exports the
+`.blend` and compares bytes against the shipped `.glb`. **The craftbook's
+byte-identical re-export law is verified for all four repaired assets.**
+
+The `landmarkMounts` reds are pre-existing and not mine: `git diff` across my fix
+commit shows the only keys that changed in any contract are `bytes` and `sha256`
+(16 lines across 4 files). A failing assertion on a field that is byte-identical
+before and after cannot have been caused by it. The mismatch is the later mount
+sweep populating `asset` fields that these verifiers predate — the lifecycle the
+craftbook describes as `mountInterlock: pending-3d-d → resolved-3d-d`.
+
+**The six remaining e2e reds.** `e2e/terrain3d-registry.spec.ts:88` — the one that
+asserted `e8-low-orbit` mounts — **went green with F-MRL-9**. The six that remain
+fail on the performance tier, not on assets. Measured on `:345`: the assertion
+expects `data-terrain3d-pilot-state="failed"` and receives `"lite"`, with
+`data-railcar3d-state="lite"` and `data-crawler3d-state="lite"` alongside it — the
+whole renderer is in LITE. `installTerrain3dClaimPilot()` checks the tier at
+`:503` and returns `publish('lite','painted')` **before a single GLB byte is
+fetched**, so no change to a terrain asset can reach that branch. This machine spent
+the session running Blender renders and two vite servers, which is the most likely
+reason the tier probe degraded.
+
+I am flagging rather than clearing these: I could not get a clean-machine baseline
+inside the window, and "environmental" is exactly the comfortable conclusion
+Mistake #4 exists to punish. What I can assert is the code-path argument above.
+**Next session: re-run `e2e/terrain3d-registry.spec.ts` on an idle machine before
+reading these six as anything.**
 
 ## What I did not touch
 
