@@ -4,6 +4,7 @@ import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 
 const QUERY = '?debug&epoch=epoch-5-deepwater&contract=e5-deepwater-claim&nolevel&nopause&seed=shelf-1';
 const ARTIFACT_DIR = 'artifacts/e5-deepwater-claim';
+const WAVE_COUNTER_SHOT_DIR = 'reviews/shots-deepwater-wave-counter';
 
 test.beforeEach(async ({ page }) => page.addInitScript(({ key }) => {
   localStorage.clear();
@@ -91,6 +92,42 @@ test('boots the Deepwater contract with deck pads, depth gates, and a storm-sche
   expect(mask.enemyRoster).toEqual(state.contract.enemyRoster);
   expect(mask.lanes).toEqual(state.contract.tileParams.lanes);
   await artifact(testInfo, 'tile-state', state);
+  expect(errors).toEqual([]);
+});
+
+test('shows the active run wave in Deepwater and WaveSystem contracts', async ({ page }, testInfo) => {
+  const errors = await open(page);
+  const deepwater = await page.evaluate(() => {
+    const game = window.__GR_TEST__!;
+    game.setManualSim(true);
+    for (let second = 0; second < 40 && window.__THREE_GAME_DIAGNOSTICS__!.deepwaterClaim!.corsairWaves.length < 2; second += 1) {
+      game.advanceSim(1);
+    }
+    const corsairWaves = window.__THREE_GAME_DIAGNOSTICS__!.deepwaterClaim!.corsairWaves.length;
+    return {
+      corsairWaves,
+      displayed: document.querySelector<HTMLElement>('[data-hud-wave-number]')?.textContent,
+    };
+  });
+  expect(deepwater.corsairWaves).toBeGreaterThanOrEqual(2);
+  expect(deepwater.corsairWaves).toBeGreaterThan(0);
+  expect(deepwater.displayed).toBe(String(deepwater.corsairWaves));
+  await mkdir(WAVE_COUNTER_SHOT_DIR, { recursive: true });
+  await page.screenshot({ path: `${WAVE_COUNTER_SHOT_DIR}/${testInfo.project.name}-wave-counter.png` });
+
+  await page.goto('/?debug&epoch=epoch-1-frontier&contract=the-claim&nolevel&nopause&nowaves&seed=wave-counter-control');
+  await page.waitForFunction(() => window.__GR_TEST__ && window.__THREE_GAME_DIAGNOSTICS__?.contract.activeId === 'the-claim');
+  await page.evaluate(() => window.__GR_TEST__!.setWave(7));
+  await page.waitForFunction(() => {
+    const wave = window.__THREE_GAME_DIAGNOSTICS__?.wave;
+    return wave === 7 && document.querySelector<HTMLElement>('[data-hud-wave-number]')?.textContent === String(wave);
+  });
+  const waveSystem = await page.evaluate(() => ({
+    wave: window.__THREE_GAME_DIAGNOSTICS__!.wave,
+    displayed: document.querySelector<HTMLElement>('[data-hud-wave-number]')?.textContent,
+  }));
+  expect(waveSystem.wave).toBe(7);
+  expect(waveSystem.displayed).toBe(String(waveSystem.wave));
   expect(errors).toEqual([]);
 });
 
