@@ -1682,8 +1682,10 @@
       {
        "id": "factory-diet-gate-honesty",
        "title": "asset-diet gate tells the truth about which bundle it measured (F-1026-1)",
+       "mergeHash": "e3d81fb647108f7f797df56d98d9326db404207b",
        "taskFile": "lane-asset-diet-gate-honesty.md",
-       "status": "queued"
+       "status": "merged",
+       "note": "s1029 DRAINED. F-1026-1 CLOSED. test.skip guarded on GR_CAPTURE_EXTERNAL_SERVER + loud reason naming the exact commands + per-project byte logging; the 25,000,000 threshold is UNTOUCHED. Both states proven by the draining fire, not accepted from the report: default = 4 skipped with visible reason; production preview = 4/4 PASSED with assertions actually executing, 16,381,195 B measured on BOTH projects (reproduces Codex's figure to the byte, ~34% headroom under the ceiling). Review reviews/asset-diet-gate-honesty.md. F-1029-4 recorded: the gate is now opt-in, so it should join a periodic/pre-deploy sweep."
       },
       {
        "id": "factory-dashboard-unfreeze",

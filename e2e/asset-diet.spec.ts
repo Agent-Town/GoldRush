@@ -1,3 +1,7 @@
+// Measures the built, dieted production bundle; Vite's dev server serves undieted originals.
+// Run: npm run build && npm run preview -- --port 5188
+// Then, in another shell: GR_CAPTURE_EXTERNAL_SERVER=1 npx playwright test e2e/asset-diet.spec.ts --workers=1
+
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
@@ -6,6 +10,10 @@ import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type 
 
 const ARTIFACT_DIR = path.resolve('artifacts/asset-diet');
 const MAPS = [{ id: 'the-claim', era: 1 }, { id: 'e1-dry-gulch', era: 1 }] as const;
+const BUILT_BUNDLE_ONLY = 'asset diet measures the BUILT bundle; run: npm run build && npm run preview -- --port 5188, then GR_CAPTURE_EXTERNAL_SERVER=1 npx playwright test e2e/asset-diet.spec.ts --workers=1';
+
+if (process.env.GR_CAPTURE_EXTERNAL_SERVER !== '1') console.warn(`[asset-diet] SKIPPED: ${BUILT_BUNDLE_ONLY}`);
+test.skip(process.env.GR_CAPTURE_EXTERNAL_SERVER !== '1', BUILT_BUNDLE_ONLY);
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(({ profileKey, townKey, metaKey, guideKey }) => {
@@ -89,7 +97,9 @@ test('honest town and claim cues appear while GLBs are throttled and leave at re
   await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
   await expect(cue).toBeHidden();
   countTownTransfer = false;
-  expect(townResponses.reduce((sum, bytes) => sum + bytes, 0)).toBeLessThan(25_000_000);
+  const townResponseBytes = townResponses.reduce((sum, bytes) => sum + bytes, 0);
+  console.info(`[asset-diet] ${testInfo.project.name} townResponses: ${townResponseBytes} bytes`);
+  expect(townResponseBytes).toBeLessThan(25_000_000);
 
   await page.getByTestId('town-exit').click();
   await page.getByTestId('start-menu-enter-town').click();
