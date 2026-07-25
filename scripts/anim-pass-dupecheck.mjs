@@ -70,6 +70,13 @@ for (const stem of stems) {
   console.log(`${stem.padEnd(46)} flagged ${String(results.length).padStart(3)} → REAL ${String(real.length).padStart(3)}` +
     (real.length ? `  ${real.slice(0, 6).map((r) => `${r.a}~${r.b}(${r.verdict === 'IDENTICAL' ? 'ID' : 'NR'} mad${r.mad})`).join(' ')}` : ''));
 }
-fs.writeFileSync(path.join(DATA, '_dupecheck.json'), JSON.stringify(out, null, 1) + '\n');
+// MERGE, never clobber: a single-sheet re-run must not erase the other sheets'
+// proofs. (It did once, and two MEND verdicts silently became CLEAN because the
+// verdict table reads "no proof entry" as "no duplicates".)
+const proofPath = path.join(DATA, '_dupecheck.json');
+const merged = new Map();
+if (fs.existsSync(proofPath)) for (const s of JSON.parse(fs.readFileSync(proofPath, 'utf8'))) merged.set(s.stem, s);
+for (const s of out) merged.set(s.stem, s);
+fs.writeFileSync(proofPath, JSON.stringify([...merged.values()].sort((a, b) => a.stem.localeCompare(b.stem)), null, 1) + '\n');
 const totF = out.reduce((s, x) => s + x.flagged, 0), totR = out.reduce((s, x) => s + x.real, 0);
 console.log(`\n${out.length} sheets · ${totF} hash-flagged pairs · ${totR} survive full-resolution comparison`);
