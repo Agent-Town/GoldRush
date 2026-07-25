@@ -27,27 +27,42 @@ LOG="logs/deploy-site.log"
 mkdir -p logs
 log_note() { echo "[deploy-site] $(date '+%F %T') $*" >> "$LOG"; note "$*"; }
 STAGE="$(mktemp -d "${TMPDIR:-/tmp}/agenttown-site.XXXXXX")"
-trap 'rm -rf "$STAGE"' EXIT
+CAPTURE="$(mktemp "${TMPDIR:-/tmp}/agenttown-deploy.XXXXXX")" || { note "ABORT: could not create deploy capture"; exit 0; }
+trap 'rm -rf "$STAGE"; rm -f "$CAPTURE"' EXIT
 cp -R site/. "$STAGE"/
 if [ -d news ]; then
   mkdir -p "$STAGE/news"
   cp -R news/. "$STAGE/news"/
 fi
-deploy() { wrangler pages deploy "$STAGE" --project-name agenttown --commit-dirty=true >> "$LOG" 2>&1; }
+# F-1057-1: success requires a published URL from THIS run's output, never wrangler's exit code —
+# wrangler 4.107.0 exits 0 after publishing nothing (F-1049-1, which cost 174 undeployed commits).
+# The capture is truncated per attempt so a run that publishes nothing can never inherit an earlier
+# run's URL out of the cumulative log. Mirrors scripts/deploy.sh:90-113.
+deploy() {
+  : > "$CAPTURE"
+  local rc=0
+  wrangler pages deploy "$STAGE" --project-name agenttown --commit-dirty=true > "$CAPTURE" 2>&1 || rc=$?
+  cat "$CAPTURE" >> "$LOG"
+  return "$rc"
+}
+published_url() { grep -oE 'https://[a-z0-9.-]*pages\.dev[^ ]*' "$CAPTURE" | tail -1; }
 
 log_note "deploying site/ to Pages project 'agenttown'..."
-if deploy; then
-  URL=$(grep -oE 'https://[a-z0-9.-]*pages\.dev[^ ]*' "$LOG" | tail -1)
-  log_note "DEPLOYED ok ${URL:-'(url in log)'}"
+URL=""
+if deploy; then URL="$(published_url)"; fi
+if [ -n "$URL" ]; then
+  log_note "DEPLOYED ok $URL"
   exit 0
 fi
 
-log_note "initial deploy failed; trying Pages project create for 'agenttown'"
+log_note "initial deploy published no URL; trying Pages project create for 'agenttown'"
 if wrangler pages project create agenttown --production-branch main >> "$LOG" 2>&1 && deploy; then
-  URL=$(grep -oE 'https://[a-z0-9.-]*pages\.dev[^ ]*' "$LOG" | tail -1)
-  log_note "DEPLOYED ok ${URL:-'(url in log)'}"
+  URL="$(published_url)"
+fi
+if [ -n "$URL" ]; then
+  log_note "DEPLOYED ok $URL"
 else
-  log_note "FAILED: pages deploy — see $LOG"
+  log_note "FAILED: pages deploy — wrangler published no URL (an exit code alone is not proof — F-1049-1) — see $LOG"
 fi
 
 exit 0
