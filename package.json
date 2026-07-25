@@ -14,6 +14,8 @@
     "test:accounts": "node scripts/test-accounts.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
     "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
+    "test:node-guards": "node --test scripts/e3-mask-tables.test.mjs scripts/goal-tracker.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs && node scripts/test-ticker-stats.mjs",
+    "test:stats": "node scripts/test-stats.mjs",
     "test:deploy-contract": "bash scripts/test-deploy-contract.sh",
     "test:deploy-site-contract": "bash scripts/test-deploy-site-contract.sh",
     "verify:visual": "playwright test e2e/visual.spec.ts",
