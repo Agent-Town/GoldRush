@@ -993,6 +993,12 @@
    ],
    "tasks": [
     {
+     "id": "m1-m2-resource-guards",
+     "title": "THE TWO RED GUARDS ON MAIN — m1-01:70 geometry leak (77→87 across a double restart) + m2-01:322 draw-call ceiling; pre-existing, proven by three-point bisect (F-1026-5)",
+     "status": "queued",
+     "taskFile": "lane-m1-m2-resource-guards.md"
+    },
+    {
      "id": "mobile-overlay-input",
      "title": "Mobile overlay input audit+fix (owner playtest: overlays block play)",
      "mergeHash": "e35f05dc5641ee1fb0b66843f709a40dcfec2409",
