@@ -331,8 +331,9 @@ test('stress draw calls stay under 200 with palisades and beacons', async ({ pag
   for (const x of [-8, -5, -2, 2, 5, 8]) {
     await placeBuildableAt(page, 'sentry_beacon', x, 10);
   }
+  // z=20 keeps the stress row clear of the working-camp collision footprint.
   for (const x of [-6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]) {
-    await placeBuildableAt(page, 'palisade', x, 16);
+    await placeBuildableAt(page, 'palisade', x, 20);
   }
 
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 30);

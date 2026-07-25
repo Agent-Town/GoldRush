@@ -1003,9 +1003,10 @@
     {
      "id": "m2-01-fixture-coordinate",
      "title": "F-1029-2: m2-01:322 has never tested its 200-call ceiling — the fixture's first palisade (-6,16) sits in the working-camp collision footprint, so ghostValid never goes true and the assertion is unreachable",
-     "status": "queued",
+     "status": "merged",
+     "mergeHash": "64b0970d",
      "taskFile": "lane-m2-01-fixture-coordinate.md",
-     "note": "s1029 FIRE-AUTHORED from the s1029 drain's own verification (placeSelected timeout at spec:84, not the draw-call assert). Codex measured 184 desktop / 131 mobile at valid terrain z=20 vs the 200 ceiling — the ceiling holds, the fixture is wrong. Master forbids editing the ceiling and requires the honest per-project number."
+     "note": "s1030 DRAINED (lane tip 64b0970d, review reviews/m2-01-fixture-coordinate.md). The palisade stress row moved z=16 -> z=20, clear of the working-camp footprint; fixture shape unchanged (6 beacons + 12 palisades); the 200 ceiling is byte-identical to main. The guard now EXECUTES its assertion — proven by a temporary probe (assert flipped to <=0) that made line 339 print a received value, which it structurally could not do while placeSelected timed out at spec:84. Measured by the draining fire, not inherited: 182 desktop / 160 mobile vs 200 (Codex reported 182/162; the predecessor's 131 mobile was a hand-probe figure and should not be carried forward). GATES: tsc, build, m2-01 7/7 both projects, m1-01 8/8 both projects, zero console/page errors across 22 asserted boots. m2-05 showed 3 failures, ALL pre-existing flakes proven on clean main — see F-1030-1 (the F-1029-1 drift is cross-project, not desktop-only: mobile +3, 1-in-3) and F-1030-2 (m2-05:198 intermittently red, unrecorded until now)."
     },
     {
      "id": "mobile-overlay-input",
