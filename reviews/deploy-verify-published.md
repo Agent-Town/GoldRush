@@ -134,10 +134,54 @@ actually observed.
 
 ## Real deploy
 
-**IN FLIGHT at the time this review was committed.** Started `2026-07-26 00:33:36` local against the merged
-script, snapshot `/var/folders/…/T//gold-rush-dist.AZwUiJ`, run through
-`logs/_s1050_real_deploy.mjs` (which reads the deployment URL *and* the production alias, per F-1050-1).
-It has already run past the ~15.5-minute mark at which both of yesterday's attempts died, which is
-information but not yet a result. **The outcome is appended below by the same fire before it hands off —
-if this sentence is still the last line of the file, the fire died mid-upload and the next one should read
-`logs/deploy-result.json` and the tail of `logs/deploy.log` before assuming anything.**
+A real deploy ran through the merged script: started `00:33:36`, **failed `00:49:02`** (15.4 min), snapshot
+`/var/folders/…/T//gold-rush-dist.AZwUiJ`, driven by `logs/_s1050_real_deploy.mjs`.
+
+```
+[deploy] deploying snapshot /var/folders/…/gold-rush-dist.AZwUiJ to Pages project 'gold-rush'…
+[deploy] FAILED: pages deploy — ✘ [ERROR] Failed to upload files. Please try again. Error: {})
+         | 🪵  Logs were written to ".../wrangler-2026-07-25_17-33-36_612.log" — see logs/deploy.log
+exit 0
+{"outcome":"deploy_failed","url":"","publishedBuild":"00f5d464","commit":"00f5d464…","ts":"2026-07-25T17:49:02Z"}
+
+expected build (publishedBuild) = 00f5d464
+[PRODUCTION alias] https://gold-rush-3in.pages.dev -> {"build":"49dbce7a","builtAt":"2026-07-24T17:20:23Z"}
+```
+
+**This is the slice passing its real exam, not failing it.** The identical event one day earlier wrote
+`DEPLOYED ok '(url in log)'` and `outcome:"deployed"`. Today it wrote `deploy_failed` with an empty URL —
+and the *independent* production probe agrees with it: the alias still serves `49dbce7a` from
+`2026-07-24T17:20:23Z`. **The script's verdict and the live site now say the same thing**, which is the
+entire point of F-1049-1 and could not be demonstrated by any test.
+
+**The outage is NOT over, and no one should read this review as saying it is.** The family is still on a
+build from 2026-07-24. What changed is that the factory can no longer be fooled about it.
+
+**F-1050-1 remains UNEXERCISED, deliberately recorded as such:** no deployment URL was ever captured, so
+the deployment-URL-vs-production-alias divergence could not be tested. My wrapper read the alias directly
+instead. The finding stands as written and still wants a successful deploy to settle it.
+
+**Cause, from wrangler's own log** (the breadcrumb the predecessor `ab528c3f` added — this is the second
+time it has paid for itself): `wrangler-2026-07-25_17-33-36_612.log` contains **9× `UND_ERR_HEADERS_TIMEOUT`**
+and 9× `fetch failed`, and **zero** auth failures. Same fingerprint as yesterday. F-1049-2 holds: **it is
+not auth, and `wrangler login` is still the wrong move.**
+
+### F-1050-3 — the upload is 3.6× bigger than the factory has been telling itself. NEW, measured this fire.
+Every recent note sizes the payload at "~118MB". I measured `dist/` directly instead of repeating it:
+
+| | |
+|---|---|
+| **Total** | **443,984,185 bytes = 423.4 MB across 3,054 files** |
+| `.glb` | 306.8 MB (72%) |
+| `.png` | 80.8 MB |
+| `.webp` | 23.2 MB · `.mp3` 9.0 MB · `.js` 3.6 MB · `.css` 0.1 MB |
+
+The 118MB figure is the **asset-diet's runtime number** (93.8MB dieted GLBs + 24.3MB dieted PNGs = 118.1MB) —
+what the *game requests on first town*, which is what that gate was built to measure. It was never what
+`wrangler pages deploy` uploads, and somewhere the two got conflated. **The deploy pushes the full 423.4 MB.**
+
+That reframes the timeouts from bad luck into arithmetic: 423.4 MB over the owner's line (reported <10Mbit
+by s1049 — *inherited, not measured by me*) is ~6 minutes of transfer at the theoretical best, against
+undici's 300s per-request header timeout. Every attempt has died at ~15.5 minutes. **Shrinking what gets
+uploaded is the lever; retrying the same 423 MB is not.** This crosses what ships to players, so it is an
+owner/attended call, not something a fire may author — it is on the OWNER'S DESK with a recommendation.
