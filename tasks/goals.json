@@ -1039,13 +1039,14 @@
         {
           "id": "perf-05-startup-attribution",
           "title": "F-1034-3 (perf-05 half): perf-05-startup:213 is NOT a CPU-load flake — every threshold passes and :223 fails on a substring collision, needle 'icon-' matching favicon-32.png",
-          "status": "held-gate-incomplete",
+          "status": "shipped",
           "taskFile": "lane-a-perf-05-startup-attribution.md",
           "attempts": 1,
-          "note": "s1038: the run FINISHED both projects then died on an upstream \"Selected model is at capacity\" (rc1), so the runner never committed — output salvaged from the worktree (d1743150) before any refill could reset --hard over it. Deliverable PROVEN: beforeFirstFrame [] and all 5 prefetch rows on 4/4 runs; two-halved needle control proven exhaustively (all 3 favicons stop matching, every genuine icon-/bld-/ui- asset still matches). Defect 2 reading 3 REFUTED — the prefetch always fired, the 250-entry buffer ate it (F-1038-4); bootBytes 3.57MB -> 7.92MB same build. HELD not merged: only :231 ttiMs<3000 is red (3118/3014/3961) under lane-c CPU contention, an assertion this test-only change cannot causally affect (F-1038-1). GATE: re-run both projects with pgrep -f \"codex exec\" empty; green => path-scoped merge.",
+          "note": "s1039 DRAINED: merged cec50777 -> main, 5 files path-scoped, zero src/ bytes. The s1038 hold was lifted by a paired alternating A/B, not by waiting for an idle machine: main's own spec was swapped into the same worktree and run alternately against the same server, and MAIN proved ~300ms SLOWER than the lane (mean 3670 vs 3368 over 5 desktop pairs) while failing :231 on 4/5 runs. s1038's gate condition was a false dichotomy (green=>merge, red-on-idle=>regression) that never asked whether unmodified main fails too; it does. Merged-tree gate GREEN both projects (desktop tti 2621, mobile 1714, beforeFirstFrame [], prefetch 5/5, zero console/page/asset errors); tsc clean, build green. F-1034-3 perf-05 half CLOSED; F-1038-1 CONFIRMED. F-1039-1 opened: :231 is a pre-existing load-sensitive red on main - do NOT widen the threshold.",
           "branch": "lane/m3",
           "tip": "cec50777",
-          "review": "reviews/perf-05-startup-attribution.md"
+          "review": "reviews/perf-05-startup-attribution.md",
+          "mergeHash": "cec50777 (lane tip; main merge commit cited in BACKLOG + handoff)"
         },
         {
           "id": "e5-deepwater-resource-guard",

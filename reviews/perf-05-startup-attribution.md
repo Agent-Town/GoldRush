@@ -113,3 +113,86 @@ conflicts possible:
 2. `npx playwright test e2e/perf-05-startup.spec.ts --project=desktop-chrome --project=mobile-chrome --workers=1` in `worktrees/lane-a`.
 3. Green ⇒ path-scoped merge of the two files to main, close F-1034-3's perf-05 half, gazette-exempt (test-only).
 4. Still red on `:231` **with an idle machine** ⇒ that is a genuine TTI regression and a **new** finding — do not widen the threshold (F-1026-1 class).
+
+---
+
+# DRAIN ADDENDUM — s1039: **MERGED.** The hold is lifted by measurement, not by patience.
+
+**Merged tip:** `cec50777` → main, 5 files, path-scoped, **zero `src/` bytes.**
+
+## Why the s1038 gate condition could not close as written
+The step-4 dichotomy above — *green ⇒ merge; red on an idle machine ⇒ genuine regression* — is a
+**false dichotomy.** It never asks the attribution question the slice is named for: **does `main`,
+which contains none of this change, fail `:231` too?** It does. That third branch is the true one,
+and no number of single-variant re-runs could ever have found it.
+
+## The instrument: a paired, alternating A/B
+`main`'s spec and `cec50777`'s spec were swapped into the *same* worktree and run **alternately**
+against the *same* dev server, so machine load — the suspected confounder — cancels. The page under
+test is **byte-identical** between variants (`git diff 69f0cd80 main -- src/ public/ index.html` is
+**empty**; the only delta is the spec's own bookkeeping), so `ttiMs` *should* be statistically
+indistinguishable, and any consistent gap would indict the change.
+
+### `ttiMs`, desktop, 5 pairs (alternating order within each pair)
+
+| variant | runs | mean | min | max | spread |
+|---|---|---|---|---|---|
+| **LANE** (`cec50777`) | 3224, 2947, 3386, 3510, 3771 | **3368** | 2947 | 3771 | 824 |
+| **MAIN** (unchanged) | 2874, 3876, 4392, 3566, 3643 | **3670** | 2874 | 4392 | 826 |
+
+**`main` is ~300ms SLOWER than the lane, and fails `:231` on 4 of 5 runs under identical load.**
+Both variants show ~825ms of run-to-run spread — the noise is a property of the *machine*, not of
+the diff. **F-1039-1: `perf-05:231` is a pre-existing, load-sensitive red on `main`.** F-1038-1's
+"load-sensitive" characterisation is CONFIRMED, and now by the strongest available argument — the
+unchanged baseline fails it harder.
+
+### The same A/B on mobile, where the machine was quiet
+
+| variant | `ttiMs` | rc | `beforeFirstFrame` | prefetch rows |
+|---|---|---|---|---|
+| **LANE** | 1694, 1695 (**spread 1ms**) | **0 — green** | 0 | 5 |
+| **MAIN** | 1753, 1803 | 1 — red on `:223` | 1 | 0 |
+
+The 1ms spread at load ~2.2 against 824ms at load ~5–8 is the load-sensitivity thesis proven twice
+over. It also shows the deliverable working exactly as claimed while `main` still fails the favicon
+collision.
+
+## Gate battery (merged tree)
+| check | result |
+|---|---|
+| `npx tsc --noEmit` | **clean** |
+| `npm run build` | **green** (built in 1.10s; asset-diet ran) |
+| perf-05 desktop, merged tree | **rc 0** — `ttiMs` **2621** < 3000, `firstFrame` 2516, `beforeFirstFrame` **[]**, prefetch **5** |
+| perf-05 mobile, merged tree | **rc 0** — `ttiMs` **1714** < 3000, `firstFrame` 1616, `beforeFirstFrame` **[]**, prefetch **5** |
+| console / page / asset errors | **0 / 0 / 0**, both projects |
+| lane-side confirmation, desktop | **3/3 green** at load ~2.3–2.9 (2645 / 2678 / 2789) |
+| adjacent suites | **structurally unaffected** — `grep -rln perf-05-startup e2e/ scripts/` returns only the spec itself; zero `src/` bytes, so every other suite's input set is bit-identical at HEAD and HEAD~1 |
+
+Both merged-tree gate runs were served from a scratch port (5199) per Mistake #12, off a tree whose
+`src/`, `public/` and `index.html` are byte-identical to main's — verified empty diff, not assumed.
+
+## Merge classification (re-verified at drain time)
+`git log 69f0cd80..main -- e2e/perf-05-startup.spec.ts artifacts/perf-05/` is **empty** → main never
+moved on these paths since the lane's base. All 5 files **LANE-TOUCHED-only**; clean checkout, no
+3-way, no conflicts.
+
+## Findings
+- **F-1039-1 (OPEN, pre-existing, not caused by this slice).** `perf-05:231` (`ttiMs < 3000`) fails on
+  **unmodified main** at load ≳4 and passes at load ≲3. It is a real load-sensitivity in the gate, not
+  in the product. **Do NOT widen the threshold** (F-1026-1 class) — the honest fixes are to pin the run
+  (`--workers=1` plus a no-concurrent-lane precondition) or to assert on a load-normalised statistic.
+  Needs an attended/owner call on which; no lane should be spent blind. Laddered in BACKLOG.
+- **F-1039-2 (process).** s1038's handoff is stamped `11:00Z` but its commit is
+  `2026-07-25T17:14:05+07:00` = **10:14Z** — a stamp **46 minutes in the future** — and it reported
+  lane-c as running "~70 min" when the run had started 15 minutes earlier. Stamps are being
+  hand-computed rather than read from `date -u`. This is load-bearing: §1 tells a fire to **exit
+  silently** when an `ACTIVE` lock is <45 min old, so a future-dated lock left by a fire that then
+  dies stalls the entire factory for the skew plus 45 minutes. s1039's own lock was set from `date -u`
+  and matches to within 10 seconds.
+- **F-1038-1 → CONFIRMED and closed** by the A/B above.
+- **F-1034-3, perf-05 half → CLOSED.** The favicon substring collision (`:223`) and the false-empty
+  prefetch list (`:224`) are both fixed and green on the merged tree, both projects.
+
+## Not done, deliberately
+No gazette item and no deploy: **zero `src/` bytes**, nothing a player can see — both filter laws
+checked, not assumed.

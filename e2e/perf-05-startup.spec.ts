@@ -13,21 +13,21 @@ const THROTTLE = {
 };
 
 const NON_CRITICAL_TEXTURES = [
-  'bld-palisade',
-  'bld-sentry-beacon',
-  'bld-sluice-works',
-  'bld-stockpile-yard',
-  'bld-signal-turret',
-  'bld-claim-office',
-  'char-baron',
-  'char-prospector',
-  'prop-baron-banner',
-  'townsfolk-',
-  'ui-menu-',
-  'ui-title-',
-  'icon-',
+  '/bld-palisade',
+  '/bld-sentry-beacon',
+  '/bld-sluice-works',
+  '/bld-stockpile-yard',
+  '/bld-signal-turret',
+  '/bld-claim-office',
+  '/char-baron',
+  '/char-prospector',
+  '/prop-baron-banner',
+  '/townsfolk-',
+  '/ui-menu-',
+  '/ui-title-',
+  '/icon-',
 ];
-const PREFETCH_TEXTURES = ['bld-sentry-beacon', 'bld-palisade', 'bld-sluice-works', 'bld-stockpile-yard', 'bld-signal-turret'];
+const PREFETCH_TEXTURES = ['/bld-sentry-beacon', '/bld-palisade', '/bld-sluice-works', '/bld-stockpile-yard', '/bld-signal-turret'];
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[]; assetErrors: string[] };
 type ResourceRow = {
@@ -58,6 +58,12 @@ type StartupReport = {
     beforeFirstFrame: string[];
     prefetchedBeforeWaveSpawn: string[];
   };
+  diagnostics: {
+    browserVersion: string;
+    iconRows: ResourceRow[];
+    prefetchRows: ResourceRow[];
+    assetStatuses: Record<string, string | undefined>;
+  };
   errors: ErrorBucket;
 };
 
@@ -83,6 +89,7 @@ function collectErrors(page: Page): ErrorBucket {
 
 async function installBootProbe(page: Page): Promise<void> {
   await page.addInitScript(() => {
+    performance.setResourceTimingBufferSize(5_000);
     window.__PERF05_BOOT__ = { firstFrame: 0, playable: 0, waveWarning: 0, waveSpawn: 0 };
     const sample = () => {
       const marks = window.__PERF05_BOOT__!;
@@ -183,6 +190,12 @@ async function runStartup(page: Page, testInfo: TestInfo): Promise<StartupReport
     lazy: {
       beforeFirstFrame: [...new Set(beforeFirstFrame)].sort(),
       prefetchedBeforeWaveSpawn: [...new Set(prefetchedBeforeWaveSpawn)].sort(),
+    },
+    diagnostics: {
+      browserVersion: page.context().browser()?.version() ?? 'unknown',
+      iconRows: resources.filter((row) => row.name.includes('icon')),
+      prefetchRows: resources.filter((row) => hasAny(row.name, PREFETCH_TEXTURES)),
+      assetStatuses: await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.assets ?? {}),
     },
     errors,
   };
