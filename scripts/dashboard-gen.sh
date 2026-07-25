@@ -62,7 +62,7 @@ QUEUES=$(printf '%s' "$QUEUES" | esc)
 
 # --- Done: real start/finish, model, and outcome for the last 24h ---
 DONE_TAIL=$(python3 - <<'PYDONE'
-import os, glob, re, subprocess, time
+import os, glob, re, subprocess, time, json
 rows=[]
 now=time.time()
 def sh(*a):
@@ -75,18 +75,33 @@ for _p in glob.glob('tasks/runs/*.log'):
     if not os.path.exists(_d):
         import shutil; shutil.copy2(_p,_d)
 # durable ledger: absorb any run log not yet recorded (runner prunes logs at +3d — the ledger keeps them forever)
+# s1028 fix (F-1027-3): 'json' was NOT imported at this point, so every dedupe read raised NameError into a
+# bare 'except: pass' and 'seen' was always empty — the ledger re-appended EVERY log on EVERY 60s regen
+# (6,603 rows for 49 real runs, +48 lines/minute). Three defects fixed together:
+#   1. json is imported at the top of this block, and the per-line except is narrowed to (ValueError,
+#      KeyError) so a future programming error surfaces instead of silently disabling dedupe.
+#   2. the key is stamp|lane|task, not stamp alone — 5 stamps own 2-4 sibling logs (lanes start in the same
+#      second), and a stamp-only key would permanently drop the siblings once dedupe actually worked.
+#   3. the ledger is UPSERTED, not appended: a live run writes tokens=0 rows once a minute, so skip-if-seen
+#      would freeze every run at tokens=0 forever. Best row per key wins, ranked by (tokens, minutes).
+# Rows whose logs the runner has pruned are carried forward untouched — that is the ledger's whole purpose.
 LEDGER='logs/task-stats.jsonl'
-seen=set()
+ledger_rows={}   # NOT 'rows' — that name belongs to the dashboard's Done-section list built below.
+def _key(r): return '%s|%s|%s' % (r['stamp'], r['lane'], r['task'])
+def _rank(r): return (r.get('tokens', 0), r.get('minutes', 0))
+def _absorb(r):
+    k=_key(r)
+    if k not in ledger_rows or _rank(r) > _rank(ledger_rows[k]): ledger_rows[k]=r
 try:
     for line in open(LEDGER):
-        try: seen.add(json.loads(line)['stamp'])
-        except: pass
+        line=line.strip()
+        if not line: continue
+        try: _absorb(json.loads(line))
+        except (ValueError, KeyError, TypeError): continue
 except FileNotFoundError: pass
-led=open(LEDGER,'a')
-import json as _j
 for path in sorted(glob.glob('tasks/runs/*.log'), key=os.path.getmtime):
     f0=os.path.basename(path); m0=re.match(r'(\d{8}-\d{6})-(lane-[a-z]+|art|main)-(.+)\.md\.log$', f0)
-    if not m0 or m0.group(1) in seen: continue
+    if not m0: continue
     t0=''
     try: t0=open(path,errors='ignore').read()
     except: pass
@@ -94,8 +109,12 @@ for path in sorted(glob.glob('tasks/runs/*.log'), key=os.path.getmtime):
     mt0=os.path.getmtime(path)
     try: se0=time.mktime(time.strptime(m0.group(1),'%Y%m%d-%H%M%S'))
     except: se0=mt0
-    led.write(_j.dumps({'stamp':m0.group(1),'lane':m0.group(2),'task':m0.group(3),'tokens':int(mm0[-1].replace(',','')) if mm0 else 0,'minutes':int((mt0-se0)/60)})+'\n')
-led.close()
+    _absorb({'stamp':m0.group(1),'lane':m0.group(2),'task':m0.group(3),'tokens':int(mm0[-1].replace(',','')) if mm0 else 0,'minutes':int((mt0-se0)/60)})
+_tmp=LEDGER+'.tmp'
+with open(_tmp,'w') as led:
+    for k in sorted(ledger_rows, key=lambda k:(ledger_rows[k]['stamp'], ledger_rows[k]['lane'], ledger_rows[k]['task'])):
+        led.write(json.dumps(ledger_rows[k])+'\n')
+os.replace(_tmp, LEDGER)
 import json
 for path in sorted(glob.glob('tasks/runs/*.log'), key=os.path.getmtime, reverse=True):
     mt=os.path.getmtime(path)
@@ -160,8 +179,10 @@ STATS_TABLE=$(printf 'ALL-TIME: %d task runs · %d hours %d min of implementer t
 STATS_TABLE=$(printf '%s' "$STATS_TABLE" | esc)
 
 # auto-refresh the census in the background when stale (>6h); render the last stamp meanwhile
-NODE_BIN="$(command -v node || true)"
-[ -z "$NODE_BIN" ] && for c in /Users/robin/.nvm/versions/node/*/bin/node /opt/homebrew/bin/node /usr/local/bin/node; do [ -x "$c" ] && NODE_BIN="$c" && break; done
+# s1028 (F-1028-1): this line used to re-resolve NODE_BIN as "$(command -v node || true)", throwing away the
+# validated interpreter picked at the top of this script. Under launchd the PATH carries no node, so it fell
+# through to the nvm glob and took whichever version sorted FIRST — an old one that cannot read ESM. Keep the
+# interpreter chosen (and [ -x ]-checked) at lines 11-17.
 if [ -e logs/factory-usage.json ]; then
   age_min=$(( ( $(date +%s) - $(stat -f %m logs/factory-usage.json) ) / 60 ))
   if [ "$age_min" -gt 360 ] && ! pgrep -f factory-usage-census >/dev/null 2>&1; then
@@ -258,7 +279,14 @@ ALERTS=$(grep 'ALERT' "$HEALTH_LOG" 2>/dev/null | tail -5 | cut -c1-130 | esc)
 FIRELOG=$(tail -3 "logs/fire-$(date +%Y%m%d).log" 2>/dev/null | cut -c1-130 | esc)
 
 # --- Goal tree: repo-authored plan + filesystem/git-derived leaf status ---
-"$NODE_BIN" <<'NODE' > "$GOAL_TREE_TMP" || exit 1
+# s1028 (F-1028-1): this used to pipe ESM source into node on STDIN, where node applies module-syntax
+# detection only on recent versions — on the interpreter launchd actually got, every regen died with
+# "Cannot use import statement outside a module", and the trailing "|| exit 1" then killed the WHOLE
+# script before logs/dashboard.html was written. The board froze at 07:02 and no one was told, because a
+# stale HTML file looks exactly like a fresh one. Now: run from a real .mjs (ESM on every node version),
+# and a goal-tree failure degrades to a visible placeholder instead of taking the entire board down.
+GOAL_TREE_SRC="${GOAL_TREE_TMP%.html}.mjs"
+cat > "$GOAL_TREE_SRC" <<'NODE'
 import fs from 'node:fs';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
@@ -318,6 +346,10 @@ data.goals.forEach((goal, goalIndex) => {
 });
 process.stdout.write(html);
 NODE
+if ! GOAL_TREE_ERR=$("$NODE_BIN" "$GOAL_TREE_SRC" 2>&1 > "$GOAL_TREE_TMP"); then
+  printf '<pre>(goal tree unavailable — %s)</pre>\n' "$(printf '%s' "$GOAL_TREE_ERR" | tail -2 | esc)" > "$GOAL_TREE_TMP"
+  echo "[dashboard] goal tree failed: $GOAL_TREE_ERR" >&2
+fi
 GOAL_TREE=$(<"$GOAL_TREE_TMP")
 
 cat > "$OUT" <<HTML
