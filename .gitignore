@@ -35,5 +35,8 @@ logs/.usage-census-cache.json
 # generated each regen from the heredoc in scripts/dashboard-gen.sh (s1028, F-1028-1).
 # Exact path on purpose — a wildcard here is how F-1027-2 turned logs/runs-archive/ into a black hole.
 logs/.goal-tree.mjs
+# dry-board guard counter written by scripts/fire-runner.sh:53. Untracked runtime state, but three
+# consecutive handoffs had to explain it as unexplained dirt — ignoring it ends that (s1025 flagged it).
+tasks/.fire-skip-count
 rehearsal-video/
 rider-video/
