@@ -18,6 +18,13 @@
 // line 1 must stay exactly one line (the lock/staleness check reads head -1).
 // <label> is the archive bullet's name, e.g. "s1048 handoff".
 //
+// CONVENTION (learned the hard way in s1049): `set` is for taking the lock and it
+// does NOT archive — so the predecessor's handoff line is replaced and survives only
+// in git. When you then write your handoff, the line you are archiving is your own
+// lock line, not the predecessor's handoff. Label it for what it actually is
+// ("sNNNN lock"), and if the predecessor's handoff never got archived, recover it
+// with `git show <their-commit>:STATUS.md` rather than leaving a gap in the chain.
+//
 // The archive bullet is inserted at line 4 (0-based index 3), which is where
 // every prior handoff has put it: line 1 = state, lines 2-3 = blank, then the
 // newest-first archive bullets.
