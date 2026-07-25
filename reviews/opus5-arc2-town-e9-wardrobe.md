@@ -1,15 +1,17 @@
 ---
-title: E9 Red Fields town wardrobe — full cast
+title: E9 + E10 town wardrobes — both thin eras closed to full cast
 date: 2026-07-25
 branch: sculpt/opus5-3d-night
 status: READY-FOR-GATES
 ---
 
-# ARC 2 — the thin eras: E9 closed to full cast
+# ARC 2 — the thin eras: E9 and E10 closed to full cast
 
-**Verdict: READY-FOR-GATES.** Eight `.e9.glb` land the Red Fields wardrobe, boot
-green at era 9 on desktop and 390 px mobile with zero console or page errors, and
-serve with no E8 fallback. E10 is **not** delivered — see "What is not here".
+**Verdict: READY-FOR-GATES.** Sixteen files land both thin eras: eight `.e9.glb`
+(Red Fields) and eight `.e10.glb` (Deep Sky). Both boot green at their era on
+desktop and 390 px mobile — 4/4 across the two eras and two projects — with zero
+console or page errors and no fallback to the previous era. **The town now
+evolves through all ten eras.**
 
 ## The gap, measured
 
@@ -20,7 +22,7 @@ Of the eight core town buildings, **none** had an `.e9` or `.e10` variant.
 
 | era | e2 | e3 | e4 | e5 | e6 | e7 | e8 | e9 | e10 |
 | --- | --: | --: | --: | --: | --: | --: | --: | --: | --: |
-| core town buildings | 8 | 8 | 8 | 8 | 8 | 8 | 8 | **0 → 8** | **0** |
+| core town buildings | 8 | 8 | 8 | 8 | 8 | 8 | 8 | **0 → 8** | **0 → 8** |
 
 This never failed loudly. `TownTavernPilot.eraCandidates` (`src/town/TownTavernPilot.ts:191`)
 walks DOWN from the active era, so era 9 silently served each building's E8 coat.
@@ -55,9 +57,9 @@ the shipped `era-props-e9-atlas.png` (41,468 exact pixels), not assumed.
 
 | Gate | Result |
 | --- | --- |
-| Boot at era 9, desktop-chrome + mobile-chrome (390 px) | **2/2 pass** |
-| All eight `.e9.glb` served | pass — none missing |
-| E8 fallback fired | **none** — `canvas.dataset.town3dPilotEra === "9"` |
+| Boot at era 9 AND era 10, desktop-chrome + mobile-chrome (390 px) | **4/4 pass** |
+| All eight `.e9.glb` and `.e10.glb` served | pass — none missing |
+| Previous-era fallback fired | **none** — `canvas.dataset.town3dPilotEra === "9"` / `"10"` |
 | Console errors / page errors | 0 / 0 |
 | Semantics per building | 1 node / 1 mesh / 1 primitive / 1 material / 1 image, 1024² atlas |
 | Cameras / lights / animations | 0 / 0 / 0 |
@@ -66,10 +68,10 @@ the shipped `era-props-e9-atlas.png` (41,468 exact pixels), not assumed.
 | Centred / grounded | centre drift 0.000 m; min-Z ≤ 0.001 m |
 | Deterministic re-export | 8/8 byte-identical from the reopened `.blend` |
 
-- `reviews/shots-town-e9/desktop-chrome-e9-square.png`
-- `reviews/shots-town-e9/mobile-chrome-e9-square.png`
+- `reviews/shots-town-e9/{desktop,mobile}-chrome-e9-square.png`
+- `reviews/shots-town-e10/{desktop,mobile}-chrome-e10-square.png`
 - `artifacts/town-e9/town-e9-wardrobe-board.png` — all eight, E8 above / E9 below, one camera
-- `artifacts/town-e9/town-e9-wardrobe.json`, `town-e9-verify.json`
+- `artifacts/town-e9/*.json`, `artifacts/town-e10/*.json`, both wardrobe boards
 
 ## Findings
 
@@ -111,20 +113,46 @@ punched voids in the silhouette; a spire that floated over its own roof because
 town camera but is honest debt: the parts want hatching in their cells rather than
 plain fill. Recorded rather than quietly accepted.
 
+## E10 — the capstone (delivered)
+
+E10's art law is preservation, not reinvention: the Ark's decks "keep each era's
+grammar", and the last contracts "don't extract; they PRESERVE". Doing to E9 what
+E9 did to E8 would erase the nine eras the Ark exists to carry, so the E10
+transform is deliberately restrained — deep values cool toward the void outside
+the hull, highlights warm to the nebula's parchment-gold, and the midtones that
+carry the accumulated grammar are left almost untouched.
+
+| Building | E10 role | Spec basis | Tris (+added) |
+| --- | --- | --- | ---: |
+| tavern | Long Table Deck | §A: "the Long Table mess (tavern's final form)" | 13,444 (+124) |
+| schoolhouse | Bridge Deck | §A: "the Bridge School" | 7,808 (+188) |
+| claim-office | World Window | §B1: "the world-window bridge where visited-world charters are chosen" | 3,960 (+124) |
+| assay-office | Press Hall | §A: "the Charter Press hall (Assay lineage's endpoint)" | 5,660 (+124) |
+| general-store | Preserve Hold | §A: the final contracts "PRESERVE" | 5,020 (+292) |
+| dynamo-hall | Engine Deck | §B1: "engine decks aft" | 5,008 (+140) |
+| chapel | Pan Shrine | §A: "the Pan Shrine (the original E1 pan)" | 4,796 (+124) |
+| stamp-mill | Keel Works | the mill lineage builds the hull it now rides in | 3,384 (+132) |
+
+**F-OP5-10 — two E10 roles are named for the hall, not the fixture (owner call).**
+`bridge-school.e10.glb` and `charter-press.e10.glb` already exist as plaza props.
+Naming the schoolhouse and assay-office variants after them would put the same
+landmark in the square twice, so they ship as **Bridge Deck** and **Press Hall** —
+the rooms around those fixtures. If the intent was that the props ARE those
+buildings, this is a rename, not a rebuild. Flagged rather than decided.
+
+**F-OP5-11 — the E10 change is subtle by design, non-blocking.** At the town
+camera E10 reads close to E9, because preservation is the era's stated law. A
+reviewer expecting another wholesale palette shift will ask whether anything
+changed; the answer is the hull seam, the gilded highlights, the inked darks and
+the per-lineage deck fittings. Said plainly here so restraint is not mistaken for
+an unfinished pass.
+
 ## What is not here
 
-**E10 is not delivered.** Arc 2 asked for both wardrobes; the allotment reached
-its end during E9. E9 is complete and independently gate-able, which is the
-honest partial the commission allows — E10 remains exactly as it was, and the
-recipe for it is now a parameter change away (`build_town_e9_wardrobe.py` is
-recipe-driven; E10's roles are drafted in the handover notes below).
-
-For E10 the spec language is preservation, not reinvention — "every deck keeps its
-era's grammar" — so the transform should be a light Ark seam over the E9 forms,
-NOT another palette wash. Note also that `bridge-school.e10.glb` and
-`charter-press.e10.glb` already exist as plaza props, so the schoolhouse and
-assay-office deck roles must not duplicate them; that is an owner/attended naming
-call, which is why it was not decided unilaterally here.
+**Sources not tracked.** The `.e9.blend` / `.e10.blend` files stay on disk
+untracked; the committed recipes regenerate them byte-identically in one command.
+This matches the E8 wave, which also shipped GLBs without blends. Nothing was
+deleted.
 
 **Sources not tracked.** The eight `.e9.blend` files (23 MB) stay on disk
 untracked; the committed recipe regenerates them byte-identically in one command.
@@ -137,7 +165,7 @@ left on disk, not committed, outside this commission's firewall. Reproduce with:
 ```
 npx vite --host 127.0.0.1 --port 5241 --strictPort &
 GR_CAPTURE_EXTERNAL_SERVER=1 GR_CAPTURE_BASE_URL=http://127.0.0.1:5241 \
-  npx playwright test e2e/.town-e9-probe.spec.ts \
+  npx playwright test e2e/.town-e9-probe.spec.ts e2e/.town-e10-probe.spec.ts \
   --project=desktop-chrome --project=mobile-chrome --reporter=line
 ```
 
