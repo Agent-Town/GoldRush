@@ -75,6 +75,13 @@ echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model $FIRE_MODEL)" >> "$LOG"
   >> "$LOG" 2>&1
 RC=$?
 echo "[fire-runner] $(date +%H:%M:%S) FIRE END rc=$RC" >> "$LOG"
+# THE ALT FALLBACK (owner-authorized 2026-07-25: the brainstem tank, 97% headroom): a weekly-wall bounce retries once on the alt subscription.
+if [ "$RC" != "0" ] && tail -4 "$LOG" | grep -qi "weekly limit"; then
+  echo "[fire-runner] $(date +%H:%M:%S) WALL on primary — ALT FIRE (config ~/.claude-alt)" >> "$LOG"
+  CLAUDE_CONFIG_DIR="$HOME/.claude-alt" "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" --model "$FIRE_MODEL" >> "$LOG" 2>&1
+  RC=$?
+  echo "[fire-runner] $(date +%H:%M:%S) ALT FIRE END rc=$RC" >> "$LOG"
+fi
 
 # keep 14 days of logs
 find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null
