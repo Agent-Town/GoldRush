@@ -221,8 +221,10 @@ test('wreck opens a real palisade breach, disables beacon fire, and drops stockp
 });
 
 test('repair dwell spends exact sink, restores function, and keeps replay equal to HUD', async ({ page }) => {
+  const repairSeconds = 8;
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&seed=m2-05-repair');
   await setBalance(page, 'enemy.contactDamage', 0);
+  await setBalance(page, 'wreck.repairSeconds', repairSeconds);
   await grantGold(page, 40);
   await placeBuildableAt(page, 'palisade', 0, 9);
   await wreck(page, 'palisade');
@@ -250,7 +252,9 @@ test('repair dwell spends exact sink, restores function, and keeps replay equal 
 });
 
 test('repair interrupt does not debit and no-funds repair shows one blocked float', async ({ page }) => {
+  const repairSeconds = 8;
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nolevel&nopause&seed=m2-05-repair-blocks');
+  await setBalance(page, 'wreck.repairSeconds', repairSeconds);
   await grantGold(page, 10);
   await placeBuildableAt(page, 'palisade', 0, 9);
   await wreck(page, 'palisade');
@@ -259,7 +263,7 @@ test('repair interrupt does not debit and no-funds repair shows one blocked floa
   await teleport(page, 0, 9);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.repair.progress ?? 0)).toBeGreaterThan(0);
   await teleport(page, 8, 16);
-  await waitForSim(page, Balance.wreck.repairSeconds + 0.3);
+  await waitForSim(page, repairSeconds + 0.3);
   expect((await economyLog(page)).some((event) => event.sink === 'repair_palisade')).toBe(false);
   expect(await hpEntry(page, 'palisade').then((entry) => entry?.wrecked)).toBe(true);
 
