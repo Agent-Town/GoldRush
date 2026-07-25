@@ -249,7 +249,7 @@ while IFS= read -r line; do
   BLOCKED="$BLOCKED$(printf '%s
     ⏳ blocked %s min (tracked since first sighting)' "$txt" "$(mins_ago "$first")")
 "
-done < <(grep -E 'GATE:|AUTHOR (after|from)' tasks/BACKLOG.md 2>/dev/null | grep -v '^#')
+done < <(grep -E 'GATE:|AUTHOR (after|from)' tasks/BACKLOG.md 2>/dev/null | grep -v '^#' | grep -vE 'CLOSED|SHIPPED|superseded|RESOLVED|✅|~~|GATE✅|RETIRED')
 [ -z "$BLOCKED" ] && BLOCKED="(nothing blocked — everything startable is queued or running)"
 BLOCKED=$(printf '%s' "$BLOCKED" | esc)
 
