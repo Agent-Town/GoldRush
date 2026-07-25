@@ -52,6 +52,28 @@ function bboxIn(png, key, ox, oy, cw, ch) {
   }
   return x1 < 0 ? null : { x0, y0, x1, y1, w: x1 - x0 + 1, h: y1 - y0 + 1 };
 }
+/**
+ * Where the figure actually STANDS. The bbox bottom is not the feet when a prop
+ * hangs lower — the rail tough's wrench dips below his boots, and aligning bbox
+ * bottoms put the wrench tip on the ground line and shoved his head out of the
+ * cell (grafted height 324 against a 274 reference, offset y=-41). The foot line
+ * is the lowest scanline carrying a real run of figure, not a thin prop tip.
+ */
+function footLine(png, key, ox, oy, b) {
+  const minRun = Math.max(3, Math.round(b.w * 0.12));
+  for (let y = b.y1; y >= b.y0; y--) {
+    let n = 0;
+    for (let x = b.x0; x <= b.x1; x++) if (dist(png.data, ((png.width * (oy + y) + (ox + x)) << 2), key) > TOL) n++;
+    if (n >= minRun) return y;
+  }
+  return b.y1;
+}
+function figure(png, key, ox, oy, cw, ch) {
+  const b = bboxIn(png, key, ox, oy, cw, ch);
+  if (!b) return null;
+  const foot = footLine(png, key, ox, oy, b);
+  return { ...b, foot, figH: foot - b.y0 + 1 };
+}
 const median = (a) => { const s = [...a].sort((p, q) => p - q); return s[s.length >> 1]; };
 
 const sheet = PNG.sync.read(fs.readFileSync(sheetPath));
@@ -63,28 +85,28 @@ const scw = Math.floor(src.width / scols), sch = Math.floor(src.height / srows);
 // --- what the sheet expects, measured from the reference row -----------------
 const ref = [];
 for (let c = 0; c < cols; c++) {
-  const b = bboxIn(sheet, sheetKey, c * cw, matchRow * ch, cw, ch);
+  const b = figure(sheet, sheetKey, c * cw, matchRow * ch, cw, ch);
   if (b) ref.push(b);
 }
 if (!ref.length) { console.error(`reference row ${matchRow} is empty`); process.exit(1); }
-const refH = median(ref.map((b) => b.h));
-const refBaseline = median(ref.map((b) => b.y1));
+const refH = median(ref.map((b) => b.figH));
+const refFoot = median(ref.map((b) => b.foot));
 const refCentre = median(ref.map((b) => (b.x0 + b.x1) / 2));
 
 // --- what the generator gave -------------------------------------------------
 const frames = [];
 for (let r = 0; r < srows; r++) for (let c = 0; c < scols; c++) {
-  const b = bboxIn(src, srcKey, c * scw, r * sch, scw, sch);
+  const b = figure(src, srcKey, c * scw, r * sch, scw, sch);
   frames.push(b ? { r, c, ...b } : null);
 }
 const got = frames.filter(Boolean);
 console.log(`source ${path.basename(srcFile)} ${src.width}x${src.height} @${scols}x${srows}, key #${srcKey.map((v) => v.toString(16).padStart(2, '0')).join('')}`);
-got.forEach((f, i) => console.log(`  frame ${i} r${f.r}c${f.c}: ${f.w}x${f.h} at (${f.x0},${f.y0})`));
+got.forEach((f, i) => console.log(`  frame ${i} r${f.r}c${f.c}: bbox ${f.w}x${f.h} at (${f.x0},${f.y0}) · figure height ${f.figH} (foot line y=${f.foot}${f.foot < f.y1 ? `, ${f.y1 - f.foot}px of prop hangs below` : ''})`));
 if (got.length !== cols) console.log(`NOTE: ${got.length} source figures for ${cols} target columns`);
-const srcH = median(got.map((f) => f.h));
+const srcH = median(got.map((f) => f.figH));
 const scale = refH / srcH;
-console.log(`\ntarget row ${row}: reference row ${matchRow} median height ${refH}px, baseline y=${refBaseline}, centre x=${refCentre}`);
-console.log(`source median height ${srcH}px → scale ${scale.toFixed(4)} (grafted heights ${got.map((f) => Math.round(f.h * scale)).join(', ')})`);
+console.log(`\ntarget row ${row}: reference row ${matchRow} median FIGURE height ${refH}px, foot line y=${refFoot}, centre x=${refCentre}`);
+console.log(`source median figure height ${srcH}px → scale ${scale.toFixed(4)} (grafted figure heights ${got.map((f) => Math.round(f.figH * scale)).join(', ')})`);
 if (has('--dry')) { console.log('\n--dry: nothing written'); process.exit(0); }
 
 // --- graft -------------------------------------------------------------------
@@ -108,16 +130,18 @@ const sample = (png, fx, fy) => { // bilinear
   }
   return o;
 };
-let placed = 0;
+let placed = 0, lost = 0;
 for (let c = 0; c < cols && c < got.length; c++) {
   const f = got[c];
   const dw = Math.round(f.w * scale), dh = Math.round(f.h * scale);
   const dx0 = Math.round(c * cw + refCentre - dw / 2);
-  const dy0 = Math.round(row * ch + refBaseline - dh + 1);
+  // FEET on the reference foot line — anything hanging below (a wrench, a coat
+  // tail) simply extends downward from there instead of levering the figure up.
+  const dy0 = Math.round(row * ch + refFoot - (f.foot - f.y0) * scale);
   for (let y = 0; y < dh; y++) {
     const sy = f.r * sch + f.y0 + (y / scale);
     const ty = dy0 + y;
-    if (ty < row * ch || ty >= (row + 1) * ch) continue;
+    if (ty < row * ch || ty >= (row + 1) * ch) { lost++; continue; }
     for (let x = 0; x < dw; x++) {
       const sx = f.c * scw + f.x0 + (x / scale);
       const tx = dx0 + x;
@@ -130,7 +154,9 @@ for (let c = 0; c < cols && c < got.length; c++) {
     }
   }
   placed++;
-  console.log(`  col ${c} ← source frame ${c}: ${dw}x${dh} at cell-local (${dx0 - c * cw},${dy0 - row * ch})`);
+  const localY = dy0 - row * ch;
+  console.log(`  col ${c} ← source frame ${c}: ${dw}x${dh} at cell-local (${dx0 - c * cw},${localY})${localY < 0 ? '  ⚠ ABOVE CELL TOP' : ''}`);
 }
+if (lost) console.log(`⚠ ${lost} scanlines fell outside the cell band and were dropped`);
 fs.writeFileSync(outPath, PNG.sync.write(out));
 console.log(`\ngrafted ${placed} frames into row ${row} of ${outPath} — sheet stays ${sheet.width}x${sheet.height} @${cols}x${rows}, every cell boundary untouched`);

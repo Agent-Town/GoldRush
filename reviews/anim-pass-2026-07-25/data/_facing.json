@@ -1,40 +1,78 @@
 [
  {
-  "stem": "char-tavernkeeper-sheet-walk8",
-  "grid": "8x4",
+  "stem": "char-coalthief-sheet-walk4-a",
+  "grid": "4x4",
   "selfMirror": [
-   28,
-   83,
-   74.8,
-   31
+   49,
+   75,
+   76.5,
+   58
   ],
   "pairs": {
    "0v1": {
-    "direct": 33,
-    "mirror": 34
+    "direct": 56,
+    "mirror": 46
    },
    "0v2": {
-    "direct": 43,
-    "mirror": 41
+    "direct": 65,
+    "mirror": 72
    },
    "0v3": {
-    "direct": 16,
-    "mirror": 16
+    "direct": 35,
+    "mirror": 54
    },
    "1v2": {
-    "direct": 44,
-    "mirror": 6
+    "direct": 74,
+    "mirror": 34
    },
    "1v3": {
-    "direct": 38,
-    "mirror": 30
+    "direct": 72,
+    "mirror": 37
    },
    "2v3": {
-    "direct": 40,
-    "mirror": 48
+    "direct": 51,
+    "mirror": 73
    }
   },
   "verdict": "LR-PAIR-OK",
-  "note": "rows1/2 mirror 6 < direct 44"
+  "note": "rows1/2 mirror 34 < direct 74"
+ },
+ {
+  "stem": "char-railtough-sheet-walk4-a",
+  "grid": "4x4",
+  "selfMirror": [
+   29,
+   95,
+   89,
+   99
+  ],
+  "pairs": {
+   "0v1": {
+    "direct": 81,
+    "mirror": 75
+   },
+   "0v2": {
+    "direct": 71,
+    "mirror": 70
+   },
+   "0v3": {
+    "direct": 81,
+    "mirror": 77
+   },
+   "1v2": {
+    "direct": 69,
+    "mirror": 23
+   },
+   "1v3": {
+    "direct": 14,
+    "mirror": 74
+   },
+   "2v3": {
+    "direct": 81,
+    "mirror": 20
+   }
+  },
+  "verdict": "LR-PAIR-OK",
+  "note": "rows1/2 mirror 23 < direct 69 · WARN profiles (95/89) no less symmetric than cardinals (29/99)"
  }
 ]
