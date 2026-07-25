@@ -11,5 +11,11 @@ Pre-flight (LANE-SAFETY): standard safe-dupe; npm i; tsc+build green + release b
 2. THE HONEST CUE: while town/run GLBs stream, the scene shows an in-world loading read (the survey-plot shells stay BUT gain a subtle raise-progress: canvas dataset + a small corner line "the town is raising… N/M" in house voice; no spinner overlays). Kills the "completely off" first impression on slow lines.
 3. MEASURE: before/after table — total dist, release dist, first-town-visit transfer, first-claim-visit transfer (playwright network capture); target: first town visit under ~25MB.
 4. Specs: visual-parity boot (census-style screenshot compare within tolerance on 2 maps + town) · the loading cue appears under throttled network (playwright route delay) and disappears at ready · zero console; both projects + release build boots.
-## Firewall: build pipeline + the cue + specs. NO source-art changes, NO gameplay, NO asset removals.
+
+## THE ADVANCE STREAM (owner 2026-07-25, verbatim: "Could we start downloading all the assets as soon as the player visits the start page? Basically streaming in advance?")
+5. PREFETCH FROM THE MENU: the start page begins warming the cache the moment it settles — priority-ordered, low-priority fetches (never competing with the interactive path): ① the town's GLBs+atlases (the guaranteed next scene) ② the profile's last-played/first contract (the-claim for fresh) ③ the remaining E1 maps ④ everything else, idle-paced (requestIdleCallback batches; pause instantly on any scene transition, resume in the next scene's idle). Assets are hash-named immutable — warming is pure win; re-visits cost nothing.
+6. THE PREFETCH IS POLITE: respect navigator.connection saveData (skip bulk prefetch when set, keep tier ①) · a dataset seam exposes progress (prefetched/total) · the town's raise-cue (scope 2) consumes it — on a warm cache the town raises instantly and the cue never shows.
+7. Spec additions: menu idle → tier-① requests observed (playwright network capture) · a scene launch mid-prefetch cancels pending fetches (no bandwidth contention: assert the run's own asset requests are not queued behind prefetch) · saveData=true skips bulk · zero console.
+
+## Firewall: build pipeline + the cue + THE PREFETCHER (one module, menu-mounted) + specs. NO source-art changes, NO gameplay, NO asset removals.
 END: READY-FOR-GATES + the before/after size table + throttled-boot screenshots.
