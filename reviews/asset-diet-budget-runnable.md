@@ -77,10 +77,33 @@ Base `625420ef`, four files, **all LANE-TOUCHED only** — main moved none of th
 judgment was required. No `src/` file involved, so no interaction with the three attended territory claims
 live tonight (`anim/opus5-pass`, `sculpt/map-fix-early`, `sculpt/map-fix-late`).
 
-## Honest note on a side effect of gating
+## What the end-to-end deploy probe actually showed (and a correction to my own first reading)
 
-`bash scripts/deploy.sh` is the only way to exercise the wiring end-to-end, and this machine **has live
-Cloudflare credentials** — so the probe performed a **real Pages deployment** of current main rather than
-self-skipping. The published build is fully gated (tsc + build + suites green above), so this is the
-routine factory action, not an escape; recording it because the probe's outward-facing effect was a
-consequence of the gate rather than an intent of it.
+`bash scripts/deploy.sh` is the only way to exercise the wiring end-to-end. It ran for **969s and exited
+`0`** — the never-block law at `:3-4` is intact — and the budget leg behaved exactly as specified:
+selected 2 tests (one per project), recorded both totals with headroom, proceeded without blocking.
+
+**The wrangler step then FAILED, and nothing was published.** I first read this as "a real deployment
+happened"; the log says otherwise, so the record says otherwise. Two findings fall out of it, **both
+pre-existing in `deploy.sh` and neither introduced by this slice** — but both now sit on the path every
+fire walks under DEPLOY LAW:
+
+- **F-1048-4 — deploy.sh's failure diagnostic misdiagnoses its own failures.** Every wrangler failure
+  prints the same hardcoded guess: *"auth expired? project missing? owner: wrangler login / pages project
+  create gold-rush"*. Today's log holds **two wrangler failures with entirely different causes and neither
+  is auth**: at `21:41` an `ENOENT` on `dist/assets/index-CQNr9KPZ-diet-576343bc.js`, and at `23:03` (my
+  run) an empty `Error: {}` after 15.5 minutes of uploading. **An owner following the printed advice would
+  run `wrangler login`, succeed, and still fail the deploy.** The diagnostic should report the captured
+  wrangler error rather than guess a cause.
+- **F-1048-5 — deploy.sh takes no exclusive lock, and a second run rewrites `dist/` under the first one's
+  upload.** This is not hypothetical; the log proves it. The `21:25:49` run began uploading at `21:26:03`;
+  a **second invocation started building at `21:41:37`**, rewriting content-hashed filenames in `dist/`
+  while the first upload was still enumerating them — hence the `ENOENT` on a file that existed when the
+  upload started and did not when it was read. Uploads here run **15+ minutes** against a large `dist`
+  (~118 MB of dieted GLBs/PNGs) while DEPLOY LAW has every fire call this script, so **overlap is likely,
+  not exotic** — Mistake #12 (Gate Contamination) reaching the deploy path.
+
+My own run's `Error: {}` after 15.5 minutes is **not** explained by either mechanism and is left
+**UNVERIFIED** rather than guessed at; the most plausible reading is an upload timeout on the owner's slow
+line, which the next fire should confirm before anyone touches auth. **Net effect for Robin: the Pages
+deploy has not succeeded since `21:47:08` today, so the family is not currently playing the latest build.**
