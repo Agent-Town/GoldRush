@@ -4730,12 +4730,16 @@ export class Game {
     this.completeBaronDefeat(ceremony.atSim);
   }
 
+  private currentRunWave(): number {
+    return this.deepwaterClaim ? this.deepwaterCorsairWavesSpawned : this.waveSystem.diagnostics.wave;
+  }
+
   private completeBaronDefeat(atSim: number): void {
     if (this.baronBeatenThisRun || this.state.current !== 'playing') return;
     const baron = this.activeContract.twist.baron;
     if (!baron) return;
     this.baronBeatenThisRun = true;
-    const runWave = this.deepwaterClaim?.snapshot().corsairWaves.length ?? this.waveSystem.diagnostics.wave;
+    const runWave = this.currentRunWave();
     const alreadySecured = this.runManager?.diagnostics.secured === true;
     const objectiveAllowsSecure = !this.activeContract.twist.powerGrid || this.canyonConnectCompletedByDeadline;
     const defeatRecordedBeforeSecureWave = baron.variantId === 'dredge_queen' && runWave < this.secureWaveForRun();
@@ -5217,7 +5221,7 @@ export class Game {
       this.progression.xpInto,
       this.progression.xpNeed,
       this.progression.level,
-      this.waveSystem.diagnostics.wave,
+      this.currentRunWave(),
       this.waveSystem.diagnostics.waveState,
       this.buildSystem.isBuildMode,
       this.buildMenuOpen,
