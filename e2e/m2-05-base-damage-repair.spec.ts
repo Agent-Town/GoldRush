@@ -97,6 +97,22 @@ async function waitForRendererSettle(page: Page): Promise<void> {
     && window.__THREE_GAME_DIAGNOSTICS__?.agent.embodiment.drifting === false
     && window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.prospector_agent']?.fadeActive !== true,
   );
+  await page.waitForFunction(
+    (state) => {
+      const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
+      if (!diagnostics) return false;
+      if (diagnostics.renderer.geometries !== state.last) {
+        state.last = diagnostics.renderer.geometries;
+        state.stableSince = diagnostics.timeAlive;
+        state.ticks = 1;
+        return false;
+      }
+      state.ticks += 1;
+      return state.ticks >= 8 && diagnostics.timeAlive - state.stableSince >= 1;
+    },
+    { last: -1, stableSince: -1, ticks: 0 },
+    { timeout: 15_000 },
+  );
 }
 
 async function hpEntry(page: Page, id: BuildableId, index = 0) {
@@ -331,13 +347,20 @@ test('wreck and repair cycles leave shooter and renderer counts at baseline', as
   await grantGold(page, 40);
   await placeBuildableAt(page, 'sentry_beacon', 0, 12);
   await page.waitForFunction(() => ['ready', 'lite', 'failed'].includes(document.querySelector('canvas')?.dataset.run3dPilotState ?? ''));
-  for (let i = 0; i < 2; i += 1) {
+  let previousGeometries = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer.geometries ?? -1);
+  let stableWarmups = 0;
+  for (let i = 0; i < 8 && stableWarmups < 3; i += 1) {
     await wreck(page, 'sentry_beacon');
     await teleport(page, 8, 16);
     await grantGold(page, repairCost('sentry_beacon'));
     await teleport(page, 0, 12);
     await expect.poll(() => hpEntry(page, 'sentry_beacon').then((entry) => entry?.wrecked ?? true), { timeout: 10_000 }).toBe(false);
+    await waitForRendererSettle(page);
+    const geometries = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer.geometries ?? -1);
+    stableWarmups = geometries === previousGeometries ? stableWarmups + 1 : 0;
+    previousGeometries = geometries;
   }
+  expect(stableWarmups, 'renderer geometry count did not stabilize during warm-up').toBe(3);
   await waitForRendererSettle(page);
   const baseline = await page.evaluate(() => ({
     renderer: window.__THREE_GAME_DIAGNOSTICS__?.renderer,
