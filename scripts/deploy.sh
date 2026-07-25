@@ -9,6 +9,7 @@ STRICT=0
 [ "${1:-}" = "--strict" ] && STRICT=1
 LOG="logs/deploy.log"
 RESULT="logs/deploy-result.json"
+PAGES_PRODUCTION_URL="${GR_PAGES_PRODUCTION_URL:-https://gold-rush-3in.pages.dev}"
 mkdir -p logs
 note() { echo "[deploy] $(date '+%F %T') $*" >> "$LOG"; echo "[deploy] $*"; }
 DEPLOY_COMMIT="${CF_PAGES_COMMIT_SHA:-$(git rev-parse HEAD 2>/dev/null || printf 'unknown')}"
@@ -91,35 +92,43 @@ if wrangler pages deploy "$SNAPSHOT" --commit-dirty=true > "$CAPTURE" 2>&1; then
 cat "$CAPTURE" >> "$LOG"
 URL="$(grep -oE 'https://[a-z0-9.-]+\.pages\.dev' "$CAPTURE" | tail -1)"
 if [ "$DEPLOY_RC" -ne 0 ] || [ -z "$URL" ]; then
-  ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk '
-    /ERROR|Error:/ { found=1 }
-    found && NF {
-      line=$0
-      sub(/^[[:space:]]+/, "", line)
-      sub(/[[:space:]]+$/, "", line)
-      out=out (out ? " | " : "") line
-    }
-    END { print out }
-  ' | cut -c1-240)"
-  [ -n "$ERROR_LINE" ] || ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk 'NF { line=$0 } END { print line }' | cut -c1-240)"
-  [ -n "$ERROR_LINE" ] || ERROR_LINE="wrangler returned no published URL"
+  if [ "$DEPLOY_RC" -eq 0 ]; then
+    ERROR_LINE="wrangler exited 0 but published no URL"
+  else
+    ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk '
+      /ERROR|Error:/ { found=1 }
+      found && NF {
+        line=$0
+        sub(/^[[:space:]]+/, "", line)
+        sub(/[[:space:]]+$/, "", line)
+        out=out (out ? " | " : "") line
+      }
+      END { print out }
+    ' | cut -c1-240)"
+    [ -n "$ERROR_LINE" ] || ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk 'NF { line=$0 } END { print line }' | cut -c1-240)"
+    [ -n "$ERROR_LINE" ] || ERROR_LINE="wrangler returned no published URL"
+  fi
   note "FAILED: pages deploy — $ERROR_LINE — see $LOG"
   finish deploy_failed 4
 fi
 
 note "DEPLOYED ok $URL"
-if LIVE_BUILD="$(node -e '
-  fetch(process.argv[1], { signal: AbortSignal.timeout(20000) })
-    .then(response => {
-      if (!response.ok) throw new Error(`HTTP ${response.status}`);
-      return response.json();
-    })
-    .then(version => process.stdout.write(String(version.build ?? "missing")))
-    .catch(() => process.exit(1));
-' "$URL/version.json" 2>/dev/null)"; then :; else LIVE_BUILD="unreachable"; fi
-if [ "$LIVE_BUILD" = "$PUBLISHED_BUILD" ]; then
-  note "VERIFIED published $PUBLISHED_BUILD"
-  finish deployed 0 "$URL"
-fi
-note "UNVERIFIED: deploy reported success but $URL/version.json says $LIVE_BUILD"
+for ATTEMPT in 1 2 3; do
+  if LIVE_BUILD="$(node -e '
+    fetch(process.argv[1], { signal: AbortSignal.timeout(20000) })
+      .then(response => {
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        return response.json();
+      })
+      .then(version => process.stdout.write(String(version.build ?? "missing")))
+      .catch(() => process.exit(1));
+  ' "$PAGES_PRODUCTION_URL/version.json" 2>/dev/null)"; then :; else LIVE_BUILD="unreachable"; fi
+  note "VERIFY attempt $ATTEMPT/3: $PAGES_PRODUCTION_URL/version.json says $LIVE_BUILD"
+  if [ "$LIVE_BUILD" = "$PUBLISHED_BUILD" ]; then
+    note "VERIFIED published $PUBLISHED_BUILD at $PAGES_PRODUCTION_URL"
+    finish deployed 0 "$URL"
+  fi
+  [ "$ATTEMPT" -eq 3 ] || sleep 15
+done
+note "UNVERIFIED: uploaded $PUBLISHED_BUILD but $PAGES_PRODUCTION_URL/version.json says $LIVE_BUILD"
 finish deploy_unverified 7 "$URL"
