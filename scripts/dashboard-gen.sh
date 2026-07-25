@@ -68,6 +68,12 @@ now=time.time()
 def sh(*a):
     try: return subprocess.check_output(list(a), text=True, stderr=subprocess.DEVNULL).strip()
     except: return ''
+# THE RETENTION LAW (owner 2026-07-25): mirror every run log into the tracked archive before any pruner can reach it.
+os.makedirs('logs/runs-archive', exist_ok=True)
+for _p in glob.glob('tasks/runs/*.log'):
+    _d='logs/runs-archive/'+os.path.basename(_p)
+    if not os.path.exists(_d):
+        import shutil; shutil.copy2(_p,_d)
 # durable ledger: absorb any run log not yet recorded (runner prunes logs at +3d — the ledger keeps them forever)
 LEDGER='logs/task-stats.jsonl'
 seen=set()
