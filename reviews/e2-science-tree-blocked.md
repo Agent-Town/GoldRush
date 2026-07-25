@@ -1,7 +1,17 @@
 # Finding: ③ E2 science-tree is architecturally BLOCKED — not a Silent No-Op
 
+> ## ✅ RESOLVED 2026-07-11 — THIS FILE IS HISTORY, NOT A LIVE BLOCKER (resolution header added s1065, 2026-07-26)
+> The predecessor engine slice this finding demanded **shipped as `077-epoch-substrate`**, and the E2 data landed on top of it. Both blockers named below are gone:
+> - **The socket exists.** `EpochResearchManifest` / `EpochResearchNode` are typed parts of the epoch bundle (`src/meta/ContractFamilies.ts:117,136,668`), and `loadEpoch()` exposes them — `src/meta/ResearchTree.ts:95` `researchBranches(epochId) => loadEpoch(epochId).research.branches`.
+> - **The chart consumes them.** `src/ui/ResearchChart.ts:384` calls `loadEpoch(epochId)` for nodes; it no longer renders a static Frontier-only list.
+> - **The E2 data is real.** `assets/contracts/epoch-2-steamworks/manifest.json` carries **3 branches / 18 nodes** (Geology · Arsenal · Fabrication). All ten epochs now carry a research manifest.
+>
+> ⛔ **The master `tasks/lane-a-e2-science-tree.md` is SUPERSEDED — DO NOT QUEUE IT** (Mistake #8): its Sky-Rocket Battery node shipped instead as an arsenal *system* (`src/systems/PressureArsenalSystem.ts`), so re-queueing would order a runner to re-derive shipped data against a node sketch main no longer follows.
+> **The lane-a PIPELINE-DRY flag below is likewise retired.** The one genuine residue is unspecced and owner-gated: should the Survey Chart silhouette the *next* era's real nodes while locked? See `tasks/BACKLOG.md` line 143 (resolution, verified attended 2026-07-11) and line 145 (s1042 residue + the owner question).
+> *Everything below this box is the original 2026-07-08 s178 root-cause and stands as an accurate record of what was true then.*
+
 **Slice:** WP-E2 ③ `tasks/lane-a-e2-science-tree.md` (lane-a / lane/m3, prefix `e2:`)
-**Verdict:** 🔴 BLOCKED — needs a predecessor engine slice. NOT re-queueable as scoped. NOT a lost/Silent No-Op.
+**Verdict:** 🔴 BLOCKED — needs a predecessor engine slice. NOT re-queueable as scoped. NOT a lost/Silent No-Op. **(SUPERSEDED — see the resolution box above.)**
 **Session:** s178 fire (2026-07-07T23:12Z). Root-causes two consecutive no-op runs (043551 s177, 055749 s178).
 
 ## What happened
