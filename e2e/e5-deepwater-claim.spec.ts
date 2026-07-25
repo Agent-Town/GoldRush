@@ -7,6 +7,7 @@ const ARTIFACT_DIR = 'artifacts/e5-deepwater-claim';
 const WAVE_COUNTER_SHOT_DIR = 'reviews/shots-deepwater-wave-counter';
 
 test.beforeEach(async ({ page }) => page.addInitScript(({ key }) => {
+  performance.setResourceTimingBufferSize(10_000);
   localStorage.clear();
   sessionStorage.clear();
   localStorage.setItem(key, 'epoch-5-deepwater');
