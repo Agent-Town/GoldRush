@@ -68,6 +68,29 @@ now=time.time()
 def sh(*a):
     try: return subprocess.check_output(list(a), text=True, stderr=subprocess.DEVNULL).strip()
     except: return ''
+# durable ledger: absorb any run log not yet recorded (runner prunes logs at +3d — the ledger keeps them forever)
+LEDGER='logs/task-stats.jsonl'
+seen=set()
+try:
+    for line in open(LEDGER):
+        try: seen.add(json.loads(line)['stamp'])
+        except: pass
+except FileNotFoundError: pass
+led=open(LEDGER,'a')
+import json as _j
+for path in sorted(glob.glob('tasks/runs/*.log'), key=os.path.getmtime):
+    f0=os.path.basename(path); m0=re.match(r'(\d{8}-\d{6})-(lane-[a-z]+|art|main)-(.+)\.md\.log$', f0)
+    if not m0 or m0.group(1) in seen: continue
+    t0=''
+    try: t0=open(path,errors='ignore').read()
+    except: pass
+    mm0=re.findall(r'tokens used\n([\d,]+)',t0)
+    mt0=os.path.getmtime(path)
+    try: se0=time.mktime(time.strptime(m0.group(1),'%Y%m%d-%H%M%S'))
+    except: se0=mt0
+    led.write(_j.dumps({'stamp':m0.group(1),'lane':m0.group(2),'task':m0.group(3),'tokens':int(mm0[-1].replace(',','')) if mm0 else 0,'minutes':int((mt0-se0)/60)})+'\n')
+led.close()
+import json
 for path in sorted(glob.glob('tasks/runs/*.log'), key=os.path.getmtime, reverse=True):
     mt=os.path.getmtime(path)
     if now-mt>86400: continue
