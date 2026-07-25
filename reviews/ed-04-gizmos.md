@@ -59,22 +59,32 @@ mobile.** `:17` stays red on both projects — it is the documented **F-cp00-1**
 model test that takes no page, explicitly carved out by scope 6. Identical red on desktop and mobile
 is itself consistent with a page-less defect.
 
-## Scope 5 — the mutation proof (produced by THIS FIRE; see F-1046-1)
+## Scope 5 — the mutation proof, twice over (independently)
 
-Scope 5 called the mutation reds "the acceptance evidence, not the green run." The runner's report
-that should have carried them **does not exist** (F-1046-1), so I produced them myself. A vacuous
-guard dies on a timeout; a live one yields expected/received. Both repair mechanisms were mutated,
-run red, and restored byte-exact (`git diff` empty vs index after each restore):
+⚠️ **Correction against myself, recorded rather than quietly fixed.** I first drafted this section
+claiming the runner's report *did not exist*, because `logs/runs-archive/…ed-04….log` is **14 lines**.
+That claim was **false** and I nearly merged it into the ledger. The real report is
+`tasks/runs/20260725-204841-…log` — **2,490,071 bytes**, complete. This is precisely the trap F-1038
+wrote up as *"A TRAP FOR THE NEXT READER"*, and it caught the next reader. Root cause now found and
+fixed — see F-1046-1.
+
+**The runner did mutation-prove all four guards** (verbatim: *"All four guards were mutation-proved
+red and restored byte-exact"*), plus 8/8 isolated across both projects and 24/24 across three
+repeated full browser-only runs per project. Its adjacent numbers — `m1-01` 8/8, `m2-05` 14/14 —
+**reconcile exactly** with mine (11 passed per project × 2 = 22 = 8 + 14).
+
+I had already produced my own two mutations before finding the report, so the acceptance evidence is
+now **independent and agreeing**. A vacuous guard dies on a timeout; a live one yields
+expected/received. Mine, restored byte-exact (`git diff` empty vs index after each):
 
 | Mechanism | Mutation | Result |
 |---|---|---|
 | `:216` start-menu wait (`:212`) | `installed: false` → `installed: true` | **RED with a real diff** at `:224` — `- "installed": true / + "installed": false`. It **reaches** its assertion; it no longer dies at the 30 s timeout. |
 | `commitAndSettle` (`:141`) | `:154` `toBe(before.bytes)` → `toBe(moved.bytes)` | **RED with a real byte diff** on the contract JSON. The helper genuinely observes the undo landing; previously the test hung in `commitAndReload` and never reached `:154`. |
 
-**Honest scope note:** the task asked for four individual mutations; I ran **two**, chosen to cover
-**both** distinct repair mechanisms. `:177` and `:192` are unmutated — they route through the *same*
-`commitAndSettle`/`dragWorld` path as `:141`, so the mechanism is proven, but each guard is not
-individually proven-failable. Recorded as a residual, not claimed as done.
+**Honest scope note:** I ran **two** mutations, covering both distinct repair mechanisms; the runner
+independently ran **four**, one per guard. The task's bar is therefore met by the runner's evidence
+and corroborated by mine, from a different operator on a different tree.
 
 ## Merge classification
 
@@ -88,20 +98,29 @@ question: **no product code turned out to be at fault** — the defect was entir
 
 ## Findings
 
-- **F-1046-1 (factory, MEDIUM, mine not the slice's) — lane-c run reports are being lost.**
-  `logs/runs-archive/20260725-204841-lane-c-…log` is **14 lines: the Codex header and nothing else.**
-  The run itself was real (50 min, 388,592 tokens per `logs/task-stats.jsonl:65`) and produced a
-  correct commit. The prior lane-c run (`20260725-184427`, repair-dwell, drained as `d79e8941`) is
-  **also 14 lines**, while lane-a's `20260725-200029` is **697 lines** — so this is lane-c-specific
-  and has already silently cost at least two drains their reports. Consequence: every task-mandated
-  report — here, scope 1's hang-site table, scope 2's (a)/(b)/(c) verdict, and scope 5's four
-  mutation reds — is unrecoverable, and the drain has to re-derive it or merge on faith. Corrective
-  task queued: `tasks/lane-c-report-capture-lost.md`.
-- **F-1046-2 (INFO) — scope 2's (a)/(b)/(c) is answered only in part.** The repair proves the product
-  **settles in place** (bytes change with no navigation), which is consistent with **(a) the helper is
-  stale**. Whether the editor ever *did* reload — i.e. (a) vs (b) a race — is a historical question I
-  did **not** observe, and the runner's observation is lost with F-1046-1. Non-blocking: the guard is
-  green and proven-failable either way. Flagged so no one inherits "(a), confirmed" as fact.
+- **F-1046-1 (factory, REAL, FIXED THIS FIRE) — the Retention Law's tracked mirror was archiving
+  fossils.** ✓ VERIFIED at `scripts/dashboard-gen.sh:73-76`: the mirror loop was
+  `if not os.path.exists(_d): shutil.copy2(_p,_d)`. Because that script regenerates **every ~60 s**,
+  the first copy fires **seconds into a live run**, capturing only Codex's 14-line header — and the
+  existence guard then **froze that fossil permanently**. So the *tracked, git-durable* copy the
+  Retention Law exists to guarantee was a header, while the only complete report sat in **untracked**
+  `tasks/runs/`. Measured: ed-04's archive was **14 lines vs a 2,490,071-byte** live log. Not new and
+  not lane-c-specific — **F-1038 hit it at 410 KB vs 644 KB** and wrote it up as *"A TRAP FOR THE NEXT
+  READER"*; it then caught **me**, and I nearly filed "the reports are being lost" as a finding.
+  **Fixed:** re-copy when the source is newer or a different size, so a run's archive converges on the
+  complete log. **Verified after the fix: the archive copy is now 2,490,071 bytes, byte-matching the
+  live log.** (No data was ever destroyed — the `+3d` prune that would have made this fatal was already
+  removed by s1033/F-1028-3 under the same law. The exposure was that git's history was a stub.)
+- **F-1046-2 (RESOLVED — do not inherit it as open).** I had flagged scope 2's (a)/(b)/(c) as only
+  half-answered, because I could observe the product settling in place but not whether it ever *did*
+  reload. The runner **did** observe it, and its report settles the question as **(a), the helper is
+  stale**, by mechanism: *"Runtime observation showed descriptor bytes and history changing, with only
+  same-document `history.replaceState` activity."* Same-document `replaceState` emits no `load` event —
+  which is exactly why `commitAndReload` could hang forever with the app demonstrably alive. Closed.
+- **Bonus detail worth keeping** (from the recovered report, else it would have been lost): the two
+  `scrollIntoViewIfNeeded` → `scrollIntoView({block:'end'})` changes are **not cosmetic** — *"the sticky
+  contract validator covered the desktop fixture hit point"*, so the gesture was landing on the wrong
+  element. A second, independent defect the slice fixed in passing.
 - **`:17` / F-cp00-1 unchanged** — still red on both projects, attended-owned, untouched by this
   slice. This slice produced no bonus explanation for it.
 

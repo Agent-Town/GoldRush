@@ -70,9 +70,21 @@ def sh(*a):
     except: return ''
 # THE RETENTION LAW (owner 2026-07-25): mirror every run log into the tracked archive before any pruner can reach it.
 os.makedirs('logs/runs-archive', exist_ok=True)
+# s1046 (F-1046-1): the guard here was 'if not os.path.exists(_d)'. Because this script regenerates
+# every ~60s, the FIRST copy happened seconds into a live run — capturing only Codex's 14-line header —
+# and the existence guard then froze that fossil forever. The tracked mirror the Retention Law demands
+# was therefore a header while the real report lived only in untracked tasks/runs/. Measured: ed-04's
+# archive copy was 14 lines against a 2,490,071-byte live log; F-1038 hit the same trap at 410KB vs
+# 644KB and wrote it up as "A TRAP FOR THE NEXT READER" — it then caught s1046 too. Re-copy whenever
+# the source has grown or is newer, so a run's archive converges on the complete log as it finishes.
 for _p in glob.glob('tasks/runs/*.log'):
     _d='logs/runs-archive/'+os.path.basename(_p)
-    if not os.path.exists(_d):
+    try:
+        _stale = (not os.path.exists(_d)) or os.path.getmtime(_p) > os.path.getmtime(_d) \
+                 or os.path.getsize(_p) != os.path.getsize(_d)
+    except OSError:
+        _stale = True
+    if _stale:
         import shutil; shutil.copy2(_p,_d)
 # durable ledger: absorb any run log not yet recorded (runner prunes logs at +3d — the ledger keeps them forever)
 # s1028 fix (F-1027-3): 'json' was NOT imported at this point, so every dedupe read raised NameError into a
