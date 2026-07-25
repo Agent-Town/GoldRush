@@ -2,33 +2,47 @@
 // (gold granted = grinding shortcut, cited), then T1 THE CEREMONY through the
 // schoolhouse door on a plain boot. Science seeded to threshold between runs
 // (cited: 1 science per secured run; 6 needed).
-import { openSegment, shot, hold, poll, townReady, gameReady, walkToPrompt, openSchoolhouse } from '../lib.mjs';
+import { openSegment, shot, poll, townReady, gameReady, openSchoolhouse, dismissStoryBeats, exposeFullSagaDoors, restorePlainBoot } from '../lib.mjs';
 
 // --- Part A: the mill's three defended stages, on the-claim with the debug seam.
 {
-  const { page, finish } = await openSegment('e1-03a-stamp-mill-stages', { url: '/?debug&contract=the-claim&timescale=4&seed=rehearsal-mill' });
+  const { page, finish } = await openSegment('e1-03a-stamp-mill-stages', { url: '/?debug&contract=the-claim&timescale=4&nolevel&nopause&seed=rehearsal-mill' });
   await gameReady(page);
   await poll(() => page.evaluate(() => !!window.__GR_TEST__), { label: 'seam' });
   await page.getByTestId('contract-briefing-dismiss').click().catch(() => {});
+  // Unlock is read when the run boots, so science must be banked before funding.
+  await page.evaluate(() => {
+    const key = 'gr.profile.v2.rehearsal.gr.meta.v1';
+    const meta = JSON.parse(localStorage.getItem(key) ?? '{"version":1,"tracks":{"territory":0,"science":0,"hero":0,"agent":0}}');
+    meta.tracks.science = Math.max(meta.tracks.science, 6);
+    localStorage.setItem(key, JSON.stringify(meta));
+  });
+  await page.reload();
+  await gameReady(page);
+  await page.getByTestId('contract-briefing-dismiss').click().catch(() => {});
+  await page.evaluate(() => {
+    window.__GR_TEST__.setBalance('waves.waveInterval', 1);
+    window.__GR_TEST__.setBalance('waves.pulseBase', 0);
+    window.__GR_TEST__.setBalance('waves.pulsePerWave', 0);
+    window.__GR_TEST__.setBalance('waves.aliveCap', 0);
+    window.__GR_TEST__.setWave(window.__THREE_GAME_DIAGNOSTICS__?.wave ?? 0);
+  });
   console.log('megaproject before:', JSON.stringify(await page.evaluate(() => window.__GR_TEST__.megaproject())));
   await page.evaluate(() => window.__GR_TEST__.grantGold(600)); // grinding shortcut: panning gold
   for (let stage = 0; stage < 3; stage += 1) {
-    const funded = await page.evaluate(() => window.__GR_TEST__.fundMegaproject());
+    const before = await page.evaluate(() => window.__GR_TEST__.megaproject());
+    if (before.stage > stage || before.complete) continue;
+    const funded = before.funded || await page.evaluate(() => window.__GR_TEST__.fundMegaproject());
     console.log(`fund stage ${stage + 1}:`, funded);
-    // each funded stage builds under a defense wave — let it play out
-    for (let i = 0; i < 120; i += 1) {
+    if (!funded) throw new Error(`Stamp Mill stage ${stage + 1} did not fund`);
+    const complete = await poll(async () => {
       const m = await page.evaluate(() => window.__GR_TEST__.megaproject());
-      const card = await page.evaluate(() => {
-        const c = document.querySelector('[data-testid="upgrade-card-0"]');
-        return !!(c && c.getClientRects().length);
-      });
-      if (card) { await page.keyboard.press('Digit1'); }
-      if (m && (m.stage > stage || m.complete)) { console.log('stage done:', JSON.stringify(m)); break; }
-      await hold(page, ['KeyW', 'KeyD', 'KeyS', 'KeyA'][i % 4], 150);
-      await page.waitForTimeout(250);
-    }
+      return m && (m.stage > stage || m.complete) ? m : null;
+    }, { timeout: 90_000, interval: 250, label: `Stamp Mill stage ${stage + 1}` });
+    console.log('stage done:', JSON.stringify(complete));
   }
   const final = await page.evaluate(() => window.__GR_TEST__.megaproject());
+  if (final?.stage !== 3 || !final.complete) throw new Error(`Stamp Mill incomplete: ${JSON.stringify(final)}`);
   console.log('megaproject after:', JSON.stringify(final));
   await shot(page, 'e1-11-stamp-mill-built');
   await finish(`mill stages, complete=${JSON.stringify(final?.complete ?? final)}`);
@@ -47,18 +61,15 @@ import { openSegment, shot, hold, poll, townReady, gameReady, walkToPrompt, open
     meta.tracks.science = Math.max(meta.tracks.science, 6);
     localStorage.setItem(key, JSON.stringify(meta));
   });
-  // The Baron was fought in e1-02; ensure the medal T1 gates on is present
-  // (CITED shortcut: seed only if the fight didn't persist it to this profile).
-  await page.evaluate(() => {
-    const key = 'gr.profile.v2.rehearsal.gr.medals.v1';
-    const cur = JSON.parse(localStorage.getItem(key) ?? 'null');
-    if (!cur?.baronBeaten) localStorage.setItem(key, JSON.stringify({ version: 1, baronBeaten: true, rocketCartCaptured: true }));
-  });
   await page.reload();
   await poll(() => page.getByTestId('start-menu-enter-town').isVisible(), { label: 'start menu 2' });
   await page.getByTestId('start-menu-enter-town').click();
   await townReady(page);
+  // The physical E1 package hides later-era doors. Debug removes only that
+  // packaging horizon after town boot; the earned T1 door still gates progress.
+  await exposeFullSagaDoors(page);
   await openSchoolhouse(page);
+  await dismissStoryBeats(page);
   await shot(page, 'e1-12-schoolhouse-door');
   const door = await page.evaluate(() => {
     const el = document.querySelector('[data-testid="stamp-mill-epoch-door"]');
@@ -77,6 +88,7 @@ import { openSegment, shot, hold, poll, townReady, gameReady, walkToPrompt, open
   console.log('active epoch after T1:', epoch);
   await page.locator('[data-story-ceremony-skip]').click().catch(() => {});
   // reload — persistence under fire
+  await restorePlainBoot(page);
   await page.reload();
   await poll(() => page.getByTestId('start-menu-enter-town').isVisible(), { label: 'start menu 3' });
   console.log('epoch after reload:', await page.evaluate(() => localStorage.getItem('gr.activeEpoch.v1')));

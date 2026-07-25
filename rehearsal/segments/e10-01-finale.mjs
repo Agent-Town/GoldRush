@@ -6,7 +6,7 @@
 // played through the real interact seam.
 import { openSegment, shot, poll, gameReady } from '../lib.mjs';
 
-const { page, finish } = await openSegment('e10-01-the-last-claim-the-static', { url: '/?debug&contract=e10-last-claim&e10static&timescale=1&seed=rehearsal-e10' });
+const { page, finish } = await openSegment('e10-01-the-last-claim-the-static', { url: '/?debug&e10static&epoch=epoch-10-deepsky&contract=e10-last-claim&timescale=1&seed=rehearsal-e10' });
 await gameReady(page);
 await poll(() => page.evaluate(() => !!window.__GR_TEST__), { label: 'seam' });
 console.log('contract:', await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract?.activeId));
@@ -15,6 +15,8 @@ await shot(page, 'e10-01-ark-plaza-boot');
 
 // slow-drain, generous windows so the play reads on video (cited)
 await page.evaluate(() => {
+  window.__GR_TEST__.setManualSim(true);
+  window.__GR_TEST__.setBalance('e10Static.arrivalZ', 20);
   window.__GR_TEST__.setBalance('e10Static.approachSeconds', 0.5);
   window.__GR_TEST__.setBalance('e10Static.meaningDrainPerSecond', 0.05);
   window.__GR_TEST__.setBalance('e10Static.preserveWindowSeconds', 12);
@@ -57,3 +59,4 @@ console.log('post-credits river vista:', JSON.stringify(river)?.slice(0, 260));
 console.log('post-credits contract:', await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract?.activeId));
 await shot(page, 'e10-07-THE-RIVER-playable-dawn');
 await finish(`the last claim: static receded=${receded.victory}, river charter launched + playable`);
+if (receded.victory !== 'receded') throw new Error(`Static did not recede: ${JSON.stringify(receded)}`);

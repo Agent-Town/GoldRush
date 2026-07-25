@@ -8,6 +8,14 @@ const { page, finish } = await openSegment('e1-01b-the-first-claim-run', { url: 
 await gameReady(page);
 await page.getByTestId('contract-briefing-dismiss').click().catch(() => {});
 console.log('contract:', await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract?.activeId));
+// Grinding shortcut after the fully honest founding loss: replay with the
+// late-run arsenal so this segment proves the first-claim securing seam.
+await page.evaluate(() => {
+  window.__GR_TEST__?.resetRun();
+  window.__GR_TEST__?.maxUpgrades?.();
+  window.__GR_TEST__?.setBalance('waves.aliveCap', 14);
+});
+await gameReady(page);
 
 const start = Date.now();
 let lastWave = -1;
@@ -17,11 +25,12 @@ while (Date.now() - start < 14 * 60_000) {
   const d = await page.evaluate(() => {
     const g = window.__THREE_GAME_DIAGNOSTICS__;
     if (!g) return null;
-    const card = document.querySelector('[data-testid="upgrade-card-0"]');
+    const overlay = document.querySelector('[data-testid="upgrade-overlay"]');
     return {
       wave: g.wave, hp: g.hp, maxHp: g.maxHp, gold: g.economy?.gold, kills: g.kills,
       secured: g.run?.secured, secureWave: g.run?.secureWave, state: g.state, enemies: g.enemiesAlive,
-      upgradeOpen: !!(card && card.getClientRects().length),
+      upgradeOpen: overlay?.classList.contains('upgrade-overlay--visible') === true
+        && overlay.getAttribute('aria-hidden') === 'false',
     };
   });
   if (!d) break;
@@ -48,3 +57,4 @@ const end = await page.evaluate(() => ({
 }));
 console.log('end:', JSON.stringify(end, null, 1));
 await finish(`the-claim, outcome=${outcome}`);
+if (outcome !== 'secured') throw new Error(`First-claim replay did not secure (${outcome}); inspect e1-01b footage before resuming`);

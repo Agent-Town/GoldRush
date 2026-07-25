@@ -25,13 +25,20 @@ while (Date.now() - start < 10 * 60_000) {
   const d = await page.evaluate(() => {
     const g = window.__THREE_GAME_DIAGNOSTICS__;
     if (!g) return null;
-    const card = document.querySelector('[data-testid="upgrade-card-0"]');
-    return { wave: g.wave, hp: g.hp, state: g.state, echo: g.echoBoss ?? null, upgradeOpen: !!(card && card.getClientRects().length) };
+    const overlay = document.querySelector('[data-testid="upgrade-overlay"]');
+    return {
+      wave: g.wave, hp: g.hp, state: g.state, echo: g.echoBoss ?? null,
+      upgradeOpen: overlay?.classList.contains('upgrade-overlay--visible') === true
+        && overlay.getAttribute('aria-hidden') === 'false',
+    };
   });
   if (!d) break;
   if (d.upgradeOpen) { await page.keyboard.press(`Digit${(ki % 3) + 1}`); ki += 1; continue; }
   const phase = d.echo?.phase ?? d.echo?.act ?? d.echo?.state ?? null;
-  if (phase !== lastPhase) { console.log('echo phase:', JSON.stringify(d.echo).slice(0, 300)); lastPhase = phase; }
+  if (phase !== lastPhase) {
+    console.log('echo phase:', JSON.stringify(d.echo).slice(0, 300), '— vary movement pattern for novelty');
+    lastPhase = phase;
+  }
   const active = d.echo && (d.echo.active ?? (phase && phase !== 'idle'));
   if (active && !saw) { saw = true; await shot(page, 'e7-02-echo-mirror'); }
   if (saw && ((d.echo?.act ?? 0) >= 3 || d.echo?.captured || d.echo?.jarred)) { outcome = 'echo-jarred'; break; }
@@ -47,3 +54,4 @@ console.log('echo end:', JSON.stringify(await page.evaluate(() => window.__THREE
 // the exit-beat gate that E7→E8's hardcoded seam checks:
 console.log('e7 exit-beat milestones:', JSON.stringify(await page.evaluate(() => window.__GR_TEST__?.e7Signal?.diagnostics() ?? null)).slice(0, 400));
 await finish(`relay valley + echo (${outcome})`);
+if (outcome !== 'echo-jarred') throw new Error(`Echo was not jarred (${outcome}); inspect e7-01 footage before resuming`);

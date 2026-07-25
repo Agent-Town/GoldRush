@@ -50,11 +50,12 @@ while (Date.now() - start < 18 * 60_000) {
   const d = await page.evaluate(() => {
     const g = window.__THREE_GAME_DIAGNOSTICS__;
     if (!g) return null;
-    const card = document.querySelector('[data-testid="upgrade-card-0"]');
+    const overlay = document.querySelector('[data-testid="upgrade-overlay"]');
     return {
       wave: g.wave, hp: g.hp, maxHp: g.maxHp, gold: g.economy?.gold, kills: g.kills,
       secured: g.run?.secured, secureWave: g.run?.secureWave, state: g.state, enemies: g.enemiesAlive,
-      upgradeOpen: !!(card && card.getClientRects().length),
+      upgradeOpen: overlay?.classList.contains('upgrade-overlay--visible') === true
+        && overlay.getAttribute('aria-hidden') === 'false',
     };
   });
   if (!d) break;
@@ -78,8 +79,12 @@ while (Date.now() - start < 18 * 60_000) {
 console.log('run outcome:', outcome);
 await shot(page, 'e1-07-run-end');
 const visible = await page.evaluate(() =>
-  [...document.querySelectorAll('[data-testid]')].filter((el) => el.getClientRects().length).map((el) => el.getAttribute('data-testid')));
+  [...document.querySelectorAll('[data-testid]')].filter((el) => {
+    const style = getComputedStyle(el);
+    return el.getAttribute('aria-hidden') !== 'true' && style.display !== 'none' && style.visibility !== 'hidden';
+  }).map((el) => el.getAttribute('data-testid')));
 console.log('end-of-run testids:', visible.join(', '));
 console.log('meta after run:', await page.evaluate(() => localStorage.getItem('gr.profile.v2.rehearsal.gr.meta.v1') ?? '(key probe)'));
 console.log('profile keys:', await page.evaluate(() => Object.keys(localStorage).join(' | ')));
 await finish(`founding + the-claim, outcome=${outcome}`);
+if (outcome === 'timeout') throw new Error('Founding claim timed out; inspect e1-01 footage before resuming');
