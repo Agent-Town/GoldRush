@@ -7,18 +7,31 @@
  * plain staging directory, ignored by main's .gitignore. Anything in it that
  * main does not track exists in no object database anywhere.
  *
- * Prints four buckets:
- *   UNTRACKED — in staging, in NO object database       (loss risk: TOTAL)
- *   SALVAGED  — absent from main but its blob IS in git (parked, safe)
- *   DIVERGED  — in both, different byte size            (adjudication material)
- *   SAME-SIZE — in both, same size (assumed shipped)    (no exposure)
+ * Prints five buckets, classified by CONTENT HASH (not by name or by size):
+ *   UNTRACKED — name absent from main, bytes in NO object database  (loss risk: TOTAL)
+ *   EXPOSED   — name on main but THESE bytes in no object database  (loss risk: TOTAL)
+ *   SALVAGED  — name absent from main, but the blob IS in git       (parked, safe)
+ *   DIVERGED  — differs from main, but the blob IS in git           (adjudication material)
+ *   SHIPPED   — byte-identical to main's blob                       (no exposure)
  *
- * UNTRACKED means "in no object database", NOT "absent from main": art parked
- * on a save/* branch awaiting an owner verdict is preserved, and counting it as
- * exposed would keep an unfixable alarm ringing until someone lands it on main —
- * which is exactly the decision that is legitimately still open.
+ * UNTRACKED/EXPOSED mean "in no object database", NOT "absent from main": art
+ * parked on a save/* branch awaiting an owner verdict is preserved, and counting
+ * it as exposed would keep an unfixable alarm ringing until someone lands it on
+ * main — which is exactly the decision that is legitimately still open.
  *
- * Usage: node scripts/art-staging-audit.mjs [--json]
+ * F-1054-1 (s1054): the EXPOSED bucket did not exist. A staging file whose NAME
+ * matched main went straight to "DIVERGED — adjudication material" and never got
+ * the in-git check at all, so 14 regenerated plates totalling 36.54 MB — held in
+ * no object database, the whole reason this script exists — were reported under a
+ * headline reading "UNTRACKED ... 0 files". The bug was that identity was decided
+ * by NAME and then by SIZE; it is now decided by the blob hash, which is the only
+ * thing that actually answers "are these bytes recoverable?". Size equality was
+ * also load-bearing for the old SAME-SIZE bucket ("assumed shipped") — that
+ * assumption is gone too: SHIPPED now means the hashes match.
+ *
+ * Usage: node scripts/art-staging-audit.mjs [--json] [--strict]
+ *   --strict  exit 1 when anything is in no object database (default: always 0,
+ *             so a fire's routine audit can never block a drain)
  */
 import { execFileSync } from 'node:child_process';
 import { readdirSync, statSync } from 'node:fs';
@@ -33,22 +46,26 @@ const STAGING = join(REPO, 'worktrees/art/assets/raw');
 const git = (...args) =>
   execFileSync('git', ['-C', REPO, ...args], { encoding: 'utf8', maxBuffer: 1 << 26 });
 
-// main's tracked raws, name -> byte size (from the index/HEAD, not the disk)
+// main's tracked raws, name -> { sha, size } (from the index/HEAD, not the disk).
+// The sha is what classifies: two files with the same name and the same size can
+// still be different images, and that is exactly the case this audit must catch.
 const tracked = new Map();
 for (const line of git('ls-tree', '-r', '-l', 'main', '--', 'assets/raw/').split('\n')) {
   if (!line.trim()) continue;
   // <mode> <type> <sha> <size>\t<path>
-  const m = line.match(/^\S+\s+\S+\s+\S+\s+(\d+)\t(.+)$/);
+  const m = line.match(/^\S+\s+\S+\s+(\S+)\s+(\d+)\t(.+)$/);
   if (!m) continue;
-  tracked.set(m[2].replace(/^assets\/raw\//, ''), Number(m[1]));
+  tracked.set(m[3].replace(/^assets\/raw\//, ''), { sha: m[1], size: Number(m[2]) });
 }
 
-// is this file's content already a blob in the object database (any ref)?
-const inGit = (path) => {
+// the blob hash these bytes WOULD have. Computing it does not write anything.
+// .trim() matters: git returns a trailing newline, and `cat-file -e` reads it as
+// part of the object name ("Not a valid object name").
+const hashOf = (path) => git('hash-object', '--', path).trim();
+
+// does this exact blob already exist in the object database (reachable or not)?
+const inGit = (sha) => {
   try {
-    // .trim() matters: this helper returns raw stdout, and `cat-file -e` reads a
-    // trailing newline as part of the object name ("Not a valid object name").
-    const sha = git('hash-object', '--', path).trim();
     git('cat-file', '-e', sha);
     return true;
   } catch {
@@ -57,44 +74,81 @@ const inGit = (path) => {
 };
 
 const untracked = [];
+const exposed = [];
 const salvaged = [];
 const diverged = [];
-const same = [];
+const shipped = [];
 for (const name of readdirSync(STAGING)) {
   if (name.startsWith('.')) continue;
   const path = join(STAGING, name);
   const size = statSync(path).size;
-  if (!tracked.has(name)) {
-    (inGit(path) ? salvaged : untracked).push({ name, size });
-  } else if (tracked.get(name) !== size) {
-    diverged.push({ name, size, mainSize: tracked.get(name) });
-  } else {
-    same.push({ name, size });
+  const sha = hashOf(path);
+  const main = tracked.get(name);
+  if (main && main.sha === sha) {
+    shipped.push({ name, size });
+    continue;
   }
+  // Not identical to main (or not on main at all) — so the only question that
+  // matters is whether these bytes survive this disk. Ask it in BOTH cases: the
+  // old code asked it only when the NAME was absent from main, which is what
+  // let 36.54 MB of regenerated plates report as safe (F-1054-1).
+  const backed = inGit(sha);
+  if (!main) (backed ? salvaged : untracked).push({ name, size });
+  else (backed ? diverged : exposed).push({ name, size, mainSize: main.size });
 }
+const atRisk = [...untracked, ...exposed];
 
 const kb = (n) => `${(n / 1024).toFixed(0)} KB`;
 const total = (rows) => rows.reduce((a, r) => a + r.size, 0);
 
+const byName = (a, b) => a.name.localeCompare(b.name);
+
 if (process.argv.includes('--json')) {
-  console.log(JSON.stringify({ untracked, salvaged, diverged, same: same.length }, null, 2));
+  console.log(
+    JSON.stringify(
+      {
+        atRiskFiles: atRisk.length,
+        atRiskBytes: total(atRisk),
+        untracked,
+        exposed,
+        salvaged,
+        diverged,
+        shipped: shipped.length,
+      },
+      null,
+      2,
+    ),
+  );
 } else {
   console.log(`ART STAGING AUDIT — ${STAGING}`);
-  const staged = untracked.length + salvaged.length + diverged.length + same.length;
-  console.log(`main tracks ${tracked.size} raws; staging holds ${staged}\n`);
-  console.log(`UNTRACKED (in NO commit — dies with this disk): ${untracked.length} files, ${kb(total(untracked))}`);
-  for (const r of untracked.sort((a, b) => a.name.localeCompare(b.name))) {
-    console.log(`  ${r.name}  ${kb(r.size)}`);
+  const staged =
+    untracked.length + exposed.length + salvaged.length + diverged.length + shipped.length;
+  console.log(`main tracks ${tracked.size} raws; staging holds ${staged}`);
+  console.log(
+    `\nAT RISK (in NO object database — dies with this disk): ${atRisk.length} files, ${kb(total(atRisk))}`,
+  );
+  console.log(
+    `  UNTRACKED (name not on main): ${untracked.length} files, ${kb(total(untracked))}`,
+  );
+  for (const r of untracked.sort(byName)) console.log(`    ${r.name}  ${kb(r.size)}`);
+  console.log(
+    `  EXPOSED (name IS on main, but these bytes are not): ${exposed.length} files, ${kb(total(exposed))}`,
+  );
+  for (const r of exposed.sort(byName)) {
+    console.log(`    ${r.name}  staging ${kb(r.size)} vs main ${kb(r.mainSize)}`);
   }
   console.log(
     `\nSALVAGED (not on main, but the bytes ARE in git — parked, safe): ${salvaged.length} files`,
   );
-  for (const r of salvaged.sort((a, b) => a.name.localeCompare(b.name))) {
-    console.log(`  ${r.name}  ${kb(r.size)}`);
-  }
-  console.log(`\nDIVERGED (regenerated over shipped art): ${diverged.length} files`);
-  for (const r of diverged.sort((a, b) => a.name.localeCompare(b.name))) {
+  for (const r of salvaged.sort(byName)) console.log(`  ${r.name}  ${kb(r.size)}`);
+  console.log(
+    `\nDIVERGED (regenerated over shipped art, bytes ARE in git): ${diverged.length} files`,
+  );
+  for (const r of diverged.sort(byName)) {
     console.log(`  ${r.name}  staging ${kb(r.size)} vs main ${kb(r.mainSize)}`);
   }
-  console.log(`\nSAME-SIZE (assumed shipped): ${same.length} files`);
+  console.log(`\nSHIPPED (blob-identical to main): ${shipped.length} files`);
 }
+
+// Default exit is always 0: a routine audit must never block a fire's drain.
+if (process.argv.includes('--strict') && atRisk.length > 0) process.exit(1);
