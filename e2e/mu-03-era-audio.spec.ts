@@ -1,11 +1,14 @@
 import { expect, test, type Page } from '@playwright/test';
 
 async function seedProfile(page: Page): Promise<void> {
-  await page.addInitScript(() => localStorage.setItem('gr.profile.v2', JSON.stringify({
-    version: 2,
-    activeId: 'mu-03',
-    profiles: [{ id: 'mu-03', name: 'Era Audio', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
-  })));
+  await page.addInitScript(() => {
+    performance.setResourceTimingBufferSize(10_000);
+    localStorage.setItem('gr.profile.v2', JSON.stringify({
+      version: 2,
+      activeId: 'mu-03',
+      profiles: [{ id: 'mu-03', name: 'Era Audio', createdAt: 1, updatedAt: 1, difficultyPreset: 'trail', hintsSeen: [] }],
+    }));
+  });
 }
 
 async function expectLoop(page: Page, query: string, loop: string): Promise<void> {

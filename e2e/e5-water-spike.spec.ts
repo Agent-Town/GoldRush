@@ -82,6 +82,7 @@ test('storm fronts carry one west-to-east wave per deterministic cycle', async (
 });
 
 test('plain debug boot leaves the deepwater chunk dormant', async ({ page }) => {
+  await page.addInitScript(() => performance.setResourceTimingBufferSize(10_000));
   await page.goto('/?debug&nowaves&nolevel&nopause');
   await page.waitForTimeout(300);
   expect(await page.evaluate(() => ({

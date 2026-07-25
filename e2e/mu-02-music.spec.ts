@@ -5,6 +5,7 @@ type MusicAudio = ThreeGameDiagnostics['audio'] & { loopElapsedSeconds: Record<s
 
 async function seedProfile(page: Page): Promise<void> {
   await page.addInitScript(() => {
+    performance.setResourceTimingBufferSize(10_000);
     localStorage.setItem(
       'gr.profile.v2',
       JSON.stringify({
