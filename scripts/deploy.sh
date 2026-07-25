@@ -26,6 +26,22 @@ finish() {
   exit 0
 }
 
+if GIT_COMMON_DIR="$(git rev-parse --git-common-dir 2>/dev/null)"; then
+  LOCK="$GIT_COMMON_DIR/gold-rush-deploy.lock"
+else
+  LOCK="logs/deploy.lock"
+fi
+command -v lockf >/dev/null 2>&1 || { note "FAILED: lockf not installed"; finish lock_failed 6; }
+exec 9>"$LOCK" || { note "FAILED: could not open deploy lock"; finish lock_failed 6; }
+# macOS lockf accepts an open fd; descriptor 9 holds the lock until this shell exits.
+if ! lockf -s -t 0 9; then
+  note "SKIP: deploy already running (exclusive lock held)"
+  finish skipped 6
+fi
+trap 'finish interrupted 129' HUP
+trap 'finish interrupted 130' INT
+trap 'finish interrupted 143' TERM
+
 note "building…"
 BUILD_ID="${CF_PAGES_COMMIT_SHA:-$(git rev-parse --short=8 HEAD 2>/dev/null || printf 'unknown')}"
 if ! CF_PAGES_COMMIT_SHA="$BUILD_ID" npm run build >> "$LOG" 2>&1; then note "ABORT: build failed — never deploy a red build"; finish build_failed 3; fi
@@ -71,6 +87,18 @@ if wrangler pages deploy --commit-dirty=true > "$CAPTURE" 2>&1; then
   finish deployed 0 "${URL:-}"
 else
   cat "$CAPTURE" >> "$LOG"
-  note "FAILED: pages deploy — see $LOG (auth expired? project missing? owner: wrangler login / pages project create gold-rush)"
+  ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk '
+    /ERROR|Error:/ { found=1 }
+    found && NF {
+      line=$0
+      sub(/^[[:space:]]+/, "", line)
+      sub(/[[:space:]]+$/, "", line)
+      out=out (out ? " | " : "") line
+    }
+    END { print out }
+  ' | cut -c1-240)"
+  [ -n "$ERROR_LINE" ] || ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk 'NF { line=$0 } END { print line }' | cut -c1-240)"
+  [ -n "$ERROR_LINE" ] || ERROR_LINE="no wrangler error output (check auth and project configuration)"
+  note "FAILED: pages deploy — $ERROR_LINE — see $LOG"
   finish deploy_failed 4
 fi
