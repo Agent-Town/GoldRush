@@ -95,20 +95,32 @@ across desktop and 390px mobile. That is 22 clean boots on both viewports.
 
 ## Findings
 
-### F-1030-1 — F-1029-1's geometry drift is NOT desktop-only (refines a live finding)
+### F-1030-1 — `m2-05:319` fails on BOTH projects, via TWO DIFFERENT assertions
 
-s1029 recorded the `m2-05:319` wreck/repair drift as *"Desktop only; mobile green."* That is
-**wrong, and only looked right because the test is flaky.** On the merged tree `:319` failed on
-**mobile** too, and a `--repeat-each=3` probe reproduced it 1-in-3:
+**Self-correction, recorded deliberately.** My first pass through this finding read the failure
+messages without checking *which* assertion produced them, and concluded "the geometry drift is
+cross-project." That was wrong, and the `<=` in half the messages is what gave it away — line 348
+uses `toBe`, line 349 uses `toBeLessThanOrEqual`. Two assertions, two different defects. Verified
+by re-running with the source frame printed, rather than by pattern-matching the numbers:
 
-```
-[mobile-chrome] m2-05:319   Expected: <= 67   Received: 70    (+3)
-[desktop-chrome] m2-05:319  Expected: <= 91   Received: 93    (+2)
-```
+| Project | Failing line | Assertion | Reading | Repeatability |
+|---|---|---|---|---|
+| desktop-chrome | **348** | `geometries` `toBe` baseline | expected **94**, received **95** (**+1**) | **2/2 — deterministic** |
+| mobile-chrome | **349** | `calls` ≤ baseline **+2** | expected **≤69**, received **70** (**+3**) | 1/2, 1/3 — intermittent |
 
-Same assertion, same "counts do not return to baseline after wreck/repair cycles" class, both
-projects. Whoever authors the F-1029-1 corrective should treat it as a **cross-project** drift and
-must not gate on a single mobile run — a 1-in-3 red reads as green two times out of three.
+So s1029's *"Desktop only; mobile green"* was **half right**: the **+1 geometry leak really is
+desktop-only**, and its mobile counterpart is green. But the test *as a whole* also fails on
+mobile, through the draw-call tolerance, which no prior fire recorded.
+
+A third mode appears in full-suite runs: with the whole file running `--workers=1`, **desktop**
+fails at **line 349** instead (baseline 89, received 93) while its geometries pass. Baselines move
+with test order (94 isolated vs 89 in-suite), so which assertion trips depends on what ran before.
+
+**Not attributable to this drain:** both modes reproduce on clean main with the change reverted
+(`git status -- e2e/` empty), and this slice touches a different spec file entirely.
+
+Whoever takes the corrective must treat this as **two defects behind one test name**, and must not
+gate on a single run of either project — a 1-in-3 red reads green two times out of three.
 
 **Not attributable to this drain:** the desktop failure reproduces on clean main (change fully
 reverted, `git status -- e2e/` empty), and this slice touches a different spec file entirely.

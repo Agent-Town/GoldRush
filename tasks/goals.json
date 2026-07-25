@@ -1009,6 +1009,13 @@
      "note": "s1030 DRAINED (lane tip 64b0970d, review reviews/m2-01-fixture-coordinate.md). The palisade stress row moved z=16 -> z=20, clear of the working-camp footprint; fixture shape unchanged (6 beacons + 12 palisades); the 200 ceiling is byte-identical to main. The guard now EXECUTES its assertion — proven by a temporary probe (assert flipped to <=0) that made line 339 print a received value, which it structurally could not do while placeSelected timed out at spec:84. Measured by the draining fire, not inherited: 182 desktop / 160 mobile vs 200 (Codex reported 182/162; the predecessor's 131 mobile was a hand-probe figure and should not be carried forward). GATES: tsc, build, m2-01 7/7 both projects, m1-01 8/8 both projects, zero console/page errors across 22 asserted boots. m2-05 showed 3 failures, ALL pre-existing flakes proven on clean main — see F-1030-1 (the F-1029-1 drift is cross-project, not desktop-only: mobile +3, 1-in-3) and F-1030-2 (m2-05:198 intermittently red, unrecorded until now)."
     },
     {
+     "id": "m2-05-wreck-repair-drift",
+     "title": "F-1029-1 + F-1030-1: three wreck/repair cycles do not return the renderer to baseline — desktop leaks +1 geometry (spec:348, deterministic), mobile drifts +3 draw calls against a +2 tolerance (spec:349, intermittent)",
+     "status": "queued",
+     "taskFile": "lane-m2-05-wreck-repair-drift.md",
+     "note": "s1030 FIRE-AUTHORED from the s1030 drain's own re-measurement, which CORRECTED s1029's reading. s1029 recorded 'desktop only, mobile green'; that is half right — the +1 geometry leak IS desktop-only (isolated :319 desktop, toBe, expected 94 received 95, 2/2 deterministic), but the test ALSO fails on mobile through a DIFFERENT assertion (line 349 draw-call tolerance, expected <=69 received 70, ~1-in-3). A third mode: in full-suite runs desktop trips :349 too (baseline 89 -> 93) while its geometries pass, because baselines move with test order (94 isolated vs 89 in-suite). Two defects behind one test name. Both reproduce on CLEAN main, so neither belongs to a recent slice. Master forbids weakening the toBe equality or the +2 tolerance and requires each project gated BOTH isolated and in-suite with --repeat-each, because a 1-in-3 red reads green two times out of three. Mobile-half diagnose-only is an authorized outcome if the desktop geometry fix lands clean. Last red of the F-1026-5 pair (the other half closed in df51d877)."
+    },
+    {
      "id": "mobile-overlay-input",
      "title": "Mobile overlay input audit+fix (owner playtest: overlays block play)",
      "mergeHash": "e35f05dc5641ee1fb0b66843f709a40dcfec2409",
