@@ -90,6 +90,15 @@ async function waitForSim(page: Page, seconds: number): Promise<void> {
   );
 }
 
+async function waitForRendererSettle(page: Page): Promise<void> {
+  await waitForSim(page, 0.9);
+  await page.waitForFunction(() =>
+    window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts === 0
+    && window.__THREE_GAME_DIAGNOSTICS__?.agent.embodiment.drifting === false
+    && window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.prospector_agent']?.fadeActive !== true,
+  );
+}
+
 async function hpEntry(page: Page, id: BuildableId, index = 0) {
   return page.evaluate(
     ([family, i]) => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.find((entry) => entry.id === family && entry.index === i),
@@ -321,12 +330,15 @@ test('wreck and repair cycles leave shooter and renderer counts at baseline', as
   await page.evaluate(() => window.__GR_TEST__?.warmVfx());
   await grantGold(page, 40);
   await placeBuildableAt(page, 'sentry_beacon', 0, 12);
-  await wreck(page, 'sentry_beacon');
-  await teleport(page, 8, 16);
-  await grantGold(page, repairCost('sentry_beacon'));
-  await teleport(page, 0, 12);
-  await expect.poll(() => hpEntry(page, 'sentry_beacon').then((entry) => entry?.wrecked ?? true), { timeout: 10_000 }).toBe(false);
-  await waitForSim(page, 0.5);
+  await page.waitForFunction(() => ['ready', 'lite', 'failed'].includes(document.querySelector('canvas')?.dataset.run3dPilotState ?? ''));
+  for (let i = 0; i < 2; i += 1) {
+    await wreck(page, 'sentry_beacon');
+    await teleport(page, 8, 16);
+    await grantGold(page, repairCost('sentry_beacon'));
+    await teleport(page, 0, 12);
+    await expect.poll(() => hpEntry(page, 'sentry_beacon').then((entry) => entry?.wrecked ?? true), { timeout: 10_000 }).toBe(false);
+  }
+  await waitForRendererSettle(page);
   const baseline = await page.evaluate(() => ({
     renderer: window.__THREE_GAME_DIAGNOSTICS__?.renderer,
     shooters: window.__THREE_GAME_DIAGNOSTICS__?.build.shooterRegistrations,
@@ -340,6 +352,7 @@ test('wreck and repair cycles leave shooter and renderer counts at baseline', as
     await expect.poll(() => hpEntry(page, 'sentry_beacon').then((entry) => entry?.wrecked ?? true), { timeout: 10_000 }).toBe(false);
   }
 
+  await waitForRendererSettle(page);
   const after = await page.evaluate(() => ({
     renderer: window.__THREE_GAME_DIAGNOSTICS__?.renderer,
     shooters: window.__THREE_GAME_DIAGNOSTICS__?.build.shooterRegistrations,
