@@ -260,7 +260,7 @@
       },
       {
        "id": "e5-hud-wave-counter",
-       "title": "HUD — count the corsair waves the player is actually fighting (rehearsal F-REH-05: 100 waves shown as 0) ✅",
+       "title": "HUD \u2014 count the corsair waves the player is actually fighting (rehearsal F-REH-05: 100 waves shown as 0) \u2705",
        "taskFile": "lane-deepwater-wave-counter.md",
        "mergeHash": "3598b88c",
        "status": "merged"
@@ -994,10 +994,10 @@
    "tasks": [
     {
      "id": "m1-m2-resource-guards",
-     "title": "THE TWO RED GUARDS ON MAIN — m1-01:70 geometry leak (77→87 across a double restart) + m2-01:322 draw-call ceiling; pre-existing, proven by three-point bisect (F-1026-5)",
+     "title": "THE TWO RED GUARDS ON MAIN \u2014 m1-01:70 geometry leak (77\u219287 across a double restart) + m2-01:322 draw-call ceiling; pre-existing, proven by three-point bisect (F-1026-5)",
      "status": "running",
      "taskFile": "lane-m1-m2-resource-guards.md",
-     "note": "s1027: attempt 1 (10:58) was an HONEST NO-OP — a paraphrased pre-flight bricked it before it began (F-1027-1), zero diff, reason written. Master's pre-flight replaced with the verbatim SAFE-DUPE template + the proof that lane/m3's tip 6be3964c is a merged dupe of 0dfa1d3f; re-queued 04:34Z, runner picked it up within 2 min. This is effectively attempt 1 of the real task."
+     "note": "s1027: attempt 1 (10:58) was an HONEST NO-OP \u2014 a paraphrased pre-flight bricked it before it began (F-1027-1), zero diff, reason written. Master's pre-flight replaced with the verbatim SAFE-DUPE template + the proof that lane/m3's tip 6be3964c is a merged dupe of 0dfa1d3f; re-queued 04:34Z, runner picked it up within 2 min. This is effectively attempt 1 of the real task."
     },
     {
      "id": "mobile-overlay-input",
@@ -1669,6 +1669,18 @@
        "title": "Download diet",
        "taskFile": "052-download-diet.md",
        "mergeHash": "9e95b80acf423172b8989a26248742f802152eee",
+       "status": "merged"
+      },
+      {
+       "id": "factory-diet-gate-honesty",
+       "title": "asset-diet gate tells the truth about which bundle it measured (F-1026-1)",
+       "taskFile": "lane-asset-diet-gate-honesty.md",
+       "status": "queued"
+      },
+      {
+       "id": "factory-dashboard-unfreeze",
+       "title": "Dashboard unfrozen + run-stats ledger stops re-appending itself (F-1028-1, F-1027-3)",
+       "mergeHash": "dc6c8196",
        "status": "merged"
       }
      ]
