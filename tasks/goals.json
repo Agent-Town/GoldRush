@@ -1806,9 +1806,9 @@
         {
           "id": "tl-03-window-3",
           "title": "TL-03 Window 3 — the Ticker/Gazette quotes /api/stats for real numbers (last open window of the owner-ordered Assay Office spine; drafting tool only, publication stays owner-only)",
-          "status": "queued",
-          "taskFile": "lane-a-tl-03-window-3-ticker-stats.md",
-          "note": "FIRE-AUTHORED s1042 from specs/accounts/README.md:29,32 (slice marked fire-authorable). QUEUED to lane-a later the same fire, once the lane-c repair-dwell run finished and was drained (d79e8941) — the load-contention reason for banking it had expired."
+          "status": "merged",
+          "note": "FIRE-AUTHORED s1042, DRAINED s1043. Additive tooling only (scripts/ticker-stats.mjs + its fixture harness, +243/2 new files, base d79e8941, no 3-way). Gates: tsc clean, build green, harness PASS, m1-01 boot 8/8 desktop+mobile zero-console. Rider discharged by the drain’s OWN mutation run: neutering guard() made the harness RED (\"Missing expected rejection\"), so scope 5d is not vacuous. Scope 2 held — endpoint read from liveStats.ts, no shipped surface touched. F-1043-1 (broken endpoint read degrades to the quiet-wire line) + F-1043-2 (live endpoint is 200/ok/empty with allTime:0 — Window 3 reports \"the wire is quiet\" for a HEALTHY wire, and the whole spine renders zero) both non-blocking, review reviews/tl-03-window-3-ticker-stats.md. TL-03 COMPLETE — all three windows shipped.",
+          "mergeHash": "5227409f"
         }
       ]
     },
