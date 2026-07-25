@@ -1,4 +1,34 @@
 # stream-capture-duty — the channel feeds itself (standing duty, TK-01 pattern)
+
+> ## ⛔ DO NOT QUEUE — BLOCKED PENDING OWNER RULING (s1034, 2026-07-25). F-1034-1.
+> **Scopes 1 and 4 of this master were superseded by two owner rulings made TWO DAYS after it was
+> written.** Queueing it as-is sends a runner to produce banned content and to write a file it no
+> longer owns. Verified at file:line, not inherited:
+> - **HEADLESS BAN** — `tasks/stream-rotation-curator.md:15`, owner 2026-07-14: *"HEADLESS CAPTURES
+>   ARE BANNED from the pools (owner: 'gameplay is very slow' — headless browsers throttle the frame
+>   loop): only real-speed footage enters (owner OBS recordings, or future headed captures on a
+>   virtual display)."* Also `docs/marketing/BRAND-BOOK.md:26`. **Scope 1 is a headless capture**
+>   (`scripts/stream-capture.mjs:38,117` = `chromium.launch({ headless: true })`).
+> - **PLAYLIST LAW / one writer** — `tasks/stream-rotation-curator.md:16`, owner 2026-07-14: *"The
+>   curator only ever edits the manifest."* **Scope 4 orders this duty to edit it too**
+>   (`scripts/stream-capture.mjs:180-183` mutates + writes `loop-manifest.json`), while
+>   `scripts/stream-curate.mjs:194` **fully regenerates** that file from its pools. Two writers on
+>   one surface — CLAUDE.md §4.4. This already happened: the Jul-12 run's entries were erased by the
+>   Jul-14 regenerate.
+> - **Its output is unreachable anyway.** The curator's only pool for this directory accepts
+>   `/^ceremony-[^.]+\.(mp4|webm)$/` (`scripts/stream-curate.mjs:43`), so the gameplay mp4 and both
+>   slideshows are discarded at intake — `node scripts/stream-curate.mjs --check` prints
+>   `IGNORED artifacts/stream-capture/capture-duty-gameplay.mp4 (not an approved ceremony-recording)`.
+>   **Re-running scope 1-2 today changes nothing that any consumer can see.**
+>
+> **What survives:** scope 3 (ceremony recordings) — `ceremony-e3-voltage.mp4` is in the live loop
+> today. Scope 5's honesty gate is still right. A NARROWED re-queue (ceremony-only, no manifest
+> write) is lawful; **the gameplay feed needs Robin's ruling first** — see OWNER'S DESK / F-1034-1.
+>
+> **s1033's prescribed two-edit refresh (pre-flight + "run the existing script and refresh the
+> manifest") must NOT be applied** — the second edit is precisely the superseded instruction. The
+> missing pre-flight (F-1027-1 brick class) is still real and still owed by any future re-queue.
+
 ROLE: capture pipeline. WORKDIR: lane-d (worktrees/lane-d). RECURRING: re-queue on every era gate + weekly refresh (fires refill per BACKLOG line).
 CODEX: model=gpt-5.6-sol effort=medium
 
