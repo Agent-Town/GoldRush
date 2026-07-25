@@ -4,7 +4,9 @@ import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
 
 const QUIET_LINE = 'the wire is quiet.';
+const EMPTY_LINE = 'the office opens with the first assay.';
 const ENDPOINT_SOURCE = new URL('../src/encyclopedia/liveStats.ts', import.meta.url);
+const ENDPOINT_DIAGNOSTIC = 'ticker-stats: could not read STATS_ENDPOINT from src/encyclopedia/liveStats.ts';
 const BANNED_WORDS = [
   'token', 'price', 'trade', 'trading', 'value', 'valuation', 'expectation', 'expectations',
   'amazing', 'epic', 'exciting', 'groundbreaking', 'huge', 'incredible', 'massive',
@@ -34,9 +36,25 @@ const WAVE_LABELS = {
   '40plus': '40+',
 };
 
-export async function draftTickerStats({ url, json = false, fetchImpl = fetch } = {}) {
+export async function draftTickerStats({
+  url,
+  json = false,
+  fetchImpl = fetch,
+  endpointImpl = statsEndpoint,
+  stderr = console.error,
+} = {}) {
+  if (!url) {
+    try {
+      url = await endpointImpl();
+    } catch (error) {
+      if (!(error instanceof StatsEndpointReadError)) throw error;
+      stderr(error.message);
+      return QUIET_LINE;
+    }
+  }
+
   try {
-    const response = await fetchImpl(url ?? await statsEndpoint(), { headers: { accept: 'application/json' } });
+    const response = await fetchImpl(url, { headers: { accept: 'application/json' } });
     if (!response.ok) return QUIET_LINE;
     const payload = await response.json();
     if (json) {
@@ -51,15 +69,20 @@ export async function draftTickerStats({ url, json = false, fetchImpl = fetch } 
   }
 }
 
-export async function statsEndpoint() {
-  const source = await readFile(ENDPOINT_SOURCE, 'utf8');
-  const match = source.match(/\bconst STATS_ENDPOINT = ['"]([^'"]+)['"]/);
-  if (!match) throw new Error('STATS_ENDPOINT not found');
-  return match[1];
+export async function statsEndpoint(readSource = () => readFile(ENDPOINT_SOURCE, 'utf8')) {
+  try {
+    const source = await readSource();
+    const match = source.match(/\bconst STATS_ENDPOINT = ['"]([^'"]+)['"]/);
+    if (!match) throw new Error();
+    return match[1];
+  } catch {
+    throw new StatsEndpointReadError(ENDPOINT_DIAGNOSTIC);
+  }
 }
 
 export function render(payload) {
-  if (!validPayload(payload) || payload.empty) return QUIET_LINE;
+  if (!validPayload(payload)) return QUIET_LINE;
+  if (payload.empty) return EMPTY_LINE;
   const stats = payload.stats;
   const duration = stats.medianDurationBucket === null ? 'still tallying' : DURATION_LABELS[stats.medianDurationBucket];
   const lines = [
@@ -131,6 +154,7 @@ function guard(lines) {
 }
 
 export class UnsafeTickerCopyError extends Error {}
+export class StatsEndpointReadError extends Error {}
 
 function help() {
   return `Usage: node scripts/ticker-stats.mjs [--url <endpoint>] [--json]

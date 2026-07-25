@@ -6,6 +6,9 @@ import {
   UnsafeTickerCopyError,
 } from './ticker-stats.mjs';
 
+const QUIET_LINE = 'the wire is quiet.';
+const EMPTY_LINE = 'the office opens with the first assay.';
+
 const fixture = {
   ok: true,
   empty: false,
@@ -49,15 +52,38 @@ assert(expected.every((line) => line.length <= 140), 'every populated line stays
 
 const empty = structuredClone(fixture);
 empty.empty = true;
-assert.equal(await draftTickerStats({ url: 'fixture:', fetchImpl: reply(empty) }), 'the wire is quiet.');
+assert.equal(await draftTickerStats({ url: 'fixture:', fetchImpl: reply(empty) }), EMPTY_LINE, 'empty office is not a quiet wire');
 
 for (const fetchImpl of [
   async () => { throw new Error('unreachable'); },
   reply({}, 500),
   async () => ({ ok: true, json: async () => { throw new SyntaxError('garbage JSON'); } }),
 ]) {
-  assert.equal(await draftTickerStats({ url: 'fixture:', fetchImpl }), 'the wire is quiet.');
+  assert.equal(await draftTickerStats({ url: 'fixture:', fetchImpl }), QUIET_LINE);
 }
+
+const invalid = structuredClone(fixture);
+delete invalid.stats.runs.today;
+assert.equal(
+  await draftTickerStats({ url: 'fixture:', fetchImpl: reply(invalid) }),
+  QUIET_LINE,
+  'a non-empty shape violation is an unusable answer',
+);
+
+const diagnostics = [];
+assert.equal(
+  await draftTickerStats({
+    endpointImpl: () => statsEndpoint(async () => 'const RENAMED_ENDPOINT = "https://example.test/api/stats";'),
+    stderr: (line) => diagnostics.push(line),
+  }),
+  QUIET_LINE,
+  'a broken endpoint read keeps stdout paste-safe',
+);
+assert.deepEqual(
+  diagnostics,
+  ['ticker-stats: could not read STATS_ENDPOINT from src/encyclopedia/liveStats.ts'],
+  'a broken endpoint read names the file and constant on stderr',
+);
 
 const poisoned = structuredClone(fixture);
 poisoned.stats.busiestContract.id = 'token-ridge';
@@ -79,7 +105,7 @@ assert.deepEqual(
   '--json passes the raw payload through',
 );
 
-console.log('ticker stats checks passed (populated, empty, failures, poison control, shared URL, JSON)');
+console.log('ticker stats checks passed (populated, empty, failures, invalid shape, endpoint diagnostic, poison control, shared URL, JSON)');
 
 function reply(body, status = 200) {
   return async () => ({ ok: status >= 200 && status < 300, status, json: async () => structuredClone(body) });
