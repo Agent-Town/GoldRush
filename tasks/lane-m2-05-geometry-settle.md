@@ -1,7 +1,16 @@
 # lane-m2-05-geometry-settle — the baseline must wait for the sentry's own GLB, not the terrain pilot's
 
-**FIRE-AUTHORED s1035 (attended review welcome).**
+**FIRE-AUTHORED s1035, REFRESHED s1036 — attempt 2 (attended review welcome).**
 **Role:** Codex runner, lane-c. **Workdir:** `worktrees/lane-c` (branch `lane/e2-arsenal`).
+
+> **WHAT CHANGED SINCE ATTEMPT 1 — read this first.** Attempt 1 took this master's own "0/6 twice in a
+> row" exit and stopped, honestly and lawfully, reporting the residue as non-reproducing. **s1036 then
+> reproduced it — 2 fail / 6 at `:361`, correct fingerprint — on the same tree and the same machine**, and
+> found why the samples disagreed: **every repeat inside one `--repeat-each` invocation shares one dev
+> server, one browser launch and one warmed GLB cache, so a 6-repeat batch is ONE draw of the slow
+> variable, not six.** That stop clause is **DELETED** — it could be satisfied by measuring the wrong
+> regime. **Two hypotheses are already dead: `--trace=off` and the vite dep-optimize cache. Do not
+> re-spend cycles on either.** Full four-batch table + reasoning: `reviews/m2-05-geometry-settle.md`.
 
 > **THIS IS A SUCCESSOR, NOT A RETRY.** `lane-m2-05-readiness-seam` SHIPPED (s1035 drain,
 > `reviews/m2-05-readiness-seam.md`) and closed **one** of its two races. Its fix is on main and you are
@@ -9,7 +18,9 @@
 > measured residue.
 
 ## READ FIRST (paths, in this order)
-- `reviews/m2-05-readiness-seam.md` — the drain that produced this task's entire premise, including the
+- `reviews/m2-05-geometry-settle.md` — **s1036's measurement review of attempt 1.** The four-batch table,
+  the two dead hypotheses, and the per-cold-invocation rate model. Read this before the one below.
+- `reviews/m2-05-readiness-seam.md` — the drain that produced this task's original premise, including the
   pre-merge control run. Read the Findings section first.
 - `e2e/m2-05-base-damage-repair.spec.ts:93-101` (`waitForRendererSettle`, the merged helper),
   `:333` (the terminal-state wait), `:334-341` (the two warm-up cycles), `:342` + `:355` (the two
@@ -19,7 +30,10 @@
   discipline).
 - `CLAUDE.md` §5 Mistake #1 (no-op) and #12 (gate contamination).
 
-## WHY (measured this fire on the merged tree — not a hypothesis, not inherited)
+## WHY (measured on the merged tree by two fires independently — not a hypothesis, not inherited)
+
+**s1036 re-measured and reproduced it: 2 failures / 6 at `:361`, correct fingerprint, on a byte-identical
+tree.** So the numbers below are confirmed by a second fire, not carried.
 
 s1035 gated the merged tree and got **3 failures in 12 desktop-isolated runs**, every one of them the
 identical fingerprint:
@@ -48,14 +62,18 @@ time, and on a cold fetch they sometimes do not. **The baseline is still, occasi
 the geometry it is supposed to count exists.**
 
 ## SCOPE (numbered, each testable)
-1. **Establish the rate before you touch anything.** Desktop, isolated
-   (`-g "wreck and repair cycles leave shooter and renderer counts at baseline"`), `--workers=1
-   --repeat-each=6`. Report pass/fail. **Expect roughly 4-5 of 6 to pass** — s1035 measured 25%
-   failure across 12. **Do NOT stop over a different count**: 6 samples of a 25% event legitimately
-   returns anywhere from 0 to 4 failures. **STOP-and-report only if the CLASS moved:** the failure is at
-   a line other than `:361`, or the delta is anything other than **+1 geometry**, or it fails **0/6 twice
-   in a row** (in which case say so — the residue may be machine-specific and this task is done by
-   measurement rather than by patch).
+1. **Establish the rate before you touch anything — as SEPARATE INVOCATIONS.** Desktop, isolated
+   (`-g "wreck and repair cycles leave shooter and renderer counts at baseline"`), `--workers=1`.
+   Run **six separate `npx playwright test` invocations of `--repeat-each=1`** — NOT one invocation with
+   `--repeat-each=6`. Report the six results individually.
+   **Why the shape matters (F-1036-2):** `playwright.config.ts:20-25` starts a fresh dev server per
+   invocation, but repeats *within* an invocation reuse one browser launch and one warmed GLB cache. s1035
+   got ≈**one failure per cold invocation** (3 invocations → 3 failures) while two back-to-back warm
+   invocations gave 0/12. Expect **roughly 1-3 of your six invocations to fail**.
+   **Do NOT stop over a low count** — a green sample is the expected outcome of a warm machine, not
+   evidence of absence, and this master no longer has a "did not reproduce" exit.
+   **STOP-and-report only if the CLASS moved:** the failure is at a line other than `:361`, or the delta
+   is anything other than **+1 geometry**.
 2. **Diagnose which geometry arrives late — by instrumentation, not by inference.** Sample
    `renderer.geometries` at four points (after the terminal-state wait; after warm-up cycle 1; after
    warm-up cycle 2; at the baseline snapshot) and print the series for a passing run and a failing run.
@@ -69,13 +87,20 @@ the geometry it is supposed to count exists.**
    in `__THREE_GAME_DIAGNOSTICS__` — e.g. a per-buildable model/upgrade flag — prefer that and say why.**
    Either way the wait must **time out and fail loudly**, never silently proceed on a machine where the
    count never stabilises.
-4. **Prove the repaired guard can still fail.** Mandatory. A temporary local mutation that genuinely
-   registers an extra geometry must turn `:361` red; revert it and verify the revert two ways.
-   The predecessor's control (retained expired sprites → draw-call assertion red at 91→94, limit 93)
-   is the model. **A green run only proves the line executed, never that it still bites.**
-5. **Report the four-shape table at `--repeat-each=6`** — desktop/mobile × isolated/in-suite — plus the
-   scope-2 series. **6, not 3:** s1035 shipped a partial believing a 3/3 sample, and a 25% flake reads
-   clean in three runs ~42% of the time (F-1035-2). Three repeats are below this defect's resolution.
+4. **Prove the repaired guard can still fail — THIS IS THE PRIMARY ACCEPTANCE EVIDENCE, not a footnote.**
+   Mandatory. A temporary local mutation that genuinely registers an extra geometry must turn `:361` red;
+   revert it and verify the revert two ways. The predecessor's control (retained expired sprites →
+   draw-call assertion red at 91→94, limit 93) is the model.
+   **Why this outranks the repetition table (F-1036-2):** at ≈1 failure per cold invocation, *proving
+   absence by observation* costs many separated invocations and still cannot distinguish "fixed" from
+   "the machine was warm". The mutation control is **deterministic** — it either goes red or your wait has
+   made the guard vacuous. **A deterministic can-it-still-fail proof outranks any number of green runs**;
+   that principle is what closed F-1026-1, F-1026-5, F-1029-3 and F-1032-1. Green runs corroborate; they
+   never certify.
+5. **Report the four-shape table** — desktop/mobile × isolated/in-suite — plus the scope-2 series. Use
+   **separate invocations for the desktop-isolated shape** (six, per scope 1); `--repeat-each=6` is
+   acceptable for the other three shapes, which have never carried this race. **State plainly that the
+   table is corroboration, not proof** — scope 4 is the proof. Do not present a green table as a close.
 
 ## FIREWALL
 **TOUCH-ONLY:** `e2e/m2-05-base-damage-repair.spec.ts`.
@@ -115,22 +140,32 @@ task**, verified by content adoption plus byte-diff. It is a textbook SAFE DUPE;
 treat anything you find there as a finding worth reporting, not as expected.)*
 
 ## No-op guard
-If you find yourself about to exit without changes, WRITE WHY into your report first. **A no-op is only
-acceptable under a scope-1 class change** — specifically the "0/6 twice in a row" branch, which is a
-legitimate and useful answer (it would mean the residue is machine-dependent and the board should stop
-paying for it). Anything else means the deliverable was not attempted. **Note that scope-2's
-instrumentation series is itself a deliverable**: a run that diagnoses precisely and patches nothing is
-NOT a no-op, provided the series is in the report.
+If you find yourself about to exit without changes, WRITE WHY into your report first. **The "0/6 twice in
+a row" exit that attempt 1 used is DELETED — a green sample is no longer an acceptable reason to stop.**
+s1036 reproduced the defect after attempt 1 reported it gone, so "did not reproduce" describes a sample,
+never the defect. **A no-op is now acceptable only under a scope-1 CLASS change** (failure at a line other
+than `:361`, or a delta other than +1 geometry). **Note that scope-2's instrumentation series is itself a
+deliverable**: a run that diagnoses precisely and patches nothing is NOT a no-op, provided the series is in
+the report. If the wait in scope 3 lands and scope 4 proves it still bites, that is a complete task even if
+every observational run was green.
 
 ## Self-check (evidence, not vibes)
 `npx tsc --noEmit` + `npm run build` green.
 **The slice's own gate:** `e2e/m2-05-base-damage-repair.spec.ts` green **desktop + mobile**, run **both
-isolated and as the full file**, each at `--workers=1 --repeat-each=6`. **Report all four numbers.**
+isolated and as the full file**, at `--workers=1`. **Desktop-isolated must be six SEPARATE invocations**
+(scope 1); the other three shapes may use `--repeat-each=6`. **Report all four numbers**, and label the
+table corroboration — **scope 4's mutation control is the acceptance evidence.**
 Adjacent unmodified-green both projects at `--workers=1`: `e2e/m1-01-first-claim.spec.ts`,
 `e2e/m2-01-fixture-coordinate.spec.ts`, `e2e/run3d-turret.spec.ts`, `e2e/run3d-assay-bench.spec.ts`
 (16 tests — s1035's merged-tree number, so a deviation is yours).
 Zero console/page errors on both viewports.
 
-End: **READY-FOR-GATES** + report: the scope-1 pre-fix rate, the scope-2 geometry series for a passing
-AND a failing run, what stabilisation condition you chose and the measurement that justifies it, the
-scope-4 can-it-still-fail proof, whether `:198` moved, and the four-shape table at `--repeat-each=6`.
+End: **READY-FOR-GATES** + report: the scope-1 pre-fix rate **as six separate invocation results**, the
+scope-2 geometry series for a passing AND a failing run, what stabilisation condition you chose and the
+measurement that justifies it, **the scope-4 can-it-still-fail proof (the acceptance evidence)**, whether
+`:198` moved, and the four-shape table labelled as corroboration.
+
+**Pre-flight note for attempt 2 (s1036, verified):** `lane/e2-arsenal` was reset to `main` by attempt 1 and
+`e2e/` + `src/` are **byte-identical to main** in `worktrees/lane-c` (checked with `diff -rq` on both
+trees). There is no undrained content on the branch, so the safe-dupe reset is risk-free — but re-verify
+rather than trusting this line (Mistake #4).
