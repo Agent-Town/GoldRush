@@ -47,6 +47,27 @@ fi
 
 # Opus weekly cap hit 2026-07-15 (resets Jul 18 01:00 Asia/Bangkok) — Sonnet fallback
 # keeps the fires alive; revert to opus after the reset (attended note in BACKLOG).
+# THE DRY-BOARD GUARD (2026-07-25, owner-prompted: no-op fires burned the weekly Opus meter).
+# Skip the model call entirely when the board is PROVABLY dry — conservative: any doubt runs the fire.
+# A counter caps consecutive skips at 11 (~1 real fire/hour keeps the heartbeat + backup duties).
+SKIPCOUNT_F="tasks/.fire-skip-count"
+skips=$(cat "$SKIPCOUNT_F" 2>/dev/null || echo 0)
+dry=1
+ls tasks/queue/*/* >/dev/null 2>&1 && dry=0
+[ -n "$(ls tasks/running/ 2>/dev/null | grep -v '\.pid$')" ] && dry=0
+for b in lane/m3 lane/m4 lane/e2-arsenal lane/perf; do
+  [ "$(git rev-list --count origin/main..$b 2>/dev/null || echo 1)" != "0" ] && dry=0
+done
+[ -n "$(find tasks/done -type f -mmin -60 2>/dev/null | head -1)" ] && dry=0
+head -1 STATUS.md 2>/dev/null | grep -q "lock ACTIVE" && dry=0
+if [ "$dry" = "1" ] && [ "$skips" -lt 11 ]; then
+  echo $((skips+1)) > "$SKIPCOUNT_F"
+  echo "[fire-runner] $(date +%H:%M:%S) DRY BOARD — skip $((skips+1))/11, no model call" >> "$LOG"
+  rmdir "$LOCKDIR" 2>/dev/null
+  exit 0
+fi
+echo 0 > "$SKIPCOUNT_F"
+
 FIRE_MODEL=${FIRE_MODEL:-claude-opus-5}
 echo "[fire-runner] $(date +%H:%M:%S) FIRE START (model $FIRE_MODEL)" >> "$LOG"
 "$CLAUDE_BIN" -p "$(cat scripts/fire.md)" \
