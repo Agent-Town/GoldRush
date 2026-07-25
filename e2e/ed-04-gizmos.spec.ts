@@ -150,9 +150,9 @@ test('zone gestures add one history mark and undo byte-exactly', async ({ page }
   expect(moved.history.past.length).toBe(before.history.past.length + 1);
   expect(moved.history.past.at(-1)).toBe(before.bytes);
 
-  await commitAndReload(page, () => page.getByTestId('terrain-brush-undo').click());
+  await commitAndSettle(page, () => page.getByTestId('terrain-brush-undo').click());
   expect((await editorState(page)).bytes).toBe(before.bytes);
-  await commitAndReload(page, () => page.getByTestId('terrain-brush-redo').click());
+  await commitAndSettle(page, () => page.getByTestId('terrain-brush-redo').click());
   expect((await editorState(page)).bytes).toBe(moved.bytes);
 
   await selectMode(page);
@@ -213,7 +213,7 @@ test('plain boot does not load the Hand surface', async ({ page }) => {
   const errors = collectErrors(page);
   await page.goto('/');
   await expect(page.locator('#game-canvas')).toBeVisible();
-  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.locator('[aria-label="Gold Rush start menu"]').waitFor({ state: 'visible' });
   expect(await page.getByTestId('terrain-brush-mode-select').count()).toBe(0);
   expect(await page.evaluate(() => ({
     installed: window.__GR_EDITOR__ !== undefined,
@@ -294,7 +294,7 @@ async function dragWorld(
   to: TerrainBrushPoint,
   offset = { x: 0, y: 0 },
 ): Promise<void> {
-  await commitAndReload(page, () => dragWorldGesture(page, testInfo, claimSize, from, to, offset));
+  await commitAndSettle(page, () => dragWorldGesture(page, testInfo, claimSize, from, to, offset));
 }
 
 async function dragWorldGesture(
@@ -306,7 +306,7 @@ async function dragWorldGesture(
   offset = { x: 0, y: 0 },
 ): Promise<void> {
   const map = page.getByTestId('terrain-brush-map');
-  await map.scrollIntoViewIfNeeded();
+  await map.evaluate((element) => element.scrollIntoView({ block: 'end' }));
   const box = await map.boundingBox();
   expect(box).not.toBeNull();
   const start = worldClient(box!, claimSize, from, offset);
@@ -332,7 +332,7 @@ async function dragWorldGesture(
 
 async function tapWorld(page: Page, testInfo: TestInfo, claimSize: number, at: TerrainBrushPoint): Promise<void> {
   const map = page.getByTestId('terrain-brush-map');
-  await map.scrollIntoViewIfNeeded();
+  await map.evaluate((element) => element.scrollIntoView({ block: 'end' }));
   const box = await map.boundingBox();
   expect(box).not.toBeNull();
   const point = worldClient(box!, claimSize, at, { x: 0, y: 0 });
@@ -359,9 +359,10 @@ function worldClient(
   };
 }
 
-async function commitAndReload(page: Page, action: () => Promise<unknown>): Promise<void> {
-  await Promise.all([page.waitForEvent('load'), action()]);
-  await ready(page);
+async function commitAndSettle(page: Page, action: () => Promise<unknown>): Promise<void> {
+  const before = await editorState(page);
+  await action();
+  await expect.poll(async () => (await editorState(page)).bytes).not.toBe(before.bytes);
 }
 
 function collectErrors(page: Page): { consoleErrors: string[]; pageErrors: string[] } {
