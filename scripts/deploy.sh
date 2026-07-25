@@ -12,11 +12,12 @@ RESULT="logs/deploy-result.json"
 mkdir -p logs
 note() { echo "[deploy] $(date '+%F %T') $*" >> "$LOG"; echo "[deploy] $*"; }
 DEPLOY_COMMIT="${CF_PAGES_COMMIT_SHA:-$(git rev-parse HEAD 2>/dev/null || printf 'unknown')}"
+PUBLISHED_BUILD=""
 write_result() {
   local outcome="$1" url="$2" ts tmp
   ts="$(date -u '+%Y-%m-%dT%H:%M:%SZ')"
   tmp="$(mktemp "${RESULT}.tmp.XXXXXX")" || return 1
-  printf '{"outcome":"%s","url":"%s","commit":"%s","ts":"%s"}\n' "$outcome" "$url" "$DEPLOY_COMMIT" "$ts" > "$tmp"
+  printf '{"outcome":"%s","url":"%s","publishedBuild":"%s","commit":"%s","ts":"%s"}\n' "$outcome" "$url" "$PUBLISHED_BUILD" "$DEPLOY_COMMIT" "$ts" > "$tmp"
   mv "$tmp" "$RESULT"
 }
 finish() {
@@ -51,7 +52,8 @@ BUDGET_LIMIT=25000000
 BUDGET_OVER=0
 CAPTURE="$(mktemp "${TMPDIR:-/tmp}/gold-rush-deploy.XXXXXX")" || { note "FAILED: could not create deploy capture"; finish budget_failed 5; }
 BUDGET_CWD="$(mktemp -d "${TMPDIR:-/tmp}/gold-rush-budget.XXXXXX")" || { note "FAILED: could not create budget workdir"; finish budget_failed 5; }
-trap 'rm -f "$CAPTURE"; rm -rf "$BUDGET_CWD"' EXIT
+SNAPSHOT=""
+trap 'rm -f "$CAPTURE"; rm -rf "$BUDGET_CWD"; [ -z "$SNAPSHOT" ] || rm -rf "$SNAPSHOT"' EXIT
 note "checking first-town asset budget…"
 if (
   cd "$BUDGET_CWD" || exit 1
@@ -73,20 +75,22 @@ if [ "$BUDGET_RC" -ne 0 ] || [ "$BUDGET_OVER" -ne 0 ]; then
   note "WARN: asset budget check failed — default mode continues"
 fi
 
+SNAPSHOT="$(mktemp -d "${TMPDIR:-/tmp}/gold-rush-dist.XXXXXX")" || { note "FAILED: could not create deploy snapshot"; finish deploy_failed 4; }
+cp -R dist/. "$SNAPSHOT"/ || { note "FAILED: could not copy deploy snapshot"; finish deploy_failed 4; }
+PUBLISHED_BUILD="$(node -e 'process.stdout.write(JSON.parse(require("fs").readFileSync(process.argv[1], "utf8")).build)' "$SNAPSHOT/version.json" 2>/dev/null)" ||
+  { note "FAILED: deploy snapshot has no readable build id"; finish deploy_failed 4; }
+
 command -v wrangler >/dev/null 2>&1 || { note "SKIP: wrangler not installed"; finish skipped 2; }
 # Headless auth: scoped API token from .env.local (interactive OAuth is unusable by fires).
 if [ -f .env.local ]; then set -a; . ./.env.local; set +a; fi
 [ -n "${CLOUDFLARE_API_TOKEN:-}" ] || { note "SKIP: CLOUDFLARE_API_TOKEN missing from .env.local (owner one-time: create a token with 'Cloudflare Pages: Edit' permission)"; finish skipped 2; }
 
-note "deploying dist/ to Pages project 'gold-rush'…"
+note "deploying snapshot $SNAPSHOT to Pages project 'gold-rush'…"
 : > "$CAPTURE"
-if wrangler pages deploy --commit-dirty=true > "$CAPTURE" 2>&1; then
-  cat "$CAPTURE" >> "$LOG"
-  URL=$(grep -oE 'https://[a-z0-9.-]+\.pages\.dev' "$CAPTURE" | tail -1)
-  note "DEPLOYED ok ${URL:-'(url in log)'}"
-  finish deployed 0 "${URL:-}"
-else
-  cat "$CAPTURE" >> "$LOG"
+if wrangler pages deploy "$SNAPSHOT" --commit-dirty=true > "$CAPTURE" 2>&1; then DEPLOY_RC=0; else DEPLOY_RC=$?; fi
+cat "$CAPTURE" >> "$LOG"
+URL="$(grep -oE 'https://[a-z0-9.-]+\.pages\.dev' "$CAPTURE" | tail -1)"
+if [ "$DEPLOY_RC" -ne 0 ] || [ -z "$URL" ]; then
   ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk '
     /ERROR|Error:/ { found=1 }
     found && NF {
@@ -98,7 +102,24 @@ else
     END { print out }
   ' | cut -c1-240)"
   [ -n "$ERROR_LINE" ] || ERROR_LINE="$(sed $'s/\033\\[[0-9;]*m//g' "$CAPTURE" | tr -d '\r' | awk 'NF { line=$0 } END { print line }' | cut -c1-240)"
-  [ -n "$ERROR_LINE" ] || ERROR_LINE="no wrangler error output (check auth and project configuration)"
+  [ -n "$ERROR_LINE" ] || ERROR_LINE="wrangler returned no published URL"
   note "FAILED: pages deploy — $ERROR_LINE — see $LOG"
   finish deploy_failed 4
 fi
+
+note "DEPLOYED ok $URL"
+if LIVE_BUILD="$(node -e '
+  fetch(process.argv[1], { signal: AbortSignal.timeout(20000) })
+    .then(response => {
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      return response.json();
+    })
+    .then(version => process.stdout.write(String(version.build ?? "missing")))
+    .catch(() => process.exit(1));
+' "$URL/version.json" 2>/dev/null)"; then :; else LIVE_BUILD="unreachable"; fi
+if [ "$LIVE_BUILD" = "$PUBLISHED_BUILD" ]; then
+  note "VERIFIED published $PUBLISHED_BUILD"
+  finish deployed 0 "$URL"
+fi
+note "UNVERIFIED: deploy reported success but $URL/version.json says $LIVE_BUILD"
+finish deploy_unverified 7 "$URL"
