@@ -1801,6 +1801,13 @@
           "title": "Assay Office — Records page in the Claim Ledger ✅ (county + your claim)",
           "status": "merged",
           "mergeHash": "00b93d659b7de5efe073e7b572adc7425a9fa4ae"
+        },
+        {
+          "id": "tl-03-window-3",
+          "title": "TL-03 Window 3 — the Ticker/Gazette quotes /api/stats for real numbers (last open window of the owner-ordered Assay Office spine; drafting tool only, publication stays owner-only)",
+          "status": "authored-banked",
+          "taskFile": "lane-a-tl-03-window-3-ticker-stats.md",
+          "note": "FIRE-AUTHORED s1042 from specs/accounts/README.md:29,32 (slice marked fire-authorable). BANKED, NOT QUEUED: a Codex run on lane-a would have injected CPU load into the LIVE lane-c repair-dwell timing verification, which measures a ~150ms transient with a ~100ms poller. Queue it once tasks/running/lane-c.pid is gone."
         }
       ]
     },
