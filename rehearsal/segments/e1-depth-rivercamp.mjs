@@ -25,9 +25,10 @@ import { chromium } from 'playwright';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { resolveBase } from '../base-url.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const BASE = process.env.E1_BASE ?? 'http://127.0.0.1:5247';   // this review's own tree — see e1-depth-play.mjs
+const BASE = resolveBase('E1_BASE', { root: ROOT });
 const SHOT_DIR = path.join(ROOT, 'reviews', 'shots-e1-depth');
 const DATA_DIR = path.join(ROOT, 'e1-review-video', 'profiles');
 

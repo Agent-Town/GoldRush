@@ -4,9 +4,9 @@ import { chromium } from 'playwright';
 import { mkdirSync, readdirSync, renameSync, statSync, appendFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { resolveBase } from './base-url.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-export const BASE = process.env.REHEARSAL_BASE ?? 'http://127.0.0.1:5231';
 const PROFILE_DIR = path.join(ROOT, 'rehearsal-profile');
 const VIDEO_DIR = path.join(ROOT, 'rehearsal-video');
 const VIDEO_TMP = path.join(VIDEO_DIR, '.tmp');
@@ -14,6 +14,9 @@ export const SHOT_DIR = path.join(ROOT, 'reviews', 'shots-rehearsal');
 const VIDEO_LOG = path.join(ROOT, 'rehearsal-video', 'segments.jsonl');
 
 export async function openSegment(name, { url = '/' } = {}) {
+  const base = resolveBase('REHEARSAL_BASE', { root: ROOT });
+  const hmrOrigin = new URL(base);
+  hmrOrigin.protocol = hmrOrigin.protocol === 'https:' ? 'wss:' : 'ws:';
   mkdirSync(VIDEO_TMP, { recursive: true });
   mkdirSync(SHOT_DIR, { recursive: true });
   const context = await chromium.launchPersistentContext(PROFILE_DIR, {
@@ -27,12 +30,12 @@ export async function openSegment(name, { url = '/' } = {}) {
   const errors = { console: [], page: [] };
   page.on('console', (m) => {
     const t = m.text();
-    if (m.type() === 'error' && !t.includes('ws://127.0.0.1:5231') && t !== 'Failed to load resource: net::ERR_CONNECTION_REFUSED')
+    if (m.type() === 'error' && !t.includes(hmrOrigin.origin) && t !== 'Failed to load resource: net::ERR_CONNECTION_REFUSED')
       errors.console.push(t);
   });
   page.on('pageerror', (e) => errors.page.push(e.message));
   const startedAt = Date.now();
-  await page.goto(BASE + url);
+  await page.goto(base + url);
   const finish = async (note = '') => {
     const video = page.video();
     await context.close();

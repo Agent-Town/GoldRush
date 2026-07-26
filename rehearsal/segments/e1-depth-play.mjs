@@ -16,15 +16,15 @@ import { chromium } from 'playwright';
 import { mkdirSync, renameSync, appendFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import path from 'node:path';
+import { resolveBase } from '../base-url.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-// PORT 5247 IS THIS REVIEW'S OWN SCRATCH PORT, and that is not a detail.
-// 5241 — this driver's first default — turned out to be served by
+// This driver once defaulted to 5241, which turned out to be served by
 // `worktrees/lane-a` (verified with `lsof -a -p <pid> -d cwd`), i.e. ANOTHER
 // lane's tree. A run against it measures somebody else's code and attributes it
 // to this branch: Mistake #12 (gate contamination) wearing a play-session coat.
-// Always start the server from THIS checkout and confirm its cwd before playing.
-const BASE = process.env.E1_BASE ?? 'http://127.0.0.1:5247';
+// The resolver now enforces that E1_BASE belongs to THIS checkout before playing.
+const BASE = resolveBase('E1_BASE', { root: ROOT });
 const VIDEO_DIR = path.join(ROOT, 'e1-review-video');
 const SHOT_DIR = path.join(ROOT, 'reviews', 'shots-e1-depth');
 const DATA_DIR = path.join(ROOT, 'e1-review-video', 'profiles');
