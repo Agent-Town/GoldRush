@@ -1063,6 +1063,13 @@
        "status": "merged",
        "mergeHash": "eb7278ac063abef90f2e3f7b0bf4934295343403",
        "taskFile": "lane-e1-ladder-tune.md"
+      },
+      {
+       "id": "rf-18-tailor-wagon",
+       "title": "The tailor's wagon dresses the Prospector and the hero — two wardrobe racks in the town (prospector-skin + hero-skin), equipped PER PROFILE rather than globally, persisted by adding HERO_SKIN_STORAGE_KEY/HERO_SKINS_OWNED_STORAGE_KEY to ProfileStorage's PROFILE_DATA_KEYS so a wardrobe choice travels with the profile exactly as the Complainant's Coat already did; SpriteAnimator composes era-age hero sheets with skin variants (the surface the coat art will plug into); TownScene + town.css build and style the wagon and its two wardrobe-* pickers. THE SETTINGS SKIN PICKER IS RETIRED (StartMenu -7), which is the open owner question F-1079-6 answered by necessity rather than by ruling — the wagon's scope requires it, one owner word reverses it (F-1081-7). Merged as a tip-graft of the lane's own 52fa15ad..da0f4240 delta (454/32 over 9 files). ONE file was contested, e2e/cosmetic-grants.spec.ts (lane 31/4 vs main 8/1): 3-way grafted and BOTH writers verified present by re-reading main's hunks in the merged file rather than trusting a clean apply — s1080's 21-code tooMany bad_payload net (:112-118) and its bad_stub->ok:true re-redeem flip (:136) survive verbatim beside the lane's wardrobe assertions (:87-93), no conflict markers anywhere. Gates: tsc clean twice (the second after the control restore, proving the restored tree is the tree that merged), build 1.04s, 30/30 exit 0 across tailor-wagon + cosmetic-grants + bug-office-desk + profile-first-boot on desktop and mobile-390 with console/page asserted empty inside the specs. The town adjacent battery went 18 passed/4 failed while THE SAME BATTERY ON CLEAN MAIN went 16 passed/6 failed: every wagon failure exists on clean main, two clean-main failures actually PASS with the wagon, and town-fresh-boot-textures merely flips project (flake) — strictly fewer reds than the tree it merges into. Findings: F-1081-6 e2e/town-t5-townsfolk.spec.ts cannot be COLLECTED at all (import.meta.glob via townsfolk->townLayout aborts the whole run before any test executes; 4 more specs import townLayout directly) — pre-existing, reproduced on clean main with the wagon reverted; F-1081-8 the racks are reachable but the coats still have no cloth (shipped hover4 vs requested hover8), now UNBLOCKED since this slice was the two-writers hazard that made s1080 defer the art",
+       "status": "merged",
+       "mergeHash": "925a0c3ba80982c2e43ccb5561126e0f24a76cae",
+       "taskFile": "lane-tailor-wagon.md"
       }
      ]
     }
