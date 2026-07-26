@@ -36,12 +36,6 @@ export const townPropFootprints: Record<TownPropKind, TownPropFootprint> = {
   pony_express_plot: { kind: 'rect', w: 2.7, d: 1.7 },
 };
 
-type TownEraPropManifest = {
-  epoch: number;
-  floodReset?: boolean;
-  props: TownEraPropDescriptor[];
-};
-
 export type TownEraPropDescriptor = {
   id: string;
   glb: string;
@@ -49,11 +43,6 @@ export type TownEraPropDescriptor = {
   rotation: number;
   scale: number;
 };
-
-const townEraPropManifests = import.meta.glob('../../assets/pilots/plaza-props-3d/era-props.e*.json', {
-  eager: true,
-  import: 'default',
-}) as Record<string, TownEraPropManifest>;
 
 export const townEraPropFootprints: Record<string, TownPropFootprint | undefined> = {
   'ark-scaffold-stage-1.e9.glb': { kind: 'rect', w: 2.8, d: 2 },
@@ -81,14 +70,6 @@ export const townEraPropFootprints: Record<string, TownPropFootprint | undefined
   'transformer-shed.e3.glb': { kind: 'rect', w: 2.5, d: 1.8 },
   'wire-run.e3.glb': { kind: 'rect', w: 3, d: 0.3 },
 };
-
-export function townEraPropsForOrder(activeEra: number): readonly TownEraPropDescriptor[] {
-  const manifests = Array.from({ length: Math.max(0, activeEra - 1) }, (_, index) => index + 2)
-    .map((era) => townEraPropManifests[`../../assets/pilots/plaza-props-3d/era-props.e${era}.json`])
-    .filter((manifest): manifest is TownEraPropManifest => !!manifest);
-  return manifests.slice(Math.max(0, manifests.map((manifest) => manifest.floodReset).lastIndexOf(true)))
-    .flatMap((manifest) => manifest.props);
-}
 
 export type TownPropDescriptor = {
   id: string;

@@ -69,7 +69,6 @@ import {
   townBuildings,
   TOWN_LEGACY_PAN_NAME,
   townEraPropFootprints,
-  townEraPropsForOrder,
   townPlazaLayout,
   townPlazaSlot,
   townPropFootprints,
@@ -79,6 +78,7 @@ import {
   type TownPropFootprint,
   type TownPropKind,
 } from './townLayout';
+import { townEraPropsForOrder } from './townEraProps';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
 import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 import { takeMeiWorldDispatch } from './worldDispatches';

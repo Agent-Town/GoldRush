@@ -2,7 +2,8 @@ import * as THREE from 'three';
 import { trackedGltfLoader } from '../assets/AssetLoading';
 import { activeEpoch } from '../meta/ContractFamilies';
 import { disposeObject3D } from '../utils/dispose';
-import { TOWN_LEGACY_PAN_NAME, townBuildings, townEraPropsForOrder, townPlazaSlot, townPropRing } from './townLayout';
+import { townEraPropsForOrder } from './townEraProps';
+import { TOWN_LEGACY_PAN_NAME, townBuildings, townPlazaSlot, townPropRing } from './townLayout';
 
 const MODEL_PATHS = {
   tavern: {
