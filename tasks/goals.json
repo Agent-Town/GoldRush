@@ -1166,7 +1166,8 @@
       {
        "id": "rf-32-startmenu-storage-contract",
        "title": "THE DEGRADE THAT ONLY WORKS BY ACCIDENT (F-1084-2 rider). StartMenu.ts:433's unguarded storage.getItem is the accidental mode-1 usability probe that makes setupProfileStorage() return undefined, which is what gives the StartMenu its clean degrade under blocked storage. s1093 measured that the finding's own prescription -- re-point it at the rawGet accessor rf-22 exported -- would instead hand the throwing storage object out at :425, flip firstBoot true, render the 'Who's prospecting?' screen under blocked storage, turn :233's early-exit into a no-op, and reach installProfileStorageScope (ProfileStorage.ts:291) which monkey-patches Storage.prototype and calls nativeStorage.getItem.call() on a non-Storage object => TypeError: Illegal invocation, globally. Neither existing storage oracle (task-024 :130 mode-1 / :167 mode-2) drives the create-profile flow, so neither would redden. So the slice makes the probe DELIBERATE first (preserving the undefined return; net behaviour change NONE), then re-points the helper at rawGet, re-points migrateLegacySuspendResources while KEEPING its try/catch (it also guards JSON.parse), and pins the contract with a plain-boot oracle in profile-first-boot.spec.ts asserting profile-title is ABSENT under mode-1 blocked storage, with a mandatory mutation control that deletes the probe and must redden on that exact assertion.",
-       "status": "queued",
+       "status": "merged",
+       "mergeHash": "53d260ff940a319deb964798746d87d0a89a0878",
        "taskFile": "lane-startmenu-storage-contract.md"
       },
       {
