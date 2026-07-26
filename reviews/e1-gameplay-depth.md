@@ -3,7 +3,7 @@ Session: dedicated Opus 5, branch `review/e1-gameplay-depth`. Leg 1: 2026-07-25 
 Commission (owner, 2026-07-25 night): *"E1's maps are most important for the release... understand the gameplay and look for gaps and optimizations."*
 
 ## VERDICT LINE FIRST
-**Three of the five release maps are won by walking into the river and standing still — the Claim in 77 seconds, with zero kills, zero damage taken, zero gold spent and nothing built. And two of the five never tell the player how to win at all.** Both are verified: the first by play, the second at source. Both are cheap to fix. Everything below separates, ruthlessly, what was **played**, what was **verified at source**, and what remains **unverified** (claim-verification rule).
+**Three of the five release maps are won by walking into the river and standing still — the Claim in 77 seconds, with zero kills, zero damage taken, zero gold spent and nothing built. And two of the five never tell the player how to win at all.** Both are verified by play, with a negative control. The strongest evidence for the first is that this session's driver did it **twice by accident** while trying to play properly, and won both times — including a 25-wave map it spent twenty-two waves standing motionless in a river to secure. Everything below separates, ruthlessly, what was **played**, what was **verified at source**, and what remains **unverified** (claim-verification rule).
 
 ---
 
@@ -18,7 +18,7 @@ The honest-play doctrine forbids debug assists. The rig's older E1 segments all 
 | `drygulch` | e1-dry-gulch | play | 2 | **20/20** | **SECURED**, hp 143/175, 863 kills, level 28, 307 s | 7 | 0 / 0 |
 | `twinbanks` | e1-twin-banks | play | 2 | 17/20 | died, 722 kills, level 25, 266 s | 9/9 | 0 / 0 |
 | `nightshift` | e1-night-shift | play | 2 | 4/25 | died, 59 kills, 69 s | 10 (120 gold panned) | 0 / 0 |
-| `nightshift2` | e1-night-shift | play | 1 | see §7 | see §7 | 6 | 0 / 0 |
+| `nightshift2` | e1-night-shift | play | 1 | **25/25** | **SECURED — but by drifting into the river at wave 3 and never leaving** (F-E1-5), 754 s | 6 | 0 / 0 |
 | `baron2` | e1-baron | play | 2 | 3/20 | died, 39 kills, 82 s | 9 | 0 / 0 |
 | `camp-claim` | the-claim | **camp** | 4 | **10/10** | **SECURED, 0 kills, hp 100/100, 77 s** | 0 | 0 / 0 |
 | `camp-nightshift` | e1-night-shift | **camp** | 4 | **25/25** | **SECURED, 0 kills, hp 100/100** | 0 | 0 / 0 |
@@ -52,7 +52,7 @@ So the price is not a price: you trade an offense you do not need for immunity t
 
 **The negative control matters as much as the finding.** Twin Banks rides its own tile, its braided water is wade-only, and the same probe **dies at wave 3**. The Baron rides `frontier-river-claim` and the camp survives untouched all the way to wave 20 — and then **dies at wave 21, because the Baron reaches into the river**. So this is not a universal engine bug and not a probe artifact: it is scoped exactly to the tile flag, and the Baron already contains the design answer.
 
-Worth stating plainly: **the driver fell into this by accident, twice, on two different maps.** On the-claim (`ghostfix2`) it was walking to a gold seam, drifted into the channel, and the map handed it eight flat waves and a win — hp frozen at 92 from wave 3 to wave 10 with 60 jumpers alive. On Night Shift (`nightshift2`) it did it again: hp frozen at 53/125 from wave 7 onward, 60 alive, nothing to do. Nobody has to be clever to find this. It is what happens when you pan a river claim and stop paying attention.
+Worth stating plainly: **the driver fell into this by accident, twice, on two different maps, and won both.** On the-claim (`ghostfix2`) it walked toward a gold seam, drifted into the channel, and the map handed it eight flat waves and the win — hp frozen at 92 from wave 3 to wave 10 with 60 jumpers alive. On Night Shift (`nightshift2`) it did it again and harder: from wave 3 it stood at **x = −22.2, z ≈ 0, zone `river` for 90 % of every wave**, hp frozen at **53/125 for twenty-two consecutive waves**, 21 kills all night — **and the game secured the claim at wave 25.** Nobody has to be clever to find this. It is simply what happens when you pan a river claim and stop paying attention.
 
 Corrective: `tasks/DRAFT-e1-river-camp.md`. Smallest fix is **one boolean** — `heroCanWadeDeep: false` in the E1 manifest — which also makes the Claim's own card true (*"The river splits the claim around one center ford"*: today it splits nothing).
 
@@ -144,12 +144,13 @@ Kept from leg 1 because it nearly became a false finding. An unattended hero fro
 - **Gap — sixteen dead waves (F-E1-9).** Waves 3–19: one position, one build set, no damage, no decisions but the level-up card.
 - **Optimisation, smallest-change-first:** give Dry Gulch an explicit `twist.secureWave` and put the number on the card (F-E1-1's draft covers it); and consider a mid-run reason to return to the spring — the map is named for it.
 
-### 3.4 e1-night-shift — ⚠ the map with the clearest goal and the harshest opening
-**Played:** died at wave 4/25 (timescale 2) and again pinned early at timescale 1 — see §7 for the second run's end state. **Camp:** secured at 25, 0 kills, hp 100/100.
-**Verdict:** *the only card in the set that states its goal perfectly — and the one map whose first four waves this session could not survive by fighting.*
-- The briefing is the best-written of the five: *"Goals Survive to DAWN at wave 25. Rules Beyond your light, the night owns the claim. Relight cold lanterns or build new posts to see threats. Turrets still target in the dark."* Goal, threat, and the counter-play, in three lines.
-- **Gap — the map dies before its own mechanic starts.** `twist.lightRamp.duskWave: 5`. Both honest runs were killed or crippled *before wave 5*, i.e. in daylight, with the light ramp never engaged. A map whose identity begins at wave 5 must survivably reach wave 5.
-- **Gap — it is the camp's best customer (F-E1-5):** 25 waves of standing still, 187 wet-powder warnings, and the light ramp — the entire reason the map exists — never matters.
+### 3.4 e1-night-shift — ⛔ the clearest goal in the set, and the clearest proof of the camp
+**Played twice:** died at wave 4/25 (timescale 2); **secured 25/25 at timescale 1 — and that "win" is the finding, not a refutation of it.** **Camp:** secured at 25, 0 kills, hp 100/100.
+**Verdict:** *the only card in the set that states its goal perfectly, wrapped around a map that can be won by not playing it — proved twice, once without meaning to.*
+- The briefing is the best-written of the five: *"Goals Survive to DAWN at wave 25. Rules Beyond your light, the night owns the claim. Relight cold lanterns or build new posts to see threats. Turrets still target in the dark."* Goal, threat, and counter-play in three lines. Every other card should be measured against it.
+- **The damning run (`nightshift2-report.json`, honest play, no camp intent):** the driver walked into the channel chasing a seam at wave 3 and stood at **x = −22.2, z ≈ 0 — zone `river` for 90 % of every single wave from 3 to 25.** HP frozen at **53/125 for twenty-two consecutive waves**, level stuck at 3, 21 kills all night, 60 jumpers alive throughout — and the game **secured the claim at wave 25.** Twelve and a half minutes in which the map's entire light ramp, its lanterns, its "the night owns the claim" — none of it happened.
+- **Gap — the map also dies before its own mechanic starts.** `twist.lightRamp.duskWave: 5`. The timescale-2 run was killed at wave 4, in daylight. So Night Shift is either over before dusk or irrelevant after it: this session never once saw the light system decide anything.
+- **Optimisation:** this map has the most to gain from `DRAFT-e1-river-camp.md`. Fix the water and Night Shift becomes what its card already promises; leave it and the best-written card in the game sits on top of 25 waves of nothing.
 
 ### 3.5 e1-baron — ✅ the design answer, behind the harshest door
 **Played:** died at wave 3/20 (timescale 2). **Camp:** untouched to 20, killed at 21 by the Baron himself.
@@ -166,7 +167,7 @@ One driver, one policy, one difficulty (Trail), five maps:
 | the-claim | **secured 10/10** | 9 |
 | e1-dry-gulch | **secured 20/20** | 8 |
 | e1-twin-banks | died 17/20 | 7 |
-| e1-night-shift | died **4**/25 | 6 |
+| e1-night-shift | died **4**/25 (a second run "secured" only by camping) | 6 |
 | e1-baron | died **3**/20 | **13** |
 
 The two maps a player meets first are the two that can be finished; the two later ones end the run in the opening minute. That is not a smooth curve with a couple of spikes — it is two gentle maps and two walls, with Twin Banks the only honest middle. Against the first-external-tester lesson (*"did not exactly understand what to do"*), the shape of this ladder means a stranger's second or third map is where they stop. Caveat, stated plainly: a scripted driver is not a skilled human, so these outcomes measure **relative** difficulty, not absolute — but they were all measured by the *same* driver, which is exactly what makes the comparison worth something.
