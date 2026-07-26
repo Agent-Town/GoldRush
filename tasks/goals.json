@@ -1134,6 +1134,12 @@
        "status": "merged",
        "mergeHash": "a9fccf755ab3bc7608110e62413d307db626a57e",
        "taskFile": "lane-rehearsal-base-failclosed.md"
+      },
+      {
+       "id": "rf-28-rehearsal-unset-guard",
+       "title": "THE GUARD LEARNS TO FAIL (F-1089-1). rf-27 shipped a fail-closed resolver whose own guard would NOT catch the defect it was written to prevent: scripts/rehearsal-base.test.mjs asserts happy-path, foreign cwd, no-listener and unusable-probe, but has NO assertion for the UNSET branch -- the one where the original hardcoded default lived. s1089 PROVED the hole by mutation control while draining rf-27: restoring the 5231 default and neutralising the unset branch left the guard 4/4 GREEN (reverted, blob verified byte-identical 7cde854c). The cause is structural -- every existing test sets its own env var, so none can ever observe a default being reintroduced. Deliverable: exactly one added test asserting resolveBase throws when the env var is unset, using an env-var name no sibling test touches and deleting it first (or a leaked value makes the assertion vacuous -- the same failure class), matching on message content so it names the env var and the root rather than merely throwing, and asserting the injected probe was never invoked (the unset branch returns before any probe). Mandatory mutation control: reintroduce the defect, prove the NEW test goes red while the other four stay green, revert with an empty git diff. Expect the node --test phase 53 -> 54. Overall test:node-guards rc 1 is pre-existing F-1088-1 and NOT the slice. Explicitly out of scope: a port-binding integration test for the real lsof path (F-1089-2) and probe-plain-boot-console.mjs port 5188 (F-1089-3), both recorded.",
+       "status": "queued",
+       "taskFile": "lane-rehearsal-unset-guard.md"
       }
      ]
     }
