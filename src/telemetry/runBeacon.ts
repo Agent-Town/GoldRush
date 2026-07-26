@@ -1,3 +1,4 @@
+import { gameApiUrl } from '../app/GameApi';
 import type { EventBus } from '../core/EventBus';
 import {
   TELEMETRY_DEV_SEND_STORAGE_KEY,
@@ -54,7 +55,7 @@ export function installRunTelemetry(host: RunTelemetryHost): () => void {
 
 export async function postRunTelemetry(payload: RunTelemetryPayload): Promise<void> {
   try {
-    await fetch('/api/telemetry', {
+    await fetch(gameApiUrl('/api/telemetry'), {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify(payload),

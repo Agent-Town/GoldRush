@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import { GAME_API_ORIGIN } from '../app/GameApi';
 import type { Intents } from '../core/InputController';
 import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
 import { isBuildableId } from '../game/buildables';
@@ -874,7 +875,7 @@ export function multiplayerConfigFromSearch(search = window.location.search): Lo
   if (params.get('mp') !== 'dev') return null;
   const partySize = Number(params.get('mpParty'));
   return {
-    relayBase: (params.get('mpRelay') ?? window.location.origin).replace(/\/$/, ''),
+    relayBase: (params.get('mpRelay') ?? GAME_API_ORIGIN).replace(/\/$/, ''),
     code: params.get('mpCode'),
     player: {
       name: params.get('mpName') ?? 'Rider',

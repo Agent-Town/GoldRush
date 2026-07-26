@@ -26,7 +26,7 @@ export default defineConfig(() => {
     .digest('hex')
     .slice(0, 8);
   return {
-  base: './',
+  base: releaseE1 && process.env.GR_BASE ? process.env.GR_BASE : './',
   define: {
     __APP_BUILD__: JSON.stringify(process.env.CF_PAGES_COMMIT_SHA?.slice(0, 8) ?? 'dev'),
     __APP_BUILD_VARIANT__: JSON.stringify(buildVariant),

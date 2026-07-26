@@ -1,3 +1,4 @@
+import { gameApiUrl } from '../app/GameApi';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { activeContract } from '../meta/ContractFamilies';
 import { captureNextRenderedFrame } from '../core/Renderer';
@@ -200,7 +201,7 @@ export class ComplaintDeskPanel {
     this.setBusy(true);
     this.setStatus('The clerk is filing your complaint…', 'posting');
     try {
-      const response = await fetch('/api/bug-report', {
+      const response = await fetch(gameApiUrl('/api/bug-report'), {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({

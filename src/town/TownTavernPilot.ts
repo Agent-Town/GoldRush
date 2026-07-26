@@ -201,7 +201,7 @@ function eraCandidates(paths: { base: string; variant: string }): ModelCandidate
 }
 
 function modelUrl(path: string): string {
-  return BASE_MODEL_URLS[path] ?? new URL(path.replace(/^\.\.\/\.\./, ''), globalThis.location.origin).href;
+  return BASE_MODEL_URLS[path]!;
 }
 
 function variantModelUrl(path: string): string | undefined {
