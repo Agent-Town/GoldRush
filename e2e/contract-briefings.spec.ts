@@ -9,6 +9,7 @@ type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type Briefing = {
   id: string;
   name: string;
+  secureWave: number;
   geographyLine: string;
   goals: string[];
   rules: string[];
@@ -28,15 +29,20 @@ const CONTRACTS: readonly Briefing[] = [
   {
     id: 'the-claim',
     name: 'The Claim',
+    secureWave: 10,
     geographyLine: 'The classic river claim.',
-    goals: ['Pan. Build. Hold the claim.'],
-    rules: ['The river splits the claim around one center ford.', 'Pressure comes from all four edges.'],
+    goals: ['Hold the claim through wave 10.'],
+    rules: [
+      'The river splits the claim around one center ford.',
+      'Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck.',
+    ],
   },
   {
     id: 'e1-dry-gulch',
     name: 'The Dry Gulch',
+    secureWave: 20,
     geographyLine: 'Mesa country; dry washes fall toward one sunken spring.',
-    goals: ['Work the dry washes around the lone spring.'],
+    goals: ['Hold the gulch through wave 20.', 'Work the dry washes around the lone spring.'],
     rules: [
       'Sluices work only beside the spring.',
       'The river is gone; enemies can press from every edge.',
@@ -46,6 +52,7 @@ const CONTRACTS: readonly Briefing[] = [
   {
     id: 'e1-night-shift',
     name: 'Night Shift',
+    secureWave: 25,
     geographyLine: 'The claim, gone dark, dotted with cold lanterns.',
     goals: ['Survive to DAWN at wave 25.'],
     rules: [
@@ -57,8 +64,9 @@ const CONTRACTS: readonly Briefing[] = [
   {
     id: 'e1-twin-banks',
     name: 'Twin Banks',
+    secureWave: 20,
     geographyLine: 'A braided river claim with twin fords, gravel bars, and damp reeds.',
-    goals: ['Build on either bank and watch both fords.'],
+    goals: ['Hold both banks through wave 20.', 'Build on either bank and watch both fords.'],
     rules: [
       'Both banks can hold buildings.',
       'Two fords carry pressure across the river.',
@@ -68,6 +76,7 @@ const CONTRACTS: readonly Briefing[] = [
   {
     id: 'e1-baron',
     name: 'The Claim-Jumper Baron',
+    secureWave: 20,
     geographyLine: 'A brass-bannered bully compresses the waves and waits at the twentieth horn.',
     goals: ['The Baron rides at wave 20. Break his Rocket Cart.'],
     rules: [
@@ -79,6 +88,7 @@ const CONTRACTS: readonly Briefing[] = [
   {
     id: 'e2-hill-mine',
     name: 'The Hill Mine',
+    secureWave: 12,
     geographyLine: 'A terraced hillside mine above a flooded rail cut.',
     goals: [
       'Build across the terraces and keep watch on the rail cut.',
@@ -97,7 +107,7 @@ const DISTINCT_BOARD_GEOGRAPHY = new Set(['e1-baron']);
 type ContractCopy = {
   id: string;
   boardRow: { ledgerBlurb: string };
-  briefing: Omit<Briefing, 'id' | 'name'>;
+  briefing: Omit<Briefing, 'id' | 'name' | 'secureWave'>;
   twist: Record<string, unknown>;
 };
 
@@ -225,6 +235,7 @@ async function assertRunCard(page: Page, expected: Briefing): Promise<void> {
   expect(await page.getByTestId('contract-briefing-rules').locator('li').allTextContents()).toEqual(expected.rules);
   const manifest = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract);
   expect(manifest?.activeId).toBe(expected.id);
+  expect(manifest?.secureWave).toBe(expected.secureWave);
   expect(manifest?.briefing).toEqual({
     geographyLine: expected.geographyLine,
     goals: expected.goals,

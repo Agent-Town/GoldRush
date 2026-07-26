@@ -81,6 +81,7 @@
         }
       },
       "twist": {
+        "secureWave": 20,
         "sluicesNeedWaterSource": true,
         "seamYieldMult": 1.4
       },
@@ -91,7 +92,7 @@
         "unlock": "wave10OnClaim"
       },
       "briefing": {
-        "goals": ["Work the dry washes around the lone spring."],
+        "goals": ["Hold the gulch through wave 20.", "Work the dry washes around the lone spring."],
         "rules": [
           "Sluices work only beside the spring.",
           "The river is gone; enemies can press from every edge.",
@@ -230,7 +231,7 @@
           "territoryRingLaneBias": 0
         }
       },
-      "twist": {},
+      "twist": { "secureWave": 20 },
       "boardRow": {
         "name": "Twin Banks",
         "ledgerBlurb": "A braided river claim with twin fords, gravel bars, and damp reeds.",
@@ -238,7 +239,7 @@
         "unlock": "firstSecuredClaim"
       },
       "briefing": {
-        "goals": ["Build on either bank and watch both fords."],
+        "goals": ["Hold both banks through wave 20.", "Build on either bank and watch both fords."],
         "rules": [
           "Both banks can hold buildings.",
           "Two fords carry pressure across the river.",
