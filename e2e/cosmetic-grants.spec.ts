@@ -99,6 +99,13 @@ test('a live prize stub grants gilded once through the Wrangler worker', async (
   });
   expect(oversized.status).toBe(400);
   await expect(oversized.json()).resolves.toMatchObject({ ok: false, error: 'bad_payload' });
+  const tooMany = await fetch(`${workerURL}/api/redeem`, {
+    method: 'POST',
+    headers: { authorization: `Bearer ${TOKEN}`, 'content-type': 'application/json' },
+    body: JSON.stringify({ codes: Array.from({ length: 21 }, () => code) }),
+  });
+  expect(tooMany.status).toBe(400);
+  await expect(tooMany.json()).resolves.toMatchObject({ ok: false, error: 'bad_payload' });
   await mint(code);
   await seedTown(page);
   await proxyRedeem(page);
@@ -116,7 +123,7 @@ test('a live prize stub grants gilded once through the Wrangler worker', async (
     body: JSON.stringify({ code }),
   });
   expect(spent.status).toBe(200);
-  await expect(spent.json()).resolves.toMatchObject({ ok: false, error: 'bad_stub' });
+  await expect(spent.json()).resolves.toMatchObject({ ok: true, skin: 'gilded' });
   expect(errors).toEqual({ console: [], page: [] });
 });
 

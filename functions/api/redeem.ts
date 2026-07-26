@@ -1,7 +1,6 @@
 type KVNamespaceLike = {
   get(key: string): Promise<string | null>;
-  put(key: string, value: string): Promise<void>;
-  delete(key: string): Promise<void>;
+  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
 };
 
 type RedeemContext = {
@@ -16,6 +15,8 @@ type RedeemContext = {
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
 const CODE_PATTERN = /^GR(?:-[A-F0-9]{6}){4}$/;
 const MAX_JSON_BYTES = 2_048;
+const RATE_TTL_SECONDS = 60 * 60;
+const MAX_REDEEMS_PER_IP = 5;
 
 export async function onRequest(context: RedeemContext): Promise<Response> {
   const cors = corsHeaders(context.request);
@@ -30,16 +31,23 @@ export async function onRequest(context: RedeemContext): Promise<Response> {
     const body = await readJson(context.request);
     if ('codes' in body) {
       if (Object.keys(body).some((key) => key !== 'codes')) throw new PayloadError();
-      return mint(context, kv, cors, body.codes);
+      return await mint(context, kv, cors, body.codes);
     }
     if (Object.keys(body).some((key) => key !== 'code')) throw new PayloadError();
     const code = normalizeCode(body.code);
-    if (!code || await kv.get(`prize:${code}`) === null) {
+    if (!code) {
       return json(cors, { ok: false, error: 'bad_stub', message: 'The clerk turns the stub over. “This one is no county prize.”' });
     }
-    // ponytail: Workers KV is eventually consistent; use a Durable Object if simultaneous cross-region claims become real.
-    await kv.delete(`prize:${code}`);
-    return json(cors, { ok: true, skin: 'gilded', message: 'The clerk stamps the stub. The Gilded Coat is yours.' });
+    if (!(await bumpCounter(kv, `redeem:ratelimit:${await clientIpHash(context.request)}`))) {
+      return json(cors, { ok: false, error: 'rate_limited', message: 'The prize desk has your stack already. Try again after the next bell.' }, 429);
+    }
+    const stored = await kv.get(`prize:${code}`);
+    const skin = stored?.startsWith('redeemed:') ? stored.split('|', 2)[1] : stored;
+    if (!skin) {
+      return json(cors, { ok: false, error: 'bad_stub', message: 'The clerk turns the stub over. “This one is no county prize.”' });
+    }
+    if (!stored.startsWith('redeemed:')) await kv.put(`prize:${code}`, `redeemed:${new Date().toISOString()}|${skin}`);
+    return json(cors, { ok: true, skin, message: 'The clerk stamps the stub. The Gilded Coat is yours.' });
   } catch (cause) {
     if (!(cause instanceof PayloadError)) {
       return json(cors, { ok: false, error: 'server_error', message: 'The prize ledger slipped off the desk. Try again.' }, 503);
@@ -85,6 +93,20 @@ function normalizeCode(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const code = value.trim().toUpperCase();
   return CODE_PATTERN.test(code) ? code : null;
+}
+
+async function bumpCounter(kv: KVNamespaceLike, key: string): Promise<boolean> {
+  const current = Number(await kv.get(key));
+  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
+  if (count >= MAX_REDEEMS_PER_IP) return false;
+  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
+  return true;
+}
+
+async function clientIpHash(request: Request): Promise<string> {
+  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() ?? 'local';
+  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
+  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 32);
 }
 
 function corsHeaders(request: Request): Record<string, string> | null {
