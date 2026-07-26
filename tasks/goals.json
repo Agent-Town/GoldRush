@@ -1028,6 +1028,13 @@
        "status": "merged",
        "mergeHash": "d2279d3251ffd9a3fce1db81b61f1444faba73ec",
        "taskFile": "DRAFT-e1-midgame.md"
+      },
+      {
+       "id": "rf-13-e1-river-camp",
+       "title": "E1 river camp closed — the release-blocking passive win (three of five E1 maps secured by standing still in the deep river: 0 kills, 0 damage, 0 gold, 0 buildings) is closed by one datum, heroCanWadeDeep true→false on frontier-river-depth, per the owner's 'lets fix it'. The hero keeps the shallows and the fords and loses only the deep channel, so the Claim's board card ('the river splits the claim around one center ford') becomes true. The 41-line test rewrite was scrutinised and is a PREMISE CHANGE, not assertion-weakening: Terrain.ts:214 gates deep-wading on the flag AND tileId, so the deleted hero-in-deep-river assertions are unreachable by construction, and the replacement asserts the new invariant positively (riverSamples 0, deep sample walkable:false, weapons NOT disarmed). Drained s1078; the two reds in the battery were proven not-mine by a cp-revert control on clean main (F-1078-1 pre-existing night-shift lighting, byte-identical payload; m1-05:112 gate-battery contention)",
+       "status": "merged",
+       "mergeHash": "5bad5def167bd428d308e143e68bf8bb78d64433",
+       "taskFile": "DRAFT-e1-river-camp.md"
       }
      ]
     }
