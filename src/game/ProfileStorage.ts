@@ -481,7 +481,7 @@ function browserStorage(): Storage | undefined {
   }
 }
 
-function rawGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
+export function rawGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
   try {
     return nativeStorage.getItem && isNativeStorage(storage) ? nativeStorage.getItem.call(storage, key) : storage.getItem(key);
   } catch {
@@ -489,7 +489,7 @@ function rawGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
   }
 }
 
-function rawSet(storage: Pick<Storage, 'setItem'>, key: string, value: string): void {
+export function rawSet(storage: Pick<Storage, 'setItem'>, key: string, value: string): void {
   try {
     if (nativeStorage.setItem && isNativeStorage(storage)) nativeStorage.setItem.call(storage, key, value);
     else storage.setItem(key, value);

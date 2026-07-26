@@ -158,6 +158,7 @@ test('difficulty preset falls back to default when profile storage is blocked', 
   const page = await context.newPage();
   const errors = await openGame(page, '?debug&nowaves&nolevel&seed=task-024-storage-blocked');
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.difficultyPreset)).toBe('trail');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.meta?.tracks)).toBeTruthy();
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
   await context.close();
