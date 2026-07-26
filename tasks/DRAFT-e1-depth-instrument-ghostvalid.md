@@ -1,4 +1,15 @@
 # DRAFT — CLOSE THE HONEST-PLAY INSTRUMENT'S BUILD DEFECT (`ghostValid` never true)
+STATUS: **CLOSED 2026-07-26** (E1-depth review leg 2). Kept for the trail — the diagnosis below was right about the method (probe, don't guess) and wrong about all three suspects.
+
+**What it actually was**, found by reading the engine's own e2e specs rather than probing:
+1. `screenPoint` is `(x, z, y)`, not `(x, y, z)` — the driver's first-tried shape aimed every build at the world **z = 0 line**, which on the-claim is the river. Not one of the five gates; the aim itself.
+2. `Enter` places a building, not `Space`. Even a legal ghost was never confirmed.
+The listed suspects were all innocent: `canAfford` is honest (`BuildSystem.ts:494` uses `costCurve(count)`, the same number the flat `cost` field carries), `matchesPlacement` was rejecting correctly (the aim really was in the river), and `snap()` never moved anything out of radius.
+Fix + proof: commit `14466c8f` — the-claim SECURED at wave 10 with 8 real builds, `reviews/shots-e1-depth/ghostfix2-report.json`. See `reviews/e1-gameplay-depth.md` §4.
+
+---
+*Original draft, unchanged, below.*
+
 STATUS: DRAFT (E1-depth review session, 2026-07-25). Not queued. Small, self-contained, unblocks the whole E1 depth review.
 WHY: `reviews/e1-gameplay-depth.md` §3. The instrument (`rehearsal/segments/e1-depth-play.mjs`) boots a fresh profile, pans real gold and takes real upgrades — but **0/49 build attempts succeed**, so it cannot yet play a tower-defence map honestly. Four of five E1 maps are unplayed behind this.
 

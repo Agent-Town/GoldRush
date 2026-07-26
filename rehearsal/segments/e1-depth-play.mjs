@@ -217,8 +217,7 @@ async function tryBuild(buildId, worldSpots) {
     if (g?.valid) { aim = pt; break; }
   }
   if (!aim) {
-    await page.keyboard.press('Escape');
-    await wait(90);
+    await leaveBuildMode();
     return { built: false, why: `no legal ghost in ${worldSpots.length} hero-local spots (last ghost ${lastGhost ? `${lastGhost.x?.toFixed(1)},${lastGhost.z?.toFixed(1)}` : 'n/a'})`, ...before };
   }
   // Enter places. (e2e/m1-05-sentry-beacon-build.spec.ts:42,53 and
@@ -232,8 +231,26 @@ async function tryBuild(buildId, worldSpots) {
     const b = window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildables?.find((x) => x.id === id);
     return { count: b?.count ?? -1, gold: window.__THREE_GAME_DIAGNOSTICS__?.ui?.gold ?? 0, buildMode: window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildMode ?? false };
   }, buildId);
-  if (after.buildMode) { await page.keyboard.press('Escape'); await wait(100); }
+  if (after.buildMode) await leaveBuildMode();
   return { built: after.count > before.count, before: before.count, after: after.count, goldBefore: before.gold, goldAfter: after.gold, at: lastGhost };
+}
+
+/** ESCAPE IS THE PAUSE KEY. `Hud.ts:194` — the pause button carries
+ * aria-keyshortcuts="P Escape". The first leg-2 driver pressed Escape after every
+ * failed build to leave build mode; when build mode was already closed that
+ * PAUSED THE GAME, and the Baron run then sat frozen at wave 4 for three minutes
+ * looking exactly like a hang. Leave build mode by toggling KeyB, and only ever
+ * press Escape when the diagnostics say build mode is genuinely open. */
+async function leaveBuildMode() {
+  for (let i = 0; i < 3; i += 1) {
+    const state = await page.evaluate(() => ({
+      build: window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildMode ?? false,
+      paused: window.__THREE_GAME_DIAGNOSTICS__?.ui?.paused ?? false,
+    }));
+    if (!state.build && !state.paused) return;
+    await page.keyboard.press(state.paused ? 'KeyP' : 'KeyB');
+    await wait(120);
+  }
 }
 
 // ---- THE PLAY LOOP
@@ -253,6 +270,7 @@ const zoneTicks = {};       // where the hero actually stood, per wave
 let seamTarget = null;      // the seam we are committed to (see the pan branch)
 let seamStuck = 0;
 let seamLastDist = Infinity;
+let pauseRecoveries = 0;   // stray-Escape pauses the driver had to undo
 let waveStart = Date.now();
 let peakEnemies = 0;
 let sawRush = false;
@@ -270,6 +288,7 @@ while (Date.now() < deadline) {
     const u = g.ui ?? {};
     return {
       wave: u.wave, waveState: u.waveState, hp: g.hp, maxHp: g.maxHp, gold: u.gold, level: u.level,
+      paused: u.paused ?? false, buildMode: u.buildMode ?? false,
       enemies: g.enemiesAlive, state: g.state, secured: g.run?.secured ?? false, rush: g.run?.rush ?? false,
       secureWave: g.run?.secureWave ?? null, announcement: u.announcement, announcementKind: u.announcementKind,
       upgradeOpen, offer: g.progression?.offer ?? null, stacks: g.progression?.stacks ?? null,
@@ -300,6 +319,16 @@ while (Date.now() < deadline) {
   //    cannot aim it. Offer AND pick are logged every time, so a dominant
   //    strategy shows up as a pattern in the telemetry rather than being
   //    manufactured by the driver taking slot 1 forever.
+  // 0. PAUSE GUARD. A paused sim reads exactly like a hung game: waves stop,
+  //    telemetry freezes, the driver keeps politely trying. Never let that be
+  //    mistaken for a map finding (§4 of the review).
+  if (d.paused) {
+    pauseRecoveries += 1;
+    await page.keyboard.press('KeyP');
+    await wait(200);
+    continue;
+  }
+
   if (d.upgradeOpen) {
     const PREF = ['heavy_spark', 'double_tap_coil', 'split_spark', 'long_resonator',
       'tinkers_plating', 'prospectors_luck', 'pan_legend', 'beacon_dynamo', 'spring_heels'];
@@ -487,7 +516,7 @@ const report = {
   difficulty: boot.difficulty, secureWave: boot.secureWave, startGold: boot.startGold,
   firstRun, boot, outcome, wallSeconds: Math.round((Date.now() - startedAt) / 1000),
   wavesReached: lastWave, sawRush, fpsEstimate: fps,
-  driver: { ticks: tick, kiteTicks, panTicks },
+  driver: { ticks: tick, kiteTicks, panTicks, pauseRecoveries },
   perWave, upgradesTaken, buildLog, announcements, end, errors,
 };
 writeFileSync(path.join(SHOT_DIR, `${LABEL}-report.json`), JSON.stringify(report, null, 2));
