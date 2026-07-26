@@ -5,6 +5,17 @@ import { resolveBase } from '../rehearsal/base-url.mjs';
 const ROOT = '/repo/ours';
 const BASE = 'http://127.0.0.1:5432';
 
+test('rejects an unset base before probing ownership', () => {
+  const envVarName = 'REHEARSAL_BASE_TEST_UNSET';
+  delete process.env[envVarName];
+  let probeCalls = 0;
+  assert.throws(
+    () => resolveBase(envVarName, { root: ROOT, probeListener: () => { probeCalls += 1; } }),
+    { message: `${envVarName} is unset. Start a server from ${ROOT} and pass ${envVarName}=http://127.0.0.1:<port>.` },
+  );
+  assert.equal(probeCalls, 0);
+});
+
 test('accepts a listener owned by this checkout', () => {
   process.env.REHEARSAL_BASE_TEST_OWN = BASE;
   assert.equal(resolveBase('REHEARSAL_BASE_TEST_OWN', { root: ROOT, probeListener: () => ROOT }), BASE);
