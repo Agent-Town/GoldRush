@@ -834,6 +834,7 @@ function restoreSnapshot(game: AnyGame, snapshot: RunSuspendEnvelope, persistPro
   if (snapshot.baron.ceremony || (snapshot.runManager.secured && !snapshot.runManager.rush)) {
     game.state?.setPaused?.(true);
   }
+  game.syncHeroVisualHeight?.();
   game.cameraRig?.snapTo?.(hero?.group?.position);
   game.syncStockpileHoldings?.();
   if (!restoreAgent(game, snapshot, hero)) return restoreFailed('agent');
