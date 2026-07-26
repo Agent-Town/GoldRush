@@ -820,7 +820,7 @@ export const Balance = {
   upgrades: {
     assayGoldPerWave: 5,
     fieldDressingHealFrac: 0.3,
-    doubleTapCoilMaxStacks: 6,
+    doubleTapCoilMaxStacks: 3,
   },
   research: {
     assayGradingStockpileCapBonus: 35,
@@ -1006,7 +1006,7 @@ const TRAIL = {
   thiefMaxConcurrent: 2,
   thiefMaxConcurrentCap: 4,
   palisadeHp: 60,
-  doubleTapCoilMaxStacks: 6,
+  doubleTapCoilMaxStacks: 3,
 } as const;
 
 type MutableBalance = {
