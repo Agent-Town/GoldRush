@@ -1049,6 +1049,13 @@
        "status": "merged",
        "mergeHash": "52fa15ad4027c6940aaee688c36c20fdab48e71c",
        "taskFile": "lane-cosmetic-grants.md"
+      },
+      {
+       "id": "rf-16-redeem-harden",
+       "title": "The prize clerk keeps an honest ledger — the three defects the s1079 gate found in functions/api/redeem.ts, all landed before the first real stub is minted. F-1079-2: 'return mint(...)' inside a try let mint's rejections settle after the try scope exited, so the catch never ran and a malformed authenticated mint returned a Cloudflare 500 instead of 400 bad_payload; fixed with 'return await'. PROVEN BY MUTATION CONTROL at drain time — reverting only the await turned the new 21-code test from 400 back into 500, so the regression net is real and not vacuous. F-1079-3: kv.delete burned the code before the client could persist it, so a lost response or a quota failure killed a real prize permanently; replaced with an idempotent state write (redeemed:<iso>|<skin>) that returns ok:true and the skin for BOTH a fresh and an already-claimed stub — single-use enforced nothing anyway, since the grant is client-side localStorage. F-1079-4: the endpoint had copied its siblings' CORS block verbatim and dropped their rate limit; the public redeem path now gates on _bugs.ts's key and 429 shape (5/IP/hour) while the authenticated mint path stays unthrottled. Scope item 3 also landed: the stored skin is returned instead of a hardcoded 'gilded', so a second cosmetic can be minted later without silently granting gilded, and a falsy value now reads bad_stub where the old '=== null' guard would have passed an empty string. Gates: tsc 0, build 1.01s, cosmetic-grants 8/8 desktop + mobile-390 with console/page assertions inside the spec, bug-office-api + bug-office-desk 16/16 unmodified-green. Rate-limit flake risk checked and cleared at the rig level: the spec wipes its per-project --persist-to KV before each spawn and uses separate ports per project, so the counter starts at 0 every run and 2 redeems never approach the cap of 5",
+       "status": "merged",
+       "mergeHash": "2962577194e4c1d8d8362198925ae30ae4384cb7",
+       "taskFile": "redeem-harden.md"
       }
      ]
     }
