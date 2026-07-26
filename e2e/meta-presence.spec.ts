@@ -136,7 +136,9 @@ test('earned meta is visible in run recap, pause ledger, and boosted cards', asy
   await expect(page.getByTestId('pause-meta-boons')).toContainText('+35 stockpile cap');
   await expect(page.getByTestId('pause-meta-boons')).toContainText('Second Order Slot');
   await expect(page.getByTestId('pause-meta-mastery')).toContainText('Firerate mastery');
-  await expect(page.getByTestId('pause-meta-mastery')).toContainText('0/6 stacks toward Spark Pressure Ring');
+  await expect(page.getByTestId('pause-meta-mastery')).toContainText(
+    `0/${Balance.upgrades.doubleTapCoilMaxStacks} stacks toward Spark Pressure Ring`,
+  );
   await shot(page, testInfo, 'pause-panel');
 
   await page.keyboard.press('KeyP');
