@@ -54,13 +54,36 @@ Both storage oracles (`task-024-blast-aim-presets.spec.ts:130` mode 1, `:167` mo
 
 ⚠️ **`git log main..lane/perf` WILL PRINT ONE COMMIT (`da0f4240 runner(lane-d): lane-tailor-wagon.md`), AND THAT IS EXPECTED — IT IS *NOT* A REASON TO STOP.** ✓ s1093 re-measured it per file this fire (F-1091-2 independently reconfirmed): of the 13 files that commit touched, **8 are byte-identical to main**, **4 are its own run screenshots and all present on main**, and the last — `e2e/cosmetic-grants.spec.ts` and `src/game/ProfileStorage.ts` — show **main strictly AHEAD**: the branch would *delete* main's 21-code `bad_payload` assertion, `inertStorage`, and `safeLocalStorage()`. Its content merged as `925a0c3b`, ✓ confirmed an ancestor of main. The branch is **FALSE-AHEAD with stale-base phantom deletions**; a reset is **loss-free**. An ahead-count is not a drain signal (F-1066-1 / F-1073-1 — it misled on three separate lanes in one week).
 
-All four must hold before you touch a file:
-1. `git log --oneline main..lane/perf` prints **exactly `da0f4240` and nothing else.** A **second** commit would be undrained work — **only then STOP and report.**
-2. `grep -n "storage.getItem(key)" src/ui/menu/StartMenu.ts` → **must print line `433`.** If it is already `rawGet`, someone landed this and the premise is gone — STOP and report.
-3. `grep -n "export function rawGet" src/game/ProfileStorage.ts` → **must print `500`.** The accessor you depend on must exist; if it does not, STOP and report.
-4. `grep -n "if (!this.storage) return" src/ui/menu/StartMenu.ts` → **must print `233`.** That early-exit is the guard the WHY's blast radius turns on; if it has moved or gone, the analysis needs redoing — STOP and report.
+⚠️⚠️ **ORDER MATTERS, AND THE FIRST VERSION OF THIS MASTER GOT IT WRONG (F-1093-5, s1093).** The
+premise checks below describe **main's** content. `lane/perf` is **91 commits behind main**, so running
+them on the un-reset lane measures a stale tree and they fail for the wrong reason: attempt 1 of this
+task **correctly STOPPED** because `src/game/ProfileStorage.ts` on the stale lane still has the *old
+private* `function rawGet` at `:484` instead of the exported one at `:500`. That STOP was the runner
+obeying its firewall, not a failure. **So: the lane-safety check comes first, then the reset, and the
+premise checks run on the FRESH tree.**
 
-If all four hold, start from fresh main (`git checkout -B lane/perf main`) — `da0f4240` is safe to leave behind.
+### STEP 1 — lane safety (run this on the branch as it stands, BEFORE any reset)
+
+`git log --oneline main..lane/perf` must print **exactly `da0f4240` and nothing else.** A **second**
+commit would be undrained work — **only then STOP and report.**
+
+### STEP 2 — reset to fresh main
+
+`git checkout -B lane/perf main`. `da0f4240` is safe to leave behind, per the loss-free measurement
+above.
+
+### STEP 3 — premise checks, on the freshly-reset tree (all three must hold)
+
+If any of these fails **now**, the ground genuinely moved under this master — **STOP and report.**
+
+1. `grep -n "storage.getItem(key)" src/ui/menu/StartMenu.ts` → **must print line `433`.** If it is
+   already `rawGet`, someone landed this and the premise is gone.
+2. `grep -n "export function rawGet" src/game/ProfileStorage.ts` → **must print `500`.** The accessor
+   this whole slice depends on must exist **and be exported**. ⚠️ If you see a bare
+   `function rawGet` at `:484` with no `export`, **you are on the stale lane — you skipped STEP 2.**
+3. `grep -n "if (!this.storage) return" src/ui/menu/StartMenu.ts` → **must print `233`.** That
+   early-exit is the guard the WHY's blast radius turns on; if it has moved or gone, the analysis
+   needs redoing.
 
 ## READ FIRST (in your worktree, before writing anything)
 
