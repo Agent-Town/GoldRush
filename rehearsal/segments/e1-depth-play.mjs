@@ -250,6 +250,9 @@ let kiteTicks = 0;          // ticks spent breaking contact
 let consecutiveKite = 0;    // time-box so fleeing can't become a stalemate
 let panTicks = 0;           // ticks spent standing on a seam, panning
 const zoneTicks = {};       // where the hero actually stood, per wave
+let seamTarget = null;      // the seam we are committed to (see the pan branch)
+let seamStuck = 0;
+let seamLastDist = Infinity;
 let waveStart = Date.now();
 let peakEnemies = 0;
 let sawRush = false;
@@ -325,6 +328,10 @@ while (Date.now() < deadline) {
     perWave.push({
       wave: d.wave, hpIn: Math.round(d.hp), maxHp: d.maxHp, goldIn: d.gold, level: d.level,
       panned: d.panned, sluiced: d.sluiced, seamsUp: (d.seams ?? []).length,
+      // WHERE the wave was fought. Without this a frozen hp column is unreadable:
+      // you cannot tell a safe pocket from a driver stuck against impassable water.
+      at: d.heroPos ? { x: +d.heroPos.x.toFixed(1), z: +d.heroPos.z.toFixed(1) } : null,
+      seamAt: (d.seams ?? []).map((s) => `${s.x.toFixed(0)},${s.z.toFixed(0)}`).join(' | '),
       builds: d.buildables.filter((b) => b.count > 0).map((b) => `${b.id}x${b.count}`).join(' ') || 'none',
     });
     console.log(`[${LABEL}] wave ${d.wave}${d.secureWave ? '/' + d.secureWave : ''} hp=${Math.round(d.hp)}/${d.maxHp} gold=${d.gold} panned=${d.panned} lvl=${d.level} enemies=${d.enemies} seams=${(d.seams ?? []).length} builds=${perWave[perWave.length - 1].builds}`);
@@ -419,12 +426,26 @@ while (Date.now() < deadline) {
     await hold(page, key, 240);
     kiteTicks += 1;
   } else if (seamsOpen) {
-    // Nearest active seam — walk to it, then STAND STILL and pan it dry.
-    const target = d.seams
-      .map((s) => ({ ...s, dist: Math.hypot(s.x - hero.x, s.z - hero.z) }))
-      .sort((a, b) => a.dist - b.dist)[0];
-    if (target.dist > 1.3) await moveToward(target.x, target.z, 200);
-    else { await wait(420); panTicks += 1; }   // stand still => channel
+    // COMMIT TO ONE SEAM until it is worked out or proves unreachable.
+    // Re-picking "nearest" every tick is a driver degeneracy, not play: with two
+    // seams roughly equidistant the hero ping-pongs between them forever. In the
+    // first leg-2 runs that cost 688 of 784 ticks walking and 22 panning, and it
+    // pinned every map at exactly 90 gold (3 seams x capacity 30) — a DRIVER
+    // ceiling that would have been misread as a map economy ceiling.
+    const seams = d.seams.map((s) => ({ ...s, dist: Math.hypot(s.x - hero.x, s.z - hero.z) }));
+    let target = seamTarget && seams.find((s) => s.id === seamTarget);
+    if (target && (seamStuck > 14 || target.remaining <= 0)) { target = null; seamTarget = null; }
+    if (!target) {
+      target = seams.sort((a, b) => a.dist - b.dist)[0];
+      seamTarget = target.id; seamStuck = 0; seamLastDist = target.dist;
+    }
+    if (target.dist > 1.3) {
+      // no progress this tick => count it; a seam across impassable water is a
+      // seam a player would give up on (this driver has no pathfinding).
+      if (target.dist > seamLastDist - 0.25) seamStuck += 1; else seamStuck = 0;
+      seamLastDist = target.dist;
+      await moveToward(target.x, target.z, 200);
+    } else { seamStuck = 0; await wait(420); panTicks += 1; }   // stand still => channel
   } else {
     await hold(page, ['KeyD', 'KeyS', 'KeyA', 'KeyW'][tick % 4], 200);
   }
