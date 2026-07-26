@@ -1109,8 +1109,10 @@
       {
        "id": "rf-24-ratelimit-429-net",
        "title": "THE 429 REGRESSION NET — characterize the rate limiters BEFORE anyone hoists them. Prerequisite for F-1080-1, NOT F-1080-1 itself: tests only, zero edits under functions/. s1084 re-verified that finding as MORE dangerous than recorded: bumpCounter is defined 5x in THREE variants (2-arg hardcoded in redeem/_bugs; 3-arg Math.trunc in telemetry/_multiplayer; 3-arg numberOrZero untruncated in _accounts), and RATE_TTL_SECONDS is captured by CLOSURE and DIVERGES (_accounts.ts:72 = 600s vs 3600s everywhere else), so a naive hoist would silently 6x the account rate-limit window. Only 2 of 5 modules have any 429 test (telemetry, _bugs); redeem/_accounts/_multiplayer have NONE. This adds one new spec pinning redeem (6th stub from one IP -> 429, limit 5) and _accounts.requestCode (BOTH limits: 6th per email -> 429 at 5, 21st per IP -> 429 at 20), each with a different-IP isolation assertion so a hoist that collapses per-IP keying is caught. Mandatory mutation controls on MAX_REDEEMS_PER_IP and MAX_REQUESTS_PER_EMAIL, both reverted, proven by an empty git diff main -- functions/. Names the PORT TRAP measured s1085: 8788/8799 are held by ~16-day-old workerd, and playwright.accounts.config.ts sets reuseExistingServer:false on 8788, so reusing it would bind-fail or measure a FOREIGN stale tree (F-1077-3). Explicitly records that TTL is NOT covered by this net.",
-       "status": "queued",
-       "taskFile": "lane-ratelimit-429-net.md"
+       "status": "merged",
+       "mergeHash": "d16000a9c9b3a8690ee8a48d3b1b23a4a4faea0d",
+       "taskFile": "lane-ratelimit-429-net.md",
+       "note": "s1086 DRAINED. Pure add: ONE new file e2e/ratelimit-429-net.spec.ts, 154 insertions, zero edits under functions/ (firewall held, proven by git diff of the lane commit). New net 6/6 green (3 desktop + 3 mobile) at --workers=1; bug-office-api 8/8. Battery 28 passed / 2 failed exit 1; both reds are tl-01-run-telemetry:229 in BOTH projects and were PROVED PRE-EXISTING by a clean-main fingerprint (new file moved out so the tree was byte-identical to main): identical locator, identical line, still red => F-1086-1, a genuine unrecorded regression, NOT this slice and NOT F-1084-1 load contention (it fails at --workers=1 in isolation). Honest limit carried forward from the master: RATE_TTL_SECONDS is not observable over HTTP, so this net does NOT protect the 600-vs-3600 divergence. Review reviews/ratelimit-429-net.md."
       }
      ]
     }
