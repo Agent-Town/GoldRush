@@ -48,10 +48,16 @@ s1103 verified the reset is **loss-free by content, not by counting**: `git diff
 Define this check (run it as one command, and paste its output every time):
 
 ```sh
-sysctl -n vm.loadavg; pgrep -fc "Chrome for Testing"; pgrep -fl "playwright test" | grep -v $$ | cat
+sysctl -n vm.loadavg
+ps -Ao command= | grep -c "[C]hrome for Testing"
+ps -Ao pid=,etime=,time=,command= | grep "[p]laywright test"
 ```
 
-**QUIESCENT means all three of:** 1-minute loadavg **≤ 4.0** · zero `Chrome for Testing` processes · no foreign `playwright test` process.
+**QUIESCENT means all three of:** 1-minute loadavg **≤ 4.0** · zero `Chrome for Testing` processes · no foreign **LIVE** `playwright test` process.
+
+> **`pgrep -fc` does NOT work on this host** (macOS `pgrep` has no `-c`; it prints usage instead of a count, which reads as junk rather than a number). The `ps`+`grep -c` form above is the portable one; the `[C]`/`[p]` bracket trick stops the grep from matching itself. **Corrected s1104 after the `20260727-044706` dispatch hit exactly this.**
+>
+> ⚠️ **"Foreign playwright process" means a LIVE one — judge by CPU, never by existence (F-1104-2).** The third column above is cumulative CPU time. The `20260727-044706` dispatch STOPped on two "foreign" processes that were **orphaned corpses**: started Jul 18, `ppid 1`, **0:00.26 and 0:00.54 total CPU with zero growth across 45 s**. Because the gate tested for existence, they would have STOPped this calibration on *every* future dispatch, forever. **Take two samples ≥45 s apart: if a process's CPU time has not moved, it is dead — say so, discount it, and continue.** (Those two were reaped in s1104, so the board should be clear; this rule is here for the next corpse.) Live processes still mean STOP — you still never kill anything you did not start.
 
 - Load averages **decay slowly** (they are ~1-minute-smoothed), so a box that was just busy reads high for several minutes even when idle. Therefore: **take two samples 60 s apart and require BOTH to be ≤ 4.0.**
 - **If the box is not quiescent, STOP and report the readings. Do not measure anyway, and do not kill anything you did not start** — another lane's codex or an attended session may own it. A STOP here is a **success**, not a failure: it costs one cheap dispatch and a later fire re-queues this master. Say so plainly in your report.
