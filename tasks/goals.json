@@ -1124,7 +1124,8 @@
       {
        "id": "rf-26-entry-damage-net",
        "title": "THE E1 LADDER TUNE GETS A NET (F-1081-3). Balance.waves.entryDamageScale + applyEntryDamageScale shipped in eb7278ac with no spec asserting any of it; the only proof the opening is walkable was one manual rig run. A node --test guard imports the REAL src/game/Balance.ts and pins the table: both contracts present, wave-3 reduced (<1), wave-12 undefined, the BOUNDARY (wave 10 defined, wave 11 undefined) so an off-by-one cannot survive, every entry in (0,1] so a sign inversion cannot be silent, and the two tables element-wise equal. THREE RULINGS decided by measurement s1087, not left to the runner: (1) import the real Balance.ts, no copied table -- PROVED importable headlessly (WaveSystem.ts is NOT: \"TypeScript parameter property is not supported in strip-only mode\"); (2) do NOT test spawnAt and do NOT add a src/ debug bridge to reach it -- no wave/enemy test global exists in e2e/, inventing one is scope invention (S7.3) under a firewall that has lawfully STOPPED two prior rounds (F-1082-1), and the rig is barred by F-1081-3 itself until F-1077-3 is fixed; (3) assert the boundary, not just F-1081-3s two interior samples. STATED LIMIT, carried into the master and the report duty: this net does NOT cover the spawnAt parameter-reordering risk -- it covers 3 of the 4 named risks. Two mandatory mutation controls (wave-3 0.2->1, and a 12th entry appended), both reverted with an empty git diff of Balance.ts as proof. Authored s1087 after F-1086-1 proved the silent-rot class is real and live.",
-       "status": "queued",
+       "status": "merged",
+       "mergeHash": "dc483d74927bcdd694c9aeb4c61144ecd225acb5",
        "taskFile": "lane-entry-damage-net.md"
       }
      ]
