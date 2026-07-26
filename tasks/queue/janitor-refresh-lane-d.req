@@ -1,2 +1,13 @@
-verified content-merged: git cherry main lane/perf shows no unmerged (+) commits as of a26418fc
-reset lane/perf to main loss-free before next pickup
+INERT — DO NOT ACT ON THIS FILE. Re-verified s1073 (2026-07-26).
+
+Why inert, twice over (read scripts/lane-runner-v3.sh:99-114 before doubting):
+  1. The runner globs "$ROOT/tasks/janitor"/*.req. This file lives in tasks/queue/ — never scanned.
+  2. op = line 1. Line 1 here is prose, so even if relocated it falls to *) "unknown op — ignored".
+
+ITS ORIGINAL CLAIM IS NOW STALE — DO NOT RESTORE IT.
+  Original text (2026-07-12, base a26418fc): "verified content-merged: git cherry main lane/perf
+  shows no unmerged (+) commits" / "reset lane/perf to main loss-free before next pickup".
+  lane/perf has moved since; its tip is now 99baab74 (2026-07-26T01:51,
+  lane-d-deploy-verify-production-alias). s1073 re-verified that tip: two-dot
+  `git diff main lane/perf -- <2 touched files>` is EMPTY, i.e. fully content-merged (false-ahead),
+  and the tip is preserved at archive/lane-perf-99baab74. Re-verify the tip NOW, never this file.

@@ -1,2 +1,14 @@
-verified content-merged: git cherry main lane/m3 shows no unmerged (+) commits as of a26418fc
-reset lane/m3 to main loss-free before next pickup
+INERT — DO NOT ACT ON THIS FILE. Re-verified s1073 (2026-07-26).
+
+Why inert, twice over (read scripts/lane-runner-v3.sh:99-114 before doubting):
+  1. The runner globs "$ROOT/tasks/janitor"/*.req. This file lives in tasks/queue/ — never scanned.
+  2. op = line 1. Line 1 here is prose, so even if relocated it falls to *) "unknown op — ignored".
+
+ITS ORIGINAL CLAIM IS NOW FALSE — DO NOT RESTORE IT.
+  Original text (2026-07-12, base a26418fc): "verified content-merged: git cherry main lane/m3
+  shows no unmerged (+) commits" / "reset lane/m3 to main loss-free before next pickup".
+  That was true of a26418fc. lane/m3 has moved FOUR commits since:
+    428c01d5 / 2d0739f5 / 4401778f / bd1b0044 (newest 2026-07-26T09:23).
+  Content IS merged into main (two-dot `git diff main lane/m3 -- <17 touched files>` differs only
+  in regenerated screenshot bytes), but 4401778f and bd1b0044 carry NO archive/* ref, so a
+  reset --hard would leave them reflog-only. Re-verify the tip NOW, never this file (Mistake #2).
