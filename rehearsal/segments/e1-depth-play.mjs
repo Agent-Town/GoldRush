@@ -141,13 +141,8 @@ async function screenFor(x, z) {
   const pt = await page.evaluate(([wx, wz]) => {
     const sp = window.__GR_TEST__?.screenPoint;
     if (!sp) return null;
-    for (const args of [[wx, 0, wz], [wx, wz]]) {
-      try {
-        const r = sp(...args);
-        if (r && Number.isFinite(r.x) && Number.isFinite(r.y)) return { x: r.x, y: r.y };
-      } catch { /* try next shape */ }
-    }
-    return null;
+    const r = sp(wx, wz, 0);
+    return r && Number.isFinite(r.x) && Number.isFinite(r.y) ? { x: r.x, y: r.y } : null;
   }, [x, z]);
   return pt;
 }
@@ -323,7 +318,8 @@ while (Date.now() < deadline) {
   // 5. Build when we can — defence first, then economy. (Honest: real gold.)
   const turret = affordable.find((b) => b.id === 'turret' || b.id === 'sentry_beacon');
   const sluice = affordable.find((b) => b.id === 'sluice');
-  const anyBuild = turret ?? sluice ?? affordable[0];
+  const hasDefence = d.buildables.some((b) => (b.id === 'turret' || b.id === 'sentry_beacon') && b.count > 0);
+  const anyBuild = turret ?? (hasDefence ? sluice ?? affordable[0] : null);
   if (anyBuild && tick % 6 === 0) {
     // BuildSystem.ts:1391-1394 — the ghost must lie within placeRadius OF THE
     // HERO. So a build is always hero-local: offset a couple of metres and nudge.
@@ -392,6 +388,7 @@ const end = await page.evaluate(() => {
     run: g?.run ?? null, wave: g?.ui?.wave, gold: g?.ui?.gold, level: g?.ui?.level,
     kills: g?.kills ?? null, xpAudit: g?.xpAudit ?? null, stacks: g?.progression?.stacks ?? null,
     arsenal: g?.arsenal ? { turretKills: g.arsenal.turretKills, blastKills: g.arsenal.blastKills, toggles: g.arsenal.weaponToggles } : null,
+    build: g?.build ? { turrets: g.build.turrets, beacons: g.build.beacons } : null,
     office: document.querySelector('[data-testid="claim-office"]')?.textContent?.replace(/\s+/g, ' ').slice(0, 400) ?? null,
     deathOverlay: document.querySelector('[data-testid="death-overlay"]')?.textContent?.replace(/\s+/g, ' ').slice(0, 300) ?? null,
   };
