@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** All five ceremonies landed: T6/T7/T8 (s896), T9 (s931), T10 the Charter Press (s958, `be762583` — verified `git merge-base --is-ancestor be762583 main` = true). The saga wall is down. Retained per the RETENTION LAW as the authoring record; the "Owner/attended must slice this" line below is HISTORY, not an instruction.
+
 # DRAFT (UNQUEUED) — T6–T10: the five missing inter-era ceremonies (THE SAGA WALL)
 > Authored by the saga-rehearsal session 2026-07-22 as a P0 corrective draft. NOT queued. Owner/attended must slice this — it is five ceremonies + five successor wirings, too large for one runner task; decompose per the numbered slices below. Prefix when queued: per-slice.
 

@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Landed as `fa645b6c` *"e1: depth instrument plays honestly — projection fix unblocks the build loop"*, verified `git merge-base --is-ancestor fa645b6c main` = true. Retained per the RETENTION LAW as the authoring record.
+
 # DRAFT — CLOSE THE HONEST-PLAY INSTRUMENT'S BUILD DEFECT (`ghostValid` never true)
 STATUS: DRAFT (E1-depth review session, 2026-07-25). Not queued. Small, self-contained, unblocks the whole E1 depth review.
 WHY: `reviews/e1-gameplay-depth.md` §3. The instrument (`rehearsal/segments/e1-depth-play.mjs`) boots a fresh profile, pans real gold and takes real upgrades — but **0/49 build attempts succeed**, so it cannot yet play a tower-defence map honestly. Four of five E1 maps are unplayed behind this.

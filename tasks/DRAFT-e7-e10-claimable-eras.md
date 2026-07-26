@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Landed as `1135df1a` *"runner(lane-a): lane-e7-e10-claimable.md"*, verified `git merge-base --is-ancestor 1135df1a main` = true; F-REH-02 + F-REH-03 are recorded CLOSED in `tasks/BACKLOG.md` (s1025 rehearsal bullet). Retained per the RETENTION LAW as the authoring record.
+
 # DRAFT (UNQUEUED) — E7 + E10: landable eras (contracts claimable, bosses/finale off their debug flags)
 > Authored by the saga-rehearsal interpretation leg 2026-07-22 as P0 correctives for F-REH-02 and F-REH-03 (reviews/saga-rehearsal-2026-07-22.md). NOT queued. Two independent slices — queue separately, one lane each. Companion to DRAFT-t6-t10-ceremonies.md: that draft builds the doors BETWEEN eras; this one makes the eras behind the doors landable. Both are needed before any era past E6 is player-real.
 

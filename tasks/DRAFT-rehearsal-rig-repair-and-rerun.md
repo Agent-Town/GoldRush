@@ -1,3 +1,5 @@
+> ⛔ **CLOSED — DO NOT QUEUE (Mistake #8 guard, verified s1074 2026-07-26).** Its finding F-REH-04 is recorded **CLOSED** in `tasks/BACKLOG.md` (s1025 bullet, verbatim: *"F-REH-01..04 CLOSED; F-REH-05 RESOLVED"*) — the rig was repaired (R1–R8) and the whole saga re-run on one fresh profile; review `reviews/rig-repair.md`. Retained per the RETENTION LAW as the authoring record.
+
 # DRAFT (UNQUEUED) — SAGA REHEARSAL: rig repair + honest re-run (the release gate)
 > Authored by the saga-rehearsal interpretation leg 2026-07-22 (F-REH-04 P1, reviews/saga-rehearsal-2026-07-22.md). NOT queued. Pipeline-side: this task may edit ONLY rehearsal/* (the rig is evidence tooling, not gameplay). Run AFTER DRAFT-t6-t10-ceremonies + DRAFT-e7-e10-claimable-eras land, or before them for the E1→E6 half alone.
 
