@@ -14,13 +14,18 @@
  * A warn here would mean the guard fires when storage is working, i.e. the
  * fallback is masking a real defect instead of degrading gracefully.
  *
- * Usage: node scripts/probe-plain-boot-console.mjs <baseURL>
+ * Usage: PROBE_BASE=<baseURL> node scripts/probe-plain-boot-console.mjs
  * Prints every console message by type for a plain `/` boot (no ?debug) at
  * 1280x800 and 390x844, and exits 1 if any warn/error appears.
  */
 import { chromium } from '@playwright/test';
+import { fileURLToPath } from 'node:url';
+import path from 'node:path';
+import { resolveBase } from '../rehearsal/base-url.mjs';
 
-const baseURL = process.argv[2] ?? 'http://127.0.0.1:5188';
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
+if (process.argv[2]) throw new Error('Positional base URL is unsupported; use PROBE_BASE=<url> instead.');
+const baseURL = resolveBase('PROBE_BASE', { root: ROOT });
 const VIEWPORTS = [
   { name: 'desktop', width: 1280, height: 800 },
   { name: 'mobile-390', width: 390, height: 844 },
