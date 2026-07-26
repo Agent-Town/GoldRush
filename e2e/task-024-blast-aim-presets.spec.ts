@@ -163,3 +163,22 @@ test('difficulty preset falls back to default when profile storage is blocked', 
   expect(errors.pageErrors).toEqual([]);
   await context.close();
 });
+
+test('difficulty preset falls back to default when profile storage access is blocked', async ({ browser }) => {
+  const context = await browser.newContext();
+  await context.addInitScript(() => {
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get() {
+        throw new Error('SecurityError: storage access denied');
+      },
+    });
+  });
+  const page = await context.newPage();
+  const errors = await openGame(page, '?debug&nowaves&nolevel&seed=task-024-storage-access-blocked');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.difficultyPreset)).toBe('trail');
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.meta?.tracks)).toBeTruthy();
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+  await context.close();
+});

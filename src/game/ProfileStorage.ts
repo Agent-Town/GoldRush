@@ -96,6 +96,18 @@ const nativeStorage = {
   setItem: typeof Storage === 'undefined' ? undefined : Storage.prototype.setItem,
   removeItem: typeof Storage === 'undefined' ? undefined : Storage.prototype.removeItem,
 };
+const inertStorage: Storage = {
+  length: 0,
+  clear() {},
+  getItem() {
+    return null;
+  },
+  key() {
+    return null;
+  },
+  removeItem() {},
+  setItem() {},
+};
 
 let scopedStorage: Storage | null = null;
 let sessionProfileId = '';
@@ -479,6 +491,10 @@ function browserStorage(): Storage | undefined {
   } catch {
     return undefined;
   }
+}
+
+export function safeLocalStorage(): Storage {
+  return browserStorage() ?? inertStorage;
 }
 
 export function rawGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {

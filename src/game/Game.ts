@@ -264,7 +264,7 @@ import {
   type RunSuspendWrite,
 } from './RunSuspend';
 import { defaultSaveSlotName, formatBudgetWarning, saveManualSlot, saveSlotsBudget } from './SaveSlots';
-import { DREDGE_QUEEN_WRECK_KEY } from './ProfileStorage';
+import { DREDGE_QUEEN_WRECK_KEY, safeLocalStorage } from './ProfileStorage';
 import {
   applyAtBirth,
   DREDGE_QUEEN_WRECK_ENTRY_ID,
@@ -567,7 +567,7 @@ export class Game {
   private readonly activeEpoch = selectActiveEpoch();
   // Tile persistence speaks once, at birth: the profile-scoped snapshot is read
   // here, before any system builds, and never again mid-run (Loader Contract).
-  private readonly tileStateStore = new TileStateStore(localStorage);
+  private readonly tileStateStore = new TileStateStore(safeLocalStorage());
   private readonly activeContract = bornContract(this.tileStateStore);
   private readonly e8PhysicsSystem = new E8PhysicsSystem(this.activeContract);
   private readonly contractEpoch = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === this.activeContract.id));
@@ -1306,7 +1306,7 @@ export class Game {
         ];
       },
       terrainLineOfSight,
-      localStorage,
+      safeLocalStorage(),
       (fragment) => this.uiBridge.announce(fragment, this.timeAlive, null, 6, 'wave', 'THE EXCHANGE'),
     );
     this.e7ArsenalSystem = new E7ArsenalSystem(
