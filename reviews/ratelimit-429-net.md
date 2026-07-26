@@ -101,6 +101,21 @@ unknown, and I did not investigate** — diagnosing it is outside a drain's budg
 this slice's firewall. It needs a bisect, which is exactly the shape of work
 `F-1081-3` (the ladder regression net) exists to make cheap.
 
+**A LEAD, ✓ verified by reading, and explicitly NOT sufficient.** The helper
+`openBoardAndLaunchPlain` (`tl-01:71-98`) forces a fast win by setting
+**`Balance.run.secureWave = 1`** through a runtime source import, then launches
+**`contract-launch-the-claim`**. That contract is `DEFAULT_CONTRACT_ID = 'the-claim'`
+(`ContractFamilies.ts:701`) and now carries **`twist: { secureWave: 10 }`**
+(`ContractFamilies.ts:1857`) — and `Game.ts:4532` resolves
+`this.activeContract.twist.secureWave ?? Balance.run.secureWave`, so **the twist wins and
+the harness's global mutation is silently ignored** (chain: `RunManager.ts:266` →
+`host.secureWave()` → `RunManager.ts:511` → `Game.ts:4532`). A test that believes it set
+the secure wave to 1 is really running a contract that secures at 10.
+⚠️ **I am not calling this the cause. The arithmetic does not close:** the same helper sets
+`waves.waveInterval = 0.25`, so wave 10 should still arrive in **~2.5 s**, far inside the
+18 s budget. Either something else also changed, or the twist path affects cadence in a way
+I did not trace. **Confirm or kill this lead with one instrumented run before bisecting.**
+
 **Non-blocking for rf-24** (predates it, unrelated file, and holding an additive test file
 hostage to it would help nobody). **No corrective queued by me** — a bisect task authored
 blind would be inventing scope; it wants either an attended session or an owner *go*.
