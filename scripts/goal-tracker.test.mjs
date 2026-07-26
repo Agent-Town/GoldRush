@@ -10,7 +10,11 @@ const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const goals = JSON.parse(fs.readFileSync(path.join(root, 'tasks/goals.json'), 'utf8'));
 const leaves = goals.goals.flatMap((goal) => goal.subgoals.flatMap((subgoal) => subgoal.tasks));
 const byId = new Map(leaves.map((leaf) => [leaf.id, leaf]));
-const statuses = new Set(['planned', 'queued', 'building', 'merged', 'verified-by-owner']);
+// 'blocked' added s1097: a leaf whose work is FINISHED and gated on an owner decision has no other
+// honest word — 'queued' would claim a queue entry that does not exist. s1096 parked rf-34 that way
+// (F-1096-2) and this guard went red on its own bookkeeping commit, so the vocabulary follows the
+// practice. A blocked leaf must say WHY, or the state is just a stall with no owner question in it.
+const statuses = new Set(['planned', 'queued', 'building', 'blocked', 'merged', 'verified-by-owner']);
 
 test('goal tree schema is valid', () => {
   assert.equal(goals.version, 1);
@@ -39,6 +43,7 @@ test('goal tree schema is valid', () => {
         if (leaf.taskFile) assert.match(leaf.taskFile, /^[a-zA-Z0-9_-]+\.md$/);
         if (leaf.mergeHash) assert.match(leaf.mergeHash, /^[0-9a-f]{40}$/);
         if (leaf.status === 'merged') assert.ok(leaf.mergeHash, `${leaf.id}: merged without Git evidence`);
+        if (leaf.status === 'blocked') assert.ok(leaf.blockedReason, `${leaf.id}: blocked without a reason`);
       }
     }
   }
