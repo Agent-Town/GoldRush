@@ -1127,6 +1127,12 @@
        "status": "merged",
        "mergeHash": "dc483d74927bcdd694c9aeb4c61144ecd225acb5",
        "taskFile": "lane-entry-damage-net.md"
+      },
+      {
+       "id": "rf-27-rehearsal-base-failclosed",
+       "title": "THE RIG STOPS MEASURING STRANGERS (F-1077-3). rehearsal/segments/e1-depth-play.mjs:27 defaults to a FIXED PORT with no ownership check, and s1077 nearly filed a false P0 off a 12-wave run served by another worktree. s1088 MEASURED that the hazard is live, not historical: :5247 is STILL served by /Users/robin/Claude/Projects/gr-task-e1-gameplay and :5231 by gr-task-rehearsal, while servers started from this checkout correctly read OURS -- so the lsof pid->cwd probe is proven to discriminate before the runner writes a line. FOUR RULINGS decided by measurement: (1) FIX THE CLASS -- there are THREE declaration sites, not the one F-1077-3 names, and the missed one (rehearsal/lib.mjs:9, REHEARSAL_BASE ?? :5231) is the widest, inherited by 20 segments via openSegment; (2) the ownership check is lsof pid->cwd, the same probe s1077 used by hand -- a sentinel-fetch identity scheme is explicitly OUT as new surface answering a question lsof already answers; (3) fail closed means THROW on all four branches (env unset, foreign cwd, no listener, lsof unusable) and the hardcoded defaults are DELETED, not moved to other ports; (4) resolve LAZILY inside openSegment (export const BASE has zero external consumers, verified) and DERIVE lib.mjs:30's ws://127.0.0.1:5231 console filter from the resolved base, or that filter goes vacuous the moment the port changes and HMR noise starts counting as page errors. Deliverable: rehearsal/base-url.mjs with an injectable probeListener seam, all three sites routed through it, a node --test guard in test:node-guards, a four-case truth table RUN (a live foreign server is available as the negative control), and a mutation control on the guard itself. Unblocks F-1081-3's residual spawnAt coverage, which F-1081-3 itself bars until this is fixed.",
+       "status": "queued",
+       "taskFile": "lane-rehearsal-base-failclosed.md"
       }
      ]
     }
