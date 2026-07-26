@@ -13,6 +13,16 @@ test('rejects an unset PROBE_BASE before launching a browser', () => {
   assert.match(result.stderr, /PROBE_BASE/);
 });
 
+test('rejects an unset PROBE_BASE before checking the browser executable', () => {
+  const result = spawnSync(process.execPath, [SCRIPT], {
+    env: { ...envWithoutBase, PLAYWRIGHT_BROWSERS_PATH: '/nonexistent-lane-probe-launch-ordering-1091' },
+    encoding: 'utf8',
+  });
+  assert.ok(Number.isInteger(result.status) && result.status !== 0, result.stderr);
+  assert.match(result.stderr, /PROBE_BASE/);
+  assert.doesNotMatch(result.stderr, /Executable doesn't exist/);
+});
+
 test('rejects a positional base URL with a PROBE_BASE directive', () => {
   const result = spawnSync(process.execPath, [SCRIPT, 'http://127.0.0.1:5188'], {
     env: { ...envWithoutBase, PROBE_BASE: 'http://127.0.0.1:1' },
