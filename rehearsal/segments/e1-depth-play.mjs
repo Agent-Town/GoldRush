@@ -18,7 +18,13 @@ import { fileURLToPath } from 'node:url';
 import path from 'node:path';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-const BASE = process.env.E1_BASE ?? 'http://127.0.0.1:5241';
+// PORT 5247 IS THIS REVIEW'S OWN SCRATCH PORT, and that is not a detail.
+// 5241 — this driver's first default — turned out to be served by
+// `worktrees/lane-a` (verified with `lsof -a -p <pid> -d cwd`), i.e. ANOTHER
+// lane's tree. A run against it measures somebody else's code and attributes it
+// to this branch: Mistake #12 (gate contamination) wearing a play-session coat.
+// Always start the server from THIS checkout and confirm its cwd before playing.
+const BASE = process.env.E1_BASE ?? 'http://127.0.0.1:5247';
 const VIDEO_DIR = path.join(ROOT, 'e1-review-video');
 const SHOT_DIR = path.join(ROOT, 'reviews', 'shots-e1-depth');
 const DATA_DIR = path.join(ROOT, 'e1-review-video', 'profiles');
@@ -127,29 +133,29 @@ await wait(400);
 await shot(`${LABEL}-02-first-look`);
 
 // ---- HONEST BUILD: pointer preview + confirm. Verified by a count delta.
-const canvasBox = await page.evaluate(() => {
-  const c = document.querySelector('canvas');
-  if (!c) return null;
-  const r = c.getBoundingClientRect();
-  return { x: r.x, y: r.y, w: r.width, h: r.height };
-});
-
 /** World->screen via the engine's own projection (__GR_TEST__.screenPoint).
  * Perception only: it tells the driver where a thing IS on screen, exactly as a
- * sighted player reads it. Falls back to a centre offset if unavailable. */
-async function screenFor(x, z) {
-  const pt = await page.evaluate(([wx, wz]) => {
+ * sighted player reads it.
+ *
+ * SIGNATURE IS (x, z, y) — Game.ts:1667 `screenPoint: (x, z, y = 0.8) =>
+ * new THREE.Vector3(x, y, z).project(camera)`. Every e2e spec calls it that way
+ * (e2e/run3d-interaction.spec.ts:35, e2e/e1-dry-gulch.spec.ts:66, ...).
+ * The first version of this driver tried `sp(wx, 0, wz)` first — which resolves
+ * to world (x=wx, y=wz, z=0), i.e. it aimed every build at the z=0 LINE, which
+ * on the-claim is the RIVER (e2e/m1-05-sentry-beacon-build.spec.ts:83 teleports
+ * to (-12, 0) precisely to prove the river rejects placement). It returned
+ * finite numbers, so the correct 2-arg fallback was never reached: 0/49 builds.
+ * That was the whole `ghostValid` defect. */
+async function screenFor(x, z, y = 0) {
+  return page.evaluate(([wx, wz, wy]) => {
     const sp = window.__GR_TEST__?.screenPoint;
     if (!sp) return null;
-    for (const args of [[wx, 0, wz], [wx, wz]]) {
-      try {
-        const r = sp(...args);
-        if (r && Number.isFinite(r.x) && Number.isFinite(r.y)) return { x: r.x, y: r.y };
-      } catch { /* try next shape */ }
-    }
+    try {
+      const r = sp(wx, wz, wy);
+      if (r && Number.isFinite(r.x) && Number.isFinite(r.y)) return { x: r.x, y: r.y, inView: r.inView !== false };
+    } catch { /* projection unavailable */ }
     return null;
-  }, [x, z]);
-  return pt;
+  }, [x, z, y]);
 }
 
 /** Walk the hero toward a world point with real WASD holds.
@@ -165,7 +171,22 @@ async function moveToward(tx, tz, ms = 220) {
   return { dist, arrived: false, key };
 }
 
-async function tryBuild(buildId, screenDx, screenDy, worldSpot = null) {
+/** The ring a player's eye actually sweeps: hero-local world points, near first.
+ * BuildSystem.ts:1391-1394 caps the ghost at placeRadius (6 m for every E1
+ * buildable — Balance.ts beacon/turret/lanternPost/decoyShed placeRadius: 6), so
+ * anything past ~5.5 m is wasted motion. */
+function buildRing(hero, phase) {
+  const spots = [];
+  for (const r of [3.2, 4.8]) {
+    for (let i = 0; i < 8; i += 1) {
+      const a = (i / 8) * Math.PI * 2 + phase;
+      spots.push([hero.x + Math.cos(a) * r, hero.z + Math.sin(a) * r]);
+    }
+  }
+  return spots;
+}
+
+async function tryBuild(buildId, worldSpots) {
   const before = await page.evaluate((id) => {
     const b = window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildables?.find((x) => x.id === id);
     return { count: b?.count ?? -1, gold: window.__THREE_GAME_DIAGNOSTICS__?.ui?.gold ?? 0, afford: b?.canAfford ?? false, cost: b?.cost ?? 0 };
@@ -178,35 +199,41 @@ async function tryBuild(buildId, screenDx, screenDy, worldSpot = null) {
     return list.findIndex((x) => x.id === id);
   }, buildId);
   if (idx >= 0) { await page.keyboard.press(`Digit${idx + 1}`); await wait(120); }
-  // Aim the ghost, then NUDGE until the engine says the spot is legal — this is
-  // exactly the player's move: slide the preview until it stops being red.
+  // Slide the preview over hero-local ground until the engine stops calling it
+  // red. This is the player's move, and it is also the honest terrain probe:
+  // whatever the last rejection was, it was the ENGINE's rejection.
   let aim = null;
-  if (worldSpot) aim = await screenFor(worldSpot[0], worldSpot[1]);
-  if (!aim && canvasBox) aim = { x: canvasBox.x + canvasBox.w / 2 + screenDx, y: canvasBox.y + canvasBox.h / 2 + screenDy };
-  let valid = false;
-  const NUDGES = [[0, 0], [26, 0], [-26, 0], [0, 22], [0, -22], [40, 26], [-40, 26], [52, -18], [-52, -18], [0, 46]];
-  for (const [nx, ny] of NUDGES) {
-    if (!aim) break;
-    await page.mouse.move(aim.x + nx, aim.y + ny);
-    await wait(110);
-    valid = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build?.ghostValid === true);
-    if (valid) { aim = { x: aim.x + nx, y: aim.y + ny }; break; }
+  let lastGhost = null;
+  for (const [wx, wz] of worldSpots) {
+    const pt = await screenFor(wx, wz, 0);
+    if (!pt || !pt.inView) continue;
+    await page.mouse.move(pt.x, pt.y);
+    await wait(70);
+    const g = await page.evaluate(() => {
+      const b = window.__THREE_GAME_DIAGNOSTICS__?.build;
+      return b ? { valid: b.ghostValid === true, x: b.ghostPos?.x, z: b.ghostPos?.z } : null;
+    });
+    if (g) lastGhost = g;
+    if (g?.valid) { aim = pt; break; }
   }
-  if (!valid) {
+  if (!aim) {
     await page.keyboard.press('Escape');
     await wait(90);
-    return { built: false, why: 'no legal ghost spot found in 10 nudges', ...before };
+    return { built: false, why: `no legal ghost in ${worldSpots.length} hero-local spots (last ghost ${lastGhost ? `${lastGhost.x?.toFixed(1)},${lastGhost.z?.toFixed(1)}` : 'n/a'})`, ...before };
   }
-  await page.keyboard.press('Space');
-  await wait(220);
+  // Enter places. (e2e/m1-05-sentry-beacon-build.spec.ts:42,53 and
+  // e2e/m2-01-build-menu.spec.ts:87 — 'Space' does nothing here; the first
+  // driver pressed Space, so even a legal ghost would never have been placed.)
+  await page.keyboard.press('Enter');
+  await wait(200);
   const midCount = await page.evaluate((id) => window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildables?.find((x) => x.id === id)?.count ?? -1, buildId);
-  if (midCount <= before.count && aim) { await page.mouse.click(aim.x, aim.y); await wait(220); }
+  if (midCount <= before.count) { await page.mouse.click(aim.x, aim.y); await wait(220); }
   const after = await page.evaluate((id) => {
     const b = window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildables?.find((x) => x.id === id);
     return { count: b?.count ?? -1, gold: window.__THREE_GAME_DIAGNOSTICS__?.ui?.gold ?? 0, buildMode: window.__THREE_GAME_DIAGNOSTICS__?.ui?.buildMode ?? false };
   }, buildId);
   if (after.buildMode) { await page.keyboard.press('Escape'); await wait(100); }
-  return { built: after.count > before.count, before: before.count, after: after.count, goldBefore: before.gold, goldAfter: after.gold };
+  return { built: after.count > before.count, before: before.count, after: after.count, goldBefore: before.gold, goldAfter: after.gold, at: lastGhost };
 }
 
 // ---- THE PLAY LOOP
@@ -222,14 +249,13 @@ let liveTicks = 0;
 let kiteTicks = 0;          // ticks spent breaking contact
 let consecutiveKite = 0;    // time-box so fleeing can't become a stalemate
 let panTicks = 0;           // ticks spent standing on a seam, panning
+const zoneTicks = {};       // where the hero actually stood, per wave
 let waveStart = Date.now();
 let peakEnemies = 0;
 let sawRush = false;
 const fpsSamples = [];
 const deadline = Date.now() + BUDGET_MIN * 60_000;
 
-// Ring of build spots around centre (screen-space offsets), tried in order.
-const SPOTS = [[-140, 60], [140, 60], [-140, -40], [140, -40], [0, 120], [-240, 20], [240, 20], [0, -110], [-60, 160], [60, 160]];
 let spotIx = 0;
 
 while (Date.now() < deadline) {
@@ -254,16 +280,31 @@ while (Date.now() < deadline) {
         .map((n) => ({ id: n.id, x: n.position.x, z: n.position.z, remaining: n.remaining })),
       // the player's eyes: where the pressure is right now
       foes: (window.__GR_TEST__?.enemyPositions?.() ?? []).map((e) => ({ x: e.x, z: e.z })),
+      // WHERE THE PLAYER IS STANDING, in the engine's own words (Game.ts:4363).
+      // 'bank' | 'shallows' | 'river' | 'ford' | 'out'. This is the single most
+      // telling gap-hunting datum on a river map: deep water disarms the hero
+      // (Game.ts:6536) and bandits don't swim, so time spent in 'river' is time
+      // spent neither fighting nor being fought.
+      zone: g.terrain?.playerZone ?? null,
     };
   });
   if (!d) { outcome = 'diagnostics-lost'; break; }
 
-  // 1. Level-up: take a REAL pick from the REAL offer (policy: first offer, but
-  //    logged so a dominant-strategy pattern shows up in the telemetry).
+  // 1. Level-up: take a REAL pick from the REAL offer, with the preference a
+  //    competent Trail player has: this hero fights with the AUTO-AIMED rig, so
+  //    rig damage/rate/volley first, then survivability, then economy; the two
+  //    blast upgrades last because the Blast is cursor-aimed and this driver
+  //    cannot aim it. Offer AND pick are logged every time, so a dominant
+  //    strategy shows up as a pattern in the telemetry rather than being
+  //    manufactured by the driver taking slot 1 forever.
   if (d.upgradeOpen) {
-    const pick = Array.isArray(d.offer) && d.offer.length ? d.offer[0] : null;
-    upgradesTaken.push({ wave: d.wave, level: d.level, offer: d.offer, took: pick });
-    await page.keyboard.press('Digit1');
+    const PREF = ['heavy_spark', 'double_tap_coil', 'split_spark', 'long_resonator',
+      'tinkers_plating', 'prospectors_luck', 'pan_legend', 'beacon_dynamo', 'spring_heels'];
+    const offer = Array.isArray(d.offer) ? d.offer.map((o) => (typeof o === 'string' ? o : o?.id)) : [];
+    let ix = 0;
+    for (const want of PREF) { const at = offer.indexOf(want); if (at >= 0) { ix = at; break; } }
+    upgradesTaken.push({ wave: d.wave, level: d.level, offer, took: offer[ix] ?? null });
+    await page.keyboard.press(`Digit${ix + 1}`);
     await wait(180);
     continue;
   }
@@ -275,7 +316,12 @@ while (Date.now() < deadline) {
       const row = perWave[perWave.length - 1];
       if (row) { row.wallSeconds = secs; row.peakEnemies = peakEnemies; row.idleFrac = liveTicks ? +(idleTicks / liveTicks).toFixed(2) : null; }
     }
+    if (lastWave >= 0) {
+      const row = perWave[perWave.length - 1];
+      if (row) row.zones = { ...zoneTicks };
+    }
     waveStart = Date.now(); peakEnemies = 0; idleTicks = 0; liveTicks = 0;
+    for (const k of Object.keys(zoneTicks)) delete zoneTicks[k];
     perWave.push({
       wave: d.wave, hpIn: Math.round(d.hp), maxHp: d.maxHp, goldIn: d.gold, level: d.level,
       panned: d.panned, sluiced: d.sluiced, seamsUp: (d.seams ?? []).length,
@@ -316,6 +362,7 @@ while (Date.now() < deadline) {
   //    "Meaningful" = an affordable build OR a reachable seam to work. A tick
   //    with neither is a DEAD tick — this is the dead-minutes instrument.
   liveTicks += 1;
+  if (d.zone) zoneTicks[d.zone] = (zoneTicks[d.zone] ?? 0) + 1;
   const affordable = d.buildables.filter((b) => b.afford && b.count < b.max);
   const seamsOpen = (d.seams ?? []).length > 0;
   if (!affordable.length && !seamsOpen) idleTicks += 1;
@@ -326,42 +373,48 @@ while (Date.now() < deadline) {
   const anyBuild = turret ?? sluice ?? affordable[0];
   if (anyBuild && tick % 6 === 0) {
     // BuildSystem.ts:1391-1394 — the ghost must lie within placeRadius OF THE
-    // HERO. So a build is always hero-local: offset a couple of metres and nudge.
-    const hero = d.heroPos ?? { x: 0, z: 0 };
-    const off = [[2.5, 2.5], [-2.5, 2.5], [2.5, -2.5], [-2.5, -2.5], [3.5, 0], [0, 3.5], [-3.5, 0], [0, -3.5]][spotIx % 8];
-    const worldSpot = [hero.x + off[0], hero.z + off[1]];
-    const [dx, dy] = SPOTS[spotIx % SPOTS.length];
+    // HERO. So a build is always hero-local: sweep the ring, rotated each time
+    // so repeated builds fan out instead of stacking on one arc.
+    const heroNow = d.heroPos ?? { x: 0, z: 0 };
     spotIx += 1;
-    const r = await tryBuild(anyBuild.id, dx, dy, worldSpot);
+    const r = await tryBuild(anyBuild.id, buildRing(heroNow, spotIx * 0.7));
     buildLog.push({ wave: d.wave, id: anyBuild.id, ...r });
     if (r.built) console.log(`[${LABEL}]   built ${anyBuild.id} (gold ${r.goldBefore}->${r.goldAfter})`);
     else if (buildLog.filter((b) => !b.built).length <= 4) console.log(`[${LABEL}]   build ${anyBuild.id} FAILED: ${r.why ?? `count ${r.before}->${r.after}`}`);
   }
 
-  // 6. NEVER IDLE — THE REAL LOOP a competent Trail player runs:
-  //    KITE when pressed (auto-fire does the damage; survival is footwork),
-  //    PAN in the gaps (HarvestSystem.ts:355 — you must be SLOWER than
-  //    Balance.goldSeam.slowSpeed to channel, i.e. actually stand still),
-  //    and never stand still when nothing is worth standing for.
+  // 6. NEVER IDLE — THE REAL LOOP a competent Trail player runs.
+  //    The numbers this policy is built on (all read from Balance.ts):
+  //      Spark Rig  dmg 12, fireRate 2/s, range 10, AUTO-AIMED  -> ~0.66 kills/s
+  //      enemy      hp 25.2, contact 8 dmg / 0.8 s, speed 2.7 (hero 6.0)
+  //      seam       tickGold 5 / 1.5 s, capacity 30, channelRange 1.6
+  //    So: one rig cannot out-kill a wave — the map is WON WITH GOLD, and gold
+  //    is won by STANDING STILL on a seam while the rig works. A driver that
+  //    flees whenever anything is near (the first version: 246 kite ticks of
+  //    311, 20 gold in six waves) is not playing this game, it is avoiding it.
+  //    Kite only when the contact rate would actually kill: badly hurt, or a
+  //    real crowd inside contact range.
   const hero = d.heroPos ?? { x: 0, z: 0 };
   const foes = d.foes ?? [];
-  const near = foes
+  const ranked = foes
     .map((f) => ({ ...f, dist: Math.hypot(f.x - hero.x, f.z - hero.z) }))
-    .sort((a, b) => a.dist - b.dist)[0] ?? null;
-  const hurt = d.hp / Math.max(1, d.maxHp) < 0.55;
+    .sort((a, b) => a.dist - b.dist);
+  const near = ranked[0] ?? null;
+  const crowd = ranked.filter((f) => f.dist < 2.8).length;
+  const hpFrac = d.hp / Math.max(1, d.maxHp);
   // Kiting is TIME-BOXED: a real player breaks contact, then goes back to work.
   // Unbounded fleeing is a driver degeneracy (it stalemates), not play.
-  const kiteBudgetLeft = consecutiveKite < 8;
-  const pressed = near && (near.dist < (hurt ? 9 : 5.5)) && kiteBudgetLeft;
+  const kiteBudgetLeft = consecutiveKite < 6;
+  const pressed = near && kiteBudgetLeft && (crowd >= 3 || (hpFrac < 0.45 && near.dist < 6));
 
+  consecutiveKite = pressed ? consecutiveKite + 1 : 0;
   if (pressed) {
-    consecutiveKite += 1;
-  } else {
-    consecutiveKite = 0;
-  }
-  if (pressed) {
-    // Break contact directly away from the nearest threat.
-    const ax = hero.x - near.x, az = hero.z - near.z;
+    // Break contact directly away from the pressure (mean of the crowd, not the
+    // single nearest — otherwise you sidestep one enemy into four).
+    const mass = ranked.slice(0, Math.max(1, crowd));
+    const cx = mass.reduce((s, f) => s + f.x, 0) / mass.length;
+    const cz = mass.reduce((s, f) => s + f.z, 0) / mass.length;
+    const ax = hero.x - cx, az = hero.z - cz;
     const key = Math.abs(ax) > Math.abs(az) ? (ax > 0 ? 'KeyD' : 'KeyA') : (az > 0 ? 'KeyS' : 'KeyW');
     await hold(page, key, 240);
     kiteTicks += 1;
@@ -375,14 +428,18 @@ while (Date.now() < deadline) {
   } else {
     await hold(page, ['KeyD', 'KeyS', 'KeyA', 'KeyW'][tick % 4], 200);
   }
-  if (tick % 9 === 0) await page.keyboard.press('KeyQ'); // exercise both arsenal roots
+  // Weapon: stay on the auto-aimed rig. The Blast is cursor-aimed
+  // (Balance.blast.aimMode: 'cursor') and this driver's cursor is parked
+  // wherever the last build ghost was — toggling to it would be a driver
+  // handicap, not play. Toggled once early so the arsenal root is exercised.
+  if (tick === 40) await page.keyboard.press('KeyQ'), await wait(120), await page.keyboard.press('KeyQ');
   fpsSamples.push({ t: Date.now(), frame: d.frame });
   tick += 1;
   await wait(90);
 }
 
 const finalRow = perWave[perWave.length - 1];
-if (finalRow) { finalRow.wallSeconds = Math.round((Date.now() - waveStart) / 1000); finalRow.peakEnemies = peakEnemies; finalRow.idleFrac = liveTicks ? +(idleTicks / liveTicks).toFixed(2) : null; }
+if (finalRow) { finalRow.wallSeconds = Math.round((Date.now() - waveStart) / 1000); finalRow.peakEnemies = peakEnemies; finalRow.idleFrac = liveTicks ? +(idleTicks / liveTicks).toFixed(2) : null; finalRow.zones = { ...zoneTicks }; }
 
 await wait(1200);
 await shot(`${LABEL}-10-final`);
@@ -405,7 +462,7 @@ if (fpsSamples.length > 4) {
 }
 
 const report = {
-  label: LABEL, contract: CONTRACT, url, timescale: TIMESCALE, viewport: VIEWPORT,
+  label: LABEL, contract: CONTRACT, base: BASE, url, timescale: TIMESCALE, viewport: VIEWPORT,
   difficulty: boot.difficulty, secureWave: boot.secureWave, startGold: boot.startGold,
   firstRun, boot, outcome, wallSeconds: Math.round((Date.now() - startedAt) / 1000),
   wavesReached: lastWave, sawRush, fpsEstimate: fps,
