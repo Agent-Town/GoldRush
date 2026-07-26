@@ -12,6 +12,7 @@
     "test:asset-diet": "GR_CAPTURE_EXTERNAL_SERVER=1 playwright test --config playwright.preview.config.ts e2e/asset-diet.spec.ts --workers=1",
     "census": "playwright test e2e/map-census.spec.ts --project=desktop-chrome --workers=1",
     "test:accounts": "node scripts/test-accounts.mjs",
+    "mint:prizes": "node scripts/mint-prize-codes.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
     "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
     "test:node-guards": "node --test scripts/e3-mask-tables.test.mjs scripts/goal-tracker.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs && node scripts/test-ticker-stats.mjs",

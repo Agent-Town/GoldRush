@@ -11,6 +11,7 @@ import {
   type RotationDirection,
 } from './OrientationResolver';
 import { assetSlots, type AssetSlotId } from './slots';
+import { prospectorSkinSheetFile, readProspectorSkin, type ProspectorSkin } from '../game/ProspectorSkin';
 
 export type CharacterSpriteClip = 'idle' | 'walk' | 'hit' | 'pan' | 'flee' | string;
 
@@ -745,7 +746,11 @@ function mirroredRuntimeFrame(frame: RuntimeFrame): RuntimeFrame {
 }
 
 function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
-  const cacheKey = slotId === assetSlots.charHero ? `${slotId}:${activeHeroAge()}` : slotId;
+  const cacheKey = slotId === assetSlots.charHero
+    ? `${slotId}:${activeHeroAge()}`
+    : slotId === assetSlots.charProspectorAgent
+      ? `${slotId}:${readProspectorSkin()}`
+      : slotId;
   const cached = runtimeCache.get(cacheKey);
   if (cached) return cached;
   const promise = createRuntimeSlot(slotId);
@@ -848,6 +853,7 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
 
 async function resolveWalkSheet(slotId: AssetSlotId, slot: ContractSlot | undefined): Promise<WalkSheetSource | null> {
   const young = selectWalkSheet(slot);
+  if (slotId === assetSlots.charProspectorAgent) return resolveProspectorWalkSheet(young);
   if (slotId !== assetSlots.charHero) return young;
 
   const age = activeHeroAge();
@@ -856,6 +862,34 @@ async function resolveWalkSheet(slotId: AssetSlotId, slot: ContractSlot | undefi
   const resolvedAge = aged && walkSheetHasProcessedCells(aged) && (await walkSheetLoads(aged)) ? age : 'young';
   document.querySelector<HTMLCanvasElement>('#game-canvas')?.setAttribute('data-hero-sheet', resolvedAge);
   return resolvedAge === age && aged ? aged : young;
+}
+
+async function resolveProspectorWalkSheet(stock: WalkSheetSource | null): Promise<WalkSheetSource | null> {
+  const skin = readProspectorSkin();
+  const skinned = stock && skin !== 'stock' ? skinWalkSheet(stock, skin) : null;
+  const resolved = skinned && walkSheetHasProcessedCells(skinned) && (await walkSheetLoads(skinned)) ? skinned : stock;
+  const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
+  canvas?.setAttribute('data-prospector-skin', skin);
+  canvas?.setAttribute('data-prospector-sheet', resolved === skinned ? skin : 'stock');
+  return resolved;
+}
+
+function skinWalkSheet(sheet: WalkSheetSource, skin: ProspectorSkin): WalkSheetSource {
+  return {
+    ...sheet,
+    grid: sheet.grid?.file ? { ...sheet.grid, file: prospectorSkinSheetFile(sheet.grid.file, skin) } : sheet.grid,
+    directions: Object.fromEntries(
+      Object.entries(sheet.directions ?? {}).map(([direction, source]) => [
+        direction,
+        {
+          ...source,
+          frames: source.frames?.files
+            ? { ...source.frames, files: source.frames.files.map((file) => prospectorSkinSheetFile(file, skin)) }
+            : source.frames,
+        },
+      ]),
+    ),
+  };
 }
 
 function activeHeroAge(): HeroAge {

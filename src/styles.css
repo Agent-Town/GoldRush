@@ -241,6 +241,11 @@ body {
   display: none;
 }
 
+.gr-start-menu__settings {
+  max-height: min(540px, 58vh);
+  overflow: auto;
+}
+
 .gr-start-menu__settings label {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
@@ -260,7 +265,7 @@ body {
   margin: -12px -12px 10px;
   padding: 12px;
   border-bottom: 1px solid rgba(46, 27, 14, 0.24);
-  background: rgba(245, 230, 200, 0.98);
+  background: #f5e6c8;
 }
 
 .gr-start-menu__settings-header h2 {
@@ -2207,6 +2212,14 @@ body:has(.gr-profile-title) #touch-controls {
   background: rgba(91, 138, 138, 0.12);
 }
 
+.complaint-desk__prize {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: end;
+}
+
 .complaint-desk__bounty {
   border-color: var(--at-ochre-500);
   background: rgba(196, 136, 58, 0.14);
@@ -2245,7 +2258,8 @@ body:has(.gr-profile-title) #touch-controls {
   }
 
   .complaint-desk__fields,
-  .complaint-desk__moment {
+  .complaint-desk__moment,
+  .complaint-desk__prize {
     grid-template-columns: 1fr;
   }
 

@@ -25,6 +25,7 @@ import { activeEpochId, loadContract } from '../../meta/ContractFamilies';
 import { readTownName } from '../../town/TownNaming';
 import { accountSync } from '../../game/AccountSync';
 import { eraBackdropRef, loadEraBackdrop } from '../EraBackdrop';
+import { bindProspectorSkinControl, renderProspectorSkinControl } from '../../game/ProspectorSkin';
 
 const emblemUrl = new URL('../../../assets/processed/ui-title-emblem.png', import.meta.url).href;
 const panelUrl = new URL('../../../assets/processed/ui-menu-panel.png', import.meta.url).href;
@@ -40,6 +41,7 @@ const STORY_SETTINGS_IDS = {
 };
 const PERFORMANCE_TIER_ID = 'start-menu-performance-tier';
 const TELEMETRY_STATS_ID = 'start-menu-telemetry-stats';
+const PROSPECTOR_SKIN_ID = 'start-menu-prospector-skin';
 
 type StartMenuOptions = {
   onContinue: () => void;
@@ -56,6 +58,7 @@ export class StartMenu {
   private disposeStorySettings: () => void = () => undefined;
   private disposePerformanceSettings: () => void = () => undefined;
   private disposeTelemetrySettings: () => void = () => undefined;
+  private disposeProspectorSkin: () => void = () => undefined;
   private storage?: Storage;
   private firstBoot = false;
   private profileMessage = '';
@@ -95,6 +98,7 @@ export class StartMenu {
     this.disposeStorySettings();
     this.disposePerformanceSettings();
     this.disposeTelemetrySettings();
+    this.disposeProspectorSkin();
     this.disposeAccountSync();
     this.root.removeEventListener('click', this.onClick);
     this.root.removeEventListener('keydown', this.onKeyDown);
@@ -107,6 +111,7 @@ export class StartMenu {
     this.disposeStorySettings();
     this.disposePerformanceSettings();
     this.disposeTelemetrySettings();
+    this.disposeProspectorSkin();
     migrateLegacySuspendResources(this.storage);
     const suspend = readRunSuspend();
     const slots = readSaveSlots(this.storage);
@@ -156,6 +161,7 @@ export class StartMenu {
           ${renderAudioSettingsControls(AUDIO_SETTINGS_IDS)}
           ${renderStorySettingsControl(STORY_SETTINGS_IDS)}
           ${renderPerformanceTierControl(PERFORMANCE_TIER_ID)}
+          ${renderProspectorSkinControl(PROSPECTOR_SKIN_ID)}
           ${renderTelemetrySettingsControl(TELEMETRY_STATS_ID)}
         </section>
       </div>
@@ -163,6 +169,7 @@ export class StartMenu {
     this.disposeAudioSettings = bindAudioSettingsControls(this.root, AUDIO_SETTINGS_IDS);
     this.disposeStorySettings = bindStorySettingsControl(this.root, STORY_SETTINGS_IDS);
     this.disposePerformanceSettings = bindPerformanceTierControl(this.root, PERFORMANCE_TIER_ID);
+    this.disposeProspectorSkin = bindProspectorSkinControl(this.root, PROSPECTOR_SKIN_ID);
     this.disposeTelemetrySettings = bindTelemetrySettingsControl(this.root, TELEMETRY_STATS_ID);
     this.root.querySelector<HTMLFormElement>('[data-testid="profile-create-form"]')?.addEventListener('submit', (event) => {
       event.preventDefault();

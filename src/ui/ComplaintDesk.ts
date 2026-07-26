@@ -2,6 +2,7 @@ import { gameApiUrl } from '../app/GameApi';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { activeContract } from '../meta/ContractFamilies';
 import { captureNextRenderedFrame } from '../core/Renderer';
+import { canPersistProspectorSkin, grantProspectorSkin, ownedProspectorSkins } from '../game/ProspectorSkin';
 
 export const BUG_OFFICE_COPY = {
   bounty: 'THE BOUNTY — The county will reward the three reports that help the trail most. Prize notice follows.',
@@ -27,6 +28,8 @@ export class ComplaintDeskPanel {
   private readonly diagnosticsLine: HTMLElement;
   private readonly status: HTMLElement;
   private readonly submitButton: HTMLButtonElement;
+  private readonly prizeCode: HTMLInputElement;
+  private readonly redeemButton: HTMLButtonElement;
   private screenshot = '';
   private screenshotSource: 'capture' | 'upload' = 'capture';
   private evidenceRequest = 0;
@@ -77,6 +80,13 @@ export class ComplaintDeskPanel {
           </section>
           <p class="complaint-desk__diagnostics" data-testid="complaint-diagnostics"></p>
           <p class="complaint-desk__bounty" data-testid="complaint-bounty">${BUG_OFFICE_COPY.bounty}</p>
+          <div class="complaint-desk__prize">
+            <label>
+              <span>Hand the clerk a prize stub</span>
+              <input data-testid="prize-stub-code" maxlength="32" autocomplete="off" spellcheck="false" />
+            </label>
+            <button class="death-overlay__button death-overlay__button--secondary" type="button" data-testid="prize-stub-redeem">Redeem stub</button>
+          </div>
         </div>
         <div class="complaint-desk__actions">
           <button class="death-overlay__button" type="submit" data-testid="complaint-submit">File complaint</button>
@@ -92,8 +102,11 @@ export class ComplaintDeskPanel {
     this.diagnosticsLine = this.get('[data-testid="complaint-diagnostics"]');
     this.status = this.get('[data-testid="complaint-status"]');
     this.submitButton = this.get('[data-testid="complaint-submit"]');
+    this.prizeCode = this.get('[data-testid="prize-stub-code"]');
+    this.redeemButton = this.get('[data-testid="prize-stub-redeem"]');
     this.root.querySelector('[data-testid="complaint-close"]')?.addEventListener('click', this.close);
     this.root.querySelector('[data-testid="complaint-retake"]')?.addEventListener('click', this.retake);
+    this.redeemButton.addEventListener('click', this.redeem);
     this.upload.addEventListener('change', () => {
       const file = this.upload.files?.[0];
       this.upload.value = '';
@@ -222,9 +235,44 @@ export class ComplaintDeskPanel {
         this.setStatus(typeof result.message === 'string' ? result.message : 'The clerk declined that page. Check it and try again.', 'declined');
         return;
       }
-      this.setStatus(`Complaint filed. Ticket ${result.id}. The county thanks you. ${BUG_OFFICE_COPY.bounty}`, 'filed');
+      const coat = grantProspectorSkin('complainant')
+        ? " The county pays honest eyes. The Complainant's Coat is yours."
+        : '';
+      this.setStatus(`Complaint filed. Ticket ${result.id}. The county thanks you.${coat} ${BUG_OFFICE_COPY.bounty}`, 'filed');
     } catch {
       this.setStatus('The wire is down. The clerk kept your complaint on the desk — try again.', 'offline');
+    } finally {
+      this.setBusy(false);
+    }
+  };
+
+  private readonly redeem = async () => {
+    if (this.busy) return;
+    const code = this.prizeCode.value.trim();
+    if (!code) return this.setStatus('Hand the clerk a prize stub first.', 'declined');
+    if (ownedProspectorSkins().includes('gilded')) return this.setStatus('The clerk says the Gilded Coat is already in your ledger.', 'declined');
+    if (!canPersistProspectorSkin()) return this.setStatus('This browser cannot hold the coat ledger. Keep the stub and make room first.', 'declined');
+    this.setBusy(true);
+    this.setStatus('The clerk is checking the county seal…', 'posting');
+    try {
+      const response = await fetch(gameApiUrl('/api/redeem'), {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ code }),
+      });
+      const result = await response.json().catch(() => ({})) as { skin?: unknown; message?: unknown };
+      if (!response.ok || result.skin !== 'gilded') {
+        this.setStatus(typeof result.message === 'string' ? result.message : 'The clerk declines that prize stub.', 'declined');
+        return;
+      }
+      if (!grantProspectorSkin('gilded')) {
+        this.setStatus('The clerk stamped the stub, but this browser could not hold the coat ledger.', 'declined');
+        return;
+      }
+      this.prizeCode.value = '';
+      this.setStatus('The clerk stamps the stub. The Gilded Coat is yours.', 'filed');
+    } catch {
+      this.setStatus('The wire is down. Keep hold of that prize stub and try again.', 'offline');
     } finally {
       this.setBusy(false);
     }
@@ -264,6 +312,8 @@ export class ComplaintDeskPanel {
   private setBusy(busy: boolean): void {
     this.busy = busy;
     this.submitButton.disabled = busy;
+    this.prizeCode.disabled = busy;
+    this.redeemButton.disabled = busy;
     this.upload.disabled = busy;
     const retake = this.root.querySelector<HTMLButtonElement>('[data-testid="complaint-retake"]');
     if (retake) retake.disabled = busy;

@@ -9,6 +9,7 @@ import { PERFORMANCE_TIER_STORAGE_KEY, RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY 
 import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY, listEpochs } from '../meta/ContractFamilies';
 import { PLAYBOOKS_KEY } from '../playbook/PlaybookStore';
 import { E7_SIGNAL_STATE_KEY } from '../systems/E7SignalSystem';
+import { PROSPECTOR_SKIN_STORAGE_KEY, PROSPECTOR_SKINS_OWNED_STORAGE_KEY } from './ProspectorSkin';
 
 export const PROFILE_KEY = 'gr.profile.v2';
 export const CAMERA_ZOOM_STORAGE_KEY = 'gr.camera.zoom.v1';
@@ -49,6 +50,8 @@ export const PROFILE_DATA_KEYS = new Set([
   PLAYBOOKS_KEY,
   E7_SIGNAL_STATE_KEY,
   CAMERA_ZOOM_STORAGE_KEY,
+  PROSPECTOR_SKIN_STORAGE_KEY,
+  PROSPECTOR_SKINS_OWNED_STORAGE_KEY,
   ...listEpochs().map((epoch) => researchStateKey(epoch.id)),
 ]);
 const DEVICE_PROFILE_DATA_KEYS = new Set([RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY]);
