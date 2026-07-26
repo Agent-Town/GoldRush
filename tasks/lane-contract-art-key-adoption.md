@@ -1,5 +1,7 @@
 # Task lane-contract-art-key-adoption: THREE E2E ASSERTIONS STILL DEMAND THE PER-CARD ART KEYS THAT THE OWNER RETIRED ON 2026-07-20
-**FIRE-AUTHORED (attended review welcome) — s1105, 2026-07-27. This is the corrective that F-1104-6's rider ordered ("`town-t3-board:161` … pre-existing and assertion-class, and it now OWES its own corrective").**
+**FIRE-AUTHORED (attended review welcome) — s1105, 2026-07-27. This is the corrective that s1103's rider ordered ("`town-t3-board:161` … pre-existing and assertion-class, and it now OWES its own corrective").**
+
+> 📎 **Citation corrected s1106.** This header originally credited the rider to **F-1104-6**. It is not: F-1104-6 is the `restore-validation:186` flake (`reviews/hero-y-restore-roundtrip.md:61-71`), an unrelated defect. The `town-t3-board:161` rider actually lives in **`reviews/078-focus.md:86-87`**, under *"Pre-existing red, confirmed independently (s1103's rider)"*. The correction matters because `restore-validation.spec.ts` is **explicitly firewalled OUT** of the concurrent `lane-approach-steer-to-arrival` (rf-37) master, and a runner chasing the wrong finding could walk into it. Nothing in WHY or SCOPE below changes — that evidence chain was independently verified against `3a007ea7`.
 
 **READ THIS FIRST, BECAUSE IT INVERTS THE OBVIOUS FIX: the DOM is RIGHT and the SPECS are STALE.** The temptation is to "repair" `renderContractArt()` so it emits per-card keys again. **That would reverse a ratified owner ruling** and is a firewall violation here. See WHY.
 
