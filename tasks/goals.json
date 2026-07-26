@@ -1056,6 +1056,13 @@
        "status": "merged",
        "mergeHash": "2962577194e4c1d8d8362198925ae30ae4384cb7",
        "taskFile": "redeem-harden.md"
+      },
+      {
+       "id": "rf-17-e1-ladder-tune",
+       "title": "The ladder becomes a ladder — Balance.waves.entryDamageScale softens contact damage only during the opening of the two named E1 contracts (0.2 through wave 6, 0.5 through wave 10, 1 from wave 11), so the repaired depth driver survives past wave 10 instead of ending the run in the first minutes. Rig measurement: Night Shift died wave 9 -> 11, Baron died wave 3 -> 16, both clearing the wave-10 HP target with zero console/page errors; enemy counts, XP, cadence, the Claim, Dry Gulch and Baron boss damage at wave 20 are all unchanged. WaveSystem.spawnAt gained applyEntryDamageScale (default true); wiring verified at drain time by reading all six call sites, where the only opt-out is the debug path spawnStressEnemies. MERGED AS A TIP-GRAFT OF THE LANE'S OWN DELTA, NOT A BRANCH MERGE: the plain branch diff reads +9/-2 on Balance.ts and would have reverted s1077's d2279d32 doubleTapCoilMaxStacks 6->3 cap at two literals, because the lane base 312fbd0a predates that drain (merge-base --is-ancestor = NO) while the lane's own delta contains zero doubleTapCoil hits — stale base, not lane content (F-1080-4, third recurrence of the F-1073-1 class and the first on lane-c). Gates: tsc clean, build 1.16s, 31 passed across e1-night-shift + e1-baron on desktop and mobile-390 with consoleErrors/pageErrors asserted [] inside the specs. Every red fingerprinted against clean main by cp-revert rather than argued away: the 8 night-shift lighting/suspend reds are identical on clean main on BOTH projects (the lane report had checked desktop only — F-1081-1), and the 4 m1-03/m2-03 spawn-path reds also pre-exist, in suites the lane report never ran despite modifying the exact spawn path they exercise. e1-night-shift:413 and e1-baron:343 were shown LOAD-FLAKY by a matched-load control (each failed in exactly one of four runs while the graft stayed constant — F-1081-2). Owed: the tune has no automated assertion, so only a manual rig run proves the ladder is walkable (F-1081-3)",
+       "status": "merged",
+       "mergeHash": "eb7278ac063abef90f2e3f7b0bf4934295343403",
+       "taskFile": "lane-e1-ladder-tune.md"
       }
      ]
     }
