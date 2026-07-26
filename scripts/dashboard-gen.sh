@@ -339,8 +339,10 @@ const isMerged = (hash) => {
 };
 const resolvedStatus = (task) => {
   if (task.status === 'verified-by-owner') return task.status;
-  const hasDoneReceipt = !task.taskFile || matches(doneFiles, task.taskFile);
-  if (task.mergeHash && hasDoneReceipt && isMerged(task.mergeHash)) return 'merged';
+  // Ancestry alone proves a merge — done-receipts are ephemeral (fires retire
+  // them into shipped-* names), and demanding them rendered truly-merged
+  // leaves 'planned' for days (owner caught it thrice; 2026-07-26).
+  if (task.mergeHash && isMerged(task.mergeHash)) return 'merged';
   if (task.taskFile && matches(runningFiles, task.taskFile)) return 'building';
   if (task.taskFile && matches(queuedFiles, task.taskFile)) return 'queued';
   return task.status === 'merged' ? 'planned' : task.status;

@@ -612,8 +612,8 @@
       },
       {
        "id": "e9-art",
-       "title": "Art \u2014 Red Fields production set (audit E9 rung: batch 1/4 art-e9-buildings-a DRAINED s781 [LEDGER 51: dome-commons/canal-works/ice-quarry-rig/weather-spire/seed-vault] + batch 2/4 art-e9-transforms-terrain DRAINED s782 [LEDGER 52: E8\u2192E9 building EDITs Dome Commons Annex/Storm-lance/Areology Hall/World-band Tower + ter-redfields-atlas 2\u00d72 dune-rust/regolith-crust/canal-wet/the-green] \u2014 E9 BUILDINGS/TERRAIN COMPLETE; reference-tier per E6/E7/E8 precedent, Storm-lance VERIFIED weather-control INSTRUMENT not weapon [lightning-rod/charge-coil, no barrel/muzzle/beam/target], canon \u00a79/ADR-001 clean; E1 riverbank-green callback swatch #50674c held; roster superseded [char-e9-*-walk8 shipped/wired LEDGER 56]; town-icons owner-blocked on portrait convention)",
-       "status": "building"
+       "title": "Art \u2014 Red Fields set COMPLETE (batches 1-2 + roster wired; details in BACKLOG/LEDGER 51-56)",
+       "status": "merged"
       },
       {
        "id": "e9-town",
@@ -724,8 +724,8 @@
       },
       {
        "id": "e10-art",
-       "title": "Art \u2014 Deep Sky production set (audit E10 rung: E10 has NO buildings/terrain batch \u2014 the fire-authorable class is the 3 design-locked visited-world biome families [atlas + prop sheet each]. Batch 1/3 art-e10-world-ember DRAINED s783 [LEDGER 53: ter-ember-world-atlas 2\u00d72 cooled-basalt/active-lava-vein/ash-drift/ember-gravel + prop-ember-world reference-tier scatter family \u2014 boulders/spires/ember-vent/pumice-cinders/cracked-slab; vein reads as glowing cracks NOT a lake, ember-glow restrained, no titan-machine landmark, E2 warm palette echo, canon \u00a79 clean]. Batch 2/3 art-e10-world-glass DRAINED s784 [LEDGER 54: ter-glass-steppe-atlas 2\u00d72 fulgurite-glass-crust/lightning-scorch(branching fulgurite scar-veins in solid ground, NOT a pool/lake)/cracked-steppe-earth/glass-shard-gravel + prop-glass-steppe reference-tier scatter (branching fulgurite spires/cracked glass slabs/shard-pebbles/fused-sand mound/scorched rock) + landmark-glass-steppe (the authored lightning-collector spire \u2014 a passive brass-and-timber Tesla-mast with a teal orb GATHERING drawn-lightning, NOT a weapon: no barrel/muzzle/aimed-beam/crosshair, matches plate-e10-worlds center); glass steppe = E3 lightning-fused plains/E3 palette echo, engraved not photoreal, canon \u00a79/ADR-001 clean, no design fork; reference-tier unwired \u2192 no gazette/deploy]. Batch 3/3 art-e10-world-sea DRAINED s785 [LEDGER 55: ter-sea-moon-atlas 2\u00d72 tidal-flat-sand/living-reef-crust/kelp-mat/shell-gravel-shallows (walkable exposed tidal-SEABED, NOT open water/ocean/pool) + prop-sea-moon reference-tier scatter (coral/tube-sponge spire clusters/cracked reef slabs/shell-barnacle-gravel/kelp-frond clump/encrusted tide-pool basin, teal biolume glow only in crevices) + landmark-sea-moon (the ONE authored landmark \u2014 a weathered brass-and-teal tidal-works, a domed observation/diving station with a trussed CRANE hoisting a caged glass bathysphere-orb over the reef under the great alien moon, passive monument NOT a weapon: no barrel/muzzle/aimed-beam/crosshair, matches plate-e10-worlds right region); sea moon = E5 under alien tides/E5 Deepwater palette echo per spec \u00a7A, engraved not photoreal, canon \u00a79/ADR-001 clean, no design fork; reference-tier unwired \u2192 no gazette/deploy]. With batch 3/3 the E10 worlds art class is EXHAUSTED (roster/pan/icons stay attended/owner-gated). Remaining after sea: art-roster-e10 [static-mote/unravel-mask] NOVEL Static mechanic \u2192 attended/dedicated per E7-02 lesson; art-e10-pan-town + art-e10-icons OWNER-BLOCKED on portrait convention)",
-       "status": "building"
+       "title": "Art \u2014 Deep Sky set COMPLETE (3 world biomes, LEDGER 53-55; art class exhausted)",
+       "status": "merged"
       },
       {
        "id": "e10-town",
@@ -822,6 +822,11 @@
        "title": "Era-keyed hero sheet resolution (young fallback)",
        "status": "merged",
        "mergeHash": "aac5aa93d1dfdbcaaf64f79280aafbbeee68d6f0"
+      },
+      {
+       "id": "era-art-owner-gated",
+       "title": "OWNER'S DESK: town-icons + pan-town art (blocked on YOUR portrait-convention call) \u00b7 e10 Static roster wiring (novel-mechanic design fork)",
+       "status": "planned"
       }
      ]
     },
@@ -996,8 +1001,10 @@
       },
       {
        "id": "rf-09-secure-clarity",
-       "title": "F-E1-1 secure-wave CLARITY (owner-scoped: waves stand at 20/25; the win must be STATED)",
-       "status": "queued"
+       "title": "F-E1-1 secure-wave CLARITY (owner-scoped: waves stand at 20/25; the win must be STATED) \u2014 Dry Gulch + Twin Banks now lead with their win condition and carry twist.secureWave: 20 explicitly; drained s1068",
+       "status": "merged",
+       "mergeHash": "12bc909991898deaea56d3f00ab6c9980c0e2cdb",
+       "taskFile": "lane-e1-secure-wave-truth.md"
       }
      ]
     }
