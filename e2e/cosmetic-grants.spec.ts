@@ -150,14 +150,23 @@ test('a bad prize stub is declined in-world', async ({ page }) => {
   expect(errors).toEqual({ console: [], page: [] });
 });
 
-test('a named coat falls back to the stock sheet while its art is absent', async ({ page }) => {
-  await seedTown(page, 'complainant');
-  const errors = collectErrors(page);
-  await openTown(page);
-  await expect.poll(() => page.locator('#game-canvas').getAttribute('data-prospector-skin')).toBe('complainant');
-  await expect.poll(() => page.locator('#game-canvas').getAttribute('data-prospector-sheet')).toBe('stock');
-  expect(errors).toEqual({ console: [], page: [] });
-});
+// Superseded 2026-07-27 (F-1098-2). This test used to assert the OPPOSITE — that a named
+// coat falls back to the stock sheet "while its art is absent" — because the coats had been
+// minted at hover4 while the runtime only ever requests hover8, so every skin silently fell
+// back and the player saw no change. The hover8 coats now ship processed cells, so the
+// premise in that old name is deliberately false and the fallback is no longer reachable
+// by any real skin. Asserting 'stock' here today would re-encode the bug as the contract.
+for (const skin of ['complainant', 'gilded'] as const) {
+  test(`the ${skin} coat renders its own sheet, not the stock fallback`, async ({ page }, testInfo) => {
+    await seedTown(page, skin);
+    const errors = collectErrors(page);
+    await openTown(page);
+    await expect.poll(() => page.locator('#game-canvas').getAttribute('data-prospector-skin')).toBe(skin);
+    await expect.poll(() => page.locator('#game-canvas').getAttribute('data-prospector-sheet')).toBe(skin);
+    await shot(page, testInfo, `coat-${skin}`);
+    expect(errors).toEqual({ console: [], page: [] });
+  });
+}
 
 async function seedTown(page: Page, skin?: ProspectorSkin): Promise<void> {
   await page.addInitScript(({ keys, selected }) => {
