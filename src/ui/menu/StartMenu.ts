@@ -5,6 +5,8 @@ import {
   ensureProfileState,
   installProfileStorageScope,
   loadProfileState,
+  rawGet,
+  rawSet,
 } from '../../game/ProfileStorage';
 import { reconcileActiveEpoch } from '../../meta/ResearchTree';
 import { SoundSystem } from '../../audio/SoundSystem';
@@ -417,6 +419,8 @@ function setupProfileStorage(): Storage | undefined {
   try {
     const storage = globalThis.localStorage;
     if (!storage) return undefined;
+    // Mode-1 usability probe: this direct read must throw into the outer catch; rawGet would hide an unusable store.
+    storage.getItem(RUN_SUSPEND_KEY);
     if (!loadProfileState(storage) && hasLegacyProfileData(storage)) ensureProfileState(storage);
     if (loadProfileState(storage)) {
       installProfileStorageScope(storage);
@@ -430,7 +434,7 @@ function setupProfileStorage(): Storage | undefined {
 
 function hasLegacyProfileData(storage: Storage): boolean {
   for (const key of PROFILE_DATA_KEYS) {
-    if (storage.getItem(key) !== null) return true;
+    if (rawGet(storage, key) !== null) return true;
   }
   return false;
 }
@@ -438,12 +442,12 @@ function hasLegacyProfileData(storage: Storage): boolean {
 function migrateLegacySuspendResources(storage?: Storage): void {
   if (!storage) return;
   try {
-    const raw = storage.getItem(RUN_SUSPEND_KEY);
+    const raw = rawGet(storage, RUN_SUSPEND_KEY);
     if (!raw) return;
     const suspend = JSON.parse(raw) as { economy?: { resources?: unknown } };
     if (!suspend.economy || suspend.economy.resources !== undefined) return;
     suspend.economy.resources = {};
-    storage.setItem(RUN_SUSPEND_KEY, JSON.stringify(suspend));
+    rawSet(storage, RUN_SUSPEND_KEY, JSON.stringify(suspend));
   } catch {}
 }
 

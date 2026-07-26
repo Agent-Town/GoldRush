@@ -254,3 +254,42 @@ function suspendFixture(): unknown {
     research: { version: 1, progress: meta, taken: [], proposalSalt: 0, pinnedTarget: null },
   };
 }
+
+test('blocked profile storage boots without offering an unusable first profile', async ({ browser }) => {
+  const context = await browser.newContext();
+  await context.addInitScript(() => {
+    const blockedStorage = {
+      get length() {
+        throw new Error('blocked storage');
+      },
+      key() {
+        throw new Error('blocked storage');
+      },
+      getItem() {
+        throw new Error('blocked storage');
+      },
+      setItem() {
+        throw new Error('blocked storage');
+      },
+      removeItem() {
+        throw new Error('blocked storage');
+      },
+      clear() {
+        throw new Error('blocked storage');
+      },
+    };
+    Object.defineProperty(window, 'localStorage', {
+      configurable: true,
+      get: () => blockedStorage,
+    });
+  });
+  const page = await context.newPage();
+  const errors = collectErrors(page);
+  await page.goto('/');
+
+  await expect(page.getByTestId('start-menu')).toBeVisible();
+  await expect(page.getByTestId('profile-title')).toHaveCount(0);
+  expect(errors.pageErrors).toEqual([]);
+  expect([...errors.consoleErrors, ...errors.pageErrors].join('\n')).not.toMatch(/Illegal invocation/);
+  await context.close();
+});
