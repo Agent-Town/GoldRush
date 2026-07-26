@@ -1,9 +1,13 @@
 # E1 BRIEFING TRUTH — two defects the copy-red was hiding
 **FIRE-AUTHORED (attended review welcome)** — s1068, 2026-07-26.
-**STATUS: authored, NOT queued.** `lane/m3` still carries the undrained `2d0739f5`, so a lane-a refill
-would `reset --hard` over it (LANE-SAFETY LAW). Queue this only after that salvage is resolved, or run
-it in the main slot. Both defects sit in the E1 area an attended session was holding at authoring time —
-**coordinate before dispatch.**
+**STATUS: authored, NOT queued — ONE of the two blockers is now CLEARED (s1069, 2026-07-26).**
+~~`lane/m3` still carries the undrained `2d0739f5`~~ → **RESOLVED: drained at `fa645b6c`, salvage retired
+to `archive/lane-m3-2d0739f5`. LANE-SAFETY no longer blocks a lane-a refill.**
+**THE REMAINING BLOCKER STANDS:** both defects sit in the E1 area an attended session holds, and
+F-1068-2/-3 are explicitly **E1-release-verdict material** — attended was live-committing on the morning
+of 2026-07-26 (`bb57af63`, 08:21). **Coordinate before dispatch**; dispatching into a live E1 verdict is
+the F-1067-1 writer-collision shape. Once attended confirms (or is verifiably quiet and the verdict is
+landed), this is the top lane-a refill.
 
 ROLE: developer · WORKDIR: repo root (or an ANY-LANE worktree once lane-a is safe)
 
