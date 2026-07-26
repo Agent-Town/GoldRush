@@ -24,7 +24,7 @@ type SeedScore = {
   contractId?: string;
 };
 
-const ARTIFACT_DIR = path.resolve('artifacts/contract-briefings');
+const ARTIFACT_DIR = path.resolve('reviews/shots-e1-briefing-truth');
 const CONTRACTS: readonly Briefing[] = [
   {
     id: 'the-claim',
@@ -151,7 +151,6 @@ async function seedProfile(page: Page, scores: readonly SeedScore[] = []): Promi
   await page.addInitScript(
     ({ profileKey, scoreKey, townKey, metaKey, storyKey, seededScores }) => {
       localStorage.clear();
-      sessionStorage.clear();
       const state: ProfileState = {
         version: 2,
         activeId: 'robin',
@@ -204,7 +203,10 @@ async function openContract(page: Page, contractId: string, seed: string): Promi
 }
 
 async function openBoard(page: Page, debug = false): Promise<void> {
-  await seedProfile(page, [{ waves: 20, secured: true, contractId: 'the-claim' }]);
+  await seedProfile(page, [
+    { waves: 20, secured: true, contractId: 'the-claim' },
+    { waves: 20, secured: true, contractId: 'e1-dry-gulch' },
+  ]);
   await page.goto('/');
   if (debug) await page.evaluate(() => history.replaceState(null, '', '/?debug'));
   await page.getByTestId('start-menu-enter-town').click();
