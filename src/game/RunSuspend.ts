@@ -16,7 +16,7 @@ import type { WrangleSuspendSnapshot } from '../systems/WrangleSystem';
 import {
   decodeHomemakerBossSuspend,
   type HomemakerBossSuspendSnapshot,
-} from '../systems/HomemakerBossSystem';
+} from '../systems/homemakerBossSuspend';
 import { Balance } from './Balance';
 import { buildableDefs, type BuildableId } from './buildables';
 import { effectiveStats } from './StatSheet';

@@ -15,7 +15,7 @@
     "mint:prizes": "node scripts/mint-prize-codes.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
     "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
-    "test:node-guards": "node --test scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/goal-tracker.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/town-spec-collection.test.mjs && node scripts/test-ticker-stats.mjs",
+    "test:node-guards": "node --test scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/goal-tracker.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/town-spec-collection.test.mjs scripts/whole-suite-collection.test.mjs && node scripts/test-ticker-stats.mjs",
     "test:stats": "node scripts/test-stats.mjs",
     "test:deploy-contract": "bash scripts/test-deploy-contract.sh",
     "test:deploy-site-contract": "bash scripts/test-deploy-site-contract.sh",
