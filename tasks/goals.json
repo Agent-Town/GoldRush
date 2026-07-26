@@ -1035,6 +1035,13 @@
        "status": "merged",
        "mergeHash": "5bad5def167bd428d308e143e68bf8bb78d64433",
        "taskFile": "DRAFT-e1-river-camp.md"
+      },
+      {
+       "id": "rf-14-release-base-path",
+       "title": "The game learns to live at agenttown.app/goldrush — owner 2026-07-26 ('agenttown.app/goldrush, would that be ok?'). GR_BASE feeds vite's base for the RELEASE build only, so absent the env the bundle is behaviourally identical to today's; public/_headers gains /goldrush/ cache rules alongside the existing ones; and the API SPLIT LAW is now enforced in code via src/app/GameApi.ts, which pins the game project's absolute origin so API traffic reaches the game project regardless of which origin serves the page. No endpoint logic touched. Drained s1078 path-scoped to bbc9b6db's 12 files — scripts/deploy.sh (793c9f2f) deliberately NOT taken per the standing F-1073-1 forbiddance. Open: F-1078-6, accounts-sync is unverifiable under the default harness (proven not-mine by cp-revert) and wants one run under playwright.accounts.config.ts before the owner's Cloudflare session",
+       "status": "merged",
+       "mergeHash": "5b61349ec3d79c6776839963f2dd360595d4cd23",
+       "taskFile": "lane-release-base-path.md"
       }
      ]
     }
