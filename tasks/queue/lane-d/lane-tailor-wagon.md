@@ -1,0 +1,7 @@
+# Task lane-tailor-wagon: THE WARDROBE moves into the wagon (LANE-D, sequenced after cosmetic-grants merges, commit prefix "feat:")
+You are Codex (worktrees/lane-d). CODEX: model=gpt-5.6-sol effort=high
+**SEQUENCED: cosmetic-grants must be MERGED (probe the skin datum on main; else STOP).**
+READ FIRST: specs/cosmetics/README.md V1 (THE LAW) · the merged grants slice (datum/picker/redeem — you RELOCATE its surface) · the town prop ring + door-interaction pattern (newsie precedent) · the shipped wagon prop body.
+## Scope: 1. THE TAILOR'S WAGON on the plaza (reuse the wagon body + prop-tailor-sign.png when present; render-side prop + door). 2. The door opens THE WARDROBE (house UI): two racks — Prospector (stock/complainant/gilded) + The Partner (heroine: stock/claim-day, name-bound, stock-fallback); equip per profile. 3. RETIRE the Settings picker (the wagon is the one surface); the reporter grant becomes THE SET (coat + neckerchief) with the clerk's line updated. 4. `heroSkin` datum joins the resolution (era-age sheets compose with skin variants only where a variant exists; claim-day exists young-only — fallback law). 5. Spec: wagon door opens wardrobe · equip persists · set-grant on report · picker absent from Settings · zero console, both projects.
+## Firewall: the wagon prop/door, wardrobe UI, datum extension, grant-set line, specs. NO report flow, NO api, NO stats.
+END: READY-FOR-GATES + wardrobe screenshots.
