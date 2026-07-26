@@ -1070,6 +1070,12 @@
        "status": "merged",
        "mergeHash": "925a0c3ba80982c2e43ccb5561126e0f24a76cae",
        "taskFile": "lane-tailor-wagon.md"
+      },
+      {
+       "id": "rf-19-blocked-storage-boot",
+       "title": "The game must boot when the browser refuses storage — F-1077-5, re-verified at authoring time by reading the file: src/game/ProfileStorage.ts rawGet():484-486 has no try/catch while its sibling browserStorage():476-482, four lines above, does. rawGet calls storage.getItem directly, so in any browser that THROWS on storage access rather than returning null (Safari 'Block All Cookies', third-party-blocked iframes, some private-window configurations) the exception escapes through readLegacyDifficulty():378-380, a plain unguarded function on the boot path. The player-facing symptom is the worst kind: the game does not degrade, it fails to START, with nothing on screen to explain why. Scope also fixes the SIBLING rawSet():488-491, which F-1077-5 never named but which is the same defect class in the same helper pair and which the existing blocked-storage stub also throws from — fixing one and leaving the other is how this returns as a second finding (the cured-defect-survives-in-the-sibling lesson). The acceptance oracle already exists: e2e/task-024-blast-aim-presets.spec.ts:130 'difficulty preset falls back to default when profile storage is blocked', whose blockedStorage stub throws from length/key/getItem/setItem; if that test was ALREADY green the task must report it as a finding rather than a success, since it would mean the test never reaches rawGet. A mutation control is mandatory: revert only the guard, record the failure verbatim, restore. FIRE-AUTHORED s1081, queued to lane-a after verifying lane/m3 is loss-free to reset — note its rehearsal/segments/e1-depth-play.mjs differs because BOTH sides added the file and main's 537-line copy supersedes the lane's 427-line draft, which must not be re-landed",
+       "status": "queued",
+       "taskFile": "lane-blocked-storage-boot.md"
       }
      ]
     }
