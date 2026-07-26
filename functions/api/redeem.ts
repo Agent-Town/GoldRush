@@ -1,7 +1,4 @@
-type KVNamespaceLike = {
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
-};
+import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
 
 type RedeemContext = {
   request: Request;
@@ -38,7 +35,7 @@ export async function onRequest(context: RedeemContext): Promise<Response> {
     if (!code) {
       return json(cors, { ok: false, error: 'bad_stub', message: 'The clerk turns the stub over. “This one is no county prize.”' });
     }
-    if (!(await bumpCounter(kv, `redeem:ratelimit:${await clientIpHash(context.request)}`))) {
+    if (!(await bumpCounter(kv, `redeem:ratelimit:${await clientIpHash(context.request)}`, MAX_REDEEMS_PER_IP, RATE_TTL_SECONDS))) {
       return json(cors, { ok: false, error: 'rate_limited', message: 'The prize desk has your stack already. Try again after the next bell.' }, 429);
     }
     const stored = await kv.get(`prize:${code}`);
@@ -93,20 +90,6 @@ function normalizeCode(value: unknown): string | null {
   if (typeof value !== 'string') return null;
   const code = value.trim().toUpperCase();
   return CODE_PATTERN.test(code) ? code : null;
-}
-
-async function bumpCounter(kv: KVNamespaceLike, key: string): Promise<boolean> {
-  const current = Number(await kv.get(key));
-  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
-  if (count >= MAX_REDEEMS_PER_IP) return false;
-  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
-  return true;
-}
-
-async function clientIpHash(request: Request): Promise<string> {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() ?? 'local';
-  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
-  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 32);
 }
 
 function corsHeaders(request: Request): Record<string, string> | null {

@@ -1,12 +1,12 @@
+import { bumpCounter, clientIpHash, type KVNamespaceLike as RateLimitKVNamespaceLike } from './_ratelimit';
+
 type KVListResult = {
   keys: { name: string }[];
   list_complete: boolean;
   cursor?: string;
 };
 
-type KVNamespaceLike = {
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
+type KVNamespaceLike = RateLimitKVNamespaceLike & {
   list(options?: { prefix?: string; cursor?: string }): Promise<KVListResult>;
 };
 
@@ -73,7 +73,7 @@ export async function onRequest(context: TelemetryContext): Promise<Response> {
     if (!payload) return error(cors, 400, 'bad_payload', 'Telemetry payload not accepted.');
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
     if (!kv) return json(cors, { ok: true, stored: false });
-    const ipAllowed = await bumpCounter(kv, `telemetry:ratelimit:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP);
+    const ipAllowed = await bumpCounter(kv, `telemetry:ratelimit:${await clientIpHash(context.request)}`, MAX_REQUESTS_PER_IP, RATE_TTL_SECONDS);
     if (!ipAllowed) return error(cors, 429, 'rate_limited', 'The wire is busy. Try again later.');
 
     const duplicate = await storeAggregate(kv, payload);
@@ -120,14 +120,6 @@ async function storeAggregate(kv: KVNamespaceLike, payload: TelemetryPayload): P
 async function bump(kv: KVNamespaceLike, key: string): Promise<void> {
   const current = Number(await kv.get(key));
   await kv.put(key, String((Number.isFinite(current) && current > 0 ? current : 0) + 1));
-}
-
-async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number): Promise<boolean> {
-  const current = Number(await kv.get(key));
-  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
-  if (count >= limit) return false;
-  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
-  return true;
 }
 
 async function maxValue(kv: KVNamespaceLike, key: string, value: number): Promise<void> {
@@ -213,12 +205,6 @@ async function digestPayload(payload: TelemetryPayload): Promise<string> {
   ].join(':');
   const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
   return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
-}
-
-async function clientIpHash(request: Request): Promise<string> {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() ?? 'local';
-  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
-  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 32);
 }
 
 function hasIdentifierKey(value: unknown): boolean {

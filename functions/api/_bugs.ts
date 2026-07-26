@@ -1,12 +1,12 @@
+import { bumpCounter, clientIpHash, type KVNamespaceLike as RateLimitKVNamespaceLike } from './_ratelimit';
+
 type KVListResult = {
   keys: { name: string }[];
   list_complete: boolean;
   cursor?: string;
 };
 
-type KVNamespaceLike = {
-  get(key: string): Promise<string | null>;
-  put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
+type KVNamespaceLike = RateLimitKVNamespaceLike & {
   list(options?: { prefix?: string; cursor?: string; limit?: number }): Promise<KVListResult>;
 };
 
@@ -57,7 +57,7 @@ export async function postBug(context: BugsContext): Promise<Response> {
     const report = validateReport(await readJson(context.request));
     const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
     if (!kv) return error(cors, 503, 'office_closed', 'The complaints ledger is off the desk. Try again later.');
-    if (!(await bumpCounter(kv, `bug:ratelimit:${await clientIpHash(context.request)}`))) {
+    if (!(await bumpCounter(kv, `bug:ratelimit:${await clientIpHash(context.request)}`, MAX_REPORTS_PER_IP, RATE_TTL_SECONDS))) {
       return error(cors, 429, 'rate_limited', 'The complaints desk has your stack already. Try again after the next bell.');
     }
 
@@ -179,20 +179,6 @@ async function readJson(request: Request): Promise<JsonRecord> {
 function authorized(context: BugsContext): boolean {
   const token = new URL(context.request.url).searchParams.get('token');
   return Boolean(context.env.BUG_OFFICE_TOKEN && token === context.env.BUG_OFFICE_TOKEN);
-}
-
-async function bumpCounter(kv: KVNamespaceLike, key: string): Promise<boolean> {
-  const current = Number(await kv.get(key));
-  const count = Number.isFinite(current) && current > 0 ? Math.trunc(current) : 0;
-  if (count >= MAX_REPORTS_PER_IP) return false;
-  await kv.put(key, String(count + 1), { expirationTtl: RATE_TTL_SECONDS });
-  return true;
-}
-
-async function clientIpHash(request: Request): Promise<string> {
-  const ip = request.headers.get('CF-Connecting-IP') ?? request.headers.get('X-Forwarded-For')?.split(',')[0]?.trim() ?? 'local';
-  const hash = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(ip));
-  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('').slice(0, 32);
 }
 
 function parseStoredReport(value: string | null): BugReport | null {

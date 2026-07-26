@@ -1,3 +1,5 @@
+import { bumpCounter } from './_ratelimit';
+
 type KVListResult = {
   keys: { name: string }[];
   list_complete: boolean;
@@ -92,8 +94,8 @@ export async function requestCode(context: AccountsContext): Promise<Response> {
 
     const emailHash = await sha256Hex(email);
     const ip = clientIp(request);
-    const emailAllowed = await bumpCounter(env.ACCOUNTS, `ratelimit:email:${emailHash}`, MAX_REQUESTS_PER_EMAIL);
-    const ipAllowed = await bumpCounter(env.ACCOUNTS, `ratelimit:${ip}`, MAX_REQUESTS_PER_IP);
+    const emailAllowed = await bumpCounter(env.ACCOUNTS, `ratelimit:email:${emailHash}`, MAX_REQUESTS_PER_EMAIL, RATE_TTL_SECONDS);
+    const ipAllowed = await bumpCounter(env.ACCOUNTS, `ratelimit:${ip}`, MAX_REQUESTS_PER_IP, RATE_TTL_SECONDS);
     if (!emailAllowed || !ipAllowed) return error(cors, 429, 'rate_limited', 'Try again later.');
 
     const code = sixDigitCode();
@@ -532,14 +534,6 @@ function parseCode(raw: string | null): CodeRecord | null {
   } catch {
     return null;
   }
-}
-
-async function bumpCounter(kv: KVNamespaceLike, key: string, limit: number): Promise<boolean> {
-  // ponytail: fixed-window KV counter; Durable Objects can replace this if public abuse becomes real.
-  const current = numberOrZero(await kv.get(key));
-  if (current >= limit) return false;
-  await kv.put(key, String(current + 1), { expirationTtl: RATE_TTL_SECONDS });
-  return true;
 }
 
 async function deleteSessionsForAccount(kv: KVNamespaceLike, accountId: string): Promise<void> {
