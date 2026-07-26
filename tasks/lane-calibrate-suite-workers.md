@@ -49,12 +49,14 @@ Define this check (run it as one command, and paste its output every time):
 
 ```sh
 sysctl -n vm.loadavg
-ps -Ao command= | grep -c "[C]hrome for Testing"
-ps -Ao pid=,etime=,time=,command= | grep "[p]laywright test"
+ps -Ao command= | grep -c "[C]hrome for Testing" || true
+ps -Ao pid=,etime=,time=,command= | grep "[p]laywright test" || true
 ```
 
 **QUIESCENT means all three of:** 1-minute loadavg **≤ 4.0** · zero `Chrome for Testing` processes · no foreign **LIVE** `playwright test` process.
 
+> ⚠️ **The `|| true` on both lines is load-bearing, not decoration: `grep -c` exits `1` when the count is ZERO — i.e. exactly on the quiescent box you are hoping for — so without it a `set -e` shell aborts the check at the moment it succeeds.** (Measured s1104: the bare form threw with stdout `0`.)
+>
 > **`pgrep -fc` does NOT work on this host** (macOS `pgrep` has no `-c`; it prints usage instead of a count, which reads as junk rather than a number). The `ps`+`grep -c` form above is the portable one; the `[C]`/`[p]` bracket trick stops the grep from matching itself. **Corrected s1104 after the `20260727-044706` dispatch hit exactly this.**
 >
 > ⚠️ **"Foreign playwright process" means a LIVE one — judge by CPU, never by existence (F-1104-2).** The third column above is cumulative CPU time. The `20260727-044706` dispatch STOPped on two "foreign" processes that were **orphaned corpses**: started Jul 18, `ppid 1`, **0:00.26 and 0:00.54 total CPU with zero growth across 45 s**. Because the gate tested for existence, they would have STOPped this calibration on *every* future dispatch, forever. **Take two samples ≥45 s apart: if a process's CPU time has not moved, it is dead — say so, discount it, and continue.** (Those two were reaped in s1104, so the board should be clear; this rule is here for the next corpse.) Live processes still mean STOP — you still never kill anything you did not start.
