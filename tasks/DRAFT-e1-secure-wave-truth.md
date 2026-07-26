@@ -1,6 +1,9 @@
 # DRAFT — E1 SECURE-WAVE TRUTH: two release maps must state how they are won
-STATUS: DRAFT (authored by the E1-depth review session, 2026-07-25). Not queued. Owner/attended to ratify the copy before it runs.
+STATUS: DRAFT (authored by the E1-depth review session, 2026-07-25). Not queued. RATIFIED-SCOPED by the owner ruling below — run it.
 WHY: `reviews/e1-gameplay-depth.md` F-E1-1 (✓ VERIFIED at source). Instance of register class **MQ-7** (player-facing promises vs engine truth) — do NOT re-file the class.
+
+
+## OWNER RULING (2026-07-26, verbatim — SCOPE LAW for this task): "The later maps can end at 20 and 25 waves. It is more about helping the player get a quick win first." → the WAVE NUMBERS STAND (Dry Gulch 20, Twin Banks 25 — no renumbering, no Balance change); the fix is PURE CLARITY: each map STATES its win beat where a stranger sees it (the card GOALS line names the secure wave plainly; the in-run HUD/pause shows "secure at wave N — you are at M" per the pause-goal precedent; the first-win framing stays the Claim's job). Smallest change that makes the win legible.
 
 ## THE EVIDENCE (exact datum)
 - `src/game/Game.ts:4532` — `secureWaveForRun()` returns `this.activeContract.twist.secureWave ?? Balance.run.secureWave`.
