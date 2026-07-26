@@ -1418,7 +1418,8 @@ export class TownScene {
     this.emitBoardStorySignals();
     this.boardOpen = true;
     this.board.hidden = false;
-    this.board.querySelector<HTMLButtonElement>('[data-contract-launch]:not(:disabled), [data-contract-close]')?.focus({ preventScroll: true });
+    (this.board.querySelector<HTMLButtonElement>('[data-contract-launch]:not(:disabled)') ??
+      this.board.querySelector<HTMLButtonElement>('[data-contract-close]'))?.focus({ preventScroll: true });
     this.publishDiagnostics();
   }
 
