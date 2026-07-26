@@ -36,7 +36,7 @@ s1103's rider and s1104 both confirmed #1 red on **both projects**, and s1104 re
 
 **Why `tsc` never caught it:** `BOARD_CONTRACTS` at `e2e/town-t3-board.spec.ts:25-30` is a **spec-local literal**, not an import from `src/`. Its `artKey` field is a private frozen copy of the retired contract, so deleting the real field from `src/` would never have reddened the type-check.
 
-**THE DEEPER POINT, WHICH IS THE REAL WORK HERE:** an assertion that all 41 cards emit the *same constant* distinguishes no card from any other — it is nearly worthless as a guard. The Adoption's actually-testable claim is *"one render path, one size, with a documented fallback chain"*, which lives in the `imageUrl` resolution at `TownScene.ts:2530-2534`: engraved plate (`plate-contract-<id>.png`, with a legacy `plate-contract-<id-minus-era-prefix>.png` alias) → interim board-card render → **`plate-contract-the-claim.png` as the final fallback**. That chain is per-card and player-visible. Scope item 3 moves the guard there.
+**THE PER-CARD GUARD ALREADY EXISTS — DO NOT WRITE A SECOND ONE.** An assertion that all 41 cards emit the *same constant* distinguishes no card from any other, so the obvious instinct is to add a per-card image-src check. **s1105 drafted exactly that, then found `e2e/board-card-images.spec.ts` already does it, and does it better:** it walks **all 10 epochs and asserts all 41 contracts** (`expect(EPOCHS.flatMap(e => e.contracts)).toHaveLength(41)`), reads each card's `img` src via `contract-art-<id> img`, asserts every non-`the-claim` card's src **differs from `the-claim`'s**, additionally pins `contract-art-e2-trestle` to `/e2-trestle/`, and requires zero console errors. That is strictly stronger than any spot-check you could add here. **So the per-card fallback chain at `TownScene.ts:2530-2534` (engraved plate → interim board-card → `plate-contract-the-claim.png`) is already guarded; your job is only to stop three stale assertions from demanding a retired contract.** Leave a one-line comment at each fixed site pointing to `board-card-images.spec.ts` so the next reader does not re-draft the same redundant check.
 
 ## PRE-FLIGHT — verify by CONTENT, and run the premise checks AFTER the reset
 
@@ -48,12 +48,9 @@ s1103's rider and s1104 both confirmed #1 red on **both projects**, and s1104 re
 
 ## SCOPE (numbered; each item is testable)
 
-1. **`e2e/town-t3-board.spec.ts`** — at `:203`, assert the post-Adoption contract: `data-contract-art-key` is **`'plate'`** for every contract. Then **delete the now-dead `artKey` field** from the `BOARD_CONTRACTS` literal (`:25-30`, 5 entries) and from any type annotation on it, so the frozen fixture stops advertising a retired contract to the next reader. Leave `id` and `flavor` exactly as they are — they are still asserted.
+1. **`e2e/town-t3-board.spec.ts`** — at `:203`, assert the post-Adoption contract: `data-contract-art-key` is **`'plate'`** for every contract. Then **delete the now-dead `artKey` field** from the `BOARD_CONTRACTS` literal, which spans **`:25-35` and holds SIX entries** — five single-line (`the-claim`, `e1-dry-gulch`, `e1-night-shift`, `e1-twin-banks`, `e1-baron`) plus a **multi-line sixth, `e2-hill-mine` at `:31-35`**. Do not stop at the five single-line ones. Leave `id` and `flavor` exactly as they are — both are still asserted, and the literal is `as const`, so keep that.
 2. **`e2e/e2-pressure-garden.spec.ts:73` and `e2e/e2-trestle.spec.ts:73`** — same change, `'contract-the-claim'` → `'plate'`. Do not touch anything else in these two files.
-3. **Add the guard that the constant cannot give you** (this is the point of the task, not a nice-to-have). In `e2e/town-t3-board.spec.ts`, extend the existing per-contract loop to assert the **image** rather than only the wrapper: read `contract-art-<id> img` and assert its `src`
-   - is present and non-empty, **and**
-   - **differs between at least two different contract ids** in the same case — proving the one render path still resolves per-card art rather than serving one image to all 41 cards.
-   Keep it resilient to Vite's hashed asset URLs: match on the **filename stem** (e.g. `/plate-contract-|board-cards\//`), never a full path or a hash. If a contract legitimately falls through to the `the-claim` fallback, that is allowed — the assertion is about *at least two distinct srcs across the set*, not about every card being unique.
+3. **Add NO new per-card image assertion** — see WHY. `e2e/board-card-images.spec.ts` already covers all 41 cards and is stronger than anything added here would be. Instead leave a one-line comment at each of the three fixed sites, e.g. *"one render path since The Adoption (3a007ea7); per-card art is guarded by board-card-images.spec.ts"*. **Duplicating that coverage is a scope violation, not diligence.**
 4. **Do not modify `src/`.** If you believe the renderer is wrong, **STOP and report** — reversing The Adoption is an owner decision (§7.3), not a lane's.
 
 ## FIREWALL
@@ -70,9 +67,11 @@ Every path below was `ls`-verified by s1105 at authoring time. A positional arg 
 ```
 npx tsc --noEmit
 npm run build
-npx playwright test e2e/town-t3-board.spec.ts e2e/e2-trestle.spec.ts e2e/e2-pressure-garden.spec.ts --project=desktop-chrome --workers=1 --reporter=line
-npx playwright test e2e/town-t3-board.spec.ts e2e/e2-trestle.spec.ts e2e/e2-pressure-garden.spec.ts --project=mobile-chrome --workers=1 --reporter=line
+npx playwright test e2e/town-t3-board.spec.ts e2e/e2-trestle.spec.ts e2e/e2-pressure-garden.spec.ts e2e/board-card-images.spec.ts --project=desktop-chrome --workers=1 --reporter=line
+npx playwright test e2e/town-t3-board.spec.ts e2e/e2-trestle.spec.ts e2e/e2-pressure-garden.spec.ts e2e/board-card-images.spec.ts --project=mobile-chrome --workers=1 --reporter=line
 ```
+
+`board-card-images.spec.ts` is in the battery as the **adjacency that matters**: it is the real per-card art guard, it must stay green, and its greenness is what proves the DOM was right all along. ⚠️ **If it is ALREADY red before your change, say so and do not try to fix it** — it holds `hold(page,'KeyA',850)` and `hold(page,'KeyW',850)`, i.e. the wall-clock-race class F-1104-3/F-1104-6 flagged, and a flake there is a separate owed finding (poll-to-arrival), not yours.
 
 - **Expected collected count is non-zero for all three files on BOTH projects.** If any file collects 0, say so loudly — that is the F-1094-1 silent-zero class, and it means the run proved nothing.
 - Report the **before** numbers too: run the desktop command **once on the unmodified tree first** and record the failures, so the fix has a measured baseline rather than an assumed one.
