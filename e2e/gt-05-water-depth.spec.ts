@@ -330,7 +330,7 @@ test('flat wadeable river applies enemy water speed', async ({ page }, testInfo)
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('classic claim keeps legacy water behavior while carrying equivalent depth data', async ({ browser, page }, testInfo) => {
+test('classic claim keeps deep water impassable while carrying equivalent depth data', async ({ browser, page }, testInfo) => {
   test.setTimeout(45_000);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   const errors = await openClassic(page, `gt-05-classic-${testInfo.project.name}`);
@@ -347,9 +347,9 @@ test('classic claim keeps legacy water behavior while carrying equivalent depth 
       territoryRingLaneBias: 0.75,
     },
   });
-  expect(snapshot.tileWater).toMatchObject({ id: 'frontier-river-depth', heroCanWadeDeep: true });
+  expect(snapshot.tileWater).toMatchObject({ id: 'frontier-river-depth', heroCanWadeDeep: false });
   expect(snapshot.legacySamples).toEqual({
-    river: { walkable: true, speedMul: 0.55, zone: 'river' },
+    river: { walkable: false, speedMul: 0, zone: 'river' },
     ford: { walkable: true, speedMul: 0.85, zone: 'ford' },
     shallows: { walkable: true, speedMul: 0.8, zone: 'shallows' },
   });

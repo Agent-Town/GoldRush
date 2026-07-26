@@ -85,23 +85,17 @@ async function armRiverWatch(page: Page): Promise<void> {
   });
 }
 
-async function armWadeSampler(page: Page): Promise<void> {
+async function armHeroRiverWatch(page: Page): Promise<void> {
   await page.evaluate(() => {
     const w = window as unknown as {
-      __task025Wade?: { riverSamples: number; speedMul: number; minSpeed: number; maxSpeed: number };
+      __task025HeroRiver?: { riverSamples: number };
     };
-    w.__task025Wade = { riverSamples: 0, speedMul: 0, minSpeed: Number.POSITIVE_INFINITY, maxSpeed: 0 };
+    w.__task025HeroRiver = { riverSamples: 0 };
     const tick = () => {
-      const sampler = w.__task025Wade;
+      const sampler = w.__task025HeroRiver;
       const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
       if (!sampler || !diagnostics) return;
-      if (diagnostics.terrain.playerZone === 'river') {
-        const speed = diagnostics.speed ?? 0;
-        sampler.riverSamples += 1;
-        sampler.speedMul = diagnostics.terrain.probes.river.speedMul;
-        sampler.minSpeed = Math.min(sampler.minSpeed, speed);
-        sampler.maxSpeed = Math.max(sampler.maxSpeed, speed);
-      }
+      if (diagnostics.terrain.playerZone === 'river') sampler.riverSamples += 1;
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
@@ -142,50 +136,29 @@ test('scheduled waves never place enemies in deep river over three waves', async
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('hero still wades but wet powder disables and then restores weapons', async ({ page }) => {
+test('hero stops in the shallows and keeps weapons armed at the deep channel', async ({ page }) => {
   const errors = await openGame(page, '?debug&timescale=8&nowaves&nokill&nolevel&nopause&seed=task-025-wet');
   await setBalance(page, 'enemy.speed', 0);
 
   await teleport(page, -12, -7);
-  await armWadeSampler(page);
+  await armHeroRiverWatch(page);
   await page.keyboard.down('ArrowDown');
-  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone), { timeout: 8_000 }).toBe('river');
-  await expect
-    .poll(() => page.evaluate(() => (window as unknown as { __task025Wade?: { minSpeed: number } }).__task025Wade?.minSpeed ?? 999), {
-      timeout: 8_000,
-    })
-    .toBeLessThan(Balance.hero.speed * 0.55 + 0.25);
-  const wade = await page.evaluate(() => (window as unknown as {
-    __task025Wade?: { riverSamples: number; speedMul: number; minSpeed: number; maxSpeed: number };
-  }).__task025Wade);
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone), { timeout: 8_000 }).toBe('shallows');
+  await page.waitForTimeout(500);
   await page.keyboard.up('ArrowDown');
-  expect(wade?.riverSamples ?? 0).toBeGreaterThan(0);
-  expect(wade?.speedMul).toBe(0.55);
-  expect(wade?.maxSpeed ?? 0).toBeGreaterThan(Balance.hero.speed * 0.42);
-  expect(wade?.minSpeed ?? 999).toBeLessThan(Balance.hero.speed * (wade?.speedMul ?? 0) + 0.25);
-
-  await page.evaluate(() => window.__GR_TEST__?.toggleWeapon());
-  await page.evaluate(() => window.__GR_TEST__?.setBlastAim(-12, 4));
-  await teleport(page, -12, 0);
-  await expect
-    .poll(() => page.evaluate(() => document.querySelector('#game-canvas')?.classList.contains('aim-reticle--disarmed') ?? false), {
-      timeout: 8_000,
-    })
-    .toBe(true);
-  await page.evaluate(() => window.__GR_TEST__?.toggleWeapon());
-  await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(-12, 8))).resolves.toBe(true);
-  await waitForSim(page, 1);
-  const deep = await page.evaluate(() => ({
-    bolts: window.__THREE_GAME_DIAGNOSTICS__?.boltsAlive ?? -1,
+  const boundary = await page.evaluate(() => ({
+    riverSamples: (window as unknown as { __task025HeroRiver?: { riverSamples: number } }).__task025HeroRiver?.riverSamples ?? 0,
+    zone: window.__THREE_GAME_DIAGNOSTICS__?.terrain.playerZone,
+    deep: window.__GR_TEST__?.terrainSample(-12, 0),
     disarmed: window.__GR_TEST__?.state().arsenal.disarmed,
     reticleDisarmed: document.querySelector('#game-canvas')?.classList.contains('aim-reticle--disarmed') ?? false,
   }));
-  expect(deep.bolts).toBe(0);
-  expect(deep.disarmed).toBe(true);
-  await expect(page.getByTestId('hud-wave')).toContainText(/Wet powder/);
-  expect(deep.reticleDisarmed).toBe(true);
+  expect(boundary.riverSamples).toBe(0);
+  expect(boundary.zone).toBe('shallows');
+  expect(boundary.deep).toMatchObject({ walkable: false, zone: 'river', waterClass: 'deep' });
+  expect(boundary.disarmed).toBe(false);
+  expect(boundary.reticleDisarmed).toBe(false);
 
-  await teleport(page, -12, 7);
   await page.evaluate(() => {
     const w = window as unknown as { __task025MaxBolts?: number };
     w.__task025MaxBolts = 0;
@@ -195,6 +168,7 @@ test('hero still wades but wet powder disables and then restores weapons', async
     };
     requestAnimationFrame(tick);
   });
+  await expect(page.evaluate(() => window.__GR_TEST__?.spawnEnemyAt(-12, -8))).resolves.toBe(true);
   await expect
     .poll(() => page.evaluate(() => (window as unknown as { __task025MaxBolts?: number }).__task025MaxBolts ?? 0), { timeout: 8_000 })
     .toBeGreaterThan(0);
