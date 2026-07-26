@@ -1042,6 +1042,13 @@
        "status": "merged",
        "mergeHash": "5b61349ec3d79c6776839963f2dd360595d4cd23",
        "taskFile": "lane-release-base-path.md"
+      },
+      {
+       "id": "rf-15-cosmetic-grants",
+       "title": "The county pays honest eyes — filing a bug grants and equips The Complainant's Coat in-world, and a minted prize stub redeems The Gilded Coat through a new Pages Function (functions/api/redeem.ts). Skins are profile data bound by NAME with stock fallback (placeholder-first law), so the grant works before any art exists. Drained s1079 as the lane tip's OWN delta (99baab74..fadbe5bd) rather than the branch: the whole-branch view carries scripts/deploy.sh, FORBIDDEN per F-1073-1, and grafting the tip kept it out. ComplaintDesk.ts needed a real 3-way — the lane predates s1078's API SPLIT LAW, so main's gameApiUrl routing was preserved on /api/bug-report AND extended to the lane's new /api/redeem call; a blind copy would have silently reverted a merged law. Gates: tsc 0, build 1.03s, own spec 8/8 both projects with console/page assertions inside the spec, 42/42 adjacent. F-1079-1 (vp-02 10 red) proven PRE-EXISTING by cp-reverting SpriteAnimator.ts to main — identical failure set and runtime — with the root cause newly pinned as the -f- female hero sheet vs stale male-named assertions. Open: F-1079-2 (mint errors escape the catch via plain `return`), F-1079-3 (kv.delete burns a stub before the client can keep it — unrecoverable), F-1079-4 (no rate limit, unlike every sibling endpoint) — all three queued as tasks/redeem-harden.md and ALL WANT LANDING BEFORE ANY REAL CODE IS MINTED. F-1079-5: both coats render as stock until art-batch-prospector-skins lands. F-1079-6: main is transiently in breach of the RATIFIED-V1 cosmetics law ('Settings keeps no picker; the wagon IS the surface') — closed by lane-tailor-wagon, which this merge unblocked and which was re-queued the same fire",
+       "status": "merged",
+       "mergeHash": "52fa15ad4027c6940aaee688c36c20fdab48e71c",
+       "taskFile": "lane-cosmetic-grants.md"
       }
      ]
     }
