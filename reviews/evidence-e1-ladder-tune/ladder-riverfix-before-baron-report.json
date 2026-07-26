@@ -1,0 +1,334 @@
+{
+  "label": "ladder-riverfix-before-baron",
+  "contract": "e1-baron",
+  "base": "http://127.0.0.1:5258",
+  "url": "/?debug&contract=e1-baron&timescale=2&seed=e1-depth-baron2",
+  "timescale": 2,
+  "viewport": {
+    "width": 1280,
+    "height": 720
+  },
+  "difficulty": "trail",
+  "secureWave": null,
+  "startGold": 0,
+  "firstRun": {
+    "sawStartMenu": false,
+    "sawGreenhornOffer": false,
+    "greenhornCopy": null,
+    "trailGuideBeats": []
+  },
+  "boot": {
+    "contract": "e1-baron",
+    "difficulty": "trail",
+    "secureWave": null,
+    "briefing": "The Contract Begin The Claim-Jumper Baron A brass-bannered bully compresses the waves and waits at the twentieth horn. Goals The Baron rides at wave 20. Break his Rocket Cart. Rules His outfit rides hot: waves come 15% faster.Taunts warn you before his banner appears.Turn back the Baron for the medal and double science.",
+    "buildables": [
+      {
+        "id": "sentry_beacon",
+        "cost": 25,
+        "max": 6
+      },
+      {
+        "id": "palisade",
+        "cost": 10,
+        "max": 48
+      },
+      {
+        "id": "sluice",
+        "cost": 40,
+        "max": 3
+      },
+      {
+        "id": "stockpile",
+        "cost": 60,
+        "max": 2
+      },
+      {
+        "id": "turret",
+        "cost": 50,
+        "max": 4
+      },
+      {
+        "id": "assay_office",
+        "cost": 80,
+        "max": 1
+      }
+    ],
+    "startGold": 0
+  },
+  "outcome": "dead",
+  "wallSeconds": 52,
+  "wavesReached": 3,
+  "sawRush": false,
+  "fpsEstimate": 120,
+  "driver": {
+    "ticks": 119,
+    "kiteTicks": 21,
+    "panTicks": 8,
+    "pauseRecoveries": 5
+  },
+  "perWave": [
+    {
+      "wave": 0,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 0,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "at": {
+        "x": 0,
+        "z": 12
+      },
+      "seamAt": "-9,7 | 18,-7 | -22,-7",
+      "builds": "none",
+      "wallSeconds": 6,
+      "peakEnemies": 4,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 13
+      }
+    },
+    {
+      "wave": 1,
+      "hpIn": 100,
+      "maxHp": 100,
+      "goldIn": 15,
+      "level": 1,
+      "panned": 25,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "at": {
+        "x": -9.3,
+        "z": 7.3
+      },
+      "seamAt": "-9,7 | 18,-7 | -22,-7",
+      "builds": "palisadex1",
+      "wallSeconds": 13,
+      "peakEnemies": 7,
+      "idleFrac": 0,
+      "zones": {
+        "bank": 2,
+        "shallows": 33
+      }
+    },
+    {
+      "wave": 2,
+      "hpIn": 92,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 1,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "at": {
+        "x": -11.2,
+        "z": 5.2
+      },
+      "seamAt": "-2,-6 | 18,-7 | -22,-7",
+      "builds": "palisadex3",
+      "wallSeconds": 13,
+      "peakEnemies": 9,
+      "idleFrac": 0,
+      "zones": {
+        "shallows": 42
+      }
+    },
+    {
+      "wave": 3,
+      "hpIn": 36,
+      "maxHp": 100,
+      "goldIn": 0,
+      "level": 2,
+      "panned": 30,
+      "sluiced": 0,
+      "seamsUp": 3,
+      "at": {
+        "x": -31.5,
+        "z": 5.2
+      },
+      "seamAt": "-2,-6 | 18,-7 | -22,-7",
+      "builds": "palisadex3",
+      "wallSeconds": 10,
+      "peakEnemies": 14,
+      "idleFrac": 0,
+      "zones": {
+        "shallows": 29
+      }
+    }
+  ],
+  "upgradesTaken": [
+    {
+      "wave": 2,
+      "level": 2,
+      "offer": [
+        "prospectors_luck",
+        "heavy_spark",
+        "long_resonator"
+      ],
+      "took": "heavy_spark"
+    },
+    {
+      "wave": 3,
+      "level": 3,
+      "offer": [
+        "double_tap_coil",
+        "spring_heels",
+        "pan_legend"
+      ],
+      "took": "double_tap_coil"
+    }
+  ],
+  "buildLog": [
+    {
+      "wave": 0,
+      "id": "palisade",
+      "built": true,
+      "before": 0,
+      "after": 1,
+      "goldBefore": 20,
+      "goldAfter": 10,
+      "at": {
+        "valid": true,
+        "x": -7,
+        "z": 9
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 1,
+      "after": 2,
+      "goldBefore": 20,
+      "goldAfter": 10,
+      "at": {
+        "valid": true,
+        "x": -11,
+        "z": 8
+      }
+    },
+    {
+      "wave": 1,
+      "id": "palisade",
+      "built": true,
+      "before": 2,
+      "after": 3,
+      "goldBefore": 10,
+      "goldAfter": 0,
+      "at": {
+        "valid": true,
+        "x": -13,
+        "z": 8
+      }
+    }
+  ],
+  "announcements": [
+    {
+      "wave": 0,
+      "text": "the Prospector: follows and observes. Chip by weapon; claim wins grow it.",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Claim Jumpers from the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 0,
+      "text": "Beacon coils hum eastward!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "North bank shadows want the gold!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Claim Jumpers from the east ridge!",
+      "kind": "wave"
+    },
+    {
+      "wave": 1,
+      "text": "Stake lights on the south bank!",
+      "kind": "wave"
+    },
+    {
+      "wave": 2,
+      "text": "Hold the east ridge for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 3,
+      "text": "Hold the north bank for the assay!",
+      "kind": "wave"
+    },
+    {
+      "wave": 3,
+      "text": "East ridge dust is moving!",
+      "kind": "wave"
+    }
+  ],
+  "end": {
+    "run": {
+      "secured": false,
+      "rush": false,
+      "lastRunEndedReason": "death",
+      "meta": {
+        "version": 1,
+        "tracks": {
+          "territory": 0,
+          "science": 0,
+          "hero": 0,
+          "agent": 0
+        }
+      },
+      "victoryPayout": null,
+      "secureWaveReached": null,
+      "securedResultAt": null,
+      "suspend": {
+        "hasSuspend": false,
+        "restored": false,
+        "restoredWave": null,
+        "lastWriteAt": null,
+        "lastWriteMs": null,
+        "sizeBytes": 0
+      }
+    },
+    "wave": 3,
+    "gold": 0,
+    "level": 3,
+    "kills": 45,
+    "xpAudit": {
+      "deaths": 45,
+      "motesSpawned": 45,
+      "motesCollected": 11,
+      "motesCollectedXp": 44,
+      "overflowBanked": 0,
+      "expiredBanked": 0,
+      "autoBanked": 0,
+      "dropped": 0,
+      "xpAwarded": 44,
+      "xpPerKill": 4,
+      "motePool": 64,
+      "expiryBanks": true
+    },
+    "stacks": {
+      "heavy_spark": 1,
+      "double_tap_coil": 1
+    },
+    "arsenal": {
+      "turretKills": 0,
+      "blastKills": 0,
+      "toggles": 2
+    },
+    "office": null,
+    "deathOverlay": " The claim went quiet. Run Ledger The claim was overrun. The gold remembers. Time Held 01:37 Claim Jumpers Turned Back 45 Waves Survived 3 Gold Panned 30 Gold Sluiced 0 Stolen / Reclaimed 0 / 0 Spent 30 Beacons Built 0 Buildings Built / Lost / Repaired 3 / 0 / 0 Spark / Blast Damage 1360 / 0 Blast T"
+  },
+  "errors": {
+    "console": [],
+    "page": []
+  }
+}

@@ -2,6 +2,10 @@ import * as THREE from 'three';
 
 const WAVE_SPAWN_EDGES = ['north', 'south', 'east', 'west'] as const;
 const TERRITORY_RING_SIDES = [-1, 1] as const;
+const ENTRY_WAVE_DAMAGE_SCALE: Readonly<Record<string, readonly number[]>> = {
+  'e1-night-shift': [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5, 0.5],
+  'e1-baron': [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.5, 0.5, 0.5, 0.5],
+};
 
 export const Balance = {
   releaseFrontier: 'epoch-1-frontier' as string | false | undefined,
@@ -82,6 +86,7 @@ export const Balance = {
     spawnEdges: WAVE_SPAWN_EDGES,
     territoryRingBiasWaves: 3,
     territoryRingLaneBias: 0.75,
+    entryDamageScale: ENTRY_WAVE_DAMAGE_SCALE,
     hpScalePerWave: 1.115, // task-047 late valve; old 1.12.
     speedScalePerWave: 1.02,
     speedScaleCap: 1.3,

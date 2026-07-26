@@ -362,7 +362,7 @@ export class WaveSystem {
       if (this.enemies.activeCount >= this.enemies.capacity) break;
       const edge = this.spawnEdges[i % Math.max(1, this.spawnEdges.length)] ?? 'west';
       const wave = Math.max(1, this.wave);
-      if (this.spawnAt(edge, i, wave, count, false, false, this.variantOptionsFor(wave, edge, i), false)) spawned += 1;
+      if (this.spawnAt(edge, i, wave, count, false, false, this.variantOptionsFor(wave, edge, i), false, false)) spawned += 1;
     }
     return spawned;
   }
@@ -484,6 +484,7 @@ export class WaveSystem {
     wrecker = false,
     options: SpawnPackOptions = {},
     respectAliveCap = true,
+    applyEntryDamageScale = true,
   ): boolean {
     if (respectAliveCap && Balance.waves.aliveCap - this.enemies.activeCount <= 0) return false;
 
@@ -509,7 +510,18 @@ export class WaveSystem {
       this.spawnPosition.z = this.clampSpawn(this.spawnPosition.z);
     }
     this.keepSpawnOutOfDeepWater(edge);
-    return this.spawnAtPosition(wave, respectAliveCap, { edge, thief, wrecker, ...options });
+    const entryDamageScale = applyEntryDamageScale
+      ? Balance.waves.entryDamageScale[this.contract.id]?.[wave]
+      : undefined;
+    return this.spawnAtPosition(wave, respectAliveCap, {
+      edge,
+      thief,
+      wrecker,
+      ...options,
+      contactDamageScale: entryDamageScale === undefined
+        ? options.contactDamageScale
+        : (options.contactDamageScale ?? 1) * entryDamageScale,
+    });
   }
 
   private spawnAtPosition(
