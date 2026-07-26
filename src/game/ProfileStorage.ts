@@ -482,12 +482,20 @@ function browserStorage(): Storage | undefined {
 }
 
 function rawGet(storage: Pick<Storage, 'getItem'>, key: string): string | null {
-  return nativeStorage.getItem && isNativeStorage(storage) ? nativeStorage.getItem.call(storage, key) : storage.getItem(key);
+  try {
+    return nativeStorage.getItem && isNativeStorage(storage) ? nativeStorage.getItem.call(storage, key) : storage.getItem(key);
+  } catch {
+    return null;
+  }
 }
 
 function rawSet(storage: Pick<Storage, 'setItem'>, key: string, value: string): void {
-  if (nativeStorage.setItem && isNativeStorage(storage)) nativeStorage.setItem.call(storage, key, value);
-  else storage.setItem(key, value);
+  try {
+    if (nativeStorage.setItem && isNativeStorage(storage)) nativeStorage.setItem.call(storage, key, value);
+    else storage.setItem(key, value);
+  } catch {
+    // Persistence is best-effort when storage is unavailable.
+  }
 }
 
 function isNativeStorage(storage: unknown): storage is Storage {

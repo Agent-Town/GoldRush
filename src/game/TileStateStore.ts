@@ -48,7 +48,13 @@ export class TileStateStore {
     const cached = this.snapshots.get(contractId);
     if (cached) return cached;
 
-    const raw = this.storage.getItem(tileStateKey(this.profileId, contractId));
+    let raw: string | null;
+    try {
+      raw = this.storage.getItem(tileStateKey(this.profileId, contractId));
+    } catch {
+      console.warn(`Tile state read failed for ${contractId}: storage rejected the snapshot.`);
+      raw = null;
+    }
     const snapshot = parseSnapshot(raw);
     this.snapshots.set(contractId, snapshot);
     return snapshot;
