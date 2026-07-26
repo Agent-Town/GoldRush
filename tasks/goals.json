@@ -1141,6 +1141,12 @@
        "status": "merged",
        "mergeHash": "8fb9769198ce8f07716391084d4d7720c85c1636",
        "taskFile": "lane-rehearsal-unset-guard.md"
+      },
+      {
+       "id": "rf-29-probe-boot-ownership",
+       "title": "THE LAST HARDCODED PORT (F-1089-3). scripts/probe-plain-boot-console.mjs still resolves its base URL as process.argv[2] ?? http://127.0.0.1:5188 and then opens a browser and prints console/page errors as DRAIN EVIDENCE -- with no ownership check at all, so an unattended run can report a clean or dirty boot for ANOTHER worktree serving 5188 and a drain will quote it. Third instance of the class rf-27 cured (a9fccf75) and rf-28 guarded (8fb97691). Deliverable: the default DELETED not moved, resolution routed through the shipped resolveBase() with no second lsof parser, resolution ordered BEFORE chromium.launch() so an unset base cannot leak a browser, a positional argv rejected rather than silently ignored (which would be a fresh instance of the same class), plus a two-test subprocess guard wired into test:node-guards and a mutation control that restores the 5188 default and is watched to go RED. s1090 verified the script has NO callers anywhere, so the interface change is free.",
+       "status": "building",
+       "taskFile": "lane-probe-boot-ownership.md"
       }
      ]
     }
