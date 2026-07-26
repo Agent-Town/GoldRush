@@ -1148,6 +1148,12 @@
        "status": "merged",
        "mergeHash": "46db455cbd4c13e4c31def7fed3f59f3130d90bc",
        "taskFile": "lane-probe-boot-ownership.md"
+      },
+      {
+       "id": "rf-30-probe-launch-ordering",
+       "title": "THE GUARD THAT NAMES AN ORDERING IT DOES NOT CHECK (F-1091-1). rf-29's first test is named 'rejects an unset PROBE_BASE before launching a browser' and its goal leaf lists resolve-before-launch as a deliverable, but the body asserts only status !== 0 and stderr =~ /PROBE_BASE/ -- neither sensitive to ordering. s1091 MEASURED this while draining rf-29: moving chromium.launch() above the resolveBase call left the guard 2/2 GREEN (rc 0) while a browser leaks before every throw. Not a live defect -- ordering on main is correct, read and confirmed (resolve line 28, launch line 34, sequential top-level code) -- but an UNDEFENDED INVARIANT, and the second time in this class that the guard rather than the code was the blind thing (rf-28 was the first). Deliverable: exactly ONE added test to scripts/probe-base.test.mjs proving the unset branch fails without launching, made deterministic by pointing PLAYWRIGHT_BROWSERS_PATH at a nonexistent dir and asserting BOTH that stderr names PROBE_BASE and that it does NOT carry playwright's launch error -- explicitly NOT a timing threshold, since load-sensitive suites are already an open complaint (F-1084-1). The runner must prove the sabotage actually breaks launch before relying on it, with a documented 2b fallback (dynamic import after the resolve). No package.json edit -- the file is already wired, so the node --test phase goes 56 -> 57. Mandatory mutation control: move the launch above the resolve, watch the NEW test go red, and report honestly whether the two pre-existing tests stay green (s1091 measured that they do). Out of scope and still owner-gated: F-1089-2's real-lsof port-binding integration test.",
+       "status": "building",
+       "taskFile": "lane-probe-launch-ordering.md"
       }
      ]
     }
