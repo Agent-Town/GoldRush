@@ -1,7 +1,8 @@
+import { gameApiUrl } from '../app/GameApi';
 import { loadScores } from '../game/Scoreboard';
 
 const ASSAY_REFRESH_MS = 60_000;
-const STATS_ENDPOINT = 'https://gold-rush-3in.pages.dev/api/stats';
+const STATS_ENDPOINT = gameApiUrl('/api/stats');
 
 const DURATION_LABELS: Record<string, string> = {
   lt1m: 'under a minute',

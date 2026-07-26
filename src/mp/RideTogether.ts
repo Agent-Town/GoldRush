@@ -1,3 +1,4 @@
+import { GAME_API_ORIGIN } from '../app/GameApi';
 import { getDebugSeed } from '../core/DebugParams';
 import { readDifficultyPreset } from '../game/Balance';
 import { freshMetaProgress, loadMetaProgress } from '../game/MetaProgress';
@@ -57,7 +58,7 @@ const SECOND_WORDS = [
 export function relayBaseFromTownSearch(search = window.location.search): string {
   const params = new URLSearchParams(search);
   const debugRelay = params.get('mpRelay') ?? readStorage(RELAY_BASE_KEY);
-  return (debugRelay || window.location.origin).replace(/\/$/, '');
+  return (debugRelay || GAME_API_ORIGIN).replace(/\/$/, '');
 }
 
 export async function createRideRoom(

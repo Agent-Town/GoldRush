@@ -1,3 +1,4 @@
+import { GAME_API_ORIGIN } from '../app/GameApi';
 import { META_PROGRESS_KEY } from './MetaProgress';
 import { activeProfile, bindProfileSession, loadProfileState, type ProfileStorage } from './ProfileStorage';
 import {
@@ -661,7 +662,7 @@ function friendlyError(err: unknown): string {
 
 function apiBase(): string {
   const raw = import.meta.env.VITE_ACCOUNTS_API_URL;
-  return typeof raw === 'string' && raw.trim() ? raw.trim().replace(/\/+$/, '') : '';
+  return typeof raw === 'string' && raw.trim() ? raw.trim().replace(/\/+$/, '') : GAME_API_ORIGIN;
 }
 
 function timeAgo(iso: string): string {
