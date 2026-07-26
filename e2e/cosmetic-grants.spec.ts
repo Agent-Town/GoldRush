@@ -5,6 +5,8 @@ import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import {
+  HERO_SKIN_STORAGE_KEY,
+  HERO_SKINS_OWNED_STORAGE_KEY,
   PROSPECTOR_SKIN_STORAGE_KEY,
   PROSPECTOR_SKINS_OWNED_STORAGE_KEY,
   type ProspectorSkin,
@@ -60,7 +62,7 @@ test.afterAll(async () => {
   ]);
 });
 
-test('a filed complaint grants, equips, and persists the Complainant coat', async ({ page }, testInfo) => {
+test("a filed complaint grants, equips, and persists the Reporter's Set", async ({ page }, testInfo) => {
   await seedTown(page);
   const errors = collectErrors(page);
   await page.route('**/api/bug-report', (route) =>
@@ -70,17 +72,25 @@ test('a filed complaint grants, equips, and persists the Complainant coat', asyn
   await openDesk(page);
   await page.getByTestId('complaint-description').fill('The claim marker slipped under the county line.');
   await page.getByTestId('complaint-submit').click();
-  await expect(page.getByTestId('complaint-status')).toContainText("The county pays honest eyes. The Complainant's Coat is yours.");
+  await expect(page.getByTestId('complaint-status')).toContainText(
+    "The Reporter's Set is yours: the Complainant's Coat and the Claim-Day Neckerchief.",
+  );
   await expect.poll(() => selectedSkin(page)).toBe('complainant');
+  await expect.poll(() => selectedHeroSkin(page)).toBe('claim-day');
   await shot(page, testInfo, 'grant');
 
   await page.reload();
   await page.getByTestId('start-menu-settings').click();
-  const picker = page.getByTestId('start-menu-prospector-skin');
+  await expect(page.getByTestId('start-menu-prospector-skin')).toHaveCount(0);
+  await page.getByTestId('start-menu-settings-close').click();
+  await openWardrobe(page);
+  const picker = page.getByTestId('wardrobe-prospector-skin');
   await expect(picker).toHaveValue('complainant');
   await expect(picker.locator('option')).toHaveText(['Stock Coat', "The Complainant's Coat"]);
+  await expect(page.getByTestId('wardrobe-hero-skin')).toHaveValue('claim-day');
+  await expect(page.getByTestId('wardrobe-hero-skin').locator('option')).toHaveText(['Stock Neckerchief', 'Claim-Day Neckerchief']);
   await picker.scrollIntoViewIfNeeded();
-  await shot(page, testInfo, 'picker');
+  await shot(page, testInfo, 'wardrobe');
   expect(errors).toEqual({ console: [], page: [] });
 });
 
@@ -175,9 +185,22 @@ async function seedTown(page: Page, skin?: ProspectorSkin): Promise<void> {
       guide: profileDataKey('robin', FIRST_CLAIM_DONE_KEY),
       skin: profileDataKey('robin', PROSPECTOR_SKIN_STORAGE_KEY),
       owned: profileDataKey('robin', PROSPECTOR_SKINS_OWNED_STORAGE_KEY),
+      heroSkin: profileDataKey('robin', HERO_SKIN_STORAGE_KEY),
+      heroOwned: profileDataKey('robin', HERO_SKINS_OWNED_STORAGE_KEY),
     },
     selected: skin,
   });
+}
+
+async function openWardrobe(page: Page): Promise<void> {
+  await openTown(page);
+  await page.evaluate(() => {
+    const town = window.__GR_TOWN_DIAGNOSTICS__!;
+    town.teleport(town.tailorWagon.approach.x, town.tailorWagon.approach.z);
+  });
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe('tailor-wagon');
+  await page.getByTestId('town-open-wardrobe').click();
+  await expect(page.getByTestId('wardrobe-view')).toBeVisible();
 }
 
 async function openTown(page: Page): Promise<void> {
@@ -200,6 +223,10 @@ async function openDesk(page: Page): Promise<void> {
 
 async function selectedSkin(page: Page): Promise<string | null> {
   return page.evaluate((key) => localStorage.getItem(key) ?? 'stock', PROSPECTOR_SKIN_STORAGE_KEY);
+}
+
+async function selectedHeroSkin(page: Page): Promise<string | null> {
+  return page.evaluate((key) => localStorage.getItem(key) ?? 'stock', HERO_SKIN_STORAGE_KEY);
 }
 
 async function mint(code: string): Promise<void> {

@@ -2,7 +2,7 @@ import { gameApiUrl } from '../app/GameApi';
 import { performanceTierDiagnostics } from '../game/PerformanceTier';
 import { activeContract } from '../meta/ContractFamilies';
 import { captureNextRenderedFrame } from '../core/Renderer';
-import { canPersistProspectorSkin, grantProspectorSkin, ownedProspectorSkins } from '../game/ProspectorSkin';
+import { canPersistProspectorSkin, grantProspectorSkin, grantReporterSet, ownedProspectorSkins } from '../game/ProspectorSkin';
 
 export const BUG_OFFICE_COPY = {
   bounty: 'THE BOUNTY — The county will reward the three reports that help the trail most. Prize notice follows.',
@@ -235,10 +235,10 @@ export class ComplaintDeskPanel {
         this.setStatus(typeof result.message === 'string' ? result.message : 'The clerk declined that page. Check it and try again.', 'declined');
         return;
       }
-      const coat = grantProspectorSkin('complainant')
-        ? " The county pays honest eyes. The Complainant's Coat is yours."
+      const set = grantReporterSet()
+        ? " The county pays honest eyes. The Reporter's Set is yours: the Complainant's Coat and the Claim-Day Neckerchief."
         : '';
-      this.setStatus(`Complaint filed. Ticket ${result.id}. The county thanks you.${coat} ${BUG_OFFICE_COPY.bounty}`, 'filed');
+      this.setStatus(`Complaint filed. Ticket ${result.id}. The county thanks you.${set} ${BUG_OFFICE_COPY.bounty}`, 'filed');
     } catch {
       this.setStatus('The wire is down. The clerk kept your complaint on the desk — try again.', 'offline');
     } finally {

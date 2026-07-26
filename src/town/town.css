@@ -279,6 +279,46 @@
   -webkit-overflow-scrolling: touch;
 }
 
+.town-ui__wardrobe-shell {
+  width: min(760px, calc(100vw - 28px));
+}
+
+.town-ui__wardrobe-copy {
+  margin: 0 0 14px;
+}
+
+.town-ui__wardrobe-racks {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.town-ui__wardrobe-rack {
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+  border: 2px solid rgba(46, 27, 14, 0.62);
+  border-radius: 8px;
+  background: rgba(255, 248, 232, 0.72);
+}
+
+.town-ui__wardrobe-rack label {
+  display: grid;
+  gap: 8px;
+  font-weight: 900;
+}
+
+.town-ui__wardrobe-rack select {
+  width: 100%;
+  min-height: 48px;
+  border: 2px solid #2e1b0e;
+  border-radius: 7px;
+  padding: 8px;
+  color: #2e1b0e;
+  background: #fff8e8;
+  font: 900 0.9rem/1.2 Wellfleet, Georgia, serif;
+}
+
 .town-ui__epoch-door {
   margin: 16px auto 2px;
   padding: 18px;
@@ -1130,6 +1170,10 @@ figure:has(> .town-ui__contract-art-image--interim)::after {
   .town-ui__board-close {
     min-height: 48px;
     padding: 7px 10px;
+  }
+
+  .town-ui__wardrobe-racks {
+    grid-template-columns: 1fr;
   }
 
   .town-ui__contracts {

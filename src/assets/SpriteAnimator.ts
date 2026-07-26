@@ -11,7 +11,13 @@ import {
   type RotationDirection,
 } from './OrientationResolver';
 import { assetSlots, type AssetSlotId } from './slots';
-import { prospectorSkinSheetFile, readProspectorSkin, type ProspectorSkin } from '../game/ProspectorSkin';
+import {
+  prospectorSkinSheetFile,
+  readHeroSkin,
+  readProspectorSkin,
+  type HeroSkin,
+  type ProspectorSkin,
+} from '../game/ProspectorSkin';
 
 export type CharacterSpriteClip = 'idle' | 'walk' | 'hit' | 'pan' | 'flee' | string;
 
@@ -747,7 +753,7 @@ function mirroredRuntimeFrame(frame: RuntimeFrame): RuntimeFrame {
 
 function loadRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
   const cacheKey = slotId === assetSlots.charHero
-    ? `${slotId}:${activeHeroAge()}`
+    ? `${slotId}:${activeHeroAge()}:${readHeroSkin()}`
     : slotId === assetSlots.charProspectorAgent
       ? `${slotId}:${readProspectorSkin()}`
       : slotId;
@@ -860,8 +866,16 @@ async function resolveWalkSheet(slotId: AssetSlotId, slot: ContractSlot | undefi
   const params = new URLSearchParams(globalThis.location?.search ?? '');
   const aged = age === 'young' || (params.has('debug') && params.has('noheroageart')) ? null : agedHeroWalkSheet(slot?.walk4, age);
   const resolvedAge = aged && walkSheetHasProcessedCells(aged) && (await walkSheetLoads(aged)) ? age : 'young';
-  document.querySelector<HTMLCanvasElement>('#game-canvas')?.setAttribute('data-hero-sheet', resolvedAge);
-  return resolvedAge === age && aged ? aged : young;
+  const stock = resolvedAge === age && aged ? aged : young;
+  const skin = readHeroSkin();
+  const skinBase = resolvedAge === 'young' && slot?.walk4 ? slot.walk4 : stock;
+  const skinned = skinBase && skin !== 'stock' ? heroSkinWalkSheet(skinBase, resolvedAge, skin) : null;
+  const resolved = skinned && walkSheetHasProcessedCells(skinned) && (await walkSheetLoads(skinned)) ? skinned : stock;
+  const canvas = document.querySelector<HTMLCanvasElement>('#game-canvas');
+  canvas?.setAttribute('data-hero-sheet', resolvedAge);
+  canvas?.setAttribute('data-hero-skin', skin);
+  canvas?.setAttribute('data-hero-skin-sheet', resolved === skinned ? skin : 'stock');
+  return resolved;
 }
 
 async function resolveProspectorWalkSheet(stock: WalkSheetSource | null): Promise<WalkSheetSource | null> {
@@ -885,6 +899,28 @@ function skinWalkSheet(sheet: WalkSheetSource, skin: ProspectorSkin): WalkSheetS
           ...source,
           frames: source.frames?.files
             ? { ...source.frames, files: source.frames.files.map((file) => prospectorSkinSheetFile(file, skin)) }
+            : source.frames,
+        },
+      ]),
+    ),
+  };
+}
+
+function heroSkinWalkSheet(sheet: WalkSheetSource, age: HeroAge, skin: HeroSkin): WalkSheetSource {
+  const variant = skin === 'claim-day' ? 'claimday' : skin;
+  const skinFile = (file: string) => age === 'young'
+    ? file.replace(/char-hero-sheet-walk4-([ab])(?:-f)?(?=-r\d+c\d+\.png$)/, `char-hero-${variant}-sheet-walk4-$1`)
+    : file.replace(`char-hero-${age}-`, `char-hero-${age}-${variant}-`);
+  return {
+    ...sheet,
+    grid: sheet.grid?.file ? { ...sheet.grid, file: skinFile(sheet.grid.file) } : sheet.grid,
+    directions: Object.fromEntries(
+      Object.entries(sheet.directions ?? {}).map(([direction, source]) => [
+        direction,
+        {
+          ...source,
+          frames: source.frames?.files
+            ? { ...source.frames, files: source.frames.files.map(skinFile) }
             : source.frames,
         },
       ]),

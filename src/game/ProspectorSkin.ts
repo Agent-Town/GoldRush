@@ -1,13 +1,21 @@
 export const PROSPECTOR_SKIN_STORAGE_KEY = 'gr.prospector.skin.v1';
 export const PROSPECTOR_SKINS_OWNED_STORAGE_KEY = 'gr.prospector.skins-owned.v1';
+export const HERO_SKIN_STORAGE_KEY = 'gr.hero.skin.v1';
+export const HERO_SKINS_OWNED_STORAGE_KEY = 'gr.hero.skins-owned.v1';
 
 export const PROSPECTOR_SKINS = ['stock', 'complainant', 'gilded'] as const;
 export type ProspectorSkin = (typeof PROSPECTOR_SKINS)[number];
+export const HERO_SKINS = ['stock', 'claim-day'] as const;
+export type HeroSkin = (typeof HERO_SKINS)[number];
 
-const LABELS: Record<ProspectorSkin, string> = {
+const PROSPECTOR_LABELS: Record<ProspectorSkin, string> = {
   stock: 'Stock Coat',
   complainant: "The Complainant's Coat",
   gilded: 'The Gilded Coat',
+};
+const HERO_LABELS: Record<HeroSkin, string> = {
+  stock: 'Stock Neckerchief',
+  'claim-day': 'Claim-Day Neckerchief',
 };
 
 export function readProspectorSkin(storage = browserStorage()): ProspectorSkin {
@@ -44,6 +52,47 @@ export function setProspectorSkin(skin: ProspectorSkin, storage = browserStorage
   return write(storage, PROSPECTOR_SKIN_STORAGE_KEY, skin);
 }
 
+export function readHeroSkin(storage = browserStorage()): HeroSkin {
+  const selected = normalizeHeroSkin(read(storage, HERO_SKIN_STORAGE_KEY));
+  return selected && ownedHeroSkins(storage).includes(selected) ? selected : 'stock';
+}
+
+export function ownedHeroSkins(storage = browserStorage()): HeroSkin[] {
+  try {
+    const saved = JSON.parse(read(storage, HERO_SKINS_OWNED_STORAGE_KEY) ?? '[]') as unknown;
+    const owned = Array.isArray(saved) ? saved.map(normalizeHeroSkin).filter((skin): skin is HeroSkin => !!skin) : [];
+    return HERO_SKINS.filter((skin) => skin === 'stock' || owned.includes(skin));
+  } catch {
+    return ['stock'];
+  }
+}
+
+export function grantHeroSkin(skin: HeroSkin, storage = browserStorage()): boolean {
+  const owned = ownedHeroSkins(storage);
+  if (owned.includes(skin)) return false;
+  const previousOwned = read(storage, HERO_SKINS_OWNED_STORAGE_KEY);
+  const previousSkin = read(storage, HERO_SKIN_STORAGE_KEY);
+  if (
+    write(storage, HERO_SKINS_OWNED_STORAGE_KEY, JSON.stringify([...owned, skin])) &&
+    write(storage, HERO_SKIN_STORAGE_KEY, skin)
+  ) return true;
+  restore(storage, HERO_SKINS_OWNED_STORAGE_KEY, previousOwned);
+  restore(storage, HERO_SKIN_STORAGE_KEY, previousSkin);
+  return false;
+}
+
+export function setHeroSkin(skin: HeroSkin, storage = browserStorage()): boolean {
+  if (!ownedHeroSkins(storage).includes(skin)) return false;
+  return write(storage, HERO_SKIN_STORAGE_KEY, skin);
+}
+
+export function grantReporterSet(storage = browserStorage()): boolean {
+  const owned = ownedProspectorSkins(storage).includes('complainant') && ownedHeroSkins(storage).includes('claim-day');
+  grantProspectorSkin('complainant', storage);
+  grantHeroSkin('claim-day', storage);
+  return !owned && ownedProspectorSkins(storage).includes('complainant') && ownedHeroSkins(storage).includes('claim-day');
+}
+
 export function canPersistProspectorSkin(storage = browserStorage()): boolean {
   const previous = read(storage, PROSPECTOR_SKIN_STORAGE_KEY);
   const probe = previous ?? 'stock';
@@ -58,7 +107,7 @@ export function renderProspectorSkinControl(id: string): string {
     <label>
       <span>Prospector coat</span>
       <select data-testid="${id}" aria-label="Prospector coat">
-        ${ownedProspectorSkins().map((skin) => `<option value="${skin}"${skin === selected ? ' selected' : ''}>${LABELS[skin]}</option>`).join('')}
+        ${ownedProspectorSkins().map((skin) => `<option value="${skin}"${skin === selected ? ' selected' : ''}>${PROSPECTOR_LABELS[skin]}</option>`).join('')}
       </select>
     </label>
   `;
@@ -75,12 +124,55 @@ export function bindProspectorSkinControl(root: ParentNode, id: string): () => v
   return () => select.removeEventListener('change', onChange);
 }
 
+export function renderWardrobe(prospectorId: string, heroId: string, partnerName: string): string {
+  const hero = readHeroSkin();
+  return `
+    <div class="town-ui__wardrobe-racks">
+      <section class="town-ui__wardrobe-rack" data-testid="wardrobe-prospector-rack">
+        <p class="town-ui__board-eyebrow">The Prospector</p>
+        ${renderProspectorSkinControl(prospectorId)}
+      </section>
+      <section class="town-ui__wardrobe-rack" data-testid="wardrobe-partner-rack">
+        <p class="town-ui__board-eyebrow">The Partner · ${escapeHtml(partnerName)}</p>
+        <label>
+          <span>Partner neckerchief</span>
+          <select data-testid="${heroId}" aria-label="Partner neckerchief">
+            ${ownedHeroSkins().map((skin) => `<option value="${skin}"${skin === hero ? ' selected' : ''}>${HERO_LABELS[skin]}</option>`).join('')}
+          </select>
+        </label>
+      </section>
+    </div>
+  `;
+}
+
+export function bindWardrobe(root: ParentNode, prospectorId: string, heroId: string): () => void {
+  const disposeProspector = bindProspectorSkinControl(root, prospectorId);
+  const hero = root.querySelector<HTMLSelectElement>(`[data-testid="${heroId}"]`);
+  const onHeroChange = () => {
+    const skin = normalizeHeroSkin(hero?.value);
+    if (skin) setHeroSkin(skin);
+  };
+  hero?.addEventListener('change', onHeroChange);
+  return () => {
+    disposeProspector();
+    hero?.removeEventListener('change', onHeroChange);
+  };
+}
+
 export function prospectorSkinSheetFile(file: string, skin: ProspectorSkin): string {
   return skin === 'stock' ? file : file.replace('char-prospector-', `char-prospector-${skin}-`);
 }
 
 function normalizeSkin(value: unknown): ProspectorSkin | null {
   return typeof value === 'string' && PROSPECTOR_SKINS.includes(value as ProspectorSkin) ? value as ProspectorSkin : null;
+}
+
+function normalizeHeroSkin(value: unknown): HeroSkin | null {
+  return typeof value === 'string' && HERO_SKINS.includes(value as HeroSkin) ? value as HeroSkin : null;
+}
+
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[character]!);
 }
 
 type SkinStorage = Pick<Storage, 'getItem' | 'setItem' | 'removeItem'>;

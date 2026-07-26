@@ -54,6 +54,7 @@ import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } 
 import { renderResearchChart } from '../ui/ResearchChart';
 import { eraBackdropRef, loadEraBackdrop } from '../ui/EraBackdrop';
 import { WorldInfoNotePrompt, type WorldInfoObjectClass } from '../ui/WorldInfoNotes';
+import { bindWardrobe, renderWardrobe } from '../game/ProspectorSkin';
 import { disposeObject3D } from '../utils/dispose';
 import {
   createRideRoom,
@@ -94,6 +95,12 @@ const boardCardUrls = import.meta.glob<string>('../../assets/processed/board-car
   query: '?url',
   import: 'default',
 });
+const tailorSignUrls = import.meta.glob<string>('../../assets/processed/prop-tailor-sign.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const tailorSignUrl = Object.values(tailorSignUrls)[0];
 const townFacadeUrls: Partial<Record<TownBuildingId, { key: string; url: string }>> = {
   tavern: { key: 'bld-tavern', url: new URL('../../assets/processed/bld-tavern.png', import.meta.url).href },
   claim_office: { key: 'bld-claim-office', url: new URL('../../assets/processed/bld-claim-office.png', import.meta.url).href },
@@ -118,6 +125,11 @@ const VOLTAGE_EPOCH_ID = 'epoch-3-voltage';
 const DEEP_SKY_EPOCH_ID = 'epoch-10-deepsky';
 const LAST_CLAIM_ID = 'e10-last-claim';
 const CHARTER_PRESS_ID = 'charter-press';
+const TAILOR_WAGON_ID = 'tailor-wagon';
+const TAILOR_WAGON = townPropRing.props.find((prop) => prop.id === 'wagon-north-store')!;
+const TAILOR_WAGON_APPROACH = localPoint(TAILOR_WAGON, 0, 1.7);
+const WARDROBE_PROSPECTOR_ID = 'wardrobe-prospector-skin';
+const WARDROBE_HERO_ID = 'wardrobe-hero-skin';
 const CHARTER_PRESS_TOWN_PROP = townEraPropsForOrder(10).find((prop) => prop.glb === 'charter-press.e10.glb');
 const DYNAMO_CRANK_MS = 1_200;
 const STAMP_MILL_TOWN_SITE = { ...townPlazaSlot('stamp-mill').position, w: 6.2, d: 1.65 };
@@ -134,12 +146,13 @@ export type TownDiagnostics = {
   elapsed: number;
   player: { x: number; z: number };
   teleport: (x: number, z: number) => void;
-  activePrompt: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | typeof CHARTER_PRESS_ID | null;
+  activePrompt: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | typeof CHARTER_PRESS_ID | typeof TAILOR_WAGON_ID | null;
   activeBark: { actorId: TownActorId; speaker: string; text: string } | null;
   townName: string | null;
   namingPrompt: boolean;
   boardOpen: boolean;
   schoolhouseOpen: boolean;
+  wardrobeOpen: boolean;
   activeEpochId: string;
   assayOpen: boolean;
   textures: {
@@ -218,6 +231,11 @@ export type TownDiagnostics = {
     ponyExpressPlot: { visible: boolean; x: number; z: number; pictogram: 'rider-horn' };
     lanterns: number;
   };
+  tailorWagon: {
+    position: { x: number; z: number };
+    approach: { x: number; z: number };
+    sign: 'asset' | 'placeholder';
+  };
   ambientDust: { enabled: boolean; tier: PerformanceTier; count: number; drawCalls: number };
   firstClaimGuide: {
     active: boolean;
@@ -268,6 +286,7 @@ export class TownScene {
   private readonly nameCard = document.createElement('form');
   private readonly board = document.createElement('section');
   private readonly schoolhouse = document.createElement('section');
+  private readonly wardrobe = document.createElement('section');
   private readonly hiddenButtons: HiddenButtonState[];
   private readonly metaProgress = readTownMetaProgress();
   private readonly visibleBuildings = earnedTownBuildings(this.metaProgress.tracks.territory);
@@ -330,7 +349,7 @@ export class TownScene {
   private nameBeat?: HTMLElement;
   private frame = 0;
   private elapsed = 0;
-  private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | null = null;
+  private activePrompt: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | { id: typeof TAILOR_WAGON_ID; name: "The Tailor's Wagon" } | null = null;
   private activeBark: { actorId: TownActorId; speaker: string; text: string } | null = null;
   private activeBarkActor: TownActorRuntime | null = null;
   private assayBench?: ReturnType<typeof installAssayBench>;
@@ -341,6 +360,8 @@ export class TownScene {
   private nameCardOpen = false;
   private boardOpen = false;
   private schoolhouseOpen = false;
+  private wardrobeOpen = false;
+  private disposeWardrobe: () => void = () => undefined;
   private selectedResearchNodeId: string | undefined;
   private selectedResearchEpochId = activeEpochId();
   private nameBeatTimer = 0;
@@ -432,6 +453,9 @@ export class TownScene {
     this.schoolhouse.removeEventListener('pointercancel', this.onDynamoCrankStop);
     this.schoolhouse.removeEventListener('pointerleave', this.onDynamoCrankStop);
     this.schoolhouse.removeEventListener('keyup', this.onDynamoCrankKeyUp);
+    this.wardrobe.removeEventListener('click', this.onWardrobeClick);
+    this.wardrobe.removeEventListener('keydown', this.onWardrobeKeyDown);
+    this.disposeWardrobe();
     this.nameCard.removeEventListener('submit', this.onNameSubmit);
     this.nameInput?.removeEventListener('keydown', stopKeyPropagation);
     this.infoNote?.dispose();
@@ -467,12 +491,13 @@ export class TownScene {
       this.publishDiagnostics();
       return;
     }
-    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
+    if (this.boardOpen || this.schoolhouseOpen || this.wardrobeOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
       for (const actor of this.townActors) actor.update(delta, this.elapsed);
       if (rawExitIntent && !this.lastExitIntent) {
         if (this.ceremonies.modalOpen()) this.ceremonies.requestLeave();
         else if (this.boardOpen) this.closeBoard();
         else if (this.schoolhouseOpen) this.closeSchoolhouse();
+        else if (this.wardrobeOpen) this.closeWardrobe();
         else this.closeAssayBench();
       }
       this.lastExitIntent = rawExitIntent;
@@ -560,6 +585,7 @@ export class TownScene {
       // primitives too double-renders (owner saw the old frame atop Sol's pan).
       this.canvas.dataset.townEraAccent = String(this.eraOrder);
       this.scene.add(createTownPropRing(this.townNight, propsPiloted, this.eraOrder));
+      this.scene.add(createTailorWagonSign());
     }
     this.createStampMillVignette();
     this.createDynamoHallVignette();
@@ -834,6 +860,10 @@ export class TownScene {
     this.schoolhouse.dataset.testid = 'schoolhouse-view';
     this.schoolhouse.setAttribute('aria-label', 'Schoolhouse research chart');
     this.schoolhouse.hidden = true;
+    this.wardrobe.className = 'town-ui__surface town-ui__wardrobe';
+    this.wardrobe.dataset.testid = 'wardrobe-view';
+    this.wardrobe.setAttribute('aria-label', 'The Wardrobe');
+    this.wardrobe.hidden = true;
     this.nameCard.className = 'town-ui__name-card';
     this.nameCard.dataset.testid = 'town-name-card';
     this.nameCard.hidden = true;
@@ -879,9 +909,12 @@ export class TownScene {
     this.schoolhouse.addEventListener('pointercancel', this.onDynamoCrankStop);
     this.schoolhouse.addEventListener('pointerleave', this.onDynamoCrankStop);
     this.schoolhouse.addEventListener('keyup', this.onDynamoCrankKeyUp);
+    this.wardrobe.addEventListener('click', this.onWardrobeClick);
+    this.wardrobe.addEventListener('keydown', this.onWardrobeKeyDown);
     this.nameCard.addEventListener('submit', this.onNameSubmit);
     this.ui.append(this.board);
     this.ui.append(this.schoolhouse);
+    this.ui.append(this.wardrobe);
     this.getElement('#app').append(this.ui);
     this.syncTownTitle();
     if (!this.townName) this.openNameCard('founding');
@@ -902,6 +935,7 @@ export class TownScene {
     else if (target?.closest('[data-town-rename]')) this.activateTownAction('claim_office');
     else if (target?.closest('[data-town-schoolhouse]')) this.activateTownAction('schoolhouse');
     else if (target?.closest('[data-town-assay]')) this.activateTownAction('assay_office');
+    else if (target?.closest('[data-town-wardrobe]')) this.activateTownAction(TAILOR_WAGON_ID);
   };
 
   private readonly onBarkClick = (event: Event) => {
@@ -920,13 +954,14 @@ export class TownScene {
     if (this.ui.isConnected) this.barkCard.querySelector<HTMLButtonElement>('[data-town-herald]')?.focus({ preventScroll: true });
   };
 
-  private activateTownAction(buildingId: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | typeof CHARTER_PRESS_ID | undefined): void {
-    if (!buildingId || this.nameCardOpen || this.heraldOpen || this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.e10Finale) return;
+  private activateTownAction(buildingId: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | typeof CHARTER_PRESS_ID | typeof TAILOR_WAGON_ID | undefined): void {
+    if (!buildingId || this.nameCardOpen || this.heraldOpen || this.boardOpen || this.schoolhouseOpen || this.wardrobeOpen || this.assayBenchOpen() || this.e10Finale) return;
     if (buildingId === 'tavern') this.openBoard();
     else if (buildingId === 'claim_office' && this.townName) this.openNameCard('rename');
     else if (buildingId === 'schoolhouse') this.openSchoolhouse();
     else if (buildingId === 'assay_office') this.openAssayBench();
     else if (buildingId === CHARTER_PRESS_ID) this.openCharterPress();
+    else if (buildingId === TAILOR_WAGON_ID) this.openWardrobe();
   }
 
   private readonly onDynamoCrankStart = (event: Event) => {
@@ -1096,6 +1131,18 @@ export class TownScene {
     event.stopPropagation();
   };
 
+  private readonly onWardrobeClick = (event: Event) => {
+    if ((event.target as HTMLElement | null)?.closest('[data-wardrobe-close]')) this.closeWardrobe();
+  };
+
+  private readonly onWardrobeKeyDown = (event: KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      this.closeWardrobe();
+    }
+    event.stopPropagation();
+  };
+
   private readonly onNameSubmit = (event: Event) => {
     event.preventDefault();
     if (!this.nameInput || !this.nameMessage || !this.nameBeat) return;
@@ -1151,13 +1198,13 @@ export class TownScene {
   }
 
   private syncPrompt(): void {
-    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
+    if (this.boardOpen || this.schoolhouseOpen || this.wardrobeOpen || this.assayBenchOpen() || this.ceremonies.modalOpen() || this.e10Finale) {
       this.prompt.hidden = true;
       this.infoNote?.update(null);
       return;
     }
     const position = this.hero.group.position;
-    let nearest: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | null = null;
+    let nearest: TownBuilding | { id: typeof STAMP_MILL_ID; name: 'Stamp Mill' } | { id: typeof DYNAMO_HALL_ID; name: 'Dynamo Hall' } | { id: typeof CHARTER_PRESS_ID; name: 'Charter Press' } | { id: typeof TAILOR_WAGON_ID; name: "The Tailor's Wagon" } | null = null;
     let nearestDistanceSq = APPROACH_RADIUS * APPROACH_RADIUS;
     for (const building of this.visibleBuildings) {
       const dx = position.x - building.position.x;
@@ -1165,6 +1212,15 @@ export class TownScene {
       const distanceSq = dx * dx + dz * dz;
       if (distanceSq < nearestDistanceSq) {
         nearest = building;
+        nearestDistanceSq = distanceSq;
+      }
+    }
+    if (this.propRingEnabled) {
+      const dx = position.x - TAILOR_WAGON_APPROACH.x;
+      const dz = position.z - TAILOR_WAGON_APPROACH.z;
+      const distanceSq = dx * dx + dz * dz;
+      if (distanceSq < nearestDistanceSq) {
+        nearest = { id: TAILOR_WAGON_ID, name: "The Tailor's Wagon" };
         nearestDistanceSq = distanceSq;
       }
     }
@@ -1200,7 +1256,7 @@ export class TownScene {
       this.infoNote?.update(null);
       return;
     }
-    const infoClass = nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID || nearest.id === CHARTER_PRESS_ID ? null : townInfoClass(nearest.id);
+    const infoClass = nearest.id === STAMP_MILL_ID || nearest.id === DYNAMO_HALL_ID || nearest.id === CHARTER_PRESS_ID || nearest.id === TAILOR_WAGON_ID ? null : townInfoClass(nearest.id);
     this.infoNote?.update(infoClass ? { objectClass: infoClass } : null);
     const promptKey = `${nearest.id}:${this.townName ?? ''}:${activeEpochId()}:${scienceMeter(activeProfileResearchState()).complete}`;
     if (promptKey === this.promptKey) return;
@@ -1230,6 +1286,11 @@ export class TownScene {
         <span>${nearest.name} ... ${debug ? 'debug crafting door' : 'the clerk takes complaints'}</span>
         <button class="town-ui__prompt-button" type="button" data-town-assay data-testid="town-open-assay">${debug ? 'Crafting' : 'Complaints Desk'}</button>
       `;
+    } else if (nearest.id === TAILOR_WAGON_ID) {
+      this.prompt.innerHTML = `
+        <span>${nearest.name} ... the cloth door is open</span>
+        <button class="town-ui__prompt-button" type="button" data-town-wardrobe data-testid="town-open-wardrobe">Wardrobe</button>
+      `;
     } else {
       this.prompt.textContent = `${nearest.name} ... opens soon`;
     }
@@ -1243,7 +1304,7 @@ export class TownScene {
       }
       return;
     }
-    if (this.boardOpen || this.schoolhouseOpen || this.assayBenchOpen() || this.nameCardOpen) {
+    if (this.boardOpen || this.schoolhouseOpen || this.wardrobeOpen || this.assayBenchOpen() || this.nameCardOpen) {
       this.hideBark();
       return;
     }
@@ -1380,6 +1441,37 @@ export class TownScene {
   private closeSchoolhouse(): void {
     this.schoolhouse.hidden = true;
     this.schoolhouseOpen = false;
+    this.syncPrompt();
+    this.publishDiagnostics();
+  }
+
+  private openWardrobe(): void {
+    this.disposeWardrobe();
+    this.wardrobe.innerHTML = `
+      <div class="town-ui__surface-shell town-ui__wardrobe-shell">
+        <header class="town-ui__surface-header">
+          <div>
+            <p class="town-ui__board-eyebrow">The Tailor's Wagon</p>
+            <h2>The Wardrobe</h2>
+          </div>
+          <button class="town-ui__board-close" type="button" data-wardrobe-close data-testid="wardrobe-close">Back</button>
+        </header>
+        <div class="town-ui__surface-body">
+          <p class="town-ui__wardrobe-copy">Choose what each partner wears on the trail.</p>
+          ${renderWardrobe(WARDROBE_PROSPECTOR_ID, WARDROBE_HERO_ID, activeProfileName())}
+        </div>
+      </div>
+    `;
+    this.disposeWardrobe = bindWardrobe(this.wardrobe, WARDROBE_PROSPECTOR_ID, WARDROBE_HERO_ID);
+    this.wardrobeOpen = true;
+    this.wardrobe.hidden = false;
+    this.wardrobe.querySelector<HTMLSelectElement>('select')?.focus({ preventScroll: true });
+    this.publishDiagnostics();
+  }
+
+  private closeWardrobe(): void {
+    this.wardrobe.hidden = true;
+    this.wardrobeOpen = false;
     this.syncPrompt();
     this.publishDiagnostics();
   }
@@ -1951,6 +2043,7 @@ export class TownScene {
       namingPrompt: this.nameCardOpen,
       boardOpen: this.boardOpen,
       schoolhouseOpen: this.schoolhouseOpen,
+      wardrobeOpen: this.wardrobeOpen,
       activeEpochId: activeEpochId(),
       assayOpen: this.assayBenchOpen(),
       textures: {
@@ -2015,6 +2108,11 @@ export class TownScene {
       dynamoHall: this.dynamoHallDiagnostics(),
       ceremony: this.ceremonies.diagnostics(),
       propRing: this.propRingDiagnostics(),
+      tailorWagon: {
+        position: TAILOR_WAGON.position,
+        approach: TAILOR_WAGON_APPROACH,
+        sign: this.scene.getObjectByName('TownProp:TailorSign')?.userData.asset ? 'asset' : 'placeholder',
+      },
       ambientDust: {
         enabled: !!this.ambientDust,
         tier: this.performanceTier,
@@ -2191,7 +2289,7 @@ export class TownScene {
   }
 
   private updateFirstClaimGuide(): void {
-    const visible = this.firstClaimGuideActive && !this.nameCardOpen && !this.boardOpen && !this.schoolhouseOpen && !this.assayBenchOpen();
+    const visible = this.firstClaimGuideActive && !this.nameCardOpen && !this.boardOpen && !this.schoolhouseOpen && !this.wardrobeOpen && !this.assayBenchOpen();
     this.firstClaimGuideGroup.visible = visible;
     if (!visible) return;
 
@@ -3092,6 +3190,25 @@ function createPlaqueSprite(lines: readonly string[]): THREE.Sprite {
   sprite.scale.set(4.4, 1.5, 1);
   sprite.renderOrder = RenderLayers.worldUi;
   return sprite;
+}
+
+function createTailorWagonSign(): THREE.Sprite {
+  const sign = createPlaqueSprite(["THE TAILOR'S", 'WARDROBE']);
+  sign.name = 'TownProp:TailorSign';
+  sign.position.set(TAILOR_WAGON.position.x, 1.8, TAILOR_WAGON.position.z);
+  sign.scale.set(2.2, 0.76, 1);
+  sign.userData.asset = false;
+  if (tailorSignUrl) {
+    townFacadeLoader.load(tailorSignUrl, (texture) => {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      const material = sign.material as THREE.SpriteMaterial;
+      material.map?.dispose();
+      material.map = texture;
+      material.needsUpdate = true;
+      sign.userData.asset = true;
+    });
+  }
+  return sign;
 }
 
 function fitCanvasFont(ctx: CanvasRenderingContext2D, line: string, baseSize: number, maxWidth: number): string {
