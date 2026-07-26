@@ -1,13 +1,27 @@
 # E1 BRIEFING TRUTH — two defects the copy-red was hiding
 **FIRE-AUTHORED (attended review welcome)** — s1068, 2026-07-26.
-**STATUS: authored, NOT queued — ONE of the two blockers is now CLEARED (s1069, 2026-07-26).**
-~~`lane/m3` still carries the undrained `2d0739f5`~~ → **RESOLVED: drained at `fa645b6c`, salvage retired
-to `archive/lane-m3-2d0739f5`. LANE-SAFETY no longer blocks a lane-a refill.**
-**THE REMAINING BLOCKER STANDS:** both defects sit in the E1 area an attended session holds, and
-F-1068-2/-3 are explicitly **E1-release-verdict material** — attended was live-committing on the morning
-of 2026-07-26 (`bb57af63`, 08:21). **Coordinate before dispatch**; dispatching into a live E1 verdict is
-the F-1067-1 writer-collision shape. Once attended confirms (or is verifiably quiet and the verdict is
-landed), this is the top lane-a refill.
+**STATUS: QUEUED to lane-a by s1070, 2026-07-26T09:08Z — BOTH blockers now cleared, the second by
+measurement rather than by waiting.**
+~~`lane/m3` still carries the undrained `2d0739f5`~~ → **RESOLVED (s1069): drained at `fa645b6c`, salvage
+retired to `archive/lane-m3-2d0739f5`.** s1070 re-verified this independently: all three commits ahead on
+`lane/m3` (`4401778f`, `2d0739f5`, `428c01d5`) are **content-identical to main** on every file they touch,
+so the lane is false-ahead and its pre-flight `reset --hard` destroys nothing. LANE-SAFETY satisfied.
+~~THE REMAINING BLOCKER STANDS — coordinate before dispatch~~ → **CLEARED s1070. The writer-collision
+premise was inherited for two fires and is measurably FALSE.** The attended E1 verdict does live on
+`review/e1-gameplay-depth` (attended-owned `gr-task-e1-gameplay` worktree, 4 commits, tip `7dcdcdc7`
+07:42, still unmerged) — but classified against the merge-base `b702ebf5`, that branch **never moved
+either file this task edits**:
+| file | branch moved | main moved |
+|---|---|---|
+| `assets/contracts/epoch-1-frontier/contracts.json` | **no** | yes |
+| `e2e/contract-briefings.spec.ts` | **no** | yes |
+| `rehearsal/segments/e1-depth-play.mjs` | yes | yes |
+| `rehearsal/segments/e1-depth-rivercamp.mjs` | yes | **no** |
+The apparent overlap on the first two is pure stale-base drift (main moved, the branch did not). Attended's
+only real unmerged content is in `rehearsal/`, which this task's TOUCH-ONLY excludes entirely — so there is
+no writer to collide with. Attended is also verifiably quiet (last write `bb57af63` 08:21; tree carries only
+dashboard churn). **This is the F-1067-2 shape s1069 named: the caution was right to exist, its stated reason
+did not apply.** ⚠️ Still true and NOT a blocker for this task: do **not** touch `rehearsal/` here.
 
 ROLE: developer · WORKDIR: repo root (or an ANY-LANE worktree once lane-a is safe)
 
