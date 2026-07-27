@@ -576,20 +576,28 @@ test('east heading uses explicit rotation2 files with unmirrored pixels', async 
     await page.evaluate(() => window.__GR_TEST__?.teleport(0, 0));
     await moveStick(page, -1, 0);
     await waitForHeroDirection(page, 'w', 2_000);
-    const west = await canvasCaptureAtHeroFrame(page, 'w', 'char-hero-sheet-rotation-f-r1c0.png').catch(() => null);
+    let westReason: string | undefined;
+    const west = await canvasCaptureAtHeroFrame(page, 'w', 'char-hero-sheet-rotation-f-r1c0.png').catch((error) => {
+      westReason = String(error);
+      return null;
+    });
 
     await page.evaluate(() => window.__GR_TEST__?.teleport(0, 0));
     await moveStick(page, 1, 0);
     await waitForHeroDirection(page, 'e', 2_000);
-    const east = await canvasCaptureAtHeroFrame(page, 'e', 'char-hero-sheet-rotation2-f-r0c2.png').catch(() => null);
+    let eastReason: string | undefined;
+    const east = await canvasCaptureAtHeroFrame(page, 'e', 'char-hero-sheet-rotation2-f-r0c2.png').catch((error) => {
+      eastReason = String(error);
+      return null;
+    });
     await releaseStick(page);
 
     if (attempt === 0 && (!west || !east)) {
       await reloadForSpriteCellRetry(page, errors);
       continue;
     }
-    expect(west).not.toBeNull();
-    expect(east).not.toBeNull();
+    expect(west, westReason ?? 'west capture returned null').not.toBeNull();
+    expect(east, eastReason ?? 'east capture returned null').not.toBeNull();
     expect(west!.snapshot.frameKey).toBe('char-hero-sheet-rotation-f-r1c0.png');
     expect(west!.snapshot.mirrored).toBe(false);
     expect(east!.snapshot.frameKey).toBe('char-hero-sheet-rotation2-f-r0c2.png');

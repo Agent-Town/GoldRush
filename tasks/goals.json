@@ -2357,7 +2357,7 @@
         {
           "id": "lane-vp02-capture-error-surface",
           "title": "Let the vp-02 west/east capture timeout message actually reach the test report -- the caller currently discards it.",
-          "status": "queued",
+          "status": "merged",
           "taskFile": "lane-vp02-capture-error-surface.md",
           "lane": "lane-b",
           "spec": "F-1141-1 (s1141, tasks/BACKLOG.md); reviews/vp-02g.md; e2e/vp-02-sprite-animation.spec.ts:579,584 (the two call sites) + :587 (the retry that depends on the null)",
