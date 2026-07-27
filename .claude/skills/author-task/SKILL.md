@@ -6,7 +6,7 @@ description: Write a Gold Rush task master that cannot fail the known ways — c
 # /author-task — write a master that survives contact with the factory
 
 ## 0. Before writing ANYTHING, verify three facts (two minutes, saves a wasted run)
-1. **Not already shipped**: grep `tasks/BACKLOG.md` for the work — a ✅ SHIPPED line means STOP (Mistake #8: the 824k Flail). Partially shipped → scope ONLY the delta and cite the shipping commit.
+1. **Not already shipped**: run `node scripts/drain-block-check.mjs <master> --queue` — exit 1 means STOP (`ALREADY SHIPPED — DO NOT QUEUE` or a block); corroborate with a grep of `tasks/BACKLOG.md` for the work (Mistake #8: the 824k Flail). Partially shipped → scope ONLY the delta and cite the shipping commit.
 2. **The premise is true on current main**: grep/read the actual code lines your task will claim ("the bench is ?debug-gated at AssayBench.ts:189" — go LOOK). A task with a false premise no-ops or flails. Quote file:line in the task.
 3. **The right slot**: main = repo-root serial (fixes/balance/cross-cutting) · lane-a meta/science · lane-b agent · lane-c world/visual/polish · lane-d perf/foundation · art = generation only. Sequencing law needed? (e.g., "after X MERGES") — write it as a verifiable git check, with the SEARCH WINDOW WARNING below.
 

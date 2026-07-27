@@ -11,6 +11,7 @@
 //
 // USAGE
 //   node scripts/drain-block-check.mjs <done-move filename | task file | branch | slice id>
+//   node scripts/drain-block-check.mjs <task file> --queue # refuse already-shipped work
 //   node scripts/drain-block-check.mjs --all          # audit every blocked leaf
 //   node scripts/drain-block-check.mjs <arg> --strict # unknown slice becomes a failure too
 //
@@ -29,6 +30,7 @@ const BACKLOG = 'tasks/BACKLOG.md';
 // ("OWNER-GATED-...-do-not-drain-...") is a second, cheaper line of defence, and a fire that
 // renames a file but forgets the leaf should still be stopped.
 const FILENAME_BLOCK_MARKERS = [/do-not-drain/i, /OWNER-GATED/i];
+const TERMINAL_SHIPPED_STATUSES = new Set(['merged', 'shipped']);
 
 function collectLeaves(node, out = []) {
   if (!node || typeof node !== 'object') return out;
@@ -89,6 +91,7 @@ function main() {
   const argv = process.argv.slice(2);
   const strict = argv.includes('--strict');
   const all = argv.includes('--all');
+  const queue = argv.includes('--queue');
   const target = argv.find((a) => !a.startsWith('--'));
 
   if (!existsSync(GOALS)) {
@@ -155,15 +158,24 @@ function main() {
   // A CLEAR verdict must never rest on a coincidental substring. Branch names are not registered
   // in goals.json, so "lane/perf" matching an unrelated "perf-05" leaf is noise, not clearance.
   const branchShaped = /^[\w.-]+\/[\w.-]+$/.test(target.trim());
-  if (!hits.length || branchShaped) {
-    console.log(`  ? UNKNOWN — no ${branchShaped ? 'BLOCKED ' : ''}goal leaf matches "${target}".`);
-    if (branchShaped) console.log(`    (branch names are not registered as leaves — check the done-move filename too)`);
+  const queueTaskFile = queue && /\.md$/i.test(target.trim());
+  const leaf = queueTaskFile
+    ? hits.find((l) => normalize(l.taskFile).toLowerCase() === normalize(target).toLowerCase())
+    : hits[0];
+  const branchFallback = branchShaped && !queueTaskFile;
+  if (!leaf || branchFallback) {
+    console.log(`  ? UNKNOWN — no ${branchFallback ? 'BLOCKED ' : ''}goal leaf matches "${target}".`);
+    if (branchFallback) console.log(`    (branch names are not registered as leaves — check the done-move filename too)`);
     console.log(`    Goal Registration Law: every authored master registers a leaf in ${GOALS}.`);
     console.log(`    A missing leaf is a bookkeeping finding, not a clearance.`);
     process.exit(strict ? 2 : 0);
   }
 
-  const leaf = hits[0];
+  if (queue && TERMINAL_SHIPPED_STATUSES.has(leaf.status)) {
+    console.log(`  ⛔ ALREADY SHIPPED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
+    console.log(`    mergeHash="${leaf.mergeHash || '(not recorded)'}"`);
+    process.exit(1);
+  }
   console.log(`  ✅ CLEAR — ${leaf.taskFile} [${leaf.id}] status="${leaf.status}"`);
   if (hits.length > 1) {
     console.log(`    (${hits.length} leaves matched; longest wins. Others: ${hits.slice(1).map((l) => l.id).join(', ')})`);
