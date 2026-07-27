@@ -41,6 +41,35 @@ export type BuildableSnapshot = {
   tierLine?: string;
 };
 
+export type ConfirmBuildDiagnostics = {
+  reason:
+    | 'mode_off'
+    | 'invalid_max_count'
+    | 'invalid_economy'
+    | 'invalid_placement'
+    | 'invalid_range'
+    | 'invalid_overlap'
+    | 'invalid_unknown'
+    | 'economy_rejected'
+    | 'place_failed'
+    | null;
+  mode: boolean;
+  valid: boolean;
+  selectedBuildable: BuildableId;
+  ghostPos: { x: number; z: number };
+  playerPos: { x: number; z: number };
+  count: number;
+  maxCount: number;
+  gold: number;
+  cost: number;
+  economyOk: boolean;
+  placementOk: boolean;
+  rangeOk: boolean;
+  overlapOk: boolean;
+  distanceSq: number;
+  placeRadius: number;
+};
+
 export type BuildDiagnostics = {
   mode: boolean;
   selectedBuildable: BuildableId;
@@ -386,6 +415,7 @@ export class BuildSystem {
   private pointerClientY = 0;
   private mode = false;
   private valid = false;
+  private lastConfirmFailure: 'mode_off' | 'invalid' | 'economy_rejected' | 'place_failed' | null = null;
   private currentAt = 0;
   private visualDirty = true;
   private activeHpBars = 0;
@@ -807,8 +837,62 @@ export class BuildSystem {
     return { x: this.ghostPos.x, z: this.ghostPos.z };
   }
 
+  get confirmDiagnostics(): ConfirmBuildDiagnostics {
+    const def = this.selectedDef();
+    const count = this.countFor(def.id);
+    const maxCount = this.maxCountFor(def);
+    const cost = def.costCurve(count);
+    const economyOk = this.economy.gold >= cost;
+    const placementOk = this.matchesPlacement(def, this.ghostPos);
+    const dx = this.ghostPos.x - this.heroPosition.x;
+    const dz = this.ghostPos.z - this.heroPosition.z;
+    const distanceSq = dx * dx + dz * dz;
+    const placeRadius = this.placeRadius(def.id);
+    const rangeOk = distanceSq <= placeRadius * placeRadius;
+    const overlapOk = !this.overlapsExisting(def.id, this.ghostPos);
+    let reason: ConfirmBuildDiagnostics['reason'];
+    if (this.lastConfirmFailure === 'invalid') {
+      reason =
+        count >= maxCount
+          ? 'invalid_max_count'
+          : !economyOk
+            ? 'invalid_economy'
+            : !placementOk
+              ? 'invalid_placement'
+              : !rangeOk
+                ? 'invalid_range'
+                : !overlapOk
+                  ? 'invalid_overlap'
+                  : 'invalid_unknown';
+    } else {
+      reason = this.lastConfirmFailure;
+    }
+    return {
+      reason,
+      mode: this.mode,
+      valid: this.valid,
+      selectedBuildable: def.id,
+      ghostPos: { x: this.ghostPos.x, z: this.ghostPos.z },
+      playerPos: { x: this.heroPosition.x, z: this.heroPosition.z },
+      count,
+      maxCount,
+      gold: this.economy.gold,
+      cost,
+      economyOk,
+      placementOk,
+      rangeOk,
+      overlapOk,
+      distanceSq,
+      placeRadius,
+    };
+  }
+
   confirm(at: number, position?: { x: number; z: number }): boolean {
-    if (!this.mode) return false;
+    this.lastConfirmFailure = null;
+    if (!this.mode) {
+      this.lastConfirmFailure = 'mode_off';
+      return false;
+    }
     if (position) {
       this.ghostPos.set(position.x, 0, position.z);
       this.snap(this.ghostPos);
@@ -816,7 +900,10 @@ export class BuildSystem {
       this.updateGhostPosition();
     }
     this.valid = this.computeValid();
-    if (!this.valid) return this.invalidBuild();
+    if (!this.valid) {
+      this.lastConfirmFailure = 'invalid';
+      return this.invalidBuild();
+    }
 
     const def = this.selectedDef();
     const cost = def.costCurve(this.countFor(def.id));
@@ -827,10 +914,16 @@ export class BuildSystem {
       sink: buildSink(def.id),
       amount: cost,
     });
-    if (!result.ok) return this.invalidBuild();
+    if (!result.ok) {
+      this.lastConfirmFailure = 'economy_rejected';
+      return this.invalidBuild();
+    }
 
     const placed = this.place(def.id, this.ghostPos);
-    if (placed < 0) return this.invalidBuild();
+    if (placed < 0) {
+      this.lastConfirmFailure = 'place_failed';
+      return this.invalidBuild();
+    }
     this.finishPlacement(def.id, placed, cost);
     this.onSound?.('build-place', this.ghostPos);
     if (def.id === 'boiler_house') this.onSound?.('agent-works', this.ghostPos);

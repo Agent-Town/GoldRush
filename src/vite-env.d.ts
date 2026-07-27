@@ -10,6 +10,10 @@ type GrBuildableId = any;
 type GrStorySignal = import('./story').RuntimeStorySignal;
 type GrRunEndedEvent = Extract<import('./core/EventBus').GameEvent, { type: 'run_ended' }>;
 type GrRunTelemetryPayload = import('./telemetry/payload').RunTelemetryPayload;
+type GrConfirmBuildDiagnostics = Omit<import('./systems/BuildSystem').ConfirmBuildDiagnostics, 'reason'> & {
+  reason: import('./systems/BuildSystem').ConfirmBuildDiagnostics['reason'] | 'deepwater_claim';
+  deepwaterClaim: boolean;
+};
 
 interface ThreeGameDiagnostics {
   frame: number;
@@ -1173,6 +1177,7 @@ interface Window {
     reanchorClaimBoat: (anchorId: string) => boolean;
     placeFree: (id: GrBuildableId, x: number, z: number, rotationSteps?: number) => boolean;
     confirmBuild: () => boolean;
+    confirmBuildDiagnostics: () => GrConfirmBuildDiagnostics;
     testAudio: (name: string) => void;
     enemyPositions: () => Array<{
       id: number;
