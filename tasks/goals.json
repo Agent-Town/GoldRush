@@ -2355,6 +2355,17 @@
           "s1141Note": "DRAINED s1141 2026-07-27. Gates re-run on main after merge: tsc clean, build green, vp-02-sprite-animation desktop+mobile --workers=1 = 19 passed / 3 failed (4.8m), identical to the runner table; the two char.claim_jumper :724 reds unchanged at :731 plus :566 desktop = the subject under study. Scratch port 5253, external server (5188 belongs to the lane runners). s1139 REJECT bar re-checked at source, not inherited: :566 not made to pass, three-clause condition + 2000ms window byte-unchanged, no test.retry/skip/fixme, zero src/, r9c9 + west-capture-timeout absent = positive control genuinely reverted. Diagnosis delivered and now ledgered: (c) crossfade gate, r1c0 appears only with fadeActive:true; desktop 5/10 vs mobile 2/10 retires the mobile-only label. Non-blocking F-1141-1 spawned: the enriched message is unreachable because :579/:584 do .catch(() => null) -- same discarded-signal class as F-1140-1. F-1141-2 routes the real cure to whoever owns sprite crossfade (design, not fire-authorable). See reviews/vp-02g.md."
         },
         {
+          "id": "lane-vp02-capture-error-surface",
+          "title": "Let the vp-02 west/east capture timeout message actually reach the test report -- the caller currently discards it.",
+          "status": "queued",
+          "taskFile": "lane-vp02-capture-error-surface.md",
+          "lane": "lane-b",
+          "spec": "F-1141-1 (s1141, tasks/BACKLOG.md); reviews/vp-02g.md; e2e/vp-02-sprite-animation.spec.ts:579,584 (the two call sites) + :587 (the retry that depends on the null)",
+          "authoredBy": "s1141",
+          "mergeHash": null,
+          "authorNotes": "FIRE-AUTHORED s1141, found while draining vp-02g at ef3731b8. vp-02g built an enriched timeout message (observed tuples + framesPolled) and it is merged, but BOTH call sites do .catch(() => null), so the error object is discarded and the report shows only expect(received).not.toBeNull(). Verified at source this fire, not inferred: the error-context.md from a real desktop :566 failure contains exactly that and no observed-sequence; vp-02g got its dumps only via a temporary exposure its own scope 5 required it to revert. SAME CLASS AS F-1140-1 (confirmBuild() false discarded by debugPlaceAssayOffice) -- two fires running, a signal computed then thrown away by its caller. Blast radius checked: git grep finds this shape at exactly these 2 sites; m5-04-offline-queue.spec.ts:33 is response.json().catch(() => null), genuinely different. Scope 1 is a reproduce-the-gap-first STOP gate that quotes the before-state verbatim and explicitly licenses the runner to contradict the premise. THE KEY TRAP, called out in the NO list: the attempt-0 retry at :587 legitimately depends on the null, so removing the .catch outright is a cure that breaks the retry and will be rejected -- the fix must preserve null-on-failure while capturing the reason. src/** barred: the underlying flake is F-1141-2, a crossfade DESIGN question routed to the owner. Making :566 pass is explicitly not the goal (F-1137-2 refusal still binding). Scope 3 is a positive control because a probe that executes nothing reports nothing."
+        },
+        {
           "id": "lane-t037-ghost-settle-confirm",
           "title": "task-037 :171/:192 -- settle the build ghost and assert confirmBuild()'s boolean; deterministic, not a flake.",
           "status": "merged",
