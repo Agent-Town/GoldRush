@@ -12,8 +12,10 @@ type SpriteSnapshot = {
   mirrored?: boolean;
 };
 type Walk8Contract = {
+  frameCount?: number;
   grid: { file: string; cols: number; rowDirections: string[] };
   aliases: Record<string, string>;
+  directions?: Record<string, { row?: number }>;
 };
 
 const shotDir = path.resolve('artifacts/lane-c-activations');
@@ -42,12 +44,14 @@ const banditWalk8 = characterContract.slots.find(({ slot }) => slot === 'char.ba
 if (!banditWalk8) throw new Error('characters.v2.json is missing char.bandit_base.walk8');
 const frameStem = path.basename(banditWalk8.grid.file, path.extname(banditWalk8.grid.file));
 const jumperDirections = directionSpawns.map(([direction, spawn]) => {
-  const rowDirection = banditWalk8.aliases[direction] ?? direction;
-  const row = banditWalk8.grid.rowDirections.indexOf(rowDirection);
+  const rowDirection = (banditWalk8.aliases[direction] ?? direction).toLowerCase();
+  const row = banditWalk8.directions?.[rowDirection]?.row
+    ?? banditWalk8.grid.rowDirections.findIndex((candidate) => candidate.toLowerCase() === rowDirection);
+  // Runtime returns null here; the test throws so a malformed contract fails loudly at collection.
   if (row < 0) throw new Error(`char.bandit_base.walk8 has no row for ${direction} (${rowDirection})`);
-  const frames = Array.from({ length: banditWalk8.grid.cols }, (_, col) => `${frameStem}-r${row}c${col}.png`);
-  const mirrored = !banditWalk8.grid.rowDirections.includes(rowDirection);
-  return [direction, spawn, frames, mirrored] as const;
+  const frameCount = Math.max(1, banditWalk8.frameCount ?? banditWalk8.grid.cols ?? 1);
+  const frames = Array.from({ length: frameCount }, (_, col) => `${frameStem}-r${row}c${col}.png`);
+  return [direction, spawn, frames] as const;
 });
 
 function collectErrors(page: Page): ErrorBucket {
@@ -103,7 +107,7 @@ test('claim jumpers walk through the 8-way rotation matrix', async ({ page }) =>
   });
   await teleport(page, 0, 0);
 
-  for (const [direction, spawn, frames, mirrored] of jumperDirections) {
+  for (const [direction, spawn, frames] of jumperDirections) {
     await page.evaluate(() => window.__GR_TEST__?.clearEnemies());
     await page.evaluate((pos) => window.__GR_TEST__?.spawnEnemyAt(pos.x, pos.z), spawn);
     await page.waitForFunction(
@@ -115,7 +119,8 @@ test('claim jumpers walk through the 8-way rotation matrix', async ({ page }) =>
     );
     const snapshot = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base'] as SpriteSnapshot);
     expect(frames).toContain(snapshot.frameKey);
-    expect(snapshot.mirrored).toBe(mirrored);
+    // Every alias in this contract resolves to an explicit row, so none should mirror.
+    expect(snapshot.mirrored).toBe(false);
   }
 
   expect(errors.consoleErrors).toEqual([]);
