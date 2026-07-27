@@ -840,6 +840,7 @@ async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | nul
       const targetDirection = target.toLowerCase();
       const sourceDirection = source.toLowerCase();
       if (!isRotationDirection(targetDirection) || !isRotationDirection(sourceDirection)) continue;
+      if (slotId === assetSlots.charHero && slot?.rotations?.directions?.[targetDirection]) continue;
       const orientation = orientations.get(sourceDirection);
       if (!orientation) continue;
       orientations.set(targetDirection, orientation);
