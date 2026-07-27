@@ -2200,9 +2200,10 @@
           "id": "vp-02e-diagonal-clip-resolution",
           "title": "Diagonal headings (se/ne/nw/sw) must render their own contract art. F-1135-1: at heading 'se' the runtime serves char-hero-sheet-rotation2-f-r0c3.png (an EAST frame) while diagnostics correctly report direction 'se'. SpriteAnimator.pickClip:428 misses the diagonal in runtime.orientations, :429 falls back to rotationMirrors (retired to {} at s37), and control drops to the coarse fallback :443-447 which serves a pure-side clip. Masked until now because the -f- staleness failed vp-02b:113 at row 1.",
           "taskFile": "lane-vp-02e-diagonal-clip-resolution.md",
-          "status": "queued",
+          "status": "merged",
           "spec": "reviews/vp-02d.md#F-1135-1",
-          "note": "FIRE-AUTHORED s1135 from the vp-02d drain. Blocked-adjacent: lane-a owns e2e/vp-02-sprite-animation.spec.ts, do not touch."
+          "note": "FIRE-AUTHORED s1135 from the vp-02d drain. Blocked-adjacent: lane-a owns e2e/vp-02-sprite-animation.spec.ts, do not touch.",
+          "mergeHash": "e6961aee174c25bc9a5493ad89d407b0f1ed82d1"
         },
         {
           "id": "vp-02-anim-key-staleness",
