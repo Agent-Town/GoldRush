@@ -373,16 +373,16 @@ test('missing sheet cells fall back to the existing one-frame billboard without 
   expect(errors.pageErrors).toEqual([]);
 });
 
-async function steadyCalls(page: Page): Promise<number> {
-  return page.evaluate(async () => {
+async function steadyRendererCount(page: Page, key: 'calls' | 'textures'): Promise<number> {
+  return page.evaluate(async (rendererKey) => {
     const seq: number[] = [];
     const start = performance.now();
     while (performance.now() - start < 500) {
-      seq.push(window.__THREE_GAME_DIAGNOSTICS__?.renderer?.calls ?? -1);
+      seq.push(window.__THREE_GAME_DIAGNOSTICS__?.renderer?.[rendererKey] ?? -1);
       await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
     }
     return Math.min(...seq);
-  });
+  }, key);
 }
 
 test('warmed test clip swaps do not grow renderer memory or draw calls', async ({ page }) => {
@@ -428,7 +428,8 @@ test('warmed test clip swaps do not grow renderer memory or draw calls', async (
   await setHeroTestClip(page, clipA, 10);
   await page.waitForTimeout(160);
   const baseline = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
-  const baselineCalls = await steadyCalls(page);
+  const baselineTextures = await steadyRendererCount(page, 'textures');
+  const baselineCalls = await steadyRendererCount(page, 'calls');
 
   for (let i = 0; i < 2; i += 1) {
     await setHeroTestClip(page, clipB, 10);
@@ -438,8 +439,9 @@ test('warmed test clip swaps do not grow renderer memory or draw calls', async (
   }
 
   const after = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.renderer);
-  const afterCalls = await steadyCalls(page);
-  expect(after?.textures).toBe(baseline?.textures);
+  const afterTextures = await steadyRendererCount(page, 'textures');
+  const afterCalls = await steadyRendererCount(page, 'calls');
+  expect(afterTextures).toBe(baselineTextures);
   expect(after?.geometries).toBe(baseline?.geometries);
   // Draw calls are per-frame and carry 1-2 frame transients right after a swap at
   // headless fps (s27 evidence: instantaneous 20 vs steady 19). The mandate is "no

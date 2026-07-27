@@ -305,7 +305,7 @@ test('captures rotation scale-pulse review shots', async ({ page }, testInfo) =>
 
   await moveStick(page, 1, -1);
   await waitForHero(page, 'ne');
-  for (const frameKey of ['char-hero-sheet-rotation2-f-r0c2.png', 'char-hero-sheet-rotation2-f-r0c3.png']) {
+  for (const frameKey of ['char-hero-sheet-rotation-f-r1c2.png', 'char-hero-sheet-rotation-f-r1c3.png']) {
     await page.waitForFunction((key) => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameKey === key, frameKey);
     await page.locator('#game-canvas').screenshot({ path: path.join(shotDir, `ne-${path.basename(frameKey, '.png')}.png`) });
   }
