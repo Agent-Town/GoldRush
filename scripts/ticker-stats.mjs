@@ -6,6 +6,7 @@ import { pathToFileURL } from 'node:url';
 const QUIET_LINE = 'the wire is quiet.';
 const EMPTY_LINE = 'the office opens with the first assay.';
 const ENDPOINT_SOURCE = new URL('../src/encyclopedia/liveStats.ts', import.meta.url);
+const ORIGIN_SOURCE = new URL('../src/app/GameApi.ts', import.meta.url);
 const ENDPOINT_DIAGNOSTIC = 'ticker-stats: could not read STATS_ENDPOINT from src/encyclopedia/liveStats.ts';
 const BANNED_WORDS = [
   'token', 'price', 'trade', 'trading', 'value', 'valuation', 'expectation', 'expectations',
@@ -69,12 +70,23 @@ export async function draftTickerStats({
   }
 }
 
-export async function statsEndpoint(readSource = () => readFile(ENDPOINT_SOURCE, 'utf8')) {
+export async function statsEndpoint(
+  readSource = () => readFile(ENDPOINT_SOURCE, 'utf8'),
+  readOrigin = () => readFile(ORIGIN_SOURCE, 'utf8'),
+) {
   try {
     const source = await readSource();
-    const match = source.match(/\bconst STATS_ENDPOINT = ['"]([^'"]+)['"]/);
-    if (!match) throw new Error();
-    return match[1];
+    // The endpoint used to be one string literal. Since 5b61349e ("release base path + API
+    // split law") it is composed: `const STATS_ENDPOINT = gameApiUrl('/api/stats')`. Both
+    // shapes are read from SHIPPED SOURCE on purpose — this reader exists so the ticker and
+    // the game can never drift to different URLs, so never hardcode the answer here.
+    const literal = source.match(/\bconst STATS_ENDPOINT = ['"]([^'"]+)['"]/);
+    if (literal) return literal[1];
+    const composed = source.match(/\bconst STATS_ENDPOINT = gameApiUrl\(\s*['"]([^'"]+)['"]\s*\)/);
+    if (!composed) throw new Error();
+    const origin = (await readOrigin()).match(/\bconst GAME_API_ORIGIN = ['"]([^'"]+)['"]/);
+    if (!origin) throw new Error();
+    return `${origin[1]}${composed[1]}`;
   } catch {
     throw new StatsEndpointReadError(ENDPOINT_DIAGNOSTIC);
   }
