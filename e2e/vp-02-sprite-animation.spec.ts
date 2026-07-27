@@ -175,14 +175,31 @@ async function canvasCaptureAtHeroFrame(page: Page, direction: string, frameKey:
   const snapshot = await page.evaluate(
     async ({ expected, wanted }) => {
       const start = performance.now();
+      const observations: Array<{ direction: string | null; frameKey: string | null; fadeActive: boolean | null }> = [];
+      let framesPolled = 0;
+      let lastObservation = '';
       while (performance.now() - start < 2_000) {
         const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero'] as SpriteSnapshot | undefined;
+        framesPolled += 1;
+        const observation = {
+          direction: snapshot?.direction ?? null,
+          frameKey: snapshot?.frameKey ?? null,
+          fadeActive: snapshot?.fadeActive ?? null,
+        };
+        const serialized = JSON.stringify(observation);
+        if (serialized !== lastObservation && observations.length < 20) {
+          observations.push(observation);
+          lastObservation = serialized;
+        }
         if (snapshot?.direction === expected && snapshot.frameKey === wanted && snapshot.fadeActive !== true) {
           return snapshot;
         }
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
       }
-      throw new Error(`Timed out waiting for ${expected} ${wanted}`);
+      throw new Error(
+        `Timed out waiting for ${JSON.stringify({ direction: expected, frameKey: wanted, fadeActive: false })}; `
+        + `observed=${JSON.stringify(observations)}; framesPolled=${framesPolled}`,
+      );
     },
     { expected: direction, wanted: frameKey },
   );
