@@ -12,9 +12,14 @@
  * column, one row per guard, and its own exit code is 1 if ANY row is non-zero.
  * A guard that talks its way to a green cannot pass here.
  *
- * These seven cover `scripts/**` and the worker code, which `tsc` does NOT type
+ * These cover `scripts/**` and the worker code, which `tsc` does NOT type
  * check (tsconfig `include` is [src, e2e, playwright.config.ts]) -- for that part
  * of the tree these guards are the only gate there is.
+ *
+ * `test:task-guards` (added s1131) is the odd one out: it gates the tasks/ ledger
+ * rather than code. It is here because F-1130-4/F-1131-2 showed the same failure
+ * mode this runner was built for -- a check that only ever ran by hand, as a
+ * one-time sweep, while the board moved underneath it.
  */
 import { spawnSync } from 'node:child_process';
 
@@ -26,6 +31,7 @@ const GUARDS = [
   'test:mp',
   'test:deploy-contract',
   'test:deploy-site-contract',
+  'test:task-guards',
 ];
 
 const only = process.argv.includes('--only')
