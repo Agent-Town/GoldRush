@@ -1,5 +1,8 @@
 # lane-m2-01-fixture-coordinate — make the draw-call guard actually test the draw-call budget
 
+> ⛔ **SHIPPED — DO NOT QUEUE (retired s1115, 2026-07-27).** On main as drain **`df51d877`** (runner `64b0970d`, which is NOT itself on main — tip-graft): "the draw-call guard now actually tests the draw-call budget". ✓ VERIFIED: the draw-call assertion is live at `e2e/m2-01-build-menu.spec.ts:340`. Invisible to filename greps because drain messages drop the `lane-` prefix — see **F-1115-1**.
+
+
 **FIRE-AUTHORED (attended review welcome)** — s1029, 2026-07-25
 **Role:** e2e fixture repair. **Workdir:** `worktrees/lane-a` (lane branch `lane/m3`).
 

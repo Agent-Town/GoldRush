@@ -1,4 +1,7 @@
 # Task lane-m1-m2-resource-guards: THE TWO RED GUARDS ON MAIN (geometry leak + draw-call ceiling) — LANE-A, commit prefix "fix:"
+
+> ⛔ **SHIPPED / PREMISE CLOSED — DO NOT QUEUE (retired s1115, 2026-07-27).** On main as drain **`f7cd0103`** (runner `d93b1505`): "the M1 geometry leak was async upload…", plus `df51d877` for the m2-01 half. Its whole premise — "THE TWO RED GUARDS ON MAIN" (F-1026-5) — is closed: the s1108 `m2-05-debt-batch` run independently re-verified **M1/M2 resource guards + full m2-05 spec 36/36 green desktop+mobile** on `eef67e5b` and lawfully changed nothing. Invisible to filename greps because drain messages drop the `lane-` prefix — see **F-1115-1**.
+
 ### FIRE-AUTHORED (attended review welcome) — s1026, 2026-07-25
 
 You are Codex, implementer for Gold Rush (worktrees/lane-a).

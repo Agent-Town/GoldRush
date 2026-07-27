@@ -1,4 +1,7 @@
 # Task lane-blocked-storage-access-throw: THE OTHER THROW — GUARD THE bare `localStorage` ACCESS ON THE BOOT PATH, AND TEACH THE ORACLE TO SEE IT (LANE-A, commit prefix "fix:")
+
+> ⛔ **SHIPPED — DO NOT QUEUE (retired s1115, 2026-07-27).** This master's work is on main as **rf-23, drain `7be9ce7b`** ("fix: guard the bare localStorage ACCESS on the boot path"). ✓ VERIFIED by content probe, not by message: `safeLocalStorage()` is exported at `src/game/ProfileStorage.ts:496`; `Game.ts:570` reads `new TileStateStore(safeLocalStorage())`; the mode-2 oracle (throwing getter) is live at `e2e/task-024-blast-aim-presets.spec.ts:167-173`. The master was invisible to filename greps because the drain renamed it to `rf-23` — see **F-1115-1**. Queueing this is Mistake #8.
+
 **FIRE-AUTHORED (attended review welcome) — s1084, 2026-07-26. This is NOT round 4 of the whack-a-mole. Rounds 1–3 (`rf-19`, `rf-20`, `rf-22`, merged `2cd221d1` + `338e7895`) fixed storage whose METHODS throw. This fixes storage whose ACCESSOR throws — a different failure mode, on the same boot path, which the existing oracle is STRUCTURALLY INCAPABLE of detecting.**
 
 You are Codex (worktrees/lane-a). CODEX: model=gpt-5.6-sol effort=high
