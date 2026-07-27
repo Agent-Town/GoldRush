@@ -106,21 +106,18 @@ async function census(page: Page, id: string, era: number, contract: ContractMan
     const expected = PAINTED_FALLBACKS.has(id) ? 'painted' : 'glb';
     if (source !== expected) throw new Error(`expected ${expected}, got ${source}`);
   });
-  if (id === 'e6-glow-mesa' && row.render.startsWith('FAIL')) row.render = corrective(row.render, 'census-glow-mesa-3d');
   row.mq1 = await previewProbe(page, contract.tileParams.buildZones ?? []);
   row.mq3 = await depenetrationProbe(page);
-  row.mq2 = row.render.startsWith('CORRECTIVE') ? 'CORRECTIVE: census-glow-mesa-3d (3D panorama unavailable)' : await bandProbe(page);
+  row.mq2 = await bandProbe(page);
   if (id === 'e1-night-shift') row.brightness = 'PASS-exempt: night map';
   else if (contract.tileParams.render?.terrainMesh === 'off') row.brightness = 'PASS-exempt: no mounted landmark by contract';
   else {
     row.brightness = await brightnessProbe(page);
-    if (id === 'e6-glow-mesa' && row.brightness.startsWith('FAIL')) row.brightness = corrective(row.brightness, 'census-glow-mesa-3d');
   }
   row.boot = errors.console.length || errors.page.length
     ? `FAIL: console=${errors.console.length}, page=${errors.page.length}`
     : 'PASS';
   row.budget = budgetResult(started);
-  if (id === 'e6-glow-mesa' && row.budget.startsWith('FAIL')) row.budget = corrective(row.budget, 'census-glow-mesa-3d');
   return row;
 }
 
@@ -290,6 +287,7 @@ function exemptRow(row: Row, reason: string): Row {
 function corrective(result: Result, task: string): Result {
   return `CORRECTIVE: ${task} (${result.replace(/^FAIL: /, '')})`;
 }
+void corrective;
 
 function isPassing(result: Result): boolean {
   return result === 'PASS' || result.startsWith('PASS-exempt');
