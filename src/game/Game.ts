@@ -6417,6 +6417,7 @@ export class Game {
     });
     if (!result.ok) return 0;
     this.stolenTotal += amount;
+    this.speakTrailGuide('first-theft');
     this.syncStockpileHoldings();
     this.vfx.floatText(holding.position, `-${amount}`, '#a0522d');
     this.onThiefGrabbed(enemy, amount);
@@ -6857,6 +6858,7 @@ export class Game {
     }
     this.buildMenuOpen = true;
     this.buildSystem.setBuildMode(true);
+    this.speakTrailGuide('first-build-menu');
   }
 
   private closeBuildMenu(): void {

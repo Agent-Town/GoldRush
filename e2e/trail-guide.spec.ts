@@ -38,10 +38,14 @@ async function seedRunProfile(page: Page, trailGuide: boolean): Promise<void> {
   );
 }
 
-async function openRun(page: Page): Promise<void> {
-  await page.goto('/?debug&contract=the-claim&nospawn&nolevel');
+async function openRun(
+  page: Page,
+  path = '/?debug&contract=the-claim&nospawn&nolevel',
+  manualSim = true,
+): Promise<void> {
+  await page.goto(path);
   await page.waitForFunction(() => window.__GR_STORY__ && window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
-  await page.evaluate(() => window.__GR_TEST__?.setManualSim(true));
+  if (manualSim) await page.evaluate(() => window.__GR_TEST__?.setManualSim(true));
 }
 
 async function expectBark(page: Page, text: string): Promise<void> {
@@ -63,6 +67,34 @@ async function guideHints(page: Page): Promise<string[]> {
     const state = JSON.parse(localStorage.getItem(key) ?? '{}') as ProfileState;
     return state.profiles[0]?.hintsSeen.filter((hint) => hint.startsWith('story:trail-guide-')) ?? [];
   }, PROFILE_KEY);
+}
+
+async function makeVeteranProfile(page: Page): Promise<void> {
+  await page.evaluate((key) => {
+    const state = JSON.parse(localStorage.getItem(key) ?? '{}') as ProfileState;
+    const profile = state.profiles.find((entry) => entry.id === state.activeId);
+    if (!profile) throw new Error('No active profile.');
+    delete profile.trailGuide;
+    profile.hintsSeen = [];
+    localStorage.setItem(key, JSON.stringify(state));
+  }, PROFILE_KEY);
+}
+
+async function triggerTheft(page: Page): Promise<void> {
+  await expect(page.evaluate(() => window.__GR_TEST__?.setBalance('stockpile.cost', 0))).resolves.toBe(true);
+  await page.evaluate(() => window.__GR_TEST__?.teleport(3, 14));
+  await page.evaluate(() => window.__GR_TEST__?.selectBuildable('stockpile'));
+  await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
+  await expect.poll(() =>
+    page.evaluate(() => window.__GR_TEST__?.state().buildables.find((entry) => entry.id === 'stockpile')?.count ?? 0),
+  ).toBe(1);
+  await page.evaluate(() => window.__GR_TEST__?.grantGold(100));
+  await page.evaluate(() => window.__GR_TEST__?.teleport(3, -5));
+  await expect(page.evaluate(() => window.__GR_TEST__?.spawnThief('north'))).resolves.toBe(true);
+  await expect.poll(() =>
+    page.evaluate(() => window.__GR_TEST__?.economyLog().filter((event) => (event as { type?: string }).type === 'gold_stolen').length ?? 0),
+    { timeout: 10_000 },
+  ).toBeGreaterThan(0);
 }
 
 test('fresh profile sees the first three trail beats once, in order, and reload stays quiet', async ({ page }) => {
@@ -90,6 +122,62 @@ test('fresh profile sees the first three trail beats once, in order, and reload 
   await page.waitForTimeout(300);
   await expect(page.getByTestId('hud-agent-feed')).not.toContainText(/Move with the trail|Raise a sluice|Open Build/);
   expect(await guideHints(page)).toHaveLength(3);
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+test('first build-menu open teaches once, survives reload, and stays off for veterans', async ({ page }) => {
+  test.setTimeout(60_000);
+  await seedRunProfile(page, true);
+  const errors = collectErrors(page);
+  await openRun(page);
+
+  await page.keyboard.press('ArrowRight');
+  await approachFirstSeam(page, 0.2);
+  await page.keyboard.press('ArrowRight');
+  await approachFirstSeam(page, 4);
+  await expectBark(page, 'Open Build');
+  await page.getByTestId('hud-build').click();
+  await expectBark(page, 'Every line here names its price');
+  await expect(page.getByTestId('hud-agent-feed')).not.toContainText('Open Build');
+  expect(await guideHints(page)).toContain('story:trail-guide-first-build-menu');
+
+  await page.getByTestId('hud-build').click();
+  await page.getByTestId('hud-build').click();
+  await expect(page.getByTestId('hud-agent-feed')).not.toContainText('Every line here names its price');
+
+  await openRun(page);
+  await page.getByTestId('hud-build').click();
+  await expect(page.getByTestId('hud-agent-feed')).not.toContainText('Every line here names its price');
+
+  await makeVeteranProfile(page);
+  await openRun(page);
+  await page.getByTestId('hud-build').click();
+  await expect(page.getByTestId('hud-agent-feed')).not.toContainText('Every line here names its price');
+  expect(await guideHints(page)).toEqual([]);
+  expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
+});
+
+test('first confirmed theft teaches once, survives reload, and stays off for veterans', async ({ page }) => {
+  test.setTimeout(60_000);
+  const theftRun = '/?debug&contract=the-claim&timescale=8&nowaves&nokill&nolevel&noping&seed=trail-guide-theft';
+  await seedRunProfile(page, true);
+  const errors = collectErrors(page);
+  await openRun(page, theftRun, false);
+  await page.keyboard.press('ArrowRight');
+
+  await triggerTheft(page);
+  await expectBark(page, 'One of them is away with your gold');
+  expect(await guideHints(page)).toContain('story:trail-guide-first-theft');
+
+  await openRun(page, theftRun, false);
+  await triggerTheft(page);
+  await expect(page.getByTestId('hud-agent-feed')).not.toContainText('One of them is away with your gold');
+
+  await makeVeteranProfile(page);
+  await openRun(page, theftRun, false);
+  await triggerTheft(page);
+  await expect(page.getByTestId('hud-agent-feed')).not.toContainText('One of them is away with your gold');
+  expect(await guideHints(page)).toEqual([]);
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
