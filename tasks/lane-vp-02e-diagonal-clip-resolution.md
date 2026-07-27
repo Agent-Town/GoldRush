@@ -1,8 +1,14 @@
-# lane-vp-02e — diagonal headings must use their own contract art
+# Task lane-vp-02e: diagonal headings must render their own contract art — `SpriteAnimator` never consults the four diagonal blocks (lane-b, commit prefix "fix:")
 
-**FIRE-AUTHORED (attended review welcome)** — s1135, 2026-07-27, from F-1135-1 in `reviews/vp-02d.md`.
+**FIRE-AUTHORED s1135 (attended review welcome).** From **F-1135-1**, found while draining vp-02d this same fire (`reviews/vp-02d.md`, `tasks/BACKLOG.md` tail). It invents no scope: the contract already specifies the four diagonal blocks and the runtime already ignores them.
 
-**Role:** Codex runner. **Workdir:** the lane worktree you were launched in (`worktrees/lane-*`). Commit on your lane branch only.
+CODEX: model=gpt-5.6-sol effort=high
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b`.
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. **Do not compare this worktree against a list of files I wrote; I do not have one, and an exhaustive dirt list is the wrong instrument (it is what stopped a runner needlessly at s1132).** Check the **invariant** instead: **no dirty blob in this worktree may be UNIQUE — every modified/deleted/untracked file's content must already exist somewhere in git** (main's history, any branch, or this lane's own commits). If every dirty blob is reachable, the reset destroys nothing → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. If **any** blob exists nowhere else, **STOP and report that file by name** — that one is real unmerged work and resetting it would be the Mistake #2 shape. (`git hash-object <file>` then `git cat-file -e <hash>` is enough; `.wrangler/tmp/**` is build scratch and is exempt.) Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+*(s1135 pre-measured the branch and you must still re-verify it: `lane/m4` is **1 ahead** at `132e14e2`, the vp-02d runner commit. **It was drained this fire at `07eed37b` — but NOT verbatim:** I rejected its rewrite of the `directions` table and merged that table at contract values instead. So the branch's copy of `e2e/vp-02b-rotation-resolver.spec.ts` is **superseded, not unmerged** — its blob is reachable in the lane's own commit, so the invariant holds and the reset loses nothing. **Reset to main; do not try to preserve the branch's version of that table — main's is the corrected one, and it is the one you must make green.**)*
 
 ## READ FIRST (paths, in this order)
 
