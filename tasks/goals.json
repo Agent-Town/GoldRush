@@ -2441,12 +2441,12 @@
         {
           "id": "lane-c-activations-frame-matrix-from-contract",
           "title": "Rebuild lane-c-activations-assay-office's frame matrix FROM assets/layer-contracts/characters.v2.json (never from runtime) — closes F-1146-4.",
-          "status": "queued",
+          "status": "merged",
           "taskFile": "lane-c-activations-frame-matrix-from-contract.md",
           "lane": "lane-c",
           "spec": "F-1146-4 in reviews/vp-02b-jumper-slot-repair.md:60-81 (s1146). Premise re-verified at source by s1148 2026-07-28: e2e/lane-c-activations-assay-office.spec.ts:24-33 still holds the old char-jumper-sheet-rotation matrix while the loop at :88 waits on slot char.bandit_base, whose contract entry (characters.v2.json slots[1]) is a 4x8 walk8 grid with rowDirections [s,w,e,n] and aliases se/ne->e, sw/nw->w.",
           "authoredBy": "s1148 (fire-authored, attended review welcome)",
-          "mergeHash": null,
+          "mergeHash": "c727a5b7a63db24c62f9c8bccafb708d27175495",
           "authorNotes": "STALE-TEST REPAIR, e2e-only. HARD RULE (scope 5): expectations are DERIVED from the contract, never observed from a running game -- a runtime/contract disagreement is a finding to REPORT, not a number to paste (the vp-02d failure mode). ZERO src/ diff is required; if the cure looks like a runtime fix, that is scope 5, report it. s1148 added an analysis F-1146-4 itself does not contain: the mirrored column must ALSO change -- the new sheet has explicit e AND w rows, so nw/sw are no longer produced by mirroring and must become false; rebuilding only the filename column would just move the red from :99 to :100 (the third instance of the row-1-says-nothing-about-rows-2..N shape in this thread)."
         }
       ]
