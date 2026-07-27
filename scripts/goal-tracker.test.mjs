@@ -37,9 +37,25 @@ const byId = new Map(leaves.map((leaf) => [leaf.id, leaf]));
 //                and it has no mergeHash to refuse it with (its own run was a lawful STOP), so
 //                the status word is the ONLY thing that can stop a re-queue. cw-02-wrecker-
 //                target-premise is the live example (it read a bare CLEAR before s1123).
+// 'stopped' added s1146 — same "vocabulary follows the practice" reasoning again, but note WHICH
+// direction the reconciliation ran, because it is the opposite of a guard being widened to suit its
+// data: drain-block-check.mjs:46 has listed 'stopped' in TERMINAL_CLOSED_STATUSES all along, and it
+// was THIS schema that was missing the word. s1144 recorded a lawful measure-first STOP as the
+// near-miss 'stopped-lawful' (F-1146-2) — a value NO consumer reads, exactly the failure mode the
+// F-1123-1 rider below already polices for the 'mergeCommit' KEY, one level up at the VALUE.
+// It is load-bearing, not cosmetic: a lawful STOP correctly carries no mergeHash, so — per the
+// superseded note above — the status word is the ONLY thing that can refuse a re-queue, and while
+// the word was unrecognised the master read a bare CLEAR and was re-queueable with its own repair
+// live on lane-b (Mistake #8 shape, measured s1146).
+//   stopped = the run halted lawfully at its own gate, the question is NOT carried down yet ->
+//             NOT re-queueable. Prefer this over 'superseded' while the successor is still in
+//             flight; 'superseded' claims a successor that MERGED and would be a lie until it does.
+// STILL DIVERGENT, deliberately not papered over (F-1146-3): drain-block-check also knows 'void'
+// and 'abandoned', which this set still rejects. Unused today — add them when practice needs them,
+// not speculatively.
 const statuses = new Set([
   'planned', 'queued', 'building', 'blocked', 'diagnosed',
-  'merged', 'shipped', 'superseded', 'verified-by-owner',
+  'merged', 'shipped', 'superseded', 'stopped', 'verified-by-owner',
 ]);
 
 test('goal tree schema is valid', () => {
