@@ -67,11 +67,38 @@ every E6 cell is unambiguously its own raw.
 
 ## Findings
 
-### F-1154-1 — the art runner committed 428 files to `main` in one unscoped commit (MEDIUM, process)
+### F-1154-1 — a bare `git commit` in the art runner published a stale INDEX (MEDIUM, process)
 `c7601082` carries the **8 real deliverables** (6 portraits + sheet + LEDGER) and **420 files that are
-not this slice**: **18 `.wrangler/tmp/**` build-scratch bundles** and ~402 files of `artifacts/`,
-`reviews/shots-*`, `logs/session-scratch` churn. This violates the path-scoped-`git add` law
-(CLAUDE.md §4.2) — the runner swept the whole dirty tree.
+not this slice**.
+
+⚠️ **My first reading of this was wrong, and the correction is the finding.** I wrote it up as "the
+runner swept the whole dirty tree with an unscoped `add`" — the familiar shape. Then I read
+`scripts/lane-runner-v3.sh:82` and the ART/repo-root branch is **already correctly scoped**:
+
+```sh
+( cd "$wd" && git add -A -- assets artifacts && git commit -q -m "runner($slot): $name" )
+```
+
+That pathspec **cannot** stage `.wrangler/tmp/**`. So the `add` is not the leak — the **bare
+`git commit` that follows it is**, because a commit with no pathspec publishes *the entire staged
+index*, including whatever someone else left staged.
+
+✅ **Verified by content, not inference — 75 files in the commit lie outside `assets|artifacts`**, and
+the added ones are dated debris from **long-departed fires**: `logs/session-scratch/s1126-*.mjs`,
+`s1134-handoff.txt`, `s1134-line1.txt` (status `A`), plus the 18 `.wrangler/tmp` bundles and 50
+modified `reviews/shots-*` / `logs/*`. Those s1126 and s1134 scratch files were staged **days** ago
+and sat in the index unnoticed until this art run's commit adopted them.
+
+🔑 **This is the sibling-script class, not a new bug.** `019e943a` (s1109) cured exactly this family
+for **lane** commits — but it cured the *`add`* on the **lane** branch (`:95`), and the defect that
+actually bit lives in the *`commit`* on the **art** branch (`:82`). Both branches still end in a
+pathspec-less `git commit`, so **the lane path carries the identical latent hazard** even though its
+`add` is now excluded correctly.
+
+**Fixed here (both branches, the class not the instance):** the commit on `:82` and `:95` now carries
+its own pathspec, so it can only ever publish the paths that slot is allowed to write. ⚠️ The runner
+was **live** (pid 35584) when I edited it, so the fix is **inert until the runner next restarts** —
+called out in the handoff rather than assumed.
 
 - **Not on origin** at discovery (`git log origin/main..main` was exactly this one commit), so nothing
   was published. I did **not** rewrite history: the commit contains real, wanted deliverables, and the
@@ -83,9 +110,13 @@ not this slice**: **18 `.wrangler/tmp/**` build-scratch bundles** and ~402 files
   tracked-clean pre-flight a guaranteed STOP. **`git status` is now clean, so the main slot is
   pre-flightable again.** That unblocks the main lane, but it resolved an **open owner fork by
   accident**, which is the owner's call to keep or revert, not a fire's.
-- **Fixed here (additive, reversible):** `.wrangler/` added to `.gitignore` so the scratch cannot be
-  re-swept. **Owner-gated remainder:** `git rm --cached .wrangler/tmp/**` to untrack the 18 already-
-  committed scratch files (an index deletion — not a fire's call).
+- **Also fixed here (additive, reversible):** `.wrangler/` added to `.gitignore` so the scratch cannot
+  be re-staged. **Owner-gated remainder:** `git rm --cached .wrangler/tmp/**` to untrack the 18
+  already-committed scratch files (an index deletion — not a fire's call).
+- **Standing hazard this exposes, worth more than the incident:** *any* bare `git commit` in this repo
+  publishes whatever is staged, and this tree demonstrably accumulates stale staged files across
+  sessions. The house law already says path-scoped `git add`; on this evidence it should say
+  **path-scoped `git commit`** too.
 
 ### F-1154-2 — the F-1120-1 ground-warmth guard is under-specified, and one portrait fails the unstated half (LOW, convention)
 Row 60 says "ground warmth R−B"; row 61 says "60×60 corner"; the master says "report the number".

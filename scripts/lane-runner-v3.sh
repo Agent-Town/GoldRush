@@ -79,7 +79,13 @@ while true; do
             # s283 (owner-authorized 2026-07-10): a slot resolving to repo ROOT (art, when
             # worktrees/art is absent) must NEVER `add -A` — five sweep incidents (bfadfc2,
             # ff46a53, ...). Scope to the surfaces art tasks legitimately write.
-            ( cd "$wd" && git add -A -- assets artifacts && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
+            # F-1154-1 (s1154): the `add` above was ALREADY correctly scoped — the leak was the
+            # bare `git commit` after it, which publishes the whole STAGED INDEX regardless of
+            # what was just added. c7601082 shipped 75 files outside this pathspec, including
+            # .wrangler/tmp bundles and logs/session-scratch/s1126-*, s1134-* staged DAYS earlier
+            # by departed fires. Giving the commit its own pathspec makes it structurally unable
+            # to publish anything this slot is not allowed to write.
+            ( cd "$wd" && git add -A -- assets artifacts && git commit -q -m "runner($slot): $name" -- assets artifacts ) >>"$log" 2>&1 || true
           else
             # F-1108-2 / F-1109-3 (fixed s1109): a bare `add -A` swept live scratch into lane
             # commits, so a run that truthfully reported "no repo change" still moved its branch
@@ -92,7 +98,11 @@ while true; do
             # so excluding them cannot lose lane work, which is the property that matters here
             # (this commit exists per s76 precisely so lane output is never lost).
             # Measured on the live tree: 18 debris entries -> 0, content unaffected.
-            ( cd "$wd" && git add -A -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
+            # F-1154-1 (s1154): same pathspec now given to the COMMIT, not just the add — a bare
+            # commit here would publish a stale index exactly as the art branch above did. This
+            # branch never exhibited it (its excludes kept the index clean), so this is the class
+            # fix, not an incident fix.
+            ( cd "$wd" && git add -A -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' && git commit -q -m "runner($slot): $name" -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' ) >>"$log" 2>&1 || true
           fi
         fi
         mv "$run" "$ROOT/tasks/done/$stamp-$name"
