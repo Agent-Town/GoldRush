@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1130 2026-07-27).** Drained s1043: lane/m3 `46146b0b` → main **`5227409f`** (`git merge-base --is-ancestor` = true), review `reviews/tl-03-window-3-ticker-stats.md`. Content probe on main today: both deliverables exist — `scripts/ticker-stats.mjs` and `scripts/test-ticker-stats.mjs`. **TL-03 is COMPLETE (all three windows).** This master had **no done-move and no goal leaf**, so it read as live lane-a work; see F-1130-4. Retained per the RETENTION LAW as the authoring record.
+
 # lane-a: TL-03 WINDOW 3 — the Ticker/Gazette quotes the ONE endpoint (real numbers, never invented)
 
 **FIRE-AUTHORED s1042 (attended review welcome).** Closes the last open window of an owner-ordered

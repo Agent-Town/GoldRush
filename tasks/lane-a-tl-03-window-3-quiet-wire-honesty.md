@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1130 2026-07-27).** Drained s1043: lane/m3 `428c01d5` → main **`64f50507`** (`git merge-base --is-ancestor` = true), review `reviews/tl-03-window-3-quiet-wire-honesty.md`. Content probe on main today confirms **both** of its scopes landed: `scripts/ticker-stats.mjs:7` `const EMPTY_LINE = 'the office opens with the first assay.'` (the F-1043-2(a) split, byte-matching shipped Window 2) and `:169` `class StatsEndpointReadError` (the F-1043-1 stderr diagnostic). This master had **no done-move and no goal leaf**, so it read as live lane-a work; see F-1130-4. Retained per the RETENTION LAW as the authoring record.
+
 # lane-a: TL-03 Window 3 corrective — "the wire is quiet" must mean the wire IS quiet
 
 **FIRE-AUTHORED s1043 (attended review welcome).** A two-branch honesty fix on tooling that shipped one
