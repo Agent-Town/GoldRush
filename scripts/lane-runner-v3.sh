@@ -81,7 +81,18 @@ while true; do
             # ff46a53, ...). Scope to the surfaces art tasks legitimately write.
             ( cd "$wd" && git add -A -- assets artifacts && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
           else
-            ( cd "$wd" && git add -A && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
+            # F-1108-2 / F-1109-3 (fixed s1109): a bare `add -A` swept live scratch into lane
+            # commits, so a run that truthfully reported "no repo change" still moved its branch
+            # 1 ahead — and that debris commit then STOPs the NEXT task on the lane, because a
+            # pre-flight cannot tell debris from content and correctly refuses to guess. It cost
+            # rf-37 a second 49k-token run (s1108) and forced s1109 to land the plaza lift
+            # path-scoped out of a 24-file / 10,824-insertion commit holding 2 files of content.
+            # These three paths are NEVER authored by a lane task — .wrangler is wrangler's own
+            # bundle scratch and the two logs are the runner's own accounting, owned by main —
+            # so excluding them cannot lose lane work, which is the property that matters here
+            # (this commit exists per s76 precisely so lane output is never lost).
+            # Measured on the live tree: 18 debris entries -> 0, content unaffected.
+            ( cd "$wd" && git add -A -- . ':(exclude).wrangler' ':(exclude)logs/factory-usage.json' ':(exclude)logs/usage-history.jsonl' && git commit -q -m "runner($slot): $name" ) >>"$log" 2>&1 || true
           fi
         fi
         mv "$run" "$ROOT/tasks/done/$stamp-$name"
