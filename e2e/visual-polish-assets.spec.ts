@@ -5,7 +5,7 @@ import { PNG } from 'pngjs';
 
 const batch001Slots = [
   'char.hero',
-  'char.claim_jumper',
+  'char.bandit_base',
   'node.gold_seam',
   'bld.sentry_beacon',
   'terrain.bank',
@@ -84,7 +84,7 @@ test('batch-001 generated asset slots load and stay playable', async ({ page }, 
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(1, 5));
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.enemiesAlive ?? 0)).toBe(1);
   await expect
-    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.claim_jumper'] ?? 0))
+    .poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.assetSprites['char.bandit_base'] ?? 0))
     .toBe(1);
 
   await expectNonblankCanvas(page);

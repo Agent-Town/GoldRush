@@ -736,7 +736,7 @@ test('captures VP-02 desktop and narrow screenshots', async ({ page }, testInfo)
     window.__GR_TEST__?.spawnPack(1, 6);
   });
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.loaded === true);
-  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.loaded === true);
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.loaded === true);
   await page.addStyleTag({ content: '.lil-gui, .dg.ac { display: none !important; }' });
 
   fs.mkdirSync(shotDir, { recursive: true });

@@ -216,17 +216,17 @@ test('Claim Jumper walk8 keeps the old stride duration at higher frame count', a
   });
   await page.waitForFunction(
     () =>
-      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.clip === 'walk' &&
-      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.frameCount === 8,
+      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.clip === 'walk' &&
+      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.frameCount === 8,
   );
-  const jumper = await sprite(page, 'char.claim_jumper');
+  const jumper = await sprite(page, 'char.bandit_base');
 
   await page.evaluate(() => {
     window.__GR_TEST__?.clearEnemies();
     window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 5.4);
   });
-  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.fps ?? 0) > 12);
-  const fastJumper = await sprite(page, 'char.claim_jumper');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.fps ?? 0) > 12);
+  const fastJumper = await sprite(page, 'char.bandit_base');
 
   expect(hero.frameCount).toBe(4);
   expect(hero.sourceFrameKey).toContain('char-hero-sheet-walk4-');

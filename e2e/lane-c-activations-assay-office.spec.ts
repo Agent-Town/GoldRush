@@ -90,12 +90,12 @@ test('claim jumpers walk through the 8-way rotation matrix', async ({ page }) =>
     await page.evaluate((pos) => window.__GR_TEST__?.spawnEnemyAt(pos.x, pos.z), spawn);
     await page.waitForFunction(
       (expected) => {
-        const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper'] as SpriteSnapshot | undefined;
+        const snapshot = window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base'] as SpriteSnapshot | undefined;
         return snapshot?.loaded === true && snapshot.clip === 'walk' && snapshot.direction === expected;
       },
       direction,
     );
-    const snapshot = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper'] as SpriteSnapshot);
+    const snapshot = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base'] as SpriteSnapshot);
     expect(frames).toContain(snapshot.frameKey);
     expect(snapshot.mirrored).toBe(mirrored);
   }

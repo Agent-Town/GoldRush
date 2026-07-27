@@ -281,8 +281,8 @@ test('action clips stay on coarse orientation cells and jumper diagnostics stay 
   expect(actionSamples.aimSouth.frameKey).toBe('char-hero-sheet-rotation-f-r0c0.png');
 
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(1, 5));
-  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.loaded === true);
-  const jumper = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper'] as SpriteSnapshot);
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.loaded === true);
+  const jumper = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base'] as SpriteSnapshot);
   expect(Object.keys(jumper).sort()).toEqual(['clip', 'fps', 'frame', 'frameCount', 'frameKey', 'loaded'].sort());
 
   expect(errors.consoleErrors).toEqual([]);

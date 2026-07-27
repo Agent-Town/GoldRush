@@ -73,17 +73,17 @@ test('walk cadence is speed-scaled and restart keeps phase', async ({ page }) =>
   });
   await page.waitForFunction(
     () =>
-      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.clip === 'walk' &&
-      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.frameCount === 8,
+      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.clip === 'walk' &&
+      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.frameCount === 8,
   );
-  const jumper = await spriteSmoothness(page, 'char.claim_jumper');
+  const jumper = await spriteSmoothness(page, 'char.bandit_base');
 
   await page.evaluate(() => {
     window.__GR_TEST__?.clearEnemies();
     window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 5.4);
   });
-  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.fps ?? 0) > 12);
-  const fastJumper = await spriteSmoothness(page, 'char.claim_jumper');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.fps ?? 0) > 12);
+  const fastJumper = await spriteSmoothness(page, 'char.bandit_base');
 
   expect(heroBeforeStop.fps).toBeCloseTo(9.5, 1);
   expect(jumper.frameCount).toBe(8);
