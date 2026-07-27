@@ -4,7 +4,7 @@
 - **Branch/tip:** `lane/m3` @ `6acfd18f` (base `59d94c71`)
 - **Drained by:** s1137 fire, 2026-07-27
 - **Verdict:** **ACCEPT (merge).** One assertion realigned onto the shipped menu; the 4
-  remaining reds proven to be a *different, older* supersession — diagnosed here as F-1137-3.
+  remaining reds proven to be a *different, older* supersession — diagnosed here as F-1137-4 (this review originally mis-labelled it F-1137-3, which BACKLOG:1438 canonically assigns to 082's own drain; corrected s1139 per F-1138-4).
 - Runner's own report preserved at `reviews/082-town-t6-ledger-nav-align-runner-report.md`.
 
 ## What it does
@@ -49,7 +49,7 @@ asserted empty by `assertNoErrors` in every passing test, both projects.
 
 ## Findings
 
-### F-1137-3 — the 4 remaining reds are RF-03b's INTENDED SUPERSESSION, and s931's corrective missed this one file (non-blocking, corrective owed)
+### F-1137-4 — the 4 remaining reds are RF-03b's INTENDED SUPERSESSION, and s931's corrective missed this one file (non-blocking, corrective owed)
 
 All four failures are the same assertion in two tests — `assay-bench` never visible after
 `town-open-assay`, at `:125` and `:170`, both projects. They are **fingerprint-identical to
