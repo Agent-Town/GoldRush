@@ -2206,6 +2206,14 @@
           "mergeHash": "e6961aee174c25bc9a5493ad89d407b0f1ed82d1"
         },
         {
+          "id": "vp-02f-stale-and-flaky-assertions",
+          "title": "Retire two vp-02 test debts. F-1137-1: vp-02b:292 waits for NE to emit the EAST keys rotation2-f-r0c2/c3, an expectation satisfiable only while the alias bug cured by vp-02e (e6961aee) was present; proven cure-caused by an A/B under identical conditions (control PASS/PASS, treatment FAIL/FAIL). F-1136-1: vp-02-sprite-animation:388 asserts the texture count exactly with no settle, while the same test already gives draw calls a steadyCalls() poll; proven flaky by alternation on an unchanged commit. Test-only, no src.",
+          "taskFile": "lane-vp-02f-stale-and-flaky-assertions.md",
+          "status": "queued",
+          "spec": "reviews/vp-02e.md#F-1137-1",
+          "note": "FIRE-AUTHORED s1137 from the vp-02e drain. Scope 4 requires a mutation proof so the settled assertion cannot go vacuous. Explicitly EXCLUDES :547 (F-1137-2, cause undetermined)."
+        },
+        {
           "id": "vp-02-anim-key-staleness",
           "title": "Cure the pre-existing anim-red cluster owed since s459 (BACKLOG:259 F-1, \"owed corrective, not gait\"). Single root cause verified at source s1134: the s37/batch-005R2 female-hero sheet swap (-f-) was never reflected in e2e/vp-02-sprite-animation.spec.ts, which still asserts pre--f- filenames in four places -- the 8-direction table (:29-36), a route-abort glob that now matches nothing (:355), the fallback expectation hero-homesteader.png vs the contract fallback hero-homesteader-f.png (:358), and the E/W frameKey assertions (:554-570). Test-only repair; the contract characters.v2.json is the binding source of truth.",
           "status": "merged",
@@ -2311,12 +2319,13 @@
         {
           "id": "082-town-t6-ledger-nav-align",
           "title": "Align the town-t6 plain-menu nav assertion with the shipped Claim Ledger button. RED on main since 2ca5d58b (2026-07-09), orthogonal to 081.",
-          "status": "queued",
+          "status": "merged",
           "taskFile": "082-town-t6-ledger-nav-align.md",
           "lane": "lane-a",
           "spec": "reviews/081.md#F-081-1",
           "authoredBy": "s327; RE-HOMED s1136",
-          "drainNotes": "s1136 RE-HOME, not a re-author: the design was never blocked, the SLOT was. Its old MAIN-slot pre-flight demanded tracked-clean and main carries ~330 tracked artifact/log churn files, so queueing it bought a guaranteed pre-flight STOP false-done (F-1132-9). s1135 named the fork sweep-or-re-home; re-homing is the reversible half and the churn sweep stays an open owner-facing question, NOT decided here. Safe-dupe pre-proved: lane/m3 was 1 ahead at b9f1d184 whose only file is byte-identical to main (merged 96568621), so the reset destroys nothing -- pre-flight orders the unique-blob invariant re-check anyway. F-1136-3: the ledger rider telling the fixer to fold in the conditional Load-a-claim button is WITHDRAWN, verified at the seed -- seedProfile (spec :20-32) calls localStorage.clear() and writes only profile + town name, so slots.manual is empty and suspend is absent and NEITHER conditional button renders; scope 1 is correct exactly as first written. Scope 3 added: a nav that renders anything else is a STOP-and-report, never an expectation adjusted to match observed runtime (the vp-02d failure mode, s1135)."
+          "drainNotes": "s1136 RE-HOME, not a re-author: the design was never blocked, the SLOT was. Its old MAIN-slot pre-flight demanded tracked-clean and main carries ~330 tracked artifact/log churn files, so queueing it bought a guaranteed pre-flight STOP false-done (F-1132-9). s1135 named the fork sweep-or-re-home; re-homing is the reversible half and the churn sweep stays an open owner-facing question, NOT decided here. Safe-dupe pre-proved: lane/m3 was 1 ahead at b9f1d184 whose only file is byte-identical to main (merged 96568621), so the reset destroys nothing -- pre-flight orders the unique-blob invariant re-check anyway. F-1136-3: the ledger rider telling the fixer to fold in the conditional Load-a-claim button is WITHDRAWN, verified at the seed -- seedProfile (spec :20-32) calls localStorage.clear() and writes only profile + town name, so slots.manual is empty and suspend is absent and NEITHER conditional button renders; scope 1 is correct exactly as first written. Scope 3 added: a nav that renders anything else is a STOP-and-report, never an expectation adjusted to match observed runtime (the vp-02d failure mode, s1135).",
+          "mergeHash": "cc663f5236606b5fc7a59753a4744637b12e2087"
         }
       ]
     },
