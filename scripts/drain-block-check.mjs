@@ -32,6 +32,18 @@ const BACKLOG = 'tasks/BACKLOG.md';
 // renames a file but forgets the leaf should still be stopped.
 const FILENAME_BLOCK_MARKERS = [/do-not-drain/i, /OWNER-GATED/i];
 const TERMINAL_SHIPPED_STATUSES = new Set(['merged', 'shipped']);
+// F-1123-3 (s1123). The two refusal arms below both assume a terminal task LEFT A COMMIT:
+// status merged/shipped, or a mergeHash that is an ancestor of main. A master whose question is
+// dead but which never merged code has NEITHER — its own run can have been a lawful STOP with a
+// byte-identical tree, so there is no hash to refuse it with, and its lifecycle word is the ONLY
+// thing that can stop a re-queue. Measured live: cw-02-wrecker-target-premise was overturned at
+// source by s1116 and carried down two further layers that BOTH merged, yet `--queue` printed a
+// bare ✅ CLEAR — and still did after it was correctly relabelled "superseded", which is how a
+// data-only fix would have re-created F-1117-1 under a new spelling.
+// Keep this set disjoint from "diagnosed", which is deliberately NON-terminal: it means the
+// diagnosis landed and follow-up work is genuinely OWED, so the master must stay queueable
+// (calibrate-suite-workers is the live example — s1119 removed its mergeHash on purpose).
+const TERMINAL_CLOSED_STATUSES = new Set(['superseded', 'void', 'abandoned', 'stopped']);
 
 function isMainAncestor(mergeHash) {
   if (typeof mergeHash !== 'string' || !mergeHash.trim()) return false;
@@ -187,10 +199,21 @@ function main() {
   if (queue) {
     const shippedByStatus = TERMINAL_SHIPPED_STATUSES.has(leaf.status);
     const shippedByAncestry = !shippedByStatus && isMainAncestor(leaf.mergeHash);
+    const closedByStatus = TERMINAL_CLOSED_STATUSES.has(leaf.status);
     if (shippedByStatus || shippedByAncestry) {
       console.log(`  ⛔ ALREADY SHIPPED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
       console.log(`    mergeHash="${leaf.mergeHash || '(not recorded)'}"`);
       console.log(`    refusal arm=${shippedByStatus ? `status="${leaf.status}"` : `mergeHash is an ancestor of main (status="${leaf.status}")`}`);
+      process.exit(1);
+    }
+    if (closedByStatus) {
+      // Deliberately a DIFFERENT headline: "already shipped" would be a lie for a master that
+      // never merged a line, and a wrong reason teaches the next fire the wrong lesson.
+      console.log(`  ⛔ CLOSED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
+      console.log(`    refusal arm=status="${leaf.status}" (terminal, and it left no commit to refuse it with)`);
+      console.log(`    This master's question is dead — typically overturned or carried down by a`);
+      console.log(`    successor that merged. Re-queueing it re-derives finished work (Mistake #8).`);
+      console.log(`    If you believe the question is live again, author a SUCCESSOR; do not revive this leaf.`);
       process.exit(1);
     }
   }

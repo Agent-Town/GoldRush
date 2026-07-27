@@ -8,13 +8,39 @@ import { fileURLToPath } from 'node:url';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const goals = JSON.parse(fs.readFileSync(path.join(root, 'tasks/goals.json'), 'utf8'));
-const leaves = goals.goals.flatMap((goal) => goal.subgoals.flatMap((subgoal) => subgoal.tasks));
+// F-1123-1 (s1123): this used to be `goals.goals.flatMap(g => g.subgoals.flatMap(s => s.tasks))`,
+// which silently skipped every ROOT-LEVEL `goal.tasks` entry. Six goals carry them (ten-eras 16,
+// world-3d 2, factory-infra 25, art-brand 1, charter-press 7, foundry 8), so 59 of 371 task
+// entries — 16% of the tree, including the whole factory-infra ladder — were never validated.
+// That blind spot is HOW the defects below got written in the first place: 9 leaves with a status
+// this vocabulary rejects, 2 leaves recording evidence under the unread key "mergeCommit", and a
+// duplicate id (foundry-book) that :31's uniqueness assert could not see. Walk the tree, never a
+// fixed depth. NOTE: scripts/dashboard-gen.sh:358 still has the identical bug (F-1123-2).
+const collectTasks = (node, out = []) => {
+  for (const task of node.tasks ?? []) out.push(task);
+  for (const subgoal of node.subgoals ?? []) collectTasks(subgoal, out);
+  return out;
+};
+const leaves = goals.goals.flatMap((goal) => collectTasks(goal));
 const byId = new Map(leaves.map((leaf) => [leaf.id, leaf]));
 // 'blocked' added s1097: a leaf whose work is FINISHED and gated on an owner decision has no other
 // honest word — 'queued' would claim a queue entry that does not exist. s1096 parked rf-34 that way
 // (F-1096-2) and this guard went red on its own bookkeeping commit, so the vocabulary follows the
 // practice. A blocked leaf must say WHY, or the state is just a stall with no owner question in it.
-const statuses = new Set(['planned', 'queued', 'building', 'blocked', 'merged', 'verified-by-owner']);
+// 'shipped', 'diagnosed' and 'superseded' added s1123 — same "vocabulary follows the practice"
+// reasoning as 'blocked' above, and they were only invisible until now because of F-1123-1.
+// The distinction between the last two is load-bearing for drain-block-check.mjs's --queue arm:
+//   diagnosed  = the diagnosis landed and follow-up work is genuinely OWED -> STAYS re-queueable.
+//                calibrate-suite-workers is the live example; s1119 deliberately REMOVED its
+//                mergeHash so the ancestry arm could not refuse work that is still owed.
+//   superseded = the question is dead, carried down by successors that merged -> NOT re-queueable,
+//                and it has no mergeHash to refuse it with (its own run was a lawful STOP), so
+//                the status word is the ONLY thing that can stop a re-queue. cw-02-wrecker-
+//                target-premise is the live example (it read a bare CLEAR before s1123).
+const statuses = new Set([
+  'planned', 'queued', 'building', 'blocked', 'diagnosed',
+  'merged', 'shipped', 'superseded', 'verified-by-owner',
+]);
 
 test('goal tree schema is valid', () => {
   assert.equal(goals.version, 1);
@@ -30,21 +56,30 @@ test('goal tree schema is valid', () => {
   assert.equal(goals.goals[0].subgoals.length, 14); // +era-doors +release-e1 (ratified 2026-07-22)
   assert.equal(new Set(leaves.map((leaf) => leaf.id)).size, leaves.length);
 
+  const checkLeaf = (leaf) => {
+    assert.match(leaf.id, /^[a-z0-9-]+$/);
+    assert.ok(leaf.title);
+    assert.ok(statuses.has(leaf.status), `${leaf.id}: invalid status ${leaf.status}`);
+    if (leaf.taskFile) assert.match(leaf.taskFile, /^[a-zA-Z0-9_-]+\.md$/);
+    if (leaf.mergeHash) assert.match(leaf.mergeHash, /^[0-9a-f]{40}$/);
+    if (leaf.status === 'merged') assert.ok(leaf.mergeHash, `${leaf.id}: merged without Git evidence`);
+    if (leaf.status === 'blocked') assert.ok(leaf.blockedReason, `${leaf.id}: blocked without a reason`);
+    // F-1123-1 rider: two leaves recorded their evidence as "mergeCommit", a key NO consumer reads
+    // (this test asserts leaf.mergeHash; drain-block-check.mjs's isMainAncestor reads
+    // leaf.mergeHash). Such a leaf is simultaneously "merged without evidence" here and "not
+    // shipped" to the queue guard — a Mistake-#8 shape. Reject the near-miss key by name.
+    assert.equal(leaf.mergeCommit, undefined, `${leaf.id}: use "mergeHash", not "mergeCommit"`);
+  };
+
   for (const goal of goals.goals) {
     assert.match(goal.id, /^[a-z0-9-]+$/);
     assert.ok(goal.title && goal.subgoals.length);
+    // Root-level goal.tasks are validated too — see F-1123-1 at the top of this file.
+    for (const leaf of goal.tasks ?? []) checkLeaf(leaf);
     for (const subgoal of goal.subgoals) {
       assert.match(subgoal.id, /^[a-z0-9-]+$/);
       assert.ok(subgoal.title && subgoal.tasks.length);
-      for (const leaf of subgoal.tasks) {
-        assert.match(leaf.id, /^[a-z0-9-]+$/);
-        assert.ok(leaf.title);
-        assert.ok(statuses.has(leaf.status), `${leaf.id}: invalid status ${leaf.status}`);
-        if (leaf.taskFile) assert.match(leaf.taskFile, /^[a-zA-Z0-9_-]+\.md$/);
-        if (leaf.mergeHash) assert.match(leaf.mergeHash, /^[0-9a-f]{40}$/);
-        if (leaf.status === 'merged') assert.ok(leaf.mergeHash, `${leaf.id}: merged without Git evidence`);
-        if (leaf.status === 'blocked') assert.ok(leaf.blockedReason, `${leaf.id}: blocked without a reason`);
-      }
+      for (const leaf of subgoal.tasks) checkLeaf(leaf);
     }
   }
 });
