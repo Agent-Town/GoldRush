@@ -1,7 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
-import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { ACTIVE_EPOCH_KEY, listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
 
 const ARTIFACT_DIR = 'artifacts/cw-02-escort';
 const PYLONS = [
@@ -57,6 +57,13 @@ async function walkToTavern(page: Page): Promise<void> {
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt ?? null), { timeout: 2_000 }).toBe('tavern');
 }
 
+async function goToContractPage(page: Page, id: string): Promise<void> {
+  const chapter = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === id));
+  if (!chapter) throw new Error(`Missing chapter for ${id}`);
+  await page.getByTestId(`contract-chapter-tab-${chapter.id}`).click();
+  await expect(page.getByTestId(`contract-card-${id}`)).toBeVisible();
+}
+
 test('board-selected Canyon escort delivers one capacitor crate through a repaired brown-out', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
   const errors = watchErrors(page);
@@ -65,7 +72,8 @@ test('board-selected Canyon escort delivers one capacitor crate through a repair
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 24);
   await walkToTavern(page);
   await page.getByTestId('town-open-board').click();
-  await page.getByTestId('contract-page-dot-e3-canyon-works').click();
+  // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
+  await goToContractPage(page, 'e3-canyon-works');
   await expect(page.getByTestId('contract-launch-e3-canyon-works')).toHaveAttribute('data-contract-mode', 'escort');
   await page.evaluate(() => history.replaceState(null, '', '/?debug&nowaves&nolevel&nopause&seed=cw-02'));
   await page.getByTestId('contract-launch-e3-canyon-works').click();

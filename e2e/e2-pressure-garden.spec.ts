@@ -2,7 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
-import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { ACTIVE_EPOCH_KEY, listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
 
 const ARTIFACT_DIR = path.resolve('artifacts/e2-pressure-garden');
 const SLUICE_BANK = { x: 18, z: 7 } as const;
@@ -56,6 +56,13 @@ async function hold(page: Page, key: string, ms: number): Promise<void> {
   await page.keyboard.up(key);
 }
 
+async function goToContractPage(page: Page, id: string): Promise<void> {
+  const chapter = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === id));
+  if (!chapter) throw new Error(`Missing chapter for ${id}`);
+  await page.getByTestId(`contract-chapter-tab-${chapter.id}`).click();
+  await expect(page.getByTestId(`contract-card-${id}`)).toBeVisible();
+}
+
 test('Pressure Garden unlocks after Trestle and teaches the pressure loop', async ({ page }, testInfo) => {
   test.setTimeout(60_000);
   const errors = watchErrors(page);
@@ -66,7 +73,8 @@ test('Pressure Garden unlocks after Trestle and teaches the pressure loop', asyn
   await hold(page, 'KeyW', 850);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
-  await page.getByTestId('contract-page-dot-e2-pressure-garden').click();
+  // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
+  await goToContractPage(page, 'e2-pressure-garden');
 
   const card = page.getByTestId('contract-card-e2-pressure-garden');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');

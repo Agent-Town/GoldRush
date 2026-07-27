@@ -1,6 +1,6 @@
 import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
-import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { ACTIVE_EPOCH_KEY, listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
 
 const SLUICE_BANK = { x: 24, z: 7 } as const;
 
@@ -48,6 +48,13 @@ async function hold(page: Page, key: string, ms: number): Promise<void> {
   await page.keyboard.up(key);
 }
 
+async function goToContractPage(page: Page, id: string): Promise<void> {
+  const chapter = listEpochs().find((epoch) => loadEpoch(epoch.id).contracts.some((contract) => contract.id === id));
+  if (!chapter) throw new Error(`Missing chapter for ${id}`);
+  await page.getByTestId(`contract-chapter-tab-${chapter.id}`).click();
+  await expect(page.getByTestId(`contract-card-${id}`)).toBeVisible();
+}
+
 test('The Incline boots shipped data: upper cart, lower boss rail, and legal sluice bank', async ({ page }) => {
   test.setTimeout(60_000);
   const errors = watchErrors(page);
@@ -58,7 +65,8 @@ test('The Incline boots shipped data: upper cart, lower boss rail, and legal slu
   await hold(page, 'KeyW', 850);
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
-  await page.getByTestId('contract-page-dot-e2-incline').click();
+  // Chapter tabs since 6822607f; chapter derived from the manifest so no literal can freeze again.
+  await goToContractPage(page, 'e2-incline');
 
   const card = page.getByTestId('contract-card-e2-incline');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');
