@@ -70,6 +70,13 @@ test('menu enters town square, prompts at four shells, exits, then starts normal
   await page.getByTestId('start-menu-enter-town').click();
   await expect(page.getByTestId('town-ui')).toBeVisible();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  const stampMillSlot = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.plaza.slots.find((slot) => slot.id === 'stamp-mill'));
+  console.log(`[town-plaza-slot] ${JSON.stringify(stampMillSlot)}`);
+  expect({
+    id: stampMillSlot?.id,
+    approachKeys: Object.keys(stampMillSlot?.approach ?? {}).sort(),
+    finiteApproach: Number.isFinite(stampMillSlot?.approach.x) && Number.isFinite(stampMillSlot?.approach.z),
+  }).toEqual({ id: 'stamp-mill', approachKeys: ['x', 'z'], finiteApproach: true });
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt ?? null)).toBeNull();
   await shot(page, testInfo, 'square-overview');
 

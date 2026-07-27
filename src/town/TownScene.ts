@@ -180,7 +180,13 @@ export type TownDiagnostics = {
     plotVisible: boolean;
     facadeKey: string;
   }>;
-  plaza: { clearRadius: number; gate: { x: number; z: number }; emptyPlots: number; trailCount: number };
+  plaza: {
+    clearRadius: number;
+    gate: { x: number; z: number };
+    emptyPlots: number;
+    trailCount: number;
+    slots: Array<{ id: string; position: { x: number; z: number }; approach: { x: number; z: number } }>;
+  };
   actors: Array<{
     id: TownActorId;
     name: string;
@@ -2077,6 +2083,7 @@ export class TownScene {
         gate: townPlazaLayout.gate,
         emptyPlots: townBuildings.length - this.visibleBuildings.length,
         trailCount: townPlazaLayout.slots.length + 1,
+        slots: townPlazaLayout.slots.map((slot) => ({ id: slot.id, position: slot.position, approach: slot.approach })),
       },
       actors: TOWN_ACTORS.map((actor) => {
         const runtime = this.townActors.find((item) => item.definition.id === actor.id);
