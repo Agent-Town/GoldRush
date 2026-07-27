@@ -11,11 +11,15 @@
 //
 // Usage: node scripts/probe-s1150-confirmbuild-rate.mjs <base-url> <runs-per-arm> [timescales csv]
 
-import { chromium } from '@playwright/test';
+import { chromium, devices } from '@playwright/test';
 
 const baseURL = process.argv[2] ?? 'http://127.0.0.1:5241';
 const perArm = Number(process.argv[3] ?? 5);
 const timescales = (process.argv[4] ?? '1,10').split(',').map(Number);
+// 4th arg 'device' spreads devices['Desktop Chrome'] into the context the way playwright.config.ts
+// does for the desktop-chrome project (deviceScaleFactor / userAgent / hasTouch / isMobile), which
+// a bare browser.newContext({viewport}) does NOT set. This is the discriminating arm for F-1150-1.
+const useDevice = (process.argv[5] ?? '') === 'device';
 
 if (!Number.isInteger(perArm) || perArm < 1) throw new Error('runs-per-arm must be a positive integer');
 
@@ -25,7 +29,11 @@ const results = [];
 try {
   for (const timescale of timescales) {
     for (let run = 1; run <= perArm; run += 1) {
-      const context = await browser.newContext({ viewport: { width: 1280, height: 800 } });
+      const context = await browser.newContext(
+        useDevice
+          ? { ...devices['Desktop Chrome'], viewport: { width: 1280, height: 800 } }
+          : { viewport: { width: 1280, height: 800 } },
+      );
       const page = await context.newPage();
       await page.addInitScript(() => {
         localStorage.clear();
@@ -83,5 +91,5 @@ const byArm = timescales.map((timescale) => {
   };
 });
 
-console.log(JSON.stringify({ baseURL, perArm, positiveControl: { anyPlacement }, byArm, results }, null, 2));
+console.log(JSON.stringify({ baseURL, perArm, useDevice, positiveControl: { anyPlacement }, byArm }, null, 2));
 if (!anyPlacement) process.exitCode = 2;

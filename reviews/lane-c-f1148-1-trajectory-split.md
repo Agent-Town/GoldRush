@@ -95,18 +95,28 @@ Also equal between the rigs, verified in `playwright.config.ts`: the server (`np
 vite dev server), viewport `1280x800`, and `channel: 'chromium'`. The placement helper is a faithful
 three-step re-implementation of `placeBuildableAt` (same `z+2` teleport offset).
 
-➡️ **Residual difference (? INFERRED — the discriminating test is NOT yet run):** the spec's context
-comes from `devices['Desktop Chrome']`, which also sets `deviceScaleFactor`, `userAgent`, `hasTouch`
-and `isMobile`; the probe's `browser.newContext({ viewport })` sets none of them. If placement
-raycasts through pointer/DPR-dependent math, that is a mechanism. **The one-line test:** spread
-`...devices['Desktop Chrome']` into the probe's `newContext` and re-run the rate probe. If it goes
-5/5, the cure is one line and F-1148-1 is unblocked.
+**Third hypothesis — the device context — also TESTED and REFUTED (I ran it; it was my leading
+inference and it was wrong).** The spec's context comes from `devices['Desktop Chrome']`, which sets
+`deviceScaleFactor`, `userAgent`, `hasTouch` and `isMobile`; `browser.newContext({ viewport })` sets
+none of them, so a pointer/DPR-dependent raycast was a plausible mechanism. Spreading
+`...devices['Desktop Chrome']` into the probe's context (arm added to the rate probe, `timescale=10`,
+5 runs) gives **2/5 pass vs 1/5** — still 3 failures, all `palisade@2,9`. At n=5 that difference is
+noise, not a cure.
 
-⚠️ **Consequence for re-authoring F-1148-1:** a bare-chromium script is **not** rig-equivalent to the
-Playwright test runner for this fixture. Either fix the context (above) or build the instrument as a
-spec run through the test runner. **A retry loop around `confirmBuild` would be the wrong repair** —
-it would paper over an unexplained rig divergence rather than remove it, and the measurement's whole
-value is that it is trustworthy.
+➡️ **The rig divergence is therefore UNEXPLAINED. I am recording it as open rather than closing it
+with a story.** Ruled out: timescale, readiness/`openGame`, dev-server vs dev-server, viewport,
+`channel`, and the device descriptor. What remains unexamined is the rest of what the Playwright
+*test runner* wraps around a context (fixture teardown/isolation, its own tracing/instrumentation,
+artifact and storage handling) — none of which I probed.
+
+⚠️ **Consequence for re-authoring F-1148-1 — and it no longer depends on finding the cause.** A
+bare-chromium script is **not** rig-equivalent to the Playwright test runner for this fixture, and
+three attempts to explain the gap have failed. **Build the instrument as a spec run through the test
+runner**, where placement is empirically reliable (4/4 full runs + 3/3 repeats, zero placement
+failures), instead of continuing to debug a standalone rig. ⛔ **A retry loop around `confirmBuild`
+would be the wrong repair** — it papers over an unexplained divergence, and a measurement's only
+value is that it is trustworthy. ⛔ Equally, do not "fix" it by asserting the device arm works: 2/5
+is not a cure, and shipping it as one would be a fabricated closure.
 
 **Non-blocking** for this merge: both merged files are inert (nothing imports them).
 
