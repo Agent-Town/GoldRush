@@ -55,6 +55,12 @@ test('concurrent appenders preserve every entry and concurrent consumers show on
   const first = consumeNextShowcase(show, { queuePath });
   const second = consumeNextShowcase(show, { queuePath });
   release();
-  assert.deepEqual(await Promise.all([first, second]), [true, false]);
+  // Exactly one consumer wins; WHICH one is a race this test does not control.
+  // consumeNextShowcase takes the lock with timeoutMs:0, so the winner is decided by which
+  // mkdir(2) lands first in the libuv threadpool — [false,true] is as correct as [true,false].
+  // Pinning the order made this a contention flake (F-1154-5: 0/8 in isolation, 1 in 4 under
+  // a full battery). The invariant worth asserting is show-once, which is what these two lines say.
+  const outcomes = await Promise.all([first, second]);
+  assert.deepEqual([...outcomes].sort(), [false, true], `exactly one consumer should win, got ${JSON.stringify(outcomes)}`);
   assert.equal(calls, 1);
 });
