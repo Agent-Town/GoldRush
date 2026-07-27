@@ -6,20 +6,20 @@
 - Date: 2026-07-27
 - Verdict: **STOP — pre-run quiescence gate failed; no calibration run started**
 
-The first run requires two load samples 60 seconds apart with 1-minute load average
-at or below 4.0, zero Chrome-for-Testing processes, and no live foreign Playwright
-process. Both samples had zero Chrome processes and no Playwright process, but the
-1-minute load averages were **9.74** and **7.84**. The instrument therefore did not
-run.
+The first run requires two load samples 60 seconds apart with 1-minute load
+average at or below 4.0, zero Chrome-for-Testing processes, and no live foreign
+Playwright process. Both samples had zero Chrome processes and no Playwright
+process, but the 1-minute load averages were **4.24** and **4.27**. The
+instrument therefore did not run.
 
 ## Pre-flight
 
 - `git log --oneline main..lane/perf` printed only the expected
-  `9614b7eb runner(lane-d): lane-calibrate-suite-workers.md`.
+  `6372de97 runner(lane-d): lane-calibrate-suite-workers-v2.md`.
 - `lane/perf` was reset to current `main`.
 - `grep -n "workers" playwright.config.ts` printed nothing.
 - `node -e "console.log(require('os').cpus().length)"` printed `16`.
-- The prior report's latest commit is the expected VOID addendum:
+- The prior VOID report's latest commit is
   `642c5d5d drain: F-1101-1 calibration report lands VOID — the 17.88% drift was one flaky test, not an unstable box (F-1107-1/2)`.
 
 ## Quiescence evidence
@@ -27,16 +27,16 @@ run.
 Sample 1:
 
 ```text
-2026-07-27T07:12:13Z
-{ 9.74 8.76 7.53 }
+2026-07-27T07:51:32Z
+{ 4.24 4.45 4.67 }
 0
 ```
 
 Sample 2, 60 seconds later:
 
 ```text
-2026-07-27T07:13:21Z
-{ 7.84 8.49 7.53 }
+2026-07-27T07:52:32Z
+{ 4.27 4.43 4.65 }
 0
 ```
 
@@ -51,81 +51,95 @@ The absent fourth line in each sample means
 - `playwright.config.ts` and `package.json` remain unchanged.
 - No pin guard or mutation-control red/green pair exists.
 - Build and test self-checks were not run after the stop condition.
+- No premise contradicted the task; only the quiescence threshold failed.
 
-Re-run the unchanged v2 task when the box can produce two consecutive accepted
-quiescence samples. F-1101-1 remains open.
+Re-run v2 when the box can produce two consecutive accepted quiescence samples.
+F-1101-1 remains open.
 
 ---
 
-## DRAIN ADDENDUM — s1124 (fire-side, added at the gate)
+## DRAIN VERDICT — s1125 (2026-07-27T15:0xZ), attempt 2 of v2
 
-**Drain verdict: ACCEPTED as a lawful STOP.** The master pre-declared "A STOP IS A SUCCESS
-HERE", and this one is honest and firewall-clean: it pinned nothing, softened no threshold,
-and produced no guessed number. Merged **path-scoped to this file alone**.
+**ACCEPTED as the lawful STOP the master pre-declares a SUCCESS.** It pinned nothing, softened no
+threshold, guessed no number, and enumerated precisely what it did not do (§"Required stop
+consequences"). Merged **path-scoped to this file alone**.
 
-### F-1124-2 — what I refused to merge
+**Merge classification.** Three-dot vs merge-base = `reviews/calib-suite-workers-v2.md` **only** —
+a clean single-file docs diff. `scripts/ticker-stats.mjs` appears in the *two-dot* diff only because
+**main moved under the lane** (F-1125-1, committed `109a11ba` at 14:55:58, after this run reset at
+~14:51); it is **MAIN-MOVED-ONLY** and main's version was kept. Zero `src/`, zero `e2e/`.
 
-The runner commit `6372de97` also carried two files its firewall never listed, described in
-the report only as "two unrelated pre-existing artifact edits were preserved":
+✅ **F-1124-2 DID NOT RECUR.** The previous attempt's runner commit swept two unrelated
+`artifacts/**` files into its commit via a broad `git add`, and s1124 had to refuse them to protect
+banked passing evidence. This fire added an explicit ADD-DISCIPLINE clause to the master's firewall
+quoting that finding; **this commit carries exactly one file.** The corrective held.
 
-| file | effect had it merged |
-|---|---|
-| `artifacts/multiplayer-relay/test-multiplayer.json` | `"status":"passed"` (461 checks) → `"status":"failed"` (9) |
-| `artifacts/accounts-worker/test-accounts.json` | 49-line passing check list → 6 lines |
+✅ **The staleness refresh worked as intended.** The pre-flight had pinned `9614b7eb`; this fire
+refreshed it to `6372de97` before queueing, and the run's §Pre-flight confirms it accepted that hash
+and reset cleanly instead of STOPping on a pure bookkeeping mismatch.
 
-That is stale worktree dirt from an earlier local run in `worktrees/lane-d`, swept in by a
-broad `git add`. Merging it would have **destroyed banked passing evidence** under the
-RETENTION LAW. "Preserved" was the wrong verb — they were preserved *into the commit*, the one
-place they must not go. Both remain as pre-existing unstaged churn in the worktree; nothing was
-deleted. The finding is against **add-discipline**, not against the calibration reasoning,
-which was sound throughout.
+ℹ️ Note line: *"Build and test self-checks were not run after the stop condition."* Correct and
+harmless — it stopped before scope 7, so it never observed F-1125-1's red `test:node-guards`.
 
-### F-1124-1 — THE STOP WAS RIGHT, BUT ITS REMEDY NEEDS A TIMING RULE, NOT A "QUIET BOX"
+### 🔴 F-1125-2 — THE QUIESCENCE GATE IS MEASURING A BOX WITH A ~2-CORE OWNER-SIDE BACKGROUND FLOOR, AND `ps` %CPU HAS BEEN THE WRONG INSTRUMENT FOR THREE FIRES RUNNING
 
-The report closes "Re-run the unchanged v2 task on a quiet box." I tested whether this box can
-*become* quiet, because an unchanged re-queue that can never pass would burn one dispatch per
-fire forever — **exactly the failure mode F-1104-2 already fixed once in this same gate**, when
-orphaned Chrome corpses would have STOPped the calibration on every future dispatch.
+The re-queue was made under F-1124-1's rule with the floor checked first and **passing**: three
+samples 60 s apart, factory idle, observer absent (real `setTimeout`, not s1124's core-spinning
+busy-wait) read **2.35 · 2.00 · 3.82**. The dispatch then read **4.24 / 4.27** minutes later. Chasing
+that gap produced the finding.
 
-⚠️ **My first two readings said it could not, and that was my own instrument error — recorded
-here because it is the more useful half of this finding.** At 14:20 and ~14:27 the box read
-5.06 and 5.96 and I was ready to write "the ceiling is unreachable". Both samples were taken
-**while my own gate battery (tsc + build + 12 node guards) was running on the box I was
-measuring.** I was the load. Sampling properly, with the factory genuinely idle:
+⚠️ **First, my own contamination, stated plainly:** the run sampled at **14:51:32 and 14:52:32**, and
+I was running `npm run test:node-guards` batteries in that window, having queued the task at 14:50.
+**I ran a gate battery on the box while the dispatch I had just made was measuring that box.** That
+is the third occurrence of s1124's lesson in two fires — it contaminated its own reading twice, I
+contaminated the *instrument's*. I cannot prove my battery was decisive (a ~10 s burst moves a 1-min
+average only so far), but the protocol error stands regardless of magnitude.
 
-| time (local) | 1-min loadavg |
-|---|---|
-| 14:23:35 | 5.56 |
-| 14:24:05 | 4.63 |
-| 14:24:35 | 4.07 |
-| 14:25:05 | **3.80** |
-| 14:25:35 | 4.53 |
-| 14:26:05 | 4.40 |
-| 14:26:35 | **3.57** |
-| 14:27:05 | **2.99** |
+**Second, and larger: `ps` `%CPU` is a LIFETIME AVERAGE, not an instantaneous reading, and both
+prior readings of this question used it.** s1124 called `spotlightknowledged` "a stuck reindex … on a
+box with 52 days of uptime" — but 52 days was the **box's** uptime, not the process's. I first
+"corrected" this to a 32:50-old transient, then found my own probe had matched a *different*
+`spotlightknowledged` instance (etime 10 days, 0.0%). **Both readings were artefacts of the wrong
+tool.** `top -l 2` (second sample = true instantaneous) settles it:
 
-**The gate CAN pass.** The floor oscillates ~3.0–4.6 and straddles the 4.0 ceiling; two
-consecutive accepted samples 60 s apart is roughly a coin flip, not an impossibility. So:
+| process | instantaneous %CPU | note |
+|---|---|---|
+| `Codex (Renderer)` (ChatGPT.app, pid 58531) | **81.4%** | **largest single consumer; never previously identified** |
+| `spotlightknowledged` (pid 25509) | **74.6%** | real, but ~half the story |
+| `com.apple.Virtualization…` (pid 64183) | **35.7%** | 26 h CPU time |
+| `sublime_text` | 12.1% | |
+| 6 × orphaned `esbuild` daemons | ~2.5% each | alive 11 h+, ~0.16 core total |
 
-1. **Re-queueing v2 unchanged is lawful AND viable.** This STOP is not a second failure of the
-   approach — the instrument never ran, so the escalation law's identical-retry bar is not
-   tripped, and the master itself sanctions an unchanged re-run.
-2. **But time it.** The runner's 9.74/7.84 were sampled at 14:12:13 and 14:13:21 — while
-   **s1123's fire was still live** (its handoff commit lands 14:12:20) *plus* its own codex
-   dispatch. The gate was measuring the factory measuring itself. **Re-queue only onto an idle
-   board**, and expect it to need more than one attempt.
-3. **The cheap owner lever (recommended).** `spotlightknowledged` has been pinned at **91.1% →
-   92.5% → 94.2%** across three samples spanning ~10 minutes, on a box with 52 days of uptime —
-   a stuck reindex holding ~1.0 of load *continuously*. It did **not** decay when everything
-   else did. Killing it, or adding this repo to the Spotlight privacy list, would drop the floor
-   to ~2.0–3.5 and make the gate pass reliably instead of marginally. **This is owner-side and I
-   never kill what I did not start** (v1 gate §65) — flagged, not actioned.
-4. **The 4.0 ceiling may itself be miscalibrated** — 4.0 on a **16-core** box is a 25%
-   utilisation bar, and at load 4 there are still ~12 idle cores for a measurement that uses at
-   most 8. But softening a threshold to reach a nicer number is forbidden by this task's own
-   closing rule, and that binds the drainer as much as the runner. **Reported as a finding; rule
-   followed.** Owner/attended call only.
+⇒ **~2.0–2.2 cores of continuous background load before the factory does anything**, against a
+**4.0** ceiling. The gate is not fighting one stuck daemon; it is fighting a desktop.
 
-**F-1101-1 remains OPEN.** This leaf keeps **no `mergeHash`** and stays re-queueable, for the
-same reason s1119 stripped v1's: a hash means "finished, do not re-queue", and the calibration
-still has not run.
+**Third, the load is volatile independently of the factory.** With nothing of mine running, sampling
+at 30 s intervals gave **3.53 → 3.40 → 4.04 → 4.63 → 9.39 → 7.78**. A rule of "two consecutive
+samples ≤ 4.0" on that series is a coin flip **no matter how well the factory behaves**, which is why
+attempt 1 (9.74/7.84) and attempt 2 (4.24/4.27) both failed while an idle-window probe passed.
+
+### ➡️ RULING: STOP RE-QUEUEING v2. THIS IS NOW AN OWNER ITEM.
+
+Two unchanged dispatches have now been spent on the same environmental blocker in one day. A third
+would be exactly the failure mode F-1104-2 and F-1124-1 each warned about — *an unchanged re-queue
+that can never reliably pass burns one dispatch per fire forever*. The escalation law's
+changed-premise bar is now genuinely engaged: **the premise that must change is the box, not the
+task, and a fire cannot change it** (v1 gate §65: I never kill what I did not start).
+
+**Owner, any ONE of these unblocks F-1101-1 at zero engineering cost** (ranked by cost):
+1. **Quit ChatGPT.app** while a calibration is queued — it is the single largest consumer at 81%.
+2. **Add this repo to the Spotlight privacy list** (System Settings → Siri & Spotlight → Privacy),
+   which is durable and also stops the reindex recurring.
+3. Kill the six orphaned `esbuild` daemons (11 h+ old, no live build).
+4. Stop the `com.apple.Virtualization` VM if it is not in use.
+
+Doing 1 + 2 alone should drop the floor to roughly **2.0–3.0** and make the gate pass reliably rather
+than marginally.
+
+ℹ️ **Unchanged and still owner/attended-only:** the **4.0 ceiling may itself be miscalibrated** —
+25% utilisation on a **16-core** box for a run using at most 8 workers. Reported as a finding and the
+rule followed, per the master's closing clause forbidding threshold-softening, which binds the
+drainer as much as the runner. **I did not touch it.**
+
+**F-1101-1 REMAINS OPEN** — `playwright.config.ts` still declares no `workers` key. The leaf keeps
+**no `mergeHash`** and stays re-queueable, for the same reason s1119 stripped v1's.
