@@ -66,12 +66,20 @@ async function openTown(page: Page): Promise<void> {
 }
 
 async function approachNewsie(page: Page): Promise<void> {
-  await page.keyboard.down('KeyA');
-  await page.waitForTimeout(480);
-  await page.keyboard.up('KeyA');
-  await page.keyboard.down('KeyW');
-  await page.waitForTimeout(520);
-  await page.keyboard.up('KeyW');
+  for (let step = 0; step < 48; step += 1) {
+    if ((await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeBark?.actorId)) === 'newsie') break;
+    const positions = await page.evaluate(() => {
+      const diagnostics = window.__GR_TOWN_DIAGNOSTICS__!;
+      return { player: diagnostics.player, target: diagnostics.actors.find(({ id }) => id === 'newsie')?.position };
+    });
+    if (!positions.target) throw new Error('newsie is absent from town actor diagnostics');
+    const keys: string[] = [];
+    if (Math.abs(positions.target.x - positions.player.x) > 0.6) keys.push(positions.target.x > positions.player.x ? 'KeyD' : 'KeyA');
+    if (Math.abs(positions.target.z - positions.player.z) > 0.6) keys.push(positions.target.z > positions.player.z ? 'KeyS' : 'KeyW');
+    for (const key of keys) await page.keyboard.down(key);
+    await page.waitForTimeout(160);
+    for (const key of keys.reverse()) await page.keyboard.up(key);
+  }
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeBark?.actorId ?? null), { timeout: 8_000 }).toBe('newsie');
 }
 

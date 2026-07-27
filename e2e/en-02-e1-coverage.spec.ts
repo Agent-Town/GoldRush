@@ -174,21 +174,31 @@ async function readCharacterQuoteLines(): Promise<Map<LedgerEntryId, string>> {
   );
 }
 
-async function hold(page: Page, key: string, ms: number): Promise<void> {
-  await page.keyboard.down(key);
-  await page.waitForTimeout(ms);
-  await page.keyboard.up(key);
+async function steerToPrompt(page: Page, prompt: 'schoolhouse' | 'tavern'): Promise<void> {
+  const target = await page.evaluate((id) => {
+    const slot = window.__GR_TOWN_DIAGNOSTICS__?.plaza.slots.find((candidate) => candidate.id === id);
+    return slot?.approach ?? slot?.position;
+  }, prompt);
+  if (!target) throw new Error(`${prompt} is absent from town plaza diagnostics`);
+  for (let step = 0; step < 48; step += 1) {
+    if ((await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)) === prompt) break;
+    const position = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.player);
+    const keys: string[] = [];
+    if (Math.abs(target.x - position.x) > 0.6) keys.push(target.x > position.x ? 'KeyD' : 'KeyA');
+    if (Math.abs(target.z - position.z) > 0.6) keys.push(target.z > position.z ? 'KeyS' : 'KeyW');
+    for (const key of keys) await page.keyboard.down(key);
+    await page.waitForTimeout(160);
+    for (const key of keys.reverse()) await page.keyboard.up(key);
+  }
 }
 
 async function approachSchoolhouse(page: Page): Promise<void> {
-  await hold(page, 'KeyA', 1150);
-  await hold(page, 'KeyS', 900);
+  await steerToPrompt(page, 'schoolhouse');
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('schoolhouse');
 }
 
 async function approachTavern(page: Page): Promise<void> {
-  await hold(page, 'KeyA', 850);
-  await hold(page, 'KeyW', 850);
+  await steerToPrompt(page, 'tavern');
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
 }
 

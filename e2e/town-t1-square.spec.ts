@@ -44,14 +44,23 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
   await page.screenshot({ path: `${SHOT_DIR}/${testInfo.project.name}-${name}.png`, fullPage: true });
 }
 
-async function hold(page: Page, key: string, ms: number): Promise<void> {
-  await page.keyboard.down(key);
-  await page.waitForTimeout(ms);
-  await page.keyboard.up(key);
-}
-
-async function approach(page: Page, keys: [string, number][], prompt: TownPrompt, name: string, expectedText = 'opens soon'): Promise<void> {
-  for (const [key, ms] of keys) await hold(page, key, ms);
+async function approach(page: Page, _keys: [string, number][], prompt: TownPrompt, name: string, expectedText = 'opens soon'): Promise<void> {
+  const target = await page.evaluate((id) => {
+    const diagnostics = window.__GR_TOWN_DIAGNOSTICS__!;
+    const slot = diagnostics.plaza.slots.find((candidate) => candidate.id === id);
+    return slot?.approach ?? slot?.position;
+  }, prompt);
+  if (!target) throw new Error(`${prompt} is absent from town plaza diagnostics`);
+  for (let step = 0; step < 48; step += 1) {
+    if ((await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)) === prompt) break;
+    const position = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.player);
+    const keys: string[] = [];
+    if (Math.abs(target.x - position.x) > 0.6) keys.push(target.x > position.x ? 'KeyD' : 'KeyA');
+    if (Math.abs(target.z - position.z) > 0.6) keys.push(target.z > position.z ? 'KeyS' : 'KeyW');
+    for (const key of keys) await page.keyboard.down(key);
+    await page.waitForTimeout(160);
+    for (const key of keys.reverse()) await page.keyboard.up(key);
+  }
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe(prompt);
   await expect(page.getByTestId('town-approach-prompt')).toContainText(name);
   await expect(page.getByTestId('town-approach-prompt')).toContainText(expectedText);

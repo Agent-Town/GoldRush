@@ -67,15 +67,22 @@ async function expectFactCap(page: Page): Promise<void> {
   expect(maxFacts).toBeLessThanOrEqual(4);
 }
 
-async function hold(page: Page, key: string, ms: number): Promise<void> {
-  await page.keyboard.down(key);
-  await page.waitForTimeout(ms);
-  await page.keyboard.up(key);
-}
-
 async function approachSchoolhouse(page: Page): Promise<void> {
-  await hold(page, 'KeyA', 1150);
-  await hold(page, 'KeyS', 900);
+  const target = await page.evaluate(() => {
+    const slot = window.__GR_TOWN_DIAGNOSTICS__?.plaza.slots.find(({ id }) => id === 'schoolhouse');
+    return slot?.approach ?? slot?.position;
+  });
+  if (!target) throw new Error('schoolhouse is absent from town plaza diagnostics');
+  for (let step = 0; step < 48; step += 1) {
+    if ((await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)) === 'schoolhouse') break;
+    const position = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.player);
+    const keys: string[] = [];
+    if (Math.abs(target.x - position.x) > 0.6) keys.push(target.x > position.x ? 'KeyD' : 'KeyA');
+    if (Math.abs(target.z - position.z) > 0.6) keys.push(target.z > position.z ? 'KeyS' : 'KeyW');
+    for (const key of keys) await page.keyboard.down(key);
+    await page.waitForTimeout(160);
+    for (const key of keys.reverse()) await page.keyboard.up(key);
+  }
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('schoolhouse');
 }
 
