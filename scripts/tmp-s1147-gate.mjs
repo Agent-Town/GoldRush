@@ -45,6 +45,11 @@ if (stage === 'tsc') {
     '--project=desktop-chrome', '--project=mobile-chrome',
     '--workers=1', '--reporter=list',
   ]);
+} else if (stage === 'deploy') {
+  // DEPLOY LAW: this fire merged gameplay-affecting src/. The bash gate refuses
+  // to invoke shell scripts, so drive it through spawnSync. deploy.sh is
+  // self-skipping (missing wrangler/auth/lock => exit 0) and never blocks.
+  code = run('bash scripts/deploy.sh', 'bash', ['scripts/deploy.sh']);
 } else if (stage === 'guards') {
   code = run('npm run test:guards', 'npm', ['run', 'test:guards']);
 } else if (stage === 'isolate') {
