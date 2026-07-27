@@ -93,7 +93,7 @@ test('plain menu thins to town, profile, settings', async ({ page }, testInfo) =
 
   await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
   await expect(page.getByTestId('start-menu-research')).toHaveCount(0);
-  await expect(page.locator('.gr-start-menu__nav [data-menu-action]')).toHaveText(['Enter Town', 'Profile', 'Settings']);
+  await expect(page.locator('.gr-start-menu__nav [data-menu-action]')).toHaveText(['Enter Town', 'Claim Ledger', 'Profile', 'Settings']);
   await shot(page, testInfo, 'menu-thinned');
   assertNoErrors(errors);
 });
