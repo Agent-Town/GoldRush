@@ -40,8 +40,9 @@ async function seedStaleSuspend(page: Page): Promise<void> {
   );
 }
 
-async function openTown(page: Page): Promise<void> {
+async function openTown(page: Page, query = ''): Promise<void> {
   await page.goto('/');
+  if (query) await page.evaluate((search) => history.replaceState(null, '', `/${search}`), query);
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
 }
@@ -118,7 +119,7 @@ test('Schoolhouse opens the existing Research chart and returns to the square', 
 test('Assay porch opens the existing crafting order status panel', async ({ page }, testInfo) => {
   await seedProfile(page);
   const errors = collectErrors(page);
-  await openTown(page);
+  await openTown(page, '?debug');
 
   await walkTo(page, { x: 6.6, z: 7.2 }, 'assay_office');
   await page.getByTestId('town-open-assay').click();
@@ -167,7 +168,7 @@ test('town surfaces stay readable at 390px', async ({ page }, testInfo) => {
   await page.getByTestId('schoolhouse-close').click();
   await walkTo(page, { x: 6.6, z: 7.2 }, 'assay_office');
   await page.getByTestId('town-open-assay').click();
-  await expect(page.getByTestId('assay-bench')).toBeVisible();
+  await expect(page.getByTestId('complaint-desk')).toBeVisible();
   await shot(page, testInfo, '390-assay-status');
   assertNoErrors(errors);
 });
