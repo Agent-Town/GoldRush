@@ -73,9 +73,29 @@ The failure's own page snapshot names it. At the moment `confirmBuild()` returne
 
 ⚠️ **Why this was missed, and it is an instructive miss rather than a careless one.** s1150 listed *readiness* among three hypotheses "tested and REFUTED, so do not re-run them", on the grounds that *"`openGame` at `m2-04-gold-stealing.spec.ts:17-23` is the same three steps as the probe."* That statement is **true and it refutes the wrong claim**: it establishes the two rigs are *equal* in readiness, which says nothing about whether **both are insufficient**. A shared defect is invisible to a differential test. The refutation closed the door on the one hypothesis that was correct.
 
-⚠️ **Stated as a strong hypothesis with a named control, not as a conclusion — the lesson this ladder keeps relearning.** I have the state at failure and the pattern across specs; I have **not** yet run the mutation control (add the `Begin` dismissal, re-measure the rate). Two facts are still unexplained and I am recording them as open rather than folding them in: the bare-chromium probe failed on the **fifth** palisade (`palisade@2,9`) whereas this failure is at the **first**, and 1/5 vs ~2/3 are different rates. **Those may be two distinct faults**, and a single tidy story that swallows both is exactly the shape to distrust.
+#### ⛔ I RAN THE CONTROL, AND IT REFUTED MY OWN CAUSAL STORY — THE BRIEFING DISMISSAL IS NOT A CURE
 
-➡️ **Corrective is fire-authorable but is NOT a drive-by**: it touches `m2-04-gold-stealing.spec.ts`, which carries the known-red `:226` budget assertion, so any edit there must prove it did not perturb that guard.
+I wrote the paragraph above, then built the mutation control rather than handing the hypothesis forward the way s1150 handed forward its own (`scripts/probe-s1152-briefing-race.mjs`, committed). **CONTROL** = byte copy of the merged spec. **TREATMENT** = same file plus the house `Begin` dismissal. Same box, back to back.
+
+**First attempt, sequential (control ×4 then treatment ×4) — and it produced an artefact I nearly reported:** CONTROL 10/12 passed, TREATMENT 5/12. Read naively that says the dismissal *triples* the failure rate. **But arm order was fixed, so "treatment" was perfectly confounded with "later on a box that had been hammering Playwright for four minutes"** — and a standalone treatment run immediately afterwards passed 3/3. So I fixed the instrument to **interleave** the arms (control, treatment, control, treatment, …) and re-ran at n=15 per arm:
+
+| Arm | Passed | Placement failures | Failing run-indices |
+|---|---|---|---|
+| CONTROL (as merged) | 11/15 | **4 (27%)** | 1, 3, 1, 2 |
+| TREATMENT (+ `Begin` dismissal) | 9/15 | **6 (40%)** | 1, 3, 1, 3, 2, 1 |
+
+➡️ **VERDICT: the briefing-card hypothesis is REFUTED as a cure.** Dismissing the card does not reduce the placement failure rate — the two arms overlap, and if anything treatment is worse. The briefing being visible in that first snapshot was a **correlate of a slow page, not the mechanism.** ⛔ **Do not ship the `Begin` dismissal as a fix for this**; it would be a fabricated closure of exactly the kind s1150 was warned off.
+
+➡️ **A second sub-hypothesis died in the same run:** "it's always run 1 / a cold worker". At n=2 it looked clean; at n=30 the failures scatter across indices 1, 2 **and** 3 in both arms.
+
+✅ **What SURVIVES, and it is the part that matters:**
+1. **The flake is REAL, reproducible, and large — ~27–40% of runs fail at placement** in this spec family, measured on a quiet box with interleaved arms, n=30. That decisively **refutes s1150's "placement is reliable through the test runner (4/4)"**, which is the premise this whole ladder was re-scoped on.
+2. **Load is refuted as the driver** (s1151's leading hypothesis): the box was quiet and the rate stayed high.
+3. **The cause is UNEXPLAINED.** Dead so far: timescale · readiness-as-rig-difference · device context (all s1150) · briefing overlay · cold-worker index (both s1152). I am recording that honestly rather than nominating a fifth story.
+
+⚠️ **Still open and deliberately not welded together:** the bare-chromium probe failed on the **fifth** palisade (`palisade@2,9`) whereas these fail on the **first**, and 1/5 vs ~30% are different rates. **These may be two distinct faults**; a single tidy story that swallows both is the shape to distrust.
+
+➡️ **Corrective is fire-authorable but is NOT a drive-by**: it touches `m2-04-gold-stealing.spec.ts`, which carries the known-red `:226` budget assertion, so any edit there must prove it did not perturb that guard. **And it must not start from a cure** — the next step is a *cause*, with the instrument already built.
 
 ### F-1152-2 — 🟡 `palisadesPlaced: 5` is an assertion by construction, not a measurement
 
