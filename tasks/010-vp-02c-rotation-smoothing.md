@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Both of the master's constants are live: `src/game/Balance.ts:981-982` `turnRateDegPerS: 540` / `orientationFadeMs: 100`, consumed at `src/entities/Hero.ts:335` and `src/assets/SpriteAnimator.ts:518` `startOverlay('orientation', …)`. See F-1132-1.
+
 # Task 010: VP-02c rotation smoothing (8-way feels coarse — fix transitions before art)
 
 You are Codex, implementer for Gold Rush, on Robin's Mac in the project folder. Claude orchestrates and runs final gates. READ FIRST: `docs/playtests/2026-07-04-robin-m1-visuals.md` Addendum 3 §B (BINDING), `assets/requests/batch-005-rotation.md` (cell map + mirror table), `AGENTS.md`.

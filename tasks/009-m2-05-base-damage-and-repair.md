@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/core/EventBus.ts:61` `type: 'building_wrecked'`, the repair sink at `src/game/Economy.ts:7`, the repair ring at `src/systems/BuildSystem.ts:346`, and enemy building-targeting at `src/entities/Enemy.ts:1045`; spec `e2e/m2-05-base-damage-repair.spec.ts`. See F-1132-1.
+
 # Task 009 — M2-05 base-damage-and-repair
 
 **Spec (BINDING, read fully):** `specs/m2-base-waves/slices/05-base-damage-and-repair.md`.

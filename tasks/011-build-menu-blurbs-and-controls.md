@@ -1,3 +1,5 @@
+> ⚠️ **PARTLY SHIPPED — DO NOT QUEUE UNCHANGED, RE-SCOPE FIRST (Mistake #8 guard, content-probed s1132 2026-07-27).** §1/§2/§4 SHIPPED: `src/game/buildables.ts:24` `blurb?: string | (() => string)`, `src/ui/BuildButton.ts:78` `data-testid="hud-build-blurb"`, asserted at `e2e/m2-01-build-menu.spec.ts:285,317`. **§5 ABSENT** — `src/game/Game.ts:2263` still gates digit-arming on `this.buildMenuOpen`, so the kiting hotkeys (arm 1-5 with the menu closed, double-tap-B repeat-last) never shipped (searched `quickBuild` / `repeatLast` / `lastBuiltId`). **§3 ABSENT** — no pause-overlay controls legend (searched `WASD` / `controls-legend` / `pause-controls`). Queueing it whole would re-do three shipped sections. See F-1132-2.
+
 # Task 011: build-menu blurbs + controls legend (WORKTREE LANE-C VERSION — run in worktrees/lane-c on branch lane/polish, commit prefix "polish:"; the merge session reconciles with 009's landed buildables shape — ADAPT, never revert)
 
 You are Codex, implementer for Gold Rush, on Robin's Mac. Claude orchestrates and gates. READ FIRST: `AGENTS.md`; brief §5 (voice: warm frontier-ledger copy, places/rituals naming).

@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Done-move `tasks/failed/drained-s138-heritage-mine.md`. Both named outputs are tracked on main: `assets/reference/agent-town-heritage/CATALOG.md` and `docs/heritage-notes.md`; `BACKLOG:71` confirms the content reached main via `bc3540c` **before** the s140 w1-05 lane reset. See F-1132-1.
+
 # Task heritage-mine: the Portal expedition — catalog and import Agent Town's original art & brand (LANE-C, branch lane/polish, commit prefix "mkt:")
 
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in worktrees/lane-c. READ-ONLY SOURCES (never write to them): `/Users/robin/Projects/Portal` (main + branch `claude/frontier-ledger-assets-2026-06-10` via `git -C ... show <branch>:<path>` — do NOT check branches out) and `/Users/robin/Projects/agent-town-assets` (38 UUID-named PNGs). Owner ruling 2026-07-07 ~19:55: "The code is in the Portal repository and its branches — the other ones are not so important." Pre-flight: safe-dupe rule on lane/polish; npm install not needed unless building; this task writes ONLY into THIS repo. SEQUENCING: after w1-05 (this lane's queue).

@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/entities/Sluice.ts` + `src/entities/Stockpile.ts` exist; the master's cap shipped as `src/game/Balance.ts:809` `bankCap: 200`, typed at `src/game/Economy.ts:41`; spec `e2e/m2-02-sluice-and-stockpile.spec.ts`; review `reviews/m2-02-sluice-and-stockpile.md`. See F-1132-1.
+
 # Task 005 — M2-02 sluice-and-stockpile (+ palisade-rotation rider)
 
 **Spec (BINDING, read fully):** `specs/m2-base-waves/slices/02-sluice-and-stockpile.md`.

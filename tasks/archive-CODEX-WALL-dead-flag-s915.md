@@ -1,3 +1,5 @@
+> ⛔ **NOT A WORK MASTER — NEVER QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** This is the retired `tasks/CODEX-WALL` quota-wall flag, `git mv`'d into `tasks/` with an archive header by s1028 (2026-07-25) because `rm` and `git rm` are sandbox-gated for fires. Its own body reads *"RESUME NORMAL OPS… Treat this file's mere existence as a no-op."* It records both wall-class failures (locked-win `0b0aa8e3`, safari-swap `086cf9cd`) as already shipped, and carries its own veto line — `git mv` it back only to re-arm a real wall. See F-1132-15.
+
 # ⚰️ RETIRED FLAG — ARCHIVED by s1028, 2026-07-25. Quota is CONFIRMED FINE.
 #
 # This file used to live at `tasks/CODEX-WALL`. While it sat there, fire.md §2.0 forced EVERY fire to read

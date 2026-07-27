@@ -1,3 +1,5 @@
+> ⛔ **SUPERSEDED 2026-07-11 BY OWNER ORDER — NEVER QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** The chapter is Fable-authored and on main: `lore/STORYBOOK.md:74` *"## CHAPTER E2 — THE STEAMWORKS (the machine answers back)"*. ⚠️ This master already carried the ruling in prose on its `#` heading line — **it was invisible to the machine guard only because the guard requires the `>` blockquote form.** See F-1132-16.
+
 # SUPERSEDED 2026-07-11 (owner order, verbatim): "Can you instead do it yourself? All chapters? This is the baseline... please invest the time and go through the chapters and do it yourself as Fable, the originator, the creator, my co-founder." — THE CHAPTERS ARE FABLE-AUTHORED, in lore/STORYBOOK.md, one commit each. This master is retired; do not queue.
 
 # Task storybook-e2: THE STORYBOOK — the Steamworks chapter (writing task; commit prefix "lore:")

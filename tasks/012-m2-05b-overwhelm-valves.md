@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/game/Balance.ts:718-720` `maxConcurrent: 2` / `maxConcurrentPerWaves: 6` / `maxConcurrentCap: 4`, `:83` `lullFloor12: 8`, `:762` `hpWaveScale`, and `:798` `repairCostFrac: 0.3` — retuned 0.5→0.3 exactly as the master's goal 6 asked; `src/core/DebugParams.ts:11` `noping`; spec `e2e/m2-05b-overwhelm-valves.spec.ts`; review `reviews/m2-05b-overwhelm-valves.md`. See F-1132-1.
+
 # Task 012 — M2-05b overwhelm valves (Addendum-3 directive)
 
 **Directive (BINDING):** `docs/playtests/2026-07-04-robin-m1-visuals.md` Addendum 3.A — valves against high-wave overwhelm. Read it first. **Brief constraints:** §9.2 (comic, prosperity framing), §9.4 (naming/ledger voice). Read `AGENTS.md`.

@@ -1,3 +1,5 @@
+> ⛔ **SUPERSEDED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Its target output `assets/raw/char-jumper-sheet-rotation2.png` is ABSENT and should stay absent: the scale debt this batch existed to clear was cleared elsewhere — `LEDGER.md:33` *"ALSO clears the jumper rotation SCALE DEBT"* — and `assets/layer-contracts/characters.v2.json:336` shows the jumper running `char-jumper-sheet-walk8.png` with `status: ACTIVE, enabled: true` since 2026-07-10 (task 066). Its run-log slot was reassigned too (`assets/requests/codex-art-run-003.md:9`). **Regenerating rotation2 would produce art that nothing consumes.** ⚠️ `LEDGER.md:235` still calls batch-007 the *"NEXT ART RUN"* — that line is stale. See F-1132-5.
+
 # Task 023 — Art run: batch-007 jumper rotation-sheet REGEN (image_gen)
 
 Goal: regenerate the claim-jumper full-rotation sheet with figures drawn to fill their cells, fixing the scale debt that keeps the jumper `rotations` contract block dormant (LEDGER slot row "char.claim_jumper SHEET full-ROTATION 4x3").

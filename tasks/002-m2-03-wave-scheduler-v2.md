@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/game/Balance.ts:79-85` carries the master's own knobs — `kneeWave: 10` / `kneeSharpness: 8` / `budgetCeiling: 38` / `lullSeconds: 8` / `pulsesPerWave: 2`; spec `e2e/m2-03-wave-scheduler.spec.ts`; review `reviews/m2-03-wave-scheduler-v2.md`. (`budgetCeiling` was later retuned 42→38 by task 047 — a tune, not a reversal.) See F-1132-1.
+
 # Task 002: implement M2-03 wave-scheduler-v2
 
 You are Codex, implementer for Gold Rush, running on Robin's Mac in the project folder. Claude (Cowork) orchestrates and runs final gates.

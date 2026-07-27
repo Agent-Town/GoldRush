@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED AND REACHABLE — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** All 8 plates present: `plate-contract-e8-{mare-claim,far-side,low-orbit,eclipse}.png` and `plate-contract-e9-{dome-basin,seed-run,devils-alley,old-canal}.png`, with run note `assets/raw/codex-art-run-art-batch-030-contract-plates.md` and `LEDGER.md:355` row 43. ⚠️ **NOT a duplicate of batch-029** — 029 is E6-E7, 030 is E8-E9, disjoint filename sets; 029's *"do not start batch 030"* line is one-batch-in-flight sequencing, not exclusivity. Reachable through the same `TownScene.ts:88` glob. See F-1132-17.
+
 # Task art-batch-030-contract-plates: engraved contract plates, E8-E9 (8 full-bleed cards) (ART SLOT)
 
 You are Codex with image_gen, running in the ART slot.

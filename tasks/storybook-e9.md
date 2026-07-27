@@ -1,3 +1,5 @@
+> ⛔ **SUPERSEDED 2026-07-11 BY OWNER ORDER — NEVER QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** The chapter is Fable-authored and on main: `lore/STORYBOOK.md:529` *"## CHAPTER E9 — THE RED FIELDS (what stays)"*. Prose-guarded already; this adds the machine-readable form. See F-1132-16.
+
 # SUPERSEDED 2026-07-11 (owner order, verbatim): "Can you instead do it yourself? All chapters? This is the baseline... please invest the time and go through the chapters and do it yourself as Fable, the originator, the creator, my co-founder." — THE CHAPTERS ARE FABLE-AUTHORED, in lore/STORYBOOK.md, one commit each. This master is retired; do not queue.
 
 # Task storybook-e9: THE STORYBOOK — the Redfields chapter (writing task; commit prefix "lore:")

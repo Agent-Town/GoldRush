@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/assets/OrientationResolver.ts` exists (the hysteresis resolver) and `src/assets/SpriteAnimator.ts:125` exposes the `mirrored: boolean` diagnostic the master asked for; spec `e2e/vp-02b-rotation-resolver.spec.ts:112` — *"hero locomotion resolves all 8 contract directions"*. See F-1132-1.
+
 # Task 008 — VP-02b 8-way rotation resolver (chained: run AFTER tasks/007)
 
 **Spec (BINDING, read together):** `assets/requests/batch-005-rotation.md` ("Code half" + cell map) + the `rotations` block under `char.hero` in `assets/layer-contracts/characters.v2.json` (its `notes` field is part of the spec, mirror table is BINDING) + this file. Read `AGENTS.md` first.

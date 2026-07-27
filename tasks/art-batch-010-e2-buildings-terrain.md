@@ -1,3 +1,5 @@
+> ⛔ **SUPERSEDED (5 of 7 shipped, 2 replaced by 3D) — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Done-move `tasks/failed/partial-s1065-20260707-111250-art-batch-010-5of7-hillmine-atlas+minehead-NEVER-GENERATED.md`. Present in raw + processed: `bld-boiler-house`, `bld-machine-shop`, `bld-rail-depot`, `bld-stamp-mill`, `ter-rail-elements` — credited to codex-art-run-016 at `LEDGER.md:124`, PROCESSED at `LEDGER.md:285-287`. The two absent atoms (`ter-hillmine-atlas`, `prop-minehead`) are **superseded by the 3D sculpt**: `assets/pilots/map-rebuild-spike/hill-mine-{terrain,panorama}.glb` and `landmarks/hill-mine/{boiler-house-site,flooded-gallery}.glb`. ⚠️ Reachability, stated honestly: `bld-boiler-house` is live via `src/ui/BuildButton.ts:12`; rail-depot and machine-shop are registered in `e2-steamworks.v1.json` with **no live consumer**. See F-1132-17.
+
 # Task art-batch-010: E2 Steamworks — buildings + Hill Mine terrain (ART slot, gpt-image-2)
 
 You are Codex on Robin's Mac with the image_gen skill (gpt-image-2). Art pipeline v2 per CLAUDE.md §8 + assets/LEDGER.md header.

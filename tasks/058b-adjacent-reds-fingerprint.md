@@ -1,3 +1,5 @@
+> ⚠️ **OPEN BY DELIBERATE CHOICE — ATTENDED/OWNER, NOT FIRE-QUEUEABLE (Mistake #8 guard, content-probed s1132 2026-07-27).** Both targets are unchanged on main and still red-shaped: `e2e/feedback-fx.spec.ts:28-30` (*"announcement banner fades after the opening claim notice"* → `toContainText('Stake your claim.')`) and `e2e/xp-economy-audit.spec.ts:92`. The owning copy exists (`src/ui/Hud.ts:120` `<span data-hud-wave>Stake your claim.</span>`), so the red is **behavioural, not a missing string**. `tasks/BACKLOG.md:40` already rules F-058-2 *"FIRE-AUTHORED s254, NOT queued — needs attended fix-vs-respec call"*, and the master's own line 3 says *"Do NOT auto-run blind"*. Two more of the same family at `BACKLOG:106` should fold in. See F-1132-8.
+
 # Task 058b: fingerprint + clear two pre-existing main reds (feedback-fx:28, xp-economy-audit:92) — commit prefix "fix:"
 
 **FIRE-AUTHORED (s254, attended review welcome).** Not yet queued — needs an attended judgment call (real regression → fix, vs. stale spec after the story-loop/save-slots rework → update spec). Do NOT auto-run blind.

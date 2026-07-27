@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** No done-move exists (this block predates the convention); proven at the datum instead: `src/game/buildables.ts:37` `export const buildableDefs` with `id: 'sentry_beacon'`, `src/entities/Palisade.ts:32` `export class PalisadePool`, spec `e2e/m2-01-build-menu.spec.ts:131` `sink: 'build_palisade'`, review `reviews/m2-01-buildable-registry-and-menu.md`. See F-1132-1.
+
 # Task 001: implement M2-01 buildable-registry-and-menu
 
 You are Codex, implementer for Gold Rush (three.js/TS/Vite), running on Robin's Mac in the project folder. Claude (Cowork) orchestrates and runs the final gates.

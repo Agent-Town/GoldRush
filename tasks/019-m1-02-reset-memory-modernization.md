@@ -1,3 +1,5 @@
+> ⚠️ **OPEN, BUT ITS PREMISE MAY HAVE EXPIRED — MEASURE BEFORE QUEUEING (Mistake #8 guard, content-probed s1132 2026-07-27).** Not shipped: `e2e/m1-02-auto-fire.spec.ts:96` still reads `expect(after?.textures).toBe(baseline?.textures)` — the exact line this master names as the problem — and that file's newest commit `0abbab20` (2026-07-04) PRE-DATES the master's own 2026-07-05 evidence. The sibling m1-05 cure did land (`51b75ba6`); m1-02 never got the same treatment. ⚠️ **But the mirror-bake it blames may have self-cured**: the hero contract retired its mirror table to `{}` at s37 (all 8 directions explicit). **Run the `m1-02` spec on current main FIRST — if it is green, retire this master rather than queueing it.** See F-1132-4.
+
 # Task 019: m1-02 reset renderer-memory assert — s27-law modernization
 
 Codex: single-file harness fix. SCOPE: `e2e/m1-02-auto-fire.spec.ts` ONLY. No src changes, no other e2e.

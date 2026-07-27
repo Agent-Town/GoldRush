@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED AND REACHABLE — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** All 8 plates present: `assets/raw/plate-contract-e6-{glow-mesa,showroom,half-life-hollow,picnic}.png` and `plate-contract-e7-{relay-valley,echo-canyon,dead-band,relay-rush}.png`, with run note `assets/raw/codex-art-run-art-batch-029-contract-plates.md` and `LEDGER.md:355` row 43 (*"attended QA: claim spot-checked house-perfect"*). ✓ Reachability verified, not assumed: `src/town/TownScene.ts:88` globs `plate-contract-*.png` and `:2538` keys by `contract.id`, so each filename matches a live contract. See F-1132-17.
+
 # Task art-batch-029-contract-plates: engraved contract plates, E6-E7 (8 full-bleed cards) (ART SLOT)
 
 You are Codex with image_gen, running in the ART slot.

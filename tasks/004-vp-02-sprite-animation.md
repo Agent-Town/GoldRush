@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/assets/SpriteAnimator.ts` exists; the master's test hook shipped as `src/game/Game.ts:1842` `setTestClip: (slot, frames, fps)`; the contract `assets/layer-contracts/characters.v2.json` is at v2 with grid+clips; spec `e2e/vp-02-sprite-animation.spec.ts`. See F-1132-1.
+
 # Task 004 — VP-02 sprite-animation (sheet-based billboards)
 
 **Spec (BINDING, read fully):** `specs/visual-polish/slices/02-sprite-animation.md` (REVISED s9c header supersedes the s9b plan where they conflict).

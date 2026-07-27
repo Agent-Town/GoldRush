@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Done-move `tasks/failed/drained-s238-mp-02-lockstep.md`. Datum: `e2e/mp-02-lockstep.spec.ts:24` `mp=dev`, `:125` *"two clients advance 500 ticks with identical lockstep hashes"*, `:182` testid `mp-desync-card` carrying the master's exact copy *"The wire crossed"*, and the resync proof at `:273`; review `reviews/mp-02-lockstep.md`. `specs/epoch-saga/BUILD-PLAN.md:16` records MP-01 + MP-02 SHIPPED, and MP-03/04/reconnect are built on top of it. See F-1132-1.
+
 # Task mp-02: lockstep core — two sims, one truth (LANE-D, branch lane/perf, commit prefix "mp:")
 
 You are Codex, implementer for Gold Rush, on Robin's Mac in worktrees/lane-d. READ FIRST: **specs/multiplayer/README.md (BINDING) + docs/api-multiplayer.md (MP-01's protocol — build against it exactly)**; the fixed-timestep loop + determinism hash machinery (perf-04 harness); run-suspend snapshots (the resync vehicle). Pre-flight: safe-dupe by CONTENT. npm install; build green.

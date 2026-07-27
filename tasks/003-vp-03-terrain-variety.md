@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/game/Balance.ts:968` `featureMix: 0.86` is consumed at `src/world/Terrain.ts:890`, with the per-cell variant sampler at `Terrain.ts:989` and `variants?: string[]` at `:583`; spec `e2e/vp-03-terrain-variety.spec.ts`. See F-1132-1.
+
 # Task 003: implement VP-03 terrain-variety (code-first, art follows)
 
 You are Codex, implementer for Gold Rush, running on Robin's Mac in the project folder. Claude (Cowork) orchestrates and runs final gates.

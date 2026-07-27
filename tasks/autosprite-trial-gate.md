@@ -1,3 +1,5 @@
+> ⚠️ **OWNER-GATED ON CREDITS — NOT FIRE-QUEUEABLE (Mistake #8 guard, content-probed s1132 2026-07-27).** Only the prior-contact spike exists: `assets/pilots/autosprite-hero/Ariya-iso_walk_right.png` plus three `.urls.txt` files. No walk8 sheet, no A/B, no report (searched `autosprite` across `tasks/`, `reviews/`, `docs/`, `specs/`). ⛔ `tasks/BACKLOG.md:383` rules it *"AUTOSPRITE TRIAL PAUSED (credits) — identity B+ … STYLE FAIL at defaults … Retry gate WHEN owner buys credits."* See F-1132-18.
+
 # autosprite-trial-gate — one character through the new forge (attended+MCP when Pro lands; "art:")
 ATTENDED-AUTHORED 2026-07-16 — owner proposal: autosprite.io Pro for ALL sprites; MCP available. PRIOR CONTACT: assets/pilots/autosprite-hero/ holds walk-cycle URL files from an earlier spike — start by auditing those outputs.
 

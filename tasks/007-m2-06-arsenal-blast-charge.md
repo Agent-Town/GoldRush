@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** `src/entities/BlastCharge.ts:87` `this.ownerIds.push('hero_blast')` plus `src/entities/Turret.ts`; spec `e2e/m2-06-arsenal-blast-charge.spec.ts`; review `reviews/m2-06-arsenal-blast-charge.md`. See F-1132-1.
+
 # Task 007 — M2-06 arsenal-blast-charge (chained: run AFTER tasks/006)
 
 **Spec (BINDING, read fully):** `specs/m2-base-waves/slices/06-arsenal-blast-charge.md`.

@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** The master's event vocabulary is byte-present at `src/game/Economy.ts:30-31` (`{ type: 'gold_stolen'; amount }` / `{ type: 'gold_reclaimed' }`), with `src/entities/GoldPickup.ts` and the carrier hunt at `src/entities/Enemy.ts:917` `context.nearestGoldHolding(...)`; spec `e2e/m2-04-gold-stealing.spec.ts`. See F-1132-1.
+
 # Task 006 — M2-04 gold-stealing (+ spawnPack option-arg rider)
 
 **Spec (BINDING, read fully):** `specs/m2-base-waves/slices/04-gold-stealing.md`.

@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED, BY A DIFFERENT ROUTE — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** The behaviour is live: `src/entities/Enemy.ts:198` `new OrientationResolver()`, `:753` `this.spriteOrientation = this.orientationResolver.resolve(...)`, `:755` `.idleDirection()`, with grab/flee clips at `:888`/`:894`; `characters.v2.json:336` has `char.claim_jumper` walk8 ACTIVE and enabled with diagonal aliases. It shipped via the walk8 route (task 066), not the art-gated batch-007 route this master assumed. ⚠️ **Residual: `e2e/vp-02e-jumper-8way.spec.ts` was never created — a test-coverage gap, not unshipped behaviour.** See F-1132-7.
+
 # Task 025 — VP-02e: jumper 8-way activation + grab/flee clips (ART-GATED — do not run yet)
 
 PRECONDITION (hard): the batch-007 regen sheet is PROCESSED and the LEDGER row "char.claim_jumper SHEET full-ROTATION 4x3" says scale-debt CLEARED with measured heights in the side-sheet band (~409–439 px). If that row still says SCALE DEBT, STOP and report — activating on the 005R3 cells ships a visible size pop. Also run AFTER tasks/024 (idle semantics land there).

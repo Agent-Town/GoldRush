@@ -1,3 +1,5 @@
+> ⛔ **SUPERSEDED 2026-07-11 BY OWNER ORDER — NEVER QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Delivered on main: `lore/STORYBOOK.md:631` *"## THE INTERSTITIALS — the ten ceremonies, staged"* and `:647` *"## THE APPENDICES"* (A mod trees `:649`, B boss roster `:664`, C generational chart `:679`, D Baron cadence `:693`, E ratification ledger `:707`), closing at `:732` *"## THE BOOK IS WRITTEN"*. Its scope item 5 (*"replace UNWRITTEN CHAPTERS with a completion line"*) is discharged — no UNWRITTEN list survives. See F-1132-16.
+
 # SUPERSEDED 2026-07-11 (owner order, verbatim): "Can you instead do it yourself? All chapters? This is the baseline... please invest the time and go through the chapters and do it yourself as Fable, the originator, the creator, my co-founder." — THE CHAPTERS ARE FABLE-AUTHORED, in lore/STORYBOOK.md, one commit each. This master is retired; do not queue.
 
 # Task storybook-appendices: THE STORYBOOK — interstitials + appendices (writing task; AFTER all era chapters; commit prefix "lore:")

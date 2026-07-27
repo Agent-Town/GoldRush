@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, content-probed s1132 2026-07-27).** Run file `assets/requests/codex-art-run-001.md` plus its outputs `assets/raw/char-hero-sheet-rotation2.png`, `assets/raw/bld-palisade.png`, `assets/raw/bld-sluice-works.png`; `LEDGER.md:233` records *"codex-art-run-001 … PROCESSED 2026-07-05 (s36) … INTEGRATED 2026-07-05 (s37)"*. See F-1132-1.
+
 # Task 017: Codex art pipeline PILOT (MAIN folder, new account, image_gen/gpt-image-2)
 You are Codex with the image_gen skill. This run PROVES the direct art pipeline. NO code changes, NO git commits, NO edits outside assets/.
 PROCESS per sheet (repeat for each):
