@@ -26,14 +26,14 @@ type SpriteSnapshot = {
 const shotDir = path.resolve('reviews/shots-vp-02');
 const rotationDirections = ['s', 'se', 'e', 'ne', 'n', 'nw', 'w', 'sw'] as const;
 const rotationCases = [
-  ['s', 0, 1, ['char-hero-sheet-rotation-r0c0.png', 'char-hero-sheet-rotation-r0c1.png'], false],
-  ['se', 1, 1, ['char-hero-sheet-rotation-r0c2.png', 'char-hero-sheet-rotation-r0c3.png'], false],
-  ['e', 1, 0, ['char-hero-sheet-rotation2-r0c2.png', 'char-hero-sheet-rotation2-r0c3.png'], false],
-  ['ne', 1, -1, ['char-hero-sheet-rotation-r1c2.png', 'char-hero-sheet-rotation-r1c3.png'], false],
-  ['n', 0, -1, ['char-hero-sheet-rotation-r2c0.png', 'char-hero-sheet-rotation-r2c1.png'], false],
-  ['nw', -1, -1, ['char-hero-sheet-rotation2-r1c0.png', 'char-hero-sheet-rotation2-r1c1.png'], false],
-  ['w', -1, 0, ['char-hero-sheet-rotation-r1c0.png', 'char-hero-sheet-rotation-r1c1.png'], false],
-  ['sw', -1, 1, ['char-hero-sheet-rotation2-r0c0.png', 'char-hero-sheet-rotation2-r0c1.png'], false],
+  ['s', 0, 1, ['char-hero-sheet-rotation-f-r0c0.png', 'char-hero-sheet-rotation-f-r0c1.png'], false],
+  ['se', 1, 1, ['char-hero-sheet-rotation-f-r0c2.png', 'char-hero-sheet-rotation-f-r0c3.png'], false],
+  ['e', 1, 0, ['char-hero-sheet-rotation2-f-r0c2.png', 'char-hero-sheet-rotation2-f-r0c3.png'], false],
+  ['ne', 1, -1, ['char-hero-sheet-rotation-f-r1c2.png', 'char-hero-sheet-rotation-f-r1c3.png'], false],
+  ['n', 0, -1, ['char-hero-sheet-rotation-f-r2c0.png', 'char-hero-sheet-rotation-f-r2c1.png'], false],
+  ['nw', -1, -1, ['char-hero-sheet-rotation2-f-r1c0.png', 'char-hero-sheet-rotation2-f-r1c1.png'], false],
+  ['w', -1, 0, ['char-hero-sheet-rotation-f-r1c0.png', 'char-hero-sheet-rotation-f-r1c1.png'], false],
+  ['sw', -1, 1, ['char-hero-sheet-rotation2-f-r0c0.png', 'char-hero-sheet-rotation2-f-r0c1.png'], false],
 ] as const;
 
 function collectErrors(page: Page): ErrorBucket {
@@ -352,9 +352,15 @@ test('missing sheet cells fall back to the existing one-frame billboard without 
   await page.route('**/char-jumper-sheet-side-r*.png', (route) => route.abort());
   // s23 (vp-02b gate): the hero slot now also carries rotation-sheet cells (008) — block them
   // too so this test keeps exercising the LAST fallback layer (one-frame billboard), per its intent.
-  await page.route('**/char-hero-sheet-rotation-r*.png', (route) => route.abort());
+  let abortedRotationCells = 0;
+  await page.route('**/char-hero-sheet-rotation*-r*.png', (route) => {
+    abortedRotationCells += 1;
+    return route.abort();
+  });
   const errors = await openGame(page, 'vp-02-fallback');
-  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameKey === 'hero-homesteader.png');
+  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameKey === 'hero-homesteader-f.png');
+  console.log(`[fallback] abortedRotationCells=${abortedRotationCells}`);
+  expect(abortedRotationCells).toBeGreaterThan(0);
   await page.keyboard.press('KeyP');
   await expect.poll(async () => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.paused ?? false)).toBe(true);
   await page.waitForTimeout(800);
@@ -551,12 +557,12 @@ test('east heading uses explicit rotation2 files with unmirrored pixels', async 
     await page.evaluate(() => window.__GR_TEST__?.teleport(0, 0));
     await moveStick(page, -1, 0);
     await waitForHeroDirection(page, 'w', 2_000);
-    const west = await canvasCaptureAtHeroFrame(page, 'w', 'char-hero-sheet-rotation-r1c0.png').catch(() => null);
+    const west = await canvasCaptureAtHeroFrame(page, 'w', 'char-hero-sheet-rotation-f-r1c0.png').catch(() => null);
 
     await page.evaluate(() => window.__GR_TEST__?.teleport(0, 0));
     await moveStick(page, 1, 0);
     await waitForHeroDirection(page, 'e', 2_000);
-    const east = await canvasCaptureAtHeroFrame(page, 'e', 'char-hero-sheet-rotation2-r0c2.png').catch(() => null);
+    const east = await canvasCaptureAtHeroFrame(page, 'e', 'char-hero-sheet-rotation2-f-r0c2.png').catch(() => null);
     await releaseStick(page);
 
     if (attempt === 0 && (!west || !east)) {
@@ -565,9 +571,9 @@ test('east heading uses explicit rotation2 files with unmirrored pixels', async 
     }
     expect(west).not.toBeNull();
     expect(east).not.toBeNull();
-    expect(west!.snapshot.frameKey).toBe('char-hero-sheet-rotation-r1c0.png');
+    expect(west!.snapshot.frameKey).toBe('char-hero-sheet-rotation-f-r1c0.png');
     expect(west!.snapshot.mirrored).toBe(false);
-    expect(east!.snapshot.frameKey).toBe('char-hero-sheet-rotation2-r0c2.png');
+    expect(east!.snapshot.frameKey).toBe('char-hero-sheet-rotation2-f-r0c2.png');
     expect(east!.snapshot.mirrored).toBe(false);
     // East is its own drawing now: it must differ from west directly AND from
     // flipped-west (stale-mirror regression guard). frameKey/mirrored above are the
