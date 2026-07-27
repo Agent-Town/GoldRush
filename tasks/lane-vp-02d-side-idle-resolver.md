@@ -1,0 +1,44 @@
+# Task lane-vp-02d-side-idle-resolver: retire the s/n idle hard-snap so the hero idles facing E and W (lane-b, commit prefix "fix:")
+
+**FIRE-AUTHORED s1132 (attended review welcome).** This is a REFRESH of `tasks/024-vp-02d-side-idle-resolver.md`, which is still correct in substance but predates the CODEX-routing line and the safe-dupe pre-flight, and — see WHY §3 — contains one acceptance clause that is now self-contradictory. Its scope is reproduced faithfully below; the only additions are the pre-flight, the routing line, the named cell datums, and the resolution of that contradiction.
+
+CODEX: model=gpt-5.6-sol effort=high
+
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b`.
+
+READ FIRST: `AGENTS.md`; `tasks/024-vp-02d-side-idle-resolver.md` (the original master — its "Compact contract" is binding); `src/assets/OrientationResolver.ts` (all of it, it is short — `idleDirectionFor` is at lines 51-53); `src/assets/SpriteAnimator.ts` lines 420-440 (the idle remap that consumes it) and 740-755 (the mirrored-frame bake); `assets/layer-contracts/characters.v2.json` lines 8-46 (the hero `rotations` block — read the `notes` string at line 12, it names this very task) and the `char.claim_jumper` block near line 336; `e2e/vp-02b-rotation-resolver.spec.ts` lines 100-175 (both the 8-direction locomotion test and the idle test you must flip).
+
+Pre-flight (LANE-SAFETY, runner-auto-commit aware): the lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+*(s1132 pre-measured this for you and you must still re-verify it yourself: `lane/m4` tip `4a3ee80b` is **fully merged into main** — `git merge-base --is-ancestor lane/m4 main` returns true — so the branch is NOT ahead and the reset is loss-free. The worktree does hold stale dirt (`STATUS.md`, `tasks/BACKLOG.md`, `tasks/goals.json`, two `artifacts/*.json`, a deleted `reviews/board-chapter-tab-adoption.md`, untracked `.wrangler/tmp/`) — all of it main-tracked files simply left behind by an older reset, none of it lane output. If your own probe disagrees with any of this, STOP and report rather than reconciling it.)*
+
+## WHY (evidence, dated)
+
+1. **The art is finished, wired, and unreachable — and the contract says so in its own prose.** `assets/layer-contracts/characters.v2.json:12`, verbatim: *"e idle (r1c2) and w idle (r1c3) cells are wired but RUNTIME-DORMANT: idleDirectionFor + the SpriteAnimator idle remap hard-snap idle to s/n, so the W-idle-fallback retirement promised in batch-005R2 needs a resolver rider (src change, separate task) before it is real."* This task is that rider.
+2. **✓ Re-verified at source on main s1132 (2026-07-27), not inherited:** `src/assets/OrientationResolver.ts:51-53` still reads `return direction === 'n' || direction === 'ne' || direction === 'nw' ? 'n' : 's';` — every non-back heading, including pure `e` and pure `w`, collapses to `s`. `src/assets/SpriteAnimator.ts:427` still routes idle through it: `const clipDirection = requestedClip === 'idle' ? idleDirectionFor(direction) : direction;`. And the cells are genuinely present in the contract: direction `e` has `frames.files[2] = "char-hero-sheet-rotation2-f-r1c2.png"` with `clips.idle = { frames: [2], fps: 1 }`, and direction `w` has `frames.files[2] = "char-hero-sheet-rotation2-f-r1c3.png"` with the same. Nothing is missing but the mapping.
+3. **⚠️ THE TRAP, AND THE ONE THING THE ORIGINAL MASTER GOT WRONG.** Task 024's acceptance says *"new + existing vp-02b green"*. That is **not satisfiable**: `e2e/vp-02b-rotation-resolver.spec.ts:149` — `test('idle snaps to rotation idle hemispheres after movement')` — walks the hero pure east, releases, then asserts `waitForHero(page, 's', 'idle')` with `frameKey: 'char-hero-sheet-rotation-r2c2.png'`. **That test pins the exact behaviour you are being asked to remove.** It must be UPDATED, deliberately and visibly, as part of this task — it is an intended supersession, not a regression. **Do NOT resolve the conflict the other way** (i.e. do not weaken or skip the resolver change to keep the old assertion green). If you find yourself editing `idleDirectionFor` back toward `s`, stop and report instead.
+
+## Scope (numbered, each item testable)
+
+1. `src/assets/OrientationResolver.ts` — `idleDirectionFor` gets exactly this mapping, no more: `s→s`, `se→s`, `sw→s`, `n→n`, `ne→n`, `nw→n`, **`e→e` (new)**, **`w→w` (new)**. Diagonals deliberately STAY hemisphere-snapped — a 45° heading reads front/back at gameplay zoom and se/sw/ne/nw idle cells do not exist. **Do not "improve" this into a nearest-idle search.**
+2. Slots WITHOUT side-idle cells must keep today's behaviour. The jumper's crouch idle is s-only. **Prefer ZERO `SpriteAnimator.ts` changes** — the existing fallback chain at `SpriteAnimator.ts:428-430` already prefers an explicit direction and falls back otherwise, so verify first whether it already covers this. If a guard is genuinely unavoidable it must be **contract-driven (a cell-presence check)**, never a slot-name special-case. If you add one, say so explicitly in your report and explain why the fallback chain was insufficient.
+3. `e2e/vp-02b-rotation-resolver.spec.ts` — **update** `test('idle snaps to rotation idle hemispheres after movement')` (line 149) to the new law: walk east → release → hero idles **`e`**; walk `ne` → release → hero idles **`n`** (that half is unchanged and must stay). Rename the test so its name states the new law rather than the old one.
+4. `e2e/vp-02b-rotation-resolver.spec.ts` — **add** a mapping-table test pinning all eight entries of `idleDirectionFor`, in the suite's existing direct-import style (see the `await import(modulePath)` pattern already used at line ~175).
+5. `e2e/vp-02b-rotation-resolver.spec.ts` — **add** the behavioural pair: walk pure east, stop → the E idle cell resolves; walk pure west, stop → the W idle cell resolves; both with `mirrored: false`. Walk `se`, stop → `s` idle, unchanged. **Derive the expected `frameKey` values rather than trusting mine:** the suite normalises the contract's `-f-` out of the filename (contract `char-hero-sheet-rotation-f-r2c2.png` appears at line 157 as `char-hero-sheet-rotation-r2c2.png`), which predicts **`char-hero-sheet-rotation2-r1c2.png`** for east and **`char-hero-sheet-rotation2-r1c3.png`** for west. Confirm that against the real diagnostics output before asserting it; if the real key differs, use the real one and report the discrepancy.
+6. Jumper regression: the existing jumper-shape / dormancy assertions stay green **UNMODIFIED**. If one goes red, that is a FINDING to report, not a test to edit.
+
+## Firewall
+
+**TOUCH-ONLY:** `src/assets/OrientationResolver.ts`, `e2e/vp-02b-rotation-resolver.spec.ts`, and (only if scope 2 forces it, with justification) `src/assets/SpriteAnimator.ts`.
+**NO:** `src/game/Balance.ts`, `src/game/Game.ts`, `src/entities/**`, `assets/**` (the contract is already correct — do not edit the JSON), any other `e2e/*.spec.ts`, any `src/town/**`, any `src/world/**`. Keep the diff small: this is a rider, not a refactor. Reporting an adjacent problem is good; fixing one out of scope is a firewall violation.
+
+## Self-check (run these, paste the real numbers)
+
+- `npx tsc --noEmit` — clean.
+- `npm run build` — green.
+- `npx playwright test e2e/vp-02b-rotation-resolver.spec.ts` — green on **both** projects (desktop-chrome AND mobile-chrome/390px).
+- `npx playwright test e2e/vp-02-sprite-animation.spec.ts` — green, both projects (the adjacent suite that owns the animator).
+- Boot probe desktop + 390px: **zero** console errors and zero page errors.
+- Two screenshots into `reviews/shots-vp-02d/`: hero idling **E** and hero idling **W**, named `desktop-chrome-idle-east.png` / `desktop-chrome-idle-west.png`. Eyeball them: correct profile art, and **no size pop** versus the s/n idle (the s21 scale finding in the contract notes warns the E/W pair at 377px vs W 377 — if the figure visibly breathes between idle and walk, that is a finding).
+
+END WITH: **READY-FOR-GATES** + the files you changed + the real self-check numbers + explicit answers to: (a) did you need to touch `SpriteAnimator.ts`, and if so why was the existing fallback chain insufficient? (b) what were the real `frameKey` values for E and W idle, and did they match the predicted ones in scope 5? (c) did any jumper assertion move?
