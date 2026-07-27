@@ -2448,6 +2448,17 @@
           "authoredBy": "s1148 (fire-authored, attended review welcome)",
           "mergeHash": "c727a5b7a63db24c62f9c8bccafb708d27175495",
           "authorNotes": "STALE-TEST REPAIR, e2e-only. HARD RULE (scope 5): expectations are DERIVED from the contract, never observed from a running game -- a runtime/contract disagreement is a finding to REPORT, not a number to paste (the vp-02d failure mode). ZERO src/ diff is required; if the cure looks like a runtime fix, that is scope 5, report it. s1148 added an analysis F-1146-4 itself does not contain: the mirrored column must ALSO change -- the new sheet has explicit e AND w rows, so nw/sw are no longer produced by mirroring and must become false; rebuilding only the filename column would just move the red from :99 to :100 (the third instance of the row-1-says-nothing-about-rows-2..N shape in this thread)."
+        },
+        {
+          "id": "lane-c-f1148-1-trajectory-split",
+          "title": "Split the CONFIRMED CONTRIBUTOR from the UNEXPLAINED REMAINDER in the m2-04 palisade route regression: re-run the rAF trajectory probe in three arms (today's main, today's main with lateralOffset=0, parent 4da134a9) -- closes the F-1148-1 measurement.",
+          "status": "queued",
+          "taskFile": "lane-c-f1148-1-trajectory-split.md",
+          "lane": "lane-c",
+          "spec": "F-1148-1 in reviews/lane-c-m2-04-palisade-budget-bisect.md (s1148), consolidated at tasks/BACKLOG.md:10. Instrument is the rAF trajectory probe described at artifacts/f-1147-1-bisect.md:93-100. Premises re-verified at source by s1149 2026-07-28: 4da134a9 IS the parent of 3c749607; 3c749607 IS an ancestor of main; the mechanism is still live (lateralOffset src/entities/Enemy.ts:704, spreadBiasX/Z :705-718, applied :723/:728).",
+          "authoredBy": "s1149 (fire-authored, attended review welcome)",
+          "mergeHash": null,
+          "authorNotes": "MEASUREMENT ONLY, zero committed src/, zero e2e/. The cure is OWNER-GATED (E(1) pathing adjacency, F-1131-5) and the :227 budget assertion must NOT be widened -- a green :227 obtained by editing e2e/m2-04-gold-stealing.spec.ts is the REJECT condition. Three arms n>=3 each because n=1 is precisely what produced the finding being corrected; report every individual run plus spread, not just medians. Probe needs a POSITIVE CONTROL (sample count + distance non-zero) since a probe that executes nothing reports zero and reads as clean. Arm C builds 4da134a9 in a DETACHED worktree on a SCRATCH PORT -- lane worktrees share 5188 and a default-port rig would silently measure a foreign tree. Arm B's src/ mutation is a throwaway: byte backup, restore, and prove git status --porcelain -- src/ is EMPTY before committing."
         }
       ]
     },
