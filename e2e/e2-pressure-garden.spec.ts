@@ -42,7 +42,7 @@ async function seedTrestleWin(page: Page): Promise<void> {
       keys: {
         profile: PROFILE_KEY,
         town: profileDataKey('robin', TOWN_NAME_KEY),
-        epoch: ACTIVE_EPOCH_KEY,
+        epoch: profileDataKey('robin', ACTIVE_EPOCH_KEY),
         scores: profileDataKey('robin', SCOREBOARD_KEY),
       },
     },

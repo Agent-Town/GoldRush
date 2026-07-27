@@ -37,7 +37,7 @@ async function seedVoltageTown(page: Page): Promise<void> {
   }, {
     profileKey: PROFILE_KEY,
     townKey: profileDataKey('robin', TOWN_NAME_KEY),
-    epochKey: ACTIVE_EPOCH_KEY,
+    epochKey: profileDataKey('robin', ACTIVE_EPOCH_KEY),
   });
   await page.reload();
 }
