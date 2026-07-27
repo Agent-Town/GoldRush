@@ -2207,11 +2207,13 @@
         {
           "id": "vp-02-anim-key-staleness",
           "title": "Cure the pre-existing anim-red cluster owed since s459 (BACKLOG:259 F-1, \"owed corrective, not gait\"). Single root cause verified at source s1134: the s37/batch-005R2 female-hero sheet swap (-f-) was never reflected in e2e/vp-02-sprite-animation.spec.ts, which still asserts pre--f- filenames in four places -- the 8-direction table (:29-36), a route-abort glob that now matches nothing (:355), the fallback expectation hero-homesteader.png vs the contract fallback hero-homesteader-f.png (:358), and the E/W frameKey assertions (:554-570). Test-only repair; the contract characters.v2.json is the binding source of truth.",
-          "status": "queued",
+          "status": "merged",
           "taskFile": "lane-vp-02-anim-key-staleness.md",
           "lane": "lane-a",
           "spec": "Corrective from BACKLOG:259 F-1 (s459 baseline-on-main fingerprinting) + BACKLOG:65 F-p03-vp02b + F-1134-1 root-cause verification at assets/layer-contracts/characters.v2.json:6-47 and src/assets/SpriteAnimator.ts:479/:1069",
-          "authoredBy": "s1134 fire (FIRE-AUTHORED, attended review welcome)"
+          "authoredBy": "s1134 fire (FIRE-AUTHORED, attended review welcome)",
+          "mergeHash": "96568621d51ac1b85fdb6c0fd1723465ad47e01e",
+          "drainNotes": "s1136 ACCEPT. One file (e2e/vp-02-sprite-animation.spec.ts, +20/-14), LANE-TOUCHED clean off a3a73654. Suite 13 passed / 9 failed (was 12/10): :350 fallback Fail/Fail -> Pass/Pass with a new positive control (abortedRotationCells=20 > 0). Remaining reds are NOT this slice: :453/:512 fail at ROW 2 (se serves the e pair) = F-1135-1, awaiting vp-02e; :705 = known char.claim_jumper baseline; :388 mobile = F-1136-1, FLAKY not regressed, proven by alternation (pass then fail, unchanged tree, textures 26 vs 27, exact assert with no settle -- owed a poll like draw calls already have). F-1136-2: the -f- repair upgraded :547 from asserting an impossible filename to asserting the CORRECT contract name and still getting null -- a real signal, NOT the diagonal defect (w has its own explicit block; hypothesis, UNVERIFIED: vp-02d 07eed37b made the west idle cell live 15 min prior). Contract read directly confirms vp-02e scope 2: the four directions missing an idle clip (se/ne/nw/sw) are exactly the four broken ones. Runner refused the workaround and independently re-derived F-1135-1 from another lane. Review: reviews/vp-02-anim-key-staleness.md"
         },
         {
           "id": "cw-02-slide-latch-blast-radius",
