@@ -5,7 +5,10 @@ import { expect, test, type Page } from '@playwright/test';
 test.skip(!process.env.GR_F1148_PROBE, 'measurement rig — set GR_F1148_PROBE=1 to run');
 test.setTimeout(45_000);
 
-const arm = process.env.GR_F1148_ARM ?? 'arm-a';
+// Default reproduces arm A rather than minting a new file set: the committed records are
+// arm-a-main-run*.json, so a bare `GR_F1148_PROBE=1` run must overwrite those, not write
+// arm-a-run*.json alongside them and look like a fourth arm (F-1152-3).
+const arm = process.env.GR_F1148_ARM ?? 'arm-a-main';
 const artifactDir = path.resolve('artifacts/f1148-1-trajectory');
 
 type Trajectory = {
@@ -38,7 +41,14 @@ for (let run = 1; run <= 3; run += 1) {
   test(`${arm} trajectory run ${run}`, async ({ page }) => {
     await openGame(page, '?debug&timescale=10&nowaves&nokill&nolevel&seed=m2-04-walls');
     await setBalance(page, 'palisade.cost', 0);
-    for (const x of [-2, -1, 0, 1, 2]) await placeBuildableAt(page, 'palisade', x, 9);
+    // Counted, not asserted: placeBuildableAt throws unless confirmBuild() returned true, so
+    // this tallies placements that actually succeeded and tracks the row if it is ever edited.
+    // It replaces a hardcoded `palisadesPlaced: 5` that read like a measurement (F-1152-2).
+    let palisadesPlaced = 0;
+    for (const x of [-2, -1, 0, 1, 2]) {
+      await placeBuildableAt(page, 'palisade', x, 9);
+      palisadesPlaced += 1;
+    }
     await setBalance(page, 'stockpile.cost', 0);
     await placeBuildableAt(page, 'stockpile', 0, 13);
     await page.evaluate(() => window.__GR_TEST__?.grantGold(100));
@@ -80,7 +90,7 @@ for (let run = 1; run <= 3; run += 1) {
     expect(result.sampleCount).toBeGreaterThan(0);
     expect(result.pathDistance).toBeGreaterThan(0);
 
-    const output = { arm, run, palisadesPlaced: 5, ...result };
+    const output = { arm, run, palisadesPlaced, ...result };
     await mkdir(artifactDir, { recursive: true });
     await writeFile(path.join(artifactDir, `${arm}-run${run}.json`), `${JSON.stringify(output, null, 2)}\n`);
     console.log(`F1148 ${JSON.stringify(output)}`);

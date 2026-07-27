@@ -105,6 +105,18 @@ I wrote the paragraph above, then built the mutation control rather than handing
 
 `const arm = process.env.GR_F1148_ARM ?? 'arm-a'` (`:8`), but the committed records are `arm-a-main-*`. Running the spec without `GR_F1148_ARM` silently writes a *new* `arm-a-run*.json` set beside them rather than reproducing arm A. Harmless, but it means the obvious invocation is not the reproducing one. Noted for whoever next points this rig at something.
 
+> **F-1152-2 + F-1152-3 both FIXED s1155** (line numbers had drifted to `:83` and `:8`).
+> `palisadesPlaced` is now tallied inside the placement loop — `placeBuildableAt` still throws
+> unless `confirmBuild()` returned true, so the counter records placements that actually
+> succeeded and follows the row if it is ever edited. The default arm is now `arm-a-main`, so a
+> bare `GR_F1148_PROBE=1` run reproduces (overwrites) arm A instead of minting a fourth file set.
+> **Both callers are unaffected** — `scripts/probe-s1152-briefing-race.mjs:68` and
+> `scripts/probe-s1152b-confirmbuild-cause.mjs:71` always set `GR_F1148_ARM` explicitly.
+> Gate: `npx tsc --noEmit` rc=0, bare (no pipe to mask the code), and `--listFiles` confirms the
+> probe is actually inside the typecheck rather than silently omitted. **The rig was deliberately
+> NOT executed:** with the corrected default it would overwrite the committed `arm-a-main-run*.json`
+> evidence, and destroying measurement history to verify a cosmetic fix is a bad trade.
+
 ## Compliance with s1151's stated bar
 
 | Clause | Result |
