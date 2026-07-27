@@ -337,12 +337,12 @@
             {
               "id": "e6-art-town-icons",
               "title": "E6 townsfolk portraits (audit plan E6 item 3, portraits-only) -- the first cast batched from the pinned tf convention",
-              "status": "queued",
+              "status": "merged",
               "taskFile": "art-e6-town-icons.md",
               "lane": "art",
               "spec": "specs/epoch-saga/e6-atomic-bundle.md A4 + reviews/era-art-audit.md E6 item 3 + assets/LEDGER.md row 60",
               "authoredBy": "s1153 fire",
-              "mergeHash": null,
+              "mergeHash": "c7601082b8d1153ad691cbf2898a6d5a618556b8",
               "authorNotes": "UNBLOCKS THE ART LADDER. BACKLOG:767 marked art-e6-town-icons PIPELINE-DRY/not-fire-authorable on three clauses; s1153 measured two of them FALSE and split the third. (1) ZERO tf-*.png portraits exist -> FALSE: 7 tracked, landed 1d85c6e6 (ancestor of main), under OWNER RULING 2026-07-27 quoted at tasks/art-batch-portrait-convention.md:3 -- portraits match the plates, one reference sheet, unblocks town-icons E6-E10. That ruling answers OWNER DESK item 2 at BACKLOG:955 whose own recommendation was one reference portrait, then the fires batch from it. (2) the <existing-tf-id>-e6 edit set is UNDEFINED -> FALSE: six tf ids now exist to edit. (3) the batch mixes a keyed processed-tier icons-e6.png with reference-tier portraits -> RESOLVED BY SPLITTING: icons-e6.png is explicitly OUT OF SCOPE, its own rung. Convention is binding from LEDGER row 60 (1254x1254 RGB no alpha, full-bleed NO ff00ff key, shoulders-up bust, reads at 120px, processing NONE) with F-1120-1 as a measured guard (ground warmth R-B in 130-145; tf-mei drifted to 104 -- anchor on the other five). tf-depot-clerk-e6 is an image-EDIT of tf-assay-clerk (consistency law + spec aging pass +12y, one chrome element), NOT a fresh gen. Canon rider: the defector carries the catalog he wrote -> blank/holes-only cover, NO letters. Reference-tier, extraction WITHHELD (no consumer: grep tf- in src/ returns only utf-8 in CharterShare.ts) -> no gazette, no deploy. Codex image_gen is free (AGENTS.md IMAGE LAW) so no owner spend."
             },
             {
