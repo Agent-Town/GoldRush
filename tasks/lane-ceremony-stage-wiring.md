@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** Done-move `tasks/done/shipped-s899-ceremony-stage-wiring.md`. Content probe on main today: `src/ceremony/stages.ts` and `src/ceremony/CeremonySystem.ts` both exist, with `e2e/ceremony-framework.spec.ts` and `e2e/e2-t2-dynamo-ceremony.spec.ts` exercising them. See F-1131-6.
+
 # Task lane-ceremony-stage-wiring: stages wear their paintings (ANY LANE, commit prefix "feat:")
 You are Codex (worktree per queue lane). CODEX: model=gpt-5.6-sol effort=high
 READ FIRST: src/ceremony/stages.ts (the primitive compositions — they become the FALLBACK) · the plate-binding precedent (import.meta.glob + filename convention, TownScene ~:83) · assets/raw/ceremony-stage-t*.png (may land AFTER you — placeholder-first: bind by name, fall back to primitives silently).

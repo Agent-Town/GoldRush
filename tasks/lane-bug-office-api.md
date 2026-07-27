@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** Done-move `tasks/done/shipped-s901-bug-office-api.md`. Content probe on main today: `e2e/bug-office-api.spec.ts` exists under the master's own proposed filename. See F-1131-6.
+
 # Task lane-bug-office-api: RF-03a — the complaints ledger backend (LANE-B, commit prefix "feat:")
 You are Codex (worktrees/lane-b). CODEX: model=gpt-5.6-sol effort=high
 READ FIRST: specs/release-e1/README.md RF-03 · functions/api/telemetry.ts + stats.ts (THE PATTERN: KV via TELEMETRY??ACCOUNTS, rate-limit by ip-hash, CORS, honest empty states) · KV value limits (cap the screenshot JPEG ~180KB base64).

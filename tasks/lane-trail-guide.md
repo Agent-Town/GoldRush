@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** Done-move `tasks/done/shipped-s903-trail-guide.md`. Content probe on main today: `e2e/trail-guide.spec.ts` exists under the master's own proposed filename, and trail-guide state is carried in `src/game/ProfileStorage.ts` + surfaced via `src/ui/Hud.ts`. ⚠️ **Do not confuse this with `tasks/DRAFT-e1-trail-guide-plain-boot-proof.md`, which is a DIFFERENT and still OWNER-GATED item** (s1130 guarded it ⏸️) — same words, different question: this master built the trail guide; that draft asks for a plain-boot proof of it. See F-1131-6.
+
 # Task lane-trail-guide: RF-02 — the Trail Guide (LANE-C after census, commit prefix "feat:")
 You are Codex (worktree per queue lane). CODEX: model=gpt-5.6-sol effort=high
 READ FIRST: specs/release-e1/README.md RF-02 · src/town/worldDispatches.ts + the bark engine (WD-02: milestone-mapped pools, dupe-guards — THE GRAMMAR) · the Prospector suggest surface · the first-run/profile-fresh truth · the difficulty preset surface (greenhorn offer) · lore voice (era-1, warm, never lecture).

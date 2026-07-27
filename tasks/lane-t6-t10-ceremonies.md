@@ -1,3 +1,5 @@
+> ⛔ **SUPERSEDED BY ITS OWN CHILDREN — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** This umbrella master has **no done-move of its own** — because it was executed as four separate rungs, and **all four shipped, each ✓ verified an ancestor of main:** T6 `de956491` · T7 `d976837f` · T8 `5012ad42` · T10 `be762583` (*"the Charter Press — saga finale door reachable in plain play"*, done-move `shipped-s958-t10-ceremony-be762583.md`); T9 shipped too (`tasks/done/shipped-s1063-lane-t9-ceremony-review-t9-ceremony.md`). Ceremony machinery on main: `src/ceremony/CeremonySystem.ts` + `src/ceremony/stages.ts`, `e2e/ceremony-framework.spec.ts`. **Queueing the umbrella would re-derive five shipped era doors.** See F-1131-6.
+
 # DRAFT (UNQUEUED) — T6–T10: the five missing inter-era ceremonies (THE SAGA WALL)
 > Authored by the saga-rehearsal session 2026-07-22 as a P0 corrective draft. NOT queued. Owner/attended must slice this — it is five ceremonies + five successor wirings, too large for one runner task; decompose per the numbered slices below. Prefix when queued: per-slice.
 

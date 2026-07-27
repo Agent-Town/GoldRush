@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** Done-move `tasks/failed/shipped-s896-t8-ceremony-5012ad42.md`; merge **`5012ad42`** ✓ ancestor of main = **true**, subject *"feat: T8 THE COLONY SEED — era door E8→E9 (SAGA WALL 3/5, F-REH-01 P0)"*. Ceremony machinery on main: `src/ceremony/CeremonySystem.ts` + `src/ceremony/stages.ts`. See F-1131-6.
+
 # Task lane-t8-ceremony: T8 — the era door E8→E9 (slice 3/5 of THE SAGA WALL, commit prefix "feat:")
 
 You are Codex, implementer for Gold Rush (worktree per queue lane).

@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** ⚠️ **Read the done-move history before trusting any single move on this one — it has THREE, and the first two are false dones:** `noop-s901-bug-office-desk-false-done.md`, then `noop-s901-bug-office-desk-false-done-2-stale-lane.md`, and finally `shipped-s902-bug-office-desk.md`. Content probe on main today confirms the third: `src/ui/ComplaintDesk.ts` exists and `e2e/bug-office-desk.spec.ts` exists under the master's own proposed filename. **A newest-move-wins triage would have been right here only by luck; the noop moves are the Mistake-#1 shape preserved in place.** See F-1131-6.
+
 # Task lane-bug-office-desk: RF-03b — THE COMPLAINTS DESK in the Assay Office (LANE-D, commit prefix "feat:")
 You are Codex (worktrees/lane-d). CODEX: model=gpt-5.6-sol effort=xhigh
 **SEQUENCED: RF-03a (bug-office-api) must be MERGED (probe functions/api/bug-report.ts exists; else STOP).**

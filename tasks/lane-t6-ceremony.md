@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** Done-move `tasks/failed/shipped-s896-t6-ceremony-de956491.md`; merge **`de956491`** ✓ `git merge-base --is-ancestor de956491 main` = **true**, subject *"feat: T6 THE CALCULATING HOUSE — era door E6→E7 (SAGA WALL 1/5, F-REH-01 P0)"*. Ceremony machinery on main: `src/ceremony/CeremonySystem.ts` + `src/ceremony/stages.ts`; `e2e/ceremony-framework.spec.ts`, `e2e/town-t6-surfaces.spec.ts`. ⚠️ **It sits in `tasks/failed/` despite having SHIPPED — the rc≠0 filename is about the run, not the outcome; see the `tasks/failed/` note in the memory ledger. That is exactly why a filename sweep missed it.** See F-1131-6.
+
 # Task lane-t6-ceremony: T6 — the era door E6→E7 (slice 1/5 of THE SAGA WALL, commit prefix "feat:")
 
 You are Codex, implementer for Gold Rush (worktree per queue lane).
