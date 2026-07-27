@@ -129,6 +129,18 @@ and was never flagged, while mei at ~105 was. But E7–E10 all cite this convent
 **Recommendation:** pin the statistic in the LEDGER convention — *"mean R−B over the TL+TR 60×60
 corners, band 130–145"* — so the guard stops depending on which corner the runner happens to sample.
 
+> **RESOLVED s1155 — pinned in row 60, but NOT as recommended above; the recommendation was tested and
+> failed.** Measuring all 12 shipped `tf-*` portraits (`logs/session-scratch/s1155-ground-warmth-corners.mjs`):
+> the **corner** half of the recommendation is right and now binding (**mean R−B over TL+TR**; a 4-corner or
+> whole-image mean false-fails **10 of 11** accepted portraits and is banned). The **band** half is wrong —
+> *130–145* retroactively fails two accepted portraits, `tf-preacher` **124.5** and `tf-appliance-wrangler`
+> **124.6**. Row 60's own "the other five's tight 130–145 band" was therefore inaccurate when written:
+> preacher was 124.1 and was accepted without comment. **Pinned as: flag below 120, observed accepted range
+> 124–145** — 15 points of margin above `tf-mei` (105.3), 4.5 below the lowest accepted portrait.
+> Mechanism checked by eye, not assumed (`logs/session-scratch/s1155-corner-crops.png`): **no headwear
+> intrudes into any sampled corner** — the statistic reads ground tone and hatching density, and mei is
+> visibly pale and under-hatched where preacher and appliance-wrangler are merely darker in the same hand.
+
 ### F-1154-3 — row 60's contact-sheet ordering claim is wrong, and row 61 inherited it (LOW, ledger accuracy)
 Row 60 states the E1 sheet is the six raws *"in the master's exact order — mean abs per-channel diff
 **0.2 on all 6 cells**"*. A full **6×6 pairing matrix** says otherwise: the E1 sheet's actual order is
@@ -142,6 +154,19 @@ curly") actually describes the sheet's true visual order — it is the **file li
 Row 61's *"the sheet mirrors row 60's 3×2 order"* therefore inherits a false premise. **The E6 art is
 unaffected and is in fact the better-behaved of the two:** E6's sheet is in **its own raw-list order**,
 verified cell-by-cell. Only the LEDGER prose needs correcting.
+
+> **RESOLVED s1155 — CONFIRMED by independent re-derivation, and row 60 + row 61 both corrected.**
+> Re-measured from scratch (`logs/session-scratch/s1155-sheet-pairing-matrix.mjs`), not inherited: the E1
+> sheet's true order is **assay-clerk / elder-rowan / mei / storekeeper / preacher / schoolteacher**, exactly
+> as claimed above — **6/6 bijective, MAE 0.18–0.24 true vs 33.3–65.9 for all 30 wrong pairings (gap ×165–199)**.
+> **The instrument was validated on the E6 sheet first, and that control earned its keep:** the script's FIRST
+> run sliced the letterboxed, square-celled E6 sheet as `height/2` bands, cut padding into every cell, and
+> returned a meaningless 4/6 non-bijective result. The E1 sheet's exact 3×2 geometry (1152×768 = 384² cells)
+> would have hidden that bug completely and handed me a "confirmed" verdict from a broken tool. With square
+> centered cells the control recovers E6's known order **6/6 at MAE 0.14, gap ×202–265**.
+> **One refinement to the finding above:** both sheets are near-bit-faithful (**MAE 0.14–0.24**), reproducing
+> row 60's original 0.2. s1154's 3.2–6.7 was its own resampler — so that gap needed no "resampler difference"
+> caveat in the first place; the sheets are simply clean.
 
 ## Merge classification
 
