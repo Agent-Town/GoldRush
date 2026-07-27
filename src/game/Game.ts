@@ -1866,6 +1866,15 @@ export class Game {
           this.publishDiagnostics();
           return placed;
         },
+        confirmBuildDiagnostics: () => {
+          const diagnostics = this.buildSystem.confirmDiagnostics;
+          const deepwaterClaim = Boolean(this.deepwaterClaim);
+          return {
+            ...diagnostics,
+            deepwaterClaim,
+            reason: deepwaterClaim ? 'deepwater_claim' as const : diagnostics.reason,
+          };
+        },
         testAudio: (name: string) => this.audio.play(name),
         enemyPositions: () =>
           this.enemies.all
