@@ -1,3 +1,5 @@
+> ⏸️ **OWNER-GATED — ON THE OWNER'S DESK, DO NOT QUEUE unasked (verified s1130 2026-07-27).** This is the **one genuinely unshipped E1-depth draft** (BACKLOG:1059). ⚠️ **Its own blocking sentence below — "Needs the RF-02 owner's read first" — is STALE: RF-02 has since shipped**, so the stated blocker no longer exists; what remains is simply an unasked go/hold. **And the task is ~40% narrower than this draft claims:** `e2e/trail-guide.spec.ts:113` and `:135` already prove the greenhorn offer on genuine plain boots. Genuinely unproven = the **first-run bark-beat track in a plain launch** (its test at `:42` boots with `?debug&nospawn&nolevel`). **One word — *go* or *hold* — and it is a lane task the same day.**
+
 # DRAFT — PROVE THE TEACHING PATH IN A PLAIN BOOT (Trail Guide + greenhorn offer)
 STATUS: DRAFT (E1-depth review session, 2026-07-25). Not queued. Needs the RF-02 owner's read first.
 WHY: `reviews/e1-gameplay-depth.md` F-E1-2 (✓ VERIFIED, played). Mistake #10 shape — *"where does the PLAYER see this, in a plain boot?"*

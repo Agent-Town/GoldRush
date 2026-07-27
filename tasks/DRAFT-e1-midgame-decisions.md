@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1130 2026-07-27).** Optimisation **1** landed and that satisfies this draft on its own terms — it says verbatim *"Do not do all of them; land one, measure, then decide."* Content probe: `src/game/Balance.ts:828` **and** `:1014` both read `doubleTapCoilMaxStacks: 3` (the draft asked 6→3, "both literals"). Merge **`d2279d32`** *"drain: e1-midgame — Double-Tap Coil capped 6->3 in both literals"*, found via `git log -G` on the datum. ⚠️ **BACKLOG:1329 mis-attributes this to `5b61349e`, which is actually the base-path commit** *"the game learns to live at agenttown.app/goldrush"* — cite `d2279d32`. Options **2/3/4 were deliberately not taken** and remain unclaimed measurement work. Retained per the RETENTION LAW; the "Not queued" line below is **HISTORY, not an instruction**.
+
 # DRAFT — THE E1 MIDGAME HAS NO DECISIONS (sixteen dead waves on Dry Gulch)
 STATUS: DRAFT (E1-depth review, leg 2, 2026-07-26). Not queued. Balance-sized; do not start before `DRAFT-e1-river-camp.md`.
 WHY: `reviews/e1-gameplay-depth.md` F-E1-8 and F-E1-9, both played.
