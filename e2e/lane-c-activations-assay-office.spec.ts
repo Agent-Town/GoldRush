@@ -11,6 +11,10 @@ type SpriteSnapshot = {
   direction?: string;
   mirrored?: boolean;
 };
+type Walk8Contract = {
+  grid: { file: string; cols: number; rowDirections: string[] };
+  aliases: Record<string, string>;
+};
 
 const shotDir = path.resolve('artifacts/lane-c-activations');
 const portraitTiles = [
@@ -21,16 +25,30 @@ const portraitTiles = [
   ['turret', 'signal-turret'],
   ['assay_office', 'claim-office'],
 ] as const;
-const jumperDirections = [
-  ['s', { x: 0, z: -10 }, ['char-jumper-sheet-rotation-r0c0.png', 'char-jumper-sheet-rotation-r0c1.png'], false],
-  ['se', { x: -10, z: -10 }, ['char-jumper-sheet-rotation-r0c2.png', 'char-jumper-sheet-rotation-r0c3.png'], false],
-  ['e', { x: -10, z: 0 }, ['char-jumper-sheet-rotation-r1c0.png', 'char-jumper-sheet-rotation-r1c1.png'], false],
-  ['ne', { x: -10, z: 10 }, ['char-jumper-sheet-rotation-r2c0.png', 'char-jumper-sheet-rotation-r2c1.png'], false],
-  ['n', { x: 0, z: 10 }, ['char-jumper-sheet-rotation-r2c2.png'], false],
-  ['nw', { x: 10, z: 10 }, ['char-jumper-sheet-rotation-r2c0.png', 'char-jumper-sheet-rotation-r2c1.png'], true],
-  ['w', { x: 10, z: 0 }, ['char-jumper-sheet-rotation-r1c2.png', 'char-jumper-sheet-rotation-r1c3.png'], false],
-  ['sw', { x: 10, z: -10 }, ['char-jumper-sheet-rotation-r0c2.png', 'char-jumper-sheet-rotation-r0c3.png'], true],
+const directionSpawns = [
+  ['s', { x: 0, z: -10 }],
+  ['se', { x: -10, z: -10 }],
+  ['e', { x: -10, z: 0 }],
+  ['ne', { x: -10, z: 10 }],
+  ['n', { x: 0, z: 10 }],
+  ['nw', { x: 10, z: 10 }],
+  ['w', { x: 10, z: 0 }],
+  ['sw', { x: 10, z: -10 }],
 ] as const;
+const characterContract = JSON.parse(
+  fs.readFileSync(path.resolve('assets/layer-contracts/characters.v2.json'), 'utf8'),
+) as { slots: Array<{ slot: string; walk8?: Walk8Contract }> };
+const banditWalk8 = characterContract.slots.find(({ slot }) => slot === 'char.bandit_base')?.walk8;
+if (!banditWalk8) throw new Error('characters.v2.json is missing char.bandit_base.walk8');
+const frameStem = path.basename(banditWalk8.grid.file, path.extname(banditWalk8.grid.file));
+const jumperDirections = directionSpawns.map(([direction, spawn]) => {
+  const rowDirection = banditWalk8.aliases[direction] ?? direction;
+  const row = banditWalk8.grid.rowDirections.indexOf(rowDirection);
+  if (row < 0) throw new Error(`char.bandit_base.walk8 has no row for ${direction} (${rowDirection})`);
+  const frames = Array.from({ length: banditWalk8.grid.cols }, (_, col) => `${frameStem}-r${row}c${col}.png`);
+  const mirrored = !banditWalk8.grid.rowDirections.includes(rowDirection);
+  return [direction, spawn, frames, mirrored] as const;
+});
 
 function collectErrors(page: Page): ErrorBucket {
   const bucket: ErrorBucket = { consoleErrors: [], pageErrors: [] };
