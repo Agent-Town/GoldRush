@@ -14,8 +14,22 @@ test('all contract chapters use their own board-card URL', async ({ page }) => {
   await page.evaluate(() => history.replaceState(null, '', '/?debug&epoch=epoch-10-deepsky'));
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
-  await hold(page, 'KeyA', 850);
-  await hold(page, 'KeyW', 850);
+  const target = await page.evaluate((id) => {
+    const diagnostics = window.__GR_TOWN_DIAGNOSTICS__!;
+    const slot = diagnostics.plaza.slots.find((candidate) => candidate.id === id);
+    return slot?.approach ?? slot?.position;
+  }, 'tavern');
+  if (!target) throw new Error('tavern is absent from town plaza diagnostics');
+  for (let step = 0; step < 48; step += 1) {
+    if ((await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)) === 'tavern') break;
+    const position = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.player);
+    const keys: string[] = [];
+    if (Math.abs(target.x - position.x) > 0.6) keys.push(target.x > position.x ? 'KeyD' : 'KeyA');
+    if (Math.abs(target.z - position.z) > 0.6) keys.push(target.z > position.z ? 'KeyS' : 'KeyW');
+    for (const key of keys) await page.keyboard.down(key);
+    await page.waitForTimeout(160);
+    for (const key of keys.reverse()) await page.keyboard.up(key);
+  }
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
   await page.getByTestId('town-open-board').click();
 
@@ -54,10 +68,4 @@ async function seedProfile(page: Page): Promise<void> {
 async function cardImageUrl(page: Page, contractId: string): Promise<string> {
   await expect(page.getByTestId(`contract-card-${contractId}`)).toBeVisible();
   return (await page.getByTestId(`contract-art-${contractId}`).locator('img').getAttribute('src')) ?? '';
-}
-
-async function hold(page: Page, key: string, ms: number): Promise<void> {
-  await page.keyboard.down(key);
-  await page.waitForTimeout(ms);
-  await page.keyboard.up(key);
 }
