@@ -1,3 +1,5 @@
+> ⛔ **SUPERSEDED — DO NOT QUEUE UNCHANGED (Mistake #8 guard, verified s1131 2026-07-27).** Two of this master's load-bearing premises are false on main today: **(a)** corrective 1 orders a new public `BuildSystem.placeAt(def, pos, rot)` — **no `placeAt` exists in `src/systems/BuildSystem.ts`**; **(b)** it binds the agent mark to **KeyG**, but `src/core/InputController.ts:18` now assigns `debugPlant: ['KeyG']` and **G opens the Prospector panel** (`tasks/lane-b-m4-07-prospector-panel.md` scope 1) — so the key this master claims is taken twice over. The agent's behavior shipped by a different route: `src/agent/Embodiment.ts` (319 lines) + consent gating via `src/agent/AgentConsent.ts` + the m4-08 attribution split. **If any item of its behavior list is still wanted, re-author against today's input map — do not queue this.** See F-1131-4.
+
 # Lane B / M4-02: agent behavior v1 — the Prospector acts (worktree lane-b, branch lane/m4, prefix "m4:")
 
 PRE-FLIGHT (binding): verify worktree lane-b is REGISTERED (`git worktree list` shows it) and fresh against main (m4-01 merged as `b7a4e9c`). If unregistered or stale → STOP, report, change nothing (s36/s41 rule).

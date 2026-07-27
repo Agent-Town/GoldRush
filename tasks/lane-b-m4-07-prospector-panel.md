@@ -1,3 +1,5 @@
+> ⛔ **SHIPPED — DO NOT QUEUE (Mistake #8 guard, verified s1131 2026-07-27).** Content probe on main today: `src/ui/ProspectorPanel.ts:72` renders `data-testid="prospector-panel"` — the exact testid scope item 1 asks for — inside `<section class="prospector-panel" aria-label="Prospector ledger">`; `src/agent/AgentConsent.ts` (106 lines) is the reusable consent/policy store scope item 3 specifies; `e2e/m4-07-prospector-panel.spec.ts` exists. No done-move, no goal leaf; see F-1130-4 / F-1131-2. Retained per the RETENTION LAW.
+
 # Task M4-07: the Prospector Panel — how do I use my robot? (LANE-B, branch lane/m4, commit prefix "feat:")
 
 **FIRE-AUTHORED s109 (attended review welcome)** — from the ratified spec-lite `specs/m4-agent-ux/README.md` (owner's mid-playtest questions: "how do I interact with it? How do I change the permissions? What are the buttons?"). Gate satisfied: prospector-presence merged to main (`7e37c61`) — the chip/HUD surface this builds on is live.
