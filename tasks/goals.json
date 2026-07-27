@@ -2240,6 +2240,13 @@
           "status": "merged",
           "drainNote_s1122": "Drained s1122, docs-only (three-dot diff = reviews/lane-055-baron-standard-note-diagnosis.md alone; zero src/, zero pre-existing e2e/). tsc clean, build green. Source claims re-verified at the gate: Hud.ts:349 (8000ms timer), Game.ts:5664-5665 (contract-briefing clause -> update(null)), Hud.ts:327 (dismiss testid exists), plus NEW: resetRun() at Game.ts:5864/:6007 RESTARTS the briefing timer and the spec calls it at :60 - that is the clock the report never named. F-1122-1 (non-blocking, in the review): the mechanism is measured for the 5 greens but UNPROVEN for the historical red - it requires the pre-teleport phase P<3000ms vs the 4926-5885ms implied by the controls, i.e. ~2-3s FASTER than every control, in the suite SLOWEST run (21.6s). Recommendation (b) (require note visible + data-object-class) is proven-correct independently and should land regardless; recommendation (a) (dismiss briefing) is sound hygiene but NOT established as the fix. F-1101-1/calibrate-suite-workers must NOT be re-run assuming (a) closed 055:121 - it needs a repeat-run proving the red is gone.",
           "mergeHash": "987e5f4dc5a3752d3e4074db1b6024f6d7094b4c"
+        },
+        {
+          "id": "055-standard-note-assertion-and-briefing",
+          "title": "Successor to the 055 diagnosis (merged 987e5f4d): close the PROVEN green-direction unsoundness at 055-baron-kill-stop.spec.ts:150 (update(null) at WorldInfoNotes.ts:182-188 never clears title.textContent, and toHaveText does not require visibility, so a vanished note still passes) by requiring the note root visible + data-object-class=baron_standard; and remove the measured contract-briefing confounder in prepareManualBaronKill. Acceptance is a DIRECT proof that the Game.ts:5664 clause can no longer fire, NOT a green count.",
+          "taskFile": "lane-055-standard-note-assertion-and-briefing.md",
+          "status": "queued",
+          "spec": "reviews/lane-055-baron-standard-note-diagnosis.md (merged 987e5f4d) — its \"Recommend only\" (a)+(b), narrowed by the s1122 drain addendum F-1122-1: the briefing mechanism is measured for the 5 greens but UNPROVEN for the historical red (needs a pre-teleport phase <3000ms vs the 4926-5885ms implied by the controls, in w1 slowest run), so this task must not claim to close F-1101-1."
         }
       ]
     },
