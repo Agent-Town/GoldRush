@@ -58,6 +58,10 @@ async function prepareManualBaronKill(page: Page, seed: string, extraQuery = '',
   if (unlock) await unlockAudio(page);
   await expect(page.evaluate(() => window.__GR_TEST__?.setManualSim(true))).resolves.toBe(true);
   await page.evaluate(() => window.__GR_TEST__?.resetRun());
+  const briefing = page.getByTestId('contract-briefing');
+  const dismissBriefing = page.getByTestId('contract-briefing-dismiss');
+  if (await dismissBriefing.isVisible()) await dismissBriefing.click();
+  await expect(briefing).toBeHidden();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? -1)).toBe(0);
   await setBalances(page, {
     'enemy.hp': 1,
@@ -147,6 +151,9 @@ test('Baron kill-stop freezes sim, advances render, plants the standard, then th
   await page.getByTestId('stay-for-rush').click();
   const standard = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.baronStandard);
   await page.evaluate((pos) => window.__GR_TEST__?.teleport((pos?.x ?? 0) + 0.6, pos?.z ?? 0), standard);
+  await expect(page.locator('[data-testid="contract-briefing"]:not([hidden])')).toHaveCount(0);
+  await expect(page.getByTestId('world-info-note')).toBeVisible({ timeout: 5_000 });
+  await expect(page.getByTestId('world-info-note')).toHaveAttribute('data-object-class', 'baron_standard');
   await expect(page.getByTestId('world-info-note-title')).toHaveText("The Baron's Standard", { timeout: 5_000 });
   await expect(page.getByTestId('world-info-note-body')).toContainText("The Baron's standard. He'll want it back.");
   await shot(page, testInfo, 'planted-standard-note');
