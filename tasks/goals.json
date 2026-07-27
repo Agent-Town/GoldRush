@@ -2413,6 +2413,17 @@
           "mergeHash": null,
           "authorNotes": "Successor to the lawful STOP of lane-vp-02b-jumper-slot-red. Scope is Class B only (the slot rename), which is mechanical and verifiable. Class A (hero walk4 -> walk8; measured Expected 4 / Received 8 at task-031:202) is deliberately EXCLUDED and routed to the owner: whether the hero being walk8 is intended or a regression is a design fork, and 066-walk8-engine:200-205 asserts .not.toContain(walk8) on purpose. Class A fails FIRST in 066:81, task-042:59, task-031:202 and masks their jumper asserts, so those three stay red after this lands -- stated up front in scope 4 so the runner is not judged for it. visual-polish-assets is a STOP-and-report judgement (boot canary), not a blind rename. Scope 5 warns that asserts unexecuted since 2026-07-12 may surface true reds and licenses reporting them over greening them.",
           "drainNotes": null
+        },
+        {
+          "id": "lane-c-trail-guide-residue-triggers",
+          "title": "Cover the Trail Guide two residue first-run triggers named by polish-04 and never shipped: first build-menu open and first theft.",
+          "status": "queued",
+          "taskFile": "lane-c-trail-guide-residue-triggers.md",
+          "lane": "lane-c",
+          "spec": "tasks/lane-c-polish-04-first-run-hints.md:4 (original owner-blessed brief, superseded in mechanism by RF-02); F-1132-12 and F-1133-1 (BACKLOG:1419, :1430) both verified the two triggers absent from TrailGuideTrigger at src/story/trailGuide.ts:3-11 and both ruled it NOT an owner call; F-903-1 (bark copy is tunable, owner wording review welcome) is the precedent that unblocks fire-side copy.",
+          "authoredBy": "s1145 (fire-authored, attended review welcome)",
+          "mergeHash": null,
+          "authorNotes": "Three fires left this unauthored because it needs new player-facing copy. s1145 resolved that by precedent rather than invention (F-903-1) and supplied both lines verbatim in scope 3, canon-checked against brief 9.2 (unarmed thief, no weapon or blood language). Premises re-verified at source s1145, not inherited: buildMenuOpen = true appears at EXACTLY ONE line (Game.ts:6858), so keyboard KeyB and the mobile Build-button intent path both funnel through toggleBuildMenu(); onThiefGrabbed():6426 is the theft alarm; window.__GR_TEST__.spawnThief exists (vite-env.d.ts:1022, wired Game.ts:1658) and e2e/m2-04-gold-stealing.spec.ts already drives it to a real gold_stolen event, so NO new test hook is needed. Two hazards are firewalled rather than solved: (a) the bark must NOT sit behind onThiefGrabbed early-return on isPingDisabled(), which is the ?noping AUDIO flag, or a teaching hint dies with the sound; (b) speakTrailGuide assigns a single trailGuideLine, so a second bark overwrites the first and first-gold already says Open Build - the runner must REPORT that back-to-back stomp, and adding a queue or priority rule is declared a design fork and a firewall violation. Trigger deliberately named first-build-menu, not first-b-open: mobile opens the menu by tap, so a key-named trigger would be a desktop-only lie."
         }
       ]
     },
