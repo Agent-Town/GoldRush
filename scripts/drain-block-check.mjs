@@ -22,6 +22,7 @@
 //                 should exist, so this is itself a bookkeeping finding); fails under --strict.
 
 import { readFileSync, existsSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 
 const GOALS = 'tasks/goals.json';
 const BACKLOG = 'tasks/BACKLOG.md';
@@ -31,6 +32,18 @@ const BACKLOG = 'tasks/BACKLOG.md';
 // renames a file but forgets the leaf should still be stopped.
 const FILENAME_BLOCK_MARKERS = [/do-not-drain/i, /OWNER-GATED/i];
 const TERMINAL_SHIPPED_STATUSES = new Set(['merged', 'shipped']);
+
+function isMainAncestor(mergeHash) {
+  if (typeof mergeHash !== 'string' || !mergeHash.trim()) return false;
+  const hash = mergeHash.trim();
+  try {
+    execFileSync('git', ['cat-file', '-e', '--', `${hash}^{commit}`], { stdio: 'ignore', timeout: 2_000 });
+    execFileSync('git', ['merge-base', '--is-ancestor', '--', hash, 'main'], { stdio: 'ignore', timeout: 2_000 });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 function collectLeaves(node, out = []) {
   if (!node || typeof node !== 'object') return out;
@@ -171,10 +184,15 @@ function main() {
     process.exit(strict ? 2 : 0);
   }
 
-  if (queue && TERMINAL_SHIPPED_STATUSES.has(leaf.status)) {
-    console.log(`  ⛔ ALREADY SHIPPED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
-    console.log(`    mergeHash="${leaf.mergeHash || '(not recorded)'}"`);
-    process.exit(1);
+  if (queue) {
+    const shippedByStatus = TERMINAL_SHIPPED_STATUSES.has(leaf.status);
+    const shippedByAncestry = !shippedByStatus && isMainAncestor(leaf.mergeHash);
+    if (shippedByStatus || shippedByAncestry) {
+      console.log(`  ⛔ ALREADY SHIPPED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
+      console.log(`    mergeHash="${leaf.mergeHash || '(not recorded)'}"`);
+      console.log(`    refusal arm=${shippedByStatus ? `status="${leaf.status}"` : `mergeHash is an ancestor of main (status="${leaf.status}")`}`);
+      process.exit(1);
+    }
   }
   console.log(`  ✅ CLEAR — ${leaf.taskFile} [${leaf.id}] status="${leaf.status}"`);
   if (hits.length > 1) {
