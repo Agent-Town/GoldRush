@@ -2195,6 +2195,15 @@
           "spec": "tasks/024-vp-02d-side-idle-resolver.md Compact contract (binding, reproduced faithfully); batch-005R2 promise recorded in assets/layer-contracts/characters.v2.json:12; evidence = OrientationResolver.ts:51-53, SpriteAnimator.ts:427, the characters.v2.json e/w direction blocks and e2e/vp-02b-rotation-resolver.spec.ts:149 all read at source by s1132 on 2026-07-27"
         },
         {
+          "id": "vp-02-anim-key-staleness",
+          "title": "Cure the pre-existing anim-red cluster owed since s459 (BACKLOG:259 F-1, \"owed corrective, not gait\"). Single root cause verified at source s1134: the s37/batch-005R2 female-hero sheet swap (-f-) was never reflected in e2e/vp-02-sprite-animation.spec.ts, which still asserts pre--f- filenames in four places -- the 8-direction table (:29-36), a route-abort glob that now matches nothing (:355), the fallback expectation hero-homesteader.png vs the contract fallback hero-homesteader-f.png (:358), and the E/W frameKey assertions (:554-570). Test-only repair; the contract characters.v2.json is the binding source of truth.",
+          "status": "queued",
+          "taskFile": "lane-vp-02-anim-key-staleness.md",
+          "lane": "lane-a",
+          "spec": "Corrective from BACKLOG:259 F-1 (s459 baseline-on-main fingerprinting) + BACKLOG:65 F-p03-vp02b + F-1134-1 root-cause verification at assets/layer-contracts/characters.v2.json:6-47 and src/assets/SpriteAnimator.ts:479/:1069",
+          "authoredBy": "s1134 fire (FIRE-AUTHORED, attended review welcome)"
+        },
+        {
           "id": "cw-02-slide-latch-blast-radius",
           "title": "F-1118-1/F-1118-2 successor: the resolveTerrain wall-slide latch is a TERMINAL deadlock (wrecker frozen 5.2s of an 8s window, byte-identical 3/3), and its trigger is a non-walkable 0.6-unit goal lookahead. s1129 verified at source that Terrain.ts:168 returns walkable:false for EVERY non-traversable elevation tile, not only for out-of-bounds (:165-167) — so the latch may reach every cliff on every elevation contract. UNMEASURED. Measure the blast radius across scenarios incl. a plain no-debug boot and a no-elevation negative control, so the owner can rule on the global pathing cure.",
           "taskFile": "lane-cw-02-slide-latch-blast-radius.md",
