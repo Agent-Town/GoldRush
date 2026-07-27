@@ -20,15 +20,16 @@ type ErrorBucket = {
 };
 
 const shotDir = path.resolve('reviews/shots-008-rotation');
+const idleShotDir = path.resolve('reviews/shots-vp-02d');
 const directions = [
-  ['s', { x: 0, y: 1 }, ['char-hero-sheet-rotation-r0c0.png', 'char-hero-sheet-rotation-r0c1.png'], false],
-  ['se', { x: 1, y: 1 }, ['char-hero-sheet-rotation-r0c2.png', 'char-hero-sheet-rotation-r0c3.png'], false],
-  ['e', { x: 1, y: 0 }, ['char-hero-sheet-rotation2-r0c2.png', 'char-hero-sheet-rotation2-r0c3.png'], false],
-  ['ne', { x: 1, y: -1 }, ['char-hero-sheet-rotation-r1c2.png', 'char-hero-sheet-rotation-r1c3.png'], false],
-  ['n', { x: 0, y: -1 }, ['char-hero-sheet-rotation-r2c0.png', 'char-hero-sheet-rotation-r2c1.png'], false],
-  ['nw', { x: -1, y: -1 }, ['char-hero-sheet-rotation2-r1c0.png', 'char-hero-sheet-rotation2-r1c1.png'], false],
-  ['w', { x: -1, y: 0 }, ['char-hero-sheet-rotation-r1c0.png', 'char-hero-sheet-rotation-r1c1.png'], false],
-  ['sw', { x: -1, y: 1 }, ['char-hero-sheet-rotation2-r0c0.png', 'char-hero-sheet-rotation2-r0c1.png'], false],
+  ['s', { x: 0, y: 1 }, ['char-hero-sheet-rotation-f-r0c0.png', 'char-hero-sheet-rotation-f-r0c1.png'], false],
+  ['se', { x: 1, y: 1 }, ['char-hero-sheet-rotation-f-r0c2.png', 'char-hero-sheet-rotation-f-r0c3.png'], false],
+  ['e', { x: 1, y: 0 }, ['char-hero-sheet-rotation2-f-r0c2.png', 'char-hero-sheet-rotation2-f-r0c3.png'], false],
+  ['ne', { x: 1, y: -1 }, ['char-hero-sheet-rotation-f-r1c2.png', 'char-hero-sheet-rotation-f-r1c3.png'], false],
+  ['n', { x: 0, y: -1 }, ['char-hero-sheet-rotation-f-r2c0.png', 'char-hero-sheet-rotation-f-r2c1.png'], false],
+  ['nw', { x: -1, y: -1 }, ['char-hero-sheet-rotation2-f-r1c0.png', 'char-hero-sheet-rotation2-f-r1c1.png'], false],
+  ['w', { x: -1, y: 0 }, ['char-hero-sheet-rotation-f-r1c0.png', 'char-hero-sheet-rotation-f-r1c1.png'], false],
+  ['sw', { x: -1, y: 1 }, ['char-hero-sheet-rotation2-f-r0c0.png', 'char-hero-sheet-rotation2-f-r0c1.png'], false],
 ] as const;
 
 function collectErrors(page: Page): ErrorBucket {
@@ -50,7 +51,7 @@ async function openGame(page: Page, seed: string): Promise<ErrorBucket> {
   return errors;
 }
 
-const MOVE_KEYS = ['KeyW', 'KeyA', 'KeyS', 'KeyD'] as const;
+const MOVE_KEYS = ['KeyA', 'KeyD', 'KeyW', 'KeyS'] as const;
 
 async function pressMoveKeys(page: Page, x: number, y: number): Promise<void> {
   const absX = Math.abs(x);
@@ -146,24 +147,82 @@ test('resolver hysteresis holds across small boundary oscillation', async ({ pag
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('idle snaps to rotation idle hemispheres after movement', async ({ page }) => {
+test('idle resolver keeps pure sides and snaps diagonals to hemispheres', async ({ page }) => {
+  const errors = await openGame(page, 'vp-02d-idle-map');
+  const actual = await page.evaluate(async () => {
+    const modulePath = '/src/assets/OrientationResolver.ts';
+    const { idleDirectionFor } = (await import(modulePath)) as {
+      idleDirectionFor: (direction: string) => string;
+    };
+    return Object.fromEntries(['s', 'se', 'e', 'ne', 'n', 'nw', 'w', 'sw'].map((direction) => [direction, idleDirectionFor(direction)]));
+  });
+
+  expect(actual).toEqual({ s: 's', se: 's', e: 'e', ne: 'n', n: 'n', nw: 'n', w: 'w', sw: 's' });
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('pure side idle stays side while diagonal idle snaps to a hemisphere', async ({ page }) => {
+  test.setTimeout(60_000);
   const errors = await openGame(page, 'vp-02b-idle');
 
-  await startStick(page, 1, 0);
+  await pressMoveKeys(page, 1, 0);
   await waitForHero(page, 'e');
-  await releaseStick(page);
-  await waitForHero(page, 's', 'idle');
+  await releaseMoveKeys(page);
+  await waitForHero(page, 'e', 'idle');
   expect(await latestHero(page)).toMatchObject({
-    frameKey: 'char-hero-sheet-rotation-r2c2.png',
+    frameKey: 'char-hero-sheet-rotation2-f-r1c2.png',
     mirrored: false,
   });
 
-  await startStick(page, 1, -1);
+  await pressMoveKeys(page, 1, -1);
   await waitForHero(page, 'ne');
-  await releaseStick(page);
+  await releaseMoveKeys(page);
   await waitForHero(page, 'n', 'idle');
   expect(await latestHero(page)).toMatchObject({
-    frameKey: 'char-hero-sheet-rotation-r2c3.png',
+    frameKey: 'char-hero-sheet-rotation-f-r2c3.png',
+    mirrored: false,
+  });
+
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('east and west idle cells resolve explicitly while southeast stays south', async ({ page }, testInfo) => {
+  test.setTimeout(60_000);
+  const errors = await openGame(page, 'vp-02d-side-idles');
+  if (testInfo.project.name === 'desktop-chrome') fs.mkdirSync(idleShotDir, { recursive: true });
+
+  await pressMoveKeys(page, 1, 0);
+  await waitForHero(page, 'e');
+  await releaseMoveKeys(page);
+  await waitForHero(page, 'e', 'idle');
+  expect(await latestHero(page)).toMatchObject({
+    frameKey: 'char-hero-sheet-rotation2-f-r1c2.png',
+    mirrored: false,
+  });
+  if (testInfo.project.name === 'desktop-chrome') {
+    await page.locator('#game-canvas').screenshot({ path: path.join(idleShotDir, 'desktop-chrome-idle-east.png') });
+  }
+
+  await pressMoveKeys(page, -1, 0);
+  await waitForHero(page, 'w');
+  await releaseMoveKeys(page);
+  await waitForHero(page, 'w', 'idle');
+  expect(await latestHero(page)).toMatchObject({
+    frameKey: 'char-hero-sheet-rotation2-f-r1c3.png',
+    mirrored: false,
+  });
+  if (testInfo.project.name === 'desktop-chrome') {
+    await page.locator('#game-canvas').screenshot({ path: path.join(idleShotDir, 'desktop-chrome-idle-west.png') });
+  }
+
+  await pressMoveKeys(page, 1, 1);
+  await waitForHero(page, 'se');
+  await releaseMoveKeys(page);
+  await waitForHero(page, 's', 'idle');
+  expect(await latestHero(page)).toMatchObject({
+    frameKey: 'char-hero-sheet-rotation-f-r2c2.png',
     mirrored: false,
   });
 
@@ -179,7 +238,11 @@ test('action clips stay on coarse orientation cells and jumper diagnostics stay 
   const actionSamples = await page.evaluate(async () => {
     const modulePath = '/src/assets/SpriteAnimator.ts';
     const mod = (await import(modulePath)) as {
-      SpriteAnimator: new (slotId: string, material: { map: unknown; needsUpdate: boolean }, sprite: { scale: { x: number } }) => {
+      SpriteAnimator: new (
+        slotId: string,
+        material: { map: unknown; needsUpdate: boolean },
+        sprite: { scale: { x: number }; userData: Record<string, unknown>; onBeforeRender: () => void; material: unknown },
+      ) => {
         update: (delta: number, clip: string, orientation: string) => void;
         dispose: () => void;
       };
@@ -188,7 +251,7 @@ test('action clips stay on coarse orientation cells and jumper diagnostics stay 
 
     async function sample(clip: string, orientation: string): Promise<SpriteSnapshot & { scaleX: number }> {
       const material = { map: null as unknown, needsUpdate: false };
-      const sprite = { scale: { x: 1 } };
+      const sprite = { scale: { x: 1 }, userData: {}, onBeforeRender: () => undefined, material };
       const animator = new mod.SpriteAnimator('char.hero', material, sprite);
       const deadline = performance.now() + 5000;
       while (performance.now() < deadline) {
@@ -211,11 +274,11 @@ test('action clips stay on coarse orientation cells and jumper diagnostics stay 
     };
   });
 
-  expect(['char-hero-sheet-side-actions-r0c0.png', 'char-hero-sheet-side-actions-r0c1.png']).toContain(actionSamples.panEast.frameKey);
+  expect(actionSamples.panEast.frameKey).toBe('char-hero-sheet-work8-r2c0.png');
   expect(actionSamples.panEast.direction).toBe('e');
   expect(actionSamples.panEast.mirrored).toBe(false);
   expect(actionSamples.panEast.scaleX).toBeGreaterThan(0);
-  expect(actionSamples.aimSouth.frameKey).toBe('char-hero-sheet-front-r1c2.png');
+  expect(actionSamples.aimSouth.frameKey).toBe('char-hero-sheet-rotation-f-r0c0.png');
 
   await page.evaluate(() => window.__GR_TEST__?.spawnPack(1, 5));
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.claim_jumper']?.loaded === true);
@@ -235,14 +298,14 @@ test('captures rotation scale-pulse review shots', async ({ page }, testInfo) =>
 
   await startStick(page, -1, 0);
   await waitForHero(page, 'w');
-  for (const frameKey of ['char-hero-sheet-rotation-r1c0.png', 'char-hero-sheet-rotation-r1c1.png']) {
+  for (const frameKey of ['char-hero-sheet-rotation-f-r1c0.png', 'char-hero-sheet-rotation-f-r1c1.png']) {
     await page.waitForFunction((key) => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameKey === key, frameKey);
     await page.locator('#game-canvas').screenshot({ path: path.join(shotDir, `w-${path.basename(frameKey, '.png')}.png`) });
   }
 
   await moveStick(page, 1, -1);
   await waitForHero(page, 'ne');
-  for (const frameKey of ['char-hero-sheet-rotation-r1c2.png', 'char-hero-sheet-rotation-r1c3.png']) {
+  for (const frameKey of ['char-hero-sheet-rotation2-f-r0c2.png', 'char-hero-sheet-rotation2-f-r0c3.png']) {
     await page.waitForFunction((key) => window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameKey === key, frameKey);
     await page.locator('#game-canvas').screenshot({ path: path.join(shotDir, `ne-${path.basename(frameKey, '.png')}.png`) });
   }

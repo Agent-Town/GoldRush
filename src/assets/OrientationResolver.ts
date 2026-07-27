@@ -49,7 +49,7 @@ export function isRotationDirection(value: string): value is RotationDirection {
 }
 
 export function idleDirectionFor(direction: RotationDirection): RotationDirection {
-  return direction === 'n' || direction === 'ne' || direction === 'nw' ? 'n' : 's';
+  return direction === 'e' || direction === 'w' ? direction : direction === 'n' || direction === 'ne' || direction === 'nw' ? 'n' : 's';
 }
 
 export function coarseOrientationForDirection(direction: RotationDirection): CoarseOrientation {
