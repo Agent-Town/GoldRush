@@ -122,7 +122,11 @@ async function debugPlaceAssayOffice(page: Page): Promise<void> {
     window.__GR_TEST__?.grantGold(120);
     window.__GR_TEST__?.teleport(0, 9);
     window.__GR_TEST__?.selectBuildable('assay_office');
-    window.__GR_TEST__?.confirmBuild();
+  });
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
+  const placed = await page.evaluate(() => window.__GR_TEST__?.confirmBuild());
+  expect(placed, 'confirmBuild() refused: ghost invalid at the requested position').toBe(true);
+  await page.evaluate(() => {
     window.__GR_TEST__?.setBuildMode(false);
     window.__GR_TEST__?.teleport(0, 7);
   });
