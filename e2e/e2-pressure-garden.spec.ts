@@ -70,7 +70,8 @@ test('Pressure Garden unlocks after Trestle and teaches the pressure loop', asyn
 
   const card = page.getByTestId('contract-card-e2-pressure-garden');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');
-  await expect(page.getByTestId('contract-art-e2-pressure-garden')).toHaveAttribute('data-contract-art-key', 'contract-the-claim');
+  // One render path since The Adoption (3a007ea7); per-card art is guarded by board-card-images.spec.ts.
+  await expect(page.getByTestId('contract-art-e2-pressure-garden')).toHaveAttribute('data-contract-art-key', 'plate');
   await expect(page.getByTestId('contract-launch-e2-pressure-garden')).toBeEnabled();
   await shot(page, testInfo, 'board');
 

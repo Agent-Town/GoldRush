@@ -23,15 +23,14 @@ type SeedState = {
 };
 
 const BOARD_CONTRACTS = [
-  { id: 'the-claim', flavor: 'The classic river claim.', artKey: 'contract-the-claim' },
-  { id: 'e1-dry-gulch', flavor: 'Mesa country; dry washes fall toward one sunken spring.', artKey: 'contract-dry-gulch' },
-  { id: 'e1-night-shift', flavor: 'The claim, gone dark, dotted with cold lanterns.', artKey: 'contract-night-shift' },
-  { id: 'e1-twin-banks', flavor: 'A braided river claim with twin fords, gravel bars, and damp reeds.', artKey: 'contract-twin-banks' },
-  { id: 'e1-baron', flavor: 'An oxblood banner marks the outfit that keeps buying trouble.', artKey: 'contract-baron' },
+  { id: 'the-claim', flavor: 'The classic river claim.' },
+  { id: 'e1-dry-gulch', flavor: 'Mesa country; dry washes fall toward one sunken spring.' },
+  { id: 'e1-night-shift', flavor: 'The claim, gone dark, dotted with cold lanterns.' },
+  { id: 'e1-twin-banks', flavor: 'A braided river claim with twin fords, gravel bars, and damp reeds.' },
+  { id: 'e1-baron', flavor: 'An oxblood banner marks the outfit that keeps buying trouble.' },
   {
     id: 'e2-hill-mine',
     flavor: 'Terraced steamworks ground above a rail cut and flooded gallery.',
-    artKey: 'contract-hill-mine',
   },
 ] as const;
 
@@ -200,7 +199,8 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
       await goToContractPage(page, id);
       const contract = BOARD_CONTRACTS.find((item) => item.id === id)!;
       await assertFlavorOnce(page, id, contract.flavor);
-      await expect(page.getByTestId(`contract-art-${id}`)).toHaveAttribute('data-contract-art-key', contract.artKey);
+      // One render path since The Adoption (3a007ea7); per-card art is guarded by board-card-images.spec.ts.
+      await expect(page.getByTestId(`contract-art-${id}`)).toHaveAttribute('data-contract-art-key', 'plate');
       await expect(page.getByTestId(`contract-card-${id}`)).toHaveAttribute('data-contract-locked', locked ? 'true' : 'false');
     }
     if (entry.name === 'fresh') {

@@ -70,7 +70,8 @@ test('The Trestle unlocks after Hill Mine and runs the shipped crossing systems'
 
   const card = page.getByTestId('contract-card-e2-trestle');
   await expect(card).toHaveAttribute('data-contract-locked', 'false');
-  await expect(page.getByTestId('contract-art-e2-trestle')).toHaveAttribute('data-contract-art-key', 'contract-the-claim');
+  // One render path since The Adoption (3a007ea7); per-card art is guarded by board-card-images.spec.ts.
+  await expect(page.getByTestId('contract-art-e2-trestle')).toHaveAttribute('data-contract-art-key', 'plate');
   await expect(page.getByTestId('contract-launch-e2-trestle')).toBeEnabled();
   await shot(page, testInfo, 'board');
 
