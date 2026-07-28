@@ -79,10 +79,26 @@
 }
 
 .claim-herald__item {
+  position: relative;
   display: grid;
   gap: 7px;
   border-bottom: 1px solid rgba(77, 49, 25, 0.24);
   padding-bottom: 12px;
+}
+
+.claim-herald__item:has(.claim-herald__engraving) {
+  min-height: 120px;
+  padding-right: 132px;
+}
+
+.claim-herald__engraving {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 4px;
+  object-fit: cover;
 }
 
 .claim-herald__item:last-child {
@@ -134,5 +150,15 @@
   .claim-herald__close {
     grid-column: 1 / -1;
     justify-self: end;
+  }
+
+  .claim-herald__item:has(.claim-herald__engraving) {
+    min-height: 92px;
+    padding-right: 104px;
+  }
+
+  .claim-herald__engraving {
+    width: 92px;
+    height: 92px;
   }
 }
