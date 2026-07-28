@@ -120,3 +120,82 @@ needs either one owner command or a main-slot Codex task.
 art-batch-008` — an *art* commit that swept a source file. That is **F-1162-1**, the broad-add
 family, now at its 18th recorded instance. Untracking these five files treats the symptom; the
 runner's `git add` scope is the disease.
+
+---
+
+## F-1183-3 — ✅ F-1167-3 DISCHARGED: lane-d was frozen by a retention risk that one archive ref removes
+
+**Status: ACTED ON THIS FIRE.** `lane-d` has been carried as **do-not-reset** across at least
+four handoffs (s1179 → s1182), on the grounds that `lane/perf` "uniquely holds the >100 MB
+`suite-red-inventory-raw.json`." Every one of those fires re-carried the flag; s1182 explicitly
+noted it was *"re-carried unverified."* I verified it, and it was **true** — and also **cheaply
+fixable**, which nobody had checked.
+
+**The measurement.**
+
+| probe | result |
+|---|---|
+| `git rev-parse e2838ce3:logs/suite-red-inventory-raw.json` | blob `e5ea5932` |
+| `git cat-file -s e5ea5932` | **171,333,533 bytes (171.3 MB)** — not merely ">100 MB" |
+| `git branch -a --contains e2838ce3` | **`lane/perf` only** |
+| `git branch -r --contains e2838ce3` | **empty — on no origin ref** |
+| `git ls-files logs/suite-red-inventory.md scripts/suite-red-inventory.mjs` | **both present on main** |
+
+So the danger was real: `lane/perf` was the single ref keeping 171.3 MB reachable, and a refill's
+`reset --hard` would have orphaned it to eventual gc — the Reset Massacre shape, aimed at the
+RETENTION LAW instead of at a slice.
+
+**But the freeze was never the right remedy.** The house already has one for exactly this: the
+§2E salvage lifecycle (`save/` → `archive/`). A branch is a ref; keeping the bytes costs one.
+
+```
+git branch -f archive/suite-red-inventory-raw-171mb 8f1264de   # the lane TIP, not the mid-stack commit
+```
+
+Verified after: `git branch --contains e2838ce3` lists the archive ref, and
+`git cat-file -s e5ea5932` still returns 171,333,533. **`lane/perf` may now be reset and refilled
+with nothing orphaned** — the lane's tip commit (`8f1264de` boss-detail-adoption, drained by
+s1181 as `a226e5f7`) is preserved too, because I pointed the ref at the tip rather than at the
+raw's own commit. A mid-stack ref would have preserved the blob and dropped the tip.
+
+**⚠️ CORRECTION TO MY OWN FIRST DRAFT — I nearly shipped an overclaim, and `BACKLOG:43` caught
+it.** I had written that the lane held the only copy of a unique historical measurement. **It does
+not, and the difference matters.** Re-derived at the file:
+
+| probe | result |
+|---|---|
+| `git ls-files \| grep suite-red-inventory` | `logs/suite-red-inventory-compact.json` **is on main** |
+| `wc -c logs/suite-red-inventory-compact.json` | **2,358,427 B** — matches `BACKLOG:43` exactly |
+
+`BACKLOG:43` records that `scripts/suite-red-inventory-compact.mjs` strips **1,061 base64
+attachment payloads** — **97.7%** of the raw — for a 98.6% cut, and that this is **proven
+lossless for the report**: reducing the compacted file reproduces the digest byte-for-byte,
+because the reducer never reads attachments. So what `lane/perf` uniquely holds is **not the
+measurement** — it is the **screenshot/trace payloads behind it**. The analysis, the digest, the
+generator, and the compactor are all on main and all pushable.
+
+That makes the archive ref **cheaper and better-justified**, not less: it costs one ref to keep
+1,061 pieces of failure evidence that nothing else retains, and it is now the *only* thing
+lane-d's freeze was ever buying. It does **not** close the retention hole — 171.3 MB exceeds
+GitHub's 100 MB per-file limit, so those bytes can never reach origin without LFS (still
+**F-1120-2 class**: dies with the disk). What changed is that a whole lane is no longer held
+hostage to a risk that a single ref absorbs.
+
+*This is the repo's own through-line landing on me: my premise was true, my framing was inflated,
+and the correction cost one `git ls-files`. I re-derived the ladder line instead of quoting my
+own draft.*
+
+**➡️ NEXT FIRE: lane-d is refillable.** Drop the do-not-reset flag; cite this finding. Do not
+delete `archive/suite-red-inventory-raw-171mb` — it is the only thing holding those bytes.
+
+**⚠️ Lanes a / b / c are a different question and are NOT cleared by this.** All four lanes read
+`2 ahead`, and all four are *mostly* tip-graft false-ahead from s1181's five drains — but each
+carries a second, older commit, and two of them hold content main does not have:
+- `lane/m3` `65041a9c` — a **72-line task report** at timestamp `...183927...` where main only has
+  `...182840...`. A different report, not on main.
+- `lane/m4` `c97062be` — `cp04-charter-name-composition`, done-moved **`stopped-lawful-s1180`**.
+- `lane/e2-arsenal` — both commits correspond to slices s1181 drained (`bcaddba7`, `639df50b`).
+
+Before refilling **a** or **b**, either graft those reports to main or give them an archive ref
+too. This is the same class of loss the Reset Massacre law was written for, and it is why I
+authored to the **main** slot this fire rather than into a lane.
