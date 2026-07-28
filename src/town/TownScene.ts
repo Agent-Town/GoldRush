@@ -551,7 +551,7 @@ export class TownScene {
     }
     return {
       walkable:
-        !shellAt(this.visibleBuildings, x, z) &&
+        !shellAt(this.visibleBuildings, this.canvas.dataset.town3dPilotLoadedIds ?? '', x, z) &&
         !townPropAt(this.propRingEnabled, this.canvas.dataset.town3dPlazaPropsState === 'loaded', this.eraOrder, x, z) &&
         !megaprojectAt(this.stampMill, STAMP_MILL_TOWN_SITE, x, z) &&
         !megaprojectAt(this.dynamoHall, this.dynamoHall.manifest?.siteFootprint, x, z),
@@ -2716,9 +2716,11 @@ function readTownMegaproject(epochId: string, id: string): TownMegaproject {
   };
 }
 
-function shellAt(buildings: readonly TownBuilding[], x: number, z: number): boolean {
+function shellAt(visibleBuildings: readonly TownBuilding[], modeledIds: string, x: number, z: number): boolean {
   const pad = Balance.hero.radius + 0.08;
-  return buildings.some((building) => {
+  const modeled = modeledIds.split(',');
+  return townBuildings.some((building) => {
+    if (!visibleBuildings.includes(building) && !modeled.includes(building.id)) return false;
     const footprint = building.collisionFootprint ?? building.footprint;
     const halfX = footprint.w / 2 + pad;
     const halfZ = footprint.d / 2 + pad;

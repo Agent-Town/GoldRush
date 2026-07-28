@@ -1967,6 +1967,14 @@
               "status": "merged",
               "mergeHash": "a226e5f751aa054f23798dca5579e58d62a169e6",
               "note": "Owner-confirmed duel verdict wired: both boss systems point at the -detail-opus5 GLBs. All four mount-gate terms (triangles/meshes/materials/node+morph names) verified directly from the GLB binaries, not from the report — the constants are a silent return-null gate, no spec pins them. 12/12 boss specs both projects; frame p95 ratio 1.0217 desktop / 1.0109 mobile. Originals retained for one-revert rollback. Review reviews/boss-detail-adoption.md. F-1181-4: 2048 atlas ~16MB VRAM/boss, 1024 variant is owed art-slot work."
+            },
+            {
+              "id": "town-store-collider",
+              "title": "F-E1W-3 — town buildings promoted as 3D models are solid even while unearned",
+              "taskFile": "lane-town-store-collider.md",
+              "status": "merged",
+              "mergeHash": "PENDING4",
+              "note": "Owner E1 public walk: hero stood INSIDE the General Store. shellAt() consulted only earned visibleBuildings, but the 3D pilot promotes GLBs regardless of territory — a visible building over an unearned lot was walk-through. Solidity now binds to town3dPilotLoadedIds (normal-play GLB onLoad path, verified at source). Low-tier path correct by construction: no model -> survey plot -> intentionally walkable. Census covered all buildings/props (full-fix law). never-trap 6/6 both projects, fixture moved territory 3->0 so it fails on the reported bug. 3-way graft: main had moved TownScene.ts in 1f36b174 (prompt labels), disjoint hunks, both verified present after apply. Review reviews/town-store-collider.md."
             }
           ]
         }
