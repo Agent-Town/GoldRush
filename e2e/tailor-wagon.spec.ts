@@ -10,7 +10,7 @@ import {
   PROSPECTOR_SKINS_OWNED_STORAGE_KEY,
 } from '../src/game/ProspectorSkin';
 
-const SHOT_DIR = path.resolve('artifacts/tailor-wagon');
+const SHOT_DIR = path.resolve('artifacts/wardrobe-preview');
 
 test("the tailor's wagon owns the profile wardrobe and Settings has no picker", async ({ page }, testInfo) => {
   await seedTown(page);
@@ -21,12 +21,22 @@ test("the tailor's wagon owns the profile wardrobe and Settings has no picker", 
   await expect(page.getByTestId('start-menu-prospector-skin')).toHaveCount(0);
   await page.getByTestId('start-menu-settings-close').click();
   await openWardrobe(page);
+  await assertWardrobeFits(page, testInfo);
   await expect(page.getByTestId('wardrobe-partner-rack')).toContainText('The Partner · Robin');
+  await assertPreviewOptions(page, 'prospector', [
+    ['stock', 'char-prospector-sheet-hover8-r0c0', 'ready'],
+    ['complainant', 'char-prospector-complainant-sheet-hover8-r0c0', 'at-tailors'],
+    ['gilded', 'char-prospector-gilded-sheet-hover8-r0c0', 'at-tailors'],
+  ]);
+  await assertPreviewOptions(page, 'partner', [
+    ['stock', 'char-hero-sheet-walk4-a-f-r0c0', 'ready'],
+    ['claim-day', 'char-hero-sheet-walk4-a-f-r0c0', 'at-tailors', true],
+  ]);
+  await expect(page.getByTestId('wardrobe-partner-preview')).toContainText("At the tailor's · Stock fit shown");
   await page.getByTestId('wardrobe-prospector-skin').selectOption('complainant');
-  await page.getByTestId('wardrobe-hero-skin').selectOption('claim-day');
   await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), PROSPECTOR_SKIN_STORAGE_KEY)).toBe('complainant');
   await expect.poll(() => page.evaluate((key) => localStorage.getItem(key), HERO_SKIN_STORAGE_KEY)).toBe('claim-day');
-  await shot(page, testInfo, 'wardrobe-equipped');
+  await shot(page, testInfo, 'wardrobe-preview');
 
   await page.reload();
   await openWardrobe(page);
@@ -98,6 +108,35 @@ function collectErrors(page: Page): { console: string[]; page: string[] } {
   page.on('console', (message) => { if (message.type() === 'error') errors.console.push(message.text()); });
   page.on('pageerror', (error) => errors.page.push(error.message));
   return errors;
+}
+
+type PreviewExpectation = [skin: string, file: string, state: 'ready' | 'at-tailors', placeholder?: boolean];
+
+async function assertPreviewOptions(page: Page, rack: 'prospector' | 'partner', options: PreviewExpectation[]): Promise<void> {
+  const select = page.getByTestId(rack === 'partner' ? 'wardrobe-hero-skin' : 'wardrobe-prospector-skin');
+  const preview = page.getByTestId(`wardrobe-${rack}-preview`);
+  for (const [skin, file, state, placeholder = false] of options) {
+    await select.selectOption(skin);
+    await expect(preview).toHaveAttribute('data-preview-skin', skin);
+    await expect(preview).toHaveAttribute('data-preview-state', state);
+    await expect(preview).toHaveAttribute('data-preview-placeholder', String(placeholder));
+    await expect(preview.locator('img')).toHaveAttribute('src', new RegExp(`${file.replaceAll('.', '\\.')}`));
+    await expect.poll(() => preview.locator('img').evaluate((image: HTMLImageElement) => image.complete && image.naturalWidth > 0)).toBe(true);
+  }
+}
+
+async function assertWardrobeFits(page: Page, testInfo: TestInfo): Promise<void> {
+  const wardrobe = page.getByTestId('wardrobe-view');
+  await expect(page.getByTestId('wardrobe-close')).toBeInViewport();
+  await expect.poll(() => wardrobe.evaluate((element) => element.scrollWidth <= element.clientWidth)).toBe(true);
+  if (testInfo.project.name !== 'mobile-chrome') return;
+  const viewport = page.viewportSize()!;
+  const shell = await wardrobe.locator('.town-ui__surface-shell').boundingBox();
+  expect(shell).not.toBeNull();
+  expect(shell!.x).toBeGreaterThanOrEqual(0);
+  expect(shell!.x + shell!.width).toBeLessThanOrEqual(viewport.width);
+  await page.getByTestId('wardrobe-partner-preview').scrollIntoViewIfNeeded();
+  await expect(page.getByTestId('wardrobe-partner-preview')).toBeInViewport();
 }
 
 async function shot(page: Page, testInfo: TestInfo, state: string): Promise<void> {

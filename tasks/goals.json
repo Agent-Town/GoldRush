@@ -1975,6 +1975,14 @@
               "status": "merged",
               "mergeHash": "422d26399f255ed089d22e60ebb38c919bbce25d",
               "note": "Owner E1 public walk: hero stood INSIDE the General Store. shellAt() consulted only earned visibleBuildings, but the 3D pilot promotes GLBs regardless of territory — a visible building over an unearned lot was walk-through. Solidity now binds to town3dPilotLoadedIds (normal-play GLB onLoad path, verified at source). Low-tier path correct by construction: no model -> survey plot -> intentionally walkable. Census covered all buildings/props (full-fix law). never-trap 6/6 both projects, fixture moved territory 3->0 so it fails on the reported bug. 3-way graft: main had moved TownScene.ts in 1f36b174 (prompt labels), disjoint hunks, both verified present after apply. Review reviews/town-store-collider.md."
+            },
+            {
+              "id": "wardrobe-preview",
+              "title": "Wardrobe previews — see the coat before you wear it (owner request 2026-07-28)",
+              "taskFile": "lane-wardrobe-preview.md",
+              "status": "merged",
+              "mergeHash": "PENDING5",
+              "note": "Each wardrobe option renders a live preview card in house style; equip flow unchanged. Unlanded art shows an honest \"at the tailor's\" placeholder rather than a broken image. Spec asserts every option in both racks incl. that the image actually decoded (complete && naturalWidth>0) plus a real 390px fit check. 4/4 both projects. Reviewed in-game from the mobile shot, not just from assertions. Review reviews/wardrobe-preview.md."
             }
           ]
         }
