@@ -145,6 +145,12 @@ async function cleanupPostedPath(page: Page): Promise<void> {
 
 test('debug play builds the Assay Office and posts an order at the bench', async ({ page }, testInfo: TestInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'normal play keyboard path is covered on desktop; mobile touch has its own test');
+  // F-1157-1: this test walks the whole normal-play path, and panGold() alone budgets 20s (:65).
+  // Measured quiet-box (s1157, 12 runs): passes at 26.9/28.4/28.9/29.3/29.6s against the 30s global
+  // cap -- a worst-case margin of 0.4s -- so 2/12 died on the clock with the order already posted,
+  // not on any assertion. The budget is the defect, not the game. 45s leaves room for jitter while
+  // still catching a genuine 2x regression; it weakens no assertion below.
+  test.setTimeout(45_000);
   const errors = await openGame(page, '?debug&timescale=4&nowaves&nolevel&nokill&seed=task037-normal');
   await expect(page.getByTestId('assay-bench')).toBeHidden();
   await expect(page.getByTestId('assay-office-prompt')).toBeHidden();
