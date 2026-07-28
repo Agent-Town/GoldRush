@@ -1,5 +1,5 @@
 # Task art-e7-town-icons: THE E7 TOWNSFOLK — the signal era's cast, second batch off the pinned portrait convention (ART SLOT)
-FIRE-AUTHORED s1160 (attended review welcome)
+FIRE-AUTHORED s1160 (attended review welcome) — **ATTEMPT 2, re-authored s1160 with a CHANGED PREMISE after attempt 1 (`49d49007`) was correctly blocked at pre-flight by this task's own instrument control. The band was wrong; see the corrected guard below. Nothing was generated, nothing was modified — a model stop.**
 You are Codex with image_gen, running in the ART slot.
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -32,12 +32,30 @@ A townsfolk portrait is a small illustrated **BUST** in the engraved-sepia plate
 
 **E7 palette rider** (from the two shipped E7 building batches, `BACKLOG:789`): **walnut / aged-brass / honey-gold glass / teal glow**. Warm the sepia toward brass, not toward the E6 atomic mint.
 
-### ⚠️ THE GROUND-WARMTH GUARD IS PINNED HERE — F-1154-2 ORDERED IT AND E7 IS THE FIRST BATCH THAT CAN
-Row 61 raised **F-1154-2 (non-blocking)** verbatim: *"the ground-warmth guard is **under-specified — no row names WHICH corner**, and under TR60 the Appliance Wrangler reads 117.7 vs its own TL60 131.6 … **pin the statistic as mean R−B over the TL+TR 60×60 corners.**"* It also noted *"E7–E10 all cite this convention"*. **You are E7. The pin is now binding:**
+### ⚠️ THE GROUND-WARMTH GUARD — CORRECTED s1160 ATTEMPT 2, AFTER THIS TASK'S OWN CONTROL CAUGHT THE AUTHOR
+**Attempt 1 (`49d49007`) was BLOCKED at pre-flight by the control below, before a single `image_gen` call — correct behaviour, and the run report is `tasks/runs/20260728-095121-art-e7-town-icons-preflight.md`. The task was wrong, not the runner.** It demanded a **130–145** band. **That band is measurably WRONG and was already retired**, and s1160 re-read `assets/LEDGER.md` **row 60** to confirm it rather than take the runner's word:
 
-> **GROUND WARMTH := mean of (R−B) over the TL 60×60 and TR 60×60 corners. Target band 130–145.**
+> 📌 Row 60, verbatim: *"**THE GROUND-WARMTH STATISTIC, PINNED s1155 (closes F-1154-2 …)**: the number is **mean (R − B) over the TL+TR 60×60 corners** — the TOP edge only, averaged across both top corners. **Flag below 120; the observed accepted range is 124–145.**"*
+> And explicitly: *"**F-1154-2 recommended 'TL+TR, band 130–145' and that band is WRONG** — it retroactively fails two accepted portraits, `tf-preacher` (124.5, from the very batch that defined the convention) and `tf-appliance-wrangler` (124.6)."*
 
-**VALIDATE THE INSTRUMENT BEFORE YOU TRUST IT — this is not optional and it is not ceremony.** A whole-image or 4-corner mean reproduces neither the convention's band nor its known outlier; the E6 drain proved the statistic lives in the TOP corners. So: **run your measurement code over the six E1 raws FIRST.** It is correct only if it (a) reproduces row 60's 130–145 band for the five in-band E1 portraits AND (b) reproduces **`tf-mei` at ≈104** (F-1120-1's known drift). **If it does not reproduce both, your instrument is wrong — fix it before measuring a single E7 file, and report both control numbers in the run file.**
+**So F-1154-2 was CLOSED at s1155, and this task does not discharge it — it nearly re-opened it.** The statistic half was right; the band half was a *recommendation* that s1155 had already run backward over decided cases and rejected. **The binding rule:**
+
+> **GROUND WARMTH := mean of (R−B) over the TL 60×60 and TR 60×60 corners.**
+> **GATE: flag below 120.** Accepted range across all 12 shipped `tf-*` portraits is **124–145**. Aim for the E6 batch's 131.6–144.2 as *style guidance*; **fail only below 120.**
+> ⛔ **Never use a 4-corner or whole-image mean** — row 60 measured that it false-fails **10 of 11** accepted portraits. ⛔ **Never use a SINGLE corner** — appliance-wrangler spreads **13.9 points** across its own top edge (TL 131.6 / TR 117.7), so which corner you sampled would decide the verdict.
+
+**VALIDATE THE INSTRUMENT BEFORE YOU TRUST IT — not optional, not ceremony.** Run your measurement code over the six E1 raws FIRST. **These are the measured truths it must reproduce (attempt 1 produced this table and it agrees with row 60, so it is now the expected result, not a hypothesis):**
+
+| E1 control | expected TL+TR mean | vs the 120 floor |
+|---|---:|---|
+| `tf-assay-clerk.png` | ≈137.8 | pass |
+| `tf-elder-rowan.png` | ≈134.0 | pass |
+| `tf-mei.png` | ≈105.3 | **the ONE fail** (F-1120-1's known drift) |
+| `tf-preacher.png` | ≈124.5 | pass — **accepted below 130; this is the case that killed the old band** |
+| `tf-schoolteacher.png` | ≈140.4 | pass |
+| `tf-storekeeper.png` | ≈143.9 | pass |
+
+**Your instrument is correct only if it reproduces all six within ~±1 AND flags exactly one (`tf-mei`).** If it flags two, or none, it is wrong — fix it before measuring a single E7 file, and report the full control table in the run file.
 
 ## THE BATCH — 6 files EXACT (5 portraits + 1 sheet)
 Identities are `specs/epoch-saga/e7-signal-bundle.md:11` verbatim: *"switchboard chief (E3 operator promoted — face-chain) · playbook librarian · drone keeper · tape courier kid (4th-generation newcomer line)"*. Desks are assigned by **owner ruling #11** (`lore/characters.md:47`): **chief = boards, defector = Exchange, Mei = news desk.**
@@ -64,7 +82,7 @@ Style anchor **verbatim in every prompt**: `"Gold Rush townsfolk portrait, engra
 - **Instrument control FIRST** (see above): report the six E1 numbers and confirm the band + the `tf-mei` ≈104 reproduction. **Do not proceed if the control fails.**
 - Canvas **1254×1254 RGB, no alpha** on all 6 (state measured dims + channel count). **0 transparent px, 0 exact- and near-magenta px** (correct full-bleed reference tier).
 - **Reads at 120px: actually downscale each to 120px and view it** — distinct silhouette / face / headwear per role. Say that you did it, and save the strip to `reviews/shots-art-e7-town-icons/e7-portraits-120px-strip.png`.
-- **Ground warmth per portrait = mean R−B over TL+TR 60×60, inside 130–145** (report the number per file).
+- **Ground warmth per portrait = mean R−B over TL+TR 60×60, and it must clear the 120 floor** (report the number per file; aim for 124–145, and say so if any portrait lands below 124 even though that is not a fail).
 - Framing consistent across the five (shoulders-up, comparable head size) — **the CONVENTION is the deliverable, not just the faces.**
 - **Contact sheet order, verified not asserted (F-1154-3).** Row 60's file list was out of step with its own sheet and row 61 inherited the claim before a pairing matrix corrected it. So: **pair every cell against every raw (5×5 matrix), report the MAE for each true pairing AND the range for the 20 wrong pairings** — the wrong pairings are your positive control. State the sheet's true order as measured. A matrix you did not run reports nothing.
 - `tf-combine-defector-e7` vs `tf-combine-defector-e6`: identity held; **name the aging cues and the single new era element**, and confirm the E6 source file is **byte-identical** after your run.
