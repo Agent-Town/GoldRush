@@ -88,7 +88,13 @@ node scripts/anim-pass-reextract.mjs --like char-hero-sheet-walk8 char-hero-shee
 Expected result: 32 cells → `assets/processed-full/` at 512, 32 downscaled → `assets/processed/` at 256, plus `char-hero-sheet-walkdiag8.frames.json`.
 
 **Controls (both mandatory, paste both outputs):**
-- `node scripts/anim-pass-reextract.mjs --verify-downscale char-hero-sheet-walk8` — the untouched base must come back **byte-identical**, proving your `--like` path did not disturb the shared downscale.
+- `node scripts/anim-pass-reextract.mjs --verify-downscale char-hero-sheet-walk8` — must **exit 0**, proving your `--like` path did not disturb the shared downscale.
+  ⚠️ **The guard's output contract CHANGED on 2026-07-28 (`8159fe6b`) — read this before you judge the result.** It is now provenance-aware, so the correct green is:
+  ```text
+  downscale replication: 23 byte-identical, 0 unexplained, 9 master-divergent by design (of 32 masters)
+  ```
+  Those 9 are tracked post-extraction mends listed in `assets/master-divergent.json`; they are **expected to differ** and are not failures. **The number that must be zero is `unexplained`** — not the count of non-identical cells.
+  An earlier run of this very master STOPPED here, lawfully and correctly, because the *old* guard reported those 9 as mismatches. **That blocker is cured; do not STOP on it again.** But the tooth is intact: if `unexplained` (or a stale/missing exclusion) is non-zero, that IS a real regression from your `--like` path — STOP and report it with the printed lines.
 - Assert your new `frames.json` reports `cell: 512`, `scale: 1`, grid 8×4, **32 cells, 0 empty**. A non-zero `empty` count means the key or the grid is wrong — STOP rather than binding transparent cells.
 
 ⛔ **Do not pass `--refresh-full` and do not run `scripts/optimize-assets.mjs` globally.** The script's own header (`:8-19`) explains that a global run would overwrite 462 masters with today's 256 px cells. That is a loss, not a refresh.

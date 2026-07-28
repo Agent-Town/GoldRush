@@ -2732,7 +2732,7 @@
           "id": "eight-winds-wiring-hero",
           "title": "EIGHT-WINDS-WIRING slice 1 — bind char-hero-sheet-walkdiag8 to char.hero's walk8 block so the player character walks the four diagonals with real diagonal art, and ship the generic cell-presence guard that protects the other sixteen sheets. Zero src/: char.hero is the ONLY walk8 slot whose alias override is already neutralised by shipped data (its rotations.directions carries all 8, so the SpriteAnimator.ts:843 guard fires), so the binding is contract data plus tests. Extraction reproduces the hero's own convention (512 master + 256 shipped cell), not the town cast's.",
           "taskFile": "lane-c-eight-winds-wiring-hero.md",
-          "status": "stopped",
+          "status": "queued",
           "lane": "lane-c",
           "spec": "reviews/eight-winds-wiring-spec.md (READ-FIRST, §1/§3.1/§4/§7); BACKLOG:1591 gate + BACKLOG:1601 gate-release; owner directive 2026-07-28 verbatim in the spec header; surfaces src/assets/SpriteAnimator.ts:790-855,:979-996,:998-1016; contract assets/layer-contracts/characters.v2.json; proof seam e2e/066-walk8-engine.spec.ts:54-90",
           "authoredBy": "s1175 fire",
