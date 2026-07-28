@@ -50,6 +50,22 @@
               "taskFile": "lane-c-w1-07-natural-claim.md",
               "mergeHash": "e84997d689e214bf66f1c32e95442e0b924c62a4",
               "status": "merged"
+            },
+            {
+              "id": "e1-hold-the-claim-defeat-fork",
+              "title": "DRAFT — give E1 a defeat its maps can actually suffer (F-E1-6). OWNER DESIGN FORK, banked post-release.",
+              "taskFile": "DRAFT-e1-hold-the-claim.md",
+              "status": "blocked",
+              "blockedReason": "OWNER-BANKED POST-RELEASE — DO NOT QUEUE without a fresh owner ruling. The masters own header quotes the owners disposition verbatim (tasks/BACKLOG.md:1063): \"hold-the-claim (stake loss conditions) BANKED post-release (recommendation: E1 strangers lose by body-death; real siege-loss ships with E2 depth — one word reverses).\" The underlying fact was re-verified at source s1130 and still holds: src/game/Game.ts:6352 endRun() is the only defeat path and its only caller is hero death, while tileParams.stakeMarkers declares south-claim-stake with lossCondition:true whose every consumer is a spawn point or a label — the flag names a rule the game does not have. This is a LIVE fork awaiting one word, not dead work: do not archive it and do not queue it. Owner rec on the ledger line: body-death now, siege-loss with E2 depth. REGISTERED BY s1174 AS A BOOKKEEPING FIX, NOT AS A NEW GATE — the gate already existed in the masters own header and s1174 only made it machine-visible. Before this leaf, scripts/drain-block-check.mjs (the §3.0 first-command-of-every-drain guard) returned \"? UNKNOWN\" for this master, which its own output calls \"a bookkeeping finding, not a clearance\" — but rc=0. Now it STOPS. Lifted by the OWNER only, never by a green battery. Provenance: F-1173-7 measured 522 of 683 masters carry no goal leaf; of the 81 that carry a status header and none, exactly four named a PENDING owner gate. s1174 re-read all four at source and registered THREE.",
+              "note_s1174": "Verified at source this fire by reading tasks/DRAFT-e1-hold-the-claim.md, not by inheriting s1173s list."
+            },
+            {
+              "id": "e1-trail-guide-plain-boot-proof",
+              "title": "DRAFT — prove the teaching path in a plain boot (Trail Guide + greenhorn offer), F-E1-2. OWNER GO/HOLD.",
+              "taskFile": "DRAFT-e1-trail-guide-plain-boot-proof.md",
+              "status": "blocked",
+              "blockedReason": "OWNER-GATED — ON THE OWNERS DESK, DO NOT QUEUE UNASKED (tasks/BACKLOG.md:1059; verified at source s1130 and again s1174). The one genuinely unshipped E1-depth draft. Its own in-file blocking sentence (\"Needs the RF-02 owners read first\") is STALE — RF-02 has since shipped — so what remains is a plain unasked go/hold, which is exactly the class §2E reserves for the owner: a fire may not decide to spend a lane on an unasked design proof. NOTE THE SCOPE CORRECTION already recorded in the header, which the owner should be told when asked: the task is ~40 percent NARROWER than the draft claims, because e2e/trail-guide.spec.ts:113 and :135 already prove the greenhorn offer on genuine plain boots; genuinely unproven is only the first-run bark-beat track in a plain launch (its test at :42 boots with ?debug&nospawn&nolevel). One word — go or hold — and it is a lane task the same day. REGISTERED BY s1174 AS A BOOKKEEPING FIX, NOT AS A NEW GATE — the gate already existed in the masters own header and s1174 only made it machine-visible. Before this leaf, scripts/drain-block-check.mjs (the §3.0 first-command-of-every-drain guard) returned \"? UNKNOWN\" for this master, which its own output calls \"a bookkeeping finding, not a clearance\" — but rc=0. Now it STOPS. Lifted by the OWNER only, never by a green battery. Provenance: F-1173-7 measured 522 of 683 masters carry no goal leaf; of the 81 that carry a status header and none, exactly four named a PENDING owner gate. s1174 re-read all four at source and registered THREE.",
+              "note_s1174": "Verified at source this fire by reading tasks/DRAFT-e1-trail-guide-plain-boot-proof.md."
             }
           ]
         },
@@ -2684,6 +2700,14 @@
               "mergeHash": "1d85c6e6abaf6a7bdaa31cf33ec6458caeb81042",
               "status": "merged",
               "note": "s1120 SALVAGE drain: runner died rc1 on a stream disconnect AFTER generating all deliverables; 22.58 MB was untracked in main assets/. Reference-tier, extraction withheld (no consumer). F-1120-1 tf-mei ground-warmth outlier is non-blocking. Review: reviews/art-batch-portrait-convention.md"
+            },
+            {
+              "id": "autosprite-trial-gate",
+              "title": "autosprite.io Pro trial — ONE character (the hero) end-to-end through the new forge before buying the roster. OWNER-GATED ON CREDITS.",
+              "taskFile": "autosprite-trial-gate.md",
+              "status": "blocked",
+              "blockedReason": "OWNER-GATED ON CREDITS — NOT FIRE-QUEUEABLE, AND IT SPENDS MONEY, which CLAUDE.md §7.3 reserves for the owner absolutely. tasks/BACKLOG.md:383 rules it \"AUTOSPRITE TRIAL PAUSED (credits) — identity B+ ... STYLE FAIL at defaults ... Retry gate WHEN owner buys credits.\" Content-probed s1132 and re-read s1174: only the prior-contact spike exists (assets/pilots/autosprite-hero/Ariya-iso_walk_right.png plus three .urls.txt files) — no walk8 sheet, no A/B, no report anywhere in tasks/, reviews/, docs/ or specs/, so a fire that queued it would be commissioning paid generation, not verifying banked work. See F-1132-18. Unblocks when the owner buys credits and says go. REGISTERED BY s1174 AS A BOOKKEEPING FIX, NOT AS A NEW GATE — the gate already existed in the masters own header and s1174 only made it machine-visible. Before this leaf, scripts/drain-block-check.mjs (the §3.0 first-command-of-every-drain guard) returned \"? UNKNOWN\" for this master, which its own output calls \"a bookkeeping finding, not a clearance\" — but rc=0. Now it STOPS. Lifted by the OWNER only, never by a green battery. Provenance: F-1173-7 measured 522 of 683 masters carry no goal leaf; of the 81 that carry a status header and none, exactly four named a PENDING owner gate. s1174 re-read all four at source and registered THREE.",
+              "note_s1174": "Verified at source this fire by reading tasks/autosprite-trial-gate.md."
             }
           ]
         }
