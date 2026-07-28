@@ -1,0 +1,130 @@
+{
+ "stem": "char-hero-sheet-rotation2",
+ "file": "assets/raw/char-hero-sheet-rotation2.png",
+ "w": 1254,
+ "h": 1254,
+ "grid": [
+  4,
+  2
+ ],
+ "gridSrc": "frames.json",
+ "cellW": 313,
+ "cellH": 627,
+ "remainder": {
+  "w": 2,
+  "h": 0,
+  "px": 0
+ },
+ "keyRGB": [
+  237,
+  9,
+  231
+ ],
+ "components": 12,
+ "spanning": [
+  {
+   "id": 6,
+   "mass": 37199,
+   "bbox": [
+    731,
+    611,
+    850,
+    1106
+   ],
+   "owner": {
+    "cell": 6,
+    "rc": "r1c2",
+    "mass": 36560
+   },
+   "foreign": [
+    {
+     "cell": 2,
+     "rc": "r0c2",
+     "mass": 639
+    }
+   ],
+   "foreignMass": 639,
+   "minorityPct": 1.72,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 7,
+   "mass": 41284,
+   "bbox": [
+    1011,
+    614,
+    1134,
+    1107
+   ],
+   "owner": {
+    "cell": 7,
+    "rc": "r1c3",
+    "mass": 40799
+   },
+   "foreign": [
+    {
+     "cell": 3,
+     "rc": "r0c3",
+     "mass": 485
+    }
+   ],
+   "foreignMass": 485,
+   "minorityPct": 1.17,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 8,
+   "mass": 56354,
+   "bbox": [
+    56,
+    617,
+    267,
+    1129
+   ],
+   "owner": {
+    "cell": 4,
+    "rc": "r1c0",
+    "mass": 55984
+   },
+   "foreign": [
+    {
+     "cell": 0,
+     "rc": "r0c0",
+     "mass": 370
+    }
+   ],
+   "foreignMass": 370,
+   "minorityPct": 0.66,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 9,
+   "mass": 58775,
+   "bbox": [
+    357,
+    618,
+    576,
+    1111
+   ],
+   "owner": {
+    "cell": 5,
+    "rc": "r1c1",
+    "mass": 58448
+   },
+   "foreign": [
+    {
+     "cell": 1,
+     "rc": "r0c1",
+     "mass": 327
+    }
+   ],
+   "foreignMass": 327,
+   "minorityPct": 0.56,
+   "verdict": "OVERHANG"
+  }
+ ],
+ "cols": 4,
+ "rows": 2,
+ "cw": 313,
+ "ch": 627
+}

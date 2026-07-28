@@ -1,0 +1,80 @@
+{
+ "stem": "char-jumper-sheet-front",
+ "file": "assets/raw/char-jumper-sheet-front.png",
+ "w": 1254,
+ "h": 1254,
+ "grid": [
+  3,
+  2
+ ],
+ "gridSrc": "frames.json",
+ "cellW": 418,
+ "cellH": 627,
+ "remainder": {
+  "w": 0,
+  "h": 0,
+  "px": 0
+ },
+ "keyRGB": [
+  243,
+  7,
+  243
+ ],
+ "components": 8,
+ "spanning": [
+  {
+   "id": 2,
+   "mass": 87877,
+   "bbox": [
+    832,
+    61,
+    1201,
+    566
+   ],
+   "owner": {
+    "cell": 2,
+    "rc": "r0c2",
+    "mass": 87819
+   },
+   "foreign": [
+    {
+     "cell": 1,
+     "rc": "r0c1",
+     "mass": 58
+    }
+   ],
+   "foreignMass": 58,
+   "minorityPct": 0.07,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 4,
+   "mass": 95535,
+   "bbox": [
+    832,
+    650,
+    1168,
+    1198
+   ],
+   "owner": {
+    "cell": 5,
+    "rc": "r1c2",
+    "mass": 95499
+   },
+   "foreign": [
+    {
+     "cell": 4,
+     "rc": "r1c1",
+     "mass": 36
+    }
+   ],
+   "foreignMass": 36,
+   "minorityPct": 0.04,
+   "verdict": "OVERHANG"
+  }
+ ],
+ "cols": 3,
+ "rows": 2,
+ "cw": 418,
+ "ch": 627
+}
