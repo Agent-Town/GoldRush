@@ -9,6 +9,7 @@ import {
   freshMetaProgress,
   loadMetaProgress,
   saveMetaProgress,
+  trackLabel,
   type MetaPayout,
   type MetaProgress,
   type MetaProgressStorage,
@@ -266,7 +267,7 @@ export class RunManager {
         gold: summary.goldPanned,
         goldByProspector: summary.goldPannedByProspector,
         duration: at,
-        ...(reason === 'secured' && this.lastPayout ? { metaEarned: { ...this.lastPayout } } : {}),
+        ...(this.paidRunId === this.runId && this.lastPayout ? { metaEarned: { ...this.lastPayout } } : {}),
       });
     }
     this.host.events.emit({
@@ -587,11 +588,4 @@ function escapeHtml(value: string): string {
     .replaceAll('>', '&gt;')
     .replaceAll('"', '&quot;')
     .replaceAll("'", '&#39;');
-}
-
-function trackLabel(track: (typeof META_TRACKS)[number]): string {
-  if (track === 'territory') return 'Territory';
-  if (track === 'science') return 'Science';
-  if (track === 'hero') return 'Hero';
-  return 'Agent';
 }

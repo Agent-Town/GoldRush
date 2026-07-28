@@ -4,6 +4,13 @@ export const META_TRACKS = ['territory', 'science', 'hero', 'agent'] as const;
 export type MetaTrack = (typeof META_TRACKS)[number];
 export type MetaPayout = Record<MetaTrack, number>;
 
+export function trackLabel(track: MetaTrack): string {
+  if (track === 'territory') return 'Territory';
+  if (track === 'science') return 'Science';
+  if (track === 'hero') return 'Hero';
+  return 'Agent';
+}
+
 export type MetaProgress = {
   version: 1;
   tracks: Record<MetaTrack, number>;

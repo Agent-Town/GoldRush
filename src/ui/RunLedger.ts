@@ -1,5 +1,5 @@
 import type { RunEndReason } from '../core/EventBus';
-import { META_TRACKS, type MetaTrack } from '../game/MetaProgress';
+import { META_TRACKS, trackLabel, type MetaTrack } from '../game/MetaProgress';
 import { RUN_HISTORY_KEY } from '../game/ProfileStorage';
 
 export const RUN_HISTORY_LIMIT = 50;
@@ -142,7 +142,7 @@ function renderEntry(entry: RunHistoryEntry): string {
         <div><dt>Outcome</dt><dd data-testid="run-ledger-outcome">${outcomeLabel(entry.outcome)}</dd></div>
         <div><dt>Waves</dt><dd data-testid="run-ledger-waves">${Math.floor(entry.waves)}</dd></div>
         <div><dt>Gold</dt><dd data-testid="run-ledger-gold-split">you ${Math.floor(entry.gold - entry.goldByProspector)} / the Prospector ${Math.floor(entry.goldByProspector)}</dd></div>
-        ${entry.metaEarned ? `<div><dt>Meta earned</dt><dd data-testid="run-ledger-meta">${META_TRACKS.filter((track) => entry.metaEarned?.[track]).map((track) => `${track[0].toUpperCase()}${track.slice(1)} +${entry.metaEarned![track]}`).join(' / ')}</dd></div>` : ''}
+        ${entry.metaEarned ? `<div><dt>Meta earned</dt><dd data-testid="run-ledger-meta">${META_TRACKS.filter((track) => entry.metaEarned?.[track]).map((track) => `${trackLabel(track)} +${entry.metaEarned![track]}`).join(' / ')}</dd></div>` : ''}
         <div><dt>Duration</dt><dd data-testid="run-ledger-duration">${formatDuration(entry.duration)}</dd></div>
       </dl>
     </li>

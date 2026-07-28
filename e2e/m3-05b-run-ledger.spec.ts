@@ -109,6 +109,45 @@ test('a secured run records its payout and sanitizes optional meta on read', () 
   expect(readRunHistory(storage)[0]?.metaEarned).toEqual({ territory: 2 });
 });
 
+test('a secured rush ended by death records the payout it already earned', () => {
+  const storage = memoryStorage();
+  const events = new EventBus();
+  const economy = new Economy(16);
+  const manager = install(
+    {
+      events,
+      economy,
+      activeContract: { id: 'e1-dry-gulch', name: 'Dry Gulch' },
+      waveSystem: { diagnostics: { wave: 22 } },
+    },
+    { storage },
+  );
+  const payout = { territory: 2, science: 3, hero: 4, agent: 5 };
+
+  manager.restoreSuspend({
+    secured: true,
+    rush: true,
+    securedAtWave: 18,
+    resultAt: 125,
+    meta: manager.metaProgress,
+    payout,
+  });
+  events.emit({
+    type: 'hero_died',
+    at: 155,
+    timeAlive: 155,
+    kills: 0,
+    goldPanned: 0,
+    spent: 0,
+    beaconsBuilt: 0,
+    wavesSurvived: 22,
+    weaponToggles: 0,
+    blastTime: 0,
+  });
+
+  expect(readRunHistory(storage)[0]).toMatchObject({ outcome: 'rush', metaEarned: payout });
+});
+
 test('Claim Office opens a responsive Run Ledger and a profile reset returns its warm empty state', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await seedProfileWithHistory(page);
@@ -135,6 +174,33 @@ test('Claim Office opens a responsive Run Ledger and a profile reset returns its
   await page.evaluate(() => localStorage.clear());
   await page.getByTestId('open-run-ledger').click();
   await expect(page.getByTestId('run-ledger-empty')).toHaveText('No claims stamped yet. The first trail is waiting.');
+  assertNoErrors(errors);
+});
+
+test('a rush ledger card renders its earned meta and rush outcome', async ({ page }) => {
+  const errors = collectErrors(page);
+  await seedProfileWithHistory(page, [
+    {
+      at: Date.UTC(2026, 6, 29, 12),
+      contractId: 'e1-rush-claim',
+      contract: 'Rush Claim',
+      outcome: 'rush',
+      waves: 22,
+      gold: 48,
+      goldByProspector: 12,
+      metaEarned: { territory: 2, science: 3, hero: 4, agent: 5 },
+      duration: 155,
+    },
+  ]);
+  await page.goto('/?debug&timescale=100&nolevel&seed=m3-05d-ledger-rush');
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 2);
+  await fastToSecure(page);
+  await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
+  await page.getByTestId('open-run-ledger').click();
+
+  const rush = page.getByTestId('run-ledger-row').filter({ hasText: 'Rush Claim' });
+  await expect(rush.getByTestId('run-ledger-outcome')).toHaveText('Rush ended');
+  await expect(rush.getByTestId('run-ledger-meta')).toHaveText('Territory +2 / Science +3 / Hero +4 / Agent +5');
   assertNoErrors(errors);
 });
 
