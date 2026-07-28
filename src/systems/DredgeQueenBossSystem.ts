@@ -14,8 +14,8 @@ const PADDLE_IDS = ['paddle_port', 'paddle_starboard'] as const;
 type Act1ComponentId = typeof ACT1_IDS[number];
 type ComponentId = Act1ComponentId | 'hold';
 const COMPONENT_IDS = [...ACT1_IDS, 'hold'] as const;
-const DREDGE_QUEEN_3D_URL = new URL('../../assets/pilots/dredge-queen-3d/dredge-queen.glb', import.meta.url).href;
-const DREDGE_QUEEN_3D_TRIANGLES = 11_832;
+const DREDGE_QUEEN_3D_URL = new URL('../../assets/pilots/dredge-queen-3d/dredge-queen-detail-opus5.glb', import.meta.url).href;
+const DREDGE_QUEEN_3D_TRIANGLES = 33_124;
 const DREDGE_QUEEN_DAMAGE_THRESHOLD = 0.5;
 const DREDGE_QUEEN_3D_COMPONENTS = {
   claw: { mesh: 'claw', morph: 'Damage_SlackClaw', damageColor: '#5b8a8a' },

@@ -12,8 +12,8 @@ const GRAPPLE_IDS = ['grapple_port', 'grapple_starboard'] as const;
 type GrappleId = typeof GRAPPLE_IDS[number];
 type ComponentId = GrappleId | 'winch' | 'anchor_feet';
 const COMPONENT_IDS = [...GRAPPLE_IDS, 'winch', 'anchor_feet'] as const;
-const MODEL_URL = new URL('../../assets/pilots/salvage-claw-3d/salvage-claw.glb', import.meta.url).href;
-const MODEL_TRIANGLES = 10_164;
+const MODEL_URL = new URL('../../assets/pilots/salvage-claw-3d/salvage-claw-detail-opus5.glb', import.meta.url).href;
+const MODEL_TRIANGLES = 30_100;
 const MODEL_COMPONENTS = {
   crown: 'Landing_DarkCrown',
   winch: 'Landing_SprungWinch',
