@@ -2055,6 +2055,13 @@
               "status": "merged"
             },
             {
+              "id": "factory-power-budget-instrument-control",
+              "title": "F-1160-2: power-budget guard blames PowerGraph for the box",
+              "taskFile": "lane-c-power-budget-instrument-control.md",
+              "status": "queued",
+              "note_s1170": "Authored s1170 2026-07-28 from F-1160-2 (BACKLOG:193) + a third independent measurement taken this fire. test:power-budget is guard 2/8 in run-guards.mjs and cannot distinguish a slower solve from a descheduled process, so it accuses PowerGraph whenever the box stalls. THE AUTHORING FACT THAT RESHAPED THE TASK: s1160's stated gate (over-cap 4/20 -> 0/20) is UNRUNNABLE, because s1170 re-measured the before-arm at 0/20 (n=20, loadavg 7.69, body 0.352-0.405, median 0.374) where s1160 read 4/20 and s1161 read 1/12. The rate is a property of the box, not the guard; pooled default-QoS across three fires is 5/52 ~ 9.6%, and 0/20 does NOT disprove an 8% rate (P=0.19). So the gate was re-based onto the DETERMINISTIC arm: taskpolicy -b reproduced 12/12 (s1161) and 6/6 at 1.707-3.036ms (s1170) - a 100% reproduction of the exact failure mode. Scope 1 is a measure-first STOP that can cancel the task: the whole remedy assumes an in-process reference loop degrades PROPORTIONALLY with the solve, which no one has measured; if the ratio is unstable the task STOPS with a table and that is declared a full success. Scope 3 is the mutation control that keeps an 'environment degraded' escape hatch from becoming a guard that never fails - injected into the SUBJECT (PowerGraph.ts), proven to still red at normal QoS, then reverted with git diff proving zero permanent src/ change. The 0.5ms cap is firewalled."
+            },
+            {
               "id": "factory-run-suspend",
               "title": "Resumable run state",
               "taskFile": "lane-a-run-suspend.md",
