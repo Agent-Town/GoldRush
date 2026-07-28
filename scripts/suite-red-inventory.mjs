@@ -9,6 +9,12 @@ const positiveControlPassed = args.includes('--positive-control-passed');
 const [input = 'logs/suite-red-inventory-raw.json', output = 'logs/suite-red-inventory.md'] =
   args.filter((arg) => !arg.startsWith('--'));
 const report = JSON.parse(fs.readFileSync(input, 'utf8'));
+const recordedRoot = report.config?.rootDir;
+const recordedRootIsE2e = recordedRoot && path.basename(recordedRoot) === 'e2e';
+const runRoot = recordedRoot
+  ? path.resolve(recordedRoot, recordedRootIsE2e ? '..' : '.')
+  : ROOT;
+const runTreePresent = recordedRoot ? fs.existsSync(recordedRoot) : true;
 const projects = new Set(['desktop-chrome', 'mobile-chrome']);
 const executions = [];
 const otherExecutions = [];
@@ -56,7 +62,11 @@ function mergeError(result) {
 
 function relative(file) {
   if (!file) return 'unknown';
-  if (path.isAbsolute(file)) return path.relative(ROOT, file).replaceAll(path.sep, '/');
+  if (path.isAbsolute(file)) return path.relative(runRoot, file).replaceAll(path.sep, '/');
+  if (recordedRoot) {
+    const normalized = file.replaceAll(path.sep, '/');
+    return recordedRootIsE2e && !normalized.startsWith('e2e/') ? `e2e/${normalized}` : normalized;
+  }
   if (fs.existsSync(path.join(ROOT, file))) return file.replaceAll(path.sep, '/');
   const e2eFile = path.join('e2e', file);
   return (fs.existsSync(path.join(ROOT, e2eFile)) ? e2eFile : file).replaceAll(path.sep, '/');
@@ -108,7 +118,9 @@ function duration(ms) {
 }
 
 function testBody(execution, failureLocation) {
-  const source = fs.readFileSync(path.join(ROOT, execution.file), 'utf8');
+  const sourcePath = path.join(runRoot, execution.file);
+  if (recordedRoot && (!runTreePresent || !fs.existsSync(sourcePath))) return undefined;
+  const source = fs.readFileSync(sourcePath, 'utf8');
   const sourceFile = ts.createSourceFile(execution.file, source, ts.ScriptTarget.Latest, true);
   let best;
   function visit(node) {
@@ -213,9 +225,20 @@ for (const pair of byTest.values()) {
     const location = errorLocation(execution);
     return { execution, location, body: testBody(execution, location) };
   });
-  masking.push({ values, ratios, risk: Math.min(...ratios.map(({ body }) => body?.percent ?? 100)) });
+  const measured = ratios.flatMap(({ body }) => body?.percent === undefined ? [] : [body.percent]);
+  masking.push({ values, ratios, risk: measured.length ? Math.min(...measured) : undefined });
 }
-masking.sort((a, b) => a.risk - b.risk || a.values[0].title.localeCompare(b.values[0].title));
+masking.sort((a, b) =>
+  (a.risk === undefined) - (b.risk === undefined)
+  || (a.risk ?? 0) - (b.risk ?? 0)
+  || a.values[0].title.localeCompare(b.values[0].title)
+);
+const rankedMaskingCount = masking.filter(({ risk }) => risk !== undefined).length;
+const resolvedBodyCount = masking
+  .flatMap(({ ratios }) => ratios)
+  .filter(({ body }) => body !== undefined)
+  .length;
+const totalBodyCount = masking.reduce((total, { ratios }) => total + ratios.length, 0);
 
 const targetFailureRows = failures
   .sort((a, b) => a.file.localeCompare(b.file) || a.title.localeCompare(b.title) || a.project.localeCompare(b.project))
@@ -237,6 +260,7 @@ const lines = [
   `- MOBILE-ONLY: **${bucketCounts['MOBILE-ONLY']}**`,
   `- DESKTOP-ONLY: **${bucketCounts['DESKTOP-ONLY']}**`,
   `- Harness: configured workers **${report.config?.workers ?? 'unrecorded'}**; actual workers **${report.config?.metadata?.actualWorkers ?? 'unrecorded'}**; fully parallel **${report.config?.fullyParallel ?? 'unrecorded'}**; shard **${report.config?.shard === undefined ? 'unrecorded' : JSON.stringify(report.config.shard)}**; Playwright **${report.config?.version ?? 'unrecorded'}**`,
+  `- Run tree: **${recordedRoot ?? 'unrecorded'}**; status **${recordedRoot && !runTreePresent ? 'unavailable' : 'present'}**; resolved test bodies **${resolvedBodyCount}/${totalBodyCount}**`,
   '',
   '_Bucket sizes count logical tests; totals count desktop/mobile project executions._',
   `_The exact command also ran ${otherExecutions.length} configured non-target project cases; they are reported separately._`,
@@ -292,7 +316,12 @@ const lines = [
   '',
   '## Masking candidates',
   '',
-  'Ranked by the earliest failing line within the test body. Lower ratios leave more of the test unexercised.',
+  ...(rankedMaskingCount
+    ? [
+        'Ranked by the earliest failing line within the test body. Lower ratios leave more of the test unexercised.',
+        `${rankedMaskingCount} of ${masking.length} rows ranked; ${masking.length - rankedMaskingCount} unresolved rows are marked — and listed after them.`,
+      ]
+    : [`No masking candidates could be ranked; all ${masking.length} ${masking.length === 1 ? 'row is' : 'rows are'} unresolved and marked —.`]),
   '',
   '| Rank | Spec file | Test title | Failing-line / body-lines ratio |',
   '|---:|---|---|---|',
@@ -304,7 +333,7 @@ const lines = [
           : `${execution.project}: ${location} — ?/${body.total} (callsite outside body)`
         : `${execution.project}: ${location} — body unavailable`
     ).join('<br>');
-    return `| ${index + 1} | ${escapeCell(values[0].file)} | ${escapeCell(values[0].title)} | ${ratio} |`;
+    return `| ${index < rankedMaskingCount ? index + 1 : '—'} | ${escapeCell(values[0].file)} | ${escapeCell(values[0].title)} | ${ratio} |`;
   }),
   '',
   '## Crashes and timeouts',
