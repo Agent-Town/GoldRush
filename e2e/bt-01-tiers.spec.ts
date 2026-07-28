@@ -1,6 +1,7 @@
 import { expect, test, type Page } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 
+// 2026-07-28 lane-a-build-mode-prompt-spec-realign: the building card is build-mode-only per the owner's 2026-07-12 ruling (tasks/fix-building-prompt-flicker.md:8).
 type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office';
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type HpEntry = {
@@ -73,7 +74,7 @@ async function placeBuildableAt(page: Page, id: BuildableId, x: number, z: numbe
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid ?? false)).toBe(true);
   await expect(page.evaluate(() => window.__GR_TEST__?.confirmBuild())).resolves.toBe(true);
   await expect.poll(() => buildableCount(page, id)).toBe(before + 1);
-  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   const entries = await page.evaluate((buildableId) => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.filter((entry) => entry.id === buildableId) ?? [], id);
   const entry = entries.find((candidate) => candidate.position.x === x && candidate.position.z === z) as HpEntry | undefined;
   expect(entry).toBeTruthy();

@@ -8,6 +8,7 @@ import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
 import type { WorldInfoObjectClass } from '../src/ui/WorldInfoNotes';
 
+// 2026-07-28 lane-a-build-mode-prompt-spec-realign: the building card is build-mode-only per the owner's 2026-07-12 ruling (tasks/fix-building-prompt-flicker.md:8).
 type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office';
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type BuildEntry = { id: BuildableId; index: number; tier: number; position: { x: number; z: number } };
@@ -214,6 +215,7 @@ test('building notes sit with existing assay and upgrade prompts', async ({ page
   await page.keyboard.press('Escape');
   await expect(page.getByTestId('assay-bench')).toBeHidden();
   const palisade = entries.palisade!;
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   await teleport(page, palisade.position.x, palisade.position.z);
   await expect(page.getByTestId('building-context-prompt')).toBeVisible();
   await expectNote(page, 'palisade', 'Higher tier means more hit points');

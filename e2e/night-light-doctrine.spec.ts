@@ -3,6 +3,7 @@ import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 
+// 2026-07-28 lane-a-build-mode-prompt-spec-realign: the building card is build-mode-only per the owner's 2026-07-12 ruling (tasks/fix-building-prompt-flicker.md:8).
 const ARTIFACT_DIR = path.resolve('artifacts/night-doctrine');
 
 test.setTimeout(60_000);
@@ -74,6 +75,7 @@ test('honest night lights reveal only carried lamps, watch paint, consent, and s
   const hero = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.heroPos);
   expect(hero).toBeTruthy();
   await expect(page.evaluate((position) => window.__GR_TEST__?.placeFree('turret', position.x + 1, position.z), hero!)).resolves.toBe(true);
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   await page.evaluate((position) => window.__GR_TEST__?.teleport(position.x + 1, position.z), hero!);
   const prompt = page.getByTestId('building-context-prompt');
   await expect(prompt).toBeVisible();

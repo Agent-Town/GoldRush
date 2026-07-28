@@ -1,10 +1,10 @@
 import { expect, test, type Page } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 
+// 2026-07-28 lane-a-build-mode-prompt-spec-realign: the building card is build-mode-only per the owner's 2026-07-12 ruling (tasks/fix-building-prompt-flicker.md:8).
 type BuildableId = 'sentry_beacon' | 'palisade' | 'sluice' | 'stockpile' | 'turret' | 'assay_office';
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type EconomyEvent = { type: string; sink?: string; source?: string; amount?: number };
-type Rect = { x: number; y: number; width: number; height: number };
 type HpEntry = {
   id: BuildableId;
   index: number;
@@ -86,11 +86,6 @@ function demolishRefund(cost: number, hp: number, maxHp: number): number {
   return Math.floor(Balance.demolish.refundPctOfCost * cost * (hp / maxHp));
 }
 
-function intersects(a: Rect | null, b: Rect | null): boolean {
-  if (!a || !b) return false;
-  return a.x < b.x + b.width && a.x + a.width > b.x && a.y < b.y + b.height && a.y + a.height > b.y;
-}
-
 async function upgradeBuildable(page: Page, entry: HpEntry): Promise<void> {
   await teleport(page, entry.position.x, entry.position.z);
   await expect(page.evaluate(([id, index]) => window.__GR_TEST__?.upgradeBuilding(id, index) ?? false, [entry.id, entry.index] as const)).resolves.toBe(
@@ -123,6 +118,8 @@ test('demolish refunds full-HP palisade and frees its footprint for replacement'
   const expectedRefund = demolishRefund(built.cost, built.hp, built.maxHp);
   expect(expectedRefund).toBe(5);
   await teleport(page, built.position.x, built.position.z);
+  await expect(page.getByTestId('building-context-prompt')).toBeHidden();
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   await expect(page.getByTestId('building-context-prompt')).toBeVisible();
   await expect(page.getByTestId('building-context-prompt')).toContainText('Palisade');
   await expect(page.getByTestId('building-context-prompt')).toContainText('invested 10g');
@@ -153,9 +150,7 @@ test('demolish button removes an assay office without stealing the bench Enter p
   const beforeEnter = await gold(page);
   await teleport(page, 1.2, 7);
   await expect(page.getByTestId('assay-office-prompt')).toBeVisible();
-  await expect(page.getByTestId('building-context-prompt')).toBeVisible();
-  await expect(page.getByTestId('building-context-prompt')).toContainText('Palisade');
-  expect(intersects(await page.getByTestId('assay-office-prompt').boundingBox(), await page.getByTestId('building-context-prompt').boundingBox())).toBe(false);
+  await expect(page.getByTestId('building-context-prompt')).toBeHidden();
   await page.keyboard.press('Enter');
   await expect(page.getByTestId('assay-bench')).toBeVisible();
   await expect.poll(() => hpEntry(page, neighbor.id, neighbor.index)).not.toBeNull();
@@ -166,8 +161,8 @@ test('demolish button removes an assay office without stealing the bench Enter p
   const beforeDemolish = await gold(page);
   const expectedRefund = demolishRefund(built.cost, built.hp, built.maxHp);
   expect(expectedRefund).toBe(40);
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   await teleport(page, built.position.x, built.position.z);
-  await expect(page.getByTestId('assay-office-prompt')).toBeVisible();
   await expect(page.getByTestId('building-context-prompt')).toBeVisible();
   await expect(page.getByTestId('building-context-prompt')).toContainText('Assay Office');
   await page.getByTestId('demolish-confirm').click();
@@ -183,7 +178,7 @@ test('building context bar keeps both actions inside a mid-size phone viewport',
   const errors = await openGame(page, '?debug&timescale=6&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-00-mid-phone');
   await grantGold(page, 100);
   const built = await placeBuildableAt(page, 'palisade', 0, 9);
-  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   await teleport(page, built.position.x, built.position.z);
   const prompt = page.getByTestId('building-context-prompt');
   await expect(prompt).toBeVisible();
@@ -212,7 +207,7 @@ test('tiered full-HP sluice refunds base cost only and shows the loss', async ({
   const nextTierCost = Balance.tiers.sluice[2].cost;
   await grantGold(page, baseCost + tierCost);
   const built = await placeBuildableAt(page, 'sluice', 0, 7);
-  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   await upgradeBuildable(page, built);
 
   const upgraded = (await hpEntry(page, built.id, built.index))!;
@@ -245,7 +240,7 @@ test('tiered half-HP sluice refund scales from base cost only', async ({ page })
   });
   await grantGold(page, baseCost + tierCost);
   const built = await placeBuildableAt(page, 'sluice', 0, 7);
-  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(false));
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
   await upgradeBuildable(page, built);
 
   await spawnStationaryWreckerAt(page, built);
