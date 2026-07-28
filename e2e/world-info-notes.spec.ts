@@ -129,10 +129,11 @@ async function buildableCount(page: Page, id: BuildableId): Promise<number> {
   );
 }
 
-async function hold(page: Page, key: string, ms: number): Promise<void> {
-  await page.keyboard.down(key);
-  await page.waitForTimeout(ms);
-  await page.keyboard.up(key);
+async function approachTownBuilding(page: Page, id: 'tavern' | 'claim_office' | 'schoolhouse' | 'assay_office'): Promise<void> {
+  const approach = await page.evaluate((buildingId) => window.__GR_TOWN_DIAGNOSTICS__?.plaza.slots.find((slot) => slot.id === buildingId)?.approach ?? null, id);
+  if (!approach) throw new Error(`${id} is absent from town plaza diagnostics`);
+  await page.evaluate((point) => window.__GR_TOWN_DIAGNOSTICS__?.teleport(point.x, point.z), approach);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe(id);
 }
 
 function assertNoErrors(errors: ErrorBucket): void {
@@ -286,32 +287,29 @@ test('megaproject site registers a note without replacing the signboard readout'
   assertNoErrors(errors);
 });
 
-test('town shells use info notes beside opens-soon prompts', async ({ page }) => {
+test('town shells use info notes beside opens-soon prompts', async ({ page }, testInfo) => {
   await seedProfile(page, scopedEntry(TOWN_NAME_KEY, 'Quartz Hill'));
   const errors = collectErrors(page);
   await page.goto('/');
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
 
-  await hold(page, 'KeyA', 850);
-  await hold(page, 'KeyW', 850);
+  await approachTownBuilding(page, 'tavern');
   await expect(page.getByTestId('town-approach-prompt')).toContainText('opens soon');
   await expect(page.getByTestId('town-open-board')).toBeVisible();
   await expectNote(page, 'town_tavern', 'contract board');
 
-  await hold(page, 'KeyD', 2_000);
-  await hold(page, 'KeyS', 350);
+  await approachTownBuilding(page, 'claim_office');
   await expect(page.getByTestId('town-approach-prompt')).toContainText('Claim Office');
   await expect(page.getByTestId('town-rename')).toBeVisible();
   await expectNote(page, 'town_claim_office', 'civic ledger');
+  await shot(page, testInfo, 'town-claim-office-note');
 
-  await hold(page, 'KeyA', 2_300);
-  await hold(page, 'KeyS', 1_200);
+  await approachTownBuilding(page, 'schoolhouse');
   await expect(page.getByTestId('town-approach-prompt')).toContainText('Schoolhouse');
   await expectNote(page, 'town_schoolhouse', 'Future lessons');
 
-  await hold(page, 'KeyD', 2_250);
-  await hold(page, 'KeyS', 350);
+  await approachTownBuilding(page, 'assay_office');
   await expect(page.getByTestId('town-approach-prompt')).toContainText('Assay Office');
   await expectNote(page, 'town_assay_office', 'town side of orders');
 
