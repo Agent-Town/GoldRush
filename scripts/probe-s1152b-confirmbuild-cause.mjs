@@ -13,7 +13,7 @@ import { existsSync, mkdirSync, readFileSync, unlinkSync, writeFileSync } from '
 
 const SOURCE = 'e2e/f1148-1-trajectory-probe.spec.ts';
 const TEMP = 'e2e/tmp-s1152b-confirmbuild.spec.ts';
-const ARTIFACT_DIR = 'artifacts/f1152-1-confirmbuild';
+const ARTIFACT_DIR = process.env.GR_CONFIRM_PROBE_ARTIFACT_DIR ?? 'artifacts/f1152-1-confirmbuild';
 const INVOCATIONS = Number(process.argv[2] ?? 7);
 const SOURCE_ARTIFACT_DIR = `const artifactDir = path.resolve('artifacts/f1148-1-trajectory');`;
 

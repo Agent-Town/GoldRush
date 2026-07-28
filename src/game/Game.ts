@@ -1652,6 +1652,8 @@ export class Game {
           this.localActor.velocity.set(0, 0, 0);
           this.e8PhysicsSystem.reset(this.mpLocalSlot);
           this.localActor.snapRenderState();
+          this.updateActionActorPosition();
+          if (this.actionActor !== this.localActor) this.actionActorPosition.copy(this.localActor.group.position);
         },
         spawnPack: (n: number, radius?: number, opts?: SpawnPackOptions) =>
           this.spawnHarnessPack(n, radius, opts ?? legacySpawnPackOptions(n, radius)),
