@@ -17,10 +17,11 @@ const ARTIFACT_DIR = path.resolve('artifacts/world-info-notes');
 const PROFILE_ID = 'robin';
 const TAKEN_FRONTIER_NODES = RESEARCH_NODES.map((node) => node.id);
 
+// 2026-07-28 F-1169: keep these at the nearest measured terrain-valid, mutually clear cells.
 const BUILD_NOTE_CASES: Array<{ id: BuildableId; x: number; z: number; objectClass: WorldInfoObjectClass; text: string }> = [
   { id: 'sentry_beacon', x: -16, z: 14, objectClass: 'sentry_beacon', text: 'brass lamp' },
   { id: 'palisade', x: -10, z: 14, objectClass: 'palisade', text: 'Higher tier means more hit points' },
-  { id: 'stockpile', x: 10, z: 14, objectClass: 'stockpile', text: 'bank cap' },
+  { id: 'stockpile', x: 9, z: 13, objectClass: 'stockpile', text: 'bank cap' },
   { id: 'turret', x: 16, z: 14, objectClass: 'turret', text: 'spark tower' },
   { id: 'sluice', x: -4, z: 7, objectClass: 'sluice', text: 'Washes gold over time' },
   { id: 'assay_office', x: 3, z: 7, objectClass: 'assay_office', text: 'Write an order' },
