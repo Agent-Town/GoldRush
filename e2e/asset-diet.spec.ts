@@ -1,5 +1,5 @@
 // Measures the built, dieted production bundle; Vite's dev server serves undieted originals.
-// Run: npm run test:asset-diet
+// Run with GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet
 
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
@@ -9,10 +9,10 @@ import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type 
 
 const ARTIFACT_DIR = path.resolve('artifacts/asset-diet');
 const MAPS = [{ id: 'the-claim', era: 1 }, { id: 'e1-dry-gulch', era: 1 }] as const;
-const BUILT_BUNDLE_ONLY = 'asset diet measures the BUILT bundle; run: npm run test:asset-diet';
+const BUILT_BUNDLE_ONLY = 'asset diet measures the BUILT production bundle; set GR_ASSET_DIET_BUNDLE=1 via: npm run test:asset-diet';
 
-if (process.env.GR_CAPTURE_EXTERNAL_SERVER !== '1') console.warn(`[asset-diet] SKIPPED: ${BUILT_BUNDLE_ONLY}`);
-test.skip(process.env.GR_CAPTURE_EXTERNAL_SERVER !== '1', BUILT_BUNDLE_ONLY);
+if (process.env.GR_ASSET_DIET_BUNDLE !== '1') console.warn(`[asset-diet] SKIPPED: ${BUILT_BUNDLE_ONLY}`);
+test.skip(process.env.GR_ASSET_DIET_BUNDLE !== '1', BUILT_BUNDLE_ONLY);
 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(({ profileKey, townKey, metaKey, guideKey }) => {

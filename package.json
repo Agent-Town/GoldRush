@@ -9,7 +9,7 @@
     "build:release": "tsc && vite build && node scripts/asset-diet.mjs && node scripts/assert-release-build.mjs",
     "preview": "vite preview --host 127.0.0.1",
     "test": "playwright test",
-    "test:asset-diet": "GR_CAPTURE_EXTERNAL_SERVER=1 playwright test --config playwright.preview.config.ts e2e/asset-diet.spec.ts --workers=1",
+    "test:asset-diet": "GR_ASSET_DIET_BUNDLE=1 playwright test --config playwright.preview.config.ts e2e/asset-diet.spec.ts --workers=1",
     "census": "playwright test e2e/map-census.spec.ts --project=desktop-chrome --workers=1",
     "test:accounts": "node scripts/test-accounts.mjs",
     "mint:prizes": "node scripts/mint-prize-codes.mjs",

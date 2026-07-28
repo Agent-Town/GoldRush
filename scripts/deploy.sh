@@ -58,7 +58,7 @@ trap 'rm -f "$CAPTURE"; rm -rf "$BUDGET_CWD"; [ -z "$SNAPSHOT" ] || rm -rf "$SNA
 note "checking first-town asset budget…"
 if (
   cd "$BUDGET_CWD" || exit 1
-  GR_CAPTURE_EXTERNAL_SERVER=1 GR_ASSET_DIET_REUSE_BUILD=1 npm --prefix "$ROOT" exec -- playwright test \
+  GR_CAPTURE_EXTERNAL_SERVER=1 GR_ASSET_DIET_BUNDLE=1 GR_ASSET_DIET_REUSE_BUILD=1 npm --prefix "$ROOT" exec -- playwright test \
     --config "$ROOT/playwright.preview.config.ts" "$ROOT/e2e/asset-diet.spec.ts" --workers=1 \
     --grep "honest town and claim cues"
 ) > "$CAPTURE" 2>&1; then BUDGET_RC=0; else BUDGET_RC=$?; fi
