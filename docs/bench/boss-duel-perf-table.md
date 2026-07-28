@@ -28,3 +28,7 @@ Added model detail does not measurably cost frame time at the gameplay camera: p
 - Variant scripts (untracked, left in place): gr-task-bench-sol/scripts/bench-duel-*.tmp.mjs
 - Copied GLBs (untracked, left in place): dredge-queen-detail-opus5.glb, dredge-queen-unbound-opus5u.glb, dredge-queen-unbound-solu.glb (dredge-queen-3d/), salvage-claw-detail-opus5.glb (salvage-claw-3d/)
 - Worktree state after cleanup: `git status --short` = 10 untracked additions only, zero modified tracked files; port 5237 released; no processes other than my own vite server were started or stopped
+
+## F-CLAW-2X resolved: LEGIT
+
+The Claw's second triangle billing is the sun shadow-map pass, not a double-submit: its shipped→detail asset delta was 4,440 triangles, billed as 8,880 (2×) with shadows on and 4,440 (1×) with shadows off. The Queen control's 9,852-triangle delta changed from 9,852 (1×) to 0 (0×): at the sampled state its box intersects the sun frustum but not the gameplay-camera frustum, while the Claw intersects both. The live Claw graph contained exactly one `SalvageClaw3d`, three distinct meshes, and 30,100 summed triangles. Full counters, bounds, frustum evidence, and load windows: `tasks/runs/20260729-0442-lane-b-claw-2x-triangle-billing-diagnosis.md`.
