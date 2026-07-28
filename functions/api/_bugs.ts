@@ -199,7 +199,7 @@ function corsHeaders(request: Request, methods: string): Record<string, string> 
     'Vary': 'Origin',
   };
   if (!origin) return headers;
-  if (ALLOWED_ORIGINS.has(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
+  if (ALLOWED_ORIGINS.has(origin) || /^https:\/\/[a-z0-9-]+\.gold-rush-3in\.pages\.dev$/.test(origin) || /^http:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/.test(origin)) {
     return { ...headers, 'Access-Control-Allow-Origin': origin };
   }
   return null;
