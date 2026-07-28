@@ -1,7 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import ts from 'typescript';
+import { fileURLToPath } from 'node:url';
 
+const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const args = process.argv.slice(2);
 const positiveControlPassed = args.includes('--positive-control-passed');
 const [input = 'logs/suite-red-inventory-raw.json', output = 'logs/suite-red-inventory.md'] =
@@ -54,10 +56,10 @@ function mergeError(result) {
 
 function relative(file) {
   if (!file) return 'unknown';
-  if (path.isAbsolute(file)) return path.relative(process.cwd(), file).replaceAll(path.sep, '/');
-  if (fs.existsSync(file)) return file.replaceAll(path.sep, '/');
+  if (path.isAbsolute(file)) return path.relative(ROOT, file).replaceAll(path.sep, '/');
+  if (fs.existsSync(path.join(ROOT, file))) return file.replaceAll(path.sep, '/');
   const e2eFile = path.join('e2e', file);
-  return (fs.existsSync(e2eFile) ? e2eFile : file).replaceAll(path.sep, '/');
+  return (fs.existsSync(path.join(ROOT, e2eFile)) ? e2eFile : file).replaceAll(path.sep, '/');
 }
 
 function failed(execution) {
@@ -106,7 +108,7 @@ function duration(ms) {
 }
 
 function testBody(execution, failureLocation) {
-  const source = fs.readFileSync(execution.file, 'utf8');
+  const source = fs.readFileSync(path.join(ROOT, execution.file), 'utf8');
   const sourceFile = ts.createSourceFile(execution.file, source, ts.ScriptTarget.Latest, true);
   let best;
   function visit(node) {
