@@ -79,7 +79,22 @@ The inventory lists faults but does not **group** them. Clustering the 303 faili
 
 ? **INFERRED, not verified:** `asset-diet.spec.ts:101` (`townResponseBytes < 25_000_000`, BOTH) is plausibly the *same* mechanism measured in bytes rather than requests — that would make the class 34 executions — but I did not trace it to a shared cause and it must not be assumed.
 
-➡️ **Recommendation for the next repair task: diagnose the lazy-mount path ONCE, not eight times.** The honest shape is a single investigation slice ("what now fetches town blender GLBs before the pilot enables?") whose gate is *all eight specs green*, not eight sibling repairs.
+**I then tested my own recommendation instead of shipping it, and it needed correcting twice.**
+
+**(1) The data contains its own control.** There are **ten** `town-*-blender` specs, not eight. Two are **fully green** — `town-dynamo-hall-blender` (12/12) and `town-stamp-mill-blender` (10/10) — and they carry the **same** `expect(requests).toEqual([])` assertion. ✓ Verified they *ran and passed* rather than being skipped (the report has 86 skipped executions, so absence from the red list proves nothing on its own). The eight red ones fail **exactly 4 executions each** (2 sites × 2 projects). A natural A/B was sitting in the run.
+
+**(2) The mechanism, found at source.** `src/town/TownTavernPilot.ts:43` `townPrefetchUrls()` builds a speculative prefetch list of every pilot GLB — filtered at **`:49`** by `.filter(([id]) => id !== 'stamp-mill' && id !== 'dynamo_hall')`. **The two excluded ids are exactly the two green specs.** Its only caller is `src/assets/AdvanceStream.ts:30`, the idle-time asset warmer. So the eight specs are not a mysterious regression: **a prefetcher fetches those GLBs before the pilot mounts, which is precisely what their assertion forbids.**
+
+**(3) The dates settle authorship, and they are unambiguous.** All ten blender specs were added **2026-07-13**. The Advance Stream merged **2026-07-25T10:36 (`e109639f`)** — and `git log -S` proves **the exclusion filter was introduced in that same commit**. Whoever shipped the prefetch excluded two models so their specs stayed green, and left the other eight red.
+
+⚠️ **THEREFORE THIS IS NOT A REPAIR TASK — IT IS AN OWNER FORK, AND I DID NOT AUTHOR IT (§2E hard limit).** The Advance Stream is a **ratified owner directive**, quoted verbatim at `tasks/BACKLOG.md:879`: *"Could we start downloading all the assets as soon as the player visits the start page? Basically streaming in advance?"* The eight assertions and that directive **cannot both be satisfied**:
+
+- **(a) the prefetch is right** → the eight `toEqual([])` assertions are **obsolete**, and should be re-scoped to assert *mount* laziness rather than *any-fetch* laziness. **Then the two exclusions at `:49` are themselves the bug** — they quietly deny the owner's warm-town benefit to two models purely to keep two specs green. **Recommended.**
+- **(b) pilot GLBs should not be prefetched** → extend the filter to all pilots; the eight reds are then a genuine regression.
+
+⚠️ **One fact must not be folded into that fork:** `asset-diet.spec.ts:101` (`townResponseBytes < 25_000_000`) now fails **BOTH**, yet `BACKLOG.md:879` records that the Advance Stream's own drain gated asset-diet **4/4 against the production bundle, with the prefetch live**. So the 25 MB budget held on 07-25 and does not now. **That is a separate, real regression** and it is the one piece of evidence that could argue against (a). Do not merge the two questions.
+
+🔑 **This is also the inventory paying for itself on its first day:** eight specs went red on 2026-07-25 and nobody noticed for three days, because until this merge the factory had no machine-readable red list.
 
 ### F-1167-2 — the timeout bucket is measured under contaminated load (carried from s1166, re-confirmed)
 
