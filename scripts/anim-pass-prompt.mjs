@@ -98,7 +98,11 @@ WHICH SIDE EVERY ASYMMETRIC DETAIL GOES ON — this is the most important rule h
 ${propLines}
 - No firearms and no gun-like silhouettes. Nothing gory. No extra characters, no scenery, no props lying on the ground.
 
-STYLE ANCHOR, follow exactly:
+${A.includes('--retake-mirrored') ? `CRITICAL — READ AGAIN. The previous attempt at this view was a horizontally FLIPPED copy of the opposite view, which put every asymmetric detail on the wrong side of the body. Check yourself against this before you draw:
+${(c.props ?? []).map((p) => `  · ${p.what} → MUST be on the ${WIND[p.side][0]}-HAND side of the figure as drawn.`).join('\n')}
+If you find yourself drawing any of them on the other side, you have mirrored the wrong view. The key light is also from the upper LEFT — a flipped frame lights from the wrong side, which is the other way to catch this.
+
+` : ''}STYLE ANCHOR, follow exactly:
 Frontier Ledger style: hand-engraved storybook illustration, fine ink hatching and cross-hatch shading, parchment-warm palette of ochres, sepias and warm browns with restrained teal agent-tech glow accents; illustrated and warmly readable, never photorealistic, never gory, no text or letters or watermarks anywhere in the image.
 `;
 
