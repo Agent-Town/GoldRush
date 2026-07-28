@@ -1973,7 +1973,7 @@
               "title": "F-E1W-3 — town buildings promoted as 3D models are solid even while unearned",
               "taskFile": "lane-town-store-collider.md",
               "status": "merged",
-              "mergeHash": "PENDING4",
+              "mergeHash": "422d26399f255ed089d22e60ebb38c919bbce25d",
               "note": "Owner E1 public walk: hero stood INSIDE the General Store. shellAt() consulted only earned visibleBuildings, but the 3D pilot promotes GLBs regardless of territory — a visible building over an unearned lot was walk-through. Solidity now binds to town3dPilotLoadedIds (normal-play GLB onLoad path, verified at source). Low-tier path correct by construction: no model -> survey plot -> intentionally walkable. Census covered all buildings/props (full-fix law). never-trap 6/6 both projects, fixture moved territory 3->0 so it fails on the reported bug. 3-way graft: main had moved TownScene.ts in 1f36b174 (prompt labels), disjoint hunks, both verified present after apply. Review reviews/town-store-collider.md."
             }
           ]
