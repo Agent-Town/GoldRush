@@ -50,6 +50,16 @@ for who, sheet in actors.items():
     if who != 'prospector':
         for r, d in enumerate(('s', 'w', 'e', 'n')): rowmap.setdefault(sheet, {}).setdefault(r, set()).add(d)
 
+# THE EIGHT WINDS (2026-07-28): the diagonal siblings are not in any contract yet
+# — the code slice that binds them is a separate task — but their row order is
+# fixed by the naming convention, so the gallery states it instead of shrugging.
+# Captioning a sheet the reviewer cannot read is how F-A5 produced false defect
+# reports; a sheet whose rows are knowable should always say what they mean.
+for p in root.glob('assets/raw/char-*-sheet-*diag*.png'):
+    if not re.search(r'-sheet-(?:walk|hover)diag\d+(?:-[ab])?$', p.stem): continue
+    for r, d in enumerate(('sw', 'se', 'nw', 'ne')):
+        rowmap.setdefault(p.stem, {}).setdefault(r, set()).add(d)
+
 if os.environ.get('MODE') == '--all':
     sheets = [(p.stem, p, ['(unwired — reference only)'] if p.stem not in live else sorted(live[p.stem])) for p in sorted(root.glob('assets/raw/char-*-sheet-*.png'))]
 else:
