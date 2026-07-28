@@ -81,7 +81,7 @@ async function heroWalk(page: Page): Promise<SpriteSnapshot> {
   await page.waitForFunction(
     () =>
       window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.clip === 'walk' &&
-      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameCount === 4,
+      window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.hero']?.frameCount === 8,
   );
   return sprite(page, 'char.hero');
 }
@@ -191,16 +191,16 @@ test('Prospector hover8 plays eight distinct frames while panning', async ({ pag
   expect(errors.pageErrors).toEqual([]);
 });
 
-test('hero stays on walk4 while walk8 cells are registered', async ({ page }, testInfo) => {
+test('hero walks on the activated walk8 sheet at the ratified cadence', async ({ page }, testInfo) => {
   const errors = await openGame(page, '066-hero-stays-walk4');
   const walking = await heroWalk(page);
   await saveShot(page, testInfo, 'hero-walk4-unchanged');
   await page.keyboard.up('KeyS');
 
-  expect(walking.frameCount).toBe(4);
-  expect(walking.fps).toBeCloseTo(9.5, 1);
-  expect(walking.sourceFrameKey).toContain('char-hero-sheet-walk4-');
-  expect(walking.sourceFrameKey).not.toContain('walk8');
+  expect(walking.frameCount).toBe(8);
+  expect(walking.fps).toBeCloseTo(15.61, 1);
+  expect(walking.sourceFrameKey).toContain('char-hero-sheet-walk8-');
+  expect(walking.strideUnitsPerCycle).toBeCloseTo(3.075, 1);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
@@ -228,8 +228,8 @@ test('Claim Jumper walk8 keeps the old stride duration at higher frame count', a
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.fps ?? 0) > 12);
   const fastJumper = await sprite(page, 'char.bandit_base');
 
-  expect(hero.frameCount).toBe(4);
-  expect(hero.sourceFrameKey).toContain('char-hero-sheet-walk4-');
+  expect(hero.frameCount).toBe(8);
+  expect(hero.sourceFrameKey).toContain('char-hero-sheet-walk8-');
   expect(jumper.frameCount).toBe(8);
   expect(jumper.sourceFrameKey).toContain('char-jumper-sheet-walk8-');
   expect(jumper.fps).toBeCloseTo(8.55, 1);
