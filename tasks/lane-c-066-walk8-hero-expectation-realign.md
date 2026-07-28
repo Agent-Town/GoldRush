@@ -19,7 +19,11 @@ The lane branch being ahead is NORMAL — the runner auto-commits. For each ahea
 
 **The dupe was proven at authoring time — but its premise EXPIRED THREE MINUTES LATER, so re-derive it rather than trusting the paragraph below.** s1179 verified at 2026-07-28T19:2xZ, immediately after draining this very lane: `lane/e2-arsenal` was ahead at `46397ac5`, whose entire 77-file deliverable **shipped to main as `29bac3d9`**, and `git diff --name-only --diff-filter=A main..lane/e2-arsenal` returned **EMPTY**.
 
-⚠️ **THEN AN ATTENDED SESSION QUEUED `lane-m3-05b-run-ledger` TO THIS SAME LANE AT 19:19 AND THE RUNNER PICKED IT UP THREE SECONDS LATER (`f75f4e4e`, owner-approved).** So by the time you read this, `lane/e2-arsenal` most likely carries **that** task's output, and whether it is a safe dupe depends entirely on **whether a fire has drained it yet**. ➡️ **Run `git diff --name-only --diff-filter=A main..lane/e2-arsenal` yourself. If it is EMPTY, reset and proceed. If it is NOT empty, that is undrained work and a reset would DESTROY it — STOP AND REPORT, naming the files.** A STOP there is the correct outcome and costs the factory one run; a reset there costs it a slice.
+✅ **THAT BLOCKER IS NOW CURED — THIS IS THE SECOND DISPATCH, AND THE PREMISE HAS CHANGED (s1180, 2026-07-28T20:0xZ).** The first dispatch **STOPPED CORRECTLY at this very pre-flight** (`tasks/runs/20260728-194116-…`, merged `25837a8c`): an attended session had queued `lane-m3-05b-run-ledger` to this same lane at 19:19 (`f75f4e4e`, owner-approved), the runner took it three seconds later, and its five-file deliverable sat **undrained** on the branch — so the gate refused to reset and cost the factory one run instead of a slice. **That is the gate working, not failing.**
+
+**s1180 then drained it (`d9c86768`, review `reviews/m3-05b-run-ledger.md`) and re-measured this lane at 20:0xZ: `git diff --name-only --diff-filter=A main..lane/e2-arsenal` is now EMPTY.**
+
+➡️ **Re-derive it anyway — that is the whole point of this paragraph, and the reason this task exists to be run twice.** Run `git diff --name-only --diff-filter=A main..lane/e2-arsenal` yourself. **EMPTY ⇒ reset and proceed. NOT empty ⇒ something landed after 20:0xZ; that is undrained work and a reset would DESTROY it — STOP AND REPORT, naming the files.** A STOP there is the correct outcome and costs the factory one run; a reset there costs it a slice.
 
 Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
 
