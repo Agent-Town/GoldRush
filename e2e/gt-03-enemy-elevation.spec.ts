@@ -159,7 +159,7 @@ test('cliff blocks enemies and local routing sends them around the ridge', async
 
   await page.evaluate(({ cliff }) => {
     window.__GR_TEST__?.clearEnemies();
-    window.__GR_TEST__?.teleport(0, 12);
+    window.__GR_TEST__?.teleport(-30, 12);
     window.__GT03_ROUTE__ = {
       done: false,
       reached: false,
@@ -170,7 +170,7 @@ test('cliff blocks enemies and local routing sends them around the ridge', async
       last: null,
     };
     const start = window.__THREE_GAME_DIAGNOSTICS__?.timeAlive ?? 0;
-    const target = { x: 0, z: 12 };
+    const target = { x: -30, z: 12 };
     const tick = () => {
       const probe = window.__GT03_ROUTE__!;
       const enemy = window.__GR_TEST__?.enemyPositions()[0] as EnemySnapshot | undefined;
@@ -179,7 +179,7 @@ test('cliff blocks enemies and local routing sends them around the ridge', async
         const inCliffX = enemy.x >= cliff.minX && enemy.x <= cliff.maxX;
         const inCliffZ = enemy.z >= cliff.minZ && enemy.z <= cliff.maxZ;
         if (inCliffX && inCliffZ) probe.cliffSamples += 1;
-        if (probe.last && probe.last.z < cliff.minZ && enemy.z > cliff.maxZ) {
+        if (probe.last && probe.last.z <= cliff.maxZ && enemy.z > cliff.maxZ) {
           const side = enemy.x < cliff.minX ? 'west' : enemy.x > cliff.maxX ? 'east' : 'cliff';
           probe.passSide = side;
           probe.crossedThroughCliff ||= side === 'cliff';
@@ -193,7 +193,7 @@ test('cliff blocks enemies and local routing sends them around the ridge', async
     };
     requestAnimationFrame(tick);
   }, { cliff: CLIFF });
-  await scriptEnemy(page, 0, -20, 0, 12, 6);
+  await scriptEnemy(page, 0, -20, -30, 12, 6);
 
   await expect.poll(() => page.evaluate(() => window.__GT03_ROUTE__?.done ?? false), { timeout: 15_000 }).toBe(true);
   const probe = await page.evaluate(() => window.__GT03_ROUTE__ as RouteProbe | undefined);
@@ -202,7 +202,37 @@ test('cliff blocks enemies and local routing sends them around the ridge', async
   expect(probe?.reached).toBe(true);
   expect(probe?.cliffSamples).toBe(0);
   expect(probe?.crossedThroughCliff).toBe(false);
-  expect(probe?.passSide).not.toBe('cliff');
+  expect(probe?.passSide).toBe('west');
+
+  await page.goto('?debug&epoch=epoch-3-voltage&contract=e3-canyon-works&nowaves&nospawn&nolevel&nokill&nopause&nosteal&nowreck&seed=gt-03-goal-side');
+  await waitForGame(page);
+  const goalSideRows = await page.evaluate(() => {
+    const harness = window.__GR_TEST__!;
+    harness.setManualSim(true);
+    const cases = [
+      { startX: -38, targetX: -46, expectedPassSide: 'west', polarity: 'same' },
+      { startX: -38, targetX: -28, expectedPassSide: 'east', polarity: 'opposite' },
+      { startX: 38, targetX: 46, expectedPassSide: 'east', polarity: 'same' },
+      { startX: 38, targetX: 28, expectedPassSide: 'west', polarity: 'opposite' },
+    ] as const;
+    return cases.map((scenario) => {
+      harness.clearEnemies();
+      harness.scriptEnemyAt(scenario.startX, 32, scenario.targetX, 8, 8);
+      let passSide: 'east' | 'west' | null = null;
+      let samples = 0;
+      for (; samples < 80 && passSide === null; samples += 1) {
+        harness.advanceSim(0.05);
+        const slideSide = harness.captureSuspend().enemies.active[0]?.terrainSlideSide ?? 0;
+        if (slideSide !== 0) passSide = slideSide > 0 ? 'east' : 'west';
+      }
+      return { ...scenario, samples, passSide };
+    });
+  });
+  await writeFile(path.join(ARTIFACT_DIR, `goal-side-report-${testInfo.project.name}.json`), `${JSON.stringify(goalSideRows, null, 2)}\n`);
+  for (const row of goalSideRows) {
+    expect(row.samples, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBeGreaterThan(5);
+    expect(row.passSide, `${row.polarity}: ${row.startX} → ${row.targetX}`).toBe(row.expectedPassSide);
+  }
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

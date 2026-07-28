@@ -1250,7 +1250,9 @@ export class ClaimJumperEnemy {
         return;
       }
       if (this.terrainSlideSide === 0) {
-        this.terrainSlideSide = (northSouth ? Math.sign(previous.x) : Math.sign(previous.z)) || this.avoidanceSide();
+        this.terrainSlideSide =
+          (northSouth ? Math.sign(goalX) : Math.sign(goalZ)) ||
+          this.avoidanceSide();
       }
       obstacleAhead = true;
       this.nextPosition.set(
@@ -1261,7 +1263,9 @@ export class ClaimJumperEnemy {
     }
 
     if (this.terrainSlideSide === 0) {
-      this.terrainSlideSide = (northSouth ? Math.sign(previous.x) : Math.sign(previous.z)) || this.avoidanceSide();
+      this.terrainSlideSide =
+        (northSouth ? Math.sign(goalX) : Math.sign(goalZ)) ||
+        this.avoidanceSide();
     }
     if (stepDistance > 0.000001 && goalDistance > 0.000001) {
       const lookahead = Math.max(0.6, stepDistance * 2);
