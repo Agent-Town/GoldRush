@@ -162,13 +162,43 @@ for (const name of existsSync(STAGING_ROOT) ? readdirSync(STAGING_ROOT) : []) {
 //    where no amount of widening the staging path would ever have found them.
 //    `git status -uall` is the cheap, exact way to ask: tracked-and-clean files
 //    are by definition already in git and need no hashing.
+const seenMainPaths = new Set();
 for (const line of git('status', '--porcelain', '--untracked-files=all', '--', 'assets/').split('\n')) {
   if (!line.trim()) continue;
   // XY <path>  — renames would carry ' -> ', which we do not expect under assets/
   const rel = line.slice(3).trim().replace(/^"|"$/g, '');
   const abs = join(REPO, rel);
   if (!existsSync(abs) || !statSync(abs).isFile()) continue;
+  seenMainPaths.add(rel);
   scan.push({ file: abs, mainPath: rel, area: 'main-tree' });
+}
+
+// 2b. MAIN's tracked-and-CLEAN assets/ files that are committed but NOT PUSHED.
+//     F-1184-5 (s1184) — the THIRD false zero in this audit's history, and the
+//     ART-SLOT LAW says fix the class, not the instance (cf. F-1054-1 classified
+//     by NAME; F-1055-1 asked only THIS disk). The gap: step 2 collects main-tree
+//     via `git status`, which lists only DIRTY or UNTRACKED files. Its comment
+//     reasons that "tracked-and-clean files are by definition already in git and
+//     need no hashing" — true for AT RISK, but LOCAL-ONLY asks a DIFFERENT
+//     question: is the blob on an ORIGIN ref? A tracked, clean, committed-but-
+//     unpushed file is in git here and on no origin ref — exactly LOCAL-ONLY —
+//     yet it never entered `scan`, so the localOnly test below could never see
+//     it. Measured when found: 28.33 MB of freshly salvaged assets/raw/originals/
+//     sat in a commit 6 ahead of origin/main and the audit printed LOCAL-ONLY 0.
+//     Asking `origin/main..main` is O(unpushed commits), not O(6.5k tracked files).
+try {
+  const unpushed = git('diff', '--name-only', 'origin/main..main', '--', 'assets/');
+  for (const line of unpushed.split('\n')) {
+    const rel = line.trim();
+    if (!rel) continue;
+    if (seenMainPaths.has(rel)) continue; // step 2 already has it (dirty/untracked)
+    const abs = join(REPO, rel);
+    if (!existsSync(abs) || !statSync(abs).isFile()) continue; // deleted upstream
+    scan.push({ file: abs, mainPath: rel, area: 'main-tree' });
+  }
+} catch {
+  // no origin, or no origin/main remote-tracking ref yet — nothing to compare
+  // against, and a missing remote is already the loudest possible signal.
 }
 
 const untracked = [];
