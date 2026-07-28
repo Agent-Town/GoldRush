@@ -15,7 +15,7 @@ type Walk8Contract = {
   frameCount?: number;
   grid: { file: string; cols: number; rowDirections: string[] };
   aliases: Record<string, string>;
-  directions?: Record<string, { row?: number }>;
+  directions?: Record<string, { row?: number; frames?: { files?: string[] } }>;
 };
 
 const shotDir = path.resolve('artifacts/lane-c-activations');
@@ -45,6 +45,11 @@ if (!banditWalk8) throw new Error('characters.v2.json is missing char.bandit_bas
 const frameStem = path.basename(banditWalk8.grid.file, path.extname(banditWalk8.grid.file));
 const jumperDirections = directionSpawns.map(([direction, spawn]) => {
   const rowDirection = (banditWalk8.aliases[direction] ?? direction).toLowerCase();
+  // s1185: since c3d8470e the diagonals are explicit-FILE direction entries on a separate
+  // walkdiag8 sheet (aliases emptied), so they carry no grid row. Prefer the declared files;
+  // the row path below still guards the cardinal rows and still fails loudly on a bad contract.
+  const explicitFiles = banditWalk8.directions?.[rowDirection]?.frames?.files;
+  if (explicitFiles?.length) return [direction, spawn, explicitFiles] as const;
   const row = banditWalk8.directions?.[rowDirection]?.row
     ?? banditWalk8.grid.rowDirections.findIndex((candidate) => candidate.toLowerCase() === rowDirection);
   // Runtime returns null here; the test throws so a malformed contract fails loudly at collection.
