@@ -34,6 +34,12 @@ const HALO = 90; // extract-alpha's interiorKey threshold — the fringe/spill b
 
 /** Grid conventions when no processed set exists (assets/LEDGER.md + frames.json survey). */
 function conventionGrid(stem) {
+  // THE EIGHT WINDS (2026-07-28): the diagonal siblings are ALWAYS <F> columns x
+  // 4 rows (sw/se/nw/ne), with F in the filename. Taught first, because a stem
+  // this table cannot parse is measured against an IMAGINARY grid and reports
+  // four-figure bleed — that is how M3 inherited three false REGENERATE verdicts.
+  const diag = /-sheet-(?:walk|hover)diag(\d+)(?:-[ab])?$/.exec(stem);
+  if (diag) return [Number(diag[1]), 4];
   if (/-sheet-walk8$/.test(stem)) return /char-e[6-9]-/.test(stem) ? [4, 2] : [8, 4];
   if (/-sheet-walk8-[ab]$/.test(stem)) return [8, 4];
   if (/-sheet-(walk4|hover4)-[ab]$/.test(stem)) return [4, 4];

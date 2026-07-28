@@ -1,0 +1,367 @@
+{
+  "_": "THE EIGHT WINDS (2026-07-28) — the identity record each diagonal prompt is built from. `who` is what the reference sheet DRAWS, read at cell magnification from reviews/eight-winds/crops/ew-town-*.png, not from the name plate (F-A8). `props` names every asymmetric prop and WHICH SIDE OF THE BODY it lives on (L/R); anim-pass-prompt.mjs turns that into the screen side for each wind. This is the whole reason a left-down walker cannot be a flipped right-down walker — and the tavernkeeper SE retake (F-EW-1) is what proved the prose form of this clause was not enough.",
+  "cast": {
+    "tavernkeeper": {
+      "base": "char-tavernkeeper-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "the tavernkeeper: heavyset and friendly, full dark beard, wide-brimmed weathered hat, cream shirt with rolled sleeves, long brown work apron over a vest, a pale towel draped over one shoulder, sturdy work boots",
+      "props": [
+        {
+          "what": "a pale towel draped over the shoulder",
+          "side": "L"
+        },
+        {
+          "what": "the apron tool pocket at the hip",
+          "side": "L"
+        }
+      ]
+    },
+    "storekeeper": {
+      "base": "char-storekeeper-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "the storekeeper: a trim moustached shopkeeper with short dark hair and no hat, cream shirt with rolled sleeves, a teal neckerchief knotted at the collar, a long brown leather apron over a waistcoat with crossed straps over the back, dark work trousers and boots",
+      "props": [],
+      "propNote": "no prop survives a side assignment: the apron pocket sits on the apron FRONT and the teal neckerchief is centred at the throat. Judged on facing and identity only."
+    },
+    "elder": {
+      "base": "char-elder-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "the town elder: an old man with a full white beard, a pale wide-brimmed hat, a long fringed chevron-woven poncho worn over a waistcoat and long coat, a small teal-glowing pendant at the throat, worn boots",
+      "props": [],
+      "propNote": "no prop survives a side assignment: the poncho is a fringed shawl with a hem all round and the teal pendant is centred. Judged on facing and identity only — the chevron weave on the back is the identity anchor."
+    },
+    "youngster-m": {
+      "base": "char-youngster-m-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "a young frontier boy, fully clothed, in a soft flat cap, cream shirt with rolled sleeves, a brown waistcoat over braces, work trousers and boots, carrying a small brass lantern with a teal glow",
+      "props": [
+        {
+          "what": "the small brass lantern with a teal glow, carried in the hand",
+          "side": "L"
+        }
+      ]
+    },
+    "youngster-f": {
+      "base": "char-youngster-f-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "a young frontier girl, fully clothed, in a wide-brimmed straw hat with two long braids, a tan jacket over blue denim overalls, cuffed work boots, carrying a small brass lantern with a teal glow",
+      "props": [
+        {
+          "what": "the small brass lantern with a teal glow, carried in the hand",
+          "side": "L"
+        }
+      ]
+    },
+    "newsie-mei": {
+      "base": "char-newsie-mei-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "the newsie: a girl in a soft newsboy cap with a long dark braid down her back, a teal-blue jacket over a cream shirt, dark trousers and boots, a canvas satchel of folded papers on a cross-body strap, a folded paper in one hand",
+      "props": [
+        {
+          "what": "the canvas satchel of papers resting at the hip",
+          "side": "L"
+        },
+        {
+          "what": "the folded paper held in the hand",
+          "side": "R"
+        }
+      ]
+    },
+    "preacher": {
+      "base": "char-preacher-sheet-walk8-a",
+      "grid": "4x4",
+      "frames": 4,
+      "rows": [
+        "s",
+        "sw",
+        "w",
+        "nw"
+      ],
+      "gait": "walk",
+      "who": "the preacher: a bearded man in a black flat-brimmed hat and a long dark frock coat over a waistcoat, a pale cravat at the throat, dark trousers and boots, carrying a small dark book",
+      "props": [
+        {
+          "what": "the small dark book carried in the hand",
+          "side": "L"
+        }
+      ]
+    },
+    "schoolteacher": {
+      "base": "char-schoolteacher-sheet-walk8-a",
+      "grid": "4x4",
+      "frames": 4,
+      "rows": [
+        "s",
+        "sw",
+        "w",
+        "nw"
+      ],
+      "gait": "walk",
+      "who": "the schoolteacher: a woman with dark curly hair pinned up, a cream blouse with full sleeves under a brown waistcoat, a dark ribbon at the throat, a long grey-brown skirt to the ankle and low boots, a small leather satchel on a shoulder strap",
+      "props": [
+        {
+          "what": "the leather satchel hanging at the hip",
+          "side": "L"
+        },
+        {
+          "what": "the short piece of chalk held up in the hand",
+          "side": "R"
+        }
+      ]
+    },
+    "assay-clerk": {
+      "base": "char-assay-clerk-sheet-walk8-a",
+      "grid": "4x4",
+      "frames": 4,
+      "rows": [
+        "s",
+        "sw",
+        "w",
+        "nw"
+      ],
+      "gait": "walk",
+      "who": "the assay clerk: a moustached man in round spectacles, cream shirt with rolled sleeves and a dark tie, a long brown work apron, dark trousers and boots",
+      "props": [
+        {
+          "what": "the ledger book carried in the hand",
+          "side": "L"
+        },
+        {
+          "what": "the pen held in the hand",
+          "side": "R"
+        }
+      ]
+    },
+    "prospector": {
+      "base": "char-prospector-sheet-hover8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "hover",
+      "who": "the Prospector, the player's machine claim-partner: a rounded riveted brass-and-copper hovering body like a small bathysphere with a glowing teal porthole eye, a domed lamp on top, two articulated jointed arms, and a teal jet-glow plume beneath where legs would be — it has no legs and never touches the ground",
+      "props": [
+        {
+          "what": "the shallow brass assay pan held by the arm",
+          "side": "L"
+        },
+        {
+          "what": "the gripper claw arm",
+          "side": "R"
+        }
+      ]
+    },
+    "hero": {
+      "base": "char-hero-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "the settler hero: a young woman in a wide-brimmed weathered hat with a long dark braid, a work shirt with rolled sleeves under an open tan leather vest, a teal stone pendant at the throat, a small leather satchel on the hip, canvas trousers cuffed into tall laced boots, carrying a shallow round metal gold pan",
+      "props": [
+        {
+          "what": "the shallow round metal gold pan carried in the hand",
+          "side": "R"
+        },
+        {
+          "what": "the leather satchel riding at the hip",
+          "side": "L"
+        }
+      ]
+    },
+    "bandit-base": {
+      "base": "char-bandit-base-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "an outlaw of the road: a wide-brimmed weathered hat, a cloth bandana pulled up over the lower face, a tattered rust-brown poncho over a worn work shirt and gloves, a plain leather strap slung across the chest, worn trousers and boots",
+      "props": [
+        {
+          "what": "the plain leather chest strap, which runs over the shoulder",
+          "side": "R"
+        }
+      ]
+    },
+    "bandit-thief": {
+      "base": "char-bandit-thief-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "a lean outlaw: a wide-brimmed hat, a bandana pulled up over the lower face, a worn shirt and open vest with no poncho, a leather strap across the chest, a canvas satchel and small pouches at the belt, trousers and boots",
+      "props": [
+        {
+          "what": "the leather chest strap, which runs over the shoulder",
+          "side": "R"
+        },
+        {
+          "what": "the canvas satchel at the belt",
+          "side": "L"
+        }
+      ]
+    },
+    "baron": {
+      "base": "char-baron-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "the Claim-Jumper Baron: a portly Victorian gentleman with a heavy moustache, a tall black top hat with a playing card tucked in the band, a deep maroon frock coat over a gold brocade waistcoat with a watch chain, a dark cravat, striped trousers and boots",
+      "props": [
+        {
+          "what": "the playing card tucked into the hatband",
+          "side": "L"
+        }
+      ]
+    },
+    "claim-jumper": {
+      "base": "char-jumper-sheet-walk8",
+      "grid": "8x4",
+      "frames": 8,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "a claim jumper: a stooped, hurrying scavenger in a battered tan hat and a bandana over the face, a ragged rust-orange cape over a patched shirt, a satchel and pouches at the belt, worn trousers and boots, always leaning forward",
+      "props": [
+        {
+          "what": "the satchel at the belt",
+          "side": "L"
+        }
+      ]
+    },
+    "rail-tough": {
+      "base": "char-railtough-sheet-walk4-a",
+      "grid": "4x4",
+      "frames": 4,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "a railway company enforcer: a bowler hat, a heavy dark beard, a long blue-grey company coat with brass shoulder pauldrons and studded bracers, a brass company badge on the chest, heavy boots, carrying a large steel wrench",
+      "props": [
+        {
+          "what": "the large steel wrench carried in the hand",
+          "side": "R"
+        },
+        {
+          "what": "the brass company badge on the chest",
+          "side": "R"
+        }
+      ]
+    },
+    "steam-wrecker": {
+      "base": "char-steamwrecker-sheet-walk4-a",
+      "grid": "4x4",
+      "frames": 4,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "a steam wrecker machine: a riveted copper-and-brass boiler body like a rounded kettle with one glowing amber porthole eye, two short smokestacks venting white steam from the top, a small teal-lit gauge panel on one flank, two heavy articulated wrench-claw arms, and four squat piston legs",
+      "props": [],
+      "propNote": "machine, near-symmetric: the amber eye is centred and the single teal gauge panel could not be assigned to a side from the base sheet. Judged on facing and identity only."
+    },
+    "coal-thief": {
+      "base": "char-coalthief-sheet-walk4-a",
+      "grid": "4x4",
+      "frames": 4,
+      "rows": [
+        "s",
+        "w",
+        "e",
+        "n"
+      ],
+      "gait": "walk",
+      "who": "a coal thief: a lean hurrying figure in a worn wide-brimmed hat and a blue bandana over the face, a ragged coat with a shaggy fur collar, hoisting a big black sack of coal over one shoulder, trousers and boots, leaning forward under the weight",
+      "props": [
+        {
+          "what": "the big black sack of coal hoisted over the shoulder",
+          "side": "R"
+        }
+      ]
+    }
+  }
+}

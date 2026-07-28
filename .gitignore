@@ -25,6 +25,12 @@ worktrees/
 scripts/_s*
 playwright.s*.config.ts
 .scratch/
+# THE EIGHT WINDS (2026-07-28): proof-only extraction of the diagonal siblings.
+# Nothing binds these cells yet, so they must NOT reach assets/processed or the
+# bundle — anim-pass-winds.mjs extracts here to measure and throws the cells away.
+.scratch-ew/
+# byte-identical copies another concurrent generation already owns (F-EW-2 repair).
+reviews/eight-winds/gen/_misclaimed/
 
 # transient runner state — masters (tasks/*.md, tasks/BACKLOG.md) stay tracked,
 # but queue/running/done/failed are ephemeral filesystem state the runner manages.
