@@ -1965,7 +1965,7 @@
               "title": "Boss detail duel winners adopted — Opus-5 Dredge-Queen (33,124 tris) + Salvage Claw (30,100 tris)",
               "taskFile": "lane-boss-detail-adoption.md",
               "status": "merged",
-              "mergeHash": "PENDING2",
+              "mergeHash": "a226e5f751aa054f23798dca5579e58d62a169e6",
               "note": "Owner-confirmed duel verdict wired: both boss systems point at the -detail-opus5 GLBs. All four mount-gate terms (triangles/meshes/materials/node+morph names) verified directly from the GLB binaries, not from the report — the constants are a silent return-null gate, no spec pins them. 12/12 boss specs both projects; frame p95 ratio 1.0217 desktop / 1.0109 mobile. Originals retained for one-revert rollback. Review reviews/boss-detail-adoption.md. F-1181-4: 2048 atlas ~16MB VRAM/boss, 1024 variant is owed art-slot work."
             }
           ]
