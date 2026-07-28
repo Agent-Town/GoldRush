@@ -28,6 +28,7 @@
  *
  * Usage:
  *   node scripts/anim-pass-reextract.mjs --verify-downscale [stem ...]
+ *   node scripts/anim-pass-reextract.mjs --like BASE_STEM <new-stem ...>
  *   node scripts/anim-pass-reextract.mjs --raw DIR <stem ...> [--dry]
  */
 import fs from 'node:fs';
@@ -41,7 +42,7 @@ const FULL = 'assets/processed-full';
 const MASTER_DIVERGENT = 'assets/master-divergent.json';
 
 const A = process.argv.slice(2);
-const VALUED = new Set(['--raw', '--key', '--scale']);
+const VALUED = new Set(['--raw', '--key', '--scale', '--like']);
 const OPTS = new Map(); const STEMS = [];
 for (let i = 0; i < A.length; i++) {
   const a = A[i];
@@ -52,6 +53,7 @@ for (let i = 0; i < A.length; i++) {
 const RAWDIR = OPTS.get('--raw') || 'assets/raw';
 const KEY = OPTS.get('--key') || 'ff00ff';
 const DRY = OPTS.has('--dry');
+const LIKE = OPTS.get('--like');
 
 /* ---- verbatim from optimize-assets.mjs:43-90 (must stay byte-faithful) ---- */
 function resize(png, maxWidth, maxHeight) {
@@ -139,7 +141,12 @@ if (OPTS.has('--verify-downscale')) {
 if (!STEMS.length) { console.error('usage: node scripts/anim-pass-reextract.mjs --raw DIR <stem ...>'); process.exit(1); }
 
 for (const stem of STEMS) {
-  const conv = convention(stem);
+  let conv = convention(stem);
+  if (conv.error === 'no frames.json — sheet is not extracted; nothing ships' && LIKE) {
+    const base = convention(LIKE);
+    if (base.error) { console.log(`\n${stem}: --like ${LIKE} failed: ${base.error} — SKIPPED`); continue; }
+    conv = { ...base, stem };
+  }
   if (conv.error) { console.log(`\n${stem}: ${conv.error} — SKIPPED (raw mend still stands)`); continue; }
   // frames.json rounds scale to 4dp. Re-extracting at the ROUNDED value resamples
   // every cell a hair differently (peak 5/255 on ~30px — invisible, but it dirties
