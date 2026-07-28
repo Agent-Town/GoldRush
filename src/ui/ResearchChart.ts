@@ -18,6 +18,7 @@ import {
   epochIsActive,
   epochMegaprojectComplete,
   loadEpoch,
+  tryLoadEpoch,
   type EpochResearchBranch,
   type ResearchIconKey,
 } from '../meta/ContractFamilies';
@@ -520,7 +521,9 @@ export function researchRevealForNode(node: ResearchNode): { name: string; line:
 
 function renderNextEpoch(epoch: ReturnType<typeof loadEpoch>): string {
   if (!epoch.successor) return '';
-  const successor = loadEpoch(epoch.successor);
+  // Beyond the release frontier the successor is stripped: no next-epoch panel.
+  const successor = tryLoadEpoch(epoch.successor);
+  if (!successor) return '';
   const active = epochIsActive(successor.id);
   const ready = !active && epochMegaprojectComplete(epoch);
   const state = active ? 'active' : ready ? 'ready' : 'locked';

@@ -7,6 +7,7 @@ import {
   epochIsActive,
   epochMegaprojectComplete,
   loadEpoch,
+  tryLoadEpoch,
 } from '../meta/ContractFamilies';
 import { browserResearchStorage, loadResearchState, scienceMeter } from '../meta/ResearchTree';
 import { emitStorySignal } from '../story';
@@ -336,7 +337,7 @@ export class CeremonySystem {
     this.root.dataset.phaseKind = 'done';
     if (this.directionElement) {
       const epoch = loadEpoch(ceremony.script.epochId);
-      const successor = epoch.successor ? loadEpoch(epoch.successor) : null;
+      const successor = epoch.successor ? tryLoadEpoch(epoch.successor) : null;
       this.directionElement.textContent = successor
         ? `${successor.displayName} is open. The ledger keeps this page.`
         : 'The ceremony is done.';

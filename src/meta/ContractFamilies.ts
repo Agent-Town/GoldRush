@@ -788,6 +788,13 @@ export function listEpochs(): EpochMeta[] {
   return orderedManifests.map(toMeta);
 }
 
+/** Frontier-tolerant lookup: content may reference epochs the release build
+ * physically strips (their ids become 'unreleased-epoch'); such refs resolve
+ * to null and the caller treats the content as beyond the frontier. */
+export function tryLoadEpoch(id: string): EpochBundle | null {
+  return manifestsById.has(id) ? loadEpoch(id) : null;
+}
+
 export function loadEpoch(id: string): EpochBundle {
   const manifest = manifestsById.get(id);
   if (!manifest) throw new Error(`Unknown contract epoch: ${id}`);
@@ -957,6 +964,7 @@ export function epochIsActive(id: string): boolean {
 }
 
 export function activateEpoch(id: string): boolean {
+  if (!manifestsById.has(id)) return false;
   const active = loadEpoch(activeEpochId());
   const successor = active.id === 'epoch-7-signal' ? 'epoch-8-orbital' : active.successor;
   if (successor !== id || !epochMegaprojectComplete(active)) return false;

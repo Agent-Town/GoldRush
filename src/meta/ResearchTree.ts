@@ -11,6 +11,7 @@ import {
   DEFAULT_EPOCH_ID,
   listEpochs,
   loadEpoch,
+  tryLoadEpoch,
   type ContractTier,
   type EpochResearchBranch,
   type EpochResearchNode,
@@ -407,11 +408,12 @@ function cacheInheritedTaken(storage: MetaProgressStorage | undefined, epochId: 
   let prior = loadEpoch(DEFAULT_EPOCH_ID);
   while (prior.id !== epochId) {
     for (const id of storedTaken(storage, prior.id)) if (!activeIds.has(id)) taken.add(id);
-    if (!prior.successor) {
+    const next = prior.successor ? tryLoadEpoch(prior.successor) : null;
+    if (!next) {
       taken.clear();
       break;
     }
-    prior = loadEpoch(prior.successor);
+    prior = next;
   }
   const identity = (storage as object | undefined) ?? NO_RESEARCH_STORAGE;
   let cache = inheritedByStorage.get(identity);

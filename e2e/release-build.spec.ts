@@ -104,6 +104,24 @@ for (const contractId of CONTRACTS) {
   });
 }
 
+test('the schoolhouse ledger opens clean on a progressed frontier save', async ({ page }) => {
+  // Owner-found F-E1W-1: era-triggered dispatches referencing stripped epochs
+  // ('unreleased-epoch') must publish as beyond-the-frontier, never throw.
+  const errors = watchErrors(page);
+  await seedProfile(page, { unlocked: true });
+  await page.goto('/');
+  await page.getByTestId('start-menu-enter-town').click();
+  await waitForTown(page);
+  if (await page.getByTestId('story-beat-card').isVisible().catch(() => false)) await page.mouse.click(6, 6);
+  await teleportToBuilding(page, 'schoolhouse');
+  await page.mouse.click(6, 6);
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe('schoolhouse');
+  await page.getByTestId('town-open-schoolhouse').click();
+  await page.waitForTimeout(500);
+  expect(errors).toEqual([]);
+  await expect(page.getByTestId('schoolhouse-close')).toBeVisible({ timeout: 10_000 });
+});
+
 test('debug and era query seams are inert', async ({ page }) => {
   const errors = watchErrors(page);
   await seedProfile(page, { unlocked: true });

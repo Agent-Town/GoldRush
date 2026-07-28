@@ -4,7 +4,7 @@ import { META_PROGRESS_KEY } from '../game/MetaProgress';
 import { activeProfile, markHintSeen } from '../game/ProfileStorage';
 import { loadScores } from '../game/Scoreboard';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../encyclopedia/storage';
-import { activeEpochId, listEpochs, loadEpoch } from '../meta/ContractFamilies';
+import { activeEpochId, listEpochs, loadEpoch, tryLoadEpoch } from '../meta/ContractFamilies';
 import { researchStateKey } from '../meta/ResearchTree';
 
 type DispatchTrigger =
@@ -120,7 +120,10 @@ function dispatchTrigger(era: number, ordinal: number): DispatchTrigger {
 }
 
 function triggerReached(trigger: DispatchTrigger, storage: Storage, scores: ReturnType<typeof loadScores>, seen: ReadonlySet<string>): boolean {
-  if (trigger.kind === 'era') return loadEpoch(activeEpochId()).order >= loadEpoch(trigger.id).order;
+  if (trigger.kind === 'era') {
+    const target = tryLoadEpoch(trigger.id);
+    return target !== null && loadEpoch(activeEpochId()).order >= target.order;
+  }
   if (trigger.kind === 'contract') return scores.some((score) => score.secured === true && (trigger.id === '*' || score.contractId === trigger.id));
   if (trigger.kind === 'boss') return (trigger.id === 'e1-baron' && hasBaronMedal()) || scores.some((score) => score.secured === true && score.contractId === trigger.id);
   if (trigger.kind === 'science') return scienceSteps(storage, trigger.eraId) >= trigger.steps;
