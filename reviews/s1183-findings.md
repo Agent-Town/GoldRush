@@ -53,6 +53,29 @@ measured the mismatch, said so, and chose the contract over its own judgement. T
 firewall working (`generator proposes, contract disposes`), and it is the only reason this was
 catchable from outside the run.
 
+### ✅ OUTCOME CONFIRMED LATER THE SAME FIRE — the resample happened, and I caught it in the act
+
+I measured `herald-engraving-board.png` at **1254 × 1254** while the batch was mid-run. By the end
+of the run, **all seven deliverables measure 1024 × 1024**:
+
+```
+herald-engraving-{board,boss,ledger,river,schoolhouse,town-growth,trail}.png
+  → PNG image data, 1024 x 1024, 8-bit/color RGB, non-interlaced   (all seven)
+```
+
+So this is **outcome (b) below**, now fact rather than forecast: Codex honoured the contract and
+downscaled 1254 → 1024, discarding ~33% of the returned pixels to satisfy a gate whose stated
+justification was *avoiding* a resample. **The only reason this is provable is that I sampled the
+directory mid-run**; from the finished tree, seven files at the requested size look like a clean
+pass. *A gate can be satisfied and wrong at the same time, and the evidence that shows it
+disappears when the run ends.*
+
+**Measured sizes (from `scripts/art-staging-audit.mjs`, this fire):** 2.14 / 2.25 / 2.22 / 2.35 /
+2.30 / 2.17 / 2.31 MB. **All seven are 3.5×–4× the master's 600 KB discussion point** — the master
+deliberately left that unresolved and ordered *measure-and-report*, so this is the measurement.
+The drain owes a ruling, not a rejection: these are `assets/raw/` originals with no processing
+step, exactly like the multi-MB plates already on main.
+
 **Recommendation, for the gating fire — NOT for me to apply mid-run (Mistake #12: never touch
 a live batch).**
 - (a) **Accept 1254² and do not fail the batch on the size gate alone.** It matches every other
