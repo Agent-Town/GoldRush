@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+const p = 'STATUS.md';
+const stamp = process.argv[2];
+const line1 = process.argv[3];
+const label = process.argv[4];
+const lines = fs.readFileSync(p, 'utf8').split('\n');
+const old = lines[0].replace(/^Last updated: /, '');
+lines[0] = 'Last updated: ' + (stamp ? stamp : '') + line1;
+lines.splice(1, 0, '- **' + label + ' (line-1 archive):** ' + old);
+fs.writeFileSync(p, lines.join('\n'));
+console.log('ok:', lines[0].slice(0, 160));

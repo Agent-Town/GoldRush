@@ -1,5 +1,9 @@
 # EIGHT-WINDS-WIRING slice 1 (hero diagonals) — STOPPED LAWFULLY, report landed
 
+> **ACT 2 IS AT THE BOTTOM OF THIS FILE.** The same master was re-run after its blocker was
+> cured (`8159fe6b`) and **MERGED at `29bac3d9` by the s1179 fire**. Everything below this line
+> is the first attempt's lawful STOP, kept verbatim.
+
 **Slice:** `lane-c-eight-winds-wiring-hero`
 **Branch / tip:** `lane/e2-arsenal` @ `e968b7f7` (one commit: the 101-line run report, zero `src/`, zero assets)
 **Drained by:** s1176 fire, 2026-07-28
@@ -132,3 +136,133 @@ Note this needs no owner *decision* — unlike F-1174-1 it is a pure mechanism q
 leaf registered in the same commit. It is scoped to **measure first and STOP**: whether the
 26 hand-edits can be reproduced at 512 px (making the masters honest) or whether the control
 needs a provenance-aware reference set. It must not guess between those.
+
+---
+
+# ACT 2 (s1179, 2026-07-28) — THE SAME MASTER, RE-RUN AND MERGED
+
+**Slice:** `lane-c-eight-winds-wiring-hero` (second attempt, blocker cured by `8159fe6b`)
+**Branch / tip:** `lane/e2-arsenal` @ `46397ac5`, base `f3b5cc17`
+**Merged:** `29bac3d9` — 77 files, +707/−2
+**Drained by:** s1179 fire
+**§3.0 `drain-block-check`:** `✅ CLEAR — lane-c-eight-winds-wiring-hero.md [eight-winds-wiring-hero] status="queued"`, run as the **first command** of the drain, before classification and before I formed an opinion.
+
+## Verdict
+
+**ACCEPTED AND MERGED.** The hero now walks the four diagonals on real diagonal art, in a
+plain boot, on desktop and at 390 px — and the guard that protects the other sixteen sheets
+shipped with it. Zero `src/`, exactly as the firewall required.
+
+## What it does
+
+`char-hero-sheet-walkdiag8` is extracted through a new `--like <base-stem>` path on
+`scripts/anim-pass-reextract.mjs` (the extractor previously **refused** any stem that did not
+already ship a `frames.json` — F-1175-2, confirmed in the lane by its verbatim skip message).
+Borrowing the base sheet's convention yields 32 cells at `cell 512, scale 1, 8×4, 0 empty`,
+written as 256 px shipped cells **plus** 512 px `processed-full` masters, matching the hero's
+own convention rather than the town cast's.
+
+`char.hero.walk8.directions` then binds them, row order **`0=sw · 1=se · 2=nw · 3=ne`**, each
+direction carrying an explicit `clips.walk { frames: [0..7], fps: 16 }` — without that,
+`withWalkSheetCadence` returns the source *without* cadence and the diagonals drift out of
+step with the cardinals. `aliases` and `rotations` are **byte-unchanged**: the hero is the one
+slot whose `rotations.directions` already carries all eight winds, so the
+`SpriteAnimator.ts:843` guard already ignores its aliases and no `src/` edit is needed.
+
+## Evidence — re-derived on the MERGED tree, not read off the run report
+
+All Playwright runs used `--workers=1` against an **external dev server on scratch port 5234**
+(`GR_CAPTURE_EXTERNAL_SERVER=1`). Port 5188 was deliberately left free: lane-a was LIVE and
+lane worktrees share that port (Mistake #12).
+
+| Gate | Result |
+|---|---|
+| `npx tsc --noEmit` | clean |
+| `npm run build` | green, **1.72 s**; bundle **+651,008 B** (32 PNGs = 634,037 B) |
+| `e2e/eight-winds-hero.spec.ts`, both projects | **4 passed** (19.8 s) |
+| Plain-boot console/page errors | **zero**, desktop 1280×800 **and** 390 px (asserted inside the spec) |
+| `e2e/vp-02b-rotation-resolver.spec.ts`, both projects | **14 passed** |
+| `e2e/066-walk8-engine.spec.ts`, both projects | 2 passed / **4 failed** — pre-existing, see below |
+| `e2e/vp-02-sprite-animation.spec.ts`, both projects | 19 passed / **3 failed** — known reds, see below |
+
+### The two red clusters, fingerprinted by MY OWN control
+
+I did not inherit the runner's fingerprints. The single behavioural file in this merge is
+`assets/layer-contracts/characters.v2.json`, so the control is one file wide: revert it to
+clean main, re-run, restore. That is a single-variable control aimed at the defect's own branch.
+
+- **`066-walk8-engine.spec.ts:194` and `:208`, both projects.** Both die in the shared helper
+  at `:81`, waiting for `spriteAnimations['char.hero'].frameCount === 4`. With the contract
+  reverted to clean main the **same two tests fail at the same line** (desktop control: 1 passed
+  / 2 failed). The stale thing is the suite's expectation — the test is literally named *"hero
+  stays on walk4 while walk8 cells are registered"*, and the hero **left walk4 on 2026-07-12**
+  when `walk8` was activated with owner approval. Not caused by this merge, and not this
+  slice's to repair (see the finding below).
+- **`vp-02-sprite-animation.spec.ts:405`, both projects** — F-1138-6. The assertion is
+  `afterTextures === baselineTextures` and it is off by **exactly +1 in every arm**, while the
+  absolute baseline drifts run to run: desktop **30 → 31** in *both* control and treatment;
+  mobile **57 → 58** in the control versus **26 → 27** in the treatment. A red whose magnitude
+  is identical with and without the change, on a baseline that is not stable between runs of
+  the *same* tree, is a property of the instrument, not of the merge.
+- **`vp-02-sprite-animation.spec.ts:566`, desktop only** — the recorded F-1140-5 / F-1137-2
+  crossfade-capture flake (measured rate desktop ~5/10). It failed in the battery and again in
+  one isolated re-run, then **passed on the next isolated re-run of the same tree** (8.6 s,
+  `[mirror-pixels] direct=0.0366 flipped=0.0199`). Mobile passed it in the battery — the
+  runner's lane battery saw the mirror image (mobile red, desktop green), which is what a flake
+  looks like from two boxes.
+
+## Merge classification
+
+Base `f3b5cc17`. `git diff --name-only f3b5cc17..main` = `STATUS.md`, three `scripts/tmp-s117*`
+helpers, `specs/e10-static-mechanic-DRAFT.md`, `tasks/BACKLOG.md`, `tasks/goals.json`,
+`tasks/lane-a-cp04-lever-unlock-seed-realign.md`. **None of those is in the lane's 77-file set**,
+so every path is **LANE-TOUCHED, MAIN-MOVED nothing, no 3-way graft.** Applied with
+`git checkout lane/e2-arsenal -- <paths>`; the staged set was verified at **exactly 77 files**
+before and after the control, so the control's revert-and-restore left no residue.
+
+Firewall verified on the merged tree: `git status --porcelain -- src e2e` shows **no `src/`
+entry at all** (the only `e2e/` entry is the new spec), and the contract diff adds the
+`directions` block and nothing else — `aliases` still reads `{"se":"e","ne":"e","sw":"w","nw":"w"}`.
+
+## The guard, and why it is worth more than the binding
+
+`e2e/eight-winds-hero.spec.ts` holds two tests:
+
+1. a **generic** check that walks *every* contract slot carrying a `walk8` block, collects both
+   grid-derived cell names and every explicit `directions[*].frames.files` entry, and asserts
+   each file exists in `assets/processed/` — this is the trap-catcher: without it, **one missing
+   cell silently downgrades the hero to `walk4` with a green log.** The runner proved the tooth
+   by moving `…-r0c0.png` aside and watching the runtime fall back to
+   `char-hero-sheet-rotation2-f-r0c1.png` — a *silent* degradation to two frames.
+2. a **no-`?debug` plain boot** (Mistake #10) that drives SW/SE/NW/NE and requires rows 0/1/2/3,
+   asserting `window.__GR_TEST__` is `undefined` first so it cannot be satisfied by a test hook.
+   Its mutation control swapped the SW and NE file lists and the test went red **on the named
+   wind** — so it asserts *the right cell appeared*, not merely *a walkdiag cell appeared*.
+
+## Findings
+
+**F-1179-1 (measured, NOT fixed here) — `066-walk8-engine.spec.ts` asserts a fact that stopped
+being true 16 days ago, and it has been costing 4 red executions per full-suite run ever since.**
+`:194` is named *"hero stays on walk4 while walk8 cells are registered"* and its helper waits
+on `frameCount === 4`; `walk8` was activated for the hero on **2026-07-12** by owner approval
+(the contract's own `notes` field records it). The suite has been red on both projects since,
+and `:208` — *"Claim Jumper walk8 keeps the old stride duration"* — is collateral: it never
+reaches its own subject because it calls the same helper first. **Fire-authorable as a
+test-side realign**, and it should be authored against the same shape as F-1178-1: observe the
+defect first, then repair the expectation, never the engine. ⚠️ It must **not** be folded into
+a claim-jumper change — `char.claim_jumper` is owner-gated (F-1166-1).
+
+**F-1179-2 (carried forward from the run report, non-blocking) — `anim-pass-reextract.mjs`
+prints one fewer cell than it writes.** The run printed `wrote 31 cells` while the counters, the
+disk census and `frames.json` all report **32**. A PNG-only count bug in the legacy summary
+line; harmless, but it is exactly the kind of off-by-one that makes a future runner STOP on a
+correct run. Left out of scope deliberately.
+
+## Next rung (the runner's own paragraph, verified against the contract)
+
+Alias retirement for the five non-hero `walk8` slots cannot borrow the hero's exception:
+`char.bandit_base`, `char.bandit_thief`, `char.baron` and `char.prospector_agent` have **empty**
+`rotations.directions`, so widening the `:843` slot check frees none of them; `char.claim_jumper`
+lacks `sw`/`nw` **and is owner-gated**. Emptying each activated slot's `walk8.aliases` map is the
+data change that actually lets explicit diagonal directions win — and that is a decision for the
+rung that owns it, with the diagonal sheets for those slots extracted first.
