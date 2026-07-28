@@ -37,8 +37,11 @@ for (let index = 0; index < 224; index += 1) {
 
 samples.sort((left, right) => left - right);
 const p95 = samples[Math.ceil(samples.length * 0.95) - 1];
+console.log(
+  `power-graph-budget: p95=${p95.toFixed(3)}ms cap=${POWER_GRAPH_LIMITS.solveBudgetMs.toFixed(3)}ms ` +
+  `samples=${samples.length} verdict=${p95 <= POWER_GRAPH_LIMITS.solveBudgetMs ? 'PASS' : 'FAIL'}`,
+);
 assert.ok(
   p95 <= POWER_GRAPH_LIMITS.solveBudgetMs,
   `power graph fixed-step p95 ${p95.toFixed(3)}ms exceeded ${POWER_GRAPH_LIMITS.solveBudgetMs.toFixed(3)}ms`,
 );
-console.log(`power-graph-budget: PASS p95=${p95.toFixed(3)}ms samples=${samples.length}`);

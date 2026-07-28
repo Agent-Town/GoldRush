@@ -55,8 +55,12 @@ for (const guard of selected) {
   // A signal-killed child reports status null; that is a failure, not a pass.
   const rc = run.status === null ? `signal:${run.signal ?? 'unknown'}` : run.status;
   const output = `${run.stdout ?? ''}${run.stderr ?? ''}`.trim();
+  const p95 = output.match(/^power-graph-budget: p95=([0-9.]+)ms\b/m)?.[1];
   rows.push({ guard, rc, seconds, output });
-  console.log(`${rc === 0 ? 'PASS' : 'FAIL'}  rc=${rc}  ${seconds}s  ${guard}`);
+  console.log(
+    `${rc === 0 ? 'PASS' : 'FAIL'}  rc=${rc}  ${seconds}s  ${guard}` +
+      (p95 ? `  p95=${p95}ms` : ''),
+  );
 }
 
 const failed = rows.filter((r) => r.rc !== 0);
