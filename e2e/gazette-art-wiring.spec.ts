@@ -110,6 +110,9 @@ test('plain-boot Claim Herald shows the correct live cut for every item', async 
     const image = item.getByTestId('claim-herald-engraving');
     await expect(image).toBeVisible();
     expect(await image.evaluate((node: HTMLImageElement) => node.src)).toContain(`herald-engraving-${heraldClass}`);
+    const naturalSize = await image.evaluate((node: HTMLImageElement) => ({ width: node.naturalWidth, height: node.naturalHeight }));
+    expect(naturalSize.width).toBeGreaterThan(0);
+    expect(naturalSize.height).toBeGreaterThan(0);
     await expect(image).toHaveAttribute('alt', '');
     await expect(image).toHaveAttribute('aria-hidden', 'true');
   }

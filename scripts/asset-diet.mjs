@@ -8,6 +8,8 @@ import { basename, dirname, extname, join, resolve } from 'node:path';
 
 const distDir = resolve('dist');
 const modelSourceDir = resolve('assets/pilots/map-rebuild-spike');
+// F-1184-1, made permanent by gazette-art-wiring-hardening.
+const HERALD_SPOT_CUT_BUDGET_BYTES = 1_500_000;
 const townLandmarkModelNames = [
   'assay-office',
   'chapel',
@@ -82,7 +84,12 @@ await runPool(platePngs, 4, async (file) => {
   const temporary = `${webp}.tmp`;
   const image = sharp(file);
   const { width, height } = await image.metadata();
-  await (width === 1024 && height === 1024 ? image.resize(384, 384) : image).webp({ quality: 80, effort: 6 }).toFile(temporary);
+  const squareTier = width === 1024 && height === 1024;
+  const heraldSpotCut = basename(file).includes('herald-engraving-');
+  if (squareTier && !heraldSpotCut) {
+    console.warn(`[asset-diet] WARNING: unrecognised 1024-square tier, converted but NOT resized: ${basename(file)}`);
+  }
+  await (squareTier && heraldSpotCut ? image.resize(384, 384) : image).webp({ quality: 80, effort: 6 }).toFile(temporary);
   await rename(temporary, webp);
   await unlink(file);
   replacements.set(basename(file), basename(webp));
@@ -105,8 +112,14 @@ if (staleReferences.length) throw new Error(`Asset diet left stale PNG reference
 
 const afterModels = await totalBytes(dietModels);
 const afterPngs = await totalBytes([...replacements.values()].map((name) => join(dirname(platePngs[0] ?? distDir), name)));
+const afterHeraldBytes = await totalBytes((await filesUnder(distDir))
+  .filter((file) => basename(file).includes('herald-engraving-')));
 const percent = (after, before) => before ? `${Math.round((1 - after / before) * 100)}%` : '0%';
 console.log(
   `[asset-diet] ${dietModels.length} terrain/landmark GLBs ${beforeModels} -> ${afterModels} bytes (${percent(afterModels, beforeModels)} cut); `
-  + `${platePngs.length} plate-class PNGs ${beforePngs} -> ${afterPngs} bytes (${percent(afterPngs, beforePngs)} cut).`,
+  + `${platePngs.length} plate-class PNGs ${beforePngs} -> ${afterPngs} bytes (${percent(afterPngs, beforePngs)} cut); `
+  + `herald spot cuts ${afterHeraldBytes} bytes.`,
 );
+if (afterHeraldBytes > HERALD_SPOT_CUT_BUDGET_BYTES) {
+  throw new Error(`Herald spot cuts exceed byte budget: ${afterHeraldBytes} B measured > ${HERALD_SPOT_CUT_BUDGET_BYTES} B ceiling.`);
+}
