@@ -164,7 +164,16 @@ console.log(`\nsource ${path.basename(srcFile)} ${src.width}x${src.height} @${sc
 got.forEach((f, i) => console.log(`  frame ${i} r${f.r}c${f.c}: bbox ${f.w}x${f.h} at (${f.x0},${f.y0}) · figure ${f.figH}${f.foot < f.y1 ? ` (+${f.y1 - f.foot}px prop below the feet)` : ''}`));
 if (got.length !== cols) console.log(`NOTE: ${got.length} source figures for ${cols} target columns`);
 const srcH = median(got.map((f) => f.figH));
-const scale = refH / srcH;
+/**
+ * `--scale-mul` corrects the one case where matching FOOT-LINE heights does not
+ * land the EXTRACTED cells in the base's band: the Prospector hovers, so its
+ * foot line is the bottom of the body while extract-alpha's bbox also swallows
+ * the jet plume below it. Matching the body left the shipped cells 6.0% narrow
+ * and 6.3% short — a visible shrink every time the companion turns 45°, which
+ * is exactly the size-pop the s21 rotation note tells this repo to watch for.
+ * Walkers need no multiplier and get none; the value used is recorded in the run file.
+ */
+const scale = (refH / srcH) * Number(arg('--scale-mul', '1'));
 console.log(`source median figure ${srcH}px → scale ${scale.toFixed(4)} · composed heights ${got.slice(0, cols).map((f) => Math.round(f.figH * scale)).join(', ')}`);
 if (has('--dry')) { console.log('\n--dry: nothing written'); process.exit(0); }
 

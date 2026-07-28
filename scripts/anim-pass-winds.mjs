@@ -7,10 +7,16 @@
  * and cannot drift from it.
  *
  * A wind may come from a generation (`--src`) or, where the base sheet already
- * draws that wind (the preacher / schoolteacher / assay clerk `-a` sheets are
- * `s / sw / w / nw`, F-M3-3), be LIFTED byte-for-byte from the base. Lifting is
- * preferred wherever it is available: it is free, and it cannot drift from the
- * identity the game already ships.
+ * draws that wind, be LIFTED byte-for-byte from the base. Lifting is preferred
+ * wherever it is available: it is free, and it cannot drift from the identity
+ * the game already ships.
+ *
+ * The preacher / schoolteacher / assay clerk `-a` sheets are the case that pays:
+ * their true row order is `s / sw / e / nw`, so rows 1 and 3 ARE sw and nw and
+ * only se + ne need generating. (F-M3-3 records that order as `s / sw / w / nw`
+ * and concludes "no east frame exists"; row 2 is an EAST-facing profile on all
+ * three — see F-EW-3, and see the predecessor's own `crops/m3-a-partners-rows.png`,
+ * which shows it.)
  *
  *   node scripts/anim-pass-winds.mjs <character> [--lift sw=1,nw=3] [--frames N] [--measure-only]
  */
@@ -32,6 +38,7 @@ const kind = c.gait === 'hover' ? 'hover' : 'walk';
 const suffix = /-(a|b)$/.exec(c.base)?.[1];
 const outStem = `${c.base.replace(/-sheet-.*$/, '')}-sheet-${kind}diag${frames}${suffix ? `-${suffix}` : ''}`;
 const outPath = path.join('assets/raw', `${outStem}.png`);
+const scaleMul = arg('--scale-mul', null);
 const lift = Object.fromEntries((arg('--lift', '') || '').split(',').filter(Boolean).map((s) => s.split('=')));
 const [bCols, bRows] = c.grid.split('x').map(Number);
 
@@ -40,6 +47,7 @@ if (!A.includes('--measure-only')) {
   for (let r = 0; r < 4; r++) {
     const wind = WINDS[r];
     const base = ['--base', c.base, '--base-grid', c.grid, '--out', outStem, '--row', String(r), '--cols', String(frames)];
+    if (scaleMul) base.push('--scale-mul', scaleMul);
     if (lift[wind] !== undefined) {
       execFileSync('node', ['scripts/anim-pass-diag.mjs', ...base, '--copy-row', lift[wind]], { stdio: 'inherit' });
       continue;
