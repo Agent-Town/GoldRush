@@ -1,5 +1,6 @@
 # Task art-e7-chalk-portrait: CHALK — the first made citizen, the E7 batch's withheld 6th file, now unblocked by owner ruling #14 (ART SLOT)
 FIRE-AUTHORED s1163 (attended review welcome) — **ONE FILE. This is the deliberately-withheld portrait from `art-e7-town-icons`, released by an owner ruling that landed after that batch generated.**
+**ATTEMPT 2, re-authored s1163 with a CHANGED PREMISE after attempt 1 (`5dffbb52`) was correctly stopped at pre-flight by this task's own scope-1 gate. Nothing was generated, nothing was modified — a model stop, report at `tasks/runs/20260728-113153-art-e7-chalk-portrait-preflight.md`. THE GATE WAS RIGHT AND THE MASTER WAS WRONG: scope 1(b)'s probe was un-scoped (`git ls-files | grep -Ei "chalk|civic-agent"`), so the act of COMMITTING this master made `tasks/art-e7-chalk-portrait.md` tracked and the probe matched its own filename. It was true when the author ran it and false by the time the runner did. The probe is narrowed to the asset namespace below — the runner proposed exactly this fix. Second time in this class that the mandatory pre-flight has stopped a bad master with zero diff (the first: `49d49007`, the wrong warmth band).**
 You are Codex with image_gen, running in the ART slot.
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -27,7 +28,8 @@ READ FIRST (paths, all on main):
 
 **(a) THE CANON IS STILL THERE AND STILL SAYS WHAT THIS TASK CLAIMS.** Read `lore/characters.md` §CHALK and quote the **HER FACE** paragraph verbatim into your run file. It must contain **"VISIBLY MADE"** and **"ruling #14"**. If it does not — if the line has moved, softened, or been superseded since 2026-07-28 — **STOP and report.** You would be drawing a species off a citation instead of a canon.
 
-**(b) SHE IS STILL UNSHIPPED.** `git ls-files | grep -Ei "chalk|civic-agent"` must return **zero rows**. If anything comes back, **STOP and report what exists** — a second Chalk is worse than no Chalk.
+**(b) SHE IS STILL UNSHIPPED — *AS AN ASSET*.** `git ls-files 'assets/**' | grep -Ei "chalk|civic-agent"` must return **zero rows**. If anything comes back, **STOP and report what exists** — a second Chalk is worse than no Chalk.
+> ⚠️ **The namespace scoping is the whole correction of attempt 1, so do not "helpfully" widen it back.** The un-scoped form matched **this master's own filename** once the master was committed — a gate that the act of queueing it falsifies. The guard's real subject is *a duplicate Chalk ASSET*; task files, reviews, ledger rows and backlog lines are all expected to name her and none of them is a portrait. **Run it exactly as written.**
 
 **(c) YOUR INSTRUMENT REPRODUCES KNOWN ANSWERS** (the standing control; three batches have now run it and it has stopped one bad master already — `tasks/runs/20260728-095121-art-e7-town-icons-preflight.md`). Measure the six E1 raws with your own warmth code **before measuring anything you generate**:
 
@@ -111,6 +113,8 @@ A contact sheet exists to prove **cell ORDER** against its raws — the F-1154-3
 - ❌ No E8–E10 portraits, no aging edits, no He-3 assayer (owner-gated, F-1161-3).
 - ❌ **Do not run the playwright suite or start a dev server.** Nothing here is testable that way, and a full-suite job has been live in lane-d for over two hours — a second heavy job corrupts that measurement (Mistake #12).
 
-One batch in flight (✓ verified s1163: `tasks/queue/art/` empty; `tasks/running/` holds only the lane-d job).
+One batch in flight (✓ verified s1163 at queue time: the ART slot holds only this task; `tasks/running/` otherwise holds only the lane-d suite job).
+
+⚠️ **A NOTE ON YOUR OWN COMMIT, because attempt 1 tripped it (F-1162-1, still live).** The runner process currently in memory predates the `d10167f4` fix, so its post-run `git commit` carries **no pathspec** and publishes whatever is staged tree-wide. Attempt 1 produced **zero art** and its commit `5dffbb52` still swept three of main's ledger artifacts and **four untracked attended marketing videos** (`marketing/outbox/duel-community-vote/*.mp4`, 8.7 MB + 3.1 + 2.9 + 2.7). **Nothing you can do in this task fixes that** — the remedy is a runner restart and it is on the owner's desk. What you CAN do: **stage nothing yourself outside your TOUCH-ONLY list, and never run `git add -A`.** Leave unrelated dirt unstaged so the bare commit has less to publish.
 
 END: **READY-FOR-GATES** + the scope-1 gate results + the measured QA table + every attempt's warmth number + the no-arithmetic statement + the three-failure-mode answers + the LEDGER row + one line on whether the convention held or drifted.
