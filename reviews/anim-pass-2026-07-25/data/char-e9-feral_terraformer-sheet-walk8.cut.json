@@ -1,0 +1,155 @@
+{
+ "stem": "char-e9-feral_terraformer-sheet-walk8",
+ "file": "assets/raw/char-e9-feral_terraformer-sheet-walk8.png",
+ "w": 2016,
+ "h": 1224,
+ "grid": [
+  4,
+  2
+ ],
+ "gridSrc": "frames.json",
+ "cellW": 504,
+ "cellH": 612,
+ "remainder": {
+  "w": 0,
+  "h": 0,
+  "px": 0
+ },
+ "keyRGB": [
+  255,
+  0,
+  255
+ ],
+ "components": 8,
+ "spanning": [
+  {
+   "id": 0,
+   "mass": 76208,
+   "bbox": [
+    66,
+    183,
+    529,
+    572
+   ],
+   "owner": {
+    "cell": 0,
+    "rc": "r0c0",
+    "mass": 74458
+   },
+   "foreign": [
+    {
+     "cell": 1,
+     "rc": "r0c1",
+     "mass": 1750
+    }
+   ],
+   "foreignMass": 1750,
+   "minorityPct": 2.3,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 4,
+   "mass": 73521,
+   "bbox": [
+    80,
+    646,
+    529,
+    1032
+   ],
+   "owner": {
+    "cell": 4,
+    "rc": "r1c0",
+    "mass": 71785
+   },
+   "foreign": [
+    {
+     "cell": 5,
+     "rc": "r1c1",
+     "mass": 1736
+    }
+   ],
+   "foreignMass": 1736,
+   "minorityPct": 2.36,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 1,
+   "mass": 75124,
+   "bbox": [
+    558,
+    183,
+    1017,
+    571
+   ],
+   "owner": {
+    "cell": 1,
+    "rc": "r0c1",
+    "mass": 74804
+   },
+   "foreign": [
+    {
+     "cell": 2,
+     "rc": "r0c2",
+     "mass": 320
+    }
+   ],
+   "foreignMass": 320,
+   "minorityPct": 0.43,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 5,
+   "mass": 74058,
+   "bbox": [
+    561,
+    647,
+    1014,
+    1031
+   ],
+   "owner": {
+    "cell": 5,
+    "rc": "r1c1",
+    "mass": 73851
+   },
+   "foreign": [
+    {
+     "cell": 6,
+     "rc": "r1c2",
+     "mass": 207
+    }
+   ],
+   "foreignMass": 207,
+   "minorityPct": 0.28,
+   "verdict": "OVERHANG"
+  },
+  {
+   "id": 7,
+   "mass": 73558,
+   "bbox": [
+    1506,
+    647,
+    1952,
+    1034
+   ],
+   "owner": {
+    "cell": 7,
+    "rc": "r1c3",
+    "mass": 73500
+   },
+   "foreign": [
+    {
+     "cell": 6,
+     "rc": "r1c2",
+     "mass": 58
+    }
+   ],
+   "foreignMass": 58,
+   "minorityPct": 0.08,
+   "verdict": "OVERHANG"
+  }
+ ],
+ "cols": 4,
+ "rows": 2,
+ "cw": 504,
+ "ch": 612
+}
