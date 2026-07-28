@@ -2133,6 +2133,12 @@
               "authoredBy": "s1169 fire",
               "spec": "F-1159-2 (reviews/f1158-3-grant-gold-diagnostics-staleness.md:69-74) + fingerprint tasks/BACKLOG.md:1408 + logs/suite-red-inventory.md:318-319; shipped precedent F-1029-2/F-1026-5 (BACKLOG:908,:946, drain df51d877)",
               "authorNotes": "Premise derived at source, zero playwright (ART + lane-c both owned the box; F-1160-2 forbids measuring under load): the spec has ONE commit, 66bb9f46 on 2026-07-08, never touched since, while src/world/Terrain.ts moved NINE times under it - incl. 3e78b486 river-continues (07-09), b2b7583a water-mask-engine (07-18), d1f549d5 landmark-collision (07-19). Red is control-proven on two independent instruments (s1159 revert control + the lane-055 clean-main fingerprint at 452af90c), so it is NOT the s1168 harness-artifact shape. computeValid (BuildSystem.ts:1479-1489) has FIVE rejection reasons and diagnostics expose none of them, so scope 1 discriminates empirically via an env-gated probe + a grid sweep; adding a seam is barred. Scope 1(d) can STOP with a WORLD-fault finding - moving a coordinate over a real src regression would install a false green. Sibling reds firewalled: :286/:301 is the next target, :318/:335 is the OPEN OWNER FORK F-1141-3+F-1164-1."
+            },
+            {
+              "id": "factory-build-mode-prompt-realign",
+              "title": "22 red rows from ONE ratified ruling: realign the stale building-context-prompt specs to the owner 2026-07-12 build-mode-only contract (F-1170-2)",
+              "status": "queued",
+              "taskFile": "lane-a-build-mode-prompt-spec-realign.md"
             }
           ]
         }
