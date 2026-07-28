@@ -26,6 +26,11 @@ const winds = [
   { direction: 'nw', row: 2, keys: ['KeyW', 'KeyA'] },
   { direction: 'ne', row: 3, keys: ['KeyW', 'KeyD'] },
 ] as const;
+const outlawDiagonals = [
+  { slot: 'char.bandit_base', stem: 'char-bandit-base' },
+  { slot: 'char.bandit_thief', stem: 'char-bandit-thief' },
+  { slot: 'char.baron', stem: 'char-baron' },
+] as const;
 
 function directionFiles(sheet: Walk8, direction: string): string[] {
   const explicit = sheet.directions?.[direction]?.frames?.files;
@@ -37,7 +42,7 @@ function directionFiles(sheet: Walk8, direction: string): string[] {
   return Array.from({ length: Math.max(1, sheet.frameCount ?? grid.cols ?? 1) }, (_, col) => `${stem}-r${row}c${col}.png`);
 }
 
-test('every walk8 reference ships and hero aliases resolve to diagonal cells', () => {
+test('every walk8 reference ships and hero plus all three outlaws resolve to diagonal cells', () => {
   const missing: string[] = [];
   for (const slot of contract.slots.filter((candidate) => candidate.walk8)) {
     const sheet = slot.walk8!;
@@ -66,6 +71,17 @@ test('every walk8 reference ships and hero aliases resolve to diagonal cells', (
     const files = directionFiles(hero.walk8!, resolvedDirection);
     expect(files).toHaveLength(8);
     expect(files.every((file) => new RegExp(`^char-hero-sheet-walkdiag8-r${row}c[0-7]\\.png$`).test(file))).toBe(true);
+  }
+
+  for (const outlaw of outlawDiagonals) {
+    const slot = contract.slots.find((candidate) => candidate.slot === outlaw.slot)!;
+    for (const { direction, row } of winds) {
+      const resolvedDirection = slot.walk8!.aliases?.[direction] ?? direction;
+      const files = directionFiles(slot.walk8!, resolvedDirection);
+      expect(files).toHaveLength(8);
+      expect(files.every((file) => new RegExp(`^${outlaw.stem}-sheet-walkdiag8-r${row}c[0-7]\\.png$`).test(file))).toBe(true);
+      expect(files.every((file) => !/-sheet-walk8-/.test(file))).toBe(true);
+    }
   }
 });
 

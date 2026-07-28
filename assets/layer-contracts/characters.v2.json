@@ -164,7 +164,13 @@
         "fps": 16,
         "cadenceReferenceFrames": 4,
         "grid": { "file": "char-bandit-base-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
-        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" }
+        "directions": {
+          "sw": { "frames": { "files": ["char-bandit-base-sheet-walkdiag8-r0c0.png", "char-bandit-base-sheet-walkdiag8-r0c1.png", "char-bandit-base-sheet-walkdiag8-r0c2.png", "char-bandit-base-sheet-walkdiag8-r0c3.png", "char-bandit-base-sheet-walkdiag8-r0c4.png", "char-bandit-base-sheet-walkdiag8-r0c5.png", "char-bandit-base-sheet-walkdiag8-r0c6.png", "char-bandit-base-sheet-walkdiag8-r0c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "se": { "frames": { "files": ["char-bandit-base-sheet-walkdiag8-r1c0.png", "char-bandit-base-sheet-walkdiag8-r1c1.png", "char-bandit-base-sheet-walkdiag8-r1c2.png", "char-bandit-base-sheet-walkdiag8-r1c3.png", "char-bandit-base-sheet-walkdiag8-r1c4.png", "char-bandit-base-sheet-walkdiag8-r1c5.png", "char-bandit-base-sheet-walkdiag8-r1c6.png", "char-bandit-base-sheet-walkdiag8-r1c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "nw": { "frames": { "files": ["char-bandit-base-sheet-walkdiag8-r2c0.png", "char-bandit-base-sheet-walkdiag8-r2c1.png", "char-bandit-base-sheet-walkdiag8-r2c2.png", "char-bandit-base-sheet-walkdiag8-r2c3.png", "char-bandit-base-sheet-walkdiag8-r2c4.png", "char-bandit-base-sheet-walkdiag8-r2c5.png", "char-bandit-base-sheet-walkdiag8-r2c6.png", "char-bandit-base-sheet-walkdiag8-r2c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "ne": { "frames": { "files": ["char-bandit-base-sheet-walkdiag8-r3c0.png", "char-bandit-base-sheet-walkdiag8-r3c1.png", "char-bandit-base-sheet-walkdiag8-r3c2.png", "char-bandit-base-sheet-walkdiag8-r3c3.png", "char-bandit-base-sheet-walkdiag8-r3c4.png", "char-bandit-base-sheet-walkdiag8-r3c5.png", "char-bandit-base-sheet-walkdiag8-r3c6.png", "char-bandit-base-sheet-walkdiag8-r3c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } }
+        },
+        "aliases": {}
       }
     },
     {
@@ -178,7 +184,13 @@
         "fps": 16,
         "cadenceReferenceFrames": 4,
         "grid": { "file": "char-bandit-thief-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
-        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" }
+        "directions": {
+          "sw": { "frames": { "files": ["char-bandit-thief-sheet-walkdiag8-r0c0.png", "char-bandit-thief-sheet-walkdiag8-r0c1.png", "char-bandit-thief-sheet-walkdiag8-r0c2.png", "char-bandit-thief-sheet-walkdiag8-r0c3.png", "char-bandit-thief-sheet-walkdiag8-r0c4.png", "char-bandit-thief-sheet-walkdiag8-r0c5.png", "char-bandit-thief-sheet-walkdiag8-r0c6.png", "char-bandit-thief-sheet-walkdiag8-r0c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "se": { "frames": { "files": ["char-bandit-thief-sheet-walkdiag8-r1c0.png", "char-bandit-thief-sheet-walkdiag8-r1c1.png", "char-bandit-thief-sheet-walkdiag8-r1c2.png", "char-bandit-thief-sheet-walkdiag8-r1c3.png", "char-bandit-thief-sheet-walkdiag8-r1c4.png", "char-bandit-thief-sheet-walkdiag8-r1c5.png", "char-bandit-thief-sheet-walkdiag8-r1c6.png", "char-bandit-thief-sheet-walkdiag8-r1c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "nw": { "frames": { "files": ["char-bandit-thief-sheet-walkdiag8-r2c0.png", "char-bandit-thief-sheet-walkdiag8-r2c1.png", "char-bandit-thief-sheet-walkdiag8-r2c2.png", "char-bandit-thief-sheet-walkdiag8-r2c3.png", "char-bandit-thief-sheet-walkdiag8-r2c4.png", "char-bandit-thief-sheet-walkdiag8-r2c5.png", "char-bandit-thief-sheet-walkdiag8-r2c6.png", "char-bandit-thief-sheet-walkdiag8-r2c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "ne": { "frames": { "files": ["char-bandit-thief-sheet-walkdiag8-r3c0.png", "char-bandit-thief-sheet-walkdiag8-r3c1.png", "char-bandit-thief-sheet-walkdiag8-r3c2.png", "char-bandit-thief-sheet-walkdiag8-r3c3.png", "char-bandit-thief-sheet-walkdiag8-r3c4.png", "char-bandit-thief-sheet-walkdiag8-r3c5.png", "char-bandit-thief-sheet-walkdiag8-r3c6.png", "char-bandit-thief-sheet-walkdiag8-r3c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } }
+        },
+        "aliases": {}
       }
     },
     {
@@ -441,7 +453,13 @@
         "fps": 16,
         "cadenceReferenceFrames": 4,
         "grid": { "file": "char-baron-sheet-walk8.png", "cols": 8, "rows": 4, "rowDirections": ["s", "w", "e", "n"] },
-        "aliases": { "se": "e", "ne": "e", "sw": "w", "nw": "w" },
+        "directions": {
+          "sw": { "frames": { "files": ["char-baron-sheet-walkdiag8-r0c0.png", "char-baron-sheet-walkdiag8-r0c1.png", "char-baron-sheet-walkdiag8-r0c2.png", "char-baron-sheet-walkdiag8-r0c3.png", "char-baron-sheet-walkdiag8-r0c4.png", "char-baron-sheet-walkdiag8-r0c5.png", "char-baron-sheet-walkdiag8-r0c6.png", "char-baron-sheet-walkdiag8-r0c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "se": { "frames": { "files": ["char-baron-sheet-walkdiag8-r1c0.png", "char-baron-sheet-walkdiag8-r1c1.png", "char-baron-sheet-walkdiag8-r1c2.png", "char-baron-sheet-walkdiag8-r1c3.png", "char-baron-sheet-walkdiag8-r1c4.png", "char-baron-sheet-walkdiag8-r1c5.png", "char-baron-sheet-walkdiag8-r1c6.png", "char-baron-sheet-walkdiag8-r1c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "nw": { "frames": { "files": ["char-baron-sheet-walkdiag8-r2c0.png", "char-baron-sheet-walkdiag8-r2c1.png", "char-baron-sheet-walkdiag8-r2c2.png", "char-baron-sheet-walkdiag8-r2c3.png", "char-baron-sheet-walkdiag8-r2c4.png", "char-baron-sheet-walkdiag8-r2c5.png", "char-baron-sheet-walkdiag8-r2c6.png", "char-baron-sheet-walkdiag8-r2c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } },
+          "ne": { "frames": { "files": ["char-baron-sheet-walkdiag8-r3c0.png", "char-baron-sheet-walkdiag8-r3c1.png", "char-baron-sheet-walkdiag8-r3c2.png", "char-baron-sheet-walkdiag8-r3c3.png", "char-baron-sheet-walkdiag8-r3c4.png", "char-baron-sheet-walkdiag8-r3c5.png", "char-baron-sheet-walkdiag8-r3c6.png", "char-baron-sheet-walkdiag8-r3c7.png"] }, "clips": { "walk": { "frames": [0, 1, 2, 3, 4, 5, 6, 7], "fps": 16 } } }
+        },
+        "aliases": {},
         "notes": "Activated 2026-07-12 after owner approval. Rows are down/left/right/up with 8 frames; diagonals alias to side rows."
       }
     },
