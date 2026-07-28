@@ -22,8 +22,9 @@
  * size-pop — s37), same shipped pixel size, same presence-or-absence of a master.
  *
  * The downscale is a byte-faithful copy of `optimize-assets.mjs`'s resize/writePng.
- * `--verify-downscale` proves that claim against untouched shipped cells instead of
- * asserting it: it re-derives them from their masters and byte-compares.
+ * `--verify-downscale` proves that claim by re-deriving shipped cells from their
+ * masters and byte-comparing, excluding only tracked post-extraction mends in
+ * `assets/master-divergent.json`.
  *
  * Usage:
  *   node scripts/anim-pass-reextract.mjs --verify-downscale [stem ...]
@@ -37,6 +38,7 @@ import { PNG } from 'pngjs';
 
 const PROC = 'assets/processed';
 const FULL = 'assets/processed-full';
+const MASTER_DIVERGENT = 'assets/master-divergent.json';
 
 const A = process.argv.slice(2);
 const VALUED = new Set(['--raw', '--key', '--scale']);
@@ -100,22 +102,38 @@ function convention(stem) {
 }
 
 if (OPTS.has('--verify-downscale')) {
-  // Control: re-derive untouched shipped cells from their masters. Byte-identical
-  // output is the proof that this file's resize matches optimize-assets.mjs.
+  // Control: re-derive shipped cells from their masters. Tracked post-extraction
+  // mends must still diverge; everything else must reproduce byte-identically.
   const files = fs.readdirSync(FULL).filter((f) => /-r\d+c\d+\.png$/.test(f) && (!STEMS.length || STEMS.some((s) => f.startsWith(s)))).sort();
-  let ok = 0, bad = 0, skipped = 0;
+  const entries = JSON.parse(fs.readFileSync(MASTER_DIVERGENT, 'utf8')).cells;
+  const divergent = new Map();
+  let invalid = 0;
+  for (const entry of entries) {
+    if (divergent.has(entry.file)) { console.log(`  DUPLICATE EXCLUSION ${entry.file}`); invalid++; }
+    divergent.set(entry.file, entry);
+    if (!fs.existsSync(path.join(PROC, entry.file)) || !fs.existsSync(path.join(FULL, entry.file))) {
+      console.log(`  MISSING EXCLUSION FILE ${entry.file}`);
+      invalid++;
+    }
+  }
+  let ok = 0, unexplained = 0, expected = 0, stale = 0, skipped = 0;
   for (const f of files) {
     const p = path.join(PROC, f);
     if (!fs.existsSync(p)) { skipped++; continue; }
     const derived = resize(readPng(path.join(FULL, f)), 256, 256);
     const tmp = path.join(os.tmpdir(), `anim-verify-${process.pid}.png`);
     writePng(derived, tmp);
-    if (Buffer.compare(fs.readFileSync(tmp), fs.readFileSync(p)) === 0) ok++;
-    else { bad++; if (bad <= 8) console.log(`  MISMATCH ${f}`); }
+    const matches = Buffer.compare(fs.readFileSync(tmp), fs.readFileSync(p)) === 0;
+    if (matches && divergent.has(f)) { stale++; console.log(`  STALE EXCLUSION ${f}`); }
+    else if (matches) ok++;
+    else if (divergent.has(f)) expected++;
+    else { unexplained++; console.log(`  UNEXPLAINED ${f}`); }
     fs.unlinkSync(tmp);
   }
-  console.log(`downscale replication: ${ok} byte-identical, ${bad} mismatched, ${skipped} with no shipped copy (of ${files.length} masters)`);
-  process.exit(bad ? 1 : 0);
+  console.log(`downscale replication: ${ok} byte-identical, ${unexplained} unexplained, ${expected} master-divergent by design (of ${files.length} masters)`);
+  if (stale) console.log(`  ${stale} stale exclusion${stale === 1 ? '' : 's'}`);
+  if (skipped) console.log(`  ${skipped} with no shipped copy`);
+  process.exit(unexplained || stale || invalid ? 1 : 0);
 }
 
 if (!STEMS.length) { console.error('usage: node scripts/anim-pass-reextract.mjs --raw DIR <stem ...>'); process.exit(1); }
