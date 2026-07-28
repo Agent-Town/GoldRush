@@ -20,11 +20,13 @@ Two-dot `main..e2838ce3` reports 66 files, but that is the **stale-base phantom-
 
 | File | Class | On main before? |
 |---|---|---|
-| `logs/suite-red-inventory-raw.json` | LANE-TOUCHED (add, 98,232 lines) | absent (`git ls-files` empty) |
+| `logs/suite-red-inventory-raw.json` | LANE-TOUCHED (add, 171 MB) | absent (`git ls-files` empty) — **compacted before landing, see F-1167-3** |
 | `logs/suite-red-inventory.md` | LANE-TOUCHED (add, 550 lines) | absent |
 | `scripts/suite-red-inventory.mjs` | LANE-TOUCHED (add, 322 lines) | absent |
 
 No file was touched by both sides ⇒ **no 3-way graft needed**; landed with a path-scoped `git checkout e2838ce3 -- <3 paths>` onto main. Zero `src/`, zero `e2e/`.
+
+**What actually landed** (after F-1167-3): `logs/suite-red-inventory.md`, `scripts/suite-red-inventory.mjs`, `logs/suite-red-inventory-compact.json` (2,358,427 B in place of the 171 MB raw), `scripts/suite-red-inventory-compact.mjs`, this review, the `goals.json` leaf, and four `logs/session-scratch/s1167-*.mjs` probes.
 
 ## Evidence
 
@@ -82,6 +84,30 @@ The inventory lists faults but does not **group** them. Clustering the 303 faili
 ### F-1167-2 — the timeout bucket is measured under contaminated load (carried from s1166, re-confirmed)
 
 42 of 303 failures (13.9%) are timeouts, and s1166 flagged that this run took **nine hours on a box that also carried two ART generations**. The evidence in the data supports the warning: `066-walk8-engine` and `bt-01-tiers` show **41 s** durations against a **30 s** timeout, and `m1-06`/`m2-01`/`e5-arsenal` appear in the MOBILE-ONLY list *via timeout*. **Do not treat MOBILE-ONLY-by-timeout as a mobile-specific defect** without a quiet-box re-measure. Non-blocking for the merge — the inventory is still the best red map we have — but it bounds what may be concluded from it.
+
+### F-1167-3 — **SELF-INFLICTED AND FIXED IN THE DRAIN COMMIT: merging this artifact verbatim made main permanently unpushable.**
+
+The run's JSON is **171,333,533 bytes**. My first version of the drain commit merged it as-is; the backup push then came back:
+
+```
+! [remote rejected]   main -> main (pre-receive hook declined)
+```
+
+GitHub hard-limits a single file at **100 MB**, so that blob could never reach origin — and because git ships history, **no later commit could have fixed it**. My own drain had broken the Backup Law (Mistake #11, "The Missing Remote") for every subsequent fire, silently, while the review said ACCEPT.
+
+✓ **Measured the cause rather than guessed it** (`logs/session-scratch/s1167-json-weight.mjs`): **97.7% of the file is `attachments`** — base64-inlined screenshots and traces — against 0.3% for `error` and 0.2% for `errors`. The reducer reads `status`/`duration`/`errors`/`error`/`errorLocation`; ✓ `grep` confirms it contains **no reference to `attachments`, `stdout`, `stderr` or `annotations`** at all.
+
+**Fix:** `scripts/suite-red-inventory-compact.mjs` strips the 1,061 attachment payloads (keeping each entry's `name`/`contentType` plus a `stripped: true` marker, so the file is self-describing) → **2,358,427 B, a 98.6% cut**. This is **compaction of a tracked file, which CLAUDE.md §4.10b expressly permits**, not deletion of untracked history.
+
+**Proven lossless, not assumed:** reducing the compacted file reproduces the committed report **byte-for-byte**. The drain commit was **amended rather than followed up** — it had never been pushed (the push is what failed), so this rewrote nothing shared. ✅ The retry then landed `a2141348..7a457025`.
+
+**Retention:** the full 171 MB original is untouched — on disk at `worktrees/lane-d/logs/suite-red-inventory-raw.json` and committed on `lane/perf` @ `e2838ce3`. Only my own duplicate (created by my `git checkout` minutes earlier) was removed, and the removal script **asserted the original's existence and exact byte size first, aborting otherwise**.
+
+🔺 **OWNER'S DESK, one line:** the full raw can *never* reach origin under the 100 MB limit. If a byte-exact Playwright raw is wanted durably off-disk, that needs **Git LFS or external storage** — an owner call (§7.3, external services). Until then the raw is F-1120-2 class: **at risk, dies with the disk**. The compacted file is a complete substitute for every known consumer.
+
+### F-1167-4 — the reducer's output depends on the directory it is run from (minor)
+
+`scripts/suite-red-inventory.mjs:57` resolves spec paths with `path.relative(process.cwd(), file)`. Run from the repo root it emits `worktrees/lane-d/e2e/...`; run from the lane worktree it emits `e2e/...`. **The committed report is therefore only reproducible from `worktrees/lane-d`** — which cost me one confusing diff before I read the function. Non-blocking (the classification is unaffected; only the displayed path prefix changes), but a future re-reduction that expects byte-identity must match the cwd, or the script should normalise against the repo root.
 
 ## Duties
 
