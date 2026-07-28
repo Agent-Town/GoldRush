@@ -71,6 +71,44 @@ test('run end writes the actor split and keeps only the newest 50 additive entri
   expect(history.some((entry) => entry.contractId === 'invalid-date')).toBe(false);
 });
 
+test('a secured run records its payout and sanitizes optional meta on read', () => {
+  const storage = memoryStorage();
+  const events = new EventBus();
+  const economy = new Economy(16);
+  const manager = install(
+    {
+      events,
+      economy,
+      activeContract: { id: 'e1-dry-gulch', name: 'Dry Gulch' },
+      waveSystem: { diagnostics: { wave: 18 } },
+      timeAlive: 125,
+    },
+    { storage },
+  );
+
+  manager.restoreSuspend({
+    secured: true,
+    rush: false,
+    securedAtWave: 18,
+    resultAt: 125,
+    meta: manager.metaProgress,
+    payout: { territory: 1, science: 1, hero: 1, agent: 1 },
+  });
+  expect(manager.endSecuredRun()).toBe(true);
+  expect(readRunHistory(storage)[0]?.metaEarned).toEqual({ territory: 1, science: 1, hero: 1, agent: 1 });
+
+  storage.setItem(
+    RUN_HISTORY_KEY,
+    JSON.stringify([
+      {
+        ...readRunHistory(storage)[0],
+        metaEarned: { territory: 2, science: 0, hero: -1, agent: 'bad', unknown: 99 },
+      },
+    ]),
+  );
+  expect(readRunHistory(storage)[0]?.metaEarned).toEqual({ territory: 2 });
+});
+
 test('Claim Office opens a responsive Run Ledger and a profile reset returns its warm empty state', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await seedProfileWithHistory(page);
@@ -87,6 +125,7 @@ test('Claim Office opens a responsive Run Ledger and a profile reset returns its
   await expect(page.getByTestId('run-ledger-outcome')).toHaveText('Claim secured');
   await expect(page.getByTestId('run-ledger-waves')).toHaveText('18');
   await expect(page.getByTestId('run-ledger-gold-split')).toHaveText('you 31 / the Prospector 11');
+  await expect(page.getByTestId('run-ledger-meta')).toHaveText('Territory +1 / Science +1 / Hero +1 / Agent +1');
   await expect(page.getByTestId('run-ledger-duration')).toHaveText('2:05');
   await expect(page.getByTestId('run-ledger-date')).toContainText('Jul 28, 2026');
   await shot(page, testInfo);
@@ -96,6 +135,45 @@ test('Claim Office opens a responsive Run Ledger and a profile reset returns its
   await page.evaluate(() => localStorage.clear());
   await page.getByTestId('open-run-ledger').click();
   await expect(page.getByTestId('run-ledger-empty')).toHaveText('No claims stamped yet. The first trail is waiting.');
+  assertNoErrors(errors);
+});
+
+test('pre-slice and death entries stay visible without an empty meta row', async ({ page }) => {
+  const errors = collectErrors(page);
+  await seedProfileWithHistory(page, [
+    {
+      at: Date.UTC(2026, 6, 27, 12),
+      contractId: 'legacy-claim',
+      contract: 'Legacy Claim',
+      outcome: 'secured',
+      waves: 12,
+      gold: 20,
+      goldByProspector: 0,
+      duration: 90,
+    },
+    {
+      at: Date.UTC(2026, 6, 26, 12),
+      contractId: 'last-stand',
+      contract: 'Last Stand',
+      outcome: 'death',
+      waves: 7,
+      gold: 9,
+      goldByProspector: 0,
+      duration: 45,
+    },
+  ]);
+  await page.goto('/?debug&timescale=100&nolevel&seed=m3-05c-ledger-compat');
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 2);
+  await fastToSecure(page);
+  await expect(page.getByTestId('claim-secured')).toBeVisible({ timeout: 12_000 });
+  await page.getByTestId('open-run-ledger').click();
+
+  const legacy = page.getByTestId('run-ledger-row').filter({ hasText: 'Legacy Claim' });
+  const death = page.getByTestId('run-ledger-row').filter({ hasText: 'Last Stand' });
+  await expect(legacy).toBeVisible();
+  await expect(legacy.getByTestId('run-ledger-meta')).toHaveCount(0);
+  await expect(death).toBeVisible();
+  await expect(death.getByTestId('run-ledger-meta')).toHaveCount(0);
   assertNoErrors(errors);
 });
 
@@ -142,7 +220,23 @@ test('a pre-history exported ledger still imports without a history key', async 
   assertNoErrors(errors);
 });
 
-async function seedProfileWithHistory(page: Page): Promise<void> {
+async function seedProfileWithHistory(
+  page: Page,
+  history: RunHistoryEntry[] = [
+    {
+      at: Date.UTC(2026, 6, 28, 12),
+      contractId: 'e1-dry-gulch',
+      contract: 'Dry Gulch',
+      outcome: 'secured',
+      waves: 18,
+      gold: 42,
+      goldByProspector: 11,
+      metaEarned: { territory: 1, science: 1, hero: 1, agent: 1 },
+      duration: 125,
+      importedNote: 'unknown fields stay harmless',
+    },
+  ],
+): Promise<void> {
   await page.addInitScript(
     ({ profileKey, historyKey, history }) => {
       localStorage.clear();
@@ -158,19 +252,7 @@ async function seedProfileWithHistory(page: Page): Promise<void> {
     {
       profileKey: PROFILE_KEY,
       historyKey: profileDataKey('robin', RUN_HISTORY_KEY),
-      history: [
-        {
-          at: Date.UTC(2026, 6, 28, 12),
-          contractId: 'e1-dry-gulch',
-          contract: 'Dry Gulch',
-          outcome: 'secured',
-          waves: 18,
-          gold: 42,
-          goldByProspector: 11,
-          duration: 125,
-          importedNote: 'unknown fields stay harmless',
-        },
-      ],
+      history,
     },
   );
 }

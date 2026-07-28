@@ -266,6 +266,7 @@ export class RunManager {
         gold: summary.goldPanned,
         goldByProspector: summary.goldPannedByProspector,
         duration: at,
+        ...(reason === 'secured' && this.lastPayout ? { metaEarned: { ...this.lastPayout } } : {}),
       });
     }
     this.host.events.emit({
