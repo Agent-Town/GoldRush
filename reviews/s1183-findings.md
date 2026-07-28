@@ -146,6 +146,55 @@ runner's `git add` scope is the disease.
 
 ---
 
+## F-1183-4 — the art runner's broad `git add` swept 117 files onto main and silently settled TWO owner-desk items (F-1162-1, 20th instance, caught in the act)
+
+**Severity:** 🔺 act before the art drain. Nothing is lost, but two decisions the owner was holding
+were made for him by a `git add`, and the drain must now review content it did not choose.
+
+**What happened.** The art slot works in the repo root, so when `art-gazette-engravings` exited at
+`22:23:09` the runner auto-committed **`94ca2400 runner(art): art-gazette-engravings.md`
+directly onto main** — below my handoff commit, and inside the push I had already sent to origin.
+A batch whose entire legitimate deliverable is **7 PNGs + a run report** landed as:
+
+```
+117 files changed, 700 insertions(+), 873 deletions(-)
+```
+
+| swept in | count | what it is |
+|---|---|---|
+| `artifacts/**` | **73** | the carried *"`artifacts/` churn keep-or-revert"* desk item — **committed, not decided** |
+| `.wrangler/tmp/bundle-Qif4sC/**` | **2** (deletions) | the carried *"`.wrangler` untracking"* desk item — **committed, not decided** |
+| `tasks/queue/**` | **6** (deletions) | stale tracked queue copies predating the `queue/` gitignore |
+| `tasks/runs/…engravings.md` + the 7 cuts | — | the only legitimate content |
+
+✅ **`src/**` was NOT touched** — I checked, and that is the one mercy. This instance did not
+create another `Balance.ts.orig` (F-1183-2).
+
+**Why it matters more than "noisy commit".** Two items sat on the OWNER'S DESK across many
+handoffs *precisely because they were judgement calls*: keep-or-revert the `artifacts/`
+screenshot churn, and whether to untrack `.wrangler`. A broad `git add` answered both in the
+"keep/commit" direction, unreviewed, in a commit whose message says *art-gazette-engravings*.
+**That is the Ghost Line and the Silent No-Op inverted:** not a claim without a change, but a
+change without a claim. Nobody reading `git log --oneline` would ever look here for the
+resolution of an owner-desk question.
+
+**Recommendation for the gating fire.**
+- Gate the **seven cuts** on their own merits as planned; do not let the 73 churn files ride along
+  into the review's evidence table as if they were part of the batch.
+- **Classify the churn explicitly in `reviews/gazette-art-engravings.md`**: state that `94ca2400`
+  committed it, that it was not this batch's work, and either ratify it (*"the churn is now on
+  main; the desk item is closed as KEEP"*) or revert it path-scoped. **Either is fine — silence
+  is not**, because the desk item will otherwise be carried forever against a state that no
+  longer exists.
+- Re-check `src/**` on the *next* art commit too. This is the 20th recorded instance of the
+  family; the cure is the runner's `git add` scope (**F-1162-1, "RESTART THE LANE RUNNER"**), not
+  another cleanup.
+
+*This is why F-1162-1 keeps being the highest-value item on the desk: it is not cosmetic, it
+launders decisions.*
+
+---
+
 ## F-1183-3 — ✅ F-1167-3 DISCHARGED: lane-d was frozen by a retention risk that one archive ref removes
 
 **Status: ACTED ON THIS FIRE.** `lane-d` has been carried as **do-not-reset** across at least
