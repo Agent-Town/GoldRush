@@ -177,7 +177,7 @@ test('Claim Office opens a responsive Run Ledger and a profile reset returns its
   assertNoErrors(errors);
 });
 
-test('a rush ledger card renders its earned meta and rush outcome', async ({ page }) => {
+test('a rush ledger card renders its earned meta and rush outcome', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await seedProfileWithHistory(page, [
     {
@@ -201,6 +201,7 @@ test('a rush ledger card renders its earned meta and rush outcome', async ({ pag
   const rush = page.getByTestId('run-ledger-row').filter({ hasText: 'Rush Claim' });
   await expect(rush.getByTestId('run-ledger-outcome')).toHaveText('Rush ended');
   await expect(rush.getByTestId('run-ledger-meta')).toHaveText('Territory +2 / Science +3 / Hero +4 / Agent +5');
+  await shot(page, testInfo, 'rush-card');
   assertNoErrors(errors);
 });
 
@@ -360,9 +361,9 @@ function collectErrors(page: Page): ErrorBucket {
   return errors;
 }
 
-async function shot(page: Page, testInfo: TestInfo): Promise<void> {
+async function shot(page: Page, testInfo: TestInfo, name?: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
-  await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}.png`), fullPage: true });
+  await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}${name ? `-${name}` : ''}.png`), fullPage: true });
 }
 
 function assertNoErrors(errors: ErrorBucket): void {
