@@ -15,6 +15,7 @@ import {
   type MetaTrack,
 } from './MetaProgress';
 import { RunSuspendController, type RunSuspendDiagnostics, type RunSuspendWrite } from './RunSuspend';
+import { appendRunHistory, openRunLedger } from '../ui/RunLedger';
 
 type EconomyLog = {
   log: readonly EconomyEvent[];
@@ -33,6 +34,7 @@ type RunManagerHost = {
   secureBark?: () => string | undefined;
   secureLedgerLine?: () => string | undefined;
   secureCallout?: () => string | undefined;
+  contract: () => { id: string; name: string } | undefined;
   onSuspendWrite?: (write: RunSuspendWrite) => void;
 };
 
@@ -253,6 +255,19 @@ export class RunManager {
       summary.deepestWave = deepestWave;
     }
     if (reason === 'secured') this.awardSecuredClaim();
+    const contract = this.host.contract();
+    if (this.storage && contract) {
+      appendRunHistory(this.storage, {
+        at: Date.now(),
+        contractId: contract.id,
+        contract: contract.name,
+        outcome: reason,
+        waves: deepestWave,
+        gold: summary.goldPanned,
+        goldByProspector: summary.goldPannedByProspector,
+        duration: at,
+      });
+    }
     this.host.events.emit({
       type: 'run_ended',
       at,
@@ -380,6 +395,7 @@ export class RunManager {
           <p class="claim-office__tier" data-testid="territory-tier-one">${
             territoryReady ? 'Next claim: palisade ring ready; the gaps are your kill-lanes.' : 'Next claim: territory ledger banked.'
           }</p>
+          <button class="death-overlay__button death-overlay__button--secondary" type="button" data-testid="open-run-ledger">Run Ledger</button>
         </section>
         <div class="gr-run-overlay__actions">
           <button class="death-overlay__button" type="button" data-testid="bank-secured-claim">Return to Town</button>
@@ -394,6 +410,9 @@ export class RunManager {
       });
     root.querySelector<HTMLButtonElement>('[data-testid="stay-for-rush"]')?.addEventListener('click', () => {
       if (!this.options.onSecureChoice?.('rush')) this.stayForRush();
+    });
+    root.querySelector<HTMLButtonElement>('[data-testid="open-run-ledger"]')?.addEventListener('click', () => {
+      if (this.storage) openRunLedger(this.storage);
     });
     parent.append(root);
     this.secureOverlay = root;
@@ -497,6 +516,7 @@ function resolveHost(game: unknown): RunManagerHost {
     secureBarkForRun?: () => string | undefined;
     secureLedgerLineForRun?: () => string | undefined;
     secureCalloutForRun?: () => string | undefined;
+    activeContract?: { id?: string; name?: string };
     onRunSuspendWrite?: (write: RunSuspendWrite) => void;
   };
 
@@ -517,6 +537,10 @@ function resolveHost(game: unknown): RunManagerHost {
     secureBark: () => host.secureBarkForRun?.(),
     secureLedgerLine: () => host.secureLedgerLineForRun?.(),
     secureCallout: () => host.secureCalloutForRun?.(),
+    contract: () =>
+      typeof host.activeContract?.id === 'string' && typeof host.activeContract.name === 'string'
+        ? { id: host.activeContract.id, name: host.activeContract.name }
+        : undefined,
     onSuspendWrite: (write) => host.onRunSuspendWrite?.(write),
   };
 }
