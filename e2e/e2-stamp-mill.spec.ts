@@ -199,7 +199,12 @@ test('Stamp Mill manifest builds to the door without switching epochs', async ({
   await expect(page.getByTestId('story-beat-card')).toBeVisible({ timeout: 8_000 });
   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'stamp-site-found');
   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-speaker', 'elder');
-  await expect(page.getByTestId('story-beat-card')).toContainText("The survey's done.");
+  // F-1158-2: this asserted "The survey's done." — the beat's first line as authored by
+  // 734f269e (07-08 08:45). ss-02 (e3019343, 07-08 17:47) re-authored the whole 21-beat table
+  // and gave stamp-site-found new lines; this expectation was never updated, so the test has
+  // been red for 20 days. Both lines below are read from src/story/beats.ts:173 (the shipped,
+  // reviewed copy). The assertion's intent — both authored lines render on the card — is intact.
+  await expect(page.getByTestId('story-beat-card')).toContainText('Fund the first stage here.');
   await expect(page.getByTestId('story-beat-card')).toContainText("The Steamworks wants a founder's gold.");
   await expect(firstFundButton).toHaveAttribute('data-story-pointer', 'true');
   await shot(page, testInfo, 'pre-funding-surveyed-site');
