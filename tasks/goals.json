@@ -2099,7 +2099,8 @@
             {
               "id": "factory-suite-red-inventory",
               "title": "SUITE RED INVENTORY — first machine-readable list of the factory own failing tests (BOTH/MOBILE-ONLY/DESKTOP-ONLY + masking ratios)",
-              "status": "queued",
+              "status": "shipped",
+              "drainNotes": "s1167 drain. Report byte-REPRODUCED from the raw JSON by re-running the reducer (proves derived, not hand-written), and every headline independently re-derived by a from-scratch instrument that shares no code with it: 2388/2006/303, BOTH 135, MOBILE-ONLY 17 (same 17 tests), DESKTOP-ONLY 11, INCOMPLETE 5, timeouts 42 — all exact. The one disagreement (my probe said 1 crash, report says 0) resolved IN THE REPORT'S FAVOUR: playwright's own status histogram holds no crashed/interrupted state, and the 'browser has been closed' line is a timeout's teardown consequence. F-1167-1 raised from the merged data, not from the report's own tables.",
               "taskFile": "lane-d-suite-red-inventory.md",
               "lane": "lane-d",
               "authoredBy": "s1159 fire",
