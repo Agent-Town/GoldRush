@@ -1778,6 +1778,7 @@ export class Game {
             source: 'debug',
             amount: n,
           });
+          this.publishDiagnostics();
         },
         grantPressure: (n: number, actor = 'player') => {
           this.economy.apply({
@@ -1789,6 +1790,7 @@ export class Game {
             amount: n,
             actor: actor === 'prospector' ? 'prospector' : 'player',
           });
+          this.publishDiagnostics();
         },
         grantXp: (n: number) => {
           if (!this.secureClaimChoicePending()) this.progression.debugGrant(n);

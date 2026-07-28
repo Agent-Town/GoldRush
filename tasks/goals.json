@@ -2039,6 +2039,13 @@
               "title": "Dashboard unfrozen + run-stats ledger stops re-appending itself (F-1028-1, F-1027-3)",
               "mergeHash": "dc6c81960d7c15d6bf1359e42fb1cf0687446bce",
               "status": "merged"
+            },
+            {
+              "id": "factory-grant-gold-diagnostics",
+              "title": "__GR_TEST__ grant helpers republish diagnostics — one-frame stale snapshot (F-1158-3)",
+              "status": "merged",
+              "mergeHash": "PENDING",
+              "note": "s1159 fire-authored corrective. grantGold/grantPressure applied the Economy event but never called publishDiagnostics(), unlike every sibling mutator, so a same-turn read of __THREE_GAME_DIAGNOSTICS__.economy.gold returned the PRE-grant value. Measured at runtime: economy log truth 90 while the snapshot read 0, catching up one frame / 4-19ms later. e2-stamp-mill mobile-chrome went 3/8 -> 8/8 with the fix; the reverse control (fix removed) reproduced the original Expected 90 / Received 0. Review reviews/f1158-3-grant-gold-diagnostics-staleness.md."
             }
           ]
         }

@@ -1,0 +1,70 @@
+import { expect, test, type Page } from '@playwright/test';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { SCOREBOARD_KEY } from '../src/game/ProfileStorage';
+import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
+import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
+
+const TAKEN = RESEARCH_NODES.map((n) => n.id);
+const SCIENCE_STEPS = STEAMWORKS_THRESHOLD + 9;
+
+async function openGame(page: Page) {
+  await page.addInitScript(
+    ({ metaKey, megaprojectKey, researchKey, scoreKey, scienceSteps, takenNodes }) => {
+      localStorage.removeItem(megaprojectKey);
+      localStorage.removeItem(scoreKey);
+      localStorage.setItem(metaKey, JSON.stringify({ version: 1, tracks: { territory: 0, science: scienceSteps, hero: 0, agent: 0 } }));
+      localStorage.setItem(researchKey, JSON.stringify({ version: 1, taken: takenNodes, proposalSalt: 0 }));
+    },
+    { metaKey: META_PROGRESS_KEY, megaprojectKey: MEGAPROJECT_STATE_KEY, researchKey: RESEARCH_STATE_KEY, scoreKey: SCOREBOARD_KEY, scienceSteps: SCIENCE_STEPS, takenNodes: TAKEN },
+  );
+  await page.goto('/?debug&timescale=4&nolevel&nopause&seed=e2-stamp-mill');
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+}
+
+// Measures: after grantGold(90), how long until diagnostics.economy.gold reflects it,
+// and how many published frames elapse. Also records the true live value via economyLog.
+test('s1159 gold lag probe', async ({ page }) => {
+  await openGame(page);
+  const rows: unknown[] = [];
+  for (let i = 0; i < 5; i += 1) {
+    const sample = await page.evaluate(async () => {
+      const d0 = window.__THREE_GAME_DIAGNOSTICS__;
+      const before = { gold: d0?.economy.gold ?? -1, frame: d0?.frame ?? -1 };
+      const t0 = performance.now();
+      window.__GR_TEST__?.grantGold(90);
+      // immediate read — the exact shape the test's :141 line performs
+      const immediate = {
+        gold: window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? -1,
+        frame: window.__THREE_GAME_DIAGNOSTICS__?.frame ?? -1,
+        // ground truth straight from the economy log, not the snapshot
+        logSum: (window.__GR_TEST__?.economyLog() ?? []).reduce(
+          (acc: number, e: { type?: string; amount?: number }) => (e.type === 'gold_granted' ? acc + (e.amount ?? 0) : acc),
+          0,
+        ),
+      };
+      // now wait for the snapshot to catch up
+      const deadline = performance.now() + 3000;
+      let caughtAt = -1;
+      let caughtFrame = -1;
+      while (performance.now() < deadline) {
+        const d = window.__THREE_GAME_DIAGNOSTICS__;
+        if ((d?.economy.gold ?? -1) >= before.gold + 90) {
+          caughtAt = performance.now() - t0;
+          caughtFrame = d?.frame ?? -1;
+          break;
+        }
+        await new Promise((r) => requestAnimationFrame(() => r(null)));
+      }
+      return { before, immediate, caughtAtMs: caughtAt, caughtFrame };
+    });
+    rows.push(sample);
+    await page.waitForTimeout(300);
+  }
+  console.log('S1159_GOLDLAG ' + JSON.stringify(rows, null, 1));
+  expect(rows.length).toBe(5);
+  // The deterministic control: the SAME-TURN read must already reflect the grant.
+  // Pre-fix this fails on sample 1 (immediate.gold === before.gold); post-fix all 5 hold.
+  for (const r of rows as { before: { gold: number }; immediate: { gold: number } }[]) {
+    expect(r.immediate.gold).toBe(r.before.gold + 90);
+  }
+});
