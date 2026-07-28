@@ -205,7 +205,7 @@ test('a rush ledger card renders its earned meta and rush outcome', async ({ pag
   assertNoErrors(errors);
 });
 
-test('pre-slice and death entries stay visible without an empty meta row', async ({ page }) => {
+test('pre-slice and death entries stay visible without an empty meta row', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await seedProfileWithHistory(page, [
     {
@@ -241,6 +241,7 @@ test('pre-slice and death entries stay visible without an empty meta row', async
   await expect(legacy.getByTestId('run-ledger-meta')).toHaveCount(0);
   await expect(death).toBeVisible();
   await expect(death.getByTestId('run-ledger-meta')).toHaveCount(0);
+  await shot(page, testInfo, 'pre-slice-death');
   assertNoErrors(errors);
 });
 
@@ -272,6 +273,7 @@ test('a pre-history exported ledger still imports without a history key', async 
   await expect(page.getByTestId('profile-import-confirm')).toContainText('Old Timer');
   await page.getByTestId('profile-import-apply').click();
   await expect(page.getByTestId('profile-row').filter({ hasText: 'Old Timer' })).toBeVisible();
+  await shot(page, testInfo, 'pre-history-import');
   expect(
     await page.evaluate(
       ({ profileKey, historyKey }) => {
