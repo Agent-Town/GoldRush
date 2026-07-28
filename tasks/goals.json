@@ -2106,6 +2106,12 @@
               "authoredBy": "s1159 fire",
               "spec": "F-1158-3 (reviews/f1158-3-grant-gold-diagnostics-staleness.md) + the F-1141-3 precedent, tasks/BACKLOG.md:1513",
               "authorNotes": "MEASUREMENT ONLY, fixes are a firewall violation. Premise verified before authoring: 333 spec files exist and NO machine-readable red list exists anywhere in logs/, docs/ or tasks/ (searched) - the known reds live in scattered review prose. Trigger: e2-stamp-mill:202 sat red 20 days, and REPAIRING it advanced the spec to a deeper mobile-only failure that had been unreachable the whole time; F-1141-3 records the identical shape in different code, so this is a named repeating pattern, not a one-off. Scratch port 5271 is mandatory - vite.config.ts:38 hard-codes 5188 for every lane worktree (Mistake #12) - via GR_CAPTURE_EXTERNAL_SERVER=1 + GR_CAPTURE_BASE_URL, the path playwright.config.ts:17 already supports. The reducer must be a script, never a context read of the raw JSON, and it needs a planted-failure positive control before any zero is believed."
+            },
+            {
+              "id": "factory-diet-skip-duty-split",
+              "title": "Split the asset-diet skip duty off GR_CAPTURE_EXTERNAL_SERVER (3rd instance of the F-1026-1/F-1047-1 class; 2 false reds in the red inventory)",
+              "status": "queued",
+              "taskFile": "lane-c-asset-diet-skip-duty-split.md"
             }
           ]
         }
