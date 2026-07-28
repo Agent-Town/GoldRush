@@ -7,6 +7,8 @@ import {
   listBoardContracts,
   listEpochs,
   loadEpoch,
+  recordStagedContractLaunchClear,
+  stagedCharterLaunchPresent,
   stagedPlayerContractLaunch,
   type ContractManifest,
 } from './ContractFamilies';
@@ -73,10 +75,18 @@ export function contractUnlockStatus(contract: ContractManifest): ContractUnlock
 }
 
 export function reverifyStagedContractLaunch(): void {
+  recordStagedContractLaunchClear(null);
   const stagedId = stagedPlayerContractLaunch();
   if (!stagedId) return;
   const contract = listBoardContracts().find((entry) => entry.id === stagedId);
-  if (!contract || !contractUnlockStatus(contract).unlocked) clearPlayerContractLaunch();
+  const reason = !contract
+    ? 'staged-contract-missing'
+    : contractUnlockStatus(contract).unlocked
+      ? null
+      : 'staged-contract-locked';
+  if (!reason) return;
+  recordStagedContractLaunchClear({ reason, charterDocumentPresent: stagedCharterLaunchPresent() });
+  clearPlayerContractLaunch();
 }
 
 function contractIdOf(id: string | undefined): string {

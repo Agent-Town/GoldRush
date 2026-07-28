@@ -279,6 +279,10 @@ interface ThreeGameDiagnostics {
     activeId: string;
     requestedId: string | null;
     fallbackReason: 'debug-disabled' | 'unknown-contract' | 'unavailable-contract' | null;
+    stagedLaunchClear: {
+      reason: 'staged-contract-missing' | 'staged-contract-locked';
+      charterDocumentPresent: boolean;
+    } | null;
     warningSuppressed: boolean;
     epochId: string;
     epochResources: GrContractEpochBundle['resources'];

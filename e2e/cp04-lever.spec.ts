@@ -124,6 +124,36 @@ test('a plain boot remains inert', async ({ page }) => {
     shelf: Object.keys(localStorage).filter((key) => key.includes('charterShelf')),
     launch: sessionStorage.getItem('gr.charter.launch.v1'),
   }))).toEqual({ shelf: [], launch: null });
+  await page.goto('/?debug&nowaves&nolevel&nokill&nopause&seed=cp04-plain');
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract.stagedLaunchClear)).toBeNull();
+  expect(errors).toEqual({ console: [], page: [] });
+});
+
+test('a locked staged contract clear is observable', async ({ page }) => {
+  const combination = bootSample[2]!;
+  expect(combination.result.ok).toBe(true);
+  if (!combination.result.ok) return;
+  const errors = collectErrors(page);
+  await page.addInitScript(
+    ([templateId, document]) => {
+      sessionStorage.setItem('gr.contract.launch.v1', templateId!);
+      sessionStorage.setItem('gr.charter.launch.v1', JSON.stringify({ templateId, document }));
+    },
+    [combination.land.id, combination.result.document],
+  );
+  await page.goto(`/?debug&contract=${combination.land.id}&nowaves&nolevel&nokill&nopause&seed=cp04-clear`);
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__) && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  expect(await page.evaluate(() => ({
+    stagedLaunchClear: window.__THREE_GAME_DIAGNOSTICS__!.contract.stagedLaunchClear,
+    charterDocument: sessionStorage.getItem('gr.charter.launch.v1'),
+  }))).toEqual({
+    stagedLaunchClear: {
+      reason: 'staged-contract-locked',
+      charterDocumentPresent: true,
+    },
+    charterDocument: null,
+  });
   expect(errors).toEqual({ console: [], page: [] });
 });
 

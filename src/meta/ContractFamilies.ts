@@ -628,6 +628,10 @@ export type ActiveContractDiagnostics = {
   activeId: string;
   requestedId: string | null;
   fallbackReason: 'debug-disabled' | 'unknown-contract' | 'unavailable-contract' | null;
+  stagedLaunchClear: {
+    reason: 'staged-contract-missing' | 'staged-contract-locked';
+    charterDocumentPresent: boolean;
+  } | null;
   warningSuppressed: boolean;
 };
 
@@ -1078,6 +1082,12 @@ function toMeta(manifest: EpochManifest): EpochMeta {
 
 let activeSelection: { contract: ContractManifest; diagnostics: ActiveContractDiagnostics } | null = null;
 let activeSelectionSearch = '';
+let stagedLaunchClear: ActiveContractDiagnostics['stagedLaunchClear'] = null;
+
+export function recordStagedContractLaunchClear(diagnostics: ActiveContractDiagnostics['stagedLaunchClear']): void {
+  stagedLaunchClear = diagnostics;
+  if (activeSelection) activeSelection.diagnostics.stagedLaunchClear = diagnostics;
+}
 
 export function stagePlayerContractLaunch(id: string): void {
   activeSelection = null;
@@ -1128,6 +1138,14 @@ export function readCharterLaunch(): { templateId: string; document: string } | 
     return { templateId: value.templateId, document: value.document };
   } catch {
     return null;
+  }
+}
+
+export function stagedCharterLaunchPresent(): boolean {
+  try {
+    return (globalThis.sessionStorage?.getItem(CHARTER_LAUNCH_KEY) ?? null) !== null;
+  } catch {
+    return false;
   }
 }
 
@@ -1206,6 +1224,7 @@ function activeContractSelection(): { contract: ContractManifest; diagnostics: A
       activeId: contract.id,
       requestedId,
       fallbackReason,
+      stagedLaunchClear,
       warningSuppressed: fallbackReason === 'unknown-contract',
     },
   };
