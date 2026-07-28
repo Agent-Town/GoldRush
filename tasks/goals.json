@@ -2046,6 +2046,16 @@
               "status": "merged",
               "mergeHash": "eda6504fc22ad1753c421b2ad9a6723ffde3f663",
               "note": "s1159 fire-authored corrective. grantGold/grantPressure applied the Economy event but never called publishDiagnostics(), unlike every sibling mutator, so a same-turn read of __THREE_GAME_DIAGNOSTICS__.economy.gold returned the PRE-grant value. Measured at runtime: economy log truth 90 while the snapshot read 0, catching up one frame / 4-19ms later. e2-stamp-mill mobile-chrome went 3/8 -> 8/8 with the fix; the reverse control (fix removed) reproduced the original Expected 90 / Received 0. Review reviews/f1158-3-grant-gold-diagnostics-staleness.md."
+            },
+            {
+              "id": "factory-suite-red-inventory",
+              "title": "SUITE RED INVENTORY — first machine-readable list of the factory own failing tests (BOTH/MOBILE-ONLY/DESKTOP-ONLY + masking ratios)",
+              "status": "queued",
+              "taskFile": "lane-d-suite-red-inventory.md",
+              "lane": "lane-d",
+              "authoredBy": "s1159 fire",
+              "spec": "F-1158-3 (reviews/f1158-3-grant-gold-diagnostics-staleness.md) + the F-1141-3 precedent, tasks/BACKLOG.md:1513",
+              "authorNotes": "MEASUREMENT ONLY, fixes are a firewall violation. Premise verified before authoring: 333 spec files exist and NO machine-readable red list exists anywhere in logs/, docs/ or tasks/ (searched) - the known reds live in scattered review prose. Trigger: e2-stamp-mill:202 sat red 20 days, and REPAIRING it advanced the spec to a deeper mobile-only failure that had been unreachable the whole time; F-1141-3 records the identical shape in different code, so this is a named repeating pattern, not a one-off. Scratch port 5271 is mandatory - vite.config.ts:38 hard-codes 5188 for every lane worktree (Mistake #12) - via GR_CAPTURE_EXTERNAL_SERVER=1 + GR_CAPTURE_BASE_URL, the path playwright.config.ts:17 already supports. The reducer must be a script, never a context read of the raw JSON, and it needs a planted-failure positive control before any zero is believed."
             }
           ]
         }
