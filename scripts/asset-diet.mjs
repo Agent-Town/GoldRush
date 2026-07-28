@@ -53,7 +53,7 @@ const platePngs = [];
 
 await runPool(distFiles.filter((file) => extname(file) === '.png'), 8, async (file) => {
   const { width, height } = await sharp(file).metadata();
-  if ((width === 1671 || width === 1672) && height === 941) platePngs.push(file);
+  if (((width === 1671 || width === 1672) && height === 941) || (width === 1024 && height === 1024)) platePngs.push(file);
 });
 
 const beforeModels = await totalBytes(dietModels);
@@ -80,7 +80,9 @@ const replacements = new Map();
 await runPool(platePngs, 4, async (file) => {
   const webp = file.replace(/\.png$/i, '.webp');
   const temporary = `${webp}.tmp`;
-  await sharp(file).webp({ quality: 80, effort: 6 }).toFile(temporary);
+  const image = sharp(file);
+  const { width, height } = await image.metadata();
+  await (width === 1024 && height === 1024 ? image.resize(384, 384) : image).webp({ quality: 80, effort: 6 }).toFile(temporary);
   await rename(temporary, webp);
   await unlink(file);
   replacements.set(basename(file), basename(webp));

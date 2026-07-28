@@ -1,5 +1,20 @@
 import './heraldReader.css';
-import { readHeraldItems, type HeraldItem } from './herald';
+import { readHeraldItems, type HeraldClass, type HeraldItem } from './herald';
+
+const heraldEngravingUrls = import.meta.glob<string>('../../assets/raw/herald-engraving-*.png', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const HERALD_ENGRAVINGS: Record<HeraldClass, string | undefined> = {
+  board: heraldEngravingUrls['../../assets/raw/herald-engraving-board.png'],
+  trail: heraldEngravingUrls['../../assets/raw/herald-engraving-trail.png'],
+  river: heraldEngravingUrls['../../assets/raw/herald-engraving-river.png'],
+  schoolhouse: heraldEngravingUrls['../../assets/raw/herald-engraving-schoolhouse.png'],
+  ledger: heraldEngravingUrls['../../assets/raw/herald-engraving-ledger.png'],
+  boss: heraldEngravingUrls['../../assets/raw/herald-engraving-boss.png'],
+  'town-growth': heraldEngravingUrls['../../assets/raw/herald-engraving-town-growth.png'],
+};
 
 let currentRoot: HTMLElement | null = null;
 let currentOnClose: (() => void) | undefined;
@@ -54,9 +69,10 @@ function renderHerald(items: readonly HeraldItem[]): string {
 }
 
 function renderItem(item: HeraldItem): string {
+  const engravingUrl = item.class && Object.hasOwn(HERALD_ENGRAVINGS, item.class) ? HERALD_ENGRAVINGS[item.class] : undefined;
   return `
     <section class="claim-herald__item" data-testid="claim-herald-item">
-      <p class="claim-herald__date">${escapeHtml(formatDate(item.date))}</p>
+      ${engravingUrl ? `<img class="claim-herald__engraving" src="${engravingUrl}" alt="" aria-hidden="true" data-testid="claim-herald-engraving">\n      ` : ''}<p class="claim-herald__date">${escapeHtml(formatDate(item.date))}</p>
       <h3>${escapeHtml(item.headline)}</h3>
       ${item.lines.map((line) => `<p>${escapeHtml(line)}</p>`).join('')}
     </section>

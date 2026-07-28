@@ -1,10 +1,13 @@
 import feed from '../../news/herald.json' with { type: 'json' };
 
+export type HeraldClass = 'board' | 'trail' | 'river' | 'schoolhouse' | 'ledger' | 'boss' | 'town-growth';
+
 export type HeraldItem = {
   headline: string;
   lines: string[];
   date: string;
   hash: string;
+  class?: HeraldClass;
 };
 
 const INTERNAL_HERALD_PATTERNS = [/\b\d{3}\b/, /\b[A-Z]{2,}-\d+\b/, /\bshipped\b/i, /\brepo\b/i, /\btoken\b/i, /\bbackend\b/i] as const;
