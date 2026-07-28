@@ -1273,12 +1273,12 @@ export class TownScene {
       this.prompt.innerHTML = action;
     } else if (nearest.id === 'claim_office' && this.townName) {
       this.prompt.innerHTML = `
-        <span>${nearest.name} ... opens soon</span>
+        <span>${nearest.name} ... the registrar is in</span>
         <button class="town-ui__prompt-button" type="button" data-town-rename data-testid="town-rename">Rename</button>
       `;
     } else if (nearest.id === 'tavern') {
       this.prompt.innerHTML = `
-        <span>${nearest.name} ... opens soon</span>
+        <span>${nearest.name} ... the board is warm</span>
         <button class="town-ui__prompt-button" type="button" data-town-board data-testid="town-open-board">Board</button>
       `;
     } else if (nearest.id === 'schoolhouse') {
