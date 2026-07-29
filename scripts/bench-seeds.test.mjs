@@ -24,7 +24,25 @@ const bundles = [
   redfieldsContracts,
   deepskyContracts,
 ];
-const knownContractIds = new Set(bundles.flatMap((bundle) => bundle.contracts.map((contract) => contract.id)));
+const allContractIds = bundles.flatMap((bundle) => bundle.contracts.map((contract) => contract.id));
+const knownContractIds = new Set(allContractIds);
+
+// F-1222-2 (s1222). bench-seeds.json keys on `contractId` ALONE, but the server validates
+// with knownContract(epochId, contractId) — a PAIR. That lookup is only sound because no
+// contract id appears in two epochs (measured s1222: 41 ids, 0 duplicated). Nothing asserted
+// it, and the Set above *assumes* the property rather than checking it: if a later epoch ever
+// reuses an id, two epochs would silently share one frozen seed set — exactly the
+// comparability property specs/agent-play/README.md:61 exists to protect — and every other
+// assertion here would stay green. So the assumption becomes a guard.
+test('contract ids are globally unique across the ten epoch bundles', () => {
+  const duplicates = allContractIds.filter((id, index) => allContractIds.indexOf(id) !== index);
+  assert.deepEqual(
+    duplicates,
+    [],
+    `bench-seeds.json keys on contractId alone; these ids appear in more than one epoch: ${duplicates.join(', ')}`,
+  );
+  assert.equal(knownContractIds.size, allContractIds.length);
+});
 
 test('bench seed sets cover Frontier and contain only valid known-contract seeds', () => {
   for (const { id: contractId } of frontierContracts.contracts) {
