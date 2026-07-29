@@ -73,7 +73,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
-import { readFileSync, readdirSync, existsSync, writeFileSync, mkdtempSync } from 'node:fs';
+import { readFileSync, readdirSync, existsSync, writeFileSync, mkdtempSync, rmSync } from 'node:fs';
 import { join, dirname, resolve } from 'node:path';
 import { tmpdir } from 'node:os';
 import { fileURLToPath } from 'node:url';
@@ -112,20 +112,24 @@ test('site: every local <script src> the pages load actually exists', () => {
 
 test('site: each loaded script parses under the grammar its tag requests', () => {
   const tmp = mkdtempSync(join(tmpdir(), 'gr-site-parse-'));
-  for (const ref of scriptRefs()) {
-    const source = readFileSync(join(SITE, ref.src), 'utf8');
-    // A classic <script> is NOT parsed as a module by the browser, so checking it
-    // as ESM would accept import/export that would blank the page in production.
-    // Match the grammar to the tag: .cjs => classic/sloppy, .mjs => module.
-    const probe = join(tmp, `probe.${ref.module ? 'mjs' : 'cjs'}`);
-    writeFileSync(probe, source);
-    const run = spawnSync(process.execPath, ['--check', probe], { encoding: 'utf8' });
-    assert.equal(
-      run.status,
-      0,
-      `site/${ref.src} (loaded by ${ref.page} as ${ref.module ? 'module' : 'classic script'}) ` +
-        `does not parse:\n${(run.stderr ?? '').trim()}`,
-    );
+  try {
+    for (const ref of scriptRefs()) {
+      const source = readFileSync(join(SITE, ref.src), 'utf8');
+      // A classic <script> is NOT parsed as a module by the browser, so checking it
+      // as ESM would accept import/export that would blank the page in production.
+      // Match the grammar to the tag: .cjs => classic/sloppy, .mjs => module.
+      const probe = join(tmp, `probe.${ref.module ? 'mjs' : 'cjs'}`);
+      writeFileSync(probe, source);
+      const run = spawnSync(process.execPath, ['--check', probe], { encoding: 'utf8' });
+      assert.equal(
+        run.status,
+        0,
+        `site/${ref.src} (loaded by ${ref.page} as ${ref.module ? 'module' : 'classic script'}) ` +
+          `does not parse:\n${(run.stderr ?? '').trim()}`,
+      );
+    }
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
   }
 });
 
@@ -153,17 +157,21 @@ test('site: each inline <script> parses under the grammar its tag requests', () 
   // inline. A regex that stops matching must fail here, not report zero defects.
   assert.ok(blocks.length > 0, 'found no inline <script> in site/*.html — parser or site changed');
   const tmp = mkdtempSync(join(tmpdir(), 'gr-site-inline-'));
-  blocks.forEach((block, i) => {
-    const probe = join(tmp, `inline-${i}.${block.module ? 'mjs' : 'cjs'}`);
-    writeFileSync(probe, block.body);
-    const run = spawnSync(process.execPath, ['--check', probe], { encoding: 'utf8' });
-    assert.equal(
-      run.status,
-      0,
-      `an inline <script> in ${block.page} (${block.module ? 'module' : 'classic script'}) ` +
-        `does not parse:\n${(run.stderr ?? '').trim()}`,
-    );
-  });
+  try {
+    blocks.forEach((block, i) => {
+      const probe = join(tmp, `inline-${i}.${block.module ? 'mjs' : 'cjs'}`);
+      writeFileSync(probe, block.body);
+      const run = spawnSync(process.execPath, ['--check', probe], { encoding: 'utf8' });
+      assert.equal(
+        run.status,
+        0,
+        `an inline <script> in ${block.page} (${block.module ? 'module' : 'classic script'}) ` +
+          `does not parse:\n${(run.stderr ?? '').trim()}`,
+      );
+    });
+  } finally {
+    rmSync(tmp, { recursive: true, force: true });
+  }
 });
 
 /**
