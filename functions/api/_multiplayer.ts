@@ -1,4 +1,7 @@
+declare const WebSocketPair: typeof import('@cloudflare/workers-types').WebSocketPair;
+
 type JsonRecord = Record<string, unknown>;
+type WebSocket = import('@cloudflare/workers-types').WebSocket;
 
 type DurableObjectNamespaceLike = {
   idFromName(name: string): unknown;
@@ -207,7 +210,7 @@ export class MultiplayerRoom {
     }
 
     const pair = new WebSocketPair();
-    const [client, server] = Object.values(pair) as [WebSocket, WebSocket];
+    const [client, server] = Object.values(pair);
     let playerId: string | null = null;
     let handshakeTimer: ReturnType<typeof setTimeout> | null = setTimeout(() => {
       if (!playerId) server.close(1008, 'join timeout');
@@ -244,7 +247,8 @@ export class MultiplayerRoom {
       clearHandshakeTimer();
       if (playerId) this.hold(playerId, server);
     });
-    return new Response(null, { status: 101, webSocket: client });
+    const init = { status: 101, webSocket: client } satisfies import('@cloudflare/workers-types').ResponseInit;
+    return new Response(null, init);
   }
 
   private inspect(): Response {
@@ -717,8 +721,12 @@ function normalizeReconnectToken(value: unknown): string | null {
   return /^[A-F0-9]{32}$/.test(token) ? token : null;
 }
 
+function isInteger(value: unknown): value is number {
+  return Number.isInteger(value);
+}
+
 function normalizeTick(value: unknown): number | null {
-  return Number.isInteger(value) && value >= 0 && value <= 10_000_000 ? value : null;
+  return isInteger(value) && value >= 0 && value <= 10_000_000 ? value : null;
 }
 
 function randomRoomCode(): string {

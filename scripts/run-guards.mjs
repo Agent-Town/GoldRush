@@ -12,9 +12,12 @@
  * column, one row per guard, and its own exit code is 1 if ANY row is non-zero.
  * A guard that talks its way to a green cannot pass here.
  *
- * These cover `scripts/**` and the worker code, which `tsc` does NOT type
- * check (tsconfig `include` is [src, e2e, playwright.config.ts]) -- for that part
- * of the tree these guards are the only gate there is.
+ * These cover `scripts/**`, which `tsc` does NOT type check (tsconfig `include`
+ * is [src, e2e, functions, playwright.config.ts]) -- for that part of the tree
+ * these guards are the only gate there is. The worker code under `functions/`
+ * used to belong in that sentence and NO LONGER DOES: ts-cov-01 (merged s1235)
+ * brought all 22 worker files under tsc, and scripts/worker-type-coverage.test.mjs
+ * fails if any of them ever falls back out.
  *
  * READ THAT SENTENCE PRECISELY (F-1232-1, s1232). "These cover scripts/**" was
  * false as written for four months, and it is the kind of false that reads as
@@ -73,37 +76,37 @@ const GATE_GUARDS = ['test:node-guards', 'test:power-budget', 'test:task-guards'
 // purpose: a per-file map of which worker each guard exercises would rot silently
 // the first time a route moved, and the whole trio costs ~7s.
 //
-// WHAT THIS RULE DOES *NOT* MEAN (F-1233-1, measured s1233). This comment used to
-// state as fact that because tsconfig `include` is ["src","e2e",
-// "playwright.config.ts"], `npx tsc --noEmit` "does NOT read functions/** at all".
-// That is false, and it is false in the way this file keeps finding: an English
-// claim about coverage that nobody re-derived. `include` picks ROOT files; tsc
-// also checks everything those roots transitively IMPORT. Measured with
-// `tsc --noEmit --listFiles`: 4 of the 22 files under functions/ ARE type-checked
-// today -- standings.ts, stats.ts, telemetry.ts, _ratelimit.ts -- because src/
-// imports them. Proven by mutation: an unclosed brace in functions/api/standings.ts
-// takes `npx tsc --noEmit` to rc=2 with `TS1005: '}' expected`, on a tree where
-// the header's sentence promises tsc never looked.
+// WHAT THIS RULE IS NOT ABOUT, AND THE HISTORY OF THAT (F-1233-1 s1233, CLOSED by
+// ts-cov-01 s1235). This comment used to state as fact that because tsconfig
+// `include` is ["src","e2e","playwright.config.ts"], `npx tsc --noEmit` "does NOT
+// read functions/** at all". That was false twice over, and the first falseness is
+// the one this file keeps finding: an English claim about coverage that nobody
+// re-derived. `include` picks ROOT files; tsc also checks everything those roots
+// transitively IMPORT, so 4 of the 22 files under functions/ were type-checked all
+// along -- standings.ts, stats.ts, telemetry.ts, _ratelimit.ts -- because src/
+// imports them. Mutation-proven s1233: an unclosed brace in standings.ts took
+// `npx tsc --noEmit` to rc=2, on a tree whose comment promised tsc never looked.
 //
-// The other 18 are type-checked by NOTHING, and that is the live gap. They are not
-// ungated -- `wrangler pages dev` builds the WHOLE functions/ directory at startup,
+// The other 18 were type-checked by NOTHING. That WAS the live gap; it is closed.
+// ts-cov-01 added "functions" to `include` (scoping the Workers globals to
+// _multiplayer.ts via inline `import()` types, so nothing leaks into src/'s type
+// space) and fixed the 10 resulting errors with type predicates, not casts. The
+// count is now 22 of 22, and it is GUARDED rather than merely done:
+// scripts/worker-type-coverage.test.mjs walks functions/ and asserts every file
+// appears in `tsc --noEmit --listFiles`. Do not restore the old sentence.
+//
+// The rule below survives the cure and is still load-bearing, for the reason it was
+// written: `vite build` does not bundle Pages Functions, and TYPES ARE NOT
+// BEHAVIOUR. `wrangler pages dev` builds the whole functions/ directory at startup,
 // so a parse error anywhere reddens all three guards here (mutation-proven s1233:
 // the standings.ts break took test:stats, test:accounts AND test:mp to rc=1, though
 // standings is a route none of the three ever requests), and the bug/redeem/
 // standings routes are additionally exercised by playwright specs that spawn their
 // own wrangler (e2e/bug-office-api, cosmetic-grants, lb-01-county-standings).
-// Parse and behaviour are covered. TYPES are not, for 18 of 22.
-//
-// The fix is small and has been measured, not guessed: adding "functions" to
-// tsconfig `include` yields exactly 10 errors in 3 files -- 3 missing Cloudflare
-// Workers globals (WebSocketPair, WebSocket.accept, ResponseInit.webSocket, all in
-// _multiplayer.ts) and 7 narrowing sites that are RUNTIME-SAFE today (Number.isInteger
-// is not a type predicate, so `unknown` never narrows; redeem.ts:46 is narrowed
-// through an alias tsc cannot follow). Zero latent runtime bugs. It needs
-// @cloudflare/workers-types, so it is a task, not a drive-by: tasks/ts-cov-01-worker-type-coverage.md.
+// A worker whose types check can still answer the wrong thing -- keep the trio.
 const PATH_RULES = [
   {
-    label: 'functions/** (Cloudflare Pages Functions -- outside tsconfig include)',
+    label: 'functions/** (Cloudflare Pages Functions -- type-checked since s1235; these gate BEHAVIOUR)',
     match: (file) => file.startsWith('functions/'),
     guards: ['test:stats', 'test:accounts', 'test:mp'],
   },

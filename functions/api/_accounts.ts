@@ -394,9 +394,13 @@ function normalizeProfileId(value: unknown): string | null {
   return /^[a-z0-9][a-z0-9-]{0,63}$/.test(profileId) ? profileId : null;
 }
 
+function isInteger(value: unknown): value is number {
+  return Number.isInteger(value);
+}
+
 function normalizeVersion(value: unknown): number | false | null {
   if (value === undefined || value === null) return null;
-  return Number.isInteger(value) && value >= 1 && value <= 5 ? value : false;
+  return isInteger(value) && value >= 1 && value <= 5 ? value : false;
 }
 
 function validateEnvelope(envelope: JsonRecord, profileId: string): SaveMetadata | null {

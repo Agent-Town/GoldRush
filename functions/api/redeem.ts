@@ -40,7 +40,7 @@ export async function onRequest(context: RedeemContext): Promise<Response> {
     }
     const stored = await kv.get(`prize:${code}`);
     const skin = stored?.startsWith('redeemed:') ? stored.split('|', 2)[1] : stored;
-    if (!skin) {
+    if (!skin || stored === null) {
       return json(cors, { ok: false, error: 'bad_stub', message: 'The clerk turns the stub over. “This one is no county prize.”' });
     }
     if (!stored.startsWith('redeemed:')) await kv.put(`prize:${code}`, `redeemed:${new Date().toISOString()}|${skin}`);
