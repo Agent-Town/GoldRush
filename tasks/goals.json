@@ -3569,7 +3569,9 @@
               "id": "standing-orders-wave-early-seam",
               "title": "Cure the one MEASURED member of the concurrency class - ap-standing-orders.spec.ts:121 wave_early is a MISSED event (sampled state-diff), not a late one, so no timeout can fix it. Measure-first, deterministic repro required, acceptance 0/16 mobile-chrome at workers=4 (F-1215-1 / F-1214-1).",
               "taskFile": "lane-d-standing-orders-wave-early-seam.md",
-              "status": "queued"
+              "status": "merged",
+              "mergeHash": "a0aae8764829c8794dbf0423d8b433216acc1b05",
+              "review": "reviews/standing-orders-wave-early-seam.md"
             },
             {
               "id": "lb-03-bench-seed-sets",
