@@ -3522,7 +3522,7 @@
               "title": "AP-06b Standing-orders adapter wiring — lift the firewall to Game.ts so BUILD and HARVEST reach the world (F-1212-3)",
               "taskFile": "ap-orders-adapter-wiring.md",
               "status": "blocked",
-              "blockedReason": "TECHNICAL GATE, NOT AN OWNER DESIGN FORK - NO OWNER ACTION REQUIRED. Discharge condition RE-POINTED by s1218: the previous corrective (ap-06b-panel-ladder-and-voice) lawfully STOPPED instead of merging, so this leaf stays blocked and its gate is now tasks/lane-c-agent-rung-honest-gate.md (F-1218-1) - the rung-blind tool-surface gate must be able to express rung 3 before wiring panAt is safe. See reviews/ap-06b-panel-ladder-and-voice.md. Original block (s1217, F-1217-1): supplying panAt registers the level-3 auto_pan capability at ToolSurface.ts:375, adding a row to the player-facing Prospector panel; a matched control proved m4-10:112, m4-09:107 and m4-06:384 flip green-to-red on BOTH projects. Do not drain 2f216af0 on its own - it would put 6 red executions on main. Work preserved at save/ap-06b-adapter-wiring 2f216af0 and lane/e2-arsenal 6c44c6f3."
+              "blockedReason": "OWNER DESIGN FORK - RULING REQUIRED (re-classified by s1219, F-1219-1). PREVIOUSLY mis-classified as a technical gate needing no owner action; that is now disproven. Its gate was tasks/lane-c-agent-rung-honest-gate.md, which STOPPED lawfully at item 2 (reviews/agent-rung-honest-gate.md): making the tool-surface gate rung-honest would redden four green assertion families that encode pan-at-L2, while the ratified spec (specs/m4-agent-ux/README.md:14) puts pan at L3 and the code declares auto_pan:3. The tests - not the code - are the divergent artifact, green only because the rung-blind gate could never expose them. NO LANE TASK CAN LIFT THIS. Needs the owner ruling: is the m4-agent-ux ladder spec canon (fix the tests) or is shipped behaviour canon (amend the spec)? Same ruling resolves F-1218-2 (repair L2 vs 1) and F-1219-2 (place_building/chase_mark have no rung anywhere)."
             },
             {
               "id": "ap-06b-panel-ladder-and-voice",
@@ -3535,7 +3535,9 @@
               "id": "agent-rung-honest-gate",
               "title": "Make the tool-surface permission gate able to express the rung it already declares - decideToolPermission never receives the tool, so no rung above 1 is enforceable (F-1218-1). Measure-first with a hard STOP if not behaviour-neutral. Unblocks ap-06b-adapter-wiring.",
               "taskFile": "lane-c-agent-rung-honest-gate.md",
-              "status": "queued"
+              "status": "stopped",
+              "stoppedReason": "LAWFUL ITEM-2 STOP = the master's declared SUCCESS, not a failure. Zero repo bytes changed; the deliverable (item 1 table) is in reviews/agent-rung-honest-gate.md. Enforcing declared rungs WOULD redden four currently-green assertion families (m4-01:164 requiredLevel===1 for pan_at; 066-walk8:162 pan-at-L2 must move; m4-05:218; m4-06:248) - re-verified at source by s1219. F-1219-1: those assertions encode pan-at-L2 which the RATIFIED ladder spec (specs/m4-agent-ux/README.md:14, \"L3 work the claim (pan)\") never ratified; code auto_pan:3 MATCHES the spec. So the cure is a spec-conformance change, i.e. an OWNER design fork, not a technical fix.",
+              "reviewFile": "reviews/agent-rung-honest-gate.md"
             },
             {
               "id": "ap-08-the-view",
