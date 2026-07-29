@@ -87,6 +87,7 @@ test('seeded standing orders obey priority, gates, legal actions, surprises, and
   );
   await page.goto('/?debug&nowaves&nolevel&timescale=8&seed=ap-standing-orders');
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await armEarlyWave(page);
   await installOrdersSurface(page);
 
   const unknown = await submit(page, [{ verb: 'DANCE', pos: { x: 0, z: 10 } }]);
@@ -117,7 +118,7 @@ test('seeded standing orders obey priority, gates, legal actions, surprises, and
     }),
   ).toEqual([]);
   await expect.poll(() => view(page).then((state) => state.orders[0]?.status)).toBe('pending');
-  await page.evaluate(() => window.__GR_TEST__?.startWaveForTest(1));
+  await triggerEarlyWave(page);
   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'wave_early'))).toBe(true);
 
   await grantGold(page, 24);
@@ -169,6 +170,41 @@ test('seeded standing orders obey priority, gates, legal actions, surprises, and
   await page.evaluate(() => window.__GR_TEST__?.endRunForTest());
   await expect.poll(() => view(page).then((state) => state.log.some((event) => event.surprise === 'hero_down'))).toBe(true);
 
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+async function armEarlyWave(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    window.__GR_TEST__!.setManualSim(true);
+    window.__GR_TEST__!.setWave(0);
+  });
+}
+
+async function triggerEarlyWave(page: Page): Promise<void> {
+  await page.evaluate(() => {
+    window.__GR_TEST__!.advanceSim(1 / 60);
+    window.__GR_TEST__!.startWaveForTest(1);
+    window.__GR_TEST__!.advanceSim(1 / 60);
+    window.__GR_TEST__!.setManualSim(false);
+  });
+}
+
+test('manual early-wave seam resets an expired countdown before forcing the transition', async ({ page }) => {
+  const errors = collectErrors(page);
+  await page.goto('/?debug&nowaves&nolevel&timescale=8&seed=ap-standing-orders-wave-seam');
+  await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.evaluate(() => {
+    window.__GR_TEST__!.setManualSim(true);
+    window.__GR_TEST__!.advanceSim(31);
+  });
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.nextWaveInSim)).toBe(0);
+
+  await armEarlyWave(page);
+  await installOrdersSurface(page);
+  await triggerEarlyWave(page);
+
+  expect((await view(page)).log.some((event) => event.surprise === 'wave_early')).toBe(true);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });
