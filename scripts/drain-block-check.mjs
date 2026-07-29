@@ -182,8 +182,22 @@ function main() {
 
   // A CLEAR verdict must never rest on a coincidental substring. Branch names are not registered
   // in goals.json, so "lane/perf" matching an unrelated "perf-05" leaf is noise, not clearance.
-  const branchShaped = /^[\w.-]+\/[\w.-]+$/.test(target.trim());
-  const queueTaskFile = queue && /\.md$/i.test(target.trim());
+  //
+  // F-1245-2 (s1245): that branch shape ALSO matches a taskfile path — "tasks/ret-02-foo.md" is
+  // `[\w.-]+` + "/" + `[\w.-]+` — so the input shape this file documents as supported at :76
+  // ("tasks/lane-hero-y-restore-roundtrip.md (master)") was being reclassified as a branch and its
+  // correct match thrown away. Measured on main: `tasks/ret-02-retention-floor-ratchet.md` printed
+  // "? UNKNOWN — no BLOCKED goal leaf matches" at rc=0 while the bare name printed ✅ CLEAR for the
+  // same leaf, and `--strict` turned that into a FALSE rc=2 on correctly-registered work. §3.0
+  // tells the reader UNKNOWN "is a Goal Registration Law bookkeeping finding", so the false verdict
+  // invites a fire to re-register a leaf that already exists. Block detection was never affected
+  // (a blocked leaf still exits 1 in every spelling, because blockedHit is decided above on the
+  // directory-stripped key) — this only restored the CLEAR verdict.
+  // A ".md" suffix means taskfile, never a branch: 260 refs on this repo, none ends in ".md". This
+  // merely generalises what the --queue arm below already assumed.
+  const isTaskFileShaped = /\.md$/i.test(target.trim());
+  const branchShaped = /^[\w.-]+\/[\w.-]+$/.test(target.trim()) && !isTaskFileShaped;
+  const queueTaskFile = queue && isTaskFileShaped;
   const leaf = queueTaskFile
     ? hits.find((l) => normalize(l.taskFile).toLowerCase() === normalize(target).toLowerCase())
     : hits[0];
