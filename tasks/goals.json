@@ -3189,6 +3189,15 @@
           "mergeHash": null
         },
         {
+          "id": "e2-rail-tough-only-bind",
+          "title": "E2 RAIL-TOUGH-ONLY BIND — bind the one E2 enemy sheet whose four rows are settled (Rail Tough) to four real diagonals, gated on a mandatory re-measurement of the row the s1193 art batch replaced. Steam Wrecker + Coal Thief stay unbound (F-1193-3).",
+          "taskFile": "lane-a-e2-rail-tough-only-bind.md",
+          "status": "queued",
+          "lane": "lane-a",
+          "spec": "reviews/eight-winds-wiring-spec.md (READ-FIRST; gate released BACKLOG:1643 verbatim “EIGHT-WINDS-WIRING is now FIRE-AUTHORABLE (art + spec on main)”); evidence chain reviews/eight-winds-wiring-e2-enemies.md (F-1188-2, the STOP this task does NOT reverse), reviews/eight-winds-rail-tough-row-settle.md (8b9e8af2, rows 2/3 settled), reviews/eight-winds-e2-row-repairs.md (f61843c0, PARTIAL — 2 landed, 2 parked); subject slot assets/layer-contracts/characters.v2.json:196-211.",
+          "note_s1221": "AUTHORED s1221 on two findings the authoring fire MEASURED rather than inherited. F-1221-1: logs/s1190-rail-tough-wrench-probe.mjs is RED on main (throws ‘Mirror-floor control drifted: 0.4585250692698196’ against its 0.452 pin) and its probe-results.json byte-identity provenance is therefore void; the decisive control (logs/s1221-rail-tough-row1-repair-control.mjs, same instrument, sheet path parameterised) proves the drift is caused by row 1 ALONE — rows 0/2/3 wrench offsets are numerically identical across the pre-batch and repaired sheets, row 1’s are not. F-1221-2: the spec §4 ordering safety-net is walk8-only — SpriteAnimator.ts:979-984 returns walk4 with NO processed-cells check and the E2 slots have no walk8 block, so a missing cell resolves to null at :1148-1149 with no throw and no log. CONSEQUENCE: the master’s scope 1 is a hard STOP gate — nobody has measured whether the repaired rows 0/1 are a lawful sw/se mirror pair, and F-1188-2 measured them at +0.119 DIRECT-dominant (same heading) before the repair. The surviving wrench control is a front/back tell and carries no east/west information (F-1191-1)."
+        },
+        {
           "id": "eight-winds-rail-tough-row-settle",
           "title": "Settle the Rail Tough 2v3 disagreement with a NON-SILHOUETTE instrument, so the E2 diagonal art batch can be sized in full and shipped as ONE request. Evidence only: zero art, zero src/, zero assets/, zero contract bytes.",
           "taskFile": "lane-c-eight-winds-rail-tough-row-settle.md",
