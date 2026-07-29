@@ -8,6 +8,7 @@ description: Gate and merge one finished task's output into main, the Gold Rush 
 One drain per invocation. Serial. Never batch-gate (DISJOINT-PAIR exception only per fire.md §3, two max, provably disjoint diffs).
 
 ## 0. Preconditions (abort if any fails; fix the precondition first)
+- [ ] **IS IT ALLOWED? — the FIRST command, before classification and before you form an opinion:** `node scripts/drain-block-check.mjs <done-move filename | taskfile | branch>`. **Exit 1 = STOP: do not drain, do not gate, do not "just check the merge."** Every other precondition asks *is it READY* — but a policy block is **not a property of the tree**, so no git probe can ever see it. s1104 merged owner-gated rf-34 with a genuinely-ahead branch, a real two-dot diff, and a runner report it judged sound — then reversed it the same fire. **A well-argued runner report is not an unblock; it is often exactly what made the fork worth reserving for the owner.** The block lives in `tasks/goals.json` (`status:"blocked"` + `blockedReason`) keyed by `taskFile`, which every done-move filename already contains — a lookup, not a judgement, one second. A block is lifted by the OWNER only, never by a green battery. Exit 2/UNKNOWN = no goal leaf matched: that is a Goal Registration Law bookkeeping finding, **not a clearance** (F-1116-1: 524 of 644 masters have no leaf). `--all` audits every blocked leaf on the board.
 - [ ] STATUS.md line-1: you hold the lock (attended) or no fresh ACTIVE fire owns main.
 - [ ] `git status --short | grep -v '^??'` on main is EMPTY (clean-main window). If a live main-slot task is running: WAIT — never gate over a dirty tree (Mistake #12: Gate Contamination).
 - [ ] Identify the drain unit: a done-move in `tasks/done/` + its lane branch, OR a `save/*` salvage ref. Read the RUN LOG tail (`tasks/runs/<stamp>-*.log`) — confirm the run made a REAL diff (Mistake #1: Silent No-Op). rc=0 with zero diff → do NOT drain; mark the ladder line no-op and re-queue with a corrected premise if the work is still owed.
@@ -25,8 +26,10 @@ Prefer `git merge --no-ff <branch>` when classification was clean; otherwise app
 
 ## 3. The gate battery (on the MERGED tree — evidence, not vibes)
 ```
+node scripts/drain-block-check.mjs <the drain unit>   # §0 — re-assert on the merged tree
 npx tsc --noEmit
 npm run build
+npm run test:node-guards        # tsc does NOT cover scripts/** — these guards are its only gate
 npx playwright test <the-slice's-spec> <adjacent-suites> -c <self-booting scratch config, ports 5199/5231/5234 family> --workers=1 --reporter=line
 ```
 - Adjacent = the task's self-check list + task-025 + m1-01 + m2-01 minimum. BOTH projects (desktop + mobile). Capture exit codes from the COMMAND, not a pipe tail.
@@ -39,6 +42,7 @@ Sections, all mandatory: Slice/branch/tip → Verdict → What it does (one para
 
 ## 5. Commit + ledger (one event, one commit set)
 - [ ] Merge commit message: `<prefix>: <slice> — <one-line>` + evidence line.
+- [ ] **GOAL REGISTRATION LAW (owner ruling 2026-07-16): flip this slice's leaf in `tasks/goals.json` IN THE DRAIN COMMIT** — `status` → `merged` and `mergeHash` → the full 40-char hash. Not `mergeCommit`: that near-miss key is read by NO consumer, so such a leaf is simultaneously "merged without evidence" to `goal-tracker.test.mjs` and "not shipped" to the queue guard (F-1123-1). Missing goal-tree bookkeeping means the drain duty is UNFINISHED.
 - [ ] `tasks/BACKLOG.md`: mark the ladder line ✅ SHIPPED <hash> IN THIS COMMIT (Mistake #5: Ghost Line). Un-gate anything whose GATE just opened; queue it if the throttle allows.
 - [ ] Salvage lifecycle: branch content now on main → rename `save/*` → `archive/*`; lane branch left as merged ancestor (safe-dupe for the next pre-flight).
 - [ ] Screenshots → `reviews/shots-<slice>/`. Artifacts referenced by the review must exist.
