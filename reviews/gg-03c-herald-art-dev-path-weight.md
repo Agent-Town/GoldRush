@@ -79,7 +79,17 @@ Applied with `git checkout 8e265ee4 -- <8 paths>` and verified by identity rathe
 
 ## Findings
 
-### 🔺 F-1211-1 (HIGH) — the release gate carries THREE reds on main, not the two F-1210-5 named
+### ↩️ F-1211-1 — **WITHDRAWN LATER THE SAME FIRE. The claim below is wrong; it is kept, not deleted, because how it was wrong is the useful part.**
+
+> **Correction (s1211, after draining the lane-d corrective at `e5d3c26c`):** `:184` **cleared** when `:21` was cured —
+> the full release suite is **26/26**. My control could not see why: at `--workers=2`, `:21`'s two **150-second**
+> timeouts ran *concurrently with* `:184` and were themselves the contention starving its GLTF blob-texture loads.
+> **Both of my arms contained the slow `:21`**, so "reproduced identically with and without GG-03c" was true and
+> irrelevant — the arms agreed because they shared the confound, not because `:184` was independent.
+> ➡️ *A failing test can manufacture the load that fails its neighbours; a red measured beside a slow red is not an
+> independent red.* The exoneration of GG-03c below still stands — that part was never in doubt.
+
+### 🔺 F-1211-1 (AS ORIGINALLY WRITTEN — SUPERSEDED) — the release gate carries THREE reds on main, not the two F-1210-5 named
 
 Running `release-build.spec.ts` under its real config (a private-port mirror, see below) gives **3 failed / 23 passed**:
 `:21` desktop + mobile (F-1210-5's known regression) **and `:184` "later flagship URLs decline to the Claim"** on desktop,
