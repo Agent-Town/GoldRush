@@ -3561,6 +3561,12 @@
               "title": "Cure the one MEASURED member of the concurrency class - ap-standing-orders.spec.ts:121 wave_early is a MISSED event (sampled state-diff), not a late one, so no timeout can fix it. Measure-first, deterministic repro required, acceptance 0/16 mobile-chrome at workers=4 (F-1215-1 / F-1214-1).",
               "taskFile": "lane-d-standing-orders-wave-early-seam.md",
               "status": "queued"
+            },
+            {
+              "id": "lb-03-bench-seed-sets",
+              "title": "LB-03 the frozen seed set — THE BENCH's ratified comparability law (specs/agent-play/README.md:61, 'bench runs use a frozen seed set per contract') finally gets the set it names. Today seedMode:'bench' is claimed by the mere PRESENCE of a ?seed= param (Game.ts:5509-5510,:5536) with no set to be a member of, so ?bench=fullbase's 24x perf-harness seed (DebugParams.ts:41-42) mints a bench row; and the server accepts the claim unchecked (standings.ts:139,:143). Adds assets/contracts/bench-seeds.json as its OWN artifact — deliberately NOT a contract-manifest field, because contractDescriptorJson serializes the whole object (ContractFamilies.ts:886) and DescriptorInspector.ts:347 enumerates fields generically into the Charter Press editor, so a manifest field would make the frozen set player-EDITABLE in the same commit that froze it. Client derives the bench claim from set membership; server rejects a non-member bench claim — safe because RELEASE_E1 short-circuits before the URL is read (DebugParams.ts:34) so no release build can emit bench at all. Node guard over the data; board blindness preserved. TWO things deliberately NOT settled and flagged for the owner: how a bench run is launched in a release build (debug-door-in-release design fork), and the reversible ruling that an arbitrary non-member seed submits nothing.",
+              "taskFile": "lane-b-lb-03-bench-seed-sets.md",
+              "status": "queued"
             }
           ]
         }

@@ -1,0 +1,56 @@
+CODEX: model=gpt-5.6-sol effort=xhigh
+# lb-03-bench-seed-sets — give THE BENCH the frozen seed set its own law already requires
+ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
+**FIRE-AUTHORED (attended review welcome)** — authored s1220 from `specs/agent-play/README.md:61` (RATIFIED) plus LB-02's shipped code, every claim below re-derived by reading the files on main, not inherited from a handoff.
+
+WHY: the ratified law, verbatim (`specs/agent-play/README.md:61`):
+> **PINNED SEEDS: bench runs use a frozen seed set per contract (comparability); the live county ladder runs live seeds. Same door, two modes.**
+
+LB-02 (`b5cb6c60`, `reviews/lb-02-bench-fields.md`) shipped the **declaration** — a required `seed` + `seedMode:'live'|'bench'` on every submission — and BACKLOG:1775 closes with *"NEXT RUNG: the bench seed SETS … the seed-set rung is now unblocked by LB-02's `seedMode`."* **This task is that rung.** Today the word "bench" is asserted by a client with no set to assert it against, and accepted by a server with nothing to check it against.
+
+**THE MEASURED PREMISE — four facts, each read at source on main. Re-derive them before you build; do not take my word.**
+1. `src/game/Game.ts:5509-5510` + `:5536` — the entire bench/live decision:
+```ts
+const pinnedSeed = getDebugSeed();
+const seed = pinnedSeed ?? 'gold-rush';
+…
+seedMode: pinnedSeed === null ? 'live' : 'bench',
+```
+➡️ **`seedMode:'bench'` is claimed by the mere PRESENCE of a `?seed=` URL parameter.** Any seed at all mints a "bench" row. There is no set, no membership, no comparability — which is precisely the property the law exists to guarantee.
+2. `src/core/DebugParams.ts:41-42` — `?bench=fullbase` injects `seed: 'perf-02-fullbase'` **and** `timescale: 24`. ➡️ **a performance-harness run at 24× speed that happens to secure submits itself as a BENCH row.** That is the sharpest illustration of fact 1: the corpus the owner intends to compare models on is, today, open to a perf rig.
+3. `src/core/DebugParams.ts:34` — `if (RELEASE_E1) return DEFAULT_PARAMS;` returns **before** the URL is read, and `DEFAULT_PARAMS.seed` is `null` (`:18`). ➡️ **in the E1 release build `getDebugSeed()` is unconditionally `null`, so bench mode is UNREACHABLE and every release row is `live` with the literal seed `'gold-rush'`.** Two consequences, both load-bearing: (a) **no genuine bench row exists in the wild**, which is what makes item 3's server-side rejection safe (see the F-1216-2 note there); (b) *how a real bench run is ever launched in a release build is a separate, owner-gated question — see NO.*
+4. `functions/api/standings.ts:139` + `:143` — the server accepts `seedMode` as a free-choice enum (`body.seedMode === 'live' || body.seedMode === 'bench'`) and checks only that `seed` is non-empty. Nothing anywhere relates a seed to a contract.
+
+⚠️ **THE TRAP — READ THIS BEFORE YOU CHOOSE WHERE THE SEED SET LIVES. The obvious placement is the wrong one and it will cost you the whole slice.**
+The natural instinct is to add `benchSeeds: string[]` to each contract entry in `assets/contracts/epoch-*/contracts.json`. **Do not.** Three facts make that a breaking change:
+- `src/meta/ContractFamilies.ts:886` — `contractDescriptorJson` is `JSON.stringify(contract, null, 2)`, the **whole object**, not a projection. Every field on a contract is part of its descriptor.
+- `src/meta/ContractFamilies.ts:1480` — `normalizeContractDescriptor` shape-checks a candidate against the template, and `src/charter/CharterStamp.ts:40-42` round-trips descriptors through it. Charter stamps and the `cp01`/`cp02` specs are downstream of that string.
+- `src/editor/DescriptorInspector.ts:347` — `for (const [key, child] of Object.entries(value))` enumerates descriptor fields **generically** into the contract editor.
+➡️ **A field on the contract manifest becomes a player-EDITABLE field in the Charter Press — which would make the "frozen" seed set editable, defeating the law in the same commit that implements it.** ✅ **THEREFORE: the seed set lives in its OWN artifact, and the contract manifests are not touched at all.**
+
+**THE ONE PIECE OF GOOD NEWS — a real single source of truth already exists.** `functions/api/standings.ts:1-10` and `src/meta/ContractFamilies.ts:2-21` import **the same ten** `assets/contracts/epoch-*/contracts.json` bundles. A sibling JSON under `assets/contracts/` is importable by client and server identically, with no duplication and no drift. Use that; do not hand-copy a seed list into two places.
+
+READ-FIRST: `specs/agent-play/README.md:53-62` (THE BENCH + its three laws — the whole section) · `reviews/lb-02-bench-fields.md` (what shipped, and its F-1216-2 note on tightening a public contract) · `functions/api/standings.ts:87-90`, `:130-170`, `:190-220`, `:239-241` (POST_KEYS, the POST validator, `validateStoredRow`, `knownContract`) · `src/game/Game.ts:5502-5545` (`submitCountyStanding` — THE SUBJECT) · `src/core/DebugParams.ts:33-63` · `e2e/lb-01-county-standings.spec.ts:140-175` + `:260-270` (the existing bench-row and board-blindness assertions you must not weaken).
+
+PRE-FLIGHT (LANE-SAFETY invariant): any dirty tracked blob must be reachable in git, else STOP.
+
+SCOPE:
+1. **THE FROZEN SET, as its own artifact.** Add `assets/contracts/bench-seeds.json`: a versioned map from `contractId` → a frozen, ordered, non-empty array of seed strings. Cover **at minimum every contract in `epoch-1-frontier`**; you may cover more, but an incomplete map must be *explicit* (a contract absent from the map has **no** bench set — it is not an error, it means bench runs are not yet offered there). **Do not touch any `contracts.json`.** Seeds are opaque strings ≤256 chars (`MAX_SEED_LENGTH`, `standings.ts:82`); keep them short, lowercase, and named so a human can tell two apart in a report.
+2. **CLIENT: derive the bench CLAIM from set MEMBERSHIP, not from "a seed exists".** In `submitCountyStanding`, `seedMode` becomes `'bench'` **only** when the active seed is a member of *that contract's* frozen set. ⚖️ **The unspecified case, and my ruling on it — this is a deliberate, reversible choice, flagged for the owner's veto:** a run on an **arbitrary non-member seed** is neither a bench run (not comparable) nor a live run (not a live seed), so **it is not submitted at all** — return early, exactly as the existing guards at `:5503` do. Rationale: labelling it `live` would pollute the live board with pinned-seed runs, which is the same comparability breach as fact 2 pointed the other way. **Implement it as one clearly-commented early return so a one-line reversal is possible.** Everything else about the submission is unchanged.
+3. **SERVER: reject a bench claim whose seed is not a member of that contract's set** — a new `400` with its own error code (follow the house shape at `:110`/`:144`), importing the same artifact from item 1. Rows with `seedMode:'live'` are untouched. 🔓 **Why rejecting is SAFE here, and why you should say so in your report:** F-1216-2 warns that tightening a public contract breaks a client deployed ahead of its bundle — **but fact 3 above proves the release build cannot emit `seedMode:'bench'` at all** (`RELEASE_E1` ⇒ `seed === null` ⇒ `'live'`), so there is no deployed client whose bench rows this can break. **Verify that yourself before relying on it**; if you find any path by which a release build emits `bench`, STOP and report rather than shipping the rejection.
+4. **A NODE GUARD over the artifact** (it is data, and data rots silently): every key is a **known contract id** — cross-check against the same bundles `standings.ts:71-73` uses, so a renamed contract cannot leave an orphaned seed set · every array non-empty · **no duplicate seed within a contract** · every seed a non-empty string ≤256 chars. Wire it into `npm run test:node-guards`.
+5. **TESTS.** Extend `e2e/lb-01-county-standings.spec.ts`: a member seed stores as `bench`; a **non-member** seed is rejected by the server (item 3); and the existing board-blindness assertions at `:155`/`:171` still pass unchanged — **the public board must remain blind to `seed`/`seedMode`, and nothing here may widen the GET projection.** **Mutate each new assertion to confirm it genuinely fails without your change, and report that you did.**
+
+TOUCH-ONLY: `assets/contracts/bench-seeds.json` (new) · `functions/api/standings.ts` · `src/game/Game.ts` (**`submitCountyStanding` only**) · `e2e/lb-01-county-standings.spec.ts` · one new node guard + its registration in `package.json`.
+NO: **any `assets/contracts/epoch-*/contracts.json`** (the trap above — automatic reject) · `ContractFamilies.ts` / `CharterSchema.ts` / `CharterStamp.ts` / `DescriptorInspector.ts` / anything in `src/editor/` · **making bench mode reachable in the release build** (fact 3b — that is a debug-door-in-release **design fork**, OWNER-GATED; report it, do not build it) · widening the GET board projection or weakening `:155`/`:171` · the `stack` block or any LB-02 field semantics · `src/agent/**` (`PermissionLadder.ts`/`ToolSurface.ts` are **owner-gated by F-1219-1**) · `e2e/ap-standing-orders.spec.ts` (lane-d is curing it live this hour) · Economy · CombatSystem · Balance · `playwright.config.ts`.
+
+SELF-CHECK: `npm run test:node-guards` **FIRST** (expect 74/74 **+ your new guard** — state the literal count) · `npx tsc --noEmit` clean · `npm run build` green · `npx playwright test --list` (expect **344 files**; the test count moves by exactly the number of tests you added × 2 projects — **state both numbers**) · `e2e/lb-01-county-standings.spec.ts` full file, both projects · adjacent: `e2e/release-build.spec.ts` **under `playwright.release.config.ts`** (⚠️ it does **not** run under the default config, and you are touching the release-gated seed path — a slice passed every listed gate and still turned this suite red once) · plain boot desktop + 390px, zero console/page errors.
+
+⚠️ **`--workers=N` DOES NOT DO WHAT YOU THINK ON A SINGLE FILE (F-1217-2).** `playwright.config.ts` sets no `fullyParallel` and no `workers`; one spec × two projects tops out at **2 workers** whatever you pass. **Always quote the literal `Running X tests using M workers` line**, never the flag.
+
+🔴 KNOWN REDS — NOT yours, do not "fix" them (automatic reject):
+  - `locked-win.spec.ts:65` and `tl-01-run-telemetry.spec.ts:229` — **100% deterministic at every worker count** (measured s1218, F-1218-3). Report if seen; never chase.
+  - `m4-06-embodiment.spec.ts:395` — known ~45% flake (F-1212-2). Re-measure as a rate before blaming yourself.
+  - `ap-standing-orders.spec.ts:121` — measured 25% mobile-only at w4; **lane-d owns it.**
+
+READY-FOR-GATES + report: the seed-set artifact and which contracts it covers · your **own verification of fact 3** (that a release build cannot emit `bench`) and therefore whether item 3's rejection is safe · the item-5 mutation proofs · the literal node-guard count and the `--list` numbers before/after · and **explicitly flag the two things this task deliberately did NOT settle**: how a bench run is launched in a release build, and whether the item-2 non-member ruling ("do not submit") is what the owner wants.
