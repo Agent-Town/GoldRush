@@ -15,6 +15,34 @@ const STATS_FILE = resolve(ROOT, process.env.GOLD_RUSH_TASK_STATS_FILE ?? 'logs/
 const RUNS = join(ROOT, 'tasks/runs');
 const ARCHIVE = join(ROOT, 'logs/runs-archive');
 const ENTRY_FLOOR = 228;
+const BASELINE_REF = process.env.GOLD_RUSH_TASK_STATS_BASELINE_REF;
+const HISTORY_DEPTH = 20;
+
+function countRows(text) {
+  return text.split(/\r?\n/).filter((line) => line.trim()).length;
+}
+
+function highWaterEntryCount() {
+  try {
+    if (!BASELINE_REF && execFileSync('git', ['rev-parse', '--is-shallow-repository'], {
+      cwd: ROOT,
+      encoding: 'utf8',
+    }).trim() === 'true') return 0;
+    const refs = BASELINE_REF
+      ? [BASELINE_REF]
+      : execFileSync('git', ['log', '--first-parent', `-${HISTORY_DEPTH}`, '--format=%h', '--', 'logs/task-stats.jsonl'], {
+          cwd: ROOT,
+          encoding: 'utf8',
+        }).split(/\r?\n/).filter(Boolean);
+    return Math.max(0, ...refs.map((ref) => countRows(execFileSync(
+      'git',
+      ['show', BASELINE_REF ? ref : `${ref}:logs/task-stats.jsonl`],
+      { cwd: ROOT, encoding: 'utf8' },
+    ))));
+  } catch {
+    return 0;
+  }
+}
 
 test('every recorded run log remains recoverable', () => {
   const archiveFiles = readdirSync(ARCHIVE);
@@ -35,6 +63,16 @@ test('every recorded run log remains recoverable', () => {
   assert.ok(
     entries.length >= ENTRY_FLOOR,
     `task-stats floor: expected at least ${ENTRY_FLOOR} entries, found ${entries.length}`,
+  );
+  const highWater = highWaterEntryCount();
+  assert.ok(
+    highWater > 0,
+    `task-stats high-water baseline could not be established${BASELINE_REF ? ` from ${BASELINE_REF}` : ''}`,
+  );
+  console.log(`Task-stats high-water: subject ${entries.length} rows, baseline ${highWater}`);
+  assert.ok(
+    entries.length >= highWater,
+    `subject ${entries.length} rows vs high-water ${highWater} (−${highWater - entries.length})`,
   );
 
   const recoverableLogs = new Set(
