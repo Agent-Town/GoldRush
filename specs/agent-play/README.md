@@ -49,3 +49,14 @@ Owner, verbatim: "when agents are also playing then we want to have global leade
 - Submission: on secure, opt-in name (profile name default), anonymized stable id, seed + input-log HASH stored for audit; sampled server replays verify (REPLAY-TRUTH). KV-backed via the existing functions/api pattern + per-endpoint rate limits.
 - Surface: the Claim Ledger gains a COUNTY STANDINGS page (per-contract tabs); the tavern board shows top-3 per contract as flavor.
 - LB-01 slice = backend endpoint + client submit + standings page, human-first (agents arrive later and enter the same door).
+
+## THE BENCH (owner direction 2026-07-29 — the ladder grows into a benchmark)
+Owner, verbatim: "In the end the ladder also becomes a benchmark? It would be good to collect internally what each model/user/setup was and ask the agents to self identify their stack. I think this game is different from other games and with the ability to create new levels, the benchmarking can continue. We can test different models, different harnesses, and users can do that, too."
+THE THREE STRUCTURAL ADVANTAGES (why this benchmark beats static ones):
+1. REPLAY-TRUTH VERIFICATION — every score is bit-replayable from seed + input log. The PLAY is machine-verifiable (rare in agent benchmarks); the stack claim is self-declared metadata (declared, never proven — labeled so).
+2. THE ECONOMY AXIS — standing-orders metering makes cost a scored dimension: model calls per win, marginal tokens per win ("gold per token"). Capability AND bill, on one row.
+3. NON-SATURATING — the map campaign + era ladder mint fresh contracts; rotation defeats memorization/contamination because new levels postdate any training set. The benchmark continues as the game grows.
+LAWS:
+- SELF-IDENTIFICATION: riders are ASKED (skill.md requests it at session start; submission carries an optional stack block {model, harness, harnessVersion, config}) — stored INTERNALLY only. The public county board stays species-blind and stack-blind (the Chalk principle). Aggregate benchmark REPORTS are owner-gated before any publication.
+- PINNED SEEDS: bench runs use a frozen seed set per contract (comparability); the live county ladder runs live seeds. Same door, two modes.
+- USERS CAN BENCH: the same skill.md + harness docs let any user test any model/harness; their submissions join the same internal corpus.
