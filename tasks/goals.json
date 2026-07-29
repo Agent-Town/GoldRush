@@ -3555,6 +3555,12 @@
               "status": "merged",
               "mergeHash": "54f166b9c5b47e412ddfa8905a0fa9976693b61b",
               "drainNotes": "s1215: node guards 74/74 (incl. whole-suite-collection), --list 2460/344 = the corrected bar, tsc clean, build 1.43s, own spec + m4-01/05/10 green at --workers=4, plain-boot probe CLEAN desktop+390. F-1215-1: adjacent ap-standing-orders.spec.ts:80 red at workers=4 is PRE-EXISTING on main, proven by a matched control (pre-merge ToolSurface.ts fails identically 4/4). Review: reviews/ap-08b-view-collection-firewall.md"
+            },
+            {
+              "id": "standing-orders-wave-early-seam",
+              "title": "Cure the one MEASURED member of the concurrency class - ap-standing-orders.spec.ts:121 wave_early is a MISSED event (sampled state-diff), not a late one, so no timeout can fix it. Measure-first, deterministic repro required, acceptance 0/16 mobile-chrome at workers=4 (F-1215-1 / F-1214-1).",
+              "taskFile": "lane-d-standing-orders-wave-early-seam.md",
+              "status": "queued"
             }
           ]
         }
