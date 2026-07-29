@@ -8,6 +8,7 @@ import * as Terrain from '../world/Terrain';
 import type { GoldRushToolName, ToolReceipt } from './ToolSurface';
 import { agentBark, barkForReceipt } from './Voice';
 import { RUN_CAST_SCALE } from '../entities/runCastScale';
+import { observeStandingOrders, resetStandingOrders, tickStandingOrders } from './StandingOrders';
 
 export type ProspectorPoint = { x: number; z: number };
 
@@ -81,6 +82,7 @@ export class ProspectorEmbodiment {
   }
 
   reset(hero?: ProspectorPoint): void {
+    resetStandingOrders();
     const start = hero ? this.idlePoint(hero, 0) : { x: Balance.agent.homeX, z: Balance.agent.homeZ };
     this.group.position.set(start.x, this.floatY(start.x, start.z, 0), start.z);
     this.target.set(start.x, 0, start.z);
@@ -122,6 +124,10 @@ export class ProspectorEmbodiment {
   }
 
   updateSimulation(delta: number, at: number, hero?: ProspectorPoint): void {
+    const order = tickStandingOrders(at, this.group.position);
+    if (order.receipt) this.handleReceipt(order.receipt, order.receiptPoint);
+    else if (order.movement) this.assignWork(order.movement, 0);
+
     if (delta > 0) {
       if (this.moving) this.stepTowardTarget(delta);
       else if (this.workRemaining > 0) this.workRemaining = Math.max(0, this.workRemaining - delta);
@@ -142,6 +148,7 @@ export class ProspectorEmbodiment {
   }
 
   updatePresentation(delta: number, alpha: number): void {
+    observeStandingOrders();
     this.presentationAt += Math.max(0, delta);
     const amount = THREE.MathUtils.clamp(alpha, 0, 1);
     this.renderPosition.lerpVectors(this.previousPosition, this.group.position, amount);

@@ -8,6 +8,11 @@ import {
   type MetaProgressAgentGate,
 } from './PermissionLadder';
 import type { AgentAbility } from './AgentConsent';
+import {
+  bindStandingOrders,
+  StandingOrdersExecutor,
+  type StandingOrdersSubmission,
+} from './StandingOrders';
 
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };
@@ -37,7 +42,9 @@ export type GoldRushToolName =
   | 'et.goldrush.chase_mark'
   | 'et.goldrush.collect_xp'
   | 'et.goldrush.collect_gold'
-  | 'et.goldrush.place_building';
+  | 'et.goldrush.place_building'
+  | 'et.goldrush.orders'
+  | 'et.goldrush.view';
 
 export type AgentCapability = {
   id: AgentAbility;
@@ -104,6 +111,8 @@ export type GoldRushToolSurface = {
       pos: AgentVec2,
       rot?: number,
     ) => ToolReceipt<'et.goldrush.place_building', { def: BuildableId; pos: AgentVec2; rot: number }>;
+    submit_orders: (orders: unknown) => ToolReceipt<'et.goldrush.orders', { orders: unknown }>;
+    view: () => ToolReceipt<'et.goldrush.view', Record<string, never>>;
   };
 };
 
@@ -126,10 +135,12 @@ type InternalGame = AgentGameAdapter & {
 };
 
 const EMPTY_ARGS: Record<string, never> = {};
+const standingOrdersBySurface = new WeakMap<GoldRushToolSurface, StandingOrdersExecutor>();
 
 export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOptions = {}): GoldRushToolSurface {
   const permissionLevel = () => options.permissionLevel ?? readAgentPermissionLevel(options.metaProgress ?? readMeta(game));
   const capabilities = implementedCapabilities(game);
+  let standingOrders: StandingOrdersExecutor;
 
   const stateReceipt = (): ToolReceipt<'et.goldrush.get_state', Record<string, never>> =>
     makeReceipt('et.goldrush.get_state', EMPTY_ARGS, {
@@ -138,7 +149,7 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
       economyLog: readEconomyLog(game),
     });
 
-  return {
+  const surface: GoldRushToolSurface = {
     namespace: 'et.goldrush',
     permissionLevel,
     capabilities,
@@ -169,17 +180,30 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
           if (!validPos(pos)) return invalid('place_building requires finite x/z.');
           return game.placeBuilding?.(def, pos, rot) ?? placeBuildingThroughGame(game, def, pos, rot);
         }),
+      submit_orders: (orders) => orderReceipt(standingOrders.submit(orders), orders, readEconomyLog(game)),
+      view: () =>
+        makeReceipt('et.goldrush.view', EMPTY_ARGS, {
+          ok: true,
+          result: standingOrders.snapshot(),
+          economyLog: readEconomyLog(game),
+        }),
     },
   };
+  standingOrders = new StandingOrdersExecutor(surface, () => readLiveState(game), () => readEconomyLog(game));
+  standingOrdersBySurface.set(surface, standingOrders);
+  return surface;
 }
 
 export function install(game: AgentGameAdapter, options: ToolSurfaceOptions = {}): GoldRushToolSurface {
   const surface = createToolSurface(game, options);
+  bindStandingOrders(standingOrdersBySurface.get(surface)!);
   (game as AgentGameAdapter & { agentTools?: GoldRushToolSurface }).agentTools = surface;
   return surface;
 }
 
-function runSideEffect<TName extends Exclude<GoldRushToolName, 'et.goldrush.get_state'>, TArgs>(
+type SideEffectToolName = Exclude<GoldRushToolName, 'et.goldrush.get_state' | 'et.goldrush.orders' | 'et.goldrush.view'>;
+
+function runSideEffect<TName extends SideEffectToolName, TArgs>(
   game: AgentGameAdapter,
   level: AgentPermissionLevel,
   tool: TName,
@@ -351,13 +375,17 @@ function readMeta(game: AgentGameAdapter): MetaProgressAgentGate | undefined {
 }
 
 function readState(game: AgentGameAdapter): unknown {
-  if (game.diagnostics) return clone(game.diagnostics());
-  if (typeof window !== 'undefined') return clone(window.__THREE_GAME_DIAGNOSTICS__);
+  return clone(readLiveState(game));
+}
+
+function readLiveState(game: AgentGameAdapter): unknown {
+  if (game.diagnostics) return game.diagnostics();
+  if (typeof window !== 'undefined') return window.__THREE_GAME_DIAGNOSTICS__;
   const internal = game as InternalGame & { readonly buildSystem?: { readonly diagnostics?: unknown }; readonly economy?: { readonly state?: unknown } };
-  return clone({
+  return {
     economy: internal.economy?.state,
     build: internal.buildSystem?.diagnostics,
-  });
+  };
 }
 
 function readEconomyLog(game: AgentGameAdapter): readonly unknown[] {
@@ -392,6 +420,27 @@ function makeReceipt<TName extends GoldRushToolName, TArgs>(
   cost?: number,
 ): ToolReceipt<TName, TArgs> {
   return { tool, args: clone(args), outcome, ...(cost === undefined ? {} : { cost }) };
+}
+
+function orderReceipt(
+  result: StandingOrdersSubmission,
+  orders: unknown,
+  economyLog: readonly unknown[],
+): ToolReceipt<'et.goldrush.orders', { orders: unknown }> {
+  if (result.ok) {
+    return makeReceipt('et.goldrush.orders', { orders }, {
+      ok: true,
+      result: { count: result.count },
+      economyLog,
+    });
+  }
+  return makeReceipt('et.goldrush.orders', { orders }, {
+    ok: false,
+    reason: result.reason,
+    message: result.message,
+    ...(result.requiredLevel === undefined ? {} : { requiredLevel: result.requiredLevel }),
+    economyLog,
+  });
 }
 
 function invalid(message: string): { invalid: true; message: string } {
