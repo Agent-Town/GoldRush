@@ -3503,6 +3503,13 @@
               "status": "merged"
             },
             {
+              "id": "lb-02-bench-fields",
+              "title": "LB-02 the bench's internal memory ✅ — submissions may carry an OPTIONAL self-declared stack (model, harness, harnessVersion, config), each 256-char-capped and stored verbatim in the KV row as declaredBy:'self', plus REQUIRED seed + seedMode:'live'|'bench' so pinned-seed runs declare themselves (specs/agent-play/README.md §THE BENCH, owner directive 2026-07-29). Storage only — no aggregate/report path, which stays owner-gated for later. The public GET stays stack-blind BY CONSTRUCTION: standings.ts projects the board through an explicit six-field destructure, and the spec now asserts the absence of stack/seed/seedMode/model/harness/harnessVersion/config/declaredBy on every returned row. Backward compatible on READ — validateStoredRow treats the seed pair as all-or-nothing, so pre-BENCH KV rows survive (asserted with a seeded legacy row that ranks 2nd on the board). GOAL-LEAF DEBT DISCHARGED HERE: LB-02 was authored without a leaf; this drain registers it, per the Goal Registration Law. Gates on the merged tree, node-guards FIRST: 74/74 exit 0 incl. whole-suite-collection; --list 2460/344 (unchanged — LB-02 extends an existing spec and adds no file); tsc clean; build 1.50s; own spec 12/12 both projects; plain-boot probe CLEAN at 1280x800 AND 390x844 (0 errors / 0 warnings / 0 pageErrors). Pure LANE-TOUCHED: git diff d7edcd3b main over all three paths is EMPTY, so main had moved none of them and no graft was needed. The adjacent secure-ceremony battery was RED IN BOTH ARMS and the merge was exonerated by a matched control plus a second treatment sample — see F-1216-1.",
+              "taskFile": "lane-bench-fields.md",
+              "mergeHash": "b5cb6c60f1e7c7d1f5ccc2852a0a410466837af6",
+              "status": "merged"
+            },
+            {
               "id": "ap-06b-adapter-wiring",
               "title": "AP-06b Standing-orders adapter wiring — lift the firewall to Game.ts so BUILD and HARVEST reach the world (F-1212-3)",
               "taskFile": "ap-orders-adapter-wiring.md",
