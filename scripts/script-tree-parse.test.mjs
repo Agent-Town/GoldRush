@@ -45,33 +45,14 @@
  */
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { readdirSync, statSync } from 'node:fs';
 import { join, dirname, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { spawn } from 'node:child_process';
+import { subjectFiles } from './lib/subject-tree.mjs';
 
 // Resolved from this file, never from cwd -- guards in this repo are required to
 // be cwd-invariant (scripts/collection-guards-cwd-invariance.test.mjs).
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
-
-function walk(dir, predicate, acc = []) {
-  let entries;
-  try {
-    entries = readdirSync(dir, { withFileTypes: true });
-  } catch {
-    return acc;
-  }
-  for (const entry of entries) {
-    const full = join(dir, entry.name);
-    if (entry.isDirectory()) {
-      if (entry.name === 'node_modules' || entry.name === '.git') continue;
-      walk(full, predicate, acc);
-    } else if (entry.isFile() && predicate(entry.name)) {
-      acc.push(full);
-    }
-  }
-  return acc;
-}
 
 // Bounded concurrency: 174 serial `node --check` spawns measured 4.3s, which is
 // real money on a gate that runs on every drain. A pool of 8 brings the whole
@@ -125,22 +106,7 @@ const SUBJECTS = [
 
 for (const subject of SUBJECTS) {
   test(`every ${subject.dir}/**/*${subject.ext} parses`, async () => {
-    const dir = join(ROOT, subject.dir);
-    let exists = true;
-    try {
-      statSync(dir);
-    } catch {
-      exists = false;
-    }
-    // Absence must be loud. A subject that vanishes should force a deliberate
-    // retirement of its row, not quietly stop being checked.
-    assert.ok(exists, `${subject.dir}/ is missing — this guard names it as a subject; retire its row deliberately, do not let it pass by absence`);
-
-    const files = walk(dir, (n) => n.endsWith(subject.ext));
-    assert.ok(
-      files.length >= subject.floor,
-      `expected >=${subject.floor} ${subject.dir}/**/*${subject.ext}, walked ${files.length} — the walk or the tree moved`,
-    );
+    const files = subjectFiles(ROOT, subject, { ignoreReadErrors: true });
 
     const failures = await parseAll(files, subject.cmd, subject.args);
     assert.deepEqual(
