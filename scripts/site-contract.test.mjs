@@ -49,6 +49,22 @@
  * The tests below close the rest of what a page can reference: inline scripts,
  * and every local href/src that must resolve to a real file or a real element.
  *
+ * ---------------------------------------------------------------------------
+ * F-1234-1 / F-1234-2 (measured s1234): the sentence directly above was ITSELF
+ * the next instance of the class it describes. "every local href/src" walked a
+ * TAG WHITELIST, so the site's one cross-tree reference -- news.html's
+ * `<div data-feed="../news/herald.json">`, a real production fetch -- was outside
+ * the denominator; and resolveRef's branch for that same reference resolved it
+ * to OUTSIDE THE REPOSITORY. Two mechanisms had been written for one reference
+ * and neither had ever executed, each keeping the other unnoticed. Breaking the
+ * live feed left tsc rc=0, build rc=0 and run-guards 8/8 rc=0.
+ *
+ * Both are cured below and the claim is now true as written: references are
+ * enumerated by ATTRIBUTE on any element, not by a roster of tags. What it still
+ * does NOT see is stated where it lives -- the `|| '../news/herald.json'` string
+ * literal inside news.html's inline fetch is a second copy of the same path that
+ * no assertion reads, and CSS `url()` is not parsed (site/styles.css emits none).
+ *
  * These three are ONE-sided (site/ referring to itself), so the two-sided
  * argument above is not what keeps them always-on -- they ride here only because
  * the file already does and they cost ~10ms. That is not a precedent for adding
@@ -153,12 +169,31 @@ test('site: each inline <script> parses under the grammar its tag requests', () 
 /**
  * Every local href/src the pages emit, split into its path and its fragment.
  * External schemes are not ours to resolve.
+ *
+ * F-1234-1 (measured s1234): this used to walk a TAG WHITELIST
+ * (link|a|img|script|source|video|audio|iframe). The `data-feed` arm of the
+ * attribute chain below was added for news.html's production feed -- and the
+ * only element that carries data-feed is a <div>, which the whitelist excluded.
+ * So that arm matched 0 references out of 22 and had never executed once.
+ * Measured: repointing the feed at a file that does not exist left tsc rc=0,
+ * `npm run build` rc=0 and `run-guards` 8/8 rc=0; the identical break moved onto
+ * an <iframe> failed this file's own "resolves to a file that exists" assertion.
+ * Same attribute, same missing target, same page -- only the carrier tag differed.
+ *
+ * The fix is to stop keeping a tag roster: any element may carry a reference, so
+ * the ATTRIBUTE is the thing worth enumerating, not the tag. Script and style
+ * bodies are stripped first so a `<` inside JS/CSS cannot forge a tag.
  */
 function localRefs() {
   const refs = [];
-  const TAG = /<(link|a|img|script|source|video|audio|iframe)\b([^>]*)>/gi;
+  const TAG = /<([a-zA-Z][a-zA-Z0-9-]*)\b([^>]*)>/g;
   for (const page of htmlFiles()) {
-    const html = readFileSync(join(SITE, page), 'utf8');
+    // Blank the BODIES only -- the opening <script src> tag is itself a reference
+    // and must stay in the denominator.
+    const html = readFileSync(join(SITE, page), 'utf8').replace(
+      /(<(script|style)\b[^>]*>)([\s\S]*?)(<\/\2>)/gi,
+      (_m, open, _tag, body, close) => open + body.replace(/[^\n]/g, ' ') + close,
+    );
     for (const [, tag, attrs] of html.matchAll(TAG)) {
       const raw =
         attrs.match(/\bhref=["']([^"']+)["']/i)?.[1] ??
@@ -177,12 +212,25 @@ function localRefs() {
 
 /**
  * Where a reference lands once deployed. deploy-site.sh:31-36 stages `site/.` at
- * the root and copies `news/` in beside it, so a path that escapes site/ is
- * resolved against the repo root -- that is the production layout, not a guess.
+ * the root and copies `news/` in beside it, so a leading `../` from a site page
+ * lands in the repo root -- that is the production layout, not a guess.
+ *
+ * F-1234-2 (measured s1234): the former escape branch was
+ * `inSite.startsWith(SITE) ? inSite : resolve(ROOT, path)`, which re-applied the
+ * SAME `../` a second time and sent "../news/herald.json" to
+ * <repo-parent>/news/herald.json -- outside the repository entirely -- while
+ * discarding the correct answer `inSite` had already computed. It was written
+ * for the one escaping reference on the site and was never reached, because the
+ * tag whitelist removed by F-1234-1 hid that reference from this function: two
+ * mechanisms for one reference, neither of which had ever executed.
+ *
+ * resolve(SITE, path) is therefore the whole rule. KNOWN LIMIT, stated rather
+ * than coded for: a root-absolute href ("/news/x.json") would resolve to the
+ * filesystem root and read as missing. The site emits none today, and writing an
+ * untested branch for a case that does not exist is the exact defect above.
  */
 function resolveRef(path) {
-  const inSite = resolve(SITE, path);
-  return inSite.startsWith(SITE) ? inSite : resolve(ROOT, path);
+  return resolve(SITE, path);
 }
 
 test('site: every local href/src resolves to a file that exists', () => {
@@ -193,6 +241,42 @@ test('site: every local href/src resolves to a file that exists', () => {
       existsSync(resolveRef(ref.path)),
       `${ref.page} <${ref.tag}> points at "${ref.raw}" but nothing exists there ` +
         `(resolved: ${resolveRef(ref.path)})`,
+    );
+  }
+});
+
+/**
+ * The anti-rot assertion for F-1234-1/-2. Both defects were INVISIBLE rather than
+ * wrong-answered: a reference simply fell out of the denominator, and a guard that
+ * checks nothing reports no failures. Counting is therefore not enough -- the two
+ * properties that were silently lost have to be asserted by name.
+ */
+test('site: the denominator still contains a data-* reference and an escaping path', () => {
+  const refs = localRefs().filter((r) => r.path);
+
+  // (1) A reference carried by a non-whitelisted element. This is what the old
+  // tag roster dropped; if a roster is ever reintroduced, this fails.
+  const dataAttr = refs.filter((r) => !['link', 'a', 'img', 'script', 'source', 'video', 'audio', 'iframe'].includes(r.tag));
+  assert.ok(
+    dataAttr.length > 0,
+    'no reference on a non-whitelisted element is being checked — the tag roster removed in F-1234-1 has come back',
+  );
+
+  // (2) A reference that escapes site/, i.e. the cross-tree feed. This is the one
+  // input that exercises resolveRef's escaping case at all.
+  const escaping = refs.filter((r) => !resolve(SITE, r.path).startsWith(SITE + '/'));
+  assert.ok(
+    escaping.length > 0,
+    'no reference escapes site/ — the cross-tree feed has left the denominator (F-1234-2 branch is unexercised again)',
+  );
+
+  // (3) …and it must resolve INSIDE the repo. The old branch sent it to the
+  // repo's PARENT, which existsSync would have reported as simply missing.
+  for (const ref of escaping) {
+    const landed = resolveRef(ref.path);
+    assert.ok(
+      landed.startsWith(ROOT + '/'),
+      `${ref.page} <${ref.tag}> "${ref.raw}" resolves to ${landed}, outside the repository`,
     );
   }
 });
