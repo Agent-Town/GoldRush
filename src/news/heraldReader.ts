@@ -2,19 +2,24 @@ import './heraldReader.css';
 import { readHeraldItems, type HeraldClass, type HeraldItem } from './herald';
 import { activeProfile, markHintSeen, type ProfileStorage } from '../game/ProfileStorage';
 
-const heraldEngravingUrls = import.meta.glob<string>('../../assets/raw/herald-engraving-*.png', {
+const heraldEngravingUrls = import.meta.glob<string>('../../assets/processed/herald-engraving-*.webp', {
+  eager: true,
+  query: '?url',
+  import: 'default',
+});
+const gazettePanelUrls = import.meta.glob<string>('../../assets/processed/gazette-panel-*.webp', {
   eager: true,
   query: '?url',
   import: 'default',
 });
 const HERALD_ENGRAVINGS: Record<HeraldClass, string | undefined> = {
-  board: heraldEngravingUrls['../../assets/raw/herald-engraving-board.png'],
-  trail: heraldEngravingUrls['../../assets/raw/herald-engraving-trail.png'],
-  river: heraldEngravingUrls['../../assets/raw/herald-engraving-river.png'],
-  schoolhouse: heraldEngravingUrls['../../assets/raw/herald-engraving-schoolhouse.png'],
-  ledger: heraldEngravingUrls['../../assets/raw/herald-engraving-ledger.png'],
-  boss: heraldEngravingUrls['../../assets/raw/herald-engraving-boss.png'],
-  'town-growth': heraldEngravingUrls['../../assets/raw/herald-engraving-town-growth.png'],
+  board: heraldEngravingUrls['../../assets/processed/herald-engraving-board.webp'],
+  trail: heraldEngravingUrls['../../assets/processed/herald-engraving-trail.webp'],
+  river: heraldEngravingUrls['../../assets/processed/herald-engraving-river.webp'],
+  schoolhouse: heraldEngravingUrls['../../assets/processed/herald-engraving-schoolhouse.webp'],
+  ledger: heraldEngravingUrls['../../assets/processed/herald-engraving-ledger.webp'],
+  boss: heraldEngravingUrls['../../assets/processed/herald-engraving-boss.webp'],
+  'town-growth': heraldEngravingUrls['../../assets/processed/herald-engraving-town-growth.webp'],
 };
 const FIRST_ISSUE_SEEN_KEY = 'story:greenhorn-gazette-issue-1';
 const FIRST_ISSUE_PANELS = [
@@ -146,9 +151,10 @@ function renderHerald(items: readonly HeraldItem[]): string {
 }
 
 function renderFirstIssuePanel(panel: (typeof FIRST_ISSUE_PANELS)[number]): string {
+  const engravingUrl = gazettePanelUrls[`../../assets/processed/gazette-panel-${panel.id}.webp`];
   return `
     <article class="claim-herald__guide-panel" data-panel-id="${panel.id}" data-testid="gazette-panel">
-      <div class="claim-herald__art-slot" aria-hidden="true">Engraving reserved</div>
+      ${engravingUrl ? `<img class="claim-herald__art-slot" src="${engravingUrl}" alt="" aria-hidden="true" data-testid="gazette-panel-engraving">` : '<div class="claim-herald__art-slot" aria-hidden="true">Engraving reserved</div>'}
       <h4>${panel.headline}</h4>
       ${panel.lines.map((line) => `<p>${line}</p>`).join('')}
     </article>

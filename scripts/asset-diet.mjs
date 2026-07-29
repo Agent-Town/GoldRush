@@ -10,6 +10,9 @@ const distDir = resolve('dist');
 const modelSourceDir = resolve('assets/pilots/map-rebuild-spike');
 // F-1184-1, made permanent by gazette-art-wiring-hardening.
 const HERALD_SPOT_CUT_BUDGET_BYTES = 1_500_000;
+// Scope 1 measured 1,099,906 B on disk; 1.5 MB leaves 36% encoder drift
+// (and still bounds 7 spot cuts at 64 KiB plus 6 panels at 160 KiB).
+const HERALD_DEV_ART_BUDGET_BYTES = 1_500_000;
 const townLandmarkModelNames = [
   'assay-office',
   'chapel',
@@ -33,11 +36,44 @@ function totalBytes(files) {
     .then((sizes) => sizes.reduce((sum, size) => sum + size, 0));
 }
 
+async function filesReachedByHeraldGlobs() {
+  const source = await readFile(resolve('src/news/heraldReader.ts'), 'utf8');
+  const patterns = [...source.matchAll(/import\.meta\.glob<string>\('([^']*(?:herald-engraving|gazette-panel)-[^']*)'/g)]
+    .map((match) => resolve('src/news', match[1]));
+  if (patterns.length !== 2) throw new Error(`Expected 2 Herald art globs, found ${patterns.length}.`);
+  const reached = await Promise.all(patterns.map(async (pattern) => {
+    const [prefix, suffix, extra] = basename(pattern).split('*');
+    if (extra !== undefined || suffix === undefined) throw new Error(`Unsupported Herald art glob: ${pattern}`);
+    const files = (await readdir(dirname(pattern), { withFileTypes: true }))
+      .filter((entry) => entry.isFile() && entry.name.startsWith(prefix) && entry.name.endsWith(suffix))
+      .map((entry) => join(dirname(pattern), entry.name));
+    return files;
+  }));
+  const files = reached.flat();
+  const expectedNames = new Set([
+    ...[...source.matchAll(/heraldEngravingUrls\['[^']*\/([^/'*]+\.webp)'\]/g)].map((match) => match[1]),
+    ...[...source.matchAll(/\bid: '([^']+)'/g)].map((match) => `gazette-panel-${match[1]}.webp`),
+  ]);
+  const reachedNames = new Set(files.map((file) => basename(file)));
+  const missing = [...expectedNames].filter((name) => !reachedNames.has(name));
+  const unexpected = [...reachedNames].filter((name) => !expectedNames.has(name));
+  if (expectedNames.size !== 13 || missing.length || unexpected.length) {
+    throw new Error(`Expected the 13 Herald derivatives; missing [${missing}], unexpected [${unexpected}].`);
+  }
+  return files;
+}
+
 async function runPool(items, workers, job) {
   let cursor = 0;
   await Promise.all(Array.from({ length: Math.min(workers, items.length) }, async () => {
     while (cursor < items.length) await job(items[cursor++]);
   }));
+}
+
+const heraldDevArtBytes = await totalBytes(await filesReachedByHeraldGlobs());
+console.log(`[asset-diet] Herald dev-path art ${heraldDevArtBytes} bytes (${HERALD_DEV_ART_BUDGET_BYTES} byte ceiling).`);
+if (heraldDevArtBytes > HERALD_DEV_ART_BUDGET_BYTES) {
+  throw new Error(`Herald dev-path art exceeds byte budget: ${heraldDevArtBytes} B measured > ${HERALD_DEV_ART_BUDGET_BYTES} B ceiling.`);
 }
 
 const sourceModels = await filesUnder(modelSourceDir);

@@ -2,7 +2,7 @@ import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 
-const ARTIFACT_DIR = path.resolve('artifacts/gazette-first-issue');
+const ARTIFACT_DIR = path.resolve('artifacts/gg-03c-herald-dev-path');
 const PANEL_IDS = ['claim-goal', 'seams-gold', 'the-works', 'the-arms', 'freeing-fevered', 'town-serves'] as const;
 const PANEL_HEADLINES = [
   'THE CLAIM AND THE GOAL',
@@ -40,8 +40,13 @@ async function expectFirstIssue(page: Page): Promise<void> {
   await expect(page.getByTestId('gazette-first-issue')).toBeVisible();
   await expect(page.getByTestId('gazette-panel')).toHaveCount(6);
   expect(await page.getByTestId('gazette-panel').evaluateAll((panels) => panels.map((panel) => panel.getAttribute('data-panel-id')))).toEqual(PANEL_IDS);
-  for (const headline of PANEL_HEADLINES) {
+  for (const [index, headline] of PANEL_HEADLINES.entries()) {
+    const panel = page.getByTestId('gazette-panel').filter({ has: page.getByRole('heading', { name: headline }) });
+    const engraving = panel.getByTestId('gazette-panel-engraving');
     await expect(page.getByRole('heading', { name: headline })).toBeVisible();
+    await expect(engraving).toBeVisible();
+    expect(await engraving.evaluate((image: HTMLImageElement) => image.src)).toContain(`gazette-panel-${PANEL_IDS[index]}`);
+    await expect.poll(() => engraving.evaluate((image: HTMLImageElement) => image.naturalWidth)).toBeGreaterThan(0);
   }
   await expect(page.getByTestId('gazette-first-issue')).toContainText('victims, never villains');
 }
