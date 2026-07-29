@@ -3491,9 +3491,10 @@
             },
             {
               "id": "ap-07-county-standings",
-              "title": "AP-07 County Standings (LB-01) — global boards per contract x epoch, blind to human/agent by design",
+              "title": "AP-07 County Standings (LB-01) ✅ — global boards per contract x epoch, blind to human/agent BY ABSENCE: no species/agent field exists anywhere in the schema, so agents later enter the same door (owner directive 2026-07-29, specs/agent-play/README.md §AP-06). A rate-limited contract-validated top-100 KV board (functions/api/standings.ts) submitted fire-and-forget at the secure path so an offline failure never blocks the ceremony, rendered as COUNTY STANDINGS in the Claim Ledger with per-contract tabs. Drained s1212 as the lane TIP's own delta (c162bd1a..d7edcd3b) — the older lane/m4 commit is the already-merged approach-convergence safe dupe (79be48db). Zero MAIN-MOVED: git diff 4fdbc950 main over all five source paths is empty. Gates ALL at --workers=1: tsc 0, build 1.36s, own spec 12/12 both projects, release suite 26/26 (matters: the submit is __APP_BUILD__-gated plus an explicit dev opt-in), node-guards 74/74 exit 0, en-01 claim ledger 2/2, drain minimum 35/36 with the lone casualty m2-01:178 re-measured 8/8 GREEN IN ISOLATION on the treatment tree — not waved off, because this slice does touch Game.ts's build/demolish path. Firewall probe clean: grepping the +155 Game.ts delta for economy/spend/addGold/Balance/sim returns nothing. Security reviewed as a new public endpoint: per-IP-hash AND per-anonId rate limits via bumpCounter with TTL, CORS allowlist + preview regex + localhost only, KV via context.env, no hardcoded secrets, contract ids validated against the shipped set — matches the _bugs.ts/telemetry.ts sibling discipline; no finding. Runner's own deferral recorded: replay verification and standings-specific consent remain later AP-06 scope.",
               "taskFile": "lane-county-standings.md",
-              "status": "building"
+              "mergeHash": "4c72f2e7556426844d469e2e3c46ec6d49b3f05b",
+              "status": "merged"
             },
             {
               "id": "ap-06b-adapter-wiring",
