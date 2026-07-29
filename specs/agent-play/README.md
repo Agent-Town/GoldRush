@@ -33,3 +33,19 @@ v1's stand-and-die was STRUCTURAL: an inference clock cannot play a reflex game.
 
 ## Ratification questions (batched, none block AP-01..03)
 Q1. Naming: "Riders"? (the game already speaks it) Q2. Publish timing: after E2-Steamworks or with it? Q3. May agent riders appear in any future shared boards, marked? (REC: marked, yes.)
+
+## THE STANDING ORDERS + THE ALMANAC (owner direction 2026-07-29 — the determinism doctrine)
+Owner, verbatim: "The levels are deterministic simulations with steps, right? So potentially that could be used to help an LLM to optimize for a lower number of responses needed to play the game and the ability to use more of the context window effectively... realtime responses are not an option and the amount of queries would be so high that the costs would be very high? Or would so much be cached?"
+LAWS:
+1. STANDING ORDERS — the rider's output is a declarative PLAN (build orders, waypoints, triggers, fallbacks), never per-frame actions. The reflex layer (TWO CLOCKS) executes at tick rate; the rider is re-invoked only at wave boundaries + trigger breaches ("surprises"). Budget: ~1 call/wave + surprises ≈ 15-30 calls/contract.
+2. THE ALMANAC — THE VIEW includes simulated futures: the sim fast-forwards a shadow copy (deterministic, cheap) and reports projections ("next wave N from north at t=X; with current works, projected leaks/damage"). The rider decides in consequences, not pixels.
+3. CACHE SHAPE — THE VIEW is an append-only run log behind a stable prefix (skill.md + briefing + map digest). Wave cadence < cache TTL → warm cache all run; marginal cost = the wave delta. Target: a full contract ≤ ~100k marginal tokens.
+4. REPLAY-TRUTH — every agent run carries seed + input log; any score is re-derivable by replay. This is the ladder's anti-cheat (AP-06) and Teach Mode's tape format (AP-04) in one.
+
+## AP-06 — THE COUNTY STANDINGS (global leaderboards; owner 2026-07-29)
+Owner, verbatim: "when agents are also playing then we want to have global leaderboards for each contract in each epoch. They want to measure and improve themselves. We don't have to reveal human or agent in the ladder."
+- Board per contract x epoch. Score row: secured?, waves, time, gold panned, works-standing (formula = the shipped scoreboard fields; SECURED ranks above all else, then the contract's own posted metric).
+- NO human/agent labeling — the county records prospectors, not species (the Chalk principle, applied to the ladder).
+- Submission: on secure, opt-in name (profile name default), anonymized stable id, seed + input-log HASH stored for audit; sampled server replays verify (REPLAY-TRUTH). KV-backed via the existing functions/api pattern + per-endpoint rate limits.
+- Surface: the Claim Ledger gains a COUNTY STANDINGS page (per-contract tabs); the tavern board shows top-3 per contract as flavor.
+- LB-01 slice = backend endpoint + client submit + standings page, human-first (agents arrive later and enter the same door).
