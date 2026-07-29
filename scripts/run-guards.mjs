@@ -66,16 +66,41 @@ const GUARDS = [
 // buy by gating it behind a path. Do not "tidy" it into PATH_RULES.
 const GATE_GUARDS = ['test:node-guards', 'test:power-budget', 'test:task-guards'];
 
-// PATH RULES (F-1229-1, measured s1229). `tsconfig.json` include is
-// ["src", "e2e", "playwright.config.ts"], so `npx tsc --noEmit` does NOT read
-// functions/** at all, and `vite build` does not bundle Cloudflare Pages
-// Functions either. Proven by mutation: `accountId: 12345` (a string field) in
-// functions/api/_accounts.ts left tsc rc=0, build rc=0 AND the three gate guards
-// rc=0 -- while `test:accounts` caught it in ONE second. Worker code has been
-// merging through drains with no gate of any kind; functions/ changed in four
-// merges over 2026-07-28..29 alone. Directory-wide on purpose: a per-file map of
-// which worker each guard exercises would rot silently the first time a route
-// moved, and the whole trio costs ~7s.
+// PATH RULES (F-1229-1, measured s1229; the coverage sentence CORRECTED s1233).
+// `vite build` does not bundle Cloudflare Pages Functions, and worker code was
+// merging through drains with no gate of any kind before this rule existed;
+// functions/ changed in four merges over 2026-07-28..29 alone. Directory-wide on
+// purpose: a per-file map of which worker each guard exercises would rot silently
+// the first time a route moved, and the whole trio costs ~7s.
+//
+// WHAT THIS RULE DOES *NOT* MEAN (F-1233-1, measured s1233). This comment used to
+// state as fact that because tsconfig `include` is ["src","e2e",
+// "playwright.config.ts"], `npx tsc --noEmit` "does NOT read functions/** at all".
+// That is false, and it is false in the way this file keeps finding: an English
+// claim about coverage that nobody re-derived. `include` picks ROOT files; tsc
+// also checks everything those roots transitively IMPORT. Measured with
+// `tsc --noEmit --listFiles`: 4 of the 22 files under functions/ ARE type-checked
+// today -- standings.ts, stats.ts, telemetry.ts, _ratelimit.ts -- because src/
+// imports them. Proven by mutation: an unclosed brace in functions/api/standings.ts
+// takes `npx tsc --noEmit` to rc=2 with `TS1005: '}' expected`, on a tree where
+// the header's sentence promises tsc never looked.
+//
+// The other 18 are type-checked by NOTHING, and that is the live gap. They are not
+// ungated -- `wrangler pages dev` builds the WHOLE functions/ directory at startup,
+// so a parse error anywhere reddens all three guards here (mutation-proven s1233:
+// the standings.ts break took test:stats, test:accounts AND test:mp to rc=1, though
+// standings is a route none of the three ever requests), and the bug/redeem/
+// standings routes are additionally exercised by playwright specs that spawn their
+// own wrangler (e2e/bug-office-api, cosmetic-grants, lb-01-county-standings).
+// Parse and behaviour are covered. TYPES are not, for 18 of 22.
+//
+// The fix is small and has been measured, not guessed: adding "functions" to
+// tsconfig `include` yields exactly 10 errors in 3 files -- 3 missing Cloudflare
+// Workers globals (WebSocketPair, WebSocket.accept, ResponseInit.webSocket, all in
+// _multiplayer.ts) and 7 narrowing sites that are RUNTIME-SAFE today (Number.isInteger
+// is not a type predicate, so `unknown` never narrows; redeem.ts:46 is narrowed
+// through an alias tsc cannot follow). Zero latent runtime bugs. It needs
+// @cloudflare/workers-types, so it is a task, not a drive-by: tasks/ts-cov-01-worker-type-coverage.md.
 const PATH_RULES = [
   {
     label: 'functions/** (Cloudflare Pages Functions -- outside tsconfig include)',

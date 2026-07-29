@@ -2592,6 +2592,13 @@
               "taskFile": "lane-d-concurrency-class-failure-rate.md",
               "status": "merged",
               "mergeHash": "987df9889da24857bf1472121b249f4d8621b20f"
+            },
+            {
+              "id": "factory-worker-type-coverage",
+              "title": "F-1233-1: 18 of 22 Cloudflare worker files are type-checked by nothing; close it and guard the claim",
+              "taskFile": "ts-cov-01-worker-type-coverage.md",
+              "status": "planned",
+              "note_s1233": "Authored s1233 2026-07-30 from F-1233-1, measured by that fire. run-guards.mjs stated as fact that 'npx tsc --noEmit does NOT read functions/** at all' -- the comment justifying the entire PATH_RULES design. FALSE: include picks ROOT files, tsc also checks what they transitively import, and tsc --noEmit --listFiles shows 4 of 22 worker files ARE checked today (standings, stats, telemetry, _ratelimit) because src/ imports them. Mutation-proven both ways: an unclosed brace in functions/api/standings.ts takes tsc to rc=2 TS1005, and takes ALL THREE worker guards to rc=1 because wrangler pages dev builds the WHOLE functions/ directory at startup (so parse errors ARE caught even on routes no guard requests). THE GAP IS TYPES ONLY, 18 of 22 -- behaviour is covered by the node trio plus playwright specs that spawn their own wrangler (bug-office-api, cosmetic-grants, lb-01-county-standings). CURE MEASURED NOT GUESSED: adding 'functions' to include yields exactly 10 errors in 3 files, ZERO latent runtime bugs -- 3 missing Workers globals in _multiplayer.ts (WebSocketPair/accept/ResponseInit.webSocket, need @cloudflare/workers-types), 6 non-narrowing sites because Number.isInteger is not a type predicate (_accounts.ts:399 normalizeVersion, _multiplayer.ts:721 normalizeTick), 1 aliased narrowing (redeem.ts:46, guard tests a DIFFERENT variable). The master forbids fixing those with casts or ts-expect-error -- they are the input validators on public routes -- and requires type predicates plus a rot-proof guard modelled on s1232's script-tree-parse.test.mjs. The false sentence itself was corrected in place s1233; this task fixes the condition it was wrong about."
             }
           ]
         }
