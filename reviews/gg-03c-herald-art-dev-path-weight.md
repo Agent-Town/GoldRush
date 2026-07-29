@@ -148,9 +148,21 @@ and fully gated (everything in the Evidence table was measured on this exact tre
 review is the correction. History is not rewritten: the hash is recorded honestly here, in the goal leaf, and in BACKLOG.
 
 ➡️ **The remedy s1210 wrote is a discipline, and a discipline that fails one fire after being written down needs a
-mechanism instead.** `git commit <pathspec>` commits *only* the named paths and ignores the rest of the index, which
-makes the sweep structurally impossible rather than merely discouraged. I used the pathspec form for this review's own
-commit and verified afterwards that unrelated dirt stayed uncommitted. Recommended for the drain skill's step 5.
+mechanism instead.** I tested the mechanism rather than recommending it — and **my first version of it was wrong**:
+
+- ❌ `git commit <pathspec>` alone fails on a drain, because a review file is **untracked**:
+  `error: pathspec 'reviews/gg-03c-…md' did not match any file(s) known to git`.
+- ✅ **`git add <paths>` then `git commit --only <paths>`** works and is sweep-proof.
+
+**Proved with a canary, not asserted.** Before making this drain's commit I deliberately staged an unrelated file
+(`logs/task-stats.jsonl`). The commit `5563bfc4` took **exactly** its four named paths, and afterwards
+`git diff --cached --name-only` still printed `logs/task-stats.jsonl` — staged, uncommitted, untouched. A plain
+`git commit` would have swallowed it, exactly as `b5be7ab3` swallowed this slice.
+
+➡️ **Recommended for the drain skill's step 5, as the mechanism rather than the reminder.** Note the ordering trap
+that made my first attempt fail: `--only` still requires each path to be *known to git*, so a **new** file must be
+`git add`-ed first — which is precisely the step that arms the sweep, so the two commands belong together as one
+idiom, never as advice to "remember to check".
 
 ## Instrument (Retention Law — `playwright.s*.config.ts` is gitignored, so it is preserved here)
 
