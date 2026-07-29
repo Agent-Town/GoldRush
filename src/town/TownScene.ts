@@ -85,6 +85,7 @@ import {
 } from './townLayout';
 import { townEraPropsForOrder } from './townEraProps';
 import { readTownName, saveTownName, validateTownName } from './TownNaming';
+import { TownWelcome } from './TownWelcome';
 import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, type TownActorDefinition, type TownActorId } from './townsfolk';
 import { takeMeiWorldDispatch } from './worldDispatches';
 import { takeTrailGuideBark } from '../story/trailGuide';
@@ -258,6 +259,7 @@ export type TownDiagnostics = {
     trailVisible: boolean;
     flagKey: typeof FIRST_CLAIM_DONE_KEY;
   };
+  welcome: ReturnType<TownWelcome['snapshot']>;
   renderer: { calls: number; geometries: number; textures: number };
   canvas: { width: number; height: number; dpr: number };
   camera: CameraZoomDiagnostics & {
@@ -364,6 +366,7 @@ export class TownScene {
   private readonly townActors: TownActorRuntime[] = [];
   private readonly actorBarkVisits = new Map<TownActorId, number>();
   private readonly barkCard = document.createElement('div');
+  private readonly welcome = new TownWelcome();
   private townTitle?: HTMLElement;
   private townSubtitle?: HTMLElement;
   private nameInput?: HTMLInputElement;
@@ -398,6 +401,7 @@ export class TownScene {
   private firstClaimGreetingVisible = false;
   private firstClaimGreetingDismissed = false;
   private returnGuideLine: string | null = null;
+  private welcomeRenderKey = '';
   private readonly dismissReturnGuide = () => {
     document.removeEventListener('pointerdown', this.dismissReturnGuide, { capture: true });
     document.removeEventListener('keydown', this.dismissReturnGuide, { capture: true });
@@ -549,8 +553,18 @@ export class TownScene {
         maxDistance,
       ),
     });
-    for (const actor of this.townActors) actor.update(delta, this.elapsed);
+    const welcomeFollowing = this.welcome.followsPlayer && !this.storyBeatVisible();
+    for (const actor of this.townActors) {
+      actor.update(
+        delta,
+        this.elapsed,
+        welcomeFollowing && actor.definition.id === 'newsie'
+          ? { x: this.hero.group.position.x - 0.9, z: this.hero.group.position.z + 0.65 }
+          : undefined,
+      );
+    }
     this.cameraRig.update(delta, this.hero.group.position, this.hero.velocity);
+    this.updateWelcome();
     this.updateFirstClaimGuide();
     this.syncPrompt();
     if (intents.confirm) this.activateTownAction(this.activePrompt?.id);
@@ -974,7 +988,30 @@ export class TownScene {
   };
 
   private readonly onBarkClick = (event: Event) => {
-    const opener = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-town-herald]');
+    const target = event.target as HTMLElement | null;
+    const action = target?.closest<HTMLButtonElement>('[data-town-welcome-action]')?.dataset.townWelcomeAction;
+    if (action === 'take-paper' && this.welcome.takePaper()) {
+      this.openHerald(target ?? undefined);
+      return;
+    }
+    if (action === 'next') {
+      this.welcome.advance();
+      if (this.welcome.active) this.welcomeRenderKey = '';
+      else this.hideBark();
+      return;
+    }
+    if (action === 'skip') {
+      if (this.welcome.snapshot().phase === 'delivery') this.markHeraldRead();
+      this.welcome.skip();
+      this.hideBark();
+      return;
+    }
+    if (action === 'replay') {
+      this.welcome.replayWalk();
+      this.welcomeRenderKey = '';
+      return;
+    }
+    const opener = target?.closest<HTMLElement>('[data-town-herald]');
     if (!opener) return;
     this.openHerald(opener);
   };
@@ -986,13 +1023,21 @@ export class TownScene {
   private openHerald(opener?: HTMLElement): void {
     if (this.heraldOpen) return;
     this.heraldOpener = opener ?? null;
-    markClaimHeraldFirstIssueRead();
-    const badge = this.ui.querySelector<HTMLElement>('[data-testid="town-herald-badge"]');
-    if (badge) badge.dataset.unread = 'false';
+    if (this.welcome.snapshot().phase === 'delivery') {
+      this.welcome.arriveWithPaper();
+      this.welcome.takePaper();
+    }
+    this.markHeraldRead();
     openClaimHerald(this.onHeraldClose);
     this.heraldOpen = true;
     this.ui.inert = true;
     this.ui.setAttribute('aria-hidden', 'true');
+  }
+
+  private markHeraldRead(): void {
+    markClaimHeraldFirstIssueRead();
+    const badge = this.ui.querySelector<HTMLElement>('[data-testid="town-herald-badge"]');
+    if (badge) badge.dataset.unread = 'false';
   }
 
   private readonly onHeraldClose = () => {
@@ -1002,6 +1047,8 @@ export class TownScene {
     this.lastExitIntent = true;
     this.ui.inert = false;
     this.ui.removeAttribute('aria-hidden');
+    this.welcome.paperClosed();
+    this.welcomeRenderKey = '';
     if (this.ui.isConnected) {
       const fallback = this.ui.querySelector<HTMLButtonElement>('[data-testid="town-herald-badge"]');
       (opener?.isConnected ? opener : fallback)?.focus({ preventScroll: true });
@@ -1236,6 +1283,10 @@ export class TownScene {
     this.nameInput.disabled = false;
     this.nameCard.hidden = true;
     this.nameCardOpen = false;
+    if (this.nameMode === 'founding') {
+      const herald = claimHeraldTownStatus();
+      this.welcome.beginFirst(herald.showBadge && !herald.unread);
+    }
     this.syncPrompt();
   }
 
@@ -1362,7 +1413,6 @@ export class TownScene {
       this.hideBark();
       return;
     }
-
     if (this.firstClaimGuideActive && !this.firstClaimGreetingDismissed) {
       if (this.storyBeatVisible()) {
         this.hideBark();
@@ -1375,6 +1425,10 @@ export class TownScene {
         }
         return;
       }
+    }
+    if (this.welcome.active) {
+      this.syncWelcomeBark();
+      return;
     }
 
     const position = this.hero.group.position;
@@ -1394,6 +1448,10 @@ export class TownScene {
     if (!nearest) {
       this.hideBark();
       return;
+    }
+    if (nearest.definition.id === 'newsie') {
+      this.prompt.hidden = true;
+      this.infoNote?.update(null);
     }
     if (nearest === this.activeBarkActor) return;
 
@@ -1421,7 +1479,8 @@ export class TownScene {
     return nearest;
   }
 
-  private showBark(nearest: TownActorRuntime, text: string, firstClaim = false): void {
+  private showBark(nearest: TownActorRuntime, text: string, firstClaim = false, actions?: string): void {
+    this.welcomeRenderKey = '';
     this.firstClaimGreetingVisible = firstClaim;
     this.activeBarkActor = nearest;
     this.activeBark = { actorId: nearest.definition.id, speaker: nearest.definition.name, text };
@@ -1431,7 +1490,12 @@ export class TownScene {
         <strong data-testid="town-bark-speaker">${escapeHtml(nearest.definition.name)}</strong>
         <span>${escapeHtml(nearest.definition.post)}</span>
         <p data-testid="town-bark-text">${escapeHtml(text)}</p>
-        ${nearest.definition.id === 'newsie' ? '<button class="town-ui__bark-action" type="button" data-town-herald data-testid="town-open-herald">Read</button>' : ''}
+        ${
+          actions ??
+          (nearest.definition.id === 'newsie'
+            ? '<button class="town-ui__bark-action" type="button" data-town-herald data-testid="town-open-herald">Read issue #1 again</button><button class="town-ui__bark-action" type="button" data-town-welcome-action="replay" data-testid="town-show-around-again">Show me around again</button>'
+            : '')
+        }
       </div>
     `;
     const portrait = this.barkCard.querySelector<HTMLImageElement>('.town-ui__bark-portrait');
@@ -1464,6 +1528,57 @@ export class TownScene {
     this.barkCard.textContent = '';
     delete this.barkCard.dataset.actorId;
     delete this.barkCard.dataset.firstClaim;
+    delete this.barkCard.dataset.welcomePhase;
+    delete this.barkCard.dataset.welcomeBeat;
+    delete this.barkCard.dataset.welcomeArrived;
+    this.welcomeRenderKey = '';
+  }
+
+  private updateWelcome(): void {
+    const snapshot = this.welcome.snapshot();
+    if (!snapshot.active || this.storyBeatVisible()) return;
+    if (snapshot.phase === 'delivery' && !snapshot.deliveryReady) {
+      const newsie = this.townActors.find((actor) => actor.definition.id === 'newsie');
+      if (newsie && newsie.position.distanceTo(this.hero.group.position) <= 1.6) this.welcome.arriveWithPaper();
+    }
+    this.welcome.update(this.hero.group.position);
+  }
+
+  private syncWelcomeBark(): void {
+    if (this.storyBeatVisible()) {
+      this.hideBark();
+      return;
+    }
+    this.prompt.hidden = true;
+    this.infoNote?.update(null);
+    const snapshot = this.welcome.snapshot();
+    const newsie = this.townActors.find((actor) => actor.definition.id === 'newsie');
+    if (!newsie || snapshot.phase === 'paper' || (snapshot.phase === 'delivery' && !snapshot.deliveryReady)) {
+      this.hideBark();
+      return;
+    }
+    const key = `${snapshot.phase}:${snapshot.beat?.id ?? ''}:${snapshot.arrived}`;
+    if (key === this.welcomeRenderKey) return;
+    if (snapshot.phase === 'delivery') {
+      this.showBark(
+        newsie,
+        'Hot off the press — your first Gazette, free to a new face.',
+        false,
+        '<button class="town-ui__bark-action" type="button" data-town-welcome-action="take-paper" data-testid="town-welcome-take-paper">Take issue #1</button><button class="town-ui__bark-action" type="button" data-town-welcome-action="skip" data-testid="town-welcome-skip">Skip welcome</button>',
+      );
+    } else if (snapshot.beat) {
+      const final = snapshot.beat.id === 'schoolhouse-chart';
+      this.showBark(
+        newsie,
+        snapshot.arrived ? snapshot.beat.line : snapshot.beat.guide,
+        false,
+        `${snapshot.arrived ? `<button class="town-ui__bark-action" type="button" data-town-welcome-action="next" data-testid="town-welcome-next">${final ? 'Finish welcome' : 'Next stop'}</button>` : ''}<button class="town-ui__bark-action" type="button" data-town-welcome-action="skip" data-testid="town-welcome-skip">Skip welcome</button>`,
+      );
+    }
+    this.barkCard.dataset.welcomePhase = snapshot.phase;
+    this.barkCard.dataset.welcomeBeat = snapshot.beat?.id ?? '';
+    this.barkCard.dataset.welcomeArrived = String(snapshot.arrived);
+    this.welcomeRenderKey = key;
   }
 
   private openBoard(): void {
@@ -2184,6 +2299,7 @@ export class TownScene {
         trailVisible: this.firstClaimGuideGroup.visible,
         flagKey: FIRST_CLAIM_DONE_KEY,
       },
+      welcome: this.welcome.snapshot(),
       renderer: {
         calls: this.renderer.info.render.calls,
         geometries: this.renderer.info.memory.geometries,
@@ -2415,6 +2531,7 @@ class TownActorRuntime {
   private movedThisTick = false;
   private motionX = 0;
   private motionZ = 0;
+  private returningFromWelcome = false;
   private readonly orientationResolver = new OrientationResolver();
   private currentDirection: RotationDirection;
 
@@ -2475,7 +2592,7 @@ class TownActorRuntime {
     return { x: this.motionX, z: this.motionZ };
   }
 
-  update(delta: number, elapsed: number): void {
+  update(delta: number, elapsed: number, welcomeTarget?: { x: number; z: number }): void {
     if (this.material.map && this.material.map !== this.crispTexture) {
       this.crispTexture = this.material.map;
       this.crispTexture.magFilter = THREE.NearestFilter;
@@ -2485,7 +2602,19 @@ class TownActorRuntime {
     if (!this.fitted && this.definition.fullBody && this.definition.id !== 'prospector' && this.material.map) this.fitSpriteToTexture(this.material.map);
     const previousX = this.group.position.x;
     const previousZ = this.group.position.z;
-    const point = this.definition.loop ? loopPoint(this.definition.loop, elapsed) : this.definition.position;
+    let point = this.definition.loop ? loopPoint(this.definition.loop, elapsed) : this.definition.position;
+    const target = welcomeTarget ?? (this.returningFromWelcome ? point : undefined);
+    if (target) {
+      const remainingX = target.x - previousX;
+      const remainingZ = target.z - previousZ;
+      const remaining = Math.hypot(remainingX, remainingZ);
+      const ratio = remaining > 0 ? Math.min(1, (delta * 7) / remaining) : 1;
+      this.returningFromWelcome = !!welcomeTarget || ratio < 1;
+      point = {
+        x: previousX + remainingX * ratio,
+        z: previousZ + remainingZ * ratio,
+      };
+    }
     this.group.position.x = point.x;
     this.group.position.z = point.z;
     const dx = point.x - previousX;
