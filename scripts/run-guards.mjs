@@ -44,6 +44,13 @@ const GUARDS = [
 //
 // The guards every drain runs regardless of what it touched: they gate what a
 // DRAIN ITSELF writes -- scripts/**, the tasks/ ledger, src/systems/PowerGraph.ts.
+//
+// site/ rides here too, inside test:node-guards (scripts/site-contract.test.mjs,
+// F-1230-1) -- deliberately NOT a path rule. Its contract is two-sided: the page
+// is untypechecked browser JS reading a shape produced by functions/api/stats.ts,
+// and a `site/**` rule would miss the likelier drift direction, where the WORKER
+// changes and the untouched consumer rots. It costs ~60ms, so there is nothing to
+// buy by gating it behind a path. Do not "tidy" it into PATH_RULES.
 const GATE_GUARDS = ['test:node-guards', 'test:power-budget', 'test:task-guards'];
 
 // PATH RULES (F-1229-1, measured s1229). `tsconfig.json` include is
