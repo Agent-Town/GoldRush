@@ -26,3 +26,11 @@ The Claim Herald's FIRST ISSUE is a pinned, illustrated greenhorn edition. Diege
 - GG-01 wiring (lane): pinned first issue + fresh-profile badge + greenhorn-offer hook + six text panels. e2e: fresh boot shows badge → issue opens → six panels present → reopenable; offer-yes path opens it.
 - GG-02 art (art slot): six engraved panels + masthead vignette (exact filenames in the master; style-anchor: the contract plates).
 - GG-03 swap (lane, after GG-02): panels gain their engravings; 390px legibility screenshots.
+
+## THE WELCOME (owner ruling 2026-07-29, verbatim: "The tutorial is like the welcome for the player into town - it happens once and can be retriggered, but it is a distinct experience from entering town later? I think that makes sense.")
+The first town entry after naming is a DISTINCT experience — THE WELCOME — not ordinary town plus a badge:
+1. The NEWSIE runs to the player and hands over issue #1 ("hot off the press — your first Gazette, free to a new face"). The paper opens in hand.
+2. Closing it, the welcome walks 2–3 anchored beats at the player's pace (the tavern board where the first claim is posted → the works/build moment → the schoolhouse chart), then DISSOLVES into normal play. No gates, skippable at every step.
+3. ONCE-LAW: the welcome never replays uninvited. Ordinary later entries are clean — no badge nag, no repeated beats.
+4. RETRIGGER: ask the newsie anytime — prompt offers "Read issue #1 again" and "Show me around again" (replays the welcome walk). The retrigger is diegetic; no settings toggle.
+SLICE GG-01b (after GG-01): the welcome choreography + newsie delivery + retrigger prompt. The pinned-issue substrate from GG-01 is its dependency.
