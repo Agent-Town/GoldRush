@@ -988,8 +988,8 @@
             },
             {
               "id": "era-art-owner-gated",
-              "title": "Era art — town-icons + pan-town art (portrait call ANSWERED: Chalk ruling #14 'visibly made', lore/characters.md 2026-07-28 — E7 portrait 6th file fire-authorable; icons batch cycling in ART slot)",
-              "status": "planned"
+              "title": "Era art — CHALK PORTRAIT SHIPPED (ad7f2a9c, ruling #14 executed 2026-07-28) · town-icons re-cycling in ART slot after lawful band-stop · pan-town art next",
+              "status": "building"
             }
           ]
         },
@@ -2212,9 +2212,9 @@
             },
             {
               "id": "factory-power-budget-instrument-control",
-              "title": "F-1160-2: power-budget guard blames PowerGraph for the box",
+              "title": "F-1160-2: power-budget guard blames PowerGraph for the box — REFUTED s1170 (stopped-lawful-s1170-refuted-at-scope-1d): premise false at scope 1d — closed by refutation receipt",
               "taskFile": "lane-c-power-budget-instrument-control.md",
-              "status": "stopped",
+              "status": "superseded",
               "drainNote_s1170": "AUTHORED, RUN AND DRAINED IN ONE FIRE (s1170). STOP AT SCOPE 1(d) - the master's declared FULL-SUCCESS outcome - review reviews/power-budget-instrument-control.md, evidence merged at the drain commit. THE REMEDY IS REFUTED AND MUST NOT BE BUILT. Scope 1 was written as a measure-first gate that could cancel the task because the whole approach rested on an assumption nobody had measured: that a fixed-cost reference loop degrades PROPORTIONALLY with the PowerGraph solve. 10+10 interleaved pairs say it does not - normal QoS ref median 0.512 / PG p95 median 0.439 / ratio 0.857 (band 0.729-1.132); taskpolicy -b ref 1.599 / PG 2.683 / ratio 1.678 (band 1.327-3.220). Background inflated the reference 3.12x but the solve 6.11x, the arm ratio moved 1.96x, and the per-run bands DO NOT OVERLAP. So any threshold labelling the deterministic degraded arm DEGRADED would also swallow a genuine PowerGraph-only regression - exactly what scope 3's mutation control existed to catch, caught one stage earlier for a tenth of the cost. VERIFIED BY ME RATHER THAN ACCEPTED ON REPORT: the reference loop cannot have been JIT-eliminated (the one artifact that would manufacture this result) - it is a data-dependent LCG whose accumulator is returned and consumed at :54 and :59, and its 0.512ms normal median is the same order as the solve, as the master required; arms were interleaved not blocked. Mechanism is coherent: the two workloads have different SHAPES (the solve allocates and walks a large wire graph, the reference is register arithmetic) and background QoS penalises them differently - which refutes the APPROACH, not one implementation of it. Firewall held: zero src/, zero scripts/, the guard unedited, solveBudgetMs untouched at 0.5, scopes 2-5 correctly cancelled rather than faked. F-1170-4 RAISED: BOTH published remedies in BACKLOG:193 are now dead - min-of-3 refuted by s1161 (4/4 fail under systematic deprioritisation), reference loop refuted here - so no third attempt should be authored from that entry without a NEW mechanism (out-of-band scheduler signal, or report-and-re-run in run-guards.mjs, which this task firewalled off and is therefore a new master).",
               "note_s1170": "Authored s1170 2026-07-28 from F-1160-2 (BACKLOG:193) + a third independent measurement taken this fire. test:power-budget is guard 2/8 in run-guards.mjs and cannot distinguish a slower solve from a descheduled process, so it accuses PowerGraph whenever the box stalls. THE AUTHORING FACT THAT RESHAPED THE TASK: s1160's stated gate (over-cap 4/20 -> 0/20) is UNRUNNABLE, because s1170 re-measured the before-arm at 0/20 (n=20, loadavg 7.69, body 0.352-0.405, median 0.374) where s1160 read 4/20 and s1161 read 1/12. The rate is a property of the box, not the guard; pooled default-QoS across three fires is 5/52 ~ 9.6%, and 0/20 does NOT disprove an 8% rate (P=0.19). So the gate was re-based onto the DETERMINISTIC arm: taskpolicy -b reproduced 12/12 (s1161) and 6/6 at 1.707-3.036ms (s1170) - a 100% reproduction of the exact failure mode. Scope 1 is a measure-first STOP that can cancel the task: the whole remedy assumes an in-process reference loop degrades PROPORTIONALLY with the solve, which no one has measured; if the ratio is unstable the task STOPS with a table and that is declared a full success. Scope 3 is the mutation control that keeps an 'environment degraded' escape hatch from becoming a guard that never fails - injected into the SUBJECT (PowerGraph.ts), proven to still red at normal QoS, then reverted with git diff proving zero permanent src/ change. The 0.5ms cap is firewalled."
             },
@@ -2305,8 +2305,8 @@
               "review": "reviews/cp04-lever-unlock-seed-realign.md",
               "runReport": "tasks/runs/20260728-183927-lane-a-cp04-lever-unlock-seed-realign.md",
               "stopNote": "STOPPED LAWFULLY at scope 1(d), classification (b) SOMETHING ELSE — the outcome the master itself declared lawful, and the right one. The SHAPE s1178 measured is confirmed (16 failed / 8 passed, both projects, --workers=1, 9.1m; the two the-claim seeded boots green, all seven non-the-claim seeded boots red). The MECHANISM is refuted: activeId is the REQUESTED contract (e1-dry-gulch), so nothing falls back to DEFAULT_CONTRACT_ID on the seeded boots; what is lost is only the charter-COMPOSED name — 'The Dry Gulch — Build Something Big' renders as 'The Dry Gulch', and the same shape repeats on Night Shift / Twin Banks / The Baron's Claim. The proposed unlock-seed cure would therefore have papered over a defect it does not touch, and the observe-first STOP is what caught that. Zero src/, zero e2e/, zero assets; the temporary diagnostic was removed and the spec diff is empty. Successor work is F-1179-3 (charter-name composition loss on seeded boots) — author a SUCCESSOR, do not revive this leaf. Separately F-1179-4 reaches the OWNER'S DESK: src/charter/PressPanel.ts renders all five LEVER_LANDS cards and never calls contractUnlockStatus, so a real press-through can request e1-twin-banks and be briefed as The Claim — a genuine fallback, but in the press path, not the seeded boots.",
-              "title": "16 red executions from ONE gate added after the spec shipped: cp04-lever asserts contract-briefing-name against the charter's composed name, but the four non-default Lever lands are LOCKED in a virgin boot (F-1178-1)",
-              "status": "stopped",
+              "title": "16 red executions from ONE gate added after the spec shipped: cp04-lever asserts — REFUTED s1179 (stopped-lawful-s1179-refuted-at-scope-1d): premise false at scope 1d — closed by refutation receipt",
+              "status": "superseded",
               "taskFile": "lane-a-cp04-lever-unlock-seed-realign.md",
               "lane": "lane-a",
               "authoredBy": "s1178 fire",
@@ -2398,9 +2398,9 @@
             },
             {
               "id": "factory-cp04-charter-name-composition",
-              "title": "F-1179-3: the charter-COMPOSED contract name is lost between the staged document and the briefing — 'The Dry Gulch — Build Something Big' renders as 'The Dry Gulch' while activeId is correctly 'e1-dry-gulch', so the unlock gate is NOT implicated and the seam at ContractFamilies.ts:1177-1182 has four silent early-outs, none of which logs",
+              "title": "F-1179-3: the charter-COMPOSED contract name is lost between the staged document — REFUTED s1180 (stopped-lawful-s1180-scope-1c-gate-not-entered): gate never entered — closed by refutation receipt",
               "taskFile": "lane-b-cp04-charter-name-composition.md",
-              "status": "stopped",
+              "status": "superseded",
               "lane": "lane-b",
               "review": "reviews/cp04-charter-name-composition.md",
               "runReport": "tasks/runs/20260728-194217-lane-b-cp04-charter-name-composition.md",
