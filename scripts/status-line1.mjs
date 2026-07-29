@@ -14,6 +14,28 @@
 //                                                               # as a bullet, then set
 //   node scripts/status-line1.mjs show                          # print line 1
 //
+// THE STAMP COMES FROM `date`, NOT FROM THE CALLER (F-1039-2 / F-1204-5, closed here
+// s1206). Write the literal token {STAMP} in <textfile> and it is substituted with
+// `date "+%Y-%m-%dT%H:%MZ"` at write time. This closes a SIX-instance lineage of
+// models hand-computing a time they could have run a command for, every one of them
+// drifting into the FUTURE: s1038 +46 min, s1046 +56/+50, s1053 +14, s1204 +38 — the
+// s1053 and s1204 instances written by fires that had just re-read the rule forbidding
+// it. It is not cosmetic: protocol §1.1 makes the next fire EXIT SILENTLY while an
+// ACTIVE lock is <45 min old, so one future-dated stamp left by a fire that then dies
+// stalls the whole factory for the skew plus 45 minutes.
+//
+// s1205 proved the fix in a per-session copy (logs/session-scratch/s1205-status-line1.mjs)
+// and asked the next fire to "adopt it or fold it into a permanent script". This is that
+// fold — the per-session copies are what kept letting the defect back in.
+//
+// BELT AND BRACES: any full ISO stamp (YYYY-MM-DDTHH:MMZ) appearing anywhere in the new
+// line 1 is checked against now, and a FUTURE one is REFUSED even if the caller never
+// used {STAMP}. That is the actual failure mode, caught regardless of how it was written.
+// Past stamps pass freely (handoff prose legitimately cites earlier times), and the
+// short forms fires quote in prose ("claimed at 09:44:53") are not full ISO and do not
+// match. Local time labelled Z, matching every recent fire — protocol §1.1 fixes the
+// label on a flag day, never as a drive-by.
+//
 // <textfile> may contain newlines; they are collapsed to single spaces, because
 // line 1 must stay exactly one line (the lock/staleness check reads head -1).
 // <label> is the archive bullet's name, e.g. "s1048 handoff".
@@ -30,6 +52,7 @@
 // newest-first archive bullets.
 
 import { readFileSync, writeFileSync } from 'node:fs';
+import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 
 // fileURLToPath, not URL.pathname — the repo path contains a space ("Gold Rush")
@@ -43,9 +66,40 @@ function readLines() {
   return readFileSync(STATUS, 'utf8').split('\n');
 }
 
+const ISO_MIN = /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z/g;
+
+// The one place a stamp may be born. Same command protocol §1.1 names.
+function nowStamp() {
+  const stamp = execFileSync('date', ['+%Y-%m-%dT%H:%MZ'], { encoding: 'utf8' }).trim();
+  if (!/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}Z$/.test(stamp)) {
+    throw new Error(`refusing to write a malformed stamp: ${JSON.stringify(stamp)}`);
+  }
+  return stamp;
+}
+
+// Stamps are written local-labelled-Z, so compare in the same frame: parse the text
+// as if local. A stamp more than SKEW_MS ahead of now was hand-computed, not measured.
+const SKEW_MS = 2 * 60 * 1000;
+function assertNoFutureStamp(line, now) {
+  const nowMs = Date.parse(`${now.replace(/Z$/, '')}:00`);
+  if (Number.isNaN(nowMs)) return; // never let the guard itself break a handoff
+  for (const found of line.match(ISO_MIN) ?? []) {
+    const ms = Date.parse(`${found.replace(/Z$/, '')}:00`);
+    if (Number.isNaN(ms)) continue;
+    if (ms - nowMs > SKEW_MS) {
+      throw new Error(
+        `refusing a FUTURE stamp ${found} (now ${now}, +${Math.round((ms - nowMs) / 60000)} min). ` +
+        'Stamps come from a command, never arithmetic — write {STAMP} and let this script fill it in (F-1039-2).',
+      );
+    }
+  }
+}
+
 function oneLine(text) {
-  const collapsed = text.replace(/\s*\n\s*/g, ' ').trim();
+  const now = nowStamp();
+  const collapsed = text.replace(/\s*\n\s*/g, ' ').trim().replaceAll('{STAMP}', now);
   if (!collapsed) throw new Error('refusing to write an empty line 1');
+  assertNoFutureStamp(collapsed, now);
   return collapsed;
 }
 
