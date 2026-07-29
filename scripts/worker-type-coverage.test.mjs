@@ -13,9 +13,12 @@ const SUBJECTS = [{ dir: 'functions', ext: '.ts', floor: 22 }];
 for (const subject of SUBJECTS) {
   test(`every ${subject.dir}/**/*${subject.ext} is type-checked`, () => {
     const files = subjectFiles(ROOT, subject).sort();
-    const unchecked = files
-      .filter((file) => file.endsWith('.d.ts') || readFileSync(file, 'utf8').includes('@ts-nocheck'))
-      .map((file) => relative(ROOT, file));
+    const unchecked = files.flatMap((file) => {
+      const source = readFileSync(file, 'utf8');
+      const reasons = ['@ts-nocheck', '@ts-ignore', '@ts-expect-error'].filter((directive) => source.includes(directive));
+      if (file.endsWith('.d.ts')) reasons.unshift('.d.ts');
+      return reasons.map((reason) => `${relative(ROOT, file)} (${reason})`);
+    });
     assert.deepEqual(unchecked, [], `worker files disabling semantic checks:\n  ${unchecked.join('\n  ')}`);
 
     const result = spawnSync(process.execPath, [TSC, '--noEmit', '--listFiles', '--project', join(ROOT, 'tsconfig.json')], {
