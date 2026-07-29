@@ -260,7 +260,7 @@ const lines = [
   `- MOBILE-ONLY: **${bucketCounts['MOBILE-ONLY']}**`,
   `- DESKTOP-ONLY: **${bucketCounts['DESKTOP-ONLY']}**`,
   `- Harness: configured workers **${report.config?.workers ?? 'unrecorded'}**; actual workers **${report.config?.metadata?.actualWorkers ?? 'unrecorded'}**; fully parallel **${report.config?.fullyParallel ?? 'unrecorded'}**; shard **${report.config?.shard === undefined ? 'unrecorded' : JSON.stringify(report.config.shard)}**; Playwright **${report.config?.version ?? 'unrecorded'}**`,
-  `- Run tree: **${recordedRoot ?? 'unrecorded'}**; status **${recordedRoot && !runTreePresent ? 'unavailable' : 'present'}**; resolved test bodies **${resolvedBodyCount}/${totalBodyCount}**`,
+  `- Run tree: **${recordedRoot ?? 'unrecorded'}**; status **${recordedRoot && !runTreePresent ? 'unavailable' : 'present'}**; resolved masking-row test bodies **${resolvedBodyCount}/${totalBodyCount}**`,
   '',
   '_Bucket sizes count logical tests; totals count desktop/mobile project executions._',
   `_The exact command also ran ${otherExecutions.length} configured non-target project cases; they are reported separately._`,

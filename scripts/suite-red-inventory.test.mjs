@@ -135,9 +135,11 @@ test('reducer renders absolute raw paths relative to the recorded tree', (t) => 
   assert.equal(result.status, 0, result.stderr || result.stdout);
   const markdown = fs.readFileSync(output, 'utf8');
   assert.ok(markdown.includes(`| ${SPEC_PATH} | cwd invariant failure |`));
+  assert.ok(markdown.includes(`| ${SPEC_PATH}:3 |`));
   assert.ok(!markdown.includes(`| ${specFile} |`));
   assert.ok(!markdown.includes('| fixture.spec.ts | cwd invariant failure |'));
   assert.ok(markdown.includes(`- Run tree: **${rootDir}**; status **present**;`));
+  assert.ok(!markdown.split('\n').filter((line) => !line.startsWith('- Run tree:')).join('\n').includes(specFile));
 });
 
 test('reducer refuses body statistics when the recorded tree is unavailable', (t) => {
