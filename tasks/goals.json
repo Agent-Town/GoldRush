@@ -3521,13 +3521,20 @@
               "title": "AP-06b Standing-orders adapter wiring — lift the firewall to Game.ts so BUILD and HARVEST reach the world (F-1212-3)",
               "taskFile": "ap-orders-adapter-wiring.md",
               "status": "blocked",
-              "blockedReason": "TECHNICAL GATE, NOT AN OWNER DESIGN FORK - NO OWNER ACTION REQUIRED. Discharge condition: tasks/lane-c-ap-06b-panel-ladder-and-voice.md merges, which re-lands this work together with the panel truth it changes. Blocked by s1217 (reviews/ap-06b-adapter-wiring.md, F-1217-1): the work on lane/e2-arsenal @ 2f216af0 is CORRECT but supplying panAt registers the level-3 auto_pan capability at ToolSurface.ts:375, adding a row to the player-facing Prospector panel; a matched control proved m4-10:112, m4-09:107 and m4-06:384 flip green-to-red on BOTH projects because of it. Do not drain 2f216af0 on its own - it would put 6 red executions on main."
+              "blockedReason": "TECHNICAL GATE, NOT AN OWNER DESIGN FORK - NO OWNER ACTION REQUIRED. Discharge condition RE-POINTED by s1218: the previous corrective (ap-06b-panel-ladder-and-voice) lawfully STOPPED instead of merging, so this leaf stays blocked and its gate is now tasks/lane-c-agent-rung-honest-gate.md (F-1218-1) - the rung-blind tool-surface gate must be able to express rung 3 before wiring panAt is safe. See reviews/ap-06b-panel-ladder-and-voice.md. Original block (s1217, F-1217-1): supplying panAt registers the level-3 auto_pan capability at ToolSurface.ts:375, adding a row to the player-facing Prospector panel; a matched control proved m4-10:112, m4-09:107 and m4-06:384 flip green-to-red on BOTH projects. Do not drain 2f216af0 on its own - it would put 6 red executions on main. Work preserved at save/ap-06b-adapter-wiring 2f216af0 and lane/e2-arsenal 6c44c6f3."
             },
             {
               "id": "ap-06b-panel-ladder-and-voice",
               "title": "AP-06b corrective - re-land the standing-orders adapter wiring WITH the Prospector-panel truth it changes: prove auto_pan is gated at rung 3 rather than merely displayed, and root-cause the pan-voice line (F-1217-1)",
               "taskFile": "lane-c-ap-06b-panel-ladder-and-voice.md",
-              "status": "queued"
+              "status": "stopped",
+              "stoppedReason": "LAWFUL CASE-(b) STOP, not a failure - the runner proved the branch its own master named as a success condition and correctly changed nothing. reviews/ap-06b-panel-ladder-and-voice.md (s1218): a rung-2 probe showed auto_pan earned:false/allowed:false while panAt() succeeded and moved seam gold 30 to 25. Mechanism verified at source by s1218: decideToolPermission (PermissionLadder.ts:24) never receives the tool, so it cannot express a rung above 1; its sole call site ToolSurface.ts:226 has the tool in scope and drops it. Superseded by the cure tasks/lane-c-agent-rung-honest-gate.md (F-1218-1). Work preserved at save/ap-06b-adapter-wiring 2f216af0 and lane/e2-arsenal 6c44c6f3."
+            },
+            {
+              "id": "agent-rung-honest-gate",
+              "title": "Make the tool-surface permission gate able to express the rung it already declares - decideToolPermission never receives the tool, so no rung above 1 is enforceable (F-1218-1). Measure-first with a hard STOP if not behaviour-neutral. Unblocks ap-06b-adapter-wiring.",
+              "taskFile": "lane-c-agent-rung-honest-gate.md",
+              "status": "planned"
             },
             {
               "id": "ap-08-the-view",
