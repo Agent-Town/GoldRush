@@ -2,6 +2,7 @@ import { createHash } from 'node:crypto';
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import { onRequest as standingsRoute } from '../functions/api/standings';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 import { TELEMETRY_DEV_SEND_STORAGE_KEY, TELEMETRY_OPT_IN_STORAGE_KEY } from '../src/telemetry/payload';
@@ -25,6 +26,8 @@ type StandingPost = {
 };
 
 const ARTIFACT_DIR = path.resolve('artifacts/county-standings');
+const CLAIM_BENCH_SEED = benchSeeds['the-claim'][0]!;
+const WRONG_CONTRACT_BENCH_SEED = benchSeeds['e1-dry-gulch'][0]!;
 const PROFILE_STATE: ProfileState = {
   version: 2,
   activeId: 'robin',
@@ -139,7 +142,7 @@ test('endpoint stores optional self-declared stack and keeps the public board st
     harnessVersion: '1.2.3',
     config: ' effort = medium ',
   };
-  const firstPost = { ...validPost('1'.repeat(32), 12), seed: 'bench-seed-01', seedMode: 'bench' as const, stack };
+  const firstPost = { ...validPost('1'.repeat(32), 12), seed: CLAIM_BENCH_SEED, seedMode: 'bench' as const, stack };
   const first = await standingsRoute({ request: apiRequest('POST', '', firstPost), env: { TELEMETRY: kv } });
   expect(first.status).toBe(200);
   await standingsRoute({ request: apiRequest('POST', '', validPost('1'.repeat(32), 8)), env: { TELEMETRY: kv } });
@@ -147,7 +150,7 @@ test('endpoint stores optional self-declared stack and keeps the public board st
 
   const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
   expect(stored.find((row) => row.anonId === '1'.repeat(32))).toMatchObject({
-    seed: 'bench-seed-01',
+    seed: CLAIM_BENCH_SEED,
     seedMode: 'bench',
     stack: { ...stack, declaredBy: 'self' },
   });
@@ -244,11 +247,38 @@ test('endpoint stores optional self-declared stack and keeps the public board st
   expect(await unranked.json()).toMatchObject({ ok: true, stored: false, rank: null });
 });
 
-test('secure submits the county row with pinned origin, hashes, and profile name', async ({ page }, testInfo) => {
+test('bench submissions require membership in the contract frozen seed set', async () => {
+  const kv = makeKv();
+  const member = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...validPost('7'.repeat(32)),
+      seed: CLAIM_BENCH_SEED,
+      seedMode: 'bench',
+    }),
+    env: { TELEMETRY: kv },
+  });
+  expect(member.status).toBe(200);
+  expect(JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]')).toContainEqual(
+    expect.objectContaining({ seed: CLAIM_BENCH_SEED, seedMode: 'bench' }),
+  );
+
+  const nonMember = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...validPost('8'.repeat(32)),
+      seed: WRONG_CONTRACT_BENCH_SEED,
+      seedMode: 'bench',
+    }),
+    env: { TELEMETRY: kv },
+  });
+  expect(nonMember.status).toBe(400);
+  expect(await nonMember.json()).toMatchObject({ ok: false, error: 'bad_bench_seed' });
+});
+
+test('secure submits the county row with pinned origin, hashes, and profile name', async ({ page }) => {
   await seedProfile(page);
   const posts = interceptPosts(page);
   const errors = collectErrors(page);
-  const seed = `lb01-submit-${testInfo.project.name}`;
+  const seed = CLAIM_BENCH_SEED;
 
   await secureClaim(page, seed, undefined, '&epoch=epoch-2-steamworks&contract=the-claim');
   await expect.poll(() => posts.length, { timeout: 8_000 }).toBe(1);
@@ -283,30 +313,40 @@ test('secure submits the county row with pinned origin, hashes, and profile name
   expectNoErrors(errors);
 });
 
-test('development standings require the explicit dev-send opt-in', async ({ page }, testInfo) => {
+test('secure skips county submission for a pinned seed outside the frozen set', async ({ page }, testInfo) => {
+  await seedProfile(page);
+  const posts = interceptPosts(page);
+  const errors = collectErrors(page);
+  await secureClaim(page, `lb03-nonmember-${testInfo.project.name}`);
+  await page.waitForTimeout(500);
+  expect(posts).toEqual([]);
+  expectNoErrors(errors);
+});
+
+test('development standings require the explicit dev-send opt-in', async ({ page }) => {
   await seedProfile(page, true, false);
   const posts = interceptPosts(page);
   const errors = collectErrors(page);
-  await secureClaim(page, `lb01-dev-off-${testInfo.project.name}`);
+  await secureClaim(page, CLAIM_BENCH_SEED);
   await page.waitForTimeout(500);
   expect(posts).toEqual([]);
   expectNoErrors(errors);
 });
 
-test('standings opt-out suppresses submission', async ({ page }, testInfo) => {
+test('standings opt-out suppresses submission', async ({ page }) => {
   await seedProfile(page, false);
   const posts = interceptPosts(page);
   const errors = collectErrors(page);
-  await secureClaim(page, `lb01-optout-${testInfo.project.name}`);
+  await secureClaim(page, CLAIM_BENCH_SEED);
   await page.waitForTimeout(500);
   expect(posts).toEqual([]);
   expectNoErrors(errors);
 });
 
-test('offline standings failure stays silent through the secure ceremony', async ({ page }, testInfo) => {
+test('offline standings failure stays silent through the secure ceremony', async ({ page }) => {
   await seedProfile(page);
   const errors = collectErrors(page);
-  await secureClaim(page, `lb01-offline-${testInfo.project.name}`, () =>
+  await secureClaim(page, CLAIM_BENCH_SEED, () =>
     page.evaluate(() => {
       Object.defineProperty(Navigator.prototype, 'onLine', { configurable: true, get: () => false });
     }),

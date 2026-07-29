@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
 import { applyGeneratedMap, disposeGeneratedAssets, generatedAssetRenderCounts, generatedAssetStatuses } from '../assets/generated';
 import {
   beginSpriteStatsFrame,
@@ -5507,6 +5508,8 @@ export class Game {
       const descriptor = contractDescriptorJson(this.activeContract);
       if (descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
       const pinnedSeed = getDebugSeed();
+      // A non-member pinned seed is neither comparable bench data nor live play; the owner may reverse this submission policy.
+      if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[this.activeContract.id]?.includes(pinnedSeed)) return;
       const seed = pinnedSeed ?? 'gold-rush';
       const [seedHash, inputLogHash] = await Promise.all([
         sha256Hex(seed),

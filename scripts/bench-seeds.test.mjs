@@ -1,0 +1,42 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
+import atomicContracts from '../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
+import deepwaterContracts from '../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
+import deepskyContracts from '../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
+import frontierContracts from '../assets/contracts/epoch-1-frontier/contracts.json' with { type: 'json' };
+import motorContracts from '../assets/contracts/epoch-4-motor/contracts.json' with { type: 'json' };
+import orbitalContracts from '../assets/contracts/epoch-8-orbital/contracts.json' with { type: 'json' };
+import redfieldsContracts from '../assets/contracts/epoch-9-redfields/contracts.json' with { type: 'json' };
+import signalContracts from '../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
+import steamworksContracts from '../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
+import voltageContracts from '../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
+
+const bundles = [
+  frontierContracts,
+  steamworksContracts,
+  voltageContracts,
+  motorContracts,
+  deepwaterContracts,
+  atomicContracts,
+  signalContracts,
+  orbitalContracts,
+  redfieldsContracts,
+  deepskyContracts,
+];
+const knownContractIds = new Set(bundles.flatMap((bundle) => bundle.contracts.map((contract) => contract.id)));
+
+test('bench seed sets cover Frontier and contain only valid known-contract seeds', () => {
+  for (const { id: contractId } of frontierContracts.contracts) {
+    assert.ok(Object.hasOwn(benchSeeds, contractId), `${contractId} needs a bench seed set`);
+  }
+  for (const [contractId, seeds] of Object.entries(benchSeeds)) {
+    assert.ok(knownContractIds.has(contractId), `${contractId} is not a known contract`);
+    assert.ok(Array.isArray(seeds) && seeds.length > 0, `${contractId} needs at least one seed`);
+    assert.equal(new Set(seeds).size, seeds.length, `${contractId} has duplicate seeds`);
+    for (const seed of seeds) {
+      assert.equal(typeof seed, 'string', `${contractId} contains a non-string seed`);
+      assert.ok(seed.length > 0 && seed.length <= 256, `${contractId} contains an invalid seed`);
+    }
+  }
+});

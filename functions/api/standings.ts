@@ -1,3 +1,4 @@
+import benchSeeds from '../../assets/contracts/bench-seeds.json' with { type: 'json' };
 import atomicContracts from '../../assets/contracts/epoch-6-atomic/contracts.json' with { type: 'json' };
 import deepwaterContracts from '../../assets/contracts/epoch-5-deepwater/contracts.json' with { type: 'json' };
 import deepskyContracts from '../../assets/contracts/epoch-10-deepsky/contracts.json' with { type: 'json' };
@@ -142,6 +143,9 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const stack = body.stack === undefined ? undefined : validateStack(body.stack);
   if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+  }
+  if (seedMode === 'bench' && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(seed)) {
+    return error(cors, 400, 'bad_bench_seed', 'Bench seed not accepted.');
   }
 
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
