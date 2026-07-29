@@ -3520,6 +3520,13 @@
               "id": "ap-06b-adapter-wiring",
               "title": "AP-06b Standing-orders adapter wiring — lift the firewall to Game.ts so BUILD and HARVEST reach the world (F-1212-3)",
               "taskFile": "ap-orders-adapter-wiring.md",
+              "status": "blocked",
+              "blockedReason": "TECHNICAL GATE, NOT AN OWNER DESIGN FORK - NO OWNER ACTION REQUIRED. Discharge condition: tasks/lane-c-ap-06b-panel-ladder-and-voice.md merges, which re-lands this work together with the panel truth it changes. Blocked by s1217 (reviews/ap-06b-adapter-wiring.md, F-1217-1): the work on lane/e2-arsenal @ 2f216af0 is CORRECT but supplying panAt registers the level-3 auto_pan capability at ToolSurface.ts:375, adding a row to the player-facing Prospector panel; a matched control proved m4-10:112, m4-09:107 and m4-06:384 flip green-to-red on BOTH projects because of it. Do not drain 2f216af0 on its own - it would put 6 red executions on main."
+            },
+            {
+              "id": "ap-06b-panel-ladder-and-voice",
+              "title": "AP-06b corrective - re-land the standing-orders adapter wiring WITH the Prospector-panel truth it changes: prove auto_pan is gated at rung 3 rather than merely displayed, and root-cause the pan-voice line (F-1217-1)",
+              "taskFile": "lane-c-ap-06b-panel-ladder-and-voice.md",
               "status": "queued"
             },
             {
