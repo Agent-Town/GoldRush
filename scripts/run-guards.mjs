@@ -34,15 +34,27 @@ const GUARDS = [
   'test:task-guards',
 ];
 
-const only = process.argv.includes('--only')
+// `--only` takes one guard OR a comma-separated list (F-1228-1). The drain gate
+// needs a SUBSET, not all eight: `test:accounts` and `test:mp` each rewrite a
+// tracked artifact, and a drain's own precondition is a clean tree, so they must
+// stay out of the merge path. Selecting by list keeps the drain on ONE command
+// that still prints a real rc per guard -- which is the whole point of this file.
+const onlyArg = process.argv.includes('--only')
   ? process.argv[process.argv.indexOf('--only') + 1]
   : null;
-const selected = only ? GUARDS.filter((g) => g === only) : GUARDS;
+const requested = onlyArg ? onlyArg.split(',').map((s) => s.trim()).filter(Boolean) : null;
+const unknown = requested ? requested.filter((g) => !GUARDS.includes(g)) : [];
 
-if (only && selected.length === 0) {
-  console.error(`run-guards: no guard named "${only}". Known: ${GUARDS.join(', ')}`);
+// An unknown name must be loud: silently narrowing to nothing would report a
+// green over zero guards, which is the failure mode this runner exists to refuse.
+if (requested && (unknown.length > 0 || requested.length === 0)) {
+  console.error(
+    `run-guards: no guard named "${unknown.join(', ') || onlyArg}". Known: ${GUARDS.join(', ')}`,
+  );
   process.exit(2);
 }
+
+const selected = requested ? GUARDS.filter((g) => requested.includes(g)) : GUARDS;
 
 const rows = [];
 for (const guard of selected) {

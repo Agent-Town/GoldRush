@@ -65,6 +65,36 @@ test('--only rejects unknown guards and runs one known guard', (t) => {
   assert.equal(known.stdout.match(/^(PASS|FAIL)/gm)?.length, 1);
 });
 
+test('--only accepts a comma-separated subset in canonical order', (t) => {
+  const dir = fixture();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  const subset = run(dir, '--only', 'test:task-guards,test:power-budget');
+  assert.equal(subset.status, 0, subset.stderr || subset.stdout);
+  const rows = subset.stdout.match(/^(?:PASS|FAIL)\s+rc=\S+\s+\d+s\s+(\S+)$/gm) ?? [];
+  assert.equal(rows.length, 2, subset.stdout);
+  // GUARDS order wins over the order typed on the command line.
+  assert.match(subset.stdout, /test:power-budget[\s\S]*test:task-guards/);
+  assert.match(subset.stdout, /guards: 2\/2 passed/);
+
+  // Whitespace around list members is tolerated.
+  const spaced = run(dir, '--only', 'test:power-budget, test:task-guards');
+  assert.equal(spaced.status, 0, spaced.stderr || spaced.stdout);
+  assert.match(spaced.stdout, /guards: 2\/2 passed/);
+});
+
+test('--only rejects a list containing an unknown guard rather than narrowing', (t) => {
+  const dir = fixture();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  // The dangerous shape: one real name carries a typo past the check, and the
+  // run reports a green over fewer guards than the caller asked for.
+  const mixed = run(dir, '--only', 'test:power-budget,test:tsak-guards');
+  assert.equal(mixed.status, 2, mixed.stdout);
+  assert.match(mixed.stderr, /no guard named "test:tsak-guards"/);
+  assert.doesNotMatch(mixed.stdout, /passed/);
+});
+
 test('power-budget rows include p95 only when printed', (t) => {
   const measuredDir = fixture({
     'test:power-budget': 'node -e "console.log(\'power-graph-budget: p95=12.5ms\')"',
