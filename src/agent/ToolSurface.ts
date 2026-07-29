@@ -13,6 +13,7 @@ import {
   StandingOrdersExecutor,
   type StandingOrdersSubmission,
 } from './StandingOrders';
+import { buildView, type AgentView } from './View';
 
 export type AgentVec2 = { x: number; z: number };
 export type AgentBuildingRef = { id: string; index?: number };
@@ -82,6 +83,7 @@ export type AgentGameAdapter = {
   readonly metaProgress?: MetaProgressAgentGate;
   readonly diagnostics?: () => unknown;
   readonly economyLog?: () => readonly unknown[];
+  readonly standingOrders?: () => unknown;
   readonly placeBuilding?: (def: BuildableId, pos: AgentVec2, rot?: number) => unknown;
   readonly panAt?: (node: string) => unknown;
   readonly repair?: (building: AgentBuildingRef) => unknown;
@@ -185,7 +187,8 @@ export function createToolSurface(game: AgentGameAdapter, options: ToolSurfaceOp
         makeReceipt('et.goldrush.view', EMPTY_ARGS, {
           ok: true,
           result: standingOrders.snapshot(),
-          economyLog: readEconomyLog(game),
+          state: buildView(game),
+          economyLog: [],
         }),
     },
   };
@@ -198,6 +201,16 @@ export function install(game: AgentGameAdapter, options: ToolSurfaceOptions = {}
   const surface = createToolSurface(game, options);
   bindStandingOrders(standingOrdersBySurface.get(surface)!);
   (game as AgentGameAdapter & { agentTools?: GoldRushToolSurface }).agentTools = surface;
+  if (typeof window !== 'undefined') {
+    queueMicrotask(() => {
+      if (!window.__GR_AGENT__) return;
+      Object.defineProperty(window.__GR_AGENT__, 'view', {
+        configurable: true,
+        enumerable: true,
+        get: () => buildView(game),
+      } satisfies PropertyDescriptor & { get: () => AgentView });
+    });
+  }
   return surface;
 }
 
