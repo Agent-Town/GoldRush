@@ -3481,6 +3481,25 @@
               "id": "ap-05-publish",
               "title": "AP-05 Publish (owner-gated; OpenClaw/Hermes/Milady adapters) [REHEARSAL-GATED]",
               "status": "planned"
+            },
+            {
+              "id": "ap-06-standing-orders",
+              "title": "AP-06 Standing Orders ✅ — the plan the reflexes obey: a schema-validated vocabulary (BUILD/REPAIR_UNDER/MOVE_TO/HOLD/HARVEST/FALLBACK_IF) executed on the Prospector's reflex clock through the EXISTING ToolSurface, so legal placement and the permission ladder stay the law; unknown verbs rejected with a reason (Mistake #14). Drained s1212 as the lane TIP's own delta (8e265ee4..f44097b1) — the older commit on lane/m3 is the already-merged GG-03c safe dupe b5be7ab3. Zero MAIN-MOVED: git diff a4524f9e main over all four paths is empty. Gates: tsc 0, build 1.18s, own spec 2/2 both projects, node-guards 74/74 exit 0, drain minimum 34/34 at --workers=1, plain boot zero console desktop+390px, release suite 25/26 with the single red re-measured 8/8 green in isolation. F-1212-3 OPEN AND CARRIED: BUILD and HARVEST are INERT in production because Game.ts:2040 installs the agent stub with an ADAPTER OBJECT LITERAL exposing only diagnostics/economyLog/repair/collectXp/collectGold — placeBuilding and panAt are absent, and place_building's placeBuildingThroughGame fallback reads buildSystem off that same adapter, so it too returns undefined. Both verbs fail LOUDLY with NO_SYSTEM_API, marked failed(reason); nothing is silently swallowed. REPAIR_UNDER, MOVE_TO, HOLD and FALLBACK_IF DO work. The runner stopped at its own TOUCH-ONLY firewall, which was correct behaviour, not a defect — corrective tasks/ap-orders-adapter-wiring.md queued with the firewall explicitly lifted to Game.ts.",
+              "taskFile": "lane-ap-orders.md",
+              "mergeHash": "94dd863be423632b83b4d828b15d61c39bb48c2a",
+              "status": "merged"
+            },
+            {
+              "id": "ap-07-county-standings",
+              "title": "AP-07 County Standings (LB-01) — global boards per contract x epoch, blind to human/agent by design",
+              "taskFile": "lane-county-standings.md",
+              "status": "building"
+            },
+            {
+              "id": "ap-06b-adapter-wiring",
+              "title": "AP-06b Standing-orders adapter wiring — lift the firewall to Game.ts so BUILD and HARVEST reach the world (F-1212-3)",
+              "taskFile": "ap-orders-adapter-wiring.md",
+              "status": "queued"
             }
           ]
         }
