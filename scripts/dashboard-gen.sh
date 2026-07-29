@@ -350,8 +350,8 @@ const resolvedStatus = (task) => {
 const done = (status) => status === 'merged' || status === 'verified-by-owner';
 const label = (status) => ({
   planned: 'planned', queued: 'queued', building: 'building', merged: 'merged',
-  'verified-by-owner': 'owner verified',
-})[status];
+  'verified-by-owner': 'owner verified', blocked: 'blocked', stopped: 'stopped', superseded: 'retired',
+})[status] ?? (status || 'draft');
 
 let html = '';
 data.goals.forEach((goal, goalIndex) => {
