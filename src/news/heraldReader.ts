@@ -1,5 +1,6 @@
 import './heraldReader.css';
 import { readHeraldItems, type HeraldClass, type HeraldItem } from './herald';
+import { activeProfile, markHintSeen, type ProfileStorage } from '../game/ProfileStorage';
 
 const heraldEngravingUrls = import.meta.glob<string>('../../assets/raw/herald-engraving-*.png', {
   eager: true,
@@ -15,6 +16,57 @@ const HERALD_ENGRAVINGS: Record<HeraldClass, string | undefined> = {
   boss: heraldEngravingUrls['../../assets/raw/herald-engraving-boss.png'],
   'town-growth': heraldEngravingUrls['../../assets/raw/herald-engraving-town-growth.png'],
 };
+const FIRST_ISSUE_SEEN_KEY = 'story:greenhorn-gazette-issue-1';
+const FIRST_ISSUE_PANELS = [
+  {
+    id: 'claim-goal',
+    headline: 'THE CLAIM AND THE GOAL',
+    lines: [
+      'Hold the claim through every posted wave.',
+      'Secure it and the win is banked; each claim carries the town forward.',
+    ],
+  },
+  {
+    id: 'seams-gold',
+    headline: 'SEAMS GIVE GOLD',
+    lines: [
+      'Pan the glittering seams to put gold in your pouch.',
+      'Raise a sluice beside running water and it keeps washing while you fight.',
+    ],
+  },
+  {
+    id: 'the-works',
+    headline: 'THE WORKS',
+    lines: [
+      'Gold raises the works: palisades slow trouble; turrets and beacons watch the night.',
+      'Build where the trouble walks.',
+    ],
+  },
+  {
+    id: 'the-arms',
+    headline: 'THE ARMS',
+    lines: [
+      'Your brass-and-teal frontier rig fires when trouble comes in range.',
+      'When the trail pauses for a fitting, choose the upgrade your claim needs.',
+    ],
+  },
+  {
+    id: 'freeing-fevered',
+    headline: 'FREEING THE FEVERED',
+    lines: [
+      "The bandits are neighbors caught in the Baron's Gold Fever.",
+      'Turn them back and break the hunger; they are victims, never villains.',
+    ],
+  },
+  {
+    id: 'town-serves',
+    headline: 'THE TOWN SERVES YOU',
+    lines: [
+      'The tavern board posts claims; the schoolhouse charts science; the tailor dresses both partners.',
+      'The complaints desk pays bounties for trouble reported.',
+    ],
+  },
+] as const;
 
 let currentRoot: HTMLElement | null = null;
 let currentOnClose: (() => void) | undefined;
@@ -48,6 +100,22 @@ export function closeClaimHerald(): void {
   onClose?.();
 }
 
+export function claimHeraldTownStatus(storage = browserStorage()): {
+  showBadge: boolean;
+  unread: boolean;
+  openOnTownEntry: boolean;
+} {
+  if (!storage) return { showBadge: false, unread: false, openOnTownEntry: false };
+  const profile = activeProfile(storage);
+  const showBadge = profile.trailGuide === true;
+  const unread = showBadge && !profile.hintsSeen.includes(FIRST_ISSUE_SEEN_KEY);
+  return { showBadge, unread, openOnTownEntry: unread && profile.difficultyPreset === 'greenhorn' };
+}
+
+export function markClaimHeraldFirstIssueRead(storage = browserStorage()): void {
+  if (storage) markHintSeen(storage, FIRST_ISSUE_SEEN_KEY);
+}
+
 function renderHerald(items: readonly HeraldItem[]): string {
   return `
     <article class="claim-herald__paper">
@@ -59,11 +127,30 @@ function renderHerald(items: readonly HeraldItem[]): string {
         </div>
         <button class="claim-herald__close" type="button" data-herald-close data-testid="claim-herald-close">Back</button>
       </header>
+      <section class="claim-herald__first-issue" data-testid="gazette-first-issue" aria-labelledby="gazette-first-issue-title">
+        <header class="claim-herald__issue-header">
+          <p>Issue No. 1 · Pinned greenhorn edition</p>
+          <h3 id="gazette-first-issue-title">SIX THINGS EVERY CLAIM-HOLDER SHOULD KNOW</h3>
+        </header>
+        <div class="claim-herald__guide-panels">
+          ${FIRST_ISSUE_PANELS.map(renderFirstIssuePanel).join('')}
+        </div>
+      </section>
       ${
         items.length > 0
-          ? `<div class="claim-herald__items" data-testid="claim-herald-items">${items.map(renderItem).join('')}</div>`
+          ? `<section class="claim-herald__latest"><h3>Latest from the plaza</h3><div class="claim-herald__items" data-testid="claim-herald-items">${items.map(renderItem).join('')}</div></section>`
           : '<p class="claim-herald__empty" data-testid="claim-herald-empty">No fresh ink today.</p>'
       }
+    </article>
+  `;
+}
+
+function renderFirstIssuePanel(panel: (typeof FIRST_ISSUE_PANELS)[number]): string {
+  return `
+    <article class="claim-herald__guide-panel" data-panel-id="${panel.id}" data-testid="gazette-panel">
+      <div class="claim-herald__art-slot" aria-hidden="true">Engraving reserved</div>
+      <h4>${panel.headline}</h4>
+      ${panel.lines.map((line) => `<p>${line}</p>`).join('')}
     </article>
   `;
 }
@@ -105,4 +192,12 @@ function escapeHtml(value: string): string {
     if (char === '"') return '&quot;';
     return '&#39;';
   });
+}
+
+function browserStorage(): ProfileStorage | undefined {
+  try {
+    return globalThis.localStorage ?? undefined;
+  } catch {
+    return undefined;
+  }
 }

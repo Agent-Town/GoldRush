@@ -78,6 +78,97 @@
   padding-top: 14px;
 }
 
+.claim-herald__first-issue {
+  margin-top: 14px;
+  border: 2px solid rgba(77, 49, 25, 0.52);
+  background: rgba(255, 248, 232, 0.48);
+}
+
+.claim-herald__issue-header {
+  padding: 12px;
+  border-bottom: 4px double rgba(46, 27, 14, 0.52);
+  text-align: center;
+}
+
+.claim-herald__issue-header p,
+.claim-herald__issue-header h3,
+.claim-herald__guide-panel h4,
+.claim-herald__guide-panel p,
+.claim-herald__latest h3 {
+  margin: 0;
+}
+
+.claim-herald__issue-header p {
+  color: #5b8a8a;
+  font-size: 0.72rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.claim-herald__issue-header h3 {
+  margin-top: 4px;
+  font-size: 1.12rem;
+  line-height: 1.1;
+}
+
+.claim-herald__guide-panels {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.claim-herald__guide-panel {
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 12px;
+  border-right: 1px solid rgba(77, 49, 25, 0.24);
+  border-bottom: 1px solid rgba(77, 49, 25, 0.24);
+}
+
+.claim-herald__guide-panel:nth-child(2n) {
+  border-right: 0;
+}
+
+.claim-herald__guide-panel:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.claim-herald__art-slot {
+  display: grid;
+  place-items: center;
+  min-height: 76px;
+  border: 1px dashed rgba(77, 49, 25, 0.48);
+  color: rgba(46, 27, 14, 0.58);
+  background:
+    repeating-linear-gradient(135deg, transparent 0 8px, rgba(139, 125, 60, 0.08) 8px 9px);
+  font-size: 0.68rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.claim-herald__guide-panel h4 {
+  font-size: 0.95rem;
+  line-height: 1.08;
+}
+
+.claim-herald__guide-panel p {
+  color: rgba(46, 27, 14, 0.82);
+  font-size: 0.82rem;
+  font-weight: 800;
+  line-height: 1.3;
+}
+
+.claim-herald__latest {
+  padding-top: 18px;
+}
+
+.claim-herald__latest > h3 {
+  padding-bottom: 8px;
+  border-bottom: 4px double rgba(46, 27, 14, 0.52);
+  font-size: 1rem;
+  text-transform: uppercase;
+}
+
 .claim-herald__item {
   position: relative;
   display: grid;
@@ -127,6 +218,49 @@
   margin: 18px 0 0;
 }
 
+.claim-herald-actions {
+  display: flex;
+  gap: 8px;
+  align-items: start;
+  pointer-events: auto;
+}
+
+.claim-herald-badge {
+  display: grid;
+  min-height: 44px;
+  border: 2px solid #2e1b0e;
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #2e1b0e;
+  background: #f5e6c8;
+  box-shadow: 0 4px 0 rgba(46, 27, 14, 0.62);
+  font: 900 0.8rem/1 Wellfleet, Georgia, serif;
+  cursor: pointer;
+}
+
+.claim-herald-badge span {
+  color: #5b8a8a;
+  font-size: 0.62rem;
+  text-transform: uppercase;
+}
+
+.claim-herald-badge[data-unread='true'] {
+  animation: claim-herald-pulse 1.6s ease-in-out infinite;
+}
+
+.claim-herald-badge:hover,
+.claim-herald-badge:focus-visible {
+  outline: 3px solid rgba(91, 138, 138, 0.72);
+  outline-offset: 3px;
+}
+
+@keyframes claim-herald-pulse {
+  50% {
+    background: #ffe4a0;
+    box-shadow: 0 4px 0 rgba(46, 27, 14, 0.62), 0 0 0 6px rgba(255, 228, 160, 0.3);
+  }
+}
+
 @media (max-width: 560px) {
   .claim-herald {
     padding: 10px;
@@ -160,5 +294,32 @@
   .claim-herald__engraving {
     width: 92px;
     height: 92px;
+  }
+
+  .claim-herald__guide-panels {
+    grid-template-columns: 1fr;
+  }
+
+  .claim-herald__guide-panel,
+  .claim-herald__guide-panel:nth-child(2n),
+  .claim-herald__guide-panel:nth-last-child(-n + 2) {
+    border-right: 0;
+    border-bottom: 1px solid rgba(77, 49, 25, 0.24);
+  }
+
+  .claim-herald__guide-panel:last-child {
+    border-bottom: 0;
+  }
+
+  .claim-herald-badge {
+    padding-inline: 8px;
+    font-size: 0.72rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .claim-herald-badge[data-unread='true'] {
+    animation: none;
+    background: #ffe4a0;
   }
 }

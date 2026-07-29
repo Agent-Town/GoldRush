@@ -47,7 +47,12 @@ import {
 } from '../meta/Megaproject';
 import { RESEARCH_STATE_KEY, browserResearchStorage, hasResearchNode, loadResearchState, reconcileActiveEpoch, researchStateKey, saveResearchState, scienceMeter, setPinnedResearchTarget, type ResearchState } from '../meta/ResearchTree';
 import { CeremonySystem, type CeremonyDiagnostics } from '../ceremony/CeremonySystem';
-import { closeClaimHerald, openClaimHerald } from '../news/heraldReader';
+import {
+  claimHeraldTownStatus,
+  closeClaimHerald,
+  markClaimHeraldFirstIssueRead,
+  openClaimHerald,
+} from '../news/heraldReader';
 import { emitStorySignal } from '../story';
 import { requestOpenClaimLedger } from '../encyclopedia/events';
 import { discoverLedgerContract, discoverLedgerEntry, discoverLedgerTownActor } from '../encyclopedia/state';
@@ -371,6 +376,7 @@ export class TownScene {
   private activeBarkActor: TownActorRuntime | null = null;
   private assayBench?: ReturnType<typeof installAssayBench>;
   private heraldOpen = false;
+  private heraldOpener: HTMLElement | null = null;
   private promptKey = '';
   private townName = readTownName();
   private nameMode: TownNameMode = 'founding';
@@ -846,6 +852,7 @@ export class TownScene {
   }
 
   private createUi(): void {
+    const herald = claimHeraldTownStatus();
     this.ui.className = 'town-ui';
     this.ui.dataset.testid = 'town-ui';
     this.ui.setAttribute('aria-label', 'Town square');
@@ -855,7 +862,14 @@ export class TownScene {
           <strong data-testid="town-name">Town Square</strong>
           <span data-testid="town-subtitle">Four doors stand ready.</span>
         </div>
-        <button class="town-ui__exit" type="button" data-testid="town-exit">Exit</button>
+        <div class="claim-herald-actions">
+          ${
+            herald.showBadge
+              ? `<button class="claim-herald-badge" type="button" data-testid="town-herald-badge" data-unread="${herald.unread}" aria-label="Read issue one of The Claim Herald"><span>Issue No. 1</span>Claim Herald</button>`
+              : ''
+          }
+          <button class="town-ui__exit" type="button" data-testid="town-exit">Exit</button>
+        </div>
       </div>
       <div class="town-ui__prompt-stack" data-testid="town-prompt-stack"></div>
     `;
@@ -908,6 +922,7 @@ export class TownScene {
     this.ui.append(this.nameCard);
     this.ui.append(this.assetLoadingCue);
     this.ui.querySelector('[data-testid="town-exit"]')?.addEventListener('click', this.onExitClick);
+    this.ui.querySelector('[data-testid="town-herald-badge"]')?.addEventListener('click', this.onHeraldBadgeClick);
     this.prompt.addEventListener('click', this.onPromptClick);
     this.prompt.addEventListener('pointerdown', this.onDynamoCrankStart);
     this.prompt.addEventListener('pointerup', this.onDynamoCrankStop);
@@ -938,6 +953,7 @@ export class TownScene {
     this.syncTownTitle();
     if (!this.townName) this.openNameCard('founding');
     if (this.options.openBoard) this.openBoard();
+    if (herald.openOnTownEntry) this.openHerald();
     discoverLedgerEntry('the_claim');
     this.emitGrowthSightBeats();
   }
@@ -958,19 +974,38 @@ export class TownScene {
   };
 
   private readonly onBarkClick = (event: Event) => {
-    if (!(event.target as HTMLElement | null)?.closest('[data-town-herald]')) return;
+    const opener = (event.target as HTMLElement | null)?.closest<HTMLElement>('[data-town-herald]');
+    if (!opener) return;
+    this.openHerald(opener);
+  };
+
+  private readonly onHeraldBadgeClick = (event: Event) => {
+    this.openHerald(event.currentTarget instanceof HTMLElement ? event.currentTarget : undefined);
+  };
+
+  private openHerald(opener?: HTMLElement): void {
+    if (this.heraldOpen) return;
+    this.heraldOpener = opener ?? null;
+    markClaimHeraldFirstIssueRead();
+    const badge = this.ui.querySelector<HTMLElement>('[data-testid="town-herald-badge"]');
+    if (badge) badge.dataset.unread = 'false';
     openClaimHerald(this.onHeraldClose);
     this.heraldOpen = true;
     this.ui.inert = true;
     this.ui.setAttribute('aria-hidden', 'true');
-  };
+  }
 
   private readonly onHeraldClose = () => {
+    const opener = this.heraldOpener;
+    this.heraldOpener = null;
     this.heraldOpen = false;
     this.lastExitIntent = true;
     this.ui.inert = false;
     this.ui.removeAttribute('aria-hidden');
-    if (this.ui.isConnected) this.barkCard.querySelector<HTMLButtonElement>('[data-town-herald]')?.focus({ preventScroll: true });
+    if (this.ui.isConnected) {
+      const fallback = this.ui.querySelector<HTMLButtonElement>('[data-testid="town-herald-badge"]');
+      (opener?.isConnected ? opener : fallback)?.focus({ preventScroll: true });
+    }
   };
 
   private activateTownAction(buildingId: TownBuildingId | typeof STAMP_MILL_ID | typeof DYNAMO_HALL_ID | typeof CHARTER_PRESS_ID | typeof TAILOR_WAGON_ID | undefined): void {
