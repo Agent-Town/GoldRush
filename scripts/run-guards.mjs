@@ -16,6 +16,19 @@
  * check (tsconfig `include` is [src, e2e, playwright.config.ts]) -- for that part
  * of the tree these guards are the only gate there is.
  *
+ * READ THAT SENTENCE PRECISELY (F-1232-1, s1232). "These cover scripts/**" was
+ * false as written for four months, and it is the kind of false that reads as
+ * reassurance. `test:node-guards` is a hand-written roster of test files; the
+ * import graph out of it plus the other entrypoints reached 31 of 174
+ * scripts/*.mjs. A hard SyntaxError in art-staging-audit.mjs -- a script the
+ * ART-SLOT LAW obliges fires to run -- passed tsc, build, and all eight guards
+ * 8/8. What coverage existed came from tests that happened to EXECUTE a script
+ * (deploy-site.sh is gated only because its contract test runs it), never from
+ * anything that read the tree as a whole. scripts/script-tree-parse.test.mjs now
+ * holds the floor -- every .mjs and .sh here and in rehearsal/ must parse -- so
+ * the sentence above is true at the parse level and ONLY at the parse level.
+ * A script with a contract test is still gated far better than one without.
+ *
  * `test:task-guards` (added s1131) is the odd one out: it gates the tasks/ ledger
  * rather than code. It is here because F-1130-4/F-1131-2 showed the same failure
  * mode this runner was built for -- a check that only ever ran by hand, as a
