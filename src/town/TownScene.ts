@@ -111,6 +111,9 @@ const townFacadeUrls: Partial<Record<TownBuildingId, { key: string; url: string 
 };
 const townFacadeLoader = new THREE.TextureLoader();
 const townFacadeTextures = new Map<string, Promise<THREE.Texture | null>>();
+const TOWN_ZOOM_MIN = 0.36;
+const TOWN_ZOOM_DEFAULT = 0.85;
+const TOWN_ZOOM_MAX = 1.1;
 const TOWN_HALF = 15;
 const TOWN_BOUNDS = { minX: -TOWN_HALF, maxX: TOWN_HALF, minZ: -TOWN_HALF, maxZ: TOWN_HALF };
 const HERO_START = new THREE.Vector3(0, 0.06, 2);
@@ -252,7 +255,15 @@ export type TownDiagnostics = {
   };
   renderer: { calls: number; geometries: number; textures: number };
   canvas: { width: number; height: number; dpr: number };
-  camera: CameraZoomDiagnostics & { heroRenderedHeight: number };
+  camera: CameraZoomDiagnostics & {
+    currentDistance: number;
+    framingDistanceScale: number;
+    targetFramingDistanceScale: number;
+    minFramingDistanceScale: number;
+    maxFramingDistanceScale: number;
+    heroRenderedHeight: number;
+    setZoom: (distanceScale: number) => void;
+  };
 };
 
 type TownSceneOptions = {
@@ -403,6 +414,7 @@ export class TownScene {
     this.boardPageIndex = boardPageIndexForContract(options.initialBoardContractId);
     this.renderer = createRenderer(canvas);
     this.cameraZoom = new CameraZoomController(canvas, 'town', this.cameraRig);
+    this.syncTownZoomProjection();
     this.renderer.toneMappingExposure = 1.02;
     this.input = new InputController(this.getElement('#touch-stick'), this.getElement('#touch-knob'), this.getElement('#confirm-button'));
     this.hiddenButtons = this.hideTownActionButtons();
@@ -486,6 +498,7 @@ export class TownScene {
     this.elapsed += delta;
     this.updateAmbientDust();
     this.cameraZoom.update(delta);
+    this.syncTownZoomProjection();
     resizeRenderer(this.renderer, this.camera, Balance.render.maxDpr);
     const intents = this.input.readIntents();
     const rawExitIntent = intents.cancel || intents.pause;
@@ -2032,6 +2045,8 @@ export class TownScene {
       facades[object.name.split(':')[1] ?? object.name] = material.userData.textureState ?? 'placeholder';
     });
     const barkPortrait = this.barkCard.querySelector<HTMLImageElement>('.town-ui__bark-portrait');
+    const cameraZoom = this.cameraZoom.diagnostics();
+    const framingDistanceScale = townFramingDistanceScale(cameraZoom.distanceScale);
     window.__GR_TOWN_DIAGNOSTICS__ = {
       frame: this.frame,
       elapsed: this.elapsed,
@@ -2145,10 +2160,36 @@ export class TownScene {
         dpr,
       },
       camera: {
-        ...this.cameraZoom.diagnostics(),
+        ...cameraZoom,
+        currentDistance: cameraZoom.baseDistance * framingDistanceScale,
+        framingDistanceScale,
+        targetFramingDistanceScale: townFramingDistanceScale(cameraZoom.targetDistanceScale),
+        minFramingDistanceScale: TOWN_ZOOM_MIN,
+        maxFramingDistanceScale: TOWN_ZOOM_MAX,
         heroRenderedHeight: this.heroRenderedHeight(),
+        setZoom: this.setTownZoom,
       },
     };
+  }
+
+  private readonly setTownZoom = (distanceScale: number): void => {
+    const currentTarget = this.cameraZoom.diagnostics().targetDistanceScale;
+    const target = townControllerDistanceScale(distanceScale);
+    this.canvas.dispatchEvent(
+      new WheelEvent('wheel', {
+        deltaMode: WheelEvent.DOM_DELTA_PIXEL,
+        deltaY: Math.log(target / currentTarget) / Balance.camera.zoom.wheelSensitivity,
+        cancelable: true,
+      }),
+    );
+  };
+
+  private syncTownZoomProjection(): void {
+    const distanceScale = this.cameraZoom.diagnostics().distanceScale;
+    const zoom = distanceScale / townFramingDistanceScale(distanceScale);
+    if (Math.abs(this.camera.zoom - zoom) < 0.0001) return;
+    this.camera.zoom = zoom;
+    this.camera.updateProjectionMatrix();
   }
 
   private heroRenderedHeight(): number {
@@ -2159,7 +2200,7 @@ export class TownScene {
     const depth = Math.abs(this.heroCameraProbe.z);
     return depth > 0
       ? TOWN_CAST_METROLOGY.worldUnitsPerHero * this.canvas.clientHeight /
-          (2 * Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2) * depth)
+          (2 * Math.tan(THREE.MathUtils.degToRad(this.camera.fov) / 2) * depth) * this.camera.zoom
       : 0;
   }
 
@@ -2333,6 +2374,7 @@ class TownActorRuntime {
   private stillElapsed = 0;
   private frame = 0;
   private currentFrameKey = '';
+  private crispTexture?: THREE.Texture;
   private disposed = false;
   private fitted = false;
   private movedThisTick = false;
@@ -2399,6 +2441,12 @@ class TownActorRuntime {
   }
 
   update(delta: number, elapsed: number): void {
+    if (this.material.map && this.material.map !== this.crispTexture) {
+      this.crispTexture = this.material.map;
+      this.crispTexture.magFilter = THREE.NearestFilter;
+      this.crispTexture.anisotropy = Math.max(4, this.crispTexture.anisotropy);
+      this.crispTexture.needsUpdate = true;
+    }
     if (!this.fitted && this.definition.fullBody && this.definition.id !== 'prospector' && this.material.map) this.fitSpriteToTexture(this.material.map);
     const previousX = this.group.position.x;
     const previousZ = this.group.position.z;
@@ -2488,6 +2536,39 @@ class TownActorRuntime {
     this.sprite.scale.set(targetHeight * (width / height), targetHeight, 1);
     this.sprite.position.y = targetHeight / 2 + 0.08;
   }
+}
+
+function townFramingDistanceScale(controllerScale: number): number {
+  return controllerScale <= 1
+    ? THREE.MathUtils.lerp(
+        TOWN_ZOOM_MIN,
+        TOWN_ZOOM_DEFAULT,
+        THREE.MathUtils.inverseLerp(Balance.camera.zoom.minDistanceScale, 1, controllerScale),
+      )
+    : THREE.MathUtils.lerp(
+        TOWN_ZOOM_DEFAULT,
+        TOWN_ZOOM_MAX,
+        THREE.MathUtils.inverseLerp(1, Balance.camera.zoom.maxDistanceScale, controllerScale),
+      );
+}
+
+function townControllerDistanceScale(framingScale: number): number {
+  const scale = THREE.MathUtils.clamp(
+    Number.isFinite(framingScale) ? framingScale : TOWN_ZOOM_DEFAULT,
+    TOWN_ZOOM_MIN,
+    TOWN_ZOOM_MAX,
+  );
+  return scale <= TOWN_ZOOM_DEFAULT
+    ? THREE.MathUtils.lerp(
+        Balance.camera.zoom.minDistanceScale,
+        1,
+        THREE.MathUtils.inverseLerp(TOWN_ZOOM_MIN, TOWN_ZOOM_DEFAULT, scale),
+      )
+    : THREE.MathUtils.lerp(
+        1,
+        Balance.camera.zoom.maxDistanceScale,
+        THREE.MathUtils.inverseLerp(TOWN_ZOOM_DEFAULT, TOWN_ZOOM_MAX, scale),
+      );
 }
 
 function createPortraitPost(cardSize: number): THREE.Group {
