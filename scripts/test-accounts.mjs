@@ -279,6 +279,13 @@ function assertEqual(actual, expected, label) {
 }
 
 async function writeSummary(status, err) {
+  // GR_GUARD_NO_ARTIFACT (F-1229-1): this summary carries a `generatedAt` and an
+  // echoed save timestamp, so every run rewrites a TRACKED file with pure noise --
+  // measured s1229: two lines, both timestamps, zero semantic change. That churn is
+  // harmless by hand and fatal in a gate, because a drain's own precondition is a
+  // clean tree. run-guards.mjs sets this flag so the guard can be wired into the
+  // merge path; `npm run test:accounts` on its own still refreshes the artifact.
+  if (process.env.GR_GUARD_NO_ARTIFACT === '1') return;
   await writeFile(
     path.join(ARTIFACT_DIR, 'test-accounts.json'),
     `${JSON.stringify(

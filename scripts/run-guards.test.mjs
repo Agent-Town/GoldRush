@@ -113,6 +113,87 @@ test('power-budget rows include p95 only when printed', (t) => {
   assert.doesNotMatch(silent.stdout, /p95=/);
 });
 
+function gitFixture(overrides = {}) {
+  const dir = fixture(overrides);
+  const git = (...args) => spawnSync('git', args, { cwd: dir, encoding: 'utf8' });
+  git('init', '-q');
+  git('config', 'user.email', 'guard@test.local');
+  git('config', 'user.name', 'guard');
+  fs.writeFileSync(path.join(dir, 'seed.txt'), 'seed\n');
+  git('add', '.');
+  git('commit', '-q', '-m', 'base');
+  return { dir, git };
+}
+
+test('--changed-since runs the base gate when no path rule matches', (t) => {
+  const { dir } = gitFixture();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  fs.writeFileSync(path.join(dir, 'seed.txt'), 'touched\n');
+  const result = run(dir, '--changed-since', 'HEAD');
+  assert.equal(result.status, 0, result.stderr || result.stdout);
+  assert.match(result.stdout, /no path rule matched/);
+  assert.match(result.stdout, /guards: 3\/3 passed/);
+  // The worker guards must NOT ride along on an unrelated change.
+  assert.doesNotMatch(result.stdout, /test:accounts/);
+});
+
+test('--changed-since adds the worker guards when functions/ moved', (t) => {
+  const { dir, git } = gitFixture();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  const expectWorkerBattery = (result) => {
+    assert.equal(result.status, 0, result.stderr || result.stdout);
+    const rows = result.stdout.match(/^(?:PASS|FAIL)\s+rc=\S+\s+\d+s\s+(\S+)$/gm) ?? [];
+    assert.equal(rows.length, 6, result.stdout);
+    for (const guard of ['test:stats', 'test:accounts', 'test:mp']) {
+      assert.ok(rows.some((row) => row.endsWith(` ${guard}`)), `${guard} missing:\n${result.stdout}`);
+    }
+    // ...and still not the 80s deploy contracts, which no drain touches.
+    assert.doesNotMatch(result.stdout, /test:deploy-contract/);
+  };
+
+  // Shape 1: a brand-new worker file, not yet staged -- invisible to `git diff`.
+  fs.mkdirSync(path.join(dir, 'functions/api'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'functions/api/_accounts.ts'), 'export {};\n');
+  expectWorkerBattery(run(dir, '--changed-since', 'HEAD'));
+
+  // Shape 2: the real drain shape -- the merge is committed, gate runs against base.
+  git('add', '.');
+  git('commit', '-q', '-m', 'merge: worker change');
+  expectWorkerBattery(run(dir, '--changed-since', 'HEAD~1'));
+});
+
+test('--changed-since exits 2 on a bad ref rather than narrowing to the base gate', (t) => {
+  const { dir } = gitFixture();
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  const bad = run(dir, '--changed-since', 'no-such-ref-xyz');
+  assert.equal(bad.status, 2, bad.stdout);
+  assert.match(bad.stderr, /git diff --name-only no-such-ref-xyz failed/);
+  assert.doesNotMatch(bad.stdout, /passed/);
+
+  const missing = run(dir, '--changed-since');
+  assert.equal(missing.status, 2, missing.stdout);
+  assert.match(missing.stderr, /needs a git ref/);
+
+  const both = run(dir, '--only', 'test:node-guards', '--changed-since', 'HEAD');
+  assert.equal(both.status, 2, both.stdout);
+  assert.match(both.stderr, /mutually exclusive/);
+});
+
+test('guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree', (t) => {
+  // The guard's own exit code is the verdict here: a passing guard's stdout is
+  // never printed by the runner, so asserting on output would pass vacuously.
+  const dir = fixture({
+    'test:node-guards': 'node -e "process.exit(process.env.GR_GUARD_NO_ARTIFACT === \'1\' ? 0 : 7)"',
+  });
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+
+  const result = run(dir, '--only', 'test:node-guards');
+  assert.equal(result.status, 0, `flag not propagated to the child: ${result.stdout}`);
+});
+
 test('a signal-killed guard is never a pass', (t) => {
   const dir = fixture({
     'test:stats': 'node -e "process.kill(process.pid, \'SIGKILL\')"',

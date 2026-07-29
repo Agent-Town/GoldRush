@@ -424,6 +424,10 @@ function assertEqual(actual, expected, label) {
 }
 
 async function writeSummary(status, err) {
+  // GR_GUARD_NO_ARTIFACT (F-1229-1) -- same contract as scripts/test-accounts.mjs.
+  // Fixing one of these two siblings and not the other would leave the defect alive
+  // in the half nobody re-read; both writers are identical, so both take the flag.
+  if (process.env.GR_GUARD_NO_ARTIFACT === '1') return;
   await writeFile(
     path.join(ARTIFACT_DIR, 'test-multiplayer.json'),
     `${JSON.stringify(
