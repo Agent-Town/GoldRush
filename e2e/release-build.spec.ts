@@ -44,6 +44,7 @@ test('first player reaches textured town actors and places a Dry Gulch spring sl
   await page.mouse.click(6, 6);
   await teleportToActor(page, 'newsie');
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activeBark?.actorId ?? null)).toBe('newsie');
+  await page.getByTestId('town-welcome-skip').click();
   await teleportToBuilding(page, 'tavern');
   await page.getByTestId('town-open-board').click();
   await expect(page.getByTestId('contract-board')).toBeVisible();
