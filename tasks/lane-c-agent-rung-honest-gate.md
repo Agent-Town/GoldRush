@@ -44,7 +44,7 @@ NO: the declared rung VALUES themselves — `auto_pan` stays 3, `auto_repair` st
 SELF-CHECK: `npm run test:node-guards` **FIRST** (74/74 — the only instrument that sees a suite-uncollectable regression) · `npx tsc --noEmit` clean · `npm run build` green · `npx playwright test --list` reports **344 files** and the test count moved by exactly the number of tests you added × 2 projects (state both numbers) · the full adjacent battery `e2e/m4-01 m4-05 m4-06 m4-09 m4-10 ap-standing-orders 066-walk8 polish-03` · zero console/page errors · plain boot desktop + 390px.
 
 🔴 KNOWN REDS — NOT yours, do not "fix" them (automatic reject):
-  - `ap-standing-orders.spec.ts:115` at `:156` (`wave_early` poll) — **F-1215-1**, proven pre-existing by matched control.
+  - ✅ `ap-standing-orders.spec.ts` (the `wave_early` poll, listed here as `:115`→`:156`) — **CURED s1222 (`a0aae876`, test-only). NO LONGER A KNOWN RED: a failure here is a real regression, report it.** F-1215-1 was right it was pre-existing, wrong that it was a concurrency victim — it was spec sequencing (F-1222-3 / F-1223-1).
   - `m4-06-embodiment.spec.ts:395` — known **~45% flake** (F-1212-2). Re-measure as a rate before blaming yourself.
   - `m4-06:196`, `m4-07:113`, `locked-win:65` — load/concurrency-class reds (F-1216-1, F-1214-1). Report counts, do not chase.
 
