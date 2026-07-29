@@ -30,12 +30,25 @@ type ScoreRow = {
   baseValue: number;
 };
 
+type SeedMode = 'live' | 'bench';
+
+type SelfDeclaredStack = {
+  declaredBy: 'self';
+  model?: string;
+  harness?: string;
+  harnessVersion?: string;
+  config?: string;
+};
+
 type StoredRow = ScoreRow & {
   profileName: string;
   anonId: string;
+  seed?: string;
+  seedMode?: SeedMode;
   seedHash: string;
   inputLogHash: string;
   submittedAt: number;
+  stack?: SelfDeclaredStack;
 };
 
 type ContractBundle = {
@@ -66,7 +79,12 @@ const MAX_REQUESTS_PER_IP = 60;
 const RATE_TTL_SECONDS = 60 * 60;
 const SHA256 = /^[a-f0-9]{64}$/;
 const ANON_ID = /^[a-f0-9]{32}$/;
-const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'seedHash', 'inputLogHash']);
+const MAX_SEED_LENGTH = 256;
+const MAX_STACK_FIELD_LENGTH = 256;
+const STACK_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as const;
+const STACK_KEYS = new Set<string>(STACK_FIELDS);
+const STORED_STACK_KEYS = new Set([...STACK_FIELDS, 'declaredBy']);
+const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack']);
 const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue']);
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
@@ -117,9 +135,12 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const score = validateScore(body.score);
   const profileName = cleanName(body.profileName);
   const anonId = typeof body.anonId === 'string' && ANON_ID.test(body.anonId) ? body.anonId : '';
+  const seed = typeof body.seed === 'string' && body.seed.length > 0 && body.seed.length <= MAX_SEED_LENGTH ? body.seed : '';
+  const seedMode = body.seedMode === 'live' || body.seedMode === 'bench' ? body.seedMode : null;
   const seedHash = typeof body.seedHash === 'string' && SHA256.test(body.seedHash) ? body.seedHash : '';
   const inputLogHash = typeof body.inputLogHash === 'string' && SHA256.test(body.inputLogHash) ? body.inputLogHash : '';
-  if (!knownContract(epochId, contractId) || !score || !anonId || !seedHash || !inputLogHash) {
+  const stack = body.stack === undefined ? undefined : validateStack(body.stack);
+  if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   }
 
@@ -137,9 +158,12 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     ...score,
     profileName,
     anonId,
+    seed,
+    seedMode,
     seedHash,
     inputLogHash,
     submittedAt: Date.now(),
+    ...(stack ? { stack } : {}),
   };
   const prior = current.find((row) => row.anonId === anonId);
   const kept = prior && compareScores(prior, candidate) < 0 ? prior : candidate;
@@ -171,11 +195,25 @@ function validateStoredRow(value: unknown): StoredRow | null {
   });
   const profileName = cleanName(value.profileName);
   if (!score || typeof value.anonId !== 'string' || !ANON_ID.test(value.anonId)) return null;
+  const hasSeedFields = value.seed !== undefined || value.seedMode !== undefined;
+  if (hasSeedFields && (typeof value.seed !== 'string' || value.seed.length === 0 || value.seed.length > MAX_SEED_LENGTH)) return null;
+  if (hasSeedFields && value.seedMode !== 'live' && value.seedMode !== 'bench') return null;
   if (typeof value.seedHash !== 'string' || !SHA256.test(value.seedHash)) return null;
   if (typeof value.inputLogHash !== 'string' || !SHA256.test(value.inputLogHash)) return null;
+  const stack = value.stack === undefined ? undefined : validateStack(value.stack, true);
+  if (stack === null) return null;
   const submittedAt = integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER);
   if (submittedAt === null) return null;
-  return { ...score, profileName, anonId: value.anonId, seedHash: value.seedHash, inputLogHash: value.inputLogHash, submittedAt };
+  return {
+    ...score,
+    profileName,
+    anonId: value.anonId,
+    seedHash: value.seedHash,
+    inputLogHash: value.inputLogHash,
+    submittedAt,
+    ...(hasSeedFields ? { seed: value.seed as string, seedMode: value.seedMode as SeedMode } : {}),
+    ...(stack ? { stack } : {}),
+  };
 }
 
 function validateScore(value: unknown): ScoreRow | null {
@@ -204,6 +242,19 @@ function knownContract(epochId: string, contractId: string): boolean {
 
 function cleanName(value: unknown): string {
   return typeof value === 'string' ? value.replace(/\s+/g, ' ').trim().slice(0, 24) || 'Anonymous Prospector' : 'Anonymous Prospector';
+}
+
+function validateStack(value: unknown, stored = false): SelfDeclaredStack | null {
+  if (!isRecord(value) || !hasOnlyKeys(value, stored ? STORED_STACK_KEYS : STACK_KEYS)) return null;
+  if (stored && value.declaredBy !== 'self') return null;
+  const stack: SelfDeclaredStack = { declaredBy: 'self' };
+  for (const field of STACK_FIELDS) {
+    const fieldValue = value[field];
+    if (fieldValue === undefined) continue;
+    if (typeof fieldValue !== 'string' || fieldValue.length > MAX_STACK_FIELD_LENGTH) return null;
+    stack[field] = fieldValue;
+  }
+  return stack;
 }
 
 function boardKey(epochId: string, contractId: string): string {

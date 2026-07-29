@@ -5506,8 +5506,10 @@ export class Game {
       if (!epoch) return;
       const descriptor = contractDescriptorJson(this.activeContract);
       if (descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
+      const pinnedSeed = getDebugSeed();
+      const seed = pinnedSeed ?? 'gold-rush';
       const [seedHash, inputLogHash] = await Promise.all([
-        sha256Hex(getDebugSeed() ?? 'gold-rush'),
+        sha256Hex(seed),
         sha256Hex(JSON.stringify({
           version: 1,
           contract: descriptor,
@@ -5530,6 +5532,8 @@ export class Game {
           },
           profileName: activeProfileName(),
           anonId: countyAnonId(),
+          seed,
+          seedMode: pinnedSeed === null ? 'live' : 'bench',
           seedHash,
           inputLogHash,
         }),

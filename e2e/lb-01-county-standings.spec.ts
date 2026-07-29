@@ -17,8 +17,11 @@ type StandingPost = {
   score: { secured: true; waves: number; timeAlive: number; gold: number; baseValue: number };
   profileName: string;
   anonId: string;
+  seed: string;
+  seedMode: 'live' | 'bench';
   seedHash: string;
   inputLogHash: string;
+  stack?: { model?: string; harness?: string; harnessVersion?: string; config?: string };
 };
 
 const ARTIFACT_DIR = path.resolve('artifacts/county-standings');
@@ -53,6 +56,8 @@ function validPost(anonId: string, waves = 10): StandingPost {
     score: { secured: true, waves, timeAlive: 125.5, gold: 42, baseValue: 60 },
     profileName: 'Robin',
     anonId,
+    seed: 'gold-rush',
+    seedMode: 'live',
     seedHash: 'a'.repeat(64),
     inputLogHash: 'b'.repeat(64),
   };
@@ -118,12 +123,36 @@ function expectNoErrors(errors: ErrorBucket): void {
   expect(errors.pageErrors).toEqual([]);
 }
 
-test('endpoint keeps each prospectors best row and returns no audit identifiers', async () => {
+test('endpoint stores optional self-declared stack and keeps the public board stack-blind', async () => {
   const kv = makeKv();
-  const first = await standingsRoute({ request: apiRequest('POST', '', validPost('1'.repeat(32), 12)), env: { TELEMETRY: kv } });
+  await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([{
+    ...validPost('3'.repeat(32), 13).score,
+    profileName: 'Before the Bench',
+    anonId: '3'.repeat(32),
+    seedHash: 'a'.repeat(64),
+    inputLogHash: 'b'.repeat(64),
+    submittedAt: 1,
+  }]));
+  const stack = {
+    model: 'gpt-5.6-sol',
+    harness: 'codex',
+    harnessVersion: '1.2.3',
+    config: ' effort = medium ',
+  };
+  const firstPost = { ...validPost('1'.repeat(32), 12), seed: 'bench-seed-01', seedMode: 'bench' as const, stack };
+  const first = await standingsRoute({ request: apiRequest('POST', '', firstPost), env: { TELEMETRY: kv } });
   expect(first.status).toBe(200);
   await standingsRoute({ request: apiRequest('POST', '', validPost('1'.repeat(32), 8)), env: { TELEMETRY: kv } });
   await standingsRoute({ request: apiRequest('POST', '', validPost('2'.repeat(32), 14)), env: { TELEMETRY: kv } });
+
+  const stored = JSON.parse((await kv.get('standings:epoch-1-frontier:the-claim')) ?? '[]') as Array<Record<string, unknown>>;
+  expect(stored.find((row) => row.anonId === '1'.repeat(32))).toMatchObject({
+    seed: 'bench-seed-01',
+    seedMode: 'bench',
+    stack: { ...stack, declaredBy: 'self' },
+  });
+  expect(stored.find((row) => row.anonId === '2'.repeat(32))).not.toHaveProperty('stack');
+  expect(stored.find((row) => row.anonId === '3'.repeat(32))).not.toHaveProperty('seedMode');
 
   const response = await standingsRoute({
     request: apiRequest('GET', '?contract=the-claim&epoch=epoch-1-frontier'),
@@ -133,12 +162,21 @@ test('endpoint keeps each prospectors best row and returns no audit identifiers'
   expect(response.status).toBe(200);
   expect(body.board).toMatchObject([
     { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60 },
-    { rank: 2, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60 },
+    { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60 },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60 },
   ]);
   for (const row of body.board) {
     expect(row).not.toHaveProperty('anonId');
+    expect(row).not.toHaveProperty('seed');
+    expect(row).not.toHaveProperty('seedMode');
     expect(row).not.toHaveProperty('seedHash');
     expect(row).not.toHaveProperty('inputLogHash');
+    expect(row).not.toHaveProperty('stack');
+    expect(row).not.toHaveProperty('model');
+    expect(row).not.toHaveProperty('harness');
+    expect(row).not.toHaveProperty('harnessVersion');
+    expect(row).not.toHaveProperty('config');
+    expect(row).not.toHaveProperty('declaredBy');
     expect(row).not.toHaveProperty('species');
     expect(row).not.toHaveProperty('agent');
   }
@@ -153,6 +191,14 @@ test('endpoint keeps each prospectors best row and returns no audit identifiers'
     env: { TELEMETRY: kv },
   });
   expect(wrongPair.status).toBe(400);
+
+  for (const field of ['model', 'harness', 'harnessVersion', 'config'] as const) {
+    const capped = await standingsRoute({
+      request: apiRequest('POST', '', { ...validPost('6'.repeat(32)), stack: { [field]: 'x'.repeat(257) } }),
+      env: { TELEMETRY: kv },
+    });
+    expect(capped.status).toBe(400);
+  }
 
   let boardWrites = 0;
   const unreadableKv: MockKV = {
@@ -183,6 +229,8 @@ test('endpoint keeps each prospectors best row and returns no audit identifiers'
         baseValue: 100,
         profileName: `Prospector ${index + 1}`,
         anonId: index.toString(16).padStart(32, '0'),
+        seed: 'gold-rush',
+        seedMode: 'live',
         seedHash: 'a'.repeat(64),
         inputLogHash: 'b'.repeat(64),
         submittedAt: index,
@@ -216,6 +264,8 @@ test('secure submits the county row with pinned origin, hashes, and profile name
   expect(post.score.gold).toBeGreaterThanOrEqual(0);
   expect(post.score.baseValue).toBeGreaterThanOrEqual(0);
   expect(post.anonId).toMatch(/^[a-f0-9]{32}$/);
+  expect(post.seed).toBe(seed);
+  expect(post.seedMode).toBe('bench');
   expect(post.seedHash).toBe(createHash('sha256').update(seed).digest('hex'));
   expect(post.inputLogHash).toMatch(/^[a-f0-9]{64}$/);
   expect(JSON.stringify(post)).not.toContain('"species"');
