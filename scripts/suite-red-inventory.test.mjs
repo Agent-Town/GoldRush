@@ -138,7 +138,7 @@ test('reducer renders absolute raw paths relative to the recorded tree', (t) => 
   assert.ok(markdown.includes(`| ${SPEC_PATH}:3 |`));
   assert.ok(!markdown.includes(`| ${specFile} |`));
   assert.ok(!markdown.includes('| fixture.spec.ts | cwd invariant failure |'));
-  assert.ok(markdown.includes(`- Run tree: **${rootDir}**; status **present**;`));
+  assert.ok(markdown.includes(`- Run tree: **${rootDir}**; status **present**; resolved masking-row test bodies`));
   assert.ok(!markdown.split('\n').filter((line) => !line.startsWith('- Run tree:')).join('\n').includes(specFile));
 });
 

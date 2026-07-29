@@ -15,7 +15,7 @@
     "mint:prizes": "node scripts/mint-prize-codes.mjs",
     "test:mp": "node scripts/test-multiplayer.mjs",
     "test:power-budget": "node --experimental-strip-types scripts/check-power-graph-budget.mjs",
-    "test:node-guards": "node --test scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/glob-fallback-completeness.test.mjs scripts/goal-tracker.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/run-guards.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/suite-red-inventory.test.mjs scripts/town-era-props-node-safety.test.mjs scripts/town-spec-collection.test.mjs scripts/whole-suite-collection.test.mjs && node scripts/test-ticker-stats.mjs",
+    "test:node-guards": "node --test scripts/collection-guards-cwd-invariance.test.mjs scripts/e3-mask-tables.test.mjs scripts/entry-damage-table.test.mjs scripts/glob-fallback-completeness.test.mjs scripts/goal-tracker.test.mjs scripts/probe-base.test.mjs scripts/rehearsal-base.test.mjs scripts/run-guards.test.mjs scripts/stream-curate.test.mjs scripts/stream-director.test.mjs scripts/stream-showcase-queue.test.mjs scripts/suite-red-inventory.test.mjs scripts/town-era-props-node-safety.test.mjs scripts/town-spec-collection.test.mjs scripts/whole-suite-collection.test.mjs && node scripts/test-ticker-stats.mjs",
     "test:guards": "node scripts/run-guards.mjs",
     "test:task-guards": "node scripts/task-guard-audit.mjs",
     "test:stats": "node scripts/test-stats.mjs",
