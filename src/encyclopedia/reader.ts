@@ -1,5 +1,6 @@
 import './reader.css';
-import { activeEpochId, listEpochs, loadEpoch } from '../meta/ContractFamilies';
+import { gameApiUrl } from '../app/GameApi';
+import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/ContractFamilies';
 import { loadEraBackdrop } from '../ui/EraBackdrop';
 import { installAssayOfficeRecordsLiveRead } from './liveStats';
 import {
@@ -21,12 +22,26 @@ type OpenClaimLedgerOptions = {
   onClose?: () => void;
 };
 
+type LedgerView = 'ledger' | 'standings';
+
+type CountyStanding = {
+  rank: number;
+  profileName: string;
+  secured: true;
+  waves: number;
+  timeAlive: number;
+  gold: number;
+  baseValue: number;
+};
+
 let currentRoot: HTMLElement | null = null;
 let currentClose: (() => void) | undefined;
 let currentLiveReads: (() => void)[] = [];
 let currentRestoreFocus: HTMLElement | null = null;
 let currentEntryId: LedgerEntryId | undefined;
 let currentEpochId: LedgerEpochId = 'epoch-1-frontier';
+let currentView: LedgerView = 'ledger';
+let currentStandingsContractId = '';
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   backfillReachedWorldOutsideEntries();
@@ -37,6 +52,8 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   currentClose = options.onClose;
   currentEntryId = options.entryId;
   currentEpochId = initialEpochId(options.entryId);
+  currentView = 'ledger';
+  currentStandingsContractId = '';
   root.className = 'claim-ledger';
   root.dataset.testid = 'claim-ledger';
   root.setAttribute('role', 'dialog');
@@ -74,6 +91,12 @@ function renderCurrentLedger(): void {
   const root = currentRoot;
   if (!root) return;
   for (const dispose of currentLiveReads) dispose();
+  if (currentView === 'standings') {
+    currentLiveReads = [];
+    root.innerHTML = renderStandingsLedger();
+    void loadCountyStandings();
+    return;
+  }
   root.innerHTML = renderLedger(currentEntryId, currentEpochId);
   currentLiveReads = currentEpochId === 'epoch-1-frontier' ? [installAssayOfficeRecordsLiveRead(root)] : [];
   const renderedEpochId = currentEpochId;
@@ -93,13 +116,8 @@ function renderLedger(selectedId: LedgerEntryId | undefined, selectedEpochId: Le
   currentEpochId = selectedEra.id;
   return `
     <div class="claim-ledger__shell">
-      <header class="claim-ledger__header">
-        <div>
-          <p class="claim-ledger__eyebrow">Schoolhouse Ledger</p>
-          <h2>Claim Ledger</h2>
-        </div>
-        <button class="claim-ledger__close" type="button" data-ledger-close data-testid="claim-ledger-close" aria-label="Close Claim Ledger">Back</button>
-      </header>
+      ${renderHeader()}
+      ${renderViewRow()}
       ${renderEraRow(eras.open, eras.locked?.id, selectedEra.id)}
       <div class="claim-ledger__shelves" data-testid="claim-ledger-shelves">
         <section class="claim-ledger__shelf" data-testid="claim-ledger-chapter-${selectedEra.id}" data-ledger-era-state="open">
@@ -113,6 +131,142 @@ function renderLedger(selectedId: LedgerEntryId | undefined, selectedEpochId: Le
       </div>
     </div>
   `;
+}
+
+function renderHeader(): string {
+  return `
+    <header class="claim-ledger__header">
+      <div>
+        <p class="claim-ledger__eyebrow">Schoolhouse Ledger</p>
+        <h2>Claim Ledger</h2>
+      </div>
+      <button class="claim-ledger__close" type="button" data-ledger-close data-testid="claim-ledger-close" aria-label="Close Claim Ledger">Back</button>
+    </header>
+  `;
+}
+
+function renderViewRow(): string {
+  return `
+    <nav class="claim-ledger__views" aria-label="Claim Ledger pages">
+      <button type="button" data-ledger-view="ledger" data-testid="claim-ledger-pages" aria-pressed="${currentView === 'ledger'}">Claim Pages</button>
+      <button type="button" data-ledger-view="standings" data-testid="claim-ledger-county-standings" aria-pressed="${currentView === 'standings'}">County Standings</button>
+    </nav>
+  `;
+}
+
+function renderStandingsLedger(): string {
+  const epochId = activeEpochId();
+  const contracts = listContracts(epochId);
+  if (!contracts.some((contract) => contract.id === currentStandingsContractId)) {
+    currentStandingsContractId = contracts[0]?.id ?? '';
+  }
+  return `
+    <div class="claim-ledger__shell">
+      ${renderHeader()}
+      ${renderViewRow()}
+      <section class="county-standings" data-testid="county-standings">
+        <p class="claim-ledger__eyebrow">County Record</p>
+        <h3>County Standings</h3>
+        <p class="county-standings__epoch">${escapeHtml(eraName(epochId as LedgerEpochId))}</p>
+        <nav class="county-standings__contracts" aria-label="County standings contracts">
+          ${contracts
+            .map(
+              (contract) =>
+                `<button type="button" data-standings-contract="${escapeHtml(contract.id)}" data-testid="county-standings-contract-${escapeHtml(
+                  contract.id,
+                )}" aria-pressed="${contract.id === currentStandingsContractId}">${escapeHtml(contract.boardRow.name)}</button>`,
+            )
+            .join('')}
+        </nav>
+        <p class="county-standings__contracts-hint" aria-hidden="true">Swipe for more contracts &rarr;</p>
+        <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
+          <p class="county-standings__empty">The county clerk turns the pages.</p>
+        </div>
+      </section>
+    </div>
+  `;
+}
+
+async function loadCountyStandings(): Promise<void> {
+  const root = currentRoot;
+  const epochId = activeEpochId();
+  const contractId = currentStandingsContractId;
+  if (!root || !contractId) return;
+  if (globalThis.navigator?.onLine === false) {
+    const board = root.querySelector<HTMLElement>('[data-testid="county-standings-board"]');
+    if (board) board.innerHTML = renderCountyRows([]);
+    return;
+  }
+  const url = new URL(gameApiUrl('/api/standings'));
+  url.searchParams.set('contract', contractId);
+  url.searchParams.set('epoch', epochId);
+  let rows: CountyStanding[] = [];
+  try {
+    const response = await fetch(url);
+    if (response.ok) {
+      const payload = (await response.json()) as unknown;
+      rows = countyRows(payload);
+    }
+  } catch {
+    // The county book stays usable offline.
+  }
+  if (currentRoot !== root || currentView !== 'standings' || currentStandingsContractId !== contractId) return;
+  const board = root.querySelector<HTMLElement>('[data-testid="county-standings-board"]');
+  if (board) board.innerHTML = renderCountyRows(rows);
+}
+
+function countyRows(value: unknown): CountyStanding[] {
+  if (!value || typeof value !== 'object') return [];
+  const board = (value as { board?: unknown }).board;
+  if (!Array.isArray(board)) return [];
+  return board.slice(0, 100).filter(isCountyStanding);
+}
+
+function isCountyStanding(value: unknown): value is CountyStanding {
+  if (!value || typeof value !== 'object') return false;
+  const row = value as Partial<CountyStanding>;
+  return (
+    Number.isInteger(row.rank) &&
+    (row.rank ?? 0) > 0 &&
+    typeof row.profileName === 'string' &&
+    row.secured === true &&
+    finiteNonNegative(row.waves) &&
+    finiteNonNegative(row.timeAlive) &&
+    finiteNonNegative(row.gold) &&
+    finiteNonNegative(row.baseValue)
+  );
+}
+
+function renderCountyRows(rows: readonly CountyStanding[]): string {
+  if (rows.length === 0) return '<p class="county-standings__empty">The county waits for its first name.</p>';
+  return `
+    <table>
+      <thead><tr><th scope="col">Rank</th><th scope="col">Name</th><th scope="col">Waves</th><th scope="col">Time</th><th scope="col">Gold</th></tr></thead>
+      <tbody>
+        ${rows
+          .map(
+            (row) => `<tr data-testid="county-standings-row-${row.rank}">
+              <td>${row.rank}</td>
+              <th scope="row">${escapeHtml(row.profileName)}</th>
+              <td>${Math.floor(row.waves)}</td>
+              <td>${formatTime(row.timeAlive)}</td>
+              <td>${Math.floor(row.gold)}</td>
+            </tr>`,
+          )
+          .join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+function finiteNonNegative(value: unknown): value is number {
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0;
+}
+
+function formatTime(secondsAlive: number): string {
+  const minutes = Math.floor(secondsAlive / 60).toString().padStart(2, '0');
+  const seconds = Math.floor(secondsAlive % 60).toString().padStart(2, '0');
+  return `${minutes}:${seconds}`;
 }
 
 function renderShelf(
@@ -323,6 +477,20 @@ function characterQuote(id: LedgerEntryId): string | undefined {
 function onLedgerClick(event: MouseEvent): void {
   const target = event.target instanceof Element ? event.target : null;
   if (target?.closest('[data-ledger-close]')) closeClaimLedger();
+  const view = target?.closest<HTMLButtonElement>('[data-ledger-view]')?.dataset.ledgerView as LedgerView | undefined;
+  if (view && view !== currentView) {
+    currentView = view;
+    renderCurrentLedger();
+    currentRoot?.querySelector<HTMLElement>(`[data-ledger-view="${view}"]`)?.focus();
+    return;
+  }
+  const contractId = target?.closest<HTMLButtonElement>('[data-standings-contract]')?.dataset.standingsContract;
+  if (contractId && contractId !== currentStandingsContractId) {
+    currentStandingsContractId = contractId;
+    renderCurrentLedger();
+    currentRoot?.querySelector<HTMLElement>(`[data-standings-contract="${contractId}"]`)?.focus();
+    return;
+  }
   const eraButton = target?.closest<HTMLButtonElement>('[data-ledger-era-state="open"]');
   const epochId = eraButton?.dataset.ledgerEra as LedgerEpochId | undefined;
   if (!epochId || epochId === currentEpochId) return;

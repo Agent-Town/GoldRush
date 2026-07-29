@@ -65,6 +65,111 @@
   cursor: pointer;
 }
 
+.claim-ledger__views,
+.county-standings__contracts {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+}
+
+.county-standings__contracts {
+  padding-bottom: 6px;
+  scrollbar-color: #79552f transparent;
+  scrollbar-width: thin;
+}
+
+.county-standings__contracts::-webkit-scrollbar {
+  height: 6px;
+}
+
+.county-standings__contracts::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: #79552f;
+}
+
+.county-standings__contracts-hint {
+  display: none;
+}
+
+.claim-ledger__views {
+  padding: 14px 20px 0;
+}
+
+.claim-ledger__views button,
+.county-standings__contracts button {
+  flex: 0 0 auto;
+  border: 1px solid rgba(76, 48, 23, 0.44);
+  border-radius: 6px;
+  padding: 8px 11px;
+  background: rgba(255, 252, 240, 0.72);
+  color: #2e1b0e;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.claim-ledger__views button[aria-pressed='true'],
+.county-standings__contracts button[aria-pressed='true'] {
+  border-color: #5b8a8a;
+  background: #5b8a8a;
+  color: #fff8e8;
+}
+
+.county-standings {
+  padding: 20px;
+}
+
+.county-standings h3 {
+  margin: 0;
+  font-size: 1.35rem;
+  text-transform: uppercase;
+}
+
+.county-standings__epoch {
+  margin: 5px 0 16px;
+  color: #684728;
+  font-weight: 800;
+}
+
+.county-standings__board {
+  margin-top: 16px;
+  overflow-x: auto;
+  border: 1px solid rgba(76, 48, 23, 0.36);
+  border-radius: 8px;
+  background: rgba(255, 252, 240, 0.78);
+}
+
+.county-standings table {
+  width: 100%;
+  border-collapse: collapse;
+  font-variant-numeric: tabular-nums;
+}
+
+.county-standings th,
+.county-standings td {
+  padding: 10px 12px;
+  border-bottom: 1px solid rgba(76, 48, 23, 0.2);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.county-standings th:nth-child(2) {
+  width: 100%;
+  text-align: left;
+}
+
+.county-standings tbody tr:last-child > * {
+  border-bottom: 0;
+}
+
+.county-standings__empty {
+  margin: 0;
+  padding: 28px 18px;
+  color: #684728;
+  text-align: center;
+  font-style: italic;
+}
+
 .claim-ledger__shelves {
   display: grid;
   gap: 18px;
@@ -190,9 +295,26 @@
   }
 
   .claim-ledger__header,
+  .claim-ledger__views,
+  .county-standings,
   .claim-ledger__shelves {
     padding-left: 12px;
     padding-right: 12px;
+  }
+
+  .county-standings th,
+  .county-standings td {
+    padding: 9px 8px;
+    font-size: 0.82rem;
+  }
+
+  .county-standings__contracts-hint {
+    display: block;
+    margin: 3px 0 0;
+    color: #684728;
+    text-align: right;
+    font-size: 0.75rem;
+    font-weight: 800;
   }
 
   .claim-ledger__cards {

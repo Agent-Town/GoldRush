@@ -13,6 +13,7 @@ import {
   activeContractDiagnostics,
   activeEpoch as selectActiveEpoch,
   activeTileDescriptor,
+  contractDescriptorJson,
   DEFAULT_EPOCH_ID,
   listEpochs,
   loadContract,
@@ -239,7 +240,9 @@ import {
 import { DetailScatter, type DetailScatterClearPoint } from '../world/Scatter';
 import { createDeepwaterClaimTile, type CorsairSkiffWave } from '../world/DeepwaterClaimTile';
 import { readTownName } from '../town/TownNaming';
+import { gameApiUrl } from '../app/GameApi';
 import { installRunTelemetry } from '../telemetry/runBeacon';
+import { readTelemetryOptIn, TELEMETRY_DEV_SEND_STORAGE_KEY } from '../telemetry/payload';
 import { GameState } from './GameState';
 import {
   applyStoredPerformanceTier,
@@ -250,7 +253,7 @@ import {
 } from './PerformanceTier';
 import { Progression } from './Progression';
 import { applyUpgradeBudgetsFromBalance, isUpgradeUnlocked, resolveFiller, upgradeEffect, upgradeFamilyId } from './Upgrades';
-import { clearScores, loadScores, recordScore } from './Scoreboard';
+import { clearScores, loadScores, recordScore, type ScoreRecord } from './Scoreboard';
 import type { EffectiveStats } from './StatSheet';
 import { upgradeDefById, upgradeDefs, type UpgradeDef, type UpgradeId } from './Upgrades';
 import { buildableDefs, isBuildableId, type BuildableId } from './buildables';
@@ -264,7 +267,7 @@ import {
   type RunSuspendWrite,
 } from './RunSuspend';
 import { defaultSaveSlotName, formatBudgetWarning, saveManualSlot, saveSlotsBudget } from './SaveSlots';
-import { DREDGE_QUEEN_WRECK_KEY, safeLocalStorage } from './ProfileStorage';
+import { activeProfile, activeProfileName, DREDGE_QUEEN_WRECK_KEY, safeLocalStorage } from './ProfileStorage';
 import {
   applyAtBirth,
   DREDGE_QUEEN_WRECK_ENTRY_ID,
@@ -310,6 +313,7 @@ const BARON_KILL_STOP_SECONDS = 2.2;
 const BARON_DEFEAT_CARD_SECONDS = 4;
 const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
 const GREEN_WAYPOINT_CONTRACT_ID = 'e1-dry-gulch';
+const COUNTY_ANON_ID_KEY = 'gr.countyStandings.anonId.v1';
 
 // The tile factory is the sole birth-loader reader (Loader Contract): sim
 // entries transform tileParams here, before any system builds on them.
@@ -1068,6 +1072,9 @@ export class Game {
   private readonly debugTools: DebugTools;
   private frame = 0;
   private simTick = 0;
+  private readonly countyStandingsEnabled = readTelemetryOptIn() && shouldPostCountyStanding();
+  private readonly countyInputLog: string[] = [];
+  private countyInputLast = '';
   private elapsed = 0;
   private fixedTickElapsed = 0;
   private activeTickElapsed = 0;
@@ -1420,7 +1427,13 @@ export class Game {
     });
     this.events.on('run_secured', (event) => {
       this.securedScoreAt = event.resultAt;
-      this.recordRunScore(event.summary.deepestWave ?? event.summary.wavesSurvived, event.at, true, event.secureWave);
+      const { score } = this.recordRunScore(
+        event.summary.deepestWave ?? event.summary.wavesSurvived,
+        event.at,
+        true,
+        event.secureWave,
+      );
+      void this.submitCountyStanding(score);
       this.e7SignalSystem.recordContractWin(this.activeContract.id);
       emitStorySignal({ type: 'first-victory' });
       if (!this.baronBeatenThisRun) this.audio.play('victory-sting');
@@ -1429,7 +1442,8 @@ export class Game {
       this.audio.play('defeat-sting');
       this.audio.play('ledger-open', 0.75);
       const secured = this.runWasSecured(event.wavesSurvived);
-      const { scoreAt, runStats, scores } = this.recordRunScore(event.wavesSurvived, event.timeAlive, secured);
+      const { scoreAt, runStats, score, scores } = this.recordRunScore(event.wavesSurvived, event.timeAlive, secured);
+      if (secured) void this.submitCountyStanding(score);
       this.deathLedger = {
         timeAlive: event.timeAlive,
         kills: event.kills,
@@ -2246,6 +2260,7 @@ export class Game {
       this.manualResumeAtMpTickForTest = null;
     }
     this.simTick += 1;
+    this.recordCountyInput(intents);
     this.fixedTickElapsed += delta;
     this.updateActionActorPosition();
     this.updateBuildingContextCandidates();
@@ -3995,6 +4010,7 @@ export class Game {
     this.audio.play('ledger-open', 0.75);
     this.uiBridge.announce(this.megaprojectProgressLine(), this.timeAlive, null, 4.8);
     if (cost > 0) this.vfx.floatText(this.megaprojectTarget.position, `-${cost}`, '#a0522d');
+    this.recordCountyAction('fund_megaproject', { id: manifest.id, stage: project.stage, cost });
     this.publishDiagnostics();
     return true;
   }
@@ -5435,7 +5451,7 @@ export class Game {
       : Date.now();
     const economySummary = summarizeLog(this.economy.log);
     const runStats = this.deathRunStats(economySummary);
-    const scores = recordScore({
+    const score: ScoreRecord = {
       waves,
       kills: this.kills,
       gold: economySummary.panned,
@@ -5447,8 +5463,81 @@ export class Game {
       baseValue: Math.round(economySummary.baseValue),
       weaponSplit: this.weaponSplit(runStats),
       contractId: this.activeContract.id,
-    });
-    return { scoreAt, economySummary, runStats, scores };
+    };
+    const scores = recordScore(score);
+    return { scoreAt, economySummary, runStats, score, scores };
+  }
+
+  private recordCountyInput(intents: Intents): void {
+    if (!this.countyStandingsEnabled || this.countyInputLog.length >= MAX_PLAYBOOK_TICKS) return;
+    const sample = JSON.stringify([
+      this.simTick,
+      quantizePlaybookCoordinate(intents.move.x),
+      quantizePlaybookCoordinate(intents.move.y),
+      intents.confirm,
+      intents.upgrade,
+      intents.rotateBuild,
+      intents.weaponToggle,
+      intents.build,
+      intents.cancel,
+      intents.buildSlot,
+      intents.restart,
+      intents.pause,
+      quantizePlaybookCoordinate(this.aimPointerNdc.x),
+      quantizePlaybookCoordinate(this.aimPointerNdc.y),
+    ]);
+    const state = sample.slice(sample.indexOf(',') + 1);
+    if (state === this.countyInputLast) return;
+    // ponytail: shares the shipped ten-minute tape ceiling; stream a digest if longer contracts need full-run audits.
+    this.countyInputLast = state;
+    this.countyInputLog.push(sample);
+  }
+
+  private recordCountyAction(type: string, value: unknown): void {
+    if (!this.countyStandingsEnabled || this.countyInputLog.length >= MAX_PLAYBOOK_TICKS) return;
+    this.countyInputLog.push(JSON.stringify([this.simTick, type, value]));
+    this.countyInputLast = '';
+  }
+
+  private async submitCountyStanding(score: ScoreRecord): Promise<void> {
+    if (!this.countyStandingsEnabled || !score.secured || !readTelemetryOptIn() || globalThis.navigator?.onLine === false) return;
+    try {
+      const epoch = listEpochs().find((entry) => loadEpoch(entry.id).contracts.some((contract) => contract.id === this.activeContract.id));
+      if (!epoch) return;
+      const descriptor = contractDescriptorJson(this.activeContract);
+      if (descriptor !== contractDescriptorJson(loadContract(this.activeContract.id, epoch.id))) return;
+      const [seedHash, inputLogHash] = await Promise.all([
+        sha256Hex(getDebugSeed() ?? 'gold-rush'),
+        sha256Hex(JSON.stringify({
+          version: 1,
+          contract: descriptor,
+          difficultyPreset: this.difficultyPreset,
+          entries: this.countyInputLog,
+        })),
+      ]);
+      await fetch(gameApiUrl('/api/standings'), {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({
+          contractId: this.activeContract.id,
+          epochId: epoch.id,
+          score: {
+            secured: true,
+            waves: Math.max(0, Math.floor(score.waves)),
+            timeAlive: Math.max(0, score.timeAlive),
+            gold: Math.max(0, Math.floor(score.gold)),
+            baseValue: Math.max(0, Math.floor(score.baseValue ?? 0)),
+          },
+          profileName: activeProfileName(),
+          anonId: countyAnonId(),
+          seedHash,
+          inputLogHash,
+        }),
+        keepalive: true,
+      });
+    } catch {
+      // County standings are optional and must never block the secure ceremony.
+    }
   }
 
   private agentAutonomyDelta(securedThisRun: boolean): { before: number; after: number } | undefined {
@@ -5799,7 +5888,7 @@ export class Game {
       this.mpQueuedActions.push({ type: 'pick_upgrade', id: picked.id });
       return;
     }
-    this.progression.applyUpgrade(picked.id);
+    if (this.progression.applyUpgrade(picked.id)) this.recordCountyAction('pick_upgrade', picked.id);
   }
 
   private advanceSimForTest(seconds: number, onTick?: (sample: GrSimulationTickSample) => void): void {
@@ -5882,6 +5971,8 @@ export class Game {
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;
     this.simTick = 0;
+    this.countyInputLog.length = 0;
+    this.countyInputLast = '';
     this.wrangle.reset();
     this.decay.reset();
     this.e6TileConsumers.reset();
@@ -6888,9 +6979,17 @@ export class Game {
   private confirmAction(): void {
     if (this.buildSystem.isBuildMode) {
       if (this.deepwaterClaim) return;
-      const id = this.buildSystem.diagnostics.selectedBuildable;
+      const build = this.buildSystem.diagnostics;
+      const id = build.selectedBuildable;
       this.updateActionActorPosition();
-      if (this.buildSystem.confirm(this.timeAlive)) discoverLedgerBuildable(id);
+      if (this.buildSystem.confirm(this.timeAlive)) {
+        discoverLedgerBuildable(id);
+        this.recordCountyAction('place_build', {
+          id,
+          position: build.ghostPos,
+          rotationSteps: build.ghostRotationSteps,
+        });
+      }
       return;
     }
     if (this.buildSystem.assayOfficeInRange(this.actionActor.group.position)) {
@@ -6940,6 +7039,7 @@ export class Game {
   private upgradeBuilding(id: BuildableId, index: number): boolean {
     const upgraded = this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.actionActor.group.position);
     if (!upgraded) return false;
+    this.recordCountyAction('upgrade_building', { id, index });
     this.syncStockpileHoldings();
     this.publishDiagnostics();
     return true;
@@ -6948,6 +7048,7 @@ export class Game {
   private demolishBuilding(id: BuildableId, index: number): boolean {
     const removed = this.buildSystem.demolish(id, index, this.timeAlive, this.actionActor.group.position);
     if (!removed) return false;
+    this.recordCountyAction('demolish_building', { id, index });
     this.syncStockpileHoldings();
     this.publishDiagnostics();
     return true;
@@ -7732,6 +7833,40 @@ function browserMegaprojectStorage(): MegaprojectStorage | undefined {
   } catch {
     return undefined;
   }
+}
+
+function countyAnonId(): string {
+  try {
+    const storage = safeLocalStorage();
+    const key = `${COUNTY_ANON_ID_KEY}.${activeProfile(storage).id}`;
+    const saved = storage.getItem(key);
+    if (saved && /^[a-f0-9]{32}$/.test(saved)) return saved;
+    const next = randomHex(16);
+    storage.setItem(key, next);
+    return next;
+  } catch {
+    return randomHex(16);
+  }
+}
+
+function shouldPostCountyStanding(): boolean {
+  if (__APP_BUILD__ !== 'dev') return true;
+  try {
+    return globalThis.localStorage?.getItem(TELEMETRY_DEV_SEND_STORAGE_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
+
+function randomHex(bytes: number): string {
+  const values = new Uint8Array(bytes);
+  globalThis.crypto.getRandomValues(values);
+  return [...values].map((value) => value.toString(16).padStart(2, '0')).join('');
+}
+
+async function sha256Hex(value: string): Promise<string> {
+  const hash = await globalThis.crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+  return [...new Uint8Array(hash)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
 function isDevPowerGraphEnabled(): boolean {
