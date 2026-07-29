@@ -3512,14 +3512,18 @@
               "id": "ap-08-the-view",
               "title": "AP-08 THE VIEW + THE ALMANAC — the rider reads the run: stable prefix + append log + NOW + a StatSimHarness-backed projection. Built (c502f9cc, +958) and REJECTED at the s1213 gate.",
               "taskFile": "lane-ap-view.md",
-              "status": "blocked",
+              "status": "superseded",
+              "supersededBy": "ap-08b-view-collection-firewall",
+              "supersededNote": "s1215: F-1213-1 is CURED and the work SHIPPED via ap-08b (merge 54f166b9, reviews/ap-08b-view-collection-firewall.md). This leaf's rejected build (c502f9cc) stays preserved at save/ap-view-c502f9cc. Retired here so it stops reading as a live block; the original blockedReason is kept verbatim below as the record.",
               "blockedReason": "F-1213-1 BLOCKING (reviews/ap-view.md): the slice makes the ENTIRE e2e suite uncollectable. src/agent/ToolSurface.ts gains a VALUE import of buildView -> src/agent/View.ts:6 imports nodeAnchors from ../world/Terrain -> src/world/Terrain.ts:2 imports a Vite-only ...json?raw specifier, which Playwright node-side collection cannot resolve. Measured one-variable: clean main 2458 tests in 343 files + whole-suite-collection PASS; with the slice 0 tests in 0 files + FAIL; with the slices own new spec REMOVED still 0 (the spec is not the carrier, ToolSurface is); main restored 2458 + PASS. The slices own spec passes IN ISOLATION because it uses import type (erased), which is why the runner saw green. Work is preserved at save/ap-view-c502f9cc. Cure re-landed by ap-08b."
             },
             {
               "id": "ap-08b-view-collection-firewall",
               "title": "AP-08b RE-LAND THE VIEW so the suite still collects — salvage from save/ap-view-c502f9cc, break the ToolSurface->View->Terrain value-import chain, adopt the ruled et.goldrush.view WRAP (F-1213-1)",
               "taskFile": "ap-view-collection-firewall.md",
-              "status": "queued"
+              "status": "merged",
+              "mergeHash": "54f166b9c5b47e412ddfa8905a0fa9976693b61b",
+              "drainNotes": "s1215: node guards 74/74 (incl. whole-suite-collection), --list 2460/344 = the corrected bar, tsc clean, build 1.43s, own spec + m4-01/05/10 green at --workers=4, plain-boot probe CLEAN desktop+390. F-1215-1: adjacent ap-standing-orders.spec.ts:80 red at workers=4 is PRE-EXISTING on main, proven by a matched control (pre-merge ToolSurface.ts fails identically 4/4). Review: reviews/ap-08b-view-collection-firewall.md"
             }
           ]
         }
