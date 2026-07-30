@@ -16,7 +16,13 @@
 //
 //   This guard enforces only the cheap half, and only going forward.
 //
-// WHAT IT CHECKS
+// WHAT IT CHECKS — AND THE 74% IT DOES NOT (read this before quoting a PASS; F-1252-1, s1252)
+//   The denominator is `git ls-files tasks`, and ONLY that. Measured s1252: 305 citations in
+//   scope, 853 out of it, including logs/suite-red-inventory.md — the known-reds block named
+//   in the WHY above — with 644 citations, 643 of them NUMBER-ONLY. A PASS here is a statement
+//   about tasks/**, never about the repo, and the verdict now prints that remainder so it
+//   cannot be misread again. Widening the scope is an owner ruling, not a drive-by.
+//
 //   Every `e2e/<name>.spec.ts:<line>` citation in tracked `tasks/**/*.md` must have, within
 //   ~400 characters, a quoted string that resolves to a real `test(...)` title in that spec AS
 //   IT STANDS TODAY. Resolution accepts the three shapes this repo's prose actually uses:
@@ -90,6 +96,38 @@ function titlesOf(spec) {
   return v;
 }
 
+// NOT EVERY `spec.ts:<line>` CITATION NAMES A TEST (F-1252-3, s1252).
+// The guard's vocabulary assumed one, and that assumption was its only violation on the whole
+// tree: tasks/ts-cov-02-*.md cites `e2e/second-rider.spec.ts:6` and quotes, verbatim, what
+// actually stands at line 6 -- `// @ts-expect-error The production companion is intentionally a
+// directly runnable Node module.` That is a CORRECT and fully recoverable citation; a future
+// reader greps the quoted text and lands on it whatever the line number becomes. Scoring it
+// NUMBER-ONLY was the guard being wrong, not the doc.
+//
+// So a quote that resolves to any real SOURCE LINE of the cited spec counts as carried too.
+// The recoverability test is the same one the title rule applies -- does the prose carry
+// something greppable? -- and a directive, an import, or a config line answers it as well as a
+// title does. Titles are still tried FIRST, so nothing about the title rule is weakened.
+const lineCache = new Map();
+function sourceLinesOf(spec) {
+  if (lineCache.has(spec)) return lineCache.get(spec);
+  const p = path.join(ROOT, spec);
+  let v = null;
+  if (fs.existsSync(p)) {
+    v = [
+      ...new Set(
+        fs
+          .readFileSync(p, 'utf8')
+          .split('\n')
+          .map((l) => l.trim())
+          .filter((l) => l.length >= MIN_PREFIX),
+      ),
+    ];
+  }
+  lineCache.set(spec, v);
+  return v;
+}
+
 // A doc almost never quotes a title verbatim. All three shapes below let a future reader grep
 // back to the subject, so all three count as carried.
 function matchesATitle(quote, titles) {
@@ -150,6 +188,19 @@ export function scan(root = ROOT) {
             break;
           }
         }
+        // Titles first, then any real source line of the same spec (F-1252-3).
+        if (verdict === 'NUMBER-ONLY') {
+          const lines = sourceLinesOf(spec) || [];
+          QUOTED.lastIndex = 0;
+          while ((q = QUOTED.exec(win))) {
+            const t = matchesATitle(q[1], lines);
+            if (t) {
+              verdict = 'CARRIES-LINE';
+              carried = t;
+              break;
+            }
+          }
+        }
       }
       rows.push({ file, raw: hit[0], spec, verdict, carried });
     }
@@ -160,15 +211,95 @@ export function scan(root = ROOT) {
 function tally(rows) {
   const counts = new Map();
   for (const r of rows) {
-    if (r.verdict === 'CARRIES-TITLE') continue;
+    if (r.verdict === 'CARRIES-TITLE' || r.verdict === 'CARRIES-LINE') continue;
     const key = `${r.file}::${r.raw}`;
     counts.set(key, (counts.get(key) || 0) + 1);
   }
   return counts;
 }
 
+// WHAT THIS GUARD DOES **NOT** READ, PRINTED IN ITS OWN VERDICT (F-1252-1, s1252).
+//
+// The denominator above is `git ls-files tasks`. Measured at s1252: that is 305 of the
+// 1158 `e2e/*.spec.ts:<line>` citations in the tracked tree. The other 853 live in .md
+// files this guard never opens -- and the single largest of them is
+// logs/suite-red-inventory.md with 644, of which 643 are NUMBER-ONLY.
+//
+// That file is the known-reds block. Read the WHY at the top of this script again: the
+// harm it was written to stop is "a rotted citation in a known-reds block either excuses
+// a real red or points at nothing". So the one file whose rot motivated the guard is the
+// one file the guard was not pointed at, and `PASS` read as a statement about the repo.
+//
+// WIDENING THE DENOMINATOR IS A POLICY CHANGE AND IS NOT MADE HERE (§7.3). It would put
+// ~853 citations under the ratchet and change what every future drain and fire must write;
+// it sits on the owner's desk. What IS fixed here is the misreporting: a guard that says
+// "clean" must say what it read. The count below is REPORTED, never gated -- if gating it
+// were free the ruling would not be needed.
+function unGatedCitations() {
+  try {
+    const all = execFileSync('git', ['ls-files'], { cwd: ROOT, encoding: 'utf8', maxBuffer: 1 << 28 })
+      .trim()
+      .split('\n')
+      .filter((f) => f.endsWith('.md') && !f.startsWith('tasks/'));
+    let citations = 0;
+    let files = 0;
+    let top = { file: null, n: 0 };
+    for (const f of all) {
+      let text;
+      try {
+        text = fs.readFileSync(path.join(ROOT, f), 'utf8');
+      } catch {
+        continue;
+      }
+      CITE.lastIndex = 0;
+      let n = 0;
+      while (CITE.exec(text)) n++;
+      if (!n) continue;
+      files++;
+      citations += n;
+      if (n > top.n) top = { file: f, n };
+    }
+    return { citations, files, top };
+  } catch {
+    // A probe that cannot run reports UNKNOWN, never 0 (the false-zero class:
+    // F-1054-1 / F-1055-1 both shipped a reassuring 0 from a check that had not looked).
+    return null;
+  }
+}
+
+const taskDocs = trackedTaskDocs();
 const rows = scan();
 const current = tally(rows);
+
+// REFUSE A SUBJECT NOBODY READ (F-1251-2's class, fourth instance -- s1248/s1249/s1250 in
+// drain-block-check, s1251 in assert-release-build, here in s1252).
+// Measured before the fix: with `tasks/` absent, empty, or holding no citation at all, this
+// script printed `citations scanned : 0` followed by `PASS -- no new bare spec:line citation`
+// and exited 0. A ratchet that has read nothing has proved nothing, and the realistic trigger
+// is not exotic: renaming or moving tasks/, or a --root aimed one directory off, empties the
+// denominator SILENTLY and turns this gate into an affirmative all-clear forever.
+if (!REPORT) {
+  if (taskDocs.length === 0) {
+    console.error('citation-title-guard: REFUSING — `git ls-files tasks` matched no .md file.');
+    console.error(
+      `  root: ${ROOT}\n` +
+        '  Nothing was read, so "no new bare citation" would be a claim about an empty set.\n' +
+        '  Likely cause: tasks/ was moved or renamed, or --root points one directory off.',
+    );
+    process.exit(2);
+  }
+  if (rows.length === 0) {
+    console.error(
+      `citation-title-guard: REFUSING — ${taskDocs.length} tracked task doc(s) scanned, 0 citations found.`,
+    );
+    console.error(
+      '  This guard exists because these citations exist. Zero of them across the whole\n' +
+        '  ledger means the CITE pattern stopped matching (a path or naming convention moved),\n' +
+        '  not that the debt was paid. Re-point the pattern rather than banking the silence.',
+    );
+    process.exit(2);
+  }
+}
 
 if (UPDATE) {
   const obj = Object.fromEntries([...current.entries()].sort((a, b) => a[0].localeCompare(b[0])));
@@ -186,12 +317,44 @@ if (REPORT) {
   for (const [k, v] of Object.entries(summary).sort((a, b) => b[1] - a[1])) {
     console.log(`  ${k.padEnd(15)} ${v}`);
   }
+  // --report is documented as never gating, so it WARNS where the gate REFUSES.
+  if (rows.length === 0) {
+    console.log(
+      `  ⚠️  read nothing: ${taskDocs.length} tracked task doc(s), 0 citations. ` +
+        'These numbers describe an empty set (the gate refuses on this input).',
+    );
+  }
+  const un = unGatedCitations();
+  if (un === null) console.log('  NOT GATED: UNKNOWN — out-of-scope probe could not run.');
+  else if (un.citations > 0) {
+    console.log(
+      `  NOT GATED: ${un.citations} citation(s) in ${un.files} tracked .md outside tasks/ ` +
+        `— largest ${un.top.file} (${un.top.n}).`,
+    );
+  }
   process.exit(0);
 }
 
+// A RATCHET WITHOUT ITS BASELINE IS NOT A RATCHET (F-1252-1, s1252).
+// Previously a missing baseline was read as `{}` -- "nothing grandfathered". That is not a
+// neutral default: it silently redefines the gate, and the sibling ratchet in this same
+// battery already refuses instead (task-guard-audit.mjs: "no baseline ... run with --update
+// once to create it", exit 2). Same class, same answer. `--update-baseline` still bootstraps.
 let baseline = {};
-if (fs.existsSync(BASELINE)) {
+if (!fs.existsSync(BASELINE)) {
+  console.error(`citation-title-guard: REFUSING — no baseline at ${BASELINE}.`);
+  console.error(
+    '  Treating a missing baseline as "nothing grandfathered" would report every one of the\n' +
+      `  ${current.size} pre-existing bare citation(s) as a new violation, or -- with an empty\n` +
+      '  denominator -- would pass having compared nothing. Run --update-baseline once.',
+  );
+  process.exit(2);
+}
+try {
   baseline = JSON.parse(fs.readFileSync(BASELINE, 'utf8')).grandfathered || {};
+} catch (error) {
+  console.error(`citation-title-guard: REFUSING — baseline unreadable: ${error.message}`);
+  process.exit(2);
 }
 
 const violations = [];
@@ -201,14 +364,27 @@ for (const [key, n] of current) {
 }
 
 console.log('=== citation-title-guard ===');
-console.log(`citations scanned : ${rows.length}`);
+console.log(`citations scanned : ${rows.length}  (in ${taskDocs.length} tracked tasks/**/*.md)`);
 for (const [k, v] of Object.entries(summary).sort((a, b) => b[1] - a[1])) {
   console.log(`  ${k.padEnd(15)} ${v}`);
 }
 console.log(`grandfathered keys: ${Object.keys(baseline).length}`);
 
+const unGated = unGatedCitations();
+if (unGated === null) {
+  console.log('NOT GATED         : UNKNOWN — the out-of-scope probe could not run (git unavailable?).');
+} else if (unGated.citations > 0) {
+  console.log(
+    `NOT GATED         : ${unGated.citations} citation(s) in ${unGated.files} tracked .md outside tasks/ ` +
+      `— largest ${unGated.top.file} (${unGated.top.n}). Scope ruling: F-1252-1, owner's desk.`,
+  );
+}
+
 if (violations.length === 0) {
-  console.log('PASS — no new bare `spec:line` citation.');
+  console.log(
+    'PASS — no new bare `spec:line` citation among the ' +
+      `${rows.length} scanned. This verdict covers tasks/** only.`,
+  );
   process.exit(0);
 }
 

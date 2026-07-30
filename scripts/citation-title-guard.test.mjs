@@ -54,6 +54,24 @@ function withEmptyBaseline(t, dir) {
   return baseline;
 }
 
+// s1252 arms need trees the `fixture` helper deliberately cannot build: one with no task
+// markdown at all, and one carrying a tracked .md OUTSIDE tasks/. Same git-real discipline.
+function customFixture(t, build) {
+  const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-citation-guard-x-'));
+  fs.mkdirSync(path.join(dir, 'e2e'), { recursive: true });
+  fs.mkdirSync(path.join(dir, 'scripts'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'e2e', 'fixture.spec.ts'), SPEC);
+  build(dir);
+  const git = (...args) => execFileSync('git', args, { cwd: dir, encoding: 'utf8' });
+  git('init', '-q');
+  git('config', 'user.email', 'fixture@example.com');
+  git('config', 'user.name', 'fixture');
+  git('add', '-A');
+  git('commit', '-qm', 'fixture');
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  return dir;
+}
+
 test('a bare spec:line citation fails the guard', (t) => {
   const dir = fixture(t, 'KNOWN RED: e2e/fixture.spec.ts:4 fails on main.\n');
   const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
@@ -126,4 +144,104 @@ test('--report never gates', (t) => {
 
   assert.equal(result.status, 0, result.stdout + result.stderr);
   assert.match(result.stdout, /NUMBER-ONLY/);
+});
+
+// ---------------------------------------------------------------------------
+// s1252 — F-1252-1/2/3. Measured before these existed: with tasks/ absent, empty, or
+// citation-free, this guard printed `citations scanned : 0` and `PASS`, exit 0. Its
+// verdict also read as repo-wide while covering 305 of 1158 citations, and it scored a
+// correct non-test citation as a violation. Each arm below runs the REAL script.
+// ---------------------------------------------------------------------------
+
+test('REFUSES when no tracked task markdown exists (denominator 0 docs)', (t) => {
+  const dir = customFixture(t, (d) => {
+    fs.mkdirSync(path.join(d, 'tasks'), { recursive: true });
+    fs.writeFileSync(path.join(d, 'tasks', 'keep.txt'), 'not markdown\n');
+  });
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 2, result.stdout + result.stderr);
+  assert.match(result.stderr, /REFUSING/);
+  assert.match(result.stderr, /matched no \.md file/);
+  // and it must NOT have claimed a pass
+  assert.doesNotMatch(result.stdout, /PASS/);
+});
+
+test('REFUSES when task docs exist but carry zero citations', (t) => {
+  const dir = customFixture(t, (d) => {
+    fs.mkdirSync(path.join(d, 'tasks'), { recursive: true });
+    fs.writeFileSync(path.join(d, 'tasks', 'a.md'), '# a master naming no spec at all\n');
+  });
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 2, result.stdout + result.stderr);
+  assert.match(result.stderr, /0 citations found/);
+  assert.doesNotMatch(result.stdout, /PASS/);
+});
+
+test('REFUSES when the baseline it ratchets against is missing', (t) => {
+  const dir = fixture(t, 'Carried: e2e/fixture.spec.ts:4 ("hero stops in the shallows").\n');
+  // POSITIVE CONTROL: the identical tree passes once a baseline exists, so this arm
+  // is proving the missing baseline is what refuses -- not the tree.
+  const withBaseline = run(dir, '--baseline', withEmptyBaseline(t, dir));
+  assert.equal(withBaseline.status, 0, withBaseline.stdout + withBaseline.stderr);
+
+  const missing = run(dir, '--baseline', path.join(dir, 'no-such-baseline.json'));
+  assert.equal(missing.status, 2, missing.stdout + missing.stderr);
+  assert.match(missing.stderr, /no baseline at/);
+});
+
+test('a citation quoting a real NON-TEST source line is carried, not a violation', (t) => {
+  // e2e/fixture.spec.ts line 2 is the playwright import -- not a test title.
+  const dir = fixture(
+    t,
+    'See e2e/fixture.spec.ts:2 ("import { test, expect } from \'@playwright/test\';").\n',
+  );
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /CARRIES-LINE/);
+});
+
+test('a quote matching NEITHER a title nor any source line still fails', (t) => {
+  // The control for the arm above: widening to source lines must not accept anything.
+  const dir = fixture(t, 'See e2e/fixture.spec.ts:2 ("a sentence that appears nowhere in it").\n');
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 1, result.stdout + result.stderr);
+  assert.match(result.stdout, /FAIL/);
+});
+
+test('the verdict names the citations it did NOT gate', (t) => {
+  const dir = customFixture(t, (d) => {
+    fs.mkdirSync(path.join(d, 'tasks'), { recursive: true });
+    fs.mkdirSync(path.join(d, 'logs'), { recursive: true });
+    fs.writeFileSync(
+      path.join(d, 'tasks', 'master.md'),
+      'Carried: e2e/fixture.spec.ts:4 ("hero stops in the shallows").\n',
+    );
+    // tracked, carries citations, and outside the denominator
+    fs.writeFileSync(
+      path.join(d, 'logs', 'red-inventory.md'),
+      'e2e/fixture.spec.ts:11 and e2e/fixture.spec.ts:12 and e2e/fixture.spec.ts:13\n',
+    );
+  });
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir));
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /NOT GATED\s*:\s*3 citation\(s\) in 1 tracked \.md outside tasks\//);
+  assert.match(result.stdout, /logs\/red-inventory\.md \(3\)/);
+  // the PASS may no longer read as a claim about the whole repo
+  assert.match(result.stdout, /covers tasks\/\*\* only/);
+});
+
+test('--report still never gates, even on a denominator it could not read', (t) => {
+  const dir = customFixture(t, (d) => {
+    fs.mkdirSync(path.join(d, 'tasks'), { recursive: true });
+    fs.writeFileSync(path.join(d, 'tasks', 'keep.txt'), 'not markdown\n');
+  });
+  const result = run(dir, '--baseline', withEmptyBaseline(t, dir), '--report');
+
+  assert.equal(result.status, 0, result.stdout + result.stderr);
+  assert.match(result.stdout, /read nothing/);
 });
