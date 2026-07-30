@@ -2784,6 +2784,14 @@
               "taskFile": "lane-b-gazette-welcome-release-state-probe.md",
               "mergeHash": "a087cbcdffcdf1220817d349d20fda3cabb6b2b5",
               "status": "merged"
+            },
+            {
+              "id": "gazette-welcome-drift-observation-frame",
+              "title": "Move the newsie drift bound INSIDE the page. Measured s1263 on main a269317f (desktop-chrome, workers=1, repeat-each=3): the shipped assertion measures the CDP round-trip, not the newsie — quiet arm window 121-133 ms / displacement 0.693-0.763 / 0-of-3 breaches, loaded arm (14 CPU spinners, loadavg 21.4) window 312-483 ms / displacement 3.303-3.877 / 3-of-3 breaches, with the CLICK round-trip (284-347 ms) the dominant term. The newsie walks home at delta*7 (TownScene.ts:2613), so the <1 bound is arithmetically an assertion that the round-trip finished in ~143 ms. Cure is spec-only: an in-page rAF sampler installed BEFORE the click, anchored on the first frame welcomeFollowsPlayer reads false, bounded by 0.08 s of the town own elapsed — which caps the peak at 7*(0.08+0.05)=0.91<1 on any machine at any load (Loop.ts:27 clamps delta to 0.05). Folds in F-1262-5.",
+              "taskFile": "lane-b-gazette-welcome-drift-observation-frame.md",
+              "status": "queued",
+              "registeredBy": "s1263 fire — FIRE-AUTHORED from a measurement, not from the predecessor findings recommendation. F-1262-4 proposed a FIXED FRAME COUNT window; s1263 measured that a frame count is NOT the invariant (n=16 already reads 1.010 under load) because displacement tracks SIM TIME, not frames — so the leaf ships a sim-time window instead. Basis: logs/session-scratch/s1263/RESULTS.txt.",
+              "authorNotes": "MEASURE-FIRST GATE THAT CAN CANCEL THE WORK: scope 1 must reproduce the red under deliberate CPU load on a clean tree (burn.mjs is committed) before any edit, and STOPs at PREMISE-NOT-REPRODUCED if the loaded arm comes back green — the exact trap s1215 fell into on this same assertion. Acceptance is not green, it is: the arm that was RED before the change is GREEN after it, same box, same load. No src edit is in scope — elapsed and welcomeFollowsPlayer are already public on TownDiagnostics (TownScene.ts:155, :162)."
             }
           ]
         }
