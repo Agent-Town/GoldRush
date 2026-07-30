@@ -19,7 +19,9 @@ CODEX: model=gpt-5.6-sol effort=medium
 
 ## Why this exists
 
-Six fires have argued about one assertion, `e2e/gazette-welcome.spec.ts:88`. The state of the
+Six fires have argued about one assertion, `e2e/gazette-welcome.spec.ts:88`
+("the Gazette welcome fires once, walks skippably, and retriggers through the newsie" — the
+newsie-drift `toBeLessThan(1)` check). The state of the
 argument is **F-1264-3: the fire shell and the lane shell are not the same measuring instrument** —
 the identical command on the identical commit goes **6/6 GREEN in the lane (~14s)** and **6/6 RED
 in the fire shell (~50s/test)**. s1265 killed the sandbox, the node version, and vite warmth.
