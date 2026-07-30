@@ -182,6 +182,51 @@ test('--changed-since exits 2 on a bad ref rather than narrowing to the base gat
   assert.match(both.stderr, /mutually exclusive/);
 });
 
+test('--changed-since exits 2 when the untracked listing fails rather than reporting a green', (t) => {
+  // The sibling of the bad-ref arm above, and it was missing (s1247). `git diff` and
+  // `git ls-files` are SEPARATE spawns, so one can fail while the other succeeds -- a
+  // transient fork failure under load is enough. Treating that as "no untracked files"
+  // silently drops the Shape-1 protection (a brand-new, unstaged worker file) and still
+  // prints a green, which is the one thing this runner exists to refuse.
+  const { dir } = gitFixture();
+  const shimDir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-run-guards-shim-'));
+  t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
+  t.after(() => fs.rmSync(shimDir, { recursive: true, force: true }));
+
+  const realGit = spawnSync('sh', ['-c', 'command -v git'], { encoding: 'utf8' }).stdout.trim();
+  assert.ok(realGit, 'git must be resolvable for this arm to mean anything');
+  // Fails ONLY `ls-files --others`; every other git call passes through untouched, so
+  // the listing failure is the single variable between this arm and the control below.
+  fs.writeFileSync(
+    path.join(shimDir, 'git'),
+    `#!/bin/sh\nfor a in "$@"; do if [ "$a" = "--others" ]; then echo "simulated ls-files failure" 1>&2; exit 128; fi; done\nexec ${realGit} "$@"\n`,
+    { mode: 0o755 },
+  );
+  const withShim = (...args) =>
+    spawnSync(process.execPath, [SCRIPT, ...args], {
+      cwd: dir,
+      encoding: 'utf8',
+      timeout: 60_000,
+      env: { ...process.env, PATH: `${shimDir}${path.delimiter}${process.env.PATH}` },
+    });
+
+  // Shape 1: brand-new unstaged worker file -- invisible to `git diff`, so the untracked
+  // union is the ONLY thing that can pull in the worker battery.
+  fs.mkdirSync(path.join(dir, 'functions/api'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'functions/api/_accounts.ts'), 'export {};\n');
+
+  const failed = withShim('--changed-since', 'HEAD');
+  assert.equal(failed.status, 2, failed.stdout);
+  assert.match(failed.stderr, /git ls-files --others failed/);
+  assert.doesNotMatch(failed.stdout, /passed/);
+
+  // Control: the identical fixture with the shim removed must still see the file and add
+  // the worker guards -- otherwise the arm above could pass for the wrong reason.
+  const control = run(dir, '--changed-since', 'HEAD');
+  assert.equal(control.status, 0, control.stderr || control.stdout);
+  assert.match(control.stdout, /test:accounts/);
+});
+
 test('guards run with GR_GUARD_NO_ARTIFACT so a gate cannot dirty its own tree', (t) => {
   // The guard's own exit code is the verdict here: a passing guard's stdout is
   // never printed by the runner, so asserting on output would pass vacuously.

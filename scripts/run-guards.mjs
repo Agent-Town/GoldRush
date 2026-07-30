@@ -154,8 +154,24 @@ if (changedSince !== null) {
   // guards, so the safe direction to err is toward running more of them.
   const untracked = spawnSync('git', ['ls-files', '--others', '--exclude-standard'], {
     encoding: 'utf8',
+    maxBuffer: 64 * 1024 * 1024,
   });
-  const lines = `${diff.stdout ?? ''}\n${untracked.status === 0 ? untracked.stdout ?? '' : ''}`;
+  // Same law as the bad ref above, and it was missing here: treating a FAILED listing
+  // as "no untracked files" drops exactly the brand-new-file protection this union
+  // exists to provide, and still prints "guards: N/N passed". A transient fork failure
+  // under load is enough -- `diff` and `ls-files` are separate spawns, so one can fail
+  // while the other succeeds. `status` is null (not non-zero) when the child dies on a
+  // signal or never spawns, so compare against 0 rather than testing truthiness.
+  if (untracked.status !== 0) {
+    console.error(
+      `run-guards: git ls-files --others failed (rc=${untracked.status}` +
+        `${untracked.signal ? `, signal=${untracked.signal}` : ''}` +
+        `${untracked.error ? `, ${untracked.error.code ?? untracked.error.message}` : ''}). ` +
+        `${(untracked.stderr ?? '').trim()}`,
+    );
+    process.exit(2);
+  }
+  const lines = `${diff.stdout ?? ''}\n${untracked.stdout ?? ''}`;
   changedFiles = [...new Set(lines.split('\n').map((s) => s.trim()).filter(Boolean))];
 }
 
