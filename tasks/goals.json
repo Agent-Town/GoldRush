@@ -2782,8 +2782,8 @@
               "id": "gazette-welcome-release-state-probe",
               "title": "Make the newsie-release assertion observe a STATE, not a 50 ms wall-clock window — e2e/gazette-welcome.spec.ts:84-88 infers \"the newsie stopped following\" from a displacement sampled after waitForTimeout(50), while TownWelcome.followsPlayer (:44) is the property itself. Test hygiene only: the assertion measures 0 failures in 48 executions (987df988), so the flake premise is dead (F-1261-6) and scope 1 is a mandatory observe-first STOP.",
               "taskFile": "lane-b-gazette-welcome-release-state-probe.md",
-              "mergeHash": null,
-              "status": "queued"
+              "mergeHash": "a087cbcdffcdf1220817d349d20fda3cabb6b2b5",
+              "status": "merged"
             }
           ]
         }
