@@ -1,0 +1,15 @@
+{
+ "seq": 9,
+ "note": "CORRECTION — the first real re-command of the rehearsal, and it is warranted rather than fidgety. Three of four turrets died 'cell-invalid-per-game': the reflex layer's honest pre-check refused to click because the game itself reported the cell unplaceable at the moment the trigger came due. Night Shift is the one map that ships pre-placed works — seven wrecked lantern posts scattered across the middle — and my cells were copied from the gulch, where that furniture does not exist. One turret standing at wave 11 will not see dawn at 25. Re-aiming the bench well clear of the lantern rows at (0,16), (-16,18), (16,18), (-22,-12), (22,-12), (-10,-24), (10,-24): the new cells sit in the open ground between them. Wave triggers two apart from 13 so nothing lands in the same tick as anything else, and the beacon line follows through 22. Purse is 229 against the cap, so every piece here is already paid for; only the clock is pacing it.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -6, "z": 2 }, "when": { "waveGte": 13 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 6, "z": 2 }, "when": { "waveGte": 15 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 0, "z": 5 }, "when": { "waveGte": 17 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -8, "z": 8 }, "when": { "waveGte": 18 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -4, "z": -6 }, "when": { "waveGte": 19 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 8, "z": 8 }, "when": { "waveGte": 20 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": -6 }, "when": { "waveGte": 21 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -12, "z": 2 }, "when": { "waveGte": 22 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 12, "z": 2 }, "when": { "waveGte": 23 } }
+ ]
+}

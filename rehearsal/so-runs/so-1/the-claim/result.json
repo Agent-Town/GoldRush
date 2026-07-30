@@ -1,0 +1,2851 @@
+{
+ "contractId": "the-claim",
+ "mode": "play",
+ "outcome": "secured",
+ "seconds": 300,
+ "finalWave": 10,
+ "secureWave": 10,
+ "hp": 93,
+ "gold": 94,
+ "kills": 291,
+ "works": {
+  "mode": true,
+  "sel": "turret",
+  "ghostPos": {
+   "x": 10,
+   "z": -5
+  },
+  "ghostValid": false,
+  "nextCost": 70,
+  "turrets": 1,
+  "beacons": 0,
+  "sluices": 0,
+  "palisades": 8,
+  "stockpiles": 0,
+  "hp": [
+   {
+    "id": "palisade",
+    "index": 0,
+    "hp": 0,
+    "maxHp": 60,
+    "wrecked": true
+   },
+   {
+    "id": "palisade",
+    "index": 1,
+    "hp": 0,
+    "maxHp": 60,
+    "wrecked": true
+   },
+   {
+    "id": "palisade",
+    "index": 2,
+    "hp": 0,
+    "maxHp": 60,
+    "wrecked": true
+   },
+   {
+    "id": "palisade",
+    "index": 3,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 4,
+    "hp": 0,
+    "maxHp": 60,
+    "wrecked": true
+   },
+   {
+    "id": "palisade",
+    "index": 5,
+    "hp": 0,
+    "maxHp": 60,
+    "wrecked": true
+   },
+   {
+    "id": "palisade",
+    "index": 6,
+    "hp": 0,
+    "maxHp": 60,
+    "wrecked": true
+   },
+   {
+    "id": "palisade",
+    "index": 7,
+    "hp": 0,
+    "maxHp": 60,
+    "wrecked": true
+   },
+   {
+    "id": "turret",
+    "index": 0,
+    "hp": 58,
+    "maxHp": 58,
+    "wrecked": false
+   }
+  ]
+ },
+ "permissionRung": 3,
+ "difficulty": "trail",
+ "honesty": {
+  "grTestSeen": false,
+  "grAgentSeen": false,
+  "searches": [
+   "?contract=the-claim"
+  ]
+ },
+ "meter": {
+  "calls": 4,
+  "viewBytes": [
+   1946,
+   1955,
+   2188,
+   2553
+  ],
+  "cumulativeBytes": 8642,
+  "latencies": [
+   38598,
+   64151,
+   95862
+  ],
+  "submissions": [
+   {
+    "seq": 0,
+    "latencyMs": 38598,
+    "orders": [
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": -6,
+       "z": 7
+      },
+      "when": {
+       "goldGte": 62
+      }
+     },
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": 2,
+       "z": -5
+      },
+      "when": {
+       "goldGte": 85
+      }
+     },
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": 5,
+       "z": 7
+      },
+      "when": {
+       "goldGte": 110
+      }
+     },
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": -4,
+       "z": -4
+      },
+      "when": {
+       "goldGte": 142
+      }
+     },
+     {
+      "verb": "FALLBACK_IF",
+      "threat": {
+       "enemiesGte": 20
+      },
+      "pos": {
+       "x": 0,
+       "z": 9
+      }
+     }
+    ],
+    "note": "FULL PLAN AT THE GATE, gold-clocked with a staging margin. Two lessons are folded in. (1) Latency: my answer takes tens of seconds against a 30s wave, so no trigger may be true when it lands — the purse is 0 now, so every threshold below is safely in the future. (2) waveGte was the wrong clock: a wave arrives whether or not the purse can pay, and attempt 2 lost two turrets that way. goldGte is the right clock because affordability IS the trigger — the reflex layer pre-arms the moment gold covers the price, and the margin above the price is the seconds it needs to walk, open the menu and park the mouse. Prices are 50/70/95/125, so triggers 62/85/110/142 each leave ~4s of staging at ~3.3 gold/s. Cells all sit inside 5.2wu of a seam so the pan keeps paying while the aim is held: (-6,7) NW, (2,-5) S, (5,7) E, (-4,-4) SW. Four turrets at 16wu blanket the middle and the stake at (0,12) before the 25-33 jumper waves. BUILDs lead the list; the retreat trigger is last so it cannot starve them.",
+    "receipt": {
+     "ok": true,
+     "result": {
+      "count": 5
+     },
+     "economyLog": []
+    }
+   },
+   {
+    "seq": 1,
+    "latencyMs": 64151,
+    "orders": [
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": 2,
+       "z": -5
+      },
+      "when": {
+       "goldGte": 85
+      }
+     },
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": 5,
+       "z": 7
+      },
+      "when": {
+       "goldGte": 110
+      }
+     },
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": -4,
+       "z": -4
+      },
+      "when": {
+       "goldGte": 142
+      }
+     },
+     {
+      "verb": "FALLBACK_IF",
+      "threat": {
+       "enemiesGte": 20
+      },
+      "pos": {
+       "x": 0,
+       "z": 9
+      }
+     }
+    ],
+    "note": "Purse 60 against a 62 trigger — the first turret fires within a second, long before this answer can land, so it is dropped from the restatement. NOTE THE DSL COST THIS EXPOSES: a submission REPLACES the whole record set, so every re-command must restate the entire remaining plan and must guess what fired during my own latency. Rest unchanged: S (2,-5) at 85, E (5,7) at 110, SW (-4,-4) at 142, retreat inside the ring at 20+.",
+    "receipt": {
+     "ok": true,
+     "result": {
+      "count": 4
+     },
+     "economyLog": []
+    }
+   },
+   {
+    "seq": 2,
+    "latencyMs": 95862,
+    "orders": [
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": 5,
+       "z": 7
+      },
+      "when": {
+       "goldGte": 75
+      }
+     },
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": 9,
+       "z": 4
+      },
+      "when": {
+       "goldGte": 105
+      }
+     },
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": -19,
+       "z": -7
+      },
+      "when": {
+       "goldGte": 145
+      }
+     },
+     {
+      "verb": "FALLBACK_IF",
+      "threat": {
+       "enemiesGte": 20
+      },
+      "pos": {
+       "x": 0,
+       "z": 9
+      }
+     }
+    ],
+    "note": "UNFREEZE. Two whole waves paid nothing: goldDelta 0 across waves 1 and 2, purse stuck at 60. Cause is mine, and it is a doctrine finding — I named cells beside the seams that were live AT THE GATE, but seams cycle, and by wave 2 the (-9,6.7) seam had gone cold. The reflex layer, holding an aim it could not abandon, stood on ground that pays nothing while waiting for a gold trigger only panning could deliver. A gold-clocked BUILD whose cell has drifted away from a live seam is a self-blocking order. Re-aiming both cells at the seams that are live RIGHT NOW — (7.5,6.5) — so the pan funds the trigger it is waiting for: (5,7) at 75 and (9,4) at 105, both inside 3wu of that seam, both reaching the stake at (0,12) with their 16wu. Third turret parked out west beside the other live seam (-22,-6.8) as a fallback purchase. Retreat trigger unchanged.",
+    "receipt": {
+     "ok": true,
+     "result": {
+      "count": 4
+     },
+     "economyLog": []
+    }
+   }
+  ],
+  "missed": 0
+ },
+ "almanacLog": [
+  {
+   "seq": 0,
+   "wave": 0,
+   "at": 1.400000000000001,
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 1,
+     "arrivalInSeconds": 28.57,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "claim_jumper",
+       "label": "Claim Jumpers",
+       "count": 6
+      }
+     ]
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 55.83,
+     "currentWorks": 8,
+     "harnessHash": "fnv1a32:e965fc9c"
+    }
+   },
+   "works": {
+    "mode": false,
+    "sel": "sentry_beacon",
+    "ghostPos": {
+     "x": 0,
+     "z": 0
+    },
+    "ghostValid": false,
+    "nextCost": 25,
+    "turrets": 0,
+    "beacons": 0,
+    "sluices": 0,
+    "palisades": 8,
+    "stockpiles": 0,
+    "hp": [
+     {
+      "id": "palisade",
+      "index": 0,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 2,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 3,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 4,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 5,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 6,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 7,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     }
+    ]
+   },
+   "gold": 0,
+   "hp": 100
+  },
+  {
+   "seq": 1,
+   "wave": 1,
+   "at": 40.100000000000286,
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 2,
+     "arrivalInSeconds": 19.9,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "claim_jumper",
+       "label": "Claim Jumpers",
+       "count": 9
+      }
+     ]
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 55.83,
+     "currentWorks": 8,
+     "harnessHash": "fnv1a32:6bd346aa"
+    }
+   },
+   "works": {
+    "mode": false,
+    "sel": "sentry_beacon",
+    "ghostPos": {
+     "x": 0,
+     "z": 0
+    },
+    "ghostValid": false,
+    "nextCost": 25,
+    "turrets": 0,
+    "beacons": 0,
+    "sluices": 0,
+    "palisades": 8,
+    "stockpiles": 0,
+    "hp": [
+     {
+      "id": "palisade",
+      "index": 0,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 2,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 3,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 4,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 5,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 6,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 7,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     }
+    ]
+   },
+   "gold": 60,
+   "hp": 92
+  },
+  {
+   "seq": 2,
+   "wave": 3,
+   "at": 104.33333333332997,
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 4,
+     "arrivalInSeconds": 15.67,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "claim_jumper",
+       "label": "Claim Jumpers",
+       "count": 15
+      }
+     ]
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 57.51,
+     "currentWorks": 8,
+     "harnessHash": "fnv1a32:e5b0b7ed"
+    }
+   },
+   "works": {
+    "mode": false,
+    "sel": "sentry_beacon",
+    "ghostPos": {
+     "x": 0,
+     "z": 0
+    },
+    "ghostValid": false,
+    "nextCost": 25,
+    "turrets": 0,
+    "beacons": 0,
+    "sluices": 0,
+    "palisades": 8,
+    "stockpiles": 0,
+    "hp": [
+     {
+      "id": "palisade",
+      "index": 0,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 1,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 2,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 3,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 4,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 5,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 6,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 7,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     }
+    ]
+   },
+   "gold": 60,
+   "hp": 92
+  },
+  {
+   "seq": 3,
+   "wave": 6,
+   "at": 200.16666666665787,
+   "almanac": {
+    "label": "the Almanac reckons",
+    "estimate": true,
+    "nextWave": {
+     "wave": 7,
+     "arrivalInSeconds": 9.83,
+     "basis": "estimated-from-wave-schedule",
+     "composition": [
+      {
+       "id": "claim_jumper",
+       "label": "Claim Jumpers",
+       "count": 24
+      }
+     ]
+    },
+    "projection": {
+     "expectedLeaks": 0,
+     "expectedWorksDamage": 0,
+     "expectedGold": 54.99,
+     "currentWorks": 8,
+     "harnessHash": "fnv1a32:35d273ec"
+    }
+   },
+   "works": {
+    "mode": true,
+    "sel": "turret",
+    "ghostPos": {
+     "x": 2,
+     "z": -7
+    },
+    "ghostValid": false,
+    "nextCost": 70,
+    "turrets": 1,
+    "beacons": 0,
+    "sluices": 0,
+    "palisades": 8,
+    "stockpiles": 0,
+    "hp": [
+     {
+      "id": "palisade",
+      "index": 0,
+      "hp": 0,
+      "maxHp": 60,
+      "wrecked": true
+     },
+     {
+      "id": "palisade",
+      "index": 1,
+      "hp": 12,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 2,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 3,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 4,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 5,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 6,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "palisade",
+      "index": 7,
+      "hp": 60,
+      "maxHp": 60,
+      "wrecked": false
+     },
+     {
+      "id": "turret",
+      "index": 0,
+      "hp": 58,
+      "maxHp": 58,
+      "wrecked": false
+     }
+    ]
+   },
+   "gold": 31,
+   "hp": 68
+  }
+ ],
+ "waveLog": [
+  {
+   "wave": 0,
+   "endedAt": 40.100000000000286,
+   "gold": 60,
+   "hp": 92,
+   "works": 0,
+   "enemies": 5
+  },
+  {
+   "wave": 1,
+   "endedAt": 104.33333333332997,
+   "gold": 60,
+   "hp": 92,
+   "works": 0,
+   "enemies": 12
+  },
+  {
+   "wave": 3,
+   "endedAt": 200.16666666665787,
+   "gold": 31,
+   "hp": 68,
+   "works": 1,
+   "enemies": 20
+  }
+ ],
+ "upgrades": [
+  {
+   "offered": [
+    "double_tap_coil",
+    "prospectors_luck",
+    "powder_charge"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "rich_seam_pact",
+    "pan_legend"
+   ],
+   "took": "prospectors_luck"
+  },
+  {
+   "offered": [
+    "pan_legend",
+    "quick_fuse",
+    "heavy_spark"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "spring_heels",
+    "heavy_spark"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "split_spark",
+    "heavy_spark",
+    "chain_spark_arc"
+   ],
+   "took": "split_spark"
+  },
+  {
+   "offered": [
+    "wide_ring",
+    "heavy_spark",
+    "tinkers_plating"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "spring_heels",
+    "pan_legend",
+    "quick_fuse"
+   ],
+   "took": "quick_fuse"
+  },
+  {
+   "offered": [
+    "chain_spark_arc",
+    "powder_charge",
+    "pan_legend"
+   ],
+   "took": "chain_spark_arc"
+  },
+  {
+   "offered": [
+    "tinkers_plating",
+    "double_tap_coil",
+    "long_resonator"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "double_tap_coil",
+    "split_spark",
+    "chain_spark_arc"
+   ],
+   "took": "split_spark"
+  },
+  {
+   "offered": [
+    "chain_spark_arc",
+    "double_tap_coil",
+    "tinkers_plating"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "chain_spark_arc",
+    "pan_legend",
+    "spark_pressure_ring"
+   ],
+   "took": "chain_spark_arc"
+  },
+  {
+   "offered": [
+    "pan_legend",
+    "rich_seam_pact",
+    "prospectors_luck"
+   ],
+   "took": "prospectors_luck"
+  },
+  {
+   "offered": [
+    "stockpile_seam_survey",
+    "tinkers_plating",
+    "pan_legend"
+   ],
+   "took": "tinkers_plating"
+  },
+  {
+   "offered": [
+    "rich_seam_pact",
+    "pan_legend",
+    "long_resonator"
+   ],
+   "took": "long_resonator"
+  }
+ ],
+ "stageLog": [
+  {
+   "t": 80.16666666666468,
+   "wave": 2,
+   "unstaged": "orders-1-1",
+   "why": "stale-stage"
+  },
+  {
+   "t": 117.9333333333292,
+   "wave": 3,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": true,
+   "px": 640,
+   "py": 336.6666666666667,
+   "world": {
+    "x": 2,
+    "z": -7
+   },
+   "offset": {
+    "x": 0,
+    "z": -1
+   },
+   "snapped": 2
+  },
+  {
+   "t": 147.83333333332752,
+   "wave": 4,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": true,
+   "px": 640,
+   "py": 313.3333333333333,
+   "world": {
+    "x": 2,
+    "z": -7
+   },
+   "offset": {
+    "x": 0,
+    "z": -2
+   },
+   "snapped": 2
+  },
+  {
+   "t": 163.36666666665997,
+   "wave": 5,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": true,
+   "px": 640,
+   "py": 332,
+   "world": {
+    "x": 2,
+    "z": -7
+   },
+   "offset": {
+    "x": 0,
+    "z": -1
+   },
+   "snapped": 2
+  },
+  {
+   "t": 172.23333333332613,
+   "wave": 5,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": false,
+   "why": "no-valid-cell"
+  },
+  {
+   "t": 174.49999999999267,
+   "wave": 5,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": false,
+   "why": "no-valid-cell"
+  },
+  {
+   "t": 184.03333333332546,
+   "wave": 6,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": false,
+   "why": "no-valid-cell"
+  },
+  {
+   "t": 186.299999999992,
+   "wave": 6,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": false,
+   "why": "no-valid-cell"
+  },
+  {
+   "t": 196.66666666665807,
+   "wave": 6,
+   "stage": "orders-2-1",
+   "def": "turret",
+   "requested": {
+    "x": 2,
+    "z": -5
+   },
+   "ok": true,
+   "px": 721.6666666666666,
+   "py": 430,
+   "world": {
+    "x": 2,
+    "z": -7
+   },
+   "offset": {
+    "x": 0,
+    "z": -3
+   },
+   "snapped": 2
+  }
+ ],
+ "buildAttempts": [
+  {
+   "mode": "order",
+   "def": "turret",
+   "at": 200.03333333332455,
+   "verified": true,
+   "countAfter": 1
+  }
+ ],
+ "riderAudit": {
+  "builds": [
+   {
+    "at": 200.03333333332455,
+    "wave": 6,
+    "def": "turret",
+    "requested": {
+     "x": 5,
+     "z": 7
+    },
+    "staged": {
+     "x": 2,
+     "z": -7
+    },
+    "goldBefore": 81,
+    "preValid": true,
+    "preCount": 0,
+    "preGhost": {
+     "x": 2,
+     "z": -7
+    },
+    "result": "placed",
+    "verified": true,
+    "countAfter": 1
+   }
+  ],
+  "actions": []
+ },
+ "finalView": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "the-claim",
+    "name": "The Claim",
+    "briefing": {
+     "geography": "The classic river claim.",
+     "goals": [
+      "Hold the claim through wave 10."
+     ],
+     "rules": [
+      "The river splits the claim around one center ford.",
+      "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": true,
+     "ford": true,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 480,
+     "max": 480,
+     "delta": 0
+    },
+    "kills": 10,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 480,
+     "max": 480,
+     "delta": 0
+    },
+    "kills": 18,
+    "surprises": []
+   },
+   {
+    "wave": 3,
+    "outcome": "held",
+    "goldDelta": 20,
+    "worksHp": {
+     "current": 480,
+     "max": 480,
+     "delta": 0
+    },
+    "kills": 24,
+    "surprises": []
+   },
+   {
+    "wave": 4,
+    "outcome": "works-damaged",
+    "goldDelta": -3,
+    "worksHp": {
+     "current": 456,
+     "max": 480,
+     "delta": -24
+    },
+    "kills": 24,
+    "surprises": []
+   },
+   {
+    "wave": 5,
+    "outcome": "held",
+    "goldDelta": -4,
+    "worksHp": {
+     "current": 472,
+     "max": 480,
+     "delta": 16
+    },
+    "kills": 31,
+    "surprises": []
+   },
+   {
+    "wave": 6,
+    "outcome": "works-damaged",
+    "goldDelta": -22,
+    "worksHp": {
+     "current": 378,
+     "max": 538,
+     "delta": -94
+    },
+    "kills": 38,
+    "surprises": []
+   },
+   {
+    "wave": 7,
+    "outcome": "works-damaged",
+    "goldDelta": 41,
+    "worksHp": {
+     "current": 298,
+     "max": 538,
+     "delta": -80
+    },
+    "kills": 41,
+    "surprises": []
+   },
+   {
+    "wave": 8,
+    "outcome": "works-damaged",
+    "goldDelta": 5,
+    "worksHp": {
+     "current": 58,
+     "max": 538,
+     "delta": -240
+    },
+    "kills": 51,
+    "surprises": []
+   },
+   {
+    "wave": 9,
+    "outcome": "secured",
+    "goldDelta": -3,
+    "worksHp": {
+     "current": 118,
+     "max": 538,
+     "delta": 60
+    },
+    "kills": 46,
+    "surprises": []
+   },
+   {
+    "wave": 10,
+    "outcome": "secured",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 118,
+     "max": 538,
+     "delta": 0
+    },
+    "kills": 0,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 10,
+   "timers": {
+    "runSeconds": 300,
+    "nextWaveInSeconds": 0
+   },
+   "gold": 94,
+   "hero": {
+    "hp": 93,
+    "maxHp": 125,
+    "x": 7.68,
+    "z": -5
+   },
+   "works": {
+    "hp": 118,
+    "maxHp": 538,
+    "standing": 2,
+    "wrecked": 7,
+    "byKind": {
+     "palisade": 8,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 14,
+    "state": "warning",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 50
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 25
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 10,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 11,
+    "arrivalInSeconds": 0,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 35
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 2,
+    "harnessHash": "fnv1a32:211a0743"
+   }
+  }
+ },
+ "finalOrders": {
+  "needsRider": true,
+  "orders": [
+   {
+    "id": "orders-3-1",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 75
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-3-2",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 9,
+      "z": 4
+     },
+     "when": {
+      "goldGte": 105
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-3-3",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -19,
+      "z": -7
+     },
+     "when": {
+      "goldGte": 145
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-3-4",
+    "order": {
+     "verb": "FALLBACK_IF",
+     "threat": {
+      "enemiesGte": 20
+     },
+     "pos": {
+      "x": 0,
+      "z": 9
+     }
+    },
+    "status": "done"
+   }
+  ],
+  "log": [
+   {
+    "seq": 1,
+    "at": 39.96666666666696,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-1-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -6,
+        "z": 7
+       },
+       "when": {
+        "goldGte": 62
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 2,
+        "z": -5
+       },
+       "when": {
+        "goldGte": 85
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-3",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 5,
+        "z": 7
+       },
+       "when": {
+        "goldGte": 110
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-4",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -4,
+        "z": -4
+       },
+       "when": {
+        "goldGte": 142
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-5",
+      "order": {
+       "verb": "FALLBACK_IF",
+       "threat": {
+        "enemiesGte": 20
+       },
+       "pos": {
+        "x": 0,
+        "z": 9
+       }
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 2,
+    "at": 104.19999999999665,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-2-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 2,
+        "z": -5
+       },
+       "when": {
+        "goldGte": 85
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 5,
+        "z": 7
+       },
+       "when": {
+        "goldGte": 110
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-3",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -4,
+        "z": -4
+       },
+       "when": {
+        "goldGte": 142
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-4",
+      "order": {
+       "verb": "FALLBACK_IF",
+       "threat": {
+        "enemiesGte": 20
+       },
+       "pos": {
+        "x": 0,
+        "z": 9
+       }
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 3,
+    "at": 130.5333333333285,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 4,
+    "at": 131.43333333332845,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 5,
+    "at": 132.3333333333284,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 6,
+    "at": 133.23333333332835,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 7,
+    "at": 134.1333333333283,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 8,
+    "at": 135.03333333332824,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 9,
+    "at": 135.9333333333282,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 10,
+    "at": 136.83333333332814,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 11,
+    "at": 137.7333333333281,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 12,
+    "at": 138.63333333332804,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 13,
+    "at": 139.533333333328,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 14,
+    "at": 140.43333333332794,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 15,
+    "at": 141.63333333332787,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 16,
+    "at": 142.53333333332782,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 17,
+    "at": 143.43333333332777,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 18,
+    "at": 144.33333333332772,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 19,
+    "at": 145.23333333332766,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 20,
+    "at": 146.1333333333276,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 21,
+    "at": 147.03333333332756,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 22,
+    "at": 147.9333333333275,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 23,
+    "at": 148.83333333332746,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 24,
+    "at": 149.7333333333274,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 25,
+    "at": 150.06666666666072,
+    "type": "order_status",
+    "orderId": "orders-2-4",
+    "status": "active"
+   },
+   {
+    "seq": 26,
+    "at": 150.5666666666607,
+    "type": "order_status",
+    "orderId": "orders-2-4",
+    "status": "done"
+   },
+   {
+    "seq": 27,
+    "at": 150.63333333332736,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 28,
+    "at": 151.5333333333273,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 29,
+    "at": 152.43333333332725,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 30,
+    "at": 153.3333333333272,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 31,
+    "at": 154.23333333332715,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 32,
+    "at": 155.1333333333271,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 33,
+    "at": 156.03333333332705,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 34,
+    "at": 156.933333333327,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 35,
+    "at": 157.83333333332695,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 36,
+    "at": 158.7333333333269,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 37,
+    "at": 159.63333333332685,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 38,
+    "at": 160.5333333333268,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 39,
+    "at": 161.43333333332674,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 40,
+    "at": 162.3333333333267,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 41,
+    "at": 163.23333333332664,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 42,
+    "at": 164.1333333333266,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 43,
+    "at": 165.03333333332654,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 44,
+    "at": 165.9333333333265,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 45,
+    "at": 166.83333333332644,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 46,
+    "at": 167.73333333332639,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 47,
+    "at": 168.63333333332633,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 48,
+    "at": 169.53333333332628,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 49,
+    "at": 170.43333333332623,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 50,
+    "at": 171.33333333332618,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 51,
+    "at": 172.23333333332613,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 52,
+    "at": 173.13333333332608,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 53,
+    "at": 174.03333333332603,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 54,
+    "at": 174.93333333332598,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 55,
+    "at": 175.83333333332592,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 56,
+    "at": 176.73333333332587,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 57,
+    "at": 177.63333333332582,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 58,
+    "at": 178.53333333332577,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 59,
+    "at": 179.43333333332572,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 60,
+    "at": 180.33333333332567,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 61,
+    "at": 181.23333333332562,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 62,
+    "at": 182.13333333332557,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 63,
+    "at": 183.03333333332552,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 64,
+    "at": 183.93333333332546,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 65,
+    "at": 184.8333333333254,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 66,
+    "at": 185.73333333332536,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 67,
+    "at": 186.6333333333253,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 68,
+    "at": 187.53333333332526,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 69,
+    "at": 188.4333333333252,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 70,
+    "at": 189.33333333332516,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 71,
+    "at": 190.2333333333251,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 72,
+    "at": 190.49999999999176,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 73,
+    "at": 191.13333333332506,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 74,
+    "at": 191.3999999999917,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 75,
+    "at": 192.033333333325,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 76,
+    "at": 192.93333333332495,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 77,
+    "at": 192.96666666665828,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 78,
+    "at": 193.8333333333249,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 79,
+    "at": 193.86666666665823,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 80,
+    "at": 194.73333333332485,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 81,
+    "at": 194.76666666665818,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 82,
+    "at": 195.6333333333248,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 83,
+    "at": 195.66666666665813,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 84,
+    "at": 196.53333333332475,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 85,
+    "at": 196.56666666665808,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 86,
+    "at": 197.4333333333247,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 87,
+    "at": 197.46666666665803,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 88,
+    "at": 198.33333333332465,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 89,
+    "at": 198.36666666665798,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 90,
+    "at": 199.2333333333246,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 91,
+    "at": 199.26666666665793,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 92,
+    "at": 200.03333333332455,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-3-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 5,
+        "z": 7
+       },
+       "when": {
+        "goldGte": 75
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-3-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 9,
+        "z": 4
+       },
+       "when": {
+        "goldGte": 105
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-3-3",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -19,
+        "z": -7
+       },
+       "when": {
+        "goldGte": 145
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-3-4",
+      "order": {
+       "verb": "FALLBACK_IF",
+       "threat": {
+        "enemiesGte": 20
+       },
+       "pos": {
+        "x": 0,
+        "z": 9
+       }
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 93,
+    "at": 200.06666666665788,
+    "type": "order_status",
+    "orderId": "orders-3-1",
+    "status": "active"
+   },
+   {
+    "seq": 94,
+    "at": 200.06666666665788,
+    "type": "order_status",
+    "orderId": "orders-3-1",
+    "status": "done"
+   },
+   {
+    "seq": 95,
+    "at": 200.0999999999912,
+    "type": "order_status",
+    "orderId": "orders-3-4",
+    "status": "active"
+   },
+   {
+    "seq": 96,
+    "at": 200.13333333332454,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 97,
+    "at": 200.4999999999912,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 98,
+    "at": 201.0333333333245,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 99,
+    "at": 201.23333333332448,
+    "type": "order_status",
+    "orderId": "orders-3-4",
+    "status": "done"
+   },
+   {
+    "seq": 100,
+    "at": 201.93333333332444,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 101,
+    "at": 202.5333333333244,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 102,
+    "at": 202.8333333333244,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 103,
+    "at": 203.43333333332436,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 104,
+    "at": 203.73333333332434,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 105,
+    "at": 204.3333333333243,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 106,
+    "at": 204.6333333333243,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 107,
+    "at": 205.23333333332425,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 108,
+    "at": 205.53333333332424,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 109,
+    "at": 206.1333333333242,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 110,
+    "at": 206.43333333332419,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 111,
+    "at": 207.03333333332415,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 112,
+    "at": 207.33333333332413,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 113,
+    "at": 207.9333333333241,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 114,
+    "at": 208.23333333332408,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 115,
+    "at": 208.83333333332405,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 116,
+    "at": 209.13333333332403,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 117,
+    "at": 209.733333333324,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 118,
+    "at": 210.03333333332398,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 119,
+    "at": 210.63333333332395,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 120,
+    "at": 210.93333333332393,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 121,
+    "at": 211.5333333333239,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 122,
+    "at": 213.5666666666571,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 123,
+    "at": 213.83333333332376,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 124,
+    "at": 214.46666666665706,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 125,
+    "at": 214.7333333333237,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 126,
+    "at": 215.366666666657,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 127,
+    "at": 215.63333333332366,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 128,
+    "at": 216.26666666665696,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 129,
+    "at": 216.5333333333236,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 130,
+    "at": 218.03333333332353,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 131,
+    "at": 218.23333333332351,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 132,
+    "at": 218.93333333332347,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 133,
+    "at": 219.09999999999013,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 134,
+    "at": 219.13333333332346,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 135,
+    "at": 219.83333333332342,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 136,
+    "at": 219.99999999999008,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 137,
+    "at": 220.0333333333234,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 138,
+    "at": 220.73333333332337,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 139,
+    "at": 220.89999999999003,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 140,
+    "at": 220.93333333332336,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 141,
+    "at": 221.79999999998998,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 142,
+    "at": 222.69999999998993,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 143,
+    "at": 222.7666666666566,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 144,
+    "at": 222.93333333332325,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 145,
+    "at": 223.66666666665654,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 146,
+    "at": 223.8333333333232,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 147,
+    "at": 224.5666666666565,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 148,
+    "at": 224.73333333332315,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 149,
+    "at": 225.46666666665644,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 150,
+    "at": 225.6333333333231,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 151,
+    "at": 227.16666666665634,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 152,
+    "at": 227.36666666665633,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 153,
+    "at": 228.0666666666563,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 154,
+    "at": 228.26666666665628,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 155,
+    "at": 228.96666666665624,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 156,
+    "at": 229.16666666665623,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 157,
+    "at": 229.8666666666562,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 158,
+    "at": 230.06666666665618,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 159,
+    "at": 231.93333333332274,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 160,
+    "at": 232.5333333333227,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 161,
+    "at": 232.83333333332268,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 162,
+    "at": 233.43333333332265,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 163,
+    "at": 233.73333333332263,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 164,
+    "at": 234.3333333333226,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 165,
+    "at": 234.63333333332258,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 166,
+    "at": 235.23333333332255,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 167,
+    "at": 236.73333333332246,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 168,
+    "at": 237.2999999999891,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 169,
+    "at": 237.6333333333224,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 170,
+    "at": 238.19999999998905,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 171,
+    "at": 238.53333333332236,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 172,
+    "at": 239.099999999989,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 173,
+    "at": 239.4333333333223,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 174,
+    "at": 239.99999999998894,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 175,
+    "at": 241.19999999998888,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 176,
+    "at": 242.09999999998882,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 177,
+    "at": 242.1666666666555,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 178,
+    "at": 242.99999999998877,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 179,
+    "at": 243.06666666665544,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 180,
+    "at": 243.89999999998872,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 181,
+    "at": 243.96666666665539,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 182,
+    "at": 244.79999999998867,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 183,
+    "at": 245.69999999998862,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 184,
+    "at": 246.4333333333219,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 185,
+    "at": 246.59999999998857,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 186,
+    "at": 247.33333333332186,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 187,
+    "at": 247.49999999998852,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 188,
+    "at": 248.2333333333218,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 189,
+    "at": 248.39999999998847,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 190,
+    "at": 249.13333333332176,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 191,
+    "at": 250.46666666665502,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 192,
+    "at": 251.36666666665496,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 193,
+    "at": 251.66666666665495,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 194,
+    "at": 252.2666666666549,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 195,
+    "at": 252.5666666666549,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 196,
+    "at": 253.16666666665486,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 197,
+    "at": 253.46666666665485,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 198,
+    "at": 254.0666666666548,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 199,
+    "at": 255.46666666665473,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 200,
+    "at": 256.0999999999881,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 201,
+    "at": 256.36666666665496,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 202,
+    "at": 256.9999999999888,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 203,
+    "at": 257.2666666666557,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 204,
+    "at": 257.8999999999895,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 205,
+    "at": 258.1666666666564,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 206,
+    "at": 258.79999999999023,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   }
+  ]
+ }
+}

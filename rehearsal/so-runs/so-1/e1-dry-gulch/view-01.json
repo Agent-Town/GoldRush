@@ -1,0 +1,805 @@
+{
+ "seq": 1,
+ "calledAt": "2026-07-30T05:10:02.198Z",
+ "trigger": "wave-4",
+ "runSeconds": 120.13333333332908,
+ "wave": 4,
+ "permissionRung": 3,
+ "meter": {
+  "calls": 2,
+  "viewBytes": 2355,
+  "cumulativeViewBytes": 4338
+ },
+ "pilotReport": {
+  "priceOfNext": {
+   "turret": 70,
+   "sentry_beacon": 25,
+   "palisade": 10,
+   "sluice": 40,
+   "stockpile": 60
+  },
+  "capsRemaining": {
+   "turret": 3,
+   "sentry_beacon": 6,
+   "sluice": 3
+  },
+  "lastPlacements": [
+   {
+    "at": 89.99999999999746,
+    "wave": 2,
+    "def": "turret",
+    "requested": {
+     "x": -5,
+     "z": 4
+    },
+    "staged": {
+     "x": 3,
+     "z": 6
+    },
+    "goldBefore": 141,
+    "preValid": true,
+    "preCount": 0,
+    "preGhost": {
+     "x": 3,
+     "z": 6
+    },
+    "result": "placed",
+    "verified": true,
+    "countAfter": 1
+   }
+  ],
+  "hero": {
+   "x": -1.8310755429127443,
+   "z": -5.961792226795421
+  },
+  "heroHp": "84/100",
+  "speed": 0,
+  "gold": 171,
+  "bankCap": 235,
+  "enemiesAlive": 11,
+  "telegraphedEdge": "north",
+  "waveState": "active",
+  "nextWaveInSeconds": 29.9,
+  "works": {
+   "turrets": 1,
+   "beacons": 0,
+   "sluices": 0,
+   "palisades": 8
+  },
+  "nextCost": 70,
+  "liveSeams": [
+   {
+    "id": "gold-seam-1",
+    "x": 18,
+    "z": -7,
+    "remaining": 40
+   },
+   {
+    "id": "gold-seam-2",
+    "x": -1.5,
+    "z": -6.4,
+    "remaining": 19
+   }
+  ],
+  "upgradesTaken": [
+   "double_tap_coil",
+   "prospectors_luck",
+   "heavy_spark",
+   "heavy_spark",
+   "split_spark",
+   "heavy_spark"
+  ],
+  "lastStagings": [
+   {
+    "t": 90.13333333333078,
+    "wave": 3,
+    "stage": "orders-1-2",
+    "def": "turret",
+    "requested": {
+     "x": 2,
+     "z": -4
+    },
+    "standSeam": "gold-seam-2",
+    "relocated": true,
+    "movedBy": 6.7,
+    "ok": true,
+    "px": 584,
+    "py": 336.6666666666667,
+    "world": {
+     "x": 5,
+     "z": 2
+    },
+    "offset": {
+     "x": 0,
+     "z": 0
+    },
+    "snapped": 0
+   },
+   {
+    "t": 104.66666666666329,
+    "wave": 3,
+    "stage": "orders-1-2",
+    "def": "turret",
+    "requested": {
+     "x": 2,
+     "z": -4
+    },
+    "standSeam": null,
+    "relocated": false,
+    "movedBy": 0,
+    "ok": true,
+    "px": 640,
+    "py": 400,
+    "world": {
+     "x": 2,
+     "z": -3
+    },
+    "offset": {
+     "x": 0,
+     "z": 0
+    },
+    "snapped": 1
+   },
+   {
+    "t": 114.86666666666271,
+    "wave": 3,
+    "stage": "orders-1-2",
+    "def": "turret",
+    "requested": {
+     "x": 2,
+     "z": -4
+    },
+    "standSeam": "gold-seam-2",
+    "relocated": false,
+    "movedBy": 0,
+    "ok": true,
+    "px": 752,
+    "py": 524,
+    "world": {
+     "x": 2,
+     "z": -3
+    },
+    "offset": {
+     "x": 0,
+     "z": 2
+    },
+    "snapped": 1
+   }
+  ],
+  "reflexNote": "The reflex clock walks the hero (WASD), pans seams by standing still inside 1.35wu, kites when hurt, takes level-up cards, and parks the real mouse on the next pending BUILD cell. It does NOT choose what to build."
+ },
+ "ordersSnapshot": {
+  "needsRider": false,
+  "orders": [
+   {
+    "id": "orders-1-1",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 4
+     },
+     "when": {
+      "waveGte": 3
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-1-2",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 2,
+      "z": -4
+     },
+     "when": {
+      "waveGte": 5
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-3",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 5,
+      "z": 6
+     },
+     "when": {
+      "waveGte": 7
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-4",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -2,
+      "z": 8
+     },
+     "when": {
+      "waveGte": 9
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-5",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -7,
+      "z": 7
+     },
+     "when": {
+      "waveGte": 11
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-6",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -3,
+      "z": -5
+     },
+     "when": {
+      "waveGte": 12
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-7",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 4,
+      "z": -4
+     },
+     "when": {
+      "waveGte": 13
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-8",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 8,
+      "z": 4
+     },
+     "when": {
+      "waveGte": 14
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-9",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -9,
+      "z": 1
+     },
+     "when": {
+      "waveGte": 15
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-10",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 0,
+      "z": 9
+     },
+     "when": {
+      "waveGte": 16
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-11",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": -4,
+      "z": 1
+     },
+     "when": {
+      "waveGte": 17
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-12",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 3,
+      "z": 1
+     },
+     "when": {
+      "waveGte": 18
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-13",
+    "order": {
+     "verb": "BUILD",
+     "what": "palisade",
+     "where": {
+      "x": 0,
+      "z": -2
+     },
+     "when": {
+      "waveGte": 19
+     }
+    },
+    "status": "pending"
+   }
+  ],
+  "log": [
+   {
+    "seq": 1,
+    "at": 2.533333333333334,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-1-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -5,
+        "z": 4
+       },
+       "when": {
+        "waveGte": 3
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 2,
+        "z": -4
+       },
+       "when": {
+        "waveGte": 5
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-3",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 5,
+        "z": 6
+       },
+       "when": {
+        "waveGte": 7
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-4",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -2,
+        "z": 8
+       },
+       "when": {
+        "waveGte": 9
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-5",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -7,
+        "z": 7
+       },
+       "when": {
+        "waveGte": 11
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-6",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -3,
+        "z": -5
+       },
+       "when": {
+        "waveGte": 12
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-7",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 4,
+        "z": -4
+       },
+       "when": {
+        "waveGte": 13
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-8",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 8,
+        "z": 4
+       },
+       "when": {
+        "waveGte": 14
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-9",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -9,
+        "z": 1
+       },
+       "when": {
+        "waveGte": 15
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-10",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 0,
+        "z": 9
+       },
+       "when": {
+        "waveGte": 16
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-11",
+      "order": {
+       "verb": "BUILD",
+       "what": "palisade",
+       "where": {
+        "x": -4,
+        "z": 1
+       },
+       "when": {
+        "waveGte": 17
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-12",
+      "order": {
+       "verb": "BUILD",
+       "what": "palisade",
+       "where": {
+        "x": 3,
+        "z": 1
+       },
+       "when": {
+        "waveGte": 18
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-13",
+      "order": {
+       "verb": "BUILD",
+       "what": "palisade",
+       "where": {
+        "x": 0,
+        "z": -2
+       },
+       "when": {
+        "waveGte": 19
+       }
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 2,
+    "at": 90.03333333333079,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "active"
+   },
+   {
+    "seq": 3,
+    "at": 90.03333333333079,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "done"
+   }
+  ]
+ },
+ "view": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "e1-dry-gulch",
+    "name": "The Dry Gulch",
+    "briefing": {
+     "geography": "Mesa country; dry washes fall toward one sunken spring.",
+     "goals": [
+      "Hold the gulch through wave 20.",
+      "Work the dry washes around the lone spring."
+     ],
+     "rules": [
+      "Sluices work only beside the spring.",
+      "The river is gone; enemies can press from every edge.",
+      "Seams pay 40% more gold."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 1,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 19,
+    "worksHp": {
+     "current": 480,
+     "max": 480,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 16,
+    "worksHp": {
+     "current": 530,
+     "max": 530,
+     "delta": 50
+    },
+    "kills": 17,
+    "surprises": []
+   },
+   {
+    "wave": 3,
+    "outcome": "held",
+    "goldDelta": 80,
+    "worksHp": {
+     "current": 530,
+     "max": 530,
+     "delta": 0
+    },
+    "kills": 33,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 4,
+   "timers": {
+    "runSeconds": 120.17,
+    "nextWaveInSeconds": 29.83
+   },
+   "gold": 171,
+   "hero": {
+    "hp": 84,
+    "maxHp": 100,
+    "x": -1.83,
+    "z": -5.96
+   },
+   "works": {
+    "hp": 530,
+    "maxHp": 530,
+    "standing": 9,
+    "wrecked": 0,
+    "byKind": {
+     "palisade": 8,
+     "turret": 1
+    }
+   },
+   "threats": {
+    "alive": 11,
+    "state": "active",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 40
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 19
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 4,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 5,
+    "arrivalInSeconds": 29.83,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 18
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 9,
+    "harnessHash": "fnv1a32:0b42d47f"
+   }
+  }
+ }
+}

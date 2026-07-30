@@ -1,0 +1,11 @@
+{
+ "seq": 0,
+ "note": "OPENING PLAN. Goal: hold to wave 10. The claim already wears an 8-plate palisade ring (territory tier 1), so the works are not the weak point — damage output is. Four Signal Turrets (57 dps each at 16wu reach) beat six Sentry Beacons (~21 dps at 8wu) for the same purse, so the whole gold budget goes to turrets, bought in cost order 50/70/95/125 as the pan pays for them. Cells are chosen to sit inside 5.2wu of a live seam so the rider keeps earning while the reflex clock holds the aim: (-6,7) covers the north-west approach from beside the (-9,6.7) seam, (2,-5) and (-4,-4) cover the south off the (-1.5,-6.4) seam, (5,7) covers the east. Together their 16wu reach blankets the working middle and the claim stake at (0,12). Last line is a retreat trigger, not a station: only when 22+ are on the field does the rider fall back inside the palisade ring at (0,9), where two turrets cover him. BUILD orders lead the list deliberately — the executor returns on the first order that yields movement, so any position verb placed above a BUILD would starve it.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -6, "z": 7 }, "when": { "goldGte": 50 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -5 }, "when": { "goldGte": 70 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 7 }, "when": { "goldGte": 95 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -4, "z": -4 }, "when": { "goldGte": 125 } },
+  { "verb": "FALLBACK_IF", "threat": { "enemiesGte": 22 }, "pos": { "x": 0, "z": 9 } }
+ ]
+}

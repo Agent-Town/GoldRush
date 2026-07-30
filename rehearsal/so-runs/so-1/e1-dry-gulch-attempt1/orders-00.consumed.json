@@ -1,0 +1,13 @@
+{
+ "seq": 0,
+ "note": "THE DRY GULCH, wave 20, no river, seams pay 1.4x — so the purse is the fastest of the three contracts and the answer is simply MORE WORKS. Seven-piece build-out issued at the gate, 445 gold total, well inside the ~2700 the pan can raise in 600s. THE TRIGGERS ARE STRICTLY INCREASING AND THAT IS DELIBERATE: the executor skips a BUILD whose condition is unmet and fires the next one that IS met, so a cheap order low in the list jumps the queue and lands unstaged. Monotone triggers make list order and firing order the same thing. Opening beacon at 30 buys early damage while the first turret is still being paid for; then turrets at 62/88/130/180 and beacons at 105/155 interleaved so damage arrives continuously instead of in one lump. Every price carries a ~12 gold margin over its cost (25/50/70/35/95/45/125) which at 4.6 gold/s is ~2.6s — the walk-and-park the reflex layer needs. Cells are spread around the working middle rather than pinned to today's live seams: seams cycle, and the reflex layer now stands on whichever seam is PAYING and aims at the closest legal approach to my cell. No FALLBACK_IF this time — on The Claim its threshold went permanently true and quietly became a HOLD that starved the pan.",
+ "orders": [
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -7, "z": 7 }, "when": { "goldGte": 30 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -5, "z": 4 }, "when": { "goldGte": 62 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -4 }, "when": { "goldGte": 88 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -3, "z": -5 }, "when": { "goldGte": 105 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 6 }, "when": { "goldGte": 130 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": -4 }, "when": { "goldGte": 155 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": 8 }, "when": { "goldGte": 180 } }
+ ]
+}

@@ -1,0 +1,2885 @@
+{
+ "seq": 14,
+ "calledAt": "2026-07-30T05:27:20.565Z",
+ "trigger": "surprise",
+ "runSeconds": 509.6000000001898,
+ "wave": 16,
+ "permissionRung": 3,
+ "meter": {
+  "calls": 15,
+  "viewBytes": 3813,
+  "cumulativeViewBytes": 44903
+ },
+ "pilotReport": {
+  "priceOfNext": {
+   "turret": 125,
+   "sentry_beacon": 35,
+   "palisade": 10,
+   "sluice": 40,
+   "stockpile": 60
+  },
+  "capsRemaining": {
+   "turret": 1,
+   "sentry_beacon": 5,
+   "sluice": 3
+  },
+  "lastPlacements": [
+   {
+    "at": 329.96666666671354,
+    "wave": 10,
+    "def": "lantern_post",
+    "requested": {
+     "x": 4,
+     "z": -4
+    },
+    "staged": {
+     "x": -5,
+     "z": 7
+    },
+    "goldBefore": 235,
+    "preValid": false,
+    "preCount": 8,
+    "preGhost": {
+     "x": -17,
+     "z": 6
+    },
+    "result": "cell-invalid-per-game"
+   },
+   {
+    "at": 359.9666666667374,
+    "wave": 11,
+    "def": "sentry_beacon",
+    "requested": {
+     "x": -7,
+     "z": 7
+    },
+    "staged": {
+     "x": 3,
+     "z": 7
+    },
+    "goldBefore": 231,
+    "preValid": true,
+    "preCount": 0,
+    "preGhost": {
+     "x": 3,
+     "z": 7
+    },
+    "result": "placed",
+    "verified": true,
+    "countAfter": 1
+   },
+   {
+    "at": 389.9666666667613,
+    "wave": 12,
+    "def": "turret",
+    "requested": {
+     "x": -6,
+     "z": 2
+    },
+    "staged": {
+     "x": -18,
+     "z": -7
+    },
+    "goldBefore": 215,
+    "preValid": true,
+    "preCount": 1,
+    "preGhost": {
+     "x": 20,
+     "z": 7
+    },
+    "result": "placed",
+    "verified": true,
+    "countAfter": 2
+   },
+   {
+    "at": 449.96666666680903,
+    "wave": 14,
+    "def": "turret",
+    "requested": {
+     "x": 6,
+     "z": 2
+    },
+    "staged": {
+     "x": -4,
+     "z": 7
+    },
+    "goldBefore": 220,
+    "preValid": true,
+    "preCount": 2,
+    "preGhost": {
+     "x": -4,
+     "z": 7
+    },
+    "result": "placed",
+    "verified": true,
+    "countAfter": 3
+   }
+  ],
+  "hero": {
+   "x": 24.500533937454836,
+   "z": 6.970191111128793
+  },
+  "heroHp": "26.200000000000017/175",
+  "speed": 0,
+  "gold": 208,
+  "bankCap": 305,
+  "enemiesAlive": 17,
+  "telegraphedEdge": "south",
+  "waveState": "warning",
+  "nextWaveInSeconds": 0.4,
+  "works": {
+   "turrets": 3,
+   "beacons": 1,
+   "sluices": 0,
+   "palisades": 8
+  },
+  "nextCost": 125,
+  "liveSeams": [
+   {
+    "id": "gold-seam-1",
+    "x": 25,
+    "z": 6.9,
+    "remaining": 8
+   },
+   {
+    "id": "gold-seam-2",
+    "x": 18,
+    "z": -7,
+    "remaining": 68
+   }
+  ],
+  "upgradesTaken": [
+   "double_tap_coil",
+   "beacon_handoff",
+   "heavy_spark",
+   "heavy_spark",
+   "split_spark",
+   "split_spark",
+   "beacon_handoff",
+   "chain_spark_arc",
+   "heavy_spark",
+   "double_tap_coil",
+   "double_tap_coil",
+   "chain_spark_arc",
+   "prospectors_luck",
+   "tinkers_plating",
+   "long_resonator",
+   "wide_ring",
+   "long_resonator",
+   "tinkers_plating",
+   "tinkers_plating",
+   "beacon_dynamo",
+   "prospectors_luck",
+   "beacon_dynamo",
+   "rich_seam_pact",
+   "powder_charge"
+  ],
+  "lastStagings": [
+   {
+    "t": 445.53333333347217,
+    "wave": 14,
+    "stage": "orders-2-2",
+    "def": "turret",
+    "requested": {
+     "x": 6,
+     "z": 2
+    },
+    "standSeam": "gold-seam-2",
+    "relocated": true,
+    "movedBy": 10.4,
+    "ok": true,
+    "px": 805,
+    "py": 460,
+    "world": {
+     "x": -4,
+     "z": 7
+    },
+    "offset": {
+     "x": 0,
+     "z": 2
+    },
+    "snapped": 2
+   },
+   {
+    "t": 450.1000000001425,
+    "wave": 15,
+    "stage": "orders-2-3",
+    "def": "turret",
+    "requested": {
+     "x": 0,
+     "z": 5
+    },
+    "standSeam": "gold-seam-2",
+    "relocated": true,
+    "movedBy": 4.1,
+    "ok": true,
+    "px": 752,
+    "py": 460,
+    "world": {
+     "x": -5,
+     "z": 7
+    },
+    "offset": {
+     "x": -1,
+     "z": 1
+    },
+    "snapped": 1.4142135623730951
+   },
+   {
+    "t": 489.5000000001738,
+    "wave": 16,
+    "stage": "orders-2-3",
+    "def": "turret",
+    "requested": {
+     "x": 0,
+     "z": 5
+    },
+    "standSeam": "gold-seam-1",
+    "relocated": true,
+    "movedBy": 20.1,
+    "ok": true,
+    "px": 490,
+    "py": 480,
+    "world": {
+     "x": 19,
+     "z": 7
+    },
+    "offset": {
+     "x": 0,
+     "z": 0
+    },
+    "snapped": 1
+   }
+  ],
+  "reflexNote": "The reflex clock walks the hero (WASD), pans seams by standing still inside 1.35wu, kites when hurt, takes level-up cards, and parks the real mouse on the next pending BUILD cell. It does NOT choose what to build."
+ },
+ "ordersSnapshot": {
+  "needsRider": true,
+  "orders": [
+   {
+    "id": "orders-2-1",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -6,
+      "z": 2
+     },
+     "when": {
+      "waveGte": 13
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-2-2",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 6,
+      "z": 2
+     },
+     "when": {
+      "waveGte": 15
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-2-3",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 0,
+      "z": 5
+     },
+     "when": {
+      "waveGte": 17
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-2-4",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -8,
+      "z": 8
+     },
+     "when": {
+      "waveGte": 18
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-2-5",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -4,
+      "z": -6
+     },
+     "when": {
+      "waveGte": 19
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-2-6",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 8,
+      "z": 8
+     },
+     "when": {
+      "waveGte": 20
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-2-7",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 4,
+      "z": -6
+     },
+     "when": {
+      "waveGte": 21
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-2-8",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": -12,
+      "z": 2
+     },
+     "when": {
+      "waveGte": 22
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-2-9",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 12,
+      "z": 2
+     },
+     "when": {
+      "waveGte": 23
+     }
+    },
+    "status": "pending"
+   }
+  ],
+  "log": [
+   {
+    "seq": 1,
+    "at": 21.233333333333547,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-1-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -5,
+        "z": 4
+       },
+       "when": {
+        "waveGte": 3
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 2,
+        "z": -4
+       },
+       "when": {
+        "waveGte": 5
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-3",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 5,
+        "z": 6
+       },
+       "when": {
+        "waveGte": 7
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-4",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -2,
+        "z": 8
+       },
+       "when": {
+        "waveGte": 9
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-5",
+      "order": {
+       "verb": "BUILD",
+       "what": "lantern_post",
+       "where": {
+        "x": -6,
+        "z": 6
+       },
+       "when": {
+        "waveGte": 10
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-6",
+      "order": {
+       "verb": "BUILD",
+       "what": "lantern_post",
+       "where": {
+        "x": 4,
+        "z": -4
+       },
+       "when": {
+        "waveGte": 11
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-7",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -7,
+        "z": 7
+       },
+       "when": {
+        "waveGte": 12
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-8",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -3,
+        "z": -5
+       },
+       "when": {
+        "waveGte": 13
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-9",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 4,
+        "z": 5
+       },
+       "when": {
+        "waveGte": 14
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-10",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 8,
+        "z": 4
+       },
+       "when": {
+        "waveGte": 15
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-11",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -9,
+        "z": 1
+       },
+       "when": {
+        "waveGte": 16
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-12",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 0,
+        "z": 9
+       },
+       "when": {
+        "waveGte": 17
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-13",
+      "order": {
+       "verb": "BUILD",
+       "what": "palisade",
+       "where": {
+        "x": -4,
+        "z": 1
+       },
+       "when": {
+        "waveGte": 19
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-14",
+      "order": {
+       "verb": "BUILD",
+       "what": "palisade",
+       "where": {
+        "x": 3,
+        "z": 1
+       },
+       "when": {
+        "waveGte": 21
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-15",
+      "order": {
+       "verb": "BUILD",
+       "what": "palisade",
+       "where": {
+        "x": 0,
+        "z": -2
+       },
+       "when": {
+        "waveGte": 23
+       }
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 2,
+    "at": 90.03333333333079,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "active"
+   },
+   {
+    "seq": 3,
+    "at": 90.03333333333079,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "done"
+   },
+   {
+    "seq": 4,
+    "at": 132.06666666666175,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 5,
+    "at": 132.9666666666617,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 6,
+    "at": 133.13333333332835,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 7,
+    "at": 133.86666666666164,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 8,
+    "at": 134.0333333333283,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 9,
+    "at": 134.7666666666616,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 10,
+    "at": 134.93333333332825,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 11,
+    "at": 135.66666666666154,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 12,
+    "at": 135.8333333333282,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 13,
+    "at": 136.73333333332815,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 14,
+    "at": 137.6333333333281,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 15,
+    "at": 138.53333333332805,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 16,
+    "at": 139.433333333328,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 17,
+    "at": 140.73333333332792,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 18,
+    "at": 141.63333333332787,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 19,
+    "at": 142.6333333333278,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 20,
+    "at": 143.53333333332776,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 21,
+    "at": 144.4333333333277,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 22,
+    "at": 150.0333333333274,
+    "type": "order_status",
+    "orderId": "orders-1-2",
+    "status": "active"
+   },
+   {
+    "seq": 23,
+    "at": 150.0333333333274,
+    "type": "order_status",
+    "orderId": "orders-1-2",
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 24,
+    "at": 150.0333333333274,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-2",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 25,
+    "at": 188.93333333332518,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 26,
+    "at": 189.83333333332513,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 27,
+    "at": 190.73333333332508,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 28,
+    "at": 191.63333333332503,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 29,
+    "at": 192.53333333332498,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 30,
+    "at": 193.43333333332492,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 31,
+    "at": 194.33333333332487,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 32,
+    "at": 195.23333333332482,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 33,
+    "at": 196.29999999999143,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 34,
+    "at": 197.19999999999138,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 35,
+    "at": 198.09999999999133,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 36,
+    "at": 198.99999999999127,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 37,
+    "at": 199.89999999999122,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 38,
+    "at": 200.79999999999117,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 39,
+    "at": 201.69999999999112,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 40,
+    "at": 202.59999999999107,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 41,
+    "at": 204.3333333333243,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 42,
+    "at": 205.23333333332425,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 43,
+    "at": 206.1333333333242,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 44,
+    "at": 207.03333333332415,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 45,
+    "at": 207.9333333333241,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 46,
+    "at": 209.13333333332403,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 47,
+    "at": 210.03333333332398,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 48,
+    "at": 210.03333333332398,
+    "type": "order_status",
+    "orderId": "orders-1-3",
+    "status": "active"
+   },
+   {
+    "seq": 49,
+    "at": 210.03333333332398,
+    "type": "order_status",
+    "orderId": "orders-1-3",
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 50,
+    "at": 210.03333333332398,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-3",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 51,
+    "at": 210.93333333332393,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 52,
+    "at": 211.83333333332388,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 53,
+    "at": 212.73333333332383,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 54,
+    "at": 213.63333333332378,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 55,
+    "at": 214.53333333332372,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 56,
+    "at": 215.43333333332367,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 57,
+    "at": 217.86666666665687,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 58,
+    "at": 218.76666666665682,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 59,
+    "at": 219.66666666665677,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 60,
+    "at": 220.29999999999006,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 61,
+    "at": 220.56666666665672,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 62,
+    "at": 221.19999999999,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 63,
+    "at": 221.46666666665666,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 64,
+    "at": 222.09999999998996,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 65,
+    "at": 222.3666666666566,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 66,
+    "at": 222.9999999999899,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 67,
+    "at": 223.26666666665656,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 68,
+    "at": 223.89999999998986,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 69,
+    "at": 270.0333333333325,
+    "type": "order_status",
+    "orderId": "orders-1-4",
+    "status": "active"
+   },
+   {
+    "seq": 70,
+    "at": 270.0333333333325,
+    "type": "order_status",
+    "orderId": "orders-1-4",
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 71,
+    "at": 270.0333333333325,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-4",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 72,
+    "at": 283.63333333334333,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 73,
+    "at": 284.03333333334365,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 74,
+    "at": 284.53333333334405,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 75,
+    "at": 284.93333333334436,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 76,
+    "at": 285.43333333334476,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 77,
+    "at": 285.8333333333451,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 78,
+    "at": 286.3333333333455,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 79,
+    "at": 286.7333333333458,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 80,
+    "at": 287.2333333333462,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 81,
+    "at": 287.6333333333465,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 82,
+    "at": 288.1333333333469,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 83,
+    "at": 288.53333333334723,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 84,
+    "at": 289.0333333333476,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 85,
+    "at": 289.43333333334795,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 86,
+    "at": 289.93333333334834,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 87,
+    "at": 290.33333333334866,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 88,
+    "at": 291.10000000001594,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 89,
+    "at": 291.8666666666832,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 90,
+    "at": 292.00000000001666,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 91,
+    "at": 300.000000000023,
+    "type": "order_status",
+    "orderId": "orders-1-5",
+    "status": "active"
+   },
+   {
+    "seq": 92,
+    "at": 300.000000000023,
+    "type": "order_status",
+    "orderId": "orders-1-5",
+    "status": "done"
+   },
+   {
+    "seq": 93,
+    "at": 311.5666666666989,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 94,
+    "at": 311.60000000003225,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 95,
+    "at": 312.4666666666996,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 96,
+    "at": 312.50000000003297,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 97,
+    "at": 313.3666666667003,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 98,
+    "at": 313.4000000000337,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 99,
+    "at": 314.26666666670104,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 100,
+    "at": 314.3000000000344,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 101,
+    "at": 315.0666666667017,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 102,
+    "at": 315.16666666670176,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 103,
+    "at": 315.2000000000351,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 104,
+    "at": 315.9666666667024,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 105,
+    "at": 316.0666666667025,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 106,
+    "at": 316.9666666667032,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 107,
+    "at": 318.800000000038,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 108,
+    "at": 318.9333333333714,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 109,
+    "at": 319.7000000000387,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 110,
+    "at": 319.83333333337214,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 111,
+    "at": 320.6000000000394,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 112,
+    "at": 320.73333333337285,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 113,
+    "at": 321.50000000004013,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 114,
+    "at": 321.63333333337357,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 115,
+    "at": 323.13333333337476,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 116,
+    "at": 323.3666666667083,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 117,
+    "at": 324.0333333333755,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 118,
+    "at": 324.266666666709,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 119,
+    "at": 324.9333333333762,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 120,
+    "at": 325.1666666667097,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 121,
+    "at": 326.73333333337763,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 122,
+    "at": 327.0666666667112,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 123,
+    "at": 327.63333333337835,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 124,
+    "at": 327.96666666671194,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 125,
+    "at": 328.53333333337906,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 126,
+    "at": 328.86666666671266,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 127,
+    "at": 329.4333333333798,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 128,
+    "at": 329.7666666667134,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 129,
+    "at": 330.0000000000469,
+    "type": "order_status",
+    "orderId": "orders-1-6",
+    "status": "active"
+   },
+   {
+    "seq": 130,
+    "at": 330.0000000000469,
+    "type": "order_status",
+    "orderId": "orders-1-6",
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 131,
+    "at": 330.0000000000469,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-6",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 132,
+    "at": 331.7333333333816,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 133,
+    "at": 332.53333333338225,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 134,
+    "at": 332.6333333333823,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 135,
+    "at": 333.43333333338296,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 136,
+    "at": 333.53333333338304,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 137,
+    "at": 334.3333333333837,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 138,
+    "at": 334.43333333338376,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 139,
+    "at": 335.2333333333844,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 140,
+    "at": 335.9000000000516,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 141,
+    "at": 336.8000000000523,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 142,
+    "at": 337.16666666671927,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 143,
+    "at": 337.700000000053,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 144,
+    "at": 338.06666666672,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 145,
+    "at": 338.60000000005374,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 146,
+    "at": 338.9666666667207,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 147,
+    "at": 339.50000000005446,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 148,
+    "at": 339.8666666667214,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 149,
+    "at": 340.4000000000552,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 150,
+    "at": 340.76666666672213,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 151,
+    "at": 341.3000000000559,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 152,
+    "at": 341.66666666672285,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 153,
+    "at": 342.2000000000566,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 154,
+    "at": 342.7666666667237,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 155,
+    "at": 343.1000000000573,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 156,
+    "at": 344.33333333339164,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 157,
+    "at": 344.56666666672515,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 158,
+    "at": 345.23333333339235,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 159,
+    "at": 345.46666666672587,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 160,
+    "at": 346.13333333339307,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 161,
+    "at": 346.3666666667266,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 162,
+    "at": 347.0333333333938,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 163,
+    "at": 347.2666666667273,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 164,
+    "at": 347.9333333333945,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 165,
+    "at": 360.00000000007077,
+    "type": "order_status",
+    "orderId": "orders-1-7",
+    "status": "active"
+   },
+   {
+    "seq": 166,
+    "at": 360.00000000007077,
+    "type": "order_status",
+    "orderId": "orders-1-7",
+    "status": "done"
+   },
+   {
+    "seq": 167,
+    "at": 362.4000000000727,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-2-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -6,
+        "z": 2
+       },
+       "when": {
+        "waveGte": 13
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 6,
+        "z": 2
+       },
+       "when": {
+        "waveGte": 15
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-3",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 0,
+        "z": 5
+       },
+       "when": {
+        "waveGte": 17
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-4",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -8,
+        "z": 8
+       },
+       "when": {
+        "waveGte": 18
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-5",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -4,
+        "z": -6
+       },
+       "when": {
+        "waveGte": 19
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-6",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 8,
+        "z": 8
+       },
+       "when": {
+        "waveGte": 20
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-7",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 4,
+        "z": -6
+       },
+       "when": {
+        "waveGte": 21
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-8",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": -12,
+        "z": 2
+       },
+       "when": {
+        "waveGte": 22
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-2-9",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 12,
+        "z": 2
+       },
+       "when": {
+        "waveGte": 23
+       }
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 168,
+    "at": 370.80000000007936,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 169,
+    "at": 371.0000000000795,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 170,
+    "at": 371.7000000000801,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 171,
+    "at": 371.90000000008024,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 172,
+    "at": 372.6000000000808,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 173,
+    "at": 374.40000000008223,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 174,
+    "at": 374.8333333334159,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 175,
+    "at": 375.30000000008295,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 176,
+    "at": 375.7333333334166,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 177,
+    "at": 376.20000000008366,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 178,
+    "at": 376.63333333341734,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 179,
+    "at": 377.1000000000844,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 180,
+    "at": 377.53333333341806,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 181,
+    "at": 378.3333333334187,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 182,
+    "at": 378.80000000008573,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 183,
+    "at": 379.2333333334194,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 184,
+    "at": 379.70000000008645,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 185,
+    "at": 380.1333333334201,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 186,
+    "at": 380.60000000008716,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 187,
+    "at": 381.5000000000879,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 188,
+    "at": 382.4000000000886,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 189,
+    "at": 390.00000000009464,
+    "type": "order_status",
+    "orderId": "orders-2-1",
+    "status": "active"
+   },
+   {
+    "seq": 190,
+    "at": 390.00000000009464,
+    "type": "order_status",
+    "orderId": "orders-2-1",
+    "status": "done"
+   },
+   {
+    "seq": 191,
+    "at": 399.63333333343564,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 192,
+    "at": 399.96666666676924,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 193,
+    "at": 400.53333333343636,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 194,
+    "at": 400.86666666676996,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 195,
+    "at": 401.4333333334371,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 196,
+    "at": 401.7666666667707,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 197,
+    "at": 402.3333333334378,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 198,
+    "at": 402.6666666667714,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 199,
+    "at": 403.2333333334385,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 200,
+    "at": 403.5666666667721,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 201,
+    "at": 404.1333333334392,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 202,
+    "at": 404.4666666667728,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 203,
+    "at": 405.03333333343994,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 204,
+    "at": 405.36666666677354,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 205,
+    "at": 405.93333333344066,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 206,
+    "at": 406.26666666677426,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 207,
+    "at": 406.8333333334414,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 208,
+    "at": 407.166666666775,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 209,
+    "at": 407.7333333334421,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 210,
+    "at": 408.466666666776,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 211,
+    "at": 408.6333333334428,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 212,
+    "at": 409.3666666667767,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 213,
+    "at": 409.5333333334435,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 214,
+    "at": 410.26666666677744,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 215,
+    "at": 411.16666666677816,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 216,
+    "at": 412.0666666667789,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 217,
+    "at": 413.2666666667798,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 218,
+    "at": 431.03333333346063,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 219,
+    "at": 431.60000000012775,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 220,
+    "at": 431.93333333346135,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 221,
+    "at": 432.50000000012847,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 222,
+    "at": 432.83333333346206,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 223,
+    "at": 433.76666666679614,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 224,
+    "at": 434.0666666667964,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 225,
+    "at": 434.2000000001298,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 226,
+    "at": 434.66666666679686,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 227,
+    "at": 434.9666666667971,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 228,
+    "at": 435.10000000013054,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 229,
+    "at": 435.5666666667976,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 230,
+    "at": 436.00000000013125,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 231,
+    "at": 436.4666666667983,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 232,
+    "at": 436.90000000013197,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 233,
+    "at": 437.366666666799,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 234,
+    "at": 438.2666666667997,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 235,
+    "at": 439.16666666680044,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 236,
+    "at": 440.06666666680115,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 237,
+    "at": 440.96666666680187,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 238,
+    "at": 441.8666666668026,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 239,
+    "at": 442.7666666668033,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 240,
+    "at": 450.0000000001424,
+    "type": "order_status",
+    "orderId": "orders-2-2",
+    "status": "active"
+   },
+   {
+    "seq": 241,
+    "at": 450.0000000001424,
+    "type": "order_status",
+    "orderId": "orders-2-2",
+    "status": "done"
+   },
+   {
+    "seq": 242,
+    "at": 461.7000000001517,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 243,
+    "at": 462.6000000001524,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 244,
+    "at": 463.50000000015314,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 245,
+    "at": 464.40000000015385,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 246,
+    "at": 465.30000000015457,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 247,
+    "at": 467.1666666668227,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 248,
+    "at": 468.06666666682344,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 249,
+    "at": 492.6000000001763,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 250,
+    "at": 492.8666666668432,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 251,
+    "at": 493.500000000177,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 252,
+    "at": 493.7666666668439,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 253,
+    "at": 494.4000000001777,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 254,
+    "at": 494.6666666668446,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 255,
+    "at": 495.30000000017844,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 256,
+    "at": 495.5000000001786,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 257,
+    "at": 495.5666666668453,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 258,
+    "at": 495.6666666668454,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 259,
+    "at": 496.36666666684596,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 260,
+    "at": 496.4000000001793,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 261,
+    "at": 496.5666666668461,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 262,
+    "at": 496.833333333513,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 263,
+    "at": 497.2666666668467,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 264,
+    "at": 497.30000000018003,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 265,
+    "at": 497.46666666684683,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 266,
+    "at": 497.7333333335137,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 267,
+    "at": 498.1666666668474,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 268,
+    "at": 498.36666666684755,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 269,
+    "at": 499.26666666684827,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 270,
+    "at": 499.36666666684835,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 271,
+    "at": 499.5000000001818,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 272,
+    "at": 500.166666666849,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 273,
+    "at": 500.26666666684906,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 274,
+    "at": 500.4000000001825,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 275,
+    "at": 501.0666666668497,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 276,
+    "at": 501.1666666668498,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 277,
+    "at": 501.3000000001832,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 278,
+    "at": 502.0666666668505,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 279,
+    "at": 502.20000000018393,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 280,
+    "at": 503.76666666685185,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 281,
+    "at": 504.0666666668521,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 282,
+    "at": 504.66666666685256,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 283,
+    "at": 504.9666666668528,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 284,
+    "at": 505.5666666668533,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 285,
+    "at": 505.8666666668535,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 286,
+    "at": 506.466666666854,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 287,
+    "at": 506.76666666685423,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 288,
+    "at": 508.6333333335224,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 289,
+    "at": 509.5333333335231,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   }
+  ]
+ },
+ "view": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "e1-night-shift",
+    "name": "Night Shift",
+    "briefing": {
+     "geography": "The claim, gone dark, dotted with cold lanterns.",
+     "goals": [
+      "Survive to DAWN at wave 25."
+     ],
+     "rules": [
+      "Beyond your light, the night owns the claim.",
+      "Relight cold lanterns or build new posts to see threats.",
+      "Turrets still target in the dark."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": true,
+     "ford": true,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": -8,
+    "worksHp": {
+     "current": 550,
+     "max": 725,
+     "delta": 35
+    },
+    "kills": 12,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 10,
+    "worksHp": {
+     "current": 600,
+     "max": 775,
+     "delta": 50
+    },
+    "kills": 12,
+    "surprises": []
+   },
+   {
+    "wave": 3,
+    "outcome": "held",
+    "goldDelta": 60,
+    "worksHp": {
+     "current": 600,
+     "max": 775,
+     "delta": 0
+    },
+    "kills": 29,
+    "surprises": []
+   },
+   {
+    "wave": 4,
+    "outcome": "held",
+    "goldDelta": 35,
+    "worksHp": {
+     "current": 600,
+     "max": 775,
+     "delta": 0
+    },
+    "kills": 28,
+    "surprises": []
+   },
+   {
+    "wave": 5,
+    "outcome": "held",
+    "goldDelta": 45,
+    "worksHp": {
+     "current": 600,
+     "max": 775,
+     "delta": 0
+    },
+    "kills": 34,
+    "surprises": []
+   },
+   {
+    "wave": 6,
+    "outcome": "works-damaged",
+    "goldDelta": 5,
+    "worksHp": {
+     "current": 413,
+     "max": 775,
+     "delta": -187
+    },
+    "kills": 33,
+    "surprises": []
+   },
+   {
+    "wave": 7,
+    "outcome": "works-damaged",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 289,
+     "max": 775,
+     "delta": -124
+    },
+    "kills": 42,
+    "surprises": []
+   },
+   {
+    "wave": 8,
+    "outcome": "held",
+    "goldDelta": -1,
+    "worksHp": {
+     "current": 399,
+     "max": 775,
+     "delta": 110
+    },
+    "kills": 46,
+    "surprises": []
+   },
+   {
+    "wave": 9,
+    "outcome": "works-damaged",
+    "goldDelta": 25,
+    "worksHp": {
+     "current": 290,
+     "max": 810,
+     "delta": -109
+    },
+    "kills": 55,
+    "surprises": []
+   },
+   {
+    "wave": 10,
+    "outcome": "works-damaged",
+    "goldDelta": 12,
+    "worksHp": {
+     "current": 275,
+     "max": 810,
+     "delta": -15
+    },
+    "kills": 52,
+    "surprises": []
+   },
+   {
+    "wave": 11,
+    "outcome": "held",
+    "goldDelta": -29,
+    "worksHp": {
+     "current": 357,
+     "max": 892,
+     "delta": 82
+    },
+    "kills": 66,
+    "surprises": []
+   },
+   {
+    "wave": 12,
+    "outcome": "held",
+    "goldDelta": -61,
+    "worksHp": {
+     "current": 771,
+     "max": 1006,
+     "delta": 414
+    },
+    "kills": 52,
+    "surprises": []
+   },
+   {
+    "wave": 13,
+    "outcome": "held",
+    "goldDelta": 25,
+    "worksHp": {
+     "current": 823,
+     "max": 1006,
+     "delta": 52
+    },
+    "kills": 66,
+    "surprises": []
+   },
+   {
+    "wave": 14,
+    "outcome": "held",
+    "goldDelta": -40,
+    "worksHp": {
+     "current": 894,
+     "max": 1136,
+     "delta": 71
+    },
+    "kills": 69,
+    "surprises": []
+   },
+   {
+    "wave": 15,
+    "outcome": "held",
+    "goldDelta": 30,
+    "worksHp": {
+     "current": 926,
+     "max": 1136,
+     "delta": 32
+    },
+    "kills": 61,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 16,
+   "timers": {
+    "runSeconds": 509.6,
+    "nextWaveInSeconds": 0.4
+   },
+   "gold": 208,
+   "hero": {
+    "hp": 26.200000000000017,
+    "maxHp": 175,
+    "x": 24.5,
+    "z": 6.97
+   },
+   "works": {
+    "hp": 737,
+    "maxHp": 1136,
+    "standing": 13,
+    "wrecked": 7,
+    "byKind": {
+     "sentry_beacon": 1,
+     "palisade": 8,
+     "turret": 3,
+     "lantern_post": 8
+    }
+   },
+   "threats": {
+    "alive": 17,
+    "state": "warning",
+    "edge": "south",
+    "thieves": 0,
+    "wreckers": 1
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 8
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 68
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 16,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 17,
+    "arrivalInSeconds": 0.4,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 38
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 13,
+    "harnessHash": "fnv1a32:05fda77f"
+   }
+  }
+ }
+}

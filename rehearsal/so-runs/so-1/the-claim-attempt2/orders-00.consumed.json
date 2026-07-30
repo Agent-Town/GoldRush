@@ -1,0 +1,11 @@
+{
+ "seq": 0,
+ "note": "FULL PLAN AT THE GATE. Attempt 1 taught the cadence law: my answer takes ~57s, the wave is 30s, so anything I trigger inside two waves of now fires before its own hands are ready. Whole campaign issued once, wave-clocked, first trigger three waves out. Four turrets (57dps/16wu) beat six beacons for the purse; all four cells sit inside 5.2wu of a seam so the pan keeps paying while the aim is held. (-6,7) NW off the (-9,6.7) seam, (2,-5) S and (-4,-4) SW off the (-1.5,-6.4) seam, (5,7) E. BUILDs lead; the retreat trigger is last so it cannot starve them.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -6, "z": 7 }, "when": { "waveGte": 3 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -5 }, "when": { "waveGte": 4 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 7 }, "when": { "waveGte": 5 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -4, "z": -4 }, "when": { "waveGte": 6 } },
+  { "verb": "FALLBACK_IF", "threat": { "enemiesGte": 20 }, "pos": { "x": 0, "z": 9 } }
+ ]
+}

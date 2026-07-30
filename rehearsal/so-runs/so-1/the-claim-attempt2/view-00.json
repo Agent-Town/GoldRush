@@ -1,0 +1,245 @@
+{
+ "seq": 0,
+ "calledAt": "2026-07-30T04:23:19.457Z",
+ "trigger": "run-start",
+ "runSeconds": 1.4333333333333345,
+ "wave": 0,
+ "permissionRung": 3,
+ "meter": {
+  "calls": 1,
+  "viewBytes": 1946,
+  "cumulativeViewBytes": 1946
+ },
+ "pilotReport": {
+  "priceOfNext": {
+   "turret": 50,
+   "sentry_beacon": 25,
+   "palisade": 10,
+   "sluice": 40,
+   "stockpile": 60
+  },
+  "capsRemaining": {
+   "turret": 4,
+   "sentry_beacon": 6,
+   "sluice": 3
+  },
+  "lastPlacements": [],
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "heroHp": "100/100",
+  "speed": 0,
+  "gold": 0,
+  "bankCap": 200,
+  "enemiesAlive": 0,
+  "telegraphedEdge": null,
+  "waveState": "quiet",
+  "nextWaveInSeconds": 28.6,
+  "works": {
+   "turrets": 0,
+   "beacons": 0,
+   "sluices": 0,
+   "palisades": 8
+  },
+  "nextCost": 25,
+  "liveSeams": [
+   {
+    "id": "gold-seam-1",
+    "x": -9,
+    "z": 6.7,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-2",
+    "x": -1.5,
+    "z": -6.4,
+    "remaining": 30
+   }
+  ],
+  "upgradesTaken": [],
+  "lastStagings": [],
+  "reflexNote": "The reflex clock walks the hero (WASD), pans seams by standing still inside 1.35wu, kites when hurt, takes level-up cards, and parks the real mouse on the next pending BUILD cell. It does NOT choose what to build."
+ },
+ "ordersSnapshot": {
+  "needsRider": false,
+  "orders": [],
+  "log": []
+ },
+ "view": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "the-claim",
+    "name": "The Claim",
+    "briefing": {
+     "geography": "The classic river claim.",
+     "goals": [
+      "Hold the claim through wave 10."
+     ],
+     "rules": [
+      "The river splits the claim around one center ford.",
+      "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": true,
+     "ford": true,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [],
+  "now": {
+   "wave": 0,
+   "timers": {
+    "runSeconds": 1.43,
+    "nextWaveInSeconds": 28.57
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 100,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12
+   },
+   "works": {
+    "hp": 480,
+    "maxHp": 480,
+    "standing": 8,
+    "wrecked": 0,
+    "byKind": {
+     "palisade": 8
+    }
+   },
+   "threats": {
+    "alive": 0,
+    "state": "quiet",
+    "edge": null,
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 0,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 1,
+    "arrivalInSeconds": 28.57,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 6
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 8,
+    "harnessHash": "fnv1a32:e965fc9c"
+   }
+  }
+ }
+}

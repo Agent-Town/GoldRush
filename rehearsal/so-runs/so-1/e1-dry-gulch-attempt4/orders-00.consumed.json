@@ -1,0 +1,19 @@
+{
+ "seq": 0,
+ "note": "ONE PLAN FOR THE WHOLE CONTRACT — thirteen pieces, wave 3 to wave 19, and then I intend to say nothing but HOLD. Three attempts taught this shape. A rider that re-commands mid-run pays twice: once because a submission REPLACES the record set and throws away the reflex layer's staging, and once because every trigger it outlived while thinking fires on the same tick, where all but one must fail against a single parked mouse. The cure is not to answer faster, it is to plan far enough ahead that answering is unnecessary. Wave triggers, two apart at the top and one apart later, so no two ever come due together. Bench of four turrets first (50/70/95/125 by wave 9), then six beacons through wave 16 as the pulse thickens, then palisades — 10 gold each, the cheapest hit-points on the board — for the last three waves. 720 gold against a 1.4x pan across 570 seconds. Cells are named as intent across the working middle; the reflex layer relocates each toward whichever seam is paying, and now also refuses to stand and pan inside a 24-strong pulse below three-quarters health, which is exactly how the last attempt died at wave 18 with all four turrets still standing.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -5, "z": 4 }, "when": { "waveGte": 3 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -4 }, "when": { "waveGte": 5 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 6 }, "when": { "waveGte": 7 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": 8 }, "when": { "waveGte": 9 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -7, "z": 7 }, "when": { "waveGte": 11 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -3, "z": -5 }, "when": { "waveGte": 12 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": -4 }, "when": { "waveGte": 13 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 8, "z": 4 }, "when": { "waveGte": 14 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -9, "z": 1 }, "when": { "waveGte": 15 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 0, "z": 9 }, "when": { "waveGte": 16 } },
+  { "verb": "BUILD", "what": "palisade", "where": { "x": -4, "z": 1 }, "when": { "waveGte": 17 } },
+  { "verb": "BUILD", "what": "palisade", "where": { "x": 3, "z": 1 }, "when": { "waveGte": 18 } },
+  { "verb": "BUILD", "what": "palisade", "where": { "x": 0, "z": -2 }, "when": { "waveGte": 19 } }
+ ]
+}

@@ -1,0 +1,249 @@
+{
+ "note": "DEBUG BOOT — quarantined from the honest-play runs; no __GR_TEST__ method was called.",
+ "reach": {
+  "grAgentPresent": true,
+  "grAgentKeys": [
+   "surface",
+   "receipts",
+   "listeners",
+   "debug",
+   "marker",
+   "receiptFeed",
+   "lastActionAt",
+   "receiptCount",
+   "lastReceiptTool",
+   "clock",
+   "view",
+   "constructor",
+   "log",
+   "state",
+   "subscribe",
+   "heartbeat",
+   "panAt",
+   "repair",
+   "chaseMark",
+   "collectXp",
+   "collectGold",
+   "placeBuilding",
+   "dispose",
+   "record"
+  ],
+  "stubHasSubmitOrders": false,
+  "stubHasView": true,
+  "surfaceReachable": true,
+  "surfaceTools": [
+   "get_state",
+   "pan_at",
+   "repair",
+   "chase_mark",
+   "collect_xp",
+   "collect_gold",
+   "place_building",
+   "submit_orders",
+   "view"
+  ],
+  "permissionLevel": 3,
+  "capabilities": [
+   {
+    "id": "auto_collect",
+    "level": 1,
+    "tools": [
+     "et.goldrush.collect_xp",
+     "et.goldrush.collect_gold"
+    ]
+   },
+   {
+    "id": "auto_repair",
+    "level": 1,
+    "tools": [
+     "et.goldrush.repair"
+    ]
+   }
+  ],
+  "meta": {
+   "version": 1,
+   "tracks": {
+    "territory": 3,
+    "science": 7,
+    "hero": 3,
+    "agent": 3
+   }
+  },
+  "agentAutonomyFromDiagnostics": 3
+ },
+ "tools": {
+  "place_building": {
+   "tool": "et.goldrush.place_building",
+   "args": {
+    "def": "turret",
+    "pos": {
+     "x": 0,
+     "z": 8
+    },
+    "rot": 0
+   },
+   "ok": false,
+   "reason": "NO_SYSTEM_API",
+   "message": null,
+   "requiredLevel": null
+  },
+  "pan_at": {
+   "tool": "et.goldrush.pan_at",
+   "args": {
+    "node": "gold-seam-2"
+   },
+   "ok": false,
+   "reason": "NO_SYSTEM_API",
+   "message": null,
+   "requiredLevel": null
+  },
+  "repair": {
+   "tool": "et.goldrush.repair",
+   "args": {
+    "building": {
+     "id": "palisade",
+     "index": 0
+    }
+   },
+   "ok": false,
+   "reason": "FAILED",
+   "message": null,
+   "requiredLevel": null
+  },
+  "collect_gold": {
+   "tool": "et.goldrush.collect_gold",
+   "args": {},
+   "ok": false,
+   "reason": "FAILED",
+   "message": null,
+   "requiredLevel": null
+  },
+  "submit_build_order": {
+   "tool": "et.goldrush.orders",
+   "args": {
+    "orders": [
+     {
+      "verb": "BUILD",
+      "what": "turret",
+      "where": {
+       "x": 0,
+       "z": 8
+      },
+      "when": {
+       "waveGte": 0
+      }
+     }
+    ]
+   },
+   "ok": true,
+   "reason": null,
+   "message": null,
+   "requiredLevel": null
+  },
+  "submit_harvest_order": {
+   "tool": "et.goldrush.orders",
+   "args": {
+    "orders": [
+     {
+      "verb": "HARVEST",
+      "seam": "gold-seam-2"
+     }
+    ]
+   },
+   "ok": true,
+   "reason": null,
+   "message": null,
+   "requiredLevel": null
+  },
+  "submit_hold_order": {
+   "tool": "et.goldrush.orders",
+   "args": {
+    "orders": [
+     {
+      "verb": "HOLD",
+      "pos": {
+       "x": 0,
+       "z": 8
+      }
+     }
+    ]
+   },
+   "ok": true,
+   "reason": null,
+   "message": null,
+   "requiredLevel": null
+  }
+ },
+ "buildOrderLifecycle": {
+  "orders": [
+   {
+    "id": "orders-4-1",
+    "verb": "BUILD",
+    "status": "failed",
+    "reason": "NO_SYSTEM_API: BUILD action was rejected."
+   }
+  ],
+  "surprises": [
+   {
+    "seq": 8,
+    "at": 2.233333333333335,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-4-1",
+    "reason": "NO_SYSTEM_API: BUILD action was rejected."
+   }
+  ],
+  "needsRider": true,
+  "turrets": 0,
+  "gold": 0
+ },
+ "harvestOrderLifecycle": {
+  "orders": [
+   {
+    "id": "orders-5-1",
+    "verb": "HARVEST",
+    "status": "failed",
+    "reason": "NO_SYSTEM_API: HARVEST action was rejected."
+   }
+  ],
+  "surprises": [
+   {
+    "surprise": "order_failure",
+    "reason": "NO_SYSTEM_API: BUILD action was rejected."
+   },
+   {
+    "surprise": "order_failure",
+    "reason": "NO_SYSTEM_API: HARVEST action was rejected."
+   }
+  ]
+ },
+ "afterTicks": {
+  "orders": [
+   {
+    "id": "orders-5-1",
+    "verb": "HARVEST",
+    "status": "failed",
+    "reason": "NO_SYSTEM_API: HARVEST action was rejected."
+   }
+  ],
+  "surprises": [
+   {
+    "seq": 8,
+    "at": 2.233333333333335,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-4-1",
+    "reason": "NO_SYSTEM_API: BUILD action was rejected."
+   },
+   {
+    "seq": 12,
+    "at": 5.2333333333333245,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-5-1",
+    "reason": "NO_SYSTEM_API: HARVEST action was rejected."
+   }
+  ],
+  "turrets": 0
+ }
+}

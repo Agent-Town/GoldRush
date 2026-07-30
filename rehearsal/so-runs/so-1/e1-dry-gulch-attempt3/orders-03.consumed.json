@@ -1,0 +1,13 @@
+{
+ "seq": 3,
+ "note": "EXTENDING THE BUILD-OUT to cover waves 6-18, and switching the whole ladder to the WAVE clock for a reason worth writing down. Gold triggers are self-pacing but they collide with the 200 purse cap: once the purse is deep, every threshold below it is already true on arrival, so a gold-clocked plan can only ever contain ONE order the executor is not about to fire blind. Wave triggers do not have that problem — they are in the future by construction, they space the spend out on their own, and the reflex layer pre-arms on affordability rather than on the trigger, so the mouse is parked before the wave turns over. Two turrets standing at (-5,4) and (5,3); this fills the bench to four and then adds five beacons, 505 gold across 390 seconds against a pan that raises roughly twice that. Cells are named as intent, two waves apart so no two ever come due on the same tick: the reflex layer will relocate each one toward whichever seam is paying, which is the division of labour the two clocks are for.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 6 }, "when": { "waveGte": 6 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": 8 }, "when": { "waveGte": 8 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -7, "z": 7 }, "when": { "waveGte": 10 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -3, "z": -5 }, "when": { "waveGte": 12 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": -4 }, "when": { "waveGte": 14 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 8, "z": 4 }, "when": { "waveGte": 16 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -9, "z": 1 }, "when": { "waveGte": 18 } }
+ ]
+}

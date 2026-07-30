@@ -1,0 +1,628 @@
+{
+ "contractId": "the-claim",
+ "mode": "bank",
+ "outcome": "secured",
+ "seconds": 300,
+ "finalWave": 10,
+ "secureWave": 10,
+ "hp": 175,
+ "gold": 30,
+ "kills": 300,
+ "works": {
+  "mode": true,
+  "sel": "turret",
+  "ghostPos": {
+   "x": -5,
+   "z": -5
+  },
+  "ghostValid": false,
+  "nextCost": 170,
+  "turrets": 4,
+  "beacons": 0,
+  "sluices": 0,
+  "palisades": 0,
+  "stockpiles": 0,
+  "hp": [
+   {
+    "id": "turret",
+    "index": 0,
+    "hp": 34,
+    "maxHp": 50,
+    "wrecked": false
+   },
+   {
+    "id": "turret",
+    "index": 1,
+    "hp": 50,
+    "maxHp": 50,
+    "wrecked": false
+   },
+   {
+    "id": "turret",
+    "index": 2,
+    "hp": 50,
+    "maxHp": 50,
+    "wrecked": false
+   },
+   {
+    "id": "turret",
+    "index": 3,
+    "hp": 50,
+    "maxHp": 50,
+    "wrecked": false
+   }
+  ]
+ },
+ "permissionRung": 1,
+ "difficulty": "trail",
+ "honesty": {
+  "grTestSeen": false,
+  "grAgentSeen": false,
+  "searches": [
+   "?contract=the-claim"
+  ]
+ },
+ "meter": {
+  "calls": 0,
+  "viewBytes": [],
+  "cumulativeBytes": 0,
+  "latencies": [],
+  "submissions": [],
+  "missed": 0
+ },
+ "almanacLog": [],
+ "waveLog": [
+  {
+   "wave": 0,
+   "endedAt": 30.100000000000655,
+   "gold": 10,
+   "hp": 100,
+   "works": 1,
+   "enemies": 5
+  },
+  {
+   "wave": 1,
+   "endedAt": 60.09999999999915,
+   "gold": 50,
+   "hp": 100,
+   "works": 1,
+   "enemies": 8
+  },
+  {
+   "wave": 2,
+   "endedAt": 90.13333333333078,
+   "gold": 35,
+   "hp": 100,
+   "works": 2,
+   "enemies": 8
+  },
+  {
+   "wave": 3,
+   "endedAt": 120.09999999999575,
+   "gold": 95,
+   "hp": 100,
+   "works": 2,
+   "enemies": 10
+  },
+  {
+   "wave": 4,
+   "endedAt": 150.13333333332739,
+   "gold": 75,
+   "hp": 100,
+   "works": 3,
+   "enemies": 13
+  },
+  {
+   "wave": 5,
+   "endedAt": 180.0333333333257,
+   "gold": 10,
+   "hp": 125,
+   "works": 4,
+   "enemies": 14
+  },
+  {
+   "wave": 6,
+   "endedAt": 210.13333333332398,
+   "gold": 30,
+   "hp": 150,
+   "works": 4,
+   "enemies": 14
+  },
+  {
+   "wave": 7,
+   "endedAt": 240.0666666666556,
+   "gold": 30,
+   "hp": 150,
+   "works": 4,
+   "enemies": 18
+  },
+  {
+   "wave": 8,
+   "endedAt": 270.06666666666587,
+   "gold": 30,
+   "hp": 150,
+   "works": 4,
+   "enemies": 20
+  }
+ ],
+ "upgrades": [
+  {
+   "offered": [
+    "double_tap_coil",
+    "pan_legend",
+    "prospectors_luck"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "pan_legend",
+    "spring_heels"
+   ],
+   "took": "prospectors_luck"
+  },
+  {
+   "offered": [
+    "spring_heels",
+    "prospectors_luck",
+    "double_tap_coil"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "split_spark",
+    "double_tap_coil"
+   ],
+   "took": "split_spark"
+  },
+  {
+   "offered": [
+    "split_spark",
+    "double_tap_coil",
+    "prospectors_luck"
+   ],
+   "took": "split_spark"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "heavy_spark",
+    "long_resonator"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "tinkers_plating",
+    "spring_heels",
+    "prospectors_luck"
+   ],
+   "took": "tinkers_plating"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "pan_legend",
+    "tinkers_plating"
+   ],
+   "took": "tinkers_plating"
+  },
+  {
+   "offered": [
+    "tinkers_plating",
+    "double_tap_coil",
+    "heavy_spark"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "double_tap_coil",
+    "heavy_spark",
+    "prospectors_luck"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "double_tap_coil",
+    "long_resonator"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "spring_heels",
+    "spark_pressure_ring"
+   ],
+   "took": "prospectors_luck"
+  },
+  {
+   "offered": [
+    "spring_heels",
+    "stockpile_seam_survey",
+    "tinkers_plating"
+   ],
+   "took": "tinkers_plating"
+  },
+  {
+   "offered": [
+    "stockpile_seam_survey",
+    "long_resonator",
+    "pan_legend"
+   ],
+   "took": "long_resonator"
+  }
+ ],
+ "stageLog": [],
+ "buildAttempts": [
+  {
+   "mode": "house",
+   "def": "turret",
+   "at": 22.333333333333602,
+   "wave": 0,
+   "world": {
+    "x": 0,
+    "z": -7
+   },
+   "placed": true
+  },
+  {
+   "mode": "house",
+   "def": "turret",
+   "at": 65.16666666666553,
+   "wave": 2,
+   "world": {
+    "x": 2,
+    "z": 7
+   },
+   "placed": true
+  },
+  {
+   "mode": "house",
+   "def": "turret",
+   "at": 121.03333333332903,
+   "wave": 4,
+   "world": {
+    "x": -3,
+    "z": 7
+   },
+   "placed": true
+  },
+  {
+   "mode": "house",
+   "def": "turret",
+   "at": 178.33333333332578,
+   "wave": 5,
+   "world": {
+    "x": -17,
+    "z": -7
+   },
+   "placed": true
+  }
+ ],
+ "riderAudit": {
+  "builds": [],
+  "actions": []
+ },
+ "finalView": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "the-claim",
+    "name": "The Claim",
+    "briefing": {
+     "geography": "The classic river claim.",
+     "goals": [
+      "Hold the claim through wave 10."
+     ],
+     "rules": [
+      "The river splits the claim around one center ford.",
+      "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": true,
+     "ford": true,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 40,
+    "worksHp": {
+     "current": 50,
+     "max": 50,
+     "delta": 0
+    },
+    "kills": 14,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": -15,
+    "worksHp": {
+     "current": 100,
+     "max": 100,
+     "delta": 50
+    },
+    "kills": 21,
+    "surprises": []
+   },
+   {
+    "wave": 3,
+    "outcome": "held",
+    "goldDelta": 60,
+    "worksHp": {
+     "current": 100,
+     "max": 100,
+     "delta": 0
+    },
+    "kills": 24,
+    "surprises": []
+   },
+   {
+    "wave": 4,
+    "outcome": "held",
+    "goldDelta": -20,
+    "worksHp": {
+     "current": 150,
+     "max": 150,
+     "delta": 50
+    },
+    "kills": 27,
+    "surprises": []
+   },
+   {
+    "wave": 5,
+    "outcome": "held",
+    "goldDelta": -65,
+    "worksHp": {
+     "current": 200,
+     "max": 200,
+     "delta": 50
+    },
+    "kills": 32,
+    "surprises": []
+   },
+   {
+    "wave": 6,
+    "outcome": "held",
+    "goldDelta": 20,
+    "worksHp": {
+     "current": 200,
+     "max": 200,
+     "delta": 0
+    },
+    "kills": 38,
+    "surprises": []
+   },
+   {
+    "wave": 7,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 200,
+     "max": 200,
+     "delta": 0
+    },
+    "kills": 39,
+    "surprises": []
+   },
+   {
+    "wave": 8,
+    "outcome": "held",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 200,
+     "max": 200,
+     "delta": 0
+    },
+    "kills": 46,
+    "surprises": []
+   },
+   {
+    "wave": 9,
+    "outcome": "secured",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 184,
+     "max": 200,
+     "delta": -16
+    },
+    "kills": 50,
+    "surprises": []
+   },
+   {
+    "wave": 10,
+    "outcome": "secured",
+    "goldDelta": 0,
+    "worksHp": {
+     "current": 184,
+     "max": 200,
+     "delta": 0
+    },
+    "kills": 0,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 10,
+   "timers": {
+    "runSeconds": 300,
+    "nextWaveInSeconds": 0
+   },
+   "gold": 30,
+   "hero": {
+    "hp": 175,
+    "maxHp": 175,
+    "x": -9.21,
+    "z": -5.01
+   },
+   "works": {
+    "hp": 184,
+    "maxHp": 200,
+    "standing": 4,
+    "wrecked": 0,
+    "byKind": {
+     "turret": 4
+    }
+   },
+   "threats": {
+    "alive": 5,
+    "state": "warning",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 50
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 50
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 10,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 11,
+    "arrivalInSeconds": 0,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 35
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 4,
+    "harnessHash": "fnv1a32:4a97650a"
+   }
+  }
+ },
+ "finalOrders": {
+  "needsRider": true,
+  "orders": [],
+  "log": [
+   {
+    "seq": 1,
+    "at": 283.36666666667645,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 2,
+    "at": 284.26666666667717,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   }
+  ]
+ }
+}
