@@ -57,18 +57,53 @@ const TERMINAL_CLOSED_STATUSES = new Set(['superseded', 'void', 'abandoned', 'st
 // plainly when there is none: a refusal that cannot state its cause teaches the next fire nothing.
 const CLOSED_REASON_KEYS = ['closedReason', 'stoppedReason', 'stopNote', 'supersededBy', 'reason', 'drainNotes'];
 
+// F-1249-1. The adhoc arm below used to be `/^(stopped|stop|closed)Note/i` — anchored to the SUFFIX
+// stem of the single session-stamped spelling s1248 happened to hold (stoppedNote_s1216), so it missed
+// every sibling that varies the STEM instead. Measured s1249 against the live tree: 3 of the 15
+// terminal-closed leaves printed "(no reason recorded on the leaf ...)" and ALL THREE carried the why
+// ON the leaf — supersededNote_s1116 ("ITS 2a VERDICT IS OVERTURNED"), drainNote_s1170 + note_s1170,
+// and autosprite-trial-gate's title (the owner's verbatim canning, quoted with its date). Zero were
+// genuinely silent, so the old sentence was not a hedge: it was a false claim about the object this
+// script had just parsed, and about two files it never opened. It cost real work — s1248 read that
+// silence over autosprite-trial-gate and escalated "a money-gated item has been quietly moved off
+// Robin's desk" to the next fire, which is the alarm s1249 opened by refuting.
+// Match by reason-ish stem ANYWHERE in the key name, and rank closure-specific stems first so
+// `supersededNote_s1116` outranks a generic `note`.
+const REASON_ISH_KEY = /(note|reason|why|outcome|verdict)/i;
+const CLOSURE_STEM_KEY = /(superseded|closed|stop|drain|refut|retir|cann)/i;
+
+// DELIBERATELY EXCLUDED from the closed-path scan even though it matches REASON_ISH_KEY: a
+// `blockedReason` describes the state the leaf used to be in, not why it closed. autosprite-trial-gate
+// is the live proof — the owner CANNED it 2026-07-29 and the leaf still carries the pre-retirement
+// "OWNER-GATED ON CREDITS ... Lifted by the OWNER only, never by a green battery". Printing that as the
+// closure cause would be WORSE than silence: it would tell the next fire a money gate is live when the
+// owner has closed the question. Retired reasons belong under `priorBlockedReason` (the spelling
+// e1-trail-guide-plain-boot-proof already uses), and that is excluded for the same reason.
+const NOT_A_CLOSURE_REASON = new Set(['blockedReason', 'priorBlockedReason']);
+
 function closedReason(leaf) {
   for (const key of CLOSED_REASON_KEYS) {
     const value = leaf[key];
     if (typeof value === 'string' && value.trim()) return `${key}: ${value.trim()}`;
   }
-  // Session-stamped one-offs like "stoppedNote_s1216" — the same near-miss-KEY shape the F-1123-1
-  // rider polices for "mergeCommit", one level up at the field name.
-  const adhoc = Object.keys(leaf).find(
-    (key) => /^(stopped|stop|closed)Note/i.test(key) && typeof leaf[key] === 'string' && leaf[key].trim(),
+  const candidates = Object.keys(leaf).filter(
+    (key) =>
+      !NOT_A_CLOSURE_REASON.has(key) &&
+      REASON_ISH_KEY.test(key) &&
+      typeof leaf[key] === 'string' &&
+      leaf[key].trim(),
   );
-  if (adhoc) return `${adhoc}: ${leaf[adhoc].trim()}`;
-  return '(no reason recorded on the leaf — the why lives only in BACKLOG/reviews)';
+  const ranked = [
+    ...candidates.filter((key) => CLOSURE_STEM_KEY.test(key)),
+    ...candidates.filter((key) => !CLOSURE_STEM_KEY.test(key)),
+  ];
+  if (ranked.length) return `${ranked[0]}: ${leaf[ranked[0]].trim()}`;
+  // Nothing found. Say what was SEARCHED rather than asserting where the why lives — this script reads
+  // ONE file and cannot know what BACKLOG or reviews/ contain, so the old sentence ("the why lives only
+  // in BACKLOG/reviews") was a claim about two files it never opened. The title is printed
+  // unconditionally by both refusal arms, so the reader still has the leaf's own words.
+  const searched = Object.keys(leaf).join(', ') || '(none)';
+  return `(no reason-bearing key on this leaf — searched: ${searched})`;
 }
 
 function isMainAncestor(mergeHash) {
@@ -274,6 +309,10 @@ function main() {
     console.log(`\n  ⛔ CLOSED — DO NOT DRAIN: ${leaf.taskFile} [${leaf.id}]`);
     console.log(`    refusal arm     : status="${leaf.status}" (terminal-closed; the drain path now`);
     console.log(`                      consults the same set as --queue — F-1248-1)`);
+    // The title is printed UNCONDITIONALLY, not as a fallback: §4.7 puts an owner's verbatim ruling
+    // in it ("owner directive, date"), so on a canned leaf the title IS the cause and any reason key
+    // is secondary bookkeeping. autosprite-trial-gate is the case that proved it — F-1249-1.
+    console.log(`    leaf title      : ${(leaf.title || '(untitled leaf)').trim().slice(0, 300)}`);
     console.log(`    ${closedReason(leaf)}`);
     const mentions = backlogMentions(target);
     if (mentions.length) {
@@ -303,9 +342,11 @@ function main() {
       // never merged a line, and a wrong reason teaches the next fire the wrong lesson.
       console.log(`  ⛔ CLOSED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
       console.log(`    refusal arm=status="${leaf.status}" (terminal, and it left no commit to refuse it with)`);
+      console.log(`    leaf title      : ${(leaf.title || '(untitled leaf)').trim().slice(0, 300)}`);
       console.log(`    ${closedReason(leaf)}`);
-      console.log(`    This master's question is dead — typically overturned or carried down by a`);
-      console.log(`    successor that merged. Re-queueing it re-derives finished work (Mistake #8).`);
+      console.log(`    This master's question is dead — overturned, carried down by a successor that`);
+      console.log(`    merged, or CANNED by the owner (read the title above before assuming which).`);
+      console.log(`    Re-queueing it re-derives finished work (Mistake #8).`);
       console.log(`    If you believe the question is live again, author a SUCCESSOR; do not revive this leaf.`);
       process.exit(1);
     }

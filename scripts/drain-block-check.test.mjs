@@ -130,11 +130,96 @@ test('a closed leaf whose reason sits under a session-stamped key is still expla
   assert.match(r.stdout, /stoppedNote_s1216: Premise not reproduced/);
 
   // And when there is genuinely no reason anywhere, it must say so rather than print an empty line.
+  // F-1249-1 changed this sentence deliberately: it used to end "the why lives only in BACKLOG/reviews",
+  // which is a claim about two files this script never opens — and was false on all 3 live leaves that
+  // printed it. The replacement states the SEARCH, which is the only thing the script actually knows.
   const bare = fixture(leafOf('stopped'));
   cleanup(t, bare);
   const r2 = run(bare, DONE_MOVE);
   assert.equal(r2.status, 1);
-  assert.match(r2.stdout, /no reason recorded on the leaf/);
+  assert.match(r2.stdout, /no reason-bearing key on this leaf — searched: id, title, taskFile, status/);
+  assert.doesNotMatch(r2.stdout, /the why lives only in BACKLOG/);
+});
+
+test('F-1249-1: a session-stamped reason key that varies the STEM is explained, and non-reason keys are not', (t) => {
+  // The arm above proved "stoppedNote_s1216" works. That spelling was the ONE s1248 held, and the
+  // pattern it wrote (/^(stopped|stop|closed)Note/i) was anchored to that suffix stem — so the live
+  // siblings that vary the stem printed silence: supersededNote_s1116 and drainNote_s1170 + note_s1170.
+  const superseded = fixture(leafOf('superseded', { supersededNote_s1116: 'ITS 2a VERDICT IS OVERTURNED by reading the chain at source.' }));
+  cleanup(t, superseded);
+  const r = run(superseded, DONE_MOVE);
+  assert.equal(r.status, 1, `expected rc=1, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /supersededNote_s1116: ITS 2a VERDICT IS OVERTURNED/);
+
+  // RANKING: a closure-specific stem outranks a generic note, so the printed line is the relevant one.
+  const both = fixture(leafOf('superseded', {
+    note: 'FIRE-AUTHORED s1114 and queued same fire to lane-a.',
+    drainNote_s1170: 'THE REMEDY IS REFUTED AND MUST NOT BE BUILT.',
+  }));
+  cleanup(t, both);
+  const r2 = run(both, DONE_MOVE);
+  assert.match(r2.stdout, /drainNote_s1170: THE REMEDY IS REFUTED/);
+  assert.doesNotMatch(r2.stdout, /note: FIRE-AUTHORED/);
+
+  // CONTROL — the widened match must key off reason-ish NAMES, not "any string on the leaf". A hash
+  // pointer is not a cause, and printing one would be a well-formed lie in place of the old silence.
+  const pointer = fixture(leafOf('superseded', { drainedBy: 'a0aae876', reportMergeHash: 'af226e93' }));
+  cleanup(t, pointer);
+  const r3 = run(pointer, DONE_MOVE);
+  assert.match(r3.stdout, /no reason-bearing key on this leaf/);
+  assert.doesNotMatch(r3.stdout, /a0aae876/);
+});
+
+test('F-1249-1: a stale blockedReason is never printed as the CLOSURE cause', (t) => {
+  // The live case: autosprite-trial-gate. The owner CANNED it 2026-07-29, the leaf went superseded,
+  // and it kept a pre-retirement blockedReason reading "OWNER-GATED ON CREDITS ... Lifted by the OWNER
+  // only". s1248 read that field and escalated "a money-gated item has been quietly moved off Robin's
+  // desk" to the next fire. Printing it as the closure cause would be WORSE than silence.
+  const stale = fixture(leafOf('superseded', {
+    blockedReason: 'OWNER-GATED ON CREDITS — NOT FIRE-QUEUEABLE, AND IT SPENDS MONEY. Lifted by the OWNER only.',
+  }));
+  cleanup(t, stale);
+  const r = run(stale, DONE_MOVE);
+  assert.equal(r.status, 1);
+  assert.doesNotMatch(r.stdout, /OWNER-GATED ON CREDITS/);
+  assert.doesNotMatch(r.stdout, /SPENDS MONEY/);
+  assert.match(r.stdout, /no reason-bearing key on this leaf/);
+
+  // CONTROL — the exclusion is about the KEY NAME, not the text. The identical sentence under
+  // `closedReason` must print, or this arm would be asserting a censored substring rather than a rule.
+  const live = fixture(leafOf('superseded', {
+    closedReason: 'OWNER-GATED ON CREDITS — NOT FIRE-QUEUEABLE, AND IT SPENDS MONEY. Lifted by the OWNER only.',
+  }));
+  cleanup(t, live);
+  const r2 = run(live, DONE_MOVE);
+  assert.match(r2.stdout, /closedReason: OWNER-GATED ON CREDITS/);
+});
+
+test('F-1249-1: the leaf TITLE is printed on both refusal arms, even when a reason key exists', (t) => {
+  // §4.7 puts an owner's verbatim ruling in the title ("owner directive, date"), so on a canned leaf
+  // the title IS the cause and any reason key is secondary bookkeeping — which is exactly how
+  // autosprite-trial-gate read: `note_s1174: Verified at source this fire` over an owner canning.
+  const canned = fixture({
+    id: 'autosprite-trial-gate',
+    title: "autosprite.io Pro trial — CANNED (owner 2026-07-29, verbatim: 'this can be canned - we don't need that')",
+    taskFile: 'autosprite-trial-gate.md',
+    status: 'superseded',
+    note_s1174: 'Verified at source this fire by reading the master.',
+  });
+  cleanup(t, canned);
+  for (const args of [['autosprite-trial-gate.md'], ['--queue', 'autosprite-trial-gate.md']]) {
+    const r = run(canned, ...args);
+    assert.equal(r.status, 1, `expected rc=1 for ${args.join(' ')}\n${r.stdout}${r.stderr}`);
+    assert.match(r.stdout, /leaf title\s+: autosprite\.io Pro trial — CANNED \(owner 2026-07-29/);
+    assert.match(r.stdout, /note_s1174: Verified at source/);
+  }
+
+  // CONTROL — a leaf with no title must say so rather than print a blank line or crash.
+  const untitled = fixture(leafOf('stopped', { title: '' }));
+  cleanup(t, untitled);
+  const r2 = run(untitled, DONE_MOVE);
+  assert.equal(r2.status, 1);
+  assert.match(r2.stdout, /leaf title\s+: \(untitled leaf\)/);
 });
 
 test('--all reports terminal-closed leaves but its exit code still tracks BLOCKED alone', (t) => {
