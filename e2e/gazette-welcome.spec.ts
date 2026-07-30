@@ -83,7 +83,7 @@ test('the Gazette welcome fires once, walks skippably, and retriggers through th
       : undefined;
     await page.getByTestId('town-welcome-next').click();
     if (newsieBefore) {
-      await page.waitForTimeout(50);
+      await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
       const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
       expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
     }
