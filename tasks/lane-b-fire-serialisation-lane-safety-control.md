@@ -69,9 +69,17 @@ lane run on this box by that factor, and nobody would notice except as "the lane
    a predicate that must be *present in this worktree*. Verify all three, and record each:
    - `grep -c isFireShell playwright.config.ts` → **must be ≥ 1**
    - `grep -n "workers" playwright.config.ts` → must show the `workers:` line using `isFireShell`
-   - `git rev-parse HEAD` and `git rev-list --count HEAD..main` → record both; **count must be 0**
-     (this lane is expected to sit exactly at main; if it is behind, the config you are about to
-     measure is not the one the factory ships)
+   - ⭐ **The binding check — the SUBJECT's blob, not the branch's ancestry:**
+     `git rev-parse HEAD:playwright.config.ts` and `git rev-parse main:playwright.config.ts`
+     → **the two hashes must be EQUAL.** That is the real precondition: the config you are about
+     to measure must be byte-identical to the one the factory ships.
+   - `git rev-parse HEAD` and `git rev-list --count HEAD..main` → **record both as context; a
+     non-zero count is NOT a reason to abort.** The runner does not reset the lane at dispatch
+     (`lane-runner-v3.sh:62-68` runs `codex exec` directly), so this lane is routinely a few
+     commits behind main on files that have nothing to do with the subject — bookkeeping, ledger
+     and STATUS edits made after the master was committed. **Judging staleness by the commit count
+     would abort this task on a tree whose subject is perfect** (measured at authoring: blob equal
+     at `047b2662`, count already 1). *Ancestry is a proxy; the blob is the question.*
 
    **If `isFireShell` is absent from `playwright.config.ts`: STOP IMMEDIATELY. Change no files.
    Report `PREMISE ABSENT — predicate not in this tree, measurement impossible` and quote the
@@ -134,7 +142,7 @@ Report adjacent problems in your run report; do not fix them.
 
 ## Self-check before you report
 
-- [ ] **Scope 0 ran first**, and its three readings are recorded verbatim — including `git rev-list --count HEAD..main`.
+- [ ] **Scope 0 ran first**, and all four readings are recorded verbatim — including **both** `playwright.config.ts` blob hashes, which must be equal.
 - [ ] `logs/session-scratch/s1271/lane-safety.json` exists, parses, and holds **4 runs** (2 per arm) plus the premise and environment blocks.
 - [ ] Every `workersObtained` was **read back from the reporter's output**, not copied from the flag you passed.
 - [ ] Arm A rows genuinely passed **no** `--workers` flag — verifiable from the command you record.
