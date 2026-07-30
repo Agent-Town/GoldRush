@@ -48,6 +48,7 @@ const GUARDS = [
   'test:deploy-contract',
   'test:deploy-site-contract',
   'test:task-guards',
+  'test:citations',
 ];
 
 // `--only` takes one guard OR a comma-separated list (F-1228-1); `--changed-since
@@ -67,7 +68,15 @@ const GUARDS = [
 // and a `site/**` rule would miss the likelier drift direction, where the WORKER
 // changes and the untouched consumer rots. It costs ~60ms, so there is nothing to
 // buy by gating it behind a path. Do not "tidy" it into PATH_RULES.
-const GATE_GUARDS = ['test:node-guards', 'test:power-budget', 'test:task-guards'];
+// `test:citations` joined this list in s1252, and the reason is F-1126-1 rather than a new
+// policy. scripts/citation-title-guard.mjs was written as a gate -- its own usage line says
+// "# gate (exit 1 on a new bare citation)" -- and then never given a caller. Measured s1252:
+// the ONLY reference to it anywhere was its own fixture test, so it had been RED against the
+// real tree since s1241 (2026-07-30 04:25) and no one could have known. An unrun guard is an
+// unread verdict. It rides beside test:task-guards for the same reason that one does: it
+// gates the tasks/ ledger a drain itself writes, and it costs 0.33s on the real tree.
+// REVERSIBLE IN ONE LINE if the owner would rather it stayed advisory (§7.4 veto window).
+const GATE_GUARDS = ['test:node-guards', 'test:power-budget', 'test:task-guards', 'test:citations'];
 
 // PATH RULES (F-1229-1, measured s1229; the coverage sentence CORRECTED s1233).
 // `vite build` does not bundle Cloudflare Pages Functions, and worker code was
