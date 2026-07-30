@@ -6,6 +6,9 @@ if (process.env.GR_RELEASE !== 'e1') throw new Error('build:release requires GR_
 const root = process.cwd();
 const dist = join(root, 'dist');
 const files = await walk(dist);
+// A guard must never clear a subject it did not read. With no dist/ every check below iterates
+// an empty list and the summary line reports an affirmative all-clear over zero bytes (s1251).
+if (!files.length) fail(`no build to check — ${dist} is missing or empty; run \`npm run build:release\` first`);
 const textFiles = files.filter((file) => ['.css', '.html', '.js', '.json'].includes(extname(file)));
 const laterEpoch = /epoch-(?:[2-9]|10)-/;
 for (const file of textFiles) {
@@ -30,6 +33,13 @@ for (const file of await walk(join(root, 'assets/pilots/map-rebuild-spike'))) {
   if (!e1Maps.has(map)) laterAssetStems.add(parse(file).name);
 }
 
+// The plate/GLB check is only as strong as this blacklist, which is rebuilt from disk every run
+// (261 stems at s1251). If those source dirs are moved or renamed the set silently empties and the
+// two checks below pass vacuously — so an empty denominator is a failure, not a clean bill.
+if (!laterAssetStems.size) {
+  fail('no later-epoch asset stems found — assets/raw and assets/pilots/map-rebuild-spike are missing or renamed, so the plate/GLB leak check would pass vacuously; repoint it');
+}
+
 const leakedAssets = files
   .map((file) => basename(file))
   .filter((file) => [...laterAssetStems].some((stem) => file === `${stem}${extname(file)}` || file.startsWith(`${stem}-`)));
@@ -42,7 +52,9 @@ const laterEraAssets = files.map((file) => basename(file)).filter((file) =>
 if (laterEraAssets.length) fail(`later era assets emitted: ${laterEraAssets.slice(0, 8).join(', ')}`);
 
 const bytes = (await Promise.all(files.map((file) => stat(file)))).reduce((sum, entry) => sum + entry.size, 0);
-console.log(`[release-build] E1-only: ${files.length} files, ${bytes} bytes, zero later manifest ids or plate/GLB assets`);
+// Report the denominator alongside the verdict: a reader can then see at a glance whether the
+// clearance was earned against a real blacklist or against an empty one.
+console.log(`[release-build] E1-only: ${files.length} files, ${bytes} bytes, zero later manifest ids or plate/GLB assets (checked against ${laterAssetStems.size} later-asset stems)`);
 
 async function walk(dir) {
   const entries = await readdir(dir, { withFileTypes: true }).catch(() => []);
