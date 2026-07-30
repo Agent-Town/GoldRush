@@ -13,7 +13,8 @@ CODEX: model=gpt-5.6-sol effort=high
 
 ## Why this exists (read it, it is short and it is the whole point)
 
-Five fires have now argued about one assertion, `e2e/gazette-welcome.spec.ts:88`. The current
+Five fires have now argued about one assertion, `e2e/gazette-welcome.spec.ts:88`
+("the Gazette welcome fires once, walks skippably, and retriggers through the newsie"). The current
 state of the argument is **F-1264-3: "the fire shell and the lane shell are not the same
 measuring instrument"** — the identical command, in the identical worktree, on the identical
 commit, goes **6/6 GREEN in the lane (13.8 s)** and **6/6 RED in the fire shell (55–60 s/test)**.
@@ -52,7 +53,9 @@ Then `npm install --no-audit --no-fund`, and `npm run build` green before you me
 2. `logs/session-scratch/s1264/RESULTS.md` — the fire-shell red, sampled 18/18. **Read-only.**
 3. `e2e/gazette-welcome.spec.ts` — the subject. Read the test `the Gazette welcome fires once,
    walks skippably, and retriggers through the newsie` (starts `:45`); the assertion under
-   measurement is `:88`. **You will not modify this file.**
+   measurement is `e2e/gazette-welcome.spec.ts:88`, the `toBeLessThan(1)` drift bound inside
+   ("the Gazette welcome fires once, walks skippably, and retriggers through the newsie").
+   **You will not modify this file.**
 
 **Owner-relevant framing (Mistake #10):** nothing a player sees changes, and no src file is
 touched. This is the factory refusing to build a fourth theory on a single unreplicated reading.
