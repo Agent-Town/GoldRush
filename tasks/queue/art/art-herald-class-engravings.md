@@ -1,0 +1,6 @@
+# art-herald-class-engravings — the ongoing Herald's reusable engraving set
+SLOT: art. One batch. Style anchor (verbatim in every prompt): "engraved frontier newspaper illustration, warm sepia ink on parchment, fine crosshatching, the Gold Rush plate style — never photoreal, never gory, no letters or numerals in the image."
+WHY: specs/greenhorn-gazette/README.md §THE ONGOING ILLUSTRATED HERALD (owner 2026-07-30: "start working on that").
+FILES (assets/raw/, full-bleed): gazette-class-board.png (tavern board with pinned claims) · gazette-class-trail.png (switchback trail into hills) · gazette-class-river.png (river bend with sluice) · gazette-class-science.png (schoolhouse chart + instruments) · gazette-class-ledger.png (open ledger, ink pot, stamp) · gazette-class-threat.png (distant dust cloud over a ridge, ominous not gory) · gazette-class-growth.png (raising a frame building, ropes and neighbors) · gazette-class-ceremony.png (lanterns strung across the plaza at dusk)
+SELF-QA per file (measured, stated): anchor match · no letters/numerals · reads at 320px wide · plate palette. LEDGER row + run file per batch.
+FIREWALL: generate + save only; wiring is the heraldReader class-map (separate small lane slice after this batch).

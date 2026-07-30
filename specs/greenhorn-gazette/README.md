@@ -34,3 +34,12 @@ The first town entry after naming is a DISTINCT experience — THE WELCOME — n
 3. ONCE-LAW: the welcome never replays uninvited. Ordinary later entries are clean — no badge nag, no repeated beats.
 4. RETRIGGER: ask the newsie anytime — prompt offers "Read issue #1 again" and "Show me around again" (replays the welcome walk). The retrigger is diegetic; no settings toggle.
 SLICE GG-01b (after GG-01): the welcome choreography + newsie delivery + retrigger prompt. The pinned-issue substrate from GG-01 is its dependency.
+
+## THE ONGOING ILLUSTRATED HERALD (owner 2026-07-29→30: "for the news paper images would be amazing" → "Can you continue to illustrate the other newspaper later down the road? I think we should start working on that.")
+Every Herald item gains an engraving by HEADLINE CLASS (reusable set, not per-item): board/claims · trail/terrain · river/water · schoolhouse/science · ledger/records · boss/threat · town-growth · ceremony. Renderer maps item class → engraving (heraldReader already loads gazette-panel-*.webp — same pipeline). New classes earn new engravings in later batches; unmapped classes render text-only (placeholder-first).
+
+## THE MANDATORY WELCOME (owner ruling 2026-07-30, verbatim: "it should be mandatory for all new accounts, and then we can remove the option whether a user is new or not, we know that from their account. So then we only have to ask their name and the name of their town and can then let them do the tutorial flow.")
+- Profile creation asks NAME only; town naming follows as today. The "First time prospecting?" question is REMOVED.
+- A FRESH profile (no imported progress, no prior claims) ALWAYS runs THE WELCOME on first town entry. Imported ledgers and existing profiles never see it uninvited.
+- The welcome stays skippable-at-every-step and newsie-retriggerable (the once-law + retrigger stand unchanged) — mandatory means DEFAULT, not imprisonment.
+- Difficulty: greenhorn-question's difficulty side effect is replaced by the existing default (trail) + Settings; the welcome's board beat may mention it.
