@@ -313,6 +313,7 @@ const BARON_DEFEAT_TITLE = 'THE BARON IS DEFEATED';
 const BARON_KILL_STOP_SECONDS = 2.2;
 const BARON_DEFEAT_CARD_SECONDS = 4;
 const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
+const TRAIL_GUIDE_DWELL_MS = 4_000;
 const GREEN_WAYPOINT_CONTRACT_ID = 'e1-dry-gulch';
 const COUNTY_ANON_ID_KEY = 'gr.countyStandings.anonId.v1';
 
@@ -1097,6 +1098,8 @@ export class Game {
   private baronAnnouncementTimer = 0;
   private pendingBaronBanner: { text: string; atSim: number; title: string; edge: CompassEdge | null } | null = null;
   private trailGuideLine: string | null = null;
+  private readonly pendingTrailGuideLines: string[] = [];
+  private trailGuideTimer = 0;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
   private charmPauseCooldown = 0;
@@ -2124,6 +2127,7 @@ export class Game {
     window.__GR_MP__ = undefined;
     this.loop.stop();
     window.clearTimeout(this.baronAnnouncementTimer);
+    window.clearTimeout(this.trailGuideTimer);
     window.removeEventListener('pointerdown', this.skipBaronCeremony);
     window.removeEventListener('keydown', this.skipBaronCeremony);
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
@@ -4627,20 +4631,33 @@ export class Game {
   private speakTrailGuide(trigger: TrailGuideTrigger): void {
     const bark = takeTrailGuideBark(trigger);
     if (!bark) return;
-    this.trailGuideLine = bark.line;
+    if (this.trailGuideLine) {
+      this.pendingTrailGuideLines.push(bark.line);
+      return;
+    }
+    this.showTrailGuide(bark.line);
+  }
+
+  private showTrailGuide(line: string): void {
+    this.trailGuideLine = line;
+    window.clearTimeout(this.trailGuideTimer);
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
     window.removeEventListener('keydown', this.dismissTrailGuide);
     window.addEventListener('pointerdown', this.dismissTrailGuide, { once: true });
     window.addEventListener('keydown', this.dismissTrailGuide, { once: true });
+    this.trailGuideTimer = window.setTimeout(this.dismissTrailGuide, TRAIL_GUIDE_DWELL_MS);
     this.syncUi();
   }
 
   private readonly dismissTrailGuide = (): void => {
     if (!this.trailGuideLine) return;
+    const next = this.pendingTrailGuideLines.shift();
     this.trailGuideLine = null;
+    window.clearTimeout(this.trailGuideTimer);
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
     window.removeEventListener('keydown', this.dismissTrailGuide);
-    this.syncUi();
+    if (next) this.showTrailGuide(next);
+    else this.syncUi();
   };
 
   private queueBaronBanner(text: string, atSim: number, title: string, edge: CompassEdge | null = null): void {
