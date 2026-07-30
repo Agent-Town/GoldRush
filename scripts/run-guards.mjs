@@ -49,6 +49,7 @@ const GUARDS = [
   'test:deploy-site-contract',
   'test:task-guards',
   'test:citations',
+  'test:gate-callers',
 ];
 
 // `--only` takes one guard OR a comma-separated list (F-1228-1); `--changed-since
@@ -76,7 +77,29 @@ const GUARDS = [
 // unread verdict. It rides beside test:task-guards for the same reason that one does: it
 // gates the tasks/ ledger a drain itself writes, and it costs 0.33s on the real tree.
 // REVERSIBLE IN ONE LINE if the owner would rather it stayed advisory (§7.4 veto window).
-const GATE_GUARDS = ['test:node-guards', 'test:power-budget', 'test:task-guards', 'test:citations'];
+//
+// `test:gate-callers` joined in s1253, and it is the guard that watches THIS LIST.
+// s1252 found citation-title-guard.mjs by hand: a finished ratchet with a test, a
+// baseline, and a usage line reading "# gate", which nothing had ever called, and
+// which had therefore been RED against the real tree for nine fires while nine
+// fires reported full green batteries. That was found by luck. scripts/gate-caller-
+// audit.mjs makes it findable by a battery: it resolves the caller graph from these
+// rosters plus the pipeline shells, the node --test argv, and *.config.ts webServer
+// commands, and it exits 1 when a gate-shaped subject has no caller and no recorded
+// reason. Measured s1253: 5 orphans on the real tree, all five grandfathered with a
+// written reason in scripts/gate-caller-baseline.json (four are release-door gates
+// whose wiring is an owner cost decision -- F-1253-1).
+// It is a GATE rather than an advisory for the same reason test:citations is: it
+// gates what a DRAIN ITSELF writes -- package.json and scripts/**. A slice that
+// lands a new guard without a caller should not be able to merge quietly.
+// REVERSIBLE IN ONE LINE, same as the line above (§7.4 veto window).
+const GATE_GUARDS = [
+  'test:node-guards',
+  'test:power-budget',
+  'test:task-guards',
+  'test:citations',
+  'test:gate-callers',
+];
 
 // PATH RULES (F-1229-1, measured s1229; the coverage sentence CORRECTED s1233).
 // `vite build` does not bundle Cloudflare Pages Functions, and worker code was

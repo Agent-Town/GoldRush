@@ -17,6 +17,7 @@ const GUARDS = [
   'test:deploy-site-contract',
   'test:task-guards',
   'test:citations', // s1252 — see the GATE_GUARDS comment in run-guards.mjs
+  'test:gate-callers', // s1253 — the guard that watches this roster (F-1253-1)
 ];
 
 function fixture(overrides = {}) {
@@ -45,7 +46,7 @@ test('runner exit follows guard exit codes', (t) => {
 
   const green = run(greenDir);
   assert.equal(green.status, 0, green.stderr || green.stdout);
-  assert.match(green.stdout, /guards: 9\/9 passed/);
+  assert.match(green.stdout, /guards: 10\/10 passed/);
 
   const red = run(redDir);
   assert.equal(red.status, 1, red.stderr || red.stdout);
@@ -134,7 +135,7 @@ test('--changed-since runs the base gate when no path rule matches', (t) => {
   const result = run(dir, '--changed-since', 'HEAD');
   assert.equal(result.status, 0, result.stderr || result.stdout);
   assert.match(result.stdout, /no path rule matched/);
-  assert.match(result.stdout, /guards: 4\/4 passed/);
+  assert.match(result.stdout, /guards: 5\/5 passed/);
   // The worker guards must NOT ride along on an unrelated change.
   assert.doesNotMatch(result.stdout, /test:accounts/);
 });
@@ -146,7 +147,7 @@ test('--changed-since adds the worker guards when functions/ moved', (t) => {
   const expectWorkerBattery = (result) => {
     assert.equal(result.status, 0, result.stderr || result.stdout);
     const rows = result.stdout.match(/^(?:PASS|FAIL)\s+rc=\S+\s+\d+s\s+(\S+)$/gm) ?? [];
-    assert.equal(rows.length, 7, result.stdout); // 4 gate guards + the 3 worker guards (s1252)
+    assert.equal(rows.length, 8, result.stdout); // 5 gate guards + the 3 worker guards (s1253)
     for (const guard of ['test:stats', 'test:accounts', 'test:mp']) {
       assert.ok(rows.some((row) => row.endsWith(` ${guard}`)), `${guard} missing:\n${result.stdout}`);
     }
