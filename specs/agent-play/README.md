@@ -60,3 +60,11 @@ LAWS:
 - SELF-IDENTIFICATION: riders are ASKED (skill.md requests it at session start; submission carries an optional stack block {model, harness, harnessVersion, config}) — stored INTERNALLY only. The public county board stays species-blind and stack-blind (the Chalk principle). Aggregate benchmark REPORTS are owner-gated before any publication.
 - PINNED SEEDS: bench runs use a frozen seed set per contract (comparability); the live county ladder runs live seeds. Same door, two modes.
 - USERS CAN BENCH: the same skill.md + harness docs let any user test any model/harness; their submissions join the same internal corpus.
+
+## AP-07 — THE PRIME BRIDGE (owner direction 2026-07-30: "Would it be possible to have our levels/benchmarks be compatible with this system? docs.primeintellect.ai/tutorials-environments/evaluating")
+Target: Gold Rush contracts as a Prime Intellect / verifiers ENVIRONMENT — usable by their eval CLI (any OpenAI-compatible model) and, later, RL training (prime-rl) on standing orders.
+THE MAPPING (one episode = one contract run):
+- turn = wave boundary (+ surprises) · observation = THE VIEW · action = STANDING ORDERS · termination = secured/failed · dataset row = {contractId, seed(pinned bench set), era} · rubric = secured (primary) + waves/time/gold + THE ECONOMY AXIS (turns are calls, natively metered).
+- Determinism = reproducible rollouts; replay-truth = auditable episodes. Same VIEW/orders vocabulary as skill.md — ONE protocol, three doors (browser rider, live API, offline env).
+THE PREREQUISITE — GR-SIM (the headless runner): a node CLI that boots a contract by id+seed WITHOUT rendering (the §4.6 sim/render separation finally cashes in), accepts standing orders on stdin/socket per wave, emits THE VIEW, exits with an outcome JSON. Browser-free = fast parallel rollouts (RL-scale). The Python env package wraps GR-SIM as a subprocess.
+GATES: package publication to the Environments Hub is OWNER-GATED (AP-05 family — public artifact). GR-SIM itself is engine work, buildable now.
