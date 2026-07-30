@@ -20,14 +20,23 @@ const SCRIPT = fileURLToPath(new URL('./drain-block-check.mjs', import.meta.url)
 
 // One leaf per fixture keeps the "longest match wins" tie-breaker out of the way — these arms are
 // about the STATUS word, and a second leaf would test a different thing.
+//
+// F-1250-1 (s1250): that sentence was true of the arms above it and was ALSO this suite's blind spot.
+// "A second leaf would test a different thing" is correct — and the different thing was broken. The
+// multi-leaf arms at the bottom of this file use `fixtureN` and exist because the tie-break, declared
+// out of scope here, was silently deciding refusals. A suite inherits the blind spots of its fixtures.
 function fixture(leaf) {
+  return fixtureN([leaf]);
+}
+
+function fixtureN(tasks) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-drain-block-'));
   fs.mkdirSync(path.join(dir, 'tasks'));
   fs.writeFileSync(
     path.join(dir, 'tasks', 'goals.json'),
     JSON.stringify({
       version: 1,
-      goals: [{ id: 'factory-infra', title: 'Factory Infra', subgoals: [{ id: 'guards', title: 'Guards', tasks: [leaf] }] }],
+      goals: [{ id: 'factory-infra', title: 'Factory Infra', subgoals: [{ id: 'guards', title: 'Guards', tasks }] }],
     }),
   );
   return dir;
@@ -238,6 +247,112 @@ test('--all reports terminal-closed leaves but its exit code still tracks BLOCKE
   assert.equal(r2.status, 1);
   assert.match(r2.stdout, /1 BLOCKED/);
   assert.doesNotMatch(r2.stdout, /ALSO \d+ TERMINAL-CLOSED/);
+});
+
+// ── F-1250-1: the MATCHER, not the status word ────────────────────────────────────────────────────
+// The arms above all feed a one-leaf fixture, so they prove what the guard does once it has picked a
+// leaf. These prove it picks the RIGHT one. The board's successor-naming convention manufactures the
+// collision: a successor appends a suffix, so a predecessor's key is always a strict substring of its
+// successor's. All 4 collisions measured on the 227 live leaves are that shape.
+const PRED = {
+  id: 'blocked-storage-boot',
+  title: 'Storage boot, first pass',
+  taskFile: 'lane-blocked-storage-boot.md',
+  status: 'superseded',
+  supersededBy: 'carried down by the -2 successor, which merged',
+};
+const SUCC = {
+  id: 'blocked-storage-boot-2',
+  title: 'Storage boot, second pass',
+  taskFile: 'lane-blocked-storage-boot-2.md',
+  status: 'merged',
+  mergeHash: 'b'.repeat(40),
+};
+
+test('F-1250-1: an EXACT taskFile match outranks a longer-named sibling (no false CLEAR)', (t) => {
+  // THE DEFECT, pre-fix: asking about the superseded predecessor by its own exact taskFile answered
+  // "✅ CLEAR — lane-blocked-storage-boot-2.md [blocked-storage-boot-2] status=merged" at rc=0 — an
+  // affirmative clearance over a terminal-closed leaf, naming a file the fire never asked about.
+  // That is F-1104-7's shape a third time, reached through the matcher instead of the status word.
+  const dir = fixtureN([PRED, SUCC]);
+  cleanup(t, dir);
+  const r = run(dir, PRED.taskFile);
+  assert.equal(r.status, 1, `exact-named superseded leaf must refuse, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /⛔ CLOSED — DO NOT DRAIN: lane-blocked-storage-boot\.md \[blocked-storage-boot\]/);
+  // The successor must be disclosed, not silently discarded — it is what the reader needs to judge
+  // whether the stop is stale.
+  assert.match(r.stdout, /also matched\s+: blocked-storage-boot-2\[merged\]/);
+
+  // CONTROL 1 — the same predecessor ALONE. If this failed too, the arm above would be proving
+  // something about the status word rather than about the shadowing.
+  const alone = fixtureN([PRED]);
+  cleanup(t, alone);
+  const r1 = run(alone, PRED.taskFile);
+  assert.equal(r1.status, 1);
+  assert.doesNotMatch(r1.stdout, /also matched/);
+
+  // CONTROL 2 — asking about the SUCCESSOR must still CLEAR. Without this, "make it refuse" would
+  // pass by reddening every drain in the pair, which is the opposite failure.
+  const r2 = run(dir, SUCC.taskFile);
+  assert.equal(r2.status, 0, `the merged successor must still CLEAR, got rc=${r2.status}\n${r2.stdout}`);
+  assert.match(r2.stdout, /✅ CLEAR — lane-blocked-storage-boot-2\.md \[blocked-storage-boot-2\]/);
+});
+
+test('F-1250-1: the reverse — a lawful merged drain is not reddened by a longer closed predecessor', (t) => {
+  // The same asymmetry runs both ways: pre-fix, a merged successor whose key is a substring of a
+  // longer superseded predecessor printed "⛔ CLOSED" at rc=1, blocking a lawful drain and naming a
+  // file nobody asked about. A guard that cries wolf is spent as surely as one that clears wrongly.
+  const longPred = { id: 'boot-first-pass-with-fixtures', title: 'long predecessor', taskFile: 'lane-storage-boot-2-first-pass-with-fixtures.md', status: 'superseded' };
+  const shortSucc = { id: 'storage-boot-2', title: 'short successor', taskFile: 'lane-storage-boot-2.md', status: 'merged', mergeHash: 'c'.repeat(40) };
+  const dir = fixtureN([longPred, shortSucc]);
+  cleanup(t, dir);
+  const r = run(dir, shortSucc.taskFile);
+  assert.equal(r.status, 0, `the exactly-named merged leaf must CLEAR, got rc=${r.status}\n${r.stdout}`);
+  assert.match(r.stdout, /✅ CLEAR — lane-storage-boot-2\.md \[storage-boot-2\]/);
+
+  // CONTROL — the longer predecessor, asked directly, must still refuse. Exact-match-wins must not
+  // have been implemented as "prefer the shorter key", which would pass this arm for the wrong reason.
+  const r2 = run(dir, longPred.taskFile);
+  assert.equal(r2.status, 1, `the superseded predecessor must still refuse, got rc=${r2.status}\n${r2.stdout}`);
+  assert.match(r2.stdout, /⛔ CLOSED — DO NOT DRAIN: lane-storage-boot-2-first-pass-with-fixtures\.md/);
+});
+
+test('F-1250-1: with NO exact match, longest-wins still decides (the tie-break is kept, not replaced)', (t) => {
+  // The done-move path relies on it: the input is a run-stamped filename, and after normalize() it
+  // usually equals the taskFile — but not always, and when it does not, the longest containing key is
+  // still the right answer. Exact-match-first must be a PRIORITY, not a replacement.
+  const shortLeaf = { id: 'storage-boot', title: 'short', taskFile: 'lane-storage-boot.md', status: 'merged', mergeHash: 'd'.repeat(40) };
+  const longLeaf = { id: 'storage-boot-2', title: 'long', taskFile: 'lane-storage-boot-2.md', status: 'superseded' };
+  const dir = fixtureN([shortLeaf, longLeaf]);
+  cleanup(t, dir);
+  // Neither key equals this input; both are contained by it. The longer one must win.
+  const r = run(dir, 'drained-s1250-abcd1234-20260730-083000-lane-storage-boot-2-final.md');
+  assert.equal(r.status, 1, `longest inexact match must still decide, got rc=${r.status}\n${r.stdout}`);
+  assert.match(r.stdout, /⛔ CLOSED — DO NOT DRAIN: lane-storage-boot-2\.md \[storage-boot-2\]/);
+});
+
+test('F-1250-1 rider: a blocked SIBLING still refuses, but now says which leaf you actually named', (t) => {
+  // s1249 lead (I), measured live on lane-calibrate-suite-workers.md: the blocked arm deliberately
+  // scans ALL hits (:220) rather than the winner, which is conservative and right — it can only ever
+  // produce rc=1. But it made the named leaf unreachable in the OUTPUT: the reader saw only the -v2
+  // owner block and never learned their own leaf was superseded. Refusal unchanged; the report is not.
+  const blockedSucc = { ...SUCC, status: 'blocked', blockedReason: 'OWNER-GATED s1125 — the box, not the task.' };
+  const dir = fixtureN([PRED, blockedSucc]);
+  cleanup(t, dir);
+  const r = run(dir, PRED.taskFile);
+  assert.equal(r.status, 1);
+  assert.match(r.stdout, /⛔ BLOCKED — DO NOT DRAIN/);
+  assert.match(r.stdout, /goal leaf\s+: blocked-storage-boot-2\s+\(tasks\/goals\.json, status="blocked"\)/);
+  assert.match(r.stdout, /you asked about : blocked-storage-boot\s+status="superseded"/);
+
+  // CONTROL — when the blocked leaf IS the one named, there is no second leaf to disclose and the
+  // line must not appear. Otherwise the arm would pass on a guard that printed it unconditionally.
+  const direct = fixtureN([blockedSucc]);
+  cleanup(t, direct);
+  const r2 = run(direct, blockedSucc.taskFile);
+  assert.equal(r2.status, 1);
+  assert.match(r2.stdout, /⛔ BLOCKED/);
+  assert.doesNotMatch(r2.stdout, /you asked about/);
 });
 
 test('a missing leaf is still UNKNOWN-not-a-clearance, and --strict still escalates it', (t) => {

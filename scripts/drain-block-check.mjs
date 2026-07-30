@@ -155,8 +155,30 @@ function findLeaves(leaves, needle) {
     if (key.includes(taskKey) || taskKey.includes(key)) hits.push({ leaf, taskKey });
     else if (leaf.id && key.includes(String(leaf.id).toLowerCase())) hits.push({ leaf, taskKey });
   }
-  // Longest match wins — guards against a short taskFile matching many done-moves by accident.
-  hits.sort((a, b) => b.taskKey.length - a.taskKey.length);
+  // F-1250-1 (s1250). Longest match wins guards against a short taskFile matching many done-moves by
+  // accident — but it is a heuristic for the INEXACT case, and it must never override IDENTITY. An
+  // exact normalized match now sorts first; length only breaks ties among inexact hits. This is the
+  // rule the --queue arm already used (:276, exact-equality find); the drain path did not have it.
+  //
+  // WHY IT MATTERS: the board's successor-naming convention manufactures the collision — a successor
+  // is named by appending a suffix to its predecessor, so the predecessor's key is ALWAYS a strict
+  // substring of its successor's. Measured s1250, all 4 collisions on 227 live leaves are that shape
+  // (lane-asset-diet ⊂ lane-asset-diet-gate-honesty, lane-blocked-storage-boot ⊂ ...-boot-2,
+  // lane-d-suite-red-inventory ⊂ ...-run-tree-invariance, lane-calibrate-suite-workers ⊂ ...-v2).
+  // So asking about a PREDECESSOR by its own exact taskFile answered about its SUCCESSOR instead.
+  // Proved by construction against the pre-fix subject, both directions:
+  //   superseded predecessor + longer merged successor -> "✅ CLEAR ... status=merged" rc=0
+  //     — a FALSE CLEARANCE over a terminal-closed leaf, F-1104-7's shape a third time; and
+  //   merged successor + longer superseded predecessor -> "⛔ CLOSED" rc=1
+  //     — a lawful drain reddened, naming a file the fire never asked about.
+  // Zero live instances the day this landed (all 227 leaves probed through this script: 5 blocked and
+  // 15 terminal-closed all rc=1). It was latent, not academic: 3 of the 4 collision predecessors are
+  // merged/shipped TODAY, and the CLOSED epilogue at :325 instructs retiring exactly such a leaf to
+  // "superseded" when a successor lands. Following this guard's own printed advice was the one edit
+  // that would have armed it. The BLOCKED arm was never exposed because it scans ALL hits (:220)
+  // rather than the winner — that asymmetry between the two refusal arms IS the defect.
+  const exact = (h) => h.taskKey === key;
+  hits.sort((a, b) => (exact(a) !== exact(b) ? (exact(a) ? -1 : 1) : b.taskKey.length - a.taskKey.length));
   return hits.map((h) => h.leaf);
 }
 
@@ -240,6 +262,15 @@ function main() {
     if (blockedHit) {
       console.log(`  goal leaf       : ${blockedHit.id}  (${GOALS}, status="blocked")`);
       console.log(`  reason          : ${blockedHit.blockedReason || '(none recorded)'}`);
+      // F-1250-1 rider (s1249 lead I). This arm deliberately scans ALL hits rather than the winner,
+      // so a blocked SIBLING refuses an input that exactly names a different leaf — conservative and
+      // right (it can only ever produce rc=1), but it made the named leaf unreachable in the OUTPUT:
+      // lane-calibrate-suite-workers.md reported only the blocked -v2 leaf and never its own
+      // superseded one. Say both, so the reader learns which question they actually asked.
+      if (hits[0] && hits[0].id !== blockedHit.id) {
+        console.log(`  you asked about : ${hits[0].id}  status="${hits[0].status}" (${hits[0].taskFile})`);
+        console.log(`                    refused via the blocked SIBLING above, which also matched.`);
+      }
     } else {
       console.log(`  goal leaf       : none blocked — filename marker alone. Fix the leaf too.`);
     }
@@ -314,6 +345,12 @@ function main() {
     // is secondary bookkeeping. autosprite-trial-gate is the case that proved it — F-1249-1.
     console.log(`    leaf title      : ${(leaf.title || '(untitled leaf)').trim().slice(0, 300)}`);
     console.log(`    ${closedReason(leaf)}`);
+    // F-1250-1: this refusal is decided on ONE leaf (unlike the blocked arm, which scans all hits), so
+    // when the input matched more than one, name them. A successor that merged is the commonest second
+    // hit and it is exactly what the reader needs to see before deciding the stop is stale.
+    if (hits.length > 1) {
+      console.log(`    also matched    : ${hits.slice(1).map((l) => `${l.id}[${l.status}]`).join(', ')}`);
+    }
     const mentions = backlogMentions(target);
     if (mentions.length) {
       console.log(`\n  BACKLOG context:`);
@@ -353,7 +390,11 @@ function main() {
   }
   console.log(`  ✅ CLEAR — ${leaf.taskFile} [${leaf.id}] status="${leaf.status}"`);
   if (hits.length > 1) {
-    console.log(`    (${hits.length} leaves matched; longest wins. Others: ${hits.slice(1).map((l) => l.id).join(', ')})`);
+    // F-1250-1: "longest wins" was the whole rule and is now only the tie-break, so say the rule that
+    // actually decided this. A CLEAR that names a leaf the reader did not ask about is the exact shape
+    // that made the false clearance readable as an affirmative answer.
+    console.log(`    (${hits.length} leaves matched; exact name wins, then longest.`);
+    console.log(`     Others: ${hits.slice(1).map((l) => `${l.id}[${l.status}]`).join(', ')})`);
   }
   process.exit(0);
 }
