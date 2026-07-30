@@ -16,8 +16,12 @@
 //   node scripts/drain-block-check.mjs <arg> --strict # unknown slice becomes a failure too
 //
 // EXIT CODES
-//   0  CLEAR    — a leaf matched and it is not blocked (or --all found nothing blocked)
-//   1  BLOCKED  — DO NOT DRAIN. The reason is printed.
+//   0  CLEAR    — a leaf matched and it is neither blocked nor terminal-closed (or --all found
+//                 nothing blocked)
+//   1  BLOCKED  — DO NOT DRAIN. The reason is printed. TWO refusal classes land here: an owner
+//                 BLOCK (status="blocked", lifted by the owner only) and a terminal-CLOSED leaf
+//                 (status in TERMINAL_CLOSED_STATUSES — the question is dead or parked, so there is
+//                 nothing to land; added on the drain path by F-1248-1, see :216).
 //   2  UNKNOWN  — no goal leaf matched. Advisory by default (Goal Registration Law says one
 //                 should exist, so this is itself a bookkeeping finding); fails under --strict.
 
@@ -44,6 +48,28 @@ const TERMINAL_SHIPPED_STATUSES = new Set(['merged', 'shipped']);
 // diagnosis landed and follow-up work is genuinely OWED, so the master must stay queueable
 // (calibrate-suite-workers is the live example — s1119 removed its mergeHash on purpose).
 const TERMINAL_CLOSED_STATUSES = new Set(['superseded', 'void', 'abandoned', 'stopped']);
+
+// The "why" of a CLOSED leaf has no agreed key, and only `blocked` is schema-forced to carry one
+// (goal-tracker.test.mjs:82 asserts blockedReason; nothing asserts a stop reason). Measured s1248
+// across the six status:"stopped" leaves on main, the reason lived under FIVE different spellings —
+// stopNote, stoppedReason, stoppedNote_s1216, drainNotes, note_s1205 — and plain `reason` was
+// undefined on all six. So read every spelling we have seen rather than minting a sixth, and say
+// plainly when there is none: a refusal that cannot state its cause teaches the next fire nothing.
+const CLOSED_REASON_KEYS = ['closedReason', 'stoppedReason', 'stopNote', 'supersededBy', 'reason', 'drainNotes'];
+
+function closedReason(leaf) {
+  for (const key of CLOSED_REASON_KEYS) {
+    const value = leaf[key];
+    if (typeof value === 'string' && value.trim()) return `${key}: ${value.trim()}`;
+  }
+  // Session-stamped one-offs like "stoppedNote_s1216" — the same near-miss-KEY shape the F-1123-1
+  // rider polices for "mergeCommit", one level up at the field name.
+  const adhoc = Object.keys(leaf).find(
+    (key) => /^(stopped|stop|closed)Note/i.test(key) && typeof leaf[key] === 'string' && leaf[key].trim(),
+  );
+  if (adhoc) return `${adhoc}: ${leaf[adhoc].trim()}`;
+  return '(no reason recorded on the leaf — the why lives only in BACKLOG/reviews)';
+}
 
 function isMainAncestor(mergeHash) {
   if (typeof mergeHash !== 'string' || !mergeHash.trim()) return false;
@@ -132,6 +158,19 @@ function main() {
       console.log(`\n  BLOCKED  ${leaf.taskFile}  [${leaf.id}]`);
       console.log(`           ${leaf.blockedReason || '(no blockedReason recorded)'}`);
     }
+    // F-1248-1: --all was the instrument F-1172-2 used to measure this guard's denominator ("--all
+    // scans 164 goal leaves and reports only 2 BLOCKED"), and it could not see a terminal-closed
+    // leaf at all — so six leaves that BOTH paths refuse were invisible to the board's own audit of
+    // what is held. Report-only: the exit code still tracks BLOCKED alone, because that is what
+    // --all is documented to mean and a closed question is not an owner debt.
+    const closed = leaves.filter((l) => TERMINAL_CLOSED_STATUSES.has(l.status));
+    if (closed.length) {
+      console.log(`\n  ALSO ${closed.length} TERMINAL-CLOSED — refused on BOTH the drain and --queue`);
+      console.log(`  paths (F-1248-1). Not owner debt; listed so the audit's denominator is honest:`);
+      for (const leaf of closed) {
+        console.log(`    ${String(leaf.status).padEnd(11)} ${leaf.taskFile}  [${leaf.id}]`);
+      }
+    }
     process.exit(blocked.length ? 1 : 0);
   }
 
@@ -210,6 +249,45 @@ function main() {
     process.exit(strict ? 2 : 0);
   }
 
+  // F-1248-1 (s1248) — THE DRAIN PATH'S VOCABULARY WAS NARROWER THAN THIS FILE'S OWN --queue PATH.
+  // TERMINAL_CLOSED_STATUSES (:46) was consulted ONLY under --queue, so the path §3.0 calls "THE
+  // FIRST COMMAND OF EVERY DRAIN, BEFORE CLASSIFICATION AND BEFORE YOU FORM AN OPINION" answered
+  // "✅ CLEAR — status=stopped" at rc=0 for a leaf whose run STOPPED lawfully pending an OWNER FORK.
+  // MEASURED LIVE ON MAIN BEFORE THE FIX: one body of owner-gated ap-06b code answered THREE
+  // different ways depending only on which spelling of it you typed —
+  //   save/ap-06b-adapter-wiring                                  -> ⛔ BLOCKED  rc=1
+  //   lane/e2-arsenal            (the branch that actually holds it) -> ? UNKNOWN rc=0
+  //   stopped-...-lane-c-ap-06b-panel-ladder-and-voice.md (done-move) -> ✅ CLEAR rc=0
+  // while 28 of the 30 substantive src/game/Game.ts lines in that commit were absent from main and
+  // the sibling leaf ap-06b-adapter-wiring reads "NO LANE TASK CAN LIFT THIS. Needs the owner
+  // ruling." CLEAR is the worst of the three: §3.0's own exit table defines 0 as "a leaf matched and
+  // it is not blocked", an affirmative clearance, where UNKNOWN at least prints "not a clearance".
+  // That is F-1104-7's shape reproduced by the guard written to refuse it. Census at the time:
+  // 12 of 31 `stopped-` done-moves cleared this way (6 status=stopped, 6 status=superseded).
+  // BOUNDARY, DELIBERATE — TERMINAL_SHIPPED_STATUSES (merged/shipped) is NOT refused here. The
+  // /drain skill re-asserts this command on the MERGED tree at the top of its gate battery (§3),
+  // which runs BEFORE the leaf flip in its §5, so the normal flow never sees a closed word; but a
+  // re-assert over a unit drained by an EARLIER fire reads `merged`, and turning that into rc=1
+  // would red a lawful re-check. Re-draining already-merged work is caught by the two-dot diff —
+  // a policy word is not, which is the whole reason this file exists.
+  if (!queue && TERMINAL_CLOSED_STATUSES.has(leaf.status)) {
+    console.log(`\n  ⛔ CLOSED — DO NOT DRAIN: ${leaf.taskFile} [${leaf.id}]`);
+    console.log(`    refusal arm     : status="${leaf.status}" (terminal-closed; the drain path now`);
+    console.log(`                      consults the same set as --queue — F-1248-1)`);
+    console.log(`    ${closedReason(leaf)}`);
+    const mentions = backlogMentions(target);
+    if (mentions.length) {
+      console.log(`\n  BACKLOG context:`);
+      for (const { line, n } of mentions) console.log(`    ${BACKLOG}:${n}  ${line.trim().slice(0, 150)}`);
+    }
+    console.log(`\n  A lawful STOP ships no work, so there is usually nothing here to land — and when`);
+    console.log(`  a branch DOES hold bytes (work preserved on a lane or save/* ref), the question`);
+    console.log(`  that stopped it is the thing to settle first, not the merge. If the stop is stale`);
+    console.log(`  because a successor landed, retire THIS leaf (superseded) in the same commit as`);
+    console.log(`  that event — do not merge past it.\n`);
+    process.exit(1);
+  }
+
   if (queue) {
     const shippedByStatus = TERMINAL_SHIPPED_STATUSES.has(leaf.status);
     const shippedByAncestry = !shippedByStatus && isMainAncestor(leaf.mergeHash);
@@ -225,6 +303,7 @@ function main() {
       // never merged a line, and a wrong reason teaches the next fire the wrong lesson.
       console.log(`  ⛔ CLOSED — DO NOT QUEUE: ${leaf.taskFile} [${leaf.id}]`);
       console.log(`    refusal arm=status="${leaf.status}" (terminal, and it left no commit to refuse it with)`);
+      console.log(`    ${closedReason(leaf)}`);
       console.log(`    This master's question is dead — typically overturned or carried down by a`);
       console.log(`    successor that merged. Re-queueing it re-derives finished work (Mistake #8).`);
       console.log(`    If you believe the question is live again, author a SUCCESSOR; do not revive this leaf.`);
