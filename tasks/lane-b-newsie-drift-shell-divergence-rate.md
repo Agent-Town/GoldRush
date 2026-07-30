@@ -1,5 +1,9 @@
 # Task newsie-drift-shell-divergence-rate: measure the LANE side of the shell divergence as a RATE, and report the lane's own environment (LANE SLOT)
-FIRE-AUTHORED s1265 (attended review welcome)
+FIRE-AUTHORED s1265 · **AMENDED s1266** (attended review welcome) — attempt 2. Its first run
+(`20260730-192621`) measured nothing: it stopped at the lane-safety pre-flight over four regenerated
+screenshots that were v1/v2's exhaust. Changed premise per §7.5: the lane is pre-cleared, the
+pre-flight now classifies evidence artifacts, and the firewall's false "writes no file" claim is
+corrected (F-1266-1). **The measurement scope below is UNCHANGED — it has still never been run.**
 You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `lane/m4`, commit prefix `test:`).
 CODEX: model=gpt-5.6-sol effort=high
 
@@ -38,6 +42,21 @@ content is already merged to main (verify via git log/diff), it is a SAFE DUPE �
 `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead
 commit's content is **NOT** on main (undrained work — resetting would DESTROY it), or the worktree
 holds uncommitted edits you did not make.
+
+🔴 **EVIDENCE-ARTIFACT EXCEPTION — READ THIS, IT IS WHY YOUR PREDECESSOR NEVER MEASURED ANYTHING
+(F-1266-1, s1266).** Changes confined to regenerated evidence — `artifacts/**`, `reviews/shots-*`,
+any `.png` screenshot — are **NEVER "work" and NEVER a STOP**, whether they sit as uncommitted dirt
+or as the whole content of an ahead commit. Screenshots are never byte-identity gated, so their
+bytes differ from main forever. **Discard them and PROCEED**, listing what you discarded.
+⚠️ **This master's own first run (`20260730-192621`) stopped dead here** — it found four modified
+`artifacts/gazette-welcome/*.png`, correctly refused to reset over unknown work, and measured
+nothing. Those PNGs were the *exhaust of v1 and v2*: a run that STOPS still ran playwright and
+still regenerated screenshots. Three consecutive masters died before taking a single measurement.
+
+✅ **s1266 pre-cleared this lane for you**: `lane/m4` was reset to main (`0 ahead / 0 behind`,
+clean worktree), and the churn commit `2f15624c` is preserved at `archive/lane-b-shots-churn-s1266`.
+**So your own pre-flight should measure 0 ahead, 0 behind, and an empty `git status`.** If it does
+NOT, say so loudly and report what you found — that is new information, not a reason to stop.
 
 ⚠️ **Re-derive this yourself after the reset (VERIFY-DON'T-INHERIT).** At authoring time s1265
 measured `git diff --name-status --diff-filter=A main..lane/m4` as **EMPTY** — nothing exists on
@@ -104,9 +123,16 @@ touched. This is the factory refusing to build a fourth theory on a single unrep
 
 ## Firewall
 
-**TOUCH-ONLY:** nothing. This task writes **no file in the repository**. Your entire output is the
-run report. (The runner will auto-commit; there should be an empty diff, and **that is correct** —
-per Mistake #1 your report must state plainly that a zero diff is the intended outcome here.)
+**TOUCH-ONLY:** nothing **you author**. Your entire output is the run report.
+
+⚠️ **CORRECTED s1266 (F-1266-1) — the previous wording here was factually wrong and it cost three
+runs.** It said "this task writes no file in the repository" and "there should be an empty diff."
+**That is not true of the command in scope 2:** `e2e/gazette-welcome.spec.ts` regenerates four
+tracked screenshots — `artifacts/gazette-welcome/{desktop,mobile}-chrome-{delivery-moment,walk-beat}.png`
+— every time it runs. So a **non-empty diff limited to exactly those four PNGs is the EXPECTED and
+CORRECT outcome.** Do not revert them, do not treat them as a scope violation, do not "fix" them,
+and do not let them stop you. Name them in your report as expected exhaust. A diff touching
+**anything else** is the violation.
 
 **NO:** `src/**` · `e2e/**` · `playwright.config.ts` · `package.json` · `tasks/**` · `STATUS.md` ·
 any file at all. **Do not implement the parked cure. Do not "fix" the assertion you are measuring.**
@@ -118,7 +144,9 @@ any file at all. **Do not implement the parked cure. Do not "fix" the assertion 
 - [ ] **Two** serial runs.
 - [ ] Reds counted by `toBeLessThan(expected)`, and the rate stated as `N / 24`.
 - [ ] Row of the scope-4 table named explicitly.
-- [ ] `git status` shows no modified tracked file.
+- [ ] `git status` shows no modified tracked file **other than the four expected
+      `artifacts/gazette-welcome/*.png`** — list them by name and call them expected exhaust.
+      (Corrected s1266: the old wording demanded a clean tree the prescribed command cannot leave.)
 
 **READY-FOR-GATES** — report: your environment triple, the two rate tables, the row you landed in,
 and any adjacent `file:line` list. **There is no failing outcome. A rate of 0/24 and a rate of
