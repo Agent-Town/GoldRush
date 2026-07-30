@@ -86,7 +86,7 @@
               "authoredBy": "owner (4ee9c12f 2026-07-30) — \"product: guide beats hold the floor (from F-1205-5)\"",
               "spec": "tasks/BACKLOG.md F-1205-5 (the measured mechanism); master WHY quotes it verbatim",
               "registeredBy": "s1254 fire — F-1254-1 repair: the master shipped with NO goal leaf, so drain-block-check returned UNKNOWN rather than a clearance. Registered and flipped in the same commit as the drain bookkeeping.",
-              "mergeHash": "6f343a6e",
+              "mergeHash": "6f343a6e5afbda098479d3c5a701caa8fd4afe7c",
               "drainedBy": "s1254 fire 2026-07-30",
               "review": "reviews/guide-beat-priority.md",
               "note_s1254": "F-1254-2: the master's stated mechanism (non-guide barks overtake guide beats) was already false at HEAD — Game.ts:5435 prepends the guide line to receiptFeed[0]. The shipped fix addresses guide-over-guide overwrite, which is the real defect. The spec's bark-storm arm (spec:76) is vacuous — measured green with AND without the slice; only spec:86 discriminates. Do not cite spec:76 as proof of bark suppression."
@@ -149,6 +149,27 @@
               "spec": "specs/greenhorn-gazette/README.md GG-02 (owner verbatim: \"Could be the first newsletter actually has the tutorial images in it? How do the weapons work, freeing the bandits, seams give gold, how to build and so on.\")",
               "registeredBy": "s1203 fire (Goal Registration Law debt deferred to this fire by b70e410d)",
               "note_s1203": "ART-SLOT LAW APPLIES TO WHOEVER DRAINS THIS (CLAUDE.md §2E): run `node scripts/art-staging-audit.mjs` and report BOTH buckets — AT RISK (bytes in no object database, salvage them) and LOCAL-ONLY (in git here but on no origin ref, push them). worktrees/art/ is NOT a git worktree, so its output is untracked-by-default and dies with the disk; the standing hole is F-1120-2 (AT RISK 566.47 MB, owner-gated on F-1193-2). The master's FIREWALL is generate+save ONLY — NO extraction and NO wiring (GG-03 owns the swap), so a drain that extracts has exceeded scope. These six are BESPOKE and are NOT the GAZETTE-ART reusable-class ladder (spec §23), which stays a separate later batch for ONGOING issues."
+            },
+            {
+              "id": "gg-04-mandatory-welcome",
+              "title": "THE MANDATORY WELCOME — the town greets every new face unasked: the first-time question leaves profile creation (name only) and the welcome auto-arms for fresh profiles, never for imported ones.",
+              "taskFile": "lane-mandatory-welcome.md",
+              "status": "building",
+              "lane": "lane-c",
+              "authoredBy": "owner (0db0e675 2026-07-30) — \"owner: ongoing herald illustration begins + mandatory welcome ruled + practice claim specced\"",
+              "spec": "specs/greenhorn-gazette/README.md §THE MANDATORY WELCOME (owner ruling 2026-07-30, verbatim therein)",
+              "registeredBy": "s1254 fire — F-1254-1 repair. The master shipped with no leaf, so drain-block-check answered \"? UNKNOWN\", which is a bookkeeping finding and NOT a clearance.",
+              "note_s1254": "AWAITING DRAIN. Runner output is lane/e2-arsenal 40ea99a4 (12 files: profile creation, welcome arming, 5 e2e specs incl. release-build.spec.ts + trail-guide.spec.ts). ⚠️ DRAIN BY CHERRY-PICK OF 40ea99a4 ALONE — its PARENT 6c44c6f3 (ap-06b-panel-ladder-and-voice) is a terminal-closed leaf that drain-block-check refuses with \"⛔ CLOSED\"; merging the branch would land owner-gated work past a lawful stop. Base is 176 behind main, so the two-dot branch diff is stale-base phantom. The master self-check names the release-build first-player spec, which is 138 s and config-owned (F-1251-1)."
+            },
+            {
+              "id": "gg-03d-herald-class-engravings",
+              "title": "The Claim Herald's ongoing class engravings — the eight class dispatch plates, generated in the ART slot as the herald illustration goes on.",
+              "taskFile": "art-herald-class-engravings.md",
+              "status": "building",
+              "lane": "art",
+              "authoredBy": "owner (0db0e675 2026-07-30) — \"ongoing herald illustration begins\"",
+              "registeredBy": "s1254 fire — F-1254-1 repair (same gap as gg-04 above).",
+              "note_s1254": "AWAITING THE DRAIN CEREMONY, NOT THE BYTES. The 8 raws are ALREADY ON MAIN: the art runner committed them itself in 9f8d11c9 with a repo-root broad add (F-1253-3), which also swallowed the whole of the s1253 fire into that commit — so the art batch's drain diff is CONTAMINATED with a guard slice and must be classified per-file, never by the commit. Still owed: extract-alpha, contract wiring, in-game review, LEDGER entry, reviews/ file. Any fire touching this slot also owes `node scripts/art-staging-audit.mjs` and must report BOTH its AT RISK and LOCAL-ONLY counts (fire.md §2E ART-SLOT LAW)."
             },
             {
               "id": "gg-03-gazette-panel-swap",
