@@ -119,6 +119,10 @@ export function bindWorldSpriteTint(
 }
 
 export function loadGeneratedTexture(slotId: AssetSlotId): Promise<THREE.Texture | null> {
+  if (typeof document === 'undefined') {
+    status[slotId] = 'missing';
+    return Promise.resolve(null);
+  }
   if (baronArtDisabledForDebug(slotId)) {
     status[slotId] = 'error';
     return Promise.resolve(null);

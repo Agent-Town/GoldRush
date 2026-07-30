@@ -317,6 +317,10 @@ export function observeStandingOrders(): void {
   installedExecutor?.observe();
 }
 
+export function snapshotStandingOrders(): StandingOrdersView {
+  return installedExecutor?.snapshot() ?? { needsRider: false, orders: [], log: [] };
+}
+
 export function resetStandingOrders(): void {
   installedExecutor?.reset();
 }
