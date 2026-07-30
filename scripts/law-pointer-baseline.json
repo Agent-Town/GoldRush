@@ -24,6 +24,12 @@
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
+    "scripts/fire.md -> .claude/skills/drain/SKILL.md:33": {
+      "target": ".claude/skills/drain/SKILL.md",
+      "line": 33,
+      "fingerprint": "4eb7ad8e7dcc",
+      "excerpt": "npx playwright test <the-slice's-spec> <adjacent-suites> -c <self-booting scratch config, ports 5199"
+    },
     "scripts/fire.md -> playwright.config.ts:30": {
       "target": "playwright.config.ts",
       "line": 30,
@@ -53,6 +59,12 @@
       "line": 81,
       "fingerprint": "c11d5b8cacd2",
       "excerpt": "CLAUDE_CONFIG_DIR=\"$HOME/.claude-alt\" \"$CLAUDE_BIN\" -p \"$(cat scripts/fire.md)\" --model \"$FIRE_MODEL"
+    },
+    ".claude/skills/author-task/SKILL.md -> tasks/lane-blocked-storage-boot-2.md:44": {
+      "target": "tasks/lane-blocked-storage-boot-2.md",
+      "line": 44,
+      "fingerprint": "2a211a7c1a67",
+      "excerpt": "🔓 **FIREWALL LIFT, EXPLICIT:** the predecessor's blanket \"**NO:** any other file under `src/`\" is *"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."

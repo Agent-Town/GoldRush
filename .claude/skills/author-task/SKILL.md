@@ -33,9 +33,10 @@ tsc + `npm run build` green. <New/updated spec> green desktop+mobile. <Adjacent 
 End: READY-FOR-GATES + <the specific things to report: root cause found / numbers measured / what was adapted>.
 ```
 
-## 2. Sequencing-law wording (prevents two real failures)
+## 2. Sequencing-law wording (prevents three real failures)
 - Gate on a merge: `verify <commit-ish or a grep of git log --oneline | grep -q '<slice-name>'> — do NOT gate on git log -N with a small N` (a prior task no-op'd because its dependency was 20 commits back — search the WHOLE log or by pattern).
 - If the dependency is missing: `STOP and report "<dep> not landed"` — never improvise the dependency.
+- **A conditional scope item needs a NAMED lift (F-1082-1, landed s1278).** If any scope item says *"and fix it if you find it"*, the firewall must either name the files it pre-authorizes or carry an explicit `🔓 FIREWALL LIFT: <file>` line. A blanket `NO: any other file under src/` **silently outranks every conditional above it** — the two are mutually exclusive the moment the thing you told Codex to fix lands outside the allowed list, and Codex will correctly resolve it in favour of the firewall and STOP. That is the behaviour CLAUDE.md §4.5 asks for, but it costs a whole run (~120k tokens, `lane-blocked-storage-boot`). Model to copy: `tasks/lane-blocked-storage-boot-2.md:44`.
 
 ## 3. Pre-flight templates (copy VERBATIM — every word earned by an incident)
 **LANE slots (a/b/c/d):**

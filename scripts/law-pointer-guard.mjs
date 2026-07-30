@@ -75,7 +75,11 @@ const ILLUSTRATIVE = new Map([
   ['e2e/foo.spec.ts:123', 'author-task §5 CITATION LAW template placeholder — a made-up spec showing the required shape.'],
 ]);
 
-const POINTER = /`?([A-Za-z0-9_./-]+\.(?:mjs|ts|tsx|js|sh|json))`?\s*:\s*(\d+)/g;
+// s1278 (F-1278-2): `md` added — law surfaces cite each OTHER by coordinate
+// (`scripts/fire.md` -> `.claude/skills/drain/SKILL.md:33`), and those pointers rot
+// exactly like code pointers do. They were invisible here until s1278, which is why
+// s1275 had to hand-check SKILL.md:33 the guard was built to make unnecessary.
+const POINTER = /`?([A-Za-z0-9_./-]+\.(?:mjs|ts|tsx|js|sh|json|md))`?\s*:\s*(\d+)/g;
 const SEARCH_DIRS = ['', 'scripts', 'src', 'e2e', 'functions'];
 
 const REPORT = process.argv.includes('--report');

@@ -100,3 +100,23 @@ test('THE REAL TREE: every law-surface pointer in this repo currently holds', ()
   const r = run(REAL_ROOT);
   assert.equal(r.status, 0, `law-pointer-guard is RED on the real tree:\n${r.stdout}`);
 });
+
+// s1278 (F-1278-2): law surfaces cite EACH OTHER by coordinate — `scripts/fire.md` points at
+// `.claude/skills/drain/SKILL.md:33`, the --workers=1 command §3.1 calls load-bearing. Until s1278
+// the pattern matched code extensions only, so those pointers were invisible and had to be checked
+// by hand (s1275 did exactly that — for the guard that exists to make hand checks unnecessary).
+test('MARKDOWN TARGET: a law surface citing another .md by coordinate is checked, not skipped (F-1278-2)', (t) => {
+  const dir = fixture(t, { law: 'The flag lives at `docs/target.md:3` — go LOOK.\n', target: TARGET });
+  const md = ['# doc', 'intro', 'THE FLAG: --workers=1 is load-bearing', 'tail', ''].join('\n');
+  fs.mkdirSync(path.join(dir, 'docs'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'docs', 'target.md'), md);
+  assert.equal(run(dir, '--update').status, 0);
+  assert.equal(run(dir).status, 0, 'a baselined .md pointer must pass');
+  // Move the cited line: an .md pointer must rot-detect exactly like a code pointer does.
+  const moved = md.split('\n');
+  moved.splice(1, 0, 'inserted');
+  fs.writeFileSync(path.join(dir, 'docs', 'target.md'), moved.join('\n'));
+  const r = run(dir);
+  assert.equal(r.status, 1, 'a .md pointer must red when its line moves');
+  assert.match(r.stdout, /POINTER DRIFT/);
+});
