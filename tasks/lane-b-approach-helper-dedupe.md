@@ -1,0 +1,48 @@
+# Task approach-helper-dedupe: retire the duplicated hero-approach helper from the release suite (LANE SLOT)
+FIRE-AUTHORED s1257 (attended review welcome)
+You are Codex, implementer for Gold Rush, running natively on Robin's Mac in `worktrees/lane-b` (branch `lane/m4`, commit prefix `test:`).
+CODEX: model=gpt-5.6-sol effort=high
+
+## Pre-flight (LANE-SAFETY, runner-auto-commit aware)
+
+The lane branch being ahead is NORMAL — the runner auto-commits. For each ahead commit: if its content is already merged to main (verify via git log/diff), it is a SAFE DUPE → `git checkout -B lane/m4 main && git clean -fd` and PROCEED. STOP-and-report ONLY if an ahead commit's content is NOT on main (undrained work — resetting would DESTROY it), or the worktree holds uncommitted edits you did not make. Then `npm install --no-audit --no-fund`; `npm run build` green before touching anything.
+
+> ℹ️ Authoring-time note (s1257 — **verify it yourself anyway**): `lane/m4` was 1 ahead at `c5fd71b2` (`lane-b-trail-guide-plain-boot-seam-approach`), drained by me this fire as `74ef8c66`. Its only residual difference from main is **11 regenerated screenshots** under `artifacts/trail-guide-plain-boot/` — the drain committed its *own* gate-run shots rather than the lane's, which is lawful (screenshots are never byte-identity gated) but leaves the branch looking ahead forever. **Zero substantive files differ**, so this is a safe dupe. Driver: `logs/session-scratch/s1257/lane-safety-2.mjs` — and note *why* it took two passes: the first version measured uniqueness by raw diff size and by whether a file merely *differs*, which false-alarmed on every drained lane. **A lane-safety check must exclude regenerated evidence AND check diff DIRECTION** (main-ahead is safe; lane-ahead is not).
+
+## Why — the fix that saved the plain-boot proof now exists twice, and the older copy is the one with a bad history
+
+`74ef8c66` (s1257, this fire) landed `e2e/helpers/hero-approach.ts`: the hero-approach helper that finally made the E1 plain-boot teaching proof honest after three failed attempts. Its own review, `reviews/e1-trail-guide-plain-boot-proof.md`, records the finding this task discharges:
+
+> **F-1257-3 (follow-up owed, non-blocking, and explicitly the drain's job) — the approach helper now exists twice.** Scope 5 of the master *ordered* the duplicate left standing … **The risk is drift:** two byte-identical copies of a braking-lead algorithm whose *previous* incarnation silently missed its tolerance for an unknown number of fires. If one copy is tuned and the other is not, the release suite and the plain-boot proof will disagree about whether the hero can reach a seam, and the failure will look like a product regression.
+
+That duplicate was left deliberately, not carelessly: the s1256 master's scope 5 read *"Do NOT refactor `release-build.spec.ts` in this slice … State in your report that the duplicate remains, so the drain can raise it as a follow-up."* The run complied and reported it. **This task is that follow-up.**
+
+**The two copies are byte-identical today, verified by reading both (s1257).** `e2e/helpers/hero-approach.ts:5-59` and the inlined `moveHeroTo` at `e2e/release-build.spec.ts:311-365` have identical bodies, down to `const SIM_PROGRESS_TIMEOUT = 15_000` (`hero-approach.ts:3`, `release-build.spec.ts:19`). The shared module differs only by an `export` keyword and its import line. **So this is a deletion and an import, not a merge of two diverged implementations** — if you find they have diverged by the time you run, STOP and report that instead (see scope 3).
+
+**Why it is worth doing rather than leaving:** this exact helper is the thing that was silently wrong. s1256 measured the *previous* approach implementation missing its own stated `0.12` tolerance on **13/13** moves (0.237–2.153) on passing runs as well as failing ones, so the E1 proof had been passing by harvest-range luck for an unknown number of fires. The corrected algorithm's guarantee is structural — it can only return through its `hypot(dx,dz) <= 0.12` branch — and that guarantee is worth exactly one copy. Two copies of it is one silent tuning away from the release suite and the plain-boot proof disagreeing about whether a player can stand on a seam.
+
+## Scope (numbered; each item independently checkable)
+
+1. **Delete the inlined `moveHeroTo` from `e2e/release-build.spec.ts`** (currently `:311-365`) and import the shared one instead: `import { moveHeroTo } from './helpers/hero-approach';`. Its two call sites at `:305-306` (`moveHeroTo(page, -4.5, 6.7)` then `moveHeroTo(page, -9, 6.7)`) already use the shared signature `(page, x, z)`, so **no call site should need editing**. If one does, say so — that means the copies had diverged.
+2. **Deal with `SIM_PROGRESS_TIMEOUT` honestly.** `release-build.spec.ts:19` declares its own `SIM_PROGRESS_TIMEOUT = 15_000`. After scope 1, check whether anything *else* in that file still uses it. If yes, leave it exactly as it is. **If nothing else uses it, delete the now-dead constant** — do not leave a dead 15_000 sitting next to a helper that no longer reads it, because the next person to tune the braking lead will edit the dead one. Report which case you found, with the line numbers of any remaining users.
+3. **⛔ STOP-AND-REPORT if the two implementations have diverged** — i.e. if the inlined body is not byte-identical (modulo whitespace) to `e2e/helpers/hero-approach.ts:5-59`. Do NOT reconcile them yourself and do NOT pick a winner: a divergence means someone tuned one copy, and which behaviour is correct is a question for the drain with both histories in hand. Quote the differing lines.
+4. **Do not change the algorithm.** Not the `0.12` tolerance, not the `speed / 28 + 0.08` braking lead, not the 16 ms sampler, not the 12-pass cap, not `SIM_PROGRESS_TIMEOUT`'s value, not the level-up handling. This slice moves a caller onto a shared module and removes a copy. **A behaviour change here is a firewall violation, not an improvement.**
+
+## Firewall
+
+**TOUCH-ONLY:** `e2e/release-build.spec.ts` (delete the inlined helper, add the import, and — only under scope 2's second case — remove the dead constant).
+
+**NO:** ⛔ **zero `src/` bytes — this slice changes no product code whatsoever** · ⛔ **do not edit `e2e/helpers/hero-approach.ts`** — it is now a shared contract with two callers; changing it changes the E1 proof that was just repaired · do not touch `e2e/trail-guide-plain-boot.spec.ts` · do not touch `e2e/trail-guide.spec.ts` (GG-04 renamed tests there and `tasks/BACKLOG.md` cites them — F-1255-2) · do not touch `playwright.release.config.ts`, `playwright.config.ts`, or any timeout constant other than scope 2's dead-code case · do not edit `logs/suite-red-inventory.md` · no new dependencies · do not "also fix" the other duplicated helpers you may notice in `e2e/` — report them, one class per slice.
+
+## Self-check (name the exact commands and both projects)
+
+- `npx tsc --noEmit` clean · `npm run build` green.
+- 🚨 **THE GATING RUN IS THE RELEASE SUITE UNDER ITS OWN CONFIG:** `npx playwright test --config playwright.release.config.ts`. **Derived baseline on main at authoring time (s1257, measured, not inherited): 26 tests, `25 passed / 1 failed` in 1.3 m.** The single red is **`later flagship URLs decline to the Claim`** (mobile-chrome) = the **F-1180-2 known transient** — **cite it BY TITLE, never by line number, and expect its line to move as you delete ~55 lines above it.** s1255 measured this same suite 26/26 with that test green, so both readings exist on unchanged code: it is a **rate, not a line**. Your gate is therefore: **every other test green, and any red among them is a finding.** If `later flagship URLs…` reds, note it and move on; if it *passes*, say so — that is useful data on the same rate.
+- Adjacent, at `--workers=1`: `npx playwright test e2e/trail-guide-plain-boot.spec.ts e2e/trail-guide.spec.ts --workers=1` — the shared helper's other caller must stay green (12/12 + 2/2 both projects at authoring time).
+- 🚨 **AND the plain-boot proof at ITS canonical arm, which is NOT `--workers=1`:** `npx playwright test e2e/trail-guide-plain-boot.spec.ts --repeat-each=2` with **default workers, both projects** — 4/4 expected (s1257 measured 4/4, loadavg 2.40 → 12.92). **This spec's history is that `--workers=1` produced a false GREEN three times running**, so a serial green on it is not evidence. Report `uptime` loadavg before and after; a green on a quiet box is the weakest evidence available here.
+- Zero console/page errors — both suites already assert this; do not remove those assertions.
+- No screenshots are owed: this slice renders nothing new. **Do not regenerate `artifacts/` shots** — regenerated evidence with no change behind it is churn, and it is what made this lane's branch look permanently ahead of main.
+
+## READY-FOR-GATES + report
+
+Report: the release-suite result **by test title** (which passed, which red, and whether `later flagship URLs decline to the Claim` was green or red this time) · your scope-2 finding on `SIM_PROGRESS_TIMEOUT` with line numbers · confirmation that the two bodies were byte-identical before deletion, or the diverging lines if they were not · the plain-boot canonical-arm result with loadavg before/after · `git diff --stat` proving zero `src/` bytes and that `e2e/helpers/hero-approach.ts` is untouched · any other duplicated `e2e/` helper you noticed, named but NOT fixed.
