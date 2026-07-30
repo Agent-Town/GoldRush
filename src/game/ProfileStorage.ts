@@ -184,6 +184,7 @@ export function createProfile(storage: ProfileStorage, name: string, difficultyP
     saveProfileState(storage, next);
     migrateLegacyData(storage, profile.id);
     saveProfileDatum(storage, profile.id, DIFFICULTY_PRESET_STORAGE_KEY, profile.difficultyPreset);
+    saveProfileDatum(storage, profile.id, TOWN_WELCOME_SEEN_KEY, '0');
     return profile;
   }
 
@@ -201,6 +202,7 @@ export function createProfile(storage: ProfileStorage, name: string, difficultyP
   state.activeId = profile.id;
   saveProfileState(storage, state);
   saveProfileDatum(storage, profile.id, DIFFICULTY_PRESET_STORAGE_KEY, profile.difficultyPreset);
+  saveProfileDatum(storage, profile.id, TOWN_WELCOME_SEEN_KEY, '0');
   return profile;
 }
 

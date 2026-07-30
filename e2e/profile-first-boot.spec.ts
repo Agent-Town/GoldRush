@@ -44,7 +44,9 @@ test('cleared-storage boot asks who is prospecting and creates no Robin ghost', 
   await page.goto('/');
 
   await expect(page.getByTestId('profile-title')).toContainText("Who's prospecting?");
+  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
   await expect(page.getByTestId('start-menu-new-claim')).toHaveCount(0);
+  await shot(page, testInfo, 'name-only-creation');
   await page.getByTestId('profile-name-input').fill('Mina');
   await page.getByTestId('profile-create').click();
   await expect(page.getByTestId('start-menu')).toHaveCount(0);
@@ -54,11 +56,15 @@ test('cleared-storage boot asks who is prospecting and creates no Robin ghost', 
   await page.getByTestId('town-name-submit').click();
   await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
   await page.mouse.click(6, 6);
+  await expect(page.getByTestId('town-bark-card')).toHaveAttribute('data-first-claim', 'true');
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('[data-welcome-phase="delivery"]')).toBeVisible();
 
   const state = await readProfileState(page);
   expect(state.activeId).toBe('mina');
   expect(state.profiles.map((profile) => profile.name)).toEqual(['Mina']);
   expect(state.profiles.some((profile) => profile.name === 'Robin')).toBe(false);
+  expect(state.profiles[0]).toMatchObject({ difficultyPreset: 'trail', trailGuide: true });
   await shot(page, testInfo, 'first-boot-created');
   assertNoErrors(errors);
 });

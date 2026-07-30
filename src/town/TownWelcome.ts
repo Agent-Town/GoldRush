@@ -47,10 +47,10 @@ export class TownWelcome {
 
   beginFirst(paperAlreadyRead = false, storage = browserStorage()): boolean {
     try {
-      if (storage?.getItem(TOWN_WELCOME_SEEN_KEY) === '1') return false;
-      storage?.setItem(TOWN_WELCOME_SEEN_KEY, '1');
+      if (storage?.getItem(TOWN_WELCOME_SEEN_KEY) !== '0') return false;
+      storage.setItem(TOWN_WELCOME_SEEN_KEY, '1');
     } catch {
-      // A storage failure may lose persistence, but must not trap the welcome.
+      return false;
     }
     this.phase = paperAlreadyRead ? 'walk' : 'delivery';
     this.deliveryReady = false;

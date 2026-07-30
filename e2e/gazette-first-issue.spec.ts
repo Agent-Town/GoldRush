@@ -24,14 +24,13 @@ function collectErrors(page: Page): ErrorBucket {
   return errors;
 }
 
-async function createProfile(page: Page, greenhorn: boolean): Promise<void> {
+async function createProfile(page: Page, name: string): Promise<void> {
   await page.addInitScript(() => {
     localStorage.clear();
     sessionStorage.clear();
   });
   await page.goto('/');
-  if (greenhorn) await page.getByLabel('Yes - ease me onto the trail').check();
-  await page.getByTestId('profile-name-input').fill(greenhorn ? 'Mina' : 'June');
+  await page.getByTestId('profile-name-input').fill(name);
   await page.getByTestId('profile-create').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
 }
@@ -58,7 +57,7 @@ async function screenshot(page: Page, testInfo: TestInfo, name: string): Promise
 
 test('fresh profile gets the pinned first issue badge and can reopen it', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
-  await createProfile(page, false);
+  await createProfile(page, 'June');
 
   const badge = page.getByTestId('town-herald-badge');
   await expect(badge).toBeVisible();
@@ -77,14 +76,21 @@ test('fresh profile gets the pinned first issue badge and can reopen it', async 
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-test('greenhorn offer opens issue one only on the first town entry', async ({ page }) => {
+test('mandatory welcome opens issue one only on the first town entry', async ({ page }) => {
   const errors = collectErrors(page);
-  await createProfile(page, true);
+  await createProfile(page, 'Mina');
 
-  await expectFirstIssue(page);
-  await page.getByTestId('claim-herald-close').click();
   await page.getByTestId('town-name-input').fill('Sunrise Bend');
   await page.getByTestId('town-name-submit').click();
+  await expect(page.getByTestId('story-beat-card')).toHaveAttribute('data-beat-id', 'founding-welcome');
+  await page.mouse.click(6, 6);
+  await expect(page.getByTestId('town-bark-card')).toHaveAttribute('data-first-claim', 'true');
+  await page.keyboard.press('ArrowRight');
+  await expect(page.locator('[data-welcome-phase="delivery"]')).toBeVisible();
+  await page.getByTestId('town-welcome-take-paper').click();
+  await expectFirstIssue(page);
+  await page.getByTestId('claim-herald-close').click();
+  await page.getByTestId('town-welcome-skip').click();
   await page.getByTestId('town-exit').click();
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);

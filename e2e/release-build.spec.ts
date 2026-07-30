@@ -28,6 +28,7 @@ test('first player reaches textured town actors and places a Dry Gulch spring sl
     sessionStorage.setItem('gr.release-build.first-player', '1');
   });
   await page.goto('/');
+  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
   await page.getByTestId('profile-name-input').fill('Mina');
   await page.getByTestId('profile-create').click();
   await waitForTown(page);
