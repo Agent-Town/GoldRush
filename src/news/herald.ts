@@ -1,6 +1,6 @@
 import feed from '../../news/herald.json' with { type: 'json' };
 
-export type HeraldClass = 'board' | 'trail' | 'river' | 'schoolhouse' | 'ledger' | 'boss' | 'town-growth';
+export type HeraldClass = 'board' | 'trail' | 'river' | 'schoolhouse' | 'ledger' | 'boss' | 'town-growth' | 'ceremony';
 
 export type HeraldItem = {
   headline: string;

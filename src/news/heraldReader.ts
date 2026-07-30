@@ -20,6 +20,7 @@ const HERALD_ENGRAVINGS: Record<HeraldClass, string | undefined> = {
   ledger: heraldEngravingUrls['../../assets/processed/herald-engraving-ledger.webp'],
   boss: heraldEngravingUrls['../../assets/processed/herald-engraving-boss.webp'],
   'town-growth': heraldEngravingUrls['../../assets/processed/herald-engraving-town-growth.webp'],
+  ceremony: heraldEngravingUrls['../../assets/processed/herald-engraving-ceremony.webp'],
 };
 const FIRST_ISSUE_SEEN_KEY = 'story:greenhorn-gazette-issue-1';
 const FIRST_ISSUE_PANELS = [
