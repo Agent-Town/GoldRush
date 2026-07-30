@@ -13,6 +13,17 @@
   <integer>300</integer>
   <key>RunAtLoad</key>
   <true/>
+  <!-- ProcessType: PRE-STAGED s1270, INERT UNTIL INSTALLED. This repo copy is not read by
+       anything (only referenced in a comment at fire-runner.sh:2); the live job is
+       ~/Library/LaunchAgents/com.goldrush.fire.plist, which as of s1270 is byte-identical to
+       this file MINUS this key. Without ProcessType, man launchd.plist says the system applies
+       "light resource limits to the job, throttling its CPU usage and I/O bandwidth" — the
+       leading named cause of the fire shell's per-job CPU ceiling (F-1268-4 -> F-1269-1:
+       lane 7.53x vs fire 3.47x parallel throughput at eight children, 1-child baselines matched
+       within 10%). Staged here so the owner's action is a copy, not a hand-edit; see F-1270-4.
+       Alternatives if Interactive proves too aggressive: Adaptive, or Standard. -->
+  <key>ProcessType</key>
+  <string>Interactive</string>
   <key>WorkingDirectory</key>
   <string>/Users/robin/Claude/Projects/Gold Rush</string>
   <key>StandardOutPath</key>
