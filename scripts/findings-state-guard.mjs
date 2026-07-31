@@ -35,7 +35,23 @@ const REPORT = process.argv.includes('--report');
 const SUBJECT_CHARS = 90;
 const FINDING = /\bF-\d+-\d+\b/g;
 
-function scan(text) {
+// Exported so a second guard can EXECUTE this closure rule rather than copy it.
+// F-1261-1: a re-implementation of a ledger rule disagreed with the original on
+// 4 of 14 rows. There is one implementation of "closed", and this is it.
+// CLOSURE VOCABULARY — 'narrow' (default) vs 'wide'.
+//   Narrow counts a closure only when ✅ leads the line. Measured s1291: the
+//   ledger's commonest closure shape is the BULLET-led "- ✅ **F-x ...", and
+//   narrow sees 1 of its 136 occurrences, leaving 56 F-IDs closed only by a row
+//   the census cannot read. Wide additionally accepts that bullet-led form.
+//   The DEFAULT IS DELIBERATELY UNCHANGED: this file's header warns that
+//   widening needs triage, and every fire's reported census (151/125/26 at
+//   s1291) is denominated in the narrow vocabulary. Callers opt in and say why.
+//   Wide widens CLOSED ONLY, never open — see blocker-panel-closed-guard.mjs,
+//   whose panel row is itself the open claim.
+const BULLET_CLOSED = /^[-*•]\s*✅/;
+
+export function scan(text, { closedVocabulary = 'narrow' } = {}) {
+  const wide = closedVocabulary === 'wide';
   const states = new Map();
   for (const [index, line] of text.split('\n').entries()) {
     const subject = line.slice(0, SUBJECT_CHARS);
@@ -44,9 +60,10 @@ function scan(text) {
       /^[^A-Za-z0-9]*~~/.test(lead) ||
       /✅\s*(?:CLOSED|RETIRED)/i.test(subject) ||
       /struck s\d+/i.test(subject);
-    if (!lead.startsWith('🟡') && !lead.startsWith('✅') && !struck) continue;
+    const bulletClosed = wide && BULLET_CLOSED.test(lead);
+    if (!lead.startsWith('🟡') && !lead.startsWith('✅') && !struck && !bulletClosed) continue;
 
-    const state = lead.startsWith('✅') || struck ? 'closed' : 'open';
+    const state = lead.startsWith('✅') || struck || bulletClosed ? 'closed' : 'open';
     const ids = new Set(subject.match(FINDING) || []);
 
     for (const id of ids) {
@@ -78,19 +95,26 @@ function print(states) {
   return conflicts;
 }
 
-const backlog = path.join(ROOT, 'tasks', 'BACKLOG.md');
-let text;
-try {
-  text = fs.readFileSync(backlog, 'utf8');
-} catch (error) {
-  console.error(`findings-state-guard: REFUSING — cannot read ${backlog}: ${error.message}`);
-  process.exit(REPORT ? 0 : 2);
+function main() {
+  const backlog = path.join(ROOT, 'tasks', 'BACKLOG.md');
+  let text;
+  try {
+    text = fs.readFileSync(backlog, 'utf8');
+  } catch (error) {
+    console.error(`findings-state-guard: REFUSING — cannot read ${backlog}: ${error.message}`);
+    process.exit(REPORT ? 0 : 2);
+  }
+
+  const conflicts = print(scan(text));
+  if (REPORT) process.exit(0);
+  if (conflicts.length) {
+    console.error('findings-state-guard: FAIL — a finding is declared both closed and open.');
+    process.exit(1);
+  }
+  console.log('findings-state-guard: PASS');
 }
 
-const conflicts = print(scan(text));
-if (REPORT) process.exit(0);
-if (conflicts.length) {
-  console.error('findings-state-guard: FAIL — a finding is declared both closed and open.');
-  process.exit(1);
+// Run only when invoked directly; importing this module must have no side effects.
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+  main();
 }
-console.log('findings-state-guard: PASS');
