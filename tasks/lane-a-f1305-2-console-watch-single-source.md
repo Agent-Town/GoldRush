@@ -18,7 +18,7 @@ WHY (quoted evidence, dated):
 - ⚠️ **THE ACCEPTANCE BAR IS DELIBERATELY NOT "N RUNS GREEN", AND THIS IS THE MOST IMPORTANT LINE IN THIS MASTER (F-1305-1, same drain).** The predecessor task gated on *"3 consecutive both-project runs green"*. s1305 measured the **unfixed** tree at **3 green / 1 red in 4 runs** and found the suppressed counter read `0/0` across **six** certifying runs in two sessions — the transient never fired, so *"every one of those greens would have been green with the fix reverted."* **A bar the broken tree passes ~75% of the time is not a bar.** Do not propose one here, and do not report a run-count as your evidence of correctness.
 
 READ-FIRST (paths):
-- `e2e/agent-view.spec.ts:249-274` — the **proven reference implementation** (merge `babedc32`) and its mutation-control test. You are moving this, not inventing it.
+- `e2e/agent-view.spec.ts` — the **proven reference implementation** (merge `babedc32`): its local `watchErrors()` definition and the mutation-control test ("the zero-error rider suppresses only the known transient"). You are moving this, not inventing it. Find them by name — the coordinates decay.
 - `reviews/f1304-1-manifest-view-console-rider.md` — F-1305-1/F-1305-2 as written, including why the mutation control (not the green runs) is what proved the cure sound.
 - `logs/suite-red-inventory.md:728-770` — the retired row and the mechanism paragraph (heavy preceding boot in the same worker starves the next town entry's texture blobs).
 - `tasks/BACKLOG.md:424` (F-1180-2) and `:1766` (F-1083-2) — the two rulings that bound this scope.
@@ -30,7 +30,7 @@ SCOPE (four slices; each ends in its own checkable checkpoint — if a later sli
 
 1. **Create the single source.** New file `e2e/support/console-watch.ts` exporting:
    - `export interface ErrorWatch { errors: string[]; suppressed: string[] }`
-   - `export function watchErrors(page: Page): ErrorWatch` — body moved **verbatim in behaviour** from `e2e/agent-view.spec.ts:249`, including the literal-prefix predicate `text.startsWith("THREE.GLTFLoader: Couldn't load texture blob:")` and the comment citing **F-1304-1 / F-1180-2**. Match by that literal prefix — **not** a loose `/GLTF/i`, **not** a blanket console-error ignore.
+   - `export function watchErrors(page: Page): ErrorWatch` — body moved **verbatim in behaviour** from the `watchErrors()` currently defined in `e2e/agent-view.spec.ts`, including the literal-prefix predicate `text.startsWith("THREE.GLTFLoader: Couldn't load texture blob:")` and the comment citing **F-1304-1 / F-1180-2**. Match by that literal prefix — **not** a loose `/GLTF/i`, **not** a blanket console-error ignore.
    - `export function expectNoConsoleErrors(watch: ErrorWatch, label?: string): void` — logs the suppressed count (never discards it: F-1304-1 scope item 3) and then asserts `expect(watch.errors).toEqual([])`.
    Making the accounting live *inside* the assertion helper is the point: it should be impossible for a call site to drop the suppressed count.
 2. **Migrate the reference spec first, because it is the only one with a proven control.** Point `e2e/agent-view.spec.ts` at the shared module (delete its local definition, add the import) and keep its mutation-control test — now exercising the shared module. Checkpoint: `e2e/agent-view.spec.ts` both projects at `--workers=1` green **and** the mutation-control test still passes. This proves the module is behaviour-equivalent to the merged cure before any other spec depends on it.
