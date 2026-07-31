@@ -1,7 +1,7 @@
 # f1311-2 — the citation gate moves before the queue copy
 
 **Slice:** `lane-a-f1311-2-citation-gate-before-queue` · **branch:** `lane/m3` · **lane tip:** `817622e3` · **base:** `0b06a62e`
-**Merged to main at:** `<MERGE_HASH>` · **drained by:** s1312 · **date:** 2026-08-01
+**Merged to main at:** `98272a1b40a93aed45469f0856395223a78594db` · **drained by:** s1312 · **date:** 2026-08-01
 
 ## Verdict
 
