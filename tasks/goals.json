@@ -3862,6 +3862,14 @@
               "status": "merged",
               "mergeHash": "af226e93c3e378e0c6190098d085483e4f195224",
               "review": "reviews/lb-03-bench-seed-sets.md"
+            },
+            {
+              "id": "lb-03b-standings-difficulty",
+              "title": "LB-03 (second slice of that number) the ladder learns what preset you played. Owner question 2026-07-31 'Are the agents playing on Greenhorn difficulty?' exposed the blind row: standings carried no difficultyPreset, so a greenhorn win ranked beside a vein-hunter win invisibly -- unfair to humans, useless for the bench. Submission + stored row gain a required difficulty validated against the three presets (missing on old clients defaults to 'trail' with defaulted:true); ?difficulty= filter on GET with a bad_difficulty 400 off-vocabulary; preset chip per row in the reader. Ranking formula UNCHANGED -- segregation is a future owner call, visibility is not. NOTE the id collision: 'lb-03-bench-seed-sets' already holds the LB-03 number, hence the 'b'.",
+              "taskFile": "lane-standings-difficulty.md",
+              "status": "merged",
+              "mergeHash": "689990f1c1948a0209e949096ec401ee4f06773e",
+              "review": "reviews/lb-03-standings-difficulty.md"
             }
           ]
         }

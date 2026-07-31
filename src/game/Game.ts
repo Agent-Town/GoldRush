@@ -5598,6 +5598,7 @@ export class Game {
           },
           profileName: activeProfileName(),
           anonId: countyAnonId(),
+          difficulty: this.difficultyPreset,
           seed,
           seedMode: pinnedSeed === null ? 'live' : 'bench',
           seedHash,

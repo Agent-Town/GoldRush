@@ -1,5 +1,6 @@
 import './reader.css';
 import { gameApiUrl } from '../app/GameApi';
+import type { DifficultyPresetId } from '../game/Balance';
 import { activeEpochId, listContracts, listEpochs, loadEpoch } from '../meta/ContractFamilies';
 import { loadEraBackdrop } from '../ui/EraBackdrop';
 import { installAssayOfficeRecordsLiveRead } from './liveStats';
@@ -23,6 +24,7 @@ type OpenClaimLedgerOptions = {
 };
 
 type LedgerView = 'ledger' | 'standings';
+type StandingsDifficulty = DifficultyPresetId | 'all';
 
 type CountyStanding = {
   rank: number;
@@ -32,6 +34,14 @@ type CountyStanding = {
   timeAlive: number;
   gold: number;
   baseValue: number;
+  difficulty: DifficultyPresetId;
+  defaulted?: true;
+};
+
+const DIFFICULTY_LABELS: Record<DifficultyPresetId, string> = {
+  greenhorn: 'Greenhorn',
+  trail: 'Trail',
+  'vein-hunter': 'Vein-Hunter',
 };
 
 let currentRoot: HTMLElement | null = null;
@@ -42,6 +52,7 @@ let currentEntryId: LedgerEntryId | undefined;
 let currentEpochId: LedgerEpochId = 'epoch-1-frontier';
 let currentView: LedgerView = 'ledger';
 let currentStandingsContractId = '';
+let currentStandingsDifficulty: StandingsDifficulty = 'all';
 
 export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   backfillReachedWorldOutsideEntries();
@@ -54,12 +65,14 @@ export function openClaimLedger(options: OpenClaimLedgerOptions = {}): void {
   currentEpochId = initialEpochId(options.entryId);
   currentView = 'ledger';
   currentStandingsContractId = '';
+  currentStandingsDifficulty = 'all';
   root.className = 'claim-ledger';
   root.dataset.testid = 'claim-ledger';
   root.setAttribute('role', 'dialog');
   root.setAttribute('aria-modal', 'true');
   root.setAttribute('aria-label', 'Claim Ledger');
   root.addEventListener('click', onLedgerClick);
+  root.addEventListener('change', onLedgerChange);
   root.addEventListener('keydown', onLedgerKeyDown);
   (document.querySelector<HTMLElement>('#app') ?? document.body).append(root);
   renderCurrentLedger();
@@ -81,6 +94,7 @@ export function closeClaimLedger(notify = true): void {
   currentRestoreFocus = null;
   for (const dispose of liveReads) dispose();
   root.removeEventListener('click', onLedgerClick);
+  root.removeEventListener('change', onLedgerChange);
   root.removeEventListener('keydown', onLedgerKeyDown);
   root.remove();
   if (notify && restoreFocus?.isConnected) restoreFocus.focus({ preventScroll: true });
@@ -179,6 +193,15 @@ function renderStandingsLedger(): string {
             .join('')}
         </nav>
         <p class="county-standings__contracts-hint" aria-hidden="true">Swipe for more contracts &rarr;</p>
+        <label class="county-standings__filter">
+          Difficulty
+          <select data-standings-difficulty data-testid="county-standings-difficulty-filter">
+            <option value="all"${currentStandingsDifficulty === 'all' ? ' selected' : ''}>All presets</option>
+            ${Object.entries(DIFFICULTY_LABELS)
+              .map(([value, label]) => `<option value="${value}"${currentStandingsDifficulty === value ? ' selected' : ''}>${label}</option>`)
+              .join('')}
+          </select>
+        </label>
         <div class="county-standings__board" data-testid="county-standings-board" aria-live="polite">
           <p class="county-standings__empty">The county clerk turns the pages.</p>
         </div>
@@ -191,6 +214,7 @@ async function loadCountyStandings(): Promise<void> {
   const root = currentRoot;
   const epochId = activeEpochId();
   const contractId = currentStandingsContractId;
+  const difficulty = currentStandingsDifficulty;
   if (!root || !contractId) return;
   if (globalThis.navigator?.onLine === false) {
     const board = root.querySelector<HTMLElement>('[data-testid="county-standings-board"]');
@@ -200,6 +224,7 @@ async function loadCountyStandings(): Promise<void> {
   const url = new URL(gameApiUrl('/api/standings'));
   url.searchParams.set('contract', contractId);
   url.searchParams.set('epoch', epochId);
+  if (difficulty !== 'all') url.searchParams.set('difficulty', difficulty);
   let rows: CountyStanding[] = [];
   try {
     const response = await fetch(url);
@@ -210,7 +235,7 @@ async function loadCountyStandings(): Promise<void> {
   } catch {
     // The county book stays usable offline.
   }
-  if (currentRoot !== root || currentView !== 'standings' || currentStandingsContractId !== contractId) return;
+  if (currentRoot !== root || currentView !== 'standings' || currentStandingsContractId !== contractId || currentStandingsDifficulty !== difficulty) return;
   const board = root.querySelector<HTMLElement>('[data-testid="county-standings-board"]');
   if (board) board.innerHTML = renderCountyRows(rows);
 }
@@ -233,7 +258,9 @@ function isCountyStanding(value: unknown): value is CountyStanding {
     finiteNonNegative(row.waves) &&
     finiteNonNegative(row.timeAlive) &&
     finiteNonNegative(row.gold) &&
-    finiteNonNegative(row.baseValue)
+    finiteNonNegative(row.baseValue) &&
+    isDifficultyPreset(row.difficulty) &&
+    (row.defaulted === undefined || row.defaulted === true)
   );
 }
 
@@ -247,7 +274,7 @@ function renderCountyRows(rows: readonly CountyStanding[]): string {
           .map(
             (row) => `<tr data-testid="county-standings-row-${row.rank}">
               <td>${row.rank}</td>
-              <th scope="row">${escapeHtml(row.profileName)}</th>
+              <th scope="row">${escapeHtml(row.profileName)}<span class="county-standings__difficulty" data-testid="county-standings-difficulty-${row.rank}" data-difficulty="${row.difficulty}"${row.defaulted ? ' title="Trail preset defaulted for an older standing"' : ''}>${DIFFICULTY_LABELS[row.difficulty]}</span></th>
               <td>${Math.floor(row.waves)}</td>
               <td>${formatTime(row.timeAlive)}</td>
               <td>${Math.floor(row.gold)}</td>
@@ -261,6 +288,10 @@ function renderCountyRows(rows: readonly CountyStanding[]): string {
 
 function finiteNonNegative(value: unknown): value is number {
   return typeof value === 'number' && Number.isFinite(value) && value >= 0;
+}
+
+function isDifficultyPreset(value: unknown): value is DifficultyPresetId {
+  return value === 'greenhorn' || value === 'trail' || value === 'vein-hunter';
 }
 
 function formatTime(secondsAlive: number): string {
@@ -498,6 +529,15 @@ function onLedgerClick(event: MouseEvent): void {
   currentEntryId = undefined;
   renderCurrentLedger();
   currentRoot?.querySelector<HTMLElement>(`[data-ledger-era="${epochId}"]`)?.focus();
+}
+
+function onLedgerChange(event: Event): void {
+  const select = event.target instanceof HTMLSelectElement && event.target.matches('[data-standings-difficulty]') ? event.target : null;
+  const difficulty = select?.value;
+  if (!difficulty || (difficulty !== 'all' && !isDifficultyPreset(difficulty)) || difficulty === currentStandingsDifficulty) return;
+  currentStandingsDifficulty = difficulty;
+  renderCurrentLedger();
+  currentRoot?.querySelector<HTMLElement>('[data-standings-difficulty]')?.focus();
 }
 
 function onLedgerKeyDown(event: KeyboardEvent): void {

@@ -4,6 +4,7 @@ import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json' };
 import { onRequest as standingsRoute } from '../functions/api/standings';
+import type { DifficultyPresetId } from '../src/game/Balance';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
 import { TELEMETRY_DEV_SEND_STORAGE_KEY, TELEMETRY_OPT_IN_STORAGE_KEY } from '../src/telemetry/payload';
 
@@ -18,6 +19,7 @@ type StandingPost = {
   score: { secured: true; waves: number; timeAlive: number; gold: number; baseValue: number };
   profileName: string;
   anonId: string;
+  difficulty: DifficultyPresetId;
   seed: string;
   seedMode: 'live' | 'bench';
   seedHash: string;
@@ -59,6 +61,7 @@ function validPost(anonId: string, waves = 10): StandingPost {
     score: { secured: true, waves, timeAlive: 125.5, gold: 42, baseValue: 60 },
     profileName: 'Robin',
     anonId,
+    difficulty: 'trail',
     seed: 'gold-rush',
     seedMode: 'live',
     seedHash: 'a'.repeat(64),
@@ -128,21 +131,39 @@ function expectNoErrors(errors: ErrorBucket): void {
 
 test('endpoint stores optional self-declared stack and keeps the public board stack-blind', async () => {
   const kv = makeKv();
-  await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([{
-    ...validPost('3'.repeat(32), 13).score,
-    profileName: 'Before the Bench',
-    anonId: '3'.repeat(32),
-    seedHash: 'a'.repeat(64),
-    inputLogHash: 'b'.repeat(64),
-    submittedAt: 1,
-  }]));
+  await kv.put('standings:epoch-1-frontier:the-claim', JSON.stringify([
+    {
+      ...validPost('3'.repeat(32), 13).score,
+      profileName: 'Before the Bench',
+      anonId: '3'.repeat(32),
+      seedHash: 'a'.repeat(64),
+      inputLogHash: 'b'.repeat(64),
+      submittedAt: 1,
+    },
+    {
+      ...validPost('4'.repeat(32), 15).score,
+      profileName: 'Unclassified Bench',
+      anonId: '4'.repeat(32),
+      seed: CLAIM_BENCH_SEED,
+      seedMode: 'bench',
+      seedHash: 'a'.repeat(64),
+      inputLogHash: 'b'.repeat(64),
+      submittedAt: 2,
+    },
+  ]));
   const stack = {
     model: 'gpt-5.6-sol',
     harness: 'codex',
     harnessVersion: '1.2.3',
     config: ' effort = medium ',
   };
-  const firstPost = { ...validPost('1'.repeat(32), 12), seed: CLAIM_BENCH_SEED, seedMode: 'bench' as const, stack };
+  const firstPost = {
+    ...validPost('1'.repeat(32), 12),
+    difficulty: 'vein-hunter' as const,
+    seed: CLAIM_BENCH_SEED,
+    seedMode: 'bench' as const,
+    stack,
+  };
   const first = await standingsRoute({ request: apiRequest('POST', '', firstPost), env: { TELEMETRY: kv } });
   expect(first.status).toBe(200);
   await standingsRoute({ request: apiRequest('POST', '', validPost('1'.repeat(32), 8)), env: { TELEMETRY: kv } });
@@ -152,10 +173,13 @@ test('endpoint stores optional self-declared stack and keeps the public board st
   expect(stored.find((row) => row.anonId === '1'.repeat(32))).toMatchObject({
     seed: CLAIM_BENCH_SEED,
     seedMode: 'bench',
+    difficulty: 'vein-hunter',
     stack: { ...stack, declaredBy: 'self' },
   });
   expect(stored.find((row) => row.anonId === '2'.repeat(32))).not.toHaveProperty('stack');
+  expect(stored.find((row) => row.anonId === '3'.repeat(32))).toMatchObject({ difficulty: 'trail', defaulted: true });
   expect(stored.find((row) => row.anonId === '3'.repeat(32))).not.toHaveProperty('seedMode');
+  expect(stored.find((row) => row.anonId === '4'.repeat(32))).toBeUndefined();
 
   const response = await standingsRoute({
     request: apiRequest('GET', '?contract=the-claim&epoch=epoch-1-frontier'),
@@ -164,9 +188,9 @@ test('endpoint stores optional self-declared stack and keeps the public board st
   const body = (await response.json()) as { board: Array<Record<string, unknown>> };
   expect(response.status).toBe(200);
   expect(body.board).toMatchObject([
-    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60 },
-    { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60 },
-    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60 },
+    { rank: 1, profileName: 'Robin', secured: true, waves: 14, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail' },
+    { rank: 2, profileName: 'Before the Bench', secured: true, waves: 13, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'trail', defaulted: true },
+    { rank: 3, profileName: 'Robin', secured: true, waves: 12, timeAlive: 125.5, gold: 42, baseValue: 60, difficulty: 'vein-hunter' },
   ]);
   for (const row of body.board) {
     expect(row).not.toHaveProperty('anonId');
@@ -183,6 +207,42 @@ test('endpoint stores optional self-declared stack and keeps the public board st
     expect(row).not.toHaveProperty('species');
     expect(row).not.toHaveProperty('agent');
   }
+
+  const filteredResponse = await standingsRoute({
+    request: apiRequest('GET', '?contract=the-claim&epoch=epoch-1-frontier&difficulty=vein-hunter'),
+    env: { TELEMETRY: kv },
+  });
+  expect(await filteredResponse.json()).toMatchObject({
+    board: [{ rank: 3, profileName: 'Robin', difficulty: 'vein-hunter' }],
+  });
+  const allResponse = await standingsRoute({
+    request: apiRequest('GET', '?contract=the-claim&epoch=epoch-1-frontier&difficulty=all'),
+    env: { TELEMETRY: kv },
+  });
+  expect(((await allResponse.json()) as { board: unknown[] }).board).toHaveLength(3);
+  const invalidFilter = await standingsRoute({
+    request: apiRequest('GET', '?contract=the-claim&epoch=epoch-1-frontier&difficulty=prospector'),
+    env: { TELEMETRY: kv },
+  });
+  expect(invalidFilter.status).toBe(400);
+  expect(await invalidFilter.json()).toMatchObject({ ok: false, error: 'bad_difficulty' });
+
+  const invalidDifficulty = await standingsRoute({
+    request: apiRequest('POST', '', { ...validPost('9'.repeat(32)), difficulty: 'prospector' }),
+    env: { TELEMETRY: kv },
+  });
+  expect(invalidDifficulty.status).toBe(400);
+
+  const legacyClientKv = makeKv();
+  const { difficulty: _difficulty, ...legacyClientPost } = validPost('a'.repeat(32));
+  const legacyClient = await standingsRoute({
+    request: apiRequest('POST', '', legacyClientPost),
+    env: { TELEMETRY: legacyClientKv },
+  });
+  expect(legacyClient.status).toBe(200);
+  expect(JSON.parse((await legacyClientKv.get('standings:epoch-1-frontier:the-claim')) ?? '[]')).toContainEqual(
+    expect.objectContaining({ difficulty: 'trail', defaulted: true }),
+  );
 
   const withAgentField = await standingsRoute({
     request: apiRequest('POST', '', { ...validPost('3'.repeat(32)), agent: true }),
@@ -262,6 +322,17 @@ test('bench submissions require membership in the contract frozen seed set', asy
     expect.objectContaining({ seed: CLAIM_BENCH_SEED, seedMode: 'bench' }),
   );
 
+  const { difficulty: _difficulty, ...missingDifficulty } = validPost('9'.repeat(32));
+  const defaultedBench = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...missingDifficulty,
+      seed: CLAIM_BENCH_SEED,
+      seedMode: 'bench',
+    }),
+    env: { TELEMETRY: kv },
+  });
+  expect(defaultedBench.status).toBe(400);
+
   const nonMember = await standingsRoute({
     request: apiRequest('POST', '', {
       ...validPost('8'.repeat(32)),
@@ -296,6 +367,7 @@ test('secure submits the county row with pinned origin, hashes, and profile name
   expect(post.anonId).toMatch(/^[a-f0-9]{32}$/);
   expect(post.seed).toBe(seed);
   expect(post.seedMode).toBe('bench');
+  expect(post.difficulty).toBe('trail');
   expect(post.seedHash).toBe(createHash('sha256').update(seed).digest('hex'));
   expect(post.inputLogHash).toMatch(/^[a-f0-9]{64}$/);
   expect(JSON.stringify(post)).not.toContain('"species"');
@@ -361,12 +433,15 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   const errors = collectErrors(page);
   await page.route('https://gold-rush-3in.pages.dev/api/standings**', async (route) => {
     const url = new URL(route.request().url());
+    const difficulty = url.searchParams.get('difficulty');
+    if (difficulty === 'greenhorn') await new Promise((resolve) => setTimeout(resolve, 250));
     const board =
       url.searchParams.get('contract') === 'the-claim'
         ? [
-            { rank: 1, profileName: 'Ada', secured: true, waves: 27, timeAlive: 754, gold: 318, baseValue: 240 },
-            { rank: 2, profileName: 'Cedar Jack', secured: true, waves: 23, timeAlive: 621, gold: 251, baseValue: 180 },
-          ]
+            { rank: 1, profileName: 'Ada', secured: true, waves: 27, timeAlive: 754, gold: 318, baseValue: 240, difficulty: 'greenhorn' },
+            { rank: 2, profileName: 'Cedar Jack', secured: true, waves: 23, timeAlive: 621, gold: 251, baseValue: 180, difficulty: 'vein-hunter' },
+            { rank: 3, profileName: 'Robin', secured: true, waves: 19, timeAlive: 518, gold: 211, baseValue: 150, difficulty: 'trail', defaulted: true },
+          ].filter((row) => !difficulty || row.difficulty === difficulty)
         : [];
     await route.fulfill({
       status: 200,
@@ -383,10 +458,21 @@ test('Claim Ledger renders the seeded county board and its empty contract state'
   await expect(page.getByTestId('county-standings-row-1')).toContainText('27');
   await expect(page.getByTestId('county-standings-row-1')).toContainText('12:34');
   await expect(page.getByTestId('county-standings-row-1')).toContainText('318');
+  await expect(page.getByTestId('county-standings-difficulty-1')).toHaveText('Greenhorn');
+  await expect(page.getByTestId('county-standings-difficulty-2')).toHaveText('Vein-Hunter');
+  await expect(page.getByTestId('county-standings-difficulty-3')).toHaveText('Trail');
   await expect(page.getByTestId('county-standings-contract-e1-baron')).toBeVisible();
 
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}.png`), fullPage: true });
+
+  await page.getByTestId('county-standings-difficulty-filter').selectOption('greenhorn');
+  await page.getByTestId('county-standings-difficulty-filter').selectOption('vein-hunter');
+  await expect(page.getByTestId('county-standings-row-2')).toContainText('Cedar Jack');
+  await page.waitForTimeout(300);
+  await expect(page.getByTestId('county-standings-row-2')).toContainText('Cedar Jack');
+  await expect(page.getByTestId('county-standings-row-1')).toHaveCount(0);
+  await expect(page.getByTestId('county-standings-row-3')).toHaveCount(0);
 
   await page.getByTestId('county-standings-contract-e1-dry-gulch').click();
   await expect(page.getByTestId('county-standings-board')).toHaveText('The county waits for its first name.');

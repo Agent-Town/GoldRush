@@ -9,6 +9,7 @@ import redfieldsContracts from '../../assets/contracts/epoch-9-redfields/contrac
 import signalContracts from '../../assets/contracts/epoch-7-signal/contracts.json' with { type: 'json' };
 import steamworksContracts from '../../assets/contracts/epoch-2-steamworks/contracts.json' with { type: 'json' };
 import voltageContracts from '../../assets/contracts/epoch-3-voltage/contracts.json' with { type: 'json' };
+import type { DifficultyPresetId } from '../../src/game/Balance';
 import { bumpCounter, clientIpHash, type KVNamespaceLike } from './_ratelimit';
 
 type StandingsEnv = {
@@ -44,6 +45,8 @@ type SelfDeclaredStack = {
 type StoredRow = ScoreRow & {
   profileName: string;
   anonId: string;
+  difficulty: DifficultyPresetId;
+  defaulted?: true;
   seed?: string;
   seedMode?: SeedMode;
   seedHash: string;
@@ -85,7 +88,7 @@ const MAX_STACK_FIELD_LENGTH = 256;
 const STACK_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as const;
 const STACK_KEYS = new Set<string>(STACK_FIELDS);
 const STORED_STACK_KEYS = new Set([...STACK_FIELDS, 'declaredBy']);
-const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack']);
+const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack']);
 const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue']);
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
@@ -107,24 +110,32 @@ async function getBoard(context: StandingsContext, cors: Record<string, string>)
   const url = new URL(context.request.url);
   const contractId = url.searchParams.get('contract') ?? '';
   const epochId = url.searchParams.get('epoch') ?? '';
-  if (url.searchParams.size !== 2 || !knownContract(epochId, contractId)) {
+  const difficultyParam = url.searchParams.get('difficulty');
+  if (url.searchParams.size !== (difficultyParam === null ? 2 : 3) || !knownContract(epochId, contractId)) {
     return error(cors, 400, 'bad_contract', 'Contract and epoch not accepted.');
+  }
+  const difficulty = difficultyParam ?? 'all';
+  if (difficulty !== 'all' && !isDifficultyPreset(difficulty)) {
+    return error(cors, 400, 'bad_difficulty', 'Difficulty not accepted.');
   }
   const kv = context.env.TELEMETRY ?? context.env.ACCOUNTS;
   const rows = kv ? await readBoard(kv, epochId, contractId, true) : [];
+  const board = rows.map(({ profileName, secured, waves, timeAlive, gold, baseValue, difficulty: rowDifficulty, defaulted }, index) => ({
+    rank: index + 1,
+    profileName,
+    secured,
+    waves,
+    timeAlive,
+    gold,
+    baseValue,
+    difficulty: rowDifficulty,
+    ...(defaulted ? { defaulted: true } : {}),
+  }));
   return json(cors, {
     ok: true,
     epochId,
     contractId,
-    board: rows.map(({ profileName, secured, waves, timeAlive, gold, baseValue }, index) => ({
-      rank: index + 1,
-      profileName,
-      secured,
-      waves,
-      timeAlive,
-      gold,
-      baseValue,
-    })),
+    board: difficulty === 'all' ? board : board.filter((row) => row.difficulty === difficulty),
   });
 }
 
@@ -136,12 +147,17 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const score = validateScore(body.score);
   const profileName = cleanName(body.profileName);
   const anonId = typeof body.anonId === 'string' && ANON_ID.test(body.anonId) ? body.anonId : '';
+  const defaulted = body.difficulty === undefined;
+  const difficulty = defaulted ? 'trail' : isDifficultyPreset(body.difficulty) ? body.difficulty : null;
   const seed = typeof body.seed === 'string' && body.seed.length > 0 && body.seed.length <= MAX_SEED_LENGTH ? body.seed : '';
   const seedMode = body.seedMode === 'live' || body.seedMode === 'bench' ? body.seedMode : null;
   const seedHash = typeof body.seedHash === 'string' && SHA256.test(body.seedHash) ? body.seedHash : '';
   const inputLogHash = typeof body.inputLogHash === 'string' && SHA256.test(body.inputLogHash) ? body.inputLogHash : '';
   const stack = body.stack === undefined ? undefined : validateStack(body.stack);
   if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null) {
+    return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+  }
+  if (!difficulty || (seedMode === 'bench' && defaulted)) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   }
   if (seedMode === 'bench' && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(seed)) {
@@ -162,6 +178,8 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     ...score,
     profileName,
     anonId,
+    difficulty,
+    ...(defaulted ? { defaulted: true } : {}),
     seed,
     seedMode,
     seedHash,
@@ -199,6 +217,10 @@ function validateStoredRow(value: unknown): StoredRow | null {
   });
   const profileName = cleanName(value.profileName);
   if (!score || typeof value.anonId !== 'string' || !ANON_ID.test(value.anonId)) return null;
+  if (value.difficulty === undefined && value.seedMode === 'bench') return null;
+  const difficulty = value.difficulty === undefined ? 'trail' : isDifficultyPreset(value.difficulty) ? value.difficulty : null;
+  if (!difficulty || (value.defaulted !== undefined && value.defaulted !== true)) return null;
+  const defaulted = value.difficulty === undefined || value.defaulted === true;
   const hasSeedFields = value.seed !== undefined || value.seedMode !== undefined;
   if (hasSeedFields && (typeof value.seed !== 'string' || value.seed.length === 0 || value.seed.length > MAX_SEED_LENGTH)) return null;
   if (hasSeedFields && value.seedMode !== 'live' && value.seedMode !== 'bench') return null;
@@ -212,6 +234,8 @@ function validateStoredRow(value: unknown): StoredRow | null {
     ...score,
     profileName,
     anonId: value.anonId,
+    difficulty,
+    ...(defaulted ? { defaulted: true } : {}),
     seedHash: value.seedHash,
     inputLogHash: value.inputLogHash,
     submittedAt,
@@ -242,6 +266,10 @@ function compareScores(a: ScoreRow & { submittedAt?: number }, b: ScoreRow & { s
 
 function knownContract(epochId: string, contractId: string): boolean {
   return CONTRACT_EPOCHS.get(contractId) === epochId;
+}
+
+function isDifficultyPreset(value: unknown): value is DifficultyPresetId {
+  return value === 'greenhorn' || value === 'trail' || value === 'vein-hunter';
 }
 
 function cleanName(value: unknown): string {
