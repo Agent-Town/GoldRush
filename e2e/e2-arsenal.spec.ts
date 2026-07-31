@@ -97,7 +97,8 @@ test('Auto-Pan upkeep and boiler battery bands consume the fixed-step pressure s
   expect(autoPan?.autoPanSeconds).toBeGreaterThan(0);
   expect(await page.evaluate(() => window.__GR_TEST__?.economyLog().some((event: any) => event.type === 'resource_spent' && event.sink === 'auto_pan'))).toBe(true);
 
-  await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 0, 10))).resolves.toBe(true);
+  // (x, z) chosen clear of authored landmark footprints — see F-1281-2; do not move onto hill-mine:boiler-house-site.
+  await expect(page.evaluate(() => window.__GR_TEST__?.placeFree('turret', 10, 12))).resolves.toBe(true);
   await page.evaluate(() => window.__GR_TEST__?.advanceSim(0.1));
   const workingRate = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.hp.find((entry) => entry.id === 'turret')?.effectiveFireRate ?? 0);
   await page.evaluate(() => {
