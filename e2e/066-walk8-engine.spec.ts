@@ -1,6 +1,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { RUN_CAST_SCALE } from '../src/entities/runCastScale';
+import { Balance } from '../src/game/Balance';
 
 type ErrorBucket = {
   consoleErrors: string[];
@@ -206,14 +208,17 @@ test('hero walks on the activated walk8 sheet at the ratified cadence', async ({
 });
 
 test('Claim Jumper walk8 keeps the old stride duration at higher frame count', async ({ page }) => {
+  const slowGroundSpeed = 2.7;
+  const fastGroundSpeed = 5.4;
+  const cadenceReferenceFrames = 4;
   const errors = await openGame(page, '066-jumper-walk8-cadence');
   const hero = await heroWalk(page);
   await page.keyboard.up('KeyS');
 
-  await page.evaluate(() => {
+  await page.evaluate((groundSpeed) => {
     window.__GR_TEST__?.clearEnemies();
-    window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 2.7);
-  });
+    window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, groundSpeed);
+  }, slowGroundSpeed);
   await page.waitForFunction(
     () =>
       window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.clip === 'walk' &&
@@ -221,20 +226,27 @@ test('Claim Jumper walk8 keeps the old stride duration at higher frame count', a
   );
   const jumper = await sprite(page, 'char.bandit_base');
 
-  await page.evaluate(() => {
+  await page.evaluate((groundSpeed) => {
     window.__GR_TEST__?.clearEnemies();
-    window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, 5.4);
-  });
+    window.__GR_TEST__?.scriptEnemyAt(-8, 7, 8, 7, groundSpeed);
+  }, fastGroundSpeed);
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.spriteAnimations['char.bandit_base']?.fps ?? 0) > 12);
   const fastJumper = await sprite(page, 'char.bandit_base');
+  const frameCount = jumper.frameCount ?? 0;
+  const cadenceFrameScale = frameCount / cadenceReferenceFrames;
+  const strideUnits = Balance.anim.strideUnits * RUN_CAST_SCALE;
+  const cadenceSpeed = slowGroundSpeed * cadenceReferenceFrames / (strideUnits * Balance.anim.walkFpsPerSpeed);
+  const slowExpectedFps = Math.max(Balance.anim.walkMinFps, cadenceSpeed * Balance.anim.walkFpsPerSpeed) * cadenceFrameScale;
+  const fastExpectedFps = fastGroundSpeed * frameCount / strideUnits;
 
   expect(hero.frameCount).toBe(8);
   expect(hero.sourceFrameKey).toContain('char-hero-sheet-walk8-');
   expect(jumper.frameCount).toBe(8);
-  expect(jumper.sourceFrameKey).toContain('char-jumper-sheet-walk8-');
-  expect(jumper.fps).toBeCloseTo(8.55, 1);
-  expect(fastJumper.fps).toBeCloseTo(17.1, 2);
-  expect(jumper.strideUnitsPerCycle).toBeCloseTo(hero.strideUnitsPerCycle ?? 0, 1);
+  expect(jumper.sourceFrameKey).toContain('char-bandit-base-sheet-walk8-');
+  expect(jumper.fps).toBeCloseTo(slowExpectedFps, 5);
+  expect(fastJumper.fps).toBeCloseTo(fastExpectedFps, 5);
+  // Balance.anim.walkMinFps clamps below the ≈2.921 ground-speed knee, shortening this stride.
+  expect(jumper.strideUnitsPerCycle).toBeLessThan(hero.strideUnitsPerCycle ?? 0);
   expect(fastJumper.strideUnitsPerCycle).toBeCloseTo(hero.strideUnitsPerCycle ?? 0, 1);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
