@@ -18,13 +18,28 @@ type FloatingText = {
 
 const FLOAT_HEIGHT = 1.2;
 const FLOAT_DURATION = 0.8;
+const FLOAT_TEXT_HEIGHT = 96;
+const FLOAT_TEXT_BASE_WIDTH = 192;
+const FLOAT_TEXT_BASE_FONT_PX = 64;
+const FLOAT_TEXT_MIN_FONT_PX = 32;
+const FLOAT_TEXT_PADDING_PX = 20;
+const FLOAT_TEXT_MAX_WIDTH = FLOAT_TEXT_BASE_WIDTH * 4;
 
 export class Vfx {
   readonly group = new THREE.Group();
 
   private readonly pool: FloatingText[] = [];
   private cursor = 0;
-  private lastFloat: { text: string; x: number; z: number; y: number; terrainY: number } | null = null;
+  private lastFloat: {
+    text: string;
+    x: number;
+    z: number;
+    y: number;
+    terrainY: number;
+    renderedWidthPx: number;
+    canvasWidthPx: number;
+    fontPx: number;
+  } | null = null;
 
   constructor() {
     this.group.name = 'Vfx';
@@ -60,8 +75,16 @@ export class Vfx {
     const item = this.pool[this.cursor];
     this.cursor = (this.cursor + 1) % this.pool.length;
 
-    drawTextTexture(item.canvas, item.context, text, toCssColor(colorHex));
-    item.texture.needsUpdate = true;
+    const previousCanvasWidth = item.canvas.width;
+    const rendering = drawTextTexture(item.canvas, item.context, text, toCssColor(colorHex));
+    item.sprite.scale.set(0.8 * (item.canvas.width / item.canvas.height), 0.8, 1);
+    if (item.canvas.width !== previousCanvasWidth) {
+      item.texture.dispose();
+      item.texture = createCanvasTexture(item.canvas);
+      item.material.map = item.texture;
+    } else {
+      item.texture.needsUpdate = true;
+    }
     item.material.opacity = 1;
     item.elapsed = 0;
     item.duration = FLOAT_DURATION;
@@ -69,7 +92,7 @@ export class Vfx {
     const terrainY = visualAnchorY(position, 0);
     const lift = terrainLift ?? position.y - terrainY + 1.7;
     item.start.set(position.x, visualAnchorY(position, lift), position.z);
-    this.lastFloat = { text, x: position.x, z: position.z, y: item.start.y, terrainY };
+    this.lastFloat = { text, x: position.x, z: position.z, y: item.start.y, terrainY, ...rendering };
     item.sprite.position.copy(item.start);
     item.sprite.visible = true;
   }
@@ -139,23 +162,45 @@ function createTextTexture(
   color: string,
 ): { texture: THREE.CanvasTexture; canvas: HTMLCanvasElement; context: CanvasRenderingContext2D } {
   const canvas = document.createElement('canvas');
-  canvas.width = 192;
-  canvas.height = 96;
+  canvas.width = FLOAT_TEXT_BASE_WIDTH;
+  canvas.height = FLOAT_TEXT_HEIGHT;
   const context = canvas.getContext('2d');
   if (!context) throw new Error('Unable to create floating text canvas');
   drawTextTexture(canvas, context, text, color);
 
+  return { texture: createCanvasTexture(canvas), canvas, context };
+}
+
+function createCanvasTexture(canvas: HTMLCanvasElement): THREE.CanvasTexture {
   const texture = new THREE.CanvasTexture(canvas);
   texture.colorSpace = THREE.SRGBColorSpace;
   texture.minFilter = THREE.LinearFilter;
   texture.magFilter = THREE.LinearFilter;
   texture.needsUpdate = true;
-  return { texture, canvas, context };
+  return texture;
 }
 
-function drawTextTexture(canvas: HTMLCanvasElement, context: CanvasRenderingContext2D, text: string, color: string): void {
-  context.clearRect(0, 0, canvas.width, canvas.height);
-  context.font = '700 64px Georgia, serif';
+function drawTextTexture(
+  canvas: HTMLCanvasElement,
+  context: CanvasRenderingContext2D,
+  text: string,
+  color: string,
+): { renderedWidthPx: number; canvasWidthPx: number; fontPx: number } {
+  context.font = `700 ${FLOAT_TEXT_BASE_FONT_PX}px Georgia, serif`;
+  const baseWidth = context.measureText(text).width;
+  canvas.width = Math.min(
+    FLOAT_TEXT_MAX_WIDTH,
+    Math.max(FLOAT_TEXT_BASE_WIDTH, Math.ceil((baseWidth + FLOAT_TEXT_PADDING_PX) / FLOAT_TEXT_BASE_WIDTH) * FLOAT_TEXT_BASE_WIDTH),
+  );
+  canvas.height = FLOAT_TEXT_HEIGHT;
+
+  let fontPx = FLOAT_TEXT_BASE_FONT_PX;
+  context.font = `700 ${fontPx}px Georgia, serif`;
+  while (fontPx > FLOAT_TEXT_MIN_FONT_PX && context.measureText(text).width > canvas.width - FLOAT_TEXT_PADDING_PX) {
+    fontPx -= 1;
+    context.font = `700 ${fontPx}px Georgia, serif`;
+  }
+  const renderedWidthPx = context.measureText(text).width;
   context.textAlign = 'center';
   context.textBaseline = 'middle';
   context.lineJoin = 'round';
@@ -164,6 +209,7 @@ function drawTextTexture(canvas: HTMLCanvasElement, context: CanvasRenderingCont
   context.strokeText(text, canvas.width / 2, canvas.height / 2);
   context.fillStyle = color;
   context.fillText(text, canvas.width / 2, canvas.height / 2);
+  return { renderedWidthPx, canvasWidthPx: canvas.width, fontPx };
 }
 
 function toCssColor(colorHex: string | number): string {
