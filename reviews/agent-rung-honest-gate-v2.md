@@ -17,6 +17,38 @@ other 3 would be Mistake #12 (gate contamination) dressed as throughput.
 never modified — the four paths were checked out, gated, and reverted (`git status` clean at
 handoff). The next fire re-runs one battery and merges.
 
+> ## ⛔ s1295 CORRECTION — THE SENTENCE ABOVE IS FALSE, AND NOT THROUGH ANY FAULT OF ITS REASONING (F-1295-1)
+>
+> **The slice has been on `main` since `b37c1fc6`, 2026-07-31T16:59:12+07:00 — thirteen minutes
+> before the handoff that says it was not.** All four paths are byte-identical to the lane on main
+> *right now*; verified by blob hash, not by diff:
+> `PermissionLadder.ts 9451c000` · `ToolSurface.ts eb31d683` · `m4-01 5b674014` · `m4-05 b1cca7d1`.
+>
+> **How.** s1294 checked the four paths out into main's working tree in order to gate them — correct
+> procedure. At 16:59, *while they sat there*, a **concurrent attended session** committed
+> `b37c1fc6 "rehearsal round 2 launched (shipped pipeline, vein-hunter card)"` with a broad `git add`
+> that swept them up. Its stat is exactly the four slice paths plus one `BACKLOG.md` line; its
+> message mentions none of them.
+>
+> **Why the revert did not catch it, which is the part worth keeping.** s1294 then reverted with
+> `git checkout HEAD -- <paths>` and confirmed `git status` clean. Both steps were correct and both
+> were blind: **`HEAD` had already absorbed the slice**, so the "revert" restored the slice content,
+> and the clean status was *caused by* the contamination rather than disproving it. A revert
+> verified against a HEAD that has itself moved is not a revert — and no amount of care at the
+> `git status` layer can see this. The check that does see it is a **blob-hash comparison against
+> the pre-sweep ref**, which is why this review now records blob hashes instead of "clean".
+>
+> **Scope: bounded.** Every `main` commit from s1294's lock to now was audited for `src/`+`e2e/`
+> content (`logs/session-scratch/s1295/sweep-audit.mjs`); `b37c1fc6` is the **only** one carrying
+> code. Nothing else was swept.
+>
+> **Status of the HOLD.** The verdict below stands as *unfinished business*, not as a description of
+> the tree: the code is on main, but its gate is incomplete and no `mergeHash` was ever recorded.
+> s1295 is running the F-1294-2 control the honest way — **PRE-sweep vs POST-sweep** (`00e4c074`
+> blobs vs `HEAD` blobs), in a **detached worktree**, because a concurrent writer is still
+> committing to main and dirtying main's tree is what caused this in the first place.
+> See §"s1295 — the F-1294-2 control, and what actually shipped" at the end of this file.
+
 ## What it does
 
 `decideToolPermission` previously hardcoded `requiredLevel: 1` for every side-effect tool
@@ -151,3 +183,110 @@ The counter-evidence worth weighing next fire: the runner's own 72-test owner ba
    `agent-rung-honest-gate-v2` leaf to `merged` with the hash **in the drain commit**.
 3. The slice is a real player-facing change (the agent can no longer place buildings or pan at rungs
    it has not earned) ⇒ it owes a **GZ-01 gazette item** on merge.
+
+## s1295 — the F-1294-2 control, and what actually shipped
+
+**Run by:** s1295 fire · **Harness:** `logs/session-scratch/s1295/f1294-2-true-control.mjs`
+**Raw per-run logs:** `logs/session-scratch/s1295/true-*.log` · **Machine-readable:** `f1294-2-true-results.json`
+
+### The arms were not the ones s1294 specified, and could not have been
+
+s1294's gate says *"both arms (clean `main` and the merged tree)"*. That pairing **no longer exists**:
+the slice was swept onto main by `b37c1fc6` before this fire started (F-1295-1), so "clean main" and
+"the merged tree" are now the **same tree**. My first harness discovered this the honest way — it
+aborted with `ARM MISMATCH: wanted MERGED, tree is CONTROL`, because
+`git checkout lane/e2-arsenal -- <4 paths>` produced **zero** change.
+
+The arms that answer the same question today are **PRE-sweep vs POST-sweep**:
+
+| Arm | `PermissionLadder.ts` blob | Meaning |
+|---|---|---|
+| `PRE` | `d6941842` (at `00e4c074`, `b37c1fc6^`) | the tree **without** the slice |
+| `POST` | `9451c000` (at `main` HEAD) | the tree **with** the slice |
+
+Arm identity is asserted by **blob hash before every single run**, not by dirtiness — the check that
+would have caught F-1295-1 in the first place.
+
+### Method
+
+Run in a **detached worktree** (`gr-s1295-control`), never main's tree: a concurrent attended session
+was still committing to main during this fire (17:20, 17:26), and dirtying main's tree is precisely
+what produced F-1295-1. `--workers=1` on every run (§3.1). Own dev server on **scratch port 5241**.
+**Interleaved per spec** — each PRE/POST pair runs back-to-back so load drift is shared-mode noise
+rather than an arm confound — and **round 2 reverses the order** so any residual order effect
+cancels. Load average is sampled around every run and recorded, so arm comparability is *checked*
+rather than assumed. This is the answer to the objection that stopped s1294: the box was **not** idle
+(load 41 → 18 across the run, two lane runs finishing mid-measurement), and interleaving is what
+makes that survivable.
+
+⭐ **The asymmetry that makes the result usable regardless of load: a red on the PRE arm cannot have
+been caused by the slice.** Heavy load raises the chance of a decisive exoneration; it cannot
+manufacture a false one.
+
+### Results — 12 runs, all twelve recorded
+
+| # | Spec | Arm | rc | pass/fail | wall | load (before→after) |
+|---|---|---|---|---|---|---|
+| 1 | `ap-standing-orders.spec.ts` | **PRE** | 0 | 6p / 0f | 83s | 41.33 → 36.95 |
+| 2 | `ap-standing-orders.spec.ts` | **POST** | 0 | 6p / 0f | 52s | 36.95 → 29.97 |
+| 3 | `ss-01-beats.spec.ts` | **PRE** | 1 | 3p / 1f | 86.5s | 29.97 → 18.05 |
+| 4 | `ss-01-beats.spec.ts` | **POST** | 1 | 3p / 1f | 87.1s | 18.05 → 11.74 |
+| 5 | `trail-guide-beat-priority.spec.ts` | **PRE** | 0 | 1p / 0f | 15.4s | 11.74 → 12.1 |
+| 6 | `trail-guide-beat-priority.spec.ts` | **POST** | 0 | 1p / 0f | 16.1s | 12.1 → 10.86 |
+| 7 | `ap-standing-orders.spec.ts` | **POST** | 0 | 6p / 0f | 42.9s | 10.86 → 14.72 |
+| 8 | `ap-standing-orders.spec.ts` | **PRE** | 0 | 6p / 0f | 43.4s | 14.72 → 14.84 |
+| 9 | `ss-01-beats.spec.ts` | **POST** | 1 | 3p / 1f | 91s | 14.84 → 15.16 |
+| 10 | `ss-01-beats.spec.ts` | **PRE** | 1 | 3p / 1f | 91.8s | 15.16 → 17.82 |
+| 11 | `trail-guide-beat-priority.spec.ts` | **POST** | 0 | 1p / 0f | 15.4s | 17.82 → 18.26 |
+| 12 | `trail-guide-beat-priority.spec.ts` | **PRE** | 0 | 1p / 0f | 16s | 18.26 → 15.75 |
+
+| Spec | PRE red | POST red | Verdict |
+|---|---|---|---|
+| `ap-standing-orders.spec.ts` | 0/2 | 0/2 | **EQUAL** |
+| `ss-01-beats.spec.ts` | 2/2 | 2/2 | **EQUAL** |
+| `trail-guide-beat-priority.spec.ts` | 0/2 | 0/2 | **EQUAL** |
+
+Load range across the run: **10.86 → 41.33** (1-min average).
+armDependent = **false**
+
+### What this settles, and what it does not
+
+**Settled — the three unattributed reds are not the slice.** Every spec behaves identically with the
+slice present and absent, across two rounds with the pair order reversed and the box load falling
+from ~41 to ~11 underneath. The F-1294-2 gate condition — *"all green or equally red ⇒ merge the
+slice unchanged"* — is **met**.
+
+`ss-01-beats` is the informative one: it is **red on both arms**, and it is red for a reason already
+in the ledger. `logs/suite-red-inventory.md` row 24 records this exact test at **15/44 (34.1%) on
+desktop-chrome and 15/44 (34.1%) on mobile-chrome**, under the coordinate `ss-01-beats.spec.ts:88`.
+The control's raw output reads:
+
+```
+Error: expect(locator).toHaveAttribute(expected) failed
+  - unexpected value "ledger-page:town_elder"
+  at expectBeat (e2e/ss-01-beats.spec.ts:88:22)
+```
+
+The first line is the inventory's recorded reason **verbatim**; the second is s1294's observed value
+**verbatim**. `:88` is the assertion inside the shared `expectBeat` helper; `:103` is the `test(`
+declaration Playwright reports as the test location. **They were always the same red** — s1294
+searched the inventory by the reporter's coordinate and correctly found nothing there (F-1295-2).
+
+**Not settled, and deliberately left open.** This control covers the **three** specs F-1294-2 named,
+on **desktop-chrome**, at `--workers=1`. It does **not** re-run the full 41-test adjacent battery,
+and it says nothing about mobile. That is the scope F-1294-2 asked for and no more; claiming the
+whole battery from six paired runs would be the same over-reach the hold existed to prevent.
+
+### Disposition
+
+The gate is satisfied, so the slice **stays on main** — but it must be recorded for what it is.
+It did not arrive by a drain, and no amount of after-the-fact green makes `b37c1fc6` a drain commit.
+The goal leaf therefore carries `mergeHash: b37c1fc6` with the irregular provenance stated on it
+rather than laundered into a normal-looking merge, and the done-move is retired against that hash.
+
+⚠️ **The one thing a future fire must not conclude from this file: "the sweep turned out fine, so
+the sweep is fine."** The slice was exonerated by measurement taken *afterwards*. Had the control
+come back arm-dependent, the same accident would have shipped a defect into main under a commit
+message about a rehearsal, past a verdict that explicitly said no — and the fire that wrote that
+verdict would have gone on believing it held. **The custody defect (F-1295-1) is independent of this
+slice's innocence, and is the finding worth carrying forward.**
