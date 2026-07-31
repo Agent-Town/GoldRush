@@ -166,7 +166,13 @@ export function scan(root = ROOT) {
     const text = fs.readFileSync(abs, 'utf8');
     let hit;
     CITE.lastIndex = 0;
+    // Track the .md line as we go. CITE.exec advances monotonically, so counting
+    // newlines only between successive hits keeps this O(text) for the whole file.
+    let scannedTo = 0;
+    let mdLine = 1;
     while ((hit = CITE.exec(text))) {
+      for (let i = scannedTo; i < hit.index; i++) if (text.charCodeAt(i) === 10) mdLine++;
+      scannedTo = hit.index;
       const spec = hit[1].replace(/^.*?(e2e\/)/, '$1');
       const titles = titlesOf(spec);
       const start = Math.max(0, hit.index - WINDOW);
@@ -202,7 +208,22 @@ export function scan(root = ROOT) {
           }
         }
       }
-      rows.push({ file, raw: hit[0], spec, verdict, carried });
+      // F-1299-2: the offender KEY is not the offender's LOCATION. One coordinate can
+      // occur several times in a file with only some of them matching CITE (the pattern
+      // requires the literal `e2e/` prefix, so a bare prose mention of the same
+      // spec:line is invisible to it). s1299 annotated the prominent prose copy, re-ran,
+      // and got an unchanged count — a no-op "fix" that only the re-run caught. So carry
+      // the enclosing line and an excerpt: the report must name the text to edit.
+      const ls = text.lastIndexOf('\n', hit.index - 1) + 1;
+      let le = text.indexOf('\n', hit.index);
+      if (le < 0) le = text.length;
+      const lineText = text.slice(ls, le);
+      const col = hit.index - ls;
+      const from = Math.max(0, col - 48);
+      const to = Math.min(lineText.length, col + hit[0].length + 48);
+      const context =
+        (from > 0 ? '…' : '') + lineText.slice(from, to).trim() + (to < lineText.length ? '…' : '');
+      rows.push({ file, raw: hit[0], spec, verdict, carried, mdLine, context });
     }
   }
   return rows;
@@ -391,6 +412,13 @@ if (violations.length === 0) {
 console.log(`\nFAIL — ${violations.length} citation(s) cite a line with no recoverable test title:`);
 for (const v of violations) {
   console.log(`  ${v.key}   (found ${v.found}, grandfathered ${v.allowed})`);
+  // Name every ungated occurrence by line and surrounding text. Without this the key
+  // alone can point at a coordinate that appears more than once, only one of which the
+  // pattern actually matched — see F-1299-2 above the push site.
+  const where = rows.filter(
+    (r) => `${r.file}::${r.raw}` === v.key && r.verdict !== 'CARRIES-TITLE' && r.verdict !== 'CARRIES-LINE',
+  );
+  for (const r of where) console.log(`      ${r.file}:${r.mdLine}  ${r.context}`);
 }
 console.log(
   '\nFix: quote the test title beside the citation, e.g.\n' +
