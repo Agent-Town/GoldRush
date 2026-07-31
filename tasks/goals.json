@@ -3876,7 +3876,7 @@
               "title": "F-1281-2 repair: reseat the e2-arsenal turret coordinate onto a MEASURED open tile. The diagnosis (reviews/f1281-2-turret-placement-diagnosis.md, merged 30c0e43e) instrumented all five placeFree doors and named matchesPlacement as the one that closes: (0,10) sits inside the authored hill-mine:boiler-house-site footprint (centre (0,12), half-extents 3.35875), and d1f549d5 (2026-07-19) made landmark footprints non-walkable while isBuildable gained the !walkable clause. The RULE IS CORRECT -- it closed the never-trap P0 (reviews/lane-m4-collision-landmark.md) -- so the coordinate is what is stale. Test-only: zero src/ bytes. The task's difficulty is that the open tile must be MEASURED against every registered blocker plus the 0.58 collision pad, not assumed from the boiler house alone; a rejected candidate must be reported alongside the chosen one.",
               "taskFile": "lane-a-f1281-2-arsenal-coordinate-reseat.md",
               "status": "shipped",
-              "mergeHash": "a8e2d1fd",
+              "mergeHash": "a8e2d1fd278a1f8241a30a4ea0d093ff7deb1f6a",
               "drainNotes": "s1287: merged a8e2d1fd. Test-only reseat (0,10) -> (10,12); src/ firewall proven EMPTY. classify lane/m3 paths=6 LANE-ONLY 6 BOTH-MOVED 0. Gates: tsc clean, build green, own spec 6/6 both projects at --workers=1, node-guards rc=0. Adjacent battery 29/36; all 5 reds on specs byte-identical to main (one documented 70% known red, one load flake green in isolation, one undeclared desktop arm = F-1287-1). Review: reviews/f1281-2-arsenal-coordinate-reseat-s1287-drain.md"
             },
             {
