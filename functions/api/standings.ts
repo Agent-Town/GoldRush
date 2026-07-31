@@ -53,6 +53,7 @@ type StoredRow = ScoreRow & {
   inputLogHash: string;
   submittedAt: number;
   stack?: SelfDeclaredStack;
+  tape?: JsonRecord;
 };
 
 type ContractBundle = {
@@ -76,7 +77,8 @@ const CONTRACT_EPOCHS = new Map(
   CONTRACT_BUNDLES.flatMap((bundle) => bundle.contracts.map((contract) => [contract.id, bundle.epochId] as const)),
 );
 const ALLOWED_ORIGINS = new Set(['https://gold-rush-3in.pages.dev', 'https://agenttown.app', 'https://www.agenttown.app']);
-const MAX_JSON_BYTES = 4 * 1024;
+const MAX_TAPE_BYTES = 64 * 1024;
+const MAX_JSON_BYTES = MAX_TAPE_BYTES + 4 * 1024;
 const MAX_ROWS = 100;
 const MAX_REQUESTS_PER_ANON = 12;
 const MAX_REQUESTS_PER_IP = 60;
@@ -88,7 +90,7 @@ const MAX_STACK_FIELD_LENGTH = 256;
 const STACK_FIELDS = ['model', 'harness', 'harnessVersion', 'config'] as const;
 const STACK_KEYS = new Set<string>(STACK_FIELDS);
 const STORED_STACK_KEYS = new Set([...STACK_FIELDS, 'declaredBy']);
-const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack']);
+const POST_KEYS = new Set(['contractId', 'epochId', 'score', 'profileName', 'anonId', 'difficulty', 'seed', 'seedMode', 'seedHash', 'inputLogHash', 'stack', 'tape']);
 const SCORE_KEYS = new Set(['secured', 'waves', 'timeAlive', 'gold', 'baseValue']);
 
 export async function onRequest(context: StandingsContext): Promise<Response> {
@@ -154,10 +156,17 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
   const seedHash = typeof body.seedHash === 'string' && SHA256.test(body.seedHash) ? body.seedHash : '';
   const inputLogHash = typeof body.inputLogHash === 'string' && SHA256.test(body.inputLogHash) ? body.inputLogHash : '';
   const stack = body.stack === undefined ? undefined : validateStack(body.stack);
-  if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null) {
+  const tape = body.tape === undefined ? undefined : validateTape(body.tape, contractId, seed, difficulty);
+  if (!knownContract(epochId, contractId) || !score || !anonId || !seed || !seedMode || !seedHash || !inputLogHash || stack === null || tape === null) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   }
   if (!difficulty || (seedMode === 'bench' && defaulted)) {
+    return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+  }
+  if (tape && await sha256Hex(JSON.stringify(tape.inputLog)) !== inputLogHash) {
+    return error(cors, 400, 'bad_payload', 'Standing not accepted.');
+  }
+  if (tape && !tapeMatchesScore(tape, score)) {
     return error(cors, 400, 'bad_payload', 'Standing not accepted.');
   }
   if (seedMode === 'bench' && !(benchSeeds as Record<string, string[]>)[contractId]?.includes(seed)) {
@@ -186,6 +195,7 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
     inputLogHash,
     submittedAt: Date.now(),
     ...(stack ? { stack } : {}),
+    ...(tape ? { tape } : {}),
   };
   const prior = current.find((row) => row.anonId === anonId);
   const kept = prior && compareScores(prior, candidate) < 0 ? prior : candidate;
@@ -199,14 +209,14 @@ async function submitScore(context: StandingsContext, cors: Record<string, strin
 async function readBoard(kv: KVNamespaceLike, epochId: string, contractId: string, tolerateFailure = false): Promise<StoredRow[]> {
   try {
     const parsed = JSON.parse((await kv.get(boardKey(epochId, contractId))) ?? '[]') as unknown;
-    return Array.isArray(parsed) ? parsed.map(validateStoredRow).filter((row): row is StoredRow => row !== null).sort(compareScores).slice(0, MAX_ROWS) : [];
+    return Array.isArray(parsed) ? parsed.map((row) => validateStoredRow(row, contractId)).filter((row): row is StoredRow => row !== null).sort(compareScores).slice(0, MAX_ROWS) : [];
   } catch {
     if (tolerateFailure) return [];
     throw new HttpError(503, 'board_unavailable', 'The county book is unavailable.');
   }
 }
 
-function validateStoredRow(value: unknown): StoredRow | null {
+function validateStoredRow(value: unknown, contractId: string): StoredRow | null {
   if (!isRecord(value)) return null;
   const score = validateScore({
     secured: value.secured,
@@ -228,8 +238,9 @@ function validateStoredRow(value: unknown): StoredRow | null {
   if (typeof value.inputLogHash !== 'string' || !SHA256.test(value.inputLogHash)) return null;
   const stack = value.stack === undefined ? undefined : validateStack(value.stack, true);
   if (stack === null) return null;
+  const tape = value.tape === undefined ? undefined : validateTape(value.tape, contractId, value.seed, difficulty);
   const submittedAt = integerInRange(value.submittedAt, 0, Number.MAX_SAFE_INTEGER);
-  if (submittedAt === null) return null;
+  if (submittedAt === null || tape === null || (tape && !tapeMatchesScore(tape, score))) return null;
   return {
     ...score,
     profileName,
@@ -241,6 +252,7 @@ function validateStoredRow(value: unknown): StoredRow | null {
     submittedAt,
     ...(hasSeedFields ? { seed: value.seed as string, seedMode: value.seedMode as SeedMode } : {}),
     ...(stack ? { stack } : {}),
+    ...(tape ? { tape } : {}),
   };
 }
 
@@ -287,6 +299,114 @@ function validateStack(value: unknown, stored = false): SelfDeclaredStack | null
     stack[field] = fieldValue;
   }
   return stack;
+}
+
+function validateTape(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): JsonRecord | null {
+  if (!isRecord(value) || new TextEncoder().encode(JSON.stringify(value)).length > MAX_TAPE_BYTES) return null;
+  if (!hasOnlyKeys(value, new Set(['version', 'id', 'createdAt', 'kept', 'contract', 'seed', 'difficulty', 'simVersion', 'inputLog', 'eventLogHash', 'outcome']))) return null;
+  if (value.version !== 1 || value.simVersion !== 1 || typeof value.id !== 'string' || !value.id || value.id.length > 64) return null;
+  if (!Number.isSafeInteger(value.createdAt) || (value.createdAt as number) < 0 || typeof value.kept !== 'boolean') return null;
+  if (value.contract !== contractId || value.seed !== seed || value.difficulty !== difficulty) return null;
+  if (typeof value.eventLogHash !== 'string' || !/^fnv1a32:[a-f0-9]{8}$/.test(value.eventLogHash)) return null;
+  if (!validTapeOutcome(value.outcome) || !validTapeInput(value.inputLog, contractId, seed, difficulty)) return null;
+  return value;
+}
+
+function validTapeOutcome(value: unknown): boolean {
+  if (!isRecord(value) || !hasOnlyKeys(value, new Set(['reason', 'secured', 'waves', 'timeAlive', 'gold']))) return false;
+  const secured = value.reason === 'secured' || value.reason === 'rush';
+  return (value.reason === 'death' || secured) && value.secured === secured
+    && integerInRange(value.waves, 0, 10_000) !== null
+    && numberInRange(value.timeAlive, 0, 24 * 60 * 60) !== null
+    && numberInRange(value.gold, 0, 1_000_000_000) !== null;
+}
+
+function validTapeInput(value: unknown, contractId: unknown, seed: unknown, difficulty: DifficultyPresetId | null): boolean {
+  if (!isRecord(value) || !hasOnlyKeys(value, new Set(['version', 'name', 'contractId', 'seed', 'difficultyPreset', 'stepSeconds', 'start', 'durationTicks', 'entries', 'truncated', 'primarySlot', 'streams']))) return false;
+  if (value.version !== 1 || value.contractId !== contractId || value.seed !== seed || value.difficultyPreset !== difficulty || value.stepSeconds !== 1 / 30) return false;
+  if (typeof value.name !== 'string' || !value.name || value.name.length > 64 || !isRecord(value.start)
+    || !hasOnlyKeys(value.start, new Set(['x', 'z']))) return false;
+  if (numberInRange(value.start.x, -256, 256) === null || numberInRange(value.start.z, -256, 256) === null) return false;
+  const duration = integerInRange(value.durationTicks, 0, 18_000);
+  if (duration === null || !Array.isArray(value.entries) || value.entries.length > 2_000 || !validTapeTruncation(value.truncated, duration)) return false;
+  const primarySlot = integerInRange(value.primarySlot, 0, 3);
+  if (primarySlot === null || !Array.isArray(value.streams) || value.streams.length > 3 || !validTapeEntries(value.entries, duration)) return false;
+  const slots = new Set<number>([primarySlot]);
+  for (const stream of value.streams) {
+    if (!isRecord(stream) || !hasOnlyKeys(stream, new Set(['slot', 'start', 'entries']))) return false;
+    const slot = integerInRange(stream.slot, 0, 3);
+    if (slot === null || slots.has(slot) || !isRecord(stream.start) || !hasOnlyKeys(stream.start, new Set(['x', 'z']))) return false;
+    if (numberInRange(stream.start.x, -256, 256) === null || numberInRange(stream.start.z, -256, 256) === null) return false;
+    if (!validTapeEntries(stream.entries, duration)) return false;
+    slots.add(slot);
+  }
+  return true;
+}
+
+function validTapeEntries(entries: unknown, duration: number): boolean {
+  if (!Array.isArray(entries) || entries.length > 2_000) return false;
+  let prior = -1;
+  for (const entry of entries) {
+    if (!isRecord(entry) || !hasOnlyKeys(entry, new Set(['t', 'mx', 'my', 'a']))) return false;
+    const tick = integerInRange(entry.t, 0, Math.max(0, duration - 1));
+    if (tick === null || tick <= prior || !quantizedAxis(entry.mx) || !quantizedAxis(entry.my) || !Array.isArray(entry.a) || entry.a.length > 24) return false;
+    if (!entry.a.every(validTapeAction)) return false;
+    prior = tick;
+  }
+  return true;
+}
+
+function validTapeTruncation(value: unknown, duration: number): boolean {
+  if (value === null) return true;
+  return isRecord(value)
+    && hasOnlyKeys(value, new Set(['reason', 'atTick']))
+    && (value.reason === 'max-ticks' || value.reason === 'max-entries' || value.reason === 'run-ended')
+    && value.atTick === duration;
+}
+
+function validTapeAction(value: unknown): boolean {
+  if (!isRecord(value) || typeof value.type !== 'string') return false;
+  const simple = new Set(['weapon_toggle', 'restart', 'debug_spawn', 'debug_xp', 'skip_ceremony', 'research_skip']);
+  if (simple.has(value.type)) return hasOnlyKeys(value, new Set(['type']));
+  if (value.type === 'place_build') return hasOnlyKeys(value, new Set(['type', 'id', 'position', 'rotationSteps']))
+    && token(value.id) && isRecord(value.position) && hasOnlyKeys(value.position, new Set(['x', 'z']))
+    && numberInRange(value.position.x, -256, 256) !== null
+    && numberInRange(value.position.z, -256, 256) !== null && integerInRange(value.rotationSteps, 0, 3) !== null;
+  if (value.type === 'set_pause') return hasOnlyKeys(value, new Set(['type', 'paused'])) && typeof value.paused === 'boolean';
+  if (value.type === 'pick_upgrade' || value.type === 'research_pick') return hasOnlyKeys(value, new Set(['type', 'id'])) && token(value.id);
+  if (value.type === 'death_action') return hasOnlyKeys(value, new Set(['type', 'choice']))
+    && (value.choice === 'done' || value.choice === 'secondary');
+  if (value.type === 'secure_choice') return hasOnlyKeys(value, new Set(['type', 'choice']))
+    && (value.choice === 'bank' || value.choice === 'rush');
+  if (value.type === 'context_action') {
+    if (value.action === 'fund') return hasOnlyKeys(value, new Set(['type', 'action']));
+    return (value.action === 'upgrade' || value.action === 'demolish') && hasOnlyKeys(value, new Set(['type', 'action', 'target']))
+      && isRecord(value.target) && hasOnlyKeys(value.target, new Set(['id', 'index'])) && token(value.target.id)
+      && integerInRange(value.target.index, 0, 10_000) !== null;
+  }
+  if (value.type === 'set_agent_rung') return hasOnlyKeys(value, new Set(['type', 'level', 'granted']))
+    && integerInRange(value.level, 0, 3) !== null && typeof value.granted === 'boolean';
+  return value.type === 'set_agent_ability' && hasOnlyKeys(value, new Set(['type', 'ability', 'granted']))
+    && token(value.ability) && typeof value.granted === 'boolean';
+}
+
+function tapeMatchesScore(tape: JsonRecord, score: ScoreRow): boolean {
+  const outcome = tape.outcome as JsonRecord;
+  return outcome.secured === score.secured && outcome.waves === score.waves
+    && outcome.timeAlive === score.timeAlive && outcome.gold === score.gold;
+}
+
+function quantizedAxis(value: unknown): boolean {
+  return typeof value === 'number' && Number.isFinite(value) && value >= -1 && value <= 1 && value === Math.round(value * 1000) / 1000;
+}
+
+function token(value: unknown): value is string {
+  return typeof value === 'string' && value.length > 0 && value.length <= 64;
+}
+
+async function sha256Hex(value: string): Promise<string> {
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(value));
+  return [...new Uint8Array(digest)].map((byte) => byte.toString(16).padStart(2, '0')).join('');
 }
 
 function boardKey(epochId: string, contractId: string): string {

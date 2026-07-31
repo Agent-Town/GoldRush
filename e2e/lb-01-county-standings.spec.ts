@@ -6,6 +6,7 @@ import benchSeeds from '../assets/contracts/bench-seeds.json' with { type: 'json
 import { onRequest as standingsRoute } from '../functions/api/standings';
 import type { DifficultyPresetId } from '../src/game/Balance';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
+import type { RunTape } from '../src/game/RunTape';
 import { TELEMETRY_DEV_SEND_STORAGE_KEY, TELEMETRY_OPT_IN_STORAGE_KEY } from '../src/telemetry/payload';
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
@@ -25,6 +26,7 @@ type StandingPost = {
   seedHash: string;
   inputLogHash: string;
   stack?: { model?: string; harness?: string; harnessVersion?: string; config?: string };
+  tape?: RunTape;
 };
 
 const ARTIFACT_DIR = path.resolve('artifacts/county-standings');
@@ -66,6 +68,35 @@ function validPost(anonId: string, waves = 10): StandingPost {
     seedMode: 'live',
     seedHash: 'a'.repeat(64),
     inputLogHash: 'b'.repeat(64),
+  };
+}
+
+function validTape(seed: string, difficulty: DifficultyPresetId): RunTape {
+  return {
+    version: 1,
+    id: '11111111-1111-4111-8111-111111111111',
+    createdAt: 1,
+    kept: false,
+    contract: 'the-claim',
+    seed,
+    difficulty,
+    simVersion: 1,
+    inputLog: {
+      version: 1,
+      name: '11111111-1111-4111-8111-111111111111',
+      contractId: 'the-claim',
+      seed,
+      difficultyPreset: difficulty,
+      stepSeconds: 1 / 30,
+      start: { x: 0, z: 12 },
+      durationTicks: 1,
+      entries: [],
+      truncated: null,
+      primarySlot: 0,
+      streams: [],
+    },
+    eventLogHash: 'fnv1a32:1234abcd',
+    outcome: { reason: 'secured', secured: true, waves: 12, timeAlive: 125.5, gold: 42 },
   };
 }
 
@@ -157,15 +188,38 @@ test('endpoint stores optional self-declared stack and keeps the public board st
     harnessVersion: '1.2.3',
     config: ' effort = medium ',
   };
-  const firstPost = {
+  const firstPost: StandingPost = {
     ...validPost('1'.repeat(32), 12),
     difficulty: 'vein-hunter' as const,
     seed: CLAIM_BENCH_SEED,
     seedMode: 'bench' as const,
     stack,
   };
+  firstPost.tape = validTape(firstPost.seed, firstPost.difficulty);
+  firstPost.inputLogHash = createHash('sha256').update(JSON.stringify(firstPost.tape.inputLog)).digest('hex');
   const first = await standingsRoute({ request: apiRequest('POST', '', firstPost), env: { TELEMETRY: kv } });
   expect(first.status).toBe(200);
+  const mismatchedHash = await standingsRoute({
+    request: apiRequest('POST', '', { ...firstPost, inputLogHash: 'b'.repeat(64) }),
+    env: { TELEMETRY: kv },
+  });
+  expect(mismatchedHash.status).toBe(400);
+  const mismatchedOutcome = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...firstPost,
+      tape: { ...firstPost.tape, outcome: { ...firstPost.tape.outcome, waves: 11 } },
+    }),
+    env: { TELEMETRY: kv },
+  });
+  expect(mismatchedOutcome.status).toBe(400);
+  const oversized = await standingsRoute({
+    request: apiRequest('POST', '', {
+      ...firstPost,
+      tape: { ...firstPost.tape, inputLog: { ...firstPost.tape.inputLog, name: 'x'.repeat(70_000) } },
+    }),
+    env: { TELEMETRY: kv },
+  });
+  expect(oversized.status).toBe(413);
   await standingsRoute({ request: apiRequest('POST', '', validPost('1'.repeat(32), 8)), env: { TELEMETRY: kv } });
   await standingsRoute({ request: apiRequest('POST', '', validPost('2'.repeat(32), 14)), env: { TELEMETRY: kv } });
 
@@ -175,6 +229,7 @@ test('endpoint stores optional self-declared stack and keeps the public board st
     seedMode: 'bench',
     difficulty: 'vein-hunter',
     stack: { ...stack, declaredBy: 'self' },
+    tape: firstPost.tape,
   });
   expect(stored.find((row) => row.anonId === '2'.repeat(32))).not.toHaveProperty('stack');
   expect(stored.find((row) => row.anonId === '3'.repeat(32))).toMatchObject({ difficulty: 'trail', defaulted: true });
@@ -199,6 +254,7 @@ test('endpoint stores optional self-declared stack and keeps the public board st
     expect(row).not.toHaveProperty('seedHash');
     expect(row).not.toHaveProperty('inputLogHash');
     expect(row).not.toHaveProperty('stack');
+    expect(row).not.toHaveProperty('tape');
     expect(row).not.toHaveProperty('model');
     expect(row).not.toHaveProperty('harness');
     expect(row).not.toHaveProperty('harnessVersion');
@@ -370,6 +426,14 @@ test('secure submits the county row with pinned origin, hashes, and profile name
   expect(post.difficulty).toBe('trail');
   expect(post.seedHash).toBe(createHash('sha256').update(seed).digest('hex'));
   expect(post.inputLogHash).toMatch(/^[a-f0-9]{64}$/);
+  expect(post.tape).toMatchObject({
+    contract: 'the-claim',
+    seed,
+    difficulty: 'trail',
+    simVersion: 1,
+    outcome: { reason: 'secured', secured: true, waves: 10 },
+  });
+  expect(post.inputLogHash).toBe(createHash('sha256').update(JSON.stringify(post.tape!.inputLog)).digest('hex'));
   expect(JSON.stringify(post)).not.toContain('"species"');
   expect(JSON.stringify(post)).not.toContain('"agent"');
 

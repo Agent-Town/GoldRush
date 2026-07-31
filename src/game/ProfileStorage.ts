@@ -9,6 +9,7 @@ import { PERFORMANCE_TIER_STORAGE_KEY, RUNTIME_PERFORMANCE_VERDICTS_STORAGE_KEY 
 import { ACTIVE_EPOCH_KEY, EPOCH_CEREMONY_KEY, listEpochs } from '../meta/ContractFamilies';
 import { PLAYBOOKS_KEY } from '../playbook/PlaybookStore';
 import { E7_SIGNAL_STATE_KEY } from '../systems/E7SignalSystem';
+import { RUN_TAPES_KEY } from './RunTape';
 import {
   HERO_SKIN_STORAGE_KEY,
   HERO_SKINS_OWNED_STORAGE_KEY,
@@ -36,6 +37,7 @@ export const PROFILE_DATA_KEYS = new Set([
   META_PROGRESS_KEY,
   RUN_SUSPEND_KEY,
   RUN_HISTORY_KEY,
+  RUN_TAPES_KEY,
   SAVE_SLOTS_KEY,
   TOWN_NAME_KEY,
   MEDALS_KEY,

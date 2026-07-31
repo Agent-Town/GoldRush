@@ -8,7 +8,7 @@ import {
   spriteStatsDiagnostics,
 } from '../assets/SpriteAnimator';
 import { assetSlots, tagPlaceholder, type AssetSlotId } from '../assets/slots';
-import { EventBus } from '../core/EventBus';
+import { EventBus, type RunEndReason, type RunSummary } from '../core/EventBus';
 import {
   activeContract as selectActiveContract,
   activeContractDiagnostics,
@@ -67,6 +67,16 @@ import { takeTrailGuideBark, type TrailGuideTrigger } from '../story/trailGuide'
 import { discoverLedgerBuildable, discoverLedgerEntry, ledgerEnemyEntryId, revealLedgerEnemyStats } from '../encyclopedia/state';
 import type { EnemyLedgerEntryId, LedgerEntryId } from '../encyclopedia/registry';
 import { RunManager } from './RunManager';
+import {
+  RunTapeRecorder,
+  appendRunTape,
+  keepRunTape,
+  readRunTapes,
+  runTapeEventLogHash,
+  submittedRunTape,
+  type RunTape,
+  type RunTapeOutcome,
+} from './RunTape';
 import { agentAutonomyLevel, freshMetaProgress, type MetaProgress, type MetaTrack } from './MetaProgress';
 import { awardBaronMedal, hasBaronMedal, hasRocketCartCaptured, loadMedals } from './Medals';
 import { baronArrivalEdge } from './BaronFort';
@@ -1075,8 +1085,8 @@ export class Game {
   private frame = 0;
   private simTick = 0;
   private readonly countyStandingsEnabled = readTelemetryOptIn() && shouldPostCountyStanding();
-  private readonly countyInputLog: string[] = [];
-  private countyInputLast = '';
+  private runTapeRecorder: RunTapeRecorder | null = null;
+  private lastRunTape: RunTape | null = null;
   private elapsed = 0;
   private fixedTickElapsed = 0;
   private activeTickElapsed = 0;
@@ -1464,6 +1474,7 @@ export class Game {
       this.setMultiplayerDeathActions(onDone, onSecondary);
       this.deathOverlay.show(this.deathLedger, scores.slice(0, 5), scoreAt, {
         ...this.researchOverlayOptions(1),
+        ...this.keepTapeOptions(),
         actionLabel: 'Return to Town',
         secondaryActionLabel: 'Try Again',
         outcome: secured ? 'rush' : 'death',
@@ -1515,6 +1526,7 @@ export class Game {
         this.setMultiplayerDeathActions(onDone, onSecondary);
         this.deathOverlay.show(ledger, scores.slice(0, 5), scoreAt, {
           ...this.researchOverlayOptions(2),
+          ...this.keepTapeOptions(),
           outcome: 'secured',
           actionLabel: 'Return to Town',
           secondaryActionLabel: 'New Claim',
@@ -1994,6 +2006,10 @@ export class Game {
           getText: (name: string) => getPlaybookText(localStorage, name),
           remove: (name: string) => removePlaybook(localStorage, name),
         },
+        runTape: {
+          list: () => readRunTapes(localStorage),
+          replayEventLogHash: () => runTapeEventLogHash(this.playbookOutcome()),
+        },
         placeBeacon: () => {
           if (this.deepwaterClaim) return false;
           this.buildSystem.selectBuildable('sentry_beacon', true);
@@ -2043,6 +2059,8 @@ export class Game {
         this.mpQueuedActions.push({ type: 'secure_choice', choice });
         return true;
       },
+      onRunStarted: () => this.startRunTape(),
+      onRunEnded: ({ reason, at, summary }) => this.finishRunTape(reason, at, summary),
     });
     this.runManager.install();
     this.installMultiplayerDev();
@@ -2067,7 +2085,7 @@ export class Game {
           const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps });
           if (placed) {
             discoverLedgerBuildable(id);
-            this.recordCountyAction('place_build', { id, position, rotationSteps });
+            this.recordRunTapeAction({ type: 'place_build', id, position, rotationSteps });
           }
           return placed;
         },
@@ -2311,7 +2329,6 @@ export class Game {
       this.manualResumeAtMpTickForTest = null;
     }
     this.simTick += 1;
-    this.recordCountyInput(intents);
     this.fixedTickElapsed += delta;
     this.updateActionActorPosition();
     this.updateBuildingContextCandidates();
@@ -2386,6 +2403,7 @@ export class Game {
     this.updateCharmPause(delta);
 
     if (this.state.simActive && (!this.manualSimForTest || this.manualAdvanceForTest)) {
+      this.recordRunTapeInput(intents);
       this.captureRenderState();
       this.activeTickElapsed += delta;
       const simDelta = delta * this.simTimeScale;
@@ -4061,7 +4079,7 @@ export class Game {
     this.audio.play('ledger-open', 0.75);
     this.uiBridge.announce(this.megaprojectProgressLine(), this.timeAlive, null, 4.8);
     if (cost > 0) this.vfx.floatText(this.megaprojectTarget.position, `-${cost}`, '#a0522d');
-    this.recordCountyAction('fund_megaproject', { id: manifest.id, stage: project.stage, cost });
+    this.recordRunTapeAction({ type: 'context_action', action: 'fund' });
     this.publishDiagnostics();
     return true;
   }
@@ -5532,35 +5550,81 @@ export class Game {
     return { scoreAt, economySummary, runStats, score, scores };
   }
 
-  private recordCountyInput(intents: Intents): void {
-    if (!this.countyStandingsEnabled || this.countyInputLog.length >= MAX_PLAYBOOK_TICKS) return;
-    const sample = JSON.stringify([
-      this.simTick,
-      quantizePlaybookCoordinate(intents.move.x),
-      quantizePlaybookCoordinate(intents.move.y),
-      intents.confirm,
-      intents.upgrade,
-      intents.rotateBuild,
-      intents.weaponToggle,
-      intents.build,
-      intents.cancel,
-      intents.buildSlot,
-      intents.restart,
-      intents.pause,
-      quantizePlaybookCoordinate(this.aimPointerNdc.x),
-      quantizePlaybookCoordinate(this.aimPointerNdc.y),
-    ]);
-    const state = sample.slice(sample.indexOf(',') + 1);
-    if (state === this.countyInputLast) return;
-    // ponytail: shares the shipped ten-minute tape ceiling; stream a digest if longer contracts need full-run audits.
-    this.countyInputLast = state;
-    this.countyInputLog.push(sample);
+  private recordRunTapeInput(intents: Intents): void {
+    if (!this.state.simActive || (this.manualSimForTest && !this.manualAdvanceForTest)) return;
+    const slot = this.playbookReplay?.active ? this.playbookReplaySlot : this.mpLocalSlot;
+    const recordedIntents = this.mpActorIntents?.[slot] ?? intents;
+    const actions = this.mpActionsThisTick.filter((entry) => entry.slot === slot).map((entry) => entry.action);
+    const actor = this.actors[slot] ?? this.localActor;
+    const recorder = this.runTapeRecorder;
+    recorder?.record(recordedIntents, actor.group.position, actions, slot);
+    for (let otherSlot = 0; otherSlot < (this.mpActorIntents?.length ?? 0); otherSlot += 1) {
+      const otherActor = this.actors[otherSlot];
+      const otherIntents = this.mpActorIntents?.[otherSlot];
+      if (otherSlot === slot || !otherActor || !otherIntents) continue;
+      recorder?.recordAdditional(
+        otherSlot,
+        otherIntents,
+        otherActor.group.position,
+        this.mpActionsThisTick.filter((entry) => entry.slot === otherSlot).map((entry) => entry.action),
+      );
+    }
+    if (recorder?.truncated) recorder.freezeEventLog(this.runTapeEventLog());
   }
 
-  private recordCountyAction(type: string, value: unknown): void {
-    if (!this.countyStandingsEnabled || this.countyInputLog.length >= MAX_PLAYBOOK_TICKS) return;
-    this.countyInputLog.push(JSON.stringify([this.simTick, type, value]));
-    this.countyInputLast = '';
+  private recordRunTapeAction(action: LockstepAction): void {
+    this.runTapeRecorder?.recordAction(action);
+  }
+
+  private startRunTape(): void {
+    this.lastRunTape = null;
+    this.runTapeRecorder = new RunTapeRecorder({
+      contract: this.activeContract.id,
+      seed: getDebugSeed() ?? 'gold-rush',
+      difficulty: this.difficultyPreset,
+      start: { x: this.localActor.group.position.x, z: this.localActor.group.position.z },
+    });
+  }
+
+  private finishRunTape(reason: RunEndReason, at: number, summary: RunSummary): void {
+    const recorder = this.runTapeRecorder;
+    if (!recorder) return;
+    const tape = recorder.finish(this.runTapeOutcome(reason, at, summary), this.runTapeEventLog());
+    appendRunTape(localStorage, tape);
+    this.lastRunTape = tape;
+  }
+
+  private runTapeOutcome(reason: RunEndReason, at: number, summary: RunSummary): RunTapeOutcome {
+    return {
+      reason,
+      secured: reason === 'secured' || reason === 'rush',
+      waves: Math.max(0, Math.floor(summary.deepestWave ?? summary.wavesSurvived)),
+      timeAlive: Math.max(0, at),
+      gold: Math.max(0, Math.floor(summary.goldPanned)),
+    };
+  }
+
+  private runTapeEventLog() {
+    return {
+      probes: this.runTapeRecorder?.eventLog().probes ?? [],
+      kills: this.kills,
+      gold: this.economy.gold,
+      wave: this.waveSystem.diagnostics.wave,
+      economy: summarizeLog(this.economy.log),
+    };
+  }
+
+  private keepTapeOptions() {
+    return {
+      tapeKept: this.lastRunTape?.kept === true,
+      onKeepTape: () => {
+        const tape = this.lastRunTape ?? readRunTapes(localStorage)[0] ?? null;
+        if (!tape || !keepRunTape(localStorage, tape.id)) return false;
+        this.lastRunTape = tape;
+        tape.kept = true;
+        return true;
+      },
+    };
   }
 
   private async submitCountyStanding(score: ScoreRecord): Promise<void> {
@@ -5574,14 +5638,23 @@ export class Game {
       // A non-member pinned seed is neither comparable bench data nor live play; the owner may reverse this submission policy.
       if (pinnedSeed !== null && !(benchSeeds as Record<string, string[]>)[this.activeContract.id]?.includes(pinnedSeed)) return;
       const seed = pinnedSeed ?? 'gold-rush';
+      const reason: RunEndReason = this.state.current === 'dead'
+        ? this.runManager?.diagnostics.rush ? 'rush' : 'death'
+        : 'secured';
+      const tape = this.runTapeRecorder?.snapshot(
+        {
+          reason,
+          secured: true,
+          waves: Math.max(0, Math.floor(score.deepestWave ?? score.waves)),
+          timeAlive: Math.max(0, score.timeAlive),
+          gold: Math.max(0, Math.floor(score.gold)),
+        },
+        this.runTapeEventLog(),
+      );
+      const submittedTape = tape ? submittedRunTape(tape) : undefined;
       const [seedHash, inputLogHash] = await Promise.all([
         sha256Hex(seed),
-        sha256Hex(JSON.stringify({
-          version: 1,
-          contract: descriptor,
-          difficultyPreset: this.difficultyPreset,
-          entries: this.countyInputLog,
-        })),
+        sha256Hex(JSON.stringify(tape?.inputLog ?? [])),
       ]);
       await fetch(gameApiUrl('/api/standings'), {
         method: 'POST',
@@ -5603,6 +5676,7 @@ export class Game {
           seedMode: pinnedSeed === null ? 'live' : 'bench',
           seedHash,
           inputLogHash,
+          ...(submittedTape ? { tape: submittedTape } : {}),
         }),
         keepalive: true,
       });
@@ -5959,7 +6033,7 @@ export class Game {
       this.mpQueuedActions.push({ type: 'pick_upgrade', id: picked.id });
       return;
     }
-    if (this.progression.applyUpgrade(picked.id)) this.recordCountyAction('pick_upgrade', picked.id);
+    if (this.progression.applyUpgrade(picked.id)) this.recordRunTapeAction({ type: 'pick_upgrade', id: picked.id });
   }
 
   private advanceSimForTest(seconds: number, onTick?: (sample: GrSimulationTickSample) => void): void {
@@ -6042,8 +6116,6 @@ export class Game {
       this.runManager?.diagnostics.secured === true && this.runManager.diagnostics.lastRunEndedReason === 'secured';
     this.timeAlive = 0;
     this.simTick = 0;
-    this.countyInputLog.length = 0;
-    this.countyInputLast = '';
     this.wrangle.reset();
     this.decay.reset();
     this.e6TileConsumers.reset();
@@ -6232,6 +6304,7 @@ export class Game {
     this.setMultiplayerDeathActions(onDone, onSecondary);
     this.deathOverlay.show(this.deathLedger, scores.slice(0, 5), matchingScore?.at ?? 0, {
       ...this.researchOverlayOptions(1),
+      ...this.keepTapeOptions(),
       actionLabel: 'Return to Town',
       secondaryActionLabel: 'Try Again',
       runStats,
@@ -7055,7 +7128,7 @@ export class Game {
       this.updateActionActorPosition();
       if (this.buildSystem.confirm(this.timeAlive)) {
         discoverLedgerBuildable(id);
-        this.recordCountyAction('place_build', {
+        this.recordRunTapeAction({ type: 'place_build',
           id,
           position: build.ghostPos,
           rotationSteps: build.ghostRotationSteps,
@@ -7110,7 +7183,7 @@ export class Game {
   private upgradeBuilding(id: BuildableId, index: number): boolean {
     const upgraded = this.buildSystem.upgradeBuilding(id, index, this.timeAlive, this.actionActor.group.position);
     if (!upgraded) return false;
-    this.recordCountyAction('upgrade_building', { id, index });
+    this.recordRunTapeAction({ type: 'context_action', action: 'upgrade', target: { id, index } });
     this.syncStockpileHoldings();
     this.publishDiagnostics();
     return true;
@@ -7119,7 +7192,7 @@ export class Game {
   private demolishBuilding(id: BuildableId, index: number): boolean {
     const removed = this.buildSystem.demolish(id, index, this.timeAlive, this.actionActor.group.position);
     if (!removed) return false;
-    this.recordCountyAction('demolish_building', { id, index });
+    this.recordRunTapeAction({ type: 'context_action', action: 'demolish', target: { id, index } });
     this.syncStockpileHoldings();
     this.publishDiagnostics();
     return true;

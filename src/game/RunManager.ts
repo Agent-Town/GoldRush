@@ -42,6 +42,8 @@ type RunManagerHost = {
 type InstallOptions = {
   storage?: MetaProgressStorage;
   onSecureChoice?: (choice: 'bank' | 'rush') => boolean;
+  onRunStarted?: () => void;
+  onRunEnded?: (run: { reason: RunEndReason; at: number; summary: RunSummary }) => void;
 };
 
 export type RunManagerSuspendState = {
@@ -233,6 +235,7 @@ export class RunManager {
     this.securedAtWave = 0;
     this.securedResultAt = null;
     this.hideSecuredChip();
+    this.options.onRunStarted?.();
     this.host.events.emit({ type: 'run_started', at, runId: this.runId });
     if (this.pendingSuspendState) {
       this.applySuspendRunState(this.pendingSuspendState);
@@ -270,6 +273,7 @@ export class RunManager {
         ...(this.paidRunId === this.runId && this.lastPayout ? { metaEarned: { ...this.lastPayout } } : {}),
       });
     }
+    this.options.onRunEnded?.({ reason, at, summary });
     this.host.events.emit({
       type: 'run_ended',
       at,

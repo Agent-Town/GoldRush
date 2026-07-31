@@ -1302,6 +1302,10 @@ interface Window {
       getText: (name: string) => string | null;
       remove: (name: string) => boolean;
     };
+    runTape: {
+      list: () => import('./game/RunTape').RunTape[];
+      replayEventLogHash: () => string;
+    };
     placeBeacon: () => boolean;
     oldDigger: {
       interact: () => boolean;

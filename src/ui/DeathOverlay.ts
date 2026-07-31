@@ -77,6 +77,8 @@ export type DeathOverlayOptions = {
   research?: DeathResearchState;
   onResearchPick?: (id: string) => DeathResearchState;
   onResearchSkip?: () => DeathResearchState;
+  tapeKept?: boolean;
+  onKeepTape?: () => boolean;
   onDone?: () => void;
   onSecondaryAction?: () => void;
 };
@@ -206,6 +208,13 @@ export class DeathOverlay {
           <ol data-best-claims>${this.renderScores(scores, currentAt)}</ol>
         </section>
         <div class="death-overlay__actions">
+          ${
+            this.options.onKeepTape
+              ? `<button class="death-overlay__button death-overlay__button--secondary" type="button" data-testid="keep-run-tape"${
+                  this.options.tapeKept ? ' disabled' : ''
+                }>${this.options.tapeKept ? 'Tape kept' : 'Keep this tape'}</button>`
+              : ''
+          }
           <button class="death-overlay__button" type="button" data-testid="stake-again" data-action="finish">${
             this.options.actionLabel ?? 'Try Again'
           }</button>
@@ -417,6 +426,7 @@ export class DeathOverlay {
       return;
     }
 
+    if (target.closest('[data-testid="keep-run-tape"]')) this.keepTape();
     if (target.closest('[data-action="secondary"]')) this.secondaryAction();
     if (target.closest('[data-action="finish"]')) this.finish();
   };
@@ -472,6 +482,19 @@ export class DeathOverlay {
       return;
     }
     this.onStakeAgain();
+  }
+
+  private keepTape(): void {
+    const button = this.root.querySelector<HTMLButtonElement>('[data-testid="keep-run-tape"]');
+    if (!this.options.onKeepTape?.()) {
+      if (button) button.textContent = 'Could not keep tape';
+      return;
+    }
+    this.options.tapeKept = true;
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Tape kept';
+    }
   }
 
   private skipPendingResearch(): void {
