@@ -62,13 +62,15 @@ run_case() {
     current) printf '{"builds":["test-build"]}' > "$TMP/state.json" ;;
     stale) printf '{"builds":["old-build"]}' > "$TMP/state.json" ;;
     retry) printf '{"builds":["old-build","test-build"]}' > "$TMP/state.json" ;;
+    late) printf '{"builds":["old-build","old-build","old-build","old-build","test-build"]}' > "$TMP/state.json" ;;
     http500) printf '{"status":500}' > "$TMP/state.json" ;;
   esac
   started="$(date +%s)"
   set +e
   PATH="$TMP/bin:$PATH" STUB_CALLS="$TMP/calls" STUB_NPM_RC="$npm_rc" STUB_WRANGLER_RC="$wrangler_rc" \
     STUB_WRANGLER_URL="$wrangler_url" CLOUDFLARE_API_TOKEN="$token" CF_PAGES_COMMIT_SHA=test-build \
-    GR_PAGES_PRODUCTION_URL="$ALIAS_URL" bash "$TMP/repo/scripts/deploy.sh" $mode >/dev/null 2>&1
+    GR_PAGES_PRODUCTION_URL="$ALIAS_URL" GR_DEPLOY_VERIFY_SLEEPS='0 0 0 0 0 0' \
+    bash "$TMP/repo/scripts/deploy.sh" $mode >/dev/null 2>&1
   local actual_rc=$?
   set -e
   elapsed=$(($(date +%s) - started))
@@ -91,16 +93,20 @@ NODE
       grep -F "VERIFIED published test-build at $ALIAS_URL" "$TMP/repo/logs/deploy.log"
       ;;
     alias-stale)
-      grep -F "UNVERIFIED: uploaded test-build but $ALIAS_URL/version.json says old-build" "$TMP/repo/logs/deploy.log"
+      grep -F "UNVERIFIED after 7 attempts over ~0s: uploaded test-build, alias still reports old-build." "$TMP/repo/logs/deploy.log"
       grep -E 'VERIFY attempt' "$TMP/repo/logs/deploy.log"
       ;;
     alias-http-500)
-      grep -F "UNVERIFIED: uploaded test-build but $ALIAS_URL/version.json says unreachable" "$TMP/repo/logs/deploy.log"
+      grep -F "UNVERIFIED after 7 attempts over ~0s: uploaded test-build, alias still reports unreachable." "$TMP/repo/logs/deploy.log"
       grep -E 'VERIFY attempt' "$TMP/repo/logs/deploy.log"
       ;;
     alias-retry)
       [ "$(grep -c 'VERIFY attempt' "$TMP/repo/logs/deploy.log")" -eq 2 ] || { echo 'alias-retry did not stop at the first match' >&2; exit 1; }
       grep -E 'VERIFY attempt|VERIFIED published' "$TMP/repo/logs/deploy.log"
+      ;;
+    alias-late-promotion)
+      [ "$(grep -c 'VERIFY attempt' "$TMP/repo/logs/deploy.log")" -eq 5 ] || { echo 'alias-late-promotion did not reach the fifth attempt' >&2; exit 1; }
+      grep -E 'VERIFY attempt 5/7|VERIFIED published' "$TMP/repo/logs/deploy.log"
       ;;
     wrangler-no-url)
       grep -F 'FAILED: pages deploy — wrangler exited 0 but published no URL — see logs/deploy.log' "$TMP/repo/logs/deploy.log"
@@ -118,9 +124,12 @@ run_case default-skip '' '' 0 0 0 skipped ''
 run_case default-build-red '' fake-test-token 3 0 0 build_failed ''
 run_case default-deploy-red '' fake-test-token 0 4 0 deploy_failed ''
 run_case alias-current --strict fake-test-token 0 0 0 deployed https://stub-gold-rush.pages.dev current
+run_case alias-late-promotion --strict fake-test-token 0 0 0 deployed https://stub-gold-rush.pages.dev late
 run_case alias-stale --strict fake-test-token 0 0 7 deploy_unverified https://stub-gold-rush.pages.dev stale
 run_case alias-http-500 --strict fake-test-token 0 0 7 deploy_unverified https://stub-gold-rush.pages.dev http500
 run_case alias-retry --strict fake-test-token 0 0 0 deployed https://stub-gold-rush.pages.dev retry
 run_case wrangler-no-url --strict fake-test-token 0 0 4 deploy_failed '' current no
 
-echo 'deploy contract PASS (production alias current/stale/500/retry/no-url; strict 0/2/3/4/7; default failures return 0)'
+grep -Fq 'VERIFY_SLEEPS="${GR_DEPLOY_VERIFY_SLEEPS:-10 15 20 30 45 60}"' "$ROOT/scripts/deploy.sh"
+echo 'PASS default verify schedule (7 attempts; sleeps 10/15/20/30/45/60; ~180s)'
+echo 'deploy contract PASS (production alias current/stale/500/retry/late-promotion/no-url; strict 0/2/3/4/7; default failures return 0)'

@@ -113,7 +113,14 @@ if [ "$DEPLOY_RC" -ne 0 ] || [ -z "$URL" ]; then
 fi
 
 note "DEPLOYED ok $URL"
-for ATTEMPT in 1 2 3; do
+VERIFY_SLEEPS="${GR_DEPLOY_VERIFY_SLEEPS:-10 15 20 30 45 60}"
+read -r -a VERIFY_SLEEP_SCHEDULE <<< "$VERIFY_SLEEPS"
+VERIFY_ATTEMPTS=$(( ${#VERIFY_SLEEP_SCHEDULE[@]} + 1 ))
+VERIFY_WAIT_SECONDS=0
+for SLEEP_SECONDS in "${VERIFY_SLEEP_SCHEDULE[@]}"; do
+  VERIFY_WAIT_SECONDS=$((VERIFY_WAIT_SECONDS + SLEEP_SECONDS))
+done
+for ((ATTEMPT = 1; ATTEMPT <= VERIFY_ATTEMPTS; ATTEMPT++)); do
   if LIVE_BUILD="$(node -e '
     fetch(process.argv[1], { signal: AbortSignal.timeout(20000) })
       .then(response => {
@@ -123,12 +130,12 @@ for ATTEMPT in 1 2 3; do
       .then(version => process.stdout.write(String(version.build ?? "missing")))
       .catch(() => process.exit(1));
   ' "$PAGES_PRODUCTION_URL/version.json" 2>/dev/null)"; then :; else LIVE_BUILD="unreachable"; fi
-  note "VERIFY attempt $ATTEMPT/3: $PAGES_PRODUCTION_URL/version.json says $LIVE_BUILD"
+  note "VERIFY attempt $ATTEMPT/$VERIFY_ATTEMPTS: $PAGES_PRODUCTION_URL/version.json says $LIVE_BUILD"
   if [ "$LIVE_BUILD" = "$PUBLISHED_BUILD" ]; then
     note "VERIFIED published $PUBLISHED_BUILD at $PAGES_PRODUCTION_URL"
     finish deployed 0 "$URL"
   fi
-  [ "$ATTEMPT" -eq 3 ] || sleep 15
+  [ "$ATTEMPT" -gt "${#VERIFY_SLEEP_SCHEDULE[@]}" ] || sleep "${VERIFY_SLEEP_SCHEDULE[$((ATTEMPT - 1))]}"
 done
-note "UNVERIFIED: uploaded $PUBLISHED_BUILD but $PAGES_PRODUCTION_URL/version.json says $LIVE_BUILD"
+note "UNVERIFIED after $VERIFY_ATTEMPTS attempts over ~${VERIFY_WAIT_SECONDS}s: uploaded $PUBLISHED_BUILD, alias still reports $LIVE_BUILD. This is either a slow alias promotion or a genuinely stale alias — re-probe the alias and run 'wrangler pages deployment list' before treating it as a failure."
 finish deploy_unverified 7 "$URL"
