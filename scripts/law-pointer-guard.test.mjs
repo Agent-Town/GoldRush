@@ -155,3 +155,45 @@ test('GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red na
   assert.match(r.stdout, /POINTER DRIFT/);
   assert.match(r.stdout, /tasks\/goals\.json\[ledger-leaf\]/);
 });
+
+test('BACKLOG COORDINATE BAN: live leaves red, --update cannot bury it, terminal history stays out', (t) => {
+  const goals = (blockedReason, status = 'blocked', id = 'backlog-coordinate-leaf') => ({
+    version: 1,
+    goals: [{
+      id: 'fixture-goal',
+      title: 'fixture',
+      tasks: [{ id, taskFile: 'fixture.md', status, blockedReason }],
+    }],
+  });
+
+  const full = fixture(t, {
+    law: 'stub\n',
+    target: TARGET,
+    goals: goals('Owner gate at tasks/BACKLOG.md:42.'),
+  });
+  let r = run(full);
+  assert.equal(r.status, 1, 'a live tasks/BACKLOG.md coordinate must fail');
+  assert.match(r.stdout, /BACKLOG COORDINATE/);
+  assert.match(r.stdout, /tasks\/goals\.json\[backlog-coordinate-leaf\]/);
+
+  r = run(full, '--update');
+  assert.equal(r.status, 1, '--update must reject rather than baseline the banned shape');
+  assert.equal(run(full).status, 1, 'the banned shape must still fail after --update');
+
+  const bare = fixture(t, {
+    law: 'stub\n',
+    target: TARGET,
+    goals: goals('Owner gate at BACKLOG:42.'),
+  });
+  r = run(bare);
+  assert.equal(r.status, 1, 'a live bare BACKLOG coordinate must fail');
+  assert.match(r.stdout, /"BACKLOG:42"/);
+
+  const terminal = fixture(t, {
+    law: 'stub\n',
+    target: TARGET,
+    goals: goals('Historical pointer tasks/BACKLOG.md:42.', 'merged', 'terminal-leaf'),
+  });
+  r = run(terminal);
+  assert.equal(r.status, 0, r.stdout);
+});

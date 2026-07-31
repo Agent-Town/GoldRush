@@ -23,6 +23,8 @@
  * leaves, it resolves the file, reads that line, and fingerprints it (whitespace-normalised
  * sha256/12). Historical note fields and terminal leaves stay out. A changed fingerprint is a RED
  * that says "re-verify this pointer and re-base it", nothing more.
+ *   - A BACKLOG line coordinate in a live blockedReason is always a RED. Findings are prepended
+ *     to that ledger, so its coordinates are unmaintainable by construction; cite by content.
  *   - It does NOT judge whether the cited line SUPPORTS the claim made about it. Only a
  *     reader can do that. It detects that the ground moved, which is when a reader is needed.
  *   - It does NOT scan prose F-IDs, §-refs, session ids, or dates — only file:line shapes
@@ -90,6 +92,7 @@ const KNOWN_ROTTEN = new Map([
 // exactly like code pointers do. They were invisible here until s1278, which is why
 // s1275 had to hand-check SKILL.md:33 the guard was built to make unnecessary.
 const POINTER = /`?([A-Za-z0-9_./-]+\.(?:mjs|ts|tsx|js|sh|json|md))`?\s*:\s*(\d+)/g;
+const BACKLOG_COORDINATE = /\b((?:tasks\/)?BACKLOG(?:\.md)?\s*:\s*\d+)\b/g;
 const SEARCH_DIRS = ['', 'scripts', 'src', 'e2e', 'functions'];
 
 const REPORT = process.argv.includes('--report');
@@ -193,7 +196,11 @@ function collect() {
       return;
     }
     if (typeof node.taskFile === 'string' && !terminal.has(node.status) && typeof node.blockedReason === 'string') {
-      for (const [, cited, lineNo] of node.blockedReason.matchAll(POINTER)) {
+      for (const [, coordinate] of node.blockedReason.matchAll(BACKLOG_COORDINATE)) {
+        found.push({ surface: GOAL_LEDGER, id: `${GOAL_LEDGER}[${node.id}]`, coordinate, state: 'backlog-coordinate' });
+      }
+      const resolvablePointers = node.blockedReason.replace(BACKLOG_COORDINATE, '');
+      for (const [, cited, lineNo] of resolvablePointers.matchAll(POINTER)) {
         add(GOAL_LEDGER, cited, lineNo, `${GOAL_LEDGER}[${node.id}] -> ${cited}:${lineNo}`);
       }
     }
@@ -205,8 +212,16 @@ function collect() {
 
 const pointers = collect();
 const baseline = fs.existsSync(BASELINE) ? JSON.parse(fs.readFileSync(BASELINE, 'utf8')) : { pointers: {} };
+const backlogProblems = pointers
+  .filter((p) => p.state === 'backlog-coordinate')
+  .map((p) => `BACKLOG COORDINATE  ${p.id} — "${p.coordinate}". Cite BACKLOG by CONTENT (a grep target); write historical line numbers as prose. Coordinates into this file rot on every fire that files a finding.`);
 
 if (UPDATE) {
+  if (backlogProblems.length) {
+    console.log(`law-pointer-guard: baseline NOT re-based — ${backlogProblems.length} BACKLOG coordinate problem(s):`);
+    for (const problem of backlogProblems) console.log(`  ${problem}`);
+    process.exit(1);
+  }
   const next = { pointers: {} };
   for (const p of pointers) {
     if (p.state !== 'resolved') continue;
@@ -218,9 +233,10 @@ if (UPDATE) {
   process.exit(0);
 }
 
-const problems = [];
+const problems = [...backlogProblems];
 let checked = 0;
 for (const p of pointers) {
+  if (p.state === 'backlog-coordinate') continue;
   if (p.state === 'surface-missing') { problems.push(`LAW SURFACE MISSING: ${p.surface}`); continue; }
   if (p.state === 'illustrative') {
     if (REPORT) console.log(`  illustrative  ${p.id}\n      reason: ${ILLUSTRATIVE.get(p.key)}`);
