@@ -139,7 +139,7 @@ cites `deploy.sh:90-113`, and that region is **untouched** by this merge (the di
 
 ## Findings
 
-### 🟡 F-1308-1 (non-blocking, low) — a whitespace-only `GR_DEPLOY_VERIFY_SLEEPS` aborts the script under `set -u`
+### ✅ F-1308-1 (raised AND cured in this fire) — a whitespace-only `GR_DEPLOY_VERIFY_SLEEPS` aborts the script under `set -u`
 
 `scripts/deploy.sh:5` is `set -u`, and this machine's `/usr/bin/env bash` is **GNU bash 3.2.57**,
 where expanding an **empty array** under `set -u` is an error rather than an empty expansion.
@@ -151,7 +151,7 @@ file — not a paraphrase):
 |---|---|---|
 | unset | 0 | `attempts=7 wait=180` ✅ |
 | `""` (empty) | 0 | `attempts=7 wait=180` — **falls back to default** |
-| `" "` (whitespace only) | **127** | `bash: VERIFY_SLEEP_SCHEDULE[@]: unbound variable` |
+| `" "` (whitespace only) | **abort** | `deploy.sh:122: VERIFY_SLEEP_SCHEDULE[@]: unbound variable` |
 | `"10 15 20"` | 0 | `attempts=4 wait=45` ✅ |
 
 ⚠️ **I raised this as an empty-string hazard first, and my own probe refuted it.** `${VAR:-default}`
@@ -159,12 +159,36 @@ uses `:-`, which substitutes the default for **unset *or* empty** — so the obv
 already safe. Only a **whitespace-only** value survives the fallback and produces an empty array.
 Recording the refutation as well as the finding so nobody re-raises the empty-string version.
 
-**Why it is non-blocking:** the variable is a test-only seam, the harness always sets six numeric
-values, and production never sets it at all — so the path is unreachable in every current caller.
-**Why it is worth a line anyway:** the failure mode is an abrupt `exit 127` *after a successful
-upload*, which bypasses `finish` entirely and would produce exactly the dishonest-outcome class this
-script exists to prevent. A one-line guard (`[ "${#VERIFY_SLEEP_SCHEDULE[@]}" -gt 0 ] || VERIFY_SLEEP_SCHEDULE=(10 15 20 30 45 60)`)
-would close it. Deliberately **not** fixed in this drain — out of the slice's firewall.
+**Why it did not block the merge:** the variable is a test-only seam, the harness always sets six
+numeric values, and production never sets it at all — so the path is unreachable from every current
+caller.
+
+⚠️ **And my stated exit code was wrong — my own end-to-end probe corrected it.** I wrote `rc=127`;
+driving the *actual unguarded script* (not the extracted lines) gives **rc=1**. 127 was an artifact
+of running the block under `bash -c`. But the forensic probe also **confirmed the part that mattered**:
+
+```
+direct rc=1
+stderr: deploy.sh: line 122: VERIFY_SLEEP_SCHEDULE[@]: unbound variable
+deploy-result.json exists: false
+log tail: [deploy] ... DEPLOYED ok https://stub.pages.dev
+```
+
+**No `logs/deploy-result.json` is written at all**, and the log's final line is `DEPLOYED ok` — a
+deploy that looks successful and renders no verdict. That is exactly the dishonest-outcome class
+`deploy.sh` exists to prevent, which is why it earned a fix rather than a deferral.
+
+✅ **CURED IN THIS FIRE** (`scripts/deploy.sh:118-125` + `scripts/test-deploy-contract.sh`): the
+script re-seeds the default schedule when the parsed array is empty. `${#arr[@]}` is safe on an
+empty array under `set -u`; only `"${arr[@]}"` is not — verified before relying on it. The contract
+suite gained an 11th `run_case` parameter and an `alias-whitespace-sleeps` case.
+
+**Held to the same two-direction bar as the slice it came from:**
+
+| Arm | Result |
+|---|---|
+| new case vs. `669cb046` (guard **absent**) | **rc=1** — `alias-whitespace-sleeps: expected rc 0, got 1` |
+| new case vs. cured tree (guard **present**) | **rc=0** — `PASS alias-whitespace-sleeps (rc=0, 0s)`, full suite 6.38 s |
 
 ### ⓘ F-1308-2 (informational) — the default schedule is asserted by grep, not by behaviour
 

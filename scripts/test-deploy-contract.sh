@@ -56,6 +56,9 @@ chmod +x "$TMP/bin/npm" "$TMP/bin/wrangler" "$TMP/repo/scripts/deploy.sh"
 run_case() {
   local name="$1" mode="$2" token="$3" npm_rc="$4" wrangler_rc="$5" expected_rc="$6" outcome="$7" url="$8"
   local alias_mode="${9:-current}" wrangler_url="${10:-yes}" started elapsed
+  # 11th arg overrides the sleep schedule so a case can exercise degenerate input
+  # (F-1308-1). Default stays '0 0 0 0 0 0' — six zeroes, the 7-probe window at no cost.
+  local sleeps="${11:-0 0 0 0 0 0}"
   rm -f "$TMP/repo/logs/deploy.log" "$TMP/repo/logs/deploy-result.json" "$TMP/calls"
   printf '0' > "$TMP/count"
   case "$alias_mode" in
@@ -69,7 +72,7 @@ run_case() {
   set +e
   PATH="$TMP/bin:$PATH" STUB_CALLS="$TMP/calls" STUB_NPM_RC="$npm_rc" STUB_WRANGLER_RC="$wrangler_rc" \
     STUB_WRANGLER_URL="$wrangler_url" CLOUDFLARE_API_TOKEN="$token" CF_PAGES_COMMIT_SHA=test-build \
-    GR_PAGES_PRODUCTION_URL="$ALIAS_URL" GR_DEPLOY_VERIFY_SLEEPS='0 0 0 0 0 0' \
+    GR_PAGES_PRODUCTION_URL="$ALIAS_URL" GR_DEPLOY_VERIFY_SLEEPS="$sleeps" \
     bash "$TMP/repo/scripts/deploy.sh" $mode >/dev/null 2>&1
   local actual_rc=$?
   set -e
@@ -129,7 +132,11 @@ run_case alias-stale --strict fake-test-token 0 0 7 deploy_unverified https://st
 run_case alias-http-500 --strict fake-test-token 0 0 7 deploy_unverified https://stub-gold-rush.pages.dev http500
 run_case alias-retry --strict fake-test-token 0 0 0 deployed https://stub-gold-rush.pages.dev retry
 run_case wrangler-no-url --strict fake-test-token 0 0 4 deploy_failed '' current no
+# F-1308-1: a whitespace-only override survives ${VAR:-default} and yields an EMPTY array.
+# On bash 3.2 under `set -u` that aborted deploy.sh (rc=1) AFTER upload, writing no
+# deploy-result.json. deploy.sh now re-seeds the default; this case reds if that guard is lost.
+run_case alias-whitespace-sleeps --strict fake-test-token 0 0 0 deployed https://stub-gold-rush.pages.dev current yes ' '
 
 grep -Fq 'VERIFY_SLEEPS="${GR_DEPLOY_VERIFY_SLEEPS:-10 15 20 30 45 60}"' "$ROOT/scripts/deploy.sh"
 echo 'PASS default verify schedule (7 attempts; sleeps 10/15/20/30/45/60; ~180s)'
-echo 'deploy contract PASS (production alias current/stale/500/retry/late-promotion/no-url; strict 0/2/3/4/7; default failures return 0)'
+echo 'deploy contract PASS (production alias current/stale/500/retry/late-promotion/whitespace-sleeps/no-url; strict 0/2/3/4/7; default failures return 0)'

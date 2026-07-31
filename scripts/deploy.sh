@@ -115,6 +115,16 @@ fi
 note "DEPLOYED ok $URL"
 VERIFY_SLEEPS="${GR_DEPLOY_VERIFY_SLEEPS:-10 15 20 30 45 60}"
 read -r -a VERIFY_SLEEP_SCHEDULE <<< "$VERIFY_SLEEPS"
+# F-1308-1: ${VAR:-default} substitutes on unset OR empty, but NOT on whitespace-only,
+# which leaves an EMPTY array. This is /usr/bin/env bash 3.2 on the deploy host, where
+# expanding an empty array under `set -u` (line 5) is an unbound-variable ERROR, not an
+# empty expansion — so the "for SLEEP_SECONDS in" below aborted the script (rc=1) AFTER a
+# successful upload: measured s1308, no logs/deploy-result.json was written at all and the
+# log's last line read "DEPLOYED ok", i.e. it looked like a success with no verdict.
+# `${#arr[@]}` is safe on an empty array; only "${arr[@]}" is not. Measured s1308.
+if [ "${#VERIFY_SLEEP_SCHEDULE[@]}" -eq 0 ]; then
+  read -r -a VERIFY_SLEEP_SCHEDULE <<< "10 15 20 30 45 60"
+fi
 VERIFY_ATTEMPTS=$(( ${#VERIFY_SLEEP_SCHEDULE[@]} + 1 ))
 VERIFY_WAIT_SECONDS=0
 for SLEEP_SECONDS in "${VERIFY_SLEEP_SCHEDULE[@]}"; do
