@@ -3,6 +3,10 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   ...baseConfig,
+  // The base config ignores this spec on purpose (F-1296-3) and that ignore rides in on the spread
+  // above — measured s1301: without this line THIS config collects 0 tests and `npm run test:release`
+  // passes vacuously. The owning config must re-open what the base one closes.
+  testIgnore: ['**/*.rig.ts'],
   testMatch: /release-build\.spec\.ts/,
   projects: baseConfig.projects?.filter((project) => project.name === 'desktop-chrome' || project.name === 'mobile-chrome'),
   use: { ...baseConfig.use, baseURL: 'http://127.0.0.1:5190' },

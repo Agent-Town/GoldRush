@@ -3,6 +3,9 @@ import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
   ...baseConfig,
+  // See playwright.release.config.ts — the base ignore (F-1296-3) rides in on the spread and would
+  // silence this config's own spec. Measured s1301: 0 tests collected without this line.
+  testIgnore: ['**/*.rig.ts'],
   testMatch: /release-base-path\.spec\.ts/,
   projects: baseConfig.projects?.filter((project) => project.name === 'desktop-chrome' || project.name === 'mobile-chrome'),
   use: { ...baseConfig.use, baseURL: 'http://127.0.0.1:5191/goldrush/' },

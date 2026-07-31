@@ -22,9 +22,29 @@ const captureRun = process.env.GR_CAPTURE_RUN === '1';
 // this, but an arm that passes NO flag no longer means "6" in a fire — it means 1.
 const isFireShell = process.env.CLAUDE_CONFIG_DIR !== undefined;
 
+// F-1296-3 (s1296 measured it on itself; class fix s1301): three specs are claimed EXCLUSIVELY by
+// another config's `testMatch`, and each needs a harness THIS config cannot provide. Nothing used to
+// stop the default harness collecting them anyway — `testDir: './e2e'` swept them in, they failed for
+// environmental reasons, and the reds looked exactly like ordinary tree reds (same reporter, same
+// shape, no diagnostic saying "wrong harness"). s1296 followed the house adjacency recipe
+// (`grep -rln` over e2e/), pulled in release-build.spec.ts, and manufactured 8 reds that were its
+// instrument rather than the tree. Only reading the OTHER config revealed it.
+//   release-build.spec.ts      → playwright.release.config.ts      (release build in dist/, preview @5190)
+//   release-base-path.spec.ts  → playwright.release-base.config.ts (release under /goldrush/ @5191)
+//   accounts-sync.spec.ts      → playwright.accounts.config.ts     (wrangler accounts worker + KV @8788)
+// Each was verified s1301 to be collected by THIS config and to require a server this config never
+// starts — coverage is not lost, it moves to the owning config (`npm run test:release`, etc.).
+// ⚠️ Adding a spec here REMOVES it from the default gate: only ever list a spec whose owning config
+// you have read and whose harness this one provably cannot satisfy.
+const claimedByAnotherConfig = [
+  '**/release-build.spec.ts',
+  '**/release-base-path.spec.ts',
+  '**/accounts-sync.spec.ts',
+];
+
 export default defineConfig({
   testDir: './e2e',
-  testIgnore: captureRun ? [] : ['**/*.rig.ts'],
+  testIgnore: captureRun ? [] : ['**/*.rig.ts', ...claimedByAnotherConfig],
   testMatch: captureRun ? ['**/*.rig.ts'] : undefined,
   timeout: 30_000,
   workers: isFireShell ? 1 : undefined,
