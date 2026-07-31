@@ -4,7 +4,9 @@ import test from 'node:test';
 
 const consentSource = readFileSync(new URL('../src/agent/AgentConsent.ts', import.meta.url), 'utf8');
 const toolSurfaceSource = readFileSync(new URL('../src/agent/ToolSurface.ts', import.meta.url), 'utf8');
+const standingOrdersSource = readFileSync(new URL('../src/agent/StandingOrders.ts', import.meta.url), 'utf8');
 const level = (source, ability) => Number(source.match(new RegExp(`\\{[^}]*id: '${ability}'[^}]*level: (\\d),`))?.[1]);
+const verbLevel = (verb) => Number(standingOrdersSource.match(new RegExp(`order\\.verb === '${verb}'\\) return (\\d);`))?.[1]);
 
 test('agent consent keeps the ruled pan rung and shipped repair rung', () => {
   assert.deepEqual(
@@ -15,4 +17,8 @@ test('agent consent keeps the ruled pan rung and shipped repair rung', () => {
 
 test('tool surface keeps auto-pan at the ruled rung', () => {
   assert.equal(level(toolSurfaceSource, 'auto_pan'), 2);
+});
+
+test('standing orders keep harvest at rung 2 and build at rung 3', () => {
+  assert.deepEqual({ HARVEST: verbLevel('HARVEST'), BUILD: verbLevel('BUILD') }, { HARVEST: 2, BUILD: 3 });
 });

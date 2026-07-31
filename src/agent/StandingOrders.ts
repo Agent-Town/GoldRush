@@ -343,7 +343,8 @@ export function validateStandingOrders(input: unknown): ValidationResult {
 }
 
 export function requiredLevel(order: StandingOrder): AgentPermissionLevel {
-  if (order.verb === 'BUILD' || order.verb === 'HARVEST') return 3;
+  if (order.verb === 'BUILD') return 3;
+  if (order.verb === 'HARVEST') return 2;
   return 2;
 }
 
