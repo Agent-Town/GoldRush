@@ -63,3 +63,11 @@ TASK.md
 
 # build scratch — wrangler regenerates these per dev run (F-1154-1, s1154)
 .wrangler/
+
+# Python bytecode caches (F-1298-1, s1298). env/goldrush-verifiers is the repo's first tracked
+# Python package and its lane commit carried two committed .pyc blobs (cpython-311, ~30 KB) because
+# nothing ignored them. They are interpreter- and version-specific build debris, they rot against the
+# 3.10+ floor the package declares, and they are regenerated on every import. The two from that
+# commit were withheld at the drain rather than merged; this rule stops the class, not the instance.
+__pycache__/
+*.py[cod]
