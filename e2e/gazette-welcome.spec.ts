@@ -13,6 +13,12 @@ const BEATS = [
 ] as const;
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
+type NewsieDriftSample = {
+  anchor: { x: number; z: number; elapsed: number } | null;
+  releaseObservedElapsed: number | null;
+  peak: number;
+  done: boolean;
+};
 
 test.describe.configure({ timeout: 90_000 });
 
@@ -78,14 +84,48 @@ test('the Gazette welcome fires once, walks skippably, and retriggers through th
     await expect(welcome).toHaveAttribute('data-welcome-arrived', 'true');
     await expect(page.getByTestId('town-welcome-skip')).toBeVisible();
     if (index === 0) await shot(page, testInfo, 'walk-beat');
-    const newsieBefore = index === BEATS.length - 1
-      ? await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position)
-      : undefined;
+    if (index === BEATS.length - 1) {
+      await page.evaluate(() => {
+        const trackedWindow = window as typeof window & { __GR_NEWSIE_DRIFT__?: NewsieDriftSample };
+        const sample: NewsieDriftSample = {
+          anchor: null,
+          releaseObservedElapsed: null,
+          peak: 0,
+          done: false,
+        };
+        trackedWindow.__GR_NEWSIE_DRIFT__ = sample;
+        const tick = () => {
+          const diagnostics = window.__GR_TOWN_DIAGNOSTICS__!;
+          const newsie = diagnostics.actors.find((actor) => actor.id === 'newsie')!;
+          if (!diagnostics.welcomeFollowsPlayer) {
+            sample.releaseObservedElapsed ??= diagnostics.elapsed;
+            if (!sample.anchor && sample.releaseObservedElapsed === diagnostics.elapsed) {
+              sample.anchor = { ...newsie.position, elapsed: diagnostics.elapsed };
+            }
+            if (sample.anchor) {
+              sample.peak = Math.max(sample.peak, Math.hypot(
+                newsie.position.x - sample.anchor.x,
+                newsie.position.z - sample.anchor.z,
+              ));
+              // 0.08 s plus one clamped 0.05 s frame at 7 u/s peaks at 0.91 < 1.
+              if (diagnostics.elapsed - sample.anchor.elapsed >= 0.08) sample.done = true;
+            } else if (diagnostics.elapsed - sample.releaseObservedElapsed >= 0.08) {
+              sample.done = true;
+            }
+          }
+          if (!sample.done) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }
     await page.getByTestId('town-welcome-next').click();
-    if (newsieBefore) {
-      await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.welcomeFollowsPlayer)).toBe(false);
-      const newsieAfter = await page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__!.actors.find((actor) => actor.id === 'newsie')!.position);
-      expect(Math.hypot(newsieAfter.x - newsieBefore.x, newsieAfter.z - newsieBefore.z)).toBeLessThan(1);
+    if (index === BEATS.length - 1) {
+      await page.waitForFunction(() => (window as typeof window & { __GR_NEWSIE_DRIFT__?: NewsieDriftSample }).__GR_NEWSIE_DRIFT__?.done);
+      const drift = await page.evaluate(
+        () => (window as typeof window & { __GR_NEWSIE_DRIFT__?: NewsieDriftSample }).__GR_NEWSIE_DRIFT__,
+      );
+      expect.soft(drift?.anchor, 'the sampler must observe the newsie release').toBeTruthy();
+      expect.soft(drift!.peak).toBeLessThan(1);
     }
   }
   await expect(welcome).toHaveCount(0);
