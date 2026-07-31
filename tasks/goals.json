@@ -3891,7 +3891,9 @@
               "id": "f1288-3-place-building-roundtrip",
               "title": "F-1288-3 repair: AgentConsent registers five abilities but two serialization boundaries enumerate four. RunSuspend.decodeAgent (RunSuspend.ts:2656-2661) returns consent.abilities without place_building while captureFutureState (AgentConsent.ts:90) emits it, so RunSuspend.ts:944 -> restoreFutureState -> AgentConsent.ts:56 stores false; since 65d15a91 made requiredAbility(BUILD) read that ability, resuming a saved run silently revokes building consent at the fresh-start default of true. LockstepClient.ts:1052 drops place_building on the multiplayer wire the same way. Carry it with the light_duty === true idiom already at :2660. TRAP: do NOT add it to the :2578 strictness check or every legacy save fails validation; the legacy-restore test must stay {ok:true, placeBuilding:false}.",
               "taskFile": "lane-b-f1288-3-place-building-roundtrip.md",
-              "status": "planned"
+              "status": "stopped",
+              "review": "reviews/f1288-3-place-building-roundtrip.md",
+              "stopNote": "STOPPED at scope-0 s1288: worktrees/lane-b is checked out at lane/m4, 2 ahead / 87 behind main, and that base predates place_building entirely, so the capture->decode->restore control has no subject. NO mergeHash -- a lawful STOP ships no work and mergeHash is a guard input (F-1179-5). The defect is REAL and re-confirmed on origin/main by the runner itself. Blocker is F-1288-4 (frozen lane), not this master: the task is correct and re-dispatchable UNCHANGED once lane-b is losslessly refreshed to main. Tip archived archive/lane-b-s1288-preflight-tip (230dd49f)."
             }
           ]
         }
