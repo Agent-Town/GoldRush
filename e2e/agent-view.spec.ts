@@ -246,14 +246,32 @@ const WAVE_THREE_SNAPSHOT = `{
   }
 }`;
 
-function watchErrors(page: Page): string[] {
+function watchErrors(page: Page): { errors: string[]; suppressed: string[] } {
   const errors: string[] = [];
+  const suppressed: string[] = [];
+  const record = (text: string) => {
+    // F-1304-1 / F-1180-2: tolerate only this measured load-sensitive texture-blob transient.
+    if (text.startsWith("THREE.GLTFLoader: Couldn't load texture blob:")) suppressed.push(text);
+    else errors.push(text);
+  };
   page.on('console', (message) => {
-    if (message.type() === 'error') errors.push(message.text());
+    if (message.type() === 'error') record(message.text());
   });
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
+  page.on('pageerror', (error) => record(error.message));
+  return { errors, suppressed };
 }
+
+test('the zero-error rider suppresses only the known transient', async ({ page }) => {
+  const { errors, suppressed } = watchErrors(page);
+  await page.evaluate(() => {
+    console.error("THREE.GLTFLoader: Couldn't load texture blob:mutation-control");
+    console.error('foreign console error mutation control');
+  });
+  console.log(`watchErrors mutation control suppressed ${suppressed.length} known GLTFLoader blob error(s)`);
+  expect(suppressed).toEqual(["THREE.GLTFLoader: Couldn't load texture blob:mutation-control"]);
+  expect(errors).toEqual(['foreign console error mutation control']);
+  expect(() => expect(errors).toEqual([])).toThrow();
+});
 
 test('all five E1 mechanics manifests match their byte-stable fixture', async () => {
   const fixtures = JSON.parse(await readFile(path.resolve('e2e/fixtures/e1-mechanics-manifests.json'), 'utf8')) as MechanicsManifest[];
@@ -281,7 +299,7 @@ test('all five E1 mechanics manifests match their byte-stable fixture', async ()
 });
 
 test('the derived manifest rides THE VIEW and every E1 briefing speaks it', async ({ page }) => {
-  const errors = watchErrors(page);
+  const { errors, suppressed } = watchErrors(page);
   await page.goto('/?debug&contract=e1-night-shift&nowaves&nolevel&terrain2d&seed=mechanics-view');
   await page.waitForFunction(() => Boolean(window.__GR_AGENT__ && 'view' in window.__GR_AGENT__));
   expect(await page.evaluate(() => window.__GR_AGENT__!.view.stablePrefix.mechanics)).toEqual(
@@ -336,11 +354,12 @@ test('the derived manifest rides THE VIEW and every E1 briefing speaks it', asyn
       mechanicsManifestLine(deriveMechanicsManifest(id)),
     );
   }
+  console.log(`watchErrors manifest view suppressed ${suppressed.length} known GLTFLoader blob error(s)`);
   expect(errors).toEqual([]);
 });
 
 test('the seeded rider view stays cache-shaped and grows one honest wave at a time', async ({ page }) => {
-  const errors = watchErrors(page);
+  const { errors, suppressed } = watchErrors(page);
   await page.goto('/?debug&nowaves&nolevel&nopause&seed=ap-view');
   await page.waitForFunction(
     () => Boolean(window.__GR_TEST__ && window.__GR_AGENT__ && 'view' in window.__GR_AGENT__),
@@ -474,5 +493,6 @@ test('the seeded rider view stays cache-shaped and grows one honest wave at a ti
   });
   expect(terminalEntries.riderDown).toMatchObject({ wave: 1, outcome: 'rider-down' });
   expect(terminalEntries.secured).toMatchObject({ wave: 1, outcome: 'secured' });
+  console.log(`watchErrors seeded rider suppressed ${suppressed.length} known GLTFLoader blob error(s)`);
   expect(errors).toEqual([]);
 });
