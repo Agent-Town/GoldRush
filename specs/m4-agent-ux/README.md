@@ -11,7 +11,8 @@ Verified current state (2026-07-07): HUD chip is display-only ("the Prospector �
 Open: **G key** or click/tap the HUD chip. Close: G/Esc/outside-tap. Pauses nothing (it's a ledger page, not a menu — glanceable mid-wave).
 Contents, ledger-styled:
 1. Portrait (batch-008) + name + current level in plain words.
-2. **The ladder**, four rungs, each one line: L0 suggest-only (watches, comments) · L1 collect & carry (XP motes, dropped gold) · L2 tend & repair (walls, buildings) · L3 work the claim (pan, haul to stockpile). Earned rungs show a grant/revoke toggle; unearned show "earned at agent level N" + how the track grows (victories).
+2. **The ladder**, four rungs, each one line: L0 suggest-only (watches, comments) · L1 collect & carry (XP motes, dropped gold) · L2 tend, repair & work the claim (walls, buildings, pan, haul to stockpile) · L3 build (place buildings — spends gold). Earned rungs show a grant/revoke toggle; unearned show "earned at agent level N" + how the track grows (victories).
+Rungs for pan and build set by owner ruling 2026-07-30 ("harvesting is the hero's basic verb"; "building spends gold").
 3. **Abilities at your level**: checkboxes (auto-collect / auto-repair / auto-pan …) — these are the SAME policy switches BT-04's homestead automation consumes; build once.
 4. **Receipts, readable**: the feed becomes stacked lines (newest first, ~8 visible): time · verb · outcome in ledger voice ("02:14 — panned the east sluice: +6 gold"). Replaces the run-on `agentFeed` sentence.
 5. Mobile: chip tap opens the same panel full-width bottom-sheet; 44px targets.

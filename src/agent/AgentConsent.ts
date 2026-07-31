@@ -12,7 +12,7 @@ export const AGENT_ABILITIES: readonly AgentAbilityDef[] = [
   { id: 'auto_collect', level: 1, label: 'Let the Prospector gather loose XP and dropped gold' },
   { id: 'auto_repair', level: 1, label: 'Let the Prospector tend walls' },
   { id: 'light_duty', level: 1, label: 'Let the Prospector light the trail' },
-  { id: 'auto_pan', level: 3, label: 'Let the Prospector work claim pans' },
+  { id: 'auto_pan', level: 2, label: 'Let the Prospector work claim pans' },
 ];
 
 export type AgentConsentSnapshot = {

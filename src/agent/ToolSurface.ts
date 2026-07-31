@@ -375,7 +375,7 @@ function implementedCapabilities(game: AgentGameAdapter): readonly AgentCapabili
   if (typeof game.panAt === 'function') {
     capabilities.push({
       id: 'auto_pan',
-      level: 3,
+      level: 2,
       label: 'Let the Prospector work claim pans',
       tools: ['et.goldrush.pan_at'],
     });
