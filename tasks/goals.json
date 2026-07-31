@@ -3976,6 +3976,15 @@
               "status": "merged",
               "mergeHash": "0ef80c1b3c421991f8862369bf6f2532144414ba",
               "taskFile": "20260731-170244-lane-run-tape.md"
+            },
+            {
+              "id": "ap-11-mechanics-manifest",
+              "title": "AP-11: every contract declares its own language. deriveMechanicsManifest(contractId) built ONLY from sim/contract data (interactables, operations, special rules, wave posting) — no hand-written entries, so a mechanic the deriver cannot see does not exist. Rides THE VIEW stable prefix + the contract briefing surface; five E1 manifests committed as a determinism fixture. WHY: specs/agent-play/README.md AP-11 (owner ruling 2026-07-31) — round 2 night-shift wall (reviews/standing-orders-rehearsal-r2.md: \"the darkness needs a verb\") is an undeclared-vocabulary bug, not a difficulty feature.",
+              "taskFile": "lane-mechanics-manifest.md",
+              "lane": "lane-a",
+              "status": "building",
+              "authoredBy": "attended (AP-11 ladder)",
+              "authorNotes": "REGISTERED RETROACTIVELY by s1304, not authored by it. The master was attended-authored and queued to lane-a WITHOUT a goal leaf, so scripts/drain-block-check.mjs answered \"? UNKNOWN — no goal leaf matches\" at rc=0 for the done-move — indistinguishable from CLEAR to anyone branching on the exit code (F-1303-2, the first live instance since the s1273 correction). s1303 declined the drain for exactly this reason and named registration as the precondition; s1304 registers the leaf FIRST, then re-runs the check and expects a name-matched CLEAR. Status \"building\": the runner shipped lane/m3@87b1a1cd and the master is done-moved (tasks/done/20260731-215132-lane-mechanics-manifest.md); the drain that follows flips this leaf to merged with its 40-hex hash in the same commit (Goal Registration Law)."
             }
           ]
         }
