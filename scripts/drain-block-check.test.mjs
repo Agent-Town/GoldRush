@@ -32,6 +32,7 @@ function fixture(leaf) {
 function fixtureN(tasks) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-drain-block-'));
   fs.mkdirSync(path.join(dir, 'tasks'));
+  fs.mkdirSync(path.join(dir, 'scripts'));
   fs.writeFileSync(
     path.join(dir, 'tasks', 'goals.json'),
     JSON.stringify({
@@ -39,7 +40,33 @@ function fixtureN(tasks) {
       goals: [{ id: 'factory-infra', title: 'Factory Infra', subgoals: [{ id: 'guards', title: 'Guards', tasks }] }],
     }),
   );
+  fs.writeFileSync(
+    path.join(dir, 'scripts', 'citation-title-baseline.json'),
+    JSON.stringify({ grandfathered: {} }),
+  );
   return dir;
+}
+
+function citationFixture(t, text, baseline = {}) {
+  const taskFile = 'lane-a-citation-gate.md';
+  const dir = fixture({
+    id: 'citation-gate',
+    title: 'Citation gate fixture',
+    taskFile,
+    status: 'queued',
+  });
+  cleanup(t, dir);
+  fs.mkdirSync(path.join(dir, 'e2e'));
+  fs.writeFileSync(
+    path.join(dir, 'e2e', 'citation-gate.spec.ts'),
+    `test('the citation remains recoverable after lines move', () => {});\n`,
+  );
+  fs.writeFileSync(path.join(dir, 'tasks', taskFile), text);
+  fs.writeFileSync(
+    path.join(dir, 'scripts', 'citation-title-baseline.json'),
+    JSON.stringify({ grandfathered: baseline }),
+  );
+  return { dir, taskFile };
 }
 
 function run(dir, ...args) {
@@ -126,6 +153,39 @@ test('--queue keeps its own wording and its own reason line', (t) => {
   assert.match(r.stdout, /⛔ CLOSED — DO NOT QUEUE/);
   assert.match(r.stdout, /left no commit to refuse it with/);
   assert.match(r.stdout, /stopNote: STOPPED LAWFULLY AT SCOPE 3/);
+});
+
+test('F-1311-2: --queue refuses a fresh bare citation and names the repair', (t) => {
+  const { dir, taskFile } = citationFixture(t, '`e2e/citation-gate.spec.ts:1`\n');
+  const r = run(dir, taskFile, '--queue');
+  assert.equal(r.status, 1, `fresh bare citation must refuse, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /tasks\/lane-a-citation-gate\.md::e2e\/citation-gate\.spec\.ts:1/);
+  assert.match(r.stdout, /Fix: quote the test title beside the citation/);
+});
+
+test('F-1311-2: --queue accepts the same citation with its test title', (t) => {
+  const { dir, taskFile } = citationFixture(
+    t,
+    '`e2e/citation-gate.spec.ts:1` ("the citation remains recoverable after lines move")\n',
+  );
+  const r = run(dir, taskFile, '--queue');
+  assert.equal(r.status, 0, `titled citation must clear, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /✅ CLEAR/);
+});
+
+test('F-1311-2: --queue respects the grandfathered baseline', (t) => {
+  const key = 'tasks/lane-a-citation-gate.md::e2e/citation-gate.spec.ts:1';
+  const { dir, taskFile } = citationFixture(t, '`e2e/citation-gate.spec.ts:1`\n', { [key]: 1 });
+  const r = run(dir, taskFile, '--queue');
+  assert.equal(r.status, 0, `grandfathered citation must clear, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /✅ CLEAR/);
+});
+
+test('F-1311-2: the drain arm remains unchanged for a fresh bare citation', (t) => {
+  const { dir, taskFile } = citationFixture(t, '`e2e/citation-gate.spec.ts:1`\n');
+  const r = run(dir, taskFile);
+  assert.equal(r.status, 0, `drain arm must remain clear, got rc=${r.status}\n${r.stdout}${r.stderr}`);
+  assert.match(r.stdout, /✅ CLEAR/);
 });
 
 test('a closed leaf whose reason sits under a session-stamped key is still explained', (t) => {

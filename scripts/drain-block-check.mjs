@@ -18,16 +18,18 @@
 // EXIT CODES
 //   0  CLEAR    — a leaf matched and it is neither blocked nor terminal-closed (or --all found
 //                 nothing blocked)
-//   1  BLOCKED  — DO NOT DRAIN. The reason is printed. TWO refusal classes land here: an owner
+//   1  BLOCKED  — DO NOT DRAIN/QUEUE. The reason is printed. Three refusal classes land here: an owner
 //                 BLOCK (status="blocked", lifted by the owner only) and a terminal-CLOSED leaf
 //                 (status in TERMINAL_CLOSED_STATUSES — the question is dead or parked, so there is
-//                 nothing to land; added on the drain path by F-1248-1, see :216).
+//                 nothing to land; added on the drain path by F-1248-1), plus a new bare citation
+//                 in the named master on --queue (F-1311-2).
 //   2  UNKNOWN  — no goal leaf matched. Advisory by default (Goal Registration Law says one
 //                 should exist, so this is itself a bookkeeping finding); fails under --strict.
 
-import { readFileSync, existsSync } from 'node:fs';
-import { execFileSync } from 'node:child_process';
-
+import { copyFileSync, existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, symlinkSync, writeFileSync } from 'node:fs';
+import { execFileSync, spawnSync } from 'node:child_process';
+import { basename, join, relative, resolve } from 'node:path';
+import { tmpdir } from 'node:os';
 const GOALS = 'tasks/goals.json';
 const BACKLOG = 'tasks/BACKLOG.md';
 
@@ -324,9 +326,7 @@ function main() {
   const branchFallback = branchShaped && !queueTaskFile;
   if (!leaf || branchFallback) {
     console.log(`  ? UNKNOWN — no ${branchFallback ? 'BLOCKED ' : ''}goal leaf matches "${target}".`);
-    if (branchFallback) console.log(`    (branch names are not registered as leaves — check the done-move filename too)`);
-    console.log(`    Goal Registration Law: every authored master registers a leaf in ${GOALS}.`);
-    console.log(`    A missing leaf is a bookkeeping finding, not a clearance.`);
+    console.log(`${branchFallback ? '    (branch names are not registered as leaves — check the done-move filename too)\n' : ''}    Goal Registration Law: every authored master registers a leaf in ${GOALS}.\n    A missing leaf is a bookkeeping finding, not a clearance.`);
     process.exit(strict ? 2 : 0);
   }
 
@@ -402,6 +402,8 @@ function main() {
       console.log(`    If you believe the question is live again, author a SUCCESSOR; do not revive this leaf.`);
       process.exit(1);
     }
+    const citationStatus = checkQueuedMasterCitations(target);
+    if (citationStatus !== 0) process.exit(citationStatus);
   }
   console.log(`  ✅ CLEAR — ${leaf.taskFile} [${leaf.id}] status="${leaf.status}"`);
   if (hits.length > 1) {
@@ -415,3 +417,53 @@ function main() {
 }
 
 main();
+
+function checkQueuedMasterCitations(target) {
+  const repoRoot = process.cwd();
+  const direct = resolve(repoRoot, target);
+  const source = existsSync(direct) ? direct : resolve(repoRoot, 'tasks', basename(target));
+  const taskFile = relative(repoRoot, source);
+  const baseline = resolve(repoRoot, 'scripts', 'citation-title-baseline.json');
+  if (!taskFile.startsWith(`tasks/`) || !existsSync(source) || !existsSync(baseline)) {
+    console.error(`drain-block-check: cannot citation-check queued master "${target}".`);
+    console.error(`  Expected the master under tasks/ and the citation baseline under scripts/.`);
+    return 2;
+  }
+
+  const root = mkdtempSync(join(tmpdir(), 'gold-rush-queue-citations-'));
+  try {
+    mkdirSync(join(root, 'tasks'), { recursive: true });
+    mkdirSync(join(root, 'e2e'), { recursive: true });
+    mkdirSync(join(root, taskFile, '..'), { recursive: true });
+    copyFileSync(source, join(root, taskFile));
+
+    const e2e = resolve(repoRoot, 'e2e');
+    if (existsSync(e2e)) {
+      for (const entry of readdirSync(e2e)) symlinkSync(join(e2e, entry), join(root, 'e2e', entry));
+    }
+    writeFileSync(
+      join(root, 'e2e', '__citation-sentinel.spec.ts'),
+      `test('citation sentinel title stays resolvable', () => {});\n`,
+    );
+    writeFileSync(
+      join(root, 'tasks', '__citation-sentinel.md'),
+      '`e2e/__citation-sentinel.spec.ts:1` ("citation sentinel title stays resolvable")\n',
+    );
+
+    execFileSync('git', ['init', '-q'], { cwd: root });
+    execFileSync('git', ['add', '--', taskFile, 'tasks/__citation-sentinel.md'], { cwd: root });
+    const citationGuard = decodeURIComponent(new URL('./citation-title-guard.mjs', import.meta.url).pathname);
+    const result = spawnSync(
+      process.execPath,
+      [citationGuard, '--root', root, '--baseline', baseline],
+      { cwd: root, encoding: 'utf8', timeout: 30_000 },
+    );
+    if (result.status !== 0) {
+      process.stdout.write(result.stdout || '');
+      process.stderr.write(result.stderr || '');
+    }
+    return result.status ?? 2;
+  } finally {
+    rmSync(root, { recursive: true, force: true });
+  }
+}
