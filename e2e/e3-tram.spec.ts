@@ -1,15 +1,9 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const QUERY = '?debug&tram&nowaves&nolevel&nopause&seed=e3-tram';
 const ARTIFACT_DIR = 'artifacts/e3-tram';
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
@@ -18,7 +12,7 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
 }
 
 test('tram moves powered, holds cargo dark, and resumes on the authored loop', async ({ page }, testInfo) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await page.goto(`/${QUERY}`);
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.tram?.active === true && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const begin = page.getByRole('button', { name: 'Begin' });
@@ -65,5 +59,5 @@ test('tram moves powered, holds cargo dark, and resumes on the authored loop', a
   expect(loop.tram.trips).toBeGreaterThan(0);
   expect(loop.tram.progress).toBeLessThan(1);
   expect(loop.maxStep).toBeLessThan(3);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

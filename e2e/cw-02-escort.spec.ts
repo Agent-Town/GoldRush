@@ -2,19 +2,13 @@ import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY, listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const ARTIFACT_DIR = 'artifacts/cw-02-escort';
 const PYLONS = [
   [-12, -36], [-24, -20], [-28, 8],
   [12, -36], [24, -20], [28, 8],
 ] as const;
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
@@ -66,7 +60,7 @@ async function goToContractPage(page: Page, id: string): Promise<void> {
 
 test('board-selected Canyon escort delivers one capacitor crate through a repaired brown-out', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedVoltageTown(page);
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 24);
@@ -185,5 +179,5 @@ test('board-selected Canyon escort delivers one capacitor crate through a repair
       return entry.type === 'gold_granted' && entry.source === 'escort';
     }).length,
   }))).toMatchObject({ tram: { state: 'arrived', powered: true, trips: 1 }, payouts: 1 });
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

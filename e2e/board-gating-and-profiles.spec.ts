@@ -3,15 +3,9 @@ import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const ARTIFACT_DIR = path.resolve('artifacts/board-gating');
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function seedProfile(page: Page, epochId = 'epoch-1-frontier'): Promise<void> {
   await page.goto('/');
@@ -59,7 +53,7 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
 
 test('the board hides future epochs and keeps reached-era contract gates', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
 
   await seedProfile(page);
   await openBoard(page);
@@ -110,5 +104,5 @@ test('the board hides future epochs and keeps reached-era contract gates', async
   await expect(page.getByTestId('contract-chapter-count')).toHaveText('2 / 2');
   await shot(page, testInfo, 'steamworks-profiles');
 
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
 import { PROFILE_KEY, type ProfileState } from '../src/game/ProfileStorage';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 type HeroAge = 'midlife' | 'silver' | 'elder';
 
@@ -10,13 +11,6 @@ const AGE_CASES: ReadonlyArray<{ era: number; age: HeroAge }> = [
   { era: 8, age: 'silver' },
   { era: 10, age: 'elder' },
 ];
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function seedProfile(page: Page): Promise<void> {
   await page.addInitScript((profileKey) => {
@@ -44,7 +38,7 @@ async function bootRun(page: Page, era: number, extra = ''): Promise<void> {
 
 for (const { era, age } of AGE_CASES) {
   test(`era ${era} resolves the ${age} sheet in run and town`, async ({ page }) => {
-    const errors = watchErrors(page);
+    const watch = watchErrors(page);
     await seedProfile(page);
     await bootRun(page, era);
     const expected = processedSheetExists(age) ? age : 'young';
@@ -54,20 +48,20 @@ for (const { era, age } of AGE_CASES) {
     await page.reload();
     await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
     await expect(page.locator('#game-canvas')).toHaveAttribute('data-hero-sheet', expected, { timeout: 15_000 });
-    expect(errors).toEqual([]);
+    expectNoConsoleErrors(watch);
   });
 }
 
 test('missing aged cells fall back silently to the young sheet', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page);
   await bootRun(page, 4, '&noheroageart');
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-hero-sheet', 'young', { timeout: 15_000 });
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('era 1 keeps the existing young hero binding', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page);
   await bootRun(page, 1);
   await expect(page.locator('#game-canvas')).toHaveAttribute('data-hero-sheet', 'young', { timeout: 15_000 });
@@ -77,5 +71,5 @@ test('era 1 keeps the existing young hero binding', async ({ page }) => {
   await page.keyboard.up('KeyS');
   expect(source).toContain('char-hero-sheet-');
   expect(source).not.toMatch(/midlife|silver|elder/);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

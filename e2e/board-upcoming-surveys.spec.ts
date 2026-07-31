@@ -3,15 +3,9 @@ import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const ARTIFACT_DIR = path.resolve('artifacts/board-upcoming');
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function openSteamworksBoard(page: Page): Promise<void> {
   await page.goto('/');
@@ -42,7 +36,7 @@ async function openSteamworksBoard(page: Page): Promise<void> {
 }
 
 test('Steamworks board keeps pending surveys and Voltage secrets out of the DOM', async ({ page }, testInfo) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await openSteamworksBoard(page);
 
   await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(2);
@@ -58,5 +52,5 @@ test('Steamworks board keeps pending surveys and Voltage secrets out of the DOM'
   await expect(page.getByTestId('contract-next-epoch')).toHaveCount(0);
   await mkdir(ARTIFACT_DIR, { recursive: true });
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-board.png`), fullPage: true });
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

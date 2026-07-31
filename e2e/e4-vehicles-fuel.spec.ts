@@ -1,25 +1,19 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
+import { expectNoConsoleErrors, watchErrors, type ErrorWatch } from './support/console-watch';
 
 const QUERY = '?debug&vehicles&nowaves&nolevel&nopause&seed=e4-vehicles';
 const ARTIFACT_DIR = 'artifacts/e4-vehicles-fuel';
 
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
-
-async function openHarness(page: Page): Promise<string[]> {
-  const errors = watchErrors(page);
+async function openHarness(page: Page): Promise<ErrorWatch> {
+  const watch = watchErrors(page);
   await page.goto(`/${QUERY}`);
   await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.vehicle?.active === true && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const begin = page.getByRole('button', { name: 'Begin' });
   if (await begin.isVisible()) await begin.click();
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.runState)).toBe('playing');
   await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
-  return errors;
+  return watch;
 }
 
 async function harvest(page: Page, nodeIndex: number): Promise<void> {
@@ -34,7 +28,7 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
 }
 
 test('tar harvest fuels the HAULER, dry-halts it, and resumes without a jump', async ({ page }, testInfo) => {
-  const errors = await openHarness(page);
+  const watch = await openHarness(page);
   await harvest(page, 0);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.fuel)).toMatchObject({ tar: 0, stored: 12, harvestedNodes: 1, refinedTar: 3 });
 
@@ -59,11 +53,11 @@ test('tar harvest fuels the HAULER, dry-halts it, and resumes without a jump', a
   expect(resumed.fuel.drawn).toBeCloseTo((70 / 9) * 3, 5);
   expect(resumed.calls).toBeLessThan(200);
   await shot(page, testInfo, 'fuel-resume');
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('fixed-step fuel and vehicle results are deterministic', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   const run = async () => {
     await page.goto(`/${QUERY}`);
     await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.vehicle?.active === true);
@@ -78,5 +72,5 @@ test('fixed-step fuel and vehicle results are deterministic', async ({ page }) =
     return page.evaluate(() => JSON.stringify({ fuel: window.__THREE_GAME_DIAGNOSTICS__!.fuel, vehicle: window.__THREE_GAME_DIAGNOSTICS__!.vehicle }));
   };
   expect(await run()).toBe(await run());
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

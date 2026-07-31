@@ -2,6 +2,7 @@ import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { researchStateKey } from '../src/meta/ResearchTree';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const FRONTIER = 'epoch-1-frontier';
 const STEAMWORKS = 'epoch-2-steamworks';
@@ -9,13 +10,6 @@ const ATOMIC = 'epoch-6-atomic';
 const RED_FIELDS = 'epoch-9-redfields';
 const TOUR_PROFILE = 'tour';
 const OTHER_PROFILE = 'casey';
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function seedProfiles(page: Page, tourEpoch = STEAMWORKS): Promise<void> {
   await page.addInitScript(
@@ -45,7 +39,7 @@ async function seedProfiles(page: Page, tourEpoch = STEAMWORKS): Promise<void> {
 }
 
 test('an earlier era door overrides a later persisted tour era for this run', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfiles(page, RED_FIELDS);
   await page.goto('/?contract=e6-showroom&debug&era=6');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
@@ -70,11 +64,11 @@ test('an earlier era door overrides a later persisted tour era for this run', as
   expect(result.breadcrumb).toBe('6');
   expect(result.persistedEpoch).toBe(RED_FIELDS);
   expect(result.research.taken).toContain('sunline_beam');
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('debug era door arms E9 and grants its arsenal only to the active profile', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfiles(page);
   await page.goto('/?contract=e9-dome-basin&debug&era=9');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
@@ -106,11 +100,11 @@ test('debug era door arms E9 and grants its arsenal only to the active profile',
   expect(result.research.taken).toContain('terraform_cannon');
   expect(result.otherEpoch).toBe(FRONTIER);
   expect(result.otherResearch).toBeNull();
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('era parameter is inert without debug', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfiles(page);
   await page.goto('/?contract=e9-dome-basin&era=9');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
@@ -132,5 +126,5 @@ test('era parameter is inert without debug', async ({ page }) => {
   expect(result.breadcrumb).toBeNull();
   expect(result.activeEpoch).toBe(STEAMWORKS);
   expect(result.research).toBeNull();
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

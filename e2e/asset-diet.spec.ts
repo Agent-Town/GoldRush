@@ -3,9 +3,10 @@
 
 import { mkdir } from 'node:fs/promises';
 import path from 'node:path';
-import { expect, test, type Page } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
 import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const ARTIFACT_DIR = path.resolve('artifacts/asset-diet');
 const MAPS = [{ id: 'the-claim', era: 1 }, { id: 'e1-dry-gulch', era: 1 }] as const;
@@ -37,7 +38,7 @@ test.beforeEach(async ({ page }) => {
 
 test('dieted output keeps two terrain census views and town within screenshot tolerance', async ({ page }) => {
   test.setTimeout(90_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   for (const { id, era } of MAPS) {
     await page.goto(`/?debug&era=${era}&contract=${id}&nowaves&nolevel&nokill&nopause&tier=full&seed=asset-diet-${id}`);
     await page.waitForFunction(() => {
@@ -66,12 +67,12 @@ test('dieted output keeps two terrain census views and town within screenshot to
     threshold: 0.3,
     maxDiffPixelRatio: 0.15,
   });
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('honest town and claim cues appear while GLBs are throttled and leave at ready', async ({ page }, testInfo) => {
   test.setTimeout(90_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   const townResponses: number[] = [];
   let countTownTransfer = true;
   let townOrigin = '';
@@ -113,12 +114,5 @@ test('honest town and claim cues appear while GLBs are throttled and leave at re
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-claim-throttled.png`) });
   await expect.poll(() => page.locator('#game-canvas').getAttribute('data-asset-loading-state'), { timeout: 45_000 }).toBe('ready');
   await expect(cue).toBeHidden();
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}

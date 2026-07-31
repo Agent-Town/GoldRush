@@ -3,17 +3,11 @@ import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const SLOT = 'char.e2.rail_tough';
 const SHOTS = path.resolve('reviews/shots-e2-rail-tough-only-bind');
 const ROWS = { sw: 0, se: 1, nw: 2, ne: 3 } as const;
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function openHillMine(page: Page): Promise<void> {
   await page.goto('/');
@@ -83,7 +77,7 @@ async function openHillMine(page: Page): Promise<void> {
 
 test('plain Steamworks boot renders Rail Tough diagonal cells instead of cardinal aliases', async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await openHillMine(page);
   expect(new URL(page.url()).searchParams.has('debug')).toBe(false);
   const proof = await (await page.waitForFunction((slot) => {
@@ -110,5 +104,5 @@ test('plain Steamworks boot renders Rail Tough diagonal cells instead of cardina
   if (await page.getByTestId('story-beat-card').isVisible().catch(() => false)) await page.mouse.click(6, 6);
   await mkdir(SHOTS, { recursive: true });
   await page.screenshot({ path: path.join(SHOTS, `${testInfo.project.name}-plain-boot.png`), fullPage: false });
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

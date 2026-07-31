@@ -12,6 +12,7 @@ import {
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
 import { moveHeroTo } from './helpers/hero-approach';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const FRONTIER = 'epoch-1-frontier';
 const CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'] as const;
@@ -20,7 +21,7 @@ const SEEDED_KEY = 'gr.release-build.seeded';
 
 test('first player reaches textured town actors and places a Dry Gulch spring sluice', async ({ page }, testInfo) => {
   test.setTimeout(150_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await page.addInitScript(() => {
     if (sessionStorage.getItem('gr.release-build.first-player')) return;
     localStorage.clear();
@@ -93,24 +94,24 @@ test('first player reaches textured town actors and places a Dry Gulch spring sl
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostValid)).toBe(true);
   await canvas.dispatchEvent('click', { clientX: springRim.x, clientY: springRim.y });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.sluices)).toBe(1);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 for (const contractId of CONTRACTS) {
   test(`${contractId} boots through the E1 release door`, async ({ page }) => {
-    const errors = watchErrors(page);
+    const watch = watchErrors(page);
     await seedProfile(page, { contractId, unlocked: true });
     await page.goto(`/?contract=${contractId}`);
     await waitForContract(page, contractId);
     expect(await page.evaluate(() => window.__GR_TEST__)).toBeUndefined();
-    expect(errors).toEqual([]);
+    expectNoConsoleErrors(watch);
   });
 }
 
 test('the schoolhouse ledger opens clean on a progressed frontier save', async ({ page }) => {
   // Owner-found F-E1W-1: era-triggered dispatches referencing stripped epochs
   // ('unreleased-epoch') must publish as beyond-the-frontier, never throw.
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page, { unlocked: true });
   await page.goto('/');
   await page.getByTestId('start-menu-enter-town').click();
@@ -121,12 +122,12 @@ test('the schoolhouse ledger opens clean on a progressed frontier save', async (
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt)).toBe('schoolhouse');
   await page.getByTestId('town-open-schoolhouse').click();
   await page.waitForTimeout(500);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
   await expect(page.getByTestId('schoolhouse-close')).toBeVisible({ timeout: 10_000 });
 });
 
 test('debug and era query seams are inert', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page, { unlocked: true });
   await page.goto('/?debug&era=5&contract=e1-baron');
   await waitForContract(page, 'the-claim');
@@ -145,11 +146,11 @@ test('debug and era query seams are inert', async ({ page }) => {
     telemetry: 'undefined',
     seededEra: undefined,
   });
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('an imported later ledger heals to the frontier and plays', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page, { unlocked: true });
   await page.goto('/');
   await page.getByTestId('start-menu-profile').click();
@@ -180,37 +181,37 @@ test('an imported later ledger heals to the frontier and plays', async ({ page }
   await waitForContract(page, 'the-claim');
   expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey(importedId, ACTIVE_EPOCH_KEY))).toBe(FRONTIER);
   expect(await page.evaluate((key) => localStorage.getItem(key), profileDataKey(importedId, futureResearchKey))).not.toBeNull();
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('later flagship URLs decline to the Claim', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page, { unlocked: true });
   for (const contractId of ['e7-relay-valley', 'e10-last-claim']) {
     await page.goto(`/?contract=${contractId}`);
     await waitForContract(page, 'the-claim');
   }
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('a forged locked launch declines to the Claim', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page, { contractId: 'e1-baron', unlocked: false });
   await page.goto('/?contract=e1-baron');
   await waitForContract(page, 'the-claim');
   expect(await page.evaluate((key) => sessionStorage.getItem(key), LAUNCH_KEY)).toBeNull();
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('a legitimate suspend resumes its unlocked contract', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedProfile(page, { unlocked: true });
   await page.goto('/');
   // continueSavedRun stages the saved contract through this exact launch seam.
   await page.evaluate(([key, id]) => sessionStorage.setItem(key, id), [LAUNCH_KEY, 'e1-dry-gulch']);
   await page.goto('/?contract=e1-dry-gulch');
   await waitForContract(page, 'e1-dry-gulch');
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('dist has no later manifest ids or plate/GLB assets', () => {
@@ -338,11 +339,4 @@ async function aimBuildGhost(page: Page, target: { x: number; z: number }): Prom
   await sample(x, y);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.build.ghostPos)).toEqual(target);
   return { x, y };
-}
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
 }

@@ -1,6 +1,7 @@
 import { mkdir } from 'node:fs/promises';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
+import { expectNoConsoleErrors, watchErrors, type ErrorWatch } from './support/console-watch';
 
 const QUERY = '?debug&epoch=epoch-3-voltage&contract=e3-canyon-works&nowaves&nospawn&nolevel&nopause&seed=canyon-1';
 const ARTIFACT_DIR = 'artifacts/canyon-works';
@@ -15,21 +16,14 @@ test.beforeEach(async ({ page }) => page.addInitScript(({ key }) => {
   localStorage.setItem(key, 'epoch-3-voltage');
 }, { key: ACTIVE_EPOCH_KEY }));
 
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
-
-async function open(page: Page): Promise<string[]> {
-  const errors = watchErrors(page);
+async function open(page: Page): Promise<ErrorWatch> {
+  const watch = watchErrors(page);
   await page.goto(`/${QUERY}`);
   await page.waitForFunction(() => window.__GR_TEST__ && (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   const briefing = page.getByTestId('contract-briefing');
   if (await briefing.isVisible()) await page.getByTestId('contract-briefing-dismiss').click();
   await page.evaluate(() => window.__GR_TEST__!.setManualSim(true));
-  return errors;
+  return watch;
 }
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
@@ -38,7 +32,7 @@ async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void>
 }
 
 test('strings the gorge, holds the night, and restores a cut span', async ({ page }, testInfo) => {
-  const errors = await open(page);
+  const watch = await open(page);
   const contract = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.contract);
   expect(contract).toMatchObject({
     activeId: 'e3-canyon-works',
@@ -113,11 +107,11 @@ test('strings the gorge, holds the night, and restores a cut span', async ({ pag
     window.__GR_TEST__!.startWaveForTest(12);
   });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.run.secured)).toBe(true);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('keeps the Voltage era gate and saboteur ledger explicit', async ({ page }) => {
-  const errors = await open(page);
+  const watch = await open(page);
   const proof = await page.evaluate(async () => {
     const registry = (await import('../src/meta/ContractFamilies'));
     const contract = registry.loadContract('e3-canyon-works');
@@ -146,5 +140,5 @@ test('keeps the Voltage era gate and saboteur ledger explicit', async ({ page })
   });
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.canyonWorks?.failed)).toBe(true);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.run.secured)).toBe(false);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

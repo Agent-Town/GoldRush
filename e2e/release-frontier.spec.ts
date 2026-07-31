@@ -11,17 +11,11 @@ import {
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { MEGAPROJECT_STATE_KEY } from '../src/meta/Megaproject';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const FRONTIER = 'epoch-1-frontier';
 const STEAMWORKS = 'epoch-2-steamworks';
 const DEEPWATER = 'epoch-5-deepwater';
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function seedReadyFrontier(page: Page, url = '/'): Promise<void> {
   await page.addInitScript(
@@ -83,7 +77,7 @@ async function openTownSurface(page: Page, buildingId: 'schoolhouse' | 'tavern',
 }
 
 test('the E1 release frontier ends the Book at the horizon', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedReadyFrontier(page);
   await enterTown(page);
   await openTownSurface(page, 'schoolhouse', 'town-open-schoolhouse');
@@ -99,11 +93,11 @@ test('the E1 release frontier ends the Book at the horizon', async ({ page }) =>
   await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(1);
   await expect(page.getByTestId('contract-chapter-tab-epoch-2-steamworks')).toHaveCount(0);
   expect(await page.getByTestId('contract-board').innerHTML()).not.toContain(STEAMWORKS);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('turning the release frontier off restores the Stamp Mill arm', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedReadyFrontier(page);
   await page.evaluate(async () => {
     const { Balance } = (await Function('return import("/src/game/Balance.ts")')()) as typeof import('../src/game/Balance');
@@ -118,16 +112,16 @@ test('turning the release frontier off restores the Stamp Mill arm', async ({ pa
     const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
     return registry.activeEpochId();
   })).toBe(STEAMWORKS);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
 
 test('debug era doors bypass the release frontier', async ({ page }) => {
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedReadyFrontier(page, '/?debug&era=5&contract=e5-regatta&nowaves&nolevel&nopause&seed=release-frontier-debug');
   await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
   expect(await page.evaluate(async () => {
     const registry = (await Function('return import("/src/meta/ContractFamilies.ts")')()) as typeof import('../src/meta/ContractFamilies');
     return registry.activeEpochId();
   })).toBe(DEEPWATER);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

@@ -1,15 +1,9 @@
 import { expect, test, type Page } from '@playwright/test';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY, listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const SLUICE_BANK = { x: 24, z: 7 } as const;
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function seedPressureGardenWin(page: Page): Promise<void> {
   await page.goto('/');
@@ -57,7 +51,7 @@ async function goToContractPage(page: Page, id: string): Promise<void> {
 
 test('The Incline boots shipped data: upper cart, lower boss rail, and legal sluice bank', async ({ page }) => {
   test.setTimeout(60_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedPressureGardenWin(page);
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
@@ -126,5 +120,5 @@ test('The Incline boots shipped data: upper cart, lower boss rail, and legal slu
   expect(bossWindow.railcars).toHaveLength(3);
   expect(bossWindow.railcars.every((enemy) => enemy.bossGroupId === 'e2-incline:wave-12:railcar')).toBe(true);
   expect(bossWindow.railcars.every((enemy) => enemy.x > -13 && enemy.x < -11 && enemy.z < -40)).toBe(true);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });

@@ -3,16 +3,10 @@ import path from 'node:path';
 import { expect, test, type Page, type TestInfo } from '@playwright/test';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY, listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
+import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
 const ARTIFACT_DIR = path.resolve('artifacts/e2-pressure-garden');
 const SLUICE_BANK = { x: 18, z: 7 } as const;
-
-function watchErrors(page: Page): string[] {
-  const errors: string[] = [];
-  page.on('console', (message) => message.type() === 'error' && errors.push(message.text()));
-  page.on('pageerror', (error) => errors.push(error.message));
-  return errors;
-}
 
 async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
@@ -65,7 +59,7 @@ async function goToContractPage(page: Page, id: string): Promise<void> {
 
 test('Pressure Garden unlocks after Trestle and teaches the pressure loop', async ({ page }, testInfo) => {
   test.setTimeout(60_000);
-  const errors = watchErrors(page);
+  const watch = watchErrors(page);
   await seedTrestleWin(page);
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
@@ -156,5 +150,5 @@ test('Pressure Garden unlocks after Trestle and teaches the pressure loop', asyn
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.wave)).toBeGreaterThanOrEqual(12);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure.objective.complete)).toBe(true);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.run.secured)).toBe(true);
-  expect(errors).toEqual([]);
+  expectNoConsoleErrors(watch);
 });
