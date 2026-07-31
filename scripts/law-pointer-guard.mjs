@@ -19,9 +19,10 @@
  * guard — the catalogue's own words. This is the guard.
  *
  * WHAT IT CHECKS — AND WHAT IT DOES NOT.
- * For every `path:line` citation in the law surfaces it resolves the file, reads that line,
- * and fingerprints it (whitespace-normalised sha256/12). A changed fingerprint is a RED that
- * says "re-verify this pointer and re-base it", nothing more.
+ * For every `path:line` citation in the law surfaces, plus `blockedReason` on live blocked goal
+ * leaves, it resolves the file, reads that line, and fingerprints it (whitespace-normalised
+ * sha256/12). Historical note fields and terminal leaves stay out. A changed fingerprint is a RED
+ * that says "re-verify this pointer and re-base it", nothing more.
  *   - It does NOT judge whether the cited line SUPPORTS the claim made about it. Only a
  *     reader can do that. It detects that the ground moved, which is when a reader is needed.
  *   - It does NOT scan prose F-IDs, §-refs, session ids, or dates — only file:line shapes
@@ -29,6 +30,8 @@
  *   - ILLUSTRATIVE citations (a quoted EXAMPLE of what a premise looks like, a template
  *     placeholder) are excluded by name with a reason, never by pattern — the same
  *     grandfathering discipline as gate-caller-audit and citation-title-guard.
+ *   - KNOWN_ROTTEN goal-ledger citations are likewise excluded by name with a reason. They are
+ *     reported as rotten, never as `ok`, until the underlying diagnosis is re-derived.
  *   - KNOWN GAP, stated rather than papered over: shorthand coordinates with no file
  *     extension are NOT captured — CLAUDE.md §4.10b writes the scratch-sweep pair as
  *     "v2:76/v3:137", and `v3` matches no source extension. Resolving that shorthand needs a
@@ -68,11 +71,18 @@ const SURFACES = [
   '.claude/skills/author-task/SKILL.md',
   '.claude/skills/playtest-intake/SKILL.md',
 ];
+const GOAL_LEDGER = 'tasks/goals.json';
+const DRAIN_GUARD = 'scripts/drain-block-check.mjs';
 
 // Excluded by NAME with a reason. Never widen this by pattern.
 const ILLUSTRATIVE = new Map([
   ['AssayBench.ts:189', 'author-task §0.2 quotes it as an EXAMPLE of a task premise ("the bench is ?debug-gated at AssayBench.ts:189" — go LOOK). The line number is rhetorical, not a claim.'],
   ['e2e/foo.spec.ts:123', 'author-task §5 CITATION LAW template placeholder — a made-up spec showing the required shape.'],
+]);
+
+// Excluded by NAME with a reason. Never widen this by pattern.
+const KNOWN_ROTTEN = new Map([
+  [`${GOAL_LEDGER}[rf-34-hero-y-restore-roundtrip] -> Game.ts:6669`, 'The leaf says this diagnosis coordinate is knowingly rotten. Re-deriving the first divergent write requires rerunning the diagnosis, not guessing a nearby line.'],
 ]);
 
 // s1278 (F-1278-2): `md` added — law surfaces cite each OTHER by coordinate
@@ -90,6 +100,16 @@ function normalise(line) {
 }
 function fingerprint(line) {
   return crypto.createHash('sha256').update(normalise(line)).digest('hex').slice(0, 12);
+}
+
+function terminalStatuses() {
+  const source = fs.readFileSync(path.join(ROOT, DRAIN_GUARD), 'utf8');
+  const readSet = (name) => {
+    const definition = source.match(new RegExp(`(?:export\\s+)?const ${name} = new Set\\(\\[([^\\]]*)\\]\\)`))?.[1];
+    if (!definition) throw new Error(`Cannot read ${name} from ${DRAIN_GUARD}`);
+    return [...definition.matchAll(/'([^']+)'/g)].map((match) => match[1]);
+  };
+  return new Set([...readSet('TERMINAL_SHIPPED_STATUSES'), ...readSet('TERMINAL_CLOSED_STATUSES')]);
 }
 
 /** Resolve a cited path: as written, then under the usual roots, then a unique basename hit. */
@@ -119,6 +139,35 @@ function resolveCited(cited) {
 
 function collect() {
   const found = [];
+  const add = (surface, cited, lineNo, id = `${surface} -> ${cited}:${lineNo}`) => {
+    const key = `${cited}:${lineNo}`;
+    if (KNOWN_ROTTEN.has(id)) {
+      found.push({ surface, cited, lineNo: +lineNo, key, id, state: 'known-rotten' });
+      return;
+    }
+    if (ILLUSTRATIVE.has(key)) {
+      found.push({ surface, cited, lineNo: +lineNo, key, id, state: 'illustrative' });
+      return;
+    }
+    const target = resolveCited(cited);
+    if (!target) {
+      found.push({ surface, cited, lineNo: +lineNo, key, id, state: 'unresolvable' });
+      return;
+    }
+    const lines = fs.readFileSync(path.join(ROOT, target), 'utf8').split('\n');
+    if (+lineNo < 1 || +lineNo > lines.length) {
+      found.push({ surface, cited, lineNo: +lineNo, key, id, target, state: 'out-of-range', length: lines.length });
+      return;
+    }
+    const raw = lines[+lineNo - 1];
+    found.push({
+      surface, cited, lineNo: +lineNo, key, id, target,
+      state: 'resolved',
+      fingerprint: fingerprint(raw),
+      excerpt: normalise(raw).slice(0, 100),
+    });
+  };
+
   for (const surface of SURFACES) {
     const abs = path.join(ROOT, surface);
     if (!fs.existsSync(abs)) {
@@ -127,31 +176,30 @@ function collect() {
     }
     const text = fs.readFileSync(abs, 'utf8');
     for (const [, cited, lineNo] of text.matchAll(POINTER)) {
-      const key = `${cited}:${lineNo}`;
-      const id = `${surface} -> ${key}`;
-      if (ILLUSTRATIVE.has(key)) {
-        found.push({ surface, cited, lineNo: +lineNo, key, id, state: 'illustrative' });
-        continue;
-      }
-      const target = resolveCited(cited);
-      if (!target) {
-        found.push({ surface, cited, lineNo: +lineNo, key, id, state: 'unresolvable' });
-        continue;
-      }
-      const lines = fs.readFileSync(path.join(ROOT, target), 'utf8').split('\n');
-      if (+lineNo < 1 || +lineNo > lines.length) {
-        found.push({ surface, cited, lineNo: +lineNo, key, id, target, state: 'out-of-range', length: lines.length });
-        continue;
-      }
-      const raw = lines[+lineNo - 1];
-      found.push({
-        surface, cited, lineNo: +lineNo, key, id, target,
-        state: 'resolved',
-        fingerprint: fingerprint(raw),
-        excerpt: normalise(raw).slice(0, 100),
-      });
+      add(surface, cited, lineNo);
     }
   }
+
+  const ledgerPath = path.join(ROOT, GOAL_LEDGER);
+  if (!fs.existsSync(ledgerPath)) {
+    found.push({ surface: GOAL_LEDGER, key: GOAL_LEDGER, state: 'surface-missing' });
+    return found;
+  }
+  const terminal = terminalStatuses();
+  const walk = (node) => {
+    if (!node || typeof node !== 'object') return;
+    if (Array.isArray(node)) {
+      for (const child of node) walk(child);
+      return;
+    }
+    if (typeof node.taskFile === 'string' && !terminal.has(node.status) && typeof node.blockedReason === 'string') {
+      for (const [, cited, lineNo] of node.blockedReason.matchAll(POINTER)) {
+        add(GOAL_LEDGER, cited, lineNo, `${GOAL_LEDGER}[${node.id}] -> ${cited}:${lineNo}`);
+      }
+    }
+    for (const child of [...(node.subgoals ?? []), ...(node.tasks ?? [])]) walk(child);
+  };
+  walk(JSON.parse(fs.readFileSync(ledgerPath, 'utf8')).goals);
   return found;
 }
 
@@ -178,6 +226,10 @@ for (const p of pointers) {
     if (REPORT) console.log(`  illustrative  ${p.id}\n      reason: ${ILLUSTRATIVE.get(p.key)}`);
     continue;
   }
+  if (p.state === 'known-rotten') {
+    if (REPORT) console.log(`  known-rotten ${p.id}\n      reason: ${KNOWN_ROTTEN.get(p.id)}`);
+    continue;
+  }
   if (p.state === 'unresolvable') { problems.push(`UNRESOLVABLE  ${p.id} — no such file. Fix the path, or add it to ILLUSTRATIVE with a reason.`); continue; }
   if (p.state === 'out-of-range') { problems.push(`OUT OF RANGE  ${p.id} — ${p.target} has ${p.length} lines. The pointer is past EOF: re-verify and re-base.`); continue; }
   checked++;
@@ -194,8 +246,8 @@ for (const p of pointers) {
 }
 
 console.log('law-pointer-guard — do the law surfaces still point at what they claim?');
-console.log(`  surfaces      : ${SURFACES.length}`);
-console.log(`  pointers      : ${pointers.length}  (checked ${checked}, illustrative ${pointers.filter((p) => p.state === 'illustrative').length})`);
+console.log(`  surfaces      : ${SURFACES.length + 1}`);
+console.log(`  pointers      : ${pointers.length}  (checked ${checked}, illustrative ${pointers.filter((p) => p.state === 'illustrative').length}, known-rotten ${pointers.filter((p) => p.state === 'known-rotten').length})`);
 
 if (problems.length) {
   console.log(`\nFAIL — ${problems.length} pointer problem(s):`);

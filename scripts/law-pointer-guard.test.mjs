@@ -7,11 +7,12 @@ import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
 const SCRIPT = fileURLToPath(new URL('./law-pointer-guard.mjs', import.meta.url));
+const DRAIN_GUARD = fileURLToPath(new URL('./drain-block-check.mjs', import.meta.url));
 const REAL_ROOT = fileURLToPath(new URL('..', import.meta.url));
 
 // The guard's whole job is to notice that a cited line moved. Every test below therefore
 // MOVES something and asserts the guard reds — a guard never proven able to fail is decoration.
-function fixture(t, { law, target }) {
+function fixture(t, { law, target, goals = { version: 1, goals: [] } }) {
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'gold-rush-law-pointer-'));
   fs.mkdirSync(path.join(dir, 'scripts'), { recursive: true });
   // Every law surface must exist: a MISSING surface is itself a red (see the last test),
@@ -26,6 +27,9 @@ function fixture(t, { law, target }) {
   }
   fs.writeFileSync(path.join(dir, 'CLAUDE.md'), law);
   fs.writeFileSync(path.join(dir, 'scripts', 'target.sh'), target);
+  fs.copyFileSync(DRAIN_GUARD, path.join(dir, 'scripts', 'drain-block-check.mjs'));
+  fs.mkdirSync(path.join(dir, 'tasks'), { recursive: true });
+  fs.writeFileSync(path.join(dir, 'tasks', 'goals.json'), JSON.stringify(goals));
   t.after(() => fs.rmSync(dir, { recursive: true, force: true }));
   return dir;
 }
@@ -119,4 +123,35 @@ test('MARKDOWN TARGET: a law surface citing another .md by coordinate is checked
   const r = run(dir);
   assert.equal(r.status, 1, 'a .md pointer must red when its line moves');
   assert.match(r.stdout, /POINTER DRIFT/);
+});
+
+test('GOAL LEDGER ROT: a live non-terminal blockedReason pointer moves -> red names the leaf', (t) => {
+  const goals = {
+    version: 1,
+    goals: [{
+      id: 'fixture-goal',
+      title: 'fixture',
+      subgoals: [{
+        id: 'fixture-subgoal',
+        title: 'fixture',
+        tasks: [{
+          id: 'ledger-leaf',
+          taskFile: 'fixture.md',
+          status: 'planned',
+          blockedReason: 'The epitaph lives at scripts/target.sh:3.',
+        }],
+      }],
+    }],
+  };
+  const dir = fixture(t, { law: 'stub\n', target: TARGET, goals });
+  assert.equal(run(dir, '--update').status, 0);
+  assert.equal(run(dir).status, 0, 'a baselined ledger pointer must pass');
+
+  const moved = TARGET.split('\n');
+  moved.splice(1, 0, 'echo inserted');
+  fs.writeFileSync(path.join(dir, 'scripts', 'target.sh'), moved.join('\n'));
+  const r = run(dir);
+  assert.equal(r.status, 1, 'guard must FAIL when a ledger pointer moves');
+  assert.match(r.stdout, /POINTER DRIFT/);
+  assert.match(r.stdout, /tasks\/goals\.json\[ledger-leaf\]/);
 });

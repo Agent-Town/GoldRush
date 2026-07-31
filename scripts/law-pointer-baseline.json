@@ -71,6 +71,30 @@
       "line": 44,
       "fingerprint": "2a211a7c1a67",
       "excerpt": "🔓 **FIREWALL LIFT, EXPLICIT:** the predecessor's blanket \"**NO:** any other file under `src/`\" is *"
+    },
+    "tasks/goals.json[e1-hold-the-claim-defeat-fork] -> src/game/Game.ts:6600": {
+      "target": "src/game/Game.ts",
+      "line": 6600,
+      "fingerprint": "f477e73e1bbf",
+      "excerpt": "private endRun(): void {"
+    },
+    "tasks/goals.json[rf-34-hero-y-restore-roundtrip] -> reviews/rf-34.md:28": {
+      "target": "reviews/rf-34.md",
+      "line": 28,
+      "fingerprint": "7df3c6561555",
+      "excerpt": "- **Exact first divergent write:** `Game.ts:6669`, reached from `RunSuspend.ts:837`."
+    },
+    "tasks/goals.json[rf-34-hero-y-restore-roundtrip] -> RunSuspend.ts:837": {
+      "target": "src/game/RunSuspend.ts",
+      "line": 837,
+      "fingerprint": "7bb0d5a91e63",
+      "excerpt": "game.syncHeroVisualHeight?.();"
+    },
+    "tasks/goals.json[calibrate-suite-workers-v2] -> playwright.config.ts:50": {
+      "target": "playwright.config.ts",
+      "line": 50,
+      "fingerprint": "03b4031fea20",
+      "excerpt": "workers: isFireShell ? 1 : undefined,"
     }
   },
   "_why": "Fingerprints of the lines cited by the law surfaces. Re-base ONLY after re-reading the cited line and confirming it still supports the claim. See scripts/law-pointer-guard.mjs."
