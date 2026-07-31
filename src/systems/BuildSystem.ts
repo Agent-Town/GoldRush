@@ -1997,7 +1997,9 @@ export class BuildSystem {
     const suffix = ['', 'I', 'II', 'III'][tier] ?? String(tier);
     if (id === 'sluice') return `Sluice ${suffix} - the works run richer`;
     if (id === 'palisade') return `Palisade ${suffix} - timber holds longer`;
-    return `Turret ${suffix} - brass cadence quickens`;
+    if (id === 'stockpile') return `Stockpile Yard ${suffix} - the yard holds more gold`;
+    if (id === 'turret') return `Turret ${suffix} - brass cadence quickens`;
+    return id satisfies never;
   }
 
   private registerBeaconShooter(placed: number): void {
