@@ -90,6 +90,7 @@ import { TOWN_ACTORS, TOWN_CAST_METROLOGY, townActorBark, visibleTownActors, typ
 import { takeMeiWorldDispatch } from './worldDispatches';
 import { takeTrailGuideBark } from '../story/trailGuide';
 import { contractUnlockStatus as contractUnlock } from '../meta/ContractUnlock';
+import { deriveMechanicsManifest, mechanicsManifestLine } from '../agent/MechanicsManifest';
 
 const contractPlateUrls = import.meta.glob<string>('../../assets/raw/plate-contract-*.png', {
   eager: true,
@@ -2813,6 +2814,9 @@ function formatBest(score: ScoreRecord | null): string {
 function renderContractBriefing(contract: ContractManifest): string {
   const geographyLine = contract.briefing.geographyLine.trim();
   const duplicateFlavor = geographyLine === contract.boardRow.ledgerBlurb.trim();
+  const mechanicsLine = loadEpoch(DEFAULT_EPOCH_ID).contracts.some(({ id }) => id === contract.id)
+    ? mechanicsManifestLine(deriveMechanicsManifest(contract))
+    : null;
   return `
     <div class="town-ui__contract-briefing" data-testid="contract-board-briefing-${escapeHtml(contract.id)}">
       ${
@@ -2820,6 +2824,13 @@ function renderContractBriefing(contract: ContractManifest): string {
           ? `<p class="town-ui__contract-briefing-geography" data-testid="contract-board-geography-${escapeHtml(
               contract.id,
             )}">${escapeHtml(geographyLine)}</p>`
+          : ''
+      }
+      ${
+        mechanicsLine
+          ? `<p class="town-ui__contract-briefing-geography" data-testid="contract-board-mechanics-${escapeHtml(contract.id)}">${escapeHtml(
+              mechanicsLine,
+            )}</p>`
           : ''
       }
       <section>

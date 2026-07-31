@@ -1,5 +1,12 @@
+import { readFile } from 'node:fs/promises';
+import path from 'node:path';
 import { expect, test, type Page } from '@playwright/test';
+import { deriveMechanicsManifest, mechanicsManifestLine, type MechanicsManifest } from '../src/agent/MechanicsManifest';
 import type { AgentView } from '../src/agent/View';
+import { META_PROGRESS_KEY } from '../src/game/MetaProgress';
+import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey } from '../src/game/ProfileStorage';
+import { listContracts } from '../src/meta/ContractFamilies';
+import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
 
 const WAVE_THREE_SNAPSHOT = `{
   "schema": "goldrush.view.v1",
@@ -17,6 +24,42 @@ const WAVE_THREE_SNAPSHOT = `{
           "The river splits the claim around one center ford.",
           "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
         ]
+      }
+    },
+    "mechanics": {
+      "schema": "goldrush.mechanics.v1",
+      "contractId": "the-claim",
+      "interactables": [],
+      "rules": [
+        {
+          "id": "river",
+          "source": "tileParams.river",
+          "data": {}
+        },
+        {
+          "id": "water_crossings",
+          "source": "tileParams.ford",
+          "data": {
+            "count": 1,
+            "ids": []
+          }
+        }
+      ],
+      "posting": {
+        "waves": [
+          {
+            "event": "secure",
+            "wave": 10,
+            "source": "twist.secureWave"
+          }
+        ],
+        "spawnEdges": [
+          "east",
+          "north",
+          "south",
+          "west"
+        ],
+        "lossStakes": []
       }
     },
     "map": {
@@ -211,6 +254,90 @@ function watchErrors(page: Page): string[] {
   page.on('pageerror', (error) => errors.push(error.message));
   return errors;
 }
+
+test('all five E1 mechanics manifests match their byte-stable fixture', async () => {
+  const fixtures = JSON.parse(await readFile(path.resolve('e2e/fixtures/e1-mechanics-manifests.json'), 'utf8')) as MechanicsManifest[];
+  const ids = listContracts().map(({ id }) => id);
+  const manifests = ids.map(deriveMechanicsManifest);
+
+  expect(ids).toEqual(['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron']);
+  expect(manifests).toEqual(fixtures);
+  expect(JSON.stringify(manifests)).toBe(JSON.stringify(fixtures));
+  for (const id of ids) expect(JSON.stringify(deriveMechanicsManifest(id))).toBe(JSON.stringify(deriveMechanicsManifest(id)));
+
+  const night = deriveMechanicsManifest('e1-night-shift');
+  expect(night.interactables).toContainEqual(expect.objectContaining({ id: 'lantern_post', operations: ['relight'] }));
+  expect(night.rules.map(({ id }) => id)).toContain('darkness_cycle');
+  expect(deriveMechanicsManifest('e1-dry-gulch').rules.map(({ id }) => id)).toContain('spring_cells');
+  expect(deriveMechanicsManifest('e1-twin-banks').rules).toContainEqual(
+    expect.objectContaining({ id: 'water_crossings', data: expect.objectContaining({ count: 2 }) }),
+  );
+
+  const pressed = structuredClone(listContracts().find(({ id }) => id === 'e1-night-shift')!);
+  pressed.twist.secureWave = 24;
+  expect(deriveMechanicsManifest(pressed).posting.waves).toContainEqual(
+    expect.objectContaining({ event: 'secure', wave: 24 }),
+  );
+});
+
+test('the derived manifest rides THE VIEW and every E1 briefing speaks it', async ({ page }) => {
+  const errors = watchErrors(page);
+  await page.goto('/?debug&contract=e1-night-shift&nowaves&nolevel&terrain2d&seed=mechanics-view');
+  await page.waitForFunction(() => Boolean(window.__GR_AGENT__ && 'view' in window.__GR_AGENT__));
+  expect(await page.evaluate(() => window.__GR_AGENT__!.view.stablePrefix.mechanics)).toEqual(
+    deriveMechanicsManifest('e1-night-shift'),
+  );
+
+  await page.evaluate(
+    ({ profileKey, scoreKey, townKey, metaKey, storyKey }) => {
+      localStorage.clear();
+      localStorage.setItem(profileKey, JSON.stringify({
+        version: 2,
+        activeId: 'manifest',
+        profiles: [{
+          id: 'manifest',
+          name: 'Manifest',
+          createdAt: 1,
+          updatedAt: 1,
+          difficultyPreset: 'trail',
+          hintsSeen: [],
+        }],
+      }));
+      localStorage.setItem(scoreKey, JSON.stringify([
+        { waves: 20, kills: 0, gold: 0, timeAlive: 60, at: 1, secured: true, contractId: 'the-claim', profileName: 'Manifest' },
+        { waves: 20, kills: 0, gold: 0, timeAlive: 60, at: 2, secured: true, contractId: 'e1-dry-gulch', profileName: 'Manifest' },
+      ]));
+      localStorage.setItem(townKey, 'Manifest Hill');
+      localStorage.setItem(metaKey, JSON.stringify({ version: 1, tracks: { territory: 0, science: 6, hero: 0, agent: 0 } }));
+      localStorage.setItem(storyKey, '0');
+    },
+    {
+      profileKey: PROFILE_KEY,
+      scoreKey: profileDataKey('manifest', SCOREBOARD_KEY),
+      townKey: profileDataKey('manifest', TOWN_NAME_KEY),
+      metaKey: profileDataKey('manifest', META_PROGRESS_KEY),
+      storyKey: STORY_TALES_STORAGE_KEY,
+    },
+  );
+  await page.goto('/?tier=lite');
+  await page.getByTestId('start-menu-enter-town').click();
+  await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
+  await page.evaluate(() => {
+    const town = window.__GR_TOWN_DIAGNOSTICS__!;
+    const tavern = town.buildings.find(({ id }) => id === 'tavern');
+    if (!tavern) throw new Error('Missing tavern');
+    town.teleport(tavern.approach.x, tavern.approach.z);
+  });
+  await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
+  await page.getByTestId('town-open-board').click();
+
+  for (const id of listContracts().map(({ id }) => id)) {
+    await expect(page.getByTestId(`contract-board-mechanics-${id}`)).toHaveText(
+      mechanicsManifestLine(deriveMechanicsManifest(id)),
+    );
+  }
+  expect(errors).toEqual([]);
+});
 
 test('the seeded rider view stays cache-shaped and grows one honest wave at a time', async ({ page }) => {
   const errors = watchErrors(page);

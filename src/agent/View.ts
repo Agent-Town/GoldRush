@@ -3,6 +3,7 @@ import { Balance } from '../game/Balance';
 import type { EconomyEvent } from '../game/Economy';
 import { summarizeRun } from '../game/RunManager';
 import { activeContract, type ContractEnemyVariant, type ContractManifest } from '../meta/ContractFamilies';
+import { deriveMechanicsManifest, type MechanicsManifest } from './MechanicsManifest';
 
 export type AgentViewSource = {
   readonly diagnostics?: () => unknown;
@@ -28,6 +29,7 @@ export type AgentView = {
       name: string;
       briefing: { geography: string; goals: readonly string[]; rules: readonly string[] };
     };
+    mechanics: MechanicsManifest;
     map: {
       claim: { x: number; z: number };
       seams: readonly { id: string; x: number; z: number }[];
@@ -192,11 +194,12 @@ function buildStablePrefix(
   const gates = roster.flatMap((entry) => entry.spawnGates ?? []);
   const spawnEdges = strings(record(tile.lanes).spawnEdges);
   const authoredNodeAnchors = records(tile.harvestAnchors);
+  const contractId = text(contract.activeId) ?? manifest.id;
 
   return {
     seed: readSeed(),
     contract: {
-      id: text(contract.activeId) ?? manifest.id,
+      id: contractId,
       name: text(contract.name) ?? manifest.name,
       briefing: {
         geography: text(briefing.geographyLine) ?? manifest.briefing.geographyLine,
@@ -204,6 +207,7 @@ function buildStablePrefix(
         rules: strings(briefing.rules),
       },
     },
+    mechanics: deriveMechanicsManifest(manifest),
     map: {
       claim: {
         x: round(stake?.x ?? 0),

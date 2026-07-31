@@ -1,0 +1,272 @@
+[
+  {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "the-claim",
+    "interactables": [],
+    "rules": [
+      {
+        "id": "river",
+        "source": "tileParams.river",
+        "data": {}
+      },
+      {
+        "id": "water_crossings",
+        "source": "tileParams.ford",
+        "data": {
+          "count": 1,
+          "ids": []
+        }
+      }
+    ],
+    "posting": {
+      "waves": [
+        {
+          "event": "secure",
+          "wave": 10,
+          "source": "twist.secureWave"
+        }
+      ],
+      "spawnEdges": [
+        "east",
+        "north",
+        "south",
+        "west"
+      ],
+      "lossStakes": []
+    }
+  },
+  {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e1-dry-gulch",
+    "interactables": [],
+    "rules": [
+      {
+        "id": "seam_yield_multiplier",
+        "source": "twist.seamYieldMult",
+        "data": {
+          "multiplier": 1.4
+        }
+      },
+      {
+        "id": "sluices_need_water_source",
+        "source": "twist.sluicesNeedWaterSource",
+        "data": {
+          "sourceKinds": [
+            "spring_pond"
+          ]
+        }
+      },
+      {
+        "id": "spring_cells",
+        "source": "tileParams.waterSources",
+        "data": {
+          "count": 1,
+          "kinds": [
+            "spring_pond"
+          ]
+        }
+      }
+    ],
+    "posting": {
+      "waves": [
+        {
+          "event": "secure",
+          "wave": 20,
+          "source": "twist.secureWave"
+        }
+      ],
+      "spawnEdges": [
+        "east",
+        "north",
+        "south",
+        "west"
+      ],
+      "lossStakes": []
+    }
+  },
+  {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e1-night-shift",
+    "interactables": [
+      {
+        "id": "lantern_post",
+        "count": 7,
+        "operations": [
+          "relight"
+        ],
+        "source": "tileParams.prePlacedBuildables"
+      }
+    ],
+    "rules": [
+      {
+        "id": "darkness_cycle",
+        "source": "twist.lightRamp",
+        "data": {
+          "duskWave": 5,
+          "darkWave": 10,
+          "dawnWave": 25
+        }
+      },
+      {
+        "id": "enemy_lantern_classes",
+        "source": "twist.enemyLanternClasses",
+        "data": {
+          "classes": [
+            "rusher",
+            "thief"
+          ]
+        }
+      },
+      {
+        "id": "river",
+        "source": "tileParams.river",
+        "data": {}
+      },
+      {
+        "id": "water_crossings",
+        "source": "tileParams.ford",
+        "data": {
+          "count": 1,
+          "ids": []
+        }
+      }
+    ],
+    "posting": {
+      "waves": [
+        {
+          "event": "secure",
+          "wave": 25,
+          "source": "twist.secureWave"
+        }
+      ],
+      "spawnEdges": [
+        "east",
+        "north",
+        "south",
+        "west"
+      ],
+      "lossStakes": []
+    }
+  },
+  {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e1-twin-banks",
+    "interactables": [],
+    "rules": [
+      {
+        "id": "build_zones",
+        "source": "tileParams.buildZones",
+        "data": {
+          "count": 2,
+          "banks": [
+            "north",
+            "south"
+          ]
+        }
+      },
+      {
+        "id": "river",
+        "source": "tileParams.river",
+        "data": {}
+      },
+      {
+        "id": "water_crossings",
+        "source": "tileParams.ford",
+        "data": {
+          "count": 2,
+          "ids": [
+            "east-ford",
+            "west-ford"
+          ]
+        }
+      }
+    ],
+    "posting": {
+      "waves": [
+        {
+          "event": "secure",
+          "wave": 20,
+          "source": "twist.secureWave"
+        }
+      ],
+      "spawnEdges": [
+        "east",
+        "north",
+        "south",
+        "west"
+      ],
+      "lossStakes": [
+        {
+          "id": "south-claim-stake",
+          "x": 0,
+          "z": -12,
+          "source": "tileParams.stakeMarkers"
+        }
+      ]
+    }
+  },
+  {
+    "schema": "goldrush.mechanics.v1",
+    "contractId": "e1-baron",
+    "interactables": [],
+    "rules": [
+      {
+        "id": "baron",
+        "source": "twist.baron",
+        "data": {
+          "escortCount": 8,
+          "hpScale": 240
+        }
+      },
+      {
+        "id": "river",
+        "source": "tileParams.river",
+        "data": {}
+      },
+      {
+        "id": "rocket_volley",
+        "source": "twist.baron.rocketVolley",
+        "data": {
+          "count": 3,
+          "cadenceSeconds": 8
+        }
+      },
+      {
+        "id": "water_crossings",
+        "source": "tileParams.ford",
+        "data": {
+          "count": 1,
+          "ids": []
+        }
+      },
+      {
+        "id": "wave_cadence_multiplier",
+        "source": "twist.waveCadenceMult",
+        "data": {
+          "multiplier": 1.15
+        }
+      }
+    ],
+    "posting": {
+      "waves": [
+        {
+          "event": "baron",
+          "wave": 20,
+          "source": "twist.baron.wave"
+        },
+        {
+          "event": "secure",
+          "wave": 20,
+          "source": "twist.secureWave"
+        }
+      ],
+      "spawnEdges": [
+        "east",
+        "north",
+        "south",
+        "west"
+      ],
+      "lossStakes": []
+    }
+  }
+]
