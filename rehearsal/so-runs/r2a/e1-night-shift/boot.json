@@ -1,0 +1,70 @@
+{
+ "contract": "e1-night-shift",
+ "fallbackReason": null,
+ "secureWave": 25,
+ "difficulty": "trail",
+ "hasGrTest": false,
+ "hasGrAgent": false,
+ "search": "?contract=e1-night-shift",
+ "meta": {
+  "version": 1,
+  "tracks": {
+   "territory": 5,
+   "science": 10,
+   "hero": 5,
+   "agent": 5
+  }
+ },
+ "surface": {
+  "captured": true,
+  "seq": 1,
+  "namespace": "et.goldrush",
+  "capabilities": [
+   {
+    "id": "auto_collect",
+    "level": 1,
+    "tools": [
+     "et.goldrush.collect_xp",
+     "et.goldrush.collect_gold"
+    ]
+   },
+   {
+    "id": "auto_repair",
+    "level": 1,
+    "tools": [
+     "et.goldrush.repair"
+    ]
+   },
+   {
+    "id": "auto_pan",
+    "level": 2,
+    "tools": [
+     "et.goldrush.pan_at"
+    ]
+   },
+   {
+    "id": "place_building",
+    "level": 3,
+    "tools": [
+     "et.goldrush.place_building"
+    ]
+   }
+  ],
+  "surfacePermissionLevel": 3,
+  "diagnosticsPermissionLevel": 3,
+  "toolKeys": [
+   "chase_mark",
+   "collect_gold",
+   "collect_xp",
+   "get_state",
+   "pan_at",
+   "place_building",
+   "repair",
+   "submit_orders",
+   "view"
+  ],
+  "windowAgentStub": false,
+  "windowAgentHasSubmitOrders": false,
+  "windowTest": false
+ }
+}

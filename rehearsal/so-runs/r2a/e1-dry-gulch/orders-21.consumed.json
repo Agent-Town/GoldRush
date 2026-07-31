@@ -1,0 +1,9 @@
+{
+ "seq": 21,
+ "note": "RE-COMMAND for the last wave. Every order in the standing set is done — four turrets, three beacons, the repair — so the replace costs nothing, which is the one case where restating is free. 166 in the purse with one wave to run is dead money; the hero is at 87/175 against 36 on the south edge, so it buys defence. First order fires the instant it lands: the hero is 3.4wu from (11,7), which is 4wu clear of the turret at (7,7) and 7wu clear of the beacon at (4,7) — the immediate-fire case is safe precisely because I sited it where the reflex layer already stands. Second at wave 20 on the other side of the north line. Repair restated so the works get one more mend.",
+ "orders": [
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 11, "z": 7 }, "when": { "waveGte": 19 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 0, "z": 7 }, "when": { "waveGte": 20 } },
+  { "verb": "REPAIR_UNDER", "pct": 60 }
+ ]
+}

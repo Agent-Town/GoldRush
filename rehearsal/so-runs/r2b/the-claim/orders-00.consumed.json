@@ -1,0 +1,14 @@
+{
+ "seq": 0,
+ "note": "THE TOP PRESET. Fresh ledger, its own three secured vein-hunter claims behind it, rung 3 earned the same way. Vein Hunter is +11% enemy hp and -25% xp per kill against Trail, so the hero levels slower and the works have to carry more of the run — which makes the placement contract the whole game. Every cell here is one I watched a building stand on this morning on this exact map: (-8,7), (-2,-7), (7,7) took turrets and (-5,7) took a beacon. All four turrets go on proven ground, spaced >=3.0wu (turret+turret needs >2.4). The one unproven cell is the cheap beacon at (2,-7), 4.0 clear of the turret at (-2,-7) and 3.5 from the seam site at (-1.5,-6.4) — 25 gold is the right price for an experiment. Wave triggers only, two apart, each clearing its own cost; the 125 rung gets wave 9 and the fullest purse of the run because it is the order that has died three times today.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -8, "z": 7 }, "when": { "waveGte": 2 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": -7 }, "when": { "waveGte": 4 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 7, "z": 7 }, "when": { "waveGte": 6 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 2, "z": -7 }, "when": { "waveGte": 8 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -5, "z": 7 }, "when": { "waveGte": 9 } },
+  { "verb": "HARVEST", "seam": "gold-seam-1" },
+  { "verb": "HARVEST", "seam": "gold-seam-2" },
+  { "verb": "REPAIR_UNDER", "pct": 50 }
+ ]
+}

@@ -1,0 +1,10 @@
+{
+ "seq": 11,
+ "note": "RE-COMMAND, and this failure is a different animal from the last three. orders-3-2 died at (-4,-7) with 247 gold, a 35 price, and the hero 4.4wu away — inside the 6wu circle. Not money, not range: OVERLAP. A beacon went up at (-5,-7) during my previous answering window, one wu from the cell I then named, and beacon-on-beacon needs 1.2+1.2 = 2.4wu of clearance. I could not have avoided it from THE VIEW: now.works gives byKind counts and a total hp bar and NEVER A SINGLE COORDINATE, so a rider cannot see where its own works stand. The only positions I know are the ones I ordered myself — and my last plan sited all three remaining beacons exactly 2.0wu from a standing turret, which is inside 2.4 and would have killed every one of them. Re-siting to >=3.0wu from every building whose position I know, keeping them all on the north line so the hero never has to cross the gulch between triggers, and spending the fat purse on the fourth turret first at 1.14 dps/gold against 0.48. Triggers 16/18/19, all beyond my own answering time. The eight territory palisades remain a blind spot I cannot price.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -12, "z": 7 }, "when": { "waveGte": 16 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -5, "z": 7 }, "when": { "waveGte": 18 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": 7 }, "when": { "waveGte": 19 } },
+  { "verb": "REPAIR_UNDER", "pct": 50 }
+ ]
+}

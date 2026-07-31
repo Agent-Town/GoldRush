@@ -1,0 +1,13 @@
+{
+ "seq": 16,
+ "note": "RE-COMMAND to recover the fourth turret. orders-1-4 died at wave 8 with 131 gold against a 125 price and the hero 12.7wu away on the wrong side of the river — the third time this campaign that the 125-gold rung has been the casualty, and the second time it was position rather than money. Restating the whole undone tail (the three standing turrets and the finished HARVESTs are deliberately absent so nothing can be bought twice), with the turret back at the top because 1.14 dps/gold beats 0.48 and seventeen waves still have to be survived. Everything is spaced two waves apart — sixty seconds is the crossing time the gulch proved sufficient — and the first trigger is wave 11, three waves out, so none of it can fire inside my own answering time.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -5, "z": 7 }, "when": { "waveGte": 11 } },
+  { "verb": "BUILD", "what": "lantern_post", "where": { "x": 4, "z": -7 }, "when": { "waveGte": 12 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": 7 }, "when": { "waveGte": 14 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -11, "z": 7 }, "when": { "waveGte": 16 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 1, "z": -7 }, "when": { "waveGte": 18 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 10, "z": 7 }, "when": { "waveGte": 20 } },
+  { "verb": "REPAIR_UNDER", "pct": 55 }
+ ]
+}

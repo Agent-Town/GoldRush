@@ -1,0 +1,219 @@
+{
+ "campaign": "r2probe",
+ "difficulty": "trail",
+ "boot": {
+  "contract": "the-claim",
+  "fallbackReason": null,
+  "secureWave": 10,
+  "difficulty": "trail",
+  "hasGrTest": false,
+  "hasGrAgent": false,
+  "search": "?contract=the-claim",
+  "meta": {
+   "version": 1,
+   "tracks": {
+    "territory": 0,
+    "science": 0,
+    "hero": 0,
+    "agent": 0
+   }
+  },
+  "surface": {
+   "captured": true,
+   "seq": 1,
+   "namespace": "et.goldrush",
+   "capabilities": [
+    {
+     "id": "auto_collect",
+     "level": 1,
+     "tools": [
+      "et.goldrush.collect_xp",
+      "et.goldrush.collect_gold"
+     ]
+    },
+    {
+     "id": "auto_repair",
+     "level": 1,
+     "tools": [
+      "et.goldrush.repair"
+     ]
+    },
+    {
+     "id": "auto_pan",
+     "level": 2,
+     "tools": [
+      "et.goldrush.pan_at"
+     ]
+    },
+    {
+     "id": "place_building",
+     "level": 3,
+     "tools": [
+      "et.goldrush.place_building"
+     ]
+    }
+   ],
+   "surfacePermissionLevel": 0,
+   "diagnosticsPermissionLevel": 0,
+   "toolKeys": [
+    "chase_mark",
+    "collect_gold",
+    "collect_xp",
+    "get_state",
+    "pan_at",
+    "place_building",
+    "repair",
+    "submit_orders",
+    "view"
+   ],
+   "windowAgentStub": false,
+   "windowAgentHasSubmitOrders": false,
+   "windowTest": false
+  }
+ },
+ "refusals": {
+  "hold": {
+   "ok": false,
+   "reason": "PERMISSION_DENIED",
+   "message": "HOLD requires permission rung 2; current rung is 0.",
+   "requiredLevel": 2,
+   "economyLog": []
+  },
+  "harvest": {
+   "ok": false,
+   "reason": "PERMISSION_DENIED",
+   "message": "HARVEST requires permission rung 2; current rung is 0.",
+   "requiredLevel": 2,
+   "economyLog": []
+  },
+  "build": {
+   "ok": false,
+   "reason": "PERMISSION_DENIED",
+   "message": "BUILD requires permission rung 3; current rung is 0.",
+   "requiredLevel": 3,
+   "economyLog": []
+  },
+  "panDirect": {
+   "ok": false,
+   "reason": "PERMISSION_DENIED",
+   "level": 0,
+   "requiredLevel": 2,
+   "economyLog": []
+  },
+  "placeDirect": {
+   "ok": false,
+   "reason": "PERMISSION_DENIED",
+   "level": 0,
+   "requiredLevel": 3,
+   "economyLog": []
+  }
+ },
+ "viewBytes": 1927,
+ "viewBuildMs": 1.8,
+ "viewKeys": [
+  "schema",
+  "stablePrefix",
+  "appendLog",
+  "now",
+  "almanac"
+ ],
+ "now": {
+  "wave": 0,
+  "timers": {
+   "runSeconds": 1.3,
+   "nextWaveInSeconds": 28.7
+  },
+  "gold": 0,
+  "hero": {
+   "hp": 100,
+   "maxHp": 100,
+   "x": 0,
+   "z": 12
+  },
+  "works": {
+   "hp": 0,
+   "maxHp": 0,
+   "standing": 0,
+   "wrecked": 0,
+   "byKind": {}
+  },
+  "threats": {
+   "alive": 0,
+   "state": "quiet",
+   "edge": null,
+   "thieves": 0,
+   "wreckers": 0
+  },
+  "orders": [],
+  "needsRider": false,
+  "seams": [
+   {
+    "id": "gold-seam-1",
+    "active": true,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-2",
+    "active": true,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-3",
+    "active": false,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-4",
+    "active": false,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-5",
+    "active": false,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-6",
+    "active": false,
+    "remaining": 30
+   }
+  ],
+  "score": {
+   "wavesSurvived": 0,
+   "goldPanned": 0,
+   "goldPannedByProspector": 0,
+   "goldStolen": 0,
+   "goldReclaimed": 0,
+   "goldReclaimedByProspector": 0,
+   "buildingsBuilt": 0
+  }
+ },
+ "almanac": {
+  "label": "the Almanac reckons",
+  "estimate": true,
+  "nextWave": {
+   "wave": 1,
+   "arrivalInSeconds": 28.7,
+   "basis": "estimated-from-wave-schedule",
+   "composition": [
+    {
+     "id": "claim_jumper",
+     "label": "Claim Jumpers",
+     "count": 6
+    }
+   ]
+  },
+  "projection": {
+   "expectedLeaks": 0,
+   "expectedWorksDamage": 0,
+   "expectedGold": 55.83,
+   "currentWorks": 0,
+   "harnessHash": "fnv1a32:e965fc9c"
+  }
+ },
+ "honesty": {
+  "hasGrTest": false,
+  "hasGrAgent": false,
+  "search": "?contract=the-claim"
+ }
+}

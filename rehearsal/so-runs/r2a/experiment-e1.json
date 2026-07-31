@@ -1,0 +1,711 @@
+{
+ "contractId": "the-claim",
+ "campaign": "r2a",
+ "mode": "watch",
+ "outcome": "running",
+ "difficultyRequested": "trail",
+ "seconds": 75,
+ "finalWave": 2,
+ "secureWave": 10,
+ "hp": 76,
+ "gold": 115,
+ "kills": 28,
+ "works": {
+  "mode": false,
+  "sel": "sentry_beacon",
+  "nextCost": 25,
+  "placeRadius": null,
+  "reason": null,
+  "turrets": 0,
+  "beacons": 0,
+  "sluices": 0,
+  "palisades": 8,
+  "stockpiles": 0,
+  "hp": [
+   {
+    "id": "palisade",
+    "index": 0,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 1,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 2,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 3,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 4,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 5,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 6,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 7,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   }
+  ]
+ },
+ "permissionRung": 3,
+ "difficulty": "trail",
+ "honesty": {
+  "grTestSeen": false,
+  "grAgentSeen": false,
+  "searches": [
+   "?contract=the-claim"
+  ],
+  "surfaceSeq": 1
+ },
+ "meter": {
+  "calls": 0,
+  "viewBytes": [],
+  "cumulativeBytes": 0,
+  "latencies": [],
+  "submissions": [],
+  "missed": 0,
+  "pollCount": 52,
+  "pollMsTotal": 26.69999999999999,
+  "pollMsMax": 1.7
+ },
+ "orderEvents": [
+  {
+   "at": 1.3333333333333341,
+   "wave": 0,
+   "id": "orders-1-1",
+   "verb": "BUILD",
+   "what": "turret",
+   "where": {
+    "x": -7,
+    "z": 7
+   },
+   "when": {
+    "goldGte": 30
+   },
+   "status": "pending",
+   "reason": null,
+   "gold": 0,
+   "works": {
+    "t": 0,
+    "b": 0,
+    "p": 8
+   },
+   "heroToCell": 8.6,
+   "preFire": null,
+   "buildReason": null
+  },
+  {
+   "at": 1.3333333333333341,
+   "wave": 0,
+   "id": "orders-1-2",
+   "verb": "BUILD",
+   "what": "turret",
+   "where": {
+    "x": -11,
+    "z": 7
+   },
+   "when": {
+    "goldGte": 50
+   },
+   "status": "pending",
+   "reason": null,
+   "gold": 0,
+   "works": {
+    "t": 0,
+    "b": 0,
+    "p": 8
+   },
+   "heroToCell": 12.08,
+   "preFire": null,
+   "buildReason": null
+  },
+  {
+   "at": 13.133333333333297,
+   "wave": 0,
+   "id": "orders-1-1",
+   "verb": "BUILD",
+   "what": "turret",
+   "where": {
+    "x": -7,
+    "z": 7
+   },
+   "when": {
+    "goldGte": 30
+   },
+   "status": "failed",
+   "reason": "FAILED: BUILD action was rejected.",
+   "gold": 30,
+   "works": {
+    "t": 0,
+    "b": 0,
+    "p": 8
+   },
+   "heroToCell": 1.57,
+   "preFire": {
+    "t": 13,
+    "wave": 0,
+    "gold": 30,
+    "heroToCell": 1.57,
+    "cost": 50,
+    "runState": "playing",
+    "count": 0
+   },
+   "buildReason": null
+  },
+  {
+   "at": 13.133333333333297,
+   "wave": 0,
+   "id": "orders-1-1",
+   "surprise": "order_failure",
+   "reason": "FAILED: BUILD action was rejected."
+  },
+  {
+   "at": 23.466666666666992,
+   "wave": 0,
+   "id": "orders-1-2",
+   "verb": "BUILD",
+   "what": "turret",
+   "where": {
+    "x": -11,
+    "z": 7
+   },
+   "when": {
+    "goldGte": 50
+   },
+   "status": "failed",
+   "reason": "FAILED: BUILD action was rejected.",
+   "gold": 50,
+   "works": {
+    "t": 0,
+    "b": 0,
+    "p": 8
+   },
+   "heroToCell": 15.61,
+   "preFire": {
+    "t": 23.33,
+    "wave": 0,
+    "gold": 50,
+    "heroToCell": 16.09,
+    "cost": 50,
+    "runState": "playing",
+    "count": 0
+   },
+   "buildReason": null
+  },
+  {
+   "at": 23.466666666666992,
+   "wave": 0,
+   "id": "orders-1-2",
+   "surprise": "order_failure",
+   "reason": "FAILED: BUILD action was rejected."
+  }
+ ],
+ "rangeGuard": [
+  {
+   "at": 23.333333333333652,
+   "wave": 0,
+   "id": "orders-1-2",
+   "def": "turret",
+   "distance": 16.09,
+   "gold": 50
+  },
+  {
+   "at": 23.466666666666992,
+   "wave": 0,
+   "id": "orders-1-2",
+   "def": "turret",
+   "distance": 15.61,
+   "gold": 50
+  }
+ ],
+ "guardLog": [],
+ "almanacLog": [],
+ "waveLog": [
+  {
+   "wave": 0,
+   "endedAt": 30.06666666666732,
+   "gold": 60,
+   "hp": 92,
+   "works": 0,
+   "enemies": 6,
+   "kills": 8,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": -9,
+     "z": 6.7,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": false,
+     "x": -1.5,
+     "z": -6.4,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 1,
+   "endedAt": 60.16666666666581,
+   "gold": 100,
+   "hp": 92,
+   "works": 0,
+   "enemies": 13,
+   "kills": 18,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": -22,
+     "z": -6.8,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "x": 7.5,
+     "z": 6.5,
+     "remaining": 20
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "offered": [
+    "double_tap_coil",
+    "prospectors_luck",
+    "spring_heels"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "wide_ring",
+    "pan_legend"
+   ],
+   "took": "wide_ring"
+  },
+  {
+   "offered": [
+    "pan_legend",
+    "prospectors_luck",
+    "double_tap_coil"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "tinkers_plating",
+    "double_tap_coil"
+   ],
+   "took": "double_tap_coil"
+  }
+ ],
+ "watchdogKeyResets": 1,
+ "damageTaken": 24,
+ "finalView": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "the-claim",
+    "name": "The Claim",
+    "briefing": {
+     "geography": "The classic river claim.",
+     "goals": [
+      "Hold the claim through wave 10."
+     ],
+     "rules": [
+      "The river splits the claim around one center ford.",
+      "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": true,
+     "ford": true,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": 40,
+    "worksHp": {
+     "current": 480,
+     "max": 480,
+     "delta": 0
+    },
+    "kills": 11,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 2,
+   "timers": {
+    "runSeconds": 76.2,
+    "nextWaveInSeconds": 13.8
+   },
+   "gold": 115,
+   "hero": {
+    "hp": 76,
+    "maxHp": 100,
+    "x": 7.31,
+    "z": 6.35
+   },
+   "works": {
+    "hp": 480,
+    "maxHp": 480,
+    "standing": 8,
+    "wrecked": 0,
+    "byKind": {
+     "palisade": 8
+    }
+   },
+   "threats": {
+    "alive": 11,
+    "state": "active",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 5
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 2,
+    "goldPanned": 115,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 3,
+    "arrivalInSeconds": 13.8,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 12
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 8,
+    "harnessHash": "fnv1a32:c3ba17b6"
+   }
+  }
+ },
+ "finalOrders": {
+  "needsRider": true,
+  "orders": [
+   {
+    "id": "orders-1-1",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -7,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 30
+     }
+    },
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "id": "orders-1-2",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -11,
+      "z": 7
+     },
+     "when": {
+      "goldGte": 50
+     }
+    },
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   }
+  ],
+  "log": [
+   {
+    "seq": 1,
+    "at": 1.3000000000000007,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-1-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -7,
+        "z": 7
+       },
+       "when": {
+        "goldGte": 30
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -11,
+        "z": 7
+       },
+       "when": {
+        "goldGte": 50
+       }
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 2,
+    "at": 12.3333333333333,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "active"
+   },
+   {
+    "seq": 3,
+    "at": 12.3333333333333,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 4,
+    "at": 12.3333333333333,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-1",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 5,
+    "at": 23.233333333333647,
+    "type": "order_status",
+    "orderId": "orders-1-2",
+    "status": "active"
+   },
+   {
+    "seq": 6,
+    "at": 23.233333333333647,
+    "type": "order_status",
+    "orderId": "orders-1-2",
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 7,
+    "at": 23.233333333333647,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-2",
+    "reason": "FAILED: BUILD action was rejected."
+   }
+  ]
+ }
+}

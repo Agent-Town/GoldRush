@@ -1,0 +1,8 @@
+{
+ "seq": 10,
+ "note": "SECOND RE-COMMAND, and the arithmetic is now against the fourth turret for good: 107 in the purse, 125 on the price, one wave left. The re-commanded turret died the same death as the original — the trigger cleared, the price did not. Worth recording: my last answer landed AFTER the beacon it replaced had already fired, so the replace cost me nothing; byKind shows sentry_beacon:1 standing. Spending the purse on what it can actually buy: a beacon now, on ground 3wu from where the reflex layer is already standing so the immediate fire cannot miss its circle, and a second at wave 10 out of the same purse.",
+ "orders": [
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -5, "z": -7 }, "when": { "waveGte": 9 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -5, "z": 7 }, "when": { "waveGte": 10 } }
+ ]
+}

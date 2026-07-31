@@ -1,0 +1,9 @@
+{
+ "seq": 34,
+ "note": "RE-COMMAND for the dark half. This is the stretch that killed round 1 (dead at 19 of 25) and the hero is already at 64/175 in wave 16. orders-2-4 died at (-11,7) with the hero 12wu south of it — the works are all on the north line and the gold has moved south, so the plan and the ground have come apart. Re-siting the last two beacons onto the SOUTHERN line where the reflex layer is actually working: (1,-7) is 3.0 clear of the turret at (-2,-7) and 3.0 clear of the lantern at (4,-7) — both above the 2.4 and 2.1 those pairs need — and (-6,-7) is 4.0 clear of the same turret and 4.5 from the seam site at (-1.5,-6.4). REPAIR_UNDER goes to 70 and stays last so it cannot starve the two builds behind it; on this map a mend is also a relight.",
+ "orders": [
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 1, "z": -7 }, "when": { "waveGte": 18 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -6, "z": -7 }, "when": { "waveGte": 20 } },
+  { "verb": "REPAIR_UNDER", "pct": 70 }
+ ]
+}

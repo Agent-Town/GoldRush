@@ -1,0 +1,12 @@
+{
+ "seq": 8,
+ "note": "RE-COMMAND. Two more orders are dead — the wave-8 turret at (2,-7) and the wave-9 beacon at (4,8) — with 267 in the purse against prices of 125 and 25, so neither died of money. Both cells were ones I had never seen anything placed on. Every cell that HAS worked on this map is within 2wu of a standing turret: (-8,7), (-2,-7), (7,7). So the new bench is sited by precedent rather than by hope, each cell 2wu from proven ground and >=4wu from its neighbours to clear the 1.2+1.2 overlap radii. Triggers are waves 11/13/15/17/19: sixty seconds apart so the reflex layer can walk between the north and south lines, and all beyond my own answering time so none of them can fire while I am still typing — which is how orders-2-1 died. Turret first: 1.14 dps per gold against a beacon's 0.48.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": 0, "z": -7 }, "when": { "waveGte": 11 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -4, "z": -7 }, "when": { "waveGte": 13 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -6, "z": 7 }, "when": { "waveGte": 15 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -10, "z": 7 }, "when": { "waveGte": 17 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 5, "z": 7 }, "when": { "waveGte": 19 } },
+  { "verb": "REPAIR_UNDER", "pct": 50 }
+ ]
+}
