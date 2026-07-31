@@ -80,7 +80,8 @@ data-loss, not token-waste.
 
 2. **Fixture tests in `scripts/drain-block-check.test.mjs`.** Four, using the file's existing `--root` fixture
    pattern:
-   - a master with a **fresh bare** `e2e/foo.spec.ts:123` citation and no title → `--queue` **exit 1**;
+   - a master with a **fresh bare** citation — a spec path plus a line number, no test title beside it —
+     → `--queue` **exit 1**;
    - the same citation **with** a resolvable test title → `--queue` **exit 0**;
    - a bare citation that **is present in the baseline** → `--queue` **exit 0** (the ratchet is respected);
    - the **drain** arm (no `--queue`) on the offending master → **unchanged behaviour**. This one is the
