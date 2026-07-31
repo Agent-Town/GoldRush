@@ -295,6 +295,50 @@ test('consent restores a save from before place-building existed', async ({ page
   ).toEqual({ ok: true, placeBuilding: false });
 });
 
+test('place-building consent survives a new save round-trip', async ({ page }) => {
+  await page.addInitScript(
+    ({ key }) => {
+      localStorage.setItem(key, JSON.stringify({ version: 1, tracks: { territory: 0, science: 0, hero: 0, agent: 3 } }));
+    },
+    { key: META_PROGRESS_KEY },
+  );
+  await page.goto('/?debug&nowaves&nolevel&seed=ap-place-building-round-trip');
+  await page.waitForFunction(() => window.__GR_TEST__ !== undefined);
+  await page.keyboard.press('KeyG');
+  await page.getByTestId('prospector-ability-light_duty').check();
+
+  const result = await page.evaluate(async () => {
+    const test = window.__GR_TEST__!;
+    const captured = test.captureSuspend();
+    const suspend = (await Function('return import("/src/game/RunSuspend.ts")')()) as typeof import('../src/game/RunSuspend');
+    const decoded = suspend.normalizeRunSuspendDatum(captured);
+    const restored = decoded ? test.restoreSuspend(decoded) : false;
+    const after = test.captureSuspend();
+    return {
+      captured: {
+        lightDuty: captured.agent?.consent.abilities.light_duty,
+        placeBuilding: captured.agent?.consent.abilities.place_building,
+      },
+      decoded: {
+        lightDuty: decoded?.agent?.consent.abilities.light_duty,
+        placeBuilding: decoded?.agent?.consent.abilities.place_building,
+      },
+      restored,
+      after: {
+        lightDuty: after.agent?.consent.abilities.light_duty,
+        placeBuilding: after.agent?.consent.abilities.place_building,
+      },
+    };
+  });
+
+  expect(result).toEqual({
+    captured: { lightDuty: true, placeBuilding: true },
+    decoded: { lightDuty: true, placeBuilding: true },
+    restored: true,
+    after: { lightDuty: true, placeBuilding: true },
+  });
+});
+
 test('plain-boot production orders pan a seam and place a real building', async ({ page }, testInfo) => {
   const errors = collectErrors(page);
   await openProductionOrders(page, '/?nowaves&nolevel&nopause&seed=ap-orders-production');

@@ -41,6 +41,15 @@ test.afterAll(async () => {
   await relay?.stop();
 });
 
+test('place-building consent is accepted on the multiplayer wire', async ({ page }) => {
+  await page.goto('/?debug&nospawn&nowaves&nolevel');
+  const normalized = await page.evaluate(async () => {
+    const { normalizeLockstepAction } = await import('../src/mp/LockstepClient');
+    return normalizeLockstepAction({ type: 'set_agent_ability', ability: 'place_building', granted: true });
+  });
+  expect(normalized).toEqual({ type: 'set_agent_ability', ability: 'place_building', granted: true });
+});
+
 test('consecutive action pulses survive the filled input-delay window exactly once', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop-chrome', 'one action FIFO proof is enough');
   await page.goto('/?debug&nospawn&nowaves&nolevel');
