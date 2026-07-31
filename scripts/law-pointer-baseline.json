@@ -18,6 +18,12 @@
       "fingerprint": "514fb8d7b116",
       "excerpt": "# It was: find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null"
     },
+    "scripts/fire.md -> scripts/goal-tracker.test.mjs:80": {
+      "target": "scripts/goal-tracker.test.mjs",
+      "line": 80,
+      "fingerprint": "5a95e83cbbe1",
+      "excerpt": "if (leaf.mergeHash) assert.match(leaf.mergeHash, /^[0-9a-f]{40}$/);"
+    },
     "scripts/fire.md -> scripts/drain-block-check.mjs:330": {
       "target": "scripts/drain-block-check.mjs",
       "line": 330,
@@ -30,9 +36,9 @@
       "fingerprint": "4eb7ad8e7dcc",
       "excerpt": "npx playwright test <the-slice's-spec> <adjacent-suites> -c <self-booting scratch config, ports 5199"
     },
-    "scripts/fire.md -> playwright.config.ts:30": {
+    "scripts/fire.md -> playwright.config.ts:50": {
       "target": "playwright.config.ts",
-      "line": 30,
+      "line": 50,
       "fingerprint": "03b4031fea20",
       "excerpt": "workers: isFireShell ? 1 : undefined,"
     },
@@ -48,9 +54,9 @@
       "fingerprint": "6ec452ee10f7",
       "excerpt": "process.exit(strict ? 2 : 0);"
     },
-    ".claude/skills/drain/SKILL.md -> playwright.config.ts:30": {
+    ".claude/skills/drain/SKILL.md -> playwright.config.ts:50": {
       "target": "playwright.config.ts",
-      "line": 30,
+      "line": 50,
       "fingerprint": "03b4031fea20",
       "excerpt": "workers: isFireShell ? 1 : undefined,"
     },
