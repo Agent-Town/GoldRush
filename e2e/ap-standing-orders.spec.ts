@@ -147,6 +147,21 @@ test('seeded standing orders obey priority, gates, legal actions, surprises, and
   await page.evaluate(() => {
     (window as unknown as { __AP_LEVEL__: number }).__AP_LEVEL__ = 3;
   });
+  await page.getByTestId('hud-agent').click();
+  await page.getByTestId('prospector-ability-place_building').uncheck();
+  const revokedAbility = await submit(page, [
+    { verb: 'BUILD', what: 'sentry_beacon', where: { x: 0, z: 10 }, when: { goldGte: 25 } },
+  ]);
+  expect(revokedAbility.outcome).toMatchObject({
+    ok: false,
+    reason: 'PERMISSION_DENIED',
+    requiredLevel: 3,
+    message: 'BUILD requires the granted place_building ability.',
+  });
+  expect((await view(page)).orders).toEqual([]);
+  await page.getByTestId('prospector-ability-place_building').check();
+  await page.locator('[data-prospector-close]').click();
+
   const accepted = await submit(page, [
     { verb: 'BUILD', what: 'sentry_beacon', where: { x: 0, z: 10 }, when: { goldGte: 25 } },
     { verb: 'BUILD', what: 'palisade', where: { x: 6, z: 10 }, when: { goldGte: 25 } },

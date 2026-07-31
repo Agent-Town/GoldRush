@@ -414,6 +414,7 @@ function permissionDenial(
 }
 
 function requiredAbility(order: StandingOrder): AgentAbility | null {
+  if (order.verb === 'BUILD') return 'place_building';
   if (order.verb === 'REPAIR_UNDER') return 'auto_repair';
   if (order.verb === 'HARVEST') return 'auto_pan';
   return null;
