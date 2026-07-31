@@ -31,7 +31,7 @@ import { WaveSystem } from '../systems/WaveSystem';
 import * as Terrain from '../world/Terrain';
 
 const STEP_SECONDS = 1 / 30;
-const SUPPORTED_CONTRACT = 'e1-dry-gulch';
+const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim']);
 
 export type GrSimOutcome = {
   secured: boolean;
@@ -116,8 +116,8 @@ export class HeadlessContractSim {
   private buildingHits = 0;
 
   constructor(readonly contractId: string, readonly seed: string) {
-    if (contractId !== SUPPORTED_CONTRACT) {
-      throw new Error(`AP-07 currently supports only ${SUPPORTED_CONTRACT}; received ${contractId}.`);
+    if (!SUPPORTED_CONTRACTS.has(contractId)) {
+      throw new Error(`AP-07 supports only ${[...SUPPORTED_CONTRACTS].join(', ')}; received ${contractId}.`);
     }
     this.manifest = loadContract(contractId);
     const stake = this.manifest.tileParams.stakeMarkers?.find((marker) => marker.lossCondition);

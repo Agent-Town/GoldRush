@@ -37,5 +37,23 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     { cwd: root, encoding: 'utf8', timeout: 30_000 },
   );
   assert.notEqual(unsupported.status, 0);
-  assert.match(unsupported.stderr, /currently supports only e1-dry-gulch/);
+  assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim/);
+});
+
+test('gr-sim deterministically runs the Claim objective', () => {
+  const root = fileURLToPath(new URL('..', import.meta.url));
+  const run = () => spawnSync(
+    process.execPath,
+    ['scripts/gr-sim.mjs', '--contract', 'the-claim', '--seed', 'e1-the-claim-01', '--policy=idle'],
+    { cwd: root, encoding: 'utf8', timeout: 30_000 },
+  );
+  const first = run();
+  const second = run();
+  assert.equal(first.status, 0, first.stderr);
+  assert.equal(second.status, 0, second.stderr);
+  assert.equal(second.stdout, first.stdout);
+  assert.deepEqual(
+    Object.keys(JSON.parse(first.stdout.trim().split('\n').at(-1))),
+    ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash'],
+  );
 });

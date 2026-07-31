@@ -10,7 +10,7 @@ This v0 `verifiers` environment maps one deterministic Gold Rush contract run to
 
 The wheel is pure Python, but the local environment starts the repository's Node runner. Hosted Environments Hub containers do not contain that runner or Node by default; a later publication slice must use a `SandboxEnv`/`CliAgentEnv` image. The package deliberately uses the documented v0 `MultiTurnEnv` API, accepting its future v1 migration risk.
 
-The frozen evaluation data contains five Trail seeds each for `e1-dry-gulch` and `the-claim`. GR-SIM currently implements only `e1-dry-gulch`; Claim rows are frozen now for comparability but fail closed until its real objective driver exists. The default five-example ordering is therefore the five runnable Dry Gulch rows.
+The frozen evaluation data contains five Trail seeds each for `e1-dry-gulch` and `the-claim`. GR-SIM implements both contracts, so all ten rows are runnable. The default five-example ordering remains the five Dry Gulch rows.
 
 ## Local checks
 
