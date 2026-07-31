@@ -740,6 +740,11 @@ export const Balance = {
       { cost: 120, panRateMult: 1.35, yieldMult: 1.7 },
       { cost: 240, panRateMult: 2.15, yieldMult: 3.1 }, // task-047; old 320 / 1.9 / 2.7.
     ],
+    stockpile: [
+      { cost: 0, capMult: 1 },
+      { cost: 110, capMult: 1.6 },
+      { cost: 260, capMult: 2.4 },
+    ],
     turret: [
       { cost: 0, damageMult: 1, fireRateMult: 1 },
       { cost: 150, damageMult: 1.4, fireRateMult: 1.18 },
