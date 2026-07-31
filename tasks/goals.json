@@ -3899,7 +3899,8 @@
               "id": "ap-07-the-claim-pin-lift",
               "title": "AP-07 pin-lift — teach GR-SIM `the-claim`, the contract whose objective the engine ALREADY evaluates. HeadlessContractSim gates on a single-contract constant (`SUPPORTED_CONTRACT = e1-dry-gulch`, :34/:119-120) so five of the ten frozen eval rows fail closed. But `the-claim`s declared objective IS `twist.secureWave: 10` (ContractFamilies.ts:1884) and `startWave` (:309) reads exactly that datum with NO contract branch — so no objective driver need be written. Re-derived at source AND re-run by s1315 with the pin temporarily lifted and restored byte-exact (sha256 6303d754..de438 both sides, src/ clean): the-claim rc=0 and byte-deterministic (fnv1a32:bcff0c12 twice on one seed, 1e4aef01 on another), e1-dry-gulch/bench-001 control unchanged at fnv1a32:3d75c580, e5-deepwater-claim still rejected. Scope: lift the pin to a SET, make the thrown message enumerate it, update gr-sim.test.mjs:40 plus a positive+determinism case, and correct the two current-truth prose surfaces (env/goldrush-verifiers/README.md:13, docs/bench/agent-playability-census.md:5/:21). Carries F-1315-1: the obvious lift (add a Set, leave the message naming only e1-dry-gulch) leaves gr-sim.test.mjs:40 GREEN while the error message lies — so the test must be updated BECAUSE the message changed, not because the red is automatic. e1-twin-banks explicitly EXCLUDED as owner-gated: it runs, but its twist declares only secureWave so `hold both banks` has no machine-readable objective, and supplying one means the loss mechanic banked in DRAFT-e1-hold-the-claim.md.",
               "taskFile": "lane-b-ap07-the-claim-pin-lift.md",
-              "status": "queued"
+              "status": "shipped",
+              "mergeHash": "38b201542890afaab01531571485f7b17863145f"
             },
             {
               "id": "lb-02-bench-fields",
