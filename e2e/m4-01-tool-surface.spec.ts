@@ -126,7 +126,7 @@ test('get_state returns the same state and economy log as the direct harness', a
 
 test('place_building delegates to the direct build path and receipts the exact economy log', async ({ page }) => {
   const errors = await openGame(page);
-  const install = await installAgentTools(page, 1);
+  const install = await installAgentTools(page, 3);
   test.skip(!install.ok, 'ToolSurface is source-only until the merge session wires install(game).');
   await grantGold(page, 30);
 
@@ -158,10 +158,10 @@ test('level 0 blocks every side-effect tool with a typed refusal and no log delt
   ]);
   const after = await economyLog(page);
 
+  expect(receipts.map((receipt) => receipt.outcome.requiredLevel)).toEqual([2, 1, 1, 3]);
   for (const receipt of receipts) {
     expect(receipt.outcome.ok).toBe(false);
     expect(receipt.outcome.reason).toBe('PERMISSION_DENIED');
-    expect(receipt.outcome.requiredLevel).toBe(1);
     expect(receipt.outcome.economyLog).toEqual(before);
   }
   expect(after).toEqual(before);
@@ -182,12 +182,35 @@ test('unbacked action tools refuse without mutating the direct economy log', asy
   ]);
   const after = await economyLog(page);
 
+  expect(receipts.map((receipt) => receipt.outcome.reason)).toEqual(['PERMISSION_DENIED', 'NO_SYSTEM_API', 'NO_SYSTEM_API']);
+  expect(receipts[0].outcome.requiredLevel).toBe(2);
   for (const receipt of receipts) {
     expect(receipt.outcome.ok).toBe(false);
-    expect(receipt.outcome.reason).toBe('NO_SYSTEM_API');
     expect(receipt.outcome.economyLog).toEqual(before);
   }
   expect(after).toEqual(before);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('place_building enforces its declared rung before delegating', async ({ page }) => {
+  const errors = await openGame(page);
+  const args = ['sentry_beacon', { x: 0, z: 10 }, 0];
+  const belowRung = await installAgentTools(page, 2);
+  test.skip(!belowRung.ok, 'ToolSurface is source-only until the merge session wires install(game).');
+
+  const denied = await callTool(page, 'place_building', args);
+  expect(denied.outcome).toMatchObject({ ok: false, reason: 'PERMISSION_DENIED', requiredLevel: 3 });
+
+  await page.reload();
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  const atRung = await installAgentTools(page, 3);
+  test.skip(!atRung.ok, 'ToolSurface is source-only until the merge session wires install(game).');
+  await grantGold(page, 30);
+
+  const allowed = await callTool(page, 'place_building', args);
+  expect(allowed.outcome.ok).toBe(true);
+  expect(allowed.cost).toBe(25);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

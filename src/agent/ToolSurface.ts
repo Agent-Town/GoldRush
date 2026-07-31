@@ -7,7 +7,7 @@ import {
   type AgentPermissionLevel,
   type MetaProgressAgentGate,
 } from './PermissionLadder';
-import type { AgentAbility } from './AgentConsent';
+import { AGENT_ABILITIES, type AgentAbility } from './AgentConsent';
 import {
   bindStandingOrders,
   StandingOrdersExecutor,
@@ -215,6 +215,13 @@ export function install(game: AgentGameAdapter, options: ToolSurfaceOptions = {}
 }
 
 type SideEffectToolName = Exclude<GoldRushToolName, 'et.goldrush.get_state' | 'et.goldrush.orders' | 'et.goldrush.view'>;
+const TOOL_ABILITIES: Partial<Record<SideEffectToolName, AgentAbility>> = {
+  'et.goldrush.pan_at': 'auto_pan',
+  'et.goldrush.repair': 'auto_repair',
+  'et.goldrush.collect_xp': 'auto_collect',
+  'et.goldrush.collect_gold': 'auto_collect',
+  'et.goldrush.place_building': 'place_building',
+};
 
 function runSideEffect<TName extends SideEffectToolName, TArgs>(
   game: AgentGameAdapter,
@@ -223,7 +230,8 @@ function runSideEffect<TName extends SideEffectToolName, TArgs>(
   args: TArgs,
   call: () => unknown,
 ): ToolReceipt<TName, TArgs> {
-  const permission = decideToolPermission(level, true);
+  const requiredLevel = AGENT_ABILITIES.find((ability) => ability.id === TOOL_ABILITIES[tool])?.level ?? 1;
+  const permission = decideToolPermission(level, true, requiredLevel);
   if (!permission.ok) {
     return makeReceipt(tool, args, {
       ok: false,
