@@ -2840,7 +2840,10 @@
               "id": "factory-f1281-2-turret-placement-diagnosis",
               "title": "Diagnose the e2-arsenal turret placeFree red (F-1281-2)",
               "taskFile": "lane-d-f1281-2-turret-placement-diagnosis.md",
-              "status": "planned"
+              "status": "merged",
+              "mergeHash": "30c0e43ea1822848950c196ad3f3870e66733ed0",
+              "review": "reviews/f1281-2-turret-placement-diagnosis.md",
+              "drainNotes": "Leaf repaired s1289 (F-1289-2): the s1286 drain landed 30c0e43e but never flipped this leaf, so it sat at status=planned with no mergeHash for 3 fires -- a Goal Registration Law miss that presents shipped work as queueable (Mistake #8 shape). Verified by ancestry and content, not headline: merge-base --is-ancestor 30c0e43e main = YES, and git show --stat names reviews/f1281-2-turret-placement-diagnosis.md plus the s1284-lane-d probe evidence. Swept for the class: of 8 leaves with a taskFile in a non-merged state, this is the ONLY one carrying a drained- done-move; the other 7 carry stopped- done-moves and are correctly non-merged. Instance, not class."
             }
           ]
         }
