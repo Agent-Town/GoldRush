@@ -1,3 +1,4 @@
+import { mkdirSync } from 'node:fs';
 import { expect, test, type Page } from '@playwright/test';
 import { Balance } from '../src/game/Balance';
 
@@ -46,6 +47,10 @@ async function gold(page: Page): Promise<number> {
 
 async function baseValue(page: Page): Promise<number> {
   return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.summary.baseValue ?? 0);
+}
+
+async function bankCap(page: Page): Promise<number> {
+  return page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.bankCap ?? 0);
 }
 
 async function teleport(page: Page, x: number, z: number): Promise<void> {
@@ -310,6 +315,51 @@ test('tier cap stops at tier 3 without extra spend', async ({ page }) => {
   await expect(upgrade(page, turret)).resolves.toBe(false);
   expect(await gold(page)).toBe(beforeGold);
   expect((await hpEntry(page, 'turret', turret.index))?.tier).toBe(3);
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
+test('stockpile tiers raise cap, survive restore, demolish cleanly, and stop at tier 3', async ({ page }, testInfo) => {
+  const errors = await openGame(page, 'bt-02b-stockpile');
+  const beforeBuildCap = await bankCap(page);
+  await grantGold(page, Balance.stockpile.cost + Balance.tiers.stockpile[1].cost + Balance.tiers.stockpile[2].cost);
+  const stockpile = await placeBuildableAt(page, 'stockpile', 0, 9);
+
+  expect(stockpile.tier).toBe(1);
+  expect(await bankCap(page)).toBe(beforeBuildCap + Balance.stockpile.capBonus);
+  await teleport(page, stockpile.position.x, stockpile.position.z);
+  await expect(page.getByTestId('building-context-prompt')).toContainText(`Upgrade to T2 (${Balance.tiers.stockpile[1].cost}g)`);
+
+  await expect(upgrade(page, stockpile)).resolves.toBe(true);
+  await expect.poll(() => bankCap(page)).toBe(beforeBuildCap + Math.round(Balance.stockpile.capBonus * Balance.tiers.stockpile[1].capMult));
+  await expect(upgrade(page, stockpile)).resolves.toBe(true);
+  await expect.poll(() => bankCap(page)).toBe(beforeBuildCap + Math.round(Balance.stockpile.capBonus * Balance.tiers.stockpile[2].capMult));
+  expect((await hpEntry(page, 'stockpile', stockpile.index))?.tier).toBe(3);
+
+  const beforeFourthUpgradeGold = await gold(page);
+  await expect(upgrade(page, stockpile)).resolves.toBe(false);
+  expect(await gold(page)).toBe(beforeFourthUpgradeGold);
+
+  const snapshot = await page.evaluate(() => structuredClone(window.__GR_TEST__!.captureSuspend()));
+  expect(snapshot.buildings.find((building) => building.id === 'stockpile' && building.index === stockpile.index)?.tier).toBe(3);
+  await expect(page.evaluate((saved) => window.__GR_TEST__!.restoreSuspend(saved), snapshot)).resolves.toBe(true);
+  await expect.poll(() => hpEntry(page, 'stockpile', stockpile.index).then((entry) => entry?.tier ?? 0)).toBe(3);
+  await expect.poll(() => bankCap(page)).toBe(beforeBuildCap + Math.round(Balance.stockpile.capBonus * Balance.tiers.stockpile[2].capMult));
+
+  await page.evaluate(() => window.__GR_TEST__?.setBuildMode(true));
+  await teleport(page, stockpile.position.x, stockpile.position.z);
+  await expect(page.getByTestId('building-context-prompt')).toContainText('Stockpile Yard · Tier 3');
+  if (await page.getByTestId('contract-briefing-dismiss').isVisible()) {
+    await page.getByTestId('contract-briefing-dismiss').click();
+    await expect(page.getByTestId('contract-briefing')).toBeHidden();
+  }
+  mkdirSync('artifacts/bt-02b-stockpile-tiers', { recursive: true });
+  await page.screenshot({ path: `artifacts/bt-02b-stockpile-tiers/${testInfo.project.name}-tier-3.png`, fullPage: true });
+
+  await expect(
+    page.evaluate(([id, index]) => window.__GR_TEST__?.demolish(id, index) ?? false, [stockpile.id, stockpile.index] as const),
+  ).resolves.toBe(true);
+  await expect.poll(() => bankCap(page)).toBe(beforeBuildCap);
   expect(errors.consoleErrors).toEqual([]);
   expect(errors.pageErrors).toEqual([]);
 });

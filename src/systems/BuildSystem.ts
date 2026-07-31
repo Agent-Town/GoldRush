@@ -253,7 +253,7 @@ const buildableIds: readonly BuildableId[] = [
   'capacitor_bank',
   'assay_office',
 ];
-const upgradeableBuildableIds = ['palisade', 'sluice', 'turret'] as const;
+const upgradeableBuildableIds = ['palisade', 'sluice', 'stockpile', 'turret'] as const;
 const hiddenMatrix = new THREE.Matrix4().makeScale(0, 0, 0);
 const hpBackingColor = new THREE.Color('#f5e6c8');
 const hpInkColor = new THREE.Color('#3b2a1a');
@@ -270,7 +270,7 @@ const assayOfficeSignUrlLoader = () => import('../../assets/processed/bld-claim-
 type BuildingFamilyStore<T> = Record<BuildableId, T[]>;
 type UpgradeableBuildableId = (typeof upgradeableBuildableIds)[number];
 type TierRung = (typeof Balance.tiers)[UpgradeableBuildableId][number];
-type TierStat = 'maxHpMult' | 'panRateMult' | 'yieldMult' | 'damageMult' | 'fireRateMult';
+type TierStat = 'maxHpMult' | 'panRateMult' | 'yieldMult' | 'capMult' | 'damageMult' | 'fireRateMult';
 type BuildingDamageResult = {
   applied: boolean;
   family: string;
@@ -997,6 +997,9 @@ export class BuildSystem {
     this.finishPlacement(state.id, state.index, state.buildCost);
     this.preplaced[state.id][state.index] = state.preplaced === true;
     this.tier[state.id][state.index] = Math.max(1, Math.floor(state.tier));
+    if (state.id === 'stockpile') {
+      this.economy.addCapSource(stockpileCapSource(state.index), Math.round(this.effectiveStat(state.id, state.index, Balance.stockpile.capBonus, 'capMult')));
+    }
     const maxHpMultiplier = this.effectiveStat(state.id, state.index, 1, 'maxHpMult');
     this.hpMax[state.id][state.index] =
       typeof state.baseMaxHp === 'number' && Number.isFinite(state.baseMaxHp)
@@ -1240,6 +1243,9 @@ export class BuildSystem {
     this.tier[id][index] = candidate.nextTier;
     this.buildCosts[id][index] = (this.buildCosts[id][index] ?? 0) + candidate.cost;
     if (id === 'palisade') this.hp[id][index] = this.maxHpForInstance(id, index);
+    if (id === 'stockpile') {
+      this.economy.addCapSource(stockpileCapSource(index), Math.round(this.effectiveStat(id, index, Balance.stockpile.capBonus, 'capMult')));
+    }
     this.syncBuildingTarget(id, index, true);
     this.syncTierVisual(id, index);
     this.refreshShooterStats(id, index);
@@ -1670,7 +1676,9 @@ export class BuildSystem {
     this.syncBuildingTarget(id, index, true);
     if (id === 'sentry_beacon') this.registerBeaconShooter(index);
     if (id === 'turret') this.registerTurretShooter(index);
-    if (id === 'stockpile') this.economy.addCapSource(stockpileCapSource(index), Balance.stockpile.capBonus);
+    if (id === 'stockpile') {
+      this.economy.addCapSource(stockpileCapSource(index), Math.round(this.effectiveStat(id, index, Balance.stockpile.capBonus, 'capMult')));
+    }
     this.syncTierVisual(id, index);
     this.visualDirty = true;
   }
@@ -1711,7 +1719,9 @@ export class BuildSystem {
     this.syncBuildingTarget(id, index, true);
     if (id === 'sentry_beacon') this.registerBeaconShooter(index);
     if (id === 'turret') this.registerTurretShooter(index);
-    if (id === 'stockpile') this.economy.addCapSource(stockpileCapSource(index), Balance.stockpile.capBonus);
+    if (id === 'stockpile') {
+      this.economy.addCapSource(stockpileCapSource(index), Math.round(this.effectiveStat(id, index, Balance.stockpile.capBonus, 'capMult')));
+    }
     this.syncTierVisual(id, index);
     this.visualDirty = true;
   }
@@ -2921,7 +2931,7 @@ function stockpileCapSource(index: number): string {
 }
 
 function isUpgradeableBuildable(id: BuildableId): id is UpgradeableBuildableId {
-  return id === 'palisade' || id === 'sluice' || id === 'turret';
+  return id === 'palisade' || id === 'sluice' || id === 'stockpile' || id === 'turret';
 }
 
 export function tierUnlockAllowed(_id: BuildableId, _tier: number): boolean {
