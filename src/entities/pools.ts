@@ -1163,6 +1163,7 @@ export class EnemyPool {
   }
 
   private createRailcarParts(): void {
+    if (typeof document === 'undefined') return;
     const loader = new THREE.TextureLoader();
     const parts = [
       { id: 'wheels', urls: [railcarWheelsUrl, railcarWheelsDamagedUrl], size: [1.55, 0.85] },
@@ -1302,6 +1303,7 @@ export class EnemyPool {
   }
 
   private publishBossHpBar(state: BossBarState | null): void {
+    if (typeof document === 'undefined') return;
     const canvas = this.bossHpCanvas ??= document.querySelector<HTMLCanvasElement>('#game-canvas');
     if (!canvas) return;
     canvas.dataset.bossBarVisible = String(state !== null);
@@ -1517,6 +1519,7 @@ export class EnemyPool {
   }
 
   private publishRailcar3d(): void {
+    if (typeof document === 'undefined') return;
     const canvas = document.querySelector('canvas');
     if (!canvas) return;
     canvas.dataset.railcar3dState = this.railcar3dState;

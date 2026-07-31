@@ -313,6 +313,7 @@ const BARON_DEFEAT_TITLE = 'THE BARON IS DEFEATED';
 const BARON_KILL_STOP_SECONDS = 2.2;
 const BARON_DEFEAT_CARD_SECONDS = 4;
 const BARON_ROCKET_OWNER_PREFIX = 'baron_rocket';
+const TRAIL_GUIDE_DWELL_MS = 4_000;
 const GREEN_WAYPOINT_CONTRACT_ID = 'e1-dry-gulch';
 const COUNTY_ANON_ID_KEY = 'gr.countyStandings.anonId.v1';
 
@@ -1097,6 +1098,8 @@ export class Game {
   private baronAnnouncementTimer = 0;
   private pendingBaronBanner: { text: string; atSim: number; title: string; edge: CompassEdge | null } | null = null;
   private trailGuideLine: string | null = null;
+  private readonly pendingTrailGuideLines: string[] = [];
+  private trailGuideTimer = 0;
   private damageFlashRemaining = 0;
   private charmPauseRemaining = 0;
   private charmPauseCooldown = 0;
@@ -2056,6 +2059,52 @@ export class Game {
       {
         diagnostics: () => window.__THREE_GAME_DIAGNOSTICS__,
         economyLog: () => this.economy.log,
+        placeBuilding: (id, position, rotation = 0) => {
+          if (this.state.current !== 'playing' || this.state.isPaused || this.deepwaterClaim) return false;
+          const rotationSteps = Number.isFinite(rotation)
+            ? Number.isInteger(rotation) ? rotation : Math.round(rotation / (Math.PI / 2))
+            : 0;
+          const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps });
+          if (placed) {
+            discoverLedgerBuildable(id);
+            this.recordCountyAction('place_build', { id, position, rotationSteps });
+          }
+          return placed;
+        },
+        panAt: (node) => {
+          if (this.state.current !== 'playing' || this.state.isPaused) return false;
+          const target = this.harvestSnapshot.activeNodes.find((entry) => entry.id === node && entry.active);
+          if (!target) return false;
+          const before = target.remaining;
+          const previous = this.harvestSystem.captureFutureState(this.timeAlive);
+          const position = new THREE.Vector3(target.position.x, 0, target.position.z);
+          const panned = this.harvestSystem.update(
+            Balance.goldSeam.tickSeconds * Math.max(0.1, this.progression.snapshot.stats.panTickMult),
+            this.timeAlive,
+            [{ actorId: 'prospector', position, speed: 0 }],
+          );
+          const pannedTarget = panned.activeNodes.find((entry) => entry.id === node);
+          const nodes = previous.nodes.map((entry) => entry.id === node && pannedTarget ? pannedTarget : entry);
+          const activeNodes = new Set(nodes.filter((entry) => entry.active).map((entry) => entry.id));
+          const channels = previous.channels?.map((channel) =>
+            channel.channelNodeId === null || activeNodes.has(channel.channelNodeId)
+              ? channel
+              : { ...channel, channelNodeId: null, progress: 0, panCapBlocked: false, channeling: false },
+          );
+          const primary = channels?.find((channel) => channel.actorId === '0');
+          const channelNodeId = primary?.channelNodeId ??
+            (previous.channelNodeId !== null && activeNodes.has(previous.channelNodeId) ? previous.channelNodeId : null);
+          this.harvestSystem.restoreFutureState({
+            ...previous,
+            nodes,
+            channelNodeId,
+            progress: channelNodeId === null ? 0 : (primary?.progress ?? previous.progress),
+            panCapBlocked: channelNodeId === null ? false : (primary?.panCapBlocked ?? previous.panCapBlocked),
+            channels,
+          }, this.timeAlive);
+          this.harvestSnapshot = this.harvestSystem.update(0, this.timeAlive, this.visibleHarvestTargets());
+          return (panned.activeNodes.find((entry) => entry.id === node)?.remaining ?? before) < before;
+        },
         repair: (building) => this.repairProspectorBuilding(building),
         collectXp: (options) => this.collectProspectorXp(options),
         collectGold: () => this.collectProspectorGold(),
@@ -2124,6 +2173,7 @@ export class Game {
     window.__GR_MP__ = undefined;
     this.loop.stop();
     window.clearTimeout(this.baronAnnouncementTimer);
+    window.clearTimeout(this.trailGuideTimer);
     window.removeEventListener('pointerdown', this.skipBaronCeremony);
     window.removeEventListener('keydown', this.skipBaronCeremony);
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
@@ -4627,20 +4677,33 @@ export class Game {
   private speakTrailGuide(trigger: TrailGuideTrigger): void {
     const bark = takeTrailGuideBark(trigger);
     if (!bark) return;
-    this.trailGuideLine = bark.line;
+    if (this.trailGuideLine) {
+      this.pendingTrailGuideLines.push(bark.line);
+      return;
+    }
+    this.showTrailGuide(bark.line);
+  }
+
+  private showTrailGuide(line: string): void {
+    this.trailGuideLine = line;
+    window.clearTimeout(this.trailGuideTimer);
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
     window.removeEventListener('keydown', this.dismissTrailGuide);
     window.addEventListener('pointerdown', this.dismissTrailGuide, { once: true });
     window.addEventListener('keydown', this.dismissTrailGuide, { once: true });
+    this.trailGuideTimer = window.setTimeout(this.dismissTrailGuide, TRAIL_GUIDE_DWELL_MS);
     this.syncUi();
   }
 
   private readonly dismissTrailGuide = (): void => {
     if (!this.trailGuideLine) return;
+    const next = this.pendingTrailGuideLines.shift();
     this.trailGuideLine = null;
+    window.clearTimeout(this.trailGuideTimer);
     window.removeEventListener('pointerdown', this.dismissTrailGuide);
     window.removeEventListener('keydown', this.dismissTrailGuide);
-    this.syncUi();
+    if (next) this.showTrailGuide(next);
+    else this.syncUi();
   };
 
   private queueBaronBanner(text: string, atSim: number, title: string, edge: CompassEdge | null = null): void {
@@ -5535,6 +5598,7 @@ export class Game {
           },
           profileName: activeProfileName(),
           anonId: countyAnonId(),
+          difficulty: this.difficultyPreset,
           seed,
           seedMode: pinnedSeed === null ? 'live' : 'bench',
           seedHash,

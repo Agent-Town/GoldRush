@@ -11,7 +11,7 @@ const modelSourceDir = resolve('assets/pilots/map-rebuild-spike');
 // F-1184-1, made permanent by gazette-art-wiring-hardening.
 const HERALD_SPOT_CUT_BUDGET_BYTES = 1_500_000;
 // Scope 1 measured 1,099,906 B on disk; 1.5 MB leaves 36% encoder drift
-// (and still bounds 7 spot cuts at 64 KiB plus 6 panels at 160 KiB).
+// (and still bounds 8 spot cuts at 64 KiB plus 6 panels at 160 KiB).
 const HERALD_DEV_ART_BUDGET_BYTES = 1_500_000;
 const townLandmarkModelNames = [
   'assay-office',
@@ -57,8 +57,8 @@ async function filesReachedByHeraldGlobs() {
   const reachedNames = new Set(files.map((file) => basename(file)));
   const missing = [...expectedNames].filter((name) => !reachedNames.has(name));
   const unexpected = [...reachedNames].filter((name) => !expectedNames.has(name));
-  if (expectedNames.size !== 13 || missing.length || unexpected.length) {
-    throw new Error(`Expected the 13 Herald derivatives; missing [${missing}], unexpected [${unexpected}].`);
+  if (expectedNames.size !== 14 || missing.length || unexpected.length) {
+    throw new Error(`Expected the 14 Herald derivatives; missing [${missing}], unexpected [${unexpected}].`);
   }
   return files;
 }

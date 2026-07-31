@@ -771,6 +771,7 @@ export function prefetchNonCriticalSpriteRuntimes(): Promise<void> {
 }
 
 async function createRuntimeSlot(slotId: AssetSlotId): Promise<RuntimeSlot | null> {
+  if (typeof document === 'undefined') return null;
   const slot = slotContracts.get(slotId);
   const fallbackTexture = await loadGeneratedTexture(slotId);
   const fallbackClip = fallbackTexture

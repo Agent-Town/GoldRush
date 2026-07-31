@@ -27,6 +27,7 @@ export function createBuildingSignFromUrlLoader(
   name: string,
 ): THREE.InstancedMesh {
   const mesh = createSignMesh(capacity, name);
+  if (typeof document === 'undefined') return mesh;
   const material = mesh.material as THREE.MeshStandardMaterial;
   void afterStartupFrame()
     .then(urlLoader)

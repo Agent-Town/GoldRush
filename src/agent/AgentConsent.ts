@@ -1,6 +1,6 @@
 import type { AgentPermissionLevel } from './PermissionLadder';
 
-export type AgentAbility = 'auto_collect' | 'auto_repair' | 'auto_pan' | 'light_duty';
+export type AgentAbility = 'auto_collect' | 'auto_repair' | 'auto_pan' | 'light_duty' | 'place_building';
 
 export type AgentAbilityDef = {
   id: AgentAbility;
@@ -12,7 +12,8 @@ export const AGENT_ABILITIES: readonly AgentAbilityDef[] = [
   { id: 'auto_collect', level: 1, label: 'Let the Prospector gather loose XP and dropped gold' },
   { id: 'auto_repair', level: 1, label: 'Let the Prospector tend walls' },
   { id: 'light_duty', level: 1, label: 'Let the Prospector light the trail' },
-  { id: 'auto_pan', level: 3, label: 'Let the Prospector work claim pans' },
+  { id: 'auto_pan', level: 2, label: 'Let the Prospector work claim pans' },
+  { id: 'place_building', level: 3, label: 'Let the Prospector place buildings' },
 ];
 
 export type AgentConsentSnapshot = {
@@ -26,7 +27,11 @@ type AgentConsentState = {
   abilities: Record<AgentAbility, boolean>;
 };
 
-export type AgentConsentFutureState = AgentConsentState;
+export type AgentConsentFutureState = {
+  rungs: AgentConsentState['rungs'];
+  abilities: Omit<AgentConsentState['abilities'], 'light_duty' | 'place_building'> &
+    Partial<Pick<AgentConsentState['abilities'], 'light_duty' | 'place_building'>>;
+};
 
 export class AgentConsentStore {
   private state = freshConsentState();
@@ -45,7 +50,11 @@ export class AgentConsentStore {
     if (![...rungValues, ...abilityValues].every((value) => typeof value === 'boolean')) return false;
     this.state = {
       rungs: { ...state.rungs },
-      abilities: { ...state.abilities, light_duty: state.abilities.light_duty === true },
+      abilities: {
+        ...state.abilities,
+        light_duty: state.abilities.light_duty === true,
+        place_building: state.abilities.place_building === true,
+      },
     };
     return true;
   }
@@ -78,6 +87,7 @@ export class AgentConsentStore {
         auto_repair: this.ability('auto_repair', ceiling),
         light_duty: this.ability('light_duty', ceiling),
         auto_pan: this.ability('auto_pan', ceiling),
+        place_building: this.ability('place_building', ceiling),
       },
     };
   }
@@ -100,6 +110,6 @@ export class AgentConsentStore {
 function freshConsentState(): AgentConsentState {
   return {
     rungs: { 0: true, 1: true, 2: true, 3: true },
-    abilities: { auto_collect: true, auto_repair: true, auto_pan: true, light_duty: false },
+    abilities: { auto_collect: true, auto_repair: true, auto_pan: true, light_duty: false, place_building: true },
   };
 }

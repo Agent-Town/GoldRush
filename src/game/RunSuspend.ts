@@ -2658,6 +2658,7 @@ function decodeAgent(value: unknown, reasons: string[]): AgentSuspend | null | u
         auto_repair: abilities.auto_repair as boolean,
         auto_pan: abilities.auto_pan as boolean,
         light_duty: abilities.light_duty === true,
+        place_building: abilities.place_building === true,
       },
     },
     prospector: {

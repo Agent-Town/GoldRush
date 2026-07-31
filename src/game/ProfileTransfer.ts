@@ -6,6 +6,7 @@ import { gunzipJsonBase64, gzipTextBase64 } from '../core/GzipJson';
 import {
   PROFILE_KEY,
   RUN_SUSPEND_KEY,
+  TOWN_WELCOME_SEEN_KEY,
   activeProfile,
   importProfileRecord,
   isTileStateDataKey,
@@ -280,6 +281,7 @@ function encodeDatum(value: unknown): string {
 }
 
 function normalizeDatum(storage: ProfileStorage, profileId: string, key: string, value: unknown): unknown | null {
+  if (key === TOWN_WELCOME_SEEN_KEY) return '1';
   if (isTileStateDataKey(key)) return normalizeTileStateDatum(value);
   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
   if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(safeGet(storage, profileDataKey(profileId, SAVE_SLOTS_KEY)), value);
@@ -287,6 +289,7 @@ function normalizeDatum(storage: ProfileStorage, profileId: string, key: string,
 }
 
 function normalizeImportDatum(key: string, value: unknown): unknown | null {
+  if (key === TOWN_WELCOME_SEEN_KEY) return '1';
   if (isTileStateDataKey(key)) return normalizeTileStateDatum(value);
   if (key === 'gr.run.v1') return normalizeRunSuspendDatum(value);
   if (key === SAVE_SLOTS_KEY) return mergeSaveSlotsForRestore(null, value);

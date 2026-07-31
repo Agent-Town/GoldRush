@@ -159,6 +159,7 @@ export type TownDiagnostics = {
   activeBark: { actorId: TownActorId; speaker: string; text: string } | null;
   townName: string | null;
   namingPrompt: boolean;
+  welcomeFollowsPlayer: boolean;
   boardOpen: boolean;
   schoolhouseOpen: boolean;
   wardrobeOpen: boolean;
@@ -2213,6 +2214,7 @@ export class TownScene {
       activeBark: this.activeBark,
       townName: this.townName,
       namingPrompt: this.nameCardOpen,
+      welcomeFollowsPlayer: this.welcome.followsPlayer,
       boardOpen: this.boardOpen,
       schoolhouseOpen: this.schoolhouseOpen,
       wardrobeOpen: this.wardrobeOpen,

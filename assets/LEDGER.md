@@ -221,6 +221,7 @@ Pipeline v1: slot defined → prompt written (batch) → generated (Robin/ChatGP
 | e4.enemy.tarsprite | E4 hazard placeholder pending | art-e4-batch-02 / batch-017 | ✓ 2026-07-14 `assets/raw/enm-tarsprite-sheet.png` (4x4; 0 retakes) | PENDING-PROCESSING (`--key ff00ff --grid 4x4`; rows s,e,n,w) | PENDING-INTEGRATION |
 | e4.enemy.pipeline_rustler | E4 enemy placeholder pending | art-e4-batch-02 / batch-017 | ✓ 2026-07-14 `assets/raw/enm-pipeline-rustler-sheet-{a,b}.png` (A 4x4; B 4x5; 0 retakes) | PENDING-PROCESSING (`A --grid 4x4`; `B --grid 4x5`, fifth row siphon s/e/n/w) | PENDING-INTEGRATION |
 | e4.boss.land_yacht | E4 component-boss placeholder pending | art-e4-batch-02 / batch-017 | ✓ 2026-07-14 `assets/raw/boss-land-yacht{,-damage}.png` (1672x941 RGB; intact reuses accepted run-021 plate; damage 1 retake) | PENDING-CONSUMPTION / MODELING; full-bleed component references | PENDING-INTEGRATION |
+| herald.class_engravings | text-only fallback for unclassified/future classes | art-herald-class-engravings / ongoing Herald reusable set | ✓ 2026-07-30 `assets/raw/gazette-class-{board,trail,river,science,ledger,threat,growth,ceremony}.png` (1536x1024 RGB; 0 retakes; QA in `codex-art-run-art-herald-class-engravings.md`) | ✓ 2026-07-30 `assets/processed/herald-engraving-{board,trail,river,schoolhouse,ledger,boss,town-growth,ceremony}.webp` (384x384 WebP q82) | INTEGRATED 2026-07-30; board, trail, river, schoolhouse, ledger, boss, town-growth, and ceremony wired; only unclassified/future classes remain text-only |
 
 ## Batch queue
 

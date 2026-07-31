@@ -101,17 +101,20 @@ function distance(a: Point, b: Point): number {
 }
 
 test('panel only offers registered ToolSurface capabilities', async ({ page }, testInfo) => {
-  await setAgentLevel(page, 1);
+  await setAgentLevel(page, 3);
   const errors = await openGame(page, '?debug&nowaves&nolevel&seed=m4-10-registry');
 
   await openPanel(page);
   await expect(page.getByTestId('prospector-ability-auto_collect')).toBeVisible();
   await expect(page.getByTestId('prospector-ability-auto_repair')).toBeVisible();
-  await expect(page.getByTestId('prospector-ability-auto_pan')).toHaveCount(0);
+  await expect(page.getByTestId('prospector-ability-auto_pan')).toBeChecked();
+  await expect(page.getByTestId('prospector-ability-place_building')).toBeChecked();
   const capabilities = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.ui?.agent?.capabilities ?? []);
-  expect(capabilities.map((entry) => entry.id)).toEqual(['auto_collect', 'auto_repair']);
+  expect(capabilities.map((entry) => entry.id)).toEqual(['auto_collect', 'auto_repair', 'auto_pan', 'place_building']);
   expect(capabilities[0]?.tools).toEqual(['et.goldrush.collect_xp', 'et.goldrush.collect_gold']);
   expect(capabilities[1]?.tools).toEqual(['et.goldrush.repair']);
+  expect(capabilities[2]?.tools).toEqual(['et.goldrush.pan_at']);
+  expect(capabilities[3]?.tools).toEqual(['et.goldrush.place_building']);
   if (testInfo.project.name.includes('desktop')) await saveShot(page, testInfo, 'panel-real-functions');
 
   expect(errors.consoleErrors).toEqual([]);

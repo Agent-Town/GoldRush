@@ -198,7 +198,7 @@ test('veteran profile receives no Trail Guide barks', async ({ page }) => {
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-test('first boot asks the greenhorn question once and sets the preset', async ({ page }) => {
+test('first boot asks only for a name and uses the default preset', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.clear();
     sessionStorage.clear();
@@ -206,21 +206,19 @@ test('first boot asks the greenhorn question once and sets the preset', async ({
   const errors = collectErrors(page);
   await page.goto('/');
 
-  await expect(page.getByTestId('greenhorn-question')).toContainText('First time prospecting?');
-  await page.getByLabel('Yes - ease me onto the trail').check();
+  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
   await page.getByTestId('profile-name-input').fill('Mina');
   await page.getByTestId('profile-create').click();
-  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
 
   const profile = await page.evaluate((key) => {
     const state = JSON.parse(localStorage.getItem(key) ?? '{}') as ProfileState;
     return state.profiles.find((entry) => entry.id === state.activeId);
   }, PROFILE_KEY);
-  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'greenhorn', trailGuide: true });
+  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'trail', trailGuide: true });
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });
 
-test('profile-title first boot offers the same greenhorn choice once', async ({ page }) => {
+test('profile-title first boot also asks only for a name', async ({ page }) => {
   await page.addInitScript(() => {
     localStorage.clear();
     sessionStorage.clear();
@@ -228,16 +226,14 @@ test('profile-title first boot offers the same greenhorn choice once', async ({ 
   const errors = collectErrors(page);
   await page.goto('/?profiles');
 
-  await expect(page.getByTestId('greenhorn-question')).toContainText('First time prospecting?');
-  await page.getByLabel('Yes - ease me onto the trail').check();
+  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
   await page.getByTestId('profile-name-input').fill('Mina');
   await page.getByTestId('profile-create').click();
-  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
 
   const profile = await page.evaluate((key) => {
     const state = JSON.parse(localStorage.getItem(key) ?? '{}') as ProfileState;
     return state.profiles.find((entry) => entry.id === state.activeId);
   }, PROFILE_KEY);
-  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'greenhorn', trailGuide: true });
+  expect(profile).toMatchObject({ name: 'Mina', difficultyPreset: 'trail', trailGuide: true });
   expect(errors).toEqual({ consoleErrors: [], pageErrors: [] });
 });

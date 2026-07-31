@@ -11,12 +11,12 @@ import {
 } from '../src/game/ProfileStorage';
 import { ACTIVE_EPOCH_KEY } from '../src/meta/ContractFamilies';
 import { RESEARCH_NODES, RESEARCH_STATE_KEY, STEAMWORKS_THRESHOLD } from '../src/meta/ResearchTree';
+import { moveHeroTo } from './helpers/hero-approach';
 
 const FRONTIER = 'epoch-1-frontier';
 const CONTRACTS = ['the-claim', 'e1-dry-gulch', 'e1-night-shift', 'e1-twin-banks', 'e1-baron'] as const;
 const LAUNCH_KEY = 'gr.contract.launch.v1';
 const SEEDED_KEY = 'gr.release-build.seeded';
-const SIM_PROGRESS_TIMEOUT = 15_000;
 
 test('first player reaches textured town actors and places a Dry Gulch spring sluice', async ({ page }, testInfo) => {
   test.setTimeout(150_000);
@@ -28,6 +28,7 @@ test('first player reaches textured town actors and places a Dry Gulch spring sl
     sessionStorage.setItem('gr.release-build.first-player', '1');
   });
   await page.goto('/');
+  await expect(page.getByTestId('greenhorn-question')).toHaveCount(0);
   await page.getByTestId('profile-name-input').fill('Mina');
   await page.getByTestId('profile-create').click();
   await waitForTown(page);
@@ -305,62 +306,6 @@ async function harvestSluiceBudget(page: Page): Promise<void> {
   await moveHeroTo(page, -9, 6.7);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.harvest.channeling), { timeout: 10_000 }).toBe(true);
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.gold), { timeout: 20_000 }).toBeGreaterThanOrEqual(40);
-}
-
-async function moveHeroTo(page: Page, x: number, z: number): Promise<void> {
-  const started = Date.now();
-  let key = 'KeyW';
-  for (let attempt = 0; attempt < 12; attempt += 1) {
-    if (await page.getByTestId('upgrade-overlay').isVisible()) {
-      await page.getByTestId('upgrade-card-0').click();
-      await expect(page.getByTestId('upgrade-overlay')).toBeHidden();
-    }
-    const current = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.heroPos);
-    const dx = x - current.x;
-    const dz = z - current.z;
-    if (Math.hypot(dx, dz) <= 0.12) {
-      return;
-    }
-    if (Date.now() - started >= SIM_PROGRESS_TIMEOUT) break;
-    const axis: 'x' | 'z' = Math.abs(dx) > Math.abs(dz) ? 'x' : 'z';
-    const axisTarget = axis === 'x' ? x : z;
-    const delta = axisTarget - current[axis];
-    key = axis === 'x' ? (delta < 0 ? 'KeyA' : 'KeyD') : (delta < 0 ? 'KeyW' : 'KeyS');
-    const result = await page.evaluate(({ axis, code, direction, target, timeout }) => new Promise<
-      'done' | 'blocked' | 'levelup'
-    >((resolve) => {
-      const init = { bubbles: true, code, key: code.at(-1)!.toLowerCase() };
-      const began = performance.now();
-      let released = false;
-      window.dispatchEvent(new KeyboardEvent('keydown', init));
-      const finish = (status: 'done' | 'blocked' | 'levelup') => {
-        if (!released) window.dispatchEvent(new KeyboardEvent('keyup', init));
-        resolve(status);
-      };
-      const sample = () => {
-        const now = performance.now();
-        const diagnostics = window.__THREE_GAME_DIAGNOSTICS__;
-        if (!diagnostics || now - began >= timeout) return finish('blocked');
-        if (diagnostics.state === 'levelup') return finish('levelup');
-        const remaining = direction * (target - diagnostics.heroPos[axis]);
-        if (!released && remaining <= diagnostics.speed / 28 + 0.08) {
-          window.dispatchEvent(new KeyboardEvent('keyup', init));
-          released = true;
-        }
-        if (released && diagnostics.speed < 0.05) return finish('done');
-        window.setTimeout(sample, 16);
-      };
-      window.setTimeout(sample, 16);
-    }), {
-      axis,
-      code: key,
-      direction: Math.sign(delta),
-      target: axisTarget,
-      timeout: SIM_PROGRESS_TIMEOUT - (Date.now() - started),
-    });
-    if (result === 'blocked') break;
-  }
-  throw new Error(`Hero blocked while moving ${key}`);
 }
 
 async function aimBuildGhost(page: Page, target: { x: number; z: number }): Promise<{ x: number; y: number }> {

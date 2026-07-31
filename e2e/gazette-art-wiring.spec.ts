@@ -6,7 +6,7 @@ import { FIRST_CLAIM_DONE_KEY, PROFILE_KEY, TOWN_NAME_KEY, profileDataKey, type 
 import { STORY_TALES_STORAGE_KEY } from '../src/story/settings';
 import type { HeraldItem } from '../src/news/herald';
 
-const ARTIFACT_DIR = path.resolve('artifacts/gazette-art-wiring');
+const ARTIFACT_DIR = path.resolve('artifacts/herald-class-map');
 const LIVE_CUTS = [
   ['Board Becomes a Catalog', 'board'],
   ["River Runs Past the Claim's Edge", 'river'],
@@ -110,6 +110,7 @@ test('plain-boot Claim Herald shows the correct live cut for every item', async 
     const image = item.getByTestId('claim-herald-engraving');
     await expect(image).toBeVisible();
     expect(await image.evaluate((node: HTMLImageElement) => node.src)).toContain(`herald-engraving-${heraldClass}`);
+    await image.evaluate((node: HTMLImageElement) => node.decode());
     const naturalSize = await image.evaluate((node: HTMLImageElement) => ({ width: node.naturalWidth, height: node.naturalHeight }));
     expect(naturalSize.width).toBeGreaterThan(0);
     expect(naturalSize.height).toBeGreaterThan(0);
@@ -117,6 +118,7 @@ test('plain-boot Claim Herald shows the correct live cut for every item', async 
     await expect(image).toHaveAttribute('aria-hidden', 'true');
   }
 
+  await page.getByRole('heading', { name: LIVE_CUTS[0][0] }).scrollIntoViewIfNeeded();
   await shot(page, testInfo, 'live-cuts');
   expectNoErrors(errors);
 });

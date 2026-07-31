@@ -182,11 +182,6 @@ export class StartMenu {
         ${this.profileMessage ? `<p class="gr-profile-message" data-testid="profile-message">${escapeHtml(this.profileMessage)}</p>` : ''}
         <form class="gr-profile-create gr-profile-create--first" data-testid="profile-create-form">
           <input data-testid="profile-name-input" name="profileName" maxlength="24" autocomplete="off" placeholder="Claim-holder name" />
-          <fieldset class="gr-profile-greenhorn" data-testid="greenhorn-question">
-            <legend>First time prospecting?</legend>
-            <label><input type="radio" name="greenhornOffer" value="yes" /> Yes - ease me onto the trail</label>
-            <label><input type="radio" name="greenhornOffer" value="no" checked /> No - give me the regular trail</label>
-          </fieldset>
           <button class="death-overlay__button gr-profile-create__button" type="submit" data-testid="profile-create">Open ledger</button>
         </form>
       </section>
@@ -234,8 +229,7 @@ export class StartMenu {
   private createFirstProfile(): void {
     if (!this.storage) return;
     const input = this.root.querySelector<HTMLInputElement>('[data-testid="profile-name-input"]');
-    const preset = this.root.querySelector<HTMLInputElement>('[name="greenhornOffer"]:checked')?.value === 'yes' ? 'greenhorn' : 'trail';
-    const profile = createProfile(this.storage, input?.value ?? '', preset);
+    const profile = createProfile(this.storage, input?.value ?? '');
     if (!profile) {
       this.profileMessage = 'Use a ledger name the family can read.';
       this.render();

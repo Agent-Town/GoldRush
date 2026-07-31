@@ -79,7 +79,22 @@ const CLOSURE_STEM_KEY = /(superseded|closed|stop|drain|refut|retir|cann)/i;
 // closure cause would be WORSE than silence: it would tell the next fire a money gate is live when the
 // owner has closed the question. Retired reasons belong under `priorBlockedReason` (the spelling
 // e1-trail-guide-plain-boot-proof already uses), and that is excluded for the same reason.
-const NOT_A_CLOSURE_REASON = new Set(['blockedReason', 'priorBlockedReason']);
+//
+// F-1274-2 (s1274) adds `authorNotes` on EXACTLY the argument above, which s1249 applied to
+// blockedReason and did not carry to its sibling. `authorNotes` is written when the master is
+// AUTHORED — before the runner executes — so it can describe intent but never outcome. It is also
+// the single most common reason-ish key on the tree (60 of 483 leaves; more than drainNotes at 46),
+// and it matches REASON_ISH_KEY only because it contains "Note". FOUND BY MUTATION, not by reading:
+// s1274 deleted `stopNote` from eight-winds-wiring-e2-enemies to prove the new guard could go red,
+// and the guard stayed GREEN — the fallback had silently substituted that leaf's 3,438-char
+// authoring rationale for its missing closure reason. That is the masking case the guard exists to
+// catch, so the fallback was defeating its own purpose. VERIFIED BEHAVIOUR-NEUTRAL ON THE LIVE TREE
+// BEFORE LANDING: all 16 terminal-closed leaves resolve to a closure-specific key, and ZERO depend
+// on authorNotes, so no current output changes — this only stops a FUTURE silent leaf from hiding.
+// Deliberately NOT excluded: the bare `note` spelling (45 uses). It is genuinely ambiguous — a
+// closure note is often written there — and suppressing it would trade a masking risk for an
+// information loss, which is the worse direction.
+const NOT_A_CLOSURE_REASON = new Set(['blockedReason', 'priorBlockedReason', 'authorNotes']);
 
 function closedReason(leaf) {
   for (const key of CLOSED_REASON_KEYS) {

@@ -317,6 +317,10 @@ export function observeStandingOrders(): void {
   installedExecutor?.observe();
 }
 
+export function snapshotStandingOrders(): StandingOrdersView {
+  return installedExecutor?.snapshot() ?? { needsRider: false, orders: [], log: [] };
+}
+
 export function resetStandingOrders(): void {
   installedExecutor?.reset();
 }
@@ -339,7 +343,8 @@ export function validateStandingOrders(input: unknown): ValidationResult {
 }
 
 export function requiredLevel(order: StandingOrder): AgentPermissionLevel {
-  if (order.verb === 'BUILD' || order.verb === 'HARVEST') return 3;
+  if (order.verb === 'BUILD') return 3;
+  if (order.verb === 'HARVEST') return 2;
   return 2;
 }
 
@@ -409,6 +414,7 @@ function permissionDenial(
 }
 
 function requiredAbility(order: StandingOrder): AgentAbility | null {
+  if (order.verb === 'BUILD') return 'place_building';
   if (order.verb === 'REPAIR_UNDER') return 'auto_repair';
   if (order.verb === 'HARVEST') return 'auto_pan';
   return null;
