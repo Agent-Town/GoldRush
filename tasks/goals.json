@@ -3883,7 +3883,9 @@
               "id": "f1285-3-build-consent-ability-gate",
               "title": "F-1285-3 no.2 repair: requiredAbility() in src/agent/StandingOrders.ts maps REPAIR_UNDER->auto_repair and HARVEST->auto_pan but returns null for BUILD, so permissionDenial() skips its third (ability) gate entirely and a player who revokes the level-3 place_building consent still gets buildings placed. Verified at source s1287: AgentConsent.ts:16 registers the ability, StandingOrders.ts:193 executes BUILD via surface.tools.place_building, and the rung gate (BUILD=3) masks the divergence in every state except the one the checkbox exists to express -- rung 3 granted, ability unticked. Fix is one mapping plus one e2e assertion; requiredLevel() and the ability registry are out of scope. TRAP: keep the restore-from-before-place-building spec green.",
               "taskFile": "lane-a-f1285-3-build-consent-ability-gate.md",
-              "status": "planned"
+              "status": "shipped",
+              "mergeHash": "65d15a91037ae30347a5c1ed8f39b66f203586f6",
+              "review": "reviews/f1285-3-build-consent-ability-gate.md"
             }
           ]
         }
