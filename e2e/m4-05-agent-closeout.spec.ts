@@ -255,7 +255,7 @@ test('side-effect permission checks read live meta on each call', async ({ page 
   const args = ['sentry_beacon', { x: 0, z: 10 }, 0];
 
   const denied = await callLiveTool(page, 'place_building', args);
-  expect(denied.outcome).toMatchObject({ ok: false, reason: 'PERMISSION_DENIED', requiredLevel: 1 });
+  expect(denied.outcome).toMatchObject({ ok: false, reason: 'PERMISSION_DENIED', requiredLevel: 3 });
   const afterDenied = await page.evaluate(() => ({
     gold: window.__THREE_GAME_DIAGNOSTICS__?.economy.gold ?? 0,
     logLength: window.__THREE_GAME_DIAGNOSTICS__?.economy.logLength ?? 0,
@@ -263,7 +263,7 @@ test('side-effect permission checks read live meta on each call', async ({ page 
   }));
   expect(afterDenied).toEqual(before);
 
-  await updateStoredAgentLevel(page, 1);
+  await updateStoredAgentLevel(page, 3);
   const allowed = await callLiveTool(page, 'place_building', args);
   expect(allowed.tool).toBe('et.goldrush.place_building');
   expect(allowed.outcome.ok).toBe(true);

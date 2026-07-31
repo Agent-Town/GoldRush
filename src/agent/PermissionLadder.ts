@@ -24,8 +24,9 @@ export function readAgentPermissionLevel(meta?: MetaProgressAgentGate | null): A
 export function decideToolPermission(
   meta: MetaProgressAgentGate | AgentPermissionLevel | null | undefined,
   sideEffect: boolean,
+  requiredLevel: AgentPermissionLevel = 1,
 ): PermissionDecision {
   const level = typeof meta === 'number' ? readAgentPermissionLevel({ agentAutonomyLevel: meta }) : readAgentPermissionLevel(meta);
-  if (!sideEffect || level > 0) return { ok: true, level };
-  return { ok: false, level, reason: 'PERMISSION_DENIED', requiredLevel: 1 };
+  if (!sideEffect || level >= requiredLevel) return { ok: true, level };
+  return { ok: false, level, reason: 'PERMISSION_DENIED', requiredLevel };
 }
