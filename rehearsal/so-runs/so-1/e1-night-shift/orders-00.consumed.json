@@ -1,0 +1,21 @@
+{
+ "seq": 1,
+ "note": "NIGHT SHIFT, dawn at wave 25 — the longest contract and the only one where the map stops being visible. The briefing says dusk at 5, full dark at 10, and that TURRETS STILL TARGET IN THE DARK, which settles the shape: buy sight and reach, in that order, and never rely on the rider's own eyes. Fifteen pieces on the wave clock, spaced so no two ever come due on the same tick. Bench of four turrets by wave 9 while the light still holds (50/70/95/125). Then two lantern posts at 10 and 11, timed to the darkness keyframe rather than to the purse — 15 gold each for a 7wu circle of vision around the ground the rider works. Then the six-beacon line through wave 17 as the pulse thickens, and three palisades in the last quarter because at 10 gold they are the cheapest hit points on the board. 730 gold across 750 seconds. Cells are named as intent across the working middle; the reflex layer relocates each toward whichever seam is paying. One plan at the gate, and then I intend to answer nothing but HOLD — the whole lesson of the first two contracts is that a rider who re-commands mid-run pays twice, once in discarded stagings and once in triggers that fired while it was thinking.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -5, "z": 4 }, "when": { "waveGte": 3 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -4 }, "when": { "waveGte": 5 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 6 }, "when": { "waveGte": 7 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": 8 }, "when": { "waveGte": 9 } },
+  { "verb": "BUILD", "what": "lantern_post", "where": { "x": -6, "z": 6 }, "when": { "waveGte": 10 } },
+  { "verb": "BUILD", "what": "lantern_post", "where": { "x": 4, "z": -4 }, "when": { "waveGte": 11 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -7, "z": 7 }, "when": { "waveGte": 12 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -3, "z": -5 }, "when": { "waveGte": 13 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": 5 }, "when": { "waveGte": 14 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 8, "z": 4 }, "when": { "waveGte": 15 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -9, "z": 1 }, "when": { "waveGte": 16 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 0, "z": 9 }, "when": { "waveGte": 17 } },
+  { "verb": "BUILD", "what": "palisade", "where": { "x": -4, "z": 1 }, "when": { "waveGte": 19 } },
+  { "verb": "BUILD", "what": "palisade", "where": { "x": 3, "z": 1 }, "when": { "waveGte": 21 } },
+  { "verb": "BUILD", "what": "palisade", "where": { "x": 0, "z": -2 }, "when": { "waveGte": 23 } }
+ ]
+}

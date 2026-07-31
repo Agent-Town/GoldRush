@@ -1,0 +1,15 @@
+{
+ "seq": 5,
+ "note": "RE-COMMAND to stop wasting the purse. 175 gold at wave 5 against a 200 bank cap and ~66/wave of income means the next two waves earn nothing at all — the cap is the binding constraint, and my gate plan left the whole beacon bench idling until wave 11. Restating ONLY what is still undone (the two done turrets and the two done HARVESTs are deliberately absent, so the replace cannot buy anything twice), pulling turret 4 forward one wave and the six beacons forward four to six, spaced so no two come due on the same tick and every price clears its wave with the cap full. Note for the record that bankCap is not in THE VIEW at all — I know it is 200 because the reflex layer hands it to me out of band.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": 7, "z": 7 }, "when": { "waveGte": 6 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -4, "z": 8 }, "when": { "waveGte": 7 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -7 }, "when": { "waveGte": 8 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": 8 }, "when": { "waveGte": 9 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -5, "z": -7 }, "when": { "waveGte": 10 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 5, "z": -7 }, "when": { "waveGte": 12 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -12, "z": 7 }, "when": { "waveGte": 14 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 11, "z": 7 }, "when": { "waveGte": 16 } },
+  { "verb": "REPAIR_UNDER", "pct": 50 }
+ ]
+}

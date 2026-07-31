@@ -1,0 +1,952 @@
+{
+ "seq": 13,
+ "calledAt": "2026-07-31T11:15:34.796Z",
+ "trigger": "wave-6",
+ "runSeconds": 180.566666666659,
+ "wave": 6,
+ "permissionRung": 3,
+ "meter": {
+  "calls": 14,
+  "viewBytes": 2562,
+  "cumulativeViewBytes": 30894,
+  "viewBuildMs": 0.5
+ },
+ "pilotReport": {
+  "priceOfNext": {
+   "turret": 95,
+   "sentry_beacon": 25,
+   "palisade": 10,
+   "sluice": 40
+  },
+  "capsRemaining": {
+   "turret": 2,
+   "sentry_beacon": 6,
+   "sluice": 3
+  },
+  "placeRadiusFromHero": 6,
+  "hero": {
+   "x": 3.0412274718176606,
+   "z": -5.012021240454363
+  },
+  "prospector": {
+   "x": -0.263,
+   "y": 2.039,
+   "z": -16.068
+  },
+  "heroHp": "53/125",
+  "gold": 42,
+  "bankCap": 200,
+  "enemiesAlive": 12,
+  "telegraphedEdge": "south",
+  "waveState": "active",
+  "nextWaveInSeconds": 29.4,
+  "works": {
+   "turrets": 2,
+   "beacons": 0,
+   "sluices": 0,
+   "palisades": 8
+  },
+  "liveSeams": [
+   {
+    "id": "gold-seam-1",
+    "x": 7.5,
+    "z": 6.5,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-2",
+    "x": -1.5,
+    "z": -6.4,
+    "remaining": 5
+   }
+  ],
+  "upgradesTaken": [
+   "double_tap_coil",
+   "powder_charge",
+   "heavy_spark",
+   "heavy_spark",
+   "tinkers_plating",
+   "split_spark",
+   "wide_ring",
+   "powder_charge"
+  ],
+  "standingFor": {
+   "id": "orders-1-3",
+   "def": "turret",
+   "where": {
+    "x": 7,
+    "z": 7
+   },
+   "stand": {
+    "x": 7.5,
+    "z": 6.5,
+    "seam": "gold-seam-1",
+    "pays": true
+   },
+   "why": "condition-met"
+  },
+  "reflexNote": "The reflex clock walks the hero (WASD), pans by standing inside a live seam, kites when hurt, takes level-up cards, and — because BuildSystem measures placeRadius (6wu) FROM THE HERO and each order gets exactly ONE attempt — walks the hero inside that circle BEFORE the trigger turns true. It never chooses what to build, where, or when."
+ },
+ "ordersSnapshot": {
+  "needsRider": true,
+  "orders": [
+   {
+    "id": "orders-1-1",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -8,
+      "z": 7
+     },
+     "when": {
+      "waveGte": 2
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-1-2",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -2,
+      "z": -7
+     },
+     "when": {
+      "waveGte": 4
+     }
+    },
+    "status": "done"
+   },
+   {
+    "id": "orders-1-3",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": 7,
+      "z": 7
+     },
+     "when": {
+      "waveGte": 6
+     }
+    },
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "id": "orders-1-4",
+    "order": {
+     "verb": "BUILD",
+     "what": "sentry_beacon",
+     "where": {
+      "x": 2,
+      "z": -7
+     },
+     "when": {
+      "waveGte": 8
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-5",
+    "order": {
+     "verb": "BUILD",
+     "what": "turret",
+     "where": {
+      "x": -5,
+      "z": 7
+     },
+     "when": {
+      "waveGte": 9
+     }
+    },
+    "status": "pending"
+   },
+   {
+    "id": "orders-1-6",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-1"
+    },
+    "status": "failed",
+    "reason": "INVALID_TARGET: gold-seam-1 is unavailable."
+   },
+   {
+    "id": "orders-1-7",
+    "order": {
+     "verb": "HARVEST",
+     "seam": "gold-seam-2"
+    },
+    "status": "failed",
+    "reason": "INVALID_TARGET: gold-seam-2 is unavailable."
+   },
+   {
+    "id": "orders-1-8",
+    "order": {
+     "verb": "REPAIR_UNDER",
+     "pct": 50
+    },
+    "status": "done"
+   }
+  ],
+  "log": [
+   {
+    "seq": 1,
+    "at": 28.166666666667226,
+    "type": "orders_replaced",
+    "orders": [
+     {
+      "id": "orders-1-1",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -8,
+        "z": 7
+       },
+       "when": {
+        "waveGte": 2
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-2",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -2,
+        "z": -7
+       },
+       "when": {
+        "waveGte": 4
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-3",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": 7,
+        "z": 7
+       },
+       "when": {
+        "waveGte": 6
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-4",
+      "order": {
+       "verb": "BUILD",
+       "what": "sentry_beacon",
+       "where": {
+        "x": 2,
+        "z": -7
+       },
+       "when": {
+        "waveGte": 8
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-5",
+      "order": {
+       "verb": "BUILD",
+       "what": "turret",
+       "where": {
+        "x": -5,
+        "z": 7
+       },
+       "when": {
+        "waveGte": 9
+       }
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-6",
+      "order": {
+       "verb": "HARVEST",
+       "seam": "gold-seam-1"
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-7",
+      "order": {
+       "verb": "HARVEST",
+       "seam": "gold-seam-2"
+      },
+      "status": "pending"
+     },
+     {
+      "id": "orders-1-8",
+      "order": {
+       "verb": "REPAIR_UNDER",
+       "pct": 50
+      },
+      "status": "pending"
+     }
+    ]
+   },
+   {
+    "seq": 2,
+    "at": 28.20000000000056,
+    "type": "order_status",
+    "orderId": "orders-1-6",
+    "status": "failed",
+    "reason": "INVALID_TARGET: gold-seam-1 is unavailable."
+   },
+   {
+    "seq": 3,
+    "at": 28.20000000000056,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-6",
+    "reason": "INVALID_TARGET: gold-seam-1 is unavailable."
+   },
+   {
+    "seq": 4,
+    "at": 28.233333333333896,
+    "type": "order_status",
+    "orderId": "orders-1-7",
+    "status": "failed",
+    "reason": "INVALID_TARGET: gold-seam-2 is unavailable."
+   },
+   {
+    "seq": 5,
+    "at": 28.233333333333896,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-7",
+    "reason": "INVALID_TARGET: gold-seam-2 is unavailable."
+   },
+   {
+    "seq": 6,
+    "at": 60.033333333332486,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "active"
+   },
+   {
+    "seq": 7,
+    "at": 60.033333333332486,
+    "type": "order_status",
+    "orderId": "orders-1-1",
+    "status": "done"
+   },
+   {
+    "seq": 8,
+    "at": 120.03333333332908,
+    "type": "order_status",
+    "orderId": "orders-1-2",
+    "status": "active"
+   },
+   {
+    "seq": 9,
+    "at": 120.03333333332908,
+    "type": "order_status",
+    "orderId": "orders-1-2",
+    "status": "done"
+   },
+   {
+    "seq": 10,
+    "at": 128.06666666666197,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 11,
+    "at": 128.96666666666192,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 12,
+    "at": 129.86666666666187,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 13,
+    "at": 130.76666666666182,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 14,
+    "at": 130.76666666666182,
+    "type": "order_status",
+    "orderId": "orders-1-8",
+    "status": "active"
+   },
+   {
+    "seq": 15,
+    "at": 131.66666666666177,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 16,
+    "at": 132.56666666666172,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 17,
+    "at": 133.299999999995,
+    "type": "order_status",
+    "orderId": "orders-1-8",
+    "status": "done"
+   },
+   {
+    "seq": 18,
+    "at": 133.46666666666167,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 19,
+    "at": 134.36666666666162,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 20,
+    "at": 135.26666666666156,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 21,
+    "at": 136.1666666666615,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 22,
+    "at": 137.06666666666146,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 23,
+    "at": 137.9666666666614,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 24,
+    "at": 138.86666666666136,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 25,
+    "at": 139.7666666666613,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 26,
+    "at": 140.66666666666126,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 27,
+    "at": 141.5666666666612,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 28,
+    "at": 142.43333333332782,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 29,
+    "at": 143.3666666666611,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 30,
+    "at": 144.26666666666105,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 31,
+    "at": 145.166666666661,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 32,
+    "at": 146.06666666666095,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 33,
+    "at": 146.9666666666609,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 34,
+    "at": 147.86666666666085,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 35,
+    "at": 148.7666666666608,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 36,
+    "at": 149.66666666666075,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 37,
+    "at": 150.5666666666607,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 38,
+    "at": 151.46666666666064,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 39,
+    "at": 152.3666666666606,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 40,
+    "at": 153.26666666666054,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 41,
+    "at": 154.1666666666605,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 42,
+    "at": 155.06666666666044,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 43,
+    "at": 155.9666666666604,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 44,
+    "at": 156.86666666666034,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 45,
+    "at": 157.76666666666029,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 46,
+    "at": 158.66666666666023,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 47,
+    "at": 159.56666666666018,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 48,
+    "at": 160.8666666666601,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 49,
+    "at": 161.76666666666006,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 50,
+    "at": 162.66666666666,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 51,
+    "at": 163.56666666665996,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 52,
+    "at": 164.4666666666599,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 53,
+    "at": 165.36666666665985,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 54,
+    "at": 166.2666666666598,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 55,
+    "at": 167.16666666665975,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 56,
+    "at": 168.36666666665968,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 57,
+    "at": 169.26666666665963,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 58,
+    "at": 170.16666666665958,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 59,
+    "at": 171.06666666665953,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 60,
+    "at": 171.96666666665948,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 61,
+    "at": 172.86666666665943,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 62,
+    "at": 173.76666666665938,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 63,
+    "at": 174.66666666665932,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 64,
+    "at": 180.0333333333257,
+    "type": "order_status",
+    "orderId": "orders-1-3",
+    "status": "active"
+   },
+   {
+    "seq": 65,
+    "at": 180.0333333333257,
+    "type": "order_status",
+    "orderId": "orders-1-3",
+    "status": "failed",
+    "reason": "FAILED: BUILD action was rejected."
+   },
+   {
+    "seq": 66,
+    "at": 180.0333333333257,
+    "type": "surprise",
+    "surprise": "order_failure",
+    "orderId": "orders-1-3",
+    "reason": "FAILED: BUILD action was rejected."
+   }
+  ]
+ },
+ "view": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "the-claim",
+    "name": "The Claim",
+    "briefing": {
+     "geography": "The classic river claim.",
+     "goals": [
+      "Hold the claim through wave 10."
+     ],
+     "rules": [
+      "The river splits the claim around one center ford.",
+      "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": true,
+     "ford": true,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [
+   {
+    "wave": 1,
+    "outcome": "held",
+    "goldDelta": -20,
+    "worksHp": {
+     "current": 530,
+     "max": 530,
+     "delta": 50
+    },
+    "kills": 10,
+    "surprises": []
+   },
+   {
+    "wave": 2,
+    "outcome": "held",
+    "goldDelta": 55,
+    "worksHp": {
+     "current": 530,
+     "max": 530,
+     "delta": 0
+    },
+    "kills": 22,
+    "surprises": []
+   },
+   {
+    "wave": 3,
+    "outcome": "held",
+    "goldDelta": -40,
+    "worksHp": {
+     "current": 580,
+     "max": 580,
+     "delta": 50
+    },
+    "kills": 24,
+    "surprises": []
+   },
+   {
+    "wave": 4,
+    "outcome": "held",
+    "goldDelta": -9,
+    "worksHp": {
+     "current": 580,
+     "max": 580,
+     "delta": 0
+    },
+    "kills": 28,
+    "surprises": []
+   },
+   {
+    "wave": 5,
+    "outcome": "works-damaged",
+    "goldDelta": -4,
+    "worksHp": {
+     "current": 460,
+     "max": 580,
+     "delta": -120
+    },
+    "kills": 37,
+    "surprises": []
+   }
+  ],
+  "now": {
+   "wave": 6,
+   "timers": {
+    "runSeconds": 180.57,
+    "nextWaveInSeconds": 29.43
+   },
+   "gold": 42,
+   "hero": {
+    "hp": 53,
+    "maxHp": 125,
+    "x": 3.04,
+    "z": -5.01
+   },
+   "works": {
+    "hp": 460,
+    "maxHp": 580,
+    "standing": 8,
+    "wrecked": 2,
+    "byKind": {
+     "palisade": 8,
+     "turret": 2
+    }
+   },
+   "threats": {
+    "alive": 12,
+    "state": "active",
+    "edge": "south",
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 5
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 6,
+    "goldPanned": 175,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 2
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 7,
+    "arrivalInSeconds": 29.43,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 24
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 54.99,
+    "currentWorks": 8,
+    "harnessHash": "fnv1a32:67be7cd1"
+   }
+  }
+ }
+}

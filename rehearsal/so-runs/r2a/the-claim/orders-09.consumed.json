@@ -1,0 +1,8 @@
+{
+ "seq": 9,
+ "note": "RE-COMMAND, deliberately, and the first one this rehearsal has spent. orders-1-4 (turret at (2,-7), waveGte 8) is dead: the wave arrived with 98 in the purse against a 125 price, and a BUILD gets exactly one attempt, so the trigger destroyed its own order. Re-commanding is normally ruinous because a submission REPLACES the record set — but that only costs you what you RESTATE, and now.works.byKind already tells me the three turrets are on the ground, so I restate neither them nor anything else. The new list is two orders and nothing else: the missed turret pushed to wave 9, where ~30s at the observed 1.7 gold/s puts the purse near 150; and the beacon pushed to wave 10 so it cannot collide on the same tick, and so it still has a chance if the turret misses again and leaves the purse full.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -7 }, "when": { "waveGte": 9 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -5, "z": 7 }, "when": { "waveGte": 10 } }
+ ]
+}

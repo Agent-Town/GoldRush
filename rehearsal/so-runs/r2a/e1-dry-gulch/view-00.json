@@ -1,0 +1,250 @@
+{
+ "seq": 0,
+ "calledAt": "2026-07-31T10:52:14.979Z",
+ "trigger": "run-start",
+ "runSeconds": 1.7333333333333354,
+ "wave": 0,
+ "permissionRung": 3,
+ "meter": {
+  "calls": 1,
+  "viewBytes": 1983,
+  "cumulativeViewBytes": 1983,
+  "viewBuildMs": 0.7
+ },
+ "pilotReport": {
+  "priceOfNext": {
+   "turret": 50,
+   "sentry_beacon": 25,
+   "palisade": 10,
+   "sluice": 40
+  },
+  "capsRemaining": {
+   "turret": 4,
+   "sentry_beacon": 6,
+   "sluice": 3
+  },
+  "placeRadiusFromHero": 6,
+  "hero": {
+   "x": 0,
+   "z": 12
+  },
+  "prospector": {
+   "x": -1.62,
+   "y": 1.608,
+   "z": 10.894
+  },
+  "heroHp": "100/100",
+  "gold": 0,
+  "bankCap": 200,
+  "enemiesAlive": 0,
+  "telegraphedEdge": null,
+  "waveState": "quiet",
+  "nextWaveInSeconds": 28.3,
+  "works": {
+   "turrets": 0,
+   "beacons": 0,
+   "sluices": 0,
+   "palisades": 8
+  },
+  "liveSeams": [
+   {
+    "id": "gold-seam-1",
+    "x": -9,
+    "z": 6.7,
+    "remaining": 30
+   },
+   {
+    "id": "gold-seam-2",
+    "x": -1.5,
+    "z": -6.4,
+    "remaining": 30
+   }
+  ],
+  "upgradesTaken": [],
+  "standingFor": null,
+  "reflexNote": "The reflex clock walks the hero (WASD), pans by standing inside a live seam, kites when hurt, takes level-up cards, and — because BuildSystem measures placeRadius (6wu) FROM THE HERO and each order gets exactly ONE attempt — walks the hero inside that circle BEFORE the trigger turns true. It never chooses what to build, where, or when."
+ },
+ "ordersSnapshot": {
+  "needsRider": false,
+  "orders": [],
+  "log": []
+ },
+ "view": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "e1-dry-gulch",
+    "name": "The Dry Gulch",
+    "briefing": {
+     "geography": "Mesa country; dry washes fall toward one sunken spring.",
+     "goals": [
+      "Hold the gulch through wave 20.",
+      "Work the dry washes around the lone spring."
+     ],
+     "rules": [
+      "Sluices work only beside the spring.",
+      "The river is gone; enemies can press from every edge.",
+      "Seams pay 40% more gold."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": false,
+     "ford": false,
+     "sources": 1,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [],
+  "now": {
+   "wave": 0,
+   "timers": {
+    "runSeconds": 1.73,
+    "nextWaveInSeconds": 28.27
+   },
+   "gold": 0,
+   "hero": {
+    "hp": 100,
+    "maxHp": 100,
+    "x": 0,
+    "z": 12
+   },
+   "works": {
+    "hp": 480,
+    "maxHp": 480,
+    "standing": 8,
+    "wrecked": 0,
+    "byKind": {
+     "palisade": 8
+    }
+   },
+   "threats": {
+    "alive": 0,
+    "state": "quiet",
+    "edge": null,
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 0,
+    "goldPanned": 0,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 0
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 1,
+    "arrivalInSeconds": 28.27,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 6
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 55.83,
+    "currentWorks": 8,
+    "harnessHash": "fnv1a32:e965fc9c"
+   }
+  }
+ }
+}

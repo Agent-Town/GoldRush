@@ -1,0 +1,10 @@
+{
+ "seq": 1,
+ "note": "Purse 60 against a 62 trigger — the first turret fires within a second, long before this answer can land, so it is dropped from the restatement. NOTE THE DSL COST THIS EXPOSES: a submission REPLACES the whole record set, so every re-command must restate the entire remaining plan and must guess what fired during my own latency. Rest unchanged: S (2,-5) at 85, E (5,7) at 110, SW (-4,-4) at 142, retreat inside the ring at 20+.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -5 }, "when": { "goldGte": 85 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 7 }, "when": { "goldGte": 110 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -4, "z": -4 }, "when": { "goldGte": 142 } },
+  { "verb": "FALLBACK_IF", "threat": { "enemiesGte": 20 }, "pos": { "x": 0, "z": 9 } }
+ ]
+}

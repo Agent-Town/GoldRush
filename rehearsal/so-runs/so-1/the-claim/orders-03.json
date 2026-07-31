@@ -1,0 +1,8 @@
+{
+ "seq": 3,
+ "note": "One turret standing, purse 31, hp 68/100, 20 on the field at wave 6. DROPPING FALLBACK_IF — and this is the second self-blocking order of the run. Its threshold of 20 is now permanently true (waves 7-10 carry 24-33 jumpers), so it had stopped being a retreat trigger and become a permanent station: the rider stood inside the ring earning nothing while the seams paid out elsewhere. A threat threshold that the wave curve will exceed forever is not a fallback, it is a HOLD in disguise; FALLBACK_IF needs a ceiling as well as a floor, or the reflex layer needs to keep working the seams inside it. The reflex clock's own break-contact kiting reads hp directly and is strictly better anyway. Both remaining turrets re-aimed at the (-1.5,-6.4) seam that is live now: (-4,-4) at 82 and (2,-4) at 110, prices 70 and 95 with a ~12 gold staging margin each. Their 16wu reach still covers the stake at (0,12) and the whole southern approach.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -4, "z": -4 }, "when": { "goldGte": 82 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -4 }, "when": { "goldGte": 110 } }
+ ]
+}

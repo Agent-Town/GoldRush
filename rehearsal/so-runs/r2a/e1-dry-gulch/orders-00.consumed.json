@@ -1,0 +1,19 @@
+{
+ "seq": 0,
+ "note": "Thirteen orders, wave-clocked, issued once — the same shape and the same count as round 1's winning gulch plan, so the two are comparable. Three changes, each bought with a receipt from the-claim an hour ago: (1) every trigger is a WAVE, never gold, because a gold trigger can only be served while the hero stands on a live seam and these seams hold 30 gold (~9s) before they go dark; (2) the turret ladder is spaced 2-2-2-3 instead of 2-2-2-2, because the fourth turret at 125 is the rung that missed on the-claim — twice — and this map's 40% richer seams still have to clear it; (3) cells sit within ~1-4wu of an authored seam site so the reflex layer is inside the 6wu placement circle while it is still earning. Beacons come after the turrets (1.14 dps/gold against 0.48) and are spread to cover the claim at (0,12) and both wash mouths. REPAIR_UNDER is last: any order that returns a movement every tick starves everything behind it.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -8, "z": 7 }, "when": { "waveGte": 2 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": -7 }, "when": { "waveGte": 4 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 7, "z": 7 }, "when": { "waveGte": 6 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -7 }, "when": { "waveGte": 9 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -4, "z": 8 }, "when": { "waveGte": 11 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": 8 }, "when": { "waveGte": 13 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -5, "z": -7 }, "when": { "waveGte": 15 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 5, "z": -7 }, "when": { "waveGte": 16 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -12, "z": 7 }, "when": { "waveGte": 17 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 11, "z": 7 }, "when": { "waveGte": 18 } },
+  { "verb": "HARVEST", "seam": "gold-seam-1" },
+  { "verb": "HARVEST", "seam": "gold-seam-2" },
+  { "verb": "REPAIR_UNDER", "pct": 50 }
+ ]
+}

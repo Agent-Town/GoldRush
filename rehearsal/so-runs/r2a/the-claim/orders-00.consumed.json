@@ -1,0 +1,14 @@
+{
+ "seq": 0,
+ "note": "ONE WAVE-CLOCKED PLAN AT THE GATE, then HOLD. Wave triggers, not gold triggers, on purpose: a gold trigger can only be served where the purse rises, i.e. standing on a live seam, and the seams here hold 30 gold (six 5-gold ticks, ~9s) before they go dark — so a gold-triggered cell is a moving target. A wave trigger is a clock the reflex layer can walk to. Every cell sits within ~1-3.6wu of an authored seam site AND at |z|>=7, off the river band (Terrain refuses -5<=z<=5), so the hero is inside the 6wu placement circle while it is still earning. Spacing: one build every two waves, so no two orders come due on the same tick and the purse always clears the price (turret ladder 50/70/95/125 against ~1.5 gold/s). The two HARVESTs name LIVE node ids, not the stablePrefix anchor ids, because those two lists disagree from the first frame (prefix says gold-seam-1 is at -22,-6.8; the live node called gold-seam-1 is at -9,6.7). REPAIR_UNDER sits last because any order that returns a movement every tick starves everything behind it.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -8, "z": 7 }, "when": { "waveGte": 2 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": -7 }, "when": { "waveGte": 4 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 7, "z": 7 }, "when": { "waveGte": 6 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -7 }, "when": { "waveGte": 8 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -5, "z": 7 }, "when": { "waveGte": 9 } },
+  { "verb": "HARVEST", "seam": "gold-seam-1" },
+  { "verb": "HARVEST", "seam": "gold-seam-2" },
+  { "verb": "REPAIR_UNDER", "pct": 50 }
+ ]
+}

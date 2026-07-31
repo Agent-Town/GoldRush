@@ -1,0 +1,16 @@
+{
+ "seq": 0,
+ "note": "NIGHT SHIFT, SECOND ATTEMPT, ON A CHANGED PREMISE. Attempt 1 died at wave 18 of 25 with four turrets and ONE beacon: the plan spent the whole early economy saving for the turret ladder and left the beacon bench until waves 12-20, by which time the cells kept missing and the hero was bleeding out at 24/175. What changes is the ORDER OF SPENDING, not the cells: turret and beacon alternate from wave 2, so every purchase lands while it can still compound and the run never carries a fat idle purse. Same proven ground - (-8,7), (-2,-7), (7,7), (-5,7) all took buildings on this map today - with beacons at (-11,7), (4,7), (1,-7), (10,7), (-2,7), each >=3.0wu from its neighbours, above the 2.4 that turret+beacon and beacon+beacon both need. Triggers two waves apart so the reflex layer always has 60s to cross, and each price clears its own wave against the observed ~1.5 gold/s. REPAIR_UNDER last, and on this map a mend is also a relight.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -8, "z": 7 }, "when": { "waveGte": 2 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -11, "z": 7 }, "when": { "waveGte": 3 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -2, "z": -7 }, "when": { "waveGte": 5 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 1, "z": -7 }, "when": { "waveGte": 6 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 7, "z": 7 }, "when": { "waveGte": 8 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 4, "z": 7 }, "when": { "waveGte": 10 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -5, "z": 7 }, "when": { "waveGte": 12 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": 10, "z": 7 }, "when": { "waveGte": 14 } },
+  { "verb": "BUILD", "what": "sentry_beacon", "where": { "x": -2, "z": 7 }, "when": { "waveGte": 16 } },
+  { "verb": "REPAIR_UNDER", "pct": 60 }
+ ]
+}

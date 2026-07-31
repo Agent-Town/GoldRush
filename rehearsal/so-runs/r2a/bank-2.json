@@ -1,0 +1,1015 @@
+{
+ "contractId": "the-claim",
+ "campaign": "r2a",
+ "mode": "bank",
+ "outcome": "secured",
+ "difficultyRequested": "trail",
+ "seconds": 309,
+ "finalWave": 10,
+ "secureWave": 10,
+ "hp": 117,
+ "gold": 62,
+ "kills": 302,
+ "works": {
+  "mode": true,
+  "sel": "sentry_beacon",
+  "nextCost": 75,
+  "placeRadius": null,
+  "reason": null,
+  "turrets": 3,
+  "beacons": 4,
+  "sluices": 0,
+  "palisades": 8,
+  "stockpiles": 0,
+  "hp": [
+   {
+    "id": "sentry_beacon",
+    "index": 0,
+    "hp": 40,
+    "maxHp": 40,
+    "wrecked": false
+   },
+   {
+    "id": "sentry_beacon",
+    "index": 1,
+    "hp": 46,
+    "maxHp": 46,
+    "wrecked": false
+   },
+   {
+    "id": "sentry_beacon",
+    "index": 2,
+    "hp": 58,
+    "maxHp": 58,
+    "wrecked": false
+   },
+   {
+    "id": "sentry_beacon",
+    "index": 3,
+    "hp": 64,
+    "maxHp": 64,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 0,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 1,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 2,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 3,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 4,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 5,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 6,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "palisade",
+    "index": 7,
+    "hp": 60,
+    "maxHp": 60,
+    "wrecked": false
+   },
+   {
+    "id": "turret",
+    "index": 0,
+    "hp": 50,
+    "maxHp": 50,
+    "wrecked": false
+   },
+   {
+    "id": "turret",
+    "index": 1,
+    "hp": 50,
+    "maxHp": 50,
+    "wrecked": false
+   },
+   {
+    "id": "turret",
+    "index": 2,
+    "hp": 50,
+    "maxHp": 50,
+    "wrecked": false
+   }
+  ]
+ },
+ "permissionRung": 2,
+ "difficulty": "trail",
+ "honesty": {
+  "grTestSeen": false,
+  "grAgentSeen": false,
+  "searches": [
+   "?contract=the-claim"
+  ],
+  "surfaceSeq": 1
+ },
+ "meter": {
+  "calls": 0,
+  "viewBytes": [],
+  "cumulativeBytes": 0,
+  "latencies": [],
+  "submissions": [],
+  "missed": 0,
+  "pollCount": 0,
+  "pollMsTotal": 0,
+  "pollMsMax": 0
+ },
+ "orderEvents": [],
+ "rangeGuard": [],
+ "almanacLog": [],
+ "waveLog": [
+  {
+   "wave": 0,
+   "endedAt": 30.66666666666735,
+   "gold": 10,
+   "hp": 100,
+   "works": 1,
+   "enemies": 7,
+   "kills": 7,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": -9,
+     "z": 6.7,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": false,
+     "x": -1.5,
+     "z": -6.4,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 1,
+   "endedAt": 60.06666666666582,
+   "gold": 50,
+   "hp": 100,
+   "works": 1,
+   "enemies": 7,
+   "kills": 24,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": -22,
+     "z": -6.8,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "x": 7.5,
+     "z": 6.5,
+     "remaining": 20
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 2,
+   "endedAt": 90.06666666666412,
+   "gold": 35,
+   "hp": 100,
+   "works": 2,
+   "enemies": 8,
+   "kills": 44,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": 7.5,
+     "z": 6.5,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "x": -1.5,
+     "z": -6.4,
+     "remaining": 25
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 3,
+   "endedAt": 120.09999999999575,
+   "gold": 65,
+   "hp": 100,
+   "works": 3,
+   "enemies": 10,
+   "kills": 68,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": 18,
+     "z": -7,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "x": -9,
+     "z": 6.7,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 4,
+   "endedAt": 150.0333333333274,
+   "gold": 30,
+   "hp": 100,
+   "works": 4,
+   "enemies": 13,
+   "kills": 95,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": 25,
+     "z": 6.9,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": false,
+     "x": -9,
+     "z": 6.7,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 5,
+   "endedAt": 180.06666666665902,
+   "gold": 79,
+   "hp": 100,
+   "works": 4,
+   "enemies": 13,
+   "kills": 128,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "x": -22,
+     "z": -6.8,
+     "remaining": 5
+    },
+    {
+     "id": "gold-seam-2",
+     "active": false,
+     "x": -1.5,
+     "z": -6.4,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 6,
+   "endedAt": 210.09999999999064,
+   "gold": 78,
+   "hp": 100,
+   "works": 5,
+   "enemies": 15,
+   "kills": 164,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "x": -1.5,
+     "z": -6.4,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-2",
+     "active": false,
+     "x": -9,
+     "z": 6.7,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 7,
+   "endedAt": 240.09999999998894,
+   "gold": 103,
+   "hp": 92,
+   "works": 5,
+   "enemies": 18,
+   "kills": 204,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "x": -1.5,
+     "z": -6.4,
+     "remaining": 15
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "x": 25,
+     "z": 6.9,
+     "remaining": 40
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  },
+  {
+   "wave": 8,
+   "endedAt": 270.0333333333325,
+   "gold": 73,
+   "hp": 117,
+   "works": 6,
+   "enemies": 22,
+   "kills": 248,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": false,
+     "x": -1.5,
+     "z": -6.4,
+     "remaining": 0
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "x": 25,
+     "z": 6.9,
+     "remaining": 50
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "x": 0,
+     "z": 0,
+     "remaining": 30
+    }
+   ]
+  }
+ ],
+ "upgrades": [
+  {
+   "offered": [
+    "double_tap_coil",
+    "pan_legend",
+    "spring_heels"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "pan_legend",
+    "wide_ring",
+    "prospectors_luck"
+   ],
+   "took": "wide_ring"
+  },
+  {
+   "offered": [
+    "spring_heels",
+    "powder_charge",
+    "heavy_spark"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "pan_legend",
+    "tinkers_plating",
+    "double_tap_coil"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "long_resonator",
+    "double_tap_coil",
+    "powder_charge"
+   ],
+   "took": "double_tap_coil"
+  },
+  {
+   "offered": [
+    "beacon_dynamo",
+    "long_resonator",
+    "tinkers_plating"
+   ],
+   "took": "long_resonator"
+  },
+  {
+   "offered": [
+    "spring_heels",
+    "pan_legend",
+    "beacon_dynamo"
+   ],
+   "took": "beacon_dynamo"
+  },
+  {
+   "offered": [
+    "wide_ring",
+    "beacon_dynamo",
+    "pan_legend"
+   ],
+   "took": "beacon_dynamo"
+  },
+  {
+   "offered": [
+    "tinkers_plating",
+    "heavy_spark",
+    "long_resonator"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "heavy_spark",
+    "long_resonator",
+    "powder_charge"
+   ],
+   "took": "heavy_spark"
+  },
+  {
+   "offered": [
+    "wide_ring",
+    "long_resonator",
+    "tinkers_plating"
+   ],
+   "took": "long_resonator"
+  },
+  {
+   "offered": [
+    "prospectors_luck",
+    "pan_legend",
+    "spark_pressure_ring"
+   ],
+   "took": "prospectors_luck"
+  },
+  {
+   "offered": [
+    "pan_legend",
+    "spark_pressure_ring",
+    "prospectors_luck"
+   ],
+   "took": "prospectors_luck"
+  },
+  {
+   "offered": [
+    "stockpile_seam_survey",
+    "tinkers_plating",
+    "pan_legend"
+   ],
+   "took": "tinkers_plating"
+  },
+  {
+   "offered": [
+    "quick_fuse",
+    "pan_legend",
+    "split_spark"
+   ],
+   "took": "split_spark"
+  }
+ ],
+ "watchdogKeyResets": 3,
+ "damageTaken": 8,
+ "finalView": {
+  "schema": "goldrush.view.v1",
+  "stablePrefix": {
+   "seed": "gold-rush",
+   "contract": {
+    "id": "the-claim",
+    "name": "The Claim",
+    "briefing": {
+     "geography": "The classic river claim.",
+     "goals": [
+      "Hold the claim through wave 10."
+     ],
+     "rules": [
+      "The river splits the claim around one center ford.",
+      "Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck."
+     ]
+    }
+   },
+   "map": {
+    "claim": {
+     "x": 0,
+     "z": 12
+    },
+    "seams": [
+     {
+      "id": "gold-seam-1",
+      "x": -22,
+      "z": -6.8
+     },
+     {
+      "id": "gold-seam-2",
+      "x": -9,
+      "z": 6.7
+     },
+     {
+      "id": "gold-seam-3",
+      "x": -1.5,
+      "z": -6.4
+     },
+     {
+      "id": "gold-seam-4",
+      "x": 7.5,
+      "z": 6.5
+     },
+     {
+      "id": "gold-seam-5",
+      "x": 18,
+      "z": -7
+     },
+     {
+      "id": "gold-seam-6",
+      "x": 25,
+      "z": 6.9
+     }
+    ],
+    "water": {
+     "river": true,
+     "ford": true,
+     "sources": 0,
+     "descriptor": null
+    },
+    "spawnGates": [
+     {
+      "edge": "north"
+     },
+     {
+      "edge": "south"
+     },
+     {
+      "edge": "east"
+     },
+     {
+      "edge": "west"
+     }
+    ]
+   },
+   "orders": []
+  },
+  "appendLog": [],
+  "now": {
+   "wave": 10,
+   "timers": {
+    "runSeconds": 300,
+    "nextWaveInSeconds": 0
+   },
+   "gold": 62,
+   "hero": {
+    "hp": 117,
+    "maxHp": 125,
+    "x": 24.71,
+    "z": 7.09
+   },
+   "works": {
+    "hp": 838,
+    "maxHp": 838,
+    "standing": 15,
+    "wrecked": 0,
+    "byKind": {
+     "sentry_beacon": 4,
+     "palisade": 8,
+     "turret": 3
+    }
+   },
+   "threats": {
+    "alive": 3,
+    "state": "warning",
+    "edge": "north",
+    "thieves": 0,
+    "wreckers": 0
+   },
+   "orders": [],
+   "needsRider": false,
+   "seams": [
+    {
+     "id": "gold-seam-1",
+     "active": true,
+     "remaining": 50
+    },
+    {
+     "id": "gold-seam-2",
+     "active": true,
+     "remaining": 5
+    },
+    {
+     "id": "gold-seam-3",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-4",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-5",
+     "active": false,
+     "remaining": 30
+    },
+    {
+     "id": "gold-seam-6",
+     "active": false,
+     "remaining": 30
+    }
+   ],
+   "score": {
+    "wavesSurvived": 10,
+    "goldPanned": 455,
+    "goldPannedByProspector": 0,
+    "goldStolen": 0,
+    "goldReclaimed": 0,
+    "goldReclaimedByProspector": 0,
+    "buildingsBuilt": 7
+   }
+  },
+  "almanac": {
+   "label": "the Almanac reckons",
+   "estimate": true,
+   "nextWave": {
+    "wave": 11,
+    "arrivalInSeconds": 0,
+    "basis": "estimated-from-wave-schedule",
+    "composition": [
+     {
+      "id": "claim_jumper",
+      "label": "Claim Jumpers",
+      "count": 35
+     }
+    ]
+   },
+   "projection": {
+    "expectedLeaks": 0,
+    "expectedWorksDamage": 0,
+    "expectedGold": 56.67,
+    "currentWorks": 15,
+    "harnessHash": "fnv1a32:5c54a004"
+   }
+  }
+ },
+ "finalOrders": {
+  "needsRider": true,
+  "orders": [],
+  "log": [
+   {
+    "seq": 1,
+    "at": 161.56666666666007,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 2,
+    "at": 162.46666666666002,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 3,
+    "at": 163.36666666665997,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 4,
+    "at": 168.19999999999303,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 5,
+    "at": 195.9666666666581,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 6,
+    "at": 221.56666666665666,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 7,
+    "at": 222.4666666666566,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 8,
+    "at": 251.2999999999883,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 9,
+    "at": 252.19999999998825,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 10,
+    "at": 256.6666666666552,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 11,
+    "at": 257.5666666666559,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   },
+   {
+    "seq": 12,
+    "at": 284.10000000001037,
+    "type": "surprise",
+    "surprise": "claim_damage"
+   }
+  ]
+ }
+}

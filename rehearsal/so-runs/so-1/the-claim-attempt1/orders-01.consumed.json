@@ -1,0 +1,11 @@
+{
+ "seq": 1,
+ "note": "RECOVERY, and the lesson that forced it. My first plan took 57.4s to write. In that time the pan carried the purse from 0 to 100, so three of my four goldGte triggers were ALREADY TRUE when the orders landed: the executor fired all three on its very next tick, before the reflex clock had opened the build menu, and all three died 'build-mode-off'. A gold threshold below the purse is not a plan, it is an immediate order — and an immediate order arrives before its own hands do. Re-issuing every turret on the WAVE clock instead, which is the one trigger a slow rider can still aim at: the reflex clock sees wave W-1 with 11s left, walks to a seam inside 5.2wu of the cell, and parks the mouse before the wave turns it over. One build per wave so a single parked aim is never asked to serve two orders. Cells unchanged and still seam-adjacent: (-6,7) NW, (2,-5) S, (5,7) E, (-4,-4) SW; four turrets at 16wu blanket the middle and the stake by wave 7, ahead of the 25-33 jumper waves at 8-10. Fallback threshold dropped to 18 because waves 8+ will exceed it before the turrets are all standing.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -6, "z": 7 }, "when": { "waveGte": 4 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -5 }, "when": { "waveGte": 5 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 7 }, "when": { "waveGte": 6 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -4, "z": -4 }, "when": { "waveGte": 7 } },
+  { "verb": "FALLBACK_IF", "threat": { "enemiesGte": 18 }, "pos": { "x": 0, "z": 9 } }
+ ]
+}

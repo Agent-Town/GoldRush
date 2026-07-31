@@ -1,0 +1,11 @@
+{
+ "seq": 0,
+ "note": "FULL PLAN AT THE GATE, gold-clocked with a staging margin. Two lessons are folded in. (1) Latency: my answer takes tens of seconds against a 30s wave, so no trigger may be true when it lands — the purse is 0 now, so every threshold below is safely in the future. (2) waveGte was the wrong clock: a wave arrives whether or not the purse can pay, and attempt 2 lost two turrets that way. goldGte is the right clock because affordability IS the trigger — the reflex layer pre-arms the moment gold covers the price, and the margin above the price is the seconds it needs to walk, open the menu and park the mouse. Prices are 50/70/95/125, so triggers 62/85/110/142 each leave ~4s of staging at ~3.3 gold/s. Cells all sit inside 5.2wu of a seam so the pan keeps paying while the aim is held: (-6,7) NW, (2,-5) S, (5,7) E, (-4,-4) SW. Four turrets at 16wu blanket the middle and the stake at (0,12) before the 25-33 jumper waves. BUILDs lead the list; the retreat trigger is last so it cannot starve them.",
+ "orders": [
+  { "verb": "BUILD", "what": "turret", "where": { "x": -6, "z": 7 }, "when": { "goldGte": 62 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 2, "z": -5 }, "when": { "goldGte": 85 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": 5, "z": 7 }, "when": { "goldGte": 110 } },
+  { "verb": "BUILD", "what": "turret", "where": { "x": -4, "z": -4 }, "when": { "goldGte": 142 } },
+  { "verb": "FALLBACK_IF", "threat": { "enemiesGte": 20 }, "pos": { "x": 0, "z": 9 } }
+ ]
+}
