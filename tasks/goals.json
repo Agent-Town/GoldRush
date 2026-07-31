@@ -3783,7 +3783,10 @@
               "id": "agent-rung-conformance",
               "title": "Verb rungs — land the 2026-07-30 owner ruling in the two rung tables + the ratified ladder line",
               "taskFile": "lane-c-agent-rung-conformance.md",
-              "status": "planned"
+              "status": "shipped",
+              "lane": "lane-c",
+              "mergeHash": "85bb193812666887f653d2f0850568cb18f78a25",
+              "drainNotes": "s1281 ACCEPT; reviews/agent-rung-conformance.md. The 07-30 verb-rung ruling is in code: auto_pan 3->2 in BOTH tables (AgentConsent.ts:15 the gate reads, ToolSurface.ts:378 the panel advertises) + the ratified ladder line, plus a mutation-tested conformance guard (5 arms; reds on each table independently and on a regex-miss/NaN). package.json was BOTH-MOVED and needed a 3-way graft - a blind copy would have deleted five guards main added since the lane base plus test:ruling-propagation; all six asserted present by name after the graft. Gates all rc=0, node-guards 187->189. F-1281-1 CORRECTS s1280 s.B(3): the inherited 'wholly inert on main' claim was drawn from ONE of two consumers. ToolSurface's panel row is indeed adapter-gated and inert, but AgentConsent is not, and StandingOrders.ts:415 maps HARVEST->auto_pan; measured at ceiling 2 the ability flips allowed=false -> allowed=true, so a level-2 Prospector can now be given a HARVEST standing order and previously could not. The merge IS gameplay-affecting; DEPLOY ran. F-1281-2 REPORT-ONLY: e2-arsenal.spec.ts:87 reds at :100 placeFree('turret') on both projects - fingerprinted to clean main in a detached worktree at --workers=1, so pre-existing; already in suite-red-inventory from 07-28 but only from a default-workers lane capture, which s3.1 says is not evidence. Spec unchanged since 90e7cc68 (07-12), so something else regressed it; not fixed here, the master forbids editing e2e assertions. F-1281-3: the new guard pins auto_repair at L1, which is the OPEN F-1279-2 question - when the owner answers, the guard and the source move in ONE commit, and nobody 'fixes the failing test'."
             },
             {
               "id": "ap-06b-adapter-wiring",
