@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import asyncio
+import contextlib
 import json
 import re
 import shutil
@@ -194,10 +195,16 @@ class GoldRushEnv(vf.MultiTurnEnv):
         await asyncio.wait({stdout_task, stderr_task}, return_when=asyncio.FIRST_COMPLETED)
         if stdout_task.done() and stdout_task.result():
             stderr_task.cancel()
+            with contextlib.suppress(asyncio.CancelledError):
+                await stderr_task
             return "view", self._decode_json(stdout_task.result(), "view")
 
-        line = stderr_task.result().decode().strip() if stderr_task.done() else ""
-        stdout_task.cancel()
+        for task in (stdout_task, stderr_task):
+            task.cancel()
+        for task in (stdout_task, stderr_task):
+            with contextlib.suppress(asyncio.CancelledError):
+                await task
+        line = stderr_task.result().decode().strip() if not stderr_task.cancelled() else ""
         if line.startswith("gr-sim rejected orders:"):
             return "rejected", line.removeprefix("gr-sim rejected orders:").strip()
         await process.wait()
@@ -314,4 +321,3 @@ def _find_runner(repo_root: str | Path | None) -> Path:
     raise RuntimeError(
         "Could not find scripts/gr-sim.mjs. Run from the Gold Rush repository root or pass repo_root."
     )
-

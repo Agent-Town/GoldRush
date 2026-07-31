@@ -1,5 +1,6 @@
 import asyncio
 import json
+import sys
 import tempfile
 import unittest
 from pathlib import Path
@@ -65,6 +66,21 @@ class GoldRushTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(secured(correct), 1.0)
         self.assertEqual(secured(plausible_wrong), 0.0)
         self.assertEqual((waves(plausible_wrong), gold(plausible_wrong), timeMs(plausible_wrong)), (19.0, 50.0, 8000.0))
+
+    async def test_crashed_sim_preserves_multiline_stderr(self) -> None:
+        diagnostic = "GR-SIM crashed\nstack frame: applyOrders"
+        process = await asyncio.create_subprocess_exec(
+            sys.executable,
+            "-c",
+            "import os,time; os.close(1); time.sleep(0.05); "
+            "os.write(2, b'GR-SIM crashed\\nstack frame: applyOrders\\n')",
+            stdout=asyncio.subprocess.PIPE,
+            stderr=asyncio.subprocess.PIPE,
+        )
+
+        with self.assertRaises(RuntimeError) as raised:
+            await GoldRushEnv._read_sim_reply(GoldRushEnv.__new__(GoldRushEnv), process)
+        self.assertIn(diagnostic, str(raised.exception))
 
 
 STUB_RUNNER = r"""

@@ -14,12 +14,13 @@ The frozen evaluation data contains five Trail seeds each for `e1-dry-gulch` and
 
 ## Local checks
 
-From this directory:
+From the repository root, create or reuse the package venv and run the suite:
 
 ```bash
-python -m unittest discover -s tests
-python -m build
+bash scripts/verifiers-venv.sh
 ```
+
+The script prints the selected interpreter and version before bootstrapping, installs the package on the first run, and reuses the venv thereafter.
 
 ## Attended smoke
 
