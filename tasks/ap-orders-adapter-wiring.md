@@ -1,4 +1,6 @@
 CODEX: model=gpt-5.6-sol effort=xhigh
+⛔ **SUPERSEDED s1283 — DO NOT QUEUE THIS FILE. Use `tasks/lane-c-ap-06b-adapter-reland.md`.**
+This master tells the runner to BUILD the wiring from scratch. A runner already did that work; it was reviewed (`reviews/ap-06b-adapter-wiring.md`) and preserved on `save/ap-06b-adapter-wiring` (`2f216af0`), blocked only by F-1217-1 — which the owner discharged on 2026-07-30 (*"panel rows BLESSED at their tiers"*). Re-deriving it would be Mistake #8 (the 824k Flail). The successor is a **hunk re-land** and carries the protected-work list this file lacks. Kept on disk per the RETENTION LAW; its measured premise (§9-13) is still accurate apart from the install-site coordinate, which has drifted `:2040` → `:2058`.
 # ap-orders-adapter-wiring — AP-06b: BUILD and HARVEST reach the world (F-1212-3)
 ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
 **FIRE-AUTHORED (attended review welcome)** — corrective spawned by the s1212 drain of AP-06.
