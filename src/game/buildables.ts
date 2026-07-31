@@ -189,6 +189,10 @@ export function buildableTierEffectLine(id: BuildableId, tier = 1): string | und
     const yieldPerCycle = Math.max(1, Math.round(Balance.sluice.goldPerCycle * rung.yieldMult));
     return `T${tier}: ${formatBuildNumber(yieldPerCycle)}g every ${formatBuildNumber(cycleSeconds)}s`;
   }
+  if (id === 'stockpile') {
+    const rung = Balance.tiers.stockpile[tier - 1] ?? Balance.tiers.stockpile[0];
+    return `T${tier}: +${formatBuildNumber(Math.round(Balance.stockpile.capBonus * rung.capMult))} gold capacity`;
+  }
   if (id === 'turret') {
     const rung = Balance.tiers.turret[tier - 1] ?? Balance.tiers.turret[0];
     const damage = Math.round(Balance.turret.damage * rung.damageMult);

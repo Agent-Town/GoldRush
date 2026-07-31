@@ -364,6 +364,54 @@ test('stockpile tiers raise cap, survive restore, demolish cleanly, and stop at 
   expect(errors.pageErrors).toEqual([]);
 });
 
+test('stockpile upgrade names the yard and shows its tier capacity in the build menu', async ({ page }, testInfo) => {
+  const errors = collectErrors(page);
+  await page.goto('/?debug&timescale=1&nowaves&nolevel&nopause&nokill&nosteal&seed=bt-01-stockpile-voice');
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  if (await page.getByTestId('contract-briefing-dismiss').isVisible()) {
+    await page.getByTestId('contract-briefing-dismiss').click();
+    await expect(page.getByTestId('contract-briefing')).toBeHidden();
+  }
+  await grantGold(page, 1_000);
+  const stockpile = await placeBuildableAt(page, 'stockpile', 0, 9);
+  await teleport(page, stockpile.position.x, stockpile.position.z);
+  const snapshot = await page.evaluate(() => structuredClone(window.__GR_TEST__!.captureSuspend()));
+  await page.evaluate((saved) => localStorage.setItem('gr.run.v1', JSON.stringify(saved)), snapshot);
+
+  await page.goto('/');
+  await expect(page.getByTestId('start-menu-continue')).toBeVisible();
+  await page.getByTestId('start-menu-continue').click();
+  await page.waitForFunction(() => (window.__THREE_GAME_DIAGNOSTICS__?.frame ?? 0) > 10);
+  expect(new URL(page.url()).searchParams.has('debug')).toBe(false);
+  if (await page.getByTestId('contract-briefing-dismiss').isVisible()) {
+    await page.getByTestId('contract-briefing-dismiss').click();
+    await expect(page.getByTestId('contract-briefing')).toBeHidden();
+  }
+  await page.getByTestId('hud-build').click();
+  await expect(page.getByTestId('hud-build-menu')).toBeVisible();
+  await page.locator('#game-canvas').dispatchEvent('pointerdown', { clientX: 1, clientY: 1, pointerType: 'mouse', button: 0 });
+  await expect(page.getByTestId('hud-build-menu')).toBeHidden();
+  await expect(page.getByTestId('building-context-prompt')).toContainText('Stockpile Yard · Tier 1');
+
+  await page.getByTestId('upgrade-confirm').click();
+  await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.lastFloatText?.text)).toBe(
+    'Stockpile Yard II - the yard holds more gold',
+  );
+  mkdirSync('artifacts/f1314-3-stockpile-tier-voice', { recursive: true });
+  await page.screenshot({ path: `artifacts/f1314-3-stockpile-tier-voice/${testInfo.project.name}-float.png`, fullPage: true });
+
+  await page.getByTestId('hud-build').click();
+  await page.getByTestId('hud-build').click();
+  await expect(page.getByTestId('hud-build-menu')).toBeVisible();
+  await page.getByTestId('hud-build-tile-stockpile').hover();
+  await expect(page.getByTestId('hud-build-blurb')).toContainText(
+    `T2: +${Math.round(Balance.stockpile.capBonus * Balance.tiers.stockpile[1].capMult)} gold capacity`,
+  );
+  await page.screenshot({ path: `artifacts/f1314-3-stockpile-tier-voice/${testInfo.project.name}-menu.png`, fullPage: true });
+  expect(errors.consoleErrors).toEqual([]);
+  expect(errors.pageErrors).toEqual([]);
+});
+
 test('demolish refund ignores tier investment', async ({ page }) => {
   const errors = await openGame(page, 'bt-01-refund');
   await grantGold(page, Balance.turret.costBase + Balance.tiers.turret[1].cost);
