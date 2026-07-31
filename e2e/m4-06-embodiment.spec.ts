@@ -381,7 +381,7 @@ test('debug receipt moves the Prospector toward a panning target and floats ledg
     .toBeGreaterThan(0.3);
   const mid = await companion(page);
   expect(distance(mid.target, node!.position)).toBeLessThan(0.01);
-  expect(mid.lastLine).toBe('pan...');
+  expect(mid.lastLine).toBe('shine');
   await expect(page.getByTestId('hud-agent-feed')).toContainText('Pan');
   await expect
     .poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.vfx.activeFloatTexts ?? 0), { timeout: 2_000 })

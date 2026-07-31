@@ -2059,6 +2059,52 @@ export class Game {
       {
         diagnostics: () => window.__THREE_GAME_DIAGNOSTICS__,
         economyLog: () => this.economy.log,
+        placeBuilding: (id, position, rotation = 0) => {
+          if (this.state.current !== 'playing' || this.state.isPaused || this.deepwaterClaim) return false;
+          const rotationSteps = Number.isFinite(rotation)
+            ? Number.isInteger(rotation) ? rotation : Math.round(rotation / (Math.PI / 2))
+            : 0;
+          const placed = this.buildSystem.confirmPlacement(this.timeAlive, { id, position, rotationSteps });
+          if (placed) {
+            discoverLedgerBuildable(id);
+            this.recordCountyAction('place_build', { id, position, rotationSteps });
+          }
+          return placed;
+        },
+        panAt: (node) => {
+          if (this.state.current !== 'playing' || this.state.isPaused) return false;
+          const target = this.harvestSnapshot.activeNodes.find((entry) => entry.id === node && entry.active);
+          if (!target) return false;
+          const before = target.remaining;
+          const previous = this.harvestSystem.captureFutureState(this.timeAlive);
+          const position = new THREE.Vector3(target.position.x, 0, target.position.z);
+          const panned = this.harvestSystem.update(
+            Balance.goldSeam.tickSeconds * Math.max(0.1, this.progression.snapshot.stats.panTickMult),
+            this.timeAlive,
+            [{ actorId: 'prospector', position, speed: 0 }],
+          );
+          const pannedTarget = panned.activeNodes.find((entry) => entry.id === node);
+          const nodes = previous.nodes.map((entry) => entry.id === node && pannedTarget ? pannedTarget : entry);
+          const activeNodes = new Set(nodes.filter((entry) => entry.active).map((entry) => entry.id));
+          const channels = previous.channels?.map((channel) =>
+            channel.channelNodeId === null || activeNodes.has(channel.channelNodeId)
+              ? channel
+              : { ...channel, channelNodeId: null, progress: 0, panCapBlocked: false, channeling: false },
+          );
+          const primary = channels?.find((channel) => channel.actorId === '0');
+          const channelNodeId = primary?.channelNodeId ??
+            (previous.channelNodeId !== null && activeNodes.has(previous.channelNodeId) ? previous.channelNodeId : null);
+          this.harvestSystem.restoreFutureState({
+            ...previous,
+            nodes,
+            channelNodeId,
+            progress: channelNodeId === null ? 0 : (primary?.progress ?? previous.progress),
+            panCapBlocked: channelNodeId === null ? false : (primary?.panCapBlocked ?? previous.panCapBlocked),
+            channels,
+          }, this.timeAlive);
+          this.harvestSnapshot = this.harvestSystem.update(0, this.timeAlive, this.visibleHarvestTargets());
+          return (panned.activeNodes.find((entry) => entry.id === node)?.remaining ?? before) < before;
+        },
         repair: (building) => this.repairProspectorBuilding(building),
         collectXp: (options) => this.collectProspectorXp(options),
         collectGold: () => this.collectProspectorGold(),

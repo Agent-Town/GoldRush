@@ -104,7 +104,12 @@ test('rung 0 panel shows the canonical ladder, progress, and blocked repair reas
   await expect(page.getByTestId('prospector-rung-3')).toContainText('spends within a budget');
   await expect(page.getByTestId('prospector-ability-auto_collect')).toContainText('needs approval-required (rung 1)');
   await expect(page.getByTestId('prospector-ability-auto_repair')).toContainText('needs approval-required (rung 1)');
-  await expect(page.getByTestId('prospector-ability-auto_pan')).toHaveCount(0);
+  await expect(page.getByTestId('prospector-ability-auto_pan')).toContainText('needs trusted-routine (rung 2)');
+  await expect(page.getByTestId('prospector-ability-auto_pan')).toHaveAttribute('data-allowed', 'false');
+  await expect(page.getByTestId('prospector-ability-place_building')).toContainText(
+    'needs autonomous-within-budget (rung 3)',
+  );
+  await expect(page.getByTestId('prospector-ability-place_building')).toHaveAttribute('data-allowed', 'false');
   await saveShot(page, testInfo.project.name.includes('mobile') ? 'panel-rung0-390' : 'panel-rung0-desktop');
 
   expect(errors.consoleErrors).toEqual([]);
