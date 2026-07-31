@@ -3886,6 +3886,12 @@
               "status": "shipped",
               "mergeHash": "65d15a91037ae30347a5c1ed8f39b66f203586f6",
               "review": "reviews/f1285-3-build-consent-ability-gate.md"
+            },
+            {
+              "id": "f1288-3-place-building-roundtrip",
+              "title": "F-1288-3 repair: AgentConsent registers five abilities but two serialization boundaries enumerate four. RunSuspend.decodeAgent (RunSuspend.ts:2656-2661) returns consent.abilities without place_building while captureFutureState (AgentConsent.ts:90) emits it, so RunSuspend.ts:944 -> restoreFutureState -> AgentConsent.ts:56 stores false; since 65d15a91 made requiredAbility(BUILD) read that ability, resuming a saved run silently revokes building consent at the fresh-start default of true. LockstepClient.ts:1052 drops place_building on the multiplayer wire the same way. Carry it with the light_duty === true idiom already at :2660. TRAP: do NOT add it to the :2578 strictness check or every legacy save fails validation; the legacy-restore test must stay {ok:true, placeBuilding:false}.",
+              "taskFile": "lane-b-f1288-3-place-building-roundtrip.md",
+              "status": "planned"
             }
           ]
         }
