@@ -24,8 +24,8 @@ Both remaining sites compare a **live-derived** array against the literal `41`, 
 
 | Site | assertion |
 |---|---|
-| `e2e/board-card-images.spec.ts:37` | `expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(41)` |
-| `e2e/map-census.spec.ts:63` | `expect(CONTRACTS).toHaveLength(41)` |
+| `e2e/board-card-images.spec.ts:37` ("all contract chapters use their own board-card URL") | now `expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(42);` — read `41` when this master was authored; THIS SLICE is what changed it (merged `4cb09307`) |
+| `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(42);` — a `test.afterAll`, so there is no title to quote; the source line IS the anchor) | read `41` when this master was authored; THIS SLICE is what changed it (merged `4cb09307`) |
 
 ⚠️ **These two are ALL that remain.** s1330 re-ran the census grep itself rather than inheriting a list — `grep -rn "toHaveLength(41)\|toHaveCount(41)\|toBe(41)\|toEqual(41)\|all 41 \|41 contracts\|41 cards" e2e/ src/ scripts/ specs/` — and the only other live hits are `scripts/law-pointer-baseline.json` (a generated guard baseline, see NO) and `scripts/tmp-s1143-backlog.mjs` (a historical quoted narrative, not an assertion). The id-list-shaped censuses were already cured.
 
@@ -38,7 +38,7 @@ Both remaining sites compare a **live-derived** array against the literal `41`, 
 
 ## SCOPE (numbered, each testable)
 1. `e2e/board-card-images.spec.ts:37` ("all contract chapters use their own board-card URL") — `toHaveLength(41)` → `toHaveLength(42)`.
-2. `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(41);`, inside `test.afterAll`) — `toHaveLength(41)` → `toHaveLength(42)`.
+2. `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(42);` — inside `test.afterAll`, so there is no title; the source line is the anchor) — `toHaveLength(41)` → `toHaveLength(42)`. ✅ DONE, merged `4cb09307`.
 3. Nothing else. If you believe a third count-shaped census exists, **report it — do not fix it** (the grep above is the measured denominator; a disagreement is a finding worth more than a silent edit).
 
 ## TOUCH-ONLY
