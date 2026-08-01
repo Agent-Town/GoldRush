@@ -20,7 +20,7 @@ import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
 import { META_PROGRESS_KEY, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
-import { FIRST_CLAIM_DONE_KEY, TOWN_WELCOME_SEEN_KEY, activeProfileName } from '../game/ProfileStorage';
+import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
 import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import {
@@ -1937,9 +1937,7 @@ export class TownScene {
     const pageIndex = clampBoardPage(this.boardPageIndex, chapters.length);
     this.boardPageIndex = pageIndex;
     const chapter = chapters[pageIndex];
-    const contracts = (chapter?.contracts ?? []).filter(
-      (contract) => contract.id !== 'e1-drill-yard' || localStorage.getItem(TOWN_WELCOME_SEEN_KEY) === '1',
-    );
+    const contracts = chapter?.contracts ?? [];
     for (const contract of contracts) discoverLedgerContract(contract.id);
     const boardEpochId = chapter?.id ?? activeEpoch.id;
     const accent = townEraAccent(chapter?.order ?? activeEpoch.order);

@@ -6,6 +6,7 @@ import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type Profil
 import { listEpochs, loadEpoch } from '../src/meta/ContractFamilies';
 
 const ARTIFACT_DIR = path.resolve('artifacts/board-full-picture');
+const E1_CONTRACT_COUNT = loadEpoch('epoch-1-frontier').contracts.length;
 
 type ErrorBucket = { consoleErrors: string[]; pageErrors: string[] };
 type SeedScore = {
@@ -191,7 +192,7 @@ test('contract board renders manifest rows, locks, conditions, and per-contract 
   for (const entry of cases) {
     await seedStorage(page, entry.seed);
     await openBoard(page, true);
-    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+    await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(E1_CONTRACT_COUNT);
     await expect(page.getByTestId('contract-chapter-count')).toHaveText('1 / 10');
     await expect(page.getByTestId('contract-card-the-claim')).toHaveAttribute('data-contract-locked', 'false');
     await assertFlavorOnce(page, 'the-claim', BOARD_CONTRACTS[0].flavor);
@@ -332,7 +333,7 @@ test('contract board swipes and keeps tap targets usable at 390px', async ({ pag
   await page.setViewportSize({ width: 390, height: 844 });
   await seedStorage(page, { science: 6, scores: [{ waves: 18, secured: true, contractId: 'the-claim' }] });
   await openBoard(page, true);
-  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(5);
+  await expect(page.getByTestId('contract-card-list').locator('[data-contract-id]')).toHaveCount(E1_CONTRACT_COUNT);
   const box = await page.getByTestId('contract-card-list').boundingBox();
   expect(box).not.toBeNull();
   if (box) {

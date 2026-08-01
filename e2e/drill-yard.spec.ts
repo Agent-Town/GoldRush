@@ -15,10 +15,12 @@ import {
 } from '../src/game/ProfileStorage';
 import { RUN_TAPES_KEY } from '../src/game/RunTape';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../src/encyclopedia/storage';
+import { loadEpoch } from '../src/meta/ContractFamilies';
 import { RESEARCH_STATE_KEY } from '../src/meta/ResearchTree';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
-const ARTIFACT_DIR = path.resolve('artifacts/pc-01-drill-yard');
+const ARTIFACT_DIR = path.resolve('artifacts/pc-01b-drill-yard-parity');
+const E1_CONTRACT_COUNT = loadEpoch('epoch-1-frontier').contracts.length;
 const PRACTICE_BUILDABLES = ['sentry_beacon', 'palisade', 'sluice', 'stockpile', 'turret', 'assay_office', 'lantern_post'] as const;
 const BUILD_SITES: Record<(typeof PRACTICE_BUILDABLES)[number], { x: number; z: number }> = {
   sentry_beacon: { x: -24, z: 18 },
@@ -33,8 +35,10 @@ const BUILD_SITES: Record<(typeof PRACTICE_BUILDABLES)[number], { x: number; z: 
 test.beforeEach(async ({ page }) => {
   await page.addInitScript(
     ({ keys }) => {
+      if (sessionStorage.getItem('__drill_yard_seeded') === '1') return;
       localStorage.clear();
       sessionStorage.clear();
+      sessionStorage.setItem('__drill_yard_seeded', '1');
       const profile: ProfileState = {
         version: 2,
         activeId: 'robin',
@@ -58,6 +62,38 @@ test.beforeEach(async ({ page }) => {
       },
     },
   );
+});
+
+test('plain boot keeps the Drill Yard visible and launchable on both sides of the welcome', async ({ page }, testInfo) => {
+  test.setTimeout(90_000);
+  const watch = watchErrors(page);
+
+  await page.goto('/');
+  expect(new URL(page.url()).searchParams.has('debug')).toBe(false);
+  await page.getByTestId('start-menu-enter-town').click();
+  await openBoard(page);
+
+  await page.getByTestId('contract-board-close').click();
+  await page.evaluate((key) => localStorage.setItem(key, '0'), profileDataKey('robin', TOWN_WELCOME_SEEN_KEY));
+  await page.getByTestId('town-open-board').click();
+  const preWelcomeCount = await page.getByTestId('contract-card-list').locator('[data-contract-id]').count();
+  console.log(`PC-01b parity pre-welcome: manifest=${E1_CONTRACT_COUNT} rendered=${preWelcomeCount}`);
+  expect(preWelcomeCount).toBe(E1_CONTRACT_COUNT);
+
+  await page.getByTestId('contract-board-close').click();
+  await page.evaluate((key) => localStorage.setItem(key, '1'), profileDataKey('robin', TOWN_WELCOME_SEEN_KEY));
+  await page.getByTestId('town-open-board').click();
+  const postWelcomeCount = await page.getByTestId('contract-card-list').locator('[data-contract-id]').count();
+  console.log(`PC-01b parity post-welcome: manifest=${E1_CONTRACT_COUNT} rendered=${postWelcomeCount}`);
+  expect(postWelcomeCount).toBe(E1_CONTRACT_COUNT);
+
+  await expect(page.getByTestId('contract-card-e1-drill-yard')).toBeVisible();
+  await expect(page.getByTestId('contract-launch-e1-drill-yard')).toBeEnabled();
+  await shot(page, testInfo, 'plain-boot-card', 'e1-drill-yard');
+  await page.getByTestId('contract-launch-e1-drill-yard').click();
+  await expect.poll(() => new URL(page.url()).searchParams.get('contract')).toBe('e1-drill-yard');
+  await expect(page.getByTestId('drill-yard-exit')).toBeVisible({ timeout: 15_000 });
+  expectNoConsoleErrors(watch);
 });
 
 test('The Drill Yard is a resettable, ledger-free practice claim', async ({ page }, testInfo) => {
@@ -216,8 +252,9 @@ async function hold(page: Page, key: string, ms: number): Promise<void> {
   await page.keyboard.up(key);
 }
 
-async function shot(page: Page, testInfo: TestInfo, name: string): Promise<void> {
+async function shot(page: Page, testInfo: TestInfo, name: string, contractId?: string): Promise<void> {
   await mkdir(ARTIFACT_DIR, { recursive: true });
+  if (contractId) await page.getByTestId(`contract-card-${contractId}`).scrollIntoViewIfNeeded();
   await page.screenshot({ path: path.join(ARTIFACT_DIR, `${testInfo.project.name}-${name}.png`), fullPage: true });
 }
 
