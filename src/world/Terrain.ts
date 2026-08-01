@@ -1616,9 +1616,13 @@ function terrainBankVariantFiles(): string[] {
   }
 }
 
+let terrainSeedCache: [string, number] | undefined;
+
 function terrainSeed(): number {
   if (typeof window === 'undefined') return 0;
-  return normalizeSeed(new URLSearchParams(window.location.search).get('seed')) / 4294967296;
+  const search = window.location.search;
+  if (terrainSeedCache?.[0] !== search) terrainSeedCache = [search, normalizeSeed(new URLSearchParams(search).get('seed')) / 4294967296];
+  return terrainSeedCache[1];
 }
 
 function valueNoise(x: number, z: number): number {
