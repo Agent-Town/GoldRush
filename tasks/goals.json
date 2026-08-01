@@ -72,6 +72,18 @@
               "drainNotes_s1328": "REGISTERED AT DRAIN TIME, NOT AT AUTHOR TIME — this master was queued by the attended commit 8a4de2c1 without a goal leaf (F-1327-4), so scripts/drain-block-check.mjs returned \"? UNKNOWN\" for it; UNKNOWN is a bookkeeping finding, not a clearance, and the authorisation was re-verified at source in tasks/BACKLOG.md (OWNER MORNING RULINGS 2026-08-01) before draining. Path-scoped graft of 17 files off base 0ae711c9; e2e/charter-press-totality.spec.ts was MAIN-MOVED-ONLY (s1326 ddf0187a) and deliberately NOT taken. Ancestry recorded by a -s ours merge so the lane does not read false-ahead. Two drain-side propagation edits (F-1328-2): locked-win.spec.ts and agent-view.spec.ts asserted the old string. Control runs proved main was ALREADY red on contract-briefings (4 failed) and is 16/16 green after."
             },
             {
+              "id": "e1-defeat-fork-herostart-rename",
+              "title": "Defeat fork (C) carve-out 2/2 — stakeMarkers.lossCondition renamed heroStart repo-wide, validator rejects the old name (owner 2026-08-01, BACKLOG:2334)",
+              "taskFile": "lane-herostart-rename.md",
+              "mergeHash": "69984c6a22baadb3943b6b7dbd3a3b77f20e36e5",
+              "status": "shipped",
+              "lane": "lane-d",
+              "review": "reviews/lane-herostart-rename.md",
+              "drainedBy": "s1329",
+              "registeredBy": "s1329",
+              "drainNotes_s1329": "REGISTERED AT DRAIN TIME (F-1327-4 again): queued by 8a4de2c1 without a leaf, so drain-block-check returned \"? UNKNOWN\" at rc=0. Read the WORD, not the code. Authorisation re-verified at source in BACKLOG:2334 before merging, not inherited. PATH-SCOPED: 43 of the lane’s 70 files taken; the 27 under artifacts/ and assets/pilots/ DROPPED per F-1327-2 because they are recorded measurements of past runs (RETENTION LAW). Every red in the gate battery was fingerprint-matched to a control run on clean main in a detached worktree — zero new reds, one new passing test."
+            },
+            {
               "id": "f1328-1-drill-yard-census-debt",
               "title": "F-1328-1 — the Drill Yard is E1s 6th contract but agent-view.spec.ts:266 and 072-era-activation.spec.ts:241 still assert a five-contract census (main RED since f0bf5251, 2026-08-01 08:14)",
               "taskFile": "f1328-1-drill-yard-census-debt.md",
