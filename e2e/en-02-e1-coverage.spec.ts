@@ -405,7 +405,7 @@ test('EN-02 enemy stats reveal once, persist, and hero facts live-read abilities
   await expect.poll(() => ledgerStorage(page), { timeout: 12_000 }).toContain('claim_jumper_stats');
   // The hint is written only when the story card is SHOWN (StoryRuntime.show -> markStoryBeatSeen),
   // so this wait is gated behind the card queue: residual CARD_MS (6000) + GAP_MS (3000) = 9s worst
-  // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1338-1).
+  // case. The 5000ms poll default sits BELOW that floor, which made this a ~50% flake (F-1337-1).
   await expect.poll(() => storyHintCount(page, 'story:ledger-page:claim_jumper_stats'), { timeout: 12_000 }).toBe(1);
 
   await openLedgerDirect(page, 'claim_jumper');
