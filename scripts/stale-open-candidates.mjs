@@ -107,8 +107,15 @@ if (!candidates.length) {
   for (const c of candidates) {
     console.log(`BACKLOG:${c.line}  ${c.ids.join(' / ')}`);
     for (const s of c.shared) {
-      const who = [...new Set(s.closers.flatMap((r) => r.ids))].join(', ');
-      console.log(`    ${s.file} — also cited by ${s.closers.length} closed row(s): ${who}`);
+      // Two DIFFERENT sets, and the old label printed them as one (F-1379-1):
+      // `closers` are closed ROWS, `who` are the F-IDs those rows DECLARE — and one
+      // row can declare several (see c.ids above, e.g. "F-1281-3 / F-1279-2"), so
+      // "1 closed row(s): F-1252-1, F-1252-3, F-1252-2" was correct twice over and
+      // read as an off-by-two. Neither number was ever wrong; the label was.
+      const who = [...new Set(s.closers.flatMap((r) => r.ids))];
+      console.log(
+        `    ${s.file} — also cited by ${s.closers.length} closed row(s), declaring ${who.length} finding(s): ${who.join(', ')}`,
+      );
     }
   }
 }
