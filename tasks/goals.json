@@ -1800,9 +1800,10 @@
         },
         {
           "id": "map-campaign-27",
-          "title": "THE 27-MAP CAMPAIGN — ALL UNIQUE MASKS SCULPTED (32 terrain contracts on main); wiring + landmarks + owner tests remain",
+          "title": "THE 27-MAP CAMPAIGN — BUILD SIDE COMPLETE, RE-MEASURED s1368 (F-1368-1): all 25 sculptable maps wired in the Terrain3dClaimPilot registry (7 of them via deliberate reuse mounts documented at the call site, e0052c6e), all 36 landmark packs populated (196 .glb, zero empty), 2 rows excluded by docs/MAP-CAMPAIGN-LEDGER.md own footnote (The Last Claim = Ark-deck class, The River = Charter Press CP-05). THE ONLY REMAINING COLUMN IS THE OWNER TEST COLUMN AND IT IS 0/25. This leaf is OWNER-GATED in substance though it carries no blockedReason - a fire may not set one, and drain-block-check keys strictly on status===blocked, so this leaf is invisible to --all. Do NOT author a wiring or landmark master against it; there is nothing left to wire.",
           "status": "building",
-          "doc": "docs/MAP-CAMPAIGN-LEDGER.md"
+          "doc": "docs/MAP-CAMPAIGN-LEDGER.md",
+          "note_s1368": "RE-MEASURED AT SOURCE, NOT INHERITED. The prior title said wiring + landmarks + owner tests remain; two of those three nouns were already done and had been since 2026-07-18. Measured this fire: 25/27 ledger rows present as registry keys in src/world/Terrain3dClaimPilot.ts; 36/36 landmark dirs under assets/pilots/map-rebuild-spike/landmarks/ contain at least one .glb (196 total, 0 empty); 8 of 27 rows in docs/MAP-CAMPAIGN-LEDGER.md wired column were false and ALL EIGHT understated (5 read BLOCKED, 3 read dash). The ledger doc was repaired the same commit toward measured fact - transcription repair, not a new decision, no owner action consumed (F-1364-1 precedent). The OWNER VERDICT column was NOT touched: it is his."
         },
         {
           "id": "e8-e10-extras-contracts",
