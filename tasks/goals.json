@@ -60,6 +60,28 @@
               "note_s1174": "Verified at source this fire by reading tasks/DRAFT-e1-hold-the-claim.md, not by inheriting s1173s list."
             },
             {
+              "id": "e1-defeat-fork-survive-copy",
+              "title": "Defeat fork (C) carve-out 1/2 — E1 briefing goals say \"Survive through wave N\" where survive is the truth (owner 2026-08-01: \"keep it as it is for now and switch the word to survive\")",
+              "taskFile": "lane-survive-copy.md",
+              "mergeHash": "06ce6241836c8380b17abe7ff0de7dc3ef343222",
+              "status": "shipped",
+              "lane": "lane-c",
+              "review": "reviews/lane-survive-copy.md",
+              "drainedBy": "s1328",
+              "registeredBy": "s1328",
+              "drainNotes_s1328": "REGISTERED AT DRAIN TIME, NOT AT AUTHOR TIME — this master was queued by the attended commit 8a4de2c1 without a goal leaf (F-1327-4), so scripts/drain-block-check.mjs returned \"? UNKNOWN\" for it; UNKNOWN is a bookkeeping finding, not a clearance, and the authorisation was re-verified at source in tasks/BACKLOG.md (OWNER MORNING RULINGS 2026-08-01) before draining. Path-scoped graft of 17 files off base 0ae711c9; e2e/charter-press-totality.spec.ts was MAIN-MOVED-ONLY (s1326 ddf0187a) and deliberately NOT taken. Ancestry recorded by a -s ours merge so the lane does not read false-ahead. Two drain-side propagation edits (F-1328-2): locked-win.spec.ts and agent-view.spec.ts asserted the old string. Control runs proved main was ALREADY red on contract-briefings (4 failed) and is 16/16 green after."
+            },
+            {
+              "id": "f1328-1-drill-yard-census-debt",
+              "title": "F-1328-1 — the Drill Yard is E1s 6th contract but agent-view.spec.ts:266 and 072-era-activation.spec.ts:241 still assert a five-contract census (main RED since f0bf5251, 2026-08-01 08:14)",
+              "taskFile": "f1328-1-drill-yard-census-debt.md",
+              "status": "authored",
+              "lane": "lane-b",
+              "authoredBy": "s1328",
+              "registeredBy": "s1328",
+              "authorNotes": "FIRE-AUTHORED from measured evidence, not from a spec slice: s1328 ran the two suites and read the failure text. Blast radius measured as 7 red assertions across 3 specs; 4 were cured incidentally by the lane-survive-copy drain (06ce6241), 2 sites remain. NOT QUEUED BY s1328 DELIBERATELY: lane/m4 is 75 commits behind main and lacks 06ce6241, so its contract-briefings adjacent self-check would red for a reason unrelated to the task. tasks/janitor/s1328-refresh-lane-b.req was filed instead. The runner processes janitor requests AFTER the dispatch loop in the same cycle, so queueing the master together with the request risks the exact F-1324-2 hazard the runner comment documents (a task dispatched onto a tree where its subject commit is absent). NEXT FIRE: verify the refresh landed (a janitor-*-s1328-refresh-lane-b.req entry in tasks/done/ AND git merge-base --is-ancestor 06ce6241 lane/m4), THEN cp the master into tasks/queue/lane-b/."
+            },
+            {
               "id": "e1-trail-guide-plain-boot-proof",
               "title": "Prove the teaching path in a plain boot (Trail Guide + greenhorn offer), F-E1-2. OWNER GATE LIFTED 2026-07-29 — promoted from DRAFT and queued lane-b.",
               "taskFile": "lane-b-trail-guide-plain-boot-seam-approach.md",
