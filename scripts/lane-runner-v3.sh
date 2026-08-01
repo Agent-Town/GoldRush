@@ -159,7 +159,10 @@ while true; do
   # silently vanished from the owner's ALL-TIME dashboard figures.
   # DO NOT RESTORE IT. Disk pressure is F-1027-2 on the owner's desk ("tails" or "gzip" —
   # compaction of TRACKED files is lawful; deletion of untracked history is not).
-  # NOTE: line 116's .git/*.stale* sweep is deliberately LEFT ALONE — that is git's own scratch,
-  # not factory history.
+  # NOTE: the .git/*.stale* + tmp_obj_* sweep ABOVE (the find immediately preceding this
+  # epitaph) is deliberately LEFT ALONE — that is git's own scratch, not factory history.
+  # s1345/F-1276-3: this note used to cite that sweep by LINE NUMBER. The number rotted three
+  # times (116 -> 137 -> 152) because law-pointer-guard's denominator is the .md law surfaces,
+  # and a pointer living inside a .sh is outside it. Cited by CONTENT now, so it cannot rot.
   sleep 15
 done
