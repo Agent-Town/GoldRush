@@ -120,19 +120,34 @@ while true; do
   for req in "$ROOT/tasks/janitor"/*.req; do
     [ -e "$req" ] || continue
     op=$(head -1 "$req"); arg=$(sed -n 2p "$req")
+    # F-1324-2 (s1325): consume the request ONLY when the op actually ran. Before this,
+    # the mv below was unconditional, so a skipped refresh (lane BUSY) was filed into
+    # tasks/done/ exactly like a success — s1323 read that done/ entry, believed lane-c
+    # had been refreshed, and s1324 came within one `cp` of dispatching a task onto a tree
+    # where its subject commit was ABSENT. A request queue that consumes work on failure
+    # silently converts "not done yet" into "done".
+    consume=1
     case "$op" in
       refresh-lane)
         wt="$ROOT/worktrees/$arg"
-        if [ -d "$wt" ] && [ ! -f "$ROOT/tasks/running/$arg.pid" ]; then
-          ( cd "$wt" && git reset --hard main >/dev/null 2>&1 && git clean -fd >/dev/null 2>&1 ) \
-            && echo "[janitor] refreshed lane $arg" || echo "[janitor] refresh FAILED for $arg"
-        else echo "[janitor] skip refresh $arg (busy or missing)"; fi ;;
+        if [ ! -d "$wt" ]; then
+          # Never succeeds however often retried — consume it rather than spin every cycle.
+          echo "[janitor] refresh IMPOSSIBLE for $arg (no worktree) — consuming request"
+        elif [ -f "$ROOT/tasks/running/$arg.pid" ]; then
+          echo "[janitor] skip refresh $arg (BUSY) — request KEPT for a later cycle"; consume=0
+        elif ( cd "$wt" && git reset --hard main >/dev/null 2>&1 && git clean -fd >/dev/null 2>&1 ); then
+          echo "[janitor] refreshed lane $arg"
+        else
+          echo "[janitor] refresh FAILED for $arg — request KEPT for a later cycle"; consume=0
+        fi ;;
       clean-tests)
         rm -rf "$ROOT/test-results" "$ROOT/playwright-report" 2>/dev/null
         echo "[janitor] cleaned test artifacts" ;;
       *) echo "[janitor] unknown op in $(basename "$req") — ignored" ;;
     esac
-    mv "$req" "$ROOT/tasks/done/janitor-$(date +%s)-$(basename "$req")" 2>/dev/null
+    if [ "$consume" = 1 ]; then
+      mv "$req" "$ROOT/tasks/done/janitor-$(date +%s)-$(basename "$req")" 2>/dev/null
+    fi
   done
   find "$ROOT/.git" -maxdepth 2 \( -name '*.stale*' -o -name 'tmp_obj_*' \) -type f -delete 2>/dev/null
   # s1033 / F-1028-3: the retention-window prune that stood here is REMOVED, permanently.
