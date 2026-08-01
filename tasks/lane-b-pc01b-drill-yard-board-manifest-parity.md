@@ -18,9 +18,20 @@ CODEX: model=gpt-5.6-sol effort=high
 2. `specs/practice-claim/README.md` line 4 — the one ratified sentence that decides the fork:
    *"A standing card on the tavern board (always available once the welcome has run)"*.
 3. `src/town/TownScene.ts:1937-1980` — the render-time filter your predecessor added (`:1941`).
-4. `e2e/board-era-chapters.spec.ts:85-92` (`expectChapter`) — asserts `rendered == epoch.contracts.length`.
-5. `e2e/en-02-e1-coverage.spec.ts:323-338` — asserts board-open discovers every `CONTRACT_ENTRY_IDS` id.
-6. `e2e/town-t3-board.spec.ts:194` and `:335`, `e2e/board-gating-and-profiles.spec.ts:63` —
+4. `e2e/board-era-chapters.spec.ts:85-92` — the `expectChapter` helper shared by
+   ("a fresh profile opens only the Frontier chapter and keeps Ride Together and the Claim Ledger"),
+   ("the era door exposes chapters through the reached frontier and nothing beyond it") and
+   ("debug opens every chapter without removing any contract launch surface"); it asserts
+   `rendered == epoch.contracts.length`.
+5. `e2e/en-02-e1-coverage.spec.ts:323-338`
+   ("EN-02 town board and bark discover contracts and townsfolk")
+   — asserts board-open discovers every `CONTRACT_ENTRY_IDS` id.
+6. `e2e/town-t3-board.spec.ts:194`
+   ("contract board renders manifest rows, locks, conditions, and per-contract bests")
+   and `e2e/town-t3-board.spec.ts:335`
+   ("contract board swipes and keeps tap targets usable at 390px"), plus
+   `e2e/board-gating-and-profiles.spec.ts:63`
+   ("the board hides future epochs and keeps reached-era contract gates") —
    the three hard-coded `toHaveCount(5)` assertions on the E1 chapter. **These currently PASS only
    because the filter hides the new card from them.** Whatever you do, they must end up asserting a
    number they actually mean.
