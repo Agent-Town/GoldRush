@@ -31,6 +31,47 @@
       }
     },
     {
+      "id": "e1-drill-yard",
+      "name": "The Drill Yard",
+      "tileParams": {
+        "tileId": "frontier-river-claim",
+        "biome": "river-claim",
+        "size": 48,
+        "river": true,
+        "ford": true,
+        "waterSources": [],
+        "lanes": {
+          "spawnEdges": ["north", "south", "east", "west"],
+          "territoryRingBiasWaves": 0,
+          "territoryRingLaneBias": 0
+        }
+      },
+      "twist": { "secureWave": 0 },
+      "practice": {
+        "scheduledWaves": false,
+        "scores": false,
+        "metaProgress": false,
+        "runHistory": false,
+        "standings": false,
+        "tapes": false,
+        "goldGrant": 100,
+        "bellWaveSize": 8,
+        "dummyRespawnSeconds": 1.5,
+        "buildables": ["sentry_beacon", "palisade", "sluice", "stockpile", "turret", "assay_office", "lantern_post"]
+      },
+      "boardRow": {
+        "name": "The Drill Yard",
+        "ledgerBlurb": "The county lends the gold; the straw men lend their patience.",
+        "tags": ["trail"],
+        "unlock": "default"
+      },
+      "briefing": {
+        "goals": ["Try every Frontier building.", "Practice on the straw men and rolling logs."],
+        "rules": ["Pull the assay-tent lever to top up practice gold.", "Ring the Drill Bell for one small wave.", "Nothing in the yard enters the county ledger."],
+        "geographyLine": "A borrowed corner of the river claim at the edge of town."
+      }
+    },
+    {
       "id": "e1-dry-gulch",
       "name": "The Dry Gulch",
       "tileParams": {

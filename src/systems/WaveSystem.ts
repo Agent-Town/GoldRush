@@ -64,6 +64,7 @@ export type WaveDiagnostics = {
   edge: CompassEdge | null;
   budget: number;
   lastPulseAt: number;
+  manual: { active: boolean; completed: number; enemiesRemaining: number };
   escort: (OreCartDiagnostics & { enabled: true; objectiveLost: boolean; arrived: number; required: number; payout: number }) | { enabled: false };
 };
 
@@ -130,6 +131,8 @@ export class WaveSystem {
   private escortArrived = 0;
   private escortLost = false;
   private escortSettled = false;
+  private readonly manualEnemyIds = new Set<number>();
+  private manualWavesCompleted = 0;
 
   constructor(
     private readonly enemies: EnemyPool,
@@ -194,6 +197,7 @@ export class WaveSystem {
       edge: this.edge,
       budget: this.budget,
       lastPulseAt: this.lastPulseAt,
+      manual: { active: this.manualEnemyIds.size > 0, completed: this.manualWavesCompleted, enemiesRemaining: this.manualEnemyIds.size },
       escort: this.escortDiagnostics,
     };
   }
@@ -237,8 +241,20 @@ export class WaveSystem {
   update(atSim: number): void {
     this.updateEscort(atSim);
     this.currentAtSim = atSim;
+    if (this.manualEnemyIds.size > 0) {
+      for (const id of this.manualEnemyIds) {
+        if (!this.enemies.all[id]?.isAlive) this.manualEnemyIds.delete(id);
+      }
+      if (this.manualEnemyIds.size === 0) {
+        this.manualWavesCompleted += 1;
+        this.waveState = 'cleared';
+        this.announce('DRILL WAVE CLEAR - ring again when ready.', atSim, this.wave);
+      } else {
+        this.waveState = 'active';
+      }
+    }
     if (this.scheduledDisabled()) {
-      this.waveState = 'quiet';
+      if (this.waveState !== 'active' && this.waveState !== 'cleared') this.waveState = 'quiet';
       return;
     }
 
@@ -292,7 +308,31 @@ export class WaveSystem {
     this.escortArrived = 0;
     this.escortLost = false;
     this.escortSettled = false;
+    this.manualEnemyIds.clear();
+    this.manualWavesCompleted = 0;
     this.escortCart?.reset();
+  }
+
+  triggerManualWave(count: number): boolean {
+    if (isSpawnDisabled() || this.manualEnemyIds.size > 0) return false;
+    const total = THREE.MathUtils.clamp(Math.floor(count), 6, 10);
+    const before = new Set(this.enemies.all.filter((enemy) => enemy.isAlive).map((enemy) => enemy.id));
+    this.wave += 1;
+    this.pulse = 1;
+    this.budget = total;
+    this.lastPulseAt = this.currentAtSim;
+    for (let i = 0; i < total; i += 1) {
+      const edge = this.spawnEdges[i % Math.max(1, this.spawnEdges.length)] ?? 'west';
+      this.edge = edge;
+      this.spawnAt(edge, i, this.wave, total, false, false, {}, true, false);
+    }
+    for (const enemy of this.enemies.all) {
+      if (enemy.isAlive && !before.has(enemy.id)) this.manualEnemyIds.add(enemy.id);
+    }
+    if (this.manualEnemyIds.size === 0) return false;
+    this.waveState = 'active';
+    this.announce('DRILL BELL - basic jumpers on the yard!', this.currentAtSim, this.wave);
+    return true;
   }
 
   private updateEscort(atSim: number): void {

@@ -20,7 +20,7 @@ import { install as installAssayBench } from '../crafting/AssayBench';
 import { Balance } from '../game/Balance';
 import { BARON_MEDAL_BLURB, hasBaronMedal, hasRocketCartCaptured } from '../game/Medals';
 import { META_PROGRESS_KEY, migrateMetaProgress, type MetaProgress } from '../game/MetaProgress';
-import { FIRST_CLAIM_DONE_KEY, activeProfileName } from '../game/ProfileStorage';
+import { FIRST_CLAIM_DONE_KEY, TOWN_WELCOME_SEEN_KEY, activeProfileName } from '../game/ProfileStorage';
 import { clearRunSuspend, readRunSuspend, type RunSuspendEnvelope } from '../game/RunSuspend';
 import { loadScores, type ScoreRecord } from '../game/Scoreboard';
 import {
@@ -1937,7 +1937,10 @@ export class TownScene {
     const pageIndex = clampBoardPage(this.boardPageIndex, chapters.length);
     this.boardPageIndex = pageIndex;
     const chapter = chapters[pageIndex];
-    for (const contract of chapter?.contracts ?? []) discoverLedgerContract(contract.id);
+    const contracts = (chapter?.contracts ?? []).filter(
+      (contract) => contract.id !== 'e1-drill-yard' || localStorage.getItem(TOWN_WELCOME_SEEN_KEY) === '1',
+    );
+    for (const contract of contracts) discoverLedgerContract(contract.id);
     const boardEpochId = chapter?.id ?? activeEpoch.id;
     const accent = townEraAccent(chapter?.order ?? activeEpoch.order);
     const host = this.visibleActors.find((actor) => actor.id === 'tavernkeeper');
@@ -1970,10 +1973,10 @@ export class TownScene {
                       <p class="town-ui__board-eyebrow">Chapter ${chapter.order}</p>
                       <h3>${escapeHtml(chapter.displayName)}</h3>
                     </div>
-                    <span>${chapter.contracts.length} contract${chapter.contracts.length === 1 ? '' : 's'}</span>
+                    <span>${contracts.length} contract${contracts.length === 1 ? '' : 's'}</span>
                   </header>
                   <div class="town-ui__chapter-contracts">
-                    ${chapter.contracts.map((contract, index) => this.renderContractCard(contract, scores, index, chapter.contracts.length)).join('')}
+                    ${contracts.map((contract, index) => this.renderContractCard(contract, scores, index, contracts.length)).join('')}
                   </div>
                 </section>`
               : ''

@@ -1332,7 +1332,11 @@ export class EnemyPool {
     this.syncObject.rotation.z = motion.leanRad;
     this.syncObject.scale.setScalar(this.renderScale(enemy));
     this.syncObject.updateMatrix();
-    this.baseMatrix.copy(enemy.isAlive && enemy.eliteKind !== 'railcar' && !isMothSwarmEnemy(enemy) ? this.syncObject.matrix : this.hiddenMatrix);
+    this.baseMatrix.copy(
+      enemy.isAlive && enemy.eliteKind !== 'railcar' && !isMothSwarmEnemy(enemy) && !enemy.variantId?.startsWith('drill_')
+        ? this.syncObject.matrix
+        : this.hiddenMatrix,
+    );
 
     for (let i = 0; i < this.renderParts.length; i += 1) {
       const part = this.renderParts[i];
@@ -1596,7 +1600,7 @@ export class EnemyPool {
     const litVisible = lightFactor > 0;
     const baronVisible = enemy.isAlive && litVisible && enemy.eliteKind === 'baron' && this.baronSprites.isLoaded;
     const variantPresentation = this.variantSpritePresentations.find(({ variantId }) => variantId === enemy.variantId);
-    const normalVisible = enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !variantPresentation && !isMothSwarmEnemy(enemy);
+    const normalVisible = enemy.isAlive && litVisible && enemy.eliteKind !== 'railcar' && !enemy.isThief && !baronVisible && !variantPresentation && !isMothSwarmEnemy(enemy) && !enemy.variantId?.startsWith('drill_');
     const thiefVisible = enemy.isAlive && litVisible && enemy.isThief && !variantPresentation;
     // ponytail: batch fades draw every live enemy twice; skip them for mid/large packs unless sprites get instanced.
     const showFade = this.active <= 32 && !fullDark;
