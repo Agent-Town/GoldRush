@@ -60,7 +60,7 @@ for (const contract of CONTRACTS.filter(({ id }) => MOBILE_SPOTS.has(id))) {
 }
 
 test.afterAll(async () => {
-  expect(CONTRACTS).toHaveLength(41);
+  expect(CONTRACTS).toHaveLength(42);
   await mkdir(path.dirname(ARTIFACT), { recursive: true });
   const ordered = CONTRACTS.map(({ id }) => rows.get(id)!);
   const closed = ['MQ-1', 'MQ-2', 'MQ-3', 'Brightness'].filter((_, index) =>

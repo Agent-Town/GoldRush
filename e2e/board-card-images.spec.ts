@@ -34,7 +34,7 @@ test('all contract chapters use their own board-card URL', async ({ page }) => {
   await page.getByTestId('town-open-board').click();
 
   await expect(page.getByTestId('contract-chapter-nav').locator('[data-contract-page]')).toHaveCount(EPOCHS.length);
-  expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(41);
+  expect(EPOCHS.flatMap((epoch) => epoch.contracts)).toHaveLength(42);
   const claimUrl = await cardImageUrl(page, CLAIM_ID);
 
   for (const epoch of EPOCHS) {
