@@ -45,7 +45,7 @@ All playwright runs `--workers=1` per §3.1. The merge was **clean — zero conf
 | `drill-yard` + `town-t3-board` (mobile-chrome 390px) | **8 passed (1.2m)** |
 | Wave battery, merged tree | **8 passed / 1 failed (1.4m)** |
 | Wave battery, **clean-main control** | **8 passed / 1 failed (1.4m)** — identical |
-| `test:node-guards` (209 tests) | **206 pass / 3 fail** — all three pre-existing, see F-1323-2 |
+| `test:node-guards` (209 tests) | **206 pass / 3 fail** — see F-1323-2. ⚠️ s1324: **not** pre-existing; caused by this merge, and whole-suite collection is at 0 tests (was 2462) |
 | Console/page errors | zero, asserted in `drill-yard.spec` on both projects |
 | Screenshots | `artifacts/pc-01-drill-yard/`, `artifacts/pc-01b-drill-yard-parity/` — incl. plain-boot cards, desktop + 390px |
 
@@ -96,7 +96,7 @@ seeds either, so the new branch cannot decay into a silent skip that hides genui
 | give `e1-drill-yard` a seed set | **RED** ✓ `must NOT carry a bench seed set` |
 | restore | byte-exact, sha256 `868465be2a4b5865…`, GREEN rc=0 |
 
-### F-1323-2 — three node-guard reds are pre-existing on main; s1322's "209/209 fail 0" does not hold. 🔺 **OPEN.**
+### F-1323-2 — three node-guard reds on main; s1322's "209/209 fail 0" does not hold. 🔺 **OPEN.** ⚠️ **The "pre-existing" half of this finding was FALSIFIED by s1324 — see the correction block at the end of this section; the red is merge-caused and the blast radius is the whole e2e suite.**
 
 The runner reported *"four unrelated collection/law-pointer failures"*; s1322 §H(4) rightly said not to inherit
 that number — but its own replacement figure is also wrong, and I am not passing it on unmeasured.
@@ -112,6 +112,39 @@ worktree at clean main (`5f81a36d`); the rig is untouched by this merge and was 
 reading all six E1 contracts: the Drill Yard has `goals: 2`. Not the cause.
 
 Left open deliberately: it is main's red, not this slice's, and diagnosing a fuzz rig is outside this drain.
+
+> ### ⚠️ CORRECTION — s1324, 2026-08-01. The attribution above is WRONG: this red is **caused by this merge**.
+>
+> The paragraph beginning *"Attribution is a control, not an argument"* does not hold. s1324 re-ran that exact
+> control — `git checkout -f 5f81a36d` in a clean detached worktree, rig unpatched — and the crash **does not
+> reproduce there**:
+>
+> | tree | `npx playwright test --list --workers=1` | exit |
+> |---|---|---|
+> | `5f81a36d` (this drain's own base) | `Total: 2462 tests in 348 files` | **0** |
+> | `main` after `7e93be3d` | `Total: 0 tests in 0 files` | **1** |
+>
+> The control tree is provably pre-merge: its collected mutant list contains **no `e1-drill-yard` mutants at
+> all**, while main's contains mutant 52 `[e1-drill-yard]`.
+>
+> **Mechanism.** The rig's latent composition bug is old (`2ce1a2ca`, 2026-07-17) — that part was right — but
+> the **red** is not. Template selection is `templates[Math.floor(rng() * templates.length)]`, so adding
+> `e1-drill-yard` to `epoch-1-frontier` (at `f0bf5251`, merged inside `7e93be3d`) **re-rolled the entire seeded
+> mutant stream**. Signature: mutant 12 is `[e1-night-shift]` at the control and `[e1-dry-gulch]` on main. The
+> new stream composes `illegal:missing-briefing` then `blank:briefing.goal` at index 41 and throws. **An old
+> latent defect plus a merge that changes a contract count is a NEW red, and "the rig is untouched by this
+> merge" does not exonerate the merge** — nothing in this rig's behaviour depends only on the rig's own bytes.
+>
+> **Severity is also understated.** It is not "3 of 209 node-guard tests". Plain playwright collection crashes
+> too, so **both CP-02 specs contribute zero tests to every run and whole-suite collection on main is at zero,
+> down from 2462.** Targeted runs are unaffected (`safari-swap` still lists 4 tests), which is exactly why every
+> drain gate — which always names its specs — kept passing while the suite went dark.
+>
+> Two further notes for whoever reads this next: the s1323 master's blanket ban on a `return 'noop'` guard
+> clause is too broad (three sibling arms in that same menu already use that idiom); and s1324 instrumented the
+> full 200-mutant stream and found **exactly one** crash, so one arm fix clears it. Re-authored as **F-1324-1**
+> (`tasks/lane-c-f1324-1-charter-fuzz-composition-totality.md`), which asks for **totality over the mutation
+> space** rather than a fix to index 41 — because any future contract addition can re-roll the stream again.
 
 ### F-1323-3 — the feared wave regression does not exist, and one wave red is main's. ✅ **CLOSES F-1321-4.**
 
