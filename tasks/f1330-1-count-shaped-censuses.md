@@ -4,8 +4,8 @@
 Role: implementer. Workdir: `worktrees/lane-c` (slot lane-c, branch `lane/e2-arsenal`).
 
 ## READ FIRST (paths, in this order)
-- `e2e/board-card-images.spec.ts:1-40` — `EPOCHS` is built at `:6` from `listEpochs().map(({ id }) => loadEpoch(id))`, i.e. from the LIVE data, and `:37` asserts the flattened length against a literal.
-- `e2e/map-census.spec.ts:25` (`CONTRACTS` built from `listEpochs()/loadEpoch`) and `:63` (the `afterAll` assertion).
+- `e2e/board-card-images.spec.ts:1-40` ("all contract chapters use their own board-card URL") — `EPOCHS` is built at `:6` from `const EPOCHS = listEpochs().map(({ id }) => loadEpoch(id));`, i.e. from the LIVE data, and `:37` asserts the flattened length against a literal.
+- `e2e/map-census.spec.ts:25` (`const CONTRACTS = listEpochs().flatMap(({ id: epochId }) => {`) and `:63` (`expect(CONTRACTS).toHaveLength(41);` — a `test.afterAll` hook, so there is **no test title to quote**; the source line is the durable anchor).
 - `src/meta/ContractFamilies.ts` — `listEpochs()` / `loadEpoch()`, the source both specs read.
 - `tasks/goals.json` leaf `f1328-1-drill-yard-census-debt` — **BLOCKED, and it stays blocked. This task is NOT that task** (see WHY).
 
@@ -37,8 +37,8 @@ Both remaining sites compare a **live-derived** array against the literal `41`, 
 3. **Premise check, AFTER any reset:** `node -e` count the contracts in `assets/contracts/*/contracts.json`. It must total **42**. If it totals 41, this lane predates `f0bf5251` and the task is **not applicable here — STOP and report the number you got.** (Changing the literal to 42 on a 41-contract tree would manufacture a red.)
 
 ## SCOPE (numbered, each testable)
-1. `e2e/board-card-images.spec.ts:37` — `toHaveLength(41)` → `toHaveLength(42)`.
-2. `e2e/map-census.spec.ts:63` — `toHaveLength(41)` → `toHaveLength(42)`.
+1. `e2e/board-card-images.spec.ts:37` ("all contract chapters use their own board-card URL") — `toHaveLength(41)` → `toHaveLength(42)`.
+2. `e2e/map-census.spec.ts:63` (`expect(CONTRACTS).toHaveLength(41);`, inside `test.afterAll`) — `toHaveLength(41)` → `toHaveLength(42)`.
 3. Nothing else. If you believe a third count-shaped census exists, **report it — do not fix it** (the grep above is the measured denominator; a disagreement is a finding worth more than a silent edit).
 
 ## TOUCH-ONLY
