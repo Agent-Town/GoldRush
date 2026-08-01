@@ -1,0 +1,10 @@
+CODEX: model=gpt-5.6-sol effort=xhigh
+# lane-authored-bundle-validation — no contract enters the game unvalidated
+ROLE: lane implementer. WORKDIR: this lane worktree. One task, firewalled.
+WHY (census E5-E6 loader finding, owner-directed 2026-08-02): authored bundles BYPASS descriptor validation entirely (ContractFamilies.ts:869-873 — parseContractDescriptor gates only the charter-press editor path), and census-found rot proves the cost: untyped passthrough blocks, dead keys, phantom objectives, drifted boss offsets. The press era makes this the single most load-bearing safety gap: generator proposes, VALIDATOR disposes — but only if the validator RUNS.
+READ-FIRST: census §E5-E6 (the loader paragraph + inert-data lists) · ContractFamilies.ts:869-905 (both paths) · the validator's existing checks (:1654-1767 cited by census as proto-assayer) · every census inert-data field (they become either validated types or rejections — coordinate with lane-dead-fields-sweep if it landed first).
+PRE-FLIGHT (LANE-SAFETY invariant): dirty tracked blobs must be reachable in git, else STOP.
+SCOPE: 1. ALL bundles (authored + press) run the descriptor validator at load; violations THROW at boot in dev/test, fail assay in press flow. 2. Every field the fleet actually uses becomes TYPED (kill the :751 cast); census inert-but-planned fields (E7/E8 zones etc.) get typed as declared-inert with engineDependencies REQUIRED (the AP-11 mandate, enforced here). 3. The full 41-contract fleet passes the strict validator (fix data where it does not — each fix listed; NO behavior changes). 4. test-the-test: a planted invalid bundle fails loudly.
+TOUCH-ONLY: ContractFamilies loader/validator/types · contract data corrections the validator demands · specs. NO: mechanics, consumers, copy.
+SELF-CHECK: FULL suite battery green both projects (this touches the loader — everything is adjacent) · release suite green · tsc + build.
+READY-FOR-GATES + report: validation-coverage statement + the per-contract fix list.
