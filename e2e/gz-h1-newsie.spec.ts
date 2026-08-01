@@ -111,7 +111,13 @@ test('newsie barks latest headline and opens the Claim Herald', async ({ page },
   expect(newsie).toMatchObject({ visible: true, anchor: 'tavern', assetSlot: 'char.town.youngster_a' });
 
   await approachNewsie(page);
-  await expect(page.getByTestId('town-bark-speaker')).toHaveText('Pip Quick');
+  // 'Pip Quick' was the last stale literal of that name in the repo (s1335). The
+  // newsie is CANON as Chen Mei — lore/characters.md:56, owner-ruled 2026-07-10
+  // ("not Pip, not Juniper") — and the runtime agrees at src/town/townsfolk.ts:194,
+  // which is what this testid renders (TownScene.ts:1492 prints definition.name).
+  // The mismatch aborted this test at this line for 21 days, leaving :115–:125
+  // unexecuted, including the ONLY call to expectNoInternalHeraldText. See F-1185-1.
+  await expect(page.getByTestId('town-bark-speaker')).toHaveText('Chen Mei');
   await expect(page.getByTestId('town-bark-text')).toContainText(`EXTRA! ${fixtureFeed[0].headline}`);
   await shot(page, testInfo, 'newsie-plaza');
 
