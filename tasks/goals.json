@@ -319,6 +319,20 @@
               "authorNotes": "Spawned by the f1316-1 drain (reviews/f1316-1-float-text-legibility.md, F-1318-1). MEASURED at the drain, not inferred: logs/session-scratch/s1318-floor-headroom-probe.mjs and s1318-real-copy-probe.mjs replicate the shipped fit loop over the real producer output. NOTE the ledger row carries a CORRECTION by its own author — the first probe grew a single string (tier II) and reported \"two characters of headroom\"; enumerating the real population (4 buildables x tiers 2-3, tier 3 live since bt-02b) shows the worst case is the tier-III stockpile sentence sitting ON the floor. Nothing is broken on screen today and the master says so; the deliverable is the alarm plus a legible degradation, and BOTH manufactured REDs are pre-declared acceptance conditions because every sentence fits today, which means a wrongly-written guard is green at birth (the f1297-2 lesson). Copy changes are firewalled OUT: shortening the sentences is an owner cure on the desk (F-1316-1 / F-1318-2).",
               "mergeHash": "5d5929e4a712973b0cdc0a05a2a7f622f554f35e",
               "review": "reviews/f1318-1-float-fit-class-wide.md"
+            },
+            {
+              "id": "pc-01-drill-yard",
+              "title": "PC-01 The Drill Yard: a standing stakes-free practice claim on the tavern board (county-lent practice gold, all E1 buildables, straw targets, drill bell, nothing persists). Implemented on lane/m4 f0bf5251; REJECTED at drain s1321 because it lands a 6th E1 contract that the board refuses to render (F-1321-1).",
+              "taskFile": "lane-drill-yard.md",
+              "status": "stopped",
+              "reason": "Attended-authored and queued 2026-08-01T07:22:50 WITHOUT a goal leaf (F-1321-2, Goal Registration Law) — this leaf is s1321 repairing that retroactively. The run itself completed READY-FOR-GATES and its own spec is strong (drill-yard.spec desktop 17.4s / mobile 17.3s green, tsc clean, build green, 14 storage keys asserted byte-equal on exit AND re-entry, standings requests 0). DRAIN REJECTED s1321: the slice adds a 6th E1 contract to the manifest while TownScene.ts:1941 filters its card out of the rendered board pre-welcome, reddening board-era-chapters.spec.ts:98/:125/:146 (Expected 6, Received 5) and en-02-e1-coverage.spec.ts:323 (ledger never discovers contract_e1_drill_yard). Attribution is a guarantee not a sample: main has 5 E1 contracts and renders 5. Work is SAFE on lane/m4; main restored byte-clean. Corrective queued to lane-b as pc-01b."
+            },
+            {
+              "id": "pc-01b-drill-yard-board-manifest-parity",
+              "title": "PC-01b: make the E1 contract list identical everywhere it is consumed (board render, count text, chapter nav, ledger discovery), fix the 4 reds honestly, and prove the Drill Yard card reaches a player in a PLAIN boot (no ?debug) — Mistake #10, release content.",
+              "taskFile": "lane-b-pc01b-drill-yard-board-manifest-parity.md",
+              "status": "queued",
+              "reason": "Authored s1321 from its own drain rejection (reviews/pc-01-drill-yard.md, F-1321-1). States the fork explicitly rather than guessing: (a) no gate, card always on the board (RECOMMENDED — removes the divergence rather than relocating it, and matches the ratified sentence emphasis on \"standing\"/\"always available\"), or (b) gate at the MANIFEST so every consumer sees one list. Either way the three hard-coded toHaveCount(5) assertions must become numbers the specs actually mean — they pass today ONLY because the filter hides the new card from them. Explicitly forbids the F-1319-2 failure (loosening a guard to pass). Pre-flight is build-on-predecessor (requires f0bf5251 to be an ancestor) rather than clean-vs-main, because lane/m4 is intentionally ahead — the F-1298-4/F-1320-2 shape."
             }
           ]
         },
