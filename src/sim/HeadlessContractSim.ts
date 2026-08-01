@@ -31,7 +31,7 @@ import { WaveSystem } from '../systems/WaveSystem';
 import * as Terrain from '../world/Terrain';
 
 const STEP_SECONDS = 1 / 30;
-const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim']);
+const SUPPORTED_CONTRACTS = new Set(['e1-dry-gulch', 'the-claim', 'e1-night-shift']);
 
 export type GrSimOutcome = {
   secured: boolean;
@@ -156,6 +156,13 @@ export class HeadlessContractSim {
       this.prospector.position,
       () => this.waves?.diagnostics.wave ?? 0,
     );
+    for (const fixture of this.manifest.tileParams.prePlacedBuildables ?? []) {
+      this.build.placeFree(fixture.id, fixture, fixture.rotationSteps ?? 0, {
+        wrecked: fixture.wrecked,
+        repairCost: fixture.relightCost,
+        preplaced: true,
+      });
+    }
     for (const holding of this.stockpileHoldings) this.targeting.registerGoldHolding(holding);
 
     this.waves = new WaveSystem(
