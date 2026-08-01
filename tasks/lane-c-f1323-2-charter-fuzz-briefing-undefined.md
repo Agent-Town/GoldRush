@@ -9,7 +9,7 @@
 1. `e2e/charter-press.rig.ts` — the rig. Line **70** is the failing site; `charterMutants()` at `:35` builds the mutant stream.
 2. `src/charter/CharterSchema.ts:45-62` — `importContract()`, which is what produces `charter.contract`.
 3. `src/meta/ContractFamilies.ts:870` — `listContracts()`, the source of the templates array.
-4. `e2e/cp02-charter-boot.spec.ts:1-18` — the caller. Note `charterMutants(E1, 200)` runs at **module scope**, i.e. at collection time.
+4. `e2e/cp02-charter-boot.spec.ts` — the caller. Read its **module-scope prologue**: the `const E1 = listContracts('epoch-1-frontier')` binding and the `for (const mutant of charterMutants(E1, FUZZ_COUNT))` loop above the first `test(...)`. That loop runs at **collection time**, which is why a node collection guard trips it and a normal playwright run does not. (Cited by symbol, not by line: there is no test title at those lines, and the coordinate would decay.)
 5. `scripts/whole-suite-collection.test.mjs:33` — the guard that reds.
 6. `reviews/pc-01b-drill-yard-parity.md` § F-1323-2 — the measurement this task exists to act on.
 
