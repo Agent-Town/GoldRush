@@ -36,6 +36,7 @@ export class Vfx {
     z: number;
     y: number;
     terrainY: number;
+    renderedText: string;
     renderedWidthPx: number;
     canvasWidthPx: number;
     fontPx: number;
@@ -185,7 +186,7 @@ function drawTextTexture(
   context: CanvasRenderingContext2D,
   text: string,
   color: string,
-): { renderedWidthPx: number; canvasWidthPx: number; fontPx: number } {
+): { renderedText: string; renderedWidthPx: number; canvasWidthPx: number; fontPx: number } {
   context.font = `700 ${FLOAT_TEXT_BASE_FONT_PX}px Georgia, serif`;
   const baseWidth = context.measureText(text).width;
   canvas.width = Math.min(
@@ -217,7 +218,7 @@ function drawTextTexture(
   context.strokeText(renderedText, canvas.width / 2, canvas.height / 2);
   context.fillStyle = color;
   context.fillText(renderedText, canvas.width / 2, canvas.height / 2);
-  return { renderedWidthPx, canvasWidthPx: canvas.width, fontPx };
+  return { renderedText, renderedWidthPx, canvasWidthPx: canvas.width, fontPx };
 }
 
 function toCssColor(colorHex: string | number): string {

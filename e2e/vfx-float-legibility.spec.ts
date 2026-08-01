@@ -56,3 +56,22 @@ test('every upgrade and a reused short float report legible rendered bounds', as
   expect(webGlWarnings).toEqual([]);
   expectNoConsoleErrors(errors, testInfo.project.name);
 });
+
+test('floor-bound floats truncate with an ellipsis while fitting text stays unchanged', async ({ page }, testInfo) => {
+  const errors = watchErrors(page);
+  await page.goto('/?debug=1');
+  await page.waitForFunction(() => Boolean(window.__GR_TEST__));
+
+  const [overflow, fitting] = await page.evaluate(() => {
+    const test = window.__GR_TEST__!;
+    return [test.emitFloatText('W'.repeat(200)), test.emitFloatText('Fits')];
+  });
+
+  expect(overflow.fontPx).toBe(32);
+  expect(overflow.renderedText).not.toBe(overflow.text);
+  expect(overflow.renderedText.endsWith('…')).toBe(true);
+  expect(overflow.renderedWidthPx).toBeLessThanOrEqual(overflow.canvasWidthPx - 20);
+  expect(fitting.renderedText).toBe(fitting.text);
+  expect(fitting.renderedText).not.toContain('…');
+  expectNoConsoleErrors(errors, testInfo.project.name);
+});
