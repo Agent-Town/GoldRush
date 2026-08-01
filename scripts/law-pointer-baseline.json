@@ -18,6 +18,18 @@
       "fingerprint": "514fb8d7b116",
       "excerpt": "# It was: find logs -name 'fire-*.log' -mtime +14 -delete 2>/dev/null"
     },
+    "CLAUDE.md -> lane-runner-v2.sh:76": {
+      "target": "scripts/lane-runner-v2.sh",
+      "line": 76,
+      "fingerprint": "48544d0754ff",
+      "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
+    },
+    "CLAUDE.md -> lane-runner-v3.sh:152": {
+      "target": "scripts/lane-runner-v3.sh",
+      "line": 152,
+      "fingerprint": "48544d0754ff",
+      "excerpt": "find \"$ROOT/.git\" -maxdepth 2 \\( -name '*.stale*' -o -name 'tmp_obj_*' \\) -type f -delete 2>/dev/nul"
+    },
     "scripts/fire.md -> scripts/goal-tracker.test.mjs:80": {
       "target": "scripts/goal-tracker.test.mjs",
       "line": 80,
