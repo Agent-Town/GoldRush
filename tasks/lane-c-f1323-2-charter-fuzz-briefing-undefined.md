@@ -65,9 +65,14 @@ under vite. **That is a hypothesis, not a finding — scope 1 exists to settle i
    determinism from `CHARTER_FUZZ_SEED` (`charter-press.rig.ts:5-8`). If your fix changes which templates are
    picked or how many, say so loudly; that would change what `cp02-charter-stamp` and `cp02-charter-boot`
    actually test.
-5. **Report the guard count honestly.** Run the full `test:node-guards` set and report `# tests / # pass / # fail`
-   from a TAP reporter. Expect **209 tests**. If your cure fixes the root, expect all three reds to clear
-   together — they share one cause. **If only one clears, say so; that means the "one root" finding was wrong.**
+5. **Report the guard count honestly, and DERIVE the denominator — never inherit it.** Run the full
+   `test:node-guards` set and report `# tests / # pass / # fail` from a TAP reporter. **Read the file list out of
+   `package.json` → `scripts["test:node-guards"]` programmatically rather than retyping it**, and state how many
+   files you ran. s1323 measured **209 tests across 37 files on main**, but this lane may be behind main, so a
+   different total is not automatically a defect — *an unexplained one is*. If your number differs, say what the
+   difference is and why before drawing any conclusion from it. If your cure fixes the root, expect all three
+   reds to clear **together** — they share one cause. **If only one clears, say so; that means the "one root"
+   finding was wrong, and that is a more valuable report than a green.**
 
 ## FIREWALL
 
