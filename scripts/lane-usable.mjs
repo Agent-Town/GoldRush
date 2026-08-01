@@ -79,9 +79,29 @@ function resolve(name) {
   return all.find((l) => l.slot === name) || all.find((l) => l.branch === name) || null
 }
 
+// F-1320-2 (s1320, measured by a wasted 53k-token run; the minimum landed s1322).
+// This file answers "would a reset LOSE anything?" and "is the tree clean?" — it has never
+// answered "is this branch CURRENT?", and being BEHIND main satisfies `main..branch = ∅`
+// trivially, so staleness is invisible to the USABLE verdict by construction. s1320 read
+// USABLE twice on a lane 153 commits behind main and queued a task that could not run.
+//
+// The behind-count is printed UNCONDITIONALLY rather than turned into a fourth verdict word,
+// and that restraint is measured rather than cautious. Every lane on this board is behind
+// main right now — m3=55, m4=19, e2-arsenal=161, perf=8 (s1322) — because lane-runner-v3.sh
+// never refreshes a lane on dispatch (:124-129, the only path is an explicit janitor req).
+// A verdict keyed on `behind > 0` would therefore red the entire fleet and be flagged past
+// within a fire or two, and any threshold above 0 would be a number chosen by taste.
+// ⚠️ Whether the lane is stale ENOUGH TO MATTER is a property of the TASK, not of the lane:
+// what s1320 actually needed was `git merge-base --is-ancestor <the commit the task depends
+// on> <branch>`. A count cannot answer that, so this prints the number that makes a reader
+// ASK the question and leaves the question itself where it belongs.
+function behindCount(branch) {
+  return git(['rev-list', '--count', `${branch}..main`]).trim() || '?'
+}
+
 function classify(branch) {
   const ahead = git(['rev-list', `main..${branch}`]).trim().split('\n').filter(Boolean)
-  if (ahead.length === 0) return { ahead: 0, held: [], paths: 0 }
+  if (ahead.length === 0) return { ahead: 0, behind: behindCount(branch), held: [], paths: 0 }
   const base = git(['merge-base', 'main', branch]).trim()
   const paths = new Set()
   for (const sha of ahead) {
@@ -98,7 +118,7 @@ function classify(branch) {
     if (l === b) continue // MAIN-ONLY — the lane never moved it
     held.push({ path: p, kind: m === b ? 'LANE-ONLY' : 'BOTH-MOVED' })
   }
-  return { ahead: ahead.length, tip: ahead[0], base, paths: paths.size, held }
+  return { ahead: ahead.length, behind: behindCount(branch), tip: ahead[0], base, paths: paths.size, held }
 }
 
 // Tracked dirt and untracked debris are NOT the same hazard and must not share a
@@ -150,7 +170,7 @@ const RC = { USABLE: 0, 'AHEAD-BUT-ABSORBED': 1, HOLDS: 2, DIRTY: 2, BUSY: 2 }
 
 function report(r) {
   console.log(
-    `${r.slot}  ${r.branch}  ahead=${r.ahead}  paths=${r.paths ?? 0}` +
+    `${r.slot}  ${r.branch}  ahead=${r.ahead}  behind=${r.behind ?? '?'}  paths=${r.paths ?? 0}` +
       `  tracked-dirt=${r.dirt.tracked.length}  untracked=${r.dirt.untracked.length}${r.busy ? '  BUSY' : ''}`,
   )
   for (const h of r.held) console.log(`    HELD ${h.kind}  ${h.path}`)
@@ -167,6 +187,17 @@ function report(r) {
     BUSY: 'a runner holds this slot — leave it alone',
   }[r.verdict]
   console.log(`  => ${r.verdict}: ${note}`)
+  // Deliberately attached to USABLE alone. On every other verdict the lane is not being
+  // refilled this minute, so a staleness footnote would be noise; on USABLE it is the exact
+  // moment the F-1320-2 mistake gets made, and the verdict word itself says "refill freely".
+  if (r.verdict === 'USABLE' && Number(r.behind) > 0) {
+    console.log(
+      `     ⚠️  but ${r.branch} is ${r.behind} commit(s) BEHIND main. USABLE does not mean CURRENT.\n` +
+        `     Before queueing, name the commit your task depends on and prove the lane has it:\n` +
+        `       git merge-base --is-ancestor <sha> ${r.branch}\n` +
+        `     If it does not, request a refresh (tasks/janitor/<name>.req: refresh-lane ${r.slot}) — F-1320-2.`,
+    )
+  }
 }
 
 function cure(r) {
