@@ -5,6 +5,7 @@ import { buildableDefs } from '../src/game/buildables';
 import { PROFILE_KEY, SCOREBOARD_KEY, TOWN_NAME_KEY, profileDataKey, type ProfileState } from '../src/game/ProfileStorage';
 import { DEFAULT_CONTRACT_ID, listContracts, loadContract } from '../src/meta/ContractFamilies';
 import { LEDGER_DISCOVERED_STORAGE_KEY } from '../src/encyclopedia/storage';
+import type { TownActorId } from '../src/town/townsfolk';
 import {
   LEDGER_CATEGORIES,
   alwaysDiscoveredEntryIds,
@@ -202,6 +203,30 @@ async function approachTavern(page: Page): Promise<void> {
   await expect.poll(() => page.evaluate(() => window.__GR_TOWN_DIAGNOSTICS__?.activePrompt), { timeout: 8_000 }).toBe('tavern');
 }
 
+// F-1286-2 / F-1338-1 — repaired s1339 from measurement, not from the inherited instruction.
+// Arriving at the tavern does NOT imply the tavernkeeper owns the bark card: approachTavern waits
+// on the BUILDING prompt while the card keys off the nearest ACTOR (TownScene.ts:1437-1448). At the
+// arrival instant the card belonged to the NEWSIE in 8/8 probe runs — Chen Mei is anchored to the
+// tavern and loops its trail (townsfolk.ts:198-211) — never to a "youngster passing through", which
+// is what both prior findings assumed. Recovery is always transient, but its latency straddles the
+// 5s default deadline: 0.97 / 1.63 / 1.63 / 2.18 / 2.23 / 2.32 / 3.28 / 6.27 s = 1/8 over the line,
+// matching the 1/6 rate F-1286-2 filed. Waiting longer is NOT derivable — the same probe measured a
+// 16.0s newsie-owned episode at the same spot, which no deadline inside the 30s test budget clears.
+// So make the approach DETERMINISTIC instead: standing on the actor's own post gives distanceSq = 0
+// and the selection at TownScene.ts:1444 is a strict `<`, so nothing can displace it. Measured at
+// the true post: 700/702 samples owned, first ownership <= 220ms, prompt held 'tavern' throughout.
+// The post is READ from diagnostics and never hardcoded — townActorPlazaPlacement
+// (TownScene.ts:3618) overrides the TOWN_ACTORS literal for loop-less actors, so the definition
+// file's coordinate is the wrong one, which cost the probe two runs before it was caught.
+async function standAtTownActor(page: Page, actorId: TownActorId): Promise<void> {
+  const post = await page.evaluate((id) => {
+    const actor = window.__GR_TOWN_DIAGNOSTICS__?.actors.find((candidate) => candidate.id === id);
+    return actor ? { x: actor.position.x, z: actor.position.z } : null;
+  }, actorId);
+  if (!post) throw new Error(`${actorId} is absent from town actor diagnostics`);
+  await page.evaluate(({ x, z }) => window.__GR_TOWN_DIAGNOSTICS__!.teleport(x, z), post);
+}
+
 async function ledgerStorage(page: Page): Promise<LedgerDiscoveryId[]> {
   return page.evaluate((key) => {
     const raw = localStorage.getItem(key);
@@ -328,6 +353,7 @@ test('EN-02 town board and bark discover contracts and townsfolk', async ({ page
   await page.getByTestId('start-menu-enter-town').click();
   await page.waitForFunction(() => (window.__GR_TOWN_DIAGNOSTICS__?.frame ?? 0) > 10);
   await approachTavern(page);
+  await standAtTownActor(page, 'tavernkeeper');
   await expect(page.getByTestId('town-bark-card')).toHaveAttribute('data-actor-id', 'tavernkeeper');
   await expect.poll(() => ledgerStorage(page)).toContain(townActorLedgerEntryById.tavernkeeper);
 
