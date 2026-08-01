@@ -95,6 +95,16 @@
               "blockedReason": "BLOCKED BY F-1328-4, NOT BY AN OWNER GATE — the runner STOPPED per this masters own NO-list and the STOP was correct. deriveMechanicsManifest(\"e1-drill-yard\") returns interactables:[] and rules river/water_crossings despite the yard declaring a bell, dummies, practice gold and buildables: the derivation ignores `practice`, which is an AP-11 NO-UNDECLARED-MECHANICS violation AT THE DERIVATION. Scope item 1 (regenerate the byte-stable fixture) is therefore unsatisfiable without either fixing the derivation or hand-writing a manifest, and hand-writing is exactly what AP-11 forbids. ALSO: the census radius is WIDER than this master says — board-card-images.spec.ts:37 and map-census.spec.ts:63 both assert toHaveLength(41) and are RED; e1-baron.spec.ts:349 carries a second stale comment. DISPATCHED TWICE ALREADY (runs 20260801-122019 STOP, 20260801-122335) and the duplicate was s1328s own doing (re-cp of the corrected master after the runner had taken the first). THIRD ATTEMPT REQUIRES A CHANGED PREMISE per the twice-then-escalate law: either (a) fix the derivation in its own slice first, or (b) split this master so the four census assertions land without the fixture regeneration. Do NOT re-queue unchanged."
             },
             {
+              "id": "f1330-1-count-shaped-censuses",
+              "title": "F-1330-1 - the two COUNT-shaped E1 censuses still assert 41 against live 42-contract data (board-card-images.spec.ts:37, map-census.spec.ts:63). Carved out of the BLOCKED f1328-1 leaf so it cannot be held hostage by the AP-11/F-1328-4 fixture question.",
+              "taskFile": "f1330-1-count-shaped-censuses.md",
+              "status": "queued",
+              "lane": "lane-c",
+              "authoredBy": "s1330",
+              "registeredBy": "s1330",
+              "authorNotes": "FIRE-AUTHORED from measured evidence: s1330 counted assets/contracts/*/contracts.json directly (42 total, E1=6) and re-ran the census grep itself rather than inheriting s1328s list. Both sites compare a live-derived array (listEpochs()/loadEpoch()) against the literal 41, so both are red by arithmetic. Queued lane-c ONLY AFTER proving the lane contains f0bf5251 (git merge-base --is-ancestor f0bf5251 lane/e2-arsenal = YES), because on a pre-drill-yard tree the 41 is CORRECT and the edit would manufacture a red; the master carries that premise check in its pre-flight too. Deliberately disjoint from the five files HELD on lane/m4. The master FORBIDS running law-pointer-guard --update on the lane (stale ledger would emit a baseline missing every pointer main added since) - the drain re-bases scripts/law-pointer-baseline.json on main, where the ledger is complete."
+            },
+            {
               "id": "e1-trail-guide-plain-boot-proof",
               "title": "Prove the teaching path in a plain boot (Trail Guide + greenhorn offer), F-E1-2. OWNER GATE LIFTED 2026-07-29 — promoted from DRAFT and queued lane-b.",
               "taskFile": "lane-b-trail-guide-plain-boot-seam-approach.md",
