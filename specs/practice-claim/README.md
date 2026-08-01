@@ -1,5 +1,5 @@
-# THE PRACTICE CLAIM — the gym at the edge of town
-STATUS: DRAFT from owner idea 2026-07-30 (verbatim: "make a demo level where the user can test all the different things they can do. Maybe a gym?") — name pending owner pick: THE PROVING CLAIM (rec) · THE OLD QUARRY · THE DRILL YARD.
+# THE DRILL YARD — the gym at the edge of town
+STATUS: RATIFIED — THE DRILL YARD (owner pick 2026-08-01: "Drill Yard sounds good to me"). Origin: owner idea 2026-07-30 ("make a demo level where the user can test all the different things they can do. Maybe a gym?").
 LAWS:
 1. A standing card on the tavern board (always available once the welcome has run): a small claim where nothing is at stake.
 2. THE COUNTY LENDS PRACTICE GOLD — a diegetic budget faucet (top-up lever at the assay tent); all E1 buildables available regardless of research state (locally only).

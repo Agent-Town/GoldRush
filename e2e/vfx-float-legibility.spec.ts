@@ -1,9 +1,16 @@
 import { expect, test } from '@playwright/test';
+import { Balance } from '../src/game/Balance';
 import { expectNoConsoleErrors, watchErrors } from './support/console-watch';
 
-const LONG_FLOAT = 'Stockpile Yard II - the yard holds more gold';
+const PLACEMENTS = {
+  sluice: [0, 7],
+  palisade: [0.8, 12],
+  stockpile: [10, 11],
+  turret: [4, 16],
+} as const satisfies Record<keyof typeof Balance.tiers, readonly [number, number]>;
+const UPGRADES = Object.keys(Balance.tiers).map((id) => [id, ...PLACEMENTS[id as keyof typeof PLACEMENTS]] as const);
 
-test('long and reused short floats report legible rendered bounds', async ({ page }, testInfo) => {
+test('every upgrade and a reused short float report legible rendered bounds', async ({ page }, testInfo) => {
   const errors = watchErrors(page);
   const webGlWarnings: string[] = [];
   page.on('console', (message) => {
@@ -14,24 +21,31 @@ test('long and reused short floats report legible rendered bounds', async ({ pag
   await page.getByRole('button', { name: 'Begin' }).click();
   await page.evaluate(() => window.__GR_TEST__!.warmVfx());
 
-  const placed = await page.evaluate(() => {
-    const { x, z } = window.__THREE_GAME_DIAGNOSTICS__!.heroPos;
-    return window.__GR_TEST__!.placeFree('stockpile', x - 1.5, z - 1);
-  });
-  expect(placed).toBe(true);
-  await page.waitForFunction(() => window.__THREE_GAME_DIAGNOSTICS__?.build.stockpiles === 1);
-  const upgraded = await page.evaluate(() => {
-    window.__GR_TEST__!.grantGold(1_000);
-    return window.__GR_TEST__!.upgradeBuilding('stockpile', 0);
-  });
-  expect(upgraded).toBe(true);
-  await page.waitForFunction((text) => window.__THREE_GAME_DIAGNOSTICS__?.vfx.lastFloatText?.text === text, LONG_FLOAT);
+  const upgrades = await page.evaluate((placements) => {
+    const results = [];
+    for (const [id, x, z] of placements) {
+      const before = window.__THREE_GAME_DIAGNOSTICS__!.build.hp.filter((entry) => entry.id === id).length;
+      if (!window.__GR_TEST__!.placeFree(id, x, z)) throw new Error(`Could not place ${id}`);
+      const entries = window.__THREE_GAME_DIAGNOSTICS__!.build.hp.filter((entry) => entry.id === id);
+      const placed = entries[before] ?? entries.at(-1);
+      if (!placed) throw new Error(`Missing ${id} diagnostics`);
+      window.__GR_TEST__!.teleport(placed.position.x, placed.position.z);
+      for (let tier = 2; tier <= 3; tier += 1) {
+        window.__GR_TEST__!.grantGold(1_000);
+        if (!window.__GR_TEST__!.upgradeBuilding(id, placed.index)) throw new Error(`Could not upgrade ${id} to tier ${tier}`);
+        results.push(window.__THREE_GAME_DIAGNOSTICS__!.vfx.lastFloatText!);
+      }
+    }
+    return results;
+  }, UPGRADES);
 
-  const long = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__!.vfx.lastFloatText!);
-  expect(long.renderedWidthPx).toBeLessThanOrEqual(long.canvasWidthPx - 20);
-  expect(long.fontPx).toBeGreaterThanOrEqual(32);
+  expect(upgrades).toHaveLength(8);
+  for (const upgrade of upgrades) {
+    expect(upgrade.renderedWidthPx).toBeLessThanOrEqual(upgrade.canvasWidthPx - 20);
+    expect(upgrade.fontPx).toBeGreaterThanOrEqual(32);
+  }
   await page.screenshot({
-    path: `artifacts/f1316-1-float-legibility/${testInfo.project.name}.png`,
+    path: `artifacts/f1318-1-float-fit-class-wide/${testInfo.project.name}.png`,
     animations: 'disabled',
   });
 

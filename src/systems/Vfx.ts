@@ -200,15 +200,23 @@ function drawTextTexture(
     fontPx -= 1;
     context.font = `700 ${fontPx}px Georgia, serif`;
   }
-  const renderedWidthPx = context.measureText(text).width;
+  const budget = canvas.width - FLOAT_TEXT_PADDING_PX;
+  let renderedText = text;
+  let renderedWidthPx = context.measureText(renderedText).width;
+  if (fontPx === FLOAT_TEXT_MIN_FONT_PX && renderedWidthPx > budget) {
+    const fitted = Array.from(text);
+    while (fitted.length > 0 && context.measureText(`${fitted.join('').trimEnd()}…`).width > budget) fitted.pop();
+    renderedText = `${fitted.join('').trimEnd()}…`;
+    renderedWidthPx = context.measureText(renderedText).width;
+  }
   context.textAlign = 'center';
   context.textBaseline = 'middle';
   context.lineJoin = 'round';
   context.strokeStyle = '#2e1b0e';
   context.lineWidth = 10;
-  context.strokeText(text, canvas.width / 2, canvas.height / 2);
+  context.strokeText(renderedText, canvas.width / 2, canvas.height / 2);
   context.fillStyle = color;
-  context.fillText(text, canvas.width / 2, canvas.height / 2);
+  context.fillText(renderedText, canvas.width / 2, canvas.height / 2);
   return { renderedWidthPx, canvasWidthPx: canvas.width, fontPx };
 }
 
