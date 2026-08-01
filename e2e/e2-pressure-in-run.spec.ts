@@ -79,13 +79,18 @@ test('coal feeds boilers, pressure vents, and PRESSURIZE completes', async ({ pa
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure.objective.complete)).toBe(true);
   await expect(pressureHud.locator('[data-hud-pressure-uses]')).toHaveText('×2');
 
-  const pressureBeforeWreck = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.resources.pressure.amount);
-  await page.evaluate(() => window.__GR_TEST__?.setBalance('boilerHouse.pressurePerTick', 4));
   await expect(page.evaluate(() => window.__GR_TEST__?.wreck('boiler_house', 0))).resolves.toBe(true);
   await expect(page.evaluate(() => window.__GR_TEST__?.wreck('boiler_house', 1))).resolves.toBe(true);
   await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.2));
   await expect.poll(() => page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure.objective.hotBoilers)).toBe(0);
-  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.resources.pressure.amount)).toBe(pressureBeforeWreck);
+  // F-1287-1 (s1337): arm production ONLY after the boilers are confirmed dead. Arming at 4/tick while
+  // they still lived let the live loop earn +4/+8 across the two async wreck round-trips, which the
+  // baseline had already been sampled before — a 40% flake (8/20 idle instances, both projects), not a
+  // MOBILE-ONLY red. Intent is preserved and strengthened: production is armed against dead boilers.
+  await page.evaluate(() => window.__GR_TEST__?.setBalance('boilerHouse.pressurePerTick', 4));
+  const pressureAfterWreck = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.resources.pressure.amount);
+  await page.evaluate(() => window.__GR_TEST__?.advanceSim(1.2));
+  expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.economy.resources.pressure.amount)).toBe(pressureAfterWreck);
   expect(await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.pressure.multiplayerPosture)).toBe('single-player-gated');
   expect(errors).toEqual([]);
 });
