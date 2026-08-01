@@ -321,6 +321,13 @@
               "review": "reviews/f1318-1-float-fit-class-wide.md"
             },
             {
+              "id": "f1319-2-float-rendered-text-assertion",
+              "title": "Give the float-fit guard a non-tautological assertion by surfacing renderedText (+ guard the ellipsis)",
+              "taskFile": "lane-a-f1319-2-float-rendered-text-assertion.md",
+              "status": "queued",
+              "reason": "F-1319-2: the f1318-1 cure made renderedWidthPx <= budget a theorem (Vfx.ts:199 and :203 are the same quantity), and the certifying RED was taken against the pre-cure tree. Scope 4 requires the new arm to RED at its own birth commit by mutation."
+            },
+            {
               "id": "pc-01-drill-yard",
               "title": "PC-01 The Drill Yard: a standing stakes-free practice claim on the tavern board (county-lent practice gold, all E1 buildables, straw targets, drill bell, nothing persists). Implemented on lane/m4 f0bf5251; REJECTED at drain s1321 because it lands a 6th E1 contract that the board refuses to render (F-1321-1).",
               "taskFile": "lane-drill-yard.md",
