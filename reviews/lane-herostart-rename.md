@@ -91,30 +91,34 @@ is **F-1328-1**, s1328's drill-yard census debt whose corrective is blocked pend
 
 ## Findings
 
-**F-1329-1 — FOUR RED ASSERTIONS ON MAIN ARE RECORDED NOWHERE, AND ONE OF THEM SAYS FOUR SHIPPED
-CONTRACTS ARE INVALID.** `grep -n "ed-03-placement-validator" tasks/BACKLOG.md` and
-`grep -n "e1-twin-banks.spec" tasks/BACKLOG.md` both return **nothing**, so by the Completeness Law these
-reds do not exist. They do:
+**F-1329-1 — CORRECTED BY ITS OWN AUTHOR, SAME FIRE: FOUR SHIPPED CONTRACTS ARE REJECTED BY THE APP’S OWN
+VALIDATOR. THE MECHANISM IS THE FINDING; THE REDNESS WAS ALREADY TRACKED.**
 
-- `ed-03-placement-validator.spec.ts:14` — *"069 accepts every shipped contract byte-identically"*.
-  Probed directly: **4 of 42 shipped contracts are rejected by the app's own validator.**
-  `e5-deepwater-claim`, `e5-stillwater`, `e5-flotilla` each fail `field_number` on
-  `tileParams.deepwater.waterTile.regions[1..5].depth` (5 reasons apiece); `e10-river` fails
-  `spawn_edge_required` on `tileParams.lanes.spawnEdges`. **This is not a stale test expectation — it is
-  the shipped validator refusing shipped data**, which means the contract editor cannot round-trip four
-  maps. Unrelated to this rename (no `stakeMarkers` reason appears), and red on clean main.
-- `ed-03-placement-validator.spec.ts` *"placement controls commit valid descriptors"* — 90s timeout.
-- `e1-twin-banks.spec.ts:103`, `:122` — sluice/stockpile build and ford routing.
+⚠️ **This was first written with the headline “recorded nowhere”, and that was false.** I had grepped
+`tasks/BACKLOG.md` only. `logs/suite-red-inventory.md` — a standing red inventory that **already exists** —
+carries all four rows with project, failing `file:line`, first error line, duration, BOTH/MOBILE-ONLY
+bucket and flake rate (`ed-03:18` at **4/25, 16.0%**). My recommendation to *build* such an inventory was
+redundant; acting on it would have had a fire build a second one. It surfaced only because
+`citation-title-guard` printed the file’s name in an unrelated PASS line during the ledger battery.
 
-⚠️ **The reason this matters more than four line numbers:** s1328 found main already red and said so; I
-found a *different* red set on the same main one fire later, also unrecorded. Two fires in a row have
-discovered pre-existing reds only because each happened to run a control. **A fire that skips the control
-run reads these as its own merge's damage and rejects a sound slice** — or, worse, merges and inherits
-the blame. ➡️ **Recommend a standing red inventory** (`scripts/suite-red-inventory.test.mjs` already
-exists as a mechanism); until then the control run is the only instrument that tells a fire which reds
-are its own. Not fire-authorable as a fix for the E5/E10 contracts themselves: whether those four maps
-are wrong or the validator's depth range is wrong is a **design question**, and the answer changes shipped
-map data. **Owner's desk.**
+✓ **What survives is the part the inventory cannot contain — the mechanism.** The inventory records the
+symptom (`Error: expect(received).toBe(expected)`), not which contracts fail or why. Probed directly:
+**4 of 42 shipped contracts are rejected by `parseContractDescriptor`** — `e5-deepwater-claim`,
+`e5-stillwater`, `e5-flotilla` each fail `field_number` on
+`tileParams.deepwater.waterTile.regions[1..5].depth` (5 reasons apiece); `e10-river` fails
+`spawn_edge_required` on `tileParams.lanes.spawnEdges`. **Shipped code refusing shipped data** — the
+contract editor cannot round-trip four maps. It is deterministic (a pure function), which sits oddly
+beside a 16% flake rate and is worth reconciling.
+
+✓ **Second true half:** none of the four appear in BACKLOG. Per the inventory header, main carries **303
+failures of 2388 tests** — tracked as a measurement, and **zero of them exist as work.** That is the
+Completeness Law’s real complaint here.
+
+➡️ **Owner’s desk, not fire-authorable:** whether the four maps are wrong or the validator’s depth range
+is wrong is a design question whose answer edits shipped map data.
+
+💡 *“I grepped the ledger and found nothing” is a claim about where you looked, not about the repository.
+A finding that recommends building a mechanism should first grep for that mechanism.*
 
 **F-1329-2 — F-1327-1's CORE CLAIM IS CONFIRMED AND NOW LITERAL, BUT ITS "FIREWALLED OUT OF SCOPE" HALF
 IS FALSE — THE RUNNER RENAMED `MechanicsManifest.ts` ANYWAY.** F-1327-1 predicted the manifest file was
