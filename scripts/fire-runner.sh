@@ -1,7 +1,7 @@
 #!/bin/bash
-# Gold Rush fire runner — invoked by launchd every 15 min (com.goldrush.fire.plist).
-# Runs one headless Claude Code fire (Opus 4.8) with the protocol in scripts/fire.md.
-# Single-instance guarded; logs to logs/fire-YYYYMMDD.log. Manual run: bash scripts/fire-runner.sh
+# Gold Rush fire runner — invoked by launchd every 5 min (StartInterval 300, com.goldrush.fire.plist).
+# Runs one headless Claude Code fire with the protocol in scripts/fire.md; the model is FIRE_MODEL below (default claude-opus-5 — that default is the truth, not this comment).
+# Single-instance guarded: a tick landing on a live fire exits silently, so a NEW fire begins only once the previous one ends — measured s1358 over 58 gaps: min 5.3 min (one bare tick), median 22.8 min. Logs to logs/fire-YYYYMMDD.log. Manual run: bash scripts/fire-runner.sh
 set -u
 REPO="/Users/robin/Claude/Projects/Gold Rush"
 LOCKDIR="$REPO/tasks/.fire.lock"
