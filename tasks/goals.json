@@ -3930,7 +3930,9 @@
               "id": "ap-07-night-shift-fixtures",
               "title": "AP-07 admit e1-night-shift to GR-SIM, and place its seven wrecked lantern_post fixtures FIRST. Measured s1319: night-shift is the only remaining E1 contract whose stated objective is survival verbatim (briefing.goals[0] = 'Survive to DAWN at wave 25.', twist.secureWave 25) AND carries zero stakeMarkers, so the F-1314-1 inert-lossCondition blocker that genuinely gates e1-twin-banks does not apply. But it is also the ONLY E1 contract with tileParams.prePlacedBuildables (7 wrecked lantern_post, relightCost 8), and HeadlessContractSim reads that key ZERO times while MechanicsManifest publishes those same fixtures to the agent as relight interactables and the briefing rules tell it to relight them — so a bare pin-lift would brief and manifest seven objects into a world containing none, the F-1314-1 defect one layer up. Game.ts::placeContractFixtures() is the 5-line reference implementation; the transplant must stay contract-branch-free. Scope 1 is observe-first and can CANCEL (night-shift has never been probed headless). Scope 4's acceptance condition is a manufactured RED, because the new fixture assertion is green the moment scope 2 lands including if written wrong; a hand-typed 7 instead of tileParams.prePlacedBuildables.length is a pre-declared REJECT (F-1318-1's lesson). eval_dataset.jsonl rows and the num_examples ordering are deliberately a SEPARATE slice.",
               "taskFile": "lane-b-ap07-night-shift-fixtures.md",
-              "status": "queued"
+              "status": "shipped",
+              "mergeHash": "07854e6b0eaf41d0228f86c85e1d46586a281846",
+              "review": "reviews/ap-07-night-shift-fixtures.md"
             },
             {
               "id": "lb-02-bench-fields",
