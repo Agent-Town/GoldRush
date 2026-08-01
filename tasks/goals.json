@@ -75,11 +75,11 @@
               "id": "f1328-1-drill-yard-census-debt",
               "title": "F-1328-1 — the Drill Yard is E1s 6th contract but agent-view.spec.ts:266 and 072-era-activation.spec.ts:241 still assert a five-contract census (main RED since f0bf5251, 2026-08-01 08:14)",
               "taskFile": "f1328-1-drill-yard-census-debt.md",
-              "status": "authored",
+              "status": "queued",
               "lane": "lane-b",
               "authoredBy": "s1328",
               "registeredBy": "s1328",
-              "authorNotes": "FIRE-AUTHORED from measured evidence, not from a spec slice: s1328 ran the two suites and read the failure text. Blast radius measured as 7 red assertions across 3 specs; 4 were cured incidentally by the lane-survive-copy drain (06ce6241), 2 sites remain. NOT QUEUED BY s1328 DELIBERATELY: lane/m4 is 75 commits behind main and lacks 06ce6241, so its contract-briefings adjacent self-check would red for a reason unrelated to the task. tasks/janitor/s1328-refresh-lane-b.req was filed instead. The runner processes janitor requests AFTER the dispatch loop in the same cycle, so queueing the master together with the request risks the exact F-1324-2 hazard the runner comment documents (a task dispatched onto a tree where its subject commit is absent). NEXT FIRE: verify the refresh landed (a janitor-*-s1328-refresh-lane-b.req entry in tasks/done/ AND git merge-base --is-ancestor 06ce6241 lane/m4), THEN cp the master into tasks/queue/lane-b/."
+              "authorNotes": "FIRE-AUTHORED from measured evidence, not from a spec slice: s1328 ran the two suites and read the failure text. Blast radius measured as 7 red assertions across 3 specs; 4 were cured incidentally by the lane-survive-copy drain (06ce6241), 2 sites remain (agent-view.spec.ts:266, 072-era-activation.spec.ts:241). QUEUED lane-b by s1328 ONLY AFTER the lane was proven current: lane/m4 was 75 commits behind and lacked 06ce6241, so its contract-briefings adjacent self-check would have redded for a reason unrelated to the task. s1328 filed tasks/janitor/s1328-refresh-lane-b.req rather than queueing alongside it, because the runner processes janitor requests AFTER the dispatch loop in the same cycle -- the exact F-1324-2 hazard its own source comment documents. The refresh was then verified BY CONTENT (git merge-base --is-ancestor 06ce6241 lane/m4 = true), NOT by the consumed request appearing in tasks/done/, which is precisely the F-1324-2 lesson that a queue consuming work on failure converts \"not done yet\" into \"done\"."
             },
             {
               "id": "e1-trail-guide-plain-boot-proof",
