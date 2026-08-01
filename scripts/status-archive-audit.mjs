@@ -23,6 +23,7 @@
 //   --all       also list the ordered/self shapes that were excluded, for audit of the exclusion
 
 import { execFileSync } from "node:child_process";
+import { readFileSync } from "node:fs";
 
 const PROBE_CHARS = 120;
 const REPO = process.env.GR_REPO ?? "/Users/robin/Claude/Projects/Gold Rush";
@@ -64,9 +65,15 @@ const sessionOf = (line) => {
   return best ? best.n : null;
 };
 
-const headBlob = blobOf("HEAD");
-if (headBlob === null) {
-  console.error("STATUS.md absent at HEAD");
+// Permanence is judged against the LIVE BOARD (working tree), not HEAD: the next fire reads the
+// file on disk, and a restore that is staged-but-uncommitted is already legible to it. Reading HEAD
+// here would also make the instrument untestable, since manufacturing the defect to prove the
+// guard has teeth would require committing it.
+let headBlob;
+try {
+  headBlob = readFileSync(`${REPO}/STATUS.md`, "utf8");
+} catch {
+  console.error("STATUS.md unreadable on disk");
   process.exit(2);
 }
 
