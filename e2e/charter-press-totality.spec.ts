@@ -10,6 +10,10 @@ const rngDraws = [0, 0.5, 0.999] as const;
 const fixedRng = () => rngDraws[0];
 
 function mutationArmIndices(): Map<string, number[]> {
+  // 2026-08-01 (F-1326-1): this search is LOAD-BEARING, not tidiness. Only 1 of the 6 Frontier
+  // templates has build zones (e1-twin-banks) and it is NOT templates[0] — on every other one the
+  // illegal:zone-outside-claim arm returns 'noop' on a fresh charter, which makes the map below
+  // non-injective and reds the assertions. Point this at templates[0] and the guard dies.
   const template = templates.find((candidate) => (candidate.tileParams.buildZones?.length ?? 0) > 0);
   expect(template, 'mutation arm label "illegal:zone-outside-claim" needs a fresh charter with build zones').toBeDefined();
   const armCount = charterMutationArmsForTest(freshCharter(template!), fixedRng).length;
@@ -51,7 +55,10 @@ test('blank briefing goal fires with a briefing and noops after missing briefing
   };
   const blankBriefingGoal = armIndex('blank:briefing.goal');
   const missingBriefing = armIndex('illegal:missing-briefing');
-  expect(indices.get('noop') ?? [], 'mutation arm label "noop" must not occur on a fresh charter').toHaveLength(0);
+  expect(
+    indices.get('noop') ?? [],
+    'mutation arm label "noop" must not occur on a fresh charter of the build-zone template',
+  ).toHaveLength(0);
   let charter = freshCharter(templates[0]!);
   let arms = charterMutationArmsForTest(charter, fixedRng);
   expect(arms[blankBriefingGoal]!()).toBe('blank:briefing.goal');
