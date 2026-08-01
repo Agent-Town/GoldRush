@@ -47,6 +47,11 @@ export function charterMutants(templates: readonly ContractManifest[], count: nu
 }
 
 function applyMutation(charter: Charter, rng: Rng): string {
+  const menu = charterMutationArmsForTest(charter, rng);
+  return menu[Math.floor(rng() * menu.length)]!();
+}
+
+export function charterMutationArmsForTest(charter: Charter, rng: Rng): ReadonlyArray<() => string> {
   const contract = charter.contract;
   const menu: Array<() => string> = [
     () => {
@@ -67,7 +72,10 @@ function applyMutation(charter: Charter, rng: Rng): string {
       return `overrange:${leaf.path}`;
     },
     () => {
-      contract.briefing.goals[Math.floor(rng() * contract.briefing.goals.length)] = '   ';
+      const goals = contract.briefing?.goals;
+      // 2026-08-01: Earlier arms can delete briefing via illegal:missing-briefing.
+      if (!goals || goals.length === 0) return 'noop';
+      goals[Math.floor(rng() * goals.length)] = '   ';
       return 'blank:briefing.goal';
     },
     () => {
@@ -112,7 +120,7 @@ function applyMutation(charter: Charter, rng: Rng): string {
       return 'illegal:torn-date';
     },
   ];
-  return menu[Math.floor(rng() * menu.length)]!();
+  return menu;
 }
 
 function pickNumericLeaf(contract: ContractManifest, rng: Rng): NumericLeaf | null {
