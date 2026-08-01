@@ -19,7 +19,7 @@ const WAVE_THREE_SNAPSHOT = `{
       "briefing": {
         "geography": "The classic river claim.",
         "goals": [
-          "Hold the claim through wave 10."
+          "Survive through wave 10."
         ],
         "rules": [
           "The river splits the claim around one center ford.",

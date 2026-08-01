@@ -123,11 +123,11 @@ test('The Claim card names wave 10 while Night Shift and Baron keep their tuned 
   const errors = await openClaim(page, 'locked-win-contracts', false, false);
   const claim = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract);
   expect(claim?.secureWave).toBe(10);
-  expect(claim?.briefing.goals).toEqual(['Hold the claim through wave 10.']);
+  expect(claim?.briefing.goals).toEqual(['Survive through wave 10.']);
   expect(claim?.briefing.rules).toContain(
     'Pressure comes from all four edges until wave 10 seals the claim; stay for the Rush if you want to press your luck.',
   );
-  await expect(page.getByTestId('contract-briefing-goals')).toContainText('Hold the claim through wave 10.');
+  await expect(page.getByTestId('contract-briefing-goals')).toContainText('Survive through wave 10.');
   await expect(page.getByTestId('contract-briefing-rules')).toContainText('wave 10 seals the claim');
 
   const nightPage = await context.newPage();
