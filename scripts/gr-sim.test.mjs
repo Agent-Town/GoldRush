@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import { fileURLToPath } from 'node:url';
 
@@ -37,7 +38,7 @@ test('gr-sim replays the same contract, seed, and orders byte-for-byte', () => {
     { cwd: root, encoding: 'utf8', timeout: 30_000 },
   );
   assert.notEqual(unsupported.status, 0);
-  assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim/);
+  assert.match(unsupported.stderr, /AP-07 supports only e1-dry-gulch, the-claim, e1-night-shift/);
 });
 
 test('gr-sim deterministically runs the Claim objective', () => {
@@ -56,4 +57,18 @@ test('gr-sim deterministically runs the Claim objective', () => {
     Object.keys(JSON.parse(first.stdout.trim().split('\n').at(-1))),
     ['secured', 'waves', 'timeMs', 'gold', 'kills', 'calls', 'eventLogHash'],
   );
+});
+
+test('gr-sim places Night Shift fixtures from the contract', () => {
+  const root = fileURLToPath(new URL('..', import.meta.url));
+  const contracts = JSON.parse(readFileSync(new URL('../assets/contracts/epoch-1-frontier/contracts.json', import.meta.url), 'utf8'));
+  const contract = contracts.contracts.find(({ id }) => id === 'e1-night-shift');
+  const run = spawnSync(
+    process.execPath,
+    ['scripts/gr-sim.mjs', '--contract', contract.id, '--seed', 'e1-night-shift-01', '--policy=idle'],
+    { cwd: root, encoding: 'utf8', timeout: 30_000 },
+  );
+  assert.equal(run.status, 0, run.stderr);
+  const firstView = JSON.parse(run.stdout.split('\n', 1)[0]);
+  assert.equal(firstView.now.works.byKind.lantern_post, contract.tileParams.prePlacedBuildables.length);
 });
