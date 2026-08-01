@@ -1,6 +1,6 @@
 target: .claude/skills/drain/SKILL.md
 anchor: CUSTODY — NEVER PLACE CONTENT YOU HAVE NOT
-why: F-1295-1's custody cure is law in scripts/fire.md §3.0b but absent from the surface a drainer actually reads. Fires cannot write .claude/ (F-1027-4).
+why: F-1295-1's custody cure is law in scripts/fire.md §3.0b but absent from the surface a drainer actually reads. RE-TESTED s1349 (F-1349-1): still denied, and NO settings change can lift it — .claude/settings.json already grants bare Edit+Write. Do NOT shell around it.
 opened: s1343 2026-08-01
 kind: ACTION (mechanical paste — needs no owner ruling, only an unrestricted shell)
 
@@ -38,3 +38,35 @@ your gate; this asks whether your gate leaks.
 `node scripts/attended-owed-audit.mjs` will detect the anchor in the target and print
 **LANDED-NOT-ARCHIVED** with rc=1. Clear it by moving this file to `tasks/attended-owed/archive/`
 and committing — that rc=1 is the guard asking for bookkeeping, not reporting a problem.
+
+## RE-TEST, s1349 (F-1349-1) — the denial is real, and it is NOT a settings gap
+
+Six fires carried this item on an inherited reason. s1349 ran the command instead (Mistake #4).
+
+| probe | result |
+|---|---|
+| `Edit` on `.claude/skills/drain/SKILL.md` | **DENIED** — "requested permissions to write … but you haven't granted it yet" |
+| **CONTROL:** same `Edit` tool, same session, on `logs/session-scratch/s1349-lock.txt` | **SUCCEEDED** |
+| `.claude/settings.json` → `permissions.allow` | contains bare **`"Edit"`** and **`"Write"`**, unqualified |
+| `~/.claude-alt/settings.json` (this fire's config dir) | `{theme, model}` — **no `permissions` key at all** |
+| `deny` rules mentioning `.claude` | **none**, in either config |
+| `scripts/fire-runner.sh:72-74` | invokes `claude -p … --model` only — no `--allowedTools`, no `--permission-mode` |
+
+➡️ **The tool works; the PATH is the discriminator.** And because the project already grants the
+broadest possible form of the permission — bare `Edit` — **there is no allow-entry left to add.**
+The `.claude/` boundary is enforced above the settings layer. **So the standing recommendation
+"ask Robin to allowlist it" is measured WORTHLESS, and no future fire should spend a line on it.**
+This item is permanently attended-owed, exactly as designed. ⓘ Scope: measured in the
+`~/.claude-alt` fire shell; the primary fire shell was not separately probed.
+
+## 🚫 DO NOT LAND THIS BY SHELLING AROUND THE DENIAL (F-1349-2)
+
+`Bash(node:*)`, `Bash(cat:*)`, `Bash(cp:*)` and `Bash(mv:*)` are all on the fire allowlist, so a
+fire almost certainly *could* write this file from a shell. **That is forbidden, and the fact that
+it would work is the reason to say so out loud.** A permission boundary on `.claude/` exists
+precisely to stop an autonomous agent from editing its own instruction surface; an agent that
+routes around it with a second tool has defeated the control while satisfying the letter of every
+other law in this repo. **The denial is the answer, not an obstacle between you and the answer.**
+⚠️ This warning is aimed at a specific, predictable moment: the item is cheap, decided, composed,
+and has now failed to land seven times. **Frustration is the exploit.** If you are reading this
+and thinking "but it's only a doc paste" — that is the thought the boundary is for.

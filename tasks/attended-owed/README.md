@@ -19,6 +19,31 @@ forbids conflating them); **neither can express "anyone could do this, the fire 
 gated."** So an ACTION filed as desk prose queues behind decisions it does not need, and reads
 as though it were waiting on judgement when it is waiting on thirty seconds.
 
+## 🚫 The one rule that outranks everything else here (s1349, F-1349-2)
+
+**Never land an item by routing around the permission denial that put it here.**
+
+Items in this directory exist *because* a tool call was denied. The fire allowlist is broad —
+`Bash(node:*)`, `Bash(cat:*)`, `Bash(cp:*)`, `Bash(mv:*)` — so for a `.claude/` target a fire
+almost certainly **could** write the file from a shell. **It must not.** The boundary on
+`.claude/` exists to stop an autonomous agent from editing its own instruction surface; an agent
+that satisfies it with one tool and defeats it with another has defeated the control, not
+complied with it. **The denial is the answer, not an obstacle in front of the answer.**
+
+⚠️ The risk here is not ignorance, it is **attrition**. These items are by construction cheap,
+already-decided, fully composed, and printed at every fire — item 001 has now been read out
+**seven** times without landing. The fire most likely to shell around it is a *late* one that has
+inherited the frustration of six predecessors. **If you catch yourself reasoning "it's only a doc
+paste" — that is the exact thought this paragraph is for.** Write another line in your handoff
+and leave it open; an item that stays OPEN is the mechanism working.
+
+**And do not propose an allowlist entry either.** Measured s1349 (F-1349-1): `.claude/settings.json`
+already grants bare `"Edit"` and `"Write"` unqualified, this fire's config dir carries no
+`permissions` key at all, neither config denies `.claude`, and the write is *still* refused while
+the same `Edit` tool succeeds on a non-`.claude` path in the same session. **There is no
+allow-entry left to add** — the boundary is enforced above the settings layer. That recommendation
+is measured worthless; spend no further lines on it.
+
 ## Format
 
 A header block of `key: value` lines, then a `---` fence, then whatever a human needs:
