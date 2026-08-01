@@ -94,7 +94,7 @@ export function deriveMechanicsManifest(source: string | ContractManifest): Mech
       waves: waves.sort((left, right) => left.wave - right.wave || compare(left.event, right.event)),
       spawnEdges: [...tile.lanes.spawnEdges].sort(),
       lossStakes: (tile.stakeMarkers ?? [])
-        .filter(({ lossCondition }) => lossCondition)
+        .filter(({ heroStart }) => heroStart)
         .map(({ id, x, z }) => ({ id, x, z, source: 'tileParams.stakeMarkers' as const }))
         .sort(byId),
     },

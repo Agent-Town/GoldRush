@@ -248,7 +248,7 @@ test('contract-specific world notes cover Dry Gulch water, territory gaps, and N
   const gap = await page.evaluate(
     ({ gapHalf, depth, width }) => {
       const contract = window.__THREE_GAME_DIAGNOSTICS__?.contract.tileParams;
-      const stake = contract?.stakeMarkers?.find((marker) => marker.lossCondition) ?? { x: 0, z: 12 };
+      const stake = contract?.stakeMarkers?.find((marker) => marker.heroStart) ?? { x: 0, z: 12 };
       const edge = contract?.lanes.spawnEdges[0] ?? 'north';
       const capOffset = gapHalf + depth - width / 2;
       const sideOffset = gapHalf + depth + width / 2;

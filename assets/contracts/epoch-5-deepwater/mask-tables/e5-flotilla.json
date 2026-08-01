@@ -10,9 +10,9 @@
       { "id": "still-room-barge-deck", "bank": "north", "minX": 21, "maxX": 31, "minZ": 17, "maxZ": 25 }
     ],
     "stakeMarkers": [
-      { "id": "kitchen-scow", "x": -26, "z": 21, "lossCondition": false },
-      { "id": "turret-raft", "x": 0, "z": 27, "lossCondition": false },
-      { "id": "still-room-barge", "x": 26, "z": 21, "lossCondition": false }
+      { "id": "kitchen-scow", "x": -26, "z": 21, "heroStart": false },
+      { "id": "turret-raft", "x": 0, "z": 27, "heroStart": false },
+      { "id": "still-room-barge", "x": 26, "z": 21, "heroStart": false }
     ],
     "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
     "harvestAnchors": [],

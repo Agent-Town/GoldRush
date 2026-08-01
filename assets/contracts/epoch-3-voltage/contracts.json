@@ -18,7 +18,7 @@
           { "id": "breath-yard", "bank": "north", "minX": -8, "maxX": 24, "minZ": -6, "maxZ": 18 },
           { "id": "ridge-line", "bank": "north", "minX": 8, "maxX": 34, "minZ": 20, "maxZ": 40 }
         ],
-        "stakeMarkers": [{ "id": "ridge-switch-house", "x": 24, "z": 30, "lossCondition": true }],
+        "stakeMarkers": [{ "id": "ridge-switch-house", "x": 24, "z": 30, "heroStart": true }],
         "pylonSites": [
           { "id": "trunk-west", "nodeId": "trunk-west", "wireFrom": "off-map-current", "x": -30, "z": -30, "radius": 2.5 },
           { "id": "trunk-middle", "nodeId": "trunk-middle", "wireFrom": "trunk-west", "x": -18, "z": -18, "radius": 2.5 },
@@ -161,7 +161,7 @@
           { "id": "west-gallery", "bank": "north", "minX": -42, "maxX": -16, "minZ": 7, "maxZ": 40 },
           { "id": "east-gallery", "bank": "north", "minX": 16, "maxX": 42, "minZ": 7, "maxZ": 40 }
         ],
-        "stakeMarkers": [{ "id": "dynamo-sub-hall", "x": 0, "z": -44, "lossCondition": true }],
+        "stakeMarkers": [{ "id": "dynamo-sub-hall", "x": 0, "z": -44, "heroStart": true }],
         "pylonSites": [
           { "id": "pylon-west-base", "nodeId": "pylon-west-base", "wireFrom": "sub-hall", "x": -12, "z": -36, "radius": 2.5 },
           { "id": "pylon-west-switch", "nodeId": "pylon-west-switch", "wireFrom": "pylon-west-base", "x": -24, "z": -20, "radius": 2.5 },
@@ -346,7 +346,7 @@
           { "id": "west-pavilion", "bank": "north", "minX": -38, "maxX": -10, "minZ": -8, "maxZ": 30 },
           { "id": "east-pavilion", "bank": "north", "minX": 10, "maxX": 38, "minZ": -8, "maxZ": 30 }
         ],
-        "stakeMarkers": [{ "id": "fair-gate", "x": 0, "z": -30, "lossCondition": true }],
+        "stakeMarkers": [{ "id": "fair-gate", "x": 0, "z": -30, "heroStart": true }],
         "waterSources": [],
         "heightfield": { "id": "fairground-bowl", "mode": "visual" },
         "palette": { "id": "fairground-lamp-gold", "tint": [0.68, 0.58, 0.48], "dampAmount": 0.04, "splat": { "rockAmount": 0.24, "scrubAmount": 0.16, "macroWarmth": 0.72, "antiTile": 0.68 } },

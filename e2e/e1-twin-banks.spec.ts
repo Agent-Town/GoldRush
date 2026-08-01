@@ -86,8 +86,8 @@ test('loads Twin Banks contract with two fords, two build zones, and one loss st
   expect(snapshot.contract.tileParams.fords?.map((ford) => ford.id)).toEqual(['west-ford', 'east-ford']);
   expect(snapshot.contract.tileParams.buildZones?.map((zone) => zone.id)).toEqual(['south-bank', 'north-bank']);
   expect(snapshot.contract.tileParams.stakeMarkers).toEqual([
-    { id: 'south-claim-stake', x: 0, z: -12, lossCondition: true },
-    { id: 'north-expansion-marker', x: 0, z: 12, lossCondition: false },
+    { id: 'south-claim-stake', x: 0, z: -12, heroStart: true },
+    { id: 'north-expansion-marker', x: 0, z: 12, heroStart: false },
   ]);
   expect(snapshot.hero).toMatchObject({ x: 0, z: -12 });
   expect(snapshot.water?.riverPresent).toBe(true);
@@ -138,8 +138,8 @@ test('north marker is not the run loss stake, south overrun still ends the run, 
     '?debug&contract=e1-twin-banks&timescale=20&nolevel&nokill&nopause&nosteal&nowreck&seed=e1-twin-spawns',
   );
   const markers = await page.evaluate(() => window.__THREE_GAME_DIAGNOSTICS__?.contract.tileParams.stakeMarkers ?? []);
-  expect(markers.find((marker) => marker.id === 'north-expansion-marker')?.lossCondition).toBe(false);
-  expect(markers.find((marker) => marker.id === 'south-claim-stake')?.lossCondition).toBe(true);
+  expect(markers.find((marker) => marker.id === 'north-expansion-marker')?.heroStart).toBe(false);
+  expect(markers.find((marker) => marker.id === 'south-claim-stake')?.heroStart).toBe(true);
 
   for (const [key, value] of [
     ['enemy.speed', 0],

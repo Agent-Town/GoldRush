@@ -406,7 +406,7 @@ export type ContractStakeMarker = {
   id: string;
   x: number;
   z: number;
-  lossCondition: boolean;
+  heroStart: boolean;
 };
 export type RailPathPoint = {
   x: number;
@@ -910,6 +910,18 @@ export function parseContractDescriptor(text: string, template: ContractManifest
     candidate = JSON.parse(text);
   } catch {
     return descriptorRejection(reason('document_unreadable', 'The marks on this contract page could not be read.'));
+  }
+  if (isRecord(candidate) && isRecord(candidate.tileParams) && Array.isArray(candidate.tileParams.stakeMarkers)) {
+    const legacyIndex = candidate.tileParams.stakeMarkers.findIndex(
+      (marker) => isRecord(marker) && Object.hasOwn(marker, 'lossCondition'),
+    );
+    if (legacyIndex >= 0) {
+      return descriptorRejection(reason(
+        'stake_marker_hero_start',
+        'Stake markers use heroStart; lossCondition is no longer accepted.',
+        `tileParams.stakeMarkers[${legacyIndex}].lossCondition`,
+      ));
+    }
   }
   const reasons: ContractDescriptorReason[] = [];
   const normalized = normalizeContractDescriptor(candidate, template, reasons);

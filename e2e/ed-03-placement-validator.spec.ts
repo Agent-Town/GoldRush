@@ -39,6 +39,18 @@ test('069 accepts every shipped contract byte-identically and keeps its legacy r
   ]);
 });
 
+test('069 rejects the retired stake marker field by name', () => {
+  const twinBanks = loadContract('e1-twin-banks');
+  const legacy = JSON.parse(contractDescriptorJson(twinBanks));
+  legacy.tileParams.stakeMarkers[0].lossCondition = legacy.tileParams.stakeMarkers[0].heroStart;
+  delete legacy.tileParams.stakeMarkers[0].heroStart;
+  expect(parseFailure(`${JSON.stringify(legacy)}\n`, twinBanks).reasons).toEqual([{
+    code: 'stake_marker_hero_start',
+    message: 'Stake markers use heroStart; lossCondition is no longer accepted.',
+    path: 'tileParams.stakeMarkers[0].lossCondition',
+  }]);
+});
+
 test('map reasons cover claim bounds, positive area, declared bank, and dry ground without a second terrain sampler', () => {
   const template = loadContract('the-claim');
   const invalid = structuredClone(template);

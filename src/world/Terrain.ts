@@ -295,7 +295,7 @@ export function stakeMarkers(): readonly ContractStakeMarker[] {
 }
 
 export function lossStakeMarker(): ContractStakeMarker | null {
-  return stakeMarkers().find((marker) => marker.lossCondition) ?? null;
+  return stakeMarkers().find((marker) => marker.heroStart) ?? null;
 }
 
 export function hasRiverWater(): boolean {

@@ -16,7 +16,7 @@
         "buildZones": [
           { "id": "claim-boat-deck-mask", "bank": "north", "minX": -5, "maxX": 5, "minZ": 26, "maxZ": 34 }
         ],
-        "stakeMarkers": [{ "id": "claim-boat", "x": 0, "z": 30, "lossCondition": true }],
+        "stakeMarkers": [{ "id": "claim-boat", "x": 0, "z": 30, "heroStart": true }],
         "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
         "harvestAnchors": [
           { "x": -36, "z": -24 },
@@ -161,7 +161,7 @@
         "buildZones": [
           { "id": "claim-boat-deck-mask", "bank": "north", "minX": -54, "maxX": -44, "minZ": -5, "maxZ": 5 }
         ],
-        "stakeMarkers": [{ "id": "claim-boat", "x": -49, "z": 0, "lossCondition": true }],
+        "stakeMarkers": [{ "id": "claim-boat", "x": -49, "z": 0, "heroStart": true }],
         "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
         "harvestAnchors": [],
         "water": {
@@ -279,7 +279,7 @@
         "buildZones": [
           { "id": "claim-boat-deck-mask", "bank": "north", "minX": -5, "maxX": 5, "minZ": 26, "maxZ": 34 }
         ],
-        "stakeMarkers": [{ "id": "claim-boat", "x": 0, "z": 30, "lossCondition": true }],
+        "stakeMarkers": [{ "id": "claim-boat", "x": 0, "z": 30, "heroStart": true }],
         "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
         "harvestAnchors": [
           { "x": -36, "z": -24 },
@@ -420,9 +420,9 @@
           { "id": "still-room-barge-deck", "bank": "north", "minX": 21, "maxX": 31, "minZ": 17, "maxZ": 25 }
         ],
         "stakeMarkers": [
-          { "id": "kitchen-scow", "x": -26, "z": 21, "lossCondition": false },
-          { "id": "turret-raft", "x": 0, "z": 27, "lossCondition": false },
-          { "id": "still-room-barge", "x": 26, "z": 21, "lossCondition": false }
+          { "id": "kitchen-scow", "x": -26, "z": 21, "heroStart": false },
+          { "id": "turret-raft", "x": 0, "z": 27, "heroStart": false },
+          { "id": "still-room-barge", "x": 26, "z": 21, "heroStart": false }
         ],
         "waterSources": [{ "kind": "spring_pond", "x": 0, "z": 0, "radius": 64 }],
         "harvestAnchors": [],
