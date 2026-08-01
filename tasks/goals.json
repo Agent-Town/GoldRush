@@ -3487,12 +3487,14 @@
         {
           "id": "f1324-3-charter-fuzz-label-addressing",
           "title": "Charter fuzz totality guard: address arms by LABEL, widen the sweep past a constant rng (F-1324-3)",
-          "status": "queued",
+          "status": "shipped",
           "lane": "lane-c",
           "taskFile": "lane-c-f1324-3-charter-fuzz-label-addressing.md",
           "authoredBy": "s1325 fire",
           "spec": "reviews/f1324-1-charter-fuzz-composition-totality.md:57 (F-1324-3, filed by the s1324 drain as OPEN/NON-BLOCKING with GATE: fold into the next touch of this rig); subject e2e/charter-press-totality.spec.ts:26,31,32; rig e2e/charter-press.rig.ts:54-121",
-          "authorNotes": "FIRE-AUTHORED s1325. Premises re-derived at source, not inherited: the arms[3]/arms[9] literals were read in the file, and the rig was read to confirm 13 arms each returning a distinct label with four noop-guard paths (:63,:70,:77,:92) — which is precisely what makes a label->index map derivable without touching the rig. F-1324-3 also had NO BACKLOG row of its own until this fire filed one: findings-state-guard.mjs:10 counts only declarations at the start of a BACKLOG line, so it was invisible to the census while sitting inside F-1324-1 closed row and in a review file. Lane-c was ABSENT of d640dc31 (the very commit that created the file under edit) and was refreshed directly before queueing — the F-1324-2 trap, which has now caught two fires in a row."
+          "authorNotes": "FIRE-AUTHORED s1325. Premises re-derived at source, not inherited: the arms[3]/arms[9] literals were read in the file, and the rig was read to confirm 13 arms each returning a distinct label with four noop-guard paths (:63,:70,:77,:92) — which is precisely what makes a label->index map derivable without touching the rig. F-1324-3 also had NO BACKLOG row of its own until this fire filed one: findings-state-guard.mjs:10 counts only declarations at the start of a BACKLOG line, so it was invisible to the census while sitting inside F-1324-1 closed row and in a review file. Lane-c was ABSENT of d640dc31 (the very commit that created the file under edit) and was refreshed directly before queueing — the F-1324-2 trap, which has now caught two fires in a row.",
+          "mergeHash": "3566520ffcf0c28e5e35d3a138ca690e7287d15e",
+          "review": "reviews/f1324-3-charter-fuzz-label-addressing.md"
         }
       ]
     },
