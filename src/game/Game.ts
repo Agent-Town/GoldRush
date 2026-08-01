@@ -1798,6 +1798,10 @@ export class Game {
             this.enemies.warmHitFlashes(this.localActor.group.position),
             this.warmCombatPools(),
           ])).then(() => undefined),
+        emitFloatText: (text: string) => {
+          this.vfx.floatText(this.localActor.group.position, text, '#83ded7');
+          return this.vfx.lastFloatText!;
+        },
         clearScores: () => clearScores(),
         setBalance: (path: string, value: number | boolean | string) => setBalance(path, value),
         grantGold: (n: number) => {

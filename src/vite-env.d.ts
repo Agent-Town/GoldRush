@@ -581,6 +581,7 @@ interface ThreeGameDiagnostics {
       z: number;
       y: number;
       terrainY: number;
+      renderedText: string;
       renderedWidthPx: number;
       canvasWidthPx: number;
       fontPx: number;
@@ -1114,6 +1115,7 @@ interface Window {
     setBlastAim: (x: number, z: number) => { x: number; z: number };
     setDifficultyPreset: (preset: string) => 'greenhorn' | 'trail' | 'vein-hunter';
     warmVfx: () => Promise<void>;
+    emitFloatText: (text: string) => NonNullable<ThreeGameDiagnostics['vfx']['lastFloatText']>;
     clearScores: () => void;
     setBalance: (path: string, value: number | boolean | string) => boolean;
     grantGold: (n: number) => void;
